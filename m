@@ -4,71 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48229CEBF93
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 06:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC052CCD19A
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 07:01:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLFKB-0005m3-K6; Tue, 18 Nov 2025 01:36:23 -0500
+	id 1vLFi3-0007mx-FX; Tue, 18 Nov 2025 02:01:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLFJz-0005ih-PZ
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:36:13 -0500
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vLFhy-0007i3-0Q
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 02:00:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLFJu-0007CC-Nf
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:36:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763447767; x=1794983767;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=WaEyNbjG4OMiMqlQkn69ko2nv922dzbUojBAYOjs2ao=;
- b=XCjeqI15cDQqH3HAjxc5cYj4KM4NJKzG/i+sp2ExVEnwCTpHZ8LmLYng
- NcEUndrGps3+zWB4VBriq/vW3NLXEJ1rk1eZfAg078pK9uBhR3xo13uy/
- 54WpDtws1ulNEl0cNDtwwwozNkqUQs8NsOWmofWW1XrhjkIiw65ozSdRA
- WuFpn+pnnMx6ZPLAYw/GCyXDXPFN2fh3Ei1X5w5kUXn9+cexJq4pd9wPw
- AtAkuatwduTZA/16M4sBUsE1I5zTiBQc+SiavJhQSVTYjhBQ8c5vSXkIU
- 5E7QPwlNTnX5ewlRsHgcjO1/kCEy29uG5/z/kMweO3o8DhnigDEUUqyzJ A==;
-X-CSE-ConnectionGUID: BnBDa2ZMTrOzAjyddnfD1Q==
-X-CSE-MsgGUID: asroEjDMRFyBeqPYPo3Shw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="82850949"
-X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="82850949"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 22:36:05 -0800
-X-CSE-ConnectionGUID: pN+XznNrRACiBN2jjwKSWw==
-X-CSE-MsgGUID: Y89YPDNUSVScQRjE6UELnQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="189962651"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa010.jf.intel.com with ESMTP; 17 Nov 2025 22:36:03 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- "Chang S . Bae" <chang.seok.bae@intel.com>,
- Zide Chen <zide.chen@intel.com>, Xudong Hao <xudong.hao@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 2/5] i386/cpu: Cache EGPRs in CPUX86State
-Date: Tue, 18 Nov 2025 14:58:14 +0800
-Message-Id: <20251118065817.835017-3-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251118065817.835017-1-zhao1.liu@intel.com>
-References: <20251118065817.835017-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vLFhp-0002I9-W7
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 02:00:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763449247;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IahtJlzur2A22/iciWbX6Ex1pNbrlk7ZZjXbszgm5WY=;
+ b=Bea0fFakfCp2jlPkDnAGj96SK0hPRotwvh6bvO0eLnVO/+x7QAYTpXpo3E4dWgBUeHRvl0
+ y5dji88Y98YAk9pJ4MJNn0MvIyUmoxOoUP52sUoTewKSO+tF9cVynuY+n3abofuPrRHcXC
+ nE8IT8jnlX86uOmBHSgV64YP036jeQE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-96-JBNE8cJJOXGhNgv3KzC04w-1; Tue, 18 Nov 2025 02:00:44 -0500
+X-MC-Unique: JBNE8cJJOXGhNgv3KzC04w-1
+X-Mimecast-MFC-AGG-ID: JBNE8cJJOXGhNgv3KzC04w_1763449242
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-429cbed2b8fso2109719f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 23:00:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763449242; x=1764054042; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IahtJlzur2A22/iciWbX6Ex1pNbrlk7ZZjXbszgm5WY=;
+ b=aQJBFkbAZbm1LjVAMMZMtqjCc6qdmoKBP8n74MV9v0AeX0m//FAK7esMY8NzliWLEn
+ 2lHnazckRv+hv0W5PAu0GrGMMMg9aOvNoI+A8YxLkNt7LDKDv6gK6ipal6rQFNM/N1id
+ FPBefDRMXxngQwwQyok8bU4yH/spQY558afIAvhBx0vHL4oMud35J0zCcivQgyDRtv2F
+ PgToH/1NhmbIgZPCdV+mJVrviLhoEGOlVB7FOZ+I3HiTVAeReYQrLf7WzeTSsn9Ia0Ma
+ 09iNe4tbTCV5G/KdGVqiDCfCS8XXedcgQU/n1FoogHviAQma178gsrL+GcKhEBSsJ/Rb
+ gOaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763449242; x=1764054042;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IahtJlzur2A22/iciWbX6Ex1pNbrlk7ZZjXbszgm5WY=;
+ b=g0fWXnSAbKadfTYcVyjQmAwByO1thlX1iLVadqOlXwO/FElaCQxRc2Es5TpdOrEi5D
+ jtk5rQv7SrNRVQuLyjZZ8nvP2Yei4QxJOoUfcDpcjw8xvxgz1YwBzGopojwwnx1t07SY
+ kbYmqo5uIkGY2c/T/IY3snZs1hZ8Twcftat8T/mBHhr3wZFpQraDvKp1E9phN2kQ8Qce
+ I4xRlKYvCdcs4tEfhrTGeZCSMPhkeRPmH+3N014lJ2ajfsJivxqjdB/m6NC6rJ32CNuh
+ vZdt5PlC7oHK4QOj4msGdaI7ZyCvndnmVWhgbFxUi5UiBsWBkLEA2ebS5ZGyx7XQo0JN
+ pgSw==
+X-Gm-Message-State: AOJu0YxG1d0j9S/32+1zOLJVTlJpzUUnAqm5tX7hhc5O0P0j/XPKOg71
+ BfsPMcsqbAiDP8HH56bNgRFGLbCNtrOp0IzXZdZwbQ6mk50Gsf267cVDwagkOLMPo8jUw7X7/Dz
+ tprboYeWimo5JfZb8W7SfqnFfeou1F3P8kR1TsAoPn8ERFwPjQpUjIojTMrQ0/VX3wlwp8xu4Ie
+ DhsIZBsGs3db8qcX7b+MvmDood3wq7v/s=
+X-Gm-Gg: ASbGnctLnCvHVX0GhUUVSLl2tgmj4Pk8An2j0SDD5y2ORgFdmf4WPtUwdls4kYUD67O
+ uvCjxR+glaJi60iB/oiJuMcrz+vxIB3lCmVtjb1ZkP/2SlGFYeVcPi+nDiC7iFn1g0CrrJIPOSP
+ 1QjCGfb0a3NiME+DLzE5EmQEveuiwaVIwPRrdNb6NV60pjJ3KITSCSeHFSHMDrcXb5LbSy+2Kv6
+ FfgdR/uAKsZPuT9h9/VJ9gigYR3b+qL0m7kzozOTLwcUW8qMjUXlG34w8iS0PYVb9/YhT4=
+X-Received: by 2002:a05:6000:1842:b0:42b:55f3:6196 with SMTP id
+ ffacd0b85a97d-42b5932342emr13124339f8f.4.1763449242367; 
+ Mon, 17 Nov 2025 23:00:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGqUQDXfj7ZqQ94t7tCcn0lkgdZZIPlJC39pz60cGDLogyA0/3GH2vPPhWqs9+puBDaqDX5nZA+L/bycnWIxPQ=
+X-Received: by 2002:a05:6000:1842:b0:42b:55f3:6196 with SMTP id
+ ffacd0b85a97d-42b5932342emr13124291f8f.4.1763449241737; Mon, 17 Nov 2025
+ 23:00:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20251117163107.372393-1-pbonzini@redhat.com>
+ <87bjl0l74x.fsf@draig.linaro.org>
+In-Reply-To: <87bjl0l74x.fsf@draig.linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 18 Nov 2025 08:00:00 +0100
+X-Gm-Features: AWmQ_bkivR1i9V9YEmg2Od3khLJr9C1b5nOanG7yneuszJU4fPoMhcdx7xRJSeA
+Message-ID: <CABgObfaG9uLMyLvquGMDKEfzrhHfkzE+HLhLWUYMqD14UpHJdQ@mail.gmail.com>
+Subject: Re: [PATCH 0/3] mtest2make: clean up and make dependencies more
+ precise
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, jsnow@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,63 +117,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zide Chen <zide.chen@intel.com>
+On Mon, Nov 17, 2025 at 9:46=E2=80=AFPM Alex Benn=C3=A9e <alex.bennee@linar=
+o.org> wrote:
+>
+> Paolo Bonzini <pbonzini@redhat.com> writes:
+>
+> > You probably have never thought much about scripts/mtest2make.py, and i=
+n
+> > fact it has seen only a hendful of commits in the last few years.
+> > The idea is pretty simple: gather the list of testsuites and their
+> > dependencies, and turn a "make check-*" invocation into calling "ninja"
+> > first and "meson test" second.  On top of that, it magically turns
+> > SPEED=3Dthorough into invoking up to three suites named XYZ, XYZ-slow
+> > and XYZ-thorough.
+>
+> Hmm this seemed to run too many tests:
+>
+>   make -j33 -k  -C /home/alex/lsrc/qemu.git/builds/all check-func-aarch64=
+-thorough
 
-Cache EGPR[16] in CPUX86State to store APX's EGPR value.
+oh, I never thought of doing that (as opposed to SPEED=3Dthorough).  I
+will fix it and post v2.
 
-Tested-by: Xudong Hao <xudong.hao@intel.com>
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/cpu.h          |  1 +
- target/i386/xsave_helper.c | 14 ++++++++++++++
- 2 files changed, 15 insertions(+)
-
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index bc7e16d6e6c1..48d4d7fcbb9c 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1969,6 +1969,7 @@ typedef struct CPUArchState {
- #ifdef TARGET_X86_64
-     uint8_t xtilecfg[64];
-     uint8_t xtiledata[8192];
-+    uint64_t egprs[EGPR_NUM];
- #endif
- 
-     /* sysenter registers */
-diff --git a/target/i386/xsave_helper.c b/target/i386/xsave_helper.c
-index 996e9f3bfef5..2e9265045520 100644
---- a/target/i386/xsave_helper.c
-+++ b/target/i386/xsave_helper.c
-@@ -140,6 +140,13 @@ void x86_cpu_xsave_all_areas(X86CPU *cpu, void *buf, uint32_t buflen)
- 
-         memcpy(tiledata, &env->xtiledata, sizeof(env->xtiledata));
-     }
-+
-+    e = &x86_ext_save_areas[XSTATE_APX_BIT];
-+    if (e->size && e->offset && buflen) {
-+        XSaveAPX *apx = buf + e->offset;
-+
-+        memcpy(apx, &env->egprs, sizeof(env->egprs));
-+    }
- #endif
- }
- 
-@@ -275,5 +282,12 @@ void x86_cpu_xrstor_all_areas(X86CPU *cpu, const void *buf, uint32_t buflen)
- 
-         memcpy(&env->xtiledata, tiledata, sizeof(env->xtiledata));
-     }
-+
-+    e = &x86_ext_save_areas[XSTATE_APX_BIT];
-+    if (e->size && e->offset) {
-+        const XSaveAPX *apx = buf + e->offset;
-+
-+        memcpy(&env->egprs, apx, sizeof(env->egprs));
-+    }
- #endif
- }
--- 
-2.34.1
+Paolo
 
 
