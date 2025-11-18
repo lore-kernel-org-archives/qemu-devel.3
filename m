@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EB77CEDDA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 14:56:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82FF2CEBF97
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 14:56:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLN7t-0007Da-Va; Tue, 18 Nov 2025 09:56:14 -0500
+	id 1vLN7z-0007FC-Mk; Tue, 18 Nov 2025 09:56:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vLN7R-0007B3-Pw
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:55:47 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1vLN7m-0007Dm-G7
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:56:12 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vLN7Q-0002h9-3s
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:55:45 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-42b32ff5d10so3931258f8f.1
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 06:55:43 -0800 (PST)
+ id 1vLN7k-0002hk-LG
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 09:56:05 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-47798ded6fcso12034475e9.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 06:56:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763477742; x=1764082542; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763477763; x=1764082563; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w2YSSyFFgS95NJWgbULMYK6H1nDDxjbMozcjqkKeIoA=;
- b=DiuuFU9WvqvU8ou6kwtxVtU6BvN+97q+gtJ7V+M0qOTES9WXlD2FNAcXfAJEoDtKKX
- g+eJMeodRmWr4wwD3tXjryz4/sZEGEByQS2aWXZCkd0At9y1f0GrDBJPtDT14191pGUo
- 3on+qgsqy+3kEteIl+tfg+LETnUIlUTzK2e4KWPRKACPqFX81ahE+90m0Vl/AjI9J3C7
- v2FgDLXlo0JHkROIt6Djgrb1x4S6DUdBTUxMGA8sHcNh59ydWnMKdfqH7Ilhvu7S5Swf
- Iv/JnE8u4MKi8AN5xfcYk/J+LM6tzuKGMz3gharLpX9WMraGbOmWgregJ2aygiodIut/
- 8Llw==
+ bh=mGAWhpUpxqCVxKw6l4fX0ruOU+Z0rt7SJWTNgkNOSSI=;
+ b=WEUr51rwLErF6QbmfuKlI+JyyQVn3F7uzM9vLDHMQhN7TPdu+dRUs3AI3tJ0DGw+wm
+ wRCmgrvfedFb50vHzYBJDRSMUiJlcSOoMnVgnN/gh//y0FyF+4eMtXbEc9G8/n7GjXQU
+ r0qDX1XkYMcv2z0WA8EZS+rInaMfEOfabuGLcqre8wH4cf9cgT3J8UlJRqgV0dMGu9/1
+ S96ssYTSMNh2bhBfoOER6Y7HROWmvbOT8217/etq5ZEEBokm0QJOLH8QNiXVLO6TiMGN
+ 3rndhIdlZm5kxyguCyESRkcHnKuHIjn/43JzmOb6aWGNtcD10Rp3eMkLkyAkz/CtVglq
+ reXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763477742; x=1764082542;
+ d=1e100.net; s=20230601; t=1763477763; x=1764082563;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w2YSSyFFgS95NJWgbULMYK6H1nDDxjbMozcjqkKeIoA=;
- b=elFnyBYgfA4vfn/rwPUxPjJ35oR5kSbWVFTdLTLUfdvvXPwaLJ2ry2SAhley7/bfET
- Rj/4eDs7k3blob/OJOwnOftPjCG5tH3PJwBGXF1OdkoZiecjWLblS9ssIBfcmUosgLv1
- 41EnXuZRW0TGsvL3fEgSHEh//lWwqBUG6uNGt5hY+vxqMm4QqD8Gy6ZiwuONky/UezYV
- 1BbogkBuN1DRwTX81Gt6Ljrn1UPXqM+YU0W++I+814OEa24MHL9jzFRYnvHpUPjKhpd+
- YIlu2lnCKlVTaLU+slcJ92RagA1ABZ2N10aiAGpFgNAWtmUOE4kMt8pfF43B5x0R3yzw
- pcZA==
-X-Gm-Message-State: AOJu0YyHwovUnZpuVN6dMQ1P0u0y+WXa6LcIESFDkDsOIjM3DLHlj8Dg
- FauYEQ6R5vlHvGBvYzDZsSITI7YzskmemC3zIHAfijcdfoneif0YgJR56yrkWn3mwl0D2oxZA6h
- Zk6vX
-X-Gm-Gg: ASbGnctUUKPkiJiEi7+poB0DReHmE2JzEXJ6vGXEQAGNrnaJvk0b0EBWOz2IWMTR6Yu
- SB9l6hjluZwwEpgpL+7Uf6a8sU9TMHYPZWX2wdhR6IXFUr4d+BPLbyIhT9WbUwlW+3MOaL8t/BT
- 2cHXmTPd69ssBWv+TEvWIpYlmT/stbaGV4jfMQhH8tRGrLz9dUfEFLbb8QjLkZ3JLYIJCmMI8GM
- zftbgfCEQJSyXTRc62VvZua3kH0FUirWUFPiTXPDKpdy2JWYfC/BAESkdVXf3wrA9klrf/uF/2R
- cSlfNllFpWnCI4SJ73KCoED1P4D5ztu5tpXemb4uSEbDt2QC92xPBugKeH1B3xYycH9Ules0NGA
- 1epkYoKj4yS8Z3F+eGSgdiFtS45grAeW4xWQkeUIZLrLIp+COnxGOH6ygEOmpRCOK4vOUWJ8V9E
- e/dN/1+Q8t+68=
-X-Google-Smtp-Source: AGHT+IHZuuxNwGo3lPN40LPYEHs8qD+iMLbQaGaAzXPNthsJemwXm1jWhjqTdt4obFY1wrvp2iDX9Q==
-X-Received: by 2002:a05:6000:2582:b0:425:7e33:b4a9 with SMTP id
- ffacd0b85a97d-42ca85a5046mr3698677f8f.0.1763477741918; 
- Tue, 18 Nov 2025 06:55:41 -0800 (PST)
+ bh=mGAWhpUpxqCVxKw6l4fX0ruOU+Z0rt7SJWTNgkNOSSI=;
+ b=BbuCGnIwgsyfpKfZVEQ//n/yh1qTuou1pFngx1hTy0HUIUsXAkEZYIKuBCRgmDHQNa
+ 44/gifrFny/ctLCBMHlEyPuSHgoPkkS9/ND+R4LPRmKj3zSJ3/jzSL97jEJyennanLPQ
+ R2Nj5fHmTIU3r25W02eerc5TZ+6WfUSj9lrs/Q0IdRGWngg5jza93wXIinHX1U8DyW5a
+ 1bi1s/Rxh4ZWABBjlAlTa9cNYkWvkd/vw8OFagKxxkQWVTLBXBCdGwuFjriYa+Ef5W+T
+ gBDYbDYqp48RBCEvIggCl8k72Mac3NvibWiEkiZtMFfbQhh9nMn3tkkpc8B0GTPH5Bf3
+ tM9A==
+X-Gm-Message-State: AOJu0YxOiYExQwGH2axTCaeOsEiK7otk1wnAy+U7AqKSkeAOIuJqf4Tp
+ xHhoDAFE893q7AdXbd1BiGHfUadhzAt4cSuSGzH0LAr9ab9Fj2KlR+4DUBqSR9zfOZ6FEixT9FR
+ iS0Sm
+X-Gm-Gg: ASbGncs0zBRjyIEtDiXeWxBGwSvozwTcF6NkPfpQz5s3hqutUjzM2ZfZxIdMF0T2L8E
+ +7OCk9AAFvetOA3y6+NTjZUNGqvngLibDwx39rS/vRcKGlRofln0aOx76hl9plw0mEr+w3uGuyV
+ lNG0KZg/Bk7JvWBg0IYsWMNT6/LIyJU1lcxovsqqHkmLnVmXKp1+JDvoySSQTbiiQfJsvYAz+Xt
+ h4jsJ2RKZXJuFr3NzyFPb7YJtc8AIbe39ChbZMDeXsF0FHwhmkBVoXgVApCLdOXMYSlTEM5g8id
+ FJsO0IFN5WYHd5ehREUrEXTlU7KdIfRDYpNhS8OylczQq1cxDiBJx5Vfb/WF3VqLfkJvA6kcwE2
+ hWyeiG3CRNMuhxC174D9XKpDClEfInlOdwxO6Vs2P4H4PCDcniTlbdYGiA/VT6y01SJ1iOoFhSO
+ KSW8jG+AaZlQ4=
+X-Google-Smtp-Source: AGHT+IEBHq+DGiSspoPRNeaWOBfeapeSc1YKuBKNV9A869w0A+rEo79/RI274cP7TikDzOvldLIq3Q==
+X-Received: by 2002:a05:600c:3b25:b0:477:7925:f7f3 with SMTP id
+ 5b1f17b1804b1-4778fe62d4emr141128605e9.14.1763477762638; 
+ Tue, 18 Nov 2025 06:56:02 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f0b8d6sm33674581f8f.28.2025.11.18.06.55.41
+ 5b1f17b1804b1-47787e35b7esm378706095e9.4.2025.11.18.06.56.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Nov 2025 06:55:41 -0800 (PST)
+ Tue, 18 Nov 2025 06:56:02 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 80D255F8B9;
- Tue, 18 Nov 2025 14:55:40 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 4A32C5F8B9;
+ Tue, 18 Nov 2025 14:56:01 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,  jsnow@redhat.com
-Subject: Re: [PATCH v2 1/3] mtest2make: cleanup mtest-suites variables
-In-Reply-To: <20251118102942.551194-2-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Tue, 18 Nov 2025 11:29:40 +0100")
+Subject: Re: [PATCH v2 3/3] mtest2make: do not repeat the same speed over
+ and over
+In-Reply-To: <20251118102942.551194-4-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Tue, 18 Nov 2025 11:29:42 +0100")
 References: <20251118102942.551194-1-pbonzini@redhat.com>
- <20251118102942.551194-2-pbonzini@redhat.com>
+ <20251118102942.551194-4-pbonzini@redhat.com>
 User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Tue, 18 Nov 2025 14:55:40 +0000
-Message-ID: <87o6ozjspf.fsf@draig.linaro.org>
+Date: Tue, 18 Nov 2025 14:56:01 +0000
+Message-ID: <87ikf7jsou.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,10 +109,8 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Paolo Bonzini <pbonzini@redhat.com> writes:
 
-> Remove the "--suite" argument from the .*.mtest-suites variables, and
-> add it only when actually computing the arguments to "meson test".
-> This makes it possible to set ninja-cmd-goals from the set of suites,
-> instead of doing it via many different .ninja-goals.* variables.
+> There are just two of them (slow and thorough; quick is simply the
+> default).  Avoid repeating them for as many times as there are tests.
 >
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
