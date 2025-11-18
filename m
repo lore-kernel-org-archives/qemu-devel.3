@@ -4,70 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9E0DCEE350
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 20:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23691CEE350
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 20:08:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLRyv-0003yr-GB; Tue, 18 Nov 2025 15:07:17 -0500
+	id 1vLRzE-0004Mn-3T; Tue, 18 Nov 2025 15:07:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vLRys-0003yE-Vv
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:07:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vLRyr-0007WM-M2
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:07:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763496433;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lMelpG9B2qKdLfT1UG0siMaXGVHU4HNoCPGrEAwKEfc=;
- b=awPPai6+H/ebfZUkCxsj79dcCn1xKskqN5XSNF8zxHowjwvjIx13U9qlfxPwoozYts3Y/i
- QuXv0QedSx2FmyMyd0Rtp/5bTEmOF6UyYx1M6LUfu0pvEt52OD+nqCKiN7UUKmY6kssMdU
- NfDw5KQFEl1XD5cD/HyBFShHAGJF5mo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-ID6XVyW4MbO6cosFtvgENA-1; Tue,
- 18 Nov 2025 15:07:09 -0500
-X-MC-Unique: ID6XVyW4MbO6cosFtvgENA-1
-X-Mimecast-MFC-AGG-ID: ID6XVyW4MbO6cosFtvgENA_1763496429
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE54C1800371; Tue, 18 Nov 2025 20:07:08 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.78])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0D595180047F; Tue, 18 Nov 2025 20:07:06 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vLRzB-0004Gd-Fn
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:07:33 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vLRz9-0007XP-Ut
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:07:33 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-42b3720e58eso5446957f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 12:07:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1763496450; x=1764101250; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=IOXcWSlncfaiePwDCOSbYusFR5OMNF5qhOoJv5z9fxA=;
+ b=Z0L/vJKNzL3XH3EolXWnE8kigG8bnNqcbE2Xrs5A5gbHOP3yQKYUWI+u1AERYSU5BR
+ wuvIjryWdDcXxn2MsUy5udyZ6M3UIQT+mjm/Gyn/TMEXZd4VnqG40J4UZLYMiI3a5kWv
+ 9fmxTzdZunqRJpvEewKk5Ax+AbiKcnR4T/795l9IGc4NQ1x15/LvrfD4iAlbiv0ZIZWt
+ ErazTSB05b1FymLogXV+xVcOQcdRR4GKXNWzj1Mud7waDzhQ2JHj4/PgdnX9YFXYVzPF
+ g2cyHbUPkpgj+7Ip2Xr3b+lUMxseCzer2t2bWiD1H3xhpTP9b2G7+0cbUHcWhY5dNWk4
+ ksdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763496450; x=1764101250;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IOXcWSlncfaiePwDCOSbYusFR5OMNF5qhOoJv5z9fxA=;
+ b=tlap3qjTmM9+wQhWFkmNLmUQVFsEiEJH7wUPUl4KjrEIyZ0UAAdh9QllSkkuw1eat+
+ CyD6nWqr0u8G0hSbnFDK4crpGEfYq/Ta3QtXC/QEjWVmww0DPb5Zfb/vJpZJxfPvhwHF
+ BcEq+xPY1+kLGAKo5GPltt+MwvKRowGNADpDVpSMRmPkSM3YmioE082ytmtQ0XEDKsi0
+ BhUdBfkwBYc5nUva5JSRPOWzkVHKS1i2q33HvU+twloNNy0+tLoP/Z6OD2CMbnf0d7UR
+ tL4b6rd+d2KPscAQkinXD5joWVniADdUEo8j6sJ8+zxH/LPWe5cF1comh4F76cISH5qK
+ 1QFg==
+X-Gm-Message-State: AOJu0YySPW9EXX1x0b924qhccysR7yJnpgs0FXS87O+tUn6tp/1QAdjr
+ +wIwdgIwxMcdY8/Y+iIzPOuXYXu6fos2+S+RO9fz0ksmnrNHlp8XNAdoqqLcxtKt
+X-Gm-Gg: ASbGncs3iBZMzEnPNAjcAxQ8NDNGYcG+whsIPZlOFBoxMyW+STbVmHsdxFhDOvtmroU
+ DRfVImQ4tAdGgcinC9a5suhZjib6GyagDdM9fAVlIKxVb8gnR+43kfFSlUK3UJqSgLfg8NfZ2Z5
+ k1oDEJgOv67fG5eErw6R7AiN38TPpDj43web7CGWpNHXjbbkX1VxoqXdLWJdrwL1T9DdOj2g0/7
+ JeRJOpsKqJiTUaFeq9yqGGNg/77yuJXE6Isromt6VLckKbYRc6qU1/EVOsp5TRf2vESMUCHnqLS
+ rygysnANcHept4juQl8l0qd8zngSJaBI8NvZMZofg7feZ5YG21ZcdN98QqLz7kTUmLZTjYQ3lUo
+ qRLhCyjT8jPRHCnWth/tpzbFxc6mU+XRESIxw3ERwkUPlciHzS6zNRwSY6+CPaHqLzmehBdis2Q
+ naiQaEhdKXsuVJwxkoMGwu8tfy1AhGRc+HETqMCSCtLE8RPU9T8vcT229jqxrWownIrUDRuOqZ+
+ ZT6UZbV
+X-Google-Smtp-Source: AGHT+IFUqqgPen06RaVgSnd4AeLYArEgG3IxRCPcMwn+xaDPXZl+8v8/Z5T1WM7S0FAcRX77sv6x8A==
+X-Received: by 2002:a05:6000:228a:b0:42b:36f4:cd24 with SMTP id
+ ffacd0b85a97d-42b593495bemr17324372f8f.24.1763496449699; 
+ Tue, 18 Nov 2025 12:07:29 -0800 (PST)
+Received: from archlinux (dynamic-089-012-208-201.89.12.pool.telefonica.de.
+ [89.12.208.201]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53e7ae2dsm34210336f8f.5.2025.11.18.12.07.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Nov 2025 12:07:29 -0800 (PST)
+From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Markus Armbruster <armbru@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 3/3] python/qapi: delint import statements
-Date: Tue, 18 Nov 2025 15:06:57 -0500
-Message-ID: <20251118200657.1043688-4-jsnow@redhat.com>
-In-Reply-To: <20251118200657.1043688-1-jsnow@redhat.com>
-References: <20251118200657.1043688-1-jsnow@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH] hw/arm/Kconfig: Exclude imx8mp-evk machine from KVM-only build
+Date: Tue, 18 Nov 2025 21:07:52 +0100
+Message-ID: <20251118200752.39950-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,38 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Missed a spot with isort, which now causes the python-minreqs test on
-GitLab to fail. Fix it.
+Fixes make check failures on an aarch64 host:
+  qemu-system-aarch64: unknown type 'arm-gicv3'
 
-(Hint: the commands in python/tests/qapi-isort.sh can be run without the
-"-c" parameter to automatically adjust import statements according to
-our style rules. Maybe I should make a pre-submit hook that makes this
-adjustment automatically. What do you think?)
-
-Fixes: 5bd89761
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reported-by: Cornelia Huck <cohuck@redhat.com>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- scripts/qapi/commands.py | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ hw/arm/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
-index a82b5a2a5e6..9dede747205 100644
---- a/scripts/qapi/commands.py
-+++ b/scripts/qapi/commands.py
-@@ -13,10 +13,7 @@
- See the COPYING file in the top-level directory.
- """
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 0cdeb60f1f..7877506384 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -623,7 +623,7 @@ config FSL_IMX8MP_EVK
+     bool
+     default y
+     depends on AARCH64
+-    depends on TCG || KVM
++    depends on TCG
+     select FSL_IMX8MP
  
--from typing import (
--    List,
--    Optional,
--)
-+from typing import List, Optional
- 
- from .common import c_name, mcgen
- from .gen import (
+ config ARM_SMMUV3
 -- 
-2.51.1
+2.52.0
 
 
