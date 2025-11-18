@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E85CCD19A
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 06:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48229CEBF93
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 06:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLFKB-0005mG-VB; Tue, 18 Nov 2025 01:36:24 -0500
+	id 1vLFKB-0005m3-K6; Tue, 18 Nov 2025 01:36:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLFK2-0005jc-Ct
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:36:15 -0500
+ id 1vLFJz-0005ih-PZ
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:36:13 -0500
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLFK0-0007C8-RK
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:36:14 -0500
+ id 1vLFJu-0007CC-Nf
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:36:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763447773; x=1794983773;
+ t=1763447767; x=1794983767;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=1XhH2LXoPRYyYcYy5qWLa8QGY0M70kIQwv5hJ1y6GGo=;
- b=R3ITuPASXLWTdA6m4pBPzqfOYBO8H62UIphOJjn7oa3V0aPkaH/+0XqA
- DVOG1ga3cEcsnWks5mqBKGzom35VNwmySjfMrPxHTDTM8/rScuHGHJoOs
- jHc/Zt2Pw0taCgC/eRDv1sfSSJqQWdIga2vPA8DaQPgYLADVnwytTdZWM
- 3JJqecj2QDZI5bzGtG4nZ8K4jM9kF5gwdORWo2bHJlREaQhpWUo3Nb/9S
- k87V+dUlyDDhjhtiIIuw1i88/A1TdX+pU4Xxu0LaDVPBFYAc3ZV4zQ7RV
- G/pP7tjAXGapHMlJOplwEx7X2lDrkAiTNJqThN9DQLtobEvs8pW7dbrzz Q==;
-X-CSE-ConnectionGUID: SOlYezRiTGWCoyNFRWpw3g==
-X-CSE-MsgGUID: Jyl6brYjRI2LpxrUzpWv7Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="82850982"
-X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="82850982"
+ bh=WaEyNbjG4OMiMqlQkn69ko2nv922dzbUojBAYOjs2ao=;
+ b=XCjeqI15cDQqH3HAjxc5cYj4KM4NJKzG/i+sp2ExVEnwCTpHZ8LmLYng
+ NcEUndrGps3+zWB4VBriq/vW3NLXEJ1rk1eZfAg078pK9uBhR3xo13uy/
+ 54WpDtws1ulNEl0cNDtwwwozNkqUQs8NsOWmofWW1XrhjkIiw65ozSdRA
+ WuFpn+pnnMx6ZPLAYw/GCyXDXPFN2fh3Ei1X5w5kUXn9+cexJq4pd9wPw
+ AtAkuatwduTZA/16M4sBUsE1I5zTiBQc+SiavJhQSVTYjhBQ8c5vSXkIU
+ 5E7QPwlNTnX5ewlRsHgcjO1/kCEy29uG5/z/kMweO3o8DhnigDEUUqyzJ A==;
+X-CSE-ConnectionGUID: BnBDa2ZMTrOzAjyddnfD1Q==
+X-CSE-MsgGUID: asroEjDMRFyBeqPYPo3Shw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="82850949"
+X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="82850949"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 22:36:12 -0800
-X-CSE-ConnectionGUID: zlKmW00rTzO4QaXpCn7qfg==
-X-CSE-MsgGUID: vMYZRm97RHeO1BIHzRv60Q==
+ 17 Nov 2025 22:36:05 -0800
+X-CSE-ConnectionGUID: pN+XznNrRACiBN2jjwKSWw==
+X-CSE-MsgGUID: Y89YPDNUSVScQRjE6UELnQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="189962704"
+X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="189962651"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa010.jf.intel.com with ESMTP; 17 Nov 2025 22:36:10 -0800
+ by orviesa010.jf.intel.com with ESMTP; 17 Nov 2025 22:36:03 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  "Chang S . Bae" <chang.seok.bae@intel.com>,
  Zide Chen <zide.chen@intel.com>, Xudong Hao <xudong.hao@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 5/5] i386/cpu: Mark apx xstate as migratable
-Date: Tue, 18 Nov 2025 14:58:17 +0800
-Message-Id: <20251118065817.835017-6-zhao1.liu@intel.com>
+Subject: [PATCH 2/5] i386/cpu: Cache EGPRs in CPUX86State
+Date: Tue, 18 Nov 2025 14:58:14 +0800
+Message-Id: <20251118065817.835017-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251118065817.835017-1-zhao1.liu@intel.com>
 References: <20251118065817.835017-1-zhao1.liu@intel.com>
@@ -84,32 +84,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apx xstate is user xstate. The related registers are cached in
-X86CPUState. And there's a vmsd "vmstate_apx" to migrate these
-registers.
+From: Zide Chen <zide.chen@intel.com>
 
-Thus, it's safe to mark it as migratable.
+Cache EGPR[16] in CPUX86State to store APX's EGPR value.
 
 Tested-by: Xudong Hao <xudong.hao@intel.com>
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/i386/cpu.h          |  1 +
+ target/i386/xsave_helper.c | 14 ++++++++++++++
+ 2 files changed, 15 insertions(+)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 9cc553a86442..f703b1478d71 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1544,7 +1544,8 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-         .migratable_flags = XSTATE_FP_MASK | XSTATE_SSE_MASK |
-             XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
-             XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK | XSTATE_Hi16_ZMM_MASK |
--            XSTATE_PKRU_MASK | XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK,
-+            XSTATE_PKRU_MASK | XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK |
-+            XSTATE_APX_MASK,
-     },
-     [FEAT_XSAVE_XCR0_HI] = {
-         .type = CPUID_FEATURE_WORD,
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index bc7e16d6e6c1..48d4d7fcbb9c 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1969,6 +1969,7 @@ typedef struct CPUArchState {
+ #ifdef TARGET_X86_64
+     uint8_t xtilecfg[64];
+     uint8_t xtiledata[8192];
++    uint64_t egprs[EGPR_NUM];
+ #endif
+ 
+     /* sysenter registers */
+diff --git a/target/i386/xsave_helper.c b/target/i386/xsave_helper.c
+index 996e9f3bfef5..2e9265045520 100644
+--- a/target/i386/xsave_helper.c
++++ b/target/i386/xsave_helper.c
+@@ -140,6 +140,13 @@ void x86_cpu_xsave_all_areas(X86CPU *cpu, void *buf, uint32_t buflen)
+ 
+         memcpy(tiledata, &env->xtiledata, sizeof(env->xtiledata));
+     }
++
++    e = &x86_ext_save_areas[XSTATE_APX_BIT];
++    if (e->size && e->offset && buflen) {
++        XSaveAPX *apx = buf + e->offset;
++
++        memcpy(apx, &env->egprs, sizeof(env->egprs));
++    }
+ #endif
+ }
+ 
+@@ -275,5 +282,12 @@ void x86_cpu_xrstor_all_areas(X86CPU *cpu, const void *buf, uint32_t buflen)
+ 
+         memcpy(&env->xtiledata, tiledata, sizeof(env->xtiledata));
+     }
++
++    e = &x86_ext_save_areas[XSTATE_APX_BIT];
++    if (e->size && e->offset) {
++        const XSaveAPX *apx = buf + e->offset;
++
++        memcpy(&env->egprs, apx, sizeof(env->egprs));
++    }
+ #endif
+ }
 -- 
 2.34.1
 
