@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F6EBCED619
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 11:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E52FFCED61A
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 11:25:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLJmC-0006yk-4j; Tue, 18 Nov 2025 06:21:36 -0500
+	id 1vLJpN-0001tc-M6; Tue, 18 Nov 2025 06:24:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vLJmA-0006y4-O0
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:21:34 -0500
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLJpL-0001sr-7d
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:24:51 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vLJm9-0004An-4b
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:21:34 -0500
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-bc274b8b15bso4169503a12.1
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 03:21:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLJpI-00054Q-8l
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:24:49 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4779cc419b2so30215085e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 03:24:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1763464892; x=1764069692; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1763465086; x=1764069886; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=eEeFZx2f/83xQm3ItuB8PrAy+hUwtqLueNCVMYkKF/E=;
- b=TyLXhgypY1jGFlLgEDtnjgFfehFVCGi0K5NRiVwzD2Y/30A+atGRbDNyJaCIHCzS0E
- P95mxuEfY511fhXD1eJ5lrYNdfhTCInOlhjcIQBjDBHmhXeutgusxHWzgdoBjb3/K/F4
- q3Cb91LfcF11x1o/FkrGkFY74qiskfmGjytMwdxd3IuBYB+YYABuqqjiKycUtREWtt0p
- cfP/JW0/O1p/ZH4u2mrY4OfcWY/1ReBm7X80fW7YhzS1zB7lufoJqoCcGfRyWn2iHIMY
- U82DWsyn3nAezz2efmOeJ2mOM/ygGH4NSP8vWiCoy/TIWPYgObNxQqULs8BMtFLAX9fq
- /aqA==
+ bh=bvDpP2IVJJRQ+n2zQy2iI+FpIq3ypH8hVi0ntiSMvg0=;
+ b=BlXDwJBmlh4e1erPAplGd4BU+kD7eHp3QTU7+gb82/N6LQ5ehRJaDlh0qYARH1IdNV
+ Qx8HPYFzaRCbUgt/LtRNklqACFRRnIHiEfkE/yFatxDvy14QZTlL2F+OvcRY+ovPp/e0
+ DN407Ve4dtXa2C9MT6t+a5mSLMq92PbJSND8LepEnVx2clShJ4IYUj2SklfgKi6I2kRY
+ 6OMyixqEWnRFMdCCdwNCt/QGjQXXmpEvzdrH4uIohzwOvYb6yqArTSmwfRsvOyVHSC4y
+ ixTgY8YSEQ6Jyc8oVg5ZhzTG5gHlt8a1Y+sf1/+CGjH/vvANQwiQLYXf4FeZTXdSPz/C
+ M2Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763464892; x=1764069692;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1763465086; x=1764069886;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eEeFZx2f/83xQm3ItuB8PrAy+hUwtqLueNCVMYkKF/E=;
- b=KlPH8oaLy/gRk8z8jGRqugj7MeTgTEaASsRnKC/b0XL87kh3hRwacaNUY0/GA4Zdgd
- 3JYzlDRAmBW2zPbTtDjxdKLOA7r81oFybfe2IHLtr9BAkUZOb3XeHwRG9C/OnlbH8yLz
- sM9qoQ5QWjQbnUiSL7RKhKj5W+VnNF7rtf2mmEfbzbBfVtqWoJX6TE7xb0+gmyeVmuDb
- ByVCJdnDDq5RQrEW7geDX2cq5hQuGTvcFCMLPPlt7MaqdLtOsjE8rpv8Moe/RvqwvUA0
- Zo/aztdlzyJznOk5rjrvpNUvdAu/gO1N3Xq37wp7oTLmEsFAdm30p2TG9ZTXnBMKAiuF
- fuqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWn4wGxxLVncKIxOEPm5wfUr94Z60wQo5B1j0QjKxL+s81VYKEH7SAWGVj6NC4O9l1K75+VpPawwNO3@nongnu.org
-X-Gm-Message-State: AOJu0YxbnLb6KvEF/kOMIY3JyJEjD5Cxs6yVvnjB22UeHmcxFaPWuiJM
- fEGS7Nn2d6rM39+36SxNRe74KsAht38ILmSh4WDCl1dh5cKaZ3t46+sF3EBmgZD50ig=
-X-Gm-Gg: ASbGncvaNb8rJcCGjLm8ZfopsJT4y6WTh3hnoYOBlnGeuEipKzgvmOaH0/X7I5vFDjU
- MupgeGIfaKSYkoiHlAX14h3NRaA7mAqL16YHowf0U21eHHhnYVwethy8fOhSZX30TkQ8cZPHyS/
- Li4PIqpr4m+AWQ7M5X3UN0G+6tihCHu8awk8DDot27aCsR4g+38s1bs8So4CUjk7zna3BuQ9L3x
- uT9pASU0WwGdQlZ//V0LK3Z+RAER/CTLXu2YuZ+Kw8o6lxodLBDWLEnSP2Z2HlH9DSFwIJtDKhP
- O77R2wAQPE9zdxWXBt86MvQ/rR2t8G0switxN6Qp0b1FBx79DNmxxWD76w3mDrEYoiksZeTMOUN
- TwDyxOh5tKQpr42YcIIje0wUmL/6euXiNzEtpNr1xVTmEioIdLUPpJbz85FNhe/vDS6GLuKI1St
- CWbKaO9T/p/s2YT2M=
-X-Google-Smtp-Source: AGHT+IFnAEeyqSW6mkNkFEcHrHc+COd/xnV6wyR1Ho2xai6I7y0V170l1KKW1uJFyPphQJX/rJNkIA==
-X-Received: by 2002:a05:7300:7890:b0:2a4:3592:cf75 with SMTP id
- 5a478bee46e88-2a4abb032a2mr8751494eec.25.1763464891654; 
- Tue, 18 Nov 2025 03:21:31 -0800 (PST)
-Received: from [192.168.68.110] ([191.202.237.26])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2a49db7a753sm56810755eec.6.2025.11.18.03.21.29
+ bh=bvDpP2IVJJRQ+n2zQy2iI+FpIq3ypH8hVi0ntiSMvg0=;
+ b=Qovppo/utpIXh9/ua3t0TihVACE/JQA2efnKhJd8xwRFKE3VGH89htFPINHrfgNpkk
+ pqGRKAQcVfWMnnJgiAXqRlUYVyxO4r134hqtNx7Lx72FYutbBtH0Q7QcHb7aFR5wPgwI
+ KhdpoJFiz2eQc4tQ3gUmgsFxoxSZqtLxQHOyLc9lWb3wYDSiPxYsDMMUI9FyQ1REZLmx
+ hrQKtLzbLM7eskEUr0KzewIUCPOhd/OyozX2OE5zXjx++0tX2/f1Xx8ZPxnxIPviBD5b
+ usk6Rw3IGIReKr0sUGzCDjpBVgUr79caQLa/RlNYeBQKcTgapuDB3tXLUV4d0zNJ2guX
+ uI9A==
+X-Gm-Message-State: AOJu0YwKA5mZ9JDrm/6FXjk2qCC1XHPd+k0BcNeV4RFVxhpfyHcJs06a
+ ARpXwYT3EbhyxrATS+yVKKOYC5U9s6/v0h4QA/64HJda8W5TMM/ROJMrv8iopU9hKq4=
+X-Gm-Gg: ASbGncuHXSQFPejRaXL7yVUivyNqPkSUfiJRwxdT6gFmPt3Xpb87YQWI2FVYJfwHkZz
+ 0zaKayf76w2yG7F0jxyHrTWwJeagXriLzlynNz0nC9SlbTL8A/TkccQYns8mC2BYgwphkf7+vDh
+ b3Es/y3/lYJxYgFhsKwUe3MijbSR6Vlspr6Ma7sskSOQmuwt0xkmJI1V/NG3o3leEBoyfyBVY6c
+ V7WV/zHMe3wi/2ajGosHzDGZyvcmwDzs9ebzz9PwgN9EhldiFrBKMwW21PIjwIJVfzBkYUskf4v
+ qh+N7SRfS4x3liKBcfsBOoaBGLM/HuNxXh+MnkmVAyqddxktftqcm76fLOahSdJmI0qTt0esWwQ
+ EVbrK2G//SfERPbfzTGrpxofndhslhMZpnHhM7d6ZxzMFHF218QhcWdsWt6ocdA3u0hTZFH+Q1G
+ XKnzyJXe48Dbvr6Zr7VcCFvCkDsDIssOX9/D541NwNlJU=
+X-Google-Smtp-Source: AGHT+IE0dHq6LcID9k6G9kb05S9J6cdLFX9bBjgLMeMdCr/xfrlAMZsbAvkfBSPydap974Q4xJywhw==
+X-Received: by 2002:a05:600c:4452:b0:477:832c:86ae with SMTP id
+ 5b1f17b1804b1-4778fe5c755mr136090025e9.12.1763465086396; 
+ Tue, 18 Nov 2025 03:24:46 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4779f44a0e4sm143767415e9.15.2025.11.18.03.24.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 03:21:31 -0800 (PST)
-Message-ID: <b766a87c-1c06-4f28-b5b6-18c3947afd45@ventanamicro.com>
-Date: Tue, 18 Nov 2025 08:21:27 -0300
+ Tue, 18 Nov 2025 03:24:45 -0800 (PST)
+Message-ID: <8a86dfaf-eba5-4348-8885-58c520355e47@linaro.org>
+Date: Tue, 18 Nov 2025 12:24:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/riscv: Rename riscv_pm_get_virt_pmm() to
- riscv_pm_get_vm_ldst_pmm()
-To: frank.chang@sifive.com, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
-References: <20251118105936.2839054-1-frank.chang@sifive.com>
- <20251118105936.2839054-4-frank.chang@sifive.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v3 1/2] hw/arm/imx8mp-evk: Add KVM support
 Content-Language: en-US
-In-Reply-To: <20251118105936.2839054-4-frank.chang@sifive.com>
+To: Bernhard Beschow <shentey@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+References: <20251101120130.236721-1-shentey@gmail.com>
+ <20251101120130.236721-2-shentey@gmail.com> <87v7j8r399.fsf@redhat.com>
+ <CAFEAcA_XORdwONC2YbVKPois6BLPEr0dFt_QjTHE=UWmiCiv-g@mail.gmail.com>
+ <2EAC1B70-89DE-4694-A4E8-350DC6F9C343@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <2EAC1B70-89DE-4694-A4E8-350DC6F9C343@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,65 +108,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/18/25 7:59 AM, frank.chang@sifive.com wrote:
-> From: Frank Chang <frank.chang@sifive.com>
+On 18/11/25 10:49, Bernhard Beschow wrote:
 > 
-> Rename riscv_pm_get_virt_pmm() to riscv_pm_get_vm_ldst_pmm() to better
-> reflect its actual usage. This function is used when checking the PMM
-> configuration for virtual-machine load/store instructions (HLV.* and HSV.*).
 > 
-> No functional change intended.
+> Am 17. November 2025 17:38:03 UTC schrieb Peter Maydell <peter.maydell@linaro.org>:
+>> On Mon, 17 Nov 2025 at 17:13, Cornelia Huck <cohuck@redhat.com> wrote:
+>>> Running current master (resp. with this patch applied), I'm getting make
+>>> check failures on an aarch64 (Mt. Snow) host ("qemu-system-aarch64:
+>>> unknown type 'arm-gicv3'" while using this machine); going back right
+>>> before this patch, everything works fine. Haven't tried to debug this
+>>> yet (maybe I'm the one with the weird config again...)
+>>
+>> Is this a KVM-only config (no TCG) ?
+>>
+>> I think this happens because the KConfig now says
+>> +    depends on TCG || KVM
+>>
+>> but because the machine by default doesn't use KVM then
+>> trying to run the machine with no extra arguments falls
+>> over if TCG isn't present.
+>>
+>> This thing we put in to handle "creation of the SoC object
+>> via device introspection means it doesn't have an ms->cpu_type
+>> to look at":
+>>
+>> +    const char *cpu_type = ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
+>>
+>> also probably won't do anything useful under a KVM-only config.
+>>
+>> I think the simplest thing here is to put the KConfig back to:
+>>
+>>   depends on TCG && AARCH64
+>>
+>> People building a KVM-only config almost certainly do not
+>> want this machine type and its devices, because the main
+>> reason to build KVM-only is because you're in the
+>> "virtualization use case" and want to not build in a
+>> load of not-security-supported machine types.
 > 
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> ---
+> Do we need this treatment for further machines, e.g. isapc, e500, mips? Or shall the CPU type handling in the SoC consider kvm_enabled()?
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   target/riscv/cpu.h        | 2 +-
->   target/riscv/cpu_helper.c | 2 +-
->   target/riscv/internals.h  | 2 +-
->   3 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 8899bf7667a..abc87e64648 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -846,7 +846,7 @@ bool riscv_cpu_is_32bit(RISCVCPU *cpu);
->   
->   bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);
->   RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
-> -RISCVPmPmm riscv_pm_get_virt_pmm(CPURISCVState *env);
-> +RISCVPmPmm riscv_pm_get_vm_ldst_pmm(CPURISCVState *env);
->   uint32_t riscv_pm_get_pmlen(RISCVPmPmm pmm);
->   
->   RISCVException riscv_csrr(CPURISCVState *env, int csrno,
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 112093012b0..40b1e8da471 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -190,7 +190,7 @@ RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
->   #endif
->   }
->   
-> -RISCVPmPmm riscv_pm_get_virt_pmm(CPURISCVState *env)
-> +RISCVPmPmm riscv_pm_get_vm_ldst_pmm(CPURISCVState *env)
->   {
->   #ifndef CONFIG_USER_ONLY
->       int priv_mode = cpu_address_mode(env);
-> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
-> index 9b3f01144d2..b17b661e2a8 100644
-> --- a/target/riscv/internals.h
-> +++ b/target/riscv/internals.h
-> @@ -190,7 +190,7 @@ static inline target_ulong adjust_addr_body(CPURISCVState *env,
->   
->       /* get pmm field depending on whether addr is */
->       if (is_virt_addr) {
-> -        pmm = riscv_pm_get_virt_pmm(env);
-> +        pmm = riscv_pm_get_vm_ldst_pmm(env);
->       } else {
->           pmm = riscv_pm_get_pmm(env);
->       }
-
+Good point. My understanding is only virt x86/arm/ppc64/s390x are
+"security covered", but there is no explicit mention of that in
+our doc. (btw why not include isapc? as it is a subset of other
+covered x86 machines?)
 
