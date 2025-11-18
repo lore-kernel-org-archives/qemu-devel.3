@@ -4,97 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966DECEE336
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 16:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4716CEE339
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 16:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLOJs-0004zC-Ft; Tue, 18 Nov 2025 11:12:40 -0500
+	id 1vLOTR-0003CZ-Ij; Tue, 18 Nov 2025 11:22:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1vLOJJ-0004c1-5x
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 11:12:08 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1vLOJH-0005Tk-Hf
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 11:12:04 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-297e239baecso61575435ad.1
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 08:11:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vLOTP-0003C0-Td
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 11:22:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vLOTH-0006p6-1j
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 11:22:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763482940;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/9novQhfIyE9CF2gPlHGuZnEW68JqugUFyFcO4vDKfY=;
+ b=NW6S+wB7Zw4wdktQJppNK2bEx81jvsoHT6z4v7y1qOwx9qpGvkhZ2ofk38i1tDxkcaEwSm
+ lI7WiAQQuWjmk663I+xeVaEM/jxnWfBKys5QOHLlSTW3KNFjxIKXeNcnmCsfqe3eKo/bVj
+ nyxUpSc6/nTopn21WEjvorrCBhDOD/I=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-602-5dvqpxOLM_GlJq9Zzd8u9w-1; Tue, 18 Nov 2025 11:22:19 -0500
+X-MC-Unique: 5dvqpxOLM_GlJq9Zzd8u9w-1
+X-Mimecast-MFC-AGG-ID: 5dvqpxOLM_GlJq9Zzd8u9w_1763482938
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-42b366a76ffso2858508f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 08:22:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763482314; x=1764087114; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=B/8t6ED9BvS2fPO4jZeW2Yt8HfoNHyuEXKQE1en/NdA=;
- b=CMZi6eyD06rzjMcGGeL9yfMQrSNrInN7+rV4w5InxULSIULGzCyr0MTLGjW3Be9HyL
- vcVMke8EZL7qyxTNgAdGgIL2/PT5Ur3hyM2xtryGnaHWOzRsPoW8JkEw/49y3Eqm7lv0
- WWyf67xjBmp76FxyVJ7lQdfhRlG5RZ8w4d4s1F0/I8fO5jGC/b7sCNgWA73BtGJp0YZA
- SvNN4mKchKtMyUU4tLPokY2UhFzJG9LsKx1ZLNtta+HgGo5luUQau56HYt7Edn220QpR
- 7YKDGJB47MZzWlk4XWFTqJfj67s23Phj74gA7LBZ3shu1qTJMMMbi7XXnC+9ic3swaXP
- URcQ==
+ d=redhat.com; s=google; t=1763482938; x=1764087738; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/9novQhfIyE9CF2gPlHGuZnEW68JqugUFyFcO4vDKfY=;
+ b=gH8K1gifb4Q5UwWpVt4ZtFfFU/Mij49HsL++CC+b0tDGd+Dy+WAKOv+psJV+AA91rE
+ 5kODZrnz8gadrmjVET3r0zqL4lfMsXOfc2geMuprSZkdDnvmdbdHm4dzfI/8g+EPNp2B
+ J+NvsgXdJanWamo7CRWS2cLsARA4nZWOynj9x2zwGEjeV/bFCmnoEfnm2gcr8+VZZwaz
+ t3IXZIHR1P0X+rp+W8IHjxIgMXjgIb4xD73wDeih1PLSsrJab4Aj8Cdm9YyYmVY1uu/6
+ aoOKClxWxnC+Wp0n85Jgvrr0pJtLYXtJjn20tkbCOJFPO2udk3DtTcmrANzg5zG+y6xO
+ qu8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763482314; x=1764087114;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=B/8t6ED9BvS2fPO4jZeW2Yt8HfoNHyuEXKQE1en/NdA=;
- b=FyDdM1fSjyPzlZ9UB2aFKuSJ2xOJdAAndMo9RAg4W70kVRYP1iyqtW/BifUzfjBn5B
- /SpLu9X/yRMXWRVg3QRNU2CuGzUrIlrnwEcUQF25EJ64zPMGML6hASkujzvLfcZl5x19
- Bmdd5Jp4revnMwK5nBXfUJzZjWujq2PjPXabSL2RYJcduEnig63FQSTwDO8wpiyUFHon
- XPYF5zt/gDoX/PmqDY3JqJG84d+u4g5Enzal9xscygmxAOdgq9N3Ssn1kCpRdGUC6eBD
- umiHKa3bEoQZabQ/xcWdhtRximIea3b5PG4c0TG5QH571g3hitDpHKOj7azweuQbJCxe
- HNZw==
+ d=1e100.net; s=20230601; t=1763482938; x=1764087738;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/9novQhfIyE9CF2gPlHGuZnEW68JqugUFyFcO4vDKfY=;
+ b=OJcMl9z8Zfc+0yr7LSI9FACGwn2njYt3NOQNdJh2QM8ni5NiUysNsCtwtBqED5QXKm
+ YTRTUQAtn6qhQo4Dlgr+iREuJldxF3WLJxWNmeSmKAuvpDOQGaLUQSvd+Y2P0763njBN
+ H5qIOvZpNmic6pMC8hCp7bV56OzV2b+PCg19u3t8TBf8RBv38+hZg1hJbU8Q6UO46UfJ
+ EmMipcSR6E/eYAlaawaKTFYTGaEkuSF3wc2UY5/QPKwu+MX9G9JBSmictdZlDE6LCx6l
+ S6VKHZYm8/rvvbMGvUBgRCSzTPltLHdG/wYRgZgnmH8ldj7HAN9sJhFgJvu6RcnwM39q
+ 0v8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWG6Y9Irh6pLw1slqmxUWnnss7RslgHcPGLieez701uGUiQmPSb6m8/pyORPo7MkHBR1bTUcYHZnSeU@nongnu.org
-X-Gm-Message-State: AOJu0YwOjyZpo1al/E6wSdB4k056HCI/znqFVn4ebjr6o++gZyWzhyKB
- FjRP74zRQbSgGXQd3nqGRd6ZkJ3UEgIaYGnSCOQ82/7P4TLt81AMxHc6sEXsYp7j8Kk=
-X-Gm-Gg: ASbGnctKHxYJyn/lYNVb8zf+cShRF6iVjTYi8meFxqLRyuge47s0yJRIcjyIgosN3yZ
- EaeZsNxO8Cm1FzUz8XpN/u44w9QcOUXygIxcv+F0vjHwf7EOY0/BzKfqZc0/IjCO1b1GmHB0+tE
- ve5nK9rMuYe+FT8gBhMbqEOKhl4KfQGrOX8BEfb12BbJguFl1Te0O9e9FucljWlBOmlrEQ3zeI9
- sTBH9j4vE/S+rVcmAbm/AEgle12fpEWctiJYVQruXsktqNHjJ+ZXsBAQxXPqcytmk/smDNGnGcm
- bfIimPohJAlBR69HpHy/PpTMtxg/Ritma3QWwDmnsWQJVgnrtqI6MYSjTEsMOJbwfvpM7ihCq9C
- /Iloi5nv8+0kA3eCCglWyXMsBWfs347lP+FLYoup/JT08wWk0ud50MeNMYhmfgsSnFX1aE5w0Ej
- 0kzRCsJfhsaO6hDOXSLvrLmB4dD2zcwVnLw8Ti8Q1fB2jhro8oJJsj9gtjLq4dtWRIySHkMRxTQ
- AQ=
-X-Google-Smtp-Source: AGHT+IGbsGo69AUJ8pQx7W1HXgKH6BOWjjWBgyOesk+Co6aFWtYMxNSeH6nPpbuLLnqseheivSgf7g==
-X-Received: by 2002:a17:903:2451:b0:294:f6e5:b91a with SMTP id
- d9443c01a7336-29a046f1da0mr256765ad.13.1763482313662; 
- Tue, 18 Nov 2025 08:11:53 -0800 (PST)
-Received: from ?IPV6:2804:7f0:b400:8262:bc80:a9f2:2dc9:3bd5?
- ([2804:7f0:b400:8262:bc80:a9f2:2dc9:3bd5])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-bc375177be4sm15669566a12.19.2025.11.18.08.11.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 08:11:53 -0800 (PST)
-Message-ID: <e54894b2-635d-4c8e-9781-ba0bb4729361@linaro.org>
-Date: Tue, 18 Nov 2025 13:11:50 -0300
+ AJvYcCUSLnGg7KQ9KDWd2oRkGZYzGsIRfA6HCLuhRrjct8TT3CuoyCNoE1Uabh3sIV/b+Y46rJ1In+WZBWPT@nongnu.org
+X-Gm-Message-State: AOJu0YzykEaroNyw/INgB6K2duqYEA1AZXYYUE66Ga4MQ8N7Lkv4UziU
+ is9lwZhwznBOw92cjXrJxjKXngI2ZmdOnTFb7tZfXR/ah9p8Jap+j9wR1Z7n7RhNOw+m7Du0cKx
+ zIYYtxp60fof4mnTKM4OVHHGoKP59G11R3H/mGYkApDwAGqRtgmhS/KC0nvfADUe4fEkgjFohoT
+ o3Qp0Dc9ypa41JncFw9AYLfSATol8KNT8=
+X-Gm-Gg: ASbGnctWcBJzNjCOlte6i9QkFiQpO5o0W0uMvU/s/pkiMXRguwEN6IXHlr97DpQGR6D
+ AYv9cCLfuLiA5HMguM8r9b0K6u+gWLPicYXIy6+md6ATpmgBrBxvHhL0nVralXrit2Q+1ILNTtk
+ eW1QuCCflgF8lIZLgBoUnvSe5tKLhRhU5TkzNl9RsHjDaiNG0C6kgxhb1vYdQP3y3S05FbJt+IW
+ J60wUWfCkkB6t7enZj7JTHYWphaMuFmYXXAo4T1pzSMBCp6Su7O+FvuIPA2G9SXkOvPxYY=
+X-Received: by 2002:a5d:5d0b:0:b0:401:5ad1:682 with SMTP id
+ ffacd0b85a97d-42b5934f412mr14898423f8f.14.1763482937730; 
+ Tue, 18 Nov 2025 08:22:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHy75dS1s2Y9K6pKUkbWAcq4UJ6JDhJgx5hElWTHSgGxdrIxFSKxoOJlRk48nMGfiNfTSdlvJX3JGM0G2omLKA=
+X-Received: by 2002:a5d:5d0b:0:b0:401:5ad1:682 with SMTP id
+ ffacd0b85a97d-42b5934f412mr14898405f8f.14.1763482937342; Tue, 18 Nov 2025
+ 08:22:17 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2] hw/southbridge/lasi: Correct LasiState parent
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
- Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20251117091804.56529-1-philmd@linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <20251117091804.56529-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x631.google.com
+References: <20251028173430.2180057-1-pbonzini@redhat.com>
+ <20251028173430.2180057-4-pbonzini@redhat.com>
+ <cb41dc20-5a87-42b6-8819-08f5a1ee4303@redhat.com>
+ <ebb0ac51-fbf0-4f93-8a9b-12880d2a0126@rsg.ci.i.u-tokyo.ac.jp>
+ <30a9e854-e37b-4494-b372-f76ce6bdce25@redhat.com>
+ <d9db8f08-f207-45b4-9637-9f13a04ab606@rsg.ci.i.u-tokyo.ac.jp>
+ <81072e45-182f-419a-a44e-fca22ed54167@redhat.com>
+ <d4921688-b3b3-45f2-a3c9-dee2977750cd@redhat.com>
+ <889e6be6-0cef-4a23-9d57-2e0611f9588a@rsg.ci.i.u-tokyo.ac.jp>
+ <185927c2-9386-4935-8bfb-64eeb87f06a7@redhat.com>
+ <84bd1674-4a38-4864-9297-fef628b51cb8@redhat.com>
+ <ec0110b7-5d63-481a-8d8f-3eefbe366129@redhat.com>
+In-Reply-To: <ec0110b7-5d63-481a-8d8f-3eefbe366129@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 18 Nov 2025 17:22:04 +0100
+X-Gm-Features: AWmQ_bk-6u3dh64FvO8IawunmZF6BL6quMg1zTdcjtVWGY8x-vExGSxhuz1MBi0
+Message-ID: <CABgObfaCXcNn9jvCqW59fu1Nkoe6z_2AoXr5u6ot=90vUosqaA@mail.gmail.com>
+Subject: Re: Regression with the "replay" test on target alpha
+To: Thomas Huth <thuth@redhat.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,46 +130,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Phil,
+On Fri, Nov 14, 2025 at 7:11=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
+e:
+> > I'll look at it today; if I can't make heads or tails of it we'll rever=
+t it,
+> > yes.
+>
+> Sorry if I missed it, but did you find out anything? ... the test is stil=
+l
+> failing for me, which is somewhat annoying ...
 
-On 11/17/25 06:18, Philippe Mathieu-Daudé wrote:
-> TYPE_LASI_CHIP inherits from TYPE_SYS_BUS_DEVICE, not
-> TYPE_PCI_HOST_BRIDGE, so its parent structure is of
-> SysBusDevice type.
-> 
-> Fixes: 376b851909d ("hppa: Add support for LASI chip with i82596 NIC")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/hw/misc/lasi.h | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+It was failing and when I started debugging it, it fixed itself. :(
 
-oh, right :)
+I did pin it: 1) to the _recording_ side. That is, the broken
+recording cannot be loaded by a good QEMU and a good recording can be
+loaded by a broken QEMU; 2) to the write of the WAIT system register,
+which is where the CPU goes to sleep and never gets the event to wake
+up.
 
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+The reproducer is
 
+./qemu-system-alpha -display none -vga none -machine clipper -serial
+stdio  -kernel kernel-alpha -append 'printk.time=3D0 console=3DttyS0 -net
+none -no-reboot -nodefaults' -icount
+shift=3D9,rr=3Dreplay,rrfile=3Dreplay-bad.bin
 
-> diff --git a/include/hw/misc/lasi.h b/include/hw/misc/lasi.h
-> index 04312d0b589..0e95be1c32a 100644
-> --- a/include/hw/misc/lasi.h
-> +++ b/include/hw/misc/lasi.h
-> @@ -13,8 +13,8 @@
->   #define LASI_H
->   
->   #include "system/address-spaces.h"
-> -#include "hw/pci/pci_host.h"
->   #include "hw/boards.h"
-> +#include "hw/sysbus.h"
->   
->   #define TYPE_LASI_CHIP "lasi-chip"
->   OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
-> @@ -63,7 +63,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
->   #define LASI_IRQ_PS2MOU_HPA 26
->   
->   struct LasiState {
-> -    PCIHostState parent_obj;
-> +    SysBusDevice parent_obj;
->   
->       uint32_t irr;
->       uint32_t imr;
+Also, I wrote a patch to add trace events for instructions written to
+the replay stream, which I will send.
+
+Paolo
 
 
