@@ -4,85 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE101CED617
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 12:31:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A91DCED617
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 12:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLKrq-0001Yk-8j; Tue, 18 Nov 2025 07:31:30 -0500
+	id 1vLKxW-0002uc-Sa; Tue, 18 Nov 2025 07:37:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vLKrj-0001Xl-TS
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 07:31:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vLKxU-0002uQ-N9
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 07:37:20 -0500
+Received: from mail-westus2azon11012053.outbound.protection.outlook.com
+ ([52.101.48.53] helo=MW6PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vLKri-0006iX-7U
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 07:31:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763469080;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eoeyg8fcjbOiKJDcscOU2D+OfGqbj8Jwb656PRkl3eY=;
- b=FQoSTRQVq+teHziwyBH3HoU9PVoxqCSQwPZqKYp5H6ESmZLrlgf7NZMvyH7Xu335oCWRrC
- memYAxTt5UnSfjgMxd+Go4rr7YixTcDzOojWYXwocqd1l5mBR21yQaPHHP3vJfq5UHT5NJ
- Fn5wiCePyMuHPxp8iB5xVP4C18iCF5w=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-605-c4QMgtWYMeeAtXiSi5TTJA-1; Tue,
- 18 Nov 2025 07:31:19 -0500
-X-MC-Unique: c4QMgtWYMeeAtXiSi5TTJA-1
-X-Mimecast-MFC-AGG-ID: c4QMgtWYMeeAtXiSi5TTJA_1763469077
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A675B1801230; Tue, 18 Nov 2025 12:31:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.53])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D0517180047F; Tue, 18 Nov 2025 12:31:14 +0000 (UTC)
-Date: Tue, 18 Nov 2025 12:31:11 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v3 1/2] hw/arm/imx8mp-evk: Add KVM support
-Message-ID: <aRxnDwwaww8tjMqh@redhat.com>
-References: <20251101120130.236721-1-shentey@gmail.com>
- <20251101120130.236721-2-shentey@gmail.com>
- <87v7j8r399.fsf@redhat.com>
- <CAFEAcA_XORdwONC2YbVKPois6BLPEr0dFt_QjTHE=UWmiCiv-g@mail.gmail.com>
- <2EAC1B70-89DE-4694-A4E8-350DC6F9C343@gmail.com>
- <8a86dfaf-eba5-4348-8885-58c520355e47@linaro.org>
- <6e77db29-fb0a-7beb-3cb6-5ab14b3a86cf@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vLKxS-0007gL-Fr
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 07:37:20 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pOqM/S8ksxNUvtHKILA3m/oE1S45r3AJyo+0ht2KIJAEosdF4ACrIazYcs+SXLryxhhkjlqJCxfUr8rOcpgfnPLK6MqOC5rqITaalSHVl1CNdXntusUrJ1eAdcsrqCv3uUP1eJHmYoQlWTSLUu7JXN19BSRSrnqcsO2kffd1+wh2lEkxVZSr8XZBaOVkAgmAI4M/0fqPg4n8bn2gQYj13rWGCS0/n151br0ko5r6iG7qZDpG4isSddjfLC1xzgu3MI49GQUbmACZVbxokNoUUVkSHY3mAgdYV2kEmEzJsAIC13XUWIFYhqA+Awqs3oV8BJNgdC0iUFMN+BQbPK3UXw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9nzBm59hXInc98D9dRi2IzZbznHW239oFAezg+BcWQg=;
+ b=IZ30E3hDm8WQhF4zbp+kA63dnfuBu/4zLqeOEQvszZLnrEyMsFIVXyj0bQ/2Rk8nVJwATTE+WI3GYA8vUmT1TMmmsafmpoVlWiVvjljqD4jPnTDhlAh+bTAPRH++JFKudCHYq0oiOreMXKoCQ3HGvC0WQXJT4n1l8Im3S1Q2BN3wP03lpO9c5laPtiMH5WdPEpsSU3hpDJl7YPBXcnj1LwmGIVKQq8ZyDRXKuFTGAt8HfKFChco0j2DBuMbSywABUzm5OFkIYzA81abLz/CF4rM2J0f/mPksXFHv3iMek5EGBVrvCAOj0G6s983X2pZiOCGmesidgP48xv2d1EmByQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9nzBm59hXInc98D9dRi2IzZbznHW239oFAezg+BcWQg=;
+ b=svvT/yO25gzGlnkJ72TMrXevFSETAGB2Isu33OcUZNGa3v5AmmSHRAeQ53Q/e8g1TMfSCwCBP2QQqhRp8YUuNMHn5iIoZ/oEcCYUtE+ex8XA2gUwVRwBY/rWQRl50B3ofv0t0mv4ql7/naji7+M0aBqUMadyAv6WAELIyCcTC+M=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from IA1PR12MB6435.namprd12.prod.outlook.com (2603:10b6:208:3ad::10)
+ by CY5PR12MB6130.namprd12.prod.outlook.com (2603:10b6:930:26::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.22; Tue, 18 Nov
+ 2025 12:32:11 +0000
+Received: from IA1PR12MB6435.namprd12.prod.outlook.com
+ ([fe80::273a:80c9:35fc:6941]) by IA1PR12MB6435.namprd12.prod.outlook.com
+ ([fe80::273a:80c9:35fc:6941%3]) with mapi id 15.20.9275.015; Tue, 18 Nov 2025
+ 12:32:11 +0000
+Message-ID: <e04a19fb-73bb-471f-94d9-df9b1d08d6d4@amd.com>
+Date: Tue, 18 Nov 2025 20:32:04 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v4] virtio-gpu: use consistent error checking style for
+ virtio_gpu_create_mapping_iov
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: alex.bennee@linaro.org, odaki@rsg.ci.i.u-tokyo.ac.jp, mst@redhat.com,
+ cohuck@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org,
+ Ray.Huang@amd.com
+References: <20251117105104.258513-1-honghuan@amd.com>
+ <9f547fbe-ea57-4784-9e37-f79b52b551a9@collabora.com>
+ <87bjl0pzeq.fsf@pond.sub.org>
+ <ed8fd731-8e47-4282-9439-00e6c367b672@collabora.com>
+Content-Language: en-US
+From: Honglei Huang <honghuan@amd.com>
+In-Reply-To: <ed8fd731-8e47-4282-9439-00e6c367b672@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR01CA0131.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:40::35) To IA1PR12MB6435.namprd12.prod.outlook.com
+ (2603:10b6:208:3ad::10)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6e77db29-fb0a-7beb-3cb6-5ab14b3a86cf@eik.bme.hu>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB6435:EE_|CY5PR12MB6130:EE_
+X-MS-Office365-Filtering-Correlation-Id: c1ce52ab-58bc-4e3f-070e-08de269e7ed2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?RFVpWnlmZUF4cEpxcklXR2JjNUdsUFU4ZC9lUG5VMkxLc0Rta28raTlWb3Nr?=
+ =?utf-8?B?dTlrbHltSTdWK2ROK254VnB4WTEvb083aGdTZVppNVlxQzVBRi9QQS9ZSnpx?=
+ =?utf-8?B?MXdpbjdsWkpCTCt6S3RnRTNzcVJ0dkRya1QvRnprQllXR09WaTJacitocWI4?=
+ =?utf-8?B?WUovQ2xmemZ5UUMvd2g0RU1UU1U2VklRNEFtWm5wakNnRThJQjY1a3lwR3Az?=
+ =?utf-8?B?VVltL2pjZi84bk16b0dDZHJnRE9yd3VySlF4NHl5alJDV0RkK3llS3JxWTFi?=
+ =?utf-8?B?RU5IaEE1OHg2TnAzbmloT3hzdUEzQUFRZVB6UC9wQkd6b3ZYQk5nbkdOcnBu?=
+ =?utf-8?B?eXlwUjVObnN5bnVVZTRRMndkK0h0V0xpQ0t4UUJHZS9RMThYS2VYeHFIaW94?=
+ =?utf-8?B?cDlBNGpqYnp4MTBpeG1EYzBBWGVSclJ1S3lYWXhrOVNBNlIvdlNPVWJNcEFP?=
+ =?utf-8?B?MzdQRDBwcnhZTDNuYU5HaHFyRlhrcW9lWFdIOTVraytIOVhjWG9aWHlmcmgz?=
+ =?utf-8?B?ZU9mZE5EczZWRGwzY01XMUJVdnJRRTlabUNGdXZ6YVJneVdpemt6d0dwRkQ4?=
+ =?utf-8?B?S2FKaDlVWjliOWdaY0hFUkNBbUc5WjJtOU10L0V0VmNiU3NtTmVPZEdKMDIz?=
+ =?utf-8?B?N25SaE41eHpvQ3J1OTd6Vmp3cmdEdUg3YUlFZEJKOWxGQlJlS3pzdkNaRWpt?=
+ =?utf-8?B?ck5HRGFPUXQ3M0d4c2pxMk1WaXgzbnM3MGs0dWsxMm1WY0dlUm1JV1R6d2lB?=
+ =?utf-8?B?Y056RjA4WDdmNmZrYUd6NWFDeFlzR0IzUFZFRW0zQmlWdFE5cDFabTl2Mnh2?=
+ =?utf-8?B?UlJkWnhEaGlHVmo4U3Fwb2Evc3YzVHJFSTNQdWFGTk1mTFRJWHMvZ3h0bkxr?=
+ =?utf-8?B?MmNLV0l2ZmpxMVY3dHd1VzV6ZEU5S3I1Z0RCb3dYSEFVcmc1VG1IRG5sQnhC?=
+ =?utf-8?B?cWo3OTRLaThEM0I1TmkvWXRpZUZWd2ZadzIrUVpTM28zb2hhYVBpU0c0c2RH?=
+ =?utf-8?B?eU5qVlNuZW9BNTVKbzl1Wi80TlorckNmL0xtWmNmSzhpRys5WkZ4UlE0NzRu?=
+ =?utf-8?B?OXlaYkNkWDhYbUR0dHBnbU1XcUkrczJJZ2tlckRqUnJrUUEzS29JY2tXRXBW?=
+ =?utf-8?B?K2ZULzB2U1NGY1JkSFZnbFNsakhZM1lEWis1RlZvT01VcmJXMEFUdy9JcUhq?=
+ =?utf-8?B?TjVNbFFLaExyeHYzOGdNK0ZrVGc5aGxCUERiVVJLeTljQ3RyUWhuUjFjRm5H?=
+ =?utf-8?B?S1d5RzRIdlM0QXBsZy85dHd6Y1VuTVE3eW41T3diOEVqZW9OWjJ5NWgwNGMw?=
+ =?utf-8?B?dkVUelVVcDV3RGR6VWRTSDcvTXdIV1lSb2Q0RmJQdVdEak91R1RxSlR6Zkd1?=
+ =?utf-8?B?d1JzOE5idFUwZzFyOE90SStESTJrelNjN0Y0Q0FnSkc0enNDdE10MmhDN01R?=
+ =?utf-8?B?MVMrd3puMnpzUGtldGNCK1VGeG80VmJIcWlyVzVJQzY5MmlJTjhFdmVERkRj?=
+ =?utf-8?B?TUs0YWgwYTgwODNZTVJhbFNkTTh6MDZ2Wm5TNVFtcm43MVFOM0FobnRLRTE5?=
+ =?utf-8?B?aTlIcFIvdDZRdUsyTm00cGNjdUd6VlQ1dHFaNXdYb1dWNjl1MnZWaWZhMUVr?=
+ =?utf-8?B?bVFucG15WENqMWFSQko0V0dxdEtOcU5tbVcwNGJ2RGlZS1NWRjhhT1hiZ29T?=
+ =?utf-8?B?L2hlMjNpQnh6cmdFZG5YRll1QlFmQ3lCZ09sZjYrb1BsVWJDWkttTmpMYVB1?=
+ =?utf-8?B?bVFXRDBtTUV4ckhsUWUzOWZQYWFXaGh0OVdBaDdHb1FyQ1ZTOW81NzNYY3FO?=
+ =?utf-8?B?QXNKWVdnQzhCMzNvUWlSbXYxQ1lONG1kYitaQ0NQZ3JFNDg4Q1RmZUg5RDla?=
+ =?utf-8?B?dnNpbWQxNXdibytqU1R1R1RBbzNDWi83akxUaUhwUVc0RldwckZIZGlLUUZz?=
+ =?utf-8?B?a2dGbHowd2ZRcUJBakNvRko1TE9yWVhzZWM5OUNaSmpZL1hJTml1bG95Mnpq?=
+ =?utf-8?B?ZlJBeGxmT1VRPT0=?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR12MB6435.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(7053199007); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Skd3QkJVY3h0eG9oU01iUURSeDl5NjFFc3lUeTZoNXRMVjZYbFNyVXdpRjJq?=
+ =?utf-8?B?eXVrOUQ4eXVZUzl4c1RiV21Db3ZGNHpMZFNlUkZGWkxmVHY4M2h4UEZKOEFu?=
+ =?utf-8?B?Zyt3M2lZbXpvUXVPdEN4bmVaNmEwQWdkNitCaTA1blZBMW41YnRVU2M1WS81?=
+ =?utf-8?B?ME8yL0xYdXFYTmw4MnYyMjJ6M0FBVVdPMjNMaGpaNEhtMXdGWG5DNzNyQmhB?=
+ =?utf-8?B?a1Q2ajhQUmR0ejZmN2VKeWN5VnRsSExSSFB2ZFdZZHZGVHZuOHRkVWZ4RnJN?=
+ =?utf-8?B?L0FOa2gzSlZxdm1nMm1DVU4xQUEwVnB2bmtZdHM1cnFjTlNjNXpVOU51NitM?=
+ =?utf-8?B?aU12SGRJREY0dERlL3AzV2FuYWRPMGZ3RUFVV2ovbW43QVZpWmdkMXcxZkZv?=
+ =?utf-8?B?eTFEd0dIZ1hwZ1VkT1RqRFR3Q2VvTmIrNHM2eEhwNGUycmNtQ05qL1Nnemtv?=
+ =?utf-8?B?M3h0eXNjSmxCck1jSU5oOVEvVjJ4dStHYVpZTU45UVhXOGpHV0E4UkpjQ3RV?=
+ =?utf-8?B?cVAzOVdpYVpUVkVUR201WEtNNmZ3TWMvK1RnemlRNzJFNjZ2MEpUTVhlUWJS?=
+ =?utf-8?B?NlhMNzFwaCt6N0VML0FRWW1TSW1jZnVCWERod3FFeHhUY1N2Z2czbXBEMVBz?=
+ =?utf-8?B?emsvdzJWU1R2am1zMm5FS1NIUkhiWjNyZmRKeGRxOTd3UnRKL0hmSlRubzc5?=
+ =?utf-8?B?VldwdFF0MHdxZHZPMVRMUEJvbWpaNktXNnE3dXIwVXFGUnM1ZVRnc2hRNVBZ?=
+ =?utf-8?B?Y0dIc3FobmV3ZGVwbWFLRldhR1NRaXNhMk1lRFFZYmhwNUV3eE9tOEFCNjA1?=
+ =?utf-8?B?akQzK3NNNHZFeWpiTkNDYWRUd3FzQkxSaGcrTDIrT2F6Q1NseUlaOUFzVU11?=
+ =?utf-8?B?djgxT3dDMXY4NlRjWmhnYmRqUnRvc2o4aUNZZkdzSGRyWCthbi9oOUx5YlhT?=
+ =?utf-8?B?bVlrbTV1eXJReGFxR1FJeHhEVERVdHAyNmp3MVQwR2UvOXFBNEVRL2Y0N01L?=
+ =?utf-8?B?YnlzK1ZBVytiRzZ2Z3RtZ0RwRVpLT3o1S29vR1ZtMllqa2s3YnMwcUl4OWsy?=
+ =?utf-8?B?U2d1bGp0UE9CU0M1RE8rbnFCSkpKZjJpYnhrYWhSaUg0N1RNcWxQV0k3bCtF?=
+ =?utf-8?B?bXQyVGhEaG42OU5KVEFKU1FtNndLcGJjMXN2ZXhqUW91UVJqeTc2OEJFWWFj?=
+ =?utf-8?B?WlJXNWNZNjNGYlJOc2s2bWZpK044cnpLNEVhUElTNFNnVjFIbXlqTmxaNlBo?=
+ =?utf-8?B?aE1yMWdOVzhaTmE3ekdTQzBWYVAzaWpJOUE3cWxiTElQTmhDb1Yxa0Rycloz?=
+ =?utf-8?B?UytycE9Pb3kxeE8wc3crV0lOVlQxaklzSG81QjE2RXB1RHRvOG0xMTZGT2VY?=
+ =?utf-8?B?RGMxUGhwcnBaWkx5VnkvZU9nTHZHR2wxTWVQZWptZHJmbFhmYks0U3FwRDFR?=
+ =?utf-8?B?eFBIc1g5S245eEVSV3NEdHZBbUxEVlEwc0hGdVBqRy95TThvZ3dDQ2Z4S3lR?=
+ =?utf-8?B?VWFCRnkyTHhvQWNZUWEyRmlBTldqODJpVWFvVmE3TWViMDVmbmxSOTZjc2Nw?=
+ =?utf-8?B?VWNnU1g3cTN1cDM0ckJDbFhUQm50REsrYjRoR3B5SjM4RFdGZlk4WWxKRlln?=
+ =?utf-8?B?dTBIS3BhTC9XOTRJNkFDWVBwSUVFL1haMGIydFdjbXpLamJEUk9sbmdWdVB2?=
+ =?utf-8?B?eGFoME9wUHJLK2dpcTFhdUxtUTRxNkd5TVFXYUM3MEwzRzhWK1FnTFY1T1pX?=
+ =?utf-8?B?VWd4OTVPcit4Uzc5VEhQbGNVTmc4SFowV3FEcjhsVWp6OWVnelIvbEgrZ0xR?=
+ =?utf-8?B?QUVHWVJnTE4yVFJrc01jNlVuNUxXdGtzcy8wYjk1Wjk5QlE2Q2JzY1FnN3Ax?=
+ =?utf-8?B?c1lxZDdLOW8rdGFOVnJQeHF5NUljak9DVXh1QzYvdDl3V0lzNm9ZRWg1ZWZG?=
+ =?utf-8?B?SXlkWm1LVUQ4SlpoU2VEcEs0TFNodHl0QlQwczA2ZUNHM3RWcW9XYmREZTBi?=
+ =?utf-8?B?UlI5czdScHoyelQrczZOYWtiek9EL2Q3WlR6Y2NEQUpjdXRxbzJZNU9jc2dZ?=
+ =?utf-8?B?czU5Yzd0UDZoR1FrcWxNVlhsNjlhbTJBVEdtdms2bTRwMGd6K1BkckVlK1NG?=
+ =?utf-8?Q?mbSCiKReJjXVU+E2ZltMlwc/G?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c1ce52ab-58bc-4e3f-070e-08de269e7ed2
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6435.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2025 12:32:11.1437 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: rRvY2nZZgaVEdRlnlNyAzmxFsCC6wmZAlEP/zlYCMGWpAyFIWOEF9hjuL3bbVlQivZnXjgSSQekFzLQ6P36GAA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6130
+Received-SPF: permerror client-ip=52.101.48.53;
+ envelope-from=Honglei1.Huang@amd.com;
+ helo=MW6PR02CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,80 +182,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 18, 2025 at 01:25:23PM +0100, BALATON Zoltan wrote:
-> On Tue, 18 Nov 2025, Philippe Mathieu-Daudé wrote:
-> > On 18/11/25 10:49, Bernhard Beschow wrote:
-> > > Am 17. November 2025 17:38:03 UTC schrieb Peter Maydell
-> > > <peter.maydell@linaro.org>:
-> > > > On Mon, 17 Nov 2025 at 17:13, Cornelia Huck <cohuck@redhat.com> wrote:
-> > > > > Running current master (resp. with this patch applied), I'm getting make
-> > > > > check failures on an aarch64 (Mt. Snow) host ("qemu-system-aarch64:
-> > > > > unknown type 'arm-gicv3'" while using this machine); going back right
-> > > > > before this patch, everything works fine. Haven't tried to debug this
-> > > > > yet (maybe I'm the one with the weird config again...)
-> > > > 
-> > > > Is this a KVM-only config (no TCG) ?
-> > > > 
-> > > > I think this happens because the KConfig now says
-> > > > +    depends on TCG || KVM
-> > > > 
-> > > > but because the machine by default doesn't use KVM then
-> > > > trying to run the machine with no extra arguments falls
-> > > > over if TCG isn't present.
-> > > > 
-> > > > This thing we put in to handle "creation of the SoC object
-> > > > via device introspection means it doesn't have an ms->cpu_type
-> > > > to look at":
-> > > > 
-> > > > +    const char *cpu_type = ms->cpu_type ?:
-> > > > ARM_CPU_TYPE_NAME("cortex-a53");
-> > > > 
-> > > > also probably won't do anything useful under a KVM-only config.
-> > > > 
-> > > > I think the simplest thing here is to put the KConfig back to:
-> > > > 
-> > > >   depends on TCG && AARCH64
-> > > > 
-> > > > People building a KVM-only config almost certainly do not
-> > > > want this machine type and its devices, because the main
-> > > > reason to build KVM-only is because you're in the
-> > > > "virtualization use case" and want to not build in a
-> > > > load of not-security-supported machine types.
-> > > 
-> > > Do we need this treatment for further machines, e.g. isapc, e500,
-> > > mips? Or shall the CPU type handling in the SoC consider
-> > > kvm_enabled()?
-> > 
-> > Good point. My understanding is only virt x86/arm/ppc64/s390x are
-> > "security covered", but there is no explicit mention of that in
-> > our doc. (btw why not include isapc? as it is a subset of other
-> > covered x86 machines?)
+
+
+On 2025/11/18 09:48, Dmitry Osipenko wrote:
+> On 11/17/25 16:22, Markus Armbruster wrote:
+>> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+>>
+>>> On 11/17/25 13:51, Honglei Huang wrote:
+>>>> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+>>>> index ed5ae52acb..ea2928b706 100644
+>>>> --- a/hw/display/virtio-gpu-rutabaga.c
+>>>> +++ b/hw/display/virtio-gpu-rutabaga.c
+>>>> @@ -466,7 +466,7 @@ rutabaga_cmd_attach_backing(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
+>>>>   
+>>>>       ret = virtio_gpu_create_mapping_iov(g, att_rb.nr_entries, sizeof(att_rb),
+>>>>                                           cmd, NULL, &res->iov, &res->iov_cnt);
+>>>> -    CHECK(!ret, cmd);
+>>>> +    CHECK(ret >= 0, cmd);
+>>>
+>>> virtio_gpu_create_mapping_iov() doesn't return positive values, don't
+>>> see how this change improves anything. You now saying that ret > 0 is
+>>> okay, while it shall never happen.
+>>
+>> Please see
+>>
+>>      Subject: Re: [PATCH] virtio-gpu-virgl: fix error handling in virgl_cmd_resource_create_blob
+>>      Date: Mon, 17 Nov 2025 08:49:42 +0100
+>>      Message-ID: <87ms4lrtd5.fsf@pond.sub.org>
+>>      https://lore.kernel.org/qemu-devel/87ms4lrtd5.fsf@pond.sub.org/
 > 
-> Maybe because you can't run isapc with KVM because it's limited to Pentium
-> but 32bit host support is removed? Or should we keep the ability to run it
-> with newer CPUs for KVM?
+> It's a rather common bug when errno isn't negated by mistake and a
+> positive error code is returned. Ignoring positive values when they
+> aren't expected opens door to unnecessary problems, IMO.
+> 
 
-32-bit host support removal is irrelevant. We still fully support 32-bit
-guests, and they can use KVM. It is upto the user to disable the LM CPU
-flag if they wish to, though it shouldn't matter because if the OS running
-on isapc is that old it'll not even look for the "LM" flag to begin with,
-and so the CPU will never get switchd into 64-bit mode. 
+How about apply the v2 or v3 firstly to fix the 
+virtio_gpu_create_mapping_iov() block issue in virtio-gpu?
 
-Note, a run of ./configure' with TCG disabled only is NOT claiming to be
-providing a minimal virtualization build. It is simply discarding TCG.
+I will create another thread for the `CHECK(!ret, cmd);` thing in rutabaga.
 
-If people want a minimal build, they're expected to customize the
-KConfig files to suit their needs.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Regards,
+Honglei
 
 
