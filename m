@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CAB8CE8D6B
-	for <qemu-devel@archiver.kernel.org>; Mon, 17 Nov 2025 22:54:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32757CEBF61
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 01:49:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vL86I-0004J0-Km; Mon, 17 Nov 2025 17:53:35 -0500
+	id 1vLApv-0003Qj-KR; Mon, 17 Nov 2025 20:48:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vL86F-0004Ie-Vv
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 17:53:32 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vLApt-0003QO-Sn
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 20:48:49 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vL86D-0005hE-3I
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 17:53:31 -0500
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AHMrGm2014938
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 18 Nov 2025 07:53:17 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=xTd+F72y/EJGy+yOoAdShSygA7ECXF/Mec+8GssCCkI=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1763419997; v=1;
- b=OMB0YTgw24GscRF2Erm6XSGnjlSO6va/13b/s63CYsxXy0QwDWdwvzC3OxO6SmoH
- VTUQEy8HhGuGji5p4rNYRJDXezfGUwZVzltLYDmRJKQEMQ1uNAShcyjbNgFiK+TU
- 54nX77WkLGgFv3Vu8oynPbVKEQSWf0VPN3MJ7yLJszjBTPP2FXWvcSELxR/BNx4c
- sVmajG0A3aQ3uDtMnPKyBqka0RkxmFtgqwHiYzkSKCPWPQus+5z1XmaUN7Bgb3/z
- LLBVuxMgj5ZQYOtamUPGGGG19I5Dk2y7JkOKfsGuWf7VKgUrxVVQSOJVhOB1AaVg
- PLdAwHceQyORbLzJHEMmcw==
-Message-ID: <692cdc87-a384-42ed-bd97-843a936a5bcb@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 18 Nov 2025 07:53:16 +0900
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vLApr-0006gI-JE
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 20:48:49 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1763430510; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=C+nnhV/ItjYrqBrKypYb0KbMwSEtAl1ujqYMhOxoMS7nDsxhqj4NEcC6Q6aKgj7XTA9Zn3mJHmSgFzhxttlNeOBPoatXB4RfT23zw4Mqr7Z/JTPbYdeUweH4OJ0QN3s++sSQRGs4tSqoWSpfbNd1OgjHCGYeGI/I65RtDeVPW/4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1763430510;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=CHE1gWTJDWNJjK/QyOPKNfiNtCAf3WNT+GMueWfkwOM=; 
+ b=IFtN6Xcwl0p8jNIpQZaEOXHG+IpiYyfgR6p4OPqpdnffU801y3jawHJLC6px/9K30rmuO4Tn/uMEpjE1ZSSIGeJQk5xRGROdvgO/74eY6ZUGAbuVzWER7c9SwjcrElgvqYgiF0Rqas0Y9n/kMuruSMbTpPFlqK8eMlrMC1hPcoU=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763430510; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=CHE1gWTJDWNJjK/QyOPKNfiNtCAf3WNT+GMueWfkwOM=;
+ b=dx1z4mHo3etO3Bm60Auq8dlIiEluvLUmNPdQ7BrPYRFEbaAIgxLVYnv+SsWZdZNY
+ qDDSMzQlGlfxvu5djM89hlbaSH6N+5ETsxsnYit8ECDwK2STIuMBioL36GBEuhNtsCg
+ R4FbbWutM32SLmmn87v4fsQPvZ5TWDMrMWS/OqY0=
+Received: by mx.zohomail.com with SMTPS id 1763430507995190.46182993313073;
+ Mon, 17 Nov 2025 17:48:27 -0800 (PST)
+Message-ID: <ed8fd731-8e47-4282-9439-00e6c367b672@collabora.com>
+Date: Tue, 18 Nov 2025 04:48:23 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] rcu: Wake the RCU thread when draining
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <b419584d-f1af-4c05-81a6-35f533e8ff37@rsg.ci.i.u-tokyo.ac.jp>
- <aQ0Ys09WtlSPoapm@x1.local>
- <5279f15f-bf46-438e-9c1f-0873b08b59e7@rsg.ci.i.u-tokyo.ac.jp>
- <aQ37hd0fVJltYtt-@x1.local>
- <5002e5b4-0493-4dff-af11-402cebecbcc2@rsg.ci.i.u-tokyo.ac.jp>
- <aRYPXh_9m5ZvTi2w@x1.local>
- <ded7ef38-8c99-4d37-87b2-2f5ba1dc93fc@rsg.ci.i.u-tokyo.ac.jp>
- <aRdLFwxzJwjsXFpY@x1.local>
- <a8c03d1e-a3f4-40de-a633-7b15ec2288e3@rsg.ci.i.u-tokyo.ac.jp>
- <3c3ad5f1-37ac-4c4b-93c4-ca67b5a1edef@rsg.ci.i.u-tokyo.ac.jp>
- <aRtQbzMifFW3BejM@x1.local>
+Subject: Re: [v4] virtio-gpu: use consistent error checking style for
+ virtio_gpu_create_mapping_iov
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Honglei Huang <honghuan@amd.com>, alex.bennee@linaro.org,
+ odaki@rsg.ci.i.u-tokyo.ac.jp, mst@redhat.com, cohuck@redhat.com,
+ pbonzini@redhat.com, qemu-devel@nongnu.org, Ray.Huang@amd.com
+References: <20251117105104.258513-1-honghuan@amd.com>
+ <9f547fbe-ea57-4784-9e37-f79b52b551a9@collabora.com>
+ <87bjl0pzeq.fsf@pond.sub.org>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <aRtQbzMifFW3BejM@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <87bjl0pzeq.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,39 +85,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/18 1:42, Peter Xu wrote:
-> On Sat, Nov 15, 2025 at 11:59:01AM +0900, Akihiko Odaki wrote:
->> This is wrong. The following can still happen:
->>
->> call_rcu_thread()                |
->>   qatomic_sub(&rcu_call_count, n) |
->>   (sets rcu_call_count to 0)      |
->>                                   | call_rcu1()
->>                                   |  qatomic_fetch_inc(&rcu_call_count)
->>   qatomic_read(&rcu_call_count)   |
->>   qemu_event_reset(&sync_event)   |
->>                                   |  qemu_event_set(&sync_event)
->>   enter_qs(false)                 |
->>    wait_for_readers(false)        |
->>     qemu_sem_timedwait(           |
->>      &sync_event, 10)             |
->>
->> I'll fix it with the next version.
+On 11/17/25 16:22, Markus Armbruster wrote:
+> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 > 
-> Please take this as an example of why I think these orderings are very hard
-> to make 100% accurate.  Consider when someone else who is less familiar
-> with the rcu code and may mess up with some of the orderings without being
-> noticed.
+>> On 11/17/25 13:51, Honglei Huang wrote:
+>>> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+>>> index ed5ae52acb..ea2928b706 100644
+>>> --- a/hw/display/virtio-gpu-rutabaga.c
+>>> +++ b/hw/display/virtio-gpu-rutabaga.c
+>>> @@ -466,7 +466,7 @@ rutabaga_cmd_attach_backing(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
+>>>  
+>>>      ret = virtio_gpu_create_mapping_iov(g, att_rb.nr_entries, sizeof(att_rb),
+>>>                                          cmd, NULL, &res->iov, &res->iov_cnt);
+>>> -    CHECK(!ret, cmd);
+>>> +    CHECK(ret >= 0, cmd);
+>>
+>> virtio_gpu_create_mapping_iov() doesn't return positive values, don't
+>> see how this change improves anything. You now saying that ret > 0 is
+>> okay, while it shall never happen.
 > 
-> That's also why I personally liked a sem because the important thing here
-> is not missing an event, which sem always guarantees as it doesn't have
-> resetting at all.  Then we can be open to false positives on events as long
-> as keeping it as minimum as possible.
+> Please see
+> 
+>     Subject: Re: [PATCH] virtio-gpu-virgl: fix error handling in virgl_cmd_resource_create_blob 
+>     Date: Mon, 17 Nov 2025 08:49:42 +0100
+>     Message-ID: <87ms4lrtd5.fsf@pond.sub.org>
+>     https://lore.kernel.org/qemu-devel/87ms4lrtd5.fsf@pond.sub.org/
 
-It doesn't matter if it is a semaphore or event in this case. You can 
-simply drop qemu_event_reset(&sync_event) here and the situation will be 
-same for both event and semaphore.
+It's a rather common bug when errno isn't negated by mistake and a
+positive error code is returned. Ignoring positive values when they
+aren't expected opens door to unnecessary problems, IMO.
 
-Regards,
-Akihiko Odaki
+-- 
+Best regards,
+Dmitry
 
