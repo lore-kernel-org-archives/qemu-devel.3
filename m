@@ -4,74 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0822FCEE334
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 16:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966DECEE336
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 16:13:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLOI0-00030j-GZ; Tue, 18 Nov 2025 11:10:44 -0500
+	id 1vLOJs-0004zC-Ft; Tue, 18 Nov 2025 11:12:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vLOHa-0002l9-4a
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 11:10:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vLOHX-0005Gx-D8
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 11:10:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763482214;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oe9X9vrtzuAvfuKIbXQg7zoSn4VcD4HMrEpnSfOuFKg=;
- b=aaUDFUSkPaVAhVJa0DfZ3Q7rdRyNgqpAWQT5/UpoFnHp+hkqWfWRtxjpa0jsTkc71J1S1q
- F4nNjJjqxU7FsPLWlcsUZtIETe3gMecfJ9JCzDZ49cOx/A7cgihq6FyggbbYhblTwG6uVL
- mtz+/HDtU2t0BJOeoxxGYOZ08sn7Ux8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-252-E3JPMRIzOsevxW9EbuKpBA-1; Tue,
- 18 Nov 2025 11:10:09 -0500
-X-MC-Unique: E3JPMRIzOsevxW9EbuKpBA-1
-X-Mimecast-MFC-AGG-ID: E3JPMRIzOsevxW9EbuKpBA_1763482208
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5986C195607F; Tue, 18 Nov 2025 16:10:08 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.32.16])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BF4B519560B2; Tue, 18 Nov 2025 16:10:03 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, peter.maydell@linaro.org, cohuck@redhat.com,
- maz@kernel.org, oliver.upton@linux.dev, sebott@redhat.com,
- gshan@redhat.com, ddutile@redhat.com, peterx@redhat.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: [PATCH v2 7/8] target/arm/cpu: Expose x-mig-hidden-regs and
- x-mig-safe-missing-regs properties
-Date: Tue, 18 Nov 2025 17:07:37 +0100
-Message-ID: <20251118160920.554809-8-eric.auger@redhat.com>
-In-Reply-To: <20251118160920.554809-1-eric.auger@redhat.com>
-References: <20251118160920.554809-1-eric.auger@redhat.com>
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vLOJJ-0004c1-5x
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 11:12:08 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vLOJH-0005Tk-Hf
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 11:12:04 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-297e239baecso61575435ad.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 08:11:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763482314; x=1764087114; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=B/8t6ED9BvS2fPO4jZeW2Yt8HfoNHyuEXKQE1en/NdA=;
+ b=CMZi6eyD06rzjMcGGeL9yfMQrSNrInN7+rV4w5InxULSIULGzCyr0MTLGjW3Be9HyL
+ vcVMke8EZL7qyxTNgAdGgIL2/PT5Ur3hyM2xtryGnaHWOzRsPoW8JkEw/49y3Eqm7lv0
+ WWyf67xjBmp76FxyVJ7lQdfhRlG5RZ8w4d4s1F0/I8fO5jGC/b7sCNgWA73BtGJp0YZA
+ SvNN4mKchKtMyUU4tLPokY2UhFzJG9LsKx1ZLNtta+HgGo5luUQau56HYt7Edn220QpR
+ 7YKDGJB47MZzWlk4XWFTqJfj67s23Phj74gA7LBZ3shu1qTJMMMbi7XXnC+9ic3swaXP
+ URcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763482314; x=1764087114;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B/8t6ED9BvS2fPO4jZeW2Yt8HfoNHyuEXKQE1en/NdA=;
+ b=FyDdM1fSjyPzlZ9UB2aFKuSJ2xOJdAAndMo9RAg4W70kVRYP1iyqtW/BifUzfjBn5B
+ /SpLu9X/yRMXWRVg3QRNU2CuGzUrIlrnwEcUQF25EJ64zPMGML6hASkujzvLfcZl5x19
+ Bmdd5Jp4revnMwK5nBXfUJzZjWujq2PjPXabSL2RYJcduEnig63FQSTwDO8wpiyUFHon
+ XPYF5zt/gDoX/PmqDY3JqJG84d+u4g5Enzal9xscygmxAOdgq9N3Ssn1kCpRdGUC6eBD
+ umiHKa3bEoQZabQ/xcWdhtRximIea3b5PG4c0TG5QH571g3hitDpHKOj7azweuQbJCxe
+ HNZw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWG6Y9Irh6pLw1slqmxUWnnss7RslgHcPGLieez701uGUiQmPSb6m8/pyORPo7MkHBR1bTUcYHZnSeU@nongnu.org
+X-Gm-Message-State: AOJu0YwOjyZpo1al/E6wSdB4k056HCI/znqFVn4ebjr6o++gZyWzhyKB
+ FjRP74zRQbSgGXQd3nqGRd6ZkJ3UEgIaYGnSCOQ82/7P4TLt81AMxHc6sEXsYp7j8Kk=
+X-Gm-Gg: ASbGnctKHxYJyn/lYNVb8zf+cShRF6iVjTYi8meFxqLRyuge47s0yJRIcjyIgosN3yZ
+ EaeZsNxO8Cm1FzUz8XpN/u44w9QcOUXygIxcv+F0vjHwf7EOY0/BzKfqZc0/IjCO1b1GmHB0+tE
+ ve5nK9rMuYe+FT8gBhMbqEOKhl4KfQGrOX8BEfb12BbJguFl1Te0O9e9FucljWlBOmlrEQ3zeI9
+ sTBH9j4vE/S+rVcmAbm/AEgle12fpEWctiJYVQruXsktqNHjJ+ZXsBAQxXPqcytmk/smDNGnGcm
+ bfIimPohJAlBR69HpHy/PpTMtxg/Ritma3QWwDmnsWQJVgnrtqI6MYSjTEsMOJbwfvpM7ihCq9C
+ /Iloi5nv8+0kA3eCCglWyXMsBWfs347lP+FLYoup/JT08wWk0ud50MeNMYhmfgsSnFX1aE5w0Ej
+ 0kzRCsJfhsaO6hDOXSLvrLmB4dD2zcwVnLw8Ti8Q1fB2jhro8oJJsj9gtjLq4dtWRIySHkMRxTQ
+ AQ=
+X-Google-Smtp-Source: AGHT+IGbsGo69AUJ8pQx7W1HXgKH6BOWjjWBgyOesk+Co6aFWtYMxNSeH6nPpbuLLnqseheivSgf7g==
+X-Received: by 2002:a17:903:2451:b0:294:f6e5:b91a with SMTP id
+ d9443c01a7336-29a046f1da0mr256765ad.13.1763482313662; 
+ Tue, 18 Nov 2025 08:11:53 -0800 (PST)
+Received: from ?IPV6:2804:7f0:b400:8262:bc80:a9f2:2dc9:3bd5?
+ ([2804:7f0:b400:8262:bc80:a9f2:2dc9:3bd5])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-bc375177be4sm15669566a12.19.2025.11.18.08.11.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Nov 2025 08:11:53 -0800 (PST)
+Message-ID: <e54894b2-635d-4c8e-9781-ba0bb4729361@linaro.org>
+Date: Tue, 18 Nov 2025 13:11:50 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.2] hw/southbridge/lasi: Correct LasiState parent
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
+ Helge Deller <deller@gmx.de>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20251117091804.56529-1-philmd@linaro.org>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20251117091804.56529-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,52 +110,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allows to set both array properties along with arm cpus. Their "x-" prefix
-reminds that those shall be used carefully for distro specific use cases
-to garantee cross kernel migration.
+Hi Phil,
 
-This will allow to define such compat machine props like:
+On 11/17/25 06:18, Philippe Mathieu-Daudé wrote:
+> TYPE_LASI_CHIP inherits from TYPE_SYS_BUS_DEVICE, not
+> TYPE_PCI_HOST_BRIDGE, so its parent structure is of
+> SysBusDevice type.
+> 
+> Fixes: 376b851909d ("hppa: Add support for LASI chip with i82596 NIC")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/hw/misc/lasi.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-    static GlobalProperty arm_virt_kernel_compat_10_1[] = {
-        /* KVM_REG_ARM_VENDOR_HYP_BMAP_2 */
-        { TYPE_ARM_CPU, "x-mig-hidden-regs", "0x6030000000160003" },
-        { TYPE_ARM_CPU, "x-mig-safe-missing-regs",
-          /* TCR_EL1, PIRE0_EL1, PIR_EL1 */
-          "0x603000000013c103, 0x603000000013c512, 0x603000000013c513" },
-    }
+oh, right :)
 
-The first one means KVM_REG_ARM_VENDOR_HYP_BMAP_2 shall always
-been hidden for machine types older than 10.1. The second one means
-that along with 10.1 machine type we may receive in the incoming
-migration stream, 3 registers that are unknown on destination.
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 
-Obvioulsy, using the reg index as defined in
-linux/Documentation/virt/kvm/api.rst is not user friendly. However
-those options, prefixed with "x-" are supposed to be used
-rarely by people who know the details.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
----
- target/arm/cpu.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 066746d76f..c41774cb4c 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2248,6 +2248,11 @@ static const Property arm_cpu_properties[] = {
-     DEFINE_PROP_BOOL("backcompat-cntfrq", ARMCPU, backcompat_cntfrq, false),
-     DEFINE_PROP_BOOL("backcompat-pauth-default-use-qarma5", ARMCPU,
-                       backcompat_pauth_default_use_qarma5, false),
-+    DEFINE_PROP_ARRAY("x-mig-hidden-regs", ARMCPU,
-+                      nr_hidden_regs, hidden_regs, qdev_prop_uint64, uint64_t),
-+    DEFINE_PROP_ARRAY("x-mig-safe-missing-regs", ARMCPU,
-+                      nr_mig_safe_missing_regs, mig_safe_missing_regs,
-+                      qdev_prop_uint64, uint64_t),
- };
- 
- static const gchar *arm_gdb_arch_name(CPUState *cs)
--- 
-2.51.1
+> diff --git a/include/hw/misc/lasi.h b/include/hw/misc/lasi.h
+> index 04312d0b589..0e95be1c32a 100644
+> --- a/include/hw/misc/lasi.h
+> +++ b/include/hw/misc/lasi.h
+> @@ -13,8 +13,8 @@
+>   #define LASI_H
+>   
+>   #include "system/address-spaces.h"
+> -#include "hw/pci/pci_host.h"
+>   #include "hw/boards.h"
+> +#include "hw/sysbus.h"
+>   
+>   #define TYPE_LASI_CHIP "lasi-chip"
+>   OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
+> @@ -63,7 +63,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(LasiState, LASI_CHIP)
+>   #define LASI_IRQ_PS2MOU_HPA 26
+>   
+>   struct LasiState {
+> -    PCIHostState parent_obj;
+> +    SysBusDevice parent_obj;
+>   
+>       uint32_t irr;
+>       uint32_t imr;
 
 
