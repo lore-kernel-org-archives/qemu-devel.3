@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 070ACCEE34E
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 19:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD68CEE34D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 19:01:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQx9-0008G4-Ok; Tue, 18 Nov 2025 14:01:23 -0500
+	id 1vLQxB-0008IN-8W; Tue, 18 Nov 2025 14:01:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQx1-00087h-2Z
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:01:15 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQx9-0008F4-IE
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:01:23 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQwz-00060G-AX
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:01:14 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4779d47be12so26327085e9.2
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 11:01:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQx8-00060n-2w
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:01:23 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-47778b23f64so40001565e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 11:01:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763492471; x=1764097271; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763492480; x=1764097280; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=15FuB0x0LbOCNKczxF9rqixWt/dxqH7hptCfHdg0sEo=;
- b=P9UPb1mHMBgueIiDm5Vr2FlAOIfWHwGDWC8mzqv95vGOxdPgKRJyS6SX3N+eOHkJFh
- oplWrje/oqdNlzm5PH7U1mhcMjqndui3wDgctoS+WGM/HlqPSWKqQY/QOEpv5oyejMLs
- mJ4lrPo0EwLLf2fOIQM+ow8ClGiqnSfyYBSUZ4jw6NA27WK2aiABVy3oAm5KmaLfzxrG
- J6UMOOLFXWElrE25eq1jPRScPSsfDif5nfp0Jg0o+o6YY/mEytiT+Y85su9y56Y8iDvm
- M6qb5GLl0V5pV5zxyXEz3+DPhSk218JewHbzlRcnYncpu5VtA6AdgLQ9J1OTeey7OzEF
- IdUA==
+ :reply-to; bh=DvqP0yYSnga49L7kwxAU3PVeYVK1Qd/VcAbwUPzRRds=;
+ b=OLDcwJ9CFR4GQ0pBpE69GHeByVL5nTrrVtOXcYS+myoYRAyb2PNRTWEkfkH2Tzb67h
+ TQbnonAN1fjGOmDQ4dOsokftMmeVbPJgvAs5bFb9Z56/S/mBhFWcKP74M7bPFP1kXJc0
+ r9lep29Qf4zhI/ERJj2YFDt0m8QTbRJB/rZ5uOmsg5U0TcuklsFKVqKW9xf4zotDMDw+
+ Xqy05R6T63yz5vSCvVg168hhW56Of2xDdDMzvMNNVXDN8MstasdzV2lKhcgfeO3VqIN6
+ Vp8CHqPzUlaM47rjbOxQch8+/gx2C9EaMJjjpnrP4JobtZnjvIH8wsNAI5CZVHrU0iRy
+ buDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763492471; x=1764097271;
+ d=1e100.net; s=20230601; t=1763492480; x=1764097280;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=15FuB0x0LbOCNKczxF9rqixWt/dxqH7hptCfHdg0sEo=;
- b=GkKDcaiQ1FC5fEBv5Bcy4Qz0RQG1RII2us4TEMXdhYUVT2IhblJtG12b0Bnkrouj2A
- DyuyGz6BgKTylmLYi2Qs6l74RmiSaD7e9TCcV9+1LhTKFMQUeEiJaSb2L1bIqbG+PWmE
- nui+Oq6eAk/RfEEnIgO5hnP0HlRn8LZk86XOqqmmSRB434UmUQG9Xd+3FS32zuzPv04V
- OjVbti4EFKuq4iKiqLnaky+VVcYgCw0rESkCDIfJ/rCg5iquf8vaPl7DW98Spo53bA+B
- LQ+3S67dK01h7GKUwmlmHhAlR3sHk2qGLp+GDx8vNqpAeXsWK9jhPO0cz1hpcFf5vPFQ
- pyRQ==
-X-Gm-Message-State: AOJu0YxCv1ssiPu2ITFHVOpR+m8tcMM4qMqNGgMzgZW8n52W1OvCCcpP
- X072dxocbogcIbDSyTZmDHNg+E0c704j/gGWwHB78gqI/Y2bilHY2QVq9aq931YYn4Rb7i3mkSe
- BnQzC4xeqpw==
-X-Gm-Gg: ASbGncvYsqE2kWIJHJM8REXLa8KEYl10gxwscSSuU6Kg6iKTXSdytp5rAjFmrP+JB/r
- 1xRX8Dc7WrCeBanevvrpHf0CODrIMMs7dHY1HpFzfvNfP1m5w1nKSny9Q7NtD4d1tn8gz3cwACk
- Y0v/EQPtf55kBSVdCKhprppJXZkC3wq1rHaOFut+ya4cd7hu3K8jVr1nfpCipjni1nZJWKsnscM
- 9XR5Q+qkp79yLqtDKfik8jsCWwDjKSXhkXDWQJtCZ7KVqGtfQTghzx1+zHnAbOEAmMjRkYuwCJ7
- ZI9RY5IO0cAPSZE24PKA7QmRcVlR5tcYimZgLpL4ksjBrxiEFfXceZB2zEqdioc1/uo33Rq0sJ9
- 49TkkiOt+7j1qE3ZPL33jNvmD6hjIqimHyNX+0+QIaivCPZPFgl4yhLR7DLLAPlkJDQj+28TKbW
- 9GQnoadRy2xH/Xl1RZVQxIswJSWTE0LXUlde1IF16Salbjqh9gJ+D54kxALSML
-X-Google-Smtp-Source: AGHT+IGnbFcSanW9e8GF9c4LoQKYxUiPuW3JCwcGPuarszhlxpTQd+buN56D7ZXkIz0XXhcSeIBMxA==
-X-Received: by 2002:a05:600c:4505:b0:477:7a87:48d1 with SMTP id
- 5b1f17b1804b1-4778fea8810mr185910905e9.30.1763492471100; 
- Tue, 18 Nov 2025 11:01:11 -0800 (PST)
+ bh=DvqP0yYSnga49L7kwxAU3PVeYVK1Qd/VcAbwUPzRRds=;
+ b=VCCyZpX6WrwVI5V1s1wyo8d9RT1XxzIi5JUtbQLRPJ6O9dUycnWyfQtfaQQtlc6d5V
+ HJF34nTUZbFmHPSLunP0XUItQqGssZviW1sdyNB2sB67isPFxtUtgUwE8ynCi5/c0Fbd
+ zghT6JprjGQF/6/HvgHHTFGJOVAWcbVqTjvjTdgb1r4EYaaLvhiSZeFY9Mg0LQcKPmut
+ o/f9n/ILbHIqvdEgC4DLbAU9EX1XPiBoPG3LjlZF4HzPCQFAzYsfjIZQEbxNSA8aDXGa
+ 1EfwQ3GtJGAlWxYWJ4Wd6tUoqhGqSC1UKip8yG2gqy4WZOGeIxntV2rXSFMIrn6rQYUa
+ oY8Q==
+X-Gm-Message-State: AOJu0YwuKWv6/+6sptw1WkMXpjqjEtwYh8m5SuUjwgiQez6xMJ1Zu2Fe
+ hueekjBmFE5wdmN0kRQXVcVxwCa/TWqCFJEX2g0XijTdGfrLBZkwgasEe5MACaM5IS3T+wgeIIl
+ 1ZioSpLYTIQ==
+X-Gm-Gg: ASbGncvTKzAKGxCzthIMSWELXAhxO5hTJLo+30HEt77QF3kSjtl3Kyw0Z1qXCmgSOkh
+ Pu8slU7fUy5TdH2bkSHLaWfvyuPkdEkpefgf07ge/RvUwRjqAhl75XncaInsFU/lo0HwLPJx3gi
+ pZyD6+oTwGPLYLZWHzAlfbkjrQNfbR5xC8RDe/TuWB8zUTSQhFYQ0Qzw0Y3KIUNJpllyZIHRf2O
+ sUowT/hp7s51vWSsfCSINP+DAPOfsKHhp6SmhhfHxQw2dXMniSpWyTHGyLLJr7wMFZz1d0/nTBx
+ 1Qlh2oEn5UK1j+26HIaf2lCdCd42EviwSPZCo+YiqQ7+Ijl33p5+7bsg1Vxoin4qhuvoVJvLs0K
+ ijd18lpMCRYgxmEmpE25jWJ0jTJa7zNKv2VKpL3xqRzo/yzRvUwmbEX+vVWzs5coth5PWCBiA5g
+ 2S1+HhKh4AJO3PNyxi5oILnVeMoq3FmRjHzWMM9GK6kNC/ES3RLcyul/XCRy1BAoZM4KKIA4Y=
+X-Google-Smtp-Source: AGHT+IFwf4FrvFejTsS/5cKXe7xHqIlpmVM2ovW+om+PstlGID1pH/dC+rvOw6kZZW9cb24b81WuFQ==
+X-Received: by 2002:a05:600c:4744:b0:46e:48fd:a1a9 with SMTP id
+ 5b1f17b1804b1-4778fea8ab2mr178062855e9.33.1763492480099; 
+ Tue, 18 Nov 2025 11:01:20 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53e7b14bsm33284633f8f.9.2025.11.18.11.01.09
+ 5b1f17b1804b1-477a972141bsm24016645e9.2.2025.11.18.11.01.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Nov 2025 11:01:09 -0800 (PST)
+ Tue, 18 Nov 2025 11:01:18 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/18] hw/intc/ioapic: Fix ACCEL_KERNEL_GSI_IRQFD_POSSIBLE typo
-Date: Tue, 18 Nov 2025 20:00:37 +0100
-Message-ID: <20251118190053.39015-3-philmd@linaro.org>
+Subject: [PULL 03/18] system/qtest.c: Allow for multiple CHR_EVENT_CLOSED
+ events
+Date: Tue, 18 Nov 2025 20:00:38 +0100
+Message-ID: <20251118190053.39015-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251118190053.39015-1-philmd@linaro.org>
 References: <20251118190053.39015-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,56 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Commit 638ac1c78457 introduced a regression in interrupt remapping
-when running a VM configured with an intel-iommu device and an
-assigned PCI VF. During boot, Linux reports repeated messages :
+In the qtest_event() QEMUChrEvent handler, we create a timer
+and log OPENED on CHR_EVENT_OPENED, and we destroy the timer and
+log CLOSED on CHR_EVENT_CLOSED. However, the chardev subsystem
+can send us more than one CHR_EVENT_CLOSED if we're reading from
+a file chardev:
+ * the first one happens when we read the last data from the file
+ * the second one happens when the user hits ^C to exit QEMU
+   and the chardev is finalized: char_fd_finalize()
 
- [   15.416794] __common_interrupt: 2.37 No irq handler for vector
- [   15.417266] __common_interrupt: 2.37 No irq handler for vector
- [   15.417733] __common_interrupt: 2.37 No irq handler for vector
- [   15.418202] __common_interrupt: 2.37 No irq handler for vector
- [   15.418670] __common_interrupt: 2.37 No irq handler for vector
+This causes us to call g_timer_elapsed() with a NULL timer
+(which glib complains about) and print an extra CLOSED log line
+with a zero timestamp:
 
-and may eventually hang.
+[I +0.063829] CLOSED
+qemu-system-aarch64: GLib: g_timer_elapsed: assertion 'timer != NULL' failed
+[I +0.000000] CLOSED
 
-The issue is caused by the incorrect use of the macro
-ACCEL_KERNEL_GSI_IRQFD_POSSIBLE, which should instead be
-ACCEL_GSI_IRQFD_POSSIBLE.
+Avoid this by ignoring a CHR_EVENT_CLOSED if we have already
+processed one.
 
-Fixes: 638ac1c78457 ("hw/intc: Generalize APIC helper names from kvm_* to accel_*")
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251106105148.737093-1-clg@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Message-ID: <20251107174306.1408139-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/ioapic.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ system/qtest.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
-index e431d003117..38e43846486 100644
---- a/hw/intc/ioapic.c
-+++ b/hw/intc/ioapic.c
-@@ -216,7 +216,7 @@ static void ioapic_update_kvm_routes(IOAPICCommonState *s)
- #endif
- }
- 
--#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
-+#ifdef ACCEL_GSI_IRQFD_POSSIBLE
- static void ioapic_iec_notifier(void *private, bool global,
-                                 uint32_t index, uint32_t mask)
- {
-@@ -434,7 +434,7 @@ static const MemoryRegionOps ioapic_io_ops = {
- 
- static void ioapic_machine_done_notify(Notifier *notifier, void *data)
- {
--#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
-+#ifdef ACCEL_GSI_IRQFD_POSSIBLE
-     IOAPICCommonState *s = container_of(notifier, IOAPICCommonState,
-                                         machine_done);
- 
+diff --git a/system/qtest.c b/system/qtest.c
+index e4d1cd75daa..cbeb7f37728 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -808,6 +808,10 @@ static void qtest_event(void *opaque, QEMUChrEvent event)
+         }
+         break;
+     case CHR_EVENT_CLOSED:
++        if (!qtest_opened) {
++            /* Ignore CLOSED events if we have already closed the log */
++            break;
++        }
+         qtest_opened = false;
+         if (qtest_log_fp) {
+             fprintf(qtest_log_fp, "[I +" FMT_timeval "] CLOSED\n", g_timer_elapsed(timer, NULL));
 -- 
 2.51.0
 
