@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AC4BCED60F
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 11:19:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4735ECED606
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 11:20:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLJk2-0005Yw-Ie; Tue, 18 Nov 2025 06:19:22 -0500
+	id 1vLJkn-000630-1l; Tue, 18 Nov 2025 06:20:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLJjy-0005VB-26
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:19:18 -0500
-Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vLJkl-00062O-Iz
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:20:07 -0500
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLJjv-0003iW-EO
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:19:17 -0500
-Received: by mail-wm1-x344.google.com with SMTP id
- 5b1f17b1804b1-477563e28a3so36747135e9.1
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 03:19:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vLJkj-0003sP-Tq
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 06:20:07 -0500
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-bd1b0e2c1eeso1434660a12.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 03:20:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763464753; x=1764069553; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=ventanamicro.com; s=google; t=1763464804; x=1764069604; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FY7MPxZayPe1OiVaDC7Ytfdu9D2keOve8OMUnuYhR1g=;
- b=Y3ePSP2FtPCDzKdInOooP+lGNVzAOWrPcn9dyKlbLExFyn8GBAiFkHm/QR1nt479o4
- eunV3N6NViAfoPTGXOusVkNObiTYmmkch53nUrx+Tk73OzyE6o+WtIGjo4MtIES+Nj01
- tqtjHCXLQUiDPV1BjCHLKLmjuO4IAC5XcKrLoCKgyoBHHlHe/VqSYqQtpD6xUizkWTJ0
- 8kEtjbROHG9EE8XFDmzZO4RNTrRNk+uPGdtKF7iN43LbYERvEgWOOqXEKikeJ6zLQat9
- Pt2nhQl0rdCdZEv90EY2wBXq8lGy9ZIetsNFgIjmN9xGEtLeiptD6RNxazPVggnyYM37
- 7o0w==
+ bh=y82gJCb1WhqG/etTGEMv1Gsg9yYTi7jDcVYkgk6cH7I=;
+ b=ex/6KeiC10dAf5KJT44sNJlcZl+Vipev4fvKIWwRqBbs+/huOYe+70wbnl/MhBGHGz
+ Mzr6UxpKUBrAQrAqYNeRE15xyFZsOAEKacxfOoyJfDwBzojlQRtU7NrBv560OyQjkUfZ
+ e+2LfpmP+nB0xykNIXp5U6ob56Cu1swcHHBN5mlaM5oLNI5QJ+czX1jydU/jqY8MvknS
+ ITtXml5wogDAjBy3hEeEcmwz/ZyGcXoVMUFrmYu7mU0j5Et278v3347PkKdTV4DI/IV4
+ vYmpn3g3AMdSX0zNz59YP2Ex2MorTe91oQRI9Ed8ZKaUrOtfsbvuEeMByLB5g1VXNKhb
+ UvnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763464753; x=1764069553;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1763464804; x=1764069604;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FY7MPxZayPe1OiVaDC7Ytfdu9D2keOve8OMUnuYhR1g=;
- b=EcAFJDQood/Sd2GYdxy4VrkvdEhPjA3ID1TjFIG/i60bBeWLnqajItmV/M0Q/8bJd7
- H4m40Ex8ww2kgroNYA692Xu53SA4WB+M5YBMhykoVzSNwu2v3kgWuriyYdFDM8Y5yrq/
- 14W3TefdzNAV6GD5YkM8cavM/ujDSJqc/u2C2adFD10aVve8Rs4g9gE/iNmDAxxcN5m0
- aEhTjX9wpFYuxyZe3O110+ggJDb/xfnHxDDkwFzQfZT4JlbKBeHTyVpkkia1Ub3SMj7Z
- rHZSG3hjB1mk4ml8NqlDbGm7MoZOuIAv/HdK7e0kN+peTdaYo4BPMdQ1aIMK28oeB9lt
- G22g==
+ bh=y82gJCb1WhqG/etTGEMv1Gsg9yYTi7jDcVYkgk6cH7I=;
+ b=OoefvlLeJWnbnAxCnmyDJ1pDwx1PoQNoMsmNL8UkzLSDne+4TmGhUDt5suVqGieD5A
+ JDtwZh+MoGVGKHbYDypVZkmuUsFm5THA0t4HXxN+wyz3YXapNdtQQ31FoweTmIE0AM4i
+ w9Sx5h6BXon39kpWCn+nc/LADcEamtnW9DRZuAv73R1GGY9myvm97Lvdr7iXX7MOAq7D
+ 6f/uSpujpqxFbipZyy0Qx58fLwVFwgaeniFVYNr+xPFcHpOPW6t9wVuTQlQ8Hy3s6yx4
+ Pc/n8MpAQYumSU5VxFzlfWUHZxNdowFTnWkrD/ky1zrq56xaWvDRhvUpcf20XNNgNN6g
+ bEzg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXXjiAMn96yQ/gQ63lZ7egi3dfzzveOvZwVVMfmerxPPwVUm9iRp6F4y/6dZOZoaVzukAcaVb7K2LYt@nongnu.org
-X-Gm-Message-State: AOJu0YyTZ+skEWWsrJrfMSEP+cMRAUqqtiKeu5cO+uuTFDubZbB1F7fr
- CED3/Je2CZvSG1MP6RJcSmf4F/kPL1oV2MhsdqR5to807d98lHO4ZlctcR7m8x2m4pk=
-X-Gm-Gg: ASbGncuNZb8g59X1d76TJRZwZZb77qWgqqqm39yt/E53y4i+kB//oi4AKcMBUKkax9t
- 0eXhK41HF0ICFMkS75z3X5MypRBZg/ulPHWe9K/x7Db749RhITReNKwX16ekN2jT92qIaBkcMJL
- xhwQRHF6Mh4jkTM6ZxEha4s+mATZEoxcMvFsPh3s8R9B9Lh1EzdomWIuyliQVYaoCaD4QSux7mG
- 9co/8iaAWD/VP8TQ7kwLRdHWoLGyYmYaNtDbkflw7xBA+/U7PsZtlpq60RF5POzLPwgYKYCmiky
- gTcV73Jyz8RjZlGgm/YzVsFSxOa8Iv0Gv92R+q3nefSiws5jjfzuja95ldJuk4kWpFD6sto9CDH
- Hl86lUYFAJKCEJCP0yCHuF+JJvv6c6XsIRTNPOSn6U+F2t2iKKMKC/DFKx2Wc0cyjAiOiBeOR14
- BK2DmiuWa+tqv+fBiVq2bQfFN8mFB/4lK/fdEM7IhxtUxhkttLIX1TeA==
-X-Google-Smtp-Source: AGHT+IF262iSV8e5bfwsfbK0PHlbT5vX/d2qgGhVlPTeMDKbhu0BNBFd5YL49Q/Kyi3sKWXUXDzfyw==
-X-Received: by 2002:a05:600c:2d54:b0:477:a53c:8ca1 with SMTP id
- 5b1f17b1804b1-477a94f87aemr17407025e9.14.1763464753432; 
- Tue, 18 Nov 2025 03:19:13 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47787e442c2sm369906275e9.7.2025.11.18.03.19.12
+ AJvYcCUbXYXGvhhoukhDmekjQSR8Ian/A6Yp/moGiYiOEfDa1Do4ZjltVgxUAcEMGh6vAaeHscpg9xkuh1gk@nongnu.org
+X-Gm-Message-State: AOJu0YzD0M6BjVGlVLk94CmlRFPCIVj1SY5KsM3/rcOwhEBmY6tkjbkA
+ +IRam3KZ/Ab82O3iBAkfWWagwz9copigL0SBDjjQ5qPg/uU/7wIb4lCEEMd8n04DNz4=
+X-Gm-Gg: ASbGncsH7s0/fWkuqYmQfhOCLjAIPFyJk+MhOnFTk6ew0PlupeoalkJl7630unysK/A
+ M2s5EJVn89upjy+geacnfGh3voqc0y4OjxIogKxzo0bQkxAFegNHTDSnYzEek12IXtSfJCTdMJp
+ bRzPBH41vh1c2TgwDX4qah0cZi9t8WbDeoBaYWcSoAIQNABXoj2nfopzrPOxQEAwMO94enoWz4/
+ I3tQqPCTsAqF7WFvEJP41crmPstd41ONebXyUYiHbyqVpLGuZ59eXQY8QaMj6mqTa9nUxt2NXNK
+ T+8IUC+n6fZQcp1M5rC+yS4tP3rpuxGk31mbLqWEo5/HgzPoRCTBtz2d4OyFb9Fss7yvdZ/xjC/
+ +kJTSQbI+eRKsSXOWQlrwzza6VzMAfPrGGGKpMJa25d1vj26uz5LcYrwf62zYEGyjyacQJZ3jvs
+ RSIAuDgg8IcXQbYdcXYj8wEfcqF3W8PH18an08
+X-Google-Smtp-Source: AGHT+IFWDkFXf7R5qiT1nXpTOWN0wu16B3YB5+GY7s0+Xm56F3cjFKUhpMFZrs5vbtRwVmQPzY0UDw==
+X-Received: by 2002:a05:7300:570e:b0:2a4:3593:c7c8 with SMTP id
+ 5a478bee46e88-2a4aba9906emr7337760eec.8.1763464803566; 
+ Tue, 18 Nov 2025 03:20:03 -0800 (PST)
+Received: from [192.168.68.110] ([191.202.237.26])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2a49db4a36asm44104067eec.5.2025.11.18.03.20.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 03:19:12 -0800 (PST)
-Message-ID: <16cd29b1-c0fe-4dfc-81a7-654be0ea09ab@linaro.org>
-Date: Tue, 18 Nov 2025 12:19:11 +0100
+ Tue, 18 Nov 2025 03:20:03 -0800 (PST)
+Message-ID: <a0c132a0-373c-43b9-b893-eb443644dba5@ventanamicro.com>
+Date: Tue, 18 Nov 2025 08:19:58 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 14/14] scripts/checkpatch: Check DEVICE_NATIVE_ENDIAN
+Subject: Re: [PATCH 1/3] target/riscv: fix address masking
+To: frank.chang@sifive.com, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
+ Yong-Xuan Wang <yongxuan.wang@sifive.com>
+References: <20251118105936.2839054-1-frank.chang@sifive.com>
+ <20251118105936.2839054-2-frank.chang@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
- "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "alistair23@gmail.com" <alistair23@gmail.com>,
- "thuth@redhat.com" <thuth@redhat.com>
-References: <20251118085758.3996513-1-djordje.todorovic@htecgroup.com>
- <20251118085758.3996513-15-djordje.todorovic@htecgroup.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251118085758.3996513-15-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20251118105936.2839054-2-frank.chang@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::344;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,32 +110,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/11/25 09:58, Djordje Todorovic wrote:
-> Developers should specify endianess explicitly.
+
+
+On 11/18/25 7:59 AM, frank.chang@sifive.com wrote:
+> From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 > 
-> Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+> The pmlen should get the corresponding value before shifting address.
+> 
+> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
 > ---
->   scripts/checkpatch.pl | 4 ++++
->   1 file changed, 4 insertions(+)
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   target/riscv/internals.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-> index 40b6955c69..dc88fa4da4 100755
-> --- a/scripts/checkpatch.pl
-> +++ b/scripts/checkpatch.pl
-> @@ -3206,6 +3206,10 @@ sub process {
->           if ($realfile =~ /.*\/hw\/.*/ && $line =~ /\baio_bh_new\s*\(/) {
->   			ERROR("use aio_bh_new_guarded() instead of aio_bh_new() to avoid reentrancy problems\n" . $herecurr);
->   		}
-> +# check for DEVICE_NATIVE_ENDIAN, use explicit endianness instead
-> +		if ($line =~ /\bDEVICE_NATIVE_ENDIAN\b/) {
-> +			ERROR("DEVICE_NATIVE_ENDIAN is not allowed, use DEVICE_LITTLE_ENDIAN or DEVICE_BIG_ENDIAN instead\n" . $herecurr);
-> +		}
->   # check for module_init(), use category-specific init macros explicitly please
->   		if ($line =~ /^module_init\s*\(/) {
->   			ERROR("please use block_init(), type_init() etc. instead of module_init()\n" . $herecurr);
-
-Thank you for this patch :)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+> index 172296f12e2..9b3f01144d2 100644
+> --- a/target/riscv/internals.h
+> +++ b/target/riscv/internals.h
+> @@ -203,8 +203,8 @@ static inline target_ulong adjust_addr_body(CPURISCVState *env,
+>       if (!is_virt_addr) {
+>           signext = riscv_cpu_virt_mem_enabled(env);
+>       }
+> -    addr = addr << pmlen;
+>       pmlen = riscv_pm_get_pmlen(pmm);
+> +    addr = addr << pmlen;
+>   
+>       /* sign/zero extend masked address by N-1 bit */
+>       if (signext) {
 
 
