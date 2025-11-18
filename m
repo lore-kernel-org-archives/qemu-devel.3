@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4119ECEE343
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F20CEE343
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQUo-0007D1-8u; Tue, 18 Nov 2025 13:32:06 -0500
+	id 1vLQVK-0007Za-2g; Tue, 18 Nov 2025 13:32:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQUa-0007Ad-5X
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:31:57 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQVI-0007Yc-36
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:32:36 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQUY-0001W9-G6
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:31:51 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-42b3d4d9ca6so4746488f8f.2
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:31:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQVG-0001Zx-IE
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:32:35 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-477619f8ae5so39331025e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:32:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763490708; x=1764095508; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763490753; x=1764095553; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3xPEYtAVCthWcnX00lwhr8U02DKSBK78TmnGzdiH/58=;
- b=uCMfSON7kfHKB46sRFmwC4NZ0Kqml4iV3bRcYoMoZmk+mCiVwy+EalVXwINfSdzM7e
- dJCw5fojbASHU+0aWywn3FbTx0ghnrD1RiuW4kHpbDQse+amSVgr5gpPwPd9jfJ8D7cV
- 8hKAVcUW84/fSemhuYY1UPxXegu4X/PQBVqjylLx63Gl7TLF4CXKKlL6XSxy6IQd2P9Z
- tppaDydX0QWpXu2ibjYemZ1ZY/aJJBfjbOgZvd3Betx7FSvz5YDYcrQrd92+vTwmH6Fv
- Eh7sAfPaE+I/CF8Lu6O7b3qMo47tQfdP9wjZJDoFn8t5c+zIz6hFF5XjtG/GbNv2x2gM
- QsfA==
+ bh=d/uW5xhAdkkbUSv0iFNaMOjk/XEPGG4W51LWNCO8iAA=;
+ b=j40ZTJ4MEaeKX0fmDAsSYU8IhxIJHTUZ8jvPnVCfioeW0tDlz5XDNSl0p24UNBmuvi
+ TU/bwIu1DkTPsiNElKKbqCnGr7b7Xh+CxLQhyo1WehMOs0aysXnfgTYXrl56k+ppHFJn
+ klKoXT5Lfexit+HjVgC0atZxnb1UbtDyePELHX+NyM2xLR0qREHNXfPWaQaxVJ2U3uFT
+ g8k00tdCA6D19TmPK7Elymb+2fcjd2hIrv73iT0pjwVOJXkfYIQBbfVl4QeV1AkmzSXT
+ ucar8RkxttVQyAWAoMIKk7XEO83hQvXM1VyAxE5Ls/7OIUuKDAnlAIRtmTLmhUalWF3c
+ OyAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763490708; x=1764095508;
+ d=1e100.net; s=20230601; t=1763490753; x=1764095553;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3xPEYtAVCthWcnX00lwhr8U02DKSBK78TmnGzdiH/58=;
- b=QhgBshvkmONc5Rauua+1FIMSjd2gi1azYad3Ga/GzN4YlkkXmouwa5axGtr/uwGwBq
- pTFj4EvJn9IkGzGG0YdIjAy1UwCO17peyqGNrkjexC4JsUy3QLACsSLNufGy8esOICwa
- gFDWpObsF3kEiIsAFTvOEQy+PbUBVhzHl1hJftze2nNIi7GLPuXEoblcgWt0r9Q2KLaR
- FBxRBpOZYZYPIIJWKc1MGNcoQn4nAiWZOO4d1zLfuM3oNU3xG0j8mlwQqvWxNw3BR9zv
- efyBzt4Bb6PfVJJllMIdLoOjk7dhTOGMoYI+qyKhYJiRQU98kgf3gqLeXL2E7LkGEver
- 355w==
+ bh=d/uW5xhAdkkbUSv0iFNaMOjk/XEPGG4W51LWNCO8iAA=;
+ b=EHFaUDDTAM1wmTtyEAS7u9eNFQB19LoE8T6eifEsohzhasixQVLeH2z9E8V2PWTYib
+ oLiirvnkYNorWP4F+amOpl5z7NtbsfPFYItkgHgynPDG8m0unhwd/0bAm3Ptw5BLWugR
+ 2mCwTsOaZrlKRMI1KRAZF4iDfzqL48tbpKA0sWVMU7hFKKCL3zR15UvIMOUtVfLoFTQX
+ IWRA8d3plqDatCSyOQFQyUxUBAB+6a92tDrCOcIKyiVgYoXvwGLYAjpisipyZIYJJtIp
+ 93e66AgOR7Glfp1XR26ITEs6CEIgKk6iPpZvl3TJlN1HbZrGsgJYVU62CtFxj/uj7At0
+ NTPg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTFlXEuoGnrG4uqgYwfGP2mlDHCe6anGr6eSv1NMp/BZg3JNPEwU/mpEtRbuJlXXq8RQ9OFUlvF1mR@nongnu.org
-X-Gm-Message-State: AOJu0YwmSxnGVbIWRIi20cW9NxTvCxqd0dcql4HaESVDN4cWp+GbwBFR
- Ybq0Roi/Lx3CDSujmy575wdTWsMpAy5aVl8h6JimgiY+gaBMNZ8pm/leJ1pySyc+nfI=
-X-Gm-Gg: ASbGncs+7mR7oVktdn3JtlaiecMZ+XTuOcAtN/SO2V7qNN0Wb+CVIr4zsvzaphg0HoB
- 3pS1QYoSMFFxYjG8+CSrfIoCc/uMtvF2EDMG9cUa9OB2JDF9HfFYONmEXLXiuQJId5ynwmk8PWu
- PXqf5gE2IbvQEdmPtZHWKNCNhzDGcbW0KCB4HCPlXrcZfQuIkwnAPNfZ7x/OaxtLY8OLUdQpA/D
- 4w3SWutoZtyiyjPvCVoADMYXD792qXelm+MWGinNYtIAVHAuRqLMDlUyirkRBmq7MIbhDJrLykw
- Nh9+vmoU/iudQQ3u2OL8GOQb2E3KOrDE2bQ5VhYEP7lb59Ng/PByfDsZHDEI2PiKlzmXHYHm5kA
- KIckC3tvPMScrkehe0VNKDyaFTksDWIqp1BLIitZVkazehOKdkAseM2TIGzr1Kuu4tYRx0DOMyx
- 86B3N0lKk7gZ/UZLzu87d+QJ+gGXKxfnM2/4xlUzDzIHhbeoRP8kyFHxLBpIe+kCsb
-X-Google-Smtp-Source: AGHT+IGw2+iYZTOcuyRdaT9YffCLbaDzhukY7iuYwL3oqhKVUOepO1J0fqgI6bQOZRXIsQ/yCsY0vQ==
-X-Received: by 2002:a05:6000:208a:b0:425:825d:15d1 with SMTP id
- ffacd0b85a97d-42b59384374mr16100983f8f.44.1763490708522; 
- Tue, 18 Nov 2025 10:31:48 -0800 (PST)
+ AJvYcCXRiw1S4oRaTC435tqTUeRjS7XxPEyMwsdEQPZZtWRppuMvzsZbBR9yPqM4zsNlV2luBWUuL4ASQOXD@nongnu.org
+X-Gm-Message-State: AOJu0Yxpj1ibeFigIZkRU4j/b2RtL43cgDQx1lCCfaeSZqKC/DrwlLPr
+ PXqDsk2UtntbckbbmnS9ohAkgCA7/Q67Z6KhVlhHEpHTH7YMRIbx0ZEwVhGIRTb4USI=
+X-Gm-Gg: ASbGncsSm4Oiqlpm3pEWchpkpqdkF2++dGYJIec64NLGWVFK1p25J385SyWwtZYWT3d
+ 5DIevtqOiMErdsUSsuepkPFQl0jgIsnC1ENlXTGXm1LAGqKZZOHhUnJxnDYGG/m4KIkDTbNiwJ+
+ YiglxVtl+dz2Borv+fD72puszjCQUhB0oxoAzin+9ETcqQayxt1wJoul26mncRR9WQuxSJGK+F/
+ 88KdWU/qC+FZ9mOWdJwErCcPaGXzXZksKXmdrI3lH07P4/9txr77/PH8V16o6SQ5ooWU29o5Ees
+ V+CvP2GS97VgHj26EG6oXk6X6OJcQ36Rj1BHzMdqfZcdR9sA0o6eBl6jbD8VrRVawzTJedCaOtA
+ TXrTF24LbhD4JNZHmo+f2vVo3FE9AgFnzZi144YiABabzWWBt2ERngsVmWYg6LLd+BVSjQKVBGn
+ +MFYnDCKM4++9RNB/r7S7XWcOjZLjleG27fKi/CSX7loE5Qdix9usWtGf5NCAZlO9l
+X-Google-Smtp-Source: AGHT+IH8As0k+/qjIsRxSGFWSXrkQNipyVInInfO9IazJV+xqM6wRvyQCswVI0x7uEeQl0TUmXRrfQ==
+X-Received: by 2002:a05:600c:8b23:b0:477:7bd2:693f with SMTP id
+ 5b1f17b1804b1-4778fe60615mr166243085e9.6.1763490752689; 
+ Tue, 18 Nov 2025 10:32:32 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53e85627sm35339570f8f.16.2025.11.18.10.31.47
+ 5b1f17b1804b1-477aa387473sm21714325e9.4.2025.11.18.10.32.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 10:31:47 -0800 (PST)
-Message-ID: <6bec3310-5919-44df-ac38-b2ecd458ea5a@linaro.org>
-Date: Tue, 18 Nov 2025 19:31:47 +0100
+ Tue, 18 Nov 2025 10:32:32 -0800 (PST)
+Message-ID: <f25dd5eb-260a-4bc2-acde-3fee7291f49b@linaro.org>
+Date: Tue, 18 Nov 2025 19:32:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] ebpf: Error fixes and cleanups
+Subject: Re: [PATCH] system/qtest.c: Allow for multiple CHR_EVENT_CLOSED events
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: jasowang@redhat.com, mst@redhat.com, berrange@redhat.com
-References: <20251118154718.3969982-1-armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20251107174306.1408139-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251118154718.3969982-1-armbru@redhat.com>
+In-Reply-To: <20251107174306.1408139-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,14 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/11/25 16:47, Markus Armbruster wrote:
+On 7/11/25 18:43, Peter Maydell wrote:
+> In the qtest_event() QEMUChrEvent handler, we create a timer
+> and log OPENED on CHR_EVENT_OPENED, and we destroy the timer and
+> log CLOSED on CHR_EVENT_CLOSED. However, the chardev subsystem
+> can send us more than one CHR_EVENT_CLOSED if we're reading from
+> a file chardev:
+>   * the first one happens when we read the last data from the file
+>   * the second one happens when the user hits ^C to exit QEMU
+>     and the chardev is finalized: char_fd_finalize()
+> 
+> This causes us to call g_timer_elapsed() with a NULL timer
+> (which glib complains about) and print an extra CLOSED log line
+> with a zero timestamp:
+> 
+> [I +0.063829] CLOSED
+> qemu-system-aarch64: GLib: g_timer_elapsed: assertion 'timer != NULL' failed
+> [I +0.000000] CLOSED
+> 
+> Avoid this by ignoring a CHR_EVENT_CLOSED if we have already
+> processed one.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   system/qtest.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 
-> Markus Armbruster (3):
->    ebpf: Fix stubs to set an error when they return failure
->    ebpf: Clean up useless error check in ebpf_rss_set_all()
->    ebpf: Make ebpf_rss_load() return value consistent with @errp
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-and queued, thanks!
+Queued, thanks.
 
