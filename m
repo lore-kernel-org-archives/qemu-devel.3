@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3291FCED240
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BD43CEBF9A
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 03:24:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLCIE-0003pX-9x; Mon, 17 Nov 2025 22:22:10 -0500
+	id 1vLCHu-0002VT-TX; Mon, 17 Nov 2025 22:21:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLCHv-0002cm-7b
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:21:51 -0500
+ id 1vLCHg-00028H-Qm
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:21:38 -0500
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLCHs-0004Cz-5F
- for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:21:50 -0500
+ id 1vLCHa-0004Hi-8Z
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:21:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763436108; x=1794972108;
+ t=1763436090; x=1794972090;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=4vj3rkIIm3fua4GI9Ec2JhmAZvhM0BpAu+/cVsnfP9Q=;
- b=QoQ8YdrlxJ0aQN3wjpjEuVGCkd5VJNWu98yFuEjaAoZOTcrTdXzjvzje
- NcPSskzzYUCsj5hJKP3nlpF0MYzi8nP/Npw0ARB+TObrHT8OjZbE56+MN
- 0P1y0a2IcwuErUb12eYP2kRXq5jeODQtzyL6STd6bVilItWKdqacwgW83
- LT6LH+vqj3IuxsjVWdfS4zOOK07MlAdHZlYTezuI9Dm6uL0grxdUxmsHb
- hh6D9ydIfutBCXpXIIKgA8AaKuRHA3vLZ2k5zwL5LQ1X/XZZmfIo4Z1XS
- iTeeC4DkBMamEb2asfy39MWXeV8h9777b/f8P0d3Ex8JdPy7nYsx25/Aa Q==;
-X-CSE-ConnectionGUID: opVDdUQAS8WSTPO+SwirDQ==
-X-CSE-MsgGUID: 1GVmT9jnRY+URHr7Kk4Swg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="68053931"
-X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; d="scan'208";a="68053931"
+ bh=7Y+10AA8RxhybijSx1coYUp7NV9ph4l57Sz0FOZYoxA=;
+ b=VRSkfmDzg43ALX/g1Mc7AcrMIn6/AsRSPAdu5K0qzSQN68uHGqCA26EZ
+ y5vvRZM7E7Hgd8/Bq3E6VUK265A6qNCOItaYwq5oyJOeI5G1kDgATnfeZ
+ fZFfYjLMuG1AtXX9zZep5n2DdNcXGLDcWg4gJJXniNMkefST/gv2ujqLS
+ SZtwXmEGk3JtHItqi1AyQKPz8GkdOf8X4OFe5kghWS2u+LBwkFezioSWO
+ ruugsjcfoVLDo0UD+/DK55DkURqbB5rEy5Wh1RLmAJ3y9/wjmqE/G86mD
+ kjCEgNiqTf6xcVAjK/ZTS40+Ub6R0ay23UP1DjM8XBwPO1EMXz2NE2es5 w==;
+X-CSE-ConnectionGUID: H4VjBGFrSMywJmUse5gJdw==
+X-CSE-MsgGUID: dXIE0Al1QgilbWbdajXfIA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="68053896"
+X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; d="scan'208";a="68053896"
 Received: from fmviesa001.fm.intel.com ([10.60.135.141])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 19:21:28 -0800
-X-CSE-ConnectionGUID: xCTmfrJJTi2+2N0h9sQ0dg==
-X-CSE-MsgGUID: 3QO/yUuuQHKPVb9FKysCmQ==
+ 17 Nov 2025 19:21:13 -0800
+X-CSE-ConnectionGUID: 2j+ZZLwKShGHa6BNPVxORA==
+X-CSE-MsgGUID: qs9qdH5nQLGfGnDJ/i30Rg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; d="scan'208";a="221537395"
+X-IronPort-AV: E=Sophos;i="6.19,313,1754982000"; d="scan'208";a="221537320"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 17 Nov 2025 19:21:23 -0800
+ by fmviesa001.fm.intel.com with ESMTP; 17 Nov 2025 19:21:09 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
@@ -54,10 +54,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
  Farrah Chen <farrah.chen@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
  Yang Weijiang <weijiang.yang@intel.com>
-Subject: [PATCH v4 20/23] i386/cpu: Advertise CET related flags in feature
- words
-Date: Tue, 18 Nov 2025 11:42:28 +0800
-Message-Id: <20251118034231.704240-21-zhao1.liu@intel.com>
+Subject: [PATCH v4 16/23] i386/kvm: Add save/restore support for
+ KVM_REG_GUEST_SSP
+Date: Tue, 18 Nov 2025 11:42:24 +0800
+Message-Id: <20251118034231.704240-17-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251118034231.704240-1-zhao1.liu@intel.com>
 References: <20251118034231.704240-1-zhao1.liu@intel.com>
@@ -90,13 +90,17 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Yang Weijiang <weijiang.yang@intel.com>
 
-Add SHSTK and IBT flags in feature words with entry/exit
-control flags.
+CET provides a new architectural register, shadow stack pointer (SSP),
+which cannot be directly encoded as a source, destination or memory
+operand in instructions. But Intel VMCS & VMCB provide fields to
+save/load guest & host's ssp.
 
-CET SHSTK and IBT feature are enumerated via CPUID(EAX=7,ECX=0)
-ECX[bit 7] and EDX[bit 20]. CET states load/restore at vmentry/
-vmexit are controlled by VMX_ENTRY_CTLS[bit 20] and VMX_EXIT_CTLS[bit 28].
-Enable these flags so that KVM can enumerate the features properly.
+It's necessary to save & restore Guest's ssp before & after migration.
+To support this, KVM implements Guest's SSP as a special KVM internal
+register - KVM_REG_GUEST_SSP, and allows QEMU to save & load it via
+KVM_GET_ONE_REG/KVM_SET_ONE_REG.
+
+Cache KVM_REG_GUEST_SSP in X86CPUState.
 
 Tested-by: Farrah Chen <farrah.chen@intel.com>
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
@@ -106,77 +110,95 @@ Signed-off-by: Chao Gao <chao.gao@intel.com>
 Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes Since v2:
- - Rename "shstk"/"ibt" to "cet-ss"/"cet-ibt" to match feature names
-   in SDM & APM.
- - Rename "vmx-exit-save-cet-ctl"/"vmx-entry-load-cet-ctl" to
-   "vmx-exit-save-cet"/"vmx-entry-load-cet".
- - Define the feature mask macro for easier double check.
----
- target/i386/cpu.c | 8 ++++----
- target/i386/cpu.h | 2 ++
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ target/i386/cpu.h     |  3 ++-
+ target/i386/kvm/kvm.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 848e3ccbb8e3..a65fd4111c31 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1221,7 +1221,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-         .type = CPUID_FEATURE_WORD,
-         .feat_names = {
-             NULL, "avx512vbmi", "umip", "pku",
--            NULL /* ospke */, "waitpkg", "avx512vbmi2", NULL,
-+            NULL /* ospke */, "waitpkg", "avx512vbmi2", "cet-ss",
-             "gfni", "vaes", "vpclmulqdq", "avx512vnni",
-             "avx512bitalg", NULL, "avx512-vpopcntdq", NULL,
-             "la57", NULL, NULL, NULL,
-@@ -1244,7 +1244,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             "avx512-vp2intersect", NULL, "md-clear", NULL,
-             NULL, NULL, "serialize", NULL,
-             "tsx-ldtrk", NULL, NULL /* pconfig */, "arch-lbr",
--            NULL, NULL, "amx-bf16", "avx512-fp16",
-+            "cet-ibt", NULL, "amx-bf16", "avx512-fp16",
-             "amx-tile", "amx-int8", "spec-ctrl", "stibp",
-             "flush-l1d", "arch-capabilities", "core-capability", "ssbd",
-         },
-@@ -1666,7 +1666,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             "vmx-exit-save-efer", "vmx-exit-load-efer",
-                 "vmx-exit-save-preemption-timer", "vmx-exit-clear-bndcfgs",
-             NULL, "vmx-exit-clear-rtit-ctl", NULL, NULL,
--            NULL, "vmx-exit-load-pkrs", NULL, "vmx-exit-secondary-ctls",
-+            "vmx-exit-save-cet", "vmx-exit-load-pkrs", NULL, "vmx-exit-secondary-ctls",
-         },
-         .msr = {
-             .index = MSR_IA32_VMX_TRUE_EXIT_CTLS,
-@@ -1681,7 +1681,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             NULL, "vmx-entry-ia32e-mode", NULL, NULL,
-             NULL, "vmx-entry-load-perf-global-ctrl", "vmx-entry-load-pat", "vmx-entry-load-efer",
-             "vmx-entry-load-bndcfgs", NULL, "vmx-entry-load-rtit-ctl", NULL,
--            NULL, NULL, "vmx-entry-load-pkrs", "vmx-entry-load-fred",
-+            "vmx-entry-load-cet", NULL, "vmx-entry-load-pkrs", "vmx-entry-load-fred",
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-         },
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index c4412012c780..d8bdf342f98d 100644
+index 661b798da4d0..c4412012c780 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -1373,6 +1373,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define VMX_VM_EXIT_CLEAR_BNDCFGS                   0x00800000
- #define VMX_VM_EXIT_PT_CONCEAL_PIP                  0x01000000
- #define VMX_VM_EXIT_CLEAR_IA32_RTIT_CTL             0x02000000
-+#define VMX_VM_EXIT_SAVE_CET                        0x10000000
- #define VMX_VM_EXIT_LOAD_IA32_PKRS                  0x20000000
- #define VMX_VM_EXIT_ACTIVATE_SECONDARY_CONTROLS     0x80000000
+@@ -1982,7 +1982,7 @@ typedef struct CPUArchState {
+     uint64_t fred_config;
+ #endif
  
-@@ -1386,6 +1387,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define VMX_VM_ENTRY_LOAD_BNDCFGS                   0x00010000
- #define VMX_VM_ENTRY_PT_CONCEAL_PIP                 0x00020000
- #define VMX_VM_ENTRY_LOAD_IA32_RTIT_CTL             0x00040000
-+#define VMX_VM_ENTRY_LOAD_CET                       0x00100000
- #define VMX_VM_ENTRY_LOAD_IA32_PKRS                 0x00400000
+-    /* CET MSRs */
++    /* CET MSRs and register */
+     uint64_t u_cet;
+     uint64_t s_cet;
+     uint64_t pl0_ssp; /* also used for FRED */
+@@ -1992,6 +1992,7 @@ typedef struct CPUArchState {
+ #ifdef TARGET_X86_64
+     uint64_t int_ssp_table;
+ #endif
++    uint64_t guest_ssp;
  
- /* Supported Hyper-V Enlightenments */
+     uint64_t tsc_adjust;
+     uint64_t tsc_deadline;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 4eb58ca19d79..1ebe20f7fb57 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -4292,6 +4292,35 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+     return kvm_buf_set_msrs(cpu);
+ }
+ 
++static int kvm_put_kvm_regs(X86CPU *cpu)
++{
++    CPUX86State *env = &cpu->env;
++    int ret;
++
++    if ((env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK)) {
++        ret = kvm_set_one_reg(CPU(cpu), KVM_X86_REG_KVM(KVM_REG_GUEST_SSP),
++                              &env->guest_ssp);
++        if (ret) {
++            return ret;
++        }
++    }
++    return 0;
++}
++
++static int kvm_get_kvm_regs(X86CPU *cpu)
++{
++    CPUX86State *env = &cpu->env;
++    int ret;
++
++    if ((env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK)) {
++        ret = kvm_get_one_reg(CPU(cpu), KVM_X86_REG_KVM(KVM_REG_GUEST_SSP),
++                              &env->guest_ssp);
++        if (ret) {
++            return ret;
++        }
++    }
++    return 0;
++}
+ 
+ static int kvm_get_xsave(X86CPU *cpu)
+ {
+@@ -5445,6 +5474,11 @@ int kvm_arch_put_registers(CPUState *cpu, KvmPutState level, Error **errp)
+         error_setg_errno(errp, -ret, "Failed to set MSRs");
+         return ret;
+     }
++    ret = kvm_put_kvm_regs(x86_cpu);
++    if (ret < 0) {
++        error_setg_errno(errp, -ret, "Failed to set KVM type registers");
++        return ret;
++    }
+     ret = kvm_put_vcpu_events(x86_cpu, level);
+     if (ret < 0) {
+         error_setg_errno(errp, -ret, "Failed to set vCPU events");
+@@ -5517,6 +5551,11 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
+         error_setg_errno(errp, -ret, "Failed to get MSRs");
+         goto out;
+     }
++    ret = kvm_get_kvm_regs(cpu);
++    if (ret < 0) {
++        error_setg_errno(errp, -ret, "Failed to get KVM type registers");
++        goto out;
++    }
+     ret = kvm_get_apic(cpu);
+     if (ret < 0) {
+         error_setg_errno(errp, -ret, "Failed to get APIC");
 -- 
 2.34.1
 
