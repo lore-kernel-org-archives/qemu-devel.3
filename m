@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB2BCCD19A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED712CEBF93
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 06:36:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLFKF-0005p7-6q; Tue, 18 Nov 2025 01:36:27 -0500
+	id 1vLFKA-0005lt-87; Tue, 18 Nov 2025 01:36:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLFK2-0005je-JI
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:36:15 -0500
+ id 1vLFJz-0005ij-PE
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:36:13 -0500
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLFK0-0007CC-R3
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:36:14 -0500
+ id 1vLFJu-0007C4-My
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:36:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763447773; x=1794983773;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=2EeeRsC/XUg3teXyYaUyiQUeaj5evO6uMb81KhvNQWo=;
- b=WRiWdm/9B7raBVXgYmy3vqGvrYj4EaUrFEAn0f2bncpRaRJvxEuDfzbI
- PK7JYSop4LT60turrJAf1647v7ux/GyqZAOfO0IfHB9U0Y6WP2X5deK22
- jkHXYMU3UR6lp6TvPaNuqK+pgp4X40fQE7vvr/TgnL78U0E6WibnrrVe4
- o/ax/Yk6UdEyjRvJFTeb8JzizkeM8+/do/7USHSPVlULqzcZt4jg7ytnN
- 66rUeygH2e+Avm4F5LqDYFvYDXLwK0T7a1ET0atucsSEQvSi1laJlmSNq
- uxi6hkVeABJ6LpbOyt0mForcL0pS78vL2bqiuXH+w1jgiPazLWUYKSlXs A==;
-X-CSE-ConnectionGUID: arUxZp78QkuYzVPXHnvqCg==
-X-CSE-MsgGUID: s5gkRL6yToKE/HkUIR/nQg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="82850961"
-X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="82850961"
+ t=1763447767; x=1794983767;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=A65mMd5lWNs6XXTjhO21knFYXJM3Yt8rXvU/WLqh2Ko=;
+ b=F0NLzyjEEt0KIOmaSwEwjen2EE+SdGmpG9KNoprzbM8KQ902bEjadvwH
+ FyNXNcftNgCifL2yGMLEQPlTpTrOylYFBWklqFjStVweMlhY/QPFkZMlP
+ bvg4qWbD4TrzVxJ7UrvQlmuXljdpyRxVTf21AUHb05wx19M42BBBXp2+w
+ Qm4MrMYepfrJYNwi1SFnmT6NpGGJTujeXZPaOOjm8hl5fASYi+9wjcQ2x
+ xj5wXQJ7zF4v+4wSiA9d2IyID49q/T9DEdxAPNNhfQ770PEZeFcoGl7eO
+ ykOsHYCfiHxkOKUyTRRT8i5zV9DJD3ZSItFwcAdarIkwQqDUTxMeg9C+q Q==;
+X-CSE-ConnectionGUID: /KT5NToySvadmrsPHsft/w==
+X-CSE-MsgGUID: GhWGiopHQF6Qfay8d2kIRQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11616"; a="82850935"
+X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="82850935"
 Received: from orviesa010.jf.intel.com ([10.64.159.150])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Nov 2025 22:36:07 -0800
-X-CSE-ConnectionGUID: ilqn+WJjQVuS1nRIFuCG7A==
-X-CSE-MsgGUID: GmCXOVJZTai3lJ4np4cO6Q==
+ 17 Nov 2025 22:36:01 -0800
+X-CSE-ConnectionGUID: NHinHyBvTS+9fcI76gGa9g==
+X-CSE-MsgGUID: 9zQlB8GdQYK4i39ikxw46g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="189962670"
+X-IronPort-AV: E=Sophos;i="6.19,314,1754982000"; d="scan'208";a="189962628"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa010.jf.intel.com with ESMTP; 17 Nov 2025 22:36:05 -0800
+ by orviesa010.jf.intel.com with ESMTP; 17 Nov 2025 22:35:59 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  "Chang S . Bae" <chang.seok.bae@intel.com>,
  Zide Chen <zide.chen@intel.com>, Xudong Hao <xudong.hao@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 3/5] i386/cpu: Add APX migration support
-Date: Tue, 18 Nov 2025 14:58:15 +0800
-Message-Id: <20251118065817.835017-4-zhao1.liu@intel.com>
+Subject: [PATCH 0/5] i386/cpu: Support APX for KVM
+Date: Tue, 18 Nov 2025 14:58:12 +0800
+Message-Id: <20251118065817.835017-1-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251118065817.835017-1-zhao1.liu@intel.com>
-References: <20251118065817.835017-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
@@ -84,60 +83,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zide Chen <zide.chen@intel.com>
+Hi,
 
-Add a VMStateDescription to migrate APX EGPRs.
+This series adds APX (Advanced Performance Extensions) support in QEMU
+to enable APX in Guest based on KVM.
 
-Tested-by: Xudong Hao <xudong.hao@intel.com>
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+This series is based on CET v4:
+
+https://lore.kernel.org/qemu-devel/20251118034231.704240-1-zhao1.liu@intel.com/
+
+And you can also find the code here:
+
+https://gitlab.com/zhao.liu/qemu/-/commits/i386-all-for-dmr-v1.1-11-17-2025
+
+The patches for KVM side can be found at:
+
+https://lore.kernel.org/kvm/20251110180131.28264-1-chang.seok.bae@intel.com/
+
+
+Thanks for your review!
+
+
+Overview
+========
+
+Intel Advanced Performance Extensions (Intel APX) expands the Intel 64
+instruction set architecture with access to more registers (16
+additional general-purpose registers (GPRs) R16–R31) and adds various
+new features that improve general-purpose performance. The extensions
+are designed to provide efficient performance gains across a variety of
+workloads without significantly increasing silicon area or power
+consumption of the core. 
+
+APX spec link (rev.07) is:
+https://cdrdv2.intel.com/v1/dl/getContent/861610
+
+At QEMU side, the enabling work mainly includes two parts:
+
+1. save/restore/migrate the xstate of APX.
+   * APX xstate is a user xstate, but it reuses MPX xstate area in
+     un-compacted XSAVE buffer.
+   * To address this, QEMU will reject both APX and MPX if their CPUID
+     feature bits are set at the same (in Patch 1).
+
+2. add related CPUIDs support in feature words.
+
+Thanks and Best Regards,
+Zhao
 ---
- target/i386/machine.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+Zhao Liu (2):
+  i386/cpu: Support APX CPUIDs
+  i386/cpu: Mark apx xstate as migratable
 
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index 265388f1fd36..84faa2f8f8d3 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -1744,6 +1744,27 @@ static const VMStateDescription vmstate_cet = {
-     },
- };
- 
-+#ifdef TARGET_X86_64
-+static bool apx_needed(void *opaque)
-+{
-+    X86CPU *cpu = opaque;
-+    CPUX86State *env = &cpu->env;
-+
-+    return !!(env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_APX);
-+}
-+
-+static const VMStateDescription vmstate_apx = {
-+    .name = "cpu/apx",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = apx_needed,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT64_ARRAY(env.egprs, X86CPU, EGPR_NUM),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+#endif
-+
- const VMStateDescription vmstate_x86_cpu = {
-     .name = "cpu",
-     .version_id = 12,
-@@ -1895,6 +1916,9 @@ const VMStateDescription vmstate_x86_cpu = {
-         &vmstate_triple_fault,
-         &vmstate_pl0_ssp,
-         &vmstate_cet,
-+#ifdef TARGET_X86_64
-+        &vmstate_apx,
-+#endif
-         NULL
-     }
- };
+Zide Chen (3):
+  i386/cpu: Add APX EGPRs into xsave area
+  i386/cpu: Cache EGPRs in CPUX86State
+  i386/cpu: Add APX migration support
+
+ target/i386/cpu.c          | 68 ++++++++++++++++++++++++++++++++++++--
+ target/i386/cpu.h          | 26 +++++++++++++--
+ target/i386/machine.c      | 24 ++++++++++++++
+ target/i386/xsave_helper.c | 14 ++++++++
+ 4 files changed, 128 insertions(+), 4 deletions(-)
+
 -- 
 2.34.1
 
