@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4622CEE33B
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 17:03:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09913CEE341
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 17:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLP7D-0000UG-Aa; Tue, 18 Nov 2025 12:03:39 -0500
+	id 1vLP6z-00007y-L2; Tue, 18 Nov 2025 12:03:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP7C-0000Tt-JC
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP6y-00006K-4o
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP7A-0004nw-61
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:38 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLP6w-0004kq-Jo
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:03:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763485415;
+ s=mimecast20190719; t=1763485401;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uiTN7MKP9/fhyCfDenC0oaDVaYEcnwmTXIzVHbaCHvo=;
- b=JlDvmHDKRKvA2jw83IW7tHsppiq84TcMrT59jqhU86R6vB/6R2yqwoK7m7qqU2yAPnTXql
- KSiYdTui5j5E2QIGeM2V/6rUitRgiGRZ1340t4/oUL4339BSY5rQPwSV2647DwddqCcIn/
- k2uoCvYN9O1nIrKycr70PsIzOdDEHs0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=hHOyMeTMkv0bBJ7VSOAkT9JMHYRF2luZGQ4T+T0m6SY=;
+ b=D1Rz6z6akwLqWIO4KDG5cADmJIsXgnI3hDLhs1nCgI5eTFEffDVuW5HF/lkNIyVWiQWbHk
+ vSBaqLMWyjle5BemUfcTKJ4GlMx01zOnckOcMcp0nVaPefEdz1PIEi84wemjEfptBpWRwx
+ +jpj/VY6+ZVMAVdoKZF3pGkC2ucBxDg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-PwZYSqqWP9aC-jW7HeVvlw-1; Tue,
- 18 Nov 2025 12:03:31 -0500
-X-MC-Unique: PwZYSqqWP9aC-jW7HeVvlw-1
-X-Mimecast-MFC-AGG-ID: PwZYSqqWP9aC-jW7HeVvlw_1763485410
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-5LYtJk0vMsC6Bd4J59DI1Q-1; Tue,
+ 18 Nov 2025 12:03:18 -0500
+X-MC-Unique: 5LYtJk0vMsC6Bd4J59DI1Q-1
+X-Mimecast-MFC-AGG-ID: 5LYtJk0vMsC6Bd4J59DI1Q_1763485397
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2C83D1801237; Tue, 18 Nov 2025 17:03:30 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB7A9191B4C5; Tue, 18 Nov 2025 17:03:17 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.32.26])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7A060300ABAF; Tue, 18 Nov 2025 17:03:28 +0000 (UTC)
+ id 1C1D9300A88D; Tue, 18 Nov 2025 17:03:15 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 12/19] qcow2: Fix cache_clean_timer
-Date: Tue, 18 Nov 2025 18:02:49 +0100
-Message-ID: <20251118170256.272087-13-kwolf@redhat.com>
+Subject: [PULL 06/19] gluster: Do not move coroutine into BDS context
+Date: Tue, 18 Nov 2025 18:02:43 +0100
+Message-ID: <20251118170256.272087-7-kwolf@redhat.com>
 In-Reply-To: <20251118170256.272087-1-kwolf@redhat.com>
 References: <20251118170256.272087-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,324 +86,93 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hanna Czenczek <hreitz@redhat.com>
 
-The cache-cleaner runs as a timer CB in the BDS AioContext.  With
-multiqueue, it can run concurrently to I/O requests, and because it does
-not take any lock, this can break concurrent cache accesses, corrupting
-the image.  While the chances of this happening are low, it can be
-reproduced e.g. by modifying the code to schedule the timer CB every
-5 ms (instead of at most once per second) and modifying the last (inner)
-while loop of qcow2_cache_clean_unused() like so:
+The request coroutine may not run in the BDS AioContext.  We should wake
+it in its own context, not move it.
 
-    while (i < c->size && can_clean_entry(c, i)) {
-        for (int j = 0; j < 1000 && can_clean_entry(c, i); j++) {
-            usleep(100);
-        }
-        c->entries[i].offset = 0;
-        c->entries[i].lru_counter = 0;
-        i++;
-        to_clean++;
-    }
+With that, we can remove GlusterAIOCB.aio_context.
 
-i.e. making it wait on purpose for the point in time where the cache is
-in use by something else.
+Also add a comment why aio_co_schedule() is safe to use in this way.
 
-The solution chosen for this in this patch is not the best solution, I
-hope, but I admittedly can’t come up with anything strictly better.
-
-We can protect from concurrent cache accesses either by taking the
-existing s->lock, or we introduce a new (non-coroutine) mutex
-specifically for cache accesses.  I would prefer to avoid the latter so
-as not to introduce additional (very slight) overhead.
-
-Using s->lock, which is a coroutine mutex, however means that we need to
-take it in a coroutine, so the timer must run in a coroutine.  We can
-transform it from the current timer CB style into a coroutine that
-sleeps for the set interval.  As a result, however, we can no longer
-just deschedule the timer to instantly guarantee it won’t run anymore,
-but have to await the coroutine’s exit.
-
-(Note even before this patch there were places that may not have been so
-guaranteed after all: Anything calling cache_clean_timer_del() from the
-QEMU main AioContext could have been running concurrently to an existing
-timer CB invocation.)
-
-Polling to await the timer to actually settle seems very complicated for
-something that’s rather a minor problem, but I can’t come up with any
-better solution that doesn’t again just overlook potential problems.
-
-(Not Cc-ing qemu-stable, as the issue is quite unlikely to be hit, and
-I’m not too fond of this solution.)
+**Note:** Due to a lack of a gluster set-up, I have not tested this
+commit.  It seemed safe enough to send anyway, just maybe not to
+qemu-stable.  To be clear, I don’t know of any user-visible bugs that
+would arise from the state without this patch; the request coroutine is
+moved into the main BDS AioContext, so guest device completion code will
+run in a different context than where the request started, which can’t
+be good, but I haven’t actually confirmed any bugs (due to not being
+able to test it).
 
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20251110154854.151484-13-hreitz@redhat.com>
+Message-ID: <20251110154854.151484-7-hreitz@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/qcow2.h |   5 +-
- block/qcow2.c | 141 ++++++++++++++++++++++++++++++++++++++++----------
- 2 files changed, 117 insertions(+), 29 deletions(-)
+ block/gluster.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/block/qcow2.h b/block/qcow2.h
-index 547bb2b814..96db7c51ec 100644
---- a/block/qcow2.h
-+++ b/block/qcow2.h
-@@ -345,8 +345,11 @@ typedef struct BDRVQcow2State {
+diff --git a/block/gluster.c b/block/gluster.c
+index 89abd40f31..4fb25b2c6d 100644
+--- a/block/gluster.c
++++ b/block/gluster.c
+@@ -56,7 +56,6 @@ typedef struct GlusterAIOCB {
+     int64_t size;
+     int ret;
+     Coroutine *coroutine;
+-    AioContext *aio_context;
+ } GlusterAIOCB;
  
-     Qcow2Cache *l2_table_cache;
-     Qcow2Cache *refcount_block_cache;
--    QEMUTimer *cache_clean_timer;
-+    /* Non-NULL while the timer is running */
-+    Coroutine *cache_clean_timer_co;
-     unsigned cache_clean_interval;
-+    QemuCoSleep cache_clean_timer_wake;
-+    CoQueue cache_clean_timer_exit;
- 
-     QLIST_HEAD(, QCowL2Meta) cluster_allocs;
- 
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 4e4f77170a..05da589729 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -835,41 +835,113 @@ static const char *overlap_bool_option_names[QCOW2_OL_MAX_BITNR] = {
-     [QCOW2_OL_BITMAP_DIRECTORY_BITNR] = QCOW2_OPT_OVERLAP_BITMAP_DIRECTORY,
- };
- 
--static void cache_clean_timer_cb(void *opaque)
-+static void coroutine_fn cache_clean_timer(void *opaque)
- {
--    BlockDriverState *bs = opaque;
--    BDRVQcow2State *s = bs->opaque;
--    qcow2_cache_clean_unused(s->l2_table_cache);
--    qcow2_cache_clean_unused(s->refcount_block_cache);
--    timer_mod(s->cache_clean_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
--              (int64_t) s->cache_clean_interval * 1000);
-+    BDRVQcow2State *s = opaque;
-+    uint64_t wait_ns;
-+
-+    WITH_QEMU_LOCK_GUARD(&s->lock) {
-+        wait_ns = s->cache_clean_interval * NANOSECONDS_PER_SECOND;
-+    }
-+
-+    while (wait_ns > 0) {
-+        qemu_co_sleep_ns_wakeable(&s->cache_clean_timer_wake,
-+                                  QEMU_CLOCK_VIRTUAL, wait_ns);
-+
-+        WITH_QEMU_LOCK_GUARD(&s->lock) {
-+            if (s->cache_clean_interval > 0) {
-+                qcow2_cache_clean_unused(s->l2_table_cache);
-+                qcow2_cache_clean_unused(s->refcount_block_cache);
-+            }
-+
-+            wait_ns = s->cache_clean_interval * NANOSECONDS_PER_SECOND;
-+        }
-+    }
-+
-+    WITH_QEMU_LOCK_GUARD(&s->lock) {
-+        s->cache_clean_timer_co = NULL;
-+        qemu_co_queue_restart_all(&s->cache_clean_timer_exit);
-+    }
- }
- 
- static void cache_clean_timer_init(BlockDriverState *bs, AioContext *context)
- {
-     BDRVQcow2State *s = bs->opaque;
-     if (s->cache_clean_interval > 0) {
--        s->cache_clean_timer =
--            aio_timer_new_with_attrs(context, QEMU_CLOCK_VIRTUAL,
--                                     SCALE_MS, QEMU_TIMER_ATTR_EXTERNAL,
--                                     cache_clean_timer_cb, bs);
--        timer_mod(s->cache_clean_timer, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) +
--                  (int64_t) s->cache_clean_interval * 1000);
-+        assert(!s->cache_clean_timer_co);
-+        s->cache_clean_timer_co = qemu_coroutine_create(cache_clean_timer, s);
-+        aio_co_enter(context, s->cache_clean_timer_co);
+ typedef struct BDRVGlusterState {
+@@ -743,7 +742,17 @@ static void gluster_finish_aiocb(struct glfs_fd *fd, ssize_t ret,
+         acb->ret = -EIO; /* Partial read/write - fail it */
      }
- }
  
--static void cache_clean_timer_del(BlockDriverState *bs)
-+/**
-+ * Delete the cache clean timer and await any yet running instance.
-+ * Called holding s->lock.
-+ */
-+static void coroutine_fn
-+cache_clean_timer_co_locked_del_and_wait(BlockDriverState *bs)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+
-+    if (s->cache_clean_timer_co) {
-+        s->cache_clean_interval = 0;
-+        qemu_co_sleep_wake(&s->cache_clean_timer_wake);
-+        qemu_co_queue_wait(&s->cache_clean_timer_exit, &s->lock);
-+    }
-+}
-+
-+/**
-+ * Same as cache_clean_timer_co_locked_del_and_wait(), but takes s->lock.
-+ */
-+static void coroutine_fn
-+cache_clean_timer_co_del_and_wait(BlockDriverState *bs)
- {
-     BDRVQcow2State *s = bs->opaque;
--    if (s->cache_clean_timer) {
--        timer_free(s->cache_clean_timer);
--        s->cache_clean_timer = NULL;
-+
-+    WITH_QEMU_LOCK_GUARD(&s->lock) {
-+        cache_clean_timer_co_locked_del_and_wait(bs);
-+    }
-+}
-+
-+struct CacheCleanTimerDelAndWaitCoParams {
-+    BlockDriverState *bs;
-+    bool done;
-+};
-+
-+static void coroutine_fn cache_clean_timer_del_and_wait_co_entry(void *opaque)
-+{
-+    struct CacheCleanTimerDelAndWaitCoParams *p = opaque;
-+
-+    cache_clean_timer_co_del_and_wait(p->bs);
-+    p->done = true;
-+    aio_wait_kick();
-+}
-+
-+/**
-+ * Delete the cache clean timer and await any yet running instance.
-+ * Must be called from the main or BDS AioContext without s->lock held.
-+ */
-+static void coroutine_mixed_fn
-+cache_clean_timer_del_and_wait(BlockDriverState *bs)
-+{
-+    IO_OR_GS_CODE();
-+
-+    if (qemu_in_coroutine()) {
-+        cache_clean_timer_co_del_and_wait(bs);
-+    } else {
-+        struct CacheCleanTimerDelAndWaitCoParams p = { .bs = bs };
-+        Coroutine *co;
-+
-+        co = qemu_coroutine_create(cache_clean_timer_del_and_wait_co_entry, &p);
-+        qemu_coroutine_enter(co);
-+
-+        BDRV_POLL_WHILE(bs, !p.done);
-     }
- }
- 
- static void qcow2_detach_aio_context(BlockDriverState *bs)
- {
--    cache_clean_timer_del(bs);
-+    cache_clean_timer_del_and_wait(bs);
- }
- 
- static void qcow2_attach_aio_context(BlockDriverState *bs,
-@@ -1214,12 +1286,24 @@ fail:
-     return ret;
- }
- 
-+/* s_locked specifies whether s->lock is held or not */
- static void qcow2_update_options_commit(BlockDriverState *bs,
--                                        Qcow2ReopenState *r)
-+                                        Qcow2ReopenState *r,
-+                                        bool s_locked)
- {
-     BDRVQcow2State *s = bs->opaque;
-     int i;
- 
+-    aio_co_schedule(acb->aio_context, acb->coroutine);
 +    /*
-+     * We need to stop the cache-clean-timer before destroying the metadata
-+     * table caches
++     * Safe to call: The coroutine will yield exactly once awaiting this
++     * scheduling, and the context is its own context, so it will be scheduled
++     * once it does yield.
++     *
++     * (aio_co_wake() would call qemu_get_current_aio_context() to check whether
++     * we are in the same context, but we are not in a qemu thread, so we cannot
++     * do that.  Use aio_co_schedule() directly.)
 +     */
-+    if (s_locked) {
-+        cache_clean_timer_co_locked_del_and_wait(bs);
-+    } else {
-+        cache_clean_timer_del_and_wait(bs);
-+    }
-+
-     if (s->l2_table_cache) {
-         qcow2_cache_destroy(s->l2_table_cache);
-     }
-@@ -1228,6 +1312,7 @@ static void qcow2_update_options_commit(BlockDriverState *bs,
-     }
-     s->l2_table_cache = r->l2_table_cache;
-     s->refcount_block_cache = r->refcount_block_cache;
-+
-     s->l2_slice_size = r->l2_slice_size;
- 
-     s->overlap_check = r->overlap_check;
-@@ -1239,11 +1324,8 @@ static void qcow2_update_options_commit(BlockDriverState *bs,
- 
-     s->discard_no_unref = r->discard_no_unref;
- 
--    if (s->cache_clean_interval != r->cache_clean_interval) {
--        cache_clean_timer_del(bs);
--        s->cache_clean_interval = r->cache_clean_interval;
--        cache_clean_timer_init(bs, bdrv_get_aio_context(bs));
--    }
-+    s->cache_clean_interval = r->cache_clean_interval;
-+    cache_clean_timer_init(bs, bdrv_get_aio_context(bs));
- 
-     qapi_free_QCryptoBlockOpenOptions(s->crypto_opts);
-     s->crypto_opts = r->crypto_opts;
-@@ -1261,6 +1343,7 @@ static void qcow2_update_options_abort(BlockDriverState *bs,
-     qapi_free_QCryptoBlockOpenOptions(r->crypto_opts);
++    aio_co_schedule(qemu_coroutine_get_aio_context(acb->coroutine),
++                    acb->coroutine);
  }
  
-+/* Called with s->lock held */
- static int coroutine_fn GRAPH_RDLOCK
- qcow2_update_options(BlockDriverState *bs, QDict *options, int flags,
-                      Error **errp)
-@@ -1270,7 +1353,7 @@ qcow2_update_options(BlockDriverState *bs, QDict *options, int flags,
+ static void qemu_gluster_parse_flags(int bdrv_flags, int *open_flags)
+@@ -1006,7 +1015,6 @@ static coroutine_fn int qemu_gluster_co_pwrite_zeroes(BlockDriverState *bs,
+     acb.size = bytes;
+     acb.ret = 0;
+     acb.coroutine = qemu_coroutine_self();
+-    acb.aio_context = bdrv_get_aio_context(bs);
  
-     ret = qcow2_update_options_prepare(bs, &r, options, flags, errp);
-     if (ret >= 0) {
--        qcow2_update_options_commit(bs, &r);
-+        qcow2_update_options_commit(bs, &r, true);
-     } else {
-         qcow2_update_options_abort(bs, &r);
-     }
-@@ -1908,7 +1991,7 @@ qcow2_do_open(BlockDriverState *bs, QDict *options, int flags,
-     qemu_vfree(s->l1_table);
-     /* else pre-write overlap checks in cache_destroy may crash */
-     s->l1_table = NULL;
--    cache_clean_timer_del(bs);
-+    cache_clean_timer_co_locked_del_and_wait(bs);
-     if (s->l2_table_cache) {
-         qcow2_cache_destroy(s->l2_table_cache);
-     }
-@@ -1963,6 +2046,7 @@ static int qcow2_open(BlockDriverState *bs, QDict *options, int flags,
+     ret = glfs_zerofill_async(s->fd, offset, bytes, gluster_finish_aiocb, &acb);
+     if (ret < 0) {
+@@ -1184,7 +1192,6 @@ static coroutine_fn int qemu_gluster_co_rw(BlockDriverState *bs,
+     acb.size = size;
+     acb.ret = 0;
+     acb.coroutine = qemu_coroutine_self();
+-    acb.aio_context = bdrv_get_aio_context(bs);
  
-     /* Initialise locks */
-     qemu_co_mutex_init(&s->lock);
-+    qemu_co_queue_init(&s->cache_clean_timer_exit);
+     if (write) {
+         ret = glfs_pwritev_async(s->fd, qiov->iov, qiov->niov, offset, 0,
+@@ -1251,7 +1258,6 @@ static coroutine_fn int qemu_gluster_co_flush_to_disk(BlockDriverState *bs)
+     acb.size = 0;
+     acb.ret = 0;
+     acb.coroutine = qemu_coroutine_self();
+-    acb.aio_context = bdrv_get_aio_context(bs);
  
-     assert(!qemu_in_coroutine());
-     assert(qemu_get_current_aio_context() == qemu_get_aio_context());
-@@ -2048,7 +2132,7 @@ static void qcow2_reopen_commit(BDRVReopenState *state)
+     ret = glfs_fsync_async(s->fd, gluster_finish_aiocb, &acb);
+     if (ret < 0) {
+@@ -1299,7 +1305,6 @@ static coroutine_fn int qemu_gluster_co_pdiscard(BlockDriverState *bs,
+     acb.size = 0;
+     acb.ret = 0;
+     acb.coroutine = qemu_coroutine_self();
+-    acb.aio_context = bdrv_get_aio_context(bs);
  
-     GRAPH_RDLOCK_GUARD_MAINLOOP();
- 
--    qcow2_update_options_commit(state->bs, state->opaque);
-+    qcow2_update_options_commit(state->bs, state->opaque, false);
-     if (!s->data_file) {
-         /*
-          * If we don't have an external data file, s->data_file was cleared by
-@@ -2805,7 +2889,7 @@ qcow2_do_close(BlockDriverState *bs, bool close_data_file)
-         qcow2_inactivate(bs);
-     }
- 
--    cache_clean_timer_del(bs);
-+    cache_clean_timer_del_and_wait(bs);
-     qcow2_cache_destroy(s->l2_table_cache);
-     qcow2_cache_destroy(s->refcount_block_cache);
- 
-@@ -2875,6 +2959,7 @@ qcow2_co_invalidate_cache(BlockDriverState *bs, Error **errp)
-     s->data_file = data_file;
-     /* Re-initialize objects initialized in qcow2_open() */
-     qemu_co_mutex_init(&s->lock);
-+    qemu_co_queue_init(&s->cache_clean_timer_exit);
- 
-     options = qdict_clone_shallow(bs->options);
- 
+     ret = glfs_discard_async(s->fd, offset, bytes, gluster_finish_aiocb, &acb);
+     if (ret < 0) {
 -- 
 2.51.1
 
