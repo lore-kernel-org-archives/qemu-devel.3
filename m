@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F20CEE343
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 050E8CEE349
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:37:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQVK-0007Za-2g; Tue, 18 Nov 2025 13:32:38 -0500
+	id 1vLQZj-0001YR-6F; Tue, 18 Nov 2025 13:37:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQVI-0007Yc-36
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:32:36 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQZd-0001XC-Sg
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:37:06 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQVG-0001Zx-IE
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:32:35 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-477619f8ae5so39331025e9.3
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:32:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQZb-0002Wi-4m
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:37:05 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-42b38de7940so3322282f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:37:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763490753; x=1764095553; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763491020; x=1764095820; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=d/uW5xhAdkkbUSv0iFNaMOjk/XEPGG4W51LWNCO8iAA=;
- b=j40ZTJ4MEaeKX0fmDAsSYU8IhxIJHTUZ8jvPnVCfioeW0tDlz5XDNSl0p24UNBmuvi
- TU/bwIu1DkTPsiNElKKbqCnGr7b7Xh+CxLQhyo1WehMOs0aysXnfgTYXrl56k+ppHFJn
- klKoXT5Lfexit+HjVgC0atZxnb1UbtDyePELHX+NyM2xLR0qREHNXfPWaQaxVJ2U3uFT
- g8k00tdCA6D19TmPK7Elymb+2fcjd2hIrv73iT0pjwVOJXkfYIQBbfVl4QeV1AkmzSXT
- ucar8RkxttVQyAWAoMIKk7XEO83hQvXM1VyAxE5Ls/7OIUuKDAnlAIRtmTLmhUalWF3c
- OyAA==
+ bh=5nZ6PbcPVgM+2Ts7vehtNsbsk/ESLzXi7hzw3ZpWKBk=;
+ b=hNvx3X+ReZUtTaH33H2EuDuUAu+ZaC691adOI1tqRGq0vIch8lkzd0ZXPsAE3jn96N
+ BPHzo2YTiuLVVjmwGRAFG9Gle+5v5NiHmMkDtgWwyi8I1q6ASN9ICCBVZYJrO09Scev4
+ NaPiNfzHJ+6w4m8nKeTzFsG/1FBt6ylUmsuO4UPZUnPpp3jhyGKJyUg+nU/bntT9a/QZ
+ 7S1GT7SUSYIQntwK8hgqiVYPB7vzSfBHmytZAfqvje/l4Y5kpaDJr3nqEgC3W4gcmBVf
+ bLz9zIIw5JksnNctkSAyZwO1NJYxpLh0fZRp9bsRyFgkaCN2FFF0osh6vIngtyCzdXHU
+ 44rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763490753; x=1764095553;
+ d=1e100.net; s=20230601; t=1763491020; x=1764095820;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=d/uW5xhAdkkbUSv0iFNaMOjk/XEPGG4W51LWNCO8iAA=;
- b=EHFaUDDTAM1wmTtyEAS7u9eNFQB19LoE8T6eifEsohzhasixQVLeH2z9E8V2PWTYib
- oLiirvnkYNorWP4F+amOpl5z7NtbsfPFYItkgHgynPDG8m0unhwd/0bAm3Ptw5BLWugR
- 2mCwTsOaZrlKRMI1KRAZF4iDfzqL48tbpKA0sWVMU7hFKKCL3zR15UvIMOUtVfLoFTQX
- IWRA8d3plqDatCSyOQFQyUxUBAB+6a92tDrCOcIKyiVgYoXvwGLYAjpisipyZIYJJtIp
- 93e66AgOR7Glfp1XR26ITEs6CEIgKk6iPpZvl3TJlN1HbZrGsgJYVU62CtFxj/uj7At0
- NTPg==
+ bh=5nZ6PbcPVgM+2Ts7vehtNsbsk/ESLzXi7hzw3ZpWKBk=;
+ b=woIjxrM23Uozwp1D7ucQ/DcouF9XteW0O/RfrqIy8pTN8DTHho7UpPOSU2YHMhID9h
+ VN71K5ywgEYUTHuZXYnIqDJ4aLGNqAV1grAv6aVm9eWcZHRdvYc1ecDbq6LkyNhjFk2L
+ nSzwHmIm4Og0UbuUkj8Ku/ZeHRVc8LB5+PBUGHMTbctjxQudDulYLod9Cv60X1sm6/Qw
+ XcynHOcFN1flMhgRT1h0AAr8t/K6WHm370r7FLHBXkbOpmbn8aJ99p2FwC8QVjQq6NhY
+ bafxIiRxdKr2ucZSTh1qfB/Imp/TBeqbb4xbVA10j+axnmiBOKRuKoQogoaPcU+vrzIN
+ sVng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRiw1S4oRaTC435tqTUeRjS7XxPEyMwsdEQPZZtWRppuMvzsZbBR9yPqM4zsNlV2luBWUuL4ASQOXD@nongnu.org
-X-Gm-Message-State: AOJu0Yxpj1ibeFigIZkRU4j/b2RtL43cgDQx1lCCfaeSZqKC/DrwlLPr
- PXqDsk2UtntbckbbmnS9ohAkgCA7/Q67Z6KhVlhHEpHTH7YMRIbx0ZEwVhGIRTb4USI=
-X-Gm-Gg: ASbGncsSm4Oiqlpm3pEWchpkpqdkF2++dGYJIec64NLGWVFK1p25J385SyWwtZYWT3d
- 5DIevtqOiMErdsUSsuepkPFQl0jgIsnC1ENlXTGXm1LAGqKZZOHhUnJxnDYGG/m4KIkDTbNiwJ+
- YiglxVtl+dz2Borv+fD72puszjCQUhB0oxoAzin+9ETcqQayxt1wJoul26mncRR9WQuxSJGK+F/
- 88KdWU/qC+FZ9mOWdJwErCcPaGXzXZksKXmdrI3lH07P4/9txr77/PH8V16o6SQ5ooWU29o5Ees
- V+CvP2GS97VgHj26EG6oXk6X6OJcQ36Rj1BHzMdqfZcdR9sA0o6eBl6jbD8VrRVawzTJedCaOtA
- TXrTF24LbhD4JNZHmo+f2vVo3FE9AgFnzZi144YiABabzWWBt2ERngsVmWYg6LLd+BVSjQKVBGn
- +MFYnDCKM4++9RNB/r7S7XWcOjZLjleG27fKi/CSX7loE5Qdix9usWtGf5NCAZlO9l
-X-Google-Smtp-Source: AGHT+IH8As0k+/qjIsRxSGFWSXrkQNipyVInInfO9IazJV+xqM6wRvyQCswVI0x7uEeQl0TUmXRrfQ==
-X-Received: by 2002:a05:600c:8b23:b0:477:7bd2:693f with SMTP id
- 5b1f17b1804b1-4778fe60615mr166243085e9.6.1763490752689; 
- Tue, 18 Nov 2025 10:32:32 -0800 (PST)
+ AJvYcCVRyCze2LLtItFVJO2mSoJ+Y8FdDotVB2ROcdWTkN0y03nVu2uXqU0n3MMpqA1YI/DxJ2VvvlKNedDk@nongnu.org
+X-Gm-Message-State: AOJu0YzKN+Chm+EbLYUt2sSgGl0pgfMOsc3maUml4DomowUOKK99jhDp
+ 3r0SRHw7wfZAsQYuuxbkQf0mv/cvsSJQrIAssw6Ds6ywHXoYNxPG10P2fPWVGzKito8=
+X-Gm-Gg: ASbGncuV/wBuJkcJ2T4+enE2FBToRcFmMWe7FCboMovv3WpzbgBVSq7xwQBT0N3otp8
+ y5l++Hmm24BzJUXahRkKK3V5wvQqFiUFO6v0FceSxRwIdtmmK57HcIMw1mNS/DngLfcbduJXaW9
+ Nw2yQU+xfxv9VO3MaT/PsZ+P0OF0ytCsRrrs9BCOE/mmSAaaV5Ne6CtRURhU5NvrVtJKBI2iD1Q
+ pvHvsFUoR6vCaudBIfOhyrYh83ZLRI5ri/VXHd7eqv3Ky3tYUM8goK2cA08ZqNuqG7nwNbz1v6q
+ QGS9Pxp4t95hs2EaAe6kIYPAqTsRPgopCCcwr20F3j8KbiD3M5Q+JtaueRO98K3WBFoK25a+ctm
+ xU0zFCjJ2xLSSNaOFF5o1FXfBCKflKrjZjwnaoX/jVnTObNJQdUkXbdxnndB4ioFVCPc4/8DtU0
+ aDa0ovlgASqQdCliox6fuZkfeApRZrvJrr8JVM/ISlDnzfTUzW/b7D59T/wka829qD
+X-Google-Smtp-Source: AGHT+IHlnTBaYNXbM/rlZJZwc4XVkWw3cdqiudlEH7ZOceGLYneeRroVLUtI2mspQ+Pi1wzXAlmbpw==
+X-Received: by 2002:a05:6000:613:b0:42b:40df:2337 with SMTP id
+ ffacd0b85a97d-42b59373843mr15845122f8f.50.1763491020198; 
+ Tue, 18 Nov 2025 10:37:00 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477aa387473sm21714325e9.4.2025.11.18.10.32.31
+ ffacd0b85a97d-42b53f19aa0sm34087871f8f.37.2025.11.18.10.36.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 10:32:32 -0800 (PST)
-Message-ID: <f25dd5eb-260a-4bc2-acde-3fee7291f49b@linaro.org>
-Date: Tue, 18 Nov 2025 19:32:31 +0100
+ Tue, 18 Nov 2025 10:36:59 -0800 (PST)
+Message-ID: <cfd9d2c0-9321-4709-931f-6befaafd6c36@linaro.org>
+Date: Tue, 18 Nov 2025 19:36:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] system/qtest.c: Allow for multiple CHR_EVENT_CLOSED events
+Subject: Re: [PATCH] hw/sd/sdcard: Avoid confusing address calculation in
+ rpmb_calc_hmac
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20251107174306.1408139-1-peter.maydell@linaro.org>
+To: Jan Kiszka <jan.kiszka@siemens.com>, qemu-block@nongnu.org,
+ GuoHan Zhao <zhaoguohan@kylinos.cn>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, Bin Meng <bmeng.cn@gmail.com>
+References: <4f7e1952-ecbd-4484-b128-9d02de3a7935@siemens.com>
+ <663acd8d-5c39-4f1c-b5b1-569e36e4ff95@linaro.org>
+ <99d516b4-28f0-4605-8e14-fbf3d282890e@siemens.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251107174306.1408139-1-peter.maydell@linaro.org>
+In-Reply-To: <99d516b4-28f0-4605-8e14-fbf3d282890e@siemens.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,31 +108,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/25 18:43, Peter Maydell wrote:
-> In the qtest_event() QEMUChrEvent handler, we create a timer
-> and log OPENED on CHR_EVENT_OPENED, and we destroy the timer and
-> log CLOSED on CHR_EVENT_CLOSED. However, the chardev subsystem
-> can send us more than one CHR_EVENT_CLOSED if we're reading from
-> a file chardev:
->   * the first one happens when we read the last data from the file
->   * the second one happens when the user hits ^C to exit QEMU
->     and the chardev is finalized: char_fd_finalize()
+On 17/11/25 07:09, Jan Kiszka wrote:
+> On 16.11.25 18:43, Philippe Mathieu-Daudé wrote:
+>> Hi Jan,
+>>
+>> On 14/11/25 22:27, Jan Kiszka wrote:
+>>> From: Jan Kiszka <jan.kiszka@siemens.com>
+>>>
+>>>   From the source frame, we initially need to copy out all fields after
+>>> data, thus starting from nonce on. Avoid expressing this indirectly by
+>>> pointing to the end of the data field - which also raised the attention
+>>> of Coverity (out-of-bound read /wrt data).
+>>>
+>>
+>> Resolves: CID 1642869
+>> Fixes: 3acf956ea1a ("hw/sd/sdcard: Handle RPMB MAC field")
+>>
 > 
-> This causes us to call g_timer_elapsed() with a NULL timer
-> (which glib complains about) and print an extra CLOSED log line
-> with a zero timestamp:
+> Feel free to add it. But not that it is not really a bug fix IMHO. It is
+> a code clarification, output is identical.
 > 
-> [I +0.063829] CLOSED
-> qemu-system-aarch64: GLib: g_timer_elapsed: assertion 'timer != NULL' failed
-> [I +0.000000] CLOSED
+>>> Reported-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+>>> Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+>>> ---
+>>>
+>>> Tested, not causing any regression. Please check again if Coverity is
+>>> happy as well. Thanks!
+>>>
+>>>    hw/sd/sd.c | 3 ++-
+>>>    1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+>>> index 9c86c016cc..7fdb9195e0 100644
+>>> --- a/hw/sd/sd.c
+>>> +++ b/hw/sd/sd.c
+>>> @@ -1161,7 +1161,8 @@ static bool rpmb_calc_hmac(SDState *sd, const
+>>> RPMBDataFrame *frame,
+>>>              assert(RPMB_HASH_LEN <= sizeof(sd->data));
+>>>    -        memcpy((uint8_t *)buf + RPMB_DATA_LEN, &frame-
+>>>> data[RPMB_DATA_LEN],
+>>> +        memcpy((uint8_t *)buf + RPMB_DATA_LEN,
+>>> +               (uint8_t *)frame + offsetof(RPMBDataFrame, nonce),
+>>>                   RPMB_HASH_LEN - RPMB_DATA_LEN);
+>>
+>> Having:
+>>
+>> #define RPMB_HASH_LEN       (RPMB_DATA_LEN + RPMB_NONCE_LEN)
+>>
+>> then
+>>
+>> RPMB_HASH_LEN - RPMB_DATA_LEN = RPMB_NONCE_LEN.
 > 
-> Avoid this by ignoring a CHR_EVENT_CLOSED if we have already
-> processed one.
+> This is not correct: 284 - 256 != 16
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   system/qtest.c | 4 ++++
->   1 file changed, 4 insertions(+)
+> We hash 284 bytes, that is everything from data field to the end of
+> RPMBDataFrame.
 
-Queued, thanks.
+Right. This is why I took so long time before starting to review your
+previous series, I was looking for full-focused brain mode. Now than
+I could focus again, this is now clear crystal. I'll just add a
+"Hash everything from data field to the end of RPMBDataFrame" comment.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+and queued!
+
 
