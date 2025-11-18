@@ -4,71 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC597CED240
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 03:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0A91CCD19A
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 03:50:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLCKf-0004Bn-Jq; Mon, 17 Nov 2025 22:24:41 -0500
+	id 1vLCjV-0006GT-Ih; Mon, 17 Nov 2025 22:50:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vLCKc-0004Ac-IG; Mon, 17 Nov 2025 22:24:38 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vLCKX-0004rB-MC; Mon, 17 Nov 2025 22:24:37 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDX3mLe5htp1KZGAg--.28S2;
- Tue, 18 Nov 2025 11:24:14 +0800 (CST)
-Received: from [10.31.62.13] (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCX8O3Z5htpoX0FAA--.10819S2;
- Tue, 18 Nov 2025 11:24:10 +0800 (CST)
-Message-ID: <225c5e16-8e50-495e-9785-05edf25ce86f@phytium.com.cn>
-Date: Tue, 18 Nov 2025 11:24:09 +0800
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1vLCjR-0006Fq-TO
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:50:18 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangfei.gao@linaro.org>)
+ id 1vLCjO-0000v1-By
+ for qemu-devel@nongnu.org; Mon, 17 Nov 2025 22:50:15 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-5957e017378so5843728e87.3
+ for <qemu-devel@nongnu.org>; Mon, 17 Nov 2025 19:50:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763437811; x=1764042611; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=/YYBa4PpVDAlOdsy90H26Rh9+Rc0h1fgXzQPvbTBnJ8=;
+ b=THCDkSX4QzpOShB6zIZ8jMJF6bVn85wZBb6aeOYB9SYo6LNTuILbIYgPUDdZrHGEl3
+ d0/WiwdFGz+KUTer3rJD1Akr8WLhK9mg5oXTOfJoKHJEQ6rT1JcOaNS9SA6IyvJm2QQE
+ TMfrgOsyIpktDdZZ5aRT9DwprDncjJi/AlLLcUpqjEP+/qQmv39TSvMa1XfojHumgILB
+ 33EGZbhIBA58dkIQy/wwFUx9SW6Vo3YGp5Os0na9mc3pp7MKOhjhNipHTR5IZ6/kufn1
+ GQw/vyZ/I18j9YKl0FKk1AZJe1oevvLM7muZwwGg0w0p7Z9y/1RQzJlFUzjps18UMN94
+ 5dbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763437811; x=1764042611;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/YYBa4PpVDAlOdsy90H26Rh9+Rc0h1fgXzQPvbTBnJ8=;
+ b=grnqSZ/oSOIaipsamE7qExNJi6TQ5UIWElv4for3pNa4+phYB9GUqQj2J1cMAC3Prz
+ GEQzuDzB9vfCDlPjYUwaSyhdE8IaMZFU9AfuE585nKc3HHcxrB8AlDPffdxOeorNuNrT
+ yaUNJHJheP+v/20RKkSVpWWerSqeKYS81q++3TNSvQyIqbb8S7XuorydzRIYm/5F3hzt
+ krWEbyttBKxhEiEZ5YUxVVJb/+B1bexGEHGPUtr/F1u/9sB6z+vEJGMPwY6KdW+Jfmbm
+ LW/QxBE0OM5HiKTdiJaFs9a4/kuR5662bZs3YE5070dSXPusMKpTPiK+qLCZWzg21AVO
+ 0bgQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgjSL3Z0v16gJXA8Ir3S1G7pg0dcvIJn6oKZM+Mhkb0flmS+sCLkn1dDCrjtk/eIKUGrgCVZ23X74N@nongnu.org
+X-Gm-Message-State: AOJu0YyBkzHxWMnGomPw1zjCi7AB1g7Uzy2qInrVreVaf9Ea+r7zU7qp
+ NbcAz+nXceBqj9DYrkBOFrCLnEIzJ9Po89tDAcW1m/Ooc0l/fE53tIdGTtMa8Gg8jcKSspFPKSH
+ fTQHhuB5D3sbRBUzw2QUfjx5qv3bG3u/1qvO8dvMSGQ==
+X-Gm-Gg: ASbGncvYc4qaT7tCiWgIyAk/B3qptkr5XiKxIT+OhuzJpVNu0vwpFtxyfXfMPAsdL19
+ 6PqCNNKgSi6F8uUI2gRgfavb66q5H8U1VK1nSquz/sL1/BatuY5HDZIVIxu5eJhn1HXF8WF/hFe
+ ITR6MYx+W9EUujwrZzBA8Sr5zzpvmxeZBiOqnFzPmjCTwIJH0Gxu7epZhcNlovXFJ3RAfrbYEQ9
+ iy1U8AEhTct64RndQVmyC3tFggtEBTOiDKwQj4HTrG2yVl7DnbI+oEUGO0=
+X-Google-Smtp-Source: AGHT+IFbpIvrRXrMOL+wB0jCx280hL8PUu9I6kYDKZn3cRCZrRyzEhBWqtHGGPllA9/hFh6C1D6eFlbfSN8PF0mGRwI=
+X-Received: by 2002:a05:6512:b05:b0:592:f7cf:9f6f with SMTP id
+ 2adb3069b0e04-595841a287amr5217964e87.14.1763437811224; Mon, 17 Nov 2025
+ 19:50:11 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 1/3] hw/misc: introduce iommu-testdev for bare-metal
- IOMMU testing
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
-References: <20251112162152.447327-1-tangtao1634@phytium.com.cn>
- <20251112162152.447327-2-tangtao1634@phytium.com.cn>
- <b087405f179f2d2b8c4224c87c2c562455b9ab6d.camel@eviden.com>
- <7f38ee63-eb24-460c-b8b3-51f3402c4d69@phytium.com.cn>
- <875xb8l4ns.fsf@draig.linaro.org>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <875xb8l4ns.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCX8O3Z5htpoX0FAA--.10819S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQARBWkaMBEG7wAHsp
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxWFyfWry3ur4rWr47Cr13XFb_yoWrWF1UpF
- 93GFy3tFWUJrn7Cr4Sqw18GryFv348Jw4UXr13JFn5Xr90yr10qr1jgrWFgFykJrWrJF1U
- Zw1DtF17uw15AFJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20251031105005.24618-1-skolothumtho@nvidia.com>
+ <20251031105005.24618-15-skolothumtho@nvidia.com>
+In-Reply-To: <20251031105005.24618-15-skolothumtho@nvidia.com>
+From: Zhangfei Gao <zhangfei.gao@linaro.org>
+Date: Tue, 18 Nov 2025 11:49:58 +0800
+X-Gm-Features: AWmQ_bkuZd8W0hXs1QCRa9eWKcTPjGiBbqevhvrNYrTYQB2fyG4AOlPPGBzdLp0
+Message-ID: <CABQgh9Fk2qHkHbpepY0j8MaLe-TkxrVaMi_R3C-oD2HihK-wGA@mail.gmail.com>
+Subject: Re: [PATCH v5 14/32] hw/arm/smmuv3-accel: Install SMMUv3 GBPA based
+ hwpt
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com, 
+ peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com, 
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com, mochs@nvidia.com, 
+ smostafa@google.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com, 
+ jonathan.cameron@huawei.com, zhenzhong.duan@intel.com, yi.l.liu@intel.com, 
+ kjaju@nvidia.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=zhangfei.gao@linaro.org; helo=mail-lf1-x12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,101 +101,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex
+Hi, Shameer
 
-On 2025/11/18 05:39, Alex Bennée wrote:
-> Tao Tang <tangtao1634@phytium.com.cn> writes:
+On Fri, 31 Oct 2025 at 18:53, Shameer Kolothum <skolothumtho@nvidia.com> wrote:
 >
->> Hi Clement,
->>
->> On 2025/11/13 15:02, CLEMENT MATHIEU--DRIF wrote:
->>> Hi Tao,
->>>
->>> On Thu, 2025-11-13 at 00:21 +0800, Tao Tang wrote:
->>>> Add a minimal PCI test device designed to exercise IOMMU translation
->>>> (such as ARM SMMUv3) without requiring guest firmware or OS. The device
->>>> provides MMIO registers to configure and trigger DMA operations with
->>>> controllable attributes (security state, address space), enabling
->>>> deterministic IOMMU testing.
->>>>
->>>> Key features:
->>>> - Bare-metal IOMMU testing via simple MMIO interface
->>>> - Configurable DMA attributes for security states and address spaces
->>>> - Write-then-read verification pattern with automatic result checking
->>>>
->>>> The device performs a deterministic DMA test pattern: write a known
->>>> value(0x88888888) to a configured IOVA, read it back, and verify data
->>>> integrity. Results are reported through a dedicated result register,
->>>> eliminating the need for complex interrupt handling or driver
->>>> infrastructure in tests.
->>>>
->>>> This is purely a test device and not intended for production use or
->>>> machine realism. It complements existing test infrastructure like
->>>> pci-testdev but focuses specifically on IOMMU translation path
->>>> validation.
->>>>
->>>> Signed-off-by: Tao Tang <[tangtao1634@phytium.com.cn](mailto:tangtao1634@phytium.com.cn)>
->>>> ---
->>>>    docs/specs/index.rst            |   1 +
->>>>    docs/specs/iommu-testdev.rst    |  96 +++++++++++
->>>>    hw/misc/Kconfig                 |   5 +
->>>>    hw/misc/iommu-testdev.c         | 292 ++++++++++++++++++++++++++++++++
->>>>    hw/misc/meson.build             |   1 +
->>>>    hw/misc/trace-events            |  10 ++
->>>>    include/hw/misc/iommu-testdev.h |  78 +++++++++
->>>>    7 files changed, 483 insertions(+)
->>>>    create mode 100644 docs/specs/iommu-testdev.rst
->>>>    create mode 100644 hw/misc/iommu-testdev.c
->>>>    create mode 100644 include/hw/misc/iommu-testdev.h
->>>>
->>>> ------------------------------<snip>------------------------------
->>>>
->>>>
->>>>
->>>> ------------------------------<snip>------------------------------
->>>> +
->>>> +static void iommu_testdev_maybe_run_dma(IOMMUTestDevState *s)
->>>> +{
->>>> +    int i, j, remaining_bytes;
->>> I think i and j could be declared in their respective loop
->>
->> Thanks a lot for taking the time to review the patch. All your
->> suggestions are excellent and make a lot of sense.
->>
->>
->> Move the i and j loop variable declarations into their respective for
->> loops sounds a good idea. But I wasn't entirely sure if QEMU had a
->> strict code style requirement for this, such as mandating all
->> variables be defined at the start of the function before any
->> executable code (C89 style), so I appreciate the clarification.
->>
-> <snip>
+> When the Guest reboots or updates the GBPA we need to attach a nested HWPT
+> based on the GBPA register values.
 >
-> We have a special exemption, from style.rst:
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/smmuv3-accel.c | 42 ++++++++++++++++++++++++++++++++++++++++++
+>  hw/arm/smmuv3-accel.h |  8 ++++++++
+>  hw/arm/smmuv3.c       |  2 ++
+>  3 files changed, 52 insertions(+)
 >
->    Mixed declarations (interleaving statements and declarations within
->    blocks) are generally not allowed; declarations should be at the beginning
->    of blocks. To avoid accidental re-use it is permissible to declare
->    loop variables inside for loops:
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index c74e95a0ea..0573ae3772 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -479,6 +479,48 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
+>      .unset_iommu_device = smmuv3_accel_unset_iommu_device,
+>  };
 >
->    .. code-block:: c
->
->        for (int i = 0; i < ARRAY_SIZE(thing); i++) {
->            /* do something loopy */
->        }
->
->    Every now and then, an exception is made for declarations inside a
->    #ifdef or #ifndef block: if the code looks nicer, such declarations can
->    be placed at the top of the block even if there are statements above.
->    On the other hand, however, it's often best to move that #ifdef/#ifndef
->    block to a separate function altogether.
->
+> +
+> +/* Based on SMUUv3 GBPA configuration, attach a corresponding HWPT */
+> +void smmuv3_accel_gbpa_update(SMMUv3State *s)
+> +{
+> +    SMMUv3AccelDevice *accel_dev;
+> +    Error *local_err = NULL;
+> +    SMMUViommu *vsmmu;
+> +    uint32_t hwpt_id;
+> +
+> +    if (!s->accel || !s->s_accel->vsmmu) {
+> +        return;
+> +    }
+> +
+> +    vsmmu = s->s_accel->vsmmu;
+> +    /*
+> +     * The Linux kernel does not allow configuring GBPA MemAttr, MTCFG,
+> +     * ALLOCCFG, SHCFG, PRIVCFG, or INSTCFG fields for a vSTE. Host kernel
+> +     * has final control over these parameters. Hence, use one of the
+> +     * pre-allocated HWPTs depending on GBPA.ABORT value.
+> +     */
+> +    if (s->gbpa & SMMU_GBPA_ABORT) {
+> +        hwpt_id = vsmmu->abort_hwpt_id;
+> +    } else {
+> +        hwpt_id = vsmmu->bypass_hwpt_id;
+> +    }
+> +
+> +    QLIST_FOREACH(accel_dev, &vsmmu->device_list, next) {
+v4 has this, while v5 removes it.
+             if (!accel_dev->vdev)
+                continue;
 
-Thanks for the clarification and the pointer to style.rst.
-Good to know for (int i = ...) is explicitly allowed — I’ll update the 
-patch to declare the loop variables in the for headers in v4.
+So I got a warning when accel_dev->vdev = NULL in the beginning.
+"Failed to attach GBPA hwpt id xx for dev id xx"
 
-Best regards,
-Tao
-
+Thanks
 
