@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5275FCEE358
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 20:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D905CEE35D
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 21:22:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLSeo-0006S2-Jk; Tue, 18 Nov 2025 15:50:34 -0500
+	id 1vLT8P-0006Zi-DC; Tue, 18 Nov 2025 16:21:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1vLSem-0006Q8-Oy
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:50:32 -0500
-Received: from mail-il1-x133.google.com ([2607:f8b0:4864:20::133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLT8H-0006Yg-C7
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 16:21:01 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1vLSel-0005mU-0Z
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:50:32 -0500
-Received: by mail-il1-x133.google.com with SMTP id
- e9e14a558f8ab-4331709968fso22788055ab.2
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 12:50:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLT8D-0001qx-QH
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 16:21:00 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-47790b080e4so25249925e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 13:20:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1763499029; x=1764103829; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=MvvQcPaXbrQ32ZzYnn+d/9VYMwCtYgnid3bfy7U/bFM=;
- b=VXyRnwLdDVoDN7JukX2oVvoHI8tbW4Vr48W0FBcOy5MxdLxZ3LmJSkrTbryVrO3e/L
- uZSLya8vRDRHfR8gW9KM24aA3jFaDA9VnB4FXa6Si8L42GUI4ez6FT91ZsUQSGCaVKnx
- lvbVmZRmzbwfUwitxLCMUiS+QxV81BzQq2HRA60O/Zzeze61ikP4uSDzYSLIJD7XGNeM
- alffvOkMVRI428upd+jqX2yLxyVt/YQh+4xuFVx6LngV1cla7DqgirXuJVVEapVc7EWx
- gx9Mxe9ILH5EdqpRIuMdOJvDWpY9A9k4NV1g5JXK78BRKh1yJypqcEPmvM+o2OS3qy69
- 484A==
+ d=linaro.org; s=google; t=1763500855; x=1764105655; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xy2p6YX/MWZURx/WwU0Mbv6ROkO9za+nYxSRJzOQpTE=;
+ b=x/EGGsRyMZLS3pA38lQwxMjMXg7IGO/DRjRtiqSqnc54K/XsxuCmF1k4yob9TNzWxV
+ 1RvOkTxjzHiW4AMLNxRsLg3X5zY386kB8ggmQLziD3wETzw+pHdK9ZYiq/hr38qCSg8g
+ YJXsSXcNR4kTO/ogyg/TYQxEapLrfS0s6+mO1XpOYccSa7h8lj9itlddKnb+S17AhdZv
+ ir+nMx0/oLgN/FSE/UWrrtHWbKJzH6wPohuOYvGEkd+Q7cBe4jEt1+Vvjk8p/Uwur7iX
+ y60m1ejQfGCAEnV8maVRsGJqgOzJdNHuH6ftX5jJBuEN1SHHnqfS+Pucadxl6Ej9xcQy
+ AFSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763499029; x=1764103829;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MvvQcPaXbrQ32ZzYnn+d/9VYMwCtYgnid3bfy7U/bFM=;
- b=HaInd0SuxGR/d1FkypFUASXJP8LtG66v2jhgmaEhd8FfLqiyki5VItRQzC7IbwuaVh
- IR4AiwiJM9nOPmx9FsZHngDLFR2y0bBWn5+gmeBMIYJudAgskigDM2A+HGuFu1CIHyL4
- k9VuCf9PKhE9XnKzWEfZRoJb5IygXYhUC/uoOTmEdfnlnVNiHInNcHjPhTqbP8/0VpE7
- DO+P08ylN8k4rm7hMYIwSGf4cMcOpoSNIjoNhpMDz3Q6Kx+7x8PuoMx+JqpgH+WFpcwm
- LVZ7Z0CJELKN0dfJiOHld/DcZ/Ge7iXKQd+GQhTqGC0ZtEvGC1LSE/V2qr2Fz0Uw7E4y
- E9IQ==
-X-Gm-Message-State: AOJu0YzLd4rv8qU/Zwjstisrtopv9DcYv/6ICR8RdAunzlIOEoEDDzUt
- +fVNeW8DzNB83iJGHEynWKJzeQakTvIOoaI1PyHjWvnz3iiW/tlu/5YGM9V4fghg7Hs=
-X-Gm-Gg: ASbGncsbumE4mG8T/fgzW2rvtsVnKW1amcwbhfjOJfGEQfFiw8Zi84TkdyUP/5/lCNh
- sMo2aqBMWjgXksG/Qt7LGmoVMN5awA2Tz8divTnFGZQpgZwOUsSktHKdMB3nB/H/3pq1qptOWMO
- 3Pyxvh9+sb3Qhmy0pZoN4Qbu+pTYZGjduqHPptHVDVywPPqjUGHp5fqWQ33UF2wGFjsp0hLAv25
- XddwnLcv0WSFRqQvmJahHFWY0+WRulCtkHFJDSlt8w4dDgEmCO3qQk62RXXOwUzdYiVZQv8mD8z
- DJwtQKU1KTbLUkpcFbxOA8Uaf2WVcWLT28n/8IsTntTb6R2Yp4nrCc7o1RWdHpVYyfDGH7axXUd
- O5Svvpr38UhVUfbc0Oa2etngQAC/8P5NKvACaLFg5lQJHBtl8lFkBG/gY4IFhj4MC5p10lAOQO5
- ahulK03WHORKgW
-X-Google-Smtp-Source: AGHT+IFDXzPaM7SEC4rT0TNdQLaPiXqrdXAlE2nq1quEsGlMYNlbq7yKVxItdbJi3A9/dN5JN3kOIw==
-X-Received: by 2002:a05:6e02:2183:b0:433:29c3:c512 with SMTP id
- e9e14a558f8ab-4359fe883a7mr1406115ab.21.1763499028699; 
- Tue, 18 Nov 2025 12:50:28 -0800 (PST)
-Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-434838c24a1sm85912795ab.15.2025.11.18.12.50.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 18 Nov 2025 12:50:27 -0800 (PST)
-Date: Tue, 18 Nov 2025 14:50:26 -0600
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- Fei Wu <wu.fei9@sanechips.com.cn>
-Subject: Re: [PATCH v4 3/5] hw/riscv: experimental server platform reference
- machine
-Message-ID: <20251118-93789449fcd7e0189113a949@orel>
-References: <20251111182944.2895892-1-dbarboza@ventanamicro.com>
- <20251111182944.2895892-4-dbarboza@ventanamicro.com>
- <20251111-a6e8ae9a0d6809ba0e62ba2e@orel>
- <265ca0e7-b331-4158-8e11-8f31921cfcc0@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1763500855; x=1764105655;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=xy2p6YX/MWZURx/WwU0Mbv6ROkO9za+nYxSRJzOQpTE=;
+ b=CMz4DxrjGmM28XBwWejYj0tAohny327wWbaCTkoZZoKiM5UAaxupicy7WSrem02f+o
+ CrYBGgIuf+fVPgzVCQgeAgxemtZVlPeo/kkkOiuNiGswOJImLHmSyb7zCiQ1s7ywdpe7
+ Dz8vVwLk569yCKV4AYD5Yl3j7YCJaovek6vF9clRrVeRxNrcUiByshdIzN8YF51yRoP/
+ ksTFW8uG202hX3SdZwCPvsBF4g8mxDgKLiZIIpnV6bhhlgIUgKNYnoHSx4GXjwOf/yvx
+ cHX3nybZqr6284WklE4jnBtWW83q8yrzvAOVa8tRlfIZlHCcSLCHL/8zqA8r+MiTNTf9
+ /EpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUEKR09eTW8+89/8KoJEOtmJnVjuZdSXsHp87fh9UHFKR5totGWnp8q364+H8LXOPt49IWd3Y3l7gVf@nongnu.org
+X-Gm-Message-State: AOJu0YxPa1z4VnRxfV9em6OoqyHAaBTRA67PzHngF6w/XLoCPYbCDqjW
+ pHZG+05yQHqgqn1DByyrBK3sMaVe6JdiwgOiZjNy4ngmoFRFApEelRAr//lu3uBoRCo=
+X-Gm-Gg: ASbGncs8e7IiTmvis8WQWcUGXljzRRG5nAvqPZk8qH05f4vzsAwlc7vhhVThw6bxNFH
+ 4LTNWomEntgmgZglgltktBw/xt60Qg/LFOAsPkzNk4R6Lv6NlCznpaqYoJt1/Pw0S2nx1GDJYep
+ FHB0njppue1BvzFhCnL57OZXRbRKO2GueCo6X0UwXLeCBXlqGtOxtG4WVZrwXTwd1NLkK4KRf/F
+ unm4MOohuYXz3kUA6qgkFRKJoPjox9DTkbFQ58KW6VplxfUEMcC+fdjYtnO4PLTf+U6+v11ptrG
+ NHCyU0c+tco3ONLCuyOP8uYUSMl8cMpsPuhcOMjXUIznFXQqmaeouFzeEBO17nnaZP6plWpJIMT
+ Lh2uYMESsV2zMhCd4CSLOD42FCQ0Xh+5Kw93sWvPzJ4st2tk/XZFAYDYlXeeiCX5hkqgEzdwQhW
+ P6ahpIM3379XxmGzNrG4/DoIFlhTnSJrofvwadFE2K8pmhs4MaTbpZjv6M9X569aNn
+X-Google-Smtp-Source: AGHT+IG/LJZM1o0EoVC+a8HWlUQZ2gdJYeLdf7LT9vn1Uayqf0+C/fMPyzYLrRVw6VpP/JueOgvi6g==
+X-Received: by 2002:a05:600c:8b8a:b0:477:952d:fc11 with SMTP id
+ 5b1f17b1804b1-47795418dcbmr161046525e9.16.1763500855153; 
+ Tue, 18 Nov 2025 13:20:55 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53f17291sm34262337f8f.32.2025.11.18.13.20.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Nov 2025 13:20:54 -0800 (PST)
+Message-ID: <e41075a7-52df-4a90-ab3b-421a0ed701ef@linaro.org>
+Date: Tue, 18 Nov 2025 22:20:53 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <265ca0e7-b331-4158-8e11-8f31921cfcc0@ventanamicro.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::133;
- envelope-from=ajones@ventanamicro.com; helo=mail-il1-x133.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/arm/Kconfig: Exclude imx8mp-evk machine from KVM-only
+ build
+Content-Language: en-US
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20251118200752.39950-1-shentey@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251118200752.39950-1-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,97 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 18, 2025 at 05:15:54PM -0300, Daniel Henrique Barboza wrote:
+On 18/11/25 21:07, Bernhard Beschow wrote:
+> Fixes make check failures on an aarch64 host:
+
+when QEMU is configured using '--enable-kvm --disable-tcg':
+
+>    qemu-system-aarch64: unknown type 'arm-gicv3'
 > 
+> Reported-by: Cornelia Huck <cohuck@redhat.com>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   hw/arm/Kconfig | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> On 11/11/25 8:36 PM, Andrew Jones wrote:
-> > On Tue, Nov 11, 2025 at 03:29:42PM -0300, Daniel Henrique Barboza wrote:
-> > > From: Fei Wu <wu.fei9@sanechips.com.cn>
-> > ...
-> > > +static char *rvsp_ref_get_aia_guests(Object *obj, Error **errp)
-> > > +{
-> > > +    RVSPMachineState *s = RVSP_REF_MACHINE(obj);
-> > > +    char val[32];
-> > > +
-> > > +    sprintf(val, "%d", s->aia_guests);
-> > > +    return g_strdup(val);
-> > > +}
-> > > +
-> > > +static void rvsp_ref_set_aia_guests(Object *obj, const char *val, Error **errp)
-> > > +{
-> > > +    RVSPMachineState *s = RVSP_REF_MACHINE(obj);
-> > > +
-> > > +    s->aia_guests = atoi(val);
-> > > +    if (s->aia_guests < 0 || s->aia_guests > RVSP_IRQCHIP_MAX_GUESTS) {
-> > 
-> > The minimum is 5 for the server platform, so we should enforce that. Also
-> > I suggest we bump RVSP_IRQCHIP_MAX_GUESTS since it's only 7 right now.
-> > 
-> > > +        error_setg(errp, "Invalid number of AIA IMSIC guests");
-> > > +        error_append_hint(errp, "Valid values be between 0 and %d.\n",
-> > > +                          RVSP_IRQCHIP_MAX_GUESTS);
-> > > +    }
-> > > +}
-> > > +
-> > > +static void rvsp_ref_machine_class_init(ObjectClass *oc, const void *data)
-> > > +{
-> > > +    char str[128];
-> > > +    MachineClass *mc = MACHINE_CLASS(oc);
-> > > +    static const char * const valid_cpu_types[] = {
-> > > +        TYPE_RISCV_CPU_RVSP_REF,
-> > > +    };
-> > > +
-> > > +    mc->desc = "RISC-V Server SoC Reference board (EXPERIMENTAL)";
-> > 
-> > We could (and probably should) version this machine type from the get go.
-> > If we do that, then we could simply give it a version 0.9, which would
-> > match the current spec. When the spec is ratified and this model is
-> > complete, then it can be bumped to 1.0. Going that route would allow us
-> > to avoid the EXPERIMENTAL "flag".
-> 
-> There has been some discussions offline on this and I'll bring them here.
-> 
-> A minor point: it was suggested to rename the board to 'rvserver' instead
-> of 'rvsp-ref'. I like this idea mostly because I keep misspelling rvsp-ref
-> as rsvp-ref.
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index 0cdeb60f1f..7877506384 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -623,7 +623,7 @@ config FSL_IMX8MP_EVK
+>       bool
+>       default y
+>       depends on AARCH64
+> -    depends on TCG || KVM
+> +    depends on TCG
+>       select FSL_IMX8MP
+>   
+>   config ARM_SMMUV3
 
-I do like the '-ref' suffix though.
-
-> 
-> As for the "version this machine type": in this case is different with what we do
-> with other QEMU machines. They have a new version for every QEMU release, e.g.
-> ARM's newest virt board is virt-10.2, in the next QEMU release it will be virt-11.0
-> and so on. We wouldn't do the same thing here - 'versioning' in this case is name
-> the board in a way that makes reference to the spec it implements. So this current
-> emulation would be named 'rvsp-ref-0.9', with an alias 'rvsp-ref' pointing to it.
-> 
-> Changing the emulation to comply with spec version 1.0 will create a rvsp-ref-1.0
-> board while keeping rvsp-ref-0.9 as is. Usually QEMU does that by using compat flags
-> that changes the behavior of the board, and we'll probably go this route.
-
-Yes, as long as we point out what the version numbers mean somewhere, e.g.
-in the machine description, then I guess people will get it.
-
-I'm not sure I want a 0.9 board to live on after a ratified 1.0 is
-released, though. So maybe an 'experimental'  board makes more sense
-if we need to call it that in order to reserve the right to delete it.
-
-> 
-> One thing worth considering is that we can't just version stamp the board, we need to
-> do the same with the CPU. So we would have a rvsp-ref-cpu-0.9, rvsp-ref-cpu-1.0 and
-> an alias to point to the newest available emulation.
-
-ack
-
-> 
-> Also note that we're not 0.9 compliant either since we're missing sdext. So unless
-> we're willing to name this current board as rvsp-ref-0.9-beta or something like that,
-> maybe it's a good idea to postpone this work until we have 'sdext' implemented.
-
-Yes, let's prioritize sdext so we can match the current spec (which is
-unlikely to change much before ratification) before we merge the reference
-board at all.
-
-Thanks,
-drew
 
