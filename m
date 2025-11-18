@@ -4,69 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B594CF2562
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 22:43:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37BECF2562
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 22:57:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLUPH-000780-UI; Tue, 18 Nov 2025 17:42:39 -0500
+	id 1vLUcs-00049G-2e; Tue, 18 Nov 2025 17:56:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLUPG-00077C-6a
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 17:42:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vLUcr-000494-04; Tue, 18 Nov 2025 17:56:41 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLUPE-0007w7-FQ
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 17:42:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763505755;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=eyUUCD+Xa71zcld5+YQGwhGVX/Bdhb9veA4x2A2Bzcg=;
- b=PC/zOTTcfB/U4smugRed0i3s6jbAkwcrKP6zuWpECpzSWlK9nri7w9GCecqY7WOa8JzRZ1
- CWtg+5kwSEwyVxoDXSBYMFIm3WeavJiacus9pJyo/dVMo21UsfhyWG++eTvf1hVPfEpwf2
- ZJiPPhOaWBAgj68LijWJTrb+lViLmbA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-g_frS83xMcOH4xR4jKlhkg-1; Tue,
- 18 Nov 2025 17:42:31 -0500
-X-MC-Unique: g_frS83xMcOH4xR4jKlhkg-1
-X-Mimecast-MFC-AGG-ID: g_frS83xMcOH4xR4jKlhkg_1763505750
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9D1C91800358; Tue, 18 Nov 2025 22:42:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.26])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E2E30180049F; Tue, 18 Nov 2025 22:42:26 +0000 (UTC)
-Date: Tue, 18 Nov 2025 23:42:24 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: andrey.drobyshev@virtuozzo.com
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, f.ebner@proxmox.com,
- hreitz@redhat.com, den@virtuozzo.com
-Subject: Re: [BUG] Block graph assertion failure on blockdev-add
-Message-ID: <aRz2UN6kF93fbj3b@redhat.com>
-References: <20251112164108.506976-1-andrey.drobyshev@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
+ id 1vLUcp-00027D-C6; Tue, 18 Nov 2025 17:56:40 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AIHQFUh028553;
+ Tue, 18 Nov 2025 22:56:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=/yaEdk
+ monNeqci6s4V2bnwkTcETtOTqL257eKXz7Fh0=; b=N+3oafNo18IcRVLQT0XjSH
+ 3CsNXlxri3ekiUwTKmLp2iLEZ6V3GFHn/0xZGVdRY1MPw8nYLu8J6F6C12Adegea
+ SPB2lF9yt1RsJQCKD2Bzi1HKUomurPi4m3PeU/iQixPdwYG0/PGMhhVlbrZTYtSO
+ yjGBnzZ62grn7/9Xj7ThXmr7EP/ZTtEGt/w+KCSuuzQ8GDTVro0HyBL7UAsVQSpk
+ EHe8iUsghy2PCRxRcblASAOejVwtvBrtDb6ztNkBAxkUTqQhVfTNZJwWzvg0IPYY
+ CfkSUrdsryxb0rQpFNu1e7p8RRenZ9OJEA0zFxPoazdIL5ql3BB9LS6nv/AIppWA
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aejmsn0ta-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Nov 2025 22:56:35 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AIMTeIF005231;
+ Tue, 18 Nov 2025 22:56:35 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4af5bk5kmg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 18 Nov 2025 22:56:35 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5AIMuUJc38273362
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 18 Nov 2025 22:56:30 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CE5AF20043;
+ Tue, 18 Nov 2025 22:56:30 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 317E420040;
+ Tue, 18 Nov 2025 22:56:30 +0000 (GMT)
+Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.111.14.232])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Tue, 18 Nov 2025 22:56:30 +0000 (GMT)
+Date: Tue, 18 Nov 2025 23:56:28 +0100
+From: Halil Pasic <pasic@linux.ibm.com>
+To: Eric Farman <farman@linux.ibm.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Matthew Rosato
+ <mjrosato@linux.ibm.com>, qemu-devel@nongnu.org, David Hildenbrand
+ <david@redhat.com>, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater	 <clg@kaod.org>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
+Subject: Re: [PATCH v2] hw/s390x: Fix a possible crash with passed-through
+ virtio devices
+Message-ID: <20251118235628.5869f067.pasic@linux.ibm.com>
+In-Reply-To: <8f90d4d7ea1c4ee8e088f5afb483587181278ebf.camel@linux.ibm.com>
+References: <20251118093945.35062-1-thuth@redhat.com>
+ <20251118130218.30d3da33.pasic@linux.ibm.com>
+ <8f90d4d7ea1c4ee8e088f5afb483587181278ebf.camel@linux.ibm.com>
+Organization: IBM
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251112164108.506976-1-andrey.drobyshev@virtuozzo.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: PEOuGYAm_GHxNuylrBzEo7YHw5Hr3vSP
+X-Authority-Analysis: v=2.4 cv=Rv3I7SmK c=1 sm=1 tr=0 ts=691cf9a3 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kj9zAlcOel0A:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=Pm1AC5FQMR7C-oOkkdkA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
+ a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: PEOuGYAm_GHxNuylrBzEo7YHw5Hr3vSP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE1MDAzMiBTYWx0ZWRfXzY7pUmQUTj1K
+ Lk0VsuNwrg/9P/IXfM3399VRuF5cmaENoXIyWBgSB9xqTdjs+Vj5tDcze7RAjCW5L9s1V5gOTIt
+ ch1L3cNQK+ULEDuIjMkBMi9qPrFWHZgBrJ5x7But5qjidSUG9PHwGIxyyP2YXWhPPWiZpWPqJNt
+ 6cHOAu2Z29GoVJcM8Yt3swqrrwiFg5oO/dZ+3PogWXFNJ6FLMjFfmRz9t1i+FWKwxAeaVvaVCkt
+ +lZRw8re0CyW2BIvsAadSlB5z8soAWLWZJNcPqSrtSbA75ytCcgTVnkCKik+68OEDZoCGyJPM69
+ uj2r335bDfcUJ9PkHUnhuRC1Qa1Ca8jnDLhMMI7tlOQD7j5PkLVbRW5NbsG7+LU0M/lRm39qzbA
+ gFUh3rO/SzmtNt+102AVjoWppHJ6Yg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-18_04,2025-11-18_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 clxscore=1015 phishscore=0 priorityscore=1501
+ spamscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511150032
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=pasic@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,119 +126,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 12.11.2025 um 17:41 hat andrey.drobyshev@virtuozzo.com geschrieben:
-> From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+On Tue, 18 Nov 2025 10:19:56 -0500
+Eric Farman <farman@linux.ibm.com> wrote:
+
+> > So I think it would really make sense to prevent passing through
+> > virtio-ccw devices with vfio-ccw. Eric what is your take?  
 > 
-> Hi all,
-> 
-> There's a bug in block layer which leads to an assertion failure and crash.
-> The reproduce is flaky, which suggests there's a race involved.  Here's how
-> it's reproduced:
-> 
-> 1. Run QEMU with 2 disks: one system (with actual guest) and one empty; attach
-> them to an iothread;
-> 2. In the guest, format the empty disk and start sequential IO on it;
-> 3. At the host, start growing a chain of snapshots upon the empty image.
-> 
-> Here're the scripts:
-> [...]
-> So draining doesn't work as expected: in-flight requests are supposed to be
-> polled right before calling bdrv_drain_assert_idle(), but there's new IO
-> arriving:
-> 
-> void coroutine_mixed_fn bdrv_drain_all_begin(void)
-> {
-> ...
->     bdrv_drain_all_begin_nopoll();
-> 
->     /* Now poll the in-flight requests */
->     AIO_WAIT_WHILE_UNLOCKED(NULL, bdrv_drain_all_poll());   <---------
-> 
->     while ((bs = bdrv_next_all_states(bs))) {
->         bdrv_drain_assert_idle(bs);
->     }
-> }
+> It's true that the only -supported- use case is passthrough DASD, and we allow other device types to
+> be passed through. The only ones we fence off are what we know aren't going to work, like FCPs.
 
-Took me a bit, but I can reproduce the problem. Yes, "new" I/O arrives
-between AIO_WAIT_WHILE_UNLOCKED() and the assertion, which means that
-drain itself doesn't work correctly.
+I think we can add virto-ccw to that known to not work list ;)
 
-After some debugging, I ended up adding some new assertions that would
-trigger when the new I/O is added during this period, and what I caught
-is this (same in multiple runs):
+> IIRC
+> we'd talked a few years ago about a plan for a more detailed allow-list of passthrough devices and
+> configurations, but that fell off the back of the todo list. Short of dusting all that off, I don't
+> know that blocking virtio-ccw from vfio is going to buy us anything that Thomas' patch doesn't
+> already provide.
 
-(gdb) qemu bt
-#0  __GI_abort () at abort.c:95
-#1  0x00007f99cb823639 in __assert_fail_base (fmt=<optimized out>, assertion=<optimized out>, file=<optimized out>, line=<optimized out>, function=<optimized out>) at assert.c:118
-#2  0x00007f99cb8340af in __assert_fail (assertion=<optimized out>, file=<optimized out>, line=<optimized out>, function=<optimized out>) at assert.c:127
-#3  0x0000557c2a0d64c6 in blk_wait_while_drained (blk=0x557c69d18020) at ../block/block-backend.c:1325
-#4  0x0000557c2a0d5069 in blk_co_do_pwritev_part (blk=0x1, offset=140292968848728, bytes=0, qiov=0x7f99b4004568, qiov_offset=qiov_offset@entry=0, flags=3416308576)
-    at ../block/block-backend.c:1417
-#5  0x0000557c2a0d55ae in blk_aio_write_entry (opaque=0x7f99b4002020) at ../block/block-backend.c:1635
-#6  0x0000557c2a30a376 in coroutine_trampoline (i0=<optimized out>, i1=<optimized out>) at ../util/coroutine-ucontext.c:175
-#7  0x00007f99cb856f70 in ??? () at ../sysdeps/unix/sysv/linux/x86_64/__start_context.S:66
-#8  0x00007f99c35f0260 in ??? ()
-#9  0x0000000000000000 in ??? ()
-[Thread 0x7f98a94fc6c0 (LWP 321021) exited]
-[Thread 0x7f99c2dfd6c0 (LWP 320958) exited]
-Coroutine at 0x7f99c35fe588:
-#0  qemu_coroutine_switch (from_=from_@entry=0x7f99c35fe588, to_=to_@entry=0x7f99b40051f0, action=action@entry=COROUTINE_ENTER) at ../util/coroutine-ucontext.c:322
-#1  0x0000557c2a3089e8 in qemu_aio_coroutine_enter (ctx=ctx@entry=0x557c68d5cae0, co=<optimized out>) at ../util/qemu-coroutine.c:293
-#2  0x0000557c2a3071f7 in co_schedule_bh_cb (opaque=0x557c68d5cae0) at ../util/async.c:547
-#3  0x0000557c2a306b79 in aio_bh_call (bh=0x557c68d822d0) at ../util/async.c:172
-#4  aio_bh_poll (ctx=ctx@entry=0x557c68d5cae0) at ../util/async.c:219
-#5  0x0000557c2a2ee9e5 in aio_poll (ctx=0x557c68d5cae0, blocking=<optimized out>) at ../util/aio-posix.c:719
-#6  0x0000557c2a0ac032 in iothread_run (opaque=opaque@entry=0x557c68d810a0) at ../iothread.c:63
-#7  0x0000557c2a2f2aee in qemu_thread_start (args=<optimized out>) at ../util/qemu-thread-posix.c:393
-#8  0x00007f99cb893f54 in start_thread (arg=<optimized out>) at pthread_create.c:448
-#9  0x00007f99cb91732c in __GI___clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:78
+See your comment form later today :)
 
-This suggests that the following happens:
+Would prevent ending up with a most likely dysfunctional device at best.
 
-1. Drain section starts
-
-2. A new request still arrives at the BlockBackend from the iothread and
-   is queued in blk_wait_while_drained(). This alone is already
-   interesting because we thought that the BlockBackend queuing was only
-   necessary for IDE and friends, not for virtio-blk. Probably only true
-   in the main thread.
-
-3. Drain section ends, blk_root_drained_end() calls qemu_co_enter_next()
-   and that is effectively aio_co_wake(). As the request coroutine is in
-   the iothread and blk_root_drained_end() in the main thread, the
-   coroutine is only scheduled in its AioContext, but doesn't run yet.
-
-4. Another drain section starts
-4a. bdrv_drain_all_begin_nopoll()
-4b. AIO_WAIT_WHILE_UNLOCKED(NULL, bdrv_drain_all_poll());
-
-5. The iothread processes its BH list and reenters the queued request,
-   which increases blk->in_flight and bs->in_flight and runs the actual
-   request even though we're drained again. Oops.
-
-4c. bdrv_drain_assert_idle() fails
-
-After a simple s/if/while/ in blk_wait_while_drained(), I can't
-reproduce the bug any more. I don't think it's a fully correct fix
-because blk->in_flight is still increased for a short time and that
-could in theory still trigger the assertion. It's just that the window
-is now much smaller because the request doesn't actually execute but is
-requeued right away.
-
-I need to think a bit more about the right synchronisation tomorrow.
-
-> I've bisected the issue, and it seems to be introduced by Fiona's series [0]
-> for fixing a deadlock.  Namely, before the commit b13f546545 ("block: move
-> drain outside of bdrv_root_unref_child()") my reproducer above produces a
-> deadlock similar to what we had in [1].  And after commit b13f546545 is
-> applied, we get the crash.
-> 
-> Attached is a naive fix which simply eliminates global draining (i.e. draining
-> of all the block graph) in problematic codepaths.  While global draining might
-> indeed be redundant there, the real problem, i.e. the race, still remains.
-
-Yes, we don't want to just paper over the bug.
-
-Kevin
-
+Regards,
+Halil
 
