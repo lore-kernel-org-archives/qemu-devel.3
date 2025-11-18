@@ -4,68 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A22CEE343
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3250CEE343
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:56:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQcC-0002O3-RV; Tue, 18 Nov 2025 13:39:46 -0500
+	id 1vLQs7-000693-OB; Tue, 18 Nov 2025 13:56:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vLQc6-0002MV-0B
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:39:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vLQbv-0002i2-CY
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:39:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763491162;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=FFeALmQ/G2B3bP7Q+9hrnPgM1nbF3dq/8337TAP/l9c=;
- b=U/ty73/t0Zqfa6E32BpGyHZ7btGEhA9Xfwq+A+7bJWEEHJzp3K6ZVEVxSJ8Iwucps+LC4h
- Nu9VOHf6ZKjZYvhVVdoIt/3MAQCpa6DCAv/wFy7psXaKNpTA7OjsCfxYgJutrekUX7Jy8J
- YsJpDeTUggjuz9y0AB0+PQ/LgOW/VL8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-L1YikT8uPpmJDObiINZe-A-1; Tue,
- 18 Nov 2025 13:39:19 -0500
-X-MC-Unique: L1YikT8uPpmJDObiINZe-A-1
-X-Mimecast-MFC-AGG-ID: L1YikT8uPpmJDObiINZe-A_1763491158
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 249A9191B4C5; Tue, 18 Nov 2025 18:39:18 +0000 (UTC)
-Received: from localhost (unknown [10.2.17.122])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4B2BD19540DF; Tue, 18 Nov 2025 18:39:16 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, berrange@redhat.com,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH] tracetool-test: add QEMU_TEST_KEEP_SCRATCH=1 support
-Date: Tue, 18 Nov 2025 13:39:15 -0500
-Message-ID: <20251118183915.177192-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQs6-00068j-Nt
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:56:10 -0500
+Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQs1-0004u6-Ld
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:56:10 -0500
+Received: by mail-wr1-x441.google.com with SMTP id
+ ffacd0b85a97d-42b566859ecso4548281f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:56:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763492163; x=1764096963; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HRPXhrWNNSzG0S8YOgNc8B5Js6h82Eb3m4xTACfn0A8=;
+ b=pU3c2YiZ6jKMRjc/X0NUQB9oJIFKoT99tSsTz4I1WHprN2NFThYmpb3hulSi9fjh73
+ 5dOhaHwYUgRvB84gr6LVYOHhoPJURUmTU0H/TViFQAgNh5N2WOlla6DCSJzbqqYjFvJ3
+ Bg0y3RPilGlpZwo82je3Cfo2VJi3u+tBFGO20LF0GM3iphHKmz8xZzAzFhjiIlaEOyaa
+ ezCD0ucN0cEBiqoUFMWdCN0Eb5iHCC5BeDyiIDDhQjb3KsIqhSHSCTsR6XNhS2DW0CkJ
+ AJeE0pIcm4Toz/pErn60Vz8OtLy3L5ytoMs9X6mItil/vEcWO/0ADCTOmrCDPtbHEgua
+ z14g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763492163; x=1764096963;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HRPXhrWNNSzG0S8YOgNc8B5Js6h82Eb3m4xTACfn0A8=;
+ b=M169ToBrh0j23e3K4gAp4rbakOu8J6jl3bcagTaIAG56bsc2VBOnPRp+3NlqIaQHx4
+ YgfXckztPY6e7Pm5l1yHjlx3MmSL6/kdTsiP8xZwba6AHvYOT80IVIJ6KXkyge4gtxDr
+ rMzc85h7OMCB71pR2VklAZhyJV/qdZlbF/fDWxkU4DlT48PhS081QdEGiiiLmJKWdBEs
+ mEtV4T6ec7TTE5acIefS2ObRR9ElvRz1JCw4WPK4m81oODov5NTsUd5e6P0E7cbxSmYB
+ CELDiTr9cDy+YgcTzac7Zgy5Tlmyu1kYGOJNic1oYbbL7LAx6LKFkhtTtDk178/5IQdl
+ T2Rg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUKAmfHylJ20VVsfs3gYE6DrqCeDD7mwaTYEGR+NB4g6EtDL0ZolvEo7t/qzVN0z3NJkbTjXDfHFGZ4@nongnu.org
+X-Gm-Message-State: AOJu0YyMqxpFtNl90bO/LnFea5xR7IabO1fnDNLkUgHTXjgqJ6w2FYq0
+ MwO7ss4ptnrDFySuvbhBi7qFO5Bn5gs82ltLOozb2Spg/D/hDeRhC++VC/fAVhm3gEQ=
+X-Gm-Gg: ASbGnctFLhWNLSNBIEIBAwtgo3mQuMzzeXH435TkpkHREnHvOp1LwhPn2sa19+9AKk6
+ GJjtugz5fDhkCrwHwdlCVk3jUgWSpGz2Q0oQruY0TD/rFcH3o0CPra8RNxU+an+ek98rOtrEU0i
+ w4MGeXS2n6b6aRkk24O7Q8p7iiaUsIVvOR2TZR1pezYQK3bIep2OIb6T8P8POMotkfj7omcA+/m
+ HdfQDxUDlTD2z2cdNi82fL1OJ4haBPaDAfz9NL1qSgq1OAkx4lK8dzuKQ06kHUnULxkm55I8pG8
+ jh3lkZRYzEq+kLND63Iq5vq5KWeIaFcBUv0lfphg7UdFPsdO0Mui/VnBmUZsuylCsd+q5J1zHPf
+ LioffD/QIWAAleQpqjiwRL3TSzZJYzxDaf+EeYHrro35h6dbKkgjrQis2UxlksWFN/7c8oX5f/1
+ A6dAKg9r85qQdS3cJpNgrjmJpZH3MzIgrrylt+IlAROM5KEDntk+u8ICGVLls7skqq
+X-Google-Smtp-Source: AGHT+IGA8duUJdA/Kn2BcV9VmmVX3do6Fr7r6PSccbdxzFnLtpdErNCOsTVCJSbmVII8kDf7kYWpWg==
+X-Received: by 2002:a05:6000:230c:b0:429:d3e9:65b with SMTP id
+ ffacd0b85a97d-42b5958a66bmr16973526f8f.59.1763492163392; 
+ Tue, 18 Nov 2025 10:56:03 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53f203afsm34314160f8f.39.2025.11.18.10.56.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Nov 2025 10:56:02 -0800 (PST)
+Message-ID: <ce6a1c5e-04ee-4961-b47d-a79195a97982@linaro.org>
+Date: Tue, 18 Nov 2025 19:56:01 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Update David Hildenbrand's email address
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: David Hildenbrand <david@kernel.org>, qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>
+References: <20251103103947.384401-1-david@kernel.org>
+ <eff54689-b1a3-41f2-bcad-a62941aa9fc1@linaro.org>
+In-Reply-To: <eff54689-b1a3-41f2-bcad-a62941aa9fc1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::441;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,77 +104,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It can be useful to preserve the temporary files generated by the test
-for manual inspection or diffing against expected output.
+On 18/11/25 19:09, Philippe Mathieu-Daudé wrote:
+> On 3/11/25 11:39, David Hildenbrand wrote:
+>> From: "David Hildenbrand (Red Hat)" <david@kernel.org>
+>>
+>> Switch to kernel.org email address as I will be leaving Red Hat. The
+>> old address will remain active until end of January 2026, so performing
+>> the change now should make sure that most mails will reach me.
+>>
+>> Signed-off-by: David Hildenbrand <david@redhat.com>
+>> Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
+>> ---
+>>   .mailmap    |  1 +
+>>   MAINTAINERS | 18 +++++++++---------
+>>   2 files changed, 10 insertions(+), 9 deletions(-)
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- tests/tracetool/tracetool-test.py | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-diff --git a/tests/tracetool/tracetool-test.py b/tests/tracetool/tracetool-test.py
-index 786083ad7f..5a0c6a869c 100755
---- a/tests/tracetool/tracetool-test.py
-+++ b/tests/tracetool/tracetool-test.py
-@@ -9,6 +9,9 @@
- import tempfile
- 
- 
-+DELETE_TEMPFILE = not os.getenv("QEMU_TEST_KEEP_SCRATCH", False)
-+
-+
- def get_formats(backend):
-     formats = [
-         "c",
-@@ -49,7 +52,8 @@ def test_tracetool_one(tracetool, backend, fmt, src_dir, build_dir):
-         check_call(args, cwd=build_dir)
-         actual = actual_file.read_text()
-     finally:
--        actual_file.unlink()
-+        if DELETE_TEMPFILE:
-+            actual_file.unlink()
- 
-     if os.getenv("QEMU_TEST_REGENERATE", False):
-         print(f"# regenerate {expect_file}")
-@@ -84,14 +88,25 @@ def test_tracetool(tracetool, backend, source_dir, build_dir):
-             except Exception as e:
-                 print(f"# {e}")
-                 fail = True
-+
-+                if DELETE_TEMPFILE:
-+                    tempfile_hint = (
-+                        "QEMU_TEST_KEEP_SCRATCH=1 to preserve test output "
-+                        + "files"
-+                    )
-+                else:
-+                    tempfile_hint = f"check test output files in {build_dir}"
-+
-                 hint = (
-                     " (set QEMU_TEST_REGENERATE=1 to recreate reference "
--                    + "output if tracetool generator was intentionally changed)"
-+                    + "output if tracetool generator was intentionally "
-+                    + "changed or " + tempfile_hint + ")"
-                 )
-             finally:
-                 print(f"{status} {num} - {backend}.{fmt}{hint}")
-     finally:
--        build_events.unlink()
-+        if DELETE_TEMPFILE:
-+            build_events.unlink()
- 
-     return fail
- 
-@@ -102,7 +117,8 @@ def test_tracetool(tracetool, backend, source_dir, build_dir):
-         print("syntax: {argv0} TRACE-TOOL BACKEND SRC-DIR BUILD-DIR", file=sys.stderr)
-         sys.exit(1)
- 
--    with tempfile.TemporaryDirectory(prefix=sys.argv[4]) as tmpdir:
-+    with tempfile.TemporaryDirectory(prefix=sys.argv[4],
-+                                     delete=DELETE_TEMPFILE) as tmpdir:
-         fail = test_tracetool(sys.argv[1], sys.argv[2], sys.argv[3], tmpdir)
-         if fail:
-             sys.exit(1)
--- 
-2.51.1
-
+and queued :)
 
