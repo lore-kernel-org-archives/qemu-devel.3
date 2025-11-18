@@ -4,105 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37BECF2562
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 22:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C54CF2562
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 22:58:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLUcs-00049G-2e; Tue, 18 Nov 2025 17:56:42 -0500
+	id 1vLUe8-00056w-4p; Tue, 18 Nov 2025 17:58:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
- id 1vLUcr-000494-04; Tue, 18 Nov 2025 17:56:41 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1vLUe6-000568-2L; Tue, 18 Nov 2025 17:57:58 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pasic@linux.ibm.com>)
- id 1vLUcp-00027D-C6; Tue, 18 Nov 2025 17:56:40 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AIHQFUh028553;
- Tue, 18 Nov 2025 22:56:35 GMT
+ id 1vLUe4-0002VL-HG; Tue, 18 Nov 2025 17:57:57 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AIH331E010636;
+ Tue, 18 Nov 2025 22:57:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=/yaEdk
- monNeqci6s4V2bnwkTcETtOTqL257eKXz7Fh0=; b=N+3oafNo18IcRVLQT0XjSH
- 3CsNXlxri3ekiUwTKmLp2iLEZ6V3GFHn/0xZGVdRY1MPw8nYLu8J6F6C12Adegea
- SPB2lF9yt1RsJQCKD2Bzi1HKUomurPi4m3PeU/iQixPdwYG0/PGMhhVlbrZTYtSO
- yjGBnzZ62grn7/9Xj7ThXmr7EP/ZTtEGt/w+KCSuuzQ8GDTVro0HyBL7UAsVQSpk
- EHe8iUsghy2PCRxRcblASAOejVwtvBrtDb6ztNkBAxkUTqQhVfTNZJwWzvg0IPYY
- CfkSUrdsryxb0rQpFNu1e7p8RRenZ9OJEA0zFxPoazdIL5ql3BB9LS6nv/AIppWA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=H+VvkH
+ BP0cLPZrNjXoL3UdU6ueCb9cXv5UEaF4MrxuM=; b=NIM5YXEorB7+GNZHzyU1oc
+ YG5l2e+pWVsQugTe6+eilHeILzPLWrxt6ZW/7e16KlKzN9PlztUUSeBnHqHuH4Gc
+ FvRqww7HpJPWtPNangHtZeHzn89f1kYSyF9gmhahagI59hck9DSioV5mAj0v7uPe
+ bw7ESWQZyEL7X0ydWTGEFQPgQ1OyRbfku3PLmyGoJE8Umqi2Qmb3pS0PvNfxRlP8
+ VemVIlH4FCuPZ2g8iSWM/tBUX30glkF1OF88f0/6QASUh7CfD58qYHQopRMRZD6p
+ 9CGZuLa40zkXKvcM36D0QA1PvuePOQ2ZdGKceiIXEa5JyMpeIkYyW6zBWf4bCtwA
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aejmsn0ta-1
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aejjw5m44-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Nov 2025 22:56:35 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AIMTeIF005231;
- Tue, 18 Nov 2025 22:56:35 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4af5bk5kmg-1
+ Tue, 18 Nov 2025 22:57:52 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AIMQ3oX010411;
+ Tue, 18 Nov 2025 22:57:51 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4af3us5rws-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 18 Nov 2025 22:56:35 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5AIMuUJc38273362
+ Tue, 18 Nov 2025 22:57:51 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5AIMvlCn49611110
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 18 Nov 2025 22:56:30 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CE5AF20043;
- Tue, 18 Nov 2025 22:56:30 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 317E420040;
- Tue, 18 Nov 2025 22:56:30 +0000 (GMT)
+ Tue, 18 Nov 2025 22:57:47 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B643E20043;
+ Tue, 18 Nov 2025 22:57:47 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 109AA20040;
+ Tue, 18 Nov 2025 22:57:47 +0000 (GMT)
 Received: from li-ce58cfcc-320b-11b2-a85c-85e19b5285e0 (unknown [9.111.14.232])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with SMTP;
- Tue, 18 Nov 2025 22:56:30 +0000 (GMT)
-Date: Tue, 18 Nov 2025 23:56:28 +0100
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with SMTP;
+ Tue, 18 Nov 2025 22:57:46 +0000 (GMT)
+Date: Tue, 18 Nov 2025 23:57:45 +0100
 From: Halil Pasic <pasic@linux.ibm.com>
-To: Eric Farman <farman@linux.ibm.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Christian
- Borntraeger <borntraeger@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>, qemu-devel@nongnu.org, David Hildenbrand
- <david@redhat.com>, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater	 <clg@kaod.org>,
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x@nongnu.org, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew
+ Rosato <mjrosato@linux.ibm.com>, qemu-devel@nongnu.org, David Hildenbrand
+ <david@redhat.com>, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@kaod.org>,
  Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
-Subject: Re: [PATCH v2] hw/s390x: Fix a possible crash with passed-through
+Subject: Re: [PATCH v3] hw/s390x: Fix a possible crash with passed-through
  virtio devices
-Message-ID: <20251118235628.5869f067.pasic@linux.ibm.com>
-In-Reply-To: <8f90d4d7ea1c4ee8e088f5afb483587181278ebf.camel@linux.ibm.com>
-References: <20251118093945.35062-1-thuth@redhat.com>
- <20251118130218.30d3da33.pasic@linux.ibm.com>
- <8f90d4d7ea1c4ee8e088f5afb483587181278ebf.camel@linux.ibm.com>
+Message-ID: <20251118235745.524c878a.pasic@linux.ibm.com>
+In-Reply-To: <20251118174047.73103-1-thuth@redhat.com>
+References: <20251118174047.73103-1-thuth@redhat.com>
 Organization: IBM
 X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.32; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: PEOuGYAm_GHxNuylrBzEo7YHw5Hr3vSP
-X-Authority-Analysis: v=2.4 cv=Rv3I7SmK c=1 sm=1 tr=0 ts=691cf9a3 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Authority-Analysis: v=2.4 cv=BanVE7t2 c=1 sm=1 tr=0 ts=691cf9f0 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=kj9zAlcOel0A:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=Pm1AC5FQMR7C-oOkkdkA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19
- a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: PEOuGYAm_GHxNuylrBzEo7YHw5Hr3vSP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE1MDAzMiBTYWx0ZWRfXzY7pUmQUTj1K
- Lk0VsuNwrg/9P/IXfM3399VRuF5cmaENoXIyWBgSB9xqTdjs+Vj5tDcze7RAjCW5L9s1V5gOTIt
- ch1L3cNQK+ULEDuIjMkBMi9qPrFWHZgBrJ5x7But5qjidSUG9PHwGIxyyP2YXWhPPWiZpWPqJNt
- 6cHOAu2Z29GoVJcM8Yt3swqrrwiFg5oO/dZ+3PogWXFNJ6FLMjFfmRz9t1i+FWKwxAeaVvaVCkt
- +lZRw8re0CyW2BIvsAadSlB5z8soAWLWZJNcPqSrtSbA75ytCcgTVnkCKik+68OEDZoCGyJPM69
- uj2r335bDfcUJ9PkHUnhuRC1Qa1Ca8jnDLhMMI7tlOQD7j5PkLVbRW5NbsG7+LU0M/lRm39qzbA
- gFUh3rO/SzmtNt+102AVjoWppHJ6Yg==
+ a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=DF9jzra27_ti4jtxTWgA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE1MDAzMiBTYWx0ZWRfX3vBq4HEQTKhs
+ zYi8EhaJHhF5uP/7GwC1YQn0FYsXUcVf64YaCoSvQxLkHrBR/IxRXAMmjTvePkAMImXOtGEu++R
+ Em3jM6yTPCj0IAVv3951N8pre11sj38g1HT8MX/G7m5xtb4MIo42GZMPh1JZufPVchR4nmD4SiE
+ nY+vYji1dKII6dtZICTJqCzKOOaafE+n2d6OMUdcq1Il0kryg2I/fBfVcThjIBCwNDqcKlt54wH
+ 2oDuufDVGYTK96R2BNk3bdZiUVqohFnMGoGBVcVtTbJTmFghUhCnh9qkQ+GlAmoA2qHH/q3BlKQ
+ PZ/Vk4ncw5u9vofkCpYvF032Uuwi/nPNC0U/CwqyOe9FsfcfNDYm8jj+2rVuFTrQyF2R2vQrI0Y
+ awFqf5ihilH8F3bR++U27DMSVVHJQA==
+X-Proofpoint-GUID: blMqnCg5YWE3LU3U_b1vGwvw9saBypTb
+X-Proofpoint-ORIG-GUID: blMqnCg5YWE3LU3U_b1vGwvw9saBypTb
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-11-18_04,2025-11-18_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 clxscore=1015 phishscore=0 priorityscore=1501
- spamscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0 bulkscore=0
+ malwarescore=0 lowpriorityscore=0 suspectscore=0 spamscore=0 impostorscore=0
+ priorityscore=1501 clxscore=1015 phishscore=0 bulkscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511150032
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=pasic@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=pasic@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -126,27 +123,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 18 Nov 2025 10:19:56 -0500
-Eric Farman <farman@linux.ibm.com> wrote:
+On Tue, 18 Nov 2025 18:40:47 +0100
+Thomas Huth <thuth@redhat.com> wrote:
 
-> > So I think it would really make sense to prevent passing through
-> > virtio-ccw devices with vfio-ccw. Eric what is your take?  
+> Consider the following nested setup: An L1 host uses some virtio device
+> (e.g. virtio-keyboard) for the L2 guest, and this L2 guest passes this
+> device through to the L3 guest. Since the L3 guest sees a virtio device,
+> it might send virtio notifications to the QEMU in L2 for that device.
+> But since the QEMU in L2 defined this device as vfio-ccw, the function
+> handle_virtio_ccw_notify() cannot handle this and crashes: It calls
+> virtio_ccw_get_vdev() that casts sch->driver_data into a VirtioCcwDevice,
+> but since "sch" belongs to a vfio-ccw device, that driver_data rather
+> points to a CcwDevice instead. So as soon as QEMU tries to use some
+> VirtioCcwDevice specific data from that device, we've lost.
 > 
-> It's true that the only -supported- use case is passthrough DASD, and we allow other device types to
-> be passed through. The only ones we fence off are what we know aren't going to work, like FCPs.
+> We must not take virtio notifications for such devices. Thus fix the
+> issue by adding a check to the handle_virtio_ccw_notify() handler to
+> refuse all devices that are not our own virtio devices. Like in the
+> other branches that detect wrong settings, we return -EINVAL from the
+> function, which will later be placed in GPR2 to inform the guest about
+> the error.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-I think we can add virto-ccw to that known to not work list ;)
-
-> IIRC
-> we'd talked a few years ago about a plan for a more detailed allow-list of passthrough devices and
-> configurations, but that fell off the back of the todo list. Short of dusting all that off, I don't
-> know that blocking virtio-ccw from vfio is going to buy us anything that Thomas' patch doesn't
-> already provide.
-
-See your comment form later today :)
-
-Would prevent ending up with a most likely dysfunctional device at best.
-
-Regards,
-Halil
+Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
 
