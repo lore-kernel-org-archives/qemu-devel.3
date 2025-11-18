@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F85CEE348
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DC33CEE347
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQ8s-0006ZY-P1; Tue, 18 Nov 2025 13:09:26 -0500
+	id 1vLQ9w-00075I-0o; Tue, 18 Nov 2025 13:10:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQ8r-0006ZM-AI
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:09:25 -0500
-Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQ9t-00072f-J8
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:10:30 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQ8p-0006FT-Np
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:09:25 -0500
-Received: by mail-wm1-x342.google.com with SMTP id
- 5b1f17b1804b1-477a1c28778so32550255e9.3
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:09:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQ9s-0006wd-6F
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:10:29 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-47796a837c7so22910335e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:10:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763489362; x=1764094162; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:references:to
+ d=linaro.org; s=google; t=1763489426; x=1764094226; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DcBkHyTiNVC4+9fAsiXflPff6Ryh+siQ2zf+8F39EBA=;
- b=ks00neJK19i8Z1dze4/coKAi8B+5PXsFrHelOnuNG/sG13xHMFShL34EOZShM1XoIf
- eDufzps0gHPOslKd9h7VfyS21FhZqc6IAXriR6E1HIWIdvGQq4Kmx9v+FCm1I/hFXPFg
- mz/GQKYIEd45fcqGw4h9sd5Xzo07T3+ethAjN1HuDGidVAI3bzfE9hidTp34r/J1lMtD
- uRP3XHs0FM2/VYoEt769e2IFMg4kiT+NmjNBp+PGYM47o3zrrBYg6q7d2vlun7Q6vGWW
- HuhQuhwCzndpYQbQx5ZmDSvSd6eYV4YqeL9dbWZAvqTWMH28WRvfwZyKa17AtGHGmMFn
- gi6g==
+ bh=uR5/yM7IYBjMk3NdNwXKqqT1F26CKwhzXg2M8+Ly0MI=;
+ b=wTR42MXSkjKCh2MliEvTAHU9RfCP3X07xAh7twAdiobHcuRjY3X+uJrISXsfTWPA6j
+ TrsOZ6JyoMjyDLAogHI7Rs/iyBxIctxA6jHAa9HEQXUNbGgkHsgOQu1EktHbdp+MFbGL
+ yjSZaDcEbDrcEmY7eL4hEMz4kxn+eOuWXbnMVhqL7+qujVQKM4ClaKyP0WERhTq9ff43
+ ellze+bGSwDb99pJuyRwTXL0lBYFnRC2eV3QTJH2LH2KbEDCM71081s5axTw+MSQIes0
+ zpVv+DPzHfIS/D9I0cmvXlgIG2T9D6HKl4UewGysaRpyKk5i79n8sSm8norH/fqrxbxM
+ YTgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763489362; x=1764094162;
- h=content-transfer-encoding:in-reply-to:from:cc:references:to
+ d=1e100.net; s=20230601; t=1763489426; x=1764094226;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=DcBkHyTiNVC4+9fAsiXflPff6Ryh+siQ2zf+8F39EBA=;
- b=R5i6z+2+tr2zHp57OuKShLx/PdWdI/DmBVC+Bexe/C0BKmXDc6ixll4YQBO3eA9g1b
- RAQpZrwC6AI0IKhj7HZemmNXBKGltyTDN1DvdQ5kj+8UBvXWZXBXpP8v0Wyz7z/l+UrR
- p/t82oBjhhd5xLC4nvFxU33hu6F3chpzTqdO4cf60nM5+4HLMC3yWR99dAyAK2nyt+7/
- 7+UmB9qio/l7dDbMGQwir5amGEv1EpGC11Of5qdURD5Mr/jHbYoR+AjrE83DPxT7/cht
- iU9mvdMMpfQLS9uL8dfZ0ySf87EQPuB58sUj1sKqLBBVj6o1ZA1va/HPN0h9q5G4HDNb
- /AHw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXG0sydulm+qnaCU5sZjyTjG9ezxdGYom9wBAZ0JyCVEhizDAZw+oNmDaWocruFPOkQQv0BcfaYxwhQ@nongnu.org
-X-Gm-Message-State: AOJu0YxjkO0HzJTQ6xhnfhIJu+a8GiVWFBD0hCTrSWUWp6qERPIB7uwV
- Fxu9Uyjh+PjdE3I3apnq23H1hZYGTf366dt4OKJox6r8J694iL6ktUyy23GqwUKgHFk=
-X-Gm-Gg: ASbGncuoORGQeYZZUq+rGwvOc81dejrCDr441T8AHco1CKCNS6I0JrgQ09qJ+P4SIOa
- tvPa8pmMda+xNnMpqYAFEAkdZpUKYueyzSEwxqJ1eozXf2cI8Sb3FmLr+dBaAKJcncH4ETpw4lj
- stJVDjLtEzFFi7/vwGBoHQED5fYW6ivCmS6o2R2Qhg9mkvvsETZIrheRkuzW/+R7mHzQ0c4n+fH
- XhgQSzedkzItX5WPsvVopChkWUsSZ7iV+gkrGZ/Y8ngkAyRPJA2A/YE94u8CnBH+k9OKk3hOgPG
- yljIcU/s2omahnSr9xdhcLpMf6VWlHOY6BOodm15ZVbZRqRvIcz2A4vCMYRUUmJS31+kfy1mfWJ
- UcfrqloqKlRRKWTrlkdzUt6Nwb45oykpLoTPWDdh/CDYFwmWAU10svmdaJvblatKfG1pHfZ9czy
- 8lQlsl3Uh24T3kJdZOSReKSmzr8Lgmt7701r0LlLjjEu4eL1LKcPtX8w==
-X-Google-Smtp-Source: AGHT+IH95493gREtvMp4/e6nMVUxqd5OOxI8nG7JpZ/eY1BWxwXbkK1YSZQJcMajsAVUoNzwEPIrpw==
-X-Received: by 2002:a05:600c:4d95:b0:477:952d:fc1c with SMTP id
- 5b1f17b1804b1-477952dfcf5mr86737765e9.36.1763489361404; 
- Tue, 18 Nov 2025 10:09:21 -0800 (PST)
+ bh=uR5/yM7IYBjMk3NdNwXKqqT1F26CKwhzXg2M8+Ly0MI=;
+ b=vwiHanucMTSyBBr4vIiog1cMO2haHqmYVE7WcY/RweHKWgP20wtnYAfI+FkOCiZIx8
+ CETR3RCvOkBsUw2Y8X2d2Ue0R9FvbNWb7Pck0wNlkIelA7QGuptmGA6ckpmRJi0ocyhT
+ YPYrvGwaXPbwy7uuZyGofm6OBnyKtQcVtgyqWQdfC+fIcViwOdGE2pbGqFFZDJWs4W/I
+ dIxPcHSztsZZgdg08zRNMvuPo3KZlZwMrPlnyTcr9/VPXJSt9YcK1rneG1YujyC8g+uF
+ tP11R//d6B/clCtMXHMdFbwoPDaeB8rlZ1qC2s1TLee6areyNOP7Rr669upxlZtdg7IN
+ nvOQ==
+X-Gm-Message-State: AOJu0YzPhcAzYhL3MJG+3Ojcg/o5nek8VDS0SDNecMgP/0GpYHElFVd/
+ 6P+WLcoCFjxqZzAgYlBCViRDoZ87swoZucauSmJq5/NrUFnpg5PYZOE7LfmWW9mAaLxf3WNSOXe
+ bb0Pe2WW1Rw==
+X-Gm-Gg: ASbGnctXYbwWsrGbpjKq6GClJsopjiOfTLOCZJzQEuELnMSwsSmb5fg287uP9T7l48p
+ 9WrXYwENMxh0Bp9MaT4LtuUnp7EH9qKiNWBYCq0ReGOUoraBZIzRy6D1/SMU22rVH7UUwzgHWSf
+ Ilu12/kGZMinIcZl7SDwJFfSgmKrWJemLIGdYz4PNi3Y2DXOKC8NpmE1M798afPYnP7bgiWG/3p
+ p0Z5mJC2EU7xysMWcB9d10V6kgyjcIOSJtUqHpmNOJMdV+3rihJz7KvNZ5I2YuXTVhm2xExCFYi
+ Oci5Mq1fbh/KrJ2oP2Ds4fTBTCSizZdifZrXb8X5e5mKji8y3woaK3i6GdrmgDnog8WOiPCPmhV
+ l69X34zGzZgkE58r120+8r1T43cf9umzYjSpYj2bHb5hdbWDQenpxmt6TnMGw/8oQK0coBOl6kk
+ 59d+7AUXURvMgOgb9m/n+4UURA7Lpl7i8OhI30bFkLUgKNJUnqfuRzbw==
+X-Google-Smtp-Source: AGHT+IGbYrXstbW7fiwiunh2+f+HI3X6tpKYbSmM4SxSSc6jvmbDOnUkuGwN60k1nego5JQCzr3s6A==
+X-Received: by 2002:a05:600c:4f51:b0:477:a02d:397a with SMTP id
+ 5b1f17b1804b1-477a02d3af1mr90400055e9.2.1763489426095; 
+ Tue, 18 Nov 2025 10:10:26 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f0b622sm32646592f8f.29.2025.11.18.10.09.20
+ 5b1f17b1804b1-477b10804c8sm2525115e9.15.2025.11.18.10.10.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 10:09:20 -0800 (PST)
-Message-ID: <eff54689-b1a3-41f2-bcad-a62941aa9fc1@linaro.org>
-Date: Tue, 18 Nov 2025 19:09:19 +0100
+ Tue, 18 Nov 2025 10:10:25 -0800 (PST)
+Message-ID: <5c98f807-a872-42f4-a911-7f9b7aa3a091@linaro.org>
+Date: Tue, 18 Nov 2025 19:10:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Update David Hildenbrand's email address
+Subject: Re: [PATCH-for-10.2] hw/southbridge/lasi: Correct LasiState parent
 Content-Language: en-US
-To: David Hildenbrand <david@kernel.org>, qemu-devel@nongnu.org
-References: <20251103103947.384401-1-david@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
+ Helge Deller <deller@gmx.de>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20251117091804.56529-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251103103947.384401-1-david@kernel.org>
+In-Reply-To: <20251117091804.56529-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::342;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,20 +104,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/25 11:39, David Hildenbrand wrote:
-> From: "David Hildenbrand (Red Hat)" <david@kernel.org>
+On 17/11/25 10:18, Philippe Mathieu-Daudé wrote:
+> TYPE_LASI_CHIP inherits from TYPE_SYS_BUS_DEVICE, not
+> TYPE_PCI_HOST_BRIDGE, so its parent structure is of
+> SysBusDevice type.
 > 
-> Switch to kernel.org email address as I will be leaving Red Hat. The
-> old address will remain active until end of January 2026, so performing
-> the change now should make sure that most mails will reach me.
-> 
-> Signed-off-by: David Hildenbrand <david@redhat.com>
-> Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
+> Fixes: 376b851909d ("hppa: Add support for LASI chip with i82596 NIC")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   .mailmap    |  1 +
->   MAINTAINERS | 18 +++++++++---------
->   2 files changed, 10 insertions(+), 9 deletions(-)
+>   include/hw/misc/lasi.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Queued, thanks.
 
