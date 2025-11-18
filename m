@@ -4,122 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F0DCEE33B
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 17:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A6A3CEE341
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 17:32:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLPMd-0007dv-I8; Tue, 18 Nov 2025 12:19:35 -0500
+	id 1vLPYk-0004SH-QH; Tue, 18 Nov 2025 12:32:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vLPMV-0007cB-VF
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:19:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vLPMU-0007aW-2v
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:19:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763486365;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8gwWe7l3hq80W4gg9CqHx5LL4WzS4y9HtAhcGxpMRhU=;
- b=bKNKsCOiS2Znrm0AX+VX3hMeYF+cYDbKDyz73ovZt0f5yB6VaOAGEO+dSpuHr9J4NuFYGf
- toOkkBSXsQQ4TBsISdYdTiP3wxMmkd176ZzgAVHx3YNHd3cw9kMn6eRnJkj8ltqxcpt1IG
- ZhNBlao9ojvMcrL7za+G/uccJUaCgCY=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-197-DIlMMGR6MPCnNIzMfPQFKg-1; Tue, 18 Nov 2025 12:19:10 -0500
-X-MC-Unique: DIlMMGR6MPCnNIzMfPQFKg-1
-X-Mimecast-MFC-AGG-ID: DIlMMGR6MPCnNIzMfPQFKg_1763486349
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-640c4609713so8615389a12.2
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 09:19:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
+ id 1vLPYJ-0004IX-LC
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:31:58 -0500
+Received: from mail-qk1-x730.google.com ([2607:f8b0:4864:20::730])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
+ id 1vLPY8-000196-Vv
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 12:31:33 -0500
+Received: by mail-qk1-x730.google.com with SMTP id
+ af79cd13be357-8b2d32b9777so512109985a.2
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 09:31:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763486349; x=1764091149; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8gwWe7l3hq80W4gg9CqHx5LL4WzS4y9HtAhcGxpMRhU=;
- b=ouzhNY2YAwtLGKdxAEFaD0uKjtJkGrN3NnfYuypPxdypezXNlnqVxRKXTcu2QjoxLs
- PoEL8VJFHUHd8O0ehm4IsWTOZeWxuH830K7wS8ijZc+tdqjaAK17lk6OoPAtMgkZKtef
- eiRj9/gwJKc5Y9m6StiYZmV6Pd9DihNMMcaQ6/r4nXjhVLUtnQYQ/F3B8QdUPoxV32GF
- AqLHzUtIp0WMh4jpTB3t9erBep9jIcF0OcDNgS9dNkCXKPwl/v0JhxaFhlPcCBkR/IhS
- Gf2hs+6M9SYM/1ufmVDEvroSa+54A5eojFDdzAhUyPft9uObfxq2YRX6+MddddVCgjwj
- ZKBQ==
+ d=gmail.com; s=20230601; t=1763487072; x=1764091872; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QVPoESxi6UHoAgt8OY3MFpNcL1B4SyjIDkNbru2Grxw=;
+ b=XZmPXZvHO1H9REhiv3tFYr4Jn5cgO1/ZVFTdIR0p960kWDqGlXNuugTP4uU8HMwcaH
+ PcdBXGBijvOEcfzh6U0kq0znz4rJtsA1fLsGRhsQ+dc8rAfZopRuD8Pmt80wG5Lx4aaK
+ o0OV9rgpWeNCtAXruelI6qftX7/88f/HhOtGSGkUpKctxCvzlmcuhzSDr1bGmoGJ0SJt
+ AW1ZLuz+HFlXlcdtmhyNJi90MZvFMwxI9Z8gvbz1SUrYVVlAyf+0gDSDtEnaK3nXPLEa
+ 809/QTYXHatesuHjUgwBYnCrCCCztN3AE8J+i8/0/ROlmaB8rBQhsy19DAMmJK8LpSPZ
+ Wfvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763486349; x=1764091149;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8gwWe7l3hq80W4gg9CqHx5LL4WzS4y9HtAhcGxpMRhU=;
- b=hyvdyrmKuJ4hLl0LO77N5IAbUPRcXA371a2Wt86o91/aI8g3Ka0B/kgPgtmrZQf03i
- LVTh/54JLjWaa5WdLvcA5bbBr/PX9haTraaNLDl5/pazMbYe24HqK++fC7OFcdTH0qWF
- uEJEeAkrw1LRBqOQjlPWHy3a/xZLS9MqNoFev/KwabYIvolyIg+7ncKWT0AMEUmsZfWC
- k+1bU8hAywCifTWgNx79Us2BNZ8K7i3L+AQL24H2sOxFuojqrAStZtleN99FGiyHdysH
- qSd6xuLbM7AJ3mTG67E23P8rK8VLApyv4YDI77UeR+JmFfFejLYJNg+X5Q9C1Va751ty
- PXiQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUW3D99IvK7bQefYUZT76CccrP79WitenEz/6fhaxLS4nSA3vksWmuUFSbjThZ8sHxl2iJtJ/815JLy@nongnu.org
-X-Gm-Message-State: AOJu0YzW/1BxsyZUBz1VV/pO7OhwxSTTWOMl5363fehkT5YnYLCnVdtq
- g5AG0M7ycFYcshNhZIGlhl4+NGuiAYJEIfv9yx8RMyTrEaVN16m9ESeI7ONCatvpydAt/UGkO1f
- l1aHDwAhiI0Hf78FAxpPoXevaXzcoUHkNbJmTAREVycdRwPuyYoN/vnil
-X-Gm-Gg: ASbGnctHzt1gXuVkwONxM8NzFv+8LuFie6L4mzJ6yiVJMmHe9rW55uIt1iVEVpx3rVs
- D5qXxopnyG/j5J31IZmLJuOB+WS4yYXKbcavylr0f3lryDLTBMABfoe59w5RCE7RCfjkfx6VseQ
- cZURIYlnS0PRJLw0RY24qUvm6ePmKbKJ+V+HAh8UPVcfPubUQdGTMWC4EVv4ZZ2ngIIZgRHrf1D
- qkKklpKUabwuN2n1KRS0XYlB+PRO++7Z38uxVIGI5JBRfJVaoG0/LuaRiSjqSkIm2ron/vVdgjq
- 1z8ShHKYdpQIZsMT+5EvqjRjwFg0Gy4SodjUjDo04cyIDmG/W9rHJIp2Q6c9ArYUnSP8ydlGKLR
- /hir8z77Bqa3y7bdssNTdfxMnqZ2TbdfO90q48YKYnGqFNOC3ukWr2qBhXAoAy+VMZHdXEFB7NI
- 2eZqyVRHfFSLaZ1eOEhyjzwN1IzVXMHLAArliyE9g=
-X-Received: by 2002:a05:6402:27d0:b0:640:d061:e6b1 with SMTP id
- 4fb4d7f45d1cf-64350e1df7cmr16688383a12.10.1763486348617; 
- Tue, 18 Nov 2025 09:19:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IExbKjH8XJoUM2hYZqa3Kdgidq8Y9mIV1GQ6698xrpXNU18FJNA66p1QkpRj3+jc/o3W2exdQ==
-X-Received: by 2002:a05:6402:27d0:b0:640:d061:e6b1 with SMTP id
- 4fb4d7f45d1cf-64350e1df7cmr16688356a12.10.1763486348222; 
- Tue, 18 Nov 2025 09:19:08 -0800 (PST)
-Received: from ?IPV6:2003:cf:d717:1f76:905c:29a8:188b:2aad?
- (p200300cfd7171f76905c29a8188b2aad.dip0.t-ipconnect.de.
- [2003:cf:d717:1f76:905c:29a8:188b:2aad])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6433a49806csm13107868a12.18.2025.11.18.09.19.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 09:19:06 -0800 (PST)
-Message-ID: <71efff01-5353-4d50-9779-51cd1e813d4d@redhat.com>
-Date: Tue, 18 Nov 2025 18:19:03 +0100
+ d=1e100.net; s=20230601; t=1763487072; x=1764091872;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=QVPoESxi6UHoAgt8OY3MFpNcL1B4SyjIDkNbru2Grxw=;
+ b=lQuFTpnP8jyU6rVIJIraOKEvXJXgLrslvGJ+D+Lt5DDMdAPoTT24KxvXLdZTkafH+9
+ s6TeBko1CcszSc9QXiByhhPO3YOgMcajiYFa1E6XF7Vnp4E/Vxn+mVEYwJwyt1T0LRFe
+ Ts+ZiTRy2EXrNghW6QxD9MFUSW7PQXFr6D0/IiBhtBwdD+5OIKGhWKoBISGpurdZQh1y
+ P5tWSaj3Afk3AdAdv1EkYlEqi0RHRNHQapZzsVgeGtGyQ6u5S68pE7z0l8RoIhLsXozh
+ 9FxMDegpG6HGEC/vqwItCDxyHNlfk7Bvpd+EocyaikghPpc/5781sD4XLfR8TmJ1u4vD
+ HbXA==
+X-Gm-Message-State: AOJu0YyV6ebKoyHFjmo7rBWRcJX1cd8O18lT58sFsU7uz7ZAtFARjcD1
+ 5bpai0iiJmFZWMRGzUEm5KpNgXkpQq5gYNfEEhoxay19VB9xvzIjdL2a
+X-Gm-Gg: ASbGncuJzddU5GD9Au7ZvBs17srLSZzTsWK+lOqjp4RmmXFnnFY0+NNR3ndcMrdW67S
+ PJZZDYYYL37tGr0AsdDr81k2sLeYSoBhdMqoCjXACi5bRBO5pVfowWiGP+PlMkVO90WIfDdqtkO
+ xoZSwn2A7GR35vpMB86fdh36LdhUiIGXFZUz7I/3h0KiRp4uC66iaeZbJEAMW+zSVgKgrq16tti
+ jm2QeuGnXnO7HWiAgKnKtvlgksWj1zKJ76VwtgvpAR0Ob/uhOtQa8klvOoUa5jTSdip6taSu+8r
+ U7PLv13DacQbIxBzok8sjCMTJFrLJzAFYJMWgR0mB0omIVz07K1+IwJEdJAS9OB8nc2L/RcEJFf
+ DzxGcArZmHwR9gcyxWIztKvHDd8ZkBoimN3htlYbyMc3JBLrubVugPIztvbbWaZ6oRkeWM1cVve
+ xRhPaYaL+LmjRS3Q==
+X-Google-Smtp-Source: AGHT+IHQ3YwQbGg+r4tMreMLQSiq3oGsTaz02I7OhR9MGHivYVctSocnIY3DAFJ8Lm+el7nSUi5clQ==
+X-Received: by 2002:a05:620a:288e:b0:8b2:f269:f8a4 with SMTP id
+ af79cd13be357-8b2f26a07afmr950340985a.62.1763487072007; 
+ Tue, 18 Nov 2025 09:31:12 -0800 (PST)
+Received: from localhost ([208.89.33.100]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8b2aeecb087sm1244980485a.26.2025.11.18.09.31.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 18 Nov 2025 09:31:11 -0800 (PST)
+From: brookmangabriel@gmail.com
+X-Google-Original-From: archie@gabriellaptop
+Date: Tue, 18 Nov 2025 12:31:08 -0500
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH RFC v2 07/10] target/arm: ldg on canonical tag loads the
+ tag
+Message-ID: <jppfgy3fxrudrgjeyahog5zzu3fipmszjzidv2qj4r736iqbmv@7q63uwsgegbd>
+References: <20251116-feat-mte4-v2-0-9a7122b7fa76@gmail.com>
+ <20251116-feat-mte4-v2-7-9a7122b7fa76@gmail.com>
+ <b7d5b2dd-bdb2-49f5-8345-d55d5d74a65a@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/19] qcow2: Fix cache_clean_timer
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Richard W . M . Jones" <rjones@redhat.com>,
- Ilya Dryomov <idryomov@gmail.com>, Peter Lieven <pl@dlhnet.de>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>
-References: <20251110154854.151484-1-hreitz@redhat.com>
- <20251110154854.151484-13-hreitz@redhat.com> <aRs2OSuFy0HyW4EU@redhat.com>
- <7a3dc3f2-cded-4e2f-a914-938acd52576f@redhat.com>
- <aRyniMgeFyZMcU6q@redhat.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <aRyniMgeFyZMcU6q@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b7d5b2dd-bdb2-49f5-8345-d55d5d74a65a@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::730;
+ envelope-from=brookmangabriel@gmail.com; helo=mail-qk1-x730.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,65 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.11.25 18:06, Kevin Wolf wrote:
-> Am 18.11.2025 um 12:01 hat Hanna Czenczek geschrieben:
->> On 17.11.25 15:50, Kevin Wolf wrote:
->>> Am 10.11.2025 um 16:48 hat Hanna Czenczek geschrieben:
->>>> +/* s_locked specifies whether s->lock is held or not */
->>>>    static void qcow2_update_options_commit(BlockDriverState *bs,
->>>> -                                        Qcow2ReopenState *r)
->>>> +                                        Qcow2ReopenState *r,
->>>> +                                        bool s_locked)
->>>>    {
->>>>        BDRVQcow2State *s = bs->opaque;
->>>>        int i;
->>>> +    /*
->>>> +     * We need to stop the cache-clean-timer before destroying the metadata
->>>> +     * table caches
->>>> +     */
->>>> +    if (s_locked) {
->>>> +        cache_clean_timer_co_locked_del_and_wait(bs);
->>>> +    } else {
->>>> +        cache_clean_timer_del_and_wait(bs);
->>>> +    }
->>>> +
->>>>        if (s->l2_table_cache) {
->>>>            qcow2_cache_destroy(s->l2_table_cache);
->>>>        }
->>>> @@ -1228,6 +1312,10 @@ static void qcow2_update_options_commit(BlockDriverState *bs,
->>>>        }
->>>>        s->l2_table_cache = r->l2_table_cache;
->>>>        s->refcount_block_cache = r->refcount_block_cache;
->>>> +
->>>> +    s->cache_clean_interval = r->cache_clean_interval;
->>>> +    cache_clean_timer_init(bs, bdrv_get_aio_context(bs));
->>>> +
->>>>        s->l2_slice_size = r->l2_slice_size;
->>>>        s->overlap_check = r->overlap_check;
->>>> @@ -1239,12 +1327,6 @@ static void qcow2_update_options_commit(BlockDriverState *bs,
->>>>        s->discard_no_unref = r->discard_no_unref;
->>>> -    if (s->cache_clean_interval != r->cache_clean_interval) {
->>>> -        cache_clean_timer_del(bs);
->>>> -        s->cache_clean_interval = r->cache_clean_interval;
->>>> -        cache_clean_timer_init(bs, bdrv_get_aio_context(bs));
->>>> -    }
->>>> -
->>>>        qapi_free_QCryptoBlockOpenOptions(s->crypto_opts);
->>>>        s->crypto_opts = r->crypto_opts;
->>>>    }
->>> Is there any specific reason why you move cache_clean_timer_init()
->>> earlier? I don't see an actual problem with the code as it is after this
->>> change, but s->l2_slice_size is related to the cache in a way, so it
->>> would feel safer if the cache cleaner were only started once all the
->>> settings are updated and not only those that it actually happens to
->>> access at the moment.
->> Oh.  I don’t think there’s a good reason.  I think it makes sense to keep
->> the set-up in the old place.  Can you do that in your tree?
-> Yes, I changed it back and applied the series to my block branch.
-> Thanks.
+On Mon, Nov 17, 2025 at 05:26:54PM +0100, Richard Henderson wrote:
+> On 11/17/25 02:40, Gabriel Brookman wrote:
+> > @@ -444,6 +449,11 @@ uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr)
+> >           return 0;
+> >       }
+> > +    if (mtx_check(env, extract64(ptr, 55, 1))) {
+> > +        shift = extract64(ptr, LOG2_TAG_GRANULE, 4) * 4;
+> > +        return (~0) << shift;
+> > +    }
+> 
+> This should load the canonical tag, which is 0 for bit55==0.
+> 
+> The ~0 is wrong because it's not 64-bit.
+> The field also needs to be bound by gm_bs.
+> Something like
+> 
+>   return MAKE_64BIT_MASK(shift, shift + (2 << gm_bs));
+> 
+> 
+> r~
+> 
 
-Thanks a lot!
+Hey Richard,
 
-Hanna
+Thanks for the review! Expect v3 sometime soon.
 
+Thanks,
+Gabriel
 
