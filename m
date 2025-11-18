@@ -4,96 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57D7FCCD19A
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 08:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 849ADCEBF92
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 08:46:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLHKX-0000vc-F9; Tue, 18 Nov 2025 03:44:53 -0500
+	id 1vLHLK-0001zF-8d; Tue, 18 Nov 2025 03:45:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLHKU-0000nM-VL
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 03:44:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vLHLH-0001y0-Ah
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 03:45:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLHKQ-0001J9-BP
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 03:44:50 -0500
+ id 1vLHLF-0001Vy-D8
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 03:45:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763455483;
+ s=mimecast20190719; t=1763455536;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MvBzZyeqDE0awYgcTrOUR4nEuRK4TuBA73+hSBjBlcU=;
- b=Ww3Pgef9UWOrS8OeDIyes8wv3s6PxUkyJppTRvck6G+Q8SpqmpvGP3m65UJ3afAc9k78Dv
- YFlKf/xrrUflslzQeqOqU2REymNn573pH+N5mxr2WIKgLEofT3aeD5w0UPgRZ+hkdQ2Ot/
- 6JKEOknLYDW/5UHYL6PSz8LI61KRkLw=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EeH7esf9DAprT3Wwab6GVJxBQKPkkelL/OieD6b8Pwo=;
+ b=AHtRVgVMJXYYfsOymrpSlvzjET9v4zz9VUUA7EF5tG7LwX3sDNwJRLMRUCQsgWCelzMA/3
+ 5RXaRSkP208IoEVWhEnD4DGB6876QYDeNAuQNzKTrJSY6TSIYxjY+MnPKoWmxdhnpoFKRG
+ bACIeZR054cuCemfOtXbgvBlAa51oi8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-9cfSHnwBP22cptsbq79tfA-1; Tue, 18 Nov 2025 03:44:41 -0500
-X-MC-Unique: 9cfSHnwBP22cptsbq79tfA-1
-X-Mimecast-MFC-AGG-ID: 9cfSHnwBP22cptsbq79tfA_1763455480
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-42b2ad2a58cso2783538f8f.0
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 00:44:40 -0800 (PST)
+ us-mta-434-Tf_E8UfoNt6l91kR9U_fFw-1; Tue, 18 Nov 2025 03:45:34 -0500
+X-MC-Unique: Tf_E8UfoNt6l91kR9U_fFw-1
+X-Mimecast-MFC-AGG-ID: Tf_E8UfoNt6l91kR9U_fFw_1763455533
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4775fcf67d8so35636465e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 00:45:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763455480; x=1764060280; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763455533; x=1764060333; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MvBzZyeqDE0awYgcTrOUR4nEuRK4TuBA73+hSBjBlcU=;
- b=dpBpDo8/X4qHCWNscJcbHk7zTxkMUEs/J37nek4hS3JqkHw2CQExasGsilS7A2tRER
- KHDn8IBE/TCTQw5+RtoJ25xYUZihw6S9z7VOHUu6k7SwEP+Pj3iCcLzW4LznjrpjLZn3
- 7K6e7KviqX99LL56zXPk0eOLFHqiAW3qYgTlk7kMoaUvD6wlh1LtdEG/hztzHTY3Cd4y
- +/UNELZ9SlNBRsUIgA53Wk25bRramLjbRN4apz72w35oUzXnfVJyJHMTn9T69CKMWMtz
- AZoo4IIcuaheLuxjJQ9BvkxWq2p/b/FfHdozDQFUm+3/C7S7ztq2avJ+xfNPDNsmjdPD
- +mcA==
+ bh=EeH7esf9DAprT3Wwab6GVJxBQKPkkelL/OieD6b8Pwo=;
+ b=LLFg9TcdI8BDOKs/IAWhf81E+XlnKmsAbwJKsN5W9vCOWDDfr1LqTh3iecBGLg4xOZ
+ OrwgwWoZnHsvFhLEAI8IJz18ToZla9K0ceWiM9L3pVN4kTTWqp9e1O7WM32mzXHXKOec
+ hPm5wJreO9Jnho3eQZmY9dqOYLmgUSeaxilhZlzMR75Bu85ghTSlpT+R6YlAWnFNPFgD
+ x/9th2Z6/7kS+gKFYT1xPOA70BGic02A1jHnfc4wY6vvNyoiZdMMOqB0dnOY4Ar5JRSn
+ eRii0vlLmcKUccpieIoy+gbrmWnrqpvPe+kkckycOGobBw1ZwhCi4dGP3fkxe14w9LTE
+ 7CIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763455480; x=1764060280;
+ d=1e100.net; s=20230601; t=1763455533; x=1764060333;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MvBzZyeqDE0awYgcTrOUR4nEuRK4TuBA73+hSBjBlcU=;
- b=VwBlP1LGwG7zQ4y2MWoyIXTmNQLgWtsxE601eRbsZ+BfAKO4rqSL5pDB6LR8llOXyY
- vl9mzBCIC6h2SIhHlWB/Hfl/pM1umC09ju+FKsfWmbg1CO4h17Ki8NNCt8s+QMKS1zBh
- weogcjT7ne5VepygHb8fygJtA2xLaDyQXxDvbL+xz2rJrExuSryocB7tfVbk9+H7VAcm
- FnnNgXzDroRDS+RBX/LoXuQTAWRkhJVXP2A4e6l3ya97FhtENJFrFAWLYX906tcx261J
- OSeoz4SxJqvDEKGn5yjmGjDnHcNJCkq0jL/iN5gvcNzOa/6q4lVOG+TMTCFM0XWiD3/l
- OGeA==
-X-Gm-Message-State: AOJu0YzL4KwMbWQ22YukdRyztv2l0xoxSSpX+cLN5lTb2gkxOPTZcdM4
- NHgwsfgslmNWKhp1ePe0qiFULDpe3PdNZL4d5za76pSnVl0Hp0IYKBouoJ9xbk77tovbmkjCF4f
- TQFe6Ud5bRnyOIF7VZLkgw0YXXClSThKBOIUOljn1PP7PicjkQt9LQ9OUF6IkCN37BNLLhrP05T
- GCT40OCeA3Dnn9TSxxqsCMrCwbwdNpiQE=
-X-Gm-Gg: ASbGncv5H2FDjKDlyOnBcupDqJkDT93PwW15gPzWlOIaP9WqN7deadGuYmF/rzH5Lhs
- QsmLoCTadh/WtVYzcC7BZ9r2pCsa5bDix39iohBG+FhkSE2UokaQnLx/v2+WDx2YAlEWw29buP/
- FyQn1AobaBt6MY5IaRTBcI9rIlY1TfV8C4KIJxJNXVSLkGP3FSJvpZwB4cYi1G62euZJp/LOz5S
- IjZWwlJWg27rkdO3aMpX5cVxGrFP7wD62VisDXVJuboYFNLc84emBBaO5+K1N7eDI/8Bbk=
-X-Received: by 2002:a5d:5d03:0:b0:429:d391:642e with SMTP id
- ffacd0b85a97d-42b593742fdmr14123765f8f.30.1763455479765; 
- Tue, 18 Nov 2025 00:44:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGYBb00NPR0bwpQ1prqZMlD2GHOrxd4d6LK2fUEYGRJHPeSHEmV6Fh9YUM2WG7hzJ3/VvempdJLJBRnq/VNfeg=
-X-Received: by 2002:a5d:5d03:0:b0:429:d391:642e with SMTP id
- ffacd0b85a97d-42b593742fdmr14123749f8f.30.1763455479411; Tue, 18 Nov 2025
- 00:44:39 -0800 (PST)
+ bh=EeH7esf9DAprT3Wwab6GVJxBQKPkkelL/OieD6b8Pwo=;
+ b=S2MOIyFX2YYBpYGdooEoyKulN88kU8ZhUW0fPIKeUGedc5eSx2YQQFMvMeU4sl1D66
+ hVVhZRHWWJUyrOVEvKbpPODhdhgBhbO6Jthv81xAnXeuBqgM4NDY5jArZjZy8bL9aWeR
+ 9O7m43eCQHyDvrTS3fCEZVkpecIvvC011dBPI9hRFGbGiQsUWoL91HnbA3p7wE4uzA9n
+ IRBSh7OWXxkRq16/iV4MHk7+eKdkj70uO0xm48ioEoMKnPgbcwheOFLUOcYy8qvDEi1X
+ 11VYrhA2bKqiuxayEeHzUHOtHi9RKKguvant20YkDFZLoMcGVEtFtPgko8GtzDPVZbs8
+ Ewmw==
+X-Gm-Message-State: AOJu0Yw2I7oY+MyLm7uGllsFHq2drHiRBdMJLH16jLXRR0NjTFae/2b1
+ eaTmlbPy2nAJw0lU+o2QWQmvJtEIDUJnyyfu8+5BzvfIcqKQl6UqtPsE0nLLFTTd6T2jdwvzDK8
+ DaGa+imL0c0ow8YHsEQLX4GNkELvY1ztr4AXpbLDiYtc/qSKsU1wXi0V0KRj5WrudWEy8sG27ap
+ fFfLVKJ4UBMNL8EJavzpR7GXbbGkZzRZI=
+X-Gm-Gg: ASbGnctpxfZo/cXKK6qWiqQu90cKeDV6e3i5ctWSqlZ3PjqrvgOB6BWzBOY42CaxCdh
+ Pfc8WirPNxgmlXVEimKhbcWYITR5qtjXv2ZJEdbJgg6Fxb3eR+0qj9k9iTnf+NkMeasgicMOn7F
+ kRnPt8gyqTEhL3qgAT4CNedvEBRBAfZLq6W8CL3z2NSu7vEkggUJb1mx3NbE+1svE8KFegWjRUd
+ DNMfyO1aAg/+ETbXYHfErmWCTQmIEL1TY8Qr8BozJUT9GZTFfDGft4WxX3ksDiR1PTCg2k=
+X-Received: by 2002:a05:600c:138b:b0:477:7a95:b971 with SMTP id
+ 5b1f17b1804b1-4778fe882d9mr157498005e9.31.1763455533306; 
+ Tue, 18 Nov 2025 00:45:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFWrtB6FWUpiS02Ik6Y450zpyrbX5cajldKAKN3E1QGqYwiRM+8a4yPoFPG5LR7JaP0i8DbMeuNFrUI9/4JqOo=
+X-Received: by 2002:a05:600c:138b:b0:477:7a95:b971 with SMTP id
+ 5b1f17b1804b1-4778fe882d9mr157497725e9.31.1763455532932; Tue, 18 Nov 2025
+ 00:45:32 -0800 (PST)
 MIME-Version: 1.0
 References: <20251118065817.835017-1-zhao1.liu@intel.com>
- <20251118065817.835017-5-zhao1.liu@intel.com>
-In-Reply-To: <20251118065817.835017-5-zhao1.liu@intel.com>
+In-Reply-To: <20251118065817.835017-1-zhao1.liu@intel.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 18 Nov 2025 09:44:26 +0100
-X-Gm-Features: AWmQ_bkN5pSjhIhl1KBHBuy1-lXcrkuRFvZ19o-iJjMH1c5og9fONsT5dCVU14g
-Message-ID: <CABgObfZfGrx3TvT7iR=JGDvMcLzkEDndj7jb5ZVV3G3rK54Feg@mail.gmail.com>
-Subject: Re: [PATCH 4/5] i386/cpu: Support APX CPUIDs
+Date: Tue, 18 Nov 2025 09:45:20 +0100
+X-Gm-Features: AWmQ_bkgi0c0szQngSlsuQGAHJe64NW4a3ZmXTN_JYX47_A2Hyxk0ZyYVHFXbMw
+Message-ID: <CABgObfZSBjNzhMrCVxXV1zRCsT47Hz31H-ER7Qv0S+Haw6Ds+A@mail.gmail.com>
+Subject: Re: [PATCH 0/5] i386/cpu: Support APX for KVM
 To: Zhao Liu <zhao1.liu@intel.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, 
  "Chang S . Bae" <chang.seok.bae@intel.com>, Zide Chen <zide.chen@intel.com>, 
- Xudong Hao <xudong.hao@intel.com>, Peter Fang <peter.fang@intel.com>
+ Xudong Hao <xudong.hao@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -121,37 +120,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Nov 18, 2025 at 7:36=E2=80=AFAM Zhao Liu <zhao1.liu@intel.com> wrot=
 e:
 >
-> APX is enumerated by CPUID.(EAX=3D0x7, ECX=3D1).EDX[21]. And this feature
-> bit also indicates the existence of dedicated CPUID leaf 0x29, called
-> the Intel APX Advanced Performance Extensions Leaf.
+> Hi,
 >
-> This new CPUID leaf now is populated with enumerations for a select
-> set of Intel APX sub-features.
->
-> CPUID.(EAX=3D0x29, ECX=3D0)
->  - EAX
->    * Maximum Subleaf CPUID.(EAX=3D0x29, ECX=3D0).EAX[31:0] =3D 0
->  - EBX
->    * Reserved CPUID.(EAX=3D0x29, ECX=3D0).EBX[31:1] =3D 0
->    * APX_NCI_NDD_NF CPUID.(EAX=3D0x29, ECX=3D0).EBX[0:0] =3D 1, which
->      enumerates the presence of New Conditional Instructions (NCIs),
->      explicit New Data Destination (NDD) controls, and explicit Flags
->      Suppression (NF) controls for select sets of EVEX-encoded Intel
->      APX instructions (present in EVEX map=3D4, and EVEX map=3D2 0x0F38).
->  - ECX
->    * Reserved CPUID.(EAX=3D0x29, ECX=3D0).ECX[31:0] =3D 0
->  - EDX
->    * Reserved CPUID.(EAX=3D0x29, ECX=3D0).EDX[31:0] =3D 0
->
-> Note, APX_NCI_NDD_NF is documented as always enabled for Intel
-> processors since APX spec (revision v7.0). Now any Intel processor
-> that enumerates support for APX_F (CPUID.(EAX=3D0x7, ECX=3D1).EDX[21])
-> will also enumerate support for APX_NCI_NDD_NF.
+> This series adds APX (Advanced Performance Extensions) support in QEMU
+> to enable APX in Guest based on KVM.
 
-Please just make the new leaf have constant values based on just
-APX_F. We'll add the optional NCI/NDD/NF support if needed, i.e.
-never. :)
+Thanks for sending this out, I left some comments on the patch that
+adds EGPRs but otherwise it's pretty simple---good.
 
 Paolo
+
+> This series is based on CET v4:
+>
+> https://lore.kernel.org/qemu-devel/20251118034231.704240-1-zhao1.liu@inte=
+l.com/
+>
+> And you can also find the code here:
+>
+> https://gitlab.com/zhao.liu/qemu/-/commits/i386-all-for-dmr-v1.1-11-17-20=
+25
+>
+> The patches for KVM side can be found at:
+>
+> https://lore.kernel.org/kvm/20251110180131.28264-1-chang.seok.bae@intel.c=
+om/
+>
+>
+> Thanks for your review!
+>
+>
+> Overview
+> =3D=3D=3D=3D=3D=3D=3D=3D
+>
+> Intel Advanced Performance Extensions (Intel APX) expands the Intel 64
+> instruction set architecture with access to more registers (16
+> additional general-purpose registers (GPRs) R16=E2=80=93R31) and adds var=
+ious
+> new features that improve general-purpose performance. The extensions
+> are designed to provide efficient performance gains across a variety of
+> workloads without significantly increasing silicon area or power
+> consumption of the core.
+>
+> APX spec link (rev.07) is:
+> https://cdrdv2.intel.com/v1/dl/getContent/861610
+>
+> At QEMU side, the enabling work mainly includes two parts:
+>
+> 1. save/restore/migrate the xstate of APX.
+>    * APX xstate is a user xstate, but it reuses MPX xstate area in
+>      un-compacted XSAVE buffer.
+>    * To address this, QEMU will reject both APX and MPX if their CPUID
+>      feature bits are set at the same (in Patch 1).
+>
+> 2. add related CPUIDs support in feature words.
+>
+> Thanks and Best Regards,
+> Zhao
+> ---
+> Zhao Liu (2):
+>   i386/cpu: Support APX CPUIDs
+>   i386/cpu: Mark apx xstate as migratable
+>
+> Zide Chen (3):
+>   i386/cpu: Add APX EGPRs into xsave area
+>   i386/cpu: Cache EGPRs in CPUX86State
+>   i386/cpu: Add APX migration support
+>
+>  target/i386/cpu.c          | 68 ++++++++++++++++++++++++++++++++++++--
+>  target/i386/cpu.h          | 26 +++++++++++++--
+>  target/i386/machine.c      | 24 ++++++++++++++
+>  target/i386/xsave_helper.c | 14 ++++++++
+>  4 files changed, 128 insertions(+), 4 deletions(-)
+>
+> --
+> 2.34.1
+>
 
 
