@@ -4,102 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6F29CEE352
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 20:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1695BCEE352
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 20:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLS95-0002BY-Bs; Tue, 18 Nov 2025 15:17:49 -0500
+	id 1vLSFV-0005Tz-O8; Tue, 18 Nov 2025 15:24:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLS8u-0002AU-5F
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:17:36 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLS8q-0000YW-Um
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:17:35 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-47796a837c7so23637235e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 12:17:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763497051; x=1764101851; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0fsDbp266x/i7vzPqogyJHiihfg6OIpNQWatkbpvId8=;
- b=hpCtcQpIxa+hptsgcy3vWrmeaZSyqoguPIt7DO0qMtxt8peEjz0za28MZ0+En3nnUd
- zZHBYaBT2A8HlgSA+u1icVtg5K9HUl2vs/QK1zj9E+Gs6FM8uR0SZiJQeABuZHTJd671
- uphCswM/GCxZjYUSeQEH4rqgLrrtkSJNLkYinlYmjEzVzlfwXbLCOtfSnyF4mr9uLQ/k
- K2peT3/UxdFF61wZBC2w1FtddS0rcZH5b1mTbc4Jn0N09j5eSmbqnQMx4JUUO1kdZcVv
- 1+zHbFucme27uCkseEqdsn7lN86smvwVXGSpMB5dePnRFImy2GmBaeNMTHqNO1A4BKff
- r8Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763497051; x=1764101851;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0fsDbp266x/i7vzPqogyJHiihfg6OIpNQWatkbpvId8=;
- b=amLb1QtdxWfD0DimwQGhVML15kjCjG92nd2d/PCXmyYZBWstlmemv75rgTjmUbeQ7F
- r4+/t0ELhhzLpXyiKtFuNWptMeA8MvPDJYK43TmbyeyUU4wp3G0sEU7RsdaSWJ/ja2OG
- jnXr+HguqyGY/bnOP4w8Tl4P7CBmVAk1h9j1ZBx0SfP1ODWWJcoeUC0DypIJJ5RfNaNQ
- Yp6htbDk9x2DHPu/GfeBKavU9LhXfQ9XTjiODo2UiL7euy20GiAFEI3BDV4sHwFkeeKY
- 4N0JX0qZKYn/hNsP/aHbUajP8IFCG8AZYc7p0WCt5Fqqxg1pBoLJ+cyuueW9VpRWp96I
- syTA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV67L6ueDX6134HCVtSdpvPVzQkoD5MP7iF2RE2cijkbq//ZjsFsFkAmCTZaH1QsXt8jp09N51rqwLZ@nongnu.org
-X-Gm-Message-State: AOJu0YyvVUbFQPrR1ysfa/Y+9y4JZy9Zpp6P8W/VMJipWEJfEiWezOwS
- PnQFMXcRslhRdfMe6N0baviVtM2Ytg9tzzuztMzUYvvAtNVheFZcFJvhh7iAypEOM3s=
-X-Gm-Gg: ASbGncuzQWPanphFfOSGoQUYHmgII65LjD7fWsokE9fBKcYbhr1Nxcm7j52F0rybhpF
- CDjhNIcwrGUDqfp9N6GNK267BZMn1YCWdaNHJvuVvXzTTx2Bvx6FC6478pjH8Aj8ilXnk1T3jrX
- Dwmod9urWjM4T4ph01XKjrKuGyYlHPea9nlLpJIxgizxuqwkvoCwq6DMNNEX/Vidyuj7rxw322E
- DjqWUytV/mmMOdwSE0sLZZ/d+/3vC2wHnPNSdFERe5FQ6BWcu76v6Wdb3kKo1xRbePegQ1XKhAE
- sNcGgi6QO2qyMoKnR0Z6oT4v9dlxij1pCyPlX3hUVe5yakRTncxx791sWZlE8GR0IHAJnlX6MJ1
- HieRB/DozYTEO0JVIz1Ph5T4TdFS78kXLJE+5hi3swthlXic+/CaLAlqVpIfBdYAzqBXbUpq2LA
- lCAv6RiE4TU/YPwptncP7G0v7SkSf0OAXrzA9ZEvJb8pQm2ZKjvCfc89B3uVZDk4uVsB/Y2f/F+
- pw=
-X-Google-Smtp-Source: AGHT+IGIBA2WyROgLGXhq+Mazm6ZBzKqe1NWsoKEfPXlE4J3bLXYhVTPM3sHJBIIbzq7NcDocedLpQ==
-X-Received: by 2002:a05:600c:6b66:b0:477:9a28:b09a with SMTP id
- 5b1f17b1804b1-4779a28b24bmr96241525e9.0.1763497051232; 
- Tue, 18 Nov 2025 12:17:31 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b102a3a1sm7970765e9.9.2025.11.18.12.17.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 12:17:30 -0800 (PST)
-Message-ID: <958b25bf-c930-4117-8378-e9f87621d2c3@linaro.org>
-Date: Tue, 18 Nov 2025 21:17:29 +0100
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vLSFR-0005SO-Tb
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:24:21 -0500
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vLSFP-0001g6-79
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:24:21 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id A52BB8294D;
+ Tue, 18 Nov 2025 23:24:14 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:d96::1:10] (unknown
+ [2a02:6bf:8080:d96::1:10])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id DOc5b42FNW20-D3JoF5WH; Tue, 18 Nov 2025 23:24:14 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1763497454;
+ bh=HK4dH7YVztP4yRLAT1rK9MoOa+eM+hWHOkPAj7of9ps=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=dFjo1C2AAgAGA3Wxmzj9MxgX+c/JmQruALKD0wgdp09tu852Qeda0RO4tcljgnTor
+ KQ+Fr0PngUPeH9NDQlD12lB1VOzUoMqrRShsCfoBzo1HY8lulyxaunxJeJypURSMFA
+ oPp31TPbv0lfNW6sBUsiK0ItErtP27Zr3FdutK7o=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <cf0f69b9-4b2b-4c09-a32b-ad86bbe04f6d@yandex-team.ru>
+Date: Tue, 18 Nov 2025 23:24:12 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] target/riscv: Really use little endianness for
- 128-bit loads/stores
+Subject: Re: [PATCH v3 0/3] vhost-user-blk: support inflight migration
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
+Cc: Raphael Norwitz <raphael@enfabrica.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20251110103937.1944486-1-dtalexundeer@yandex-team.ru>
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Christoph Muellner <christoph.muellner@vrull.eu>,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Anton Johansson <anjo@rev.ng>,
- Valentin Haudiquet <valentin.haudiquet@canonical.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?= <frederic.petrot@univ-grenoble-alpes.fr>
-References: <20251010155045.78220-1-philmd@linaro.org>
- <20251010155045.78220-2-philmd@linaro.org>
- <88f8d901-b7b4-47e6-b209-f9375c5b95e1@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <88f8d901-b7b4-47e6-b209-f9375c5b95e1@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20251110103937.1944486-1-dtalexundeer@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,91 +82,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+Add Daniel
 
-[Dropping Fabien Portas from Cc due to bouncing email]
-
-On 10/10/25 20:44, Richard Henderson wrote:
-> On 10/10/25 08:50, Philippe Mathieu-Daudé wrote:
->> Per commit a2f827ff4f4 ("target/riscv: accessors to registers upper
->> part and 128-bit load/store") description:
->>
->>   > The 128-bit ISA adds ldu, lq and sq. We provide support for these
->>   > instructions. Note that (a) we compute only 64-bit addresses to
->>   > actually access memory, cowardly utilizing the existing address
->>   > translation mechanism of QEMU, and (b) we assume for now
->>   > little-endian memory accesses.
->>
->>     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->>
->> However this commit used MO_TE (target endianness) for the
->> gen_load_i128() and gen_store_i128() helpers. Likely it was
->> unnoticed because current targets are only built using little
->> endianness:
->>
->>    $ git grep -L TARGET_BIG_ENDIAN=y configs/targets/riscv*
->>    configs/targets/riscv32-linux-user.mak
->>    configs/targets/riscv32-softmmu.mak
->>    configs/targets/riscv64-bsd-user.mak
->>    configs/targets/riscv64-linux-user.mak
->>    configs/targets/riscv64-softmmu.mak
->>
->> Replace by MO_TE -> MO_LE to really use little endianness.
->>
->> Cc: Fabien Portas <fabien.portas@grenoble-inp.org>
->> Cc: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
->> Fixes: a2f827ff4f4 ("target/riscv: accessors to registers upper part 
->> and 128-bit load/store")
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/riscv/insn_trans/trans_rvi.c.inc | 12 ++++++++----
->>   1 file changed, 8 insertions(+), 4 deletions(-)
->>
->> diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/ 
->> insn_trans/trans_rvi.c.inc
->> index b9c71604687..df0b555176a 100644
->> --- a/target/riscv/insn_trans/trans_rvi.c.inc
->> +++ b/target/riscv/insn_trans/trans_rvi.c.inc
->> @@ -389,9 +389,11 @@ static bool gen_load_i128(DisasContext *ctx, 
->> arg_lb *a, MemOp memop)
->>           }
->>       } else {
->>           /* assume little-endian memory access for now */
->> -        tcg_gen_qemu_ld_tl(destl, addrl, ctx->mem_idx, MO_TEUQ);
->> +        MemOp memop = MO_LEUQ;
->> +
->> +        tcg_gen_qemu_ld_tl(destl, addrl, ctx->mem_idx, memop);
->>           tcg_gen_addi_tl(addrl, addrl, 8);
->> -        tcg_gen_qemu_ld_tl(desth, addrl, ctx->mem_idx, MO_TEUQ);
->> +        tcg_gen_qemu_ld_tl(desth, addrl, ctx->mem_idx, memop);
->>       }
->>       gen_set_gpr128(ctx, a->rd, destl, desth);
->> @@ -494,9 +496,11 @@ static bool gen_store_i128(DisasContext *ctx, 
->> arg_sb *a, MemOp memop)
->>           tcg_gen_qemu_st_tl(src2l, addrl, ctx->mem_idx, memop);
->>       } else {
->>           /* little-endian memory access assumed for now */
->> -        tcg_gen_qemu_st_tl(src2l, addrl, ctx->mem_idx, MO_TEUQ);
->> +        MemOp memop = MO_LEUQ;
->> +
->> +        tcg_gen_qemu_st_tl(src2l, addrl, ctx->mem_idx, memop);
->>           tcg_gen_addi_tl(addrl, addrl, 8);
->> -        tcg_gen_qemu_st_tl(src2h, addrl, ctx->mem_idx, MO_TEUQ);
->> +        tcg_gen_qemu_st_tl(src2h, addrl, ctx->mem_idx, memop);
->>       }
->>       return true;
->>   }
+On 10.11.25 13:39, Alexandr Moshkov wrote:
+> v3:
+> - use pre_load_errp instead of pre_load in vhost.c
+> - change vhost-user-blk property to
+>    "skip-get-vring-base-inflight-migration"
+> - refactor vhost-user-blk.c, by moving vhost_user_blk_inflight_needed() higher
 > 
-> We fix this to use tcg_gen_qemu_{ld,st}_i128.
+> v2:
+> - rewrite migration using VMSD instead of qemufile API
+> - add vhost-user-blk parameter instead of migration capability
+> 
+> I don't know if VMSD was used cleanly in migration implementation, so
+> feel free for comments.
+> 
+> Based on Vladimir's work:
+> [PATCH v2 00/25] vhost-user-blk: live-backend local migration
+>    which was based on:
+>      - [PATCH v4 0/7] chardev: postpone connect
+>        (which in turn is based on [PATCH 0/2] remove deprecated 'reconnect' options)
+>      - [PATCH v3 00/23] vhost refactoring and fixes
+>      - [PATCH v8 14/19] migration: introduce .pre_incoming() vmsd handler
+> 
 
-IIUC the target doesn't use TCGv_i128 but a pair of TCGv_i64
-named cpu_gpr[] and cpu_gprh[] (i.e. see how gen_set_gpr128()
-set them). Using tcg_gen_qemu_{ld,st}_i128() makes sense but
-implies a huge internals rewrite, which 1/ I'm not willing to
-do without tests and 2/ I won't have time to do because of
-priorities. Could we proceed with this simple patch meanwhile?
+Hi!
 
-Regards,
+On my series about backend-transfer migration, the final consensus (or at least,
+I hope that it's a consensus:) is that using device properties to control migration
+channel content is wrong. And we should instead use migration parameters.
 
-Phil.
+(discussion here: https://lore.kernel.org/qemu-devel/29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru/ )
+
+So the API for backend-transfer features is a migration parameter
+
+     backend-transfer = [ list of QOM paths of devices, for which we want to enable backend-transfer ]
+
+and user don't have to change device properties in runtime to setup the following migration.
+
+So I assume, similar practice should be applied here: don't use device
+properties to control migration.
+
+So, should it be a parameter like
+
+     migrate-inflight-region = [ list of QOM paths of vhost-user devices ]
+
+?
+
+
+> Based-on: <20250924133309.334631-1-vsementsov@yandex-team.ru>
+> Based-on: <20251015212051.1156334-1-vsementsov@yandex-team.ru>
+> Based-on: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
+> Based-on: <20251015132136.1083972-15-vsementsov@yandex-team.ru>
+> Based-on: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
+> 
+> ---
+> 
+> Hi!
+> 
+> During inter-host migration, waiting for disk requests to be drained
+> in the vhost-user backend can incur significant downtime.
+> 
+> This can be avoided if QEMU migrates the inflight region in vhost-user-blk.
+> Thus, during the qemu migration, the vhost-user backend can cancel all inflight requests and
+> then, after migration, they will be executed on another host.
+> 
+> At first, I tried to implement migration for all vhost-user devices that support inflight at once,
+> but this would require a lot of changes both in vhost-user-blk (to transfer it to the base class) and
+> in the vhost-user-base base class (inflight implementation and remodeling + a large refactor).
+> 
+> Therefore, for now I decided to leave this idea for later and
+> implement the migration of the inflight region first for vhost-user-blk.
+> 
+> Alexandr Moshkov (3):
+>    vmstate: introduce VMSTATE_VBUFFER_UINT64
+>    vhost: add vmstate for inflight region with inner buffer
+>    vhost-user-blk: support inter-host inflight migration
+> 
+>   hw/block/vhost-user-blk.c          | 29 +++++++++++++++++++++
+>   hw/virtio/vhost.c                  | 42 ++++++++++++++++++++++++++++++
+>   include/hw/virtio/vhost-user-blk.h |  1 +
+>   include/hw/virtio/vhost.h          |  6 +++++
+>   include/migration/vmstate.h        | 10 +++++++
+>   5 files changed, 88 insertions(+)
+> 
+
+
+-- 
+Best regards,
+Vladimir
 
