@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65625CED63D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4618CCEE34B
 	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 19:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQy7-00019i-Oa; Tue, 18 Nov 2025 14:02:24 -0500
+	id 1vLQyU-0002V6-IB; Tue, 18 Nov 2025 14:02:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQy4-00013T-Ev
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:20 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQyL-0002LY-7h
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:37 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQy0-000648-0f
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:19 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4777771ed1aso41154235e9.2
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 11:02:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQyJ-00067z-Bs
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:36 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4775ae77516so64145935e9.1
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 11:02:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763492525; x=1764097325; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763492553; x=1764097353; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+qt8vwVa1HZgU3pdePfudr37pK0aeUekWhl0ULV6H2k=;
- b=oQcndevZam6h3O8c4XqxYl7suZlVmIsOO8tQ29dt/VHB2kygr4Q5PrNs5D6N1IJ+jF
- POAVeZmO8WGkPCrTQNa2QpaeqRtHx7eQD4RukmQMKMoOrfLbHYnNsC5Cw5QxK7Rwx9M5
- 0V9nm2w9eF28DfAHqA46FWt9qv2sbWktIwIYu4huuVkbFvd061jPZZuePfFflOjezW7K
- JYzIY+6jMKF89ueKtpmMQh0ZSw8DA3kAES7LEMHVr1PJZDBmMb9HJIcFMs0XomDURd8U
- sN0pxq45R+hwggKFGEqUYjo8xvq2KnWySbhPSAel0WmNHaKRXix8pdvubqvtJvTf+e6I
- GzgA==
+ :reply-to; bh=NSqRQ4ojfQt+N4Y7QwQa/NNLGa5GocKkvTSMNpgIAEg=;
+ b=tcYI2NqCv9S3CXy2z9Kr0WswMSw2RzlRDho4z7uosYqcefyu6VS8S/X+WfwUySoHOh
+ 6bYVIdbfoij4Cgl7seuSphos3J6WH7h/ZRuMkjcaiplsISqXsrPD4mHoTwZvcZByWAdQ
+ 88UjJZLyAEYUT8HI87HUqqS79VB/Arv/jsiWs/LUCdhY6WslxiieL6mG815wfM/LyjhH
+ 7uVAMaH9BlhDTdiExzTAU7Boz/RVdRyZmX3alkl8gbyCbUNQydpWxckgukLKVjKjCQTP
+ pX4Qn522JyMxrcJk5Hyww7ZGMoopC9PyTrE9SknU+j9fP4E4BEQZQ2Ox0RmuZY9QRkXB
+ GkyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763492525; x=1764097325;
+ d=1e100.net; s=20230601; t=1763492553; x=1764097353;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+qt8vwVa1HZgU3pdePfudr37pK0aeUekWhl0ULV6H2k=;
- b=is0AqQYHbM8tDnOC1qGHeM1seGRQVTidIn48z3TZ2NMn+Du8yBFqGVKbT/tkAqlSKl
- 3ZFnkO5TtgQTWTkYnAJ6Rf69Q9XnyT15zJ1nQgX44NGCnBA7Hqqrkd2EgBahkUzJ11oc
- NI5NAZLAMqgUn25Lv+BkieQxPUpvj6sBvVsAyt/Z/3zsi8bcewoO5Lko1llkmfWwNhDt
- QJhbFhy06Xvaid0DMjwTeSR5/1vuhkVdySTxCcOmNXtR5rC37RKjnmH700yBh3ifcIJr
- 7wFk3bk+xo+AEXjO1CR2KOsTIvwe1mUL5z5XiLu9YpX27ULXUODSgMboO2WM5IdiXVvy
- XGHg==
-X-Gm-Message-State: AOJu0YwpE6dQYisRy52F1NqfunycpARKyLXX1rUU0IITTfCVblO+dRul
- BvH2cX3t/0rt5ulwo6Nup9Id7Rz3YTLqJb7cOOnHRsa3u1MWqvt9DNiv8So6vio76ReLpDykP3T
- /SO9mpouzaw==
-X-Gm-Gg: ASbGncvp8oQyUZo1bLKvegTc9g2/XQQOHel5qKtaVKsT2z9Lwhwmqra7MTXGVsgWGV5
- tDx+NlfVZIAWBlCsgtO8wRMtIpkoVfWdLezks65N2FfPQrzkHPYQZs8Jk0onUHmGgwIQTJkjpzP
- FyAxf7SCjZQFXWcMFwVZ8ZFHLHa/jeuM0deKOLrsRvg7m43VXnyemyLfHKW7tLcJaOYySl62wEE
- vTAOBM/FQMvj0eXs4hp3Z6Hla0dDwI0FEI3Hq1PeihJZg4AHzBDxbYu2+Eqv3foZ1vf+CQZ9L7s
- ouRdaFeyvdo+oj54rthDyKnj0S8Nz8sd3RUlJiEjpS60zoSknogDYHifBZnisaKDR5QceHyIUKL
- V8uxRv+81QPbFFYIAfSsyyEP2HfLqOAlQw3ei3wVYTiLbgYBwci+kfC+mKu/5oEnKUk41D2cRAh
- MqSOSGSD/4dk79IocdZx+OZGbstAq29W2eND5tzxbw8OFI6ZVV1GwkaYFX740o8/k4EbucKkY=
-X-Google-Smtp-Source: AGHT+IEaq365Tu8QIb33dokgmONZs2Px9DMjMP4er9cLNKpsYcyhpmBiolKNGRzkDkSt7fEv4UR8Wg==
-X-Received: by 2002:a05:600c:45d4:b0:477:df7:b020 with SMTP id
- 5b1f17b1804b1-4778fe7f6d4mr169725905e9.18.1763492524783; 
- Tue, 18 Nov 2025 11:02:04 -0800 (PST)
+ bh=NSqRQ4ojfQt+N4Y7QwQa/NNLGa5GocKkvTSMNpgIAEg=;
+ b=Te0kFXp5eafJFydOZIGwNUCJHg2ez3spzPahBp4ZLUzhymuoNS6W0YpteM8jLljgkL
+ qD9PVyNW+bg/xLE+wL9ziFAIjmHf9JrJCgwCQSzguTWc8BlfaS0mDUrcSnIKkUmOF/Qi
+ rVwQRSBREbhw+Ym7Rmb8B+DnDm8ma1fTU5Y6dTNEJ/sPIvcrwevegE1BDqekkG0O9jhU
+ 2yHMzBq3RwWbbBSD+8qv2ViZvdCr3TXLpRMGRs8QXZQAeQVQhqaTiliUJQ9LpAG327O9
+ MgMrObViAP+XXgWlxqctSBPRE+++4qFCiAqLM9ASLDH24lm5bKSCWCa6W61XeQ7OELs2
+ Cfqw==
+X-Gm-Message-State: AOJu0YyhQ4UbKcJO66pNBDti70i7uke86g25vRf3rcEXyxijuLrPkZ6b
+ LwKRstz+lyOKYtujGks+xGBcKFcZEsfPETNM8fEJqO28wYOh9cs5PJelRU2bZ000obHFeU4D5U4
+ UfU6Uc5QRbg==
+X-Gm-Gg: ASbGncspiDPITkOKRKMu/PbGjBg5sDU7gHRfxmIQc9EZGCaZ+l3Vb/deVzN4sL/xqte
+ D8HJfwmFSFqqTv9j30pqkuUHQpSFCmMvUhqAONhOgcbnMPEWryH/4S0s0ILpvluTVW83jydELut
+ dFsU63oZKM/zZNqTj3lHPOrCUOCAKKMpLfh4SPeMm7vd7aK5o2erDa8C4SemA7uw4H44Gf5p81q
+ FYqNXvOCim5sXigb/TkhE8A4WW8VkWnqx3rZSmJ04fBL9iMWTYgXaTNfo085U1tRMDmp2eBzLiE
+ pc4Wd2m1xYQd49Ni3WWOlwISkutZU92rnFFCp1JjTupZadwYX4nnuIqvm5zixv0S7bE/lvAnT7M
+ L1Ymgo49YdSrN2SWH1r1wcpafKzQlZzvvqH52R+PDCLMSvd6dbeb+OLUM82+0jG9zd3SwhC54ZZ
+ UHi4406HC8fmt6JBALJbLF1f11b5eJ/LMh2IeWd3fVSQHxbl1EDaDHGSAeKh/I
+X-Google-Smtp-Source: AGHT+IGWe7Ks7mMbrLQ4HbZGe+IrW2Tk2me8upDgDQnkO9I7cxQxhrLjALUbgHRlg/QEBLn5JI8fag==
+X-Received: by 2002:a05:600c:3b13:b0:477:7b72:bf9a with SMTP id
+ 5b1f17b1804b1-4778fea6797mr164520805e9.28.1763492553400; 
+ Tue, 18 Nov 2025 11:02:33 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f19664sm34722822f8f.36.2025.11.18.11.02.03
+ 5b1f17b1804b1-477b0faed71sm6469205e9.0.2025.11.18.11.02.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Nov 2025 11:02:04 -0800 (PST)
+ Tue, 18 Nov 2025 11:02:32 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/18] qga/commands: Include proper Solaris header for
- getloadavg()
-Date: Tue, 18 Nov 2025 20:00:44 +0100
-Message-ID: <20251118190053.39015-10-philmd@linaro.org>
+Subject: [PULL 13/18] docs: Correct release of MIPS deprecations / removals
+Date: Tue, 18 Nov 2025 20:00:48 +0100
+Message-ID: <20251118190053.39015-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251118190053.39015-1-philmd@linaro.org>
 References: <20251118190053.39015-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,57 +99,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Solaris declares getloadavg() in <sys/loadavg.h>:
+We are going to release 10.2, not 11.0 :)
 
-    getloadavg(3C)       Standard C Library Functions       getloadavg(3C)
-
-    NAME
-           getloadavg - get system load averages
-
-    SYNOPSIS
-           #include <sys/loadavg.h>
-
-           int getloadavg(double loadavg[], int nelem);
-
-    [...]
-
-    Oracle Solaris 11.4           23 Jul 2020               getloadavg(3C)
-
-Include it in order to avoid:
-
-  ../qga/commands-posix.c: In function 'qmp_guest_get_load':
-  ../qga/commands-posix.c:1408:9: error: implicit declaration of function 'getloadavg' [-Wimplicit-function-declaration]
-   1408 |     if (getloadavg(loadavg, G_N_ELEMENTS(loadavg)) < 0) {
-      |         ^~~~~~~~~~
-  ../qga/commands-posix.c:1408:9: warning: nested extern declaration of 'getloadavg' [-Wnested-externs]
-
-../configure relevant output:
-
-  C compiler for the host machine: gcc (gcc 14.2.0 "gcc (GCC) 14.2.0")
-  C linker for the host machine: gcc ld.solaris 5.11-1.3315
-
+Reported-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20251117203834.83713-2-philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20251117171236.80472-2-philmd@linaro.org>
 ---
- qga/commands-posix.c | 3 +++
- 1 file changed, 3 insertions(+)
+ docs/about/deprecated.rst       | 2 +-
+ docs/about/removed-features.rst | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index c7059857e44..66f3e6f6733 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -43,6 +43,9 @@
- #include <net/ethernet.h>
- #endif
- #ifdef CONFIG_SOLARIS
-+#ifdef CONFIG_GETLOADAVG
-+#include <sys/loadavg.h>
-+#endif
- #include <sys/sockio.h>
- #endif
- #endif
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 03e29915f0a..30ab72b2a4c 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -192,7 +192,7 @@ The ``info capture`` command is deprecated and will be removed in a future relea
+ Host Architectures
+ ------------------
+ 
+-MIPS (since 11.0)
++MIPS (since 10.2)
+ '''''''''''''''''
+ 
+ MIPS is not supported by Debian 13 ("Trixie") and newer, making it hard to
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index 88ea0dc4edc..a72df26dd24 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -896,7 +896,7 @@ work around the atomicity issues in system mode by running all vCPUs
+ in a single thread context; in user mode atomicity was simply broken.
+ From 10.0, QEMU has disabled configuration of 64-bit guests on 32-bit hosts.
+ 
+-32-bit MIPS (since 11.0)
++32-bit MIPS (since 10.2)
+ ''''''''''''''''''''''''
+ 
+ Debian 12 "Bookworm" removed support for 32-bit MIPS, making it hard to
 -- 
 2.51.0
 
