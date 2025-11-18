@@ -4,65 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D834CED624
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 12:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E6E0CED624
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 12:23:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLKiQ-0004po-0e; Tue, 18 Nov 2025 07:21:46 -0500
+	id 1vLKkD-0006tz-My; Tue, 18 Nov 2025 07:23:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vLKiO-0004nk-Rp
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 07:21:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vLKk8-0006tY-78
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 07:23:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vLKiN-0005Et-26
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 07:21:44 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vLKk6-0005yF-02
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 07:23:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763468501;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=j9X5ArIPpXmGuSD+aF/cK5p0tzMysHblDvV3R1otnNI=;
- b=GMNkks1O0YefupwG1tI2t5PlXa6ZdXTUkHEtdo2MlAbxrtSNvjmiXph7LDP/y/aGWB5jWO
- WZRlMprPXS/DQXCUsmEO2IhfI8o4YdkrRhnppjhVthx2tREymEGIOzYcv2HWWECqFHdyUP
- bZMdWX0ujKUut3U8Imr4QgbVEMs0sJI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ s=mimecast20190719; t=1763468608;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=G23MiKqp2jtkMFxPs6r8B+OKlp640GAfzmj73F+keKI=;
+ b=PtSzBHuwwL84iNTWrOl6BN3QwRXoWTli4eyJ5hyq2u8IjnHaicna3lDwk3G4DLvXKrJbXN
+ ZDF5t2Wm8S87AHQDM0YU86mYB8KCFTVdIdHjDIrsGK38j+UsrPgsc1XkDnhpO5EFAjO3s7
+ zhqrOa4MpWl61JB0X9mFIH6ydlZvBhQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-516-zM7t2yK6Nianq8Y2zza5UQ-1; Tue,
- 18 Nov 2025 07:21:38 -0500
-X-MC-Unique: zM7t2yK6Nianq8Y2zza5UQ-1
-X-Mimecast-MFC-AGG-ID: zM7t2yK6Nianq8Y2zza5UQ_1763468497
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-ppgu0Z-MOluoeuf-YyMjfQ-1; Tue,
+ 18 Nov 2025 07:23:24 -0500
+X-MC-Unique: ppgu0Z-MOluoeuf-YyMjfQ-1
+X-Mimecast-MFC-AGG-ID: ppgu0Z-MOluoeuf-YyMjfQ_1763468603
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3161618AB30A; Tue, 18 Nov 2025 12:21:37 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.167])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DEE0D19560B0; Tue, 18 Nov 2025 12:21:35 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 4B215182C024; Tue, 18 Nov 2025 13:21:33 +0100 (CET)
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Oliver Steffen <osteffen@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 0/4] igvm: rework igvm file loading + processing, fix reset
-Date: Tue, 18 Nov 2025 13:21:28 +0100
-Message-ID: <20251118122133.1695767-1-kraxel@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8F63E1800350; Tue, 18 Nov 2025 12:23:23 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.53])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC0C7180047F; Tue, 18 Nov 2025 12:23:21 +0000 (UTC)
+Date: Tue, 18 Nov 2025 12:23:18 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Andrew Melnychenko <andrew@daynix.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>
+Subject: Re: ebpf functions can fail without setting an error
+Message-ID: <aRxlNsnBdYJwkKFq@redhat.com>
+References: <87ectns27j.fsf@pond.sub.org> <aKRWZwvbWzA0QbA_@redhat.com>
+ <87sehfsife.fsf@pond.sub.org> <871plwpxpu.fsf@pond.sub.org>
+ <aRs55PV-R4m8KDCu@redhat.com> <87pl9filnj.fsf@pond.sub.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+In-Reply-To: <87pl9filnj.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -84,27 +88,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Nov 18, 2025 at 01:13:20PM +0100, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
+> 
+> > On Mon, Nov 17, 2025 at 02:58:37PM +0100, Markus Armbruster wrote:
+> >> Markus Armbruster <armbru@redhat.com> writes:
+> >> 
+> >> > Daniel P. Berrangé <berrange@redhat.com> writes:
+> >> >
+> >> >> On Thu, Aug 07, 2025 at 03:14:56PM +0200, Markus Armbruster wrote:
+> >> >>> Three functions in ebpf_rss.h take an Error ** argument and return bool.
+> >> >>> Good.
+> >> >>> 
+> >> >>> They can all fail without setting an error.  Not good.
+> >> >>> 
+> >> >>> The failures without error are:
+> >> >>> 
+> >> >>> * All three stubs in ebpf_rss-stub.c always.  Oversight?
+> >> >>
+> >> >> Opps, yes, we really should have added error_setg() calls for diagnosis
+> >> >> if someone tries to use eBPF when QEMU build has it disabled.
+> >> 
+> >> Easy enough, but...
+> >> 
+> >> > Some stubs exist only to mollify the linker.  They are not meant to be
+> >> > called.  They should abort(), optionally with lipstick.
+> >> >
+> >> > Other stubs are called and should fail nicely.
+> >> >
+> >> > Can you tell me offhand which kind these are?
+> >> 
+> >> If calling these stubs is possible, I'd like to know how I can get them
+> >> called, so I can test the errors I add.
+> >> 
+> >> If calling is not possible, I'd rather add abort()s.
+> >> 
+> >> I tried to figure out whether calling is possible, but it ended in
+> >> confusion.  Can you help?
+> >
+> > * ebpf_rss_set_all
+> >
+> >   Is called from virtio_net_attach_ebpf_rss
+> >   The call is unreachable if ebpf_rss_is_loaded returns  false
+> >   Stub for ebpf_rss_is_loaded always returns false
+> >
+> >     => ebpf_rss_set_all stub is unreachable
+> 
+> Then the non-stub ebpf_rss_set_all() has a useless check of
+> ebpf_rss_is_loaded() with an unreachable error message.
+> 
+> > * ebpf_rss_load_fds, ebpf_rss_load
+> >
+> >   Is called from virtio_net_load_ebpf_fds, which is called from
+> >   virtio_net_load_ebpf
+> >
+> >   The call  to virtio_net_load_ebpf_fds is unreachable if
+> >   virtio_net_attach_ebpf_to_backend fails
+> >
+> >   virtio_net_attach_ebpf_to_backend fails if set_steering_ebpf
+> >   fails
+> >
+> >   set_steering_ebpf fails if ioctl(fd, TUNSETSTEERINGEBPF...)
+> >   fails on Linux; all non-Linux impls of ebpf_rss_load_fds
+> >   return -1
+> >
+> >   It is theoretically p9ossible to build QEMU without EBPF
+> >   while both glibc & the kernel support TUNSETSTEERINGEBPF ioctl
+> >
+> >    => ebpf_rss_load_fds, ebpf_rss_load are reachable in stubs
+> 
+> So:
+> 
+> * ebpf_rss_load() and ebpf_rss_load_fds() need a suitable error_setg().
+> 
+> * For ebpf_rss_set_all(), we have two sane options:
+> 
+>   - Declare ebpf_rss_is_loaded() a precondition, drop the useless check
+>     from the non-stub version, abort() in the stub.
+> 
+>   - Keep the useless check and error in the non-stub version, add an
+>     equally useless error to the stub.
+> 
+> Got a preference?
+
+Not my code, but I'd go for declaring ebpf_rss_is_loaded a precond.
+
+> >> >>> * Non-stub ebpf_rss_load() when ebpf_rss_is_loaded().  Are these
+> >> >>>   reachable?
+> >> >>
+> >> >> This scenario should never happen, and we should add a call like
+> >> >>
+> >> >>   error_setg(errp, "eBPF program is already loaded");
+> >> >>
+> >> >> to report it correctly.
+> >> >
+> >> > Is it a programming error when it happens?
+> >> 
+> >> This question is still open as well.
+> >
+> > I'd consider it a programming error. I don't think we have a code
+> > path that could trigger it currently.
+> 
+> Then the proper fix is replacing the flawed check by an assertion.
 
 
-Gerd Hoffmann (4):
-  igvm: make igvm-cfg object resetable
-  igvm: move file load to complete callback
-  igvm: add trace point for igvm file loading and processing
-  igvm: move igvm file processing to reset callbacks
-
- include/system/igvm-cfg.h |  5 ++++
- include/system/igvm.h     |  1 +
- backends/igvm-cfg.c       | 53 ++++++++++++++++++++++++++++++++++++++-
- backends/igvm.c           | 14 +++++++----
- hw/i386/pc_piix.c         | 10 --------
- hw/i386/pc_q35.c          | 10 --------
- backends/trace-events     |  7 ++++++
- 7 files changed, 74 insertions(+), 26 deletions(-)
-
+With regards,
+Daniel
 -- 
-2.51.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
