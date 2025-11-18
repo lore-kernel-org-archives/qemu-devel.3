@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFF0ACEE343
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38EABCEE347
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 18:19:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQFP-000168-Sm; Tue, 18 Nov 2025 13:16:11 -0500
+	id 1vLQIS-00025w-Ug; Tue, 18 Nov 2025 13:19:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQF8-0000zR-F9
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:15:59 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQIN-00025N-0s
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:19:16 -0500
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQF6-0007eS-M9
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:15:54 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4779cc419b2so36053485e9.3
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:15:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQIK-0007nb-Uw
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 13:19:14 -0500
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-477549b3082so48144285e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 10:19:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763489751; x=1764094551; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763489951; x=1764094751; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gBa5JXyTqVQXilGJVv42TDvg6E6gJT7oMfgNb/Q2eT8=;
- b=ENS61EuUFBH6fJ76TMv7Tlaf7kit2q2+kjDd3RQQPfwDbJhr0P4gYhS0pLIC4rdcq7
- DJ6d0R59fCjDrsGQatVfaYXGPJPSsLA8B+buiMJ88StZeMy3juBkOyf3MbTBI3a7i0sP
- f0yCb87zzgPSjIoV/4iABG3EmpCJW8bBysZyD2DV26Mdk3pRoc0q8X9KhfTtxycWQDih
- 7XtzHdyJab+lFoggQrQ4eb90hjDzBbhv+0L7OHxsbJ2CkC8HyohB/Iku+z0VsY3+ne6Z
- wZ5qEUEknfRDL1uNXwIFMLUg97wjCHX8pR7rlYdblk2e+JWvbeUeUHWKDX8E/gtaOvpX
- Bypw==
+ bh=m2o/vzhdbdBH50L3PVVu18xCzUtmD1sqotZMWevcjPA=;
+ b=toKOrgrbeI3yIkjaoLBGS2P31KumArJj+kCRhtHS5tZDGSqPtw62u9eNLscrpECUAs
+ SmFWCCvk/SPB38DdK34okZ6YSBtlI1RiMpdhgHODcSOHYtNDWdrOWW2pt8fveIWJy1jH
+ 3i3U8jx6WOdtGqUq06e99ADoRdnCvVSORrkzuLbOJQRqsQ8TwGE0GV28oYpT/pDD5T3M
+ 6qgM6FqYA/e3HltZnsWnpBwOr6XjDecGDKIbu2NjGzbIRze0hqffog3lFdocGp0Qxjr5
+ KkrGdsegveiXYCshCDfhquGC2820unLcHrkiLqcYbEyl6YmxvHkXvlUR5lHM0NmWjsDG
+ ZpYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763489751; x=1764094551;
+ d=1e100.net; s=20230601; t=1763489951; x=1764094751;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gBa5JXyTqVQXilGJVv42TDvg6E6gJT7oMfgNb/Q2eT8=;
- b=ROxXSxCIR+l283Cah61aRHlr+r+eLLluErvWgEAq5l0XDYM325h35kNGwt583SX+XQ
- /sYVlTlm7AtFs9HsqLEPqukiP/76L0XiKDE7wWSAYZE7O2aXdZ4dl8M/y05CmOzqVMm9
- OysFM5bgAJBaiQDJ4+KTd00IBD4h6TE5nHlQMeicOLlhAIgaE4jWQSRWW8ubDLBoolep
- Rd8akOf+vrV+pMCDmQFUTgxU3gX1Bcyp+5NAl1E8/CEfRZlxH74CTe0wIrtQ+7vfblTC
- B3O/djWBdzH65NHdOOl1PlyZ9IZOtlqSmQO5Kiii40+dPrHZhJrgYQW6ndPH8tYFY0WG
- OHHA==
-X-Gm-Message-State: AOJu0YzmpiP78l8USySoDgIlycMfTWcZdLseOYaAKgOcIRVknnBt2Q/Z
- x/VrlR/CeItAwGOvjAEot/J2cTbqMvAFbiwqbbqpyPab4cV397jqhcOgB0mr+xC1AvoxK1hGJhB
- ORmrbuaSkZw==
-X-Gm-Gg: ASbGnctDQSjKCje2JouEDp6P7HZG6mu85zz+VECJfqLECwyPTdsoHVtVg8ZhyaUsnTR
- MXgneJoiwFbCKqf1VWFprH8B3+8YUAf3kvAUFoSNol8xPwIY6ZksXeK7k5e6pjUGz6KALT2IfUt
- SxZeqSGkRAKtqn7peNgUe0kToOs1NinRVdbNiBgS1iLkAyyzpigOaZvDBJuy2ZJT8rWXWpWyoLc
- mKbz2DvkgPUXAJMQIYYhP2qflcNVN9YaKSxAgMMtTsNSC7q5Nvi9qqaipjSuKN3PegklScycKqi
- y7wzg0FetrgL3363olV991q0ZPFOeza2MrCuNaE/+vr+SFPJhsDcKDTz9zNMFDth0X8Wmg5bL8Z
- AqHeyx8yavU60LKFHyeTZ/VDFmZB97a+Wz048grScoPum4TLDCS2RfnAwntyd1VE+c5Qo7JU737
- NovEmsOdvm8PxJ1lzPjtJ1pmipsbsdiUrQV4QJsjxl0OQiUgLjTIL9UQ==
-X-Google-Smtp-Source: AGHT+IEKB9J6LNyGCqQW8ICvXZlqTObg8y77ZHu+u6PCXEOkS49KojFdDtx14grVnBYvosC+VIi5lA==
-X-Received: by 2002:a05:600c:3109:b0:477:af74:ed64 with SMTP id
- 5b1f17b1804b1-477af74efd9mr13663175e9.27.1763489750754; 
- Tue, 18 Nov 2025 10:15:50 -0800 (PST)
+ bh=m2o/vzhdbdBH50L3PVVu18xCzUtmD1sqotZMWevcjPA=;
+ b=QD20Bpd7gwqXXfbhI/R3t8E7T6vOvDboNCA6QUM7aEgBP+k5ShrSFrOmQdTx7diPWx
+ Zlc5Zd57nlWJiPsAwCxkfiMXUeXosgETboLmJWOffOZl99eIYUao7TmdvWz/zRKvSTlo
+ LK8U04mVRU5kU29rv4prKC7kfyXNKT3yNxehUbzIFAO/sUJMGW5qvvaQqdiuwei61CQ6
+ vkDhBD5wEixMdAK79ncO/OqzXnXnT8/KJDt3/pDpzyf4YYqVKrVG9vPKukV/AqtSs9j7
+ wr2Q921hly3xYF5Yu0c+o5BAUpjd30kDkBbjBf1ANM771R2VVRL0sYlFrFoCAY5xoPT8
+ oJFA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUet3QZe8qqeTQ5rK/QkJP3IHWKnK4ZPlQ1g0Iw9/tY7jj+GQV/ZNBwNdX9fn6kD3Nfd6ir9L5GsXuy@nongnu.org
+X-Gm-Message-State: AOJu0Yxl6tXwdGciBtGVRgtV79Po3jPb3WC6MyCE2hYnPwSnL8LJBJs/
+ ehm9Q9Mg73ZIYNtpdCKM08KMXx+mvkxISoBpK/9qmCeSyOM+prkKh9YoJw6tkYOIW9QMxvM5XDT
+ HK9cp6yIuhtQv
+X-Gm-Gg: ASbGncs0LCZ2FrPy5jQN6G4s1vd7v0DS+3rUmlL6ks4Z8km/CMT+wEwM4hoDYBzWaft
+ Psx8fgL4Gq0JGW/15bOg4geUz4TtZ0qX38rsoZDyUe6qUiq+hLnO8UtdGKdC8Myyvu1EhEIyeNr
+ 2Pm4V4kiT0xWMBDGlkeGjhXE9I5aIp/rY7dISrGxaz6Mr/tGdcy/tLKWeFT0PLUZaALBIRhadF4
+ 9Y9qTvzlwa/eGlkJseKhKOIYWkYYcsMWlGAI5WgSEFWRs5+Wkqh06BjapXZvBqqNbomfOmuTcrd
+ jA/KTm0qkSr7/vr1kfLG/7EEMUtFl6FG5Ofsvd8DCkK5LQEdWbz45+UJnH9ngHk/8PKj7TmyGVX
+ 4rFSK3nC0PYIQW5BExzwOV2ta6VhC3YzgO0+6btuTOg0W4AWK3o4RcXTDH57fGl+vE1CyrVtele
+ 11i4sq4VRhSQXahKS5461flCFoTGHMTZBGuo9VQq1KAR9Atj4ebL+wrw==
+X-Google-Smtp-Source: AGHT+IEqiqXw6cb7TD6NSdvufBkOc7/Kd3eCb+47iRwVheMFRZRNHbLza8+v3cVfjKm0LmchOUZiRg==
+X-Received: by 2002:a05:6000:40cc:b0:42b:2c53:3abc with SMTP id
+ ffacd0b85a97d-42b593414d2mr16909383f8f.19.1763489951245; 
+ Tue, 18 Nov 2025 10:19:11 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b1012a92sm3489675e9.4.2025.11.18.10.15.49
+ ffacd0b85a97d-42b53e91f2dsm34514988f8f.19.2025.11.18.10.19.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 10:15:50 -0800 (PST)
-Message-ID: <48254249-f4ac-49d7-8bd2-c98ee65476a1@linaro.org>
-Date: Tue, 18 Nov 2025 19:15:49 +0100
+ Tue, 18 Nov 2025 10:19:10 -0800 (PST)
+Message-ID: <2ba57b1a-09ec-4fb5-9d2a-cc209134e746@linaro.org>
+Date: Tue, 18 Nov 2025 19:19:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2] buildsys: Remove dead 'mips' entry in
- supported_cpus[] array
+Subject: Re: [PATCH 2/2] hw/sd: Fix ACMD41 state machine in SPI mode
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20251117114200.60917-1-philmd@linaro.org>
+To: Bin Meng <bmeng.cn@gmail.com>, QEMU <qemu-devel@nongnu.org>
+Cc: Tom Rini <trini@konsulko.com>
+References: <20251110110507.1641042-1-bmeng.cn@gmail.com>
+ <20251110110507.1641042-3-bmeng.cn@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251117114200.60917-1-philmd@linaro.org>
+In-Reply-To: <20251110110507.1641042-3-bmeng.cn@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,14 +105,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/11/25 12:42, Philippe Mathieu-Daudé wrote:
-> Remove 'mips' from supported_cpus[], forgotten in commit
-> 269ffaabc84 ("buildsys: Remove support for 32-bit MIPS hosts").
+On 10/11/25 12:05, Bin Meng wrote:
+> In SPI mode, the ACMD41 argument only defines bit 30 (HCS); all other
+> bits are reserved. The current implementation incorrectly checks the
+> voltage window bits even in SPI mode, preventing the state machine
+> from transitioning to the READY state. As a result, the U-Boot
+> mmc-spi driver falls into an endless CMD55/ACMD41 loop.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Fixes: 3241a61a ("hw/sd/sdcard: Use complete SEND_OP_COND implementation in SPI mode")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2945
+> Reported-by: Tom Rini <trini@konsulko.com>
+> Signed-off-by: Bin Meng <bmeng.cn@gmail.com>
+> 
 > ---
->   meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+>   hw/sd/sd.c | 23 ++++++++++++-----------
+>   1 file changed, 12 insertions(+), 11 deletions(-)
 
-Queued, thanks.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
