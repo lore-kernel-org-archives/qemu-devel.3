@@ -4,80 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BCFECED635
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 12:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34DFDCED639
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 12:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLKcS-0002SU-LY; Tue, 18 Nov 2025 07:15:36 -0500
+	id 1vLKgL-0003mX-EX; Tue, 18 Nov 2025 07:19:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vLKcR-0002SE-B7
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 07:15:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vLKgI-0003ki-1g; Tue, 18 Nov 2025 07:19:34 -0500
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vLKcP-0004Gr-Lo
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 07:15:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763468132;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=umY0RpuOIoORgXi79/PaaEg7Udocrl0Xq4FTKwgGtQE=;
- b=O0KDEjtsnO1hAZ3GIgTCeML9olVDHXHcR6E5yCtML48rJTOhva/aHvyixw0SbIxokBZT7j
- XxQpAorO6X1Fh22RXxF6K44rU9weYwiVHtoSXwncgKSO0aRERd+b3p5i3TA1dKLepr0C9t
- thlBigr1fAwBL89vomtExN9h3JYvVMw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-531-ZlCm3YzgPh6-w3pRdx72yA-1; Tue,
- 18 Nov 2025 07:15:26 -0500
-X-MC-Unique: ZlCm3YzgPh6-w3pRdx72yA-1
-X-Mimecast-MFC-AGG-ID: ZlCm3YzgPh6-w3pRdx72yA_1763468125
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6772818AB406; Tue, 18 Nov 2025 12:15:25 +0000 (UTC)
-Received: from localhost (dhcp-192-224.str.redhat.com [10.33.192.224])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 46933195608E; Tue, 18 Nov 2025 12:15:24 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Christian
- Borntraeger <borntraeger@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Subject: Re: [PATCH v2] hw/s390x: Fix a possible crash with passed-through
- virtio devices
-In-Reply-To: <a2c82393-ccc1-4dfc-92b1-69e10dd6adcc@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20251118093945.35062-1-thuth@redhat.com>
- <87ms4jr20v.fsf@redhat.com>
- <a2c82393-ccc1-4dfc-92b1-69e10dd6adcc@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Tue, 18 Nov 2025 13:15:21 +0100
-Message-ID: <87jyznr0yu.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vLKgB-0004oN-Qx; Tue, 18 Nov 2025 07:19:32 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4614F82AA3;
+ Tue, 18 Nov 2025 15:19:23 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:876::1:11] (unknown
+ [2a02:6bf:8080:876::1:11])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id MJUv4w1FRKo0-GAWBQwWF; Tue, 18 Nov 2025 15:19:22 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1763468362;
+ bh=2j03ltXe9y+hcsPEArYIUhVBxZVd1LPT1rU8mno+Tg0=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=paFsSoA/ehL1UCLcR/D5gaijNKgytZiTES//BnVRHuYVlrIz9004itlDMRNv1o/vo
+ tAog/O88TlGTpLycMOAF8C4Atb+9j+r63CMsoPc1E0K5zUSQBgiA74faRX2UNc/RDX
+ tTYC9Bpg9zcUKQEmuOgC8lOMou2ha+iXU2zh+DqE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <1fb4cb14-ce1c-4d14-9e37-ed99e1947026@yandex-team.ru>
+Date: Tue, 18 Nov 2025 15:19:22 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v9 4/7] qapi: add blockdev-replace command
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, pbonzini@redhat.com,
+ armbru@redhat.com, eblake@redhat.com, hreitz@redhat.com
+References: <20240626115350.405778-1-vsementsov@yandex-team.ru>
+ <20240626115350.405778-5-vsementsov@yandex-team.ru>
+ <992e1551-6d75-441f-af6e-5df9e6c85c31@yandex-team.ru>
+ <256e998c-c0bd-40b4-94bf-de25ac9c1b02@yandex-team.ru>
+ <ZxJpx024fRqNsI2E@redhat.com>
+ <ebbc334f-43d2-4a06-a3a0-5fa3c1266f52@yandex-team.ru>
+ <aRr9uuaz4FmEextJ@redhat.com>
+ <4b8cade1-ecd3-4fa7-9082-7f2f1ef0b8a9@yandex-team.ru>
+ <aRxAxRGJOqLetXHM@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aRxAxRGJOqLetXHM@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,67 +83,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 18 2025, Thomas Huth <thuth@redhat.com> wrote:
+On 18.11.25 12:47, Kevin Wolf wrote:
+> Am 18.11.2025 um 08:37 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>> On 17.11.25 13:49, Kevin Wolf wrote:
+>>> Hi Vladimir,
+>>>
+>>> I remembered this series and wanted to check what the current status is,
+>>> because I seemed to remember that the next step was that you would send
+>>> a new version. But reading it again, you're probably waiting for more
+>>> input? Let's try to get this finished.
+>>
+>> I think yes, I was waiting, but then switched to other tasks.
+>>
+>>>
+>>> Am 02.04.2025 um 15:05 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>>>> On 18.10.24 16:59, Kevin Wolf wrote:
+>>>>> If we want to get rid of the union, I think the best course of action
+>>>>> would unifying the namespaces (so that nodes, exports and devices can't
+>>>>> share the same ID) and then we could just accept a universal 'id' along
+>>>>> with 'child'.
+>>>>
+>>>> Maybe we can go this way even without explicit restriction (which
+>>>> should some how go through deprecation period, etc), but simply look
+>>>> for the id among nodes, devices and exports and if found more than one
+>>>> parent - fail.
+>>>>
+>>>> And we document, that id should not be ambiguous, should not match more
+>>>> than one parent object. So, those who want to use new command will care
+>>>> to make unique ids.
+>>>
+>>> I don't think such a state is very pretty, but it would be okay for me
+>>> as an intermediate state while we go through a deprecation period to
+>>> restrict IDs accordingly.
+>>>
+>>> So we could start with blockdev-replace returning an error on ambiguous
+>>> IDs and at the same time deprecate them, and only later we would make
+>>> creating nodes/devices/exports with the same ID an error.
+>>>
+>>
+>> Hmm, the only question remains, is what/how to deprecate exactly?
+>>
+>> We want to deprecate user's possibility to set intersecting
+>> IDs for exports / devices / block-nodes? I think, we don't
+>> have a QAPI-native way to deprecate such thing..
+> 
+> We don't have to be able to express every deprecation in the schema. If
+> it can be expressed, that's nice, but docs/about/deprecated.rst is the
+> important part.
+> 
+>> May be, add new "uuid" parameter, and deprecate its absence (I doubt
+>> that we can do such deprecation too). And deprecate old IDs? But we
+>> can't deprecate QOM path for this..
+> 
+> I don't think renaming options is necessary.
+> 
+>> Hmm, or move to QOM paths for block-nodes and exports? And deprecate
+>> export names and node names?
+> 
+> That would only make sense if we converted the block layer to a QOM
+> class hierarchy, which would be a project of its own.
+> 
+>> Or we can just deprecate intersecting IDs in documentation and start
+>> to print warning, when user make intersecting IDs? But nobody reads
+>> warnings..
+>>
+>> Is there a proper way to deprecate such things?
+> 
+> The latter is what I would suggest. docs/about/deprecated.rst and
+> printing warnings. I think libvirt already keeps all IDs distinct
+> anyway, so for a large part of users nothing will change.
+> 
 
-> On 18/11/2025 12.52, Cornelia Huck wrote:
->> On Tue, Nov 18 2025, Thomas Huth <thuth@redhat.com> wrote:
->> 
->>> From: Thomas Huth <thuth@redhat.com>
->>>
->>> Consider the following nested setup: An L1 host uses some virtio device
->>> (e.g. virtio-keyboard) for the L2 guest, and this L2 guest passes this
->>> device through to the L3 guest. Since the L3 guest sees a virtio device,
->>> it might send virtio notifications to the QEMU in L2 for that device.
->>> But since the QEMU in L2 defined this device as vfio-ccw, the function
->>> handle_virtio_ccw_notify() cannot handle this and crashes: It calls
->>> virtio_ccw_get_vdev() that casts sch->driver_data into a VirtioCcwDevice,
->>> but since "sch" belongs to a vfio-ccw device, that driver_data rather
->>> points to a CcwDevice instead. So as soon as QEMU tries to use some
->>> VirtioCcwDevice specific data from that device, we've lost.
->>>
->>> We must not take virtio notifications for such devices. Thus fix the
->>> issue by adding a check to the handle_virtio_ccw_notify() handler to
->>> refuse all devices that are not our own virtio devices.
->>>
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>   v2: Now with the required #include statement
->>>
->>>   hw/s390x/s390-hypercall.c | 13 +++++++++++++
->>>   1 file changed, 13 insertions(+)
->>>
->>> diff --git a/hw/s390x/s390-hypercall.c b/hw/s390x/s390-hypercall.c
->>> index ac1b08b2cd5..38f1c6132e0 100644
->>> --- a/hw/s390x/s390-hypercall.c
->>> +++ b/hw/s390x/s390-hypercall.c
->>> @@ -10,6 +10,7 @@
->>>    */
->>>   
->>>   #include "qemu/osdep.h"
->>> +#include "qemu/error-report.h"
->>>   #include "cpu.h"
->>>   #include "hw/s390x/s390-virtio-ccw.h"
->>>   #include "hw/s390x/s390-hypercall.h"
->>> @@ -42,6 +43,18 @@ static int handle_virtio_ccw_notify(uint64_t subch_id, uint64_t data)
->>>       if (!sch || !css_subch_visible(sch)) {
->>>           return -EINVAL;
->>>       }
->>> +    if (sch->id.cu_type != VIRTIO_CCW_CU_TYPE) {
->>> +        /*
->>> +         * This might happen in nested setups: If the L1 host defined the
->>> +         * L2 guest with a virtio device (e.g. virtio-keyboard), and the
->>> +         * L2 guest passes this device through to the L3 guest, the L3 guest
->>> +         * might send virtio notifications to the QEMU in L2 for that device.
->>> +         * But since the QEMU in L2 defined this device as vfio-ccw, it's not
->>> +         * a VirtIODevice that we can handle here!
->>> +         */
->>> +        warn_report_once("Got virtio notification for unsupported device!");
->> 
->> Maybe also print which device ended up here?
->
-> You mean the values for cssid, ssid and schid ? Or which information did you 
-> have in mind?
+OK. Now the ball is definitely on my side, next step is v10)
 
-Yes, so that you can correlate this message to the configuration.
-
+-- 
+Best regards,
+Vladimir
 
