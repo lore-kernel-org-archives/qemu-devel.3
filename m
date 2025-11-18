@@ -4,69 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1695BCEE352
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 20:25:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A0A5CEE351
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 20:25:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLSFV-0005Tz-O8; Tue, 18 Nov 2025 15:24:26 -0500
+	id 1vLSGA-00066m-A9; Tue, 18 Nov 2025 15:25:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vLSFR-0005SO-Tb
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:24:21 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vLSFP-0001g6-79
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:24:21 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id A52BB8294D;
- Tue, 18 Nov 2025 23:24:14 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d96::1:10] (unknown
- [2a02:6bf:8080:d96::1:10])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id DOc5b42FNW20-D3JoF5WH; Tue, 18 Nov 2025 23:24:14 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1763497454;
- bh=HK4dH7YVztP4yRLAT1rK9MoOa+eM+hWHOkPAj7of9ps=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=dFjo1C2AAgAGA3Wxmzj9MxgX+c/JmQruALKD0wgdp09tu852Qeda0RO4tcljgnTor
- KQ+Fr0PngUPeH9NDQlD12lB1VOzUoMqrRShsCfoBzo1HY8lulyxaunxJeJypURSMFA
- oPp31TPbv0lfNW6sBUsiK0ItErtP27Zr3FdutK7o=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <cf0f69b9-4b2b-4c09-a32b-ad86bbe04f6d@yandex-team.ru>
-Date: Tue, 18 Nov 2025 23:24:12 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLSG7-00065a-AZ
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:25:03 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLSG5-0001iQ-EL
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 15:25:03 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-4779cc419b2so37378355e9.3
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 12:25:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763497500; x=1764102300; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lVLwJhZi1LMDqRi6c0kogsVRnq5JeBKZpwF1HGFSb+o=;
+ b=gm+yc0snM1Ml1+rHmUOSDTMx5FcBTwr8DPdViYCrVIWpd73bzoVcozgIZDwymzRgfN
+ 0xaO5nfgHPfmOmwwx2NRTDAhsF0GIlVUCcbVuBikxFu0qxoMD64vQMcBS1+S5BTTF/Xs
+ sCvBlvsVl2AdVY0SvgzI9BjBcg5OedQIj9KwPNKhzp4ZOXDd2NTpzNLeqUloSxGfho3r
+ LuhutSSHE1DAAcPcgdu5lYWX9a9rZrHojePv7n8cjp4I6g4CFPSR8Ctt5oAf8C0cDVZz
+ uxTXnv9YomBVrOvNI+7wfLZnJH1G+vC/x4F71t22NAepcpBtBs96utxeFBOLkunEPh8E
+ pFqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763497500; x=1764102300;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lVLwJhZi1LMDqRi6c0kogsVRnq5JeBKZpwF1HGFSb+o=;
+ b=XlamWFWssDFYeefVR5NV8IxirYRvF7stJg1OtIz3wug3y9YimuXAJFn3vNEksJkqr0
+ dfVdu7l4aexSMF8ckXQxWnG65YMHwcmU6pHR8HKfnDYGYOWGO6s5wXwoagFXTtU8N/+U
+ zVgcy3OqkA4caD6G5quWKlttxPhHgm6wjEj8EZDFczTRpY8Y810VbOnIDNh2fAsvBoW5
+ +EeOz8L83DO3VC/E71+Os9Z6ocJO5NmHw7PuhBqhQScCo+TR/+Hz/QrYkJ9VWDtw5HEq
+ ZDXVCtStB/g4tSGhOq6l2m4YFWfc3wyGsAETdXHMJw+JA7FpFnIs+8RhcGusMviEHoBB
+ kUPA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWvmzmtfCMv9ypMhVg/nVgUpNr3g3c5eOCKUqLA4IMg8+JSV7lATuCHF1H7Cc+PBvPPGc+5hqefBM9m@nongnu.org
+X-Gm-Message-State: AOJu0YyV4EaOOkH/M8nDDb2OWcV6p2XBrD9xIQ8vgcJ3ZxCPBjogou6A
+ gnUDvpoNgRY7ZvZkkkXMa5InhjOD55t6XR4NA8LV5qk5MPHm9J9kCD+wsPY9VkF4lnPTM28hUBN
+ x1IneTD9ug5xb
+X-Gm-Gg: ASbGncvf2ZRj7Di96ZySOjAzvGyiBC5nlmGkN+sULabF78JKWD7K/baUv1TVziN3XqN
+ CGssJTWbE2yuDyYp0JVRinyRQfH2TKmSj7Ad4fr9VljRypt+9wquvgHeYUuLms3fzxbRzm97BMz
+ 0Rs2chMYFjwXCQ8JPw5CM8wgRFdMbR89ywwuI3hK6Eo5sh+kFL0wvm5/EKzJys9nnoBLySCnse6
+ 15+b8Y4XvVgClbMWognpELRUkC69N94bzh5yoLzBuJaOxjTx+apGxvyep2PSdXe6ZOOt++BBgs0
+ Nwn/s3J5T53ieuNBXgcZ95knVeGayQnNEq9zpHo0DZwSXRYWwdlUM8OLoI+4qg7dHveA6G8E7Ks
+ rHh0SeYLHiyrldLppEFupIRh4+x3b+Tnezvk/e+yCqz30DQOGvCaCp+lrrKGCHXojuo92RNa6Pe
+ h2GvUlj0zhaBW1fIlvLp8g61r6H8B/iCh/x7qVn1iCBNhcqjIah3CGARkYwsyn2EFT9Y7ASlj3q
+ pE=
+X-Google-Smtp-Source: AGHT+IGBn1kx87+BqKJPHMigTl8GDgA5r7qUdgx0x+HGLwAVLvIJyy4rf1itRrl1+TS9KZD8g7g65w==
+X-Received: by 2002:a05:600c:8b22:b0:459:db7b:988e with SMTP id
+ 5b1f17b1804b1-4778fe5d9ecmr138532335e9.13.1763497499654; 
+ Tue, 18 Nov 2025 12:24:59 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477a9e1b657sm23328005e9.17.2025.11.18.12.24.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 18 Nov 2025 12:24:58 -0800 (PST)
+Message-ID: <d59708ee-18a9-4f42-8eab-d9e3a5c7cf69@linaro.org>
+Date: Tue, 18 Nov 2025 21:24:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] vhost-user-blk: support inflight migration
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
-Cc: Raphael Norwitz <raphael@enfabrica.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20251110103937.1944486-1-dtalexundeer@yandex-team.ru>
+Subject: Re: [PATCH 3/3] python/qapi: delint import statements
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20251110103937.1944486-1-dtalexundeer@yandex-team.ru>
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster
+ <armbru@redhat.com>, Cleber Rosa <crosa@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20251118200657.1043688-1-jsnow@redhat.com>
+ <20251118200657.1043688-4-jsnow@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251118200657.1043688-4-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,94 +108,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add Daniel
-
-On 10.11.25 13:39, Alexandr Moshkov wrote:
-> v3:
-> - use pre_load_errp instead of pre_load in vhost.c
-> - change vhost-user-blk property to
->    "skip-get-vring-base-inflight-migration"
-> - refactor vhost-user-blk.c, by moving vhost_user_blk_inflight_needed() higher
+On 18/11/25 21:06, John Snow wrote:
+> Missed a spot with isort, which now causes the python-minreqs test on
+> GitLab to fail. Fix it.
 > 
-> v2:
-> - rewrite migration using VMSD instead of qemufile API
-> - add vhost-user-blk parameter instead of migration capability
+> (Hint: the commands in python/tests/qapi-isort.sh can be run without the
+> "-c" parameter to automatically adjust import statements according to
+> our style rules. Maybe I should make a pre-submit hook that makes this
+> adjustment automatically. What do you think?)
 > 
-> I don't know if VMSD was used cleanly in migration implementation, so
-> feel free for comments.
-> 
-> Based on Vladimir's work:
-> [PATCH v2 00/25] vhost-user-blk: live-backend local migration
->    which was based on:
->      - [PATCH v4 0/7] chardev: postpone connect
->        (which in turn is based on [PATCH 0/2] remove deprecated 'reconnect' options)
->      - [PATCH v3 00/23] vhost refactoring and fixes
->      - [PATCH v8 14/19] migration: introduce .pre_incoming() vmsd handler
-> 
+> Fixes: 5bd89761
 
-Hi!
+Fixes: 5bd89761a4b ("qapi/command: Avoid generating unused 
+qmp_marshal_output_T")
 
-On my series about backend-transfer migration, the final consensus (or at least,
-I hope that it's a consensus:) is that using device properties to control migration
-channel content is wrong. And we should instead use migration parameters.
+See Laurent's tips:
+https://lore.kernel.org/qemu-devel/6c69b3b6-f1f0-da38-d47a-dba01e33bd6a@redhat.com/
 
-(discussion here: https://lore.kernel.org/qemu-devel/29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru/ )
-
-So the API for backend-transfer features is a migration parameter
-
-     backend-transfer = [ list of QOM paths of devices, for which we want to enable backend-transfer ]
-
-and user don't have to change device properties in runtime to setup the following migration.
-
-So I assume, similar practice should be applied here: don't use device
-properties to control migration.
-
-So, should it be a parameter like
-
-     migrate-inflight-region = [ list of QOM paths of vhost-user devices ]
-
-?
-
-
-> Based-on: <20250924133309.334631-1-vsementsov@yandex-team.ru>
-> Based-on: <20251015212051.1156334-1-vsementsov@yandex-team.ru>
-> Based-on: <20251015145808.1112843-1-vsementsov@yandex-team.ru>
-> Based-on: <20251015132136.1083972-15-vsementsov@yandex-team.ru>
-> Based-on: <20251016114104.1384675-1-vsementsov@yandex-team.ru>
-> 
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > ---
-> 
-> Hi!
-> 
-> During inter-host migration, waiting for disk requests to be drained
-> in the vhost-user backend can incur significant downtime.
-> 
-> This can be avoided if QEMU migrates the inflight region in vhost-user-blk.
-> Thus, during the qemu migration, the vhost-user backend can cancel all inflight requests and
-> then, after migration, they will be executed on another host.
-> 
-> At first, I tried to implement migration for all vhost-user devices that support inflight at once,
-> but this would require a lot of changes both in vhost-user-blk (to transfer it to the base class) and
-> in the vhost-user-base base class (inflight implementation and remodeling + a large refactor).
-> 
-> Therefore, for now I decided to leave this idea for later and
-> implement the migration of the inflight region first for vhost-user-blk.
-> 
-> Alexandr Moshkov (3):
->    vmstate: introduce VMSTATE_VBUFFER_UINT64
->    vhost: add vmstate for inflight region with inner buffer
->    vhost-user-blk: support inter-host inflight migration
-> 
->   hw/block/vhost-user-blk.c          | 29 +++++++++++++++++++++
->   hw/virtio/vhost.c                  | 42 ++++++++++++++++++++++++++++++
->   include/hw/virtio/vhost-user-blk.h |  1 +
->   include/hw/virtio/vhost.h          |  6 +++++
->   include/migration/vmstate.h        | 10 +++++++
->   5 files changed, 88 insertions(+)
-> 
+>   scripts/qapi/commands.py | 5 +----
+>   1 file changed, 1 insertion(+), 4 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
--- 
-Best regards,
-Vladimir
 
