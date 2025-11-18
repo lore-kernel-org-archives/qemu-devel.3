@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FEBBCED240
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 05:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABB97CEBF97
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 06:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLEXN-0007SS-IF; Tue, 18 Nov 2025 00:45:57 -0500
+	id 1vLEnU-0002iW-V1; Tue, 18 Nov 2025 01:02:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vLEXK-0007Qt-Ux
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 00:45:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vLEnS-0002iM-27
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:02:34 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vLEXH-0007xP-Nv
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 00:45:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763444749;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QIey1evpGwk590ZWrlsxF2PPuT93keXOXvXAVejk/pg=;
- b=AimOBys5OPiyAV8Qm4pv0UKO5MIeUzpMkJPaDyDHPqHq/gszIMlyenJfcCMEDrLjJ06lNM
- 6KxBfKODJJN9bVAzGl4RQvGhkKMvs9Oj7duNrScwif1naLdYbBEPbA3bqOUwL2sCJQOmJe
- DBnnFKuSIWTkLakJubs7dFlcHJV+QrE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-ccwVu4JvOH-sJTPqTjVckw-1; Tue,
- 18 Nov 2025 00:45:45 -0500
-X-MC-Unique: ccwVu4JvOH-sJTPqTjVckw-1
-X-Mimecast-MFC-AGG-ID: ccwVu4JvOH-sJTPqTjVckw_1763444744
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 415FC1956096; Tue, 18 Nov 2025 05:45:44 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A99E019560A7; Tue, 18 Nov 2025 05:45:43 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E064821E6A27; Tue, 18 Nov 2025 06:45:40 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Honglei Huang <honghuan@amd.com>,  alex.bennee@linaro.org,
- odaki@rsg.ci.i.u-tokyo.ac.jp,  mst@redhat.com,  cohuck@redhat.com,
- pbonzini@redhat.com,  qemu-devel@nongnu.org,  Ray.Huang@amd.com
-Subject: Re: [v4] virtio-gpu: use consistent error checking style for
- virtio_gpu_create_mapping_iov
-In-Reply-To: <ed8fd731-8e47-4282-9439-00e6c367b672@collabora.com> (Dmitry
- Osipenko's message of "Tue, 18 Nov 2025 04:48:23 +0300")
-References: <20251117105104.258513-1-honghuan@amd.com>
- <9f547fbe-ea57-4784-9e37-f79b52b551a9@collabora.com>
- <87bjl0pzeq.fsf@pond.sub.org>
- <ed8fd731-8e47-4282-9439-00e6c367b672@collabora.com>
-Date: Tue, 18 Nov 2025 06:45:40 +0100
-Message-ID: <874iqrnbaz.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vLEnO-000243-3d
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 01:02:33 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AI62OFn066626
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 18 Nov 2025 15:02:24 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=zsJu1UMzg+/CjOAizhlOCV+U72/Xaayq34U7zvmZQBc=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763445744; v=1;
+ b=M0D0d79diTz8j8Ilq1FWBbhQpOxQnKMHfyU61ww9WECDiZ4Z5oVBTDaJ2ePKiAni
+ I0tw0oeW0gK31VUZgVYOfIFzqV9iJc4Z7TQRvC0h0/OGfRI+sipqnsAGIioJOm5c
+ 7wjJ4JtBomWpL9ZrUL7ROnRxva0o2rPlvT/JmkZ3H5D6CfhSc0q4A17OYavSOwSI
+ GbvkyswMEuDbQdK5fH3m0PSea+aMl5ulasqgAoKeEsNTEfiND/RMozixFyyxZStc
+ xBudTky+14L0/DOOqEwTedB1PxFRFCIx+72URr/31qx4AUUz5KQIB7RuXpXFbyMT
+ fh2gdfpeLK88/kNpPOzKHg==
+Message-ID: <04410e24-43e9-4302-8a88-8de870cd53e0@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 18 Nov 2025 15:02:23 +0900
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20251109053801.2267149-1-vivek.kasireddy@intel.com>
+ <20251109053801.2267149-11-vivek.kasireddy@intel.com>
+ <5c224e00-8114-4586-b502-3819770bc8ff@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71853FE6CD48B77FA586B628F8CCA@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <3c0fe9e8-7efa-4936-b5ef-5cabc4239cdd@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71855ADFEEC4E3267B464768F8CDA@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <8451c0ee-6c9d-4fbf-b1c2-05fd5fd8e4c3@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB7185D06DA886C3758E9B0FB5F8C9A@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <8dcffe42-da84-44cf-a240-90680cdb0953@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB71850777A66759ADCAFEB53EF8D6A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB71850777A66759ADCAFEB53EF8D6A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,42 +88,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
-
-> On 11/17/25 16:22, Markus Armbruster wrote:
->> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
->> 
->>> On 11/17/25 13:51, Honglei Huang wrote:
->>>> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
->>>> index ed5ae52acb..ea2928b706 100644
->>>> --- a/hw/display/virtio-gpu-rutabaga.c
->>>> +++ b/hw/display/virtio-gpu-rutabaga.c
->>>> @@ -466,7 +466,7 @@ rutabaga_cmd_attach_backing(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
->>>>  
->>>>      ret = virtio_gpu_create_mapping_iov(g, att_rb.nr_entries, sizeof(att_rb),
->>>>                                          cmd, NULL, &res->iov, &res->iov_cnt);
->>>> -    CHECK(!ret, cmd);
->>>> +    CHECK(ret >= 0, cmd);
+On 2025/11/18 14:22, Kasireddy, Vivek wrote:
+> Hi Akihiko,
+> 
+>> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+>> associated with VFIO devices
+>>
+>> On 2025/11/17 13:19, Kasireddy, Vivek wrote:
+>>> Hi Akihiko,
 >>>
->>> virtio_gpu_create_mapping_iov() doesn't return positive values, don't
->>> see how this change improves anything. You now saying that ret > 0 is
->>> okay, while it shall never happen.
->> 
->> Please see
->> 
->>     Subject: Re: [PATCH] virtio-gpu-virgl: fix error handling in virgl_cmd_resource_create_blob 
->>     Date: Mon, 17 Nov 2025 08:49:42 +0100
->>     Message-ID: <87ms4lrtd5.fsf@pond.sub.org>
->>     https://lore.kernel.org/qemu-devel/87ms4lrtd5.fsf@pond.sub.org/
->
-> It's a rather common bug when errno isn't negated by mistake and a
-> positive error code is returned. Ignoring positive values when they
-> aren't expected opens door to unnecessary problems, IMO.
+>>>> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for blobs
+>>>> associated with VFIO devices
+>>>>
+>>>> On 2025/11/13 12:17, Kasireddy, Vivek wrote:
+>>>>> Hi Akihiko,
+>>>>>
+>>>>>> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for
+>>>> blobs
+>>>>>> associated with VFIO devices
+>>>>>>
+>>>>>> On 2025/11/12 13:26, Kasireddy, Vivek wrote:
+>>>>>>> Hi Akihiko,
+>>>>>>>
+>>>>>>>> Subject: Re: [PATCH v2 10/10] virtio-gpu-dmabuf: Create dmabuf for
+>>>>>> blobs
+>>>>>>>> associated with VFIO devices
+>>>>>>>>
+>>>>>>>> On 2025/11/09 14:33, Vivek Kasireddy wrote:
+>>>>>>>>> In addition to memfd, a blob resource can also have its backing
+>>>>>>>>> storage in a VFIO device region. Therefore, we first need to figure
+>>>>>>>>> out if the blob is backed by a VFIO device region or a memfd before
+>>>>>>>>> we can call the right API to get a dmabuf fd created.
+>>>>>>>>>
+>>>>>>>>> So, once we have the ramblock and the associated mr, we rely on
+>>>>>>>>> memory_region_is_ram_device() to tell us where the backing storage
+>>>>>>>>> is located. If the blob resource is VFIO backed, we try to find the
+>>>>>>>>> right VFIO device that contains the blob and then invoke the API
+>>>>>>>>> vfio_device_create_dmabuf().
+>>>>>>>>>
+>>>>>>>>> Note that in virtio_gpu_remap_udmabuf(), we first try to test if
+>>>>>>>>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
+>>>>>>>>> use the VFIO device fd directly to create the CPU mapping.
+>>>>>>>>
+>>>>>>>> I have just remembered that mremap() will work for either of udmabuf
+>>>>>> and
+>>>>>>>> VFIO. That will avoid having two different methods and make
+>>>>>>>> vfio_get_region_index_from_mr() and vfio_device_get_region_info()
+>>>>>>>> unnecessary.
+>>>>>>> IIUC, the name virtio_gpu_remap_dmabuf() is misleading because we
+>>>> are
+>>>>>> not
+>>>>>>> actually doing remap but are simply calling mmap(). In other words, we
+>>>>>> are not
+>>>>>>> expanding or shrinking existing mapping but are creating a new
+>>>> mapping.
+>>>>>>> And, for dmabufs associated with VFIO devices, without having to call
+>>>>>>> vfio_get_region_index_from_mr() and vfio_device_get_region_info(), I
+>>>>>> don't see
+>>>>>>> any other way to determine the region offset.
+>>>>>>>
+>>>>>>> So, I guess I'll create a new patch to do s/remapped/map.
+>>>>>>
+>>>>>> I mean calling mremap() with 0 as the old_size parameter. The man page
+>>>>>> says:
+>>>>>>     > If the value of old_size is zero, and old_address refers to a
+>>>>>>     > shareable mapping (see the description of MAP_SHARED in
+>> mmap(2)),
+>>>>>> then
+>>>>>>     > mremap() will create a new mapping of the same pages.
+>>>>> It might be possible to use mremap() here but using mmap() seems very
+>>>>> straightforward given that we are actually not shrinking or expanding
+>>>>> an existing mapping but are instead creating a new mapping. Also, I am
+>>>>> wondering what benefit would mremap() bring as opposed to just using
+>>>>> mmap()?
+>>>>
+>>>> As I noted earlier, mremap() removes the need of having two different
+>>>> paths for udmabuf and VFIO, and make vfio_get_region_index_from_mr()
+>>>> and
+>>>> vfio_device_get_region_info() unnecessary, reducing code complexity.
+>>> Sorry, I should have researched thoroughly before but after looking at the
+>> code
+>>> again, I don't see how mremap() removes the need for having two different
+>>> paths for udmabuf and VFIO and make vfio_get_region_index_from_mr()
+>>> and vfio_device_get_region_info() unnecessary. Could you please elaborate
+>>> how it can be done?
+>>
+>> Not tested, but something like the following:
+>>
+>> head = qemu_ram_mmap(-1, res->blob_size, qemu_real_host_page_size(),
+>>                        QEMU_MAP_READONLY | QEMU_MAP_SHARED, 0);
+>> if (head == MAP_FAILED) {
+>>       return NULL;
+>> }
+>>
+>> cursor = head;
+>>
+>> for (i = 0; i < res->iov_cnt; i++) {
+>>       if (mremap(res->iov[i].iov_base, 0, res->iov[i].iov_len,
+>>                  MREMAP_FIXED, cursor) == MAP_FAILED) {
+> This is very elegant and I can now see how it is expected to work. However,
+> I went ahead and tested it and it does not seem to work for VFIO backed
+> buffers. It works for buffers based out of System RAM though. Here is the
+> actual code I tested with that I am unconditionally calling for both VFIO
+> and udmabuf cases:
+> static void *vfio_dmabuf_mmap2(struct virtio_gpu_simple_resource *res,
+>                                 VFIODevice *vdev)
+> {
+>      void *head, *cursor;
+>      int i;
+> 
+>      head = qemu_ram_mmap(-1, res->blob_size, qemu_real_host_page_size(),
+>                           			QEMU_MAP_READONLY | QEMU_MAP_SHARED, 0);
 
-No convention can avoid *all* possible problems there.  I know which one
-has created more grief for *me*.  Your experience may be different.
+By the way, please do:
+head = mmap(NULL, res->blob_size, PROT_NONE, MAP_SHARED, -1, 0);
 
-virtio_gpu_create_mapping_iov() returns -1 on error, 0 on success.
-We could change it to return false on error, true on success.
+I forgot that we don't need to map a RAM but mmap() with PROT_NONE is 
+sufficient. It will catch a bug that fails to mmap() a real resource on 
+top of it.
 
+>      if (head == MAP_FAILED) {
+>          return head;
+>      }
+> 
+>      cursor = head;
+>      for (i = 0; i < res->iov_cnt; i++) {
+>           if (mremap(res->iov[i].iov_base, 0, res->iov[i].iov_len,
+>               MREMAP_FIXED | MREMAP_MAYMOVE, cursor) == MAP_FAILED) {
+>               goto err;
+>           }
+>           cursor += res->iov[i].iov_len;
+>      }
+>      return head;
+> err:
+>      qemu_ram_munmap(-1, head, res->blob_size);
+>      return MAP_FAILED;
+> }
+> 
+> It (mremap) initially errored with -EINVAL in all cases but adding MREMAP_MAYMOVE
+> fixed it for buffers based out of RAM but for VFIO backed buffers, it seems to be
+> throwing -EFAULT/Bad Address error. I did not yet check why or where the kernel
+> driver is returning this error from.
+
+The man page says that EFAULT means:
+ > Some address in the range old_address to old_address+old_size is an
+ > invalid virtual memory address for this process. You can also get
+ > EFAULT even if there exist mappings that cover the whole address space
+ > requested, but those mappings are of different types.
+
+None of this should be true so it should be a bug, though I'm not sure 
+if it is a bug of QEMU, Linux, or the man page (i.e., the man page 
+failed to mention another failure scenario). In any case it needs to be 
+debugged.
+
+Regards,
+Akihiko Odaki
 
