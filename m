@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B47BFCEE34B
-	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 19:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0E27CEE34B
+	for <qemu-devel@archiver.kernel.org>; Tue, 18 Nov 2025 19:02:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLQy3-0000z5-KB; Tue, 18 Nov 2025 14:02:19 -0500
+	id 1vLQyI-00026z-6H; Tue, 18 Nov 2025 14:02:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQy0-0000r7-6T
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:17 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQyF-0001uI-RR
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:31 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQxj-00063e-Qw
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:15 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47775fb6cb4so42379235e9.0
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 11:01:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLQyC-00066u-Jp
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 14:02:31 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-477aa218f20so7669725e9.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 11:02:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763492518; x=1764097318; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763492546; x=1764097346; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gXiO5nPfAcYV2Wewa5o/aax8KoL/hNVg9xCYOqbljoU=;
- b=RcecxDpOPCNAAH7VMq0PyOOW5DnyJAU43FojxmrIgeszSn0KfVWQJlxZraoWlgTMfn
- POe/nkWtUC5VAELtCBWDGzNHQRXv8qCghpTmeGPlaS6hRPthbb8UujPswnUXcJQ5S9NG
- kOOJSnCaKUxEMhoUYDG7FC+rAFBiOhQMQdClq5OX7SEySx4Me92k9H+NU3zM/ImmQ0Cb
- XEefFIq1wAxVTL7dTT8TeHhrcKhE/5sY1ccif3dxDzbr2vOBRoDDaW2EvPPBB1jwmHMo
- /1zMObPIPhSz/AUXpJJmXLDq+XrfDMvbUNGtNZZMBiJBI36lYN+XNhUEbN99j9GQt44Z
- nZ/Q==
+ :reply-to; bh=GYPvgDJyKQPbQRcUEUxfDE0G1cAgbiOOD5h9fXN0ghI=;
+ b=zkpa8MH+m8JGsatrBNIKOizSH27JToQ0X+usNabgsSPZDR8iI/68MQ5wUs1G83v3kR
+ 0IXoRXDVqpURmbfHvU4mnDKjPfMHfsD2BZuVfYZqVjFO7GgjEn7UsdQVmrw0gfakNO7F
+ r/Pc+mAI33E36yrKl9Q1uVMF9aMT4H3A8CmhBvgrJAQ0brftLWtoOxph3OxvK+maFh5e
+ qzcBa9Yn0O2jWhIUUWO9k+Z2ACtik59bO8CUwgBGYMT4d15yr0BSRK01WGZ/xPMErklW
+ IJIOOepKu0xvsE4e7lbnwMEjdxtXSCRT0IgR7oaggUQYC4w3mjVnagl9RuULbmsLo5aU
+ zejQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763492518; x=1764097318;
+ d=1e100.net; s=20230601; t=1763492546; x=1764097346;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=gXiO5nPfAcYV2Wewa5o/aax8KoL/hNVg9xCYOqbljoU=;
- b=abw0qZjI6leJZaaSmqYqQ0Gah5bBwgmj8CGyt+JpFSfZ/tQDfKMZfQd+C1TcyCoOkn
- mDVKZztfijIyIWRMTEaYv5wKHMpoyPDDA14/ADP4HT/tsnhfcvMGEppGnMD2I3A/k+ML
- 1iIf+V1C6Z8u6yaYPzsjuvIT0A0a44FpzKEV0lRJTKqjMuXNOHf/NT9e4PWXIfaRV3VO
- X60fsyUPLDd/XfmSC1LXpqJRV3dMcljTHwIZDbuZwB53QJH1W37cJHaPeVU8fxCOsN3a
- CgZCjwAY8/7fgShKXQl+NrewbmSBpc/fIcSRHN9XOLxdanRWoq06A2WMSx7o1SI2KopL
- kSeA==
-X-Gm-Message-State: AOJu0YyyiysT2j1AGziWOQchYbIV1PC0N5BkNrwsLpxjkESFKFFn9AW0
- 0mViirXPbeKBthqPIzV3K7mQhNROVgx8+xvHwpXlSSUy+Khk2P88EuG/ndD/hW7hv+87xKjZe2e
- cBT0ilKgZVQ==
-X-Gm-Gg: ASbGncukdp0GRSKDoieNZBl8WosFBKXl12C5G5F0hQqOQzTATgYkN4NZ+bmamHTlghE
- W/rdPXqPrAUZqMhxXouAOLQBeXjSbC1aaUxmYMjgEb3zdP0BB7Fi6W31ly1MV4pfHs7H4XTbFV+
- szR8SCmGbH01GPIGn7BIZUHnU1S2IF4UHMlmXQa601g+D3hkqY56jXvLbfFyNkAeP2Zlz7h69wF
- AB342QzMWc/AOY+Qjl+pv4umsrk78XEY8Alrit/FsRK2Y4/sbjm8K+sKiQHWJC46bpspS0SrA2W
- s4vI2grCMo5yVmMWx4zCtCYg8WStrYi6GVOozaaPUA62BtRLQTOBICoPP31WDBSUNDcu3CbJJMh
- X47dayj/A0bj5gVeagVlCO82QXo62bQZmFHT574u1ojop0RGplcShRli/evgKzNJCSfEp9d6I7j
- S8EHS7tSXGs60PL1+xjPiGV7GWILzHufbiD4DqtdqrbicGITHjoT2qXI1/sW1uKkOYb7XUx2w78
- enwGFKXIw==
-X-Google-Smtp-Source: AGHT+IFmW7hb3No794ZGBnkpEBuGFkQvoaUG214AuAgxt+Ks2pwKrZwSd1O0dUDExG7EAzEO8GmONw==
-X-Received: by 2002:a05:600c:4585:b0:477:54cd:202e with SMTP id
- 5b1f17b1804b1-4778fe59a0bmr167414665e9.2.1763492517763; 
- Tue, 18 Nov 2025 11:01:57 -0800 (PST)
+ bh=GYPvgDJyKQPbQRcUEUxfDE0G1cAgbiOOD5h9fXN0ghI=;
+ b=p4eOuvdvuxtVnDF8w7Muy/vkZ4GGHlacu5eGz2LQBOk6KRRv4fg/jvb4WBgSIxca2+
+ FKmEGoOt2rjTL/PCsy1NuMWe1NDwvHB8WR07GQBBhBhdAtzQppE/ieBYz3LEVVtORBb3
+ HdKENMQt8W09SVUmdp9idpPMOfP0NFQrCutPZgEGAwKyaEr3r1so/41Gsuow+rZKJb70
+ 0b+IR3KFFDouE0RjIfaP9oNjxHvBMF/HA/2xs8U8vL7jH1ZGRHxj5Zqtli8NHDCXHELv
+ NjZJiiDZgb7lm67NvghGFa5QY7hyJCHOhBoYZOSwanHsrhcYMDAK6Brh5hO0q2c9xY26
+ Sr/A==
+X-Gm-Message-State: AOJu0YzQv/1PUOk+iKaX0eBZtzB2lsZbtloy1uQ4QlxN6gs8KCYmvUfe
+ e1gZJz0v86r1GNJJ80UkuYz9NzCvOMk5L9jwbMtCXX3y4qKCllj5dFtUaBT9eYLHDeoNQt9wepV
+ JutgqRDnsqw==
+X-Gm-Gg: ASbGncsP5lSMHBNwlGJ3JaAUbqEd6y6j0ENjJKGEu7MQhur3DI53vAud964cRDVWxQK
+ AWZhUeYtNJyoCteeVC4I1flkvGYp0jBlC6hqXmyCx1dBEs6VaaNDnJ31xNzAuzzgx6Y7qbCs6BO
+ Sy+6uxK51bWaXhNhXnYscbQrNE42EX/3/6WLwM+BK5b9+NWaO7ZO3wac4tSOvy5XyLS3dkhV10h
+ A+6PL/V/srB//Lwq7X3gOzsbx6/T+sqXiJ+KChAyzxcF9gxYoHgikTyT52Jr/5S17wmStXNcUw/
+ Jt4ot3o2PxFsEYVXXT4n0dHOuD9hr0gzAQ98D24KAmc0gmdQe5YqdV7Oi9gHnkecqNnCDFV4zOP
+ PaXsnYderEESlsc4pS2hzdAZ3FGmuzY8758kZkEIujhsBxGi4VKrv+g04ISvpwlI0iYoF+KAsiL
+ HzCCSwxSeyk+BAgbp0arzAuqZe+TZkG/75njH1h6PPYqpOIUhFOXIMpv0EGpKuOkz7jAKIw/4=
+X-Google-Smtp-Source: AGHT+IE4iRrHKXb8LZro41254zMjXM6ISaRTNY3io3+a7Q4K75k8s2QDnLfYms9aeicA7HXSzWS5Iw==
+X-Received: by 2002:a05:600c:1f92:b0:46e:32d4:46a1 with SMTP id
+ 5b1f17b1804b1-4778fe96324mr162456745e9.22.1763492546422; 
+ Tue, 18 Nov 2025 11:02:26 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b106a9b0sm4924475e9.11.2025.11.18.11.01.54
+ 5b1f17b1804b1-477b0ffc90fsm5899565e9.2.2025.11.18.11.02.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 18 Nov 2025 11:01:55 -0800 (PST)
+ Tue, 18 Nov 2025 11:02:25 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/18] hw/sd/sdcard: Avoid confusing address calculation in
- rpmb_calc_hmac
-Date: Tue, 18 Nov 2025 20:00:43 +0100
-Message-ID: <20251118190053.39015-9-philmd@linaro.org>
+Subject: [PULL 12/18] migration/rdma: Check ntohll() availability with meson
+Date: Tue, 18 Nov 2025 20:00:47 +0100
+Message-ID: <20251118190053.39015-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251118190053.39015-1-philmd@linaro.org>
 References: <20251118190053.39015-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,43 +99,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+Commit 44ce1b5d2fc ("migration/rdma: define htonll/ntohll
+only if not predefined") tried to only include htonll/ntohll
+replacements when their symbol is *defined*, but this doesn't
+work, as they aren't:
 
-From the source frame, we initially need to copy out all fields after
-data, thus starting from nonce on. Avoid expressing this indirectly by
-pointing to the end of the data field - which also raised the attention
-of Coverity (out-of-bound read /wrt data).
+  ../migration/rdma.c:242:17: error: static declaration of 'htonll' follows non-static declaration
+    242 | static uint64_t htonll(uint64_t v)
+        |                 ^~~~~~
+  In file included from /usr/include/netinet/in.h:73,
+                   from /usr/include/sys/socket.h:32,
+                   from /home/f4bug/qemu/include/system/os-posix.h:30,
+                   from /home/f4bug/qemu/include/qemu/osdep.h:176,
+                   from ../migration/rdma.c:17:
+  /usr/include/sys/byteorder.h:75:18: note: previous declaration of 'htonll' with type 'uint64_t(uint64_t)' {aka 'long unsigned int(long unsigned int)'}
+     75 | extern  uint64_t htonll(uint64_t);
+        |                  ^~~~~~
+  ../migration/rdma.c:252:17: error: static declaration of 'ntohll' follows non-static declaration
+    252 | static uint64_t ntohll(uint64_t v)
+        |                 ^~~~~~
+  /usr/include/sys/byteorder.h:76:18: note: previous declaration of 'ntohll' with type 'uint64_t(uint64_t)' {aka 'long unsigned int(long unsigned int)'}
+     76 | extern  uint64_t ntohll(uint64_t);
+        |                  ^~~~~~
 
-Resolves: CID 1642869
-Reported-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <4f7e1952-ecbd-4484-b128-9d02de3a7935@siemens.com>
-[PMD: Add comment before the memcpy() call]
+Better to check the symbol availability with meson.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20251117203834.83713-3-philmd@linaro.org>
 ---
- hw/sd/sd.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ meson.build      | 1 +
+ migration/rdma.c | 4 +---
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/hw/sd/sd.c b/hw/sd/sd.c
-index df5a36fad9d..40a75a43ffb 100644
---- a/hw/sd/sd.c
-+++ b/hw/sd/sd.c
-@@ -1160,8 +1160,13 @@ static bool rpmb_calc_hmac(SDState *sd, const RPMBDataFrame *frame,
+diff --git a/meson.build b/meson.build
+index 5ddec8afd7b..81f9f7b3287 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2663,6 +2663,7 @@ config_host_data.set('CONFIG_SYNCFS', cc.has_function('syncfs'))
+ config_host_data.set('CONFIG_SYNC_FILE_RANGE', cc.has_function('sync_file_range'))
+ config_host_data.set('CONFIG_TIMERFD', cc.has_function('timerfd_create'))
+ config_host_data.set('CONFIG_GETLOADAVG', cc.has_function('getloadavg'))
++config_host_data.set('CONFIG_ARPA_INET_64', cc.has_function('htonll'))
+ config_host_data.set('HAVE_COPY_FILE_RANGE', cc.has_function('copy_file_range'))
+ config_host_data.set('HAVE_GETIFADDRS', cc.has_function('getifaddrs'))
+ config_host_data.set('HAVE_GLIB_WITH_SLICE_ALLOCATOR', glib_has_gslice)
+diff --git a/migration/rdma.c b/migration/rdma.c
+index 2d839fce6c4..337b4158899 100644
+--- a/migration/rdma.c
++++ b/migration/rdma.c
+@@ -238,7 +238,7 @@ static const char *control_desc(unsigned int rdma_control)
+     return strs[rdma_control];
+ }
  
-         assert(RPMB_HASH_LEN <= sizeof(sd->data));
+-#if !defined(htonll)
++#if !defined(CONFIG_ARPA_INET_64)
+ static uint64_t htonll(uint64_t v)
+ {
+     union { uint32_t lv[2]; uint64_t llv; } u;
+@@ -246,9 +246,7 @@ static uint64_t htonll(uint64_t v)
+     u.lv[1] = htonl(v & 0xFFFFFFFFULL);
+     return u.llv;
+ }
+-#endif
  
--        memcpy((uint8_t *)buf + RPMB_DATA_LEN, &frame->data[RPMB_DATA_LEN],
-+        /*
-+         * We will hash everything from data field to the end of RPMBDataFrame.
-+         */
-+        memcpy((uint8_t *)buf + RPMB_DATA_LEN,
-+               (uint8_t *)frame + offsetof(RPMBDataFrame, nonce),
-                RPMB_HASH_LEN - RPMB_DATA_LEN);
-+
-         offset = lduw_be_p(&frame->address) * RPMB_DATA_LEN + sd_part_offset(sd);
-         do {
-             if (blk_pread(sd->blk, offset, RPMB_DATA_LEN, buf, 0) < 0) {
+-#if !defined(ntohll)
+ static uint64_t ntohll(uint64_t v)
+ {
+     union { uint32_t lv[2]; uint64_t llv; } u;
 -- 
 2.51.0
 
