@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C38CF259E
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 08:28:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E01B2CF259E
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 08:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLdYB-0004xb-Sn; Wed, 19 Nov 2025 03:28:28 -0500
+	id 1vLdXv-0003wm-5s; Wed, 19 Nov 2025 03:28:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLdY9-0004lG-I9
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:28:25 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLdXX-0003XT-Hm
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:27:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLdY7-0000y5-N3
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:28:25 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLdXV-0000vu-7L
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:27:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763540903;
+ s=mimecast20190719; t=1763540861;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1JjP04p/a3qVWmVtwDi217sBbPAhwIDdHPY9477Xyuo=;
- b=NWo4YXAk6Ilwo81cJP8316deWjeNhe/uOAG3tQn+ADvc8FepBA4+JnRK9GcYgQp0JZS5nS
- D2FbDv3jgflT7nB9CUFPrgQyys7C9jij3YsatATKpvFLjiXhLjyuVdbk9ov5XSJVYImEVl
- lUzCKZ8+cSXC4rV2Gwt7ROsDaF/uocM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=VClsjSE/lJj44/MxOnS27ywXz1EbQ0juDDgmS3m/32I=;
+ b=ifI+/bUQKH2CDRggVeg+QIaAQH82bKIX19ayMRHIeWITsOPPDF/dpPgsg0LqIsxUglAGmt
+ DmFxh82AwclDDHtNlLArVlTtaWvKZxuCq8xehOmvtB7G8DYYWX/j6+WMJZu1HmXaOOcwvE
+ p73OmWtSxIh0qsrx9zPamtSToDt2CIM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-449-1xzJYJwJOI-uOCWtNJXETw-1; Wed,
- 19 Nov 2025 03:28:18 -0500
-X-MC-Unique: 1xzJYJwJOI-uOCWtNJXETw-1
-X-Mimecast-MFC-AGG-ID: 1xzJYJwJOI-uOCWtNJXETw_1763540895
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-145-Hw4_cOfwMQyYAlofR4P9Gg-1; Wed,
+ 19 Nov 2025 03:27:37 -0500
+X-MC-Unique: Hw4_cOfwMQyYAlofR4P9Gg-1
+X-Mimecast-MFC-AGG-ID: Hw4_cOfwMQyYAlofR4P9Gg_1763540855
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C941C1801237; Wed, 19 Nov 2025 08:28:15 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7491B18AB400; Wed, 19 Nov 2025 08:27:35 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-176.str.redhat.com
  [10.33.192.176])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5E295180047F; Wed, 19 Nov 2025 08:28:10 +0000 (UTC)
+ id 1D050180047F; Wed, 19 Nov 2025 08:27:29 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -65,10 +65,10 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Zhao Liu <zhao1.liu@intel.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH for-11.0 15/15] tests/functional: Add a generic test that
- checks the files with pylint
-Date: Wed, 19 Nov 2025 09:26:36 +0100
-Message-ID: <20251119082636.43286-16-thuth@redhat.com>
+Subject: [PATCH for-11.0 08/15] tests/functional/x86_64/test_memlock: Silence
+ pylint warnings
+Date: Wed, 19 Nov 2025 09:26:29 +0100
+Message-ID: <20251119082636.43286-9-thuth@redhat.com>
 In-Reply-To: <20251119082636.43286-1-thuth@redhat.com>
 References: <20251119082636.43286-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -101,76 +101,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-To avoid that new pylint-related warnings get committed, let's check
-the files with pylint during each run (similar to what we are doing
-for the iotests already).
+Pylint complains about a missing "encoding" parameter for the open()
+function here, and about a missing return statement in the "except"
+block (which cannot happen since skipTest() never returns). Rework
+the code a little bit to silence the warnings.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/generic/meson.build     |  1 +
- tests/functional/generic/test_linters.py | 41 ++++++++++++++++++++++++
- 2 files changed, 42 insertions(+)
- create mode 100755 tests/functional/generic/test_linters.py
+ tests/functional/x86_64/test_memlock.py | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/generic/meson.build b/tests/functional/generic/meson.build
-index 013cc96fbf8..09763c5d229 100644
---- a/tests/functional/generic/meson.build
-+++ b/tests/functional/generic/meson.build
-@@ -3,6 +3,7 @@
- tests_generic_system = [
-   'empty_cpu_model',
-   'info_usernet',
-+  'linters',
-   'version',
-   'vnc',
- ]
-diff --git a/tests/functional/generic/test_linters.py b/tests/functional/generic/test_linters.py
-new file mode 100755
-index 00000000000..b5b90fcf7a3
---- /dev/null
-+++ b/tests/functional/generic/test_linters.py
-@@ -0,0 +1,41 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+'''Python linter tests'''
-+
-+import os
-+
-+from pathlib import Path
-+from qemu_test import QemuBaseTest, skipIfMissingImports
-+
-+
-+class LinterTest(QemuBaseTest):
-+    '''
-+    Run python linters on the test *.py files
-+    '''
-+
-+    @skipIfMissingImports("pylint")
-+    def test_pylint(self):
-+        '''Check source files with pylint'''
-+        from pylint.lint import Run as pylint_run
-+        from pylint.reporters.collecting_reporter import CollectingReporter
-+        srcdir = os.path.join(Path(__file__).parent.parent, self.arch)
-+        rcfile = os.path.join(Path(__file__).parent.parent, "pylintrc")
-+        self.log.info('Checking files in %s with pylint', srcdir)
-+        reporter = CollectingReporter()
-+        pylint_run(["--rcfile", rcfile, srcdir], reporter=reporter, exit=False)
-+        if reporter.messages:
-+            fmt = '"{path}:{line}: {msg_id}: {msg} ({symbol})"'
-+            for msg in reporter.messages:
-+                if msg.category == "error":
-+                    self.log.error(msg.format(fmt))
-+                elif msg.category == "warning":
-+                    self.log.warning(msg.format(fmt))
-+                else:
-+                    self.log.info(msg.format(fmt))
-+            self.fail("Pylint failed, see base.log for details.")
-+
-+
-+if __name__ == '__main__':
-+    QemuBaseTest.main()
+diff --git a/tests/functional/x86_64/test_memlock.py b/tests/functional/x86_64/test_memlock.py
+index 81bce80b0c4..f970a2c3095 100755
+--- a/tests/functional/x86_64/test_memlock.py
++++ b/tests/functional/x86_64/test_memlock.py
+@@ -69,11 +69,13 @@ def get_process_status_values(self, pid: int) -> Dict[str, int]:
+         return result
+ 
+     def _get_raw_process_status(self, pid: int) -> str:
++        status = None
+         try:
+-            with open(f'/proc/{pid}/status', 'r') as f:
+-                return f.read()
++            with open(f'/proc/{pid}/status', 'r', encoding="ascii") as f:
++                status = f.read()
+         except FileNotFoundError:
+             self.skipTest("Can't open status file of the process")
++        return status
+ 
+ 
+ if __name__ == '__main__':
 -- 
 2.51.1
 
