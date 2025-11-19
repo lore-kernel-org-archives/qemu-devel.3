@@ -4,66 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2374BCF34DA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 15:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F92CF34D3
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 15:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLkFT-0004Sf-M6; Wed, 19 Nov 2025 10:37:35 -0500
+	id 1vLkF4-0004Qo-FK; Wed, 19 Nov 2025 10:37:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLkFR-0004Rr-5c; Wed, 19 Nov 2025 10:37:33 -0500
-Received: from mgamail.intel.com ([198.175.65.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLkFP-0000EM-DF; Wed, 19 Nov 2025 10:37:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763566652; x=1795102652;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=U1Cbs/dBqo8E/y7M+ZKP5CPf3bCsrxw04UQ6VD+I5iU=;
- b=XDEe5mnqB4Wy7vMeSAX95L5Z44UFOoPCE7A5SUR0wErieyQZmP8rngNo
- wJNtAfbgd3gbhegJfDW1jGQVWIMKnWdin/q0KW9EnvmSRvA2dms5PHOkV
- G2byX1uRc09V1o18hhmeHyN31t4FEqJSKAcgUsmoqXRhR7LMVI5z/cSQv
- 40vKK8POYfVMux2xU/TfWFth02z56VM7pxVBtXp4rVJZZCO6EdL0ysBg8
- ahB8DToTzJ/3xmZpiGSpqGVuuK4r2KtakA58a+khhwQFjFoUJ1VOukU2f
- 0WRI28w2k9EKui37r10eWUlG/7RG81uIJGyXXOlsaiBUiMk8I9aFOOREx g==;
-X-CSE-ConnectionGUID: Cp8JAlQlQLOEZ89Cki+aVg==
-X-CSE-MsgGUID: PcLKnquqQju02FC1eJn3hg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11618"; a="75939192"
-X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; d="scan'208";a="75939192"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Nov 2025 07:37:28 -0800
-X-CSE-ConnectionGUID: SPmAQJjhRaW5H3pF61pHCA==
-X-CSE-MsgGUID: 3rVW5UpNS5muPbVbZqwFlg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; d="scan'208";a="190896620"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa006.fm.intel.com with ESMTP; 19 Nov 2025 07:37:27 -0800
-Date: Wed, 19 Nov 2025 23:59:46 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 0/5] rust/hpet: complete moving state out of HPETTimer
-Message-ID: <aR3pcja8gtkH0Eb/@intel.com>
-References: <20251117084752.203219-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vLkF2-0004Qb-IM
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 10:37:08 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vLkF0-0000CC-Vu
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 10:37:08 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-477a219db05so25746195e9.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 07:37:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763566625; x=1764171425; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=EhCXmAvrI6zItIMik5WXJbc/5iyh9/pVwds9c0e5SAc=;
+ b=ucHzK1Oc+j1Zg0wEW7djshBqfbR8UfRofaowmlNRyO9JbC8ipgmRH37bFRIbdPCh28
+ IYDf73Gce2KejXHp9bwldOac4tEfHynwD9A6b0UQu9xkDHDJI5VrgiIaPysDn8Wc0+Ef
+ P2g8duFQABZLHmUYmp0RFRP9vL0S71tI8z1Rb4OusnZPU/PQSwlATAnmKIXbt73CN/AG
+ 4XYq75zFGBZnVhRXMY+Q7BvSTEQz29zFYAtlrL7T8SVU5lbIj1ox/S+lywYwv0lTLCkc
+ DJGUHyDUGIXxdOChBtOtsgqQzibCTw4Zq/wc4eqJsOr9KaCd+DOCbrbqptX8Q46z9UwS
+ HMFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763566625; x=1764171425;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EhCXmAvrI6zItIMik5WXJbc/5iyh9/pVwds9c0e5SAc=;
+ b=tBVzx1eGxZ1tyHSnLvuf/0Ce5YKIuptPq1nyBkExe7kOAUwhgoTahGT9/6qimE2+/o
+ h2wPeOBKMFEaljRJcL/RqKpJ5EsS2Qv+oX5iP1BngCGaJ52N59OONaOyJQc1X6YrHti+
+ V0IllzSbGcv+LHSc5pB4D+Ep8Y+OMHGTnJnSAjYzztKS3zPK+Gtbh1+UpwrSA5dPC6l1
+ eVaTiGHBBz+Sn3HKO/g1jIUQe4ZtiP46wsTYqRzI3DRJftqM7XRBaaa2Iooh1dBTMQfL
+ l86B5G5OWNCmDBzweWOkxAWswcL1kYK/0BTmWn5fInPJB9licUdG3963lS/NATOl/v2h
+ Nf4g==
+X-Gm-Message-State: AOJu0Yz6fIWz38YhAVp16hM0UP8ccQmfOnb8ylEum1BdhTq02A6AvC0I
+ utH7jdv5yiv2+YFZqFv5JySKSfdux7IgPdFX/Q0/E2DezAt3LbgNXUx5uO9YCzOTkREZCvxyD7g
+ /tK4PPiQ=
+X-Gm-Gg: ASbGncsKUNTDofRyPvBiTRblWwhazzTcaIcENcSejelpDTgbkLHt2rHeYJLhgNGVUQW
+ Ue7m4DEUosJmqXAPh85xuXIR4JDZdyG9uw2QDMlPR+UgfybiO96ujhWaUHu3BXaEcFBQnD9QTVt
+ ikCp9W2rXTT7BYYF0RKj5ud6qQ7hu16LPfUdj+RsDqSpZJyDLjlJJ4HQIVJwwortaKGgy1Fvyfo
+ CzE2qLI+vACQOZDcJN3P/PJVo3qYp/ixS2KmK3kIFOW6iiM/OMWppXDnApj3M2vP6te5RZ+cMAv
+ iq8lvhJvCfsqcUyWYL5+lbwAMD9LQgNCdoZPqeQaaRGITmGdRuVI8FTvh4WK4jGu1oEy56+wABy
+ wQj/8wCU83qAbKqx2xRqPknO6/uSjJm2By38UVZlWvFWxVQR8Dl865NqHqeJpnFCtiyBkikrm6d
+ V9ooORoZlVtHKlhUzFLE7px83PRwiL15asM2owKgOZIyTD4gyT88lXUnag9OBt7sf+6Z4=
+X-Google-Smtp-Source: AGHT+IFcbb+bgb6Rs/Q3orn1wimBP/hnxCahwUvDbdKLCBd9SPuijKy9FbRc1bNRf6X3vBfoqX/O0w==
+X-Received: by 2002:a05:6000:4284:b0:42b:3cc6:a4d7 with SMTP id
+ ffacd0b85a97d-42b593742f2mr18347562f8f.37.1763566624809; 
+ Wed, 19 Nov 2025 07:37:04 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:ed5:b1f0:6d32:aed8:c0be:1d44?
+ ([2a01:e0a:ed5:b1f0:6d32:aed8:c0be:1d44])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53e7b12asm38265793f8f.10.2025.11.19.07.37.04
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Nov 2025 07:37:04 -0800 (PST)
+Message-ID: <4eeaaf87-187d-4ad5-87de-68f88f65925b@linaro.org>
+Date: Wed, 19 Nov 2025 16:37:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251117084752.203219-1-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] hw/core/loader: Make load_elf_hdr() return bool,
+ simplify caller
+To: qemu-devel@nongnu.org
+References: <20251119130855.105479-1-armbru@redhat.com>
+ <20251119130855.105479-2-armbru@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251119130855.105479-2-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,43 +107,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 17, 2025 at 09:47:47AM +0100, Paolo Bonzini wrote:
-> Date: Mon, 17 Nov 2025 09:47:47 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 0/5] rust/hpet: complete moving state out of HPETTimer
-> X-Mailer: git-send-email 2.51.1
-> 
-> This state continues the cleanups of the HPET state, moving fields out of
-> BqlCells and into HPETRegisters and HPETTimerRegisters.  It also restores
-> the old migration format and shows an interesting trick: HPETTimer is now
-> a very simple object that handles the "unsafe" backreference from the
-> timer to the HPETState, but it also implements ToMigrationStateShared
-> and is stored in the HPETState as Migratable<[HPETTimer; N]>.  I find
-> it pretty cool that the composition works naturally.
-> 
-> The less beautiful part is that I had to modify Timer::init_full for
-> this to compile.  It's probably time to work on the final design for
-> initialization, because this is becoming very ad hoc and the differences
-> between timer, MemoryRegion and Clock initialization have no real
-> justification.
+On 11/19/25 14:08, Markus Armbruster wrote:
+> Signed-off-by: Markus Armbruster<armbru@redhat.com>
+> ---
+>   include/hw/loader.h |  4 +++-
+>   hw/arm/boot.c       |  6 +-----
+>   hw/core/loader.c    |  8 ++++++--
+>   hw/riscv/spike.c    | 10 +---------
+>   4 files changed, 11 insertions(+), 17 deletions(-)
 
-<Just some rough thoughts/understanding>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Yes, Timer requires Pin<> and it seems MemoryRegion also should requires
-it because of callback...
-
-MemoryRegion requires MaybeUninitField, but it would be not necessary
-for HPET, since HPETTimer has already initialized its other field before
-calling init_full(). But as a general interface, MaybeUninitField could
-be also useful for Timer, as we can't require how device initialize its
-field.
-
-Clock's ParentInit<> is also different. We don't need to require
-Timer::init_full must be called in init(). MemoryRegion may also don't
-need it And some C device even calls memory_region_init_io() in
-realize().
-
-Regards,
-Zhao
-
+r~
 
