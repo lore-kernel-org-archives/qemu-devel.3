@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D253CF394B
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 16:35:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4613CF3959
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 16:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLl9c-0007IM-8p; Wed, 19 Nov 2025 11:35:36 -0500
+	id 1vLlDV-0001Di-4s; Wed, 19 Nov 2025 11:39:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vLl9U-0007Dw-Tk
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 11:35:29 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vLlDJ-0001Bw-I0; Wed, 19 Nov 2025 11:39:25 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vLl9S-0002Pl-1F
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 11:35:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763570124;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VjcvkqzCIscsm9NLYgmkIlOifSr9AG0jEM2R0wFhFk8=;
- b=Z03e+4QP/7Qo5gWVZAKNSrU0q1M6aMYVfu/+WZ2ixZKO3eS2t1WD7Ve5uWi/Pr7obNF2Ss
- A5RVxfWR5JqyIlp3qbr+mKC5LkmyVQ53wcxMQh6mi7ZlNrtk8KrdGzMa3K0ErfczVQ0i8V
- SaB+L5JJYL3LZdfTBDBhDuGKBcJmiew=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-fb4-rUTdNQeMeQ3FWSoUAA-1; Wed,
- 19 Nov 2025 11:35:21 -0500
-X-MC-Unique: fb4-rUTdNQeMeQ3FWSoUAA-1
-X-Mimecast-MFC-AGG-ID: fb4-rUTdNQeMeQ3FWSoUAA_1763570119
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DDED8195606D; Wed, 19 Nov 2025 16:35:18 +0000 (UTC)
-Received: from localhost (dhcp-192-224.str.redhat.com [10.33.192.224])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C6551800367; Wed, 19 Nov 2025 16:35:16 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, gshan@redhat.com, ddutile@redhat.com,
- peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
-Subject: Re: [PATCH v2 2/8] target/arm/cpu: Allow registers to be hidden
-In-Reply-To: <20251118160920.554809-3-eric.auger@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20251118160920.554809-1-eric.auger@redhat.com>
- <20251118160920.554809-3-eric.auger@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Wed, 19 Nov 2025 17:35:14 +0100
-Message-ID: <871pluq8u5.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vLlDH-0003Hg-JU; Wed, 19 Nov 2025 11:39:25 -0500
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id A42C7C0417;
+ Wed, 19 Nov 2025 19:39:19 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:d4f::1:a] (unknown [2a02:6bf:8080:d4f::1:a])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id EdZ4hj1FoqM0-PnOuENIM; Wed, 19 Nov 2025 19:39:19 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1763570359;
+ bh=DM0KRnw/bJmlXF59KSLJHO7inhk1CSuI+W867TiXkhk=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=1aV3AQx9aES23Vo5+MMzL/Y4U1Q/xSdVQV9kID9CPGBFyxOO5gCBPF5Z0uI5h3BF4
+ iYmwL1dOKyCcf3BHSPNZ0GR9CkFWL1iXtOFXUxpaH5+YEU4mAePovvIojEwsXcoIkr
+ pM/RDLPTvlXlZtbSzEM/5jVb9Kkrncl88vVYyO64=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <a36f938d-b35a-4605-ab77-6ed7dd419945@yandex-team.ru>
+Date: Wed, 19 Nov 2025 19:39:14 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] hw/nvram/xlnx-bbram: More idiomatic and simpler error
+ reporting
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com, imammedo@redhat.com, 
+ anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
+ alistair@alistair23.me, edgar.iglesias@gmail.com, npiggin@gmail.com,
+ harshpb@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ berrange@redhat.com, peterx@redhat.com, farosas@suse.de, eblake@redhat.com,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ xen-devel@lists.xenproject.org
+References: <20251119130855.105479-1-armbru@redhat.com>
+ <20251119130855.105479-3-armbru@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20251119130855.105479-3-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,81 +85,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 18 2025, Eric Auger <eric.auger@redhat.com> wrote:
+On 19.11.25 16:08, Markus Armbruster wrote:
+> bbram_bdrv_error() interpolates a "detail" string into a template with
+> error_setg_errno(), then reports the result with error_report().
+> Produces error messages with an unwanted '.':
+> 
+>      BLK-NAME: BBRAM backstore DETAIL failed.: STERROR
+> 
+> Replace both calls of bbram_bdrv_error() by straightforward
+> error_report(), and drop the function.  This is less code, easier to
+> read, and the error message is more greppable.
+> 
+> Also delete the unwanted '.'.
 
-> More recent kernels sometimes expose new registers in an
-> unconditionnal manner. This situation breaks backward migration
-> as qemu notices there are more registers in the input stream
-> than supported on the destination host. This leads to a
-> "failed to load cpu:cpreg_vmstate_array_len" error.
->
-> A good example is the introduction of KVM_REG_ARM_VENDOR_HYP_BMAP_2
-> pseudo FW register in v6.16 by commit C0000e58c74e (=E2=80=9CKVM: arm64:
-> Introduce KVM_REG_ARM_VENDOR_HYP_BMAP_2=E2=80=9D). Trying to do backward
-> migration from a host kernel that features the commit to a destination
-> host that doesn't, fail with above error.
->
-> Currently QEMU is not using that feature so ignoring this latter
-> is not a problem. An easy way to fix the migration issue is to teach
-> qemu we don't care about that register and we can simply ignore it
-> when syncing its state during migration.
->
-> This patch introduces an array of such hidden registers. Soon it will
-> be settable through an array property.
->
-> If hidden, the register is moved out of the array of cpreg which is
-> built in kvm_arm_init_cpreg_list(). That way their state won't be
-> synced.
->
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->
+Also, using "errp" name for local "Error *" (one star) variable is a bit misleading.
+
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+
 > ---
->
-> v1 -> v2:
-> - Move the property in a separate patch
-> - improve the commit msg
-> - change the trace point to just print info in
->   kvm_arm_init_cpreg_list()
-> - improve comment in cpu.h (Connie)
-> ---
->  target/arm/cpu.h        | 23 +++++++++++++++++++++++
->  target/arm/kvm.c        | 12 +++++++++++-
->  target/arm/trace-events |  2 ++
->  3 files changed, 36 insertions(+), 1 deletion(-)
->
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 077b0cce5b..0a283940be 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -1044,6 +1044,18 @@ struct ArchCPU {
->      /* KVM steal time */
->      OnOffAuto kvm_steal_time;
->=20=20
-> +    /*
-> +     * Register indexes that must be hidden. Although normally
-> +     * supported (defined in TCG description or exposed by KVM) they are
-> +     * willingly hidden for migration sake. This may be used to allow
-> +     * backward migration to older versions that do implement a specific
-> +     * feature. With KVM acceleration the indexes are the ones described
-> +     * in linux/Documentation/virt/kvm/api.rst. With TCG, this is the TCG
-> +     * sysreg index.
-> +     */
+>   hw/nvram/xlnx-bbram.c | 18 ++++--------------
+>   1 file changed, 4 insertions(+), 14 deletions(-)
+> 
+> diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
+> index 22aefbc240..fe289bad9d 100644
+> --- a/hw/nvram/xlnx-bbram.c
+> +++ b/hw/nvram/xlnx-bbram.c
+> @@ -88,18 +88,6 @@ static bool bbram_pgm_enabled(XlnxBBRam *s)
+>       return ARRAY_FIELD_EX32(s->regs, BBRAM_STATUS, PGM_MODE) != 0;
+>   }
+>   
+> -static void bbram_bdrv_error(XlnxBBRam *s, int rc, gchar *detail)
+> -{
+> -    Error *errp = NULL;
+> -
+> -    error_setg_errno(&errp, -rc, "%s: BBRAM backstore %s failed.",
+> -                     blk_name(s->blk), detail);
+> -    error_report("%s", error_get_pretty(errp));
+> -    error_free(errp);
+> -
+> -    g_free(detail);
+> -}
+> -
+>   static void bbram_bdrv_read(XlnxBBRam *s, Error **errp)
+>   {
+>       uint32_t *ram = &s->regs[R_BBRAM_0];
+> @@ -162,7 +150,8 @@ static void bbram_bdrv_sync(XlnxBBRam *s, uint64_t hwaddr)
+>       offset = hwaddr - A_BBRAM_0;
+>       rc = blk_pwrite(s->blk, offset, 4, &le32, 0);
+>       if (rc < 0) {
+> -        bbram_bdrv_error(s, rc, g_strdup_printf("write to offset %u", offset));
+> +        error_report("%s: BBRAM backstore write to offset %u failed: %s",
+> +                     blk_name(s->blk), offset, strerror(-rc));
+>       }
+>   }
+>   
+> @@ -178,7 +167,8 @@ static void bbram_bdrv_zero(XlnxBBRam *s)
+>   
+>       rc = blk_make_zero(s->blk, 0);
+>       if (rc < 0) {
+> -        bbram_bdrv_error(s, rc, g_strdup("zeroizing"));
+> +        error_report("%s: BBRAM backstore zeroizing failed: %s",
+> +                     blk_name(s->blk), strerror(-rc));
+>       }
+>   
+>       /* Restore bbram8 if it is non-zero */
 
-Hmm... what about
 
-"Array of register indexes that need to be hidden to allow migration in
-certain cases, i.e. when a register is exposed in KVM or defined in TCG
-but not actually used in QEMU. For the KVM case, the indexes are as
-described in Linux Documentation/virt/kvm/api.rst. For TCG, the indexes
-are the TCG sysreg indexes."
-
-> +    uint64_t *hidden_regs;
-> +    uint32_t nr_hidden_regs;
-> +
->      /* Uniprocessor system with MP extensions */
->      bool mp_is_up;
->=20=20
-
-Otherwise, LGTM.
-
+-- 
+Best regards,
+Vladimir
 
