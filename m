@@ -4,111 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49158CF34C3
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 15:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2374BCF34DA
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 15:38:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLk12-0002AG-RP; Wed, 19 Nov 2025 10:22:41 -0500
+	id 1vLkFT-0004Sf-M6; Wed, 19 Nov 2025 10:37:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vLk11-00029x-33
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 10:22:39 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vLkFR-0004Rr-5c; Wed, 19 Nov 2025 10:37:33 -0500
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vLk0z-0004xj-71
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 10:22:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763565755;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qBl29ZSMogptSJkquQKffi8XsroHWWjT0MAjfrnqe5o=;
- b=f9eqcqDqnwmw3wWcrgv//vgnTrDCwo9G4nJ18hqFJ6IhdctiM5GI3UFCYRA9upJSDc2eqC
- yRhl0+hPPIn1tlPQA1HmLgFuEbkvox9np3+uerhdeS5ohJI11RhZXeBKXFDNatzX6DuHMP
- 8O6UPga4CtiY5lCTrwGxixRTImbjFRI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-351-SP9h4sdHPiizKpkO1pyOpQ-1; Wed, 19 Nov 2025 10:22:32 -0500
-X-MC-Unique: SP9h4sdHPiizKpkO1pyOpQ-1
-X-Mimecast-MFC-AGG-ID: SP9h4sdHPiizKpkO1pyOpQ_1763565751
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-42b2fb13b79so3346672f8f.3
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 07:22:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763565751; x=1764170551; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qBl29ZSMogptSJkquQKffi8XsroHWWjT0MAjfrnqe5o=;
- b=MCjy4KX9GevqRuCDN7DS0uEKypNX5vusDP+Qj45wKX4Qydiiurqv8Q0blbuwChb8k4
- rSLsP7IsI+f+ioBbkDQR2xHvlt5iJepWAYJF7pyKXzqpTzqVO5Y3vaNJ47eDWnBDXuyP
- 5rL+tswbwNdcXxtwQvHaAUdJGxFm5/J8YlGKvy7ql1flxe76yQgmP8oMehtK0PBeH2wy
- MIOZ/Fip7VMPFL8Zno6KaVClKFmNFr8C5i0ji6iWPzoDa3l6EDGMnY6NJibawBe0goQL
- K6iic0zCEucJHNNoi2EuTwmMDJEv2hwj4LG913kFFtjB3ztkHx4aqV2xGHznRI2ixWv3
- QTcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763565751; x=1764170551;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qBl29ZSMogptSJkquQKffi8XsroHWWjT0MAjfrnqe5o=;
- b=uwg0ol4+9VvhmQMCswjW0v1hNhv4oILIN/TjUdJ4oKoE5NQxjkKXHe33n5rMa1m9HA
- sBWvoaidNj99/Radh8tRysYgoRFXbLs46yeUEFirMl8+OMVat/BFAyUA1mDPyCDBZJhH
- 4OYhMsdyeNwjolSwV/bV1FWztLaxLl9w4wb5Sqapnu57qjFcrWr8LW+5IvtkF1OR4n2n
- exLanFY13X7mF7iukKPoY9TZ5k2cGsxiAKR3xMDlxSf+zr8qxeJX2M2a8/4MPbSzgw+u
- zYI66WkoXgVg+hH/S+ftsZir8S5wh47X2llef8fMPeVLneBL7PGgVi0oewBk9GvddWfe
- bbZQ==
-X-Gm-Message-State: AOJu0YxHoIOh1FCXKhb5zIf8jQan/VnRfARfw22FPAAmlojc0IjT3nAw
- TCYGAKLGL9PnKHljYmhi25fiGDvbK3aA1+pAjFRr+11rtyN3QKiL3bkVqb5Zu2e7N9C189jcx28
- XeyDT/L+enz1zMdAX2eaxgiP5N5TEzAt32RtXaFZS3o01PXNTsELai7xE
-X-Gm-Gg: ASbGncvHNnG8RXoWxFOAeAzzEtTc1P0I8XG+T9ialxNqG1o98Gxr3mqog/1ebDt6Unj
- lhEUaWdZS1rtlRKlQyWOLd6P0yV93kT6XKBBcEoE8rNsDzjiE/ssiihcjW3+kTRYW/Zq0ZsWoxw
- lh6NrVsAqUxHETFiQ4qiKQ1fXGxjPi7OnM16C/P6JIMLOhrGPmTsAJjvglB8xooBVtmwc+HnjLm
- 58ikOFu72gkL+1upRMsBhmVi1AlrmBviJwG1y/q5BLxtGyg2JFpCzYKNkA5a2iugupSXl8hmcV+
- yfb4+ZqWJ7KfleVw7a4iuC9BepxSMcOGJdC3cp0yPbmamWc0WkjeYJXvjpfzF0eFmOXekR1o5R6
- cn2N6Y4y8Hr2KFdzTEjn6ZmGgCuKiLBPT6qBPbGSOPrnTV1aQJxXSesdHjLzYIEaL4uP4UcA3Cc
- gGxGwsdlXyDZuNYQUvGUI8217cZoI2DUWk7iVzjqg=
-X-Received: by 2002:a5d:584e:0:b0:42b:4081:ccea with SMTP id
- ffacd0b85a97d-42b593679dbmr20490373f8f.35.1763565751291; 
- Wed, 19 Nov 2025 07:22:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFmlnxwXPWhfCDA34fPchWO0rfMki5LoTn/w01ZOSk8sudRu9HyiOR6EzEwXkCEgNg4WPUEzw==
-X-Received: by 2002:a5d:584e:0:b0:42b:4081:ccea with SMTP id
- ffacd0b85a97d-42b593679dbmr20490347f8f.35.1763565750894; 
- Wed, 19 Nov 2025 07:22:30 -0800 (PST)
-Received: from ?IPV6:2003:cf:d717:1f1a:9fb6:2cca:37fd:c35c?
- (p200300cfd7171f1a9fb62cca37fdc35c.dip0.t-ipconnect.de.
- [2003:cf:d717:1f1a:9fb6:2cca:37fd:c35c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53e84a4fsm38509109f8f.11.2025.11.19.07.22.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Nov 2025 07:22:29 -0800 (PST)
-Message-ID: <f08a0a6e-e379-4e25-bee9-554bd48dd344@redhat.com>
-Date: Wed, 19 Nov 2025 16:22:27 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vLkFP-0000EM-DF; Wed, 19 Nov 2025 10:37:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1763566652; x=1795102652;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=U1Cbs/dBqo8E/y7M+ZKP5CPf3bCsrxw04UQ6VD+I5iU=;
+ b=XDEe5mnqB4Wy7vMeSAX95L5Z44UFOoPCE7A5SUR0wErieyQZmP8rngNo
+ wJNtAfbgd3gbhegJfDW1jGQVWIMKnWdin/q0KW9EnvmSRvA2dms5PHOkV
+ G2byX1uRc09V1o18hhmeHyN31t4FEqJSKAcgUsmoqXRhR7LMVI5z/cSQv
+ 40vKK8POYfVMux2xU/TfWFth02z56VM7pxVBtXp4rVJZZCO6EdL0ysBg8
+ ahB8DToTzJ/3xmZpiGSpqGVuuK4r2KtakA58a+khhwQFjFoUJ1VOukU2f
+ 0WRI28w2k9EKui37r10eWUlG/7RG81uIJGyXXOlsaiBUiMk8I9aFOOREx g==;
+X-CSE-ConnectionGUID: Cp8JAlQlQLOEZ89Cki+aVg==
+X-CSE-MsgGUID: PcLKnquqQju02FC1eJn3hg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11618"; a="75939192"
+X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; d="scan'208";a="75939192"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Nov 2025 07:37:28 -0800
+X-CSE-ConnectionGUID: SPmAQJjhRaW5H3pF61pHCA==
+X-CSE-MsgGUID: 3rVW5UpNS5muPbVbZqwFlg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; d="scan'208";a="190896620"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 19 Nov 2025 07:37:27 -0800
+Date: Wed, 19 Nov 2025 23:59:46 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 0/5] rust/hpet: complete moving state out of HPETTimer
+Message-ID: <aR3pcja8gtkH0Eb/@intel.com>
+References: <20251117084752.203219-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] qcow2: Add keep_data_file command-line option
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
-References: <20250530084448.192369-1-hreitz@redhat.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20250530084448.192369-1-hreitz@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251117084752.203219-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,43 +80,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping
+On Mon, Nov 17, 2025 at 09:47:47AM +0100, Paolo Bonzini wrote:
+> Date: Mon, 17 Nov 2025 09:47:47 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 0/5] rust/hpet: complete moving state out of HPETTimer
+> X-Mailer: git-send-email 2.51.1
+> 
+> This state continues the cleanups of the HPET state, moving fields out of
+> BqlCells and into HPETRegisters and HPETTimerRegisters.  It also restores
+> the old migration format and shows an interesting trick: HPETTimer is now
+> a very simple object that handles the "unsafe" backreference from the
+> timer to the HPETState, but it also implements ToMigrationStateShared
+> and is stored in the HPETState as Migratable<[HPETTimer; N]>.  I find
+> it pretty cool that the composition works naturally.
+> 
+> The less beautiful part is that I had to modify Timer::init_full for
+> this to compile.  It's probably time to work on the final design for
+> initialization, because this is becoming very ad hoc and the differences
+> between timer, MemoryRegion and Clock initialization have no real
+> justification.
 
-On 30.05.25 10:44, Hanna Czenczek wrote:
-> Hi,
->
-> This series adds a keep_data_file qemu-img create option to qcow2 that
-> makes it keep the given external data file for a newly created image
-> instead of overwriting it.
->
-> This allows to create a qcow2 image for an existing raw image using the
-> qemu-img create command, which previously wasn’t easily possible
-> (besides work-arounds using a temporary data file or qemu-img amend).
->
-> (The “proper” way of doing it without this option is to use QMP
-> blockdev-create.)
->
-> This new option is a pure qemu-img create (i.e. command-line) option,
-> not available via QMP, because it does not make any sense there.  See
-> patch 1 for more explanation.
->
-> (See https://issues.redhat.com/browse/RHEL-73509 for perhaps a bit more
-> context.)
->
->
-> Hanna Czenczek (4):
->    qcow2: Add keep_data_file command-line option
->    qcow2: Simplify size round-up in co_create_opts
->    iotests/common.filter: Sort keep_data_file
->    iotests/244: Add test cases for keep_data_file
->
->   include/block/block_int-common.h |  1 +
->   block/qcow2.c                    | 78 +++++++++++++++++++++++++++++---
->   tests/qemu-iotests/082.out       | 18 ++++++++
->   tests/qemu-iotests/244           | 71 +++++++++++++++++++++++++++++
->   tests/qemu-iotests/244.out       | 53 ++++++++++++++++++++++
->   tests/qemu-iotests/common.filter |  2 +-
->   6 files changed, 216 insertions(+), 7 deletions(-)
->
+<Just some rough thoughts/understanding>
+
+Yes, Timer requires Pin<> and it seems MemoryRegion also should requires
+it because of callback...
+
+MemoryRegion requires MaybeUninitField, but it would be not necessary
+for HPET, since HPETTimer has already initialized its other field before
+calling init_full(). But as a general interface, MaybeUninitField could
+be also useful for Timer, as we can't require how device initialize its
+field.
+
+Clock's ParentInit<> is also different. We don't need to require
+Timer::init_full must be called in init(). MemoryRegion may also don't
+need it And some C device even calls memory_region_init_io() in
+realize().
+
+Regards,
+Zhao
 
 
