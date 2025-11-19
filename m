@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87865CF34C0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 14:46:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E054ECF34B7
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 14:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLjRQ-0008U8-JE; Wed, 19 Nov 2025 09:45:53 -0500
+	id 1vLjX9-0003Ii-HL; Wed, 19 Nov 2025 09:51:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vLjR8-0008SS-Lm
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 09:45:39 -0500
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vLjX8-0003IH-3i
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 09:51:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vLjR5-0005J8-Na
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 09:45:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763563532; x=1795099532;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=/cyobN+98q7VyNmBjAXsbWEu8H3nXQZBsRVITkxFgT8=;
- b=Mk0bQMeLuHB3fPOXs2xHPHGxWtt99zfQDyssml1X41kb+u38lIkjAJBY
- QCRtYPKGHlAA6w8Gig+ub/jSZSBeNGMMG4f+KQV4Ma8JaxEmkjS5bgiYC
- eVrBGCDt8zz828ZRA8xBOjn9CT/Pi352cY9Tq2HMpc/spPN4boVGMhQ1Q
- Up5jN5S0+B9TQN/0us5J1UUlsAciCScE5pDuIGx0Ig6oTfjXczdi2vhef
- EruMy1yXYpmpYY0vvjWZmiM4O9xG/GjsjgxwAo6kU3iOngXoG6YKUA4TM
- JdoXDcus/gifXnLNG8ARdBJQBejGyIH4JSH1xGS+aw1qp9K5s1BvH/PIT Q==;
-X-CSE-ConnectionGUID: udPjSk3LQfeJFfjw5QtiDQ==
-X-CSE-MsgGUID: YwbrRHQeTm2cdZDEUNu3jQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11618"; a="53177287"
-X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; d="scan'208";a="53177287"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Nov 2025 06:45:28 -0800
-X-CSE-ConnectionGUID: mWmJsYTkSL2reW34xKMWbA==
-X-CSE-MsgGUID: 6OaXz6aETSiNJJH+E/P/Tw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; d="scan'208";a="191200737"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.78])
- ([10.124.240.78])
- by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Nov 2025 06:45:26 -0800
-Message-ID: <e5a397a9-965e-4ef3-8ee2-b305a86df0fc@intel.com>
-Date: Wed, 19 Nov 2025 22:45:23 +0800
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vLjX6-0006VZ-C6
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 09:51:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763563901;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6RzCOw9GSiBNfRiXsDhSUHukPdNX4iZBvf/RI976f7U=;
+ b=ENKbUBauEfJgufUNiW44w5AhOda7q2PoUQ+IPDBKlT84FGxmsX14Z0dGt35AGMDJ2NZoO4
+ FBaO2M68jD8wY4FSFIDJrKnvOQTkJJD9OG+GGiwsAeXleKDuNhwfSQ1sq9Smrxl2l9oiox
+ hgHnaAVw4wZxKmG8E600VYvmVilbc9A=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-fMq7Wk5CPwKsPFVF7V2rxg-1; Wed,
+ 19 Nov 2025 09:51:36 -0500
+X-MC-Unique: fMq7Wk5CPwKsPFVF7V2rxg-1
+X-Mimecast-MFC-AGG-ID: fMq7Wk5CPwKsPFVF7V2rxg_1763563893
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0096118001FE; Wed, 19 Nov 2025 14:51:33 +0000 (UTC)
+Received: from localhost (dhcp-192-224.str.redhat.com [10.33.192.224])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1DDDA1800451; Wed, 19 Nov 2025 14:51:30 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, gshan@redhat.com, ddutile@redhat.com,
+ peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH v2 1/8] target/arm/machine: Improve traces on register
+ mismatch during migration
+In-Reply-To: <20251118160920.554809-2-eric.auger@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20251118160920.554809-1-eric.auger@redhat.com>
+ <20251118160920.554809-2-eric.auger@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Wed, 19 Nov 2025 15:51:28 +0100
+Message-ID: <874iqqqdn3.fsf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] memory: Rename RAM_GUEST_MEMFD to
- RAM_GUEST_MEMFD_PRIVATE
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
- Juraj Marcin <jmarcin@redhat.com>
-References: <20251023185913.2923322-1-peterx@redhat.com>
- <20251023185913.2923322-5-peterx@redhat.com>
- <872f9349-7d3d-4b7b-9ba9-bcbc44c9afe5@intel.com> <aRZM3TyRU_kqcpVl@x1.local>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <aRZM3TyRU_kqcpVl@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,56 +91,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/14/2025 5:25 AM, Peter Xu wrote:
-> On Fri, Oct 24, 2025 at 05:17:20PM +0800, Xiaoyao Li wrote:
->> On 10/24/2025 2:59 AM, Peter Xu wrote:
->>> This name is too generic, and can conflict with in-place guest-memfd
->>> support.  Add a _PRIVATE suffix to show what it really means: it is always
->>> silently using an internal guest-memfd to back a shared host backend,
->>> rather than used in-place.
->>>
->>> This paves way for in-place guest-memfd, which means we can have a ramblock
->>> that allocates pages completely from guest-memfd (private or shared).
->>
->> It's for patch 4-7. Regarding the rename. How about:
->>
->> - RAM_GUEST_MEMFD => RAM_PRIVATE_MEMORY
->> - backend->guest_memfd => backend->private_memory
->> - machine_require_guest_memfd() => machine_require_private_memory()
->> - cgs->require_guest_memfd => cgs->require_private_memory
->>
->> For CoCo VMs, what they require is the support of private memory, while the
->> guest_memfd is how linux provides private memory support. But with mmap
->> support added to guest memfd, it can serve as shared/non-private memory as
->> well. Futher, in the future when in-place conversion support is implemented,
->> a single guest memfd can serve as both shared and private in different
->> parts. So guest_memfd_private will be confusing at that time.
-> 
-> That's more or less a valid point.
-> 
-> Said so, I think PRIVATE_MEMORY is confusing too v.s. RAM_PRIVATE.  See:
-> 
-> commit 6169f1193657d0ba630a2ce33cef639ae918bce4
-> Author: Steve Sistare <steven.sistare@oracle.com>
-> Date:   Wed Jan 15 11:00:31 2025 -0800
-> 
->      memory: add RAM_PRIVATE
-> 
-> Not to mention its possible confusion against mmap(MAP_PRIVATE) which is
-> even more well known (where here RAM_PRIVATE is exactly about it).
-> 
-> It'll not be a concern until private gmemfd will start to back shared
-> memories, even if it happens (I believe it will, a matter of time..) IMHO
-> it's still fine to use guest_memfd_private, because here private describes
-> that the fd is a private FD (not the memory is private).  It's private
-> because it's hidden inside each ramblock that matters.  Then a fd that is
-> private can still back shared memories.
-> 
-> Would you mind I keep everything as-is for now?
+On Tue, Nov 18 2025, Eric Auger <eric.auger@redhat.com> wrote:
 
-I'm fine.
+> Currently when the number of KVM registers exposed by the source is
+> larger than the one exposed on the destination, the migration fails
+> with: "failed to load cpu:cpreg_vmstate_array_len"
+>
+> This gives no information about which registers are causing the trouble.
+>
+> This patch rework the target/arm/machine code so that it becomes
 
-> Thanks,
-> 
+s/rework/reworks/
+
+> able to handle an input stream with a larger set of registers than
+> the destination and print useful information about which registers
+> are causing the trouble. The migration outcome is unchanged:
+> - unexpected registers still will fail the migration
+> - missing ones are printed but will not fail the migration, as done today.
+>
+> The input stream can contain MAX_CPREG_VMSTATE_ANOMALIES(10) extra
+> registers compared to what exists on the target.
+>
+> If there are more registers we will still hit the previous
+> "load cpu:cpreg_vmstate_array_len" error.
+>
+> At most, MAX_CPREG_VMSTATE_ANOMALIES missing registers
+> and MAX_CPREG_VMSTATE_ANOMALIES unexpected registers are printed.
+>
+> Example:
+>
+> qemu-system-aarch64: kvm_arm_cpu_post_load Missing register in input stream: 0 0x6030000000160003 fw feat reg 3
+> qemu-system-aarch64: kvm_arm_cpu_post_load Unexpected register in input stream: 0 0x603000000013c103 op0:3 op1:0 crn:2 crm:0 op2:3
+> qemu-system-aarch64: kvm_arm_cpu_post_load Unexpected register in input stream: 1 0x603000000013c512 op0:3 op1:0 crn:10 crm:2 op2:2
+> qemu-system-aarch64: kvm_arm_cpu_post_load Unexpected register in input stream: 2 0x603000000013c513 op0:3 op1:0 crn:10 crm:2 op2:3
+> qemu-system-aarch64: error while loading state for instance 0x0 of device 'cpu'
+> qemu-system-aarch64: load of migration failed: Operation not permitted
+>
+> With TCG there no user friendly formatting of the faulting
+
+s/there/there is/
+
+> register indexes as with KVM. However the 2 added trace points
+> help to identify the culprint indexes.
+
+s/culprint/culprit/
+
+...although "culprint" would make a nice portmanteau :)
+
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>
+> ---
+>
+> v1 -> v2:
+> - fixed some type in the commit msg
+> ---
+>  target/arm/cpu.h        |  6 +++++
+>  target/arm/kvm.c        | 23 ++++++++++++++++
+>  target/arm/machine.c    | 58 ++++++++++++++++++++++++++++++++++++-----
+>  target/arm/trace-events |  7 +++++
+>  4 files changed, 88 insertions(+), 6 deletions(-)
+
+Reviewed-by: Cornelia Huck <cohuck@redhat.com>
 
 
