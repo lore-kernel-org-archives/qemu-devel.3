@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504DFCF31AC
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 11:31:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA606CF31AE
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 11:40:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLgOK-0000tD-VZ; Wed, 19 Nov 2025 06:30:28 -0500
+	id 1vLgXl-0002yj-WC; Wed, 19 Nov 2025 06:40:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLgOK-0000t3-1C
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:30:28 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vLgXa-0002rN-Af
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:40:02 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLgOI-0008Uc-Cq
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:30:27 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-4775ae5684fso33603495e9.1
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 03:30:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vLgXY-0001tw-Je
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:40:01 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-42b3ad51fecso4874370f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 03:40:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763551824; x=1764156624; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lluPvpIpNfIbtLgB2Xwyt0bFItl0gbX00AAtLCZSLa0=;
- b=f9UwNbG4oT/9WK9WnCeHw/e5ZTXvON45xQj24wlwNNrm/IO/3x2/ucqwD1PkxJunp6
- eo6I/McW5hvXOSPGtb/iuY5d3SwAdHg/TBIBjkTkb7OSgJKNwOE36vwhIIjEkxdZ+TmU
- VT3qdhofAG8te5YYj5X9AH4twf+NcNr6cxqxdPMFYru6AHfy6TJ5NGDru+ABrCIQ8/7V
- LTC2Df0ynn9eO9oefOzaqt7HANA6UmV+Hn/zj1PH4ejb2iyGSWII6T4QhnN6KWQmdC8E
- oZcczEJhtjeTBlMkqXKsrZnZO4mFDdS5pksYBYW3buIPnYjLcWR2XeH+jMBxYzGZ9TPf
- XcbA==
+ d=linaro.org; s=google; t=1763552399; x=1764157199; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SWFoMzvL5gC25K4imKNMLFdTsbgzYSdBH/lndv5XZNQ=;
+ b=V8jwPppgewJQywdCZ9+E7b4eXN5jX6s46spTtogDBTdB+iGpuWzp50hgH97ZfPt6dt
+ pS5BD1BPSShXIPRTd4MdeGf2G0798GqvSeJ9w6MEezAcTLNk2poUXl4hZmcd/0X1wWcx
+ v6j3tjiKEX0WBkfS93dqXeCd4ylgfoot6vt4zOhrCL4jQiyyU0Rlr/osfSeA+Q+xRLcZ
+ zyjx6kadCbWviD1FwPO3LoKwPxA4FwXmB0ZcJE3ghX/Dh0aVAe9mF3xygY1GAkNgkxO5
+ 4xoco6n+Tw/qYwxHsqfYdMnTaKDE1xoCp72rlDQCMAW/lMVF15ZUO6qX6PGUgts+dh7R
+ ZeqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763551824; x=1764156624;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lluPvpIpNfIbtLgB2Xwyt0bFItl0gbX00AAtLCZSLa0=;
- b=YC0Xw9ppfEp1gv2BrttXc4g/HoaJwuLbZ/bv8lsNrNJqzoFfzZBwxvuEe9bRdW+ohX
- nqND0DAkyqAAFOr08r3S/pyb4y8FTZdBVVS1wDE0U5m/dTr06qnsgNaHYxzMPK+iJ25h
- oQx4esmtZ2hq0ZhxMoUx22Jq4qcnlC8ecF1TWWV9LndZVi8zLuJQnnNmyVLesycmhCfL
- vJwrrNEruuSHR1ikjijTsUDH/HsHBk9XM12uYgtwbbHMJwZmG1glsh7oRbiLv1JQsEre
- IlbhNceGOhnh8nx1zYp/ZU925HJFATxs/c5gZYY5EwmsHA29HzLTr5n9+MEjtINFsh+v
- 4/Rg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNH4cPXP5UH7JHZLuuTfsYth+xoA9h3+31hJUMYk9YuDx7hNF+wIgQ8LpxBKxF3QWgMZMI8GOvSXIk@nongnu.org
-X-Gm-Message-State: AOJu0Yx8psTqZS4Aum/pDh5JtyXagDEDo64E6X1uJbBigEnsxMnh/D5m
- fc3LDH0gDgIfYaiBdCLe2qrg7iMq4JuoWr8PTd8VITLAMf3C8w8hIfoc1vZBalTqGH8=
-X-Gm-Gg: ASbGncuLcIrvyauF8Hm83NIkhBz3m7FtrA534UWds8l938hdRZvYW63L8c2Sjb18eVF
- la+7EHUxZsL5eW6ICIxGJLXcPk6wo0Cu6NxTG1eMM3RgOmnPG9y99igMEm2/Y3/++9xtKHaZKtu
- cJxvRWTAY9PVXsQCWVbPGjVLLmclRjn+qZP0VGnT1oEUxixb5lKaxWxnDWa7bqbxsK6JnKGJBRD
- GZhJvlEZ4aQOFvCvuGhDDzFtCCQYVTcyuehMpGzN3JWj9d3CD+PPZdTr8ayH5ad+Lq6QtAdth9S
- s3IfXhmcVMt/QSA6vImKWF8dDWEZazFWIUgMUIvZ6Tubfld/1bUo/HAE2/4SqVPyI6F/AtnkfA0
- bGtZPbeNuTL5ycqSHm945KBkro0Bm98mFKEY3R9UZXu+Mx+m7ghRDZ3ukiCVE+qzRiIMMJQmIjv
- i2yO3EK5CmxcbcEdHteOExolYTq6JUsMtzXZxmTwGBIMQLSSrEtg43Kw==
-X-Google-Smtp-Source: AGHT+IEoXvExm0Bz0x5XflpTMGTkw62WDApxTosdQh0Onld4ksW7Bvmj0DATe1xOywuLFmlFrl8WuA==
-X-Received: by 2002:a05:600c:1910:b0:477:9e10:3e63 with SMTP id
- 5b1f17b1804b1-4779e103efamr116881105e9.35.1763551824496; 
- Wed, 19 Nov 2025 03:30:24 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b10804c8sm44687055e9.15.2025.11.19.03.30.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Nov 2025 03:30:23 -0800 (PST)
-Message-ID: <40e40d05-e491-4513-85b7-48dfe8f5c178@linaro.org>
-Date: Wed, 19 Nov 2025 12:30:23 +0100
+ d=1e100.net; s=20230601; t=1763552399; x=1764157199;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SWFoMzvL5gC25K4imKNMLFdTsbgzYSdBH/lndv5XZNQ=;
+ b=NcQi5o6acoeUgEDr3x6WYnvl5CyKjRIrtRYQFFC/IwqnzLZ0rojhkDtePC0ZOaUZs6
+ FZRuGmQZ3P0cPhRYW8zA9HZbXRXcW7jpu17vuq6e8pBTYFGpQAp/SBUXHyHFR3dgziOK
+ YrzOnrkvZUjEK4pZkQSr13TauOM414qhHVPJ5Gd9ivO85QQvSAHok6FmSj86N7XVtyQe
+ +yTZDhL06XCZR0vPlkVTAr00FfQJZxnXCyhJFRRVKx3bfVynt6uZHPpZxVJlDPTWfciC
+ wxEVgFT6QFhN+kD9lpm9cKX/XMgS9nGHSp1hdgvxSvBeye0GrVG0rSGyYlKdV9/+1ioT
+ cXBA==
+X-Gm-Message-State: AOJu0Yz36GKdGOs88MYkeYZnFNNYhQ0QgQiVtfIlFqu+9UYzn4afI3EK
+ fhRIYm+dcZxsSDKh+GuSOCB5lnVWOvs5oNry0ocGE6ds89p+9kPH8MUrgR8UTAXP3E2wqplC3fy
+ Cwm3C
+X-Gm-Gg: ASbGnctIJQEmreY9OoYbLsAH59VAIPkVwTbyBhfpODcSeEDTNqalJWjfPoPUUzYayVt
+ 7heifpRFoj4h5fffs9VD9BWs3n3UiTUsZo/+oPU2yi8fW5nJIp2BDKy4e+thYGOqXlYLWUCvFsi
+ rABMz9D24GPajDNt10zmXNIrOLfOAvAuhM81f5y5gCDbO9frOlZMxFhQac6CvlWVqghW/ZP9+Wo
+ 24eFbgKmnFWRYHkKIqSpkerVKegQQHParpxzioUhCHeJuRJrjKKKOqkzKd0Py3GkCpEItIV/aAu
+ YUjO1jPrzjw5dyYyqNBOu3fH2p5ynq+Y+mHDE56uz8gCyVHf+TSSKr6kvlubwFsNiVtmL/5QA/c
+ 2857iEsyXO4Ut/S5gZ2zUIYAbGul8EEjv6khdUH46VeCujtqxGANEG7ReAFMtCvPEljrswsRFMX
+ MBO+feeSlIwj9fmtsNtMUW2z4WqVvGlCTo
+X-Google-Smtp-Source: AGHT+IGjxt5QBB9oGl7JNay9ATHRTGLBN17q7vGBghld6GjjXiYhVCZ5dITJNtVqJlE34DxF0J168g==
+X-Received: by 2002:a5d:5f47:0:b0:3e8:b4cb:c3dc with SMTP id
+ ffacd0b85a97d-42b5933dee3mr21035143f8f.3.1763552398894; 
+ Wed, 19 Nov 2025 03:39:58 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53f0b622sm36862330f8f.29.2025.11.19.03.39.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Nov 2025 03:39:56 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 1619D5F93E;
+ Wed, 19 Nov 2025 11:39:54 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+Subject: [PATCH 8/9] contrib/gitdm: add mapping for Qualcomm
+Date: Wed, 19 Nov 2025 11:39:51 +0000
+Message-ID: <20251119113953.1432303-9-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251119113953.1432303-1-alex.bennee@linaro.org>
+References: <20251119113953.1432303-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] Python: fix tests
-Content-Language: en-US
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster
- <armbru@redhat.com>, Cleber Rosa <crosa@redhat.com>
-References: <20251118200657.1043688-1-jsnow@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251118200657.1043688-1-jsnow@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,25 +106,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/11/25 21:06, John Snow wrote:
-> Whack some minor annoyances down to make the tests green again. Fixes
-> both minreqs and the optional check-tox.
-> 
-> John Snow (3):
->    python/mkvenv: ensure HAVE_LIB variables are actually constants
->    python/qapi: add an ignore for Pylint 4.x
->    python/qapi: delint import statements
-> 
->   python/scripts/mkvenv.py   | 24 ++++++++++++++++--------
->   python/setup.cfg           |  1 +
->   scripts/qapi/commands.py   |  5 +----
->   scripts/qapi/introspect.py |  2 +-
->   4 files changed, 19 insertions(+), 13 deletions(-)
-> 
+This might be sub-optimal as we also have a mapping for quicinc.com
+where a bunch of open source patches came from before. Maybe we should
+just have a domain map to collect this together?
 
-FTR, per 
-https://lore.kernel.org/qemu-devel/20251117185131.953681-1-jsnow@redhat.com/ 
-reviews:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: Vacha Bhavsar <vacha.bhavsar@oss.qualcomm.com>
+---
+ contrib/gitdm/domain-map | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/contrib/gitdm/domain-map b/contrib/gitdm/domain-map
+index c07dffc51bd..bffd2e9a3da 100644
+--- a/contrib/gitdm/domain-map
++++ b/contrib/gitdm/domain-map
+@@ -40,6 +40,7 @@ nuviainc.com    NUVIA
+ nvidia.com      NVIDIA
+ oracle.com      Oracle
+ proxmox.com     Proxmox
++qualcomm.com    Qualcomm
+ quicinc.com     Qualcomm Innovation Center
+ redhat.com      Red Hat
+ rev.ng          rev.ng Labs
+-- 
+2.47.3
 
 
