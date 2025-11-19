@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8406CF3979
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 17:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4836CF58C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 17:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLlzy-00033q-Ds; Wed, 19 Nov 2025 12:29:42 -0500
+	id 1vLm5i-0008Ie-3W; Wed, 19 Nov 2025 12:35:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vLlzk-000316-11
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 12:29:32 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vLm5g-0008IQ-PK
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 12:35:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vLlzf-0004Nl-7X
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 12:29:26 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vLm5e-0005E5-JT
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 12:35:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763573361;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=8nP0d5IOtnXzEI8CONRKrnrb1qyZ4MkyviAvMdYvPqc=;
- b=C638Zt/5QwrYEG6p4qBnXFEe9g7VdR1EPpitXGuCLcCK/LEbz7oNOjRPstYo9ouXmp4mEF
- y0yis91GLI507txYIPMDStmoSjxSRGymdfi6YEzokGY6LA9Rx+lkhKqrTJ0SmxRGU5vTpr
- 4ualeYQCFYMd30YXwtYGRQHwrmInmlE=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ s=mimecast20190719; t=1763573732;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=I1lw2Z4Kz9YInokjfhDL5D1lBcfHCtYdap07+ltevnI=;
+ b=cTznxulfi+OTVAdMiygjXT1UBk77Xg6KecvxQ4EEg3YTI3EfSAq4mHX/HE0zFpAEQaDnB4
+ ejI82dMqdq06PaX9CuQQou7rUAzmmpbcxzwjhiTehtn683+HzaGDpetnSNKMK0MWm7G2bc
+ IiUQmEFwFWBxWkODvQyLA43OX+QlNq4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-164-WUp-imaAM5SkwEQ2FfSgnQ-1; Wed, 19 Nov 2025 12:29:17 -0500
-X-MC-Unique: WUp-imaAM5SkwEQ2FfSgnQ-1
-X-Mimecast-MFC-AGG-ID: WUp-imaAM5SkwEQ2FfSgnQ_1763573357
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8b286006ffaso2183499085a.2
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 09:29:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763573357; x=1764178157; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8nP0d5IOtnXzEI8CONRKrnrb1qyZ4MkyviAvMdYvPqc=;
- b=KZp7ypWcFtfUApZXBv1K1GwDSAQzoeCVvVbdz+D6YVNpGDCGKO12j+ET5PA5paUI3A
- rpN4mVZVqP4BymXh/Lo5dZom40YnO5F7SxD/+ZoOnOpmpin+lwFzvcm8OszZjXTX9f5I
- JbnIRUWGPOIqHdqw0itzPg7h3ozgAWsKNL2dZkZZzyGRUkhbVCYJWNIrvXsJmL9Y4usA
- xshR4DyY2s+I3/nlWz+zY2x0/mlMasEf/SbjcW3grOODTJ3rMs1ISzkqB0dfF03PHNR9
- 8lF2u6t2PJHRjBPEC4KaUGlVqU9lll6nR3KGZYbBDpBWAQieiz0BztnesCLS3e/Ou+BN
- jlXQ==
+ us-mta-626-BuaOvZRvO3anowadBWj1Xg-1; Wed, 19 Nov 2025 12:35:31 -0500
+X-MC-Unique: BuaOvZRvO3anowadBWj1Xg-1
+X-Mimecast-MFC-AGG-ID: BuaOvZRvO3anowadBWj1Xg_1763573730
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4775d8428e8so208655e9.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 09:35:31 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763573357; x=1764178157;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1763573730; x=1764178530;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8nP0d5IOtnXzEI8CONRKrnrb1qyZ4MkyviAvMdYvPqc=;
- b=bS4awhubR2BnQVjwdC4XSy2LR7v/OAYZaRvBalP3kX7IHf57pCr7EXsTraiKknSuGD
- 7ZX9fE0i9VHqHyAdoMlwWUiXq8UHazYKXIVKJ4wo4cQWxdbGXb14ZN+E6FXadPZd8Opj
- JT7hvNaBublvZhecr0gl0zxywQmzsuxvMea4/3+TbaEylw2iB2zCXGSonnVPoU5/4T26
- E/z/jBrAvfSnmXULSm+U94nlEmWPZouAl6x3Jgxfz1+1heggvJvuZfTTdTlGAVDYk/3l
- XXm+urpkNNzRblZvi0IQm9I3NKpLPg+dYyZ8dGrfq5UcBoKP55liCu1e3unPlthKN3Bn
- vBIw==
-X-Gm-Message-State: AOJu0YzmcdsDKx9DqTD4bRGGJ2bpgy+ucsF0EgSN193Zg37ywFxM9CZD
- xgAFaOzcCIIxK7KOUwC7v5046XQUvL025WE/mh0kAGHm2LQ6eorzUcO/43C7p1Hnv3WTtNP+lg4
- 8ZpxkzM7Fch4cVQEXWHjPs1JS4GnRhVuvo+6SkBrgIAvGz7dUAt/6u9Dt8utyDx7DR5ji0QyDEI
- gbprvZVTl73QSVV060dbpHvmKbqMlfG3/knEFkYg==
-X-Gm-Gg: ASbGncv2hAFQUulgjmn00CcFkv2Ytdx4JsyEnXnNvWRvUzlvNuth9urlzKDCcpVDFoY
- 3flGU1pNoMUst9VWW3c/XQ+xw1nOGAKdumwDUi200TMO9nL1yLowPmU7RPcX/9DtavQE0M88GF1
- maEVqGneZzy2NUq+lxPjqzwlMHEI0AilOgfLhAkV8P+/+MqGrMqcKkB94T26UdEHtAh8u/0CYJ1
- fv/dS9oIrjj0Q7HymMEZPnDEMaycWzelx5TywSj4AkRRRkY9lvscMU44+QnALyvcmsaTkV9EiZ6
- i5XHFi3MvcZ+19jbs7BfuIo9veYlbF3lhnItFHlWWqBmOIF7+q3wk83UVtvxziOUVSQ2Qct8Spm
- i
-X-Received: by 2002:a05:620a:4606:b0:8a6:e2b4:ba73 with SMTP id
- af79cd13be357-8b3274882fdmr19319285a.51.1763573356770; 
- Wed, 19 Nov 2025 09:29:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEhNKgwlKQRz1zzFPvr3WArMYAILFQ3/nb7PZXumpsPhBxpr9xsOPlrL7XZfOWnIQMCF2R5Kw==
-X-Received: by 2002:a05:620a:4606:b0:8a6:e2b4:ba73 with SMTP id
- af79cd13be357-8b3274882fdmr19313385a.51.1763573356113; 
- Wed, 19 Nov 2025 09:29:16 -0800 (PST)
-Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b2af042c9csm1444759485a.46.2025.11.19.09.29.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Nov 2025 09:29:15 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Alexey Kardashevskiy <aik@amd.com>, peterx@redhat.com,
- Chenyi Qiang <chenyi.qiang@intel.com>, Juraj Marcin <jmarcin@redhat.com>,
- Li Xiaoyao <xiaoyao.li@intel.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 0/9] KVM/hostmem: Support init-shared guest-memfd as VM
- backends
-Date: Wed, 19 Nov 2025 12:29:04 -0500
-Message-ID: <20251119172913.577392-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.50.1
-Content-Type: text/plain; charset="utf-8"
+ bh=I1lw2Z4Kz9YInokjfhDL5D1lBcfHCtYdap07+ltevnI=;
+ b=gJtESoHTEE6M/VXv71CrupIFnuMe3ewThitnuRm3UcAAYhztJNb23HTcDxIaDVwODl
+ uWIGjO2zUrEQT5H4hcrhu2Syu8KxFI6MSXtb/ZmTq93eyItcY4HqhLKCN566yBYhVj3E
+ U8uCdVp9u0jX7Egf67F7kxne+CZ2kHbzA19osXKT2l2mLN4mfEG7dzKPO0uoAjM4LQmr
+ TZzKHSdY7AxF/un8X7fvlXGxQwiPqYh9Un4y6k7IGX4Z1BZNe077BrWK1MtRM388kQ6I
+ 9Pk0AXzir6ZlY7EW5fIZ4sv7aLx8clgHKLxckbCl80Ez4irA2QF/QcF9N5LXwMwecM1K
+ 5AuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUnPDs+WuGdMQ0OeOhDpW9n5fotgrJ+mZp8ZrkNBhdQMrMIwzZfwe4bUjzV3oSXVh8vBfMZR6q93YwI@nongnu.org
+X-Gm-Message-State: AOJu0YzUugn/8VR/LSNSNmJvreZ8u+JAREscBvyznWyrYu0bUGtoklN6
+ NZdHXAWL1nYxaW/cRIIBeOUnWPxNhfIqJrX95Jra8S05KmLhy9QjfztZPbftddCxRZ6kLnLQ/yv
+ V3v7xhDnH+A9oGPwnDLfBWcSCiszDniP3d8LdNryARKMGiW4K7ZibfNIG
+X-Gm-Gg: ASbGnctVyNhbJ6uhxRyrOuM12iV7AsOeR2Op2WUIA6VgcaMsJmYg6gsA83jHMCujsOf
+ bKAwYNXSx9peoD8gd57c6syNaEf28vuXqGo9f7iOBp/BZsFGYo9yMKnnuSFS4Ffpvxtl4/qWaci
+ NDvMjmUinHEZSkgbYtiHsTREuslN2zhTz+Wv/+Nui7gYrQcKyGiAdsFNMz/yFFK/ymBK27EMf5z
+ KRW2+6j6GlqrudZmuVtRks9tuLczaBo8w8I+mP1BUiUsHAbSjVIE9G2NuxB2X28CvZqUlrXjvu5
+ NvGwCeuh/xnR7mB7HUquRA0P5OzIvRFnr7N+GrqFNYg/abl025qwaD+8s2gJL8T7GbrCfYfjoA4
+ oic1FgCXv9wNY1T81OtCs0OWrkRUlR1693vtuhOROP0Gh4r0XR8xMkuPw2w==
+X-Received: by 2002:a05:600c:1c91:b0:477:a54a:acba with SMTP id
+ 5b1f17b1804b1-477b8a8eb6emr551755e9.17.1763573730240; 
+ Wed, 19 Nov 2025 09:35:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGOt11BSQW1Lkoju4P4M5Du3UOtN23ghkHkf/fVYVD8goCopVA2AsoHc10BtQQdt7dZpxYQQg==
+X-Received: by 2002:a05:600c:1c91:b0:477:a54a:acba with SMTP id
+ 5b1f17b1804b1-477b8a8eb6emr551335e9.17.1763573729794; 
+ Wed, 19 Nov 2025 09:35:29 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477b82cc6c4sm3435015e9.2.2025.11.19.09.35.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Nov 2025 09:35:29 -0800 (PST)
+Message-ID: <935782b9-27e3-4406-92ec-462413c3ad0b@redhat.com>
+Date: Wed, 19 Nov 2025 18:35:27 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/8] target/arm/cpu: Allow registers to be hidden
+Content-Language: en-US
+To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ maz@kernel.org, oliver.upton@linux.dev, sebott@redhat.com, gshan@redhat.com,
+ ddutile@redhat.com, peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
+References: <20251118160920.554809-1-eric.auger@redhat.com>
+ <20251118160920.554809-3-eric.auger@redhat.com> <871pluq8u5.fsf@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <871pluq8u5.fsf@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,7 +102,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,94 +115,99 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-NOTE: The test cases of this series needs a dependency small series:
+Hi Connie,
 
-Based-on: <20251117223908.415965-1-peterx@redhat.com>
+On 11/19/25 5:35 PM, Cornelia Huck wrote:
+> On Tue, Nov 18 2025, Eric Auger <eric.auger@redhat.com> wrote:
+>
+>> More recent kernels sometimes expose new registers in an
+>> unconditionnal manner. This situation breaks backward migration
+>> as qemu notices there are more registers in the input stream
+>> than supported on the destination host. This leads to a
+>> "failed to load cpu:cpreg_vmstate_array_len" error.
+>>
+>> A good example is the introduction of KVM_REG_ARM_VENDOR_HYP_BMAP_2
+>> pseudo FW register in v6.16 by commit C0000e58c74e (“KVM: arm64:
+>> Introduce KVM_REG_ARM_VENDOR_HYP_BMAP_2”). Trying to do backward
+>> migration from a host kernel that features the commit to a destination
+>> host that doesn't, fail with above error.
+>>
+>> Currently QEMU is not using that feature so ignoring this latter
+>> is not a problem. An easy way to fix the migration issue is to teach
+>> qemu we don't care about that register and we can simply ignore it
+>> when syncing its state during migration.
+>>
+>> This patch introduces an array of such hidden registers. Soon it will
+>> be settable through an array property.
+>>
+>> If hidden, the register is moved out of the array of cpreg which is
+>> built in kvm_arm_init_cpreg_list(). That way their state won't be
+>> synced.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>
+>> ---
+>>
+>> v1 -> v2:
+>> - Move the property in a separate patch
+>> - improve the commit msg
+>> - change the trace point to just print info in
+>>   kvm_arm_init_cpreg_list()
+>> - improve comment in cpu.h (Connie)
+>> ---
+>>  target/arm/cpu.h        | 23 +++++++++++++++++++++++
+>>  target/arm/kvm.c        | 12 +++++++++++-
+>>  target/arm/trace-events |  2 ++
+>>  3 files changed, 36 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+>> index 077b0cce5b..0a283940be 100644
+>> --- a/target/arm/cpu.h
+>> +++ b/target/arm/cpu.h
+>> @@ -1044,6 +1044,18 @@ struct ArchCPU {
+>>      /* KVM steal time */
+>>      OnOffAuto kvm_steal_time;
+>>  
+>> +    /*
+>> +     * Register indexes that must be hidden. Although normally
+>> +     * supported (defined in TCG description or exposed by KVM) they are
+>> +     * willingly hidden for migration sake. This may be used to allow
+>> +     * backward migration to older versions that do implement a specific
+>> +     * feature. With KVM acceleration the indexes are the ones described
+>> +     * in linux/Documentation/virt/kvm/api.rst. With TCG, this is the TCG
+>> +     * sysreg index.
+>> +     */
+> Hmm... what about
+>
+> "Array of register indexes that need to be hidden to allow migration in
+> certain cases, i.e. when a register is exposed in KVM or defined in TCG
+> but not actually used in QEMU. For the KVM case, the indexes are as
+> described in Linux Documentation/virt/kvm/api.rst. For TCG, the indexes
+> are the TCG sysreg indexes."
+sounds good.
 
-[PATCH 0/4] tests/migration-test: Introduce mem_type
-https://lore.kernel.org/r/20251117223908.415965-1-peterx@redhat.com
+about the TCG index, I am not sure. It rather looks 
+cpreg_to_kvm_id(ENCODE_CP_REG()) in the case of Aarch32 DBGDTRTX index I
+need to use to succeed the migration
 
-v2 changelog:
-- Linux-header update patch dropped because a similar version has landed
-- Replaced old patch 2 with a similar but better one from Xiaoyao Li
-- Target this series for QEMU 11.0 (hence, update in qapi/ "Since:")
-- Added a qtest covering guest-memfd boot and basic precopy migration
-- Fix checkpatch issues
 
-=========8<===========
 
-This series allows QEMU to consume init-shared guest-memfd to be a common
-memory backend. Before this series, guest-memfd was only used in CoCo and
-the fds will be created implicitly whenever CoCo environment is detected.
-When used in init-shared mode, the guest-memfd will be specified in the
-command lines directly just like other types of memory backends.
+>
+>> +    uint64_t *hidden_regs;
+>> +    uint32_t nr_hidden_regs;
+>> +
+>>      /* Uniprocessor system with MP extensions */
+>>      bool mp_is_up;
+>>  
+> Otherwise, LGTM.
 
-In the current patchset, I reused the memory-backend-memfd object, rather
-than creating a new type of object.  After all, guest-memfd (at least from
-userspace POV) works similarly like a memfd, except that it was tailored
-for VM's use case.
+Thanks!
 
-This approach so far also does not involve gmem bindings to KVM instances,
-hence it is not prone to issues when the same chunk of RAM will be attached
-to more than one KVM memslots.
-
-Now, instead of using a normal memfd backend using:
-
-  -object memory-backend-memfd,id=ID,size=SIZE,share=on
-
-One can also boot a VM with guest-memfd:
-
-  -object memory-backend-memfd,id=ID,size=SIZE,share=on,guest-memfd=on
-
-The init-shared guest-memfd relies on almost the latest linux, as the
-mmap() support just landed v6.18-rc2.  When run it on an older qemu, we'll
-see errors like:
-
-  qemu-system-x86_64: KVM does not support guest_memfd
-
-One thing to mention is live migration is by default supported, however
-postcopy is still currently not supported.  The postcopy support will have
-some kernel dependency work to be merged in Linux first.
-
-Thanks,
-
-Peter Xu (8):
-  kvm: Detect guest-memfd flags supported
-  memory: Rename RAM_GUEST_MEMFD to RAM_GUEST_MEMFD_PRIVATE
-  memory: Rename memory_region_has_guest_memfd() to *_private()
-  ramblock: Rename guest_memfd to guest_memfd_private
-  hostmem: Rename guest_memfd to guest_memfd_private
-  hostmem: Support in-place guest memfd to back a VM
-  tests/migration-test: Support guest-memfd init shared mem type
-  tests/migration-test: Add a precopy test for guest-memfd
-
-Xiaoyao Li (1):
-  kvm: Decouple memory attribute check from kvm_guest_memfd_supported
-
- qapi/qom.json                         |  6 ++-
- include/system/hostmem.h              |  2 +-
- include/system/kvm.h                  |  1 +
- include/system/memory.h               | 17 +++----
- include/system/ram_addr.h             |  2 +-
- include/system/ramblock.h             |  7 ++-
- tests/qtest/migration/framework.h     |  4 ++
- accel/kvm/kvm-all.c                   | 27 ++++++++---
- accel/stubs/kvm-stub.c                |  5 ++
- backends/hostmem-file.c               |  2 +-
- backends/hostmem-memfd.c              | 68 +++++++++++++++++++++++++--
- backends/hostmem-ram.c                |  2 +-
- backends/hostmem-shm.c                |  2 +-
- backends/hostmem.c                    |  2 +-
- system/memory.c                       |  7 +--
- system/physmem.c                      | 37 +++++++++------
- tests/qtest/migration/framework.c     | 60 +++++++++++++++++++++++
- tests/qtest/migration/precopy-tests.c | 12 +++++
- 18 files changed, 219 insertions(+), 44 deletions(-)
-
--- 
-2.50.1
+Eric
+>
 
 
