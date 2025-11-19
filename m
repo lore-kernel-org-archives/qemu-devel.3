@@ -4,37 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C6ACF3185
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 10:45:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA86CF318C
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 10:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLfgO-0008Cw-6J; Wed, 19 Nov 2025 05:45:04 -0500
+	id 1vLfoC-0004FF-OT; Wed, 19 Nov 2025 05:53:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vLfgM-0008B4-BE; Wed, 19 Nov 2025 05:45:03 -0500
+ id 1vLfnC-0003LJ-Qu; Wed, 19 Nov 2025 05:52:07 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vLfgI-0005Kq-Vm; Wed, 19 Nov 2025 05:45:02 -0500
+ id 1vLfnA-0007tv-MJ; Wed, 19 Nov 2025 05:52:06 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F185A16B91C;
- Wed, 19 Nov 2025 13:44:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5B5F216B92D;
+ Wed, 19 Nov 2025 13:51:57 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8835D31FE3E;
- Wed, 19 Nov 2025 13:44:47 +0300 (MSK)
-Message-ID: <88dae27a-e6c1-4c83-8b89-0f1d8bda4dd0@tls.msk.ru>
-Date: Wed, 19 Nov 2025 13:44:47 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id F2E2531FE4B;
+ Wed, 19 Nov 2025 13:52:01 +0300 (MSK)
+Message-ID: <acfb9f9b-7eef-48fd-9757-7fba830ad469@tls.msk.ru>
+Date: Wed, 19 Nov 2025 13:52:01 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 0/2] hw/sd: Fix broken ssi-sd implementation since v9.1.0
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: Bin Meng <bmeng.cn@gmail.com>, QEMU <qemu-devel@nongnu.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: Tom Rini <trini@konsulko.com>, qemu-stable <qemu-stable@nongnu.org>
 References: <20251110110507.1641042-1-bmeng.cn@gmail.com>
+ <88dae27a-e6c1-4c83-8b89-0f1d8bda4dd0@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -78,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20251110110507.1641042-1-bmeng.cn@gmail.com>
+In-Reply-To: <88dae27a-e6c1-4c83-8b89-0f1d8bda4dd0@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -104,55 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/10/25 14:05, Bin Meng wrote:
+On 11/19/25 13:44, Michael Tokarev wrote:
+...
+> This is the original refactoring patchset:
+> https://lore.kernel.org/qemu-devel/20250804133406.17456-1- 
+> philmd@linaro.org/
 > 
-> The U-Boot community reported a CI failure [1] where the
-> `sifive_unleashed` target failed to boot from an SD card after
-> upgrading from QEMU v8.2.0 to v9.2.3.
+> The patchset applies cleanly to 10.0.x, with these 2 fixes on
+> top, and the resulting thing seem to work fine, so far anyway:
+> https://gitlab.com/mjt0k/qemu/-/commits/10.0-sdcard
+> (and with local tests, including the test in the above series).
 > 
-> At that time, the issue was traced to commit da954d0e
-> ("hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID handlers (CMD9 & CMD10)")
-> which was introduced in v9.1.0.
-> 
-> Testing with the latest QEMU mainline shows that the problem still
-> persists, although the underlying cause has changed due to refactoring
-> since then.
-> 
-> This series fixes the broken `ssi-sd` model. After applying these
-> patches, U-Boot successfully boots again on the `sifive_unleashed`
-> target using QEMU’s `sifive_u` machine.
-> 
-> [1] https://gitlab.com/qemu-project/qemu/-/issues/2945
+> What do you think?  How important it is to make this whole
+> thing work in 10.0.x lts series (including distribution(s)
+> based on this, such as current debian stable "trixie")?
 
-Hi!
-
-This seems to be a qemu-stable material.
-
-The refactoring mentioned above happened between 10.1.0-rc1 and
-10.1.0-rc2, which is quite a hot spot for a refactoring.   So the
-changes are definitely relevant for 10.1.x series, where I applied
-them already.
-
-But we've 10.0.x series which supposed to be long-term support
-series, where we have the problem too (since the issue were
-introduced before 10.0), but the 2 fixes here don't apply to 10.0,
-obviously, due to refactoring.
-
-Now I wonder should we fix this in 10.0.x at all, should we
-create some unique fix for 10.0.x, or should we pick the
-refactoring done in 10.1.0-rc stage, to 10.0.x?
-
-This is the original refactoring patchset:
-https://lore.kernel.org/qemu-devel/20250804133406.17456-1-philmd@linaro.org/
-
-The patchset applies cleanly to 10.0.x, with these 2 fixes on
-top, and the resulting thing seem to work fine, so far anyway:
-https://gitlab.com/mjt0k/qemu/-/commits/10.0-sdcard
-(and with local tests, including the test in the above series).
-
-What do you think?  How important it is to make this whole
-thing work in 10.0.x lts series (including distribution(s)
-based on this, such as current debian stable "trixie")?
+And I already considered picking this patchset to 10.0.x, see
+https://lore.kernel.org/qemu-devel/39982478-b3fb-46b0-bef0-c0839c123300@tls.msk.ru/
+and the reply to its message :)
 
 Thanks,
 
