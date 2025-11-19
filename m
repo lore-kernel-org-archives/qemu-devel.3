@@ -4,100 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8984ECF58C6
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 18:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92DD7CF58C6
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 18:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLmc0-0002ax-CX; Wed, 19 Nov 2025 13:09:00 -0500
+	id 1vLmcY-00035M-D0; Wed, 19 Nov 2025 13:09:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLmbw-0002Yk-Nq
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 13:08:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vLmcW-00034K-Vu
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 13:09:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLmbv-0002s2-82
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 13:08:56 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vLmcU-0002tb-JA
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 13:09:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763575734;
+ s=mimecast20190719; t=1763575769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e4w9qUfBPNqlHWR761GYigXjDzqbKAXHlPl3evsHnXw=;
- b=GGqP+m6VlK9mD75IymC6NURH7KSIVt2genZbGTXZyyEmeki4f5vvXOBYEUS4xI/5wNMR64
- +Ecsc9XsQ6Zn0lQLU8QTO5GPa6lZtUuoL66Z/5Plu67zLFEH0CGNJir52z40TemMH9GMik
- 5ArStutX0DNMns4zFIxJwGL8Y3PhBiU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0DCGaHtOp5reLxorwEtMOeyn9iP1bnDso8ubGDPMiBA=;
+ b=gJ44lrST8kZ6Pb/8sVf1QZIDJnoLF5LovT3lEkXAB5GENhWXS1E4pyqwVa0rLy+J/UDuYo
+ 4vOJSAXbT4mZtei9/ykeuRa15Jq9zluLjjrK5u/AXAXOVzUjdMskHQgwn4IsDtGltyaQj1
+ cO08hCy58gB7tH+QZOwI5+IWrymFy+s=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-26-x1qFzs0-MJWlbiph_J5JDQ-1; Wed, 19 Nov 2025 13:08:52 -0500
-X-MC-Unique: x1qFzs0-MJWlbiph_J5JDQ-1
-X-Mimecast-MFC-AGG-ID: x1qFzs0-MJWlbiph_J5JDQ_1763575732
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-429c93a28ebso14486f8f.1
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 10:08:52 -0800 (PST)
+ us-mta-609-JWEIh1y2OoiYewODW_ikuw-1; Wed, 19 Nov 2025 13:09:28 -0500
+X-MC-Unique: JWEIh1y2OoiYewODW_ikuw-1
+X-Mimecast-MFC-AGG-ID: JWEIh1y2OoiYewODW_ikuw_1763575768
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-88236279bd9so381516d6.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 10:09:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763575731; x=1764180531; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e4w9qUfBPNqlHWR761GYigXjDzqbKAXHlPl3evsHnXw=;
- b=hGgh/bWLiBiGGCEkNjkmJYT0NNJR6xZ2kbznOgqtAufpxLBDN4GO7Ydz1wCW0vlTtG
- 0H1zMPvb5aJ5utLZ8IUJyo6JQ2Z0JGvi3B3kfp4kb88agpxUfympSYUvcp1XJ94Y9cD3
- 75fDhKqyYHhPq0iXjc9jCAMycitmjySnLBERpicht74L66IPX/brGrv0L561HDUC9U7J
- BpfDlFH1Ouc0tCQApmz/iBjjYxw5/tgngw7a/ByPY1F/4E0MlNtCrXmGphedNKAuk2AD
- HMbqkZFjfnIdCMvfpDw5BYmlr81RcA/3LpTLiDZoDWYBhX37luEINSXikNslz9/eumLt
- PJCQ==
+ d=redhat.com; s=google; t=1763575768; x=1764180568; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=0DCGaHtOp5reLxorwEtMOeyn9iP1bnDso8ubGDPMiBA=;
+ b=oLkMsQJTvKSpOK0RWXn0tISpMAX+J3BYeyP6eftWLaQJoiwdFpqvcxOEtkhlz5Re+i
+ UTZsh5SmpcYGFqxibzcBcdMTkFEorqXD0mXWAlfcZD6F7roTl82vdtmQzalQVvbblx8W
+ ueG6wVu4qpeBNlTAAmLJbxa6zs59kukeHIAiK6mrDjTYa0AivOkpD/qrV4PR1TuNqdfP
+ 5vb11yXefVhR4ktkKeHSO9s0YVY8EnGYt/hCcUfTe9VqL36mKxVOfBDFqmI+QeMun75V
+ e1AZYYyRAQk35F9ymsjRXXe+GO67XMCRCBrgg8vuD3zLR7FHEe8LUyfkIYWe+0i67A97
+ JdJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763575731; x=1764180531;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=e4w9qUfBPNqlHWR761GYigXjDzqbKAXHlPl3evsHnXw=;
- b=TXd7xvZGa84nytpsTeML+IDiszByKDWDFBD5fgItJlNNcUKIUpGQdvoUEoAl438GeJ
- gHKuOOs8lVq0sxJATTKVZHVRCIyO+iCtkzSriZlUviQgxJqr828x05YqVTDrxBRjYxob
- TC0MR4Mxvf4cl7BOCkMqGiMA/qx0K7YjzH1MFH0fgX6sosvhciqeyXdTmkJICcsbvsVm
- rtCCeeTUKpxmmYvkRatVhEC08EoAyQ9EmSaSAk6l1XGk+HFgzHjXA3RZ3QFUArvvU+r1
- Rcp1Ew4RCyiAGYT4YjStYlQD5l6A7TE8AAospVXkWRUz46ePgK8OhbWOteuRT0DTCp9E
- gkhA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVKJ1MAoKJyLb6OL6sS/+ig0N7Bo2azvPur+GadVEu5oWJdZvvcZDI5woDyfAwsg7mvRB8jq9ne/5DR@nongnu.org
-X-Gm-Message-State: AOJu0YyRSe4AHkVEpbiTZdTLl43T7/dJfM9UJYxKbD9gCPE+CLlIx4MP
- jzHffMzzE7E0UcS4Dvezg2ZTRZLHJnU0lFTBz6wmr0eUxMGDoketLfgVJLaq09JvXBmbcNVX6MD
- ZPj9NkIpRV7SOPZkKnujR33nlXT61JqAjHEI3fX5v166zg7g3S0ycwL6TyV/jcAOXSuTo74lYbT
- /1mM4sZ1GwS3RYtq4UjCJUO9PZSgpqrL0=
-X-Gm-Gg: ASbGnctP8gof6JW/YfwI6v7XuvOP7xN6Q0o/sSfpMBSfh8hjf2oiuXrDi276Fw9vYMu
- RsWXIYyrlTPWIEdPXZiAzVgFxegw+UaNxR5fHYWcmlC0wxMoceYjgx51RvYoEMxA/oBUOcl4vG6
- +XxFXhsHwU/OvrVgk47pT6+3/80IhLdFOa4I/FF0Y1DqnjtGocrlR6JlkBYls2jp0Hx88ogOMwh
- ir7ylbRpNjmCCXyyiajqCZGjtsX8jWCl4S3sk4yvqXmsJfdIXIpzp+s8iRcNsZ8a4l5YNY=
-X-Received: by 2002:a05:6000:40de:b0:429:8daa:c6b4 with SMTP id
- ffacd0b85a97d-42b593497d8mr19539690f8f.21.1763575731484; 
- Wed, 19 Nov 2025 10:08:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEFM3+HiCKuo+MB8yCGXu3hopFkEu2pEqFtoOTpey/HAF3kWb7fs4h9KqgFD0kfB73wWdRQReAFNiiZ+raP7ac=
-X-Received: by 2002:a05:6000:40de:b0:429:8daa:c6b4 with SMTP id
- ffacd0b85a97d-42b593497d8mr19539669f8f.21.1763575731072; Wed, 19 Nov 2025
- 10:08:51 -0800 (PST)
+ d=1e100.net; s=20230601; t=1763575768; x=1764180568;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0DCGaHtOp5reLxorwEtMOeyn9iP1bnDso8ubGDPMiBA=;
+ b=DyetusaU0r0kwqTWnzDyrY/PwlSFhq8nonKx4C9PS5gRnEFrk96aeh1GC/dOukcAcc
+ oNk4dF/pGivKKCZwKYEby5TIKMS2vLxY6bzT4JSn1WBOSffVK4WevIKSfIV2kuPy/ZBr
+ bMqd+rJuxkJS+AAGtHTWSlkN4uIvfb4U8RDurT3edeU766YpFr1eRZf4QjjNvXi+5ImN
+ irSEgUY/IcXUHGzA+dV5T8R2DYhMJqr3uLBelCsjcZjLj01p5rJmw9SbIoTAUkzmScRn
+ ojw25nYNUUq7QqPIfiKxtB3wOndmv4CeDzDAY2TKl6PGfuM1i9dUJxw4VsHPIoDWVLd/
+ +PUQ==
+X-Gm-Message-State: AOJu0Yxv2mJ51QnXo6ck+lq8gpw6kftEf9WUaDlHYnj79IfSm+0/4JOe
+ tbn8rV5zaBs+xUvLKHrfbNIsFqrmiQUTjOi9ctH/8xHO7X2ybBgTzcsJ8gP6p7qcFog9eV7cfjo
+ VCZQW+Mtw+NTBh5iz5mPulIwdkCbqwJL0+uiCay9tTuf7iipzp5zKa3ys
+X-Gm-Gg: ASbGncsq1yjGbOyf7jjEl1nI7xqvyJQvraB2JQ0fbFvgEWVZ/gGM0ASW5BBkLb1AXDJ
+ 7FDHNN2tqzQ3w1qSyARlZqeXBrjo1Y8NcMYGqLZ2GR/2+SjYBgMCnl+YJDqcf51Yg4R2BDFQR8r
+ fMTtRBZpWusw52rCA4ivl0QYMsRwNGAEsqMzeTQMl+U531RfyZqGUIcIwVV/IPdjs1Y2n1TzXgt
+ /q9Z7z/kRxeEcPdkWel9BfH/IGW1rsA6tU8k2ENavHcG5YOhd/b69RhSo0dFY9Tcv5myGDswkwQ
+ mh8J7GgYV94dGUeQHRSk7kl3BjrhOK7OAAgM9KJDzNafCQPRTS3HGil4gt9qf0OBZFRc8SxhFB7
+ zoMs=
+X-Received: by 2002:a05:6214:3a85:b0:880:5730:d3db with SMTP id
+ 6a1803df08f44-8846e054d65mr2568526d6.21.1763575767599; 
+ Wed, 19 Nov 2025 10:09:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHhcLsZHPo01FYGgTUQih5BLapAokqbeuAA+4Y54wTxOgNgHkwNxLSBBg1nI3YTS9Sdt0XpFw==
+X-Received: by 2002:a05:6214:3a85:b0:880:5730:d3db with SMTP id
+ 6a1803df08f44-8846e054d65mr2567856d6.21.1763575767173; 
+ Wed, 19 Nov 2025 10:09:27 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8846e445b1csm262086d6.9.2025.11.19.10.09.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Nov 2025 10:09:26 -0800 (PST)
+Date: Wed, 19 Nov 2025 13:09:24 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ gengdongjiu1@gmail.com, peter.maydell@linaro.org,
+ alistair@alistair23.me, edgar.iglesias@gmail.com, npiggin@gmail.com,
+ harshpb@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ berrange@redhat.com, farosas@suse.de, eblake@redhat.com,
+ vsementsov@yandex-team.ru, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ xen-devel@lists.xenproject.org
+Subject: Re: [PATCH 2/5] hw/nvram/xlnx-bbram: More idiomatic and simpler
+ error reporting
+Message-ID: <aR4H1FyafbvOUw2c@x1.local>
+References: <20251119130855.105479-1-armbru@redhat.com>
+ <20251119130855.105479-3-armbru@redhat.com>
 MIME-Version: 1.0
-References: <20251118065817.835017-1-zhao1.liu@intel.com>
- <20251118065817.835017-5-zhao1.liu@intel.com>
- <CABgObfZfGrx3TvT7iR=JGDvMcLzkEDndj7jb5ZVV3G3rK54Feg@mail.gmail.com>
- <aR1zIb4GHh9FrK31@intel.com> <lhuh5upzyob.fsf@oldenburg.str.redhat.com>
-In-Reply-To: <lhuh5upzyob.fsf@oldenburg.str.redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 19 Nov 2025 19:08:36 +0100
-X-Gm-Features: AWmQ_bnP_jPIBa_pCEhGrRI1O_HVzZjEH7dyW6CfW-AYdWmRuTyzlIIDNIWUIl8
-Message-ID: <CABgObfaXxJjOzJs_mhnq7_VnjgkMmirXhXXW7XDP=DindV6eLw@mail.gmail.com>
-Subject: Re: [PATCH 4/5] i386/cpu: Support APX CPUIDs
-To: Florian Weimer <fweimer@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- "Chang S . Bae" <chang.seok.bae@intel.com>, Zide Chen <zide.chen@intel.com>, 
- Xudong Hao <xudong.hao@intel.com>, Peter Fang <peter.fang@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251119130855.105479-3-armbru@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,7 +113,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,41 +129,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 19, 2025 at 7:04=E2=80=AFPM Florian Weimer <fweimer@redhat.com>=
- wrote:
-> This sentence (from APX spec rev.7) emphasizes the =E2=80=9CIntel=E2=80=
-=9D vendor,
-> > and its primary goal was to address and explain compatibility concern
-> > for pre-enabling work based on APX spec v6. Prior to v7, APX included
-> > NCI_NDD_NF by default, but this feature has now been separated from
-> > basic APX and requires explicit checking CPUID bit.
-> >
-> > x86 ecosystem advisory group has aligned on APX so it may be possible
-> > for other x86 vendors to implement APX without NCI_NDD_NF and this stil=
-l
-> > match with the APX spec.
->
-> Well yes, but I doubt that the ecosystem will produce binaries
-> specialized for APX *without* NDD.  It's fine to enumerate it
-> separately, but that doesn't have any immediate consequences.  GCC makes
-> it rather hard to build for APX without NDD, for example.  At least more
-> difficult than building for AVX-512F without AVX-512VL.
->
-> I just don't think software vendors are enthusiastic about having to
-> create and support not one, but two builds for APX.  If NDD is optional
-> in practice, it will not be possible to use it except for run-time
-> generated code and perhaps very targeted optimizations because that
-> single extra APX will just not use NDD.
->
-> I feel like there has been a misunderstanding somewhere.
+On Wed, Nov 19, 2025 at 02:08:52PM +0100, Markus Armbruster wrote:
+> bbram_bdrv_error() interpolates a "detail" string into a template with
+> error_setg_errno(), then reports the result with error_report().
+> Produces error messages with an unwanted '.':
+> 
+>     BLK-NAME: BBRAM backstore DETAIL failed.: STERROR
+> 
+> Replace both calls of bbram_bdrv_error() by straightforward
+> error_report(), and drop the function.  This is less code, easier to
+> read, and the error message is more greppable.
+> 
+> Also delete the unwanted '.'.
+> 
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-I totally agree and I think this addition to APX was very misguided,
-no matter who proposed it.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-However, for virtualization we probably should include this code no
-matter how much I dislike it, because having to add the bit later
-retroactively would be worse.
-
-Paolo
+-- 
+Peter Xu
 
 
