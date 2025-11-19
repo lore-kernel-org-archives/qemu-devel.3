@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9CB2CF3182
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 09:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0353BCF256B
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 09:29:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLeTG-0001Hz-0E; Wed, 19 Nov 2025 04:27:26 -0500
+	id 1vLeUy-0001wu-FR; Wed, 19 Nov 2025 04:29:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLeTD-0001HD-4P
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 04:27:23 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLeUx-0001vm-1S
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 04:29:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLeTB-000214-G5
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 04:27:22 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLeUv-00028F-LD
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 04:29:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763544439;
+ s=mimecast20190719; t=1763544549;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QozEmAjxUGXec2NEr4d9cBogEu7Ed+MhG7yY8tiycUY=;
- b=AwvZiprH2ndDkJz0vWsm2pk9BjefKWQKMih1/W33KoOdEh2N0MWjj0ugoz6c7JLR49Pxod
- 1vgu2FEexahzkyeST9ZgtDsD8SNYjdWrrPd8XjbkcqS3FG0VtNNApWQl+ziBSbrbJEvSo7
- +zqr+kLNzQT2fD7rZMyrMOO+c9kNnO0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZVDerVyCDLbjkbBuakWXcoge1xfdPcmnBaFdNfFZc2c=;
+ b=QntkGYOgYLvhtedcdaOA7gAVu2VW5Y4zfi/ouKsLNNlgBRmuRiUAXscgP2AC6Qwfm4lGWj
+ iOJO76n0mUUO5YtbItgE13PH0whP4yYXpfrxHsPfaHfl4rEoNmg31AHmFiCw12KBAe8sMR
+ b4yvIHBRY23RSGJFWDJw321gO62fRtw=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-528-FFW0A__YPe6-LABTZ3Ykng-1; Wed, 19 Nov 2025 04:27:17 -0500
-X-MC-Unique: FFW0A__YPe6-LABTZ3Ykng-1
-X-Mimecast-MFC-AGG-ID: FFW0A__YPe6-LABTZ3Ykng_1763544436
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47777158a85so56244965e9.3
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 01:27:16 -0800 (PST)
+ us-mta-590-rOQZC9HTNjeC6LaR9034hA-1; Wed, 19 Nov 2025 04:29:07 -0500
+X-MC-Unique: rOQZC9HTNjeC6LaR9034hA-1
+X-Mimecast-MFC-AGG-ID: rOQZC9HTNjeC6LaR9034hA_1763544546
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-42b3c965ce5so4361099f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 01:29:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763544436; x=1764149236; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763544546; x=1764149346; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=QozEmAjxUGXec2NEr4d9cBogEu7Ed+MhG7yY8tiycUY=;
- b=fyJbQM3dchTyWUhLvJEAcmnMy8+Cohf+zsMZW6mXWAxhON00QUlV1ORI52NLUDZ+kd
- 5hQAhbl6EaodU9r8NdZnTXvWIGFKfbhcD31yXqV1HvvaGRkCgPTjKBS/rwod4UCfcIkj
- /o94T5dC6XbM3MsuL9NRXfZypQghzbCINrdXSL4dTDq0ia8hHnVd/4RbXRi1EAK784+E
- 6bDGL0SL/9um2wFI6z8vqDcbfURoR7HcDvTX3+N0V29BbUfCIdijH9r8fwhxhFfhqNe9
- LP9k8WXwRLmVZy4huOGJh+GJxW0jTp+wCM3xg2zfBb1xPLh9dvkYHgfAYcQEzK5/q4Py
- lA3g==
+ bh=ZVDerVyCDLbjkbBuakWXcoge1xfdPcmnBaFdNfFZc2c=;
+ b=j+O1/U6CUGp3czR4mVXEe12inHxWd3J7efrQ57qRsovdMb30sBI9A1/6/CCZ6u9yW0
+ DKvTI5QzW4L1gf0RZqiNjlLiaXCbwKXeYZnpeTd/hzEUVMHCHOzkb9g6tY+yeLuVOutN
+ vxphiA/oYOpZOn7SQ7FAm8zR/qN5XyQx8vJqsf4dYDM2EErReGLSLOsHTeI1nGgJ4Dwj
+ jzhcYz67lp2Fh4dixFsztYjFjOar1eea7/iSglvKd7w25/exPb9mmDxQsefFs6S4XYNN
+ q7Qqd1ujw6O42A9VRsxw8aU2Pr1fbZOgdpJ+3ES6JygumrLTC2e802oQqf+pEQxiFywJ
+ CHvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763544436; x=1764149236;
+ d=1e100.net; s=20230601; t=1763544546; x=1764149346;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QozEmAjxUGXec2NEr4d9cBogEu7Ed+MhG7yY8tiycUY=;
- b=xRCW6G0OVw7M+c9guSAEDExVbD0gPOV4it1bJAxUKLVdXuBYze49+RaIuZu7Z0PoOA
- vUT3mzmqnCbeAQcVrZIPCBAwUf0Uu8Kj7sr14R5r2fiStUBmOfwoQyKuJ6nbVp+9HJRA
- A5ppAFeOAGNZqetgMXPjbOhMhVi7Koik1oOQh1bopPrLxvLFlFdcLp71gyhcLc/85meb
- +P0UkQXhgMozmcUXrM4JkhfUZjtUc77TRnjw8UdesUjDdWeJk3BPTVUc+eHngHIKXQfI
- t8BlERhrT7Tk0vk3jDE6vQ30EeGVpA79/yiBpJlg/0oRS5lLipaZp9hxiTkTZnnBdF24
- Kssg==
+ bh=ZVDerVyCDLbjkbBuakWXcoge1xfdPcmnBaFdNfFZc2c=;
+ b=UJ6texpnCvZL+WJy3S8iJEGIiKKoHt6D7f5tJR+RmeF3QG4Itw+Xu6DyykqPmJ269d
+ s9mPkG/JMuvXZY3r+bs+sQHgTvCFswCg4yRSWsp9sbCEp3a/FI2BNMf0h61DIL6i/L3O
+ lduAFfF4sF3MxSQs20fZ4/ESqOs+oYZBEghpezbbRl/RWEOj0bjKLv4CkBiphrQMuKsx
+ Ot1VTKpDOGZRA2Sp3KwvCfWfQQ6DF2kFd1Arm+uhJJsYtkgkW3yJHluxH/NDCDXp2qZx
+ vQaUMRKsUFa/2D2oL+PMgnM7iM+Mlsb7dJLYV05xBZD2YCr04YzvByjhHHD2AqXpBDYr
+ y5Uw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhRIvYeiu5U2rphX4Mds1qpI1o8hlhu+OWxnqfnQeBAQREehRirgHSep5jrji4Pj1g+IwXTinsffv+@nongnu.org
-X-Gm-Message-State: AOJu0Yw16TmrP0LsW89R34LbHmSBsiTlwoGg6lv4mhZO36XTjU6/abxm
- LdPHJtA7vQiHOOBD/D2DMcI2129dAgrm5yqM5HDgTh2HpmsYsZHevxKKqM+ejH2HDVMbqnTIoqj
- c9huZysQcDhv0mHVa2L30DifJvLk2Ir91fupi4gQrFrYNSDQ4Ws3vbUcq
-X-Gm-Gg: ASbGnctTCzAecnNh6PD+RwN+/8Ia0gPSvKegdaPsQDN93Y6BbW6FxQxFV+rkPvSJ58D
- wG6pVk3PFThlqoFo4jPgeYgViHj/rq+465bVE2O9zxhe8TUAkMrM1nA8Lof2yFT3MKd2gT3vvd4
- PBmVQ55Uw4BrsR0tv2KjsNqKzgaM7ju+q1XzWtbwOQPZgTXnSzUbJZD4VoxSALWqBmNEKNQm+r8
- 958AHOWuH3zgox+EN1aHrKqLcOlWNfB+yYO1N8r3G0cm0IVQDU+JKWetKFLOngRoCYQBGOtz2td
- 4Ea7jAG+uXASLqt8nleOGqsCeDVTddSqYjpWSzHL+JhLlMHI0jcofdRN1aoYcIczoTGIsCavdaB
- IAe2Tpr7JIM/sHW4/KJknwhW12rZ/h+rnXPE=
-X-Received: by 2002:a05:600c:3514:b0:477:b734:8c53 with SMTP id
- 5b1f17b1804b1-477b7348d9emr1271245e9.12.1763544435875; 
- Wed, 19 Nov 2025 01:27:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHzTMtDFoziR9Uuq2zFHGbnH+NIoCqqyJ/84VByVRwHPnmcahAIEXYIGyFp3O3aYPMVgtVnaQ==
-X-Received: by 2002:a05:600c:3514:b0:477:b734:8c53 with SMTP id
- 5b1f17b1804b1-477b7348d9emr1271005e9.12.1763544435477; 
- Wed, 19 Nov 2025 01:27:15 -0800 (PST)
+ AJvYcCW7qioKYyvG1n37ZmTb+K3XgFTqUJAmE4zK+ijGtF7110e6EITY0RtU2a5itHUn1r5XxkVPz4EMjGQb@nongnu.org
+X-Gm-Message-State: AOJu0Yx0MVRyRGy/0G3GqOy0mMaHslP9BlwmiiqVtpSY2NHletbc5Cb1
+ ZFOsWmhlR3zSNitKHVj+Q45Ck2Qfsiduzy5DjZ0IUXI0htS0FoPfieCNnIR8KssEmGqYLTopeiK
+ iZQXOKFbfzw4Jnf9xCj+CPBvcS3HVYLn7FSv0uconblrNa95wIKU/pday
+X-Gm-Gg: ASbGncsMOGG4p6Kfx39Nsq6bhvaqjwufAOnomgZEpkOKtITm7zvZrWrUCJbicFU+uk5
+ oGvMOFTzV6qmJ6ZXY0vQnBcJqZOzjK/BuWsB2eIRZL3WGPLByfTmYDVuLNT+5r2fVWyI8cjdKkN
+ V+mR1OmlDBXgilGovVv7BrPyKq2rOl3gh4sRG4u/1uZHA/O1tufMAEbI66+CZY/LHosWQoKxOVe
+ qiAz4sZPiS1gBsOu0O/sToz/unzVGbcwmHVlCJZxH5rmK3Myy+QvyHYRX86gWqZPpPHimKKLN6b
+ DWCbj9O7y5ChDUG0ikIRE04H5TAps8Ciq23CSXZHFfdKt1oTTEJxuzS7IXAsZlrWF3eAOX73uEU
+ RU2kBj9wNbsix4V2i/0CVpnrS1LJd5Fa/S7I=
+X-Received: by 2002:a05:6000:288d:b0:42b:5567:854b with SMTP id
+ ffacd0b85a97d-42b59394d6cmr18325088f8f.45.1763544546163; 
+ Wed, 19 Nov 2025 01:29:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXZi6uN/wHs6FM99G6JOgcuOcUrOWxdTxbP4aEsYMjg839tz1nU8wCw3BXUdz0DaR79jCqiw==
+X-Received: by 2002:a05:6000:288d:b0:42b:5567:854b with SMTP id
+ ffacd0b85a97d-42b59394d6cmr18325051f8f.45.1763544545741; 
+ Wed, 19 Nov 2025 01:29:05 -0800 (PST)
 Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477a96aa472sm40300215e9.0.2025.11.19.01.27.14
+ ffacd0b85a97d-42b53e7b14bsm36535557f8f.9.2025.11.19.01.29.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Nov 2025 01:27:15 -0800 (PST)
-Message-ID: <bedc5336-1359-4624-a3bd-519824eaf043@redhat.com>
-Date: Wed, 19 Nov 2025 10:27:14 +0100
+ Wed, 19 Nov 2025 01:29:05 -0800 (PST)
+Message-ID: <5858b3a2-f92a-4dcd-b401-585250821032@redhat.com>
+Date: Wed, 19 Nov 2025 10:29:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/22] python: delete qemu.qmp
+Subject: Re: [PATCH 11/22] python: add vendored qemu.qmp package
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
@@ -100,7 +100,7 @@ Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
 References: <20251117185131.953681-1-jsnow@redhat.com>
- <20251117185131.953681-23-jsnow@redhat.com>
+ <20251117185131.953681-12-jsnow@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -145,7 +145,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251117185131.953681-23-jsnow@redhat.com>
+In-Reply-To: <20251117185131.953681-12-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -157,7 +157,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -174,28 +174,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 17/11/2025 19.51, John Snow wrote:
-> Begin relying on the external python-qemu-qmp dependency instead, to
-> prevent desync between the internal and external libraries.
+> In anticipation of deleting the python/qemu/qmp source from the tree,
+> add a vendored version of the qemu.qmp package to ensure that "make
+> check" can be run in isolated build environments, offline.
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
-...
-> diff --git a/python/qemu/utils/qom_fuse.py b/python/qemu/utils/qom_fuse.py
-> index cf7e344bd53..e377ef6942f 100644
-> --- a/python/qemu/utils/qom_fuse.py
-> +++ b/python/qemu/utils/qom_fuse.py
-> @@ -47,7 +47,6 @@
->   
->   import fuse
->   from fuse import FUSE, FuseOSError, Operations
-> -
->   from qemu.qmp import ExecuteError
->   
->   from .qom_common import QOMCommand
+>   python/scripts/vendor.py                      |   2 ++
+>   python/wheels/qemu_qmp-0.0.5-py3-none-any.whl | Bin 0 -> 72263 bytes
+>   2 files changed, 2 insertions(+)
+>   create mode 100644 python/wheels/qemu_qmp-0.0.5-py3-none-any.whl
+> 
+> diff --git a/python/scripts/vendor.py b/python/scripts/vendor.py
+> index 33ac7a45de0..36cd27046e7 100755
+> --- a/python/scripts/vendor.py
+> +++ b/python/scripts/vendor.py
+> @@ -43,6 +43,8 @@ def main() -> int:
+>       packages = {
+>           "meson==1.9.0":
+>           "45e51ddc41e37d961582d06e78c48e0f9039011587f3495c4d6b0781dad92357",
+> +        "qemu.qmp==0.0.5":
+> +        "e05782d6df5844b34e0d2f7c68693525da074deef7b641c1401dda6e4e3d6303",
+>       }
 
-Nit: The above change looks unrelated.
+I wonder why I did not have to add pycotap here when I added a wheel for 
+that...?
 
-Apart from that:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Anyway, for your patch, FWIW:
+Acked-by: Thomas Huth <thuth@redhat.com>
 
 
