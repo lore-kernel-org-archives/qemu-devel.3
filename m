@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4613CF3959
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 16:40:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5642DCF3959
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 16:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLlDV-0001Di-4s; Wed, 19 Nov 2025 11:39:37 -0500
+	id 1vLlHl-0004GG-PP; Wed, 19 Nov 2025 11:44:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vLlDJ-0001Bw-I0; Wed, 19 Nov 2025 11:39:25 -0500
+ id 1vLlHj-0004Ey-DN; Wed, 19 Nov 2025 11:43:59 -0500
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vLlDH-0003Hg-JU; Wed, 19 Nov 2025 11:39:25 -0500
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:7394:0:640:5a8a:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id A42C7C0417;
- Wed, 19 Nov 2025 19:39:19 +0300 (MSK)
+ id 1vLlHh-0003qc-Go; Wed, 19 Nov 2025 11:43:59 -0500
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E53F9C0678;
+ Wed, 19 Nov 2025 19:43:51 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:d4f::1:a] (unknown [2a02:6bf:8080:d4f::1:a])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id EdZ4hj1FoqM0-PnOuENIM; Wed, 19 Nov 2025 19:39:19 +0300
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id phZGjU1FBqM0-YrNCSosA; Wed, 19 Nov 2025 19:43:51 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1763570359;
- bh=DM0KRnw/bJmlXF59KSLJHO7inhk1CSuI+W867TiXkhk=;
+ s=default; t=1763570631;
+ bh=8MHPFc36XmRWLoEylCS+7mscko0S7lVDKgcOSkUaRq8=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=1aV3AQx9aES23Vo5+MMzL/Y4U1Q/xSdVQV9kID9CPGBFyxOO5gCBPF5Z0uI5h3BF4
- iYmwL1dOKyCcf3BHSPNZ0GR9CkFWL1iXtOFXUxpaH5+YEU4mAePovvIojEwsXcoIkr
- pM/RDLPTvlXlZtbSzEM/5jVb9Kkrncl88vVYyO64=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ b=WGbz3m5pVgylCWUF0F7yXY6P1mq/DUxP0B6rUPRLgxlpNN4sMw+uCN5oYPEoz1weL
+ m+DhG/yIsv61AExP9v6dFCYWslHdiqhedix4qeFGaCCN5D/czYjwDaVMig5Ejg93QG
+ +AT5h+gu6ABapeHRV4R1xdXJ1lNH7VT8rDFS41Zs=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <a36f938d-b35a-4605-ab77-6ed7dd419945@yandex-team.ru>
-Date: Wed, 19 Nov 2025 19:39:14 +0300
+Message-ID: <c0b7faef-7c89-49c4-90d6-16da94217db9@yandex-team.ru>
+Date: Wed, 19 Nov 2025 19:43:51 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] hw/nvram/xlnx-bbram: More idiomatic and simpler error
- reporting
+Subject: Re: [PATCH 3/5] nbd/client-connection: Replace error_propagate() by
+ assignment
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com, imammedo@redhat.com, 
  anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
@@ -55,10 +55,10 @@ Cc: kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com, imammedo@redhat.com,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  xen-devel@lists.xenproject.org
 References: <20251119130855.105479-1-armbru@redhat.com>
- <20251119130855.105479-3-armbru@redhat.com>
+ <20251119130855.105479-4-armbru@redhat.com>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20251119130855.105479-3-armbru@redhat.com>
+In-Reply-To: <20251119130855.105479-4-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=178.154.239.72;
@@ -86,73 +86,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19.11.25 16:08, Markus Armbruster wrote:
-> bbram_bdrv_error() interpolates a "detail" string into a template with
-> error_setg_errno(), then reports the result with error_report().
-> Produces error messages with an unwanted '.':
+> connect_thread_func() sets a variable to null, then error_propagate()s
+> an Error * to it.  This is a roundabout way to assign the Error * to
+> it, so replace it by just that.
 > 
->      BLK-NAME: BBRAM backstore DETAIL failed.: STERROR
-> 
-> Replace both calls of bbram_bdrv_error() by straightforward
-> error_report(), and drop the function.  This is less code, easier to
-> read, and the error message is more greppable.
-> 
-> Also delete the unwanted '.'.
+> Signed-off-by: Markus Armbruster<armbru@redhat.com>
 
-Also, using "errp" name for local "Error *" (one star) variable is a bit misleading.
-
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-
-> ---
->   hw/nvram/xlnx-bbram.c | 18 ++++--------------
->   1 file changed, 4 insertions(+), 14 deletions(-)
-> 
-> diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
-> index 22aefbc240..fe289bad9d 100644
-> --- a/hw/nvram/xlnx-bbram.c
-> +++ b/hw/nvram/xlnx-bbram.c
-> @@ -88,18 +88,6 @@ static bool bbram_pgm_enabled(XlnxBBRam *s)
->       return ARRAY_FIELD_EX32(s->regs, BBRAM_STATUS, PGM_MODE) != 0;
->   }
->   
-> -static void bbram_bdrv_error(XlnxBBRam *s, int rc, gchar *detail)
-> -{
-> -    Error *errp = NULL;
-> -
-> -    error_setg_errno(&errp, -rc, "%s: BBRAM backstore %s failed.",
-> -                     blk_name(s->blk), detail);
-> -    error_report("%s", error_get_pretty(errp));
-> -    error_free(errp);
-> -
-> -    g_free(detail);
-> -}
-> -
->   static void bbram_bdrv_read(XlnxBBRam *s, Error **errp)
->   {
->       uint32_t *ram = &s->regs[R_BBRAM_0];
-> @@ -162,7 +150,8 @@ static void bbram_bdrv_sync(XlnxBBRam *s, uint64_t hwaddr)
->       offset = hwaddr - A_BBRAM_0;
->       rc = blk_pwrite(s->blk, offset, 4, &le32, 0);
->       if (rc < 0) {
-> -        bbram_bdrv_error(s, rc, g_strdup_printf("write to offset %u", offset));
-> +        error_report("%s: BBRAM backstore write to offset %u failed: %s",
-> +                     blk_name(s->blk), offset, strerror(-rc));
->       }
->   }
->   
-> @@ -178,7 +167,8 @@ static void bbram_bdrv_zero(XlnxBBRam *s)
->   
->       rc = blk_make_zero(s->blk, 0);
->       if (rc < 0) {
-> -        bbram_bdrv_error(s, rc, g_strdup("zeroizing"));
-> +        error_report("%s: BBRAM backstore zeroizing failed: %s",
-> +                     blk_name(s->blk), strerror(-rc));
->       }
->   
->       /* Restore bbram8 if it is non-zero */
-
 
 -- 
 Best regards,
