@@ -4,91 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FBE0CF34AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 13:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3331CF34B0
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 13:55:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLiXq-0006Xp-5e; Wed, 19 Nov 2025 08:48:26 -0500
+	id 1vLieL-0001nr-3b; Wed, 19 Nov 2025 08:55:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vLiXo-0006X0-9p
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 08:48:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vLiXm-0004CK-HD
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 08:48:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763560101;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=xsySjUAW/OC81jZhGvxSBn3taIt42d+Gp2Dn5EiAh3I=;
- b=WAg03mFpf54yDXLZF5qTaxZ3c+wfDAyoSZpKJZP8A0MH8YbjuFvHAvwjaHZ4gzAMuOjPeZ
- vSqKoY/wS7zPjBGJuUO5OcoGA/otBQLdq6NJHZj+LnQoT/niwodiWC2Svq9WzRdXmF09yi
- WUotWLcjcOoMYbONFOAo2a0ugntcG4M=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-c9AsqnwVO_K6HMYJOAg8Tg-1; Wed,
- 19 Nov 2025 08:48:20 -0500
-X-MC-Unique: c9AsqnwVO_K6HMYJOAg8Tg-1
-X-Mimecast-MFC-AGG-ID: c9AsqnwVO_K6HMYJOAg8Tg_1763560096
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC8DB180035F; Wed, 19 Nov 2025 13:48:15 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7A14B18004A3; Wed, 19 Nov 2025 13:48:14 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A94D221E6A27; Wed, 19 Nov 2025 14:48:11 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>,  qemu-devel@nongnu.org,
- kwolf@redhat.com,  hreitz@redhat.com,  mst@redhat.com,
- imammedo@redhat.com,  anisinha@redhat.com,  gengdongjiu1@gmail.com,
- peter.maydell@linaro.org,  alistair@alistair23.me,
- edgar.iglesias@gmail.com,  npiggin@gmail.com,  harshpb@linux.ibm.com,
- palmer@dabbelt.com,  liwei1518@gmail.com,  dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com,  sstabellini@kernel.org,
- anthony@xenproject.org,  paul@xen.org,  peterx@redhat.com,
- farosas@suse.de,  eblake@redhat.com,  vsementsov@yandex-team.ru,
- eduardo@habkost.net,  marcel.apfelbaum@gmail.com,  philmd@linaro.org,
- wangyanan55@huawei.com,  zhao1.liu@intel.com,  qemu-block@nongnu.org,
- qemu-arm@nongnu.org,  qemu-ppc@nongnu.org,  qemu-riscv@nongnu.org,
- xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 5/5] error: Consistently name Error * objects err, and
- not errp
-In-Reply-To: <aR3HpH88od11v8qL@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 19 Nov 2025 13:35:32 +0000")
-References: <20251119130855.105479-1-armbru@redhat.com>
- <20251119130855.105479-6-armbru@redhat.com>
- <3ffe11b9-db81-4930-aefa-e55d758645bf@citrix.com>
- <aR3HpH88od11v8qL@redhat.com>
-Date: Wed, 19 Nov 2025 14:48:11 +0100
-Message-ID: <87a50ixhes.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhiyuan.plct@isrc.iscas.ac.cn>)
+ id 1vLgLh-0007xG-Dt; Wed, 19 Nov 2025 06:27:45 -0500
+Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <zhiyuan.plct@isrc.iscas.ac.cn>)
+ id 1vLgLe-0007l3-GK; Wed, 19 Nov 2025 06:27:45 -0500
+Received: from chenxiaoou-ubuntu-02.. (unknown [210.73.43.101])
+ by APP-01 (Coremail) with SMTP id qwCowAD3js6gqR1pq9FAAQ--.30793S2;
+ Wed, 19 Nov 2025 19:27:29 +0800 (CST)
+From: TravisYang <zhiyuan.plct@isrc.iscas.ac.cn>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: =?UTF-8?q?=E6=9D=A8=E6=99=BA=E6=BA=90?= <zhiyuan.plct@isrc.iscas.ac.cn>,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v1] target/riscv: add support for RV64 THEAD C910 CPU
+Date: Wed, 19 Nov 2025 11:27:24 +0000
+Message-Id: <20251119112724.1342110-1-zhiyuan.plct@isrc.iscas.ac.cn>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qwCowAD3js6gqR1pq9FAAQ--.30793S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxAF4UWr1UAF4UCr43ZF18Xwb_yoW5XrW8pr
+ 15GFZ0k34DJFZrtws3JFWDXrn5Wr4ru3yIg3sxZ3ZrGr4akFW3Jrn7JrWDGr4vqF1rJ3WF
+ gr18Cw15Gws0qa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUU9Y14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWUuVWrJwAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
+ 6r4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+ 4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+ I7IYx2IY67AKxVWUJVWUGwAv7VCY1x0262k0Y48FwI0_Jr0_Gr1lYx0Ex4A2jsIE14v26F
+ 4j6r4UJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS
+ 5cI20VAGYxC7MxkF7I0En4kS14v26r126r1DMxAIw28IcxkI7VAKI48JMxC20s026xCaFV
+ Cjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWl
+ x4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r
+ 1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_
+ JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCT
+ nIWIevJa73UjIFyTuYvjfUYWrWUUUUU
+X-Originating-IP: [210.73.43.101]
+X-CM-SenderInfo: 52kl53ddqo1z1fw6x21ufox2xfdvhtffof0/
+Received-SPF: pass client-ip=159.226.251.21;
+ envelope-from=zhiyuan.plct@isrc.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 19 Nov 2025 08:54:55 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,60 +79,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+From: 杨智源 <zhiyuan.plct@isrc.iscas.ac.cn>
 
-> On Wed, Nov 19, 2025 at 01:22:06PM +0000, Andrew Cooper wrote:
->> On 19/11/2025 1:08 pm, Markus Armbruster wrote:
->> > diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
->> > index b93ff80c85..3e62ec09d0 100644
->> > --- a/hw/xen/xen-pvh-common.c
->> > +++ b/hw/xen/xen-pvh-common.c
->> > @@ -101,7 +101,7 @@ static void xen_create_virtio_mmio_devices(XenPVHM=
-achineState *s)
->> >  #ifdef CONFIG_TPM
->> >  static void xen_enable_tpm(XenPVHMachineState *s)
->> >  {
->> > -    Error *errp =3D NULL;
->> > +    Error *err =3D NULL;
->> >      DeviceState *dev;
->> >      SysBusDevice *busdev;
->> >=20=20
->> > @@ -111,8 +111,15 @@ static void xen_enable_tpm(XenPVHMachineState *s)
->> >          return;
->> >      }
->> >      dev =3D qdev_new(TYPE_TPM_TIS_SYSBUS);
->> > -    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp=
-);
->> > -    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
->> > +    /*
->> > +     * FIXME This use of &err is is wrong.  If both calls fail, the
->> > +     * second will trip error_setv()'s assertion.  If just one call
->> > +     * fails, we leak an Error object.  Setting the same property
->> > +     * twice (first to a QOM path, then to an ID string) is almost
->> > +     * certainly wrong, too.
->> > +     */
->> > +    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &err);
->> > +    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &err);
->>=20
->> To your question, I don't know the answer, but I think it's far more
->> likely that the original author didn't grok the proper use of &errp,
->> than for this behaviour to be intentional.
->>=20
->> Surely we just want a failure path and abort the construction if this
->> goes wrong?
->
-> In the caller of xen_enable_tpm, we just have error_report+exit calls,
-> so there's no error propagation ability in the call chain.
->
-> The caller will also skip  xen_enable_tpm unless a TPM was explicitly
-> requested in the config.
->
-> Given that, I'm inclined to say that the object_property_set_* calls
-> in xen_enable_tpm should be using &error_abort, as a failure to setup
-> the explicitly requested TPM should be fatal.
+Add a CPU entry for the RV64 THEAD C910 CPU which supports single-core
+and dual-core configurations.More details can be found at
+https://www.xrvm.cn/product/xuantie/C910?spm=a2d5.28054257.0.0.4a0f7a32qXoU1w
 
-I *suspect* that the first call always fails, and the second one always
-works.  If that's the case, the fix is to delete the first call, and
-pass &error_abort to the second.
+Signed-off-by: TravisYang <zhiyuan.plct@isrc.iscas.ac.cn>
+---
+ target/riscv/cpu-qom.h |  1 +
+ target/riscv/cpu.c     | 47 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 48 insertions(+)
+
+diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+index 75f4e43408..1fc8140190 100644
+--- a/target/riscv/cpu-qom.h
++++ b/target/riscv/cpu-qom.h
+@@ -56,6 +56,7 @@
+ #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
+ #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
+ #define TYPE_RISCV_CPU_XIANGSHAN_KMH    RISCV_CPU_TYPE_NAME("xiangshan-kunminghu")
++#define TYPE_RISCV_CPU_THEAD_C910       RISCV_CPU_TYPE_NAME("thead-c910")
+ #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
+ 
+ OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ae8b721e55..f522bc856b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3281,6 +3281,53 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.max_satp_mode = VM_1_10_SV48,
+     ),
+ 
++    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C910, TYPE_RISCV_VENDOR_CPU,
++        .misa_mxl_max = MXL_RV64,
++        .misa_ext = RVG | RVC | RVS | RVU,
++        .priv_spec = PRIV_VERSION_1_12_0,
++
++        .cfg.ext_zcf = true,
++        .cfg.ext_zcd = true,
++        .cfg.ext_zfa = true,
++        .cfg.ext_zfh = true,
++        .cfg.ext_zfhmin = true,
++
++        .cfg.mmu = true,
++        .cfg.ext_xtheadba = true,
++        .cfg.ext_xtheadbb = true,
++        .cfg.ext_xtheadbs = true,
++        .cfg.ext_xtheadcmo = true,
++        .cfg.ext_xtheadcondmov = true,
++        .cfg.ext_xtheadfmemidx = true,
++        .cfg.ext_xtheadmac = true,
++        .cfg.ext_xtheadmemidx = true,
++        .cfg.ext_xtheadmempair = true,
++        .cfg.ext_xtheadsync = true,
++        .cfg.pmp = true,
++
++        .cfg.ext_svinval = true,
++        .cfg.ext_svadu = true,
++        .cfg.ext_zicbom = true,
++        .cfg.ext_zicboz = true,
++
++        .cfg.ext_zba = true,
++        .cfg.ext_zbb = true,
++        .cfg.ext_zbc = true,
++        .cfg.ext_zbs = true,
++
++        .cfg.ext_zknd = true,
++        .cfg.ext_zkne = true,
++        .cfg.ext_zknh = true,
++
++        .cfg.mvendorid = THEAD_VENDOR_ID,
++
++        .cfg.max_satp_mode = VM_1_10_SV39,
++#ifndef CONFIG_USER_ONLY
++        .custom_csrs = th_csr_list,
++#endif
++    ),
++
++
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
+         .cfg.max_satp_mode = VM_1_10_SV57,
+-- 
+2.34.1
 
 
