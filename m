@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A10FCF31AD
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 11:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75E82CF31AF
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 11:41:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLgXh-0002yP-SQ; Wed, 19 Nov 2025 06:40:10 -0500
+	id 1vLgXl-0002yS-L7; Wed, 19 Nov 2025 06:40:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vLgXc-0002u8-Iz
+ id 1vLgXc-0002uE-JV
  for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:40:06 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vLgXa-0001uX-6W
+ id 1vLgXY-0001u4-Un
  for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:40:03 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-429c48e05aeso526220f8f.1
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 03:40:01 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-477b198f4bcso4590325e9.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 03:40:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763552401; x=1764157201; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763552399; x=1764157199; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uYZne6GwJ4NRY+gBlHbSmEnhm1zZNl5Dbbbd5zH8REo=;
- b=wBgj70FoInEE1prI1jF4CW42hZ48MG18WYlessVbDnj7gamc/Pf3jvAmH8vTu9PQ/g
- 56UpwkdFqCC+vTZU74yLWQ7JnwnZaVB6gAqAEFQS+xoIKH/KZkljOOrxDBPxIFm7/Q8c
- Zo8JTeC/L1jbzkJcx0OLN+95oZLpylhx//W2IxzC6I7vgJDSEhEvBCPyuqc6mO86ej6T
- R6oquTemkCjfR0Ki8pErK0CixXFzCt7wTVKxpGaoJYreek3G5zJwOR/Ib1sM0QOwCx7e
- STbUfcoHt+hWR0NCU9/V1ATH82CF/7h75CXd6015wH87NuzhXoJ6DcVdvfY6dVN+Ct2I
- 53Og==
+ bh=g5q4Dq8gSBDW8LjZ2RVoouNTkYtodcyLrqkBLjbu9ck=;
+ b=HgL4DTDPJfy1qs+b1ofQLe+iuwuWXx+sojSKoI2i4EtBz+nhM+d/uY+wV8AZVnqtgT
+ EqPSP/1ARbYHwdpB93cT+JiR3pA0KVHtcQXrg4z79PaRTGrComzT17iRDJokcgkuqLfm
+ 5M//EVjxzPZmP7by1T1CF//8t6N8Rxx0VzCGemAQyjs2JkF8ztOFbSDdjXQarG45ssmO
+ qigT91U6Wh3sdoAT9UgobE/BkSUjZkcKtL2o+OL7J18gQHTWLgtLaXDXMaOri3PKKH4S
+ Wb2JaK5+zzx8VfJw4+q6Z0+TEeFRLrrE1++KJdcdcA5myybwiSa9HlaVF9071NlyYYX9
+ Pbww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763552401; x=1764157201;
+ d=1e100.net; s=20230601; t=1763552399; x=1764157199;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=uYZne6GwJ4NRY+gBlHbSmEnhm1zZNl5Dbbbd5zH8REo=;
- b=s2RWUi/4de0JmFrBisePdrOPiaGxOkNqxf8CafHdmGDUbfCq9uFuedD7ACFbnHfoka
- J0PgTXcuvt/irJ+3+EYGNrCC+Pqph90M6eyVXeS7R6Bq9sTwDWVMz9QvB+0DZipYQ0iQ
- ui5sv7ePkf1FqxYU8TII1KoDSO0XfUViSnnu2z9yzC6uzeXIswbDa82ibATg+U1q84FJ
- GluAW+Um3btNI2mIVQ/Kh1yiXU914QsV13dkmnfaB4fSfFPoBfNIGJpdUndHDukF1IiZ
- MpJE45mdwd4w5mp5Ztr3CithzXQtXar1Zg7j5X+mloph3aPnfjzh/cLHH0bCj3HG5wkR
- w1bA==
-X-Gm-Message-State: AOJu0YxldxqZswmuB0d4gG0j/Bj+wTsQHwgEZ5j4YpkNqeLE2VGiCPOs
- b3EsaaFkcI5a9TMyvpha9UCWB3gwFMy0PCqhr/RyLrul2J+mPiF0F5PtgZT8x3NZf9A=
-X-Gm-Gg: ASbGncsX7ktMX/Qwg7DHC+7ARlbGCKaJpHZg1mhnYsuuX2uxSFnnESMZqCrR0pPcnXr
- w1jvIzDzutOJkUz4sa1OPphutvx31aisHB0w22ROj7Gchh2el6HGMWmNnJ8FtCzHi5xYerS+C1+
- yAAP+XAo85mTtCqHbeC2gUSY+78Bynym57l3tsAGvOjHLuRw9TgirtsDlnLm/3x1ryh1D0gXskO
- bWynkmPFq/noGDy4lD2vVJHPYoNwrs07Jhlg4Rh0I/1nAlQ1sd+nbrUhbDpzhqBDUw8Jo9WAmQO
- BpyHpjFtekQmHCxTRbthtoPdYaWd0ZgYLum4vvU4/4JmXZzEJC3MaejCPLc4vDZfadHYN51NlXS
- Gn6yhYpWZZ3+F8ywZhP/Xdggsy27nPLNPjVc8mg3swFz+My4nJeIRsU7eii2Mz3ZcoCwklcwaXg
- cW6j2hz9oVcfV/KrnMRT1hiA==
-X-Google-Smtp-Source: AGHT+IFKoV9ZrjgZBin+Gq2kkIO44t+RzV9DnJf9ML+EZoZDgkzHFH1nFL8vgFQYQMV5PRZX+LjcTQ==
-X-Received: by 2002:adf:f18b:0:b0:429:cb8b:b58e with SMTP id
- ffacd0b85a97d-42cb2221642mr1816532f8f.28.1763552400683; 
- Wed, 19 Nov 2025 03:40:00 -0800 (PST)
+ bh=g5q4Dq8gSBDW8LjZ2RVoouNTkYtodcyLrqkBLjbu9ck=;
+ b=nJEfcPrm6/3gVXehxR2nAw+TWTP3JfrmV2jni2MmeYY4gWKfMEXnjREgrVNYNjJ3Hp
+ Y91o6ZfKKqeU7GVeIWHd1fMhW3bCLMSrzXSoiqrxSNahEQw4G7fYo1xogGTLF41pOX2S
+ FuBsAebfnZErFePwgMx6NB5g0q5Xszkd3IyB1bS4F3asXSpRbNnuRilCNaWx/JFcEjbo
+ NxUeHPVAT5gO1rCKx+N+4SowNqCOnOkvW1DAaI+Q5K2RaQNQg8GVupmtGjRcmTjSd4fX
+ 3itO9m5CObo5vGyn0u65oxfGF4U7YsDo5jLYGS6m/DMSvxUcrPFG1x9qbgLy8AKQ4n5U
+ 8xkw==
+X-Gm-Message-State: AOJu0YzEGkXAlD0d5FW2VfaUJyRStXsUgFnWP1906Mv/IyS1H26tIf01
+ SImG5tfJKTWtlxdMuBEbyiBVI4bh4JHAKrs6+P5xFSuSiz5nA0lLcS7pk6LFW3u/KDc=
+X-Gm-Gg: ASbGncv0T1s2KzcuELu/ZOyxHiAKU6feG+nKqqL+YsXOjWnxtg+KmlLhvYTf4lEiZ7x
+ jmPDP6Z9CmRerE9GGRte8XAF5+AssRQamP2BCKtxPQX0x3pzuNYthBv4cz9ZxAoSbGPATsdwih6
+ DfsLlEofdGG52noCPexgC9oDcS0ryu3I99YbdxY3rk+Qn/ushJTJXSDpqP7YiNPj7rCPFoIVqXv
+ srBlRv+XzErrUpsRHKuVUgrx4sqR3YvriP6DLhGZSVQtfbHBzwKun7g2jMlEjC6XASzLEJv03Qk
+ KIXE+3YXUA5KWi05IYi1wbMHvBuwnf1i1ohBBkzjN7EbcIkzbP36bDKC9w0j4MQBqK/QYC5qI/Q
+ 4kJLQZ5nKKKPBSohel0tP5xK4caipGrbZH8M4m6fABom1UziEPqWrIkFGh3PxRFcjCxhoPd/3K8
+ 9ZCmoMAs+LWAk=
+X-Google-Smtp-Source: AGHT+IH7tiIO/aHt8k4xnECUS1iwz+XokqDBy3rEJAZsiad27Mu5WOxS8imnCSTAl4SIj3rpNCIqrg==
+X-Received: by 2002:a05:600c:3baa:b0:477:94e3:8a96 with SMTP id
+ 5b1f17b1804b1-477b746f2c3mr4634035e9.20.1763552399467; 
+ Wed, 19 Nov 2025 03:39:59 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f206aasm37830717f8f.40.2025.11.19.03.39.56
+ 5b1f17b1804b1-477b10260adsm42429365e9.7.2025.11.19.03.39.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 19 Nov 2025 03:39:56 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F198C5F932;
+ by draig.lan (Postfix) with ESMTP id D81125F929;
  Wed, 19 Nov 2025 11:39:53 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Manish Mishra <manish.mishra@nutanix.com>, Tejus GK <tejus.gk@nutanix.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- John Levon <john.levon@nutanix.com>, Jon Kohler <jon@nutanix.com>
-Subject: [PATCH 7/9] contrib/gitdm: add mapping for Nutanix
-Date: Wed, 19 Nov 2025 11:39:50 +0000
-Message-ID: <20251119113953.1432303-8-alex.bennee@linaro.org>
+ =?UTF-8?q?=20Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Damien Bergamini <damien.bergamini@eviden.com>
+Subject: [PATCH 6/9] contrib/gitdm: add mapping for Eviden
+Date: Wed, 19 Nov 2025 11:39:49 +0000
+Message-ID: <20251119113953.1432303-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251119113953.1432303-1-alex.bennee@linaro.org>
 References: <20251119113953.1432303-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,31 +105,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have a number of hackers from Nutanix, make sure they are grouped
-together.
-
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Cc: Manish Mishra <manish.mishra@nutanix.com>
-Cc: Tejus GK <tejus.gk@nutanix.com>
-Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: John Levon <john.levon@nutanix.com>
-Cc: Jon Kohler <jon@nutanix.com>
+Cc:  Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Cc: Damien Bergamini <damien.bergamini@eviden.com>
 ---
  contrib/gitdm/domain-map | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/contrib/gitdm/domain-map b/contrib/gitdm/domain-map
-index 4e67c3e484d..c07dffc51bd 100644
+index bf1dce03fde..4e67c3e484d 100644
 --- a/contrib/gitdm/domain-map
 +++ b/contrib/gitdm/domain-map
-@@ -35,6 +35,7 @@ lwn.net         LWN
- microsoft.com   Microsoft
- mvista.com      MontaVista
- nokia.com       Nokia
-+nutanix.com     Nutanix
- nuviainc.com    NUVIA
- nvidia.com      NVIDIA
- oracle.com      Oracle
+@@ -19,6 +19,7 @@ crudebyte.com   Crudebyte
+ chinatelecom.cn China Telecom
+ daynix.com      Daynix
+ eldorado.org.br Instituto de Pesquisas Eldorado
++eviden.com      Eviden
+ fb.com          Facebook
+ fujitsu.com     Fujitsu
+ google.com      Google
 -- 
 2.47.3
 
