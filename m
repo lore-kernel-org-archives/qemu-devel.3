@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5642DCF3959
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 16:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C61AFCF394B
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 16:45:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLlHl-0004GG-PP; Wed, 19 Nov 2025 11:44:01 -0500
+	id 1vLlIs-0005JD-9d; Wed, 19 Nov 2025 11:45:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vLlHj-0004Ey-DN; Wed, 19 Nov 2025 11:43:59 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1vLlIo-0005HI-Sw; Wed, 19 Nov 2025 11:45:07 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vLlHh-0003qc-Go; Wed, 19 Nov 2025 11:43:59 -0500
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id E53F9C0678;
- Wed, 19 Nov 2025 19:43:51 +0300 (MSK)
+ id 1vLlIn-0003yx-84; Wed, 19 Nov 2025 11:45:06 -0500
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id F27A3893AA;
+ Wed, 19 Nov 2025 19:45:00 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:d4f::1:a] (unknown [2a02:6bf:8080:d4f::1:a])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id phZGjU1FBqM0-YrNCSosA; Wed, 19 Nov 2025 19:43:51 +0300
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id uiZX4u1FEiE0-dyR3VX9a; Wed, 19 Nov 2025 19:45:00 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1763570631;
- bh=8MHPFc36XmRWLoEylCS+7mscko0S7lVDKgcOSkUaRq8=;
+ s=default; t=1763570700;
+ bh=s5SGDEOXCffdPGa2ExWMjbXnxXE80V2KPR7fbbbsK78=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=WGbz3m5pVgylCWUF0F7yXY6P1mq/DUxP0B6rUPRLgxlpNN4sMw+uCN5oYPEoz1weL
- m+DhG/yIsv61AExP9v6dFCYWslHdiqhedix4qeFGaCCN5D/czYjwDaVMig5Ejg93QG
- +AT5h+gu6ABapeHRV4R1xdXJ1lNH7VT8rDFS41Zs=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ b=oMT+pXOJswxjJJq1zanTvP8KS2EylucYuHPNHD4L6q6KUnf3xGj709hkkW/XV2ahX
+ I/57FU9PC3BrCmtaQu/FF2c0XnjgR2Zdb67j8D18YC3cxQWboyaRHjFJTVx/WeUBJa
+ JsLwq61D96jB+ELIc9XI/coQIf63FBxXzkOXgr2E=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <c0b7faef-7c89-49c4-90d6-16da94217db9@yandex-team.ru>
-Date: Wed, 19 Nov 2025 19:43:51 +0300
+Message-ID: <0a07425e-ddee-4942-8ae7-dc8b801b1595@yandex-team.ru>
+Date: Wed, 19 Nov 2025 19:44:56 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] nbd/client-connection: Replace error_propagate() by
- assignment
+Subject: Re: [PATCH 4/5] error: error_free(NULL) is safe, drop unnecessary
+ conditionals
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com, imammedo@redhat.com, 
  anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
@@ -55,14 +55,14 @@ Cc: kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com, imammedo@redhat.com,
  qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  xen-devel@lists.xenproject.org
 References: <20251119130855.105479-1-armbru@redhat.com>
- <20251119130855.105479-4-armbru@redhat.com>
+ <20251119130855.105479-5-armbru@redhat.com>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20251119130855.105479-4-armbru@redhat.com>
+In-Reply-To: <20251119130855.105479-5-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -86,12 +86,7 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19.11.25 16:08, Markus Armbruster wrote:
-> connect_thread_func() sets a variable to null, then error_propagate()s
-> an Error * to it.  This is a roundabout way to assign the Error * to
-> it, so replace it by just that.
-> 
 > Signed-off-by: Markus Armbruster<armbru@redhat.com>
-
 
 Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
