@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E01B2CF259E
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 08:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EE2DCF258C
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 08:28:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLdXv-0003wm-5s; Wed, 19 Nov 2025 03:28:11 -0500
+	id 1vLdY5-0004QU-AO; Wed, 19 Nov 2025 03:28:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLdXX-0003XT-Hm
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:27:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLdXp-0003oE-2Z
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:28:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLdXV-0000vu-7L
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:27:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLdXn-0000x0-6R
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:28:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763540861;
+ s=mimecast20190719; t=1763540882;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VClsjSE/lJj44/MxOnS27ywXz1EbQ0juDDgmS3m/32I=;
- b=ifI+/bUQKH2CDRggVeg+QIaAQH82bKIX19ayMRHIeWITsOPPDF/dpPgsg0LqIsxUglAGmt
- DmFxh82AwclDDHtNlLArVlTtaWvKZxuCq8xehOmvtB7G8DYYWX/j6+WMJZu1HmXaOOcwvE
- p73OmWtSxIh0qsrx9zPamtSToDt2CIM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=wsHhofRo5lqiIbmcS1Yb8xhqpSUPxrcCY93dg6TkMlQ=;
+ b=Hg7c0JSIehsYmSgv9+SsHkIZctxYoAnm/sMzTws17remCaP17hKVjq0ttye7oGeXHpPEbG
+ O9Rceec2cZVmi0czTeWf35yLVvE/ZcaaloDr84DDny+pHPOViZiO9VRLMnubM7DDGm77eR
+ kEPt5Y7f/kBi0lrZg3mmNyTdGi2OI50=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-145-Hw4_cOfwMQyYAlofR4P9Gg-1; Wed,
- 19 Nov 2025 03:27:37 -0500
-X-MC-Unique: Hw4_cOfwMQyYAlofR4P9Gg-1
-X-Mimecast-MFC-AGG-ID: Hw4_cOfwMQyYAlofR4P9Gg_1763540855
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-190-6uun3e_RPfm5BtoNxbPj-A-1; Wed,
+ 19 Nov 2025 03:28:01 -0500
+X-MC-Unique: 6uun3e_RPfm5BtoNxbPj-A-1
+X-Mimecast-MFC-AGG-ID: 6uun3e_RPfm5BtoNxbPj-A_1763540878
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7491B18AB400; Wed, 19 Nov 2025 08:27:35 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 80BB51956080; Wed, 19 Nov 2025 08:27:58 +0000 (UTC)
 Received: from thuth-p1g4.str.redhat.com (dhcp-192-176.str.redhat.com
  [10.33.192.176])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1D050180047F; Wed, 19 Nov 2025 08:27:29 +0000 (UTC)
+ id 12A46180047F; Wed, 19 Nov 2025 08:27:52 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
@@ -65,16 +65,16 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Zhao Liu <zhao1.liu@intel.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH for-11.0 08/15] tests/functional/x86_64/test_memlock: Silence
- pylint warnings
-Date: Wed, 19 Nov 2025 09:26:29 +0100
-Message-ID: <20251119082636.43286-9-thuth@redhat.com>
+Subject: [PATCH for-11.0 12/15] tests/functional/aarch64/test_reverse_debug:
+ Fix issues reported by pylint
+Date: Wed, 19 Nov 2025 09:26:33 +0100
+Message-ID: <20251119082636.43286-13-thuth@redhat.com>
 In-Reply-To: <20251119082636.43286-1-thuth@redhat.com>
 References: <20251119082636.43286-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,36 +101,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Pylint complains about a missing "encoding" parameter for the open()
-function here, and about a missing return statement in the "except"
-block (which cannot happen since skipTest() never returns). Rework
-the code a little bit to silence the warnings.
+Don't use underscores in CamelCase names and drop an unused import.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/x86_64/test_memlock.py | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ tests/functional/aarch64/test_reverse_debug.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/x86_64/test_memlock.py b/tests/functional/x86_64/test_memlock.py
-index 81bce80b0c4..f970a2c3095 100755
---- a/tests/functional/x86_64/test_memlock.py
-+++ b/tests/functional/x86_64/test_memlock.py
-@@ -69,11 +69,13 @@ def get_process_status_values(self, pid: int) -> Dict[str, int]:
-         return result
+diff --git a/tests/functional/aarch64/test_reverse_debug.py b/tests/functional/aarch64/test_reverse_debug.py
+index ec3348c96d8..e9fa4479d73 100755
+--- a/tests/functional/aarch64/test_reverse_debug.py
++++ b/tests/functional/aarch64/test_reverse_debug.py
+@@ -14,11 +14,11 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
  
-     def _get_raw_process_status(self, pid: int) -> str:
-+        status = None
-         try:
--            with open(f'/proc/{pid}/status', 'r') as f:
--                return f.read()
-+            with open(f'/proc/{pid}/status', 'r', encoding="ascii") as f:
-+                status = f.read()
-         except FileNotFoundError:
-             self.skipTest("Can't open status file of the process")
-+        return status
+-from qemu_test import Asset, skipFlakyTest
++from qemu_test import Asset
+ from reverse_debugging import ReverseDebugging
  
  
- if __name__ == '__main__':
+-class ReverseDebugging_AArch64(ReverseDebugging):
++class ReverseDebuggingAArch64(ReverseDebugging):
+ 
+     ASSET_KERNEL = Asset(
+         ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
 -- 
 2.51.1
 
