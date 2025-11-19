@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E0A7CF34A1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1348CF34AE
 	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 13:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLhnw-0001Ub-OV; Wed, 19 Nov 2025 08:01:00 -0500
+	id 1vLhns-0001RF-RQ; Wed, 19 Nov 2025 08:00:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vLhnc-0001K1-VG
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 08:00:41 -0500
+ id 1vLhnc-0001IM-6D
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 08:00:40 -0500
 Received: from inva020.nxp.com ([92.121.34.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vLhna-0002CG-8F
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 08:00:40 -0500
+ id 1vLhna-0002CB-89
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 08:00:39 -0500
 Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 45D9E1A4022;
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 980B61A3BC0;
  Wed, 19 Nov 2025 14:00:33 +0100 (CET)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 0F2381A0880;
+ by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6125B1A0880;
  Wed, 19 Nov 2025 14:00:33 +0100 (CET)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 85AAF180026F;
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id D7FBB1800241;
  Wed, 19 Nov 2025 21:00:32 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCHv3 10/13] hw/arm/fsl-imx8mm: Adding support for General Purpose
- Timers
-Date: Wed, 19 Nov 2025 18:30:24 +0530
-Message-Id: <20251119130027.3312971-11-gaurav.sharma_7@nxp.com>
+Subject: [PATCHv3 11/13] hw/arm/fsl-imx8mm: Adding support for ENET ethernet
+ controller
+Date: Wed, 19 Nov 2025 18:30:25 +0530
+Message-Id: <20251119130027.3312971-12-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251119130027.3312971-1-gaurav.sharma_7@nxp.com>
 References: <20251119130027.3312971-1-gaurav.sharma_7@nxp.com>
@@ -68,253 +68,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It enables emulation of GPT in iMX8MM
-Added GPT IRQ lines
+It enables emulation of ENET ethernet controller in iMX8MM
+Enables testing and debugging of network dependent drivers
+Added ENET MAC IRQ lines
 
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
  docs/system/arm/imx8mm-evk.rst |  1 +
  hw/arm/Kconfig                 |  1 +
- hw/arm/fsl-imx8mm.c            | 53 ++++++++++++++++++++++++++++++++++
- hw/timer/imx_gpt.c             | 26 +++++++++++++++++
- include/hw/arm/fsl-imx8mm.h    | 11 +++++++
- include/hw/timer/imx_gpt.h     |  2 ++
- 6 files changed, 94 insertions(+)
+ hw/arm/fsl-imx8mm.c            | 24 ++++++++++++++++++++++++
+ hw/arm/imx8mm-evk.c            |  1 +
+ include/hw/arm/fsl-imx8mm.h    |  8 ++++++++
+ 5 files changed, 35 insertions(+)
 
 diff --git a/docs/system/arm/imx8mm-evk.rst b/docs/system/arm/imx8mm-evk.rst
-index b7034ff472..96981bf27d 100644
+index 96981bf27d..c8445099e8 100644
 --- a/docs/system/arm/imx8mm-evk.rst
 +++ b/docs/system/arm/imx8mm-evk.rst
-@@ -18,6 +18,7 @@ The ``imx8mm-evk`` machine implements the following devices:
+@@ -14,6 +14,7 @@ The ``imx8mm-evk`` machine implements the following devices:
+  * 4 UARTs
+  * 3 USDHC Storage Controllers
+  * 1 Designware PCI Express Controller
++ * 1 Ethernet Controller
+  * 5 GPIO Controllers
   * 6 I2C Controllers
   * 3 SPI Controllers
-  * 3 Watchdogs
-+ * 6 General Purpose Timers
-  * Secure Non-Volatile Storage (SNVS) including an RTC
-  * Clock Tree
- 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 9498a96f30..733baea384 100644
+index 733baea384..d41d03d728 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -635,6 +635,7 @@ config FSL_IMX8MM
+@@ -634,6 +634,7 @@ config FSL_IMX8MM
+     select FSL_IMX8MM_ANALOG
      select FSL_IMX8MM_CCM
      select IMX
++    select IMX_FEC
      select IMX_I2C
-+    select OR_IRQ
+     select OR_IRQ
      select SDHCI
-     select PCI_EXPRESS_DESIGNWARE
-     select PCI_EXPRESS_FSL_IMX8M_PHY
 diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 0a3e057bf3..e5599b1c48 100644
+index e5599b1c48..7be0bb8664 100644
 --- a/hw/arm/fsl-imx8mm.c
 +++ b/hw/arm/fsl-imx8mm.c
-@@ -177,6 +177,13 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
+@@ -209,6 +209,8 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
      }
  
-+    for (i = 0; i < FSL_IMX8MM_NUM_GPTS; i++) {
-+        g_autofree char *name = g_strdup_printf("gpt%d", i + 1);
-+        object_initialize_child(obj, name, &s->gpt[i], TYPE_IMX8MM_GPT);
-+    }
-+    object_initialize_child(obj, "gpt5-gpt6-irq", &s->gpt5_gpt6_irq,
-+                            TYPE_OR_IRQ);
++    object_initialize_child(obj, "eth0", &s->enet, TYPE_IMX_ENET);
 +
-     for (i = 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
-         g_autofree char *name = g_strdup_printf("i2c%d", i + 1);
-         object_initialize_child(obj, name, &s->i2c[i], TYPE_IMX_I2C);
-@@ -370,6 +377,52 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, serial_table[i].irq));
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
+     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
+                             TYPE_FSL_IMX8M_PCIE_PHY);
+@@ -532,6 +534,21 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, spi_table[i].irq));
      }
  
-+    /* GPTs */
-+    object_property_set_int(OBJECT(&s->gpt5_gpt6_irq), "num-lines", 2,
-+                            &error_abort);
-+    if (!qdev_realize(DEVICE(&s->gpt5_gpt6_irq), NULL, errp)) {
++    /* ENET1 */
++    object_property_set_uint(OBJECT(&s->enet), "phy-num", s->phy_num,
++                             &error_abort);
++    object_property_set_uint(OBJECT(&s->enet), "tx-ring-num", 3, &error_abort);
++    qemu_configure_nic_device(DEVICE(&s->enet), true, NULL);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->enet), errp)) {
 +        return;
 +    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->enet), 0,
++                    fsl_imx8mm_memmap[FSL_IMX8MM_ENET1].addr);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 0,
++                       qdev_get_gpio_in(gicdev, FSL_IMX8MM_ENET1_MAC_IRQ));
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->enet), 1,
++                       qdev_get_gpio_in(gicdev, FSL_IMX6_ENET1_MAC_1588_IRQ));
 +
-+    qdev_connect_gpio_out(DEVICE(&s->gpt5_gpt6_irq), 0,
-+                          qdev_get_gpio_in(gicdev, FSL_IMX8MM_GPT5_GPT6_IRQ));
-+
-+    for (i = 0; i < FSL_IMX8MM_NUM_GPTS; i++) {
-+        hwaddr gpt_addrs[FSL_IMX8MM_NUM_GPTS] = {
-+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT1].addr,
-+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT2].addr,
-+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT3].addr,
-+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT4].addr,
-+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT5].addr,
-+            fsl_imx8mm_memmap[FSL_IMX8MM_GPT6].addr,
-+        };
-+
-+        s->gpt[i].ccm = IMX_CCM(&s->ccm);
-+
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpt[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpt[i]), 0, gpt_addrs[i]);
-+
-+        if (i < FSL_IMX8MM_NUM_GPTS - 2) {
-+            static const unsigned int gpt_irqs[FSL_IMX8MM_NUM_GPTS - 2] = {
-+                FSL_IMX8MM_GPT1_IRQ,
-+                FSL_IMX8MM_GPT2_IRQ,
-+                FSL_IMX8MM_GPT3_IRQ,
-+                FSL_IMX8MM_GPT4_IRQ,
-+            };
-+
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpt[i]), 0,
-+                               qdev_get_gpio_in(gicdev, gpt_irqs[i]));
-+        } else {
-+            int irq = i - FSL_IMX8MM_NUM_GPTS + 2;
-+
-+            sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpt[i]), 0,
-+                               qdev_get_gpio_in(DEVICE(&s->gpt5_gpt6_irq), irq));
-+        }
-+    }
-+
-     /* I2Cs */
-     for (i = 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
-         static const struct {
-diff --git a/hw/timer/imx_gpt.c b/hw/timer/imx_gpt.c
-index 8c7cbfdeac..5eba637f7d 100644
---- a/hw/timer/imx_gpt.c
-+++ b/hw/timer/imx_gpt.c
-@@ -6,6 +6,7 @@
-  * Originally written by Hans Jiang
-  * Updated by Peter Chubb
-  * Updated by Jean-Christophe Dubois <jcd@tribudubois.net>
-+ * Updated by Gaurav Sharma <gaurav.sharma_7@nxp.com>
-  *
-  * This code is licensed under GPL version 2 or later.  See
-  * the COPYING file in the top-level directory.
-@@ -137,6 +138,17 @@ static const IMXClk imx8mp_gpt_clocks[] = {
-     CLK_NONE,      /* 111 not defined */
- };
- 
-+static const IMXClk imx8mm_gpt_clocks[] = {
-+    CLK_NONE,      /* 000 No clock source */
-+    CLK_IPG,       /* 001 ipg_clk, 532MHz */
-+    CLK_IPG_HIGH,  /* 010 ipg_clk_highfreq */
-+    CLK_EXT,       /* 011 External clock */
-+    CLK_32k,       /* 100 ipg_clk_32k */
-+    CLK_HIGH,      /* 101 ipg_clk_16M */
-+    CLK_NONE,      /* 110 not defined */
-+    CLK_NONE,      /* 111 not defined */
-+};
-+
- /* Must be called from within ptimer_transaction_begin/commit block */
- static void imx_gpt_set_freq(IMXGPTState *s)
- {
-@@ -570,6 +582,13 @@ static void imx8mp_gpt_init(Object *obj)
-     s->clocks = imx8mp_gpt_clocks;
+     /* SNVS */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+         return;
+@@ -594,6 +611,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_GIC_REDIST:
+         case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
+         case FSL_IMX8MM_ECSPI1 ... FSL_IMX8MM_ECSPI3:
++        case FSL_IMX8MM_ENET1:
+         case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
+         case FSL_IMX8MM_PCIE1:
+         case FSL_IMX8MM_PCIE_PHY1:
+@@ -614,10 +632,16 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     }
  }
  
-+static void imx8mm_gpt_init(Object *obj)
-+{
-+    IMXGPTState *s = IMX_GPT(obj);
-+
-+    s->clocks = imx8mm_gpt_clocks;
-+}
-+
- static const TypeInfo imx25_gpt_info = {
-     .name = TYPE_IMX25_GPT,
-     .parent = TYPE_SYS_BUS_DEVICE,
-@@ -608,6 +627,12 @@ static const TypeInfo imx8mp_gpt_info = {
-     .instance_init = imx8mp_gpt_init,
- };
- 
-+static const TypeInfo imx8mm_gpt_info = {
-+    .name = TYPE_IMX8MM_GPT,
-+    .parent = TYPE_IMX25_GPT,
-+    .instance_init = imx8mm_gpt_init,
++static const Property fsl_imx8mm_properties[] = {
++    DEFINE_PROP_UINT32("fec1-phy-num", FslImx8mmState, phy_num, 0),
++    DEFINE_PROP_BOOL("fec1-phy-connected", FslImx8mmState, phy_connected, true),
 +};
 +
- static void imx_gpt_register_types(void)
+ static void fsl_imx8mm_class_init(ObjectClass *oc, const void *data)
  {
-     type_register_static(&imx25_gpt_info);
-@@ -616,6 +641,7 @@ static void imx_gpt_register_types(void)
-     type_register_static(&imx6ul_gpt_info);
-     type_register_static(&imx7_gpt_info);
-     type_register_static(&imx8mp_gpt_info);
-+    type_register_static(&imx8mm_gpt_info);
- }
+     DeviceClass *dc = DEVICE_CLASS(oc);
  
- type_init(imx_gpt_register_types)
++    device_class_set_props(dc, fsl_imx8mm_properties);
+     dc->realize = fsl_imx8mm_realize;
+ 
+     dc->desc = "i.MX 8MM SoC";
+diff --git a/hw/arm/imx8mm-evk.c b/hw/arm/imx8mm-evk.c
+index 1366f84d4a..d57b56d1d5 100644
+--- a/hw/arm/imx8mm-evk.c
++++ b/hw/arm/imx8mm-evk.c
+@@ -77,6 +77,7 @@ static void imx8mm_evk_init(MachineState *machine)
+     };
+ 
+     s = FSL_IMX8MM(object_new(TYPE_FSL_IMX8MM));
++    object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
+     object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+ 
 diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 7107e932c6..6b70be81d2 100644
+index 6b70be81d2..356627ab82 100644
 --- a/include/hw/arm/fsl-imx8mm.h
 +++ b/include/hw/arm/fsl-imx8mm.h
-@@ -17,10 +17,12 @@
+@@ -17,6 +17,7 @@
  #include "hw/misc/imx7_snvs.h"
  #include "hw/misc/imx8mm_analog.h"
  #include "hw/misc/imx8mm_ccm.h"
-+#include "hw/or-irq.h"
++#include "hw/net/imx_fec.h"
+ #include "hw/or-irq.h"
  #include "hw/pci-host/designware.h"
  #include "hw/pci-host/fsl_imx8m_phy.h"
- #include "hw/sd/sdhci.h"
- #include "hw/ssi/imx_spi.h"
-+#include "hw/timer/imx_gpt.h"
- #include "hw/watchdog/wdt_imx2.h"
- #include "qom/object.h"
- #include "qemu/units.h"
-@@ -35,6 +37,7 @@ enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_CPUS         = 4,
-     FSL_IMX8MM_NUM_ECSPIS       = 3,
-     FSL_IMX8MM_NUM_GPIOS        = 5,
-+    FSL_IMX8MM_NUM_GPTS         = 6,
-     FSL_IMX8MM_NUM_I2CS         = 4,
-     FSL_IMX8MM_NUM_IRQS         = 128,
-     FSL_IMX8MM_NUM_UARTS        = 4,
-@@ -47,6 +50,7 @@ struct FslImx8mmState {
- 
-     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
-     GICv3State         gic;
-+    IMXGPTState        gpt[FSL_IMX8MM_NUM_GPTS];
-     IMXGPIOState       gpio[FSL_IMX8MM_NUM_GPIOS];
-     IMX8MMCCMState     ccm;
-     IMX8MMAnalogState  analog;
-@@ -58,6 +62,7 @@ struct FslImx8mmState {
+@@ -58,11 +59,15 @@ struct FslImx8mmState {
+     IMXSPIState        spi[FSL_IMX8MM_NUM_ECSPIS];
+     IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
+     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
++    IMXFECState        enet;
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
      IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
      DesignwarePCIEHost pcie;
      FslImx8mPciePhyState   pcie_phy;
-+    OrIRQState         gpt5_gpt6_irq;
+     OrIRQState         gpt5_gpt6_irq;
++
++    uint32_t           phy_num;
++    bool               phy_connected;
  };
  
  enum FslImx8mmMemoryRegions {
-@@ -190,6 +195,12 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_I2C3_IRQ     = 37,
-     FSL_IMX8MM_I2C4_IRQ     = 38,
+@@ -216,6 +221,9 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_WDOG2_IRQ    = 79,
+     FSL_IMX8MM_WDOG3_IRQ    = 10,
  
-+    FSL_IMX8MM_GPT1_IRQ      = 55,
-+    FSL_IMX8MM_GPT2_IRQ      = 54,
-+    FSL_IMX8MM_GPT3_IRQ      = 53,
-+    FSL_IMX8MM_GPT4_IRQ      = 52,
-+    FSL_IMX8MM_GPT5_GPT6_IRQ = 51,
++    FSL_IMX8MM_ENET1_MAC_IRQ    = 118,
++    FSL_IMX6_ENET1_MAC_1588_IRQ = 121,
 +
-     FSL_IMX8MM_GPIO1_LOW_IRQ  = 64,
-     FSL_IMX8MM_GPIO1_HIGH_IRQ = 65,
-     FSL_IMX8MM_GPIO2_LOW_IRQ  = 66,
-diff --git a/include/hw/timer/imx_gpt.h b/include/hw/timer/imx_gpt.h
-index 5488f7e4df..379ee5de75 100644
---- a/include/hw/timer/imx_gpt.h
-+++ b/include/hw/timer/imx_gpt.h
-@@ -6,6 +6,7 @@
-  * Originally written by Hans Jiang
-  * Updated by Peter Chubb
-  * Updated by Jean-Christophe Dubois <jcd@tribudubois.net>
-+ * Updated by Gaurav Sharma <gaurav.sharma_7@nxp.com>
-  *
-  * Permission is hereby granted, free of charge, to any person obtaining a copy
-  * of this software and associated documentation files (the "Software"), to deal
-@@ -81,6 +82,7 @@
- #define TYPE_IMX6UL_GPT "imx6ul.gpt"
- #define TYPE_IMX7_GPT "imx7.gpt"
- #define TYPE_IMX8MP_GPT "imx8mp.gpt"
-+#define TYPE_IMX8MM_GPT "imx8mm.gpt"
- 
- #define TYPE_IMX_GPT TYPE_IMX25_GPT
- 
+     FSL_IMX8MM_PCI_INTA_IRQ = 122,
+     FSL_IMX8MM_PCI_INTB_IRQ = 123,
+     FSL_IMX8MM_PCI_INTC_IRQ = 124,
 -- 
 2.34.1
 
