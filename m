@@ -4,67 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3331CF34B0
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 13:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B859CF34B2
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 14:02:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLieL-0001nr-3b; Wed, 19 Nov 2025 08:55:10 -0500
+	id 1vLikL-0000Wo-Cz; Wed, 19 Nov 2025 09:01:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiyuan.plct@isrc.iscas.ac.cn>)
- id 1vLgLh-0007xG-Dt; Wed, 19 Nov 2025 06:27:45 -0500
-Received: from smtp21.cstnet.cn ([159.226.251.21] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <zhiyuan.plct@isrc.iscas.ac.cn>)
- id 1vLgLe-0007l3-GK; Wed, 19 Nov 2025 06:27:45 -0500
-Received: from chenxiaoou-ubuntu-02.. (unknown [210.73.43.101])
- by APP-01 (Coremail) with SMTP id qwCowAD3js6gqR1pq9FAAQ--.30793S2;
- Wed, 19 Nov 2025 19:27:29 +0800 (CST)
-From: TravisYang <zhiyuan.plct@isrc.iscas.ac.cn>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: =?UTF-8?q?=E6=9D=A8=E6=99=BA=E6=BA=90?= <zhiyuan.plct@isrc.iscas.ac.cn>,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v1] target/riscv: add support for RV64 THEAD C910 CPU
-Date: Wed, 19 Nov 2025 11:27:24 +0000
-Message-Id: <20251119112724.1342110-1-zhiyuan.plct@isrc.iscas.ac.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vLikJ-0000OH-2a; Wed, 19 Nov 2025 09:01:19 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vLikG-0006FJ-Ee; Wed, 19 Nov 2025 09:01:18 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AJ40VMt014162;
+ Wed, 19 Nov 2025 14:01:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4gqlMW
+ nkBOJXqOu3AxvpWE2hOBlYH6otz5slXWkIUKc=; b=WzupwgVh0Qjo5ltXoHXWNk
+ 0P5frtWsOXygW3epzPgBBQyC+BB510RUYE9brLFZGDy3qTUJeRD3QiBotTjw1D0o
+ 7KT2QzYxvPJ1QrFIdoQ3irm9J7Qz/7MevDgx5Gcsqp8TWIYpqXIH0POQ6QuKD3YX
+ VdineHXvT7Ed8RbiPEn54jBxIvIqfDT08VDn0nOZzrYvQHCPH94uLi/Au4ap+bkM
+ /gvevUQmgw9kGeaYvsSqZKdeIwXca3xAmgHS8518bg/3hoB4aqojFeIY/U1LENB9
+ xratzJqSp6jDU5GI6d4x/jVYtQ2/5H4MA1dx4/rOC7uICBZUHf6g1WQB3L+3Uo3w
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aejka0r8b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Nov 2025 14:01:04 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AJBOAxW005231;
+ Wed, 19 Nov 2025 14:01:03 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4af5bk8xk5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Nov 2025 14:01:03 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5AJE12Oc31392460
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 19 Nov 2025 14:01:02 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1837258056;
+ Wed, 19 Nov 2025 14:01:02 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6875658052;
+ Wed, 19 Nov 2025 14:01:01 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.147.101]) by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 19 Nov 2025 14:01:01 +0000 (GMT)
+Message-ID: <dcea76416ffe30278bad0cec5c4a009d63cabf3b.camel@linux.ibm.com>
+Subject: Re: [PATCH v3] hw/s390x: Fix a possible crash with passed-through
+ virtio devices
+From: Eric Farman <farman@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Matthew Rosato	 <mjrosato@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
+ =?ISO-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
+ Cornelia Huck <cohuck@redhat.com>
+Date: Wed, 19 Nov 2025 09:01:01 -0500
+In-Reply-To: <e399cffc-155c-4846-9c68-5f449ab9a6f4@redhat.com>
+References: <20251118174047.73103-1-thuth@redhat.com>
+ <8fd35be2f4d424f0093110a050c7e29830561012.camel@linux.ibm.com>
+ <e399cffc-155c-4846-9c68-5f449ab9a6f4@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qwCowAD3js6gqR1pq9FAAQ--.30793S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxAF4UWr1UAF4UCr43ZF18Xwb_yoW5XrW8pr
- 15GFZ0k34DJFZrtws3JFWDXrn5Wr4ru3yIg3sxZ3ZrGr4akFW3Jrn7JrWDGr4vqF1rJ3WF
- gr18Cw15Gws0qa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUU9Y14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
- rVWUuVWrJwAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
- 1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
- 6r4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
- 4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
- I7IYx2IY67AKxVWUJVWUGwAv7VCY1x0262k0Y48FwI0_Jr0_Gr1lYx0Ex4A2jsIE14v26F
- 4j6r4UJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS
- 5cI20VAGYxC7MxkF7I0En4kS14v26r126r1DMxAIw28IcxkI7VAKI48JMxC20s026xCaFV
- Cjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWl
- x4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r
- 1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_
- JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCT
- nIWIevJa73UjIFyTuYvjfUYWrWUUUUU
-X-Originating-IP: [210.73.43.101]
-X-CM-SenderInfo: 52kl53ddqo1z1fw6x21ufox2xfdvhtffof0/
-Received-SPF: pass client-ip=159.226.251.21;
- envelope-from=zhiyuan.plct@isrc.iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 1OFyaIcCCTz9tBuronckv-mOOgq3rKiQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE1MDAzMiBTYWx0ZWRfX0tcsbmDB0J2z
+ ybQuz0+uSioL/YFQcCbel/Wpkelyp8RFbR8qBXnTofOeQuOKEIw2yFrFOIo5sybL28/1BEZlZIP
+ p/R8Bv+AsHmzsQYrCLDcfZovTkg7NRH2gBg15+VxNTePonhlPBCFz+Z5hZBiz73WXluxlhuHPgM
+ xn/wQpJZ1CVtUxvkblRO7XGc6M/6GciP4RxE2FTco98XCyVikObLko0y1fHlS9toM2l8eNuvVnL
+ 0PlgSPZecDsLkQ4NqO9qwEg3f7tWZ6nNzKpScmErPhdtO8U3tIsSO2l7x/ztwW4qQnYxb7KCCGH
+ +80Di6fGfAAe8p4knoo6j//B9LbRs2xYZcyb3QUGlaCFvsDA8IsTpd7U5nRDAArJGUDIOt+L6gz
+ 60v6JEaaeUzL/i8+Ju//sSTi+8S38g==
+X-Proofpoint-ORIG-GUID: 1OFyaIcCCTz9tBuronckv-mOOgq3rKiQ
+X-Authority-Analysis: v=2.4 cv=XtL3+FF9 c=1 sm=1 tr=0 ts=691dcda0 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=Pjb7V9Cc-weC0biJHUsA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-19_04,2025-11-18_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ adultscore=0 lowpriorityscore=0 phishscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511150032
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 19 Nov 2025 08:54:55 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,89 +124,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: 杨智源 <zhiyuan.plct@isrc.iscas.ac.cn>
+On Wed, 2025-11-19 at 08:33 +0100, Thomas Huth wrote:
+> On 18/11/2025 22.45, Eric Farman wrote:
+> > On Tue, 2025-11-18 at 18:40 +0100, Thomas Huth wrote:
+> > > From: Thomas Huth <thuth@redhat.com>
+> > >=20
+> > > Consider the following nested setup: An L1 host uses some virtio devi=
+ce
+> > > (e.g. virtio-keyboard) for the L2 guest, and this L2 guest passes thi=
+s
+> > > device through to the L3 guest. Since the L3 guest sees a virtio devi=
+ce,
+> > > it might send virtio notifications to the QEMU in L2 for that device.
+> > > But since the QEMU in L2 defined this device as vfio-ccw, the functio=
+n
+> > > handle_virtio_ccw_notify() cannot handle this and crashes: It calls
+> > > virtio_ccw_get_vdev() that casts sch->driver_data into a VirtioCcwDev=
+ice,
+> > > but since "sch" belongs to a vfio-ccw device, that driver_data rather
+> > > points to a CcwDevice instead. So as soon as QEMU tries to use some
+> > > VirtioCcwDevice specific data from that device, we've lost.
+> > >=20
+> > > We must not take virtio notifications for such devices. Thus fix the
+> > > issue by adding a check to the handle_virtio_ccw_notify() handler to
+> > > refuse all devices that are not our own virtio devices. Like in the
+> > > other branches that detect wrong settings, we return -EINVAL from the
+> > > function, which will later be placed in GPR2 to inform the guest abou=
+t
+> > > the error.
+> >=20
+> > I still think this is a good idea, but of course "let's try it" got me =
+into the weeds. I
+> > reconstructed a configuration (dasd->virtio-blk-ccw->vfio-ccw->virtio-b=
+lk-ccw) that crashes the
+> > nested guest upon startup with today's master. Applying this patch gene=
+rates that message to point
+> > out where it's broken (yay!), but the nested guest hangs during boot. N=
+eed to ponder this more
+> > tomorrow.
+>=20
+> FWIW, we only tried to passthrough a virtio-input device to the L3 guest,=
+ we=20
+> did not try a virtio-blk device here ... so that might be the reason why =
+I=20
+> did not see any further hangs after applying my fix.
 
-Add a CPU entry for the RV64 THEAD C910 CPU which supports single-core
-and dual-core configurations.More details can be found at
-https://www.xrvm.cn/product/xuantie/C910?spm=a2d5.28054257.0.0.4a0f7a32qXoU1w
+Ah, that could be. Well, as you and Halil discussed in v2, there's more tha=
+t can be done on top but
+since this solves the guest crashes:
 
-Signed-off-by: TravisYang <zhiyuan.plct@isrc.iscas.ac.cn>
----
- target/riscv/cpu-qom.h |  1 +
- target/riscv/cpu.c     | 47 ++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Tested-by: Eric Farman <farman@linux.ibm.com>
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 75f4e43408..1fc8140190 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -56,6 +56,7 @@
- #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
- #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
- #define TYPE_RISCV_CPU_XIANGSHAN_KMH    RISCV_CPU_TYPE_NAME("xiangshan-kunminghu")
-+#define TYPE_RISCV_CPU_THEAD_C910       RISCV_CPU_TYPE_NAME("thead-c910")
- #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
- 
- OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index ae8b721e55..f522bc856b 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -3281,6 +3281,53 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.max_satp_mode = VM_1_10_SV48,
-     ),
- 
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C910, TYPE_RISCV_VENDOR_CPU,
-+        .misa_mxl_max = MXL_RV64,
-+        .misa_ext = RVG | RVC | RVS | RVU,
-+        .priv_spec = PRIV_VERSION_1_12_0,
-+
-+        .cfg.ext_zcf = true,
-+        .cfg.ext_zcd = true,
-+        .cfg.ext_zfa = true,
-+        .cfg.ext_zfh = true,
-+        .cfg.ext_zfhmin = true,
-+
-+        .cfg.mmu = true,
-+        .cfg.ext_xtheadba = true,
-+        .cfg.ext_xtheadbb = true,
-+        .cfg.ext_xtheadbs = true,
-+        .cfg.ext_xtheadcmo = true,
-+        .cfg.ext_xtheadcondmov = true,
-+        .cfg.ext_xtheadfmemidx = true,
-+        .cfg.ext_xtheadmac = true,
-+        .cfg.ext_xtheadmemidx = true,
-+        .cfg.ext_xtheadmempair = true,
-+        .cfg.ext_xtheadsync = true,
-+        .cfg.pmp = true,
-+
-+        .cfg.ext_svinval = true,
-+        .cfg.ext_svadu = true,
-+        .cfg.ext_zicbom = true,
-+        .cfg.ext_zicboz = true,
-+
-+        .cfg.ext_zba = true,
-+        .cfg.ext_zbb = true,
-+        .cfg.ext_zbc = true,
-+        .cfg.ext_zbs = true,
-+
-+        .cfg.ext_zknd = true,
-+        .cfg.ext_zkne = true,
-+        .cfg.ext_zknh = true,
-+
-+        .cfg.mvendorid = THEAD_VENDOR_ID,
-+
-+        .cfg.max_satp_mode = VM_1_10_SV39,
-+#ifndef CONFIG_USER_ONLY
-+        .custom_csrs = th_csr_list,
-+#endif
-+    ),
-+
-+
- #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
-         .cfg.max_satp_mode = VM_1_10_SV57,
--- 
-2.34.1
-
+>=20
+>   Thomas
 
