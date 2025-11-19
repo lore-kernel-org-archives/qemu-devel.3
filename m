@@ -4,147 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27816CF6487
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 22:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9DB4CF6489
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 23:04:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLqfU-0006Tl-DW; Wed, 19 Nov 2025 17:28:53 -0500
+	id 1vLrDJ-0006Od-FX; Wed, 19 Nov 2025 18:03:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLqfP-0006T6-3h
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 17:28:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vLrDH-0006OO-QJ
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 18:03:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLqfM-00010j-Uh
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 17:28:46 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vLrDF-00065T-Dk
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 18:03:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763591322;
+ s=mimecast20190719; t=1763593423;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=N/Cm/PV/41Zna1tQB0q52TvZpnbnsrwm38rZij0xfl0=;
- b=BNyPoVqZ40f0/G9KpCfKKQpjc/XHfxyMtsBMwIyqnHbn2AD9aJ17KvfmaTUttIQYr9Y4If
- Qe95gb+6+yIU/0MGSxC0n3HWenw/WayEDTOWoXJp6adgTK0JTCdVfEWbjwqCyDmwrk6lwI
- 1ObshjBDpiImuEzz19M3x1NoqFfwJ+Y=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=uaQN5vrD2V/uuFimblLdl9mjPqM/AA9UrSHNv0IuIto=;
+ b=MkGoiH+V3QEO639Sz4xxlatJxL0sWZ6EJxUgnYxzRfXjQaHZxJ/plJd3iNWpTw/cRiQiDJ
+ v3OLJ8nrmQ+Z6pF5Ip7kq2VfCx/84kVRVXRAS/l/vSl2PugS769jk2iveADQqisIlWSvWu
+ fzlQesgHtjb6uOS1dTFlpm3f5YJiRUQ=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-ATu0scvRORKJ3w_dzwJWSQ-1; Wed, 19 Nov 2025 17:28:40 -0500
-X-MC-Unique: ATu0scvRORKJ3w_dzwJWSQ-1
-X-Mimecast-MFC-AGG-ID: ATu0scvRORKJ3w_dzwJWSQ_1763591319
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-42b2ad2a58cso91057f8f.0
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 14:28:39 -0800 (PST)
+ us-mta-686-Ax3wh9SMOKKsEENfrNciyw-1; Wed, 19 Nov 2025 18:03:39 -0500
+X-MC-Unique: Ax3wh9SMOKKsEENfrNciyw-1
+X-Mimecast-MFC-AGG-ID: Ax3wh9SMOKKsEENfrNciyw_1763593419
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-787cf398a53so3707797b3.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 15:03:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763591319; x=1764196119; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=N/Cm/PV/41Zna1tQB0q52TvZpnbnsrwm38rZij0xfl0=;
- b=FKLdy1Q7BjNMJ/zZzQAa0RWR9GQSl7BdWt8zFNMWs2rL7cobhbkgyXBQJ9GCi5/Zdt
- 1DmAaucsLA8+20npjhBJbOD/zmBCC7aWGpamqR96jRUn1QWxm6mfVTngXFUIvkPX1/s9
- 3ezi1TQFQQhh9MA2o35p6kUg3O1icOb/KPKuEAxtix53ClvskSUKilQL+3vMlmYXQxFV
- OjqAMjpakSBOqKaVXGmFbPugKbWjeXKuJut9WK+GvcNJT/LwvVuR5P3mi/NclYs1/CIz
- atGoZYzRQbiogoilP0sSpmNqgJOsms8goPeANafh2YoIqtVwCxdUK42sDw9N6WghMyO9
- HfsA==
+ d=redhat.com; s=google; t=1763593419; x=1764198219; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=uaQN5vrD2V/uuFimblLdl9mjPqM/AA9UrSHNv0IuIto=;
+ b=Km10fHnJJ2Eb+hFO1K3G1pEIRcAE3LN+UL+urDHY5ootBISlFqUEx+S275uME2mwR0
+ eF4kTJTGiLSqIbOIlfg/iLzQ8lUu5v9k/En5tvJk4umhBlVnuzX37lhiW3SqbAf/56kR
+ BWiJBPqkDDPcgoz4PHuHebAyhz4y6FuDRFfF8E5gcM9Wdq6NAdgvqhX1EMPkMQkgyagc
+ 9uEMemEpe/zW/cHGnIPhmdtaSMnzw3qtaRmFMGqvKQn7yotq+9VGLdFx4wPySv2pcxB7
+ NZgXAl/IBWJuEFkWDPlT04XnxL+L+YbYgHm5HtXnS0uyaGhBTFYUslu5Xmz6Dm1CA34A
+ 7WzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763591319; x=1764196119;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1763593419; x=1764198219;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N/Cm/PV/41Zna1tQB0q52TvZpnbnsrwm38rZij0xfl0=;
- b=hnG+g61byFbWOjkOxJPrltwnnPsN3AWb+sHrbmOa4vHwvHeZGUzlcmi38nrBbMf+JM
- BVQU/W/f1YhK+Bhi8yU6ETTNKaL7iaZ8Lt76tZW/8wqOKNy6cUCweg7+gQ98Lt5SuAwb
- AmrlFCrmolq78k2Pgkj3jwnIXJ8QqvaKQEH6Ug7/xCal7GMU0z4LErOFG1kQ2XZeWHPl
- 7phHGKORRsDHoz8YTtFVn54Hu75Gi3hUDGC+LnGGItS3t1TRmtHHOHsQS0aLJLXHLjf8
- RhkFM6f16szoeUWoWD6RAkuPjXMI1bHNu7KHcY2CpdrVsqREcwqDYZhdi/IU60HHMih/
- x7eA==
-X-Gm-Message-State: AOJu0YzQo16OAdAQeGb00C4lT6sv3+XneFfshi7c4JcaP+kjGEP0fsVA
- ZXh3+T8+fVunFm+z7iJRbeHVg36JqzukOUSx//eAE+BjdEXa70gkTVqgm2GAh33p3DXhJiw4cdv
- UBCPwnwR/FA01bI13O1qiFQE95iWxvdZCsUcq8LUZfe7HYkvglLgtNbdq
-X-Gm-Gg: ASbGncuIZ8fBRZTqwk1vjBsJtKHwdMrP3JY+RZBen7k7WY0C0613XSEQDvAKa78g47u
- kHvpAJnwWpeg4M7ZBR3TbsXjwtIW4XAuTomVh7alY51uTKPBR/Trro6Y6D6f64Kso9S1p6oyMaV
- 0I/7mpOM36QuJvmzyWsq7dqoJInH3tE3njRYYSYoZjkhuYbTpPbB+KKLC1EE95w8KAn7EXaAOqp
- kFVaUAl6SBny8jzbSnFbP91vh/tFEGqRPL79Kv5Um41/TOmkex7Rl+gX/TG2G0p9OSCMVP2bUFI
- RMgmbD+sVGva4XQLc7iLsJFc5KcSIAIdBngMXvPTGCThg+xDeim4jp0DjRWGAFzyS6qorZRqjL+
- dpKXYJX6gMAoI0zE/8MgfU252VHBspkh+hXNE1LorFQ3Tu7a0Tc0NbmEvJ4Tn1rtuH6E9FBeHb4
- cw+3HkgPPQa6GJ+Bs=
-X-Received: by 2002:a05:6000:2385:b0:42b:41dc:1b5d with SMTP id
- ffacd0b85a97d-42cb9a0bdf0mr360308f8f.25.1763591318781; 
- Wed, 19 Nov 2025 14:28:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEUv9WjeaAxngoexi4ww9b7KWOrfXw/ZpMWF9C6McfRh4wRXJElDz62UUL7iTkrYl+kIXO8Hw==
-X-Received: by 2002:a05:6000:2385:b0:42b:41dc:1b5d with SMTP id
- ffacd0b85a97d-42cb9a0bdf0mr360295f8f.25.1763591318406; 
- Wed, 19 Nov 2025 14:28:38 -0800 (PST)
-Received: from [192.168.10.81] ([176.206.119.13])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fd8baesm1478117f8f.39.2025.11.19.14.28.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Nov 2025 14:28:37 -0800 (PST)
-Message-ID: <91bf0b22-33c4-46f7-95fa-f634eb069ea7@redhat.com>
-Date: Wed, 19 Nov 2025 23:28:31 +0100
+ bh=uaQN5vrD2V/uuFimblLdl9mjPqM/AA9UrSHNv0IuIto=;
+ b=pTxHu8z/uCvnfdgABxlPbSG3vONGU7m86GX4cLFYVQUhz3Tib0t9Flx9dweOaoVIe9
+ bNJdOBxCPWXlY5sKVxGINMZ7T3Db9FTRir+m1tdOb3J/RswofU085GTpQomWqSjARNNF
+ qdwbXAD4no1/CU4edFiTeVUBkTThV3d3gC6M2fAS09zUpNxSEkVjl1XpD6Uz7690N+Vk
+ hiVFBoH9StknULMH9tbH0NuSwm7ceinT0TqVYMc1HHC4pTS6gUbcgSGX6AFzAMoh7OkB
+ gZs0hAUSBphg1kIKE8G03XzTmWBGbXrpHw7DunZ4NTXA8rdbg7u/aha1OT65td2z4b6m
+ 8Vmw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRXQBsc4rEueH37x7hDPC6tlT/3ZzGX4orxFpKL5y6Cgdf1OjSRKwinAFvwC56Lb7YjjfK2RLc+N6Q@nongnu.org
+X-Gm-Message-State: AOJu0YyWDDHBgz6V4OdxxJXhFBdNQa2OHwNZTJi8c0fKrd4vUbuRlWaB
+ 2mw8hQBuHe+c48SBs8L8FPcCbYo3Y03k+zZX7fe7lXGpVdXTGaTPncoDYXnnXSHOMG+EKQhxGZX
+ TLuzM2n8Z2kMBObwRvl/P2hiJne1ayHEO/Ki/c0Fow9o5vUbvE7kDhAuYa27acor+R1WuW7Gr4V
+ mFzMIYWdIrzaVxQj3yNSiE2u2ACiE/uhg=
+X-Gm-Gg: ASbGnctO1WZnsQqmU/SgBhmz11A+3VlxMuVbpeZp3HY9gx1zZ2RWBJRLMoJaZnfUR7m
+ mWWi07oZ8CEZKX8iedhfYkrvmI2ynOgLKG3mS6D5mbBEZVOgPH8395oTofSZGKQwgKMDzPYQQP8
+ IY3u3KuRrd+qhlXtD5DIXGmrHPtD06onAXEISXVAMLe83Qj3AGsaboOlNT8GorYlG2DnHo09wxl
+ +XvcuXIK6JISMADjFJKD/ir6Q==
+X-Received: by 2002:a05:690e:4105:b0:63f:a985:a02e with SMTP id
+ 956f58d0204a3-642f7d3401cmr688412d50.3.1763593418761; 
+ Wed, 19 Nov 2025 15:03:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlkdFrk6V/5idmcA1O7iqQzsWeNs7lpZpUF0eaT8CCSyExYi4vEFJaoVMlLsY4Zc/sJYpXQHXHUiZtkj85d54=
+X-Received: by 2002:a05:690e:4105:b0:63f:a985:a02e with SMTP id
+ 956f58d0204a3-642f7d3401cmr688393d50.3.1763593418327; Wed, 19 Nov 2025
+ 15:03:38 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] rust/hpet: remove BqlRefCell around HPETTimer
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-References: <20251117084752.203219-1-pbonzini@redhat.com>
- <20251117084752.203219-4-pbonzini@redhat.com> <aR3fhvpIsXRnQcj8@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <aR3fhvpIsXRnQcj8@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+References: <20251117185131.953681-1-jsnow@redhat.com>
+ <20251117185131.953681-18-jsnow@redhat.com>
+ <aRtyTkIcuoNazF7L@redhat.com>
+ <CABgObfZW5i4nYchoCTKeh7b3cxYSctpxFp=UV2a2V5t=zmDgNw@mail.gmail.com>
+ <CAFn=p-a4_EX7FvobF2f8fH2=ZKemcZvobi0EKV4MpCiQM+TQ+g@mail.gmail.com>
+ <CABgObfY6QPzH0xM+VOeP16Lsi+y9DEeim0tsx+yKXEW2skVPHQ@mail.gmail.com>
+ <6111c59f-42c3-4c6f-8e75-209874d75363@redhat.com>
+In-Reply-To: <6111c59f-42c3-4c6f-8e75-209874d75363@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 19 Nov 2025 18:03:26 -0500
+X-Gm-Features: AWmQ_bkojoGzo8ZlMMpqhRqRZFK3i_HyGoCN-cAKv02yJJ7q1GK8nBocXHqd8x0
+Message-ID: <CAFn=p-Zv0BgUAjh=w8i-R2+73h=KxgPwvEXDLtmPPOU3aAp9uA@mail.gmail.com>
+Subject: Re: [PATCH 17/22] tests: forcibly run 'make check-venv' for crash
+ tests
+To: Thomas Huth <thuth@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ "open list:Block layer core" <qemu-block@nongnu.org>,
+ Cleber Rosa <crosa@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>, Hanna Reitz <hreitz@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Content-Type: multipart/alternative; boundary="0000000000003ad16e0643fa971e"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,64 +129,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/19/25 16:17, Zhao Liu wrote:
->> -    fn init_timer_with_cell(cell: &BqlRefCell<Self>) {
->> -        let mut timer = cell.borrow_mut();
->> -        // SAFETY: HPETTimer is only used as part of HPETState, which is
->> -        // always pinned.
->> -        let qemu_timer = unsafe { Pin::new_unchecked(&mut timer.qemu_timer) };
->> -        qemu_timer.init_full(None, CLOCK_VIRTUAL, Timer::NS, 0, timer_handler, cell);
->> +    fn init_timer(timer: Pin<&mut Self>) {
->> +        Timer::init_full(
->> +            timer,
->> +            None,
->> +            CLOCK_VIRTUAL,
->> +            Timer::NS,
->> +            0,
->> +            timer_handler,
->> +            |t| &mut t.qemu_timer,
->> +        );
->>       }
-> 
-> I find this way could also work for BqlRefCell case:
-> 
->      fn init_timer_with_cell(cell: &mut BqlRefCell<Self>) {
->          // SAFETY: HPETTimer is only used as part of HPETState, which is
->          // always pinned.
->          let timer = unsafe { Pin::new_unchecked(cell) };
->          Timer::init_full(
->              timer,
->              None,
->              CLOCK_VIRTUAL,
->              Timer::NS,
->              0,
->              timer_handler,
->              |t| {
->                  assert!(bql::is_locked());
->                  &mut t.get_mut().qemu_timer
->              },
->          );
->      }
+--0000000000003ad16e0643fa971e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yes, but I'm still not sure what the final shape will be... I don't like 
-this too much.
+On Wed, Nov 19, 2025, 9:15=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote:
 
-> 
-> So any other non-lockless timer can also use this interface to
-> initialize their BqlRefCell<>.
-> 
-> (BTW, I find BqlRefCell::get_mut() / as_ref() missed bql::is_locked().
->   right?)
+> On 19/11/2025 09.05, Paolo Bonzini wrote:
+> >
+> >
+> > Il mar 18 nov 2025, 22:50 John Snow <jsnow@redhat.com
+> > <mailto:jsnow@redhat.com>> ha scritto:
+> >
+> >
+> >
+> >     On Mon, Nov 17, 2025, 3:47=E2=80=AFPM Paolo Bonzini <pbonzini@redha=
+t.com
+> >     <mailto:pbonzini@redhat.com>> wrote:
+> >
+> >
+> >
+> >         Il lun 17 nov 2025, 20:07 Daniel P. Berrang=C3=A9 <
+> berrange@redhat.com
+> >         <mailto:berrange@redhat.com>> ha scritto:
+> >
+> >             On Mon, Nov 17, 2025 at 01:51:25PM -0500, John Snow wrote:
+> >              > In order to convert the existing Makefile target from a
+> manual
+> >              > invocation of mkvenv to one that uses the meson dependen=
+cy
+> >             system, we
+> >              > need to not suppress ninja here.
+> >              >
+> >              > I'm not sure if this creates problems I am not aware of;
+> but
+> >             invoking
+> >              > ninja here is no longer spurious but will become
+> necessary.
+> >
+> >             Yes, this will likely create problems. From the commit
+> message that
+> >             introduced NINJA=3D":"...
+> >
+> >               Avoid it with the same
+> >                  trick that we are using in buildtest-template.yml
+> already
+> >             by disabling
+> >                  the up-to-date check via NINJA=3D":".
+> >
+> >
+> >         Move the check-venv call to buildtest-template.yml, right after
+> >         configure? It's cheap enough.
+> >
+> >         Paolo
+> >
+> >
+> >     What's the root issue here? That there's enough of a time delay
+> between
+> >     the actual configure and the test running that it re-runs configure=
+?
+> >
+> >
+> > That the git repo is cloned again and is therefore newer than the
+> artifacts.
+> > That triggers a full rebuild.
+>
+> Right. At least for the other "functional" and "check-system" jobs in our
+> CI, this was a big issue, calling "make check-functional/qtest/iotest"
+> there
+> triggered a rebuild of all binaries, increasing our CI runtime
+> significantly.
+>
+> For the "crash test" jobs, it was mainly about avoiding to rerun the
+> "configure" step for cosmetical reasons each time the job runs. The
+> rebuild
+> of the qemu binaries is triggered by "make check-iotests/qtests/function"
+> in
+> the other jobs, and not by "make check-venv" alone, so it's not as bad as
+> in
+> the other jobs here:
+> Without your patch, the jobs take about 16 minutes (crash-test-debian) an=
+d
+> 10 minutes (crash-test-fedora):
+>
+>   https://gitlab.com/thuth/qemu/-/jobs/12138792667
+>   https://gitlab.com/thuth/qemu/-/jobs/12138792674
+>
+> With your patch applied:
+>
+>   https://gitlab.com/thuth/qemu/-/jobs/12139438583
+>   https://gitlab.com/thuth/qemu/-/jobs/12139438599
+>
+> the jobs take approx. the same amount of time, so I think it's OK here to
+> drop the NINJA=3D":" again.
+>
+> But I think we should give Paolo's idea a try and move the "make
+> check-venv"
+> to buildtest-template.yml instead. In fact, that might even help to
+> slightly
+> decrease the total runtime of the jobs since all the other "check" jobs
+> don't have to do this again (for example the check-functional jobs are
+> running it, too, see:
+> https://gitlab.com/qemu-project/qemu/-/jobs/12139584312#L1051).
+>
+>   Thomas
+>
 
-as_ptr() doesn't need it because the pointer can be dereferenced later.
+Ah, I see now, thanks! I can think of some remedies for this. No problem.
 
-As to get_mut()... I think if you are the only owner, you should have 
-the guarantee of being able to modify the content freely.  This is true 
-even if your &mut came from interior mutability.
+--0000000000003ad16e0643fa971e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-So, in the above case you only need &mut t.get_mut().qemu_timer.
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 19, 2025, 9:15=E2=80=
+=AFAM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com<=
+/a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
+ 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 19/11/2025 09.05,=
+ Paolo Bonzini wrote:<br>
+&gt; <br>
+&gt; <br>
+&gt; Il mar 18 nov 2025, 22:50 John Snow &lt;<a href=3D"mailto:jsnow@redhat=
+.com" target=3D"_blank" rel=3D"noreferrer">jsnow@redhat.com</a> <br>
+&gt; &lt;mailto:<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=
+=3D"noreferrer">jsnow@redhat.com</a>&gt;&gt; ha scritto:<br>
+&gt; <br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0On Mon, Nov 17, 2025, 3:47=E2=80=AFPM Paolo Bonzini=
+ &lt;<a href=3D"mailto:pbonzini@redhat.com" target=3D"_blank" rel=3D"norefe=
+rrer">pbonzini@redhat.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:pbonzini@redhat.com" t=
+arget=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;&gt; wrote:<=
+br>
+&gt; <br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Il lun 17 nov 2025, 20:07 Daniel P. B=
+errang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com" target=3D"_blank" r=
+el=3D"noreferrer">berrange@redhat.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:berrange=
+@redhat.com" target=3D"_blank" rel=3D"noreferrer">berrange@redhat.com</a>&g=
+t;&gt; ha scritto:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0On Mon, Nov 17, 2025 at=
+ 01:51:25PM -0500, John Snow wrote:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &gt; In order to conve=
+rt the existing Makefile target from a manual<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &gt; invocation of mkv=
+env to one that uses the meson dependency<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0system, we<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &gt; need to not suppr=
+ess ninja here.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &gt; I&#39;m not sure =
+if this creates problems I am not aware of; but<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0invoking<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &gt; ninja here is no =
+longer spurious but will become necessary.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Yes, this will likely c=
+reate problems. From the commit message that<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0introduced NINJA=3D&quo=
+t;:&quot;...<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Avoid it with th=
+e same<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 trick th=
+at we are using in buildtest-template.yml already<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0by disabling<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 the up-t=
+o-date check via NINJA=3D&quot;:&quot;.<br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Move the check-venv call to buildtest=
+-template.yml, right after<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0configure? It&#39;s cheap enough.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Paolo<br>
+&gt; <br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0What&#39;s the root issue here? That there&#39;s en=
+ough of a time delay between<br>
+&gt;=C2=A0 =C2=A0 =C2=A0the actual configure and the test running that it r=
+e-runs configure?<br>
+&gt; <br>
+&gt; <br>
+&gt; That the git repo is cloned again and is therefore newer than the arti=
+facts. <br>
+&gt; That triggers a full rebuild.<br>
+<br>
+Right. At least for the other &quot;functional&quot; and &quot;check-system=
+&quot; jobs in our <br>
+CI, this was a big issue, calling &quot;make check-functional/qtest/iotest&=
+quot; there <br>
+triggered a rebuild of all binaries, increasing our CI runtime significantl=
+y.<br>
+<br>
+For the &quot;crash test&quot; jobs, it was mainly about avoiding to rerun =
+the <br>
+&quot;configure&quot; step for cosmetical reasons each time the job runs. T=
+he rebuild <br>
+of the qemu binaries is triggered by &quot;make check-iotests/qtests/functi=
+on&quot; in <br>
+the other jobs, and not by &quot;make check-venv&quot; alone, so it&#39;s n=
+ot as bad as in <br>
+the other jobs here:<br>
+Without your patch, the jobs take about 16 minutes (crash-test-debian) and =
+<br>
+10 minutes (crash-test-fedora):<br>
+<br>
+=C2=A0 <a href=3D"https://gitlab.com/thuth/qemu/-/jobs/12138792667" rel=3D"=
+noreferrer noreferrer" target=3D"_blank">https://gitlab.com/thuth/qemu/-/jo=
+bs/12138792667</a><br>
+=C2=A0 <a href=3D"https://gitlab.com/thuth/qemu/-/jobs/12138792674" rel=3D"=
+noreferrer noreferrer" target=3D"_blank">https://gitlab.com/thuth/qemu/-/jo=
+bs/12138792674</a><br>
+<br>
+With your patch applied:<br>
+<br>
+=C2=A0 <a href=3D"https://gitlab.com/thuth/qemu/-/jobs/12139438583" rel=3D"=
+noreferrer noreferrer" target=3D"_blank">https://gitlab.com/thuth/qemu/-/jo=
+bs/12139438583</a><br>
+=C2=A0 <a href=3D"https://gitlab.com/thuth/qemu/-/jobs/12139438599" rel=3D"=
+noreferrer noreferrer" target=3D"_blank">https://gitlab.com/thuth/qemu/-/jo=
+bs/12139438599</a><br>
+<br>
+the jobs take approx. the same amount of time, so I think it&#39;s OK here =
+to <br>
+drop the NINJA=3D&quot;:&quot; again.<br>
+<br>
+But I think we should give Paolo&#39;s idea a try and move the &quot;make c=
+heck-venv&quot; <br>
+to buildtest-template.yml instead. In fact, that might even help to slightl=
+y <br>
+decrease the total runtime of the jobs since all the other &quot;check&quot=
+; jobs <br>
+don&#39;t have to do this again (for example the check-functional jobs are =
+<br>
+running it, too, see: <br>
+<a href=3D"https://gitlab.com/qemu-project/qemu/-/jobs/12139584312#L1051" r=
+el=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-proj=
+ect/qemu/-/jobs/12139584312#L1051</a>).<br>
+<br>
+=C2=A0 Thomas<br></blockquote></div></div><div dir=3D"auto"><br></div><div =
+dir=3D"auto">Ah, I see now, thanks! I can think of some remedies for this. =
+No problem.=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div c=
+lass=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote=
+" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
 
-> I think it may be better to add doc about how to use this for
-> BqlRefCell<> case since there'll be no example after this patch.
+--0000000000003ad16e0643fa971e--
 
 
