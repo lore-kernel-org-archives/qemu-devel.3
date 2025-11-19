@@ -4,95 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EBECCF2594
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 07:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73C2CF2597
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 08:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLcyk-0008Df-O3; Wed, 19 Nov 2025 02:51:56 -0500
+	id 1vLdBK-0004LK-1E; Wed, 19 Nov 2025 03:04:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vLcyH-0008BT-80
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 02:51:21 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vLcyF-0003Yg-IU
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 02:51:20 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4779a637712so27389495e9.1
- for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 23:51:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vLdB2-0004JN-RJ
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:04:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vLdB0-0005YB-Vx
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:04:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763539468;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=nXd3N3aRhbfLudV8p7M5Fd3Hz1daiTpnUijtmY+qwBQ=;
+ b=fJhCgmRzzBjpYkl1YBHdct5Gd72u2exMJhr9iUfKvr6KRkGRwsXp04xm1WwD23RQbCfG8H
+ CqeWqCYA1sJyEwZT7WJrDsLqCd1lRL1K/sVKNHOwjDNWXsmXEQUiHaIpO/MhMw8iVGVYJu
+ xCNwsf8wWTIurniriSlAytblqGmGLVs=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-247-8rBIlHKKP0qUACStbNAVwA-1; Wed, 19 Nov 2025 03:04:26 -0500
+X-MC-Unique: 8rBIlHKKP0qUACStbNAVwA-1
+X-Mimecast-MFC-AGG-ID: 8rBIlHKKP0qUACStbNAVwA_1763539465
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-477a027877eso34800025e9.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 00:04:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763538678; x=1764143478; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OIFUfe0Ax/LbY8n3zSczwiP4edhWPEkUA2u984zhCGA=;
- b=RdyVXlMNdUEKP48+E8yEmkiDloZCXjcauMrohitcoyZomuKAg/g1XmR85FBoeMRQZo
- qUszX07PXtxb9KqAc+yxciRl5HX3ykzABFECDsQAvOFSkzPPLQ4UCJBmO2hwwi4MhCNF
- 9B/QlLV/m1LhJVkQ8qkiiz0E6L7fKRXX2zKYBiiBticRCFOF224oejHqKi03MNmS90Hf
- N4yw7bAysw/oNit7TaMM7KhrpzcfE3+dioG0w4cU4DDf2RfUxEvaIugtsOxsT85dtVTg
- zlj87QaVRxja+Wew/NYMeeMhas/uQ4gItg4A3M63dl9zqPRinLDjqzkIOQCs3/DpcumS
- tJUA==
+ d=redhat.com; s=google; t=1763539465; x=1764144265; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=nXd3N3aRhbfLudV8p7M5Fd3Hz1daiTpnUijtmY+qwBQ=;
+ b=THSGwW0t5zMKr5at4yYi1Zi/FdYd4vNhhFMwQIbJRy1t3DPlXT16RHajiIu/Gxkw4y
+ i/GV7dHUyh0thCT8WVDk/3XbLKrgt89B8JYOQz1GZzwLyr9Ei6Bmq5e+RNjTyEORoZt0
+ Qr8IsqLpO0EuUIF5yqG4SKfb0UK0EiaUKGAQWU9Urt9QrYe26aiJYQhUjXBiDnsYcBzw
+ kpZP6A9wogh0ds+whI4Z5jO1C76jQVDXHTNHcaxDjSHkKfuFVSBolx83Kz1dMuwe8XLD
+ tDoxqQs988Ee1VcKSOO36MKc+k+SVKsmqYaWrHUdVcQfV5UgSyucerxNCI8TLPFKLXJY
+ R5oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763538678; x=1764143478;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OIFUfe0Ax/LbY8n3zSczwiP4edhWPEkUA2u984zhCGA=;
- b=gkT/c4jj0+xy6rs4uqQvL8+VJ+TTEJMdoG5DJYPm2j2dTEDk6OuXCFXo/eKMp3CwVB
- e9xPzj8iKSQ2Zqyj5J//N7mrX9oYIIKHT1a2lRT+2Nq5U818V9JLcmkkGzIc6qUfEO1g
- lQjyEt8aus62qBHuJOPqvGjiDjqCb1GcwHneUPdxpdg/sM+uenNgZhN+w5z4FIK8pRAc
- f7mLxDSSUlgKMJOfmt7F6frMjEfbPJnkbFbTxig1exBfzsRvn/3HuLK4/opnp0LVwshO
- D1dloOfB1YHzIIueeR53fYiLt2kOw9JBU0NsmPHUvQNicnovPanr038IevR9R2PN+p+q
- yhQg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVUcb/tCGZDZIAmA8nWFF+38WJMU5FhzreXG/zn170Bkh1s6ru9lS3acxNV3BkKyEcX9ZSIiXT5dNaY@nongnu.org
-X-Gm-Message-State: AOJu0YzxQa25a7aPyN1yso3ZCLXZTi4o8rEnfPglgmCtqcNB9ARhhQws
- TvqFzPthQ81Me22FTElP8/f3tTHDC2UwKUeVGJpkFVw9OXN+789nv/r4mgko4eLUpqc=
-X-Gm-Gg: ASbGnctw0U2UU85vV4Sa6ULfY3Km/fgP6p2ufWPVKIc2APS3vJiNPzzJaF3mXV4LIFU
- JDZTAq0Ypu8d6xBtsSazMgm9nFUL7NJnzGe7ZTHxBAAM2fAMeT6+FJ+LxycltY7FbJlrD3mmflF
- uqBHSq70p/ntKPBELwgqpGnNCmvysPyne77UYfngn+HrJ1YyHXP0hHvg/mUoOIr/kFQaQFg8BUI
- DjkMAofOv6FtFZzAizYvpfhlChdo2h8IhupCTFI26nrNzPFxVJSlK3k4/uFUKFcrZL/mWCoHNsD
- 4YXFbRPgbUCHXbWTot+EOg5EOb0uaCtgLkAzX1FBJ6nWF9++uL/KKjmuDWwqEpp4Jka+0f3rkWX
- YKdtfAR+XmksALa9tdln//VUopoRcO9O5D1WWij4z3Zy9NgQQ1jUOuYNvsLvUAzNHjSjpHdRh3U
- HOHh8QSq5XRV+ZPV3GTXMsqGxQRCJuYCEn5gcokefxielqWZ0G5NZ62EcFVJMLb8nvCIzB18KCa
- t3/2Q==
-X-Google-Smtp-Source: AGHT+IG253dnn7Y3Zux5z6kjfXJqQNkl0wue4SOZVv1WmIBx9qYjPcDhxtkWJfuGTcIaXzUfPstlYw==
-X-Received: by 2002:a05:600c:1caa:b0:477:76cb:4812 with SMTP id
- 5b1f17b1804b1-4778fe0694amr206399265e9.0.1763538677914; 
- Tue, 18 Nov 2025 23:51:17 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:ed5:b1f0:90e8:1fdb:2cba:9db1?
- ([2a01:e0a:ed5:b1f0:90e8:1fdb:2cba:9db1])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b102a3a1sm32432465e9.9.2025.11.18.23.51.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 18 Nov 2025 23:51:17 -0800 (PST)
-Message-ID: <d1b935a5-61a2-43db-bcc8-df1e8a1d3649@linaro.org>
-Date: Wed, 19 Nov 2025 08:51:13 +0100
+ d=1e100.net; s=20230601; t=1763539465; x=1764144265;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nXd3N3aRhbfLudV8p7M5Fd3Hz1daiTpnUijtmY+qwBQ=;
+ b=I8V84ZHXUjHoZoQN9B/HLuap5mYv+gV3wBha8vRor8/8vm9jvVkso+lpHJavw681A/
+ CCy4iJNj8QD3E94lBTj5rYzp7Pd+3D4FEeX7lgaVhEg0KcyQ0v1Vg13raHT3E8IkIW1C
+ wAD98DhO3mBkiIJ2bF6k5xWUsojP1qanCrswrjH2KTiOgPa3770cxb/lso5+njtScOwA
+ ELje3RY0wYv1eWmacEPyPWxH5rUeKABk8MF3Q+iNERWLhOaHB/2E0burEEb+fBm62CEh
+ llsIjKZyAXziTcPagLmEFJ/S4Fw1esjW+M8nOaXSHylr+6atDYFK7Gpifu6u/8CjYCFr
+ g0nw==
+X-Gm-Message-State: AOJu0YxVadDZW4eUMhJezpVDb/XOYy11Fo0ZIm657kTR24RKDIgNWO5p
+ gULkDy3FCzi6YJirDF2wJ1uqUHGEgXW84ikz9oXkJA9MCbSI74hyt8Uw9RmJrTFJK+/vYuSsHFI
+ QZBDitK89xrwAJLS6xBCJ6eoKvadDjDrFBAXaY9lVB87ijJcZ+xbxEn/9QLc20PNOXB9eVST716
+ ubpMrN3i1YbhcW5a2zfS0zbJBsUaa168M=
+X-Gm-Gg: ASbGncsUQmLl6D2QrkXpaeA8pOIipc55ZMOK1OS5aYnn/umaoeTkC0022UjYKBPdcS8
+ kZH/oW4cXs9olBSOseri5HN+2psfDS20j3/91eZPgJJiedkzmcQ7XqcrFhFbObPPlwdwsMeoJzs
+ HG7oJY00h0K37DegvBRLmB90ptil1wd/U8P383+Fr8YUUFB9sljGWZl2G/lJRY0e/qUSjLVE2w0
+ qOxgWZiEsx/xnp1k40dqTZwYsCxZa/7sh6/Jpy3pnOxtmSRt7hiBzfBWvtGprnpRvpq1YE=
+X-Received: by 2002:a05:600c:c493:b0:477:7b9a:bb07 with SMTP id
+ 5b1f17b1804b1-4778feabc40mr181111005e9.35.1763539465238; 
+ Wed, 19 Nov 2025 00:04:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG8tHxkUcbw4OnWV4mVRP0eaSkGJxLRK6z1lmTeIo2jqwW1Pp09QcAiFgevEjnJA9JgvTKAFKeonMXmkbYn9Is=
+X-Received: by 2002:a05:600c:c493:b0:477:7b9a:bb07 with SMTP id
+ 5b1f17b1804b1-4778feabc40mr181110505e9.35.1763539464718; Wed, 19 Nov 2025
+ 00:04:24 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2 10/10] docs: added MTE4 features to docs
-To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org
-References: <20251116-feat-mte4-v2-0-9a7122b7fa76@gmail.com>
- <20251116-feat-mte4-v2-10-9a7122b7fa76@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251116-feat-mte4-v2-10-9a7122b7fa76@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x336.google.com
+References: <20251118065817.835017-1-zhao1.liu@intel.com>
+ <20251118065817.835017-5-zhao1.liu@intel.com>
+ <CABgObfZfGrx3TvT7iR=JGDvMcLzkEDndj7jb5ZVV3G3rK54Feg@mail.gmail.com>
+ <aR1zIb4GHh9FrK31@intel.com>
+In-Reply-To: <aR1zIb4GHh9FrK31@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 19 Nov 2025 09:04:14 +0100
+X-Gm-Features: AWmQ_bnWrzCxa2M_6rUnFZnZZhTmpIDeVi6FBl3lqAYnoc-4bBLlilESk9zhlc0
+Message-ID: <CABgObfaOBD5QUi7XqRPsiimtgj1TSrO_bgXjZQmdZyiwr-aOtw@mail.gmail.com>
+Subject: Re: [PATCH 4/5] i386/cpu: Support APX CPUIDs
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, kvm <kvm@vger.kernel.org>, 
+ "Chang S . Bae" <chang.seok.bae@intel.com>, Zide Chen <zide.chen@intel.com>, 
+ Xudong Hao <xudong.hao@intel.com>, Peter Fang <peter.fang@intel.com>
+Content-Type: multipart/alternative; boundary="00000000000057a7a00643ee0785"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,21 +118,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/17/25 02:40, Gabriel Brookman wrote:
-> The implemented MTE4 features are now present in
-> docs/system/arm/emulation.rst
-> 
-> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-> ---
->   docs/system/arm/emulation.rst | 4 ++++
->   target/arm/tcg/cpu64.c        | 8 ++++----
->   2 files changed, 8 insertions(+), 4 deletions(-)
+--00000000000057a7a00643ee0785
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Best to merge with patch 1, as I said.
+Il mer 19 nov 2025, 08:12 Zhao Liu <zhao1.liu@intel.com> ha scritto:
 
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> > > Note, APX_NCI_NDD_NF is documented as always enabled for Intel
+> > > processors since APX spec (revision v7.0). Now any Intel processor
+> > > that enumerates support for APX_F (CPUID.(EAX=3D0x7, ECX=3D1).EDX[21]=
+)
+> > > will also enumerate support for APX_NCI_NDD_NF.
+>
+> This sentence (from APX spec rev.7) emphasizes the =E2=80=9CIntel=E2=80=
+=9D vendor,
+> and its primary goal was to address and explain compatibility concern
+> for pre-enabling work based on APX spec v6. Prior to v7, APX included
+> NCI_NDD_NF by default, but this feature has now been separated from
+> basic APX and requires explicit checking CPUID bit.
+>
+> x86 ecosystem advisory group has aligned on APX so it may be possible
+> for other x86 vendors to implement APX without NCI_NDD_NF and this still
+> match with the APX spec.
+>
+
+Oh, I was not aware of that. It is really ugly but I guess that's not our
+choice. :/ If QEMU ever implements APX emulation it will have NC/NDD/NF
+though...
+
+Paolo
 
 
-r~
+> If we default to setting this NCI_NDD_NF bit for APX, then in the future
+> when we run into other vendors that don't support this feature, we'll not
+> only have to make it optional again, but we'll also need to do fixes
+> similar to the ARCH_CAPABILITIES situation - checking vendors, fixing
+> compatibility issues, and all that stuff.
+>
+> Therefore, compared to default setting to constant, I think the optional
+> NCI_NDD_NF now not only aligns with arch spec but also prevents future
+> compatibility issues. :)
+>
+> Thanks,
+> Zhao
+>
+>
+
+--00000000000057a7a00643ee0785
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 19 nov 2025, 08:12 Zhao L=
+iu &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; h=
+a scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">&gt; =
+&gt; Note, APX_NCI_NDD_NF is documented as always enabled for Intel<br>
+&gt; &gt; processors since APX spec (revision v7.0). Now any Intel processo=
+r<br>
+&gt; &gt; that enumerates support for APX_F (CPUID.(EAX=3D0x7, ECX=3D1).EDX=
+[21])<br>
+&gt; &gt; will also enumerate support for APX_NCI_NDD_NF.<br>
+<br>
+This sentence (from APX spec rev.7) emphasizes the =E2=80=9CIntel=E2=80=9D =
+vendor,<br>
+and its primary goal was to address and explain compatibility concern<br>
+for pre-enabling work based on APX spec v6. Prior to v7, APX included<br>
+NCI_NDD_NF by default, but this feature has now been separated from<br>
+basic APX and requires explicit checking CPUID bit.<br>
+<br>
+x86 ecosystem advisory group has aligned on APX so it may be possible<br>
+for other x86 vendors to implement APX without NCI_NDD_NF and this still<br=
+>
+match with the APX spec.<br></blockquote></div></div><div dir=3D"auto"><br>=
+</div><div dir=3D"auto">Oh, I was not aware of that. It is really ugly but =
+I guess that&#39;s not our choice. :/ If QEMU ever implements APX emulation=
+ it will have NC/NDD/NF though...</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div cla=
+ss=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" =
+style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
+dding-left:1ex">
+<br>
+If we default to setting this NCI_NDD_NF bit for APX, then in the future<br=
+>
+when we run into other vendors that don&#39;t support this feature, we&#39;=
+ll not<br>
+only have to make it optional again, but we&#39;ll also need to do fixes<br=
+>
+similar to the ARCH_CAPABILITIES situation - checking vendors, fixing<br>
+compatibility issues, and all that stuff.<br>
+<br>
+Therefore, compared to default setting to constant, I think the optional<br=
+>
+NCI_NDD_NF now not only aligns with arch spec but also prevents future<br>
+compatibility issues. :)<br>
+<br>
+Thanks,<br>
+Zhao<br>
+<br>
+</blockquote></div></div></div>
+
+--00000000000057a7a00643ee0785--
+
 
