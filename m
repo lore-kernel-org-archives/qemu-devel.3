@@ -4,59 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C26CCF34B2
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 14:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CDDCF34B2
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 14:41:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLjIX-0006Yr-1s; Wed, 19 Nov 2025 09:36:41 -0500
+	id 1vLjMf-0007Rr-0I; Wed, 19 Nov 2025 09:40:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vLjIV-0006Yj-Jb
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 09:36:39 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vLjMa-0007Qp-Je
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 09:40:53 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1vLjIU-0003pQ-6Y
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 09:36:39 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id B1F2C60172;
- Wed, 19 Nov 2025 14:36:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407ACC4AF10;
- Wed, 19 Nov 2025 14:36:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1763562980;
- bh=WQeH04dqVpECHCQdx96l4lI4NrVvIMcfB360JpRUegc=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=uQYMcNfKecUfL5G8OpxVn4Vz4JL9L3kCbpQBEx9GBjM0S0f4B1NfzYrWRNUjXKtwl
- XWsXljUmwUw4skEcjzYg6iNIl250yyPBK7UCZMp0PJCUZCvCesKuMu9taKPDku3fCy
- M5GIaw98rXkQywBrfN2s6L/HtBiP8chUGnsv7OS32CS53mNS23aU/EGkma8GzOVH65
- rtBB3omKQyHFklWPcUeKBd5PqolzwLcocpMixNuCWNGCgvbEFVE4OhIw4P6+xO3BnS
- oN96zu6O93jciD5JiAg/MWEtKkpFXcbcfzEKLRutBI588htiOiv6W3nULj7hEpGpoG
- aC9rzt9n11ifg==
-Date: Wed, 19 Nov 2025 15:36:15 +0100
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>
-Cc: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 2/9] contrib/gitdm: add group-map for Huawei
-Message-ID: <20251119153615.247b74ba@foz.lan>
-In-Reply-To: <20251119132515.00006f16@huawei.com>
-References: <20251119113953.1432303-1-alex.bennee@linaro.org>
- <20251119113953.1432303-3-alex.bennee@linaro.org>
- <20251119132515.00006f16@huawei.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vLjMY-0004jb-EQ
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 09:40:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1763563250; x=1795099250;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=oMXwx0PydHtSpd9OnbK/M5rqZw9fBWu4Gfmy98aF95s=;
+ b=JezuZ4wTNlHoyojaDX/E/otSU7CoKhSd3sEjyK8K0WM8J0ykNO4Zv6DG
+ 8HvzKfDivZrQ2IdgPC2WAqfuKPtMOfh7vushNbWgmsIlf2554ghTfn3QV
+ Bb+4brHdcggBTjoRoni5N72rHArH/OEbJLguS7128QOzues8P1MjbppX3
+ p0JtTtwTWVogKPDqIPBs0ukidHltk11hRru7fEvFfrG/AtgeeWTan5guJ
+ uPILv0oarNyv9uakFOBPY2lIaQd0kWZhD9YZxI9znWCZfvWDzJZ4h7gW2
+ OfGSxSK8+qUEP+CNL7eEYA2B1NUvd1V7KmyyImWSec3IrYpibet4yYnh7 A==;
+X-CSE-ConnectionGUID: regF+nPsSjGumLbbSQTJBA==
+X-CSE-MsgGUID: 3DENtuEVTj+6D29AHsZsJw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11618"; a="91081965"
+X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; d="scan'208";a="91081965"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Nov 2025 06:40:45 -0800
+X-CSE-ConnectionGUID: lOVDX7ElTTK195rQ2ehMVA==
+X-CSE-MsgGUID: K15QOysqTc2nDwUc/xeoLQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; d="scan'208";a="191322467"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.78])
+ ([10.124.240.78])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Nov 2025 06:40:42 -0800
+Message-ID: <82fd0bb7-c97e-49a6-9967-43f66bda035f@intel.com>
+Date: Wed, 19 Nov 2025 22:40:39 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=172.105.4.254;
- envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/8] kvm: Allow kvm_guest_memfd_supported for non-private
+ use case
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Chenyi Qiang <chenyi.qiang@intel.com>,
+ David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+References: <20251023185913.2923322-1-peterx@redhat.com>
+ <20251023185913.2923322-3-peterx@redhat.com>
+ <9614d727-97bf-4a50-be13-6754952bec96@intel.com> <aRZI1O18HAHcxaFV@x1.local>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aRZI1O18HAHcxaFV@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -74,58 +91,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Wed, 19 Nov 2025 13:25:15 +0000
-Jonathan Cameron <jonathan.cameron@huawei.com> escreveu:
+On 11/14/2025 5:08 AM, Peter Xu wrote:
+> On Fri, Oct 24, 2025 at 10:30:19AM +0800, Xiaoyao Li wrote:
+>> diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+>> index 68cd33ba9735..73f04eb589ef 100644
+>> --- a/accel/stubs/kvm-stub.c
+>> +++ b/accel/stubs/kvm-stub.c
+>> @@ -125,3 +125,8 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t
+>> flags, Error **errp)
+>>   {
+>>       return -ENOSYS;
+>>   }
+>> +
+>> +bool kvm_private_memory_attribute_supported(void)
+>> +{
+>> +    return false;
+>> +}
+> 
+> Hmm, I found that your this patch seems newer than the one you pushed here:
+> 
+> https://github.com/intel-staging/qemu-tdx/tree/lxy/gmem-mmap-poc
+> 
+> Do you want to push it once more to make it latest?
 
-> On Wed, 19 Nov 2025 11:39:45 +0000
-> Alex Benn=C3=A9e <alex.bennee@linaro.org> wrote:
->=20
-> > While we do see contributions from the top-level domain some
-> > contributors also post via other addresses.
-> >=20
-> > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> > Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org> =20
->=20
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+I rebase it to the latest QMEU master:
 
->=20
->=20
-> > ---
-> >  contrib/gitdm/group-map-huawei | 5 +++++
-> >  gitdm.config                   | 1 +
-> >  2 files changed, 6 insertions(+)
-> >  create mode 100644 contrib/gitdm/group-map-huawei
-> >=20
-> > diff --git a/contrib/gitdm/group-map-huawei b/contrib/gitdm/group-map-h=
-uawei
-> > new file mode 100644
-> > index 00000000000..c287dd5d2b3
-> > --- /dev/null
-> > +++ b/contrib/gitdm/group-map-huawei
-> > @@ -0,0 +1,5 @@
-> > +#
-> > +# Some Huawei contributors submit via another domain
-> > +#
-> > +
-> > +mchehab+huawei@kernel.org
-> > diff --git a/gitdm.config b/gitdm.config
-> > index 06ac729c7bc..2d75dd4deee 100644
-> > --- a/gitdm.config
-> > +++ b/gitdm.config
-> > @@ -36,6 +36,7 @@ GroupMap contrib/gitdm/group-map-amd AMD
-> >  GroupMap contrib/gitdm/group-map-cadence Cadence Design Systems
-> >  GroupMap contrib/gitdm/group-map-codeweavers CodeWeavers
-> >  GroupMap contrib/gitdm/group-map-facebook Facebook
-> > +GroupMap contrib/gitdm/group-map-huawei Huawei
-> >  GroupMap contrib/gitdm/group-map-ibm IBM
-> >  GroupMap contrib/gitdm/group-map-janustech Janus Technologies
-> >  GroupMap contrib/gitdm/group-map-netflix Netflix =20
->=20
+https://github.com/intel-staging/qemu-tdx/tree/lxy/gmem-mmap-poc-v2
 
+> Thanks,
+> 
 
-
-Thanks,
-Mauro
 
