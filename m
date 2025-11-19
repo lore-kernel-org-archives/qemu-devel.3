@@ -4,78 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53D81CF3186
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 09:54:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2250ECF3187
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 09:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLet3-0000ZH-HC; Wed, 19 Nov 2025 04:54:08 -0500
+	id 1vLewb-0001mb-Af; Wed, 19 Nov 2025 04:57:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vLesp-0000X2-Q6
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 04:53:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vLeso-0005lR-Dh
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 04:53:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763546027;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=OXcjGRnQF4S+IUXfP1GhITEGnx+f1Mpz/Xo7WkpCdaw=;
- b=O2vN/Gd28LY3W1GAAAjepwVcVJVs58VqBZAMXU5NSU3NrnQ1Tv+YJ0oZA9sHQdyhs8ezia
- WhBj8II+uO56aBJnpv6D0mwcdEpIgPwuPbuuNmf47qFELcDRtWWo2wzuEIJ2hq+JT7rMFX
- 5TvaPwzKGJMqXzFdXWmx7HU/n58UMa0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-EG-Z5yYYNpqh7E4GGKhl9Q-1; Wed,
- 19 Nov 2025 04:53:43 -0500
-X-MC-Unique: EG-Z5yYYNpqh7E4GGKhl9Q-1
-X-Mimecast-MFC-AGG-ID: EG-Z5yYYNpqh7E4GGKhl9Q_1763546022
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9AFE219560B2; Wed, 19 Nov 2025 09:53:41 +0000 (UTC)
-Received: from localhost (dhcp-192-224.str.redhat.com [10.33.192.224])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 444E719560B0; Wed, 19 Nov 2025 09:53:40 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, Christian
- Borntraeger <borntraeger@linux.ibm.com>, Halil Pasic
- <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, Matthew Rosato
- <mjrosato@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Subject: Re: [PATCH v3] hw/s390x: Fix a possible crash with passed-through
- virtio devices
-In-Reply-To: <20251118174047.73103-1-thuth@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20251118174047.73103-1-thuth@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Wed, 19 Nov 2025 10:53:37 +0100
-Message-ID: <87bjkyqrfi.fsf@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <ilg@livius.net>) id 1vLewZ-0001mQ-M7
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 04:57:43 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ilg@livius.net>) id 1vLewW-0006C8-Or
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 04:57:42 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-42b39d51dcfso3671466f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 01:57:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=livius-net.20230601.gappssmtp.com; s=20230601; t=1763546259; x=1764151059;
+ darn=nongnu.org; 
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xlIDD3P4YdHZcnyH/LavO1kT+i9fQ8ABrVKBWe/YZms=;
+ b=oEpI4CBefjWWhkeYBAyQiOE6s93yPQx+F0uSXk2HsQbHBqnHLDkxe7WZ8Ii027pZYf
+ qrtTx1olNoIBbWNg45sVwFEQN47Aj6wLs3t1f8Wd9HdqKDkjOx1H9cPTzIKSWWveIaN4
+ EJnM0o4cpEml+qwuAJgU0alQU1Zb2wCKJ2x/oNeaOWqdZ9lqg+LpyCDnCqyRaHeJJRC1
+ hHA/vZ0w7DxOoF7GugABl3+y2mmCzAazblJdEuKS1KnMS+NCTxLB4YVA/C9cIE4y95BO
+ 7PfiPrtjt8eT4cimv+690J4dogedkebG1T2HOJS+lWZMgn918Gwc/8tDFLV3n9/BBCwl
+ t6/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763546259; x=1764151059;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xlIDD3P4YdHZcnyH/LavO1kT+i9fQ8ABrVKBWe/YZms=;
+ b=bK13Q6zFpRLNRVjZB9pjhA8Ws7axS6f2N5O2yumnpIYZtbz/K2Dk3pytOTA+uHH7RG
+ qKDFiCKWpg9hAv93j3CMfiKHgh7wmbXcggdtW/R6UWVCDGA2nZBAlScuHBL0j+VH/MsO
+ TuUvSKhO1ot6ZwgFkhLkQUyas1qOwfooaryBBl5tWzDoHOVhqdexOjjkHLVSekMKx/Hd
+ AXjoyphM1CEsVHJLFxY/W9xIp6QXdr9iwrUXrv9cKlq0a/cIMAH7Go04fRsVal7pPj9m
+ cNocJVF7F18e0jBS/iemIizhmYQuRhaes3SVhnnSSU9LsofALNmbVbD9TzsbEA4gNKy0
+ xJMw==
+X-Gm-Message-State: AOJu0YyHqGz75f7J5/b7iokMY+BFMcIIMjcs0T84jzJEWw+MZMy8h6x8
+ +/s3QYevDFqXTZoIL63mWXuLfCm7WYVbqEGlv6N0NIud5lKU3/g3lL477PDn8hNDSVwaVDAQnXt
+ AwPjt1iY=
+X-Gm-Gg: ASbGnct74m08sC+lFBJzxx8OhWewi81vpQMiXNa4gjQVydcNnL5b/42JZK21UL6GVYD
+ l/yxf8YpJ3cM1/Gmo/uOZ5V2A9DC/JC2bfgRhvsi/D6TnOz/3VAkeanNo94tYL311wS7pCLwe7f
+ 521XKjxygRPh26+/GjbHSSMZsPse/iOghNbV0lor9VwUalNKl22vvinKLIFzf7Il+gRD/yJEe4F
+ GFqYwD32l1AKUwzo9pMi1XIW8GkcR3AH3GTId58nv86TKGsr6UwMv4eRcrdctRT+7rgiiQwJ6Nc
+ upjL9GGbp9P/j9FAkr6T01/Z6zdwVBTNkXMfeAC1FQ3Jp8xSvLxW18HBcwHQXKl5ztZVEKLpvdH
+ 1ShMjqvM5ngUOVU5b6iPSlK/WSryk5toT5VyQXwJXd0Gyoh46YSeVB7oEScNLkoXeP45mUwiwa2
+ JkaSiP8iEj5COnotY=
+X-Google-Smtp-Source: AGHT+IGbWDKb6ZmpNtPqbrX2tpNiJbg0xsOHKPUQbkrldmjMgD1CRdiFd2YL5aI0lpcY+wJnuHtfjw==
+X-Received: by 2002:a5d:64e3:0:b0:42b:4061:2416 with SMTP id
+ ffacd0b85a97d-42b59396ee3mr19137523f8f.52.1763546258966; 
+ Wed, 19 Nov 2025 01:57:38 -0800 (PST)
+Received: from smtpclient.apple ([5.12.109.3])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53e7b14bsm36670521f8f.9.2025.11.19.01.57.38
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 19 Nov 2025 01:57:38 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.3\))
+Subject: Re: unaligned access for cortex-a15?
+From: Liviu Ionescu <ilg@livius.net>
+In-Reply-To: <98b9ec31-abd0-4b1a-a06e-4e041f84bebd@linaro.org>
+Date: Wed, 19 Nov 2025 11:57:27 +0200
+Cc: QEMU Developers <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <748D08D9-A015-496A-AAFE-7416A026F056@livius.net>
+References: <77419EC3-BFC1-4F0C-9287-2E753D0C30DE@livius.net>
+ <98b9ec31-abd0-4b1a-a06e-4e041f84bebd@linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+X-Mailer: Apple Mail (2.3826.700.81.1.3)
+Received-SPF: none client-ip=2a00:1450:4864:20::42a;
+ envelope-from=ilg@livius.net; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,36 +102,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 18 2025, Thomas Huth <thuth@redhat.com> wrote:
 
-> From: Thomas Huth <thuth@redhat.com>
->
-> Consider the following nested setup: An L1 host uses some virtio device
-> (e.g. virtio-keyboard) for the L2 guest, and this L2 guest passes this
-> device through to the L3 guest. Since the L3 guest sees a virtio device,
-> it might send virtio notifications to the QEMU in L2 for that device.
-> But since the QEMU in L2 defined this device as vfio-ccw, the function
-> handle_virtio_ccw_notify() cannot handle this and crashes: It calls
-> virtio_ccw_get_vdev() that casts sch->driver_data into a VirtioCcwDevice,
-> but since "sch" belongs to a vfio-ccw device, that driver_data rather
-> points to a CcwDevice instead. So as soon as QEMU tries to use some
-> VirtioCcwDevice specific data from that device, we've lost.
->
-> We must not take virtio notifications for such devices. Thus fix the
-> issue by adding a check to the handle_virtio_ccw_notify() handler to
-> refuse all devices that are not our own virtio devices. Like in the
-> other branches that detect wrong settings, we return -EINVAL from the
-> function, which will later be placed in GPR2 to inform the guest about
-> the error.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  v3: Print the subchannel number to ease debugging
->
->  hw/s390x/s390-hypercall.c | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
->
 
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+> On 19 Nov 2025, at 11:51, Richard Henderson =
+<richard.henderson@linaro.org> wrote:
+>=20
+> You must enable the mmu for unaligned accesses for the a15 as well.
+
+Ah, ok, that explains it.
+
+Thank you,
+
+Liviu
 
 
