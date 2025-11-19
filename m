@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296D1CF3195
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 11:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966B1CF31A7
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 11:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLfuB-0006pt-JB; Wed, 19 Nov 2025 05:59:19 -0500
+	id 1vLgEx-0005UB-EX; Wed, 19 Nov 2025 06:20:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vLfu8-0006mn-RQ
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 05:59:16 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1vLgEr-0005TC-NT
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:20:41 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vLfu6-0001NV-AF
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 05:59:16 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4779a4fc95aso5118085e9.1
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 02:59:13 -0800 (PST)
+ id 1vLgEp-0006DO-SX
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:20:41 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6cb4so47746255e9.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 03:20:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763549952; x=1764154752; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763551238; x=1764156038; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mbxWBV2NfcpfZzpfmZ/gbOVV3RUfMgkdtdtA+NgIZ+4=;
- b=Z14NnzK2X7BUovsM/Pi0VDvfi4FkKqQ5o+mQirrhO1ORu/kpCRMAs/W7lD42yHYoxR
- 2ctMDbDpm30WnWjSxBSzpIMgSm+D2UlegulyOq1PLapN7+M4X4hty/SihN/8nzDYUpN7
- kOWhD0TF/FP2k9cNwArViaPkLOILZzpaE/v/qxlQtDHPwwU+EkH5dQizlnc8jhvCEd4v
- NTbH9pNEowE4K6xrt/5x+NidaWwuZqE2FHOght/KjxWc5PUl7oBio+wfpQJ85S6gk1wH
- ZdFiOC0PbGEk3AdbMhXRFy9xS4u1OfSTSoUQ1M+SVtHPGoShNrk3VsX8HifzH8JfliSz
- 6AeQ==
+ bh=sTruvQbWa2gjlQKeuTYDcuQmvsjs9445tlrKxHSkxHI=;
+ b=xPz8FAhgwzNRgyFecFC7BfWVvyt5CBjxAc2JRTCuKYFyjIoK/LeuivygpPKxuY4wey
+ mAhZ7sBO9ZcGo4pxIBUYuLzPDuszpPd69LWNygWzGpq6A2h2A7iIJBwatXARTmAFddnx
+ irfJQnPDn/qPfusP6FOYtkYJpLvaTpcn+89ofDbXrVzy9JiIkBgUdEqn5au0XGxIjSP2
+ NpSsJEa0EYc0CMpkyUhGHuzv2hX0+C2ynhFAPWxL1SF7GloWMJhMq/klOW+3RRzGEnD0
+ MO5vpdjZey0q/GoGIw5ebbaVwfEG48alOVAHh6oJg6mthH6XZcgtjOoKboFhrGEuUNNp
+ NSEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763549952; x=1764154752;
+ d=1e100.net; s=20230601; t=1763551238; x=1764156038;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=mbxWBV2NfcpfZzpfmZ/gbOVV3RUfMgkdtdtA+NgIZ+4=;
- b=h/lolNumW2t9u4AE3eYotYWIRPJ+GdRAFJs9VOBf+yDDc6pIfSmECjNMdooAKBXjLK
- QSI0dnXYbTKVBPzYjvBh9rtdoSUydsxd4N9P3jk3jrM+7ro1+9LoWdEAETR79NnzicVg
- i8xwJftsEglIwsNTFZQpzDJsaCmf1ngnPGxrLQ4uWTIoJl9x6q0y4FZcoChPUvFxPkJa
- CYp1I7VJG0x16mcsEfcX+r5nnWRraQiCeYQCdph5Sf6Ga1ceG9EyI2r1crRIWsZrxvTz
- gg9PtKn+F2K5vR967n6fkafLgekJXyL3D8rxsOuITOML9XGhBcwFDf3XPAEqslYJ4egq
- ht4A==
-X-Gm-Message-State: AOJu0YwvmvG+MiDQyqhc/W+rcLxPOCz/FDiWgaXsYbI7VYEu+XnLU6at
- +PWz5EdvQIf2bnfLrTPUK+wxLP+x2/jUUXQayLuM2k73DfnF7iix7e458w4bW7/t1Uc=
-X-Gm-Gg: ASbGncsNPMB4j26Wm5mfHZVWhEfngV36WpJXS7qb4JsawlM3e27s/b4WI+oUaFRUD7X
- 684783dchuiyAG/8dTdcvUNeAcHrJh96VCY6uuGOgOEsRnEJ0RvqBjwIcymbYqJMI+W9xZMZNJ6
- SdJtMNPBjRlLMGhNTfb5hVE0G/ZMD0wmpNl0DV/0dthK8fub/KvObUG07blDHC+nk7XuCguvMtp
- bg2ikIjbSif/MYDTb0v+3Yzx61K1GRXaN6bJ4Aq7a39lCtBW/CpXruPSOqPtyf+uRlE+vjkT0dW
- elbcUh6MzGzH064Z0GeMxNiPGhsMQA7UopAbNg/+567QsbeFHielqa4v7/dTS9baaJxvRNbcJoZ
- 7m1LDZxF7wP2d6dCqBzszdf/TNa94kT0ri5UhO9YNtdF8mdblOF64g6nYH8V4bKbDEooHR5F+Zv
- 1S8gTaEQQwT36asIPeUupNNvgCKRb4bJ7Y5AVrZ1wMlLY89pwKFJZGBX3qwt+r+2TMHwuL+9aoi
- F/olM6mNEkoVtie
-X-Google-Smtp-Source: AGHT+IEvNHpy140G18dls3NSRTg2GOy5kqqIOTeqWf53H9Eczuxa8nr2cOzMuoBkKE4QAffPug72+w==
-X-Received: by 2002:a05:600c:840f:b0:477:9890:9ab8 with SMTP id
- 5b1f17b1804b1-477b18b3858mr20396475e9.3.1763549952091; 
- Wed, 19 Nov 2025 02:59:12 -0800 (PST)
+ bh=sTruvQbWa2gjlQKeuTYDcuQmvsjs9445tlrKxHSkxHI=;
+ b=FqKAxp/xx+M+TPm68yZ2kkv/V3mupqLuJ80mSV1npFTAm2UX8A8XpPj+6iQfQkUch7
+ h+jSjipTy5doSgPvYDed27GfbzctRyAOGb5UpH7IReu9NRs8VLWrS6iZisjC/YInezUf
+ ojr3O4fBDC3Lawu2uulijcgsjlej4JSKpnangTvlHnxj6FrlXrNlcW6SENO8E1DXI6oo
+ dzafmvtiKGPL8mHM/dq1fZWV3PUeQRL6CGQAdUzCEZKVB8iaCDP1QO8r0oF2mFe/yabL
+ P7tW0ldokiiZwQfhk6m2fwg5IxRM4TzUjbubdHa/bCecWsN47UYypgeaJatDEE6FH5tM
+ Selg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUkHKsU0CA+/KHpJxmKCxbju4znTpd4MxeZoQH6yj1ZuCWhwtsSDstjFARdq5lYrCSq6Ikz4LaKhLMj@nongnu.org
+X-Gm-Message-State: AOJu0Yw/9EEUb4mC/2DRyqjSS+OtapRcHRens5iKpew3cep2q9otcdI9
+ /rOYpiIQfW9nrTCuo36J3x0MWflydKDUkc5F9blGEq16Gk/oEorxKeJ7KxU4h8C74z53vnU/IkJ
+ sSWtLNo/arA==
+X-Gm-Gg: ASbGncu7qS829Rfwelhfyoh4qGYzYE27xtl+Fa3T5nhzu8CamtxraexrjyTo115EOMS
+ VhEbGBwnZWRqrTUB0rwNlmnCMlrZbRaPA75KnMuKzCg3hyizF796LOyE9j34WsTI3O111gf90PR
+ Aa+yTHjgJQRZELUdfLmsLudNyfX1XQNXVEa8LtIZsZYdkxS38bmfOD9HjCNZym1gRsHiaoDo7Ma
+ 7acFjFmYcH8mjevhStwoXcjveKn/02Amz+5Gfazihi3ElORWq0YHb9aaECzk324ru/Rzy9aZn9i
+ FxxlSi65BUw1xaVNnzlhag5tkvHZkvS5pTTlri8SOrre8AhUeb+1IoX4Aq5+ikT7G53RK3DGzHM
+ ZUiM/UjGj0dTcUWUk4aZTtvevvloqRwLLVLV1raKIO/B0a+D9GKkdCB4imaPdNgDjwJxKG9gRvW
+ qSKbIvLCeLVF+42qTJYc4Rz8AGIboFzMByuGBybWfTbV9hM1+jTUwGT6vUP9PUnpC5/1I2uenE9
+ LTRnpWEphog5VjR
+X-Google-Smtp-Source: AGHT+IGaNWBg3i6e6SRk+YulWvBe3ExscU/we3iBCKBwNKy9AQLFCljnGX+C06aIpTfNMRZF0okFcg==
+X-Received: by 2002:a05:600c:c177:b0:471:13dd:baef with SMTP id
+ 5b1f17b1804b1-4778fea3048mr200781455e9.26.1763551238002; 
+ Wed, 19 Nov 2025 03:20:38 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:ed5:b1f0:90e8:1fdb:2cba:9db1?
  ([2a01:e0a:ed5:b1f0:90e8:1fdb:2cba:9db1])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b0ffe377sm42026725e9.1.2025.11.19.02.59.11
+ 5b1f17b1804b1-477a9df8db3sm37189585e9.11.2025.11.19.03.20.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Nov 2025 02:59:11 -0800 (PST)
-Message-ID: <a726cac1-9a4c-4bdb-986a-c240fb6c9de9@linaro.org>
-Date: Wed, 19 Nov 2025 11:59:09 +0100
+ Wed, 19 Nov 2025 03:20:37 -0800 (PST)
+Message-ID: <277c2bb6-5d24-451c-a45e-893822acd2b0@linaro.org>
+Date: Wed, 19 Nov 2025 12:20:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: svm: fix sign extension of exit code
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20251115002644.103889-1-pbonzini@redhat.com>
- <3e215a17-11ed-4172-9598-42a2e1bd9e9e@linaro.org>
- <851ab1f1-c05b-48e9-a08d-2076fa9ab67c@redhat.com>
- <24c4e4cf-ddce-4e93-8f0c-33e48cdc130c@linaro.org>
- <CABgObfZHSY0AA1OFbjeOpx7GVhvdfBMYVXgc5h096q3QNK_Zpw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] linux-user: fix mremap unmapping adjacent region
+To: Matthew Lugg <mlugg@mlugg.co.uk>, qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, peter.maydell@linaro.org
+References: <20251117170954.31451-1-mlugg@mlugg.co.uk>
+ <20251117170954.31451-2-mlugg@mlugg.co.uk>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <CABgObfZHSY0AA1OFbjeOpx7GVhvdfBMYVXgc5h096q3QNK_Zpw@mail.gmail.com>
+In-Reply-To: <20251117170954.31451-2-mlugg@mlugg.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,45 +109,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/18/25 14:07, Paolo Bonzini wrote:
-> On Tue, Nov 18, 2025 at 9:31 AM Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> On 11/17/25 12:32, Paolo Bonzini wrote:
->>> On 11/17/25 10:42, Richard Henderson wrote:
->>>> On 11/15/25 01:26, Paolo Bonzini wrote:
->>>>> -void cpu_vmexit(CPUX86State *env, uint32_t exit_code, uint64_t exit_info_1,
->>>>> +void cpu_vmexit(CPUX86State *env, uint64_t exit_code, uint64_t exit_info_1,
->>>>>                    uintptr_t retaddr)
->>>>>    {
->>>>>        CPUState *cs = env_cpu(env);
->>>>> @@ -732,7 +732,7 @@ void cpu_vmexit(CPUX86State *env, uint32_t exit_code, uint64_t
->>>>> exit_info_1,
->>>>>        qemu_log_mask(CPU_LOG_TB_IN_ASM, "vmexit(%08x, %016" PRIx64 ", %016"
->>>>>                      PRIx64 ", " TARGET_FMT_lx ")!\n",
->>>>> -                  exit_code, exit_info_1,
->>>>> +                  (uint32_t)exit_code, exit_info_1,
->>>>
->>>> Why cast instead of printing all 64 bits?
->>>
->>> Because in practice exit_code is either a very small negative value (-1...-4) or a
->>> positive value.  For QEMU in addition the positive value will also be small (less than 16
->>> bits); values between 0x8000_0000 and 0xffff_ffff could happen in principle but are for
->>> use by software and by the processor[1].  So the high 32 bits are basically unused, and
->>> the cast removes eight zeroes or f's from the log.
->>
->> Then maybe you really want the signed int64_t?
+On 11/17/25 18:09, Matthew Lugg wrote:
+> This typo meant that calls to `mremap` which shrink a mapping by some N
+> bytes would, when the virtual address space was pre-reserved (e.g.
+> 32-bit guest on 64-bit host), unmap the N bytes following the*original*
+> mapping.
 > 
-> The problem is not in the type (int64_t or uint64_t work equally well,
-> they're all just constants), it's in the format string. Positive codes
-> are written in hexadecimal in the manual, so:
-> - %ld makes it hard to match the positive codes in the manual
-> - %lx still prints a -1 as ffffffffffffffff.
+> Signed-off-by: Matthew Lugg<mlugg@mlugg.co.uk>
+> ---
+>   linux-user/mmap.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> So all the cast is doing is making the log more readable.
+> No changes from last revision, just rebased.
 
-Ok then.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
