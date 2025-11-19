@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 487E7CF34A1
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 13:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 199AFCF34A1
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 13:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLho5-0001a7-Gu; Wed, 19 Nov 2025 08:01:09 -0500
+	id 1vLhns-0001PX-1A; Wed, 19 Nov 2025 08:00:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vLhnd-0001KM-4A
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 08:00:41 -0500
-Received: from inva020.nxp.com ([92.121.34.13])
+ id 1vLhna-0001Hm-RV
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 08:00:39 -0500
+Received: from inva021.nxp.com ([92.121.34.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vLhna-0002CS-Hi
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 08:00:40 -0500
-Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 4924A1A3BCA;
- Wed, 19 Nov 2025 14:00:34 +0100 (CET)
+ id 1vLhnW-0002B9-PK
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 08:00:38 -0500
+Received: from inva021.nxp.com (localhost [127.0.0.1])
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 34F00200D33;
+ Wed, 19 Nov 2025 14:00:33 +0100 (CET)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 130731A0872;
- Wed, 19 Nov 2025 14:00:34 +0100 (CET)
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 0A0E2200D6A;
+ Wed, 19 Nov 2025 14:00:33 +0100 (CET)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 88C901800096;
- Wed, 19 Nov 2025 21:00:33 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 32F8B18000A4;
+ Wed, 19 Nov 2025 21:00:32 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
  Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCHv3 13/13] hw/arm/fsl-imx8mm: Adding functional testing of
- iMX8MM emulation
-Date: Wed, 19 Nov 2025 18:30:27 +0530
-Message-Id: <20251119130027.3312971-14-gaurav.sharma_7@nxp.com>
+Subject: [PATCHv3 09/13] hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
+Date: Wed, 19 Nov 2025 18:30:23 +0530
+Message-Id: <20251119130027.3312971-10-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251119130027.3312971-1-gaurav.sharma_7@nxp.com>
 References: <20251119130027.3312971-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.13;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
+Received-SPF: pass client-ip=92.121.34.21;
+ envelope-from=gaurav.sharma_7@nxp.com; helo=inva021.nxp.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -68,111 +67,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Added script that would validate the iMX8MM emulation by checking the
-linux console log. If it succeeds, it will return:-
-
-ok 1 test_imx8mm_evk.Imx8mmEvkMachine.test_aarch64_imx8mm_evk_usdhc
+It enables emulation of WDT in iMX8MM
+Added WDT IRQ lines
 
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
- tests/functional/aarch64/meson.build        |  2 +
- tests/functional/aarch64/test_imx8mm_evk.py | 67 +++++++++++++++++++++
- 2 files changed, 69 insertions(+)
- create mode 100755 tests/functional/aarch64/test_imx8mm_evk.py
+ docs/system/arm/imx8mm-evk.rst |  1 +
+ hw/arm/Kconfig                 |  1 +
+ hw/arm/fsl-imx8mm.c            | 28 ++++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h    |  7 +++++++
+ 4 files changed, 37 insertions(+)
 
-diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
-index 5ad52f93e1..c0e5be1b58 100644
---- a/tests/functional/aarch64/meson.build
-+++ b/tests/functional/aarch64/meson.build
-@@ -4,6 +4,7 @@ test_aarch64_timeouts = {
-   'aspeed_ast2700' : 600,
-   'aspeed_ast2700fc' : 600,
-   'device_passthrough' : 720,
-+  'imx8mm_evk' : 240,
-   'imx8mp_evk' : 240,
-   'raspi4' : 480,
-   'reverse_debug' : 180,
-@@ -27,6 +28,7 @@ tests_aarch64_system_thorough = [
-   'aspeed_ast2700fc',
-   'device_passthrough',
-   'hotplug_pci',
-+  'imx8mm_evk',
-   'imx8mp_evk',
-   'kvm',
-   'multiprocess',
-diff --git a/tests/functional/aarch64/test_imx8mm_evk.py b/tests/functional/aarch64/test_imx8mm_evk.py
-new file mode 100755
-index 0000000000..224fe4669e
---- /dev/null
-+++ b/tests/functional/aarch64/test_imx8mm_evk.py
-@@ -0,0 +1,67 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel and checks the console
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/docs/system/arm/imx8mm-evk.rst b/docs/system/arm/imx8mm-evk.rst
+index fb74950e28..b7034ff472 100644
+--- a/docs/system/arm/imx8mm-evk.rst
++++ b/docs/system/arm/imx8mm-evk.rst
+@@ -17,6 +17,7 @@ The ``imx8mm-evk`` machine implements the following devices:
+  * 5 GPIO Controllers
+  * 6 I2C Controllers
+  * 3 SPI Controllers
++ * 3 Watchdogs
+  * Secure Non-Volatile Storage (SNVS) including an RTC
+  * Clock Tree
+ 
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index d442ea0624..9498a96f30 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -638,6 +638,7 @@ config FSL_IMX8MM
+     select SDHCI
+     select PCI_EXPRESS_DESIGNWARE
+     select PCI_EXPRESS_FSL_IMX8M_PHY
++    select WDT_IMX2
+ 
+ config FSL_IMX8MM_EVK
+     bool
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index a9017c90a0..0a3e057bf3 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -197,6 +197,11 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
+     }
+ 
++    for (i = 0; i < FSL_IMX8MM_NUM_WDTS; i++) {
++        g_autofree char *name = g_strdup_printf("wdt%d", i);
++        object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
++    }
 +
-+from qemu_test import LinuxKernelTest, Asset
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
+     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
+                             TYPE_FSL_IMX8M_PCIE_PHY);
+@@ -481,6 +486,28 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
+                     fsl_imx8mm_memmap[FSL_IMX8MM_SNVS_HP].addr);
+ 
++    /* Watchdogs */
++    for (i = 0; i < FSL_IMX8MM_NUM_WDTS; i++) {
++        static const struct {
++            hwaddr addr;
++            unsigned int irq;
++        } wdog_table[FSL_IMX8MM_NUM_WDTS] = {
++            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG1].addr, FSL_IMX8MM_WDOG1_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG2].addr, FSL_IMX8MM_WDOG2_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG3].addr, FSL_IMX8MM_WDOG3_IRQ },
++        };
 +
-+class Imx8mmEvkMachine(LinuxKernelTest):
++        object_property_set_bool(OBJECT(&s->wdt[i]), "pretimeout-support",
++                                 true, &error_abort);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
++            return;
++        }
 +
-+    ASSET_IMAGE = Asset(
-+        ('https://cloud.debian.org/images/cloud/bookworm/20231210-1590/'
-+         'debian-12-generic-arm64-20231210-1590.tar.xz'),
-+        '7ebf1577b32d5af6204df74b54ca2e4675de9b5a9fa14f3ff70b88eeb7b3b359')
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[i]), 0, wdog_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[i]), 0,
++                           qdev_get_gpio_in(gicdev, wdog_table[i].irq));
++    }
 +
-+    KERNEL_OFFSET = 0x51000000
-+    KERNEL_SIZE = 32622528
-+    INITRD_OFFSET = 0x76000000
-+    INITRD_SIZE = 30987766
-+    DTB_OFFSET = 0x64DB5000
-+    DTB_SIZE = 36812
+     /* PCIe */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie), errp)) {
+         return;
+@@ -521,6 +548,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_SNVS_HP:
+         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
+         case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
++        case FSL_IMX8MM_WDOG1 ... FSL_IMX8MM_WDOG3:
+             /* device implemented and treated above */
+             break;
+ 
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index f3a3304565..7107e932c6 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -21,6 +21,7 @@
+ #include "hw/pci-host/fsl_imx8m_phy.h"
+ #include "hw/sd/sdhci.h"
+ #include "hw/ssi/imx_spi.h"
++#include "hw/watchdog/wdt_imx2.h"
+ #include "qom/object.h"
+ #include "qemu/units.h"
+ 
+@@ -38,6 +39,7 @@ enum FslImx8mmConfiguration {
+     FSL_IMX8MM_NUM_IRQS         = 128,
+     FSL_IMX8MM_NUM_UARTS        = 4,
+     FSL_IMX8MM_NUM_USDHCS       = 3,
++    FSL_IMX8MM_NUM_WDTS         = 3,
+ };
+ 
+ struct FslImx8mmState {
+@@ -53,6 +55,7 @@ struct FslImx8mmState {
+     IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
+     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
++    IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
+ };
+@@ -198,6 +201,10 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_GPIO5_LOW_IRQ  = 72,
+     FSL_IMX8MM_GPIO5_HIGH_IRQ = 73,
+ 
++    FSL_IMX8MM_WDOG1_IRQ    = 78,
++    FSL_IMX8MM_WDOG2_IRQ    = 79,
++    FSL_IMX8MM_WDOG3_IRQ    = 10,
 +
-+    def extract(self, in_path, out_path, offset, size):
-+        try:
-+            with open(in_path, "rb") as source:
-+                source.seek(offset)
-+                data = source.read(size)
-+            with open(out_path, "wb") as target:
-+                target.write(data)
-+        except (IOError, ValueError) as e:
-+            self.log.error(f"Failed to extract {out_path}: {e}")
-+            raise
-+
-+    def setUp(self):
-+        super().setUp()
-+
-+        self.image_path = self.scratch_file("disk.raw")
-+        self.kernel_path = self.scratch_file("linux")
-+        self.initrd_path = self.scratch_file("initrd.zstd")
-+        self.dtb_path = self.scratch_file("imx8mm-evk.dtb")
-+
-+        self.archive_extract(self.ASSET_IMAGE)
-+        self.extract(self.image_path, self.kernel_path,
-+                     self.KERNEL_OFFSET, self.KERNEL_SIZE)
-+        self.extract(self.image_path, self.initrd_path,
-+                     self.INITRD_OFFSET, self.INITRD_SIZE)
-+        self.extract(self.image_path, self.dtb_path,
-+                     self.DTB_OFFSET, self.DTB_SIZE)
-+
-+    def test_aarch64_imx8mm_evk_usdhc(self):
-+        self.require_accelerator("tcg")
-+        self.set_machine('imx8mm-evk')
-+        self.vm.set_console(console_index=1)
-+        self.vm.add_args('-m', '2G',
-+                         '-smp', '4',
-+                         '-kernel', self.kernel_path,
-+                         '-initrd', self.initrd_path,
-+                         '-dtb', self.dtb_path,
-+                         '-append', 'root=/dev/mmcblk2p1',
-+                         '-drive', f'file={self.image_path},if=sd,bus=2,'
-+                                    'format=raw,id=mmcblk2,snapshot=on')
-+
-+        self.vm.launch()
-+        self.wait_for_console_pattern('Welcome to ')
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+     FSL_IMX8MM_PCI_INTA_IRQ = 122,
+     FSL_IMX8MM_PCI_INTB_IRQ = 123,
+     FSL_IMX8MM_PCI_INTC_IRQ = 124,
 -- 
 2.34.1
 
