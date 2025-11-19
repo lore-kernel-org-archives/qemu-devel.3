@@ -4,110 +4,161 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0F5CF256B
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 08:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07866CF256B
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 09:20:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLe1K-0002vH-FW; Wed, 19 Nov 2025 03:58:34 -0500
+	id 1vLeLs-0005vv-NH; Wed, 19 Nov 2025 04:19:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1vLe19-0002uP-5P; Wed, 19 Nov 2025 03:58:24 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLeLq-0005vf-JA
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 04:19:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1vLe17-0005av-H5; Wed, 19 Nov 2025 03:58:22 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AJ6vE2G002608;
- Wed, 19 Nov 2025 08:58:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=2xzst+
- M/KECevNyRuf3JejQbSnCIPyxhzMIOIN04hPE=; b=bAPkIQCTic/Nvf0n5x0t8p
- JpO9G4NPdp1/0SOVItAdICCsTdqwCjo7zyYxut8HIkTzzwQydKLToI0Mf8NXuIow
- BffwgsQfPez/7yfOVYgEHSSAs3BUyK6L2QDyGQ29yUhajWfYERZMBqH31PDqnkp8
- DeHENMlafbdGlv3KMkazTGC840SWs95QiIsFyRnmvgwF2oiiFUKp4b898dyaztcZ
- P2/ST8ur37mydCK30w1grHXfv7qW3Nk8sikO/D6q4e4C/pPDuZNw+QoTLUG6DxfS
- 1TT0FgqBfpyahaHR3r0MjFx6oMJBGv34k2qo7NWOSFAuk50uKWxANgEhY+MC+wYQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aejk1fg7g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Nov 2025 08:58:16 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AJ7n6t6005065;
- Wed, 19 Nov 2025 08:58:15 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4af5bk7p9x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Nov 2025 08:58:15 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5AJ8wB1n25100638
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 19 Nov 2025 08:58:11 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1CEAB20043;
- Wed, 19 Nov 2025 08:58:11 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D877D20040;
- Wed, 19 Nov 2025 08:58:10 +0000 (GMT)
-Received: from [9.155.199.94] (unknown [9.155.199.94])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 19 Nov 2025 08:58:10 +0000 (GMT)
-Message-ID: <45475213-9f68-40e0-b2ee-a1a7b73591c8@linux.ibm.com>
-Date: Wed, 19 Nov 2025 09:58:10 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vLeLn-0000XR-G7
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 04:19:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763543978;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=7U1mz7xDFpvdIm55OpDuGdDJdvQZIJLlaAcwifW7MDo=;
+ b=Cb2JEpJtC0mVX9TWhHrv+AAujDetlIWlc4S1+h2svxuqhER2BZd0R/KDGuzF1G74T/JB+K
+ FciGqm6mirrXI7Ns6qXrYfoP2pnpfM/4U/nQkKK8fL+nsRSErFwTuBg2o44/ObaxGrM5LG
+ D6vYb31LsNXf+5H4V+Ey/D+tGg6cuF8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-146-R43aCrx5PpiKWEgNOxFuDQ-1; Wed, 19 Nov 2025 04:19:35 -0500
+X-MC-Unique: R43aCrx5PpiKWEgNOxFuDQ-1
+X-Mimecast-MFC-AGG-ID: R43aCrx5PpiKWEgNOxFuDQ_1763543975
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-477a1e2b372so31115565e9.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 01:19:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763543974; x=1764148774; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=7U1mz7xDFpvdIm55OpDuGdDJdvQZIJLlaAcwifW7MDo=;
+ b=GMl/zcdMJ+YTby42rjikcYug44iBhfXT62ASqLIhqeA/ZQTxQecFVT+PDTUTU0TKzY
+ 5pWv6UurXDM3mZ1l3ymKdK0LGhDR3682GGTuqmbCZ9N9+DikTmSvi+9pTjgFvBixzEIe
+ jr9K9LXczV4ZvKm9xh3lXb+YVOVZB0ebSrEwFOh2iSlS3wM3Y8axIhFWLcuqckN514vz
+ PN00Cz0h+ItvPQuSRKHpLCeB3mZiQvJsyn1LYROvPMIP9wUHFABQ1x60fr4rksNz+Tlx
+ giPUiQtPtf3rk1mT5/XPOtl359Q1+1RPEhfhIiiXYDiGZJL6pPyXPo8uSg5xNRuqmiqZ
+ C0+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763543974; x=1764148774;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7U1mz7xDFpvdIm55OpDuGdDJdvQZIJLlaAcwifW7MDo=;
+ b=Bn4Xlmn1oRKyTk2nwQbHVD33O+98VU2PqylsmpLrq2pk2ka2gkgNUknv/JMGikfrGg
+ 81M4o16HEAn/rAZtRyr5BLZ9jDPdxtr1z601vOx7wBQR2mouqL5/O7TMKNwwKh1MfBJ5
+ fA2EdOgXNFbhW+xf+HbmDte7wZb37G1p92O9mcVVGKOrwVLYSyYhGy6JDS3it5J4tHk3
+ glHjIB/GvwH5/wDbHUuuqfw/vrLKXgqmlKZygj7qEHtMOcfBFKT3okyJYRl2r6bfvedx
+ 7m6vyuvkKoU3XmwiohDdbXxTNmvXRbRCzAEkxr6oGh6EwyZcMDPBMarxXi6HAftlkMWz
+ KNlA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWg+hlFTTmPPuTERLK3s/NmW/XDCAAsovsyB++vvaC9pu8S2xnd+cMC3EylZ0xY7NVncSLJCb9Omep3@nongnu.org
+X-Gm-Message-State: AOJu0Yy6aXSUAScVoyH4vrj5SD9nb3/FVthcZaSKExPiHlmtVyfAIDUK
+ /jMBJy2e5fGndqsWsiJUcJYRaj4sOOgZ54JBwrxkok8KjcigtIbirXBAPoXlnXRex9lZOImISF4
+ xSjtay4NLITu6+oJY7PZBgZWyRc8BYEFXoCHwoeXGFgKV8PETf4M8OoiQ
+X-Gm-Gg: ASbGncucovgbBDsiFg6Rk28xeVuuqv4RNCw+fQiwgbMrhxnH8uiYIuGK64eeqEd3vct
+ muRMjgKgUIDvrlNNUES9Z/XySuMQixfN5NxwiYolFydHJYnXbLDYHY6IChbReWfc5fnu3ThxHSF
+ RElWZASZKssvmmqs2xHImvOIOeP5/oGjdPv+Szvmr0nfKQltWV7dhabOlNmvuvSg609l/qv9neN
+ dbwAOLKjJIudeIXcvcz+BvKDRsb/N24zeTdHLntJxy6e8Ze4mxjd/szK+/oY9sPNzcniPu/UKjD
+ Pnwr2Pfw/IogKqwo3JRatoIrVGK+1p4f71HAOLA4503NsZP7wef6KHL6YAGDjPY5BVo1dCc0uss
+ laMwXeZkmIpwTqKTaOE/MjODu0bQ3A+4W0LU=
+X-Received: by 2002:a05:600c:138d:b0:477:7cac:508d with SMTP id
+ 5b1f17b1804b1-4778fe5e947mr217302535e9.16.1763543974644; 
+ Wed, 19 Nov 2025 01:19:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGXgPKBAnXoem4unqeoa9rEMbWRqnAoNGVosOX1/0vffC6wc0Yn33jEp9YW9EeXLZtn0jirVQ==
+X-Received: by 2002:a05:600c:138d:b0:477:7cac:508d with SMTP id
+ 5b1f17b1804b1-4778fe5e947mr217302215e9.16.1763543974266; 
+ Wed, 19 Nov 2025 01:19:34 -0800 (PST)
+Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477b1025707sm36601165e9.6.2025.11.19.01.19.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Nov 2025 01:19:33 -0800 (PST)
+Message-ID: <a3b2509d-fa97-4627-ab88-7e0175c6bae1@redhat.com>
+Date: Wed, 19 Nov 2025 10:19:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/s390x: Fix a possible crash with passed-through
- virtio devices
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Cornelia Huck <cohuck@redhat.com>
-References: <20251118174047.73103-1-thuth@redhat.com>
+Subject: Re: [PATCH 05/22] python/mkvenv: bump 'qemu.qmp' dependency for
+ testdeps
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20251117185131.953681-1-jsnow@redhat.com>
+ <20251117185131.953681-6-jsnow@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-In-Reply-To: <20251118174047.73103-1-thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251117185131.953681-6-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=C/nkCAP+ c=1 sm=1 tr=0 ts=691d86a8 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=DF9jzra27_ti4jtxTWgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 6ZVMm47n9C2S1mtolpi42YfW007y2X9e
-X-Proofpoint-ORIG-GUID: 6ZVMm47n9C2S1mtolpi42YfW007y2X9e
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE1MDAzMiBTYWx0ZWRfX3Q5jT9BkiDaH
- SaDhqdzFMBhK8Rf8g8GizOvjq/BB6iGKvPD2dqiamLoJ52vaECvd6Z7sLXlegp+d6AE3EcuqqGB
- Iht6oyn9Ppe/Kes1mN5ufsKgfFTA7OxnBt67XGCGx+JlvrlSA1TgcyoVHARUXMugXcxaLhjQgDb
- HzW0sfXbejWo88K+EK/lwIqw+QnRWloAtlxjZkh3UlhoqUhq0R8dqksVjI31pj3ildeFQubO70C
- tzDUlXjX3KLkLwH7oXYa1/fyDBzO0GoAaBZFcR74+i+OQe2eFdovyR5IfrkyD4nYg6AqAHp1OLt
- 4zFV/ftXYJkRT0M4fAsOxHWYr9qq79BfkLSuDVfcsLt00Kio3M1H4dpWLA1afDNisaB6dIL3I2I
- KThCNnljNIDUTOD3FVe6BDd0rWhfPw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-19_02,2025-11-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 spamscore=0 impostorscore=0 bulkscore=0
- malwarescore=0 suspectscore=0 clxscore=1011 lowpriorityscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511150032
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,31 +174,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-Am 18.11.25 um 18:40 schrieb Thomas Huth:
-> From: Thomas Huth <thuth@redhat.com>
+On 17/11/2025 19.51, John Snow wrote:
+> First up, use the newest v0.0.5 instead of the older v0.0.3.
 > 
-> Consider the following nested setup: An L1 host uses some virtio device
-> (e.g. virtio-keyboard) for the L2 guest, and this L2 guest passes this
-> device through to the L3 guest. Since the L3 guest sees a virtio device,
-> it might send virtio notifications to the QEMU in L2 for that device.
-> But since the QEMU in L2 defined this device as vfio-ccw, the function
-> handle_virtio_ccw_notify() cannot handle this and crashes: It calls
-> virtio_ccw_get_vdev() that casts sch->driver_data into a VirtioCcwDevice,
-> but since "sch" belongs to a vfio-ccw device, that driver_data rather
-> points to a CcwDevice instead. So as soon as QEMU tries to use some
-> VirtioCcwDevice specific data from that device, we've lost.
+> Secondly, the use of a period in the key name does not behave as
+> expected when installing and checking for dependencies, so quote this
+> string instead.
 > 
-> We must not take virtio notifications for such devices. Thus fix the
-> issue by adding a check to the handle_virtio_ccw_notify() handler to
-> refuse all devices that are not our own virtio devices. Like in the
-> other branches that detect wrong settings, we return -EINVAL from the
-> function, which will later be placed in GPR2 to inform the guest about
-> the error.
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> ---
+>   pythondeps.toml | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> diff --git a/pythondeps.toml b/pythondeps.toml
+> index 98e99e79005..1657953ff65 100644
+> --- a/pythondeps.toml
+> +++ b/pythondeps.toml
+> @@ -32,5 +32,5 @@ sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
+>   sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
+>   
+>   [testdeps]
+> -qemu.qmp = { accepted = ">=0.0.3", installed = "0.0.3" }
+> +"qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
 
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Question from a still-python-ignorant: Isn't a dot in a python module name a 
+bad idea after all? I mean if at one point in time, the "qemu" module comes 
+to live and also contains a "qmp" submodule, isn't this calling for trouble?
 
-Certainly a good first step. If needed we can improve further in the future.
+Maybe it would be a good point in time now to start populating 
+https://pypi.org/project/qemu instead?
+
+  Thomas
+
 
