@@ -4,223 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E211CEE35E
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 02:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E7B9CEE356
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 02:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLXch-0005I0-WD; Tue, 18 Nov 2025 21:08:44 -0500
+	id 1vLYGG-0006rE-3p; Tue, 18 Nov 2025 21:49:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1vLXcd-0005Ha-UP
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 21:08:40 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vLYGE-0006qm-Dn
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 21:49:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1vLXcZ-0006Ag-OH
- for qemu-devel@nongnu.org; Tue, 18 Nov 2025 21:08:39 -0500
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AILO0xL022375;
- Wed, 19 Nov 2025 02:08:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=rh+f3/l88NrnHEeLMrVNNmFYpvHeD0Oq9AX7GtbhzMY=; b=
- n4srWwifKYSLGFJRWAdYM3JCH5xIS1TYJGhD/RKjBqtEY/usI5pTvod6J4fE9Dn4
- AldhzfV6aIPEp9fdL92IVx+fDtBiQOFY+hJnBzaWWwL2brd2aKDxWUUoIjuuv0/2
- n+nTfg9VCPMid6Vw9dNliDug4LnWpWtySQvOvUrsyo4tcFFhEYcuACOMLJZ00AZf
- e6TqXNtzqkhFlRQZ39kFMTLdwHRISpLmgT6UneJccSbUXBc+yskRJ3OhDB7vTxs3
- UAxEgQ6fLbRNuQZSv2ol/OCOiFkIMGkKWhO2NCgBhIO+Ywd23rHFd91Ol1Y82+mU
- ZxPHUh09e+W4ZAOqeMzXHQ==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4aej9068e2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 19 Nov 2025 02:08:25 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 5AJ1twdW002381; Wed, 19 Nov 2025 02:08:24 GMT
-Received: from ch1pr05cu001.outbound.protection.outlook.com
- (mail-northcentralusazon11010066.outbound.protection.outlook.com
- [52.101.193.66])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4aefy9y603-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 19 Nov 2025 02:08:24 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=p2zbhl3x6dRZ/+l/V722Mbx0oVvpqJXUCzwcY7rhJszEsUMthWZUMUh3voTbL3b3pqF2FVyREnAMwQvZXHhFtjblnQSUj3o8hDyxA8Bx27ddrwITZit+dWkBX9OaYzmZrITNjBsNpn8VRsGLapUXZzcC0+5TbavDmgUMxoPG5vVUQzGc+BfmEffAFHZh40UpzDEWcMmia5ZmqVnWvCA3PoWhNWAt2G0CQ4tKG0J30UI2H7wqaWWO98W+T6JNERIrQoWtDNTNAd+C/onNeSZTvwDxpK7yU2flcIRsnZ1PiTrJcL7/jxdCxFtOyS8ORXl7hVNJkrMnzOwbYjqzFGPwhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rh+f3/l88NrnHEeLMrVNNmFYpvHeD0Oq9AX7GtbhzMY=;
- b=e22oGMCJvek9NEOiRHRXorIs2to0WJBD+OAcAiwLL3tKZZCapcPcNhVgmAOVvnDmzzmpfKXOENYqiTFiORpqWdY8P36IbavUnG+a5O7swlw3P+TsA4HkAafyDCieON6r+RWY/JuWp5MEtzBx3S78wRtltLOQmvFViuf+lLADMQ0Km/UcVh8pOj4I/glYmAB8HSJ3HBDNS+fNpJqI26fRmZDfpfS5XpzaTRzq/QHvU0Ua4RB7e05abayfn4GFY/1WlBnYCcDH9Dk8a5+5hyLs6nv5hfaV5J8rKMcH/PWDBAFi7jvq6F/ExwBKQPzVuky0iX7BEPHAXYF8boqO4AlXvg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vLYGC-0003oS-0B
+ for qemu-devel@nongnu.org; Tue, 18 Nov 2025 21:49:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763520569;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zFN5787goUW95COx2eIczpPfB9m5zQ8Y7f/ZSM1ROzY=;
+ b=YZbsi9N7M/2NbsI251Fo6F0boRaWgWjtik2vcEGsl9bcDCIZc1L7hlccEGFUDQM4YrGHmK
+ tH7R93s47kLnXz4t++Hgbp6lJ1qms9LVRXwL+7dMkne4bjGtLbn89b+F1OVeC5TYJy4YfP
+ KdDvacOzf7teP8wIkO6g9aGNRfFt3LU=
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-161-pZ41pPAgPaWf5XXHM3TpEA-1; Tue, 18 Nov 2025 21:49:25 -0500
+X-MC-Unique: pZ41pPAgPaWf5XXHM3TpEA-1
+X-Mimecast-MFC-AGG-ID: pZ41pPAgPaWf5XXHM3TpEA_1763520565
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-5dbfaf0bdb6so4218523137.0
+ for <qemu-devel@nongnu.org>; Tue, 18 Nov 2025 18:49:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rh+f3/l88NrnHEeLMrVNNmFYpvHeD0Oq9AX7GtbhzMY=;
- b=jaRFpgAONoy6RwZou8Ed4dmPw1frEDiD4hS/PNCzujSDh3+ThIHL5OU4FRSe/1quct9AyduHE3NuQ5mce26WGtyAerHt0yT5KgnLYFsWHC2hqnpT5F+qGG8BYOLOOeBdc3Cx6lmttEFVC2KQ7oUbsfmmyqdzGZPz5tk+fVHwUqU=
-Received: from DS7PR10MB7129.namprd10.prod.outlook.com (2603:10b6:8:e6::5) by
- SA1PR10MB6295.namprd10.prod.outlook.com (2603:10b6:806:252::8) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9343.10; Wed, 19 Nov 2025 02:08:02 +0000
-Received: from DS7PR10MB7129.namprd10.prod.outlook.com
- ([fe80::721c:7e49:d8c5:799c]) by DS7PR10MB7129.namprd10.prod.outlook.com
- ([fe80::721c:7e49:d8c5:799c%3]) with mapi id 15.20.9320.013; Wed, 19 Nov 2025
- 02:08:02 +0000
-Message-ID: <e7498cc4-445d-494a-8ca6-5bdb73fe0505@oracle.com>
-Date: Tue, 18 Nov 2025 18:07:59 -0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/9] target/i386/kvm/pmu: PMU Enhancement, Bugfix and
- Cleanup
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com
-Cc: zhao1.liu@intel.com, mtosatti@redhat.com, sandipan.das@amd.com,
- babu.moger@amd.com, likexu@tencent.com, like.xu.linux@gmail.com,
- groug@kaod.org, khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
- den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com, ewanhai-oc@zhaoxin.com,
- ewanhai@zhaoxin.com
-References: <20251111061532.36702-1-dongli.zhang@oracle.com>
-Content-Language: en-US
-In-Reply-To: <20251111061532.36702-1-dongli.zhang@oracle.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PH8P223CA0022.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:510:2db::27) To DS7PR10MB7129.namprd10.prod.outlook.com
- (2603:10b6:8:e6::5)
+ d=redhat.com; s=google; t=1763520565; x=1764125365; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zFN5787goUW95COx2eIczpPfB9m5zQ8Y7f/ZSM1ROzY=;
+ b=J/EapCLbtyVBl4NIyTljzMhDyaNLQmwY/VX7Td+SmUs64AmWN+94BW4NQwDxe5vliB
+ fp9n7h2KaCKTpDXV0NuCgYjrdKhh45kXojPxfbBrgocfVSSivgH2iXKGFL71uRsXatPT
+ 19LDRa7GNV6jOvVcuaG3X/x7671g88eQ0MpCx7wYRDzeuysqBqDNbXpJxNMM4F9JjPOd
+ p/3gEIi8EUUK5rK1R++H9jM5Ze/flD8XeUTzYQfR59qTmedR/oo2KppeATHUJPzpdpp0
+ ixwA+KCHF5K/q/ZQylBnh+vxMUiwJ7lRCJGirVXDleh/N+rpR1v/8nKctx6iOszvk8FO
+ D+DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763520565; x=1764125365;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zFN5787goUW95COx2eIczpPfB9m5zQ8Y7f/ZSM1ROzY=;
+ b=vGiLBg++qOrOs1xOt9ckJwhRpDK5IRxk/+0YsBiTzrZ13ooyN9edMECXBYZ9aS4VYR
+ GYARI+66vKjoFjlbP0rOaey1jhsjDHKepcSTWl/BML4dyfCVpKK4V1EiFcbNJ5UzIP8P
+ Zz6+yggkR1v/f/RfngY/kg+m5szaFd+VjDOhCTmiStjC+9BUS/cSa2O3jrbBrV7NpKOe
+ KTic3K6mK58ovzbTJ1I7RVu/skpJtipOZCzBa+deHrIBiUwmKW3FSxUBISVb5BEyfQX9
+ 9+XtZckZqHbod5asO4xG4uBIGxlqB4/B8L9Lo9w+elhEeVJC6kHrjw+Jg8VKxEIbaLpS
+ wpMw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzQzZ8B6+yTBc5C/WyPgoXlInklYT4erRBx2TMJ7uVM+j+Lk6YMXcIkpQ/3F0V9qnjI+cJm4FRjE/j@nongnu.org
+X-Gm-Message-State: AOJu0YxoFwk95r6xrf0d6kVBQZwaDhCLYGGfLoY2BWH9+waRjjohMbFp
+ PF7NsRzEU1K7w+UH+Lngf2FiCLewz2CGbcIAcEjepX9WA1Mp/ckNe3DokNPfmw76q14Oh+GyHEA
+ aTADN0snNdUHF2vV2nedEGwwpglfPfg/G2dR+3mrQJ9fAgGI9iNqmRApE8xrOxUvCmvVFX/fQtu
+ JbQttwLTxVIM95YGoQevzNBez8at0Kpok=
+X-Gm-Gg: ASbGnct+g7Mld0BG1f7t+xkKVfip6nO1gHmiQRXjnhJ5fS4eYsKtHcwEyGpshZ3nGjk
+ F1wBNhFKPk/xXPekjFRPbG8uU68UeXsxDBKQURLd9Z7qE6ZAIQ4CM9N/ZQi75dbfdlGZJgU7DuC
+ NXpp6PbTWyOfpDwpjkRbmqnXblPgA4vL7aQ1D+PrgrbkHCb90Xv6YqQIm7XMrMGMI=
+X-Received: by 2002:a05:6102:6899:b0:5db:23ce:3db with SMTP id
+ ada2fe7eead31-5dfc5535475mr6821179137.11.1763520564854; 
+ Tue, 18 Nov 2025 18:49:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGBqVgrgd0HzHRISrJ9GnkLzQ566DnGWivN+W4Uc+u2E/eeGEXUhNM4/Hdo9MSBgdvxhxV+zAYWJseUUfxU0Yo=
+X-Received: by 2002:a05:6102:6899:b0:5db:23ce:3db with SMTP id
+ ada2fe7eead31-5dfc5535475mr6821166137.11.1763520564307; Tue, 18 Nov 2025
+ 18:49:24 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR10MB7129:EE_|SA1PR10MB6295:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5e7404fe-674d-4780-51fc-08de27107841
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Rjk0WTlJaHJRV0lYWks1dWoxZEI3ZVdrbGhnbDhhQlIvekdTVEFqQnlvNzg0?=
- =?utf-8?B?YUJONlZ1V09QVndsVVpuQmZHeURyQVZUMGRFNXJkVHJVK3JPNk1Pd2lsTnFJ?=
- =?utf-8?B?Sy80ZmJVaTI5UlBuRmhPRGszNVpKMUgxb2pwSm9oNWFMNjFNcEwybGUrSDhq?=
- =?utf-8?B?TU5lZVJSbGhkZElmLzdFdkV5UlR1M3NJR240eERxVTZGam5tY0ZOTDk1L2Iz?=
- =?utf-8?B?UHVGSzN0b1FXSmRWUjQzYTJBWGJzWXJpRi94Y0xjbkxDTVVuSUJCUW5pWDVC?=
- =?utf-8?B?YkJiZzlFY3dZVmtIUkdVU2MwS1djdDlmajFrZFg4U29NaWw5czI0L2VjaVNG?=
- =?utf-8?B?QVcvNm5FQ1hOOU9ndStSU3Q5S1d6YW5RTjJ2QmliYmVJdzRsRE9CUUJpM3Fr?=
- =?utf-8?B?NnM0UFJUZXRuc0I0Vzlva2w0R1ZrTjlsVHErVlhhNGRzV25jdTloTDliNS82?=
- =?utf-8?B?ME1DOHkraXZGODBGa2FWdndmTm5Ub0V4R2ZPWnFYTUdKR3NhbVl6MExqSUFh?=
- =?utf-8?B?UGVWczgzdExrWWF6a0pYbm5tYTNSTFg2UlZnazlhZVJuT0s1ZVdyQ0R6TGNu?=
- =?utf-8?B?b2Z4RTBmTFg5RjFwRDd2WEVUdFdXRHVUZ1VEN3pabTJjMUpZdENVQkFoSkZx?=
- =?utf-8?B?RmRUTFIrZ3k0Tm91azBMSnNYejNTRzhTYlQ2SHJORHRUdUVSRTZqL2pIbitj?=
- =?utf-8?B?OUdtbloxbkZnN1NEMVFtdHNnNEdyTTBuZnp5TTN5NkdaSG5WK1N6RlUvUnNJ?=
- =?utf-8?B?ZmJzNGNXbWcwMDRGRnl4QUZ1U245VTlIRnZKOC83MDg3dDZRSTRlQ2dHU0Nx?=
- =?utf-8?B?TXQrSkxGcS92WFJxaG9oY3RjbGM5MkczUkYyWkRhY3NtU1l3cXNaczUybXBX?=
- =?utf-8?B?Q3VuOXptVFUvS1FFMVVkS0lwbW0rVWVlVHhsanBFY0V4R09GZnREYmwyQXhD?=
- =?utf-8?B?alptY2pPN1F4dmFtK3A0KzZrMERhUUhzSzRqYnpqVzdWZnA0Z0J1dFdIOHMv?=
- =?utf-8?B?NGFpd285YWRLVUZkSDdhRS9ibTFmdzlrMDkzNlpINU5wZTk4NjNKd21VWVVJ?=
- =?utf-8?B?N2tJdDlPdUlMZmlOV2R5bU40K2EwQnEzZU4wOC9TTE5zWWVnVGE2Y0FtUWQ0?=
- =?utf-8?B?eCtWTWxZNDQ5VUQyRHIyMW00N003bklSVlprUGZuNlY0SnIvaTZjWVpuaGNQ?=
- =?utf-8?B?eGJpQWN0d1d5RElXeEdZTUJTa0VEZ3BKZFRXb2R4bWNKZUVwMDN3RWVsT05G?=
- =?utf-8?B?b3poenRhOGFjS3lWWExkdFM3R0o5K3pyR051dnRGbVo3TGsrcjQ2aTdwWmRZ?=
- =?utf-8?B?dkRLbGlUMHFuS1NpMU5zUkY0SW9KdzN3QVJiQ1E2dmNCS2RoL3o1ZUo4QmMv?=
- =?utf-8?B?dEFNYm1Ybzh4OU9taDRCc1VBVW1KUjlNN0w5d3hJUG40a2wveWl5Wk5Ddlpw?=
- =?utf-8?B?eHptcWUxQk5GcDlVc0h6cU1iMzJlaFpFZUtZdEZFU2hhYlZZeGhnT2RRM1Ax?=
- =?utf-8?B?M3dXUlYzanAvc205cS9BcmwwVFBtdXNYTVphdGIyVURTei9jZzU0cmRNbVJx?=
- =?utf-8?B?a25PczFuazlpcjFQL3pPbnVNSkxBQmdVZS9PRFNCREFka1I4MDFjOFVMM2J2?=
- =?utf-8?B?dVhaOU1Gczhad0hONWxwNUQwUDZFaGJaYldNSDk3TllycnF5dkdYNVJQTjBy?=
- =?utf-8?B?MEU4VllGMG5VZHAvdkZyQ2dGQlo5UGx3MVloelFseE93N0RPSEkyeC9tQytn?=
- =?utf-8?B?UFVpVkQydG9qSjBkSU5vNnlJZDdPR2xlaUVIanZYNjJhbkZMNENGWTNhajhL?=
- =?utf-8?B?RDhhZ0ZrbFd4RTZiK0pqSlQzZ3lFQ1UzSEdRKzFRc0ljVGZFYjVmZFEweDBU?=
- =?utf-8?B?aDZJSmE1eHhtM2dTVGI1QXRGN1B1d3dlTUtPY2pDMkpPcnhGei9SZGtRVGtI?=
- =?utf-8?Q?WM+c55UywSXiQ2QmNpD/klppPXQB9EPw?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS7PR10MB7129.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OGowNkxhWks3eTJsSHVyWGZsQ3Y1NnhsNHpmUGwzOUtnMDZLYUhlVXdpQkJh?=
- =?utf-8?B?OVN1Tm4vdHJtdFgrOEZBTGRFUWVESWozajVKbTR5enJ5dHFtdzlRMEVOSGl2?=
- =?utf-8?B?UVBxN25HUXpJU0FlL2FOVmE3THlQWlFLVndTVjFtYWVyZDhOYS8xZUl5U1Fm?=
- =?utf-8?B?anJxd2VZYUo4SlhPWTJCUTRKalJvbFVDVGtjcFVadDIyNkpNcC9GWXZZbXB3?=
- =?utf-8?B?dlFsbVJLdnZGcFhocjZUWTNIZ1pxYndlZEh2VnRQZmRvdlhHTExNclNYcVIw?=
- =?utf-8?B?eHI2UzlJcFBpc1VJam8vWjZDNElKcG5VN1lTejZuUEVOelFKT1NJR2pqb3Fo?=
- =?utf-8?B?ZThMOG5sempHZXlDZzcrREdsMTlHMy9wemJmR09haG4zNExLc0NZTTZRekJQ?=
- =?utf-8?B?UVlCdlg1dHNDZXZoZTFwSGdONENVMm9aSXBQbEl0enVsZHB2NU92RlZwenhp?=
- =?utf-8?B?ZHk0VzdlMmJIbklXZVZFdWlpTFc4U2U1dlBTN0w5U0FpdEdrR0VqL3RMWm12?=
- =?utf-8?B?MHYrcUl0bTJDaERFV0VJZU41Y1ZZMFphMm1tWUVhZitGbTM4bEcvNitpcGs2?=
- =?utf-8?B?MXczK1pGUlJMZHowRCtjc3paU0JuVDk2UDhyYjgvYyt2S2Z5Q3hJYUtGbkRa?=
- =?utf-8?B?T1pCTzFJZFk1RFRqSkIrUnloQmVGTVk0NnJPbkFvUVUzYXprYSt6SzBwQXJ6?=
- =?utf-8?B?MGNYVmNKNFB5QkVscEtNeDQvdGZvc3lkVFBpTjdyYjRhUmRrQ1JMZktucnVC?=
- =?utf-8?B?eWYyRkNGWENJWHAyU2YzMmVFSG9XSmQ3YVJxT083QWMvaDlKN25FallCVXdp?=
- =?utf-8?B?cDJuQzY2NCtOWGdDWFJjeExZeG1PWk1ZWkF4T292QW1CakxhZTZhNnFDK3Jk?=
- =?utf-8?B?QzJMRS9XY3Zaa3Qzb0pHOWRxS0UxamprdElHN0tqTTNMNkNKKzZHcm56Mm04?=
- =?utf-8?B?UEUyYmpUNzlCSkI4VFlxekFCazUvdFl5OU5ldmh5SDMwWkNmejBab1R1b1BR?=
- =?utf-8?B?L2tFY2loL0Q3UU1KQk94S2MrUExQUjd5blpBTW0zK0VIWFBGaGxoSWVhRU8z?=
- =?utf-8?B?SDFjaWZRb3dTTFZPVmI1TkVRdzl4ekZwV1E0a3RXUmVicGxtYU54d3F1QTBk?=
- =?utf-8?B?SUkrRzVoVUp5MWE4eENra3dESWJSc0JHdjhyWlg3dmZTT1l0WDVaMzd4NkdB?=
- =?utf-8?B?UVVOUjU5YXM0MkxsOUJuekFvYlAweVFIbmtVSFpRTTlJcU9tWmZxVHJzUWJx?=
- =?utf-8?B?elMwczBzK2luT2k0cXl6Yi8raVdoa0FkeUQrUnkrajEzZlpubnI5cjhiaTNw?=
- =?utf-8?B?aWtPTXNySU9IMjVDTUtRWWEwK1Y3bGljNEZPSDYyN0FDZUo0b0l4WEdCbmJC?=
- =?utf-8?B?VHN0bk9RUjM2VDNnN1RiejdoV2psVnNvR2dGUnBHMFJKa242aGJQNkpuRzRX?=
- =?utf-8?B?Z09kWk5HdUFXUG5xanFWbWovbTZoTFFhTHNOUHNNYnBHVjQzdU10SzlBMTFN?=
- =?utf-8?B?UUZleURFcjNNVHd0K24wUGtNU1hHaGxmOGwvelRpKzIvSXo4YkpYVUhGRi9D?=
- =?utf-8?B?eTZ0bFUvQkNxVE5LQ0RZQnYzQndRcWgyRklGUXdINWRkUzRuczhWOHNUQVBi?=
- =?utf-8?B?QWxXbVFtdzVBbDA1L2ZDamNaNm5aTlJ1ZHNJTU1hdzFtVGlhbTJ4YmUxUmxY?=
- =?utf-8?B?cE92allIb0swYWVpbHFaV2ZOOVBnR0VORjhxUkUrUVRSM1Nabm83T2hDOXVC?=
- =?utf-8?B?eFRXRjNNSmhYZ1F2ZlZJajBqUjdmOWdTMGFzcXJUakwrcDkxTUlrbmpLR3Iz?=
- =?utf-8?B?V0xBVFhwNG1aRndrK2RjZkxkbncvZ1c1dTV0N3dGdVhVTjBURU9GUy9JTi9a?=
- =?utf-8?B?ZkZncEdXTnNpMEZKN0N2WVlxbkQ2aENyU2V5NlhrcXczNjEyQWdsTVJhRWUw?=
- =?utf-8?B?Y05Hd2FCdDBvNTRLK3dOYjZMeitHZ0piOEMvYlA5SG13eGNCM3dKcERCdGxS?=
- =?utf-8?B?YnJhdXpkenJIVmpSaGJHN1FLUGVxWk1nU2daN2lQVDFtR1dzZWxkRUhTU2da?=
- =?utf-8?B?Y3FteVFWRVU3QkFTekExT1JFUnZLV1poNUxLYVpBakxDczhyaGllazBSOWd1?=
- =?utf-8?B?U1RkNXh1Y043RllYOWdaN0ZMUUpaQUh6ck80SVBkaWlGOEdzL1pNaW93NFRy?=
- =?utf-8?B?NHc9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: aWWlZIfMiXqu6/Lpd75S+HSO+dg5B2EsVuU3948O0xz+VqrHA7m4v/8grfd9zacSqJx/CsO1AJ2BTQ5tMEAn3EpDlvOpQoxkdIM/Jst8XAqY5YBDiaNIdPASEdn3+lpk0WI+zyIyU7QaROPA3CxnVup8UGXYshYV8Pz5NGMIuBbxJoIh8/BbCcunfF/DrD/kaIdmq1xgkJfPqbSR1QNjYmtzvtSQfWpd/x2w/zF5boZjJX6dXZyZgPT5tFySPbTok9bqFfO2dOIJDHPBJReWWxsbqcyD4VChIBXijUaZ1dJn1BgC++CEBt+5DbX+wKtipfoV0QIok0+Qgy6N+/vq9o9LS6+9jX8C5HDcXpSl6GkE5NoWgVXXKMKSPabGkhODRGWJ0x8sOqfKUz490FhaMj4GGcCSjkYQ694adp3+qBKvL+E8BBkUn7ezBqis695vJZcJFk6sqp1o/3k5Ci2DCyPR+j/nPeggIMQs8Q3ySuG+vusRNYKX8XdkMMcwPbmQe7ttTAL0r/YW2N7+WdR9zjobpU88kVTuefP4pN1kk6L6YNzZHuG2xVEO1cWj0YCCND8kYcEwyS5DNDjV51TiK3OyqStPnzra3n4RQmcFNo4=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5e7404fe-674d-4780-51fc-08de27107841
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB7129.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Nov 2025 02:08:02.5925 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: bkJwq9kzm3hnu4URy5hTc6pl0gC4MAjXsc513e3BdGL753Z46PkklI/vww+Qi30qPpABQx+x1hyvWbmZAoPc4g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB6295
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-19_01,2025-11-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- phishscore=0
- malwarescore=0 suspectscore=0 bulkscore=0 spamscore=0 mlxlogscore=999
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2510240000 definitions=main-2511190015
-X-Authority-Analysis: v=2.4 cv=OMAqHCaB c=1 sm=1 tr=0 ts=691d2699 b=1 cx=c_pps
- a=WeWmnZmh0fydH62SvGsd2A==:117
- a=WeWmnZmh0fydH62SvGsd2A==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=6UeiqGixMTsA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Z1coTuTpIt5psuWBCRIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: SMQm9JWDd24pKDUD2NMwt68Ws7Feg2F2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE1MDAzMSBTYWx0ZWRfX1nnDtFSClWdG
- 8FVt65RHSpikVlqnH1p/rANgMt6Srji4Sgs5+Qr2+WAN4Wu3TfB4DRMsvzkr13+5BuAe+WiqhwW
- s0l5pnduzPEhPD9Te+tqHgjoX+SSGXwPIX0PphTK0QOzaV37hSvxkqU9PnVV/Ip7NQ9t8yxcoxf
- 3zARJxpZ9TnpNj/VEbKEw0qR5CWqGkOp6HCjwcNHcJDTQMFL5c3lgyoNwiJnr0UZHGGI8zdnThj
- caoEA/KSt9B7IjqpSCM57RSi4EuFSoHZvQ7JWD88p2JwaAdYQMlAnSW4c/p+JmGnebtTDly0TN+
- BN56ztQ9goz9Nrqd3lXLlbtvY53Aoxf09vkWy9kgpYx4HzDuwAAgd1I6qDoXSC3Zk0ZmMTT9gK4
- AN5WBmO0xx067AaoEaCBYi2DlCmB2g==
-X-Proofpoint-GUID: SMQm9JWDd24pKDUD2NMwt68Ws7Feg2F2
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20251107020149.3223-1-jasowang@redhat.com>
+ <20251113110004-mutt-send-email-mst@kernel.org>
+ <aRYJRZyNrDcDzTuG@x1.local> <20251113114710-mutt-send-email-mst@kernel.org>
+ <aRYRhg7lKDCBUIrf@x1.local> <20251113124207-mutt-send-email-mst@kernel.org>
+ <CACGkMEtdxWJygVbcuvER5yj13R0JL_bxPSAg0eYyiBeh=SyRXg@mail.gmail.com>
+ <20251116014625-mutt-send-email-mst@kernel.org>
+ <CACGkMEsxZvzyeqa_-9qQRfwNGAeCg5pLgu5MtEHr0OFWpA4_-g@mail.gmail.com>
+ <20251117034940-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20251117034940-mutt-send-email-mst@kernel.org>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 19 Nov 2025 10:49:11 +0800
+X-Gm-Features: AWmQ_bkHSY_ruiYn3j5p7ioYW82b3xa8jxyDqhEQQ7yZVCam2bmXeQqzajSAH00
+Message-ID: <CACGkMEsxTSG66StYpkStDqqJJmcTOSLjLH9DzNQ9WN=ffsUkDw@mail.gmail.com>
+Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, 
+ philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, 
+ qemu-devel@nongnu.org, farosas@suse.de, jinpu.wang@ionos.com, 
+ thuth@redhat.com, berrange@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -236,135 +127,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+On Mon, Nov 17, 2025 at 4:57=E2=80=AFPM Michael S. Tsirkin <mst@redhat.com>=
+ wrote:
+>
+> On Mon, Nov 17, 2025 at 12:31:47PM +0800, Jason Wang wrote:
+> > On Sun, Nov 16, 2025 at 2:53=E2=80=AFPM Michael S. Tsirkin <mst@redhat.=
+com> wrote:
+> > >
+> > > On Fri, Nov 14, 2025 at 09:32:47AM +0800, Jason Wang wrote:
+> > > > On Fri, Nov 14, 2025 at 1:47=E2=80=AFAM Michael S. Tsirkin <mst@red=
+hat.com> wrote:
+> > > > >
+> > > > > On Thu, Nov 13, 2025 at 12:12:38PM -0500, Peter Xu wrote:
+> > > > > > On Thu, Nov 13, 2025 at 11:47:51AM -0500, Michael S. Tsirkin wr=
+ote:
+> > > > > > > On Thu, Nov 13, 2025 at 11:37:25AM -0500, Peter Xu wrote:
+> > > > > > > > On Thu, Nov 13, 2025 at 11:09:32AM -0500, Michael S. Tsirki=
+n wrote:
+> > > > > > > > > On Fri, Nov 07, 2025 at 10:01:49AM +0800, Jason Wang wrot=
+e:
+> > > > > > > > > > We used to clear features silently in virtio_net_get_fe=
+atures() even
+> > > > > > > > > > if it is required. This complicates the live migration =
+compatibility
+> > > > > > > > > > as the management layer may think the feature is enable=
+d but in fact
+> > > > > > > > > > not.
+> > > > > > > > > >
+> > > > > > > > > > Let's add a strict feature check to make sure if there'=
+s a mismatch
+> > > > > > > > > > between the required feature and peer, fail the get_fea=
+tures()
+> > > > > > > > > > immediately instead of waiting until the migration to f=
+ail. This
+> > > > > > > > > > offload the migration compatibility completely to the m=
+anagement
+> > > > > > > > > > layer.
+> > > > > > > > > >
+> > > > > > > > > > Signed-off-by: Jason Wang <jasowang@redhat.com>
+> > > > > > > > >
+> > > > > > > > > This is not really useful - how do users know how to twea=
+k their
+> > > > > > > > > command lines?
+> > > > > > > > > We discussed this many times.
+> > > > > > > > > To try and solve this you need a tool that will tell you =
+how to start
+> > > > > > > > > VM on X to make it migrateable to Y or Z.
+> > > > > > > > >
+> > > > > > > > >
+> > > > > > > > > More importantly,
+> > > > > > > > > migration is a niche thing and breaking booting perfectly=
+ good VMs
+> > > > > > > > > just for that seems wrong.
+> > > > > > > >
+> > > > > > > > IMHO Jason's proposal is useful in that it now provides a w=
+ay to provide
+> > > > > > > > ABI stablility but allows auto-ON to exist.
+> > > > > > > >
+> > > > > > > > If we think migration is optional, we could add a migration=
+ blocker where
+> > > > > > > > strict check flag is set to OFF, as I mentioned in the emai=
+l reply to Dan.
+> > > > > > > > As that implies the VM ABI is not guaranteed.
+> > > > > > > >
+> > > > > > > > Thanks,
+> > > > > > >
+> > > > > > >
+> > > > > > > All you have to do is avoid changing the kernel and ABI is st=
+able.
+> > > > > > > Downstreams already do this.
+> > > > > >
+> > > > > > But the whole point of migration is allowing VMs to move betwee=
+n hosts..
+> > > > > > hence AFAIU kernel can change.
+> > > > > >
+> > > > > > Downstream will still have problem if some network features wil=
+l be
+> > > > > > optionally supported in some of the RHEL-N branches, because ma=
+chine types
+> > > > > > are defined the same in any RHEL-N, so IIUC it's also possible =
+a VM booting
+> > > > > > on a latest RHEL-X.Y qemu/kernel hit issues migrating back to a=
+n older
+> > > > > > RHEL-X.(Y-1) qemu/kernel if RHEL-X.(Y-1) kernel doesn't have th=
+e network
+> > > > > > feature available..
+> > > > > >
+> > > > > > It's also not good IMHO to only fix downstream but having upstr=
+eam face
+> > > > > > such problems, even if there's a downstream fix...
+> > > > > >
+> > > > > > This thread was revived only because Jinpu hit similar issues. =
+ IMHO we
+> > > > > > should still try to provide a generic solution upstream for eve=
+ryone.
+> > > > > >
+> > > > > > Thanks,
+> > > > > >
+> > > > > > --
+> > > > > > Peter Xu
+> > > > >
+> > > > > failing to start a perfectly good qemu which used to work
+> > > > > because you changed kernels is better than failing to migrate how=
+?
+> > > >
+> > > > It doesn't:
+> > > >
+> > > > 1) the strict feature check will be only enabled in new machine typ=
+es
+> > > > 2) if kernel ABI is stable, qemu will keep working after upgrading
+> > > > kernel even with strict check otherwise it would be a bug of kernel
+> > > >
+> > > > So I don't see it breaking anything if we make it start to work at =
+11.0?
+> > >
+> > > Using QEMU from git suddenly requires upgrading the kernel or figurin=
+g
+> > > out obscure flags? Ugh.
+> >
+> > Only the setups are buggy that might meet this.
+>
+> I do git pull on qemu and have an old kernel. My setup just
+> became buggy. No?
+>
+>
+> > >
+> > >
+> > > > >
+> > > > >
+> > > > >
+> > > > > graceful downgrade with old kernels is the basics of good userspa=
+ce
+> > > > > behaviour and has been for decades.
+> > > >
+> > > > Peter has given the example of how hard we can define gracefulness
+> > > > (e.g migrate from a kernel w/ USO to a kernel w/o USO) and fix.
+> > > >
+> > > > Maybe we can think of a usersapce fallback to emulation of USO or
+> > > > others, but I'm not sure if it's an overkill.
+> > > >
+> > > > >
+> > > > >
+> > > > > sure, let's work on a solution, just erroring out is more about b=
+laming
+> > > > > the user. what is the user supposed to do when qemu fails to star=
+t?
+> > > >
+> > > > It's the first step as it's much better than silently clearing the
+> > > > feature which may confuse both user and migration. We can use warni=
+ngs
+> > > > instead of errors but I'm not sure how much it can help.
+> > >
+> > >
+> > > Well with this first step we have successfully blamed the user and
+> > > the second step won't ever be taken.
+> >
+> > Are you suggesting to fix the management? E.g patching libvirt to
+> > probe tap features?
+>
+> host features generally.
+>
+>
+> > >
+> > > > >
+> > > > >
+> > > > > first, formulate what exactly do you want to enable.
+> > > > >
+> > > > >
+> > > > >
+> > > > > for example, you have a set of boxes and you want a set of flags
+> > > > > to supply to guarantee qemu can migrate between them. is that it?
+> > > >
+> > > > Mostly, it should work as a CPU cluster.
+> > >
+> > > the reason it kinda works with CPU cluster is simply because
+> > > there is a final set of CPU models and you can not easily
+> > > switch your CPU to a different model.
+> >
+> > We can define a set of TAP features as well, but I'm not sure it's
+> > worthwhile to do this.
+> >
+> > >
+> > > > So it's the responsibility of
+> > > > the management layer, maybe we can develop some tool to report this=
+ or
+> > > > via qemu introspection ("query-tap" ?). Or if the management can do
+> > > > this now, we don't even need to bother (or it can help to uncover
+> > > > bugs). Anyhow, clearing a feature silently is not good and can cove=
+r
+> > > > bugs of various layers.
+> > > >
+> > > > Note that this issue is not specific to TAP, we may meet this for
+> > > > vDPA/VFIO live migration as well. Basically, it should be the
+> > > > responsibility of the management layer to deal with those migration
+> > > > compatibility policies instead of using hard coded policies inside
+> > > > Qemu. For qemu, it can simply error out when there's a mismatch
+> > > > between features that are supported and features that are asked to
+> > > > enable. We've suffered a lot in the past when trying to deal with t=
+his
+> > > > by Qemu.
+> > > >
+> > > > Thanks
+> > >
+> > > Yes but QEMU currently gives management no tools to figure out
+> > > what is important for it.
+> >
+> > Using Qemu might be problematic as usually it doesn't not have privileg=
+e.
+> >
+> > We can extend iproute, or a dedicated tool or ask libvirt to do this.
+> > If libvirt could do the probe by itself, could we start from that?
+> >
+> > Thanks
+>
+> All I am saying is that I want to see how is management supposed to
+> know what to enable.
+>
+> qemu already probes tap features.
 
-Apologies if this causes any inconvenience.
+Only part of the features.
 
-Would you consider this patchset? It resolves several QEMU AMD vPMU issues, and
-each patch has received a Reviewed-by from at least two reviewers.
+> To me, it seems natural
+> for management to do the probing through qemu.
+> in fact your patch is a way to do that, is it not?
 
-Thank you very much!
+Yes and no.
 
-Dongli Zhang
+> what it lacks though is a structured way to tell management how
+> to fix the problem.
 
-On 11/10/25 10:14 PM, Dongli Zhang wrote:
-> This patchset addresses four bugs related to AMD PMU virtualization.
-> 
-> 1. The PerfMonV2 is still available if PERCORE if disabled via
-> "-cpu host,-perfctr-core".
-> 
-> 2. The VM 'cpuid' command still returns PERFCORE although "-pmu" is
-> configured.
-> 
-> 3. The third issue is that using "-cpu host,-pmu" does not disable AMD PMU
-> virtualization. When using "-cpu EPYC" or "-cpu host,-pmu", AMD PMU
-> virtualization remains enabled. On the VM's Linux side, you might still
-> see:
-> 
-> [    0.510611] Performance Events: Fam17h+ core perfctr, AMD PMU driver.
-> 
-> instead of:
-> 
-> [    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
-> [    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
-> 
-> To address this, KVM_CAP_PMU_CAPABILITY is used to set KVM_PMU_CAP_DISABLE
-> when "-pmu" is configured.
-> 
-> 4. The fourth issue is that unreclaimed performance events (after a QEMU
-> system_reset) in KVM may cause random, unwanted, or unknown NMIs to be
-> injected into the VM.
-> 
-> The AMD PMU registers are not reset during QEMU system_reset.
-> 
-> (1) If the VM is reset (e.g., via QEMU system_reset or VM kdump/kexec) while
-> running "perf top", the PMU registers are not disabled properly.
-> 
-> (2) Despite x86_cpu_reset() resetting many registers to zero, kvm_put_msrs()
-> does not handle AMD PMU registers, causing some PMU events to remain
-> enabled in KVM.
-> 
-> (3) The KVM kvm_pmc_speculative_in_use() function consistently returns true,
-> preventing the reclamation of these events. Consequently, the
-> kvm_pmc->perf_event remains active.
-> 
-> (4) After a reboot, the VM kernel may report the following error:
-> 
-> [    0.092011] Performance Events: Fam17h+ core perfctr, Broken BIOS detected, complain to your hardware vendor.
-> [    0.092023] [Firmware Bug]: the BIOS has corrupted hw-PMU resources (MSR c0010200 is 530076)
-> 
-> (5) In the worst case, the active kvm_pmc->perf_event may inject unknown
-> NMIs randomly into the VM kernel:
-> 
-> [...] Uhhuh. NMI received for unknown reason 30 on CPU 0.
-> 
-> To resolve these issues, we propose resetting AMD PMU registers during the
-> VM reset process
-> 
-> 
-> Changed since v1:
->   - Use feature_dependencies for CPUID_EXT3_PERFCORE and
->     CPUID_8000_0022_EAX_PERFMON_V2.
->   - Remove CPUID_EXT3_PERFCORE when !cpu->enable_pmu.
->   - Pick kvm_arch_pre_create_vcpu() patch from Xiaoyao Li.
->   - Use "-pmu" but not a global "pmu-cap-disabled" for KVM_PMU_CAP_DISABLE.
->   - Also use sysfs kvm.enable_pmu=N to determine if PMU is supported.
->   - Some changes to PMU register limit calculation.
-> Changed since v2:
->   - Change has_pmu_cap to pmu_cap.
->   - Use cpuid_find_entry() instead of cpu_x86_cpuid().
->   - Rework the code flow of PATCH 07 related to kvm.enable_pmu=N following
->     Zhao's suggestion.
->   - Use object_property_get_int() to get CPU family.
->   - Add support to Zhaoxin.
-> Changed since v3:
->   - Re-base on top of Zhao's queued patch.
->   - Use host_cpu_vendor_fms() from Zhao's patch.
->   - Pick new version of kvm_arch_pre_create_vcpu() patch from Xiaoyao.
->   - Re-split the cases into enable_pmu and !enable_pmu, following Zhao's
->     suggestion.
->   - Check AMD directly makes the "compat" rule clear.
->   - Some changes on commit message and comment.
->   - Bring back global static variable 'kvm_pmu_disabled' read from
->     /sys/module/kvm/parameters/enable_pmu.
-> Changed since v4:
->   - Re-base on top of most recent mainline QEMU.
->   - Add more Reviewed-by.
->   - All patches are reviewed.
-> Changed since v5:
->   - Re-base on top of most recent mainline QEMU.
->   - Remove patch "kvm: Introduce kvm_arch_pre_create_vcpu()" as it is
->     already merged.
->   - To resolve conflicts in new [PATCH v6 3/9] , move the PMU related code
->     before the call site of is_tdx_vm().
-> Changed since v6:
->   - Re-base on top of most recent mainline QEMU (staging branch).
->   - Add more Reviewed-by from Dapeng and Sandipan.
-> 
-> 
-> Dongli Zhang (9):
->   target/i386: disable PerfMonV2 when PERFCORE unavailable
->   target/i386: disable PERFCORE when "-pmu" is configured
->   target/i386/kvm: set KVM_PMU_CAP_DISABLE if "-pmu" is configured
->   target/i386/kvm: extract unrelated code out of kvm_x86_build_cpuid()
->   target/i386/kvm: rename architectural PMU variables
->   target/i386/kvm: query kvm.enable_pmu parameter
->   target/i386/kvm: reset AMD PMU registers during VM reset
->   target/i386/kvm: support perfmon-v2 for reset
->   target/i386/kvm: don't stop Intel PMU counters
-> 
->  target/i386/cpu.c     |   8 +
->  target/i386/cpu.h     |  16 ++
->  target/i386/kvm/kvm.c | 355 +++++++++++++++++++++++++++++++++++++++------
->  3 files changed, 332 insertions(+), 47 deletions(-)
-> 
-> branch: remotes/origin/staging
-> base-commit: 593aee5df98b4a862ff8841a57ea3dbf22131a5f
-> 
-> Thank you very much!
-> 
-> Dongli Zhang
-> 
-> 
+Probing through management seems to be better. For example it can
+calculate the cluster in advance without the need to launch qemu
+everywhere.
+
+Or consider the case when USO is not supported by the kernel in the
+destination, even if qemu reports this, I'm not sure what is expected
+to be done in the management layer?
+
+Thanks
+
+>
+> >
+> > >
+> > >
+> > >
+> > > > >
+> > > > >
+> > > > >
+> > > > > --
+> > > > > MST
+> > > > >
+> > >
+>
 
 
