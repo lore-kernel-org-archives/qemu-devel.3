@@ -4,77 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B364CF3189
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 10:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2C6ACF3185
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 10:45:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLfg4-000847-6F; Wed, 19 Nov 2025 05:44:44 -0500
+	id 1vLfgO-0008Cw-6J; Wed, 19 Nov 2025 05:45:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLfg2-00083X-Eg
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 05:44:42 -0500
-Received: from mgamail.intel.com ([192.198.163.17])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vLfgM-0008B4-BE; Wed, 19 Nov 2025 05:45:03 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLffz-0005JL-Tm
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 05:44:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763549080; x=1795085080;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=WhK5P4cuobRv3bMhRyzWkwxWn+7RqWPfiO66DzwlRZg=;
- b=kYKf1I7h60fDDDx/BoCW5c54zZ/21srDWuW5PrZrDkHBDDv07gkTrtYt
- 3Z7/5FLVmHU35KZeryhZ68Trdrg2BT/LXgOOlSlGWaUXXOORgssiaLrLJ
- rJU00UDig4qvH73B0E97zQ+3cTTxy5zlcR8kikZwTEatUor/+UWoKtaqe
- 86WmmiW5Wqv0KeFUnPoFGZoJ/cTrl2DOBTYEF9g+BF15t8LpZeKSAVZnM
- S9Piu/b067MXE7q2ZZq3H9FTOPC1oPx9Fpi41u0nP5mzNR24n7xpNfNxl
- 4x4Ct2U5UzwahC+8YuG1hGZ+P+OuZyyKLkXj6O+GqMAGMVrZ3g9P3QwiL A==;
-X-CSE-ConnectionGUID: UQPyI88TQomUDRxauadQvA==
-X-CSE-MsgGUID: jyUSAW1YT/SCGCnE1lWLHg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11617"; a="65483380"
-X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; d="scan'208";a="65483380"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Nov 2025 02:44:35 -0800
-X-CSE-ConnectionGUID: mItufiZIQR2Hevf9RtiK1g==
-X-CSE-MsgGUID: USMTkdqxSGGJc3gf0UXzbg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,315,1754982000"; d="scan'208";a="195971496"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 19 Nov 2025 02:44:31 -0800
-Date: Wed, 19 Nov 2025 19:06:51 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
- mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
- likexu@tencent.com, like.xu.linux@gmail.com, groug@kaod.org,
- khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
- den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
- dapeng1.mi@linux.intel.com, joe.jin@oracle.com,
- ewanhai-oc@zhaoxin.com, ewanhai@zhaoxin.com, zhao1.liu@intel.com
-Subject: Re: [PATCH v7 2/9] target/i386: disable PERFCORE when "-pmu" is
- configured
-Message-ID: <aR2ky5WU8CqH8+lS@intel.com>
-References: <20251111061532.36702-1-dongli.zhang@oracle.com>
- <20251111061532.36702-3-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vLfgI-0005Kq-Vm; Wed, 19 Nov 2025 05:45:02 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id F185A16B91C;
+ Wed, 19 Nov 2025 13:44:42 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8835D31FE3E;
+ Wed, 19 Nov 2025 13:44:47 +0300 (MSK)
+Message-ID: <88dae27a-e6c1-4c83-8b89-0f1d8bda4dd0@tls.msk.ru>
+Date: Wed, 19 Nov 2025 13:44:47 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251111061532.36702-3-dongli.zhang@oracle.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] hw/sd: Fix broken ssi-sd implementation since v9.1.0
+To: Bin Meng <bmeng.cn@gmail.com>, QEMU <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Tom Rini <trini@konsulko.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20251110110507.1641042-1-bmeng.cn@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251110110507.1641042-1-bmeng.cn@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,176 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Dongli,
+On 11/10/25 14:05, Bin Meng wrote:
+> 
+> The U-Boot community reported a CI failure [1] where the
+> `sifive_unleashed` target failed to boot from an SD card after
+> upgrading from QEMU v8.2.0 to v9.2.3.
+> 
+> At that time, the issue was traced to commit da954d0e
+> ("hw/sd/sdcard: Add spi_cmd_SEND_CSD/CID handlers (CMD9 & CMD10)")
+> which was introduced in v9.1.0.
+> 
+> Testing with the latest QEMU mainline shows that the problem still
+> persists, although the underlying cause has changed due to refactoring
+> since then.
+> 
+> This series fixes the broken `ssi-sd` model. After applying these
+> patches, U-Boot successfully boots again on the `sifive_unleashed`
+> target using QEMU’s `sifive_u` machine.
+> 
+> [1] https://gitlab.com/qemu-project/qemu/-/issues/2945
 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 3653f8953e..4fcade89bc 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -8360,6 +8360,10 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->              !(env->hflags & HF_LMA_MASK)) {
->              *edx &= ~CPUID_EXT2_SYSCALL;
->          }
-> +
-> +        if (!cpu->enable_pmu) {
-> +            *ecx &= ~CPUID_EXT3_PERFCORE;
-> +        }
+Hi!
 
-Learned the lessons from PDCM [*]:
+This seems to be a qemu-stable material.
 
-[*] https://lore.kernel.org/qemu-devel/20250923104136.133875-3-pbonzini@redhat.com/
+The refactoring mentioned above happened between 10.1.0-rc1 and
+10.1.0-rc2, which is quite a hot spot for a refactoring.   So the
+changes are definitely relevant for 10.1.x series, where I applied
+them already.
 
-Directly masking CPUID bit off is not a good idea... modifying the
-CPUID, even when fixing or adding dependencies, can easily break
-migration.
+But we've 10.0.x series which supposed to be long-term support
+series, where we have the problem too (since the issue were
+introduced before 10.0), but the 2 fixes here don't apply to 10.0,
+obviously, due to refactoring.
 
-So a safe way is to add a compat option. And I think it would be better
-if patch 1 also has a compat option. A single compat option could cover
-patch 1 & 2.
+Now I wonder should we fix this in 10.0.x at all, should we
+create some unique fix for 10.0.x, or should we pick the
+refactoring done in 10.1.0-rc stage, to 10.0.x?
 
-I have these thoughts:
+This is the original refactoring patchset:
+https://lore.kernel.org/qemu-devel/20250804133406.17456-1-philmd@linaro.org/
 
-* For "-pmu" dependency, it can be checked as [*] did.
-* For normal feature bit dependency (patch 1), it seems possible to add
-  compat_prop condition in feature_dependencies[].
+The patchset applies cleanly to 10.0.x, with these 2 fixes on
+top, and the resulting thing seem to work fine, so far anyway:
+https://gitlab.com/mjt0k/qemu/-/commits/10.0-sdcard
+(and with local tests, including the test in the above series).
 
-I attached a draft for discussion (which is on the top of the whole
-series).
+What do you think?  How important it is to make this whole
+thing work in 10.0.x lts series (including distribution(s)
+based on this, such as current debian stable "trixie")?
 
-Note, we are currently in the RC phase for v10.2, and the
-pc_compat_10_2[] array is not yet added, which will be added before the
-release of v10.2. Therefore, we have enough time for discussion I think.
+Thanks,
 
-If you think it's fine, I'll post compat_prop support separately as an
-RFC. The specific compat option can be left to this series.
-
-Although wait for a while, in a way, it is lucky :) - there's an
-opportunity to avoid making mistakes for us.
-
-Regards,
-Zhao
-
-------------------------------------------------
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index f8b919cb6c47..d2b8e83e556d 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -83,6 +83,7 @@
-
- GlobalProperty pc_compat_10_1[] = {
-     { "mch", "extended-tseg-mbytes", "16" },
-+    { TYPE_X86_CPU, "x-amd-perfmon-always-on", "true" }, // This should be added to pc_compat_10_2!
- };
- const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 4fcade89bcea..8c56789eb296 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1997,6 +1997,8 @@ static FeatureDep feature_dependencies[] = {
-     {
-         .from = { FEAT_8000_0001_ECX,       CPUID_EXT3_PERFCORE },
-         .to = { FEAT_8000_0022_EAX,         CPUID_8000_0022_EAX_PERFMON_V2 },
-+        .compat_prop =
-+            { "x-amd-perfmon-always-on",    "false" },
-     },
- };
-
-@@ -8998,15 +9000,36 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-         }
-     }
-
--    if (!cpu->pdcm_on_even_without_pmu) {
-+    if (!cpu->enable_pmu) {
-         /* PDCM is fixed1 bit for TDX */
--        if (!cpu->enable_pmu && !is_tdx_vm()) {
-+        if (!cpu->pdcm_on_even_without_pmu && !is_tdx_vm()) {
-             env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
-         }
-+
-+        if (!cpu->amd_perfmon_always_on) {
-+            env->features[FEAT_8000_0001_ECX] &= ~CPUID_EXT3_PERFCORE;
-+        }
-     }
-
-     for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
-         FeatureDep *d = &feature_dependencies[i];
-+        bool compat_omit = false;
-+        PropValue *prop = &d->compat_prop;
-+
-+        if (prop->value) {
-+            char *v = object_property_print(OBJECT(cpu), prop->prop, false, NULL);
-+            if (v) {
-+                compat_omit = !strcmp(prop->value, v);
-+                printf("feature_dependencies: v: %s, value: %s, omit: %d\n",
-+                       v, prop->value, compat_omit);
-+                g_free(v);
-+            }
-+
-+            if (compat_omit) {
-+                continue;
-+            }
-+        }
-+
-         if (!(env->features[d->from.index] & d->from.mask)) {
-             uint64_t unavailable_features = env->features[d->to.index] & d->to.mask;
-
-@@ -10065,6 +10088,8 @@ static const Property x86_cpu_properties[] = {
-                      arch_cap_always_on, false),
-     DEFINE_PROP_BOOL("x-pdcm-on-even-without-pmu", X86CPU,
-                      pdcm_on_even_without_pmu, false),
-+    DEFINE_PROP_BOOL("x-amd-perfmon-always-on", X86CPU,
-+                     amd_perfmon_always_on, false),
- };
-
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 6d78f3995b6b..ac8dd92efc59 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -696,8 +696,14 @@ typedef struct FeatureMask {
-     uint64_t mask;
- } FeatureMask;
-
-+typedef struct PropValue {
-+    const char *prop, *value;
-+} PropValue;
-+
- typedef struct FeatureDep {
-     FeatureMask from, to;
-+    /* Once set, only when prop is satisfied, dependency can be checked. */
-+    PropValue compat_prop;
- } FeatureDep;
-
- typedef uint64_t FeatureWordArray[FEATURE_WORDS];
-@@ -2353,6 +2359,16 @@ struct ArchCPU {
-      */
-     bool pdcm_on_even_without_pmu;
-
-+    /*
-+     * Backwards compatibility with QEMU <10.2. (TODO: change 10.2 to 11.0!)
-+     * This flag covers 2 parts:
-+     * - The PERFCORE feature is now disabled when PMU is not available, but prior to
-+     *   10.2 it was enabled even if PMU is off.
-+     * - The PerfMonV2 feature is now disabled when PERFCORE is disabled, but prior to
-+     *   10.2 it was enabled even if PERFCORE is off.
-+     */
-+    bool amd_perfmon_always_on;
-+
-     /* Number of physical address bits supported */
-     uint32_t phys_bits;
-
-@@ -2579,9 +2595,7 @@ bool cpu_x86_xrstor(CPUX86State *s, void *host, size_t len, uint64_t rbfm);
- /* cpu.c */
- void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
-                               uint32_t vendor2, uint32_t vendor3);
--typedef struct PropValue {
--    const char *prop, *value;
--} PropValue;
-+
- void x86_cpu_apply_props(X86CPU *cpu, PropValue *props);
-
- void x86_cpu_after_reset(X86CPU *cpu);
-
-
+/mjt
 
