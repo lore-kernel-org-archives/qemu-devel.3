@@ -4,128 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C65F2CF3957
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 16:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F59CF3959
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 16:35:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLl4R-0005hJ-73; Wed, 19 Nov 2025 11:30:16 -0500
+	id 1vLl8k-0006rG-Q0; Wed, 19 Nov 2025 11:34:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1vLl4N-0005gM-U8
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 11:30:12 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vLl8j-0006p8-2x; Wed, 19 Nov 2025 11:34:41 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1vLl4M-0001I7-4Q
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 11:30:11 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AJ7X532026915;
- Wed, 19 Nov 2025 16:29:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=rO/d/WodAriRne5bEPTICDY+dG1nLthqpPRVpLshr44=; b=MAoJUEreK0MY
- SxXfYtjjjMKsMkphRXBF2sFiR6qYj8hRIPXU4knOGsJzh2FftCC+C9OocpBubOwm
- Jj8tXXnJT8+C3P+HqSTGftkU0J/n1paszMxlspv4nkltiS/1t1CcCkZaq9huC1y1
- i7dt2LhvxOK69ZjYgF+zf8kk0NsHY/5AMGllJG9VvOLT5mjt0/144c31tnOzvlWo
- e+L1WEidbG9y6aXudGkJLAJDV83azNgKSxSqGbf5qPSgvEBlCuDXAig/FG85/s+D
- ZpWmTd1jg0URRyYYeBSkDMdoD749BXYwPBMFstucvNKIgvUJ0538yzjCFEXtE7PT
- OjHsNz8eDQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aejjw9n19-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Nov 2025 16:29:47 +0000 (GMT)
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5AJGRXq1022649;
- Wed, 19 Nov 2025 16:29:47 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aejjw9n15-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Nov 2025 16:29:47 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AJF065a022370;
- Wed, 19 Nov 2025 16:29:45 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4af4un1qfd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 19 Nov 2025 16:29:45 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5AJGTjkE60490070
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 19 Nov 2025 16:29:45 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5F84B58056;
- Wed, 19 Nov 2025 16:29:45 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF6FE58052;
- Wed, 19 Nov 2025 16:29:43 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 19 Nov 2025 16:29:43 +0000 (GMT)
-Message-ID: <f1344276076ef1a8ca05073951168640e956b01a.camel@linux.ibm.com>
-Subject: Re: [PATCH for-11.0 10/15] tests/functional/ppc/test_ppe42: Fix
- style issues reported by pylint
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, John Snow
- <jsnow@redhat.com>, "Daniel P." =?ISO-8859-1?Q?Berrang=E9?=
- <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>, Radoslaw Biernacki <rad@semihalf.com>, Peter
- Maydell <peter.maydell@linaro.org>, Leif Lindholm
- <leif.lindholm@oss.qualcomm.com>, Eric Auger <eric.auger@redhat.com>,
- Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Aurelien
- Jarno <aurelien@aurel32.net>, BALATON Zoltan <balaton@eik.bme.hu>, Nicholas
- Piggin <npiggin@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Alistair Francis
- <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, Daniel
- Henrique Barboza <dbarboza@ventanamicro.com>, Liu Zhiwei
- <zhiwei_liu@linux.alibaba.com>, Zhao Liu <zhao1.liu@intel.com>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>
-Date: Wed, 19 Nov 2025 10:29:43 -0600
-In-Reply-To: <20251119082636.43286-11-thuth@redhat.com>
-References: <20251119082636.43286-1-thuth@redhat.com>
- <20251119082636.43286-11-thuth@redhat.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vLl8g-00027k-7b; Wed, 19 Nov 2025 11:34:40 -0500
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 7BFCAC0678;
+ Wed, 19 Nov 2025 19:34:30 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:d4f::1:a] (unknown [2a02:6bf:8080:d4f::1:a])
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id QYZPeU1FLa60-mQxSyg0n; Wed, 19 Nov 2025 19:34:30 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1763570070;
+ bh=nvUxf4V4e/z9dwNpB0No3uc5zUvVA+AcUD4f7gSNLCY=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=b4HvaIDkLdN13ZIRsj7vpKOom9PrDP1UVvmJwn5Ej4iOeBldqY/rc59PIRJWV6Jfk
+ Rc+59oFHW2OhaV1fIpTz2cPhhqz+U1DoFm08nRC734t1aRTOAqTleRaQ9XC9f2fWVb
+ NOHTrES/em7yeh3uIebA6z4lvlE5ELFCJo0LMEgE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <bf44d9cd-806a-4d2c-8cff-0a88222959ed@yandex-team.ru>
+Date: Wed, 19 Nov 2025 19:34:26 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/5] hw/core/loader: Make load_elf_hdr() return bool,
+ simplify caller
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com, imammedo@redhat.com, 
+ anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
+ alistair@alistair23.me, edgar.iglesias@gmail.com, npiggin@gmail.com,
+ harshpb@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ berrange@redhat.com, peterx@redhat.com, farosas@suse.de, eblake@redhat.com,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
+ qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ xen-devel@lists.xenproject.org
+References: <20251119130855.105479-1-armbru@redhat.com>
+ <20251119130855.105479-2-armbru@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20251119130855.105479-2-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=BanVE7t2 c=1 sm=1 tr=0 ts=691df07c cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8 a=WP5zsaevAAAA:8 a=afbpXOviwP4MOHP9KbIA:9
- a=QEXdDO2ut3YA:10 a=t8Kx07QrZZTALmIZmm-o:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE1MDAzMiBTYWx0ZWRfX+f+nQKr/jCNW
- eF/sgMJfg0Emp1aLZEqOXbfJ96I5JL3p61zahqWTlQVgybF4wA3TxeR8Eqx5InwxCgX5T6eEjxM
- 97vwaYqN41aML1nrhAPFmVBO95uQkjK7UYJ+QbO9sUN4BOT7OFmY1Kov4ieAtv5qDdbXC0+yVGD
- +46iVbgXUN+JVO0SZpB88p1SjBQMNiKJhuiecjjkmh9hFlHUFma4j3VRJ5LOtU/1t4R3JtadoD8
- WK8V717Y0RUdwy9Ho9xPY+Wgz/SpxWE3HEEa2yThXml6BdfujQ2KeAyo/YMmkcc4u2+JCH1lbuU
- xDkeImJbMOJoasB1LWnRc6E2bGccZ3LvxBd8/6laKPMFNg34XBJz0tir/Py95roYgkK/d3FBfKm
- +CpzLqmvg60dMmJS1wPFPCx2RHu46w==
-X-Proofpoint-GUID: ogfjaXeXhCzexT68T8r7eIhgsNYekhKh
-X-Proofpoint-ORIG-GUID: HEBaK2EYFMzqpJOD1OYTrnUhdxXUeY5R
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-19_04,2025-11-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 lowpriorityscore=0 suspectscore=0 spamscore=0 impostorscore=0
- priorityscore=1501 clxscore=1011 phishscore=0 bulkscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511150032
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -140,75 +82,42 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+On 19.11.25 16:08, Markus Armbruster wrote:
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-Thanks,
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Glenn
-
-On Wed, 2025-11-19 at 09:26 +0100, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> Pylint suggests to write some parts of the code in a slightly different
-> way ... thus rework the code to make the linter happy.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->  tests/functional/ppc/test_ppe42.py | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
+>   include/hw/loader.h |  4 +++-
+>   hw/arm/boot.c       |  6 +-----
+>   hw/core/loader.c    |  8 ++++++--
+>   hw/riscv/spike.c    | 10 +---------
+>   4 files changed, 11 insertions(+), 17 deletions(-)
 > 
-> diff --git a/tests/functional/ppc/test_ppe42.py b/tests/functional/ppc/test_ppe42.py
-> index 26bbe11b2d3..7b360a40a54 100644
-> --- a/tests/functional/ppc/test_ppe42.py
-> +++ b/tests/functional/ppc/test_ppe42.py
-> @@ -6,8 +6,9 @@
->  #
->  # SPDX-License-Identifier: GPL-2.0-or-later
->  
-> -from qemu_test import QemuSystemTest, Asset
->  import asyncio
-> +from qemu_test import QemuSystemTest, Asset
-> +
->  
->  class Ppe42Machine(QemuSystemTest):
->  
-> @@ -30,13 +31,13 @@ def _test_completed(self):
->              raise
->  
->          self.log.info(output)
-> -        if "NIP fff80200" in output:
-> -            self.log.info("<test completed>")
-> -            return True
-> -        else:
-> +        if "NIP fff80200" not in output:
->              self.log.info("<test not completed>")
->              return False
->  
-> +        self.log.info("<test completed>")
-> +        return True
-> +
->      def _wait_pass_fail(self, timeout):
->          while not self._test_completed():
->              if timeout >= self.poll_period:
-> @@ -49,14 +50,13 @@ def _wait_pass_fail(self, timeout):
->  
->                  except asyncio.TimeoutError:
->                      self.log.info("Poll period ended.")
-> -                    pass
->  
->                  except Exception as err:
->                      self.log.debug(f"event_wait() failed due to {err=},"
->                                      " {type(err)=}")
->                      raise
->  
-> -                if e != None:
-> +                if e is not None:
->                      self.log.debug(f"Execution stopped: {e}")
->                      self.log.debug("Exiting due to test failure")
->                      self.fail("Failure detected!")
+> diff --git a/include/hw/loader.h b/include/hw/loader.h
+> index d035e72748..6f91703503 100644
+> --- a/include/hw/loader.h
+> +++ b/include/hw/loader.h
+> @@ -188,8 +188,10 @@ ssize_t load_elf(const char *filename,
+>    *
+>    * Inspect an ELF file's header. Read its full header contents into a
+>    * buffer and/or determine if the ELF is 64bit.
+> + *
+> + * Returns true on success, false on failure.
 
+I don't really care, but IMO, it's obvious contract for bool+errp functions, not worth a comment.
+
+>    */
+> -void load_elf_hdr(const char *filename, void *hdr, bool *is64, Error **errp);
+> +bool load_elf_hdr(const char *filename, void *hdr, bool *is64, Error **errp);
+>   
+>   ssize_t load_aout(const char *filename, hwaddr addr, int max_sz,
+>                     bool big_endian, hwaddr target_page_size);
+
+-- 
+Best regards,
+Vladimir
 
