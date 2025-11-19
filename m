@@ -4,72 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C61AFCF394B
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 16:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0FFBCF397D
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 17:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLlIs-0005JD-9d; Wed, 19 Nov 2025 11:45:10 -0500
+	id 1vLly2-0002Il-1E; Wed, 19 Nov 2025 12:27:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vLlIo-0005HI-Sw; Wed, 19 Nov 2025 11:45:07 -0500
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLly0-0002IZ-Va
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 12:27:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vLlIn-0003yx-84; Wed, 19 Nov 2025 11:45:06 -0500
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c10:49f:0:640:b99a:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id F27A3893AA;
- Wed, 19 Nov 2025 19:45:00 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:d4f::1:a] (unknown [2a02:6bf:8080:d4f::1:a])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uiZX4u1FEiE0-dyR3VX9a; Wed, 19 Nov 2025 19:45:00 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1763570700;
- bh=s5SGDEOXCffdPGa2ExWMjbXnxXE80V2KPR7fbbbsK78=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=oMT+pXOJswxjJJq1zanTvP8KS2EylucYuHPNHD4L6q6KUnf3xGj709hkkW/XV2ahX
- I/57FU9PC3BrCmtaQu/FF2c0XnjgR2Zdb67j8D18YC3cxQWboyaRHjFJTVx/WeUBJa
- JsLwq61D96jB+ELIc9XI/coQIf63FBxXzkOXgr2E=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <0a07425e-ddee-4942-8ae7-dc8b801b1595@yandex-team.ru>
-Date: Wed, 19 Nov 2025 19:44:56 +0300
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vLlxz-0004Gw-FI
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 12:27:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763573257;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4fymG22orDPkn/XtJWFnqe9Dr1Z6dXU8U6gAVbZ4qn8=;
+ b=Rwi1jdlFILkubyNc1E3fotY0FHdIrhWwQJPjWSBBkZgCym5UToHX7Kah5rsaYVELoHIAA7
+ ANXvzkai4Xgw0lS2qP2CjfuPB7FrsLDwYfdSLQhz2gHcNUwy5RNFm1Q1RqaktT+wv7X/9k
+ OlW9E24YES0+MWlEnptL/11juZnatns=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-446-y7SMuzkCM_aONSEk1-1yow-1; Wed,
+ 19 Nov 2025 12:27:35 -0500
+X-MC-Unique: y7SMuzkCM_aONSEk1-1yow-1
+X-Mimecast-MFC-AGG-ID: y7SMuzkCM_aONSEk1-1yow_1763573253
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A16BD19560A1; Wed, 19 Nov 2025 17:27:32 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.45.225.145])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B5E751800947; Wed, 19 Nov 2025 17:27:29 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, andrey.drobyshev@virtuozzo.com,
+ den@virtuozzo.com, f.ebner@proxmox.com, qemu-stable@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] block-backend: Fix race when resuming queued requests
+Date: Wed, 19 Nov 2025 18:27:20 +0100
+Message-ID: <20251119172720.135424-1-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] error: error_free(NULL) is safe, drop unnecessary
- conditionals
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com, imammedo@redhat.com, 
- anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
- alistair@alistair23.me, edgar.iglesias@gmail.com, npiggin@gmail.com,
- harshpb@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- berrange@redhat.com, peterx@redhat.com, farosas@suse.de, eblake@redhat.com,
- eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
- qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- xen-devel@lists.xenproject.org
-References: <20251119130855.105479-1-armbru@redhat.com>
- <20251119130855.105479-5-armbru@redhat.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20251119130855.105479-5-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,12 +80,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.11.25 16:08, Markus Armbruster wrote:
-> Signed-off-by: Markus Armbruster<armbru@redhat.com>
+When new requests arrive at a BlockBackend that is currently drained,
+these requests are queued until the drain section ends.
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+There is a race window between blk_root_drained_end() waking up a queued
+request in an iothread from the main thread and blk_wait_while_drained()
+actually being woken up in the iothread and calling blk_in_flight(). If
+the BlockBackend is drained again during this window, drain won't wait
+for this request and it will sneak in when the BlockBackend is already
+supposed to be quiesced. This causes assertion failures in
+bdrv_drain_all_begin() and can have other unintended consequences.
 
+Fix this by increasing the in_flight counter immediately when scheduling
+the request to be resumed so that the next drain will wait for it to
+complete.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ block/block-backend.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/block/block-backend.c b/block/block-backend.c
+index f8d6ba65c1..d6df369188 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -1318,9 +1318,9 @@ static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
+          * section.
+          */
+         qemu_mutex_lock(&blk->queued_requests_lock);
++        /* blk_root_drained_end() has the corresponding blk_inc_in_flight() */
+         blk_dec_in_flight(blk);
+         qemu_co_queue_wait(&blk->queued_requests, &blk->queued_requests_lock);
+-        blk_inc_in_flight(blk);
+         qemu_mutex_unlock(&blk->queued_requests_lock);
+     }
+ }
+@@ -2767,9 +2767,11 @@ static void blk_root_drained_end(BdrvChild *child)
+             blk->dev_ops->drained_end(blk->dev_opaque);
+         }
+         qemu_mutex_lock(&blk->queued_requests_lock);
+-        while (qemu_co_enter_next(&blk->queued_requests,
+-                                  &blk->queued_requests_lock)) {
++        while (!qemu_co_queue_empty(&blk->queued_requests)) {
+             /* Resume all queued requests */
++            blk_inc_in_flight(blk);
++            qemu_co_enter_next(&blk->queued_requests,
++                               &blk->queued_requests_lock);
+         }
+         qemu_mutex_unlock(&blk->queued_requests_lock);
+     }
 -- 
-Best regards,
-Vladimir
+2.51.1
+
 
