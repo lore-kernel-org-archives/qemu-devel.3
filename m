@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AD2DCF397E
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 17:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 791CCCF397E
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 17:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLm04-0003BM-9E; Wed, 19 Nov 2025 12:29:48 -0500
+	id 1vLm01-00035V-Bn; Wed, 19 Nov 2025 12:29:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vLlzp-00031a-9Q
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 12:29:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vLlzm-0004Pj-2H
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vLlzk-000317-0u
  for qemu-devel@nongnu.org; Wed, 19 Nov 2025 12:29:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vLlzg-0004O8-8h
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 12:29:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763573369;
+ s=mimecast20190719; t=1763573363;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8LRdt+/CQiyd/RiqOaKeRjP93SY+POOdomSS9E7DfjY=;
- b=JAFrscHUPJDstiG5wtH4IV/+Q6SPQ8iMPFs40J+J8GQh+vNr6y3Ks9GNbp7nhiluAs71PR
- yEMwLItH/SRCyjZP8PthX4xdubRMjzfzO5uM3zSjyN+wktUhfQYNkTfdcQPsF/ZIUmVrQ1
- 6uPNDSOUjXCixpr8RLOJtCqdHixNz3s=
+ bh=woCcmK5foYk7Lz5yBYA0XL2QOL9NnX0jkIYkMd3rgxE=;
+ b=ZOH5+ZlbxzOy+Mbm9CytcOTsA6cUZxZ5Qqan+BruvwrcBAUQU0oOaoOqe+32Vh24mlB/rx
+ 1owTeqOb8s59v01C1sF3jnak/JL89FQLVy7EgxKkRjekH3OAYRV36sLYmHB/KyWNrE9Ixj
+ 7gAU+ukOIDtqi884pKWFGbJuHWFMrBc=
 Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
  [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-262-zosGknqNNA69M4f18179og-1; Wed, 19 Nov 2025 12:29:28 -0500
-X-MC-Unique: zosGknqNNA69M4f18179og-1
-X-Mimecast-MFC-AGG-ID: zosGknqNNA69M4f18179og_1763573368
+ us-mta-693-y8KNzaneMF2xiv24g9vY3A-1; Wed, 19 Nov 2025 12:29:22 -0500
+X-MC-Unique: y8KNzaneMF2xiv24g9vY3A-1
+X-Mimecast-MFC-AGG-ID: y8KNzaneMF2xiv24g9vY3A_1763573361
 Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8a5b03118f4so349463585a.1
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 09:29:28 -0800 (PST)
+ af79cd13be357-8b24a25cff5so1968055085a.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 09:29:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763573367; x=1764178167; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763573361; x=1764178161; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8LRdt+/CQiyd/RiqOaKeRjP93SY+POOdomSS9E7DfjY=;
- b=SCQYtY+sLY3bqgt5mNbeFuUUvDjjZk5bocXVKctHUZE8FldikfwH2RGK17hLBNEpnf
- 9vS62xozpfVhtdqGCNVfsV5oyMW/a3w0EhiPoY3rPr1780ImSlxjDbDZE+ztBnaA7fVV
- JxQ1sDuZHkoqueJskf3pWE5eXgFgNY/V9ZpunRvKvejdGtMqG6VX63KJpfrACa2vt7jC
- mpyh9qTh21H1KmlL+Im/mPiTuXIr13Bsc1lUgpgMLji27ho4vcSp3ikLxisZSDb5J84S
- M9MOFDlojtBHOmga0b1Q8MjRiiWAsD9zQNA5nlkOPhNlK01Af98Wh1Au2VQ/EUseVXVj
- fk1Q==
+ bh=woCcmK5foYk7Lz5yBYA0XL2QOL9NnX0jkIYkMd3rgxE=;
+ b=LTCnxZIjmKLpx1N5XzKqS+EHnx8k8MOPbQ00itQwibDJV2pR0diZSMd7KvgTALw9dX
+ GdhAxBFfDYsqDyocfSshTVWET5Sa6cZLZFqxVJb0z0RubQs5od82PGlq2KLx9SHtxXv/
+ iZ2k2t3Ggn2+kcz4J0cRRmexXIGk54C5G0esri6fGxf6wJTpymZsz0kigfjXkdK4yRIs
+ DUvjfYAI//rN0IPEYoOeaYG1999pIxQTYv8Gh7Mw4vdLfwZ3mfUdtRlUcufKlZ+hRXFf
+ eNUywzN992MOpiTI6nafMnNeilfjWesvsuHCE4WoptQksbIJsrB3H0Uz+DUeB2t1O4wn
+ zTaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763573367; x=1764178167;
+ d=1e100.net; s=20230601; t=1763573361; x=1764178161;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8LRdt+/CQiyd/RiqOaKeRjP93SY+POOdomSS9E7DfjY=;
- b=RZYDPcJaEH66c07DXj8uNiamix+J9gF1qrEFMWLc5mqkFWb/0070MzUIcrQla1bDpO
- sVQxSJaCIg2wLncyCi1tEnYTqtQmna0srtMvAuefPcKNh9N9a7y9jXoF5p7/vJ3dfIIH
- h8sUASs3AnAzFspWY7s65YxnZAPxmTI7twogiP9WzCxg8AygOOSNZEwvrXcKW7u+/xkd
- hFFTqSe4xxg/Ep4CGo2tZ7tCaU2wXU/Czt3NoIipLRm7bW2DfyQWZKQG6gPDyo0LW7iX
- w5SB28UERGdYIjWk2F5unhTLNqE5S9U0Avlj4+byas7MeizGUEXwL7PvcQFioYmOogAy
- +cHw==
-X-Gm-Message-State: AOJu0YzgeBue73gfK6FOpZ+TmcGMzwXCj1vCB5/C2Rv2WXU7epnVwk/h
- ubXKl/9NCx6pC6dLoTbqJGNz2zLKs7kLuulJspBKuNVb6xM3XVPTt/e7SiT1GZVFd137iniw+nS
- TRES1mGSJCmzsJ68rd0aAKIyNOxxHqhqonfI4B2DbdQcBq2+Nk7VdBt7lrZBZ/1qE2t+tNMGXMC
- 6a11Ta8RmnGEU7cuNzGflGPkMQBfrnG4TrMseB6A==
-X-Gm-Gg: ASbGncuOmZHLPDUoD9T+sw2mXUEehe8SZ/5PPGChhwj0tsnFWEgDT9vIF7JVV93pD9u
- 9iVWpc8VFEz0H5nO1mWsa4DWu2glKuL+Dt6qUZLIri0TNZH0Z/F8S0eM4UTIjaDvgTBvkiZkz46
- AgBsuOJnrK5ei8n2vJuLVtvjzqw860/yrGA+biAE9LguOdJZM7X4wijIApFIF26waMdP6MqEeeO
- sObUhIAah1UNbKOtuF6pW0fIR561rj0CjIbFlIZwkmjJpmTHxx6xsIynE9B/QKmyZ8SnW3RUd10
- 1hCdMlbLRwDB+LAQOnmfE+7kY2UN9TGnMdw+kXjPo10+PrPrUMafXgw9Go7sr/w5Rg2aTmOPhE7
- a
-X-Received: by 2002:a05:620a:19a1:b0:8b2:eebc:64bc with SMTP id
- af79cd13be357-8b31824d52dmr502022185a.35.1763573367398; 
- Wed, 19 Nov 2025 09:29:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGXVEBdcFMR3WZ1/JVFaDBaTSGWRg4nE21vY8bbvEdpxJpddHaeEZcul5FdnviirK7Efb5iyg==
-X-Received: by 2002:a05:620a:19a1:b0:8b2:eebc:64bc with SMTP id
- af79cd13be357-8b31824d52dmr502017185a.35.1763573366801; 
- Wed, 19 Nov 2025 09:29:26 -0800 (PST)
+ bh=woCcmK5foYk7Lz5yBYA0XL2QOL9NnX0jkIYkMd3rgxE=;
+ b=k84lUizQBXSB8mMta8iD5S1bsmw2IPS+hW7T6H/MbncEXKvXBlCCFcdgKUocVyHMeK
+ IC302WoOayWCXobLhdHyK93ooSmCtbjkiOPX5R8d+CgJRFx6rKdNg1P1x+y8oQo4GJUS
+ 2PG/6fIlOtB0klXoWgFcL7VTOwMRCUqwAWKwtmFOxyFzSFfZeVIY07Thdw1/tGDLJE++
+ hcbI77wTMFtiqMrfl6hxtOzTWB5zgFfKlM/R6xgLO6w/AzLaVITDmvM2aqM6hKbxYiHj
+ 5p/0fKns+DpP3dlhDAvVLNTCHuFIC3Bi6PwVWOjIzTPuFneEodWNoOeOaXdOOVJhZPYL
+ sqSQ==
+X-Gm-Message-State: AOJu0YyPEfj+XMHZLsj82iHMa7EZL+R5x66Jx4PYd0jH84Ti+g5sPj1Q
+ BwF2z2OwjX8LctSH5ziM2i8zYcOJWAxq1WakmqZOimhtvUonCn01qz/SFSIt0ZqJksOu3Vu/u3Y
+ XsNkwp1Zy5mjV3GfOjoTZU5tt9uLLbWhug2+XYOdYn7QW/HOVJPvseTH2qf1G6bWFe7pBENn53J
+ coShYWGOH0itbiGKOKWSpgWyxm4e4295dKmDkuGw==
+X-Gm-Gg: ASbGncuEUYrLxlWWRqJYNJcX43daybH2o0zGoBgygsXc+r94PGNkOQms092u9Cv2lZ5
+ U37Zq5CFZ7ZQA+gEB0vehdsait7vBGQkp1+DVRKebqNP5RQ2gkMN2VixSWBnaI1KynIxsX4hduy
+ TCa9Ns+CwEE4dFG33bd7MJSGGbaL11nU73ONtwFEy3v4cxbjPhO5aLMSAoZZmSjzSCmthAfmUd3
+ aA5Xen6oFqe1H1CAVsK/38u/70x99J/XzlLHDqUSqohIGPqeAJoOit+5bBHHWVTLWO/7cEj9cyL
+ gwfAqvioT78Yk4Wly2MH4dYdTqAsG778N6oZQoFkmAyfD725AFyw9Rlb+bWsPzGMq8Bu6+YBYzO
+ N
+X-Received: by 2002:a05:620a:444a:b0:8b2:7679:4d2d with SMTP id
+ af79cd13be357-8b32749fd9fmr19639385a.63.1763573360966; 
+ Wed, 19 Nov 2025 09:29:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGzTPICTCv+VqEihJpe2V98/7Wrln/9b6c1IqXOfd1Zwu4qLJuFYpkhAQABO1aG9oA1m4Iyig==
+X-Received: by 2002:a05:620a:444a:b0:8b2:7679:4d2d with SMTP id
+ af79cd13be357-8b32749fd9fmr19635485a.63.1763573360452; 
+ Wed, 19 Nov 2025 09:29:20 -0800 (PST)
 Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b2af042c9csm1444759485a.46.2025.11.19.09.29.25
+ af79cd13be357-8b2af042c9csm1444759485a.46.2025.11.19.09.29.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Nov 2025 09:29:26 -0800 (PST)
+ Wed, 19 Nov 2025 09:29:20 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
  Alexey Kardashevskiy <aik@amd.com>, peterx@redhat.com,
  Chenyi Qiang <chenyi.qiang@intel.com>, Juraj Marcin <jmarcin@redhat.com>,
  Li Xiaoyao <xiaoyao.li@intel.com>, Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 9/9] tests/migration-test: Add a precopy test for
- guest-memfd
-Date: Wed, 19 Nov 2025 12:29:13 -0500
-Message-ID: <20251119172913.577392-10-peterx@redhat.com>
+Subject: [PATCH v2 4/9] memory: Rename memory_region_has_guest_memfd() to
+ *_private()
+Date: Wed, 19 Nov 2025 12:29:08 -0500
+Message-ID: <20251119172913.577392-5-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251119172913.577392-1-peterx@redhat.com>
 References: <20251119172913.577392-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -122,45 +122,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a plain tcp test for guest-memfd.  Note that the test will be
-automatically skipped whenever not supported (e.g. qemu compiled without
-KVM, or host kernel doesn't support kvm, or old kernels, etc.).
+Rename the function with "_private" suffix, to show that it returns true
+only if it has an internal guest-memfd to back private pages (rather than
+in-place guest-memfd).
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/qtest/migration/precopy-tests.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/system/memory.h | 6 +++---
+ accel/kvm/kvm-all.c     | 6 +++---
+ system/memory.c         | 2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index 57ca623de5..88d2627efd 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -215,6 +215,16 @@ static void test_precopy_tcp_plain(void)
-     test_precopy_common(&args);
- }
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 2c1a5e06b4..4428701a9f 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -1823,14 +1823,14 @@ static inline bool memory_region_is_romd(MemoryRegion *mr)
+ bool memory_region_is_protected(MemoryRegion *mr);
  
-+static void test_precopy_tcp_plain_gmemfd(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "tcp:127.0.0.1:0",
-+        .start.mem_type = MEM_TYPE_GUEST_MEMFD,
-+    };
-+
-+    test_precopy_common(&args);
-+}
-+
- static void test_precopy_tcp_switchover_ack(void)
- {
-     MigrateCommon args = {
-@@ -1276,6 +1286,8 @@ void migration_test_add_precopy(MigrationTestEnv *env)
-         return;
+ /**
+- * memory_region_has_guest_memfd: check whether a memory region has guest_memfd
+- *     associated
++ * memory_region_has_guest_memfd_private: check whether a memory region has
++ *     guest_memfd associated
+  *
+  * Returns %true if a memory region's ram_block has valid guest_memfd assigned.
+  *
+  * @mr: the memory region being queried
+  */
+-bool memory_region_has_guest_memfd(MemoryRegion *mr);
++bool memory_region_has_guest_memfd_private(MemoryRegion *mr);
+ 
+ /**
+  * memory_region_get_iommu: check whether a memory region is an iommu
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index f477014126..320315f50c 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -666,7 +666,7 @@ static int kvm_mem_flags(MemoryRegion *mr)
+     if (readonly && kvm_readonly_mem_allowed) {
+         flags |= KVM_MEM_READONLY;
+     }
+-    if (memory_region_has_guest_memfd(mr)) {
++    if (memory_region_has_guest_memfd_private(mr)) {
+         assert(kvm_guest_memfd_supported);
+         flags |= KVM_MEM_GUEST_MEMFD;
+     }
+@@ -1615,7 +1615,7 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
+             abort();
+         }
+ 
+-        if (memory_region_has_guest_memfd(mr)) {
++        if (memory_region_has_guest_memfd_private(mr)) {
+             err = kvm_set_memory_attributes_private(start_addr, slot_size);
+             if (err) {
+                 error_report("%s: failed to set memory attribute private: %s",
+@@ -3101,7 +3101,7 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+         return ret;
      }
  
-+    migration_test_add("/migration/precopy/tcp/plain/guest-memfd",
-+                       test_precopy_tcp_plain_gmemfd);
-     migration_test_add("/migration/precopy/tcp/plain/switchover-ack",
-                        test_precopy_tcp_switchover_ack);
+-    if (!memory_region_has_guest_memfd(mr)) {
++    if (!memory_region_has_guest_memfd_private(mr)) {
+         /*
+          * Because vMMIO region must be shared, guest TD may convert vMMIO
+          * region to shared explicitly.  Don't complain such case.  See
+diff --git a/system/memory.c b/system/memory.c
+index 81b7bff42d..15964160ee 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1897,7 +1897,7 @@ bool memory_region_is_protected(MemoryRegion *mr)
+     return mr->ram && (mr->ram_block->flags & RAM_PROTECTED);
+ }
  
+-bool memory_region_has_guest_memfd(MemoryRegion *mr)
++bool memory_region_has_guest_memfd_private(MemoryRegion *mr)
+ {
+     return mr->ram_block && mr->ram_block->guest_memfd >= 0;
+ }
 -- 
 2.50.1
 
