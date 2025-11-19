@@ -4,105 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9A11CF258C
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 08:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0F5CF256B
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 08:59:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLdc7-0001UY-RC; Wed, 19 Nov 2025 03:32:32 -0500
+	id 1vLe1K-0002vH-FW; Wed, 19 Nov 2025 03:58:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vLdbw-0001SE-G6
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:32:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1vLe19-0002uP-5P; Wed, 19 Nov 2025 03:58:24 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vLdbt-0001PT-B6
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:32:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763541136;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9gPVuk/sT4zE6r1azzUQorcbjnOiVwRZ/n3G9NSDFQY=;
- b=W0V3Th2CIw/PNwZ4gCLgfcyFWdpqyCwfkccrbeFprU3llKBTEWD9QZqKqV24IBmViukjkq
- y+AsWTFP8h3zWPYswNskcDljmEtJuUc01JkTvtjklHr9ow8QN94iNxkxjmu+KiFjlBmgrJ
- g3Iv8uwYqJz/K1J4m7ItN5PyHY6/OTU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-E9bQfPWOPZe8CVVpx1bhfQ-1; Wed, 19 Nov 2025 03:32:14 -0500
-X-MC-Unique: E9bQfPWOPZe8CVVpx1bhfQ-1
-X-Mimecast-MFC-AGG-ID: E9bQfPWOPZe8CVVpx1bhfQ_1763541133
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4779393221aso12508945e9.2
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 00:32:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763541133; x=1764145933;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9gPVuk/sT4zE6r1azzUQorcbjnOiVwRZ/n3G9NSDFQY=;
- b=RVWNJWiYb6XjZQv/wnmlOlKrrOxnGXPgv0PeLvUyhnPgHUhuruLCmVwN5+ftgsJQPE
- 5KS7uI+jqPyE435ocQRaXRS/5mdAXSMVoLwk1tjMeZwzC9y0SD9Vmv3symF51hJKahl3
- JNxlkVEc5cv9oNrj1++sHt2ae+pbd1yHStcGkrx01AxmlPpD2W8rh0jJSNhjEoSCl58n
- WzX1duko+lWMVZ/BlL2uJPf3uP3OCCcpUW2VBXfWs3/Fr6JgxCUl3bnVikXp0YIEF972
- KRkuk5FWicaCkRNqa329VLrgTwV8Do0ZYppSU3cPVFcI6J2x5n6ce/qPqEMXakHZ3eGz
- vVLw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzPdQZRmfnHh7sQxcQ5Hk+q1bGh37mZfZX7c68E7cymX3kLDQkknE6yR1QpAfK91OymkXJIGksjwUL@nongnu.org
-X-Gm-Message-State: AOJu0YxSgqP54DeJhvqbcHxDW8Zj6B10uRquhCJrJMeIEA1TjLkfyHvo
- l28iv7TKj1ZlTn2m+ruembq7oCJneXv2hXUwO57hwP/jfK8Lm2yVVqAroCqTH8OWbYq4kBuo9SQ
- jpGAy08GmXArdQTi58/i6Sk6jpmkv+4faJlFrfUDC+tYPdW9Meag0hklK
-X-Gm-Gg: ASbGncupInLv+47k5gvtOwA5SFZ9o0+XKMzUdYAMhYFE/tiubQ56UVUC2/MZjDmE+kc
- CSVbanxoy+uqddtIBJ3becYELH+hS55jN51vITqBR0OxdjptuCKZ5XHqhoVCt28X0H/koOgPBRd
- WCJ4Ewy6DF/3BK6vQj5O5b+LZsGzgBXahNBuFLqkNBMk7r6tBSrRPAP7lfd+68TMMiT1EhUEcMv
- DvjC/GcObsCAYkAXsHIeDWddswAutaQuZsRynWoozJrOeTwzTWsRy9/nm2dwNl/386IGzKPHA53
- roFndDn4MQ/j3HDHFFG4Zh/qhQqrhKSZY0feJQbwdI7aAwUqfyHiERYDaXnY/u6/+ZSR0BcK7OX
- eCWhnqgtquXs3s796LEsRKFWma91+irg3KFxeMyzLAOCeyS8jFxDE+E/0kQ==
-X-Received: by 2002:a05:600c:1c29:b0:477:7f4a:44b4 with SMTP id
- 5b1f17b1804b1-477b197ab30mr12981355e9.1.1763541133440; 
- Wed, 19 Nov 2025 00:32:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG8KG/wESUYwc0SFV30ukmYmcBLk5m7c8dt391qHu8WxTy8KOn35j0jyWk0Y5cJscGmKitmwQ==
-X-Received: by 2002:a05:600c:1c29:b0:477:7f4a:44b4 with SMTP id
- 5b1f17b1804b1-477b197ab30mr12981135e9.1.1763541133064; 
- Wed, 19 Nov 2025 00:32:13 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42c961f6e64sm23194804f8f.27.2025.11.19.00.32.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Nov 2025 00:32:12 -0800 (PST)
-Message-ID: <f724ffae-1fc6-417b-afb9-406b6d705ee9@redhat.com>
-Date: Wed, 19 Nov 2025 09:32:11 +0100
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1vLe17-0005av-H5; Wed, 19 Nov 2025 03:58:22 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AJ6vE2G002608;
+ Wed, 19 Nov 2025 08:58:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=2xzst+
+ M/KECevNyRuf3JejQbSnCIPyxhzMIOIN04hPE=; b=bAPkIQCTic/Nvf0n5x0t8p
+ JpO9G4NPdp1/0SOVItAdICCsTdqwCjo7zyYxut8HIkTzzwQydKLToI0Mf8NXuIow
+ BffwgsQfPez/7yfOVYgEHSSAs3BUyK6L2QDyGQ29yUhajWfYERZMBqH31PDqnkp8
+ DeHENMlafbdGlv3KMkazTGC840SWs95QiIsFyRnmvgwF2oiiFUKp4b898dyaztcZ
+ P2/ST8ur37mydCK30w1grHXfv7qW3Nk8sikO/D6q4e4C/pPDuZNw+QoTLUG6DxfS
+ 1TT0FgqBfpyahaHR3r0MjFx6oMJBGv34k2qo7NWOSFAuk50uKWxANgEhY+MC+wYQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aejk1fg7g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Nov 2025 08:58:16 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5AJ7n6t6005065;
+ Wed, 19 Nov 2025 08:58:15 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4af5bk7p9x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 19 Nov 2025 08:58:15 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5AJ8wB1n25100638
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 19 Nov 2025 08:58:11 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1CEAB20043;
+ Wed, 19 Nov 2025 08:58:11 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D877D20040;
+ Wed, 19 Nov 2025 08:58:10 +0000 (GMT)
+Received: from [9.155.199.94] (unknown [9.155.199.94])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 19 Nov 2025 08:58:10 +0000 (GMT)
+Message-ID: <45475213-9f68-40e0-b2ee-a1a7b73591c8@linux.ibm.com>
+Date: Wed, 19 Nov 2025 09:58:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/8] target/arm/helper: Skip hidden registers
+Subject: Re: [PATCH v3] hw/s390x: Fix a possible crash with passed-through
+ virtio devices
+To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Cornelia Huck <cohuck@redhat.com>
+References: <20251118174047.73103-1-thuth@redhat.com>
 Content-Language: en-US
-To: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, cohuck@redhat.com, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com, gshan@redhat.com,
- ddutile@redhat.com, peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
-References: <20251118160920.554809-1-eric.auger@redhat.com>
- <20251118160920.554809-5-eric.auger@redhat.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251118160920.554809-5-eric.auger@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <20251118174047.73103-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=C/nkCAP+ c=1 sm=1 tr=0 ts=691d86a8 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=DF9jzra27_ti4jtxTWgA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 6ZVMm47n9C2S1mtolpi42YfW007y2X9e
+X-Proofpoint-ORIG-GUID: 6ZVMm47n9C2S1mtolpi42YfW007y2X9e
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTE1MDAzMiBTYWx0ZWRfX3Q5jT9BkiDaH
+ SaDhqdzFMBhK8Rf8g8GizOvjq/BB6iGKvPD2dqiamLoJ52vaECvd6Z7sLXlegp+d6AE3EcuqqGB
+ Iht6oyn9Ppe/Kes1mN5ufsKgfFTA7OxnBt67XGCGx+JlvrlSA1TgcyoVHARUXMugXcxaLhjQgDb
+ HzW0sfXbejWo88K+EK/lwIqw+QnRWloAtlxjZkh3UlhoqUhq0R8dqksVjI31pj3ildeFQubO70C
+ tzDUlXjX3KLkLwH7oXYa1/fyDBzO0GoAaBZFcR74+i+OQe2eFdovyR5IfrkyD4nYg6AqAHp1OLt
+ 4zFV/ftXYJkRT0M4fAsOxHWYr9qq79BfkLSuDVfcsLt00Kio3M1H4dpWLA1afDNisaB6dIL3I2I
+ KThCNnljNIDUTOD3FVe6BDd0rWhfPw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-19_02,2025-11-18_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 spamscore=0 impostorscore=0 bulkscore=0
+ malwarescore=0 suspectscore=0 clxscore=1011 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511150032
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,60 +120,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+Am 18.11.25 um 18:40 schrieb Thomas Huth:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> Consider the following nested setup: An L1 host uses some virtio device
+> (e.g. virtio-keyboard) for the L2 guest, and this L2 guest passes this
+> device through to the L3 guest. Since the L3 guest sees a virtio device,
+> it might send virtio notifications to the QEMU in L2 for that device.
+> But since the QEMU in L2 defined this device as vfio-ccw, the function
+> handle_virtio_ccw_notify() cannot handle this and crashes: It calls
+> virtio_ccw_get_vdev() that casts sch->driver_data into a VirtioCcwDevice,
+> but since "sch" belongs to a vfio-ccw device, that driver_data rather
+> points to a CcwDevice instead. So as soon as QEMU tries to use some
+> VirtioCcwDevice specific data from that device, we've lost.
+> 
+> We must not take virtio notifications for such devices. Thus fix the
+> issue by adding a check to the handle_virtio_ccw_notify() handler to
+> refuse all devices that are not our own virtio devices. Like in the
+> other branches that detect wrong settings, we return -EINVAL from the
+> function, which will later be placed in GPR2 to inform the guest about
+> the error.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-On 11/18/25 5:07 PM, Eric Auger wrote:
-> In case a cpreg is hidden, skip it when initialing the cpreg
-> list.
->
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> ---
->  target/arm/helper.c | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
->
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 27ebc6f29b..7e34b4803d 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -236,8 +236,11 @@ static void add_cpreg_to_list(gpointer key, gpointer value, gpointer opaque)
->      uint32_t regidx = (uintptr_t)key;
->      const ARMCPRegInfo *ri = value;
->  
-> +    if (arm_cpu_hidden_reg(cpu, regidx)) {
-> +        return;
-> +    }
->      if (!(ri->type & (ARM_CP_NO_RAW | ARM_CP_ALIAS))) {
-> -        cpu->cpreg_indexes[cpu->cpreg_array_len] = cpreg_to_kvm_id(regidx);
-> +        cpu->cpreg_indexes[cpu->cpreg_array_len] = kvm_regidx;
-I screwed up with this last minute change. This diff shall be removed.
-I pushed the fix for now on
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 
-https://github.com/eauger/qemu/tree/mitig-v2
-
-Sorry for the inconvenience
-
-Eric
-
-
-
->          /* The value array need not be initialized at this point */
->          cpu->cpreg_array_len++;
->      }
-> @@ -247,6 +250,11 @@ static void count_cpreg(gpointer key, gpointer value, gpointer opaque)
->  {
->      ARMCPU *cpu = opaque;
->      const ARMCPRegInfo *ri = value;
-> +    uint32_t regidx = (uintptr_t)key;
-> +
-> +    if (arm_cpu_hidden_reg(cpu, regidx)) {
-> +        return;
-> +    }
->  
->      if (!(ri->type & (ARM_CP_NO_RAW | ARM_CP_ALIAS))) {
->          cpu->cpreg_array_len++;
-
+Certainly a good first step. If needed we can improve further in the future.
 
