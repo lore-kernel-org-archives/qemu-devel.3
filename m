@@ -4,116 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 601CECF2599
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 08:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87CD5CF2599
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 08:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLdCw-0004we-TU; Wed, 19 Nov 2025 03:06:30 -0500
+	id 1vLdEN-0005Yf-U7; Wed, 19 Nov 2025 03:07:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLdCe-0004iN-OY
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:06:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vLdEJ-0005YP-UP
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:07:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLdCb-0005rm-2H
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:06:12 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vLdEI-0005xb-HI
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 03:07:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763539568;
+ s=mimecast20190719; t=1763539673;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Qlczw5xkOpEPltSGddWKoXQ/HojOsbrvI5BFqdJ87Ak=;
- b=cScL09gYCyYFHAEdMF+o9s42WQdh75K7mjRx6iBLmioYzQ3cRh7xEp6hVky0P+yqytRpCj
- i3eCMeo7ueB7TEaVWfRsypX1J2HZyyHITkWbT4bBCChRvbpGaW7KMHZfncDJCb3CSWOp0z
- OipR25qIgmvF9oZU8sCJ4srJ/j6eLDA=
+ bh=GCDX9C4ls3wvv3mPEMBqvdGOvBYwIviD3MU7a88O3/s=;
+ b=V47XxNgXBVMBpKkVasmLeVxSqbozGz2s5J8xCU6SCMCofhPUFcpmmG7NMgTMGM+vZHiLZC
+ FurHkq3uvhG62F8sljBiTAEP9qwCWi2A33nnTrAcEwKF4LkpOIgByYdZo4KFHmshCkSgWk
+ y0Rt0JlDW5jQTzLZH50OBbTi5vGY4Ds=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-253-kIhjOj7cMeqCoc5DCMvcrQ-1; Wed, 19 Nov 2025 03:06:05 -0500
-X-MC-Unique: kIhjOj7cMeqCoc5DCMvcrQ-1
-X-Mimecast-MFC-AGG-ID: kIhjOj7cMeqCoc5DCMvcrQ_1763539565
+ us-mta-688-gLSl3KlOMN6THXra7vUwIg-1; Wed, 19 Nov 2025 03:07:51 -0500
+X-MC-Unique: gLSl3KlOMN6THXra7vUwIg-1
+X-Mimecast-MFC-AGG-ID: gLSl3KlOMN6THXra7vUwIg_1763539671
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-429cbd8299cso2963468f8f.1
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 00:06:05 -0800 (PST)
+ ffacd0b85a97d-42b2b642287so3728057f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 00:07:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763539565; x=1764144365; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Qlczw5xkOpEPltSGddWKoXQ/HojOsbrvI5BFqdJ87Ak=;
- b=GDnXIPVCfyU/kf+RhlFVQ4A82LqvpyVI0PesDgm7HBe2t2tU19W+ddcfhK51akcRpE
- KFVRpmVLltR41t3ZJ6NL19QsylrOMItihffPy/QNVL9KogPQcrLk3JJ/+U6fvdN2ssKF
- yz6ZTA2/QZkAzo1BVDxT3otJodN9R4/Ujy0FbdR17m1+yLZ1WSlgV4M9AaqvVdXCDApt
- MRe7nQ4aXgtaVcbSu0OCf6OPHhQ0KNi3mUBH7WbI8xPdYYagL/G+QMb2LVb4kx4DvHdf
- lMdizjhspPpVqujSALJ6L9smBVIoCHVgNllag65/skkDJGpoOgNYNXDqgqGc/yU3pPpy
- Y95g==
+ d=redhat.com; s=google; t=1763539670; x=1764144470; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=GCDX9C4ls3wvv3mPEMBqvdGOvBYwIviD3MU7a88O3/s=;
+ b=g6FjAQSQm9CHCmMm4s7AknELR7fC6nfI5mr5BVDHqWCCQ/hGw9VFheHuxlKWjSWfXD
+ gM2Pv4XppWUhGIEsp0QcDypfCpDr3gj415jWzMrhfQ0copJAWgHyjxIYlCnrMUmIVBeN
+ 7cSUTGhf5o3yvSHmxfD4Zaq1U+wwnQXkrj1X1FKq/ZYlyNHATT/1mMvNnHx6Hgk1kQuy
+ 145vzdPZWOZhTJFBZW3puhhAhHg8YpkL3FHM21iqTm1AIdkZmH5q8ZRV15pJBEra94bQ
+ FoA62A+xSl9WGuT+gF2whyUot7DrGMtJNM/JkrpuAsUNlCZ3O7VDFYzTvsw+Qj+x9aFe
+ khyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763539565; x=1764144365;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Qlczw5xkOpEPltSGddWKoXQ/HojOsbrvI5BFqdJ87Ak=;
- b=wBjSaXoMBLhGq0aSO1YEEAS5iQkKfgWpagsTuuid9/51iMRyD/P+z7m6gk5xvUGxtB
- N0RG0fkaqJEpx33WK/sx+NF6KX2Jf2XOQ3nxrrcYBrcQT+euHX8YEa9WscO6oKynGj8L
- YnIDG5+IGF96+DScnE4HqX0hEEKaAL5RwgtkL4jHGpUwjqKAHab2UBSxN80Cf+0eE2m5
- NYgzOtogI0IjNW5V9Nd9pKWrdEBrur8PO70ZlAoyEj8nWJE65a6YBsjIlOcn9bQKMzVx
- dueAG+HQNbp7BCIvKhuokHkiUchJCvYAzUM87hZ8ztk5zp2NqG1nNSZFY0Lg85cAXiQ8
- KH2A==
+ d=1e100.net; s=20230601; t=1763539670; x=1764144470;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GCDX9C4ls3wvv3mPEMBqvdGOvBYwIviD3MU7a88O3/s=;
+ b=M3DkAbmTFV4LKTsxMk5PCni1oE9KiGE4QysUBtj7FRxnCLMXYES+D9BupaHthyyDsh
+ bvwIDRXdloi4e7e3HtaK6MoeQ+PGFOpCD+seF0nq6PdzYpC+cZNgxcgGF642UAbYKcMC
+ xWUFNN+ze3CpWglVO1iXUzET9+90P8EV5m8DwN5AHMxWZPhLtW9CD1cZTnkN7G907s1w
+ oqmqx7ko2v6NyB/X7SO1m/JneJMNZwclbAWk6D6t/D//MupkEI3vE5KoWKn+12Ixg41t
+ keIlLqdp5a9d9sZVt8WbC20LHKu7I2rCVNHk4gt3ue3wnjifaedLA/985aj3oXfTOJPd
+ QcmQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXuAEFuA1gKaJD/90EEMykUo5yjDZsEhDXVnarJ3FxHy6yM1v3DJF8KtQoG4YXimnFPmt49ZMbOC9gw@nongnu.org
-X-Gm-Message-State: AOJu0YxAEYsbneso33N+kx3/PCitdMptvMmQTFx4FVv5Vc6vPUQuPCug
- gyVbzgVOIWURNW+ovoV+c68A/6aFQ1pl+HM5SlU9ZwN36rxgzEhY4DUhiUonhIob/oVxw+HUmQx
- vL16Il+3pkSDKWfj0ik8DbPw9AIsrnH0Xv++auQtIk7xtRQxMUpJir4ZY0CLay/gCHcDXU0Jm9d
- Qwm4XKQkJ3B1vaFScelB7euIlMu/t8EzU=
-X-Gm-Gg: ASbGnctvbp3PcChmeZ/5uVJcKMg6S6t5+tUNs2WTtmNsaqk/cVKf8vW4j5wkngn6u/I
- IXcFfS6vK7qOoO65bK2izeYYyLZvvoQQgsyc787Sq1tCMJXoIihT+ZJDPQAa5/XjXrvCrOsMSZG
- B8aswTP+8KIukuGHcIzTWnyihWcczmxo/itG2ocxJmlWM0WSs0wjcGQpnGHkU7Q8qpml1ub7Cqf
- T5cIgQU+fMuKGdEZ0NZpYIvSDvEUKru29/x193CSALrwHAVULECg8uKGblHQvt5id70Umc=
-X-Received: by 2002:a05:6000:1ace:b0:42b:55a1:2174 with SMTP id
- ffacd0b85a97d-42b595bb801mr17865291f8f.59.1763539564606; 
- Wed, 19 Nov 2025 00:06:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFVORAPhmsqHxbzeJbgB2JTzqH1e5etiWMgadjwCaTN1OlsGqodpL90g2MWdePsyDpVqnI6fI0OP2YK4E53L3U=
-X-Received: by 2002:a05:6000:1ace:b0:42b:55a1:2174 with SMTP id
- ffacd0b85a97d-42b595bb801mr17865255f8f.59.1763539564139; Wed, 19 Nov 2025
- 00:06:04 -0800 (PST)
+ AJvYcCXaPyKV1rWLn65VSdi9w4PQ98drELIfBJUcC0y58j/cZgTDaygow01pbK0C1BrHhHz6klcNydS4jtXE@nongnu.org
+X-Gm-Message-State: AOJu0YwSEu1E1D7++Uc228GjICRisxDEKLbzvCIB6un9xzFVfG41yXAg
+ 9Rh0t2FiMbUNxpQvwCtrxxXC29naLNYjr00Pb9a/7AFwT8FoOarvcg8gq6d3Q6QBhJydiRsoaP1
+ aMEbyPEwj3xgi7AshotG/ym+hhLvCZLK1guw9bVGC93aqZTd1JQGqN89s
+X-Gm-Gg: ASbGncuPElzRS46E8gqqwoBSYPbdayblgcqFw5legrjWO2PAstc9dOTZiLD74to7Xs+
+ BqNY2y0ZodoxJ6Y3NIqcknnfq1plLRuNBVKesyngbQkbKGtYQszy4QGQpq/39prXny+Vq0L8gDQ
+ xtrH/AJwMQPm5CkVnd0weu9UltE2tllWVlcttv7d8SQeGixPgQ1cNouFAogQjUxPA8d8pZOaQUs
+ dZLoG1Zxrx3nIStZgFH5X0TkrZ6gBdadY6NMqGZryo2r710ZfkjLmj8O0daT35HF55D+QncwbsZ
+ Fawfc7OhdBN4LFJs1NGWhK461KGatHoraR48xCJBkJZxmTDgKobNqZ/7L6ng/AmIfErv6WQNDoR
+ RRTwVl3HRI3FLtfDLusDdNgLR5o/kKQ==
+X-Received: by 2002:a05:6000:2806:b0:42b:4061:23f3 with SMTP id
+ ffacd0b85a97d-42b5938886amr12615627f8f.44.1763539670385; 
+ Wed, 19 Nov 2025 00:07:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGFyQ3RARJzk8yDRlOMfvNhN3VSPYQ0TkGkXusXZwkPBdnC+Iv7KFQrD+99EDs8kIMKqdQ+9A==
+X-Received: by 2002:a05:6000:2806:b0:42b:4061:23f3 with SMTP id
+ ffacd0b85a97d-42b5938886amr12615602f8f.44.1763539669844; 
+ Wed, 19 Nov 2025 00:07:49 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-39-63.inter.net.il. [80.230.39.63])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42b53e84b12sm38180733f8f.15.2025.11.19.00.07.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 19 Nov 2025 00:07:49 -0800 (PST)
+Date: Wed, 19 Nov 2025 03:07:46 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Jason Wang <jasowang@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, qemu-devel@nongnu.org,
+ farosas@suse.de, jinpu.wang@ionos.com, thuth@redhat.com,
+ berrange@redhat.com
+Subject: Re: [RFC PATCH] virtio-net: introduce strict peer feature check
+Message-ID: <20251119030622-mutt-send-email-mst@kernel.org>
+References: <20251113110004-mutt-send-email-mst@kernel.org>
+ <aRYJRZyNrDcDzTuG@x1.local>
+ <20251113114710-mutt-send-email-mst@kernel.org>
+ <aRYRhg7lKDCBUIrf@x1.local>
+ <20251113124207-mutt-send-email-mst@kernel.org>
+ <CACGkMEtdxWJygVbcuvER5yj13R0JL_bxPSAg0eYyiBeh=SyRXg@mail.gmail.com>
+ <20251116014625-mutt-send-email-mst@kernel.org>
+ <CACGkMEsxZvzyeqa_-9qQRfwNGAeCg5pLgu5MtEHr0OFWpA4_-g@mail.gmail.com>
+ <20251117034940-mutt-send-email-mst@kernel.org>
+ <CACGkMEsxTSG66StYpkStDqqJJmcTOSLjLH9DzNQ9WN=ffsUkDw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20251117185131.953681-1-jsnow@redhat.com>
- <20251117185131.953681-18-jsnow@redhat.com>
- <aRtyTkIcuoNazF7L@redhat.com>
- <CABgObfZW5i4nYchoCTKeh7b3cxYSctpxFp=UV2a2V5t=zmDgNw@mail.gmail.com>
- <CAFn=p-a4_EX7FvobF2f8fH2=ZKemcZvobi0EKV4MpCiQM+TQ+g@mail.gmail.com>
-In-Reply-To: <CAFn=p-a4_EX7FvobF2f8fH2=ZKemcZvobi0EKV4MpCiQM+TQ+g@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 19 Nov 2025 09:05:53 +0100
-X-Gm-Features: AWmQ_bn8wEBwDyzdnNcPNQllnuPNLI9bistTLm7pAZYV5Ol3jJuWhJrRHEUjt6A
-Message-ID: <CABgObfY6QPzH0xM+VOeP16Lsi+y9DEeim0tsx+yKXEW2skVPHQ@mail.gmail.com>
-Subject: Re: [PATCH 17/22] tests: forcibly run 'make check-venv' for crash
- tests
-To: John Snow <jsnow@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- "open list:Block layer core" <qemu-block@nongnu.org>,
- Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Hanna Reitz <hreitz@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000044aab00643ee0dce"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACGkMEsxTSG66StYpkStDqqJJmcTOSLjLH9DzNQ9WN=ffsUkDw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,226 +131,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000044aab00643ee0dce
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Il mar 18 nov 2025, 22:50 John Snow <jsnow@redhat.com> ha scritto:
-
->
->
-> On Mon, Nov 17, 2025, 3:47=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
->
->>
->>
->> Il lun 17 nov 2025, 20:07 Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-ha
->> scritto:
->>
->>> On Mon, Nov 17, 2025 at 01:51:25PM -0500, John Snow wrote:
->>> > In order to convert the existing Makefile target from a manual
->>> > invocation of mkvenv to one that uses the meson dependency system, we
->>> > need to not suppress ninja here.
->>> >
->>> > I'm not sure if this creates problems I am not aware of; but invoking
->>> > ninja here is no longer spurious but will become necessary.
->>>
->>> Yes, this will likely create problems. From the commit message that
->>> introduced NINJA=3D":"...
->>>
->>>  Avoid it with the same
->>>     trick that we are using in buildtest-template.yml already by
->>> disabling
->>>     the up-to-date check via NINJA=3D":".
->>>
->>
->> Move the check-venv call to buildtest-template.yml, right after
->> configure? It's cheap enough.
->>
->> Paolo
->>
->
-> What's the root issue here? That there's enough of a time delay between
-> the actual configure and the test running that it re-runs configure?
->
-
-That the git repo is cloned again and is therefore newer than the
-artifacts. That triggers a full rebuild.
+On Wed, Nov 19, 2025 at 10:49:11AM +0800, Jason Wang wrote:
+> > qemu already probes tap features.
+> 
+> Only part of the features.
 
 
-> (And presumably this is bad mostly for wasted CI time...?)
->
->
->
->>
->>>
->>> >
->>> > Signed-off-by: John Snow <jsnow@redhat.com>
->>> > ---
->>> >  .gitlab-ci.d/buildtest.yml | 4 ++--
->>> >  1 file changed, 2 insertions(+), 2 deletions(-)
->>> >
->>> > diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
->>> > index 18d72d3058b..2cb2cf25b4a 100644
->>> > --- a/.gitlab-ci.d/buildtest.yml
->>> > +++ b/.gitlab-ci.d/buildtest.yml
->>> > @@ -101,7 +101,7 @@ crash-test-debian:
->>> >      IMAGE: debian
->>> >    script:
->>> >      - cd build
->>> > -    - make NINJA=3D":" check-venv
->>> > +    - make check-venv
->>> >      - pyvenv/bin/python3 scripts/device-crash-test -q --tcg-only
->>> ./qemu-system-i386
->>> >
->>> >  build-system-fedora:
->>> > @@ -158,7 +158,7 @@ crash-test-fedora:
->>> >      IMAGE: fedora
->>> >    script:
->>> >      - cd build
->>> > -    - make NINJA=3D":" check-venv
->>> > +    - make check-venv
->>> >      - pyvenv/bin/python3 scripts/device-crash-test -q
->>> ./qemu-system-ppc
->>> >      - pyvenv/bin/python3 scripts/device-crash-test -q
->>> ./qemu-system-riscv32
->>> >
->>> > --
->>> > 2.51.1
->>> >
->>>
->>> With regards,
->>> Daniel
->>> --
->>> |: https://berrange.com      -o-
->>> https://www.flickr.com/photos/dberrange :|
->>> |: https://libvirt.org         -o-
->>> https://fstop138.berrange.com :|
->>> |: https://entangle-photo.org    -o-
->>> https://www.instagram.com/dberrange :|
->>>
->>>
+the part we care about?
 
---00000000000044aab00643ee0dce
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> > To me, it seems natural
+> > for management to do the probing through qemu.
+> > in fact your patch is a way to do that, is it not?
+> 
+> Yes and no.
+> 
+> > what it lacks though is a structured way to tell management how
+> > to fix the problem.
+> 
+> Probing through management seems to be better. For example it can
+> calculate the cluster in advance without the need to launch qemu
+> everywhere.
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 18 nov 2025, 22:50 John S=
-now &lt;<a href=3D"mailto:jsnow@redhat.com">jsnow@redhat.com</a>&gt; ha scr=
-itto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
-x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
-=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
-"gmail_attr">On Mon, Nov 17, 2025, 3:47=E2=80=AFPM Paolo Bonzini &lt;<a hre=
-f=3D"mailto:pbonzini@redhat.com" target=3D"_blank" rel=3D"noreferrer">pbonz=
-ini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex"><div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><di=
-v dir=3D"ltr" class=3D"gmail_attr">Il lun 17 nov 2025, 20:07 Daniel P. Berr=
-ang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com" rel=3D"noreferrer nore=
-ferrer" target=3D"_blank">berrange@redhat.com</a>&gt; ha scritto:<br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left:1px solid rgb(204,204,204);padding-left:1ex">On Mon, Nov 17, 2025 at 0=
-1:51:25PM -0500, John Snow wrote:<br>
-&gt; In order to convert the existing Makefile target from a manual<br>
-&gt; invocation of mkvenv to one that uses the meson dependency system, we<=
-br>
-&gt; need to not suppress ninja here.<br>
-&gt; <br>
-&gt; I&#39;m not sure if this creates problems I am not aware of; but invok=
-ing<br>
-&gt; ninja here is no longer spurious but will become necessary.<br>
-<br>
-Yes, this will likely create problems. From the commit message that<br>
-introduced NINJA=3D&quot;:&quot;...<br>
-<br>=C2=A0Avoid it with the same<br>
-=C2=A0 =C2=A0 trick that we are using in buildtest-template.yml already by =
-disabling<br>
-=C2=A0 =C2=A0 the up-to-date check via NINJA=3D&quot;:&quot;.<br></blockquo=
-te></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Move the check=
--venv call to buildtest-template.yml, right after configure? It&#39;s cheap=
- enough.=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</di=
-v></div></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"au=
-to">What&#39;s the root issue here? That there&#39;s enough of a time delay=
- between the actual configure and the test running that it re-runs configur=
-e?</div></div></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">That the git repo is cloned again and is therefore newer than the=
- artifacts. That triggers a full rebuild.</div><div dir=3D"auto"><br></div>=
-<div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex"><div dir=3D"auto"><div dir=3D"aut=
-o"><br></div><div dir=3D"auto">(And presumably this is bad mostly for waste=
-d CI time...?)</div><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div=
-><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_qu=
-ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
-4);padding-left:1ex"><div dir=3D"auto"><div dir=3D"auto"><br></div><div dir=
-=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
-g-left:1ex">
-<br>
-<br>
-&gt; <br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" rel=
-=3D"noreferrer noreferrer noreferrer" target=3D"_blank">jsnow@redhat.com</a=
->&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 .gitlab-ci.d/buildtest.yml | 4 ++--<br>
-&gt;=C2=A0 1 file changed, 2 insertions(+), 2 deletions(-)<br>
-&gt; <br>
-&gt; diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml<b=
-r>
-&gt; index 18d72d3058b..2cb2cf25b4a 100644<br>
-&gt; --- a/.gitlab-ci.d/buildtest.yml<br>
-&gt; +++ b/.gitlab-ci.d/buildtest.yml<br>
-&gt; @@ -101,7 +101,7 @@ crash-test-debian:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 IMAGE: debian<br>
-&gt;=C2=A0 =C2=A0 script:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 - cd build<br>
-&gt; -=C2=A0 =C2=A0 - make NINJA=3D&quot;:&quot; check-venv<br>
-&gt; +=C2=A0 =C2=A0 - make check-venv<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 - pyvenv/bin/python3 scripts/device-crash-test -q =
---tcg-only ./qemu-system-i386<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 build-system-fedora:<br>
-&gt; @@ -158,7 +158,7 @@ crash-test-fedora:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 IMAGE: fedora<br>
-&gt;=C2=A0 =C2=A0 script:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 - cd build<br>
-&gt; -=C2=A0 =C2=A0 - make NINJA=3D&quot;:&quot; check-venv<br>
-&gt; +=C2=A0 =C2=A0 - make check-venv<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 - pyvenv/bin/python3 scripts/device-crash-test -q =
-./qemu-system-ppc<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 - pyvenv/bin/python3 scripts/device-crash-test -q =
-./qemu-system-riscv32<br>
-&gt;=C2=A0 <br>
-&gt; -- <br>
-&gt; 2.51.1<br>
-&gt; <br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer noreferrer=
- noreferrer" target=3D"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0=
- -o-=C2=A0 =C2=A0 <a href=3D"https://www.flickr.com/photos/dberrange" rel=
-=3D"noreferrer noreferrer noreferrer noreferrer" target=3D"_blank">https://=
-www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer noreferrer =
-noreferrer" target=3D"_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https:=
-//fstop138.berrange.com" rel=3D"noreferrer noreferrer noreferrer noreferrer=
-" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer noreferrer nore=
-ferrer noreferrer" target=3D"_blank">https://entangle-photo.org</a>=C2=A0 =
-=C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"https://www.instagram.com/dberrange" rel=
-=3D"noreferrer noreferrer noreferrer noreferrer" target=3D"_blank">https://=
-www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div></div></div>
-</blockquote></div></div></div>
-</blockquote></div></div></div>
+it is basically replicating qemu code then.
 
---00000000000044aab00643ee0dce--
+what's the big deal to launch qemu?
+
+
+
+> Or consider the case when USO is not supported by the kernel in the
+> destination, even if qemu reports this, I'm not sure what is expected
+> to be done in the management layer?
+> 
+> Thanks
+
+reports what?
+
+-- 
+MST
 
 
