@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBF52CF31A7
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 11:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504DFCF31AC
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 11:31:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLgG9-0006JH-QA; Wed, 19 Nov 2025 06:22:01 -0500
+	id 1vLgOK-0000tD-VZ; Wed, 19 Nov 2025 06:30:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vLgG8-0006H5-8g
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:22:00 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLgOK-0000t3-1C
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:30:28 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vLgG6-0006R8-RU
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:22:00 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-42b3ac40ae4so4007421f8f.0
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 03:21:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vLgOI-0008Uc-Cq
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 06:30:27 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-4775ae5684fso33603495e9.1
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 03:30:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763551317; x=1764156117; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1763551824; x=1764156624; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3tvGCO+spDxkBwlHG1v9svfAPielplP2gHFj6KYX0Kw=;
- b=K062l+6oxCuDxwI3PtdrKcAOfts/pxgbZmXYdZ2duAfSt0mqWlRTpFufsNLnuD5qAo
- C0nuzt1O1W40cU8GY9XOnR7fu5kVGXEuYwN9WlSg5hf2Pv7sFB70U0jZwB7L+mLDpyjn
- t2EB9OhzI6Z9pnp3W+k9PCoIq2U0An8jB/F8P5wjPS/foiUME5MR9DagUmdajDwFSLG7
- UlY5lKuCIfpPDvD6dJN+fBeDeKwfwdbaHyAFwGM0r8LDC/lORZ68cxSebDcM4pKxCyvZ
- 4B51oBTxROVh/gk8gNjCwsMFga3Z71F4c4TctptMT3MHLgAsPJn8hO7A6EWONP0SLSpi
- Jh3Q==
+ bh=lluPvpIpNfIbtLgB2Xwyt0bFItl0gbX00AAtLCZSLa0=;
+ b=f9UwNbG4oT/9WK9WnCeHw/e5ZTXvON45xQj24wlwNNrm/IO/3x2/ucqwD1PkxJunp6
+ eo6I/McW5hvXOSPGtb/iuY5d3SwAdHg/TBIBjkTkb7OSgJKNwOE36vwhIIjEkxdZ+TmU
+ VT3qdhofAG8te5YYj5X9AH4twf+NcNr6cxqxdPMFYru6AHfy6TJ5NGDru+ABrCIQ8/7V
+ LTC2Df0ynn9eO9oefOzaqt7HANA6UmV+Hn/zj1PH4ejb2iyGSWII6T4QhnN6KWQmdC8E
+ oZcczEJhtjeTBlMkqXKsrZnZO4mFDdS5pksYBYW3buIPnYjLcWR2XeH+jMBxYzGZ9TPf
+ XcbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763551317; x=1764156117;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1763551824; x=1764156624;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3tvGCO+spDxkBwlHG1v9svfAPielplP2gHFj6KYX0Kw=;
- b=h5JMCwhXp7awZ4dlbMnvQgrLmJ9LfEc3DbJ/AakIxLd3XfLbIvM2qoKKYyUZfSWY9p
- Dj4gSmTKCseM/wjtwghXyRmfMjc5obNw/yZP9clro/tfUGIFEKQ7kWGwmAvIpk3cttNV
- v8YZb1bpUQwJI6gTfomt9SuhlFLQH7uoqyqNifrhKRxsgzlX1w1tLMnU98cwx+406TBu
- BVC++7k0E7pcHW4RnbFaZqDAZU80ompmbxyNW59pqcBtxYplJCa+RzKOXtm0VLiQiyLB
- fc6pbKDReK/KS1Cduk96bp8//nTPmjSazFZhbWCbo1hAlFLPkreYaa1UoDvJUr2WN8j1
- SLVA==
+ bh=lluPvpIpNfIbtLgB2Xwyt0bFItl0gbX00AAtLCZSLa0=;
+ b=YC0Xw9ppfEp1gv2BrttXc4g/HoaJwuLbZ/bv8lsNrNJqzoFfzZBwxvuEe9bRdW+ohX
+ nqND0DAkyqAAFOr08r3S/pyb4y8FTZdBVVS1wDE0U5m/dTr06qnsgNaHYxzMPK+iJ25h
+ oQx4esmtZ2hq0ZhxMoUx22Jq4qcnlC8ecF1TWWV9LndZVi8zLuJQnnNmyVLesycmhCfL
+ vJwrrNEruuSHR1ikjijTsUDH/HsHBk9XM12uYgtwbbHMJwZmG1glsh7oRbiLv1JQsEre
+ IlbhNceGOhnh8nx1zYp/ZU925HJFATxs/c5gZYY5EwmsHA29HzLTr5n9+MEjtINFsh+v
+ 4/Rg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXwlCx8kITv2ZClogkwvp6+qbq6199aLOjRzpnyGBcvhLUOK6pKJo5sRQky7gVFQNprDnLCfEiT7OYl@nongnu.org
-X-Gm-Message-State: AOJu0YxdeO5c2qQHiD9NxYlZolNYExcnOUpWgNUObqpJAgkUzvY0SGzj
- R2C21oh79fnKzPeP/OAitli+toMj7dffyanppJewWeLqX3o0OqsGudwM0DHcYclZcdU=
-X-Gm-Gg: ASbGnctRE2+qHCASb3VwKks+80KOnCKfFujsEOKNWhfJLGEFqy4jtnpqo5Gr4Dmurso
- emoRTB1OKQBP3pg2nj9X6b9mth/bzs4oaawuZYmCd4lnpIdHbYAn4b5ExzwPPyOmI1Zk1y1jksN
- DRbtb9C/SdQnij1iYnpr232qVBWL5dRyd5i+Fc6wLHkpYVOllxfVSPHcFBL87cRFjdOcdL1t6w0
- 0rrbz/VPw1E7qWuqYGi567qHvgG/eJlognBYc3YKrUZRuKxAhv7AYpyXwbO3TFue6NKH6R/gUyL
- lH0cqtLemvpCD+137pnW7u1J20N6FE/cYC+tdUAypT8B6jQ4KHySdMtkGtpeFYumJydReycjnjp
- 8UOFDxv0Nq5dhx0irhF6Z+SEaJhnMs16rh/hZqzv/K9REi3vlU5L2UkmPt8cKZUaXRubezyrSrJ
- CJ1bGD/fR6/t+4db5Li92nT0R/vdT+KzvCsmN5SQNaGfqG6Ur67rOCFLUhYOXXeGMmteCvr1go3
- Y38DQ==
-X-Google-Smtp-Source: AGHT+IEABwIUuG9cgCTByjKHaJ/8KGlhcj+La7UTo15cC78kMQtVUHces0ThHHTxKYGRiSNKYcthew==
-X-Received: by 2002:a05:6000:4024:b0:42b:3b55:8928 with SMTP id
- ffacd0b85a97d-42b59344ab4mr18786360f8f.20.1763551316976; 
- Wed, 19 Nov 2025 03:21:56 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:ed5:b1f0:90e8:1fdb:2cba:9db1?
- ([2a01:e0a:ed5:b1f0:90e8:1fdb:2cba:9db1])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42b53f1fd50sm37685360f8f.38.2025.11.19.03.21.56
+ AJvYcCUNH4cPXP5UH7JHZLuuTfsYth+xoA9h3+31hJUMYk9YuDx7hNF+wIgQ8LpxBKxF3QWgMZMI8GOvSXIk@nongnu.org
+X-Gm-Message-State: AOJu0Yx8psTqZS4Aum/pDh5JtyXagDEDo64E6X1uJbBigEnsxMnh/D5m
+ fc3LDH0gDgIfYaiBdCLe2qrg7iMq4JuoWr8PTd8VITLAMf3C8w8hIfoc1vZBalTqGH8=
+X-Gm-Gg: ASbGncuLcIrvyauF8Hm83NIkhBz3m7FtrA534UWds8l938hdRZvYW63L8c2Sjb18eVF
+ la+7EHUxZsL5eW6ICIxGJLXcPk6wo0Cu6NxTG1eMM3RgOmnPG9y99igMEm2/Y3/++9xtKHaZKtu
+ cJxvRWTAY9PVXsQCWVbPGjVLLmclRjn+qZP0VGnT1oEUxixb5lKaxWxnDWa7bqbxsK6JnKGJBRD
+ GZhJvlEZ4aQOFvCvuGhDDzFtCCQYVTcyuehMpGzN3JWj9d3CD+PPZdTr8ayH5ad+Lq6QtAdth9S
+ s3IfXhmcVMt/QSA6vImKWF8dDWEZazFWIUgMUIvZ6Tubfld/1bUo/HAE2/4SqVPyI6F/AtnkfA0
+ bGtZPbeNuTL5ycqSHm945KBkro0Bm98mFKEY3R9UZXu+Mx+m7ghRDZ3ukiCVE+qzRiIMMJQmIjv
+ i2yO3EK5CmxcbcEdHteOExolYTq6JUsMtzXZxmTwGBIMQLSSrEtg43Kw==
+X-Google-Smtp-Source: AGHT+IEoXvExm0Bz0x5XflpTMGTkw62WDApxTosdQh0Onld4ksW7Bvmj0DATe1xOywuLFmlFrl8WuA==
+X-Received: by 2002:a05:600c:1910:b0:477:9e10:3e63 with SMTP id
+ 5b1f17b1804b1-4779e103efamr116881105e9.35.1763551824496; 
+ Wed, 19 Nov 2025 03:30:24 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477b10804c8sm44687055e9.15.2025.11.19.03.30.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 19 Nov 2025 03:21:56 -0800 (PST)
-Message-ID: <18f5e9b1-d4f3-4c7c-90ce-aa9ca5032f40@linaro.org>
-Date: Wed, 19 Nov 2025 12:21:54 +0100
+ Wed, 19 Nov 2025 03:30:23 -0800 (PST)
+Message-ID: <40e40d05-e491-4513-85b7-48dfe8f5c178@linaro.org>
+Date: Wed, 19 Nov 2025 12:30:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] linux-user: fix reserved_va page leak in do_munmap
-To: Matthew Lugg <mlugg@mlugg.co.uk>, qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, peter.maydell@linaro.org
-References: <20251117170954.31451-1-mlugg@mlugg.co.uk>
- <20251117170954.31451-4-mlugg@mlugg.co.uk>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 0/3] Python: fix tests
 Content-Language: en-US
-In-Reply-To: <20251117170954.31451-4-mlugg@mlugg.co.uk>
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster
+ <armbru@redhat.com>, Cleber Rosa <crosa@redhat.com>
+References: <20251118200657.1043688-1-jsnow@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251118200657.1043688-1-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,23 +104,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/17/25 18:09, Matthew Lugg wrote:
-> The old logic had an off-by-one bug. For instance, assuming 4k pages on
-> host and guest, if 'len' is '4097' (indicating to unmap 2 pages), then
-> 'last = start + 4096', so 'real_last = start + 4095', so ultimately
-> 'real_len = 4096'. I do not believe this could cause any observable bugs
-> in guests, because `target_munmap` page-aligns the length it passes in.
-> However, calls to this function in `target_mremap` do not page-align the
-> length, so those calls could "drop" pages, leading to a part of the
-> reserved region becoming unmapped. At worst, a host allocation could get
-> mapped into that hole, then clobbered by a new guest mapping.
+On 18/11/25 21:06, John Snow wrote:
+> Whack some minor annoyances down to make the tests green again. Fixes
+> both minreqs and the optional check-tox.
 > 
-> Signed-off-by: Matthew Lugg<mlugg@mlugg.co.uk>
-> ---
->   linux-user/mmap.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> John Snow (3):
+>    python/mkvenv: ensure HAVE_LIB variables are actually constants
+>    python/qapi: add an ignore for Pylint 4.x
+>    python/qapi: delint import statements
+> 
+>   python/scripts/mkvenv.py   | 24 ++++++++++++++++--------
+>   python/setup.cfg           |  1 +
+>   scripts/qapi/commands.py   |  5 +----
+>   scripts/qapi/introspect.py |  2 +-
+>   4 files changed, 19 insertions(+), 13 deletions(-)
+> 
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+FTR, per 
+https://lore.kernel.org/qemu-devel/20251117185131.953681-1-jsnow@redhat.com/ 
+reviews:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-r~
 
