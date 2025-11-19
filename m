@@ -4,101 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A057ECF34BA
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 21:16:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27816CF6487
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 22:29:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLpXY-0007ad-EY; Wed, 19 Nov 2025 16:16:36 -0500
+	id 1vLqfU-0006Tl-DW; Wed, 19 Nov 2025 17:28:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vLpXX-0007aN-Ez
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 16:16:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vLqfP-0006T6-3h
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 17:28:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vLpXW-0006QK-3T
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 16:16:35 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vLqfM-00010j-Uh
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 17:28:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763586992;
+ s=mimecast20190719; t=1763591322;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8ZU0cYpUKibMgIkOkyBk+sZaW4964Va6Pih1JUDjQCw=;
- b=BcS13KD3GgBuRa636EPQaZs1tOFrpd7h27+WV731M8WXFRy1NPfaVQEZsVAEQqClAgNEHJ
- 5aPVAGnFwO4FkAwyMJ2FvuFkMTMjoacf4pj7CwI78vKyeZBTpvTUgN3B2nvCiOHSW/LHxN
- qs4oyqKUIavTnKgah+yBnduv++LJr0M=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=N/Cm/PV/41Zna1tQB0q52TvZpnbnsrwm38rZij0xfl0=;
+ b=BNyPoVqZ40f0/G9KpCfKKQpjc/XHfxyMtsBMwIyqnHbn2AD9aJ17KvfmaTUttIQYr9Y4If
+ Qe95gb+6+yIU/0MGSxC0n3HWenw/WayEDTOWoXJp6adgTK0JTCdVfEWbjwqCyDmwrk6lwI
+ 1ObshjBDpiImuEzz19M3x1NoqFfwJ+Y=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-80-LrkcoSD-M62GCHOpoMO5WA-1; Wed, 19 Nov 2025 16:16:31 -0500
-X-MC-Unique: LrkcoSD-M62GCHOpoMO5WA-1
-X-Mimecast-MFC-AGG-ID: LrkcoSD-M62GCHOpoMO5WA_1763586990
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-787f38dba90so2772747b3.0
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 13:16:31 -0800 (PST)
+ us-mta-693-ATu0scvRORKJ3w_dzwJWSQ-1; Wed, 19 Nov 2025 17:28:40 -0500
+X-MC-Unique: ATu0scvRORKJ3w_dzwJWSQ-1
+X-Mimecast-MFC-AGG-ID: ATu0scvRORKJ3w_dzwJWSQ_1763591319
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-42b2ad2a58cso91057f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 14:28:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763586990; x=1764191790; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8ZU0cYpUKibMgIkOkyBk+sZaW4964Va6Pih1JUDjQCw=;
- b=t4zlRwOO1Dv68jVK0gVoY6DHdwsKDNJASXMl4fsGCxChxhwXRLs0vrOcKYYIXUZNUN
- AYxrHctaLqvMtj47r1XViCygHMcLHPzXTLPhsQ8nZ3Xj5zf5G58D8Px1lPN5I5qThllz
- YA28Q2coePXFL/kxa9dHXdZVZ3+8sYugK5S/6HrjGAa5nxRmQo/ZfezoBBwb9Dzo2Lgk
- 65Rr+sqS0twEwhGb9CyBdDdmFjO44/75+lFLzh0g9BHYbIS06alwdfrbz6kZjT9RcXOw
- iPLKk8n7Ooyz34fxb68fpip/GwUoGL8WCT0uMGL9yBRg5UAAz6i3zWml+fQ7z/0GsnOM
- kSGg==
+ d=redhat.com; s=google; t=1763591319; x=1764196119; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=N/Cm/PV/41Zna1tQB0q52TvZpnbnsrwm38rZij0xfl0=;
+ b=FKLdy1Q7BjNMJ/zZzQAa0RWR9GQSl7BdWt8zFNMWs2rL7cobhbkgyXBQJ9GCi5/Zdt
+ 1DmAaucsLA8+20npjhBJbOD/zmBCC7aWGpamqR96jRUn1QWxm6mfVTngXFUIvkPX1/s9
+ 3ezi1TQFQQhh9MA2o35p6kUg3O1icOb/KPKuEAxtix53ClvskSUKilQL+3vMlmYXQxFV
+ OjqAMjpakSBOqKaVXGmFbPugKbWjeXKuJut9WK+GvcNJT/LwvVuR5P3mi/NclYs1/CIz
+ atGoZYzRQbiogoilP0sSpmNqgJOsms8goPeANafh2YoIqtVwCxdUK42sDw9N6WghMyO9
+ HfsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763586990; x=1764191790;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8ZU0cYpUKibMgIkOkyBk+sZaW4964Va6Pih1JUDjQCw=;
- b=jPWkY85agYJLKXOWpCfYlcZU3Q3otx6jVtMfiqIlBFVYzjKvEfltdghHAdYMrInNVf
- M0Zv/zTwdtWV8O/XckMMtmrMRyv77enr++zKW073lcFdf5Cb9EtckYmtFoEW88vqCRT2
- UkLiGoMGhmvHv05GQaMMWZXDtuqx1sIIoAW2//7iPvcLLbGOOSn6el6EQEIBAPNrDEOo
- 4UHd/ymwH1mUUGaRmLWX2rmdGHh0YSfMfdPno7TPg4Tyg1kw8aUjHTRzHNj5IAhaEpuw
- 5/0QwYBflx5M4b5kdxXpPpu3Mgeo3STP9R2IqtfH8N3zU2m34JuttaDujMJ92sQGClRf
- WarQ==
-X-Gm-Message-State: AOJu0YzSyRDULfUDg0D+qBW6BtNkT43AgZrIth2etwtsRopQlzSrez2C
- 2Hdigeh3b+8/zZPOeQ31Bl+OSq5MShYwjgtqN9RVUGyBP0K0vZ5QBlE0HyLoHLehJMSFUZKvZrm
- En4xxKJcL/brnBBJ5KWfuZLfdnrt/ZYxrzCRfZJAnP9HucyUQpHD8smgU/O4Soad8QRL7JZE/ke
- cAl89LVqc4sK1Zoy9P4dX0AjMPjhoewnY=
-X-Gm-Gg: ASbGncv+Kqk3VcCkDY+7zWm+tL/cwJuK9qAHuO22TY/DdnszCDkA3jnJfuc8qAAlTEb
- /C+cafOB0/MagzXNZgJXNjFF9BBYNGYVe6Maj3IkVNwcKE7NpESPutooS6coGTwe1K2vlxC9Clw
- q6/WnJGGKZiRErfIrm5kjvsaVWhDT6sbWvmS3jr4oqth1WNPiI6LkcAAIL+W7wrVGYwL/adgf8u
- RLcsOezuDQq8KQyaDhoqU1u4w==
-X-Received: by 2002:a05:690c:a085:10b0:785:fe77:ccce with SMTP id
- 00721157ae682-78a7960d8bfmr6932747b3.44.1763586990536; 
- Wed, 19 Nov 2025 13:16:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF+NNfKfJbdrxxohxkBhXOdFsqMehqXdZd3svmoB6EKreEyh8aC3/XuB+4y8xy0E0JVRlKD62I2TCa/kCX+ciY=
-X-Received: by 2002:a05:690c:a085:10b0:785:fe77:ccce with SMTP id
- 00721157ae682-78a7960d8bfmr6932587b3.44.1763586990280; Wed, 19 Nov 2025
- 13:16:30 -0800 (PST)
+ d=1e100.net; s=20230601; t=1763591319; x=1764196119;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N/Cm/PV/41Zna1tQB0q52TvZpnbnsrwm38rZij0xfl0=;
+ b=hnG+g61byFbWOjkOxJPrltwnnPsN3AWb+sHrbmOa4vHwvHeZGUzlcmi38nrBbMf+JM
+ BVQU/W/f1YhK+Bhi8yU6ETTNKaL7iaZ8Lt76tZW/8wqOKNy6cUCweg7+gQ98Lt5SuAwb
+ AmrlFCrmolq78k2Pgkj3jwnIXJ8QqvaKQEH6Ug7/xCal7GMU0z4LErOFG1kQ2XZeWHPl
+ 7phHGKORRsDHoz8YTtFVn54Hu75Gi3hUDGC+LnGGItS3t1TRmtHHOHsQS0aLJLXHLjf8
+ RhkFM6f16szoeUWoWD6RAkuPjXMI1bHNu7KHcY2CpdrVsqREcwqDYZhdi/IU60HHMih/
+ x7eA==
+X-Gm-Message-State: AOJu0YzQo16OAdAQeGb00C4lT6sv3+XneFfshi7c4JcaP+kjGEP0fsVA
+ ZXh3+T8+fVunFm+z7iJRbeHVg36JqzukOUSx//eAE+BjdEXa70gkTVqgm2GAh33p3DXhJiw4cdv
+ UBCPwnwR/FA01bI13O1qiFQE95iWxvdZCsUcq8LUZfe7HYkvglLgtNbdq
+X-Gm-Gg: ASbGncuIZ8fBRZTqwk1vjBsJtKHwdMrP3JY+RZBen7k7WY0C0613XSEQDvAKa78g47u
+ kHvpAJnwWpeg4M7ZBR3TbsXjwtIW4XAuTomVh7alY51uTKPBR/Trro6Y6D6f64Kso9S1p6oyMaV
+ 0I/7mpOM36QuJvmzyWsq7dqoJInH3tE3njRYYSYoZjkhuYbTpPbB+KKLC1EE95w8KAn7EXaAOqp
+ kFVaUAl6SBny8jzbSnFbP91vh/tFEGqRPL79Kv5Um41/TOmkex7Rl+gX/TG2G0p9OSCMVP2bUFI
+ RMgmbD+sVGva4XQLc7iLsJFc5KcSIAIdBngMXvPTGCThg+xDeim4jp0DjRWGAFzyS6qorZRqjL+
+ dpKXYJX6gMAoI0zE/8MgfU252VHBspkh+hXNE1LorFQ3Tu7a0Tc0NbmEvJ4Tn1rtuH6E9FBeHb4
+ cw+3HkgPPQa6GJ+Bs=
+X-Received: by 2002:a05:6000:2385:b0:42b:41dc:1b5d with SMTP id
+ ffacd0b85a97d-42cb9a0bdf0mr360308f8f.25.1763591318781; 
+ Wed, 19 Nov 2025 14:28:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEUv9WjeaAxngoexi4ww9b7KWOrfXw/ZpMWF9C6McfRh4wRXJElDz62UUL7iTkrYl+kIXO8Hw==
+X-Received: by 2002:a05:6000:2385:b0:42b:41dc:1b5d with SMTP id
+ ffacd0b85a97d-42cb9a0bdf0mr360295f8f.25.1763591318406; 
+ Wed, 19 Nov 2025 14:28:38 -0800 (PST)
+Received: from [192.168.10.81] ([176.206.119.13])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fd8baesm1478117f8f.39.2025.11.19.14.28.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 19 Nov 2025 14:28:37 -0800 (PST)
+Message-ID: <91bf0b22-33c4-46f7-95fa-f634eb069ea7@redhat.com>
+Date: Wed, 19 Nov 2025 23:28:31 +0100
 MIME-Version: 1.0
-References: <20251117185131.953681-1-jsnow@redhat.com>
- <20251117185131.953681-12-jsnow@redhat.com>
- <5858b3a2-f92a-4dcd-b401-585250821032@redhat.com>
-In-Reply-To: <5858b3a2-f92a-4dcd-b401-585250821032@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 19 Nov 2025 16:16:19 -0500
-X-Gm-Features: AWmQ_bmf6zM3MqwCD61kzQ2EtI3hKM22wKN7oSTIywG18KGN6YEbPvSCPCWxQws
-Message-ID: <CAFn=p-auf2T7NFizFhaaoW4uxr2Z3v4XdgUAj1SVYFv8Mg3Kfg@mail.gmail.com>
-Subject: Re: [PATCH 11/22] python: add vendored qemu.qmp package
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Michael Roth <michael.roth@amd.com>, 
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] rust/hpet: remove BqlRefCell around HPETTimer
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20251117084752.203219-1-pbonzini@redhat.com>
+ <20251117084752.203219-4-pbonzini@redhat.com> <aR3fhvpIsXRnQcj8@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <aR3fhvpIsXRnQcj8@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -123,46 +160,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 19, 2025 at 4:29=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
-e:
->
-> On 17/11/2025 19.51, John Snow wrote:
-> > In anticipation of deleting the python/qemu/qmp source from the tree,
-> > add a vendored version of the qemu.qmp package to ensure that "make
-> > check" can be run in isolated build environments, offline.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >   python/scripts/vendor.py                      |   2 ++
-> >   python/wheels/qemu_qmp-0.0.5-py3-none-any.whl | Bin 0 -> 72263 bytes
-> >   2 files changed, 2 insertions(+)
-> >   create mode 100644 python/wheels/qemu_qmp-0.0.5-py3-none-any.whl
-> >
-> > diff --git a/python/scripts/vendor.py b/python/scripts/vendor.py
-> > index 33ac7a45de0..36cd27046e7 100755
-> > --- a/python/scripts/vendor.py
-> > +++ b/python/scripts/vendor.py
-> > @@ -43,6 +43,8 @@ def main() -> int:
-> >       packages =3D {
-> >           "meson=3D=3D1.9.0":
-> >           "45e51ddc41e37d961582d06e78c48e0f9039011587f3495c4d6b0781dad9=
-2357",
-> > +        "qemu.qmp=3D=3D0.0.5":
-> > +        "e05782d6df5844b34e0d2f7c68693525da074deef7b641c1401dda6e4e3d6=
-303",
-> >       }
->
-> I wonder why I did not have to add pycotap here when I added a wheel for
-> that...?
+On 11/19/25 16:17, Zhao Liu wrote:
+>> -    fn init_timer_with_cell(cell: &BqlRefCell<Self>) {
+>> -        let mut timer = cell.borrow_mut();
+>> -        // SAFETY: HPETTimer is only used as part of HPETState, which is
+>> -        // always pinned.
+>> -        let qemu_timer = unsafe { Pin::new_unchecked(&mut timer.qemu_timer) };
+>> -        qemu_timer.init_full(None, CLOCK_VIRTUAL, Timer::NS, 0, timer_handler, cell);
+>> +    fn init_timer(timer: Pin<&mut Self>) {
+>> +        Timer::init_full(
+>> +            timer,
+>> +            None,
+>> +            CLOCK_VIRTUAL,
+>> +            Timer::NS,
+>> +            0,
+>> +            timer_handler,
+>> +            |t| &mut t.qemu_timer,
+>> +        );
+>>       }
+> 
+> I find this way could also work for BqlRefCell case:
+> 
+>      fn init_timer_with_cell(cell: &mut BqlRefCell<Self>) {
+>          // SAFETY: HPETTimer is only used as part of HPETState, which is
+>          // always pinned.
+>          let timer = unsafe { Pin::new_unchecked(cell) };
+>          Timer::init_full(
+>              timer,
+>              None,
+>              CLOCK_VIRTUAL,
+>              Timer::NS,
+>              0,
+>              timer_handler,
+>              |t| {
+>                  assert!(bql::is_locked());
+>                  &mut t.get_mut().qemu_timer
+>              },
+>          );
+>      }
 
-It's only a script we run manually - it doesn't break anything to skip
-over it. It just helps to have a script available that can do the
-vendoring for you and verify the checksums. Ease of convenience for
-future maintainers, etc.
+Yes, but I'm still not sure what the final shape will be... I don't like 
+this too much.
 
->
-> Anyway, for your patch, FWIW:
-> Acked-by: Thomas Huth <thuth@redhat.com>
->
+> 
+> So any other non-lockless timer can also use this interface to
+> initialize their BqlRefCell<>.
+> 
+> (BTW, I find BqlRefCell::get_mut() / as_ref() missed bql::is_locked().
+>   right?)
+
+as_ptr() doesn't need it because the pointer can be dereferenced later.
+
+As to get_mut()... I think if you are the only owner, you should have 
+the guarantee of being able to modify the content freely.  This is true 
+even if your &mut came from interior mutability.
+
+So, in the above case you only need &mut t.get_mut().qemu_timer.
+
+> I think it may be better to add doc about how to use this for
+> BqlRefCell<> case since there'll be no example after this patch.
 
 
