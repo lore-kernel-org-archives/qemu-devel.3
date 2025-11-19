@@ -4,87 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BBB9CF58EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 20:43:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73A20CF58F5
+	for <qemu-devel@archiver.kernel.org>; Wed, 19 Nov 2025 20:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLp17-0005Hb-2I; Wed, 19 Nov 2025 15:43:05 -0500
+	id 1vLp9w-0007sE-TA; Wed, 19 Nov 2025 15:52:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vLp0t-0005Ez-TW
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 15:42:52 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vLp9u-0007ri-C9
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 15:52:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vLp0p-0008NP-Bv
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 15:42:51 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6711616BC26;
- Wed, 19 Nov 2025 23:42:36 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D5EA53201A7;
- Wed, 19 Nov 2025 23:42:40 +0300 (MSK)
-Content-Type: multipart/mixed; boundary="------------FLqoB40EJIKZHh0tz6IFRoWP"
-Message-ID: <9101680c-9b01-4ca8-b54d-15d01451f592@tls.msk.ru>
-Date: Wed, 19 Nov 2025 23:42:40 +0300
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vLp9s-00022m-Cc
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 15:52:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763585525;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=telmREDl0NRi6jjPIxAR1upwJXK8/pOk41hEfINrNXo=;
+ b=RIs8N5kdEfzlyYk6ssykD54HZMS75EbaYYYjppvluw0njcGUutCtkmc8kSX9T4HASyEb23
+ ApEq+Qd59XmmGr9aPgGSa0m0ADCtdf7tbUVCfIphmWSOxud74PHaaKfWuV6zUAkHStbeKK
+ Z5DWjTFn6IQPTcc9GwMWko4UItksd3E=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-158--d3ctl4hPkKZtXb1T00kzg-1; Wed,
+ 19 Nov 2025 15:52:04 -0500
+X-MC-Unique: -d3ctl4hPkKZtXb1T00kzg-1
+X-Mimecast-MFC-AGG-ID: -d3ctl4hPkKZtXb1T00kzg_1763585522
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6A39019560AD; Wed, 19 Nov 2025 20:52:02 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.175])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7AB3E19560B0; Wed, 19 Nov 2025 20:52:01 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-rust@nongnu.org, Mads Ynddal <mads@ynddal.dk>,
+ Thomas Huth <thuth@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Josh Stone <jistone@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH v2 0/4] trace: add Rust DTrace/SystemTap SDT support
+Date: Wed, 19 Nov 2025 15:51:56 -0500
+Message-ID: <20251119205200.173170-1-stefanha@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: QEMU Development <qemu-devel@nongnu.org>,
- BALATON Zoltan <balaton@eik.bme.hu>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: A few more patches for u-boot-sam460ex (based on 10.2.0-rc1)
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
- HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
- 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
- /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
- DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
- /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
- 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
- a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
- z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
- y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
- a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
- BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
- /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
- cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
- G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
- b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
- LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
- JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
- 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
- 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
- CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
- k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
- OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
- XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
- tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
- zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
- jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
- xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
- K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
- t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
- +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
- eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
- GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
- Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
- RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
- S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
- wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
- VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
- FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
- YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
- ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
- 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,201 +87,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------FLqoB40EJIKZHh0tz6IFRoWP
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+v2:
+- Re-export probe::probe!() from the trace crate to avoid the explicit probe
+  crate dependency from hpet, pl011, etc. [Paolo]
 
-Hi!
+This series adds SDT probe support so that SystemTap, GDB, etc can trace QEMU's
+Rust code when compiled with `./configure --enable-trace-backends=dtrace`.
 
-Almost an year ago I submitted a few patches for
-u-boot-sam460ex code so it can be built by a
-current gcc:
-https://lists.nongnu.org/archive/html/qemu-devel/2025-01/msg00767.html
+The dtrace(1) tool that generates the .o and C header file does not support
+Rust. Use the probe crate (https://crates.io/crates/probe), which takes care of
+emitting SDT probes, and extend tracetool to emit code for the trace events.
 
-Here's another try.  Some of the old issues are
-now gone, some remains, and some new emerged.
+While SDT is cross-platform, the probe crate currently only supports Linux
+(SystemTap). On other platforms the crate is a nop - it compiles but does
+nothing. Future changes to the probe crate may add support for other operating
+systems like FreeBSD, macOS, etc without much needed in the way of QEMU code
+changes.
 
-The below set allows me to build u-boot-sam460ex
-code with gcc-15.
+Based-on: <20251106215606.36598-1-stefanha@redhat.com>
 
-Some bugs are rather harsh and has been there for
-a long time (like multiple definition of fbi symbol -
-the file has been moved to a different dir, but the
-prob remains - it is really a bad code).
+Stefan Hajnoczi (4):
+  hpet: remove unused trace events
+  rust/hpet: add trace events
+  subprojects: add probe crate
+  tracetool: add Rust DTrace/SystemTap SDT support
 
-Some are harsh but new (the reuse of `failed' variable -
-any compiler, even ancient gcc4, should've catched it).
+ hw/timer/trace-events                         |  2 -
+ rust/Cargo.lock                               |  6 ++
+ rust/hw/timer/hpet/Cargo.toml                 |  1 +
+ rust/hw/timer/hpet/meson.build                |  1 +
+ rust/hw/timer/hpet/src/device.rs              | 45 ++++++++-----
+ rust/meson.build                              |  2 +
+ rust/trace/Cargo.toml                         |  1 +
+ rust/trace/meson.build                        |  2 +-
+ rust/trace/src/lib.rs                         |  4 ++
+ scripts/archive-source.sh                     |  1 +
+ scripts/make-release                          |  2 +-
+ scripts/tracetool/__init__.py                 |  1 +
+ scripts/tracetool/backend/dtrace.py           | 31 +++++++++
+ scripts/tracetool/format/rs.py                | 27 ++++++--
+ subprojects/.gitignore                        |  1 +
+ .../packagefiles/probe-0.5-rs/meson.build     | 22 +++++++
+ subprojects/probe-0.5-rs.wrap                 |  7 ++
+ tests/tracetool/dtrace.rs                     | 65 +++++++++++++++++++
+ tests/tracetool/ftrace.rs                     | 21 ++++++
+ tests/tracetool/log.rs                        | 21 ++++++
+ tests/tracetool/simple.rs                     | 21 ++++++
+ tests/tracetool/syslog.rs                     | 21 ++++++
+ tests/tracetool/tracetool-test.py             |  2 +-
+ 23 files changed, 280 insertions(+), 27 deletions(-)
+ create mode 100644 subprojects/packagefiles/probe-0.5-rs/meson.build
+ create mode 100644 subprojects/probe-0.5-rs.wrap
+ create mode 100644 tests/tracetool/dtrace.rs
 
-And some are due to too old code (supporting only gcc4).
+-- 
+2.51.1
 
-FWIW.
-
-Thanks,
-
-/mjt
---------------FLqoB40EJIKZHh0tz6IFRoWP
-Content-Type: text/x-patch; charset=UTF-8; name="u-boot-sam460ex-build.patch"
-Content-Disposition: attachment; filename="u-boot-sam460ex-build.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5ydT4KRGF0ZTogU2F0LCAwMyBB
-dWcgMjAyNCAxMToxODo1OCArMDMwMApTdWJqZWN0OiB1LWJvb3Qtc2FtNDYwZXg6IGJ1aWxk
-IGZpeGVzCkZvcndhcmRlZDogaHR0cHM6Ly9saXN0cy5ub25nbnUub3JnL2FyY2hpdmUvaHRt
-bC9xZW11LWRldmVsLzIwMjUtMDEvbXNnMDA3NjcuaHRtbAoKRml4ZXMgb3Igd29ya3MgYXJv
-dW5kIG51bWVyb3VzIGJ1aWxkIGlzc3Vlcy4KCk1vc3QgYXJlIGR1ZSB0byBuZXcgZGVmYXVs
-dHMgaW4gZ2NjIChpbiBkZWJpYW4pLCBsaWtlCiAtV2Vycm9yPWltcGxpY2l0LWZ1bmN0aW9u
-LWRlY2xhcmF0aW9ucyAodGhlcmUgYXJlIGEgbG90IG9mIG1pc3NpbmcgZGVjbHMpCiAtV2Vy
-cm9yPWluY29tcGF0aWJsZS1wb2ludGVyLXR5cGVzIChmdW5jdGlvbiB0eXBlcyBtaXNtYXRj
-aGVzKQogLVdlcnJvcj1pbnQtY29udmVyc2lvbiAoZnJlZSBpbnQgPD0+IHBvaW50ZXIgY29u
-dmVyc2lvbikKCkJ1Zy1EZWJpYW46IGh0dHBzOi8vYnVncy5kZWJpYW4ub3JnLzEwNzU0MjgK
-U2lnbmVkLW9mZi1ieTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5ydT4KCmRpZmYg
-LS1naXQgYS9yb21zL3UtYm9vdC1zYW00NjBleC9jb25maWcubWsgYi9yb21zL3UtYm9vdC1z
-YW00NjBleC9jb25maWcubWsKLS0tIGEvcm9tcy91LWJvb3Qtc2FtNDYwZXgvY29uZmlnLm1r
-CisrKyBiL3JvbXMvdS1ib290LXNhbTQ2MGV4L2NvbmZpZy5tawpAQCAtMTkzLDIgKzE5Myw3
-IEBAIENGTEFHUyArPSAkKGNhbGwgY2Mtb3B0aW9uLC1mbm8tc3RhY2stcHJvdGVjdG9yKQog
-CisjIHRoaXMgdS1ib290IGlzIGFuIG9sZCBiYWQgY29kZQorQ0ZMQUdTICs9ICQoY2FsbCBj
-Yy1vcHRpb24sLVduby1lcnJvcj1pbXBsaWNpdC1mdW5jdGlvbi1kZWNsYXJhdGlvbikKK0NG
-TEFHUyArPSAkKGNhbGwgY2Mtb3B0aW9uLC1Xbm8tZXJyb3I9aW5jb21wYXRpYmxlLXBvaW50
-ZXItdHlwZXMpCitDRkxBR1MgKz0gJChjYWxsIGNjLW9wdGlvbiwtV25vLWVycm9yPWludC1j
-b252ZXJzaW9uKQorCiAjICQoQ1BQRkxBR1MpIHNldHMgLWcsIHdoaWNoIGNhdXNlcyBnY2Mg
-dG8gcGFzcyBhIHN1aXRhYmxlIC1nPGZvcm1hdD4K
---------------FLqoB40EJIKZHh0tz6IFRoWP
-Content-Type: text/x-patch; charset=UTF-8; name="u-boot-sam460ex-failed.patch"
-Content-Disposition: attachment; filename="u-boot-sam460ex-failed.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5ydT4KU3ViamVjdDogdS1ib290
-LXNhbTQ2MGV4OiBmaXggImZhaWxlZCIgcHV0cwpEYXRlOiBXZWQsIDE5IE5vdiAyMDI1IDIw
-OjQ3OjQ0ICswMzAwCgpUaGVyZSdzIGEgZ2xvYmFsIGNoYXIgKmZhaWxlZD0iZmFpbGVkIiB2
-YXJpYWJsZSwKd2hpY2ggaXMgdXNlZCBiZWxvdyB0aGUgY29kZSBpbiBxdWVzdGlvbiBsaWtl
-CiBwdXRzKGZhaWxlZCkuCkhvd2V2ZXIsIHRoZSBjb2RlIGluIHF1ZXN0aW9uLCAjaWZkZWYn
-ZWQsIHVzZXMKdGhlIHZhcmlhYmxlIG9mIHRoZSBzYW1lIG5hbWUgYnV0IHdpdGggZGlmZmVy
-ZW50CnR5cGUgKHU4KS4gIFdoaWNoIHJlc3VsdHMgaW4gYSBmYWlsZWQgY29tcGlsYXRpb24u
-ClJlbmFtZSB0aGUgbG9jYWwgdmFyaWFibGUgYGZhaWxlZCcgdG8gYHJldCcuCgooQWN0dWFs
-bHksIHRoZXJlJ3Mgbm8gbmVlZCB0byBzdG9yZSB0aGUgcmVzdWx0IG9mCnRoZSBmdW5jdGlv
-biBjYWxsIGluIGEgdmFyaWFibGUsIHNpbmNlIGl0IGlzIG9ubHkKdXNlZCBvbmNlIGFueXdh
-eSkuCgpTaWduZWQtb2ZmLWJ5OiBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PgoK
-ZGlmZiAtLWdpdCBhL3JvbXMvdS1ib290LXNhbTQ2MGV4L2FyY2gvcG93ZXJwYy9saWIvYm9h
-cmQuYyBiL3JvbXMvdS1ib290LXNhbTQ2MGV4L2FyY2gvcG93ZXJwYy9saWIvYm9hcmQuYwot
-LS0gYS9yb21zL3UtYm9vdC1zYW00NjBleC9hcmNoL3Bvd2VycGMvbGliL2JvYXJkLmMKKysr
-IGIvcm9tcy91LWJvb3Qtc2FtNDYwZXgvYXJjaC9wb3dlcnBjL2xpYi9ib2FyZC5jCkBAIC0y
-MDIsNSArMjAyLDUgQEAgc3RhdGljIGludCBpbml0X2Z1bmNfcmFtICh2b2lkKQogCiAjaWZk
-ZWYgQ09ORklHX1NBTTQ2MEVYCi0JdTggZmFpbGVkID0gMDsKKwl1OCByZXQ7CiAJY2hhciBz
-WzMyXSA9IHsgMCB9OwogCkBAIC0yMDgsNyArMjA4LDcgQEAgc3RhdGljIGludCBpbml0X2Z1
-bmNfcmFtICh2b2lkKQogCWdkLT5mbGFncyB8PSBhdG9pKHMpIDw8IDE2OwogCi0JZmFpbGVk
-ID0gaTJjX3JlZ19yZWFkKENPTkZJR19TWVNfSTJDX1JUQ19BRERSLCAweGUpOworCXJldCA9
-IGkyY19yZWdfcmVhZChDT05GSUdfU1lTX0kyQ19SVENfQUREUiwgMHhlKTsKIAotCWlmIChm
-YWlsZWQgPj0gMSkgLy8gdGhlcmUgd2FzIGFuIGVycm9yIC0gZGlzYWJsZSBkZHIyX2Jvb3N0
-CisJaWYgKHJldCA+PSAxKSAvLyB0aGVyZSB3YXMgYW4gZXJyb3IgLSBkaXNhYmxlIGRkcjJf
-Ym9vc3QKIAl7CiAJCWdkLT5mbGFncyAmPSB+KEdEX0ZMR19ERFIyX0JPT1NUX1JFQUR8R0Rf
-RkxHX0REUjJfQk9PU1RfV1JJVEUpOwo=
---------------FLqoB40EJIKZHh0tz6IFRoWP
-Content-Type: text/x-patch; charset=UTF-8; name="u-boot-sam460ex-fbi.patch"
-Content-Disposition: attachment; filename="u-boot-sam460ex-fbi.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5ydT4KU3ViamVjdDogdS1ib290
-LXNhbTQ2MGV4OiBmYmkgZml4CkRhdGU6IFNhdCBBcHIgMSAxNzozNDowOSAyMDIzICswMzAw
-CkZvcndhcmRlZDogaHR0cHM6Ly9saXN0cy5ub25nbnUub3JnL2FyY2hpdmUvaHRtbC9xZW11
-LWRldmVsLzIwMjUtMDEvbXNnMDA3NjcuaHRtbAoKRml4IHRoZSBtaXNzaW5nIGV4dGVybiBp
-biBhIHZhcmlhYmxlIGRlY2xhcmF0aW9uLApyZXN1bHRpbmcgaW4gdGhpcyB2YXJpYWJsZSBi
-ZWluZyByZXBlYXRlZCBlYWNoIHRpbWUKdGhpcyBoZWFkZXIgaXMgaW5jbHVkZWQsIHNvIHRo
-ZSBsaW5rIHdpdGggbW9kZXJuIGdjYwpmYWlscy4KClNpZ25lZC1vZmYtYnk6IE1pY2hhZWwg
-VG9rYXJldiA8bWp0QHRscy5tc2sucnU+CgpkaWZmIC0tZ2l0IGEvcm9tcy91LWJvb3Qtc2Ft
-NDYwZXgvZHJpdmVycy9iaW9zX2VtdWxhdG9yL3Zlc2EuaCBiL3JvbXMvdS1ib290LXNhbTQ2
-MGV4L2RyaXZlcnMvYmlvc19lbXVsYXRvci92ZXNhLmgKLS0tIGEvcm9tcy91LWJvb3Qtc2Ft
-NDYwZXgvZHJpdmVycy9iaW9zX2VtdWxhdG9yL3Zlc2EuaAorKysgYi9yb21zL3UtYm9vdC1z
-YW00NjBleC9kcml2ZXJzL2Jpb3NfZW11bGF0b3IvdmVzYS5oCkBAIC02LDUgKzYsNSBAQCBl
-eHRlcm4gdm9pZCAqc2V0X3Zlc2FfbW9kZShpbnQgbW9kZSk7CiBleHRlcm4gdm9pZCAqb2xk
-X3NldF92ZXNhX21vZGUoaW50IG1vZGUpOwogCi1zdHJ1Y3QgRnJhbWVCdWZmZXJJbmZvCitl
-eHRlcm4gc3RydWN0IEZyYW1lQnVmZmVySW5mbwogewogICAgICAgICB2b2lkICpCYXNlQWRk
-cmVzczsK
---------------FLqoB40EJIKZHh0tz6IFRoWP
-Content-Type: text/x-patch; charset=UTF-8; name="u-boot-sam460ex-gcc.patch"
-Content-Disposition: attachment; filename="u-boot-sam460ex-gcc.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5ydT4KU3ViamVjdDogdS1ib290
-LXNhbTQ2MGV4OiByZW1vdmUgY29tcGlsZXItZ2NjTi5oICNpbmNsdWRlCkRhdGU6IFdlZCwg
-MTkgTm92IDIwMjUgMjM6MzA6MzggKzAzMDAKCmluY2x1ZGUvbGludXgvY29tcGlsZXIqLmgg
-YXJlIHRha2VuIGZyb20gb2xkIGxpbnV4LCBhbmQKb25seSBzdXBwb3J0cyBnY2M0LiAgSG93
-ZXZlciwgdGhlIGdjYy12ZXJzaW9uLWRlcGVuZGVudApkZWZpbml0aW9ucyBpbiB0aGVyZSBh
-cmVuJ3QgYWN0dWFsbHkgdXNlZCBpbiB0aGUgY29kZSwKZXhjZXB0IG9mIHVuaW5pdGlhbGl6
-ZWRfdmFyIG1hY3JvIC0gd2hpY2ggaXMgZGVmaW5lZCBpbgp0aGUgZmFsbGJhY2sgY2FzZSB0
-byB0aGUgc2FtZSB2YWx1ZS4gIFNvIHRoZXJlJ3Mgbm8KcG9pbnQgaW4gaW5jbHVkaW5nIHRo
-ZSBnY2MtdmVyc2lvbi1zcGVjaWZpYyBoZWFkZXIsCndoaWNoIGZhaWxzIHdoZW4gYnVpbGRp
-bmcgdGhpcyBjb2RlIHdpdGggYSBtb3JlIHJlY2VudAp2ZXJzaW9uIG9mIGdjYy4KClRoaXMg
-cGF0Y2ggcmVtb3ZlcyBqdXN0IHRoZSAjaW5jbHVkZSBzdGF0ZW1lbnQKKGFuZCB0aGUgaGVs
-cGVyIGRlZmluaXRpb25zKSwgYnV0IG5vdCBjb21waWxlci1nY2M0LmgKaGVhZGVyIGl0c2Vs
-Zi4gIFRoaXMgbWFrZXMgdGhlIGNoYW5nZSBzbWFsbCwgYW5kIGFsbG93cwpjb21waWxhdGlv
-biBvZiB1LWJvb3Qtc2FtNDYwZXggY29kZSBieSBzb21ldGhpbmcgbW9yZQpyZWNlbnQgdGhh
-biBhbmNpZW50IGdjYy4KClNpZ25lZC1vZmYtYnk6IE1pY2hhZWwgVG9rYXJldiA8bWp0QHRs
-cy5tc2sucnU+CgpkaWZmIC0tZ2l0IGEvcm9tcy91LWJvb3Qtc2FtNDYwZXgvaW5jbHVkZS9s
-aW51eC9jb21waWxlci1nY2MuaCBiL3JvbXMvdS1ib290LXNhbTQ2MGV4L2luY2x1ZGUvbGlu
-dXgvY29tcGlsZXItZ2NjLmgKLS0tIGEvcm9tcy91LWJvb3Qtc2FtNDYwZXgvaW5jbHVkZS9s
-aW51eC9jb21waWxlci1nY2MuaAorKysgYi9yb21zL3UtYm9vdC1zYW00NjBleC9pbmNsdWRl
-L2xpbnV4L2NvbXBpbGVyLWdjYy5oCkBAIC04MSw3ICs4MSwyIEBACiAjZGVmaW5lIF9fbWF5
-YmVfdW51c2VkCQkJX19hdHRyaWJ1dGVfXygodW51c2VkKSkKICNkZWZpbmUgX19hbHdheXNf
-dW51c2VkCQkJX19hdHRyaWJ1dGVfXygodW51c2VkKSkKLQotI2RlZmluZSBfX2djY19oZWFk
-ZXIoeCkgI3gKLSNkZWZpbmUgX2djY19oZWFkZXIoeCkgX19nY2NfaGVhZGVyKGxpbnV4L2Nv
-bXBpbGVyLWdjYyMjeC5oKQotI2RlZmluZSBnY2NfaGVhZGVyKHgpIF9nY2NfaGVhZGVyKHgp
-Ci0jaW5jbHVkZSBnY2NfaGVhZGVyKF9fR05VQ19fKQo=
---------------FLqoB40EJIKZHh0tz6IFRoWP
-Content-Type: text/x-patch; charset=UTF-8;
- name="u-boot-sam460ex-mstring.patch"
-Content-Disposition: attachment; filename="u-boot-sam460ex-mstring.patch"
-Content-Transfer-Encoding: base64
-
-RnJvbTogTWljaGFlbCBUb2thcmV2IDxtanRAdGxzLm1zay5ydT4KU3ViamVjdDogdS1ib290
-LXNhbTQ2MGV4OiByZW1vdmUgb2Jzb2xldGUgLW1zdHJpbmcgZ2NjIG9wdGlvbgpEYXRlOiBT
-dW4gT2N0IDIyIDIzOjM1OjQ1IDIwMjMgKzAzMDAKRm9yd2FyZGVkOiBodHRwczovL2xpc3Rz
-Lm5vbmdudS5vcmcvYXJjaGl2ZS9odG1sL3FlbXUtZGV2ZWwvMjAyNS0wMS9tc2cwMDc2Ny5o
-dG1sCgpNb2Rlcm4gZ2NjIGNvbXBsYWlucyBhYm91dCBpdC4KClNpZ25lZC1vZmYtYnk6IE1p
-Y2hhZWwgVG9rYXJldiA8bWp0QHRscy5tc2sucnU+CgpkaWZmIC0tZ2l0IGEvcm9tcy91LWJv
-b3Qtc2FtNDYwZXgvYXJjaC9wb3dlcnBjL2NwdS9wcGM0eHgvY29uZmlnLm1rIGIvcm9tcy91
-LWJvb3Qtc2FtNDYwZXgvYXJjaC9wb3dlcnBjL2NwdS9wcGM0eHgvY29uZmlnLm1rCmluZGV4
-IDhmNDdjOWI3MjguLmNmNDQxNGNlZTYgMTAwNjQ0Ci0tLSBhL3JvbXMvdS1ib290LXNhbTQ2
-MGV4L2FyY2gvcG93ZXJwYy9jcHUvcHBjNHh4L2NvbmZpZy5taworKysgYi9yb21zL3UtYm9v
-dC1zYW00NjBleC9hcmNoL3Bvd2VycGMvY3B1L3BwYzR4eC9jb25maWcubWsKQEAgLTI0LDMg
-KzI0LDMgQEAKIFBMQVRGT1JNX1JFTEZMQUdTICs9IC1mUElDIC1tZWFiaQotUExBVEZPUk1f
-Q1BQRkxBR1MgKz0gLURDT05GSUdfNHh4IC1mZml4ZWQtcjIgLW1zdHJpbmcgLW1zb2Z0LWZs
-b2F0CitQTEFURk9STV9DUFBGTEFHUyArPSAtRENPTkZJR180eHggLWZmaXhlZC1yMiAtbXNv
-ZnQtZmxvYXQKIAo=
---------------FLqoB40EJIKZHh0tz6IFRoWP
-Content-Type: text/x-patch; charset=UTF-8; name="u-boot-sam460ex-stdc23.patch"
-Content-Disposition: attachment; filename="u-boot-sam460ex-stdc23.patch"
-Content-Transfer-Encoding: base64
-
-U3ViamVjdDogcm9tcy91LWJvb3Qtc2FtNDYwZXg6IHN1cHBvcnQgYzIzIChib29sKQpGcm9t
-OiBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PgpEYXRlOiBNb24sIDI1IEF1ZyAy
-MDI1IDIyOjM0OjIxICswMzAwCkZvcndhcmRlZDogbm8KQnVnLURlYmlhbjogaHR0cHM6Ly9i
-dWdzLmRlYmlhbi5vcmcvMTA5NzY5MwoKSW4gYzIzLCBib29sLCB0cnVlIGFuZCBmYWxzZSBh
-cmUga2V5d29yZHMsCmRvbid0IHRyeSB0byAocmUpZGVmaW5lIHRoZW0uICBJbnN0ZWFkLApp
-bmNsdWRlIDxzdGRib29sLmg+LgoKZGlmZiAtLWdpdCBhL3JvbXMvdS1ib290LXNhbTQ2MGV4
-L2luY2x1ZGUveHl6TW9kZW0uaCBiL3JvbXMvdS1ib290LXNhbTQ2MGV4L2luY2x1ZGUveHl6
-TW9kZW0uaAotLS0gYS9yb21zL3UtYm9vdC1zYW00NjBleC9pbmNsdWRlL3h5ek1vZGVtLmgK
-KysrIGIvcm9tcy91LWJvb3Qtc2FtNDYwZXgvaW5jbHVkZS94eXpNb2RlbS5oCkBAIC05Nywx
-MyArOTcsNyBAQCB0eXBlZGVmIHN0cnVjdCB7CiAjZW5kaWYKIH0gY29ubmVjdGlvbl9pbmZv
-X3Q7CiAKLSNpZm5kZWYJQk9PTF9XQVNfREVGSU5FRAotI2RlZmluZSBCT09MX1dBU19ERUZJ
-TkVECi10eXBlZGVmIHVuc2lnbmVkIGludCBib29sOwotI2VuZGlmCi0KLSNkZWZpbmUgZmFs
-c2UgMAotI2RlZmluZSB0cnVlIDEKKyNpbmNsdWRlIDxzdGRib29sLmg+CiAKICNlbmRpZgog
-CmRpZmYgLS1naXQgYS9yb21zL3UtYm9vdC1zYW00NjBleC9ib2FyZC9BQ3ViZS9tZW51L2xp
-c3QuaCBiL3JvbXMvdS1ib290LXNhbTQ2MGV4L2JvYXJkL0FDdWJlL21lbnUvbGlzdC5oCi0t
-LSBhL3JvbXMvdS1ib290LXNhbTQ2MGV4L2JvYXJkL0FDdWJlL21lbnUvbGlzdC5oCisrKyBi
-L3JvbXMvdS1ib290LXNhbTQ2MGV4L2JvYXJkL0FDdWJlL21lbnUvbGlzdC5oCkBAIC0zLDE0
-ICszLDMgQEAKIAotI2lmbmRlZiBib29sX2RlZmluZWQKLSNkZWZpbmUgYm9vbF9kZWZpbmVk
-Ci10eXBlZGVmIGludCBib29sOwotI2VuZGlmCi0KLSNpZm5kZWYgdHJ1ZQotI2RlZmluZSB0
-cnVlIDEKLSNlbmRpZgotCi0jaWZuZGVmIGZhbHNlCi0jZGVmaW5lIGZhbHNlIDAKLSNlbmRp
-ZgorI2luY2x1ZGUgPHN0ZGJvb2wuaD4KIApkaWZmIC0tZ2l0IGEvcm9tcy91LWJvb3Qtc2Ft
-NDYwZXgvYm9hcmQvQUN1YmUvbWVudS9tZW51LmggYi9yb21zL3UtYm9vdC1zYW00NjBleC9i
-b2FyZC9BQ3ViZS9tZW51L21lbnUuaAotLS0gYS9yb21zL3UtYm9vdC1zYW00NjBleC9ib2Fy
-ZC9BQ3ViZS9tZW51L21lbnUuaAorKysgYi9yb21zL3UtYm9vdC1zYW00NjBleC9ib2FyZC9B
-Q3ViZS9tZW51L21lbnUuaApAQCAtMjksMTQgKzI5LDMgQEAKIAotI2lmbmRlZiBib29sX2Rl
-ZmluZWQKLSNkZWZpbmUgYm9vbF9kZWZpbmVkCi10eXBlZGVmIGludCBib29sOwotI2VuZGlm
-Ci0KLSNpZm5kZWYgdHJ1ZQotI2RlZmluZSB0cnVlIDEKLSNlbmRpZgotCi0jaWZuZGVmIGZh
-bHNlCi0jZGVmaW5lIGZhbHNlIDAKLSNlbmRpZgorI2luY2x1ZGUgPHN0ZGJvb2wuaD4KIAo=
-
-
---------------FLqoB40EJIKZHh0tz6IFRoWP--
 
