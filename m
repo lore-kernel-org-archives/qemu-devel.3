@@ -4,100 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7727CF6499
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 00:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C048CF6497
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 00:18:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLsMP-0003BJ-8r; Wed, 19 Nov 2025 19:17:17 -0500
+	id 1vLsMX-0003Cr-Di; Wed, 19 Nov 2025 19:17:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLsMN-0003AZ-L7
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 19:17:15 -0500
+ id 1vLsMV-0003CO-9B
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 19:17:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLsMM-0007Ro-7a
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 19:17:15 -0500
+ id 1vLsMT-0007Sc-JS
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 19:17:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763597833;
+ s=mimecast20190719; t=1763597841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1NK+wIpV+Q2uLt75RKB2mtL15WC7Pac5R8gwVj0dKEA=;
- b=EFIfDTSFg9xm5rt7r2DeJ+kXAxHBwLLNZHfSVMdUzU1zFu/YAURNSe4Cb4pwEtRBwmXoG+
- xib7ftiEsE89cjB3aDqBlXQnDu/1YKKDYowGwZy/DiT0N5y+c7Q63S8GNGE3tZOzmpcstr
- 3+UvVATJFLvr/AyRG90MsHrs9iJtGWo=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ooMz4PrdRjFfvcta9qVRDqisJIaUtfGy+SneeR0CR/c=;
+ b=Uh02OafQEdOhRiBBH0AvN0Yot60t/LND7OfmnzgdM8WOce5hRMT8ySCX4Y+sZwVFaP0hpg
+ 6TXBpircxm61d038tY+iBOTQ3R4wMGASsW+BsuIouu96mmdDY0zoNA+BhTaNlBsECv3BMD
+ rOShmaa2kpu/2IuqXJgdVj920t5hzKo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-542-StYW3iqFPVKEd5Ws7uneoA-1; Wed, 19 Nov 2025 19:17:12 -0500
-X-MC-Unique: StYW3iqFPVKEd5Ws7uneoA-1
-X-Mimecast-MFC-AGG-ID: StYW3iqFPVKEd5Ws7uneoA_1763597831
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-429c5da68e5so127775f8f.1
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 16:17:12 -0800 (PST)
+ us-mta-558-TP2Np0ocNmCVkN4zHUrrmQ-1; Wed, 19 Nov 2025 19:17:16 -0500
+X-MC-Unique: TP2Np0ocNmCVkN4zHUrrmQ-1
+X-Mimecast-MFC-AGG-ID: TP2Np0ocNmCVkN4zHUrrmQ_1763597835
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47754e6bddbso1808335e9.3
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 16:17:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763597831; x=1764202631; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763597835; x=1764202635; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1NK+wIpV+Q2uLt75RKB2mtL15WC7Pac5R8gwVj0dKEA=;
- b=I7uQ5OkY8igmg7kXv8w+grkW+2XrmP5ogKWnYrLPw33aATmAadI6OGNAjgKEwNC8iK
- BhipSZ8yMSTZieaj3QLKPakx2KiSZpfJYgh0PZm6AUFtquLlP6kcHOJP4xAWiQV5GmMq
- DXVFHXYW/Z9OCBiQLEOQAa3kheiTX9pJezg2i73CvvA5fcJ1ziEmfbccixINXmpgPC3I
- iCkawF+MRrL+6er7jZgpDZjNJH/p0yN++uPv2OWine2Vrj98R/nzpTQ/UmUXItOwcRoI
- OAsEhqZF4F4vKVNnuzWVCL0OjbO46C/5AQxaEG5E2eZr+JYCrv9VUcnKCWcLvnzDn3Iq
- Qlxw==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ooMz4PrdRjFfvcta9qVRDqisJIaUtfGy+SneeR0CR/c=;
+ b=nhmzj+/rLgWjvuq+yoYcXhJsvkF639CU60ozSdwYUBILL0/XBOZ7abQHWXH2tnbAOk
+ w85UKMTY+w8S4EUiQ0T20ynvxCWSIz2mMbDYYCcFyPDk3f0JGvpVeXq0/7QQkxO6poYt
+ G+O8UaB8yoTfDuIcQIsfx8vTsR2NQ1w/xss67awbGocpd0OgJ23wJqcfeQacajyv0YOT
+ +JDELYkPPedtZ3Rt9F1+ByApXi03q1o21dMWFQc0SFrzrP6imvesrzbDCQV5UhyakFmE
+ 1kzP/cS9UJI6HA+It8Pw++H/cJhQ6wUZcLcJ05za5+qaZ4cByJ8TO5EXJMxBM+UNThAC
+ BM7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763597831; x=1764202631;
+ d=1e100.net; s=20230601; t=1763597835; x=1764202635;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1NK+wIpV+Q2uLt75RKB2mtL15WC7Pac5R8gwVj0dKEA=;
- b=isffgXBIWAQytr9kkjThv4uTY+OF0HtpPrYeiXAThsN0CgTkIsVyYQ4+cXVjcjimQb
- hQEgKTenmBUeoOn1M+q/Yk2TNP2kUnKvy12hIdgLiAV8EjBWv3qLEZlwcJCWu7298eyb
- BihZjnV8BgKgBgZC/znr6cG/lUjTWWsZ+4qKAKeUFuJ/9lnlmQ6lIuNtX6iIzflBGrsJ
- UT4Dsav3Z18iVFvNRkYgk1Rwz9zX91nqNO1DY+WN3b19/YHkFJvVFlWHo5tdgM0skrzR
- 4I2zUxe2tf0sUwBNjyC/f0lr+JcvStOw05NYLCyS7MhNlKtj6gYCZDdtKKlxQS7jERT0
- +xfQ==
-X-Gm-Message-State: AOJu0YwA0mBANrFvBB6U/ubQjuM4s6lHNNyVcn/ms0wSKY6oN/YfLlWu
- /1Qglvvd0q3HK/WlERgpKzHCM8b6UFdzSqZcK3lpqEQaN7ofpDIOvI4R2SDU4yt/i6R3rkkLnf2
- TV/+gNtIddiRjmCkNJO5Hyfn5nK2ntvRH0IAGPJ5TXZvnon4wgCyIVsj4VCj0ZEYBpbjKOFP0Ni
- otedXu+FBnEctI5iAgi4CZ3vfZhf+IbE7iYNdY/Q15
-X-Gm-Gg: ASbGncvAEV3A09HiluMvfbFX36MDDlzQftnzrkj4f+K88uqMR+QPCp5nlciqrz/36b+
- h3ooLvtIBOWuMXtw3K2ZVQLtflsc3mf9pXHpq8oH1CgGCrwP1ddgkg0r+xHzc6R3LrVLYXLNuNx
- 6zyq9DIrjO3iQTiY19qTDtRtctRPogd6cDeTmbPvKgiCVe4gvcQI0zkeRqGGL+BA+0GqdG/EXHb
- t9m0DIIIv3Hxa8QumEz7kb1b2hQ6M7IOgqlYTfiu4Uz1sQghu/8Grfq00tnm1bKMdXb20oug8rB
- +w5wkFfM3z/oNW3HG3ZhoynXtUzEGmMbgkNbzYBcCnQxBNCPWIp1eBr3tWgGd0wPZRqnFhFNzFO
- qJZdNOPhxEtp+4uZOkDKgyFyW+sLdLJj9XmHBK/qA9fyq6DEQPNrbgn9SELZ3Pw9jeOCVmTZzbv
- mJ1hCHOaaIAapvVEE=
-X-Received: by 2002:a05:6000:401e:b0:425:6fb5:2add with SMTP id
- ffacd0b85a97d-42cba7b3fb8mr406273f8f.19.1763597830655; 
- Wed, 19 Nov 2025 16:17:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IELPpkpOUTkzLgRq/wJ325bdxTrRVpcXzz0M08oUI7v1aIwnE3H9Xk3L0nohQJ9XoYh507rkA==
-X-Received: by 2002:a05:6000:401e:b0:425:6fb5:2add with SMTP id
- ffacd0b85a97d-42cba7b3fb8mr406240f8f.19.1763597830136; 
- Wed, 19 Nov 2025 16:17:10 -0800 (PST)
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ooMz4PrdRjFfvcta9qVRDqisJIaUtfGy+SneeR0CR/c=;
+ b=bds4Cn6Q5ZgsFqxTqniJiSsK9yTP55jcNWOJKNtvPuF31PvfDoLRxQbN+ztg3ejHG9
+ Pbna+Fq2IsXA9slnTkrlx3doG7jRiSFobP59HIBRnkXPQ82r4BjU7FpkXVhXM5GWd7p2
+ fw2S7QHfbgOmKy5Oluc8vqBoUkd2RQ6OpcP5im7xOLC0jPy4W8ecX7ACtvFrgHFEmAwO
+ wyYuJDDYfRbqNeCLmtm01XsVNLG5TsLad2qeoqBbzjI/idUUSFPgCrk3UOzKmt8R2KhX
+ pLWNH/TrUl/p3WgmfVQ3Z3vkCIeKErDWkP6JinsuEWGLGugpiqP2upaXi/4eZx7PnAMw
+ VgSw==
+X-Gm-Message-State: AOJu0YydpVsYDjsOPcsz6RucjoeTZRsag7CTeoDzFguAEHbukZVcxZOi
+ MvxyhOZmbbnzRSaO3dXMPVAnAwXfTRJPXqQ87cXOz6VJGVpLY2/h/GEhdCog1UdOTmRf9+UEXwN
+ 4UZ3uPgkyasRXq3W228xifPKqg3kWCzF4bJeMly5a6ybvSdc5aCRnuDYTM9h+SCTLyf8vnfgOv2
+ PhUHCu2XlrHfsOHEZ2Dh8zT8AgdSoRDf6KbXz7uZzh
+X-Gm-Gg: ASbGnctI+4g8hue1SCMi8GoiNrC6jmutjvMGTgM9VtyMvfDP5vOcXKWT47p+llHwHcG
+ blDlzzyaWwvStDOPg2TVqdJOs+YL60ueO8PKAPiX+tu51ehAj0XNxHvNJv8EhNUoeKJ4WXFjYSL
+ Sd9lIPy+tPRoJXgG3PkPomyWjaeU2e9DaUY9zQGXHn/MQ3mTFup9fpnk9tp3Hec/9fkkEYZJXSB
+ qb8R3nWrRn+E816qVLkqxNEH/G+RYh/4hGvM5pcyFN5+uCWlG+yhdn2OBaeIKRRlTksHXi6NlEc
+ GyhtSe/v9onvyzd/RIfEs9ZwWyzGA+zag2OeMkygw7TO2sojjAnLwpQfQsxuRB/55GD9iGnJ8ec
+ UO2MfQkxT8cUlZ/+DCm2iNiLR+2XX1j1q+mhQzJx5nVHFvqhHVvPTcL+nKysPvrhz3Tp9c2b0hr
+ Ops7EKIVt1lzs6qBs=
+X-Received: by 2002:a05:600c:c4b7:b0:46e:74cc:42b8 with SMTP id
+ 5b1f17b1804b1-477b8a8a540mr10184685e9.17.1763597834703; 
+ Wed, 19 Nov 2025 16:17:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEtcOgkrvdBo25XbutC8v5nEhUCv2A8hluiiN5SibaKQFPhv0Nl/MllGBo+QGXOnAq3xBX6XA==
+X-Received: by 2002:a05:600c:c4b7:b0:46e:74cc:42b8 with SMTP id
+ 5b1f17b1804b1-477b8a8a540mr10184605e9.17.1763597834250; 
+ Wed, 19 Nov 2025 16:17:14 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f49a7bsm2035124f8f.19.2025.11.19.16.17.07
+ 5b1f17b1804b1-477b831ad9dsm16388175e9.13.2025.11.19.16.17.12
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Nov 2025 16:17:08 -0800 (PST)
+ Wed, 19 Nov 2025 16:17:12 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 08/10] mtest2make: add dependencies to the "speed-qualified"
- suite
-Date: Thu, 20 Nov 2025 01:16:47 +0100
-Message-ID: <20251120001649.1085913-9-pbonzini@redhat.com>
+Subject: [PULL 10/10] replay: add tracing events
+Date: Thu, 20 Nov 2025 01:16:49 +0100
+Message-ID: <20251120001649.1085913-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251120001649.1085913-1-pbonzini@redhat.com>
 References: <20251120001649.1085913-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -124,38 +121,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thorough tests may have more dependencies than faster ones.
-Dependencies are now looked up based on the suites being
-executed, not on the suites passed as goals to the makefile.
-Therefore, it is possible to limit dependencies to the
-speeds that need them.
+The replay subsystem does not provide any way to see what's going on
+and how the replay events interleave with other things happening in QEMU.
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Add trace events to improve debuggability; to avoid having too many
+events reimplement all functions in terms of (non-traced) replay_getc
+and replay_putc and add a single trace event for each datum that is
+extracted or written.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- scripts/mtest2make.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ meson.build              |  1 +
+ replay/trace.h           |  1 +
+ replay/replay-internal.c | 70 ++++++++++++++++++++++++++++++----------
+ replay/trace-events      | 12 +++++++
+ 4 files changed, 67 insertions(+), 17 deletions(-)
+ create mode 100644 replay/trace.h
+ create mode 100644 replay/trace-events
 
-diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
-index d7c514243a5..38512046d97 100644
---- a/scripts/mtest2make.py
-+++ b/scripts/mtest2make.py
-@@ -58,13 +58,13 @@ def process_tests(test, targets, suites):
-             s = s.split(':')[1]
-             if s == 'slow' or s == 'thorough':
-                 continue
-+        suites[s].deps.update(deps)
-         if s.endswith('-slow'):
-             s = s[:-5]
-             suites[s].speeds.append('slow')
-         if s.endswith('-thorough'):
-             s = s[:-9]
-             suites[s].speeds.append('thorough')
--        suites[s].deps.update(deps)
+diff --git a/meson.build b/meson.build
+index df4460035c3..95fcec9ba15 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3678,6 +3678,7 @@ if have_system
+     'hw/gpio',
+     'migration',
+     'net',
++    'replay',
+     'system',
+     'ui',
+     'hw/remote',
+diff --git a/replay/trace.h b/replay/trace.h
+new file mode 100644
+index 00000000000..39ff481742e
+--- /dev/null
++++ b/replay/trace.h
+@@ -0,0 +1 @@
++#include "trace/trace-replay.h"
+diff --git a/replay/replay-internal.c b/replay/replay-internal.c
+index c2a7200339f..4839f2b6321 100644
+--- a/replay/replay-internal.c
++++ b/replay/replay-internal.c
+@@ -15,6 +15,7 @@
+ #include "replay-internal.h"
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
++#include "trace.h"
  
- def emit_prolog(suites, prefix):
-     all_targets = ' '.join((f'{prefix}-{k}' for k in suites.keys()))
+ /* Mutex to protect reading and writing events to the log.
+    data_kind and has_unread_data are also protected
+@@ -44,7 +45,7 @@ static void replay_read_error(void)
+     exit(1);
+ }
+ 
+-void replay_put_byte(uint8_t byte)
++static void replay_putc(uint8_t byte)
+ {
+     if (replay_file) {
+         if (putc(byte, replay_file) == EOF) {
+@@ -53,29 +54,45 @@ void replay_put_byte(uint8_t byte)
+     }
+ }
+ 
++void replay_put_byte(uint8_t byte)
++{
++    trace_replay_put_byte(byte);
++    replay_putc(byte);
++}
++
+ void replay_put_event(uint8_t event)
+ {
++    trace_replay_put_event(event);
+     assert(event < EVENT_COUNT);
+-    replay_put_byte(event);
++    replay_putc(event);
+ }
+ 
+ 
+ void replay_put_word(uint16_t word)
+ {
+-    replay_put_byte(word >> 8);
+-    replay_put_byte(word);
++    trace_replay_put_word(word);
++    replay_putc(word >> 8);
++    replay_putc(word);
+ }
+ 
+ void replay_put_dword(uint32_t dword)
+ {
+-    replay_put_word(dword >> 16);
+-    replay_put_word(dword);
++    int i;
++
++    trace_replay_put_dword(dword);
++    for (i = 24; i >= 0; i -= 8) {
++        replay_putc(dword >> i);
++    }
+ }
+ 
+ void replay_put_qword(int64_t qword)
+ {
+-    replay_put_dword(qword >> 32);
+-    replay_put_dword(qword);
++    int i;
++
++    trace_replay_put_qword(qword);
++    for (i = 56; i >= 0; i -= 8) {
++        replay_putc(qword >> i);
++    }
+ }
+ 
+ void replay_put_array(const uint8_t *buf, size_t size)
+@@ -88,7 +105,7 @@ void replay_put_array(const uint8_t *buf, size_t size)
+     }
+ }
+ 
+-uint8_t replay_get_byte(void)
++static uint8_t replay_getc(void)
+ {
+     uint8_t byte = 0;
+     if (replay_file) {
+@@ -101,36 +118,52 @@ uint8_t replay_get_byte(void)
+     return byte;
+ }
+ 
++uint8_t replay_get_byte(void)
++{
++    uint8_t byte = replay_getc();
++    trace_replay_get_byte(byte);
++    return byte;
++}
++
+ uint16_t replay_get_word(void)
+ {
+     uint16_t word = 0;
+     if (replay_file) {
+-        word = replay_get_byte();
+-        word = (word << 8) + replay_get_byte();
++        word = replay_getc();
++        word = (word << 8) + replay_getc();
+     }
+ 
++    trace_replay_get_word(word);
+     return word;
+ }
+ 
+ uint32_t replay_get_dword(void)
+ {
+     uint32_t dword = 0;
++    int i;
++
+     if (replay_file) {
+-        dword = replay_get_word();
+-        dword = (dword << 16) + replay_get_word();
++        for (i = 24; i >= 0; i -= 8) {
++            dword |= replay_getc() << i;
++        }
+     }
+ 
++    trace_replay_get_dword(dword);
+     return dword;
+ }
+ 
+ int64_t replay_get_qword(void)
+ {
+-    int64_t qword = 0;
++    uint64_t qword = 0;
++    int i;
++
+     if (replay_file) {
+-        qword = replay_get_dword();
+-        qword = (qword << 32) + replay_get_dword();
++        for (i = 56; i >= 0; i -= 8) {
++            qword |= (uint64_t)replay_getc() << i;
++        }
+     }
+ 
++    trace_replay_get_qword(qword);
+     return qword;
+ }
+ 
+@@ -172,10 +205,12 @@ void replay_check_error(void)
+ 
+ void replay_fetch_data_kind(void)
+ {
++    trace_replay_fetch_data_kind();
+     if (replay_file) {
+         if (!replay_state.has_unread_data) {
+-            replay_state.data_kind = replay_get_byte();
++            replay_state.data_kind = replay_getc();
+             replay_state.current_event++;
++            trace_replay_get_event(replay_state.current_event, replay_state.data_kind);
+             if (replay_state.data_kind == EVENT_INSTRUCTION) {
+                 replay_state.instruction_count = replay_get_dword();
+             }
+@@ -246,6 +281,7 @@ void replay_advance_current_icount(uint64_t current_icount)
+     int diff = (int)(current_icount - replay_state.current_icount);
+ 
+     /* Time can only go forward */
++    trace_replay_advance_current_icount(replay_state.current_icount, diff);
+     assert(diff >= 0);
+ 
+     if (replay_mode == REPLAY_MODE_RECORD) {
+diff --git a/replay/trace-events b/replay/trace-events
+new file mode 100644
+index 00000000000..e9c887a6c57
+--- /dev/null
++++ b/replay/trace-events
+@@ -0,0 +1,12 @@
++replay_put_byte(uint8_t event) "%02x"
++replay_put_event(uint8_t event) "%02x"
++replay_put_word(uint16_t event) "%04x"
++replay_put_dword(uint32_t event) "%08x"
++replay_put_qword(uint64_t event) "%016" PRIx64
++replay_get_byte(uint8_t byte) "%02x"
++replay_get_word(uint16_t word) "%04x"
++replay_get_dword(uint32_t dword) "%08x"
++replay_get_qword(uint64_t qword) "%016" PRIx64
++replay_fetch_data_kind(void) ""
++replay_get_event(uint32_t current, uint8_t data) "#%u data=%02x"
++replay_advance_current_icount(uint64_t current_icount, int diff) "current=%" PRIu64 " diff=%d"
 -- 
 2.51.1
 
