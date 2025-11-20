@@ -4,67 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E5CCF649C
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 01:50:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B6A6CF58D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 02:05:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLtoM-0007vE-Oi; Wed, 19 Nov 2025 20:50:14 -0500
+	id 1vLu1z-0002GD-4A; Wed, 19 Nov 2025 21:04:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nanliu@redhat.com>) id 1vLtoF-0007tW-12
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 20:50:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vLu1x-0002Fs-P6
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 21:04:17 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nanliu@redhat.com>) id 1vLtoC-0004pG-2S
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 20:50:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763603402;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=6adCIe9skg9CXAcWIM0LAxJDuLCJHFR+Xa2JTU7UExQ=;
- b=h2EMpglS6PFHoRc8FFZvVm7b0KpmCytRZTdtaU2rOdRMCwDuoUUnZ1VHxhYNuBMhyWux20
- mftd0WLCBT/wwukB4nxe1YhRF/VNEIpulhvov8stDJrScLB/yNqoMzojLwVuWEPlyw4UtW
- EQMrnTiC+Skh2FQvX3s3qjQm3XiJmug=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-F66yVNXMOT6279JDenCGnA-1; Wed,
- 19 Nov 2025 20:50:00 -0500
-X-MC-Unique: F66yVNXMOT6279JDenCGnA-1
-X-Mimecast-MFC-AGG-ID: F66yVNXMOT6279JDenCGnA_1763603400
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BB9DA180049F
- for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 01:49:59 +0000 (UTC)
-Received: from nanliu-thinkpadp16vgen1.raycom.csb (unknown [10.72.116.143])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C5D6B19560B0; Thu, 20 Nov 2025 01:49:57 +0000 (UTC)
-From: nanliu <nanliu@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com,
-	nanliu <nanliu@redhat.com>
-Subject: [PATCH] docs/system: Clarify local filename escaping in device URLs
-Date: Thu, 20 Nov 2025 09:49:36 +0800
-Message-ID: <20251120014936.414413-1-nanliu@redhat.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vLu1v-0007I2-Ud
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 21:04:17 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1763604240; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=BvUqI2T9MpLmCVmtPGILOOOJowqvJYaeCCWniKE3Z1rtbBHUXkSCm5HCvpkvqrlgLQHIaLglYkOTu5yrQcD88JpaLBlnfEXPNIcLsdFxhswpBHxR95i42k3N2s7PYnpaTGS6F0Q13ZuKT3+hFd+1P9sm6T7C61w6GHiYFOHNQA8=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1763604240;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=ATnlm3Ww+kykN6/YxEM1CzSC3aeS2C741HcK3gIGw3A=; 
+ b=hTghAITA14O7D59mH6AtXsbIUU2KuI8L0QI0MmwCjeGW8NQ7w5DkucxZDYgrMxNfkbu3Sf8EA61Kr9Ow55+lUDA6Re7xveYffYEck7WIxm31Ht3Vg5vLs7KEjRK+YKf8l14dECxjS3WpcxinsTEjrEjbORvT+pdAgkSxKyOv+cc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763604240; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:From:From:To:To:Cc:Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=ATnlm3Ww+kykN6/YxEM1CzSC3aeS2C741HcK3gIGw3A=;
+ b=decWkJipxxTJq95Y0xeOuMgRLapqpsC+fyAN5PvjNuMy/ANuaLoShGLMPOWKjfCh
+ LNBdZLU7db+VDbOFZJjdDxtawWXgTXXbkatNzLot3KvQNqFTsVHDb4YbCO7FKlLr5Sz
+ ApWTx/ilp9iy9SYSFD65vHmHeXVlFtxVvmCvVPTM=
+Received: by mx.zohomail.com with SMTPS id 176360423760948.452024500188486;
+ Wed, 19 Nov 2025 18:03:57 -0800 (PST)
+Message-ID: <8ce3a9dc-e4a8-4dd7-99dc-30b02b07f4c9@collabora.com>
+Date: Thu, 20 Nov 2025 05:03:49 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v4] virtio-gpu: use consistent error checking style for
+ virtio_gpu_create_mapping_iov
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+To: Honglei Huang <honghuan@amd.com>, Markus Armbruster <armbru@redhat.com>
+Cc: alex.bennee@linaro.org, odaki@rsg.ci.i.u-tokyo.ac.jp, mst@redhat.com,
+ cohuck@redhat.com, pbonzini@redhat.com, qemu-devel@nongnu.org,
+ Ray.Huang@amd.com
+References: <20251117105104.258513-1-honghuan@amd.com>
+ <9f547fbe-ea57-4784-9e37-f79b52b551a9@collabora.com>
+ <87bjl0pzeq.fsf@pond.sub.org>
+ <ed8fd731-8e47-4282-9439-00e6c367b672@collabora.com>
+ <e04a19fb-73bb-471f-94d9-df9b1d08d6d4@amd.com>
+ <cc80a97c-ca8c-4da6-bbd9-77f1c90a299d@collabora.com>
+Content-Language: en-US
+In-Reply-To: <cc80a97c-ca8c-4da6-bbd9-77f1c90a299d@collabora.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=nanliu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender4-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,41 +88,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The documentation currently lacks explicit information on how to escape
-a local filename if it contains characters that cause it to be parsed
-as a protocol (e.g., containing a ':').
+On 11/19/25 22:16, Dmitry Osipenko wrote:
+> On 11/18/25 15:32, Honglei Huang wrote:
+>>
+>>
+>> On 2025/11/18 09:48, Dmitry Osipenko wrote:
+>>> On 11/17/25 16:22, Markus Armbruster wrote:
+>>>> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+>>>>
+>>>>> On 11/17/25 13:51, Honglei Huang wrote:
+>>>>>> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-
+>>>>>> gpu-rutabaga.c
+>>>>>> index ed5ae52acb..ea2928b706 100644
+>>>>>> --- a/hw/display/virtio-gpu-rutabaga.c
+>>>>>> +++ b/hw/display/virtio-gpu-rutabaga.c
+>>>>>> @@ -466,7 +466,7 @@ rutabaga_cmd_attach_backing(VirtIOGPU *g,
+>>>>>> struct virtio_gpu_ctrl_command *cmd)
+>>>>>>         ret = virtio_gpu_create_mapping_iov(g, att_rb.nr_entries,
+>>>>>> sizeof(att_rb),
+>>>>>>                                           cmd, NULL, &res->iov,
+>>>>>> &res->iov_cnt);
+>>>>>> -    CHECK(!ret, cmd);
+>>>>>> +    CHECK(ret >= 0, cmd);
+>>>>>
+>>>>> virtio_gpu_create_mapping_iov() doesn't return positive values, don't
+>>>>> see how this change improves anything. You now saying that ret > 0 is
+>>>>> okay, while it shall never happen.
+>>>>
+>>>> Please see
+>>>>
+>>>>      Subject: Re: [PATCH] virtio-gpu-virgl: fix error handling in
+>>>> virgl_cmd_resource_create_blob
+>>>>      Date: Mon, 17 Nov 2025 08:49:42 +0100
+>>>>      Message-ID: <87ms4lrtd5.fsf@pond.sub.org>
+>>>>      https://lore.kernel.org/qemu-devel/87ms4lrtd5.fsf@pond.sub.org/
+>>>
+>>> It's a rather common bug when errno isn't negated by mistake and a
+>>> positive error code is returned. Ignoring positive values when they
+>>> aren't expected opens door to unnecessary problems, IMO.
+>>>
+>>
+>> How about apply the v2 or v3 firstly to fix the
+>> virtio_gpu_create_mapping_iov() block issue in virtio-gpu?
+>>
+>> I will create another thread for the `CHECK(!ret, cmd);` thing in rutabaga.
+> 
+> There was a precedent of virtio-gpu not handling positive error codes
+> properly [1]. To me there is no problem that needs to be fixed when
+> virtio_gpu_create_mapping_iov() is never expected to return positive
+> values and doesn't return them.
+> 
+> [1]
+> https://lore.kernel.org/qemu-devel/20240129073921.446869-1-dmitry.osipenko@collabora.com/
+> 
+> It's a common expectation that errors are negative. But in practice it's
+> not always true, especially when interacting with external code.
+> 
+> Functionally this patch doesn't change anything. Will leave to Alex and
+> Akihiko to decide on it.
 
-Use two methods to avoid this:
-1. use the explicit prefix ``file:`` (e.g. ``-cdrom file:foo:bar.iso``).
-2. use a path with ``./`` in it (e.g. ``-cdrom ./foo:bar.iso``)
+Alright, I changed my mind after just typing a code where a fact of
+error occurrence needs to be propagated. For a code that is internal to
+QEMU, it should be fine to check for err < 0 because static analysis
+tools should catch invalid error handling and using same style makes
+code look more consistent and pleasant to read.
 
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3072
+For errors originated externally, I'll continue to advocate for checking
+of both pos and neg values.
 
-Signed-off-by: nanliu <nanliu@redhat.com>
----
- docs/system/device-url-syntax.rst.inc | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/docs/system/device-url-syntax.rst.inc b/docs/system/device-url-syntax.rst.inc
-index 43b5c2596b..e7aa2be721 100644
---- a/docs/system/device-url-syntax.rst.inc
-+++ b/docs/system/device-url-syntax.rst.inc
-@@ -43,6 +43,14 @@ These are specified using a special URL syntax.
-       LIBISCSI_CHAP_PASSWORD="password" \\
-       |qemu_system| -drive file=iscsi://192.0.2.1/iqn.2001-04.com.example/1
- 
-+   Note on path parsing: If a local filename used with a device
-+   option (e.g., ``-cdrom``) contains a colon (``:``), QEMU may
-+   interpret it as a URL protocol; use the explicit prefix ``file:``
-+   (e.g. ``-cdrom file:foo:bar.iso``) or a path with ``./`` in it
-+   (e.g. ``-cdrom ./foo:bar.iso``) to ensure correct local file
-+   resolution, and avoid using ``file://`` which may lead to
-+   incorrect path resolution.
-+
- ``NBD``
-    QEMU supports NBD (Network Block Devices) both using TCP protocol as
-    well as Unix Domain Sockets. With TCP, the default port is 10809.
 -- 
-2.51.1
-
+Best regards,
+Dmitry
 
