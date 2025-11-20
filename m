@@ -4,101 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8FCACF649D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAE2FCF649E
 	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 00:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLsMF-00037a-0m; Wed, 19 Nov 2025 19:17:07 -0500
+	id 1vLsMA-00036H-IN; Wed, 19 Nov 2025 19:17:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLsMD-000373-7y
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 19:17:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vLsM7-00035m-W8
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 19:17:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vLsMB-0007PP-HA
- for qemu-devel@nongnu.org; Wed, 19 Nov 2025 19:17:04 -0500
+ id 1vLsM5-0007Ow-TS
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 19:16:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763597822;
+ s=mimecast20190719; t=1763597817;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VScUxvTA0V9fVcKlY6sj0omEw5O4+ANSWsdN9yl+u+8=;
- b=VkuYf8eHqB4T1jUH5WNT7/IKL1FteZDMJRyeFbbh+a6ImgH9nMAD19PoK2R8qGOQA86Bq5
- 38+tqupF44s7oYJAqyag59+RRlNw1r6vrIbAJohqyfc5dDvvjGZHjGa0Y6WAYkBluM4sDu
- jFjtlbG6c+Dpnr8mbSzdRxLSeDcm7VQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8aaUR6WzSNP4cK/DMriqb/j4Ba2z3R/UyBF2bczQJeI=;
+ b=QEyUa30A+PLaLmmeHLBp5FLHC+6xU+OfMYUj2FlCvspcbn9J7H3WP60tTPXla9tmG6gJTS
+ MV7dqGV9cvOjnyAXJwUoNZBUS8z4LaGjAeeDOO30AYpCBLkc7hWhk01MjqOxPlwBMI8ej/
+ 8s6ntAv06nSCm4gUVtprtMq6952lc34=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-488-1-kz-T8LN-uYG0X6v3akzA-1; Wed, 19 Nov 2025 19:17:00 -0500
-X-MC-Unique: 1-kz-T8LN-uYG0X6v3akzA-1
-X-Mimecast-MFC-AGG-ID: 1-kz-T8LN-uYG0X6v3akzA_1763597819
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4779981523fso4306215e9.2
- for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 16:17:00 -0800 (PST)
+ us-mta-47-DVOER5kPOHahvIZNyHa6QQ-1; Wed, 19 Nov 2025 19:16:55 -0500
+X-MC-Unique: DVOER5kPOHahvIZNyHa6QQ-1
+X-Mimecast-MFC-AGG-ID: DVOER5kPOHahvIZNyHa6QQ_1763597814
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-477a11d9e67so1571735e9.2
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 16:16:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763597819; x=1764202619; darn=nongnu.org;
+ d=redhat.com; s=google; t=1763597813; x=1764202613; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VScUxvTA0V9fVcKlY6sj0omEw5O4+ANSWsdN9yl+u+8=;
- b=sJxaOqSkvDgMIEVOhWWjt64iqub9v5HlF9XYvhqkrdFt+9y0Q5qLy49hcuLvIG/NZc
- tGfmS4eQvNsUUPuh8TW2Cxj7OEA4CAUKCBZXegh057a37eX8SjKk1wXly7O89+GewcTU
- AqdkxFLLh5nXuW4aLVRe1Jq2xIjw9airGab33HlfWoIweWmmoi6/0j0xdTM3zbmEK4+0
- l0iAkZP/TLEFtJj0gOBJNCAlAtX9KDJAZXyzGqaB5hVAGxNjgNbSUM7keEIOSNREqhQK
- 2fFB+Lbsr3iwr7zefVspgRpaTAIslWpO4z2hPqgHUtXCNqMWGWiRMg/0z1kwQAlYpE99
- lEPw==
+ bh=8aaUR6WzSNP4cK/DMriqb/j4Ba2z3R/UyBF2bczQJeI=;
+ b=P770kqb6eUi1H898SLnnMTayKfmN083oZO7OCclHfevASZD97tqHrvPKNtv5GUGPZR
+ osKofTRs0qfc3mRDMCOS30r8O+AClewXG9Z5YHA+c/yfFm0rlmBup/SH9tiz9mskduXo
+ DatEFrmMrxFQYlgWz21oCRGlhe3THkf4F50R96QyqksQEQrEjLihwkGNIuZKh+9CJC5r
+ jfLfF1leWWBZfQLzdFeia+MSU1uBTUwxl/PJx1UZ9jsnuwJP0Necaal7/Bc9ng5hoovj
+ gLB6+k9KId79pFKdUrarUWH/n2AvCw4e/DxcOEmTbNuYMdWe0UkrAZMG+LvrtWIZDR0r
+ xDAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763597819; x=1764202619;
+ d=1e100.net; s=20230601; t=1763597813; x=1764202613;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VScUxvTA0V9fVcKlY6sj0omEw5O4+ANSWsdN9yl+u+8=;
- b=mRgcinwgb9Zk+tFTdlrESdtTRLKzO0n83WGuJxVwdchtpcHP2BLavHqF1tM/ceDist
- siAtSFmCE07KE5AOG5Ja/QfKPJJyB8SyLB0VeYZWaz8BStN+6ghmrNjgaUBuJQw+50Fg
- Cmuxdm6eV6EvDAntE2zUdq+esZ314bFyASch48O/Zo4QL5565mAe2z88liavic3t6hqN
- jhojPYhWGkN6UUKFkWM7GqxeXB4axGcwL6UAqATCvRLjHv+SPkyhh4c1sBj2VAn1b05K
- D+Gu+ViGEcIV2m0sCJskLOGmOqdfe+5RjvUm8/4WYmmun+I1IjEnWChgRoEw10wP/vd1
- 1krQ==
-X-Gm-Message-State: AOJu0YzT/jDHr3B/Pp0V4Xs8z6AXVWic6pyasPJdQHwOpin5Uil57V1d
- pYdaj202jR0dV7nDu3uXoXWPcMgEDdD7+yHriU2G55aSgch9czuEpsNjmbLhfFCKDc72kCtVEHl
- hJPXfqGC1HoPJHk5hwKNDzfQlMPw+IorzNXkN0KkAdDd5vqDcTYd+VwUVPSZ74vwmURprS4GKbF
- XBxCMyoF40ZUYd1VAnurBq7qN4SbiAhNY7iFdbsDzT
-X-Gm-Gg: ASbGncv87S4JsGmcOlb5E3n0UkuYOBUd8m9uzfTfI5Q5923FVNpTPZ8S2HOqcgb03VL
- rJOC9zoA3yxyAAxQ+sPxkLDfSMLNK+mDKaaVzOphu9bB2lAP5W5/2cPWqdtd4eb5GCXHMxTDyH6
- uIkehlwAWBFVkAjP2Xpk5UVXJHf1DWXSDLI00tTZ2o21PL4gTNvzMaqaEM1XKhhwD2RQOfqx9lq
- swMv4dKRADLXbCZB9D4+OVbRAUnrxV8CxRkDLHnNpoR3KmFpxRB1j4lZ/4yQU/p11UdVOKJcN93
- lJeSaLaaDjS8Z+Ikx3eTXfmT9ykzFdCGBQk+FhabnjwD1HWc+bVUvdLyIkjQao6l1TzoC9cVZM+
- subalDmF3Ptk0kxO/r3Sd9tgNeJCW7BiOETe7e1z6e3xAWsOJTIc6U4GXzAbNccn9HGT09TPMHX
- /lJXSVk/VEspvcDXU=
-X-Received: by 2002:a05:600c:45d0:b0:475:dde5:d91b with SMTP id
- 5b1f17b1804b1-477b8a84acfmr9946305e9.17.1763597818690; 
- Wed, 19 Nov 2025 16:16:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF+82/zn492FLmKBZZofCi3g95NICfGS9SNuYpReGiEDkp2DBIyWfUUBuom2BoRCvvFpC0HqQ==
-X-Received: by 2002:a05:600c:45d0:b0:475:dde5:d91b with SMTP id
- 5b1f17b1804b1-477b8a84acfmr9946115e9.17.1763597818330; 
- Wed, 19 Nov 2025 16:16:58 -0800 (PST)
+ bh=8aaUR6WzSNP4cK/DMriqb/j4Ba2z3R/UyBF2bczQJeI=;
+ b=CkBpNiv5QsR3zXI0XtBwn1YJ0xlqoFMxbuDT9SRgSZdLx9TPL0PdmbTauvQpKro8vD
+ O9tkiv/+gsUswOS9V3RTkjoKnWhiSS82qo11QWyHOXX42bAP2R153woJXTlF2EyaTioK
+ DUFJd5wn0u0/Jz1ZsrjQNnwTy7wOMAFSjIWld01WvRlhwY4i38UTJ5dxMlbOXzPcD6nK
+ EU0qx7ynG3poF/5jzfcEt6GTbhRHl9APqdkFeKZ20qt2uLfnfYnd0tnIeV4i2J4i/oJG
+ 3wTN+35ZfuAVQ6KnwqWI8Vnn6ysIuiDyyhEzeZPUdk/SbLR9oOZv+By1QSeZ6wZKI8wU
+ q3og==
+X-Gm-Message-State: AOJu0Yxm86yXTaUNTNRBJU9+8825Pj8eqCsQmJ8iAtDQPJtVOkhVUcZ4
+ eSWIr7GXJkCsg8gmJ7jca6I7nBag+XyIYBZIiTSs2j752CYIP9t4xo6kgg0ZK7l2yIasfnzdNas
+ qtVM5XdKEjnBSfg2JzzBlYv7K5bevRZRT1OLkuFxkoIj36kY60CZTDx6TKqcmuwUc/EzS+ZufC1
+ i/saSSkq8dJq8xYRO7mSrtJ9qV4rchAgKUVKsdVpI7
+X-Gm-Gg: ASbGncvv+Ndpwk+j+Q5oGnsBUWjRmjCZ7ZNjsrr0MmMgFV9uZvl3hhkF3MRUXciMEyb
+ ZPUfICZOxjxd5FUHDTbgcxuX3+4TWbmm/bTmJI0+KXw69L5pF+WE1qwHHrDUtNJd1vmjYV6wQHz
+ KzdflxgOcOkR1jbkfxYMHiCuccc6c/JEzIpQ7nTJFf1I/TFNpFIyTR3+6RJRwm1Jyep9uMXQGBi
+ UMiRS+tDq8SngIWQ00XzMNS06/RHCDrivfGtH1MBDl6+aTEYSPdNsPd3vjPPsW9MkYw8zb06OAD
+ 6iSVRvjJXwCSuLcuUuLKU6jqwXeIKQusrt9OYJ4v+2VEB9+r2zCmmy++9RelxTop62uQputM+9c
+ xjWin6Bk1DaDJ+b6hf7Fr0x2y/mnsuFrQkOvTffnFddBwDJWweKz9I24SRf7x7LduU7/K8HDsua
+ /dkYVXLE5RzbgwjSA=
+X-Received: by 2002:a05:600c:c8f:b0:477:7b16:5f77 with SMTP id
+ 5b1f17b1804b1-477b8671ff3mr8969535e9.3.1763597813441; 
+ Wed, 19 Nov 2025 16:16:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFj3xzE6u774s/47T8gKXOnWMgAG84i6RAKPUsm9ek39gds3LW6a3xQ/J5fm7vLrBGy8xd8ow==
+X-Received: by 2002:a05:600c:c8f:b0:477:7b16:5f77 with SMTP id
+ 5b1f17b1804b1-477b8671ff3mr8969345e9.3.1763597812968; 
+ Wed, 19 Nov 2025 16:16:52 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b0ffe377sm75071285e9.1.2025.11.19.16.16.56
+ 5b1f17b1804b1-477b82d825dsm16085535e9.5.2025.11.19.16.16.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 19 Nov 2025 16:16:56 -0800 (PST)
+ Wed, 19 Nov 2025 16:16:52 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
-	qemu-stable@nongnu.org
-Subject: [PULL 03/10] target/i386: Mark VPERMILPS as not valid with prefix 0
-Date: Thu, 20 Nov 2025 01:16:42 +0100
-Message-ID: <20251120001649.1085913-4-pbonzini@redhat.com>
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>
+Subject: [PULL 01/10] ioapic: fix typo in irqfd check
+Date: Thu, 20 Nov 2025 01:16:40 +0100
+Message-ID: <20251120001649.1085913-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251120001649.1085913-1-pbonzini@redhat.com>
 References: <20251120001649.1085913-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -123,48 +124,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Not registering the IEC notifier results in a regression with interrupt remapping
+when running a VM configured with an intel-iommu device and an assigned
+PCI VF. At boot, Linux complains with :
 
-There are a small set of binary SSE insns which have no MMX
-equivalent, which we create the gen functions for with the
-BINARY_INT_SSE() macro.  This forwards to gen_binary_int_sse() with a
-NULL pointer for 'mmx'.
+[   15.416794] __common_interrupt: 2.37 No irq handler for vector
 
-For almost all of these insns we correctly mark them in the decode
-table as not permitting a zero prefix byte; however we got this wrong
-for VPERMILPS, with the result that a bogus instruction would get
-through the decode checks and end up in gen_binary_int_sse() trying
-to call a NULL pointer.
-
-Correct the decode table entry for VPERMILPS so that we get the
-expected #UD exception.
-
-In the x86 SDM, table A-4 "Three-byte Opcode Map: 08H-FFH
-(First Two Bytes are 0F 38H)" confirms that there is no pfx 0
-version of VPERMILPS.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3199
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/r/20251114175417.2794804-1-peter.maydell@linaro.org
+Reported-by: Cédric Le Goater <clg@redhat.com>
+Analyzed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/intc/ioapic.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index f4192f10068..805cfd08e83 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -643,7 +643,7 @@ static const X86OpEntry opcodes_0F38_00toEF[240] = {
-     [0x0a] = X86_OP_ENTRY3(PSIGND,    V,x,        H,x,  W,x,  vex4 cpuid(SSSE3) mmx avx2_256 p_00_66),
-     [0x0b] = X86_OP_ENTRY3(PMULHRSW,  V,x,        H,x,  W,x,  vex4 cpuid(SSSE3) mmx avx2_256 p_00_66),
-     /* Listed incorrectly as type 4 */
--    [0x0c] = X86_OP_ENTRY3(VPERMILPS, V,x,        H,x,  W,x,  vex6 chk(W0) cpuid(AVX) p_00_66),
-+    [0x0c] = X86_OP_ENTRY3(VPERMILPS, V,x,        H,x,  W,x,  vex6 chk(W0) cpuid(AVX) p_66),
-     [0x0d] = X86_OP_ENTRY3(VPERMILPD, V,x,        H,x,  W,x,  vex6 chk(W0) cpuid(AVX) p_66),
-     [0x0e] = X86_OP_ENTRY3(VTESTPS,   None,None,  V,x,  W,x,  vex6 chk(W0) cpuid(AVX) p_66),
-     [0x0f] = X86_OP_ENTRY3(VTESTPD,   None,None,  V,x,  W,x,  vex6 chk(W0) cpuid(AVX) p_66),
+diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
+index e431d003117..38e43846486 100644
+--- a/hw/intc/ioapic.c
++++ b/hw/intc/ioapic.c
+@@ -216,7 +216,7 @@ static void ioapic_update_kvm_routes(IOAPICCommonState *s)
+ #endif
+ }
+ 
+-#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
++#ifdef ACCEL_GSI_IRQFD_POSSIBLE
+ static void ioapic_iec_notifier(void *private, bool global,
+                                 uint32_t index, uint32_t mask)
+ {
+@@ -434,7 +434,7 @@ static const MemoryRegionOps ioapic_io_ops = {
+ 
+ static void ioapic_machine_done_notify(Notifier *notifier, void *data)
+ {
+-#ifdef ACCEL_KERNEL_GSI_IRQFD_POSSIBLE
++#ifdef ACCEL_GSI_IRQFD_POSSIBLE
+     IOAPICCommonState *s = container_of(notifier, IOAPICCommonState,
+                                         machine_done);
+ 
 -- 
 2.51.1
 
