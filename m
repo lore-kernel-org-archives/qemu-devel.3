@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD44CF8855
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 12:59:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 071DCCF8855
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 12:59:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM4Fi-0008Mq-Mh; Thu, 20 Nov 2025 07:59:10 -0500
+	id 1vM4Fe-0008JZ-So; Thu, 20 Nov 2025 07:59:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vM4Fe-0008JT-6G
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 07:59:06 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1vM4Fb-0008J9-UT
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 07:59:03 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vM4Fb-0006KC-MI
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 07:59:05 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-42bb288c1bfso559095f8f.2
- for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 04:59:02 -0800 (PST)
+ id 1vM4FY-0006Jv-Nr
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 07:59:02 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4779aa4f928so8807895e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 04:58:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763643541; x=1764248341; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763643539; x=1764248339; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T1HltNTxDcXeiGq7vyFlKSycQx69En1sBeoERy2dcAA=;
- b=mYDJDcyeL1AxP8RTjqJa5AkypZR8XUKiUn6gPTZIgsgGl/caI2+Ufc9OVNmUijaoHw
- Q9lQOjVAHLkXV7pS/bRT+gtU5CY4n29cofdP0kHQPFeU7Te9Gpeh6OqICDk4FFUbEXaL
- 4Y3B3L5U4GS8+pk07OFCgNdrbm/3RlKd+pFpKUKjWtBaA/fw0WnVqqxnLWIY0SZjs/fO
- aMM5FkGNtxaQNML6mPgV6m5xWMccIUHIxUlWIHpNNzGA2D5UXrB8+LsIB/TsFbnjcodC
- 4QRZD/Utsvdmaw3SuGXzXCaVGYWRceP5+fNfJGSzXh8/7RuxWyds5Pe1O4BUPhmkxQzN
- vPew==
+ bh=3pWIda8e2UrEXXWq+lxi04bS+9Uhurh/4yQC9gLnIYs=;
+ b=OebhfLYaHxJEKsgVIjzo+BWpmy+zPozqpzFN+N+b7GeOX+5gDFLvXoEtZD0VIOjGaR
+ WnJcQUELIYfaTMueSiHTN8RqfofHSWdoNlvWUZ72y3B42JHMnsrobeFCgQ7XuD31iIOh
+ d1iHuY2hz/WljgxiMV4vaPQxVecyozEh/2093yciagA0XZo9n7EB/05XranpEE+WzvfC
+ Dj/aKtU52yWJcMWiprIHZj2igbC6oVHf0vzq0Ld34pPn/JUhuclv2DrznSceMS8dYwvX
+ xx+HqNNpVhcL/H3BgHjMIGmOTm49XWGL8FQ2ENJ70JnhQTq/E3TBFwTJWWnxJ+KDeqpe
+ EPQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763643541; x=1764248341;
+ d=1e100.net; s=20230601; t=1763643539; x=1764248339;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=T1HltNTxDcXeiGq7vyFlKSycQx69En1sBeoERy2dcAA=;
- b=Ul/mZpz9w/YVzbnrd7qlYBWQko+IQ241cM/FrVVgXjA6l5mLbh4dk/k+Tx0rPzieal
- kyVPwWn1U5VZxHaplHrdietLcoayGKcPb2iY9fGZMt7CvcMpP/yLp++WE47nvjWOrOpc
- /apRHrzfWWluv4Y4pJwfWoMskVkVmE/yZnyk6dD9AhwcmfQ0SUELF7wUSWoINz/J4L4r
- xwGCOD807Is+jAZlr1fRLdGoGzymPkYD7ttR5s0Nnsc/8Fs8BzTYcrAogNV2/O/u1xo/
- Qo0AtNiCB51dtItEamvoTO3imVpXpF1gp6zi0ra6Zg6/pLV7wHkhYYM7qmncLfTWEvYH
- npeA==
-X-Gm-Message-State: AOJu0Yyi/cY3BuAV3XrS1Z3DBWvohO+abg6UrfyRmQE8juzxNaafUwxO
- PTyTNcTQ77BadXi8s9AEtnNTnr1rotYJRv7ZJJfKIub++JB7KcsrvbjbTFhHtRvzINZY4SdWxgG
- kEKOgOUw=
-X-Gm-Gg: ASbGncsHxlR/TF2z4Q2LoawUAI5NXtF+9WMnTgemphhNQcFAdduIyKcT35NfIRTV3uS
- OOxPClNekBQfoucnZZxBkt362JVGeP/WXRqu59SvtReIt4rzMerhT9LbnfgJezVq6ClcnTLLN5K
- 9MtA+FC4wwQk8Ud1YFJwwg+TBIJuYXq32Pz86flCD3558ybz7RKI9zQ/ERCIwyfcdnUyISvl5UZ
- ppAVmtl/wu91vrXZofk3Pzs1apOWaetV9fcDo2TfIpic01uRmhGfpXryz63tprjUVyU0/da/F/0
- JxheUGDzuRJaXtnimD4f1EH86XMoKtYOBTngSqtPrLO+JEvmNMFOZu3EDDBM1myVOZV4HyYcPJe
- lih/8NbvpbI66KfaQIOFVWUTft10DModJ4uMfFXXguX4wXjSfqUDN4HKbPPNIbmzwHh2JX5RQnS
- j9knQ2dleTJFcXOKY0fvSdKkY=
-X-Google-Smtp-Source: AGHT+IGXkFuEcDjABO5rJR8uEBtSRVgTHAfrr2Jf0BEmdTwImgqQMaG6AcV57zlSI1dcdUlClSImkw==
-X-Received: by 2002:a05:600c:4695:b0:477:73cc:82c2 with SMTP id
- 5b1f17b1804b1-477b8953aa8mr27783615e9.9.1763643541047; 
- Thu, 20 Nov 2025 04:59:01 -0800 (PST)
+ bh=3pWIda8e2UrEXXWq+lxi04bS+9Uhurh/4yQC9gLnIYs=;
+ b=B+8ReT3nP5AyQvgROzpwbvyP/vI+tNGvuoZZwAn29XGmvc699c20cCwal/ItAQ1IrW
+ lzhBeDnRzaraPIQLxcGyFb0GNU1Tu/Zc7BNBSZkR1HaRbXY5RFTAYCuj+H69z0maxMXp
+ oEyLvBZnDd33f2l6S6leRGGDkkTussGzbmBKvHbRtT1yM6/SeVqT+VtZoh0+yFiEoQ3Z
+ F9P3DVez1ktj/KTdbmdyscMxvlC+Vga+n1tmLwsLAcOQ4+jMlLqpoB4EbMRm8HLQ0lz/
+ smzBSYRMcYpCFsketpcnpgORGY69gj/exCxYf82ibbVcYbyOGIrdr+b7yhxd1nwbeI7e
+ i5fw==
+X-Gm-Message-State: AOJu0YxjvCzzNC1Z7Un9mek31sOD85TqNl6DsEh955Jojf6wuXW6VpYX
+ pUXCw8moY13e4DWHBnNBPKVF3C7vtlZqvAk4LKM8eVMJdMkISDyR9L4YUNfanmYU+c1UfUsVbdC
+ HVfBDV2Q=
+X-Gm-Gg: ASbGncv7Kn8w5vMzavTZ4QNeAiEO0iByfbPoeve6O+T3UT84kmwqfpi7IdjIlbSuN9+
+ q5xs5fS/OIEAwaNLBNG9fkMbF62Vk+Gfv2alpdtpthBNuRCLgOTpbVS5/3u0Vr97uqWbq+6IUIN
+ 7Fdf/j5Z+xaCbM3aMwdZYB0LzVv6lEQeK196OGX92tAyYt8z8hqmkfjQm9JT0PlLaeXc05gccZR
+ SxFtxzcJa+8p2R7cXhAtHYi7yzP313T4Y8ArME/r0X3Y7MMgJ8ue17YHt+cwasFQsmHruQv7E5u
+ 5oqbXIjgsZRnxrqB0CMgLpkcQ3mmgGIdR08ODeitiht8Q+yT1iNIMgOuk+WnYUUig80NYWO/34i
+ dUVP8HMYDkxvnezYeTScvvFm4UaRg5TG+9Tr+DxMGV9/q8a5IPe/RHPhNhzi0lECg1ftwuJu/nv
+ J+DFrtBIUkeUE0
+X-Google-Smtp-Source: AGHT+IGTwDVQoT7mM3aRvhCrZj7yqdNtffNPWSyZ+e9AG9g2XgcW98WThY+QRfpyS5a8Mv18Hp1dPg==
+X-Received: by 2002:a05:600c:4694:b0:465:a51d:d4 with SMTP id
+ 5b1f17b1804b1-477b8954873mr25015895e9.6.1763643538827; 
+ Thu, 20 Nov 2025 04:58:58 -0800 (PST)
 Received: from jimm-x1.. ([2a10:d582:31e:0:1328:3324:f0af:9332])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b831421fsm46082145e9.10.2025.11.20.04.59.00
+ 5b1f17b1804b1-477b831421fsm46082145e9.10.2025.11.20.04.58.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Nov 2025 04:59:00 -0800 (PST)
+ Thu, 20 Nov 2025 04:58:58 -0800 (PST)
 From: Jim MacArthur <jim.macarthur@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH 3/3] tests: Add test for ASID2 and write/read of feature bits
-Date: Thu, 20 Nov 2025 12:54:16 +0000
-Message-ID: <20251120125833.123813-4-jim.macarthur@linaro.org>
+Subject: [PATCH 1/3] target/arm: Enable ID_AA64MMFR4_EL1 register.
+Date: Thu, 20 Nov 2025 12:54:14 +0000
+Message-ID: <20251120125833.123813-2-jim.macarthur@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251120125833.123813-1-jim.macarthur@linaro.org>
 References: <20251120125833.123813-1-jim.macarthur@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,74 +101,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tests ASID2 is present and FNG1, FNG0, and A2 are writable, and read
-value shows the update.
-
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
- tests/tcg/aarch64/system/asid2.c | 53 ++++++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
- create mode 100644 tests/tcg/aarch64/system/asid2.c
+ target/arm/cpu-sysregs.h.inc | 1 +
+ target/arm/helper.c          | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/tests/tcg/aarch64/system/asid2.c b/tests/tcg/aarch64/system/asid2.c
-new file mode 100644
-index 0000000000..cfe69db2ae
---- /dev/null
-+++ b/tests/tcg/aarch64/system/asid2.c
-@@ -0,0 +1,53 @@
-+/*
-+ * ASID2 Feature presence and enabled TCR2_EL1 bits test
-+ *
-+ * Copyright (c) 2025 Linaro Ltd
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <stdint.h>
-+#include <minilib.h>
-+
-+#define ID_AA64MMFR4_EL1 "S3_0_C0_C7_4"
-+#define TCR2_EL1 "S3_0_C2_C0_3"
-+
-+int main()
-+{
-+    /*
-+     * Test for presence of ASID2 and three feature bits enabled by it:
-+     * https://developer.arm.com/documentation/109697/2025_09/Feature-descriptions/The-Armv9-5-architecture-extension
-+     * Bits added are FNG1, FNG0, and A2. These should be RES0 if A2 is
-+     * not enabled and read as the written value if A2 is enabled.
-+     */
-+
-+    uint64_t out;
-+    uint64_t idreg;
-+
-+    /* Mask is FNG1, FNG0, and A2 */
-+    const uint64_t feature_mask = (1ULL << 18 | 1ULL << 17 | 1ULL << 16);
-+    const uint64_t in = feature_mask;
-+
-+    asm("mrs %[x1], " ID_AA64MMFR4_EL1 "\n\t"
-+        : [x1] "=r" (idreg));
-+    if ((idreg & 0xF00) != 0) {
-+        /* ASID2 is enabled */
-+    } else {
-+        ml_printf("FAIL: ASID2 not present in ID_AA64MMFR4 (%lx)\n", idreg);
-+        return 1;
-+    }
-+
-+    asm("msr " TCR2_EL1 ", %[x0]\n\t"
-+        "mrs %[x1], " TCR2_EL1 "\n\t"
-+        : [x1] "=r" (out)
-+        : [x0] "r" (in));
-+
-+    if ((out & feature_mask) == in) {
-+        ml_printf("OK\n");
-+        return 0;
-+    } else {
-+        ml_printf("FAIL: read value %lx != written value %lx\n",
-+                  out & feature_mask, in);
-+        return 1;
-+    }
-+}
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+index 2bb2861c62..2ba49d8478 100644
+--- a/target/arm/cpu-sysregs.h.inc
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -14,6 +14,7 @@ DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
+ DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
+ DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
+ DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
++DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
+ DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
+ DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
+ DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 27ebc6f29b..c20334fa65 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6566,11 +6566,11 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa64_tid3,
+               .resetvalue = GET_IDREG(isar, ID_AA64MMFR3) },
+-            { .name = "ID_AA64MMFR4_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
++            { .name = "ID_AA64MMFR4_EL1", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 4,
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa64_tid3,
+-              .resetvalue = 0 },
++              .resetvalue = GET_IDREG(isar, ID_AA64MMFR4) },
+             { .name = "ID_AA64MMFR5_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 5,
+               .access = PL1_R, .type = ARM_CP_CONST,
 -- 
 2.43.0
 
