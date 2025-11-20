@@ -4,82 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D16CFA441
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 19:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F0ABCFA442
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 19:26:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMA6u-0006c1-S4; Thu, 20 Nov 2025 14:14:28 -0500
+	id 1vMAIN-0001Z9-Ex; Thu, 20 Nov 2025 14:26:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMA6a-0005vj-1L
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 14:14:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMA6Q-000779-OD
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 14:14:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763666037;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=8GWkD4F3bUuv8Q1P0X31rBekH0EimGqSmOdrumSZaFU=;
- b=hnubf/OW0jOSOj1u9hzg48p3kquC2NIUlT+YnZAJsWbdk3raCoDP4fC3857W+MbfjrnoEN
- Lb9PijuVpeJ9jZcSdtcf59tDr/Za57H5ilv8BVLNTL5KxgYmQxX4FBZpp5eDQdwyASpAki
- p1rCskVw1P8CHDF9J0rpVWKW/7cgdeQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-182-ME6oTu6fO--Wx6qmpcJOoA-1; Thu,
- 20 Nov 2025 14:13:53 -0500
-X-MC-Unique: ME6oTu6fO--Wx6qmpcJOoA-1
-X-Mimecast-MFC-AGG-ID: ME6oTu6fO--Wx6qmpcJOoA_1763666024
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A4FD119560AD; Thu, 20 Nov 2025 19:13:43 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95B8C30044DC; Thu, 20 Nov 2025 19:13:41 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 40B4921E6A27; Thu, 20 Nov 2025 20:13:39 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: arei.gonglei@huawei.com, pizhenwei@bytedance.com, alistair.francis@wdc.com,
- stefanb@linux.vnet.ibm.com, kwolf@redhat.com, hreitz@redhat.com,
- sw@weilnetz.de, qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
- shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
- sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
- sgarzare@redhat.com, pbonzini@redhat.com, fam@euphon.net,
- philmd@linaro.org, alex@shazbot.org, clg@redhat.com, peterx@redhat.com,
- farosas@suse.de, lizhijian@fujitsu.com, dave@treblig.org,
- jasowang@redhat.com, samuel.thibault@ens-lyon.org, michael.roth@amd.com,
- kkostiuk@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
- rathc@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- marcandre.lureau@redhat.com, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- xen-devel@lists.xenproject.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
-Subject: [PATCH 00/14] Error message improvements
-Date: Thu, 20 Nov 2025 20:13:25 +0100
-Message-ID: <20251120191339.756429-1-armbru@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
+ id 1vMAIL-0001Yj-Mp
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 14:26:17 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
+ id 1vMAIJ-0003TN-BH
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 14:26:17 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4779d8286d8so719815e9.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 11:26:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1763666773; x=1764271573; darn=nongnu.org;
+ h=in-reply-to:references:to:cc:subject:from:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7c9o6MF/Kk0aX+c5IDscmsfuxHyDlGG383uPqNfAbZ4=;
+ b=Ny5VZaqrpaTjqOKcq4nwhn6Xj4ZXCaO3Hm4MIE3BZIs+kxKqu4NzpTdsSby0BgekBq
+ 6yXUiS3V98Bj5AsoLhT2S9D4k+jdPUfTv8HNHH2iT6keBsgCJ9v1q4+kfSi90GIbih8B
+ fg6QdSgWdo3PoZ2lKZrUm2bPUGF+9vCOfmrH8S9hL3OrcGFgdsV1kzuwp2SV6bVUOPbu
+ xw0QjiDHYHzB8BHiPlWGZaZavzkizxPr3EwjD8kl7Kmhpt3hWmzY9WC7aHlgnfeimYJi
+ ZyFZ067qVQhaEuJYtxDl0IP/9V+S39BLzEI44aSGAKt8oz3MJz51zdCj0s3qLPMwv/MH
+ 2tkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763666773; x=1764271573;
+ h=in-reply-to:references:to:cc:subject:from:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7c9o6MF/Kk0aX+c5IDscmsfuxHyDlGG383uPqNfAbZ4=;
+ b=KeTQ36N8aNWFE3AeTDTl95Pv9bJ3Q1CcPsIWTbwPGodaVphPPtJI3J7mbOZLv48aRa
+ tIgVRY+aGSwmmNUWh77zF/pKHcPOj1i9R3YUnAz9ge1yAMqqAvWSflrXBbiLQeSZ0irR
+ Yj59/nBGDk9i3Fqze4gBfT6uQR6hPjfN8pO4uLvZapp4CZe8FeR5mY4PXjcBfdg5VXus
+ LJ4D+Aqrc9yTINT+9tZXPjuhh1xo80hjYnzhmvchXQ1vvI9mIVHJHRkIQH31mfgshSbo
+ 0ZKxRdSwWk6h/2bRGhalMRpMmHCcrKes6dSuizRy7RD5qfI6XevrsU6olrOy0pcSr2Y2
+ 4Dgw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTdPfZ1O0mhAnlYCadN62d0o5alGqjfpBCDPNDfTyrCaC3cTGUQIf9SKSCKk41MMeN6eXENPZHJaAD@nongnu.org
+X-Gm-Message-State: AOJu0YyY6obqVo+25znivSu9So4l8R8dddqgMxXerRmdGwz5iqFvjr9Z
+ zqqRv9HLBKryasgMxNMe6QnziiXyzKOEb3KkT1Zcu2WB54PNl/GvSgWK9oue+pQYnC4=
+X-Gm-Gg: ASbGncv0bOTMvlO9URBUqx7J+uhRNVvIgWmQXPNcw+5W3wXjpGSM7BfHmQtEDKs8FEV
+ 1ho3pX9/vnrioAkQB4plSVqz0RN+vasZuMqQSfJuz4ztFXY7QT6kgRBZlR2jxfWbllufId3K60/
+ nBQdRyjtcvBZzrHvDVdsv2ZTuP4NmFeeNmCDNiRYV7fPYYuuNivm82jJmrB5PtD20VAJqdnk/t9
+ 8MtpXX25oLz9sT7kazdAaiBMYes59k86Ozup7uIoF2XcFZFOiGqxK073/MRYHQHwjtydnApmqMP
+ rE/WgnrTVsEDvTE9kNUy+TXret/qVcFRWYpXownUrSbloj7bc9jNOVUhGwa/L1DNtQ3JpdXwAnk
+ 6TFN70fTbMAK0kTG+jfbnyVV2faA5oeIW1TwuaxGlQQvcrsEdgPdxvMVgPcZkc29NxBWlDGi/P5
+ 4=
+X-Google-Smtp-Source: AGHT+IF+uhTAwRFbNpoCewAkVOzfTzykN3GjejXijF2ty9eReA93tThGXVB05csjoG8OCLwzGHSoEA==
+X-Received: by 2002:a05:6000:4305:b0:429:d084:d217 with SMTP id
+ ffacd0b85a97d-42cb96a5449mr2254273f8f.0.1763666773034; 
+ Thu, 20 Nov 2025 11:26:13 -0800 (PST)
+Received: from localhost ([2a02:8308:a00c:e200::3052])
+ by smtp.gmail.com with UTF8SMTPSA id
+ ffacd0b85a97d-42cb7fa35c2sm6347043f8f.25.2025.11.20.11.26.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Nov 2025 11:26:12 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 20 Nov 2025 20:25:44 +0100
+Message-Id: <DEDROLF9I9YQ.2MQIEGB7I4BKH@ventanamicro.com>
+From: =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>
+Subject: Re: [PATCH 3/7] hw/riscv: implement CBQRI capacity controller
+Cc: "Palmer Dabbelt" <palmer@dabbelt.com>, "Alistair Francis"
+ <Alistair.Francis@wdc.com>, "Weiwei Li" <liwei1518@gmail.com>, "Daniel
+ Henrique Barboza" <dbarboza@ventanamicro.com>, "Liu Zhiwei"
+ <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "Nicolas Pitre" <npitre@baylibre.com>,
+ =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, "Atish Kumar Patra"
+ <atishp@rivosinc.com>, "Atish Patra" <atish.patra@linux.dev>, "Vasudevan
+ Srinivasan" <vasu@rivosinc.com>, "yunhui cui" <cuiyunhui@bytedance.com>,
+ "Chen Pei" <cp0613@linux.alibaba.com>, <guo.wenjia23@zte.com.cn>,
+ <liu.qingtao2@zte.com.cn>,
+ <qemu-riscv-bounces+qemu-riscv=archiver.kernel.org@nongnu.org>
+To: "Drew Fustini" <fustini@kernel.org>, <qemu-devel@nongnu.org>
+References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
+ <20251119-riscv-ssqosid-cbqri-v1-3-3392fc760e48@kernel.org>
+In-Reply-To: <20251119-riscv-ssqosid-cbqri-v1-3-3392fc760e48@kernel.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=rkrcmar@ventanamicro.com; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,68 +113,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster (14):
-  error: Strip trailing '\n' from error string arguments (again)
-  hw/usb: Use error_setg_file_open() for a better error message
-  tap-solaris: Use error_setg_file_open() for better error messages
-  qga: Use error_setg_file_open() for better error messages
-  hw/scsi: Use error_setg_file_open() for a better error message
-  hw/virtio: Use error_setg_file_open() for a better error message
-  net/tap: Use error_setg_file_open() for a better error message
-  blkdebug: Use error_setg_file_open() for a better error message
-  error: Use error_setg_file_open() for simplicity and consistency
-  net/slirp: Improve file open error message
-  error: Use error_setg_errno() to improve error messages
-  error: Use error_setg_errno() for simplicity and consistency
-  qga/commands-win32: Use error_setg_win32() for better error messages
-  block/file-win32: Improve an error message
+2025-11-19T16:42:19-08:00, Drew Fustini <fustini@kernel.org>:
+> From: Nicolas Pitre <npitre@baylibre.com>
+>
+> Implement a capacity controller according to the Capacity and Bandwidth
+> QoS Register Interface (CBQRI) which supports these capabilities:
+>
+>   - Number of access types: 2 (code and data)
+>   - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
+>   - Event IDs supported: None, Occupancy
+>   - Capacity allocation ops: CONFIG_LIMIT, READ_LIMIT, FLUSH_RCID
+>
+> Link: https://github.com/riscv-non-isa/riscv-cbqri/blob/main/riscv-cbqri.=
+pdf
+> Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+> [fustini: add fields introduced in the ratified spec: cunits, rpfx, p]
+> Signed-off-by: Drew Fustini <fustini@kernel.org>
+> ---
+> diff --git a/hw/riscv/cbqri_capacity.c b/hw/riscv/cbqri_capacity.c
+> [...]
+> +static void riscv_cbqri_cc_write_alloc_ctl(RiscvCbqriCapacityState *cc,
+> +                                           uint64_t value)
+> +{
+>[...]
+> +    if (rcid >=3D cc->nb_rcids) {
+> +        status =3D CC_ALLOC_STATUS_INVAL_RCID;
+> +    } else if (atv && !is_valid_at(cc, at)) {
+> +        status =3D CC_ALLOC_STATUS_INVAL_AT;
+> +    } else if (op =3D=3D CC_ALLOC_OP_CONFIG_LIMIT &&
+> +               cc->supports_alloc_op_config_limit) {
+> +        status =3D alloc_blockmask_config(cc, rcid, at, &busy);
+> +    } else if (op =3D=3D CC_ALLOC_OP_READ_LIMIT &&
+> +               cc->supports_alloc_op_read_limit) {
+> +        status =3D alloc_blockmask_read(cc, rcid, at, &busy);
+> +    } else if (op =3D=3D CC_ALLOC_OP_FLUSH_RCID &&
+> +               cc->supports_alloc_op_flush_rcid) {
+> +        status =3D alloc_blockmask_init(cc, rcid, at, false, &busy);
 
- backends/cryptodev-lkcf.c   |  2 +-
- backends/spdm-socket.c      |  4 ++--
- backends/tpm/tpm_emulator.c | 13 +++++--------
- block/blkdebug.c            |  2 +-
- block/file-win32.c          |  2 +-
- hw/9pfs/9p-local.c          |  2 +-
- hw/9pfs/9p.c                |  3 +--
- hw/acpi/core.c              |  5 ++---
- hw/audio/es1370.c           |  2 +-
- hw/core/loader.c            |  2 +-
- hw/intc/openpic_kvm.c       |  3 +--
- hw/intc/xics_kvm.c          |  5 +++--
- hw/pci-host/xen_igd_pt.c    |  2 +-
- hw/ppc/spapr.c              |  6 +++---
- hw/remote/vfio-user-obj.c   | 18 +++++++++---------
- hw/scsi/vhost-scsi.c        |  3 +--
- hw/sensor/emc141x.c         |  4 ++--
- hw/sensor/tmp421.c          |  4 ++--
- hw/smbios/smbios.c          |  4 ++--
- hw/usb/bus.c                |  2 +-
- hw/vfio/migration-multifd.c |  5 +++--
- hw/virtio/vdpa-dev.c        |  4 ++--
- hw/virtio/vhost-vsock.c     |  3 +--
- migration/postcopy-ram.c    | 10 +++++-----
- migration/rdma.c            |  3 +--
- monitor/hmp-cmds-target.c   |  2 +-
- net/dump.c                  |  2 +-
- net/l2tpv3.c                |  6 ++----
- net/slirp.c                 |  9 ++++++---
- net/tap-bsd.c               |  6 +++---
- net/tap-linux.c             |  2 +-
- net/tap-solaris.c           |  6 +++---
- net/tap.c                   |  3 +--
- qga/commands-linux.c        | 11 ++++++-----
- qga/commands-posix-ssh.c    | 23 +++++++++++++----------
- qga/commands-win32.c        | 16 ++++++++--------
- system/vl.c                 |  2 +-
- target/i386/sev.c           |  6 ++----
- target/ppc/kvm.c            |  5 ++---
- target/riscv/kvm/kvm-cpu.c  | 11 ++++++-----
- ui/gtk.c                    |  2 +-
- ui/ui-qmp-cmds.c            |  3 +--
- util/vfio-helpers.c         |  5 ++---
- 43 files changed, 113 insertions(+), 120 deletions(-)
+The spec says the following about flush:
 
--- 
-2.49.0
+  "The configured capacity block allocation or the capacity unit limit
+   is not changed by this operation."
 
+Limits are not implemented, so I think it's supposed to be a nop.
+
+> [...]
+> +static uint64_t riscv_cbqri_cc_read(void *opaque, hwaddr addr, unsigned =
+size)
+> +{
+> +    RiscvCbqriCapacityState *cc =3D opaque;
+> +    uint64_t value =3D 0;
+> +
+> +    assert((addr % 8) =3D=3D 0);
+> +    assert(size =3D=3D 8);
+
+Is there a plan to extend support for 32 bit operations?
+
+  "The CBQRI registers are defined so that software can perform two
+   individual 4 byte accesses."
+
+> +    switch (addr) {
+> [...]
+> +    case A_CC_BLOCK_MASK:
+> +        if (cc->ncblks =3D=3D 0) {
+> +            break;
+> +        }
+> +        /* fallthrough */
+> +    default:
+> +        unsigned int blkmask_slot =3D (addr - A_CC_BLOCK_MASK) / 8;
+> +        if (blkmask_slot >=3D (cc->ncblks + 63) / 64) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: out of bounds (addr=3D0x%x)",
+> +                          __func__, (uint32_t)addr);
+> +            break;
+> +        }
+> +        value =3D cc->alloc_blockmasks[blkmask_slot];
+
+There is supposed to be a cc_cunits registers after the cc_block_mask.
+
+> +    }
+> +
+> +    return value;
+> +}
+> [...]
+> +static void riscv_cbqri_cc_realize(DeviceState *dev, Error **errp)
+> +{
+> +    RiscvCbqriCapacityState *cc =3D RISCV_CBQRI_CC(dev);
+> +
+> +    if (!cc->mmio_base) {
+> +        error_setg(errp, "mmio_base property not set");
+> +        return;
+> +    }
+> +
+> +    assert(cc->mon_counters =3D=3D NULL);
+> +    cc->mon_counters =3D g_new0(MonitorCounter, cc->nb_mcids);
+> +
+> +    assert(cc->alloc_blockmasks =3D=3D NULL);
+> +    uint64_t *end =3D get_blockmask_location(cc, cc->nb_rcids, 0);
+> +    unsigned int blockmasks_size =3D end - cc->alloc_blockmasks;
+> +    cc->alloc_blockmasks =3D g_new0(uint64_t, blockmasks_size);
+> +
+> +    memory_region_init_io(&cc->mmio, OBJECT(dev), &riscv_cbqri_cc_ops,
+> +                          cc, TYPE_RISCV_CBQRI_CC".mmio", 4 * 1024);
+
+Shouldn't the region size take cc->ncblks into account?
+(A bitmask for 2^16 ids is 8kB.)
+
+> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &cc->mmio);
+> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, cc->mmio_base);
+> +}
+> +
+> +static void riscv_cbqri_cc_reset(DeviceState *dev)
+> +{
+> +    RiscvCbqriCapacityState *cc =3D RISCV_CBQRI_CC(dev);
+> +
+> +    cc->cc_mon_ctl =3D 0;
+> +    cc->cc_alloc_ctl =3D 0;
+
+Only the busy field must be reset to 0.  I think the decision warrants a
+comment that we're zeroing more to have simpler code.
+
+> +
+> +    /* assign all capacity only to rcid0 */
+> +    for (unsigned int rcid =3D 0; rcid < cc->nb_rcids; rcid++) {
+
+rcid !=3D 0 are unspecified on reset, so I would prefer not to touch them.
+
+> +        bool any_at =3D false;
+> +
+> +        if (cc->supports_at_data) {
+> +            alloc_blockmask_init(cc, rcid, CC_AT_DATA,
+> +                                 rcid =3D=3D 0, NULL);
+> +            any_at =3D true;
+> +        }
+> +        if (cc->supports_at_code) {
+> +            alloc_blockmask_init(cc, rcid, CC_AT_CODE,
+> +                                 rcid =3D=3D 0, NULL);
+> +            any_at =3D true;
+> +        }
+> +        if (!any_at) {
+> +            alloc_blockmask_init(cc, rcid, 0,
+> +                                 rcid =3D=3D 0, NULL);
+> +        }
+> +    }
+
+I think it looks a bit better if AT values were expressed as a bitfield
+of size 8: (untested)
+
+    unsigned long at =3D find_next_bit(&cc->supported_at_mask, 8, 0);
+
+    do {
+        alloc_blockmask_init(cc, rcid, at < 8 ? at : 0, rcid =3D=3D 0, NULL=
+);
+        at =3D find_next_bit(&cc->supported_at_mask, 8, at + 1);
+    } while (at < 8);
+
+Thanks.
 
