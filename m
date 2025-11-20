@@ -4,80 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1328CCF9C7B
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 18:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0204DCF9C7B
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 18:04:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM90Z-0002gi-7F; Thu, 20 Nov 2025 13:03:51 -0500
+	id 1vM91Q-00032u-RI; Thu, 20 Nov 2025 13:04:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <k.semichastnov@syntacore.com>)
- id 1vM90V-0002fq-BD; Thu, 20 Nov 2025 13:03:49 -0500
-Received: from m.syntacore.com ([178.249.69.228])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vM91L-0002wg-AD
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 13:04:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <k.semichastnov@syntacore.com>)
- id 1vM90S-00080o-Fr; Thu, 20 Nov 2025 13:03:47 -0500
-Received: from MRN-SC-KSMG-01.corp.syntacore.com (localhost [127.0.0.1])
- by m.syntacore.com (Postfix) with ESMTP id C23681A0004;
- Thu, 20 Nov 2025 18:03:40 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 m.syntacore.com C23681A0004
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com; s=m;
- t=1763661820; bh=AyIZJzlb8aUQdqyWUISIrhOVoYxaGPmPJ2HcvJ2j4XE=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=QEidM25jbx3rsip7edqzHQqdNzQcs6I7mOqT6Cr0N5lo14NABOJ6JPeIDJ2KHWJsy
- hWC6d/nhKD0QBm8F4phTWrnM0DTbK0olaviCWNPiRBBCZi4wu6gusKEZ1+6Nww7DIq
- 1C+ijeHNkZjMgZCVUFe0xdgt3TFqYekc67xDkfNGHyNoRaI1BgQtiZkCCehQVZ5UfX
- 1Qo+Ebg99FzvTTfvGuh/aBZ+2vCmUq7DKLOEv+wdCWevFeDTbei0xBy1HwMyelOm9F
- 7Yspqcoqt2mJGC3416WyIHR0PnECPasRI3IkuUYatce5hcmS+t4kHYTR49rGKhTG2I
- w9+y3Zkqk6aRQ==
-Received: from S-SC-EXCH-01.corp.syntacore.com (mail.syntacore.com
- [10.76.202.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by m.syntacore.com (Postfix) with ESMTPS;
- Thu, 20 Nov 2025 18:03:39 +0000 (UTC)
-Received: from [10.199.147.170] (10.199.147.170) by
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Thu, 20 Nov 2025 21:03:31 +0300
-Message-ID: <0dd528f1-8785-4cdb-a462-b93f81eeb837@syntacore.com>
-Date: Thu, 20 Nov 2025 21:03:37 +0300
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vM91I-00085v-MG
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 13:04:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763661874;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=H1qsywmTjPfRVy141w5QC7uOf+CSJWbigf7mMZoLpIo=;
+ b=bQsJCamJacBeGMjHopGaJfqwUDhE5p8Aw9V73Oyw5oIunFROiUEwX2XFLeu9dTSvjgNdP3
+ PDyU6O3AEFYEnR8LFsAF7RAheSGXZeNoCSHDLh8FgIXXqbVO/TPP+FCoRY5HXsexyubjZ4
+ Th0Oua5U7L+Xg+6RR55vcT2q2QR/qzk=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-12-o45SGxPTMDu36U13uLxYKw-1; Thu, 20 Nov 2025 13:04:31 -0500
+X-MC-Unique: o45SGxPTMDu36U13uLxYKw-1
+X-Mimecast-MFC-AGG-ID: o45SGxPTMDu36U13uLxYKw_1763661870
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-42b2b642287so549151f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 10:04:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763661870; x=1764266670;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=H1qsywmTjPfRVy141w5QC7uOf+CSJWbigf7mMZoLpIo=;
+ b=AHiR68QGu3HXUhNqviRlnDaMxYwpINGbqPgyxxHyD8OuGnRtzHtBCWkssdIvIM0yLT
+ 55FQlq6gkPy2Zeqdc6iH3y8axlL6u0LfbwMUA6TgnVGmRYSDfabNvq9vO3ucqTnbxdwr
+ C7OvRYqZTwmx2uR965JPsDZGORMYUi7jQ271My5GgC4o3wXuBijrEu9OOsuwktWf7+yA
+ OeXKD2UJZNGy8PqI7o2lc1rGyuUy7Cp2WUmWp4mKBQQcB5SpWgrLjgT4tI2/h2QFSTvB
+ SXhPdNWDWCtK0/6PXe4VeBjjOAx/A7AqWpjDakOfiPKpcVxv8BZg1PMWlg5DJZ5YszeM
+ mGZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVaM+0SH60CeBhn/BTy+OPqwHSLq8bcX0pkBf0nETmLjlwolx3hx0Yt+K9ef/SGFzugsbe1g4N6nY5R@nongnu.org
+X-Gm-Message-State: AOJu0YyYPMT3vwsG5AX40Exk8iKwi1xjw6aiUw8qtBsdA3wzSJQZweCo
+ WbAW6opQkIhPbHBDNnDcfRXREtgn+0k2BuNzf4QBGTuQh/SivDMKhrTucZUfKkdoNLdrpuTXN/F
+ Ny6DXYizFPOCNK6HKwBKN29eC200+ilxfM/s0/l0fUTKZq2IoVUPh/7Ne
+X-Gm-Gg: ASbGncsmebEjIEkazEEH/vJHtHqKrJJ5NyW8IE8v85+S6plAMVFHpCkbPpcQuBZ/Mtf
+ 18yqkIVeYj/K+hJuX/MA/1U7qXNZH5dRXkwSF2naxVlFUzsZPMnaFL9RCHkzryZ9BOFoBBIv5i+
+ QaYmYofE4ZP2Rdze68FcOblM080LtNS0miXVxpXFZL0sxdanNOFxjKqRc1W2ZpJdGawwXbBTKyb
+ zijYY7gCHV9zVFVl6Nbg4wY61MtozWSCv+/h362P7zLZCYONffCfhRauFyHShubIxtpimHSUMqv
+ OHZ980k7agYaA98P3GCGbtfJig2AfDIlYWPhBQd3snrJCRARV6J5S9G/DJC3tDezLXtoqj8Sv3I
+ YtfWHTJRW0uCJm398K+RutkeSBpaAv9xkxOZijfW9h3wPs6ceqKOlFkpMZA==
+X-Received: by 2002:a05:6000:200e:b0:42b:5521:31c6 with SMTP id
+ ffacd0b85a97d-42cb9a55d76mr4577615f8f.54.1763661870206; 
+ Thu, 20 Nov 2025 10:04:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGkr1sog0D8x8e0i0AZ7sDlo7GO72R/Nyn/dVqoUH4E/JSCp3U/e5QZkJZtWE0wbmrcF98SAw==
+X-Received: by 2002:a05:6000:200e:b0:42b:5521:31c6 with SMTP id
+ ffacd0b85a97d-42cb9a55d76mr4577564f8f.54.1763661869555; 
+ Thu, 20 Nov 2025 10:04:29 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7f2e5a3sm6840325f8f.6.2025.11.20.10.04.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Nov 2025 10:04:29 -0800 (PST)
+Message-ID: <ef7a800a-99fe-472a-b3a2-c6eff15d65ff@redhat.com>
+Date: Thu, 20 Nov 2025 19:04:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/17] hw/riscv: Trace RAM Sink initial impl
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- <qemu-devel@nongnu.org>
-CC: <qemu-riscv@nongnu.org>, <alistair.francis@wdc.com>,
- <liwei1518@gmail.com>, <zhiwei_liu@linux.alibaba.com>, <palmer@dabbelt.com>
-References: <20251111114656.2285048-1-dbarboza@ventanamicro.com>
- <20251111114656.2285048-3-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH for-11.0] arm: add DCZID_EL0 to idregs array
 Content-Language: en-US
-From: Konstantin Semichastnov <k.semichastnov@syntacore.com>
-In-Reply-To: <20251111114656.2285048-3-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <20251119134414.2892640-1-cohuck@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251119134414.2892640-1-cohuck@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.147.170]
-X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
-X-KSMG-AntiPhishing: not scanned, disabled by settings
-X-KSMG-AntiSpam-Interceptor-Info: not scanned
-X-KSMG-AntiSpam-Status: not scanned, disabled by settings
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310,
- bases: 2025/11/20 15:27:00 #27953042
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-LinksScanning: NotDetected, bases: 2025/11/20 17:24:00
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 5
-Received-SPF: pass client-ip=178.249.69.228;
- envelope-from=k.semichastnov@syntacore.com; helo=m.syntacore.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,438 +113,318 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Connie,
 
+On 11/19/25 2:44 PM, Cornelia Huck wrote:
+> This requires a bit of care, since we still have to handle the EL
+> specific part (DCZID_EL0.DZP). Callers can set/access dcz_blocksize
+what do you mean by EL specific part?
 
-On 11/11/25 14:46, Daniel Henrique Barboza wrote:
-> Following the effort to implement the basic support for Efficient Trace
-> (e-trace) in QEMU we'll add a Trace RAM Sink implementation.
-> 
-> Similar to the Trace Encoder, this is inspired in both the Efficient
-> Trace for RISC-V [1] and  RISC-V Trace Control Interface Specification
-> [2] specs. It implements a minimal set of features to get started - only
-> SMEM will be supported for now.
-> 
-> We'll implement the RAM sink logic in the next patches, although most of
-> the work will be done by the trace encoder.
-> 
-> [1] https://github.com/riscv-non-isa/riscv-trace-spec/releases/download/v2.0-20250616/riscv-trace-spec-asciidoc.pdf
-> [2] https://github.com/riscv-non-isa/tg-nexus-trace/releases/download/1.0_Ratified/RISC-V-Trace-Control-Interface.pdf
-> 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+you may simply say that at the moment only bs field is handled as part
+of cpu.dcz_blocklen
+so you replace all the users of that field by accessors to the
+isar.idreg[] storage
+> via a wrapper working on DCZID_EL.BS.
+>
+> KVM currently does not support DCZID_EL0 via ONE_REG, and actually
+> does not need to work with it, so provide a dummy value for now.
+>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 > ---
->   hw/riscv/meson.build      |   2 +-
->   hw/riscv/trace-events     |   4 +
->   hw/riscv/trace-ram-sink.c | 263 ++++++++++++++++++++++++++++++++++++++
->   hw/riscv/trace-ram-sink.h |  83 ++++++++++++
->   4 files changed, 351 insertions(+), 1 deletion(-)
->   create mode 100644 hw/riscv/trace-ram-sink.c
->   create mode 100644 hw/riscv/trace-ram-sink.h
-> 
-> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-> index b4a9988a62..2aadbe1e50 100644
-> --- a/hw/riscv/meson.build
-> +++ b/hw/riscv/meson.build
-> @@ -14,6 +14,6 @@ riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
->   	'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
->   riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
->   riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
-> -riscv_ss.add(when: 'CONFIG_RISCV_TRACE', if_true: files('trace-encoder.c'))
-> +riscv_ss.add(when: 'CONFIG_RISCV_TRACE', if_true: files('trace-encoder.c', 'trace-ram-sink.c'))
->   
->   hw_arch += {'riscv': riscv_ss}
-> diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
-> index 0cbf6ffcb6..14e333fd9e 100644
-> --- a/hw/riscv/trace-events
-> +++ b/hw/riscv/trace-events
-> @@ -28,3 +28,7 @@ riscv_iommu_hpm_evt_write(uint32_t ctr_idx, uint32_t ovf, uint64_t val) "ctr_idx
->   # trace-encoder.c
->   trencoder_read_error(uint64_t addr) "addr 0x%" PRIx64
->   trencoder_write_error(uint64_t addr, uint64_t value) "addr 0x%" PRIx64 " value 0x%" PRIx64
+>
+> This is another followup on the ID register rework. The last missing set
+> of registers are CCSIDR* and friends, then we should be able to switch
+> to autogenerated registers (probably with a different script than the
+> last attempt.)
+>
+> ---
+>  target/arm/cpu-sysregs.h.inc   |  1 +
+>  target/arm/cpu.c               |  2 +-
+>  target/arm/cpu.h               | 15 +++++++++++++--
+>  target/arm/cpu64.c             |  4 ++--
+>  target/arm/helper.c            |  3 ++-
+>  target/arm/kvm.c               |  7 +++++++
+>  target/arm/tcg/cpu64.c         | 22 +++++++++++-----------
+>  target/arm/tcg/helper-a64.c    |  2 +-
+>  target/arm/tcg/mte_helper.c    |  4 ++--
+>  target/arm/tcg/translate-a64.c |  2 +-
+>  10 files changed, 41 insertions(+), 21 deletions(-)
+>
+> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+> index 2bb2861c6234..7f3aa8b991aa 100644
+> --- a/target/arm/cpu-sysregs.h.inc
+> +++ b/target/arm/cpu-sysregs.h.inc
+> @@ -39,3 +39,4 @@ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
+>  DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
+>  DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
+>  DEF(CTR_EL0, 3, 3, 0, 0, 1)
+> +DEF(DCZID_EL0, 3, 3, 0, 0, 7)
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 39292fb9bc1f..ad99233839c0 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -2184,7 +2184,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+>  #endif
+>  
+>      if (tcg_enabled()) {
+> -        int dcz_blocklen = 4 << cpu->dcz_blocksize;
+> +        int dcz_blocklen = 4 << get_dcz_blocksize(cpu);
+>  
+>          /*
+>           * We only support DCZ blocklen that fits on one page.
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 39f2b2e54deb..e3fa6ebda3f2 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -1111,8 +1111,6 @@ struct ArchCPU {
+>      bool prop_pauth_qarma5;
+>      bool prop_lpa2;
+>  
+> -    /* DCZ blocksize, in log_2(words), ie low 4 bits of DCZID_EL0 */
+> -    uint8_t dcz_blocksize;
+>      /* GM blocksize, in log_2(words), ie low 4 bits of GMID_EL0 */
+>      uint8_t gm_blocksize;
+>  
+> @@ -1178,6 +1176,19 @@ struct ARMCPUClass {
+>      ResettablePhases parent_phases;
+>  };
+>  
+> +static inline uint8_t get_dcz_blocksize(ARMCPU *cpu)
+While at it I would replace dcz_blocksize by dczid_el0_bs to be more
+explicit
+> +{
+> +    return cpu->isar.idregs[DCZID_EL0_IDX] & 0xf;
+extract64?
+> +}
 > +
-> +# trace-ram-sink.c
-> +tr_ramsink_read_error(uint64_t addr) "addr 0x%" PRIx64
-> +tr_ramsink_write_error(uint64_t addr, uint64_t value) "addr 0x%" PRIx64 " value 0x%" PRIx64
-> diff --git a/hw/riscv/trace-ram-sink.c b/hw/riscv/trace-ram-sink.c
-> new file mode 100644
-> index 0000000000..e00de80c04
-> --- /dev/null
-> +++ b/hw/riscv/trace-ram-sink.c
-> @@ -0,0 +1,263 @@
-> +/*
-> + * Emulation of a RISC-V Trace RAM Sink
-> + *
-> + * Copyright (C) 2025 Ventana Micro Systems Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
+> +static inline void set_dcz_blocksize(ARMCPU *cpu, uint8_t bs)
+> +{
+> +    uint64_t dczid = cpu->isar.idregs[DCZID_EL0_IDX];
 > +
-> +#include "qemu/osdep.h"
+> +    /* keep dzp unchanged */
+> +    cpu->isar.idregs[DCZID_EL0_IDX] = (dczid & ~0xf) | bs;
+deposit64?
+> +}
 > +
-> +#include "trace-ram-sink.h"
-> +#include "hw/irq.h"
-> +#include "hw/qdev-properties.h"
-> +#include "migration/vmstate.h"
-> +#include "qemu/bitops.h"
-> +#include "qemu/log.h"
-> +#include "qemu/module.h"
-> +#include "qapi/error.h"
-> +#include "trace.h"
-> +#include "system/device_tree.h"
-> +#include "hw/sysbus.h"
-> +#include "hw/register.h"
+>  /* Callback functions for the generic timer's timers. */
+>  void arm_gt_ptimer_cb(void *opaque);
+>  void arm_gt_vtimer_cb(void *opaque);
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index ae84d8e42050..23924f251020 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -689,7 +689,7 @@ static void aarch64_a57_initfn(Object *obj)
+>      cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB, 2);
+>      /* 2048KB L2 cache */
+>      cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 2 * MiB, 7);
+> -    cpu->dcz_blocksize = 4; /* 64 bytes */
+> +    set_dcz_blocksize(cpu, 4); /* 64 bytes */
+>      cpu->gic_num_lrs = 4;
+>      cpu->gic_vpribits = 5;
+>      cpu->gic_vprebits = 5;
+> @@ -751,7 +751,7 @@ static void aarch64_a53_initfn(Object *obj)
+>      cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 1, 64, 32 * KiB, 2);
+>      /* 1024KB L2 cache */
+>      cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 1 * MiB, 7);
+> -    cpu->dcz_blocksize = 4; /* 64 bytes */
+> +    set_dcz_blocksize(cpu, 4); /* 64 bytes */
+>      cpu->gic_num_lrs = 4;
+>      cpu->gic_vpribits = 5;
+>      cpu->gic_vprebits = 5;
+> diff --git a/target/arm/helper.c b/target/arm/helper.c
+> index 27ebc6f29b82..8dfeaff25350 100644
+> --- a/target/arm/helper.c
+> +++ b/target/arm/helper.c
+> @@ -3324,7 +3324,8 @@ static uint64_t aa64_dczid_read(CPUARMState *env, const ARMCPRegInfo *ri)
+the name of the function seems to indicate you read the whole DCZID but
+I see the DZP bit is tweaked below. Do you get why we can't return the
+raw id reg?
+>      if (aa64_zva_access(env, NULL, false) == CP_ACCESS_OK) {
+>          dzp_bit = 0;
+>      }
+> -    return cpu->dcz_blocksize | dzp_bit;
 > +
-> +#define R_TR_RAM_CONTROL_RSVP_BITS (MAKE_64BIT_MASK(32, 32) | \
-> +                                    R_TR_RAM_CONTROL_RSVP1_MASK | \
-> +                                    R_TR_RAM_CONTROL_RSVP2_MASK | \
-> +                                    R_TR_RAM_CONTROL_RSVP3_MASK | \
-> +                                    R_TR_RAM_CONTROL_RSVP4_MASK)
+nit spurious NL
+> +    return cpu->isar.idregs[DCZID_EL0_IDX] | dzp_bit;
+>  }
+>  
+>  static CPAccessResult sp_el0_access(CPUARMState *env, const ARMCPRegInfo *ri,
+> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+> index 0d57081e69fb..5d65f64addc6 100644
+> --- a/target/arm/kvm.c
+> +++ b/target/arm/kvm.c
+> @@ -2020,6 +2020,13 @@ int kvm_arch_init_vcpu(CPUState *cs)
+>      }
+>      cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
+>  
+> +    /*
+> +     * We currently do not need this, except for tcg. Should KVM gain support
+> +     * for accessing DCZID_EL0 via ONE_REG, we'll overwrite this below. Just
+> +     * set a dummy value that corresponds to the minimum value for FEAT_MTE2.
+> +     */
+> +    set_dcz_blocksize(cpu, 2);
+it is not clear to me why we need that?
 > +
-> +/* trRamEmpty is the only RO field and reset value */
-> +#define R_TR_RAM_CONTROL_RESET R_TR_RAM_CONTROL_EMPTY_MASK
-> +#define R_TR_RAM_CONTROL_RO_BITS R_TR_RAM_CONTROL_EMPTY_MASK
-> +
-> +#define R_TR_RAM_IMPL_RSVP_BITS (MAKE_64BIT_MASK(32, 32) | \
-> +                                 R_TR_RAM_IMPL_RSVP1_MASK)
-> +
-> +#define R_TR_RAM_IMPL_RO_BITS (R_TR_RAM_IMPL_VER_MAJOR_MASK | \
-> +                               R_TR_RAM_IMPL_VER_MINOR_MASK | \
-> +                               R_TR_RAM_IMPL_COMP_TYPE_MASK | \
-> +                               R_TR_RAM_IMPL_HAS_SRAM_MASK | \
-> +                               R_TR_RAM_IMPL_HAS_SMEM_MASK)
-> +
-> +#define R_TR_RAM_IMPL_RESET (BIT(0) | 0x9 << 8)
-I suggest to set here trRamHasSMEM bit to 1, because we actually do have 
-SMEM supported
+>      return kvm_arm_init_cpreg_list(cpu);
+>  }
+>  
+> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+> index 6871956382f7..d86fc38e7157 100644
+> --- a/target/arm/tcg/cpu64.c
+> +++ b/target/arm/tcg/cpu64.c
+> @@ -72,7 +72,7 @@ static void aarch64_a35_initfn(Object *obj)
+>      SET_IDREG(isar, ID_AA64MMFR0, 0x00101122);
+>      SET_IDREG(isar, ID_AA64MMFR1, 0);
+>      SET_IDREG(isar, CLIDR, 0x0a200023);
+> -    cpu->dcz_blocksize = 4;
+> +    set_dcz_blocksize(cpu, 4);
+>  
+>      /* From B2.4 AArch64 Virtual Memory control registers */
+>      cpu->reset_sctlr = 0x00c50838;
+> @@ -219,7 +219,7 @@ static void aarch64_a55_initfn(Object *obj)
+>      /* Ordered by B2.4 AArch64 registers by functional group */
+>      SET_IDREG(isar, CLIDR, 0x82000023);
+>      cpu->ctr = 0x84448004; /* L1Ip = VIPT */
+> -    cpu->dcz_blocksize = 4; /* 64 bytes */
+> +    set_dcz_blocksize(cpu, 4); /* 64 bytes */
+>      SET_IDREG(isar, ID_AA64DFR0, 0x0000000010305408ull);
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
+>      SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
+> @@ -325,7 +325,7 @@ static void aarch64_a72_initfn(Object *obj)
+>      cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 3, 64, 48 * KiB, 2);
+>      /* 1MB L2 cache */
+>      cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 64, 1 * MiB, 7);
+> -    cpu->dcz_blocksize = 4; /* 64 bytes */
+> +    set_dcz_blocksize(cpu, 4); /* 64 bytes */
+>      cpu->gic_num_lrs = 4;
+>      cpu->gic_vpribits = 5;
+>      cpu->gic_vprebits = 5;
+> @@ -352,7 +352,7 @@ static void aarch64_a76_initfn(Object *obj)
+>      /* Ordered by B2.4 AArch64 registers by functional group */
+>      SET_IDREG(isar, CLIDR, 0x82000023);
+>      cpu->ctr = 0x8444C004;
+> -    cpu->dcz_blocksize = 4;
+> +    set_dcz_blocksize(cpu, 4);
+>      SET_IDREG(isar, ID_AA64DFR0, 0x0000000010305408ull);
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
+>      SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
+> @@ -424,7 +424,7 @@ static void aarch64_a78ae_initfn(Object *obj)
+>      /* Ordered by 3.2.4 AArch64 registers by functional group */
+>      SET_IDREG(isar, CLIDR, 0x82000023);
+>      cpu->ctr = 0x9444c004;
+> -    cpu->dcz_blocksize = 4;
+> +    set_dcz_blocksize(cpu, 4);
+>      SET_IDREG(isar, ID_AA64DFR0, 0x0000000110305408ull);
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x0010100010211120ull);
+>      SET_IDREG(isar, ID_AA64ISAR1, 0x0000000001200031ull);
+> @@ -517,7 +517,7 @@ static void aarch64_a64fx_initfn(Object *obj)
+>      cpu->ccsidr[1] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 4, 256, 64 * KiB, 2);
+>      /* 8MB L2 cache */
+>      cpu->ccsidr[2] = make_ccsidr(CCSIDR_FORMAT_LEGACY, 16, 256, 8 * MiB, 7);
+> -    cpu->dcz_blocksize = 6; /* 256 bytes */
+> +    set_dcz_blocksize(cpu, 6); /* 256 bytes */
+>      cpu->gic_num_lrs = 4;
+>      cpu->gic_vpribits = 5;
+>      cpu->gic_vprebits = 5;
+> @@ -673,7 +673,7 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+>      /* Ordered by B2.4 AArch64 registers by functional group */
+>      SET_IDREG(isar, CLIDR, 0x82000023);
+>      cpu->ctr = 0x8444c004;
+> -    cpu->dcz_blocksize = 4;
+> +    set_dcz_blocksize(cpu, 4);
+>      SET_IDREG(isar, ID_AA64DFR0, 0x0000000110305408ull);
+>      SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
+>      SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
+> @@ -749,7 +749,7 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+>      /* Ordered by 3.2.4 AArch64 registers by functional group */
+>      SET_IDREG(isar, CLIDR, 0x82000023);
+>      cpu->ctr = 0xb444c004; /* With DIC and IDC set */
+> -    cpu->dcz_blocksize = 4;
+> +    set_dcz_blocksize(cpu, 4);
+>      SET_IDREG(isar, ID_AA64AFR0, 0x00000000);
+>      SET_IDREG(isar, ID_AA64AFR1, 0x00000000);
+>      SET_IDREG(isar, ID_AA64DFR0, 0x000001f210305519ull);
+> @@ -1011,7 +1011,7 @@ static void aarch64_a710_initfn(Object *obj)
+>      SET_IDREG(isar, CLIDR, 0x0000001482000023ull);
+>      cpu->gm_blocksize      = 4;
+>      cpu->ctr               = 0x000000049444c004ull;
+> -    cpu->dcz_blocksize     = 4;
+> +    set_dcz_blocksize(cpu, 4);
+>      /* TODO FEAT_MPAM: mpamidr_el1 = 0x0000_0001_0006_003f */
+>  
+>      /* Section B.5.2: PMCR_EL0 */
+> @@ -1113,7 +1113,7 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+>      SET_IDREG(isar, CLIDR, 0x0000001482000023ull);
+>      cpu->gm_blocksize      = 4;
+>      cpu->ctr               = 0x00000004b444c004ull;
+> -    cpu->dcz_blocksize     = 4;
+> +    set_dcz_blocksize(cpu, 4);
+>      /* TODO FEAT_MPAM: mpamidr_el1 = 0x0000_0001_001e_01ff */
+>  
+>      /* Section B.7.2: PMCR_EL0 */
+> @@ -1377,7 +1377,7 @@ void aarch64_max_tcg_initfn(Object *obj)
+>       * blocksize since we don't have to follow what the hardware does.
+>       */
+>      cpu->ctr = 0x80038003; /* 32 byte I and D cacheline size, VIPT icache */
+> -    cpu->dcz_blocksize = 7; /*  512 bytes */
+> +    set_dcz_blocksize(cpu, 7); /*  512 bytes */
+>  #endif
+>      cpu->gm_blocksize = 6;  /*  256 bytes */
+>  
+> diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+> index ba1d775d818e..045a00b43373 100644
+> --- a/target/arm/tcg/helper-a64.c
+> +++ b/target/arm/tcg/helper-a64.c
+> @@ -792,7 +792,7 @@ void HELPER(dc_zva)(CPUARMState *env, uint64_t vaddr_in)
+>       * (which matches the usual QEMU behaviour of not implementing either
+>       * alignment faults or any memory attribute handling).
+>       */
+> -    int blocklen = 4 << env_archcpu(env)->dcz_blocksize;
+> +    int blocklen = 4 << get_dcz_blocksize(env_archcpu(env));
+>      uint64_t vaddr = vaddr_in & ~(blocklen - 1);
+>      int mmu_idx = arm_env_mmu_index(env);
+>      void *mem;
+> diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+> index bb48fe359b8c..20f8351d8676 100644
+> --- a/target/arm/tcg/mte_helper.c
+> +++ b/target/arm/tcg/mte_helper.c
+> @@ -545,7 +545,7 @@ void HELPER(stzgm_tags)(CPUARMState *env, uint64_t ptr, uint64_t val)
+>       * i.e. 32 bytes, which is an unreasonably small dcz anyway,
+>       * to make sure that we can access one complete tag byte here.
+>       */
+> -    log2_dcz_bytes = env_archcpu(env)->dcz_blocksize + 2;
+> +    log2_dcz_bytes = get_dcz_blocksize(env_archcpu(env)) + 2;
+>      log2_tag_bytes = log2_dcz_bytes - (LOG2_TAG_GRANULE + 1);
+>      dcz_bytes = (intptr_t)1 << log2_dcz_bytes;
+>      tag_bytes = (intptr_t)1 << log2_tag_bytes;
+> @@ -945,7 +945,7 @@ uint64_t HELPER(mte_check_zva)(CPUARMState *env, uint32_t desc, uint64_t ptr)
+>       * i.e. 32 bytes, which is an unreasonably small dcz anyway, to make
+>       * sure that we can access one complete tag byte here.
+>       */
+> -    log2_dcz_bytes = env_archcpu(env)->dcz_blocksize + 2;
+> +    log2_dcz_bytes = get_dcz_blocksize(env_archcpu(env)) + 2;
+>      log2_tag_bytes = log2_dcz_bytes - (LOG2_TAG_GRANULE + 1);
+>      dcz_bytes = (intptr_t)1 << log2_dcz_bytes;
+>      tag_bytes = (intptr_t)1 << log2_tag_bytes;
+> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+> index 08b21d7dbfa6..c72611e55e45 100644
+> --- a/target/arm/tcg/translate-a64.c
+> +++ b/target/arm/tcg/translate-a64.c
+> @@ -10712,7 +10712,7 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
+>      dc->vec_stride = 0;
+>      dc->cp_regs = arm_cpu->cp_regs;
+>      dc->features = env->features;
+> -    dc->dcz_blocksize = arm_cpu->dcz_blocksize;
+> +    dc->dcz_blocksize = get_dcz_blocksize(arm_cpu);
+>      dc->gm_blocksize = arm_cpu->gm_blocksize;
+>  
+>  #ifdef CONFIG_USER_ONLY
+Thanks
 
-> +
-> +static RegisterAccessInfo tr_ramsink_regs_info[] = {
-> +    {   .name = "TR_RAM_CONTROL", .addr = A_TR_RAM_CONTROL,
-> +        .rsvd = R_TR_RAM_CONTROL_RSVP_BITS,
-> +        .reset = R_TR_RAM_CONTROL_RESET,
-> +        .ro = R_TR_RAM_CONTROL_RO_BITS,
-> +    },
-> +    {   .name = "TR_RAM_IMPL", .addr = A_TR_RAM_IMPL,
-> +        .rsvd = R_TR_RAM_IMPL_RSVP_BITS,
-> +        .reset = R_TR_RAM_IMPL_RESET,
-> +        .ro = R_TR_RAM_IMPL_RO_BITS,
-> +    },
-> +    {   .name = "TR_RAM_START_LOW", .addr = A_TR_RAM_START_LOW,
-> +    },
-> +    {   .name = "TR_RAM_START_HIGH", .addr = A_TR_RAM_START_HIGH,
-> +    },
-> +    {   .name = "TR_RAM_LIMIT_LOW", .addr = A_TR_RAM_LIMIT_LOW,
-> +    },
-> +    {   .name = "TR_RAM_LIMIT_HIGH", .addr = A_TR_RAM_LIMIT_HIGH,
-> +    },
-> +    {   .name = "TR_RAM_WP_LOW", .addr = A_TR_RAM_WP_LOW,
-> +    },
-> +    {   .name = "TR_RAM_WP_HIGH", .addr = A_TR_RAM_WP_HIGH,
-> +    },
-> +};
-> +
-> +static uint64_t tr_ramsink_regread(void *opaque, hwaddr addr, unsigned size)
-> +{
-> +    TraceRamSink *tram = TRACE_RAM_SINK(opaque);
-> +    RegisterInfo *r = &tram->regs_info[addr / 4];
-> +
-> +    if (!r->data) {
-> +        trace_tr_ramsink_read_error(addr);
-> +        return 0;
-> +    }
-> +
-> +    return register_read(r, ~0, NULL, false);
-> +}
-> +
-> +static void tr_ramsink_regwrite(void *opaque, hwaddr addr,
-> +                            uint64_t value, unsigned size)
-> +{
-> +    TraceRamSink *tram = TRACE_RAM_SINK(opaque);
-> +    RegisterInfo *r = &tram->regs_info[addr / 4];
-> +
-> +    if (!r->data) {
-> +        trace_tr_ramsink_write_error(addr, value);
-> +        return;
-> +    }
-> +
-> +    register_write(r, value, ~0, NULL, false);
-> +}
-> +
-> +static const MemoryRegionOps tr_ramsink_regops = {
-> +    .read = tr_ramsink_regread,
-> +    .write = tr_ramsink_regwrite,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +    },
-> +};
-> +
-> +static uint64_t tr_ramsink_msgread(void *opaque, hwaddr addr, unsigned size)
-> +{
-> +    TraceRamSink *tram = TRACE_RAM_SINK(opaque);
-> +
-> +    switch (size) {
-> +    case 1:
-> +        return tram->msgs[addr];
-> +    case 2:
-> +        return (uint16_t)tram->msgs[addr];
-> +    case 4:
-> +        return (uint32_t)tram->msgs[addr];
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-Here we will always return single byte, because tram->msgs has
-type (uint8_t *)
-
-So, I suggest to call here little endian load helper
-to avoid manually handling size and byte order:
-
-ldn_le_p(tram->msgs + addr, size)
-
-> +}
-> +
-> +static void tr_ramsink_msgwrite(void *opaque, hwaddr addr,
-> +                                uint64_t value, unsigned size)
-> +{
-> +    TraceRamSink *tram = TRACE_RAM_SINK(opaque);
-> +
-> +    switch (size) {
-> +    case 1:
-> +        tram->msgs[addr] = value;
-> +        break;
-> +    case 2:
-> +        tram->msgs[addr] = extract16(value, 0, 8);
-> +        tram->msgs[addr + 1] = extract16(value, 8, 8);
-> +        break;
-> +    case 4:
-> +        tram->msgs[addr] = extract32(value, 0, 8);
-> +        tram->msgs[addr + 1] = extract32(value, 8, 8);
-> +        tram->msgs[addr + 2] = extract32(value, 16, 8);
-> +        tram->msgs[addr + 3] = extract32(value, 24, 8);
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-Here also we can use little endian store helper to avoid
-handling write size and byte order:
-
-stn_le_p(tram->msgs + addr, size, value)
-
-> +}
-> +
-> +static const MemoryRegionOps tr_ramsink_smemops = {
-> +    .read = tr_ramsink_msgread,
-> +    .write = tr_ramsink_msgwrite,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .valid = {
-> +        .min_access_size = 1,
-> +        .max_access_size = 4,
-> +    },
-> +};
-> +
-> +static void tr_ramsink_setup_regs(TraceRamSink *tram)
-> +{
-> +    hwaddr ramlimit = tram->smemaddr + tram->smemsize;
-> +
-> +    ARRAY_FIELD_DP32(tram->regs, TR_RAM_START_LOW, ADDR,
-> +                     extract64(tram->smemaddr, 2, 30));
-> +    ARRAY_FIELD_DP32(tram->regs, TR_RAM_START_HIGH, ADDR,
-> +                     extract64(tram->smemaddr, 32, 32));
-> +
-> +    ARRAY_FIELD_DP32(tram->regs, TR_RAM_WP_LOW, ADDR,
-> +                     extract64(tram->smemaddr, 2, 30));
-> +    ARRAY_FIELD_DP32(tram->regs, TR_RAM_WP_HIGH, ADDR,
-> +                     extract64(tram->smemaddr, 32, 32));
-> +
-> +    ARRAY_FIELD_DP32(tram->regs, TR_RAM_LIMIT_LOW, ADDR,
-> +                     extract64(ramlimit, 2, 30));
-> +    ARRAY_FIELD_DP32(tram->regs, TR_RAM_LIMIT_HIGH, ADDR,
-> +                     extract64(ramlimit, 32, 32));
-> +}
-> +
-> +static void tr_ramsink_reset(DeviceState *dev)
-> +{
-> +    TraceRamSink *tram = TRACE_RAM_SINK(dev);
-> +
-> +    for (int i = 0; i < ARRAY_SIZE(tram->regs_info); i++) {
-> +        register_reset(&tram->regs_info[i]);
-> +    }
-> +
-> +    tr_ramsink_setup_regs(tram);
-> +}
-> +
-> +static void tr_ramsink_realize(DeviceState *dev, Error **errp)
-> +{
-> +    TraceRamSink *tram = TRACE_RAM_SINK(dev);
-> +
-> +    memory_region_init_io(&tram->reg_mem, OBJECT(dev),
-> +                          &tr_ramsink_regops, tram,
-> +                          "trace-ram-sink-regs",
-> +                          tram->reg_mem_size);
-> +    sysbus_init_mmio(SYS_BUS_DEVICE(tram), &tram->reg_mem);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(tram), 0, tram->baseaddr);
-> +
-> +    g_assert(tram->smemsize > 0);
-> +    tram->msgs = g_malloc0(tram->smemsize);
-> +
-> +    memory_region_init_io(&tram->smem, OBJECT(dev),
-> +                          &tr_ramsink_smemops, tram,
-> +                          "trace-ram-sink-smem",
-> +                          tram->smemsize);
-> +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &tram->smem);
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 1, tram->smemaddr);
-> +
-> +    /* RegisterInfo init taken from hw/dma/xlnx-zdma.c */
-> +    for (int i = 0; i < ARRAY_SIZE(tr_ramsink_regs_info); i++) {
-> +        uint32_t reg_idx = tr_ramsink_regs_info[i].addr / 4;
-> +        RegisterInfo *r = &tram->regs_info[reg_idx];
-> +
-> +        *r = (RegisterInfo) {
-> +            .data = (uint8_t *)&tram->regs[reg_idx],
-> +            .data_size = sizeof(uint32_t),
-> +            .access = &tr_ramsink_regs_info[i],
-> +            .opaque = tram,
-> +        };
-> +    }
-> +}
-> +
-> +static const Property tr_ramsink_props[] = {
-> +    DEFINE_PROP_UINT64("baseaddr", TraceRamSink, baseaddr, 0),
-> +    DEFINE_PROP_UINT64("smemaddr", TraceRamSink, smemaddr, 0),
-> +    DEFINE_PROP_UINT32("smemsize", TraceRamSink, smemsize, 0),
-> +    DEFINE_PROP_UINT32("reg-mem-size", TraceRamSink,
-> +                       reg_mem_size, TR_DEV_REGMAP_SIZE),
-> +};
-> +
-> +static const VMStateDescription vmstate_tr_ramsink = {
-> +    .name = TYPE_TRACE_RAM_SINK,
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT32_ARRAY(regs, TraceRamSink, TRACE_R_MAX),
-> +        VMSTATE_END_OF_LIST(),
-> +    }
-> +};
-> +
-> +static void tr_ramsink_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    device_class_set_legacy_reset(dc, tr_ramsink_reset);
-> +    device_class_set_props(dc, tr_ramsink_props);
-> +    dc->realize = tr_ramsink_realize;
-> +    dc->vmsd = &vmstate_tr_ramsink;
-> +}
-> +
-> +static const TypeInfo tr_ramsink_info = {
-> +    .name          = TYPE_TRACE_RAM_SINK,
-> +    .parent        = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size = sizeof(TraceRamSink),
-> +    .class_init    = tr_ramsink_class_init,
-> +};
-> +
-> +static void tr_ramsink_register_types(void)
-> +{
-> +    type_register_static(&tr_ramsink_info);
-> +}
-> +
-> +type_init(tr_ramsink_register_types)
-> diff --git a/hw/riscv/trace-ram-sink.h b/hw/riscv/trace-ram-sink.h
-> new file mode 100644
-> index 0000000000..cd55145669
-> --- /dev/null
-> +++ b/hw/riscv/trace-ram-sink.h
-> @@ -0,0 +1,83 @@
-> +/*
-> + * Emulation of a RISC-V Trace RAM Sink
-> + *
-> + * Copyright (C) 2025 Ventana Micro Systems Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef RISCV_TRACE_RAM_SINK_H
-> +#define RISCV_TRACE_RAM_SINK_H
-> +
-> +#include "hw/register.h"
-> +#include "hw/sysbus.h"
-> +#include "system/dma.h"
-> +#include "qom/object.h"
-> +
-> +#define TRACE_R_MAX (0xFFF / 4)
-> +#define TR_DEV_REGMAP_SIZE 0x1000
-> +
-> +/*
-> + * The Trace Encoder will read/write those regs so put their
-> + * declaration in this header.
-> + */
-> +REG32(TR_RAM_CONTROL, 0x0)
-> +    FIELD(TR_RAM_CONTROL, ACTIVE, 0, 1)
-> +    FIELD(TR_RAM_CONTROL, ENABLE, 1, 1)
-> +    FIELD(TR_RAM_CONTROL, EMPTY, 3, 1)
-> +    FIELD(TR_RAM_CONTROL, MODE, 4, 1)
-> +    FIELD(TR_RAM_CONTROL, STOP_ON_WRAP, 8, 1)
-> +    FIELD(TR_RAM_CONTROL, MEM_FORMAT, 9, 2)
-> +    /* reserved bits */
-> +    FIELD(TR_RAM_CONTROL, RSVP1, 2, 1)
-> +    FIELD(TR_RAM_CONTROL, RSVP2, 5, 2)
-RSVP2 should be 3 bits long, as it occupies bits [7:5]
-
-> +    FIELD(TR_RAM_CONTROL, RSVP3, 11, 1)
-> +    FIELD(TR_RAM_CONTROL, RSVP4, 15, 16)
-Here is the same typo: RSVP4 should be 17 bits long, as it occupies
-bits [31:15]
-
-> +
-> +REG32(TR_RAM_IMPL, 0x4)
-> +    FIELD(TR_RAM_IMPL, VER_MAJOR, 0, 4)
-> +    FIELD(TR_RAM_IMPL, VER_MINOR, 4, 4)
-> +    FIELD(TR_RAM_IMPL, COMP_TYPE, 8, 4)
-> +    FIELD(TR_RAM_IMPL, HAS_SRAM, 12, 1)
-> +    FIELD(TR_RAM_IMPL, HAS_SMEM, 13, 1)
-> +    /* reserved bits */
-> +    FIELD(TR_RAM_IMPL, RSVP1, 14, 18)
-> +
-> +REG32(TR_RAM_START_LOW, 0x010)
-> +    FIELD(TR_RAM_START_LOW, ADDR, 2, 30)
-> +REG32(TR_RAM_START_HIGH, 0x014)
-> +    FIELD(TR_RAM_START_HIGH, ADDR, 0, 32)
-> +
-> +REG32(TR_RAM_LIMIT_LOW, 0x018)
-> +    FIELD(TR_RAM_LIMIT_LOW, ADDR, 2, 30)
-> +REG32(TR_RAM_LIMIT_HIGH, 0x01C)
-> +    FIELD(TR_RAM_LIMIT_HIGH, ADDR, 0, 32)
-> +
-> +REG32(TR_RAM_WP_LOW, 0x020)
-> +    FIELD(TR_RAM_WP_LOW, WRAP, 0, 1)
-> +    FIELD(TR_RAM_WP_LOW, ADDR, 2, 30)
-> +REG32(TR_RAM_WP_HIGH, 0x024)
-> +    FIELD(TR_RAM_WP_HIGH, ADDR, 0, 32)
-> +
-> +struct TraceRamSink {
-> +    /*< private >*/
-> +    SysBusDevice parent_obj;
-> +
-> +    MemoryRegion reg_mem;
-> +    uint32_t reg_mem_size;
-> +
-> +    hwaddr baseaddr;
-> +    uint32_t regs[TRACE_R_MAX];
-> +    RegisterInfo regs_info[TRACE_R_MAX];
-> +
-> +    hwaddr smemaddr;
-> +    MemoryRegion smem;
-> +    uint32_t smemsize;
-> +    uint8_t *msgs;
-> +};
-> +
-> +#define TYPE_TRACE_RAM_SINK "trace-ram-sink"
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(TraceRamSink, TRACE_RAM_SINK)
-> +
-> +#endif
+Eric
 
 
