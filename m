@@ -4,88 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF73ECFA442
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 20:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90ED9CFA441
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 20:45:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMB8D-0004Z2-18; Thu, 20 Nov 2025 15:19:53 -0500
+	id 1vMBWJ-0000OT-17; Thu, 20 Nov 2025 15:44:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMB8B-0004Ym-Jf
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 15:19:51 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMB8A-0001SF-4I
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 15:19:51 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-42b3ac40ae4so768126f8f.0
- for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 12:19:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763669988; x=1764274788; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q/LNyvQG4XVC2EIShm261QCUAXye4D5qWj6DTyVXrjE=;
- b=sKXOb2CQP/kMP29zBTw2ayPS7zuEeFsQCpRJOlnu+Gzobbd2IDkudbb5MtDlEVPtup
- 8nRmbfFFJsGs7QJRo7gz5SolDfc6kQ+A1HenX3NEYKN0oJ1gbSGL1fkifhv5OJ/VibwU
- e/3bn90Ob9SOLmh1+EhJpZ8EImWfrlQsq75W4PM6xEHJk0ekL70hNogNwaQMNUrS4fRt
- EACc1mwuFcDdOcrRbZRTFU9gMJ4KRVt7z3HLjhsghYh/v5/eXkNX/i0aQNEzBVhLXQEl
- 3vpl86EXdNq38XEB8de4YlEfCBIPvlBjsezM0C0GzJ92r+mvQHCHhh1poM1mXI8y0zmq
- pqYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763669988; x=1764274788;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=q/LNyvQG4XVC2EIShm261QCUAXye4D5qWj6DTyVXrjE=;
- b=WEZBPwmnmreQREq4kLcENRIIf0VMGU7q6b7y755zEpu/NT96/5NMBvD1Ax7AMfLcWk
- dLTjOGCCqsD49MJF/2cEXPiTn6EOK+jRcUnodVbcGnUCg59GNQ+DgWdFIsql9QLba5ZG
- AfT/NfVGmZ8bFhYeeK8tHoNvyydM+zQ5RKglH1TuYebjpcgcWtMOHdgHzu2tdMEkF4IZ
- 2V7USsmkCmfY2Fe+2+GKv5PMuKG4ZMAcx7bZwM3zl4fUO75WnQmOooE5hWNx1SfxZtON
- ormIzivoeMr83w2ViIaE+Iq5Vpvtl1V541SAzk7H7+vRAYc4CpmOzvprOTHvNKFyVRTO
- 2S8A==
-X-Gm-Message-State: AOJu0YwJuglSMwggm2fLWY/DQUQxYB67AxEkCOyceknAcjUYhNTNfp/i
- sZaTLBtdzb4hZXeM+C7wlHw1dDPyGUxdBx0J7rtPmp9t8qWdzPuaa45P0A8GBGd3JjGSdEMo2aC
- 5d9VDdzPSCw==
-X-Gm-Gg: ASbGnctFTwtiUayyrBi5CgN3Bpte/7ZQhZYIO7z0+pEAV9yGSrHwvoY6PHx9+TOwwE6
- YCBUkZAEuw+vf8pD+TEq1kY0pdgIGHHUO123Bp2RZjWQRR2DFh/8Gwo+9SDWbXkE3v512ORgFF2
- otzOq77gsQ6gtBcinIeLWTVxvEUdx4sWRqatqzYMyuWE5vkA3HqrsHXCUUM9glFETGMDAIW7lGy
- qzAURLMvKXEDToPO9iELvJ4I5blKRioNPuGcHZBEAk6sj/KgbroGiUzZQheqtADXncMRZlWu80E
- 6DZRu6pURxkHVFyLPgLmsUEDWMYgGT/H/5thJvlylbOpsacnHPfsmQXjorAIpkoroYuLIrP3L1M
- x9pt1dqe9dY4ByGWlTqnweWFO5nwH2kQV5ju+i8ByE9ho1lPKnqorald2GGI+N3X6cPNFJ77MA8
- sk57+7rP1Ezcl1CMm6kNrU4Pce+4ez4K28tMd+k2lEa/u3YVFHBvYdbLWbRvBpRhqoRM5EOxc=
-X-Google-Smtp-Source: AGHT+IHNm0Ov85ZZjxC6qaQbM+Z4H/+3Mwo7o8+ziOUz1rk3t3p1iYi37H7Pd6vy5hz/qcp3g58O9A==
-X-Received: by 2002:a05:6000:2408:b0:42b:396e:2816 with SMTP id
- ffacd0b85a97d-42cb99f5613mr4430094f8f.17.1763669988372; 
- Thu, 20 Nov 2025 12:19:48 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f34ff3sm7790179f8f.16.2025.11.20.12.19.47
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 20 Nov 2025 12:19:47 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [RFC-PATCH-for-11.0 v2 4/8] target/sparc: Use big-endian variant of
- cpu_ldl_code()
-Date: Thu, 20 Nov 2025 21:19:15 +0100
-Message-ID: <20251120201919.8460-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251120201919.8460-1-philmd@linaro.org>
-References: <20251120201919.8460-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vMBWH-0000Ng-10; Thu, 20 Nov 2025 15:44:45 -0500
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vMBWE-0007YD-MJ; Thu, 20 Nov 2025 15:44:44 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wHRcv4mwhpL95dlV+acrkc+z89HNl5ndl145mCWGgoYFRlGZnYGW1gi3PGUQdfD4Ipf4SreNJOERBZ4XJ9aYJDExkEmI48I8t8Mdfi3b3K1lAsn4HmsDz1NHZURgf1n2Oi33MTkEcbYy+HWUbjR0Dc4g1iTZintMreeaUfHtmfVxVaKVn8xN/tMu9sitzWWYfxoY7bEEldBDAo2KwKdxxexhXZveTw48y8yZkGXEsVRnAUAqNVbMgkzYuYsuTFBkv8N3vjlq5eRRjDEhiAnBICKtwZyN8G9MVTsDrRHu2LsFtmNQZZIDMXZR+oqLD2lcG5SWtKbPV4D2c8SlZD9Y/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LMq7pW711Ds0U1nKqaeXncOFkIsabO2RwB42H2dqTw4=;
+ b=teNUC6idiRwTkLUsyGpcgBL9burpBVSOSvehjpjVcciNxKNQ4nJRMHf+vbHboVmO0srdeMeREQy6tZBlGWsZh2PQERIDZ2eYxuvl/Cj4h09qR2RO0NLgiZT7PJcwl6Ni9PDPirdcBJ4qSSi3qWGcbSzFJQhSso+Fa4VEj634vc+Sbg9KL4s4OUnNg2PktILltaZnQWz6Ephkt68wnbfDDy+yVDYPOqHrRb1Kr0s0BvTOKf8743i4qwIkTg+iNeEFTIKvmn1ToXLQSQQab+a/8L2vvHz72j+r28kWurGFzFxAwAgCT7mhwwlZKOdDdiwz9mMQor5Ab4A+2wJtTCduoA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LMq7pW711Ds0U1nKqaeXncOFkIsabO2RwB42H2dqTw4=;
+ b=jgONgjBOYVn6w8JvGeId4CRI6id/eDlTOJjXiDZlbmEyCeu+7by1ax+cvzoe/MMHxN7sPa7N+WC7k041hUd1m0JZnIeExq5aYoEgYjyp3emecqqU94VGLpEQd3oSaaXks/94a/llUD6RHv2KUfQmXVMsF0wwXaaE7eatUUbsStjXQStkBPfTLSfSFMtkFEw9hG/tK8ubiYMy4qgynrJVwVy0ZwN4VambbKEnH2zJfjnKwNOm8w5chplHx7V7PQFz7BXnVbygE6x3q25WNrwslHuqUq05lqIYY5gCpih5nDl8xelc79PN+xktpFQekqhgH52h2pkpKIzk7ew27nasVg==
+Received: from MN2PR18CA0009.namprd18.prod.outlook.com (2603:10b6:208:23c::14)
+ by IA1PR12MB7664.namprd12.prod.outlook.com (2603:10b6:208:423::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.22; Thu, 20 Nov
+ 2025 20:44:35 +0000
+Received: from BL02EPF00021F6F.namprd02.prod.outlook.com
+ (2603:10b6:208:23c:cafe::97) by MN2PR18CA0009.outlook.office365.com
+ (2603:10b6:208:23c::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.10 via Frontend Transport; Thu,
+ 20 Nov 2025 20:44:35 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BL02EPF00021F6F.mail.protection.outlook.com (10.167.249.11) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9343.9 via Frontend Transport; Thu, 20 Nov 2025 20:44:35 +0000
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 20 Nov
+ 2025 12:44:17 -0800
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
+ (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 20 Nov
+ 2025 12:44:17 -0800
+Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Thu, 20 Nov 2025 12:44:15 -0800
+Date: Thu, 20 Nov 2025 12:44:14 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
+ <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
+ <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <kjaju@nvidia.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v6 07/33] hw/pci/pci: Move pci_init_bus_master() after
+ adding device to bus
+Message-ID: <aR99nhP+06VPIpl2@Asurada-Nvidia>
+References: <20251120132213.56581-1-skolothumtho@nvidia.com>
+ <20251120132213.56581-8-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20251120132213.56581-8-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF00021F6F:EE_|IA1PR12MB7664:EE_
+X-MS-Office365-Filtering-Correlation-Id: 107d925e-12f0-41c7-ad8c-08de28759d9f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|36860700013|82310400026|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?d4Lm87KR0GQwyltDcfgaB5b9proyRe7TIuprkNipTGOShtHPFeJJ17+R8v0d?=
+ =?us-ascii?Q?EpnJNo0f85U2ule3Ve9FKHmZ9mvsg/zZmP2PX5NYH7Okfyjv67OdI+z0BaFT?=
+ =?us-ascii?Q?Vdnf2o0MUaM5/aUBBdlvm5PRQBaXwR6kQJw4f/t1lND5ocWkyTFZ5RrQkmZp?=
+ =?us-ascii?Q?YnnAk1UJhdaUXpD89cdBMghMH0rsEsP19g1AAFYYOH89GtTVjKXmbrqFx+hL?=
+ =?us-ascii?Q?UsZTm7qsZGjOm7YXYs2kvNBi2KoMa2hfJ1QtLhB65PwnuiYkAVV9yKmFVpJB?=
+ =?us-ascii?Q?XGajVMu+IyrAhPXeMPDGDdrRXYMf49+7W73EAVC9XC37loJI9TJY1sXVz00C?=
+ =?us-ascii?Q?5cseXFaIq/Us7IennFvt9Ae4kuJDn20EdGX3pK6Fw9IsqK8xg2rtWEjuqp+d?=
+ =?us-ascii?Q?O2/SuLGMZOhYoLXDfw7xRiBRoGkok5pGlz9HqG9jHsWHgpHYWr/jDJu9zNp2?=
+ =?us-ascii?Q?YSIdTDAfkUI9oAU+Uj0XcFrBL9THwpLABWkyRMpAmUrheDVLpthrkguDqXPz?=
+ =?us-ascii?Q?GfwZW3wd6h3AL7ALYz8it7uWngPynytQBwWtIeXHuP8GdM0EGA0khre2FEzA?=
+ =?us-ascii?Q?F6BkNf/IqiJ6h/RY4DuY6a82gvRkflbYTxdH3FQB1WC0ExqekZr5N876knkZ?=
+ =?us-ascii?Q?MfCPWUl9snpkktJ4/930sK0j4NJKJnw9VYc/JNmPUZxXzGVqz2mU90Wb2nJB?=
+ =?us-ascii?Q?aRagOLKuRwzCs5oaODkCS0vvaHjZJVSyl6qowQDXeBem4eYh6gRa0fh53BbV?=
+ =?us-ascii?Q?0E2jVEH+u02qEq1ahhiZ6ZLa97LvHfQG7Ub4ZjYUSrrCD/B1TkfNPHe75KXg?=
+ =?us-ascii?Q?4Dt0r48brRi/VoAU5t3Ulpj2/A8bSFWalKZxW+KJo/yqNl5PlTtpvC5/S7kl?=
+ =?us-ascii?Q?ZeGEwKo6Kfea/UpopuMBN4bS6cgs5FvHxdX7PrFefSTseA0LdhozsLAm3Wdi?=
+ =?us-ascii?Q?+fjShmoQ3aTkppV7ghAK4pXCtz25IKZ3Q3Tjdmxvw4B4Zjrvr22ikMcyQiEr?=
+ =?us-ascii?Q?s05kDOYHE+58fUw1cVzvND6uy9F8i5VBocVDDFn/KqLrcJrFdjwyA5ybGQJj?=
+ =?us-ascii?Q?I2St3tn4u/oDfRGln6jUyOqvernqlUekljMtQzi2OZouh2dOBLwDr3VqALpk?=
+ =?us-ascii?Q?IlCk541TQCgDICO4qoIzNIsuounNIa/7G4/2c+vrm+wVMkizvgFx298GmhcG?=
+ =?us-ascii?Q?XBh9N97PXksBEhyfHVzRj2Cbiv6nSOMGSdPlbQvvhgJB5n8fZtjTBTid/h/u?=
+ =?us-ascii?Q?ntoRK09Fu48eOBGGLipRAajXffRTQqcUbE0vaiShL7241VE6+x0qZv57H5Nx?=
+ =?us-ascii?Q?RrFRQCTl/D7K+VaRyr94fI49+/8jhsK1hUFgyz7SER76G46SqZplamDQScP2?=
+ =?us-ascii?Q?oPcjVezeavqDoYfy3GkGEKLYc+s6D3yzPtNQoYdD4YrbXHumC2EV2eF2t+bc?=
+ =?us-ascii?Q?GFX3e+sNplsCj+doFExWbWgiIl7+mmFmBf2R4++0rjxhgs2TFdUw7hGmyP62?=
+ =?us-ascii?Q?2VwaaXRggKTgVMq7bYyXbd/ft+bUkaAU45r8Z1ngzGrJ7VoR2F0vPRX4qa9v?=
+ =?us-ascii?Q?fj9XgtgVz5FvOuQdAS8=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(36860700013)(82310400026)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2025 20:44:35.1930 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 107d925e-12f0-41c7-ad8c-08de28759d9f
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF00021F6F.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7664
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,27 +162,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SPARC instructions are always stored in big-endian order.
+On Thu, Nov 20, 2025 at 01:21:47PM +0000, Shameer Kolothum wrote:
+> During PCI hotplug, in do_pci_register_device(), pci_init_bus_master()
+> is called before storing the pci_dev pointer in bus->devices[devfn].
+> 
+> This causes a problem if pci_init_bus_master() (via its
+> get_address_space() callback) attempts to retrieve the device using
+> pci_find_device(), since the PCI device is not yet visible on the bus.
+> 
+> Fix this by moving the pci_init_bus_master() call to after the device
+> has been added to bus->devices[devfn].
+> 
+> This prepares for a subsequent patch where the accel SMMUv3
+> get_address_space() callback retrieves the pci_dev to identify the
+> attached device type.
+> 
+> No functional change intended.
+> 
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/sparc/int32_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
-index b29f693a6bf..a777d17a01c 100644
---- a/target/sparc/int32_helper.c
-+++ b/target/sparc/int32_helper.c
-@@ -151,7 +151,7 @@ void sparc_cpu_do_interrupt(CPUState *cs)
-         if (!env->fsr_qne) {
-             env->fsr_qne = FSR_QNE;
-             env->fq.s.addr = env->pc;
--            env->fq.s.insn = cpu_ldl_code(env, env->pc);
-+            env->fq.s.insn = cpu_ldl_be_code(env, env->pc);
-         }
-         env->pc = env->npc;
-         env->npc = env->npc + 4;
--- 
-2.51.0
-
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
