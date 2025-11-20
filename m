@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56FEFCF649C
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 01:05:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48309CF64A1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 01:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLt50-0000GU-JE; Wed, 19 Nov 2025 20:03:22 -0500
+	id 1vLt4y-0000Eq-PB; Wed, 19 Nov 2025 20:03:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vLski-0004Gw-S9; Wed, 19 Nov 2025 19:42:24 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ id 1vLskh-0004GY-L4; Wed, 19 Nov 2025 19:42:23 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vLskg-0002ST-8M; Wed, 19 Nov 2025 19:42:24 -0500
+ id 1vLskf-0002Rz-QV; Wed, 19 Nov 2025 19:42:23 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id EEA656018E;
- Thu, 20 Nov 2025 00:42:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693A7C19422;
- Thu, 20 Nov 2025 00:42:20 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 73E2C4415E;
+ Thu, 20 Nov 2025 00:42:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B3FEC116B1;
+ Thu, 20 Nov 2025 00:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1763599340;
- bh=jAv/LJcu+YDt6rWODkmoxza4mWGaoWkXIDlrxwdhxdM=;
+ s=k20201202; t=1763599339;
+ bh=kjvlwlRN49L6rvGN48vARsDhBcoPdQj+aJ62SJB8nxo=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=Klg8oOGRz/QH8Zo4ncCwjvSbmJj7QKjy5BZmewlxqWMY1vgQux7uEotrVzGfPskqt
- kP9o5ci8tJTlRTsrzYHHZkFlY3NJxRmqbh3NETAUZQkS17apXR4e8f5r7Ymg63REEW
- 08Qa0uZNci7Ka/S8SIn1iqWTg+PmKOGgoL/cYOibvocWwLmQqHM51n9Zv/vqLchFM4
- T/edUYPrtxWG3swwIB9eDctWNgcHE+mtDTnAvW1p7HOxrnFcFhnoiw0R/ERXz2YhbG
- CNxrWCOb8RUHn0BQSyqQ0RV7E7XZPxBR6wRwJVt64Ne0TznQPApYxmK40J2pywujiK
- udjakWV7C6udQ==
+ b=DyT9TLM9reykGgAtyVEKrdpMd4cjLvMP1Vpk8ERc7JTuV6BmVHLNOeAnPNG9dOHa0
+ EW8w5m+fdcb2rmirowMWbx+tvdoEfN+W4WlYnFVusXowX85HVqUyAoFD1oXvkL3WQj
+ wdq8LLPi4TSVM7gM8yQpRb/fPsVrlONp7/nd/mw0qSm8GQF511nZ8iQoXZqXMGFwjZ
+ fxcPxh3EsSrv9o3puJ3WCQUcN/JZIUT06foN9ZKaoPXgRaBtrtmuV7kDZKumZzHXxa
+ IYrta03gi2IYEcSay9cOztwkAMuFK8FWQqGGvjfuGesDL9Zu9NPNIufvBZGrg6Wc18
+ R58o/hBwR+ULw==
 From: Drew Fustini <fustini@kernel.org>
-Date: Wed, 19 Nov 2025 16:42:22 -0800
-Subject: [PATCH 6/7] hw/riscv: meson: add CBQRI controllers to the build
+Date: Wed, 19 Nov 2025 16:42:18 -0800
+Subject: [PATCH 2/7] hw/riscv: define capabilities of CBQRI controllers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251119-riscv-ssqosid-cbqri-v1-6-3392fc760e48@kernel.org>
+Message-Id: <20251119-riscv-ssqosid-cbqri-v1-2-3392fc760e48@kernel.org>
 References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
 In-Reply-To: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,14 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
  Drew Fustini <fustini@kernel.org>
 X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=fustini@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 19 Nov 2025 20:03:17 -0500
@@ -84,25 +85,132 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nicolas Pitre <npitre@baylibre.com>
 
-Build the CBQRI controllers when RISC-V CBQRI is enabled by Kconfig.
+Define structs to represent the hardware capabilities of capacity and
+bandwidth controllers according to the RISC-V Capacity and Bandwidth QoS
+Register Interface (CBQRI).
 
+Link: https://github.com/riscv-non-isa/riscv-cbqri/blob/main/riscv-cbqri.pdf
 Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+[fustini: add fields introduced in the ratified spec: cunits, rpfx, p]
 Signed-off-by: Drew Fustini <fustini@kernel.org>
 ---
- hw/riscv/meson.build | 1 +
- 1 file changed, 1 insertion(+)
+ MAINTAINERS              |  7 ++++
+ include/hw/riscv/cbqri.h | 89 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 96 insertions(+)
 
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index 2a8d5b136cc4..79e15514b797 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -14,5 +14,6 @@ riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
- 	'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
- riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
- riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
-+riscv_ss.add(when: 'CONFIG_RISCV_CBQRI', if_true: files('cbqri_capacity.c', 'cbqri_bandwidth.c'))
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 38325e0617c4..7afe80f1b17c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -357,6 +357,13 @@ F: target/riscv/XVentanaCondOps.decode
+ F: target/riscv/insn_trans/trans_xventanacondops.c.inc
+ F: disas/riscv-xventana*
  
- hw_arch += {'riscv': riscv_ss}
++RISC-V QoS (Ssqosid ext and CBQRI spec)
++M: Nicolas Pitre <npitre@baylibre.com>
++M: Drew Fustini <fustini@kernel.org>
++L: qemu-riscv@nongnu.org
++S: Supported
++F: include/hw/riscv/cbqri.h
++
+ RENESAS RX CPUs
+ R: Yoshinori Sato <yoshinori.sato@nifty.com>
+ S: Orphan
+diff --git a/include/hw/riscv/cbqri.h b/include/hw/riscv/cbqri.h
+new file mode 100644
+index 000000000000..1b4c69779c0e
+--- /dev/null
++++ b/include/hw/riscv/cbqri.h
+@@ -0,0 +1,89 @@
++/*
++ * RISC-V Capacity and Bandwidth QoS Register Interface
++ * URL: https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
++ *
++ * Copyright (c) 2023 BayLibre SAS
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef HW_RISCV_CBQRI_H
++#define HW_RISCV_CBQRI_H
++
++#include "qemu/typedefs.h"
++
++#define RISCV_CBQRI_VERSION_MAJOR   0
++#define RISCV_CBQRI_VERSION_MINOR   1
++
++#define TYPE_RISCV_CBQRI_CC         "riscv.cbqri.capacity"
++#define TYPE_RISCV_CBQRI_BC         "riscv.cbqri.bandwidth"
++
++/* Capacity Controller hardware capabilities */
++typedef struct RiscvCbqriCapacityCaps {
++    uint16_t nb_mcids;
++    uint16_t nb_rcids;
++
++    uint16_t ncblks;
++    bool cunits:1;
++
++    bool rpfx:1;
++    uint8_t p;
++
++    bool supports_at_data:1;
++    bool supports_at_code:1;
++
++    bool supports_alloc_op_config_limit:1;
++    bool supports_alloc_op_read_limit:1;
++    bool supports_alloc_op_flush_rcid:1;
++
++    bool supports_mon_op_config_event:1;
++    bool supports_mon_op_read_counter:1;
++
++    bool supports_mon_evt_id_none:1;
++    bool supports_mon_evt_id_occupancy:1;
++} RiscvCbqriCapacityCaps;
++
++/* Bandwidth Controller hardware capabilities */
++typedef struct RiscvCbqriBandwidthCaps {
++    uint16_t nb_mcids;
++    uint16_t nb_rcids;
++
++    uint16_t nbwblks;
++    uint16_t mrbwb;
++
++    bool rpfx:1;
++    uint8_t p;
++
++    bool supports_at_data:1;
++    bool supports_at_code:1;
++
++    bool supports_alloc_op_config_limit:1;
++    bool supports_alloc_op_read_limit:1;
++
++    bool supports_mon_op_config_event:1;
++    bool supports_mon_op_read_counter:1;
++
++    bool supports_mon_evt_id_none:1;
++    bool supports_mon_evt_id_rdwr_count:1;
++    bool supports_mon_evt_id_rdonly_count:1;
++    bool supports_mon_evt_id_wronly_count:1;
++} RiscvCbqriBandwidthCaps;
++
++DeviceState *riscv_cbqri_cc_create(hwaddr addr,
++                                   const RiscvCbqriCapacityCaps *caps,
++                                   const char *target_name);
++DeviceState *riscv_cbqri_bc_create(hwaddr addr,
++                                   const RiscvCbqriBandwidthCaps *caps,
++                                   const char *target_name);
++#endif
 
 -- 
 2.43.0
