@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B387CF649C
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 01:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EA81CF58D1
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 01:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLt4y-0000Eu-RG; Wed, 19 Nov 2025 20:03:20 -0500
+	id 1vLtUk-0002WY-JA; Wed, 19 Nov 2025 20:29:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vLskk-0004HI-58; Wed, 19 Nov 2025 19:42:26 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vLtUh-0002Vy-5A
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 20:29:55 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vLskg-0002SV-Ss; Wed, 19 Nov 2025 19:42:25 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 458376019D;
- Thu, 20 Nov 2025 00:42:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD191C116B1;
- Thu, 20 Nov 2025 00:42:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1763599341;
- bh=OZkhn5pjjQ2Q3QlWagDHaKGU9UJL0kw5S10Ux3BRkZE=;
- h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=QHmYXdnWaoJpXVy/6uq27xxsF+ia6BoEd9aaLaQS1/ooDOMBhmoPSeYaSZ2RUTXh1
- b8UB74ZR3WWq/Qq6S/YVVBhOCJ0rePOdLUNLS667BbOtID72jCjTqzC88sA77K5FJD
- XmaJzJrrMTqmDj2ZCkAB0mQYiBfxQBtU2/UFu694jajxGsMZF5Z6LUw8BLrGU8W7YP
- ec0wu+2R0lYLuhbZLhnJKRb480dA1GqWAFH26Zkv2oyq+Fuki5xQJML3X+f3frmzHs
- AIyvMOf0+UIedl27Hoq9t6qCA7WSmzpgma0uJnJ2LS1gev8YYD4Biybx5/qqmJbi0B
- wPlDaG00m1SSw==
-From: Drew Fustini <fustini@kernel.org>
-Date: Wed, 19 Nov 2025 16:42:23 -0800
-Subject: [PATCH 7/7] hw/riscv: add CBQRI controllers to virt machine
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vLtUd-0001ra-Ql
+ for qemu-devel@nongnu.org; Wed, 19 Nov 2025 20:29:54 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AK1TQ8Y040616
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 20 Nov 2025 10:29:26 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=CDRSOb2cz+/Jmuj7EmtJdK72nPeehFqaU+MTNgPADwQ=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763602166; v=1;
+ b=Ht7V9ZNHKs6pmwdaqNrG1srUcgs4MiJ+IFA5hH8riRqjeffqF26xRLKDjKlQ//dQ
+ A3fCeTMFIgwTnAYnCufglTQX5OaMu33N/aAmq4zBH+n4fiv7szQastyYW/eAvsPv
+ GsbW1Iv9EMgrS1G62NU+1G8ndNRKITm/7NeOW97CsX30F2km3yfSonr9OIWxZkSg
+ DU3HEMJ5+3aqfl84rac6ABqKXSObGTXZg2W1O9IXYG1E1+DC7c0edWjY6mw/b04k
+ W1iygdRdSeZ9AHvjXisxsDFEzMnod598Ypz1Vvlw8W9V9zL/d/coMj91S7x39d96
+ +Yn5G5xZsG7hci1Ta+InTQ==
+Message-ID: <d0005fdb-29ac-471f-b2dd-9eddebb6bd83@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 20 Nov 2025 10:29:25 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251119-riscv-ssqosid-cbqri-v1-7-3392fc760e48@kernel.org>
-References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
-In-Reply-To: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <Alistair.Francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>, Nicolas Pitre <npitre@baylibre.com>, 
- =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, 
- Atish Kumar Patra <atishp@rivosinc.com>, 
- Atish Patra <atish.patra@linux.dev>, 
- Vasudevan Srinivasan <vasu@rivosinc.com>, 
- =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>, 
- yunhui cui <cuiyunhui@bytedance.com>, Chen Pei <cp0613@linux.alibaba.com>, 
- guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
- Drew Fustini <fustini@kernel.org>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=fustini@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v4] virtio-gpu: use consistent error checking style for
+ virtio_gpu_create_mapping_iov
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Honglei Huang <honghuan@amd.com>, Markus Armbruster <armbru@redhat.com>
+Cc: alex.bennee@linaro.org, mst@redhat.com, cohuck@redhat.com,
+ pbonzini@redhat.com, qemu-devel@nongnu.org, Ray.Huang@amd.com
+References: <20251117105104.258513-1-honghuan@amd.com>
+ <9f547fbe-ea57-4784-9e37-f79b52b551a9@collabora.com>
+ <87bjl0pzeq.fsf@pond.sub.org>
+ <ed8fd731-8e47-4282-9439-00e6c367b672@collabora.com>
+ <e04a19fb-73bb-471f-94d9-df9b1d08d6d4@amd.com>
+ <cc80a97c-ca8c-4da6-bbd9-77f1c90a299d@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <cc80a97c-ca8c-4da6-bbd9-77f1c90a299d@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 19 Nov 2025 20:03:18 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,88 +81,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicolas Pitre <npitre@baylibre.com>
+On 2025/11/20 4:16, Dmitry Osipenko wrote:
+> On 11/18/25 15:32, Honglei Huang wrote:
+>>
+>>
+>> On 2025/11/18 09:48, Dmitry Osipenko wrote:
+>>> On 11/17/25 16:22, Markus Armbruster wrote:
+>>>> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+>>>>
+>>>>> On 11/17/25 13:51, Honglei Huang wrote:
+>>>>>> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-
+>>>>>> gpu-rutabaga.c
+>>>>>> index ed5ae52acb..ea2928b706 100644
+>>>>>> --- a/hw/display/virtio-gpu-rutabaga.c
+>>>>>> +++ b/hw/display/virtio-gpu-rutabaga.c
+>>>>>> @@ -466,7 +466,7 @@ rutabaga_cmd_attach_backing(VirtIOGPU *g,
+>>>>>> struct virtio_gpu_ctrl_command *cmd)
+>>>>>>          ret = virtio_gpu_create_mapping_iov(g, att_rb.nr_entries,
+>>>>>> sizeof(att_rb),
+>>>>>>                                            cmd, NULL, &res->iov,
+>>>>>> &res->iov_cnt);
+>>>>>> -    CHECK(!ret, cmd);
+>>>>>> +    CHECK(ret >= 0, cmd);
+>>>>>
+>>>>> virtio_gpu_create_mapping_iov() doesn't return positive values, don't
+>>>>> see how this change improves anything. You now saying that ret > 0 is
+>>>>> okay, while it shall never happen.
+>>>>
+>>>> Please see
+>>>>
+>>>>       Subject: Re: [PATCH] virtio-gpu-virgl: fix error handling in
+>>>> virgl_cmd_resource_create_blob
+>>>>       Date: Mon, 17 Nov 2025 08:49:42 +0100
+>>>>       Message-ID: <87ms4lrtd5.fsf@pond.sub.org>
+>>>>       https://lore.kernel.org/qemu-devel/87ms4lrtd5.fsf@pond.sub.org/
+>>>
+>>> It's a rather common bug when errno isn't negated by mistake and a
+>>> positive error code is returned. Ignoring positive values when they
+>>> aren't expected opens door to unnecessary problems, IMO.
+>>>
+>>
+>> How about apply the v2 or v3 firstly to fix the
+>> virtio_gpu_create_mapping_iov() block issue in virtio-gpu?
+>>
+>> I will create another thread for the `CHECK(!ret, cmd);` thing in rutabaga.
+> 
+> There was a precedent of virtio-gpu not handling positive error codes
+> properly [1]. To me there is no problem that needs to be fixed when
+> virtio_gpu_create_mapping_iov() is never expected to return positive
+> values and doesn't return them.
+> 
+> [1]
+> https://lore.kernel.org/qemu-devel/20240129073921.446869-1-dmitry.osipenko@collabora.com/
+> 
+> It's a common expectation that errors are negative. But in practice it's
+> not always true, especially when interacting with external code.
+> 
+> Functionally this patch doesn't change anything. Will leave to Alex and
+> Akihiko to decide on it.
 
-Add CBQRI controllers to the RISC-V virt machine. The device properties
-can be fully configured from the command line:
+I'm fine either way.
 
-  $ qemu-system-riscv64 -M virt ... \
-      -device riscv.cbqri.capacity,mmio_base=0x04828000[,...]
-      -device riscv.cbqri.bandwidth,mmio_base=0x04829000[,...]
+This is a "trade-off" scenario where both two options have upsides and 
+downsides. I often avoid making an argument in that case because it 
+tends to be subjective and cannot be confirmed, leading to bikeshedding.
 
-The mmio_base option is mandatory, the others are optional.
+In my opinion, such a function should not return int in the first place, 
+but should return bool. The wide range of values int can take causes 
+problems; bool allows compilers to enforce that it only returns two values.
 
-Many -device arguments as wanted can be provided as long as their
-mmio regions don't conflict.
+Sign is one of those problems. int leads to a mistake like returning 
+errno instead of -errno.
 
-To see all possible options:
+Functions may have completely different ideas for integer return values. 
+In case of virtio-gpu, virtio_gpu_create_mapping_iov() returns -1 but 
+virtio_gpu_update_dmabuf() returns -EINVAL. This is confusing.
 
-  $ qemu-system-riscv64 -device riscv.cbqri.capacity,help
-  riscv.cbqri.capacity options:
-    alloc_op_config_limit=<bool> -  (default: true)
-    alloc_op_flush_rcid=<bool> -  (default: true)
-    alloc_op_read_limit=<bool> -  (default: true)
-    at_code=<bool>         -  (default: true)
-    at_data=<bool>         -  (default: true)
-    max_mcids=<uint16>     -  (default: 256)
-    max_rcids=<uint16>     -  (default: 64)
-    mmio_base=<uint64>     -  (default: 0)
-    mon_evt_id_none=<bool> -  (default: true)
-    mon_evt_id_occupancy=<bool> -  (default: true)
-    mon_op_config_event=<bool> -  (default: true)
-    mon_op_read_counter=<bool> -  (default: true)
-    ncblks=<uint16>        -  (default: 16)
-    target=<str>
+Sometimes it is still preferred to keep functions returning int for 
+consistency, but looking at include/hw/virtio/virtio-gpu.h, three return 
+bool and three return int, so returning int here does not improve 
+consistency.
 
-  $ qemu-system-riscv64 -device riscv.cbqri.bandwidth,help
-  riscv.cbqri.bandwidth options:
-    alloc_op_config_limit=<bool> -  (default: true)
-    alloc_op_read_limit=<bool> -  (default: true)
-    at_code=<bool>         -  (default: true)
-    at_data=<bool>         -  (default: true)
-    max_mcids=<uint16>     -  (default: 256)
-    max_rcids=<uint16>     -  (default: 64)
-    mmio_base=<uint64>     -  (default: 0)
-    mon_evt_id_none=<bool> -  (default: true)
-    mon_evt_id_rdonly_count=<bool> -  (default: true)
-    mon_evt_id_rdwr_count=<bool> -  (default: true)
-    mon_evt_id_wronly_count=<bool> -  (default: true)
-    mon_op_config_event=<bool> -  (default: true)
-    mon_op_read_counter=<bool> -  (default: true)
-    nbwblks=<uint16>       -  (default: 1024)
-    target=<str>
+That all said, this is a bug fix, not refactoring. This patch does fix a 
+bug and avoids polluting the codebase, so it is fine for me. Perhaps it 
+may be nice to have a patch to convert all functions returning int to 
+bool to avoid pitfalls and improve consistency, but that can be done later.
 
-Boolean options correspond to hardware capabilities that can be disabled
-
-Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
-Signed-off-by: Drew Fustini <fustini@kernel.org>
----
- hw/riscv/virt.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 17909206c7ef..498f606d33b1 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -55,6 +55,7 @@
- #include "hw/pci-host/gpex.h"
- #include "hw/display/ramfb.h"
- #include "hw/acpi/aml-build.h"
-+#include "hw/riscv/cbqri.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/uefi/var-service-api.h"
-@@ -1941,6 +1942,8 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
- #ifdef CONFIG_TPM
-     machine_class_allow_dynamic_sysbus_dev(mc, TYPE_TPM_TIS_SYSBUS);
- #endif
-+    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RISCV_CBQRI_BC);
-+    machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RISCV_CBQRI_CC);
- 
-     object_class_property_add_bool(oc, "aclint", virt_get_aclint,
-                                    virt_set_aclint);
-
--- 
-2.43.0
-
+Regards,
+Akihiko Odaki
 
