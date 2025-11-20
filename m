@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BA9CFA442
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 20:21:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF73ECFA442
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 20:21:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMB95-0006My-RX; Thu, 20 Nov 2025 15:20:48 -0500
+	id 1vMB8D-0004Z2-18; Thu, 20 Nov 2025 15:19:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1vMB92-0006Ae-Hc
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 15:20:45 -0500
-Received: from mail-io1-xd2c.google.com ([2607:f8b0:4864:20::d2c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMB8B-0004Ym-Jf
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 15:19:51 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1vMB90-0001mZ-88
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 15:20:43 -0500
-Received: by mail-io1-xd2c.google.com with SMTP id
- ca18e2360f4ac-9486d008fdbso56154239f.1
- for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 12:20:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMB8A-0001SF-4I
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 15:19:51 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-42b3ac40ae4so768126f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 12:19:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763670040; x=1764274840; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/7cW7CUaGiTDpShaL8t1dEiy+l6vkD+unenEoBfJ9Lk=;
- b=DH1rsBDaCRslss+LA/Uu03duQ80lmTgnK+xJLwj6y81vU8cFNsonf1lJ3uqBCCbCmV
- BreHFLoidH+pwYDu9LFwsiKBk2FH3AJYjGcaFYtG7wDRu16EmeR6agzhivkUF3+tFVC3
- aS8xuVZuPiGCLgA9raRuS/QIA2qIYRjLv4ZJI4/6KUP6tKpUynFIN9NBj3u4WPQyA7CH
- Qr1iOYUHjKFswfB7lOr+1VuRs6ga6gdv4u1qhgpZ8ePvSWNRJBSaAZQdNNJFZ8ac5JE4
- wVt1mCepghmU90aJaYazomfKtiD2TF2hzOvuyS+imIUoHDX1ckkmfcxn5fbhIb5X0L6k
- 7GLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763670040; x=1764274840;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1763669988; x=1764274788; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/7cW7CUaGiTDpShaL8t1dEiy+l6vkD+unenEoBfJ9Lk=;
- b=EIGmcJlPyEgvzd6yTfyaxGZdRKRVqqTI9DP94hYRaG5Gkpi/Ejbn8ibx5ufCkqgMVO
- LrNBRHc1Nb+iPrcJI8wQZzZOzxo3llXfVKHiyE163lCcg216fTf9QVNSCqrIWqXBiChd
- jOYxAu+ZgIcLYogBU0weCRnPER3yLOYIN+bBIWGgnZmqYhVvK9KFDzClS8QL2h9wudOR
- W8DZYU7ZZgWsPL2F/IqdfY0jAyOjqe6nIvdVs/k89yQXkXNn7lG3KwSTX5QOpjTWJ9EX
- GeP9Ncz0TpKDRqlsMcrsTou5f5w34LtDYvxnHggUbCeL5vSnmlbN+A2kioeRBegoCwhO
- ffXw==
-X-Gm-Message-State: AOJu0YxYoqRUQjMDIGq2T5W2fqvNpd19AeuqkisvqiD6UdIlyQoTZayT
- oF90ZY/FMBn7/dECKO3BnPt3PrOWRbF0jDK9VLbtQU+j3nxVjMO7FDoSuEp+/mrOiTnEPdl2Ivr
- QOXvHbcgaqJAtvkWerrjP/EbSIzT/eXG6g7orzAdSBzZd/kJYwgD/fyhE1Q==
-X-Gm-Gg: ASbGncv8bzuEbrnjXd+IV8exQdX4oYCAr723Hw1HZ439N3hKCymsciW2Z8+KocI5SBF
- JrOC4tQkarPlSgD5csI6bRIb/lPQn6ZEg0LRabtzyBAQRGAfYdmyxlu0LTWXneXx1orj4w6W7xb
- Rdmez1/OYF1uhXVVO37xvKBEPzoA3q5T4Rp8KPCKkXNx4jX982PLj29pnAiksFxXnhXvUht+s59
- oeI4e1mQv9xxVBXlAbOFRZOA7yUqhW7hr6mAONSs1FDdTGzjC3Iw4JzfjH2QVRLzQ50wg8=
-X-Google-Smtp-Source: AGHT+IGHpMHHbOBKS36CK+ks0Zw+H8W7/KMXCqqAMGnE9eZdi1rMXB6sCIfanwhT+fzD87P/6i7/3ywKq7gq1Al7k7Y=
-X-Received: by 2002:a05:6638:c3e1:b0:5b7:d710:6632 with SMTP id
- 8926c6da1cb9f-5b956973ad9mr3430921173.11.1763670039901; Thu, 20 Nov 2025
- 12:20:39 -0800 (PST)
-MIME-Version: 1.0
-References: <20251120175914.6515-1-philmd@linaro.org>
-In-Reply-To: <20251120175914.6515-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Date: Thu, 20 Nov 2025 21:20:28 +0100
-X-Gm-Features: AWmQ_blTg7A8LjA0pr8qb3ePbPmty2HHhi1xPGWl7coboQ-qSoqnF-KOhfO8GLs
-Message-ID: <CAPMQPEJMkCnatgF2BggR-RCmpm=vH9ARRB84=uvYgh1E8UB1rw@mail.gmail.com>
-Subject: Re: [RFC-PATCH-for-11.0 0/5] accel/tcg: Remove some MO_TE uses in
- cpu_ld{uw, l, q}_code()
+ bh=q/LNyvQG4XVC2EIShm261QCUAXye4D5qWj6DTyVXrjE=;
+ b=sKXOb2CQP/kMP29zBTw2ayPS7zuEeFsQCpRJOlnu+Gzobbd2IDkudbb5MtDlEVPtup
+ 8nRmbfFFJsGs7QJRo7gz5SolDfc6kQ+A1HenX3NEYKN0oJ1gbSGL1fkifhv5OJ/VibwU
+ e/3bn90Ob9SOLmh1+EhJpZ8EImWfrlQsq75W4PM6xEHJk0ekL70hNogNwaQMNUrS4fRt
+ EACc1mwuFcDdOcrRbZRTFU9gMJ4KRVt7z3HLjhsghYh/v5/eXkNX/i0aQNEzBVhLXQEl
+ 3vpl86EXdNq38XEB8de4YlEfCBIPvlBjsezM0C0GzJ92r+mvQHCHhh1poM1mXI8y0zmq
+ pqYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763669988; x=1764274788;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=q/LNyvQG4XVC2EIShm261QCUAXye4D5qWj6DTyVXrjE=;
+ b=WEZBPwmnmreQREq4kLcENRIIf0VMGU7q6b7y755zEpu/NT96/5NMBvD1Ax7AMfLcWk
+ dLTjOGCCqsD49MJF/2cEXPiTn6EOK+jRcUnodVbcGnUCg59GNQ+DgWdFIsql9QLba5ZG
+ AfT/NfVGmZ8bFhYeeK8tHoNvyydM+zQ5RKglH1TuYebjpcgcWtMOHdgHzu2tdMEkF4IZ
+ 2V7USsmkCmfY2Fe+2+GKv5PMuKG4ZMAcx7bZwM3zl4fUO75WnQmOooE5hWNx1SfxZtON
+ ormIzivoeMr83w2ViIaE+Iq5Vpvtl1V541SAzk7H7+vRAYc4CpmOzvprOTHvNKFyVRTO
+ 2S8A==
+X-Gm-Message-State: AOJu0YwJuglSMwggm2fLWY/DQUQxYB67AxEkCOyceknAcjUYhNTNfp/i
+ sZaTLBtdzb4hZXeM+C7wlHw1dDPyGUxdBx0J7rtPmp9t8qWdzPuaa45P0A8GBGd3JjGSdEMo2aC
+ 5d9VDdzPSCw==
+X-Gm-Gg: ASbGnctFTwtiUayyrBi5CgN3Bpte/7ZQhZYIO7z0+pEAV9yGSrHwvoY6PHx9+TOwwE6
+ YCBUkZAEuw+vf8pD+TEq1kY0pdgIGHHUO123Bp2RZjWQRR2DFh/8Gwo+9SDWbXkE3v512ORgFF2
+ otzOq77gsQ6gtBcinIeLWTVxvEUdx4sWRqatqzYMyuWE5vkA3HqrsHXCUUM9glFETGMDAIW7lGy
+ qzAURLMvKXEDToPO9iELvJ4I5blKRioNPuGcHZBEAk6sj/KgbroGiUzZQheqtADXncMRZlWu80E
+ 6DZRu6pURxkHVFyLPgLmsUEDWMYgGT/H/5thJvlylbOpsacnHPfsmQXjorAIpkoroYuLIrP3L1M
+ x9pt1dqe9dY4ByGWlTqnweWFO5nwH2kQV5ju+i8ByE9ho1lPKnqorald2GGI+N3X6cPNFJ77MA8
+ sk57+7rP1Ezcl1CMm6kNrU4Pce+4ez4K28tMd+k2lEa/u3YVFHBvYdbLWbRvBpRhqoRM5EOxc=
+X-Google-Smtp-Source: AGHT+IHNm0Ov85ZZjxC6qaQbM+Z4H/+3Mwo7o8+ziOUz1rk3t3p1iYi37H7Pd6vy5hz/qcp3g58O9A==
+X-Received: by 2002:a05:6000:2408:b0:42b:396e:2816 with SMTP id
+ ffacd0b85a97d-42cb99f5613mr4430094f8f.17.1763669988372; 
+ Thu, 20 Nov 2025 12:19:48 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7f34ff3sm7790179f8f.16.2025.11.20.12.19.47
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 20 Nov 2025 12:19:47 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000003ac5a206440c6e83"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2c;
- envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-io1-xd2c.google.com
+Subject: [RFC-PATCH-for-11.0 v2 4/8] target/sparc: Use big-endian variant of
+ cpu_ldl_code()
+Date: Thu, 20 Nov 2025 21:19:15 +0100
+Message-ID: <20251120201919.8460-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251120201919.8460-1-philmd@linaro.org>
+References: <20251120201919.8460-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,44 +101,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003ac5a206440c6e83
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+SPARC instructions are always stored in big-endian order.
 
-On Thu, 20 Nov 2025 at 18:59, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g>
-wrote:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/sparc/int32_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Hi Richard,
->
-> Quick attempt to remove MO_TE uses for fixed-endianness targets.
->
-> For the other targets I started to propagate MemOp in the call
-> chain, but since IIUC it is constant, I wonder if it isn't simpler
-> to have a CPUClass::code_endian_mo field, set once with a
-> target_big_endian() call. I can post another RFC to show, WDYT?
->
+diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
+index b29f693a6bf..a777d17a01c 100644
+--- a/target/sparc/int32_helper.c
++++ b/target/sparc/int32_helper.c
+@@ -151,7 +151,7 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+         if (!env->fsr_qne) {
+             env->fsr_qne = FSR_QNE;
+             env->fq.s.addr = env->pc;
+-            env->fq.s.insn = cpu_ldl_code(env, env->pc);
++            env->fq.s.insn = cpu_ldl_be_code(env, env->pc);
+         }
+         env->pc = env->npc;
+         env->npc = env->npc + 4;
+-- 
+2.51.0
 
-Not needed, figured a simpler way, posted as v2.
-
---0000000000003ac5a206440c6e83
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">On Thu, 20 Nov 2025 at 18:59, Philippe Ma=
-thieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro.org=
-</a>&gt; wrote:</div><div class=3D"gmail_quote gmail_quote_container"><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">Hi Richard,<br>
-<br>
-Quick attempt to remove MO_TE uses for fixed-endianness targets.<br>
-<br>
-For the other targets I started to propagate MemOp in the call<br>
-chain, but since IIUC it is constant, I wonder if it isn&#39;t simpler<br>
-to have a CPUClass::code_endian_mo field, set once with a<br>
-target_big_endian() call. I can post another RFC to show, WDYT?<br></blockq=
-uote><div><br></div><div>Not needed, figured a simpler way, posted as v2.</=
-div></div></div>
-
---0000000000003ac5a206440c6e83--
 
