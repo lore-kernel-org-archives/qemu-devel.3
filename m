@@ -4,62 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B0F1CF8854
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 12:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1AC3CF8855
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 12:59:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM4C8-0007PG-08; Thu, 20 Nov 2025 07:55:28 -0500
+	id 1vM4FU-0008IH-C6; Thu, 20 Nov 2025 07:58:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vM4C5-0007NO-8O; Thu, 20 Nov 2025 07:55:25 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vM4C3-0005uv-5s; Thu, 20 Nov 2025 07:55:24 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 851795969FB;
- Thu, 20 Nov 2025 13:55:15 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id UFymzwfFm40x; Thu, 20 Nov 2025 13:55:13 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6C8115969F7; Thu, 20 Nov 2025 13:55:13 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 695685969FC;
- Thu, 20 Nov 2025 13:55:13 +0100 (CET)
-Date: Thu, 20 Nov 2025 13:55:13 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
- kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com, imammedo@redhat.com, 
- anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org, 
- alistair@alistair23.me, edgar.iglesias@gmail.com, npiggin@gmail.com, 
- harshpb@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, sstabellini@kernel.org, 
- anthony@xenproject.org, paul@xen.org, berrange@redhat.com, 
- peterx@redhat.com, farosas@suse.de, eblake@redhat.com, 
- vsementsov@yandex-team.ru, eduardo@habkost.net, marcel.apfelbaum@gmail.com, 
- philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, 
- qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org, 
- qemu-riscv@nongnu.org, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 1/5] hw/core/loader: Make load_elf_hdr() return bool,
- simplify caller
-In-Reply-To: <4fb0a736-4450-47c0-9f9e-6cb86a3b28ea@ventanamicro.com>
-Message-ID: <072c1f11-1bb4-6f19-f847-e4ba07c148c3@eik.bme.hu>
-References: <20251119130855.105479-1-armbru@redhat.com>
- <20251119130855.105479-2-armbru@redhat.com>
- <4fb0a736-4450-47c0-9f9e-6cb86a3b28ea@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vM4FS-0008I9-JP
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 07:58:55 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vM4FQ-0006JJ-KH
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 07:58:54 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-477a1c28778so10339925e9.3
+ for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 04:58:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763643530; x=1764248330; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SxGi2uLeDArqC1hUh/YQ7v216i4ry0QDrRVn6jFL5IU=;
+ b=YyrxG/hFmkQ9IvlgnGQyG1E5vakXJIDs+l9Fd5dxZ9OjPgnMguo/jw3oPN/7jEZXIx
+ hUnrhD/W2E8AXo14BpK57ERu1KX7uSIKdE4owkKTuIuQNpiivadrQMyy2f1ZrbhReuIV
+ TUz5x9ZxvbuisVLx7XKdfwbb/YB9cr/cc+zdWJRQ8OymeNlSlT6HULiqD4sdNPYFtG/N
+ Vn721QOwpN3RROK0HrZbFtecrTtHvM4zjEMB7Jgdz58u8lSivk1P5uwWvDuVbzMViQnu
+ f3nf9R+UXsDymyNo8QNZEdyMFRXgL+n2lSrcvBB7Q+e7P5uv/ny6oGQaaNxzultwIDOK
+ ZEtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763643530; x=1764248330;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SxGi2uLeDArqC1hUh/YQ7v216i4ry0QDrRVn6jFL5IU=;
+ b=beTbvMCMu2vP0Agj/moSl//NEUEdYoHxOJFrJ3ipBOhFsq8AtRzmiUlLl8dxa1KPq3
+ mZLH6DsuZ2qyNva6LXT/BUUxETtqGTKigDOhNrLn6nlRQ4+H9aOypwG9eLSSzP7X8aa+
+ 6qINx0l8zFdTr2mMYha8dhdI9LxCto8tEY36c0cIjK/zLUUDeVcjpSqmBDGxspk89WYR
+ OhkHExmIsT2Gkj/ziI3IdDVjNxPPxBXmFVNGBY5e4Y5Hi8VmNfcPXwJ/4eStY37LKdFd
+ JOFLvRaTygU/pJ6XqMPeAiYmD4ABE7YfxvNQx+vWEwtZ1SMnpGkRTEcp6FHi/qtLEIMg
+ kW6Q==
+X-Gm-Message-State: AOJu0YzokNGQpX7yExg9U2oqvSgCwDBpEdsnI1x7Po9c9rKGA6+G4nNl
+ 6N9H6s2ipKQ7+1To6W1f52j/WhzaZNEm34yef/+VZjbt5vIlQ3FBXU3eAcT9cIIGFUx0ENPx+x3
+ Sh3svoXo=
+X-Gm-Gg: ASbGnctnSfboEcrKIbYHn7JnXgvZeMUYMZKZbCl32WDEUMJffcbvc/5qtepe+PX/vku
+ KOFP3h/LPCwING2HKZJTPMHPdWktROIoKmoX/25tr0MU/Xb61tH3lbTHplAcLTq8/YG2eVpdJIL
+ 6821NQ5bdljn3UiN/4SZN+xYqgA3m2RgjXqbdlv0aIAt9nHRuOMSk1bRSv9Ma6ykzRDr/J8mhur
+ jQkhNfE9rLs85fFdhfWnUbcwvW8FRhrTZT2ibqYWJI4KlULQAgn7tQBHLZc/4Z+4NdyA/r8ATZG
+ Vs8fIgf+WGR1sVQCPDKnsrgG058GnxlsTecwo7aaStX+CX6hCJ0+teUxau0XAQ2evf3fwRSUym5
+ Qx2lt6LZsyhd7x9cAIyjzeDqlF4Cx9tyfnCDNaUkkDoeXbrUGVfCz757QfREmBsEFc7gwkGIKUN
+ sclOsz5PieuNvK
+X-Google-Smtp-Source: AGHT+IFH6y2da/Yz16oQQe/MhduBIkEt0KEj0ZJvZFAGHRZu4xkXvE612789SAdCIaPlaDyzhPDdLQ==
+X-Received: by 2002:a05:600c:3115:b0:477:89d5:fdac with SMTP id
+ 5b1f17b1804b1-477b8a9f9camr32588445e9.31.1763643529884; 
+ Thu, 20 Nov 2025 04:58:49 -0800 (PST)
+Received: from jimm-x1.. ([2a10:d582:31e:0:1328:3324:f0af:9332])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477b831421fsm46082145e9.10.2025.11.20.04.58.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 20 Nov 2025 04:58:49 -0800 (PST)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Jim MacArthur <jim.macarthur@linaro.org>
+Subject: [PATCH v2 0/3] Basic ASID2 Support
+Date: Thu, 20 Nov 2025 12:54:13 +0000
+Message-ID: <20251120125833.123813-1-jim.macarthur@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,123 +98,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 20 Nov 2025, Daniel Henrique Barboza wrote:
-> On 11/19/25 10:08 AM, Markus Armbruster wrote:
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> ---
->
-> Nice cleanup
->
->
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->
->>   include/hw/loader.h |  4 +++-
->>   hw/arm/boot.c       |  6 +-----
->>   hw/core/loader.c    |  8 ++++++--
->>   hw/riscv/spike.c    | 10 +---------
->>   4 files changed, 11 insertions(+), 17 deletions(-)
->> 
->> diff --git a/include/hw/loader.h b/include/hw/loader.h
->> index d035e72748..6f91703503 100644
->> --- a/include/hw/loader.h
->> +++ b/include/hw/loader.h
->> @@ -188,8 +188,10 @@ ssize_t load_elf(const char *filename,
->>    *
->>    * Inspect an ELF file's header. Read its full header contents into a
->>    * buffer and/or determine if the ELF is 64bit.
->> + *
->> + * Returns true on success, false on failure.
->>    */
->> -void load_elf_hdr(const char *filename, void *hdr, bool *is64, Error 
->> **errp);
->> +bool load_elf_hdr(const char *filename, void *hdr, bool *is64, Error 
->> **errp);
->>     ssize_t load_aout(const char *filename, hwaddr addr, int max_sz,
->>                     bool big_endian, hwaddr target_page_size);
->> diff --git a/hw/arm/boot.c b/hw/arm/boot.c
->> index b91660208f..06b303aab8 100644
->> --- a/hw/arm/boot.c
->> +++ b/hw/arm/boot.c
->> @@ -766,16 +766,12 @@ static ssize_t arm_load_elf(struct arm_boot_info 
->> *info, uint64_t *pentry,
->>       int data_swab = 0;
->>       int elf_data_order;
->>       ssize_t ret;
->> -    Error *err = NULL;
->>   -
->> -    load_elf_hdr(info->kernel_filename, &elf_header, &elf_is64, &err);
->> -    if (err) {
->> +    if (!load_elf_hdr(info->kernel_filename, &elf_header, &elf_is64, 
->> NULL)) {
->>           /*
->>            * If the file is not an ELF file we silently return.
->>            * The caller will fall back to try other formats.
->>            */
->> -        error_free(err);
->>           return -1;
->>       }
->>   diff --git a/hw/core/loader.c b/hw/core/loader.c
->> index 590c5b02aa..10687fe1c8 100644
->> --- a/hw/core/loader.c
->> +++ b/hw/core/loader.c
->> @@ -364,8 +364,9 @@ const char *load_elf_strerror(ssize_t error)
->>       }
->>   }
->>   -void load_elf_hdr(const char *filename, void *hdr, bool *is64, Error 
->> **errp)
->> +bool load_elf_hdr(const char *filename, void *hdr, bool *is64, Error 
->> **errp)
->>   {
->> +    bool ok = false;
->>       int fd;
->>       uint8_t e_ident_local[EI_NIDENT];
->>       uint8_t *e_ident;
->> @@ -380,7 +381,7 @@ void load_elf_hdr(const char *filename, void *hdr, bool 
->> *is64, Error **errp)
->>       fd = open(filename, O_RDONLY | O_BINARY);
->>       if (fd < 0) {
->>           error_setg_errno(errp, errno, "Failed to open file: %s", 
->> filename);
->> -        return;
->> +        return false;
->>       }
->>       if (read(fd, hdr, EI_NIDENT) != EI_NIDENT) {
->>           error_setg_errno(errp, errno, "Failed to read file: %s", 
->> filename);
->> @@ -415,8 +416,11 @@ void load_elf_hdr(const char *filename, void *hdr, 
->> bool *is64, Error **errp)
->>           off += br;
->>       }
->>   +    ok = true;
->> +
->>   fail:
->>       close(fd);
->> +    return ok;
->>   }
->>     /* return < 0 if error, otherwise the number of bytes loaded in memory 
->> */
->> diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
->> index b0bab3fe00..8531e1d121 100644
->> --- a/hw/riscv/spike.c
->> +++ b/hw/riscv/spike.c
->> @@ -180,15 +180,7 @@ static void create_fdt(SpikeState *s, const 
->> MemMapEntry *memmap,
->>     static bool spike_test_elf_image(char *filename)
->>   {
->> -    Error *err = NULL;
->> -
->> -    load_elf_hdr(filename, NULL, NULL, &err);
->> -    if (err) {
->> -        error_free(err);
->> -        return false;
->> -    } else {
->> -        return true;
->> -    }
->> +    return load_elf_hdr(filename, NULL, NULL, NULL);
+In V2, I've addressed two comments from Richard Henderson. Thank you for the review.
 
-Does it worth to keep this function or could just be inlined at the two 
-callers now that it's equivalent with load_elf_hdr?
+Changes in v2:
+- patch 2:
+  - Added FNG1, FNG0, A2 to mask for tcr2_el2_write
+- patch 3:
+  - Changed test for ASID from "=0x100" to "!= 0"
 
-Regards,
-BALATON Zoltan
+
+Jim MacArthur (3):
+  target/arm: Enable ID_AA64MMFR4_EL1 register.
+  target/arm: Enable ASID2 for cpu_max, allow writes to FNG1, FNG0, A2
+  tests: Add test for ASID2 and write/read of feature bits
+
+ target/arm/cpu-features.h        |  7 +++++
+ target/arm/cpu-sysregs.h.inc     |  1 +
+ target/arm/helper.c              | 10 ++++--
+ target/arm/tcg/cpu64.c           |  4 +++
+ tests/tcg/aarch64/system/asid2.c | 53 ++++++++++++++++++++++++++++++++
+ 5 files changed, 73 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tcg/aarch64/system/asid2.c
+
+-- 
+2.43.0
+
 
