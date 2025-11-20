@@ -4,114 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B9DCF8860
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 14:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E04F5CF8861
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 14:10:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM5GM-00020o-Ss; Thu, 20 Nov 2025 09:03:55 -0500
+	id 1vM5Lw-000306-9d; Thu, 20 Nov 2025 09:09:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vM5GL-00020V-0e
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 09:03:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vM5Lu-0002zZ-Bt; Thu, 20 Nov 2025 09:09:38 -0500
+Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vM5GJ-0000c3-1I
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 09:03:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763647429;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XVBd8e6c1f6wozihlK1UdgL6512rr1IeABVyWtTZ8rI=;
- b=blkcwT9e7BSdPvGx6uliEjDgN/0jUFYMmRPvo4I8enHkVF7EH59FQO0iSeOU8FnGABnOuH
- Zdz+9LeRnhEE5Wh0zR5cJj19QQmjnvixf1y7vwbKH2WEIulIlgtx5FBYHWnGanGbIX0vfK
- Mp2FHVbfE6lXSVIugtEQPwy8ZA2OFwM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-543-A7e43pJtO4em-ThXIsaJOw-1; Thu, 20 Nov 2025 09:03:47 -0500
-X-MC-Unique: A7e43pJtO4em-ThXIsaJOw-1
-X-Mimecast-MFC-AGG-ID: A7e43pJtO4em-ThXIsaJOw_1763647425
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-429c5f1e9faso950566f8f.3
- for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 06:03:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763647425; x=1764252225; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=XVBd8e6c1f6wozihlK1UdgL6512rr1IeABVyWtTZ8rI=;
- b=uHmURoI+GFNTc0Q1v8SrJ6eDID8yaH8ZbYfvddooL+U820Hvd+W8JEB6g9Y65aoZXz
- M0MWSqxdS5C+bsgpVPSETG3RlUwnudAIlaNz0+ue9B1rRNTJoorl7L2llLPdfBqREdzt
- 2pP1wcendZcQOOzN7SCXo/Jh7aGI5WiDFydRdS6hOjrv+Cw0D9RdRBqjPA3OKXcHY3WA
- f4bxbovzdVHRkIbjj4holp0b5mnlkMaE3ewzTbNHajKa0EHeNW+xjUrqXNs/xcQAxXNb
- J+HAx08/7I3JwOyNnjcDomo3mqJodjVif2fCfNlX8nAVxRZRFWZ1h7HJkP/Oy5+xCKBU
- w06A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763647425; x=1764252225;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=XVBd8e6c1f6wozihlK1UdgL6512rr1IeABVyWtTZ8rI=;
- b=G/cUe8IL8W3HNyl6Q4+iY4yYmp1Lfozee1ZiPihqtqElIrNVrI9asnolvmywYomvjS
- KwJBaZw4bUdy5XZwxSzpZcFxPBJiVGjSNo+JvnOZqXXkO87TX4CC1CTvw+GTDFBcBVkU
- dy1vwhg1fmCZmQDtmB/AtZH+bBe30oYL6qzzwdZsxT2rXA6mQUlk6UA5yosoZgO6uQxV
- DHPG1aOJVAH9AOX7q0uPCuas5sP7mHzictqFrl9i+ZR0tXVLCUrs7/4l6JG5v/DPsOTq
- hMPWY9Ncg4faNKcwSxZnHefexJhJByqoPq1SdJmGb3jpv0XliqwaWhFazPydHq5vyxTw
- wuJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrKUFGxHfysTB51GFwb1+OWcJW2Kac2UUzHCUBZK8EHO/9Ys5Lqdwb2ZBbyDqW6PYHXQuT6l2W4eLv@nongnu.org
-X-Gm-Message-State: AOJu0YzpQ87N8Ms+pEAWYygkQOPF/eGhFvBWzjoOWwLP4WoOKfyQrkra
- DFq6+QmweFeYABkuLXeXXVByhC1d6GwPatdIWPFeDisptOgRfnNm2hI7/StT/tEa4keEdbSmo+b
- ypiMsaSIh/azwbyAQNdCyK7kd3MbwF120PcptZbjVxyg5eeH/0gMGvdOY
-X-Gm-Gg: ASbGncvi9YMLvm/yjzAAGxpnYBsDOSzpHMGCrY2RJqnMiJgbgHAwcKkDuizSiZqww8g
- K8qxy4QcjqlArJQGRZjeCqLByzm4PLir4R3QJUiQjLa7UUDOS9itNFvX+W5uTefOvZFWyp/Ob4c
- vvALDRHCYjaCAgpMmGaaPVZ9K96Juu+ziXQL9cPCsagi6v1gRtJpDI6AT5qaL/+2qM0qL9ok3OF
- 4bQTZd7s/sZ90ZRRh/XFezy29XogoUDtMCPUIo0yGsrpMGlVmVpWZpyAKFWelTbvvPlqWLxBjAp
- KDXUgbTdNNtNr4N7UonijkyVfu72rjgeRnj9XV93lYB8imbICV8kpedQ6p/SXHA6ThPibgRZ3Wk
- 01yk1lIOF4E2KSdYrJsnkoQQLGo5FnIluuvh2EAYmnX+WJFuzhwUTc49Z4pVlACo4cj6NzXs5VK
- TchwGtqPhtNSF+YF77e413WpDjiiO2JBHMJu8ubmE=
-X-Received: by 2002:a5d:5f91:0:b0:3ff:17ac:a34b with SMTP id
- ffacd0b85a97d-42cb9a5fc8cmr2612293f8f.42.1763647424647; 
- Thu, 20 Nov 2025 06:03:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFDI9z8K+iMP2muzgE9JrqTIjC9uBPNSe440bXy+ZxuqafQ0TTNUy4PCqjJ/wkjLWMcaLvtpQ==
-X-Received: by 2002:a5d:5f91:0:b0:3ff:17ac:a34b with SMTP id
- ffacd0b85a97d-42cb9a5fc8cmr2612243f8f.42.1763647424022; 
- Thu, 20 Nov 2025 06:03:44 -0800 (PST)
-Received: from ?IPV6:2003:cf:d717:1f20:85cf:d355:b628:643c?
- (p200300cfd7171f2085cfd355b628643c.dip0.t-ipconnect.de.
- [2003:cf:d717:1f20:85cf:d355:b628:643c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fa3a6bsm5599862f8f.28.2025.11.20.06.03.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Nov 2025 06:03:43 -0800 (PST)
-Message-ID: <f5102d83-b67a-4ae1-b561-00b0d2563eb6@redhat.com>
-Date: Thu, 20 Nov 2025 15:03:41 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vM5Lr-0001zT-Rm; Thu, 20 Nov 2025 09:09:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1763647776; x=1795183776;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Q8KeSbdWaGONmhL/JAY67x/dYgup8wjYuXIA5QQXZyQ=;
+ b=dvvjcxFNeotUvrBht1gOUKkcRomhD1XHHhlvUKqsWaVdO4Dv165shYGH
+ uTaDdWVl9aIIbDBrkB8xdiIV7TRYXzc7DR9hm9YJlXodgvDJNuBdSyRJS
+ G3ww4/MWERHdRoq1L4vudrKdAp3OY3WLn3l3xdiFhBfKBBSsLuKMpu7YP
+ IA/JKX9+A3Z2wKh58J/VJtvxJO5ah9ldLCKym3NNtMAbxdhbsco25pst2
+ /vnTuLdgsY0WYSq9V+4wNRQ8G2lLNLLtO5HuSLnqOGMJAibxLTt0yg4xD
+ YvvzTUv8i1YR6ojb5Mb2jnMLB0PAU+kNUUMgfcDbIsnyvPQG7KLuSKDYm Q==;
+X-CSE-ConnectionGUID: C+zEj1dJTnKjtmiTavXumA==
+X-CSE-MsgGUID: 9bfR1u7nTl27Bm8ERGLIxg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11619"; a="77185545"
+X-IronPort-AV: E=Sophos;i="6.20,213,1758610800"; d="scan'208";a="77185545"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 Nov 2025 06:09:32 -0800
+X-CSE-ConnectionGUID: VVO3mw4KTHO6SfZ7l8tBmg==
+X-CSE-MsgGUID: c9OHG9NLQMSsHndYMuJAbg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,213,1758610800"; d="scan'208";a="228682253"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa001.jf.intel.com with ESMTP; 20 Nov 2025 06:09:30 -0800
+Date: Thu, 20 Nov 2025 22:31:50 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 4/5] rust: migration: implement ToMigrationState for Timer
+Message-ID: <aR8mVll8OeclCBxs@intel.com>
+References: <20251117084752.203219-1-pbonzini@redhat.com>
+ <20251117084752.203219-5-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block-backend: Fix race when resuming queued requests
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: andrey.drobyshev@virtuozzo.com, den@virtuozzo.com, f.ebner@proxmox.com,
- qemu-stable@nongnu.org, qemu-devel@nongnu.org
-References: <20251119172720.135424-1-kwolf@redhat.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20251119172720.135424-1-kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251117084752.203219-5-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,29 +81,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.11.25 18:27, Kevin Wolf wrote:
-> When new requests arrive at a BlockBackend that is currently drained,
-> these requests are queued until the drain section ends.
->
-> There is a race window between blk_root_drained_end() waking up a queued
-> request in an iothread from the main thread and blk_wait_while_drained()
-> actually being woken up in the iothread and calling blk_in_flight(). If
-> the BlockBackend is drained again during this window, drain won't wait
-> for this request and it will sneak in when the BlockBackend is already
-> supposed to be quiesced. This causes assertion failures in
-> bdrv_drain_all_begin() and can have other unintended consequences.
->
-> Fix this by increasing the in_flight counter immediately when scheduling
-> the request to be resumed so that the next drain will wait for it to
-> complete.
->
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+On Mon, Nov 17, 2025 at 09:47:51AM +0100, Paolo Bonzini wrote:
+> Date: Mon, 17 Nov 2025 09:47:51 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 4/5] rust: migration: implement ToMigrationState for Timer
+> X-Mailer: git-send-email 2.51.1
+> 
+> Timer is a complex struct, allow adding it to a struct that
+> uses #[derive(ToMigrationState)]; similar to vmstate_timer, only
+> the expiration time has to be preserved.
+> 
+> In fact, because it is thread-safe, ToMigrationStateShared can
+> also be implemented without needing a cell or mutex that wraps
+> the timer.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   block/block-backend.c | 8 +++++---
->   1 file changed, 5 insertions(+), 3 deletions(-)
+>  rust/hw/timer/hpet/src/device.rs |  1 -
+>  rust/migration/src/migratable.rs | 31 +++++++++++++++++++++++++++++++
+>  rust/util/src/timer.rs           | 10 +++++++++-
+>  3 files changed, 40 insertions(+), 2 deletions(-)
 
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+I just, based on previous discussion, try to complete the timer's
+ToMigrationState - use modify_ns() instead of modify(). This is on top
+of this series.
+
+From eb8b99a45ffccba7e0508141553c2c24c5efa410 Mon Sep 17 00:00:00 2001
+From: Zhao Liu <zhao1.liu@intel.com>
+Date: Thu, 20 Nov 2025 22:26:35 +0800
+Subject: [PATCH] rust/timer: Use modify_ns() in restore_migrated_state()
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ include/qemu/timer.h             | 11 +++++++++++
+ rust/migration/src/migratable.rs |  2 +-
+ rust/util/src/timer.rs           | 21 +++++++++++++++++----
+ util/qemu-timer.c                |  4 ++++
+ 4 files changed, 33 insertions(+), 5 deletions(-)
+
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index 8b561cd6960b..4c6a51d600fb 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -392,6 +392,17 @@ int64_t timerlistgroup_deadline_ns(QEMUTimerListGroup *tlg);
+  * QEMUTimer
+  */
+
++/**
++ * timer_get_scale
++ * @ts: the timer to be accessed
++ *
++ * Get the scale value of the specified timer. The scale represents
++ * the number of nanoseconds per unit of time for this timer.
++ *
++ * Returns: the scale of the timer (nanoseconds per unit)
++ */
++int timer_get_scale(QEMUTimer *ts);
++
+ /**
+  * timer_init_full:
+  * @ts: the timer to be initialised
+diff --git a/rust/migration/src/migratable.rs b/rust/migration/src/migratable.rs
+index c82a6b9a7cf2..7748aac2f27d 100644
+--- a/rust/migration/src/migratable.rs
++++ b/rust/migration/src/migratable.rs
+@@ -260,7 +260,7 @@ fn restore_migrated_state(
+ impl ToMigrationStateShared for util::timer::Timer {
+     fn restore_migrated_state(&self, source: i64, _version_id: u8) -> Result<(), InvalidError> {
+         if source >= 0 {
+-            self.modify(source as u64);
++            self.modify_ns(source as u64);
+         } else {
+             self.delete();
+         }
+diff --git a/rust/util/src/timer.rs b/rust/util/src/timer.rs
+index 4109d84c398a..6114892f084f 100644
+--- a/rust/util/src/timer.rs
++++ b/rust/util/src/timer.rs
+@@ -10,8 +10,8 @@
+ use common::{callbacks::FnCall, Opaque};
+
+ use crate::bindings::{
+-    self, qemu_clock_get_ns, timer_del, timer_expire_time_ns, timer_init_full, timer_mod,
+-    QEMUClockType,
++    self, qemu_clock_get_ns, timer_del, timer_expire_time_ns, timer_get_scale, timer_init_full,
++    timer_mod_ns, QEMUClockType,
+ };
+
+ /// A safe wrapper around [`bindings::QEMUTimer`].
+@@ -96,10 +96,23 @@ pub fn expire_time_ns(&self) -> Option<i64> {
+         i64::try_from(ret).ok()
+     }
+
+-    pub fn modify(&self, expire_time: u64) {
++    fn scale(&self) -> u32 {
++        // SAFETY: the only way to obtain a Timer safely is via methods that
++        // take a Pin<&mut Self>, therefore the timer is pinned. And when Timer
++        // is created, its fields (including scale) are initialized to zero.
++        unsafe { timer_get_scale(self.as_mut_ptr()) }
++            .try_into()
++            .unwrap()
++    }
++
++    pub fn modify_ns(&self, expire_time: u64) {
+         // SAFETY: the only way to obtain a Timer safely is via methods that
+         // take a Pin<&mut Self>, therefore the timer is pinned
+-        unsafe { timer_mod(self.as_mut_ptr(), expire_time as i64) }
++        unsafe { timer_mod_ns(self.as_mut_ptr(), expire_time.try_into().unwrap()) }
++    }
++
++    pub fn modify(&self, expire_time: u64) {
++        self.modify_ns(expire_time * u64::from(self.scale()))
+     }
+
+     pub fn delete(&self) {
+diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+index 2a6be4c7f958..233fdb2aa847 100644
+--- a/util/qemu-timer.c
++++ b/util/qemu-timer.c
+@@ -346,6 +346,10 @@ int qemu_poll_ns(GPollFD *fds, guint nfds, int64_t timeout)
+ #endif
+ }
+
++int timer_get_scale(QEMUTimer *ts)
++{
++    return ts->scale;
++}
+
+ void timer_init_full(QEMUTimer *ts,
+                      QEMUTimerListGroup *timer_list_group, QEMUClockType type,
+--
+2.34.1
+
+
 
 
