@@ -4,68 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E04F5CF8861
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 14:10:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8086CF8862
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 14:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM5Lw-000306-9d; Thu, 20 Nov 2025 09:09:40 -0500
+	id 1vM5WT-0005Zt-QL; Thu, 20 Nov 2025 09:20:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vM5Lu-0002zZ-Bt; Thu, 20 Nov 2025 09:09:38 -0500
-Received: from mgamail.intel.com ([198.175.65.12])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vM5WR-0005ZF-Ba
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 09:20:31 -0500
+Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vM5Lr-0001zT-Rm; Thu, 20 Nov 2025 09:09:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763647776; x=1795183776;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Q8KeSbdWaGONmhL/JAY67x/dYgup8wjYuXIA5QQXZyQ=;
- b=dvvjcxFNeotUvrBht1gOUKkcRomhD1XHHhlvUKqsWaVdO4Dv165shYGH
- uTaDdWVl9aIIbDBrkB8xdiIV7TRYXzc7DR9hm9YJlXodgvDJNuBdSyRJS
- G3ww4/MWERHdRoq1L4vudrKdAp3OY3WLn3l3xdiFhBfKBBSsLuKMpu7YP
- IA/JKX9+A3Z2wKh58J/VJtvxJO5ah9ldLCKym3NNtMAbxdhbsco25pst2
- /vnTuLdgsY0WYSq9V+4wNRQ8G2lLNLLtO5HuSLnqOGMJAibxLTt0yg4xD
- YvvzTUv8i1YR6ojb5Mb2jnMLB0PAU+kNUUMgfcDbIsnyvPQG7KLuSKDYm Q==;
-X-CSE-ConnectionGUID: C+zEj1dJTnKjtmiTavXumA==
-X-CSE-MsgGUID: 9bfR1u7nTl27Bm8ERGLIxg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11619"; a="77185545"
-X-IronPort-AV: E=Sophos;i="6.20,213,1758610800"; d="scan'208";a="77185545"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Nov 2025 06:09:32 -0800
-X-CSE-ConnectionGUID: VVO3mw4KTHO6SfZ7l8tBmg==
-X-CSE-MsgGUID: c9OHG9NLQMSsHndYMuJAbg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,213,1758610800"; d="scan'208";a="228682253"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 20 Nov 2025 06:09:30 -0800
-Date: Thu, 20 Nov 2025 22:31:50 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 4/5] rust: migration: implement ToMigrationState for Timer
-Message-ID: <aR8mVll8OeclCBxs@intel.com>
-References: <20251117084752.203219-1-pbonzini@redhat.com>
- <20251117084752.203219-5-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vM5WP-0004WA-KQ
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 09:20:31 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1763648410; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=bCN5w8qgNGBw0TUoqr9aBIf2zNf00CmXjdMZH7UjuBRHxzZk8k3OsHu2+rsBlXH0MWFt2HtsB7w8Ee/h/LCoj+bUbsHqj6A1JB4tBz3lMDAPXffUf+6kUmFWBBYeWB1IzqmEZo2BtbfctlcTvA+z5Zt/vys3p+oju2OYVqaz77w=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1763648410;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=w5uthRHM4LpgNjaFrP0536GzY9UFJcunFp6zCJkj5us=; 
+ b=SRamdLlz35jj95BA+GVLR9sbkzTxIu7RuXW5X+0Qa3Vfnf+xhvYtMKAQLHweikQ+0uIf4myo7Jl+V0aA5Hz2W4/FfOtdvxPK+V3KgA7/+b4gSfSAjMrgIQiSTr7lG11TLQSwiImCzcVRvTF3YTntEAbrNkIWlmYvkQZXvPq4E/w=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763648409; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=w5uthRHM4LpgNjaFrP0536GzY9UFJcunFp6zCJkj5us=;
+ b=hE/1tgQzp6LLf3NPR1DUBaYS48PYSnl1nJZwpM+L4qtA/hp7vPRaPAf097WPZZQj
+ 78VIsPkPmLYtrBNlodQgfl1e38qdy4ExRrsQvhMMfj2VzYnTQBckh4Uc3UHGZokfkdl
+ hiD1CqUUk5cltpXCa/gMAdL7nEZv0hogy73i9UX4=
+Received: by mx.zohomail.com with SMTPS id 1763648407545517.968040040091;
+ Thu, 20 Nov 2025 06:20:07 -0800 (PST)
+Message-ID: <ac28484e-f5f9-42e3-be2b-721e8e4741e1@collabora.com>
+Date: Thu, 20 Nov 2025 17:19:59 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251117084752.203219-5-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v3 7/7] virtio-gpu: Support mapping hostmem blobs with
+ map_fixed
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Robert Beckett <bob.beckett@collabora.com>
+References: <20251120040632.4036204-1-dmitry.osipenko@collabora.com>
+ <20251120040632.4036204-8-dmitry.osipenko@collabora.com>
+ <0d9d5573-8ab8-42b4-ae1f-82e01b4f4fe3@rsg.ci.i.u-tokyo.ac.jp>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <0d9d5573-8ab8-42b4-ae1f-82e01b4f4fe3@rsg.ci.i.u-tokyo.ac.jp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.184.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,138 +100,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 17, 2025 at 09:47:51AM +0100, Paolo Bonzini wrote:
-> Date: Mon, 17 Nov 2025 09:47:51 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 4/5] rust: migration: implement ToMigrationState for Timer
-> X-Mailer: git-send-email 2.51.1
+On 11/20/25 08:14, Akihiko Odaki wrote:
+>> +    if (virtio_gpu_hostmem_enabled(b->conf)) {
+>> +        map = qemu_ram_mmap(-1, b->conf.hostmem,
+>> qemu_real_host_page_size(),
+>> +                            0, 0);
 > 
-> Timer is a complex struct, allow adding it to a struct that
-> uses #[derive(ToMigrationState)]; similar to vmstate_timer, only
-> the expiration time has to be preserved.
-> 
-> In fact, because it is thread-safe, ToMigrationStateShared can
-> also be implemented without needing a cell or mutex that wraps
-> the timer.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/hw/timer/hpet/src/device.rs |  1 -
->  rust/migration/src/migratable.rs | 31 +++++++++++++++++++++++++++++++
->  rust/util/src/timer.rs           | 10 +++++++++-
->  3 files changed, 40 insertions(+), 2 deletions(-)
+> qemu_ram_mmap() shouldn't be called if !defined(CONFIG_WIN32).
 
-I just, based on previous discussion, try to complete the timer's
-ToMigrationState - use modify_ns() instead of modify(). This is on top
-of this series.
+Indeed, see now that mmap-alloc.c not compiled for Windows target.
+Though, it appears to me that Cygwin provides a compatible mmap()
+implementation that supports MAP_FIXED, thus the mapping likely should
+work on Windows.
 
-From eb8b99a45ffccba7e0508141553c2c24c5efa410 Mon Sep 17 00:00:00 2001
-From: Zhao Liu <zhao1.liu@intel.com>
-Date: Thu, 20 Nov 2025 22:26:35 +0800
-Subject: [PATCH] rust/timer: Use modify_ns() in restore_migrated_state()
+Will re-add !defined(CONFIG_WIN32) and address rest of the comments.
+Thanks a lot for the review.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- include/qemu/timer.h             | 11 +++++++++++
- rust/migration/src/migratable.rs |  2 +-
- rust/util/src/timer.rs           | 21 +++++++++++++++++----
- util/qemu-timer.c                |  4 ++++
- 4 files changed, 33 insertions(+), 5 deletions(-)
-
-diff --git a/include/qemu/timer.h b/include/qemu/timer.h
-index 8b561cd6960b..4c6a51d600fb 100644
---- a/include/qemu/timer.h
-+++ b/include/qemu/timer.h
-@@ -392,6 +392,17 @@ int64_t timerlistgroup_deadline_ns(QEMUTimerListGroup *tlg);
-  * QEMUTimer
-  */
-
-+/**
-+ * timer_get_scale
-+ * @ts: the timer to be accessed
-+ *
-+ * Get the scale value of the specified timer. The scale represents
-+ * the number of nanoseconds per unit of time for this timer.
-+ *
-+ * Returns: the scale of the timer (nanoseconds per unit)
-+ */
-+int timer_get_scale(QEMUTimer *ts);
-+
- /**
-  * timer_init_full:
-  * @ts: the timer to be initialised
-diff --git a/rust/migration/src/migratable.rs b/rust/migration/src/migratable.rs
-index c82a6b9a7cf2..7748aac2f27d 100644
---- a/rust/migration/src/migratable.rs
-+++ b/rust/migration/src/migratable.rs
-@@ -260,7 +260,7 @@ fn restore_migrated_state(
- impl ToMigrationStateShared for util::timer::Timer {
-     fn restore_migrated_state(&self, source: i64, _version_id: u8) -> Result<(), InvalidError> {
-         if source >= 0 {
--            self.modify(source as u64);
-+            self.modify_ns(source as u64);
-         } else {
-             self.delete();
-         }
-diff --git a/rust/util/src/timer.rs b/rust/util/src/timer.rs
-index 4109d84c398a..6114892f084f 100644
---- a/rust/util/src/timer.rs
-+++ b/rust/util/src/timer.rs
-@@ -10,8 +10,8 @@
- use common::{callbacks::FnCall, Opaque};
-
- use crate::bindings::{
--    self, qemu_clock_get_ns, timer_del, timer_expire_time_ns, timer_init_full, timer_mod,
--    QEMUClockType,
-+    self, qemu_clock_get_ns, timer_del, timer_expire_time_ns, timer_get_scale, timer_init_full,
-+    timer_mod_ns, QEMUClockType,
- };
-
- /// A safe wrapper around [`bindings::QEMUTimer`].
-@@ -96,10 +96,23 @@ pub fn expire_time_ns(&self) -> Option<i64> {
-         i64::try_from(ret).ok()
-     }
-
--    pub fn modify(&self, expire_time: u64) {
-+    fn scale(&self) -> u32 {
-+        // SAFETY: the only way to obtain a Timer safely is via methods that
-+        // take a Pin<&mut Self>, therefore the timer is pinned. And when Timer
-+        // is created, its fields (including scale) are initialized to zero.
-+        unsafe { timer_get_scale(self.as_mut_ptr()) }
-+            .try_into()
-+            .unwrap()
-+    }
-+
-+    pub fn modify_ns(&self, expire_time: u64) {
-         // SAFETY: the only way to obtain a Timer safely is via methods that
-         // take a Pin<&mut Self>, therefore the timer is pinned
--        unsafe { timer_mod(self.as_mut_ptr(), expire_time as i64) }
-+        unsafe { timer_mod_ns(self.as_mut_ptr(), expire_time.try_into().unwrap()) }
-+    }
-+
-+    pub fn modify(&self, expire_time: u64) {
-+        self.modify_ns(expire_time * u64::from(self.scale()))
-     }
-
-     pub fn delete(&self) {
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index 2a6be4c7f958..233fdb2aa847 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -346,6 +346,10 @@ int qemu_poll_ns(GPollFD *fds, guint nfds, int64_t timeout)
- #endif
- }
-
-+int timer_get_scale(QEMUTimer *ts)
-+{
-+    return ts->scale;
-+}
-
- void timer_init_full(QEMUTimer *ts,
-                      QEMUTimerListGroup *timer_list_group, QEMUClockType type,
---
-2.34.1
-
-
-
+-- 
+Best regards,
+Dmitry
 
