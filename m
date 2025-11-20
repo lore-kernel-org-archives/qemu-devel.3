@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899EDCF9C7D
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 18:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A662CF9C7B
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 18:00:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM8wK-0006rh-Im; Thu, 20 Nov 2025 12:59:28 -0500
+	id 1vM8wk-0006x9-Ff; Thu, 20 Nov 2025 12:59:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vM8wI-0006qC-Vj
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 12:59:26 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vM8wj-0006wy-5G
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 12:59:53 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vM8wH-0006yg-Fy
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 12:59:26 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-477632b0621so8401495e9.2
- for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 09:59:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vM8wh-000710-L7
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 12:59:52 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-477ba2c1ca2so10354745e9.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 09:59:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763661563; x=1764266363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763661589; x=1764266389; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EctDLYXHneCSbnit9AgBWHWi2e7ESBxD60JGtambQRU=;
- b=ibJDPCeE5luEjrKvlJ3Sjyp5ZYr+x7j7sMwgcqtACGE0NVqZh/gIeM3A0oJISZq4Fv
- 6C04s4Xmbs1Wul8jfYdVDzfheeb4at9GPd7TcKN3G2O6KM0OF2zlttCDYIlgAIfw2b/U
- DJO1eiTFeSy40rth66NalY6keVlBLfTMo8Rha+ncqnDSEyes6NrIuFCrYSuCoOzEiBZm
- lV4/wE6tfeg6jWzogF5IgH0DAQFtYu+XeaA+RW1l8OLJxY7ZyHDm/Rmj87Po0K7jmweO
- jzdSIkybvs4TCOFxgCmxK4GEY1yS8cHSYxzfloXaM7hWt0+SkDQ+lGRAqZuHkwul1q4u
- jCgg==
+ bh=/vtPJyMqgCGMhr6VLZ/OxluMX8n/5Gh0ZiBYoSL9UOw=;
+ b=khCDtdKd6R6DVT9ktn7A8JlQEHPHsEFHsayECfpw1juCnLih5HY3ZMjI9dSmeNH2ts
+ DD7yvqEVzY/L34UYezOKv2c55BXqYPmbjtTNwbkmHIYEffFReaoOyW82RypCDvOj7rKv
+ nnuFHb7NFovVe9ivGqhEmvUKZjKnB9WqeiG10eQh76Usv6wl8a7xNwnB+qx8+kPlrr6M
+ F+HObwIdP/6/p8DMRNj74+avfE3YB+50rN6rGjIZI1ahlOYP1nWbcSkK8Trrf6YciP7l
+ bUBCxVcU4FBq7QrOoymh++FmMyqmc0wn1uDYuJ3tk+JwmbySW0iOFBrwJurgih1aLe9C
+ oKdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763661563; x=1764266363;
+ d=1e100.net; s=20230601; t=1763661589; x=1764266389;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=EctDLYXHneCSbnit9AgBWHWi2e7ESBxD60JGtambQRU=;
- b=loej47bxuN0wDXyuqv6sR97d/eaAYWDnc1wuNh242y+QSOj0HfVTJctXMJJwymGAzL
- ieuHKWnB2E1kEU7FYKu41fuBT4CqKGoMTNlcP4pwOdiM0EtwMTD5FK8pd3bwM/MGRxhF
- J6ia0glVkVAnWlQrSr2uEBxfBr5LOyz8RIXjrBfOzsAKDd+0a1E2Pkv5Mbz3D6BcBw+H
- Pk6kstEjd0oyqXLQhvnPAvKE9MreP3ffRmo1oUihqeEmzWTkomdyYTJHtyfhrpJPlDWu
- OqqDSsUgPl/0msJoahu/tRX8Y4AYzfRyO1epNGSxdIw3MEWumdpasKDE3++NpnqUJ4vX
- NGRQ==
-X-Gm-Message-State: AOJu0Yzq6KnAsxeZaFcUBFLd65enr5hDv/v00sdrB9KB40aRR+B1aftb
- 5akAdCs9SPhKhy499KYgEv37UjLppyWR6uLCQvJenizppjCD/yBVq3OPMUO3KC3o19J9t80BNqs
- 7JEvl51j8Wg==
-X-Gm-Gg: ASbGnctBdIFdn/uYDLwaEDUKUxAH0IU2NFeMAWBIWP8XyKGKDZ4iiXP8s0+XAaSGrSL
- 2bRzPlbsHdoZ/GqLNwLQMug+39nrZDWDDTqSNnL1Dr8dLBBYnj3FWVk1xJucNrcKOfLhCfjIfW+
- NPvBuwPDNIXDZjYGNi0WDJ3Aq/OZOkzUrnwb8kyY662dxvrY1bIKCnvM6AYhti+7MhHmQkVlvoc
- Tu3XaWtXt2hzBWMXcEnF/nHifN+AV3GkS5I7+n/Fy+csbTMwpo/QyHLmTQOeZQfVOsUrgHIStKT
- L/9oTL6ftofaka+4+ahjLtt/+AUxTRgBK2DVNdBd2azByUPhYhoNqq5/d2cS8+BY60MHr+e7PDa
- p2m5vR7dn4MMW1B1qersCKEsrtaRehgOxoCkTSmxqQ3gwWPgRvZkvZmokD9fkl5VBNB+Yb59RqB
- /6GKneOeWIDUueq9eL7tOHnCRX32I6HLD2zcPdk+BRPWvWmj8hQyd6ToBy95RJqf8vLMNPNbE=
-X-Google-Smtp-Source: AGHT+IFGNX+0G/mPk+Y5npk6yjXlbh0i5nDBV7z9KOCIHItBvpAUwHD1RjcnlzfXyUmgzFC/+OQ7Cg==
-X-Received: by 2002:a05:600c:190e:b0:45d:f83b:96aa with SMTP id
- 5b1f17b1804b1-477b867184emr6545485e9.7.1763661563039; 
- Thu, 20 Nov 2025 09:59:23 -0800 (PST)
+ bh=/vtPJyMqgCGMhr6VLZ/OxluMX8n/5Gh0ZiBYoSL9UOw=;
+ b=RW4vQCkF6zg87dAg8eosT/u9+Enwzua8Ogt2tHticTeil3iBGoBHz16eeUBAlVOA15
+ 2QXZbz84jwlARqA5UL6sHimaORc9Wywo+8Gx5L1EiFhcgf1U8ap/EaUQmVbOXZtcyKUt
+ B3Pte8I552YN7xuYjv68Cw7N3A2Ke//YIRAQvNeAHYBg4mVGk4h5Tasq35k8lZG+YXH+
+ nW61Q/oU+sq6w0J5Y7BixULuqH8ZPK1XXqW1vSkjdtMMHU9ERwJy0TgSyHT7Ts39hU+1
+ YatamSvDLruIVfYQaXjZXgxpLm9VbiLAkIz/JP84q03Kg5/VwLSxUdlvQgucdqUeg/sT
+ vklw==
+X-Gm-Message-State: AOJu0Ywgg6j9UJJ8MtH+5nZkTBRYPscJqkaDaIVHzsnqONGykO/I76eY
+ vLsusoyZX6aCn3CxV0tqir42/JDLLZWtWnnArDAEANlakTILZKkyV2o8rcXqfARwQAo+dJ7fC+l
+ 89P1eIh1T6w==
+X-Gm-Gg: ASbGncs+sNzasv1v+8DF4bVxiGuunnpAgFWzJbdvrjjCmMBccmApwICCtpRCOL/N0Xw
+ /eIzYpM12ydMo11wifWRzhv+PEPpiBRrw7yR6rCooRmiFIR3EGc572Bfu9csE31G4Xlit/xsO7x
+ b/VVAGSh4ew+BNjLzJV1yOQepRKCzDDyWEfEYFfCiNLRFlutnF7bndzEd7Gfp25dVnQkWlBW0Xw
+ nGxxrLf59+Vq3wszp/tufGyjcTYHAzTUyXh6G/ug4hRvaambiPIRupx6/owJdhJETs2B86Bo4e0
+ bjh0GXIoX0qazzSEQYDLscQ2AqjKJpDBmdvDINNWSDa/9Bq+lEXXmfCnzU8m2Yap5a8dbCnidex
+ zutBq1kNH6ns731FSAX/CoDNgb+siud7lrBQ4TCxL2s4F1iZ7ORmQ5C6ARqGrjRfcFPakAnbPMZ
+ VOQo+T0h6J7Q0AKzvrE5ZLqlWmaUyfDEGZEfL3vy2fOuKUDwjVmWOBrQGc2o3Y
+X-Google-Smtp-Source: AGHT+IHosIeYbIb/mhgMUy4D75IG6BcbvOXPhXuC5ZhGKOifdEk8EyMRxSwR0mnp7/PbBa9y9j1N2w==
+X-Received: by 2002:a05:600c:46c3:b0:477:58:7cf4 with SMTP id
+ 5b1f17b1804b1-477b8954d83mr44701375e9.4.1763661589417; 
+ Thu, 20 Nov 2025 09:59:49 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477a974cdc8sm72988995e9.2.2025.11.20.09.59.22
+ 5b1f17b1804b1-477bf1e868bsm2057665e9.4.2025.11.20.09.59.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 20 Nov 2025 09:59:22 -0800 (PST)
+ Thu, 20 Nov 2025 09:59:48 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [RFC-PATCH-for-11.0 1/5] accel/tcg: Add endianness variants of
- cpu_ld{uw, l, q}_code()
-Date: Thu, 20 Nov 2025 18:59:10 +0100
-Message-ID: <20251120175914.6515-2-philmd@linaro.org>
+Subject: [RFC-PATCH-for-11.0 5/5] target/s390x: Use big-endian variant of
+ cpu_ld{uw, l}_code()
+Date: Thu, 20 Nov 2025 18:59:14 +0100
+Message-ID: <20251120175914.6515-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251120175914.6515-1-philmd@linaro.org>
 References: <20251120175914.6515-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,80 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow target with fixed-endianness to not use the MO_TE definition.
+S390x is always big-endian.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/accel/tcg/cpu-ldst.h | 43 +++++++++++++++++++++++++++++++-----
- 1 file changed, 37 insertions(+), 6 deletions(-)
+ target/s390x/tcg/mem_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
-index 0de7f5eaa6b..e4ec4e7d367 100644
---- a/include/accel/tcg/cpu-ldst.h
-+++ b/include/accel/tcg/cpu-ldst.h
-@@ -481,25 +481,56 @@ static inline uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr addr)
-     return cpu_ldb_code_mmu(env, addr, oi, 0);
- }
+diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+index 24675fc818d..84d901c2008 100644
+--- a/target/s390x/tcg/mem_helper.c
++++ b/target/s390x/tcg/mem_helper.c
+@@ -2437,7 +2437,7 @@ void HELPER(ex)(CPUS390XState *env, uint32_t ilen, uint64_t r1, uint64_t addr)
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
+     }
  
--static inline uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr addr)
-+static inline uint32_t cpu_lduw_le_code(CPUArchState *env, abi_ptr addr)
- {
-     CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_TEUW, cpu_mmu_index(cs, true));
-+    MemOpIdx oi = make_memop_idx(MO_LEUW, cpu_mmu_index(cs, true));
-     return cpu_ldw_code_mmu(env, addr, oi, 0);
- }
+-    insn = cpu_lduw_code(env, addr);
++    insn = cpu_lduw_be_code(env, addr);
+     opc = insn >> 8;
  
--static inline uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr addr)
-+static inline uint32_t cpu_ldl_le_code(CPUArchState *env, abi_ptr addr)
- {
-     CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_TEUL, cpu_mmu_index(cs, true));
-+    MemOpIdx oi = make_memop_idx(MO_LEUL, cpu_mmu_index(cs, true));
-     return cpu_ldl_code_mmu(env, addr, oi, 0);
- }
- 
--static inline uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
-+static inline uint64_t cpu_ldq_le_code(CPUArchState *env, abi_ptr addr)
- {
-     CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_TEUQ, cpu_mmu_index(cs, true));
-+    MemOpIdx oi = make_memop_idx(MO_LEUQ, cpu_mmu_index(cs, true));
-     return cpu_ldq_code_mmu(env, addr, oi, 0);
- }
- 
-+static inline uint32_t cpu_lduw_be_code(CPUArchState *env, abi_ptr addr)
-+{
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_BEUW, cpu_mmu_index(cs, true));
-+    return cpu_ldw_code_mmu(env, addr, oi, 0);
-+}
-+
-+static inline uint32_t cpu_ldl_be_code(CPUArchState *env, abi_ptr addr)
-+{
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_BEUL, cpu_mmu_index(cs, true));
-+    return cpu_ldl_code_mmu(env, addr, oi, 0);
-+}
-+
-+static inline uint64_t cpu_ldq_be_code(CPUArchState *env, abi_ptr addr)
-+{
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi = make_memop_idx(MO_BEUQ, cpu_mmu_index(cs, true));
-+    return cpu_ldq_code_mmu(env, addr, oi, 0);
-+}
-+
-+#if TARGET_BIG_ENDIAN
-+# define cpu_lduw_code        cpu_lduw_be_code
-+# define cpu_ldl_code         cpu_ldl_be_code
-+# define cpu_ldq_code         cpu_ldq_be_code
-+#else
-+# define cpu_lduw_code        cpu_lduw_le_code
-+# define cpu_ldl_code         cpu_ldl_le_code
-+# define cpu_ldq_code         cpu_ldq_le_code
-+#endif
-+
- #endif /* ACCEL_TCG_CPU_LDST_H */
+     /* Or in the contents of R1[56:63].  */
+@@ -2449,10 +2449,10 @@ void HELPER(ex)(CPUS390XState *env, uint32_t ilen, uint64_t r1, uint64_t addr)
+     case 2:
+         break;
+     case 4:
+-        insn |= (uint64_t)cpu_lduw_code(env, addr + 2) << 32;
++        insn |= (uint64_t)cpu_lduw_be_code(env, addr + 2) << 32;
+         break;
+     case 6:
+-        insn |= (uint64_t)(uint32_t)cpu_ldl_code(env, addr + 2) << 16;
++        insn |= (uint64_t)(uint32_t)cpu_ldl_be_code(env, addr + 2) << 16;
+         break;
+     default:
+         g_assert_not_reached();
 -- 
 2.51.0
 
