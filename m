@@ -4,99 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24AC6CF857F
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 10:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38E8ACF8842
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 11:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM2LG-0006ln-VI; Thu, 20 Nov 2025 05:56:47 -0500
+	id 1vM2TJ-0000rq-M5; Thu, 20 Nov 2025 06:05:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vM2LF-0006le-EW
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 05:56:45 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vM2TE-0000rP-Ot
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 06:05:01 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vM2LD-0005i6-Vs
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 05:56:45 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4775895d69cso3257365e9.0
- for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 02:56:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vM2TB-0007Ji-M6
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 06:05:00 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-477563e28a3so5073665e9.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 03:04:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763636202; x=1764241002; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763636695; x=1764241495; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nKjuggSFAUg6KqDfjRcvr47A8qsmzKEn6yQfgdxStxc=;
- b=FBb9/h5IYAWnSY14r4ilmdvFqgLiXnjeBvrIhOGWg/WAc87xnnuFwEGr3VUXMVlgY2
- l+z5Xy5oDWQtdIn9sJbZDB+QZWOqB2zdPqe/rGZTknQrMKmaeZIR3fESHrELyqJkZJ/z
- oQV/TEUjoi892x8M+rRHT/k1rhjg8tKXYr/XwDrm/dhvS8q4w/uM0pfNdl2gEiPGW92f
- lJm8QtMASV4IiM/B8BkbAtAT9qJh45hU/AD0iIDeDItru3bso+21LlSDrTUkmOYWKZrK
- iWB/NpdSX6ArK+YtF8YS09otrffTCk6xHhh2gGUJaxgGpN24Oe6/Lb39Ja5IxnbwX15U
- NzdA==
+ bh=wxmpX5ymkR8ERQYzCU1wjvpFP+IO6VzFSxu3U5ml0mA=;
+ b=r/5zpd3AwV+35qqCnBIKCDeiE3NB8np2mUD4PdKgkPRzX4/2N4xw8YHqwCUsoBJrGe
+ oGE2mH/GXFXipnp1ufu7CcQUm4jiS8sM7emCmWxD69sxu0qjGbHFZqT6+xRAJUmtuNcr
+ qbEqlh/aP1vFIJpexiGpQitXiDZljGndutTL51lv98mNz/RhLj95q3mq9mV2EveHQiRU
+ to7ULzqBPJefh94FeHkAP9llifgROQtVyMmUnhxAiPsTacaJe25+KvPGagZS5NT/d+6t
+ X+CPYMxaVSmNqN9/KEYmORYOcnD9oyrCfAujvcfbi+IG10cZrR95iJdHNOI5ko5SuVqv
+ ADbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763636202; x=1764241002;
+ d=1e100.net; s=20230601; t=1763636695; x=1764241495;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nKjuggSFAUg6KqDfjRcvr47A8qsmzKEn6yQfgdxStxc=;
- b=ZNoSjCecWmiXfLqRqs2YtsTv/VlD0Qn24LCLatJ0k3HAEEECbiVqK/imvj5K1qbweu
- 1dNbhXKqNjnDsOEG+llhFylRPhM4yiNXHepHWYTPi1+kM4Oa5A7wkJpf9PCcBlnAsb4N
- J3ZVwmAuC+feCiW7qHv4If5nKyyNz0Q/VzYzhSzLvPwPvqH8RFGP5wncSCk1JNHkTEOX
- tmBvFCrKxQO89aQQy9KyY1sOL83n2BCqL0sziQB9d2y9dgFLMl20AhjwHNmTmIs4iY52
- tJmqWe7V5UAAEZdZgOioCLn+TB64h1z7CSFydBzEnNB6H/4Q7ASxJm1W1se9LmfzZNEC
- pCNQ==
+ bh=wxmpX5ymkR8ERQYzCU1wjvpFP+IO6VzFSxu3U5ml0mA=;
+ b=kO+hSWeKaS24Je9sPR01WL6Ie+BicOf1Anj86Mn3JQdfVH6GcBhFFD7Ha2PNaoNcpm
+ Sa5WuhW1ftBX1KAwjg/n69ziLZkSMkoILpRy7jRppFApns9snz6cIusApIH4gtybDql7
+ vmIu0grLGycROffD5qinqLbfbTZSisxViJgYGhhzIo/wrom13H6RQDxndmcIQGqiyyWD
+ I9itr9Ow1/yEUUr8M3ZQB6lsB9tlrQ3ltc1qYVR635p1hcpzKbPLvWQi9gi60Ev3M8D6
+ jlz+OZGvF0WNDiqvbf9NEtiUwZgfI9stF6OoJxDfWJ9vUsq4jksBqO9Z3m47KFjw7dAK
+ c+Qg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWln/Waj0ES12h7AZpL4cxbJP9hV9fWk2noAm9r1H+IIOzvF46ZCte6BAEdvNmDOuZ5/W8UY+csze/k@nongnu.org
-X-Gm-Message-State: AOJu0YyORlmvf+tGkcc1PtxsZoBtbmx0LBg1gExOKuRZG0A0mYAq3YzK
- /PcaIWgSsdf2C6aByngk+5+O1jc6KNqELxqyVBWTy+StvDc4fiLpE/Rk9+ItHunZ6/Q=
-X-Gm-Gg: ASbGncvCJ6GwPTpBw8X6EMv9bhykAnAuHRfQrHQzWNUoF7ldFr+xqF2N6IGmhsr1O4a
- XXywrmxNdUARwX5fhS91/bcmSkCXVqRt2G290putbUkSFzjkTXTjj2WkC/aOWjgJZo5LNTqfbVa
- SYBlF8v5LrYlqmVOQE4cOo6ZM9qrdjvMGi9PurK987hztckiznB+zEahwhvCgEzMupyM1w+Hmlr
- Q6Dj7iqkLnlGZC7UDJPXd4kFNc6kEfPcrJdP7aNxXKf/DC1wvkIIX12Zw//pCDjWjmRIKHC5tyE
- C6vP4ZDDlAmKoluw0K5TE2fjBUHDLqwe0+6QcWXip3x2xW8pFjogpooHb07fRAoSazHaYESyu/L
- 6UyQAiQhhr/rN2/NeX/JcZc10iQvoYOfD3pyKw83bCp3defU4XfkdXKr1cEZ3sKM+d4U5jaZo96
- S7yZYdKEpLtbJnOOyMTIQvfC/pVzSJerXQ9fA3uGnzm+EkZBSZ5ItiKw==
-X-Google-Smtp-Source: AGHT+IE/ltMdyQhuFdkJQZQd27KpfXiQhiOuRxXI4NBm/O6YIw4K7RnUiYATdYui2T0yVJuWQ7ApAg==
-X-Received: by 2002:a05:600c:6c88:b0:477:acb7:7141 with SMTP id
- 5b1f17b1804b1-477b94027f2mr15577635e9.3.1763636202095; 
- Thu, 20 Nov 2025 02:56:42 -0800 (PST)
+ AJvYcCUmxgtOHMt3L+rdkVYMzf3WIDw+LaPSX0IR6OqKQhO5ZJv2Ms9sHkYo/oAFG/rjb73gO9lvsNGo+zNj@nongnu.org
+X-Gm-Message-State: AOJu0YxpNpTq9ziGETDdxIJnNtheynxopqE3AXrRcedHya8FP3lwuWgF
+ Me/hMaR3pvQvOQAQ2lAPqn9S6AKdzy5a26lh7k4AkwXBE45Hwjc1xq9x8F0l/Gyjla4=
+X-Gm-Gg: ASbGncuI5AO2yomeWBN5tqUQnPKpL1a0sB+2QgkxvwZrWuM1wpwVxKqjjUmEy3lmvOx
+ UcZdgKRyMr6wwYVN8RfQgqBG3zhtpWJwPxWC6QvUplqzxSNLRmw/m3ImyZsj2y0yYdpxhghzfVG
+ RpVI8ZolmR1BlIuUHFYeCWso6S2CdmmqHy0c/RWvhiih/3heU12KlQCKAfOpIE/U6epa/8RMdgp
+ rofQw3BM4zgSQhh//fB1KE1zaTXWZGpCSinOjerVUfaHuXmJwN0qWLtV4wjYlDz7a+i7Xed1OdT
+ RBwMSVUWzOdJzS9zCu0zrp6H0f94iAskETK9rrcFr7yQeae/ZDC26x/haGahT+EQjt3TufyNL68
+ h24Fsy3U36PD8ozW79UmikyOlwXm4yD954sdBEnmDr7BZg9ePV1SQ/X4x7DSFgj+HRU59LbRoVq
+ 0hYVjngTa5/hHuslBfyU5O5frm07yRRroNTjYKr1vjMLLJnwMB+KuLeQ==
+X-Google-Smtp-Source: AGHT+IH4NKW1+zOl9S2bm3MKpZ9dfjiaxJ2sGNrNWhKrW7JwvgzprsHsqvpwoLA157lGFmIpAjISUQ==
+X-Received: by 2002:a05:600c:17d1:b0:475:d7fd:5c59 with SMTP id
+ 5b1f17b1804b1-477b9ef509dmr13436225e9.16.1763636694916; 
+ Thu, 20 Nov 2025 03:04:54 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b106b10asm100648985e9.10.2025.11.20.02.56.40
+ 5b1f17b1804b1-477b10763a9sm101448855e9.12.2025.11.20.03.04.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Nov 2025 02:56:41 -0800 (PST)
-Message-ID: <8112f7f0-0800-4b04-99d0-5fcabe5c0f27@linaro.org>
-Date: Thu, 20 Nov 2025 11:56:40 +0100
+ Thu, 20 Nov 2025 03:04:54 -0800 (PST)
+Message-ID: <7601933c-5518-4ecd-98dc-5f01764772d8@linaro.org>
+Date: Thu, 20 Nov 2025 12:04:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-11.0 08/15] tests/functional/x86_64/test_memlock:
- Silence pylint warnings
+Subject: Re: [PATCH 4/9] contrib/gitdm: add Nicholas to the IBM group map
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- John Snow <jsnow@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Radoslaw Biernacki <rad@semihalf.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- Eric Auger <eric.auger@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- BALATON Zoltan <balaton@eik.bme.hu>, Glenn Miles <milesg@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Zhao Liu <zhao1.liu@intel.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20251119082636.43286-1-thuth@redhat.com>
- <20251119082636.43286-9-thuth@redhat.com>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>
+References: <20251119113953.1432303-1-alex.bennee@linaro.org>
+ <20251119113953.1432303-5-alex.bennee@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251119082636.43286-9-thuth@redhat.com>
+In-Reply-To: <20251119113953.1432303-5-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,19 +105,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/11/25 09:26, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> Pylint complains about a missing "encoding" parameter for the open()
-> function here, and about a missing return statement in the "except"
-> block (which cannot happen since skipTest() never returns). Rework
-> the code a little bit to silence the warnings.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/functional/x86_64/test_memlock.py | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+On 19/11/25 12:39, Alex Bennée wrote:
+> Let me know if this should be under "individual contributor".
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+See '2025' section of https://ozlabs.org/about.html ...
+
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   contrib/gitdm/group-map-ibm | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/contrib/gitdm/group-map-ibm b/contrib/gitdm/group-map-ibm
+> index 24d8dc1b865..2d76bbe163a 100644
+> --- a/contrib/gitdm/group-map-ibm
+> +++ b/contrib/gitdm/group-map-ibm
+> @@ -13,3 +13,4 @@ joel@jms.id.au
+>   sjitindarsingh@gmail.com
+>   tommusta@gmail.com
+>   idan.horowitz@gmail.com
+> +npiggin@gmail.com
 
 
