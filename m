@@ -4,96 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB4A0CF8841
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 10:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCC24CF857F
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 10:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM28k-0001T5-Gf; Thu, 20 Nov 2025 05:43:50 -0500
+	id 1vM2B5-0002vw-Q9; Thu, 20 Nov 2025 05:46:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vM28i-0001Sj-JI
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 05:43:48 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vM28g-0003TN-QQ
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 05:43:48 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-477a219dbcaso6920305e9.3
- for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 02:43:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763635424; x=1764240224; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7oHOv6TarlQbLUVDxxSIUN/NgK6M7FvSaHEHJevpMjw=;
- b=n2nu33Ex1CQW8aFAnPBh1w2EZckYOLJLOW4DsyKMSvBv8k0dH9CET2jFuv/Apg0W65
- gGRD/DptzMlKrnrPdiT/Q+//nvvwifOsJiii+i5b7HcTBP+jxXU7GLjbeeEanNsi99SA
- 76zvnM6hdtvZLIsSm6m7GE1gBvNDuKtYMfkGqRA5nliXLV70fxEP3m5wu8xJi+2MEizj
- gPIwQFLqDXe+kaO969PTsqxX59NobpAGAYaPbm/a37yyZyTbHpyCnLi4RFCWAt3MUuIX
- Vlhc4YWKm2kUGocgOPNsBVFYBWJ3EnaWSdAfA4BA+scxyHYy/oD/znmwRHLppEyPdKiL
- SLZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763635424; x=1764240224;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7oHOv6TarlQbLUVDxxSIUN/NgK6M7FvSaHEHJevpMjw=;
- b=C/RJWZGOP4yp3W8gVswcoG0d8hUC9llwVcL7WvdSNLO2uykHH42+aXu94SmGAgcStL
- GUPfQhdM5xZQqogfc2GRGBmrjfOnFx29lA0VqiG/3m+qgIRWi9EHj9paeKiJWHHabAoq
- Y1oR0V6SqfOOLp8nNgkKneDylppm/txODT8nNhEujjOpbTH0i6hDkkp3seTk/leEew7Z
- Ds5D5oL7QPDHGh22zL2CjWDkL54R0oitqxODkeM07kiThjbaKG9n4Vp1L7gwUu3Xw7s2
- Cd8qmDwOh8prfb+wUtqwx6KTqKRAALPNxlye7U5BAn9dIrgzANAZciKiM8L7SJY6hdth
- 9GGw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVbKwlEOWcGjFqSe5TOFLLtVJ8dgOXxGRiGHFEBpFuWVBvmA1Ueo8BkxIyYelPfWamD+KP66YgegzDn@nongnu.org
-X-Gm-Message-State: AOJu0YzCd8PSlT5wy29rdjmz0nD6gec5BeruOuqQsDBe+MjuhtTMAPfc
- EYxU1aedF0JCW/dwvw5GswCcgaTLUbdzfdacVXGpwpZcY+ex+dP7BM6ZVkLuOuHmMDY=
-X-Gm-Gg: ASbGncvlvRTx6TyrNSbdzZ8FjlOboXcBt6jjtMRNNWS3LC2vEmPYzrUYa8lisSZTNjo
- xGauJSS6K6NsQKWVUSjsN/FMM16/a1Wf/p9Fmg9uLsHLoaaVeL7my/AxCCHxjz6ftSOESgMiexx
- EzTrjOLy83OMfErZ+mxnx8hmLeN/7+k19KxMzVbnDXBi6AJFW8VXunyZHOfDb6HvZRSurbObBvj
- GB2e8G6BX4frhOOc77+okrcITIHwtSg7nrTNIMiliyEwTLCLJmI79/uAASMeMP2K1baXIKQzwLF
- Qt16NbhH/7C1p7yqqAkN7kBumTNsLsq8TzI63WcbRUnVbj7+Y1A8TQLRRB6z7lx3qFnmFgdnIIO
- LxMWmxMVe8O44x/cs5Hs9hZWTKTtRAL9sJWed5ji4Tu3pN/c9pDzkxh6Jynh1FOKB4/P3utqzoR
- rrym6jrCKc5k/whFZQg94TMlPplPYoYY3HySeC/Sgre8oJyCqJYCQgCA==
-X-Google-Smtp-Source: AGHT+IEMgQ5A/ngM4oB7aYVi/VQg/3amHDLzSn7jIdobyyplBkmG3dA8rWbfZr7EIB9azrG7yf2qjA==
-X-Received: by 2002:a05:600c:1550:b0:477:a54a:acba with SMTP id
- 5b1f17b1804b1-477b9e1cbe5mr23604595e9.17.1763635424278; 
- Thu, 20 Nov 2025 02:43:44 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477b831421fsm40121035e9.10.2025.11.20.02.43.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Nov 2025 02:43:43 -0800 (PST)
-Message-ID: <43427fac-db73-43af-bbf6-93bc3d978706@linaro.org>
-Date: Thu, 20 Nov 2025 11:43:42 +0100
+ (Exim 4.90_1) (envelope-from <david@kernel.org>)
+ id 1vM2B4-0002uX-8A; Thu, 20 Nov 2025 05:46:14 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@kernel.org>)
+ id 1vM2B2-0003vR-Ax; Thu, 20 Nov 2025 05:46:13 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 170596014E;
+ Thu, 20 Nov 2025 10:46:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138A1C116D0;
+ Thu, 20 Nov 2025 10:46:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1763635567;
+ bh=1Gm5cEgjo3v8iUuKqXhRnSnI1jymVVFPv4YDUhGqOLI=;
+ h=From:To:Cc:Subject:Date:From;
+ b=a1RoonEQuHzYgZhmNREsBV5xDpPXmxP7VC2abPe+4hmlL0k26HAeHfLl0fydGk6lI
+ YDzQ7XPSu+F6cpZXPyd1gB95TT7Rgpng44faObHV/hPj3WsuZuULEvDJ600ASP6Y5v
+ Sxv3cxnmKybOF6wDe9hzUxfqWFfvFbO8ZiTwa9IF7stn3901Hs2iJ41QXFxYkdiq3b
+ e/mHx9wZ6i+tiatzOvn055/blcCEdiKMM57eB4zRgjLAVcU+HWdPWnDlMpri8FA0Rw
+ ByGyaJhUguuq2nWjRKJRxeX0UMo+PmrGvjPKLmW7SpIsR4sumqNUYVDqzZz0fS8QkZ
+ 7O9GnTSqfD19Q==
+From: "David Hildenbrand (Red Hat)" <david@kernel.org>
+To: qemu-devel@nongnu.org,
+	qemu-s390x@nongnu.org
+Cc: "David Hildenbrand (Red Hat)" <david@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: [PATCH v1] MAINTAINERS: s390 maintainer updates
+Date: Thu, 20 Nov 2025 11:46:02 +0100
+Message-ID: <20251120104602.205718-1-david@kernel.org>
+X-Mailer: git-send-email 2.51.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] target/arm/kvm: add kvm-psci-version vcpu property
-Content-Language: en-US
-To: eric.auger@redhat.com, Sebastian Ott <sebott@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, kvmarm@lists.linux.dev
-References: <20251112181357.38999-1-sebott@redhat.com>
- <20251112181357.38999-3-sebott@redhat.com>
- <d4f17034-94d9-4fdb-9d9d-c027dbc1e9b3@linaro.org>
- <c082340f-31b1-e690-8c29-c8d39edf8d35@redhat.com>
- <a2d0ddf1-f00c-42dd-851d-53f2ec789986@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <a2d0ddf1-f00c-42dd-851d-53f2ec789986@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=david@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,101 +72,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/11/25 11:10, Eric Auger wrote:
-> 
-> 
-> On 11/13/25 1:05 PM, Sebastian Ott wrote:
->> Hi Philippe,
->>
->> On Wed, 12 Nov 2025, Philippe Mathieu-Daudé wrote:
->>> On 12/11/25 19:13, Sebastian Ott wrote:
->>>>   Provide a kvm specific vcpu property to override the default
->>>>   (as of kernel v6.13 that would be PSCI v1.3) PSCI version emulated
->>>>   by kvm. Current valid values are: 0.1, 0.2, 1.0, 1.1, 1.2, and 1.3
->>>>
->>>>   Note: in order to support PSCI v0.1 we need to drop vcpu
->>>>   initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
->>>>
->>>>   Signed-off-by: Sebastian Ott <sebott@redhat.com>
->>>>   ---
->>>>     docs/system/arm/cpu-features.rst |  5 +++
->>>>     target/arm/cpu.h                 |  6 +++
->>>>     target/arm/kvm.c                 | 64
->>>> +++++++++++++++++++++++++++++++-
->>>>     3 files changed, 74 insertions(+), 1 deletion(-)
->>>
->>>
->>>>   diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->>>>   index 0d57081e69..e91b1abfb8 100644
->>>>   --- a/target/arm/kvm.c
->>>>   +++ b/target/arm/kvm.c
->>>>   @@ -484,6 +484,49 @@ static void kvm_steal_time_set(Object *obj, bool
->>>>   value, Error **errp)
->>>>         ARM_CPU(obj)->kvm_steal_time = value ? ON_OFF_AUTO_ON :
->>>>     ON_OFF_AUTO_OFF;
->>>>     }
->>>>
->>>>   +struct psci_version {
->>>>   +    uint32_t number;
->>>>   +    const char *str;
->>>>   +};
->>>>   +
->>>>   +static const struct psci_version psci_versions[] = {
->>>>   +    { QEMU_PSCI_VERSION_0_1, "0.1" },
->>>>   +    { QEMU_PSCI_VERSION_0_2, "0.2" },
->>>>   +    { QEMU_PSCI_VERSION_1_0, "1.0" },
->>>>   +    { QEMU_PSCI_VERSION_1_1, "1.1" },
->>>>   +    { QEMU_PSCI_VERSION_1_2, "1.2" },
->>>>   +    { QEMU_PSCI_VERSION_1_3, "1.3" },
->>>>   +    { -1, NULL },
->>>>   +};
->>>
->>>
->>>>   @@ -505,6 +548,12 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
->>>>                                  kvm_steal_time_set);
->>>>         object_property_set_description(obj, "kvm-steal-time",
->>>>                                         "Set off to disable KVM steal
->>>>   time.");
->>>>   +
->>>>   +    object_property_add_str(obj, "kvm-psci-version",
->>>>   kvm_get_psci_version,
->>>>   +                            kvm_set_psci_version);
->>>>   +    object_property_set_description(obj, "kvm-psci-version",
->>>>   +                                    "Set PSCI version. "
->>>>   +                                    "Valid values are 0.1, 0.2,
->>>> 1.0, 1.1,
->>>>   1.2, 1.3");
->>>
->>> Could we enumerate from psci_versions[] here?
->>>
->>
->> Hm, we'd need to concatenate these. Either manually:
->> "Valid values are " psci_versions[0].str ", " psci_versions[1].str ",
->> " ... which is not pretty and still needs to be touched for a new
->> version.
->>
->> Or by a helper function that puts these in a new array and uses smth like
->> g_strjoinv(", ", array);
->> But that's quite a bit of extra code that needs to be maintained without
->> much gain.
->>
->> Or we shy away from the issue and rephrase that to:
->> "Valid values include 1.0, 1.1, 1.2, 1.3"
-> Personally I would vote for keeping it as is
+Unfortunately, I don't have a lot of capacity lately to take good care of
+s390 in QEMU like I used to; and it doesn't look like that situation
+will change. So let me convert myself to a reviewer in the s390 areas I
+co-maintain.
 
-OK.
+Fortunately, we still have two other maintainers for "S390 floating
+interrupt controller", so no action needed on that front.
 
-> (by the way why did you
-> moit 0.1 and 0.2 above?)
-> 
-> Eric
->>
->> Since the intended use case is via machine types and I don't expect a
->> lot of users setting the psci version manually - I vote for option 3.
->>
->> Opinions?
->>
->> Sebastian
-> 
+For the other sections we get two new maintainers: Hendrik will
+maintain "S390 CPU models" and Ilya will co-maintain "S390 TCG CPUs".
+
+Thanks Hendrik and Ilya for stepping up!
+
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Halil Pasic <pasic@linux.ibm.com>
+Cc: Hendrik Brueckner <brueckner@linux.ibm.com>
+Cc: Matthew Rosato <mjrosato@linux.ibm.com>
+Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
+---
+ MAINTAINERS | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d1c5080e50..d048c9f30d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -364,8 +364,8 @@ F: target/rx/
+ 
+ S390 TCG CPUs
+ M: Richard Henderson <richard.henderson@linaro.org>
+-M: David Hildenbrand <david@kernel.org>
+-R: Ilya Leoshkevich <iii@linux.ibm.com>
++M: Ilya Leoshkevich <iii@linux.ibm.com>
++R: David Hildenbrand <david@kernel.org>
+ S: Maintained
+ F: target/s390x/
+ F: target/s390x/tcg
+@@ -1862,7 +1862,8 @@ F: target/s390x/ioinst.c
+ L: qemu-s390x@nongnu.org
+ 
+ S390 CPU models
+-M: David Hildenbrand <david@kernel.org>
++M: Hendrik Brueckner <brueckner@linux.ibm.com>
++R: David Hildenbrand <david@kernel.org>
+ S: Maintained
+ F: target/s390x/cpu_features*.[ch]
+ F: target/s390x/cpu_models.[ch]
+@@ -2919,7 +2920,7 @@ L: qemu-s390x@nongnu.org
+ S390 floating interrupt controller
+ M: Halil Pasic <pasic@linux.ibm.com>
+ M: Christian Borntraeger <borntraeger@linux.ibm.com>
+-M: David Hildenbrand <david@kernel.org>
++R: David Hildenbrand <david@kernel.org>
+ R: Jason Herne <jjherne@linux.ibm.com>
+ S: Supported
+ F: hw/intc/s390_flic*.c
+-- 
+2.51.1
 
 
