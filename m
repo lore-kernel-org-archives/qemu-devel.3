@@ -4,69 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 958AACF64BB
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 06:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E743CF64A2
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 07:53:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLyTA-0005Cn-EU; Thu, 20 Nov 2025 01:48:40 -0500
+	id 1vLzSb-0004CP-BZ; Thu, 20 Nov 2025 02:52:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLyT6-000579-Ab
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 01:48:36 -0500
-Received: from mgamail.intel.com ([192.198.163.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLyT3-0005ql-Cx
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 01:48:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763621313; x=1795157313;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=3EMUWkHSCA/tfmKappgbzqr0Ir4rokgyHvMpaedvWFs=;
- b=JrTI++X8HFePnrzUaoVk7MpwXuamt7/5fELTAe8vHLvEBwMuOzuh+J2K
- 7L5LDObS7fe7JmlAhJe7gqdVh+XnA72KVSrEFOxxl9d9wmuH7frtmh5pR
- 2DpdbvmbYgfBIQsZ9MM959QChwAbHKjw3kWKhTZmFnYGaiyL4oc009M8L
- xKvV48ZV8OG6LPFEiLZe1H2lnNH864vQgyJyIwBZmDY2QaaUua4utbUcB
- IapwVoBrugyXqDpnOkHQzRSEiDik0zBVg9yPwqtdf9SbbldPKX6Eoevoy
- UEtxpSnQAiBJneJHUMgLIJTN7nc12d30KGgSR7J6vQGWc95SifWXLX8KT A==;
-X-CSE-ConnectionGUID: ApjU5gZ9TyG8kv+r9c3VfQ==
-X-CSE-MsgGUID: 0qJsNSkzQduEcH3rwDux0w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11618"; a="65572553"
-X-IronPort-AV: E=Sophos;i="6.19,317,1754982000"; d="scan'208";a="65572553"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Nov 2025 22:48:28 -0800
-X-CSE-ConnectionGUID: Q59W+5vXQommWYSKxiUHnQ==
-X-CSE-MsgGUID: ToipA4PaTV2jIbPGbBDDjg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,317,1754982000"; d="scan'208";a="191296126"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 19 Nov 2025 22:48:27 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Xudong Hao <xudong.hao@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 06/10] i386/cpu: Allow cache to be shared at thread level
-Date: Thu, 20 Nov 2025 15:10:26 +0800
-Message-Id: <20251120071030.961230-7-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251120071030.961230-1-zhao1.liu@intel.com>
-References: <20251120071030.961230-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <kosasihwilliam4@gmail.com>)
+ id 1vLzSY-0004Bq-Ls
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 02:52:06 -0500
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <kosasihwilliam4@gmail.com>)
+ id 1vLzSU-0006mu-3A
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 02:52:06 -0500
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-640c857ce02so525482d50.0
+ for <qemu-devel@nongnu.org>; Wed, 19 Nov 2025 23:47:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1763624832; x=1764229632; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=XHRtT09ONWK9qV5XAP5FbYoBYjc+fXZzlYdG9kcBAbo=;
+ b=QPM5bpwPDGEucBHRpA0aBOqmkYEFsXJxLgGotgBdfFMbsEWV/S1snntYKyyujf0jZ8
+ VjHHBE4vQtboXyd6+ZQcj91bgg5oP1s62OtqvqZ0SSX1BIVQbusmqSqfSQIlwhW30wWw
+ 3o5FVUZ4pOu2/TMmJbXCPm8p+K2Lt+4YMdb3OCKjhQujELYBV6gREIQc97/I1Dlr8t1n
+ 70WkCmuD5BL90PLPA9PttMbxCam8kx+spGG1GPjmkkj18DNHi+EWr9M3HLWnLs5rhczA
+ NgFoefWKLKB5iNicCKhruZeQHrdza/IsjT1sgiZN0H9GS3b4mI0MpH3QtWpZqFrK6JVP
+ +6jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763624832; x=1764229632;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XHRtT09ONWK9qV5XAP5FbYoBYjc+fXZzlYdG9kcBAbo=;
+ b=WNBmM0viYdrLPMveerExFQhuApGRZct41ZbHfZN80t3HY+rWPIOC7psNkOPO7Szgqk
+ FNqLmn6YvWsv2d7nNuNHA+YYJ7p1BDjRtVxn2RSkdPiou3vk+XG90AGiwZ4FvKsalGLw
+ 11MVyTMkCyXmwyEGmrz1fHHTbMocQWilgezql7h4j+fu1FTK5B1vSpnXklW+r2cLkZKX
+ 6wJVun80FUtlGQPnIQjxLeifeq0Ziebh/YgEmu6utqc1hqNmx+nefjEHQGXHsY3+U9e6
+ o22eohbZa94p1/IlOn31jimmrV6rglkBdSPClwJRHthgpOshImfLWab93MNgzUyyS4mv
+ lXoA==
+X-Gm-Message-State: AOJu0YyhWwtJLnF4grk+5ILgnsJZKhuSeEYJ2xa4ZBP/4cxJn9fDNAe3
+ kpOdzXdzQxeMeTOxFfBlHUkB6m0pVBcF4LY8Hh2yoh82qHX0xjbT8CbjcxJ9GOiXty/PdIu7BbJ
+ wqYQ04d1byojRgZsarEQhebHczue5iNY=
+X-Gm-Gg: ASbGncsViX6npgozkjYzTcIVhPJ3bb2JjL0cSMXEL+AhSmFIlGz9Muh6ILRTqTHcCOX
+ nr3bDsigU+zAn92Hrk0aOpZ3vIzT0MYJnLRI/O3oLE2M/cTFEk838OmsWNzPd4eYRRxZ5QtHBNc
+ ADhrgd2CED59Peao+sOgry2DKYWIEyf9nCHmKdgzdTlPl5luMrPnkAaS7jhmIsAcz2S+sNiPjed
+ cKOhjnZWSMKAdcKBN0syjaaZJDfHj/skI3I90NZ2ygQwGfmQ7PzBikNy047b5H3NmvrR+5tmdiA
+ vyR31ViTggpbxlGtxSNMVuxBdboJ
+X-Google-Smtp-Source: AGHT+IGFPRqQUIuH0DNNjuTC+HlxqTnaKtQRdIATsDdVkSVaB3pmDpYaN9NNHd9ExqUTwhYSRMzt3xR68w1gOiuaXeI=
+X-Received: by 2002:a05:690e:42dc:b0:640:e3c6:c419 with SMTP id
+ 956f58d0204a3-642f77b9bb4mr1025280d50.18.1763624832636; Wed, 19 Nov 2025
+ 23:47:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20251119113953.1432303-1-alex.bennee@linaro.org>
+ <20251119113953.1432303-10-alex.bennee@linaro.org>
+In-Reply-To: <20251119113953.1432303-10-alex.bennee@linaro.org>
+From: William Kosasih <kosasihwilliam4@gmail.com>
+Date: Thu, 20 Nov 2025 18:17:01 +1030
+X-Gm-Features: AWmQ_bl48qgxGqVTw1C4gPCqIpLriYj_eaERIeIB5rEyDtveMRX2hbLMesPwcXk
+Message-ID: <CAG66A_cQw+_NpbxCSYW66T05pBy0C+ei6RgqhMDWrVZ8zdU+yA@mail.gmail.com>
+Subject: Re: [PATCH 9/9] contrib/gitdm: add more individual contributors
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000aa9ca9064401e787"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=kosasihwilliam4@gmail.com; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,109 +95,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In CPUID 0x4 leaf, it's possible to make the cache privated at thread
-level when there's no HT within the core. In this case, while cache per
-thread and cache per core are essentially identical, their topology
-information differs in CPUID 0x4.
+--000000000000aa9ca9064401e787
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Diamond Rapids assigns the L1 i/d cache at the thread level. To allow
-accurate emulation of DMR cache topology, remove the cache-per-thread
-restriction in max_thread_ids_for_cache(), which enables CPUID 0x4 to
-support cache per thread topology.
+Acked-by: William Kosasih<kosasihwilliam4@gmail.com>
 
-Given that after adding thread-level support, the topology offset
-information required by max_thread_ids_for_cache() can be sufficiently
-provided by apicid_offset_by_topo_level(), so it's straightforward to
-re-implement max_thread_ids_for_cache() based on
-apicid_offset_by_topo_level() to reduce redundant duplicate codes.
+On Wed, Nov 19, 2025 at 22:10 Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 
-Tested-by: Xudong Hao <xudong.hao@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/cpu.c | 53 ++++++++++++++---------------------------------
- 1 file changed, 15 insertions(+), 38 deletions(-)
+> I'll only add names explicitly acked here as its quite possible people
+> are using different addresses than their company affiliation. Let me
+> know if you want contributions mapped to a company or academia instead.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Cc: Amarjargal Gundjalam <amarjargal16@gmail.com>
+> Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+> Cc: Tomita Moeko <tomitamoeko@gmail.com>
+> Cc: Julian Ganz <neither@nut.email>
+> Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+> Cc: Sean Wei <me@sean.taipei>
+> Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>
+> Cc: Phil Dennis-Jordan <phil@philjordan.eu>
+> Cc: Jackson Donaldson <jackson88044@gmail.com>
+> Cc: Weifeng Liu <weifeng.liu.z@gmail.com>
+> Cc: Roman Penyaev <r.peniaev@gmail.com>
+> Cc: William Kosasih <kosasihwilliam4@gmail.com>
+> Cc: Guenter Roeck <linux@roeck-us.net>
+> Cc: Tanish Desai <tanishdesai37@gmail.com>
+> ---
+>  contrib/gitdm/group-map-individuals | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/contrib/gitdm/group-map-individuals
+> b/contrib/gitdm/group-map-individuals
+> index d7116f5444f..4ac0f99b87c 100644
+> --- a/contrib/gitdm/group-map-individuals
+> +++ b/contrib/gitdm/group-map-individuals
+> @@ -42,3 +42,17 @@ shentey@gmail.com
+>  bmeng@tinylab.org
+>  strahinja.p.jankovic@gmail.com
+>  Jason@zx2c4.com
+> +amarjargal16@gmail.com
+> +soumyajyotisarkar23@gmail.com
+> +tomitamoeko@gmail.com
+> +neither@nut.email
+> +ktokunaga.mail@gmail.com
+> +me@sean.taipei
+> +roy.hopkins@randomman.co.uk
+> +phil@philjordan.eu
+> +jackson88044@gmail.com
+> +weifeng.liu.z@gmail.com
+> +r.peniaev@gmail.com
+> +kosasihwilliam4@gmail.com
+> +linux@roeck-us.net
+> +tanishdesai37@gmail.com
+> --
+> 2.47.3
+>
+>
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 118ce43e4267..c5f1f5d18d07 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -304,33 +304,30 @@ static void encode_cache_cpuid2(X86CPU *cpu,
-                        ((t) == UNIFIED_CACHE) ? CACHE_TYPE_UNIFIED : \
-                        0 /* Invalid value */)
- 
--static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
--                                         enum CpuTopologyLevel share_level)
-+static uint32_t apicid_offset_by_topo_level(X86CPUTopoInfo *topo_info,
-+                                            enum CpuTopologyLevel topo_level)
- {
--    uint32_t num_ids = 0;
--
--    switch (share_level) {
-+    switch (topo_level) {
-+    case CPU_TOPOLOGY_LEVEL_THREAD:
-+        return 0;
-     case CPU_TOPOLOGY_LEVEL_CORE:
--        num_ids = 1 << apicid_core_offset(topo_info);
--        break;
-+        return apicid_core_offset(topo_info);
-     case CPU_TOPOLOGY_LEVEL_MODULE:
--        num_ids = 1 << apicid_module_offset(topo_info);
--        break;
-+        return apicid_module_offset(topo_info);
-     case CPU_TOPOLOGY_LEVEL_DIE:
--        num_ids = 1 << apicid_die_offset(topo_info);
--        break;
-+        return apicid_die_offset(topo_info);
-     case CPU_TOPOLOGY_LEVEL_SOCKET:
--        num_ids = 1 << apicid_pkg_offset(topo_info);
--        break;
-+        return apicid_pkg_offset(topo_info);
-     default:
--        /*
--         * Currently there is no use case for THREAD, so use
--         * assert directly to facilitate debugging.
--         */
-         g_assert_not_reached();
-     }
-+    return 0;
-+}
- 
--    return num_ids - 1;
-+static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
-+                                         enum CpuTopologyLevel share_level)
-+{
-+    return (1 << apicid_offset_by_topo_level(topo_info, share_level)) - 1;
- }
- 
- static uint32_t max_core_ids_in_package(X86CPUTopoInfo *topo_info)
-@@ -398,26 +395,6 @@ static uint32_t num_threads_by_topo_level(X86CPUTopoInfo *topo_info,
-     return 0;
- }
- 
--static uint32_t apicid_offset_by_topo_level(X86CPUTopoInfo *topo_info,
--                                            enum CpuTopologyLevel topo_level)
--{
--    switch (topo_level) {
--    case CPU_TOPOLOGY_LEVEL_THREAD:
--        return 0;
--    case CPU_TOPOLOGY_LEVEL_CORE:
--        return apicid_core_offset(topo_info);
--    case CPU_TOPOLOGY_LEVEL_MODULE:
--        return apicid_module_offset(topo_info);
--    case CPU_TOPOLOGY_LEVEL_DIE:
--        return apicid_die_offset(topo_info);
--    case CPU_TOPOLOGY_LEVEL_SOCKET:
--        return apicid_pkg_offset(topo_info);
--    default:
--        g_assert_not_reached();
--    }
--    return 0;
--}
--
- static uint32_t cpuid1f_topo_type(enum CpuTopologyLevel topo_level)
- {
-     switch (topo_level) {
--- 
-2.34.1
+--000000000000aa9ca9064401e787
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div><div><div><div>
+<div>
+<p dir=3D"auto">Acked-by: William Kosasih&lt;<a href=3D"mailto:kosasihwilli=
+am4@gmail.com" target=3D"_blank">kosasihwilliam4@gmail.com</a>&gt;</p></div=
+></div></div></div></div><div><div><br><div class=3D"gmail_quote"><div dir=
+=3D"ltr" class=3D"gmail_attr">On Wed, Nov 19, 2025 at 22:10 Alex Benn=C3=A9=
+e &lt;<a href=3D"mailto:alex.bennee@linaro.org" target=3D"_blank">alex.benn=
+ee@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:soli=
+d;padding-left:1ex;border-left-color:rgb(204,204,204)">I&#39;ll only add na=
+mes explicitly acked here as its quite possible people<br>
+are using different addresses than their company affiliation. Let me<br>
+know if you want contributions mapped to a company or academia instead.<br>
+<br>
+Signed-off-by: Alex Benn=C3=A9e &lt;<a href=3D"mailto:alex.bennee@linaro.or=
+g" target=3D"_blank">alex.bennee@linaro.org</a>&gt;<br>
+Cc: Amarjargal Gundjalam &lt;<a href=3D"mailto:amarjargal16@gmail.com" targ=
+et=3D"_blank">amarjargal16@gmail.com</a>&gt;<br>
+Cc: Soumyajyotii Ssarkar &lt;<a href=3D"mailto:soumyajyotisarkar23@gmail.co=
+m" target=3D"_blank">soumyajyotisarkar23@gmail.com</a>&gt;<br>
+Cc: Tomita Moeko &lt;<a href=3D"mailto:tomitamoeko@gmail.com" target=3D"_bl=
+ank">tomitamoeko@gmail.com</a>&gt;<br>
+Cc: Julian Ganz &lt;neither@nut.email&gt;<br>
+Cc: Kohei Tokunaga &lt;<a href=3D"mailto:ktokunaga.mail@gmail.com" target=
+=3D"_blank">ktokunaga.mail@gmail.com</a>&gt;<br>
+Cc: Sean Wei &lt;me@sean.taipei&gt;<br>
+Cc: Roy Hopkins &lt;<a href=3D"mailto:roy.hopkins@randomman.co.uk" target=
+=3D"_blank">roy.hopkins@randomman.co.uk</a>&gt;<br>
+Cc: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu" target=3D"=
+_blank">phil@philjordan.eu</a>&gt;<br>
+Cc: Jackson Donaldson &lt;<a href=3D"mailto:jackson88044@gmail.com" target=
+=3D"_blank">jackson88044@gmail.com</a>&gt;<br>
+Cc: Weifeng Liu &lt;<a href=3D"mailto:weifeng.liu.z@gmail.com" target=3D"_b=
+lank">weifeng.liu.z@gmail.com</a>&gt;<br>
+Cc: Roman Penyaev &lt;<a href=3D"mailto:r.peniaev@gmail.com" target=3D"_bla=
+nk">r.peniaev@gmail.com</a>&gt;<br>
+Cc: William Kosasih &lt;<a href=3D"mailto:kosasihwilliam4@gmail.com" target=
+=3D"_blank">kosasihwilliam4@gmail.com</a>&gt;<br>
+Cc: Guenter Roeck &lt;<a href=3D"mailto:linux@roeck-us.net" target=3D"_blan=
+k">linux@roeck-us.net</a>&gt;<br>
+Cc: Tanish Desai &lt;<a href=3D"mailto:tanishdesai37@gmail.com" target=3D"_=
+blank">tanishdesai37@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0contrib/gitdm/group-map-individuals | 14 ++++++++++++++<br>
+=C2=A01 file changed, 14 insertions(+)<br>
+<br>
+diff --git a/contrib/gitdm/group-map-individuals b/contrib/gitdm/group-map-=
+individuals<br>
+index d7116f5444f..4ac0f99b87c 100644<br>
+--- a/contrib/gitdm/group-map-individuals<br>
++++ b/contrib/gitdm/group-map-individuals<br>
+@@ -42,3 +42,17 @@ <a href=3D"mailto:shentey@gmail.com" target=3D"_blank">s=
+hentey@gmail.com</a><br>
+=C2=A0<a href=3D"mailto:bmeng@tinylab.org" target=3D"_blank">bmeng@tinylab.=
+org</a><br>
+=C2=A0<a href=3D"mailto:strahinja.p.jankovic@gmail.com" target=3D"_blank">s=
+trahinja.p.jankovic@gmail.com</a><br>
+=C2=A0<a href=3D"mailto:Jason@zx2c4.com" target=3D"_blank">Jason@zx2c4.com<=
+/a><br>
++<a href=3D"mailto:amarjargal16@gmail.com" target=3D"_blank">amarjargal16@g=
+mail.com</a><br>
++<a href=3D"mailto:soumyajyotisarkar23@gmail.com" target=3D"_blank">soumyaj=
+yotisarkar23@gmail.com</a><br>
++<a href=3D"mailto:tomitamoeko@gmail.com" target=3D"_blank">tomitamoeko@gma=
+il.com</a><br>
++neither@nut.email<br>
++<a href=3D"mailto:ktokunaga.mail@gmail.com" target=3D"_blank">ktokunaga.ma=
+il@gmail.com</a><br>
++me@sean.taipei<br>
++<a href=3D"mailto:roy.hopkins@randomman.co.uk" target=3D"_blank">roy.hopki=
+ns@randomman.co.uk</a><br>
++<a href=3D"mailto:phil@philjordan.eu" target=3D"_blank">phil@philjordan.eu=
+</a><br>
++<a href=3D"mailto:jackson88044@gmail.com" target=3D"_blank">jackson88044@g=
+mail.com</a><br>
++<a href=3D"mailto:weifeng.liu.z@gmail.com" target=3D"_blank">weifeng.liu.z=
+@gmail.com</a><br>
++<a href=3D"mailto:r.peniaev@gmail.com" target=3D"_blank">r.peniaev@gmail.c=
+om</a><br>
++<a href=3D"mailto:kosasihwilliam4@gmail.com" target=3D"_blank">kosasihwill=
+iam4@gmail.com</a><br>
++<a href=3D"mailto:linux@roeck-us.net" target=3D"_blank">linux@roeck-us.net=
+</a><br>
++<a href=3D"mailto:tanishdesai37@gmail.com" target=3D"_blank">tanishdesai37=
+@gmail.com</a><br>
+-- <br>
+2.47.3<br>
+<br>
+</blockquote></div></div>
+</div>
+
+--000000000000aa9ca9064401e787--
 
