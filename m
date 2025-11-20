@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A5DCF9C7A
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 19:14:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E22CFA444
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 19:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMA6x-0006kt-Pv; Thu, 20 Nov 2025 14:14:31 -0500
+	id 1vMA6x-0006kY-Kf; Thu, 20 Nov 2025 14:14:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMA6c-0005xP-OE
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 14:14:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMA6a-0005vy-EC
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 14:14:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMA6R-00077p-KZ
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 14:14:10 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMA6R-00077h-3v
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 14:14:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1763666037;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s+f/YPMyhiw0MODLrT/W+QVnkFDpo2Q2VNPNda433v0=;
- b=epT6d98VlrmCWnXJprpJ/aArsiaAKhaNh789m/ge+38H/a+r4Tpcak8ESaqxR0mwasruB1
- GE5Op6q3JJhLZgspFjDJaRV70nJmz1op8OnjvH7la1bpXR9/wQjeaOQSqfu39rVPR0LzSH
- nqZ5K7PYK0oVv/NkWhz+zBju9pV1ksU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=/xtGdog7VgzIfQmeSQKWrv+vlf3j6c1d+FLveMONGz8=;
+ b=cjNNtF68M4hNzwwbwZra1hIglRgSjANmB/vZ8aV0qAsir2T+jI4e/6qkiwgLh3EPEaLDm5
+ 9gsyOSCHAWthfZxKiaptUM51ewlyuEE+FxNbHv9OczYhKLbdJ5FSrjCCr3u33jvF+VZeog
+ qFTa2CB/aESqfjrXKxqCIPZYPUyEQj8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-93-m10SDGhuPzaFE5VhiICI4w-1; Thu,
- 20 Nov 2025 14:13:53 -0500
-X-MC-Unique: m10SDGhuPzaFE5VhiICI4w-1
-X-Mimecast-MFC-AGG-ID: m10SDGhuPzaFE5VhiICI4w_1763666027
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-450-gSO2B6tkNASi5AxKkflOCA-1; Thu,
+ 20 Nov 2025 14:13:52 -0500
+X-MC-Unique: gSO2B6tkNASi5AxKkflOCA-1
+X-Mimecast-MFC-AGG-ID: gSO2B6tkNASi5AxKkflOCA_1763666027
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DEFC1800650; Thu, 20 Nov 2025 19:13:47 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB4CF1955F28; Thu, 20 Nov 2025 19:13:46 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EB2471955F67; Thu, 20 Nov 2025 19:13:45 +0000 (UTC)
+ id 09C651955F66; Thu, 20 Nov 2025 19:13:46 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 6C27521E65DA; Thu, 20 Nov 2025 20:13:39 +0100 (CET)
+ id 612BE21E66B9; Thu, 20 Nov 2025 20:13:39 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: arei.gonglei@huawei.com, pizhenwei@bytedance.com, alistair.francis@wdc.com,
@@ -65,16 +65,16 @@ Cc: arei.gonglei@huawei.com, pizhenwei@bytedance.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
  marcandre.lureau@redhat.com, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
  xen-devel@lists.xenproject.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
-Subject: [PATCH 08/14] blkdebug: Use error_setg_file_open() for a better error
- message
-Date: Thu, 20 Nov 2025 20:13:33 +0100
-Message-ID: <20251120191339.756429-9-armbru@redhat.com>
+Subject: [PATCH 06/14] hw/virtio: Use error_setg_file_open() for a better
+ error message
+Date: Thu, 20 Nov 2025 20:13:31 +0100
+Message-ID: <20251120191339.756429-7-armbru@redhat.com>
 In-Reply-To: <20251120191339.756429-1-armbru@redhat.com>
 References: <20251120191339.756429-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -101,31 +101,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 The error message changes from
 
-    Could not read blkdebug config file: REASON
+    vhost-vsock: failed to open vhost device: REASON
 
 to
 
-    Could not open 'FNAME': REASON
+    Could not open '/dev/vhost-vsock': REASON
 
 I think the exact file name is more useful to know than the file's
 purpose.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- block/blkdebug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/virtio/vhost-vsock.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/block/blkdebug.c b/block/blkdebug.c
-index c54aee0c84..8a4a8cb85e 100644
---- a/block/blkdebug.c
-+++ b/block/blkdebug.c
-@@ -288,7 +288,7 @@ static int read_config(BDRVBlkdebugState *s, const char *filename,
-     if (filename) {
-         f = fopen(filename, "r");
-         if (f == NULL) {
--            error_setg_errno(errp, errno, "Could not read blkdebug config file");
-+            error_setg_file_open(errp, errno, filename);
-             return -errno;
+diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+index 107d88babe..7940b60d8a 100644
+--- a/hw/virtio/vhost-vsock.c
++++ b/hw/virtio/vhost-vsock.c
+@@ -153,8 +153,7 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+     } else {
+         vhostfd = open("/dev/vhost-vsock", O_RDWR);
+         if (vhostfd < 0) {
+-            error_setg_errno(errp, errno,
+-                             "vhost-vsock: failed to open vhost device");
++            error_setg_file_open(errp, errno, "/dev/vhost-vsock");
+             return;
          }
  
 -- 
