@@ -4,53 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 374D4CF8854
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 12:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B0F1CF8854
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 12:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM40K-0001yA-KT; Thu, 20 Nov 2025 07:43:16 -0500
+	id 1vM4C8-0007PG-08; Thu, 20 Nov 2025 07:55:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1vM40G-0001xA-SP
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 07:43:12 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1vM40D-00043L-2y
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 07:43:12 -0500
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bx3tLQDB9pwhcmAA--.16409S3;
- Thu, 20 Nov 2025 20:42:56 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJBxysDPDB9plJg5AQ--.5496S4;
- Thu, 20 Nov 2025 20:42:56 +0800 (CST)
-From: Xianglai Li <lixianglai@loongson.cn>
-To: qemu-devel@nongnu.org,
-	lixianglai@loongson.cn
-Cc: Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Song Gao <gaosong@loongson.cn>
-Subject: [PATCH V4 2/2] fix pci device can't alloc irq from fdt
-Date: Thu, 20 Nov 2025 20:18:42 +0800
-Message-Id: <20726ae560966e7405c8f73a665c2f006c613623.1763434297.git.lixianglai@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <cover.1763434297.git.lixianglai@loongson.cn>
-References: <cover.1763434297.git.lixianglai@loongson.cn>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vM4C5-0007NO-8O; Thu, 20 Nov 2025 07:55:25 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vM4C3-0005uv-5s; Thu, 20 Nov 2025 07:55:24 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 851795969FB;
+ Thu, 20 Nov 2025 13:55:15 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id UFymzwfFm40x; Thu, 20 Nov 2025 13:55:13 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 6C8115969F7; Thu, 20 Nov 2025 13:55:13 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 695685969FC;
+ Thu, 20 Nov 2025 13:55:13 +0100 (CET)
+Date: Thu, 20 Nov 2025 13:55:13 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org, 
+ kwolf@redhat.com, hreitz@redhat.com, mst@redhat.com, imammedo@redhat.com, 
+ anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org, 
+ alistair@alistair23.me, edgar.iglesias@gmail.com, npiggin@gmail.com, 
+ harshpb@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com, 
+ zhiwei_liu@linux.alibaba.com, sstabellini@kernel.org, 
+ anthony@xenproject.org, paul@xen.org, berrange@redhat.com, 
+ peterx@redhat.com, farosas@suse.de, eblake@redhat.com, 
+ vsementsov@yandex-team.ru, eduardo@habkost.net, marcel.apfelbaum@gmail.com, 
+ philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com, 
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-ppc@nongnu.org, 
+ qemu-riscv@nongnu.org, xen-devel@lists.xenproject.org
+Subject: Re: [PATCH 1/5] hw/core/loader: Make load_elf_hdr() return bool,
+ simplify caller
+In-Reply-To: <4fb0a736-4450-47c0-9f9e-6cb86a3b28ea@ventanamicro.com>
+Message-ID: <072c1f11-1bb4-6f19-f847-e4ba07c148c3@eik.bme.hu>
+References: <20251119130855.105479-1-armbru@redhat.com>
+ <20251119130855.105479-2-armbru@redhat.com>
+ <4fb0a736-4450-47c0-9f9e-6cb86a3b28ea@ventanamicro.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBxysDPDB9plJg5AQ--.5496S4
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,128 +76,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we use the -kernel parameter to start an elf format kernel relying on
-fdt, we get the following error:
+On Thu, 20 Nov 2025, Daniel Henrique Barboza wrote:
+> On 11/19/25 10:08 AM, Markus Armbruster wrote:
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>> ---
+>
+> Nice cleanup
+>
+>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>
+>>   include/hw/loader.h |  4 +++-
+>>   hw/arm/boot.c       |  6 +-----
+>>   hw/core/loader.c    |  8 ++++++--
+>>   hw/riscv/spike.c    | 10 +---------
+>>   4 files changed, 11 insertions(+), 17 deletions(-)
+>> 
+>> diff --git a/include/hw/loader.h b/include/hw/loader.h
+>> index d035e72748..6f91703503 100644
+>> --- a/include/hw/loader.h
+>> +++ b/include/hw/loader.h
+>> @@ -188,8 +188,10 @@ ssize_t load_elf(const char *filename,
+>>    *
+>>    * Inspect an ELF file's header. Read its full header contents into a
+>>    * buffer and/or determine if the ELF is 64bit.
+>> + *
+>> + * Returns true on success, false on failure.
+>>    */
+>> -void load_elf_hdr(const char *filename, void *hdr, bool *is64, Error 
+>> **errp);
+>> +bool load_elf_hdr(const char *filename, void *hdr, bool *is64, Error 
+>> **errp);
+>>     ssize_t load_aout(const char *filename, hwaddr addr, int max_sz,
+>>                     bool big_endian, hwaddr target_page_size);
+>> diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+>> index b91660208f..06b303aab8 100644
+>> --- a/hw/arm/boot.c
+>> +++ b/hw/arm/boot.c
+>> @@ -766,16 +766,12 @@ static ssize_t arm_load_elf(struct arm_boot_info 
+>> *info, uint64_t *pentry,
+>>       int data_swab = 0;
+>>       int elf_data_order;
+>>       ssize_t ret;
+>> -    Error *err = NULL;
+>>   -
+>> -    load_elf_hdr(info->kernel_filename, &elf_header, &elf_is64, &err);
+>> -    if (err) {
+>> +    if (!load_elf_hdr(info->kernel_filename, &elf_header, &elf_is64, 
+>> NULL)) {
+>>           /*
+>>            * If the file is not an ELF file we silently return.
+>>            * The caller will fall back to try other formats.
+>>            */
+>> -        error_free(err);
+>>           return -1;
+>>       }
+>>   diff --git a/hw/core/loader.c b/hw/core/loader.c
+>> index 590c5b02aa..10687fe1c8 100644
+>> --- a/hw/core/loader.c
+>> +++ b/hw/core/loader.c
+>> @@ -364,8 +364,9 @@ const char *load_elf_strerror(ssize_t error)
+>>       }
+>>   }
+>>   -void load_elf_hdr(const char *filename, void *hdr, bool *is64, Error 
+>> **errp)
+>> +bool load_elf_hdr(const char *filename, void *hdr, bool *is64, Error 
+>> **errp)
+>>   {
+>> +    bool ok = false;
+>>       int fd;
+>>       uint8_t e_ident_local[EI_NIDENT];
+>>       uint8_t *e_ident;
+>> @@ -380,7 +381,7 @@ void load_elf_hdr(const char *filename, void *hdr, bool 
+>> *is64, Error **errp)
+>>       fd = open(filename, O_RDONLY | O_BINARY);
+>>       if (fd < 0) {
+>>           error_setg_errno(errp, errno, "Failed to open file: %s", 
+>> filename);
+>> -        return;
+>> +        return false;
+>>       }
+>>       if (read(fd, hdr, EI_NIDENT) != EI_NIDENT) {
+>>           error_setg_errno(errp, errno, "Failed to read file: %s", 
+>> filename);
+>> @@ -415,8 +416,11 @@ void load_elf_hdr(const char *filename, void *hdr, 
+>> bool *is64, Error **errp)
+>>           off += br;
+>>       }
+>>   +    ok = true;
+>> +
+>>   fail:
+>>       close(fd);
+>> +    return ok;
+>>   }
+>>     /* return < 0 if error, otherwise the number of bytes loaded in memory 
+>> */
+>> diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
+>> index b0bab3fe00..8531e1d121 100644
+>> --- a/hw/riscv/spike.c
+>> +++ b/hw/riscv/spike.c
+>> @@ -180,15 +180,7 @@ static void create_fdt(SpikeState *s, const 
+>> MemMapEntry *memmap,
+>>     static bool spike_test_elf_image(char *filename)
+>>   {
+>> -    Error *err = NULL;
+>> -
+>> -    load_elf_hdr(filename, NULL, NULL, &err);
+>> -    if (err) {
+>> -        error_free(err);
+>> -        return false;
+>> -    } else {
+>> -        return true;
+>> -    }
+>> +    return load_elf_hdr(filename, NULL, NULL, NULL);
 
-pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
-pcieport 0000:00:01.0: enabling device (0000 -> 0003)
-pcieport 0000:00:01.0: PME: Signaling with IRQ 19
-pcieport 0000:00:01.0: AER: enabled with IRQ 19
-pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
-pcieport 0000:00:01.1: enabling device (0000 -> 0003)
-pcieport 0000:00:01.1: PME: Signaling with IRQ 20
-pcieport 0000:00:01.1: AER: enabled with IRQ 20
-pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
-pcieport 0000:00:01.2: enabling device (0000 -> 0003)
-pcieport 0000:00:01.2: PME: Signaling with IRQ 21
-pcieport 0000:00:01.2: AER: enabled with IRQ 21
-pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
-pcieport 0000:00:01.3: enabling device (0000 -> 0003)
-pcieport 0000:00:01.3: PME: Signaling with IRQ 22
-pcieport 0000:00:01.3: AER: enabled with IRQ 22
-pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
+Does it worth to keep this function or could just be inlined at the two 
+callers now that it's equivalent with load_elf_hdr?
 
-This is because  the description of interrupt-cell is missing in the pcie
-irq map.  And there is a lack of a description of the interrupt trigger
-type.  Now it is corrected and the correct interrupt-cell is added in the
-pcie irq map.
-
-Refer to the implementation in arm and add some comments.
-
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
----
-Cc: Bibo Mao <maobibo@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Cc: Song Gao <gaosong@loongson.cn>
-
- hw/loongarch/virt-fdt-build.c | 44 ++++++++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 16 deletions(-)
-
-diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
-index 7333019cf7..e597b19dc3 100644
---- a/hw/loongarch/virt-fdt-build.c
-+++ b/hw/loongarch/virt-fdt-build.c
-@@ -321,6 +321,8 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
-     uint32_t full_irq_map[PCI_NUM_PINS * PCI_NUM_PINS * 10] = {};
-     uint32_t *irq_map = full_irq_map;
-     const MachineState *ms = MACHINE(lvms);
-+    uint32_t pin_mask;
-+    uint32_t devfn_mask;
- 
-     /*
-      * This code creates a standard swizzle of interrupts such that
-@@ -333,37 +335,45 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
-      */
- 
-     for (dev = 0; dev < PCI_NUM_PINS; dev++) {
--        int devfn = dev * 0x8;
-+        int devfn = PCI_DEVFN(dev, 0);
- 
-         for (pin = 0; pin < PCI_NUM_PINS; pin++) {
--            int irq_nr = 16 + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
-+            int irq_nr = VIRT_DEVICE_IRQS + \
-+                         ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
-             int i = 0;
- 
--            /* Fill PCI address cells */
--            irq_map[i] = cpu_to_be32(devfn << 8);
--            i += 3;
--
--            /* Fill PCI Interrupt cells */
--            irq_map[i] = cpu_to_be32(pin + 1);
--            i += 1;
--
--            /* Fill interrupt controller phandle and cells */
--            irq_map[i++] = cpu_to_be32(*pch_pic_phandle);
--            irq_map[i++] = cpu_to_be32(irq_nr);
-+            uint32_t map[] = {
-+                devfn << 8, 0, 0,             /* devfn */
-+                pin + 1,                      /* PCI pin */
-+                *pch_pic_phandle,             /* interrupt controller handle */
-+                irq_nr,                       /* irq number */
-+                FDT_IRQ_TYPE_LEVEL_HIGH };    /* irq trigger level */
- 
-             if (!irq_map_stride) {
--                irq_map_stride = i;
-+                irq_map_stride = sizeof(map) / sizeof(uint32_t);
-             }
-+
-+            /* Convert map to big endian */
-+            for (i = 0; i < irq_map_stride; i++) {
-+                irq_map[i] = cpu_to_be32(map[i]);
-+            }
-+
-             irq_map += irq_map_stride;
-         }
-     }
- 
--
-     qemu_fdt_setprop(ms->fdt, nodename, "interrupt-map", full_irq_map,
-                      PCI_NUM_PINS * PCI_NUM_PINS *
-                      irq_map_stride * sizeof(uint32_t));
-+
-+    /* Only need to match the pci slot bit */
-+    devfn_mask = PCI_DEVFN((PCI_NUM_PINS - 1), 0) << 8;
-+    /* The pci interrupt only needs to match the specified low bit */
-+    pin_mask = (1 << ((PCI_NUM_PINS - 1))) - 1;
-+
-     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupt-map-mask",
--                     0x1800, 0, 0, 0x7);
-+                           devfn_mask, 0, 0,  /* address cells */
-+                           pin_mask);
- }
- 
- static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
-@@ -400,6 +410,8 @@ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
-                                  2, base_mmio, 2, size_mmio);
-     qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
-                            0, *pch_msi_phandle, 0, 0x10000);
-+
-+    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
-     fdt_add_pcie_irq_map_node(lvms, nodename, pch_pic_phandle);
-     g_free(nodename);
- }
--- 
-2.39.1
-
+Regards,
+BALATON Zoltan
 
