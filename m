@@ -4,80 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E49CF884C
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 12:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46987CF884D
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 12:17:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM3Yy-0003Oq-LC; Thu, 20 Nov 2025 07:15:01 -0500
+	id 1vM3b1-0004Uu-8K; Thu, 20 Nov 2025 07:17:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <k.semichastnov@syntacore.com>)
- id 1vM3Yw-0003Nu-Lk; Thu, 20 Nov 2025 07:14:58 -0500
-Received: from m.syntacore.com ([178.249.69.228])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vM3av-0004UP-2A
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 07:17:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <k.semichastnov@syntacore.com>)
- id 1vM3Yu-0007Hm-Ht; Thu, 20 Nov 2025 07:14:58 -0500
-Received: from MRN-SC-KSMG-01.corp.syntacore.com (localhost [127.0.0.1])
- by m.syntacore.com (Postfix) with ESMTP id C37181A0004;
- Thu, 20 Nov 2025 12:14:46 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 m.syntacore.com C37181A0004
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com; s=m;
- t=1763640886; bh=P2Q7hwyiXX7mlh7Z/UK8BvADLpW9q6378YcSTU7CGa4=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=astkgntwVH9Zq/8UhA0kQaizolZIYiezGOOY8eIzJyTzb8nBBiHBy+VbcyrIJBoz9
- MqlPkOTf4Fzy/qHAEz/uZOrv4+YbalSNfB6LAH5NiqaibdFlSaIT/Rnp8+c3bnwgei
- 1lcqnGZSBLWwnVaJCKy/cbQiQpEIxxSQ5+BzQ+qcIZJLnymz2283Kr7ospkKAXwfkm
- Ja0QT/TtBTMNEBk6SqsDx0Fo/WGBdXdD1Krz9AKca2xQzZZU6tB4+RoyPYRB5vuBIm
- TaBFaUW7muXjLckWFvvhyr0TUMikMOg42nLnyksrN4gyhjN+dxBf+Zq/F1kBmmAvFk
- cVVEMh15xdqVA==
-Received: from S-SC-EXCH-01.corp.syntacore.com (mail.syntacore.com
- [10.76.202.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vM3ar-0007oj-Sk
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 07:17:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763641014;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pTQNE0r3/HxQy5usdCXgS8+jWS8LIj6l+lAXOsFxrII=;
+ b=ih9KGvAahSg6cbb3LK4+x3yB1T+nSciiYThUn0pkWwDRlXPaWjMx3TayOYLXonmnF8TK3y
+ UHDeiNtDN+Q3B5vIHfE7vHlMrr/ksYJNvJoGXSY8ACuC5sWhpI3Avs8+hQCW9FmqHjJN7f
+ nAoHnG0PpwDJBtMB+bkLPhZwB1euqD8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-8Qt0ViGQPX6GVdvwM8NGhg-1; Thu,
+ 20 Nov 2025 07:16:53 -0500
+X-MC-Unique: 8Qt0ViGQPX6GVdvwM8NGhg-1
+X-Mimecast-MFC-AGG-ID: 8Qt0ViGQPX6GVdvwM8NGhg_1763641012
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by m.syntacore.com (Postfix) with ESMTPS;
- Thu, 20 Nov 2025 12:14:46 +0000 (UTC)
-Received: from [10.178.119.213] (10.178.119.213) by
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Thu, 20 Nov 2025 15:14:40 +0300
-Message-ID: <115a56af-4db1-42ee-9541-8077322207c7@syntacore.com>
-Date: Thu, 20 Nov 2025 15:14:45 +0300
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F22E1956096; Thu, 20 Nov 2025 12:16:52 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.226.132])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8C99D3001E83; Thu, 20 Nov 2025 12:16:50 +0000 (UTC)
+Date: Thu, 20 Nov 2025 13:16:48 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, farosas@suse.de,
+ John Snow <jsnow@redhat.com>
+Subject: Re: Migration and the Job abstraction (was: [PATCH 0/3] migration:
+ Error fixes and improvements)
+Message-ID: <aR8GsDYMwWDT4oeN@redhat.com>
+References: <20251115083500.2753895-1-armbru@redhat.com>
+ <aRtHWbWcTh3OF2wY@x1.local> <87a50jlr8f.fsf@pond.sub.org>
+ <aRyuZbS7iALvx-BT@x1.local> <87cy5ecvoc.fsf@pond.sub.org>
+ <aR4vdRcORY4em3yB@x1.local> <878qg1uhbd.fsf_-_@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/17] hw/riscv, target/riscv: initial e-trace support
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- <qemu-devel@nongnu.org>
-CC: <qemu-riscv@nongnu.org>, <alistair.francis@wdc.com>,
- <liwei1518@gmail.com>, <zhiwei_liu@linux.alibaba.com>, <palmer@dabbelt.com>,
- <k.semichastnov@syntacore.com>
-References: <20251111114656.2285048-1-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: Konstantin Semichastnov <k.semichastnov@syntacore.com>
-In-Reply-To: <20251111114656.2285048-1-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.178.119.213]
-X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
-X-KSMG-AntiPhishing: not scanned, disabled by settings
-X-KSMG-AntiSpam-Interceptor-Info: not scanned
-X-KSMG-AntiSpam-Status: not scanned, disabled by settings
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310,
- bases: 2025/11/20 11:26:00 #27952687
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-LinksScanning: NotDetected, bases: 2025/11/20 11:32:00
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 5
-Received-SPF: pass client-ip=178.249.69.228;
- envelope-from=k.semichastnov@syntacore.com; helo=m.syntacore.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <878qg1uhbd.fsf_-_@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,94 +86,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Am 20.11.2025 um 11:30 hat Markus Armbruster geschrieben:
+> Peter Xu <peterx@redhat.com> writes:
+> > On Wed, Nov 19, 2025 at 08:45:39AM +0100, Markus Armbruster wrote:
+> >> [*] If the job abstraction had been available in time, migration would
+> >> totally be a job.  There's no *design* reason for it being not a job.
+> >> Plenty of implementation and backward compatibility reasons, though.
+> >
+> > There might be something common between Jobs that block uses and a
+> > migration process.  If so, we can provide CommonJob and make MigrationJob
+> > and BlockJobs dependent on it.
 
+Conceptually, live migration and the mirror block job are _really_
+similar. You have a bulk copy phase and you keep copying data that has
+changed to bring both sides in sync. When both sides are close enough,
+you stop new changes from coming in, copy the small remainder and finish
+the thing.
 
-On 11/11/25 14:46, Daniel Henrique Barboza wrote:
-> Hi,
-> 
-> In this v2 we're addressing a review comment from Konstantin in patch
-> 14. We're also doing changes in the FDT (patch 5) to keep up with the
-> changes that the kernel support is making [1].
-> 
-> I've been thinking about adding partial support for N-trace in this work
-> as well. From what I can tell the difference between N-trace and E-trace
-> are the encoding of the packages, with everything else staying the same.
-> In this case we could add hooks in the code to be ready to support
-> N-trace encoding in the future.
-> 
-> No other changes made. Patches based on current master.
-> 
-> Changes in v2:
-> - patch 5:
->    - changed tr_compat from "ventana,veyron-v2-trace" to "qemu,trace-component"
->    - renamed trace encoder prop handler "cpu" to "cpus"
-> - patch 14:
->    - removed updiscon generation in gen_jal()
-> - v1 link: https://lore.kernel.org/qemu-riscv/20251002112335.2374517-1-dbarboza@ventanamicro.com/
-> 
-> 
-> [1] https://lore.kernel.org/linux-riscv/20251101154245.162492-1-apatel@ventanamicro.com/
-> 
-> Daniel Henrique Barboza (16):
->    hw/riscv: Trace Encoder initial impl
->    hw/riscv: Trace RAM Sink initial impl
->    hw/riscv/trace-encoder: add trace start/stop logic
->    hw/riscv/virt.c: add trace encoders and trace ram sinks
->    hw/riscv: add e-trace message helpers
->    target/riscv: add initial trace instrumentation
->    hw/riscv/trace-encoder: write e-trace packets to RAM sink
->    test/qtest: add riscv-trace-test.c
->    hw/riscv/rv-trace-messages.c: add encoded trap message
->    hw/riscv, target/riscv: send trace trap messages
->    target/riscv, hw/riscv: send trace ppccd packets
->    hw/riscv/trace: add format2 msg helper
->    hw/riscv, target/riscv: send resync updiscon trace packets
->    hw/riscv/rv-trace-messages: add format 1 msgs with branch info
->    hw/riscv/trace-encoder: send branches info
->    hw/riscv/trace: update branch bit in sync messages
-> 
-> Mayuresh Chitale (1):
->    hw/riscv/virt.c add trace encoder and ramsink fdt nodes
-> 
->   hw/riscv/Kconfig                              |   5 +
->   hw/riscv/meson.build                          |   2 +
->   hw/riscv/rv-trace-messages.c                  | 373 +++++++++++
->   hw/riscv/rv-trace-messages.h                  |  40 ++
->   hw/riscv/trace-encoder.c                      | 609 ++++++++++++++++++
->   hw/riscv/trace-encoder.h                      |  62 ++
->   hw/riscv/trace-events                         |   9 +
->   hw/riscv/trace-ram-sink.c                     | 263 ++++++++
->   hw/riscv/trace-ram-sink.h                     |  83 +++
->   hw/riscv/virt.c                               | 135 ++++
->   include/hw/riscv/virt.h                       |   2 +
->   target/riscv/cpu.h                            |  11 +
->   target/riscv/cpu_helper.c                     |  26 +-
->   target/riscv/helper.h                         |   6 +
->   .../riscv/insn_trans/trans_privileged.c.inc   |  11 +
->   target/riscv/insn_trans/trans_rvi.c.inc       |  15 +
->   target/riscv/meson.build                      |   3 +-
->   target/riscv/tcg/tcg-cpu.c                    |   5 +
->   target/riscv/trace_helper.c                   |  62 ++
->   target/riscv/translate.c                      |  19 +
->   tests/qtest/meson.build                       |   2 +-
->   tests/qtest/riscv-trace-test.c                | 120 ++++
->   22 files changed, 1860 insertions(+), 3 deletions(-)
->   create mode 100644 hw/riscv/rv-trace-messages.c
->   create mode 100644 hw/riscv/rv-trace-messages.h
->   create mode 100644 hw/riscv/trace-encoder.c
->   create mode 100644 hw/riscv/trace-encoder.h
->   create mode 100644 hw/riscv/trace-ram-sink.c
->   create mode 100644 hw/riscv/trace-ram-sink.h
->   create mode 100644 target/riscv/trace_helper.c
->   create mode 100644 tests/qtest/riscv-trace-test.c
-> 
-Hi, I am currently working on adding the N-Trace message format, based 
-on your v1 patch set. Currently I have supported ProgTraceSync, 
-ProgTraceCorrelation, ResourceFull, IndirectBranchHist, 
-IndirectBranchHistSync, Ownership messages.
+The main difference is that mirror copies disk content whereas live
+migration mostly copies RAM. But that's irrelevant conceptually.
 
-After finishing the internal review and rebasing over the v2 patch set, 
-I would like to send it here next week.
+So it makes a lot of sense to me that the same user-visible state
+machine should be applicable to both.
 
-Konstantin
+(I'm not saying that we have to do this, just that I expect it to be
+possible.)
+
+> > Possible challenges of adopting Jobs in migration flow
+> > ======================================================
+> >
+> > - Many Jobs defined property doesn't directly suite migration
+> >
+> >   - JobStatus is not directly suitable for migration purposes.  There're
+> >     some of the JobStatus that I can't think of any use
+> >     (e.g. JOB_STATUS_WAITING, JOB_STATUS_PENDING, which is fine, because we
+> >     can simply not use it), but there're other status that migration needs
+> >     but isn't availble. Introducing them seems to be an overkill instead to
+> >     block layer's use case.
+
+Which other status does live migration have that the user cares about?
+
+Does it have to be a status on the Job level or could it be some kind of
+substatus that could be represented by job-specific information in
+query-jobs? (Which doesn't exist yet, but I think we have been talking
+about it multiple times before.)
+
+> The Job abstraction defines possible states and state transitions.  Each
+> job finds its own path from the initial state @created to the final
+> state @concluded.  If a state doesn't make sense for a certain type of
+> job, it simply doesn't go there.
+
+Note that most states are really managed by the common Job abstraction.
+The job itself only goes potentially from RUNNING to READY, and then
+implicitly to WAITING/ABORTING when it returns from .run().
+
+Everything else only exists so that management tools can orchestrate
+jobs in the right way and can query errors before the job disappears.
+
+I'm not sure if WAITING is really useless for migration. In theory, you
+could have a job transaction of some mirror jobs for the disks and live
+migration for the device state, and of course you want both to finish
+and switch over at the same time. I'm also not completely sure if it
+will actually be used in practice, but the Job infrastructure gives you
+the option for free.
+
+PENDING and the associated job-finalize already exists in live migration
+in the form of pause-before-switchover/pre-switchover status and
+migrate-continue. So I don't think you can argue you have no use for it.
+
+> So, job states migration doesn't want are only a problem if there is no
+> path from start to finish that doesn't go through unwanted states.
+> 
+> There may also be states migration wants that aren't job states.  We
+> could make them job states.  Or we map multiple migration states to a
+> single job state, i.e. have the job state *abstract* from migration
+> state details.
+> 
+> >   - Similarly to JobVerb.  E.g. JOB_VERB_CHANGE doesn't seem to apply to
+> >     any concept to migration, but it misses quite some others
+> >     (e.g. JOB_VERB_SET_DOWNTIME, JOB_VERB_POSTCOPY_START, and more).
+
+How is SET_DOWNTIME or POSTCOPY_START not just a form of CHANGE?
+
+> JobVerb is used internally to restrict certain job commands to certain
+> job states.  For instance, command job-dismiss is rejected unless job is
+> in state @concluded.
+> 
+> This governs the generic job-FOO commands.  It also covers the legacy
+> block-job-FOO commands, because these wrap around the same C core as the
+> job-FOO commands.
+> 
+> We could have commands specific to a certain job type (say migration
+> jobs) that bypass the JobVerb infrastructure, and do their own thing to
+> restrict themselves to certain states.  Probably stupid if the states
+> that matter are job states.  Probably necessary if they aren't (say a
+> more fine-grained migration state).
+
+I suspect we would have to look at specific examples to figure out how
+to represent them best. In general, I think a generic job-change (to be
+added as a more generic version of block-job-change) and job-specific
+data in query-jobs can cover a lot.
+
+You may want to have job-specific QMP events outside of the Job
+mechanism, or we could have a generic one to notify the user that
+something in the queryable state has changed.
+
+> >   - Similarly, JobInfo reports in current-progress (which is not optional
+> >     but required), which may make perfect sense for block jobs. However
+> >     migration is OTOH convergence-triggered process, or user-triggered (in
+> >     case of postcopy).  It doesn't have a quantified process but only
+> >     "COMPLETED" / "IN_PROGRESS".
+> 
+> Is there really no way to track migration progress approximately?
+
+Of course there is. mirror in its default configuration is no different.
+When things are dirtied, the amount of work to do simply grows.
+
+> Here's the relevant doc comment:
+> 
+>     # @current-progress: Progress made until now.  The unit is arbitrary
+>     #     and the value can only meaningfully be used for the ratio of
+>     #     @current-progress to @total-progress.  The value is
+>     #     monotonically increasing.
+>     #
+>     # @total-progress: Estimated @current-progress value at the completion
+>     #     of the job.  This value can arbitrarily change while the job is
+>     #     running, in both directions.
+> 
+> I think this should work fine for convergence-triggered finish.
+> @current-progress could be the number of "things" sent (for some
+> arbitrary, convenient choice of "things").  Monotonotically increasing.
+> @total-progress then would have to be a more or less rough estimate of
+> @current-progress plus what still needs to be sent.  For RAM,
+> @current-progress could be number of pages sent, ane @total-progress
+> could be number of pages sent + (possibly estimated) number of dirty
+> pages.  Multiply by page size if that makes adding the estimated size of
+> the non-RAM transfers easier.
+> 
+> I haven't thought about postcopy.
+
+Postcopy should ask for every "thing" only once, so if you knew the
+number of remaining "things" when you switched to postcopy, you can
+simply continue to increase current-progress and leave total-progress
+unchanged (which might already be what automatically happens because the
+number of dirty pages can't grow on an inactive source instance any
+more).
+
+> >   - Another very major example that I have discussed a few times
+> >     previously, Jobs are close attached to AioContext, while migration
+> >     doesn't have, meanwhile migration is moving even further away from
+> >     event driven model..  See:
+> >
+> >     https://lore.kernel.org/all/20251022192612.2737648-1-peterx@redhat.com/#t
+
+The main loop of a job runs in a coroutine in an AioContext, yes, and
+that is the context where you will get callbacks from, too. If the job
+doesn't explicitly put itself anywhere else, it will be in the main
+thread. Nothing stops you from firing off as many worker threads as you
+want to, though.
+
+This separation of the migration thread and its management interface
+running in a different thread isn't new, though: Your existing QMP
+commands always run in the main thread, too.
+
+> >   There're just too many example showing that Jobs are defined almost only
+> >   for block layer.. e.g. job-finalize (which may not make much sense in a
+> >   migration context anyway..) mentions finalizing of graph changes, which
+> >   also doesn't exist in migration process.
+
+s/graph changes/switchover/ for migration.
+
+I suppose "changes to global state" might be a more accurate generic
+description.
+
+> >   So if we rewrite migration somehow with Jobs or keeping migration in mind
+> >   designing Jobs, Jobs may need to be very bloated containing both
+> >   migration and block layer requirements.
+> >
+> > - Migration involves "two" QEMU instances instead of one
+> >
+> >   I'm guessing existing Jobs operations are not as such, and providing such
+> >   mechanisms in "Jobs" only for migration may introduce unnecessary code
+> >   that block layer will never use.
+> >
+> >   E.g. postcopy migration attached the two QEMU instances to represent one
+> >   VM instance.  I do not have a clear picture in mind yet on how we can
+> >   manage that if we see it as two separate Jobs on each side, and what
+> >   happens if each side operates on its own Job with different purposes, and
+> >   how we should connect two Jobs to say they're relevant (or maybe we don't
+> >   need to?).
+
+Don't you already run two different code paths on the source and the
+destination host? Why would they be the same job?
+
+Block migration isn't very different. You typically have an NBD export
+running on one side and have a mirror job connecting to it on the other
+side. One part doesn't make sense without the other, but that doesn't
+mean that they are the same thing.
+
+> > - More challenges on dest QEMU (VM loader) than src QEMU
+> >
+> >   Unlike on the src side, the dest QEMU, when in an incoming state, is not
+> >   a VM at all yet, but waiting to receive the migration data to become a
+> >   working VM. It's not a generic long term process, but a pure listening
+> >   port of QEMU where QEMU can do nothing without this "job" being
+> >   completed..
+> >
+> >   If we think about CPR it's even more complicated, because we essential
+> >   require part of incoming process to happen before almost everything.. it
+> >   may even include monitors being initialized.
+
+I'm not sure that the destination side should be a job. I suppose with
+postcopy migration you have at least some background task, but with
+precopy you don't even have that.
+
+Is there much that the user can manage on the destination side apart
+from just waiting for migration to finish?
+
+> > - Deep integration with other subsystems
+> >
+> >   Migration is deeply integrated into many other subsystems (auto-converge
+> >   being able to throttle vCPUs, RAM being able to ignore empty pages
+> >   reported from balloons, dirty trackings per-module, etc.), so we're not
+> >   sure if there'll be some limitation from Jobs (when designed with block
+> >   layer in mind) that will make such transition harder.
+> >
+> >   For example, we at least want to make sure Jobs won't have simple locks
+> >   that will be held while running migration, that can further deadlock if
+> >   the migration code may invoke something else that tries to re-take the
+> >   Jobs lock, which may cause dead-locks.
+
+I don't know why anything in the actual system emulation would want to
+access the migration job and take its locks?
+
+But that aside, jobs are made for long running background tasks. While
+they have a mutex to protect the generic state, you're not supposed to
+hold it for a long time.
+
+> >   Or, since migration runs nowadays with quite some threads concurrently,
+> >   whether the main migration Job can always properly synchronize between
+> >   all of them with no problem (maybe yes, but I just don't know Jobs enough
+> >   to say).  This is also a relevant question about how much AioContext
+> >   plays a role in core of Jobs idea and whether it can work well with
+> >   complicated threaded environment.
+
+Why wouldn't they be able to do that when a QMP handler in the main loop
+can do it correctly?
+
+Kevin
+
 
