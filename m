@@ -4,62 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F210CF8848
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 11:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D88A6CF884A
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 11:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM3DL-0004wb-15; Thu, 20 Nov 2025 06:52:39 -0500
+	id 1vM3Jz-0006WC-09; Thu, 20 Nov 2025 06:59:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>)
- id 1vM3DK-0004wJ-2G; Thu, 20 Nov 2025 06:52:38 -0500
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@kernel.org>)
- id 1vM3DI-0002IR-KS; Thu, 20 Nov 2025 06:52:37 -0500
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 64D7E6011E;
- Thu, 20 Nov 2025 11:52:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A012BC116B1;
- Thu, 20 Nov 2025 11:52:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1763639554;
- bh=ExA0xOkbbHbjoMcMeiczFAhHVzvri8EteI6sD6HHMFw=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=c8/DIzqk0+bpWqayDGtZ3LyZSBirxIZaMzpQiFJS1lU/zWrkxrGGzZ1PzhXLj48yf
- GtNCYCKL00OS3Os1I+g78dAadnV8xfgDlr/Fih+kyhP43J+Ptgiv4AfhWFUMA8Gred
- FNkCfx9YLssEzI8kY+G3xt2dLk/8XmhlWWqJTmksSoRGkxdFnvORGEJqF+RcR5AEjW
- DgDeoPe3wAiilNdM5vqZLiZiGHDY5l3QUBPcRUUXORPgKi5clGMQfwwu0680UNsDvS
- Swr+JQe3L+rX3TmGm1rFKD6qwaQTR7M54jZk6rnG8tqop/lyIrbSvqCk4uOqWhv+wc
- bZXsvOOP+E2Lg==
-Message-ID: <aea5c335-4f28-4f82-825a-229c4065eab0@kernel.org>
-Date: Thu, 20 Nov 2025 12:52:29 +0100
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vM3Jx-0006VR-7I
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 06:59:29 -0500
+Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vM3Ju-0003TX-Bm
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 06:59:28 -0500
+Received: by mail-ot1-x331.google.com with SMTP id
+ 46e09a7af769-7c6d1ebb0c4so548866a34.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 03:59:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1763639965; x=1764244765; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BwKMvDY8297hr9uPqK/3BBxH5Upv5LgYn4pXQ9ZWDpA=;
+ b=iaIoaAnmbsqvZHXxJUY93nGYFKny0Yuiv9o29BDmJooBE9J7fBHKIGpyJll09zmW3Q
+ Z+sozR6D0bTGxkfF7hF5Oed6whygUg9ntJXLF7igTlUIASLvNyMZuz/a2v22RDJwgTKB
+ O/aojw3oJa190NQYOKKUjIefyhHYI34SzdHTd9RHseiZTa2c8Es/B90cFntS4iZumTJD
+ mppuDUwSpM84cRn8FcgEUUXhX+gGK6g+Ck3mOiSy6CMSFhFkwSf1xMwQgQ4i6aKO/U3t
+ RJUgidWZFEmB6HZi5EUTDpx2lG1eTHW9oJBsUYUb07l6E0HJY7rJq5KsRiiQFWNkWfRH
+ uRYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763639965; x=1764244765;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BwKMvDY8297hr9uPqK/3BBxH5Upv5LgYn4pXQ9ZWDpA=;
+ b=conDAyMHQxScvh/I+54DCC3q/ITwRDb3YUQbHvNBj7lolOKU0LMZAxIs4H2OnZaej0
+ s9fZ9/6f3GJipvJtlnHcPlJv6xLzPXj4Itez0+4HCNflOeMqJoMHlfx4Y93+eYoRfe1G
+ BeupLQ5ulVcGcuBQzcuNO34e7p1IhNiOHnFEU2F9HR9xQCWvUZ80835luUHRCWfOz4+g
+ WYVP6hWHjFD/WsVAam1Y362MFmo61JZpBJB2PfA1YT5iaReE9UVjuAMFbpK300yngSsc
+ mPES6emYSVrNNnGhXwZbWdbeOCJ99qx4O44Qy5kxMzwjc9MOQdBx8Xy8rl0yADpBwN+w
+ iTYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7CXxU83QCcjVcE//FsA32LCTJ3zq2BZlHHGKglisB3ZfM5krNflcU5HFae4WftJySNLuLWPQOrCVG@nongnu.org
+X-Gm-Message-State: AOJu0Yyhc9zbLan3L+avgnWohX4g+FmRpS6t+kSBWdaz5CkgaI4BIKbW
+ ewI4sTkLTEnFxpZYFczN0VB29YLMAZbbZlSuFhYC6jqpMv0XH6EZo8BJsuniXxJyCNY=
+X-Gm-Gg: ASbGnctZhMltlbWwL57YnP6BU451tbU4bdxfOmXcVEVYr1VtD4vbYelBj4yth9fIfik
+ n7BYPFkQY+7DfszifrFnN1qxeOoeobDv7ujPTzsHbbza2ONn2oWmk/UopN/EDbfRJTXEqgDz3dC
+ BZrS/tdSrjVhWZws1HX570qP8UtZsQWJ79wdtvRULucaMhuU7ZhDXyr5jNT+A2569gzYyLSVf6/
+ QaRG74Ija7hynfQ6XHwbt9uBrNtDiDU6Ox6JdBNHysKP5JrwdN+7lbOGmIYpnoF0wIS/59iqVBE
+ QEYkXzRSyx+QWUNXCImfpXJKOLAYpXwwSjhpIDTgeKD87JW+fWvJMcq9kk57sgjIxaw1tGJAN2l
+ e2/bQyV+cAvlwKyCij0yGHF8vjZAUjqUQgIkN+pctcvpuMA+UOKz72b5/wkj3pec9Bj+/c/dpWF
+ +F5uJ+phQHV/wz4cQdxSSmV1iQw3k=
+X-Google-Smtp-Source: AGHT+IHx1l8t/uOlVBUL45bt6MO6wfOe3CXRPGjbGY2pDPVF5MxAP9pa0cIKItQXqgXknSy/gICoiQ==
+X-Received: by 2002:a05:6830:8485:b0:7c7:586e:8e76 with SMTP id
+ 46e09a7af769-7c78f4208e3mr715003a34.28.1763639965063; 
+ Thu, 20 Nov 2025 03:59:25 -0800 (PST)
+Received: from [192.168.68.110] ([177.188.133.235])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7c78d428edfsm913265a34.31.2025.11.20.03.59.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Nov 2025 03:59:22 -0800 (PST)
+Message-ID: <0699f702-d65b-4ab3-89ac-0c27b9330b6e@ventanamicro.com>
+Date: Thu, 20 Nov 2025 08:59:16 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] MAINTAINERS: s390 maintainer updates
-To: Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-devel@nongnu.org, 
- qemu-s390x@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-References: <20251120104602.205718-1-david@kernel.org>
- <cb7ac0cf-940a-4079-aa84-4433a4b49908@linux.ibm.com>
-From: "David Hildenbrand (Red Hat)" <david@kernel.org>
+Subject: Re: [PATCH 2/7] hw/riscv: define capabilities of CBQRI controllers
+To: Drew Fustini <fustini@kernel.org>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Nicolas Pitre <npitre@baylibre.com>, =?UTF-8?Q?Kornel_Dul=C4=99ba?=
+ <mindal@semihalf.com>, Atish Kumar Patra <atishp@rivosinc.com>,
+ Atish Patra <atish.patra@linux.dev>, Vasudevan Srinivasan
+ <vasu@rivosinc.com>, =?UTF-8?B?UmFkaW0gS3LEjW3DocWZ?=
+ <rkrcmar@ventanamicro.com>, yunhui cui <cuiyunhui@bytedance.com>,
+ Chen Pei <cp0613@linux.alibaba.com>, guo.wenjia23@zte.com.cn,
+ liu.qingtao2@zte.com.cn
+References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
+ <20251119-riscv-ssqosid-cbqri-v1-2-3392fc760e48@kernel.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <cb7ac0cf-940a-4079-aa84-4433a4b49908@linux.ibm.com>
+In-Reply-To: <20251119-riscv-ssqosid-cbqri-v1-2-3392fc760e48@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=david@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,44 +116,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/20/25 11:53, Christian Borntraeger wrote:
-> Am 20.11.25 um 11:46 schrieb David Hildenbrand (Red Hat):
->> Unfortunately, I don't have a lot of capacity lately to take good care of
->> s390 in QEMU like I used to; and it doesn't look like that situation
->> will change. So let me convert myself to a reviewer in the s390 areas I
->> co-maintain.
->>
->> Fortunately, we still have two other maintainers for "S390 floating
->> interrupt controller", so no action needed on that front.
->>
->> For the other sections we get two new maintainers: Hendrik will
->> maintain "S390 CPU models" and Ilya will co-maintain "S390 TCG CPUs".
->>
->> Thanks Hendrik and Ilya for stepping up!
->>
->> Cc: Richard Henderson <richard.henderson@linaro.org>
->> Cc: Thomas Huth <thuth@redhat.com>
->> Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
->> Cc: Ilya Leoshkevich <iii@linux.ibm.com>
->> Cc: Halil Pasic <pasic@linux.ibm.com>
->> Cc: Hendrik Brueckner <brueckner@linux.ibm.com>
->> Cc: Matthew Rosato <mjrosato@linux.ibm.com>
->> Signed-off-by: David Hildenbrand (Red Hat) <david@kernel.org>
+
+
+On 11/19/25 9:42 PM, Drew Fustini wrote:
+> From: Nicolas Pitre <npitre@baylibre.com>
 > 
-> Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+> Define structs to represent the hardware capabilities of capacity and
+> bandwidth controllers according to the RISC-V Capacity and Bandwidth QoS
+> Register Interface (CBQRI).
 > 
-> Thank you for your work on s390/kvm is the past. There would be no gdb,
-> nesting, cpumodel and virtio-mem support without you for s390. You did
-> an awesome job.
+> Link: https://github.com/riscv-non-isa/riscv-cbqri/blob/main/riscv-cbqri.pdf
+> Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+> [fustini: add fields introduced in the ratified spec: cunits, rpfx, p]
+> Signed-off-by: Drew Fustini <fustini@kernel.org>
+> ---
 
-Thanks a lot for your kind word Christian, highly appreciated!
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-... without you, I wouldn't even have had the opportunity to do any of 
-that work and would likely not be doing the work I do today, so thanks 
-to you for that as well! :)
+>   MAINTAINERS              |  7 ++++
+>   include/hw/riscv/cbqri.h | 89 ++++++++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 96 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 38325e0617c4..7afe80f1b17c 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -357,6 +357,13 @@ F: target/riscv/XVentanaCondOps.decode
+>   F: target/riscv/insn_trans/trans_xventanacondops.c.inc
+>   F: disas/riscv-xventana*
+>   
+> +RISC-V QoS (Ssqosid ext and CBQRI spec)
+> +M: Nicolas Pitre <npitre@baylibre.com>
+> +M: Drew Fustini <fustini@kernel.org>
+> +L: qemu-riscv@nongnu.org
+> +S: Supported
+> +F: include/hw/riscv/cbqri.h
+> +
+>   RENESAS RX CPUs
+>   R: Yoshinori Sato <yoshinori.sato@nifty.com>
+>   S: Orphan
+> diff --git a/include/hw/riscv/cbqri.h b/include/hw/riscv/cbqri.h
+> new file mode 100644
+> index 000000000000..1b4c69779c0e
+> --- /dev/null
+> +++ b/include/hw/riscv/cbqri.h
+> @@ -0,0 +1,89 @@
+> +/*
+> + * RISC-V Capacity and Bandwidth QoS Register Interface
+> + * URL: https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
+> + *
+> + * Copyright (c) 2023 BayLibre SAS
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This program is free software; you can redistribute it and/or modify it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOUT
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License along with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#ifndef HW_RISCV_CBQRI_H
+> +#define HW_RISCV_CBQRI_H
+> +
+> +#include "qemu/typedefs.h"
+> +
+> +#define RISCV_CBQRI_VERSION_MAJOR   0
+> +#define RISCV_CBQRI_VERSION_MINOR   1
+> +
+> +#define TYPE_RISCV_CBQRI_CC         "riscv.cbqri.capacity"
+> +#define TYPE_RISCV_CBQRI_BC         "riscv.cbqri.bandwidth"
+> +
+> +/* Capacity Controller hardware capabilities */
+> +typedef struct RiscvCbqriCapacityCaps {
+> +    uint16_t nb_mcids;
+> +    uint16_t nb_rcids;
+> +
+> +    uint16_t ncblks;
+> +    bool cunits:1;
+> +
+> +    bool rpfx:1;
+> +    uint8_t p;
+> +
+> +    bool supports_at_data:1;
+> +    bool supports_at_code:1;
+> +
+> +    bool supports_alloc_op_config_limit:1;
+> +    bool supports_alloc_op_read_limit:1;
+> +    bool supports_alloc_op_flush_rcid:1;
+> +
+> +    bool supports_mon_op_config_event:1;
+> +    bool supports_mon_op_read_counter:1;
+> +
+> +    bool supports_mon_evt_id_none:1;
+> +    bool supports_mon_evt_id_occupancy:1;
+> +} RiscvCbqriCapacityCaps;
+> +
+> +/* Bandwidth Controller hardware capabilities */
+> +typedef struct RiscvCbqriBandwidthCaps {
+> +    uint16_t nb_mcids;
+> +    uint16_t nb_rcids;
+> +
+> +    uint16_t nbwblks;
+> +    uint16_t mrbwb;
+> +
+> +    bool rpfx:1;
+> +    uint8_t p;
+> +
+> +    bool supports_at_data:1;
+> +    bool supports_at_code:1;
+> +
+> +    bool supports_alloc_op_config_limit:1;
+> +    bool supports_alloc_op_read_limit:1;
+> +
+> +    bool supports_mon_op_config_event:1;
+> +    bool supports_mon_op_read_counter:1;
+> +
+> +    bool supports_mon_evt_id_none:1;
+> +    bool supports_mon_evt_id_rdwr_count:1;
+> +    bool supports_mon_evt_id_rdonly_count:1;
+> +    bool supports_mon_evt_id_wronly_count:1;
+> +} RiscvCbqriBandwidthCaps;
+> +
+> +DeviceState *riscv_cbqri_cc_create(hwaddr addr,
+> +                                   const RiscvCbqriCapacityCaps *caps,
+> +                                   const char *target_name);
+> +DeviceState *riscv_cbqri_bc_create(hwaddr addr,
+> +                                   const RiscvCbqriBandwidthCaps *caps,
+> +                                   const char *target_name);
+> +#endif
+> 
 
--- 
-Cheers
-
-David
 
