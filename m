@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45952CF8863
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 14:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBE7ECF8863
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 15:03:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vM64I-0002DH-8c; Thu, 20 Nov 2025 09:55:30 -0500
+	id 1vM6BY-0004Ae-B6; Thu, 20 Nov 2025 10:03:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vM64E-0002D9-68
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 09:55:26 -0500
+ id 1vM6BN-0004AJ-Fr
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 10:02:51 -0500
 Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vM64C-00021x-6D
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 09:55:25 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1763650504; cv=none; 
+ id 1vM6BK-0003dz-Qi
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 10:02:48 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1763650945; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=LmsNH/EUHWsFKsn11u562A7EZVkPynuaC7C7if/+1F7Qg6MkeI9HXcYd+ENQLCjbixnorEzu1rTmA/2aJgmtEiSc2k/eOrFpfAl2ARVFbWe/u3mDZo8RLfz8ZsPRmZLw096SaZ8/682sXFdfxVLP4LAn+vG0T8mUO/hHUrJOER0=
+ b=YE44AQJcTQ/7pt9VqGOy+ES+7rr8oacuLNLjIrLGteNYTYeBsMyecBSPdAnDOgkCUCefKsDOhOl7y2/CxE2X1JEPYN4UI3R0ofzO5z/KciDe1qGrAJozJ8xxkmy5z6856XFs+4qEhoYaXEmoo4fx9svgKOMoYiC/EEzbt7x7K9s=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1763650504;
+ s=zohoarc; t=1763650945;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=GFPcDL17IIunLGbyTsX8w+sKZjuLQsXZwn4GtlEDc28=; 
- b=G5lda19m3UknrineYMkorm/8bsuafSUcg0QNwFhZaQBDmtsaPM6pkopYMq2vtrHHSKbofsDRPjQksN8f5Ilnm5CAVnWRTnmWSz2iBmUKjQPUa1/VsZu9PxNq3p7BNst8yOSzq5b8fIiip3XVFa2UZCxYjT62C9k3rkmHpgdbcPo=
+ bh=xXaxWFOo2SEnymgNZGckHlZrPr/Y4qrKn6YQevluswg=; 
+ b=aC/vn/CGz6OF6JykKBp7jBiz3iSKTi24zCgu7nJMVduUUhy/dI348O/0tAXgxTWNABoqWIykmR1YDtrmRpHZquEWFk6u6ho8F7wlvv/VLv0S+YjyTHEGNEFQhUlipuZcYSFpuBGREqyLZgEkRjSiHlvBz98pB5+VndJWtj5do2g=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=collabora.com;
  spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
  dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763650504; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1763650945; 
  s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=GFPcDL17IIunLGbyTsX8w+sKZjuLQsXZwn4GtlEDc28=;
- b=aLzqLy355PcIWrDQPwOS1/7XpXrM+aCN9gDTdXgT1E2D3UG7cgCZJhHDXYkFB5qe
- WYQA3W4okkeKsrSevPWO/ELzebNaVHUZBy7udpY9jbkcyCXfZV0C8YpYlrqLegquNT6
- phZ2dlFEE0Raw66LNz6tLHSTFFDbqQeWeEUdutow=
-Received: by mx.zohomail.com with SMTPS id 1763650502211123.17228119804327;
- Thu, 20 Nov 2025 06:55:02 -0800 (PST)
-Message-ID: <00064b47-ca94-4eb9-a443-bb2739ed885a@collabora.com>
-Date: Thu, 20 Nov 2025 17:54:53 +0300
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:From:From:To:To:Cc:Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=xXaxWFOo2SEnymgNZGckHlZrPr/Y4qrKn6YQevluswg=;
+ b=ip1Xy2c6iSzZ/NBD7v7LwuhNoHBjxIpYC5K+driwaJZ5PE7EQwGT07+xs5i3GBeY
+ RwjX/U7KsEwHDMFxMYppLiFT7uK/nvPQy/oQRDDhUv6IUzDx1F9uvFDHZXd0uVcnzyH
+ ghcgG7/rAwJq2SRXg+rj6NZmM2B69dfPwWcJLmwI=
+Received: by mx.zohomail.com with SMTPS id 176365094203343.17242703444606;
+ Thu, 20 Nov 2025 07:02:22 -0800 (PST)
+Message-ID: <2207c76d-a800-45e5-9acc-66e9d4cfa089@collabora.com>
+Date: Thu, 20 Nov 2025 18:02:13 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH v3 5/7] virtio-gpu: Destroy virgl resources on
  virtio-gpu reset
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -69,9 +70,9 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
 References: <20251120040632.4036204-1-dmitry.osipenko@collabora.com>
  <20251120040632.4036204-6-dmitry.osipenko@collabora.com>
  <94e92cb0-3e5a-48e3-bf3c-12d27c23c27f@rsg.ci.i.u-tokyo.ac.jp>
+ <00064b47-ca94-4eb9-a443-bb2739ed885a@collabora.com>
 Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <94e92cb0-3e5a-48e3-bf3c-12d27c23c27f@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <00064b47-ca94-4eb9-a443-bb2739ed885a@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-ZohoMailClient: External
@@ -100,31 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/20/25 08:07, Akihiko Odaki wrote:
->> +int virtio_gpu_virgl_reset(VirtIOGPU *g)
->>   {
->> +    struct virtio_gpu_simple_resource *res, *tmp;
->> +
->> +    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
->> +        virtio_gpu_virgl_resource_destroy(g, res, NULL);
->> +    }
->> +
->> +    if (!QTAILQ_EMPTY(&g->reslist)) {
->> +        error_report("failed to reset virgl resources");
->> +        return -1;
+On 11/20/25 17:54, Dmitry Osipenko wrote:
+> On 11/20/25 08:07, Akihiko Odaki wrote:
+>>> +int virtio_gpu_virgl_reset(VirtIOGPU *g)
+>>>   {
+>>> +    struct virtio_gpu_simple_resource *res, *tmp;
+>>> +
+>>> +    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
+>>> +        virtio_gpu_virgl_resource_destroy(g, res, NULL);
+>>> +    }
+>>> +
+>>> +    if (!QTAILQ_EMPTY(&g->reslist)) {
+>>> +        error_report("failed to reset virgl resources");
+>>> +        return -1;
+>>
+>> It shouldn't report an error if suspended.
 > 
-> It shouldn't report an error if suspended.
+> Could you please expand on what you're meaning by "suspended"?
+> 
+> Suppose you're talking about guest's kernel suspension. There was a
+> discussion on [1] RE a need to use `x-pcie-pm-no-soft-reset=true` option
+> to avoid virtio-gpu resetting across S3 suspend-resume. This option
+> works with virtio-vga, but not with virtio-vga-gl device where VM hangs
+> on startup. So currently S3 doesn't work for virgl and needs further fixing.
+> 
+> [1]
+> https://lore.kernel.org/dri-devel/20250924194755.1265531-1-dongwon.kim@intel.com/
 
-Could you please expand on what you're meaning by "suspended"?
-
-Suppose you're talking about guest's kernel suspension. There was a
-discussion on [1] RE a need to use `x-pcie-pm-no-soft-reset=true` option
-to avoid virtio-gpu resetting across S3 suspend-resume. This option
-works with virtio-vga, but not with virtio-vga-gl device where VM hangs
-on startup. So currently S3 doesn't work for virgl and needs further fixing.
-
-[1]
-https://lore.kernel.org/dri-devel/20250924194755.1265531-1-dongwon.kim@intel.com/
+Correction: `x-pcie-pm-no-soft-reset=true` works with virgl without
+enabled hostmem. It's hostmem that doesn't work with the additional PCI bus.
 
 -- 
 Best regards,
