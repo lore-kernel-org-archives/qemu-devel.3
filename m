@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253AECF64A0
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 01:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF489CF64A0
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 01:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLt4z-0000FY-GC; Wed, 19 Nov 2025 20:03:21 -0500
+	id 1vLt51-0000HD-5W; Wed, 19 Nov 2025 20:03:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vLskj-0004HF-AN; Wed, 19 Nov 2025 19:42:25 -0500
-Received: from tor.source.kernel.org ([172.105.4.254])
+ id 1vLskk-0004HJ-7U; Wed, 19 Nov 2025 19:42:26 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vLskg-0002S0-H8; Wed, 19 Nov 2025 19:42:24 -0500
+ id 1vLskf-0002S3-Uv; Wed, 19 Nov 2025 19:42:25 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 49B0F60185;
+ by sea.source.kernel.org (Postfix) with ESMTP id C68B8441E5;
  Thu, 20 Nov 2025 00:42:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC160C16AAE;
- Thu, 20 Nov 2025 00:42:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DF48C116D0;
+ Thu, 20 Nov 2025 00:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1763599339;
- bh=ZoKXyBiS0bJFhqyVI65ezn+Mu3I5RJvtW5nvhBqRgC4=;
+ bh=rQ0BCOvqW64O2m65sp0e31SwyfXBKYIvGZxTLBxJcwU=;
  h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
- b=N/kT5CTQrRHNl8GaM9v7Fc8JBtmLb2L/Gvt+kR+J3yuQviUqZbzWaN2mzYNXpfrpn
- rajtzB6Qp3KtJJekt6EMyec7bu9ckRgi0HC3qnmIcU/ikCnrRrPJiYl8ldpy90i9Kw
- g/R5ql0D2ToMGPYLRXJgmA/blPQuHgBcSsbn5Q4kDhcrhhPmP2TaOJOAeUmplXVdPb
- jUblBe5di8kiFEMs2kY1Dr6KTHqcZ52N2JjZJpAzdvuWnAVWGxuuiFwswmzoDbwfQ0
- ykFBq3AEhHbjACuue81nNJ9UDaO7thsAsy7sH20OSsKEerYVhKWTj+Prx+jxCdq+32
- R1jdFHFZWmySg==
+ b=dadtP4b5Sxj+iOmmusLJhjS+Yv7Du+kkrEcV9kPkeglLfGcBlnjbPpXNlxaJaXK4o
+ CBaLCDFC7OWteaa/PQZt2WJE2VELYTh+wMRiUb2xAdTeo/rvfVz6VLLLY6JvtmtIFz
+ ybAMBrIFoZ6f383E+UTv0SI3E0SQIpJChE2GLUl48FQszlhgUVuYMWuHQmS5jAq/F6
+ Nq9omIIRMCBcgGUYfXIPYpG5LsU7oYrU40JigAzHiQVSUU1qRza5ra52R2mHBI6Dzq
+ BXnEcuycDCKp5RU5xFXpOuk1QJqejtV/PMQlrwB8VQtzS8gmFJ07S1uqPZXlNNTYJT
+ TtegOJI7Nf5ug==
 From: Drew Fustini <fustini@kernel.org>
-Date: Wed, 19 Nov 2025 16:42:17 -0800
-Subject: [PATCH 1/7] riscv: implement Ssqosid extension and srmcfg CSR
+Date: Wed, 19 Nov 2025 16:42:19 -0800
+Subject: [PATCH 3/7] hw/riscv: implement CBQRI capacity controller
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20251119-riscv-ssqosid-cbqri-v1-1-3392fc760e48@kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251119-riscv-ssqosid-cbqri-v1-3-3392fc760e48@kernel.org>
 References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
 In-Reply-To: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
 To: qemu-devel@nongnu.org
@@ -58,8 +58,8 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  guo.wenjia23@zte.com.cn, liu.qingtao2@zte.com.cn, 
  Drew Fustini <fustini@kernel.org>
 X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=fustini@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -83,165 +83,677 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kornel Dulęba <mindal@semihalf.com>
+From: Nicolas Pitre <npitre@baylibre.com>
 
-Implement the srmcfg CSR defined by the Ssqosid ISA extension
-(Supervisor-mode Quality of Service ID). The CSR contains two fields:
+Implement a capacity controller according to the Capacity and Bandwidth
+QoS Register Interface (CBQRI) which supports these capabilities:
 
-  - Resource Control ID (RCID) used determine resource allocation
-  - Monitoring Counter ID (MCID) used to track resource usage
+  - Number of access types: 2 (code and data)
+  - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
+  - Event IDs supported: None, Occupancy
+  - Capacity allocation ops: CONFIG_LIMIT, READ_LIMIT, FLUSH_RCID
 
-The CSR is defined for S-mode but accessing it when V=1 shall cause a
-virtual instruction exception. Implement this behavior by calling the
-hmode predicate.
-
-Link: https://github.com/riscv-non-isa/riscv-cbqri/releases/download/v1.0/riscv-cbqri.pdf
-Signed-off-by: Kornel Dulęba <mindal@semihalf.com>
-[fustini: rebase on v10.1.50, fix check_srmcfg]
+Link: https://github.com/riscv-non-isa/riscv-cbqri/blob/main/riscv-cbqri.pdf
+Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+[fustini: add fields introduced in the ratified spec: cunits, rpfx, p]
 Signed-off-by: Drew Fustini <fustini@kernel.org>
 ---
- disas/riscv.c                     |  1 +
- target/riscv/cpu.c                |  2 ++
- target/riscv/cpu.h                |  3 +++
- target/riscv/cpu_bits.h           |  8 ++++++++
- target/riscv/cpu_cfg_fields.h.inc |  1 +
- target/riscv/csr.c                | 34 ++++++++++++++++++++++++++++++++++
- 6 files changed, 49 insertions(+)
+ MAINTAINERS               |   1 +
+ hw/riscv/cbqri_capacity.c | 634 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 635 insertions(+)
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 85cd2a9c2aef..86fc710528c1 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -2289,6 +2289,7 @@ static const char *csr_name(int csrno)
-     case 0x0143: return "stval";
-     case 0x0144: return "sip";
-     case 0x0180: return "satp";
-+    case 0x0181: return "srmcfg";
-     case 0x0200: return "hstatus";
-     case 0x0202: return "hedeleg";
-     case 0x0203: return "hideleg";
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 73d4280d7c84..2e2e642de26b 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -216,6 +216,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(ssdbltrp, PRIV_VERSION_1_13_0, ext_ssdbltrp),
-     ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
-     ISA_EXT_DATA_ENTRY(sspm, PRIV_VERSION_1_13_0, ext_sspm),
-+    ISA_EXT_DATA_ENTRY(ssqosid, PRIV_VERSION_1_12_0, ext_ssqosid),
-     ISA_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
-     ISA_EXT_DATA_ENTRY(ssstrict, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
-@@ -1268,6 +1269,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zvfbfwma", ext_zvfbfwma, false),
-     MULTI_EXT_CFG_BOOL("zvfh", ext_zvfh, false),
-     MULTI_EXT_CFG_BOOL("zvfhmin", ext_zvfhmin, false),
-+    MULTI_EXT_CFG_BOOL("ssqosid", ext_ssqosid, true),
-     MULTI_EXT_CFG_BOOL("sstc", ext_sstc, true),
-     MULTI_EXT_CFG_BOOL("ssnpm", ext_ssnpm, false),
-     MULTI_EXT_CFG_BOOL("sspm", ext_sspm, false),
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 36e7f100374d..21688d8ca002 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -336,6 +336,9 @@ struct CPUArchState {
-     uint64_t ctr_dst[16 << SCTRDEPTH_MAX];
-     uint64_t ctr_data[16 << SCTRDEPTH_MAX];
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7afe80f1b17c..48cca4ac8702 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -362,6 +362,7 @@ M: Nicolas Pitre <npitre@baylibre.com>
+ M: Drew Fustini <fustini@kernel.org>
+ L: qemu-riscv@nongnu.org
+ S: Supported
++F: hw/riscv/cbqri_capacity.c
+ F: include/hw/riscv/cbqri.h
  
-+    /* Ssqosid extension */
-+    target_ulong srmcfg;
+ RENESAS RX CPUs
+diff --git a/hw/riscv/cbqri_capacity.c b/hw/riscv/cbqri_capacity.c
+new file mode 100644
+index 000000000000..e70f831878ac
+--- /dev/null
++++ b/hw/riscv/cbqri_capacity.c
+@@ -0,0 +1,634 @@
++/*
++ * RISC-V Capacity and Bandwidth QoS Register Interface
++ * URL: https://github.com/riscv-non-isa/riscv-cbqri/releases/tag/v1.0
++ *
++ * Copyright (c) 2023 BayLibre SAS
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This file contains the Capacity-controller QoS Register Interface.
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
 +
-     /* Machine and Supervisor interrupt priorities */
-     uint8_t miprio[64];
-     uint8_t siprio[64];
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index b62dd82fe7c0..ebb400bf6f2c 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -228,6 +228,9 @@
- #define CSR_SPTBR           0x180
- #define CSR_SATP            0x180
- 
-+/* Ssqosid extension */
-+#define CSR_SRMCFG          0x181
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qemu/bitmap.h"
++#include "hw/qdev-properties.h"
++#include "hw/sysbus.h"
++#include "target/riscv/cpu.h"
++#include "hw/riscv/cbqri.h"
 +
- /* Supervisor-Level Window to Indirectly Accessed Registers (AIA) */
- #define CSR_SISELECT        0x150
- #define CSR_SIREG           0x151
-@@ -1164,4 +1167,9 @@ typedef enum CTRType {
- #define MCONTEXT64                         0x0000000000001FFFULL
- #define MCONTEXT32_HCONTEXT                0x0000007F
- #define MCONTEXT64_HCONTEXT                0x0000000000003FFFULL
++/* Encodings of `AT` field */
++enum {
++    CC_AT_DATA = 0,
++    CC_AT_CODE = 1,
++};
 +
-+/* SRMCFG CSR field masks (Ssqosid extensions) */
-+#define SRMCFG_RCID                      0x00000FFF
-+#define SRMCFG_MCID                      0x0FFF0000
++/* Capabilities */
++REG64(CC_CAPABILITIES, 0);
++FIELD(CC_CAPABILITIES, VER, 0, 8);
++FIELD(CC_CAPABILITIES, VER_MINOR, 0, 4);
++FIELD(CC_CAPABILITIES, VER_MAJOR, 4, 4);
++FIELD(CC_CAPABILITIES, NCBLKS, 8, 16);
++FIELD(CC_CAPABILITIES, FRCID, 24, 1);
++FIELD(CC_CAPABILITIES, CUNITS, 25, 1);
++FIELD(CC_CAPABILITIES, RPFX, 26,  1);
++FIELD(CC_CAPABILITIES, P, 27, 4);
 +
- #endif
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index a154ecdc792b..6518f6f9c571 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -105,6 +105,7 @@ BOOL_FIELD(ext_ssaia)
- BOOL_FIELD(ext_smctr)
- BOOL_FIELD(ext_ssctr)
- BOOL_FIELD(ext_sscofpmf)
-+BOOL_FIELD(ext_ssqosid)
- BOOL_FIELD(ext_smepmp)
- BOOL_FIELD(ext_smrnmi)
- BOOL_FIELD(ext_ssnpm)
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 5c91658c3dc4..06a6212c672d 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1759,6 +1759,37 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
-     return RISCV_EXCP_NONE;
- }
- 
-+static RISCVException check_srmcfg(CPURISCVState *env, int csrno)
++/* Usage monitoring control */
++REG64(CC_MON_CTL, 8);
++FIELD(CC_MON_CTL, OP, 0, 5);
++FIELD(CC_MON_CTL, AT, 5, 3);
++FIELD(CC_MON_CTL, MCID, 8, 12);
++FIELD(CC_MON_CTL, EVT_ID, 20, 8);
++FIELD(CC_MON_CTL, ATV, 28, 1);
++FIELD(CC_MON_CTL, STATUS, 32, 7);
++FIELD(CC_MON_CTL, BUSY, 39, 1);
++
++/* Usage monitoring operations */
++enum {
++    CC_MON_OP_CONFIG_EVENT = 1,
++    CC_MON_OP_READ_COUNTER = 2,
++};
++
++/* Usage monitoring event ID */
++enum {
++    CC_EVT_ID_None = 0,
++    CC_EVT_ID_Occupancy = 1,
++};
++
++/* CC_MON_CTL.STATUS field encodings */
++enum {
++    CC_MON_CTL_STATUS_SUCCESS = 1,
++    CC_MON_CTL_STATUS_INVAL_OP = 2,
++    CC_MON_CTL_STATUS_INVAL_MCID = 3,
++    CC_MON_CTL_STATUS_INVAL_EVT_ID = 4,
++    CC_MON_CTL_STATUS_INVAL_AT = 5,
++};
++
++/* Monitoring counter value */
++REG64(CC_MON_CTR_VAL, 16);
++FIELD(CC_MON_CTR_VAL, CTR, 0, 63);
++FIELD(CC_MON_CTR_VAL, INVALID, 63, 1);
++
++/* Capacity allocation control */
++REG64(CC_ALLOC_CTL, 24);
++FIELD(CC_ALLOC_CTL, OP, 0, 5);
++FIELD(CC_ALLOC_CTL, AT, 5, 3);
++FIELD(CC_ALLOC_CTL, RCID, 8, 12);
++FIELD(CC_ALLOC_CTL, STATUS, 32, 7);
++FIELD(CC_ALLOC_CTL, BUSY, 39, 1);
++
++/* Capacity allocation operations */
++enum {
++    CC_ALLOC_OP_CONFIG_LIMIT = 1,
++    CC_ALLOC_OP_READ_LIMIT = 2,
++    CC_ALLOC_OP_FLUSH_RCID = 3,
++};
++
++/* CC_ALLOC_CTL.STATUS field encodings */
++enum {
++    CC_ALLOC_STATUS_SUCCESS = 1,
++    CC_ALLOC_STATUS_INVAL_OP = 2,
++    CC_ALLOC_STATUS_INVAL_RCID = 3,
++    CC_ALLOC_STATUS_INVAL_AT = 4,
++    CC_ALLOC_STATUS_INVAL_BLKMASK = 5,
++};
++
++REG64(CC_BLOCK_MASK, 32);
++
++
++typedef struct MonitorCounter {
++    uint64_t ctr_val;
++    int at;
++    int evt_id;
++    bool active;
++} MonitorCounter;
++
++typedef struct RiscvCbqriCapacityState {
++    SysBusDevice parent_obj;
++    MemoryRegion mmio;
++
++    /* cached value of some registers */
++    uint64_t cc_mon_ctl;
++    uint64_t cc_mon_ctr_val;
++    uint64_t cc_alloc_ctl;
++
++    /* monitoring counters */
++    MonitorCounter *mon_counters;
++
++    /* allocation blockmasks (1st one is the CC_BLOCK_MASK register) */
++    uint64_t *alloc_blockmasks;
++
++    /* properties */
++
++    uint64_t mmio_base;
++    char *target;
++    uint16_t nb_mcids;
++    uint16_t nb_rcids;
++
++    uint16_t ncblks;
++
++    bool cunits;
++    bool rpfx;
++    uint8_t p;
++
++    bool supports_at_data;
++    bool supports_at_code;
++
++    bool supports_alloc_op_config_limit;
++    bool supports_alloc_op_read_limit;
++    bool supports_alloc_op_flush_rcid;
++
++    bool supports_mon_op_config_event;
++    bool supports_mon_op_read_counter;
++
++    bool supports_mon_evt_id_none;
++    bool supports_mon_evt_id_occupancy;
++} RiscvCbqriCapacityState;
++
++#define RISCV_CBQRI_CC(obj) \
++    OBJECT_CHECK(RiscvCbqriCapacityState, (obj), TYPE_RISCV_CBQRI_CC)
++
++static uint64_t *get_blockmask_location(RiscvCbqriCapacityState *cc,
++                                        uint32_t rcid, uint32_t at)
 +{
-+    RISCVCPU *cpu = env_archcpu(env);
++    /*
++     * All blockmasks are contiguous to simplify allocation.
++     * The first one is used to hold the CC_BLOCK_MASK register content,
++     * followed by respective blockmasks for each AT per RCID.
++     * Each blockmask is made of one or more uint64_t "slots".
++     */
++    unsigned int nb_ats = 0;
++    nb_ats += !!cc->supports_at_data;
++    nb_ats += !!cc->supports_at_code;
++    nb_ats = MAX(nb_ats, 1);
++    assert(at < nb_ats);
 +
-+    if (!cpu->cfg.ext_ssqosid) {
-+        return RISCV_EXCP_ILLEGAL_INST;
++    unsigned int blockmask_slots = (cc->ncblks + 63) / 64;
++    unsigned int blockmask_offset = blockmask_slots * (1 + rcid * nb_ats + at);
++
++    return cc->alloc_blockmasks + blockmask_offset;
++}
++
++static uint32_t alloc_blockmask_config(RiscvCbqriCapacityState *cc,
++                                       uint32_t rcid, uint32_t at,
++                                       bool *busy)
++{
++    unsigned int blockmask_slots = (cc->ncblks + 63) / 64;
++
++    if ((cc->ncblks % 64) != 0) {
++        /* make sure provided mask isn't too large */
++        uint64_t tail = cc->alloc_blockmasks[blockmask_slots - 1];
++        if ((tail >> (cc->ncblks % 64)) != 0) {
++            return CC_ALLOC_STATUS_INVAL_BLKMASK;
++        }
 +    }
 +
-+    /*
-+     * Even though this is an S-mode CSR the spec says that we need to throw
-+     * and virt instruction fault if a guest tries to access it.
-+     */
-+    return env->virt_enabled ?
-+           RISCV_EXCP_VIRT_INSTRUCTION_FAULT : smode(env, csrno);
++    /* for now we only preserve the current CC_BLOCK_MASK register content */
++    memcpy(get_blockmask_location(cc, rcid, at),
++           cc->alloc_blockmasks, blockmask_slots * 8);
++    return CC_ALLOC_STATUS_SUCCESS;
 +}
 +
-+static RISCVException read_srmcfg(CPURISCVState *env, int csrno,
-+                                  target_ulong *val)
++static uint32_t alloc_blockmask_read(RiscvCbqriCapacityState *cc,
++                                     uint32_t rcid, uint32_t at,
++                                     bool *busy)
 +{
-+    *val = env->srmcfg;
-+    return RISCV_EXCP_NONE;
++    unsigned int blockmask_slots = (cc->ncblks + 63) / 64;
++
++    memcpy(cc->alloc_blockmasks,
++           get_blockmask_location(cc, rcid, at),
++           blockmask_slots * 8);
++    return CC_ALLOC_STATUS_SUCCESS;
 +}
 +
-+static RISCVException write_srmcfg(CPURISCVState *env, int csrno,
-+                                   target_ulong val, uintptr_t ra)
++static uint32_t alloc_blockmask_init(RiscvCbqriCapacityState *cc,
++                                     uint32_t rcid, uint32_t at, bool set,
++                                     bool *busy)
 +{
-+    env->srmcfg = val & (SRMCFG_RCID | SRMCFG_MCID);
-+    return RISCV_EXCP_NONE;
++    void *blockmask = get_blockmask_location(cc, rcid, at);
++
++    if (set) {
++        bitmap_fill(blockmask, cc->ncblks);
++    } else {
++        bitmap_zero(blockmask, cc->ncblks);
++    }
++    return CC_ALLOC_STATUS_SUCCESS;
 +}
 +
++static bool is_valid_at(RiscvCbqriCapacityState *cc, uint32_t at)
++{
++    switch (at) {
++    case CC_AT_DATA:
++        return cc->supports_at_data;
++    case CC_AT_CODE:
++        return cc->supports_at_code;
++    default:
++        return false;
++    }
++}
 +
- #define VSTOPI_NUM_SRCS 5
- 
- /*
-@@ -6035,6 +6066,9 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] = {
-     /* Supervisor Protection and Translation */
-     [CSR_SATP]     = { "satp",     satp, read_satp,     write_satp     },
- 
-+    /* Supervisor-Level Quality-of-Service Identifiers (Ssqosid) */
-+    [CSR_SRMCFG]   = { "srmcfg",  check_srmcfg, read_srmcfg, write_srmcfg },
++static void riscv_cbqri_cc_write_mon_ctl(RiscvCbqriCapacityState *cc,
++                                         uint64_t value)
++{
++    if (!cc->supports_mon_op_config_event &&
++        !cc->supports_mon_op_read_counter) {
++        /* monitoring not supported: leave mon_ctl set to 0 */
++        return;
++    }
 +
-     /* Supervisor-Level Window to Indirectly Accessed Registers (AIA) */
-     [CSR_SISELECT]   = { "siselect",   csrind_or_aia_smode, NULL, NULL,
-                          rmw_xiselect                                       },
++    /* extract writable fields */
++    uint32_t op = FIELD_EX64(value, CC_MON_CTL, OP);
++    uint32_t at = FIELD_EX64(value, CC_MON_CTL, AT);
++    uint32_t mcid = FIELD_EX64(value, CC_MON_CTL, MCID);
++    uint32_t evt_id = FIELD_EX64(value, CC_MON_CTL, EVT_ID);
++    bool atv = FIELD_EX64(value, CC_MON_CTL, ATV);
++
++    /* extract read-only fields */
++    uint32_t status = FIELD_EX64(cc->cc_mon_ctl, CC_MON_CTL, STATUS);
++    bool busy = FIELD_EX64(cc->cc_mon_ctl, CC_MON_CTL, BUSY);
++
++    if (busy) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: busy flag still set, ignored",
++                      __func__);
++        return;
++    }
++
++    if (!cc->supports_at_data &&
++        !cc->supports_at_code) {
++        /* AT not supported: hardwire to 0 */
++        at = 0;
++        atv = false;
++    }
++
++    if (mcid >= cc->nb_mcids) {
++        status = CC_MON_CTL_STATUS_INVAL_MCID;
++    } else if (op == CC_MON_OP_CONFIG_EVENT &&
++               cc->supports_mon_op_config_event) {
++        if (evt_id == CC_EVT_ID_None &&
++            cc->supports_mon_evt_id_none) {
++            cc->mon_counters[mcid].active = false;
++            status = CC_MON_CTL_STATUS_SUCCESS;
++        } else if (evt_id == CC_EVT_ID_Occupancy &&
++                   cc->supports_mon_evt_id_occupancy) {
++            if (atv && !is_valid_at(cc, at)) {
++                status = CC_MON_CTL_STATUS_INVAL_AT;
++            } else {
++                cc->mon_counters[mcid].ctr_val =
++                    FIELD_DP64(0, CC_MON_CTR_VAL, INVALID, 1);
++                cc->mon_counters[mcid].evt_id = evt_id;
++                cc->mon_counters[mcid].at = atv ? at : -1;
++                cc->mon_counters[mcid].active = true;
++                status = CC_MON_CTL_STATUS_SUCCESS;
++            }
++        } else {
++            status = CC_MON_CTL_STATUS_INVAL_EVT_ID;
++        }
++    } else if (op == CC_MON_OP_READ_COUNTER &&
++               cc->supports_mon_op_read_counter) {
++        cc->cc_mon_ctr_val = cc->mon_counters[mcid].ctr_val;
++        status = CC_MON_CTL_STATUS_SUCCESS;
++    } else {
++        status = CC_MON_CTL_STATUS_INVAL_OP;
++    }
++
++    /* reconstruct updated register value */
++    value = 0;
++    value = FIELD_DP64(value, CC_MON_CTL, OP, op);
++    value = FIELD_DP64(value, CC_MON_CTL, AT, at);
++    value = FIELD_DP64(value, CC_MON_CTL, MCID, mcid);
++    value = FIELD_DP64(value, CC_MON_CTL, EVT_ID, evt_id);
++    value = FIELD_DP64(value, CC_MON_CTL, ATV, atv);
++    value = FIELD_DP64(value, CC_MON_CTL, STATUS, status);
++    value = FIELD_DP64(value, CC_MON_CTL, BUSY, busy);
++    cc->cc_mon_ctl = value;
++}
++
++static void riscv_cbqri_cc_write_alloc_ctl(RiscvCbqriCapacityState *cc,
++                                           uint64_t value)
++{
++    if (cc->ncblks == 0 ||
++        (!cc->supports_alloc_op_config_limit &&
++         !cc->supports_alloc_op_read_limit &&
++         !cc->supports_alloc_op_flush_rcid)) {
++        /* capacity allocation not supported: leave alloc_ctl set to 0 */
++        return;
++    }
++
++    /* extract writable fields */
++    uint32_t op = FIELD_EX64(value, CC_ALLOC_CTL, OP);
++    uint32_t at = FIELD_EX64(value, CC_ALLOC_CTL, AT);
++    uint32_t rcid = FIELD_EX64(value, CC_ALLOC_CTL, RCID);
++
++    /* extract read-only fields */
++    uint32_t status = FIELD_EX64(cc->cc_alloc_ctl, CC_ALLOC_CTL, STATUS);
++    bool busy = FIELD_EX64(cc->cc_alloc_ctl, CC_ALLOC_CTL, BUSY);
++
++    if (busy) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: busy flag still set, ignored",
++                      __func__);
++        return;
++    }
++
++    bool atv = true;
++    if (!cc->supports_at_data &&
++        !cc->supports_at_code) {
++        /* AT not supported: hardwire to 0 */
++        at = 0;
++        atv = false;
++    }
++
++    if (rcid >= cc->nb_rcids) {
++        status = CC_ALLOC_STATUS_INVAL_RCID;
++    } else if (atv && !is_valid_at(cc, at)) {
++        status = CC_ALLOC_STATUS_INVAL_AT;
++    } else if (op == CC_ALLOC_OP_CONFIG_LIMIT &&
++               cc->supports_alloc_op_config_limit) {
++        status = alloc_blockmask_config(cc, rcid, at, &busy);
++    } else if (op == CC_ALLOC_OP_READ_LIMIT &&
++               cc->supports_alloc_op_read_limit) {
++        status = alloc_blockmask_read(cc, rcid, at, &busy);
++    } else if (op == CC_ALLOC_OP_FLUSH_RCID &&
++               cc->supports_alloc_op_flush_rcid) {
++        status = alloc_blockmask_init(cc, rcid, at, false, &busy);
++    } else {
++        status = CC_ALLOC_STATUS_INVAL_OP;
++    }
++
++    /* reconstruct updated register value */
++    value = 0;
++    value = FIELD_DP64(value, CC_ALLOC_CTL, OP, op);
++    value = FIELD_DP64(value, CC_ALLOC_CTL, AT, at);
++    value = FIELD_DP64(value, CC_ALLOC_CTL, RCID, rcid);
++    value = FIELD_DP64(value, CC_ALLOC_CTL, STATUS, status);
++    value = FIELD_DP64(value, CC_ALLOC_CTL, BUSY, busy);
++    cc->cc_alloc_ctl = value;
++}
++
++static void riscv_cbqri_cc_write(void *opaque, hwaddr addr,
++                                 uint64_t value, unsigned size)
++{
++    RiscvCbqriCapacityState *cc = opaque;
++
++    assert((addr % 8) == 0);
++    assert(size == 8);
++
++    switch (addr) {
++    case A_CC_CAPABILITIES:
++        /* read-only register */
++        break;
++    case A_CC_MON_CTL:
++        riscv_cbqri_cc_write_mon_ctl(cc, value);
++        break;
++    case A_CC_ALLOC_CTL:
++        riscv_cbqri_cc_write_alloc_ctl(cc, value);
++        break;
++    case A_CC_MON_CTR_VAL:
++        /* read-only register */
++        break;
++    case A_CC_BLOCK_MASK:
++        if (cc->ncblks == 0) {
++            break;
++        }
++        /* fallthrough */
++    default:
++        uint32_t blkmask_slot = (addr - A_CC_BLOCK_MASK) / 8;
++        if (blkmask_slot >= (cc->ncblks + 63) / 64) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: out of bounds (addr=0x%x)",
++                          __func__, (uint32_t)addr);
++            break;
++        }
++        cc->alloc_blockmasks[blkmask_slot] = value;
++    }
++}
++
++static uint64_t riscv_cbqri_cc_read(void *opaque, hwaddr addr, unsigned size)
++{
++    RiscvCbqriCapacityState *cc = opaque;
++    uint64_t value = 0;
++
++    assert((addr % 8) == 0);
++    assert(size == 8);
++
++    switch (addr) {
++    case A_CC_CAPABILITIES:
++        value = FIELD_DP64(value, CC_CAPABILITIES, VER_MAJOR,
++                           RISCV_CBQRI_VERSION_MAJOR);
++        value = FIELD_DP64(value, CC_CAPABILITIES, VER_MINOR,
++                           RISCV_CBQRI_VERSION_MINOR);
++        value = FIELD_DP64(value, CC_CAPABILITIES, NCBLKS,
++                           cc->ncblks);
++        value = FIELD_DP64(value, CC_CAPABILITIES, FRCID,
++                           cc->supports_alloc_op_flush_rcid);
++        value = FIELD_DP64(value, CC_CAPABILITIES, CUNITS,
++                           cc->cunits);
++        value = FIELD_DP64(value, CC_CAPABILITIES, RPFX,
++                           cc->rpfx);
++        value = FIELD_DP64(value, CC_CAPABILITIES, P,
++                           cc->p);
++
++        break;
++    case A_CC_MON_CTL:
++        value = cc->cc_mon_ctl;
++        break;
++    case A_CC_ALLOC_CTL:
++        value = cc->cc_alloc_ctl;
++        break;
++    case A_CC_MON_CTR_VAL:
++        value = cc->cc_mon_ctr_val;
++        break;
++    case A_CC_BLOCK_MASK:
++        if (cc->ncblks == 0) {
++            break;
++        }
++        /* fallthrough */
++    default:
++        unsigned int blkmask_slot = (addr - A_CC_BLOCK_MASK) / 8;
++        if (blkmask_slot >= (cc->ncblks + 63) / 64) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: out of bounds (addr=0x%x)",
++                          __func__, (uint32_t)addr);
++            break;
++        }
++        value = cc->alloc_blockmasks[blkmask_slot];
++    }
++
++    return value;
++}
++
++static const MemoryRegionOps riscv_cbqri_cc_ops = {
++    .read = riscv_cbqri_cc_read,
++    .write = riscv_cbqri_cc_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid.min_access_size = 4,
++    .valid.max_access_size = 8,
++    .impl.min_access_size = 8,
++    .impl.max_access_size = 8,
++};
++
++static void riscv_cbqri_cc_realize(DeviceState *dev, Error **errp)
++{
++    RiscvCbqriCapacityState *cc = RISCV_CBQRI_CC(dev);
++
++    if (!cc->mmio_base) {
++        error_setg(errp, "mmio_base property not set");
++        return;
++    }
++
++    assert(cc->mon_counters == NULL);
++    cc->mon_counters = g_new0(MonitorCounter, cc->nb_mcids);
++
++    assert(cc->alloc_blockmasks == NULL);
++    uint64_t *end = get_blockmask_location(cc, cc->nb_rcids, 0);
++    unsigned int blockmasks_size = end - cc->alloc_blockmasks;
++    cc->alloc_blockmasks = g_new0(uint64_t, blockmasks_size);
++
++    memory_region_init_io(&cc->mmio, OBJECT(dev), &riscv_cbqri_cc_ops,
++                          cc, TYPE_RISCV_CBQRI_CC".mmio", 4 * 1024);
++    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &cc->mmio);
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, cc->mmio_base);
++}
++
++static void riscv_cbqri_cc_reset(DeviceState *dev)
++{
++    RiscvCbqriCapacityState *cc = RISCV_CBQRI_CC(dev);
++
++    cc->cc_mon_ctl = 0;
++    cc->cc_alloc_ctl = 0;
++
++    /* assign all capacity only to rcid0 */
++    for (unsigned int rcid = 0; rcid < cc->nb_rcids; rcid++) {
++        bool any_at = false;
++
++        if (cc->supports_at_data) {
++            alloc_blockmask_init(cc, rcid, CC_AT_DATA,
++                                 rcid == 0, NULL);
++            any_at = true;
++        }
++        if (cc->supports_at_code) {
++            alloc_blockmask_init(cc, rcid, CC_AT_CODE,
++                                 rcid == 0, NULL);
++            any_at = true;
++        }
++        if (!any_at) {
++            alloc_blockmask_init(cc, rcid, 0,
++                                 rcid == 0, NULL);
++        }
++    }
++}
++
++static Property riscv_cbqri_cc_properties[] = {
++    DEFINE_PROP_UINT64("mmio_base", RiscvCbqriCapacityState, mmio_base, 0),
++    DEFINE_PROP_STRING("target", RiscvCbqriCapacityState, target),
++
++    DEFINE_PROP_UINT16("max_mcids", RiscvCbqriCapacityState, nb_mcids, 256),
++    DEFINE_PROP_UINT16("max_rcids", RiscvCbqriCapacityState, nb_rcids, 64),
++    DEFINE_PROP_UINT16("ncblks", RiscvCbqriCapacityState, ncblks, 16),
++
++    DEFINE_PROP_BOOL("cunits", RiscvCbqriCapacityState, cunits, true),
++    DEFINE_PROP_BOOL("rpfx", RiscvCbqriCapacityState, rpfx, true),
++    DEFINE_PROP_UINT8("p", RiscvCbqriCapacityState, p, 4),
++
++    DEFINE_PROP_BOOL("at_data", RiscvCbqriCapacityState,
++                     supports_at_data, true),
++    DEFINE_PROP_BOOL("at_code", RiscvCbqriCapacityState,
++                     supports_at_code, true),
++
++    DEFINE_PROP_BOOL("alloc_op_config_limit", RiscvCbqriCapacityState,
++                     supports_alloc_op_config_limit, true),
++    DEFINE_PROP_BOOL("alloc_op_read_limit", RiscvCbqriCapacityState,
++                     supports_alloc_op_read_limit, true),
++    DEFINE_PROP_BOOL("alloc_op_flush_rcid", RiscvCbqriCapacityState,
++                     supports_alloc_op_flush_rcid, true),
++
++    DEFINE_PROP_BOOL("mon_op_config_event", RiscvCbqriCapacityState,
++                     supports_mon_op_config_event, true),
++    DEFINE_PROP_BOOL("mon_op_read_counter", RiscvCbqriCapacityState,
++                     supports_mon_op_read_counter, true),
++
++    DEFINE_PROP_BOOL("mon_evt_id_none", RiscvCbqriCapacityState,
++                     supports_mon_evt_id_none, true),
++    DEFINE_PROP_BOOL("mon_evt_id_occupancy", RiscvCbqriCapacityState,
++                     supports_mon_evt_id_occupancy, true),
++};
++
++static void riscv_cbqri_cc_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    dc->realize = riscv_cbqri_cc_realize;
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++    dc->desc = "RISC-V CBQRI Capacity Controller";
++    device_class_set_props(dc, riscv_cbqri_cc_properties);
++    dc->legacy_reset = riscv_cbqri_cc_reset;
++    dc->user_creatable = true;
++}
++
++static const TypeInfo riscv_cbqri_cc_info = {
++    .name          = TYPE_RISCV_CBQRI_CC,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RiscvCbqriCapacityState),
++    .class_init    = riscv_cbqri_cc_class_init,
++};
++
++static void riscv_cbqri_cc_register_types(void)
++{
++    type_register_static(&riscv_cbqri_cc_info);
++}
++
++DeviceState *riscv_cbqri_cc_create(hwaddr addr,
++                                   const RiscvCbqriCapacityCaps *caps,
++                                   const char *target_name)
++{
++    DeviceState *dev = qdev_new(TYPE_RISCV_CBQRI_CC);
++
++    qdev_prop_set_uint64(dev, "mmio_base", addr);
++    qdev_prop_set_string(dev, "target", target_name);
++    qdev_prop_set_uint16(dev, "max_mcids", caps->nb_mcids);
++    qdev_prop_set_uint16(dev, "max_rcids", caps->nb_rcids);
++    qdev_prop_set_uint16(dev, "ncblks", caps->ncblks);
++    qdev_prop_set_bit(dev, "cunits", caps->cunits);
++    qdev_prop_set_bit(dev, "rpfx", caps->rpfx);
++    qdev_prop_set_uint8(dev, "p", caps->p);
++
++    qdev_prop_set_bit(dev, "at_data",
++                      caps->supports_at_data);
++    qdev_prop_set_bit(dev, "at_code",
++                      caps->supports_at_code);
++    qdev_prop_set_bit(dev, "alloc_op_config_limit",
++                      caps->supports_alloc_op_config_limit);
++    qdev_prop_set_bit(dev, "alloc_op_read_limit",
++                      caps->supports_alloc_op_read_limit);
++    qdev_prop_set_bit(dev, "alloc_op_flush_rcid",
++                      caps->supports_alloc_op_flush_rcid);
++    qdev_prop_set_bit(dev, "mon_op_config_event",
++                      caps->supports_mon_op_config_event);
++    qdev_prop_set_bit(dev, "mon_op_read_counter",
++                      caps->supports_mon_op_read_counter);
++    qdev_prop_set_bit(dev, "mon_evt_id_none",
++                      caps->supports_mon_evt_id_none);
++    qdev_prop_set_bit(dev, "mon_evt_id_occupancy",
++                      caps->supports_mon_evt_id_occupancy);
++
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++
++    return dev;
++}
++
++type_init(riscv_cbqri_cc_register_types)
 
 -- 
 2.43.0
