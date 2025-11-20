@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 183A7CF64B6
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 05:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2887CF64BB
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 05:23:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLx4f-0002ek-P0; Thu, 20 Nov 2025 00:19:17 -0500
+	id 1vLx8k-00042U-NV; Thu, 20 Nov 2025 00:23:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vLx4d-0002eP-NL
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 00:19:15 -0500
+ id 1vLx8k-00042I-2B
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 00:23:30 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vLx4c-0005NQ-1H
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 00:19:15 -0500
+ id 1vLx8i-0006LS-Cl
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 00:23:29 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AK5IqLo043239
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AK5N7LY046625
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 20 Nov 2025 14:18:52 +0900 (JST)
+ Thu, 20 Nov 2025 14:23:08 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=wq6NWtc0coCnhLiFW8UMOT8ipTlO36qvRY/KGu8US98=; 
+DKIM-Signature: a=rsa-sha256; bh=5YuIyapGXkQO3tV0yo8w+UBKgC0e96pI3aXYKgQv/A8=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1763615932; v=1;
- b=S76Gsk1rouRKVOwE+JEQcnT6JtZtoLjZOVstSlzIZO3hVIZ50L3Rrihp5uk0C67j
- mY21Wqa9aX5hsFEJMDzPWaVL4rzgYUj2EAXm4b1jBsrIV8zsgLOacaHpMmtNvf2R
- em+k3Zj7d35tpo+9GIsgnDWCbdjjTtZY2Hwc3WHUjtL9NflmM3TWnOCWqDr0EuIq
- H1NAvyLGa6ht5IU29UR7niHWJUF4vqddHBv19COPLPOZzb1AeeO6S58WJy+ymFgd
- vmlLkycwyvgxlgZTGYOIGqxyR8JuqKe0bAoeFIop2KvdXzJTGOq53y7eCZOjGurQ
- Mo5JRdN9YHA+I8r/pWFUCg==
-Message-ID: <807286d8-8100-4ff3-a207-2ae4c5bdae87@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 20 Nov 2025 14:18:50 +0900
+ s=rs20250326; t=1763616188; v=1;
+ b=B9qOWATG9ofvBlcLw+DN0fbD8s5LXcjTpSUya8FSS3YePwemHS8YF7O6Yj88I0zT
+ LI7VDET8ru0mwgzPig+HFBeJAVzu/glKpyf+y0cN0OHuTnhHsXB83t1CbCQbTMSK
+ gByJ6/9GpW8z583zJDfDfy7uOxXWZXQuZ0Mf2/EaAGSDQvD7dQAEB9ZfOj+oWHP8
+ dwdw2oWzqFJY0mpVqsvux30I3RUVr+3q/+ZPzhfX5BoAMc4qYODla7kgQ7pEOw9W
+ MciJVXXurb5TL0ZVzSNQN+bcjsZLdUWQV1mWILUNX5yONpdKUJhnpx0n+RTW5t6T
+ LoX4tmoT13Ex4WRCy3nJQQ==
+Message-ID: <565005a9-4841-450d-97f7-d03d5a1020be@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 20 Nov 2025 14:23:07 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 2/7] virtio-gpu: Validate hostmem mapping offset
+Subject: Re: [RFC PATCH v3 4/7] virtio-gpu: Blame host for virgl blob resource
+ unmapping error
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
@@ -62,10 +63,10 @@ Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
  Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
 References: <20251120040632.4036204-1-dmitry.osipenko@collabora.com>
- <20251120040632.4036204-3-dmitry.osipenko@collabora.com>
+ <20251120040632.4036204-5-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251120040632.4036204-3-dmitry.osipenko@collabora.com>
+In-Reply-To: <20251120040632.4036204-5-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -93,40 +94,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/11/20 13:06, Dmitry Osipenko wrote:
-> Check hostmem mapping boundaries originated from guest.
+> Report virgl blob resource unmapping error as a host error since it's
+> host's fault.
 > 
-> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 > ---
->   hw/display/virtio-gpu-virgl.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
+>   hw/display/virtio-gpu-virgl.c | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
 > 
 > diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index a6860f63b563..cf1da4b79626 100644
+> index bc22763cc931..ae8de8ee47da 100644
 > --- a/hw/display/virtio-gpu-virgl.c
 > +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -126,6 +126,14 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
->           return -EOPNOTSUPP;
->       }
+> @@ -196,9 +196,8 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
 >   
-> +    if (offset + res->base.blob_size > b->conf.hostmem ||
-> +        offset + res->base.blob_size < offset) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: failed to map virgl resource: invalid offset\n",
-> +                      __func__);
-> +        return -1;
+>           ret = virgl_renderer_resource_unmap(res->base.resource_id);
+>           if (ret) {
+> -            qemu_log_mask(LOG_GUEST_ERROR,
+> -                          "%s: failed to unmap virgl resource: %s\n",
+> -                          __func__, strerror(-ret));
+> +            error_report("%s: failed to unmap virgl resource: %s",
+> +                         __func__, strerror(-ret));
 
-The last returned error is -EOPNOTSUPP but this returns -1, which does 
-not look right.
+I'm not sure about this. Unlike plain mmap(), virglrenderer *may* return 
+an error because of the current state it has. Skimming the virglrenderer 
+code it apparently does not happen, but there is no guarantee.
 
-QEMU should also return VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER if this 
-check fails.
+I also checked crosvm but it didn't help; it don't distinguish guest and 
+host errors.
 
-> +    }
-> +
->       ret = virgl_renderer_resource_map(res->base.resource_id, &data, &size);
->       if (ret) {
->           qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map virgl resource: %s\n",
-
-
+Regards,
+Akihiko Odaki
 
