@@ -4,147 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69E31CF887F
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 22:11:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A170ACFA457
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 23:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMCr5-0007jZ-26; Thu, 20 Nov 2025 17:10:19 -0500
+	id 1vMEX3-00036r-3z; Thu, 20 Nov 2025 18:57:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vMCr3-0007j9-AT; Thu, 20 Nov 2025 17:10:17 -0500
-Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1vMEX0-000365-Q5; Thu, 20 Nov 2025 18:57:42 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vMCqu-0002bB-6l; Thu, 20 Nov 2025 17:10:17 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=t4TmQ9g/xU1JbEmKHXsVT/Qp3tPeEiWVUAH1/4WeU8pR70KY6gDI4lzdc7BZYYz+UIvf0OCX/uU8pNasR1MWxJfbbBW7XcqPJWXLPMljXJasOex5B2M+RWJujOB23rWKQ2DRF+VV2p2qia3jPxYGSXSZOCaJ8TkpuR0j28CqO2RXbBLJo7Y1WMsXe5lJ8FizclXNKJm+ctaD6mEBVjTf14xCSnXmzMpNsVXdLUg9b4RP7xMNxQxyBzBAtZIKefHlw/v8QrCiIOeg8i/mx6VPUwhcWaeic0k1IkYbJTCGy/Q3KRQP0LIYsfAWJhHPkC89Lq8ymqTSVtqGpgGh+oK9UA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Y3sGT59m6ofT4TBRyEEWisxnvWTZP3LNk6BHlPpkonc=;
- b=UjgKAxHqedQo49p7CKNwERA/y+P+pNM9sDqXsyQZHTkYuIw1Igi7hlJTSpRJmFWtoQTCLsExmu1dZ/DXK4jgKONIFhKCzLmnqfS353rYlgw08pApHLKWisWnxpvNEkpEkeqraZzyzaVpwqKwdu8LWGGh/3snd5WkfShJ+rsp/TYna1Qht8UQhyoMK9j2pWKfZCbiE3KLjxINl1NW5TfMhk6gf+CKvZsHfvNVs1PpxqZrfIasoLdGkkOYC3Vj/ghARBmJMNvT0f6T5x72/KIm88wePm0GKf9eWl/BAmnUq9CF01bJ69P5s40h15dRY31bqCd+TlyGzC3lK7m1rN8oQQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Y3sGT59m6ofT4TBRyEEWisxnvWTZP3LNk6BHlPpkonc=;
- b=UnD4duyncEc7OxXwnY/2/IUr+WeBXtQVYaRSbbN5Q6DGzRg/qEBlVVYZzHpGNLGHn8kA1zPqtHqVT+1bSzT1a+4KsJTfYbLW8ZdfqmhEf8y87UdW4q34yJ4bwelrJvy98jyzXOp5iZGSqXXfnrtsuDz6yJruW2Vkey73GAJuY9BdNf4tTiNMArfvNOyMYtoek2wjtnYWClsP3wB5FBtnct2JPP5XqYGEmEuBm2IqGW0VR7hqZovASvxXTu46BCZMpcOHOxbwwvfIXwp0S793ZJBGdkeUnQhyDa5wiVRE8MaVyCjqiChzYh3s3Zp+5olE0BUmayToBZBQMDkVDunP+A==
-Received: from BL1PR13CA0124.namprd13.prod.outlook.com (2603:10b6:208:2bb::9)
- by CH2PR12MB4151.namprd12.prod.outlook.com (2603:10b6:610:78::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9320.18; Thu, 20 Nov
- 2025 22:10:00 +0000
-Received: from BL6PEPF0001AB4E.namprd04.prod.outlook.com
- (2603:10b6:208:2bb:cafe::b4) by BL1PR13CA0124.outlook.office365.com
- (2603:10b6:208:2bb::9) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.10 via Frontend Transport; Thu,
- 20 Nov 2025 22:10:00 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BL6PEPF0001AB4E.mail.protection.outlook.com (10.167.242.72) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9343.9 via Frontend Transport; Thu, 20 Nov 2025 22:10:00 +0000
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 20 Nov
- 2025 14:09:37 -0800
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail204.nvidia.com
- (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 20 Nov
- 2025 14:09:37 -0800
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Thu, 20 Nov 2025 14:09:36 -0800
-Date: Thu, 20 Nov 2025 14:09:34 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <ddutile@redhat.com>,
- <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <smostafa@google.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <yi.l.liu@intel.com>, <kjaju@nvidia.com>
-Subject: Re: [PATCH v6 33/33] hw/arm/smmuv3-accel: Add support for PASID enable
-Message-ID: <aR+RngqP3HTLZIlH@Asurada-Nvidia>
-References: <20251120132213.56581-1-skolothumtho@nvidia.com>
- <20251120132213.56581-34-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1vMEWy-0000bW-5y; Thu, 20 Nov 2025 18:57:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=yLx8/kW/v6qUU6G/CxjaSljuRBbP90sLxOMR5Nm0pKA=; b=M+mrJZyL7werI5IY
+ QaTeVA66JNcc6UmKX+IWfgWcCWSuWyHR7woCz+nK9VH5X6DShYGi0MnnpKdk9R3hWP01DVM9pwSO+
+ 0mHysCZkXmXtBm6gneQIoDYy329cHrq4QWGf+FTXK+uautA8L/u+kRXnHzpnKt8s9QlXtYFuaryRY
+ wSIAGNeeevUTUeh/kN6c9EILJCGBnAqKriOxG+2PqaiaQF12+cH853scKM7WMr9MfwqCtDgaZNVtO
+ gXnSKivBzAdvYq5xjXyQrtWf62qjquyoFcKQ+Ozoj8NzsmVeiTGM8WAQHu/FUVhGAqjlsbDzc600R
+ s+g1gljwzFbH36fTkA==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1vMEWX-00000005cYr-0ztq;
+ Thu, 20 Nov 2025 23:57:13 +0000
+Date: Thu, 20 Nov 2025 23:57:13 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, pizhenwei@bytedance.com,
+ alistair.francis@wdc.com, stefanb@linux.vnet.ibm.com,
+ kwolf@redhat.com, hreitz@redhat.com, sw@weilnetz.de,
+ qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
+ shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
+ sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com,
+ jag.raman@oracle.com, sgarzare@redhat.com, pbonzini@redhat.com,
+ fam@euphon.net, philmd@linaro.org, alex@shazbot.org, clg@redhat.com,
+ peterx@redhat.com, farosas@suse.de, lizhijian@fujitsu.com,
+ jasowang@redhat.com, samuel.thibault@ens-lyon.org,
+ michael.roth@amd.com, kkostiuk@redhat.com, zhao1.liu@intel.com,
+ mtosatti@redhat.com, rathc@linux.ibm.com, palmer@dabbelt.com,
+ liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, marcandre.lureau@redhat.com,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ xen-devel@lists.xenproject.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH 09/14] error: Use error_setg_file_open() for simplicity
+ and consistency
+Message-ID: <aR-q2YeegIEPmk2R@gallifrey>
+References: <20251120191339.756429-1-armbru@redhat.com>
+ <20251120191339.756429-10-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20251120132213.56581-34-skolothumtho@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB4E:EE_|CH2PR12MB4151:EE_
-X-MS-Office365-Filtering-Correlation-Id: 10ca2f66-daf5-476e-1d43-08de28818c4b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?ZhMpamdIFtLKTn4wxiqCR/2vgw9E28wBRCU/nReWz2HMYP2SGC35T7DhMoW0?=
- =?us-ascii?Q?PMMWdFVy+5r5dDmbbutTk0bONT9UI5/fqDavyJSDMzXo/1rJDHW7M+Y2IQxO?=
- =?us-ascii?Q?OkFTdw96lVtehj4tqjbXOindpQbUj6oQD3kt9meYl1SMSRvh/eLVAq2gqIMm?=
- =?us-ascii?Q?aXLfqmCXFzcAnnT1hST0zaTbKKEL2zO6MLmFwl4L+SWQWYYXvuNRlqFm/3NF?=
- =?us-ascii?Q?3yckP/oJz0KaVARgZKrAic34oVlTtwWp6WPoFGMTstpRTJ4wysJINJW7euN5?=
- =?us-ascii?Q?BKE7yAYgSbk/UIMzQ2r6FZEQMYtDCcxKV0zIGh9YHiR3lrDtsUuWicVRHs5m?=
- =?us-ascii?Q?fl6UOhD2pWx4m3o/M3P1bi+8jofksju//7eTK1GdKFiiaQIIEUmN8jSkuU0h?=
- =?us-ascii?Q?rk41G+hOBbz+Ut+MeUcTQEHbg1jl/LtHpDMOHLGfRDRPzcJRIpWWaTHVILJc?=
- =?us-ascii?Q?uegzLKRxR0k8TivPDl8Y0c9GE+1UjNE3olJOdWOr/rb/0oqMrpfeThCIw+o6?=
- =?us-ascii?Q?yyXqXxlT41p8U22u1keOK+92d5OwDQGGYDgI0P+7IWjagip6XGYbub1eqUSN?=
- =?us-ascii?Q?D70lrtPjs/Bw0B4SJYYuRIRBdrhumdGN3Sxj0fn7rciaAzRQGS63X0MUlGUQ?=
- =?us-ascii?Q?IllFcSezC/twJYaAQFAsGyzH/LdUqwU24OgiH6FppACQveDtEF6ZpotAmqf9?=
- =?us-ascii?Q?2uglujpjtDUXb0WQMmxqPQHE4R/rpvYC5nO2SpHoj8FW237NZpyZty6pFNUW?=
- =?us-ascii?Q?B658UGD9WspHONa/mDuO73/Tauye/ROCfu2FbQ+qUVf9dSAGEaTgLZIOgiCb?=
- =?us-ascii?Q?lOcQ/RoBSznKymKBIKg9Rt4FArcqOpT/lrUjPMsgkG0thiIKUHdv5+8b7fJf?=
- =?us-ascii?Q?oZgP6Xl+BWGz4dpDitTzPMqNRCkmmBKwkDSppq76DnsoGrlvUTMfXPO5ZOKq?=
- =?us-ascii?Q?+mVecWgIAtzlNa0pYAAsZFv6ICwHm81ooIcKRVbDMLhmE10fIeVbpXnFFKom?=
- =?us-ascii?Q?iw5qwWLz8SU66r1x01a58a1gdAAd01l2lYHnp85zchc4ixVBtW7TygY4Veke?=
- =?us-ascii?Q?zgEOdKHhSWF9EA9JO7ykUEFOdHpl090A/ZbHsNoiQWMGUEa5e+72NbwR+ymk?=
- =?us-ascii?Q?WhkYMpVhgzKX7Jnj42qJvM41avvT9q5htTJh3RlGI0DCg93ByqcGwIOpPVnL?=
- =?us-ascii?Q?UAgy/yUf9+YKAQQldgdeh5G3QqL8jtyXOAdYhbEyrHyUnnM3EwEnMUQNvhek?=
- =?us-ascii?Q?1+xaLHMf+NolM/mI8n05jQ/2gOu5kEnDVMiqEySiErBMw1FLeSDk9QlYeulb?=
- =?us-ascii?Q?mKbwxWZ8VmNu8XyI3ifJUrmskCEGyXR7oRFIgr1NosRDxxBiSGlNuO0/okFu?=
- =?us-ascii?Q?x8k9sB2elkstZYkPWRKwSJqch3onY6o6/jKg7SOBZE/pFzbJtd8ydixTr02E?=
- =?us-ascii?Q?kTcqIlIcWOtV2xfHYse+bOT8D9TCT+2dAYMWu9uWewP1B8RW0C7mQKuBql/M?=
- =?us-ascii?Q?O2CQdbQXUvXud9HNEz12O3+58+rw5RkOVdO2e/nyR5o9g/r6OqFIXkgrMw?=
- =?us-ascii?Q?=3D=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Nov 2025 22:10:00.1075 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 10ca2f66-daf5-476e-1d43-08de28818c4b
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB4E.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4151
-Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
- envelope-from=nicolinc@nvidia.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20251120191339.756429-10-armbru@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
+X-Uptime: 23:56:31 up 24 days, 23:32,  2 users,  load average: 0.00, 0.01, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,37 +87,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 20, 2025 at 01:22:13PM +0000, Shameer Kolothum wrote:
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -67,6 +67,12 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->          error_setg(errp, "Host SMMUv3 SIDSIZE not compatible");
->          return false;
+* Markus Armbruster (armbru@redhat.com) wrote:
+> Replace
+> 
+>     error_setg_errno(errp, errno, MSG, FNAME);
+> 
+> by
+> 
+>     error_setg_file_open(errp, errno, FNAME);
+> 
+> where MSG is "Could not open '%s'" or similar.
+> 
+> Also replace equivalent uses of error_setg().
+> 
+> A few messages lose prefixes ("net dump: ", "SEV: ", __func__ ": ").
+> We could put them back with error_prepend().  Not worth the bother.
+
+Yeh, I guess you could just do it with another macro using
+the same internal function just with string concatenation.
+
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+
+> ---
+>  hw/9pfs/9p-local.c        | 2 +-
+>  hw/acpi/core.c            | 2 +-
+>  hw/core/loader.c          | 2 +-
+>  hw/pci-host/xen_igd_pt.c  | 2 +-
+>  monitor/hmp-cmds-target.c | 2 +-
+>  net/dump.c                | 2 +-
+>  net/tap-bsd.c             | 6 +++---
+>  net/tap-linux.c           | 2 +-
+>  target/i386/sev.c         | 6 ++----
+>  ui/ui-qmp-cmds.c          | 3 +--
+>  util/vfio-helpers.c       | 5 ++---
+>  11 files changed, 15 insertions(+), 19 deletions(-)
+> 
+> diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+> index 31e216227c..376b377698 100644
+> --- a/hw/9pfs/9p-local.c
+> +++ b/hw/9pfs/9p-local.c
+> @@ -1456,7 +1456,7 @@ static int local_init(FsContext *ctx, Error **errp)
+>  
+>      data->mountfd = open(ctx->fs_root, O_DIRECTORY | O_RDONLY);
+>      if (data->mountfd == -1) {
+> -        error_setg_errno(errp, errno, "failed to open '%s'", ctx->fs_root);
+> +        error_setg_file_open(errp, errno, ctx->fs_root);
+>          goto err;
 >      }
-> +    /* If user enables PASID support(pasid=on), QEMU sets SSIDSIZE to 16 */
-> +    if (FIELD_EX32(info->idr[1], IDR1, SSIDSIZE) <
-> +                FIELD_EX32(s->idr[1], IDR1, SSIDSIZE)) {
-> +        error_setg(errp, "Host SMMUv3 SSIDSIZE not compatible");
-> +        return false;
-> +    }
-
-I think we can print the values: host vs VM. And at SIDSIZE above
-as well.
-
-> @@ -2084,6 +2090,7 @@ static const Property smmuv3_properties[] = {
->      DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
->      DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
->      DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
-> +    DEFINE_PROP_BOOL("pasid", SMMUv3State, pasid, false),
->  };
-
-Instead of doing a boolean "pasid", perhaps ssidsize and sidsize
-should be configurable. Then, user can follow the not-compatible
-print to set correct SSIDSIZE and SIDSIZE.
-
-They can also choose to set a higher value if underlying SMMU HW
-supports that.
-
-Otherwise,
-
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+>  
+> diff --git a/hw/acpi/core.c b/hw/acpi/core.c
+> index ff16582803..d2677332af 100644
+> --- a/hw/acpi/core.c
+> +++ b/hw/acpi/core.c
+> @@ -277,7 +277,7 @@ void acpi_table_add(const QemuOpts *opts, Error **errp)
+>          int fd = open(*cur, O_RDONLY | O_BINARY);
+>  
+>          if (fd < 0) {
+> -            error_setg(errp, "can't open file %s: %s", *cur, strerror(errno));
+> +            error_setg_file_open(errp, errno, *cur);
+>              goto out;
+>          }
+>  
+> diff --git a/hw/core/loader.c b/hw/core/loader.c
+> index 590c5b02aa..b56e5eb2f5 100644
+> --- a/hw/core/loader.c
+> +++ b/hw/core/loader.c
+> @@ -379,7 +379,7 @@ void load_elf_hdr(const char *filename, void *hdr, bool *is64, Error **errp)
+>  
+>      fd = open(filename, O_RDONLY | O_BINARY);
+>      if (fd < 0) {
+> -        error_setg_errno(errp, errno, "Failed to open file: %s", filename);
+> +        error_setg_file_open(errp, errno, filename);
+>          return;
+>      }
+>      if (read(fd, hdr, EI_NIDENT) != EI_NIDENT) {
+> diff --git a/hw/pci-host/xen_igd_pt.c b/hw/pci-host/xen_igd_pt.c
+> index 5dd17ef236..f6016f2cd5 100644
+> --- a/hw/pci-host/xen_igd_pt.c
+> +++ b/hw/pci-host/xen_igd_pt.c
+> @@ -55,7 +55,7 @@ static void host_pci_config_read(int pos, int len, uint32_t *val, Error **errp)
+>  
+>      config_fd = open(path, O_RDWR);
+>      if (config_fd < 0) {
+> -        error_setg_errno(errp, errno, "Failed to open: %s", path);
+> +        error_setg_file_open(errp, errno, path);
+>          goto out;
+>      }
+>  
+> diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
+> index e982061146..ad4ed2167d 100644
+> --- a/monitor/hmp-cmds-target.c
+> +++ b/monitor/hmp-cmds-target.c
+> @@ -331,7 +331,7 @@ static uint64_t vtop(void *ptr, Error **errp)
+>  
+>      fd = open("/proc/self/pagemap", O_RDONLY);
+>      if (fd == -1) {
+> -        error_setg_errno(errp, errno, "Cannot open /proc/self/pagemap");
+> +        error_setg_file_open(errp, errno, "/proc/self/pagemap");
+>          return -1;
+>      }
+>  
+> diff --git a/net/dump.c b/net/dump.c
+> index 581234b775..0c39f09892 100644
+> --- a/net/dump.c
+> +++ b/net/dump.c
+> @@ -111,7 +111,7 @@ static int net_dump_state_init(DumpState *s, const char *filename,
+>  
+>      fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | O_BINARY, 0644);
+>      if (fd < 0) {
+> -        error_setg_errno(errp, errno, "net dump: can't open %s", filename);
+> +        error_setg_file_open(errp, errno, filename);
+>          return -1;
+>      }
+>  
+> diff --git a/net/tap-bsd.c b/net/tap-bsd.c
+> index bbf84d1828..3fd300d46f 100644
+> --- a/net/tap-bsd.c
+> +++ b/net/tap-bsd.c
+> @@ -68,7 +68,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
+>          }
+>      }
+>      if (fd < 0) {
+> -        error_setg_errno(errp, errno, "could not open %s", dname);
+> +        error_setg_file_open(errp, errno, dname);
+>          return -1;
+>      }
+>  
+> @@ -118,7 +118,7 @@ static int tap_open_clone(char *ifname, int ifname_size, Error **errp)
+>  
+>      fd = RETRY_ON_EINTR(open(PATH_NET_TAP, O_RDWR));
+>      if (fd < 0) {
+> -        error_setg_errno(errp, errno, "could not open %s", PATH_NET_TAP);
+> +        error_setg_file_open(errp, errno, PATH_NET_TAP);
+>          return -1;
+>      }
+>  
+> @@ -166,7 +166,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
+>          snprintf(dname, sizeof dname, "/dev/%s", ifname);
+>          fd = RETRY_ON_EINTR(open(dname, O_RDWR));
+>          if (fd < 0 && errno != ENOENT) {
+> -            error_setg_errno(errp, errno, "could not open %s", dname);
+> +            error_setg_file_open(errp, errno, dname);
+>              return -1;
+>          }
+>      }
+> diff --git a/net/tap-linux.c b/net/tap-linux.c
+> index 2a90b58467..909c4f1fcf 100644
+> --- a/net/tap-linux.c
+> +++ b/net/tap-linux.c
+> @@ -57,7 +57,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
+>      if (fd < 0) {
+>          fd = RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
+>          if (fd < 0) {
+> -            error_setg_errno(errp, errno, "could not open %s", PATH_NET_TUN);
+> +            error_setg_file_open(errp, errno, PATH_NET_TUN);
+>              return -1;
+>          }
+>      }
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index fd2dada013..8660ecd9e4 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -891,8 +891,7 @@ static SevCapability *sev_get_capabilities(Error **errp)
+>  
+>      fd = open(sev_device, O_RDWR);
+>      if (fd < 0) {
+> -        error_setg_errno(errp, errno, "SEV: Failed to open %s",
+> -                         sev_device);
+> +        error_setg_file_open(errp, errno, sev_device);
+>          g_free(sev_device);
+>          return NULL;
+>      }
+> @@ -1819,8 +1818,7 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+>      devname = object_property_get_str(OBJECT(sev_common), "sev-device", NULL);
+>      sev_common->sev_fd = open(devname, O_RDWR);
+>      if (sev_common->sev_fd < 0) {
+> -        error_setg(errp, "%s: Failed to open %s '%s'", __func__,
+> -                   devname, strerror(errno));
+> +        error_setg_file_open(errp, errno, devname);
+>          g_free(devname);
+>          return -1;
+>      }
+> diff --git a/ui/ui-qmp-cmds.c b/ui/ui-qmp-cmds.c
+> index 74fa6c6ec5..d927121676 100644
+> --- a/ui/ui-qmp-cmds.c
+> +++ b/ui/ui-qmp-cmds.c
+> @@ -371,8 +371,7 @@ qmp_screendump(const char *filename, const char *device,
+>  
+>      fd = qemu_open_old(filename, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0666);
+>      if (fd == -1) {
+> -        error_setg(errp, "failed to open file '%s': %s", filename,
+> -                   strerror(errno));
+> +        error_setg_file_open(errp, errno, filename);
+>          return;
+>      }
+>  
+> diff --git a/util/vfio-helpers.c b/util/vfio-helpers.c
+> index fdff042ab4..8b1b2e2f05 100644
+> --- a/util/vfio-helpers.c
+> +++ b/util/vfio-helpers.c
+> @@ -309,7 +309,7 @@ static int qemu_vfio_init_pci(QEMUVFIOState *s, const char *device,
+>      s->container = open("/dev/vfio/vfio", O_RDWR);
+>  
+>      if (s->container == -1) {
+> -        error_setg_errno(errp, errno, "Failed to open /dev/vfio/vfio");
+> +        error_setg_file_open(errp, errno, "/dev/vfio/vfio");
+>          return -errno;
+>      }
+>      if (ioctl(s->container, VFIO_GET_API_VERSION) != VFIO_API_VERSION) {
+> @@ -333,8 +333,7 @@ static int qemu_vfio_init_pci(QEMUVFIOState *s, const char *device,
+>  
+>      s->group = open(group_file, O_RDWR);
+>      if (s->group == -1) {
+> -        error_setg_errno(errp, errno, "Failed to open VFIO group file: %s",
+> -                         group_file);
+> +        error_setg_file_open(errp, errno, group_file);
+>          g_free(group_file);
+>          ret = -errno;
+>          goto fail_container;
+> -- 
+> 2.49.0
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
