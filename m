@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA4CCF64BB
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 06:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21DBFCF64BB
+	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 06:50:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vLyTC-0005DT-2r; Thu, 20 Nov 2025 01:48:42 -0500
+	id 1vLyTA-0005Cl-E3; Thu, 20 Nov 2025 01:48:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLyT6-00057A-Bl
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 01:48:36 -0500
+ id 1vLyT0-00055I-5o
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 01:48:32 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vLyT3-0005rC-A5
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 01:48:34 -0500
+ id 1vLySu-0005r2-RU
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 01:48:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763621313; x=1795157313;
+ t=1763621305; x=1795157305;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=ovsxg3hrz20CGPJgoBcOeGCszgdZlpPS7etlhX5Nax4=;
- b=mJKYJKf/OqAPvB4MPjMXIMICBVHig9PBQgKUXvfAnirKPTn3qAx3j/pd
- CIXrhNysN3oMdIJJAw7kzRkOqU4fu4zoytcIRGROKKCLh6+SSgQCscFgh
- qWc1xnYC/w3ndnoQH4RpvdHYJfsoxyXG3MH+z3QfMbG7bENnL7md9f/Qz
- j+AA2rICUsLpkqzyiNyndXTrVALCqaC1TaUlIQAQ9OMkSGxfkzpVUD3Hg
- q96eRelYs6LGSremCz3BJvUR+tWICN/+oHLu+T7j15o8vdnd7i6Wch9de
- A5PaRkbWSsRgXed2TwMHQrfUHrcuI8TZTBg5hurr99xJpd4AKaYevSjrC w==;
-X-CSE-ConnectionGUID: pvD6G2JkTyqbtHPtDZMv1A==
-X-CSE-MsgGUID: oBmBLREfQ7e9OiLw+cNwCw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11618"; a="65572546"
-X-IronPort-AV: E=Sophos;i="6.19,317,1754982000"; d="scan'208";a="65572546"
+ bh=487ITGVr9i8c/gw4YoNyHsP0ApJoxPWCX3AhdoyG/F8=;
+ b=e7MvUt0xXTfVW7iIoYUVh4qLOq+cNOgcKJyuOIOcqQQIoHVn5pBXVx1D
+ gd8C7qiKM0Z2BAKC2Tx/MnpC/s+wyMlAjv6UMjgdALC8gYkxnNlLjLhvY
+ bGtTNXrRElOnT2FChGRyW20rxu10QnGQcUynQzefg75iO6dUvkjPXnbvY
+ CQsefVp2p/H4cfv/Qpij6ue+fZXF1G1lApfRfLCOvOsSAwWk3X6cipLZg
+ cIrccufYWuQgblfc1KBWPQ1tGnBxhQZNZzZh/5Hk0IHdhWeourFutMFi0
+ DZbPBSbOJ25t/0j2ZcHDDPRRsn24CbzNUkswrnBi8GyqK7iZ7UkWCS8ks Q==;
+X-CSE-ConnectionGUID: K2BcrqNXR/2NJfSS19ljHQ==
+X-CSE-MsgGUID: pH1JjFnpR9OhxzhbISUqzA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11618"; a="65572528"
+X-IronPort-AV: E=Sophos;i="6.19,317,1754982000"; d="scan'208";a="65572528"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Nov 2025 22:48:26 -0800
-X-CSE-ConnectionGUID: 4v6YAkJQTDSFIzHNcnzBLg==
-X-CSE-MsgGUID: pe2+VRDpSYSFeVJ1cGoFxg==
+ 19 Nov 2025 22:48:19 -0800
+X-CSE-ConnectionGUID: Q3YeRrSiSoiXgvEYsKThsg==
+X-CSE-MsgGUID: ZxhSNNFES9iWYFmf+CplDA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,317,1754982000"; d="scan'208";a="191296123"
+X-IronPort-AV: E=Sophos;i="6.19,317,1754982000"; d="scan'208";a="191296105"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 19 Nov 2025 22:48:25 -0800
+ by orviesa007.jf.intel.com with ESMTP; 19 Nov 2025 22:48:18 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Xudong Hao <xudong.hao@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 05/10] i386/cpu: Add a helper to get host avx10 version
-Date: Thu, 20 Nov 2025 15:10:25 +0800
-Message-Id: <20251120071030.961230-6-zhao1.liu@intel.com>
+Subject: [PATCH 01/10] i386/cpu: Add support for MOVRS in CPUID enumeration
+Date: Thu, 20 Nov 2025 15:10:21 +0800
+Message-Id: <20251120071030.961230-2-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251120071030.961230-1-zhao1.liu@intel.com>
 References: <20251120071030.961230-1-zhao1.liu@intel.com>
@@ -83,58 +83,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor out a helper to get host avx10 version, to reduce duplicate
-codes.
+MOVRS is a new set of instructions introduced in the Intel platform
+Diamond Rapids, to load instructions that carry a read-shared hint.
+
+Functionally, MOVRS family is equivalent to existing load instructions,
+but its read-shared hint indicates the source memory location is likely
+to become read-shared by multiple processors, i.e., read in the future
+by at least one other processor before it is written (assuming it is
+ever written in the future). It could optimize the behavior of the
+caches, especially shared caches, for this data for future reads by
+multiple processors. Additionally, MOVRS family also includes a software
+prefetch instruction, PREFETCHRST2, that carries the same read-shared
+hint. [*]
+
+MOVRS family is enumerated by CPUID single-bit (0x7.0x1.EAX[bit 31]).
+Add its enumeration support.
+
+[*]: Intel Architecture Instruction Set Extensions and Future Features
+     (rev.059).
 
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+Reference link: https://cdrdv2.intel.com/v1/dl/getContent/865891
+---
+ target/i386/cpu.c | 2 +-
+ target/i386/cpu.h | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index f0ed575dce59..118ce43e4267 100644
+index 0c954202cea8..1aae9cba13af 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -7757,6 +7757,13 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
+@@ -1266,7 +1266,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             NULL, "fred", "lkgs", "wrmsrns",
+             NULL, "amx-fp16", NULL, "avx-ifma",
+             NULL, NULL, "lam", NULL,
+-            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, "movrs",
+         },
+         .cpuid = {
+             .eax = 7,
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index d15a89f8c72e..7b50c0c04f6e 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1030,6 +1030,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_1_EAX_AVX_IFMA          (1U << 23)
+ /* Linear Address Masking */
+ #define CPUID_7_1_EAX_LAM               (1U << 26)
++/* MOVRS Instructions */
++#define CPUID_7_1_EAX_MOVRS             (1U << 31)
  
- #endif /* !CONFIG_USER_ONLY */
- 
-+static uint8_t x86_cpu_get_host_avx10_version(void)
-+{
-+    uint32_t eax, ebx, ecx, edx;
-+    x86_cpu_get_supported_cpuid(0x24, 0, &eax, &ebx, &ecx, &edx);
-+    return ebx & 0xff;
-+}
-+
- uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
- {
-     FeatureWordInfo *wi = &feature_word_info[w];
-@@ -9255,11 +9262,10 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-         }
- 
-         if ((env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) && !env->avx10_version) {
--            uint32_t eax, ebx, ecx, edx;
--            x86_cpu_get_supported_cpuid(0x24, 0, &eax, &ebx, &ecx, &edx);
-+            uint8_t version = x86_cpu_get_host_avx10_version();
- 
-             if (!object_property_set_uint(OBJECT(cpu), "avx10-version",
--                                          ebx & 0xff, errp)) {
-+                                          version, errp)) {
-                 return;
-             }
-         }
-@@ -9481,9 +9487,7 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
-     have_filtered_features = x86_cpu_have_filtered_features(cpu);
- 
-     if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
--        x86_cpu_get_supported_cpuid(0x24, 0,
--                                    &eax_0, &ebx_0, &ecx_0, &edx_0);
--        uint8_t version = ebx_0 & 0xff;
-+        uint8_t version = x86_cpu_get_host_avx10_version();
- 
-         if (version < env->avx10_version) {
-             if (prefix) {
+ /* The immediate form of MSR access instructions */
+ #define CPUID_7_1_ECX_MSR_IMM           (1U << 5)
 -- 
 2.34.1
 
