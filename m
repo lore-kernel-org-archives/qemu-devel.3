@@ -4,35 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0089CFC504
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F007CF64B1
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdH9-0000Ip-Es; Fri, 21 Nov 2025 21:23:00 -0500
+	id 1vMdIO-00020P-IV; Fri, 21 Nov 2025 21:24:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdGz-000064-KJ; Fri, 21 Nov 2025 21:22:49 -0500
+ id 1vMdIH-0001qV-Ke; Fri, 21 Nov 2025 21:24:09 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdGB-0004er-7V; Fri, 21 Nov 2025 21:22:46 -0500
+ id 1vMdHL-000565-MR; Fri, 21 Nov 2025 21:24:05 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 20BD416C6FE;
- Fri, 21 Nov 2025 16:51:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 267DB16C6F3;
+ Fri, 21 Nov 2025 16:51:56 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7A77B32199B;
- Fri, 21 Nov 2025 16:52:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 74C8F321990;
+ Fri, 21 Nov 2025 16:52:04 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 38/76] target/x86: Correctly handle invalid 0x0f 0xc7
- 0xxx insns
-Date: Fri, 21 Nov 2025 16:51:16 +0300
-Message-ID: <20251121135201.1114964-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Richard W.M. Jones" <rjones@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 27/76] block/curl.c: Fix CURLOPT_VERBOSE parameter type
+Date: Fri, 21 Nov 2025 16:51:05 +0300
+Message-ID: <20251121135201.1114964-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
@@ -60,51 +58,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: "Richard W.M. Jones" <rjones@redhat.com>
 
-In the decode_group9() function, if we don't recognise the insn as
-one that we should handle, we leave the 'entry' pointer unaltered.
-Because the X86OpEntry struct has a union for the gen and decode
-pointers, this means that the top level code will call decode.e.gen()
-which tries to use the decode function pointer (still set to
-decode_group9) as a gen function pointer.
+In commit ed26056d90 ("block/curl.c: Use explicit long constants in
+curl_easy_setopt calls") we missed a further call that takes a long
+parameter.
 
-This is undefined behaviour, but seems to be mostly harmless in
-practice (we call decode_group9() again with bogus arguments and it
-does nothing).  If you have CFI enabled then it will trip the CFI
-check:
-
-../target/i386/tcg/decode-new.c.inc:2862:9: runtime error: control flow integrity check for type 'void (struct DisasContext *, struct X86DecodedInsn *)' failed during indirect function call
-
-Set *entry to UNKNOWN_OPCODE to provoke the #UD exception, as we do
-in decode_group1A() and decode_group11() for similar situations.
-
-Thanks to the bug reporter for the clear description and analysis of
-the bug and the simple reproducer.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3172
-Fixes: fcd16539ebfe2 ("target/i386: convert CMPXCHG8B/CMPXCHG16B to new decoder")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251021173152.1695997-1-peter.maydell@linaro.org>
-(cherry picked from commit 4f503afc7eb503997fedad84f24e2cdf696a7a0e)
+Reported-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
+Message-ID: <20251013124127.604401-1-rjones@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit ad97769e9dcf4dbdaae6d859176e5f37fd6a7c66)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index a50f57dbaa..f4192f1006 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -335,6 +335,8 @@ static void decode_group9(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
-         *entry = group9_reg;
-     } else if (op == 1) {
-         *entry = REX_W(s) ? cmpxchg16b : cmpxchg8b;
-+    } else {
-+        *entry = UNKNOWN_OPCODE;
-     }
- }
+diff --git a/block/curl.c b/block/curl.c
+index 1102a3aa2f..cbfb847dc4 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -524,7 +524,7 @@ static int curl_init_state(BDRVCURLState *s, CURLState *state)
+ #endif
  
+ #ifdef DEBUG_VERBOSE
+-        if (curl_easy_setopt(state->curl, CURLOPT_VERBOSE, 1)) {
++        if (curl_easy_setopt(state->curl, CURLOPT_VERBOSE, 1L)) {
+             goto err;
+         }
+ #endif
 -- 
 2.47.3
 
