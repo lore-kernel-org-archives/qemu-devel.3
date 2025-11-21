@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A170ACFA457
-	for <qemu-devel@archiver.kernel.org>; Thu, 20 Nov 2025 23:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C9FCFA45F
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 00:11:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMEX3-00036r-3z; Thu, 20 Nov 2025 18:57:45 -0500
+	id 1vMEkB-0008D3-LZ; Thu, 20 Nov 2025 19:11:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1vMEX0-000365-Q5; Thu, 20 Nov 2025 18:57:42 -0500
+ id 1vMEjb-0007ls-Sj; Thu, 20 Nov 2025 19:10:56 -0500
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1vMEWy-0000bW-5y; Thu, 20 Nov 2025 18:57:42 -0500
+ id 1vMEjU-0003WD-AL; Thu, 20 Nov 2025 19:10:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=yLx8/kW/v6qUU6G/CxjaSljuRBbP90sLxOMR5Nm0pKA=; b=M+mrJZyL7werI5IY
- QaTeVA66JNcc6UmKX+IWfgWcCWSuWyHR7woCz+nK9VH5X6DShYGi0MnnpKdk9R3hWP01DVM9pwSO+
- 0mHysCZkXmXtBm6gneQIoDYy329cHrq4QWGf+FTXK+uautA8L/u+kRXnHzpnKt8s9QlXtYFuaryRY
- wSIAGNeeevUTUeh/kN6c9EILJCGBnAqKriOxG+2PqaiaQF12+cH853scKM7WMr9MfwqCtDgaZNVtO
- gXnSKivBzAdvYq5xjXyQrtWf62qjquyoFcKQ+Ozoj8NzsmVeiTGM8WAQHu/FUVhGAqjlsbDzc600R
- s+g1gljwzFbH36fTkA==;
+ :Subject; bh=4YAcbiarbzQHvhEzZ63n6RkH46R+BEUGak5gqn7DS+0=; b=ilbUYMN0rKRC6nJC
+ AjVUwVMVW7944N9SN4N3h+IDCtzr87WMNXUIjULXle6L7f2jIHRXFfSFJOhAvPsDh+Z0MgdXaqFzH
+ xtlyavuW6OwPf2BO03CsvX0Ryu0GPXNoJeLboZkxtZVm6GJSOHN/CzhKQQpMqsdK6HpavN34jWfZZ
+ Kt1+prB3CLGVGdrqi5ZXeOePqoNkHL74MhrVFb1qWAECOoiXvaAqik3S9zDCGG3ogy18MMD4PBfRk
+ VNgLVDGImyGZWGiBa95qzFc+pyTfzMMKtajdwOWnCMLk2vMLrIgLH4H3PxDBorM9KvZw7GDP0Hojb
+ 9PgYJe97XoKoacFcHw==;
 Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vMEWX-00000005cYr-0ztq;
- Thu, 20 Nov 2025 23:57:13 +0000
-Date: Thu, 20 Nov 2025 23:57:13 +0000
+ (envelope-from <dg@treblig.org>) id 1vMEj7-00000005csx-0Lk8;
+ Fri, 21 Nov 2025 00:10:13 +0000
+Date: Fri, 21 Nov 2025 00:10:13 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, pizhenwei@bytedance.com,
@@ -51,18 +51,18 @@ Cc: qemu-devel@nongnu.org, arei.gonglei@huawei.com, pizhenwei@bytedance.com,
  zhiwei_liu@linux.alibaba.com, marcandre.lureau@redhat.com,
  qemu-block@nongnu.org, qemu-ppc@nongnu.org,
  xen-devel@lists.xenproject.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
-Subject: Re: [PATCH 09/14] error: Use error_setg_file_open() for simplicity
- and consistency
-Message-ID: <aR-q2YeegIEPmk2R@gallifrey>
+Subject: Re: [PATCH 11/14] error: Use error_setg_errno() to improve error
+ messages
+Message-ID: <aR-t5SzR2AdqlJtq@gallifrey>
 References: <20251120191339.756429-1-armbru@redhat.com>
- <20251120191339.756429-10-armbru@redhat.com>
+ <20251120191339.756429-12-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20251120191339.756429-10-armbru@redhat.com>
+In-Reply-To: <20251120191339.756429-12-armbru@redhat.com>
 X-Chocolate: 70 percent or better cocoa solids preferably
 X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 23:56:31 up 24 days, 23:32,  2 users,  load average: 0.00, 0.01, 0.00
+X-Uptime: 00:09:12 up 24 days, 23:45,  2 users,  load average: 0.03, 0.03, 0.00
 User-Agent: Mutt/2.2.13 (2024-03-09)
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
  helo=mx.treblig.org
@@ -88,228 +88,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Markus Armbruster (armbru@redhat.com) wrote:
-> Replace
+> A few error messages show numeric errno codes.  Use error_setg_errno()
+> to show human-readable text instead.
 > 
->     error_setg_errno(errp, errno, MSG, FNAME);
-> 
-> by
-> 
->     error_setg_file_open(errp, errno, FNAME);
-> 
-> where MSG is "Could not open '%s'" or similar.
-> 
-> Also replace equivalent uses of error_setg().
-> 
-> A few messages lose prefixes ("net dump: ", "SEV: ", __func__ ": ").
-> We could put them back with error_prepend().  Not worth the bother.
-
-Yeh, I guess you could just do it with another macro using
-the same internal function just with string concatenation.
-
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+...
 
-> ---
->  hw/9pfs/9p-local.c        | 2 +-
->  hw/acpi/core.c            | 2 +-
->  hw/core/loader.c          | 2 +-
->  hw/pci-host/xen_igd_pt.c  | 2 +-
->  monitor/hmp-cmds-target.c | 2 +-
->  net/dump.c                | 2 +-
->  net/tap-bsd.c             | 6 +++---
->  net/tap-linux.c           | 2 +-
->  target/i386/sev.c         | 6 ++----
->  ui/ui-qmp-cmds.c          | 3 +--
->  util/vfio-helpers.c       | 5 ++---
->  11 files changed, 15 insertions(+), 19 deletions(-)
-> 
-> diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-> index 31e216227c..376b377698 100644
-> --- a/hw/9pfs/9p-local.c
-> +++ b/hw/9pfs/9p-local.c
-> @@ -1456,7 +1456,7 @@ static int local_init(FsContext *ctx, Error **errp)
->  
->      data->mountfd = open(ctx->fs_root, O_DIRECTORY | O_RDONLY);
->      if (data->mountfd == -1) {
-> -        error_setg_errno(errp, errno, "failed to open '%s'", ctx->fs_root);
-> +        error_setg_file_open(errp, errno, ctx->fs_root);
->          goto err;
->      }
->  
-> diff --git a/hw/acpi/core.c b/hw/acpi/core.c
-> index ff16582803..d2677332af 100644
-> --- a/hw/acpi/core.c
-> +++ b/hw/acpi/core.c
-> @@ -277,7 +277,7 @@ void acpi_table_add(const QemuOpts *opts, Error **errp)
->          int fd = open(*cur, O_RDONLY | O_BINARY);
->  
->          if (fd < 0) {
-> -            error_setg(errp, "can't open file %s: %s", *cur, strerror(errno));
-> +            error_setg_file_open(errp, errno, *cur);
->              goto out;
->          }
->  
-> diff --git a/hw/core/loader.c b/hw/core/loader.c
-> index 590c5b02aa..b56e5eb2f5 100644
-> --- a/hw/core/loader.c
-> +++ b/hw/core/loader.c
-> @@ -379,7 +379,7 @@ void load_elf_hdr(const char *filename, void *hdr, bool *is64, Error **errp)
->  
->      fd = open(filename, O_RDONLY | O_BINARY);
->      if (fd < 0) {
-> -        error_setg_errno(errp, errno, "Failed to open file: %s", filename);
-> +        error_setg_file_open(errp, errno, filename);
->          return;
->      }
->      if (read(fd, hdr, EI_NIDENT) != EI_NIDENT) {
-> diff --git a/hw/pci-host/xen_igd_pt.c b/hw/pci-host/xen_igd_pt.c
-> index 5dd17ef236..f6016f2cd5 100644
-> --- a/hw/pci-host/xen_igd_pt.c
-> +++ b/hw/pci-host/xen_igd_pt.c
-> @@ -55,7 +55,7 @@ static void host_pci_config_read(int pos, int len, uint32_t *val, Error **errp)
->  
->      config_fd = open(path, O_RDWR);
->      if (config_fd < 0) {
-> -        error_setg_errno(errp, errno, "Failed to open: %s", path);
-> +        error_setg_file_open(errp, errno, path);
->          goto out;
->      }
->  
-> diff --git a/monitor/hmp-cmds-target.c b/monitor/hmp-cmds-target.c
-> index e982061146..ad4ed2167d 100644
-> --- a/monitor/hmp-cmds-target.c
-> +++ b/monitor/hmp-cmds-target.c
-> @@ -331,7 +331,7 @@ static uint64_t vtop(void *ptr, Error **errp)
->  
->      fd = open("/proc/self/pagemap", O_RDONLY);
->      if (fd == -1) {
-> -        error_setg_errno(errp, errno, "Cannot open /proc/self/pagemap");
-> +        error_setg_file_open(errp, errno, "/proc/self/pagemap");
+> diff --git a/migration/rdma.c b/migration/rdma.c
+> index 337b415889..ef4885ef5f 100644
+> --- a/migration/rdma.c
+> +++ b/migration/rdma.c
+> @@ -2349,8 +2349,7 @@ static int qemu_get_cm_event_timeout(RDMAContext *rdma,
+>          error_setg(errp, "RDMA ERROR: poll cm event timeout");
 >          return -1;
->      }
->  
-> diff --git a/net/dump.c b/net/dump.c
-> index 581234b775..0c39f09892 100644
-> --- a/net/dump.c
-> +++ b/net/dump.c
-> @@ -111,7 +111,7 @@ static int net_dump_state_init(DumpState *s, const char *filename,
->  
->      fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | O_BINARY, 0644);
->      if (fd < 0) {
-> -        error_setg_errno(errp, errno, "net dump: can't open %s", filename);
-> +        error_setg_file_open(errp, errno, filename);
->          return -1;
->      }
->  
-> diff --git a/net/tap-bsd.c b/net/tap-bsd.c
-> index bbf84d1828..3fd300d46f 100644
-> --- a/net/tap-bsd.c
-> +++ b/net/tap-bsd.c
-> @@ -68,7 +68,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
->          }
->      }
->      if (fd < 0) {
-> -        error_setg_errno(errp, errno, "could not open %s", dname);
-> +        error_setg_file_open(errp, errno, dname);
->          return -1;
->      }
->  
-> @@ -118,7 +118,7 @@ static int tap_open_clone(char *ifname, int ifname_size, Error **errp)
->  
->      fd = RETRY_ON_EINTR(open(PATH_NET_TAP, O_RDWR));
->      if (fd < 0) {
-> -        error_setg_errno(errp, errno, "could not open %s", PATH_NET_TAP);
-> +        error_setg_file_open(errp, errno, PATH_NET_TAP);
->          return -1;
->      }
->  
-> @@ -166,7 +166,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
->          snprintf(dname, sizeof dname, "/dev/%s", ifname);
->          fd = RETRY_ON_EINTR(open(dname, O_RDWR));
->          if (fd < 0 && errno != ENOENT) {
-> -            error_setg_errno(errp, errno, "could not open %s", dname);
-> +            error_setg_file_open(errp, errno, dname);
->              return -1;
->          }
->      }
-> diff --git a/net/tap-linux.c b/net/tap-linux.c
-> index 2a90b58467..909c4f1fcf 100644
-> --- a/net/tap-linux.c
-> +++ b/net/tap-linux.c
-> @@ -57,7 +57,7 @@ int tap_open(char *ifname, int ifname_size, int *vnet_hdr,
->      if (fd < 0) {
->          fd = RETRY_ON_EINTR(open(PATH_NET_TUN, O_RDWR));
->          if (fd < 0) {
-> -            error_setg_errno(errp, errno, "could not open %s", PATH_NET_TUN);
-> +            error_setg_file_open(errp, errno, PATH_NET_TUN);
->              return -1;
->          }
->      }
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index fd2dada013..8660ecd9e4 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -891,8 +891,7 @@ static SevCapability *sev_get_capabilities(Error **errp)
->  
->      fd = open(sev_device, O_RDWR);
->      if (fd < 0) {
-> -        error_setg_errno(errp, errno, "SEV: Failed to open %s",
-> -                         sev_device);
-> +        error_setg_file_open(errp, errno, sev_device);
->          g_free(sev_device);
->          return NULL;
->      }
-> @@ -1819,8 +1818,7 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
->      devname = object_property_get_str(OBJECT(sev_common), "sev-device", NULL);
->      sev_common->sev_fd = open(devname, O_RDWR);
->      if (sev_common->sev_fd < 0) {
-> -        error_setg(errp, "%s: Failed to open %s '%s'", __func__,
-> -                   devname, strerror(errno));
-> +        error_setg_file_open(errp, errno, devname);
->          g_free(devname);
->          return -1;
->      }
-> diff --git a/ui/ui-qmp-cmds.c b/ui/ui-qmp-cmds.c
-> index 74fa6c6ec5..d927121676 100644
-> --- a/ui/ui-qmp-cmds.c
-> +++ b/ui/ui-qmp-cmds.c
-> @@ -371,8 +371,7 @@ qmp_screendump(const char *filename, const char *device,
->  
->      fd = qemu_open_old(filename, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0666);
->      if (fd == -1) {
-> -        error_setg(errp, "failed to open file '%s': %s", filename,
-> -                   strerror(errno));
-> +        error_setg_file_open(errp, errno, filename);
->          return;
->      }
->  
-> diff --git a/util/vfio-helpers.c b/util/vfio-helpers.c
-> index fdff042ab4..8b1b2e2f05 100644
-> --- a/util/vfio-helpers.c
-> +++ b/util/vfio-helpers.c
-> @@ -309,7 +309,7 @@ static int qemu_vfio_init_pci(QEMUVFIOState *s, const char *device,
->      s->container = open("/dev/vfio/vfio", O_RDWR);
->  
->      if (s->container == -1) {
-> -        error_setg_errno(errp, errno, "Failed to open /dev/vfio/vfio");
-> +        error_setg_file_open(errp, errno, "/dev/vfio/vfio");
->          return -errno;
->      }
->      if (ioctl(s->container, VFIO_GET_API_VERSION) != VFIO_API_VERSION) {
-> @@ -333,8 +333,7 @@ static int qemu_vfio_init_pci(QEMUVFIOState *s, const char *device,
->  
->      s->group = open(group_file, O_RDWR);
->      if (s->group == -1) {
-> -        error_setg_errno(errp, errno, "Failed to open VFIO group file: %s",
-> -                         group_file);
-> +        error_setg_file_open(errp, errno, group_file);
->          g_free(group_file);
->          ret = -errno;
->          goto fail_container;
-> -- 
-> 2.49.0
-> 
+>      } else if (ret < 0) {
+> -        error_setg(errp, "RDMA ERROR: failed to poll cm event, errno=%i",
+> -                   errno);
+> +        error_setg_errno(errp, "RDMA ERROR: failed to poll cm event");
+
+Hasn't that lost the errno ?
+
+Dave
+
 -- 
  -----Open up your eyes, open up your mind, open up your code -------   
 / Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
