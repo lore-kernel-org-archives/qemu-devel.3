@@ -4,42 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D480CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:27:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A6B3CFC516
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcxD-0002Vx-2j; Fri, 21 Nov 2025 21:02:24 -0500
+	id 1vMciv-00007u-U6; Fri, 21 Nov 2025 20:47:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcAH-0006ku-Me; Fri, 21 Nov 2025 20:11:49 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vMbRt-0005lV-UI
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:26:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcA6-0004fo-8J; Fri, 21 Nov 2025 20:11:45 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AC6E216CA6F;
- Fri, 21 Nov 2025 21:44:26 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6969E321CAB;
- Fri, 21 Nov 2025 21:44:35 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 52/81] hw/net/e1000e_core: Correct rx oversize packet
- checks
-Date: Fri, 21 Nov 2025 21:43:51 +0300
-Message-ID: <20251121184424.1137669-52-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vMbRh-0003ES-GM
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:25:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763771128;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HvfEuZqsYtGOsOMoRJb/pPk3SZPKfOA52jDeyhimdME=;
+ b=aIjRLfeNRtVkFeW6yhhNVLjSBI+ttYg6f45nWMWpOg00DiPkoCrteJqoPEycz3y0IRkbkq
+ ZqbWm+m32qjiCmIUqapk1BZrKyMbPPGhV25mAcHnFs+0DSaee1toJVLKRlsn0TZTotXzwr
+ LX7m5Uq5bjOPe25XNgMAJSq/oAMuUlQ=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-252-ncrbj46KOaiwwNgNCoSKuQ-1; Fri, 21 Nov 2025 08:07:58 -0500
+X-MC-Unique: ncrbj46KOaiwwNgNCoSKuQ-1
+X-Mimecast-MFC-AGG-ID: ncrbj46KOaiwwNgNCoSKuQ_1763730478
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2956a694b47so34967675ad.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 05:07:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763730477; x=1764335277; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HvfEuZqsYtGOsOMoRJb/pPk3SZPKfOA52jDeyhimdME=;
+ b=BCNBdAGxV0wtP9pjF5cPSUVA3VVQKO5qfULO/5jhfrf8aH/uTMuxqH99gKMcJj1Fb4
+ G7gFSO5r4d7jXhr1X/Im900PTc+32NVNPKKVfnouhHr1zdtq8Pd8VLzZwe0WhUzAZnEx
+ tv3ZCNJt27ezD5qXYt6RcPEvJ+ulL2xtiUvL9ITvMbvoai/V8Wo/R0ure0uIblYLRd9m
+ upBxIR+Xo1GD2I9N8OB8369feeEk0mS0YgK4aGOmavzTlhCf902m+omZkZgb/WW4oqoQ
+ 8uH8eV1EzInsrZovXu0E18cMl1iRjUFYa746FX6H7nuZq48uYCIE0QUwHV371l17Xdmu
+ E4pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763730477; x=1764335277;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HvfEuZqsYtGOsOMoRJb/pPk3SZPKfOA52jDeyhimdME=;
+ b=jT8+Na/mJvzC8ee68hox3dDabBME0XM5+OVBcyDzKznH96SdD8SqNlGeqdvmio0qac
+ /Yys518sxa4TvSUy/Ug1pWkXjYeiFUYLpie7w1ojw+YNK/qewujR0or9t611MKrTZpOH
+ 0TtqYaFn+pQhaAtU4grMPcRhLeLS+vI1fDVKB28oSxdWYUbqIXOib5P1j0yL2/4Vv0pR
+ 4knaMsmu/bN6XiRekYnhNg9A2OfbfblzGQva1HmhBgRZ65YN4IKEZPmq3FgRtCYLo+r2
+ P7tZdaydqjLj/4puKnSYdq3MuK25Ub4mr5LTAMJyMpxScjWxS1D1335ywLftzJgNh+56
+ f/aQ==
+X-Gm-Message-State: AOJu0YxqPbpHk7RX+dKZAdUNcRQ3S7iMXfVYqyp+BiVAG9EXvcAqyuT7
+ OBClyWILmH9d7JM+Mf0aWyiKKDAP3f/Tmks8TbW/Tukf4yzJ+bH+GqXdd4z7eyUdXX/+HbHCufw
+ HX6tHQnSeaeN3THGiXHsCPNXEZbKP3D4Dqxv6hRWs4s18kLAQ1FbAaywR
+X-Gm-Gg: ASbGncvt4JvWysNL7yuSmjqiaDurGyMNuAQBz8vGw5iiBrYBV/UYl8dQ6oH1YgoczvA
+ Qay98CP7Otb5DBItpcMWM2Siua80KUaANV66KKfJXy9MU61Wa+vLJ5ZQ3e207YJF0PvWDEcudhx
+ GdcgMzlErrv3+PLf82+/J455bCnmU8P9LqhNdGGt2tAT01q1B4u8HhNJJPsVsi15wdTCG7zP+Pp
+ 21QuiysM5zV0M7w4BdDQX2G+ByjG8o4zqlj3uuQPJ68W/HlEM1yhp2srpRrl3a9SbOjWv5mCUKj
+ fxLBA0bRNeKwSXcIejAUT/HBDswfSQUHLPGYyWCRJFz6lpQvmaPXaapm2b9vc2Tw4pIIEEj1XHw
+ T1dHIBl7mB6QwAejylVt4CMcR7ubOPN2Q0CJ/et0+GUhQEYh5n0y/ul4E
+X-Received: by 2002:a17:903:2450:b0:27d:69cc:9a6 with SMTP id
+ d9443c01a7336-29b6bf7f26cmr29578845ad.53.1763730477490; 
+ Fri, 21 Nov 2025 05:07:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGUrdLgpZVnB+pqYJctbNVZLzgUbKIPWyNoVZITw+yxhokcZ5qqG6O/Psx+AKJ591Hk9ULgKQ==
+X-Received: by 2002:a17:903:2450:b0:27d:69cc:9a6 with SMTP id
+ d9443c01a7336-29b6bf7f26cmr29578475ad.53.1763730476969; 
+ Fri, 21 Nov 2025 05:07:56 -0800 (PST)
+Received: from smtpclient.apple ([106.212.87.16])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-bd75b61c29dsm5589954a12.0.2025.11.21.05.07.53
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 21 Nov 2025 05:07:56 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.7\))
+Subject: Re: [PATCH 3/4] igvm: add trace point for igvm file loading and
+ processing
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20251118122133.1695767-4-kraxel@redhat.com>
+Date: Fri, 21 Nov 2025 18:37:41 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eduardo Habkost <eduardo@habkost.net>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Luigi Leonardi <leonardi@redhat.com>, Oliver Steffen <osteffen@redhat.com>,
+ Michael Tsirkin <mst@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3BCC9E21-2EB5-4D63-B2E3-923F5BB9BBE4@redhat.com>
+References: <20251118122133.1695767-1-kraxel@redhat.com>
+ <20251118122133.1695767-4-kraxel@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+X-Mailer: Apple Mail (2.3776.700.51.11.7)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,169 +121,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
 
-In e1000e_write_packet_to_guest() we attempt to ensure that we don't
-write more of a packet to a descriptor than will fit in the guest
-configured receive buffers.  However, this code does not allow for
-the "packet split" feature.  When packet splitting is enabled, the
-first of up to 4 buffers in the descriptor is used for the packet
-header only, with the payload going into buffers 2, 3 and 4.  Our
-length check only checks against the total sizes of all 4 buffers,
-which meant that if an incoming packet was large enough to fit in (1
-+ 2 + 3 + 4) but not into (2 + 3 + 4) and packet splitting was
-enabled, we would run into the assertion in
-e1000e_write_hdr_frag_to_rx_buffers() that we had enough buffers for
-the data:
 
-qemu-system-i386: ../../hw/net/e1000e_core.c:1418: void e1000e_write_payload_frag_to_rx_buffers(E1000ECore *, hwaddr *, E1000EBAState *, const char *, dma_addr_t): Assertion `bastate->cur_idx < MAX_PS_BUFFERS' failed.
+> On 18 Nov 2025, at 5:51=E2=80=AFPM, Gerd Hoffmann <kraxel@redhat.com> =
+wrote:
+>=20
+Please add some description to the patch =E2=80=A6
 
-A malicious guest could provoke this assertion by configuring the
-device into loopback mode, and then sending itself a suitably sized
-packet into a suitably arrange rx descriptor.
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 
-The code also fails to deal with the possibility that the descriptor
-buffers are sized such that the trailing checksum word does not fit
-into the last descriptor which has actual data, which might also
-trigger this assertion.
+Modulo above ..
 
-Rework the length handling to use two variables:
- * desc_size is the total amount of data DMA'd to the guest
-   for the descriptor being processed in this iteration of the loop
- * rx_desc_buf_size is the total amount of space left in it
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
-As we copy data to the guest (packet header, payload, checksum),
-update these two variables.  (Previously we attempted to calculate
-desc_size once at the top of the loop, but this is too difficult to
-do correctly.) Then we can use the variables to ensure that we clamp
-the amount of copied payload data to the remaining space in the
-descriptor's buffers, even if we've used one of the buffers up in the
-packet-split code, and we can tell whether we have enough space for
-the full checksum word in this descriptor or whether we're going to
-need to split that to the following descriptor.
 
-I have included comments that hopefully help to make the loop
-logic a little clearer.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/537
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 9d946d56a2ac8a6c2df186e20d24810255c83a3f)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-index 8e93bd3d81..58a34125e9 100644
---- a/hw/net/e1000e_core.c
-+++ b/hw/net/e1000e_core.c
-@@ -1495,6 +1495,13 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
-     rxi = rxr->i;
- 
-     do {
-+        /*
-+         * Loop processing descriptors while we have packet data to
-+         * DMA to the guest.  desc_offset tracks how much data we have
-+         * sent to the guest in total over all descriptors, and goes
-+         * from 0 up to total_size (the size of everything to send to
-+         * the guest including possible trailing 4 bytes of CRC data).
-+         */
-         hwaddr ba[MAX_PS_BUFFERS];
-         E1000EBAState bastate = { { 0 } };
-         bool is_last = false;
-@@ -1512,23 +1519,27 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
-         e1000e_read_rx_descr(core, &desc, ba);
- 
-         if (ba[0]) {
--            size_t desc_size = total_size - desc_offset;
--
--            if (desc_size > core->rx_desc_buf_size) {
--                desc_size = core->rx_desc_buf_size;
--            }
-+            /* Total amount of data DMA'd to the guest in this iteration */
-+            size_t desc_size = 0;
-+            /*
-+             * Total space available in this descriptor (we will update
-+             * this as we use it up)
-+             */
-+            size_t rx_desc_buf_size = core->rx_desc_buf_size;
- 
-             if (desc_offset < size) {
--                static const uint32_t fcs_pad;
-                 size_t iov_copy;
-+                /* Amount of data to copy from the incoming packet */
-                 size_t copy_size = size - desc_offset;
--                if (copy_size > core->rx_desc_buf_size) {
--                    copy_size = core->rx_desc_buf_size;
--                }
- 
-                 /* For PS mode copy the packet header first */
-                 if (do_ps) {
-                     if (is_first) {
-+                        /*
-+                         * e1000e_do_ps() guarantees that buffer 0 has enough
-+                         * space for the header; otherwise we will not split
-+                         * the packet (i.e. do_ps is false).
-+                         */
-                         size_t ps_hdr_copied = 0;
-                         do {
-                             iov_copy = MIN(ps_hdr_len - ps_hdr_copied,
-@@ -1550,14 +1561,26 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
-                         } while (ps_hdr_copied < ps_hdr_len);
- 
-                         is_first = false;
-+                        desc_size += ps_hdr_len;
-                     } else {
-                         /* Leave buffer 0 of each descriptor except first */
-                         /* empty as per spec 7.1.5.1                      */
-                         e1000e_write_hdr_frag_to_rx_buffers(core, ba, &bastate,
-                                                             NULL, 0);
-                     }
-+                    rx_desc_buf_size -= core->rxbuf_sizes[0];
-                 }
- 
-+                /*
-+                 * Clamp the amount of packet data we copy into what will fit
-+                 * into the remaining buffers in the descriptor.
-+                 */
-+                if (copy_size > rx_desc_buf_size) {
-+                    copy_size = rx_desc_buf_size;
-+                }
-+                desc_size += copy_size;
-+                rx_desc_buf_size -= copy_size;
-+
-                 /* Copy packet payload */
-                 while (copy_size) {
-                     iov_copy = MIN(copy_size, iov->iov_len - iov_ofs);
-@@ -1574,12 +1597,22 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
-                         iov_ofs = 0;
-                     }
-                 }
-+            }
- 
--                if (desc_offset + desc_size >= total_size) {
--                    /* Simulate FCS checksum presence in the last descriptor */
--                    e1000e_write_payload_frag_to_rx_buffers(core, ba, &bastate,
--                          (const char *) &fcs_pad, e1000x_fcs_len(core->mac));
--                }
-+            if (rx_desc_buf_size &&
-+                desc_offset >= size && desc_offset < total_size) {
-+                /*
-+                 * We are in the last 4 bytes corresponding to the FCS checksum.
-+                 * We only ever write zeroes here (unlike the hardware).
-+                 */
-+                static const uint32_t fcs_pad;
-+                /* Amount of space for the trailing checksum */
-+                size_t fcs_len = MIN(rx_desc_buf_size,
-+                                     total_size - desc_offset);
-+                e1000e_write_payload_frag_to_rx_buffers(core, ba, &bastate,
-+                                                        (const char *)&fcs_pad,
-+                                                        fcs_len);
-+                desc_size += fcs_len;
-             }
-             desc_offset += desc_size;
-             if (desc_offset >= total_size) {
--- 
-2.47.3
+> ---
+> backends/igvm.c       | 5 +++++
+> backends/trace-events | 2 ++
+> 2 files changed, 7 insertions(+)
+>=20
+> diff --git a/backends/igvm.c b/backends/igvm.c
+> index 05d197fdfe85..a350c890cc95 100644
+> --- a/backends/igvm.c
+> +++ b/backends/igvm.c
+> @@ -18,6 +18,8 @@
+> #include "system/address-spaces.h"
+> #include "hw/core/cpu.h"
+>=20
+> +#include "trace.h"
+> +
+> #include <igvm/igvm.h>
+> #include <igvm/igvm_defs.h>
+>=20
+> @@ -884,6 +886,8 @@ IgvmHandle qigvm_file_init(char *filename, Error =
+**errp)
+>         error_setg(errp, "Unable to parse IGVM file %s: %d", filename, =
+igvm);
+>         return -1;
+>     }
+> +
+> +    trace_igvm_file_loaded(filename, igvm);
+>     return igvm;
+> }
+>=20
+> @@ -901,6 +905,7 @@ int qigvm_process_file(IgvmCfg *cfg, =
+ConfidentialGuestSupport *cgs,
+>         return -1;
+>     }
+>     ctx.file =3D cfg->file;
+> +    trace_igvm_process_file(cfg->file, onlyVpContext);
+>=20
+>     /*
+>      * The ConfidentialGuestSupport object is optional and allows a =
+confidential
+> diff --git a/backends/trace-events b/backends/trace-events
+> index 45ac46dc2454..7a00e9bf6c16 100644
+> --- a/backends/trace-events
+> +++ b/backends/trace-events
+> @@ -26,3 +26,5 @@ iommufd_backend_invalidate_cache(int iommufd, =
+uint32_t id, uint32_t data_type, u
+> igvm_reset_enter(int type) "type=3D%u"
+> igvm_reset_hold(int type) "type=3D%u"
+> igvm_reset_exit(int type) "type=3D%u"
+> +igvm_file_loaded(const char *fn, int32_t handle) "fn=3D%s, =
+handle=3D0x%x"
+> +igvm_process_file(int32_t handle, bool context_only) "handle=3D0x%x =
+context-only=3D%d"
+> --=20
+> 2.51.1
+>=20
 
 
