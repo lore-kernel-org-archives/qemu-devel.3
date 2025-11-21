@@ -4,66 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD58CFC504
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2866CFC504
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:27:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcxa-0002fO-7Y; Fri, 21 Nov 2025 21:02:47 -0500
+	id 1vMczc-0004CF-Ht; Fri, 21 Nov 2025 21:04:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vMcB8-0007DM-SP
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:12:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMcAD-0006iy-Py; Fri, 21 Nov 2025 20:11:45 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vMcAx-0004xC-19
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:12:39 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763773933;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=P4NxXTDRiWe6iZUoA3bppHcb6EEGrWyTpkU1pvcMxcM=;
- b=XwCFc6GCwf9RF4xqsdnx2Srwtuq2zjve0TFFtOYU5ErLhlYuA8BeiDU/wwXulK0x1zZ58T
- UBe6Kr4bghLwfoUYoIOC3SDbiFa9FNeJxR/+GGdldvWz2/WSacK3WNEjUaPpGkfZLeVMx4
- 7ZeHL6s5V2j4oHtGdum4ph+sKeW2m4Y=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-FXZ77TMePRin77aD4SXS5A-1; Fri,
- 21 Nov 2025 11:54:31 -0500
-X-MC-Unique: FXZ77TMePRin77aD4SXS5A-1
-X-Mimecast-MFC-AGG-ID: FXZ77TMePRin77aD4SXS5A_1763744070
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A5E5B1956096; Fri, 21 Nov 2025 16:54:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.184])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BFE741940E82; Fri, 21 Nov 2025 16:54:26 +0000 (UTC)
-Date: Fri, 21 Nov 2025 16:54:23 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Ben Chaney <bchaney@akamai.com>, farosas@suse.de, armbru@redhat.com,
- mark.kanda@oracle.com, qemu-devel@nongnu.org, johunt@akamai.com,
- mtottenh@akamai.com, nhudson@akamai.com
-Subject: Re: [PATCH] migration: cpr socket permissions fix
-Message-ID: <aSCZP_mkjYD7e7nP@redhat.com>
-References: <20251120185733.141912-1-bchaney@akamai.com>
- <aSCOVNMJ-NK_9PuH@x1.local>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMcA0-0004dw-RP; Fri, 21 Nov 2025 20:11:41 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5ALC1MwC000804
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 21 Nov 2025 21:01:23 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=4NXv6EwW2QRaAJOJTTRauVs49o3MSdW1+DjtNFk7ULA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763726483; v=1;
+ b=Zcs3Lxe7pUp14O5Dz4a+mw4zarbdGUhX2XwCU92UTBhbYpQ4pr78dFWfrlE9bs8e
+ MUAgKWqDe1tYw6Pu8xwn8ThJfseZnP0txcHPd1pBDeS0S2qUPccNnlfED2o7ECDU
+ FdOZUHUl2hGl2gv0IL1Jd4Ql9z2gl9jkEkZhf6kigj6IcidXgdbckxtTns/nem1e
+ RRs/de18dmo0qGB37yWL7460jvdh3TztnL31XTpY5oAzJogoN7rM3nSEtIaBspkq
+ HaZoouiG+ZZlFPJZWJgRSevs68gDQqpHH740prXHLnK2BqFTnFv7XAViat/0YoMN
+ P86SmuW/1M/oUpryATsuTw==
+Message-ID: <2aab212b-0770-4cdf-a30f-5b914e815543@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 21 Nov 2025 21:01:22 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aSCOVNMJ-NK_9PuH@x1.local>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 14/28] whpx: change memory management logic
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>
+References: <20251121100240.89117-1-mohamed@unpredictable.fr>
+ <20251121100240.89117-15-mohamed@unpredictable.fr>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251121100240.89117-15-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,168 +66,154 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 21, 2025 at 11:07:48AM -0500, Peter Xu wrote:
-> On Thu, Nov 20, 2025 at 01:57:33PM -0500, Ben Chaney wrote:
-> > Fix an issue where cpr transfer fails when running with the
-> > -run-with user=$USERID with a permission denied error. This issue
-> > occurs because the destination host creates the transfer sockets before
-> > it drops permissions while the source host tries to connect after
-> > dropping permissions. Fix this by changing the ownership of the cpr
-> > socket to the lower level so it is accessible to both parties.
-> > 
-> > Resolves: https://lore.kernel.org/all/3D32B62F-29E2-4470-86A5-9A2B3B29E371@akamai.com/
-> > Signed-off-by: Ben Chaney <bchaney@akamai.com>
-> > ---
-> >  include/system/os-posix.h |  1 +
-> >  include/system/os-wasm.h  |  1 +
-> >  include/system/os-win32.h |  1 +
-> >  os-posix.c                | 12 ++++++++++++
-> >  stubs/meson.build         |  1 +
-> >  stubs/os-file.c           |  6 ++++++
-> >  util/qemu-sockets.c       |  6 ++++++
-> >  7 files changed, 28 insertions(+)
-> >  create mode 100644 stubs/os-file.c
-> > 
-> > diff --git a/include/system/os-posix.h b/include/system/os-posix.h
-> > index ce5b3bccf8..e4b69fc316 100644
-> > --- a/include/system/os-posix.h
-> > +++ b/include/system/os-posix.h
-> > @@ -54,6 +54,7 @@ void os_set_chroot(const char *path);
-> >  void os_setup_limits(void);
-> >  void os_setup_post(void);
-> >  int os_mlock(bool on_fault);
-> > +void os_set_socket_permissions(const char *path);
-> >  
-> >  /**
-> >   * qemu_alloc_stack:
-> > diff --git a/include/system/os-wasm.h b/include/system/os-wasm.h
-> > index 3abb3aaa03..eeac092183 100644
-> > --- a/include/system/os-wasm.h
-> > +++ b/include/system/os-wasm.h
-> > @@ -57,6 +57,7 @@ static inline int os_set_daemonize(bool d)
-> >  };
-> >  bool is_daemonized(void);
-> >  static inline void os_daemonize(void) {}
-> > +static inline void os_set_socket_permissions(const char *dummy) {};
-> >  
-> >  /**
-> >   * qemu_alloc_stack:
-> > diff --git a/include/system/os-win32.h b/include/system/os-win32.h
-> > index 22d72babdf..79e42ec297 100644
-> > --- a/include/system/os-win32.h
-> > +++ b/include/system/os-win32.h
-> > @@ -103,6 +103,7 @@ static inline void os_setup_post(void) {}
-> >  static inline void os_set_proc_name(const char *dummy) {}
-> >  void os_set_line_buffering(void);
-> >  void os_setup_early_signal_handling(void);
-> > +static inline void os_set_socket_permissions(const char *dummy) {};
-> >  
-> >  int getpagesize(void);
-> >  
-> > diff --git a/os-posix.c b/os-posix.c
-> > index 52925c23d3..bbd17ff2b9 100644
-> > --- a/os-posix.c
-> > +++ b/os-posix.c
-> > @@ -94,6 +94,18 @@ static struct passwd *user_pwd;    /*   NULL   non-NULL   NULL   */
-> >  static uid_t user_uid = (uid_t)-1; /*   -1      -1        >=0    */
-> >  static gid_t user_gid = (gid_t)-1; /*   -1      -1        >=0    */
-> >  
-> > +void os_set_socket_permissions(const char *path)
-> > +{
-> > +    uid_t uid = user_pwd ? user_pwd->pw_uid : user_uid;
-> > +    gid_t gid = user_pwd ? user_pwd->pw_gid : user_gid;
-> > +
-> > +    if (chown(path, uid, gid) < 0) {
-> > +        error_report("Failed to chown socket %s: %s", path, strerror(errno));
-> > +        exit(1);
-> > +    }
-> > +}
-> > +
-> > +
-> >  /*
-> >   * Prepare to change user ID. user_id can be one of 3 forms:
-> >   *   - a username, in which case user ID will be changed to its uid,
-> > diff --git a/stubs/meson.build b/stubs/meson.build
-> > index 0b2778c568..4a4342344b 100644
-> > --- a/stubs/meson.build
-> > +++ b/stubs/meson.build
-> > @@ -24,6 +24,7 @@ if have_block
-> >    stub_ss.add(files('ram-block.c'))
-> >    stub_ss.add(files('runstate-check.c'))
-> >    stub_ss.add(files('uuid.c'))
-> > +  stub_ss.add(files('os-file.c'))
-> >  endif
-> >  
-> >  if have_block or have_ga
-> > diff --git a/stubs/os-file.c b/stubs/os-file.c
-> > new file mode 100644
-> > index 0000000000..c32cbc7efa
-> > --- /dev/null
-> > +++ b/stubs/os-file.c
-> > @@ -0,0 +1,6 @@
-> > +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> > +#include "qemu/osdep.h"
-> > +
-> > +void os_set_socket_permissions(const char *dummy)
-> > +{
-> > +}
-> > diff --git a/util/qemu-sockets.c b/util/qemu-sockets.c
-> > index 4773755fd5..77b2d9287b 100644
-> > --- a/util/qemu-sockets.c
-> > +++ b/util/qemu-sockets.c
-> > @@ -1026,6 +1026,12 @@ static int unix_listen_saddr(UnixSocketAddress *saddr,
-> >          error_setg_errno(errp, errno, "Failed to bind socket to %s", path);
-> >          goto err;
-> >      }
-> > +    /*
-> > +     * Change the permissions on the socket to match the permission of the
-> > +     * counterparty process
-> > +     */
-> > +    os_set_socket_permissions(un.sun_path);
+On 2025/11/21 19:02, Mohamed Mediouni wrote:
+> This allows edk2 to work on Arm, although u-boot is still not functional.
 > 
-> QEMU's -run-with described user= as:
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   accel/whpx/whpx-common.c | 101 +++++++++++++++------------------------
+>   1 file changed, 38 insertions(+), 63 deletions(-)
 > 
->   user=username or user=uid:gid can be used to drop root privileges before
->   starting guest execution. QEMU will use the setuid and setgid system
->   calls to switch to the specified identity...
-> 
-> So it explicitly mentioned "before starting guest execution", hence at
-> least from that doc it's hard to say if unix socket should be created with
-> the privilege or after dropped..  Here I believe cpr socket should be the
-> case for latter, however when it's a generic change to unix listening
-> ports, I wonder if there's other unwanted side effects.
-> 
-> Considering unix socket itself doesn't really have a UID attached to it,
-> it's only the unix path that needs a chmod(), meanwhile the mgmt of course
-> knows both the right UID (as specified in -run-with) and the path, would it
-> make sense if the mgmt chmod() after it starts dest QEMU?  That'll reduce
-> the scope of impact to minimum.
+> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+> index 399cf1914c..53b8cb06cc 100644
+> --- a/accel/whpx/whpx-common.c
+> +++ b/accel/whpx/whpx-common.c
+> @@ -259,89 +259,64 @@ void whpx_vcpu_kick(CPUState *cpu)
+>    * Memory support.
+>    */
+>   
+> -static void whpx_update_mapping(hwaddr start_pa, ram_addr_t size,
+> -                                void *host_va, int add, int rom,
+> -                                const char *name)
+> +static void whpx_set_phys_mem(MemoryRegionSection *section, bool add)
+>   {
+>       struct whpx_state *whpx = &whpx_global;
+> -    HRESULT hr;
+> -
+> -    /*
+> -    if (add) {
+> -        printf("WHPX: ADD PA:%p Size:%p, Host:%p, %s, '%s'\n",
+> -               (void*)start_pa, (void*)size, host_va,
+> -               (rom ? "ROM" : "RAM"), name);
+> -    } else {
+> -        printf("WHPX: DEL PA:%p Size:%p, Host:%p,      '%s'\n",
+> -               (void*)start_pa, (void*)size, host_va, name);
+> -    }
+> -    */
+> -
+> -    if (add) {
+> -        hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
+> -                                         host_va,
+> -                                         start_pa,
+> -                                         size,
+> -                                         (WHvMapGpaRangeFlagRead |
+> -                                          WHvMapGpaRangeFlagExecute |
+> -                                          (rom ? 0 : WHvMapGpaRangeFlagWrite)));
+> -    } else {
+> -        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
+> -                                           start_pa,
+> -                                           size);
+> -    }
+> -
+> -    if (FAILED(hr)) {
+> -        error_report("WHPX: Failed to %s GPA range '%s' PA:%p, Size:%p bytes,"
+> -                     " Host:%p, hr=%08lx",
+> -                     (add ? "MAP" : "UNMAP"), name,
+> -                     (void *)(uintptr_t)start_pa, (void *)size, host_va, hr);
+> +    MemoryRegion *area = section->mr;
+> +    bool writable = !area->readonly && !area->rom_device;
+> +    WHV_MAP_GPA_RANGE_FLAGS flags;
+> +    uint64_t page_size = qemu_real_host_page_size();
+> +    uint64_t gva = section->offset_within_address_space;
+> +    uint64_t size = int128_get64(section->size);
+> +    HRESULT res;
 
-My guiding principal is that the behaviour of cold-plugging a backend
-on the CLI and hot-plugging a backend via QMP should be the same, since
-we want to eventually get to a point where everything can be configured
-via QMP and zero CLI except for basic process related things.
+Let's keep it named as hr for consistency.
 
-hot-plugging will honour -run-with setting, therefore cold-plugging
-should do the same.
+> +    void *mem;
+> +
+> +    if (!memory_region_is_ram(area)) {
+> +        if (writable) {
+> +            return;
+> +        } else if (!memory_region_is_romd(area)) {
+> +             add = false;
+> +        }
+>       }
+> -}
+> -
+> -static void whpx_process_section(MemoryRegionSection *section, int add)
+> -{
+> -    MemoryRegion *mr = section->mr;
+> -    hwaddr start_pa = section->offset_within_address_space;
+> -    ram_addr_t size = int128_get64(section->size);
+> -    unsigned int delta;
+> -    uint64_t host_va;
+>   
+> -    if (!memory_region_is_ram(mr)) {
+> -        return;
+> +    if (!QEMU_IS_ALIGNED(size, page_size) ||
+> +        !QEMU_IS_ALIGNED(gva, page_size)) {
+> +        /* Not page aligned, so we can not map as RAM */
+> +        add = false;
+>       }
+>   
+> -    delta = qemu_real_host_page_size() - (start_pa & ~qemu_real_host_page_mask());
+> -    delta &= ~qemu_real_host_page_mask();
+> -    if (delta > size) {
+> -        return;
+> -    }
+> -    start_pa += delta;
+> -    size -= delta;
+> -    size &= qemu_real_host_page_mask();
+> -    if (!size || (start_pa & ~qemu_real_host_page_mask())) {
+> +    if (!add) {
+> +        res = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
+> +                gva, size);
+> +        if (!SUCCEEDED(res)) {
 
-Having said that, the run-with setting impl is very clearcut however
-that it is intended to run *after* all cold-plug setup is complete.
-IOW, it is inherantly intending to have differnt behaviour for cold
-plug vs hotplug.
+Simpler: if (FAILED(res))
 
-There's a very real risk we'll cause regressions if we change how
-permissions are handled implicitly on any backends.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> +            error_report("WHPX: failed to unmap GPA range");
+> +            abort();
+> +        }
+>           return;
+>       }
+>   
+> -    host_va = (uintptr_t)memory_region_get_ram_ptr(mr)
+> -            + section->offset_within_region + delta;
+> +    flags = WHvMapGpaRangeFlagRead | WHvMapGpaRangeFlagExecute
+> +     | (writable ? WHvMapGpaRangeFlagWrite : 0);
+> +    mem = memory_region_get_ram_ptr(area) + section->offset_within_region;
+>   
+> -    whpx_update_mapping(start_pa, size, (void *)(uintptr_t)host_va, add,
+> -                        memory_region_is_rom(mr), mr->name);
+> +    res = whp_dispatch.WHvMapGpaRange(whpx->partition,
+> +         mem, gva, size, flags);
+> +    if (!SUCCEEDED(res)) {
+> +        error_report("WHPX: failed to map GPA range");
+> +        abort();
+> +    }
+>   }
+>   
+>   static void whpx_region_add(MemoryListener *listener,
+>                              MemoryRegionSection *section)
+>   {
+> -    memory_region_ref(section->mr);
+> -    whpx_process_section(section, 1);
+> +    whpx_set_phys_mem(section, true);
+>   }
+>   
+>   static void whpx_region_del(MemoryListener *listener,
+>                              MemoryRegionSection *section)
+>   {
+> -    whpx_process_section(section, 0);
+> -    memory_region_unref(section->mr);
+> +    whpx_set_phys_mem(section, false);
+>   }
+>   
+>   static void whpx_transaction_begin(MemoryListener *listener)
 
 
