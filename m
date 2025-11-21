@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FF2CFA476
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 05:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28753CFA476
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 05:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMJxr-0008VM-Lr; Fri, 21 Nov 2025 00:45:47 -0500
+	id 1vMJyy-0001bl-Pu; Fri, 21 Nov 2025 00:46:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMJxW-0008Qd-IY
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 00:45:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMJyn-0001Sf-Uh
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 00:46:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMJxU-00025C-13
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 00:45:26 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMJyl-0002Qv-Bd
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 00:46:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763703921;
+ s=mimecast20190719; t=1763704002;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=M/iAoWDs3TI1i4yv2SFCc8BQMzVF2ZzwOWLNv6dOrLw=;
- b=dPuUiVzcItqEkVc33qcVPiGl9obOZtW5PRCXKQ2bL8/8nsqMC7r1S0/2Y7xwUEK5Ryb1fX
- iNqUmNpr0RrFkBk8Z0KRWwSUMWChHjml79IeRXsbHNq5hPz267FwbFwsjw9mpYrjH7yYSh
- KhOF8MSfCur7uXR82/Wl0zo0wVLO3aM=
+ bh=PL3yXLCkMFHCIh38uQXNnEtvLjSg5S3Sh+k5cm/3Mtg=;
+ b=AWzxg42dSd5RBdEO7IpzgpYuniOsKzq+2dQdw8SCTJwUrAKvLXjjLZkJK//W5g/CZJumZD
+ X/sxbhTz0Jehpq5LqGNJi9y3vwFrnrxlqca/Q5Gs8c4m/aLnU4tyUmZ+HvjjDT3+bpq3AR
+ BCnFlBSGvixEZCFZpZrJyKltyqPkeT4=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-QWRSdU85PZOwmsuMAg_68Q-1; Fri,
- 21 Nov 2025 00:45:17 -0500
-X-MC-Unique: QWRSdU85PZOwmsuMAg_68Q-1
-X-Mimecast-MFC-AGG-ID: QWRSdU85PZOwmsuMAg_68Q_1763703913
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-dw4h8ppxNGOwFwV5lUYlYA-1; Fri,
+ 21 Nov 2025 00:46:38 -0500
+X-MC-Unique: dw4h8ppxNGOwFwV5lUYlYA-1
+X-Mimecast-MFC-AGG-ID: dw4h8ppxNGOwFwV5lUYlYA_1763703994
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 70BB31956072; Fri, 21 Nov 2025 05:45:11 +0000 (UTC)
+ id DBBCD1956050; Fri, 21 Nov 2025 05:46:32 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E836F1956045; Fri, 21 Nov 2025 05:45:08 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF8A430044DC; Fri, 21 Nov 2025 05:46:30 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7D61821E6A27; Fri, 21 Nov 2025 06:45:06 +0100 (CET)
+ id 6FAF521E6A27; Fri, 21 Nov 2025 06:46:28 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: "Dr. David Alan Gilbert" <dave@treblig.org>
 Cc: qemu-devel@nongnu.org,  arei.gonglei@huawei.com,
@@ -66,20 +66,20 @@ Cc: qemu-devel@nongnu.org,  arei.gonglei@huawei.com,
  zhiwei_liu@linux.alibaba.com,  marcandre.lureau@redhat.com,
  qemu-block@nongnu.org,  qemu-ppc@nongnu.org,
  xen-devel@lists.xenproject.org,  kvm@vger.kernel.org, qemu-riscv@nongnu.org
-Subject: Re: [PATCH 09/14] error: Use error_setg_file_open() for simplicity
- and consistency
-In-Reply-To: <aR-q2YeegIEPmk2R@gallifrey> (David Alan Gilbert's message of
- "Thu, 20 Nov 2025 23:57:13 +0000")
+Subject: Re: [PATCH 11/14] error: Use error_setg_errno() to improve error
+ messages
+In-Reply-To: <aR-t5SzR2AdqlJtq@gallifrey> (David Alan Gilbert's message of
+ "Fri, 21 Nov 2025 00:10:13 +0000")
 References: <20251120191339.756429-1-armbru@redhat.com>
- <20251120191339.756429-10-armbru@redhat.com>
- <aR-q2YeegIEPmk2R@gallifrey>
-Date: Fri, 21 Nov 2025 06:45:05 +0100
-Message-ID: <87see8q6qm.fsf@pond.sub.org>
+ <20251120191339.756429-12-armbru@redhat.com>
+ <aR-t5SzR2AdqlJtq@gallifrey>
+Date: Fri, 21 Nov 2025 06:46:28 +0100
+Message-ID: <87o6owq6ob.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -88,7 +88,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,44 +107,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 "Dr. David Alan Gilbert" <dave@treblig.org> writes:
 
 > * Markus Armbruster (armbru@redhat.com) wrote:
->> Replace
+>> A few error messages show numeric errno codes.  Use error_setg_errno()
+>> to show human-readable text instead.
 >> 
->>     error_setg_errno(errp, errno, MSG, FNAME);
->> 
->> by
->> 
->>     error_setg_file_open(errp, errno, FNAME);
->> 
->> where MSG is "Could not open '%s'" or similar.
->> 
->> Also replace equivalent uses of error_setg().
->> 
->> A few messages lose prefixes ("net dump: ", "SEV: ", __func__ ": ").
->> We could put them back with error_prepend().  Not worth the bother.
->
-> Yeh, I guess you could just do it with another macro using
-> the same internal function just with string concatenation.
-
-I'm no fan of such prefixes.  A sign of developers not caring enough to
-craft a good error message for *users*.  *Especially* in the case of
-__func__.
-
-The error messages changes in question are:
-
-    net dump: can't open DUMP-FILE: REASON
-    Could not open 'DUMP-FILE': REASON
-
-    SEV: Failed to open SEV-DEVICE: REASON
-    Could not open 'SEV-DEVICE': REASON
-
-    sev_common_kvm_init: Failed to open SEV_DEVICE 'REASON'
-    Could not open 'SEV-DEVICE': REASON
-
-I think these are all improvements, and the loss of the prefix is fine.
-
 >> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 >
-> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+> ...
+>
+>> diff --git a/migration/rdma.c b/migration/rdma.c
+>> index 337b415889..ef4885ef5f 100644
+>> --- a/migration/rdma.c
+>> +++ b/migration/rdma.c
+>> @@ -2349,8 +2349,7 @@ static int qemu_get_cm_event_timeout(RDMAContext *rdma,
+>>          error_setg(errp, "RDMA ERROR: poll cm event timeout");
+>>          return -1;
+>>      } else if (ret < 0) {
+>> -        error_setg(errp, "RDMA ERROR: failed to poll cm event, errno=%i",
+>> -                   errno);
+>> +        error_setg_errno(errp, "RDMA ERROR: failed to poll cm event");
+>
+> Hasn't that lost the errno ?
+
+Yes.  My build tree must have lost the ability to compile this file.  I
+need to fix that.
 
 Thanks!
 
