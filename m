@@ -4,78 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2DFCFC504
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B240CFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:13:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcob-0004cN-IT; Fri, 21 Nov 2025 20:53:30 -0500
+	id 1vMdYZ-0003CU-Gl; Fri, 21 Nov 2025 21:41:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbZg-0001io-CH
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:34:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMdYV-0003B1-3d; Fri, 21 Nov 2025 21:40:55 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbZW-0005Hm-Nj
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:33:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763771614;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jN2hNANWVWTCu1f5WR+vOsR5aIOIA2pYSQMMfmQp7wI=;
- b=Mryt9+vN/G2YHrJAwj9w4gQBp6t73R9ZNiqAmiuXDOqNBuvTUHCAyrKxFLDhgfIBR7HDOD
- qVdbQZH5CvA/WyKwaKTxoe8Ke8GKlYbC6BaUxgQdqRtPus0bPbP0kUDTPYteIVo532RfVj
- vuKSoK6x1BMOnZObtelFe0A1a+pZgO8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-362-mFYJ-q5wMPuQuTz0rIqCBA-1; Fri,
- 21 Nov 2025 07:14:49 -0500
-X-MC-Unique: mFYJ-q5wMPuQuTz0rIqCBA-1
-X-Mimecast-MFC-AGG-ID: mFYJ-q5wMPuQuTz0rIqCBA_1763727284
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 701F51800358; Fri, 21 Nov 2025 12:14:43 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E68AA30044DB; Fri, 21 Nov 2025 12:14:40 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8F86121E66EF; Fri, 21 Nov 2025 13:14:38 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMdXc-0002WG-ON; Fri, 21 Nov 2025 21:40:51 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id BCFD716C6FA;
+ Fri, 21 Nov 2025 16:51:56 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1CD38321997;
+ Fri, 21 Nov 2025 16:52:05 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, alistair.francis@wdc.com,
- stefanb@linux.vnet.ibm.com, kwolf@redhat.com, hreitz@redhat.com,
- sw@weilnetz.de, qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
- shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
- sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
- sgarzare@redhat.com, pbonzini@redhat.com, fam@euphon.net,
- philmd@linaro.org, alex@shazbot.org, clg@redhat.com, peterx@redhat.com,
- farosas@suse.de, lizhijian@fujitsu.com, dave@treblig.org,
- jasowang@redhat.com, samuel.thibault@ens-lyon.org, michael.roth@amd.com,
- kkostiuk@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
- rathc@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- marcandre.lureau@redhat.com, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- xen-devel@lists.xenproject.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
-Subject: [PATCH v2 03/15] ui: Convert to qemu_create() for simplicity and
- consistency
-Date: Fri, 21 Nov 2025 13:14:26 +0100
-Message-ID: <20251121121438.1249498-4-armbru@redhat.com>
-In-Reply-To: <20251121121438.1249498-1-armbru@redhat.com>
-References: <20251121121438.1249498-1-armbru@redhat.com>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+ Heiko Carstens <hca@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 34/76] target/s390x: Use address generation for
+ register branch targets
+Date: Fri, 21 Nov 2025 16:51:12 +0300
+Message-ID: <20251121135201.1114964-34-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,36 +62,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The error message changes from
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-    failed to open file 'FILENAME': REASON
+Indirect branches to addresses taken from registers go through address
+generation, e.g., for BRANCH ON CONDITION Principles of Operation says:
 
-to
+    In the RR format, the contents of general register R2 are used to
+    generate the branch address
 
-    Could not create 'FILENAME': REASON
+QEMU uses r2_nz handler for the respective register operands. Currently
+it does not zero out extra bits in 24- and 31-bit addressing modes as
+required by address generation. The very frequently used
+s390x_tr_init_disas_context() function has a workaround for this,
+but the code for saving an old PSW during an interrupt does not.
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- ui/ui-qmp-cmds.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Add the missing masking to r2_nz. Enforce PSW validity by replacing the
+workaround with an assertion.
 
-diff --git a/ui/ui-qmp-cmds.c b/ui/ui-qmp-cmds.c
-index 74fa6c6ec5..b49b636152 100644
---- a/ui/ui-qmp-cmds.c
-+++ b/ui/ui-qmp-cmds.c
-@@ -369,10 +369,8 @@ qmp_screendump(const char *filename, const char *device,
+Reported-by: Thomas Weißschuh <linux@weissschuh.net>
+Reported-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://lore.kernel.org/lkml/ab3131a2-c42a-47ff-bf03-e9f68ac053c0@t-8ch.de/
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Tested-by: Thomas Weißschuh <linux@weissschuh.net>
+Message-ID: <20251016175954.41153-4-iii@linux.ibm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit fc976a67ded4232cf0b9ae3c11fe051da01e4456)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index c7e8574438..f9487f4044 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -5613,6 +5613,7 @@ static void in2_r2_nz(DisasContext *s, DisasOps *o)
+     int r2 = get_field(s, r2);
+     if (r2 != 0) {
+         o->in2 = load_reg(r2);
++        gen_addi_and_wrap_i64(s, o->in2, o->in2, 0);
      }
-     image = pixman_image_ref(surface->image);
+ }
+ #define SPEC_in2_r2_nz 0
+@@ -6379,10 +6380,12 @@ static void s390x_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+ {
+     DisasContext *dc = container_of(dcbase, DisasContext, base);
  
--    fd = qemu_open_old(filename, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0666);
-+    fd = qemu_create(filename, O_WRONLY | O_TRUNC | O_BINARY, 0666, errp);
-     if (fd == -1) {
--        error_setg(errp, "failed to open file '%s': %s", filename,
--                   strerror(errno));
-         return;
+-    /* 31-bit mode */
+-    if (!(dc->base.tb->flags & FLAG_MASK_64)) {
+-        dc->base.pc_first &= 0x7fffffff;
+-        dc->base.pc_next = dc->base.pc_first;
++    if (dc->base.tb->flags & FLAG_MASK_32) {
++        if (!(dc->base.tb->flags & FLAG_MASK_64)) {
++            assert(!(dc->base.pc_first & ~((1ULL << 31) - 1)));
++        }
++    } else {
++        assert(!(dc->base.pc_first & ~((1ULL << 24) - 1)));
      }
  
+     dc->cc_op = CC_OP_DYNAMIC;
 -- 
-2.49.0
+2.47.3
 
 
