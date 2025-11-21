@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09E0DCFA76A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E53FCFA76B
 	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 09:58:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMNtb-0008Q2-1x; Fri, 21 Nov 2025 04:57:39 -0500
+	id 1vMNtR-0008I5-Iv; Fri, 21 Nov 2025 04:57:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
- id 1vMMeu-0005KR-4K
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 03:38:26 -0500
-Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
- ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ id 1vMMdW-00053H-Ov
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 03:36:58 -0500
+Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
- id 1vMMes-0000Sb-BX
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 03:38:23 -0500
+ id 1vMMdU-0000Jd-OX
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 03:36:58 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=S7uEReaKxx63FitKjU9U50Dus6ikMffz4cZkNRqhtcybzVqwHrbiEZ46afXJp+CYx6GY5Hwrnpo4c4uQYSa8AViibzmIxrUWUtk3PbxSWHCCsJ9xeyvBHMe+iDNxzt8pyH1DSE0IcdGKpqNJejFKCF39FGiADpORzhNhXFpKaZ1sb7Nx4b25vcBn5f+ZHYVqRZ1GfqZ0kfhxvcnP5oEsPhN1/UWIfyv6GtjoypkYDSVfO0wPxHIqUlVIVDA5S1DKxEI7NQVzDmZsZ6KMENmQrOFAeNxXxEKrekUTgu/aK/tPO0Ql5cdIL0sH83guTm/h1/ilHJ8lx2JQdVXHVSRB+g==
+ b=mkr0TbeeJDeizRG9jmWihDp1vvP8ICYDvHoFSv9DplMWpXARFfu+nTgWHd/AMrfwM20AxFPcqwQXR+nyz7um/J1m92KoxymwDrCZHtlF3mLcdIW8IByzITg8fth5VCdUCOySBgNCNhSDyJH0cRvo1Nmp9f2GjdP6+EwIEeHdZ/qgMTSfj2oIwwx+C6kFGKJqOh1X8FhyAx8BNmRg+8qZ+9hXagu8/jk1ghxnKceQxuAm9yFT81+wWG6OIxkTznEA93kHBLJumTRZUQSOGlCiL2SUT95J842XWlJ8+dmfnptIC0rR98CqsyKT+xfpBPuleZg2qJLeAcTRdFXoGGyjXg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+boKxpjIoxJc+KhooMJtnUsReY9o0+wonKYSweLuoQY=;
- b=c4DmpPVUx3OU7v+Rz5/D/eZxNDZnLCUyny8gnDGPzuT2d1ePfTK4ZBIN13qWb7rNM3ud3cDZg6uCsp1rYp2FJ+3Aa4NnoSKL+UEzb8mRIazqE0j047I59cGnPlMgzVTVYGkKhXzSB9ZsAtcq8dnXrUgy/OYucaOywZ5NhWn8862s5WHMxAFzciDScSDxoCzzlsZzd6ug/0P0r/GYIFolyjOf2zDI0wj7+pSt9uADjJum4Ff4vT/3D0matx7CfIPkJmOOxnUZykZYStOjWAfnRTDyWjexRX7sSWWSDwuoypkkY6KQzX/bXjqe25k5mh0VKLNcpNr07sdqgmoAVlbd5A==
+ bh=deJyHN+Z8DoZzHVeFyoB0co5whkZUqI2937I3WDC2WE=;
+ b=TFj4h8GNqGr63psKWFLQVnXfEA3IBWhKqianh0ICOaABBXnehZ2TbHKaXOK5rfVSZ+cRNaiH68fCzyJT/33gMT+EAgUIhAt1Amg05PTVQJXm2v7GY2t5DmzLahZu1yltSR3uTF6NbbR+izdIUD4Cm7BncaqcIGXCLYSp1cYXeAg/qIbqxr1oVLamQD1h11sF2RRg5doVg75CMHacqj1uMVBbeh8tlWFUwyY3damqAChP8080snHUDCrxAcMkNVfVaqReAROiHOIyfyxm4BrqrMsY6PDhIUdZMnb9fH1XSMPfEnT2jWGIdMgiLZlTwbloYfVwTxnJ45/x74qNNt2CMw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+boKxpjIoxJc+KhooMJtnUsReY9o0+wonKYSweLuoQY=;
- b=btDpi+w/CR2ZwksTiOQba0uIGa0IrhyD47Dxa36QmrtGy/EFDU9JjGoklYeGWmBBIbIES1sEmcv9x2Uz+jwhTR0J7tk/ABffYOvPTp1i3ctB7t8L/80HQQf2hTcs8haJ/Xcl1g82zrDlgsvEKAPkMLkFqqn0bBZd8aF3vERo5j0=
-Received: from BN9PR03CA0904.namprd03.prod.outlook.com (2603:10b6:408:107::9)
- by BN5PR12MB9510.namprd12.prod.outlook.com (2603:10b6:408:2ac::9)
+ bh=deJyHN+Z8DoZzHVeFyoB0co5whkZUqI2937I3WDC2WE=;
+ b=umNvGludCGkv5RKkijNqgF2aFxrz/uJEp4y1ekrkKd8YZRFygPAkHhHyzNDM3RGgXImoy16tBLFZZOmFpkGt7YAj/VM/5Z339raeE75oczkCSxKd7zowlcz4NzrQsTbdLXRrVNSVaUHNgSGs4bUib1WcuU5j/itVpeiLqFXtS0Q=
+Received: from BN1PR12CA0007.namprd12.prod.outlook.com (2603:10b6:408:e1::12)
+ by PH8PR12MB6770.namprd12.prod.outlook.com (2603:10b6:510:1c5::11)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.10; Fri, 21 Nov
- 2025 08:38:18 +0000
-Received: from BN2PEPF000044A9.namprd04.prod.outlook.com
- (2603:10b6:408:107:cafe::8b) by BN9PR03CA0904.outlook.office365.com
- (2603:10b6:408:107::9) with Microsoft SMTP Server (version=TLS1_3,
+ 2025 08:36:47 +0000
+Received: from BN2PEPF000044A6.namprd04.prod.outlook.com
+ (2603:10b6:408:e1:cafe::75) by BN1PR12CA0007.outlook.office365.com
+ (2603:10b6:408:e1::12) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.12 via Frontend Transport; Fri,
- 21 Nov 2025 08:38:08 +0000
+ 21 Nov 2025 08:36:40 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -53,22 +53,22 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- BN2PEPF000044A9.mail.protection.outlook.com (10.167.243.103) with Microsoft
+ BN2PEPF000044A6.mail.protection.outlook.com (10.167.243.100) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9343.9 via Frontend Transport; Fri, 21 Nov 2025 08:38:18 +0000
+ 15.20.9343.9 via Frontend Transport; Fri, 21 Nov 2025 08:36:47 +0000
 Received: from purico-abeahost.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Fri, 21 Nov
- 2025 00:38:15 -0800
+ 2025 00:36:44 -0800
 From: Shivansh Dhiman <shivansh.dhiman@amd.com>
 To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <mtosatti@redhat.com>,
  <kvm@vger.kernel.org>
 CC: <qemu-devel@nongnu.org>, <seanjc@google.com>, <santosh.shukla@amd.com>,
  <nikunj.dadhania@amd.com>, <ravi.bangoria@amd.com>, <babu.moger@amd.com>,
  <shivansh.dhiman@amd.com>
-Subject: [PATCH 5/5] i386: Add Bus Lock Detect support for EPYC-Turin-v2 model
-Date: Fri, 21 Nov 2025 08:34:52 +0000
-Message-ID: <20251121083452.429261-6-shivansh.dhiman@amd.com>
+Subject: [PATCH 1/5] i386: Implement CPUID 0x80000026
+Date: Fri, 21 Nov 2025 08:34:48 +0000
+Message-ID: <20251121083452.429261-2-shivansh.dhiman@amd.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251121083452.429261-1-shivansh.dhiman@amd.com>
 References: <20251121083452.429261-1-shivansh.dhiman@amd.com>
@@ -80,64 +80,65 @@ X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF000044A9:EE_|BN5PR12MB9510:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5bd28d36-d5a2-4819-c28c-08de28d9522b
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044A6:EE_|PH8PR12MB6770:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0039a8e8-09ec-45f9-d75a-08de28d91bc6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?sbu+7SzW0BSgJCxW7c7IG/wPasYc5Wt//1wL0gAn9JCXpry2hI0NUV5Ld7tN?=
- =?us-ascii?Q?on1VO/eXe+jmMSLS44Ztq2L4lIOLDa0OYs/dfmnum+JIlfh6FEiQUiEQDp0W?=
- =?us-ascii?Q?KYVkTg1jKnHAa1b5z5QMdSS0Mn5S9UJCNkvASa9FvV3n0bgDpojQe/Rw+375?=
- =?us-ascii?Q?TI3jpMW2m/6D1ZSmmFHQY1MaJRcF6OqQcro0n2/0UsGExeWJ66ynUSiVwJqd?=
- =?us-ascii?Q?EIXFFUnrQqeHi1GE++MhjNnXE25yWtYuIN/eRH63Hdvr0uNjJecNxA3ub3sn?=
- =?us-ascii?Q?+hnmXuC2GdYO8A40DMtbfxgPiJs5g8yRaRVsykpXOLbL328hX3nFRxFu0NCE?=
- =?us-ascii?Q?/DAs8dq4ivyIK8F4HkRDlkV2uTszvp7H/ZePJe4yIYnxyK19KT0kcwKYUDhF?=
- =?us-ascii?Q?uBpNOqfw5/aDsD7B7b3HEGVdNFBHqGrNEkbl+ZziMbgfMpgYYwCMaL0+zBjZ?=
- =?us-ascii?Q?JeLS2asGYsVOxyk4M6m1N4/RSwSvGeKVak0NX98Yxs+3Vbt81Sy4FFpfb7/9?=
- =?us-ascii?Q?0yvkO/nf+kkJVbSgA5ZMPARCb1u/ZXlpqZXFL046HR1hUUmDSPYB9UaAoeVT?=
- =?us-ascii?Q?lqLbORK2Zozk2KBoG6/vCAuVIPDuA+pIADLZRPRLoEUp8rjoCxVj0/f6Q44v?=
- =?us-ascii?Q?+CzA5eGClsGY/Kz/d+hwnCGUgf40xM8/e1CPUSDCJj9gqIV3baglEjA/BMEN?=
- =?us-ascii?Q?owNpBfTSyMjmegzBhR4jX8aW8D4xaNtQG1DTUD9lV2gFEM65hb9a83FLLmZs?=
- =?us-ascii?Q?j0c5OkILsBkF+s3G9dXGzSv70oKMoHKvvnyyUVvpa7CDEj3A4JHt0Rh4d6Lu?=
- =?us-ascii?Q?+Nk3PsmGwfruUFJGhoKPzi6rgNTuWIeXAoWQQPSoIyi/sJCI7FnZ6qOoidUT?=
- =?us-ascii?Q?ekHw0TERVi9tbx+sA2EkBfFBZzssR4u6F+S9DzfaMxKbB2GlJhM0LRrKDAab?=
- =?us-ascii?Q?CO3cR7CBDpel4dDaG3nmxx0BiXPA9GxPNAYA0+Oc2Rrp4iiRLtll/GZr2/AP?=
- =?us-ascii?Q?1RXCp0qRMTBzZsbm2bk+IU8vFTETORF3FoE+cZ4Hpa/y/C8U7/rQMwYGDcYF?=
- =?us-ascii?Q?5I0qs0wjJCXQGDHyspEDIStareeT7ENbOaVCa+ZyeU9dRp/Qm4swS0OIJwQ5?=
- =?us-ascii?Q?akeqo1nNX0iZDqq/h7eQg7DZ4RhrD4JpCKf8nic3sFIErajbIhRAzQVbxhM6?=
- =?us-ascii?Q?s+4qf1lq6i85ctNo2qE0yJ1QKESlwtCA201eG6k3Hd8UYuZSTcTJBROr8IA/?=
- =?us-ascii?Q?hPaPfG/PKp1GxBnqa2ba9578vY2+hyeSjT8BdcrzDt1HNhomli+a9zMc3OdO?=
- =?us-ascii?Q?DYuU1z6IyKDPKVmKpgLkPbFSFnyAXAnJsamveP795IpHet+Fba8hPoalc5gQ?=
- =?us-ascii?Q?NJ1hQiUBrgC/prTxjd15NiYZWICJSNkx3mgXQnDQ/mvG/JEH+q2DmmbWPEwP?=
- =?us-ascii?Q?cpfyyoiQysvVDdmOAc41+rVWWIldwHuQJwK8MuuIZnL6Ina1RPmw0EMv+VXg?=
- =?us-ascii?Q?ncryY7nBiccZ3pT5iojmRDEjRgzBQOtoEE/591mxLW2kOc0UTdQnqdjPMK5F?=
- =?us-ascii?Q?8rhcKbs9SCSuha6MUEk=3D?=
+ ARA:13230040|82310400026|376014|1800799024|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?jNU0GnnymknY3qPymtL6zeNCYtDO2Rk09Z2szYowIh83KZT+tnaOyecLUcPJ?=
+ =?us-ascii?Q?tDizthjR8rpjAqwKvyYAz+HorRYX89L/9V1izR0FCd0uxhzRNdJEvftIg+lH?=
+ =?us-ascii?Q?IPzFNofSkz8lA+7unMLEg0FnSgTcpXj5wZ4fVZJ+YdgexAt31S1xVUuPGO+t?=
+ =?us-ascii?Q?Xz2UXApT7YFdVTHpxBvgwv3om5LoPSxxQdmS9pxBxrjyAeKrseJR0rVZjmS3?=
+ =?us-ascii?Q?3hRIqpo7Wyx/6tFcWs4bOAB2jYKEoZuywKqE2sUOJ9ZCcMyWScZJgjDs1Fz/?=
+ =?us-ascii?Q?lGvT+7X4iKERUwcWQx+hrnoOIH2FeDz9i5bCEhpdYH7t+HDfxqao0dHFxLFp?=
+ =?us-ascii?Q?kcpWQgDe9niHh29jZ52q9tmKP4R+9BRDvRYOrs2E/SsYS9YKx2on0ZesTOZN?=
+ =?us-ascii?Q?HPkhAYXxNNnxUG7fbkUp+GB1bxaPb75GI4Owmuy5T8Eq36yH8NU37m1Mnob6?=
+ =?us-ascii?Q?QyHYT/PsiIAMr3TwyabKh39PeChCdyBZQdGmhE1BEatItQ15b2iT0McAdRGb?=
+ =?us-ascii?Q?KI7P9lrbClqJJDc5PvAlKlPv/UrpRlc/Gqdk4CdK7dcgHoQkQnGLPe8S0A1R?=
+ =?us-ascii?Q?B9eLYzUApIlNhA4oqDC1euG5Ayh/+Q5Iau660DUGdUlSp8isoEI9fGN7ANSF?=
+ =?us-ascii?Q?KJSOYa8vNybk/5DDJEIvuJUyD0de+dQ0dS9joD29LgThAoa21nBKsgnMy5Lb?=
+ =?us-ascii?Q?rLzLJh5fcZ27Owm0bl/XJ0RWN15j+dmO0nmiQzIygNauBXzd8HbN93mQA7i3?=
+ =?us-ascii?Q?C0s4FbFF4h8hntnKgmNjUEym6kA2bZLY4ntBpDWtkKmwULgGAK3Nrv9IVTva?=
+ =?us-ascii?Q?7Qva67es7z1FpIIw0tsKxoe79mC2Wuz/LisSHoJ2oGgP+KxEVuM2XOOJbo+c?=
+ =?us-ascii?Q?5glLC+6qTPdzLJGko0d/njxcOVBK1V5EkX7UUYEdzKOCuylRWq6KJlYjY45+?=
+ =?us-ascii?Q?FyLeUsArn7LYwVL3x+VLOv1co8mCTK7CH/u6ov9suRra2BqEmVTCcqF3Qx4P?=
+ =?us-ascii?Q?4TRgF6pc3TJBQ5BY+NgRqRPXPMtbq/bllVwMeucJkup7ikpihAOaXdFw5Xxs?=
+ =?us-ascii?Q?youk5fZaXsXrg6WGHCMLAG+3fz2l2pfb1KEKiH6d/Bt175L8qIC3DMcdoZLw?=
+ =?us-ascii?Q?4KL4xGt+DvdusgNQCt7whNY8vyYGADq6gxMOt7ignXnsvarFuTScANt4yAM+?=
+ =?us-ascii?Q?rC2d2A+Njpcrqb01M3xr0bgRy9AyjI5sEWpd3Ml1e0Rw6PbsqOU0IEnP61f7?=
+ =?us-ascii?Q?KcEWlSOWCoNCmAsdVaEM6QXCjGlNpj/cN4NXDMwTMKMGyiTrreSkuGeDHAqV?=
+ =?us-ascii?Q?ihjELYuEVjn3U1vVKg8v35tyjBiQKuAQOUM9Cb1aYt2P4mIgUoS9D+JoX1Gz?=
+ =?us-ascii?Q?J+KcWrsMC3T+LsnA55LppXWVuSMjd8ZeC404FP+JE6090xurZyO5COwIWN0Z?=
+ =?us-ascii?Q?v1WPRuqB8NOCA1G3lKwV5jeQQifYFg71f6a0JupeKFw6GBOlQ+6o6pNxQu9i?=
+ =?us-ascii?Q?G/tDzcKJzziVfAXTGfnuRj5V2ZXvMEEJd3X+qrGGFppK1nSpb5vtAQEKGjO1?=
+ =?us-ascii?Q?409Dt7fjWPJEh3GkyMA=3D?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(36860700013)(82310400026); DIR:OUT;
+ SFS:(13230040)(82310400026)(376014)(1800799024)(36860700013); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2025 08:38:18.4383 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5bd28d36-d5a2-4819-c28c-08de28d9522b
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2025 08:36:47.1799 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0039a8e8-09ec-45f9-d75a-08de28d91bc6
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A9.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A6.namprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN5PR12MB9510
-Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6770
+Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
  envelope-from=Shivansh.Dhiman@amd.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
+ helo=DM5PR21CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 21 Nov 2025 04:57:38 -0500
+X-Mailman-Approved-At: Fri, 21 Nov 2025 04:57:24 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -152,32 +153,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable the Bus Lock Detect feature for the EPYC-Turin-v2 CPU model to
-match the hardware capabilities of AMD Turin processors. This feature
-allows detection of split locks and bus locks, which can cause
-performance degradation in multi-core systems.
+Implement CPUID leaf 0x80000026 (AMD Extended CPU Topology). It presents the
+complete topology information to guests via a single CPUID with multiple
+subleafs, each describing a specific hierarchy level, viz. core, complex,
+die, socket.
 
-The bus-lock-detect feature is part of the architectural capabilities
-exposed through CPUID and should be enabled by default for Turin v2
-and later CPU models.
+Note that complex/CCX level relates to "die" in QEMU, and die/CCD level is
+not supported in QEMU yet. Hence, use CCX at CCD level until diegroups are
+implemented.
 
 Signed-off-by: Shivansh Dhiman <shivansh.dhiman@amd.com>
 ---
- target/i386/cpu.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/i386/cpu.c     | 76 +++++++++++++++++++++++++++++++++++++++++++
+ target/i386/kvm/kvm.c | 17 ++++++++++
+ 2 files changed, 93 insertions(+)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 12500d6b7bed..660b9c2a98b6 100644
+index 641777578637..b7827e448aa5 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6748,6 +6748,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                 .version = 2,
-                 .props = (PropValue[]) {
-                     { "x-force-cpuid-0x80000026", "on" },
-+                    { "bus-lock-detect", "on" },
-                     { /* end of list */ }
-                 }
-             },
+@@ -495,6 +495,78 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
+     assert(!(*eax & ~0x1f));
+ }
+ 
++/*
++ * CPUID_Fn80000026: Extended CPU Topology
++ *
++ * EAX Bits Description
++ * 31:5 Reserved
++ *  4:0 Number of bits to shift Extended APIC ID right to get a unique
++ *      topology ID of the current hierarchy level.
++ *
++ * EBX Bits Description
++ * 31:16 Reserved
++ * 15:0  Number of logical processors at the current hierarchy level.
++ *
++ * ECX Bits Description
++ * 31:16 Reserved
++ * 15:8  Level Type. Values:
++ *       Value   Description
++ *       0h      Reserved
++ *       1h      Core
++ *       2h      Complex
++ *       3h      Die
++ *       4h      Socket
++ *       FFh-05h Reserved
++ * 7:0   Input ECX
++ *
++ * EDX Bits Description
++ * 31:0 Extended APIC ID of the logical processor
++ */
++static void encode_topo_cpuid80000026(CPUX86State *env, uint32_t count,
++                                X86CPUTopoInfo *topo_info,
++                                uint32_t *eax, uint32_t *ebx,
++                                uint32_t *ecx, uint32_t *edx)
++{
++    X86CPU *cpu = env_archcpu(env);
++    uint32_t shift, nr_logproc, lvl_type;
++
++    switch (count) {
++    case 0:
++        shift = apicid_core_offset(topo_info);
++        nr_logproc = num_threads_by_topo_level(topo_info, CPU_TOPOLOGY_LEVEL_CORE);
++        lvl_type = 1;
++        break;
++
++    case 1:
++        shift = apicid_die_offset(topo_info);
++        nr_logproc = num_threads_by_topo_level(topo_info, CPU_TOPOLOGY_LEVEL_DIE);
++        lvl_type = 2;
++        break;
++
++    case 2:
++        shift = apicid_die_offset(topo_info);
++        nr_logproc = num_threads_by_topo_level(topo_info, CPU_TOPOLOGY_LEVEL_DIE);
++        lvl_type = 3;
++        break;
++
++    case 3:
++        shift = apicid_pkg_offset(topo_info);
++        nr_logproc = num_threads_by_topo_level(topo_info, CPU_TOPOLOGY_LEVEL_SOCKET);
++        lvl_type = 4;
++        break;
++
++    default:
++        shift = 0;
++        nr_logproc = 0;
++        lvl_type = 0;
++    }
++
++    *eax = shift & 0x1F;
++    *ebx = nr_logproc;
++    *ecx = ((lvl_type & 0xFF) << 8) | (count & 0xFF);
++    *edx = cpu->apic_id;
++}
++
+ /* Encode cache info for CPUID[0x80000005].ECX or CPUID[0x80000005].EDX */
+ static uint32_t encode_cache_cpuid80000005(CPUCacheInfo *cache)
+ {
+@@ -8554,6 +8626,10 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+                                                  R_EBX) & 0xf;
+         }
+         break;
++    case 0x80000026:
++        /* AMD Extended CPU Topology */
++        encode_topo_cpuid80000026(env, count, topo_info, eax, ebx, ecx, edx);
++        break;
+     case 0xC0000000:
+         *eax = env->cpuid_xlevel2;
+         *ebx = 0;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 60c798113823..ed3d40bf073e 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2037,6 +2037,23 @@ uint32_t kvm_x86_build_cpuid(CPUX86State *env, struct kvm_cpuid_entry2 *entries,
+                 c = &entries[cpuid_i++];
+             }
+             break;
++        case 0x80000026:
++            /* Query for all AMD extended topology information leaves */
++            for (j = 0; ; j++) {
++                c->function = i;
++                c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
++                c->index = j;
++                cpu_x86_cpuid(env, i, j, &c->eax, &c->ebx, &c->ecx, &c->edx);
++
++                if (((c->ecx >> 8) & 0xFF) == 0) {
++                    break;
++                }
++                if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
++                    goto full;
++                }
++                c = &entries[cpuid_i++];
++            }
++            break;
+         default:
+             c->function = i;
+             c->flags = 0;
 -- 
 2.43.0
 
