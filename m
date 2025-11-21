@@ -4,91 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32545CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C61B5CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:53:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdic-0004oy-A9; Fri, 21 Nov 2025 21:51:23 -0500
+	id 1vMcrV-00069T-6Z; Fri, 21 Nov 2025 20:56:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdiX-0004ez-7b; Fri, 21 Nov 2025 21:51:17 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vMbdx-0004XH-Pc; Fri, 21 Nov 2025 19:38:26 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdhv-00068h-Ib; Fri, 21 Nov 2025 21:51:12 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 09CEA16C660;
- Fri, 21 Nov 2025 15:47:24 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 544DF3218AF;
- Fri, 21 Nov 2025 15:47:32 +0300 (MSK)
-Message-ID: <6caac774-af69-4d7b-b6f7-ba6b79500828@tls.msk.ru>
-Date: Fri, 21 Nov 2025 15:47:32 +0300
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vMbdm-0006Fp-9d; Fri, 21 Nov 2025 19:38:21 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 9035B419AD;
+ Fri, 21 Nov 2025 19:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31AE4C4CEF1;
+ Fri, 21 Nov 2025 19:50:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1763754652;
+ bh=ocvIczLizuo1p7TQN3uTgxUV3nXqKPquig4s0T4MZA0=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=JPutPbb2v5Nir2ApZigTa5LMg4wHA5HTzGZip80UIWUjlEE15ri/H7Vp5ZtkoRfeE
+ Y2K5lcuTCfC8UuZnWTY36LgvMCXtGf2wIv1fmxkGvymhbsc2pS3lfstx2CksQCsncc
+ wEm1en+84bEsw+iHwjzewl50K7Y2K/vhX6ZgUxjyx46HERAc+UVKAJUEkTi8dtRsYq
+ KFY4M7JbEgs3BlKIXlr6mrzWJtpEHutDwu8dUWP00c3n1qUtd2RanNslFTOGABC3ue
+ RybzMgl8r8r/eg/hngplmDaeQ6wShv8+5OjjEdHIaKijFLTuABsxB4osY0rWqJZs39
+ yqjVsDguWkifQ==
+Date: Fri, 21 Nov 2025 11:50:50 -0800
+From: Drew Fustini <fustini@kernel.org>
+To: Radim =?utf-8?B?S3LEjW3DocWZ?= <rkrcmar@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Nicolas Pitre <npitre@baylibre.com>,
+ Kornel =?utf-8?Q?Dul=C4=99ba?= <mindal@semihalf.com>,
+ Atish Kumar Patra <atishp@rivosinc.com>,
+ Atish Patra <atish.patra@linux.dev>,
+ Vasudevan Srinivasan <vasu@rivosinc.com>,
+ yunhui cui <cuiyunhui@bytedance.com>,
+ Chen Pei <cp0613@linux.alibaba.com>, guo.wenjia23@zte.com.cn,
+ liu.qingtao2@zte.com.cn,
+ qemu-riscv-bounces+qemu-riscv=archiver.kernel.org@nongnu.org
+Subject: Re: [PATCH 3/7] hw/riscv: implement CBQRI capacity controller
+Message-ID: <aSDCmrvONUgvzqbV@x1>
+References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
+ <20251119-riscv-ssqosid-cbqri-v1-3-3392fc760e48@kernel.org>
+ <DEDROLF9I9YQ.2MQIEGB7I4BKH@ventanamicro.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] Fix the typo of vfio-pci device's enable-migration
- option
-To: Yanghang Liu <yanghliu@redhat.com>, qemu-devel@nongnu.org
-Cc: clegoate@redhat.com, QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20251121094341.80038-1-yanghliu@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20251121094341.80038-1-yanghliu@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <DEDROLF9I9YQ.2MQIEGB7I4BKH@ventanamicro.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
+ helo=sea.source.kernel.org
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,30 +76,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-21.11.2025 12:43, Yanghang Liu wrote:
+On Thu, Nov 20, 2025 at 08:25:44PM +0100, Radim Krčmář wrote:
+> 2025-11-19T16:42:19-08:00, Drew Fustini <fustini@kernel.org>:
+> > From: Nicolas Pitre <npitre@baylibre.com>
+> >
+> > Implement a capacity controller according to the Capacity and Bandwidth
+> > QoS Register Interface (CBQRI) which supports these capabilities:
+> >
+> >   - Number of access types: 2 (code and data)
+> >   - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
+> >   - Event IDs supported: None, Occupancy
+> >   - Capacity allocation ops: CONFIG_LIMIT, READ_LIMIT, FLUSH_RCID
+> >
+> > Link: https://github.com/riscv-non-isa/riscv-cbqri/blob/main/riscv-cbqri.pdf
+> > Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+> > [fustini: add fields introduced in the ratified spec: cunits, rpfx, p]
+> > Signed-off-by: Drew Fustini <fustini@kernel.org>
+> > ---
+> > diff --git a/hw/riscv/cbqri_capacity.c b/hw/riscv/cbqri_capacity.c
+> > [...]
+> > +static void riscv_cbqri_cc_write_alloc_ctl(RiscvCbqriCapacityState *cc,
+> > +                                           uint64_t value)
+> > +{
+> >[...]
+> > +    if (rcid >= cc->nb_rcids) {
+> > +        status = CC_ALLOC_STATUS_INVAL_RCID;
+> > +    } else if (atv && !is_valid_at(cc, at)) {
+> > +        status = CC_ALLOC_STATUS_INVAL_AT;
+> > +    } else if (op == CC_ALLOC_OP_CONFIG_LIMIT &&
+> > +               cc->supports_alloc_op_config_limit) {
+> > +        status = alloc_blockmask_config(cc, rcid, at, &busy);
+> > +    } else if (op == CC_ALLOC_OP_READ_LIMIT &&
+> > +               cc->supports_alloc_op_read_limit) {
+> > +        status = alloc_blockmask_read(cc, rcid, at, &busy);
+> > +    } else if (op == CC_ALLOC_OP_FLUSH_RCID &&
+> > +               cc->supports_alloc_op_flush_rcid) {
+> > +        status = alloc_blockmask_init(cc, rcid, at, false, &busy);
 > 
-> Signed-off-by: Yanghang Liu <yanghliu@redhat.com>
-> Reported-by: Mario Casquero <mcasquer@redhat.com>
-> ---
->   hw/vfio/pci.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> The spec says the following about flush:
 > 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 8b8bc5a421..b46b1305a7 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -3871,7 +3871,7 @@ static void vfio_pci_class_init(ObjectClass *klass, const void *data)
->                                             "(DEBUG)");
->       object_class_property_set_description(klass, /* 5.2, 8.0 non-experimetal */
->                                             "enable-migration",
-> -                                          "Enale device migration. Also requires a host VFIO PCI "
-> +                                          "Enable device migration. Also requires a host VFIO PCI "
->                                             "variant or mdev driver with migration support enabled");
->       object_class_property_set_description(klass, /* 8.1 */
->                                             "vf-token",
+>   "The configured capacity block allocation or the capacity unit limit
+>    is not changed by this operation."
+> 
+> Limits are not implemented, so I think it's supposed to be a nop.
 
-Picked up to the trivial-patches tree.
-Thanks!
+Thanks, that makes sense. I'll change it for the next revision.
 
-/mjt
+> > [...]
+> > +static uint64_t riscv_cbqri_cc_read(void *opaque, hwaddr addr, unsigned size)
+> > +{
+> > +    RiscvCbqriCapacityState *cc = opaque;
+> > +    uint64_t value = 0;
+> > +
+> > +    assert((addr % 8) == 0);
+> > +    assert(size == 8);
+> 
+> Is there a plan to extend support for 32 bit operations?
+> 
+>   "The CBQRI registers are defined so that software can perform two
+>    individual 4 byte accesses."
+
+Good question. Daniel also commented about the asserts for size == 8
+while your MemoryRegionOps has .valid.min_access_size = 4. It does seem
+like from the spec that these CBQRI controllers do need to support 4
+byte accesses.
+
+However, I need to understand better how to accomplish that. I'm
+uncertain if I need to add code to the read and write hooks for that, or
+if something in MemoryRegionOps can handle it automatically.
+
+> > [...]
+> > +    case A_CC_BLOCK_MASK:
+> > +        if (cc->ncblks == 0) {
+> > +            break;
+> > +        }
+> > +        /* fallthrough */
+> > +    default:
+> > +        unsigned int blkmask_slot = (addr - A_CC_BLOCK_MASK) / 8;
+> > +        if (blkmask_slot >= (cc->ncblks + 63) / 64) {
+> > +            qemu_log_mask(LOG_GUEST_ERROR,
+> > +                          "%s: out of bounds (addr=0x%x)",
+> > +                          __func__, (uint32_t)addr);
+> > +            break;
+> > +        }
+> > +        value = cc->alloc_blockmasks[blkmask_slot];
+> 
+> There is supposed to be a cc_cunits registers after the cc_block_mask.
+
+Good point, I need to update the code to account for cc_units.
+
+> > [...]
+> > +static void riscv_cbqri_cc_realize(DeviceState *dev, Error **errp)
+> > +{
+> > +    RiscvCbqriCapacityState *cc = RISCV_CBQRI_CC(dev);
+> > +
+> > +    if (!cc->mmio_base) {
+> > +        error_setg(errp, "mmio_base property not set");
+> > +        return;
+> > +    }
+> > +
+> > +    assert(cc->mon_counters == NULL);
+> > +    cc->mon_counters = g_new0(MonitorCounter, cc->nb_mcids);
+> > +
+> > +    assert(cc->alloc_blockmasks == NULL);
+> > +    uint64_t *end = get_blockmask_location(cc, cc->nb_rcids, 0);
+> > +    unsigned int blockmasks_size = end - cc->alloc_blockmasks;
+> > +    cc->alloc_blockmasks = g_new0(uint64_t, blockmasks_size);
+> > +
+> > +    memory_region_init_io(&cc->mmio, OBJECT(dev), &riscv_cbqri_cc_ops,
+> > +                          cc, TYPE_RISCV_CBQRI_CC".mmio", 4 * 1024);
+> 
+> Shouldn't the region size take cc->ncblks into account?
+> (A bitmask for 2^16 ids is 8kB.)
+
+cc_block_mask field is BMW / 8. In the case of NCBLKS of 12 and NCBLKS
+of 16, both end up with a BMW of 64 which would be 8 bytes. I think the
+the only reason the allocation is 4KB is that is meant to be aligned to
+the page size. Otherwise, the capacity controller register layout is
+pretty small.
+
+> > +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &cc->mmio);
+> > +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, cc->mmio_base);
+> > +}
+> > +
+> > +static void riscv_cbqri_cc_reset(DeviceState *dev)
+> > +{
+> > +    RiscvCbqriCapacityState *cc = RISCV_CBQRI_CC(dev);
+> > +
+> > +    cc->cc_mon_ctl = 0;
+> > +    cc->cc_alloc_ctl = 0;
+> 
+> Only the busy field must be reset to 0.  I think the decision warrants a
+> comment that we're zeroing more to have simpler code.
+
+Okay, will do.
+
+> > +
+> > +    /* assign all capacity only to rcid0 */
+> > +    for (unsigned int rcid = 0; rcid < cc->nb_rcids; rcid++) {
+> 
+> rcid != 0 are unspecified on reset, so I would prefer not to touch them.
+
+Okay, that is a good point that the spec does state that. I'll fix this
+in the next rev.
+
+> > +        bool any_at = false;
+> > +
+> > +        if (cc->supports_at_data) {
+> > +            alloc_blockmask_init(cc, rcid, CC_AT_DATA,
+> > +                                 rcid == 0, NULL);
+> > +            any_at = true;
+> > +        }
+> > +        if (cc->supports_at_code) {
+> > +            alloc_blockmask_init(cc, rcid, CC_AT_CODE,
+> > +                                 rcid == 0, NULL);
+> > +            any_at = true;
+> > +        }
+> > +        if (!any_at) {
+> > +            alloc_blockmask_init(cc, rcid, 0,
+> > +                                 rcid == 0, NULL);
+> > +        }
+> > +    }
+> 
+> I think it looks a bit better if AT values were expressed as a bitfield
+> of size 8: (untested)
+> 
+>     unsigned long at = find_next_bit(&cc->supported_at_mask, 8, 0);
+> 
+>     do {
+>         alloc_blockmask_init(cc, rcid, at < 8 ? at : 0, rcid == 0, NULL);
+>         at = find_next_bit(&cc->supported_at_mask, 8, at + 1);
+>     } while (at < 8);
+
+Thanks for the suggestion. I will give that a try.
+
+Drew
 
