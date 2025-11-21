@@ -4,66 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08169CF2564
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 03:40:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07687CFA46E
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 03:44:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMI09-0000ie-OA; Thu, 20 Nov 2025 22:40:02 -0500
+	id 1vMI3w-0002KW-VA; Thu, 20 Nov 2025 22:43:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vMHzz-0000dk-B1
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 22:39:51 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vMHzw-0002vI-Nd
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 22:39:51 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AL3dUtk090934
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 21 Nov 2025 12:39:30 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=kRtr1BBlFDZGhuiV2TXqyXyKRDeMUyY7+fAg/iYP4YY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1763696370; v=1;
- b=v7sjk0I65HA7bo4nkJ6MK7+tMl4GXaJCiMVsSMuml23s04AzYyFDjDVIh1HTfLHL
- be7MyRpasjobjkZ14Kg91pNn6Cksio6ZWTC8OWGT7hT6nYSr04WM7+F5ANHLPWbi
- Unbp3rcud96cIS44rozpy8PYHJjV/BKTfJOH75T33cGz+kSgPEd0m6wQFsUN4ykK
- 2w7tBS7Oy7pwGAA+J4Wv29NF0wsibl69aGBmTytJTzXLMqBZYIHlGZ5VunQHnbCc
- QGGSpbfbrrYoG2qbNfvmJNq+pmPRqBn9RR8rZz7yrBbMpS2EryX/41HF9rHGe1y9
- kokZxeCyYWALCvo0VHyOVQ==
-Message-ID: <ca2e398e-8158-4845-9798-6f444a73b103@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 21 Nov 2025 12:39:30 +0900
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vMI3q-0002IZ-M1
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 22:43:50 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1vMI3m-0004cw-28
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 22:43:48 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxidHp3x9pLm0mAA--.17556S3;
+ Fri, 21 Nov 2025 11:43:37 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAxecDm3x9pP5Q6AQ--.6990S3;
+ Fri, 21 Nov 2025 11:43:36 +0800 (CST)
+Subject: Re: [PATCH V4 2/2] fix pci device can't alloc irq from fdt
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
+References: <cover.1763434297.git.lixianglai@loongson.cn>
+ <20726ae560966e7405c8f73a665c2f006c613623.1763434297.git.lixianglai@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <f1fda0d6-5255-df10-7b73-0bd36e4c3c51@loongson.cn>
+Date: Fri, 21 Nov 2025 11:41:09 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [v2 1/3] virtio-gpu: Add support for
- VIRTIO_GPU_BLOB_FLAG_USE_USERPTR flag
-To: Honglei Huang <honghuan@amd.com>
-Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, Ray.Huang@amd.com,
- dmitry.osipenko@collabora.com, alex.bennee@linaro.org
-References: <20251121024705.1403042-1-honghuan@amd.com>
- <20251121024705.1403042-2-honghuan@amd.com>
- <b6f4cc26-7ebe-4b07-8e50-257b6f53d309@rsg.ci.i.u-tokyo.ac.jp>
- <db263884-6159-4d25-8c40-44dd78291714@amd.com>
+In-Reply-To: <20726ae560966e7405c8f73a665c2f006c613623.1763434297.git.lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <db263884-6159-4d25-8c40-44dd78291714@amd.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-CM-TRANSID: qMiowJAxecDm3x9pP5Q6AQ--.6990S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZF1kGF4rXr4DWrWfCr47Jrc_yoWrtr4xpr
+ WDC3ZIgrWIqr1I939xZ3WUXFnIyr1fCFy8twnxXr10krnxuw1xXrWDKr47tFy7KrWkJayU
+ XFnFga4Ig3WUJagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.71,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,94 +82,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/21 12:14, Honglei Huang wrote:
-> 
-> 
-> On 2025/11/21 10:56, Akihiko Odaki wrote:
->> On 2025/11/21 11:47, Honglei Huang wrote:
->>> Add support for the USE_USERPTR blob flag in virtio-gpu to enable
->>> user pointer mapping for blob resources. This allows guest applications
->>> to use user-allocated memory for GPU resources more efficiently.
->>>
->>> Changes include:
->>> - Add VIRTIO_GPU_BLOB_FLAG_USE_USERPTR flag definition
->>> - Enhance blob resource creation to handle userptr flag properly
->>> - Remove arbitrary nr_entries limit (16384) in mapping creation
->>> - Add conditional handling for userptr vs regular blob mapping
->>
->> I don't see the added conditional handling.
-> 
-> Sorry, the additional handing is replaced by the fixing of value check.
-> I will correct this commit message in the next version.
 
-Not just the commit message, but it also questions the utility of 
-VIRTIO_GPU_BLOB_FLAG_USE_USERPTR and VIRTIO_GPU_F_RESOURCE_USERPTR. 
-Neither of them adds a new functionality. They should be dropped if they 
-are also replaced with the fix.
 
+On 2025/11/20 下午8:18, Xianglai Li wrote:
+> When we use the -kernel parameter to start an elf format kernel relying on
+> fdt, we get the following error:
 > 
->>
->>> - Support guest_blob_mapped parameter for virgl renderer
->>> - Fix value check issue in virtio-gpu
->>>
->>> This enables more flexible memory management between guest and host
->>> for GPU virtualization scenarios.
->>>
->>> Signed-off-by: Honglei Huang <honghuan@amd.com>
->>> ---
->>>   hw/display/virtio-gpu-virgl.c               | 2 +-
->>>   hw/display/virtio-gpu.c                     | 7 -------
->>>   include/standard-headers/linux/virtio_gpu.h | 1 +
->>>   3 files changed, 2 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu- 
->>> virgl.c
->>> index 07f6355ad6..c927275c79 100644
->>> --- a/hw/display/virtio-gpu-virgl.c
->>> +++ b/hw/display/virtio-gpu-virgl.c
->>> @@ -705,7 +705,7 @@ static void 
->>> virgl_cmd_resource_create_blob(VirtIOGPU *g,
->>>           ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, 
->>> sizeof(cblob),
->>>                                               cmd, &res->base.addrs,
->>>                                               &res->base.iov, &res- 
->>> >base.iov_cnt);
->>> -        if (!ret) {
->>> +        if (ret != 0) {
->>>               cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
->>>               return;
->>>           }
->>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
->>> index 43e88a4daf..956dc811fa 100644
->>> --- a/hw/display/virtio-gpu.c
->>> +++ b/hw/display/virtio-gpu.c
->>> @@ -808,13 +808,6 @@ int virtio_gpu_create_mapping_iov(VirtIOGPU *g,
->>>       size_t esize, s;
->>>       int e, v;
->>> -    if (nr_entries > 16384) {
->>> -        qemu_log_mask(LOG_GUEST_ERROR,
->>> -                      "%s: nr_entries is too big (%d > 16384)\n",
->>> -                      __func__, nr_entries);
->>> -        return -1;
->>> -    }
->>> -
->>>       esize = sizeof(*ents) * nr_entries;
->>>       ents = g_malloc(esize);
->>>       s = iov_to_buf(cmd->elem.out_sg, cmd->elem.out_num,
->>> diff --git a/include/standard-headers/linux/virtio_gpu.h b/include/ 
->>> standard-headers/linux/virtio_gpu.h
->>> index 00cd3f04af..b85e781a2d 100644
->>> --- a/include/standard-headers/linux/virtio_gpu.h
->>> +++ b/include/standard-headers/linux/virtio_gpu.h
->>> @@ -405,6 +405,7 @@ struct virtio_gpu_resource_create_blob {
->>>   #define VIRTIO_GPU_BLOB_FLAG_USE_MAPPABLE     0x0001
->>>   #define VIRTIO_GPU_BLOB_FLAG_USE_SHAREABLE    0x0002
->>>   #define VIRTIO_GPU_BLOB_FLAG_USE_CROSS_DEVICE 0x0004
->>> +#define VIRTIO_GPU_BLOB_FLAG_USE_USERPTR      0x0008
->>>       /* zero is invalid blob mem */
->>>       uint32_t blob_mem;
->>>       uint32_t blob_flags;
->>
+> pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.0: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.0: PME: Signaling with IRQ 19
+> pcieport 0000:00:01.0: AER: enabled with IRQ 19
+> pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.1: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.1: PME: Signaling with IRQ 20
+> pcieport 0000:00:01.1: AER: enabled with IRQ 20
+> pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.2: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.2: PME: Signaling with IRQ 21
+> pcieport 0000:00:01.2: AER: enabled with IRQ 21
+> pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
+> pcieport 0000:00:01.3: enabling device (0000 -> 0003)
+> pcieport 0000:00:01.3: PME: Signaling with IRQ 22
+> pcieport 0000:00:01.3: AER: enabled with IRQ 22
+> pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
 > 
+> This is because  the description of interrupt-cell is missing in the pcie
+> irq map.  And there is a lack of a description of the interrupt trigger
+> type.  Now it is corrected and the correct interrupt-cell is added in the
+> pcie irq map.
+> 
+> Refer to the implementation in arm and add some comments.
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> Cc: Song Gao <gaosong@loongson.cn>
+> 
+>   hw/loongarch/virt-fdt-build.c | 44 ++++++++++++++++++++++-------------
+>   1 file changed, 28 insertions(+), 16 deletions(-)
+> 
+> diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+> index 7333019cf7..e597b19dc3 100644
+> --- a/hw/loongarch/virt-fdt-build.c
+> +++ b/hw/loongarch/virt-fdt-build.c
+> @@ -321,6 +321,8 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
+>       uint32_t full_irq_map[PCI_NUM_PINS * PCI_NUM_PINS * 10] = {};
+>       uint32_t *irq_map = full_irq_map;
+>       const MachineState *ms = MACHINE(lvms);
+> +    uint32_t pin_mask;
+> +    uint32_t devfn_mask;
+>   
+>       /*
+>        * This code creates a standard swizzle of interrupts such that
+> @@ -333,37 +335,45 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
+>        */
+>   
+>       for (dev = 0; dev < PCI_NUM_PINS; dev++) {
+> -        int devfn = dev * 0x8;
+> +        int devfn = PCI_DEVFN(dev, 0);
+>   
+>           for (pin = 0; pin < PCI_NUM_PINS; pin++) {
+> -            int irq_nr = 16 + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
+> +            int irq_nr = VIRT_DEVICE_IRQS + \
+> +                         ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
+>               int i = 0;
+>   
+> -            /* Fill PCI address cells */
+> -            irq_map[i] = cpu_to_be32(devfn << 8);
+> -            i += 3;
+> -
+> -            /* Fill PCI Interrupt cells */
+> -            irq_map[i] = cpu_to_be32(pin + 1);
+> -            i += 1;
+> -
+> -            /* Fill interrupt controller phandle and cells */
+> -            irq_map[i++] = cpu_to_be32(*pch_pic_phandle);
+> -            irq_map[i++] = cpu_to_be32(irq_nr);
+> +            uint32_t map[] = {
+> +                devfn << 8, 0, 0,             /* devfn */
+> +                pin + 1,                      /* PCI pin */
+> +                *pch_pic_phandle,             /* interrupt controller handle */
+> +                irq_nr,                       /* irq number */
+> +                FDT_IRQ_TYPE_LEVEL_HIGH };    /* irq trigger level */
+>   
+>               if (!irq_map_stride) {
+> -                irq_map_stride = i;
+> +                irq_map_stride = sizeof(map) / sizeof(uint32_t);
+>               }
+> +
+> +            /* Convert map to big endian */
+> +            for (i = 0; i < irq_map_stride; i++) {
+> +                irq_map[i] = cpu_to_be32(map[i]);
+> +            }
+> +
+>               irq_map += irq_map_stride;
+>           }
+>       }
+>   
+> -
+>       qemu_fdt_setprop(ms->fdt, nodename, "interrupt-map", full_irq_map,
+>                        PCI_NUM_PINS * PCI_NUM_PINS *
+>                        irq_map_stride * sizeof(uint32_t));
+> +
+> +    /* Only need to match the pci slot bit */
+> +    devfn_mask = PCI_DEVFN((PCI_NUM_PINS - 1), 0) << 8;
+> +    /* The pci interrupt only needs to match the specified low bit */
+> +    pin_mask = (1 << ((PCI_NUM_PINS - 1))) - 1;
+> +
+>       qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupt-map-mask",
+> -                     0x1800, 0, 0, 0x7);
+> +                           devfn_mask, 0, 0,  /* address cells */
+> +                           pin_mask);
+>   }
+>   
+>   static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
+> @@ -400,6 +410,8 @@ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
+>                                    2, base_mmio, 2, size_mmio);
+>       qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
+>                              0, *pch_msi_phandle, 0, 0x10000);
+> +
+> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
+>       fdt_add_pcie_irq_map_node(lvms, nodename, pch_pic_phandle);
+>       g_free(nodename);
+>   }
+> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
