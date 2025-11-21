@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCC9CFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:56:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7562ECFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdho-00040v-8R; Fri, 21 Nov 2025 21:50:33 -0500
+	id 1vMdUd-0008KS-2U; Fri, 21 Nov 2025 21:36:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdhh-0003xu-3j; Fri, 21 Nov 2025 21:50:25 -0500
+ id 1vMdUV-00087h-0d; Fri, 21 Nov 2025 21:36:47 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdhA-0005u7-3a; Fri, 21 Nov 2025 21:50:21 -0500
+ id 1vMdTg-0001QF-BV; Fri, 21 Nov 2025 21:36:40 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 088CE16C6F2;
- Fri, 21 Nov 2025 16:51:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 163E016C709;
+ Fri, 21 Nov 2025 16:51:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 629EC32198F;
- Fri, 21 Nov 2025 16:52:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6F10F3219A6;
+ Fri, 21 Nov 2025 16:52:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 26/76] block: fix luks 'amend' when run in coroutine
-Date: Fri, 21 Nov 2025 16:51:04 +0300
-Message-ID: <20251121135201.1114964-26-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 49/76] qio: Protect NetListener callback with mutex
+Date: Fri, 21 Nov 2025 16:51:27 +0300
+Message-ID: <20251121135201.1114964-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
@@ -60,117 +60,252 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Eric Blake <eblake@redhat.com>
 
-Launch QEMU with
+Without a mutex, NetListener can run into this data race between a
+thread changing the async callback callback function to use when a
+client connects, and the thread servicing polling of the listening
+sockets:
 
-  $ qemu-img create \
-      --object secret,id=sec0,data=123456 \
-      -f luks -o key-secret=sec0 demo.luks 1g
+  Thread 1:
+       qio_net_listener_set_client_func(lstnr, f1, ...);
+           => foreach sock: socket
+               => object_ref(lstnr)
+               => sock_src = qio_channel_socket_add_watch_source(sock, ...., lstnr, object_unref);
 
-  $ qemu-system-x86_64 \
-      --object secret,id=sec0,data=123456 \
-      -blockdev  driver=luks,key-secret=sec0,file.filename=demo.luks,file.driver=file,node-name=luks
+  Thread 2:
+       poll()
+          => event POLLIN on socket
+               => ref(GSourceCallback)
+               => if (lstnr->io_func) // while lstnr->io_func is f1
+                    ...interrupt..
 
-Then in QMP shell attempt
+  Thread 1:
+       qio_net_listener_set_client_func(lstnr, f2, ...);
+          => foreach sock: socket
+               => g_source_unref(sock_src)
+          => foreach sock: socket
+               => object_ref(lstnr)
+               => sock_src = qio_channel_socket_add_watch_source(sock, ...., lstnr, object_unref);
 
-  x-blockdev-amend job-id=fish node-name=luks options={'state':'active','new-secret':'sec0','driver':'luks'}
+  Thread 2:
+               => call lstnr->io_func(lstnr->io_data) // now sees f2
+               => return dispatch(sock)
+               => unref(GSourceCallback)
+                  => destroy-notify
+                     => object_unref
 
-It will result in an assertion
+Found by inspection; I did not spend the time trying to add sleeps or
+execute under gdb to try and actually trigger the race in practice.
+This is a SEGFAULT waiting to happen if f2 can become NULL because
+thread 1 deregisters the user's callback while thread 2 is trying to
+service the callback.  Other messes are also theoretically possible,
+such as running callback f1 with an opaque pointer that should only be
+passed to f2 (if the client code were to use more than just a binary
+choice between a single async function or NULL).
 
-  #0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
-  #1  0x00007fad18b73f63 in __pthread_kill_internal (threadid=<optimized out>, signo=6) at pthread_kill.c:89
-  #2  0x00007fad18b19f3e in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-  #3  0x00007fad18b016d0 in __GI_abort () at abort.c:77
-  #4  0x00007fad18b01639 in __assert_fail_base
-      (fmt=<optimized out>, assertion=<optimized out>, file=<optimized out>, line=<optimized out>, function=<optimized out>) at assert.c:118
-  #5  0x00007fad18b120af in __assert_fail (assertion=<optimized out>, file=<optimized out>, line=<optimized out>, function=<optimized out>)
-      at assert.c:127
-  #6  0x000055ff74fdbd46 in bdrv_graph_rdlock_main_loop () at ../block/graph-lock.c:260
-  #7  0x000055ff7548521b in graph_lockable_auto_lock_mainloop (x=<optimized out>)
-      at /usr/src/debug/qemu-9.2.4-1.fc42.x86_64/include/block/graph-lock.h:266
-  #8  block_crypto_read_func (block=<optimized out>, offset=4096, buf=0x55ffb6d66ef0 "", buflen=256000, opaque=0x55ffb5edcc30, errp=0x55ffb6f00700)
-      at ../block/crypto.c:71
-  #9  0x000055ff75439f8b in qcrypto_block_luks_load_key
-      (block=block@entry=0x55ffb5edbe90, slot_idx=slot_idx@entry=0, password=password@entry=0x55ffb67dc260 "123456", masterkey=masterkey@entry=0x55ffb5fb0c40 "", readfunc=readfunc@entry=0x55ff754851e0 <block_crypto_read_func>, opaque=opaque@entry=0x55ffb5edcc30, errp=0x55ffb6f00700)
-      at ../crypto/block-luks.c:927
-  #10 0x000055ff7543b90f in qcrypto_block_luks_find_key
-      (block=<optimized out>, password=<optimized out>, masterkey=<optimized out>, readfunc=<optimized out>, opaque=<optimized out>, errp=<optimized out>) at ../crypto/block-luks.c:1045
-  #11 qcrypto_block_luks_amend_add_keyslot
-      (block=0x55ffb5edbe90, readfunc=0x55ff754851e0 <block_crypto_read_func>, writefunc=0x55ff75485100 <block_crypto_write_func>, opaque=0x55ffb5edcc3, opts_luks=0x7fad1715aef8, force=<optimized out>, errp=0x55ffb6f00700) at ../crypto/block-luks.c:1673
-  #12 qcrypto_block_luks_amend_options
-      (block=0x55ffb5edbe90, readfunc=0x55ff754851e0 <block_crypto_read_func>, writefunc=0x55ff75485100 <block_crypto_write_func>, opaque=0x55ffb5edcc30, options=0x7fad1715aef0, force=<optimized out>, errp=0x55ffb6f00700) at ../crypto/block-luks.c:1865
-  #13 0x000055ff75485b95 in block_crypto_amend_options_generic_luks
-      (bs=<optimized out>, amend_options=<optimized out>, force=<optimized out>, errp=<optimized out>) at ../block/crypto.c:949
-  #14 0x000055ff75485c28 in block_crypto_co_amend_luks (bs=<optimized out>, opts=<optimized out>, force=<optimized out>, errp=<optimized out>)
-      at ../block/crypto.c:1008
-  #15 0x000055ff754778e5 in blockdev_amend_run (job=0x55ffb6f00640, errp=0x55ffb6f00700) at ../block/amend.c:52
-  #16 0x000055ff75468b90 in job_co_entry (opaque=0x55ffb6f00640) at ../job.c:1106
-  #17 0x000055ff755a0fc2 in coroutine_trampoline (i0=<optimized out>, i1=<optimized out>) at ../util/coroutine-ucontext.c:175
+Mitigating factor: if the code that modifies the QIONetListener can
+only be reached by the same thread that is executing the polling and
+async callbacks, then we are not in a two-thread race documented above
+(even though poll can see two clients trying to connect in the same
+window of time, any changes made to the listener by the first async
+callback will be completed before the thread moves on to the second
+client).  However, QEMU is complex enough that this is hard to
+generically analyze.  If QMP commands (like nbd-server-stop) are run
+in the main loop and the listener uses the main loop, things should be
+okay.  But when a client uses an alternative GMainContext, or if
+servicing a QMP command hands off to a coroutine to avoid blocking, I
+am unable to state with certainty whether a given net listener can be
+modified by a thread different from the polling thread running
+callbacks.
 
-This changes the read/write callbacks to not assert that they
-are run in mainloop context if already in a coroutine.
+At any rate, it is worth having the API be robust.  To ensure that
+modifying a NetListener can be safely done from any thread, add a
+mutex that guarantees atomicity to all members of a listener object
+related to callbacks.  This problem has been present since
+QIONetListener was introduced.
 
-This is also reproduced by qemu-iotests cases 295 and 296.
+Note that this does NOT prevent the case of a second round of the
+user's old async callback being invoked with the old opaque data, even
+when the user has already tried to change the async callback during
+the first async callback; it is only about ensuring that there is no
+sharding (the eventual io_func(io_data) call that does get made will
+correspond to a particular combination that the user had requested at
+some point in time, and not be sharded to a combination that never
+existed in practice).  In other words, this patch maintains the status
+quo that a user's async callback function already needs to be robust
+to parallel clients landing in the same window of poll servicing, even
+when only one client is desired, if that particular listener can be
+amended in a thread other than the one doing the polling.
 
-Fixes: 1f051dcbdf2e4b6f518db731c84e304b2b9d15ce
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250919112213.1530079-1-berrange@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit c86488abaf017ed3f5a636c3247cd640a93d3b08)
+CC: qemu-stable@nongnu.org
+Fixes: 53047392 ("io: introduce a network socket listener API", v2.12.0)
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Message-ID: <20251113011625.878876-20-eblake@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+[eblake: minor commit message wording improvements]
+Signed-off-by: Eric Blake <eblake@redhat.com>
+(cherry picked from commit 9d86181874ab7b0e95ae988f6f80715943c618c6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/crypto.c b/block/crypto.c
-index 17b4749a1e..7c37b23e36 100644
---- a/block/crypto.c
-+++ b/block/crypto.c
-@@ -67,11 +67,18 @@ static int block_crypto_read_func(QCryptoBlock *block,
-     BlockCrypto *crypto = bs->opaque;
-     ssize_t ret;
+diff --git a/include/io/net-listener.h b/include/io/net-listener.h
+index 42fbfab546..c2165dc166 100644
+--- a/include/io/net-listener.h
++++ b/include/io/net-listener.h
+@@ -54,6 +54,7 @@ struct QIONetListener {
  
--    GLOBAL_STATE_CODE();
--    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+    if (qemu_in_coroutine()) {
-+        GRAPH_RDLOCK_GUARD();
+     bool connected;
  
--    ret = bdrv_pread(crypto->header ? crypto->header : bs->file,
--                     offset, buflen, buf, 0);
-+        ret = bdrv_co_pread(crypto->header ? crypto->header : bs->file,
-+                            offset, buflen, buf, 0);
-+    } else {
-+        GLOBAL_STATE_CODE();
-+        GRAPH_RDLOCK_GUARD_MAINLOOP();
++    QemuMutex lock; /* Protects remaining fields */
+     QIONetListenerClientFunc io_func;
+     gpointer io_data;
+     GDestroyNotify io_notify;
+diff --git a/io/net-listener.c b/io/net-listener.c
+index 0f16b78fbb..f70acdfc5c 100644
+--- a/io/net-listener.c
++++ b/io/net-listener.c
+@@ -23,11 +23,16 @@
+ #include "io/dns-resolver.h"
+ #include "qapi/error.h"
+ #include "qemu/module.h"
++#include "qemu/lockable.h"
+ #include "trace.h"
+ 
+ QIONetListener *qio_net_listener_new(void)
+ {
+-    return QIO_NET_LISTENER(object_new(TYPE_QIO_NET_LISTENER));
++    QIONetListener *listener;
 +
-+        ret = bdrv_pread(crypto->header ? crypto->header : bs->file,
-+                         offset, buflen, buf, 0);
++    listener = QIO_NET_LISTENER(object_new(TYPE_QIO_NET_LISTENER));
++    qemu_mutex_init(&listener->lock);
++    return listener;
+ }
+ 
+ void qio_net_listener_set_name(QIONetListener *listener,
+@@ -44,6 +49,9 @@ static gboolean qio_net_listener_channel_func(QIOChannel *ioc,
+ {
+     QIONetListener *listener = QIO_NET_LISTENER(opaque);
+     QIOChannelSocket *sioc;
++    QIONetListenerClientFunc io_func;
++    gpointer io_data;
++    GMainContext *context;
+ 
+     sioc = qio_channel_socket_accept(QIO_CHANNEL_SOCKET(ioc),
+                                      NULL);
+@@ -51,10 +59,15 @@ static gboolean qio_net_listener_channel_func(QIOChannel *ioc,
+         return TRUE;
+     }
+ 
+-    trace_qio_net_listener_callback(listener, listener->io_func,
+-                                    listener->context);
+-    if (listener->io_func) {
+-        listener->io_func(listener, sioc, listener->io_data);
++    WITH_QEMU_LOCK_GUARD(&listener->lock) {
++        io_func = listener->io_func;
++        io_data = listener->io_data;
++        context = listener->context;
 +    }
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Could not read encryption header");
-         return ret;
-@@ -90,11 +97,18 @@ static int block_crypto_write_func(QCryptoBlock *block,
-     BlockCrypto *crypto = bs->opaque;
-     ssize_t ret;
- 
--    GLOBAL_STATE_CODE();
--    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+    if (qemu_in_coroutine()) {
-+        GRAPH_RDLOCK_GUARD();
- 
--    ret = bdrv_pwrite(crypto->header ? crypto->header : bs->file,
--                      offset, buflen, buf, 0);
-+        ret = bdrv_co_pwrite(crypto->header ? crypto->header : bs->file,
-+                             offset, buflen, buf, 0);
-+    } else {
-+        GLOBAL_STATE_CODE();
-+        GRAPH_RDLOCK_GUARD_MAINLOOP();
 +
-+        ret = bdrv_pwrite(crypto->header ? crypto->header : bs->file,
-+                          offset, buflen, buf, 0);
++    trace_qio_net_listener_callback(listener, io_func, context);
++    if (io_func) {
++        io_func(listener, sioc, io_data);
+     }
+ 
+     object_unref(OBJECT(sioc));
+@@ -111,6 +124,9 @@ int qio_net_listener_open_sync(QIONetListener *listener,
+ void qio_net_listener_add(QIONetListener *listener,
+                           QIOChannelSocket *sioc)
+ {
++    QIONetListenerClientFunc io_func;
++    GMainContext *context;
++
+     if (listener->name) {
+         qio_channel_set_name(QIO_CHANNEL(sioc), listener->name);
+     }
+@@ -126,14 +142,18 @@ void qio_net_listener_add(QIONetListener *listener,
+     object_ref(OBJECT(sioc));
+     listener->connected = true;
+ 
+-    trace_qio_net_listener_watch(listener, listener->io_func,
+-                                 listener->context, "add");
+-    if (listener->io_func != NULL) {
++    WITH_QEMU_LOCK_GUARD(&listener->lock) {
++        io_func = listener->io_func;
++        context = listener->context;
 +    }
-     if (ret < 0) {
-         error_setg_errno(errp, -ret, "Could not write encryption header");
-         return ret;
++
++    trace_qio_net_listener_watch(listener, io_func, context, "add");
++    if (io_func) {
+         object_ref(OBJECT(listener));
+         listener->io_source[listener->nsioc] = qio_channel_add_watch_source(
+             QIO_CHANNEL(listener->sioc[listener->nsioc]), G_IO_IN,
+             qio_net_listener_channel_func,
+-            listener, (GDestroyNotify)object_unref, listener->context);
++            listener, (GDestroyNotify)object_unref, context);
+     }
+ 
+     listener->nsioc++;
+@@ -148,6 +168,7 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
+ {
+     size_t i;
+ 
++    QEMU_LOCK_GUARD(&listener->lock);
+     trace_qio_net_listener_unwatch(listener, listener->io_func,
+                                    listener->context, "set_client_func");
+ 
+@@ -228,9 +249,15 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
+         .loop = loop
+     };
+     size_t i;
++    QIONetListenerClientFunc io_func;
++    GMainContext *context;
+ 
+-    trace_qio_net_listener_unwatch(listener, listener->io_func,
+-                                   listener->context, "wait_client");
++    WITH_QEMU_LOCK_GUARD(&listener->lock) {
++        io_func = listener->io_func;
++        context = listener->context;
++    }
++
++    trace_qio_net_listener_unwatch(listener, io_func, context, "wait_client");
+     for (i = 0; i < listener->nsioc; i++) {
+         if (listener->io_source[i]) {
+             g_source_destroy(listener->io_source[i]);
+@@ -260,15 +287,14 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
+     g_main_loop_unref(loop);
+     g_main_context_unref(ctxt);
+ 
+-    trace_qio_net_listener_watch(listener, listener->io_func,
+-                                 listener->context, "wait_client");
+-    if (listener->io_func != NULL) {
++    trace_qio_net_listener_watch(listener, io_func, context, "wait_client");
++    if (io_func != NULL) {
+         for (i = 0; i < listener->nsioc; i++) {
+             object_ref(OBJECT(listener));
+             listener->io_source[i] = qio_channel_add_watch_source(
+                 QIO_CHANNEL(listener->sioc[i]), G_IO_IN,
+                 qio_net_listener_channel_func,
+-                listener, (GDestroyNotify)object_unref, listener->context);
++                listener, (GDestroyNotify)object_unref, context);
+         }
+     }
+ 
+@@ -283,6 +309,7 @@ void qio_net_listener_disconnect(QIONetListener *listener)
+         return;
+     }
+ 
++    QEMU_LOCK_GUARD(&listener->lock);
+     trace_qio_net_listener_unwatch(listener, listener->io_func,
+                                    listener->context, "disconnect");
+     for (i = 0; i < listener->nsioc; i++) {
+@@ -318,6 +345,7 @@ static void qio_net_listener_finalize(Object *obj)
+     g_free(listener->io_source);
+     g_free(listener->sioc);
+     g_free(listener->name);
++    qemu_mutex_destroy(&listener->lock);
+ }
+ 
+ static const TypeInfo qio_net_listener_info = {
 -- 
 2.47.3
 
