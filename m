@@ -4,108 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF005CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E121ECFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcoS-0004YL-V8; Fri, 21 Nov 2025 20:53:22 -0500
+	id 1vMdBq-0001Cf-K9; Fri, 21 Nov 2025 21:17:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vMbcF-0003UT-4X
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:36:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMd2r-0001iE-Qt; Fri, 21 Nov 2025 21:08:13 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vMbc3-0005uq-DX
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:36:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763771772;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ka/LwZACBj7+iB/mKpac26m4PyzjtvU3xnZwHxw/o2Y=;
- b=AAFcUvCV0N+UuwW2NqJ80jLmuKCc8W8myk83AGKMNt5RfwX80HeUWhgzzTc2xU+TIp9Pio
- tcAnjmpqm0ezCKZwMrA42vHK1T/wyoNk7058kgtuqioqRrJpKGdytCdJewO9yhK4LUXI/w
- UxCUONTSBgcaNHQSnK69rcdF1a0Hyfc=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-487-V2IGyd9jMrmoQwTkyXgP8Q-1; Fri, 21 Nov 2025 07:17:11 -0500
-X-MC-Unique: V2IGyd9jMrmoQwTkyXgP8Q-1
-X-Mimecast-MFC-AGG-ID: V2IGyd9jMrmoQwTkyXgP8Q_1763727431
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-340bc4ef67fso2488423a91.3
- for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 04:17:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763727431; x=1764332231; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ka/LwZACBj7+iB/mKpac26m4PyzjtvU3xnZwHxw/o2Y=;
- b=IBAKuaWfiJjEm5i2Ff6O/JB57V9eA8Uw3NnFhO+nPoYbyeyR1P6EVxh2/8WzfJzCwd
- Ane8XWAovPYWyuQnJ7ZKknlZLZe3bN7ypqqRE3DLRVt2GPmDvmbN2E441G3JmZiaAYG1
- yCOX744IjBH8YntXLh3aM+2FGj9QwMzPE0pBHfD17Wkrr5eVnS7PYp3Ll1IrcCDA1g1r
- 893ng+XH97oqlIFLtSkYK1Ro07QFxmudN81cCshouplMBlYw/lJ/jxENjsBoVr0LwrHw
- 1AO7B3p33fX2DNXTaMFWfvdbV+x0ZJtQzHjhEU0NB5APrZQBRYP6JvwU2PzRaAXRB/V6
- U8cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763727431; x=1764332231;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ka/LwZACBj7+iB/mKpac26m4PyzjtvU3xnZwHxw/o2Y=;
- b=GwckpbuwQS52Me6Q9Jzuk89n9dgm6i8YjZa3fj1qfRq1lminWnsoGiDtIEpjrY5g/o
- tHBjyLMrOcbdEVnzXG2kdjZAcZd3S+9U8kMV4e/3q9gSqtL8py4+aQ7aU69eqesWsYSX
- lcjzPKrfK7j3NMz3A0Zx7jOhfRvcBB9xZDUOHe4zQikVT9S6+4kjfUxfahEzOqmxlnX5
- +H3bXQQYvNxCd3Szo478DS8a0SF7NV0op4kZC3E+t5bSlksozTTeOIzsMbLMzeKQNepi
- 5b/2WguDPNozMHf6A1O7Ioi8Vber4YTx2nQ2daB9Zkig55YqSvrOE0eoGQaP6Jt8C2u5
- nbOw==
-X-Gm-Message-State: AOJu0YxaRCUK0EubavACtP6rcVbGvfJJihWhC6JNSKQ2IR8eQE4Haga3
- 8PgdiJAvD/Trh7krVFCoMVOj1XmITs8yegXrCAmsQyDf6wloUlU7eQxn4XU0RA4jjdtQ3CBzuRZ
- Zj+cVvIAWb+MYakcsDTyEBr7MW90AjZ2pI+WM3DXKjdpXtbWXaAbNl4RA
-X-Gm-Gg: ASbGncvIXKjDN+SBfJyAPP2+Qn6GStfPe3GERPZxHQxjqsH8d6Xa7zEJaH4fSMEa5tm
- fCEllTm3UW3ocuS5n5D9rZiPjd89lmo2hfcgeIjwhbS72hs4aVAnUN6oBv+JOovsAXzOzuCDk7z
- 8A+bW1KkBbXyh+TXFKjWMEwfBHN9fccqC2MLQdPulHrZHHEh3+HC2m013Y9y8snuBhFYOahGnWB
- fIEQ8zDDibk0M7isqCTTk9CYSG99La+s3SI4mb9GGLiykWEZB948vgUKFSoIMX0581NDE6ntrJN
- sibggN95jGrxzUIy9DyLNLSvzUbFe6jJlyyQWi+m3M7JRGRcKzJFBsEVADRG9qLpdSA7knfLAZo
- JYBuOtdm3YxNwenMDxQj3ofXShD89xhIazvE3MRBYOKt3oqHXgL31ehUh
-X-Received: by 2002:a17:90b:4e8d:b0:340:ad5e:cd with SMTP id
- 98e67ed59e1d1-34733e4a359mr2276525a91.5.1763727430769; 
- Fri, 21 Nov 2025 04:17:10 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHYo3UIS+Xk1AQWXXJzIlOgywUNh3uyMp+jPNLa30cdjAzJgIygKaOQA/bOes2pqvStzrgSAQ==
-X-Received: by 2002:a17:90b:4e8d:b0:340:ad5e:cd with SMTP id
- 98e67ed59e1d1-34733e4a359mr2276495a91.5.1763727430313; 
- Fri, 21 Nov 2025 04:17:10 -0800 (PST)
-Received: from smtpclient.apple ([106.212.87.16])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34726696cd4sm5577760a91.4.2025.11.21.04.17.07
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 21 Nov 2025 04:17:10 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.7\))
-Subject: Re: [PATCH 1/4] igvm: make igvm-cfg object resetable
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20251118122133.1695767-2-kraxel@redhat.com>
-Date: Fri, 21 Nov 2025 17:46:55 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Oliver Steffen <osteffen@redhat.com>,
- Michael Tsirkin <mst@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4FB46312-EECB-46E1-A70B-A26BA4DE14B3@redhat.com>
-References: <20251118122133.1695767-1-kraxel@redhat.com>
- <20251118122133.1695767-2-kraxel@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-X-Mailer: Apple Mail (2.3776.700.51.11.7)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMd25-0002ef-SA; Fri, 21 Nov 2025 21:08:10 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3E53116C66F;
+ Fri, 21 Nov 2025 15:54:50 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8A1393218E8;
+ Fri, 21 Nov 2025 15:54:58 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 1/3] qga: use access(2) to check for command existance instead
+ of questionable stat(2)
+Date: Fri, 21 Nov 2025 15:54:49 +0300
+Message-ID: <20251121125455.1108509-2-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251121125455.1108509-1-mjt@tls.msk.ru>
+References: <20251121125455.1108509-1-mjt@tls.msk.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,145 +60,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The code checks existance of a command (halt/poweroff/reboot) by using
+stat(2) and immediately checking for S_ISLNK() on the returned stat
+struct.  This check will never be true, because stat(2) always follows
+symbolic links and hence will either return ENOENT (in case of dangling
+symlink) or the properties for the final target file.  It is lstat(2)
+which might return information about the symlink itself.  However, even
+there, we want to check the final file properties, not the first symlink.
 
+This check - S_ISLNK - is harmful but useless in this case.  However, it
+is confusing and it helps the wrong usage of stat(2) to spread, so it is
+better to remove it.
 
-> On 18 Nov 2025, at 5:51=E2=80=AFPM, Gerd Hoffmann <kraxel@redhat.com> =
-wrote:
->=20
-> Add TYPE_RESETTABLE_INTERFACE to interfaces.  Register callbacks for =
-the
-> reset phases.  Add trace points for logging and debugging.  No
-> functional change, that will come in followup patches.
->=20
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Additionally, the code would better to check for the executable bits
+of the final file, not check if it's a regular file - it's sort of
+dubious to have anything but regular files in /sbin/.
 
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+But a POSIX system provides another command which suits the purpose
+perfectly: it is access(2).  And it is so simple that it's not
+necessary to create a separate function when usin it.
 
-> ---
-> include/system/igvm-cfg.h |  2 ++
-> backends/igvm-cfg.c       | 36 +++++++++++++++++++++++++++++++++++-
-> backends/trace-events     |  5 +++++
-> 3 files changed, 42 insertions(+), 1 deletion(-)
->=20
-> diff --git a/include/system/igvm-cfg.h b/include/system/igvm-cfg.h
-> index 944f23a814dd..312f77c092b0 100644
-> --- a/include/system/igvm-cfg.h
-> +++ b/include/system/igvm-cfg.h
-> @@ -13,6 +13,7 @@
-> #define QEMU_IGVM_CFG_H
->=20
-> #include "qom/object.h"
-> +#include "hw/resettable.h"
->=20
-> typedef struct IgvmCfg {
->     ObjectClass parent_class;
-> @@ -23,6 +24,7 @@ typedef struct IgvmCfg {
->      *           format.
->      */
->     char *filename;
-> +    ResettableState reset_state;
-> } IgvmCfg;
->=20
-> typedef struct IgvmCfgClass {
-> diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
-> index d00acf351249..4e3ef88ffc27 100644
-> --- a/backends/igvm-cfg.c
-> +++ b/backends/igvm-cfg.c
-> @@ -13,8 +13,11 @@
->=20
-> #include "system/igvm-cfg.h"
-> #include "system/igvm.h"
-> +#include "system/reset.h"
-> #include "qom/object_interfaces.h"
->=20
-> +#include "trace.h"
-> +
-> static char *get_igvm(Object *obj, Error **errp)
-> {
->     IgvmCfg *igvm =3D IGVM_CFG(obj);
-> @@ -28,24 +31,55 @@ static void set_igvm(Object *obj, const char =
-*value, Error **errp)
->     igvm->filename =3D g_strdup(value);
-> }
->=20
-> +static ResettableState *igvm_reset_state(Object *obj)
-> +{
-> +    IgvmCfg *igvm =3D IGVM_CFG(obj);
-> +    return &igvm->reset_state;
-> +}
-> +
-> +static void igvm_reset_enter(Object *obj, ResetType type)
-> +{
-> +    trace_igvm_reset_enter(type);
-> +}
-> +
-> +static void igvm_reset_hold(Object *obj, ResetType type)
-> +{
-> +    trace_igvm_reset_hold(type);
-> +}
-> +
-> +static void igvm_reset_exit(Object *obj, ResetType type)
-> +{
-> +    trace_igvm_reset_exit(type);
-> +}
-> +
-> OBJECT_DEFINE_TYPE_WITH_INTERFACES(IgvmCfg, igvm_cfg, IGVM_CFG, =
-OBJECT,
-> -                                   { TYPE_USER_CREATABLE }, { NULL })
-> +                                   { TYPE_USER_CREATABLE },
-> +                                   { TYPE_RESETTABLE_INTERFACE },
-> +                                   { NULL })
->=20
-> static void igvm_cfg_class_init(ObjectClass *oc, const void *data)
-> {
->     IgvmCfgClass *igvmc =3D IGVM_CFG_CLASS(oc);
-> +    ResettableClass *rc =3D RESETTABLE_CLASS(oc);
->=20
->     object_class_property_add_str(oc, "file", get_igvm, set_igvm);
->     object_class_property_set_description(oc, "file",
->                                           "Set the IGVM filename to =
-use");
->=20
->     igvmc->process =3D qigvm_process_file;
-> +
-> +    rc->get_state =3D igvm_reset_state;
-> +    rc->phases.enter =3D igvm_reset_enter;
-> +    rc->phases.hold =3D igvm_reset_hold;
-> +    rc->phases.exit =3D igvm_reset_exit;
-> }
->=20
-> static void igvm_cfg_init(Object *obj)
-> {
-> +    qemu_register_resettable(obj);
-> }
->=20
-> static void igvm_cfg_finalize(Object *obj)
-> {
-> +    qemu_unregister_resettable(obj);
-> }
-> diff --git a/backends/trace-events b/backends/trace-events
-> index 56132d3fd22b..45ac46dc2454 100644
-> --- a/backends/trace-events
-> +++ b/backends/trace-events
-> @@ -21,3 +21,8 @@ iommufd_backend_free_id(int iommufd, uint32_t id, =
-int ret) " iommufd=3D%d id=3D%d (%
-> iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, =
-int ret) " iommufd=3D%d hwpt=3D%u enable=3D%d (%d)"
-> iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, =
-uint64_t iova, uint64_t size, uint64_t page_size, int ret) " iommufd=3D%d =
-hwpt=3D%u iova=3D0x%"PRIx64" size=3D0x%"PRIx64" page_size=3D0x%"PRIx64" =
-(%d)"
-> iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t =
-data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, =
-uint64_t data_ptr, int ret) " iommufd=3D%d id=3D%u data_type=3D%u =
-entry_len=3D%u entry_num=3D%u done_num=3D%u data_ptr=3D0x%"PRIx64" (%d)"
-> +
-> +# igvm-cfg.c
-> +igvm_reset_enter(int type) "type=3D%u"
-> +igvm_reset_hold(int type) "type=3D%u"
-> +igvm_reset_exit(int type) "type=3D%u"
-> --=20
-> 2.51.1
->=20
+Replace stat(2) with access(X_OK) to check for file existance in
+qga/commands-posix.c
+
+Fixes: c5b4afd4d56e "qga: Support guest shutdown of BusyBox-based systems"
+Reviewed-by: Rodrigo Dias Correa <r@drigo.nl>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ qga/commands-posix.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 66f3e6f673..837be51c40 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -216,12 +216,6 @@ out:
+     return retcode;
+ }
+ 
+-static bool file_exists(const char *path)
+-{
+-    struct stat st;
+-    return stat(path, &st) == 0 && (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode));
+-}
+-
+ #define POWEROFF_CMD_PATH "/sbin/poweroff"
+ #define HALT_CMD_PATH "/sbin/halt"
+ #define REBOOT_CMD_PATH "/sbin/reboot"
+@@ -248,17 +242,17 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
+ 
+     slog("guest-shutdown called, mode: %s", mode);
+     if (!mode || strcmp(mode, "powerdown") == 0) {
+-        if (file_exists(POWEROFF_CMD_PATH)) {
++        if (access(POWEROFF_CMD_PATH, X_OK) == 0) {
+             shutdown_cmd = POWEROFF_CMD_PATH;
+         }
+         shutdown_flag = powerdown_flag;
+     } else if (strcmp(mode, "halt") == 0) {
+-        if (file_exists(HALT_CMD_PATH)) {
++        if (access(HALT_CMD_PATH, X_OK) == 0) {
+             shutdown_cmd = HALT_CMD_PATH;
+         }
+         shutdown_flag = halt_flag;
+     } else if (strcmp(mode, "reboot") == 0) {
+-        if (file_exists(REBOOT_CMD_PATH)) {
++        if (access(REBOOT_CMD_PATH, X_OK) == 0) {
+             shutdown_cmd = REBOOT_CMD_PATH;
+         }
+         shutdown_flag = reboot_flag;
+-- 
+2.47.3
 
 
