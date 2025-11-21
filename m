@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3872CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38ECACFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:35:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdOQ-0000x0-R2; Fri, 21 Nov 2025 21:30:31 -0500
+	id 1vMdIQ-00021M-Ek; Fri, 21 Nov 2025 21:24:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdOK-0000v6-V4; Fri, 21 Nov 2025 21:30:24 -0500
+ id 1vMdIL-0001zH-RV; Fri, 21 Nov 2025 21:24:13 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdNo-0007Z3-8D; Fri, 21 Nov 2025 21:30:21 -0500
+ id 1vMdHN-00056X-4a; Fri, 21 Nov 2025 21:24:10 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5249416C6F5;
- Fri, 21 Nov 2025 16:51:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2B9F316C70A;
+ Fri, 21 Nov 2025 16:51:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AB4D6321992;
- Fri, 21 Nov 2025 16:52:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 837793219A7;
+ Fri, 21 Nov 2025 16:52:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 29/76] target/microblaze: Remove unused arg from
- check_divz()
-Date: Fri, 21 Nov 2025 16:51:07 +0300
-Message-ID: <20251121135201.1114964-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 50/76] hw/net/e1000e_core: Don't advance desc_offset
+ for NULL buffer RX descriptors
+Date: Fri, 21 Nov 2025 16:51:28 +0300
+Message-ID: <20251121135201.1114964-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,47 +60,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Remove unused arg from check_divz(). No functional change.
+In e1000e_write_packet_to_guest() we don't write data for RX descriptors
+where the buffer address is NULL (as required by the i82574 datasheet
+section 7.1.7.2). However, when we do this we still update desc_offset
+by the amount of data we would have written to the RX descriptor if
+it had a valid buffer pointer, resulting in our dropping that data
+entirely. The data sheet is not 100% clear on the subject, but this
+seems unlikely to be the correct behaviour.
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit a04c5ba543c1bc83a25a557e3b62ee811869b373)
+Rearrange the null-descriptor logic so that we don't treat these
+do-nothing descriptors as if we'd really written the data.
+
+This both fixes a bug and also is a prerequisite to cleaning up
+the size calculation logic in the next patch.
+
+(Cc to stable largely because it will be needed for the next patch,
+which fixes a more serious bug.)
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 6da0c9828194eb21e54fe4264cd29a1b85a29f33)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
-index b8365b3b1d..470526ee92 100644
---- a/target/microblaze/op_helper.c
-+++ b/target/microblaze/op_helper.c
-@@ -69,7 +69,7 @@ void helper_raise_exception(CPUMBState *env, uint32_t index)
-     cpu_loop_exit(cs);
- }
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index 06657bb3ac..8e93bd3d81 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -1481,7 +1481,6 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+     PCIDevice *d = core->owner;
+     dma_addr_t base;
+     union e1000_rx_desc_union desc;
+-    size_t desc_size;
+     size_t desc_offset = 0;
+     size_t iov_ofs = 0;
  
--static bool check_divz(CPUMBState *env, uint32_t a, uint32_t b, uintptr_t ra)
-+static bool check_divz(CPUMBState *env, uint32_t b, uintptr_t ra)
- {
-     if (unlikely(b == 0)) {
-         env->msr |= MSR_DZ;
-@@ -89,7 +89,7 @@ static bool check_divz(CPUMBState *env, uint32_t a, uint32_t b, uintptr_t ra)
+@@ -1500,12 +1499,6 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+         E1000EBAState bastate = { { 0 } };
+         bool is_last = false;
  
- uint32_t helper_divs(CPUMBState *env, uint32_t a, uint32_t b)
- {
--    if (!check_divz(env, a, b, GETPC())) {
-+    if (!check_divz(env, b, GETPC())) {
-         return 0;
-     }
-     return (int32_t)a / (int32_t)b;
-@@ -97,7 +97,7 @@ uint32_t helper_divs(CPUMBState *env, uint32_t a, uint32_t b)
+-        desc_size = total_size - desc_offset;
+-
+-        if (desc_size > core->rx_desc_buf_size) {
+-            desc_size = core->rx_desc_buf_size;
+-        }
+-
+         if (e1000e_ring_empty(core, rxi)) {
+             return;
+         }
+@@ -1519,6 +1512,12 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+         e1000e_read_rx_descr(core, &desc, ba);
  
- uint32_t helper_divu(CPUMBState *env, uint32_t a, uint32_t b)
- {
--    if (!check_divz(env, a, b, GETPC())) {
-+    if (!check_divz(env, b, GETPC())) {
-         return 0;
-     }
-     return a / b;
+         if (ba[0]) {
++            size_t desc_size = total_size - desc_offset;
++
++            if (desc_size > core->rx_desc_buf_size) {
++                desc_size = core->rx_desc_buf_size;
++            }
++
+             if (desc_offset < size) {
+                 static const uint32_t fcs_pad;
+                 size_t iov_copy;
+@@ -1582,13 +1581,13 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+                           (const char *) &fcs_pad, e1000x_fcs_len(core->mac));
+                 }
+             }
++            desc_offset += desc_size;
++            if (desc_offset >= total_size) {
++                is_last = true;
++            }
+         } else { /* as per intel docs; skip descriptors with null buf addr */
+             trace_e1000e_rx_null_descriptor();
+         }
+-        desc_offset += desc_size;
+-        if (desc_offset >= total_size) {
+-            is_last = true;
+-        }
+ 
+         e1000e_write_rx_descr(core, &desc, is_last ? core->rx_pkt : NULL,
+                            rss_info, do_ps ? ps_hdr_len : 0, &bastate.written);
 -- 
 2.47.3
 
