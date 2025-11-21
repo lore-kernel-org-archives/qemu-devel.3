@@ -4,47 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9F00CF64B1
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92496CFC504
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:21:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdWv-00021Y-Mb; Fri, 21 Nov 2025 21:39:18 -0500
+	id 1vMcya-0003oZ-D6; Fri, 21 Nov 2025 21:03:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdWl-0001wV-3S; Fri, 21 Nov 2025 21:39:07 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdVl-00020X-9E; Fri, 21 Nov 2025 21:39:02 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BBACF16C6EF;
- Fri, 21 Nov 2025 16:51:55 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 20B0E32198C;
- Fri, 21 Nov 2025 16:52:04 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMc7P-00056E-Kc
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:08:51 -0500
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMc7F-000403-3c
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:08:48 -0500
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-b735b7326e5so632950066b.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 17:08:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763773698; x=1764378498; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dSqacx8J6/zgtlp2PptQ1lYmcrsegZl83a7tVHbquyY=;
+ b=PMBG1EX8lEomnpRnx2+EoHi6IquUJW0C4tUYBmTO0rRiHsZnEBd3btlZ5DYfJFUQCG
+ DiRpNkVIS4vrsQLTZfCQDMhw/MGzqagGgtOne+pCHJrgMi3Lm2ZZmvCA1ifznu+kuYod
+ vq+qHLvhdVhTqiFPUXnGmE1SKZnjW2gpAU8BvFdNm4pTqjKmUBc56glnuqSeY0+OUXGr
+ myElEdIdkwGeSV9yDkdvmdBwLV0rw8/kSibozLVW/lv0r1Bjqh8xNYFICdH5cKnxZCA6
+ g91FcfbEARERatp3TmKt8p9IXtjGkz5MSE8ccJ0EFFLfgYu+5Ds5sYmlqcnqFBg4/WZM
+ 6New==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763773698; x=1764378498;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dSqacx8J6/zgtlp2PptQ1lYmcrsegZl83a7tVHbquyY=;
+ b=Wz5J5bmI5OFrEkPvDnno4SkZvM1/WJjZg7K9m3f1LfPezFUdjL7oH+gYj02WuFrNNu
+ 1gmhSmhqEPVxVfQaCE7Rb1s47OouAvI5cAaJFEO+qYgg6g3R7+poexKLh6YuEgQgMuyJ
+ 4jGltLLF4+otxQ6Az/YCNcvtrxSYbNA4FptBpbBPXNa15uxvUiV//bHSgP5ZkVRX3Dh3
+ 0+P+Zbwyjkp1lrQlJC3sOQf+MBSWmSXw57jfu6uNCIusE2P3XbJo+O1UtnfKPivYBhrM
+ usx1/c2pBPIog1yGM4Cus0HuTBBGAc6YCkgsEhL53Dsem8NUU4D4DDzKDrLulmwYVYSt
+ Fctg==
+X-Gm-Message-State: AOJu0YxST1e0rc3PYh49ePol5SeRb+Aam+YZf1bwcH4D7eixCHJxolF6
+ JyyfU6Ks1Wf7eKoDLUTEMO3MBQurECFhSourIbViY/JCgQU452/othLlFvAEPKc2QOcObVRjYvd
+ 7JEy6gydMMg==
+X-Gm-Gg: ASbGnct5QNQo5u7c8y8CPajKjUXViXDksLQOqGhm37CF1X68IpNNen+SLVi59YdvOXe
+ ORj9xOY0MonMaTfuqCenvgvsvhPMTXlX0jUtKNCdzO9KFZODMeOjuLgHLjxCT+E9quoDctTvXcT
+ sTFe6MnoJZlil3jbskmHqvSfsAvMwqGzgbih0d9DSpI2iAK1lqvnNLE9VBANm1sQIT2Ox20fano
+ vA2D/PW7Ft9qxgC/KlF2iNdRe87zAO68qJseP3cvKEoJExkWHdCPAmWjmHAw5ZQMQKw//6fE0Sk
+ 758LFdzRUqcxLOpcbfAp0x7/YDHYACgLTysHw4DDp9DcvDa/sf4ubBe2BSw5HmfkwmjuTt0KKdk
+ QzY3H72oFgBcY0ccZKsGuM1nYR8JPfPjcTGOBBB3xSzig1cQp+GuCluxNc0ny9RnxbpWgv+dwHs
+ YexrEYhntNY7PtHvkoq5KuAiHcZp+CnKoJ1EYMsTeKLigTeqOb/Y2fkrv3wska
+X-Google-Smtp-Source: AGHT+IG2LBpzN/7MutT6FD1rJI5Vj5/7zy760hif3q1afu5JBf0/MDhD9wPBUQFy3NBz/75gXvtlLA==
+X-Received: by 2002:a05:600c:35c6:b0:477:a219:cdc3 with SMTP id
+ 5b1f17b1804b1-477c0513e47mr31299105e9.12.1763732739098; 
+ Fri, 21 Nov 2025 05:45:39 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477a9deb126sm84952915e9.9.2025.11.21.05.45.37
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 21 Nov 2025 05:45:38 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, peng guo <engguopeng@buaa.edu.cn>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 23/76] hw/i386/pc: Avoid overlap between CXL window
- and PCI 64bit BARs in QEMU
-Date: Fri, 21 Nov 2025 16:51:01 +0300
-Message-ID: <20251121135201.1114964-23-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
-References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [RFC-PATCH-for-11.0 v3 05/21] target/s390x: Use big-endian variant of
+ cpu_ld{uw, l}_code()
+Date: Fri, 21 Nov 2025 14:44:47 +0100
+Message-ID: <20251121134503.30914-6-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251121134503.30914-1-philmd@linaro.org>
+References: <20251121134503.30914-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,105 +94,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: peng guo <engguopeng@buaa.edu.cn>
+S390x instructions are always stored in big-endian order.
 
-When using a CXL Type 3 device together with a virtio 9p device in QEMU on a
-physical server, the 9p device fails to initialize properly. The kernel reports
-the following error:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/s390x/tcg/mem_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-    virtio: device uses modern interface but does not have VIRTIO_F_VERSION_1
-    9pnet_virtio virtio0: probe with driver 9pnet_virtio failed with error -22
-
-Further investigation revealed that the 64-bit BAR space assigned to the 9pnet
-device was overlapped by the memory window allocated for the CXL devices. As a
-result, the kernel could not correctly access the BAR region, causing the
-virtio device to malfunction.
-
-An excerpt from /proc/iomem shows:
-
-    480010000-cffffffff : CXL Window 0
-      480010000-4bfffffff : PCI Bus 0000:00
-      4c0000000-4c01fffff : PCI Bus 0000:0c
-        4c0000000-4c01fffff : PCI Bus 0000:0d
-      4c0200000-cffffffff : PCI Bus 0000:00
-        4c0200000-4c0203fff : 0000:00:03.0
-          4c0200000-4c0203fff : virtio-pci-modern
-
-To address this issue, this patch adds the reserved memory end calculation
-for cxl devices to reserve sufficient address space and ensure that CXL memory
-windows are allocated beyond all PCI 64-bit BARs. This prevents overlap with
-64-bit BARs regions such as those used by virtio or other pcie devices,
-resolving the conflict.
-
-QEMU Build Configuration:
-
-    ./configure --prefix=/home/work/qemu_master/build/ \
-                --target-list=x86_64-softmmu \
-                --enable-kvm \
-                --enable-virtfs
-
-QEMU Boot Command:
-
-    sudo /home/work/qemu_master/qemu/build/qemu-system-x86_64 \
-        -nographic -machine q35,cxl=on -enable-kvm -m 16G -smp 8 \
-        -hda /home/work/gp_qemu/rootfs.img \
-        -virtfs local,path=/home/work/gp_qemu/share,mount_tag=host0,security_model=passthrough,id=host0 \
-        -kernel /home/work/linux_output/arch/x86/boot/bzImage \
-        --append "console=ttyS0 crashkernel=256M root=/dev/sda rootfstype=ext4 rw loglevel=8" \
-        -object memory-backend-ram,id=vmem0,share=on,size=4096M \
-        -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-        -device cxl-rp,port=0,bus=cxl.1,id=root_port13,chassis=0,slot=2 \
-        -device cxl-type3,bus=root_port13,volatile-memdev=vmem0,id=cxl-vmem0,sn=0x123456789 \
-        -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G
-
-Fixes: 03b39fcf64bc ("hw/cxl: Make the CXL fixed memory window setup a machine parameter")
-Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-ID: <20250805142300.15226-1-engguopeng@buaa.edu.cn>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-(cherry picked from commit d1193481dee63442fc41e47ca6ebc4cd34f1f69c)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 0861e329b5..1bdd3a6e56 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -836,6 +836,7 @@ void pc_memory_init(PCMachineState *pcms,
-     hwaddr maxphysaddr, maxusedaddr;
-     hwaddr cxl_base, cxl_resv_end = 0;
-     X86CPU *cpu = X86_CPU(first_cpu);
-+    uint64_t res_mem_end;
- 
-     assert(machine->ram_size == x86ms->below_4g_mem_size +
-                                 x86ms->above_4g_mem_size);
-@@ -977,16 +978,17 @@ void pc_memory_init(PCMachineState *pcms,
- 
-     rom_set_fw(fw_cfg);
- 
--    if (machine->device_memory) {
--        uint64_t *val = g_malloc(sizeof(*val));
--        uint64_t res_mem_end;
-+    if (pcms->cxl_devices_state.is_enabled) {
-+        res_mem_end = cxl_resv_end;
-+    } else if (machine->device_memory) {
-+        res_mem_end = machine->device_memory->base
-+                      + memory_region_size(&machine->device_memory->mr);
-+    } else {
-+        res_mem_end = 0;
-+    }
- 
--        if (pcms->cxl_devices_state.is_enabled) {
--            res_mem_end = cxl_resv_end;
--        } else {
--            res_mem_end = machine->device_memory->base
--                          + memory_region_size(&machine->device_memory->mr);
--        }
-+    if (res_mem_end) {
-+        uint64_t *val = g_malloc(sizeof(*val));
-         *val = cpu_to_le64(ROUND_UP(res_mem_end, 1 * GiB));
-         fw_cfg_add_file(fw_cfg, "etc/reserved-memory-end", val, sizeof(*val));
+diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+index 24675fc818d..84d901c2008 100644
+--- a/target/s390x/tcg/mem_helper.c
++++ b/target/s390x/tcg/mem_helper.c
+@@ -2437,7 +2437,7 @@ void HELPER(ex)(CPUS390XState *env, uint32_t ilen, uint64_t r1, uint64_t addr)
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
      }
+ 
+-    insn = cpu_lduw_code(env, addr);
++    insn = cpu_lduw_be_code(env, addr);
+     opc = insn >> 8;
+ 
+     /* Or in the contents of R1[56:63].  */
+@@ -2449,10 +2449,10 @@ void HELPER(ex)(CPUS390XState *env, uint32_t ilen, uint64_t r1, uint64_t addr)
+     case 2:
+         break;
+     case 4:
+-        insn |= (uint64_t)cpu_lduw_code(env, addr + 2) << 32;
++        insn |= (uint64_t)cpu_lduw_be_code(env, addr + 2) << 32;
+         break;
+     case 6:
+-        insn |= (uint64_t)(uint32_t)cpu_ldl_code(env, addr + 2) << 16;
++        insn |= (uint64_t)(uint32_t)cpu_ldl_be_code(env, addr + 2) << 16;
+         break;
+     default:
+         g_assert_not_reached();
 -- 
-2.47.3
+2.51.0
 
 
