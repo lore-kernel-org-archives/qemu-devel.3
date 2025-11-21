@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87257CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:45:49 +0000 (UTC)
-Received: from [::1] (helo=lists1p.gnu.org)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A6ACFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:45:57 +0000 (UTC)
+Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdBE-0000Sh-Fb; Fri, 21 Nov 2025 21:16:53 -0500
+	id 1vMd9Q-00074u-5V; Fri, 21 Nov 2025 21:15:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMczc-0004CK-FW; Fri, 21 Nov 2025 21:04:52 -0500
+ id 1vMcyV-0003oO-Q3; Fri, 21 Nov 2025 21:03:44 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcyq-0001W0-PI; Fri, 21 Nov 2025 21:04:49 -0500
+ id 1vMcxO-00010y-I6; Fri, 21 Nov 2025 21:03:37 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4770E16C718;
- Fri, 21 Nov 2025 16:51:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 413E716C70B;
+ Fri, 21 Nov 2025 16:51:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9EA013219B4;
- Fri, 21 Nov 2025 16:52:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9901E3219A8;
+ Fri, 21 Nov 2025 16:52:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Junyao Zhao <junzhao@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 63/76] =?UTF-8?q?rbd:=20Run=20co=20BH=20CB=20in=20?=
- =?UTF-8?q?the=20coroutine=E2=80=99s=20AioContext?=
-Date: Fri, 21 Nov 2025 16:51:41 +0300
-Message-ID: <20251121135201.1114964-63-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 51/76] hw/net/e1000e_core: Correct rx oversize packet
+ checks
+Date: Fri, 21 Nov 2025 16:51:29 +0300
+Message-ID: <20251121135201.1114964-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,113 +60,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-qemu_rbd_completion_cb() schedules the request completion code
-(qemu_rbd_finish_bh()) to run in the BDS’s AioContext, assuming that
-this is the same thread in which qemu_rbd_start_co() runs.
+In e1000e_write_packet_to_guest() we attempt to ensure that we don't
+write more of a packet to a descriptor than will fit in the guest
+configured receive buffers.  However, this code does not allow for
+the "packet split" feature.  When packet splitting is enabled, the
+first of up to 4 buffers in the descriptor is used for the packet
+header only, with the payload going into buffers 2, 3 and 4.  Our
+length check only checks against the total sizes of all 4 buffers,
+which meant that if an incoming packet was large enough to fit in (1
++ 2 + 3 + 4) but not into (2 + 3 + 4) and packet splitting was
+enabled, we would run into the assertion in
+e1000e_write_hdr_frag_to_rx_buffers() that we had enough buffers for
+the data:
 
-To explain, this is how both latter functions interact:
+qemu-system-i386: ../../hw/net/e1000e_core.c:1418: void e1000e_write_payload_frag_to_rx_buffers(E1000ECore *, hwaddr *, E1000EBAState *, const char *, dma_addr_t): Assertion `bastate->cur_idx < MAX_PS_BUFFERS' failed.
 
-In qemu_rbd_start_co():
+A malicious guest could provoke this assertion by configuring the
+device into loopback mode, and then sending itself a suitably sized
+packet into a suitably arrange rx descriptor.
 
-    while (!task.complete)
-        qemu_coroutine_yield();
+The code also fails to deal with the possibility that the descriptor
+buffers are sized such that the trailing checksum word does not fit
+into the last descriptor which has actual data, which might also
+trigger this assertion.
 
-In qemu_rbd_finish_bh():
+Rework the length handling to use two variables:
+ * desc_size is the total amount of data DMA'd to the guest
+   for the descriptor being processed in this iteration of the loop
+ * rx_desc_buf_size is the total amount of space left in it
 
-    task->complete = true;
-    aio_co_wake(task->co); // task->co is qemu_rbd_start_co()
+As we copy data to the guest (packet header, payload, checksum),
+update these two variables.  (Previously we attempted to calculate
+desc_size once at the top of the loop, but this is too difficult to
+do correctly.) Then we can use the variables to ensure that we clamp
+the amount of copied payload data to the remaining space in the
+descriptor's buffers, even if we've used one of the buffers up in the
+packet-split code, and we can tell whether we have enough space for
+the full checksum word in this descriptor or whether we're going to
+need to split that to the following descriptor.
 
-For this interaction to work reliably, both must run in the same thread
-so that qemu_rbd_finish_bh() can only run once the coroutine yields.
-Otherwise, finish_bh() may run before start_co() checks task.complete,
-which will result in the latter seeing .complete as true immediately and
-skipping the yield altogether, even though finish_bh() still wakes it.
+I have included comments that hopefully help to make the loop
+logic a little clearer.
 
-With multiqueue, the BDS’s AioContext is not necessarily the thread
-start_co() runs in, and so finish_bh() may be scheduled to run in a
-different thread than start_co().  With the right timing, this will
-cause the problems described above; waking a non-yielding coroutine is
-not good, as can be reproduced by putting e.g. a usleep(100000) above
-the while loop in start_co() (and using multiqueue), giving finish_bh()
-a much better chance at exiting before start_co() can yield.
-
-So instead of scheduling finish_bh() in the BDS’s AioContext, schedule
-finish_bh() in task->co’s AioContext.
-
-In addition, we can get rid of task.complete altogether because we will
-get woken exactly once, when the task is indeed complete, no need to
-check.
-
-(We could go further and drop the BH, running aio_co_wake() directly in
-qemu_rbd_completion_cb() because we are allowed to do that even if the
-coroutine isn’t yet yielding and we’re in a different thread – but the
-doc comment on qemu_rbd_completion_cb() says to be careful, so I decided
-not to go so far here.)
-
-Buglink: https://issues.redhat.com/browse/RHEL-67115
-Reported-by: Junyao Zhao <junzhao@redhat.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20251110154854.151484-3-hreitz@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 89d22536d1a1715083ef8118fe7e6e9239f900c1)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/537
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 9d946d56a2ac8a6c2df186e20d24810255c83a3f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/rbd.c b/block/rbd.c
-index 3611dc81cf..2a70b5a983 100644
---- a/block/rbd.c
-+++ b/block/rbd.c
-@@ -110,9 +110,7 @@ typedef struct BDRVRBDState {
- } BDRVRBDState;
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index 8e93bd3d81..58a34125e9 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -1495,6 +1495,13 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+     rxi = rxr->i;
  
- typedef struct RBDTask {
--    BlockDriverState *bs;
-     Coroutine *co;
--    bool complete;
-     int64_t ret;
- } RBDTask;
+     do {
++        /*
++         * Loop processing descriptors while we have packet data to
++         * DMA to the guest.  desc_offset tracks how much data we have
++         * sent to the guest in total over all descriptors, and goes
++         * from 0 up to total_size (the size of everything to send to
++         * the guest including possible trailing 4 bytes of CRC data).
++         */
+         hwaddr ba[MAX_PS_BUFFERS];
+         E1000EBAState bastate = { { 0 } };
+         bool is_last = false;
+@@ -1512,23 +1519,27 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+         e1000e_read_rx_descr(core, &desc, ba);
  
-@@ -1309,7 +1307,6 @@ static int qemu_rbd_resize(BlockDriverState *bs, uint64_t size)
- static void qemu_rbd_finish_bh(void *opaque)
- {
-     RBDTask *task = opaque;
--    task->complete = true;
-     aio_co_wake(task->co);
- }
+         if (ba[0]) {
+-            size_t desc_size = total_size - desc_offset;
+-
+-            if (desc_size > core->rx_desc_buf_size) {
+-                desc_size = core->rx_desc_buf_size;
+-            }
++            /* Total amount of data DMA'd to the guest in this iteration */
++            size_t desc_size = 0;
++            /*
++             * Total space available in this descriptor (we will update
++             * this as we use it up)
++             */
++            size_t rx_desc_buf_size = core->rx_desc_buf_size;
  
-@@ -1326,7 +1323,7 @@ static void qemu_rbd_completion_cb(rbd_completion_t c, RBDTask *task)
- {
-     task->ret = rbd_aio_get_return_value(c);
-     rbd_aio_release(c);
--    aio_bh_schedule_oneshot(bdrv_get_aio_context(task->bs),
-+    aio_bh_schedule_oneshot(qemu_coroutine_get_aio_context(task->co),
-                             qemu_rbd_finish_bh, task);
- }
+             if (desc_offset < size) {
+-                static const uint32_t fcs_pad;
+                 size_t iov_copy;
++                /* Amount of data to copy from the incoming packet */
+                 size_t copy_size = size - desc_offset;
+-                if (copy_size > core->rx_desc_buf_size) {
+-                    copy_size = core->rx_desc_buf_size;
+-                }
  
-@@ -1338,7 +1335,7 @@ static int coroutine_fn qemu_rbd_start_co(BlockDriverState *bs,
-                                           RBDAIOCmd cmd)
- {
-     BDRVRBDState *s = bs->opaque;
--    RBDTask task = { .bs = bs, .co = qemu_coroutine_self() };
-+    RBDTask task = { .co = qemu_coroutine_self() };
-     rbd_completion_t c;
-     int r;
+                 /* For PS mode copy the packet header first */
+                 if (do_ps) {
+                     if (is_first) {
++                        /*
++                         * e1000e_do_ps() guarantees that buffer 0 has enough
++                         * space for the header; otherwise we will not split
++                         * the packet (i.e. do_ps is false).
++                         */
+                         size_t ps_hdr_copied = 0;
+                         do {
+                             iov_copy = MIN(ps_hdr_len - ps_hdr_copied,
+@@ -1550,14 +1561,26 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+                         } while (ps_hdr_copied < ps_hdr_len);
  
-@@ -1401,9 +1398,8 @@ static int coroutine_fn qemu_rbd_start_co(BlockDriverState *bs,
-         return r;
-     }
+                         is_first = false;
++                        desc_size += ps_hdr_len;
+                     } else {
+                         /* Leave buffer 0 of each descriptor except first */
+                         /* empty as per spec 7.1.5.1                      */
+                         e1000e_write_hdr_frag_to_rx_buffers(core, ba, &bastate,
+                                                             NULL, 0);
+                     }
++                    rx_desc_buf_size -= core->rxbuf_sizes[0];
+                 }
  
--    while (!task.complete) {
--        qemu_coroutine_yield();
--    }
-+    /* Expect exactly a single wake from qemu_rbd_finish_bh() */
-+    qemu_coroutine_yield();
++                /*
++                 * Clamp the amount of packet data we copy into what will fit
++                 * into the remaining buffers in the descriptor.
++                 */
++                if (copy_size > rx_desc_buf_size) {
++                    copy_size = rx_desc_buf_size;
++                }
++                desc_size += copy_size;
++                rx_desc_buf_size -= copy_size;
++
+                 /* Copy packet payload */
+                 while (copy_size) {
+                     iov_copy = MIN(copy_size, iov->iov_len - iov_ofs);
+@@ -1574,12 +1597,22 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+                         iov_ofs = 0;
+                     }
+                 }
++            }
  
-     if (task.ret < 0) {
-         error_report("rbd request failed: cmd %d offset %" PRIu64 " bytes %"
+-                if (desc_offset + desc_size >= total_size) {
+-                    /* Simulate FCS checksum presence in the last descriptor */
+-                    e1000e_write_payload_frag_to_rx_buffers(core, ba, &bastate,
+-                          (const char *) &fcs_pad, e1000x_fcs_len(core->mac));
+-                }
++            if (rx_desc_buf_size &&
++                desc_offset >= size && desc_offset < total_size) {
++                /*
++                 * We are in the last 4 bytes corresponding to the FCS checksum.
++                 * We only ever write zeroes here (unlike the hardware).
++                 */
++                static const uint32_t fcs_pad;
++                /* Amount of space for the trailing checksum */
++                size_t fcs_len = MIN(rx_desc_buf_size,
++                                     total_size - desc_offset);
++                e1000e_write_payload_frag_to_rx_buffers(core, ba, &bastate,
++                                                        (const char *)&fcs_pad,
++                                                        fcs_len);
++                desc_size += fcs_len;
+             }
+             desc_offset += desc_size;
+             if (desc_offset >= total_size) {
 -- 
 2.47.3
 
