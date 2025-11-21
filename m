@@ -4,43 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A461FCFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB52CFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcqV-0005Sj-4l; Fri, 21 Nov 2025 20:55:28 -0500
+	id 1vMcqz-0005Z7-9q; Fri, 21 Nov 2025 20:55:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbmV-0001DC-ED; Fri, 21 Nov 2025 19:47:15 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMbcW-0003kv-IX; Fri, 21 Nov 2025 19:36:56 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbkS-0007hH-Oa; Fri, 21 Nov 2025 19:47:11 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 47C8916CA4A;
- Fri, 21 Nov 2025 21:44:22 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BD013321C86;
- Fri, 21 Nov 2025 21:44:30 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 15/81] crypto: stop requiring "key encipherment" usage
- in x509 certs
-Date: Fri, 21 Nov 2025 21:43:14 +0300
-Message-ID: <20251121184424.1137669-15-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMbcK-0005Dq-Sy; Fri, 21 Nov 2025 19:36:52 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5ALAewEQ076011
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 21 Nov 2025 19:40:59 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=lNp5divqF01PzSSdYyTYotITUvUSEKBSIbpmecHY0wY=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763721659; v=1;
+ b=Q7LtqkiZwzkIflPjzsgPou9z+aE8ifUvpSsk2lSaLTHBZIbGSNDnDvC/LDiCxzpC
+ 9LzTmb2Vsv7npJcGCubT76QyzLmL3k0IT0PQ5n/MkR+KAgXeXb3xPbwkFFbDVUHG
+ 7YTUYGMzEoDArjytR45R8hC0puz4FPhDirtxzAQIUyXm+Bm8KVOH+2lovqQTP/5A
+ isE92gJm8co4FCUq2Oh6O2AS63pNpI1B3pDRVRGjyTXHZuOA3c/NxL08qCMS4ar3
+ 5okswiRpPYPPCRNRioaAhubAZfbmxWl5MzBxO3wYmuk+4JV80z5G5c3/c11uCjJl
+ vQm1nA5rvWuxe6nd53jfXg==
+Message-ID: <013084e1-0f6d-462d-b4f5-e5a38e4d8f3b@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 21 Nov 2025 19:40:58 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 08/28] whpx: ifdef out winhvemulation on non-x86_64
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251121100240.89117-1-mohamed@unpredictable.fr>
+ <20251121100240.89117-9-mohamed@unpredictable.fr>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251121100240.89117-9-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,372 +70,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+On 2025/11/21 19:02, Mohamed Mediouni wrote:
+> winhvemulation is x86_64 only.
+> 
+> In the future, we might want to get rid of winhvemulation usage
+> entirely.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> 
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   accel/whpx/whpx-common.c       | 14 ++++++++++++--
+>   include/system/whpx-common.h   |  2 ++
+>   include/system/whpx-internal.h |  7 ++++++-
+>   3 files changed, 20 insertions(+), 3 deletions(-)
+> 
+> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+> index 66c9238586..95664a1df7 100644
+> --- a/accel/whpx/whpx-common.c
+> +++ b/accel/whpx/whpx-common.c
+> @@ -41,7 +41,9 @@
+>   bool whpx_allowed;
+>   static bool whp_dispatch_initialized;
+>   static HMODULE hWinHvPlatform;
+> +#ifdef __x86_64__
 
-This usage flag was deprecated by RFC8813, such that it is
-forbidden to be present for certs using ECDSA/ECDH algorithms,
-and in TLS 1.3 is conceptually obsolete.
+Please use: HOST_X86_64
 
-As such many valid certs will no longer have this key usage
-flag set, and QEMU should not be rejecting them, as this
-prevents use of otherwise valid & desirable algorithms.
+Rationale: scripts/checkpatch.pl has the following code:
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 3995fc238e0599e0417ba958ffc5c7a609e82a7f)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+# check of hardware specific defines
+# we have e.g. CONFIG_LINUX and CONFIG_WIN32 for common cases
+# where they might be necessary.
+		if ($line =~ m@^.\s*\#\s*if.*\b__@) {
+			WARN("architecture specific defines should be avoided\n" .  $herecurr);
+		}
 
-diff --git a/crypto/tlscredsx509.c b/crypto/tlscredsx509.c
-index 24ec584922..2983409301 100644
---- a/crypto/tlscredsx509.c
-+++ b/crypto/tlscredsx509.c
-@@ -144,7 +144,7 @@ qcrypto_tls_creds_check_cert_key_usage(QCryptoTLSCredsX509 *creds,
-     if (status < 0) {
-         if (status == GNUTLS_E_REQUESTED_DATA_NOT_AVAILABLE) {
-             usage = isCA ? GNUTLS_KEY_KEY_CERT_SIGN :
--                GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT;
-+                GNUTLS_KEY_DIGITAL_SIGNATURE;
-         } else {
-             error_setg(errp,
-                        "Unable to query certificate %s key usage: %s",
-@@ -171,14 +171,6 @@ qcrypto_tls_creds_check_cert_key_usage(QCryptoTLSCredsX509 *creds,
-                 return -1;
-             }
-         }
--        if (!(usage & GNUTLS_KEY_KEY_ENCIPHERMENT)) {
--            if (critical) {
--                error_setg(errp,
--                           "Certificate %s usage does not permit key "
--                           "encipherment", certFile);
--                return -1;
--            }
--        }
-     }
- 
-     return 0;
-diff --git a/docs/system/tls.rst b/docs/system/tls.rst
-index e284c82801..a4f6781d62 100644
---- a/docs/system/tls.rst
-+++ b/docs/system/tls.rst
-@@ -118,7 +118,6 @@ information for each server, and use it to issue server certificates.
-    ip_address = 2620:0:cafe::87
-    ip_address = 2001:24::92
-    tls_www_server
--   encryption_key
-    signing_key
-    EOF
-    # certtool --generate-privkey > server-hostNNN-key.pem
-@@ -134,9 +133,8 @@ the subject alt name extension data. The ``tls_www_server`` keyword is
- the key purpose extension to indicate this certificate is intended for
- usage in a web server. Although QEMU network services are not in fact
- HTTP servers (except for VNC websockets), setting this key purpose is
--still recommended. The ``encryption_key`` and ``signing_key`` keyword is
--the key usage extension to indicate this certificate is intended for
--usage in the data session.
-+still recommended. The ``signing_key`` keyword is the key usage extension
-+to indicate this certificate is intended for usage in the data session.
- 
- The ``server-hostNNN-key.pem`` and ``server-hostNNN-cert.pem`` files
- should now be securely copied to the server for which they were
-@@ -171,7 +169,6 @@ certificates.
-    organization = Name of your organization
-    cn = hostNNN.foo.example.com
-    tls_www_client
--   encryption_key
-    signing_key
-    EOF
-    # certtool --generate-privkey > client-hostNNN-key.pem
-@@ -187,9 +184,8 @@ the ``dns_name`` and ``ip_address`` fields are not included. The
- ``tls_www_client`` keyword is the key purpose extension to indicate this
- certificate is intended for usage in a web client. Although QEMU network
- clients are not in fact HTTP clients, setting this key purpose is still
--recommended. The ``encryption_key`` and ``signing_key`` keyword is the
--key usage extension to indicate this certificate is intended for usage
--in the data session.
-+recommended. The ``signing_key`` keyword is the key usage extension to
-+indicate this certificate is intended for usage in the data session.
- 
- The ``client-hostNNN-key.pem`` and ``client-hostNNN-cert.pem`` files
- should now be securely copied to the client for which they were
-@@ -222,7 +218,6 @@ client and server instructions in one.
-    ip_address = 2001:24::92
-    tls_www_server
-    tls_www_client
--   encryption_key
-    signing_key
-    EOF
-    # certtool --generate-privkey > both-hostNNN-key.pem
-diff --git a/tests/unit/crypto-tls-x509-helpers.h b/tests/unit/crypto-tls-x509-helpers.h
-index 2a0f7c04fd..7e9a508ad6 100644
---- a/tests/unit/crypto-tls-x509-helpers.h
-+++ b/tests/unit/crypto-tls-x509-helpers.h
-@@ -148,8 +148,7 @@ void test_tls_cleanup(const char *keyfile);
-         .basicConstraintsIsCA = false,                                  \
-         .keyUsageEnable = true,                                         \
-         .keyUsageCritical = true,                                       \
--        .keyUsageValue =                                                \
--        GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,     \
-+        .keyUsageValue = GNUTLS_KEY_DIGITAL_SIGNATURE,                  \
-         .keyPurposeEnable = true,                                       \
-         .keyPurposeCritical = true,                                     \
-         .keyPurposeOID1 = GNUTLS_KP_TLS_WWW_CLIENT,                     \
-@@ -168,8 +167,7 @@ void test_tls_cleanup(const char *keyfile);
-         .basicConstraintsIsCA = false,                                  \
-         .keyUsageEnable = true,                                         \
-         .keyUsageCritical = true,                                       \
--        .keyUsageValue =                                                \
--        GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,     \
-+        .keyUsageValue = GNUTLS_KEY_DIGITAL_SIGNATURE,                  \
-         .keyPurposeEnable = true,                                       \
-         .keyPurposeCritical = true,                                     \
-         .keyPurposeOID1 = GNUTLS_KP_TLS_WWW_SERVER,                     \
-diff --git a/tests/unit/test-crypto-tlscredsx509.c b/tests/unit/test-crypto-tlscredsx509.c
-index 3c25d75ca1..2025d75365 100644
---- a/tests/unit/test-crypto-tlscredsx509.c
-+++ b/tests/unit/test-crypto-tlscredsx509.c
-@@ -166,14 +166,14 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
-     TLS_CERT_REQ(clientcertreq, cacertreq,
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_CLIENT, NULL,
-                  0, 0);
- 
-@@ -196,7 +196,7 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
- 
-@@ -211,7 +211,7 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
- 
-@@ -226,7 +226,7 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
- 
-@@ -250,7 +250,7 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
-     /* no-basic */
-@@ -264,7 +264,7 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
-     /* Key usage:dig-sig:critical */
-@@ -278,7 +278,7 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
- 
-@@ -303,7 +303,7 @@ int main(int argc, char **argv)
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT |
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE |
-                  GNUTLS_KEY_KEY_CERT_SIGN,
-                  false, false, NULL, NULL,
-                  0, 0);
-@@ -406,7 +406,7 @@ int main(int argc, char **argv)
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT |
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE |
-                  GNUTLS_KEY_KEY_CERT_SIGN,
-                  false, false, NULL, NULL,
-                  0, 0);
-@@ -508,21 +508,21 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
-     TLS_CERT_REQ(servercertexp1req, cacertreq,
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, -1);
-     TLS_CERT_REQ(clientcertexp1req, cacertreq,
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_CLIENT, NULL,
-                  0, -1);
- 
-@@ -546,21 +546,21 @@ int main(int argc, char **argv)
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
-     TLS_CERT_REQ(servercertnew1req, cacertreq,
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  1, 2);
-     TLS_CERT_REQ(clientcertnew1req, cacertreq,
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_CLIENT, NULL,
-                  1, 2);
- 
-@@ -599,14 +599,14 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
-     TLS_CERT_REQ(clientcertlevel2breq, cacertlevel1breq,
-                  "UK", "qemu client level 2b", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_CLIENT, NULL,
-                  0, 0);
- 
-diff --git a/tests/unit/test-crypto-tlssession.c b/tests/unit/test-crypto-tlssession.c
-index 554054e934..e8b2e0201c 100644
---- a/tests/unit/test-crypto-tlssession.c
-+++ b/tests/unit/test-crypto-tlssession.c
-@@ -472,14 +472,14 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
-     TLS_CERT_REQ(clientcertreq, cacertreq,
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_CLIENT, NULL,
-                  0, 0);
- 
-@@ -487,7 +487,7 @@ int main(int argc, char **argv)
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_CLIENT, NULL,
-                  0, 0);
- 
-@@ -506,7 +506,7 @@ int main(int argc, char **argv)
-                  "192.168.122.1", "fec0::dead:beaf",
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
-     /* This intentionally doesn't replicate */
-@@ -515,7 +515,7 @@ int main(int argc, char **argv)
-                  "192.168.122.1", "fec0::dead:beaf",
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
- 
-@@ -619,14 +619,14 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
-     TLS_CERT_REQ(clientcertlevel2breq, cacertlevel1breq,
-                  "UK", "qemu client level 2b", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_CLIENT, NULL,
-                  0, 0);
- 
-diff --git a/tests/unit/test-io-channel-tls.c b/tests/unit/test-io-channel-tls.c
-index e036ac5df4..c2115d45fe 100644
---- a/tests/unit/test-io-channel-tls.c
-+++ b/tests/unit/test-io-channel-tls.c
-@@ -302,14 +302,14 @@ int main(int argc, char **argv)
-                  "UK", "qemu.org", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_SERVER, NULL,
-                  0, 0);
-     TLS_CERT_REQ(clientcertreq, cacertreq,
-                  "UK", "qemu", NULL, NULL, NULL, NULL,
-                  true, true, false,
-                  true, true,
--                 GNUTLS_KEY_DIGITAL_SIGNATURE | GNUTLS_KEY_KEY_ENCIPHERMENT,
-+                 GNUTLS_KEY_DIGITAL_SIGNATURE,
-                  true, true, GNUTLS_KP_TLS_WWW_CLIENT, NULL,
-                  0, 0);
- 
--- 
-2.47.3
+>   static HMODULE hWinHvEmulation;
+> +#endif
+>   
+>   struct whpx_state whpx_global;
+>   struct WHPDispatch whp_dispatch;
+> @@ -236,8 +238,10 @@ void whpx_destroy_vcpu(CPUState *cpu)
+>       struct whpx_state *whpx = &whpx_global;
+>   
+>       whp_dispatch.WHvDeleteVirtualProcessor(whpx->partition, cpu->cpu_index);
+> +#ifdef __x86_64__
+>       AccelCPUState *vcpu = cpu->accel;
+>       whp_dispatch.WHvEmulatorDestroyEmulator(vcpu->emulator);
+> +#endif
+>       g_free(cpu->accel);
+>   }
+>   
+> @@ -412,8 +416,12 @@ static bool load_whp_dispatch_fns(HMODULE *handle,
+>           LIST_WINHVPLATFORM_FUNCTIONS(WHP_LOAD_FIELD)
+>           break;
+>       case WINHV_EMULATION_FNS_DEFAULT:
+> +#ifdef __x86_64__
+>           WHP_LOAD_LIB(WINHV_EMULATION_DLL, hLib)
+>           LIST_WINHVEMULATION_FUNCTIONS(WHP_LOAD_FIELD)
+> +#else
+> +        g_assert_not_reached();
+> +#endif
+>           break;
+>       case WINHV_PLATFORM_FNS_SUPPLEMENTAL:
+>           WHP_LOAD_LIB(WINHV_PLATFORM_DLL, hLib)
+> @@ -539,11 +547,11 @@ bool init_whp_dispatch(void)
+>       if (!load_whp_dispatch_fns(&hWinHvPlatform, WINHV_PLATFORM_FNS_DEFAULT)) {
+>           goto error;
+>       }
+> -
+> +#ifdef __x86_64__
+>       if (!load_whp_dispatch_fns(&hWinHvEmulation, WINHV_EMULATION_FNS_DEFAULT)) {
+>           goto error;
+>       }
+> -
+> +#endif
+>       assert(load_whp_dispatch_fns(&hWinHvPlatform,
+>           WINHV_PLATFORM_FNS_SUPPLEMENTAL));
+>       whp_dispatch_initialized = true;
+> @@ -553,9 +561,11 @@ error:
+>       if (hWinHvPlatform) {
+>           FreeLibrary(hWinHvPlatform);
+>       }
+> +#ifdef __x86_64__
+>       if (hWinHvEmulation) {
+>           FreeLibrary(hWinHvEmulation);
+>       }
+> +#endif
+>       return false;
+>   }
+>   
+> diff --git a/include/system/whpx-common.h b/include/system/whpx-common.h
+> index e549c7539c..7a7c607e0a 100644
+> --- a/include/system/whpx-common.h
+> +++ b/include/system/whpx-common.h
+> @@ -3,7 +3,9 @@
+>   #define SYSTEM_WHPX_COMMON_H
+>   
+>   struct AccelCPUState {
+> +#ifdef __x86_64__
+>       WHV_EMULATOR_HANDLE emulator;
+> +#endif
+>       bool window_registered;
+>       bool interruptable;
+>       bool ready_for_pic_interrupt;
+> diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
+> index c59f9de091..4565436682 100644
+> --- a/include/system/whpx-internal.h
+> +++ b/include/system/whpx-internal.h
+> @@ -4,8 +4,9 @@
+>   
+>   #include <windows.h>
+>   #include <winhvplatform.h>
+> +#ifdef __x86_64__
+>   #include <winhvemulation.h>
+> -
+> +#endif
+>   #include "hw/i386/apic.h"
+>   
+>   typedef enum WhpxBreakpointState {
+> @@ -100,12 +101,16 @@ void whpx_apic_get(APICCommonState *s);
+>   
+>   /* Define function typedef */
+>   LIST_WINHVPLATFORM_FUNCTIONS(WHP_DEFINE_TYPE)
+> +#ifdef __x86_64__
+>   LIST_WINHVEMULATION_FUNCTIONS(WHP_DEFINE_TYPE)
+> +#endif
+>   LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DEFINE_TYPE)
+>   
+>   struct WHPDispatch {
+>       LIST_WINHVPLATFORM_FUNCTIONS(WHP_DECLARE_MEMBER)
+> +#ifdef __x86_64__
+>       LIST_WINHVEMULATION_FUNCTIONS(WHP_DECLARE_MEMBER)
+> +#endif
+>       LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL(WHP_DECLARE_MEMBER)
+>   };
+>   
 
 
