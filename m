@@ -4,91 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D290DCFA473
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 05:29:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 171BFCFA473
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 05:29:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMJhI-0007Tp-A2; Fri, 21 Nov 2025 00:28:41 -0500
+	id 1vMJhr-0007gs-Vr; Fri, 21 Nov 2025 00:29:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMJhD-0007Sm-S9
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 00:28:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMJhp-0007gD-5Z
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 00:29:13 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMJh9-0005Fe-VN
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 00:28:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763702911;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BEd9KlDvB7GskRmSaCjimoNXVvT4vORaDdSrmiFotWU=;
- b=irbbejLQ1p4WjQe3+gDVVpgAjq771xWpd2vSptQIF31tUlINS6/39TWnK/o7cPnKBol3mY
- sXrXm7lW4azxIz8Z5SarJ93hrVxueSb/imFIKDKUzkxa4KWJacXczgiAgPRE3MIjFNkOW2
- g4QRWv7aJSASOGzFwduy33991uIHdw0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-m_eSFKIbNuOvbL9nfv2Tzg-1; Fri,
- 21 Nov 2025 00:28:26 -0500
-X-MC-Unique: m_eSFKIbNuOvbL9nfv2Tzg-1
-X-Mimecast-MFC-AGG-ID: m_eSFKIbNuOvbL9nfv2Tzg_1763702902
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5C049180049F; Fri, 21 Nov 2025 05:28:20 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.18])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58D431940E82; Fri, 21 Nov 2025 05:28:17 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DF74721E6A27; Fri, 21 Nov 2025 06:28:14 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: qemu-devel@nongnu.org,  arei.gonglei@huawei.com,
- alistair.francis@wdc.com,  stefanb@linux.vnet.ibm.com,  kwolf@redhat.com,
- hreitz@redhat.com,  sw@weilnetz.de,  qemu_oss@crudebyte.com,
- groug@kaod.org,  mst@redhat.com,  imammedo@redhat.com,
- anisinha@redhat.com,  kraxel@redhat.com,  shentey@gmail.com,
- npiggin@gmail.com,  harshpb@linux.ibm.com,  sstabellini@kernel.org,
- anthony@xenproject.org,  paul@xen.org,  edgar.iglesias@gmail.com,
- elena.ufimtseva@oracle.com,  jag.raman@oracle.com,  sgarzare@redhat.com,
- pbonzini@redhat.com,  fam@euphon.net,  philmd@linaro.org,
- alex@shazbot.org,  clg@redhat.com,  peterx@redhat.com,  farosas@suse.de,
- lizhijian@fujitsu.com,  jasowang@redhat.com,
- samuel.thibault@ens-lyon.org,  michael.roth@amd.com,
- kkostiuk@redhat.com,  zhao1.liu@intel.com,  mtosatti@redhat.com,
- rathc@linux.ibm.com,  palmer@dabbelt.com,  liwei1518@gmail.com,
- dbarboza@ventanamicro.com,  zhiwei_liu@linux.alibaba.com,
- marcandre.lureau@redhat.com,  qemu-block@nongnu.org,
- qemu-ppc@nongnu.org,  xen-devel@lists.xenproject.org,
- kvm@vger.kernel.org,  qemu-riscv@nongnu.org
-Subject: Re: [PATCH 02/14] hw/usb: Use error_setg_file_open() for a better
- error message
-In-Reply-To: <aR-1jGX4Ck0f69zG@gallifrey> (David Alan Gilbert's message of
- "Fri, 21 Nov 2025 00:42:52 +0000")
-References: <20251120191339.756429-1-armbru@redhat.com>
- <20251120191339.756429-3-armbru@redhat.com>
- <aR-1jGX4Ck0f69zG@gallifrey>
-Date: Fri, 21 Nov 2025 06:28:14 +0100
-Message-ID: <873468rm35.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMJhm-0005kI-BN
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 00:29:12 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AL5SnEU039917
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 21 Nov 2025 14:28:49 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=Bi3+h63lyqOwFhwJlKbv91J1B32RyaJUaUyjJh9qoyc=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763702929; v=1;
+ b=E7UczQLzIKATS4qVOEy0ohG1I/fn6kKjJY0lpvOjbQwNhgSbVkQsO9bRzrBbUoh1
+ saHb3EOHEF2/S5mL4rBhdQX+wyiKk5gV3a5yYKdVKhUilOUAnvjaptHPKWtn5bxv
+ 2HtCeMYSdev6TpSPCcIMZo2SUbke3eO0ceRYAlmitmN8GUrgLnHrlHC5hepcNiox
+ QFcb0Ia8C8sAYAJxuxzimfkD6+xtJSts11cUHY5JICj+xq/TzfwabOroo+7jG5zQ
+ ETUhHm7SgSnzJGNTZqxWN9TUzuy26tsVuKTRdn5La7IXdoo6PXHPQG+unWYrisU5
+ KzAWXAtteP18ZuLVNOpwww==
+Message-ID: <21b94d50-79c4-4942-84f7-f4c96f432dd8@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 21 Nov 2025 14:28:48 +0900
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v2 1/3] virtio-gpu: Add support for
+ VIRTIO_GPU_BLOB_FLAG_USE_USERPTR flag
+To: Honglei Huang <honghuan@amd.com>
+Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, Ray.Huang@amd.com,
+ dmitry.osipenko@collabora.com, alex.bennee@linaro.org
+References: <20251121024705.1403042-1-honghuan@amd.com>
+ <20251121024705.1403042-2-honghuan@amd.com>
+ <b6f4cc26-7ebe-4b07-8e50-257b6f53d309@rsg.ci.i.u-tokyo.ac.jp>
+ <db263884-6159-4d25-8c40-44dd78291714@amd.com>
+ <ca2e398e-8158-4845-9798-6f444a73b103@rsg.ci.i.u-tokyo.ac.jp>
+ <c33300b0-b4db-44b0-be07-4e4382a0c0fb@amd.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <c33300b0-b4db-44b0-be07-4e4382a0c0fb@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,50 +81,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Dr. David Alan Gilbert" <dave@treblig.org> writes:
+On 2025/11/21 14:21, Honglei Huang wrote:
+> 
+> 
+> On 2025/11/21 11:39, Akihiko Odaki wrote:
+>> On 2025/11/21 12:14, Honglei Huang wrote:
+>>>
+>>>
+>>> On 2025/11/21 10:56, Akihiko Odaki wrote:
+>>>> On 2025/11/21 11:47, Honglei Huang wrote:
+>>>>> Add support for the USE_USERPTR blob flag in virtio-gpu to enable
+>>>>> user pointer mapping for blob resources. This allows guest 
+>>>>> applications
+>>>>> to use user-allocated memory for GPU resources more efficiently.
+>>>>>
+>>>>> Changes include:
+>>>>> - Add VIRTIO_GPU_BLOB_FLAG_USE_USERPTR flag definition
+>>>>> - Enhance blob resource creation to handle userptr flag properly
+>>>>> - Remove arbitrary nr_entries limit (16384) in mapping creation
+>>>>> - Add conditional handling for userptr vs regular blob mapping
+>>>>
+>>>> I don't see the added conditional handling.
+>>>
+>>> Sorry, the additional handing is replaced by the fixing of value check.
+>>> I will correct this commit message in the next version.
+>>
+>> Not just the commit message, but it also questions the utility of 
+>> VIRTIO_GPU_BLOB_FLAG_USE_USERPTR and VIRTIO_GPU_F_RESOURCE_USERPTR. 
+>> Neither of them adds a new functionality. They should be dropped if 
+>> they are also replaced with the fix.
+>>
+> 
+> Yes totally agreed, it is my mistaken, I shouldn't mix the code for 
+> fixing and the code for adding new features in one submission.
+> 
+> Actually this patch set are for another components upstream test, for 
+> the sake of convenience, I have added both the fix and feature here,
+> that is a bad idea.
+> 
+> Will split the fix part into previous thread.
+> 
+> And for the check value fix thread, will send v4 as the final version.
 
-> * Markus Armbruster (armbru@redhat.com) wrote:
->> The error message changes from
->> 
->>     open FILENAME failed
->> 
->> to
->> 
->>     Could not open 'FILENAME': REASON
->> 
->> where REASON is the value of strerror(errno).
->> 
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> ---
->>  hw/usb/bus.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/hw/usb/bus.c b/hw/usb/bus.c
->> index 8dd2ce415e..47d42ca3c1 100644
->> --- a/hw/usb/bus.c
->> +++ b/hw/usb/bus.c
->> @@ -262,7 +262,7 @@ static void usb_qdev_realize(DeviceState *qdev, Error **errp)
->>          int fd = qemu_open_old(dev->pcap_filename,
->>                                 O_CREAT | O_WRONLY | O_TRUNC | O_BINARY, 0666);
->>          if (fd < 0) {
->> -            error_setg(errp, "open %s failed", dev->pcap_filename);
->> +            error_setg_file_open(errp, errno, dev->pcap_filename);
->
-> Wouldn't it be easier to flip it to use qemu_open() ?
+Splitting fixes and features is a good idea, but that's not what I meant.
 
-Mechanical change; I missed the obvious :)
-
-I'll give it a try, along with the call in ui/ui-qmp-cmd.c [PATCH 09].
-Thanks!
-
->
-> Dave
->
->>              usb_qdev_unrealize(qdev);
->>              return;
->>          }
->> -- 
->> 2.49.0
->> 
-
+What I pointed out is that, it seems that one of the "features" you are 
+adding, namely VIRTIO_GPU_F_RESOURCE_USERPTR does nothing at at all. So 
+I'm wondering if you forgot to add a real implementation or the feature 
+is just no longer necessary.
 
