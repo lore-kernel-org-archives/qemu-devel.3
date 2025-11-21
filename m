@@ -4,70 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27EA1CFA753
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 09:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21568CFA768
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 09:58:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMNgM-0003CM-3N; Fri, 21 Nov 2025 04:43:58 -0500
+	id 1vMNtW-0008My-AX; Fri, 21 Nov 2025 04:57:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yanghliu@redhat.com>)
- id 1vMNgI-0003Bt-PG
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 04:43:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1vMMe7-0005B2-Fs
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 03:37:35 -0500
+Received: from mail-westusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c000::1] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yanghliu@redhat.com>)
- id 1vMNgG-00053W-VM
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 04:43:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763718231;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=yGT+Ot+/8cc2vynMchcxei7L9SIL18EKocZzWxPIlIw=;
- b=inQEPPI62yy4LAIlxFAeZw9GqBCS4fBsF3bVQ7QbSHye6B+b6B8HaAySGHcbrvlM0UiH9w
- Vi3i8v1YVMC4PezU6k6J4xjA3X9+3LnLHrKt4OuTpZRXPbdlTq8/RJZm/4L3bQMi8Ue7hi
- NcdH0faQHBraigzLXXOE57QPjvtXkCc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-453-Ax7Nag_aO92JIVn7LDHFvg-1; Fri,
- 21 Nov 2025 04:43:49 -0500
-X-MC-Unique: Ax7Nag_aO92JIVn7LDHFvg-1
-X-Mimecast-MFC-AGG-ID: Ax7Nag_aO92JIVn7LDHFvg_1763718228
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9280D195608A
- for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 09:43:48 +0000 (UTC)
-Received: from dell-per7625-01.lab.eng.pek2.redhat.com
- (dell-per7625-01.lab.eng.pek2.redhat.com [10.73.212.98])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 338491956045; Fri, 21 Nov 2025 09:43:46 +0000 (UTC)
-From: Yanghang Liu <yanghliu@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: clegoate@redhat.com
-Subject: [PATCH v2] Fix the typo of vfio-pci device's enable-migration option
-Date: Fri, 21 Nov 2025 17:43:41 +0800
-Message-ID: <20251121094341.80038-1-yanghliu@redhat.com>
+ (Exim 4.90_1) (envelope-from <Shivansh.Dhiman@amd.com>)
+ id 1vMMe5-0000Nv-65
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 03:37:35 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=K8qZ9MgTtgz4vLehh1r/7EwrJym4gN5gon0gDUwN5kVYPZN2s9TqHNcG+df1uJ+aIYiKAovmZJqFD6bpVZ/8KncsK5IlQJza8CtcIBEN/vABLG9D2OO8zjqHOI8rSBUyUQONWyA1adwLI5rHHjxjCNLMivApSuQkgBrRbbqbCu6A3qHQ22T39FX/2KO1v7oEyOzZkQdiHlAl4qUR9o5Zt3APOdurxfCokMR0vZQoGDzKrWI4KzkQOfSN9KMklDhmhLiw1/jh/kkFi9QunB2CiLO+2AkR4/oM9iumaZIiCTyMXvxKeQKsAKsC4MBRsfls8Ma6DSRl4kdQqItL0+FhwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OXhv61nONhbhl9R9HnyIcIs6s6XFIbwUzS+V8scz/pQ=;
+ b=fkqAIk8TR7Y+xDR6AH8Pdqcj/uLoYU8q3WwpfWn0HWTxYdy8xTKzq0iRHlTrCWdccXJsB4c/PKNbu2IHgg9YlNb4Ib0QLv8SqW/fwsqqEBCvfvzMjmSR0j9fNb0RAEmw5LNee9j2bWtiXZ9A6Xa/f9A+f+x/AMTyZvTZWXsMZzA+6T5GwPcRdu0Ih8mYqTaH2cKV9BNhLpc+vKrCCXVhNJolYNXrN1NXFAggfDaFWaCl7/WRTync/FdJrZQHwWDzvKhg/x+2gw4S2yFxPB8u6hiH347rfeGbAzE9J50rMIMvhH+mauMb4dCb2LESowS3wo/s1eaG8c56wH274JA+gA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OXhv61nONhbhl9R9HnyIcIs6s6XFIbwUzS+V8scz/pQ=;
+ b=43bA8Zo1VIxyOToX1sbmL9FTy+KocKHhNxT7IgHPFu3HJ7CurSp7yhPQUHr6Il79/M932xiQ/s4ZvjGhb/k1nNB9LkDvZV1tUYKzIedNFu26jhUWa/e8lh6fKNpQ3DECRcvEY+XuZyw/PtqOmpXiuCFEYlIM5vMgWDIPvUubk3c=
+Received: from MN2PR20CA0048.namprd20.prod.outlook.com (2603:10b6:208:235::17)
+ by SA1PR12MB8600.namprd12.prod.outlook.com (2603:10b6:806:257::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.11; Fri, 21 Nov
+ 2025 08:37:27 +0000
+Received: from BN2PEPF000044A8.namprd04.prod.outlook.com
+ (2603:10b6:208:235:cafe::93) by MN2PR20CA0048.outlook.office365.com
+ (2603:10b6:208:235::17) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.12 via Frontend Transport; Fri,
+ 21 Nov 2025 08:37:25 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BN2PEPF000044A8.mail.protection.outlook.com (10.167.243.102) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9343.9 via Frontend Transport; Fri, 21 Nov 2025 08:37:26 +0000
+Received: from purico-abeahost.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Fri, 21 Nov
+ 2025 00:37:23 -0800
+From: Shivansh Dhiman <shivansh.dhiman@amd.com>
+To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <mtosatti@redhat.com>,
+ <kvm@vger.kernel.org>
+CC: <qemu-devel@nongnu.org>, <seanjc@google.com>, <santosh.shukla@amd.com>,
+ <nikunj.dadhania@amd.com>, <ravi.bangoria@amd.com>, <babu.moger@amd.com>,
+ <shivansh.dhiman@amd.com>
+Subject: [PATCH 3/5] i386: Enable CPUID 80000026 for EPYC-Genoa/Turin vCPU
+Date: Fri, 21 Nov 2025 08:34:50 +0000
+Message-ID: <20251121083452.429261-4-shivansh.dhiman@amd.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251121083452.429261-1-shivansh.dhiman@amd.com>
+References: <20251121083452.429261-1-shivansh.dhiman@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=yanghliu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000044A8:EE_|SA1PR12MB8600:EE_
+X-MS-Office365-Filtering-Correlation-Id: d9987d76-26c1-42ef-00ae-08de28d9337f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700013|1800799024|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?3gMtBR9+D2FgL+LAFSZXAcoTKuA+XRv+crcIP2S4xh28dhtPkBh41in4D0jw?=
+ =?us-ascii?Q?TrxGKRHnG/XAi4aHUtw934yozVj9ESJDoR2MRg3OP+cVkBaEjTw/dEYB02yY?=
+ =?us-ascii?Q?M3NZi1WTKopeJQ5KN9/vOKJi5C9gfXTYvcPokasD7yyAsBQFka0D8ZMqK1yA?=
+ =?us-ascii?Q?/fYVUsIkzjAw9t46UgAKwxs6Dq+6Zsjmy25hng74B8IUZKmLX6K9YdOz2YVp?=
+ =?us-ascii?Q?4AYAw89V+fU8d72kOOrEO6p2l6UNiZRJ064RvqrjYS0CzLrjmgIx91cXo7XB?=
+ =?us-ascii?Q?NO54QnNkXY27DnvpalOlsuCDTA4IUqtm2A32U4TlajfQTaJtw05xb4HRHo9D?=
+ =?us-ascii?Q?yxOoK6l+VjH7TNhK3vfhMH2lGoi0Sin8wf2A8AsKSBw94HKI0FwBVS6YBsNK?=
+ =?us-ascii?Q?m7Mezyccv4N1UjpyLjqlCa75JocUPxwCib48TjEyTVWwG/6qZZWy9urtNOMA?=
+ =?us-ascii?Q?qJ29LF6084wr9Xtf+3pHUWlRaJvRAwfmFvouXXagRwwyGRLTBA/MoxTjc0xA?=
+ =?us-ascii?Q?jsF9gWyP77x+ZCd/ZHvAHaXxxFrUfFafiOEu0vI3TVA+jdY5swiYr68wVDJc?=
+ =?us-ascii?Q?FDS070/yv7LKqtHve/dXPg6RNu8xvFWGgcJa5OMQuW5Yg4I6lPKZvsKTWpxo?=
+ =?us-ascii?Q?1c8FA/UYgpSAf6/UJJsqPyChL5E+V+3F4EHXx0bye+hbmCZyQ/02cNuJIXkT?=
+ =?us-ascii?Q?QanVvbsrL4xiVSvvsiZt/bWCFgekfpCA4y4ixRH1Acd8VVP+Ti6ohx/rKaao?=
+ =?us-ascii?Q?y2JfncNlYWKRLWHmLfyNEoD0UwRPAas9BZFTk+y3VUCM2Pl6+5im8av28KKi?=
+ =?us-ascii?Q?glxs0j1I+WIXAQWhDHZxTNa+9OqnJ41fBE1mABc8uKa9hAq6KE/F8czcuft/?=
+ =?us-ascii?Q?llpzyiZSonMH1wUSOozWxUvU6bsd8bCNDO5uzH8QiiiXja/7vUsPI4Ofa2CO?=
+ =?us-ascii?Q?gDhgGZoC79r9uJyyNaDQSJZn5sGx5/QtlgaHCUnFpDfW7ecJ/f6ofHMUKyil?=
+ =?us-ascii?Q?u+nUF/5iqkYFsecdhFD7VCLiGxxp4SaCbVBrrdxbtt7DII9+pPa128CZ5jHz?=
+ =?us-ascii?Q?Hatl/DbgQoYvsrh9ZEKJ7JTnhap4R4ljKeWeOOHac8p5V1CuCV5AOK63uhzd?=
+ =?us-ascii?Q?fLr3BOpNlTm4h8iTdrW6PN0n7QUoA75YiuzFJS24T+dDTDyFfsdIOfWFHheN?=
+ =?us-ascii?Q?GXoM4hgsk6FKCkI1AipuOpiSRNe7xz2VqW9JFf/CkvyEJrL21OVb8D1j1mGc?=
+ =?us-ascii?Q?4aH47MdilRJIZws6FpFxFUA3cxQT+dh4Azel+lkezTM29SGZkutrESoFcNQ9?=
+ =?us-ascii?Q?0JcrMrDtDYUjpye/99Frzug7Rjp6dIxkGiufXbLYlgvu21AwIx98y4l4WPDI?=
+ =?us-ascii?Q?Uk47/iqNTHqNhdSxXktzZsPnBLEEm0RYb67xctOqzPhyMXUy0sCVKLeQ7buy?=
+ =?us-ascii?Q?lWxqLllwHP8Nd7s/ixFqYPV+YjF/kYZ1mSwuZF3a7Cp3E+LrczERcpU1cvUX?=
+ =?us-ascii?Q?jM6tzj+B2WpizSmphKairJtwAQfQdo+86/wCrDIFA8aJg/B3VTkwS5+14IKg?=
+ =?us-ascii?Q?vUnO+fHey1gltlPzCY0=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(36860700013)(1800799024)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2025 08:37:26.9756 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d9987d76-26c1-42ef-00ae-08de28d9337f
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000044A8.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8600
+Received-SPF: permerror client-ip=2a01:111:f403:c000::1;
+ envelope-from=Shivansh.Dhiman@amd.com;
+ helo=BYAPR05CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 21 Nov 2025 04:57:32 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,27 +153,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Enable CPUID leaf 0x80000026 (Extended CPU Topology) for AMD Zen4+ processors,
+i.e, Genoa and above. Add version 3 to EPYC-Genoa and version 2 to EPYC-Turin
+CPU models with x-force-cpuid-0x80000026 property enabled.
 
-Signed-off-by: Yanghang Liu <yanghliu@redhat.com>
-Reported-by: Mario Casquero <mcasquer@redhat.com>
+Signed-off-by: Shivansh Dhiman <shivansh.dhiman@amd.com>
 ---
- hw/vfio/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/cpu.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 8b8bc5a421..b46b1305a7 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3871,7 +3871,7 @@ static void vfio_pci_class_init(ObjectClass *klass, const void *data)
-                                           "(DEBUG)");
-     object_class_property_set_description(klass, /* 5.2, 8.0 non-experimetal */
-                                           "enable-migration",
--                                          "Enale device migration. Also requires a host VFIO PCI "
-+                                          "Enable device migration. Also requires a host VFIO PCI "
-                                           "variant or mdev driver with migration support enabled");
-     object_class_property_set_description(klass, /* 8.1 */
-                                           "vf-token",
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 01c4da7cf134..12500d6b7bed 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6505,6 +6505,13 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+                 },
+                 .cache_info = &epyc_genoa_v2_cache_info
+             },
++            {
++                .version = 3,
++                .props = (PropValue[]) {
++                    { "x-force-cpuid-0x80000026", "on" },
++                    { /* end of list */ }
++                }
++            },
+             { /* end of list */ }
+         }
+     },
+@@ -6735,6 +6742,17 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+         .xlevel = 0x80000022,
+         .model_id = "AMD EPYC-Turin Processor",
+         .cache_info = &epyc_turin_cache_info,
++        .versions = (X86CPUVersionDefinition[]) {
++            { .version = 1 },
++            {
++                .version = 2,
++                .props = (PropValue[]) {
++                    { "x-force-cpuid-0x80000026", "on" },
++                    { /* end of list */ }
++                }
++            },
++            { /* end of list */ }
++        }
+     },
+ };
+ 
 -- 
-2.47.3
+2.43.0
 
 
