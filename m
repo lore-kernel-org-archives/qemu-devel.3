@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38ECACFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7980CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdIQ-00021M-Ek; Fri, 21 Nov 2025 21:24:19 -0500
+	id 1vMdBb-0000wj-Kr; Fri, 21 Nov 2025 21:17:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdIL-0001zH-RV; Fri, 21 Nov 2025 21:24:13 -0500
+ id 1vMd1f-00011x-US; Fri, 21 Nov 2025 21:06:59 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdHN-00056X-4a; Fri, 21 Nov 2025 21:24:10 -0500
+ id 1vMd1C-0002JY-T7; Fri, 21 Nov 2025 21:06:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2B9F316C70A;
- Fri, 21 Nov 2025 16:51:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 39BB916C6E0;
+ Fri, 21 Nov 2025 16:51:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 837793219A7;
- Fri, 21 Nov 2025 16:52:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 92F64321957;
+ Fri, 21 Nov 2025 16:52:02 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 50/76] hw/net/e1000e_core: Don't advance desc_offset
- for NULL buffer RX descriptors
-Date: Fri, 21 Nov 2025 16:51:28 +0300
-Message-ID: <20251121135201.1114964-50-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jialong Yang <z_bajeer@yeah.net>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 08/76] aplic: fix mask for smsiaddrcfgh
+Date: Fri, 21 Nov 2025 16:50:46 +0300
+Message-ID: <20251121135201.1114964-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
@@ -60,88 +59,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Jialong Yang <z_bajeer@yeah.net>
 
-In e1000e_write_packet_to_guest() we don't write data for RX descriptors
-where the buffer address is NULL (as required by the i82574 datasheet
-section 7.1.7.2). However, when we do this we still update desc_offset
-by the amount of data we would have written to the RX descriptor if
-it had a valid buffer pointer, resulting in our dropping that data
-entirely. The data sheet is not 100% clear on the subject, but this
-seems unlikely to be the correct behaviour.
+ 4.5.4. Supervisor MSI address configuration (smsiaddrcfg and
+   smsiaddrcfgh)
+smsiaddrcfgh:
+        bits 22:20 LHXS(WARL)
+        bits 11:0  High Base PPN(WARL)
 
-Rearrange the null-descriptor logic so that we don't treat these
-do-nothing descriptors as if we'd really written the data.
-
-This both fixes a bug and also is a prerequisite to cleaning up
-the size calculation logic in the next patch.
-
-(Cc to stable largely because it will be needed for the next patch,
-which fixes a more serious bug.)
-
+Signed-off-by: Jialong Yang <z_bajeer@yeah.net>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <44f3e0d1.161.199d0c338b0.Coremail.z_bajeer@yeah.net>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 6da0c9828194eb21e54fe4264cd29a1b85a29f33)
+(cherry picked from commit 5e3e066e4ac894aff3e8dd3a072bca9c1986b2ff)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-index 06657bb3ac..8e93bd3d81 100644
---- a/hw/net/e1000e_core.c
-+++ b/hw/net/e1000e_core.c
-@@ -1481,7 +1481,6 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
-     PCIDevice *d = core->owner;
-     dma_addr_t base;
-     union e1000_rx_desc_union desc;
--    size_t desc_size;
-     size_t desc_offset = 0;
-     size_t iov_ofs = 0;
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index a1d9fa5085..6dccca73af 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -96,7 +96,7 @@
+     (APLIC_xMSICFGADDR_PPN_HHX_MASK(__hhxw) << \
+      APLIC_xMSICFGADDR_PPN_HHX_SHIFT(__hhxs))
  
-@@ -1500,12 +1499,6 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
-         E1000EBAState bastate = { { 0 } };
-         bool is_last = false;
+-#define APLIC_xMSICFGADDRH_VALID_MASK   \
++#define APLIC_MMSICFGADDRH_VALID_MASK   \
+     (APLIC_xMSICFGADDRH_L | \
+      (APLIC_xMSICFGADDRH_HHXS_MASK << APLIC_xMSICFGADDRH_HHXS_SHIFT) | \
+      (APLIC_xMSICFGADDRH_LHXS_MASK << APLIC_xMSICFGADDRH_LHXS_SHIFT) | \
+@@ -104,6 +104,10 @@
+      (APLIC_xMSICFGADDRH_LHXW_MASK << APLIC_xMSICFGADDRH_LHXW_SHIFT) | \
+      APLIC_xMSICFGADDRH_BAPPN_MASK)
  
--        desc_size = total_size - desc_offset;
--
--        if (desc_size > core->rx_desc_buf_size) {
--            desc_size = core->rx_desc_buf_size;
--        }
--
-         if (e1000e_ring_empty(core, rxi)) {
-             return;
-         }
-@@ -1519,6 +1512,12 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
-         e1000e_read_rx_descr(core, &desc, ba);
- 
-         if (ba[0]) {
-+            size_t desc_size = total_size - desc_offset;
++#define APLIC_SMSICFGADDRH_VALID_MASK   \
++    ((APLIC_xMSICFGADDRH_LHXS_MASK << APLIC_xMSICFGADDRH_LHXS_SHIFT) | \
++     APLIC_xMSICFGADDRH_BAPPN_MASK)
 +
-+            if (desc_size > core->rx_desc_buf_size) {
-+                desc_size = core->rx_desc_buf_size;
-+            }
-+
-             if (desc_offset < size) {
-                 static const uint32_t fcs_pad;
-                 size_t iov_copy;
-@@ -1582,13 +1581,13 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
-                           (const char *) &fcs_pad, e1000x_fcs_len(core->mac));
-                 }
-             }
-+            desc_offset += desc_size;
-+            if (desc_offset >= total_size) {
-+                is_last = true;
-+            }
-         } else { /* as per intel docs; skip descriptors with null buf addr */
-             trace_e1000e_rx_null_descriptor();
-         }
--        desc_offset += desc_size;
--        if (desc_offset >= total_size) {
--            is_last = true;
--        }
+ #define APLIC_SETIP_BASE               0x1c00
+ #define APLIC_SETIPNUM                 0x1cdc
  
-         e1000e_write_rx_descr(core, &desc, is_last ? core->rx_pkt : NULL,
-                            rss_info, do_ps ? ps_hdr_len : 0, &bastate.written);
+@@ -184,7 +188,7 @@ void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr)
+         addr >>= APLIC_xMSICFGADDR_PPN_SHIFT;
+         aplic->kvm_msicfgaddr = extract64(addr, 0, 32);
+         aplic->kvm_msicfgaddrH = extract64(addr, 32, 32) &
+-                                 APLIC_xMSICFGADDRH_VALID_MASK;
++                                 APLIC_MMSICFGADDRH_VALID_MASK;
+     }
+ #endif
+ }
+@@ -409,13 +413,8 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
+         msicfgaddr = aplic->kvm_msicfgaddr;
+         msicfgaddrH = ((uint64_t)aplic->kvm_msicfgaddrH << 32);
+     } else {
+-        if (aplic->mmode) {
+-            msicfgaddr = aplic_m->mmsicfgaddr;
+-            msicfgaddrH = aplic_m->mmsicfgaddrH;
+-        } else {
+-            msicfgaddr = aplic_m->smsicfgaddr;
+-            msicfgaddrH = aplic_m->smsicfgaddrH;
+-        }
++        msicfgaddr = aplic_m->mmsicfgaddr;
++        msicfgaddrH = aplic_m->mmsicfgaddrH;
+     }
+ 
+     lhxs = (msicfgaddrH >> APLIC_xMSICFGADDRH_LHXS_SHIFT) &
+@@ -427,6 +426,14 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
+     hhxw = (msicfgaddrH >> APLIC_xMSICFGADDRH_HHXW_SHIFT) &
+             APLIC_xMSICFGADDRH_HHXW_MASK;
+ 
++    if (!aplic->kvm_splitmode && !aplic->mmode) {
++        msicfgaddrH = aplic_m->smsicfgaddrH;
++        msicfgaddr = aplic_m->smsicfgaddr;
++
++        lhxs = (msicfgaddrH >> APLIC_xMSICFGADDRH_LHXS_SHIFT) &
++            APLIC_xMSICFGADDRH_LHXS_MASK;
++    }
++
+     group_idx = hart_idx >> lhxw;
+ 
+     addr = msicfgaddr;
+@@ -771,7 +778,7 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_MMSICFGADDRH)) {
+         if (!(aplic->mmsicfgaddrH & APLIC_xMSICFGADDRH_L)) {
+-            aplic->mmsicfgaddrH = value & APLIC_xMSICFGADDRH_VALID_MASK;
++            aplic->mmsicfgaddrH = value & APLIC_MMSICFGADDRH_VALID_MASK;
+         }
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_SMSICFGADDR)) {
+@@ -792,7 +799,7 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
+                (addr == APLIC_SMSICFGADDRH)) {
+         if (aplic->num_children &&
+             !(aplic->mmsicfgaddrH & APLIC_xMSICFGADDRH_L)) {
+-            aplic->smsicfgaddrH = value & APLIC_xMSICFGADDRH_VALID_MASK;
++            aplic->smsicfgaddrH = value & APLIC_SMSICFGADDRH_VALID_MASK;
+         }
+     } else if ((APLIC_SETIP_BASE <= addr) &&
+             (addr < (APLIC_SETIP_BASE + aplic->bitfield_words * 4))) {
 -- 
 2.47.3
 
