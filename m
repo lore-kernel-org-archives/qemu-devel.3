@@ -4,37 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3C7ACFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87161CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:44:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd4F-0002Vl-Dp; Fri, 21 Nov 2025 21:09:40 -0500
+	id 1vMcwv-0002Li-5f; Fri, 21 Nov 2025 21:02:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@jiesong.me>) id 1vMclI-0001MX-Rh
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:50:04 -0500
-Received: from out28-66.mail.aliyun.com ([115.124.28.66])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vMc9v-0006a3-2K
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:11:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mail@jiesong.me>) id 1vMcjH-0005Ds-0I
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:50:01 -0500
-Received: from Sun.localdomain(mailfrom:mail@jiesong.me
- fp:SMTPD_---.fT0U-1w_1763776042 cluster:ay29) by smtp.aliyun-inc.com;
- Sat, 22 Nov 2025 09:47:27 +0800
-From: Jie Song <mail@jiesong.me>
-To: eblake@redhat.com, armbru@redhat.com, berrange@redhat.com,
- qemu-devel@nongnu.org
-Cc: mail@jiesong.me,
-	songjie_yewu@cmss.chinamobile.com
-Subject: [PATCH v3] monitor/qmp: cleanup SocketChardev listener sources early
- to avoid fd handling race
-Date: Sat, 22 Nov 2025 09:46:56 +0800
-Message-ID: <20251122014656.297693-1-mail@jiesong.me>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.28.66; envelope-from=mail@jiesong.me;
- helo=out28-66.mail.aliyun.com
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vMc7t-0004C0-IZ
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:11:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763773746;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=j+F6WIwWKwxNMDi4qAm/LtNKAUJiCHrgptJWiL6wqhg=;
+ b=TvG7uB1kKr9m1vvhpc5lcBHOFQ/0g1mlwkXzmJWK0a7xofYVUMK8neukWK+aOW7Z9UMy5W
+ LK8OdQa1zKfdbV19NMapenMJQVPLOy2JXUe8UxHdtzWKDgTUR6P2xtdpWMouH+bSPVeh0u
+ izfMEUV7vPrkF7OspxLm8iUroBVEhtw=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-558-MO7MSC3_PVG92bf0qfucPQ-1; Fri, 21 Nov 2025 08:48:49 -0500
+X-MC-Unique: MO7MSC3_PVG92bf0qfucPQ-1
+X-Mimecast-MFC-AGG-ID: MO7MSC3_PVG92bf0qfucPQ_1763732928
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-7b96038aa68so2311790b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 05:48:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763732928; x=1764337728; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j+F6WIwWKwxNMDi4qAm/LtNKAUJiCHrgptJWiL6wqhg=;
+ b=LW/bn4zQFCX80JCMwcIw9p1F/dEJ33jh+stSGqm2DC+DNnfG99KDHpL/VG1V7X/Iyi
+ f19laEkVQCs87M7CIGMGXLhlCQfg1JmlKoAI0KQ2bGrlRRSXbA8ySDGz83KBZSbtImka
+ m7S6FF6TksXSBcvBPjtFp0/+L+29VDz0LZVxHZ4MOZTcGDVd7TfjumuaUT052sb9ZwY4
+ hHXtff4LgIxIGMPzZhYiB45uQDTcpYcv4IhhI0Va9DdVJKrC1aECaK5EjGBzKKVIpdWo
+ qP9s40H2XZvctwXOWd1tnzMF9Dvs0/4hAWS9DypgjKIFquxuj9wN1odFtgPKpm3WCAnR
+ 7SwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763732928; x=1764337728;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=j+F6WIwWKwxNMDi4qAm/LtNKAUJiCHrgptJWiL6wqhg=;
+ b=YLVBrfrifEK7d8VNk3kXFou9RiyZgaEUHuxU4zj59CDMIEZq9Clk0g8KgYgq6nAyfb
+ N/qdCn21lKlJ7NKu5sqMirFOmMHeMcaCANMwmaTrv4Cavu3obRkGnHwkSznj7XL2pO0u
+ ML3uch/mT6jX6s7oftq9tw7FcHUO/jMrwP/R0kStlBXG1vPjIprauDXSug1XWGYwK3Cx
+ uruc7Fshnr7J9mvXPKXOSXZokstOco/ulERKuaCxNQ/ibPTCyx6lEpjPa2M6mDaBtNFN
+ bjyaNpT66Ewh3Is4Jc8A86LSDlbpOvb0orLwyr5cp8gHAMkGY89UjmRS4SrwMtbQzhqq
+ K2Eg==
+X-Gm-Message-State: AOJu0Yw+NUoiTsFLwiQVz/f7BcH79lDLPvPKBLz5s2ZquNvYBPnuLndu
+ x8R4x0khVm4CBXiPM4xj+qG9CknBX3gtimYY28b8RTFdofjZv/u4xyB/oan81V0QtmdoH7ieuMY
+ DhywnsCz9oECoG+H44/VAb5SBfuYucF1pDbgtt/EY+bLYiVWDegJC3RgR
+X-Gm-Gg: ASbGncsosy/7flxEp2oSVaggTp5gHzhDUslD3qT7v4uvQj7TVB1CsytuQRrbFpJbtbV
+ APrE6itY3VNSem72EJr36iWkxff7RrtI4arBFjnNF0GLCzJuVvyu/5DAxCljigHGR1lBzoZMy18
+ qu9miIwatIrA0/GEe7Hb88AqXUkHnLmB1sC5aKqGHBTJcqUmurDrllaxiDSsRAELndWgX6f7axE
+ He7YJPfHpcEiRZ9AoLEhULQEOiKEIeepxNliZmmDwuPN7UIYCja9eMCB9z5x2c7ChadSOBXmRVK
+ aLqTCYej04deXG+oiUDjkF0ARS0+/XJ3oakZT9xXTRcpSyfSenPRMdSnLwbDKhEmUeK3mMNFsP/
+ STbnz9l67eR+9wiBjmY7FKG1omutpcCrfalkYID5S6JTqVALNLD49W1m/
+X-Received: by 2002:a05:6a00:73a7:b0:7aa:8c11:b520 with SMTP id
+ d2e1a72fcca58-7c41e6f85b1mr5428880b3a.7.1763732928043; 
+ Fri, 21 Nov 2025 05:48:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHJOOyLt24wTeytOAaTI6/XGYVDnbu/8SCrj0ZSnYrKDSUxCkvHhUq1VBUb4DQEJMPFx2Rilw==
+X-Received: by 2002:a05:6a00:73a7:b0:7aa:8c11:b520 with SMTP id
+ d2e1a72fcca58-7c41e6f85b1mr5428855b3a.7.1763732927660; 
+ Fri, 21 Nov 2025 05:48:47 -0800 (PST)
+Received: from smtpclient.apple ([106.212.87.16])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7c3f174c9dasm6149063b3a.65.2025.11.21.05.48.44
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 21 Nov 2025 05:48:47 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.7\))
+Subject: Re: [PATCH 4/4] igvm: move igvm file processing to reset callbacks
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20251118122133.1695767-5-kraxel@redhat.com>
+Date: Fri, 21 Nov 2025 19:18:32 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eduardo Habkost <eduardo@habkost.net>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Luigi Leonardi <leonardi@redhat.com>, Oliver Steffen <osteffen@redhat.com>,
+ Michael Tsirkin <mst@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <155EBDE9-0859-4235-8685-13B3398A35C9@redhat.com>
+References: <20251118122133.1695767-1-kraxel@redhat.com>
+ <20251118122133.1695767-5-kraxel@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+X-Mailer: Apple Mail (2.3776.700.51.11.7)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -49,124 +120,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jie Song <songjie_yewu@cmss.chinamobile.com>
 
-When starting a dummy QEMU process with virsh version, monitor_init_qmp()
-enables IOThread monitoring of the QMP fd by default. However, a race
-condition exists during the initialization phase: the IOThread only removes
-the main thread's fd watch when it reaches qio_net_listener_set_client_func_full(),
-which may be delayed under high system load.
 
-This creates a window between monitor_qmp_setup_handlers_bh() and
-qio_net_listener_set_client_func_full() where both the main thread and
-IOThread are simultaneously monitoring the same fd and processing events.
-This race can cause either the main thread or the IOThread to hang and
-become unresponsive.
+> On 18 Nov 2025, at 5:51=E2=80=AFPM, Gerd Hoffmann <kraxel@redhat.com> =
+wrote:
+>=20
+> Move igvm file processing from machine init to reset callbacks.  With
+> that the igvm file is properly re-loaded on reset.  Also the loading
+> happens later in the init process now.  This will simplify future
+> support for some IGVM parameters which depend on initialization steps
+> which happen after machine init.
 
-Fix this by proactively cleaning up the listener's IO sources in
-monitor_init_qmp() before the IOThread initializes QMP monitoring,
-ensuring exclusive fd ownership and eliminating the race condition.
+LGTM.
 
-Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
----
-Changes in v3:
-- Use a more general method to fix the problem.
-- Link to v2:
-  https://lore.kernel.org/qemu-devel/20251117150142.131694-1-mail@jiesong.me/
-- Link to v1:
-  https://lore.kernel.org/qemu-devel/20251111150144.76751-1-mail@jiesong.me/
----
- chardev/char-io.c         | 8 ++++++++
- chardev/char-socket.c     | 9 +++++++++
- include/chardev/char-io.h | 2 ++
- include/chardev/char.h    | 2 ++
- monitor/qmp.c             | 5 +++++
- 5 files changed, 26 insertions(+)
+>=20
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 
-diff --git a/chardev/char-io.c b/chardev/char-io.c
-index 3be17b51ca..998282e526 100644
---- a/chardev/char-io.c
-+++ b/chardev/char-io.c
-@@ -182,3 +182,11 @@ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len)
- {
-     return io_channel_send_full(ioc, buf, len, NULL, 0);
- }
-+
-+void remove_listaner_fd_in_watch(Chardev *chr)
-+{
-+    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
-+    if (cc->chr_listener_cleanup) {
-+        cc->chr_listener_cleanup(chr);
-+    }
-+}
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 26d2f11202..39b3a76638 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -1570,6 +1570,14 @@ char_socket_get_connected(Object *obj, Error **errp)
-     return s->state == TCP_CHARDEV_STATE_CONNECTED;
- }
- 
-+static void tcp_chr_listener_cleanup(Chardev *chr)
-+{
-+    SocketChardev *s = SOCKET_CHARDEV(chr);
-+    if (s->listener)
-+        qio_net_listener_set_client_func_full(s->listener, NULL, NULL,
-+                                              NULL, chr->gcontext);
-+}
-+
- static void char_socket_class_init(ObjectClass *oc, const void *data)
- {
-     ChardevClass *cc = CHARDEV_CLASS(oc);
-@@ -1587,6 +1595,7 @@ static void char_socket_class_init(ObjectClass *oc, const void *data)
-     cc->chr_add_client = tcp_chr_add_client;
-     cc->chr_add_watch = tcp_chr_add_watch;
-     cc->chr_update_read_handler = tcp_chr_update_read_handler;
-+    cc->chr_listener_cleanup = tcp_chr_listener_cleanup;
- 
-     object_class_property_add(oc, "addr", "SocketAddress",
-                               char_socket_get_addr, NULL,
-diff --git a/include/chardev/char-io.h b/include/chardev/char-io.h
-index ac379ea70e..087a250c70 100644
---- a/include/chardev/char-io.h
-+++ b/include/chardev/char-io.h
-@@ -43,4 +43,6 @@ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len);
- int io_channel_send_full(QIOChannel *ioc, const void *buf, size_t len,
-                          int *fds, size_t nfds);
- 
-+void remove_listaner_fd_in_watch(Chardev *chr);
-+
- #endif /* CHAR_IO_H */
-diff --git a/include/chardev/char.h b/include/chardev/char.h
-index b65e9981c1..192cad67d4 100644
---- a/include/chardev/char.h
-+++ b/include/chardev/char.h
-@@ -307,6 +307,8 @@ struct ChardevClass {
- 
-     /* handle various events */
-     void (*chr_be_event)(Chardev *s, QEMUChrEvent event);
-+
-+    void (*chr_listener_cleanup)(Chardev *chr);
- };
- 
- Chardev *qemu_chardev_new(const char *id, const char *typename,
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index cb99a12d94..e2b1c49ed6 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -537,6 +537,11 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
-          * e.g. the chardev is in client mode, with wait=on.
-          */
-         remove_fd_in_watch(chr);
-+        /*
-+         * Clean up listener IO sources early to prevent racy fd
-+         * handling between the main thread and the I/O thread.
-+         */
-+        remove_listaner_fd_in_watch(chr);
-         /*
-          * We can't call qemu_chr_fe_set_handlers() directly here
-          * since chardev might be running in the monitor I/O
--- 
-2.43.0
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+
+> ---
+> backends/igvm-cfg.c |  7 +++++++
+> hw/i386/pc_piix.c   | 10 ----------
+> hw/i386/pc_q35.c    | 10 ----------
+> 3 files changed, 7 insertions(+), 20 deletions(-)
+>=20
+> diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+> index 08501a67e58e..c1b45401f429 100644
+> --- a/backends/igvm-cfg.c
+> +++ b/backends/igvm-cfg.c
+> @@ -15,6 +15,8 @@
+> #include "system/igvm.h"
+> #include "system/reset.h"
+> #include "qom/object_interfaces.h"
+> +#include "hw/qdev-core.h"
+> +#include "hw/boards.h"
+>=20
+> #include "trace.h"
+>=20
+> @@ -44,7 +46,12 @@ static void igvm_reset_enter(Object *obj, ResetType =
+type)
+>=20
+> static void igvm_reset_hold(Object *obj, ResetType type)
+> {
+> +    MachineState *ms =3D MACHINE(qdev_get_machine());
+> +    IgvmCfg *igvm =3D IGVM_CFG(obj);
+> +
+>     trace_igvm_reset_hold(type);
+> +
+> +    qigvm_process_file(igvm, ms->cgs, false, &error_fatal);
+> }
+>=20
+> static void igvm_reset_exit(Object *obj, ResetType type)
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 7b3611e973cd..b3b71df64bfc 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -320,16 +320,6 @@ static void pc_init1(MachineState *machine, const =
+char *pci_type)
+>                                x86_nvdimm_acpi_dsmio,
+>                                x86ms->fw_cfg, OBJECT(pcms));
+>     }
+> -
+> -#if defined(CONFIG_IGVM)
+> -    /* Apply guest state from IGVM if supplied */
+> -    if (x86ms->igvm) {
+> -        if (IGVM_CFG_GET_CLASS(x86ms->igvm)
+> -                ->process(x86ms->igvm, machine->cgs, false, =
+&error_fatal) < 0) {
+> -            g_assert_not_reached();
+> -        }
+> -    }
+> -#endif
+> }
+>=20
+> typedef enum PCSouthBridgeOption {
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index 6015e639d7bc..f2e6ebfe294c 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -328,16 +328,6 @@ static void pc_q35_init(MachineState *machine)
+>                                x86_nvdimm_acpi_dsmio,
+>                                x86ms->fw_cfg, OBJECT(pcms));
+>     }
+> -
+> -#if defined(CONFIG_IGVM)
+> -    /* Apply guest state from IGVM if supplied */
+> -    if (x86ms->igvm) {
+> -        if (IGVM_CFG_GET_CLASS(x86ms->igvm)
+> -                ->process(x86ms->igvm, machine->cgs, false, =
+&error_fatal) < 0) {
+> -            g_assert_not_reached();
+> -        }
+> -    }
+> -#endif
+> }
+>=20
+> #define DEFINE_Q35_MACHINE(major, minor) \
+> --=20
+> 2.51.1
+>=20
 
 
