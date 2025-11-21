@@ -4,42 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390E0CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:25:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52D14CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:26:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcrn-0006hR-3t; Fri, 21 Nov 2025 20:56:48 -0500
+	id 1vMdf6-0000en-Mm; Fri, 21 Nov 2025 21:47:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbqx-00045K-SI; Fri, 21 Nov 2025 19:51:51 -0500
+ id 1vMdd6-0007Ta-BD; Fri, 21 Nov 2025 21:45:40 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbqn-0000cA-EP; Fri, 21 Nov 2025 19:51:48 -0500
+ id 1vMdbs-00042P-Qe; Fri, 21 Nov 2025 21:45:37 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 892AF16CA83;
- Fri, 21 Nov 2025 21:44:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9C86E16C71C;
+ Fri, 21 Nov 2025 16:51:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 47005321CBF;
- Fri, 21 Nov 2025 21:44:38 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F3EC73219B8;
+ Fri, 21 Nov 2025 16:52:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 72/81] nvme: Fix coroutine waking
-Date: Fri, 21 Nov 2025 21:44:11 +0300
-Message-ID: <20251121184424.1137669-72-mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 67/76] nvme: Fix coroutine waking
+Date: Fri, 21 Nov 2025 16:51:45 +0300
+Message-ID: <20251121135201.1114964-67-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,10 +106,10 @@ Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/block/nvme.c b/block/nvme.c
-index 3366519e57..2e93abdb4b 100644
+index 7ed5f570bc..b8262ebfd9 100644
 --- a/block/nvme.c
 +++ b/block/nvme.c
-@@ -1171,25 +1171,35 @@ fail:
+@@ -1176,25 +1176,35 @@ fail:
  
  typedef struct {
      Coroutine *co;
@@ -150,7 +156,7 @@ index 3366519e57..2e93abdb4b 100644
  }
  
  static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
-@@ -1213,7 +1223,7 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+@@ -1218,7 +1228,7 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
          .cdw12 = cpu_to_le32(cdw12),
      };
      NVMeCoData data = {
@@ -159,7 +165,7 @@ index 3366519e57..2e93abdb4b 100644
          .ret = -EINPROGRESS,
      };
  
-@@ -1230,9 +1240,7 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+@@ -1235,9 +1245,7 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
          return r;
      }
      nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
@@ -170,7 +176,7 @@ index 3366519e57..2e93abdb4b 100644
          qemu_coroutine_yield();
      }
  
-@@ -1328,7 +1336,7 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
+@@ -1333,7 +1341,7 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
          .nsid = cpu_to_le32(s->nsid),
      };
      NVMeCoData data = {
@@ -179,7 +185,7 @@ index 3366519e57..2e93abdb4b 100644
          .ret = -EINPROGRESS,
      };
  
-@@ -1336,9 +1344,7 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
+@@ -1341,9 +1349,7 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
      req = nvme_get_free_req(ioq);
      assert(req);
      nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
@@ -190,7 +196,7 @@ index 3366519e57..2e93abdb4b 100644
          qemu_coroutine_yield();
      }
  
-@@ -1379,7 +1385,7 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
+@@ -1384,7 +1390,7 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
      };
  
      NVMeCoData data = {
@@ -199,7 +205,7 @@ index 3366519e57..2e93abdb4b 100644
          .ret = -EINPROGRESS,
      };
  
-@@ -1399,9 +1405,7 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
+@@ -1404,9 +1410,7 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
      assert(req);
  
      nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
@@ -210,7 +216,7 @@ index 3366519e57..2e93abdb4b 100644
          qemu_coroutine_yield();
      }
  
-@@ -1429,7 +1433,7 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
+@@ -1434,7 +1438,7 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
      };
  
      NVMeCoData data = {
@@ -219,7 +225,7 @@ index 3366519e57..2e93abdb4b 100644
          .ret = -EINPROGRESS,
      };
  
-@@ -1474,9 +1478,7 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
+@@ -1479,9 +1483,7 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
      trace_nvme_dsm(s, offset, bytes);
  
      nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
