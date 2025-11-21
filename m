@@ -4,48 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E121ECFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D724CFC519
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:25:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdBq-0001Cf-K9; Fri, 21 Nov 2025 21:17:31 -0500
+	id 1vMcjI-0000Ha-Cb; Fri, 21 Nov 2025 20:48:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMd2r-0001iE-Qt; Fri, 21 Nov 2025 21:08:13 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vMbPX-0004Jq-1Z; Fri, 21 Nov 2025 19:23:32 -0500
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMd25-0002ef-SA; Fri, 21 Nov 2025 21:08:10 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3E53116C66F;
- Fri, 21 Nov 2025 15:54:50 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8A1393218E8;
- Fri, 21 Nov 2025 15:54:58 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL 1/3] qga: use access(2) to check for command existance instead
- of questionable stat(2)
-Date: Fri, 21 Nov 2025 15:54:49 +0300
-Message-ID: <20251121125455.1108509-2-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251121125455.1108509-1-mjt@tls.msk.ru>
-References: <20251121125455.1108509-1-mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
+ id 1vMbPK-0002Rd-Ug; Fri, 21 Nov 2025 19:23:27 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id E279643F60;
+ Fri, 21 Nov 2025 18:57:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AC9C116C6;
+ Fri, 21 Nov 2025 18:57:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1763751448;
+ bh=4v/4H6HK6k3+IlgT1aQrDWAFbJmsD5QFrpz8ER7m8To=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=h+eh58ZTHyPR4P+AvJ2h0q4tV95gSs5RcRkWveyF7jFNjY/Z7Sq8gKDB+1GSRP7DS
+ fdgaxRaemEMg2U6lJQeQygFZMJG4vw8ANnv4R9/kTRBFcDGKXK3HEugMfNuP5AMHo5
+ iXYcpUFHEu7sdS8lkMYLZWX9z+JjD+jp/ZOhT9Fv8XoRJWF+gVv8zJIs7d6UtKQ6EC
+ z3Hc4N51Zhmc2ZlfGeiweCj0/s46Nbg5Tc+PbGAgA+l3RavZuLTXeqzSUyaAo9Vtai
+ /4hzTFF0CtmK1LxOf6Kk/mMAGY46sPte3TfOW85DEHj7JTT6+8Gf0+SowQRB3/Sikj
+ IVB1zPJ907seA==
+Date: Fri, 21 Nov 2025 10:57:26 -0800
+From: Drew Fustini <fustini@kernel.org>
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-riscv@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, Nicolas Pitre <npitre@baylibre.com>,
+ Kornel =?utf-8?Q?Dul=C4=99ba?= <mindal@semihalf.com>,
+ Atish Kumar Patra <atishp@rivosinc.com>,
+ Atish Patra <atish.patra@linux.dev>,
+ Vasudevan Srinivasan <vasu@rivosinc.com>,
+ Radim =?utf-8?B?S3LEjW3DocWZ?= <rkrcmar@ventanamicro.com>,
+ yunhui cui <cuiyunhui@bytedance.com>,
+ Chen Pei <cp0613@linux.alibaba.com>, guo.wenjia23@zte.com.cn,
+ liu.qingtao2@zte.com.cn
+Subject: Re: [PATCH 3/7] hw/riscv: implement CBQRI capacity controller
+Message-ID: <aSC2FhUFlrKSSuwI@x1>
+References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
+ <20251119-riscv-ssqosid-cbqri-v1-3-3392fc760e48@kernel.org>
+ <ea794b78-2b7e-44eb-96e2-342f6a338090@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ea794b78-2b7e-44eb-96e2-342f6a338090@ventanamicro.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
+ helo=sea.source.kernel.org
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,77 +74,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The code checks existance of a command (halt/poweroff/reboot) by using
-stat(2) and immediately checking for S_ISLNK() on the returned stat
-struct.  This check will never be true, because stat(2) always follows
-symbolic links and hence will either return ENOENT (in case of dangling
-symlink) or the properties for the final target file.  It is lstat(2)
-which might return information about the symlink itself.  However, even
-there, we want to check the final file properties, not the first symlink.
+On Thu, Nov 20, 2025 at 08:47:44AM -0300, Daniel Henrique Barboza wrote:
+> [ ...]
+> 
+> > +
+> > +static void riscv_cbqri_cc_write(void *opaque, hwaddr addr,
+> > +                                 uint64_t value, unsigned size)
+> > +{
+> > +    RiscvCbqriCapacityState *cc = opaque;
+> > +
+> > +    assert((addr % 8) == 0);
+> > +    assert(size == 8);
+> 
+> So here and in the read callback (riscv_cbqri_cc_read) you're doing asserts for
+> size == 8, while your memoryops has:
+> 
+> static const MemoryRegionOps riscv_cbqri_cc_ops = {
+>     .read = riscv_cbqri_cc_read,
+>     .write = riscv_cbqri_cc_write,
+>     .endianness = DEVICE_LITTLE_ENDIAN,
+>     .valid.min_access_size = 4,  <==========
+>     .valid.max_access_size = 8,
+>     .impl.min_access_size = 8,
+>     .impl.max_access_size = 8,
+> };
+> 
+> 
+> You can get rid of assert(size == 8) in both callbacks by setting
+> min_access_size = 8.
 
-This check - S_ISLNK - is harmful but useless in this case.  However, it
-is confusing and it helps the wrong usage of stat(2) to spread, so it is
-better to remove it.
+Thanks for the review. 
 
-Additionally, the code would better to check for the executable bits
-of the final file, not check if it's a regular file - it's sort of
-dubious to have anything but regular files in /sbin/.
+I think that the assert in riscv_cbqri_cc_write maybe incorrect.
 
-But a POSIX system provides another command which suits the purpose
-perfectly: it is access(2).  And it is so simple that it's not
-necessary to create a separate function when usin it.
+The CBQRI spec states that the registers:
+ - start at an 8-byte aligned physical address. 
+ - can accessed by using naturally aligned 4-byte or 8-byte accesses
+ - 4-byte access to a register must be single-copy atomic
+ - It is UNSPECIFIED whether 8-byte access must be single-copy atomic
+ - 8-byte access can appear internally to the CBQRI implementation as
+   if two separate 4-byte accesses are performed.
 
-Replace stat(2) with access(X_OK) to check for file existance in
-qga/commands-posix.c
+The spec further notes that:
 
-Fixes: c5b4afd4d56e "qga: Support guest shutdown of BusyBox-based systems"
-Reviewed-by: Rodrigo Dias Correa <r@drigo.nl>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- qga/commands-posix.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+"The CBQRI registers are defined so that software can perform two
+individual 4 byte accesses, or hardware can perform two independent 4
+byte transactions resulting from an 8 byte access, to the high and low
+halves of the register as long as the register semantics, with regards
+to side-effects, are respected between the two software accesses, or two
+hardware transactions, respectively."
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 66f3e6f673..837be51c40 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -216,12 +216,6 @@ out:
-     return retcode;
- }
- 
--static bool file_exists(const char *path)
--{
--    struct stat st;
--    return stat(path, &st) == 0 && (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode));
--}
--
- #define POWEROFF_CMD_PATH "/sbin/poweroff"
- #define HALT_CMD_PATH "/sbin/halt"
- #define REBOOT_CMD_PATH "/sbin/reboot"
-@@ -248,17 +242,17 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
- 
-     slog("guest-shutdown called, mode: %s", mode);
-     if (!mode || strcmp(mode, "powerdown") == 0) {
--        if (file_exists(POWEROFF_CMD_PATH)) {
-+        if (access(POWEROFF_CMD_PATH, X_OK) == 0) {
-             shutdown_cmd = POWEROFF_CMD_PATH;
-         }
-         shutdown_flag = powerdown_flag;
-     } else if (strcmp(mode, "halt") == 0) {
--        if (file_exists(HALT_CMD_PATH)) {
-+        if (access(HALT_CMD_PATH, X_OK) == 0) {
-             shutdown_cmd = HALT_CMD_PATH;
-         }
-         shutdown_flag = halt_flag;
-     } else if (strcmp(mode, "reboot") == 0) {
--        if (file_exists(REBOOT_CMD_PATH)) {
-+        if (access(REBOOT_CMD_PATH, X_OK) == 0) {
-             shutdown_cmd = REBOOT_CMD_PATH;
-         }
-         shutdown_flag = reboot_flag;
--- 
-2.47.3
+Based on the above, I believe .valid.min_access_size does need to stay
+at 4 bytes. The Qemu documentation states that otherwise "accesses
+outside this range will have device and bus specific behaviour (ignored,
+or machine check)".
 
+I am confused whether ".impl.min_access_size = 8" is correct. The Qemu
+documentation states that "other access sizes will be emulated using the
+ones available. For example a 4-byte write will be emulated using four
+1-byte writes, if .impl.max_access_size = 1."
+
+Radim asked if 32-bit (4 byte) access would be supported, but I am
+confused how other access sizes are emulated.
+
+Do I need to add code to the read and write hooks for riscv_cbqri_cc_ops
+and riscv_cbqri_bc_ops?
+
+Or is there some aspect of MemoryRegionOps that can handle the emulation
+of other sizes automatically?
+
+Thanks,
+Drew
 
