@@ -4,156 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 070AECFA76E
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 10:41:00 +0000 (UTC)
-Received: from localhost ([::1] helo=lists1p.gnu.org)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84A71CFC28C
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 15:16:35 +0000 (UTC)
+Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMOUa-0003EQ-No; Fri, 21 Nov 2025 05:35:54 -0500
+	id 1vMOoA-0001a5-KW; Fri, 21 Nov 2025 05:56:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vMOKR-0008IE-AJ
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 05:25:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMOWh-0003zA-UX; Fri, 21 Nov 2025 05:38:04 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vMOKH-0001Ki-I4
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 05:25:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763720697;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mP619Xf7apXUow5hCSU/SjZJPjChsAnhjp5c/9UFgus=;
- b=MbXVo00t/sNdYFlquMvnQSvg0tUB4hPvcBGwKUyhR2YKOs9hVteQiYuyICSW3MLUExUGFL
- Copap9G5DQd8hPulESkbHohIBA4xvZwXgVFS+5Umj+cSfT1p4Z89oLcw83k32gkUIRhPjH
- QvlBC5aIdq+3zRegvtrPYjXqpWtAGCs=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-_825Ho3DPbi00YAsWh9dTQ-1; Fri, 21 Nov 2025 05:24:55 -0500
-X-MC-Unique: _825Ho3DPbi00YAsWh9dTQ-1
-X-Mimecast-MFC-AGG-ID: _825Ho3DPbi00YAsWh9dTQ_1763720695
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-429c95fdba8so922718f8f.0
- for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 02:24:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763720694; x=1764325494; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=mP619Xf7apXUow5hCSU/SjZJPjChsAnhjp5c/9UFgus=;
- b=CKTggLpMqgAG4YhFXAxRD7Vlk7h86OpKBi17dk5ykLVsa3zpiwkLA6Q9Ix7Dedl1p1
- dCrVIh+fM9BfKu+D8ZipJbCl+sgY829JW+dTg+eAjC+8o9Vx0TF96xwcfFTfk+gO0SKH
- M2LRzzie/d68eyrB484GX2zhS4DFkjtXAJOdi5loANTVu937taS3NOCrcIBnyML+lH/V
- vf/j1sqmAlR4SzUvnZPd4zmCGN3YOEHLxEmZkxjkAlnsnI4Ft7vt7Owk8Qoa3jPpvvFT
- kSkU9vpsNSTtyAxklIwcDKCVmmNcic3i1DyPNuC2kK5uTQnccvWij8anF04MGbQR8Nl6
- s9Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763720694; x=1764325494;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mP619Xf7apXUow5hCSU/SjZJPjChsAnhjp5c/9UFgus=;
- b=OdeDDOwWO/SpauEFN5LeOz/9HVxaFi1W6CB7tk5yKbiaEDL0Ubl4vl9TA3bnx17KpG
- bXaUKn5z4NFiBHwZ+SsxEoZuI8w3no44QWvElAL6IUIMrJ0v0zBSgCpne/Fz3cVI/+9W
- wl8uDWiuscxxF5bmx2QcOEUpq2YIP/BR5Rcj8Dg3COPaYMExxiefpKMbdNay/ZrTRxJY
- QrRFjsshP+oRyvkHdMP2/OfAnl15Pj6A4Muc+ko/UbRw06mvvcoxLNZM2lA8Uvse2w6J
- BdszM5DpvVgu6D9kNuKew0bMbM0VztZ4V6AK0A948vzzHZJqewK89VPUZItLiYHqA4mG
- u/Gw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXirEKkfOfxo7HBWPr5uZzPVgXTAggD+6otXZg+bl+gb/zSabedeJwlvMiH9Ex1cKU4hLdOaVNVKKPl@nongnu.org
-X-Gm-Message-State: AOJu0YzcXzbBoJjSZvEcVjdXLzvIYv+Lfx3flzEbxakoevc2Jjnz276E
- i51xyiIucFvng5biUPVN7olhnGXrsC3UkkGIml28H6hPYvN30Iofs47jGgkJjr3kiX8KwX+7yDy
- U7HVhiHuK52ZtKtyX/DdbftdQ2TD0byFPsCd7I1TGljxgqBIbGNG0udQl
-X-Gm-Gg: ASbGncuclcO3oFrm7rBDoWprZQMjawWtQZzbZTRf5tS8srbKIhy/YGo77fvjQ2Od7wb
- KsLC/jKYcVNeDwoxG/o84mVPdN+HpqPE5mhEH8qPWnK87vjGWx/61OTORgpFFdhNduD6tIPHGG/
- SiOgDhfjxGokeCMFJAKSLrBJFYXurbtS7tI31DGdLbbnplRc9DOmHUOeSeNXURQOg9+VLnch8Z0
- NRw6xMNqBMIrt52Q72Eq2o5yEApMMb6t9Ynfuf8XE8hPLle9YIwr2TJGw4i2u07w+DJmXnWhqVG
- sCME5DKwaZs8nlclP5gMMph531HM7ark8WCKogcC8XyG6Be9SQOHtlvC2Iqf1NnKeK2raJUC2uO
- b4Dc3HNZ9WTWX6hgHxLbcOcNT6BKXr6JdY/yLLY5+CACLEAnoIx4gr8FgH5BsJtn2Tys288UWc4
- u3XhipCBDKfFXl5Jk=
-X-Received: by 2002:a5d:5c89:0:b0:42b:32f5:ad43 with SMTP id
- ffacd0b85a97d-42cc1ceead7mr1783045f8f.17.1763720694596; 
- Fri, 21 Nov 2025 02:24:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH6iZXimUDPd4eFb7Kmiljiz4pjNYuGrlD2iMNepoUfevPehlVidzIIv58J0wTgrmr3aXhLZg==
-X-Received: by 2002:a5d:5c89:0:b0:42b:32f5:ad43 with SMTP id
- ffacd0b85a97d-42cc1ceead7mr1783020f8f.17.1763720694212; 
- Fri, 21 Nov 2025 02:24:54 -0800 (PST)
-Received: from [192.168.10.81] ([176.206.119.13])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fd8c47sm10735860f8f.38.2025.11.21.02.24.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 21 Nov 2025 02:24:53 -0800 (PST)
-Message-ID: <df22536e-c813-4b9a-a9fa-75b9fdc0fb4a@redhat.com>
-Date: Fri, 21 Nov 2025 11:24:46 +0100
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMOWX-0002JN-Al; Fri, 21 Nov 2025 05:37:59 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5ALAbASp074664
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 21 Nov 2025 19:37:11 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=fXuVz71uzKkMD6s5XD0qIx2g6uYHZuOpMWhK178pPTM=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763721431; v=1;
+ b=B8BJ4RsEIYqOAWJKwm2AN9ZZu8mhPspw6z+gm5cbHONrV0+EesrAoc57mj8e4WDr
+ krGosBnUsoIwKQwyAgdbDXENH80IxsUTM915E5OMdG95c2lnjn1tqTDxjq2qCYAf
+ HlhdqTVfoInu2iu1L2BQfYJs/jcvrZjR5lPqOYydjvZJwuGwNRUhkYeOLCfmzSTF
+ hO3x1uvg5749eMxpYWvoBA08nrJcpcKaTPyOL0txh92hhVrOMVeETcG8f00yXwwV
+ E94pRd7+qNFI4+jy+SaPmz1cnIQPaTUi4aV6lzxi1E3R+o0oaKHvkiP5+Rch1aD/
+ 9jf18z9PQnw4ei2xiFWqaw==
+Message-ID: <95237630-e3b4-4787-a1f8-8eb8e50929f5@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 21 Nov 2025 19:37:10 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/22] mtest2make: cleanup mtest-suites variables
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
- Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20251117185131.953681-1-jsnow@redhat.com>
- <20251117185131.953681-14-jsnow@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v11 04/28] hw/arm: virt: add GICv2m for the case when ITS
+ is not available
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20251121100240.89117-1-mohamed@unpredictable.fr>
+ <20251121100240.89117-5-mohamed@unpredictable.fr>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20251117185131.953681-14-jsnow@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251121100240.89117-5-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,23 +79,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/17/25 19:51, John Snow wrote:
-> From: Paolo Bonzini <pbonzini@redhat.com>
+On 2025/11/21 19:02, Mohamed Mediouni wrote:
+> On Hypervisor.framework for macOS and WHPX for Windows, the provided environment is a GICv3 without ITS.
 > 
-> Remove the "--suite" argument from the .*.mtest-suites variables, and
-> add it only when actually computing the arguments to "meson test".
-> This makes it possible to look at the set of suites to set ninja-cmd-goals,
-> instead of doing it via many different .ninja-goals.* variables.
+> As such, support a GICv3 w/ GICv2m for that scenario.
 > 
-> As a bonus, this removes code duplication between emit_suite_deps
-> and its caller emit_suite.  Since emit_suite_deps would now be one or
-> two lines of code, integrate it into emit_suite directly.
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: John Snow <jsnow@redhat.com>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   hw/arm/virt-acpi-build.c | 4 +++-
+>   hw/arm/virt.c            | 8 ++++++++
+>   include/hw/arm/virt.h    | 2 ++
+>   3 files changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 200e2a1da7..e2062f5d21 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -960,7 +960,9 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>               build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
+>               build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
+>           }
+> -    } else {
+> +    }
+> +
+> +    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) && !vms->no_gicv3_with_gicv2m) {
+>           const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
+>   
+>           /* 5.2.12.16 GIC MSI Frame Structure */
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 25fb2bab56..f2a924ed26 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -959,6 +959,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+>   
+>       if (vms->gic_version != VIRT_GIC_VERSION_2 && vms->its) {
+>           create_its(vms);
+> +    } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
+> +        create_v2m(vms);
+>       } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
+>           create_v2m(vms);
+>       }
 
-This and the other two patches are now in master.
+Shorter:
+if (vms->gic_version == VIRT_GIC_VERSION_2 ||
+     !vms->no_gicv3_with_gicv2m) {
+     create_v2m(vms);
+}
 
-Paolo
+> @@ -2444,6 +2446,8 @@ static void machvirt_init(MachineState *machine)
+>       vms->ns_el2_virt_timer_irq = ns_el2_virt_timer_present() &&
+>           !vmc->no_ns_el2_virt_timer_irq;
+>   
+> +    vms->no_gicv3_with_gicv2m = vmc->no_gicv3_with_gicv2m;
+> +
+>       fdt_add_timer_nodes(vms);
+>       fdt_add_cpu_nodes(vms);
+>   
+> @@ -3488,6 +3492,7 @@ static void virt_instance_init(Object *obj)
+>       vms->its = true;
+>       /* Allow ITS emulation if the machine version supports it */
+>       vms->tcg_its = !vmc->no_tcg_its;
+> +    vms->no_gicv3_with_gicv2m = false;
+>   
+>       /* Default disallows iommu instantiation */
+>       vms->iommu = VIRT_IOMMU_NONE;
+> @@ -3540,9 +3545,12 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 2)
+>   
+>   static void virt_machine_10_1_options(MachineClass *mc)
+>   {
+> +    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
+> +
+>       virt_machine_10_2_options(mc);
+>       mc->smbios_memory_device_size = 2047 * TiB;
+>       compat_props_add(mc->compat_props, hw_compat_10_1, hw_compat_10_1_len);
+> +    vmc->no_gicv3_with_gicv2m = true;
+>   }
+>   DEFINE_VIRT_MACHINE(10, 1)
+>   
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index c77a33f6df..3ff83aaabe 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -130,6 +130,7 @@ struct VirtMachineClass {
+>       bool no_cpu_topology;
+>       bool no_tcg_lpa2;
+>       bool no_ns_el2_virt_timer_irq;
+> +    bool no_gicv3_with_gicv2m;
+>       bool no_nested_smmu;
+>   };
+>   
+> @@ -178,6 +179,7 @@ struct VirtMachineState {
+>       char *oem_id;
+>       char *oem_table_id;
+>       bool ns_el2_virt_timer_irq;
+> +    bool no_gicv3_with_gicv2m;
+>       CXLState cxl_devices_state;
+>       bool legacy_smmuv3_present;
+>   };
 
 
