@@ -4,69 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07687CFA46E
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 03:44:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECA7ECF2564
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 04:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMI3w-0002KW-VA; Thu, 20 Nov 2025 22:43:56 -0500
+	id 1vMIMS-0000nH-AC; Thu, 20 Nov 2025 23:03:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vMI3q-0002IZ-M1
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 22:43:50 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vMI3m-0004cw-28
- for qemu-devel@nongnu.org; Thu, 20 Nov 2025 22:43:48 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxidHp3x9pLm0mAA--.17556S3;
- Fri, 21 Nov 2025 11:43:37 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxecDm3x9pP5Q6AQ--.6990S3;
- Fri, 21 Nov 2025 11:43:36 +0800 (CST)
-Subject: Re: [PATCH V4 2/2] fix pci device can't alloc irq from fdt
-To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Song Gao <gaosong@loongson.cn>
-References: <cover.1763434297.git.lixianglai@loongson.cn>
- <20726ae560966e7405c8f73a665c2f006c613623.1763434297.git.lixianglai@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <f1fda0d6-5255-df10-7b73-0bd36e4c3c51@loongson.cn>
-Date: Fri, 21 Nov 2025 11:41:09 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vMIMQ-0000ml-1m
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 23:03:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vMIMN-0004YF-Ms
+ for qemu-devel@nongnu.org; Thu, 20 Nov 2025 23:03:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763697776;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hRr6W8diSd59J3YABzUjNB7wJzD3GQ6WHK20PczeJIs=;
+ b=SbeSvgQR/L/iY6s02fUtiqLmeKz04PRZ9esB9YDq450MmjR1pdqhspPxrDAnYFUBViwYbh
+ 8vaDncFxV1o0oictnDF2wxok5POH3pvtgx4YK80Wjj0xsHahSDPh5Lkju6Cv7ICg4EqNGe
+ nojRfWiBhG9Sj8PU9CUXwAxmpbQTRJs=
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-137-65y1rm8aNlWRktaORM78bw-1; Thu, 20 Nov 2025 23:02:54 -0500
+X-MC-Unique: 65y1rm8aNlWRktaORM78bw-1
+X-Mimecast-MFC-AGG-ID: 65y1rm8aNlWRktaORM78bw_1763697774
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-5dbcb1740daso846317137.2
+ for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 20:02:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763697773; x=1764302573; darn=nongnu.org;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hRr6W8diSd59J3YABzUjNB7wJzD3GQ6WHK20PczeJIs=;
+ b=WwbB/wIyPJRsL1ewduGjHqnqT43i3dOpqyiarzOG1/HX0+Gnie08P7rbyvOmIgNw3V
+ hCW2cU4TKK+LqVRl2GNiErYaHUPdYD0ERZZ5KJQhS1cAz+VCkrDHtMB7tn2kYoyT9qaf
+ 00cteUH9sryCIBvZijS2T/Ka/V3l/LHo/OqkN2HNHW3C8xq9JubIsGkZhkh4ZC95tjfy
+ TGR6BYAxNza79WPcU49AUvPjnhV5sQ8+UwfOC2vTxR5McFuIOzDwiaEsotszVNYbCd86
+ qSrXQrsLpibXcJBLhaDGW3QwNo+OLlNjRwfBoenZd267RHATyQDxPt3Q/AZkV9nhnd5K
+ y6lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763697773; x=1764302573;
+ h=content-transfer-encoding:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hRr6W8diSd59J3YABzUjNB7wJzD3GQ6WHK20PczeJIs=;
+ b=J/3N7sKCkQu1T3dyFI4+aysQL4dTtlP4ESHcqqPa4YeaBtBE/Q3+8B992MWJwdhKBR
+ cqgSnM3luQpwF8u823mB/JTUR0+/0go50GRHnTn05Ggq97DAs52Bf3Q90+xEwiRPJlh3
+ fXCTY2vpNou71dxl9FcjzqqOwCWMC3hiC4jYyRV0Mz7MNfZHVxoim3mSSvMZ5JbW58zB
+ 11yb8mAAl8DYF7N0W1Xj5Li9XuLVI1hicStZNt6QfXD97O3zxQVOxiv9tVXOtM5h+uOw
+ kcNWaWh3D8rFeipGnCEkJsqUf2op6AqZwiCjQ4Cctur1NCJgvLq84dCtYWoybrFU5H/i
+ n3JA==
+X-Gm-Message-State: AOJu0YzdwCaHv377l2+h1zEbXDRSUv1LzovqbDiRN6p+tgJR9vOWofq+
+ w7Nb0V7TnQ0+ZxgKtAqhyeYAGDoEue7iXbipAuUVQrDmD00iv1MXzulYbR+vybKnu2sIFmgDg79
+ ybs/f/KSFCHv1EFEdmHYr3/rYjEXo9YI22Y8EOTU9Cu6p3d4kczIgC7EOsQVCmI46Rkgu7GoN5E
+ 0+v/YiiTyf99AwUGfp+3EydojWuqojOYHj2SqW7wY2Fg==
+X-Gm-Gg: ASbGncvG8os9pF+wPe4sPpxooWIRxsg+vFVNHdwJmi22dfp+MYkg489CFo86M4F0BZG
+ 14ZaeJYPhH2Qb+bqRMufTEdpzK5o2HDDS/Gj82T+3k6MEe5GDV0lj4T5cb46cA3iI80yDHW+rco
+ 29EunSIW6a/egsCGRINooTTqgpDQfy5vz+hQntCcMUuZlUZJvszTzrpNCzeewhX47FeWU=
+X-Received: by 2002:a05:6102:41a5:b0:5dd:8819:e68a with SMTP id
+ ada2fe7eead31-5e1de3a6b22mr232038137.36.1763697773281; 
+ Thu, 20 Nov 2025 20:02:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEBFExOfqNUf6PNOuqEjnvQLikir34VNbbi/trER/3N7JgdGHLHLuQ++GV+IDcrcKrdnja9d3reKYSAHa++nXI=
+X-Received: by 2002:a05:6102:41a5:b0:5dd:8819:e68a with SMTP id
+ ada2fe7eead31-5e1de3a6b22mr232034137.36.1763697772889; Thu, 20 Nov 2025
+ 20:02:52 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20726ae560966e7405c8f73a665c2f006c613623.1763434297.git.lixianglai@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxecDm3x9pP5Q6AQ--.6990S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxZF1kGF4rXr4DWrWfCr47Jrc_yoWrtr4xpr
- WDC3ZIgrWIqr1I939xZ3WUXFnIyr1fCFy8twnxXr10krnxuw1xXrWDKr47tFy7KrWkJayU
- XFnFga4Ig3WUJagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+References: <20251114034806.2440-1-jasowang@redhat.com>
+In-Reply-To: <20251114034806.2440-1-jasowang@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Fri, 21 Nov 2025 12:02:40 +0800
+X-Gm-Features: AWmQ_bn7_YbRIRux9nd2erRevkvnt1BPH0n0uDcg_WaKZr1aG6xmnlRLQp71Ryc
+Message-ID: <CACGkMEvmuwGC_U3wW51v=qyuvU8qt5R-xx-jf5OR8gB8Fc3XOA@mail.gmail.com>
+Subject: Re: [PULL 0/5] Net patches
+To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.71,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,131 +113,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Nov 14, 2025 at 11:48=E2=80=AFAM Jason Wang <jasowang@redhat.com> w=
+rote:
+>
+> The following changes since commit 9febfa94b69b7146582c48a868bd2330ac4503=
+7f:
+>
+>   Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging =
+(2025-11-12 11:47:42 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/jasowang/qemu.git tags/net-pull-request
+>
+> for you to fetch changes up to a01344d9d78089e9e585faaeb19afccff2050abf:
+>
+>   net: pad packets to minimum length in qemu_receive_packet() (2025-11-14=
+ 09:59:55 +0800)
 
+Ping.
 
-On 2025/11/20 下午8:18, Xianglai Li wrote:
-> When we use the -kernel parameter to start an elf format kernel relying on
-> fdt, we get the following error:
-> 
-> pcieport 0000:00:01.0: of_irq_parse_pci: failed with rc=-22
-> pcieport 0000:00:01.0: enabling device (0000 -> 0003)
-> pcieport 0000:00:01.0: PME: Signaling with IRQ 19
-> pcieport 0000:00:01.0: AER: enabled with IRQ 19
-> pcieport 0000:00:01.1: of_irq_parse_pci: failed with rc=-22
-> pcieport 0000:00:01.1: enabling device (0000 -> 0003)
-> pcieport 0000:00:01.1: PME: Signaling with IRQ 20
-> pcieport 0000:00:01.1: AER: enabled with IRQ 20
-> pcieport 0000:00:01.2: of_irq_parse_pci: failed with rc=-22
-> pcieport 0000:00:01.2: enabling device (0000 -> 0003)
-> pcieport 0000:00:01.2: PME: Signaling with IRQ 21
-> pcieport 0000:00:01.2: AER: enabled with IRQ 21
-> pcieport 0000:00:01.3: of_irq_parse_pci: failed with rc=-22
-> pcieport 0000:00:01.3: enabling device (0000 -> 0003)
-> pcieport 0000:00:01.3: PME: Signaling with IRQ 22
-> pcieport 0000:00:01.3: AER: enabled with IRQ 22
-> pcieport 0000:00:01.4: of_irq_parse_pci: failed with rc=-22
-> 
-> This is because  the description of interrupt-cell is missing in the pcie
-> irq map.  And there is a lack of a description of the interrupt trigger
-> type.  Now it is corrected and the correct interrupt-cell is added in the
-> pcie irq map.
-> 
-> Refer to the implementation in arm and add some comments.
-> 
-> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
-> ---
-> Cc: Bibo Mao <maobibo@loongson.cn>
-> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-> Cc: Song Gao <gaosong@loongson.cn>
-> 
->   hw/loongarch/virt-fdt-build.c | 44 ++++++++++++++++++++++-------------
->   1 file changed, 28 insertions(+), 16 deletions(-)
-> 
-> diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
-> index 7333019cf7..e597b19dc3 100644
-> --- a/hw/loongarch/virt-fdt-build.c
-> +++ b/hw/loongarch/virt-fdt-build.c
-> @@ -321,6 +321,8 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
->       uint32_t full_irq_map[PCI_NUM_PINS * PCI_NUM_PINS * 10] = {};
->       uint32_t *irq_map = full_irq_map;
->       const MachineState *ms = MACHINE(lvms);
-> +    uint32_t pin_mask;
-> +    uint32_t devfn_mask;
->   
->       /*
->        * This code creates a standard swizzle of interrupts such that
-> @@ -333,37 +335,45 @@ static void fdt_add_pcie_irq_map_node(const LoongArchVirtMachineState *lvms,
->        */
->   
->       for (dev = 0; dev < PCI_NUM_PINS; dev++) {
-> -        int devfn = dev * 0x8;
-> +        int devfn = PCI_DEVFN(dev, 0);
->   
->           for (pin = 0; pin < PCI_NUM_PINS; pin++) {
-> -            int irq_nr = 16 + ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
-> +            int irq_nr = VIRT_DEVICE_IRQS + \
-> +                         ((pin + PCI_SLOT(devfn)) % PCI_NUM_PINS);
->               int i = 0;
->   
-> -            /* Fill PCI address cells */
-> -            irq_map[i] = cpu_to_be32(devfn << 8);
-> -            i += 3;
-> -
-> -            /* Fill PCI Interrupt cells */
-> -            irq_map[i] = cpu_to_be32(pin + 1);
-> -            i += 1;
-> -
-> -            /* Fill interrupt controller phandle and cells */
-> -            irq_map[i++] = cpu_to_be32(*pch_pic_phandle);
-> -            irq_map[i++] = cpu_to_be32(irq_nr);
-> +            uint32_t map[] = {
-> +                devfn << 8, 0, 0,             /* devfn */
-> +                pin + 1,                      /* PCI pin */
-> +                *pch_pic_phandle,             /* interrupt controller handle */
-> +                irq_nr,                       /* irq number */
-> +                FDT_IRQ_TYPE_LEVEL_HIGH };    /* irq trigger level */
->   
->               if (!irq_map_stride) {
-> -                irq_map_stride = i;
-> +                irq_map_stride = sizeof(map) / sizeof(uint32_t);
->               }
-> +
-> +            /* Convert map to big endian */
-> +            for (i = 0; i < irq_map_stride; i++) {
-> +                irq_map[i] = cpu_to_be32(map[i]);
-> +            }
-> +
->               irq_map += irq_map_stride;
->           }
->       }
->   
-> -
->       qemu_fdt_setprop(ms->fdt, nodename, "interrupt-map", full_irq_map,
->                        PCI_NUM_PINS * PCI_NUM_PINS *
->                        irq_map_stride * sizeof(uint32_t));
-> +
-> +    /* Only need to match the pci slot bit */
-> +    devfn_mask = PCI_DEVFN((PCI_NUM_PINS - 1), 0) << 8;
-> +    /* The pci interrupt only needs to match the specified low bit */
-> +    pin_mask = (1 << ((PCI_NUM_PINS - 1))) - 1;
-> +
->       qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupt-map-mask",
-> -                     0x1800, 0, 0, 0x7);
-> +                           devfn_mask, 0, 0,  /* address cells */
-> +                           pin_mask);
->   }
->   
->   static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
-> @@ -400,6 +410,8 @@ static void fdt_add_pcie_node(const LoongArchVirtMachineState *lvms,
->                                    2, base_mmio, 2, size_mmio);
->       qemu_fdt_setprop_cells(ms->fdt, nodename, "msi-map",
->                              0, *pch_msi_phandle, 0, 0x10000);
-> +
-> +    qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
->       fdt_add_pcie_irq_map_node(lvms, nodename, pch_pic_phandle);
->       g_free(nodename);
->   }
-> 
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Thanks
+
+>
+> ----------------------------------------------------------------
+> -----BEGIN PGP SIGNATURE-----
+>
+> iQEzBAABCAAdFiEEIV1G9IJGaJ7HfzVi7wSWWzmNYhEFAmkWo9EACgkQ7wSWWzmN
+> YhHargf/Uf801PmKskryVENF9sVe6u5NxJZlT3BUJVsSTGitucBIHWZ5J7MMR1lw
+> If4tfMho3BX5Wrtl5GuCEzolk9pCz3wmSN6nyOU25C5tKaoJ/uR135K25D0CwVmD
+> eTOyg+gKktVfogXxJ/zwZpRHMq4XXrk/C2ZP41r/CdcLyaeuDS9GIbd/q4N7f3vv
+> bEsVqECzjEwWr2JBY9SD0xlIRp3nWwEvRsgRZPzBiQzfjSTlImqGLUsxIpF5V2LV
+> 1BU0V/FShWyrwckBXSqCWBUh6uBUGgEl6qKnK4vH7+ed4Kd9giyp1vWAFEjHgIg+
+> gZtPaT/MJQOtLyCuzfuSdUpAzz5Sfw=3D=3D
+> =3DIs8a
+> -----END PGP SIGNATURE-----
+>
+> ----------------------------------------------------------------
+> Jonah Palmer (1):
+>       net/hub: make net_hub_port_cleanup idempotent
+>
+> Peter Maydell (4):
+>       hw/net/e1000e_core: Don't advance desc_offset for NULL buffer RX de=
+scriptors
+>       hw/net/e1000e_core: Correct rx oversize packet checks
+>       hw/net/e1000e_core: Adjust e1000e_write_payload_frag_to_rx_buffers(=
+) assert
+>       net: pad packets to minimum length in qemu_receive_packet()
+>
+>  hw/net/e1000e_core.c | 85 ++++++++++++++++++++++++++++++++++++----------=
+------
+>  net/hub.c            |  8 ++++-
+>  net/net.c            | 10 +++++++
+>  3 files changed, 76 insertions(+), 27 deletions(-)
+>
+>
 
 
