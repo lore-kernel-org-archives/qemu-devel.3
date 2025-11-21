@@ -4,35 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A00E2CFC51E
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 10:21:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B4ECFC51E
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 10:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcqg-0005Th-Ev; Fri, 21 Nov 2025 20:55:39 -0500
+	id 1vMd1Q-0000uW-HE; Fri, 21 Nov 2025 21:06:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbiE-0006z0-6l; Fri, 21 Nov 2025 19:42:50 -0500
+ id 1vMcEM-0000Vc-2Y; Fri, 21 Nov 2025 20:16:02 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbi2-0007B3-PJ; Fri, 21 Nov 2025 19:42:45 -0500
+ id 1vMcCK-0005HT-9F; Fri, 21 Nov 2025 20:15:58 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4DF1516CA5C;
+ by isrv.corpit.ru (Postfix) with ESMTP id ACB1D16CA5E;
  Fri, 21 Nov 2025 21:44:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0C19E321C98;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 326E2321C9A;
  Fri, 21 Nov 2025 21:44:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 33/81] target/microblaze: Handle signed division
- overflows
-Date: Fri, 21 Nov 2025 21:43:32 +0300
-Message-ID: <20251121184424.1137669-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 35/81] target/s390x: Fix missing clock-comparator
+ interrupts after reset
+Date: Fri, 21 Nov 2025 21:43:34 +0300
+Message-ID: <20251121184424.1137669-35-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
@@ -54,53 +53,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Handle signed division overflows as specified in UG984:
-https://docs.amd.com/r/en-US/ug984-vivado-microblaze-ref/idiv
+After reset, CKC value is set to 0, so if clock-comparator interrupts
+are enabled, one should occur very shortly thereafter.
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-(cherry picked from commit cfc1d54251d3b4c4cf21c4fa278c8aea2fe25a99)
+Currently the code that loads the respective control register does not
+set tod_timer, so this does not happen.
+
+Fix by adding a tcg_s390_tod_updated() call to LCTL and LCTLG.
+
+Cc: qemu-stable@nongnu.org
+Suggested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20251016175954.41153-3-iii@linux.ibm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit dacfec5157fb9e2249cf393a143bd545e80a6e31)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/microblaze/cpu.h b/target/microblaze/cpu.h
-index e44ddd5307..8d92389c48 100644
---- a/target/microblaze/cpu.h
-+++ b/target/microblaze/cpu.h
-@@ -85,6 +85,7 @@ typedef struct CPUArchState CPUMBState;
- #define          ESR_ESS_FSL_OFFSET     5
+diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+index 8187b917ba..116349b17c 100644
+--- a/target/s390x/tcg/mem_helper.c
++++ b/target/s390x/tcg/mem_helper.c
+@@ -1956,6 +1956,10 @@ void HELPER(lctlg)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
+         if (env->cregs[i] != val && i >= 9 && i <= 11) {
+             PERchanged = true;
+         }
++        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val & CR0_CKC_SC)) {
++            BQL_LOCK_GUARD();
++            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
++        }
+         env->cregs[i] = val;
+         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%" PRIx64 "\n",
+                    i, src, val);
+@@ -1986,10 +1990,15 @@ void HELPER(lctl)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
  
- #define          ESR_ESS_MASK  (0x7f << 5)
-+#define          ESR_ESS_DEC_OF  (1 << 11) /* DEC: 0=DBZ, 1=OF */
- 
- #define          ESR_EC_FSL             0
- #define          ESR_EC_UNALIGNED_DATA  1
-diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
-index 0e9b725c1b..bdaf0ca2f8 100644
---- a/target/microblaze/op_helper.c
-+++ b/target/microblaze/op_helper.c
-@@ -90,6 +90,21 @@ uint32_t helper_divs(CPUMBState *env, uint32_t ra, uint32_t rb)
-         raise_divzero(env, ESR_EC_DIVZERO, GETPC());
-         return 0;
-     }
-+
-+    /*
-+     * Check for division overflows.
-+     *
-+     * Spec: https://docs.amd.com/r/en-US/ug984-vivado-microblaze-ref/idiv
-+     * UG984, Chapter 5 MicroBlaze Instruction Set Architecture, idiv.
-+     *
-+     * If the U bit is clear, the value of rA is -1, and the value of rB is
-+     * -2147483648 (divide overflow), the DZO bit in MSR will be set and
-+     * the value in rD will be -2147483648, unless an exception is generated.
-+     */
-+    if ((int32_t)ra == -1 && (int32_t)rb == INT32_MIN) {
-+        raise_divzero(env, ESR_EC_DIVZERO | ESR_ESS_DEC_OF, GETPC());
-+        return INT32_MIN;
-+    }
-     return (int32_t)rb / (int32_t)ra;
- }
+     for (i = r1;; i = (i + 1) % 16) {
+         uint32_t val = cpu_ldl_data_ra(env, src, ra);
++        uint64_t val64 = deposit64(env->cregs[i], 0, 32, val);
+         if ((uint32_t)env->cregs[i] != val && i >= 9 && i <= 11) {
+             PERchanged = true;
+         }
+-        env->cregs[i] = deposit64(env->cregs[i], 0, 32, val);
++        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val64 & CR0_CKC_SC)) {
++            BQL_LOCK_GUARD();
++            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
++        }
++        env->cregs[i] = val64;
+         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%x\n", i, src, val);
+         src += sizeof(uint32_t);
  
 -- 
 2.47.3
