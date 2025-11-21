@@ -4,50 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B240CFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C3D9CFC504
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdYZ-0003CU-Gl; Fri, 21 Nov 2025 21:41:00 -0500
+	id 1vMcuR-0000Hs-8z; Fri, 21 Nov 2025 20:59:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdYV-0003B1-3d; Fri, 21 Nov 2025 21:40:55 -0500
+ id 1vMbvP-0006rA-A5; Fri, 21 Nov 2025 19:56:27 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdXc-0002WG-ON; Fri, 21 Nov 2025 21:40:51 -0500
+ id 1vMbtM-000189-Nx; Fri, 21 Nov 2025 19:56:23 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BCFD716C6FA;
- Fri, 21 Nov 2025 16:51:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6E1FE16CA4C;
+ Fri, 21 Nov 2025 21:44:22 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1CD38321997;
- Fri, 21 Nov 2025 16:52:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2AD52321C88;
+ Fri, 21 Nov 2025 21:44:31 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
- Heiko Carstens <hca@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 34/76] target/s390x: Use address generation for
- register branch targets
-Date: Fri, 21 Nov 2025 16:51:12 +0300
-Message-ID: <20251121135201.1114964-34-mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 17/81] target/hppa: Set FPCR exception flag bits for
+ non-trapped exceptions
+Date: Fri, 21 Nov 2025 21:43:16 +0300
+Message-ID: <20251121184424.1137669-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
-References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,63 +56,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Indirect branches to addresses taken from registers go through address
-generation, e.g., for BRANCH ON CONDITION Principles of Operation says:
+In commit ebd394948de4e8 ("target/hppa: Fix FPE exceptions") when
+we added the code for setting up the registers correctly on trapping
+FP exceptions, we accidentally broke the handling of the flag bits
+for non-trapping exceptions.
 
-    In the RR format, the contents of general register R2 are used to
-    generate the branch address
+In update_fr0_op() we incorrectly zero out the flag bits and the C
+bit, so any fp operation would clear previously set flag bits. We
+also stopped setting the flag bits when the fp operation raises
+an exception and the trap is not enabled.
 
-QEMU uses r2_nz handler for the respective register operands. Currently
-it does not zero out extra bits in 24- and 31-bit addressing modes as
-required by address generation. The very frequently used
-s390x_tr_init_disas_context() function has a workaround for this,
-but the code for saving an old PSW during an interrupt does not.
+Adjust the code so that we set the Flag bits for every exception that
+happened and where the trap is not enabled.  (This is the correct
+behaviour for the case where an instruction triggers two exceptions,
+one of which traps and one of which does not; that can only happen
+for inexact + underflow or inexact + overflow.)
 
-Add the missing masking to r2_nz. Enforce PSW validity by replacing the
-workaround with an assertion.
-
-Reported-by: Thomas Weißschuh <linux@weissschuh.net>
-Reported-by: Heiko Carstens <hca@linux.ibm.com>
-Link: https://lore.kernel.org/lkml/ab3131a2-c42a-47ff-bf03-e9f68ac053c0@t-8ch.de/
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Tested-by: Thomas Weißschuh <linux@weissschuh.net>
-Message-ID: <20251016175954.41153-4-iii@linux.ibm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit fc976a67ded4232cf0b9ae3c11fe051da01e4456)
+Fixes: ebd394948de4e8 ("target/hppa: Fix FPE exceptions")
+Fixes: 6966e0ba1d4a9e ("target/hppa: Fix FPE exceptions") in 10.0.1
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3158
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Tested-by: Helge Deller <deller@gmx.de>
+Message-ID: <20251017085350.895681-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 1a8ffd6172f3d9ad8232189adb879a16ec416f89)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
-index c7e8574438..f9487f4044 100644
---- a/target/s390x/tcg/translate.c
-+++ b/target/s390x/tcg/translate.c
-@@ -5613,6 +5613,7 @@ static void in2_r2_nz(DisasContext *s, DisasOps *o)
-     int r2 = get_field(s, r2);
-     if (r2 != 0) {
-         o->in2 = load_reg(r2);
-+        gen_addi_and_wrap_i64(s, o->in2, o->in2, 0);
-     }
- }
- #define SPEC_in2_r2_nz 0
-@@ -6379,10 +6380,12 @@ static void s390x_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
+index 294ce0a970..9ffcda66b8 100644
+--- a/target/hppa/fpu_helper.c
++++ b/target/hppa/fpu_helper.c
+@@ -95,7 +95,8 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
  {
-     DisasContext *dc = container_of(dcbase, DisasContext, base);
+     uint32_t soft_exp = get_float_exception_flags(&env->fp_status);
+     uint32_t hard_exp = 0;
+-    uint32_t shadow = env->fr0_shadow & 0x3ffffff;
++    uint32_t shadow = env->fr0_shadow;
++    uint32_t to_flag = 0;
+     uint32_t fr1 = 0;
  
--    /* 31-bit mode */
--    if (!(dc->base.tb->flags & FLAG_MASK_64)) {
--        dc->base.pc_first &= 0x7fffffff;
--        dc->base.pc_next = dc->base.pc_first;
-+    if (dc->base.tb->flags & FLAG_MASK_32) {
-+        if (!(dc->base.tb->flags & FLAG_MASK_64)) {
-+            assert(!(dc->base.pc_first & ~((1ULL << 31) - 1)));
-+        }
-+    } else {
-+        assert(!(dc->base.pc_first & ~((1ULL << 24) - 1)));
+     if (likely(soft_exp == 0)) {
+@@ -123,6 +124,10 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+             fr1 |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
+         }
      }
++    /* Set the Flag bits for every exception that was not enabled */
++    to_flag = hard_exp & ~shadow;
++    shadow |= to_flag << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
++
+     env->fr0_shadow = shadow;
+     env->fr[0] = (uint64_t)shadow << 32 | fr1;
  
-     dc->cc_op = CC_OP_DYNAMIC;
 -- 
 2.47.3
 
