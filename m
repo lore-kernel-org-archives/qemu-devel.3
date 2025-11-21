@@ -4,48 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE76CFC504
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BB13CF64B1
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:08:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd8m-0006LX-14; Fri, 21 Nov 2025 21:14:21 -0500
+	id 1vMcoi-0004dN-BA; Fri, 21 Nov 2025 20:53:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMd7M-0004ye-DT; Fri, 21 Nov 2025 21:12:52 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMd6i-0004NV-7q; Fri, 21 Nov 2025 21:12:49 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6268816C6E2;
- Fri, 21 Nov 2025 16:51:54 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BC67F32197F;
- Fri, 21 Nov 2025 16:52:02 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMbZu-0001sD-M3
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:34:14 -0500
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMbXs-0004ru-T4
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:34:11 -0500
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-5957f617ff0so2879582e87.2
+ for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 16:31:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763771507; x=1764376307; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PeYBDSu6cMgQceRuy5tiVH2SP+8CoWLSP+CQiGR2J0w=;
+ b=hEZjXeTYsBIYWX5wd51UrXeaoBrNb7Uasi1ITZbdd69+MRjId1Ht6EFwrYO4+f0fOR
+ c5TW20+k/4EaaXgFL+SapMkRTWyBhF/4M2OP4Bks52u32cTDYSuflG5vxILmKNv5Fhip
+ RYzhLzrTID1B+JF68kmgoqweox3YoloAfKI+9AGpH68xFLj8HZNq3S3b3eC7LjxfAwev
+ E9jHo5essNDjt0TIZdbcQDSCitVL23xufn4g684b3lGMdMdZfhGdHTzx5EHng+SPNwS6
+ bJOuj/w3VxmuEpLr+8HshE4UC6+HGcnB6hPG60Sjr2g476ITm/MfYypUmzLu1K3/rRLu
+ hQWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763771507; x=1764376307;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PeYBDSu6cMgQceRuy5tiVH2SP+8CoWLSP+CQiGR2J0w=;
+ b=Tv7xLEYrMlWXas9i/1vNbcnugjGgKCoDjJ+qA3d5nNobbTzC03u5KVDYvrp8BUrAZM
+ ZqMdKumeIuqAoh9tOz/PN5lJEtBtsq8Fgp38xv2bx0XECMoSHp9fD5W8y+5wZRwv6bU0
+ HuCk4k4BjeREZV1y+Mx6slqdgGXY/qouNuA18qVWNexJIeoLZCAg5gIzetl+Ah+mDH8z
+ 5Ygjr6+afQNrE8VCzgTthwV4ofI4Y+maQKKGZB5j/Aj0F93uC6GYi8SjVffUu5Mo5u2T
+ 52ok9UB2f7mCpXtHF49YQfMobfpCxWg19+k+3O541uIwXrq13KSb+yfkQQJVlX8ey3VM
+ n9hw==
+X-Gm-Message-State: AOJu0YwyY6Y2bqI3Z+HOXdRi9xrrIlerqy2KpCKHUaA7+VIN3E1Ayk0p
+ EYq8+hf5oerciPPRZ4ioQbspta3iNKpymGqpuKj9RXCyizE3WlPnegQdP4JJJJj1fXJp49xFDK6
+ 65H4YYsT0oA==
+X-Gm-Gg: ASbGnctidIR8FZTo3YVGVAndhaOm+i4oPxb3ZkFc3KjpgB/+9Hnuxhfch/JVb0ghkWN
+ gzauo7LDz0Pbu0VEEMGHl4scvO4sRebosxHqxsg7V4BLleDcmhFFua35aZHC0Ts4tb+ob02v29H
+ iE75iFAjnv/8aIcrhe1vq/JMD5pouJpYzl4CnWRz6sC8l3mKYEdsjXejMIAb04QouV5ypvjVOmH
+ myLmXOKK8mthqKHUCrmy9LmQeDEkzvUUtp+hC2DKtst2bo/bAun4bO/RAdSl50GJptOmcIQWZHL
+ /Pn86S6fKv9frYjIS5t583ehIoxDEZTwGe/ZiMyqwlAgaw3DM/ru/hJHrJ0+kRS0cCsnjSM184t
+ 1+EEU5cioMgKWuRcZMiU91dOKvWn7lKIYLksFD9DcsnqgTMBOBe00LBWElswTR/ypaSTRh3Pyxk
+ fevgx38mGR5YlhYn/2HDJzlNXHobhlqCaPd0nOiN9Li8zmYdzUxyWU+zQrVfDW
+X-Google-Smtp-Source: AGHT+IGOy7ijW3Saoq3tEPfafETXCLdd03s9R4J1y/0QOA7IKP9EnH8884b5OD/Z9Zvc/CZ5mAuqPw==
+X-Received: by 2002:a05:600c:3551:b0:471:131f:85b7 with SMTP id
+ 5b1f17b1804b1-477c10e2bc2mr28653215e9.15.1763732758974; 
+ Fri, 21 Nov 2025 05:45:58 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477a9dea7fcsm87143845e9.8.2025.11.21.05.45.58
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 21 Nov 2025 05:45:58 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 10/76] target/riscv: fix riscv_cpu_sirq_pending() mask
-Date: Fri, 21 Nov 2025 16:50:48 +0300
-Message-ID: <20251121135201.1114964-10-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
-References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [RFC-PATCH-for-11.0 v3 08/21] target/mips: Replace cpu_ld{uw,
+ l}_code() by explicit endianness variants
+Date: Fri, 21 Nov 2025 14:44:50 +0100
+Message-ID: <20251121134503.30914-9-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251121134503.30914-1-philmd@linaro.org>
+References: <20251121134503.30914-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12b.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,43 +94,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/mips/tcg/system/tlb_helper.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-We're filtering out (MIP_VSSIP | MIP_VSTIP | MIP_VSEIP) from S-mode
-pending interrupts without apparent reason. There's no special treatment
-for these ints as far as the spec goes, and this filtering is causing
-read_stopi() to miss those VS interrupts [1].
-
-We shouldn't return delegated VS interrupts in S-mode though, so change
-the current mask with "~env->hideleg". Note that this is the same
-handling we're doing in riscv_cpu_mirq_pending() and env->mideleg.
-
-[1] https://gitlab.com/qemu-project/qemu/-/issues/2820
-
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2820
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251022124340.493358-1-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Cc: qemu-stable@nongnu.org
-(cherry picked from commit 06e01941ffca3c246a9770f477e43118793fde59)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 3479a62cc7..360db133e2 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -443,8 +443,7 @@ int riscv_cpu_mirq_pending(CPURISCVState *env)
+diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+index 566924b079e..415c214c5b4 100644
+--- a/target/mips/tcg/system/tlb_helper.c
++++ b/target/mips/tcg/system/tlb_helper.c
+@@ -997,18 +997,30 @@ static void set_hflags_for_handler(CPUMIPSState *env)
+     }
+ }
  
- int riscv_cpu_sirq_pending(CPURISCVState *env)
++static uint16_t lduw_code(CPUMIPSState *env, target_ulong addr)
++{
++    return mips_env_is_bigendian(env) ? cpu_lduw_be_code(env, addr)
++                                      : cpu_lduw_le_code(env, addr);
++}
++
++static uint32_t ldl_code(CPUMIPSState *env, target_ulong addr)
++{
++    return mips_env_is_bigendian(env) ? cpu_ldl_be_code(env, addr)
++                                      : cpu_ldl_le_code(env, addr);
++}
++
+ static inline void set_badinstr_registers(CPUMIPSState *env)
  {
--    uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg &
--                    ~(MIP_VSSIP | MIP_VSTIP | MIP_VSEIP);
-+    uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg & ~env->hideleg;
-     uint64_t irqs_f = env->mvip & env->mvien & ~env->mideleg & env->sie;
+     if (env->insn_flags & ISA_NANOMIPS32) {
+         if (env->CP0_Config3 & (1 << CP0C3_BI)) {
+-            uint32_t instr = (cpu_lduw_code(env, env->active_tc.PC)) << 16;
++            uint32_t instr = (lduw_code(env, env->active_tc.PC)) << 16;
+             if ((instr & 0x10000000) == 0) {
+-                instr |= cpu_lduw_code(env, env->active_tc.PC + 2);
++                instr |= lduw_code(env, env->active_tc.PC + 2);
+             }
+             env->CP0_BadInstr = instr;
  
-     return riscv_cpu_pending_to_irq(env, IRQ_S_EXT, IPRIO_DEFAULT_S,
+             if ((instr & 0xFC000000) == 0x60000000) {
+-                instr = cpu_lduw_code(env, env->active_tc.PC + 4) << 16;
++                instr = lduw_code(env, env->active_tc.PC + 4) << 16;
+                 env->CP0_BadInstrX = instr;
+             }
+         }
+@@ -1020,11 +1032,11 @@ static inline void set_badinstr_registers(CPUMIPSState *env)
+         return;
+     }
+     if (env->CP0_Config3 & (1 << CP0C3_BI)) {
+-        env->CP0_BadInstr = cpu_ldl_code(env, env->active_tc.PC);
++        env->CP0_BadInstr = ldl_code(env, env->active_tc.PC);
+     }
+     if ((env->CP0_Config3 & (1 << CP0C3_BP)) &&
+         (env->hflags & MIPS_HFLAG_BMASK)) {
+-        env->CP0_BadInstrP = cpu_ldl_code(env, env->active_tc.PC - 4);
++        env->CP0_BadInstrP = ldl_code(env, env->active_tc.PC - 4);
+     }
+ }
+ 
 -- 
-2.47.3
+2.51.0
 
 
