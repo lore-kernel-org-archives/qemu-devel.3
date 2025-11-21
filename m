@@ -4,154 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99905CFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 01:51:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B10CFC516
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 01:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMchj-0007hO-Rd; Fri, 21 Nov 2025 20:46:24 -0500
+	id 1vMciR-0008Mm-9b; Fri, 21 Nov 2025 20:47:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vMbLV-0001jN-1W; Fri, 21 Nov 2025 19:19:25 -0500
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vMbJQ-0000ZM-A4; Fri, 21 Nov 2025 19:19:15 -0500
-Received: from LV2PR12MB5896.namprd12.prod.outlook.com (2603:10b6:408:172::15)
- by IA1PR12MB6089.namprd12.prod.outlook.com (2603:10b6:208:3ef::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.13; Fri, 21 Nov
- 2025 22:11:50 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OlrcOTbWRxsxicXz2HVH/YgaC7HqL4u+QbLmvTZUBQY7I52rFd2OAzsD/N7x6h2DBbgeySOKRohkbTjjF3IualDV4/ZbDEUUS8Osr5URHGlGPyPWB6kMDVOhxhX5sSQ+PH8+kDjv5iGCGprApoWmYYu+vmuvQ7GUz41rcicPK+uLWLQPmk6LTwEN9cFr8Ju8QfgXRv/v58FszJNy7XyCi1ImIxg9QMx9JYGxIkzJAcui4626IAXgHgU06AGJy+hcA1FZqaaMbDAY/TVSvKAYgQFsD62JPvpc6fqAQGbSWAwPGsQGp2EJa7FPtAZJfk5w/KD5K+JyKffrZcbsq+piuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9abRolksorFAzPzumDL4cf1sRonMLuYRQ2wjUw4CBV8=;
- b=dtgFqKL0S3Iofij6tB2FCJq20GikMWxAJLr3anPmXnK/OzpG3dvjV3xs90cBSaOzCkGPmXXCgreS/AG16GooVxPDsztZON2RJ4Z7mMR9am9wTZl1j6xojPcd+PCdFJvxkPRWBLAo8Lacuz8MzfzmSatBK5fk3vFwDlzs/xh2DkcEpZHo2opwFZg7ooey052U0zcnb9rlPsVH3Mx+PgzgC16OglIJI2ONQI8d+Ce2uN3y/2/pBaNjAYlftFmC0B1xnjbmpw43yNLtKuVLbHBf0pBQa84Ayxch/HTnXsYvlJvAvg0Yj9138V0rZyAqZZpllydLXf4+ZcJdY2lbqL9+rA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9abRolksorFAzPzumDL4cf1sRonMLuYRQ2wjUw4CBV8=;
- b=I3DfLsUBh+zNJ01ZyyZ5jSKLgiUsl6UOuPT4BrB5yfk07wMRiQ0oUxKXJR5iLhieYGCbMCsZzpbDYKIbd2Vsg7ax1tU7XVuHfspVecuM+Xa23v5Nu0RYzHkckmzAdXfxOlNdZSh+vv8L5QLazMNwgHG68/Tnx2rcXBAubqToeHZlUNcHhtVL1r5vbraOa2z/eSZNDnAbZQj7LoxwLxSEV+thrX4P1YNnITtZibCOc9BnmzbwWIJz4AbwSCXakoyyHVwmDeD0aJU0LLgOoehKh03Bp0U+8BqiNlxiJhyUJ6YFO/F9VnpEFOAxTx+EdceyiZbNapUB2vSVtUfFmw2jyQ==
-Received: from BN8PR04CA0057.namprd04.prod.outlook.com (2603:10b6:408:d4::31)
- by LV2PR12MB5896.namprd12.prod.outlook.com (2603:10b6:408:172::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.10; Fri, 21 Nov
- 2025 18:36:43 +0000
-Received: from BN1PEPF00006000.namprd05.prod.outlook.com
- (2603:10b6:408:d4:cafe::d8) by BN8PR04CA0057.outlook.office365.com
- (2603:10b6:408:d4::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.14 via Frontend Transport; Fri,
- 21 Nov 2025 18:36:32 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- BN1PEPF00006000.mail.protection.outlook.com (10.167.243.232) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9343.9 via Frontend Transport; Fri, 21 Nov 2025 18:36:43 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Fri, 21 Nov
- 2025 10:36:27 -0800
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Fri, 21 Nov 2025 10:36:26 -0800
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Fri, 21 Nov 2025 10:36:26 -0800
-Date: Fri, 21 Nov 2025 10:36:24 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
-Subject: Re: [PATCH v6 33/33] hw/arm/smmuv3-accel: Add support for PASID enable
-Message-ID: <aSCxKPBfmhdY0eGj@Asurada-Nvidia>
-References: <20251120132213.56581-1-skolothumtho@nvidia.com>
- <20251120132213.56581-34-skolothumtho@nvidia.com>
- <aR+RngqP3HTLZIlH@Asurada-Nvidia>
- <CH3PR12MB75485354E16E462D66567416ABD5A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aSCmeoFtzRBEGE8I@Asurada-Nvidia>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vMbQ7-0004dx-Jx
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:24:10 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vMbPv-0002kU-CD
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:24:04 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 3804421005;
+ Fri, 21 Nov 2025 12:38:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1763728686; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QFaPabIKbMuIWY+3MALbZM+04nLZi8DoIk2fXFvzU5M=;
+ b=KdkqQ6WN19AIaR09pNsn0/WDOXWU+IgKKCoHMZoOOEBOOSjZk890X3M06F8XdUNTkqC02z
+ X1DHGzQx7kYeaFTTCiaZvLD+UlTYBpOfa4sP0/uvkPuZP5IzjdRShNYJBkc7pYflXA8vcB
+ tPy03X3Dw9nhc0weugLTy/bJbYbVH7U=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1763728686;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QFaPabIKbMuIWY+3MALbZM+04nLZi8DoIk2fXFvzU5M=;
+ b=n6/OmjzAGWr9+OF/laVJbrWsli3L9HIQibiH9UgaW1X2C+MD+JQI0Kiq9gKqU/7/ugBeiH
+ 81DfkJQzlhb6CGDg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1763728685; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QFaPabIKbMuIWY+3MALbZM+04nLZi8DoIk2fXFvzU5M=;
+ b=cKxZHxyEeRnfEK6T60sp5exZZIxidlWsiPtTJHFEd4U1P1IUGtpyM/CUNzvjw9rVhE6QhZ
+ sSSubznUehB115RR4bkGQYl5kcWu/YQOesdNYYJbGkWsty+F6lSazsrsxC3ErXfntbakbi
+ JtVu0olw3NQKez2yXW6q4XHHlXZbYUk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1763728685;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QFaPabIKbMuIWY+3MALbZM+04nLZi8DoIk2fXFvzU5M=;
+ b=rqgqpq5uFAmGr32ZV6sGydlzE9KWTzNhR7iCjAVBNVcsrPfwF81I2hVjBsFp8j4zIdkBQu
+ q/E0xj57fprqazBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AD79A3EA61;
+ Fri, 21 Nov 2025 12:38:04 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id b/+6GyxdIGmOKQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 21 Nov 2025 12:38:04 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/3] migration: Error fixes and improvements
+In-Reply-To: <aR4vdRcORY4em3yB@x1.local>
+References: <20251115083500.2753895-1-armbru@redhat.com>
+ <aRtHWbWcTh3OF2wY@x1.local> <87a50jlr8f.fsf@pond.sub.org>
+ <aRyuZbS7iALvx-BT@x1.local> <87cy5ecvoc.fsf@pond.sub.org>
+ <aR4vdRcORY4em3yB@x1.local>
+Date: Fri, 21 Nov 2025 09:38:02 -0300
+Message-ID: <87bjkvftn9.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <aSCmeoFtzRBEGE8I@Asurada-Nvidia>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00006000:EE_|LV2PR12MB5896:EE_|IA1PR12MB6089:EE_
-X-MS-Office365-Filtering-Correlation-Id: ff715bd4-8014-4e94-ebcd-08de292ceb45
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|376014|7416014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?bUwwiNDHKJdxqMwCaa461ngW+CU/47lit/f96dktxJiAQoEmvF56u/QBu+zQ?=
- =?us-ascii?Q?Dt2OaCapJfkAXakhhS3Tmy4Dj2Ho/mSi3po/8zrAAjWfXoFADNtlHX6/f9zo?=
- =?us-ascii?Q?8OPEmLVp+s1GspCDHDn89dsbgjQ/fS3H+BxPa3baEoz4XL64JPZ1pebwmgA+?=
- =?us-ascii?Q?qEuoxHraYUI+/R3fhfAfviCTlQVUPNoUg4oj+rOXJ7d8jm85HGGZXJ0FDJrv?=
- =?us-ascii?Q?5RB7mSyXAkj5ycKOUnv116saaB29eOAyPv+3LVk8K33c3DazCFtqVFw5nlzE?=
- =?us-ascii?Q?0K3u5mtp81ah+B3IRakmm9UDk3woCqlWsBZU9re9Djkx/KjzrkHT7M5xNt7q?=
- =?us-ascii?Q?zV6eiZcKZMUr8j3qFSTNntggNGGoL3Q0ryc8KLYFQTjTWI3UsKwBCnA1kSxX?=
- =?us-ascii?Q?k4T8ZSSog2M66hFuq12CKBZkOqHfsdl3v0X82AoUihhdEylK2z0SeFRjp7Lq?=
- =?us-ascii?Q?gJHe5yQbAoNw4MJG5ELvbpkMjqCQO3V3XWptYkG+sdKAsYljge/8+OMFoH13?=
- =?us-ascii?Q?zn4EvYMiz+aJ5bGOIo26G0mDaTBsxiRZD+iZy/56GYfVwnGtL/U3NsmUwZI5?=
- =?us-ascii?Q?QFYj6w1F/SHppiKAwXeUfNqNxoy1lL5vow0ojJcH/E1fEA0tMmvICOeDQuut?=
- =?us-ascii?Q?X7eTkR5usLtcw2e/Cut/WO3H1kb2ZgqSQ/rnb29He1HDKhrENTtHxTtsQA5I?=
- =?us-ascii?Q?id4QWzYKB2HkwUDd6f4p3wJASWbI5vSazSJMpoPVGJ9A+b2S37zlNzE8dWLS?=
- =?us-ascii?Q?REItt1vZ/iuY6fbkBpyRSTjXQcI7mLPWh2nLo3SWY5RDtFhtpTa8+i31eGxa?=
- =?us-ascii?Q?8cUjCXYFpE+ePSEx7geVwbg2QoySkAin84GW+yz46SthXtqaupIy7+bdNk7o?=
- =?us-ascii?Q?irzscThm+/m1mIq61cjL/rWw/sdP8ravPtyoVerOmYjxepV9h0oov14+GAdZ?=
- =?us-ascii?Q?NUghdwRZt5qlFHwJbo57Q3Zn1cerscNJRTfsl88cBVYfrCbW/vwPMGLYdDRj?=
- =?us-ascii?Q?jWnq1HjAJSAen5By6CqolxIXvjQTWKE5d5wt8IBYsmtT1ra7fBb0XmH6udxl?=
- =?us-ascii?Q?w/o45xSjCEUxjmO6DvLjO9jzHs3S8yT6VkynY3X5xLYqTpgBRtRq9ktW2kYD?=
- =?us-ascii?Q?IxYs2vDbpR7bogieO3tZwtc2RhD1l9u1zLUyDz0oAJSECbQhfVY3SNZe9WTb?=
- =?us-ascii?Q?JiW8Ngybq8zt7q7sMdQjTizs9p8YT9aQ58u5aY+LaNSqdn0snY9E9vjLTE0+?=
- =?us-ascii?Q?NzvpF/YYwuJY7yrjrA2aARvTHiFVj0EDpDCKw6y7XkVFKEAN1F/xoK1sVdZi?=
- =?us-ascii?Q?KWXAzof3m4SYsMboxX9RDACHkPFDvAjsi2Fp7zcSd4qH1RSagpcwZL6HEK3S?=
- =?us-ascii?Q?BcSxVmOWtuvcMQeF/0IpjcU0vDP2vbSqkiwCBSlH2Ge2hOXfLLJF8h6ZCNXI?=
- =?us-ascii?Q?aXPzpdwX6mphsdDsovP7LO7OQeWHZte/qubOBxBa+BfWXaSaUXo7bB48wVsW?=
- =?us-ascii?Q?W8d6iwRyBWwmjx9K0v8bH5qsKuC+B+a/Rrb19Cv3HAC3wTU76H1d1KdqjNiE?=
- =?us-ascii?Q?Cc6V5in8aOXvnlMyjls=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(376014)(7416014)(82310400026); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Nov 2025 18:36:43.3925 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ff715bd4-8014-4e94-ebcd-08de292ceb45
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00006000.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV2PR12MB5896
-X-OriginatorOrg: Nvidia.com
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
- envelope-from=nicolinc@nvidia.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -166,8 +108,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Nov 21, 2025 at 09:50:53AM -0800, Nicolin Chen wrote:
-> So, I think it's nicer to define "uint32 ssidsize" in the first
+Peter Xu <peterx@redhat.com> writes:
 
-Correction: "u8 ssidsize".
+> On Wed, Nov 19, 2025 at 08:45:39AM +0100, Markus Armbruster wrote:
+>
+> [...]
+>
+>> The hairy part is the background task.
+>> 
+>> I believe it used to simply do its job, reporting errors to stderr along
+>> the way, until it either succeeded or failed.  The errors reported made
+>> success / failure "obvious" for users.
+>> 
+>> This can report multiple errors, which can be confusing.
+>> 
+>> Worse, it was no good for management applications.  These need to
+>> observe migration as a state machine, with final success and error
+>> states, where the error state comes with an indication of what went
+>> wrong.  So we made migration store the first of certain errors in the
+>> migration state in addition to reporting to stderr.
+>> 
+>> "First", because we store only when the state doesn't already have an
+>> error.  "Certain", because I doubt we do it for all errors we report.
+>> 
+>> Compare this to how jobs solve this problem.  These are a much, much
+>> later invention, and designed for management applications from the
+>> start[*].  A job is a state machine.  Management applications can
+>> observe and control the state.  Errors are not supposed to be reported,
+>> they should be fed to the state machine, which goes into an error state
+>> then.  The job is not supposed to do actual work in an error state.
+>> Therefore, no further errors should be possible.  When something goes
+>> wrong, we get a single error, stored in the job state, where the
+>> management application can find it.
+>> 
+>> Migration is also a state machine, and we long ago retrofitted the means
+>> for management applications to observe and control the state.  What we
+>> haven't done is the disciplined feeding of errors to the state machine.
+>> We can still get multiple errors.  We store the first of certain errors
+>> where the managament application can find it, but whether that error
+>> suffices to explain what went wrong is a crap shot.  As long as that's
+>> the case, we need to spew the other errors to stderr, where a human can
+>> find it.
+>
+> Since above mentioned once more on the possibility of reusing Jobs idea, I
+> did try to list things explicitly this time, that why I think it should be
+> challenging and maybe not as worthwhile (?) to do so, however I might be
+> wrong.  I attached it at the end of this email almost for myself in the
+> future to reference, please feel free comment, or, to ignore all of those!
+> IMHO it's not directly relevant to the error reporting issues.
+>
+> IMHO rewriting migration with Jobs will not help much in error reporting,
+> because the challenge for refactoring from migration side is not the "Jobs"
+> interfacing, but internally of migration.  Say, even if migration provided
+> a "job", it's the "job" impl that did error reporting bad, not the Jobs
+> interfacing.. the "job" impl will need to manage quite some threads on its
+> own, making sure errors are properly reported at least to the "job"
+> interface.
+>
+> Said that, I totally agree we should try to improve error reporting in
+> migration.. with / without Jobs.
+>
+> [...]
+>
+>> > Maybe I should ping Vladimir on his recent work here?
+>> >
+>> > https://lore.kernel.org/r/20251028231347.194844-1-vsementsov@yandex-team.ru
+>> >
+>> > That'll be part of such cleanup effort (and yes unfortunately many
+>> > migration related cleanups will need a lot of code churns...).
+>> 
+>> I know...
+>> 
+>> Can we afford modest efforts to reduce the mess one step at a time?
+>
+> Yes, I'll try to follow up on that.
+>
+> [...]
+>
+>> [*] If the job abstraction had been available in time, migration would
+>> totally be a job.  There's no *design* reason for it being not a job.
+>> Plenty of implementation and backward compatibility reasons, though.
+>
+> There might be something common between Jobs that block uses and a
+> migration process.  If so, we can provide CommonJob and make MigrationJob
+> and BlockJobs dependent on it.
+>
+> However, I sincerely don't know how much common function will there be.
+> IOW, I doubt even in an imaginery world, if we could go back to when Jobs
+> was designed and if we would make migration a Job too (note!  snapshots is
+> definitely a too simple migration scenario..).  Is it possible after
+> evaluation we still don't?  I don't know, but I think it's possible.
+>
+> Thanks!
+> Peter
+>
+>
+>
+>
+> Possible challenges of adopting Jobs in migration flow
+> ======================================================
+>
+> - Many Jobs defined property doesn't directly suite migration
+>
+>   - JobStatus is not directly suitable for migration purposes.  There're
+>     some of the JobStatus that I can't think of any use
+>     (e.g. JOB_STATUS_WAITING, JOB_STATUS_PENDING, which is fine, because we
+>     can simply not use it), but there're other status that migration needs
+>     but isn't availble. Introducing them seems to be an overkill instead to
+>     block layer's use case.
+>
+>   - Similarly to JobVerb.  E.g. JOB_VERB_CHANGE doesn't seem to apply to
+>     any concept to migration, but it misses quite some others
+>     (e.g. JOB_VERB_SET_DOWNTIME, JOB_VERB_POSTCOPY_START, and more).
+>
+>   - Similarly, JobInfo reports in current-progress (which is not optional
+>     but required), which may make perfect sense for block jobs. However
+>     migration is OTOH convergence-triggered process, or user-triggered (in
+>     case of postcopy).  It doesn't have a quantified process but only
+>     "COMPLETED" / "IN_PROGRESS".
+>
+>   - Another very major example that I have discussed a few times
+>     previously, Jobs are close attached to AioContext, while migration
+>     doesn't have, meanwhile migration is moving even further away from
+>     event driven model..  See:
+>
+>     https://lore.kernel.org/all/20251022192612.2737648-1-peterx@redhat.com/#t
+>
+>   There're just too many example showing that Jobs are defined almost only
+>   for block layer.. e.g. job-finalize (which may not make much sense in a
+>   migration context anyway..) mentions finalizing of graph changes, which
+>   also doesn't exist in migration process.
+>
+>   So if we rewrite migration somehow with Jobs or keeping migration in mind
+>   designing Jobs, Jobs may need to be very bloated containing both
+>   migration and block layer requirements.
+>
+> - Migration involves "two" QEMU instances instead of one
+>
+>   I'm guessing existing Jobs operations are not as such, and providing such
+>   mechanisms in "Jobs" only for migration may introduce unnecessary code
+>   that block layer will never use.
+>
+>   E.g. postcopy migration attached the two QEMU instances to represent one
+>   VM instance.  I do not have a clear picture in mind yet on how we can
+>   manage that if we see it as two separate Jobs on each side, and what
+>   happens if each side operates on its own Job with different purposes, and
+>   how we should connect two Jobs to say they're relevant (or maybe we don't
+>   need to?).
+>
+> - More challenges on dest QEMU (VM loader) than src QEMU
+>
+>   Unlike on the src side, the dest QEMU, when in an incoming state, is not
+>   a VM at all yet, but waiting to receive the migration data to become a
+>   working VM. It's not a generic long term process, but a pure listening
+>   port of QEMU where QEMU can do nothing without this "job" being
+>   completed..
+>
+>   If we think about CPR it's even more complicated, because we essential
+>   require part of incoming process to happen before almost everything.. it
+>   may even include monitors being initialized.
+>
+> - Deep integration with other subsystems
+>
+>   Migration is deeply integrated into many other subsystems (auto-converge
+>   being able to throttle vCPUs, RAM being able to ignore empty pages
+>   reported from balloons, dirty trackings per-module, etc.), so we're not
+>   sure if there'll be some limitation from Jobs (when designed with block
+>   layer in mind) that will make such transition harder.
+>
+>   For example, we at least want to make sure Jobs won't have simple locks
+>   that will be held while running migration, that can further deadlock if
+>   the migration code may invoke something else that tries to re-take the
+>   Jobs lock, which may cause dead-locks.
+>
+>   Or, since migration runs nowadays with quite some threads concurrently,
+>   whether the main migration Job can always properly synchronize between
+>   all of them with no problem (maybe yes, but I just don't know Jobs enough
+>   to say).  This is also a relevant question about how much AioContext
+>   plays a role in core of Jobs idea and whether it can work well with
+>   complicated threaded environment.
+
+Thanks for looking into this, Peter! I'm saving it for future reference
+as well! It was on my todo list to make such an analysis.
+
+I hope Markus can comment on some of those and maybe we can still find a
+way to converge, but I think I agree that migration is (at this point) a
+little too particular to be retrofitted (which I'd be very much in favor
+of, if it were at all feasible).
+
+(wondering what happened in QEMU historically that we devised so many
+well designed interfaces, but chose to leave migration aside altogether)
+
+(maybe this right here is what happened)
 
