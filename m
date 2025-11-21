@@ -4,48 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B99CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:46:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A9E2CFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdPU-0002nG-IZ; Fri, 21 Nov 2025 21:31:37 -0500
+	id 1vMcvF-000165-0f; Fri, 21 Nov 2025 21:00:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdPR-0002iB-22; Fri, 21 Nov 2025 21:31:33 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbxH-0007rW-Ij
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:58:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdOj-0007yE-SI; Fri, 21 Nov 2025 21:31:28 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B6A816C719;
- Fri, 21 Nov 2025 16:51:59 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B4A973219B5;
- Fri, 21 Nov 2025 16:52:07 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbvF-0001V2-Vl
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:58:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763772962;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lhM6VNueuj3VtVBOzdDIFaT3P1rwvHo7X0l7rmJCF4s=;
+ b=GFG50jtkdMrogslKZG02zzron2nm9C6rAtQ0CHEzqVnYfHEN+J/dhr+YRGa/e7sZNHKXeV
+ ZoKXIz3t/N63Vqydm1txY+HWS6IQayQj07G2PbsByyfnbcWQX/v3MJuRvCbNeL1vkz9giS
+ Jrqb3mMlFHUxxypH1TvOdwR3d8fypeo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-tFYG7y-qPd2gLtOuB6mqQg-1; Fri,
+ 21 Nov 2025 07:36:00 -0500
+X-MC-Unique: tFYG7y-qPd2gLtOuB6mqQg-1
+X-Mimecast-MFC-AGG-ID: tFYG7y-qPd2gLtOuB6mqQg_1763728558
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D71C51800447; Fri, 21 Nov 2025 12:35:57 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 54D01180049F; Fri, 21 Nov 2025 12:35:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C684C21E6935; Fri, 21 Nov 2025 13:35:54 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 64/76] =?UTF-8?q?nfs:=20Run=20co=20BH=20CB=20in=20?=
- =?UTF-8?q?the=20coroutine=E2=80=99s=20AioContext?=
-Date: Fri, 21 Nov 2025 16:51:42 +0300
-Message-ID: <20251121135201.1114964-64-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
-References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+Cc: richard.henderson@linaro.org, zhenwei.pi@linux.dev, fam@euphon.net,
+ xieyongji@bytedance.com
+Subject: [PULL 1/1] MAINTAINERS: update email of zhenwei pi
+Date: Fri, 21 Nov 2025 13:35:54 +0100
+Message-ID: <20251121123554.1255093-2-armbru@redhat.com>
+In-Reply-To: <20251121123554.1255093-1-armbru@redhat.com>
+References: <20251121123554.1255093-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,129 +75,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: zhenwei pi <pizhenwei@bytedance.com>
 
-Like in “rbd: Run co BH CB in the coroutine’s AioContext”, drop the
-completion flag, yield exactly once, and run the BH in the coroutine’s
-AioContext.
+I will leave ByteDance in the next days. Update email to stay reachable.
 
-(Can be reproduced with multiqueue by adding a usleep(100000) before the
-`while (!task.complete)` loops.)
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+Acked-by: Fam Zheng <fam.zheng@bytedance.com>
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+Message-ID: <20250528033156.1188531-1-pizhenwei@bytedance.com>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Like in “iscsi: Run co BH CB in the coroutine’s AioContext”, this makes
-nfs_co_generic_bh_cb() trivial, so we can drop it in favor of just
-calling aio_co_wake() directly.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20251110154854.151484-5-hreitz@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit deb35c129b859b9bec70fd42f856a0b7c1dc6e61)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/block/nfs.c b/block/nfs.c
-index 0a7d38db09..1d3a34a30c 100644
---- a/block/nfs.c
-+++ b/block/nfs.c
-@@ -69,7 +69,6 @@ typedef struct NFSClient {
- typedef struct NFSRPC {
-     BlockDriverState *bs;
-     int ret;
--    int complete;
-     QEMUIOVector *iov;
-     struct stat *st;
-     Coroutine *co;
-@@ -230,14 +229,6 @@ static void coroutine_fn nfs_co_init_task(BlockDriverState *bs, NFSRPC *task)
-     };
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d1c5080e50..1cb21cd0fe 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3381,7 +3381,7 @@ T: git https://gitlab.com/ehabkost/qemu.git machine-next
  
--static void nfs_co_generic_bh_cb(void *opaque)
--{
--    NFSRPC *task = opaque;
--
--    task->complete = 1;
--    aio_co_wake(task->co);
--}
--
- /* Called (via nfs_service) with QemuMutex held.  */
- static void
- nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
-@@ -256,8 +247,16 @@ nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
-     if (task->ret < 0) {
-         error_report("NFS Error: %s", nfs_get_error(nfs));
-     }
--    replay_bh_schedule_oneshot_event(task->client->aio_context,
--                                     nfs_co_generic_bh_cb, task);
-+
-+    /*
-+     * Safe to call: nfs_service(), which called us, is only run from the FD
-+     * handlers, never from the request coroutine.  The request coroutine in
-+     * turn will yield unconditionally.
-+     * No need to release the lock, even if we directly enter the coroutine, as
-+     * the lock is never re-taken after yielding.  (Note: If we do enter the
-+     * coroutine, @task will probably be dangling once aio_co_wake() returns.)
-+     */
-+    aio_co_wake(task->co);
- }
- 
- static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
-@@ -278,9 +277,7 @@ static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
- 
-         nfs_set_events(client);
-     }
--    while (!task.complete) {
--        qemu_coroutine_yield();
--    }
-+    qemu_coroutine_yield();
- 
-     if (task.ret < 0) {
-         return task.ret;
-@@ -328,9 +325,7 @@ static int coroutine_fn nfs_co_pwritev(BlockDriverState *bs, int64_t offset,
- 
-         nfs_set_events(client);
-     }
--    while (!task.complete) {
--        qemu_coroutine_yield();
--    }
-+    qemu_coroutine_yield();
- 
-     if (my_buffer) {
-         g_free(buf);
-@@ -358,9 +353,7 @@ static int coroutine_fn nfs_co_flush(BlockDriverState *bs)
- 
-         nfs_set_events(client);
-     }
--    while (!task.complete) {
--        qemu_coroutine_yield();
--    }
-+    qemu_coroutine_yield();
- 
-     return task.ret;
- }
-@@ -723,8 +716,8 @@ nfs_get_allocated_file_size_cb(int ret, struct nfs_context *nfs, void *data,
-     if (task->ret < 0) {
-         error_report("NFS Error: %s", nfs_get_error(nfs));
-     }
--    replay_bh_schedule_oneshot_event(task->client->aio_context,
--                                     nfs_co_generic_bh_cb, task);
-+    /* Safe to call, see nfs_co_generic_cb() */
-+    aio_co_wake(task->co);
- }
- 
- static int64_t coroutine_fn nfs_co_get_allocated_file_size(BlockDriverState *bs)
-@@ -748,9 +741,7 @@ static int64_t coroutine_fn nfs_co_get_allocated_file_size(BlockDriverState *bs)
- 
-         nfs_set_events(client);
-     }
--    while (!task.complete) {
--        qemu_coroutine_yield();
--    }
-+    qemu_coroutine_yield();
- 
-     return (task.ret < 0 ? task.ret : st.st_blocks * 512);
- }
+ Cryptodev Backends
+ M: Gonglei <arei.gonglei@huawei.com>
+-M: zhenwei pi <pizhenwei@bytedance.com>
++M: zhenwei pi <zhenwei.pi@linux.dev>
+ S: Maintained
+ F: include/system/cryptodev*.h
+ F: backends/cryptodev*.c
 -- 
-2.47.3
+2.49.0
 
 
