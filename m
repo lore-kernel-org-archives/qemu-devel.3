@@ -4,67 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2016CFA753
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 09:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F9D0CFA759
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 09:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMN1s-0004Sq-0S; Fri, 21 Nov 2025 04:02:08 -0500
+	id 1vMN8e-000622-Vk; Fri, 21 Nov 2025 04:09:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yanghliu@redhat.com>)
- id 1vMN1p-0004SO-Vh
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 04:02:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yanghliu@redhat.com>)
- id 1vMN1n-00060j-Ra
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 04:02:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763715722;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=zKJoL6wnKDeVTpXcUZo1oMx0oWQh3C0MU1Gzyxr+Dsk=;
- b=JrDMq87pMV6KWXt00wGU/vsu/sX7nm7tXGcO71bu/8UBNLeoA5AytCsWVU13PgVxvHtNR7
- 2s1wqrU3xXJqCPfgeDc8CHExjbkeku2FhoHo/It9ZgAGO3ltcNm138k9pK3wviCc90uWPj
- v9yZSp5f5h3Ce1GxA+4oXaYz5ihYWFY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-332-5ze23kPhNPOtNILiw2f9LA-1; Fri,
- 21 Nov 2025 04:00:18 -0500
-X-MC-Unique: 5ze23kPhNPOtNILiw2f9LA-1
-X-Mimecast-MFC-AGG-ID: 5ze23kPhNPOtNILiw2f9LA_1763715618
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF2E41956048
- for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 09:00:17 +0000 (UTC)
-Received: from dell-per7625-01.lab.eng.pek2.redhat.com
- (dell-per7625-01.lab.eng.pek2.redhat.com [10.73.212.98])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 775BA180099C; Fri, 21 Nov 2025 09:00:16 +0000 (UTC)
-From: Yanghang Liu <yanghliu@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: clegoate@redhat.com
-Subject: [PATCH] Fix the typo of vfio-pci device's enable-migration option
-Date: Fri, 21 Nov 2025 17:00:05 +0800
-Message-ID: <20251121090005.79399-1-yanghliu@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhiyuan.plct@isrc.iscas.ac.cn>)
+ id 1vMN8c-00061b-E4; Fri, 21 Nov 2025 04:09:06 -0500
+Received: from smtp81.cstnet.cn ([159.226.251.81] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <zhiyuan.plct@isrc.iscas.ac.cn>)
+ id 1vMN8Z-0007h7-Ha; Fri, 21 Nov 2025 04:09:06 -0500
+Received: from chenxiaoou-ubuntu-02.. (unknown [210.73.43.101])
+ by APP-03 (Coremail) with SMTP id rQCowADnctUiLCBp3cGHAQ--.12868S2;
+ Fri, 21 Nov 2025 17:08:50 +0800 (CST)
+From: TravisYang <zhiyuan.plct@isrc.iscas.ac.cn>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: TravisYang <zhiyuan.plct@isrc.iscas.ac.cn>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v1] target/riscv:Add support for RV64 Sifive U74 CPU
+Date: Fri, 21 Nov 2025 09:08:48 +0000
+Message-Id: <20251121090849.1353917-1-zhiyuan.plct@isrc.iscas.ac.cn>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=yanghliu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: rQCowADnctUiLCBp3cGHAQ--.12868S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxXF45Cw45ZF18tF1xKr48JFb_yoW5Cw1kpr
+ 15GFs09a4DJFZFv3yfJF4DXrn5Wws5u3yxK39xZ3W7KF4agFZxJrnrJr4UCr40qF1fJw1F
+ gr18Gr15Gws0qa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDU0xBIdaVrnRJUUUvq14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+ rVWUuVWrJwAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+ 1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r1j
+ 6r4UM28EF7xvwVC2z280aVAFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+ 4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+ I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r
+ 4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWU
+ AVWUtwCY02Avz4vE14v_GFWl42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr
+ 1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE
+ 14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7
+ IYx2IY6xkF7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E
+ 87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0x
+ ZFpf9x0JU2eHgUUUUU=
+X-Originating-IP: [210.73.43.101]
+X-CM-SenderInfo: 52kl53ddqo1z1fw6x21ufox2xfdvhtffof0/
+Received-SPF: pass client-ip=159.226.251.81;
+ envelope-from=zhiyuan.plct@isrc.iscas.ac.cn; helo=cstnet.cn
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,25 +77,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Yanghang Liu <yanghliu@redhat.com>
----
- hw/vfio/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Add a CPU entry for the RV64 SiFive U74 CPU .It is available in
+single-core and dual-core configurations,and features advanced power
+management and AIA compliance.More details can be found at
+https://www.sifive.com/document-file/sifive-essential-u7-product-brief
+ 
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 8b8bc5a421..b46b1305a7 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3871,7 +3871,7 @@ static void vfio_pci_class_init(ObjectClass *klass, const void *data)
-                                           "(DEBUG)");
-     object_class_property_set_description(klass, /* 5.2, 8.0 non-experimetal */
-                                           "enable-migration",
--                                          "Enale device migration. Also requires a host VFIO PCI "
-+                                          "Enable device migration. Also requires a host VFIO PCI "
-                                           "variant or mdev driver with migration support enabled");
-     object_class_property_set_description(klass, /* 8.1 */
-                                           "vf-token",
+Signed-off-by: TravisYang <zhiyuan.plct@isrc.iscas.ac.cn>
+---
+ target/riscv/cpu-qom.h |  1 +
+ target/riscv/cpu.c     | 44 ++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 39 insertions(+), 6 deletions(-)
+
+diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+index 1fc8140190..f17390d072 100644
+--- a/target/riscv/cpu-qom.h
++++ b/target/riscv/cpu-qom.h
+@@ -57,6 +57,7 @@
+ #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
+ #define TYPE_RISCV_CPU_XIANGSHAN_KMH    RISCV_CPU_TYPE_NAME("xiangshan-kunminghu")
+ #define TYPE_RISCV_CPU_THEAD_C910       RISCV_CPU_TYPE_NAME("thead-c910")
++#define TYPE_RISCV_CPU_SIFIVE_U74       RISCV_CPU_TYPE_NAME("sifive-u74")
+ #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
+ 
+ OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ea9e6eb6a5..aa2fc59804 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3284,10 +3284,10 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.pmp = true,
+         .cfg.max_satp_mode = VM_1_10_SV48,
+     ),
+-
++
+ 	DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C910, TYPE_RISCV_VENDOR_CPU,
+ 		.misa_mxl_max = MXL_RV64,
+-       .misa_ext = RVG | RVC | RVS | RVU,
++       .misa_ext = RVG | RVC | RVS | RVU,
+ 		.priv_spec = PRIV_VERSION_1_12_0,
+ 
+ 		.cfg.ext_zcf = true,
+@@ -3297,9 +3297,9 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+ 		.cfg.ext_zfhmin = true,
+ 
+ 		.cfg.mmu = true,
+-       .cfg.ext_xtheadba = true,
+-       .cfg.ext_xtheadbb = true,
+-       .cfg.ext_xtheadbs = true,
++       .cfg.ext_xtheadba = true,
++       .cfg.ext_xtheadbb = true,
++       .cfg.ext_xtheadbs = true,
+ 	 	.cfg.ext_xtheadcmo = true,
+ 		.cfg.ext_xtheadcondmov = true,
+ 		.cfg.ext_xtheadfmemidx = true,
+@@ -3328,9 +3328,41 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+ 		.cfg.max_satp_mode = VM_1_10_SV39,
+ #ifndef CONFIG_USER_ONLY
+ 		.custom_csrs = th_csr_list,
+-#endif
++#endif
+ 	),
+ 
++    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_U74, TYPE_RISCV_CPU_SIFIVE_U,
++       .misa_mxl_max = MXL_RV64,
++       .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU | RVH,
++       .priv_spec = PRIV_VERSION_1_12_0,
++
++       .cfg.mmu = true,
++       .cfg.pmp_regions = 16,
++
++       .cfg.ext_zba = true,
++       .cfg.ext_zbb = true,
++       .cfg.ext_zbs = true,
++       .cfg.ext_zic64b = true,
++
++       .cfg.ext_zicbom = true,
++       .cfg.ext_zicboz = true,
++       .cfg.ext_zicbop = true,
++
++       .cfg.ext_svinval = true,
++       .cfg.ext_svadu = true,
++
++       .cfg.ext_zfh = true,
++       .cfg.ext_zfhmin = true,
++       .cfg.ext_zfa = true,
++
++       .cfg.ext_smaia = true,
++       .cfg.ext_ssaia = true,
++
++       .cfg.ext_sscofpmf = true,
++       .cfg.ext_sstc = true,
++
++       .cfg.max_satp_mode = VM_1_10_SV39,
++    ),
+ 
+ #if defined(CONFIG_TCG) && !defined(CONFIG_USER_ONLY)
+     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_BASE128, TYPE_RISCV_DYNAMIC_CPU,
 -- 
-2.47.3
+2.34.1
 
 
