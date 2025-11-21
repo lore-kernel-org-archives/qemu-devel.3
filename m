@@ -4,123 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBFEFCFA477
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 05:59:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB9ACFA477
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 05:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMKAX-0001Ns-Hx; Fri, 21 Nov 2025 00:58:53 -0500
+	id 1vMKBF-0002jA-6H; Fri, 21 Nov 2025 00:59:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMKAV-0001HY-0F
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 00:58:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMKBD-0002h8-NP; Fri, 21 Nov 2025 00:59:35 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMKAS-0005MJ-A0
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 00:58:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763704727;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- resent-to:resent-from:resent-message-id:in-reply-to:in-reply-to:
- references:references; bh=KxWPyWlvO0rezo2o1B/UY81NZvVMPhvZc/dOplcdSKY=;
- b=LI8cRzPH4HkOKLEuPSmJDPH6LDRrbHHgwdmPK8fgmIkENwWmHsZaIRekCBnKAYeQK+Sm6D
- 5o7NZfzTkjwqkK94etFZo11e9u4w2RVXMCwOexcFpyi9EUjRKGJoFwP+mwgjQWfLmviOxa
- 8JTB073GCrNjeV+CJYjMZEDZER3fnPM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-gnVpiT2lMau2bDq3UAQfEg-1; Fri,
- 21 Nov 2025 00:58:43 -0500
-X-MC-Unique: gnVpiT2lMau2bDq3UAQfEg-1
-X-Mimecast-MFC-AGG-ID: gnVpiT2lMau2bDq3UAQfEg_1763704719
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1718F180057A; Fri, 21 Nov 2025 05:58:38 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F30B218004A3; Fri, 21 Nov 2025 05:58:35 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9FDDF21E6A27; Fri, 21 Nov 2025 06:58:33 +0100 (CET)
-Resent-To: michael.roth@amd.com, qemu_oss@crudebyte.com, palmer@dabbelt.com,
- samuel.thibault@ens-lyon.org, fam@euphon.net, lizhijian@fujitsu.com,
- edgar.iglesias@gmail.com, liwei1518@gmail.com, npiggin@gmail.com,
- shentey@gmail.com, arei.gonglei@huawei.com, zhao1.liu@intel.com,
- groug@kaod.org, sstabellini@kernel.org, philmd@linaro.org,
- zhiwei_liu@linux.alibaba.com, harshpb@linux.ibm.com, rathc@linux.ibm.com,
- stefanb@linux.vnet.ibm.com, xen-devel@lists.xenproject.org,
- qemu-block@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- qemu-riscv@nongnu.org, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
- alex@shazbot.org, farosas@suse.de, dave@treblig.org,
- dbarboza@ventanamicro.com, kvm@vger.kernel.org, alistair.francis@wdc.com,
- sw@weilnetz.de, paul@xen.org, anthony@xenproject.org
-Resent-From: Markus Armbruster <armbru@redhat.com>
-Resent-Date: Fri, 21 Nov 2025 06:58:33 +0100
-Resent-Message-ID: <87wm3korjq.fsf@pond.sub.org>
-X-From-Line: armbru@redhat.com Fri Nov 21 06:55:24 2025
-Received: from imap.gmail.com ([2a00:1450:400c:c07::6d]:993) by
- dusky.pond.sub.org with IMAP4-SSL getmail6 msgid:11/376136; 21 Nov 2025
- 05:55:24 -0000
-Received: from blackfin.pond.sub.org
- (p200300d36f125200d4b07119e720e6da.dip0.t-ipconnect.de.
- [2003:d3:6f12:5200:d4b0:7119:e720:e6da])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fd8e54sm9034202f8f.40.2025.11.20.21.47.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 20 Nov 2025 21:47:19 -0800 (PST)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E659421E6A27; Fri, 21 Nov 2025 06:47:18 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: qemu-devel@nongnu.org,  arei.gonglei@huawei.com,
- pizhenwei@bytedance.com,  alistair.francis@wdc.com,
- stefanb@linux.vnet.ibm.com,  kwolf@redhat.com,  hreitz@redhat.com,
- sw@weilnetz.de,  qemu_oss@crudebyte.com,  groug@kaod.org,
- mst@redhat.com,  imammedo@redhat.com,  anisinha@redhat.com,
- kraxel@redhat.com,  shentey@gmail.com,  npiggin@gmail.com,
- harshpb@linux.ibm.com,  sstabellini@kernel.org,  anthony@xenproject.org,
- paul@xen.org,  edgar.iglesias@gmail.com,  elena.ufimtseva@oracle.com,
- jag.raman@oracle.com,  sgarzare@redhat.com,  pbonzini@redhat.com,
- fam@euphon.net,  philmd@linaro.org,  alex@shazbot.org,  clg@redhat.com,
- peterx@redhat.com,  farosas@suse.de,  lizhijian@fujitsu.com,
- jasowang@redhat.com,  samuel.thibault@ens-lyon.org,
- michael.roth@amd.com,  kkostiuk@redhat.com,  zhao1.liu@intel.com,
- mtosatti@redhat.com,  rathc@linux.ibm.com,  palmer@dabbelt.com,
- liwei1518@gmail.com,  dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com,  marcandre.lureau@redhat.com,
- qemu-block@nongnu.org,  qemu-ppc@nongnu.org,
- xen-devel@lists.xenproject.org,  kvm@vger.kernel.org, qemu-riscv@nongnu.org
-Subject: Re: [PATCH 12/14] error: Use error_setg_errno() for simplicity and
- consistency
-In-Reply-To: <aR-vExiomEe9jUNN@gallifrey> (David Alan Gilbert's message of
- "Fri, 21 Nov 2025 00:15:15 +0000")
-References: <20251120191339.756429-1-armbru@redhat.com>
- <20251120191339.756429-13-armbru@redhat.com>
- <aR-vExiomEe9jUNN@gallifrey>
-Date: Fri, 21 Nov 2025 06:47:18 +0100
-Message-ID: <87jyzkq6mx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMKBC-0005TZ-3u; Fri, 21 Nov 2025 00:59:35 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id AF22616C392;
+ Fri, 21 Nov 2025 08:59:23 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6BDE1321236;
+ Fri, 21 Nov 2025 08:59:31 +0300 (MSK)
+Message-ID: <88504990-e7c8-4033-a287-165d7392811c@tls.msk.ru>
+Date: Fri, 21 Nov 2025 08:59:30 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-getmail-retrieved-from-mailbox: [Gmail]/All Mail
-X-GMAIL-LABELS: "\\Sent"
-X-GMAIL-THRID: 1849337867389441729
-X-GMAIL-MSGID: 1849377727029175239
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Make sure fetch_instruction exist before calling it
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: phind.uet@gmail.com, Cameron Esfahani <dirty@apple.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>
+Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20251114082915.71884-2-phind.uet@gmail.com>
+ <aa7dad60-77e9-4871-8768-f1baa8fb0f60@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <aa7dad60-77e9-4871-8768-f1baa8fb0f60@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,49 +107,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"Dr. David Alan Gilbert" <dave@treblig.org> writes:
+On 11/21/25 08:54, Michael Tokarev wrote:
+> On 11/14/25 11:29, phind.uet@gmail.com wrote:
+>> From: Nguyen Dinh Phi <phind.uet@gmail.com>
+>>
+>> Currently, this function is only available in MSHV. If a different 
+>> accelerator
+>> is used, and the code jumps to this section, a segfault will occur.
+>> (I ran into this with HVF)
+> 
+> Is it a qemu-stable material?  It looks like it is.
+> Please let me know if it isn't.
 
-> * Markus Armbruster (armbru@redhat.com) wrote:
->> Use error_setg_errno() instead of passing the value of strerror() or
->> g_strerror() to error_setg().
->> 
->> The separator between the error message proper and the value of
->> strerror() changes from " : ", "", " - ", "- " to ": " in places.
->> 
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->
->> @@ -792,9 +792,9 @@ static void vfu_object_init_ctx(VfuObject *o, Error **errp)
->>                             VFU_REGION_FLAG_RW | VFU_REGION_FLAG_ALWAYS_CB,
->>                             NULL, 0, -1, 0);
->>      if (ret < 0) {
->> -        error_setg(errp,
->> -                   "vfu: Failed to setup config space handlers for %s- %s",
->> -                   o->device, strerror(errno));
->> +        error_setg_errno(errp,
->> +                         "vfu: Failed to setup config space handlers for %s",
->> +                         o->device);
->
-> missing errno.
+Ah, n/m.  This one fixes a commit which were added after 10.1
+(so not in any stable release), --
 
-Yes.
+1e25327b24 target/i386/emulate: Allow instruction decoding from stream
 
->>          goto fail;
->>      }
->>  
->> @@ -822,8 +822,8 @@ static void vfu_object_init_ctx(VfuObject *o, Error **errp)
->>  
->>      ret = vfu_realize_ctx(o->vfu_ctx);
->>      if (ret < 0) {
->> -        error_setg(errp, "vfu: Failed to realize device %s- %s",
->> -                   o->device, strerror(errno));
->> +        error_setg_errno(errp, "vfu: Failed to realize device %s",
->> +                         o->device);
->
-> missing errno.
+Sorry for the noise.
 
-Yes.  Another file my build tree doesn't compile anymore.  Will fix,
-thanks!
-
-[...]
+/mjt
 
 
