@@ -4,58 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81746CFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F738CFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd68-00045F-NC; Fri, 21 Nov 2025 21:11:38 -0500
+	id 1vMdH3-0000Bk-3D; Fri, 21 Nov 2025 21:22:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vMccs-0004u6-FH; Fri, 21 Nov 2025 20:41:22 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMdGz-00005J-4f; Fri, 21 Nov 2025 21:22:49 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vMcao-00034B-CX; Fri, 21 Nov 2025 20:41:18 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5ALAnhLa078745
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 21 Nov 2025 19:49:44 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Nctt2G5VdGAd0f97i5IQdXGCf3/Ph3bC8lF+lgjLw50=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1763722184; v=1;
- b=jksot3XuhnFKOX4NBpb9WtrjLgbGKthOlZoxlErqPILtc/Ghh1YHJF7PCFLnDSA1
- 2gTdS135uBzu3V3ajJxPGbOssJlKvaLiZm7U9HytP/TMKOc9zQbuvUblCWxzHK6h
- oYGoICc1YwPjrshUJjPRaAbVn5UujNXXs1iBuvif8yhUz85W3yhoz7fYW41S8SCP
- 4sbMvV8lLWGSO7EGGynKJFrI6j4kZKfBfSevycD+rvzg2LD2NXntUopGB5CJmSbL
- WRYJOJnuPIN7rz8mgX/0X9MceuuNy65nY3XvnXSp1k0xB7MoGAyQ4u735OkIxskN
- zeCtYJYTbabj8JIe5B9qoQ==
-Message-ID: <073d66a9-1507-4ff2-95c4-0a2d362a0feb@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 21 Nov 2025 19:49:43 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMdG7-0004dl-SM; Fri, 21 Nov 2025 21:22:44 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 265BA16C6DF;
+ Fri, 21 Nov 2025 16:51:54 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 74E49321956;
+ Fri, 21 Nov 2025 16:52:02 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Zejun Zhao <jelly.zhao.42@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 07/76] hw/riscv: Correct mmu-type property of sifive_u
+ harts in device tree
+Date: Fri, 21 Nov 2025 16:50:45 +0300
+Message-ID: <20251121135201.1114964-7-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 11/28] whpx: switch irqchip in kernel to a bool
- outside the struct
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>
-References: <20251121100240.89117-1-mohamed@unpredictable.fr>
- <20251121100240.89117-12-mohamed@unpredictable.fr>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251121100240.89117-12-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,83 +61,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/21 19:02, Mohamed Mediouni wrote:
-> Fix buildability on newer Qemu.
+From: Zejun Zhao <jelly.zhao.42@gmail.com>
 
-Can you give some more explanation?
+Correct mmu-type property of sifive_u harts from Sv48 to Sv39 in 64-bit
+mode since it's the only supported SATP mode.
 
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   accel/stubs/whpx-stub.c        |  1 +
->   accel/whpx/whpx-common.c       | 10 +---------
->   include/system/whpx-internal.h |  1 -
->   include/system/whpx.h          |  3 ++-
->   4 files changed, 4 insertions(+), 11 deletions(-)
-> 
-> diff --git a/accel/stubs/whpx-stub.c b/accel/stubs/whpx-stub.c
-> index c564c89fd0..4529dc4f78 100644
-> --- a/accel/stubs/whpx-stub.c
-> +++ b/accel/stubs/whpx-stub.c
-> @@ -10,3 +10,4 @@
->   #include "system/whpx.h"
->   
->   bool whpx_allowed;
-> +bool whpx_irqchip_in_kernel;
-> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-> index 18d93225c1..4dabe3a032 100644
-> --- a/accel/whpx/whpx-common.c
-> +++ b/accel/whpx/whpx-common.c
-> @@ -39,6 +39,7 @@
->   #include <winhvplatformdefs.h>
->   
->   bool whpx_allowed;
-> +bool whpx_irqchip_in_kernel;
->   static bool whp_dispatch_initialized;
->   static HMODULE hWinHvPlatform;
->   #ifdef __x86_64__
-> @@ -492,15 +493,6 @@ static const TypeInfo whpx_cpu_accel_type = {
->       .abstract = true,
->   };
->   
-> -/*
-> - * Partition support
-> - */
-> -
-> -bool whpx_irqchip_in_kernel(void)
-> -{
-> -    return whpx_global.kernel_irqchip;
-> -}
-> -
->   static void whpx_accel_class_init(ObjectClass *oc, const void *data)
->   {
->       AccelClass *ac = ACCEL_CLASS(oc);
-> diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
-> index 81c0c1819f..b1706a2749 100644
-> --- a/include/system/whpx-internal.h
-> +++ b/include/system/whpx-internal.h
-> @@ -44,7 +44,6 @@ struct whpx_state {
->   
->       bool kernel_irqchip_allowed;
->       bool kernel_irqchip_required;
-> -    bool kernel_irqchip;
->   };
->   
->   extern struct whpx_state whpx_global;
-> diff --git a/include/system/whpx.h b/include/system/whpx.h
-> index 98fe045ba1..4217a27e91 100644
-> --- a/include/system/whpx.h
-> +++ b/include/system/whpx.h
-> @@ -25,8 +25,9 @@
->   
->   #ifdef CONFIG_WHPX_IS_POSSIBLE
->   extern bool whpx_allowed;
-> +extern bool whpx_irqchip_in_kernel;
->   #define whpx_enabled() (whpx_allowed)
-> -bool whpx_irqchip_in_kernel(void);
-> +#define whpx_irqchip_in_kernel() (whpx_irqchip_in_kernel)
->   #else /* !CONFIG_WHPX_IS_POSSIBLE */
->   #define whpx_enabled() 0
->   #define whpx_irqchip_in_kernel() (0)
+Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20251013133242.1945681-1-jelly.zhao.42@gmail.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Cc: qemu-stable@nongnu.org
+(cherry picked from commit e41139eaad1d6ea7c52b8ebb5def2dcb84ff57e1)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index d69f942cfb..3e1ed209ca 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -176,7 +176,7 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
+             if (is_32_bit) {
+                 qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "riscv,sv32");
+             } else {
+-                qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "riscv,sv48");
++                qemu_fdt_setprop_string(fdt, nodename, "mmu-type", "riscv,sv39");
+             }
+             riscv_isa_write_fdt(&s->soc.u_cpus.harts[cpu - 1], fdt, nodename);
+         } else {
+-- 
+2.47.3
 
 
