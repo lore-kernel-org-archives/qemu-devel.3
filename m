@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B4ECFC51E
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 10:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26503CFC526
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 10:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd1Q-0000uW-HE; Fri, 21 Nov 2025 21:06:45 -0500
+	id 1vMcwM-0001ne-65; Fri, 21 Nov 2025 21:01:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcEM-0000Vc-2Y; Fri, 21 Nov 2025 20:16:02 -0500
+ id 1vMbyl-0000Aw-MM; Fri, 21 Nov 2025 19:59:55 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcCK-0005HT-9F; Fri, 21 Nov 2025 20:15:58 -0500
+ id 1vMbwj-0001il-5j; Fri, 21 Nov 2025 19:59:51 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ACB1D16CA5E;
- Fri, 21 Nov 2025 21:44:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 77F5C16CA82;
+ Fri, 21 Nov 2025 21:44:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 326E2321C9A;
- Fri, 21 Nov 2025 21:44:33 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 01C2B321CBE;
+ Fri, 21 Nov 2025 21:44:37 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 35/81] target/s390x: Fix missing clock-comparator
- interrupts after reset
-Date: Fri, 21 Nov 2025 21:43:34 +0300
-Message-ID: <20251121184424.1137669-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 71/81] nvme: Kick and check completions in BDS context
+Date: Fri, 21 Nov 2025 21:44:10 +0300
+Message-ID: <20251121184424.1137669-71-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -53,57 +54,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-After reset, CKC value is set to 0, so if clock-comparator interrupts
-are enabled, one should occur very shortly thereafter.
+nvme_process_completion() must run in the main BDS context, so schedule
+a BH for requests that aren’t there.
 
-Currently the code that loads the respective control register does not
-set tod_timer, so this does not happen.
+The context in which we kick does not matter, but let’s just keep kick
+and process_completion together for simplicity’s sake.
 
-Fix by adding a tcg_s390_tod_updated() call to LCTL and LCTLG.
+(For what it’s worth, a quick fio bandwidth test indicates that on my
+test hardware, if anything, this may be a bit better than kicking
+immediately before scheduling a pure nvme_process_completion() BH.  But
+I wouldn’t take more from those results than that it doesn’t really seem
+to matter either way.)
 
 Cc: qemu-stable@nongnu.org
-Suggested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20251016175954.41153-3-iii@linux.ibm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit dacfec5157fb9e2249cf393a143bd545e80a6e31)
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20251110154854.151484-8-hreitz@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 7a501bbd51941fb1867d78e6b0d1dc69e396b9e2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index 8187b917ba..116349b17c 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -1956,6 +1956,10 @@ void HELPER(lctlg)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-         if (env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
-+        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val & CR0_CKC_SC)) {
-+            BQL_LOCK_GUARD();
-+            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
-+        }
-         env->cregs[i] = val;
-         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%" PRIx64 "\n",
-                    i, src, val);
-@@ -1986,10 +1990,15 @@ void HELPER(lctl)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
+diff --git a/block/nvme.c b/block/nvme.c
+index bbf7c23dcd..3366519e57 100644
+--- a/block/nvme.c
++++ b/block/nvme.c
+@@ -480,7 +480,7 @@ static void nvme_trace_command(const NvmeCmd *cmd)
+     }
+ }
  
-     for (i = r1;; i = (i + 1) % 16) {
-         uint32_t val = cpu_ldl_data_ra(env, src, ra);
-+        uint64_t val64 = deposit64(env->cregs[i], 0, 32, val);
-         if ((uint32_t)env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
--        env->cregs[i] = deposit64(env->cregs[i], 0, 32, val);
-+        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val64 & CR0_CKC_SC)) {
-+            BQL_LOCK_GUARD();
-+            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
-+        }
-+        env->cregs[i] = val64;
-         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%x\n", i, src, val);
-         src += sizeof(uint32_t);
+-static void nvme_deferred_fn(void *opaque)
++static void nvme_kick_and_check_completions(void *opaque)
+ {
+     NVMeQueuePair *q = opaque;
  
+@@ -489,6 +489,18 @@ static void nvme_deferred_fn(void *opaque)
+     nvme_process_completion(q);
+ }
+ 
++static void nvme_deferred_fn(void *opaque)
++{
++    NVMeQueuePair *q = opaque;
++
++    if (qemu_get_current_aio_context() == q->s->aio_context) {
++        nvme_kick_and_check_completions(q);
++    } else {
++        aio_bh_schedule_oneshot(q->s->aio_context,
++                                nvme_kick_and_check_completions, q);
++    }
++}
++
+ static void nvme_submit_command(NVMeQueuePair *q, NVMeRequest *req,
+                                 NvmeCmd *cmd, BlockCompletionFunc cb,
+                                 void *opaque)
 -- 
 2.47.3
 
