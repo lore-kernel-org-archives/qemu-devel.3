@@ -4,41 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3BE3CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:52:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DC6CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd4G-0002WP-3E; Fri, 21 Nov 2025 21:09:41 -0500
+	id 1vMeJu-0004ij-Ho; Fri, 21 Nov 2025 22:29:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcVO-0000xC-FP; Fri, 21 Nov 2025 20:33:38 -0500
+ id 1vMeJp-0004hM-SF; Fri, 21 Nov 2025 22:29:49 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcTL-0001Mr-8y; Fri, 21 Nov 2025 20:33:33 -0500
+ id 1vMeJO-0002xE-8U; Fri, 21 Nov 2025 22:29:40 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 16B0C16CA8C;
- Fri, 21 Nov 2025 21:44:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7F33C16C70E;
+ Fri, 21 Nov 2025 16:51:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CB323321CC8;
- Fri, 21 Nov 2025 21:44:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D882C3219AB;
+ Fri, 21 Nov 2025 16:52:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 81/81] target/i386: fix stack size when delivering
- real mode interrupts
-Date: Fri, 21 Nov 2025 21:44:20 +0300
-Message-ID: <20251121184424.1137669-81-mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 54/76] hw/display/xlnx_dp.c: Don't abort on AUX FIFO
+ overrun/underrun
+Date: Fri, 21 Nov 2025 16:51:32 +0300
+Message-ID: <20251121135201.1114964-54-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,41 +62,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The stack can be 32-bit even in real mode, and in this case
-the stack pointer must be updated in its entirety rather than
-just the bottom 16 bits.  The same is true of real mode IRET,
-for which there was even a comment suggesting the right thing
-to do.
+The documentation of the Xilinx DisplayPort subsystem at
+https://www.xilinx.com/support/documents/ip_documentation/v_dp_txss1/v3_1/pg299-v-dp-txss1.pdf
+doesn't say what happens if a guest tries to issue an AUX write
+command with a length greater than the amount of data in the AUX
+write FIFO, or tries to write more data to the write FIFO than it can
+hold, or issues multiple commands that put data into the AUX read
+FIFO without reading it such that it overflows.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1506
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 106d766c9d5b549bc9780d2d2c519aa2bbebc89a)
+Currently QEMU will abort() in these guest-error situations, either
+in xlnx_dp.c itself or in the fifo8 code.  Make these cases all be
+logged as guest errors instead.  We choose to ignore the new data on
+overflow, and return 0 on underflow. This is in line with how we handled
+the "read from empty RX FIFO" case in commit a09ef5040477.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1418
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1419
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1424
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-id: 20251106145209.1083998-2-peter.maydell@linaro.org
+(cherry picked from commit f52db7f34242d3398bab0bacaa3e5dde99be5258)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
-index 71962113fb..603993ea03 100644
---- a/target/i386/tcg/seg_helper.c
-+++ b/target/i386/tcg/seg_helper.c
-@@ -1135,7 +1135,7 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
-     sa.env = env;
-     sa.ra = 0;
-     sa.sp = env->regs[R_ESP];
--    sa.sp_mask = 0xffff;
-+    sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-     sa.ss_base = env->segs[R_SS].base;
-     sa.mmu_index = x86_mmu_index_pl(env, 0);
+diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+index 7c980ee642..4120f03a3b 100644
+--- a/hw/display/xlnx_dp.c
++++ b/hw/display/xlnx_dp.c
+@@ -435,7 +435,18 @@ static void xlnx_dp_aux_clear_rx_fifo(XlnxDPState *s)
  
-@@ -1933,7 +1933,7 @@ void helper_iret_real(CPUX86State *env, int shift)
-     sa.env = env;
-     sa.ra = GETPC();
-     sa.mmu_index = x86_mmu_index_pl(env, 0);
--    sa.sp_mask = 0xffff; /* XXXX: use SS segment size? */
-+    sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
-     sa.sp = env->regs[R_ESP];
-     sa.ss_base = env->segs[R_SS].base;
+ static void xlnx_dp_aux_push_rx_fifo(XlnxDPState *s, uint8_t *buf, size_t len)
+ {
++    size_t avail = fifo8_num_free(&s->rx_fifo);
+     DPRINTF("Push %u data in rx_fifo\n", (unsigned)len);
++    if (len > avail) {
++        /*
++         * Data sheet doesn't specify behaviour here: we choose to ignore
++         * the excess data.
++         */
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: ignoring %zu bytes pushed to full RX_FIFO\n",
++                      __func__, len - avail);
++        len = avail;
++    }
+     fifo8_push_all(&s->rx_fifo, buf, len);
+ }
  
+@@ -466,7 +477,18 @@ static void xlnx_dp_aux_clear_tx_fifo(XlnxDPState *s)
+ 
+ static void xlnx_dp_aux_push_tx_fifo(XlnxDPState *s, uint8_t *buf, size_t len)
+ {
++    size_t avail = fifo8_num_free(&s->tx_fifo);
+     DPRINTF("Push %u data in tx_fifo\n", (unsigned)len);
++    if (len > avail) {
++        /*
++         * Data sheet doesn't specify behaviour here: we choose to ignore
++         * the excess data.
++         */
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: ignoring %zu bytes pushed to full TX_FIFO\n",
++                      __func__, len - avail);
++        len = avail;
++    }
+     fifo8_push_all(&s->tx_fifo, buf, len);
+ }
+ 
+@@ -475,8 +497,10 @@ static uint8_t xlnx_dp_aux_pop_tx_fifo(XlnxDPState *s)
+     uint8_t ret;
+ 
+     if (fifo8_is_empty(&s->tx_fifo)) {
+-        error_report("%s: TX_FIFO underflow", __func__);
+-        abort();
++        /* Data sheet doesn't specify behaviour here: we choose to return 0 */
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: attempt to read empty TX_FIFO\n",
++                      __func__);
++        return 0;
+     }
+     ret = fifo8_pop(&s->tx_fifo);
+     DPRINTF("pop 0x%2.2X from tx_fifo.\n", ret);
 -- 
 2.47.3
 
