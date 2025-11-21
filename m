@@ -4,72 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F28CFA478
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 07:37:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6F84CFA478
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 07:37:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMLhP-00065p-G6; Fri, 21 Nov 2025 02:36:56 -0500
+	id 1vMLhl-0006BU-Hm; Fri, 21 Nov 2025 02:37:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vMLhK-000651-A8
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 02:36:51 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vMLhk-0006B7-Hb
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 02:37:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vMLhH-0002mQ-8M
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 02:36:50 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AL7aS9V003095
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 21 Nov 2025 16:36:28 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=NpXDJuJPXxlu5pBKIyFAvQjaoHtAL0dCqF9RUohvXMg=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1763710588; v=1;
- b=EX44FZE4NxO02zwdUhBdbLWdBbVlv5UOoGQb96Jgm+k99VNy5aLz1W829Fl1SzYl
- 3uuCbA/r2HuRztQwyDXbSrYoQh3Xw8OYkx3ineRpUjWoxqFRn/7hBse63aYNbgnZ
- uwp17PEtPxsUWZLGZhD8xvnCOoDeanwkLKQRomhe0B3VK9/9TevrIpToXe8kvh1d
- IJeuRYlwv+beFUPhe4xPn9erdDDPuG2odHXnarO8k2reM60yf5DyjRRUm/gjuM0k
- 5GErn4oYqLMEOEzGLQ3pKAdSFQvCjtbsinuyFBuQuSqh1UCpHlbDWXj5yQzWyLy5
- TYR37GqCj2rkBiakgs+mPA==
-Message-ID: <24853a9b-9f75-4e69-a9e8-5ff796d6cc9f@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 21 Nov 2025 16:36:28 +0900
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vMLhi-0003Ua-8b
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 02:37:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763710632;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=82qnaFPBZTwgTGUTYtaBG0ApMNQ3Bp2OWvgPpLO11nw=;
+ b=dTQf8eFAdr7nbZ2GirtoPZ+ESn+i33fgOehZt5sVWPLGjXbUIwWDdSkRqtDtyyk3Pe7PP9
+ +mc1W0nT968dxTAD1yvKH3dJ62ferKFLHnRWsjiJm24Kx6wRGA+Jgf/RIZGjTARM0b5DgN
+ 6pWBEHLt1aYEN52/GWj2+420gU4rPlw=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-588-lvuod4KZMvi1eRXrS0Nl7g-1; Fri, 21 Nov 2025 01:54:49 -0500
+X-MC-Unique: lvuod4KZMvi1eRXrS0Nl7g-1
+X-Mimecast-MFC-AGG-ID: lvuod4KZMvi1eRXrS0Nl7g_1763708088
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-342701608e2so1985947a91.1
+ for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 22:54:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763708088; x=1764312888; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=82qnaFPBZTwgTGUTYtaBG0ApMNQ3Bp2OWvgPpLO11nw=;
+ b=tPdRE84zSGw0aaSvZ3AFbW1z36eJXRO7LFjqhGabW5WAFqDWRoWjOoKQFFq4wtFF+a
+ yhFISX/3OD3nmKUuMQLiMSRfsU8v3RHuBufSVWwJB9Y+gA2z8OWWOfQpsRY60br7pTxm
+ UrDYy5G75jdwFnBU0SxJAksqJcmxL6E93mVTX3PmFEtPwqH9dPJJ3wDGsGWwr+UZCGaC
+ TeHGxjIkBSuDi6fvG6XhcsQi9rygN4iAsjiZdiLFcJD3PuVziu1KvZcbg8Z1dBfKMbcl
+ r0zha9/qd6HhVd7OwSvRkuY4IgnwnBcBK6qSrVPtu0aEVv1ovlRUdxm9eJ80FOxHagUd
+ cusw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763708088; x=1764312888;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=82qnaFPBZTwgTGUTYtaBG0ApMNQ3Bp2OWvgPpLO11nw=;
+ b=gcd3juz5iZhJcwSVIAJ4GWxULdhdyjQRgxzRON3YC+rDORFIH9vmpWs89fxWyjWi6I
+ 2I3qMPCspyIhK5rJQXvQcTuLJhrPwgZo68dqRglrc1NG/JzhFMywLtBvjjKYaNOvuk5h
+ 43bsbwdPWj+tqReNgb78qzctBCfcOpcn8KzOjNd4XVBqWA9o2euRmHOtdMn6EfwdU57G
+ WODVoVY2cLFQykzM8zsGTSfBg5nhL7kqnOuk5Icy50Q8tLA/OkhV/sPpBZcYgL3zh0w/
+ 5Y19YKffF5mfwmHEcmh3F6gqpWnz09CEHmIHSa1y1sAiz4t8CSyNbDoKWpDbcKo3I/Co
+ TZ7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFSQ5svAVQFOQpqakZ8edYGnetA281tHohApnZe6/hhvjRcod2argOmB3YjxkmkwYELjiUerYI1O/y@nongnu.org
+X-Gm-Message-State: AOJu0Yz79EccgaMyFyX0/CFAjun1TgIJNi0OMGDiM5/rw5qUypA/OjVL
+ 6zw1NYSXytNRM9R/2E8qOi0Rt9iHVGvPHlEyIPtReHrOBeQTy/7yl21tFVfExpK40z0uAbCFqCs
+ 59z0swHCeGiT3Cdz+jpuUGL/OinSpsZAK6Eb+3JAPBlz7QX8/0+WqyLwR
+X-Gm-Gg: ASbGncutuPvy9NlWH7l+h+hurU+1iKQfA3eonKU7R3dqj7qYKRN4cv+M/Zq/ifOM76v
+ zkAHyCvCC7ZWXAfIKJ1GZQwnQ3qqhXKhsIEYJRZ6DxlJ3oD/EWh1WEATqzM6RJSiuVTOKDGv7Nk
+ xyr6d6QRZ77t7BGsrPgIN8Uh0oKwybjEXu+Mqg/Z/Y6xQOmxNjeNgXwPyjp/EIUcL0DYUG09gD/
+ O604R4z+y6Q/EGG5wqD2Ymv4RnyMiwZE5r6ablXPR/1D2Bn0ChICskI7KpZYhUDFd2+3y8XGQxy
+ Z2vkXZicJ4COh0/fUWBoucLNOePNXzkQuw3JbTtLfmGZeUNMAJ6UkO7whli4vvVdpWqPwyrlGy6
+ /KxyOeTPOX24WJe68pJDYVvzFMrzQxjciKw4pHBH7DZM/TYbdLA==
+X-Received: by 2002:a17:90b:1e51:b0:340:c060:4d44 with SMTP id
+ 98e67ed59e1d1-34733e5c442mr1575229a91.14.1763708088081; 
+ Thu, 20 Nov 2025 22:54:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF4IUYEXig1EOQlEkXHp2/sAMo4ljyvIGox1RbMWdChM1PHXKNPRpVPGGz82A7GskWAySTcoQ==
+X-Received: by 2002:a17:90b:1e51:b0:340:c060:4d44 with SMTP id
+ 98e67ed59e1d1-34733e5c442mr1575196a91.14.1763708087694; 
+ Thu, 20 Nov 2025 22:54:47 -0800 (PST)
+Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
+ [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-34727be2320sm4317637a91.5.2025.11.20.22.54.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 20 Nov 2025 22:54:47 -0800 (PST)
+Message-ID: <a43d044e-51e3-4000-b5cc-3bcc14317d20@redhat.com>
+Date: Fri, 21 Nov 2025 16:54:39 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [v2 1/3] virtio-gpu: Add support for
- VIRTIO_GPU_BLOB_FLAG_USE_USERPTR flag
-To: Honglei Huang <honghuan@amd.com>
-Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, Ray.Huang@amd.com,
- dmitry.osipenko@collabora.com, alex.bennee@linaro.org
-References: <20251121024705.1403042-1-honghuan@amd.com>
- <20251121024705.1403042-2-honghuan@amd.com>
- <b6f4cc26-7ebe-4b07-8e50-257b6f53d309@rsg.ci.i.u-tokyo.ac.jp>
- <db263884-6159-4d25-8c40-44dd78291714@amd.com>
- <ca2e398e-8158-4845-9798-6f444a73b103@rsg.ci.i.u-tokyo.ac.jp>
- <c33300b0-b4db-44b0-be07-4e4382a0c0fb@amd.com>
- <21b94d50-79c4-4942-84f7-f4c96f432dd8@rsg.ci.i.u-tokyo.ac.jp>
- <dd14c464-bd74-4d0d-9578-e28367319475@amd.com>
- <9b48903e-09eb-453a-aa8f-903fca99cb7d@rsg.ci.i.u-tokyo.ac.jp>
- <f95196fe-27c8-4eef-8b64-b1ede138425d@amd.com>
+Subject: Re: [PATCH v4 0/8] target/arm/kvm: Improve memory error handling
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, gengdongjiu1@gmail.com,
+ mst@redhat.com, imammedo@redhat.com, armbru@redhat.com, anisinha@redhat.com,
+ eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, zhao1.liu@intel.com, peter.maydell@linaro.org,
+ pbonzini@redhat.com, shan.gavin@gmail.com, zhangliang5@huawei.com
+References: <20251112172535.403042-1-gshan@redhat.com>
+ <20251118104755.000024c8@huawei.com>
+ <lghhh6xohwekbst2bbuqksiono5dgtrkyjxoypb4ahij2t2qgs@7dmgytmbiehd>
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <f95196fe-27c8-4eef-8b64-b1ede138425d@amd.com>
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <lghhh6xohwekbst2bbuqksiono5dgtrkyjxoypb4ahij2t2qgs@7dmgytmbiehd>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,108 +130,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/21 15:50, Honglei Huang wrote:
-> 
-> 
-> On 2025/11/21 14:12, Akihiko Odaki wrote:
->>
->>
->> On 2025/11/21 14:43, Honglei Huang wrote:
->>>
->>>
->>> On 2025/11/21 13:28, Akihiko Odaki wrote:
->>>> On 2025/11/21 14:21, Honglei Huang wrote:
->>>>>
->>>>>
->>>>> On 2025/11/21 11:39, Akihiko Odaki wrote:
->>>>>> On 2025/11/21 12:14, Honglei Huang wrote:
->>>>>>>
->>>>>>>
->>>>>>> On 2025/11/21 10:56, Akihiko Odaki wrote:
->>>>>>>> On 2025/11/21 11:47, Honglei Huang wrote:
->>>>>>>>> Add support for the USE_USERPTR blob flag in virtio-gpu to enable
->>>>>>>>> user pointer mapping for blob resources. This allows guest 
->>>>>>>>> applications
->>>>>>>>> to use user-allocated memory for GPU resources more efficiently.
->>>>>>>>>
->>>>>>>>> Changes include:
->>>>>>>>> - Add VIRTIO_GPU_BLOB_FLAG_USE_USERPTR flag definition
->>>>>>>>> - Enhance blob resource creation to handle userptr flag properly
->>>>>>>>> - Remove arbitrary nr_entries limit (16384) in mapping creation
->>>>>>>>> - Add conditional handling for userptr vs regular blob mapping
->>>>>>>>
->>>>>>>> I don't see the added conditional handling.
->>>>>>>
->>>>>>> Sorry, the additional handing is replaced by the fixing of value 
->>>>>>> check.
->>>>>>> I will correct this commit message in the next version.
->>>>>>
->>>>>> Not just the commit message, but it also questions the utility of 
->>>>>> VIRTIO_GPU_BLOB_FLAG_USE_USERPTR and 
->>>>>> VIRTIO_GPU_F_RESOURCE_USERPTR. Neither of them adds a new 
->>>>>> functionality. They should be dropped if they are also replaced 
->>>>>> with the fix.
->>>>>>
->>>>>
->>>>> Yes totally agreed, it is my mistaken, I shouldn't mix the code for 
->>>>> fixing and the code for adding new features in one submission.
->>>>>
->>>>> Actually this patch set are for another components upstream test, 
->>>>> for the sake of convenience, I have added both the fix and feature 
->>>>> here,
->>>>> that is a bad idea.
->>>>>
->>>>> Will split the fix part into previous thread.
->>>>>
->>>>> And for the check value fix thread, will send v4 as the final version.
->>>>
->>>> Splitting fixes and features is a good idea, but that's not what I 
->>>> meant.
->>>>
->>>> What I pointed out is that, it seems that one of the "features" you 
->>>> are adding, namely VIRTIO_GPU_F_RESOURCE_USERPTR does nothing at at 
->>>> all. So I'm wondering if you forgot to add a real implementation or 
->>>> the feature is just no longer necessary.
->>>
->>> Understood, actually the resource of flag 
->>> VIRTIO_GPU_F_RESOURCE_USERPTR just reuses the feature of 
->>> VIRTIO_GPU_BLOB_MEM_GUEST: using the virtio_gpu_create_mapping_iov 
->>> function to map the iov from guest.
->>>
->>> In qemu, the handing of VIRTIO_GPU_F_RESOURCE_USERPTR and 
->>> VIRTIO_GPU_BLOB_MEM_GUEST basically same.
->>>
->>> The VIRTIO_GPU_F_RESOURCE_USERPTR is from guest userspace, but the
->>> VIRTIO_GPU_BLOB_MEM_GUEST comes from guest kernel.
->>> So in VIRTIO kernel and virglrenderer they are different, see VIRTIO 
->>> kerenl: [1], and virglrenderer: [2].
->>>
->>> May I need to change the organizational form of this patch set?
->>>
->>> [1]: https://lore.kernel.org/lkml/20251112074548.3718563-1- 
->>> honglei1.huang@amd.com/
->>> [2]: https://gitlab.freedesktop.org/virgl/virglrenderer/-/ 
->>> merge_requests/1568/ 
->>> diffs#14086999aaf57fc68a3d7d639ab280c3a2672430:~:text=if%20(args%2D%3Eblob_flags%20%26%20VIRGL_RENDERER_BLOB_FLAG_USE_USERPTR)%20%7B
->> Why does virglrenderer need to distinguish userspace and kernel?
-> 
-> It seems like the blob resource in virglrenderer doesn't support the 
-> guest resource/iov resource, virglrenderer doesn't let guest kernel 
-> resource go into get_blob callback.
-> 
-> But some feature I am working on really want to let guest userptr 
-> resource get in get_blob callback.
-> 
-> So I use this flag to extend the feature of virglrenderer blob callback.
-> 
-> The different is:
-> guest kernel resource -> won't go to blob callback.
-> guest userptr resource -> go to blob callback.
+Hi Mauro,
 
-Now I understand what you want to achieve. But there should be no reason 
-to distinguish kernel and userspace; you just need to run some code to 
-set up a resource for hsakmt using some memory.
+On 11/18/25 8:54 PM, Mauro Carvalho Chehab wrote:
+> On Tue, Nov 18, 2025 at 10:47:55AM +0000, Jonathan Cameron wrote:
+>> On Thu, 13 Nov 2025 03:25:27 +1000
+>> Gavin Shan <gshan@redhat.com> wrote:
+>>
+>>> In the combination of 64KiB host and 4KiB guest, a problematic host
+>>> page affects 16x guest pages. Those 16x guest pages are most likely
+>>> owned by separate threads and accessed by the threads in parallel.
+>>> It means 16x memory errors can be raised at once. However, we're
+>>> unable to handle this situation because the only error source has
+>>> one read acknowledgement register in current design. QEMU has to
+>>> crash in the following path due to the previously delivered error
+>>> isn't acknowledged by the guest on attempt to deliver another error.
+>>>
+>>>    kvm_vcpu_thread_fn
+>>>      kvm_cpu_exec
+>>>        kvm_arch_on_sigbus_vcpu
+>>>          kvm_cpu_synchronize_state
+>>>          acpi_ghes_memory_errors
+>>>          abort
+>>>
+>>> This series fixes the issue by sending 16x consective CPER errors
+>>> which are contained in a single GHES error block.
+>>>
+>>> PATCH[1-4] Increases GHES raw data maximal length from 1KiB to 4KiB
+>>> PATCH[5]   Supports multiple error records in a single error block
+>>> PATCH[6-7] Improves the error handling in the error delivery path
+>>> PATCH[8]   Sends 16x consective CPERs in a single block if needed
+>>>
+>>
+>> Hi Gavin,
+>>
+>> Just a quick head's up to say we've had some internal discussions around the
+>> kernel handling of broader address masks in CPER and think it is probably
+>> broken. Rectifying that may at least simplify what is needed on the QEMU side
+>> of things and maybe even handle much larger blocks (2M and larger).
+> 
+> Btw, I just added a logic at rasdaemon to catch SIGBUS errors:
+> https://github.com/mchehab/rasdaemon/pull/199
+> 
+> But so far, I didn't find a proper way to check such code.
+> 
+> Jonathan/Gavin,
+> 
+> Do you know a good way for us to check how the mm SEA notification
+> is handled with QEMU?
+> 
 
-In that case, you can simply add another callback that achieves the goal 
-to virglrenderer. There is no need to change the guest-visible interface.
+Sorry that I'm not familiar with rasdaemon. Could you please provide more
+contexts about your question?
+
+Thanks,
+Gavin
+
 
