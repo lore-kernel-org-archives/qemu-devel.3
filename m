@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F6ACFC50C
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF0E9CFC50C
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:36:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMeJ4-0004F8-Ig; Fri, 21 Nov 2025 22:29:03 -0500
+	id 1vMdfr-0001pj-RR; Fri, 21 Nov 2025 21:48:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMeJ1-0004Dr-4m; Fri, 21 Nov 2025 22:28:59 -0500
+ id 1vMdfe-0001ND-L1; Fri, 21 Nov 2025 21:48:18 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMeIR-0002dn-17; Fri, 21 Nov 2025 22:28:55 -0500
+ id 1vMdf0-0005BR-Um; Fri, 21 Nov 2025 21:48:15 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7B69A16C702;
- Fri, 21 Nov 2025 16:51:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0305616C6E8;
+ Fri, 21 Nov 2025 16:51:55 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D2A4F32199F;
- Fri, 21 Nov 2025 16:52:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 52608321985;
+ Fri, 21 Nov 2025 16:52:03 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Shameer Kolothum <skolothumtho@nvidia.com>,
- Eric Auger <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Helge Deller <deller@gmx.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 42/76] tests/qtest/bios-tables-test: Update DSDT blobs
- after GPEX _DSM change
-Date: Fri, 21 Nov 2025 16:51:20 +0300
-Message-ID: <20251121135201.1114964-42-mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 16/76] target/hppa: Set FPCR exception flag bits for
+ non-trapped exceptions
+Date: Fri, 21 Nov 2025 16:50:54 +0300
+Message-ID: <20251121135201.1114964-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
@@ -61,155 +62,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Update the reference DSDT blobs after GPEX _DSM change. This affects the
-aarch64 'virt', riscv64 "virt", loongarch64 "virt" and the x86 'microvm'
-machines.
+In commit ebd394948de4e8 ("target/hppa: Fix FPE exceptions") when
+we added the code for setting up the registers correctly on trapping
+FP exceptions, we accidentally broke the handling of the flag bits
+for non-trapping exceptions.
 
-DSDT diff is the same for all the machines/tests:
+In update_fr0_op() we incorrectly zero out the flag bits and the C
+bit, so any fp operation would clear previously set flag bits. We
+also stopped setting the flag bits when the fp operation raises
+an exception and the trap is not enabled.
 
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20230628 (64-bit version)
-  * Copyright (c) 2000 - 2023 Intel Corporation
-  *
-  * Disassembling to symbolic ASL+ operators
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/DSDT, Fri Oct 10 11:18:21 2025
-+ * Disassembly of /tmp/aml-E6V9D3, Fri Oct 10 11:18:21 2025
-  *
-  * Original Table Header:
-  *     Signature        "DSDT"
-  *     Length           0x000014D9 (5337)
-  *     Revision         0x02
-- *     Checksum         0xA4
-+ *     Checksum         0xA5
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-  *     Compiler ID      "BXPC"
-  *     Compiler Version 0x00000001 (1)
-  */
- DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
- {
-     Scope (\_SB)
-     {
-         Device (C000)
-         {
-             Name (_HID, "ACPI0007" /* Processor Device */)  // _HID: Hardware ID
-             Name (_UID, Zero)  // _UID: Unique ID
-         }
+Adjust the code so that we set the Flag bits for every exception that
+happened and where the trap is not enabled.  (This is the correct
+behaviour for the case where an instruction triggers two exceptions,
+one of which traps and one of which does not; that can only happen
+for inexact + underflow or inexact + overflow.)
 
-@@ -1822,33 +1822,33 @@
-                 Else
-                 {
-                     CDW1 |= 0x04
-                 }
-
-                 Return (Arg3)
-             }
-
-             Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
-             {
-                 If ((Arg0 == ToUUID ("e5c937d0-3553-4d7a-9117-ea4d19c3434d") /* Device Labeling Interface */))
-                 {
-                     If ((Arg2 == Zero))
-                     {
-                         Return (Buffer (One)
-                         {
--                             0x01                                             // .
-+                             0x00                                             // .
-                         })
-                     }
-                 }
-
-                 Return (Buffer (One)
-                 {
-                      0x00                                             // .
-                 })
-             }
-
-             Device (RES0)
-             {
-                 Name (_HID, "PNP0C02" /* PNP Motherboard Resources */)  // _HID: Hardware ID
-                 Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-                 {
-                     QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, NonCacheable, ReadWrite,
-
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251022080639.243965-4-skolothumtho@nvidia.com>
-(cherry picked from commit ccf166d89dcf57c9d333f05173851f90e416097a)
-(Mjt: regenerate all actual tables)
+Cc: qemu-stable@nongnu.org
+Fixes: ebd394948de4e8 ("target/hppa: Fix FPE exceptions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3158
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Tested-by: Helge Deller <deller@gmx.de>
+Message-ID: <20251017085350.895681-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 1a8ffd6172f3d9ad8232189adb879a16ec416f89)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/data/acpi/aarch64/virt/DSDT b/tests/data/acpi/aarch64/virt/DSDT
-index 18d97e8f22..47d4b9d2ba 100644
-Binary files a/tests/data/acpi/aarch64/virt/DSDT and b/tests/data/acpi/aarch64/virt/DSDT differ
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt
-index 2cef095bcc..044a075401 100644
-Binary files a/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt and b/tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt differ
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.acpipcihp b/tests/data/acpi/aarch64/virt/DSDT.acpipcihp
-index 8d55a877a4..87e05d2a28 100644
-Binary files a/tests/data/acpi/aarch64/virt/DSDT.acpipcihp and b/tests/data/acpi/aarch64/virt/DSDT.acpipcihp differ
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex b/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex
-index 970d43f68b..fcae6ca910 100644
-Binary files a/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex and b/tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex differ
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.memhp b/tests/data/acpi/aarch64/virt/DSDT.memhp
-index 372ca3d7fb..2f5039aff0 100644
-Binary files a/tests/data/acpi/aarch64/virt/DSDT.memhp and b/tests/data/acpi/aarch64/virt/DSDT.memhp differ
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.pxb b/tests/data/acpi/aarch64/virt/DSDT.pxb
-index c277988249..8a2d8a878f 100644
-Binary files a/tests/data/acpi/aarch64/virt/DSDT.pxb and b/tests/data/acpi/aarch64/virt/DSDT.pxb differ
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.topology b/tests/data/acpi/aarch64/virt/DSDT.topology
-index ebbeedc1ed..3400ea67c4 100644
-Binary files a/tests/data/acpi/aarch64/virt/DSDT.topology and b/tests/data/acpi/aarch64/virt/DSDT.topology differ
-diff --git a/tests/data/acpi/aarch64/virt/DSDT.viot b/tests/data/acpi/aarch64/virt/DSDT.viot
-index b897d66797..7a50bed9cc 100644
-Binary files a/tests/data/acpi/aarch64/virt/DSDT.viot and b/tests/data/acpi/aarch64/virt/DSDT.viot differ
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT b/tests/data/acpi/loongarch64/virt/DSDT
-index b31841aec6..2fdb2a750f 100644
-Binary files a/tests/data/acpi/loongarch64/virt/DSDT and b/tests/data/acpi/loongarch64/virt/DSDT differ
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT.memhp b/tests/data/acpi/loongarch64/virt/DSDT.memhp
-index e291200fc9..fbd1b9242d 100644
-Binary files a/tests/data/acpi/loongarch64/virt/DSDT.memhp and b/tests/data/acpi/loongarch64/virt/DSDT.memhp differ
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT.numamem b/tests/data/acpi/loongarch64/virt/DSDT.numamem
-index 07923ac395..6509d71044 100644
-Binary files a/tests/data/acpi/loongarch64/virt/DSDT.numamem and b/tests/data/acpi/loongarch64/virt/DSDT.numamem differ
-diff --git a/tests/data/acpi/loongarch64/virt/DSDT.topology b/tests/data/acpi/loongarch64/virt/DSDT.topology
-index 6dfbb495f8..6a97c076a5 100644
-Binary files a/tests/data/acpi/loongarch64/virt/DSDT.topology and b/tests/data/acpi/loongarch64/virt/DSDT.topology differ
-diff --git a/tests/data/acpi/riscv64/virt/DSDT b/tests/data/acpi/riscv64/virt/DSDT
-index 527f239dab..968e1a15c8 100644
-Binary files a/tests/data/acpi/riscv64/virt/DSDT and b/tests/data/acpi/riscv64/virt/DSDT differ
-diff --git a/tests/data/acpi/x86/microvm/DSDT.pcie b/tests/data/acpi/x86/microvm/DSDT.pcie
-index ba258f454d..b646a05551 100644
-Binary files a/tests/data/acpi/x86/microvm/DSDT.pcie and b/tests/data/acpi/x86/microvm/DSDT.pcie differ
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index e2fce2e972..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,17 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/DSDT",
--"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
--"tests/data/acpi/aarch64/virt/DSDT.memhp",
--"tests/data/acpi/aarch64/virt/DSDT.pxb",
--"tests/data/acpi/aarch64/virt/DSDT.topology",
--"tests/data/acpi/aarch64/virt/DSDT.acpipcihp",
--"tests/data/acpi/aarch64/virt/DSDT.hpoffacpiindex",
--"tests/data/acpi/aarch64/virt/DSDT.viot",
--"tests/data/acpi/aarch64/virt/DSDT.smmuv3-legacy",
--"tests/data/acpi/aarch64/virt/DSDT.smmuv3-dev",
--"tests/data/acpi/riscv64/virt/DSDT",
--"tests/data/acpi/loongarch64/virt/DSDT",
--"tests/data/acpi/loongarch64/virt/DSDT.topology",
--"tests/data/acpi/loongarch64/virt/DSDT.numamem",
--"tests/data/acpi/loongarch64/virt/DSDT.memhp",
--"tests/data/acpi/x86/microvm/DSDT.pcie",
+diff --git a/target/hppa/fpu_helper.c b/target/hppa/fpu_helper.c
+index 45353202fa..2d272730f6 100644
+--- a/target/hppa/fpu_helper.c
++++ b/target/hppa/fpu_helper.c
+@@ -94,7 +94,8 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+ {
+     uint32_t soft_exp = get_float_exception_flags(&env->fp_status);
+     uint32_t hard_exp = 0;
+-    uint32_t shadow = env->fr0_shadow & 0x3ffffff;
++    uint32_t shadow = env->fr0_shadow;
++    uint32_t to_flag = 0;
+     uint32_t fr1 = 0;
+ 
+     if (likely(soft_exp == 0)) {
+@@ -122,6 +123,10 @@ static void update_fr0_op(CPUHPPAState *env, uintptr_t ra)
+             fr1 |= hard_exp << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
+         }
+     }
++    /* Set the Flag bits for every exception that was not enabled */
++    to_flag = hard_exp & ~shadow;
++    shadow |= to_flag << (R_FPSR_FLAGS_SHIFT - R_FPSR_ENABLES_SHIFT);
++
+     env->fr0_shadow = shadow;
+     env->fr[0] = (uint64_t)shadow << 32 | fr1;
+ 
 -- 
 2.47.3
 
