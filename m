@@ -4,84 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D68CFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE009CFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcq5-0005G3-Sk; Fri, 21 Nov 2025 20:55:02 -0500
+	id 1vMdMA-0006vY-OC; Fri, 21 Nov 2025 21:28:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vMbge-00064v-6X
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:41:13 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vMbgT-0006tB-P4
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:41:09 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-477b91680f8so20731645e9.0
- for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 16:40:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763772041; x=1764376841; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LdWAJH6s7XticPUwO+/xRlCKqNuhKhU8yKqVINAJxXA=;
- b=ZpRuV3DrHMSL8kGwFaPbXNSNFTzN7Gp8F2H4E/0iwv7aYEHhINBi9IOIzymHGp91Q3
- t7ZtuBoL6Y6O/ahWtC8Qq7q5zTUUPOTBrfYIpWBx+U2wj3x8SkRCIEYOshuL55MjtTTk
- gpiqlrIPr2HBwjOOLzkwo+PZ/psA3xiAHtlwIN038ObhCG5rTuV9yYefPZGyVCCa2Jib
- emhuNFbnqH8Q3QFXa4eJWFPgLH1lZbBAPhgtaWILuVadWbB+Z0G08jbGfkL8IpFjkUZS
- 2KgeMa6pg5GWuQp9XvjzGw0G/xk3oSdR1v2xf2mglK9G/F7xt2EP5GCZibSa7u/YwltI
- nc/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763772041; x=1764376841;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LdWAJH6s7XticPUwO+/xRlCKqNuhKhU8yKqVINAJxXA=;
- b=XUvjys3X62R3LKtHjQKpztuEkuHhwhhduFqsdemMtqXwXoXUywecKIt+ysGPoAU99Z
- zFpTs2MX1OgTF2SKEr+9YgFn+qvWCOsQqFS0ci9M+ZKG7wEgkEUBCnFKjHQGIpvqwVDF
- PxBheZeW58lDHejFhj8EbCTT7o+UV3bt4kvgn1ZYMrCXOTuJkmLYa3jYnFpIgkbh0SyJ
- Y/8RhAae8gFNKuTigvSRh+ZmofzfOUXPC2u7I0dgjTg7sMGu7AU8PEvkhNli1F8vLB5O
- bYnEtW2qFdESmtrE+Kuh0A5KxmOgCLcgsypIUVx4uY1EOm2Fo1fu2Fy77GY0WmS6VnOQ
- mhvQ==
-X-Gm-Message-State: AOJu0YznUjoy3Tx5QtglMh4OThXqjfp2cI8EhI4dVFEpAVWvasDeehUK
- XqWFGi0PNBPthK2fE13sfI1zN9lITE5iqC58zKmliMYRteKEeBK7QXFj5qiGlFAogn9doWHqdGD
- cx8Ry
-X-Gm-Gg: ASbGncvwDvg9HZ5oAYA2tv1Uim/w4R5VRnp8mmv7JSnFBsOWFzg2n86IeG6ao/yk80s
- AVXvKs90Ugy8f4u0mnQtkGxUzZoD5It9otEHWlJMI+W69cqVgBvrND4RnAem8+rZGhsbLDafoD7
- g86Drb5fkj714T0DUsoQiycrhJvxzOq3uwFD/0lZgURjcMNsLEg9rGaz0jPcVdbqLRbEfUHJd40
- +5SiVQC3m5vVhZyZAlf8OgrJ/PatgDWQoYRYorxjkIO6Da+3t0WapA3NEvA0oe76oRG4Nltt3q5
- vj3hag+GNwLzEjLX41ksYt/LYyoT1f/bjcHv5BOYrsVEoB52XNFlniJsLkKAAw2hV+aIOZfpLbw
- HIuIxjhCW1aiPTde5z27UcjM/Y5tWsU+u5OMoB0l1EODYXr5V+xLLS1uFz8114cgR99fRhJHbEX
- DQaBNgl+zGhjY=
-X-Google-Smtp-Source: AGHT+IGdaEJgL4z9YyY1O9xJYAAayq2BOL8yrGefufK0H1u6XZHEI5QaPTIkycSFEuXJXrJbxG2xHg==
-X-Received: by 2002:a05:600c:a07:b0:477:a219:cdb7 with SMTP id
- 5b1f17b1804b1-477c10523aamr28667635e9.0.1763730205762; 
- Fri, 21 Nov 2025 05:03:25 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477bf3af0e1sm40285325e9.10.2025.11.21.05.03.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 21 Nov 2025 05:03:24 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0D0755F841;
- Fri, 21 Nov 2025 13:03:24 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMdM6-0006pQ-LZ; Fri, 21 Nov 2025 21:28:06 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMdLD-0006XF-F7; Fri, 21 Nov 2025 21:28:03 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id A25FE16C6DA;
+ Fri, 21 Nov 2025 16:51:53 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0357D321951;
+ Fri, 21 Nov 2025 16:52:02 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [RFC PATCH] plugins: shorten aggressively long name
-Date: Fri, 21 Nov 2025 13:03:17 +0000
-Message-ID: <20251121130317.2874416-1-alex.bennee@linaro.org>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 02/76] tests/tcg/multiarch/linux/linux-test: Don't try
+ to test atime update
+Date: Fri, 21 Nov 2025 16:50:40 +0300
+Message-ID: <20251121135201.1114964-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,202 +63,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The old name comes in at a 51 characters, contains at least one
-redundant token and exec is arguably implied by inline as all inline
-operations occur when instructions are executing.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-By putting the name on a substantial diet we can reduce it by 15% and
-gain valuable white-space in the process.
+The linux-test test includes an attempt to check the utime and stat
+syscalls by setting the atime and mtime of a file to specific values,
+and then calling stat() to check that the values read back correctly.
 
+Unfortunately this is flaky, as it will fail if some other process
+(for instance a virus scanner, backup program, etc) gets in and reads
+the file between the utime() and stat() call, resulting in a host
+syscall sequence like this:
+
+utimensat(AT_FDCWD, "file2",
+  [{tv_sec=1001, tv_nsec=0} /* 1970-01-01T01:16:41+0100 */,
+   {tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */], 0) = 0
+# successfully set atime to 1001 and mtime to 1000
+statx(AT_FDCWD, "file2", AT_STATX_SYNC_AS_STAT|AT_NO_AUTOMOUNT,
+  STATX_BASIC_STATS,
+  {stx_mask=STATX_BASIC_STATS|STATX_MNT_ID,
+   stx_blksize=4096, stx_attributes=0, stx_nlink=1, stx_uid=32808,
+   stx_gid=32808, stx_mode=S_IFREG|0600, stx_ino=21659016,
+   stx_size=100, stx_blocks=8,
+   stx_attributes_mask=STATX_ATTR_COMPRESSED|STATX_ATTR_IMMUTABLE|
+         STATX_ATTR_APPEND|STATX_ATTR_NODUMP|STATX_ATTR_ENCRYPTED|
+         STATX_ATTR_AUTOMOUNT|STATX_ATTR_MOUNT_ROOT|STATX_ATTR_VERITY|
+         STATX_ATTR_DAX,
+   stx_atime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
+   stx_ctime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
+   stx_mtime={tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */,
+   stx_rdev_major=0, stx_rdev_minor=0, stx_dev_major=252,
+   stx_dev_minor=0, stx_mnt_id=0x1f}) = 0
+# but when we statx the file, we get back an mtime of 1000
+# but an atime corresponding to when the other process read it
+
+and which will cause the test program to fail with the error
+message "stat time".
+
+In theory we could defend against this by e.g.  operating on files in
+a dummy loopback mount filesystem which we mounted as 'noatime', but
+this isn't worth the hassle.  Just drop the check on atime.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20251016150357.876415-4-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- include/qemu/qemu-plugin.h    |  4 ++--
- contrib/plugins/cflow.c       | 22 +++++++++++-----------
- contrib/plugins/howvec.c      |  2 +-
- contrib/plugins/stoptrigger.c | 10 ++++++----
- plugins/api.c                 |  2 +-
- tests/tcg/plugins/discons.c   | 18 +++++++++---------
- tests/tcg/plugins/inline.c    |  6 +++---
- tests/tcg/plugins/insn.c      |  5 +++--
- 8 files changed, 36 insertions(+), 33 deletions(-)
+(cherry picked from commit 77dc9d662f80b9f4eb450df27f60a0a9b3c97785)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 60de4fdd3fa..29663591ebf 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -516,7 +516,7 @@ void qemu_plugin_register_vcpu_insn_exec_cond_cb(
-     void *userdata);
+diff --git a/tests/tcg/multiarch/linux/linux-test.c b/tests/tcg/multiarch/linux/linux-test.c
+index 64f57cb287..bf6e0fda26 100644
+--- a/tests/tcg/multiarch/linux/linux-test.c
++++ b/tests/tcg/multiarch/linux/linux-test.c
+@@ -155,9 +155,14 @@ static void test_file(void)
+         error("stat mode");
+     if ((st.st_mode & 0777) != 0600)
+         error("stat mode2");
+-    if (st.st_atime != 1001 ||
+-        st.st_mtime != 1000)
++    /*
++     * Only check mtime, not atime: other processes such as
++     * virus scanners might race with this test program and get
++     * in and update the atime, causing random failures.
++     */
++    if (st.st_mtime != 1000) {
+         error("stat time");
++    }
  
- /**
-- * qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu() - insn exec inline op
-+ * qemu_plugin_register_inline_per_vcpu() - insn exec inline op
-  * @insn: the opaque qemu_plugin_insn handle for an instruction
-  * @op: the type of qemu_plugin_op (e.g. ADD_U64)
-  * @entry: entry to run op
-@@ -525,7 +525,7 @@ void qemu_plugin_register_vcpu_insn_exec_cond_cb(
-  * Insert an inline op to every time an instruction executes.
-  */
- QEMU_PLUGIN_API
--void qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+void qemu_plugin_register_inline_per_vcpu(
-     struct qemu_plugin_insn *insn,
-     enum qemu_plugin_op op,
-     qemu_plugin_u64 entry,
-diff --git a/contrib/plugins/cflow.c b/contrib/plugins/cflow.c
-index b5e33f25f9b..cef5ae2239f 100644
---- a/contrib/plugins/cflow.c
-+++ b/contrib/plugins/cflow.c
-@@ -320,14 +320,14 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-      * check where we are at. Do this on the first instruction and not
-      * the TB so we don't get mixed up with above.
-      */
--    qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(first_insn,
--                                                      QEMU_PLUGIN_INLINE_STORE_U64,
--                                                      end_block, qemu_plugin_insn_vaddr(last_insn));
--    qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(first_insn,
--                                                      QEMU_PLUGIN_INLINE_STORE_U64,
--                                                      pc_after_block,
--                                                      qemu_plugin_insn_vaddr(last_insn) +
--                                                      qemu_plugin_insn_size(last_insn));
-+    qemu_plugin_register_inline_per_vcpu(first_insn,
-+                                         QEMU_PLUGIN_INLINE_STORE_U64,
-+                                         end_block, qemu_plugin_insn_vaddr(last_insn));
-+    qemu_plugin_register_inline_per_vcpu(first_insn,
-+                                         QEMU_PLUGIN_INLINE_STORE_U64,
-+                                         pc_after_block,
-+                                         qemu_plugin_insn_vaddr(last_insn) +
-+                                         qemu_plugin_insn_size(last_insn));
- 
-     for (int idx = 0; idx < qemu_plugin_tb_n_insns(tb); ++idx) {
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, idx);
-@@ -355,9 +355,9 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-         }
- 
-         /* Store the PC of what we are about to execute */
--        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
--                                                            QEMU_PLUGIN_INLINE_STORE_U64,
--                                                            last_pc, ipc);
-+        qemu_plugin_register_inline_per_vcpu(insn,
-+                                             QEMU_PLUGIN_INLINE_STORE_U64,
-+                                             last_pc, ipc);
-     }
- }
- 
-diff --git a/contrib/plugins/howvec.c b/contrib/plugins/howvec.c
-index 42bddb6566d..c60737d57f1 100644
---- a/contrib/plugins/howvec.c
-+++ b/contrib/plugins/howvec.c
-@@ -321,7 +321,7 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
- 
-         if (cnt) {
-             if (do_inline) {
--                qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+                qemu_plugin_register_inline_per_vcpu(
-                     insn, QEMU_PLUGIN_INLINE_ADD_U64,
-                     qemu_plugin_scoreboard_u64(cnt), 1);
-             } else {
-diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.c
-index b3a6ed66a7b..68c0ed432af 100644
---- a/contrib/plugins/stoptrigger.c
-+++ b/contrib/plugins/stoptrigger.c
-@@ -73,10 +73,12 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
- 
-         if (exit_on_icount) {
-             /* Increment and check scoreboard for each instruction */
--            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
--                insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
--            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
--                insn, QEMU_PLUGIN_INLINE_STORE_U64, current_pc, insn_vaddr);
-+            qemu_plugin_register_inline_per_vcpu(insn,
-+                                                 QEMU_PLUGIN_INLINE_ADD_U64,
-+                                                 insn_count, 1);
-+            qemu_plugin_register_inline_per_vcpu(insn,
-+                                                 QEMU_PLUGIN_INLINE_STORE_U64,
-+                                                 current_pc, insn_vaddr);
-             qemu_plugin_register_vcpu_insn_exec_cond_cb(
-                 insn, exit_icount_reached, QEMU_PLUGIN_CB_NO_REGS,
-                 QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, NULL);
-diff --git a/plugins/api.c b/plugins/api.c
-index eac04cc1f6b..267fa2fd503 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -154,7 +154,7 @@ void qemu_plugin_register_vcpu_insn_exec_cond_cb(
-                                        cond, entry, imm, udata);
- }
- 
--void qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+void qemu_plugin_register_inline_per_vcpu(
-     struct qemu_plugin_insn *insn,
-     enum qemu_plugin_op op,
-     qemu_plugin_u64 entry,
-diff --git a/tests/tcg/plugins/discons.c b/tests/tcg/plugins/discons.c
-index 2e0e664e823..1348d6e5020 100644
---- a/tests/tcg/plugins/discons.c
-+++ b/tests/tcg/plugins/discons.c
-@@ -156,15 +156,15 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-         uint64_t next_pc = pc + qemu_plugin_insn_size(insn);
-         uint64_t has_next = (i + 1) < n_insns;
- 
--        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
--                                                            QEMU_PLUGIN_INLINE_STORE_U64,
--                                                            last_pc, pc);
--        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
--                                                            QEMU_PLUGIN_INLINE_STORE_U64,
--                                                            from_pc, next_pc);
--        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
--                                                            QEMU_PLUGIN_INLINE_STORE_U64,
--                                                            has_from, has_next);
-+        qemu_plugin_register_inline_per_vcpu(insn,
-+                                             QEMU_PLUGIN_INLINE_STORE_U64,
-+                                             last_pc, pc);
-+        qemu_plugin_register_inline_per_vcpu(insn,
-+                                             QEMU_PLUGIN_INLINE_STORE_U64,
-+                                             from_pc, next_pc);
-+        qemu_plugin_register_inline_per_vcpu(insn,
-+                                             QEMU_PLUGIN_INLINE_STORE_U64,
-+                                             has_from, has_next);
-         qemu_plugin_register_vcpu_insn_exec_cb(insn, insn_exec,
-                                                QEMU_PLUGIN_CB_NO_REGS, NULL);
-     }
-diff --git a/tests/tcg/plugins/inline.c b/tests/tcg/plugins/inline.c
-index 73dde995781..35307501105 100644
---- a/tests/tcg/plugins/inline.c
-+++ b/tests/tcg/plugins/inline.c
-@@ -244,15 +244,15 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-         void *insn_store = insn;
-         void *mem_store = (char *)insn_store + 0xff;
- 
--        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+        qemu_plugin_register_inline_per_vcpu(
-             insn, QEMU_PLUGIN_INLINE_STORE_U64, data_insn,
-             (uintptr_t) insn_store);
-         qemu_plugin_register_vcpu_insn_exec_cb(
-             insn, vcpu_insn_exec, QEMU_PLUGIN_CB_NO_REGS, insn_store);
--        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+        qemu_plugin_register_inline_per_vcpu(
-             insn, QEMU_PLUGIN_INLINE_ADD_U64, count_insn_inline, 1);
- 
--        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
-+        qemu_plugin_register_inline_per_vcpu(
-             insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_cond_track_count, 1);
-         qemu_plugin_register_vcpu_insn_exec_cond_cb(
-             insn, vcpu_insn_cond_exec, QEMU_PLUGIN_CB_NO_REGS,
-diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
-index 0c723cb9ed8..b337fda9f13 100644
---- a/tests/tcg/plugins/insn.c
-+++ b/tests/tcg/plugins/insn.c
-@@ -147,8 +147,9 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
- 
-         if (do_inline) {
--            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
--                insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
-+            qemu_plugin_register_inline_per_vcpu(insn,
-+                                                 QEMU_PLUGIN_INLINE_ADD_U64,
-+                                                 insn_count, 1);
-         } else {
-             qemu_plugin_register_vcpu_insn_exec_cb(
-                 insn, vcpu_insn_exec_before, QEMU_PLUGIN_CB_NO_REGS, NULL);
+     chk_error(stat(tmpdir, &st));
+     if (!S_ISDIR(st.st_mode))
 -- 
 2.47.3
 
