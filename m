@@ -4,89 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 477E5CFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:01:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D68CFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:01:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd8H-0005vO-2z; Fri, 21 Nov 2025 21:13:50 -0500
+	id 1vMcq5-0005G3-Sk; Fri, 21 Nov 2025 20:55:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMcsV-0007Rs-H0
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:57:32 -0500
-Received: from mail-ed1-x544.google.com ([2a00:1450:4864:20::544])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vMbge-00064v-6X
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:41:13 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMcr9-0007LP-3T
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:57:27 -0500
-Received: by mail-ed1-x544.google.com with SMTP id
- 4fb4d7f45d1cf-64074f01a6eso4595098a12.2
- for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 17:55:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vMbgT-0006tB-P4
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:41:09 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-477b91680f8so20731645e9.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 16:40:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763776545; x=1764381345; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=27Oww4qQxdixc+Id3IXgq5AJQ19OjMu/GDoS0nr9Vqw=;
- b=bIqH7OhjKFwCntB6Adpm6Z2i8YRCsQn/W1RlSF8SHSlv+5G+YOjwHp68Z7EVo9b2q6
- aDbg8sTwVehpxzO4SDMt6Ak00/7kbyk/LdOyUkwKqfwEYbfZ8BOjftJ5R5ugFBecWggU
- QfzdMplX57+ZDCg8ubMgR0/eASirSZz0o5Gkyd0df0kv79waD1U/5DjsQnOYI9SkBWwP
- G2OEu4zOBcVaDPo1i7/EVYNwLtE8mD36eNk6Cds3tmi7yIlnCq2vV2glnogWBPSQZCNE
- m0VKAIuxRhKGdV5bOJrKbcyHblqb1YUq4rZQoY4+cJAp6XbGn8hRNrYemWsYMLLO+FUQ
- Z/TA==
+ d=linaro.org; s=google; t=1763772041; x=1764376841; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LdWAJH6s7XticPUwO+/xRlCKqNuhKhU8yKqVINAJxXA=;
+ b=ZpRuV3DrHMSL8kGwFaPbXNSNFTzN7Gp8F2H4E/0iwv7aYEHhINBi9IOIzymHGp91Q3
+ t7ZtuBoL6Y6O/ahWtC8Qq7q5zTUUPOTBrfYIpWBx+U2wj3x8SkRCIEYOshuL55MjtTTk
+ gpiqlrIPr2HBwjOOLzkwo+PZ/psA3xiAHtlwIN038ObhCG5rTuV9yYefPZGyVCCa2Jib
+ emhuNFbnqH8Q3QFXa4eJWFPgLH1lZbBAPhgtaWILuVadWbB+Z0G08jbGfkL8IpFjkUZS
+ 2KgeMa6pg5GWuQp9XvjzGw0G/xk3oSdR1v2xf2mglK9G/F7xt2EP5GCZibSa7u/YwltI
+ nc/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763776545; x=1764381345;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=27Oww4qQxdixc+Id3IXgq5AJQ19OjMu/GDoS0nr9Vqw=;
- b=naOvUFYcvGsLbY7JZiKFma11I8ZPCx5aFgITWD/Jsr87+Gp4ch/mBEtrqYxDkDPNfy
- HzKSLVcfpzxZti7oKqm223QhhDmTbHouDCzZeHilKnSrvTO2tqvV4PVzwbJ5NLhIwkQo
- L+YrYvXak9mtEyC16Ees9fZuGSHOT0JTGzyXNT9TE9+wOPQ13JYsBi8TmXDFjCH7CwYI
- 5eb0cuNhEghpSKeyA77aPVQBZPq7HSKmg2PnsNujtTNIaWh0SsGwYypS4vPrRKAXTvsQ
- tHMFKt2ps8k6k16WQMA6efoWwiYW2RbKcgGgYQxiV7KrGUJYd9NET95XVIvw6edaYPOK
- +lfw==
-X-Gm-Message-State: AOJu0YxnQLZrq1sl/aRVU5gGvVC6r799RJbJt3ahzIJBrzsaJxasKP5x
- x197JHl8SuMQqt8/7b89iEo4CwJIR3J9B1Je4vRno1Myt37zAYbokV1vpH8m3XEJX4gCxyeWkz9
- CI3eLM5UXyzE5
-X-Gm-Gg: ASbGncs82ACwVzCufxNgIzY8HBctIKhpH8dFRF7ZAyKf7U2A9G6DQBLwLxYQ79LDbs8
- 2v1b/eygGM2Xtc05UHEn3T/N/IeQKN4d/Ub7jzGS2GftGnUaX31EILfp7JjR0xbQttsxsXU5bzv
- qbSHSjefm4gtRC5t21hDkrpVBXODHem7DJAzVGtSiFCq1CdnZysRYBFT2QuDliHPZ8ym4+sryip
- ZcvHhU5WpKqfKDY+cj56cyK3Jx0xPxTd+mP0EB24orOSatU2IVsXp7HEgVq3b0/GAD1sYwoCw1j
- /kMIOqOFav4XsIWWezPk0qHVvzfFYTUJu54oQuY51zNsAjJDREtkX2x723bXZkNs7cc4km1nvSg
- 94oerBNEIr/BIwYHx+C87j5iCOAEjg5nCWufTqpKb9z4hmKtaAzHRQSM3XmzsQQnwFqsrsarmIg
- gXwlq4cGldPsbCc09NpNMp9/LcAiLNLoLcqg7U0DlG95Kk8lGM7uALG9od5B7B
-X-Google-Smtp-Source: AGHT+IEPLHBqw5ofq+6kz8Qjha8zhtu5Le9chojoHOl92BeqzuOOGh31Z+6+FW5BL3Z7UYtmDPrGIg==
-X-Received: by 2002:a05:6000:1787:b0:42b:3023:66a9 with SMTP id
- ffacd0b85a97d-42cc1cbd4d0mr2509791f8f.22.1763732792090; 
- Fri, 21 Nov 2025 05:46:32 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f2e581sm10502617f8f.8.2025.11.21.05.46.31
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 21 Nov 2025 05:46:31 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1763772041; x=1764376841;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LdWAJH6s7XticPUwO+/xRlCKqNuhKhU8yKqVINAJxXA=;
+ b=XUvjys3X62R3LKtHjQKpztuEkuHhwhhduFqsdemMtqXwXoXUywecKIt+ysGPoAU99Z
+ zFpTs2MX1OgTF2SKEr+9YgFn+qvWCOsQqFS0ci9M+ZKG7wEgkEUBCnFKjHQGIpvqwVDF
+ PxBheZeW58lDHejFhj8EbCTT7o+UV3bt4kvgn1ZYMrCXOTuJkmLYa3jYnFpIgkbh0SyJ
+ Y/8RhAae8gFNKuTigvSRh+ZmofzfOUXPC2u7I0dgjTg7sMGu7AU8PEvkhNli1F8vLB5O
+ bYnEtW2qFdESmtrE+Kuh0A5KxmOgCLcgsypIUVx4uY1EOm2Fo1fu2Fy77GY0WmS6VnOQ
+ mhvQ==
+X-Gm-Message-State: AOJu0YznUjoy3Tx5QtglMh4OThXqjfp2cI8EhI4dVFEpAVWvasDeehUK
+ XqWFGi0PNBPthK2fE13sfI1zN9lITE5iqC58zKmliMYRteKEeBK7QXFj5qiGlFAogn9doWHqdGD
+ cx8Ry
+X-Gm-Gg: ASbGncvwDvg9HZ5oAYA2tv1Uim/w4R5VRnp8mmv7JSnFBsOWFzg2n86IeG6ao/yk80s
+ AVXvKs90Ugy8f4u0mnQtkGxUzZoD5It9otEHWlJMI+W69cqVgBvrND4RnAem8+rZGhsbLDafoD7
+ g86Drb5fkj714T0DUsoQiycrhJvxzOq3uwFD/0lZgURjcMNsLEg9rGaz0jPcVdbqLRbEfUHJd40
+ +5SiVQC3m5vVhZyZAlf8OgrJ/PatgDWQoYRYorxjkIO6Da+3t0WapA3NEvA0oe76oRG4Nltt3q5
+ vj3hag+GNwLzEjLX41ksYt/LYyoT1f/bjcHv5BOYrsVEoB52XNFlniJsLkKAAw2hV+aIOZfpLbw
+ HIuIxjhCW1aiPTde5z27UcjM/Y5tWsU+u5OMoB0l1EODYXr5V+xLLS1uFz8114cgR99fRhJHbEX
+ DQaBNgl+zGhjY=
+X-Google-Smtp-Source: AGHT+IGdaEJgL4z9YyY1O9xJYAAayq2BOL8yrGefufK0H1u6XZHEI5QaPTIkycSFEuXJXrJbxG2xHg==
+X-Received: by 2002:a05:600c:a07:b0:477:a219:cdb7 with SMTP id
+ 5b1f17b1804b1-477c10523aamr28667635e9.0.1763730205762; 
+ Fri, 21 Nov 2025 05:03:25 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477bf3af0e1sm40285325e9.10.2025.11.21.05.03.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 21 Nov 2025 05:03:24 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0D0755F841;
+ Fri, 21 Nov 2025 13:03:24 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [RFC-PATCH-for-11.0 v3 13/21] target/m68k: Use little-endian variant
- of cpu_ld/st_data*()
-Date: Fri, 21 Nov 2025 14:44:55 +0100
-Message-ID: <20251121134503.30914-14-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251121134503.30914-1-philmd@linaro.org>
-References: <20251121134503.30914-1-philmd@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [RFC PATCH] plugins: shorten aggressively long name
+Date: Fri, 21 Nov 2025 13:03:17 +0000
+Message-ID: <20251121130317.2874416-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::544;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x544.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
-X-Spam_action: no action
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,295 +96,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only build the M68k target using little endianness order,
-therefore the cpu_ld/st_data*() definitions expand to the little
-endian declarations. Use the explicit little-endian variants.
+The old name comes in at a 51 characters, contains at least one
+redundant token and exec is arguably implied by inline as all inline
+operations occur when instructions are executing.
 
-Mechanical change running:
+By putting the name on a substantial diet we can reduce it by 15% and
+gain valuable white-space in the process.
 
-  $ tgt=m68k; \
-    end=be; \
-    for op in data mmuidx_ra; do \
-      for ac in uw sw l q; do \
-        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
-                  $(git grep -l cpu_ target/${tgt}/); \
-      done;
-      for ac in w l q; do \
-        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
-                  $(git grep -l cpu_ target/${tgt}/); \
-      done;
-    done
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/m68k/fpu_helper.c | 12 +++---
- target/m68k/op_helper.c  | 88 ++++++++++++++++++++--------------------
- 2 files changed, 50 insertions(+), 50 deletions(-)
+ include/qemu/qemu-plugin.h    |  4 ++--
+ contrib/plugins/cflow.c       | 22 +++++++++++-----------
+ contrib/plugins/howvec.c      |  2 +-
+ contrib/plugins/stoptrigger.c | 10 ++++++----
+ plugins/api.c                 |  2 +-
+ tests/tcg/plugins/discons.c   | 18 +++++++++---------
+ tests/tcg/plugins/inline.c    |  6 +++---
+ tests/tcg/plugins/insn.c      |  5 +++--
+ 8 files changed, 36 insertions(+), 33 deletions(-)
 
-diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
-index 56012863c85..f49f841d489 100644
---- a/target/m68k/fpu_helper.c
-+++ b/target/m68k/fpu_helper.c
-@@ -510,8 +510,8 @@ static int cpu_ld_floatx80_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
-     uint32_t high;
-     uint64_t low;
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 60de4fdd3fa..29663591ebf 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -516,7 +516,7 @@ void qemu_plugin_register_vcpu_insn_exec_cond_cb(
+     void *userdata);
  
--    high = cpu_ldl_data_ra(env, addr, ra);
--    low = cpu_ldq_data_ra(env, addr + 4, ra);
-+    high = cpu_ldl_be_data_ra(env, addr, ra);
-+    low = cpu_ldq_be_data_ra(env, addr + 4, ra);
+ /**
+- * qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu() - insn exec inline op
++ * qemu_plugin_register_inline_per_vcpu() - insn exec inline op
+  * @insn: the opaque qemu_plugin_insn handle for an instruction
+  * @op: the type of qemu_plugin_op (e.g. ADD_U64)
+  * @entry: entry to run op
+@@ -525,7 +525,7 @@ void qemu_plugin_register_vcpu_insn_exec_cond_cb(
+  * Insert an inline op to every time an instruction executes.
+  */
+ QEMU_PLUGIN_API
+-void qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
++void qemu_plugin_register_inline_per_vcpu(
+     struct qemu_plugin_insn *insn,
+     enum qemu_plugin_op op,
+     qemu_plugin_u64 entry,
+diff --git a/contrib/plugins/cflow.c b/contrib/plugins/cflow.c
+index b5e33f25f9b..cef5ae2239f 100644
+--- a/contrib/plugins/cflow.c
++++ b/contrib/plugins/cflow.c
+@@ -320,14 +320,14 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+      * check where we are at. Do this on the first instruction and not
+      * the TB so we don't get mixed up with above.
+      */
+-    qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(first_insn,
+-                                                      QEMU_PLUGIN_INLINE_STORE_U64,
+-                                                      end_block, qemu_plugin_insn_vaddr(last_insn));
+-    qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(first_insn,
+-                                                      QEMU_PLUGIN_INLINE_STORE_U64,
+-                                                      pc_after_block,
+-                                                      qemu_plugin_insn_vaddr(last_insn) +
+-                                                      qemu_plugin_insn_size(last_insn));
++    qemu_plugin_register_inline_per_vcpu(first_insn,
++                                         QEMU_PLUGIN_INLINE_STORE_U64,
++                                         end_block, qemu_plugin_insn_vaddr(last_insn));
++    qemu_plugin_register_inline_per_vcpu(first_insn,
++                                         QEMU_PLUGIN_INLINE_STORE_U64,
++                                         pc_after_block,
++                                         qemu_plugin_insn_vaddr(last_insn) +
++                                         qemu_plugin_insn_size(last_insn));
  
-     fp->l.upper = high >> 16;
-     fp->l.lower = low;
-@@ -522,8 +522,8 @@ static int cpu_ld_floatx80_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
- static int cpu_st_floatx80_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
-                                uintptr_t ra)
- {
--    cpu_stl_data_ra(env, addr, fp->l.upper << 16, ra);
--    cpu_stq_data_ra(env, addr + 4, fp->l.lower, ra);
-+    cpu_stl_be_data_ra(env, addr, fp->l.upper << 16, ra);
-+    cpu_stq_be_data_ra(env, addr + 4, fp->l.lower, ra);
- 
-     return 12;
- }
-@@ -533,7 +533,7 @@ static int cpu_ld_float64_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
- {
-     uint64_t val;
- 
--    val = cpu_ldq_data_ra(env, addr, ra);
-+    val = cpu_ldq_be_data_ra(env, addr, ra);
-     fp->d = float64_to_floatx80(*(float64 *)&val, &env->fp_status);
- 
-     return 8;
-@@ -545,7 +545,7 @@ static int cpu_st_float64_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
-     float64 val;
- 
-     val = floatx80_to_float64(fp->d, &env->fp_status);
--    cpu_stq_data_ra(env, addr, *(uint64_t *)&val, ra);
-+    cpu_stq_be_data_ra(env, addr, *(uint64_t *)&val, ra);
- 
-     return 8;
- }
-diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-index e9c20a8e032..eac45669ce7 100644
---- a/target/m68k/op_helper.c
-+++ b/target/m68k/op_helper.c
-@@ -32,8 +32,8 @@ static void cf_rte(CPUM68KState *env)
-     uint32_t fmt;
- 
-     sp = env->aregs[7];
--    fmt = cpu_ldl_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
--    env->pc = cpu_ldl_mmuidx_ra(env, sp + 4, MMU_KERNEL_IDX, 0);
-+    fmt = cpu_ldl_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-+    env->pc = cpu_ldl_be_mmuidx_ra(env, sp + 4, MMU_KERNEL_IDX, 0);
-     sp |= (fmt >> 28) & 3;
-     env->aregs[7] = sp + 8;
- 
-@@ -48,13 +48,13 @@ static void m68k_rte(CPUM68KState *env)
- 
-     sp = env->aregs[7];
- throwaway:
--    sr = cpu_lduw_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-+    sr = cpu_lduw_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-     sp += 2;
--    env->pc = cpu_ldl_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-+    env->pc = cpu_ldl_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-     sp += 4;
-     if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
-         /*  all except 68000 */
--        fmt = cpu_lduw_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-+        fmt = cpu_lduw_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-         sp += 2;
-         switch (fmt >> 12) {
-         case 0:
-@@ -250,12 +250,12 @@ static void cf_interrupt_all(CPUM68KState *env, int is_hw)
-     /* ??? This could cause MMU faults.  */
-     sp &= ~3;
-     sp -= 4;
--    cpu_stl_mmuidx_ra(env, sp, retaddr, MMU_KERNEL_IDX, 0);
-+    cpu_stl_be_mmuidx_ra(env, sp, retaddr, MMU_KERNEL_IDX, 0);
-     sp -= 4;
--    cpu_stl_mmuidx_ra(env, sp, fmt, MMU_KERNEL_IDX, 0);
-+    cpu_stl_be_mmuidx_ra(env, sp, fmt, MMU_KERNEL_IDX, 0);
-     env->aregs[7] = sp;
-     /* Jump to vector.  */
--    env->pc = cpu_ldl_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
-+    env->pc = cpu_ldl_be_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
- 
-     do_plugin_vcpu_interrupt_cb(cs, retaddr);
- }
-@@ -270,24 +270,24 @@ static inline void do_stack_frame(CPUM68KState *env, uint32_t *sp,
-         switch (format) {
-         case 4:
-             *sp -= 4;
--            cpu_stl_mmuidx_ra(env, *sp, env->pc, MMU_KERNEL_IDX, 0);
-+            cpu_stl_be_mmuidx_ra(env, *sp, env->pc, MMU_KERNEL_IDX, 0);
-             *sp -= 4;
--            cpu_stl_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
-+            cpu_stl_be_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
-             break;
-         case 3:
-         case 2:
-             *sp -= 4;
--            cpu_stl_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
-+            cpu_stl_be_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
-             break;
+     for (int idx = 0; idx < qemu_plugin_tb_n_insns(tb); ++idx) {
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, idx);
+@@ -355,9 +355,9 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
          }
-         *sp -= 2;
--        cpu_stw_mmuidx_ra(env, *sp, (format << 12) + (cs->exception_index << 2),
-+        cpu_stw_be_mmuidx_ra(env, *sp, (format << 12) + (cs->exception_index << 2),
-                           MMU_KERNEL_IDX, 0);
+ 
+         /* Store the PC of what we are about to execute */
+-        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
+-                                                            QEMU_PLUGIN_INLINE_STORE_U64,
+-                                                            last_pc, ipc);
++        qemu_plugin_register_inline_per_vcpu(insn,
++                                             QEMU_PLUGIN_INLINE_STORE_U64,
++                                             last_pc, ipc);
      }
-     *sp -= 4;
--    cpu_stl_mmuidx_ra(env, *sp, retaddr, MMU_KERNEL_IDX, 0);
-+    cpu_stl_be_mmuidx_ra(env, *sp, retaddr, MMU_KERNEL_IDX, 0);
-     *sp -= 2;
--    cpu_stw_mmuidx_ra(env, *sp, sr, MMU_KERNEL_IDX, 0);
-+    cpu_stw_be_mmuidx_ra(env, *sp, sr, MMU_KERNEL_IDX, 0);
  }
  
- static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
-@@ -346,49 +346,49 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
-         env->mmu.fault = true;
-         /* push data 3 */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* push data 2 */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* push data 1 */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* write back 1 / push data 0 */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* write back 1 address */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* write back 2 data */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* write back 2 address */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* write back 3 data */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* write back 3 address */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
-         /* fault address */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
-         /* write back 1 status */
-         sp -= 2;
--        cpu_stw_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* write back 2 status */
-         sp -= 2;
--        cpu_stw_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* write back 3 status */
-         sp -= 2;
--        cpu_stw_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-+        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-         /* special status word */
-         sp -= 2;
--        cpu_stw_mmuidx_ra(env, sp, env->mmu.ssw, MMU_KERNEL_IDX, 0);
-+        cpu_stw_be_mmuidx_ra(env, sp, env->mmu.ssw, MMU_KERNEL_IDX, 0);
-         /* effective address */
-         sp -= 4;
--        cpu_stl_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
-+        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
+diff --git a/contrib/plugins/howvec.c b/contrib/plugins/howvec.c
+index 42bddb6566d..c60737d57f1 100644
+--- a/contrib/plugins/howvec.c
++++ b/contrib/plugins/howvec.c
+@@ -321,7 +321,7 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
  
-         do_stack_frame(env, &sp, 7, oldsr, 0, env->pc);
-         env->mmu.fault = false;
-@@ -436,7 +436,7 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
+         if (cnt) {
+             if (do_inline) {
+-                qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
++                qemu_plugin_register_inline_per_vcpu(
+                     insn, QEMU_PLUGIN_INLINE_ADD_U64,
+                     qemu_plugin_scoreboard_u64(cnt), 1);
+             } else {
+diff --git a/contrib/plugins/stoptrigger.c b/contrib/plugins/stoptrigger.c
+index b3a6ed66a7b..68c0ed432af 100644
+--- a/contrib/plugins/stoptrigger.c
++++ b/contrib/plugins/stoptrigger.c
+@@ -73,10 +73,12 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
  
-     env->aregs[7] = sp;
-     /* Jump to vector.  */
--    env->pc = cpu_ldl_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
-+    env->pc = cpu_ldl_be_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
- 
-     do_plugin_vcpu_interrupt_cb(cs, last_pc);
+         if (exit_on_icount) {
+             /* Increment and check scoreboard for each instruction */
+-            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+-                insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
+-            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+-                insn, QEMU_PLUGIN_INLINE_STORE_U64, current_pc, insn_vaddr);
++            qemu_plugin_register_inline_per_vcpu(insn,
++                                                 QEMU_PLUGIN_INLINE_ADD_U64,
++                                                 insn_count, 1);
++            qemu_plugin_register_inline_per_vcpu(insn,
++                                                 QEMU_PLUGIN_INLINE_STORE_U64,
++                                                 current_pc, insn_vaddr);
+             qemu_plugin_register_vcpu_insn_exec_cond_cb(
+                 insn, exit_icount_reached, QEMU_PLUGIN_CB_NO_REGS,
+                 QEMU_PLUGIN_COND_EQ, insn_count, icount + 1, NULL);
+diff --git a/plugins/api.c b/plugins/api.c
+index eac04cc1f6b..267fa2fd503 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -154,7 +154,7 @@ void qemu_plugin_register_vcpu_insn_exec_cond_cb(
+                                        cond, entry, imm, udata);
  }
-@@ -784,11 +784,11 @@ void HELPER(cas2w)(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2)
-     int16_t l1, l2;
-     uintptr_t ra = GETPC();
  
--    l1 = cpu_lduw_data_ra(env, a1, ra);
--    l2 = cpu_lduw_data_ra(env, a2, ra);
-+    l1 = cpu_lduw_be_data_ra(env, a1, ra);
-+    l2 = cpu_lduw_be_data_ra(env, a2, ra);
-     if (l1 == c1 && l2 == c2) {
--        cpu_stw_data_ra(env, a1, u1, ra);
--        cpu_stw_data_ra(env, a2, u2, ra);
-+        cpu_stw_be_data_ra(env, a1, u1, ra);
-+        cpu_stw_be_data_ra(env, a2, u2, ra);
-     }
+-void qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
++void qemu_plugin_register_inline_per_vcpu(
+     struct qemu_plugin_insn *insn,
+     enum qemu_plugin_op op,
+     qemu_plugin_u64 entry,
+diff --git a/tests/tcg/plugins/discons.c b/tests/tcg/plugins/discons.c
+index 2e0e664e823..1348d6e5020 100644
+--- a/tests/tcg/plugins/discons.c
++++ b/tests/tcg/plugins/discons.c
+@@ -156,15 +156,15 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+         uint64_t next_pc = pc + qemu_plugin_insn_size(insn);
+         uint64_t has_next = (i + 1) < n_insns;
  
-     if (c1 != l1) {
-@@ -845,11 +845,11 @@ static void do_cas2l(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2,
-         }
-     } else {
-         /* We're executing in a serial context -- no need to be atomic.  */
--        l1 = cpu_ldl_data_ra(env, a1, ra);
--        l2 = cpu_ldl_data_ra(env, a2, ra);
-+        l1 = cpu_ldl_be_data_ra(env, a1, ra);
-+        l2 = cpu_ldl_be_data_ra(env, a2, ra);
-         if (l1 == c1 && l2 == c2) {
--            cpu_stl_data_ra(env, a1, u1, ra);
--            cpu_stl_data_ra(env, a2, u2, ra);
-+            cpu_stl_be_data_ra(env, a1, u1, ra);
-+            cpu_stl_be_data_ra(env, a2, u2, ra);
-         }
+-        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
+-                                                            QEMU_PLUGIN_INLINE_STORE_U64,
+-                                                            last_pc, pc);
+-        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
+-                                                            QEMU_PLUGIN_INLINE_STORE_U64,
+-                                                            from_pc, next_pc);
+-        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(insn,
+-                                                            QEMU_PLUGIN_INLINE_STORE_U64,
+-                                                            has_from, has_next);
++        qemu_plugin_register_inline_per_vcpu(insn,
++                                             QEMU_PLUGIN_INLINE_STORE_U64,
++                                             last_pc, pc);
++        qemu_plugin_register_inline_per_vcpu(insn,
++                                             QEMU_PLUGIN_INLINE_STORE_U64,
++                                             from_pc, next_pc);
++        qemu_plugin_register_inline_per_vcpu(insn,
++                                             QEMU_PLUGIN_INLINE_STORE_U64,
++                                             has_from, has_next);
+         qemu_plugin_register_vcpu_insn_exec_cb(insn, insn_exec,
+                                                QEMU_PLUGIN_CB_NO_REGS, NULL);
      }
+diff --git a/tests/tcg/plugins/inline.c b/tests/tcg/plugins/inline.c
+index 73dde995781..35307501105 100644
+--- a/tests/tcg/plugins/inline.c
++++ b/tests/tcg/plugins/inline.c
+@@ -244,15 +244,15 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+         void *insn_store = insn;
+         void *mem_store = (char *)insn_store + 0xff;
  
-@@ -951,12 +951,12 @@ static uint64_t bf_load(CPUM68KState *env, uint32_t addr, int blen,
-     case 0:
-         return cpu_ldub_data_ra(env, addr, ra);
-     case 1:
--        return cpu_lduw_data_ra(env, addr, ra);
-+        return cpu_lduw_be_data_ra(env, addr, ra);
-     case 2:
-     case 3:
--        return cpu_ldl_data_ra(env, addr, ra);
-+        return cpu_ldl_be_data_ra(env, addr, ra);
-     case 4:
--        return cpu_ldq_data_ra(env, addr, ra);
-+        return cpu_ldq_be_data_ra(env, addr, ra);
-     default:
-         g_assert_not_reached();
-     }
-@@ -970,14 +970,14 @@ static void bf_store(CPUM68KState *env, uint32_t addr, int blen,
-         cpu_stb_data_ra(env, addr, data, ra);
-         break;
-     case 1:
--        cpu_stw_data_ra(env, addr, data, ra);
-+        cpu_stw_be_data_ra(env, addr, data, ra);
-         break;
-     case 2:
-     case 3:
--        cpu_stl_data_ra(env, addr, data, ra);
-+        cpu_stl_be_data_ra(env, addr, data, ra);
-         break;
-     case 4:
--        cpu_stq_data_ra(env, addr, data, ra);
-+        cpu_stq_be_data_ra(env, addr, data, ra);
-         break;
-     default:
-         g_assert_not_reached();
+-        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
++        qemu_plugin_register_inline_per_vcpu(
+             insn, QEMU_PLUGIN_INLINE_STORE_U64, data_insn,
+             (uintptr_t) insn_store);
+         qemu_plugin_register_vcpu_insn_exec_cb(
+             insn, vcpu_insn_exec, QEMU_PLUGIN_CB_NO_REGS, insn_store);
+-        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
++        qemu_plugin_register_inline_per_vcpu(
+             insn, QEMU_PLUGIN_INLINE_ADD_U64, count_insn_inline, 1);
+ 
+-        qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
++        qemu_plugin_register_inline_per_vcpu(
+             insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_cond_track_count, 1);
+         qemu_plugin_register_vcpu_insn_exec_cond_cb(
+             insn, vcpu_insn_cond_exec, QEMU_PLUGIN_CB_NO_REGS,
+diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
+index 0c723cb9ed8..b337fda9f13 100644
+--- a/tests/tcg/plugins/insn.c
++++ b/tests/tcg/plugins/insn.c
+@@ -147,8 +147,9 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+ 
+         if (do_inline) {
+-            qemu_plugin_register_vcpu_insn_exec_inline_per_vcpu(
+-                insn, QEMU_PLUGIN_INLINE_ADD_U64, insn_count, 1);
++            qemu_plugin_register_inline_per_vcpu(insn,
++                                                 QEMU_PLUGIN_INLINE_ADD_U64,
++                                                 insn_count, 1);
+         } else {
+             qemu_plugin_register_vcpu_insn_exec_cb(
+                 insn, vcpu_insn_exec_before, QEMU_PLUGIN_CB_NO_REGS, NULL);
 -- 
-2.51.0
+2.47.3
 
 
