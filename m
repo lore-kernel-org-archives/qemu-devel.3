@@ -4,37 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3CFCFC504
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:05:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E5DBCFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdUU-00086O-Fk; Fri, 21 Nov 2025 21:36:47 -0500
+	id 1vMdBx-0001KF-21; Fri, 21 Nov 2025 21:17:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdUA-0007pH-A8; Fri, 21 Nov 2025 21:36:27 -0500
+ id 1vMd3W-000293-Ih; Fri, 21 Nov 2025 21:08:54 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdT8-0001Fd-QH; Fri, 21 Nov 2025 21:36:21 -0500
+ id 1vMd32-00030B-LH; Fri, 21 Nov 2025 21:08:50 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D062816C6FB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 3E8AD16C6F4;
  Fri, 21 Nov 2025 16:51:56 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 35CF8321998;
- Fri, 21 Nov 2025 16:52:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 93F6B321991;
+ Fri, 21 Nov 2025 16:52:04 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 35/76] tests/tcg/s390x: Test SET CLOCK COMPARATOR
-Date: Fri, 21 Nov 2025 16:51:13 +0300
-Message-ID: <20251121135201.1114964-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Sean Anderson <sean.anderson@linux.dev>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 28/76] gdbstub: Fix %s formatting
+Date: Fri, 21 Nov 2025 16:51:06 +0300
+Message-ID: <20251121135201.1114964-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -58,99 +62,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-Add a small test to prevent regressions.
+The format string for %s has two format characters. This causes it to
+emit strings like "466f5bd8/6x" instead of "466f5bd8/6". GDB detects
+this and returns EIO, causing all open File I/O calls to fail.
 
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20251016175954.41153-5-iii@linux.ibm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 0408c61e27aca56c2d40aeb6ca0e5c5f8b8c3845)
+Fixes: 0820a075af ("gdbstub: Adjust gdb_do_syscall to only use uint32_t and uint64_t")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251027110344.2289945-35-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+(cherry picked from commit 524fc77d2322814f0dfde272559d74ec1599f01e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
-index 8cd4667c63..a4425d3184 100644
---- a/tests/tcg/s390x/Makefile.softmmu-target
-+++ b/tests/tcg/s390x/Makefile.softmmu-target
-@@ -28,6 +28,7 @@ ASM_TESTS =                                                                    \
-     mc                                                                         \
-     per                                                                        \
-     precise-smc-softmmu                                                        \
-+    sckc                                                                       \
-     ssm-early                                                                  \
-     stosm-early                                                                \
-     stpq                                                                       \
-diff --git a/tests/tcg/s390x/sckc.S b/tests/tcg/s390x/sckc.S
-new file mode 100644
-index 0000000000..ecd64a3059
---- /dev/null
-+++ b/tests/tcg/s390x/sckc.S
-@@ -0,0 +1,63 @@
-+/*
-+ * Test clock comparator.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+    .org 0x130
-+ext_old_psw:
-+    .org 0x1b0
-+ext_new_psw:
-+    .quad 0x180000000, _ext            /* 64-bit mode */
-+    .org 0x1d0
-+pgm_new_psw:
-+    .quad 0x2000000000000,0            /* disabled wait */
-+    .org 0x200                         /* lowcore padding */
-+
-+    .globl _start
-+_start:
-+    lpswe start31_psw
-+_start31:
-+    stctg %c0,%c0,c0
-+    oi c0+6,8                          /* set clock-comparator subclass mask */
-+    lctlg %c0,%c0,c0
-+
-+0:
-+    brasl %r14,_f                      /* %r14's most significant bit is 1 */
-+    jg 0b
-+_f:
-+    br %r14                            /* it must not end up in ext_old_psw */
-+
-+_ext:
-+    stg %r0,ext_saved_r0
-+
-+    lg %r0,ext_counter
-+    aghi %r0,1
-+    stg %r0,ext_counter
-+
-+    cgfi %r0,0x1000
-+    jnz 0f
-+    lpswe success_psw
-+0:
-+
-+    stck clock
-+    lg %r0,clock
-+    agfi %r0,0x40000                   /* 64us * 0x1000 =~ 0.25s */
-+    stg %r0,clock
-+    sckc clock
-+
-+    lg %r0,ext_saved_r0
-+    lpswe ext_old_psw
-+
-+    .align 8
-+start31_psw:
-+    .quad 0x100000080000000,_start31   /* EX, 31-bit mode */
-+success_psw:
-+    .quad 0x2000000000000,0xfff        /* see is_special_wait_psw() */
-+c0:
-+    .skip 8
-+clock:
-+    .quad 0
-+ext_counter:
-+    .quad 0
-+ext_saved_r0:
-+    .skip 8
+diff --git a/gdbstub/syscalls.c b/gdbstub/syscalls.c
+index e855df21ab..d8bb90cc1c 100644
+--- a/gdbstub/syscalls.c
++++ b/gdbstub/syscalls.c
+@@ -127,7 +127,7 @@ void gdb_do_syscall(gdb_syscall_complete_cb cb, const char *fmt, ...)
+             case 's':
+                 i64 = va_arg(va, uint64_t);
+                 i32 = va_arg(va, uint32_t);
+-                p += snprintf(p, p_end - p, "%" PRIx64 "/%x" PRIx32, i64, i32);
++                p += snprintf(p, p_end - p, "%" PRIx64 "/%" PRIx32, i64, i32);
+                 break;
+             default:
+             bad_format:
 -- 
 2.47.3
 
