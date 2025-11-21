@@ -4,57 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2866CFC504
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A29CFC504
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMczc-0004CF-Ht; Fri, 21 Nov 2025 21:04:53 -0500
+	id 1vMcuT-0000I0-Ab; Fri, 21 Nov 2025 20:59:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vMcAD-0006iy-Py; Fri, 21 Nov 2025 20:11:45 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMbrr-0004c7-Ow; Fri, 21 Nov 2025 19:52:47 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vMcA0-0004dw-RP; Fri, 21 Nov 2025 20:11:41 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5ALC1MwC000804
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 21 Nov 2025 21:01:23 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=4NXv6EwW2QRaAJOJTTRauVs49o3MSdW1+DjtNFk7ULA=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1763726483; v=1;
- b=Zcs3Lxe7pUp14O5Dz4a+mw4zarbdGUhX2XwCU92UTBhbYpQ4pr78dFWfrlE9bs8e
- MUAgKWqDe1tYw6Pu8xwn8ThJfseZnP0txcHPd1pBDeS0S2qUPccNnlfED2o7ECDU
- FdOZUHUl2hGl2gv0IL1Jd4Ql9z2gl9jkEkZhf6kigj6IcidXgdbckxtTns/nem1e
- RRs/de18dmo0qGB37yWL7460jvdh3TztnL31XTpY5oAzJogoN7rM3nSEtIaBspkq
- HaZoouiG+ZZlFPJZWJgRSevs68gDQqpHH740prXHLnK2BqFTnFv7XAViat/0YoMN
- P86SmuW/1M/oUpryATsuTw==
-Message-ID: <2aab212b-0770-4cdf-a30f-5b914e815543@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 21 Nov 2025 21:01:22 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMbpq-0000O3-8C; Fri, 21 Nov 2025 19:52:44 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 3641816CA3B;
+ Fri, 21 Nov 2025 21:44:18 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D9498321C77;
+ Fri, 21 Nov 2025 21:44:26 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 00/81] Patch Round-up for stable 10.0.7,
+ freeze on 2025-12-01
+Date: Fri, 21 Nov 2025 21:42:59 +0300
+Message-ID: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 14/28] whpx: change memory management logic
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>
-References: <20251121100240.89117-1-mohamed@unpredictable.fr>
- <20251121100240.89117-15-mohamed@unpredictable.fr>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251121100240.89117-15-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,151 +52,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/21 19:02, Mohamed Mediouni wrote:
-> This allows edk2 to work on Arm, although u-boot is still not functional.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   accel/whpx/whpx-common.c | 101 +++++++++++++++------------------------
->   1 file changed, 38 insertions(+), 63 deletions(-)
-> 
-> diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-> index 399cf1914c..53b8cb06cc 100644
-> --- a/accel/whpx/whpx-common.c
-> +++ b/accel/whpx/whpx-common.c
-> @@ -259,89 +259,64 @@ void whpx_vcpu_kick(CPUState *cpu)
->    * Memory support.
->    */
->   
-> -static void whpx_update_mapping(hwaddr start_pa, ram_addr_t size,
-> -                                void *host_va, int add, int rom,
-> -                                const char *name)
-> +static void whpx_set_phys_mem(MemoryRegionSection *section, bool add)
->   {
->       struct whpx_state *whpx = &whpx_global;
-> -    HRESULT hr;
-> -
-> -    /*
-> -    if (add) {
-> -        printf("WHPX: ADD PA:%p Size:%p, Host:%p, %s, '%s'\n",
-> -               (void*)start_pa, (void*)size, host_va,
-> -               (rom ? "ROM" : "RAM"), name);
-> -    } else {
-> -        printf("WHPX: DEL PA:%p Size:%p, Host:%p,      '%s'\n",
-> -               (void*)start_pa, (void*)size, host_va, name);
-> -    }
-> -    */
-> -
-> -    if (add) {
-> -        hr = whp_dispatch.WHvMapGpaRange(whpx->partition,
-> -                                         host_va,
-> -                                         start_pa,
-> -                                         size,
-> -                                         (WHvMapGpaRangeFlagRead |
-> -                                          WHvMapGpaRangeFlagExecute |
-> -                                          (rom ? 0 : WHvMapGpaRangeFlagWrite)));
-> -    } else {
-> -        hr = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
-> -                                           start_pa,
-> -                                           size);
-> -    }
-> -
-> -    if (FAILED(hr)) {
-> -        error_report("WHPX: Failed to %s GPA range '%s' PA:%p, Size:%p bytes,"
-> -                     " Host:%p, hr=%08lx",
-> -                     (add ? "MAP" : "UNMAP"), name,
-> -                     (void *)(uintptr_t)start_pa, (void *)size, host_va, hr);
-> +    MemoryRegion *area = section->mr;
-> +    bool writable = !area->readonly && !area->rom_device;
-> +    WHV_MAP_GPA_RANGE_FLAGS flags;
-> +    uint64_t page_size = qemu_real_host_page_size();
-> +    uint64_t gva = section->offset_within_address_space;
-> +    uint64_t size = int128_get64(section->size);
-> +    HRESULT res;
+The following patches are queued for QEMU stable v10.0.7:
 
-Let's keep it named as hr for consistency.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
 
-> +    void *mem;
-> +
-> +    if (!memory_region_is_ram(area)) {
-> +        if (writable) {
-> +            return;
-> +        } else if (!memory_region_is_romd(area)) {
-> +             add = false;
-> +        }
->       }
-> -}
-> -
-> -static void whpx_process_section(MemoryRegionSection *section, int add)
-> -{
-> -    MemoryRegion *mr = section->mr;
-> -    hwaddr start_pa = section->offset_within_address_space;
-> -    ram_addr_t size = int128_get64(section->size);
-> -    unsigned int delta;
-> -    uint64_t host_va;
->   
-> -    if (!memory_region_is_ram(mr)) {
-> -        return;
-> +    if (!QEMU_IS_ALIGNED(size, page_size) ||
-> +        !QEMU_IS_ALIGNED(gva, page_size)) {
-> +        /* Not page aligned, so we can not map as RAM */
-> +        add = false;
->       }
->   
-> -    delta = qemu_real_host_page_size() - (start_pa & ~qemu_real_host_page_mask());
-> -    delta &= ~qemu_real_host_page_mask();
-> -    if (delta > size) {
-> -        return;
-> -    }
-> -    start_pa += delta;
-> -    size -= delta;
-> -    size &= qemu_real_host_page_mask();
-> -    if (!size || (start_pa & ~qemu_real_host_page_mask())) {
-> +    if (!add) {
-> +        res = whp_dispatch.WHvUnmapGpaRange(whpx->partition,
-> +                gva, size);
-> +        if (!SUCCEEDED(res)) {
+Patch freeze is 2025-12-01, and the release is planned for 2025-12-03:
 
-Simpler: if (FAILED(res))
+  https://wiki.qemu.org/Planning/10.0
 
-> +            error_report("WHPX: failed to unmap GPA range");
-> +            abort();
-> +        }
->           return;
->       }
->   
-> -    host_va = (uintptr_t)memory_region_get_ram_ptr(mr)
-> -            + section->offset_within_region + delta;
-> +    flags = WHvMapGpaRangeFlagRead | WHvMapGpaRangeFlagExecute
-> +     | (writable ? WHvMapGpaRangeFlagWrite : 0);
-> +    mem = memory_region_get_ram_ptr(area) + section->offset_within_region;
->   
-> -    whpx_update_mapping(start_pa, size, (void *)(uintptr_t)host_va, add,
-> -                        memory_region_is_rom(mr), mr->name);
-> +    res = whp_dispatch.WHvMapGpaRange(whpx->partition,
-> +         mem, gva, size, flags);
-> +    if (!SUCCEEDED(res)) {
-> +        error_report("WHPX: failed to map GPA range");
-> +        abort();
-> +    }
->   }
->   
->   static void whpx_region_add(MemoryListener *listener,
->                              MemoryRegionSection *section)
->   {
-> -    memory_region_ref(section->mr);
-> -    whpx_process_section(section, 1);
-> +    whpx_set_phys_mem(section, true);
->   }
->   
->   static void whpx_region_del(MemoryListener *listener,
->                              MemoryRegionSection *section)
->   {
-> -    whpx_process_section(section, 0);
-> -    memory_region_unref(section->mr);
-> +    whpx_set_phys_mem(section, false);
->   }
->   
->   static void whpx_transaction_begin(MemoryListener *listener)
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 77dc9d662f80 Peter Maydell:
+   tests/tcg/multiarch/linux/linux-test: Don't try to test atime update
+02 0c6d6d79a5cb Dongwon Kim:
+   ui/gtk-gl-area: Remove extra draw call in refresh
+03 270b28681e36 Thomas Huth:
+   hw/ppc/e500: Check for compatible CPU type instead of aborting 
+   ungracefully
+04 3f462d79a080 Peter Maydell:
+   target/arm: Fix reads of CNTFRQ_EL0 in linux-user mode
+05 e41139eaad1d Zejun Zhao:
+   hw/riscv: Correct mmu-type property of sifive_u harts in device tree
+06 5e3e066e4ac8 Jialong Yang:
+   aplic: fix mask for smsiaddrcfgh
+07 86b8c3821496 Daniel Henrique Barboza:
+   target/riscv/kvm: add senvcfg CSR
+08 775ac57e0a54 Daniel Henrique Barboza:
+   target/riscv/kvm: read/write KVM regs via env size
+09 8ab99a05f34b Daniel Henrique Barboza:
+   target/riscv/kvm: add scounteren CSR
+10 2a21cbee47a1 Daniel Henrique Barboza:
+   target/riscv/kvm: fix env->priv setting in reset_regs_csr()
+11 06e01941ffca Daniel Henrique Barboza:
+   target/riscv: fix riscv_cpu_sirq_pending() mask
+12 2c147611cf56 Daniel P. Berrangé:
+   io: release active GSource in TLS channel finalizer
+13 322c3c4f3abe Daniel P. Berrangé:
+   io: move websock resource release to close method
+14 b7a1f2ca45c7 Daniel P. Berrangé:
+   io: fix use after free in websocket handshake code
+15 3995fc238e05 Daniel P. Berrangé:
+   crypto: stop requiring "key encipherment" usage in x509 certs
+16 6910f04aa646 Fiona Ebner:
+   hw/scsi: avoid deadlock upon TMF request cancelling with VirtIO
+17 1a8ffd6172f3 Peter Maydell:
+   target/hppa: Set FPCR exception flag bits for non-trapped exceptions
+18 575264e9083b Akihiko Odaki:
+   nw/nvram/ds1225y: Fix nvram MemoryRegion owner
+19 fb722e1dc2d8 Helge Deller:
+   hw/hppa: Fix interrupt of LASI parallel port
+20 36ec1a829a07 Mark Cave-Ayland:
+   esp.c: fix esp_cdb_ready() FIFO wraparound limit calculation
+21 e9d02b59316f Mark Cave-Ayland:
+   qtest/am53c974-test: add additional test for cmdfifo overflow
+22 7c7089321670 Bastian Blank:
+   linux-user: Use correct type for FIBMAP and FIGETBSZ emulation
+23 0db2de22fcbf Peter Maydell:
+   linux-user: permit sendto() with NULL buf and 0 len
+24 d5e1d2dea11b Paolo Bonzini:
+   target/i386: clear CPU_INTERRUPT_SIPI for all accelerators
+25 d1193481dee6 peng guo:
+   hw/i386/pc: Avoid overlap between CXL window and PCI 64bit BARs in QEMU 
+   10.0.x
+26 639a29422754 Xiaoyao Li:
+   i386/kvm/cpu: Init SMM cpu address space for hotplugged CPUs
+27 6eda39a87f4f Daniel P. Berrangé:
+   block: remove 'detached-header' option from opts after use
+28 c86488abaf01 Daniel P. Berrangé:
+   block: fix luks 'amend' when run in coroutine
+29 ad97769e9dcf Richard W.M. Jones:
+   block/curl.c: Fix CURLOPT_VERBOSE parameter type
+30 524fc77d2322 Sean Anderson:
+   gdbstub: Fix %s formatting
+31 a04c5ba543c1 Edgar E. Iglesias:
+   target/microblaze: Remove unused arg from check_divz()
+32 0e46b4d1f13b Edgar E. Iglesias:
+   target/microblaze: div: Break out raise_divzero()
+33 cfc1d54251d3 Edgar E. Iglesias:
+   target/microblaze: Handle signed division overflows
+34 df7e9243d540 Ilya Leoshkevich:
+   target/s390x: Fix missing interrupts for small CKC values
+35 dacfec5157fb Ilya Leoshkevich:
+   target/s390x: Fix missing clock-comparator interrupts after reset
+36 fc976a67ded4 Ilya Leoshkevich:
+   target/s390x: Use address generation for register branch targets
+37 0408c61e27ac Ilya Leoshkevich:
+   tests/tcg/s390x: Test SET CLOCK COMPARATOR
+38 75e2cb144191 Xiaoyao Li:
+   hostmem/shm: Allow shm memory backend serve as shared memory for coco-VMs
+39 4f503afc7eb5 Peter Maydell:
+   target/x86: Correctly handle invalid 0x0f 0xc7 0xxx insns
+40 fde5930cc371 Albert Esteve:
+   vhost-user: fix shared object lookup handler logic
+41 3e6ad83f209e Shameer Kolothum:
+   tests/qtest/bios-tables-test: Prepare for _DSM change in the DSDT table
+42 325aa2d86a20 Eric Auger:
+   hw/pci-host/gpex-acpi: Fix _DSM function 0 support return value
+43 ccf166d89dcf Shameer Kolothum:
+   tests/qtest/bios-tables-test: Update DSDT blobs after GPEX _DSM change
+44 f00bcc833790 Akihiko Odaki:
+   qemu-img: Fix amend option parse error handling
+45 909852ba6b4a Alberto Garcia:
+   qemu-img rebase: don't exceed IO_BUF_SIZE in one operation
+46 4c91719a6a78 Alberto Garcia:
+   tests/qemu-iotest: fix iotest 024 with qed images
+47 59506e59e0f0 Eric Blake:
+   qio: Add trace points to net_listener
+48 6e03d5cdc991 Eric Blake:
+   qio: Unwatch before notify in QIONetListener
+49 b5676493a08b Eric Blake:
+   qio: Remember context of qio_net_listener_set_client_func_full
+50 9d86181874ab Eric Blake:
+   qio: Protect NetListener callback with mutex
+51 6da0c9828194 Peter Maydell:
+   hw/net/e1000e_core: Don't advance desc_offset for NULL buffer RX 
+   descriptors
+52 9d946d56a2ac Peter Maydell:
+   hw/net/e1000e_core: Correct rx oversize packet checks
+53 bab496a18358 Peter Maydell:
+   hw/net/e1000e_core: Adjust e1000e_write_payload_frag_to_rx_buffers() 
+   assert
+54 a01344d9d780 Peter Maydell:
+   net: pad packets to minimum length in qemu_receive_packet()
+55 f52db7f34242 Peter Maydell:
+   hw/display/xlnx_dp.c: Don't abort on AUX FIFO overrun/underrun
+56 032333eba77b Peter Maydell:
+   hw/display/xlnx_dp: Don't abort for unsupported graphics formats
+57 5fc50b4ec841 Peter Maydell:
+   hw/misc/npcm_clk: Don't divide by zero when calculating frequency
+58 71365ee43312 Vincent Vanlaer:
+   block: get type of block allocation in commit_run
+59 23743ab282af Vincent Vanlaer:
+   block: move commit_run loop to separate function
+60 0648c76ad198 Vincent Vanlaer:
+   block: refactor error handling of commit_iteration
+61 6f3199f99600 Vincent Vanlaer:
+   block: allow commit to unmap zero blocks
+62 68aba2a93503 Vincent Vanlaer:
+   block: add test non-active commit with zeroed data
+63 863449cc8ec7 Alex Bennée:
+   tests: move test_xen assets to share.linaro.org
+64 dfaf3695b20d Alex Bennée:
+   tests: move test_virt assets to share.linaro.org
+65 5ff8d1fac98b Alex Bennée:
+   tests: move test_netdev_ethtool to share.linaro.org
+66 533b5ac2d6a8 Alex Bennée:
+   tests: move test_kvm_xen to share.linaro.org
+67 497d3e87ce2d Alex Bennée:
+   tests: move test_virt_gpu to share.linaro.org
+68 89d22536d1a1 Hanna Czenczek:
+   rbd: Run co BH CB in the coroutine’s AioContext
+69 deb35c129b85 Hanna Czenczek:
+   nfs: Run co BH CB in the coroutine’s AioContext
+70 53d5c7ffac7b Hanna Czenczek:
+   curl: Fix coroutine waking
+71 7a501bbd5194 Hanna Czenczek:
+   nvme: Kick and check completions in BDS context
+72 0f142cbd919f Hanna Czenczek:
+   nvme: Fix coroutine waking
+73 9b9ee60c07f5 Hanna Czenczek:
+   block/io: Take reqs_lock for tracked_requests
+74 124ab930ba38 Daniel P. Berrangé:
+   tests/functional: fix formatting of exception args
+75 335da23abec8 Daniel P. Berrangé:
+   tests/functional: handle URLError when fetching assets
+76 a344e22917f4 Yannick Voßen:
+   hw/dma/zynq-devcfg: Fix register memory
+77 9c3b76a0d406 Philippe Mathieu-Daudé:
+   hw/southbridge/lasi: Correct LasiState parent
+78 ebd9ea2947d8 Peter Maydell:
+   target/i386: Mark VPERMILPS as not valid with prefix 0
+79 ebb46ba6a4a2 Paolo Bonzini:
+   target/i386/tcg: validate segment registers
+80 9c3afb9d9b92 Paolo Bonzini:
+   target/i386: svm: fix sign extension of exit code
+81 106d766c9d5b Paolo Bonzini:
+   target/i386: fix stack size when delivering real mode interrupts
 
