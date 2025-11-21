@@ -4,35 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D01CFC51C
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:36:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A64CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd2w-0001k8-K1; Fri, 21 Nov 2025 21:08:19 -0500
+	id 1vMcs0-0006ls-5F; Fri, 21 Nov 2025 20:57:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcLd-0004FS-26; Fri, 21 Nov 2025 20:23:33 -0500
+ id 1vMbmL-00017J-Lr; Fri, 21 Nov 2025 19:47:05 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcJb-0007Kq-KU; Fri, 21 Nov 2025 20:23:29 -0500
+ id 1vMbm8-00084D-RB; Fri, 21 Nov 2025 19:47:01 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D663D16CA48;
- Fri, 21 Nov 2025 21:44:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 36ED816CA3F;
+ Fri, 21 Nov 2025 21:44:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 94456321C84;
- Fri, 21 Nov 2025 21:44:30 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E7A9D321C7B;
+ Fri, 21 Nov 2025 21:44:28 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 13/81] io: move websock resource release to close
- method
-Date: Fri, 21 Nov 2025 21:43:12 +0300
-Message-ID: <20251121184424.1137669-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 04/81] target/arm: Fix reads of CNTFRQ_EL0 in
+ linux-user mode
+Date: Fri, 21 Nov 2025 21:43:03 +0300
+Message-ID: <20251121184424.1137669-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
@@ -55,62 +56,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The QIOChannelWebsock object releases all its resources in the
-finalize callback. This is later than desired, as callers expect
-to be able to call qio_channel_close() to fully close a channel
-and release resources related to I/O.
+In commit bd8e9ddf6f6 ("target/arm: Refactor default generic timer
+frequency handling") we changed how we initialized the generic timer
+frequency as reported in the CNTFRQ_EL0 register.  As part of that,
+we chanegd the linux-user version of the CNTFRQ_EL0 sysreg from
+having a constant value set at compile time through the .resetvalue
+field to having a reset value which we compute in a .resetfn.
 
-The logic in the finalize method is at most a failsafe to handle
-cases where a consumer forgets to call qio_channel_close.
+This accidentally broke the reading of CNTFRQ_EL0 in linux-user mode,
+because the cpreg is marked as ARM_CP_CONST, which means we translate
+it as a read of the compile-time constant value in the .resetvalue
+field.  This is now zero, so userspace sees a 0 frequency value.
 
-This adds equivalent logic to the close method to release the
-resources, using g_clear_handle_id/g_clear_pointer to be robust
-against repeated invocations. The finalize method is tweaked
-so that the GSource is removed before releasing the underlying
-channel.
+Fix the bug by dropping the ARM_CP_CONST marking.  This will cause us
+to translate the read as a load of the value from the CPU state
+struct cp15.c14_cntfrq field, which is where the real frequency value
+now lives.
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 322c3c4f3abee616a18b3bfe563ec29dd67eae63)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3159
+Fixes: bd8e9ddf6f6 ("target/arm: Refactor default generic timer frequency handling")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20251013161040.216819-1-peter.maydell@linaro.org
+(cherry picked from commit 3f462d79a080060e54e39d31ce10fdf1a20317ef)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index 55192b770a..5c0df9d6af 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -922,13 +922,13 @@ static void qio_channel_websock_finalize(Object *obj)
-     buffer_free(&ioc->encinput);
-     buffer_free(&ioc->encoutput);
-     buffer_free(&ioc->rawinput);
--    object_unref(OBJECT(ioc->master));
-     if (ioc->io_tag) {
-         g_source_remove(ioc->io_tag);
-     }
-     if (ioc->io_err) {
-         error_free(ioc->io_err);
-     }
-+    object_unref(OBJECT(ioc->master));
- }
- 
- 
-@@ -1219,6 +1219,15 @@ static int qio_channel_websock_close(QIOChannel *ioc,
-     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(ioc);
- 
-     trace_qio_channel_websock_close(ioc);
-+    buffer_free(&wioc->encinput);
-+    buffer_free(&wioc->encoutput);
-+    buffer_free(&wioc->rawinput);
-+    if (wioc->io_tag) {
-+        g_clear_handle_id(&wioc->io_tag, g_source_remove);
-+    }
-+    if (wioc->io_err) {
-+        g_clear_pointer(&wioc->io_err, error_free);
-+    }
-     return qio_channel_close(wioc->master, errp);
- }
- 
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index b3ca49a6de..f694b266d9 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -3420,7 +3420,7 @@ static uint64_t gt_virt_cnt_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ static const ARMCPRegInfo generic_timer_cp_reginfo[] = {
+     { .name = "CNTFRQ_EL0", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 3, .crn = 14, .crm = 0, .opc2 = 0,
+-      .type = ARM_CP_CONST, .access = PL0_R /* no PL1_RW in linux-user */,
++      .access = PL0_R /* no PL1_RW in linux-user */,
+       .fieldoffset = offsetof(CPUARMState, cp15.c14_cntfrq),
+       .resetfn = arm_gt_cntfrq_reset,
+     },
 -- 
 2.47.3
 
