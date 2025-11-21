@@ -4,160 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422EECFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A76D1CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcjp-0000ev-DR; Fri, 21 Nov 2025 20:48:34 -0500
+	id 1vMd18-0000kG-9A; Fri, 21 Nov 2025 21:06:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vMbRr-0005kp-I6; Fri, 21 Nov 2025 19:25:57 -0500
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vMbPu-0002h6-Ec; Fri, 21 Nov 2025 19:25:50 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lvcdyQApCmMJIUWBXWlNqGoRYyTl/jA/gGDrLvrCGILh4fcHzRemy+xUBy8yEnGSxZm7iX/PJ+/W7LiefToUi3Ij0KNGoIp/R2IsJe9CgxbUjNreqiNm5MeSmYPukjkHDMnYqiiB2yLC/4Yw+KRrGi74uszRyupy+nMmCpiR0LKvtg2Q3602mFB0f+lFbuYJx5HNxBDhPGjp+6JvvFwBhctud2NGlwgMSaapVuRyRqtazWS014BFJR2l7OP3LRj7sebuaWS1NszrYmucetwKa/T7NVd3V3ZU8SF4Hg0N8XGvrBD4gYqcpMztnNHiufz0xBeA+2KSlGgRpLMNslEQ+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZRjFitd7FsZAAT/4+O017tyTUl63tNDhrVwTeU83bGs=;
- b=PQgXotrJRpbBSVh9QfHp/hX6zBEis7jzgpKTm3hZ5eZkx+pLJJeOE9iq6fTKooG/uQD+F7h5ycV56iwnS2jNU4inRvsgRt6+LOcboozKtToVGTT0j0Iv4zdqt0pYc9orjpKxirES9DjEDq08ruCrYrAkYDrxWFHE9k09AxVZixQkdtR6juwTGj6SYPC8DJJv9cNH8KvMfl0GEcrxBgHOcokdQUJ5absvi9dFb19dCuTQdTEylDG2U0vwc5oUnlWFZj6nG15ZbEHYNKtXbhVt+Z/oYmdNrZUg1G44IDJcb/yk9tBXZ2zFVmdeH+mf/1bzUnr/KizxOGQDnJroab/ZQw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZRjFitd7FsZAAT/4+O017tyTUl63tNDhrVwTeU83bGs=;
- b=OevDY311wXtka2Jz27h1mVQ5zspAmDrm+A2cyh7XDS64+FIdzAqdGJowZc55/BHLEcqQEspsjaUf+nUNOwbr4S1EJJRDMGtTMlkK2BWyK+8D38njgx6Uhhh5FU0aSBOjHJ309Be/zNNsWD+QFYk08D2i9BgK37+uJNsVquUIn+inHU7pk8Wr8ALXCpT1KfpYl/wpqAf/IEf4hPC/t2I+Ink4qSySOD2tKRwnNpaEEgn7lqXqrFuihGfe6D6Z6mt1j22X1mpR8Dg4l9WwuW5V+Gdzsv6N7mFoDAqUimMbeDHiIlyvDdzik59T7NjD10hkKd3be7SWOI4RSX29FX8JIg==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by DM6PR12MB4353.namprd12.prod.outlook.com (2603:10b6:5:2a6::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.11; Fri, 21 Nov
- 2025 17:32:27 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::e8c:e992:7287:cb06]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::e8c:e992:7287:cb06%5]) with mapi id 15.20.9343.011; Fri, 21 Nov 2025
- 17:32:26 +0000
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>, "Michael S .
- Tsirkin" <mst@redhat.com>
-Subject: RE: [PATCH v6 08/33] hw/pci/pci: Add optional
- supports_address_space() callback
-Thread-Topic: [PATCH v6 08/33] hw/pci/pci: Add optional
- supports_address_space() callback
-Thread-Index: AQHcWiFC5ZutjosMpE+DcYfPDxJ0SbT8CpYAgADj5VCAAHWrgIAAAGXA
-Date: Fri, 21 Nov 2025 17:32:26 +0000
-Message-ID: <CH3PR12MB75487F475CA02C6319AE5086ABD5A@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20251120132213.56581-1-skolothumtho@nvidia.com>
- <20251120132213.56581-9-skolothumtho@nvidia.com>
- <aR9/SMia+iganQ2r@Asurada-Nvidia>
- <CH3PR12MB754864DAE416B1EE5C1DFFC7ABD5A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <aSChKQtpSs/zYqh1@Asurada-Nvidia>
-In-Reply-To: <aSChKQtpSs/zYqh1@Asurada-Nvidia>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DM6PR12MB4353:EE_
-x-ms-office365-filtering-correlation-id: a5375047-2da8-4287-1c9e-08de2923f01c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|7416014|38070700021|7053199007; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?/D++63OjDJcJpbg0gzAjBxvmEssEeLvEaiSuatEnrugGxhGiA2WNIQo3UmhH?=
- =?us-ascii?Q?dJaxYFBAXPQlsj57WzMxZQ5qav/fVMXl+A0tTH7+DVgqO1TsivJKJ9GcJCsa?=
- =?us-ascii?Q?eSnasTyiEbZn0o0fYCqh4iwzhicqOnKbEG+ef0wPcWwV5jaWUTWoj/Y45znA?=
- =?us-ascii?Q?t1peRuUNlsF0FuU59TzMcS+FwV8KE7acWPI8wP0DmIdy1VFdzc/TJphIJB87?=
- =?us-ascii?Q?vwQZcQgzTYUrL0N8pbWcacBIDQHkAwSKtm0Lhhx8dLXE57/f8QDHzmHU0fGC?=
- =?us-ascii?Q?mZ9CuL6mHYw1lvMjTsoYbNxllWvbdfq/595XTCPTY6RaPRsuGdJb0rc5+du8?=
- =?us-ascii?Q?i2ayx+9nXXI7jErAOJF8jIhiOwswkvxvEZiqcl6zCG9D4667hBym4GfOdjBd?=
- =?us-ascii?Q?6Mgjue+pHk3BvH8v/L1rKoBwvSXX9UT6AdmwCFsYkSAr82Ahoxme83lI2e5f?=
- =?us-ascii?Q?qNiEJq4ZAnLBJ8AScVMi01sX9QNCT0LSLOhcMH2KiHleuP32sKikZt+CKMk2?=
- =?us-ascii?Q?jYwEybQKKQPV7x6tBcHlzvLXfzt4mTcThtC97yEdjgZ6AekfotFnzVhOO/iE?=
- =?us-ascii?Q?RXzGXB4ZuCEiJSLWCokeWWhv3eiuaYRX3YrwKRkhxLCk3KzjfN9PZMsntHI2?=
- =?us-ascii?Q?G8blvJ4GZWWeDbl1d1qjsDEvUM21/L6pL2qo1LVqgye9fNbrO48Y5AiOG28g?=
- =?us-ascii?Q?QbkSjY+PXYkpxBsRHdcNQCs2or3ZTp+0ix00sXHggFMbi8ko4VlSNDmxbdGg?=
- =?us-ascii?Q?NJYJP6BhgGEomzFruGhHU9uBeGz5hWd+RgKJOwbG++Jf1fsv5ior5JAEVyZ/?=
- =?us-ascii?Q?6ve3xvUmZ3RFAoKp5V2JR0bdpBa0EMhX6qemPf0NyJWhvpzTzR4gotV276So?=
- =?us-ascii?Q?YrVZP5aP6SL8NFCuO2PHoIDO2UQzwfu91/dnqQPQ73JDDvi8IHGhePl8MjgD?=
- =?us-ascii?Q?bdu36CzF7XAlfzcDN3RImEn+I/TuoWpRR+btFSlVAadd39qlY6v2NCPYPKDr?=
- =?us-ascii?Q?a5li7J4i1WtGjginugPlIB4mAg8puq44gvB5gABiU2nN2j0pKJZ1oAF3t/Bg?=
- =?us-ascii?Q?5bFumlBts4gJ1tggoBbQbJ5LKubW3G/4YzkhDOjKayKPh6JMfTPfjdyAz06z?=
- =?us-ascii?Q?IFRmauYZlbwkucUH6NLf49Ol+Lol8/fTWmLEnwE8WcR4DuCpFpgT8QaYysVN?=
- =?us-ascii?Q?Pg+4Rv8WzNb+xVFTJt2TolB2Q1rxjEn0b6sVMO847YbdSMpaF5ywnTy8o8+K?=
- =?us-ascii?Q?x4Cv85mlfJ8n+IFw2JslrP5VU3fMufR1o2IpjKSdIw8P2Z+d5kasXEqjYsIc?=
- =?us-ascii?Q?4a766YgQKvKwoSgb8xRhwwFbU3/4awbYVUgrfTTYSOw5fXg/supNVCe83GQ4?=
- =?us-ascii?Q?nTEDJCxYPstBoI2NDIx/6lMt7QFovGXdCHAI9pG/aPwIGjdDfBdP+L2SA8Z6?=
- =?us-ascii?Q?p6fBO9lYyMdUzTsZdnHUxQX3XDUH2dTlsDQ0V0YN5zR3SgUupSw/t4GNaBnZ?=
- =?us-ascii?Q?jnqX49C34PXtgy+y5ZJH9KUFv0VCm0IX+kv4?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700021)(7053199007);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?LZobua0kYtryxN1FsI2mBiNrE+aiBQWwfC6x+/YWJxoO8+YBERfWY3tvnBhd?=
- =?us-ascii?Q?WE+gFj9fN7ricsxF0sGrE7xnFapxGtVc0v5hea1mZgmqb8CxqZ/PLOf3M2c8?=
- =?us-ascii?Q?XhIzqgGEqQrOzB/L8D3rUxVCdX2GsMfUYCG3ZF0YyGnH1oKPAnTN5iXV2tN4?=
- =?us-ascii?Q?wZcvcxchS+aE9FszvYoLAGLFnJB6dSagVwyj8pPAXyQCAE25oheZxH1uChU8?=
- =?us-ascii?Q?Y/84VPslgezeMdmwCiJD1mUC6oHKb/boqxrFLVh6PITPsyH/Xb9WXPw6u5NS?=
- =?us-ascii?Q?shXprCOzVXUJEmDJMzw1mflApkaweMnn54/4S6+gUqP2oezgJBl6F1CgB2Xa?=
- =?us-ascii?Q?R+b51jAXKuhmXUwzLMSC//cx+UCNJV7ge3WSYXTnVsdkJ29KZWw21Gf1YhvG?=
- =?us-ascii?Q?jzs5f49pZ8X94gEL31O73+NgliZ8PamkX0BJivZIc9B7QvMGm+LB8HFx5226?=
- =?us-ascii?Q?frOn6SKiyKuqkS0unuSjg7WZw9KNVYW3GOCQeACz5TSzv9qDiPNbS9u5X9Iw?=
- =?us-ascii?Q?biMppHju5auIUeYiSd1e8g2Ebv9bp96Xzvk0bQbuNjYBLdmDJpmO4oh93U4+?=
- =?us-ascii?Q?/7EDHQSOXZkGzeAEWpqWcW2Weh5VMXyen1e1GA0fDIq6ZwGIXNhq/u8W+WE2?=
- =?us-ascii?Q?1iOZVGkypR5QVCIYCoz/vkabTwYP+ToLB38e5WnbDOdgll4/Ks6MrkmVDNhw?=
- =?us-ascii?Q?EmDz0R8FJZvspwd8Ekqrd+rWHyJavkiuDKzKiKQ7ZYW7AfxNgJRswpfPfuYn?=
- =?us-ascii?Q?o/wT8M1a4EgeDaPgoHm2Gzh8F9Na5abccf/o+6nIMs6blWhJ7fCibxEi2TD6?=
- =?us-ascii?Q?cp7T1ye/090yh2Es4tW5hEuB3fSGmXMFLKibEfQDDKgZjlbuCjj3c0kqQEXU?=
- =?us-ascii?Q?E9vaCqp9U0b77ySFmgMSI8LhscGb9lAEIE0u8fCTTtC+34CC+/epat02Syyw?=
- =?us-ascii?Q?ewPpx1pi4HNKURCzValMg+dTPbQFZ+HqlyR47k1rjvhliBODJpBPY9ovEfp0?=
- =?us-ascii?Q?G+wp+S6qnVoitVyY4PduIHU1Dz6/uRdUz0IXoByNej4+nM8gu7X78VibGgp4?=
- =?us-ascii?Q?5zzHvgOdILu3kiqnqR88PtCjwGhWzaFV/RHr7eF2AqOmwkxjlwfySIwfbV/+?=
- =?us-ascii?Q?stPuChI93//dawYPXrQ9YujF86F2TraIZhlgQXO1lUrqpztzbmiOuktjVHLy?=
- =?us-ascii?Q?H0FZo2FdR4zxQkvEPswJAXJ+LJ8kgs//8wpAzehlTthvzns934hMfr24Jf/8?=
- =?us-ascii?Q?R+WVRGooHOi2xxYdZJLlk7hpU3/5x5JOURbwA7SGQtb9EYspmFCD6k8pS+58?=
- =?us-ascii?Q?v6ZragE1RHhidaZVh1kKij5V4nnFvikUx44L0txr/0hn9xvnScXJMIsg3s4s?=
- =?us-ascii?Q?YVYh708O1XtYrREtorr38hT5zZDkn8VdKajs4ruvV/aYyPArVhc0HzEW6BTJ?=
- =?us-ascii?Q?QJ4zbyVeCR6rRAgVSVCd8xddXFPkOER/lDZBnu88XGRtZwLF+cv3QRiPMJIM?=
- =?us-ascii?Q?8XzgOXCos7MLE44gXJQUyap8q2RgVVO4pCDlE0+xlWhVHDWaO3DdnMHIbamd?=
- =?us-ascii?Q?P80CMuZoMhKS7kKW+2f8JhZdIZHAN5HxZP7/jxA3?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMcUc-0000ab-DA
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:32:50 -0500
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMcSZ-0001Ep-2H
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:32:45 -0500
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-6431b0a1948so4387126a12.3
+ for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 17:30:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763775018; x=1764379818; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vESko8GQ2ceP2oMkbBNKvzIYyYx9GKCYINNyOwGklUg=;
+ b=yQLHSJ9VSbXQSo+w+5sEEmjcZ+oCtFAwyF8hSCdY9DmduJ3epsj1etdoVs6a9XZ19X
+ 8F+yVtqm7B8M6wc9N5KMIVy3OoYI1pb+eHamSD2Um2Vu2UuT0vB/J6kOMFQ/aN00iZOd
+ qI+s85vD07amoh4uMWJ4OJf1rX7TL4rpaOcq3154mFxE0UhmSS51DcX5ZNCfDryMfLhT
+ CJrlUJpIEkc62C+QLRt0AsqMMS1MStr8et6ulVIOW/eUvH+dJ7lcCxb7zDQeMIMM5gZd
+ S3hW4S5Snd+xDB1D/0qJ4argbQbLJaS5niyaF9pbA1C9Mb/p3oW4GHVjhCXDvshIU1di
+ 48xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763775018; x=1764379818;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vESko8GQ2ceP2oMkbBNKvzIYyYx9GKCYINNyOwGklUg=;
+ b=Or3/zbum+A6ZMyENhpWVM9ht/46GBR4DZKcF2pYywuI9oAgDulVXnDrjpRDlWvd/a1
+ oUZ1yABzQNfo7d9+ESVagm3fDSgiTVp32OMjUzrLSa6m8zsOolKxU8zobaki4FPjdlNE
+ CLxQuLBthnJhsGwfNHEaMk4kILVs7kpHIB+n5DQo2CjZ9tE7XKLNcjZru0vm7+wmKgaB
+ 0f8FRFKq0jE3jdd8+RkSztNFka+cF6cHEFtnaPabGbovJaF6C7R1KvYNqIK4BiZcsPQx
+ QjCoI5CQwzinLNFFP2yCNqD/+DuBerZ5zOmwbrWmToBsdL5q320nbEqQziwwardl4bS0
+ YDRw==
+X-Gm-Message-State: AOJu0Yxo7mCwB0XT2uAKLUQGDNA8vqeI5uvpN4nGWlGxLV5QZeL50zFx
+ +YE5cDM8/B5G9MIS3rKZ2QgQfd/ydVtoEIiogUt/9ZexKfYycs3z03lelHKaK9FoFjcRN2OltsK
+ mgJWoCQy2Bw==
+X-Gm-Gg: ASbGncsrc2iWrTcdr0YudGTBhmwRkjfn9sllW8lujpJnzcC2jJwkJIuecdyIu114vem
+ p/GBZseFbGCRXuXe3v4VrG/XCZrEUA1u1d4JgYUv4tCEa57rqHAyrvx/tDzDRPj7Z51JCBErzxY
+ r3NDbmPrQv4pwZEz9eUfL3tLPg0oW1scJ0Ek4j1oXA89tHj6vw1qgqVtJVrN6MgkXZMNl9tvud8
+ AOWKCyVbW9ovZeM5TD9SKBlmCzl4CJ1X+gRN7N20DJW87sPs+GkUm10LQcZJpR0a+N3wUESEBTE
+ vh46CD4YJRaxkuEwffjs2gOrHhUjzxvRXJdfhg2w0HwYvB2+fvXysKMv9aMN6QbmzK6j6jb/Naj
+ zO599V/gVXG4RA8hzDBbr76g6i5GIVtdjiSeIl/ngzLGNDzrvSmBA2VG3dVi1Eap46slQ5qC/8k
+ xHfZhS3QROUCIH0NnZI83D9lkJATiO1HOw51k2Y0S7Sdt9WB5feTyXE4q0op0w
+X-Google-Smtp-Source: AGHT+IGHTqgyl1vrXL3wcw+ANlMLiuuycekcVyYOBzjuSrK6eO43371ZUi+5CO6J8ZKFoSmLyQgWag==
+X-Received: by 2002:a05:600c:4f83:b0:45d:e28c:875a with SMTP id
+ 5b1f17b1804b1-477c01fb88cmr27959155e9.31.1763732772260; 
+ Fri, 21 Nov 2025 05:46:12 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477bf3af0e1sm42006415e9.10.2025.11.21.05.46.11
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 21 Nov 2025 05:46:11 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [RFC-PATCH-for-11.0 v3 10/21] target/hexagon: Use little-endian
+ variant of cpu_ld/st_data*()
+Date: Fri, 21 Nov 2025 14:44:52 +0100
+Message-ID: <20251121134503.30914-11-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251121134503.30914-1-philmd@linaro.org>
+References: <20251121134503.30914-1-philmd@linaro.org>
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a5375047-2da8-4287-1c9e-08de2923f01c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Nov 2025 17:32:26.1778 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: MJejzvuP82y2ut1dZOchOs2E1nz3EW5fp6WyRnO6n7MJ9RaCxUY6+fa10xYWcNm5EkDAzDl/D8NA3ew1+0SYMA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4353
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=skolothumtho@nvidia.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x531.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -172,70 +94,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We only build the Hexagon target using little endianness order,
+therefore the cpu_ld/st_data*() definitions expand to the little
+endian declarations. Use the explicit little-endian variants.
 
+Mechanical change running:
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: 21 November 2025 17:28
-> To: Shameer Kolothum <skolothumtho@nvidia.com>
-> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
-> <jgg@nvidia.com>; ddutile@redhat.com; berrange@redhat.com; Nathan
-> Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
-> smostafa@google.com; wangzhou1@hisilicon.com;
-> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
-> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
-> Krishnakant Jaju <kjaju@nvidia.com>; Michael S . Tsirkin <mst@redhat.com>
-> Subject: Re: [PATCH v6 08/33] hw/pci/pci: Add optional
-> supports_address_space() callback
->=20
-> On Fri, Nov 21, 2025 at 02:38:06AM -0800, Shameer Kolothum wrote:
-> > > -----Original Message-----
-> > > From: Nicolin Chen <nicolinc@nvidia.com>
-> > > Sent: 20 November 2025 20:51
-> > > To: Shameer Kolothum <skolothumtho@nvidia.com>
-> > > Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> > > eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
-> > > <jgg@nvidia.com>; ddutile@redhat.com; berrange@redhat.com; Nathan
-> > > Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
-> > > smostafa@google.com; wangzhou1@hisilicon.com;
-> > > jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
-> > > zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com=
-;
-> > > Krishnakant Jaju <kjaju@nvidia.com>; Michael S . Tsirkin
-> <mst@redhat.com>
-> > > Subject: Re: [PATCH v6 08/33] hw/pci/pci: Add optional
-> > > supports_address_space() callback
-> > >
-> > > On Thu, Nov 20, 2025 at 01:21:48PM +0000, Shameer Kolothum wrote:
-> > > > Introduce an optional supports_address_space() callback in
-> PCIIOMMUOps
-> > > to
-> > >
-> > > "supports_address_space" sounds a bit to wide to me than its
-> > > indication to supporting an IOMMU address space specifically,
-> > > since the "system address space" being used in this series is
-> > > a legit address space as well.
-> > >
-> > > With that being said, I think we are fine for now, given the
-> > > API docs has clarified it. If someone shares the same concern,
-> > > we can rename it later.
-> >
-> > The intent here is just to let the vIOMMU decide whether a device shoul=
-d
-> > be associated with its address_space before we call get_address_space()=
-.
-> > If the check passes, the vIOMMU must provide the actual address_space
-> > through get_address_space() callback.
->=20
-> The naming makes sense now. Yet, the API doc is a bit confusing..
->=20
-> Why it says "device can have an IOMMU address space"? If a device
-> only has a system address space (i.e. it doesn't support an IOMMU
-> address space), it still returns true, right?
+  $ tgt=hexagon; \
+    end=le; \
+    for op in data mmuidx_ra; do \
+      for ac in uw sw l q; do \
+        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+      for ac in w l q; do \
+        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+    done
 
-Yes. I think the API doc wording requires tightening. Will do.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/hexagon/macros.h    | 6 +++---
+ target/hexagon/op_helper.c | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-Thanks,
-Shameer
+diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
+index 088e5961ab7..6c2862a2320 100644
+--- a/target/hexagon/macros.h
++++ b/target/hexagon/macros.h
+@@ -519,9 +519,9 @@ static inline TCGv gen_read_ireg(TCGv result, TCGv val, int shift)
+ #define fLOAD(NUM, SIZE, SIGN, EA, DST) MEM_LOAD##SIZE##SIGN(DST, EA)
+ #else
+ #define MEM_LOAD1 cpu_ldub_data_ra
+-#define MEM_LOAD2 cpu_lduw_data_ra
+-#define MEM_LOAD4 cpu_ldl_data_ra
+-#define MEM_LOAD8 cpu_ldq_data_ra
++#define MEM_LOAD2 cpu_lduw_le_data_ra
++#define MEM_LOAD4 cpu_ldl_le_data_ra
++#define MEM_LOAD8 cpu_ldq_le_data_ra
+ 
+ #define fLOAD(NUM, SIZE, SIGN, EA, DST) \
+     do { \
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+index e2e80ca7efa..08db1e9c56b 100644
+--- a/target/hexagon/op_helper.c
++++ b/target/hexagon/op_helper.c
+@@ -77,13 +77,13 @@ static void commit_store(CPUHexagonState *env, int slot_num, uintptr_t ra)
+         cpu_stb_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
+         break;
+     case 2:
+-        cpu_stw_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
++        cpu_stw_le_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
+         break;
+     case 4:
+-        cpu_stl_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
++        cpu_stl_le_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
+         break;
+     case 8:
+-        cpu_stq_data_ra(env, va, env->mem_log_stores[slot_num].data64, ra);
++        cpu_stq_le_data_ra(env, va, env->mem_log_stores[slot_num].data64, ra);
+         break;
+     default:
+         g_assert_not_reached();
+-- 
+2.51.0
+
 
