@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C5BCFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:16:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F621CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:16:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdgf-0002lv-NO; Fri, 21 Nov 2025 21:49:22 -0500
+	id 1vMdNU-0000AA-NU; Fri, 21 Nov 2025 21:29:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdg3-0001zr-Ub; Fri, 21 Nov 2025 21:48:43 -0500
+ id 1vMdNQ-00008y-Px; Fri, 21 Nov 2025 21:29:28 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdfW-0005Jy-0K; Fri, 21 Nov 2025 21:48:39 -0500
+ id 1vMdMU-000732-6b; Fri, 21 Nov 2025 21:29:25 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 00DF216C714;
- Fri, 21 Nov 2025 16:51:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A32D316C6F9;
+ Fri, 21 Nov 2025 16:51:56 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5A3E13219B1;
- Fri, 21 Nov 2025 16:52:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 078FD321996;
+ Fri, 21 Nov 2025 16:52:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
  Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 60/76] tests: move test_kvm_xen to share.linaro.org
-Date: Fri, 21 Nov 2025 16:51:38 +0300
-Message-ID: <20251121135201.1114964-60-mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 33/76] target/s390x: Fix missing clock-comparator
+ interrupts after reset
+Date: Fri, 21 Nov 2025 16:51:11 +0300
+Message-ID: <20251121135201.1114964-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -60,46 +59,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Linaro are migrating file-hosting from the old NextCloud instance to
-another sharing site.
+After reset, CKC value is set to 0, so if clock-comparator interrupts
+are enabled, one should occur very shortly thereafter.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Currently the code that loads the respective control register does not
+set tod_timer, so this does not happen.
+
+Fix by adding a tcg_s390_tod_updated() call to LCTL and LCTLG.
+
 Cc: qemu-stable@nongnu.org
-Message-ID: <20251117115523.3993105-10-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit 533b5ac2d6a826619cf80b009bf23ae3246d7011)
+Suggested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-ID: <20251016175954.41153-3-iii@linux.ibm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+(cherry picked from commit dacfec5157fb9e2249cf393a143bd545e80a6e31)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/test_x86_64_kvm_xen.py b/tests/functional/test_x86_64_kvm_xen.py
-index a5d445023c..424d4b2001 100755
---- a/tests/functional/test_x86_64_kvm_xen.py
-+++ b/tests/functional/test_x86_64_kvm_xen.py
-@@ -23,18 +23,11 @@ class KVMXenGuest(QemuSystemTest):
-     kernel_path = None
-     kernel_params = None
+diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+index f1acb1618f..24675fc818 100644
+--- a/target/s390x/tcg/mem_helper.c
++++ b/target/s390x/tcg/mem_helper.c
+@@ -1959,6 +1959,10 @@ void HELPER(lctlg)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
+         if (env->cregs[i] != val && i >= 9 && i <= 11) {
+             PERchanged = true;
+         }
++        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val & CR0_CKC_SC)) {
++            BQL_LOCK_GUARD();
++            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
++        }
+         env->cregs[i] = val;
+         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%" PRIx64 "\n",
+                    i, src, val);
+@@ -1989,10 +1993,15 @@ void HELPER(lctl)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
  
--    # Fetch assets from the kvm-xen-guest subdir of my shared test
--    # images directory on fileserver.linaro.org where you can find
--    # build instructions for how they where assembled.
--    ASSET_KERNEL = Asset(
--        ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/download?'
--         'path=%2Fkvm-xen-guest&files=bzImage'),
--        'ec0ad7bb8c33c5982baee0a75505fe7dbf29d3ff5d44258204d6307c6fe0132a')
--
--    ASSET_ROOTFS = Asset(
--        ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/download?'
--         'path=%2Fkvm-xen-guest&files=rootfs.ext4'),
--        'b11045d649006c649c184e93339aaa41a8fe20a1a86620af70323252eb29e40b')
-+    ASSET_KERNEL = Asset('https://share.linaro.org/downloadFile?id=UG0V8dzzHrrHb9X',
-+                         'ec0ad7bb8c33c5982baee0a75505fe7dbf29d3ff5d44258204d6307c6fe0132a')
-+
-+    ASSET_ROOTFS = Asset('https://share.linaro.org/downloadFile?id=VwLRKDXKFl6oKti',
-+                         'b11045d649006c649c184e93339aaa41a8fe20a1a86620af70323252eb29e40b')
+     for (i = r1;; i = (i + 1) % 16) {
+         uint32_t val = cpu_ldl_data_ra(env, src, ra);
++        uint64_t val64 = deposit64(env->cregs[i], 0, 32, val);
+         if ((uint32_t)env->cregs[i] != val && i >= 9 && i <= 11) {
+             PERchanged = true;
+         }
+-        env->cregs[i] = deposit64(env->cregs[i], 0, 32, val);
++        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val64 & CR0_CKC_SC)) {
++            BQL_LOCK_GUARD();
++            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
++        }
++        env->cregs[i] = val64;
+         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%x\n", i, src, val);
+         src += sizeof(uint32_t);
  
-     def common_vm_setup(self):
-         # We also catch lack of KVM_XEN support if we fail to launch
 -- 
 2.47.3
 
