@@ -4,34 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E0BCFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE10CFC519
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd3b-0002Bq-GL; Fri, 21 Nov 2025 21:09:00 -0500
+	id 1vMdUH-000805-GW; Fri, 21 Nov 2025 21:36:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcQP-0006qR-Rr; Fri, 21 Nov 2025 20:28:29 -0500
+ id 1vMcBx-0007cy-Nt; Fri, 21 Nov 2025 20:13:33 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcON-0000BT-AX; Fri, 21 Nov 2025 20:28:25 -0500
+ id 1vMc9u-0004cT-Ts; Fri, 21 Nov 2025 20:13:29 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DF3B016CA76;
- Fri, 21 Nov 2025 21:44:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2193116CA63;
+ Fri, 21 Nov 2025 21:44:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9E478321CB2;
- Fri, 21 Nov 2025 21:44:36 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D177E321C9F;
+ Fri, 21 Nov 2025 21:44:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Vincent Vanlaer <libvirt-e6954efa@volkihar.be>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 59/81] block: move commit_run loop to separate function
-Date: Fri, 21 Nov 2025 21:43:58 +0300
-Message-ID: <20251121184424.1137669-59-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Albert Esteve <aesteve@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 40/81] vhost-user: fix shared object lookup handler
+ logic
+Date: Fri, 21 Nov 2025 21:43:39 +0300
+Message-ID: <20251121184424.1137669-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
@@ -53,130 +54,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
+From: Albert Esteve <aesteve@redhat.com>
 
-Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Message-Id: <20241026163010.2865002-3-libvirt-e6954efa@volkihar.be>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 23743ab282af4fbb80fdc049bff2c93668c73c83)
+Refactor backend_read() function and add a reply_ack variable
+to have the option for handlers to force tweak whether they should
+send a reply or not without depending on VHOST_USER_NEED_REPLY_MASK
+flag.
+
+This fixes an issue with
+vhost_user_backend_handle_shared_object_lookup() logic, as the
+error path was not closing the backend channel correctly. So,
+we can remove the reply call from within the handler, make
+sure it returns early on errors as other handlers do and
+set the reply_ack variable on backend_read() to true to ensure
+that it will send a response, thus keeping the original intent.
+
+Fixes: 1609476662 ("vhost-user: add shared_object msg")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20251017072011.1874874-2-aesteve@redhat.com>
+(cherry picked from commit fde5930cc37175cfcd0f03a089e26f4458a52311)
+(Mjt: context fix)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/commit.c b/block/commit.c
-index ba0ba59316..3ee0ade7df 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -128,6 +128,55 @@ static void commit_clean(Job *job)
-     blk_unref(s->top);
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 267b612587..7961e3c9e8 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -1670,14 +1670,6 @@ static bool vhost_user_send_resp(QIOChannel *ioc, VhostUserHeader *hdr,
+     return !qio_channel_writev_all(ioc, iov, ARRAY_SIZE(iov), errp);
  }
  
-+static int commit_iteration(CommitBlockJob *s, int64_t offset,
-+                            int64_t *n, void *buf)
-+{
-+    int ret = 0;
-+    bool copy;
-+    bool error_in_source = true;
-+
-+    /* Copy if allocated above the base */
-+    WITH_GRAPH_RDLOCK_GUARD() {
-+        ret = bdrv_co_common_block_status_above(blk_bs(s->top),
-+            s->base_overlay, true, true, offset, COMMIT_BUFFER_SIZE,
-+            n, NULL, NULL, NULL);
-+    }
-+
-+    copy = (ret >= 0 && ret & BDRV_BLOCK_ALLOCATED);
-+    trace_commit_one_iteration(s, offset, *n, ret);
-+    if (copy) {
-+        assert(*n < SIZE_MAX);
-+
-+        ret = blk_co_pread(s->top, offset, *n, buf, 0);
-+        if (ret >= 0) {
-+            ret = blk_co_pwrite(s->base, offset, *n, buf, 0);
-+            if (ret < 0) {
-+                error_in_source = false;
-+            }
-+        }
-+    }
-+    if (ret < 0) {
-+        BlockErrorAction action = block_job_error_action(&s->common,
-+                                                         s->on_error,
-+                                                         error_in_source,
-+                                                         -ret);
-+        if (action == BLOCK_ERROR_ACTION_REPORT) {
-+            return ret;
-+        } else {
-+            *n = 0;
-+            return 0;
-+        }
-+    }
-+    /* Publish progress */
-+    job_progress_update(&s->common.job, *n);
-+
-+    if (copy) {
-+        block_job_ratelimit_processed_bytes(&s->common, *n);
-+    }
-+
-+    return 0;
-+}
-+
- static int coroutine_fn commit_run(Job *job, Error **errp)
+-static bool
+-vhost_user_backend_send_dmabuf_fd(QIOChannel *ioc, VhostUserHeader *hdr,
+-                                  VhostUserPayload *payload, Error **errp)
+-{
+-    hdr->size = sizeof(payload->u64);
+-    return vhost_user_send_resp(ioc, hdr, payload, errp);
+-}
+-
+ int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned char *uuid,
+                                  int *dmabuf_fd)
  {
-     CommitBlockJob *s = container_of(job, CommitBlockJob, common.job);
-@@ -158,9 +207,6 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-     buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
+@@ -1718,19 +1710,15 @@ int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned char *uuid,
  
-     for (offset = 0; offset < len; offset += n) {
--        bool copy;
--        bool error_in_source = true;
--
-         /* Note that even when no rate limit is applied we need to yield
-          * with no pending I/O here so that bdrv_drain_all() returns.
-          */
-@@ -168,42 +214,11 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
-         if (job_is_cancelled(&s->common.job)) {
-             break;
+ static int
+ vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u,
+-                                               QIOChannel *ioc,
+-                                               VhostUserHeader *hdr,
+-                                               VhostUserPayload *payload)
++                                               VhostUserShared *object)
+ {
+     QemuUUID uuid;
+     CharBackend *chr = u->user->chr;
+-    Error *local_err = NULL;
+     int dmabuf_fd = -1;
+     int fd_num = 0;
+ 
+-    memcpy(uuid.data, payload->object.uuid, sizeof(payload->object.uuid));
++    memcpy(uuid.data, object->uuid, sizeof(object->uuid));
+ 
+-    payload->u64 = 0;
+     switch (virtio_object_type(&uuid)) {
+     case TYPE_DMABUF:
+         dmabuf_fd = virtio_lookup_dmabuf(&uuid);
+@@ -1739,18 +1727,16 @@ vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u,
+     {
+         struct vhost_dev *dev = virtio_lookup_vhost_device(&uuid);
+         if (dev == NULL) {
+-            payload->u64 = -EINVAL;
+-            break;
++            return -EINVAL;
          }
--        /* Copy if allocated above the base */
--        WITH_GRAPH_RDLOCK_GUARD() {
--            ret = bdrv_co_common_block_status_above(blk_bs(s->top),
--                s->base_overlay, true, true, offset, COMMIT_BUFFER_SIZE,
--                &n, NULL, NULL, NULL);
--        }
- 
--        copy = (ret >= 0 && ret & BDRV_BLOCK_ALLOCATED);
--        trace_commit_one_iteration(s, offset, n, ret);
--        if (copy) {
--            assert(n < SIZE_MAX);
--
--            ret = blk_co_pread(s->top, offset, n, buf, 0);
--            if (ret >= 0) {
--                ret = blk_co_pwrite(s->base, offset, n, buf, 0);
--                if (ret < 0) {
--                    error_in_source = false;
--                }
--            }
--        }
--        if (ret < 0) {
--            BlockErrorAction action =
--                block_job_error_action(&s->common, s->on_error,
--                                       error_in_source, -ret);
--            if (action == BLOCK_ERROR_ACTION_REPORT) {
--                return ret;
--            } else {
--                n = 0;
--                continue;
--            }
--        }
--        /* Publish progress */
--        job_progress_update(&s->common.job, n);
-+        ret = commit_iteration(s, offset, &n, buf);
- 
--        if (copy) {
--            block_job_ratelimit_processed_bytes(&s->common, n);
-+        if (ret < 0) {
+         int ret = vhost_user_get_shared_object(dev, uuid.data, &dmabuf_fd);
+         if (ret < 0) {
+-            payload->u64 = ret;
 +            return ret;
          }
+         break;
      }
+     case TYPE_INVALID:
+-        payload->u64 = -EINVAL;
+-        break;
++        return -EINVAL;
+     }
+ 
+     if (dmabuf_fd != -1) {
+@@ -1759,11 +1745,6 @@ vhost_user_backend_handle_shared_object_lookup(struct vhost_user *u,
+ 
+     if (qemu_chr_fe_set_msgfds(chr, &dmabuf_fd, fd_num) < 0) {
+         error_report("Failed to set msg fds.");
+-        payload->u64 = -EINVAL;
+-    }
+-
+-    if (!vhost_user_backend_send_dmabuf_fd(ioc, hdr, payload, &local_err)) {
+-        error_report_err(local_err);
+         return -EINVAL;
+     }
+ 
+@@ -1792,6 +1773,7 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+     struct iovec iov;
+     g_autofree int *fd = NULL;
+     size_t fdsize = 0;
++    bool reply_ack;
+     int i;
+ 
+     /* Read header */
+@@ -1810,6 +1792,8 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+         goto err;
+     }
+ 
++    reply_ack = hdr.flags & VHOST_USER_NEED_REPLY_MASK;
++
+     /* Read payload */
+     if (qio_channel_read_all(ioc, (char *) &payload, hdr.size, &local_err)) {
+         error_report_err(local_err);
+@@ -1835,8 +1819,10 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+                                                              &payload.object);
+         break;
+     case VHOST_USER_BACKEND_SHARED_OBJECT_LOOKUP:
+-        ret = vhost_user_backend_handle_shared_object_lookup(dev->opaque, ioc,
+-                                                             &hdr, &payload);
++        /* The backend always expects a response */
++        reply_ack = true;
++        ret = vhost_user_backend_handle_shared_object_lookup(dev->opaque,
++                                                             &payload.object);
+         break;
+     default:
+         error_report("Received unexpected msg type: %d.", hdr.request);
+@@ -1847,7 +1833,7 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
+      * REPLY_ACK feature handling. Other reply types has to be managed
+      * directly in their request handlers.
+      */
+-    if (hdr.flags & VHOST_USER_NEED_REPLY_MASK) {
++    if (reply_ack) {
+         payload.u64 = !!ret;
+         hdr.size = sizeof(payload.u64);
  
 -- 
 2.47.3
