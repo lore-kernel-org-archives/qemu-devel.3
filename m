@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA7ECF64B1
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE76CFC504
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdCM-0001f9-GB; Fri, 21 Nov 2025 21:18:03 -0500
+	id 1vMd8m-0006LX-14; Fri, 21 Nov 2025 21:14:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMd5W-0003bd-MF; Fri, 21 Nov 2025 21:11:00 -0500
+ id 1vMd7M-0004ye-DT; Fri, 21 Nov 2025 21:12:52 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMd51-0003bx-OZ; Fri, 21 Nov 2025 21:10:55 -0500
+ id 1vMd6i-0004NV-7q; Fri, 21 Nov 2025 21:12:49 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8E61B16C6ED;
- Fri, 21 Nov 2025 16:51:55 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6268816C6E2;
+ Fri, 21 Nov 2025 16:51:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E591E32198A;
- Fri, 21 Nov 2025 16:52:03 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BC67F32197F;
+ Fri, 21 Nov 2025 16:52:02 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [Stable-10.1.3 21/76] linux-user: permit sendto() with NULL buf and 0
- len
-Date: Fri, 21 Nov 2025 16:50:59 +0300
-Message-ID: <20251121135201.1114964-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 10/76] target/riscv: fix riscv_cpu_sirq_pending() mask
+Date: Fri, 21 Nov 2025 16:50:48 +0300
+Message-ID: <20251121135201.1114964-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,71 +60,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-If you pass sendto() a NULL buffer, this is usually an error
-(causing an EFAULT return); however if you pass a 0 length then
-we should not try to validate the buffer provided. Instead we
-skip the copying of the user data and possible processing
-through fd_trans_target_to_host_data, and call the host syscall
-with NULL, 0.
+We're filtering out (MIP_VSSIP | MIP_VSTIP | MIP_VSEIP) from S-mode
+pending interrupts without apparent reason. There's no special treatment
+for these ints as far as the spec goes, and this filtering is causing
+read_stopi() to miss those VS interrupts [1].
 
-(unlock_user() permits a NULL buffer pointer for "do nothing"
-so we don't need to special case the unlock code.)
+We shouldn't return delegated VS interrupts in S-mode though, so change
+the current mask with "~env->hideleg". Note that this is the same
+handling we're doing in riscv_cpu_mirq_pending() and env->mideleg.
 
+[1] https://gitlab.com/qemu-project/qemu/-/issues/2820
+
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2820
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20251022124340.493358-1-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3102
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251028142001.3011630-1-peter.maydell@linaro.org>
-(cherry picked from commit 0db2de22fcbf90adafab9d9dd1fc8203c66bfa75)
+(cherry picked from commit 06e01941ffca3c246a9770f477e43118793fde59)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 91360a072c..c236b28345 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -3583,7 +3583,7 @@ static abi_long do_sendto(int fd, abi_ulong msg, size_t len, int flags,
-                           abi_ulong target_addr, socklen_t addrlen)
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 3479a62cc7..360db133e2 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -443,8 +443,7 @@ int riscv_cpu_mirq_pending(CPURISCVState *env)
+ 
+ int riscv_cpu_sirq_pending(CPURISCVState *env)
  {
-     void *addr;
--    void *host_msg;
-+    void *host_msg = NULL;
-     void *copy_msg = NULL;
-     abi_long ret;
+-    uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg &
+-                    ~(MIP_VSSIP | MIP_VSTIP | MIP_VSEIP);
++    uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg & ~env->hideleg;
+     uint64_t irqs_f = env->mvip & env->mvien & ~env->mideleg & env->sie;
  
-@@ -3591,16 +3591,19 @@ static abi_long do_sendto(int fd, abi_ulong msg, size_t len, int flags,
-         return -TARGET_EINVAL;
-     }
- 
--    host_msg = lock_user(VERIFY_READ, msg, len, 1);
--    if (!host_msg)
--        return -TARGET_EFAULT;
--    if (fd_trans_target_to_host_data(fd)) {
--        copy_msg = host_msg;
--        host_msg = g_malloc(len);
--        memcpy(host_msg, copy_msg, len);
--        ret = fd_trans_target_to_host_data(fd)(host_msg, len);
--        if (ret < 0) {
--            goto fail;
-+    if (len != 0) {
-+        host_msg = lock_user(VERIFY_READ, msg, len, 1);
-+        if (!host_msg) {
-+            return -TARGET_EFAULT;
-+        }
-+        if (fd_trans_target_to_host_data(fd)) {
-+            copy_msg = host_msg;
-+            host_msg = g_malloc(len);
-+            memcpy(host_msg, copy_msg, len);
-+            ret = fd_trans_target_to_host_data(fd)(host_msg, len);
-+            if (ret < 0) {
-+                goto fail;
-+            }
-         }
-     }
-     if (target_addr) {
+     return riscv_cpu_pending_to_irq(env, IRQ_S_EXT, IPRIO_DEFAULT_S,
 -- 
 2.47.3
 
