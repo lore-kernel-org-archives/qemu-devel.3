@@ -4,96 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EA51CFA477
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 07:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC61CCFA478
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 07:42:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMLmO-00013s-A1; Fri, 21 Nov 2025 02:42:04 -0500
+	id 1vMLmc-00019X-1d; Fri, 21 Nov 2025 02:42:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMLmM-00013E-9c
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 02:42:02 -0500
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMLmJ-0005ld-0l
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 02:42:02 -0500
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-429ce7e79f8so981364f8f.0
- for <qemu-devel@nongnu.org>; Thu, 20 Nov 2025 23:41:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763710916; x=1764315716; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=L1ma/FgOyn6F5DDDvAZGScTkgrExcWHFs5u8FhdaZUg=;
- b=I4kdN48RaKhHAikpiwpY/CNjhB0ZBRPSA//905mhFaQTQAa3B6FNvL1//AFU0sm10X
- pSE3Sd3+JG3vlChw1OTaKm4BaMMpGmbOVFnlr9tz9RYq95Tx28600xNSZrig9d2ZDQ/x
- mizVepBs9lLh1CQkYMxbcy1d1N9ugjAblJ/wB4SujoslKmdvW58vSdsFE09dJ+9cumUV
- RD/SckCfCCmOYsoNsdlD6kEVnu+8xCdKSPmc5pk1Do3qCSK4VN7ni+eTmEWFJa9mzGGj
- KAR4cyHZ71ApK6puhZFlTfjBr0+yg/Iikr9nVE3yigM26sib9lEgg30CNvw3QFeLbXrs
- Z7zQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763710916; x=1764315716;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=L1ma/FgOyn6F5DDDvAZGScTkgrExcWHFs5u8FhdaZUg=;
- b=BJLRBGpUrVKtR27rI/9W4VULWOrEhDoCVNZ1gyJkgAbtq5YdHoTlNKHoE+nO7L4cfG
- cMMR+zxZ99CU9VgB4Hybqu/bHLe76lMOxJIZL/I5JAeym1CT5AflPg4/ByknWgmZNyNH
- jUAQ2gavr1d1ZuTsCPVtaYZFC0Pi4PcpIvlv2rfF9xlqv3eCS08psMoATmNnfhYcLVpO
- WjHtIhrM1agr4mlI+cy6LRrthCJmYAD40ND14FQlB2CX89mWDRlhB7d/OiHrf42LnikN
- GOe+6TZLjRc/ps2X3K81UdshKFIJxBwP9ktFbVjFMNEluqq2zpE9h3W7UBUNuwszTIEn
- r9Pw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX1L60PXmJuWgOibuGxhXZ0LiZsjIGkZ3wMNRpQT1mHTDe3oXX8dIemv2gOXUQlS40XjVdJbnZcurmv@nongnu.org
-X-Gm-Message-State: AOJu0YyY4hmCXTSe50enrjQZyEbUBIRJWdMl6kM3Rzv9Tx95HrnxDfTm
- cr1FHt+p7LfNX5887YQHYDiDBPp2odASiZS2K2fyySF1mMlhRTkjilYqmeTxf7YufJE=
-X-Gm-Gg: ASbGncu19tFESEcQIkuF58/AAKlGcJceIpDazxmk260+3Up9kwGZLeDinUlXNGw9VeV
- BiVULA3g247sMyN+NKKaT9JJfTuTJ4WO8N74wKC9F21NDw+JPRhwasDJMTpX8hCI28w77szSC/c
- 0uH8uhptQLOGvQBh+UsRxdzN0X8F3c1lHbNLTosGqSLFekprVX4vIIyNarSBiRpCA0ToHjMGroU
- qnfQ8vJ0qU/ahalO9c9GL3/xzul30QDwX3enQk9zc11qyQ/9lowX+WqbK3R599INPG0Q2ZI+1S4
- rz29h0peEIMOXlxK+IKTurbu9grY2a4QamvabHe9UjMSXlvBKYdL8EWTvNqr8LcyMQLoaTZgydt
- g3UCRalAxB4VQ8Zj2B2PxBLdbKnRSVjJw/cn0TZLvdzSpVy28ZTkhugCCJwAqa9vcZ1e+3zx82x
- 3ra17DqdzmfoHkp5F1nSThA8ojI0mo50TM3sTWqEAQ1zO4qXM9gobdGA==
-X-Google-Smtp-Source: AGHT+IFStL+sfVxup5vil7E7ot3Uzb0O0qqSAlc0Ome8ai0acGyOjot4XlKspPovgMmuEv0k4n7dwg==
-X-Received: by 2002:a05:6000:1448:b0:429:f0a4:22e with SMTP id
- ffacd0b85a97d-42cc1d3a800mr990706f8f.54.1763710915531; 
- Thu, 20 Nov 2025 23:41:55 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f2e432sm9172211f8f.9.2025.11.20.23.41.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 20 Nov 2025 23:41:54 -0800 (PST)
-Message-ID: <442e57d9-74f1-4a46-be5a-70158ce0c8ea@linaro.org>
-Date: Fri, 21 Nov 2025 08:41:53 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMLma-00019C-Qs
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 02:42:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMLmY-0005oi-HK
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 02:42:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763710933;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3NW1ZCKUlQkbLbmb949CH/guBc8UA9jC87DIPZ5FVBI=;
+ b=MBmPdgxVOW9SxkzMmeGUvvRfd7Da+s9jjYP31yv0yJKcA6tLX/DRQB3zeCc2mQY8aFjWRl
+ N9y+7Wj+92aC9sqcvJ/cGkCXZ8k1D400Eb6tL6Ur3VkgUxJ2uFQb00OwQUaaj/qo14aqh3
+ dguJ2iLLLn5yu5TbAkyH7op53VNVPzg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-6Nx3hajiNLuNNYgJfdWNMg-1; Fri,
+ 21 Nov 2025 02:42:07 -0500
+X-MC-Unique: 6Nx3hajiNLuNNYgJfdWNMg-1
+X-Mimecast-MFC-AGG-ID: 6Nx3hajiNLuNNYgJfdWNMg_1763710926
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF153180034A; Fri, 21 Nov 2025 07:42:05 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3287C1800877; Fri, 21 Nov 2025 07:42:05 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BF17821E6A27; Fri, 21 Nov 2025 08:42:02 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: elena.ufimtseva@oracle.com,  jag.raman@oracle.com
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,  qemu-devel@nongnu.org
+Subject: Re: [PATCH 12/14] error: Use error_setg_errno() for simplicity and
+ consistency
+In-Reply-To: <87jyzkq6mx.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Fri, 21 Nov 2025 06:47:18 +0100")
+References: <20251120191339.756429-1-armbru@redhat.com>
+ <20251120191339.756429-13-armbru@redhat.com>
+ <aR-vExiomEe9jUNN@gallifrey> <87jyzkq6mx.fsf@pond.sub.org>
+Date: Fri, 21 Nov 2025 08:42:02 +0100
+Message-ID: <873467q1bp.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] Add RISCV Zilsd extension
-Content-Language: en-US
-To: Roan Richmond <roan.richmond@codethink.co.uk>,
- Alistair Francis <alistair23@gmail.com>
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org,
- richard.henderson@linaro.org
-References: <20251110090510.84103-1-roan.richmond@codethink.co.uk>
- <CAKmqyKPheAMZt6cn2d4bN2kPxXMrr5Vr8jY5+MBuqhptnc4wjw@mail.gmail.com>
- <19ada6a7-089e-4103-9c2f-c6a9a0e7add2@codethink.co.uk>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <19ada6a7-089e-4103-9c2f-c6a9a0e7add2@codethink.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,129 +89,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Roan,
+Cc: trimmed
 
-On 13/11/25 09:53, Roan Richmond wrote:
-> On 12/11/2025 01:41, Alistair Francis wrote:
->> On Mon, Nov 10, 2025 at 7:05 PM Roan Richmond
->> <roan.richmond@codethink.co.uk> wrote:
->>> This is based on v1.0 of the Zilsd extension [1].
->>> The specification is listed as in the Ratified state [2],
->>>   since Jan 30, 2025.
->>>
->>> [1]: https://github.com/riscv/riscv-zilsd
->>> [2]: https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154861/ 
->>> RISC-V+Specs+Under+Development
->>>
->>> Reviewed-by: Daniel Henrique barboza <dbarboza@ventanamicro.com>
->>> Reviewed-by: Richard Henderson  <richard.henderson@linaro.org>
->>> Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
->>> ---
->>> v2:
->>>    - In `gen_load_zilsd` swapped `dest_gpr` with `tcg_temp_new`, this 
->>> prevents
->>>      writing to `r1/r0` in the case where `r0` is the set as `rd`.
->>>    - Removed unneeded brackets around `a->rd` + c expressions
->>>
->>>   target/riscv/cpu.c                      |  2 +
->>>   target/riscv/cpu_cfg_fields.h.inc       |  1 +
->>>   target/riscv/insn_trans/trans_rvi.c.inc | 57 ++++++++++++++++++++++++-
->>>   3 files changed, 58 insertions(+), 2 deletions(-)
+Markus Armbruster <armbru@redhat.com> writes:
 
-
->>> @@ -482,6 +509,27 @@ static bool gen_store_tl(DisasContext *ctx, 
->>> arg_sb *a, MemOp memop)
->>>       return true;
->>>   }
->>>
->>> +/* Zilsd extension adds load/store double for 32bit arch */
->>> +static bool gen_store_zilsd(DisasContext *ctx, arg_sb *a)
->>> +{
->>> +    TCGv data_1 = tcg_temp_new();
->>> +    TCGv data_2 = tcg_temp_new();
-
-[*]
-
->>> +    if (a->rs2 != 0) {
->>> +        data_1 = get_gpr(ctx, a->rs2, EXT_NONE);
->>> +        data_2 = get_gpr(ctx, a->rs2+1, EXT_NONE);
->>> +    }
->> Don't mix code and declarations, otherwise
+> "Dr. David Alan Gilbert" <dave@treblig.org> writes:
+>
+>> * Markus Armbruster (armbru@redhat.com) wrote:
+>>> Use error_setg_errno() instead of passing the value of strerror() or
+>>> g_strerror() to error_setg().
+>>>=20
+>>> The separator between the error message proper and the value of
+>>> strerror() changes from " : ", "", " - ", "- " to ": " in places.
+>>>=20
+>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 >>
->> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>>> @@ -792,9 +792,9 @@ static void vfu_object_init_ctx(VfuObject *o, Error=
+ **errp)
+>>>                             VFU_REGION_FLAG_RW | VFU_REGION_FLAG_ALWAYS=
+_CB,
+>>>                             NULL, 0, -1, 0);
+>>>      if (ret < 0) {
+>>> -        error_setg(errp,
+>>> -                   "vfu: Failed to setup config space handlers for %s-=
+ %s",
+>>> -                   o->device, strerror(errno));
+>>> +        error_setg_errno(errp,
+>>> +                         "vfu: Failed to setup config space handlers f=
+or %s",
+>>> +                         o->device);
 >>
->> Alistair
-> Struggling to see what you mean by this.
-> 
-> Could you provide a bit more clarification on the changes you would like 
-> me to make and then I'll send out a v3.
-> 
-> Thanks,
-> Roan
-> 
+>> missing errno.
+>
+> Yes.
+>
+>>>          goto fail;
+>>>      }
+>>>=20=20
+>>> @@ -822,8 +822,8 @@ static void vfu_object_init_ctx(VfuObject *o, Error=
+ **errp)
+>>>=20=20
+>>>      ret =3D vfu_realize_ctx(o->vfu_ctx);
+>>>      if (ret < 0) {
+>>> -        error_setg(errp, "vfu: Failed to realize device %s- %s",
+>>> -                   o->device, strerror(errno));
+>>> +        error_setg_errno(errp, "vfu: Failed to realize device %s",
+>>> +                         o->device);
 >>
->>> +    TCGv addr_1 = get_address(ctx, a->rs1, a->imm);
+>> missing errno.
+>
+> Yes.  Another file my build tree doesn't compile anymore.  Will fix,
+> thanks!
+>
+> [...]
 
-The declaration part is:
+To include it in the build, I need to pass --enable-vfio-user-server to
+configure, then install the libaries configure asked for.
 
-    TCGv addr_1;
+Build then fails for me:
 
-and the code part is:
+    FAILED: subprojects/libvfio-user/test/unit_tests.p/unit-tests.c.o=20
+    cc -m64 -Isubprojects/libvfio-user/test/unit_tests.p -Isubprojects/libv=
+fio-user/test -I../subprojects/libvfio-user/test -Isubprojects/libvfio-user=
+/include -I../subprojects/libvfio-user/include -Isubprojects/libvfio-user/l=
+ib -I../subprojects/libvfio-user/lib -I/usr/include/json-c -fdiagnostics-co=
+lor=3Dauto -Wall -Winvalid-pch -Wextra -Werror -std=3Dgnu99 -O2 -g -DSTAP_S=
+DT_V2 -mcx16 -msse2 -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE -fno-stric=
+t-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=3Dzero -fzero-call-u=
+sed-regs=3Dused-gpr -fPIE -DUNIT_TEST -DWITH_TRAN_PIPE -D_GNU_SOURCE -Werro=
+r -DDEBUG -Wno-missing-field-initializers -Wmissing-declarations -Wwrite-st=
+rings -MD -MQ subprojects/libvfio-user/test/unit_tests.p/unit-tests.c.o -MF=
+ subprojects/libvfio-user/test/unit_tests.p/unit-tests.c.o.d -o subprojects=
+/libvfio-user/test/unit_tests.p/unit-tests.c.o -c ../subprojects/libvfio-us=
+er/test/unit-tests.c
+    ../subprojects/libvfio-user/test/unit-tests.c: In function =E2=80=98tes=
+t_device_is_stopped_and_copying=E2=80=99:
+    ../subprojects/libvfio-user/test/unit-tests.c:585:23: error: storing th=
+e address of local variable =E2=80=98migration=E2=80=99 in =E2=80=98vfu_ctx=
+.migration=E2=80=99 [-Werror=3Ddangling-pointer=3D]
+      585 |     vfu_ctx.migration =3D &migration;
+          |     ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~
+    ../subprojects/libvfio-user/test/unit-tests.c:584:22: note: =E2=80=98mi=
+gration=E2=80=99 declared here
+      584 |     struct migration migration;
+          |                      ^~~~~~~~~
+    ../subprojects/libvfio-user/test/unit-tests.c:62:18: note: =E2=80=98vfu=
+_ctx=E2=80=99 declared here
+       62 | static vfu_ctx_t vfu_ctx;
+          |                  ^~~~~~~
+    cc1: all warnings being treated as errors
 
-    addr_1 = get_address(ctx, a->rs1, a->imm);
+and
 
-Per our coding style (docs/devel/style.rst) chapter "Declarations":
-
-    Mixed declarations (interleaving statements and declarations
-    within blocks) are generally not allowed; declarations should
-    be at the beginning of blocks.
-
-Declarations should go in [*].
-
-For v3 you should address Richard's comments.
-
-Regards,
-
-Phil.
-
->>> +    TCGv addr_2 = get_address(ctx, a->rs1, a->imm+4);
->>> +
->>> +    if (ctx->ztso) {
->>> +        tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL);
->>> +    }
->>> +
->>> +    tcg_gen_qemu_st_tl(data_1, addr_1, ctx->mem_idx, MO_SL);
->>> +    tcg_gen_qemu_st_tl(data_2, addr_2, ctx->mem_idx, MO_SL);
->>> +    return true;
->>> +}
->>> +
->>>   static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
->>>   {
->>>       TCGv src1l = get_gpr(ctx, a->rs1, EXT_NONE);
->>> @@ -511,6 +559,8 @@ static bool gen_store(DisasContext *ctx, arg_sb 
->>> *a, MemOp memop)
->>>       decode_save_opc(ctx, 0);
->>>       if (get_xl(ctx) == MXL_RV128) {
->>>           return gen_store_i128(ctx, a, memop);
->>> +    } else if (memop == MO_UQ && get_xl(ctx) == MXL_RV32) {
->>> +        return gen_store_zilsd(ctx, a);
->>>       } else {
->>>           return gen_store_tl(ctx, a, memop);
->>>       }
->>> @@ -533,7 +583,10 @@ static bool trans_sw(DisasContext *ctx, arg_sw *a)
->>>
->>>   static bool trans_sd(DisasContext *ctx, arg_sd *a)
->>>   {
->>> -    REQUIRE_64_OR_128BIT(ctx);
->>> +    /* Check for Zilsd extension if 32bit */
->>> +    if (get_xl(ctx) == MXL_RV32 && !ctx->cfg_ptr->ext_zilsd) {
->>> +        return false;
->>> +    }
->>>       return gen_store(ctx, a, MO_UQ);
->>>   }
->>>
->>> -- 
->>> 2.43.0
->>>
+    FAILED: subprojects/libvfio-user/lib/libvfio-user.so.0.0.1.p/libvfio-us=
+er.c.o=20
+    cc -m64 -Isubprojects/libvfio-user/lib/libvfio-user.so.0.0.1.p -Isubpro=
+jects/libvfio-user/lib -I../subprojects/libvfio-user/lib -Isubprojects/libv=
+fio-user/include -I../subprojects/libvfio-user/include -I/usr/include/json-=
+c -fvisibility=3Dhidden -fdiagnostics-color=3Dauto -Wall -Winvalid-pch -Wex=
+tra -Werror -std=3Dgnu99 -O2 -g -DSTAP_SDT_V2 -mcx16 -msse2 -D_FILE_OFFSET_=
+BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftr=
+ivial-auto-var-init=3Dzero -fzero-call-used-regs=3Dused-gpr -fPIC -D_GNU_SO=
+URCE -Werror -DDEBUG -Wno-missing-field-initializers -Wmissing-declarations=
+ -Wwrite-strings -MD -MQ subprojects/libvfio-user/lib/libvfio-user.so.0.0.1=
+.p/libvfio-user.c.o -MF subprojects/libvfio-user/lib/libvfio-user.so.0.0.1.=
+p/libvfio-user.c.o.d -o subprojects/libvfio-user/lib/libvfio-user.so.0.0.1.=
+p/libvfio-user.c.o -c ../subprojects/libvfio-user/lib/libvfio-user.c
+    ../subprojects/libvfio-user/lib/libvfio-user.c: In function =E2=80=98ha=
+ndle_device_get_region_io_fds=E2=80=99:
+    ../subprojects/libvfio-user/lib/libvfio-user.c:617:38: error: =E2=80=98=
+calloc=E2=80=99 sizes specified with =E2=80=98sizeof=E2=80=99 in the earlie=
+r argument and not in the later argument [-Werror=3Dcalloc-transposed-args]
+      617 |         msg->out.fds =3D calloc(sizeof(int), max_sent_sub_regio=
+ns);
+          |                                      ^~~
+    ../subprojects/libvfio-user/lib/libvfio-user.c:617:38: note: earlier ar=
+gument should specify number of elements, later size of each element
+    cc1: all warnings being treated as errors
 
 
