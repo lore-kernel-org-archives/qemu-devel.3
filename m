@@ -4,163 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96E14CFA76B
-	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 10:32:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 070AECFA76E
+	for <qemu-devel@archiver.kernel.org>; Fri, 21 Nov 2025 10:41:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMONP-0000cE-Qg; Fri, 21 Nov 2025 05:28:28 -0500
+	id 1vMOUa-0003EQ-No; Fri, 21 Nov 2025 05:35:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vMOI8-0007lA-V3; Fri, 21 Nov 2025 05:23:01 -0500
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vMOKR-0008IE-AJ
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 05:25:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vMOHy-0001Eh-8o; Fri, 21 Nov 2025 05:22:56 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=u7WonJWfv2LNZQ5FYdautBZSCZ1TjB1W8xskYTg5mxjUejGdr8DTUn1/XSjVoSL/kUgpUzfAKRvk6q7CPvPyl7UxD0LgQiHjzNI2yV0UPqCbfr1QwDdWUi0w76tjucmkZSeXtV+xysqWaKSLwgU2AYLC1KiJYDcKJwrx1JpZigwEfizzilPh5i9iFiB1xxtEWfCb5BmtmC2Y1SA5hCxKRRFLshgGMY6Q+jc7OPSKtugG2/HQhi5Z+k+j7/X48M90Dmf/O+5YsxKPsCDIusLSiE6HbHchl83fyl0bkF/TbU1yaFFxwcfU5vFGoMN891Fx/NBvurEAQx9oe6m8+b9XVg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WkdipiNHgD2YBjJihTPp2q34GZrBZ9P9Zc2OhHIDqWA=;
- b=VXzwcjCx6bv1MjPo3W5+rEyHZAi3+HHKqJWqbB3s2QJhGc+hteJpfPKF5nu3ir2qHVVl8CBXHXMzM8LPxwPZu9AbK3uyMKOCElTnBJIyI4g1sSlYXEZwyYEQi2Vpqn/eqzbiSBsnQAz+0oXGk0iiq9nInTEN3dr66VdKig/UrJULpKCkUGJw1Vh7WtDlgFvoWR3M7N0FOXGELXtatvCF4ouJsfDCrm6nzN/TQ7AwtRw5MMvqh/TLjsTXvSPkVQ1KVUPp+As76+KDssVH1Pq8JYQHxRaDrI1GkP6vjBJaURzF9ojy81v0AQryY2QAu5+vNLT2uFcV3EM9hZdyNK/PNg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WkdipiNHgD2YBjJihTPp2q34GZrBZ9P9Zc2OhHIDqWA=;
- b=k8wND824Bp8Ta6AQ3j6OYt+XK1G9YuFgkW0eWSVa29P+rHDZXN7x2DPZoVMT03nytlmnjandzEyIdcAyH6raZZYVd/V2ApVx/3ynYgCnFbLvMUgCyNxjdMOpo1/vzrVXCFAJFRDEC2CdMKzSGgvy8xVj/ObK/i3xvhvhIxS+dIYWmxLxTYkTa5yyT2PZA6kkgsWFT84B5iABh25bVdb8dKg1gGVl69gNO0osiuExoOJ8HI1PdAiVPiYyVx6fP8t6TXI0gBa67VgLQx0/dfLqSviK0esW8wJ8soKVsH4BB4n6EWOPuB/ebFcrYTD0SgwQ9jcSdc5F1fU78LL01weIIA==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by DS0PR12MB8343.namprd12.prod.outlook.com (2603:10b6:8:fd::8) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9343.11; Fri, 21 Nov 2025 10:22:21 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::e8c:e992:7287:cb06]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::e8c:e992:7287:cb06%5]) with mapi id 15.20.9343.011; Fri, 21 Nov 2025
- 10:22:21 +0000
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
- <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
- "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
- <yi.l.liu@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
-Subject: RE: [PATCH v6 33/33] hw/arm/smmuv3-accel: Add support for PASID enable
-Thread-Topic: [PATCH v6 33/33] hw/arm/smmuv3-accel: Add support for PASID
- enable
-Thread-Index: AQHcWiFqHSYhBOGE40atlLYpe09yo7T8IHEAgADKkVA=
-Date: Fri, 21 Nov 2025 10:22:21 +0000
-Message-ID: <CH3PR12MB75485354E16E462D66567416ABD5A@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20251120132213.56581-1-skolothumtho@nvidia.com>
- <20251120132213.56581-34-skolothumtho@nvidia.com>
- <aR+RngqP3HTLZIlH@Asurada-Nvidia>
-In-Reply-To: <aR+RngqP3HTLZIlH@Asurada-Nvidia>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DS0PR12MB8343:EE_
-x-ms-office365-filtering-correlation-id: 390df915-a759-4006-499a-08de28e7db4a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|38070700021|7053199007; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?zQ7rEWC4bE1QDgL1TQPRX5tNaqNRdc/ztJBSp7VIYqnJIcE7kAj9C95GvTWe?=
- =?us-ascii?Q?/s4//hRsIYkm1gLfrws69+7q1rgSB7NPhv2Bkq+Pgc6RoOdVggaGfPIeV/Gu?=
- =?us-ascii?Q?R3skAs1CbUlf0nHBQ0V19CS/RoGp4Q+V6U5kVxpukwXnYIhCT/pzzoP2FLtt?=
- =?us-ascii?Q?QhZc0jE2ChYwpEhh4KdkZ6OjPvvzJdXEsQupLyQlT9Xhmeflo26L3uI1F7Df?=
- =?us-ascii?Q?MBd2h/M6SuKE72fJ5pEuZYz3TYlC268OF61JG+VHxu+MkPGcNzkxVsQsZ1oT?=
- =?us-ascii?Q?91cokrdYAKGEDzdhCMzYmCa4Qo/S7r0BmfvBX3ehFteW+u9bDpBj7rVUGM/i?=
- =?us-ascii?Q?ihIhWT8ocb0yUMrKwTf8tqCGqqajOoRBLr6hvPrjV7A+lFqtlV44ymkhuD1k?=
- =?us-ascii?Q?97qHj6i4izyx5iYlpMFy2QvpGtZg2n2GMRJQMStt/C69f67hMnXN+LIb4BOS?=
- =?us-ascii?Q?pMJyZomvrkURBbG1+800RzFQX/wSPwMLnru4dW4YV/HFs8kcn+U/XD4iP+e4?=
- =?us-ascii?Q?/S/+7ZW1mtJnnyIPPrasUWGx2ROUoqFJ/nlbLuPYTgvDL7RfOw2b7yZCwW+I?=
- =?us-ascii?Q?lG8Q7UwxqukBWle2kyIXzei7LYjpf8vqKmYSwzhkOtOEsnG8TGmxkMeNpVCq?=
- =?us-ascii?Q?pSHTFHAlri6o34fc7BXWK9DOouJPc5GCujBNZKGir0G71WOF++41nahJ9zvZ?=
- =?us-ascii?Q?wBG5XWxiAp59BSQrp0JiICHWNRWrrbHeCoph+0AH22YybZjD0NcBw/rnAXlF?=
- =?us-ascii?Q?l9NFE4YK3zc8LxECOti+Frvi3+/gknBJu6aym8QQuptUfJxwrpKrQ/81mV2u?=
- =?us-ascii?Q?XLxptKIKgGhWNyYWB0DIfbmQBlMvu5bgiM8mF3XAYmRify52BNPHzHWnu6aw?=
- =?us-ascii?Q?go3QV8TSnWm15ZEEd2J5Dq7mVFm1081HUIP1SV09m6RV3RijqCbNvWrxBxzd?=
- =?us-ascii?Q?e9/jrI6ugeUM15E0FmQ2jBf0kBcilp67DjYqqHlW8z9sB+zHPyAbrn4nJawQ?=
- =?us-ascii?Q?0n6vbhzle83JhN44q/Mtuhknz7gb69MPTLMbHtN5Q1E16lye/UVfjzFijdOp?=
- =?us-ascii?Q?JRpbJZr0Ky2J36Zep4J0tMAufXuYbAgVFk1ay0iNTPOz1+CSCsbWOwZJ5cFv?=
- =?us-ascii?Q?cwsExZAIMRIVzTQXDZODX9RBQwj3iZSL0d4M1kW0UvTZejbrhcLZmVkWWWEL?=
- =?us-ascii?Q?05kGAFrRDgSrctTToXVowZA+3vWw9/lIs8MgnGXwm43UY0ev+/ayeFRrfYLe?=
- =?us-ascii?Q?+WY7s6eIiupkbO/gw2wfXMBLv//wSg3ez9j6sAfoBFWLkZzi2j0ydvQTmLxq?=
- =?us-ascii?Q?JCRv3c6KkOHUHGBRTtfoRVfDTZ8v+vEDKk0tHAGSlf/LJhMOY8VophTVVMPW?=
- =?us-ascii?Q?DRnQPVoHgXMHGTMM2EOBX7ZJCQRfKSDGiHxhAmtxSSxHHisDiV/WPpSURVTx?=
- =?us-ascii?Q?LPFFYjPnBmSW8ugFcNyDudVG/pLszI6qS4dsQ7pSW74rg+ZBo5pfTRFjThEQ?=
- =?us-ascii?Q?W7mvwN4OHgCIHZvndaX3XWSf82+GENS53jiE?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021)(7053199007);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?QAKzrbtHIhVPHdNYKwafIIwB7xSKmqZx6rypgHjgHSycMH622bZrw48tlNYI?=
- =?us-ascii?Q?JIOR/TS4inCJXt94OIxOS4yOj7oqlcGzRZArFeD5VtgNTGJPyK7RHqfRtuhq?=
- =?us-ascii?Q?KXC4EJgrqBtj/txQssYYwdyqMmrCI/+RqXnOkW5zqIY18m3zA2wNZ3evxLsb?=
- =?us-ascii?Q?RrkYl3G1fSMlKyQ2SVyx2H7+sSIJja7RTRaIbkrnBQt8cxxNRojMy+JpSlxc?=
- =?us-ascii?Q?ldA7Har4sbKKwgIYmHcZMxIE1+d7VZzwrqofD1aBsczF5hG3xP7Rb9ScDrzs?=
- =?us-ascii?Q?uD9VIUnQ/GlCyti32BzlR6qhvXHBe8c4a9Q5m52KXB12EQ+N8mXTZPSJtX+K?=
- =?us-ascii?Q?ukfW8qE98fFZuMBec162LkzOB2IWMaa7rsnu4S+rPbvF4L95fvtc2orFlzlt?=
- =?us-ascii?Q?xylgcnnhWVea8jsAVfH2fa/sTbeEsuPGcjFFw32fHr16os5PgQdH4eFP4Quz?=
- =?us-ascii?Q?68b+LE56a6BFXAs0/aVL8tiL3w6fxhb+rBB5e+tD/tBNT6vF2T/JGy8V1Xm+?=
- =?us-ascii?Q?sNuZxYo3MoWgHwLp2mQ4b2PpJ1zcn9icE3jI92ijOW4e6urFE48cgCQAPSIN?=
- =?us-ascii?Q?e/mFIjmUllDHVdNaSyiIvy9CvPX+Z9R/LxHOX6r3P/GKBw+rMRS7ixp3q9UN?=
- =?us-ascii?Q?Z0dmqIgryDMRUVSsFZ6UPwAbfVSrsSL5IfRfxzwfGhhaC8nz3X1gAcOOItDe?=
- =?us-ascii?Q?swJYxYe0qNOTUA5v0JpkzMhqkRi63+2MX/g5VSXUsvuc/5dlIO6HjNIBXCLL?=
- =?us-ascii?Q?WhfBJkpGIpauFw8Kd0PqTG/Bk/W7ns2pR77rS5DFPdEkkvmuBhJdGKREB9wf?=
- =?us-ascii?Q?L9f12RQRitmEUJ+XqEOCyl/pIssBBvbTdj5klooPxdChcpqxVm9DAEwhvEBi?=
- =?us-ascii?Q?Etj2PeO3Vd4eUO/uUL+zepYklETFKIg7KHc+6gLVL/LHQwBwriJZ+GchRSH9?=
- =?us-ascii?Q?cmQ0c/PCqAneieobOLcQ17iTB7AJoqtmNkSNOoujf4zZA+ybFrnQ9R71uX2n?=
- =?us-ascii?Q?riEt9tRWC4X5wlF58wZGzqm4CRcHWbGlLVGOM1xRvFNbIUXi28W97Q26iFcj?=
- =?us-ascii?Q?KKPhAXRHeRhmtysuQCDiG0/L4s/4CoR/vki8iRFlMKhMyuS/0BJKYaUWW2gY?=
- =?us-ascii?Q?7p4qlITPBv+CzfBIcli+DBXeQnQMBszXY+YVyBPk0klu++b6fmllWmAMgdQk?=
- =?us-ascii?Q?cm3LdqLrT0zlfsYsxOlleWSc768we4WK6fuZB8ra6fWXVULIeNVvkOSLlXW7?=
- =?us-ascii?Q?MsdU5oUXPjtVKTtG2DpVQQCBnDHYVxp1aeNO+OoC9npdwpgJDFgYpWwE7ArF?=
- =?us-ascii?Q?8jNkM3O5iONCLFJEMMPWVsAdWP0sePOLvola0j0Drevr/FpXcDlHDUns9bgC?=
- =?us-ascii?Q?rNTd8Y5Afp2NVBbuHQXP/79+YuVfyO+adY5cBWlR2FvrNX36R39Kgvs0Ekl7?=
- =?us-ascii?Q?aBQuTmQ09NVa5PoikvFICg4sWnbijObosGWGtdJro83+6OVfuSsmWk+gWAko?=
- =?us-ascii?Q?zCURqkOS/zj/CS8Q1kaEcFyBF6y7S3xgVgeWvSVjN9gWwOHJ7h6MEIWnCtyD?=
- =?us-ascii?Q?hv58Qwrw7OpiGLt+dgADQ5+tusM7Ah0VSaPnN51g?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vMOKH-0001Ki-I4
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 05:25:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763720697;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mP619Xf7apXUow5hCSU/SjZJPjChsAnhjp5c/9UFgus=;
+ b=MbXVo00t/sNdYFlquMvnQSvg0tUB4hPvcBGwKUyhR2YKOs9hVteQiYuyICSW3MLUExUGFL
+ Copap9G5DQd8hPulESkbHohIBA4xvZwXgVFS+5Umj+cSfT1p4Z89oLcw83k32gkUIRhPjH
+ QvlBC5aIdq+3zRegvtrPYjXqpWtAGCs=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-327-_825Ho3DPbi00YAsWh9dTQ-1; Fri, 21 Nov 2025 05:24:55 -0500
+X-MC-Unique: _825Ho3DPbi00YAsWh9dTQ-1
+X-Mimecast-MFC-AGG-ID: _825Ho3DPbi00YAsWh9dTQ_1763720695
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-429c95fdba8so922718f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 02:24:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763720694; x=1764325494; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=mP619Xf7apXUow5hCSU/SjZJPjChsAnhjp5c/9UFgus=;
+ b=CKTggLpMqgAG4YhFXAxRD7Vlk7h86OpKBi17dk5ykLVsa3zpiwkLA6Q9Ix7Dedl1p1
+ dCrVIh+fM9BfKu+D8ZipJbCl+sgY829JW+dTg+eAjC+8o9Vx0TF96xwcfFTfk+gO0SKH
+ M2LRzzie/d68eyrB484GX2zhS4DFkjtXAJOdi5loANTVu937taS3NOCrcIBnyML+lH/V
+ vf/j1sqmAlR4SzUvnZPd4zmCGN3YOEHLxEmZkxjkAlnsnI4Ft7vt7Owk8Qoa3jPpvvFT
+ kSkU9vpsNSTtyAxklIwcDKCVmmNcic3i1DyPNuC2kK5uTQnccvWij8anF04MGbQR8Nl6
+ s9Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763720694; x=1764325494;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mP619Xf7apXUow5hCSU/SjZJPjChsAnhjp5c/9UFgus=;
+ b=OdeDDOwWO/SpauEFN5LeOz/9HVxaFi1W6CB7tk5yKbiaEDL0Ubl4vl9TA3bnx17KpG
+ bXaUKn5z4NFiBHwZ+SsxEoZuI8w3no44QWvElAL6IUIMrJ0v0zBSgCpne/Fz3cVI/+9W
+ wl8uDWiuscxxF5bmx2QcOEUpq2YIP/BR5Rcj8Dg3COPaYMExxiefpKMbdNay/ZrTRxJY
+ QrRFjsshP+oRyvkHdMP2/OfAnl15Pj6A4Muc+ko/UbRw06mvvcoxLNZM2lA8Uvse2w6J
+ BdszM5DpvVgu6D9kNuKew0bMbM0VztZ4V6AK0A948vzzHZJqewK89VPUZItLiYHqA4mG
+ u/Gw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXirEKkfOfxo7HBWPr5uZzPVgXTAggD+6otXZg+bl+gb/zSabedeJwlvMiH9Ex1cKU4hLdOaVNVKKPl@nongnu.org
+X-Gm-Message-State: AOJu0YzcXzbBoJjSZvEcVjdXLzvIYv+Lfx3flzEbxakoevc2Jjnz276E
+ i51xyiIucFvng5biUPVN7olhnGXrsC3UkkGIml28H6hPYvN30Iofs47jGgkJjr3kiX8KwX+7yDy
+ U7HVhiHuK52ZtKtyX/DdbftdQ2TD0byFPsCd7I1TGljxgqBIbGNG0udQl
+X-Gm-Gg: ASbGncuclcO3oFrm7rBDoWprZQMjawWtQZzbZTRf5tS8srbKIhy/YGo77fvjQ2Od7wb
+ KsLC/jKYcVNeDwoxG/o84mVPdN+HpqPE5mhEH8qPWnK87vjGWx/61OTORgpFFdhNduD6tIPHGG/
+ SiOgDhfjxGokeCMFJAKSLrBJFYXurbtS7tI31DGdLbbnplRc9DOmHUOeSeNXURQOg9+VLnch8Z0
+ NRw6xMNqBMIrt52Q72Eq2o5yEApMMb6t9Ynfuf8XE8hPLle9YIwr2TJGw4i2u07w+DJmXnWhqVG
+ sCME5DKwaZs8nlclP5gMMph531HM7ark8WCKogcC8XyG6Be9SQOHtlvC2Iqf1NnKeK2raJUC2uO
+ b4Dc3HNZ9WTWX6hgHxLbcOcNT6BKXr6JdY/yLLY5+CACLEAnoIx4gr8FgH5BsJtn2Tys288UWc4
+ u3XhipCBDKfFXl5Jk=
+X-Received: by 2002:a5d:5c89:0:b0:42b:32f5:ad43 with SMTP id
+ ffacd0b85a97d-42cc1ceead7mr1783045f8f.17.1763720694596; 
+ Fri, 21 Nov 2025 02:24:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH6iZXimUDPd4eFb7Kmiljiz4pjNYuGrlD2iMNepoUfevPehlVidzIIv58J0wTgrmr3aXhLZg==
+X-Received: by 2002:a5d:5c89:0:b0:42b:32f5:ad43 with SMTP id
+ ffacd0b85a97d-42cc1ceead7mr1783020f8f.17.1763720694212; 
+ Fri, 21 Nov 2025 02:24:54 -0800 (PST)
+Received: from [192.168.10.81] ([176.206.119.13])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fd8c47sm10735860f8f.38.2025.11.21.02.24.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 21 Nov 2025 02:24:53 -0800 (PST)
+Message-ID: <df22536e-c813-4b9a-a9fa-75b9fdc0fb4a@redhat.com>
+Date: Fri, 21 Nov 2025 11:24:46 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 390df915-a759-4006-499a-08de28e7db4a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Nov 2025 10:22:21.4421 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: vL6bVqBdPcPoT6UIILCuusUno5fmTta8A22o2FB+Me+SdTVyslqqiUS6DcZwd0H290rZf1j0anBQXVITG1p70w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8343
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=skolothumtho@nvidia.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/22] mtest2make: cleanup mtest-suites variables
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20251117185131.953681-1-jsnow@redhat.com>
+ <20251117185131.953681-14-jsnow@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20251117185131.953681-14-jsnow@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,56 +169,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 11/17/25 19:51, John Snow wrote:
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> 
+> Remove the "--suite" argument from the .*.mtest-suites variables, and
+> add it only when actually computing the arguments to "meson test".
+> This makes it possible to look at the set of suites to set ninja-cmd-goals,
+> instead of doing it via many different .ninja-goals.* variables.
+> 
+> As a bonus, this removes code duplication between emit_suite_deps
+> and its caller emit_suite.  Since emit_suite_deps would now be one or
+> two lines of code, integrate it into emit_suite directly.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
+This and the other two patches are now in master.
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: 20 November 2025 22:10
-> To: Shameer Kolothum <skolothumtho@nvidia.com>
-> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> eric.auger@redhat.com; peter.maydell@linaro.org; Jason Gunthorpe
-> <jgg@nvidia.com>; ddutile@redhat.com; berrange@redhat.com; Nathan
-> Chen <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>;
-> smostafa@google.com; wangzhou1@hisilicon.com;
-> jiangkunkun@huawei.com; jonathan.cameron@huawei.com;
-> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; yi.l.liu@intel.com;
-> Krishnakant Jaju <kjaju@nvidia.com>
-> Subject: Re: [PATCH v6 33/33] hw/arm/smmuv3-accel: Add support for PASID
-> enable
->=20
-> On Thu, Nov 20, 2025 at 01:22:13PM +0000, Shameer Kolothum wrote:
-> > +++ b/hw/arm/smmuv3-accel.c
-> > @@ -67,6 +67,12 @@ smmuv3_accel_check_hw_compatible(SMMUv3State
-> *s,
-> >          error_setg(errp, "Host SMMUv3 SIDSIZE not compatible");
-> >          return false;
-> >      }
-> > +    /* If user enables PASID support(pasid=3Don), QEMU sets SSIDSIZE t=
-o 16 */
-> > +    if (FIELD_EX32(info->idr[1], IDR1, SSIDSIZE) <
-> > +                FIELD_EX32(s->idr[1], IDR1, SSIDSIZE)) {
-> > +        error_setg(errp, "Host SMMUv3 SSIDSIZE not compatible");
-> > +        return false;
-> > +    }
->=20
-> I think we can print the values: host vs VM. And at SIDSIZE above
-> as well.
->=20
-> > @@ -2084,6 +2090,7 @@ static const Property smmuv3_properties[] =3D {
-> >      DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
-> >      DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
-> >      DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
-> > +    DEFINE_PROP_BOOL("pasid", SMMUv3State, pasid, false),
-> >  };
->=20
-> Instead of doing a boolean "pasid", perhaps ssidsize and sidsize
-> should be configurable. Then, user can follow the not-compatible
-> print to set correct SSIDSIZE and SIDSIZE.
+Paolo
 
-Do we really need that? Currently both are set to 16 which means 64K
-values are supported. I think we can make it configurable when any
-usecase  with >64K requirement comes up.
-=20
-Thanks,
-Shameer
 
