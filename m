@@ -4,50 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 002C8CF64B1
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C88CFC504
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMeI9-000309-Fn; Fri, 21 Nov 2025 22:28:06 -0500
+	id 1vMczi-0004Ei-UF; Fri, 21 Nov 2025 21:04:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMeI4-0002yZ-GJ; Fri, 21 Nov 2025 22:28:00 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMcAd-0006wz-Rd; Fri, 21 Nov 2025 20:12:13 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMeHj-0002P6-0C; Fri, 21 Nov 2025 22:27:56 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 652AB16C701;
- Fri, 21 Nov 2025 16:51:57 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BA3F532199E;
- Fri, 21 Nov 2025 16:52:05 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>,
- Zhangfei Gao <zhangfei.gao@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 41/76] hw/pci-host/gpex-acpi: Fix _DSM function 0
- support return value
-Date: Fri, 21 Nov 2025 16:51:19 +0300
-Message-ID: <20251121135201.1114964-41-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
-References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMcAS-0004dw-Pt; Fri, 21 Nov 2025 20:12:08 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5ALC5PTd002022
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 21 Nov 2025 21:05:25 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=+5GNtLSFKyQzhBbZfhNfyO2/GtHz4fBldl1unhI9Xjk=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763726725; v=1;
+ b=HrL0XQTYBRNpwmKEEvNw+rk36Pgg+a+5ccfZxKvh6MMUZ0VBkoHzMT27L70nfY1M
+ YuCyfoooSAQ0H1IV4ygZtI1W7jWQEEmRZa3fyDFaCTEDXr2b5PRqryUpgGsg+Bt9
+ aUmcgEJF0EcfU+OdZSpo0+yHOscJZcNaQM+srxu/G4XaqyAql6EkXBm8jn67At6E
+ bzIxs+b3dIkFv1FDs42eH3f5JwW4nOmdEoc2W62CJ/3qQzG9j0Y9OV6oCwAXvseb
+ FSX0Lgt+ryLD8JyppJX++nT3hMhw3zgglACgI8iYfLtLFNSGvmFUFb97GtjwiCwz
+ RcXVuV/AOOIMWkVhEr0BvA==
+Message-ID: <6ffd15c9-3928-4b66-a004-e9864432773e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 21 Nov 2025 21:05:25 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
-X-Spam_action: no action
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 17/28] hw: arm: virt: rework MSI-X configuration
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
+ Peter Xu <peterx@redhat.com>, Mads Ynddal <mads@ynddal.dk>
+References: <20251121100240.89117-1-mohamed@unpredictable.fr>
+ <20251121100240.89117-18-mohamed@unpredictable.fr>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251121100240.89117-18-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,54 +69,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+On 2025/11/21 19:02, Mohamed Mediouni wrote:
+> Introduce a -M msi= argument to be able to control MSI-X support independently
+> from ITS, as part of supporting GICv3 + GICv2m platforms.
+> 
+> Remove vms->its as it's no longer needed after that change.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   hw/arm/virt-acpi-build.c |   3 +-
+>   hw/arm/virt.c            | 111 +++++++++++++++++++++++++++++++--------
+>   include/hw/arm/virt.h    |   4 +-
+>   3 files changed, 94 insertions(+), 24 deletions(-)
+> 
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index c8ac58b64e..15e6239e5f 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -962,8 +962,7 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>           }
+>       }
+>   
+> -    if (!(vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms))
+> -     && !vms->no_gicv3_with_gicv2m) {
+> +    if (virt_is_gicv2m_enabled(vms)) {
+>           const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
+>   
+>           /* 5.2.12.16 GIC MSI Frame Structure */
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index ddc6d4d3b1..7b776187f8 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -967,12 +967,12 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+>   
+>       fdt_add_gic_node(vms);
+>   
+> -    if (vms->gic_version != VIRT_GIC_VERSION_2 && virt_is_its_enabled(vms)) {
+> +    if (virt_is_its_enabled(vms)) {
+>           create_its(vms);
+> -    } else if (vms->gic_version != VIRT_GIC_VERSION_2 && !vms->no_gicv3_with_gicv2m) {
+> -        create_v2m(vms);
+> -    } else if (vms->gic_version == VIRT_GIC_VERSION_2) {
+> +    } else if (virt_is_gicv2m_enabled(vms)) {
+>           create_v2m(vms);
+> +    } else {
+> +        vms->msi_controller = VIRT_MSI_CTRL_NONE;
+>       }
+>   }
+>   
+> @@ -2713,32 +2713,94 @@ static void virt_set_highmem_mmio_size(Object *obj, Visitor *v,
+>   
+>   bool virt_is_its_enabled(VirtMachineState *vms)
+>   {
+> -    if (vms->its == ON_OFF_AUTO_OFF) {
+> -        return false;
+> +    switch (vms->msi_controller) {
+> +        case VIRT_MSI_CTRL_NONE:
+> +            return false;
+> +        case VIRT_MSI_CTRL_ITS:
+> +            return true;
+> +        case VIRT_MSI_CTRL_GICV2M:
+> +            return false;
+> +        case VIRT_MSI_CTRL_AUTO:
+> +            if (whpx_enabled() && whpx_irqchip_in_kernel()) {
+> +                return false;
+> +            }
+> +            if (vms->gic_version == VIRT_GIC_VERSION_2) {
+> +                return false;
+> +            }
+> +            return true;
+> +        default:
+> +            return false;
+>       }
+> -    if (vms->its == ON_OFF_AUTO_AUTO) {
+> -        if (whpx_enabled()) {
+> +}
+> +
+> +bool virt_is_gicv2m_enabled(VirtMachineState *vms)
+> +{
+> +    switch (vms->msi_controller) {
+> +        case VIRT_MSI_CTRL_NONE:
+>               return false;
+> -        }
+> +        default:
+> +            return !virt_is_its_enabled(vms);
+>       }
+> -    return true;
+>   }
+>   
+> -static void virt_get_its(Object *obj, Visitor *v, const char *name,
+> -                          void *opaque, Error **errp)
+> +static char *virt_get_msi(Object *obj, Error **errp)
+>   {
+>       VirtMachineState *vms = VIRT_MACHINE(obj);
+> -    OnOffAuto its = vms->its;
+> +    const char *val;
+>   
+> -    visit_type_OnOffAuto(v, name, &its, errp);
+> +    switch (vms->msi_controller) {
+> +    case VIRT_MSI_CTRL_NONE:
+> +        val = "off";
+> +        break;
+> +    case VIRT_MSI_CTRL_ITS:
+> +        val = "its";
+> +        break;
+> +    case VIRT_MSI_CTRL_GICV2M:
+> +        val = "gicv2m";
+> +        break;
+> +    default:
+> +        val = "auto";
+> +        break;
+> +    }
+> +    return g_strdup(val);
+>   }
+>   
+> -static void virt_set_its(Object *obj, Visitor *v, const char *name,
+> -                          void *opaque, Error **errp)
+> +static void virt_set_msi(Object *obj, const char *value, Error **errp)
+>   {
+>       VirtMachineState *vms = VIRT_MACHINE(obj);
+>   
+> -    visit_type_OnOffAuto(v, name, &vms->its, errp);
+> +    if (!strcmp(value, "auto")) {
+> +        vms->msi_controller = VIRT_MSI_CTRL_AUTO; /* Will be overriden later */
+> +    } else if (!strcmp(value, "its")) {
+> +        vms->msi_controller = VIRT_MSI_CTRL_ITS;
+> +    } else if (!strcmp(value, "gicv2m")) {
+> +        vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+> +    } else if (!strcmp(value, "none")) {
+> +        vms->msi_controller = VIRT_MSI_CTRL_NONE;
+> +    } else {
+> +        error_setg(errp, "Invalid msi value");
+> +        error_append_hint(errp, "Valid values are auto, gicv2m, its, off\n");
 
-Currently, only function 0 is supported. According to the ACPI
-Specification, Revision 6.6, Section 9.1.1 “_DSM (Device Specific
-Method)”, bit 0 should be 0 to indicate that no other functions
-are supported beyond function 0.
+This should have ERRP_GUARD().
 
-The resulting AML change looks like this:
-
-Method (_DSM, 4, NotSerialized)  // _DSM: Device-Specific Method
-{
-    If ((Arg0 == ToUUID ("e5c937d0-3553-4d7a-9117-ea4d19c3434d")
-    {
-        If ((Arg2 == Zero))
-        {
-            Return (Buffer (One)
-            {
--               0x01                                             // .
-+               0x00                                             // .
-            })
-        }
-    }
-}
-
-Fixes: 5b85eabe68f9 ("acpi: add acpi_dsdt_add_gpex")
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20251022080639.243965-3-skolothumtho@nvidia.com>
-(cherry picked from commit 325aa2d86a20786c308b0874d15a60d1b924bd0e)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-index 952a0ace19..4587baeb78 100644
---- a/hw/pci-host/gpex-acpi.c
-+++ b/hw/pci-host/gpex-acpi.c
-@@ -64,7 +64,7 @@ static Aml *build_pci_host_bridge_dsm_method(void)
-     UUID = aml_touuid("E5C937D0-3553-4D7A-9117-EA4D19C3434D");
-     ifctx = aml_if(aml_equal(aml_arg(0), UUID));
-     ifctx1 = aml_if(aml_equal(aml_arg(2), aml_int(0)));
--    uint8_t byte_list[1] = {1};
-+    uint8_t byte_list[1] = {0};
-     buf = aml_buffer(1, byte_list);
-     aml_append(ifctx1, aml_return(buf));
-     aml_append(ifctx, ifctx1);
--- 
-2.47.3
+> +    }
+> +}
+> +
+> +static bool virt_get_its(Object *obj, Error **errp)
+> +{
+> +    VirtMachineState *vms = VIRT_MACHINE(obj);
+> +
+> +    return virt_is_its_enabled(vms);
+> +}
+> +
+> +static void virt_set_its(Object *obj, bool value, Error **errp)
+> +{
+> +    VirtMachineState *vms = VIRT_MACHINE(obj);
+> +
+> +    if (value) {
+> +        vms->msi_controller = VIRT_MSI_CTRL_ITS;
+> +    } else if (vms->no_gicv3_with_gicv2m) {
+> +        vms->msi_controller = VIRT_MSI_CTRL_NONE;
+> +    } else {
+> +        vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+> +    }
+>   }
+>   
+>   static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+> @@ -3065,6 +3127,8 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>               db_start = base_memmap[VIRT_GIC_V2M].base;
+>               db_end = db_start + base_memmap[VIRT_GIC_V2M].size - 1;
+>               break;
+> +        case VIRT_MSI_CTRL_AUTO:
+> +            g_assert_not_reached();
+>           }
+>           resv_prop_str = g_strdup_printf("0x%"PRIx64":0x%"PRIx64":%u",
+>                                           db_start, db_end,
+> @@ -3455,13 +3519,18 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+>                                             "guest CPU which implements the ARM "
+>                                             "Memory Tagging Extension");
+>   
+> -    object_class_property_add(oc, "its", "OnOffAuto",
+> -        virt_get_its, virt_set_its,
+> -        NULL, NULL);
+> +    object_class_property_add_bool(oc, "its", virt_get_its,
+> +                                   virt_set_its);
+>       object_class_property_set_description(oc, "its",
+>                                             "Set on/off to enable/disable "
+>                                             "ITS instantiation");
+>   
+> +    object_class_property_add_str(oc, "msi", virt_get_msi,
+> +                                  virt_set_msi);
+> +    object_class_property_set_description(oc, "msi",
+> +                                          "Set MSI settings. "
+> +                                          "Valid values are auto/gicv2m/its/off");
+> +
+>       object_class_property_add_bool(oc, "dtb-randomness",
+>                                      virt_get_dtb_randomness,
+>                                      virt_set_dtb_randomness);
+> @@ -3518,7 +3587,7 @@ static void virt_instance_init(Object *obj)
+>       vms->highmem_redists = true;
+>   
+>       /* Default allows ITS instantiation if available */
+> -    vms->its = ON_OFF_AUTO_AUTO;
+> +    vms->msi_controller = VIRT_MSI_CTRL_AUTO;
+>       /* Allow ITS emulation if the machine version supports it */
+>       vms->tcg_its = !vmc->no_tcg_its;
+>       vms->no_gicv3_with_gicv2m = false;
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index abacc366bf..8d6493ae7f 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -101,6 +101,8 @@ typedef enum VirtIOMMUType {
+>   
+>   typedef enum VirtMSIControllerType {
+>       VIRT_MSI_CTRL_NONE,
+> +    /* This value is overriden at runtime.*/
+> +    VIRT_MSI_CTRL_AUTO,
+>       VIRT_MSI_CTRL_GICV2M,
+>       VIRT_MSI_CTRL_ITS,
+>   } VirtMSIControllerType;
+> @@ -147,7 +149,6 @@ struct VirtMachineState {
+>       bool highmem_ecam;
+>       bool highmem_mmio;
+>       bool highmem_redists;
+> -    OnOffAuto its;
+>       bool tcg_its;
+>       bool virt;
+>       bool ras;
+> @@ -217,5 +218,6 @@ static inline int virt_gicv3_redist_region_count(VirtMachineState *vms)
+>   }
+>   
+>   bool virt_is_its_enabled(VirtMachineState *vms);
+> +bool virt_is_gicv2m_enabled(VirtMachineState *vms);
+>   
+>   #endif /* QEMU_ARM_VIRT_H */
 
 
