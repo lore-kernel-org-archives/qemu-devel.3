@@ -4,48 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 976BDCFC504
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:50:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E848CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd8M-000612-J3; Fri, 21 Nov 2025 21:13:55 -0500
+	id 1vMcqC-0005J4-7t; Fri, 21 Nov 2025 20:55:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcuq-0000NK-Em; Fri, 21 Nov 2025 20:59:56 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbcB-0003St-PI
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:36:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMctJ-00080x-A6; Fri, 21 Nov 2025 20:59:53 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0845416CA69;
- Fri, 21 Nov 2025 21:44:26 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B8988321CA5;
- Fri, 21 Nov 2025 21:44:34 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbaA-0005Ta-BO
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:36:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763771653;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=s+f/YPMyhiw0MODLrT/W+QVnkFDpo2Q2VNPNda433v0=;
+ b=NRKfbzsEqgWcSREdG+REGM1NF+IzrMtJ8dCjd2djymGBYdTWO5nxZcSUUL+yzTzk08STjy
+ HjX7ips+NZ7hyUVg+3XVS4Guvae72LLVbVKg4vJE0CHuAKuRezChX4FWF+UqdrU9UL6MG1
+ 4xdzqmAc+PxKeuS9AIaQYGet1ByNjZc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-63--Cu4SEnVN0iR9hO-VJAOfQ-1; Fri,
+ 21 Nov 2025 07:14:51 -0500
+X-MC-Unique: -Cu4SEnVN0iR9hO-VJAOfQ-1
+X-Mimecast-MFC-AGG-ID: -Cu4SEnVN0iR9hO-VJAOfQ_1763727287
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F51C1800343; Fri, 21 Nov 2025 12:14:46 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A8D84180047F; Fri, 21 Nov 2025 12:14:45 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B3F5821E65DC; Fri, 21 Nov 2025 13:14:38 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alberto Garcia <berto@igalia.com>,
- Eric Blake <eblake@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 46/81] tests/qemu-iotest: fix iotest 024 with qed
- images
-Date: Fri, 21 Nov 2025 21:43:45 +0300
-Message-ID: <20251121184424.1137669-46-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, alistair.francis@wdc.com,
+ stefanb@linux.vnet.ibm.com, kwolf@redhat.com, hreitz@redhat.com,
+ sw@weilnetz.de, qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
+ shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
+ sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
+ sgarzare@redhat.com, pbonzini@redhat.com, fam@euphon.net,
+ philmd@linaro.org, alex@shazbot.org, clg@redhat.com, peterx@redhat.com,
+ farosas@suse.de, lizhijian@fujitsu.com, dave@treblig.org,
+ jasowang@redhat.com, samuel.thibault@ens-lyon.org, michael.roth@amd.com,
+ kkostiuk@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ rathc@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ marcandre.lureau@redhat.com, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ xen-devel@lists.xenproject.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
+Subject: [PATCH v2 09/15] blkdebug: Use error_setg_file_open() for a better
+ error message
+Date: Fri, 21 Nov 2025 13:14:32 +0100
+Message-ID: <20251121121438.1249498-10-armbru@redhat.com>
+In-Reply-To: <20251121121438.1249498-1-armbru@redhat.com>
+References: <20251121121438.1249498-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,49 +90,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alberto Garcia <berto@igalia.com>
+The error message changes from
 
-Use 'qemu-io -c map' instead of 'qemu-img map' to get an output that
-works with both image types.
+    Could not read blkdebug config file: REASON
 
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Fixes: 909852ba6b4a ("qemu-img rebase: don't exceed IO_BUF_SIZE in one operation")
-Fixes: 585d5c1db8bd ("qemu-img rebase: don't exceed IO_BUF_SIZE in one operation") in 10.0.x
-Signed-off-by: Alberto Garcia <berto@igalia.com>
-Message-ID: <20251112170959.700840-1-berto@igalia.com>
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Eric Blake <eblake@redhat.com>
-(cherry picked from commit 4c91719a6a78a1c24d8bb854f7594e767962d0d9)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+to
 
-diff --git a/tests/qemu-iotests/024 b/tests/qemu-iotests/024
-index 021169b4a1..10be2bd845 100755
---- a/tests/qemu-iotests/024
-+++ b/tests/qemu-iotests/024
-@@ -359,7 +359,7 @@ $QEMU_IO "$OVERLAY" -c "read -P 0x00  0 1M" | _filter_qemu_io
- $QEMU_IO "$OVERLAY" -c "read -P 0xff 1M 2M" | _filter_qemu_io
- $QEMU_IO "$OVERLAY" -c "read -P 0x00 3M 1M" | _filter_qemu_io
+    Could not open 'FNAME': REASON
+
+I think the exact file name is more useful to know than the file's
+purpose.
+
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ block/blkdebug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/block/blkdebug.c b/block/blkdebug.c
+index c54aee0c84..8a4a8cb85e 100644
+--- a/block/blkdebug.c
++++ b/block/blkdebug.c
+@@ -288,7 +288,7 @@ static int read_config(BDRVBlkdebugState *s, const char *filename,
+     if (filename) {
+         f = fopen(filename, "r");
+         if (f == NULL) {
+-            error_setg_errno(errp, errno, "Could not read blkdebug config file");
++            error_setg_file_open(errp, errno, filename);
+             return -errno;
+         }
  
--$QEMU_IMG map "$OVERLAY" | _filter_qemu_img_map
-+$QEMU_IO -c map "$OVERLAY" | _filter_qemu_io
- 
- echo
- 
-diff --git a/tests/qemu-iotests/024.out b/tests/qemu-iotests/024.out
-index 1b7522ba71..da8fedc08b 100644
---- a/tests/qemu-iotests/024.out
-+++ b/tests/qemu-iotests/024.out
-@@ -266,7 +266,6 @@ read 2097152/2097152 bytes at offset 1048576
- 2 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- read 1048576/1048576 bytes at offset 3145728
- 1 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
--Offset          Length          File
--0               0x400000        TEST_DIR/subdir/t.IMGFMT
-+4 MiB (0x400000) bytes     allocated at offset 0 bytes (0x0)
- 
- *** done
 -- 
-2.47.3
+2.49.0
 
 
