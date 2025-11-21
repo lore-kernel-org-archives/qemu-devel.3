@@ -4,82 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AFB8CFC516
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535BECFC516
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMclN-0001Va-JF; Fri, 21 Nov 2025 20:50:10 -0500
+	id 1vMcwB-0001jw-1X; Fri, 21 Nov 2025 21:01:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMbRo-0005jG-P5
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:25:55 -0500
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMbPl-0002fW-N4
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:25:49 -0500
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-37b9d8122fdso20479331fa.3
- for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 16:23:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763771004; x=1764375804; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yQ3G/f5z9MwEGa9QMBSOfQ0OhqIrmAfETxxhBlriST8=;
- b=Z73HXqDlrfLyQu+y4dXSyjNBdJjh6a4ZU0dwzunro+MOhY3lg32AQQ0CncnlwoCbxW
- 2d54fLQLDl69gM/7MVvS2IP7/qGVP31tYshd+66nJnuMx3PI5io78OBqAmDN9/Rj4AP3
- H+3NQSjoH0daHiHu+T9ROQviRiWc2AppvGFD3g8NJXU+mWDatF2EcKwMqBAeePtc7oNr
- 1LA15+slrKTBRjOb4BFkzuhryzAHpU8Yd96nsljRd/uesSyAN5yh2A9kxu0dAEgyhDRP
- qvtKWliTy5QOJAWc3VAK2ExyyKQ9ft+EUeuk3MiHDXQfHmuqX2nopYc+JOSiFlYdZEFS
- HrdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763771004; x=1764375804;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=yQ3G/f5z9MwEGa9QMBSOfQ0OhqIrmAfETxxhBlriST8=;
- b=iY5X0IgsrYUvFO8vy2+PkZa1a+BA74PgSOYTLxPPkP/lkjsxBVL5sbO4M9ety3cUr8
- 63qNqc7g3EKfUt6QeTmcAjBfHIhOUFZ6zEwU28GaTWXV2N9WT1cxawMebJV/oCmeE553
- ejtsPAnqEdfY0qbWxq7WTUX3x7sSLnFI6fUEbSaPJsAF7CQ+yi7cLXB9b0f0jQi9OABs
- gm+whHtcDaI/MP8k60ko35w2Lyyr3PGDakTLIa+Av8DApg/n5ySCmFDXi6V2dMClHekX
- xswjnnu1JsAtsIBN0XuwzqalpONjfHam5LXDQdNBUpFuCBQOu9hg7m51SsqgQhjapP1N
- LwKQ==
-X-Gm-Message-State: AOJu0YwwUR4BfMYMXB4XKVnB5X4X96mdKGnfPU7oPLwQUS/8z+WGwAdk
- C3fj44Ea+HTjZ02NJ2p5g3BL0Bk77Z1intzs0Z/tsGK0qF9UlC+KglKbazlYRt5dCZ1hoXNdB5k
- EfPMOphkS6w==
-X-Gm-Gg: ASbGnctu/NVVVK3F4Bb2Mi+f+StWsSR+KNQj7dQENRnidxHImEBowLc8zeNb9+TBLcW
- peABlqSlikQrMgAhaQ/L/QrivUMdBrPxWKZ7vvLVaeUWW5Wn0aBkss+mDO436lxRZH8WT1UtSqW
- /qOT3X6/GV9EDKViwkd+QujEGHk4Aooh537KF4zeCMBR1Pr3vYyzpMzYcjxz6GqgCKvs6pGSpvG
- +LPF2URVQXNz7Wu5o7klTTZNmScDWZ+AMkqjbhRJVPBawdG9aNe6laR3QvdqkydAnaMHJojFE39
- kB9YKZ6ZsmfEu6w4Q8Tyh0oD4COewNwLB7ca0vo3e0pDCRxXQIUNOGJC+Bbn2UxfUnUAMq/xDj0
- XdtVAxdQwML9g9gbgxg3W2KzMZN7piTZnSx0wgZCjrl60uq6nG5YODF6doemdcr/BP3cQhMn7cH
- 3x7jUB6tWrbDGB9EgHe8HBEpX7J3wL67NLcdsH1xPnc7mPYm1Y//8k3rOtzugY
-X-Google-Smtp-Source: AGHT+IFbF4f4MylMWtflv3T7K6D1FOB2iY1tVyDtTNkEg2MW4/BeMV+80VdGErsxIt8RwoWpfU+jzg==
-X-Received: by 2002:a05:600c:4684:b0:477:9c73:2680 with SMTP id
- 5b1f17b1804b1-477c01bf658mr25170915e9.23.1763732831887; 
- Fri, 21 Nov 2025 05:47:11 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477bf1e872esm45046375e9.5.2025.11.21.05.47.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 21 Nov 2025 05:47:11 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMc7J-00053P-K5; Fri, 21 Nov 2025 20:08:45 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMc79-0003xK-5c; Fri, 21 Nov 2025 20:08:42 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 2404716CA72;
+ Fri, 21 Nov 2025 21:44:27 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D50D1321CAE;
+ Fri, 21 Nov 2025 21:44:35 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [RFC-PATCH-for-11.0 v3 19/21] target/sh4: Replace cpu_stl_data() by
- explicit endianness variants
-Date: Fri, 21 Nov 2025 14:45:01 +0100
-Message-ID: <20251121134503.30914-20-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251121134503.30914-1-philmd@linaro.org>
-References: <20251121134503.30914-1-philmd@linaro.org>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 55/81] hw/display/xlnx_dp.c: Don't abort on AUX FIFO
+ overrun/underrun
+Date: Fri, 21 Nov 2025 21:43:54 +0300
+Message-ID: <20251121184424.1137669-55-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,32 +56,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-See commit 852d481faf7 ("SH: Improve movca.l/ocbi emulation")
-for more context on this code.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/sh4/op_helper.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+The documentation of the Xilinx DisplayPort subsystem at
+https://www.xilinx.com/support/documents/ip_documentation/v_dp_txss1/v3_1/pg299-v-dp-txss1.pdf
+doesn't say what happens if a guest tries to issue an AUX write
+command with a length greater than the amount of data in the AUX
+write FIFO, or tries to write more data to the write FIFO than it can
+hold, or issues multiple commands that put data into the AUX read
+FIFO without reading it such that it overflows.
 
-diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
-index 557b1bf4972..63515cc5e6c 100644
---- a/target/sh4/op_helper.c
-+++ b/target/sh4/op_helper.c
-@@ -143,7 +143,11 @@ void helper_ocbi(CPUSH4State *env, uint32_t address)
-         if ((a & ~0x1F) == (address & ~0x1F))
-         {
-             memory_content *next = (*current)->next;
--            cpu_stl_data(env, a, (*current)->value);
-+            if (TARGET_BIG_ENDIAN) {
-+                cpu_stl_be_data(env, a, (*current)->value);
-+            } else {
-+                cpu_stl_le_data(env, a, (*current)->value);
-+            }
+Currently QEMU will abort() in these guest-error situations, either
+in xlnx_dp.c itself or in the fifo8 code.  Make these cases all be
+logged as guest errors instead.  We choose to ignore the new data on
+overflow, and return 0 on underflow. This is in line with how we handled
+the "read from empty RX FIFO" case in commit a09ef5040477.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1418
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1419
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1424
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-id: 20251106145209.1083998-2-peter.maydell@linaro.org
+(cherry picked from commit f52db7f34242d3398bab0bacaa3e5dde99be5258)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+index 1272da0133..1ca7ab860d 100644
+--- a/hw/display/xlnx_dp.c
++++ b/hw/display/xlnx_dp.c
+@@ -435,7 +435,18 @@ static void xlnx_dp_aux_clear_rx_fifo(XlnxDPState *s)
  
-             if (next == NULL)
-             {
+ static void xlnx_dp_aux_push_rx_fifo(XlnxDPState *s, uint8_t *buf, size_t len)
+ {
++    size_t avail = fifo8_num_free(&s->rx_fifo);
+     DPRINTF("Push %u data in rx_fifo\n", (unsigned)len);
++    if (len > avail) {
++        /*
++         * Data sheet doesn't specify behaviour here: we choose to ignore
++         * the excess data.
++         */
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: ignoring %zu bytes pushed to full RX_FIFO\n",
++                      __func__, len - avail);
++        len = avail;
++    }
+     fifo8_push_all(&s->rx_fifo, buf, len);
+ }
+ 
+@@ -466,7 +477,18 @@ static void xlnx_dp_aux_clear_tx_fifo(XlnxDPState *s)
+ 
+ static void xlnx_dp_aux_push_tx_fifo(XlnxDPState *s, uint8_t *buf, size_t len)
+ {
++    size_t avail = fifo8_num_free(&s->tx_fifo);
+     DPRINTF("Push %u data in tx_fifo\n", (unsigned)len);
++    if (len > avail) {
++        /*
++         * Data sheet doesn't specify behaviour here: we choose to ignore
++         * the excess data.
++         */
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "%s: ignoring %zu bytes pushed to full TX_FIFO\n",
++                      __func__, len - avail);
++        len = avail;
++    }
+     fifo8_push_all(&s->tx_fifo, buf, len);
+ }
+ 
+@@ -475,8 +497,10 @@ static uint8_t xlnx_dp_aux_pop_tx_fifo(XlnxDPState *s)
+     uint8_t ret;
+ 
+     if (fifo8_is_empty(&s->tx_fifo)) {
+-        error_report("%s: TX_FIFO underflow", __func__);
+-        abort();
++        /* Data sheet doesn't specify behaviour here: we choose to return 0 */
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: attempt to read empty TX_FIFO\n",
++                      __func__);
++        return 0;
+     }
+     ret = fifo8_pop(&s->tx_fifo);
+     DPRINTF("pop 0x%2.2X from tx_fifo.\n", ret);
 -- 
-2.51.0
+2.47.3
 
 
