@@ -4,35 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D744CF64B1
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:36:48 +0000 (UTC)
-Received: from localhost ([::1] helo=lists1p.gnu.org)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD9A4CFC504
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:36:52 +0000 (UTC)
+Received: from [::1] (helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdfR-0001C9-Ct; Fri, 21 Nov 2025 21:48:06 -0500
+	id 1vMd9n-0007Mz-VL; Fri, 21 Nov 2025 21:15:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdbW-0006ON-Bl; Fri, 21 Nov 2025 21:44:02 -0500
+ id 1vMd9O-000758-30; Fri, 21 Nov 2025 21:14:58 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdaJ-0003WP-EM; Fri, 21 Nov 2025 21:43:58 -0500
+ id 1vMd8r-0005ge-6T; Fri, 21 Nov 2025 21:14:54 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 941A316C6E4;
- Fri, 21 Nov 2025 16:51:54 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F30F16C71A;
+ Fri, 21 Nov 2025 16:51:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id ED3F6321981;
- Fri, 21 Nov 2025 16:52:02 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C8C543219B6;
+ Fri, 21 Nov 2025 16:52:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 12/76] io: move websock resource release to close
- method
-Date: Fri, 21 Nov 2025 16:50:50 +0300
-Message-ID: <20251121135201.1114964-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 65/76] curl: Fix coroutine waking
+Date: Fri, 21 Nov 2025 16:51:43 +0300
+Message-ID: <20251121135201.1114964-65-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
@@ -61,60 +59,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-The QIOChannelWebsock object releases all its resources in the
-finalize callback. This is later than desired, as callers expect
-to be able to call qio_channel_close() to fully close a channel
-and release resources related to I/O.
+If we wake a coroutine from a different context, we must ensure that it
+will yield exactly once (now or later), awaiting that wake.
 
-The logic in the finalize method is at most a failsafe to handle
-cases where a consumer forgets to call qio_channel_close.
+curl’s current .ret == -EINPROGRESS loop may lead to the coroutine not
+yielding if the request finishes before the loop gets run.  To fix it,
+we must drop the loop and yield exactly once, if we need to yield.
 
-This adds equivalent logic to the close method to release the
-resources, using g_clear_handle_id/g_clear_pointer to be robust
-against repeated invocations. The finalize method is tweaked
-so that the GSource is removed before releasing the underlying
-channel.
+Finding out that latter part ("if we need to yield") makes it a bit
+complicated: Requests may be served from a cache internal to the curl
+block driver, or fail before being submitted.  In these cases, we must
+not yield.  However, if we find a matching but still ongoing request in
+the cache, we will have to await that, i.e. still yield.
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 322c3c4f3abee616a18b3bfe563ec29dd67eae63)
+To address this, move the yield inside of the respective functions:
+- Inside of curl_find_buf() when awaiting ongoing concurrent requests,
+- Inside of curl_setup_preadv() when having created a new request.
+
+Rename curl_setup_preadv() to curl_do_preadv() to reflect this.
+
+(Can be reproduced with multiqueue by adding a usleep(100000) before the
+`while (acb.ret == -EINPROGRESS)` loop.)
+
+Also, add a comment why aio_co_wake() is safe regardless of whether the
+coroutine and curl_multi_check_completion() run in the same context.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20251110154854.151484-6-hreitz@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 53d5c7ffac7bd4e0d12174432ebb2b3e88614b15)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index 08ddb274f0..a19b902ff9 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -922,13 +922,13 @@ static void qio_channel_websock_finalize(Object *obj)
-     buffer_free(&ioc->encinput);
-     buffer_free(&ioc->encoutput);
-     buffer_free(&ioc->rawinput);
--    object_unref(OBJECT(ioc->master));
-     if (ioc->io_tag) {
-         g_source_remove(ioc->io_tag);
-     }
-     if (ioc->io_err) {
-         error_free(ioc->io_err);
-     }
-+    object_unref(OBJECT(ioc->master));
+diff --git a/block/curl.c b/block/curl.c
+index cbfb847dc4..96498aac1d 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -258,8 +258,8 @@ read_end:
  }
  
+ /* Called with s->mutex held.  */
+-static bool curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len,
+-                          CURLAIOCB *acb)
++static bool coroutine_fn
++curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len, CURLAIOCB *acb)
+ {
+     int i;
+     uint64_t end = start + len;
+@@ -307,6 +307,10 @@ static bool curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len,
+             for (j=0; j<CURL_NUM_ACB; j++) {
+                 if (!state->acb[j]) {
+                     state->acb[j] = acb;
++                    /* Await ongoing request */
++                    qemu_mutex_unlock(&s->mutex);
++                    qemu_coroutine_yield();
++                    qemu_mutex_lock(&s->mutex);
+                     return true;
+                 }
+             }
+@@ -378,6 +382,16 @@ static void curl_multi_check_completion(BDRVCURLState *s)
+                 acb->ret = error ? -EIO : 0;
+                 state->acb[i] = NULL;
+                 qemu_mutex_unlock(&s->mutex);
++                /*
++                 * Current AioContext is the BDS context, which may or may not
++                 * be the request (coroutine) context.
++                 * - If it is, the coroutine must have yielded or the FD handler
++                 *   (curl_multi_do()/curl_multi_timeout_do()) could not have
++                 *   been called and we would not be here
++                 * - If it is not, it doesn't matter whether it has already
++                 *   yielded or not; it will be scheduled once it does yield
++                 * So aio_co_wake() is safe to call.
++                 */
+                 aio_co_wake(acb->co);
+                 qemu_mutex_lock(&s->mutex);
+             }
+@@ -879,7 +893,7 @@ out_noclean:
+     return -EINVAL;
+ }
  
-@@ -1219,6 +1219,15 @@ static int qio_channel_websock_close(QIOChannel *ioc,
-     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(ioc);
+-static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
++static void coroutine_fn curl_do_preadv(BlockDriverState *bs, CURLAIOCB *acb)
+ {
+     CURLState *state;
+     int running;
+@@ -891,10 +905,13 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
  
-     trace_qio_channel_websock_close(ioc);
-+    buffer_free(&wioc->encinput);
-+    buffer_free(&wioc->encoutput);
-+    buffer_free(&wioc->rawinput);
-+    if (wioc->io_tag) {
-+        g_clear_handle_id(&wioc->io_tag, g_source_remove);
-+    }
-+    if (wioc->io_err) {
-+        g_clear_pointer(&wioc->io_err, error_free);
-+    }
-     return qio_channel_close(wioc->master, errp);
+     qemu_mutex_lock(&s->mutex);
+ 
+-    // In case we have the requested data already (e.g. read-ahead),
+-    // we can just call the callback and be done.
++    /*
++     * In case we have the requested data already (e.g. read-ahead),
++     * we can just call the callback and be done.  This may have to
++     * await an ongoing request, in which case it itself will yield.
++     */
+     if (curl_find_buf(s, start, acb->bytes, acb)) {
+-        goto out;
++        goto dont_yield;
+     }
+ 
+     // No cache found, so let's start a new request
+@@ -909,7 +926,7 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
+     if (curl_init_state(s, state) < 0) {
+         curl_clean_state(state);
+         acb->ret = -EIO;
+-        goto out;
++        goto dont_yield;
+     }
+ 
+     acb->start = 0;
+@@ -924,7 +941,7 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
+     if (state->buf_len && state->orig_buf == NULL) {
+         curl_clean_state(state);
+         acb->ret = -ENOMEM;
+-        goto out;
++        goto dont_yield;
+     }
+     state->acb[0] = acb;
+ 
+@@ -936,13 +953,16 @@ static void coroutine_fn curl_setup_preadv(BlockDriverState *bs, CURLAIOCB *acb)
+         acb->ret = -EIO;
+ 
+         curl_clean_state(state);
+-        goto out;
++        goto dont_yield;
+     }
+ 
+     /* Tell curl it needs to kick things off */
+     curl_multi_socket_action(s->multi, CURL_SOCKET_TIMEOUT, 0, &running);
++    qemu_mutex_unlock(&s->mutex);
++    qemu_coroutine_yield();
++    return;
+ 
+-out:
++dont_yield:
+     qemu_mutex_unlock(&s->mutex);
+ }
+ 
+@@ -958,10 +978,7 @@ static int coroutine_fn curl_co_preadv(BlockDriverState *bs,
+         .bytes = bytes
+     };
+ 
+-    curl_setup_preadv(bs, &acb);
+-    while (acb.ret == -EINPROGRESS) {
+-        qemu_coroutine_yield();
+-    }
++    curl_do_preadv(bs, &acb);
+     return acb.ret;
  }
  
 -- 
