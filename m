@@ -4,96 +4,187 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B10CFC516
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 01:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F8FDCFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 01:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMciR-0008Mm-9b; Fri, 21 Nov 2025 20:47:08 -0500
+	id 1vMchg-0007d8-MO; Fri, 21 Nov 2025 20:46:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vMbQ7-0004dx-Jx
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:24:10 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vMbPv-0002kU-CD
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:24:04 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 3804421005;
- Fri, 21 Nov 2025 12:38:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1763728686; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QFaPabIKbMuIWY+3MALbZM+04nLZi8DoIk2fXFvzU5M=;
- b=KdkqQ6WN19AIaR09pNsn0/WDOXWU+IgKKCoHMZoOOEBOOSjZk890X3M06F8XdUNTkqC02z
- X1DHGzQx7kYeaFTTCiaZvLD+UlTYBpOfa4sP0/uvkPuZP5IzjdRShNYJBkc7pYflXA8vcB
- tPy03X3Dw9nhc0weugLTy/bJbYbVH7U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1763728686;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QFaPabIKbMuIWY+3MALbZM+04nLZi8DoIk2fXFvzU5M=;
- b=n6/OmjzAGWr9+OF/laVJbrWsli3L9HIQibiH9UgaW1X2C+MD+JQI0Kiq9gKqU/7/ugBeiH
- 81DfkJQzlhb6CGDg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1763728685; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QFaPabIKbMuIWY+3MALbZM+04nLZi8DoIk2fXFvzU5M=;
- b=cKxZHxyEeRnfEK6T60sp5exZZIxidlWsiPtTJHFEd4U1P1IUGtpyM/CUNzvjw9rVhE6QhZ
- sSSubznUehB115RR4bkGQYl5kcWu/YQOesdNYYJbGkWsty+F6lSazsrsxC3ErXfntbakbi
- JtVu0olw3NQKez2yXW6q4XHHlXZbYUk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1763728685;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QFaPabIKbMuIWY+3MALbZM+04nLZi8DoIk2fXFvzU5M=;
- b=rqgqpq5uFAmGr32ZV6sGydlzE9KWTzNhR7iCjAVBNVcsrPfwF81I2hVjBsFp8j4zIdkBQu
- q/E0xj57fprqazBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id AD79A3EA61;
- Fri, 21 Nov 2025 12:38:04 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id b/+6GyxdIGmOKQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 21 Nov 2025 12:38:04 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 0/3] migration: Error fixes and improvements
-In-Reply-To: <aR4vdRcORY4em3yB@x1.local>
-References: <20251115083500.2753895-1-armbru@redhat.com>
- <aRtHWbWcTh3OF2wY@x1.local> <87a50jlr8f.fsf@pond.sub.org>
- <aRyuZbS7iALvx-BT@x1.local> <87cy5ecvoc.fsf@pond.sub.org>
- <aR4vdRcORY4em3yB@x1.local>
-Date: Fri, 21 Nov 2025 09:38:02 -0300
-Message-ID: <87bjkvftn9.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <konrad.schwarz@siemens.com>)
+ id 1vMbOv-0003w6-1T
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:22:54 -0500
+Received: from mail-francecentralazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c20a::7] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <konrad.schwarz@siemens.com>)
+ id 1vMbOj-0002MS-32
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:22:49 -0500
+Received: from GVXPR10MB8827.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:1de::7)
+ by GVXPR10MB8455.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:1e2::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.11; Fri, 21 Nov
+ 2025 21:03:29 +0000
+Received: from DU4PR10MB9022.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:564::9)
+ by GVXPR10MB8827.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:150:1de::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.11; Fri, 21 Nov
+ 2025 18:08:34 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mZ2nNhkZMpirq+WlQQD3M211KhRttZcoYNw+4cLWagDE58M4XLDMoI9eQm6qL6A9aWFxtXN/hrQ/cykreEwhGiA92yikG4pl379XVBVjAxFcomo1uCcIlm0nWdIuXjh8UyrBEOrMF0JIKd/FNEA6FdGPqHtbdCmXqJS6cJ1Z0BD8NguBFivGxrbqnhGYvm28dP5Xm/+rsDZq9Nzm9S8pP48IY/aVkc2uaPjfnpENLAVfSSj064QVAxkvZLSOL4raqb61vgQ7S5CAc1zR1nYhT5QhaBzl5RgyTPh0zxTlVs6UN4u29HHj9pXucpAgItEu/znZfMZHMWW6ydI9PxGIbA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cPXQJEEWnGsCybIyOMu2KdBTU2rQu2FrDUzLsdj5wyY=;
+ b=ZRXbPbaG5vOyhbUsaG0WduHA9Pt2yAl72hQdqK1JQybxtNItu9l4Sib/O0wT7iBGtrUzKbZ9qAFya2cPLGbCM16sh682SMgqpOoGtO2qoYfQBfi1Rs+hC0RiVk4XjzVzcGJWHqFgs6b01mn13EDyKad0gL0rJct7TYCnsuZnJXinqKzHWP+23p/nUQshOptz6S520OvZuOImIzE7qAqrUcRt1se0dhqmaDonWai3vH00JmjXfURpfPQdE8njNwcbe8aSCLYDut/TP0HCS+xS17Ijk6m+6GVJHAmp4P75GQNGhV1FAVATBWKssdSCUdoDpEBO/PWFT7O/5sCcc6z58w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=siemens.com; dmarc=pass action=none header.from=siemens.com;
+ dkim=pass header.d=siemens.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=siemens.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cPXQJEEWnGsCybIyOMu2KdBTU2rQu2FrDUzLsdj5wyY=;
+ b=nUmnMdGJyoLfxF5XXwQM3qXTibqpX6cN0+t14T3os645mtn25P8KCJVzvTZX1I0G3LQjmVW9bLBlbI4RYmet4y15wELQuAi6c0WEywFqo/ZDDw83VQAKdyaF9uFlSlnPA4s2WYYPgOvlAs93Vn8zCTpT6EAcZ9zj9WPTnS3CvMixFD7aN0Udexvf5Nv7imPegFWuxSF6nrQN6ZhhfVkQOo0+mq9I0NuhjZpVm7StUKk9F1XHOgtPBEvipSPpOKXQkI0XF5yaMXkJyhZ2RX9yngmvuEOO7KqCjlHg0s7M28+fivIH9D4L5xNDfk9YBTR1Iw1F2OUnThL5M6FanuPa7A==
+Received: from AS8PR10MB4680.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:20b:33c::13)
+ by DU4PR10MB9022.EURPRD10.PROD.OUTLOOK.COM (2603:10a6:10:564::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.11; Fri, 21 Nov
+ 2025 14:07:37 +0000
+Received: from AS8PR10MB4680.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::214b:9b1d:acac:e64b]) by AS8PR10MB4680.EURPRD10.PROD.OUTLOOK.COM
+ ([fe80::214b:9b1d:acac:e64b%4]) with mapi id 15.20.9343.011; Fri, 21 Nov 2025
+ 14:07:37 +0000
+From: "Schwarz, Konrad" <konrad.schwarz@siemens.com>
+To: =?utf-8?B?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>, "Kiszka,
+ Jan" <jan.kiszka@siemens.com>
+CC: "konrad.schwarz@gmail.com" <konrad.schwarz@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "philmd@linaro.org"
+ <philmd@linaro.org>
+Subject: RE: [PATCH 1/1] scripts: Changed potential O(n) file size calculation
+ to O(1)
+Thread-Topic: [PATCH 1/1] scripts: Changed potential O(n) file size
+ calculation to O(1)
+Thread-Index: AQHcWXoCyaQlcz8AKEufgNoVu9G9F7T87MOAgAAOy4CAADEsMA==
+Date: Fri, 21 Nov 2025 14:07:37 +0000
+Message-ID: <AS8PR10MB4680196D449C8FE8C12710A88AD5A@AS8PR10MB4680.EURPRD10.PROD.OUTLOOK.COM>
+References: <CA+kmUXafV4PPo2t+P23g9QRXHjaH_XBke3DjzbvciqBtw+i-OA@mail.gmail.com>
+ <dee22f22-c2e5-4154-99a7-525bfeb965af@siemens.com>
+ <aSBIUz8PxYZHncVN@redhat.com>
+In-Reply-To: <aSBIUz8PxYZHncVN@redhat.com>
+Accept-Language: en-US, de-DE
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_ActionId=a9cecca8-a0f1-464c-a845-db932b21261d;
+ MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_ContentBits=0;
+ MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_Enabled=true;
+ MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_Method=Standard;
+ MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_Name=restricted;
+ MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_SetDate=2025-11-21T14:05:06Z;
+ MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_SiteId=38ae3bcd-9579-4fd4-adda-b42e1495d55a;
+ MSIP_Label_9d258917-277f-42cd-a3cd-14c4e9ee58bc_Tag=10, 3, 0, 1;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=siemens.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AS8PR10MB4680:EE_|DU4PR10MB9022:EE_|GVXPR10MB8827:EE_|GVXPR10MB8455:EE_
+x-ms-office365-filtering-correlation-id: 4a70e522-413a-4e8a-29d1-08de2907537f
+x-ms-exchange-atpmessageproperties: SA
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|366016|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?utf-8?B?QmpDTmRQeVhMM0NaOHhBaVgzeVorY1dpdUVkWXNmU1E2MjdESDM1eUxLMFdm?=
+ =?utf-8?B?WlBTajVBa1RLL0swZ1Y3Y2c3UzB0SkhmVVJ6SzVFZjg5d3N4bStMaU4rbHlp?=
+ =?utf-8?B?UnBlc0xPR3NpN1dNbUVmSVRESStBQXZicGZnak1PdkhGaW9WaHpleCtPU29G?=
+ =?utf-8?B?MlhYbUU1OHQzMmM0dmhGME5HWnlGWWFyTkdkRHUrQ1U3SFVIN2dndmtKU0Zm?=
+ =?utf-8?B?bE1lNWhYMXlQWEdDZ0NjUFc0Z0Jva2FDbWNJUHF5MXFQYytRS05IOGdMdWdv?=
+ =?utf-8?B?VjY2RDlMY0gwMlpsdksrQTBwTUlqdHJCOERaUVRYMEh2dDZ3STA1TzFHVThu?=
+ =?utf-8?B?S2QvWW5YVmx5MEJiSEJUNFVwRWFoaGM2Y3p1dEtHQXJpbmxWVnVKZ3Znc3hH?=
+ =?utf-8?B?ejRuOU9Vd2xNNEZqbW1OcnVKcHZPalkralR3YkxqaTJ4RlRwVzVhNjV6V1NL?=
+ =?utf-8?B?Q21TTzFudDM4NlZZNUh2aUJhN2VIU25LdnNGTzYwSGM2ZzEyc3dZLzgyNUQ5?=
+ =?utf-8?B?NTQ2dHNMVzk1aHZ4aS9xMmhRRE0wVUw3OFA5ZjVRb3oxbmxHTHhnTEhyREZs?=
+ =?utf-8?B?VGQxanorUFBIVFR6TFlSMnVWQ2VCN004Y1kxdmtmOUtUQXVPYUp0MjEwc3d6?=
+ =?utf-8?B?R1VHbENLSmlzNVpMN1g0NjNvZENZc3dqckUxRXMwUmk0Y1R0bVFoWFBxWUVF?=
+ =?utf-8?B?eTdyZE52akd5bjI1MG1xMldhSEdXak9IRzFDYUlrOXd0WU9PdHBLSkFGRnZo?=
+ =?utf-8?B?OXpncEg5N0t5djMxTzBkSjhkZkJtMjd6S09qRGE2a3dKaitkS1J2bWlGVmkz?=
+ =?utf-8?B?ck8xYmw5ZlhNYjhKT2F0ZmNiQ3NSZEJ2dGlNV1Q1M0FpNHE5aDRaekZYc3Jw?=
+ =?utf-8?B?OFNhcnE1bEJrUDE3cTNkTVlkU2FKSTlKUVE5NHU2ZXd4YWlvdW9TWkVLTWNl?=
+ =?utf-8?B?bWJBa3plWkl1QnBTWFhKd0lBYUorWlUvSlkyZ3I0RG5HZW9YZTNNc0tXWEd5?=
+ =?utf-8?B?WlFMVXBUMklsLzhkSTN5V3Bkd2NMZFhqdXJNSFBESDRiM1lrdy83QXVWODZr?=
+ =?utf-8?B?a3NKaER5OENTT0NCRGhlK0xRN2Q4bzk4SkdPMXNWZlFkYWp0eml6M253Rnc1?=
+ =?utf-8?B?cExQalZtVTVkVWdJSFVRTGRCbFgwRFNURkVwaVYyb280eVBOMTk1cTFtdHVQ?=
+ =?utf-8?B?TUhCZ3BOUUU3VnNmRG9oWXBkUlZSZFlxakZhdzdVelJ3QmY1VDc3bDZNTHZ4?=
+ =?utf-8?B?aThvVzMzVjNLL0VJSS9BRUlpNUhnL1NndHNxbHloQlk1cTFvajMxdnFHVENF?=
+ =?utf-8?B?bjRNOUMrVUtBTHdNQU8zYlNBb2F5aEdYOVV6RHhpVmRHbVloeEwyRm9XMG5E?=
+ =?utf-8?B?bmE1a29NSmVXTzJkY2JnYVZ1TlZyb1dOdjVMVVVOcjhJTzhJeUw0U1hzbGVR?=
+ =?utf-8?B?QytuMHVscnBxcllDbEZsMUd2dnAxMCt0MS9sbDJsb0x1NUFtUGVnbWxsVUNx?=
+ =?utf-8?B?Ym04aFQ5Q3JJekpqOENKdUNQM0tYUmM1aUowQytMWnRJQkg2MTdJYWdSTWM4?=
+ =?utf-8?B?T3p0SWZzck90NTltei9lWmlKYWJEWlR3d1VTZ3RLSkRpTU15RWplbjRUSFp2?=
+ =?utf-8?B?N1JLVmEwTXB6d3JsUi8xZjlFUFlSVm83Q0x2UlFVMHVUQTJoUld1ajJwbW85?=
+ =?utf-8?B?eUVQSFlJalFZZ0RwZWFGdUJLQlRlWVVjOExzbE1IR0U5TDFqS3BJbk1QTjFH?=
+ =?utf-8?B?RjZXbjNQUFErempNUm52akFRU0htcGU2WkdLc0ZHeUhLTDZQZzBGMjA4bnBR?=
+ =?utf-8?B?ODd2TU41a2c0OVpnQWd3R2svWTAxOWoxa1NNWDVMUEdYMlBmNEU2eUtSbms1?=
+ =?utf-8?B?eFhpV25QV2JzVURPaVhiUWJ0elpPSlNjWGk0S04zeVJ4Wi92aHVkOEJGbFB4?=
+ =?utf-8?B?MnlaME9uc1diZ2htR1JHZFhxZDNaL0RseG9vVnYzRWFwTEVKY3VGN2dHaHlG?=
+ =?utf-8?B?c3llV1lBWThYTi9saWNLbCtVZXNsSzFqZTBrWEZkZGRTMjk0OU5KWGlqdnc2?=
+ =?utf-8?Q?iJdIQM?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AS8PR10MB4680.EURPRD10.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(38070700021); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?bFNFOTlzZmE3R1lGbnZ3UVVsbTlCL1RNZWdmN0hoTHhGYjdlSjhZVjRBeXh1?=
+ =?utf-8?B?SUVxQ1V5Z0h1TDE5NFNSNmErRzhiTEc2VE5KbUNNNVhqSHFhblp0djVxTUoy?=
+ =?utf-8?B?SldTWXhubUpZSmNDUjRpVmFMVWR6Vk0xdi9FQS9adDJ6QVRScHp4Ykd1cnhj?=
+ =?utf-8?B?d2VmN0RsbjVpL0xEUllvMHoyRlZNcWhndmo4Z0VRNmFDeE9ySVZnMlZmdlE2?=
+ =?utf-8?B?Q2NIai9HdDBuTVRVWGY1aTBndWY2anhmWExwdk5aTVlCU2d5MVEwTnpnUkMv?=
+ =?utf-8?B?cW9PZGpYNTFJQXU1SnNVQ25hR0FNWkxjT2JnT3M1enpmd0lvTTVzMlZMUUl5?=
+ =?utf-8?B?eE1SalVsSDNXRWEzMUJqZkZBYXY0VHp5dFBzZWlYTVFvdU9KMHBKeWR2MXc0?=
+ =?utf-8?B?TTZZdGZ2M01oNDY3NElzSnFWQXc2VkI3LzZva1JUdnJPeTN2TE8yWlNKRWFV?=
+ =?utf-8?B?YzdPS3VHQjZZTitndHY5ZzBEUkFORkpxdDUydlkwOTIyMk5IU3FxRXZwU3pQ?=
+ =?utf-8?B?Z3lVSFh0bHh6RVVrekZ2SXBOL3ZxamlzM05iMm04aVp1ZU5oeDArNFlBdTg3?=
+ =?utf-8?B?enNZU0xrSHR1MmhXb1NKMGJ6WGVDUVBnU0RhUlRpa0RCZzVRWGxpTDhwM2Z6?=
+ =?utf-8?B?SzNqTGhkSWRnTmhhT1VYYzBWK0JpZFgvbXBpSndKOWJ4Vmw4d05DZzVyVXht?=
+ =?utf-8?B?TWthbFpseXkxK3NYSDM0TjZRWXRaN2JzQ21tblRieUxRaG84QTJFdTN2OXVR?=
+ =?utf-8?B?a1NOYncvVG10VktWTUpiVDdJV3ZoT05kNmZVbUh4ZFRyRVBIM09FdDJ1K1BG?=
+ =?utf-8?B?SkQrdS9XNzJBTzY4dFpYWFdYNzVNN3VCZ3VjZUhlMGs3eCtvZ3BWOFoxK2h0?=
+ =?utf-8?B?TlNHMVRFcDE2K2d3MFlLUnRRYnF1bnEybDk3WStwR2luL2VUTUw3Y3htSTg0?=
+ =?utf-8?B?RWFSVmFIUHM3NTNGQ2VqVUphMlpoTnlpVzk3czdON1VObUI3bVN3TElYZi9Q?=
+ =?utf-8?B?ZDd0MlRsSW1kdmJodHJUVTdWUUV2NTN4bXRGSlZoQWczOU9mekpPQmFYTnBW?=
+ =?utf-8?B?Qko4ZHdEV2hvdGpERmN6L1V6aTBmcERWQUJyY3FXM3dvNXZ3NHlMSjlsSzBq?=
+ =?utf-8?B?RVRpVHVsVGdhOXY4QVFMUS9ZVEdYZmpSTTZ5QkRUNFlrbUIzOEtQTDdPLzAy?=
+ =?utf-8?B?emV5Q0MzK3JrRFFnc2hhaDdkdnpOeFp4VFR3dTVQbFFBbFVIVEoyRlE0M2dY?=
+ =?utf-8?B?QnBNcHVYTWZRWkEvb2FLRlVYR3NBQWNKUU13QnNSTTFDbFhWLzl2NTZJYjkx?=
+ =?utf-8?B?L2ZrVXVmdWg3cGpQaXNxZVV2K3VSaVBKaUcwbXV2NGFpdnV6djRyRVZlT1RI?=
+ =?utf-8?B?dVNmdWQ4WmtGaDF4N0NhUThRZ0lGQjdaNEtrZ2tsb3lGVDZ4M1BFQnF2Wm9D?=
+ =?utf-8?B?L1pwUWxrTE14S1RHVkdIM1ZnMWxVdXQzM2c5N0dMS2YyZDFhS3ZybHVYbWc2?=
+ =?utf-8?B?UkxOSWo3SXloVnZ1Vkc4M09PNmlBTG5UeHBkUkxhdk5VY3YwekphRzFxR2hu?=
+ =?utf-8?B?bmwzZi9wU1lYaENrTVhOc0dTK3NuR0VIVTRpRUFobllGQVI2bDRLdWNPVU5m?=
+ =?utf-8?B?N1RYUVp0QzVyODF2cUdxR01IaTUxdDRKei8zVHBaczI1eEtPYVYzT1hXV1pr?=
+ =?utf-8?B?eXJJTTlRZE15Mll4ZTNPOVpzOVFDVlU5Sm9tVDZmQk1mcFdPODBIQUEza1N3?=
+ =?utf-8?B?UkRtbFcxOXhBN3dOWmd4VnlycVRYcXVFU0QyaTJTNTRqc3MrbnpUV2lRalJP?=
+ =?utf-8?B?SEVFMU9xV0JsL0xVendLN3ZQSVU4MTRmcTFKclZvc041RWxuZ0tCOUtaZmt5?=
+ =?utf-8?B?dUIrTWExYmxiS21FUFBYVHZYK0lWellleUhvdm4rOUVWMnpaR2krekhyOTdB?=
+ =?utf-8?B?bXBYNG1vK041a1dkSWJvQUVaWVhJVHV5Y1A3aVl1MXNEcG5qcTVMMXg5UXBh?=
+ =?utf-8?B?ZmpaRFlkQSs4cnI2UGJ5VFgzcllXZHpWWExXTEwwMGZqcVl0OHdvN0toQ3RK?=
+ =?utf-8?B?QUJReUxZKzAvVHljRThjakNWaW9LQmtLcGc4TWhPUnBrRnV5TVh3YnR0M1ZD?=
+ =?utf-8?B?MmJDLzlPVE9XS0xyV2xZMm5KOTlpalI1ck8reEZPaE9FNkdyVmN0ZWJibmsv?=
+ =?utf-8?B?UVE9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AS8PR10MB4680.EURPRD10.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4a70e522-413a-4e8a-29d1-08de2907537f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 21 Nov 2025 14:07:37.4949 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 38ae3bcd-9579-4fd4-adda-b42e1495d55a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 6+E9MzYkLCssMEupIt7fd2C2tPotoV8PVmiohMc3ysbZfF+MfYwWIZChOPtGu4FTNH+m4GqTyubscTnrxuc3XL6qNWxzfsdf4+TSitQEuuc=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU4PR10MB9022
+X-OriginatorOrg: siemens.com
+Received-SPF: pass client-ip=2a01:111:f403:c20a::7;
+ envelope-from=konrad.schwarz@siemens.com;
+ helo=PA4PR04CU001.outbound.protection.outlook.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,196 +199,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
-
-> On Wed, Nov 19, 2025 at 08:45:39AM +0100, Markus Armbruster wrote:
->
-> [...]
->
->> The hairy part is the background task.
->> 
->> I believe it used to simply do its job, reporting errors to stderr along
->> the way, until it either succeeded or failed.  The errors reported made
->> success / failure "obvious" for users.
->> 
->> This can report multiple errors, which can be confusing.
->> 
->> Worse, it was no good for management applications.  These need to
->> observe migration as a state machine, with final success and error
->> states, where the error state comes with an indication of what went
->> wrong.  So we made migration store the first of certain errors in the
->> migration state in addition to reporting to stderr.
->> 
->> "First", because we store only when the state doesn't already have an
->> error.  "Certain", because I doubt we do it for all errors we report.
->> 
->> Compare this to how jobs solve this problem.  These are a much, much
->> later invention, and designed for management applications from the
->> start[*].  A job is a state machine.  Management applications can
->> observe and control the state.  Errors are not supposed to be reported,
->> they should be fed to the state machine, which goes into an error state
->> then.  The job is not supposed to do actual work in an error state.
->> Therefore, no further errors should be possible.  When something goes
->> wrong, we get a single error, stored in the job state, where the
->> management application can find it.
->> 
->> Migration is also a state machine, and we long ago retrofitted the means
->> for management applications to observe and control the state.  What we
->> haven't done is the disciplined feeding of errors to the state machine.
->> We can still get multiple errors.  We store the first of certain errors
->> where the managament application can find it, but whether that error
->> suffices to explain what went wrong is a crap shot.  As long as that's
->> the case, we need to spew the other errors to stderr, where a human can
->> find it.
->
-> Since above mentioned once more on the possibility of reusing Jobs idea, I
-> did try to list things explicitly this time, that why I think it should be
-> challenging and maybe not as worthwhile (?) to do so, however I might be
-> wrong.  I attached it at the end of this email almost for myself in the
-> future to reference, please feel free comment, or, to ignore all of those!
-> IMHO it's not directly relevant to the error reporting issues.
->
-> IMHO rewriting migration with Jobs will not help much in error reporting,
-> because the challenge for refactoring from migration side is not the "Jobs"
-> interfacing, but internally of migration.  Say, even if migration provided
-> a "job", it's the "job" impl that did error reporting bad, not the Jobs
-> interfacing.. the "job" impl will need to manage quite some threads on its
-> own, making sure errors are properly reported at least to the "job"
-> interface.
->
-> Said that, I totally agree we should try to improve error reporting in
-> migration.. with / without Jobs.
->
-> [...]
->
->> > Maybe I should ping Vladimir on his recent work here?
->> >
->> > https://lore.kernel.org/r/20251028231347.194844-1-vsementsov@yandex-team.ru
->> >
->> > That'll be part of such cleanup effort (and yes unfortunately many
->> > migration related cleanups will need a lot of code churns...).
->> 
->> I know...
->> 
->> Can we afford modest efforts to reduce the mess one step at a time?
->
-> Yes, I'll try to follow up on that.
->
-> [...]
->
->> [*] If the job abstraction had been available in time, migration would
->> totally be a job.  There's no *design* reason for it being not a job.
->> Plenty of implementation and backward compatibility reasons, though.
->
-> There might be something common between Jobs that block uses and a
-> migration process.  If so, we can provide CommonJob and make MigrationJob
-> and BlockJobs dependent on it.
->
-> However, I sincerely don't know how much common function will there be.
-> IOW, I doubt even in an imaginery world, if we could go back to when Jobs
-> was designed and if we would make migration a Job too (note!  snapshots is
-> definitely a too simple migration scenario..).  Is it possible after
-> evaluation we still don't?  I don't know, but I think it's possible.
->
-> Thanks!
-> Peter
->
->
->
->
-> Possible challenges of adopting Jobs in migration flow
-> ======================================================
->
-> - Many Jobs defined property doesn't directly suite migration
->
->   - JobStatus is not directly suitable for migration purposes.  There're
->     some of the JobStatus that I can't think of any use
->     (e.g. JOB_STATUS_WAITING, JOB_STATUS_PENDING, which is fine, because we
->     can simply not use it), but there're other status that migration needs
->     but isn't availble. Introducing them seems to be an overkill instead to
->     block layer's use case.
->
->   - Similarly to JobVerb.  E.g. JOB_VERB_CHANGE doesn't seem to apply to
->     any concept to migration, but it misses quite some others
->     (e.g. JOB_VERB_SET_DOWNTIME, JOB_VERB_POSTCOPY_START, and more).
->
->   - Similarly, JobInfo reports in current-progress (which is not optional
->     but required), which may make perfect sense for block jobs. However
->     migration is OTOH convergence-triggered process, or user-triggered (in
->     case of postcopy).  It doesn't have a quantified process but only
->     "COMPLETED" / "IN_PROGRESS".
->
->   - Another very major example that I have discussed a few times
->     previously, Jobs are close attached to AioContext, while migration
->     doesn't have, meanwhile migration is moving even further away from
->     event driven model..  See:
->
->     https://lore.kernel.org/all/20251022192612.2737648-1-peterx@redhat.com/#t
->
->   There're just too many example showing that Jobs are defined almost only
->   for block layer.. e.g. job-finalize (which may not make much sense in a
->   migration context anyway..) mentions finalizing of graph changes, which
->   also doesn't exist in migration process.
->
->   So if we rewrite migration somehow with Jobs or keeping migration in mind
->   designing Jobs, Jobs may need to be very bloated containing both
->   migration and block layer requirements.
->
-> - Migration involves "two" QEMU instances instead of one
->
->   I'm guessing existing Jobs operations are not as such, and providing such
->   mechanisms in "Jobs" only for migration may introduce unnecessary code
->   that block layer will never use.
->
->   E.g. postcopy migration attached the two QEMU instances to represent one
->   VM instance.  I do not have a clear picture in mind yet on how we can
->   manage that if we see it as two separate Jobs on each side, and what
->   happens if each side operates on its own Job with different purposes, and
->   how we should connect two Jobs to say they're relevant (or maybe we don't
->   need to?).
->
-> - More challenges on dest QEMU (VM loader) than src QEMU
->
->   Unlike on the src side, the dest QEMU, when in an incoming state, is not
->   a VM at all yet, but waiting to receive the migration data to become a
->   working VM. It's not a generic long term process, but a pure listening
->   port of QEMU where QEMU can do nothing without this "job" being
->   completed..
->
->   If we think about CPR it's even more complicated, because we essential
->   require part of incoming process to happen before almost everything.. it
->   may even include monitors being initialized.
->
-> - Deep integration with other subsystems
->
->   Migration is deeply integrated into many other subsystems (auto-converge
->   being able to throttle vCPUs, RAM being able to ignore empty pages
->   reported from balloons, dirty trackings per-module, etc.), so we're not
->   sure if there'll be some limitation from Jobs (when designed with block
->   layer in mind) that will make such transition harder.
->
->   For example, we at least want to make sure Jobs won't have simple locks
->   that will be held while running migration, that can further deadlock if
->   the migration code may invoke something else that tries to re-take the
->   Jobs lock, which may cause dead-locks.
->
->   Or, since migration runs nowadays with quite some threads concurrently,
->   whether the main migration Job can always properly synchronize between
->   all of them with no problem (maybe yes, but I just don't know Jobs enough
->   to say).  This is also a relevant question about how much AioContext
->   plays a role in core of Jobs idea and whether it can work well with
->   complicated threaded environment.
-
-Thanks for looking into this, Peter! I'm saving it for future reference
-as well! It was on my todo list to make such an analysis.
-
-I hope Markus can comment on some of those and maybe we can still find a
-way to converge, but I think I agree that migration is (at this point) a
-little too particular to be retrofitted (which I'd be very much in favor
-of, if it were at all feasible).
-
-(wondering what happened in QEMU historically that we devised so many
-well designed interfaces, but chose to leave migration aside altogether)
-
-(maybe this right here is what happened)
+PiBGcm9tOiBEYW5pZWwgUC4gQmVycmFuZ8OpIDxiZXJyYW5nZUByZWRoYXQuY29tPg0KPiBTZW50
+OiBGcmlkYXksIE5vdmVtYmVyIDIxLCAyMDI1IDEyOjA5DQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0gg
+MS8xXSBzY3JpcHRzOiBDaGFuZ2VkIHBvdGVudGlhbCBPKG4pIGZpbGUgc2l6ZSBjYWxjdWxhdGlv
+biB0bw0KPiBPKDEpDQoNCj4gPiBsc19saW5lPSQobHMgLUhkb2cgIiQxIiAyPi9kZXYvbnVsbCkg
+fHwgcmV0dXJuDQo+ID4NCj4gPiA+ICsgICBwcmludGYgJXNcXG4gIiRsc19saW5lIiB8IGN1dCAt
+ZFwgIC1mMw0KPiA+ID4gKyAgIHVuc2V0IGxzX2xpbmUNCj4gDQo+IFRoaXMgcGFyc2luZyBvZiAn
+bHMnIG91dHB1dCBjb3VsZCBiZSBzaW1wbGlmaWVkIGJ5IHVzaW5nIHRoZSAnc3RhdCcgY29tbWFu
+ZA0KPiB3aXRoIGEgZm9ybWF0IHN0cmluZyB0byByZXF1ZXN0IG9ubHkgdGhlIGZpbGUgc2l6ZS4N
+Cj4gDQo+ICAgICBzdGF0IC0tZm9ybWF0PSVzICIkMSINCg0KVGhlIHVzZSBvZiBgd2MnIHJlc3Vs
+dHMgZnJvbSB0aGUgZmFjdCB0aGF0IGBzdGF0JyBpcyBub3QgYXZhaWxhYmxlIG9uIGFsbCBwbGF0
+Zm9ybXMsDQppTWFjT1MgaW4gcGFydGljdWxhciwgdG8gbXkga25vd2xlZGdlLg0K
 
