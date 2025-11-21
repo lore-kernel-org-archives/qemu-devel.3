@@ -4,48 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52D14CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCB91CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:28:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdf6-0000en-Mm; Fri, 21 Nov 2025 21:47:45 -0500
+	id 1vMcyW-0003oP-LW; Fri, 21 Nov 2025 21:03:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdd6-0007Ta-BD; Fri, 21 Nov 2025 21:45:40 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdbs-00042P-Qe; Fri, 21 Nov 2025 21:45:37 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9C86E16C71C;
- Fri, 21 Nov 2025 16:51:59 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F3EC73219B8;
- Fri, 21 Nov 2025 16:52:07 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMcEj-0000hp-AE
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:16:25 -0500
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMcCg-0005Od-Pv
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:16:22 -0500
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-5957753e0efso2719032e87.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 17:14:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763774038; x=1764378838; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uhfSYXVJhQzgILc5n4xlE7EXEuT5rMWIJU0DyKOMRY4=;
+ b=NNVHAkhjeb0h/OkeoYwLM13Kids/cCBIwTY/9Cp4VNyEGXSBqNfV8QmJa4bS5LkV0T
+ PHEVCYk+q7whWTA4+ZLNkblmzidj+bGQnWxSeywK11utQHr39YVzX3GLtrfKpK+r1Jux
+ PQe5/eAj75pNbt88s43psvnvEAJpZ2R5nnX3t5Fk2jhGkGdbFZKvIzMJIXxZQcMtq9z4
+ 5ytm0Ox1zd9caoBMps0zjQSgV6VGbsvbMHR+kjFAUdKFQkNpmwoFZTgbS6+Yn3cGZyeT
+ KNqNIKiA8VKPzie2zzMSdG+2DRCaVBZb+wBlmzBAfk46ebr1zYEgFAtl8CmyRnvg5hua
+ X/nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763774038; x=1764378838;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=uhfSYXVJhQzgILc5n4xlE7EXEuT5rMWIJU0DyKOMRY4=;
+ b=V4QbBhTg6p6q48nNjcJIpS1VBrPXYhiCLrJlY9sHHTojX1yxQCYJ4p89PU2SvOAI8e
+ 2RjTaU5cCI+R9UgvEsV0Gl09XbicsxP72241v9f4hEQaRWxmPdkWDLxeSlbCoXNEovRI
+ asJPCtKLtlQsE2hmrE0+fG+YGCvx0DfcEcqT4gG2Agj0h6AERhJt0W+E4Pvahooq9vJK
+ YPc+PImnUQP+gYmswQ/Mx9g0q0DHbg/+MCEn1FZcPkS83xeWnKmvPdoJNSxqp2+BEaYH
+ jkolZoE4e53OizWdaQZzt8lO02EYOAvqIqtnN8AHRFP/D8s65vKP5yh1PfpstAhCOO1R
+ U2gQ==
+X-Gm-Message-State: AOJu0Yyy0RAD6rhc8Di3MN6XEFSG9NQUCFcoRzdZkiOVqvyF4909eXdm
+ 8QrYD23352Z3xkYVAUgxQzIOpmjNwbUe8PRuYocwt7ZintSpxvOmNMcFiRYVPljm8OLm4dV4JoP
+ rcSzyNPlfWg==
+X-Gm-Gg: ASbGncsTCsdyKmBurNAurOF1aDczAYIgxVujBwNB4WRLvHSUBhk7tbzpIvR2Z1WB46x
+ GCFMCRQIKokMcFPI84c7e+BEbrq3zZuEHE5XInfuebb5Ga5/Ar8uDk3kMsGwdXHQW0b+/2ILnSQ
+ qrmmHzZKqvxz5kI4VdfsTTTq/STszUw0buLYtbtJBEKfJc7Q0+Dg2aBfPrKtftNilEkHAymIsLj
+ ze7OhC/MPCH2xMKzDlGD80t4j9bW/o52lH4IpBo6go0Bw1sIfq5yq+UV4VRcvVd049BrFxK2KDz
+ tAWuxhs+QzU9T5k2Xm187b516MyOGI3DS6gk1nJ5dTXKpgihAsrg3H6xA8V1MNmE+pTxf6IBeRI
+ RBRyCe3bfJrIaJlLJxTAMX5f0s6aFeRt/dVCKr+mpBD3vG1BMWFbwFnVpyJV1MLg8CqBrNkF3w1
+ YEIuvNhRWtipAsYmYo4k+GqV0Na/6vtCDOGekUYSdfhK4bMUGusMvsYonnVuDC
+X-Google-Smtp-Source: AGHT+IG/b8TxL9CJ2yGrfcKCr8xr6tIWI9/kBLmY8vXlUe3LRE9WTL5vE8m0zohVGp43fgT2y8tBkg==
+X-Received: by 2002:a05:6000:240b:b0:42b:396e:27fd with SMTP id
+ ffacd0b85a97d-42cc1d2d44emr2576757f8f.38.1763732765605; 
+ Fri, 21 Nov 2025 05:46:05 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7f363b0sm11300121f8f.13.2025.11.21.05.46.04
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 21 Nov 2025 05:46:05 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 67/76] nvme: Fix coroutine waking
-Date: Fri, 21 Nov 2025 16:51:45 +0300
-Message-ID: <20251121135201.1114964-67-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
-References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [RFC-PATCH-for-11.0 v3 09/21] accel/tcg: Remove non-explicit endian
+ cpu_ld*_code() helpers
+Date: Fri, 21 Nov 2025 14:44:51 +0100
+Message-ID: <20251121134503.30914-10-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251121134503.30914-1-philmd@linaro.org>
+References: <20251121134503.30914-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,183 +94,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+All uses were converted to the explicit cpu_ld*_{be,le}_code()
+helpers, no need for the non-explicit versions anymore.
 
-nvme wakes the request coroutine via qemu_coroutine_enter() from a BH
-scheduled in the BDS AioContext.  This may not be the same context as
-the one in which the request originally ran, which would be wrong:
-- It could mean we enter the coroutine before it yields,
-- We would move the coroutine in to a different context.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/accel/tcg/cpu-ldst.h | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-(Can be reproduced with multiqueue by adding a usleep(100000) before the
-`while (data.ret == -EINPROGRESS)` loop.)
-
-To fix that, use aio_co_wake() to run the coroutine in its home context.
-Just like in the preceding iscsi and nfs patches, we can drop the
-trivial nvme_rw_cb_bh() and use aio_co_wake() directly.
-
-With this, we can remove NVMeCoData.ctx.
-
-Note the check of data->co == NULL to bypass the BH/yield combination in
-case nvme_rw_cb() is called from nvme_submit_command(): We probably want
-to keep this fast path for performance reasons, but we have to be quite
-careful about it:
-- We cannot overload .ret for this, but have to use a dedicated
-  .skip_yield field.  Otherwise, if nvme_rw_cb() runs in a different
-  thread than the coroutine, it may see .ret set and skip the yield,
-  while nvme_rw_cb() will still schedule a BH for waking.   Therefore,
-  the signal to skip the yield can only be set in nvme_rw_cb() if waking
-  too is skipped, which is independent from communicating the return
-  value.
-- We can only skip the yield if nvme_rw_cb() actually runs in the
-  request coroutine.  Otherwise (specifically if they run in different
-  AioContexts), the order between this function’s execution and the
-  coroutine yielding (or not yielding) is not reliable.
-- There is no point to yielding in a loop; there are no spurious wakes,
-  so once we yield, we will only be re-entered once the command is done.
-  Replace `while` by `if`.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20251110154854.151484-9-hreitz@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 0f142cbd919fcb6cea7aa176f7e4939925806dd9)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/block/nvme.c b/block/nvme.c
-index 7ed5f570bc..b8262ebfd9 100644
---- a/block/nvme.c
-+++ b/block/nvme.c
-@@ -1176,25 +1176,35 @@ fail:
- 
- typedef struct {
-     Coroutine *co;
-+    bool skip_yield;
-     int ret;
--    AioContext *ctx;
- } NVMeCoData;
- 
--static void nvme_rw_cb_bh(void *opaque)
--{
--    NVMeCoData *data = opaque;
--    qemu_coroutine_enter(data->co);
--}
--
- static void nvme_rw_cb(void *opaque, int ret)
- {
-     NVMeCoData *data = opaque;
-+
-     data->ret = ret;
--    if (!data->co) {
--        /* The rw coroutine hasn't yielded, don't try to enter. */
--        return;
-+
-+    if (data->co == qemu_coroutine_self()) {
-+        /*
-+         * Fast path: We are inside of the request coroutine (through
-+         * nvme_submit_command, nvme_deferred_fn, nvme_process_completion).
-+         * We can set data->skip_yield here to keep the coroutine from
-+         * yielding, and then we don't need to schedule a BH to wake it.
-+         */
-+        data->skip_yield = true;
-+    } else {
-+        /*
-+         * Safe to call: The case where we run in the request coroutine is
-+         * handled above, so we must be independent of it; and without
-+         * skip_yield set, the coroutine will yield.
-+         * No need to release NVMeQueuePair.lock (we are called without it
-+         * held).  (Note: If we enter the coroutine here, @data will
-+         * probably be dangling once aio_co_wake() returns.)
-+         */
-+        aio_co_wake(data->co);
-     }
--    replay_bh_schedule_oneshot_event(data->ctx, nvme_rw_cb_bh, data);
+diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
+index e4ec4e7d367..a3125fc9026 100644
+--- a/include/accel/tcg/cpu-ldst.h
++++ b/include/accel/tcg/cpu-ldst.h
+@@ -523,14 +523,4 @@ static inline uint64_t cpu_ldq_be_code(CPUArchState *env, abi_ptr addr)
+     return cpu_ldq_code_mmu(env, addr, oi, 0);
  }
  
- static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
-@@ -1218,7 +1228,7 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
-         .cdw12 = cpu_to_le32(cdw12),
-     };
-     NVMeCoData data = {
--        .ctx = bdrv_get_aio_context(bs),
-+        .co = qemu_coroutine_self(),
-         .ret = -EINPROGRESS,
-     };
- 
-@@ -1235,9 +1245,7 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
-         return r;
-     }
-     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-#if TARGET_BIG_ENDIAN
+-# define cpu_lduw_code        cpu_lduw_be_code
+-# define cpu_ldl_code         cpu_ldl_be_code
+-# define cpu_ldq_code         cpu_ldq_be_code
+-#else
+-# define cpu_lduw_code        cpu_lduw_le_code
+-# define cpu_ldl_code         cpu_ldl_le_code
+-# define cpu_ldq_code         cpu_ldq_le_code
+-#endif
 -
--    data.co = qemu_coroutine_self();
--    while (data.ret == -EINPROGRESS) {
-+    if (!data.skip_yield) {
-         qemu_coroutine_yield();
-     }
- 
-@@ -1333,7 +1341,7 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
-         .nsid = cpu_to_le32(s->nsid),
-     };
-     NVMeCoData data = {
--        .ctx = bdrv_get_aio_context(bs),
-+        .co = qemu_coroutine_self(),
-         .ret = -EINPROGRESS,
-     };
- 
-@@ -1341,9 +1349,7 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
-     req = nvme_get_free_req(ioq);
-     assert(req);
-     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
--
--    data.co = qemu_coroutine_self();
--    if (data.ret == -EINPROGRESS) {
-+    if (!data.skip_yield) {
-         qemu_coroutine_yield();
-     }
- 
-@@ -1384,7 +1390,7 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
-     };
- 
-     NVMeCoData data = {
--        .ctx = bdrv_get_aio_context(bs),
-+        .co = qemu_coroutine_self(),
-         .ret = -EINPROGRESS,
-     };
- 
-@@ -1404,9 +1410,7 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
-     assert(req);
- 
-     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
--
--    data.co = qemu_coroutine_self();
--    while (data.ret == -EINPROGRESS) {
-+    if (!data.skip_yield) {
-         qemu_coroutine_yield();
-     }
- 
-@@ -1434,7 +1438,7 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
-     };
- 
-     NVMeCoData data = {
--        .ctx = bdrv_get_aio_context(bs),
-+        .co = qemu_coroutine_self(),
-         .ret = -EINPROGRESS,
-     };
- 
-@@ -1479,9 +1483,7 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
-     trace_nvme_dsm(s, offset, bytes);
- 
-     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
--
--    data.co = qemu_coroutine_self();
--    while (data.ret == -EINPROGRESS) {
-+    if (!data.skip_yield) {
-         qemu_coroutine_yield();
-     }
- 
+ #endif /* ACCEL_TCG_CPU_LDST_H */
 -- 
-2.47.3
+2.51.0
 
 
