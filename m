@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 847B9CFC518
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390E0CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcvl-0001P5-MV; Fri, 21 Nov 2025 21:00:54 -0500
+	id 1vMcrn-0006hR-3t; Fri, 21 Nov 2025 20:56:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbxr-0008B1-W0; Fri, 21 Nov 2025 19:59:00 -0500
+ id 1vMbqx-00045K-SI; Fri, 21 Nov 2025 19:51:51 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbvm-0001Y0-CM; Fri, 21 Nov 2025 19:58:52 -0500
+ id 1vMbqn-0000cA-EP; Fri, 21 Nov 2025 19:51:48 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 60D2116CA5D;
- Fri, 21 Nov 2025 21:44:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 892AF16CA83;
+ Fri, 21 Nov 2025 21:44:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1E91A321C99;
- Fri, 21 Nov 2025 21:44:33 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 47005321CBF;
+ Fri, 21 Nov 2025 21:44:38 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 34/81] target/s390x: Fix missing interrupts for small
- CKC values
-Date: Fri, 21 Nov 2025 21:43:33 +0300
-Message-ID: <20251121184424.1137669-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 72/81] nvme: Fix coroutine waking
+Date: Fri, 21 Nov 2025 21:44:11 +0300
+Message-ID: <20251121184424.1137669-72-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -53,49 +54,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-Suppose TOD clock value is 0x1111111111111111 and clock-comparator
-value is 0, in which case clock-comparator interruption should occur
-immediately.
+nvme wakes the request coroutine via qemu_coroutine_enter() from a BH
+scheduled in the BDS AioContext.  This may not be the same context as
+the one in which the request originally ran, which would be wrong:
+- It could mean we enter the coroutine before it yields,
+- We would move the coroutine in to a different context.
 
-With the current code, tod2time(env->ckc - td->base.low) ends up being
-a very large number, so this interruption never happens.
+(Can be reproduced with multiqueue by adding a usleep(100000) before the
+`while (data.ret == -EINPROGRESS)` loop.)
 
-Fix by firing the timer immediately if env->ckc < td->base.low.
+To fix that, use aio_co_wake() to run the coroutine in its home context.
+Just like in the preceding iscsi and nfs patches, we can drop the
+trivial nvme_rw_cb_bh() and use aio_co_wake() directly.
+
+With this, we can remove NVMeCoData.ctx.
+
+Note the check of data->co == NULL to bypass the BH/yield combination in
+case nvme_rw_cb() is called from nvme_submit_command(): We probably want
+to keep this fast path for performance reasons, but we have to be quite
+careful about it:
+- We cannot overload .ret for this, but have to use a dedicated
+  .skip_yield field.  Otherwise, if nvme_rw_cb() runs in a different
+  thread than the coroutine, it may see .ret set and skip the yield,
+  while nvme_rw_cb() will still schedule a BH for waking.   Therefore,
+  the signal to skip the yield can only be set in nvme_rw_cb() if waking
+  too is skipped, which is independent from communicating the return
+  value.
+- We can only skip the yield if nvme_rw_cb() actually runs in the
+  request coroutine.  Otherwise (specifically if they run in different
+  AioContexts), the order between this function’s execution and the
+  coroutine yielding (or not yielding) is not reliable.
+- There is no point to yielding in a loop; there are no spurious wakes,
+  so once we yield, we will only be re-entered once the command is done.
+  Replace `while` by `if`.
 
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20251016175954.41153-2-iii@linux.ibm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit df7e9243d540ee130f044f975af8de33c45f5299)
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20251110154854.151484-9-hreitz@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 0f142cbd919fcb6cea7aa176f7e4939925806dd9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
-index 31266aeda4..06b75aa453 100644
---- a/target/s390x/tcg/misc_helper.c
-+++ b/target/s390x/tcg/misc_helper.c
-@@ -199,11 +199,15 @@ static void update_ckc_timer(CPUS390XState *env)
-         return;
+diff --git a/block/nvme.c b/block/nvme.c
+index 3366519e57..2e93abdb4b 100644
+--- a/block/nvme.c
++++ b/block/nvme.c
+@@ -1171,25 +1171,35 @@ fail:
+ 
+ typedef struct {
+     Coroutine *co;
++    bool skip_yield;
+     int ret;
+-    AioContext *ctx;
+ } NVMeCoData;
+ 
+-static void nvme_rw_cb_bh(void *opaque)
+-{
+-    NVMeCoData *data = opaque;
+-    qemu_coroutine_enter(data->co);
+-}
+-
+ static void nvme_rw_cb(void *opaque, int ret)
+ {
+     NVMeCoData *data = opaque;
++
+     data->ret = ret;
+-    if (!data->co) {
+-        /* The rw coroutine hasn't yielded, don't try to enter. */
+-        return;
++
++    if (data->co == qemu_coroutine_self()) {
++        /*
++         * Fast path: We are inside of the request coroutine (through
++         * nvme_submit_command, nvme_deferred_fn, nvme_process_completion).
++         * We can set data->skip_yield here to keep the coroutine from
++         * yielding, and then we don't need to schedule a BH to wake it.
++         */
++        data->skip_yield = true;
++    } else {
++        /*
++         * Safe to call: The case where we run in the request coroutine is
++         * handled above, so we must be independent of it; and without
++         * skip_yield set, the coroutine will yield.
++         * No need to release NVMeQueuePair.lock (we are called without it
++         * held).  (Note: If we enter the coroutine here, @data will
++         * probably be dangling once aio_co_wake() returns.)
++         */
++        aio_co_wake(data->co);
+     }
+-    replay_bh_schedule_oneshot_event(data->ctx, nvme_rw_cb_bh, data);
+ }
+ 
+ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+@@ -1213,7 +1223,7 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+         .cdw12 = cpu_to_le32(cdw12),
+     };
+     NVMeCoData data = {
+-        .ctx = bdrv_get_aio_context(bs),
++        .co = qemu_coroutine_self(),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1230,9 +1240,7 @@ static coroutine_fn int nvme_co_prw_aligned(BlockDriverState *bs,
+         return r;
+     }
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-
+-    data.co = qemu_coroutine_self();
+-    while (data.ret == -EINPROGRESS) {
++    if (!data.skip_yield) {
+         qemu_coroutine_yield();
      }
  
--    /* difference between origins */
--    time = env->ckc - td->base.low;
-+    if (env->ckc < td->base.low) {
-+        time = 0;
-+    } else {
-+        /* difference between origins */
-+        time = env->ckc - td->base.low;
+@@ -1328,7 +1336,7 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
+         .nsid = cpu_to_le32(s->nsid),
+     };
+     NVMeCoData data = {
+-        .ctx = bdrv_get_aio_context(bs),
++        .co = qemu_coroutine_self(),
+         .ret = -EINPROGRESS,
+     };
  
--    /* nanoseconds */
--    time = tod2time(time);
-+        /* nanoseconds */
-+        time = tod2time(time);
-+    }
+@@ -1336,9 +1344,7 @@ static coroutine_fn int nvme_co_flush(BlockDriverState *bs)
+     req = nvme_get_free_req(ioq);
+     assert(req);
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-
+-    data.co = qemu_coroutine_self();
+-    if (data.ret == -EINPROGRESS) {
++    if (!data.skip_yield) {
+         qemu_coroutine_yield();
+     }
  
-     timer_mod(env->tod_timer, time);
- }
+@@ -1379,7 +1385,7 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
+     };
+ 
+     NVMeCoData data = {
+-        .ctx = bdrv_get_aio_context(bs),
++        .co = qemu_coroutine_self(),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1399,9 +1405,7 @@ static coroutine_fn int nvme_co_pwrite_zeroes(BlockDriverState *bs,
+     assert(req);
+ 
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-
+-    data.co = qemu_coroutine_self();
+-    while (data.ret == -EINPROGRESS) {
++    if (!data.skip_yield) {
+         qemu_coroutine_yield();
+     }
+ 
+@@ -1429,7 +1433,7 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
+     };
+ 
+     NVMeCoData data = {
+-        .ctx = bdrv_get_aio_context(bs),
++        .co = qemu_coroutine_self(),
+         .ret = -EINPROGRESS,
+     };
+ 
+@@ -1474,9 +1478,7 @@ static int coroutine_fn nvme_co_pdiscard(BlockDriverState *bs,
+     trace_nvme_dsm(s, offset, bytes);
+ 
+     nvme_submit_command(ioq, req, &cmd, nvme_rw_cb, &data);
+-
+-    data.co = qemu_coroutine_self();
+-    while (data.ret == -EINPROGRESS) {
++    if (!data.skip_yield) {
+         qemu_coroutine_yield();
+     }
+ 
 -- 
 2.47.3
 
