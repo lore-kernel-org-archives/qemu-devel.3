@@ -4,74 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9F72CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D01CFC51C
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:36:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcnU-0003fY-10; Fri, 21 Nov 2025 20:52:21 -0500
+	id 1vMd2w-0001k8-K1; Fri, 21 Nov 2025 21:08:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbcG-0003Wa-R9
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:36:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMcLd-0004FS-26; Fri, 21 Nov 2025 20:23:33 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbc7-0005vT-96
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:36:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763771775;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=SakLJGJj0LkA1a6qNyCMYZNSthSDHMhyUkRA4qcArBA=;
- b=gRmKWGIjdE/boM7ZJgqGpwRrosqopbvLZcUAKwdkL9cObKz88DVts1kTspJVGTVrtZs+Dj
- yDIdtL4r/pcj7rwRj62hNVKZSQO4NrK+BFiNQ4k3WpuovqXD6wnpjnjQhfJvt7+lZkA7Ko
- zuT3h4twth2d2yAxIQIpqxl8jNuG0+4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-362--3aJYg8QO7mowt-5VMm9DQ-1; Fri,
- 21 Nov 2025 07:14:49 -0500
-X-MC-Unique: -3aJYg8QO7mowt-5VMm9DQ-1
-X-Mimecast-MFC-AGG-ID: -3aJYg8QO7mowt-5VMm9DQ_1763727284
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 384951956059; Fri, 21 Nov 2025 12:14:43 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E1C871940E82; Fri, 21 Nov 2025 12:14:40 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7FBC221E6A27; Fri, 21 Nov 2025 13:14:38 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMcJb-0007Kq-KU; Fri, 21 Nov 2025 20:23:29 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id D663D16CA48;
+ Fri, 21 Nov 2025 21:44:21 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 94456321C84;
+ Fri, 21 Nov 2025 21:44:30 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, alistair.francis@wdc.com,
- stefanb@linux.vnet.ibm.com, kwolf@redhat.com, hreitz@redhat.com,
- sw@weilnetz.de, qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
- shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
- sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
- sgarzare@redhat.com, pbonzini@redhat.com, fam@euphon.net,
- philmd@linaro.org, alex@shazbot.org, clg@redhat.com, peterx@redhat.com,
- farosas@suse.de, lizhijian@fujitsu.com, dave@treblig.org,
- jasowang@redhat.com, samuel.thibault@ens-lyon.org, michael.roth@amd.com,
- kkostiuk@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
- rathc@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- marcandre.lureau@redhat.com, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- xen-devel@lists.xenproject.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
-Subject: [PATCH v2 00/15] Error message improvements
-Date: Fri, 21 Nov 2025 13:14:23 +0100
-Message-ID: <20251121121438.1249498-1-armbru@redhat.com>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 13/81] io: move websock resource release to close
+ method
+Date: Fri, 21 Nov 2025 21:43:12 +0300
+Message-ID: <20251121184424.1137669-13-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,75 +55,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2:
-* PATCH 02: New, replacing old PATCH 02 [Dave]
-* PATCH 03: New, replacing one of old PATCH 09's hunks
-* PATCH 12: Fix patch splitting mishap [Dave]
-* PATCH 13: Fix lost argument [Dave]
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Markus Armbruster (15):
-  error: Strip trailing '\n' from error string arguments (again)
-  hw/usb: Convert to qemu_create() for a better error message
-  ui: Convert to qemu_create() for simplicity and consistency
-  tap-solaris: Use error_setg_file_open() for better error messages
-  qga: Use error_setg_file_open() for better error messages
-  hw/scsi: Use error_setg_file_open() for a better error message
-  hw/virtio: Use error_setg_file_open() for a better error message
-  net/tap: Use error_setg_file_open() for a better error message
-  blkdebug: Use error_setg_file_open() for a better error message
-  error: Use error_setg_file_open() for simplicity and consistency
-  net/slirp: Improve file open error message
-  error: Use error_setg_errno() to improve error messages
-  error: Use error_setg_errno() for simplicity and consistency
-  qga/commands-win32: Use error_setg_win32() for better error messages
-  block/file-win32: Improve an error message
+The QIOChannelWebsock object releases all its resources in the
+finalize callback. This is later than desired, as callers expect
+to be able to call qio_channel_close() to fully close a channel
+and release resources related to I/O.
 
- backends/cryptodev-lkcf.c   |  2 +-
- backends/spdm-socket.c      |  4 ++--
- backends/tpm/tpm_emulator.c | 13 +++++--------
- block/blkdebug.c            |  2 +-
- block/file-win32.c          |  2 +-
- hw/9pfs/9p-local.c          |  2 +-
- hw/9pfs/9p.c                |  3 +--
- hw/acpi/core.c              |  5 ++---
- hw/audio/es1370.c           |  2 +-
- hw/core/loader.c            |  2 +-
- hw/intc/openpic_kvm.c       |  3 +--
- hw/intc/xics_kvm.c          |  5 +++--
- hw/pci-host/xen_igd_pt.c    |  2 +-
- hw/ppc/spapr.c              |  6 +++---
- hw/remote/vfio-user-obj.c   | 18 +++++++++---------
- hw/scsi/vhost-scsi.c        |  3 +--
- hw/sensor/emc141x.c         |  4 ++--
- hw/sensor/tmp421.c          |  4 ++--
- hw/smbios/smbios.c          |  4 ++--
- hw/usb/bus.c                |  5 ++---
- hw/vfio/migration-multifd.c |  5 +++--
- hw/virtio/vdpa-dev.c        |  4 ++--
- hw/virtio/vhost-vsock.c     |  3 +--
- migration/postcopy-ram.c    | 10 +++++-----
- migration/rdma.c            |  3 +--
- monitor/hmp-cmds-target.c   |  2 +-
- net/dump.c                  |  2 +-
- net/l2tpv3.c                |  6 ++----
- net/slirp.c                 |  9 ++++++---
- net/tap-bsd.c               |  6 +++---
- net/tap-linux.c             |  2 +-
- net/tap-solaris.c           |  6 +++---
- net/tap.c                   |  3 +--
- qga/commands-linux.c        | 11 ++++++-----
- qga/commands-posix-ssh.c    | 23 +++++++++++++----------
- qga/commands-win32.c        | 16 ++++++++--------
- system/vl.c                 |  2 +-
- target/i386/sev.c           |  6 ++----
- target/ppc/kvm.c            |  5 ++---
- target/riscv/kvm/kvm-cpu.c  | 11 ++++++-----
- ui/gtk.c                    |  2 +-
- ui/ui-qmp-cmds.c            |  4 +---
- util/vfio-helpers.c         |  5 ++---
- 43 files changed, 114 insertions(+), 123 deletions(-)
+The logic in the finalize method is at most a failsafe to handle
+cases where a consumer forgets to call qio_channel_close.
 
+This adds equivalent logic to the close method to release the
+resources, using g_clear_handle_id/g_clear_pointer to be robust
+against repeated invocations. The finalize method is tweaked
+so that the GSource is removed before releasing the underlying
+channel.
+
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 322c3c4f3abee616a18b3bfe563ec29dd67eae63)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index 55192b770a..5c0df9d6af 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -922,13 +922,13 @@ static void qio_channel_websock_finalize(Object *obj)
+     buffer_free(&ioc->encinput);
+     buffer_free(&ioc->encoutput);
+     buffer_free(&ioc->rawinput);
+-    object_unref(OBJECT(ioc->master));
+     if (ioc->io_tag) {
+         g_source_remove(ioc->io_tag);
+     }
+     if (ioc->io_err) {
+         error_free(ioc->io_err);
+     }
++    object_unref(OBJECT(ioc->master));
+ }
+ 
+ 
+@@ -1219,6 +1219,15 @@ static int qio_channel_websock_close(QIOChannel *ioc,
+     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(ioc);
+ 
+     trace_qio_channel_websock_close(ioc);
++    buffer_free(&wioc->encinput);
++    buffer_free(&wioc->encoutput);
++    buffer_free(&wioc->rawinput);
++    if (wioc->io_tag) {
++        g_clear_handle_id(&wioc->io_tag, g_source_remove);
++    }
++    if (wioc->io_err) {
++        g_clear_pointer(&wioc->io_err, error_free);
++    }
+     return qio_channel_close(wioc->master, errp);
+ }
+ 
 -- 
-2.49.0
+2.47.3
 
 
