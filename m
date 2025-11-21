@@ -4,108 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A6B3CFC516
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B65D9CFC515
 	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMciv-00007u-U6; Fri, 21 Nov 2025 20:47:39 -0500
+	id 1vMcnE-0003RB-4Z; Fri, 21 Nov 2025 20:52:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vMbRt-0005lV-UI
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:26:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbaJ-00027g-R4
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:34:39 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vMbRh-0003ES-GM
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:25:53 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMba8-0005T4-QJ
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:34:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763771128;
+ s=mimecast20190719; t=1763771653;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HvfEuZqsYtGOsOMoRJb/pPk3SZPKfOA52jDeyhimdME=;
- b=aIjRLfeNRtVkFeW6yhhNVLjSBI+ttYg6f45nWMWpOg00DiPkoCrteJqoPEycz3y0IRkbkq
- ZqbWm+m32qjiCmIUqapk1BZrKyMbPPGhV25mAcHnFs+0DSaee1toJVLKRlsn0TZTotXzwr
- LX7m5Uq5bjOPe25XNgMAJSq/oAMuUlQ=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-252-ncrbj46KOaiwwNgNCoSKuQ-1; Fri, 21 Nov 2025 08:07:58 -0500
-X-MC-Unique: ncrbj46KOaiwwNgNCoSKuQ-1
-X-Mimecast-MFC-AGG-ID: ncrbj46KOaiwwNgNCoSKuQ_1763730478
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2956a694b47so34967675ad.1
- for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 05:07:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1763730477; x=1764335277; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HvfEuZqsYtGOsOMoRJb/pPk3SZPKfOA52jDeyhimdME=;
- b=BCNBdAGxV0wtP9pjF5cPSUVA3VVQKO5qfULO/5jhfrf8aH/uTMuxqH99gKMcJj1Fb4
- G7gFSO5r4d7jXhr1X/Im900PTc+32NVNPKKVfnouhHr1zdtq8Pd8VLzZwe0WhUzAZnEx
- tv3ZCNJt27ezD5qXYt6RcPEvJ+ulL2xtiUvL9ITvMbvoai/V8Wo/R0ure0uIblYLRd9m
- upBxIR+Xo1GD2I9N8OB8369feeEk0mS0YgK4aGOmavzTlhCf902m+omZkZgb/WW4oqoQ
- 8uH8eV1EzInsrZovXu0E18cMl1iRjUFYa746FX6H7nuZq48uYCIE0QUwHV371l17Xdmu
- E4pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763730477; x=1764335277;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HvfEuZqsYtGOsOMoRJb/pPk3SZPKfOA52jDeyhimdME=;
- b=jT8+Na/mJvzC8ee68hox3dDabBME0XM5+OVBcyDzKznH96SdD8SqNlGeqdvmio0qac
- /Yys518sxa4TvSUy/Ug1pWkXjYeiFUYLpie7w1ojw+YNK/qewujR0or9t611MKrTZpOH
- 0TtqYaFn+pQhaAtU4grMPcRhLeLS+vI1fDVKB28oSxdWYUbqIXOib5P1j0yL2/4Vv0pR
- 4knaMsmu/bN6XiRekYnhNg9A2OfbfblzGQva1HmhBgRZ65YN4IKEZPmq3FgRtCYLo+r2
- P7tZdaydqjLj/4puKnSYdq3MuK25Ub4mr5LTAMJyMpxScjWxS1D1335ywLftzJgNh+56
- f/aQ==
-X-Gm-Message-State: AOJu0YxqPbpHk7RX+dKZAdUNcRQ3S7iMXfVYqyp+BiVAG9EXvcAqyuT7
- OBClyWILmH9d7JM+Mf0aWyiKKDAP3f/Tmks8TbW/Tukf4yzJ+bH+GqXdd4z7eyUdXX/+HbHCufw
- HX6tHQnSeaeN3THGiXHsCPNXEZbKP3D4Dqxv6hRWs4s18kLAQ1FbAaywR
-X-Gm-Gg: ASbGncvt4JvWysNL7yuSmjqiaDurGyMNuAQBz8vGw5iiBrYBV/UYl8dQ6oH1YgoczvA
- Qay98CP7Otb5DBItpcMWM2Siua80KUaANV66KKfJXy9MU61Wa+vLJ5ZQ3e207YJF0PvWDEcudhx
- GdcgMzlErrv3+PLf82+/J455bCnmU8P9LqhNdGGt2tAT01q1B4u8HhNJJPsVsi15wdTCG7zP+Pp
- 21QuiysM5zV0M7w4BdDQX2G+ByjG8o4zqlj3uuQPJ68W/HlEM1yhp2srpRrl3a9SbOjWv5mCUKj
- fxLBA0bRNeKwSXcIejAUT/HBDswfSQUHLPGYyWCRJFz6lpQvmaPXaapm2b9vc2Tw4pIIEEj1XHw
- T1dHIBl7mB6QwAejylVt4CMcR7ubOPN2Q0CJ/et0+GUhQEYh5n0y/ul4E
-X-Received: by 2002:a17:903:2450:b0:27d:69cc:9a6 with SMTP id
- d9443c01a7336-29b6bf7f26cmr29578845ad.53.1763730477490; 
- Fri, 21 Nov 2025 05:07:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGUrdLgpZVnB+pqYJctbNVZLzgUbKIPWyNoVZITw+yxhokcZ5qqG6O/Psx+AKJ591Hk9ULgKQ==
-X-Received: by 2002:a17:903:2450:b0:27d:69cc:9a6 with SMTP id
- d9443c01a7336-29b6bf7f26cmr29578475ad.53.1763730476969; 
- Fri, 21 Nov 2025 05:07:56 -0800 (PST)
-Received: from smtpclient.apple ([106.212.87.16])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-bd75b61c29dsm5589954a12.0.2025.11.21.05.07.53
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 21 Nov 2025 05:07:56 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.7\))
-Subject: Re: [PATCH 3/4] igvm: add trace point for igvm file loading and
- processing
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20251118122133.1695767-4-kraxel@redhat.com>
-Date: Fri, 21 Nov 2025 18:37:41 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>, Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Luigi Leonardi <leonardi@redhat.com>, Oliver Steffen <osteffen@redhat.com>,
- Michael Tsirkin <mst@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <3BCC9E21-2EB5-4D63-B2E3-923F5BB9BBE4@redhat.com>
-References: <20251118122133.1695767-1-kraxel@redhat.com>
- <20251118122133.1695767-4-kraxel@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-X-Mailer: Apple Mail (2.3776.700.51.11.7)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ bh=fcIBzXudHPYvY6QmF4OmsaPzhsA+4LiQymdChLvcMTo=;
+ b=Pii47RRizrjwm9x8EmtpY2YOBBQ7RKNqyZFNxODwKrhkmIa9ab2IY/ZlbN0bcSMKGT/i3T
+ kEF9L/7Piqa+oJ+uKgcsEqNYqpZ5ULixa+zGfskjSOZ+So9cO3Q2IjirlCWZR8ykdvAkTV
+ qjfHGSfhRNuAxHmOuhgflzvlvneuvAY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-Dq2pCknkP6KXf0MRWBD_yw-1; Fri,
+ 21 Nov 2025 07:14:48 -0500
+X-MC-Unique: Dq2pCknkP6KXf0MRWBD_yw-1
+X-Mimecast-MFC-AGG-ID: Dq2pCknkP6KXf0MRWBD_yw_1763727284
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4FD4B1800650; Fri, 21 Nov 2025 12:14:43 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 19398180049F; Fri, 21 Nov 2025 12:14:41 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 835E221E6935; Fri, 21 Nov 2025 13:14:38 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, alistair.francis@wdc.com,
+ stefanb@linux.vnet.ibm.com, kwolf@redhat.com, hreitz@redhat.com,
+ sw@weilnetz.de, qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
+ shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
+ sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
+ sgarzare@redhat.com, pbonzini@redhat.com, fam@euphon.net,
+ philmd@linaro.org, alex@shazbot.org, clg@redhat.com, peterx@redhat.com,
+ farosas@suse.de, lizhijian@fujitsu.com, dave@treblig.org,
+ jasowang@redhat.com, samuel.thibault@ens-lyon.org, michael.roth@amd.com,
+ kkostiuk@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ rathc@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ marcandre.lureau@redhat.com, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ xen-devel@lists.xenproject.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
+Subject: [PATCH v2 01/15] error: Strip trailing '\n' from error string
+ arguments (again)
+Date: Fri, 21 Nov 2025 13:14:24 +0100
+Message-ID: <20251121121438.1249498-2-armbru@redhat.com>
+In-Reply-To: <20251121121438.1249498-1-armbru@redhat.com>
+References: <20251121121438.1249498-1-armbru@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,74 +90,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Tracked down with scripts/coccinelle/err-bad-newline.cocci.
 
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ hw/audio/es1370.c | 2 +-
+ ui/gtk.c          | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-> On 18 Nov 2025, at 5:51=E2=80=AFPM, Gerd Hoffmann <kraxel@redhat.com> =
-wrote:
->=20
-Please add some description to the patch =E2=80=A6
-
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-
-Modulo above ..
-
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-
-
-> ---
-> backends/igvm.c       | 5 +++++
-> backends/trace-events | 2 ++
-> 2 files changed, 7 insertions(+)
->=20
-> diff --git a/backends/igvm.c b/backends/igvm.c
-> index 05d197fdfe85..a350c890cc95 100644
-> --- a/backends/igvm.c
-> +++ b/backends/igvm.c
-> @@ -18,6 +18,8 @@
-> #include "system/address-spaces.h"
-> #include "hw/core/cpu.h"
->=20
-> +#include "trace.h"
-> +
-> #include <igvm/igvm.h>
-> #include <igvm/igvm_defs.h>
->=20
-> @@ -884,6 +886,8 @@ IgvmHandle qigvm_file_init(char *filename, Error =
-**errp)
->         error_setg(errp, "Unable to parse IGVM file %s: %d", filename, =
-igvm);
->         return -1;
->     }
-> +
-> +    trace_igvm_file_loaded(filename, igvm);
->     return igvm;
-> }
->=20
-> @@ -901,6 +905,7 @@ int qigvm_process_file(IgvmCfg *cfg, =
-ConfidentialGuestSupport *cgs,
->         return -1;
->     }
->     ctx.file =3D cfg->file;
-> +    trace_igvm_process_file(cfg->file, onlyVpContext);
->=20
->     /*
->      * The ConfidentialGuestSupport object is optional and allows a =
-confidential
-> diff --git a/backends/trace-events b/backends/trace-events
-> index 45ac46dc2454..7a00e9bf6c16 100644
-> --- a/backends/trace-events
-> +++ b/backends/trace-events
-> @@ -26,3 +26,5 @@ iommufd_backend_invalidate_cache(int iommufd, =
-uint32_t id, uint32_t data_type, u
-> igvm_reset_enter(int type) "type=3D%u"
-> igvm_reset_hold(int type) "type=3D%u"
-> igvm_reset_exit(int type) "type=3D%u"
-> +igvm_file_loaded(const char *fn, int32_t handle) "fn=3D%s, =
-handle=3D0x%x"
-> +igvm_process_file(int32_t handle, bool context_only) "handle=3D0x%x =
-context-only=3D%d"
-> --=20
-> 2.51.1
->=20
+diff --git a/hw/audio/es1370.c b/hw/audio/es1370.c
+index 9873ffadab..566f93f1ea 100644
+--- a/hw/audio/es1370.c
++++ b/hw/audio/es1370.c
+@@ -228,7 +228,7 @@ static void print_sctl(uint32_t val)
+ #undef a
+         error_report("es1370: "
+                 "%s p2_end_inc %d, p2_st_inc %d,"
+-                " r1_fmt %s, p2_fmt %s, p1_fmt %s\n",
++                " r1_fmt %s, p2_fmt %s, p1_fmt %s",
+                 buf,
+                 (val & SCTRL_P2ENDINC) >> SCTRL_SH_P2ENDINC,
+                 (val & SCTRL_P2STINC) >> SCTRL_SH_P2STINC,
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 48571bedbf..e83a366625 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -1197,7 +1197,7 @@ static gboolean gd_touch_event(GtkWidget *widget, GdkEventTouch *touch,
+         type = INPUT_MULTI_TOUCH_TYPE_END;
+         break;
+     default:
+-        warn_report("gtk: unexpected touch event type\n");
++        warn_report("gtk: unexpected touch event type");
+         return FALSE;
+     }
+ 
+-- 
+2.49.0
 
 
