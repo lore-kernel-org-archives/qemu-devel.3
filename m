@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A9A2CF64B1
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 12:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05206CFC533
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 12:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd1D-0000pk-Mk; Fri, 21 Nov 2025 21:06:32 -0500
+	id 1vMd03-0004ab-UL; Fri, 21 Nov 2025 21:05:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcVQ-0000yS-Kb; Fri, 21 Nov 2025 20:33:40 -0500
+ id 1vMcBO-0007L2-9S; Fri, 21 Nov 2025 20:12:58 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcTM-0001Nn-94; Fri, 21 Nov 2025 20:33:35 -0500
+ id 1vMcBC-0004z3-9U; Fri, 21 Nov 2025 20:12:54 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 199EA16CA6A;
- Fri, 21 Nov 2025 21:44:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A881B16CA46;
+ Fri, 21 Nov 2025 21:44:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CC95A321CA6;
- Fri, 21 Nov 2025 21:44:34 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3248D321C82;
+ Fri, 21 Nov 2025 21:44:30 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 47/81] qio: Add trace points to net_listener
-Date: Fri, 21 Nov 2025 21:43:46 +0300
-Message-ID: <20251121184424.1137669-47-mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 11/81] target/riscv: fix riscv_cpu_sirq_pending() mask
+Date: Fri, 21 Nov 2025 21:43:10 +0300
+Message-ID: <20251121184424.1137669-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -54,104 +54,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Blake <eblake@redhat.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Upcoming patches will adjust how net_listener watches for new client
-connections; adding trace points now makes it easier to debug that the
-changes work as intended.  For example, adding
---trace='qio_net_listener*' to the qemu-storage-daemon command line
-before --nbd-server will track when the server first starts listening
-for clients.
+We're filtering out (MIP_VSSIP | MIP_VSTIP | MIP_VSEIP) from S-mode
+pending interrupts without apparent reason. There's no special treatment
+for these ints as far as the spec goes, and this filtering is causing
+read_stopi() to miss those VS interrupts [1].
 
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20251113011625.878876-17-eblake@redhat.com>
-(cherry picked from commit 59506e59e0f0a773e892104b945d0f15623381a7)
+We shouldn't return delegated VS interrupts in S-mode though, so change
+the current mask with "~env->hideleg". Note that this is the same
+handling we're doing in riscv_cpu_mirq_pending() and env->mideleg.
+
+[1] https://gitlab.com/qemu-project/qemu/-/issues/2820
+
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2820
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20251022124340.493358-1-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Cc: qemu-stable@nongnu.org
+(cherry picked from commit 06e01941ffca3c246a9770f477e43118793fde59)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/io/net-listener.c b/io/net-listener.c
-index 47405965a6..007acbd5b1 100644
---- a/io/net-listener.c
-+++ b/io/net-listener.c
-@@ -23,6 +23,7 @@
- #include "io/dns-resolver.h"
- #include "qapi/error.h"
- #include "qemu/module.h"
-+#include "trace.h"
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 3233b66e7e..25619c556c 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -539,8 +539,7 @@ int riscv_cpu_mirq_pending(CPURISCVState *env)
  
- QIONetListener *qio_net_listener_new(void)
+ int riscv_cpu_sirq_pending(CPURISCVState *env)
  {
-@@ -50,6 +51,7 @@ static gboolean qio_net_listener_channel_func(QIOChannel *ioc,
-         return TRUE;
-     }
+-    uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg &
+-                    ~(MIP_VSSIP | MIP_VSTIP | MIP_VSEIP);
++    uint64_t irqs = riscv_cpu_all_pending(env) & env->mideleg & ~env->hideleg;
+     uint64_t irqs_f = env->mvip & env->mvien & ~env->mideleg & env->sie;
  
-+    trace_qio_net_listener_callback(listener, listener->io_func);
-     if (listener->io_func) {
-         listener->io_func(listener, sioc, listener->io_data);
-     }
-@@ -123,6 +125,7 @@ void qio_net_listener_add(QIONetListener *listener,
-     object_ref(OBJECT(sioc));
-     listener->connected = true;
- 
-+    trace_qio_net_listener_watch(listener, listener->io_func, "add");
-     if (listener->io_func != NULL) {
-         object_ref(OBJECT(listener));
-         listener->io_source[listener->nsioc] = qio_channel_add_watch_source(
-@@ -143,6 +146,8 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
- {
-     size_t i;
- 
-+    trace_qio_net_listener_unwatch(listener, listener->io_func,
-+                                   "set_client_func");
-     if (listener->io_notify) {
-         listener->io_notify(listener->io_data);
-     }
-@@ -158,6 +163,8 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
-         }
-     }
- 
-+    trace_qio_net_listener_watch(listener, listener->io_func,
-+                                 "set_client_func");
-     if (listener->io_func != NULL) {
-         for (i = 0; i < listener->nsioc; i++) {
-             object_ref(OBJECT(listener));
-@@ -218,6 +225,7 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
-     };
-     size_t i;
- 
-+    trace_qio_net_listener_unwatch(listener, listener->io_func, "wait_client");
-     for (i = 0; i < listener->nsioc; i++) {
-         if (listener->io_source[i]) {
-             g_source_destroy(listener->io_source[i]);
-@@ -247,6 +255,7 @@ QIOChannelSocket *qio_net_listener_wait_client(QIONetListener *listener)
-     g_main_loop_unref(loop);
-     g_main_context_unref(ctxt);
- 
-+    trace_qio_net_listener_watch(listener, listener->io_func, "wait_client");
-     if (listener->io_func != NULL) {
-         for (i = 0; i < listener->nsioc; i++) {
-             object_ref(OBJECT(listener));
-@@ -268,6 +277,7 @@ void qio_net_listener_disconnect(QIONetListener *listener)
-         return;
-     }
- 
-+    trace_qio_net_listener_unwatch(listener, listener->io_func, "disconnect");
-     for (i = 0; i < listener->nsioc; i++) {
-         if (listener->io_source[i]) {
-             g_source_destroy(listener->io_source[i]);
-diff --git a/io/trace-events b/io/trace-events
-index dc3a63ba1f..10976eca5f 100644
---- a/io/trace-events
-+++ b/io/trace-events
-@@ -72,3 +72,8 @@ qio_channel_command_new_pid(void *ioc, int writefd, int readfd, int pid) "Comman
- qio_channel_command_new_spawn(void *ioc, const char *binary, int flags) "Command new spawn ioc=%p binary=%s flags=%d"
- qio_channel_command_abort(void *ioc, int pid) "Command abort ioc=%p pid=%d"
- qio_channel_command_wait(void *ioc, int pid, int ret, int status) "Command abort ioc=%p pid=%d ret=%d status=%d"
-+
-+# net-listener.c
-+qio_net_listener_watch(void *listener, void *func, const char *extra) "Net listener=%p watch enabled func=%p by %s"
-+qio_net_listener_unwatch(void *listener, void *func, const char *extra) "Net listener=%p watch disabled func=%p by %s"
-+qio_net_listener_callback(void *listener, void *func) "Net listener=%p callback forwarding to func=%p"
+     return riscv_cpu_pending_to_irq(env, IRQ_S_EXT, IPRIO_DEFAULT_S,
 -- 
 2.47.3
 
