@@ -4,82 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A243ACFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3BE3CFC515
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:52:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd4u-00034C-5Z; Fri, 21 Nov 2025 21:10:21 -0500
+	id 1vMd4G-0002WP-3E; Fri, 21 Nov 2025 21:09:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMcoZ-0004c7-ER
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:53:27 -0500
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMcmX-00061N-S1
- for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:53:24 -0500
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-b728a43e410so476360966b.1
- for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 17:51:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763776259; x=1764381059; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Fq19cbHx1urHYB7WgX1thdWAR2rwXrisZPcOy65hifc=;
- b=CXTXrC03rOGdUjmC4vE1dPAaL4l+wKMr5Jd92rM60YVAFNblM7f5Pr/juvB5RPA6lp
- Q4pNe8tiQXbBEi0CwAEWIK8YIY1DhpbCwOuU4ti1PlrTurHzTdwYJB72D+qgHvV4IrUu
- Mg+SJeC2CPYi0VHiieMnvraCR6GAnLWA+hTbPhUv3shsx+oFw54KF0mdefnTBL1g2/uy
- b2e+JZwcjBOrsOMAWH5ithZyI9BKLS0C5V/VTggwrtTq/ZcUuhUESMXKCC8KZkcHOWPD
- 1JEbfzxGr2co6Ak2a2i3FB7udzyTYjO5rAKcPyC6tzC/aIvlRsWJOAfxaByzY1pGaGr2
- JxAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763776259; x=1764381059;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Fq19cbHx1urHYB7WgX1thdWAR2rwXrisZPcOy65hifc=;
- b=E4yPCKNoQuoRcQoFCwOySxHp84i1IG+Yw4JG7YspAfeHZojIkH9F0W68pt/1KqSF1y
- PYKq2W5/XlQzLZhSoCp43h/hiRqxzkNfYBpH2x6RUo8x3wIScGmi06VPBM7BKQtnT2/x
- 3d/VEchycGOX8bFS5K96yufgb2uBomA1Uj0WZof3lgmaRG1SnN3OMFTeeOw+sIg8wNZ1
- DoA5Stb4azW4DpGbXsS7Lrxkzi3m2lA5zbJ4VaXb+XWMndqxSQNX76DvVfQV2qSZjiGH
- 8EQ7mzpEkLQvIlKgL5guFOMmjguRg66BwpshxtmjqYnn8t50N510XLRHSpUkY3jcofAc
- rZ6g==
-X-Gm-Message-State: AOJu0YwvscoBub++rHLTQ1E1k2QPGf3RkUVyra3pEVDe959F3FemEwh3
- VkTa81PDZ1qcg0n49Dg4lS6CxNW9CPaZXsBigc3cMJekTK2quU8acJIGUVQDu0nDVCApKk7MDKb
- I4OAMum6bUQ==
-X-Gm-Gg: ASbGncvQzg7bBVWdbTcyWu383iu3i9UGaAiX9/LaBOEzdJEs51pUDVhf1opJMMCcJkb
- iJ9i36YMJz7PJwjlfq5uXkOmvfQfsQs6KmyccxH1+POdEwAOs9jEWpVeskYmv1M82ok2ehC/2Tc
- 7TCZ8D1iZPj8W42AVVgv/AZJqn+I4SGk7crtJUEcANl0lhzQEkw7OG2VBOaYO6+Ds0CdFqlOKUp
- T3WCoXQo9e53YGoavpLeFbupYmqigBbxDHVJf6v/1LPq6y1sODkRePpma85GN3KAijEQfaJcU5e
- 70j9QAD3JnnuPhL2bmxsV5vCa046ucuhp6mml7sz2NIVi7QUQ1mGrGqiDhyj/BoNk6iKoRYfAys
- dDeQ9i8ZTxEqWdJLlcbELvZ+JNBqbbtcZl0TUsh8UG0THWc8YUZM/q9sp1NiBq7dHd70p2CqEKh
- HxpGMH2lUXudteNa04NoUrNkxKpTDteRnP9G0u6F89joriRnFXpnMEZMyIZFeC
-X-Google-Smtp-Source: AGHT+IFNOpsJhQzQPin1axIEEtvxDd8MYGAjtHV1dNpSExkzS4tkHFNwrMPxw8oYK/UwOJeSPwDpOg==
-X-Received: by 2002:a05:6000:2281:b0:42b:2e1c:6341 with SMTP id
- ffacd0b85a97d-42cc1abe28bmr2632465f8f.9.1763732752391; 
- Fri, 21 Nov 2025 05:45:52 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fa3a76sm11017266f8f.24.2025.11.21.05.45.51
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 21 Nov 2025 05:45:51 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMcVO-0000xC-FP; Fri, 21 Nov 2025 20:33:38 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vMcTL-0001Mr-8y; Fri, 21 Nov 2025 20:33:33 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 16B0C16CA8C;
+ Fri, 21 Nov 2025 21:44:31 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id CB323321CC8;
+ Fri, 21 Nov 2025 21:44:39 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-Subject: [RFC-PATCH-for-11.0 v3 07/21] target/ppc: Replace cpu_ldl_code() by
- explicit endianness variants
-Date: Fri, 21 Nov 2025 14:44:49 +0100
-Message-ID: <20251121134503.30914-8-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251121134503.30914-1-philmd@linaro.org>
-References: <20251121134503.30914-1-philmd@linaro.org>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 81/81] target/i386: fix stack size when delivering
+ real mode interrupts
+Date: Fri, 21 Nov 2025 21:44:20 +0300
+Message-ID: <20251121184424.1137669-81-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,41 +53,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/ppc/tcg-excp_helper.c | 16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index edecfb85725..b2d36ab11b1 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -424,22 +424,10 @@ G_NORETURN void powerpc_checkstop(CPUPPCState *env, const char *reason)
-     cpu_loop_exit_noexc(cs);
- }
+The stack can be 32-bit even in real mode, and in this case
+the stack pointer must be updated in its entirety rather than
+just the bottom 16 bits.  The same is true of real mode IRET,
+for which there was even a comment suggesting the right thing
+to do.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1506
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 106d766c9d5b549bc9780d2d2c519aa2bbebc89a)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 71962113fb..603993ea03 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -1135,7 +1135,7 @@ static void do_interrupt_real(CPUX86State *env, int intno, int is_int,
+     sa.env = env;
+     sa.ra = 0;
+     sa.sp = env->regs[R_ESP];
+-    sa.sp_mask = 0xffff;
++    sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
+     sa.ss_base = env->segs[R_SS].base;
+     sa.mmu_index = x86_mmu_index_pl(env, 0);
  
--/* Return true iff byteswap is needed to load instruction */
--static inline bool insn_need_byteswap(CPUArchState *env)
--{
--    /* SYSTEM builds TARGET_BIG_ENDIAN. Need to swap when MSR[LE] is set */
--    return !!(env->msr & ((target_ulong)1 << MSR_LE));
--}
--
- uint32_t ppc_ldl_code(CPUArchState *env, target_ulong addr)
- {
--    uint32_t insn = cpu_ldl_code(env, addr);
--
--    if (insn_need_byteswap(env)) {
--        insn = bswap32(insn);
--    }
--
--    return insn;
-+    return FIELD_EX64(env->msr, MSR, LE) ? cpu_ldl_le_code(env, addr)
-+                                         : cpu_ldl_be_code(env, addr);
- }
+@@ -1933,7 +1933,7 @@ void helper_iret_real(CPUX86State *env, int shift)
+     sa.env = env;
+     sa.ra = GETPC();
+     sa.mmu_index = x86_mmu_index_pl(env, 0);
+-    sa.sp_mask = 0xffff; /* XXXX: use SS segment size? */
++    sa.sp_mask = get_sp_mask(env->segs[R_SS].flags);
+     sa.sp = env->regs[R_ESP];
+     sa.ss_base = env->segs[R_SS].base;
  
- #if defined(TARGET_PPC64)
 -- 
-2.51.0
+2.47.3
 
 
