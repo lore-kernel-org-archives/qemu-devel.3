@@ -4,44 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63A64CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26F75CFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:41:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcs0-0006ls-5F; Fri, 21 Nov 2025 20:57:01 -0500
+	id 1vMdEQ-0004I5-W9; Fri, 21 Nov 2025 21:20:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbmL-00017J-Lr; Fri, 21 Nov 2025 19:47:05 -0500
+ id 1vMdEL-00040X-ME; Fri, 21 Nov 2025 21:20:05 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbm8-00084D-RB; Fri, 21 Nov 2025 19:47:01 -0500
+ id 1vMdDT-0003sW-Az; Fri, 21 Nov 2025 21:20:01 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 36ED816CA3F;
- Fri, 21 Nov 2025 21:44:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E854D16C6F1;
+ Fri, 21 Nov 2025 16:51:55 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E7A9D321C7B;
- Fri, 21 Nov 2025 21:44:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 49FCB32198E;
+ Fri, 21 Nov 2025 16:52:04 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 04/81] target/arm: Fix reads of CNTFRQ_EL0 in
- linux-user mode
-Date: Fri, 21 Nov 2025 21:43:03 +0300
-Message-ID: <20251121184424.1137669-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 25/76] block: remove 'detached-header' option from
+ opts after use
+Date: Fri, 21 Nov 2025 16:51:03 +0300
+Message-ID: <20251121135201.1114964-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,48 +62,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-In commit bd8e9ddf6f6 ("target/arm: Refactor default generic timer
-frequency handling") we changed how we initialized the generic timer
-frequency as reported in the CNTFRQ_EL0 register.  As part of that,
-we chanegd the linux-user version of the CNTFRQ_EL0 sysreg from
-having a constant value set at compile time through the .resetvalue
-field to having a reset value which we compute in a .resetfn.
+The code for creating LUKS devices references a 'detached-header'
+option in the QemuOpts  data, but does not consume (remove) the
+option.
 
-This accidentally broke the reading of CNTFRQ_EL0 in linux-user mode,
-because the cpreg is marked as ARM_CP_CONST, which means we translate
-it as a read of the compile-time constant value in the .resetvalue
-field.  This is now zero, so userspace sees a 0 frequency value.
+Thus when the code later tries to convert the remaining unused
+QemuOpts into a QCryptoBlockCreateOptions struct, an error is
+reported by the QAPI code that 'detached-header' is not a valid
+field.
 
-Fix the bug by dropping the ARM_CP_CONST marking.  This will cause us
-to translate the read as a load of the value from the CPU state
-struct cp15.c14_cntfrq field, which is where the real frequency value
-now lives.
+This fixes a regression caused by
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3159
-Fixes: bd8e9ddf6f6 ("target/arm: Refactor default generic timer frequency handling")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20251013161040.216819-1-peter.maydell@linaro.org
-(cherry picked from commit 3f462d79a080060e54e39d31ce10fdf1a20317ef)
+  commit e818c01ae6e7c54c7019baaf307be59d99ce80b9
+  Author: Daniel P. Berrangé <berrange@redhat.com>
+  Date:   Mon Feb 19 15:12:59 2024 +0000
+
+    qapi: drop unused QCryptoBlockCreateOptionsLUKS.detached-header
+
+which identified that the QAPI field was unused, but failed to
+realize the QemuOpts -> QCryptoBlockCreateOptions conversion
+was seeing the left-over 'detached-header' option which had not
+been removed from QemuOpts.
+
+This problem was identified by the 'luks-detached-header' I/O
+test, but unfortunately I/O tests are not run regularly for the
+LUKS format.
+
+Fixes: e818c01ae6e7c54c7019baaf307be59d99ce80b9
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20250919103810.1513109-1-berrange@redhat.com>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 6eda39a87f4fda78befa4085e3644e4440afc1dd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index b3ca49a6de..f694b266d9 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -3420,7 +3420,7 @@ static uint64_t gt_virt_cnt_read(CPUARMState *env, const ARMCPRegInfo *ri)
- static const ARMCPRegInfo generic_timer_cp_reginfo[] = {
-     { .name = "CNTFRQ_EL0", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 3, .crn = 14, .crm = 0, .opc2 = 0,
--      .type = ARM_CP_CONST, .access = PL0_R /* no PL1_RW in linux-user */,
-+      .access = PL0_R /* no PL1_RW in linux-user */,
-       .fieldoffset = offsetof(CPUARMState, cp15.c14_cntfrq),
-       .resetfn = arm_gt_cntfrq_reset,
-     },
+diff --git a/block/crypto.c b/block/crypto.c
+index d4226cc68a..17b4749a1e 100644
+--- a/block/crypto.c
++++ b/block/crypto.c
+@@ -792,7 +792,7 @@ block_crypto_co_create_opts_luks(BlockDriver *drv, const char *filename,
+     char *buf = NULL;
+     int64_t size;
+     bool detached_hdr =
+-        qemu_opt_get_bool(opts, "detached-header", false);
++        qemu_opt_get_bool_del(opts, "detached-header", false);
+     unsigned int cflags = 0;
+     int ret;
+     Error *local_err = NULL;
 -- 
 2.47.3
 
