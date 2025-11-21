@@ -4,45 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F68DCFC515
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEEF6CF64B1
 	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 04:59:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd27-0001HT-V6; Fri, 21 Nov 2025 21:07:28 -0500
+	id 1vMd27-0001Ha-7T; Fri, 21 Nov 2025 21:07:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcGm-0001gd-0N; Fri, 21 Nov 2025 20:18:32 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcEj-0005uF-G4; Fri, 21 Nov 2025 20:18:27 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AF1EC16CA3C;
- Fri, 21 Nov 2025 21:44:19 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6849C321C78;
- Fri, 21 Nov 2025 21:44:28 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMcbX-00048y-9B
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:40:00 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vMcZV-0002lN-MN
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:39:57 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b73a9592fb8so556322866b.1
+ for <qemu-devel@nongnu.org>; Fri, 21 Nov 2025 17:37:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763775452; x=1764380252; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gX9jGmeu+KwJPxY0MI+9o8DmOfeDSzlJfBVH4f7ccoo=;
+ b=mtycuAHV+Zz8F+oM2KomidNA5iFwvYiUIRV/tW3h3CpTu3xcuVun1j7Z8DOtenoQLX
+ XvZ/YNEedT+vGuuzAcjyAZWRqeLEdeFvSikKkD3fc2Ky6yGNUYs5zPJRYL8vodBXTfpA
+ cQjwfTeRW5fm+LXIPSYU7Idc6rJokxwZUab13fFlZinItuJMoYK5PvOBMyS+xExg3g0W
+ fnwFOwJxOwK6OL9rotEJmd1/8soFPvgfQnhqR1jKDQUAB/AV9OUtA5FQBfPjkQMfRADT
+ LbPVW2KKckf4KYVL/A7aE4ad6zBOjnXa+3Dhna4M++fZWTuWVheoWSXcoqrIb4Uo2PhO
+ gNKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763775452; x=1764380252;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gX9jGmeu+KwJPxY0MI+9o8DmOfeDSzlJfBVH4f7ccoo=;
+ b=dbxgMJGxpdEaho6BN9rU4XdI5qgDeGF6cppDROiI2FcjteUv0A3o2j3qrpYW9eosAe
+ uJErgYTYHytX5QNvo/cVZp8SuP6tx7nlFAfk8d1Bt+cwJ0kOEYGNkETztdTni1sLrQao
+ Vf3DiA4tW4zI6ngz6L9pq2cjkLndIBN3MsCLD5YxFC1Vh89GFos+v2984ok0Z68SgabK
+ r868Riv229/0dxcS9BN5/PgFbQLMZFkE+QL/yGtXlakmrmSYevfduQGGqZhpUTDKaxge
+ VT0AA9VJOzCugiuNRE2Myie5rvzEK2Qfv8xxeTtNoyQ4DWFPqkISwdxQuLILdrLDpixH
+ xNdQ==
+X-Gm-Message-State: AOJu0YwDfMfhOTGHYk142imDHFWkgALjT9f0p0M/TW+1SOVcsUWUn1pi
+ zcfGBsnUTqExOF0CH7I5Nhf8YdV+YCqbXyD0bI8uPk3L/NqNmJ+Ql96etzm3SpABsZt9OTH0pjr
+ xt3heNT4pqQ==
+X-Gm-Gg: ASbGncs4AHoibf/XaGVLHjL/lJJ7NZrH2LoNe9MEvwEtYFPbVR51rcdNDRFHIUIqogS
+ Re9lS8/TzpRrq3WnxEWBr/m7VqVu/HoZigKmvpPew8ehOzIU1qLH7Phb4EA1OcWqNDxg47iNJIy
+ 9aUlBNmc/AF2FXoORMxKgH1wXzKOGZr6D898NWR/zp8pXHVZTthVqA/uJarzGoLFK+hDiYFTPQo
+ 3BQayMxlJWP3fXMpmci12lz5x+C8Zp6bLXpnhakJW1pTLv9yfyfsYYQUGb0pyg3Hiak2LpWtfXI
+ TbLLNuY3OGM8gpKhRWK9LKhbHxn7XHyeYJTdUk6Je2GeqEKOgfutjGbtn5C1K/G26xUjAQ7CDcq
+ unNtWRnZVIydIkjpswWz7RE/5f4sUwlSldLCe+tRsOdh+esrXW5SktV/DM9j+6v1o+n7X/Eeb9Y
+ 54klCcGqBFjN2EYMWe4+fegfwRdmhDweoT00HgbSxUxTKPHcgdE5S5RvjkBky2
+X-Google-Smtp-Source: AGHT+IFOH4LNpKae+OXXzyYpeXqAhEmkuW3HbrrPigIx2IrcfACRtYTQr9+u6IbBTF8irO0fqbXFBA==
+X-Received: by 2002:a05:6000:288b:b0:426:fb27:974a with SMTP id
+ ffacd0b85a97d-42cba7c4cc9mr7182956f8f.27.1763732745859; 
+ Fri, 21 Nov 2025 05:45:45 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fa41d2sm10946251f8f.22.2025.11.21.05.45.44
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 21 Nov 2025 05:45:45 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 01/81] tests/tcg/multiarch/linux/linux-test: Don't try
- to test atime update
-Date: Fri, 21 Nov 2025 21:43:00 +0300
-Message-ID: <20251121184424.1137669-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [RFC-PATCH-for-11.0 v3 06/21] target/riscv: Use little-endian variant
+ of cpu_ld{l, q}_code()
+Date: Fri, 21 Nov 2025 14:44:48 +0100
+Message-ID: <20251121134503.30914-7-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251121134503.30914-1-philmd@linaro.org>
+References: <20251121134503.30914-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,77 +94,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+RISC-V instructions are always stored in little-endian order
+(see "Volume I: RISC-V Unprivileged ISA" document, chapter
+'Instruction Encoding Spaces and Prefixes': "instruction fetch
+in RISC-V is little-endian").
 
-The linux-test test includes an attempt to check the utime and stat
-syscalls by setting the atime and mtime of a file to specific values,
-and then calling stat() to check that the values read back correctly.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/riscv/translate.c  | 2 +-
+ target/riscv/zce_helper.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Unfortunately this is flaky, as it will fail if some other process
-(for instance a virus scanner, backup program, etc) gets in and reads
-the file between the utime() and stat() call, resulting in a host
-syscall sequence like this:
-
-utimensat(AT_FDCWD, "file2",
-  [{tv_sec=1001, tv_nsec=0} /* 1970-01-01T01:16:41+0100 */,
-   {tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */], 0) = 0
-# successfully set atime to 1001 and mtime to 1000
-statx(AT_FDCWD, "file2", AT_STATX_SYNC_AS_STAT|AT_NO_AUTOMOUNT,
-  STATX_BASIC_STATS,
-  {stx_mask=STATX_BASIC_STATS|STATX_MNT_ID,
-   stx_blksize=4096, stx_attributes=0, stx_nlink=1, stx_uid=32808,
-   stx_gid=32808, stx_mode=S_IFREG|0600, stx_ino=21659016,
-   stx_size=100, stx_blocks=8,
-   stx_attributes_mask=STATX_ATTR_COMPRESSED|STATX_ATTR_IMMUTABLE|
-         STATX_ATTR_APPEND|STATX_ATTR_NODUMP|STATX_ATTR_ENCRYPTED|
-         STATX_ATTR_AUTOMOUNT|STATX_ATTR_MOUNT_ROOT|STATX_ATTR_VERITY|
-         STATX_ATTR_DAX,
-   stx_atime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
-   stx_ctime={tv_sec=1760091862, tv_nsec=63509009} /* 2025-10-10T11:24:22.063509009+0100 */,
-   stx_mtime={tv_sec=1000, tv_nsec=0} /* 1970-01-01T01:16:40+0100 */,
-   stx_rdev_major=0, stx_rdev_minor=0, stx_dev_major=252,
-   stx_dev_minor=0, stx_mnt_id=0x1f}) = 0
-# but when we statx the file, we get back an mtime of 1000
-# but an atime corresponding to when the other process read it
-
-and which will cause the test program to fail with the error
-message "stat time".
-
-In theory we could defend against this by e.g.  operating on files in
-a dummy loopback mount filesystem which we mounted as 'noatime', but
-this isn't worth the hassle.  Just drop the check on atime.
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251016150357.876415-4-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit 77dc9d662f80b9f4eb450df27f60a0a9b3c97785)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/tests/tcg/multiarch/linux/linux-test.c b/tests/tcg/multiarch/linux/linux-test.c
-index 64f57cb287..bf6e0fda26 100644
---- a/tests/tcg/multiarch/linux/linux-test.c
-+++ b/tests/tcg/multiarch/linux/linux-test.c
-@@ -155,9 +155,14 @@ static void test_file(void)
-         error("stat mode");
-     if ((st.st_mode & 0777) != 0600)
-         error("stat mode2");
--    if (st.st_atime != 1001 ||
--        st.st_mtime != 1000)
-+    /*
-+     * Only check mtime, not atime: other processes such as
-+     * virus scanners might race with this test program and get
-+     * in and update the atime, causing random failures.
-+     */
-+    if (st.st_mtime != 1000) {
-         error("stat time");
-+    }
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index e1f4dc5ffd0..847481a9b41 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1182,7 +1182,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+     CPUState *cpu = ctx->cs;
+     CPURISCVState *env = cpu_env(cpu);
  
-     chk_error(stat(tmpdir, &st));
-     if (!S_ISDIR(st.st_mode))
+-    return cpu_ldl_code(env, pc);
++    return cpu_ldl_le_code(env, pc);
+ }
+ 
+ #define SS_MMU_INDEX(ctx) (ctx->mem_idx | MMU_IDX_SS_WRITE)
+diff --git a/target/riscv/zce_helper.c b/target/riscv/zce_helper.c
+index 55221f5f375..992e2f964e0 100644
+--- a/target/riscv/zce_helper.c
++++ b/target/riscv/zce_helper.c
+@@ -44,10 +44,10 @@ target_ulong HELPER(cm_jalt)(CPURISCVState *env, uint32_t index)
+ 
+     if (xlen == 32) {
+         t0 = base + (index << 2);
+-        target = cpu_ldl_code(env, t0);
++        target = cpu_ldl_le_code(env, t0);
+     } else {
+         t0 = base + (index << 3);
+-        target = cpu_ldq_code(env, t0);
++        target = cpu_ldq_le_code(env, t0);
+     }
+ 
+     return target & ~0x1;
 -- 
-2.47.3
+2.51.0
 
 
