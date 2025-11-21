@@ -4,47 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F621CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:16:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E32CFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 03:16:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMdNU-0000AA-NU; Fri, 21 Nov 2025 21:29:33 -0500
+	id 1vMco4-00046c-Pu; Fri, 21 Nov 2025 20:52:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdNQ-00008y-Px; Fri, 21 Nov 2025 21:29:28 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbbR-00030g-KF
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:35:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMdMU-000732-6b; Fri, 21 Nov 2025 21:29:25 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A32D316C6F9;
- Fri, 21 Nov 2025 16:51:56 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 078FD321996;
- Fri, 21 Nov 2025 16:52:05 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMbbH-0005l9-4V
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 19:35:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763771724;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ECBnpLLCj16fpj21fI+h9tBul9riCpuU3pZvsycdoc0=;
+ b=Yki1z7itDZEQtNuubcd9LC2qneyLywxHScd8Bs8JVbMvxY3EyE4FrjtpaUt+22LiXfzD5H
+ c2ctQzs5mawh/OCxtSDF3IY7yaSgV612+w2GBBtknpEAvbaVu7tAedtgUyg0euCtJCAiQn
+ CcFCp0wYhV/qKyi4eNPPE9CVkA06oDs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-402-A-3AMTmXM8abc48Y8X2Neg-1; Fri,
+ 21 Nov 2025 07:14:50 -0500
+X-MC-Unique: A-3AMTmXM8abc48Y8X2Neg-1
+X-Mimecast-MFC-AGG-ID: A-3AMTmXM8abc48Y8X2Neg_1763727286
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B7C701801233; Fri, 21 Nov 2025 12:14:46 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CA2DF1940E88; Fri, 21 Nov 2025 12:14:45 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BFCBD21EC342; Fri, 21 Nov 2025 13:14:38 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 33/76] target/s390x: Fix missing clock-comparator
- interrupts after reset
-Date: Fri, 21 Nov 2025 16:51:11 +0300
-Message-ID: <20251121135201.1114964-33-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
-References: <qemu-stable-10.1.3-20251121155857@cover.tls.msk.ru>
+Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, alistair.francis@wdc.com,
+ stefanb@linux.vnet.ibm.com, kwolf@redhat.com, hreitz@redhat.com,
+ sw@weilnetz.de, qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
+ shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
+ sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
+ sgarzare@redhat.com, pbonzini@redhat.com, fam@euphon.net,
+ philmd@linaro.org, alex@shazbot.org, clg@redhat.com, peterx@redhat.com,
+ farosas@suse.de, lizhijian@fujitsu.com, dave@treblig.org,
+ jasowang@redhat.com, samuel.thibault@ens-lyon.org, michael.roth@amd.com,
+ kkostiuk@redhat.com, zhao1.liu@intel.com, mtosatti@redhat.com,
+ rathc@linux.ibm.com, palmer@dabbelt.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ marcandre.lureau@redhat.com, qemu-block@nongnu.org, qemu-ppc@nongnu.org,
+ xen-devel@lists.xenproject.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
+Subject: [PATCH v2 11/15] net/slirp: Improve file open error message
+Date: Fri, 21 Nov 2025 13:14:34 +0100
+Message-ID: <20251121121438.1249498-12-armbru@redhat.com>
+In-Reply-To: <20251121121438.1249498-1-armbru@redhat.com>
+References: <20251121121438.1249498-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
-X-Spam_action: no action
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,58 +89,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+This error reports failure to create a temporary file, and
+error_setg_file_open() would probably be too terse, so merely switch
+to error_setg_errno() to add errno information.
 
-After reset, CKC value is set to 0, so if clock-comparator interrupts
-are enabled, one should occur very shortly thereafter.
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ net/slirp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Currently the code that loads the respective control register does not
-set tod_timer, so this does not happen.
-
-Fix by adding a tcg_s390_tod_updated() call to LCTL and LCTLG.
-
-Cc: qemu-stable@nongnu.org
-Suggested-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-ID: <20251016175954.41153-3-iii@linux.ibm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit dacfec5157fb9e2249cf393a143bd545e80a6e31)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index f1acb1618f..24675fc818 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -1959,6 +1959,10 @@ void HELPER(lctlg)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-         if (env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
-+        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val & CR0_CKC_SC)) {
-+            BQL_LOCK_GUARD();
-+            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
-+        }
-         env->cregs[i] = val;
-         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%" PRIx64 "\n",
-                    i, src, val);
-@@ -1989,10 +1993,15 @@ void HELPER(lctl)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
+diff --git a/net/slirp.c b/net/slirp.c
+index 120eef6122..5996fec512 100644
+--- a/net/slirp.c
++++ b/net/slirp.c
+@@ -1034,8 +1034,10 @@ static int slirp_smb(SlirpState* s, const char *exported_dir,
  
-     for (i = r1;; i = (i + 1) % 16) {
-         uint32_t val = cpu_ldl_data_ra(env, src, ra);
-+        uint64_t val64 = deposit64(env->cregs[i], 0, 32, val);
-         if ((uint32_t)env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
--        env->cregs[i] = deposit64(env->cregs[i], 0, 32, val);
-+        if (i == 0 && !(env->cregs[i] & CR0_CKC_SC) && (val64 & CR0_CKC_SC)) {
-+            BQL_LOCK_GUARD();
-+            tcg_s390_tod_updated(env_cpu(env), RUN_ON_CPU_NULL);
-+        }
-+        env->cregs[i] = val64;
-         HELPER_LOG("load ctl %d from 0x%" PRIx64 " == 0x%x\n", i, src, val);
-         src += sizeof(uint32_t);
- 
+     f = fopen(smb_conf, "w");
+     if (!f) {
++        int eno = errno;
++
+         slirp_smb_cleanup(s);
+-        error_setg(errp,
++        error_setg_errno(errp, eno,
+                    "Could not create samba server configuration file '%s'",
+                     smb_conf);
+         g_free(smb_conf);
 -- 
-2.47.3
+2.49.0
 
 
