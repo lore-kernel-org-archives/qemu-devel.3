@@ -4,43 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1236CCFC52A
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 11:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0255CFC52A
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 12:02:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMcum-0000MS-At; Fri, 21 Nov 2025 20:59:53 -0500
+	id 1vMmCf-0006Ll-RE; Sat, 22 Nov 2025 06:54:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbsP-0004v9-Ml; Fri, 21 Nov 2025 19:53:22 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vMmCY-0006Gg-J9; Sat, 22 Nov 2025 06:54:50 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMbsF-0000us-8g; Fri, 21 Nov 2025 19:53:18 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6219416CA45;
- Fri, 21 Nov 2025 21:44:21 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E044E321C81;
- Fri, 21 Nov 2025 21:44:29 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 10/81] target/riscv/kvm: fix env->priv setting in
- reset_regs_csr()
-Date: Fri, 21 Nov 2025 21:43:09 +0300
-Message-ID: <20251121184424.1137669-10-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vMmCA-0001fr-Lu; Sat, 22 Nov 2025 06:54:44 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 911CE5969FB;
+ Sat, 22 Nov 2025 12:53:39 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id zyO5GX3vEdkz; Sat, 22 Nov 2025 12:53:37 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 74C9B5969FA; Sat, 22 Nov 2025 12:53:37 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 70C3A5969F7;
+ Sat, 22 Nov 2025 12:53:37 +0100 (CET)
+Date: Sat, 22 Nov 2025 12:53:37 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Markus Armbruster <armbru@redhat.com>
+cc: "Dr. David Alan Gilbert" <dave@treblig.org>, qemu-devel@nongnu.org, 
+ arei.gonglei@huawei.com, pizhenwei@bytedance.com, alistair.francis@wdc.com, 
+ stefanb@linux.vnet.ibm.com, kwolf@redhat.com, hreitz@redhat.com, 
+ sw@weilnetz.de, qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com, 
+ imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com, 
+ shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com, 
+ sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org, 
+ edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com, 
+ sgarzare@redhat.com, pbonzini@redhat.com, fam@euphon.net, 
+ philmd@linaro.org, alex@shazbot.org, clg@redhat.com, peterx@redhat.com, 
+ farosas@suse.de, lizhijian@fujitsu.com, jasowang@redhat.com, 
+ samuel.thibault@ens-lyon.org, michael.roth@amd.com, kkostiuk@redhat.com, 
+ zhao1.liu@intel.com, mtosatti@redhat.com, rathc@linux.ibm.com, 
+ palmer@dabbelt.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, marcandre.lureau@redhat.com, 
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org, xen-devel@lists.xenproject.org, 
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH 09/14] error: Use error_setg_file_open() for simplicity
+ and consistency
+In-Reply-To: <87ecpqtt6f.fsf@pond.sub.org>
+Message-ID: <05ef43e5-cc42-8e1c-2619-eb1dea12b02b@eik.bme.hu>
+References: <20251120191339.756429-1-armbru@redhat.com>
+ <20251120191339.756429-10-armbru@redhat.com> <aR-q2YeegIEPmk2R@gallifrey>
+ <87see8q6qm.fsf@pond.sub.org> <aSClUIvI2W-PVv6B@gallifrey>
+ <87ecpqtt6f.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,50 +82,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+On Sat, 22 Nov 2025, Markus Armbruster wrote:
+> "Dr. David Alan Gilbert" <dave@treblig.org> writes:
+>
+>> * Markus Armbruster (armbru@redhat.com) wrote:
+>>> "Dr. David Alan Gilbert" <dave@treblig.org> writes:
+>>>
+>>>> * Markus Armbruster (armbru@redhat.com) wrote:
+>>>>> Replace
+>>>>>
+>>>>>     error_setg_errno(errp, errno, MSG, FNAME);
+>>>>>
+>>>>> by
+>>>>>
+>>>>>     error_setg_file_open(errp, errno, FNAME);
+>>>>>
+>>>>> where MSG is "Could not open '%s'" or similar.
+>>>>>
+>>>>> Also replace equivalent uses of error_setg().
+>>>>>
+>>>>> A few messages lose prefixes ("net dump: ", "SEV: ", __func__ ": ").
+>>>>> We could put them back with error_prepend().  Not worth the bother.
+>>>>
+>>>> Yeh, I guess you could just do it with another macro using
+>>>> the same internal function just with string concatenation.
+>>>
+>>> I'm no fan of such prefixes.  A sign of developers not caring enough to
+>>> craft a good error message for *users*.  *Especially* in the case of
+>>> __func__.
+>>>
+>>> The error messages changes in question are:
+>>>
+>>>     net dump: can't open DUMP-FILE: REASON
+>>>     Could not open 'DUMP-FILE': REASON
+>>>
+>>>     SEV: Failed to open SEV-DEVICE: REASON
+>>>     Could not open 'SEV-DEVICE': REASON
+>>>
+>>>     sev_common_kvm_init: Failed to open SEV_DEVICE 'REASON'
+>>>     Could not open 'SEV-DEVICE': REASON
+>>>
+>>> I think these are all improvements, and the loss of the prefix is fine.
+>>
+>> Yeh, although I find the error messages aren't just for users;
+>> they're often for the first dev to see it to guess which other
+>> dev to pass the problem to, so a hint about where it's coming
+>> from can be useful.
+>
+> I agree!  But I think an error message must be make sense to users
+> *first* and help developers second, and once they make sense to users,
+> they're often good enough for developers.
+>
+> The common failures I see happen when developers remain caught in the
+> developer's perspective, and write something that makes sense to *them*.
+> Strawman form:
+>
+>    prefix: failed op[: reason]
+>
+> where "prefix" is a subsystem tag, or even __func__, and "reason" is
+> strerror() or similar.
+>
+> To users, this tends to read as
+>
+>    gobbledygook: techbabble[: reason]
+>
+> When we care to replace "failed op" (developer's perspective) by
+> something that actually makes sense to users, "prefix" often becomes
+> redundant.
+>
+> The error messages shown above aren't bad to begin with.  "failed to
+> open FILE", where FILE is something the user specified, should make
+> sense to the user.  It should also be good enough for developers even
+> without a prefix: connecting trouble with the DUMP-FILE to dump /
+> trouble with the SEV-DEVICE to SEV should be straightforward.
+>
+> [...]
 
-This patch was originally made by Gitlab user Bo Gan (@ganboing) 4
-months ago in the context of issue [1]. I asked the author to send a
-patch to the mailing list ~3 months ago and got no reply. I'm sending
-the patch myself because we already missed 10.1 without this fix.
+I think that
 
-I'll also just post verbatim Bo Gan comment in the commit msg:
+net dump: can't open random-filename: because of some error
 
-"In RISCV Linux with KVM enabled, gdbstub is broken. The
-get_physical_address isn't able to page-walk correctly and resolve the
-physical page. This is due to that the vcpu is being treated as starting
-in M mode even if KVM enabled. However, with KVM, the vcpu is actually
-started in S mode. The mmu_idx will give 3 (M), instead of 1 (S),
-resulting in Guest PA == VA (wrong)!"
+shows better where to look for the problem than just
 
-Set env->priv to PRV_S in kvm_riscv_reset_regs_csr() since the VCPU is
-always started in S-mode for KVM.
+Could not open 'random-filename': because of some error
 
-[1] https://gitlab.com/qemu-project/qemu/-/issues/2991
+as the latter does not tell where the file name comes from or what is it. 
+It could be added by a management application or added by the users 
+randomly without really knowing what they are doing so repeating the 
+option or part in the message that the error comes from can help to find 
+out where to correct it. Otherwise it might be difficult to guess what 
+random-filename is related to if it's not named something you'd expect.
 
-Cc: qemu-stable@nongnu.org
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/2991
-Originally-by: Bo Gan (@ganboing in Gitlab)
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20251022111105.483992-1-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 2a21cbee47a124edf43fc9ee156d7093e2f957fd)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index 92240c6e4b..7b4a2aecbb 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -704,6 +704,7 @@ static void kvm_riscv_reset_regs_csr(CPURISCVState *env)
-     env->satp = 0;
-     env->scounteren = 0;
-     env->senvcfg = 0;
-+    env->priv = PRV_S;
- }
- 
- static int kvm_riscv_get_regs_fp(CPUState *cs)
--- 
-2.47.3
-
+Regards,
+BALATON Zoltan
 
