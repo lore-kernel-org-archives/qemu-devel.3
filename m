@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 104F9CF64B1
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 07:46:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E7A2CFC50C
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 07:47:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMiGw-0007Cr-0V; Sat, 22 Nov 2025 02:43:07 -0500
+	id 1vMiHK-0007Ij-Mv; Sat, 22 Nov 2025 02:43:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vMhSd-0000QP-27
- for qemu-devel@nongnu.org; Sat, 22 Nov 2025 01:51:08 -0500
+ id 1vMhUI-0000kL-Jp
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 01:52:51 -0500
 Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vMhSA-0000qe-Tg
- for qemu-devel@nongnu.org; Sat, 22 Nov 2025 01:51:04 -0500
+ id 1vMhTw-0001CG-Gs
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 01:52:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763794239; x=1795330239;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=fc0Le/gVDdvOZ4rSppSsmapPVlWe7tTXdKc8UONphy8=;
- b=itfMiSvJSa4HoRGO/vjCPhg6OwloKOsUjKHx/6L7G99VPUJf/fApmMJO
- FffBvi+DH79vmkOcZtniJdMsG8qzuRv6WJ3UV8MtHJnpcHrT57sTNZQEZ
- 9pG1qks6URBPNAvsnme2ZzRytUcLU/ZfX0KA7xYuSMZeTclumMtEJdsOh
- PDEvMVzUMaVrv+ws1EGitttn9h0YeCDrVAK+V8yvrAEZApGte/Qz8xMfU
- BcnjwEv3pa9cO5m5kJnnGG59cWMTcRcAfSh/aB562YGCxAFYsl1CXZYYV
- Z8DbsTyjZWvmT2UqRyBPFulxjrakRJCnUXhVMx0oChTiuRtXpYMtZLL/K w==;
-X-CSE-ConnectionGUID: 2zpAoiVYTD6h+Lu83t3BRA==
-X-CSE-MsgGUID: dgs8zZriRr6/ZSCrMuXbHg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11620"; a="65924054"
-X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; d="scan'208";a="65924054"
+ t=1763794348; x=1795330348;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=yrEJwSrBS5NSdtOP0SPNq0ppkXr4cjPLmNjHkU7a0gg=;
+ b=SYkZ+Wdp5C5O2vLw6B64L8yHZhMRXGprW8Bkl6AXPcIDs8Gf9EfzKgTh
+ XbJhMzD7c8RHScFoDAAuA0oajvmiPM94+z28pQSP+jXUGtDAehgH4PPSc
+ a35rxiD+qWR7bPLzEEEYXcsxxLBYSKqYl1mdnUrrtEBeHE+gCnPArPIRb
+ 4xqpt28AyMwL2GdD1gIF1gKRsZPE2WxJSdJ4hiz3GV01n1xDXJkofgQir
+ pYMfHxZqwf3JFZ/D88DCmGLkIyXuPG+cyKIj8BO6FcAWaXDnJmqfaLZn3
+ h9vKEB4ljtjEa4ZQxPZMUjyoAbcfGLp2z86FHzlDhn0aStSJ1kTbbugtg g==;
+X-CSE-ConnectionGUID: 2XJ1YC1YRbOpMInb7/ULMg==
+X-CSE-MsgGUID: JTD+W/m9S5qoFFvg84CFBg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11620"; a="65924086"
+X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; d="scan'208";a="65924086"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Nov 2025 22:50:21 -0800
-X-CSE-ConnectionGUID: 3QN0RySHS729CwMTIcJbig==
-X-CSE-MsgGUID: MW9PK85XT1erIP1EPDFwtQ==
+ 21 Nov 2025 22:50:22 -0800
+X-CSE-ConnectionGUID: MXBUZ324SzqXo4AeDWnJiw==
+X-CSE-MsgGUID: FNgMqc24Rna55GSFHojajw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; d="scan'208";a="191064598"
+X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; d="scan'208";a="191064621"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Nov 2025 22:50:22 -0800
+ 21 Nov 2025 22:50:23 -0800
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
@@ -54,14 +54,13 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Leon Romanovsky <leon@kernel.org>, Leon Romanovsky <leonro@nvidia.com>,
- Jason Gunthorpe <jgg@nvidia.com>, Dongwon Kim <dongwon.kim@intel.com>
-Subject: [PATCH v3 0/9] vfio: Implement VFIO_DEVICE_FEATURE_DMA_BUF and use it
- in virtio-gpu
-Date: Fri, 21 Nov 2025 22:46:21 -0800
-Message-ID: <20251122064936.2948632-1-vivek.kasireddy@intel.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 7/9] virtio-gpu: Rename udmabuf files and helpers to dmabuf
+Date: Fri, 21 Nov 2025 22:46:28 -0800
+Message-ID: <20251122064936.2948632-8-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251122064936.2948632-1-vivek.kasireddy@intel.com>
+References: <20251122064936.2948632-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -88,115 +87,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio-gpu driver running in the Guest VM can create Guest blob
-resources (by importing dmabufs) that are backed by System RAM. This
-is made possible by making use of memfd memory backend and udmabuf
-driver on the Host side. However, in order to create Guest blobs
-that are backed by vfio-pci device regions (which happens when
-virtio-gpu imports dmabufs from devices that have local memory such
-as dGPU VFs), we have to implement VFIO_DEVICE_FEATURE_DMA_BUF and
-leverage it in virtio-gpu.
+This is prep-work for adding the ability to create dmabuf fds from
+VFIO devices in addition to udmabuf.
 
-So, while creating the blobs we use ram_block_is_memfd_backed() to
-figure out if the blob is backed by memfd or a vfio-pci device. If
-it is determined that the blob is backed by vfio-pci device region,
-instead of calling into udmabuf driver to create a dmabuf fd we would
-now call into vfio-pci driver to have a dmabuf fd created on the Host.
-
-Changelog:
-v2 -> v3:
-- Use memory_region_get_ram_ptr() to obtain hva for both memfd and
-  VFIO backed memory regions (Akihiko)
-- Drop the patch that introduced qemu_iovec_same_memory_regions()
-  helper and move the "same memory region" check into
-  virtio_gpu_create_udmabuf(), vfio_device_create_dmabuf_fd() (Akihiko)
-- Refactor virtio_gpu_init_dmabuf() to not rely on helpers such as
-  memory_region_is_ram_device() to identify memory regions and
-  instead call virtio_gpu_create_udmabuf() unconditionally (Akihiko)
-- Add a patch to introduce ram_block_is_memfd_backed() helper
-
-v1 -> v2:
-- Drop the patch that uses res->blob_size instead of res->blob to
-  identify blob resources (Akihiko)
-- Remove the res->dmabuf_fd < 0 check while attaching backing to a
-  resource (Akihiko)
-- Remove cmd->cmd_hdr.type != VIRTIO_GPU_CMD_RESOURCE_CREATE_BLOB
-  check while attaching backing (Akihiko)
-- Improve vfio_get_region_index_from_mr() and add documentation (Cedric)
-- Remove rcu_read_lock/unlock around qemu_ram_block_from_host()
-  (Akihiko, Cedric)
-- Improve, document and rename vfio_device_create_dmabuf() to
-  vfio_device_create_dmabuf_fd() (Cedric)
-- Add a new helper to lookup VFIO device from memory region (Cedric)
-- Document vfio_device_get_region_info() (Cedric)
-- Ensure that info variable (in vfio_dmabuf_mmap()) is initialized
-  before use (Cedric)
-- Rename udmabuf files and helpers to dmabuf (Akihiko)
-- Remove the redundant check for virtio_gpu_have_udmabuf() in
-  virtio_gpu_init_dmabuf() (Akihiko)
-- Add a helper to check whether all the entries of a dmabuf belong
-  to a single memory region or not (Akihiko)
-
-RFC -> v1:
-- Create the CPU mapping using vfio device fd if the dmabuf exporter
-  (vfio-pci) does not provide mmap() support (Akihiko)
-- Log a warning with LOG_GUEST_ERROR instead of warn_report() when
-  dmabuf cannot be created using Guest provided addresses (Akihiko)
-- Use address_space_translate() instead of gpa2hva() to obtain the
-  Host addresses (Akihiko)
-- Rearrange the patches and improve the commit messages (Akihiko)
-- Fix compilation error when VFIO is not enabled (Alex)
-- Add a new helper to obtain VFIO region index from memory region
-- Move vfio_device_create_dmabuf() to hw/vfio/device.c
-
-Tested with an SRIOV enabled Intel dGPU (B60) by running Gnome Wayland
-(in the VM) and Qemu with the following (relevant) parameters:
--device vfio-pci,host=0000:03:00.1
--device virtio-vga,max_outputs=1,xres=1920,yres=1080,blob=true
--display gtk,gl=on
-
-Associated vfio-pci kernel driver series:
-https://lore.kernel.org/dri-devel/20251120-dmabuf-vfio-v9-0-d7f71607f371@nvidia.com/
-Associated virtio-gpu kernel driver series (merged):
-https://lore.kernel.org/dri-devel/20241126031643.3490496-1-vivek.kasireddy@intel.com/
-
----
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Alex Bennée <alex.bennee@linaro.org>
 Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: Leon Romanovsky <leonro@nvidia.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Dongwon Kim <dongwon.kim@intel.com>
-
-Vivek Kasireddy (9):
-  virtio-gpu: Recreate the resource's dmabuf if new backing is attached
-  virtio-gpu: Find hva for Guest's DMA addr associated with a ram device
-  vfio: Document vfio_device_get_region_info()
-  vfio/region: Add a helper to get region index from memory region
-  vfio/device: Add a helper to lookup VFIODevice from memory region
-  vfio/device: Add support for VFIO_DEVICE_FEATURE_DMA_BUF
-  virtio-gpu: Rename udmabuf files and helpers to dmabuf
-  virtio-gpu-dmabuf: Introduce ram_block_is_memfd_backed() helper
-  virtio-gpu-dmabuf: Create dmabuf for blobs associated with VFIO
-    devices
-
- hw/display/Kconfig                            |   5 +
- hw/display/meson.build                        |   4 +-
- ...abuf-stubs.c => virtio-gpu-dmabuf-stubs.c} |   4 +-
- ...rtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c} | 155 +++++++++++++++---
- hw/display/virtio-gpu.c                       |  31 +++-
- hw/vfio/device.c                              |  57 +++++++
- hw/vfio/region.c                              |  14 ++
- include/hw/vfio/vfio-device.h                 |  46 ++++++
- include/hw/virtio/virtio-gpu.h                |   6 +-
- 9 files changed, 288 insertions(+), 34 deletions(-)
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+---
+ hw/display/meson.build                               |  4 ++--
+ ...gpu-udmabuf-stubs.c => virtio-gpu-dmabuf-stubs.c} |  4 ++--
+ .../{virtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c}    | 12 ++++++------
+ hw/display/virtio-gpu.c                              |  8 ++++----
+ include/hw/virtio/virtio-gpu.h                       |  6 +++---
+ 5 files changed, 17 insertions(+), 17 deletions(-)
  rename hw/display/{virtio-gpu-udmabuf-stubs.c => virtio-gpu-dmabuf-stubs.c} (79%)
- rename hw/display/{virtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c} (58%)
+ rename hw/display/{virtio-gpu-udmabuf.c => virtio-gpu-dmabuf.c} (94%)
 
+diff --git a/hw/display/meson.build b/hw/display/meson.build
+index 90e6c041bd..f5f92b1068 100644
+--- a/hw/display/meson.build
++++ b/hw/display/meson.build
+@@ -69,9 +69,9 @@ if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
+   virtio_gpu_ss.add(when: 'CONFIG_VIRTIO_GPU',
+                     if_true: [files('virtio-gpu-base.c', 'virtio-gpu.c'), pixman])
+   if host_os == 'linux'
+-    virtio_gpu_ss.add(files('virtio-gpu-udmabuf.c'))
++    virtio_gpu_ss.add(files('virtio-gpu-dmabuf.c'))
+   else
+-    virtio_gpu_ss.add(files('virtio-gpu-udmabuf-stubs.c'))
++    virtio_gpu_ss.add(files('virtio-gpu-dmabuf-stubs.c'))
+   endif
+   virtio_gpu_ss.add(when: 'CONFIG_VHOST_USER_GPU', if_true: files('vhost-user-gpu.c'))
+   hw_display_modules += {'virtio-gpu': virtio_gpu_ss}
+diff --git a/hw/display/virtio-gpu-udmabuf-stubs.c b/hw/display/virtio-gpu-dmabuf-stubs.c
+similarity index 79%
+rename from hw/display/virtio-gpu-udmabuf-stubs.c
+rename to hw/display/virtio-gpu-dmabuf-stubs.c
+index f692e13510..01067e246d 100644
+--- a/hw/display/virtio-gpu-udmabuf-stubs.c
++++ b/hw/display/virtio-gpu-dmabuf-stubs.c
+@@ -7,12 +7,12 @@ bool virtio_gpu_have_udmabuf(void)
+     return false;
+ }
+ 
+-void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
++void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
+     /* nothing (stub) */
+ }
+ 
+-void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
++void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
+     /* nothing (stub) */
+ }
+diff --git a/hw/display/virtio-gpu-udmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+similarity index 94%
+rename from hw/display/virtio-gpu-udmabuf.c
+rename to hw/display/virtio-gpu-dmabuf.c
+index d804f321aa..c34d4c85bc 100644
+--- a/hw/display/virtio-gpu-udmabuf.c
++++ b/hw/display/virtio-gpu-dmabuf.c
+@@ -68,7 +68,7 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+     g_free(list);
+ }
+ 
+-static void virtio_gpu_remap_udmabuf(struct virtio_gpu_simple_resource *res)
++static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
+     res->remapped = mmap(NULL, res->blob_size, PROT_READ,
+                          MAP_SHARED, res->dmabuf_fd, 0);
+@@ -79,7 +79,7 @@ static void virtio_gpu_remap_udmabuf(struct virtio_gpu_simple_resource *res)
+     }
+ }
+ 
+-static void virtio_gpu_destroy_udmabuf(struct virtio_gpu_simple_resource *res)
++static void virtio_gpu_destroy_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
+     if (res->remapped) {
+         munmap(res->remapped, res->blob_size);
+@@ -128,7 +128,7 @@ bool virtio_gpu_have_udmabuf(void)
+     return memfd_backend;
+ }
+ 
+-void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
++void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
+     void *pdata = NULL;
+ 
+@@ -141,7 +141,7 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+         if (res->dmabuf_fd < 0) {
+             return;
+         }
+-        virtio_gpu_remap_udmabuf(res);
++        virtio_gpu_remap_dmabuf(res);
+         if (!res->remapped) {
+             return;
+         }
+@@ -151,10 +151,10 @@ void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res)
+     res->blob = pdata;
+ }
+ 
+-void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res)
++void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
+ {
+     if (res->remapped) {
+-        virtio_gpu_destroy_udmabuf(res);
++        virtio_gpu_destroy_dmabuf(res);
+     }
+ }
+ 
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index d746c5f426..681702eea9 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -360,7 +360,7 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
+         return;
+     }
+ 
+-    virtio_gpu_init_udmabuf(res);
++    virtio_gpu_init_dmabuf(res);
+     QTAILQ_INSERT_HEAD(&g->reslist, res, next);
+ }
+ 
+@@ -917,7 +917,7 @@ void virtio_gpu_cleanup_mapping(VirtIOGPU *g,
+     res->addrs = NULL;
+ 
+     if (res->blob) {
+-        virtio_gpu_fini_udmabuf(res);
++        virtio_gpu_fini_dmabuf(res);
+     }
+ }
+ 
+@@ -954,7 +954,7 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+     }
+ 
+     if (res->blob_size) {
+-        virtio_gpu_init_udmabuf(res);
++        virtio_gpu_init_dmabuf(res);
+     }
+ }
+ 
+@@ -1440,7 +1440,7 @@ static int virtio_gpu_blob_load(QEMUFile *f, void *opaque, size_t size,
+             return -EINVAL;
+         }
+ 
+-        virtio_gpu_init_udmabuf(res);
++        virtio_gpu_init_dmabuf(res);
+ 
+         resource_id = qemu_get_be32(f);
+     }
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 58e0f91fda..e3d351a2d4 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -354,10 +354,10 @@ bool virtio_gpu_scanout_blob_to_fb(struct virtio_gpu_framebuffer *fb,
+                                    struct virtio_gpu_set_scanout_blob *ss,
+                                    uint64_t blob_size);
+ 
+-/* virtio-gpu-udmabuf.c */
++/* virtio-gpu-dmabuf.c */
+ bool virtio_gpu_have_udmabuf(void);
+-void virtio_gpu_init_udmabuf(struct virtio_gpu_simple_resource *res);
+-void virtio_gpu_fini_udmabuf(struct virtio_gpu_simple_resource *res);
++void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res);
++void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res);
+ int virtio_gpu_update_dmabuf(VirtIOGPU *g,
+                              uint32_t scanout_id,
+                              struct virtio_gpu_simple_resource *res,
 -- 
 2.50.1
 
