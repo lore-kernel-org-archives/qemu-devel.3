@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42BD7CFC53B
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:21:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D882CFD2F3
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMusU-0001lX-GS; Sat, 22 Nov 2025 16:10:43 -0500
+	id 1vMut2-00028a-Dd; Sat, 22 Nov 2025 16:11:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMusR-0001kr-JV; Sat, 22 Nov 2025 16:10:39 -0500
+ id 1vMusx-00026b-IU; Sat, 22 Nov 2025 16:11:11 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMusI-0007TR-Nj; Sat, 22 Nov 2025 16:10:36 -0500
+ id 1vMusn-0007hz-Q3; Sat, 22 Nov 2025 16:11:08 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B563916D311;
+ by isrv.corpit.ru (Postfix) with ESMTP id C9AFA16D312;
  Sun, 23 Nov 2025 00:03:35 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 69E3A3223E5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7FF843223E6;
  Sun, 23 Nov 2025 00:03:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.22 23/25] hw/display/xlnx_dp.c: Don't abort on AUX FIFO
- overrun/underrun
-Date: Sat, 22 Nov 2025 23:55:41 +0300
-Message-ID: <20251122210344.48374-23-mjt@tls.msk.ru>
+Subject: [Stable-7.2.22 24/25] hw/display/xlnx_dp: Don't abort for unsupported
+ graphics formats
+Date: Sat, 22 Nov 2025 23:55:42 +0300
+Message-ID: <20251122210344.48374-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 References: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
@@ -65,86 +65,106 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-The documentation of the Xilinx DisplayPort subsystem at
-https://www.xilinx.com/support/documents/ip_documentation/v_dp_txss1/v3_1/pg299-v-dp-txss1.pdf
-doesn't say what happens if a guest tries to issue an AUX write
-command with a length greater than the amount of data in the AUX
-write FIFO, or tries to write more data to the write FIFO than it can
-hold, or issues multiple commands that put data into the AUX read
-FIFO without reading it such that it overflows.
+If the guest writes an invalid or unsupported value to the
+AV_BUF_FORMAT register, currently we abort().  Instead, log this as
+either a guest error or an unimplemented error and continue.
 
-Currently QEMU will abort() in these guest-error situations, either
-in xlnx_dp.c itself or in the fifo8 code.  Make these cases all be
-logged as guest errors instead.  We choose to ignore the new data on
-overflow, and return 0 on underflow. This is in line with how we handled
-the "read from empty RX FIFO" case in commit a09ef5040477.
+The existing code treats DP_NL_VID_CB_Y0_CR_Y1 as x8b8g8r8
+via a "case 0" that does not use the enum constant name for some
+reason; we leave that alone beyond adding a comment about the
+weird code.
+
+Documentation of this register seems to be at:
+https://docs.amd.com/r/en-US/ug1087-zynq-ultrascale-registers/AV_BUF_FORMAT-DISPLAY_PORT-Register
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1418
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1419
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1424
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1415
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-id: 20251106145209.1083998-2-peter.maydell@linaro.org
-(cherry picked from commit f52db7f34242d3398bab0bacaa3e5dde99be5258)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20251106145209.1083998-3-peter.maydell@linaro.org
+(cherry picked from commit 032333eba77b83dfbd74071cc2971f0bda9a3d4f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
-index b0828d65aa..d5c6d19ab5 100644
+index d5c6d19ab5..2cbbfeef59 100644
 --- a/hw/display/xlnx_dp.c
 +++ b/hw/display/xlnx_dp.c
-@@ -432,7 +432,18 @@ static void xlnx_dp_aux_clear_rx_fifo(XlnxDPState *s)
- 
- static void xlnx_dp_aux_push_rx_fifo(XlnxDPState *s, uint8_t *buf, size_t len)
- {
-+    size_t avail = fifo8_num_free(&s->rx_fifo);
-     DPRINTF("Push %u data in rx_fifo\n", (unsigned)len);
-+    if (len > avail) {
-+        /*
-+         * Data sheet doesn't specify behaviour here: we choose to ignore
-+         * the excess data.
-+         */
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: ignoring %zu bytes pushed to full RX_FIFO\n",
-+                      __func__, len - avail);
-+        len = avail;
-+    }
-     fifo8_push_all(&s->rx_fifo, buf, len);
- }
- 
-@@ -463,7 +474,18 @@ static void xlnx_dp_aux_clear_tx_fifo(XlnxDPState *s)
- 
- static void xlnx_dp_aux_push_tx_fifo(XlnxDPState *s, uint8_t *buf, size_t len)
- {
-+    size_t avail = fifo8_num_free(&s->tx_fifo);
-     DPRINTF("Push %u data in tx_fifo\n", (unsigned)len);
-+    if (len > avail) {
-+        /*
-+         * Data sheet doesn't specify behaviour here: we choose to ignore
-+         * the excess data.
-+         */
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: ignoring %zu bytes pushed to full TX_FIFO\n",
-+                      __func__, len - avail);
-+        len = avail;
-+    }
-     fifo8_push_all(&s->tx_fifo, buf, len);
- }
- 
-@@ -472,8 +494,10 @@ static uint8_t xlnx_dp_aux_pop_tx_fifo(XlnxDPState *s)
-     uint8_t ret;
- 
-     if (fifo8_is_empty(&s->tx_fifo)) {
--        error_report("%s: TX_FIFO underflow", __func__);
+@@ -662,14 +662,28 @@ static void xlnx_dp_change_graphic_fmt(XlnxDPState *s)
+     case DP_GRAPHIC_BGR888:
+         s->g_plane.format = PIXMAN_b8g8r8;
+         break;
++    case DP_GRAPHIC_RGBA5551:
++    case DP_GRAPHIC_RGBA4444:
++    case DP_GRAPHIC_8BPP:
++    case DP_GRAPHIC_4BPP:
++    case DP_GRAPHIC_2BPP:
++    case DP_GRAPHIC_1BPP:
++        qemu_log_mask(LOG_UNIMP, "%s: unimplemented graphic format %u",
++                      __func__,
++                      s->avbufm_registers[AV_BUF_FORMAT] & DP_GRAPHIC_MASK);
++        s->g_plane.format = PIXMAN_r8g8b8a8;
++        break;
+     default:
+-        error_report("%s: unsupported graphic format %u", __func__,
+-                     s->avbufm_registers[AV_BUF_FORMAT] & DP_GRAPHIC_MASK);
 -        abort();
-+        /* Data sheet doesn't specify behaviour here: we choose to return 0 */
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: attempt to read empty TX_FIFO\n",
-+                      __func__);
-+        return 0;
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid graphic format %u",
++                      __func__,
++                      s->avbufm_registers[AV_BUF_FORMAT] & DP_GRAPHIC_MASK);
++        s->g_plane.format = PIXMAN_r8g8b8a8;
++        break;
      }
-     ret = fifo8_pop(&s->tx_fifo);
-     DPRINTF("pop 0x%2.2X from tx_fifo.\n", ret);
+ 
+     switch (s->avbufm_registers[AV_BUF_FORMAT] & DP_NL_VID_FMT_MASK) {
+     case 0:
++        /* This is DP_NL_VID_CB_Y0_CR_Y1 ??? */
+         s->v_plane.format = PIXMAN_x8b8g8r8;
+         break;
+     case DP_NL_VID_Y0_CB_Y1_CR:
+@@ -678,10 +692,39 @@ static void xlnx_dp_change_graphic_fmt(XlnxDPState *s)
+     case DP_NL_VID_RGBA8880:
+         s->v_plane.format = PIXMAN_x8b8g8r8;
+         break;
++    case DP_NL_VID_CR_Y0_CB_Y1:
++    case DP_NL_VID_Y0_CR_Y1_CB:
++    case DP_NL_VID_YV16:
++    case DP_NL_VID_YV24:
++    case DP_NL_VID_YV16CL:
++    case DP_NL_VID_MONO:
++    case DP_NL_VID_YV16CL2:
++    case DP_NL_VID_YUV444:
++    case DP_NL_VID_RGB888:
++    case DP_NL_VID_RGB888_10BPC:
++    case DP_NL_VID_YUV444_10BPC:
++    case DP_NL_VID_YV16CL2_10BPC:
++    case DP_NL_VID_YV16CL_10BPC:
++    case DP_NL_VID_YV16_10BPC:
++    case DP_NL_VID_YV24_10BPC:
++    case DP_NL_VID_Y_ONLY_10BPC:
++    case DP_NL_VID_YV16_420:
++    case DP_NL_VID_YV16CL_420:
++    case DP_NL_VID_YV16CL2_420:
++    case DP_NL_VID_YV16_420_10BPC:
++    case DP_NL_VID_YV16CL_420_10BPC:
++    case DP_NL_VID_YV16CL2_420_10BPC:
++        qemu_log_mask(LOG_UNIMP, "%s: unimplemented video format %u",
++                      __func__,
++                      s->avbufm_registers[AV_BUF_FORMAT] & DP_NL_VID_FMT_MASK);
++        s->v_plane.format = PIXMAN_x8b8g8r8;
++        break;
+     default:
+-        error_report("%s: unsupported video format %u", __func__,
+-                     s->avbufm_registers[AV_BUF_FORMAT] & DP_NL_VID_FMT_MASK);
+-        abort();
++        qemu_log_mask(LOG_UNIMP, "%s: invalid video format %u",
++                      __func__,
++                      s->avbufm_registers[AV_BUF_FORMAT] & DP_NL_VID_FMT_MASK);
++        s->v_plane.format = PIXMAN_x8b8g8r8;
++        break;
+     }
+ 
+     xlnx_dp_recreate_surface(s);
 -- 
 2.47.3
 
