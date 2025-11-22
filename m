@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0E27CFD2EF
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC83CFD2EF
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:11:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMuoB-0008Oi-IX; Sat, 22 Nov 2025 16:06:16 -0500
+	id 1vMupL-0000H4-Mb; Sat, 22 Nov 2025 16:07:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMuo5-0008Kg-K9; Sat, 22 Nov 2025 16:06:09 -0500
+ id 1vMupD-0000FY-VE; Sat, 22 Nov 2025 16:07:20 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMunx-0006be-1f; Sat, 22 Nov 2025 16:06:06 -0500
+ id 1vMup1-0006ox-O6; Sat, 22 Nov 2025 16:07:13 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4704816D300;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9B5DE16D304;
  Sun, 23 Nov 2025 00:03:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EF5B53223D4;
- Sun, 23 Nov 2025 00:03:44 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 538A43223D8;
+ Sun, 23 Nov 2025 00:03:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bastian Blank <bblank@thinkmo.de>,
- Bastian Blank <waldi@debian.org>, Peter Maydell <peter.maydell@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.22 06/25] linux-user: Use correct type for FIBMAP and
- FIGETBSZ emulation
-Date: Sat, 22 Nov 2025 23:55:24 +0300
-Message-ID: <20251122210344.48374-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.22 10/25] io: move websock resource release to close
+ method
+Date: Sat, 22 Nov 2025 23:55:28 +0300
+Message-ID: <20251122210344.48374-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 References: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,44 +62,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bastian Blank <bblank@thinkmo.de>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Both the FIBMAP and FIGETBSZ ioctl get "int *" (pointer to 32bit
-integer) as argument, not "long *" as specified in qemu.  Using the
-correct type makes the emulation work in cross endian context.
+The QIOChannelWebsock object releases all its resources in the
+finalize callback. This is later than desired, as callers expect
+to be able to call qio_channel_close() to fully close a channel
+and release resources related to I/O.
 
-Both ioctl does not seem to be documented. However the kernel
-implementation has always used "int *".
+The logic in the finalize method is at most a failsafe to handle
+cases where a consumer forgets to call qio_channel_close.
 
-Signed-off-by: Bastian Blank <waldi@debian.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3185
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Reviwed-by: Michael Tokarev <mjt@tls.msk.ru>
+This adds equivalent logic to the close method to release the
+resources, using g_clear_handle_id/g_clear_pointer to be robust
+against repeated invocations. The finalize method is tweaked
+so that the GSource is removed before releasing the underlying
+channel.
+
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 322c3c4f3abee616a18b3bfe563ec29dd67eae63)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 7c7089321670fb51022a1c4493cbcc69aa288a0f)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 071f7ca253..261cef1e75 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -129,13 +129,13 @@
-      IOCTL(FDTWADDLE, 0, TYPE_NULL)
-      IOCTL(FDEJECT, 0, TYPE_NULL)
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index fb4932ade7..205df0b25a 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -921,13 +921,13 @@ static void qio_channel_websock_finalize(Object *obj)
+     buffer_free(&ioc->encinput);
+     buffer_free(&ioc->encoutput);
+     buffer_free(&ioc->rawinput);
+-    object_unref(OBJECT(ioc->master));
+     if (ioc->io_tag) {
+         g_source_remove(ioc->io_tag);
+     }
+     if (ioc->io_err) {
+         error_free(ioc->io_err);
+     }
++    object_unref(OBJECT(ioc->master));
+ }
  
--     IOCTL(FIBMAP, IOC_W | IOC_R, MK_PTR(TYPE_LONG))
-+     IOCTL(FIBMAP, IOC_W | IOC_R, MK_PTR(TYPE_INT))
- #ifdef FICLONE
-      IOCTL(FICLONE, IOC_W, TYPE_INT)
-      IOCTL(FICLONERANGE, IOC_W, MK_PTR(MK_STRUCT(STRUCT_file_clone_range)))
- #endif
  
--     IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_LONG))
-+     IOCTL(FIGETBSZ, IOC_R, MK_PTR(TYPE_INT))
- #ifdef CONFIG_FIEMAP
-      IOCTL_SPECIAL(FS_IOC_FIEMAP, IOC_W | IOC_R, do_ioctl_fs_ioc_fiemap,
-                    MK_PTR(MK_STRUCT(STRUCT_fiemap)))
+@@ -1217,6 +1217,15 @@ static int qio_channel_websock_close(QIOChannel *ioc,
+     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(ioc);
+ 
+     trace_qio_channel_websock_close(ioc);
++    buffer_free(&wioc->encinput);
++    buffer_free(&wioc->encoutput);
++    buffer_free(&wioc->rawinput);
++    if (wioc->io_tag) {
++        g_clear_handle_id(&wioc->io_tag, g_source_remove);
++    }
++    if (wioc->io_err) {
++        g_clear_pointer(&wioc->io_err, error_free);
++    }
+     return qio_channel_close(wioc->master, errp);
+ }
+ 
 -- 
 2.47.3
 
