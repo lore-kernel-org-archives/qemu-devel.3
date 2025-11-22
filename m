@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D77E5CFD2F3
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD9ACFD2EF
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:09:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMunC-00088k-Jx; Sat, 22 Nov 2025 16:05:15 -0500
+	id 1vMuma-00080o-E3; Sat, 22 Nov 2025 16:04:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMun1-00083P-Po; Sat, 22 Nov 2025 16:05:04 -0500
+ id 1vMumV-0007zF-2K; Sat, 22 Nov 2025 16:04:31 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMums-0006E9-6Z; Sat, 22 Nov 2025 16:05:00 -0500
+ id 1vMumL-00063z-7y; Sat, 22 Nov 2025 16:04:26 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 021AE16D2FD;
- Sun, 23 Nov 2025 00:03:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B232716D2FA;
+ Sun, 23 Nov 2025 00:03:33 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A62E13223D1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 69AAE3223CE;
  Sun, 23 Nov 2025 00:03:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, YiFei Zhu <zhuyifei@google.com>,
- unvariant.winter@gmail.com, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.22 03/25] i386/tcg/smm_helper: Properly apply DR values
- on SMM entry / exit
-Date: Sat, 22 Nov 2025 23:55:21 +0300
-Message-ID: <20251122210344.48374-3-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.22 00/25] Patch Round-up for stable 7.2.22,
+ freeze on 2025-12-01
+Date: Sat, 22 Nov 2025 23:55:18 +0300
+Message-ID: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
-References: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,61 +59,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YiFei Zhu <zhuyifei@google.com>
+The following patches are queued for QEMU stable v7.2.22:
 
-do_smm_enter and helper_rsm sets the env->dr, but does not sync the
-values with cpu_x86_update_dr7. A malicious kernel may control the
-instruction pointer in SMM by setting a breakpoint on the SMI
-entry point, and after do_smm_enter cpu->breakpoints contains the
-stale breakpoint; and because IDT is not reloaded upon SMI entry,
-the debug exception handler controlled by the malicious kernel
-is invoked.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-7.2
 
-Fixes: 01df040b5247 ("x86: Debug register emulation (Jan Kiszka)")
-Reported-by: unvariant.winter@gmail.com
-Signed-off-by: YiFei Zhu <zhuyifei@google.com>
-Link: https://lore.kernel.org/r/2bacb9b24e9d337dbe48791aa25d349eb9c52c3a.1758794468.git.zhuyifei@google.com
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit cdba90ac1b0ac789b10c0b5f6ef7e9558237ec66)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Patch freeze is 2025-12-01, and the release is planned for 2025-12-03:
 
-diff --git a/target/i386/tcg/sysemu/smm_helper.c b/target/i386/tcg/sysemu/smm_helper.c
-index a45b5651c3..f3d0bbb8c3 100644
---- a/target/i386/tcg/sysemu/smm_helper.c
-+++ b/target/i386/tcg/sysemu/smm_helper.c
-@@ -168,7 +168,7 @@ void do_smm_enter(X86CPU *cpu)
-                        env->cr[0] & ~(CR0_PE_MASK | CR0_EM_MASK | CR0_TS_MASK |
-                                       CR0_PG_MASK));
-     cpu_x86_update_cr4(env, 0);
--    env->dr[7] = 0x00000400;
-+    helper_set_dr(env, 7, 0x00000400);
- 
-     cpu_x86_load_seg_cache(env, R_CS, (env->smbase >> 4) & 0xffff, env->smbase,
-                            0xffffffff,
-@@ -233,8 +233,8 @@ void helper_rsm(CPUX86State *env)
-     env->eip = x86_ldq_phys(cs, sm_state + 0x7f78);
-     cpu_load_eflags(env, x86_ldl_phys(cs, sm_state + 0x7f70),
-                     ~(CC_O | CC_S | CC_Z | CC_A | CC_P | CC_C | DF_MASK));
--    env->dr[6] = x86_ldl_phys(cs, sm_state + 0x7f68);
--    env->dr[7] = x86_ldl_phys(cs, sm_state + 0x7f60);
-+    helper_set_dr(env, 6, x86_ldl_phys(cs, sm_state + 0x7f68));
-+    helper_set_dr(env, 7, x86_ldl_phys(cs, sm_state + 0x7f60));
- 
-     cpu_x86_update_cr4(env, x86_ldl_phys(cs, sm_state + 0x7f48));
-     cpu_x86_update_cr3(env, x86_ldq_phys(cs, sm_state + 0x7f50));
-@@ -268,8 +268,8 @@ void helper_rsm(CPUX86State *env)
-     env->regs[R_EDX] = x86_ldl_phys(cs, sm_state + 0x7fd8);
-     env->regs[R_ECX] = x86_ldl_phys(cs, sm_state + 0x7fd4);
-     env->regs[R_EAX] = x86_ldl_phys(cs, sm_state + 0x7fd0);
--    env->dr[6] = x86_ldl_phys(cs, sm_state + 0x7fcc);
--    env->dr[7] = x86_ldl_phys(cs, sm_state + 0x7fc8);
-+    helper_set_dr(env, 6, x86_ldl_phys(cs, sm_state + 0x7fcc));
-+    helper_set_dr(env, 7, x86_ldl_phys(cs, sm_state + 0x7fc8));
- 
-     env->tr.selector = x86_ldl_phys(cs, sm_state + 0x7fc4) & 0xffff;
-     env->tr.base = x86_ldl_phys(cs, sm_state + 0x7f64);
--- 
-2.47.3
+  https://wiki.qemu.org/Planning/7.2
 
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+This most likely will be the last release in 7.2.x series.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 df9a3372ddeb Mathias Krause:
+   target/i386: Fix CR2 handling for non-canonical addresses
+02 df32e5c568c9 Paolo Bonzini:
+   i386/cpu: Prevent delivering SIPI during SMM in TCG mode
+03 cdba90ac1b0a YiFei Zhu:
+   i386/tcg/smm_helper: Properly apply DR values on SMM entry / exit
+04 5142397c7933 Paolo Bonzini:
+   async: access bottom half flags with qatomic_read
+05 58aa1d08bbc4 Paolo Bonzini:
+   target/i386: user: do not set up a valid LDT on reset
+06 7c7089321670 Bastian Blank:
+   linux-user: Use correct type for FIBMAP and FIGETBSZ emulation
+07 0db2de22fcbf Peter Maydell:
+   linux-user: permit sendto() with NULL buf and 0 len
+08 003f15369de4 Daniel P. Berrangé:
+   io: add trace event when cancelling TLS handshake
+09 2c147611cf56 Daniel P. Berrangé:
+   io: release active GSource in TLS channel finalizer
+10 322c3c4f3abe Daniel P. Berrangé:
+   io: move websock resource release to close method
+11 b7a1f2ca45c7 Daniel P. Berrangé:
+   io: fix use after free in websocket handshake code
+12 3995fc238e05 Daniel P. Berrangé:
+   crypto: stop requiring "key encipherment" usage in x509 certs
+13 ed26056d90dd Richard W.M. Jones:
+   block/curl.c: Use explicit long constants in curl_easy_setopt calls
+14 ad97769e9dcf Richard W.M. Jones:
+   block/curl.c: Fix CURLOPT_VERBOSE parameter type
+15 59506e59e0f0 Eric Blake:
+   qio: Add trace points to net_listener
+16 6e03d5cdc991 Eric Blake:
+   qio: Unwatch before notify in QIONetListener
+17 b5676493a08b Eric Blake:
+   qio: Remember context of qio_net_listener_set_client_func_full
+18 9d86181874ab Eric Blake:
+   qio: Protect NetListener callback with mutex
+19 6da0c9828194 Peter Maydell:
+   hw/net/e1000e_core: Don't advance desc_offset for NULL buffer RX 
+   descriptors
+20 9d946d56a2ac Peter Maydell:
+   hw/net/e1000e_core: Correct rx oversize packet checks
+21 bab496a18358 Peter Maydell:
+   hw/net/e1000e_core: Adjust e1000e_write_payload_frag_to_rx_buffers() 
+   assert
+22 a01344d9d780 Peter Maydell:
+   net: pad packets to minimum length in qemu_receive_packet()
+23 f52db7f34242 Peter Maydell:
+   hw/display/xlnx_dp.c: Don't abort on AUX FIFO overrun/underrun
+24 032333eba77b Peter Maydell:
+   hw/display/xlnx_dp: Don't abort for unsupported graphics formats
+25 5fc50b4ec841 Peter Maydell:
+   hw/misc/npcm_clk: Don't divide by zero when calculating frequency
 
