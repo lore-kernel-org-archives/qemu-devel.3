@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FC83CFD2EF
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C69B4CFD2F3
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:12:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMupL-0000H4-Mb; Sat, 22 Nov 2025 16:07:28 -0500
+	id 1vMunm-0008Eo-Sa; Sat, 22 Nov 2025 16:05:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMupD-0000FY-VE; Sat, 22 Nov 2025 16:07:20 -0500
+ id 1vMunZ-0008BJ-Pl; Sat, 22 Nov 2025 16:05:37 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMup1-0006ox-O6; Sat, 22 Nov 2025 16:07:13 -0500
+ id 1vMunP-0006Jb-4G; Sat, 22 Nov 2025 16:05:34 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B5DE16D304;
+ by isrv.corpit.ru (Postfix) with ESMTP id 15DCA16D2FE;
  Sun, 23 Nov 2025 00:03:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 538A43223D8;
- Sun, 23 Nov 2025 00:03:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C2D0A3223D2;
+ Sun, 23 Nov 2025 00:03:44 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.22 10/25] io: move websock resource release to close
- method
-Date: Sat, 22 Nov 2025 23:55:28 +0300
-Message-ID: <20251122210344.48374-10-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.22 04/25] async: access bottom half flags with
+ qatomic_read
+Date: Sat, 22 Nov 2025 23:55:22 +0300
+Message-ID: <20251122210344.48374-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 References: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -62,62 +60,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-The QIOChannelWebsock object releases all its resources in the
-finalize callback. This is later than desired, as callers expect
-to be able to call qio_channel_close() to fully close a channel
-and release resources related to I/O.
+Running test-aio-multithread under TSAN reveals data races on bh->flags.
+Because bottom halves may be scheduled or canceled asynchronously,
+without taking a lock, adjust aio_compute_bh_timeout() and aio_ctx_check()
+to use a relaxed read to access the flags.
 
-The logic in the finalize method is at most a failsafe to handle
-cases where a consumer forgets to call qio_channel_close.
+Use an acquire load to ensure that anything that was written prior to
+qemu_bh_schedule() is visible.
 
-This adds equivalent logic to the close method to release the
-resources, using g_clear_handle_id/g_clear_pointer to be robust
-against repeated invocations. The finalize method is tweaked
-so that the GSource is removed before releasing the underlying
-channel.
-
-Reviewed-by: Eric Blake <eblake@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 322c3c4f3abee616a18b3bfe563ec29dd67eae63)
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/2749
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/851
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 5142397c79330aab9bef3230991c8ac0c251110f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index fb4932ade7..205df0b25a 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -921,13 +921,13 @@ static void qio_channel_websock_finalize(Object *obj)
-     buffer_free(&ioc->encinput);
-     buffer_free(&ioc->encoutput);
-     buffer_free(&ioc->rawinput);
--    object_unref(OBJECT(ioc->master));
-     if (ioc->io_tag) {
-         g_source_remove(ioc->io_tag);
+diff --git a/util/async.c b/util/async.c
+index 0cc3037e0c..01961898be 100644
+--- a/util/async.c
++++ b/util/async.c
+@@ -247,8 +247,9 @@ static int64_t aio_compute_bh_timeout(BHList *head, int timeout)
+     QEMUBH *bh;
+ 
+     QSLIST_FOREACH_RCU(bh, head, next) {
+-        if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
+-            if (bh->flags & BH_IDLE) {
++        int flags = qatomic_load_acquire(&bh->flags);
++        if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
++            if (flags & BH_IDLE) {
+                 /* idle bottom halves will be polled at least
+                  * every 10ms */
+                 timeout = 10000000;
+@@ -326,14 +327,16 @@ aio_ctx_check(GSource *source)
+     aio_notify_accept(ctx);
+ 
+     QSLIST_FOREACH_RCU(bh, &ctx->bh_list, next) {
+-        if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
++        int flags = qatomic_load_acquire(&bh->flags);
++        if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
+             return true;
+         }
      }
-     if (ioc->io_err) {
-         error_free(ioc->io_err);
-     }
-+    object_unref(OBJECT(ioc->master));
- }
  
- 
-@@ -1217,6 +1217,15 @@ static int qio_channel_websock_close(QIOChannel *ioc,
-     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(ioc);
- 
-     trace_qio_channel_websock_close(ioc);
-+    buffer_free(&wioc->encinput);
-+    buffer_free(&wioc->encoutput);
-+    buffer_free(&wioc->rawinput);
-+    if (wioc->io_tag) {
-+        g_clear_handle_id(&wioc->io_tag, g_source_remove);
-+    }
-+    if (wioc->io_err) {
-+        g_clear_pointer(&wioc->io_err, error_free);
-+    }
-     return qio_channel_close(wioc->master, errp);
- }
- 
+     QSIMPLEQ_FOREACH(s, &ctx->bh_slice_list, next) {
+         QSLIST_FOREACH_RCU(bh, &s->bh_list, next) {
+-            if ((bh->flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
++            int flags = qatomic_load_acquire(&bh->flags);
++            if ((flags & (BH_SCHEDULED | BH_DELETED)) == BH_SCHEDULED) {
+                 return true;
+             }
+         }
 -- 
 2.47.3
 
