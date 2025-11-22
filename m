@@ -4,42 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4976CF64B1
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 07:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B5E2CFC50C
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 07:54:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd18-0000kE-9M; Fri, 21 Nov 2025 21:06:27 -0500
+	id 1vMiKl-0008Fw-RB; Sat, 22 Nov 2025 02:47:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcEM-0000Vf-4r; Fri, 21 Nov 2025 20:16:02 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vMhTk-0000gN-R0
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 01:52:23 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcCI-0005Gy-WE; Fri, 21 Nov 2025 20:15:57 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A959816CA55;
- Fri, 21 Nov 2025 21:44:23 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 30C23321C91;
- Fri, 21 Nov 2025 21:44:32 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1vMhTN-0000qe-LE
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 01:52:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1763794313; x=1795330313;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=Upq2JY7yf0Ys2TZJHDdbUd1IroM2T22AHjG73dw2axg=;
+ b=hTvILl+OcEQmMgPbob8C7E9jzu9uKCTL171OhUf4igCDqUMNrjoAKPrv
+ oNrqKi5BH5ooJvaZDNi8348JUBXx0dOCURKOIkbNSyyGmlqjbZY9XNIoZ
+ fiOHIineYnw5nxBf9sCNO+MAkUOBPFTZfYo7hBa5I/9s1rbFKo6uwBlRX
+ MEFCBSrVeVeCAuQKMwbbM98p5jsUzCy0cKoL/kXu1OIs3aqoE5rvnP4Ek
+ NeK/3Q7d0kvgZS4Budh4ny8xT8KaD03mZIgzDVe8dnFVgnmFZv0Bt8lG3
+ q994GVkmg834bYy9CuqwFIcv3z9LK7eyjD+q9ccj8PPGNVQfg3nyNIYCF w==;
+X-CSE-ConnectionGUID: /APFKRm+T4+SGcnMeRRlew==
+X-CSE-MsgGUID: ZuzzI3T9Rce2jXkIurom/Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11620"; a="65924069"
+X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; d="scan'208";a="65924069"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Nov 2025 22:50:22 -0800
+X-CSE-ConnectionGUID: Ml6EIHS3R2e/NRoXnyyfgQ==
+X-CSE-MsgGUID: bSPxbtQ2QLSZDAups5WFxA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; d="scan'208";a="191064608"
+Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
+ by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Nov 2025 22:50:22 -0800
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xiaoyao Li <xiaoyao.li@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 26/81] i386/kvm/cpu: Init SMM cpu address space for
- hotplugged CPUs
-Date: Fri, 21 Nov 2025 21:43:25 +0300
-Message-ID: <20251121184424.1137669-26-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 3/9] vfio: Document vfio_device_get_region_info()
+Date: Fri, 21 Nov 2025 22:46:24 -0800
+Message-ID: <20251122064936.2948632-4-vivek.kasireddy@intel.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251122064936.2948632-1-vivek.kasireddy@intel.com>
+References: <20251122064936.2948632-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+Received-SPF: pass client-ip=192.198.163.14;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,81 +83,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+Add documentation for vfio_device_get_region_info() and clarify the
+expectations around its usage.
 
-The SMM cpu address space is initialized in a machine_init_done
-notifier. It only runs once when QEMU starts up, which leads to the
-issue that for any hotplugged CPU after the machine is ready, SMM
-cpu address space doesn't get initialized.
+Cc: Alex Williamson <alex@shazbot.org>
+Cc: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+---
+ include/hw/vfio/vfio-device.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-Fix the issue by initializing the SMM cpu address space in x86_cpu_plug()
-when the cpu is hotplugged.
-
-Fixes: 591f817d819f ("target/i386: Define enum X86ASIdx for x86's address spaces")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Closes: https://lore.kernel.org/qemu-devel/CAFEAcA_3kkZ+a5rTZGmK8W5K6J7qpYD31HkvjBnxWr-fGT2h_A@mail.gmail.com/
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Link: https://lore.kernel.org/r/20251014094216.164306-2-xiaoyao.li@intel.com
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 639a29422754f62b4bfd26cff936b3c981758010)
-(Mjt: the original Fixes: line is wrong:
- https://lore.kernel.org/qemu-devel/57d3c5b2-8b07-41ee-bf41-a9eac16eb6da@intel.com/T/#u )
-Fixes: 0516f4b70264 ("i386/cpu: Enable SMM cpu address space under KVM")
-Fixes: 232d5c627589 ("i386/cpu: Enable SMM cpu address space under KVM"), 10.1.5
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 1b0671c523..0ab27c053f 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -182,6 +182,17 @@ void x86_cpu_plug(HotplugHandler *hotplug_dev,
-         fw_cfg_modify_i16(x86ms->fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
-     }
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 0fe6c60ba2..bb28123faf 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -257,6 +257,19 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainer *bcontainer,
  
-+    /*
-+     * Non-hotplugged CPUs get their SMM cpu address space initialized in
-+     * machine init done notifier: register_smram_listener().
-+     *
-+     * We need initialize the SMM cpu address space for the hotplugged CPU
-+     * specifically.
-+     */
-+    if (kvm_enabled() && dev->hotplugged && x86_machine_is_smm_enabled(x86ms)) {
-+        kvm_smm_cpu_address_space_init(cpu);
-+    }
-+
-     found_cpu = x86_find_cpu_slot(MACHINE(x86ms), cpu->apic_id, NULL);
-     found_cpu->cpu = CPU(dev);
- out:
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index e77fb752c2..98e99374e7 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2722,6 +2722,12 @@ static void register_smram_listener(Notifier *n, void *unused)
-     }
- }
+ void vfio_device_unprepare(VFIODevice *vbasedev);
  
-+/* It should only be called in cpu's hotplug callback */
-+void kvm_smm_cpu_address_space_init(X86CPU *cpu)
-+{
-+    cpu_address_space_init(CPU(cpu), X86ASIdx_SMM, "cpu-smm", &smram_as_root);
-+}
-+
- static void *kvm_msr_energy_thread(void *data)
- {
-     KVMState *s = data;
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-index 88565e8dba..b5f274c27f 100644
---- a/target/i386/kvm/kvm_i386.h
-+++ b/target/i386/kvm/kvm_i386.h
-@@ -59,6 +59,7 @@ void kvm_update_msi_routes_all(void *private, bool global,
- 
- #endif /* CONFIG_KVM */
- 
-+void kvm_smm_cpu_address_space_init(X86CPU *cpu);
- void kvm_pc_setup_irq_routing(bool pci_enabled);
- 
- #endif
++/**
++ * Return the region info for a given region index. The region info includes
++ * details such as size, offset, and capabilities. Note that the returned
++ * info pointer is either a cached copy or newly allocated by
++ * vfio_device_get_region_info(), so the caller is not expected to allocate
++ * or free it.
++ *
++ * @vbasedev: #VFIODevice to use
++ * @index: region index
++ * @info: pointer to store the region info
++ *
++ * Returns 0 on success or a negative value on error.
++ */
+ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+                                 struct vfio_region_info **info);
+ int vfio_device_get_region_info_type(VFIODevice *vbasedev, uint32_t type,
 -- 
-2.47.3
+2.50.1
 
 
