@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A14CFD2F3
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89C67CFD2EF
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMupT-0000IU-1N; Sat, 22 Nov 2025 16:07:36 -0500
+	id 1vMuoq-00006D-Hr; Sat, 22 Nov 2025 16:06:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMupD-0000Fh-LA; Sat, 22 Nov 2025 16:07:20 -0500
+ id 1vMuog-0008Vq-Hc; Sat, 22 Nov 2025 16:06:46 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMup4-0006pN-SJ; Sat, 22 Nov 2025 16:07:16 -0500
+ id 1vMuoW-0006hW-KI; Sat, 22 Nov 2025 16:06:43 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AE12716D305;
+ by isrv.corpit.ru (Postfix) with ESMTP id 87CA716D303;
  Sun, 23 Nov 2025 00:03:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 651403223D9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 35E993223D7;
  Sun, 23 Nov 2025 00:03:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Grant Millar | Cylo <rid@cylo.io>, Eric Blake <eblake@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.22 11/25] io: fix use after free in websocket handshake
- code
-Date: Sat, 22 Nov 2025 23:55:29 +0300
-Message-ID: <20251122210344.48374-11-mjt@tls.msk.ru>
+ Eric Blake <eblake@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.22 09/25] io: release active GSource in TLS channel
+ finalizer
+Date: Sat, 22 Nov 2025 23:55:27 +0300
+Message-ID: <20251122210344.48374-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 References: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
@@ -65,164 +64,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-If the QIOChannelWebsock object is freed while it is waiting to
-complete a handshake, a GSource is leaked. This can lead to the
-callback firing later on and triggering a use-after-free in the
-use of the channel. This was observed in the VNC server with the
-following trace from valgrind:
+While code is supposed to call qio_channel_close() before releasing the
+last reference on an QIOChannel, this is not guaranteed. QIOChannelFile
+and QIOChannelSocket both cleanup resources in their finalizer if the
+close operation was missed.
 
-==2523108== Invalid read of size 4
-==2523108==    at 0x4054A24: vnc_disconnect_start (vnc.c:1296)
-==2523108==    by 0x4054A24: vnc_client_error (vnc.c:1392)
-==2523108==    by 0x4068A09: vncws_handshake_done (vnc-ws.c:105)
-==2523108==    by 0x44863B4: qio_task_complete (task.c:197)
-==2523108==    by 0x448343D: qio_channel_websock_handshake_io (channel-websock.c:588)
-==2523108==    by 0x6EDB862: UnknownInlinedFun (gmain.c:3398)
-==2523108==    by 0x6EDB862: g_main_context_dispatch_unlocked.lto_priv.0 (gmain.c:4249)
-==2523108==    by 0x6EDBAE4: g_main_context_dispatch (gmain.c:4237)
-==2523108==    by 0x45EC79F: glib_pollfds_poll (main-loop.c:287)
-==2523108==    by 0x45EC79F: os_host_main_loop_wait (main-loop.c:310)
-==2523108==    by 0x45EC79F: main_loop_wait (main-loop.c:589)
-==2523108==    by 0x423A56D: qemu_main_loop (runstate.c:835)
-==2523108==    by 0x454F300: qemu_default_main (main.c:37)
-==2523108==    by 0x73D6574: (below main) (libc_start_call_main.h:58)
-==2523108==  Address 0x57a6e0dc is 28 bytes inside a block of size 103,608 free'd
-==2523108==    at 0x5F2FE43: free (vg_replace_malloc.c:989)
-==2523108==    by 0x6EDC444: g_free (gmem.c:208)
-==2523108==    by 0x4053F23: vnc_update_client (vnc.c:1153)
-==2523108==    by 0x4053F23: vnc_refresh (vnc.c:3225)
-==2523108==    by 0x4042881: dpy_refresh (console.c:880)
-==2523108==    by 0x4042881: gui_update (console.c:90)
-==2523108==    by 0x45EFA1B: timerlist_run_timers.part.0 (qemu-timer.c:562)
-==2523108==    by 0x45EFC8F: timerlist_run_timers (qemu-timer.c:495)
-==2523108==    by 0x45EFC8F: qemu_clock_run_timers (qemu-timer.c:576)
-==2523108==    by 0x45EFC8F: qemu_clock_run_all_timers (qemu-timer.c:663)
-==2523108==    by 0x45EC765: main_loop_wait (main-loop.c:600)
-==2523108==    by 0x423A56D: qemu_main_loop (runstate.c:835)
-==2523108==    by 0x454F300: qemu_default_main (main.c:37)
-==2523108==    by 0x73D6574: (below main) (libc_start_call_main.h:58)
-==2523108==  Block was alloc'd at
-==2523108==    at 0x5F343F3: calloc (vg_replace_malloc.c:1675)
-==2523108==    by 0x6EE2F81: g_malloc0 (gmem.c:133)
-==2523108==    by 0x4057DA3: vnc_connect (vnc.c:3245)
-==2523108==    by 0x448591B: qio_net_listener_channel_func (net-listener.c:54)
-==2523108==    by 0x6EDB862: UnknownInlinedFun (gmain.c:3398)
-==2523108==    by 0x6EDB862: g_main_context_dispatch_unlocked.lto_priv.0 (gmain.c:4249)
-==2523108==    by 0x6EDBAE4: g_main_context_dispatch (gmain.c:4237)
-==2523108==    by 0x45EC79F: glib_pollfds_poll (main-loop.c:287)
-==2523108==    by 0x45EC79F: os_host_main_loop_wait (main-loop.c:310)
-==2523108==    by 0x45EC79F: main_loop_wait (main-loop.c:589)
-==2523108==    by 0x423A56D: qemu_main_loop (runstate.c:835)
-==2523108==    by 0x454F300: qemu_default_main (main.c:37)
-==2523108==    by 0x73D6574: (below main) (libc_start_call_main.h:58)
-==2523108==
+This ensures the TLS channel will do the same failsafe cleanup.
 
-The above can be reproduced by launching QEMU with
-
-  $ qemu-system-x86_64 -vnc localhost:0,websocket=5700
-
-and then repeatedly running:
-
-  for i in {1..100}; do
-     (echo -n "GET / HTTP/1.1" && sleep 0.05) | nc -w 1 localhost 5700 &
-  done
-
-CVE-2025-11234
-Reported-by: Grant Millar | Cylo <rid@cylo.io>
 Reviewed-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit b7a1f2ca45c7865b9e98e02ae605a65fc9458ae9)
+(cherry picked from commit 2c147611cf568eb1cd7dc8bf4479b272bad3b9d6)
+(Mjt: remove releasing of ioc->bye_ioc_tag due to missing in 7.2.x
+ v9.2.0-1773-g30ee88622edf "io: tls: Add qio_channel_tls_bye")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/include/io/channel-websock.h b/include/io/channel-websock.h
-index e180827c57..6700cf8946 100644
---- a/include/io/channel-websock.h
-+++ b/include/io/channel-websock.h
-@@ -61,7 +61,8 @@ struct QIOChannelWebsock {
-     size_t payload_remain;
-     size_t pong_remain;
-     QIOChannelWebsockMask mask;
--    guint io_tag;
-+    guint hs_io_tag; /* tracking handshake task */
-+    guint io_tag; /* tracking watch task */
-     Error *io_err;
-     gboolean io_eof;
-     uint8_t opcode;
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index 205df0b25a..bc0bb80c9a 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -545,6 +545,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        wioc->hs_io_tag = 0;
-         return FALSE;
-     }
+diff --git a/io/channel-tls.c b/io/channel-tls.c
+index 686271acf7..3b3934db72 100644
+--- a/io/channel-tls.c
++++ b/io/channel-tls.c
+@@ -255,6 +255,11 @@ static void qio_channel_tls_finalize(Object *obj)
+ {
+     QIOChannelTLS *ioc = QIO_CHANNEL_TLS(obj);
  
-@@ -560,6 +561,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-             trace_qio_channel_websock_handshake_complete(ioc);
-             qio_task_complete(task);
-         }
-+        wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-     trace_qio_channel_websock_handshake_pending(ioc, G_IO_OUT);
-@@ -586,6 +588,7 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-     if (ret == 0) {
-@@ -597,7 +600,7 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-     error_propagate(&wioc->io_err, err);
- 
-     trace_qio_channel_websock_handshake_reply(ioc);
--    qio_channel_add_watch(
-+    wioc->hs_io_tag = qio_channel_add_watch(
-         wioc->master,
-         G_IO_OUT,
-         qio_channel_websock_handshake_send,
-@@ -906,11 +909,12 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
- 
-     trace_qio_channel_websock_handshake_start(ioc);
-     trace_qio_channel_websock_handshake_pending(ioc, G_IO_IN);
--    qio_channel_add_watch(ioc->master,
--                          G_IO_IN,
--                          qio_channel_websock_handshake_io,
--                          task,
--                          NULL);
-+    ioc->hs_io_tag = qio_channel_add_watch(
-+        ioc->master,
-+        G_IO_IN,
-+        qio_channel_websock_handshake_io,
-+        task,
-+        NULL);
++    if (ioc->hs_ioc_tag) {
++        trace_qio_channel_tls_handshake_cancel(ioc);
++        g_clear_handle_id(&ioc->hs_ioc_tag, g_source_remove);
++    }
++
+     object_unref(OBJECT(ioc->master));
+     qcrypto_tls_session_free(ioc->session);
  }
- 
- 
-@@ -921,6 +925,9 @@ static void qio_channel_websock_finalize(Object *obj)
-     buffer_free(&ioc->encinput);
-     buffer_free(&ioc->encoutput);
-     buffer_free(&ioc->rawinput);
-+    if (ioc->hs_io_tag) {
-+        g_source_remove(ioc->hs_io_tag);
-+    }
-     if (ioc->io_tag) {
-         g_source_remove(ioc->io_tag);
-     }
-@@ -1220,6 +1227,9 @@ static int qio_channel_websock_close(QIOChannel *ioc,
-     buffer_free(&wioc->encinput);
-     buffer_free(&wioc->encoutput);
-     buffer_free(&wioc->rawinput);
-+    if (wioc->hs_io_tag) {
-+        g_clear_handle_id(&wioc->hs_io_tag, g_source_remove);
-+    }
-     if (wioc->io_tag) {
-         g_clear_handle_id(&wioc->io_tag, g_source_remove);
-     }
 -- 
 2.47.3
 
