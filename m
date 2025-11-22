@@ -4,39 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C84E2CFC53B
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:16:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF515CFD2F3
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMus1-0001dY-1z; Sat, 22 Nov 2025 16:10:14 -0500
+	id 1vMuoh-0008Vp-GA; Sat, 22 Nov 2025 16:06:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMurw-0001cR-7v; Sat, 22 Nov 2025 16:10:08 -0500
+ id 1vMuoe-0008VH-9P; Sat, 22 Nov 2025 16:06:44 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMurj-0007KH-Nh; Sat, 22 Nov 2025 16:10:03 -0500
+ id 1vMuoV-0006hD-Jz; Sat, 22 Nov 2025 16:06:40 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8A05916D30F;
- Sun, 23 Nov 2025 00:03:35 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6C40816D302;
+ Sun, 23 Nov 2025 00:03:34 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3FBD73223E3;
- Sun, 23 Nov 2025 00:03:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 24E9B3223D6;
+ Sun, 23 Nov 2025 00:03:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.22 21/25] hw/net/e1000e_core: Adjust
- e1000e_write_payload_frag_to_rx_buffers() assert
-Date: Sat, 22 Nov 2025 23:55:39 +0300
-Message-ID: <20251122210344.48374-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.22 08/25] io: add trace event when cancelling TLS
+ handshake
+Date: Sat, 22 Nov 2025 23:55:26 +0300
+Message-ID: <20251122210344.48374-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 References: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,64 +63,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-An assertion in e1000e_write_payload_frag_to_rx_buffers() attempts to
-guard against the calling code accidentally trying to write too much
-data to a single RX descriptor, such that the E1000EBAState::cur_idx
-indexes off the end of the EB1000BAState::written[] array.
-
-Unfortunately it is overzealous: it asserts that cur_idx is in
-range after it has been incremented. This will fire incorrectly
-for the case where the guest configures four buffers and exactly
-enough bytes are written to fill all four of them.
-
-The only places where we use cur_idx and index in to the written[]
-array are the functions e1000e_write_hdr_frag_to_rx_buffers() and
-e1000e_write_payload_frag_to_rx_buffers(), so we can rewrite this to
-assert before doing the array dereference, rather than asserting
-after updating cur_idx.
-
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit bab496a18358643b686f69e2b97d73fb98d37e79)
-(Mjt: in 7.2.x it is e1000e_write_to_rx_buffers, not
- e1000e_write_payload_frag_to_rx_buffers, due to missing in 7.2.x
- v8.1.0-693-g17ccd0164796 "igb: RX payload guest writting refactoring")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 003f15369de4e290a4d2e58292d96c5a506e4ee6)
+(Mjt: pick this commit up so that the next changes applies (more) cleanly)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
-index deb070d17e..14bf3ee948 100644
---- a/hw/net/e1000e_core.c
-+++ b/hw/net/e1000e_core.c
-@@ -1411,10 +1411,13 @@ e1000e_write_to_rx_buffers(E1000ECore *core,
-                            dma_addr_t data_len)
- {
-     while (data_len > 0) {
--        uint32_t cur_buf_len = core->rxbuf_sizes[bastate->cur_idx];
--        uint32_t cur_buf_bytes_left = cur_buf_len -
--                                      bastate->written[bastate->cur_idx];
--        uint32_t bytes_to_write = MIN(data_len, cur_buf_bytes_left);
-+        uint32_t cur_buf_len, cur_buf_bytes_left, bytes_to_write;
-+
-+        assert(bastate->cur_idx < MAX_PS_BUFFERS);
-+
-+        cur_buf_len = core->rxbuf_sizes[bastate->cur_idx];
-+        cur_buf_bytes_left = cur_buf_len - bastate->written[bastate->cur_idx];
-+        bytes_to_write = MIN(data_len, cur_buf_bytes_left);
+diff --git a/io/channel-tls.c b/io/channel-tls.c
+index a91efb57f3..686271acf7 100644
+--- a/io/channel-tls.c
++++ b/io/channel-tls.c
+@@ -380,6 +380,7 @@ static int qio_channel_tls_close(QIOChannel *ioc,
+     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
  
-         trace_e1000e_rx_desc_buff_write(bastate->cur_idx,
-                                         (*ba)[bastate->cur_idx],
-@@ -1433,8 +1436,6 @@ e1000e_write_to_rx_buffers(E1000ECore *core,
-         if (bastate->written[bastate->cur_idx] == cur_buf_len) {
-             bastate->cur_idx++;
-         }
--
--        assert(bastate->cur_idx < MAX_PS_BUFFERS);
+     if (tioc->hs_ioc_tag) {
++        trace_qio_channel_tls_handshake_cancel(ioc);
+         g_clear_handle_id(&tioc->hs_ioc_tag, g_source_remove);
      }
- }
+ 
+diff --git a/io/trace-events b/io/trace-events
+index 3cc5cf1efd..d4c0f84a9a 100644
+--- a/io/trace-events
++++ b/io/trace-events
+@@ -43,6 +43,7 @@ qio_channel_tls_handshake_start(void *ioc) "TLS handshake start ioc=%p"
+ qio_channel_tls_handshake_pending(void *ioc, int status) "TLS handshake pending ioc=%p status=%d"
+ qio_channel_tls_handshake_fail(void *ioc) "TLS handshake fail ioc=%p"
+ qio_channel_tls_handshake_complete(void *ioc) "TLS handshake complete ioc=%p"
++qio_channel_tls_handshake_cancel(void *ioc) "TLS handshake cancel ioc=%p"
+ qio_channel_tls_credentials_allow(void *ioc) "TLS credentials allow ioc=%p"
+ qio_channel_tls_credentials_deny(void *ioc) "TLS credentials deny ioc=%p"
  
 -- 
 2.47.3
