@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF515CFD2F3
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6798ECFD2F3
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:17:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMuoh-0008Vp-GA; Sat, 22 Nov 2025 16:06:48 -0500
+	id 1vMuqt-0000qp-LW; Sat, 22 Nov 2025 16:09:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMuoe-0008VH-9P; Sat, 22 Nov 2025 16:06:44 -0500
+ id 1vMuqo-0000o1-De; Sat, 22 Nov 2025 16:08:58 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMuoV-0006hD-Jz; Sat, 22 Nov 2025 16:06:40 -0500
+ id 1vMuqd-00077s-JC; Sat, 22 Nov 2025 16:08:54 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6C40816D302;
- Sun, 23 Nov 2025 00:03:34 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2947216D30A;
+ Sun, 23 Nov 2025 00:03:35 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 24E9B3223D6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D539C3223DE;
  Sun, 23 Nov 2025 00:03:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
+Cc: qemu-stable@nongnu.org, Eric Blake <eblake@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.22 08/25] io: add trace event when cancelling TLS
- handshake
-Date: Sat, 22 Nov 2025 23:55:26 +0300
-Message-ID: <20251122210344.48374-8-mjt@tls.msk.ru>
+Subject: [Stable-7.2.22 16/25] qio: Unwatch before notify in QIONetListener
+Date: Sat, 22 Nov 2025 23:55:34 +0300
+Message-ID: <20251122210344.48374-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 References: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
@@ -63,38 +61,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Eric Blake <eblake@redhat.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 003f15369de4e290a4d2e58292d96c5a506e4ee6)
-(Mjt: pick this commit up so that the next changes applies (more) cleanly)
+When changing the callback registered with QIONetListener, the code
+was calling notify on the old opaque data prior to actually removing
+the old GSource objects still pointing to that data.  Similarly,
+during finalize, it called notify before tearing down the various
+GSource objects tied to the data.
+
+In practice, a grep of the QEMU code base found that every existing
+client of QIONetListener passes in a NULL notifier (the opaque data,
+if non-NULL, outlives the NetListener and so does not need cleanup
+when the NetListener is torn down), so this patch has no impact.  And
+even if a caller had passed in a reference-counted object with a
+notifier of object_unref but kept its own reference on the data, then
+the early notify would merely reduce a refcount from (say) 2 to 1, but
+not free the object.  However, it is a latent bug waiting to bite any
+future caller that passes in data where the notifier actually frees
+the object, because the GSource could then trigger a use-after-free if
+it loses the race on a last-minute client connection resulting in the
+data being passed to one final use of the async callback.
+
+Better is to delay the notify call until after all GSource that have
+been given a copy of the opaque data are torn down.
+
+CC: qemu-stable@nongnu.org
+Fixes: 530473924d "io: introduce a network socket listener API", v2.12.0
+Signed-off-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20251113011625.878876-18-eblake@redhat.com>
+(cherry picked from commit 6e03d5cdc991f5db86969fc6aeaca96234426263)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index a91efb57f3..686271acf7 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -380,6 +380,7 @@ static int qio_channel_tls_close(QIOChannel *ioc,
-     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(ioc);
+diff --git a/io/net-listener.c b/io/net-listener.c
+index 99c3ef0fdb..70e70c49fb 100644
+--- a/io/net-listener.c
++++ b/io/net-listener.c
+@@ -150,13 +150,6 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
  
-     if (tioc->hs_ioc_tag) {
-+        trace_qio_channel_tls_handshake_cancel(ioc);
-         g_clear_handle_id(&tioc->hs_ioc_tag, g_source_remove);
+     trace_qio_net_listener_unwatch(listener, listener->io_func,
+                                    "set_client_func");
+-    if (listener->io_notify) {
+-        listener->io_notify(listener->io_data);
+-    }
+-    listener->io_func = func;
+-    listener->io_data = data;
+-    listener->io_notify = notify;
+-
+     for (i = 0; i < listener->nsioc; i++) {
+         if (listener->io_source[i]) {
+             g_source_destroy(listener->io_source[i]);
+@@ -165,6 +158,13 @@ void qio_net_listener_set_client_func_full(QIONetListener *listener,
+         }
      }
  
-diff --git a/io/trace-events b/io/trace-events
-index 3cc5cf1efd..d4c0f84a9a 100644
---- a/io/trace-events
-+++ b/io/trace-events
-@@ -43,6 +43,7 @@ qio_channel_tls_handshake_start(void *ioc) "TLS handshake start ioc=%p"
- qio_channel_tls_handshake_pending(void *ioc, int status) "TLS handshake pending ioc=%p status=%d"
- qio_channel_tls_handshake_fail(void *ioc) "TLS handshake fail ioc=%p"
- qio_channel_tls_handshake_complete(void *ioc) "TLS handshake complete ioc=%p"
-+qio_channel_tls_handshake_cancel(void *ioc) "TLS handshake cancel ioc=%p"
- qio_channel_tls_credentials_allow(void *ioc) "TLS credentials allow ioc=%p"
- qio_channel_tls_credentials_deny(void *ioc) "TLS credentials deny ioc=%p"
++    if (listener->io_notify) {
++        listener->io_notify(listener->io_data);
++    }
++    listener->io_func = func;
++    listener->io_data = data;
++    listener->io_notify = notify;
++
+     trace_qio_net_listener_watch(listener, listener->io_func,
+                                  "set_client_func");
+     if (listener->io_func != NULL) {
+@@ -302,10 +302,10 @@ static void qio_net_listener_finalize(Object *obj)
+     QIONetListener *listener = QIO_NET_LISTENER(obj);
+     size_t i;
  
++    qio_net_listener_disconnect(listener);
+     if (listener->io_notify) {
+         listener->io_notify(listener->io_data);
+     }
+-    qio_net_listener_disconnect(listener);
+ 
+     for (i = 0; i < listener->nsioc; i++) {
+         object_unref(OBJECT(listener->sioc[i]));
 -- 
 2.47.3
 
