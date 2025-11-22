@@ -4,110 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF86CFC51D
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 08:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1FFECFC50C
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 08:26:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMinA-0004Xu-6B; Sat, 22 Nov 2025 03:16:25 -0500
+	id 1vMisf-0006OQ-B0; Sat, 22 Nov 2025 03:22:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vMhwx-0000qK-O9
- for qemu-devel@nongnu.org; Sat, 22 Nov 2025 02:22:40 -0500
-Received: from smtpout1.mo529.mail-out.ovh.net ([178.32.125.2])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMi0I-00027t-7H
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 02:25:56 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vMhwa-0001Ek-RA
- for qemu-devel@nongnu.org; Sat, 22 Nov 2025 02:22:25 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.9])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4dD3Rs1Xlqz5w9L;
- Sat, 22 Nov 2025 07:21:44 +0000 (UTC)
-Received: from kaod.org (37.59.142.109) by DAG8EX2.mxp5.local (172.16.2.72)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Sat, 22 Nov
- 2025 08:21:43 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-109S00322e31a61-ac32-4874-9c79-5ca650d85bbf,
- BDE5E08CAA5430CDD034853EEFE7ADF510FDB634) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <4a893b67-c457-47a5-87ca-c41c0a4df070@kaod.org>
-Date: Sat, 22 Nov 2025 08:21:42 +0100
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vMhzt-00036y-Bo
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 02:25:51 -0500
+Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AM7P6wU004541
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 22 Nov 2025 16:25:06 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=bSCUctkXhd05N9nQ7atYTBiZ4f8603RzqFt9EI0Tb40=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1763796306; v=1;
+ b=TnSypq6C/kzZgJ58O9Gy55WTNAq3+lKL7k6xk+leAAMRppmSd9FSuXEXK+6BInyK
+ w7cErz1JUnyPLTvGIu97xRmxs4mAUhPoo/vJFCMT5QcQEdrVDJLL97kYZRRXH1qx
+ 6rJ7lhaYodm3h4Xs9ABJcNN6oXDVtJsD/16OVObJbB0Fm+W4+t7+InUmUcC4HihP
+ 6arioACk96bi0BgEd+JcVIoncAj1Pu5zGNo0bx4tJ54NNYwS12cKXU1oR/ehFXcS
+ zHpvIKiOM8Nidpgx7u3dTknVUFnfqTwtRDRmmvYRaCxClzG9V/Nr7uzCJd5Ks3CU
+ ev/TVQt+khtVyiCTvQaMNw==
+Message-ID: <74f4e219-a094-42b9-a30c-8de597692ab6@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 22 Nov 2025 16:25:06 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [SPAM] [PATCH v1 1/1] hw/pci-host/aspeed_pcie: Update ASPEED PCIe
- Root Port capabilities and enable MSI to support hotplug
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, <nabihestefan@google.com>
-References: <20251121050108.3407445-1-jamin_lin@aspeedtech.com>
- <20251121050108.3407445-2-jamin_lin@aspeedtech.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20251121050108.3407445-2-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH v3 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
+ associated with VFIO devices
+To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20251122064936.2948632-1-vivek.kasireddy@intel.com>
+ <20251122064936.2948632-10-vivek.kasireddy@intel.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251122064936.2948632-10-vivek.kasireddy@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.109]
-X-ClientProxiedBy: DAG9EX2.mxp5.local (172.16.2.82) To DAG8EX2.mxp5.local
- (172.16.2.72)
-X-Ovh-Tracer-GUID: 0ff04f64-22aa-4a0e-aa86-1bf2c87cfa1e
-X-Ovh-Tracer-Id: 7244040004386982834
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGH6v95T7keEROrGFMTV1WVXfmCiamPW936P49pNYF8bJmaR+0VgpmSRxNrnZNqEXCLVE46Du0ctieMjfBfwVoFUoIHsW3CGunMY84ykB5AWMmqi7JPcuRDvOEZVQo9dnBpaPFKZGVKk4D7bSIHjPvyL/AoDggzR2jhqIBH3BSQ8YoaAtLXdaZSVTy3l0V1D10aY3dS/WTyIXhZsJ3BRMw7F8OD7O3sJ78fjwTpuPNOg+xEc+0qdEaYq3ZGqH6w76D+4u3gU7jzEU01JztSEm5uuC6AQ2tqmdoFkhCqOkT0uvSOsvgkHrffG+pWhuTiPOs2D3v9QYmWkEl7fSUktoGSsxTpgONqWzRpTNzYP1YYJmy32zB7dlOVYgcWwOxGESerRHq9UKWcok/+mm6ip8PTo7ohtG4nsR3aP3x9XAzWSDwhJRVaACFZkiZ91Tk/zLMnWjVwhupHrbgJMidHtk9/LRQYEfGy1KMf0CgrvysqHv19QHuYTzaNS+mO8iDEhsSPSfLgcX0P6fJmjSE+8/ufQyPyH2SFMNaKcTZYrrlHoAYszLJuianr4Q1eNgq8z9Mku26V1YqNnA4kajPzC/ZZqGh6QNmhsDxOndLBqOHP3PX1IuuAK29BLtyttILh9WbMKCVMc7eCmtcfZpTLHR8iVTA6nbaPdMFC6Rn7Xfjgow
-DKIM-Signature: a=rsa-sha256; bh=xZGzjLqXk74K0JYHVocJhDdupdJvlc3jlXUjzNR7uls=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1763796106; v=1;
- b=Uz/d9LnTJ7MhmBqKly5E0lb68OE4+wAPQGGPQdefWuIa+RdiB/kw+s5H2VVk8pB0ptYP+Gzy
- oWlfFdR5IPq9+B649S+RyPmNBYdLDhaZmsSN1g2pESgNskp92UyK0IMtwBbuVOXJnwSvvZtUzmj
- L4QfG/2TBJoq7zskoCIpsdyjK4SS5soRkLSlPDJfo37J05N4HPErqnJSCU+PoBF+c22zHVM1sCm
- zyTeeWnttk7gx2/uAQjXk8fRwj1W0QB4BK3QpwklhMhK7Kcgi58+4NClhUiEhIndgIE0Y+H/NZO
- ymTMLBODbtEkz+hGG/IXb8WmtfVJ2z5ZUtTFnDHBfvX9w==
-Received-SPF: pass client-ip=178.32.125.2; envelope-from=clg@kaod.org;
- helo=smtpout1.mo529.mail-out.ovh.net
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -129,99 +78,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/21/25 06:01, Jamin Lin wrote:
-> This patch updates the ASPEED PCIe Root Port capability layout and interrupt
-> handling to match the hardware-defined capability structure as documented in
-> the PCI Express Controller (PCIE) chapter of the ASPEED SoC datasheet.
+On 2025/11/22 15:46, Vivek Kasireddy wrote:
+> In addition to memfd, a blob resource can also have its backing
+> storage in a VFIO device region. Therefore, we first need to figure
+> out if the blob is backed by a VFIO device region or a memfd before
+> we can call the right API to get a dmabuf fd created.
 > 
-> The following capability offsets and fields are now aligned with the actual
-> hardware implementation (validated using EVB config-space dumps via
-> 'lspci -s <bdf> -vvv'):
+> So, we first call virtio_gpu_create_udmabuf() which further calls
+> ram_block_is_memfd_backed() to check if the blob's backing storage
+> is located in a memfd or not. If it is not, we call vfio_create_dmabuf()
+> which identifies the right VFIO device and eventually invokes the
+> API vfio_device_create_dmabuf_fd() to have a dmabuf fd created.
 > 
-> - Added MSI capability at offset 0x50 and enabled 1-vector MSI support
-> - Added PCI Express Capability structure at offset 0x80
-> - Added Secondary Subsystem Vendor ID (SSVID) at offset 0xC0
-> - Added AER capability at offset 0x100
-> - Implemented aer_vector() callback and MSI init/uninit hooks
-> - Updated Root Port SSID to 0x1150 to reflect the platform default
+> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
+> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
+> use the VFIO device fd directly to create the CPU mapping.
 > 
-> Enabling MSI is required for proper PCIe Hotplug event signaling. This change
-> improves correctness and ensures QEMU Root Port behavior matches the behavior
-> of ASPEED hardware and downstream kernel expectations.
+> While at it, remove the unnecessary rcu_read_lock/rcu_read_unlock
+> from virtio_gpu_create_udmabuf().
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-
-Fixes: 2af56518fa91 ("hw/pci-host/aspeed: Add AST2600 PCIe Root Port and make address configurable")
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
+> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Cc: Alex Bennée <alex.bennee@linaro.org>
+> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Alex Williamson <alex@shazbot.org>
+> Cc: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 > ---
->   hw/pci-host/aspeed_pcie.c | 40 ++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 39 insertions(+), 1 deletion(-)
+>   hw/display/Kconfig             |   5 ++
+>   hw/display/virtio-gpu-dmabuf.c | 122 ++++++++++++++++++++++++++++++---
+>   2 files changed, 119 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/pci-host/aspeed_pcie.c b/hw/pci-host/aspeed_pcie.c
-> index f7593444fc..1fc2c61772 100644
-> --- a/hw/pci-host/aspeed_pcie.c
-> +++ b/hw/pci-host/aspeed_pcie.c
-> @@ -68,6 +68,38 @@ static const TypeInfo aspeed_pcie_root_device_info = {
->    * PCIe Root Port
->    */
+> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
+> index 1e95ab28ef..0d090f25f5 100644
+> --- a/hw/display/Kconfig
+> +++ b/hw/display/Kconfig
+> @@ -106,6 +106,11 @@ config VIRTIO_VGA
+>       depends on VIRTIO_PCI
+>       select VGA
 >   
-> +#define ASPEED_PCIE_ROOT_PORT_MSI_OFFSET        0x50
-> +#define ASPEED_PCIE_ROOT_PORT_MSI_NR_VECTOR     1
-> +#define ASPEED_PCIE_ROOT_PORT_SSVID_OFFSET      0xC0
-> +#define ASPEED_PCIE_ROOT_PORT_EXP_OFFSET        0x80
-> +#define ASPEED_PCIE_ROOT_PORT_AER_OFFSET        0x100
+> +config VIRTIO_GPU_VFIO_BLOB
+> +    bool
+> +    default y
+> +    depends on VFIO
 > +
-> +static uint8_t aspeed_pcie_root_port_aer_vector(const PCIDevice *d)
-> +{
-> +    return 0;
-> +}
-> +
-> +static int aspeed_pcie_root_port_interrupts_init(PCIDevice *d, Error **errp)
-> +{
-> +    int rc;
-> +
-> +    rc = msi_init(d, ASPEED_PCIE_ROOT_PORT_MSI_OFFSET,
-> +                  ASPEED_PCIE_ROOT_PORT_MSI_NR_VECTOR,
-> +                  PCI_MSI_FLAGS_MASKBIT & PCI_MSI_FLAGS_64BIT,
-> +                  PCI_MSI_FLAGS_MASKBIT & PCI_MSI_FLAGS_MASKBIT,
-> +                  errp);
-> +    if (rc < 0) {
-> +        assert(rc == -ENOTSUP);
-> +    }
-> +
-> +    return rc;
-> +}
-> +
-> +static void aspeed_pcie_root_port_interrupts_uninit(PCIDevice *d)
-> +{
-> +    msi_uninit(d);
-> +}
-> +
->   static void aspeed_pcie_root_port_class_init(ObjectClass *klass,
->                                                const void *data)
->   {
-> @@ -80,7 +112,13 @@ static void aspeed_pcie_root_port_class_init(ObjectClass *klass,
->       k->device_id = 0x1150;
->       dc->user_creatable = true;
->   
-> -    rpc->aer_offset = 0x100;
-> +    rpc->aer_vector = aspeed_pcie_root_port_aer_vector;
-> +    rpc->interrupts_init = aspeed_pcie_root_port_interrupts_init;
-> +    rpc->interrupts_uninit = aspeed_pcie_root_port_interrupts_uninit;
-> +    rpc->exp_offset = ASPEED_PCIE_ROOT_PORT_EXP_OFFSET;
-> +    rpc->aer_offset = ASPEED_PCIE_ROOT_PORT_AER_OFFSET;
-> +    rpc->ssvid_offset = ASPEED_PCIE_ROOT_PORT_SSVID_OFFSET;
-> +    rpc->ssid = 0x1150;
+>   config VHOST_USER_GPU
+>       bool
+>       default y
+> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+> index 258c48d31b..d121a2c9a7 100644
+> --- a/hw/display/virtio-gpu-dmabuf.c
+> +++ b/hw/display/virtio-gpu-dmabuf.c
+> @@ -18,6 +18,7 @@
+>   #include "ui/console.h"
+>   #include "hw/virtio/virtio-gpu.h"
+>   #include "hw/virtio/virtio-gpu-pixman.h"
+> +#include "hw/vfio/vfio-device.h"
+>   #include "trace.h"
+>   #include "system/ramblock.h"
+>   #include "system/hostmem.h"
+> @@ -40,10 +41,42 @@ static bool ram_block_is_memfd_backed(RAMBlock *rb)
+>       return false;
 >   }
 >   
->   static const TypeInfo aspeed_pcie_root_port_info = {
+> +static void vfio_create_dmabuf(struct virtio_gpu_simple_resource *res)
+> +{
+> +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> +    VFIODevice *vbasedev;
+> +    RAMBlock *first_rb;
+> +    ram_addr_t offset;
+> +
+> +    first_rb = qemu_ram_block_from_host(res->iov[0].iov_base, false, &offset);
+> +    if (!first_rb) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: Could not find ramblock\n", __func__);
+> +        return;
+> +    }
+> +
+> +    vbasedev = vfio_device_lookup(first_rb->mr);
+> +    if (!vbasedev) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: No VFIO device found to create dmabuf from\n",
+> +                      __func__);
+> +        return;
+> +    }
+> +
+> +    res->dmabuf_fd = vfio_device_create_dmabuf_fd(vbasedev,
+> +                                                  res->iov, res->iov_cnt);
+> +    if (res->dmabuf_fd < 0) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "%s: VFIO_DEVICE_FEATURE_DMA_BUF: %s\n",
+> +                      __func__, strerror(errno));
+> +    }
+> +#endif
+> +}
+> +
+>   static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>   {
+>       struct udmabuf_create_list *list;
+> -    RAMBlock *rb;
+> +    RAMBlock *rb, *first_rb;
+>       ram_addr_t offset;
+>       int udmabuf, i;
+>   
+> @@ -52,15 +85,17 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>           return;
+>       }
+>   
+> +    first_rb = qemu_ram_block_from_host(res->iov[0].iov_base, false, &offset);
+> +    if (!ram_block_is_memfd_backed(first_rb)) {
+> +        return;
+> +    }
+> +
+
+We had an extensive discussion but I still don't understand the benefit 
+of this change while I see it adds complexity by having another call of 
+qemu_ram_block_from_host() and imposing an extra restriction that all 
+elements need to belong to one RAMBlock.
+
+If anyone else have some opinion on this, I'd like to hear.
+
+Regards,
+Akihiko Odaki
+
+>       list = g_malloc0(sizeof(struct udmabuf_create_list) +
+>                        sizeof(struct udmabuf_create_item) * res->iov_cnt);
+>   
+>       for (i = 0; i < res->iov_cnt; i++) {
+> -        rcu_read_lock();
+>           rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
+> -        rcu_read_unlock();
+> -
+> -        if (!rb || rb->fd < 0) {
+> +        if (rb != first_rb) {
+>               g_free(list);
+>               return;
+>           }
+> @@ -81,11 +116,77 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+>       g_free(list);
+>   }
+>   
+> +static void *vfio_dmabuf_mmap(struct virtio_gpu_simple_resource *res)
+> +{
+> +    struct vfio_region_info *info = NULL;
+> +    VFIODevice *vbasedev = NULL;
+> +    ram_addr_t offset, len = 0;
+> +    RAMBlock *first_rb, *rb;
+> +    void *map, *submap;
+> +    int i, ret = -1;
+> +
+> +    first_rb = qemu_ram_block_from_host(res->iov[0].iov_base, false, &offset);
+> +    if (!first_rb) {
+> +        return MAP_FAILED;
+> +    }
+> +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> +    vbasedev = vfio_device_lookup(first_rb->mr);
+> +#endif
+> +    if (!vbasedev) {
+> +        return MAP_FAILED;
+> +    }
+> +
+> +    /*
+> +     * We first reserve a contiguous chunk of address space for the entire
+> +     * dmabuf, then replace it with smaller mappings that correspond to the
+> +     * individual segments of the dmabuf.
+> +     */
+> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, vbasedev->fd, 0);
+> +    if (map == MAP_FAILED) {
+> +        return map;
+> +    }
+> +
+> +    for (i = 0; i < res->iov_cnt; i++) {
+> +        rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
+> +        if (rb != first_rb) {
+> +            goto err;
+> +        }
+> +#if defined(VIRTIO_GPU_VFIO_BLOB)
+> +        ret = vfio_get_region_index_from_mr(rb->mr);
+> +        if (ret < 0) {
+> +            goto err;
+> +        }
+> +
+> +        ret = vfio_device_get_region_info(vbasedev, ret, &info);
+> +#endif
+> +        if (ret < 0 || !info) {
+> +            goto err;
+> +        }
+> +
+> +        submap = mmap(map + len, res->iov[i].iov_len, PROT_READ,
+> +                      MAP_SHARED | MAP_FIXED, vbasedev->fd,
+> +                      info->offset + offset);
+> +        if (submap == MAP_FAILED) {
+> +            goto err;
+> +        }
+> +
+> +        len += res->iov[i].iov_len;
+> +    }
+> +    return map;
+> +err:
+> +    munmap(map, res->blob_size);
+> +    return MAP_FAILED;
+> +}
+> +
+>   static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
+>   {
+>       res->remapped = mmap(NULL, res->blob_size, PROT_READ,
+>                            MAP_SHARED, res->dmabuf_fd, 0);
+>       if (res->remapped == MAP_FAILED) {
+> +        res->remapped = vfio_dmabuf_mmap(res);
+> +        if (res->remapped != MAP_FAILED) {
+> +            return;
+> +        }
+>           warn_report("%s: dmabuf mmap failed: %s", __func__,
+>                       strerror(errno));
+>           res->remapped = NULL;
+> @@ -146,6 +247,13 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+>       } else {
+>           virtio_gpu_create_udmabuf(res);
+>           if (res->dmabuf_fd < 0) {
+> +            vfio_create_dmabuf(res);
+> +        }
+> +
+> +        if (res->dmabuf_fd < 0) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "%s: memory region cannot be used to create dmabuf\n",
+> +                          __func__);
+>               return;
+>           }
+>           virtio_gpu_remap_dmabuf(res);
+> @@ -160,9 +268,7 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+>   
+>   void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
+>   {
+> -    if (res->remapped) {
+> -        virtio_gpu_destroy_dmabuf(res);
+> -    }
+> +    virtio_gpu_destroy_dmabuf(res);
+>   }
+>   
+>   static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
 
 
