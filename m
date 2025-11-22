@@ -4,77 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E2DCFC538
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 14:04:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1A8CFD2EF
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 20:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMo9Z-00055Q-HE; Sat, 22 Nov 2025 08:59:54 -0500
+	id 1vMu5T-0006F1-9o; Sat, 22 Nov 2025 15:20:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1vMo9T-000505-P5; Sat, 22 Nov 2025 08:59:47 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1vMo9F-00073K-MY; Sat, 22 Nov 2025 08:59:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=AEXZEuTJIE85z2nUo6vGRF6C9CDHEnZEtlKMj8CbeT4=; b=boN+E0WV5PWDs4yp
- E5QiNikBwzcKxOr9y3ErKBosKi8VqQlyUK8FcpSwKZRZIklWGivPv0b8RSW0Md0mlLqwACbhBB1vJ
- 2xtO1APz5QqCPj2IB1son8z6yI2JWKjc/YisVf8Akz0AYURhVUPEbxbNHOCoqog6ksbOEZ8nbt3AA
- M8nUp+/I6opgxD3kBK/3L9z07BOWIsUllEtVyMmhMVILtJ3RsJeXEUUUC+EDFUwvaSRJ+Fe7/WWD/
- ixd0MwL2lJiyApfAIlZlIVvw0uVu6nd+S9a1CmPOP6ZRlcoooeZB+4RWIRymF57ys85smCTeDjJKH
- Z3Kd2MYnSTr6//8Edg==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vMo83-00000005wUV-2FTG;
- Sat, 22 Nov 2025 13:58:19 +0000
-Date: Sat, 22 Nov 2025 13:58:19 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- arei.gonglei@huawei.com, pizhenwei@bytedance.com,
- alistair.francis@wdc.com, stefanb@linux.vnet.ibm.com,
- kwolf@redhat.com, hreitz@redhat.com, sw@weilnetz.de,
- qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
- shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
- sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com,
- jag.raman@oracle.com, sgarzare@redhat.com, pbonzini@redhat.com,
- fam@euphon.net, philmd@linaro.org, alex@shazbot.org, clg@redhat.com,
- peterx@redhat.com, farosas@suse.de, lizhijian@fujitsu.com,
- jasowang@redhat.com, samuel.thibault@ens-lyon.org,
- michael.roth@amd.com, kkostiuk@redhat.com, zhao1.liu@intel.com,
- mtosatti@redhat.com, rathc@linux.ibm.com, palmer@dabbelt.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, marcandre.lureau@redhat.com,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org,
- xen-devel@lists.xenproject.org, kvm@vger.kernel.org, qemu-riscv@nongnu.org
-Subject: Re: [PATCH 09/14] error: Use error_setg_file_open() for simplicity
- and consistency
-Message-ID: <aSHBez6kYRagEL1K@gallifrey>
-References: <20251120191339.756429-1-armbru@redhat.com>
- <20251120191339.756429-10-armbru@redhat.com>
- <aR-q2YeegIEPmk2R@gallifrey> <87see8q6qm.fsf@pond.sub.org>
- <aSClUIvI2W-PVv6B@gallifrey> <87ecpqtt6f.fsf@pond.sub.org>
- <05ef43e5-cc42-8e1c-2619-eb1dea12b02b@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
+ id 1vMu59-00065n-CJ
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 15:19:44 -0500
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
+ id 1vMu4z-0005IV-QX
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 15:19:41 -0500
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-37b9d8122fdso24724841fa.3
+ for <qemu-devel@nongnu.org>; Sat, 22 Nov 2025 12:19:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1763842754; x=1764447554; darn=nongnu.org;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wC+7MZp7zBskO8XTQphUohwsHBK2MpO3LHeDEqzsQcM=;
+ b=nSn+xVfk2LbUucIlYQ1+MNBL9+9x2QxxN1SKau0mGD7gRbn0IS6XhVfPRNzuCDx2fZ
+ RqrUzeJsMjPYsm65GbiI4PPh95hKcI9k94ANa+eagenCBLXXUsNwi+cLtLfqHEaJytG7
+ nNcDg8yxozpTo4WcLsIL95z5umKGByYBHsKqjpCTXYwH0BXF7MlgqNdYSFgc7DesMqGo
+ ncjg0MTaq86IJD/TlyEUW/xGgWF5O8Zjwr+dTM9IGwiCJYMSZAHOc4XxJ/ztUNJcXLMO
+ K+NZiw/+vx7vtxFDsmmC2t5qPV6JS4948ycufdmLm8vthQjO8FyNreIMpRbXTO+P+ql7
+ YUIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763842754; x=1764447554;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wC+7MZp7zBskO8XTQphUohwsHBK2MpO3LHeDEqzsQcM=;
+ b=IbTcDq4HghQ6V9bdI8z42h/wSphJGq7LIQN/8GTTZdtIBhXp0Xy7Y/SEySDxltCUGW
+ 0AoXPdwtGV4tW3+tcsE1xc80fYSjGhZWu4vI6WaK9E/fTn1AIKY8YjfBk3HpzZMj2e1y
+ aQJbdjSlb2Ev4JDaFxtzWPGSvZDr/nUqv2P+zDSmnYn5FYHFF0s21Sf1XEsmFtqNz40+
+ xGBUjB3sCKBGMvEk5NuyWR7j/AIEGirWYZWDCWQGKLlyN+Szl6MicEwpuYU27qzwLQk3
+ 40irIL9vAAb7OE3hknSjnQn7eA956c137Qip2UTJI396fTn7Mh9iToHID+hGBOWFC/76
+ pYqQ==
+X-Gm-Message-State: AOJu0Yxvca4woxtNrHfUECTM7LUoTzGUrsAJCxqAdz9U9tmd2clRWESF
+ TTqjVZpO+mu1FKSgJh9GDx9U9lI9FGu833SGvC51U1rr0zHgrENjK/ggh092oQ==
+X-Gm-Gg: ASbGncstRdrH3CXTZtvGj5lB/BUMPWO1aBgbEtp2mJ5ukMuHoj23dTmM11NX5ahoP39
+ fncg5p5EOVfcMV/ngqJUJ9M1aWAainFdhPQWTHDYb1f8fvOSk7xm6PLgQsR4kC4GFsb1+OFYN8Z
+ uFsO4F7Oqo6BmURt4evGo/WHmHTSRDyb1znlpozIE75FjCLwI8wS8aX3/RnsJOfkb7VP7Kg+fBE
+ MNrwF22UdzixjY1/OpjQF2zui7B63klXRyC8wSMtpio0Ryo8xbblPmoIH9iW46h3ZZWSrrElZLz
+ 8S3tIz22IAy8NcXlnX7FUInRnrTqUHD0UNGjTEWrxunogPJI9pbuRrp5IXsPrm8pUWSzAfcI7i7
+ god6D6QZLlCHceS48ZDBxIxQPsXzwx3mrP038UlkczlUBFd0A1GvgO/kBhWVIPRCt64ES/LwYzV
+ ZyKjuXMxbb2eOCkx8a50UrXA==
+X-Google-Smtp-Source: AGHT+IEUTGxwOGZl/1D0V6tYG3qlajDVyRrGY4zcqGnn8A3UPoM8coYWUD7v1zu5BLf5v+IdXzECWA==
+X-Received: by 2002:a2e:91c4:0:b0:37a:3963:cec5 with SMTP id
+ 38308e7fff4ca-37cd92b2e33mr13504321fa.43.1763842753714; 
+ Sat, 22 Nov 2025 12:19:13 -0800 (PST)
+Received: from [192.168.88.253] ([82.215.83.93])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-37cc6bcb808sm17362651fa.44.2025.11.22.12.19.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 22 Nov 2025 12:19:13 -0800 (PST)
+Message-ID: <3c35955d-a57e-4203-81c5-395146e23f83@gmail.com>
+Date: Sun, 23 Nov 2025 01:19:09 +0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <05ef43e5-cc42-8e1c-2619-eb1dea12b02b@eik.bme.hu>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 13:56:00 up 26 days, 13:32,  2 users,  load average: 0.00, 0.00, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>, Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Andrey Erokhin <language.lawyer@gmail.com>
+Subject: [PATCH v2] 9pfs: local: read native symlinks when
+ security-model=mapped
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=language.lawyer@gmail.com; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,112 +101,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* BALATON Zoltan (balaton@eik.bme.hu) wrote:
-> On Sat, 22 Nov 2025, Markus Armbruster wrote:
-> > "Dr. David Alan Gilbert" <dave@treblig.org> writes:
-> > 
-> > > * Markus Armbruster (armbru@redhat.com) wrote:
-> > > > "Dr. David Alan Gilbert" <dave@treblig.org> writes:
-> > > > 
-> > > > > * Markus Armbruster (armbru@redhat.com) wrote:
-> > > > > > Replace
-> > > > > > 
-> > > > > >     error_setg_errno(errp, errno, MSG, FNAME);
-> > > > > > 
-> > > > > > by
-> > > > > > 
-> > > > > >     error_setg_file_open(errp, errno, FNAME);
-> > > > > > 
-> > > > > > where MSG is "Could not open '%s'" or similar.
-> > > > > > 
-> > > > > > Also replace equivalent uses of error_setg().
-> > > > > > 
-> > > > > > A few messages lose prefixes ("net dump: ", "SEV: ", __func__ ": ").
-> > > > > > We could put them back with error_prepend().  Not worth the bother.
-> > > > > 
-> > > > > Yeh, I guess you could just do it with another macro using
-> > > > > the same internal function just with string concatenation.
-> > > > 
-> > > > I'm no fan of such prefixes.  A sign of developers not caring enough to
-> > > > craft a good error message for *users*.  *Especially* in the case of
-> > > > __func__.
-> > > > 
-> > > > The error messages changes in question are:
-> > > > 
-> > > >     net dump: can't open DUMP-FILE: REASON
-> > > >     Could not open 'DUMP-FILE': REASON
-> > > > 
-> > > >     SEV: Failed to open SEV-DEVICE: REASON
-> > > >     Could not open 'SEV-DEVICE': REASON
-> > > > 
-> > > >     sev_common_kvm_init: Failed to open SEV_DEVICE 'REASON'
-> > > >     Could not open 'SEV-DEVICE': REASON
-> > > > 
-> > > > I think these are all improvements, and the loss of the prefix is fine.
-> > > 
-> > > Yeh, although I find the error messages aren't just for users;
-> > > they're often for the first dev to see it to guess which other
-> > > dev to pass the problem to, so a hint about where it's coming
-> > > from can be useful.
-> > 
-> > I agree!  But I think an error message must be make sense to users
-> > *first* and help developers second, and once they make sense to users,
-> > they're often good enough for developers.
-> > 
-> > The common failures I see happen when developers remain caught in the
-> > developer's perspective, and write something that makes sense to *them*.
-> > Strawman form:
-> > 
-> >    prefix: failed op[: reason]
-> > 
-> > where "prefix" is a subsystem tag, or even __func__, and "reason" is
-> > strerror() or similar.
-> > 
-> > To users, this tends to read as
-> > 
-> >    gobbledygook: techbabble[: reason]
-> > 
-> > When we care to replace "failed op" (developer's perspective) by
-> > something that actually makes sense to users, "prefix" often becomes
-> > redundant.
-> > 
-> > The error messages shown above aren't bad to begin with.  "failed to
-> > open FILE", where FILE is something the user specified, should make
-> > sense to the user.  It should also be good enough for developers even
-> > without a prefix: connecting trouble with the DUMP-FILE to dump /
-> > trouble with the SEV-DEVICE to SEV should be straightforward.
-> > 
-> > [...]
-> 
-> I think that
-> 
-> net dump: can't open random-filename: because of some error
-> 
-> shows better where to look for the problem than just
-> 
-> Could not open 'random-filename': because of some error
-> 
-> as the latter does not tell where the file name comes from or what is it. It
-> could be added by a management application or added by the users randomly
-> without really knowing what they are doing so repeating the option or part
-> in the message that the error comes from can help to find out where to
-> correct it. Otherwise it might be difficult to guess what random-filename is
-> related to if it's not named something you'd expect.
+Directories attached using virtfs with security-model=mapped
+may contain native symlinks
 
-Yeh agreed.  It very much depends if you think of a 'user' as the person
-who typed a qemu command line, or pressed a button on a GUI that triggered
-15 levels of abstraction that eventually ran a qemu.
+This can happen e.g. when booting from a rootfs directory tree
+(usually with a writable overlay set up on the host side)
 
-Or for the support person who has a customer saying 'help I've got this error',
-and now needs to route it to the network person rather than something else.
+Currently, when security-model=mapped[-xattr|-file],
+QEMU assumes that host-side "symlinks" are in the mapped format,
+i.e. are regular files storing the linked path,
+so it tries to open with O_NOFOLLOW
+and fails with ELOOP on native symlinks
 
-Dave
+This patch introduces a fallback for such cases:
+reuse security-model=[none|passthrough] else if branch logic
+where readlink will be called for the path basename
 
-> Regards,
-> BALATON Zoltan
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/173
+
+Signed-off-by: Andrey Erokhin <language.lawyer@gmail.com>
+---
+ hw/9pfs/9p-local.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+index 6230466de1..ddf111b674 100644
+--- a/hw/9pfs/9p-local.c
++++ b/hw/9pfs/9p-local.c
+@@ -474,12 +474,16 @@ static ssize_t local_readlink(FsContext *fs_ctx, V9fsPath *fs_path,
+ 
+         fd = local_open_nofollow(fs_ctx, fs_path->data, O_RDONLY, 0);
+         if (fd == -1) {
++            if (errno == ELOOP) {
++                goto native_symlink;
++            }
+             return -1;
+         }
+         tsize = RETRY_ON_EINTR(read(fd, (void *)buf, bufsz));
+         close_preserve_errno(fd);
+     } else if ((fs_ctx->export_flags & V9FS_SM_PASSTHROUGH) ||
+                (fs_ctx->export_flags & V9FS_SM_NONE)) {
++    native_symlink:;
+         char *dirpath = g_path_get_dirname(fs_path->data);
+         char *name = g_path_get_basename(fs_path->data);
+         int dirfd;
 -- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+2.34.1
+
 
