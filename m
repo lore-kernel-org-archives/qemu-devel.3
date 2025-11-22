@@ -4,41 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94153CFC515
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3C7ACFC518
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 02:44:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMd2F-0001LI-2i; Fri, 21 Nov 2025 21:07:36 -0500
+	id 1vMd4F-0002Vl-Dp; Fri, 21 Nov 2025 21:09:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcJA-00031Q-03; Fri, 21 Nov 2025 20:21:00 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <mail@jiesong.me>) id 1vMclI-0001MX-Rh
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:50:04 -0500
+Received: from out28-66.mail.aliyun.com ([115.124.28.66])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMcH8-0006al-JB; Fri, 21 Nov 2025 20:20:56 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5A3A216CA4B;
- Fri, 21 Nov 2025 21:44:22 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 183EF321C87;
- Fri, 21 Nov 2025 21:44:31 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 16/81] hw/scsi: avoid deadlock upon TMF request
- cancelling with VirtIO
-Date: Fri, 21 Nov 2025 21:43:15 +0300
-Message-ID: <20251121184424.1137669-16-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
-References: <qemu-stable-10.0.7-20251121170317@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <mail@jiesong.me>) id 1vMcjH-0005Ds-0I
+ for qemu-devel@nongnu.org; Fri, 21 Nov 2025 20:50:01 -0500
+Received: from Sun.localdomain(mailfrom:mail@jiesong.me
+ fp:SMTPD_---.fT0U-1w_1763776042 cluster:ay29) by smtp.aliyun-inc.com;
+ Sat, 22 Nov 2025 09:47:27 +0800
+From: Jie Song <mail@jiesong.me>
+To: eblake@redhat.com, armbru@redhat.com, berrange@redhat.com,
+ qemu-devel@nongnu.org
+Cc: mail@jiesong.me,
+	songjie_yewu@cmss.chinamobile.com
+Subject: [PATCH v3] monitor/qmp: cleanup SocketChardev listener sources early
+ to avoid fd handling race
+Date: Sat, 22 Nov 2025 09:46:56 +0800
+Message-ID: <20251122014656.297693-1-mail@jiesong.me>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
+Received-SPF: pass client-ip=115.124.28.66; envelope-from=mail@jiesong.me;
+ helo=out28-66.mail.aliyun.com
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,82 +49,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Jie Song <songjie_yewu@cmss.chinamobile.com>
 
-When scsi_req_dequeue() is reached via
-scsi_req_cancel_async()
-virtio_scsi_tmf_cancel_req()
-virtio_scsi_do_tmf_aio_context(),
-there is a deadlock when trying to acquire the SCSI device's requests
-lock, because it was already acquired in
-virtio_scsi_do_tmf_aio_context().
+When starting a dummy QEMU process with virsh version, monitor_init_qmp()
+enables IOThread monitoring of the QMP fd by default. However, a race
+condition exists during the initialization phase: the IOThread only removes
+the main thread's fd watch when it reaches qio_net_listener_set_client_func_full(),
+which may be delayed under high system load.
 
-In particular, the issue happens with a FreeBSD guest (13, 14, 15,
-maybe more), when it cancels SCSI requests, because of timeout.
+This creates a window between monitor_qmp_setup_handlers_bh() and
+qio_net_listener_set_client_func_full() where both the main thread and
+IOThread are simultaneously monitoring the same fd and processing events.
+This race can cause either the main thread or the IOThread to hang and
+become unresponsive.
 
-This is a regression caused by commit da6eebb33b ("virtio-scsi:
-perform TMFs in appropriate AioContexts") and the introduction of the
-requests_lock earlier.
+Fix this by proactively cleaning up the listener's IO sources in
+monitor_init_qmp() before the IOThread initializes QMP monitoring,
+ensuring exclusive fd ownership and eliminating the race condition.
 
-To fix the issue, only cancel the requests after releasing the
-requests_lock. For this, the SCSI device's requests are iterated while
-holding the requests_lock and the requests to be cancelled are
-collected in a list. Then, the collected requests are cancelled
-one by one while not holding the requests_lock. This is safe, because
-only requests from the current AioContext are collected and acted
-upon.
+Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
+---
+Changes in v3:
+- Use a more general method to fix the problem.
+- Link to v2:
+  https://lore.kernel.org/qemu-devel/20251117150142.131694-1-mail@jiesong.me/
+- Link to v1:
+  https://lore.kernel.org/qemu-devel/20251111150144.76751-1-mail@jiesong.me/
+---
+ chardev/char-io.c         | 8 ++++++++
+ chardev/char-socket.c     | 9 +++++++++
+ include/chardev/char-io.h | 2 ++
+ include/chardev/char.h    | 2 ++
+ monitor/qmp.c             | 5 +++++
+ 5 files changed, 26 insertions(+)
 
-Originally reported by Proxmox VE users:
-https://bugzilla.proxmox.com/show_bug.cgi?id=6810
-https://forum.proxmox.com/threads/173914/
-
-Fixes: da6eebb33b ("virtio-scsi: perform TMFs in appropriate AioContexts")
-Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-id: 20251017094518.328905-1-f.ebner@proxmox.com
-[Changed g_list_append() to g_list_prepend() to avoid traversing the
-list each time.
---Stefan]
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 6910f04aa646f63a0257f77201ad8ea15992b816)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index f5a3aa2366..383521495f 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -343,6 +343,7 @@ static void virtio_scsi_do_tmf_aio_context(void *opaque)
-     SCSIDevice *d = virtio_scsi_device_get(s, tmf->req.tmf.lun);
-     SCSIRequest *r;
-     bool match_tag;
-+    g_autoptr(GList) reqs = NULL;
- 
-     if (!d) {
-         tmf->resp.tmf.response = VIRTIO_SCSI_S_BAD_TARGET;
-@@ -378,10 +379,21 @@ static void virtio_scsi_do_tmf_aio_context(void *opaque)
-             if (match_tag && cmd_req->req.cmd.tag != tmf->req.tmf.tag) {
-                 continue;
-             }
--            virtio_scsi_tmf_cancel_req(tmf, r);
-+            /*
-+             * Cannot cancel directly, because scsi_req_dequeue() would deadlock
-+             * when attempting to acquire the request_lock a second time. Taking
-+             * a reference here is paired with an unref after cancelling below.
-+             */
-+            scsi_req_ref(r);
-+            reqs = g_list_prepend(reqs, r);
-         }
-     }
- 
-+    for (GList *elem = g_list_first(reqs); elem; elem = g_list_next(elem)) {
-+        virtio_scsi_tmf_cancel_req(tmf, elem->data);
-+        scsi_req_unref(elem->data);
-+    }
+diff --git a/chardev/char-io.c b/chardev/char-io.c
+index 3be17b51ca..998282e526 100644
+--- a/chardev/char-io.c
++++ b/chardev/char-io.c
+@@ -182,3 +182,11 @@ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len)
+ {
+     return io_channel_send_full(ioc, buf, len, NULL, 0);
+ }
 +
-     /* Incremented by virtio_scsi_do_tmf() */
-     virtio_scsi_tmf_dec_remaining(tmf);
++void remove_listaner_fd_in_watch(Chardev *chr)
++{
++    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
++    if (cc->chr_listener_cleanup) {
++        cc->chr_listener_cleanup(chr);
++    }
++}
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 26d2f11202..39b3a76638 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -1570,6 +1570,14 @@ char_socket_get_connected(Object *obj, Error **errp)
+     return s->state == TCP_CHARDEV_STATE_CONNECTED;
+ }
  
++static void tcp_chr_listener_cleanup(Chardev *chr)
++{
++    SocketChardev *s = SOCKET_CHARDEV(chr);
++    if (s->listener)
++        qio_net_listener_set_client_func_full(s->listener, NULL, NULL,
++                                              NULL, chr->gcontext);
++}
++
+ static void char_socket_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+@@ -1587,6 +1595,7 @@ static void char_socket_class_init(ObjectClass *oc, const void *data)
+     cc->chr_add_client = tcp_chr_add_client;
+     cc->chr_add_watch = tcp_chr_add_watch;
+     cc->chr_update_read_handler = tcp_chr_update_read_handler;
++    cc->chr_listener_cleanup = tcp_chr_listener_cleanup;
+ 
+     object_class_property_add(oc, "addr", "SocketAddress",
+                               char_socket_get_addr, NULL,
+diff --git a/include/chardev/char-io.h b/include/chardev/char-io.h
+index ac379ea70e..087a250c70 100644
+--- a/include/chardev/char-io.h
++++ b/include/chardev/char-io.h
+@@ -43,4 +43,6 @@ int io_channel_send(QIOChannel *ioc, const void *buf, size_t len);
+ int io_channel_send_full(QIOChannel *ioc, const void *buf, size_t len,
+                          int *fds, size_t nfds);
+ 
++void remove_listaner_fd_in_watch(Chardev *chr);
++
+ #endif /* CHAR_IO_H */
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index b65e9981c1..192cad67d4 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -307,6 +307,8 @@ struct ChardevClass {
+ 
+     /* handle various events */
+     void (*chr_be_event)(Chardev *s, QEMUChrEvent event);
++
++    void (*chr_listener_cleanup)(Chardev *chr);
+ };
+ 
+ Chardev *qemu_chardev_new(const char *id, const char *typename,
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index cb99a12d94..e2b1c49ed6 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -537,6 +537,11 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+          * e.g. the chardev is in client mode, with wait=on.
+          */
+         remove_fd_in_watch(chr);
++        /*
++         * Clean up listener IO sources early to prevent racy fd
++         * handling between the main thread and the I/O thread.
++         */
++        remove_listaner_fd_in_watch(chr);
+         /*
+          * We can't call qemu_chr_fe_set_handlers() directly here
+          * since chardev might be running in the monitor I/O
 -- 
-2.47.3
+2.43.0
 
 
