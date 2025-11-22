@@ -4,59 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1FFECFC50C
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 08:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B07ECFC51D
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 08:45:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMisf-0006OQ-B0; Sat, 22 Nov 2025 03:22:13 -0500
+	id 1vMjAx-0002L3-I4; Sat, 22 Nov 2025 03:41:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vMi0I-00027t-7H
- for qemu-devel@nongnu.org; Sat, 22 Nov 2025 02:25:56 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMiBk-0005EU-1P
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 02:37:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vMhzt-00036y-Bo
- for qemu-devel@nongnu.org; Sat, 22 Nov 2025 02:25:51 -0500
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AM7P6wU004541
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 22 Nov 2025 16:25:06 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=bSCUctkXhd05N9nQ7atYTBiZ4f8603RzqFt9EI0Tb40=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1763796306; v=1;
- b=TnSypq6C/kzZgJ58O9Gy55WTNAq3+lKL7k6xk+leAAMRppmSd9FSuXEXK+6BInyK
- w7cErz1JUnyPLTvGIu97xRmxs4mAUhPoo/vJFCMT5QcQEdrVDJLL97kYZRRXH1qx
- 6rJ7lhaYodm3h4Xs9ABJcNN6oXDVtJsD/16OVObJbB0Fm+W4+t7+InUmUcC4HihP
- 6arioACk96bi0BgEd+JcVIoncAj1Pu5zGNo0bx4tJ54NNYwS12cKXU1oR/ehFXcS
- zHpvIKiOM8Nidpgx7u3dTknVUFnfqTwtRDRmmvYRaCxClzG9V/Nr7uzCJd5Ks3CU
- ev/TVQt+khtVyiCTvQaMNw==
-Message-ID: <74f4e219-a094-42b9-a30c-8de597692ab6@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 22 Nov 2025 16:25:06 +0900
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vMiBF-0000Nr-Kv
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 02:37:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763797016;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9zaKUM6NERkcDDV6tGqy74CB52tnWy2WHUiDFb7Jfp8=;
+ b=Njoorb8B24NKoThbfuSpKVtnoVvfJ6lGPvyAYNTIf2igp6WcTimgvWGroBPvGewVs1Lobx
+ I/2UM1zkTMHLa93ZZ1+nCicPIdtR3X0pUFCwis/H8bH5/yiIXSeThOFAWWMVpWikpXiBWE
+ ReKpfMLQwGiztObXUaPSL32YccCjqPU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-403-_NSKGyWnNIq26wjDIyzvQA-1; Sat,
+ 22 Nov 2025 02:36:51 -0500
+X-MC-Unique: _NSKGyWnNIq26wjDIyzvQA-1
+X-Mimecast-MFC-AGG-ID: _NSKGyWnNIq26wjDIyzvQA_1763797008
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8F13A195608F; Sat, 22 Nov 2025 07:36:45 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 930D118004D8; Sat, 22 Nov 2025 07:36:42 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1260B21E6A27; Sat, 22 Nov 2025 08:36:40 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: qemu-devel@nongnu.org,  arei.gonglei@huawei.com,
+ pizhenwei@bytedance.com,  alistair.francis@wdc.com,
+ stefanb@linux.vnet.ibm.com,  kwolf@redhat.com,  hreitz@redhat.com,
+ sw@weilnetz.de,  qemu_oss@crudebyte.com,  groug@kaod.org,
+ mst@redhat.com,  imammedo@redhat.com,  anisinha@redhat.com,
+ kraxel@redhat.com,  shentey@gmail.com,  npiggin@gmail.com,
+ harshpb@linux.ibm.com,  sstabellini@kernel.org,  anthony@xenproject.org,
+ paul@xen.org,  edgar.iglesias@gmail.com,  elena.ufimtseva@oracle.com,
+ jag.raman@oracle.com,  sgarzare@redhat.com,  pbonzini@redhat.com,
+ fam@euphon.net,  philmd@linaro.org,  alex@shazbot.org,  clg@redhat.com,
+ peterx@redhat.com,  farosas@suse.de,  lizhijian@fujitsu.com,
+ jasowang@redhat.com,  samuel.thibault@ens-lyon.org,
+ michael.roth@amd.com,  kkostiuk@redhat.com,  zhao1.liu@intel.com,
+ mtosatti@redhat.com,  rathc@linux.ibm.com,  palmer@dabbelt.com,
+ liwei1518@gmail.com,  dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com,  marcandre.lureau@redhat.com,
+ qemu-block@nongnu.org,  qemu-ppc@nongnu.org,
+ xen-devel@lists.xenproject.org,  kvm@vger.kernel.org, qemu-riscv@nongnu.org
+Subject: Re: [PATCH 09/14] error: Use error_setg_file_open() for simplicity
+ and consistency
+In-Reply-To: <aSClUIvI2W-PVv6B@gallifrey> (David Alan Gilbert's message of
+ "Fri, 21 Nov 2025 17:45:52 +0000")
+References: <20251120191339.756429-1-armbru@redhat.com>
+ <20251120191339.756429-10-armbru@redhat.com>
+ <aR-q2YeegIEPmk2R@gallifrey> <87see8q6qm.fsf@pond.sub.org>
+ <aSClUIvI2W-PVv6B@gallifrey>
+Date: Sat, 22 Nov 2025 08:36:40 +0100
+Message-ID: <87ecpqtt6f.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20251122064936.2948632-1-vivek.kasireddy@intel.com>
- <20251122064936.2948632-10-vivek.kasireddy@intel.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251122064936.2948632-10-vivek.kasireddy@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -78,244 +103,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/22 15:46, Vivek Kasireddy wrote:
-> In addition to memfd, a blob resource can also have its backing
-> storage in a VFIO device region. Therefore, we first need to figure
-> out if the blob is backed by a VFIO device region or a memfd before
-> we can call the right API to get a dmabuf fd created.
-> 
-> So, we first call virtio_gpu_create_udmabuf() which further calls
-> ram_block_is_memfd_backed() to check if the blob's backing storage
-> is located in a memfd or not. If it is not, we call vfio_create_dmabuf()
-> which identifies the right VFIO device and eventually invokes the
-> API vfio_device_create_dmabuf_fd() to have a dmabuf fd created.
-> 
-> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
-> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
-> use the VFIO device fd directly to create the CPU mapping.
-> 
-> While at it, remove the unnecessary rcu_read_lock/rcu_read_unlock
-> from virtio_gpu_create_udmabuf().
-> 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Alex Williamson <alex@shazbot.org>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> ---
->   hw/display/Kconfig             |   5 ++
->   hw/display/virtio-gpu-dmabuf.c | 122 ++++++++++++++++++++++++++++++---
->   2 files changed, 119 insertions(+), 8 deletions(-)
-> 
-> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
-> index 1e95ab28ef..0d090f25f5 100644
-> --- a/hw/display/Kconfig
-> +++ b/hw/display/Kconfig
-> @@ -106,6 +106,11 @@ config VIRTIO_VGA
->       depends on VIRTIO_PCI
->       select VGA
->   
-> +config VIRTIO_GPU_VFIO_BLOB
-> +    bool
-> +    default y
-> +    depends on VFIO
-> +
->   config VHOST_USER_GPU
->       bool
->       default y
-> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
-> index 258c48d31b..d121a2c9a7 100644
-> --- a/hw/display/virtio-gpu-dmabuf.c
-> +++ b/hw/display/virtio-gpu-dmabuf.c
-> @@ -18,6 +18,7 @@
->   #include "ui/console.h"
->   #include "hw/virtio/virtio-gpu.h"
->   #include "hw/virtio/virtio-gpu-pixman.h"
-> +#include "hw/vfio/vfio-device.h"
->   #include "trace.h"
->   #include "system/ramblock.h"
->   #include "system/hostmem.h"
-> @@ -40,10 +41,42 @@ static bool ram_block_is_memfd_backed(RAMBlock *rb)
->       return false;
->   }
->   
-> +static void vfio_create_dmabuf(struct virtio_gpu_simple_resource *res)
-> +{
-> +#if defined(VIRTIO_GPU_VFIO_BLOB)
-> +    VFIODevice *vbasedev;
-> +    RAMBlock *first_rb;
-> +    ram_addr_t offset;
-> +
-> +    first_rb = qemu_ram_block_from_host(res->iov[0].iov_base, false, &offset);
-> +    if (!first_rb) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: Could not find ramblock\n", __func__);
-> +        return;
-> +    }
-> +
-> +    vbasedev = vfio_device_lookup(first_rb->mr);
-> +    if (!vbasedev) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: No VFIO device found to create dmabuf from\n",
-> +                      __func__);
-> +        return;
-> +    }
-> +
-> +    res->dmabuf_fd = vfio_device_create_dmabuf_fd(vbasedev,
-> +                                                  res->iov, res->iov_cnt);
-> +    if (res->dmabuf_fd < 0) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: VFIO_DEVICE_FEATURE_DMA_BUF: %s\n",
-> +                      __func__, strerror(errno));
-> +    }
-> +#endif
-> +}
-> +
->   static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->   {
->       struct udmabuf_create_list *list;
-> -    RAMBlock *rb;
-> +    RAMBlock *rb, *first_rb;
->       ram_addr_t offset;
->       int udmabuf, i;
->   
-> @@ -52,15 +85,17 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->           return;
->       }
->   
-> +    first_rb = qemu_ram_block_from_host(res->iov[0].iov_base, false, &offset);
-> +    if (!ram_block_is_memfd_backed(first_rb)) {
-> +        return;
-> +    }
-> +
+"Dr. David Alan Gilbert" <dave@treblig.org> writes:
 
-We had an extensive discussion but I still don't understand the benefit 
-of this change while I see it adds complexity by having another call of 
-qemu_ram_block_from_host() and imposing an extra restriction that all 
-elements need to belong to one RAMBlock.
+> * Markus Armbruster (armbru@redhat.com) wrote:
+>> "Dr. David Alan Gilbert" <dave@treblig.org> writes:
+>> 
+>> > * Markus Armbruster (armbru@redhat.com) wrote:
+>> >> Replace
+>> >> 
+>> >>     error_setg_errno(errp, errno, MSG, FNAME);
+>> >> 
+>> >> by
+>> >> 
+>> >>     error_setg_file_open(errp, errno, FNAME);
+>> >> 
+>> >> where MSG is "Could not open '%s'" or similar.
+>> >> 
+>> >> Also replace equivalent uses of error_setg().
+>> >> 
+>> >> A few messages lose prefixes ("net dump: ", "SEV: ", __func__ ": ").
+>> >> We could put them back with error_prepend().  Not worth the bother.
+>> >
+>> > Yeh, I guess you could just do it with another macro using
+>> > the same internal function just with string concatenation.
+>> 
+>> I'm no fan of such prefixes.  A sign of developers not caring enough to
+>> craft a good error message for *users*.  *Especially* in the case of
+>> __func__.
+>> 
+>> The error messages changes in question are:
+>> 
+>>     net dump: can't open DUMP-FILE: REASON
+>>     Could not open 'DUMP-FILE': REASON
+>> 
+>>     SEV: Failed to open SEV-DEVICE: REASON
+>>     Could not open 'SEV-DEVICE': REASON
+>> 
+>>     sev_common_kvm_init: Failed to open SEV_DEVICE 'REASON'
+>>     Could not open 'SEV-DEVICE': REASON
+>> 
+>> I think these are all improvements, and the loss of the prefix is fine.
+>
+> Yeh, although I find the error messages aren't just for users;
+> they're often for the first dev to see it to guess which other
+> dev to pass the problem to, so a hint about where it's coming
+> from can be useful.
 
-If anyone else have some opinion on this, I'd like to hear.
+I agree!  But I think an error message must be make sense to users
+*first* and help developers second, and once they make sense to users,
+they're often good enough for developers.
 
-Regards,
-Akihiko Odaki
+The common failures I see happen when developers remain caught in the
+developer's perspective, and write something that makes sense to *them*.
+Strawman form:
 
->       list = g_malloc0(sizeof(struct udmabuf_create_list) +
->                        sizeof(struct udmabuf_create_item) * res->iov_cnt);
->   
->       for (i = 0; i < res->iov_cnt; i++) {
-> -        rcu_read_lock();
->           rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
-> -        rcu_read_unlock();
-> -
-> -        if (!rb || rb->fd < 0) {
-> +        if (rb != first_rb) {
->               g_free(list);
->               return;
->           }
-> @@ -81,11 +116,77 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
->       g_free(list);
->   }
->   
-> +static void *vfio_dmabuf_mmap(struct virtio_gpu_simple_resource *res)
-> +{
-> +    struct vfio_region_info *info = NULL;
-> +    VFIODevice *vbasedev = NULL;
-> +    ram_addr_t offset, len = 0;
-> +    RAMBlock *first_rb, *rb;
-> +    void *map, *submap;
-> +    int i, ret = -1;
-> +
-> +    first_rb = qemu_ram_block_from_host(res->iov[0].iov_base, false, &offset);
-> +    if (!first_rb) {
-> +        return MAP_FAILED;
-> +    }
-> +#if defined(VIRTIO_GPU_VFIO_BLOB)
-> +    vbasedev = vfio_device_lookup(first_rb->mr);
-> +#endif
-> +    if (!vbasedev) {
-> +        return MAP_FAILED;
-> +    }
-> +
-> +    /*
-> +     * We first reserve a contiguous chunk of address space for the entire
-> +     * dmabuf, then replace it with smaller mappings that correspond to the
-> +     * individual segments of the dmabuf.
-> +     */
-> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, vbasedev->fd, 0);
-> +    if (map == MAP_FAILED) {
-> +        return map;
-> +    }
-> +
-> +    for (i = 0; i < res->iov_cnt; i++) {
-> +        rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
-> +        if (rb != first_rb) {
-> +            goto err;
-> +        }
-> +#if defined(VIRTIO_GPU_VFIO_BLOB)
-> +        ret = vfio_get_region_index_from_mr(rb->mr);
-> +        if (ret < 0) {
-> +            goto err;
-> +        }
-> +
-> +        ret = vfio_device_get_region_info(vbasedev, ret, &info);
-> +#endif
-> +        if (ret < 0 || !info) {
-> +            goto err;
-> +        }
-> +
-> +        submap = mmap(map + len, res->iov[i].iov_len, PROT_READ,
-> +                      MAP_SHARED | MAP_FIXED, vbasedev->fd,
-> +                      info->offset + offset);
-> +        if (submap == MAP_FAILED) {
-> +            goto err;
-> +        }
-> +
-> +        len += res->iov[i].iov_len;
-> +    }
-> +    return map;
-> +err:
-> +    munmap(map, res->blob_size);
-> +    return MAP_FAILED;
-> +}
-> +
->   static void virtio_gpu_remap_dmabuf(struct virtio_gpu_simple_resource *res)
->   {
->       res->remapped = mmap(NULL, res->blob_size, PROT_READ,
->                            MAP_SHARED, res->dmabuf_fd, 0);
->       if (res->remapped == MAP_FAILED) {
-> +        res->remapped = vfio_dmabuf_mmap(res);
-> +        if (res->remapped != MAP_FAILED) {
-> +            return;
-> +        }
->           warn_report("%s: dmabuf mmap failed: %s", __func__,
->                       strerror(errno));
->           res->remapped = NULL;
-> @@ -146,6 +247,13 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->       } else {
->           virtio_gpu_create_udmabuf(res);
->           if (res->dmabuf_fd < 0) {
-> +            vfio_create_dmabuf(res);
-> +        }
-> +
-> +        if (res->dmabuf_fd < 0) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "%s: memory region cannot be used to create dmabuf\n",
-> +                          __func__);
->               return;
->           }
->           virtio_gpu_remap_dmabuf(res);
-> @@ -160,9 +268,7 @@ void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
->   
->   void virtio_gpu_fini_dmabuf(struct virtio_gpu_simple_resource *res)
->   {
-> -    if (res->remapped) {
-> -        virtio_gpu_destroy_dmabuf(res);
-> -    }
-> +    virtio_gpu_destroy_dmabuf(res);
->   }
->   
->   static void virtio_gpu_free_dmabuf(VirtIOGPU *g, VGPUDMABuf *dmabuf)
+    prefix: failed op[: reason]
+
+where "prefix" is a subsystem tag, or even __func__, and "reason" is
+strerror() or similar.
+
+To users, this tends to read as
+
+    gobbledygook: techbabble[: reason]
+
+When we care to replace "failed op" (developer's perspective) by
+something that actually makes sense to users, "prefix" often becomes
+redundant.
+
+The error messages shown above aren't bad to begin with.  "failed to
+open FILE", where FILE is something the user specified, should make
+sense to the user.  It should also be good enough for developers even
+without a prefix: connecting trouble with the DUMP-FILE to dump /
+trouble with the SEV-DEVICE to SEV should be straightforward.
+
+[...]
 
 
