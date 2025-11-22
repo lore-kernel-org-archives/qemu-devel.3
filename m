@@ -4,57 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17607CF64B1
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 07:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E08AECF64B1
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 07:53:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMiKE-0008Di-Rd; Sat, 22 Nov 2025 02:46:31 -0500
+	id 1vMiMF-0000U3-27; Sat, 22 Nov 2025 02:48:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vMhTk-0000gO-RA
- for qemu-devel@nongnu.org; Sat, 22 Nov 2025 01:52:26 -0500
+ id 1vMhUR-0000lS-0t
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 01:53:00 -0500
 Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1vMhTN-0001CG-NN
- for qemu-devel@nongnu.org; Sat, 22 Nov 2025 01:52:12 -0500
+ id 1vMhU4-0001Uz-2n
+ for qemu-devel@nongnu.org; Sat, 22 Nov 2025 01:52:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1763794314; x=1795330314;
+ t=1763794356; x=1795330356;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=fwkIF75YKfczbZku0xCM5nGDSNWKts3J6DNrrIfsjiY=;
- b=XH2CzjNQSVktr894n5Qgj5O6OV1ft56ErId7X6eaNQIw3BHaXQUT4WOF
- 1Mb5qmwY+8CkdnBHxAjY6ILnpPADLz62FMr/L/YnJpBWj2f3xMYQvXSLK
- IfBEIZMA7W+uEN0wKgMiij4uSYHwOE38f+MT3FLzXDORXCtxZQUK6fSKp
- AL0gOzC7SXroceyoFegJKG7rBl1lpCm2GP3RPjQA2vOWPzj3gQv5PJ2St
- ZGmOAt08z2n7xBEKQI8eZj0QM1vXtYYwkmTTq/6wrrLXwszprzMK5VCjt
- OI+mx5oy1wC5W7VX07operx9+tkCfPj26QzZBoibNirua1xRvvSVMaF0b A==;
-X-CSE-ConnectionGUID: uIdmJ5/PQxuM1ckAOQWveA==
-X-CSE-MsgGUID: 6HMquwMgQ16pXOv8z2TTaw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11620"; a="65924073"
-X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; d="scan'208";a="65924073"
+ bh=kMX3gK3C2jrvs4wVLl8xztI2o+0UwVJ4qGV1poeLrvc=;
+ b=P1XeBPryrbtoy3ub9dhZJLx+P8uRRjLPMDk0O38Wek1WgflRGHn33UHB
+ 2DnXQICpkaZHJfHw884tILtqzeRgWymtErDAFa4mnnJDCTYD3MX0f7w/t
+ vX4BjKKG/srnaEkNwSwd2/1cruSVMnrROGgCNhmtCQVMp/6Or8xJAGNKQ
+ PGTe1tMoyVmA1ZrWF9/fOQmolg5lnxy7iYRUHXO94YjZp3YgErnbmOUB2
+ gOFKVx6bjsVm9SQtb8G06Qp6KLWWuqdv97mbtt1Jork7xpsDoQxw6uTc+
+ QIXq4/J++XFOsrwd4/K1bhFZCNCCnJSt/EE8yja+sO759T9TkuHLMbLC4 Q==;
+X-CSE-ConnectionGUID: cIcslnDwTqyD9jVRcbAhvw==
+X-CSE-MsgGUID: Gc1HiX2uRH2Qs75EvC/WoQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11620"; a="65924088"
+X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; d="scan'208";a="65924088"
 Received: from orviesa006.jf.intel.com ([10.64.159.146])
  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  21 Nov 2025 22:50:22 -0800
-X-CSE-ConnectionGUID: +SIWi5PVTa6cawuWtXe10w==
-X-CSE-MsgGUID: Vdd8VcNAQkGrTZYcQ9EsYw==
+X-CSE-ConnectionGUID: uCCP/QygS7OqN4c4ELGArg==
+X-CSE-MsgGUID: 1KYwNuBNT8OPsvPWQ383vg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; d="scan'208";a="191064612"
+X-IronPort-AV: E=Sophos;i="6.20,217,1758610800"; d="scan'208";a="191064624"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Nov 2025 22:50:22 -0800
+ 21 Nov 2025 22:50:23 -0800
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v3 4/9] vfio/region: Add a helper to get region index from
- memory region
-Date: Fri, 21 Nov 2025 22:46:25 -0800
-Message-ID: <20251122064936.2948632-5-vivek.kasireddy@intel.com>
+Subject: [PATCH v3 8/9] virtio-gpu-dmabuf: Introduce
+ ram_block_is_memfd_backed() helper
+Date: Fri, 21 Nov 2025 22:46:29 -0800
+Message-ID: <20251122064936.2948632-9-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251122064936.2948632-1-vivek.kasireddy@intel.com>
 References: <20251122064936.2948632-1-vivek.kasireddy@intel.com>
@@ -84,62 +88,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having a way to figure out the region index (or bar) associated
-with a memory region is helpful in various scenarios. For example,
-this capability can be useful in retrieving the region info needed
-for mapping a part of a VFIO region or creating a dmabuf.
+This helper function provides a way to determine if a ram block
+is backed by memfd by checking the SEALS on the associated fd.
+This is useful in scenarios where we need to quickly verify if
+a given memory region is associated with a memfd or not.
 
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/vfio/region.c              | 14 ++++++++++++++
- include/hw/vfio/vfio-device.h | 10 ++++++++++
- 2 files changed, 24 insertions(+)
+ hw/display/virtio-gpu-dmabuf.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-index b165ab0b93..046adfaa2c 100644
---- a/hw/vfio/region.c
-+++ b/hw/vfio/region.c
-@@ -398,3 +398,17 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled)
-     trace_vfio_region_mmaps_set_enabled(memory_region_name(region->mem),
-                                         enabled);
- }
-+
-+int vfio_get_region_index_from_mr(MemoryRegion *mr)
+diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+index c34d4c85bc..258c48d31b 100644
+--- a/hw/display/virtio-gpu-dmabuf.c
++++ b/hw/display/virtio-gpu-dmabuf.c
+@@ -27,6 +27,19 @@
+ #include "standard-headers/linux/udmabuf.h"
+ #include "standard-headers/drm/drm_fourcc.h"
+ 
++static bool ram_block_is_memfd_backed(RAMBlock *rb)
 +{
-+    VFIORegion *region;
++    int ret;
 +
-+    while (mr->container) {
-+        if (mr->ops == &vfio_region_ops) {
-+            region = mr->opaque;
-+	    return region->nr;
-+        }
-+        mr = mr->container;
++    if (rb && rb->fd > 0) {
++	ret = fcntl(rb->fd, F_GET_SEALS);
++	if (ret > 0) {
++	    return true;
++	}
 +    }
-+    return -1;
++    return false;
 +}
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index bb28123faf..44cacd3728 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -290,6 +290,16 @@ bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_t
- 
- int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-                                 struct vfio_irq_info *info);
 +
-+/**
-+ * Return the region index associated with a given MemoryRegion. The index
-+ * can be useful in retrieving region info.
-+ *
-+ * @mr: MemoryRegion to use
-+ *
-+ * Returns the region index or -1 on error.
-+ */
-+int vfio_get_region_index_from_mr(MemoryRegion *mr);
- #endif
+ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+ {
+     struct udmabuf_create_list *list;
+@@ -94,20 +107,14 @@ static void virtio_gpu_destroy_dmabuf(struct virtio_gpu_simple_resource *res)
+ static int find_memory_backend_type(Object *obj, void *opaque)
+ {
+     bool *memfd_backend = opaque;
+-    int ret;
  
- /* Returns 0 on success, or a negative errno. */
+     if (object_dynamic_cast(obj, TYPE_MEMORY_BACKEND)) {
+         HostMemoryBackend *backend = MEMORY_BACKEND(obj);
+-        RAMBlock *rb = backend->mr.ram_block;
+ 
+-        if (rb && rb->fd > 0) {
+-            ret = fcntl(rb->fd, F_GET_SEALS);
+-            if (ret > 0) {
+-                *memfd_backend = true;
+-            }
++        if (ram_block_is_memfd_backed(backend->mr.ram_block)) {
++            *memfd_backend = true;
+         }
+     }
+-
+     return 0;
+ }
+ 
 -- 
 2.50.1
 
