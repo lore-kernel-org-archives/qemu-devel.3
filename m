@@ -4,33 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4F3BCFD2F3
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:18:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA62CFD2F3
+	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMuqZ-0000ec-LF; Sat, 22 Nov 2025 16:08:44 -0500
+	id 1vMura-0001Iy-2f; Sat, 22 Nov 2025 16:09:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMuqH-0000bl-3z; Sat, 22 Nov 2025 16:08:30 -0500
+ id 1vMurM-0001Eg-7o; Sat, 22 Nov 2025 16:09:32 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMuq7-00072c-74; Sat, 22 Nov 2025 16:08:20 -0500
+ id 1vMurC-0007Di-Dm; Sat, 22 Nov 2025 16:09:29 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0310216D308;
+ by isrv.corpit.ru (Postfix) with ESMTP id 6128F16D30D;
  Sun, 23 Nov 2025 00:03:35 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A47903223DC;
- Sun, 23 Nov 2025 00:03:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 17DDA3223E1;
+ Sun, 23 Nov 2025 00:03:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Richard W.M. Jones" <rjones@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.22 14/25] block/curl.c: Fix CURLOPT_VERBOSE parameter type
-Date: Sat, 22 Nov 2025 23:55:32 +0300
-Message-ID: <20251122210344.48374-14-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-7.2.22 19/25] hw/net/e1000e_core: Don't advance desc_offset
+ for NULL buffer RX descriptors
+Date: Sat, 22 Nov 2025 23:55:37 +0300
+Message-ID: <20251122210344.48374-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
 References: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
@@ -59,33 +61,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Richard W.M. Jones" <rjones@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-In commit ed26056d90 ("block/curl.c: Use explicit long constants in
-curl_easy_setopt calls") we missed a further call that takes a long
-parameter.
+In e1000e_write_packet_to_guest() we don't write data for RX descriptors
+where the buffer address is NULL (as required by the i82574 datasheet
+section 7.1.7.2). However, when we do this we still update desc_offset
+by the amount of data we would have written to the RX descriptor if
+it had a valid buffer pointer, resulting in our dropping that data
+entirely. The data sheet is not 100% clear on the subject, but this
+seems unlikely to be the correct behaviour.
 
-Reported-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Richard W.M. Jones <rjones@redhat.com>
-Message-ID: <20251013124127.604401-1-rjones@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit ad97769e9dcf4dbdaae6d859176e5f37fd6a7c66)
+Rearrange the null-descriptor logic so that we don't treat these
+do-nothing descriptors as if we'd really written the data.
+
+This both fixes a bug and also is a prerequisite to cleaning up
+the size calculation logic in the next patch.
+
+(Cc to stable largely because it will be needed for the next patch,
+which fixes a more serious bug.)
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 6da0c9828194eb21e54fe4264cd29a1b85a29f33)
+(Mjt: context fixup in hw/net/e1000e_core.c:e1000e_write_packet_to_guest())
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/curl.c b/block/curl.c
-index d2b094802e..3b6f18d02c 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -531,7 +531,7 @@ static int curl_init_state(BDRVCURLState *s, CURLState *state)
- #endif
+diff --git a/hw/net/e1000e_core.c b/hw/net/e1000e_core.c
+index 5def4cfc1c..be9c15f01e 100644
+--- a/hw/net/e1000e_core.c
++++ b/hw/net/e1000e_core.c
+@@ -1512,7 +1512,6 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+     PCIDevice *d = core->owner;
+     dma_addr_t base;
+     uint8_t desc[E1000_MAX_RX_DESC_LEN];
+-    size_t desc_size;
+     size_t desc_offset = 0;
+     size_t iov_ofs = 0;
  
- #ifdef DEBUG_VERBOSE
--        if (curl_easy_setopt(state->curl, CURLOPT_VERBOSE, 1)) {
-+        if (curl_easy_setopt(state->curl, CURLOPT_VERBOSE, 1L)) {
-             goto err;
+@@ -1531,12 +1530,6 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+         e1000e_ba_state bastate = { { 0 } };
+         bool is_last = false;
+ 
+-        desc_size = total_size - desc_offset;
+-
+-        if (desc_size > core->rx_desc_buf_size) {
+-            desc_size = core->rx_desc_buf_size;
+-        }
+-
+         if (e1000e_ring_empty(core, rxi)) {
+             return;
          }
- #endif
+@@ -1550,6 +1543,12 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+         e1000e_read_rx_descr(core, desc, &ba);
+ 
+         if (ba[0]) {
++            size_t desc_size = total_size - desc_offset;
++
++            if (desc_size > core->rx_desc_buf_size) {
++                desc_size = core->rx_desc_buf_size;
++            }
++
+             if (desc_offset < size) {
+                 static const uint32_t fcs_pad;
+                 size_t iov_copy;
+@@ -1609,13 +1608,13 @@ e1000e_write_packet_to_guest(E1000ECore *core, struct NetRxPkt *pkt,
+                           (const char *) &fcs_pad, e1000x_fcs_len(core->mac));
+                 }
+             }
++            desc_offset += desc_size;
++            if (desc_offset >= total_size) {
++                is_last = true;
++            }
+         } else { /* as per intel docs; skip descriptors with null buf addr */
+             trace_e1000e_rx_null_descriptor();
+         }
+-        desc_offset += desc_size;
+-        if (desc_offset >= total_size) {
+-            is_last = true;
+-        }
+ 
+         e1000e_write_rx_descr(core, desc, is_last ? core->rx_pkt : NULL,
+                            rss_info, do_ps ? ps_hdr_len : 0, &bastate.written);
 -- 
 2.47.3
 
