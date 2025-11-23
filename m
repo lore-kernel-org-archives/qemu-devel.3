@@ -4,48 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87B09CFC53B
-	for <qemu-devel@archiver.kernel.org>; Sat, 22 Nov 2025 21:24:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79A37CFC518
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Nov 2025 06:11:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vMusV-0001lW-7b; Sat, 22 Nov 2025 16:10:44 -0500
+	id 1vN3Fq-0005rt-P3; Sun, 23 Nov 2025 01:07:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMusR-0001kg-AC; Sat, 22 Nov 2025 16:10:39 -0500
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vN3Fi-0005mp-Ml
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 01:07:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vMusF-0007PT-VF; Sat, 22 Nov 2025 16:10:35 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9EA1216D310;
- Sun, 23 Nov 2025 00:03:35 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 549B03223E4;
- Sun, 23 Nov 2025 00:03:46 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-7.2.22 22/25] net: pad packets to minimum length in
- qemu_receive_packet()
-Date: Sat, 22 Nov 2025 23:55:40 +0300
-Message-ID: <20251122210344.48374-22-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
-References: <qemu-stable-7.2.22-20251122235450@cover.tls.msk.ru>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vN3FZ-0003Bm-1D
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 01:07:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1763878009;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z1g/k8dt6+5zEFwDpRN9RrBRBY6uqZQa7CRGlGdgP8Q=;
+ b=T0cT3Nhf1qw82s2al0oJI6m+cvCUH9JxUurJFLfTfglpNxrhenTOdTdSVumilP0XslmijE
+ 7a1FyA8Yy5LZZuP/hR33xdK9Xt3CkmrI1EQ87InYETKsj3HzV/pZl0y2LKwTuTZ3hJzKfA
+ 2DUACvpyUeSsXWZj8f7kwI+ZVxXDxn0=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683-t3tCCihKPPeHtn9KBRQKkg-1; Sun, 23 Nov 2025 01:06:46 -0500
+X-MC-Unique: t3tCCihKPPeHtn9KBRQKkg-1
+X-Mimecast-MFC-AGG-ID: t3tCCihKPPeHtn9KBRQKkg_1763878006
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-295915934bfso54183145ad.0
+ for <qemu-devel@nongnu.org>; Sat, 22 Nov 2025 22:06:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1763878005; x=1764482805; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=z1g/k8dt6+5zEFwDpRN9RrBRBY6uqZQa7CRGlGdgP8Q=;
+ b=Euf8cZwejypNDIN0LGlqVImU4dndDuY00J4RsJEPTC25lGXpKuMzWeFGJIYvYyJgNA
+ HAofeu5es8dkf++8/r0WAz4nw13HXFq+W0Rk34qB/yKd0r2MpFuuVt6+ylgzxwpGHXHa
+ 6ViFCaMxTFYjowZLPAZTeDvwUD9iJ9a3l9+DsE3fwhU29DDq3MF3BcfRqKrBPi+iXY23
+ 5fJ4Dj+YWYr7kraRkRJYY+b13SQ6mWwcpyutARbbWFsBv2q9syZy0GjujlvvgWlJqliB
+ oahJJqJJTUGmar2DrKS3pAkg3Z2YP272ZM/T+eyM2EuY1BDpwoQ4B6iQrgwl8/HDtxYW
+ OZWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763878005; x=1764482805;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=z1g/k8dt6+5zEFwDpRN9RrBRBY6uqZQa7CRGlGdgP8Q=;
+ b=bm3ibCEgygB/2yn2X6OAQ+Yaga2A9bIEhV32p83pNSwFBfzaVxFawyT+BJfzySWDIk
+ uCFoVkP5SHG39gizaTYxt6f0VDjiL1qwg8wU+GQz5+1gam1SwKuhRZctcXoCAuatST8q
+ ptBccHW/o+lW6b21J/mrjXfjo8YCsw2LUFfvluhA3Wer26Q5b+SU996/NkhQmEfDqWuK
+ 6rOW+3naWHIfoWbKlcwe//00ImoQsyT+A1l13iIQsg9VjPF4KQI+scw5Z9sOtMSIiAhM
+ pJ3HewxbIgsSTAZFNTy02Jp3Juuj2WKfHZBjZFm1uPF8DR7z1ClGUIibHaRDuL5WyXoG
+ iguQ==
+X-Gm-Message-State: AOJu0YziVCug1pVJnfGgYh7FXc0XXygRdcpyBJBcZpNMHYII/fSzfiYW
+ GeV9woY3Ht9GtCeIYaQbTHwaTw3LJkRGIqXQ+amxLgMzkShEbsxl1Zu94gK3rU9u9FIo5PfCj23
+ tZltilpJscZm5WdVxDQltZEZCrwDZLyG0kKkl3Sx3WHMIHiMQ479JdH74
+X-Gm-Gg: ASbGncvo1PPAtCkjEwcWU6AzTkP9V66ho1C1vS5A0p8z5dpAZKc0rxQsW0Nm0g4YU5d
+ hR0gv1plKtleBydXgk80sMIhIfkGYMXLE9dVujEV5kcHuyv1IdDGQF8G19z9d+9XA0gZDlUXBDM
+ fIWxHsJPb64gFZ5nIP6UyOGY7K1I2Ij+lWyIDFZHBzMVbMrGMpSxOwjw7f0bbjwJdce6qe5N1SP
+ n9BCHbLVQ0MmFhUo/j/gR36YPcnqcLpDaXZpaffHs6ZxQ3jaaJuOuiX4Riy5VuJQPEmnJATW/rZ
+ q34UWKJFTlwqL881az0YiSwH0qxdOnJ5oaSbJoBjARcZu6ICH9V8MrFHvAx8lopllNSoJpG/ddL
+ NxtTnnPGV7Tzku6zRx6oLesKl/G9GICTYJbEGmXdTppCfx+LdfQq1zbDAoQ==
+X-Received: by 2002:a17:903:384d:b0:297:dade:456e with SMTP id
+ d9443c01a7336-29b6c6a621emr80416225ad.44.1763878005620; 
+ Sat, 22 Nov 2025 22:06:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGF/q2Jpo5kXkEaXg67v1lhEYtBsAH73xEYatHuFhyrIz1aWhdAxM4BdpP04iqoXnexJVkDAQ==
+X-Received: by 2002:a17:903:384d:b0:297:dade:456e with SMTP id
+ d9443c01a7336-29b6c6a621emr80416035ad.44.1763878005170; 
+ Sat, 22 Nov 2025 22:06:45 -0800 (PST)
+Received: from smtpclient.apple ([122.163.54.167])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-bd760dbc99asm9614811a12.30.2025.11.22.22.06.42
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Sat, 22 Nov 2025 22:06:44 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.7\))
+Subject: Re: [PATCH 0/4] igvm: rework igvm file loading + processing, fix reset
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20251118122133.1695767-1-kraxel@redhat.com>
+Date: Sun, 23 Nov 2025 11:36:29 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>, Eduardo Habkost <eduardo@habkost.net>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Luigi Leonardi <leonardi@redhat.com>, Oliver Steffen <osteffen@redhat.com>,
+ Michael Tsirkin <mst@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <2B721FD4-1A76-4C90-B957-7D109957526D@redhat.com>
+References: <20251118122133.1695767-1-kraxel@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+X-Mailer: Apple Mail (2.3776.700.51.11.7)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -61,64 +128,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
 
-In commits like 969e50b61a28 ("net: Pad short frames to minimum size
-before sending from SLiRP/TAP") we switched away from requiring
-network devices to handle short frames to instead having the net core
-code do the padding of short frames out to the ETH_ZLEN minimum size.
-We then dropped the code for handling short frames from the network
-devices in a series of commits like 140eae9c8f7 ("hw/net: e1000:
-Remove the logic of padding short frames in the receive path").
 
-This missed one route where the device's receive code can still see a
-short frame: if the device is in loopback mode and it transmits a
-short frame via the qemu_receive_packet() function, this will be fed
-back into its own receive code without being padded.
+> On 18 Nov 2025, at 5:51=E2=80=AFPM, Gerd Hoffmann <kraxel@redhat.com> =
+wrote:
+>=20
+>=20
+>=20
+> Gerd Hoffmann (4):
+>  igvm: make igvm-cfg object resetable
+>  igvm: move file load to complete callback
+>  igvm: add trace point for igvm file loading and processing
+>  igvm: move igvm file processing to reset callbacks
+>=20
+> include/system/igvm-cfg.h |  5 ++++
+> include/system/igvm.h     |  1 +
+> backends/igvm-cfg.c       | 53 ++++++++++++++++++++++++++++++++++++++-
+> backends/igvm.c           | 14 +++++++----
+> hw/i386/pc_piix.c         | 10 --------
+> hw/i386/pc_q35.c          | 10 --------
+> backends/trace-events     |  7 ++++++
+> 7 files changed, 74 insertions(+), 26 deletions(-)
 
-Add the padding logic to qemu_receive_packet().
 
-This fixes a buffer overrun which can be triggered in the
-e1000_receive_iov() logic via the loopback code path.
-
-Other devices that use qemu_receive_packet() to implement loopback
-are cadence_gem, dp8393x, lan9118, msf2-emac, pcnet, rtl8139
-and sungem.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3043
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit a01344d9d78089e9e585faaeb19afccff2050abf)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/net/net.c b/net/net.c
-index c3391168f6..40db3b5dc0 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -728,10 +728,20 @@ ssize_t qemu_send_packet(NetClientState *nc, const uint8_t *buf, int size)
- 
- ssize_t qemu_receive_packet(NetClientState *nc, const uint8_t *buf, int size)
- {
-+    uint8_t min_pkt[ETH_ZLEN];
-+    size_t min_pktsz = sizeof(min_pkt);
-+
-     if (!qemu_can_receive_packet(nc)) {
-         return 0;
-     }
- 
-+    if (net_peer_needs_padding(nc)) {
-+        if (eth_pad_short_frame(min_pkt, &min_pktsz, buf, size)) {
-+            buf = min_pkt;
-+            size = min_pktsz;
-+        }
-+    }
-+
-     return qemu_net_queue_receive(nc->incoming_queue, buf, size);
- }
- 
--- 
-2.47.3
+For the context, this is related to the work I am doing in supporting =
+resets for confidential guests.=20=
 
 
