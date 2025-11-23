@@ -4,80 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6B71CFA46B
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Nov 2025 18:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86084CFA46B
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Nov 2025 18:59:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNFEz-0007DF-GV; Sun, 23 Nov 2025 13:55:17 -0500
+	id 1vNFIS-0001Nj-CS; Sun, 23 Nov 2025 13:58:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNFEt-0007BC-GQ
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 13:55:11 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNFIH-0001AU-Br
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 13:58:45 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNFEr-0002rc-Rd
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 13:55:11 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-42b2e9ac45aso2092185f8f.0
- for <qemu-devel@nongnu.org>; Sun, 23 Nov 2025 10:55:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNFIE-0003W5-3U
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 13:58:39 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-477ba2c1ca2so36785205e9.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Nov 2025 10:58:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763924107; x=1764528907; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763924315; x=1764529115; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=UOo9AhVgtEawM3gsfM+gCMk6lSM7pziegoxg2/plQqc=;
- b=I7CmylABXzrpMI0zcSF1E8dZoLWd0lrhdxbyQd6JKcPhHlc4gdaXHuyDzDrEPf8XYq
- ru1STaa4Q7rAF+DQ+Wk0oIQHZRSvex7C6x7PjXgS8mGuYIcZ+LOBPyiPlGoVdZOuuYQL
- rfJNDGwamZyRXjLs2gWGlW6tOBnojjU7VuxpK5NYjJlCOb/azPVMXovTAzG7gGU5N8sf
- M/JTSBb9EhptAD5mMhv26wJIeUkjFWJpfGindJl7IiBgpkZXE9ZQzhotaFUhvwaueUAL
- kjfMK+fbT7ErnTwfIqK2d9x4Kuy3K11d/y8pGMdIJiSt/Cyn2pBMhGqbD1GFce59bp3/
- iq5A==
+ bh=CZs7gYynycdv4EGKIYDGcUMCMGhmj2RagHDsP9q/nKQ=;
+ b=sLxpUxJXMxMtgWTSrrmuBOKqjFoqdKy4wCsol2RbsA+um7ftW0P7vKvstP37RpAz1S
+ PlWOB/p9kfhy3FeI9b2QAdwgtJu3m2EgAlftjE4P/B6BG9boZVsYy/SwRiQ0n9c6fLTD
+ gFzUqriu6JYRLbtsJmeJg7lFdeFyrqjESyVbUNT08rt9TzVaGcm8S2L71Sw0jYEcRUTM
+ KLkUy8i3MeaodGfxSTuSgVh7yEOhcaq0UiywSFPQLZczvtQsGWLxpjdnGQw/VlBXm0u/
+ 6L4doDsHX2V+D9abUIOXq5xiO6Fg4C6OEC0HpFxUtzbJQjNCw52Sa2XcpjcY2oC3+cH8
+ nznQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763924107; x=1764528907;
+ d=1e100.net; s=20230601; t=1763924315; x=1764529115;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UOo9AhVgtEawM3gsfM+gCMk6lSM7pziegoxg2/plQqc=;
- b=jtSNeDUGY9ELytttRvZce5NXTUl73kh9mMljULrZ+Wn5tsX70WQio2/PbjhhAyRhes
- B5yJp9lXfeFivAYShgWONXXePK8t4wsYPhxuF37eOYF3BVW1kp9KJjtb9HE1kb7u8BtP
- gVkSJZF0TSFOATzY5Irh8+oX2apbCJLHsGCO4jCyK4ZwDESYNhwmoq7qQAhMtR/TLDGs
- ckTyscEH9pyOfrizWvRklihTWn6CURu0VZ9CT7ts41GRSW5MJFTHGkhE4JBI+PB/EQEP
- a5V7qh8RzTO/DtUDd85LpWCdaE99pRXI6wqWJssnOKPaT3C7nrpD1JtY3PcMQQ8c3+Z3
- ruqA==
-X-Gm-Message-State: AOJu0YynoYm8hNziDbqHzUHABJiMkO1c3iMciR5g+TT5OHTVzalrGu+p
- uWE/NRSbcJKWajvXewabVjib+CZ/C1WWnSI3M8mZWXQeYiexNins97CaQf0p2fj0fhhDjJ7rcIf
- OqvjLWfVXvg==
-X-Gm-Gg: ASbGncv1iC8Np/zXMe49bBDRF65658p1xQ/6uQ5Q+FSuLeDqaVNvHIT5QgaPupPuTr7
- b06UR/TpNFkwxZd6wyHuBVjEKW319xQ8On4ZtmXortdPux95IfqPeR1JxNCn/HkXU5N8VcKaWzc
- FCXPEE6mNe80aA9XGCa7d8+fz0A7cFEQKPgBps6JZgdb0NBk31bKjsag9FRDcoNrpX4aXukmjDo
- xDuoqwb1i8pe7xINvkxRzeuU0k1SYyTj7G4mKAeU4crof2yGrqXJRX34UkeJtJGt7LmSYPotSHH
- 6NFA4y729J5vxsk4lJF1yF1qGW1oGBuNheLCxsVNjo73y0cA11zeshYgorSTHgS+oYi6yiPH7n1
- 3yD3ohiLbwS4SfgNvXW1aCtc0RybZae93t7yrgILKt9thzYgA+8u435sIa+M98Y9q/e5YP9sR6g
- E1wR+dQ5CJaoKz8r9PncdAK++BYm2YxmucczH0Fa3WSyW8cps6WlOpMuitMmP8sEIgAb5mZoQ=
-X-Google-Smtp-Source: AGHT+IFOes67yZUaaed8vkVQAgmA7frl/MDdRlwHE/aH/XxKJ8R+6yMyLEwsMLfJ4J/UhRdN+MB4jQ==
-X-Received: by 2002:a05:6000:4210:b0:429:b9bc:e826 with SMTP id
- ffacd0b85a97d-42cc1d21287mr10267850f8f.53.1763924107505; 
- Sun, 23 Nov 2025 10:55:07 -0800 (PST)
+ bh=CZs7gYynycdv4EGKIYDGcUMCMGhmj2RagHDsP9q/nKQ=;
+ b=CSEwDoCMCq7UgjD3hOBAAD0cbU0HLDwRqsRBfZnWhlmfdoTaboUZG75CSjtewCb90h
+ 80eY2R2ZaPkJInWFR+xNvaJ0FLpPiUXEQeh6SS3stKrAkLtWU8kTBh0bmxVTQWzIkGPq
+ e7XS/hsXH6V0s13qOpj7Q1GjZ6yCkvJVF+FmpBfWymEPrPM8q1geCfVJY91T+71m98II
+ Vdz2mujpaHW6yTCH9z7erRSB5x4XAxUCbmEa7xHC7lE82mAx/FJDgGwYM9zcVIRC9Ytv
+ PzYdr3qvF6MdjBYZUMs1PF4EtNZYKAB+1AXdgQN1UAH71sWD0uSSPQCDhjsLR8w/dNae
+ vR9w==
+X-Gm-Message-State: AOJu0YzbN+opUzt8RhulxC7Gcd7FVBqNbHqNyFujRpAPLCmgGCroBCrj
+ ivLDhyUJs90lmZrhh6htNzvFALgElf7SibrRq+Fud2vigZovneS9xcBZ0U4G18Ml8kUfc7/SMdw
+ PzCi4Oy2FTg==
+X-Gm-Gg: ASbGnctORTh7fsMHULc5cMSFUZCdc3x34Ox1y+KoNvZ8GTEBXL6zd9/h/+M06Gu6SFF
+ XbRM0Llzn8UYhXn2BZIYiw2sYskyVJiuqh1WF1BtZv/B7ZlEOhSNFh7sAZqufsXORxbD5IMuDhA
+ PGCKVS0mnl8KVPgnvudzEl9n4vPQD50MHolsUgtkyp78+Q/ecfCYOfz9z6cIx/ZK56xfGAY4qCi
+ SuPZyj3418mIhkEd4Nr64WLPHd13vToFvy7HIAcK1l3MsKv3KgexTWd0H+FS7cEZ1dMkYO1NUP2
+ cSyDryVsltRfjoiMrOeSH7ZwVHcLhASCrZI7CCbH6ycg991tUauA9tunJQRlxZCS5fG2u0oq6ct
+ uG85PLGEeQMmhst6SA8wRnzDlIR6A+NM34EaCWqd1TevULGfdUcoX0BiIbadLns0qWTpSCEqB7i
+ Fkhobh2SYDDLDZMlkwgmpKGIeiw2qPExH0Br4JPfXqjqUE8UwOixgZVbZibg9oZl3LmEmRzV8=
+X-Google-Smtp-Source: AGHT+IHzO3TzKM0byiy0d9QAboT5h5wHvIrU67sA5M2DR4+xrurNsc+4Y6ORWQbdadWWIQty08DYhA==
+X-Received: by 2002:a05:600c:b93:b0:477:557b:6917 with SMTP id
+ 5b1f17b1804b1-477c01be404mr91728135e9.18.1763924314742; 
+ Sun, 23 Nov 2025 10:58:34 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cbd764dbesm20613631f8f.27.2025.11.23.10.55.06
+ 5b1f17b1804b1-477bf3b4eb2sm154328725e9.12.2025.11.23.10.58.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 23 Nov 2025 10:55:06 -0800 (PST)
+ Sun, 23 Nov 2025 10:58:34 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
+Cc: Paolo Bonzini <pbonzini@redhat.com>, David Woodhouse <dwmw2@infradead.org>,
+ Paul Durrant <paul@xen.org>, Eduardo Habkost <eduardo@habkost.net>,
+ xen-devel@lists.xenproject.org, Anthony PERARD <anthony@xenproject.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
  Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.2] hw/pci-host/dino: Correct PCI memory access to PA
- I/O range
-Date: Sun, 23 Nov 2025 19:55:05 +0100
-Message-ID: <20251123185505.53503-1-philmd@linaro.org>
+Subject: [PATCH] hw/i386/isapc: Remove dead Xen code
+Date: Sun, 23 Nov 2025 19:58:32 +0100
+Message-ID: <20251123185832.53802-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,27 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PCI memory transactions above 0xf000_0000 can access
-to the whole PA space. Fix the one missing byte.
+We don't use Xen on the isapc machine: let's remove
+pointless code.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/pci-host/dino.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/i386/isapc.c | 27 ++++-----------------------
+ 1 file changed, 4 insertions(+), 23 deletions(-)
 
-diff --git a/hw/pci-host/dino.c b/hw/pci-host/dino.c
-index 924053499c1..34aca429c98 100644
---- a/hw/pci-host/dino.c
-+++ b/hw/pci-host/dino.c
-@@ -466,7 +466,7 @@ static void dino_pcihost_realize(DeviceState *dev, Error **errp)
-                              30 * DINO_MEM_CHUNK_SIZE);
-     memory_region_init_alias(&s->bm_cpu_alias, OBJECT(s),
-                              "bm-cpu", s->memory_as, 0xfff00000,
--                             0xfffff);
-+                             1 * MiB);
-     memory_region_add_subregion(&s->bm, 0,
-                                 &s->bm_ram_alias);
-     memory_region_add_subregion(&s->bm,
+diff --git a/hw/i386/isapc.c b/hw/i386/isapc.c
+index 1ba9ae22cc3..1e13a30c505 100644
+--- a/hw/i386/isapc.c
++++ b/hw/i386/isapc.c
+@@ -17,8 +17,6 @@
+ #include "hw/ide/ide-bus.h"
+ #include "system/kvm.h"
+ #include "hw/i386/kvm/clock.h"
+-#include "hw/xen/xen-x86.h"
+-#include "system/xen.h"
+ #include "hw/rtc/mc146818rtc.h"
+ #include "target/i386/cpu.h"
+ 
+@@ -37,7 +35,6 @@ static void pc_init_isa(MachineState *machine)
+     ISABus *isa_bus;
+     uint32_t irq;
+     GSIState *gsi_state;
+-    MemoryRegion *ram_memory;
+     DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
+     int i;
+ 
+@@ -77,15 +74,9 @@ static void pc_init_isa(MachineState *machine)
+     /*
+      * There is no RAM split for the isapc machine
+      */
+-    if (xen_enabled()) {
+-        xen_hvm_init_pc(pcms, &ram_memory);
+-    } else {
+-        ram_memory = machine->ram;
+-
+-        pcms->max_ram_below_4g = 3.5 * GiB;
+-        x86ms->above_4g_mem_size = 0;
+-        x86ms->below_4g_mem_size = machine->ram_size;
+-    }
++    pcms->max_ram_below_4g = 3.5 * GiB;
++    x86ms->above_4g_mem_size = 0;
++    x86ms->below_4g_mem_size = machine->ram_size;
+ 
+     x86_cpus_init(x86ms, pcmc->default_cpu_version);
+ 
+@@ -94,17 +85,7 @@ static void pc_init_isa(MachineState *machine)
+     }
+ 
+     /* allocate ram and load rom/bios */
+-    if (!xen_enabled()) {
+-        pc_memory_init(pcms, system_memory, system_memory, 0);
+-    } else {
+-        assert(machine->ram_size == x86ms->below_4g_mem_size +
+-                                    x86ms->above_4g_mem_size);
+-
+-        if (machine->kernel_filename != NULL) {
+-            /* For xen HVM direct kernel boot, load linux here */
+-            xen_load_linux(pcms);
+-        }
+-    }
++    pc_memory_init(pcms, system_memory, system_memory, 0);
+ 
+     gsi_state = pc_gsi_create(&x86ms->gsi, false);
+ 
 -- 
 2.51.0
 
