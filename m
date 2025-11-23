@@ -4,69 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE035CFA46B
-	for <qemu-devel@archiver.kernel.org>; Sun, 23 Nov 2025 08:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22C8BCFC518
+	for <qemu-devel@archiver.kernel.org>; Sun, 23 Nov 2025 09:08:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vN5b3-0001S8-EH; Sun, 23 Nov 2025 03:37:27 -0500
+	id 1vN61b-0002WK-Tm; Sun, 23 Nov 2025 04:04:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vN5af-0001EK-ND
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 03:37:01 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vN61X-0002UQ-7p; Sun, 23 Nov 2025 04:04:47 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vN5aV-00012H-7E
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 03:36:57 -0500
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AN8aQkD034452
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sun, 23 Nov 2025 17:36:27 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=nD3YZRD+WQJxE7qrp5qrrSAWt82TbOvALzd1CoAcUUE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1763886987; v=1;
- b=rJh1fveBuUkIYG8dbh2eR5Yh4wwMn6jHZnj4lEPCSgGASL6QalzB27UgWOx8VEXI
- osfww2DaEwjxzTtLcqVwWvi7MxgA1fuzfbUU0BiVk2LuJ4V0lsmbumC9fF0Jj6a7
- OMq5eMoz71O8Td/F3oOoRML+4lbXVzMPUupj5K7tQuhHsqIxYXsYFOHOPhgcWt3P
- 6TM70g9Kdg6O4hzBwSDFuuJKnUDcBD6xJOuQnpNBdtcnP8qXvS2DsRK+EWGuSziG
- K88Eoc66aBKNxT8LE4DZhRpmKmLmlaidI/ZBUNtlLYp8wfkTNEB6ckhl1cy+geNO
- Gps3ziZrlApe+/BROVDizw==
-Message-ID: <a52f86c1-9cd3-4c1e-9b25-880dbd756712@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sun, 23 Nov 2025 17:36:26 +0900
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vN61N-0005uH-1s; Sun, 23 Nov 2025 04:04:43 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5622116D483;
+ Sun, 23 Nov 2025 12:03:55 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id E004D322E17;
+ Sun, 23 Nov 2025 12:04:06 +0300 (MSK)
+Message-ID: <f53de975-28ee-47ff-992d-98c30112ef0e@tls.msk.ru>
+Date: Sun, 23 Nov 2025 12:04:06 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
- associated with VFIO devices
-To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20251122064936.2948632-1-vivek.kasireddy@intel.com>
- <20251122064936.2948632-10-vivek.kasireddy@intel.com>
- <74f4e219-a094-42b9-a30c-8de597692ab6@rsg.ci.i.u-tokyo.ac.jp>
- <IA0PR11MB7185273C43DA53473EC8B796F8D3A@IA0PR11MB7185.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <IA0PR11MB7185273C43DA53473EC8B796F8D3A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Subject: Re: [PULL 00/29] Machine types, s390x, functional tests and Avocado
+ removal
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-stable <qemu-stable@nongnu.org>
+References: <20250423073610.271585-1-thuth@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20250423073610.271585-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,177 +104,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/23 15:17, Kasireddy, Vivek wrote:
-> Hi Akihiko,
+On 4/23/25 10:35, Thomas Huth wrote:
+>   Hi!
 > 
->> Subject: Re: [PATCH v3 9/9] virtio-gpu-dmabuf: Create dmabuf for blobs
->> associated with VFIO devices
->>
->> On 2025/11/22 15:46, Vivek Kasireddy wrote:
->>> In addition to memfd, a blob resource can also have its backing
->>> storage in a VFIO device region. Therefore, we first need to figure
->>> out if the blob is backed by a VFIO device region or a memfd before
->>> we can call the right API to get a dmabuf fd created.
->>>
->>> So, we first call virtio_gpu_create_udmabuf() which further calls
->>> ram_block_is_memfd_backed() to check if the blob's backing storage
->>> is located in a memfd or not. If it is not, we call vfio_create_dmabuf()
->>> which identifies the right VFIO device and eventually invokes the
->>> API vfio_device_create_dmabuf_fd() to have a dmabuf fd created.
->>>
->>> Note that in virtio_gpu_remap_dmabuf(), we first try to test if
->>> the VFIO dmabuf exporter supports mmap or not. If it doesn't, we
->>> use the VFIO device fd directly to create the CPU mapping.
->>>
->>> While at it, remove the unnecessary rcu_read_lock/rcu_read_unlock
->>> from virtio_gpu_create_udmabuf().
->>>
->>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> Cc: Alex Bennée <alex.bennee@linaro.org>
->>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>> Cc: Alex Williamson <alex@shazbot.org>
->>> Cc: Cédric Le Goater <clg@redhat.com>
->>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->>> ---
->>>    hw/display/Kconfig             |   5 ++
->>>    hw/display/virtio-gpu-dmabuf.c | 122
->> ++++++++++++++++++++++++++++++---
->>>    2 files changed, 119 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/hw/display/Kconfig b/hw/display/Kconfig
->>> index 1e95ab28ef..0d090f25f5 100644
->>> --- a/hw/display/Kconfig
->>> +++ b/hw/display/Kconfig
->>> @@ -106,6 +106,11 @@ config VIRTIO_VGA
->>>        depends on VIRTIO_PCI
->>>        select VGA
->>>
->>> +config VIRTIO_GPU_VFIO_BLOB
->>> +    bool
->>> +    default y
->>> +    depends on VFIO
->>> +
->>>    config VHOST_USER_GPU
->>>        bool
->>>        default y
->>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
->> dmabuf.c
->>> index 258c48d31b..d121a2c9a7 100644
->>> --- a/hw/display/virtio-gpu-dmabuf.c
->>> +++ b/hw/display/virtio-gpu-dmabuf.c
->>> @@ -18,6 +18,7 @@
->>>    #include "ui/console.h"
->>>    #include "hw/virtio/virtio-gpu.h"
->>>    #include "hw/virtio/virtio-gpu-pixman.h"
->>> +#include "hw/vfio/vfio-device.h"
->>>    #include "trace.h"
->>>    #include "system/ramblock.h"
->>>    #include "system/hostmem.h"
->>> @@ -40,10 +41,42 @@ static bool ram_block_is_memfd_backed(RAMBlock
->> *rb)
->>>        return false;
->>>    }
->>>
->>> +static void vfio_create_dmabuf(struct virtio_gpu_simple_resource *res)
->>> +{
->>> +#if defined(VIRTIO_GPU_VFIO_BLOB)
->>> +    VFIODevice *vbasedev;
->>> +    RAMBlock *first_rb;
->>> +    ram_addr_t offset;
->>> +
->>> +    first_rb = qemu_ram_block_from_host(res->iov[0].iov_base, false,
->> &offset);
->>> +    if (!first_rb) {
->>> +        qemu_log_mask(LOG_GUEST_ERROR,
->>> +                      "%s: Could not find ramblock\n", __func__);
->>> +        return;
->>> +    }
->>> +
->>> +    vbasedev = vfio_device_lookup(first_rb->mr);
->>> +    if (!vbasedev) {
->>> +        qemu_log_mask(LOG_GUEST_ERROR,
->>> +                      "%s: No VFIO device found to create dmabuf from\n",
->>> +                      __func__);
->>> +        return;
->>> +    }
->>> +
->>> +    res->dmabuf_fd = vfio_device_create_dmabuf_fd(vbasedev,
->>> +                                                  res->iov, res->iov_cnt);
->>> +    if (res->dmabuf_fd < 0) {
->>> +        qemu_log_mask(LOG_GUEST_ERROR,
->>> +                      "%s: VFIO_DEVICE_FEATURE_DMA_BUF: %s\n",
->>> +                      __func__, strerror(errno));
->>> +    }
->>> +#endif
->>> +}
->>> +
->>>    static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource
->> *res)
->>>    {
->>>        struct udmabuf_create_list *list;
->>> -    RAMBlock *rb;
->>> +    RAMBlock *rb, *first_rb;
->>>        ram_addr_t offset;
->>>        int udmabuf, i;
->>>
->>> @@ -52,15 +85,17 @@ static void virtio_gpu_create_udmabuf(struct
->> virtio_gpu_simple_resource *res)
->>>            return;
->>>        }
->>>
->>> +    first_rb = qemu_ram_block_from_host(res->iov[0].iov_base, false,
->> &offset);
->>> +    if (!ram_block_is_memfd_backed(first_rb)) {
->>> +        return;
->>> +    }
->>> +
->>
->> We had an extensive discussion but I still don't understand the benefit
->> of this change while I see it adds complexity by having another call of
-> I'll get rid of the extra call to qemu_ram_block_from_host() in the next version.
-
-It is possible to reduce the number of the execution of 
-qemu_ram_block_from_host() calls, but the code complexity remains unless 
-you keep the original code.
-
+> The following changes since commit 1da8f3a3c53b604edfe0d55e475102640490549e:
 > 
->> qemu_ram_block_from_host() and imposing an extra restriction that all
->> elements need to belong to one RAMBlock.
-> I thought you suggested that we need to ensure all entries (need to be
-> validated and) are associated with the same memory region? As
-> virtio_gpu_create_udmabuf() was not doing that, I thought this
-> change/restriction needs to be added.
-
-My first comment I raised for "[PATCH v2 09/10] virtio-gpu-dmabuf: 
-Introduce qemu_iovec_same_memory_regions()" was that it complicates the 
-codebase without necessity.
-https://lore.kernel.org/qemu-devel/83274ca7-dd37-4856-b198-f334bf630835@rsg.ci.i.u-tokyo.ac.jp/
-
+>    Open 10.1 development tree (2025-04-22 15:09:23 -0400)
 > 
-> And, since calling ram_block_is_memfd_backed() for each entry would
-> incur extra overhead (as there can be thousands of entries and fcntl needs
-> to check with the kernel), I figured calling it once for the first ram block
-> and comparing all the other ram blocks against it made sense.
-
-I don't think the change is irrelevant with adding support of VFIO, and 
-I doubt its necessity either; the UDMABUF_CREATE_LIST ioctl will catch it.
-
+> are available in the Git repository at:
 > 
-> Also, rethinking this whole situation again, I don't think we should try to create
-> a dmabuf for a buffer that might have mixed/different memory regions or
-> memfds (as this is most likely an invalid scenario that could lead to undefined
-> behavior) so this change is meant to prevent such scenario.
+>    https://gitlab.com/thuth/qemu.git tags/pull-request-2025-04-23
+> 
+> for you to fetch changes up to 12c6b6153063aafcdbadca8fee7eac793ef85e4b:
+> 
+>    MAINTAINERS: Add functional tests that are not covered yet (2025-04-23 07:51:25 +0200)
+> 
+> ----------------------------------------------------------------
+> * Remove the obsolete s390-ccw-virtio-2.9 machine type
+> * Prepare the dump-skeys QMP command for the universal binary project
+> * Add compat machine types for 10.1
+> * Convert the remaining Avocado tests to the functional framework
+> * Some more small fixes for the functional tests
+> 
+> ----------------------------------------------------------------
+> Cornelia Huck (2):
+>        hw: add compat machines for 10.1
+>        tests/functional/test_vnc: skip test if no crypto backend available
+> 
+> Philippe Mathieu-Daudé (4):
+>        hw/s390x/skeys: Declare QOM types using DEFINE_TYPES() macro
+>        hw/s390x/skeys: Introduce TYPE_DUMP_SKEYS_INTERFACE
+>        hw/s390x/ccw: Have CCW machine implement a qmp_dump_skeys() callback
+>        qapi/machine: Make @dump-skeys command generic
+> 
+> Thomas Huth (23):
+>        hw/s390x/s390-virtio-ccw: Remove the deprecated 2.9 machine type
+>        hw/s390x/css: Remove the obsolete "css_migration_enabled" variable
+>        hw/s390x/s390-stattrib: Remove the old migration_enabled flag
+>        hw/intc/s390_flic: Remove the obsolete migration_enabled flag
+>        gitlab-ci: Remove the avocado tests from the CI pipelines
+>        tests/functional: Move the check for the parameters from avocado to functional
+>        tests/functional: Convert reverse_debugging tests to the functional framework
+>        tests/functional: Convert the i386 replay avocado test
+>        tests/avocado: Remove the LinuxKernelTest class
+>        tests/functional: Convert the 32-bit big endian Wheezy mips test
+>        tests/functional: Convert the 32-bit little endian Wheezy mips test
+>        tests/functional: Convert the 64-bit little endian Wheezy mips test
+>        tests/functional: Convert the 64-bit big endian Wheezy mips test
+>        tests/avocado: Remove the boot_linux.py tests
+>        tests/functional: Use the tuxrun kernel for the x86 replay test
+>        tests/functional: Use the tuxrun kernel for the aarch64 replay test
+>        tests/functional: Convert the SMMU test to the functional framework
+>        gitlab-ci: Update QEMU_JOB_AVOCADO and QEMU_CI_AVOCADO_TESTING
+>        docs/devel/testing: Dissolve the ci-definitions.rst.inc file
+>        Remove the remainders of the Avocado tests
+>        tests/functional: Remove semicolons at the end of lines
+>        tests/functional: Remove unnecessary import statements
+>        MAINTAINERS: Add functional tests that are not covered yet
 
-In the email thread I cited I only said the check is unnecessary, but it 
-can be also problematic.
+Hi!
 
-For example, if you hotplug some memory, the memory can be backed by 
-another memfd, and the kernel may use both the existing memory and the 
-hotplugged one to back a virtually contiguous region allocated for a 
-virtio-gpu resource. You may look at drm_gem_get_pages() in Linux and 
-find out that it allocates on a per-page basis.
+I'm picking the bulk of this patchset from Apr-2025 to 10.0.x stable
+series of qemu, so that testing framework for 10.0.x will be the same
+as current/future versions of qemu.
 
-Regards,
-Akihiko Odaki
+In particular, I'm picking up the following patches, all of which
+applies cleanly to 10.0.x:
+
+4e3823c68c tests/functional/test_vnc: skip test if no crypto backend 
+available
+22baa5f340 gitlab-ci: Remove the avocado tests from the CI pipelines
+bc65ae6961 tests/functional: Move the check for the parameters from 
+avocado to functional
+951ededf12 tests/functional: Convert reverse_debugging tests to the 
+functional framework
+0e756f404d tests/functional: Convert the i386 replay avocado test
+574f71bc1f tests/avocado: Remove the LinuxKernelTest class
+42a87f0ce7 tests/functional: Convert the 32-bit big endian Wheezy mips test
+689a8b56a6 tests/functional: Convert the 32-bit little endian Wheezy 
+mips test
+8e3461c3a6 tests/functional: Convert the 64-bit little endian Wheezy 
+mips test
+f79592f427 tests/functional: Convert the 64-bit big endian Wheezy mips test
+e83aee9c6a tests/avocado: Remove the boot_linux.py tests
+7fecdb0acd tests/functional: Use the tuxrun kernel for the x86 replay test
+a820caf844 tests/functional: Use the tuxrun kernel for the aarch64 
+replay test
+5c2bae2155 tests/functional: Convert the SMMU test to the functional 
+framework
+f8c5484417 gitlab-ci: Update QEMU_JOB_AVOCADO and QEMU_CI_AVOCADO_TESTING
+5748e46415 docs/devel/testing: Dissolve the ci-definitions.rst.inc file
+52e9ed6d3a Remove the remainders of the Avocado tests
+858640eaee tests/functional: Remove semicolons at the end of lines
+99fb9256b7 tests/functional: Remove unnecessary import statements
+12c6b61530 MAINTAINERS: Add functional tests that are not covered yet
+
+The result is at https://gitlab.com/mjt0k/qemu/-/pipelines/2174244481.
+
+Please let me know if I should skip/omit some of them.  And please also
+let me know of there's someting else which is worth picking up for 10.0
+in the testing area, to keep an LTS branch more manageable.
+
+Thanks!
+
+/mjt
 
