@@ -4,86 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DCB3CFD356
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 20:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72041CFD355
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 21:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNdZg-00071A-8O; Mon, 24 Nov 2025 15:54:16 -0500
+	id 1vNe1Y-0000af-8g; Mon, 24 Nov 2025 16:23:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1vNdZf-00070y-2u
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 15:54:15 -0500
-Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vNe1G-0000S5-Pn
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 16:22:48 -0500
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1vNdZd-0001Lk-9P
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 15:54:14 -0500
-Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-450ccefe573so2166115b6e.3
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 12:54:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vNe1F-0000TZ-6G
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 16:22:46 -0500
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-642fcb38f35so3325473d50.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 13:22:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minyard.net; s=google; t=1764017651; x=1764622451; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=D5OT9GeynPxz0yzBkSQzGi7hrTkfyswJq9BocslwaT4=;
- b=J+lq8JM4YGnUKTUEZ1+bzCKHT6PSqTRCjO7IIvCfnvSPO2dZbfeWSO6+TTNz6aWyYC
- ITgUWRn3cuOrVrccZEPfHb+PkOE0JMJO+/n7PLWxGcGySiuo+EiXCeQ1PccEXWsB070d
- jVTPXBrNHq1Knz+Rr02s1LAJHWH28v2QbZsJxs4lcLI66ozwgbIw10QJbw4CxVs47e8w
- 7pkrjp7LfWtzF5VJojhzvbbTCkUApakLfg7DUYSPg/qVdcUpjj/ppBBvPb4reQHApKuk
- 4HqWsmGzgwdgO2PVddslsuuZyTNRPkXKqCNqs8q0oLWcRYXKayqJWX7eOfACh/twmTrB
- Wljw==
+ d=linaro.org; s=google; t=1764019363; x=1764624163; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=hGhg3WUEZygIztlrqkQH8K69wcx1Wk5hLvPb7vzAbYw=;
+ b=QI6SmTP07uy9dXg5Sa/1062Uf1n6/0BIuhxIrgXmHsulGtbB6VGz2aBXKHPE+J5ujA
+ KyrjuU4jsHjEE7RxXZMqBWnbL6cv2/sXM8cpAERrs3t6W+BjIgcEOkxDpWEX7YLrcAVV
+ 86BDrWLIm4HCVZdNRCs5MzUxWGGIBS7eDtGx9hdzILuhTh2ObCk4yuaR9j2fJs7e9YUx
+ jpWSILUr0yYR3K/VOsyIuH5Z0V22g/S+Cq/7ZFTFJhWsQWXRa2jVqbJsc3nVTcJD8P1U
+ LGRbX/2gcLsnY0uBqBNAPk2DGLi53Z8w9QyVhQeNSLxRr0eFrWXkWrWNcLv/VI4AUlZF
+ jKOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764017651; x=1764622451;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=D5OT9GeynPxz0yzBkSQzGi7hrTkfyswJq9BocslwaT4=;
- b=BFr5HME4a6wi+rJh7KnBJ1YetqtR4WSWZUn62+aN96/rkweon3SJx05odEQFAtFi81
- Y1SlDzOz5tocX3eJz8yLJn1fAOH4aJ1S3pLblZg1J/QgbfOGLYOpEGCBNi0ozEgUIe+3
- /KTjoa4LvMEeXd17RW/n/GQ9n7rh80P9F0ui5OV7rj5ymrjyN2L6tqms8AxnL/0HmcXd
- FHgcvcI+fvpxqt9DgrVyY329+uJcwvsXGFxDorjBqPNtm4syBbwSOD3icebEwOxEg+62
- MJ+k//6lxDpnyict57dWGI9XHLEN29fyZE1doBVfAcd+rcFE4U5vrzmDU6cunaDXQvx6
- UvAw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW2dlzynP/vNnSNTYM96yYKWxjU4DRBd56d/vckTpx7pwAA1OO0L95oD6dQrKEv7oKa5KEyk8NdV6lo@nongnu.org
-X-Gm-Message-State: AOJu0YwzEi7lDjKI8xCF2cvrbGd4jfWMwwvNZY3s+ktFWXQC/IUs53Oq
- c2yeRM/jExL/bt6h+cVWh1MWlVeXGMStcdo3u6+bGEZduXkeoeB6n+uwH4KyCS1uucA=
-X-Gm-Gg: ASbGncsxIKLXr87Y5VLFGnbCRiVY8TBEYylFXDvLMYkywDYtVsae6/ivuzNVgYpADpy
- ebpMVYXAn89Mi4ZZp3mPniDBMVGduM0cM5UX2KNqR0pr5MWo8C3aDU9Us2D/7bxtwn2lO1FGy2Y
- aRigWPNEJ/owFo8jvac89xbXBYEUY18OpjuKz0ISzDuG4aLBKqTOgk9oc4/nFiNUPTeY2vVBYAw
- u8Wkuw2lzRdvKPoAdQtMuC0rlGxvF0YsTuOuy6RCBdBQItIrdz8QHlGnySuB9zs3LJFv51viYC7
- Gj4F9gy93acNvljRtjqv3TrfoOX+/pp2YRHvtAcs1+6knTLawRajlM9J9LWbp2mhYcrigZKFqE1
- pKDRE5R1XM6n6PBePnjlcpAD9Z+23ZeeYed4f/+2BdfEY7czlsx65Lj+sV1vTBkDSzXxXXjVuLY
- gkU0TNPZEGSPwa4w==
-X-Google-Smtp-Source: AGHT+IFPlpC9aJfPdJ6kTdj+/DR4BxOVw90B4NumaK0vMVLxlW55Fpb0MySjfI/CGkZ/sbRJf6PPqA==
-X-Received: by 2002:a05:6808:1891:b0:450:5ca:5170 with SMTP id
- 5614622812f47-45112b4a113mr5312502b6e.33.1764017651184; 
- Mon, 24 Nov 2025 12:54:11 -0800 (PST)
-Received: from mail.minyard.net ([2001:470:b8f6:1b:a107:f956:4b48:680c])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-450fffedd51sm4063801b6e.22.2025.11.24.12.54.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Nov 2025 12:54:10 -0800 (PST)
-Date: Mon, 24 Nov 2025 14:54:05 -0600
-From: Corey Minyard <corey@minyard.net>
-To: Yunpeng Yang <yunpeng.yang@nutanix.com>
-Cc: "minyard@acm.org" <minyard@acm.org>, "farosas@suse.de" <farosas@suse.de>,
- "lvivier@redhat.com" <lvivier@redhat.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Jonathan Davies <jond@nutanix.com>,
- "cornelia.huck@de.ibm.com" <cornelia.huck@de.ibm.com>
-Subject: Re: [PATCH 0/2] hw/ipmi/ipmi_bmc_sim: Get/set fake LAN config
-Message-ID: <aSTF7QFuXGhNzGce@mail.minyard.net>
-References: <20251028180115.1098433-1-yunpeng.yang@nutanix.com>
+ d=1e100.net; s=20230601; t=1764019363; x=1764624163;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hGhg3WUEZygIztlrqkQH8K69wcx1Wk5hLvPb7vzAbYw=;
+ b=pNcc6zoVvud1uItbeMBUXhG++6yya7q8JvY5WPzfovtb+8g/CZKRQ9W6CKVbMnswnz
+ p2/2QlG8CaHCHXYTN9C7a8mn6Q6hD7cmjlv1pR9O+SYcr6xILLX3J0gBUp+DTxJZDfoP
+ 8nptz9ipAR7+nVz9n1R9kAZ+CGnwnbF/gs1YrcLXbL2umCsJLI1SBhpoaNsVaCxScrRu
+ yu+yzW8BK7fMTQMT8yay2DY4uj2cK9g27/4HhOx3DqWQ7i0uM4mbfAZkjul2JbFtmIbt
+ YeFd0EjP19nAgv7xoMFzK2NdR4tCdHTjP2NgInNMGlLzo9cjti0kjQXr+Gm9OF7s3bEN
+ Y/9A==
+X-Gm-Message-State: AOJu0YylMXGybWMpLT6KWV2PGhL6HPQ07d4/udwOZP9uA/Lp8Uc2hChz
+ fIxqEriNKBgv0g904kbNbT4gbtFQltQ+XY7YZOIA3X59oI/jaQSY3d7r/V0HSgCwv9v16Acuzk5
+ Y2q+/L4Rka+ecUwp2s3+2EZDVcSwlbSYsnVeK9jVqXA==
+X-Gm-Gg: ASbGncvi0xo/DLoPv0vtxl7z0GTQ2lVpPlqrirOcg1MXtALdf576HayJi3EbCrpc6vX
+ mfPOVKkYpsEsCgBNeRlPOVZC7rjUsaFKeYzlDm5enCtHQxm/JAzevosRP8oqyu6yzHAKEn3WN+c
+ lLP/AJ+Tb3FLCsGjYzj2aW6JDlgkt8zSkhvgdxMMUAKaombc4JPByfuVqaT+qDLHU6QqoIdqSV/
+ 42/6b7QC3vMNEvxx8JGDtobzEbs56YkOsGi0XjpgOCO7g+j4nwiWhfQOjfsl0wmkM1o5arP
+X-Google-Smtp-Source: AGHT+IE/JhK+j2T6H+R2MKzEUcgPgteN8WiYodf4bb+zETX+HZ0Z0nxGwOeNerEyR9dZmX9heKBMI5dZc6TGuyanO4E=
+X-Received: by 2002:a53:acd8:0:20b0:63f:a89c:46f9 with SMTP id
+ 956f58d0204a3-64302ab7bdbmr7266880d50.40.1764019363538; Mon, 24 Nov 2025
+ 13:22:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251028180115.1098433-1-yunpeng.yang@nutanix.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
- envelope-from=corey@minyard.net; helo=mail-oi1-x22b.google.com
+References: <20251122002656.687350-1-peterx@redhat.com>
+ <20251122002656.687350-5-peterx@redhat.com>
+In-Reply-To: <20251122002656.687350-5-peterx@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 24 Nov 2025 21:22:31 +0000
+X-Gm-Features: AWmQ_bn9w4Lf-0UbzLBPMS3fSxPuCDQ6-eOGGWylEo9-GujHHq-8d9vVWrh5xs8
+Message-ID: <CAFEAcA9K8sFKSV+nbQ9UKJW5PNnnQwLNuuyQY7gX2LMEk8ui-g@mail.gmail.com>
+Subject: Re: [PULL 4/9] migration: Use warn_reportf_err() where appropriate
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Markus Armbruster <armbru@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,51 +91,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: corey@minyard.net
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 06:01:18PM +0000, Yunpeng Yang wrote:
-> Support for a fake LAN channel is added to the device `ipmi_bmc_sim`.
-> Although there is no real LAN channel, some testing processes which
-> require interactions with BMC LAN channel will become easier.
-> 
-> There's another device `ipmi_bmc_extern` which works together with some
-> external BMC simulator, e.g., `ipmi_sim`. More comprehensive BMC
-> simulation can be achieved with `ipmi_bmc_extern`. However,
-> `ipmi_bmc_sim` is more light-weight and is built into QEMU.
+On Sat, 22 Nov 2025 at 02:02, Peter Xu <peterx@redhat.com> wrote:
+>
+> From: Markus Armbruster <armbru@redhat.com>
+>
+> Replace
+>
+>     warn_report("...: %s", ..., error_get_pretty(err));
+>
+> by
+>
+>     warn_reportf_err(err, "...: ", ...);
+>
+> Prior art: commit 5217f1887a8 (error: Use error_reportf_err() where
+> appropriate).
+>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Link: https://lore.kernel.org/r/20251115083500.2753895-3-armbru@redhat.com
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  migration/multifd.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/migration/multifd.c b/migration/multifd.c
+> index a529c399e4..6210454838 100644
+> --- a/migration/multifd.c
+> +++ b/migration/multifd.c
+> @@ -464,8 +464,8 @@ static void migration_ioc_shutdown_gracefully(QIOChannel *ioc)
+>           */
+>          migration_tls_channel_end(ioc, &local_err);
+>          if (local_err) {
+> -            warn_report("Failed to gracefully terminate TLS connection: %s",
+> -                        error_get_pretty(local_err));
+> +            warn_reportf_err(local_err,
+> +                        "Failed to gracefully terminate TLS connection: ");
+>          }
+>      }
 
-I apologize for the time on this, it slipped between the cracks.
+Hi; Coverity points out (CID 1643463) that this introduces a double-free
+of local_err. In this function local_err is marked up as g_autoptr()
+so it is automatically freed when it goes out of scope. This was needed
+because error_get_pretty() doesn't free its argument. But
+warn_reportf_err() *does* free its error argument, so now we free it twice.
 
-These both look good.  I can give a:
+Dropping the g_autoptr markup would be enough, I think.
 
-Reviewed-by: Corey Minyard <corey@minyard.net>
+The "prior art" commit 5217f1887a8 also seemed to introduce
+some double-frees in hw/usb/dev-mtp.c, but it looks like we
+fixed those in 562a55864 (but with a Fixes: tag that didn't
+point at the commit that introduced them but at a different
+blameless one).
 
-or 
-
-Acked-by: Corey Minyard <corey@minyard.net>
-
-or I can take it into my tree if you aren't bringing it in any place
-else.
-
-One thing you should try is doing a migration between a version 1 and
-version 2 device, and between two version 2 devices, just to be sure
-migration still works.  Assuming you haven't done this already.
-
--corey
-
-> 
-> Yunpeng Yang (2):
->   hw/ipmi/ipmi_bmc_sim: Support getting fake LAN channel config
->   hw/ipmi/ipmi_bmc_sim: Support setting fake LAN channel config
-> 
->  hw/ipmi/ipmi_bmc_sim.c      | 407 +++++++++++++++++++++++++++++++++++-
->  include/hw/ipmi/ipmi.h      |   1 +
->  qemu-options.hx             |  26 +++
->  tests/qtest/ipmi-kcs-test.c | 143 +++++++++++++
->  4 files changed, 567 insertions(+), 10 deletions(-)
-> 
-> -- 
-> 2.43.7
-> 
+thanks
+-- PMM
 
