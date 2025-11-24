@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEB4CFD317
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 09:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9478CFD31C
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 09:56:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNTJI-0007NK-D5; Mon, 24 Nov 2025 04:56:40 -0500
+	id 1vNTHf-0005ie-Et; Mon, 24 Nov 2025 04:55:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vNTGW-0004nZ-7W
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:53:53 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNTF9-0004YQ-VN
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:52:32 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vNTGT-0001q7-RB
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:53:47 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-47755de027eso21297265e9.0
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 01:53:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNTF8-0001ej-HG
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:52:23 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-42b427cda88so2728337f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 01:52:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763978023; x=1764582823; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763977941; x=1764582741; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WdfPVNcsgxdSChKlyDoSG2k2BbOIKuM3AGHYELIYuS0=;
- b=aIrfKzGs981KW+C0uEPOzBaFQ9JgdVUTtcL7v4W2KkY+kotOAd41XLG/7jfWbpo66U
- 58O99JbCou7tBWOe8PL2zDWS/pMJXtBJVTmcD304b0huL8hRXiCZlNFs8HlHgUE5u+Q2
- WdGXVuOLUg1wOIvwT45bbDJnQYWPsaU4ft4aaqSMXijK1XC1V+4fwqrcGmW4sH3gbNYx
- xvSEUwp/JHClyxkWxgRmWdvwDZq9wvCI43D1qBymexcLN5KXWU7IUfYRGCkKQDOX09mp
- tOSOxCxzc8vK/3j6h2qLh+UKfcGZGkkSczDmiIUsd10YWX7CGGvM0tIYi09wUFQAuRg0
- LEHQ==
+ bh=iHirYCS7o5fHFAEDDvU/4jz9vrUedalvStdmBVvHfE0=;
+ b=N4ZSy7bxC5/KnhX1kgJXTBg5/ovm478squkQbWy+057wyzJVBWQdVOXSnr6OHazU/f
+ L2Kua4JjNauAgOyZGCN12ek6KQkzLbKeAllxTnSRbG57oRwwqmB3yI1mq4b2LqvwECRk
+ ao+SAYNhBeEOCwlaJpvlMXY7yctzjOy3iM3wMHepIioA3NplIAhVxHRwJCaJTWeCku6Z
+ 7MWeh8+dW3oyc30Ss+OjI9yH40C26KHNMcH3LEMBwdmL/2wPerpJNupJrQ86my+AWJfZ
+ 479ajly3F1etN17K21WcR52/jCaY5GchSX4QARg/gtUcYNyzE9V60AnZLx6ZMJ3/7eg5
+ opDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763978023; x=1764582823;
+ d=1e100.net; s=20230601; t=1763977941; x=1764582741;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WdfPVNcsgxdSChKlyDoSG2k2BbOIKuM3AGHYELIYuS0=;
- b=pY3zGCg1izy8cYW1nboswx1WxuOP/nKnAEM/+dcZ8bBmXdQUcoihVUbNKSuspdznwA
- EKMHhRHWSWoXNjPbDgr3vZnXGpaZjRGTNyzz3k7mhBbfvgDQBQmu9fMrHcV64zbHB6Si
- RRvxzYdOi1cl4gb1ghjumUay2sROpY54+1EaINM7vL35acmniqlV0w5LIduEhQojh3Dh
- rtPm57FlqxS7QqmEZZXr3EmNqJ6bMOBUaakWhB5pAl8vxIBZyY2KXc6fGuLl3wCuiTOL
- i4kvg+p4KUhrUrQAc0wP39hwOxJf8+7qVGOtpxyId4XOgvdByEeRbMqmRmdFlcYyf2hM
- yNFQ==
-X-Gm-Message-State: AOJu0YyIDumLfxpo81zUPaThyCgXluCfAlxBAbPOArFbQOMvFtacm2Tv
- jFXB0zq/84Utxs+SIiBJAZil9a8FT7oSvsos7o7XfcJaeIxZYyJOfBMcv7RBvaqXrLY=
-X-Gm-Gg: ASbGncuSRQQb9xys5qR159opuHxC3FZ+CBZDSl6GSN1GVJUqUBEPQksy34eXyukY5mK
- Bd6snuQ0ha/zcK3Mm2HYmf8+y8k9GCAiQHUkFcjPkG7BhHGItf0829oA2J2xGu6JAwOJSh+7PRI
- CZfF7VFoHDQtUDRBtRuMilu4B6B7EqewLnA4Lmz/RoHPwyY+KS8uUg1z7CmGhdP/sJ5RhqXAX3X
- I8Q6FN52OxuP7tyl2COogTXUxARSeyVvVVymVuTCbA5tIK7DlA7aj+TV8GXeqE2vkV3nwrXr2gJ
- 0upIE9WbtDfAITM/GnMomKZlnXqtPMwk73KBRc7+gueBlhe5qvd9D2Z6fjZGvZBQAirvfyE7C04
- z1iNJe+MIWB6upHU7jRt9quBjx+7Y1RpJiZ08ntyyee3V1P2ebaYtdDy3OUKK+pxbOMJFJSHtph
- POZbof/NZ3qSA=
-X-Google-Smtp-Source: AGHT+IGDiUllR6FHjmW6loypK9poFMHRpO1CPKAf83mskE6rAcitiMmioEq2jhisVfyFbi+mHpa8Gg==
-X-Received: by 2002:a05:600c:4f49:b0:45d:d8d6:7fcc with SMTP id
- 5b1f17b1804b1-477c01dfe16mr121960425e9.27.1763978023324; 
- Mon, 24 Nov 2025 01:53:43 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477bf35f976sm191750455e9.4.2025.11.24.01.53.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Nov 2025 01:53:42 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 130066021C;
- Mon, 24 Nov 2025 09:53:38 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jon Kohler <jon@nutanix.com>, John Levon <john.levon@nutanix.com>
-Subject: [PULL 5/6] contrib/gitdm: add mapping for Nutanix
-Date: Mon, 24 Nov 2025 09:53:36 +0000
-Message-ID: <20251124095337.537277-6-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251124095337.537277-1-alex.bennee@linaro.org>
-References: <20251124095337.537277-1-alex.bennee@linaro.org>
+ bh=iHirYCS7o5fHFAEDDvU/4jz9vrUedalvStdmBVvHfE0=;
+ b=VMZSLDxJ3Yd4A3c1X2VPpIMc3yU/23Lilsymugbi74mMn2/i1HeHWjdeMuz3IlnPiY
+ Sg5w3oysGyj5zegNF3LKMcgCIfXv2EITYTUNKftVv4WA++dLZb1PlN5cLabolprdSaze
+ kvhSA572gD+ROXHXCYlbhkb6PeArcgK6BPIirjWxW6Ik0byBNDXODJ4c/92m22/N97hq
+ L+zZKwhD17QmvaSsLyFhnMZFX/AZwlmGi1PT5feFpZlOxZ20iophw5MV6gNnrL6qB5Hz
+ Sr8JYcOa3xhkcbG6znM3Y0RRANkoTY/gMMNbQCBwcKbs0myP3qKszS4Nw7loxVkX1zr8
+ mACA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU7XgQXusVryinqNmIHP4g7wodHr1RlO/1zIb16tt2ZI9/6GpGvXiKsWdPjCa7s3D0oNcDaAHXhsdVO@nongnu.org
+X-Gm-Message-State: AOJu0Yxmmsdv+AAqxt0eS87cTPlSfpqMTj2yh2uR8L+1jMjRcNSehlUS
+ keynRnWDSQhVgVeITGQQGp7e2mw+VIPDX4fEIV/tvg0mt9+FMSM9Lyw81jfRxDgsIUY=
+X-Gm-Gg: ASbGncsfbT+eAhBp7snNcabwrEOgYJ6MM/N7C3GIdXUo7xAJ75xtN1TOJGfag1Wr9XN
+ z4JUwkyNhkvQKuUIl6fn4IHdTqHbSYAY+pZPMLC04RLQWfQie+btIQvhmoW7aiEux9zTnK0czbD
+ nlVW6aWK8qqzUz4+9U2Gbr2x5g+1p39OrKI8OUb6/v8l+BcwyGFVuidTeGypQQMj2lOEAUyd+eQ
+ il7ziALVKzrQs6NCruyImnB8mZqM1jdk9ydEHKZRwZ4QDZ3aY2EEIRqfrJDSUqhV3OYN/ezsSQK
+ Alk1/T/gKAqkbqj2RUkJCzvNSUhxazlp06ZAMgKtlc5iXh6Sad8chyPLFUl9G2t2ch+fb8wYbj8
+ ZFvN4dE6j33lfTGSnJ9INxBWemDhUosNSoXnYQNk5yrGPFmDgydEwGr238pxHS8unS17UUBQexB
+ RiJ0AFKS2swdQP7EsXtq8JwQKO7BjgiHoDOTkrq/dLqHr2AvoJ1MiBQWPJ1xPE
+X-Google-Smtp-Source: AGHT+IE8lAGpWs5r47u9tfQ09QCiQp+hvwbk1sFYcYvTR9hupnHVS7a+9ruBHkNWTl1whd+N3savNw==
+X-Received: by 2002:a05:6000:310f:b0:429:bce4:20bf with SMTP id
+ ffacd0b85a97d-42cc1d194fdmr10445600f8f.55.1763977940737; 
+ Mon, 24 Nov 2025 01:52:20 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7f363c0sm27731794f8f.18.2025.11.24.01.52.19
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 24 Nov 2025 01:52:20 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+ qemu-devel@nongnu.org
+Cc: Rob Landley <rob@landley.net>, Thorsten Glaser <tg@debian.org>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-11.0 10/13] hw/sh4/r2d: Use EXT_CS_BASE() macro for
+ display controller
+Date: Mon, 24 Nov 2025 10:51:05 +0100
+Message-ID: <20251124095109.66091-11-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251124095109.66091-1-philmd@linaro.org>
+References: <20251124095109.66091-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,27 +106,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have a number of hackers from Nutanix, make sure they are grouped
-together.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/sh4/r2d.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Reviewed-by: Jon Kohler <jon@nutanix.com>
-Reviewed-by: John Levon <john.levon@nutanix.com>
-Message-ID: <20251119113953.1432303-8-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
-diff --git a/contrib/gitdm/domain-map b/contrib/gitdm/domain-map
-index 4e67c3e484d..c07dffc51bd 100644
---- a/contrib/gitdm/domain-map
-+++ b/contrib/gitdm/domain-map
-@@ -35,6 +35,7 @@ lwn.net         LWN
- microsoft.com   Microsoft
- mvista.com      MontaVista
- nokia.com       Nokia
-+nutanix.com     Nutanix
- nuviainc.com    NUVIA
- nvidia.com      NVIDIA
- oracle.com      Oracle
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index 2229cc6fe66..75878abe946 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -254,6 +254,7 @@ static void r2d_init(MachineState *machine)
+     r2d_fpga_t *fpga;
+     const hwaddr flash_base = EXT_CS_BASE(0);
+     const hwaddr fpga_base = EXT_CS_BASE(1);
++    const hwaddr sm501_base = EXT_CS_BASE(4);
+     hwaddr sdram_base;
+     uint64_t sdram_size = machine->ram_size;
+ 
+@@ -295,11 +296,11 @@ static void r2d_init(MachineState *machine)
+     dev = qdev_new("sysbus-sm501");
+     busdev = SYS_BUS_DEVICE(dev);
+     qdev_prop_set_uint32(dev, "vram-size", SM501_VRAM_SIZE);
+-    qdev_prop_set_uint64(dev, "dma-offset", 0x10000000);
++    qdev_prop_set_uint64(dev, "dma-offset", sm501_base);
+     qdev_prop_set_chr(dev, "chardev", serial_hd(2));
+     sysbus_realize_and_unref(busdev, &error_fatal);
+-    sysbus_mmio_map(busdev, 0, 0x10000000);
+-    sysbus_mmio_map(busdev, 1, 0x13e00000);
++    sysbus_mmio_map(busdev, 0, sm501_base);
++    sysbus_mmio_map(busdev, 1, sm501_base + 0x3e00000);
+     sysbus_connect_irq(busdev, 0, &fpga->irq[SM501]);
+ 
+     /* onboard CF (True IDE mode, Master only). */
 -- 
-2.47.3
+2.51.0
 
 
