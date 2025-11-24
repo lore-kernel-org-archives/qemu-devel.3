@@ -4,103 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4776BCFA466
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 03:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 654CECFA466
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 03:50:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNNYK-00025A-3c; Sun, 23 Nov 2025 22:47:48 -0500
+	id 1vNNae-0003aU-SF; Sun, 23 Nov 2025 22:50:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_haixcui@quicinc.com>)
- id 1vNNYF-00024o-W0
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 22:47:44 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_haixcui@quicinc.com>)
- id 1vNNYA-00018H-M1
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 22:47:43 -0500
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 5ANKG6Bo2161900; Mon, 24 Nov 2025 03:47:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- N2J/qlKZv0Rdpza4vLQF9s1U7uEW/LHejN9eMMJX83s=; b=byO1j67IuNaNk/3h
- wfIUWLt9tCe8J6YrGOb+TgPuGRXsmudAt3pIOSAfh4i05VGh9C06oCadW8LDrXmQ
- m0ee52dsek06DIOZym4jx1hhRZZXTVjwjGgKMwiXBIXGKFiEjn5eYqwLVS8w6nLC
- 26+qTDNiTRZNaK6T9Dt1r6uA/qYYYV3t9n6DAxHsJztdht4EFm2Qz+r/Iotv86vF
- 4cfgLBFblnh0I1x9CPbZ0AxOebKfGCINyuR0cQ87dek9UDDQU3qDiV2TYlAxUbzv
- 4EZk5Q04dUe+mMnWXf4r2s0DxmezL0iDvkG9FsJbyia2KzaP9DRCkN3czY+8NT0V
- 0wwiUA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ak685uhuh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Nov 2025 03:47:32 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com
- [10.47.209.197])
- by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5AO3lVZD027674
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 24 Nov 2025 03:47:31 GMT
-Received: from [10.239.105.87] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Sun, 23 Nov
- 2025 19:47:29 -0800
-Message-ID: <3062579c-2fc5-43f6-bbb5-baeb4a4c9a67@quicinc.com>
-Date: Mon, 24 Nov 2025 11:47:26 +0800
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNaY-0003a7-Hl
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 22:50:07 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNaV-0001LN-Ox
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 22:50:06 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47796a837c7so24077705e9.0
+ for <qemu-devel@nongnu.org>; Sun, 23 Nov 2025 19:49:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763956195; x=1764560995; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wBt0VMh5UNoaAMkYMJi8BaFvkaBAP+iBIRWQUwbCU08=;
+ b=Zh9KR1tb24cHqswCZB7tLHrYcdWvj2vgaKM36ZtbzFzKfxJHWdABHxjB9uU3e8DQdl
+ j/gQmYALJwfkZ5lDqL0OOEuLE2r1ewvXjmJymVN3E6y3ZMytVp991D+xlXJ0dYuJ7251
+ GeSSii0O5NSg3QeCN2OPOoPz51vm3nbERrRB82s2TYXrw2Zq2nbhYvcAwfKjtIlQXV4p
+ 0egj+DkNxn3+VB3AsGkqdyRMMVPTbzcZJz/qJg66Q7TJmXPG2gNxd4TsKjEtGPZZkPZz
+ gCPFhbXgj0PxVjEWJTqE08hDu/rTNkS4OsWvRrt485ELoMs1yE3bnwGsEnIqDqCBna6Q
+ C2aQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763956195; x=1764560995;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wBt0VMh5UNoaAMkYMJi8BaFvkaBAP+iBIRWQUwbCU08=;
+ b=RePh+h/BFcFUcGKSXWlBzV9T6oVSwQVYthmkbGAd73UAeYGGkL0EQtwmqJt7vbDApA
+ NK76Z9skx6jZCyXlAZjFXbfLPLYnjRF8RWxAwMdYag9Y2h+w2dLD1b+L8jnn4IaiEES2
+ rndUXQXQHvRpbT42E+Fn2LgksrmUMuv/I96AISQXITlLdwjTCb0qiRxAHUu/NJkS3Jou
+ ARSXhHQOaFhbHg1qF2kezLM10iQI8tOzAWyEquDK7UY+Z0SUYDJbAeRj9CM9YrYa5Pk+
+ LpM+sFQ4N0xcaBVPuD+Cuu2CpOa3JPvF5o6BrWOu2qMLkaLCdzMebFAQAMCYh9nMCh9g
+ DJwA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVMIKRdyENLjKaC4eD+CJRsh2lZ9Cfxi77dn8Y4rLkG2yWijiXfun97MddfbF5oWk1vE/ZbvMClXgpP@nongnu.org
+X-Gm-Message-State: AOJu0YyrrzwucB+xQR9SPgeH17xKRryCVhmgLnzg6PgFD55Ud8fUDaeo
+ 2/eL/xaf8/3QO/Vi7O4S9eai9KFsOqwCr2iD1gMr0Gw7sSDctunQUMLMgOEYGBLP6qY=
+X-Gm-Gg: ASbGnctUK0ABFhAJ1z1/OTyWPxTT57reHse0qiLSac+8KalNQroLuk4CQ/p1qmuvQd1
+ lg3wY+7AcBeWDRulPnDI6z5/juYEAAVVaoix6sSfhCPxZAIZdmj/EOdh39r2FOxh6pOefKW5fjo
+ Gv4wuVLtuPqFcn6QYrAe/NaQ7vmuMYGllrwkJzqlAPJNErJPuzmRo2N25Jkjh09pOnLuVyFaQNd
+ tqhLvqTkOG0AeHv3vL2bwiwnEfrWSckPIR5FgKpLXcTuQripfOL6Muo3kar5XS1ZF7UCLKBX/n/
+ Xhs4sLOr7L3dJx5gg9UngycXoM/mtx6giKHRdxQrw/LxeKjyGv1VhcpUmq0Iz7DA9efn1BGenww
+ RufiIomFJuxjnG3iVxyZSE3jeP6Ly9sTMFqXwPPhTe8CiW5FjLXmfDCm8uhAFCKPX2MF6SvAF64
+ CtdlFJZoWzD+wGmsSZpY93/IhIBpOwZg5CWyt/3FNoOTAMpWDreDyF9A==
+X-Google-Smtp-Source: AGHT+IHyFEbCrDVD80J6wd5FoQFK1Ci4HQgoJtloPTcuDXTToUCSy6vNJnI6Wbz+Ya0B6/SJCqj2Tw==
+X-Received: by 2002:a05:600c:4684:b0:477:9c73:2680 with SMTP id
+ 5b1f17b1804b1-477c01bf658mr103227735e9.23.1763956195398; 
+ Sun, 23 Nov 2025 19:49:55 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477a9d198a0sm145913095e9.1.2025.11.23.19.49.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 23 Nov 2025 19:49:54 -0800 (PST)
+Message-ID: <14dacd31-7d62-4ff1-a013-04dd3da176af@linaro.org>
+Date: Mon, 24 Nov 2025 04:49:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] virtio-spi: Add vhost-user-spi device support
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-CC: <alex.bennee@linaro.org>, <viresh.kumar@linaro.org>,
- <quic_tsoni@quicinc.com>, <qemu-devel@nongnu.org>, <mst@redhat.com>,
- <zhiqiang.tu@oss.qualcomm.com>
-References: <20251030083413.1532360-1-quic_haixcui@quicinc.com>
- <20251030083413.1532360-4-quic_haixcui@quicinc.com>
- <CAAjaMXYRpRXxGcGA9B5=56=tgHNjCyaiWpJ7wQj4RHGXe24XLQ@mail.gmail.com>
+Subject: Re: [PATCH] Fix the typo of vfio-pci device's enable-migration option
 Content-Language: en-US
-From: Haixu Cui <quic_haixcui@quicinc.com>
-In-Reply-To: <CAAjaMXYRpRXxGcGA9B5=56=tgHNjCyaiWpJ7wQj4RHGXe24XLQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Authority-Analysis: v=2.4 cv=Woom8Nfv c=1 sm=1 tr=0 ts=6923d554 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=Mc6MSTjDq2kS_NhvNFAA:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: wuSTRQ0AGzLti2MrfgXJmvaCfTrFJhKj
-X-Proofpoint-ORIG-GUID: wuSTRQ0AGzLti2MrfgXJmvaCfTrFJhKj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI0MDAzMCBTYWx0ZWRfXxC7MBsigrkZ5
- b7xVv20LWgLtp1dqUBKWRFa8d63/rAkDmY1+kS6OZHZm0+YsNxZ2HLes8lCip9YRvN6DKUVExwx
- O+VfT7SRimAGpDJtXcpMTaOqN14mzYKWe+ZdJL5G4sOAqoSwdvsRbOsBG2t32cIoixzVyId84uL
- nSdAkIV65a6rFfG9SmR2lTPZF0BzFEb+VaY5CT08ljCMQijIcaW1eeQRchNPgWcA1SCF7Ovy96l
- Bf9WGRv6a10e6p/yLGDDX34TwQdUS9QiD/6A54xPnrFQWgPx7gCSj7px/tMrwC5gSycjUV3EjCN
- WBm5KPOuUOYDs4voF6cXhBDO2NG9l4GbYPYZ0rK9TPZZzNKtfspyjcU9eJidRyFcA4+g7nWhUeF
- j14ZdB69bGJVNjq+hHy2RXVMQl83QA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-24_01,2025-11-21_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 adultscore=0 malwarescore=0 suspectscore=0
- impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2511240030
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=quic_haixcui@quicinc.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+To: Yanghang Liu <yanghliu@redhat.com>, qemu-devel@nongnu.org
+Cc: clegoate@redhat.com
+References: <20251121090005.79399-1-yanghliu@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251121090005.79399-1-yanghliu@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,20 +103,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> 
-> I unfortunately cannot test it since the rust-vmm daemon requires a
-> host SPI device, but LGTM
-> 
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+On 21/11/25 10:00, Yanghang Liu wrote:
+> Signed-off-by: Yanghang Liu <yanghliu@redhat.com>
+> ---
+>   hw/vfio/pci.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks Manos for reviewing and providing the feedback. I really 
-appreciate your time and effort.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-To QEMU community:
-I would like to kindly ask if anyone else has additional comments or 
-suggestions regarding this patch. If there are no further concerns, 
-could you please advise whether it is ready to be merged?
-
-Best Regards
-Haixu Cui
 
