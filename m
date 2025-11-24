@@ -4,81 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C0DCFD313
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 12:58:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAFCCFD313
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 13:37:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNW8q-0003pT-UQ; Mon, 24 Nov 2025 07:58:04 -0500
+	id 1vNWkN-0002WI-JU; Mon, 24 Nov 2025 08:36:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNW8p-0003p0-29
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 07:58:03 -0500
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vNWkL-0002Vs-ED
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 08:36:49 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNW8n-0001yC-Aw
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 07:58:02 -0500
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-7815092cd0bso38950047b3.2
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 04:58:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vNWkJ-0001By-0c
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 08:36:48 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-47755de027eso22728075e9.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 05:36:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763989080; x=1764593880; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1763991405; x=1764596205; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K614BIREjHpHDSYsrtLdXhkUTrcbrRJLRkEVq+4AviI=;
- b=hyuGiMR7Doev1+MEhUZctCMp6SQAvYN9KWxS4d2ZKUUc9UZr4+3GkUeK9/Avp9JUlR
- TXbiLn0Bx49STiTR9L7SGZG/6B7KVMXZlziYJ/p87NCpJArIrI92Tgx2PCjXiSkfZxdy
- vZKKE0+/I86YFz2+sXb9E6vsB3uZcjoUcNtJkTIVBqnB8Mh0oVcsvuQY6mPwEsgznOXc
- ZDUI8FMj4RHZoH0CPs/wBzq0Ya/EVrOZbtiPLmw1n1lMhGan4IF5mO7ooByrfp5rGXx/
- YfEqXT+xbT4S6ZqGzivgKwg5ncNJrpSzSzMn2B1eYLx0zVcFegjuDeX5k7aJsOobbHAe
- XYIA==
+ bh=H4xz24Wztw7HTdPYy7ecg89+rhyVWxJPlTjrMGFkQrQ=;
+ b=VVPOR9XrwA8NdL6RhZYf1lVrVbmd2FJ+cjg1xZERMfjlXADk+VtukmLgg9D2u6vpWA
+ 9qa/cQntSZp/Qy2q6C9KNCpOTK/pe/Vr/50TqKcTgbvozLiEwEQqGXJaenckqitlf2tH
+ OjdWxHxdjfxgj3Oy4R/YAkMR8g3sZbkwNp5/osWHCZNYuRJhg+qtBwyGKfitYvZ1bPLg
+ nmv0N52b63c6LfRFORfWrB4j+LtOX0Owb7NoESMYIMg+xHvLbYcb6pfFFE+cn/3MHcZK
+ 0iGOcgl2lMnQw6EaZSJd2GsuUCjjvgHoFpR5vX3heSBU/J6Xy2FL6AHlfGZj16ILdiv6
+ pSAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763989080; x=1764593880;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=K614BIREjHpHDSYsrtLdXhkUTrcbrRJLRkEVq+4AviI=;
- b=mTKd8fzrVyOwP0w7kp/LakZ5ewECk4oVdMN2wtWGhStrq1LolYynOZkSOjPkOm/DO5
- tpQqm4OgPdUACl4WwoBZT8VylTkxgnOquBJ4D7CXIQCkdOdbJ7EC5XET6dtt5T1K9AUn
- AWmwpUye8ZNi+5FPifBqr1x/cTSEXcY8Q0N8zLZuw0cREXw5ENO/4hJSNLxPEdI+aIzz
- DoKgMBGwCuobtHnQAqEim6XkKA3C6NmxxRO2PVPcFnwqkSDZrOuwFyuS32h6Tqd8dHnl
- PTQZRFe4SSC6xlapJISl2i2/JJbglqRPQ0R00MNza4CwfnhbLBg7tuCg+u4OQIkARnC/
- SMhw==
-X-Gm-Message-State: AOJu0YyA7Ir5S/LOpFN2Xu+zL7bo4WB+BO2kX24ED3vuMUU+QabvqERA
- IufU725GxfASvuVh+hDwor+nigj1lzu09N4Ivby+fAaSff4YlM3LxpeVUkFBIIDyyuM1XJJgVzO
- Ws5eIoFw4MG4/DPzCW6FjW44GsIxJ3dM92HVwWRRvZw==
-X-Gm-Gg: ASbGncsBp+tB8JH/2ufVlKP3U8oZe9Q67zgcjO9XT+92ufs2qer5d/VUjtnSgiHz6Iv
- 9j6ifaH1wVH/ODLspo5OkMCa4bcMS9+XCchtwwWQBdTrfflzBdlFDgxYSJOLVydgRHpPGrTldQ9
- zbEXyIrf7stji6SksnzEXCXDOISxnskPVtzQ1k6q5+HhLak1NNxIxHJYx7x0QX230edekJ8a9UY
- SHsPPyYqwGfhtlo2H0Hi7Jqy5c6h+ASHeyy4jfX2jxnfEsefbhAPGaBKptGRNFGTnWyOCyJ
-X-Google-Smtp-Source: AGHT+IGZJ3+hVJkY5NGR8ijdSIHG/uDUCcbESDNrzf+Zm5zEdecSwzOPkmOmBHc95mlIfUpt1hyfbT9xWjXZ7Sew6jA=
-X-Received: by 2002:a05:690c:d18:b0:788:201c:a170 with SMTP id
- 00721157ae682-78a8b52b6a8mr182725607b3.42.1763989080194; Mon, 24 Nov 2025
- 04:58:00 -0800 (PST)
+ d=1e100.net; s=20230601; t=1763991405; x=1764596205;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=H4xz24Wztw7HTdPYy7ecg89+rhyVWxJPlTjrMGFkQrQ=;
+ b=D5WJ8fWDb+7kelOQRCzcNRFd+dg5tvtaCb/yspX8ykG+hSWdfVfk8OVIt6KC2i+aii
+ 2nO9YFSEsVNUNO6e22nxkVpq0oCHJD7S8382toppZkUu6sS1z9mG8n6SpW5gKUEB4g2q
+ 7UbhwU4ERmXSyHGJgsAAde5kkfzrXLyjUL7SXafL1eqblK+hAS4QAeHlS5WPIt0VTMbK
+ mmNKOcw7vOcbNQ3yvF3MmhTgsKODGr777Qux4xvZYoCvOEoSiNstX4XVvnaGYtk51X/W
+ bKXFg5uwCeKpoIf/3LqXB2MlfiqWNqJysmZuZF5ubVS0CQE+tc7kfetNuxn/6OxpwaCn
+ ZciA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVkKlNxhRNnHPOR3FVr2hjOrFlTxJqYAxbFWoUlasFWD5LWfkwjQ/PBsWXJshg952JRlpkLom/lCgp1@nongnu.org
+X-Gm-Message-State: AOJu0YwxjAJx3Uemv5VfA4WJrA/s7pHv2ZqaKBMeox/cLf7gpr+LotGC
+ 7a+3Upo1ncPxF7c+ff2iCbPqjG8h4vuCuvDjOb2gK842AzHUbbKfPokNW52LpnAjVsc=
+X-Gm-Gg: ASbGncst7ZNY86imEV+2DFu+BNex0mLbPKYw74iC3ctkjm9dsfAvcX+UxRr3tMa7Da7
+ WKWs8HkFR1aA+fuhWnUx6nY/q0kY0Q0fDufC5dp3kogx5ljbsu1386UxAO1r4QsO5zAlHn1smsC
+ RngnhVgA8k9PwdiQVOPxDgKmX5jyNifgFn41bQZmfiwq5wV+63M2X8j1qtBXcFozDqGRFeqHepl
+ 3o/QT+SKr5yKm6ysAAJint06sQ3HKd0lQMz19O+4YqzAfB2BkAYRZ7g84SWs5M6gudF06ZW9EAO
+ rPXGmdm+MZQj7Hd0eZR1ShxTPtictf+QYA0WnWzgbFB3GM2ixoDEVyGDlA0v2EjWW1GZUDPylYH
+ LvH7AWuHSZaygCAbE4XdWI5ySwFL2osdpb7ZbG5rP0cwpkmWao7VnbMQwatHqVU7N1ughUZFsbC
+ sfUTYWCAuJ8rk=
+X-Google-Smtp-Source: AGHT+IF0dJ+uMYoGxGrKESeuk5j4XBM/pzNa5EuAcMp8he8Y2t4N1T0BAg/Un3bNs5VkrlausSw3DQ==
+X-Received: by 2002:a05:600c:4694:b0:477:9814:6882 with SMTP id
+ 5b1f17b1804b1-477c016bbf6mr110840675e9.5.1763991405177; 
+ Mon, 24 Nov 2025 05:36:45 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477a9de4631sm150284365e9.7.2025.11.24.05.36.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Nov 2025 05:36:44 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B54585F83A;
+ Mon, 24 Nov 2025 13:36:42 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Mark Cave-Ayland <mark.caveayland@nutanix.com>,  qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>,  David Woodhouse
+ <dwmw2@infradead.org>,  Paul Durrant <paul@xen.org>,  Eduardo Habkost
+ <eduardo@habkost.net>,  xen-devel@lists.xenproject.org,  Anthony PERARD
+ <anthony@xenproject.org>,  Stefano Stabellini <sstabellini@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: [PATCH] hw/i386/isapc: Remove dead Xen code
+In-Reply-To: <39f5f781-398b-4974-8b1e-e7061ed9194f@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Mon, 24 Nov 2025 12:07:08
+ +0100")
+References: <20251123185832.53802-1-philmd@linaro.org>
+ <066cb998-e89a-4cd1-a89b-865f4a6dcbbd@nutanix.com>
+ <39f5f781-398b-4974-8b1e-e7061ed9194f@linaro.org>
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Mon, 24 Nov 2025 13:36:42 +0000
+Message-ID: <87wm3f8sd1.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20251124122224.80830-1-philmd@linaro.org>
-In-Reply-To: <20251124122224.80830-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Nov 2025 12:57:48 +0000
-X-Gm-Features: AWmQ_bkzqAQUpq2Lk4twtNv0eToHm9TsOPtMepdCGrJAseXAd_nVZBtICibLAhY
-Message-ID: <CAFEAcA_55OYZLLk0U-qeSvnZagN=9ZVVGgwQzM88Wk2cEdpTNA@mail.gmail.com>
-Subject: Re: [RFC-PATCH-for-11.0] loader: Add support for U-Boot
- Zstandard-compressed image
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Jason Wang <jasowang@redhat.com>,
- Daan De Meyer <daan.j.demeyer@gmail.com>,
- Gustavo Romero <gustavo.romero@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- WANG Xuerui <git@xen0n.name>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,81 +115,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 24 Nov 2025 at 12:22, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+
+> On 24/11/25 11:27, Mark Cave-Ayland wrote:
+>> On 23/11/2025 18:58, Philippe Mathieu-Daud=C3=A9 wrote:
+>>=20
+>>> We don't use Xen on the isapc machine: let's remove
+>>> pointless code.
+>>>
+>>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>>> ---
+>>> =C2=A0 hw/i386/isapc.c | 27 ++++-----------------------
+>>> =C2=A0 1 file changed, 4 insertions(+), 23 deletions(-)
+>>>
+>>> diff --git a/hw/i386/isapc.c b/hw/i386/isapc.c
+>>> index 1ba9ae22cc3..1e13a30c505 100644
+>>> --- a/hw/i386/isapc.c
+>>> +++ b/hw/i386/isapc.c
+>>> @@ -17,8 +17,6 @@
+>>> =C2=A0 #include "hw/ide/ide-bus.h"
+>>> =C2=A0 #include "system/kvm.h"
+>>> =C2=A0 #include "hw/i386/kvm/clock.h"
+>>> -#include "hw/xen/xen-x86.h"
+>>> -#include "system/xen.h"
+>>> =C2=A0 #include "hw/rtc/mc146818rtc.h"
+>>> =C2=A0 #include "target/i386/cpu.h"
+>>> @@ -37,7 +35,6 @@ static void pc_init_isa(MachineState *machine)
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ISABus *isa_bus;
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 uint32_t irq;
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 GSIState *gsi_state;
+>>> -=C2=A0=C2=A0=C2=A0 MemoryRegion *ram_memory;
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS=
+];
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int i;
+>>> @@ -77,15 +74,9 @@ static void pc_init_isa(MachineState *machine)
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * There is no RAM split for the is=
+apc machine
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
+>>> -=C2=A0=C2=A0=C2=A0 if (xen_enabled()) {
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 xen_hvm_init_pc(pcms, &ram_=
+memory);
+>>> -=C2=A0=C2=A0=C2=A0 } else {
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ram_memory =3D machine->ram;
+>>> -
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pcms->max_ram_below_4g =3D =
+3.5 * GiB;
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 x86ms->above_4g_mem_size =
+=3D 0;
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 x86ms->below_4g_mem_size =
+=3D machine->ram_size;
+>>> -=C2=A0=C2=A0=C2=A0 }
+>>> +=C2=A0=C2=A0=C2=A0 pcms->max_ram_below_4g =3D 3.5 * GiB;
+>>> +=C2=A0=C2=A0=C2=A0 x86ms->above_4g_mem_size =3D 0;
+>>> +=C2=A0=C2=A0=C2=A0 x86ms->below_4g_mem_size =3D machine->ram_size;
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 x86_cpus_init(x86ms, pcmc->default_cpu_v=
+ersion);
+>>> @@ -94,17 +85,7 @@ static void pc_init_isa(MachineState *machine)
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* allocate ram and load rom/bios */
+>>> -=C2=A0=C2=A0=C2=A0 if (!xen_enabled()) {
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pc_memory_init(pcms, system=
+_memory, system_memory, 0);
+>>> -=C2=A0=C2=A0=C2=A0 } else {
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 assert(machine->ram_size =
+=3D=3D x86ms->below_4g_mem_size +
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 x86ms->a=
+bove_4g_mem_size);
+>>> -
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (machine->kernel_filenam=
+e !=3D NULL) {
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* =
+For xen HVM direct kernel boot, load linux here */
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 xen=
+_load_linux(pcms);
+>>> -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>>> -=C2=A0=C2=A0=C2=A0 }
+>>> +=C2=A0=C2=A0=C2=A0 pc_memory_init(pcms, system_memory, system_memory, =
+0);
+>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gsi_state =3D pc_gsi_create(&x86ms->gsi,=
+ false);
+>> FWIW I did contact upstream about this (see https://patchew.org/
+>> QEMU/20250618112828.235087-1-
+>> mark.caveayland@nutanix.com/20250618112828.235087-13-
+>> mark.caveayland@nutanix.com/#91b96b24-af60-4a89-91ec-
+>> d0e660a76a0a@nutanix.com) and they mentioned that it should work,
+>> which is why I left it in.
+>> Unfortunately I don't currently have any way to test it here :/
 >
-> U-Boot is able to decompress Zstandard images since almost
-> 6 years (u-boot commit 8509f22a).
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
-> Based-on: <20251011081553.4065883-1-daan.j.demeyer@gmail.com>
-> ---
->  hw/core/loader.c | 22 ++++++++++++++++++----
->  1 file changed, 18 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/core/loader.c b/hw/core/loader.c
-> index e5904cdafa1..97fa8248ce7 100644
-> --- a/hw/core/loader.c
-> +++ b/hw/core/loader.c
-> @@ -635,7 +635,7 @@ static ssize_t load_uboot_image(const char *filename,=
- hwaddr *ep,
->      uboot_image_header_t *hdr =3D &h;
->      uint8_t *data =3D NULL;
->      int ret =3D -1;
-> -    int do_uncompress =3D 0;
-> +    bool do_uncompress =3D false;
->
->      fd =3D open(filename, O_RDONLY | O_BINARY);
->      if (fd < 0)
-> @@ -685,7 +685,8 @@ static ssize_t load_uboot_image(const char *filename,=
- hwaddr *ep,
->          case IH_COMP_NONE:
->              break;
->          case IH_COMP_GZIP:
-> -            do_uncompress =3D 1;
-> +        case IH_COMP_ZSTD:
-> +            do_uncompress =3D true;
->              break;
+> OK :| IMHO upstream Xen maintainers should provide us a test, otherwise
+> we can not make our code base evolve.
 
-Here we set do_uncompress whether QEMU was built with
-CONFIG_ZSTD or not...
+Ok how about this:
 
->          default:
->              fprintf(stderr,
-> @@ -747,10 +748,23 @@ static ssize_t load_uboot_image(const char *filenam=
-e, hwaddr *ep,
->          max_bytes =3D UBOOT_MAX_GUNZIP_BYTES;
->          data =3D g_malloc(max_bytes);
->
-> -        bytes =3D gunzip(data, max_bytes, compressed_data, hdr->ih_size)=
-;
-> +        switch (hdr->ih_comp) {
-> +        case IH_COMP_GZIP:
-> +            bytes =3D gunzip(data, max_bytes, compressed_data, hdr->ih_s=
-ize);
-> +            break;
-> +#ifdef CONFIG_ZSTD
-> +        case IH_COMP_ZSTD: {
-> +            size_t ret =3D ZSTD_decompress(data, max_bytes,
-> +                                         compressed_data, hdr->ih_size);
-> +            bytes =3D ZSTD_isError(ret) ? -1 : (ssize_t) ret;
-> +            } break;
-> +#endif
+  As of the xen commit 9e8672f1c36 (tools: remove xend and associated
+  python modules) there is no longer the ability to emulate an ISA only
+  system. As a result we can drop the code in isapc. We still need to
+  support the ISA bus for the -m pc type as Xen doesn't support the q35
+  machine model for HVM.
 
-...so here if the user passes a ZSTD image to a QEMU
-built without CONFIG_ZSTD I think we fall into the default
-case and assert.
+I think the actual support got removed earlier but this was when the
+last bits of "Simulate an ISA only system" where removed in 2013.
 
-I think the neatest fix for this would be to have the
-switch (hdr->ih_comp) that sets do_uncompress to have
-an ifdef for CONFIG_ZSTD so that we can tell the user
-"couldn't load this image because QEMU was compiled without
-zstd support".
-
-PS: do we need to cast ret to a ssize_t ? bytes is
-already a ssize_t variable.
-
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
