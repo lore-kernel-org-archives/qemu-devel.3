@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98EF5CFD347
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 18:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68936CFD345
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 18:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNbRZ-00065t-Sn; Mon, 24 Nov 2025 13:37:45 -0500
+	id 1vNba9-0006Q1-Pv; Mon, 24 Nov 2025 13:46:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vNbRY-00064Z-Et; Mon, 24 Nov 2025 13:37:44 -0500
-Received: from sea.source.kernel.org ([172.234.252.31])
+ id 1vNbZW-0005gH-11; Mon, 24 Nov 2025 13:46:00 -0500
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <fustini@kernel.org>)
- id 1vNbRW-0007YE-Op; Mon, 24 Nov 2025 13:37:44 -0500
+ id 1vNbZU-0000wx-G6; Mon, 24 Nov 2025 13:45:57 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 26E524395E;
- Mon, 24 Nov 2025 18:37:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C20B2C4CEF1;
- Mon, 24 Nov 2025 18:37:33 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 2A93360103;
+ Mon, 24 Nov 2025 18:45:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B3EC4CEF1;
+ Mon, 24 Nov 2025 18:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1764009454;
- bh=6vSYOm/w1nH31h/tLpAluGjbv2+KaYbc3h4Rq2s0UVs=;
+ s=k20201202; t=1764009953;
+ bh=DsLiqUKlZbkTBxGPGK7T0QsWhWUjQggUuXJ1BfiIPzg=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Z+x07sTMpzB8H6QVgT0c6V5ELY+mlkLuBEVuxnDntszNdR37ZQRnbsm03Hgrm4q/v
- afbNesvl9G/cLvxqEOXFwSGkX5gngfrZWOTTq1Zlo5fZwQ6QDV7pzxCETy11JnP4hY
- R6hAn1IWgcgr4F83A5ng2oZpLGMvt+ygzTUGjST66p3cfiTHLSrB44ocP3WUEze4fo
- RmIIEGDNbvYX4P83KTdJS/5jp8xA/1BloFCY7Sr/AOLi+HmNgP0sYsZ08mA6kCB+Ra
- lSNbS4RJxOjYEeWob1mbyeKfCcd61JR+4rXHmVyXCDVTilXG6rpiK7SITn1NRcT7Kx
- tvTk1A+QpySwg==
-Date: Mon, 24 Nov 2025 10:37:31 -0800
+ b=qVHIfounDZaTg3eXpqnZrEBXs+ANmSHrw26ZV/vLtmcvjW6ssLRjjUsQwUCVUEMH+
+ appVmiQ99J6LRIJZqWrY7npDPvyo7dikYeqLc5qbq+xt+bx2BvKi2FjW2i4pDDs7Wk
+ Bf2SJbcoGwhO3wDk5QRaAEKMGmqbhqe2YHY8rFQVYSiFmksaEmo54tK/wILKf/9OiM
+ nTX0SY4BNs/e10tRo9GOfnLRG74DY3oXqBDG44z5BzyYZfR59GReNW7GYVstHOCRVr
+ KOXTngMzCAh0fMqLsX+YZlkDmqHCwDK8jkVID2FtIZlKK5zvHNHrPgIulM3tZ8ZouS
+ WATK6us8wuFHg==
+Date: Mon, 24 Nov 2025 10:45:52 -0800
 From: Drew Fustini <fustini@kernel.org>
 To: Radim =?utf-8?B?S3LEjW3DocWZ?= <rkrcmar@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
@@ -50,25 +50,23 @@ Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
  Chen Pei <cp0613@linux.alibaba.com>, guo.wenjia23@zte.com.cn,
  liu.qingtao2@zte.com.cn,
  qemu-riscv-bounces+qemu-riscv=archiver.kernel.org@nongnu.org
-Subject: Re: [PATCH 3/7] hw/riscv: implement CBQRI capacity controller
-Message-ID: <aSSl6+i5fa4+kD3Q@x1>
+Subject: Re: [PATCH 4/7] hw/riscv: implement CBQRI bandwidth controller
+Message-ID: <aSSn4G/66lhFKoyE@x1>
 References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
- <20251119-riscv-ssqosid-cbqri-v1-3-3392fc760e48@kernel.org>
- <DEDROLF9I9YQ.2MQIEGB7I4BKH@ventanamicro.com> <aSDCmrvONUgvzqbV@x1>
- <DEH356RBYAIG.IS7SP4D5XLIQ@ventanamicro.com>
+ <20251119-riscv-ssqosid-cbqri-v1-4-3392fc760e48@kernel.org>
+ <DEH381ZF2STN.G7QL6LUEEBKQ@ventanamicro.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <DEH356RBYAIG.IS7SP4D5XLIQ@ventanamicro.com>
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=fustini@kernel.org;
- helo=sea.source.kernel.org
+In-Reply-To: <DEH381ZF2STN.G7QL6LUEEBKQ@ventanamicro.com>
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=fustini@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,66 +83,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Nov 24, 2025 at 06:02:37PM +0100, Radim Krčmář wrote:
-> 2025-11-21T11:50:50-08:00, Drew Fustini <fustini@kernel.org>:
-> > On Thu, Nov 20, 2025 at 08:25:44PM +0100, Radim Krčmář wrote:
-> >> 2025-11-19T16:42:19-08:00, Drew Fustini <fustini@kernel.org>:
-> >> > +static void riscv_cbqri_cc_realize(DeviceState *dev, Error **errp)
-> >> > +{
-> >> > +    RiscvCbqriCapacityState *cc = RISCV_CBQRI_CC(dev);
-> >> > +
-> >> > +    if (!cc->mmio_base) {
-> >> > +        error_setg(errp, "mmio_base property not set");
-> >> > +        return;
-> >> > +    }
-> >> > +
-> >> > +    assert(cc->mon_counters == NULL);
-> >> > +    cc->mon_counters = g_new0(MonitorCounter, cc->nb_mcids);
-> >> > +
-> >> > +    assert(cc->alloc_blockmasks == NULL);
-> >> > +    uint64_t *end = get_blockmask_location(cc, cc->nb_rcids, 0);
-> >> > +    unsigned int blockmasks_size = end - cc->alloc_blockmasks;
-> >> > +    cc->alloc_blockmasks = g_new0(uint64_t, blockmasks_size);
-> >> > +
-> >> > +    memory_region_init_io(&cc->mmio, OBJECT(dev), &riscv_cbqri_cc_ops,
-> >> > +                          cc, TYPE_RISCV_CBQRI_CC".mmio", 4 * 1024);
-> >> 
-> >> Shouldn't the region size take cc->ncblks into account?
-> >> (A bitmask for 2^16 ids is 8kB.)
+On Mon, Nov 24, 2025 at 06:06:21PM +0100, Radim Krčmář wrote:
+> 2025-11-19T16:42:20-08:00, Drew Fustini <fustini@kernel.org>:
+> > From: Nicolas Pitre <npitre@baylibre.com>
 > >
-> > cc_block_mask field is BMW / 8. In the case of NCBLKS of 12 and NCBLKS
-> > of 16, both end up with a BMW of 64 which would be 8 bytes. I think the
-> > the only reason the allocation is 4KB is that is meant to be aligned to
-> > the page size. Otherwise, the capacity controller register layout is
-> > pretty small.
+> > Implement a bandwidth controller according to the Capacity and Bandwidth
+> > QoS Register Interface (CBQRI) which supports these capabilities:
+> >
+> >   - Number of access types: 2 (code and data)
+> >   - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
+> >   - Event IDs supported: None, Total read/write byte count, Total
+> >                          read byte count, Total write byte count
+> >   - Bandwidth allocation operations: CONFIG_LIMIT, READ_LIMIT
+> >
+> > Link: https://github.com/riscv-non-isa/riscv-cbqri/blob/main/riscv-cbqri.pdf
+> > Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+> > [fustini: add fields introduced in the ratified spec: rpfx and p]
+> > Signed-off-by: Drew Fustini <fustini@kernel.org>
+> > ---
+> > diff --git a/hw/riscv/cbqri_bandwidth.c b/hw/riscv/cbqri_bandwidth.c
+> > +static uint32_t bandwidth_config(RiscvCbqriBandwidthState *bc,
+> > +                                 uint32_t rcid, uint32_t at,
+> > +                                 bool *busy)
+> > +{
+> > +    BandwidthAllocation *bw_alloc = get_bw_alloc(bc, rcid, at);
+> > +
+> > +    /* for now we only preserve the current BC_BW_ALLOC register content */
 > 
-> I understood NCBLKS as the amount of bits in the capacity bitmask, and
-> NCBLKS in encoded in a 16 bit field, which means up to 65536 bits.
-> Is there a lower limit?
+> There are a few checks that we could do even without any real
+> accounting, like rbwb > 0, and sum_{rcid}(rcid.rbwb) <= mrbwb.
 
-Ah, yes, thank you for correcting me. NCBLKS can be 2^16 therefore BMW
-can be 8 KB: 
+Good point, I'll add basic checks like that.
 
-x = 65536
-x += 63 => 65599
-x /= 64 => 1024
-x *= 64 => BMW is 65536 bits
-cc_block_mask = BMW/8 = 8192 bytes
+> Doing so might help us find some bugs in the software management layer.
+> What is the level of ISA correctness that you're aiming for?
+> (I'll tone down my review if nitpicks like that are not needed.)
 
-This would yield capacity register layout:
-
-cc_capabilities	8
-cc_mon_ctl	8
-cc_mon_ctr_val	8
-cc_alloc_ctl	8
-cc_block_mask	8192
-cc_cunits	8
-
-Thus I think the mmio size would need to be: (BMW/8) + 40
-
-In the max NCBLKS case, that would be 8,232 bytes. I am wondering if
-that a problem as it would not be aligned on a 4 KB page boundary. Do
-you think that would be a problem?
+The original goal for the Qemu code was for the software proof of
+concept needed to freeze the spec. I am working on upstreaming the qemu
+code in order to have a "hardware" implementation to reference when
+upstreaming the Linux kernel support for resctrl. I do also have access
+to CBQRI controllers in RTL emulation but that won't be very useful for
+the purposes of public review of my Linux resctrl patches.
 
 Thanks,
 Drew
