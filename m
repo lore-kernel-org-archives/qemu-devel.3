@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 654CECFA466
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 03:50:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 126DCCFD313
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 03:54:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNNae-0003aU-SF; Sun, 23 Nov 2025 22:50:14 -0500
+	id 1vNNeD-0005BF-UT; Sun, 23 Nov 2025 22:53:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNaY-0003a7-Hl
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 22:50:07 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNe7-0005Am-RX
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 22:53:48 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNaV-0001LN-Ox
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 22:50:06 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47796a837c7so24077705e9.0
- for <qemu-devel@nongnu.org>; Sun, 23 Nov 2025 19:49:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNe6-0001ti-03
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 22:53:47 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-429c48e05aeso2338534f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 23 Nov 2025 19:53:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763956195; x=1764560995; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1763956424; x=1764561224; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wBt0VMh5UNoaAMkYMJi8BaFvkaBAP+iBIRWQUwbCU08=;
- b=Zh9KR1tb24cHqswCZB7tLHrYcdWvj2vgaKM36ZtbzFzKfxJHWdABHxjB9uU3e8DQdl
- j/gQmYALJwfkZ5lDqL0OOEuLE2r1ewvXjmJymVN3E6y3ZMytVp991D+xlXJ0dYuJ7251
- GeSSii0O5NSg3QeCN2OPOoPz51vm3nbERrRB82s2TYXrw2Zq2nbhYvcAwfKjtIlQXV4p
- 0egj+DkNxn3+VB3AsGkqdyRMMVPTbzcZJz/qJg66Q7TJmXPG2gNxd4TsKjEtGPZZkPZz
- gCPFhbXgj0PxVjEWJTqE08hDu/rTNkS4OsWvRrt485ELoMs1yE3bnwGsEnIqDqCBna6Q
- C2aQ==
+ bh=GtSvn6UYWSN8ScFk2HhKHM3bcegsK+6BHk7XZhuw+ko=;
+ b=Ky3Z5QTd4GdDC92Ija7K49wkAEQo4hUdw+xRcgQksTMlTaHN7lHAvKe8NYHAi+dIXm
+ g/2Xr/OMdTkZjuDOGaZky4kbLKDmMYh5NQy4fz/4T+z8h7kDxLNTdBASUoNi38H0DCsT
+ BDEonviMgsfblZZsDNkFNNs0q13KGgxditXeM2HUEFBO2B/NW26pWNBfPEf91J5iZ+DE
+ QmzAGYwLSeEoUg1DfqfW5VVXCcPemLFuFwrTJKKfm9YBFLb9R8alYZhOpLi3ecOh4u4/
+ yyFhfOkGk0eFCosyuDYQhazhCKJyxK3dC9GnVY3Y52MDE28dIkRjCeJ8c5EY0nea/o3B
+ tMsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763956195; x=1764560995;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1763956424; x=1764561224;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wBt0VMh5UNoaAMkYMJi8BaFvkaBAP+iBIRWQUwbCU08=;
- b=RePh+h/BFcFUcGKSXWlBzV9T6oVSwQVYthmkbGAd73UAeYGGkL0EQtwmqJt7vbDApA
- NK76Z9skx6jZCyXlAZjFXbfLPLYnjRF8RWxAwMdYag9Y2h+w2dLD1b+L8jnn4IaiEES2
- rndUXQXQHvRpbT42E+Fn2LgksrmUMuv/I96AISQXITlLdwjTCb0qiRxAHUu/NJkS3Jou
- ARSXhHQOaFhbHg1qF2kezLM10iQI8tOzAWyEquDK7UY+Z0SUYDJbAeRj9CM9YrYa5Pk+
- LpM+sFQ4N0xcaBVPuD+Cuu2CpOa3JPvF5o6BrWOu2qMLkaLCdzMebFAQAMCYh9nMCh9g
- DJwA==
+ bh=GtSvn6UYWSN8ScFk2HhKHM3bcegsK+6BHk7XZhuw+ko=;
+ b=qDv5IOLNR2wc53kuXZjl/cLtGKXdQlxrBpx7YVvHdvHo5Tb1mTyzqx47YC5bc8EDqG
+ OElPNTt0QLx7uvgRDChdgnNqMKro33MWHzxCUAPmHYx3hJfw3HpvJjKgoDTE3/X6jO/e
+ ZMrmhdHWGZlXpxbpp6BcXQ3q6yeygjyyO2Von4uZrz66GcRk4c6mulPzjSNSAyRKJUEM
+ vt5J8vZJpf9nU/XvkxNTFu1Evoocw5lOCigbm82N38w8hXj2MQuyuu4JyAlxcFRHRWRr
+ 4brbL1Ytd7PPUFwn6E4ack/8YzhCH1cW88+fxkoFcy9wfpoTitbVRk1XgbpFwtCOwER/
+ rvVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMIKRdyENLjKaC4eD+CJRsh2lZ9Cfxi77dn8Y4rLkG2yWijiXfun97MddfbF5oWk1vE/ZbvMClXgpP@nongnu.org
-X-Gm-Message-State: AOJu0YyrrzwucB+xQR9SPgeH17xKRryCVhmgLnzg6PgFD55Ud8fUDaeo
- 2/eL/xaf8/3QO/Vi7O4S9eai9KFsOqwCr2iD1gMr0Gw7sSDctunQUMLMgOEYGBLP6qY=
-X-Gm-Gg: ASbGnctUK0ABFhAJ1z1/OTyWPxTT57reHse0qiLSac+8KalNQroLuk4CQ/p1qmuvQd1
- lg3wY+7AcBeWDRulPnDI6z5/juYEAAVVaoix6sSfhCPxZAIZdmj/EOdh39r2FOxh6pOefKW5fjo
- Gv4wuVLtuPqFcn6QYrAe/NaQ7vmuMYGllrwkJzqlAPJNErJPuzmRo2N25Jkjh09pOnLuVyFaQNd
- tqhLvqTkOG0AeHv3vL2bwiwnEfrWSckPIR5FgKpLXcTuQripfOL6Muo3kar5XS1ZF7UCLKBX/n/
- Xhs4sLOr7L3dJx5gg9UngycXoM/mtx6giKHRdxQrw/LxeKjyGv1VhcpUmq0Iz7DA9efn1BGenww
- RufiIomFJuxjnG3iVxyZSE3jeP6Ly9sTMFqXwPPhTe8CiW5FjLXmfDCm8uhAFCKPX2MF6SvAF64
- CtdlFJZoWzD+wGmsSZpY93/IhIBpOwZg5CWyt/3FNoOTAMpWDreDyF9A==
-X-Google-Smtp-Source: AGHT+IHyFEbCrDVD80J6wd5FoQFK1Ci4HQgoJtloPTcuDXTToUCSy6vNJnI6Wbz+Ya0B6/SJCqj2Tw==
-X-Received: by 2002:a05:600c:4684:b0:477:9c73:2680 with SMTP id
- 5b1f17b1804b1-477c01bf658mr103227735e9.23.1763956195398; 
- Sun, 23 Nov 2025 19:49:55 -0800 (PST)
+ AJvYcCVt9LaEpQ2arGKSoYaevV8c1P4FXuh7LWVlmRSweBPd9iTxX1FwHKuc0HZaHHI0X6IzjBMsWiYzxB+J@nongnu.org
+X-Gm-Message-State: AOJu0YwzZgYKkakqvzD0rXbBL/sqBY67fa32dshHKLv6wP/nwLWWD3fG
+ DbO0ivKNSA5zESQAf+zwwv39mCnh5TMFMrhXnZTHTQQrPHXES+QqvPh0iMy2Gqt6jJ8=
+X-Gm-Gg: ASbGnctkqIzocGvxgDvHHEAZbaRaVNtg+Wu0z87xIYJtlrVcRlUNlbL9qH0aPBYdyoI
+ 5BA9qLvOQUFSweqSLCqDmsl5BVkE0O8FTkOaEeYNF0y3Z1dI+hUuwrM/T2GXoQUmeiSGENqarun
+ DHPCD7MIYt6MfA489AA/JcN4FswWUbtmyTSW+41ysWJGIbysRypyUsnkPodn38xw4VeLa/Ilyab
+ AF2gDF0uPpbVoKMX+OboQjcNFRsMxrO2bKbMKe2LeC030cITtYTc4mezahpO23aCkqdA8S4Rs90
+ VLsJ01oXdY8zej5yka0XeO+kkcVGjLwanyn/UV2Wm1ebSeOy9xyXM5E7xqPqs9C6Th1vsL4ihmP
+ tM21g9K54oczCz/auKrFHatiwoPfE35YCqoN83Yf+7/f1Cff6LDp0P+B7lCWDos8zNbK4h03f5s
+ aHaOMZCmNomx0FKFz1i4h4T2K3w62LbGkG34og/HoC+T5U3q4EpVKU1A==
+X-Google-Smtp-Source: AGHT+IEbCitFxA4xW5/lCtV7ZF4I+8TvifCfJuNmrl3KQnVS3r70tKZCRTt+ovcM5v99twA9BNTShQ==
+X-Received: by 2002:a05:6000:2dca:b0:42b:48bc:49b0 with SMTP id
+ ffacd0b85a97d-42cba7b435fmr16366650f8f.21.1763956424169; 
+ Sun, 23 Nov 2025 19:53:44 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477a9d198a0sm145913095e9.1.2025.11.23.19.49.53
+ 5b1f17b1804b1-477a96aafb3sm142583625e9.0.2025.11.23.19.53.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Nov 2025 19:49:54 -0800 (PST)
-Message-ID: <14dacd31-7d62-4ff1-a013-04dd3da176af@linaro.org>
-Date: Mon, 24 Nov 2025 04:49:53 +0100
+ Sun, 23 Nov 2025 19:53:43 -0800 (PST)
+Message-ID: <8244536a-404e-408f-b3d4-38b96d180dbd@linaro.org>
+Date: Mon, 24 Nov 2025 04:53:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Fix the typo of vfio-pci device's enable-migration option
+Subject: Re: [Qemu-devel] [PULL 16/17] hw/pci-bridge: format special OFW unit
+ address for PXB host
 Content-Language: en-US
-To: Yanghang Liu <yanghliu@redhat.com>, qemu-devel@nongnu.org
-Cc: clegoate@redhat.com
-References: <20251121090005.79399-1-yanghliu@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251121090005.79399-1-yanghliu@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Kevin O'Connor <kevin@koconnor.net>
+References: <1435326248-24291-1-git-send-email-mst@redhat.com>
+ <1435326248-24291-17-git-send-email-mst@redhat.com>
+ <c782890b-1dc5-4ac6-9792-d31a07c2354e@linaro.org>
+In-Reply-To: <c782890b-1dc5-4ac6-9792-d31a07c2354e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,12 +107,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/11/25 10:00, Yanghang Liu wrote:
-> Signed-off-by: Yanghang Liu <yanghliu@redhat.com>
-> ---
->   hw/vfio/pci.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+ping
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 12/11/25 23:35, Philippe Mathieu-Daudé wrote:
+> Hi Michael and Marcel,
+> 
+> (old patch...)
+> 
+> On 26/6/15 15:46, Michael S. Tsirkin wrote:
+>> From: Laszlo Ersek <lersek@redhat.com>
+>>
+>> We have agreed that OpenFirmware device paths in the "bootorder" fw_cfg
+>> file should follow the pattern
+>>
+>>    /pci@i0cf8,%x/...
+>>
+>> for devices that live behind an extra root bus. The extra root bus in
+>> question is the %x'th among the extra root buses. (In other words, %x
+>> gives the position of the affected extra root bus relative to the other
+>> extra root buses, in bus_nr order.) %x starts at 1, and is formatted in
+>> hex.
+>>
+>> The portion of the unit address that comes before the comma is 
+>> dynamically
+>> taken from the main host bridge, similarly to sysbus_get_fw_dev_path().
+>>
+>> Cc: Kevin O'Connor <kevin@koconnor.net>
+>> Cc: Michael S. Tsirkin <mst@redhat.com>
+>> Cc: Marcel Apfelbaum <marcel@redhat.com>
+>> Signed-off-by: Laszlo Ersek <lersek@redhat.com>
+>> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+>> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+>> ---
+>>   hw/pci-bridge/pci_expander_bridge.c | 53 +++++++++++++++++++++++++++ 
+>> ++++++++++
+>>   1 file changed, 53 insertions(+)
+>>
+>> diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/ 
+>> pci_expander_bridge.c
+>> index 70708ef..57f8a37 100644
+>> --- a/hw/pci-bridge/pci_expander_bridge.c
+>> +++ b/hw/pci-bridge/pci_expander_bridge.c
+>> @@ -43,6 +43,8 @@ typedef struct PXBDev {
+>>       uint16_t numa_node;
+>>   } PXBDev;
+>> +static GList *pxb_dev_list;
+> 
+> This list is static ...
+> 
+>> +
+>>   #define TYPE_PXB_HOST "pxb-host"
+>>   static int pxb_bus_num(PCIBus *bus)
+>> @@ -89,12 +91,45 @@ static const char 
+>> *pxb_host_root_bus_path(PCIHostState *host_bridge,
+>>       return bus->bus_path;
+>>   }
+>> +static char *pxb_host_ofw_unit_address(const SysBusDevice *dev)
+>> +{
+>> +    const PCIHostState *pxb_host;
+>> +    const PCIBus *pxb_bus;
+>> +    const PXBDev *pxb_dev;
+>> +    int position;
+>> +    const DeviceState *pxb_dev_base;
+>> +    const PCIHostState *main_host;
+>> +    const SysBusDevice *main_host_sbd;
+>> +
+>> +    pxb_host = PCI_HOST_BRIDGE(dev);
+>> +    pxb_bus = pxb_host->bus;
+>> +    pxb_dev = PXB_DEV(pxb_bus->parent_dev);
+>> +    position = g_list_index(pxb_dev_list, pxb_dev);
+>> +    assert(position >= 0);
+> 
+> ... and for some reason when calling pxb_host_ofw_unit_address() twice
+> it triggers the following:
+> 
+> Assertion failed: (position >= 0), function pxb_host_ofw_unit_address, 
+> file pci_expander_bridge.c, line 154.
+> 
+> Any idea why it got implemented this way and how to modify to
+> avoid the assertion? All other devices implementing the
+> SysBusDeviceClass::explicit_ofw_unit_address handler don't abort
+> when being called multiple times, what is so particular here?
+> 
+> Thanks,
+> 
+> Phil.
+> 
+>> +
+>> +    pxb_dev_base = DEVICE(pxb_dev);
+>> +    main_host = PCI_HOST_BRIDGE(pxb_dev_base->parent_bus->parent);
+>> +    main_host_sbd = SYS_BUS_DEVICE(main_host);
+>> +
+>> +    if (main_host_sbd->num_mmio > 0) {
+>> +        return g_strdup_printf(TARGET_FMT_plx ",%x",
+>> +                               main_host_sbd->mmio[0].addr, position 
+>> + 1);
+>> +    }
+>> +    if (main_host_sbd->num_pio > 0) {
+>> +        return g_strdup_printf("i%04x,%x",
+>> +                               main_host_sbd->pio[0], position + 1);
+>> +    }
+>> +    return NULL;
+>> +}
+>> +
+>>   static void pxb_host_class_init(ObjectClass *class, void *data)
+>>   {
+>>       DeviceClass *dc = DEVICE_CLASS(class);
+>> +    SysBusDeviceClass *sbc = SYS_BUS_DEVICE_CLASS(class);
+>>       PCIHostBridgeClass *hc = PCI_HOST_BRIDGE_CLASS(class);
+>>       dc->fw_name = "pci";
+>> +    sbc->explicit_ofw_unit_address = pxb_host_ofw_unit_address;
+>>       hc->root_bus_path = pxb_host_root_bus_path;
+>>   }
+>> @@ -149,6 +184,15 @@ static int pxb_map_irq_fn(PCIDevice *pci_dev, int 
+>> pin)
+>>       return pin - PCI_SLOT(pxb->devfn);
+>>   }
+>> +static gint pxb_compare(gconstpointer a, gconstpointer b)
+>> +{
+>> +    const PXBDev *pxb_a = a, *pxb_b = b;
+>> +
+>> +    return pxb_a->bus_nr < pxb_b->bus_nr ? -1 :
+>> +           pxb_a->bus_nr > pxb_b->bus_nr ?  1 :
+>> +           0;
+>> +}
+>> +
+>>   static int pxb_dev_initfn(PCIDevice *dev)
+>>   {
+>>       PXBDev *pxb = PXB_DEV(dev);
+>> @@ -192,9 +236,17 @@ static int pxb_dev_initfn(PCIDevice *dev)
+>>                                  PCI_STATUS_66MHZ | 
+>> PCI_STATUS_FAST_BACK);
+>>       pci_config_set_class(dev->config, PCI_CLASS_BRIDGE_HOST);
+>> +    pxb_dev_list = g_list_insert_sorted(pxb_dev_list, pxb, pxb_compare);
+>>       return 0;
+>>   }
+>> +static void pxb_dev_exitfn(PCIDevice *pci_dev)
+>> +{
+>> +    PXBDev *pxb = PXB_DEV(pci_dev);
+>> +
+>> +    pxb_dev_list = g_list_remove(pxb_dev_list, pxb);
+>> +}
+>> +
+>>   static Property pxb_dev_properties[] = {
+>>       /* Note: 0 is not a legal a PXB bus number. */
+>>       DEFINE_PROP_UINT8("bus_nr", PXBDev, bus_nr, 0),
+>> @@ -208,6 +260,7 @@ static void pxb_dev_class_init(ObjectClass *klass, 
+>> void *data)
+>>       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+>>       k->init = pxb_dev_initfn;
+>> +    k->exit = pxb_dev_exitfn;
+>>       k->vendor_id = PCI_VENDOR_ID_REDHAT;
+>>       k->device_id = PCI_DEVICE_ID_REDHAT_PXB;
+>>       k->class_id = PCI_CLASS_BRIDGE_HOST;
+> 
 
 
