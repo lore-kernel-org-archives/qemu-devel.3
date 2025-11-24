@@ -4,91 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62D1CCFD340
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B15ECCFD31F
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 17:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNa1w-0008HA-KB; Mon, 24 Nov 2025 12:07:12 -0500
+	id 1vNa1z-0000YC-31; Mon, 24 Nov 2025 12:07:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNa12-0006OT-BT
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 12:06:17 -0500
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
+ id 1vNa1s-0008PQ-P4
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 12:07:12 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNa0z-00045K-KD
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 12:06:15 -0500
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-787ff3f462bso55890427b3.0
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 09:05:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
+ id 1vNa1o-0004Jr-LO
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 12:07:07 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-47797676c62so4405875e9.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 09:06:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764003958; x=1764608758; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=ventanamicro.com; s=google; t=1764004017; x=1764608817; darn=nongnu.org;
+ h=in-reply-to:references:from:to:cc:subject:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AMcfu2h4bevoj0RykyRrAeEPkRNFg8Ac4Sz94eecfzo=;
- b=SVrFK/Q++cUGqeMuGenQWmyLnfvYl/FcMMuPKcZWuJDm+mnFtprM6q9Fc5dj+G+Tey
- StaNvRWJZJw5eg7WBDkkiBGU5oYknwefJq5xDsLN4Co7NW1DUzcNRn+R1yXEeLGpvsM9
- Xm3TivUTjN9ixmFnSfZxZWPzIMiWG+5kYB8c41gSCWSEsSggmpXgY+qfPtWDCGnH9kiw
- idPM7Ew2JWtwmAo5Q9u9N4S3zgp0C29RAin5SJ8ZivJoe10k8Dm/92ZVIqsCpZsIg0qI
- OnIwTQrQKefffx/7P8XAbJHcJDeLP3xopyLMuUJXCH6rvmfOPOdcpqfQBAzrYEVILnXB
- lA8A==
+ bh=y03jS9yKZdIuUw5sNGcqpZgXDc3pcFdoE+155gn3nEo=;
+ b=BgdP9Ih8FAbjBRqdMOhJDHQuRpXLHUfa3rGw456u+cYxFvzK4OsAYRkufH6IOf2gJG
+ x5KSQUbd9GoTl4ZaYo7RS0lAd9Xin/Wt69JdgKISI64kdS4LFj/aYUJCTzDPwC2o0UcW
+ BA7EUu5J5k5Kbn8RGixIn1bH4PLmsk8zzHzdBYDaB9Ursv5NrHDlCNTRkBxi0MYCqERn
+ P6Hhpm+fQZDTTTlwzn60bAT5gCHP9tYjLL5aOue6pNKVQBr1mF6POamIujOGNRTL+KWu
+ XcY84rJjFrOlf7rG0Bo9wgKGQn44DCikhheB+z7ESIY1g+5ndg4twaC5PM62YjI2WqhL
+ GP8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764003958; x=1764608758;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=AMcfu2h4bevoj0RykyRrAeEPkRNFg8Ac4Sz94eecfzo=;
- b=VkHQ6Go766oCfDT7DbTarZrx7FsdZwE5CS1vb5SCdNRpVBy3AtsRs8zCxBZmqRNrnG
- 6ZaXIRO4MfK3MxTnj+JGz+VztmeKSpinBT45HRuAObdFrt/tIHXJUl3AHFfBbKF4B3ET
- PGEt8Hkl796oK5O4VbHrBVb+v95zGaTpWMv2oj5h5jib7uZUGQuxvSR2SrmYudhgD56S
- S7veiWmdEZNHnEnpbSQAoxzeeJH2aHF6MyUqPAmfhCvW6lfmIY7Ow8gYCedgKwlfFIrv
- EWqXDxLR8ess4hM0n2/IgSJ9k9teKqKwYim/+61Jm5piQuWkoIYvsz2gUIvM6pjgScS8
- LfRg==
+ d=1e100.net; s=20230601; t=1764004017; x=1764608817;
+ h=in-reply-to:references:from:to:cc:subject:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=y03jS9yKZdIuUw5sNGcqpZgXDc3pcFdoE+155gn3nEo=;
+ b=qY+KJs5MacV8fn4lVXrzXJTh2DrNIgMTwiVtYe8tKX/cdVLAP384t99XZzurjrYmUE
+ kOc9aO0fYS8PzhTNzgJ52cxjX80jQsvXuSz+zaBdeq0qrdRolbjDhzaTasM5y+8iwPA8
+ dmW7AbcHeRJftQASNKQcaexnLrRWjyVpsqfX0PkGLGURK3FQUfMT7Ulb8QKaniwkbLb4
+ 0JphWowjEBxnW9MVfI+cd1WqJDStp4z1hUG+tKf615Adl7recIwebqoihCshGLz4EcpC
+ xtlJ+X5uMwdUayUVga2EVxLyNJIByudHUwLpohdTYDz9K5Z3k7dwcvKp88oEJPGQYfQS
+ Q5mw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUxjSgME2w1cWrdYMhAMl/t4furADW9TGcuTCdqoJqnpIToHzBiyp1JBXqigDOSeS+UwnuN0HHhxEeR@nongnu.org
-X-Gm-Message-State: AOJu0YzUhs5a3Wss39qADPND1aR5o2X0L2M+cU0EmpoTukpsHMldhHyU
- 2OMxBl/uz3vBc44h/ToSAMQSXjFWU1vh5ZGT5KlZpstkluqh40HQv+SQIeeq0QGWNrCtH09AA1J
- wPZs/bho209c8Wtx4dWtWKX7qG/unPLVm9Qn/lYQktw==
-X-Gm-Gg: ASbGnctjzSOzlgKTSJelC98TUQmgV+FlfzRc79aG2wzvS+3Vg4Fz0pWXUotymV7ySDG
- yGB6z7UijJosirSs7wASCHCnflbkKcf4JLcuzwxzzXxIXLY/6gXgvGmBt8GxeegZeWjFJDNA6wF
- 7+NdZPSW0ftftfikqcigWX9qv+yWzBCdavcf3aG3SrGB55qzhIOdbwOzbxOplndbhbb1QTIdSPF
- zXqaNkNIs/tGln07YfO+cCkacWe6DzidZ6SxIhtfigrV5zO1zUATUUgVEaU1adXWjwI3GIx
-X-Google-Smtp-Source: AGHT+IGrNE0mNX8XVsAvxmQmsLaqA/mtdbfwCV2rh+VjNztxXWWD3xBgac4yGK2A7BNesdMUOKTfEJzYNSXnmeUPUuw=
-X-Received: by 2002:a53:d005:0:b0:63f:b6c0:23f8 with SMTP id
- 956f58d0204a3-642f8e430c1mr16487535d50.33.1764003958498; Mon, 24 Nov 2025
- 09:05:58 -0800 (PST)
-MIME-Version: 1.0
-References: <20251111102836.212535-1-corvin.koehne@gmail.com>
- <20251111102836.212535-2-corvin.koehne@gmail.com>
- <9bc047f0-1122-4381-ab5a-01878a10297e@linaro.org>
-In-Reply-To: <9bc047f0-1122-4381-ab5a-01878a10297e@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Nov 2025 17:05:46 +0000
-X-Gm-Features: AWmQ_bnx4AQTpBZhl2nOLh-u7rfw-4-PkC72NCq7FkZ1J5z1JYlvd3GM705Aya8
-Message-ID: <CAFEAcA_UHmXA5HGmvYEucxXX8uiQbHK9-_t7R7EDrxvsxcMmyQ@mail.gmail.com>
-Subject: Re: [PATCH v4 01/15] hw/timer: Make frequency configurable
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?Q?Corvin_K=C3=B6hne?= <corvin.koehne@gmail.com>, 
- qemu-devel@nongnu.org, =?UTF-8?Q?Yannick_Vo=C3=9Fen?= <y.vossen@beckhoff.com>, 
- qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Alistair Francis <alistair@alistair23.me>,
- qemu-arm@nongnu.org, 
- =?UTF-8?Q?Corvin_K=C3=B6hne?= <c.koehne@beckhoff.com>, 
- Kevin Wolf <kwolf@redhat.com>, "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ AJvYcCWmgZnUX3jTsGzBvx9kd43JNJZcK6l1UdyNrJqWccAgrtWSa1hYunp5lz7Bposqb6WpdjnpxV02qdOP@nongnu.org
+X-Gm-Message-State: AOJu0Yzam8d14KO1MBUHy0PworAyTMZr0zatRbfVW3b6DWvvjMMu78Mn
+ aPtUSCztsJrxqKnc5JAvm/cQ1QsfeSqyxtV3uhPdPTbXmDEcVa9HSokE3oRo7+MmPVQ=
+X-Gm-Gg: ASbGncuDPwDAAGEFYAFptr+e0CvVEKQ4ATo7A+ZOmZmY+uEjtKhdQUssq8COADjfNXT
+ G3T4TcxvfdY54mKUpl7dWRcCLMqMlj3q2ga/XDDUOusSpjxKGTHmaDX8eb5k7MAiTBg26r/55Cs
+ ELtTlkIJFisnbdogdbwUx0tuADTPNCu2zW0EpKPYTKgfx2Bz/vZrxLZpC1roJUdfIWjFWFmRaRZ
+ r2ALPXPKRAU0H3B9X3gjmNfpUt3WFJYezx2wS9YQRE94jC8IWWi4AvaB5NVSYZYbopRtIX7XCKQ
+ V0EJZ3VxdpEm4qRZqR2BmtLAw8jkj8qnCMX3/iwI0t2nRI3CEDpOWEHvu13kELQwd9bhIsSsuqM
+ YiUHcrrLyJZLY7LAtiJf1Z8wCOAuuM2X1G5Emg4S7Frw5LXY7dNp5boX2uscHiA6MWo4VNRLOV7
+ M=
+X-Google-Smtp-Source: AGHT+IH1UcLs6Z8EDCiPmctYySD5NjdPIWI4jOao4tVNsa/NrxrP14kAs4b2WHQhOQxzs4BOiY5vIQ==
+X-Received: by 2002:a05:600c:444e:b0:477:9a4d:b92d with SMTP id
+ 5b1f17b1804b1-477c314a201mr79236065e9.5.1764004016818; 
+ Mon, 24 Nov 2025 09:06:56 -0800 (PST)
+Received: from localhost ([2a02:8308:a00c:e200::3052])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-477bf227ae2sm205686545e9.9.2025.11.24.09.06.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Nov 2025 09:06:55 -0800 (PST)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 24 Nov 2025 18:06:21 +0100
+Message-Id: <DEH381ZF2STN.G7QL6LUEEBKQ@ventanamicro.com>
+Subject: Re: [PATCH 4/7] hw/riscv: implement CBQRI bandwidth controller
+Cc: "Palmer Dabbelt" <palmer@dabbelt.com>, "Alistair Francis"
+ <Alistair.Francis@wdc.com>, "Weiwei Li" <liwei1518@gmail.com>, "Daniel
+ Henrique Barboza" <dbarboza@ventanamicro.com>, "Liu Zhiwei"
+ <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "Nicolas Pitre" <npitre@baylibre.com>,
+ =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, "Atish Kumar Patra"
+ <atishp@rivosinc.com>, "Atish Patra" <atish.patra@linux.dev>, "Vasudevan
+ Srinivasan" <vasu@rivosinc.com>, "yunhui cui" <cuiyunhui@bytedance.com>,
+ "Chen Pei" <cp0613@linux.alibaba.com>, <guo.wenjia23@zte.com.cn>,
+ <liu.qingtao2@zte.com.cn>,
+ <qemu-riscv-bounces+qemu-riscv=archiver.kernel.org@nongnu.org>
+To: "Drew Fustini" <fustini@kernel.org>, <qemu-devel@nongnu.org>
+From: =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>
+References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
+ <20251119-riscv-ssqosid-cbqri-v1-4-3392fc760e48@kernel.org>
+In-Reply-To: <20251119-riscv-ssqosid-cbqri-v1-4-3392fc760e48@kernel.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=rkrcmar@ventanamicro.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,29 +113,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 12 Nov 2025 at 11:24, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+2025-11-19T16:42:20-08:00, Drew Fustini <fustini@kernel.org>:
+> From: Nicolas Pitre <npitre@baylibre.com>
 >
-> Hi Yannick, Corvin.
+> Implement a bandwidth controller according to the Capacity and Bandwidth
+> QoS Register Interface (CBQRI) which supports these capabilities:
 >
-> On 11/11/25 11:28, Corvin K=C3=B6hne wrote:
-> > From: YannickV <Y.Vossen@beckhoff.com>
-> >
-> > The a9 global timer and arm mp timers rely on the PERIPHCLK as
-> > their clock source. The current implementation does not take
-> > that into account. That causes problems for applications assuming
-> > other frequencies than 1 GHz.
+>   - Number of access types: 2 (code and data)
+>   - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
+>   - Event IDs supported: None, Total read/write byte count, Total
+>                          read byte count, Total write byte count
+>   - Bandwidth allocation operations: CONFIG_LIMIT, READ_LIMIT
 >
-> This change makes sense, but IMHO we should model the source as a
-> Clock object (see docs/devel/clocks.rst).
+> Link: https://github.com/riscv-non-isa/riscv-cbqri/blob/main/riscv-cbqri.=
+pdf
+> Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
+> [fustini: add fields introduced in the ratified spec: rpfx and p]
+> Signed-off-by: Drew Fustini <fustini@kernel.org>
+> ---
+> diff --git a/hw/riscv/cbqri_bandwidth.c b/hw/riscv/cbqri_bandwidth.c
+> +static uint32_t bandwidth_config(RiscvCbqriBandwidthState *bc,
+> +                                 uint32_t rcid, uint32_t at,
+> +                                 bool *busy)
+> +{
+> +    BandwidthAllocation *bw_alloc =3D get_bw_alloc(bc, rcid, at);
+> +
+> +    /* for now we only preserve the current BC_BW_ALLOC register content=
+ */
 
-I agree that would be the modern and cleaner way to do this,
-but I said in review on an earlier version of this series
-that I wasn't going to insist on that:
+There are a few checks that we could do even without any real
+accounting, like rbwb > 0, and sum_{rcid}(rcid.rbwb) <=3D mrbwb.
 
-https://lore.kernel.org/qemu-devel/CAFEAcA8opzjChTA7UONEPtrUnQ-xayoMgxH5gK9=
-Bi-_VnMXjUQ@mail.gmail.com/
+Doing so might help us find some bugs in the software management layer.
+What is the level of ISA correctness that you're aiming for?
+(I'll tone down my review if nitpicks like that are not needed.)
 
-thanks
--- PMM
+Thanks.
 
