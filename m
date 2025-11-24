@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE81CFA466
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 10:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA219CFA466
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 10:29:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNTby-0003d0-6h; Mon, 24 Nov 2025 05:15:58 -0500
+	id 1vNTok-0000Z9-Qx; Mon, 24 Nov 2025 05:29:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vNTb2-0003Kj-Uv
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 05:15:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vNTax-0005Rr-N5
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 05:15:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763979293;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0tC79samwWePB3tLxmPqGImp7yLEUid7HuRpqd42T2o=;
- b=RUaJGaIhHaYnT9AMVG1iXdyikIl1gl67NmLRxFK/V/2w3BnnbQeJUs4LNzhlNeis3xIgEF
- Z1uzSsmjYd/tC2AcdGBKd5Hyq6mIKLa9ydkC0O40/8Xfd6yNtrqwUgHTPBXcaG9qBs0Kat
- 0wM/S0P7FcmXGhKpmDOPKaxEmWEu+ks=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-l1KoQPHgMP6tymnzrikDGQ-1; Mon,
- 24 Nov 2025 05:14:46 -0500
-X-MC-Unique: l1KoQPHgMP6tymnzrikDGQ-1
-X-Mimecast-MFC-AGG-ID: l1KoQPHgMP6tymnzrikDGQ_1763979285
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 486AD1956080; Mon, 24 Nov 2025 10:14:44 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.58])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 92E2430044DC; Mon, 24 Nov 2025 10:14:39 +0000 (UTC)
-Date: Mon, 24 Nov 2025 10:14:36 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- David Woodhouse <dwmw2@infradead.org>, Paul Durrant <paul@xen.org>,
- Eduardo Habkost <eduardo@habkost.net>, xen-devel@lists.xenproject.org,
- Anthony PERARD <anthony@xenproject.org>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH] hw/i386/isapc: Remove dead Xen code
-Message-ID: <aSQwDCCkIALZdh6w@redhat.com>
-References: <20251123185832.53802-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vNTmm-0008TF-Rx
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 05:27:12 -0500
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vNTmj-0001h4-L6
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 05:27:06 -0500
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-63f9beb2730so3128674d50.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 02:27:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1763980024; x=1764584824; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=IH+tVktUvnIYfS+s5xTGqoXsukiAMNrSam2SRoNxLp0=;
+ b=UX1b+5EmUIwD/LQ9rbGwhKwacOHQLLYr12sgpr973YQvwpKghpr1kYnRfJxI5wO2gN
+ l8gswmkasIcfeeY3KV3S7/gqmcuznpLAxdIDEeWX3PoITu+4oFWObCXbhg/BXtBRKv42
+ 6KFrTij9cloevMTIMQHj7Dj1Cl/HjY2wxfpVjiMgc1LuulI9jZj9QzSk1auua2jn9i6n
+ IhbQ79tdb0ljqZcaA9qAfw2fQ7T8o7/pW90yEVuErzeI8Oi3RRUDCTj5qHan6iBONjdm
+ UOybq5b9iI/E8uLqpi2GOnkvv4IX8muSOeJrYKqFZJPPSPVS2KftFclqJ0uszISLLjye
+ ewRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763980024; x=1764584824;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IH+tVktUvnIYfS+s5xTGqoXsukiAMNrSam2SRoNxLp0=;
+ b=FTAzqxnLycZj3FUPnMJ8oMY+A7SsS72bVTdbBZ/lFP3W/MgJznybsLme7XqrgJOB5X
+ lORTHx+6B6Wl1z1SZBZ0Uzz77OMq2jcNVRjugrrIxUIvPxtFxSpvA0SxHxdVORoEqccF
+ 1LPR2oz7F+EAl4MQaF/kZ3z9sK8HCHE7sTOkjGkydEA48t5y5ECDcI9ZTvyj81uZbw14
+ tHQDB4cO2M7O4UmgSKUeIzRBQ8B5ZmKvXaRR/gdLU9cHhpJRHJeiijWxmYV994vy0nSL
+ Btel58PzmwlXUf0kdxCvEjPnaU/PDvFIqZdewHD8mL5H9Aa34+MkCLjHXTEI5m4+fVvt
+ mj4Q==
+X-Gm-Message-State: AOJu0Yyuq+SZ6W6jAA+iwpGxWny0fdtsD4nhsTy2Q1vbda9kiqrqFTO2
+ mpon2ggrenE6CN3GrTTQ2Mk7pzSJ3EaAccJtttYP0+MkMrZOIzyBS1S7W+B9Fb4ZkiI8GBonFqa
+ P5obkGXAA1416MEkGofuK94DgQs5D0ivmel8i36Za3w==
+X-Gm-Gg: ASbGncuil8MLeIbTNbWO7FYEidc1ZhbnznmEXmsTWFUJrEm459gSn2QRZnz/WfRmK2o
+ LOu7cHYUv7AtmFcMLEcyQ38a4fMPwKTs6Lyv0VA8WFqvFNiO1Kt0aj6qyjSP32xxi/trvNjbh+j
+ GmiXsdDCh6y1eN3him+tSHNFdndkmky/FOKdVIjk+izi24tYoqO8H51WSnpUBPt6kTkz8ZzGfd4
+ dqSg6tQA7TI3xY9gHMO1JoZqtHRbScxwCVAjfGd5v/Kol3rIqmPCSCm0XYLCA6StX5ikshM9Qml
+ qwBJMaw=
+X-Google-Smtp-Source: AGHT+IHLvF0XUMkdzCYS7wNsFiewY9ZPICNofUVb0vrbbFFwhNEmm3Nc5Sz9bfxwKdoQq0ZKQTUxq0ngYggKVztaxsw=
+X-Received: by 2002:a05:690e:d8a:b0:643:79b:fb1b with SMTP id
+ 956f58d0204a3-643079bfda1mr6196627d50.21.1763980023760; Mon, 24 Nov 2025
+ 02:27:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251123185832.53802-1-philmd@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20251119203759.5138-1-shentey@gmail.com>
+In-Reply-To: <20251119203759.5138-1-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 24 Nov 2025 10:26:52 +0000
+X-Gm-Features: AWmQ_blpWYofeSl5Nfpn4qBG3wJ-LHn3DxvM2zqvgF4u7cdi9xrle6lVf8P7PEQ
+Message-ID: <CAFEAcA893XcTzwwivboB_T252mwFjH8jQYh3PJbkkyXijgV8kg@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/arm/Kconfig: Exclude imx8mp-evk machine from
+ KVM-only build
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.161,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,27 +92,24 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Nov 23, 2025 at 07:58:32PM +0100, Philippe Mathieu-Daudé wrote:
-> We don't use Xen on the isapc machine: let's remove
-> pointless code.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  hw/i386/isapc.c | 27 ++++-----------------------
->  1 file changed, 4 insertions(+), 23 deletions(-)
+On Wed, 19 Nov 2025 at 20:38, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+> Fixes make check failures on an aarch64 host when QEMU is configured
+> using '--enable-kvm --disable-tcg':
+>   qemu-system-aarch64: unknown type 'arm-gicv3'
+>
+> Reported-by: Cornelia Huck <cohuck@redhat.com>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Tested-by: Cornelia Huck <cohuck@redhat.com>
+> Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Applied to target-arm.next, thanks.
 
+-- PMM
 
