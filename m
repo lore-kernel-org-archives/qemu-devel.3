@@ -4,91 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46359CFD313
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 03:58:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D859DCFA466
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 04:02:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNNi2-0006Sd-FD; Sun, 23 Nov 2025 22:57:51 -0500
+	id 1vNNmD-0008FO-Nh; Sun, 23 Nov 2025 23:02:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNhx-0006Rn-TW
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 22:57:46 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNmB-0008Dp-Kw
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 23:02:07 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNhw-0002ht-86
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 22:57:45 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4775895d69cso15447385e9.0
- for <qemu-devel@nongnu.org>; Sun, 23 Nov 2025 19:57:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNmA-0003JO-0p
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 23:02:07 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-477b1cc8fb4so21542165e9.1
+ for <qemu-devel@nongnu.org>; Sun, 23 Nov 2025 20:02:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763956663; x=1764561463; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jdNZlBGCi8LiBFSGxRFWbVUK1gTbuCJa3dvSeS0t65Y=;
- b=WeQUlm0hc1udr2MRWDheci97x8izNBg3BnZ8bBS58nMzy9Z8loZ5qHef9tUCXnDlN0
- U3PI7Yl22o+Og1VVCzAi5RfbR8QzqIodY/6CZ7h6eKuO6r4BSYyWAjnzBYzR+hmRboFJ
- gkElYVOtpQTZ3PZdhMT1Y03sXwDZ1ysfYCRUddEbXx5PHe3/Z4dz0QdmYl0R+XOm5rCY
- vfpUXGeLxcMS4hKE0pQ+C1bp7ZFb1nq0hokOg42vWdE3UzRIeoUdL0H2SVayffUEBoud
- Qi7otBCN1OFdkHHDPKIqIxrGad17U8hzfaIHCidC7GpON2FK0jdcp1wQYNcFHYhh5MbN
- VRdg==
+ d=linaro.org; s=google; t=1763956924; x=1764561724; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5Ag186/Duxi1QrTx73gaJvoeNSOx3x+Fko0RiH98G3o=;
+ b=kwrFBX4mrv/4r0F62njc+T0nyEskJBDKKhTPH6A6YEUF4jRqab2/5Iz4FR2fItHbGs
+ iKUqHFy9qosC2I+p1voxrbcDLhDMyvC88Zn7SLpCqkLDc5Vr1YVVaHFqbSqBNljuPGRO
+ sDX6XwSc98SGQuIo+WMJ469+9/X5dOmu0JDCelL2wgeagQW2wrNwI8gfkZh3hnCbN3bJ
+ IIG+UbNZcwQlp5Y9U0GYJ9YzynzgpBozI5v0rNZkHaJ3r1orqf546M3le7yigVNg4bZ2
+ kogK0Rme9SoJgKmsUD6F3hUwn0rhklGx3Z+MlFmxvSZERepXSDVYd+epG0vndIV81Ke+
+ T9vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763956663; x=1764561463;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jdNZlBGCi8LiBFSGxRFWbVUK1gTbuCJa3dvSeS0t65Y=;
- b=LNG/SGUMoZ4uimmbQkS9FxDDdRcw8vy0JDod8VuAXPM0CVlZXpVnhKR/Fair5a1P+p
- H7ioEH871xBrpaGQgDDi9OU3j/svd9HqRJN4eBsrt4B+w0DLKbzbJZPkrUURIqgW//x7
- zsHFfilrkO3JtisUHu2TQlJhH8YxvPkTqD2m8z5tPBiX/fkfuBE2TXLdF8/yVFIc+5Tq
- ot4mviQE1n5m+FbV3jur8O1sM2jiibs6L/gAc+5fOMv3HJbo6gldydBHJP87UjfrM9t+
- 7PAITHmQsC63EoXPtpQxZf7MQfv3GonGb3n7eRleAccRSP1aRv7H8676ANLblaB75awu
- kh0g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVZCCX56QRcbY7/J60Hmqo8phl7wrDCiF1Ygsb9/Qur1Fcx3Wua1PvZeDqgVVpWTenvS+xcOsC14Eoq@nongnu.org
-X-Gm-Message-State: AOJu0YyKHCREZ+wsW3AtRW6deUt0Ki8EfnRlYrd1SHrhyFnD4oSb3srR
- uRAYzgaljBXm8KN+MWRbP2EWTfsNPYHwRMk7YYnIjCLzAG9x64E2L4pKQc+1NdXfLjF+v70FnC7
- LD8n9cq0LWw==
-X-Gm-Gg: ASbGnctk4pmI09XKqwXvlpAYkj35GseZpyBFpKrBY3BxEVyNFOysIwq1guz9mQckeGR
- yL3d6O9Ra0xNpCvCFEM5ln/bHBPFWuqKxNJJcpu7ZfTHq7w8+HRlVILiVEPdOmLZA84XXAjfy6k
- /VYBpAvrT9Nbky/0THy+1qzq2A6V+0lxw5vlFTD/CZNGNtMDq6wT8PBWkTG68YXO9y8nT/T4y1R
- y2vd+K7AdpUmheQFG8R6cuySCIvy25mO9M9ve0dGpxfdSxoHCmq3URVFPLkoFPX221tucr0c/DO
- O/GVXiZbTRC76qBF0RVCn8I7onetvTvOvzwtZsxQR63sWAqDHOn8UZexo8q8N9hc5KAk+lm93b4
- 0FkMGu9dttoKk4qsInLOttBxqSgbC0n3mbNT6QWBmjE6dFCj1YfE5uFMcbIzVlVwppHFMktgr9T
- MKrYzqakc9NM5UW5kcEIlmVGwD2Ep6VLf1WC5nKGFQOB4Gdua9fksC/g==
-X-Google-Smtp-Source: AGHT+IGN6yNictzipvjbSefaZp9DfOIYsNxSw5kwepsfnv4eWZmsjv2/iGiGZjHzoGyK0k9IU3AApA==
-X-Received: by 2002:a05:600c:35c1:b0:477:abea:9028 with SMTP id
- 5b1f17b1804b1-477c016e7a6mr104288835e9.6.1763956662757; 
- Sun, 23 Nov 2025 19:57:42 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1763956924; x=1764561724;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5Ag186/Duxi1QrTx73gaJvoeNSOx3x+Fko0RiH98G3o=;
+ b=b7dVXP8V03FOcE2viYKDme2XLjsHXYu97TiL/0bnNnpfAfIcy1HXZfW/CQhyTGODDT
+ FFIQ3eNQXrAZRLQSu2S+cuTAtFyMR+EtRi4AhHAKFCaIZ7OGk+mdRd+cc69VqqEO+c0l
+ /V7KEL2wLlbj6MgJVAb2gwFOLctudRET8cwIJL8Yt/aHTTR5m7VegfN5a8wvpkgQAEgA
+ VkjRTxUgApPKQX6yYZg4kHc2dJRv63yPQry3CieSLufVmO9dNhKLpixQl3nwimX5NYhK
+ e0Ucee9hrMbXLiukyiZHOFKPoZ0NcAp7S4MRZwx5Idx1fqjk3Sov8iKnliwQhbZfbi+W
+ re+g==
+X-Gm-Message-State: AOJu0Yz4Myw2nITl/j40+ibQ4XzDBZTWEDXBp6QKexMM5MfFEMni/E/i
+ ChpSqBQy4jZxVEz+tZxHjkaHBmF6n2269BY/7rFLK44L5qav6Q1VAqAFB4JjokVIcqpoBZv0WpZ
+ hnIoqw/UAWorm
+X-Gm-Gg: ASbGncsQUWEQ3PB1bASPP9tukQhogQL4p4HCBhkN1ATXwPzh+UpQfchAZbgc7Wj1dso
+ Y2AoWPVWZ1dACEcUHKjhwn0EXas2nN/WAOPwm0JiESY3qJKKnJhrd88rFn4Vh1Gv9mIMuBXDxhP
+ IR7PYtT4hGPyHWM8y9aLB/Sa2yLtGl7RWVQR+jkvGqhOaeqVVuCN2C8DQD4LbgB49FbLdwJMMez
+ NVO52MdLGDLqFMaE4eG2zi7NGEVGSBaeVxFb5y4+nj4kLP2uil19J7EDms6BJzorIX1HVDxVoql
+ qWr6NrREIpED/ROcd3zwiEUieEghkmHfrCQY2jJ9Yz7qEP0eUVb8UVU0JcGvMmoV52RRWzVrbd3
+ adsmA9iqOz3ouCqAXBRBMSA/aA52fWxRshtRD4EWo0vgiJMdcphJaHMiKEDBCm4EPgEXlMV9Ezn
+ P7n9I7e4UOYKHwTWq2ZwCuG5l6VZMz5xVK7VX43R1nZknzBNkrzky9iGCM1pgo
+X-Google-Smtp-Source: AGHT+IHgz72xQNjtbc49aan4nHlti6RW96v4rpjYW8uSq5Iirr7v/CyXqEjK1ayP3dZK9t1L92OhoA==
+X-Received: by 2002:a05:6000:40e0:b0:429:b525:6dc2 with SMTP id
+ ffacd0b85a97d-42cc1cbb56cmr9899811f8f.17.1763956924031; 
+ Sun, 23 Nov 2025 20:02:04 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477a9de4631sm140191875e9.7.2025.11.23.19.57.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Nov 2025 19:57:41 -0800 (PST)
-Message-ID: <cc5261eb-e11a-4215-8e01-e05b1afff19f@linaro.org>
-Date: Mon, 24 Nov 2025 04:57:40 +0100
+ ffacd0b85a97d-42cb7fa3a76sm25980802f8f.24.2025.11.23.20.02.02
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sun, 23 Nov 2025 20:02:02 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-block@nongnu.org,
+ Klaus Jensen <its@irrelevant.dk>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Jesper Devantier <foss@defmacro.it>, Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.2] hw/nvme/ctrl: Validate PMR memory size
+Date: Mon, 24 Nov 2025 05:02:01 +0100
+Message-ID: <20251124040201.55117-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/4] hw/misc/pvpanic: add PCI interface support
-Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>,
- Mihai Carabas <mihai.carabas@oracle.com>, qemu-devel@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: peter.maydell@linaro.org, yvugenfi@redhat.com, kraxel@redhat.com,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <1611759570-3645-1-git-send-email-mihai.carabas@oracle.com>
- <1611759570-3645-3-git-send-email-mihai.carabas@oracle.com>
- <77d7afeb-3dbc-4fcf-976b-09fe01cf542e@linaro.org>
- <8fd6caa2-c641-4901-9d1d-83282ae07c12@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8fd6caa2-c641-4901-9d1d-83282ae07c12@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,117 +102,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/11/25 00:18, Gustavo Romero wrote:
-> Hi Phil,
-> 
-> On 11/18/25 11:16, Philippe Mathieu-Daudé wrote:
->> Hi,
->>
->> (old patch merged as commit d097b3dcb62)
->>
->> On 27/1/21 15:59, Mihai Carabas wrote:
->>> Add PCI interface support for PVPANIC device. Create a new file 
->>> pvpanic-pci.c
->>> where the PCI specific routines reside and update the build system 
->>> with the new
->>> files and config structure.
->>>
->>> Signed-off-by: Mihai Carabas <mihai.carabas@oracle.com>
->>> Reviewed-by: Gerd Hoffmann <kraxel@redhat.com>
->>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->>> Signed-off-by: Mihai Carabas <mihai.carabas@oracle.com>
->>> ---
->>>   docs/specs/pci-ids.txt    |  1 +
->>>   hw/misc/Kconfig           |  6 +++
->>>   hw/misc/meson.build       |  1 +
->>>   hw/misc/pvpanic-pci.c     | 94 ++++++++++++++++++++++++++++++++++++ 
->>> +++++++++++
->>>   include/hw/misc/pvpanic.h |  1 +
->>>   include/hw/pci/pci.h      |  1 +
->>>   6 files changed, 104 insertions(+)
->>>   create mode 100644 hw/misc/pvpanic-pci.c
+Per the PCI spec 3.0, in section 6.2.5.1, "Address Maps":
 
+  A 32-bit register can be implemented to support a single
+  memory size that is a power of 2 from 16 bytes to 2 GB.
 
->>> +static void pvpanic_pci_realizefn(PCIDevice *dev, Error **errp)
->>> +{
->>> +    PVPanicPCIState *s = PVPANIC_PCI_DEVICE(dev);
->>> +    PVPanicState *ps = &s->pvpanic;
->>> +
->>> +    pvpanic_setup_io(&s->pvpanic, DEVICE(s), 2);
->>
->> Why registering 2-bytes of I/O when the underlying device is 1-byte
->> wide? Is this to allow 16-bit I/O instructions?
-> 
-> TL;DR: I think that 2 should actually be 16 :)
-> 
-> First, IMO, pvpanic_setup_io() should be called pvpanic_setup_mmio() 
-> because
-> the registered memory region in question is of type 
-> PCI_BASE_ADDRESS_SPACE_MEMORY,
-> not of type PCI_BASE_ADDRESS_SPACE_IO, hence the BAR associated to
-> this memory region (ps->mr) will map a MMIO region, not an I/O region.
-> 
-> But I think I see why it looks confusing to me: QEMU puts both a Memory 
-> Space
-> and an I/O Space (PCI terms here) into pci_dev->io_regions[] (which is ok).
-> The former defines a MMIO region and the latter an I/O (x86 old-style) 
-> region.
-> 
-> I'm just saying that in case you were thinking of inb/outb/insw/outsw &
-> friends when you said "to allow 16-bit I/O instructions", which are mean
-> to work with PCI_BASE_ADDRESS_SPACE_IO, not with 
-> PCI_BASE_ADDRESS_SPACE_MEMORY
-> regions, where normal CPU load/store instructions (mov, ldr, str, ld, 
-> std, etc.)
-> should be used instead.
-> 
-> For such normal a CPU loads/stores the granularity would be, in general, 
-> 1 byte,
-> so CPU can load/store 1 byte or more on most PCI devices (in MMIO 
-> regions), hence:
-> 
->        .impl = {
->            .min_access_size = 1,
->            .max_access_size = 1,
->        },
-> 
-> 
-> looks correct to me.
-> 
-> That said, I understand that pvpanic_setup_io is defining a 2 bytes
-> PCI_BASE_ADDRESS_SPACE_MEMORY (Memory Space) and the minimum size of this
-> region should actually be 16 bytes, not 2 bytes.
-> 
-> If you take a look at the PCI spec 3.0, in section 6.2.5.1, "Address Maps",
-> it says, about "Base Address Register for Memory":
-> 
-> "A 32-bit register can be implemented to support a single memory size that
-> is a power of 2 from 16 bytes to 2 GB."
-> 
-> So the minimum size of a Memory Space is 16 bytes, because bits from 0 to 3
-> in the BAR are not used for address decoding purposes (they define the type
-> of the space, number of bits in the address space, etc.).
+Add a check in nvme_init_pmr(), returning an error if the
+PMR region size is too small; and update the QTest.
 
-Thank you, this is the relevant info I was looking for :)
-> Also, in pci_register_bar() the size is used to set the wmask for the
-> BAR register:
-> 
-> wmask = ~(size - 1);
-> 
-> and with size = 2, if my math is right, gives 0xfffffffe, which is invalid
-> (it should be 0xfffffff0 for the minimum size: bits from 0 to 3 should
-> be zeroed (falgs) and bit 4 and upwards should be one. The first bit set as
-> 1 starting from the least significant bit determines the size of the 
-> MMIO region,
-> and in 0xfffffff0 bit 4 is the first one that is 1, which kind tells us the
-> minimum size should really be 16 bytes for a MMIO region).
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/nvme/ctrl.c          | 13 +++++++++++--
+ tests/qtest/nvme-test.c |  2 +-
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-Also interesting for PCI_BASE_ADDRESS_SPACE_IO:
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 4d150c7206a..1df5e88dbbb 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -8819,10 +8819,15 @@ static void nvme_init_cmb(NvmeCtrl *n, PCIDevice *pci_dev)
+     }
+ }
+ 
+-static void nvme_init_pmr(NvmeCtrl *n, PCIDevice *pci_dev)
++static bool nvme_init_pmr(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+ {
+     uint32_t pmrcap = ldl_le_p(&n->bar.pmrcap);
+ 
++    if (memory_region_size(&n->pmr.dev->mr) < 16) {
++        error_setg(errp, "PMR device must have at least 16 bytes");
++        return false;
++    }
++
+     NVME_PMRCAP_SET_RDS(pmrcap, 1);
+     NVME_PMRCAP_SET_WDS(pmrcap, 1);
+     NVME_PMRCAP_SET_BIR(pmrcap, NVME_PMR_BIR);
+@@ -8837,6 +8842,8 @@ static void nvme_init_pmr(NvmeCtrl *n, PCIDevice *pci_dev)
+                      PCI_BASE_ADDRESS_MEM_PREFETCH, &n->pmr.dev->mr);
+ 
+     memory_region_set_enabled(&n->pmr.dev->mr, false);
++
++    return true;
+ }
+ 
+ static uint64_t nvme_mbar_size(unsigned total_queues, unsigned total_irqs,
+@@ -9055,7 +9062,9 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+     }
+ 
+     if (n->pmr.dev) {
+-        nvme_init_pmr(n, pci_dev);
++        if (!nvme_init_pmr(n, pci_dev, errp)) {
++            return false;
++        }
+     }
+ 
+     return true;
+diff --git a/tests/qtest/nvme-test.c b/tests/qtest/nvme-test.c
+index 5ad6821f7af..4aec1651e6e 100644
+--- a/tests/qtest/nvme-test.c
++++ b/tests/qtest/nvme-test.c
+@@ -149,7 +149,7 @@ static void nvme_register_nodes(void)
+         .before_cmd_line = "-drive id=drv0,if=none,file=null-co://,"
+                            "file.read-zeroes=on,format=raw "
+                            "-object memory-backend-ram,id=pmr0,"
+-                           "share=on,size=8",
++                           "share=on,size=16",
+     };
+ 
+     add_qpci_address(&opts, &(QPCIAddress) { .devfn = QPCI_DEVFN(4, 0) });
+-- 
+2.51.0
 
-   Devices that map control functions into I/O Space must not
-   consume more than 256 bytes per I/O Base Address register.
-
-Regards,
-
-Phil.
 
