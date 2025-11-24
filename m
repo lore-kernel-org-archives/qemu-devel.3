@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F374CFA466
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 11:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C182BCFA466
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 11:48:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNUnJ-0002Zz-Ir; Mon, 24 Nov 2025 06:31:48 -0500
+	id 1vNV33-0004sC-GY; Mon, 24 Nov 2025 06:48:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNUmx-0002Sg-Bd
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 06:31:31 -0500
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNV31-0004rH-KF
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 06:47:59 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNUmv-00011T-Nv
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 06:31:23 -0500
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-787df0d729dso39999537b3.3
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 03:31:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNV30-0004de-3k
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 06:47:59 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-42b3d4d9ca6so3385396f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 03:47:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763983880; x=1764588680; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=M/+fq3Urp/TAekKLUl/fWaZbY+dzZHekvFsjZmcLDyo=;
- b=HIhgLKiRpyPNHCk3+plP/Q9ORsTqDRfOyzM2qImj0UWgn5ESsA+j/SPgCu+npAgMoa
- 5PSOfxKiAQdoX+NJxWzrzIKPq01qjKBIqAugQKA/6HMumSIhE8rRcPC2y6OOkaKqnOdx
- qJ3zKr+MzHnNI8NtrRKky6OR5islJMRuBe2BsOA7vEzqbOh+dpOTVRY+zXFSySJbAT95
- 6mmE2JQRcfYTUpLHhKtVJuHVMOVEdRPcGqTSMlqUZViW8y5KfXyxqNEkmmXkETIyMXEs
- 31pHzmUZw9Fugeag2sRRB9wvq5J9Spnm/MD4bbE3YRAFS/hj5T03QYJA5/CBBKMsWzVZ
- LPMg==
+ d=linaro.org; s=google; t=1763984876; x=1764589676; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=R3BCt6mRRKHL+2yqebBYLsLG9nPkDZtSoCS4ZfOrDa0=;
+ b=s+Hz2cdjmrdCFNGy7MFcjEuaIWmmjeeSP/J7M3X1ncAVq/eSZBFuH+LL1XjKbe/2qw
+ 8o6MkbYWRRmhmDonMters45QEKg1rbdtQY27fuEhVJCMMS2iNCqsWJjhCW9F1++AN4Wf
+ Zdl7rX8GthzsA3vqh8SZ6J9neDSUSKv0WX9EdLZ5LdwXapAx8E+3Qf4fow2yj0UMR3je
+ /EvFm+fH4tpt10MRSs5vWHqBdaH6Yo6GVsNOO3VSHZoAWxMH+5NbGqUvlQrWwLYNI1cZ
+ 5bx6kuwxl0+cwl94knGlZRohXrsWhV0gPPYBiFrgwyYPj3KDsXGLnYwQDr41/wiwbCwG
+ a87g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763983880; x=1764588680;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1763984876; x=1764589676;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M/+fq3Urp/TAekKLUl/fWaZbY+dzZHekvFsjZmcLDyo=;
- b=HxJ7HhzGEZHxdY5wHNxZwBc5uvA3sjUpviCEGXcrVKgAwJjfS0gFs8tt2ZV7j4ap4f
- ZuUYUHLAy+l6+Qgu3ONQk0c6v0H3gs/XLTvjTXJelgmaPbqWkqNAXyu0l6yjh1s6gCmo
- ZwyqZ+aR3vQJPi/I/3FPVVlNQopC+XhYUFO+OfdLDiy/+Upxbvyk5ipcQQQC+Ifr0+PO
- Euqea//Rljpl0NQ53RRZCmpXrbqyVpeMoQagRkwG/bpZsV2GjzxXeB9+56yyjXlph9tL
- wlyi/ujCj4eVPLymVSJTkjyHUYIs4CEttD9zvbSxJsCqMjKtdm6SMy2Ifu6B9Le6qNYD
- XOBQ==
-X-Gm-Message-State: AOJu0YwYpPEAN62IsBljcuCPJ5yK6IVfi2KZoTPB/OPoxbz1HCG93BbF
- yrhGLZ1l2ICnDrfBkZUkKZnifLAVut5ZGwBgrsIUuAtj1YzdqAnoA29tpyh2I6hIFsIuUdu/kCX
- BIVxT9clspVCO3Sfd2CgqesFMdbhDUKqh1SEypG/rtA==
-X-Gm-Gg: ASbGncsGWAvYOUFvJngq9HkckNRzpX5cyIkY2lc1BN5zS8c1KINpDlWN6wTH5YMzonF
- wwfsRMaGqf/834ycz/WY1dq7c5H5kbrgPBGiVroZRv3uH6AMmmA4LTQOkNIQ7Qhw2ZAbObchs8t
- GNh4JBQg5YrXFYVuUtkV4AlRYqAzHX3BKALFW6DtrDzNAWG16njsHuvgq30M3POAFWyBRIdKL4i
- PvxgduzvbpqzYAjo8lf9j4rax1RS/CHvXYt4wQ3DkaVMST3vliMmCICjb9Gi4iWQBxVzT2N
-X-Google-Smtp-Source: AGHT+IFcBUI1eYnh/fxhv83a2ZnxPfOy6aD0aFd6wNmYEqaO63NziLgTF7e8AD64+MQJ2AKonmp7eqY0WPg7GHJhAWM=
-X-Received: by 2002:a05:690c:744a:b0:786:45ce:9b8b with SMTP id
- 00721157ae682-78a8b478cb6mr97847447b3.11.1763983880413; Mon, 24 Nov 2025
- 03:31:20 -0800 (PST)
+ bh=R3BCt6mRRKHL+2yqebBYLsLG9nPkDZtSoCS4ZfOrDa0=;
+ b=OnGPeCqFdfuNGAYkh8bHDsCCTt4MS3I6YuJJ+f1lCPmyFBpK91WGsCUHRjIk7dx4nU
+ yc6RhCHOct2CWJsthYvdaIGpErYGBrwU9yJV1p+cnsgDPBBBI2cxPfbR0z8NPaVJGxtZ
+ xJN7HLOES1bJneOL4hdgzKJkt6CoKUJfHiZi1Ew62dgcz12lYrmqzhI0i7TndzpBHouq
+ 4P1Yr5Blo9YttoMchdNocfvz47+R41+00VH9kMz1c47THZQHmSHVpnGll82r5uZ2mEMs
+ tNXRohTLb2SEDlYkc6jIq3PkVXcwapj4uhHXRGM7K8Q6Hkozvw28YVKvVACrPHQr9wEZ
+ 0vGQ==
+X-Gm-Message-State: AOJu0YyASLt6DpuyiOkIRB2kuRc2huItHOR4wYXAjRWouK83hJzOIUI5
+ Rjcup4Bea1aj8Ij5mDXu/MybG95rFTGO/p6tF9AAUgjK256KEEbyXsmKvdCGwZ8GNQ5FktFwTjq
+ 6PXkgv82M0g==
+X-Gm-Gg: ASbGnctV1qTruR4gMVNfodBpKNMawngPszJIccnY6atIaXz70Uj7wfR9dPVRNTB4aeK
+ rWoz5V0tckruE7Mi+vhoV4IzA+CW3ITk5oluOa6TSqfQAx7YRbudPMwE9ZYzOobYGXsT3eJH7GQ
+ ECgMy/0vYu0SbKl0zmD5BFFXkrabdfciqv4yiLqoHzt/zvpnUbNSZ7v2N20Ps7MiD2FSjUGYRhh
+ HnZ0/9sfQzpQt/6/ltrr/aBCT6EjBrouifNsOhA01T1FiAOo7WG2u3t+VUyKxKZe5rEOl+gktIa
+ mmqshZTf4UGL5Ae8qvPyABytzgzmRPFjkWZfDWS3SzAHWdCxJ2Uacb6xAVQasUbrEvyRnwA84/+
+ Y7bbT4RJlNRaS4roGYm1Cv9Af6vCG1x55pj+x7G3zfRay4Mv9B7jbIjf243bGQIJ2wEXJho3Fun
+ KYR9epxB3Fuhb8H+KXlMg4koiTX1jwgQLn55D9Gf/GByqL4LhnyBSOe1Waqm8w
+X-Google-Smtp-Source: AGHT+IFerpXzKLQRfLpoT8pDVQrHPHDsGTzrIcTW0NzbE2L4Fw6QJGnAdZdE14LpwFkD2vCjDYs/TQ==
+X-Received: by 2002:a05:6000:24c8:b0:42b:3e60:18a3 with SMTP id
+ ffacd0b85a97d-42cc1cf10d5mr12673696f8f.24.1763984876023; 
+ Mon, 24 Nov 2025 03:47:56 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fa3a76sm28107081f8f.24.2025.11.24.03.47.55
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 24 Nov 2025 03:47:55 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] hw/pci: Use correct bus aperture for device container size
+Date: Mon, 24 Nov 2025 12:47:54 +0100
+Message-ID: <20251124114754.79831-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-References: <20251104094151.2218252-1-zoudongjie@huawei.com>
-In-Reply-To: <20251104094151.2218252-1-zoudongjie@huawei.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Nov 2025 11:31:08 +0000
-X-Gm-Features: AWmQ_bkoCfNb1ta42SwLas9koXTP-R27Qel7BopwDppJsRRtQH4baPkVfWWig4g
-Message-ID: <CAFEAcA9z8RkBq9=6y+E73mzVDKfkXTR59grCBTPfozC6PYwPOQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/host-libusb: cancel the processing of inflight
- packets correctly
-To: zoudongjie <zoudongjie@huawei.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@linaro.org, 
- alex.chen@huawei.com, luolongmin@huawei.com, mujinsheng@huawei.com, 
- chenjianfei3@huawei.com, eric.fangyi@huawei.com, renxuming@huawei.com, 
- suxiaodong1@huawei.com, wangjian161@huawei.com, liuxiangdong5@huawei.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,89 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 4 Nov 2025 at 09:42, zoudongjie <zoudongjie@huawei.com> wrote:
->
-> The EHCI controller in QEMU seems to cause a UAF (Use-After-Free) issue when
-> handling packets from abnormal USB devices. Specifically, when the USB device's
-> firmware behaves abnormally and causes some initialization requests to block
-> and time out, passing that USB device through to QEMU's EHCI controller appears
-> to make the do-while loop in ehci_advance_state repeatedly submit multiple
-> requests to handle the same packet (this do-while loop is quite complex;
-> I confirmed the issue by adding logs in usb_host_cancel_packet).
+Before commit 3716d5902d7 ("pci: introduce a bus master container")
+device view of the bus address space was correctly sized to the
+bus aperture, but then it always used a 64-bit aperture. Restore
+the previous behavior, so devices on 32-bit PCI only see 32-bit
+address space.
 
-Hi; thanks for this patch. I'm not a USB expert so my comments
-below are just some surface level questions.  Like you, I wonder
-if the correct fix ought instead to be to not have multiple in-flight
-requests for the same packet, but I don't know our USB subsystem
-at all well enough to answer that.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/pci/pci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-> diff --git a/hw/usb/host-libusb.c b/hw/usb/host-libusb.c
-> index b74670ae25..b5aab12aee 100644
-> --- a/hw/usb/host-libusb.c
-> +++ b/hw/usb/host-libusb.c
-> @@ -406,18 +406,6 @@ static void usb_host_req_free(USBHostRequest *r)
->      g_free(r);
->  }
->
-> -static USBHostRequest *usb_host_req_find(USBHostDevice *s, USBPacket *p)
-> -{
-> -    USBHostRequest *r;
-> -
-> -    QTAILQ_FOREACH(r, &s->requests, next) {
-> -        if (r->p == p) {
-> -            return r;
-> -        }
-> -    }
-> -    return NULL;
-> -}
-> -
->  static void LIBUSB_CALL usb_host_req_complete_ctrl(struct libusb_transfer *xfer)
->  {
->      USBHostRequest *r = xfer->user_data;
-> @@ -1276,7 +1264,7 @@ static void usb_host_unrealize(USBDevice *udev)
->  static void usb_host_cancel_packet(USBDevice *udev, USBPacket *p)
->  {
->      USBHostDevice *s = USB_HOST_DEVICE(udev);
-> -    USBHostRequest *r;
-> +    USBHostRequest *r, *next_entry;
->
->      if (p->combined) {
->          usb_combined_packet_cancel(udev, p);
-> @@ -1285,10 +1273,17 @@ static void usb_host_cancel_packet(USBDevice *udev, USBPacket *p)
->
->      trace_usb_host_req_canceled(s->bus_num, s->addr, p);
->
-> -    r = usb_host_req_find(s, p);
-> -    if (r && r->p) {
-> -        r->p = NULL; /* mark as dead */
-> -        libusb_cancel_transfer(r->xfer);
-> +    QTAILQ_FOREACH_SAFE(r, &s->requests, next, next_entry) {
-> +        if (r->p == p) {
-> +            if (unlikely(r && r->fake_in_flight)) {
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index b1eba348e06..64f33b9de04 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -1375,7 +1375,8 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
+     pstrcpy(pci_dev->name, sizeof(pci_dev->name), name);
+ 
+     memory_region_init(&pci_dev->bus_master_container_region, OBJECT(pci_dev),
+-                       "bus master container", UINT64_MAX);
++                       "bus master container",
++                       memory_region_size(bus->address_space_mem));
+     address_space_init(&pci_dev->bus_master_as,
+                        &pci_dev->bus_master_container_region, pci_dev->name);
+     pci_dev->bus_master_as.max_bounce_buffer_size =
+-- 
+2.51.0
 
-What is this fake_in_flight field ? r is a USBHostRequest
-but the definition of this struct doesn't seem to have that
-field in it.
-
-> +                usb_host_req_free(r);
-> +                continue;
-> +            }
-> +            if (r && r->p) {
-
-We're inside the "if (r->p == p)" check here, so we
-know that r and r->p are the same. And the
-QTAILQ_FOREACH_SAFE() macro that iterates 'r' through
-the request list will only give us non-NULL pointers;
-it terminates when it hits the NULL. So I don't think
-we need to test this, it's always true.
-
-> +                r->p = NULL; /* mark as dead */
-> +                libusb_cancel_transfer(r->xfer);
-> +            }
-> +        }
->      }
->  }
-
-thanks
--- PMM
 
