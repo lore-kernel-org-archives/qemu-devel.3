@@ -4,100 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B15ECCFD31F
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 17:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66E54CFD318
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 17:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNa1z-0000YC-31; Mon, 24 Nov 2025 12:07:15 -0500
+	id 1vNaS6-0004vf-Lq; Mon, 24 Nov 2025 12:34:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
- id 1vNa1s-0008PQ-P4
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 12:07:12 -0500
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vNaS4-0004uX-7r
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 12:34:12 -0500
 Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
- id 1vNa1o-0004Jr-LO
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 12:07:07 -0500
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vNaS2-00034m-Me
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 12:34:11 -0500
 Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-47797676c62so4405875e9.1
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 09:06:58 -0800 (PST)
+ 5b1f17b1804b1-47775fb6cb4so29931985e9.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 09:34:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1764004017; x=1764608817; darn=nongnu.org;
- h=in-reply-to:references:from:to:cc:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=y03jS9yKZdIuUw5sNGcqpZgXDc3pcFdoE+155gn3nEo=;
- b=BgdP9Ih8FAbjBRqdMOhJDHQuRpXLHUfa3rGw456u+cYxFvzK4OsAYRkufH6IOf2gJG
- x5KSQUbd9GoTl4ZaYo7RS0lAd9Xin/Wt69JdgKISI64kdS4LFj/aYUJCTzDPwC2o0UcW
- BA7EUu5J5k5Kbn8RGixIn1bH4PLmsk8zzHzdBYDaB9Ursv5NrHDlCNTRkBxi0MYCqERn
- P6Hhpm+fQZDTTTlwzn60bAT5gCHP9tYjLL5aOue6pNKVQBr1mF6POamIujOGNRTL+KWu
- XcY84rJjFrOlf7rG0Bo9wgKGQn44DCikhheB+z7ESIY1g+5ndg4twaC5PM62YjI2WqhL
- GP8A==
+ d=linaro.org; s=google; t=1764005649; x=1764610449; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y9X5I8fC0uuEs8vv1Ff54UYI01m/TtTkaY+Liy82Gbs=;
+ b=G35HWCCsEgHspYmNoC8z35TDwKlqgdESu/P+zBvCllY7ozVcwrk+YynuUhYfH7DF/T
+ CcJjq4JqcNkeHBNDVT9s8p5t4GysNcV3Kvypsm9g9MFB0iOs+bYdyOHRUei22uBlWREO
+ y5K08kRkrRFXmvIxSo7ncmRLJkJGowHQKB9D08s/ktpbgxMX1SyWJ79wd8YR43xd+uuX
+ VTCrUM0szvLoVtRP2ZKD+bEln8ZOSduESKPNxW+ck7k1Y8PmLPGVl9rsZHJ729NRZLUH
+ 7oI5mPHi5BUKH/RdBdrv4LGoBRMPAOWE75p4y0YX80kZXoHQzz1EVxH9TMf+HIALja8Q
+ 3rug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764004017; x=1764608817;
- h=in-reply-to:references:from:to:cc:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=y03jS9yKZdIuUw5sNGcqpZgXDc3pcFdoE+155gn3nEo=;
- b=qY+KJs5MacV8fn4lVXrzXJTh2DrNIgMTwiVtYe8tKX/cdVLAP384t99XZzurjrYmUE
- kOc9aO0fYS8PzhTNzgJ52cxjX80jQsvXuSz+zaBdeq0qrdRolbjDhzaTasM5y+8iwPA8
- dmW7AbcHeRJftQASNKQcaexnLrRWjyVpsqfX0PkGLGURK3FQUfMT7Ulb8QKaniwkbLb4
- 0JphWowjEBxnW9MVfI+cd1WqJDStp4z1hUG+tKf615Adl7recIwebqoihCshGLz4EcpC
- xtlJ+X5uMwdUayUVga2EVxLyNJIByudHUwLpohdTYDz9K5Z3k7dwcvKp88oEJPGQYfQS
- Q5mw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWmgZnUX3jTsGzBvx9kd43JNJZcK6l1UdyNrJqWccAgrtWSa1hYunp5lz7Bposqb6WpdjnpxV02qdOP@nongnu.org
-X-Gm-Message-State: AOJu0Yzam8d14KO1MBUHy0PworAyTMZr0zatRbfVW3b6DWvvjMMu78Mn
- aPtUSCztsJrxqKnc5JAvm/cQ1QsfeSqyxtV3uhPdPTbXmDEcVa9HSokE3oRo7+MmPVQ=
-X-Gm-Gg: ASbGncuDPwDAAGEFYAFptr+e0CvVEKQ4ATo7A+ZOmZmY+uEjtKhdQUssq8COADjfNXT
- G3T4TcxvfdY54mKUpl7dWRcCLMqMlj3q2ga/XDDUOusSpjxKGTHmaDX8eb5k7MAiTBg26r/55Cs
- ELtTlkIJFisnbdogdbwUx0tuADTPNCu2zW0EpKPYTKgfx2Bz/vZrxLZpC1roJUdfIWjFWFmRaRZ
- r2ALPXPKRAU0H3B9X3gjmNfpUt3WFJYezx2wS9YQRE94jC8IWWi4AvaB5NVSYZYbopRtIX7XCKQ
- V0EJZ3VxdpEm4qRZqR2BmtLAw8jkj8qnCMX3/iwI0t2nRI3CEDpOWEHvu13kELQwd9bhIsSsuqM
- YiUHcrrLyJZLY7LAtiJf1Z8wCOAuuM2X1G5Emg4S7Frw5LXY7dNp5boX2uscHiA6MWo4VNRLOV7
- M=
-X-Google-Smtp-Source: AGHT+IH1UcLs6Z8EDCiPmctYySD5NjdPIWI4jOao4tVNsa/NrxrP14kAs4b2WHQhOQxzs4BOiY5vIQ==
-X-Received: by 2002:a05:600c:444e:b0:477:9a4d:b92d with SMTP id
- 5b1f17b1804b1-477c314a201mr79236065e9.5.1764004016818; 
- Mon, 24 Nov 2025 09:06:56 -0800 (PST)
-Received: from localhost ([2a02:8308:a00c:e200::3052])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-477bf227ae2sm205686545e9.9.2025.11.24.09.06.55
+ d=1e100.net; s=20230601; t=1764005649; x=1764610449;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Y9X5I8fC0uuEs8vv1Ff54UYI01m/TtTkaY+Liy82Gbs=;
+ b=PesAZD3OUZpxy4NW37xMM0XyOaH6DdJyldwm+GVVxJX7pd7x9JOO+0z6/ekaxmXRao
+ bgMKYe+2aqbLVboAUwK+G/q3+ZU1p4EYx5d09rbN3lOcMhmmZ8lf++UDAsRXlYf4N41C
+ Y8+7dbPzDUQJT1gN05C6IeIfwOInAiCwqrCRvn7wlIQFfpjWxpkM/DlzDd6tR+SBUb91
+ 9d2nlS3kOFNCggx2TG2R5zt7L+H8g+K87oJCTFiP120G9T8gvnJA/i0iFy3pGi5SHZFE
+ rf5n5qZEzylwTwyyFw2WgcY5zA1Fs4w6FgLWeRik8nigHfqcfyuNMdA7WY61O9eB08n0
+ lspw==
+X-Gm-Message-State: AOJu0YxekrBzK1E/E7I2cW+9yh8c/lcvqacZjpR+tnp0+cTWY3t28i9i
+ WDglzo1T0owAAZ+hVBOzYLEdT0x/9RL+WwgWMBvfHnydgkc5/a/YoOBtKvSBBKhEKQzyUjoFLRo
+ RD5Tx
+X-Gm-Gg: ASbGncv11yOgxf+wtBSfR2S5rKSfepAdItWQ0BD2ax6xYHagjWhj3CSJH1OVh5emQ2H
+ QAYvxpsXZggLydouwgovEFO9Bg/kx8m/uCP4X/tBvTYEzDQaD2Ji5EUREApiJ9bRdRrbkcaY07n
+ /aCMNGiCMZlBBl8isQ/iWUr2Ux7dlLJyHnIdKmLqavV72gvxAZXLGkPEy+66qxbsnIyvqQHUuL0
+ PLLJ5axqdty96Df/N14kn9K8bp9wsiU1tzXuHenKLCpQe2oSz3nJavHCxVDnSTmxpiaHojPEYoP
+ U2MaMsN+xixN2F1RT4SQtl2Rnaj+xIkiQDtfQh8NoOR0AEaSz4RllAulD/1CiDU2zo1xE2ypGWo
+ QVf9Tv3WonfGrIzEKkDSTKrAT3kVpTk+ppK+XL/lQHAC6B2ord1Ot5CgNFC14T61ktrOHGzRdbd
+ BJlw1xXSBf7I2YYNqw
+X-Google-Smtp-Source: AGHT+IFHsOjVS/XZNj9BKNlgyeLZpKxovox9vO7yCppKPtznh1wW+E/z1jmQzOBgXyACWRtgIR7a4g==
+X-Received: by 2002:a05:600c:529a:b0:477:8a2a:123e with SMTP id
+ 5b1f17b1804b1-477c1133932mr119455345e9.33.1764005649101; 
+ Mon, 24 Nov 2025 09:34:09 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477a9deb126sm154030755e9.9.2025.11.24.09.34.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Nov 2025 09:06:55 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 24 Nov 2025 18:06:21 +0100
-Message-Id: <DEH381ZF2STN.G7QL6LUEEBKQ@ventanamicro.com>
-Subject: Re: [PATCH 4/7] hw/riscv: implement CBQRI bandwidth controller
-Cc: "Palmer Dabbelt" <palmer@dabbelt.com>, "Alistair Francis"
- <Alistair.Francis@wdc.com>, "Weiwei Li" <liwei1518@gmail.com>, "Daniel
- Henrique Barboza" <dbarboza@ventanamicro.com>, "Liu Zhiwei"
- <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, "Paolo Bonzini"
- <pbonzini@redhat.com>, "Nicolas Pitre" <npitre@baylibre.com>,
- =?utf-8?q?Kornel_Dul=C4=99ba?= <mindal@semihalf.com>, "Atish Kumar Patra"
- <atishp@rivosinc.com>, "Atish Patra" <atish.patra@linux.dev>, "Vasudevan
- Srinivasan" <vasu@rivosinc.com>, "yunhui cui" <cuiyunhui@bytedance.com>,
- "Chen Pei" <cp0613@linux.alibaba.com>, <guo.wenjia23@zte.com.cn>,
- <liu.qingtao2@zte.com.cn>,
- <qemu-riscv-bounces+qemu-riscv=archiver.kernel.org@nongnu.org>
-To: "Drew Fustini" <fustini@kernel.org>, <qemu-devel@nongnu.org>
-From: =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>
-References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
- <20251119-riscv-ssqosid-cbqri-v1-4-3392fc760e48@kernel.org>
-In-Reply-To: <20251119-riscv-ssqosid-cbqri-v1-4-3392fc760e48@kernel.org>
+ Mon, 24 Nov 2025 09:34:08 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] replay: Improve assert in replay_char_read_all_load()
+Date: Mon, 24 Nov 2025 17:34:07 +0000
+Message-ID: <20251124173407.50124-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=rkrcmar@ventanamicro.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,40 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-2025-11-19T16:42:20-08:00, Drew Fustini <fustini@kernel.org>:
-> From: Nicolas Pitre <npitre@baylibre.com>
->
-> Implement a bandwidth controller according to the Capacity and Bandwidth
-> QoS Register Interface (CBQRI) which supports these capabilities:
->
->   - Number of access types: 2 (code and data)
->   - Usage monitoring operations: CONFIG_EVENT, READ_COUNTER
->   - Event IDs supported: None, Total read/write byte count, Total
->                          read byte count, Total write byte count
->   - Bandwidth allocation operations: CONFIG_LIMIT, READ_LIMIT
->
-> Link: https://github.com/riscv-non-isa/riscv-cbqri/blob/main/riscv-cbqri.=
-pdf
-> Signed-off-by: Nicolas Pitre <npitre@baylibre.com>
-> [fustini: add fields introduced in the ratified spec: rpfx and p]
-> Signed-off-by: Drew Fustini <fustini@kernel.org>
-> ---
-> diff --git a/hw/riscv/cbqri_bandwidth.c b/hw/riscv/cbqri_bandwidth.c
-> +static uint32_t bandwidth_config(RiscvCbqriBandwidthState *bc,
-> +                                 uint32_t rcid, uint32_t at,
-> +                                 bool *busy)
-> +{
-> +    BandwidthAllocation *bw_alloc =3D get_bw_alloc(bc, rcid, at);
-> +
-> +    /* for now we only preserve the current BC_BW_ALLOC register content=
- */
+In replay_char_read_all_load() we get a buffer and size from the
+replay log.  We know the size has to fit an int because of how we
+write the log.  However the way we assert this is wrong: we cast the
+size_t from replay_get_array() to an int and then check that it is
+non-negative.  This misses cases where an over-large size is
+truncated into a positive value by the cast.
 
-There are a few checks that we could do even without any real
-accounting, like rbwb > 0, and sum_{rcid}(rcid.rbwb) <=3D mrbwb.
+Replace the assertion with checking that the size is in-range
+before doing the cast.
 
-Doing so might help us find some bugs in the software management layer.
-What is the level of ISA correctness that you're aiming for?
-(I'll tone down my review if nitpicks like that are not needed.)
+Coverity complained about the possible overflow: CID 1643440.
 
-Thanks.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ replay/replay-char.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/replay/replay-char.c b/replay/replay-char.c
+index 81dc416e988..4e58dd154af 100644
+--- a/replay/replay-char.c
++++ b/replay/replay-char.c
+@@ -126,8 +126,8 @@ int replay_char_read_all_load(uint8_t *buf)
+         int res;
+         replay_get_array(buf, &size);
+         replay_finish_event();
++        assert(size <= INT_MAX);
+         res = (int)size;
+-        assert(res >= 0);
+         return res;
+     } else if (replay_next_event_is(EVENT_CHAR_READ_ALL_ERROR)) {
+         int res = replay_get_dword();
+-- 
+2.43.0
+
 
