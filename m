@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B85C8CFD317
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 14:31:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8344ACFD313
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 15:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNXaZ-0007rD-Mc; Mon, 24 Nov 2025 09:30:47 -0500
+	id 1vNY3z-0006jC-64; Mon, 24 Nov 2025 10:01:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNXaX-0007qU-5P
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 09:30:45 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vNY3y-0006iz-85
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 10:01:10 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNXaU-00033r-TQ
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 09:30:44 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-42b38693c4dso1961706f8f.3
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 06:30:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vNY3w-0001Ce-FZ
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 10:01:09 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-477632d9326so26961205e9.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 07:01:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763994641; x=1764599441; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=U2EersBLKb9S6tlHedyCki0WgUrx4IajTbClSVPvW4g=;
- b=nIFprDF22lIvWf9AkUR1pPElkB7VclEoE7rNCRv+pH+Br+1wcr8SlIbfcR1ZBgusUe
- ZhyePvEOkxKpdI8hAhBj353weIbSRdpnctz6eSyDWVsNqXKW0JSNuwwDkl1BvNLdIUmK
- kNic5R9APZzDYzUzMRYDg18kiT1s7p9KaR9php57I+aZkiejHlpCBf3zuDd/JinUlHSI
- f5PJ3R+CKUVj87HT/TQCZiHMwTluEGhh+Tl8WWHould0/sbqp8q7M9bcJVYtI2jO9rdu
- fUUyZzXk/7x8UmmBM+4wJ5NUyMbl/L88rrNqzyVG42dzvRcBQTdVzQTL/I6V1Zkg4ueL
- qvMg==
+ d=linaro.org; s=google; t=1763996467; x=1764601267; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tEDDK6IXuw8hJEmM0iRHF5cbHpHneFq0dVKNU1MtQQI=;
+ b=nyeYYSWzmMvYIOmKw46TcJe7GeH7zRqNQeD/yYVSLmkbMOCaOrdN7Hf+0DqP9qUmpW
+ /0gGqE6Z+aQg8R8vCZvcPmc3rV5DQ8kGhutx4GdReph1rWrDH+hj7liQ4AqZdRJkRSsI
+ cZeDYKi37GeAIqqf+ej+gbdZxweSxVlTNtzS3Wj4CfcI+eNOGRgML03fWqhtHIm+1HMn
+ F2yvwtLv8QABC6ghWbiNw+7v8gGEndSsAYXChp7/MMyJngvpIg2JUW80jkNStWZb5f8k
+ lY1IibDp3e5My01+u4bz8IzNu2zaXE/yqookqOfUTLXZevUCj80KlVsmEbUm2wXgZlqB
+ 8c9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763994641; x=1764599441;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=U2EersBLKb9S6tlHedyCki0WgUrx4IajTbClSVPvW4g=;
- b=kczJ/N0mY6nxI3hnSXTp9J7nXcKhTXimb9AO8ot17901XVux5g30BRHPZetAeLaNVo
- H57L/m3xIyeCzWtPnPLgF/rCJOc+OZ8UUdWRk3uVq2jwDu7Lirx/N16PFrVKUr3kj9h/
- d6L7ORGYdGPZQIeVW91qy0OzKJn3i6hEkN/wo0ntqtm8TEBLh7tAXR8B0SpbAKe+JQOx
- HIMrN8yP+1jIk6g/TCNCJU93++XdUt60OoHzsi/v6wEjYYHQHL12PQg5oLl9u1SCirIw
- +DjeLCcfxN3n3sFOq5ryZCbMlIyJkHIEnAExYRP51XcG6gFZlVofUH7ZMBvQCElanNfw
- 8ltA==
-X-Gm-Message-State: AOJu0YxJFlE7mk544fzcyKza6IcyyO920MuAC7M8V6Qf24xiEIa1OVyS
- xZdXsvyOqlOxt2RjiOTD4l1wcbIQ9K12KGkDwK0pYs3kJFW+oVeZu2D0kgjMSf3buq1Fy483WYy
- qhcqe
-X-Gm-Gg: ASbGncuzlok+xNT82I+v+PmkHUJ+aR8PX5PzxLpZ9+ifjHT1f27fYi9BYgvpRwuhUVS
- o6y/am4AZxXHhydRlGLSSb85SesbKb78EL4AqUhAD0abOJmxts32QHA/HUCsgJBpofJwv6vGYH2
- V5D/Ar67LK17XLlnL09L/TVONSwYn/wJsjezLS6OmzKpcqtePek1VShcAMXP9R5VufhkrZpbI/t
- JqPs8PhBDgDzh+YTNVZ08XRm5Lfp7eMFnwHoxnxb7wzqFRLyF5NfswrGwRUXZ3Allrc8BtAQprd
- Vdw05Y4D2oWFF1dcXpM5wGqrD2q0HdFGGFfyEeDdD+gU0BSGQlIyI/ReRRiKLcT7CskHE2z9hKG
- qz2P2VDGcOZcTsFrUt7gcMyuEB3CfYK4bdHm4pC0/lAl6hgBFyrtlKyIOqCcgabsCdY+y1QvVfa
- WwDw/ChG2nVmHjF02j
-X-Google-Smtp-Source: AGHT+IHy9piOAc5XmdUEIca8IiF6ZwTSbAD9INmRPq1HVyQ0++JFGeeIDOypRu35PpemTXRisxon0g==
-X-Received: by 2002:a5d:5c84:0:b0:42b:3ab7:b8a4 with SMTP id
- ffacd0b85a97d-42cc1d0e42cmr13072184f8f.33.1763994641298; 
- Mon, 24 Nov 2025 06:30:41 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f34ff3sm29408930f8f.16.2025.11.24.06.30.40
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1763996467; x=1764601267;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tEDDK6IXuw8hJEmM0iRHF5cbHpHneFq0dVKNU1MtQQI=;
+ b=QwuHyS7Suu9bZ0iJ/ZFk5paCR2Y1iJvFgGrua+W6yaMZQwA8A2699Akrcnx1CQovVj
+ jkKfV+EjaQp5WVHLcBmWtJqq8lixmqn1b5xlfJYnzjvSQ6JqGlKFnYv/Qszx6aZRg/fa
+ JaIxcs3yuOx2Xjtc3J+1rZWx5zyiD21+c1V3zcDD8XR4LCLQ05UbH9x5LkdFsDKjaphN
+ wSACYpb81a0YZFpbGixPBj9rsAZKjcq1LqUylMlBwQkWjxvnGB4Dj9jZ9+SnL7+hI6GE
+ 9d1qaDiVr6+ooxvzhlIhrVxw97Bl8s3oTb2pBam4fNGUknIJgfwepa1yAZEXV9PkOBzp
+ cusA==
+X-Gm-Message-State: AOJu0YzJsIFPGmb6TUcvQhFOEDqQ6YM7ZovIdeUMFYT7VZ+fg0ZXPwWh
+ ngHrjxA6XirCDD9Ak9I4yK0AxpB99+OGovmXX5luTcSQ5TKq9aZ+Gd0hQ+jvptEy7bv28kRcUti
+ ZlDnI
+X-Gm-Gg: ASbGncvc7+7L+EnbyZmMsztT+/tEOXUdPyTnKdmUgtVBn+qFmLGvrQuW6wXNmEzNy2r
+ rCH2YR1WRFCzHz578s4PwHzIOxMHKB+FZXQ8gmbGL0D9T9dRftY9vxXv4PQMnhF6IfMYz9bPT35
+ mkJ8z7CuzgU/jUhTOfzow6CqhaTWUTSUkcXTuJ0pArgV8UelbmcJmIvk4+aZLnLK7WyejYEF/47
+ 7dBmlSQwBLzLEdkfuysdvxHR/r5O+wVijYqbPoL9mYPN8Xn26D1uMIXmwnnAHrXKji/f9pKdC1W
+ GEQ9OS7JNWQ0A7/PjPgqddjI9N2hC3BmINZM9Z3HRhx679R7fiAJ1Qb/w7PZAL22x68zpYDNds5
+ BDuQn7QjyswH665PeKR5BRQP5oS5xj74YzDLT7ZI5mtaI1vCO12FqBwWo3FcxAnA665FefDOquz
+ KUply0GedVyrQ=
+X-Google-Smtp-Source: AGHT+IHMGxqCRMQ4qLE6l1mFcoyL2oYb+r2Wkpn7CewgjaLja7JZm+FogcjJZOdLZJ5DdBAQQLiDnQ==
+X-Received: by 2002:a05:600c:474b:b0:46e:35a0:3587 with SMTP id
+ 5b1f17b1804b1-477c01ee377mr119128345e9.27.1763996464920; 
+ Mon, 24 Nov 2025 07:01:04 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477bf3af0ecsm202300355e9.9.2025.11.24.07.01.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Nov 2025 06:30:40 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 3/4] hw/arm/armv7m: Disable reentrancy guard for
- v7m_sysreg_ns_ops MRs
-Date: Mon, 24 Nov 2025 14:30:35 +0000
-Message-ID: <20251124143036.4113886-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251124143036.4113886-1-peter.maydell@linaro.org>
-References: <20251124143036.4113886-1-peter.maydell@linaro.org>
+ Mon, 24 Nov 2025 07:01:04 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 5C04A5F83A;
+ Mon, 24 Nov 2025 15:01:03 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Jim MacArthur <jim.macarthur@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 3/3] tests: Add test for ASID2 and write/read of feature
+ bits
+In-Reply-To: <20251120125833.123813-4-jim.macarthur@linaro.org> (Jim
+ MacArthur's message of "Thu, 20 Nov 2025 12:54:16 +0000")
+References: <20251120125833.123813-1-jim.macarthur@linaro.org>
+ <20251120125833.123813-4-jim.macarthur@linaro.org>
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Mon, 24 Nov 2025 15:01:03 +0000
+Message-ID: <87fra38ogg.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,80 +107,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For M-profile cores which support TrustZone, there are some memory
-areas which are "NS aliases" -- a Secure access to these addresses
-really performs an NS access to a different part of the device.  We
-implement these using MemoryRegionOps read and write functions which
-pass the access on with adjusted attributes using
-memory_region_dispatch_read() and memory_region_dispatch_write().
+Jim MacArthur <jim.macarthur@linaro.org> writes:
 
-Since the MR we are dispatching to is owned by the same device that
-owns the NS-alias MR (the TYPE_ARMV7M container object), this trips
-the reentrancy-guard that is applied by access_with_adjusted_size().
+> Tests ASID2 is present and FNG1, FNG0, and A2 are writable, and read
+> value shows the update.
+>
+> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+> ---
+>  tests/tcg/aarch64/system/asid2.c | 53 ++++++++++++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+>  create mode 100644 tests/tcg/aarch64/system/asid2.c
+>
+> diff --git a/tests/tcg/aarch64/system/asid2.c b/tests/tcg/aarch64/system/=
+asid2.c
+> new file mode 100644
+> index 0000000000..cfe69db2ae
+> --- /dev/null
+> +++ b/tests/tcg/aarch64/system/asid2.c
+> @@ -0,0 +1,53 @@
+> +/*
+> + * ASID2 Feature presence and enabled TCR2_EL1 bits test
+> + *
+> + * Copyright (c) 2025 Linaro Ltd
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include <stdint.h>
+> +#include <minilib.h>
+> +
+> +#define ID_AA64MMFR4_EL1 "S3_0_C0_C7_4"
+> +#define TCR2_EL1 "S3_0_C2_C0_3"
+> +
+> +int main()
+> +{
+> +    /*
+> +     * Test for presence of ASID2 and three feature bits enabled by it:
+> +     * https://developer.arm.com/documentation/109697/2025_09/Feature-de=
+scriptions/The-Armv9-5-architecture-extension
+> +     * Bits added are FNG1, FNG0, and A2. These should be RES0 if A2 is
+> +     * not enabled and read as the written value if A2 is enabled.
+> +     */
+> +
+> +    uint64_t out;
+> +    uint64_t idreg;
+> +
+> +    /* Mask is FNG1, FNG0, and A2 */
+> +    const uint64_t feature_mask =3D (1ULL << 18 | 1ULL << 17 | 1ULL << 1=
+6);
+> +    const uint64_t in =3D feature_mask;
+> +
+> +    asm("mrs %[x1], " ID_AA64MMFR4_EL1 "\n\t"
+> +        : [x1] "=3Dr" (idreg));
+> +    if ((idreg & 0xF00) !=3D 0) {
+> +        /* ASID2 is enabled */
+> +    } else {
+> +        ml_printf("FAIL: ASID2 not present in ID_AA64MMFR4 (%lx)\n", idr=
+eg);
+> +        return 1;
+> +    }
 
-Mark the NS alias MemoryRegions as disable_reentrancy_guard; this is
-safe because v7m_sysreg_ns_read() and v7m_sysreg_ns_write() do not
-touch any of the device's state.  (Any further reentrancy attempts by
-the underlying MR will still be caught.)
+If we instead use this to test for the presence of the feature and then...
 
-Without this fix, an attempt to read from an address like 0xe002e010,
-which is a register in the NS systick alias, will fail and provoke
+> +
+> +    asm("msr " TCR2_EL1 ", %[x0]\n\t"
+> +        "mrs %[x1], " TCR2_EL1 "\n\t"
+> +        : [x1] "=3Dr" (out)
+> +        : [x0] "r" (in));
+> +
+> +    if ((out & feature_mask) =3D=3D in) {
+> +        ml_printf("OK\n");
+> +        return 0;
+> +    } else {
+> +        ml_printf("FAIL: read value %lx !=3D written value %lx\n",
+> +                  out & feature_mask, in);
+> +        return 1;
+> +    }
 
- qemu-system-arm: warning: Blocked re-entrant IO on MemoryRegion: v7m_systick at addr: 0x0
+extend this part to check the bits are behaving as the feature dictates
+then we can add a second test like this (Makefile.softmmu-target):
 
-We didn't notice this earlier because almost all code accesses
-the registers and systick via the non-alias addresses; the NS
-aliases are only need for the rarer case of Secure code that needs
-to manage the NS timer or system state on behalf of NS code.
+  run-asid2-oldcpu: asid2
+          $(call run-test, $<, \
+            $(QEMU) -monitor none -display none \
+                    -chardev file$(COMMA)path=3D$<.out$(COMMA)id=3Doutput \
+                    $(QEMU_OPTS) $<)
 
-Note that although the v7m_systick_ops read and write functions
-also call memory_region_dispatch_{read,write}, this MR does not
-need to have the reentrancy-guard disabled because the underlying
-MR that it forwards to is owned by a different device (the
-TYPE_SYSTICK timer device).
+  run-asid2-oldcpu: QEMU_OPTS=3D-M virt -cpu cortex-a72 -display none $(QEM=
+U_BASE_ARGS) -kernel
 
-Reported via a stackoverflow question:
-https://stackoverflow.com/questions/79808107/what-this-error-is-even-about-qemu-system-arm-warning-blocked-re-entrant-io
+  EXTRA_RUNS +=3D run-asid2-oldcpu
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20251114155304.2662414-1-peter.maydell@linaro.org
----
- hw/arm/armv7m.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Although its a bit clunky - one day I'll get around to converting this
+lot to meson.
 
-diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
-index c4a9c3ac529..7fa1b37630e 100644
---- a/hw/arm/armv7m.c
-+++ b/hw/arm/armv7m.c
-@@ -442,6 +442,12 @@ static void armv7m_realize(DeviceState *dev, Error **errp)
-                               &v7m_sysreg_ns_ops,
-                               sysbus_mmio_get_region(sbd, 0),
-                               "nvic_sysregs_ns", 0x1000);
-+        /*
-+         * This MR calls memory_region_dispatch_read/write to access the
-+         * real region for the NVIC sysregs (which is also owned by this
-+         * device), so reentrancy through here is expected and safe.
-+         */
-+        s->sysreg_ns_mem.disable_reentrancy_guard = true;
-         memory_region_add_subregion(&s->container, 0xe002e000,
-                                     &s->sysreg_ns_mem);
-     }
-@@ -499,6 +505,12 @@ static void armv7m_realize(DeviceState *dev, Error **errp)
-         memory_region_init_io(&s->systick_ns_mem, OBJECT(s),
-                               &v7m_sysreg_ns_ops, &s->systickmem,
-                               "v7m_systick_ns", 0xe0);
-+        /*
-+         * This MR calls memory_region_dispatch_read/write to access the
-+         * real region for the systick regs (which is also owned by this
-+         * device), so reentrancy through here is expected and safe.
-+         */
-+        s->systick_ns_mem.disable_reentrancy_guard = true;
-         memory_region_add_subregion_overlap(&s->container, 0xe002e010,
-                                             &s->systick_ns_mem, 1);
-     }
--- 
-2.43.0
+> +}
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
