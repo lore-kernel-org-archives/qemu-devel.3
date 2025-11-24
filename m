@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3323CCFD313
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 02:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C86CFD313
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 02:07:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNLux-0005KB-RY; Sun, 23 Nov 2025 21:03:03 -0500
+	id 1vNLyZ-0002lB-ST; Sun, 23 Nov 2025 21:06:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
- id 1vNLuh-0005HP-BH; Sun, 23 Nov 2025 21:02:56 -0500
-Received: from out28-43.mail.aliyun.com ([115.124.28.43])
+ id 1vNLyT-0002jx-0g; Sun, 23 Nov 2025 21:06:41 -0500
+Received: from out28-81.mail.aliyun.com ([115.124.28.81])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
- id 1vNLud-00068L-Tl; Sun, 23 Nov 2025 21:02:45 -0500
+ id 1vNLyQ-0006sl-TB; Sun, 23 Nov 2025 21:06:40 -0500
 Received: from 10.13.14.160(mailfrom:chao.liu@zevorn.cn
- fp:SMTPD_---.fUE66VN_1763949749 cluster:ay29) by smtp.aliyun-inc.com;
- Mon, 24 Nov 2025 10:02:30 +0800
-Message-ID: <58606acd-6a62-41e1-94c7-bd9fce381b1a@zevorn.cn>
-Date: Mon, 24 Nov 2025 10:02:29 +0800
+ fp:SMTPD_---.fUBa4bQ_1763949991 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 24 Nov 2025 10:06:33 +0800
+Message-ID: <4968fb08-3475-444d-85dd-740de1800f12@zevorn.cn>
+Date: Mon, 24 Nov 2025 10:06:32 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: dbarboza@ventanamicro.com
-Cc: ajones@ventanamicro.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- palmer@dabbelt.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- zhiwei_liu@linux.alibaba.com, wangjingwei@iscas.ac.cn
-References: <20251111182944.2895892-2-dbarboza@ventanamicro.com>
-Subject: Re: [PATCH v4 1/5] target/riscv/cpu.c: remove 'bare' condition for
- .profile
+Cc: alistair.francis@wdc.com, liwei1518@gmail.com, palmer@dabbelt.com,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
+ wangjingwei@iscas.ac.cn
+References: <20251111182944.2895892-6-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v4 5/5] docs: add rvsp-ref.rst
 From: Chao Liu <chao.liu@zevorn.cn>
-In-Reply-To: <20251111182944.2895892-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20251111182944.2895892-6-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=115.124.28.43; envelope-from=chao.liu@zevorn.cn;
- helo=out28-43.mail.aliyun.com
+Received-SPF: pass client-ip=115.124.28.81; envelope-from=chao.liu@zevorn.cn;
+ helo=out28-81.mail.aliyun.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -60,37 +59,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 11 Nov 2025 15:29:40 -0300, Daniel Henrique Barboza wrote:
->We want to configure other CPU types to use profiles as an alternative
->to adding every profile extension explicitly, i.e. a profile is nothing
->more than an extension bundle.
->
->This means that a vendor CPU can set .profile=rva23s64 while having the
->same handling as any other vendor CPU. Same thing with all other CPU
->types.
+On Tue, 11 Nov 2025 15:29:44 -0300, Daniel Henrique Barboza wrote:
+>Add documentation on the new experimental board rvsp-ref.
 >
 >Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-
-Tested-by: Chao Liu <chao.liu.riscv@isrc.iscas.ac.cn>
+>---
+> docs/system/riscv/rvsp-ref.rst | 28 ++++++++++++++++++++++++++++
+> docs/system/target-riscv.rst   |  1 +
+> 2 files changed, 29 insertions(+)
+> create mode 100644 docs/system/riscv/rvsp-ref.rst
+>
+>diff --git a/docs/system/riscv/rvsp-ref.rst b/docs/system/riscv/rvsp-ref.rst
+>new file mode 100644
+>index 0000000000..3889fce413
+>--- /dev/null
+>+++ b/docs/system/riscv/rvsp-ref.rst
+>@@ -0,0 +1,28 @@
+>+Experimental RISC-V Server Platform Reference board (``rvsp-ref``)
+>+==================================================================
+>+
+>+The RISC-V Server Platform specification `spec`_ defines a standardized
+>+set of hardware and software capabilities that portable system software,
+>+such as OS and hypervisors, can rely on being present in a RISC-V server
+>+platform. This machine aims to emulate this specification, providing
+>+an environment for firmware/OS development and testing.
+>+
+>+The main features included in rvsp-ref are:
+>+
+>+*  a new CPU type rvsp-ref CPU for server platform compliance
+There is an extra space before the character "a", which can be removed.
 
 Thanks,
 Chao
->---
-> target/riscv/cpu.c | 1 -
-> 1 file changed, 1 deletion(-)
->
->diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->index 73d4280d7c..975f7953e1 100644
->--- a/target/riscv/cpu.c
->+++ b/target/riscv/cpu.c
->@@ -2792,7 +2792,6 @@ static void riscv_cpu_class_base_init(ObjectClass *c,
-const void *data)
->         mcc->def->bare |= def->bare;
->         if (def->profile) {
->             assert(profile_extends(def->profile, mcc->def->profile));
->-            assert(mcc->def->bare);
->             mcc->def->profile = def->profile;
->         }
->         if (def->misa_mxl_max) {
+>+* AIA
+>+* PCIe AHCI
+>+* PCIe NIC
+>+* No virtio mmio bus
+>+* No fw_cfg device
+>+* No ACPI table
+>+* Minimal device tree nodes
 
