@@ -4,81 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72041CFD355
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 21:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DAEACFD35A
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 21:29:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNe1Y-0000af-8g; Mon, 24 Nov 2025 16:23:04 -0500
+	id 1vNe7Y-00035f-U8; Mon, 24 Nov 2025 16:29:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNe1G-0000S5-Pn
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 16:22:48 -0500
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNe1F-0000TZ-6G
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 16:22:46 -0500
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-642fcb38f35so3325473d50.1
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 13:22:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764019363; x=1764624163; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hGhg3WUEZygIztlrqkQH8K69wcx1Wk5hLvPb7vzAbYw=;
- b=QI6SmTP07uy9dXg5Sa/1062Uf1n6/0BIuhxIrgXmHsulGtbB6VGz2aBXKHPE+J5ujA
- KyrjuU4jsHjEE7RxXZMqBWnbL6cv2/sXM8cpAERrs3t6W+BjIgcEOkxDpWEX7YLrcAVV
- 86BDrWLIm4HCVZdNRCs5MzUxWGGIBS7eDtGx9hdzILuhTh2ObCk4yuaR9j2fJs7e9YUx
- jpWSILUr0yYR3K/VOsyIuH5Z0V22g/S+Cq/7ZFTFJhWsQWXRa2jVqbJsc3nVTcJD8P1U
- LGRbX/2gcLsnY0uBqBNAPk2DGLi53Z8w9QyVhQeNSLxRr0eFrWXkWrWNcLv/VI4AUlZF
- jKOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764019363; x=1764624163;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hGhg3WUEZygIztlrqkQH8K69wcx1Wk5hLvPb7vzAbYw=;
- b=pNcc6zoVvud1uItbeMBUXhG++6yya7q8JvY5WPzfovtb+8g/CZKRQ9W6CKVbMnswnz
- p2/2QlG8CaHCHXYTN9C7a8mn6Q6hD7cmjlv1pR9O+SYcr6xILLX3J0gBUp+DTxJZDfoP
- 8nptz9ipAR7+nVz9n1R9kAZ+CGnwnbF/gs1YrcLXbL2umCsJLI1SBhpoaNsVaCxScrRu
- yu+yzW8BK7fMTQMT8yay2DY4uj2cK9g27/4HhOx3DqWQ7i0uM4mbfAZkjul2JbFtmIbt
- YeFd0EjP19nAgv7xoMFzK2NdR4tCdHTjP2NgInNMGlLzo9cjti0kjQXr+Gm9OF7s3bEN
- Y/9A==
-X-Gm-Message-State: AOJu0YylMXGybWMpLT6KWV2PGhL6HPQ07d4/udwOZP9uA/Lp8Uc2hChz
- fIxqEriNKBgv0g904kbNbT4gbtFQltQ+XY7YZOIA3X59oI/jaQSY3d7r/V0HSgCwv9v16Acuzk5
- Y2q+/L4Rka+ecUwp2s3+2EZDVcSwlbSYsnVeK9jVqXA==
-X-Gm-Gg: ASbGncvi0xo/DLoPv0vtxl7z0GTQ2lVpPlqrirOcg1MXtALdf576HayJi3EbCrpc6vX
- mfPOVKkYpsEsCgBNeRlPOVZC7rjUsaFKeYzlDm5enCtHQxm/JAzevosRP8oqyu6yzHAKEn3WN+c
- lLP/AJ+Tb3FLCsGjYzj2aW6JDlgkt8zSkhvgdxMMUAKaombc4JPByfuVqaT+qDLHU6QqoIdqSV/
- 42/6b7QC3vMNEvxx8JGDtobzEbs56YkOsGi0XjpgOCO7g+j4nwiWhfQOjfsl0wmkM1o5arP
-X-Google-Smtp-Source: AGHT+IE/JhK+j2T6H+R2MKzEUcgPgteN8WiYodf4bb+zETX+HZ0Z0nxGwOeNerEyR9dZmX9heKBMI5dZc6TGuyanO4E=
-X-Received: by 2002:a53:acd8:0:20b0:63f:a89c:46f9 with SMTP id
- 956f58d0204a3-64302ab7bdbmr7266880d50.40.1764019363538; Mon, 24 Nov 2025
- 13:22:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vNe7X-000350-DL
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 16:29:15 -0500
+Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vNe7V-0002B4-Or
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 16:29:15 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1764019735; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=WNuNwbydehGAKVPWkadgdOGHa5yx96y0SJKtja5dIHeOmuVVC2KTwdu0FYaZgYl/jMyraNObGjSOr2CRnaIKlRacjD+yfWND6aNOJHa60qtWzCK71xa7Ln7BOIsKkNQ4Qezse7l7Jwf/sethRjblCjCdkc3s0RUTGAmzb7HYazc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1764019735;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=hTH1pOkaBQxStiEDOzRG8+oy0n/iY9EvYmXhWfPQpbo=; 
+ b=DB8CvF3RJcjFB9DM7nsf9L3XDi8EQaHMo5zCMZyWKhbMG86RPmUAxvUdeeU/wkjy80yktJSIOA8FQopDWcWi70Bv73ZuUoBYax75s2g7CwdVRrp3PQVltTQf8pVZIDtC0CYhUf72kRdHLSyoZCbzHg4A4Bl8re5geyaFmp3qMWs=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764019735; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=hTH1pOkaBQxStiEDOzRG8+oy0n/iY9EvYmXhWfPQpbo=;
+ b=UZ/MSsB5QtFKbvCaFeldkF4KEdrkv/s2LRndeFd4yq8tIwszeICfn4nZCphSmYnI
+ 982UfBHRwv0HKmY66M3lJn98s6ak5b3sxlCezKJOTuOK0del0RJ6VpTRc825UWCPtIt
+ 40UMhCCVxYislk0Tg+o+os3MbVdpcAuPSQWnd+P4=
+Received: by mx.zohomail.com with SMTPS id 17640197334407.1296674011802;
+ Mon, 24 Nov 2025 13:28:53 -0800 (PST)
+Message-ID: <19852f51-0c20-463d-98d7-5219f17ca45c@collabora.com>
+Date: Tue, 25 Nov 2025 00:28:49 +0300
 MIME-Version: 1.0
-References: <20251122002656.687350-1-peterx@redhat.com>
- <20251122002656.687350-5-peterx@redhat.com>
-In-Reply-To: <20251122002656.687350-5-peterx@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Nov 2025 21:22:31 +0000
-X-Gm-Features: AWmQ_bn9w4Lf-0UbzLBPMS3fSxPuCDQ6-eOGGWylEo9-GujHHq-8d9vVWrh5xs8
-Message-ID: <CAFEAcA9K8sFKSV+nbQ9UKJW5PNnnQwLNuuyQY7gX2LMEk8ui-g@mail.gmail.com>
-Subject: Re: [PULL 4/9] migration: Use warn_reportf_err() where appropriate
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v5 1/2] virtio-gpu: fix error handling in
+ virgl_cmd_resource_create_blob
+To: Honglei Huang <honghuan@amd.com>, alex.bennee@linaro.org,
+ odaki@rsg.ci.i.u-tokyo.ac.jp, armbru@redhat.com
+Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, Ray.Huang@amd.com
+References: <20251124032423.227712-1-honghuan@amd.com>
+ <20251124032423.227712-2-honghuan@amd.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <20251124032423.227712-2-honghuan@amd.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.184.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,58 +84,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 22 Nov 2025 at 02:02, Peter Xu <peterx@redhat.com> wrote:
->
-> From: Markus Armbruster <armbru@redhat.com>
->
-> Replace
->
->     warn_report("...: %s", ..., error_get_pretty(err));
->
-> by
->
->     warn_reportf_err(err, "...: ", ...);
->
-> Prior art: commit 5217f1887a8 (error: Use error_reportf_err() where
-> appropriate).
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-> Link: https://lore.kernel.org/r/20251115083500.2753895-3-armbru@redhat.com
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+On 11/24/25 06:24, Honglei Huang wrote:
+> Fix inverted error check in virgl_cmd_resource_create_blob() that causes
+> the function to return error when virtio_gpu_create_mapping_iov() succeeds.
+> 
+> virtio_gpu_create_mapping_iov() returns 0 on success and negative values
+> on error. The check 'if (!ret)' incorrectly treats success (ret=0) as an
+> error condition, causing the function to fail when it should succeed.
+> 
+> Change the condition to 'if (ret != 0)' to properly detect errors.
+> 
+> Fixes: 7c092f17ccee ("virtio-gpu: Handle resource blob commands")
+> Signed-off-by: Honglei Huang <honghuan@amd.com>
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 > ---
->  migration/multifd.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index a529c399e4..6210454838 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -464,8 +464,8 @@ static void migration_ioc_shutdown_gracefully(QIOChannel *ioc)
->           */
->          migration_tls_channel_end(ioc, &local_err);
->          if (local_err) {
-> -            warn_report("Failed to gracefully terminate TLS connection: %s",
-> -                        error_get_pretty(local_err));
-> +            warn_reportf_err(local_err,
-> +                        "Failed to gracefully terminate TLS connection: ");
+>  hw/display/virtio-gpu-virgl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 94ddc01f91..e60e1059df 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -701,7 +701,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
+>          ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
+>                                              cmd, &res->base.addrs,
+>                                              &res->base.iov, &res->base.iov_cnt);
+> -        if (!ret) {
+> +        if (ret != 0) {
+>              cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+>              return;
 >          }
->      }
 
-Hi; Coverity points out (CID 1643463) that this introduces a double-free
-of local_err. In this function local_err is marked up as g_autoptr()
-so it is automatically freed when it goes out of scope. This was needed
-because error_get_pretty() doesn't free its argument. But
-warn_reportf_err() *does* free its error argument, so now we free it twice.
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-Dropping the g_autoptr markup would be enough, I think.
-
-The "prior art" commit 5217f1887a8 also seemed to introduce
-some double-frees in hw/usb/dev-mtp.c, but it looks like we
-fixed those in 562a55864 (but with a Fixes: tag that didn't
-point at the commit that introduced them but at a different
-blameless one).
-
-thanks
--- PMM
+-- 
+Best regards,
+Dmitry
 
