@@ -4,94 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE359CFD313
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 16:28:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 425D9CFD318
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 16:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNZQ2-0002BU-TU; Mon, 24 Nov 2025 11:28:03 -0500
+	id 1vNZqE-0007Ze-I8; Mon, 24 Nov 2025 11:55:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNZQ0-0002B5-Ln
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 11:28:00 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
+ id 1vNZqC-0007YY-C3
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 11:55:04 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNZPx-0003yk-BS
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 11:28:00 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-477b5e0323bso28828615e9.0
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 08:27:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
+ id 1vNZqA-0000wf-Sf
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 11:55:04 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-429c5e0f94eso539302f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 08:55:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764001675; x=1764606475; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=T2dwCYYa3ervrITpiwB3L7hO3YrvKF+imZwiyIl1FPE=;
- b=YqChycif/QXd00b8/B6Y6y46pfdNMqtS0bnHlQlO5qBzwIkt8t0Tn4bj5kvK2YBx9Q
- DNCNFkBy5BwS1asFm6KlnSnWfo+kY0XPo7lfwXvFcjLy7fL7mZmxKXBpXhjCY83Lhua0
- 8ZAxMqz2oedM0YJyesACw75YtW0JJWaZewIn3FntHh6RH5P/tnCqaX+5iy/zcD9o4v/M
- B7bSBaaTGkjiYy8Al5i0JYdXbe06yx2Uog/YjXCNfYqkXsa/6o0kIz5Naoo3l3lfzueT
- YG78EdWSqE+jbO2Ocn38ZBWuSemF/7CIGfR+T8pBmtXylhsLp3t43I7NT1lbIgNm4RyZ
- FsVw==
+ d=ventanamicro.com; s=google; t=1764003301; x=1764608101; darn=nongnu.org;
+ h=in-reply-to:references:from:to:cc:subject:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=de/nL1X6CIhlZMzkys7paLOokbEaoPrAmuKY8a3olBA=;
+ b=U45MQOtHKyl4/h8COmCuXj0r922CQT2BGbq7AXRkpEVlB0W8EUUTkS0DaZRqiEsurA
+ M+5W/v1m5nhJNauB63YkeUNmzDrW0B/ZqPT06jvJJrFRE+geF+/yY7Iuzd3+qH3SAQ4J
+ PJo6W6lLRH0iBriTnIiMhjw3YJAMOS8HCVQVqhL1zD3dhJ+dP6f4o5gMatcJLw1mm+th
+ VBndFJONa4iZ/FbKleZ4ttvTK91CHn4j1kD4/pPSMX/AvCo01db4BzVlJqVudCEdZIGU
+ j/RgGATgcgam3WRBBlzE/g0eXdb5ePKw89fP9m/AfifA4MGrQ5Q5JitNBAKLtu6kGkFI
+ lUiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764001675; x=1764606475;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=T2dwCYYa3ervrITpiwB3L7hO3YrvKF+imZwiyIl1FPE=;
- b=LsC3bSo0Y2wzHCi9M8THagzcgBOfgsH1YY5zBSV28pRaG9Jz63tiM9RUjVqkqNzOPf
- QLmvTNL2CiBYrzMUh5WU0Ni6hF6sYsAQZi4b1tW7tQ591NC6s8G3xX/uv9glLlPL5rp0
- xzF+pY3zinBH0MBkEFdICTkQzkHY5gdDHNXahWdMFsx//9HsgVI9UF3ARgWdwAx8tjab
- ZAee0BtqwADnbKC8u15iwvIIvhMrT2oqJF1mZA2YfuL0V+19We7i5ZcJCtaNZBZzjIiR
- MYviUbyjAK7Pq/XQy+FAh08S8sRRK1EAEWYxxj5OFjKSqBOvXk1nGPM47TKuqC7f1rav
- lcPA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsuIDi6dNrMT92JsTvyNRdDpQGmCwhoA4urfg+RBqKFC5Ud+AbMyRnKaeSBLxcYq/tmRYjnHVIq1GW@nongnu.org
-X-Gm-Message-State: AOJu0YxNcaxWfNErvqiftMoYKlp0MR+4+gwVFgk2JnYcPKMHs8fro2TM
- LC0cn4Q+uRCDDpXTBGAWpQElRzefOImp07nzQoKY5x13WfVh0FSyj89XjZADECx59EE=
-X-Gm-Gg: ASbGncvIj+4NQaBsMqiBDJZdqTN4wK642/zql70bbogGILjCxoIBuMHcjuAaxuBfoDz
- t6j0u+6FsourKiHfjqVMYJgWK7zQzsSW9wX1S3GNhlRoGtnfN868e3S27eMGn1vC8jBea8WyK3t
- bd+KELklyQKiOsdTWsv5PWMYKTn06gJ+RvFq8x44JSnC1sB2brRYNVJLhrtcGcDovZt0CRRRF3j
- 4o8SDALl7M0ZXTUsNRw82KDEEQdOGvJY3tN3cyRCQJ36CQpY5qvANsfJM+1QgMw7I+/tJElciou
- b5Y4bGMNRW+sc+DB//O+N9aH34zmzmvJ7U9JVCPUhltS56XftFSgaT8AW5HDxj5Hd84fDS5rpo3
- nBczH+KHRDwY130xtM9/Y3hH9Y1mlvSkJgxdnLO1WTWBixZ/DAYv60hR2iYaX+unSfr6dFtO5IL
- B26bGH6uYAJ+UjnCSf23gZD6Vd2UI2f6LctCwy4aBB6m8PSStkvyUA5Q==
-X-Google-Smtp-Source: AGHT+IEXCz2cVSU0+M6kSXnTBmxIikzPHTzSN1ZW6//OUB6uEoZqwrEr69CCMC0cN1nTljQJ44i4Iw==
-X-Received: by 2002:a05:600c:4f45:b0:45d:5c71:769d with SMTP id
- 5b1f17b1804b1-477c04db9a0mr133970575e9.8.1764001675374; 
- Mon, 24 Nov 2025 08:27:55 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477bf3558d5sm203524175e9.1.2025.11.24.08.27.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Nov 2025 08:27:54 -0800 (PST)
-Message-ID: <cd027328-a4d0-4052-acb6-56af1122535b@linaro.org>
-Date: Mon, 24 Nov 2025 17:27:53 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0 2/2] hw/pci: Rename PCIDeviceClass::exit() ->
- PCIDeviceClass::unrealize()
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- "Michael S . Tsirkin" <mst@redhat.com>
-References: <20251124103244.78932-1-philmd@linaro.org>
- <20251124103244.78932-3-philmd@linaro.org>
- <9f13fc0a-c5d8-3e73-0ec9-a6d3498888ce@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <9f13fc0a-c5d8-3e73-0ec9-a6d3498888ce@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ d=1e100.net; s=20230601; t=1764003301; x=1764608101;
+ h=in-reply-to:references:from:to:cc:subject:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=de/nL1X6CIhlZMzkys7paLOokbEaoPrAmuKY8a3olBA=;
+ b=rhS3DWI/AK0+tMXpsn0oy8RfHcjuVWwGdBSKOei4REa9DTbWgWFiMcZKkdFnpDYHv6
+ nirtjzgzcIjyRneyPZuZTdIDkZZy/8jAxJWWeZc6FiDFphDA7KwTjoiwWMXgddFc7ZYR
+ gVLadWbLy3K7QzHr1MrdHKR/sVGHtpAOZbW+J+Kk29PAAvhHA++z+Lfj94Acqu2mY1zw
+ dlKkMb5/d0KsBuLNbRb7whJwTjCFrrrv7OqunY67VwjxixbhQkmzLe3lCj4qSI0YBhxd
+ XOoMbnSoLIix+2vohAWoS4sr9RIsIQrIXAiKTgu6beM2Lu+xijf4wF0+OhH2NIpAIQlc
+ zfPQ==
+X-Gm-Message-State: AOJu0Yxrzq12gK3aMNLzrzzEjwcBm/3ZkokS0hKF+SJOq+1dyH15z0RH
+ xPmf0tkd5HRDWpnxSYsgTNrvdcjd6QJJZpO/7l2W8T8NyyrdPvyZS3OP13fJTk49iI8=
+X-Gm-Gg: ASbGncutBB97z3kU4BRIx1yXMBE+Wt9x2mm7ipoSvBYGuqvhvYx0C2paEHjukHo9+sM
+ sMtWSzQdxjjn8o0PRdfHHW5zrW+E2BgQHzzUyfgMEQWcrD9OoU+OCJpByjd8P7amvqK+yzJtjrY
+ hYMKe4UPBkFcnk6U8QoaPppUuuRicfZmimmDk3keAR2sGbD2AGUMTmYkXRz1+lnP0CWkZ1V//4t
+ aT2j92wVsnqJqlLcYFbeM8e2TcTfjmuElYvTe7SLzOWfqrmOsqzL40LndaKWDXrQfJHAWLm66Pk
+ EJlECsENbasKHmaMEtSYFbTgYddTwT6Q5k7hU7C8fupR0eumdNMcCrOGRSQ7XPnHSr4F4DkjIRC
+ 6O/PvGLn/cVJZ63KM0YgDQ81I8hB1NTxcINMTfPSmiqXzR+2Yo2AdkfLXNJ1hUQmynX9CWvagtG
+ pMmZX34q0gBw==
+X-Google-Smtp-Source: AGHT+IHrHQe/gGtpnjuGp01WJdMtGbyDl6MaVugqBX/YEn4FtcnTRmcRG4/lv4qEi6lGJfrvotdinA==
+X-Received: by 2002:a05:6000:310b:b0:429:c8f6:587c with SMTP id
+ ffacd0b85a97d-42cc3cbdfc2mr6933915f8f.0.1764003300617; 
+ Mon, 24 Nov 2025 08:55:00 -0800 (PST)
+Received: from localhost ([2a02:8308:a00c:e200::3052])
+ by smtp.gmail.com with UTF8SMTPSA id
+ ffacd0b85a97d-42cb7fa35b7sm29698215f8f.20.2025.11.24.08.54.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Nov 2025 08:55:00 -0800 (PST)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 24 Nov 2025 17:54:26 +0100
+Message-Id: <DEH2YXGOYGO7.1J2NUI1KD165O@ventanamicro.com>
+Subject: Re: [PATCH 1/7] riscv: implement Ssqosid extension and srmcfg CSR
+Cc: <qemu-devel@nongnu.org>, "Palmer Dabbelt" <palmer@dabbelt.com>,
+ "Alistair Francis" <Alistair.Francis@wdc.com>, "Weiwei Li"
+ <liwei1518@gmail.com>, "Daniel Henrique Barboza"
+ <dbarboza@ventanamicro.com>, "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>,
+ <qemu-riscv@nongnu.org>, "Paolo Bonzini" <pbonzini@redhat.com>, "Nicolas
+ Pitre" <npitre@baylibre.com>, =?utf-8?q?Kornel_Dul=C4=99ba?=
+ <mindal@semihalf.com>, "Atish Kumar Patra" <atishp@rivosinc.com>, "Atish
+ Patra" <atish.patra@linux.dev>, "Vasudevan Srinivasan" <vasu@rivosinc.com>,
+ "yunhui cui" <cuiyunhui@bytedance.com>, "Chen Pei"
+ <cp0613@linux.alibaba.com>, <guo.wenjia23@zte.com.cn>,
+ <liu.qingtao2@zte.com.cn>,
+ <qemu-riscv-bounces+qemu-riscv=archiver.kernel.org@nongnu.org>
+To: "Drew Fustini" <fustini@kernel.org>
+From: =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>
+References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
+ <20251119-riscv-ssqosid-cbqri-v1-1-3392fc760e48@kernel.org>
+ <DEDNGGQCPNKP.25HNT2IHYB0C2@ventanamicro.com> <aR9+NoQVkxq3mcP6@x1>
+In-Reply-To: <aR9+NoQVkxq3mcP6@x1>
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=rkrcmar@ventanamicro.com; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,121 +113,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/11/25 14:56, BALATON Zoltan wrote:
-> On Mon, 24 Nov 2025, Philippe Mathieu-Daudé wrote:
->> Commit 7ee6c1e182c ("pci: Permit incremental conversion of
->> device models to realize") renamed:
->>
->>  PCIDeviceClass::init() -> PCIDeviceClass::realize()
->>
->> Finish the conversion by renaming the counter part
->>
->>  PCIDeviceClass::exit() PCIDeviceClass::unrealize()
->>
->> This clarifies the handler is called during the DeviceUnrealize
->> path, not during Object destruction in instance_finalize().
->>
->> Manual change adapting style when needed.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> include/hw/pci/pci.h                |  1 -
->> include/hw/pci/pci_device.h         |  3 ++-
->> hw/audio/ac97.c                     |  8 ++++----
->> hw/audio/es1370.c                   |  8 ++++----
->> hw/audio/intel-hda.c                |  8 ++++----
->> hw/audio/via-ac97.c                 |  4 ++--
->> hw/char/diva-gsp.c                  |  6 +++---
->> hw/char/serial-pci-multi.c          |  8 ++++----
->> hw/char/serial-pci.c                |  4 ++--
->> hw/cxl/switch-mailbox-cci.c         |  4 ++--
->> hw/display/ati.c                    |  8 ++++----
->> hw/display/bochs-display.c          |  4 ++--
->> hw/display/vga-pci.c                |  4 ++--
->> hw/ide/cmd646.c                     |  4 ++--
->> hw/ide/ich.c                        |  4 ++--
->> hw/ide/piix.c                       |  6 +++---
->> hw/ide/via.c                        |  4 ++--
->> hw/mem/cxl_type3.c                  |  4 ++--
->> hw/misc/edu.c                       |  4 ++--
->> hw/misc/ivshmem-pci.c               |  4 ++--
->> hw/misc/pci-testdev.c               |  5 ++---
->> hw/net/can/can_kvaser_pci.c         |  4 ++--
->> hw/net/can/can_mioe3680_pci.c       |  4 ++--
->> hw/net/can/can_pcm3680_pci.c        |  4 ++--
->> hw/net/can/ctucan_pci.c             |  4 ++--
->> hw/net/e1000.c                      |  5 ++---
->> hw/net/e1000e.c                     |  4 ++--
->> hw/net/eepro100.c                   |  8 ++++----
->> hw/net/igb.c                        |  4 ++--
->> hw/net/igbvf.c                      |  4 ++--
->> hw/net/ne2000-pci.c                 |  4 ++--
->> hw/net/pcnet-pci.c                  |  4 ++--
->> hw/net/rocker/rocker.c              |  4 ++--
->> hw/net/rtl8139.c                    |  4 ++--
->> hw/net/sungem.c                     |  4 ++--
->> hw/net/tulip.c                      |  4 ++--
->> hw/net/vmxnet3.c                    |  4 ++--
->> hw/nvme/ctrl.c                      |  4 ++--
->> hw/pci-bridge/cxl_downstream.c      |  4 ++--
->> hw/pci-bridge/cxl_root_port.c       |  2 +-
->> hw/pci-bridge/cxl_upstream.c        |  4 ++--
->> hw/pci-bridge/gen_pcie_root_port.c  |  2 +-
->> hw/pci-bridge/pci_bridge_dev.c      |  4 ++--
->> hw/pci-bridge/pci_expander_bridge.c |  8 ++++----
->> hw/pci-bridge/pcie_pci_bridge.c     |  4 ++--
->> hw/pci-bridge/pcie_root_port.c      |  4 ++--
->> hw/pci-bridge/simba.c               |  2 +-
->> hw/pci-bridge/xio3130_downstream.c  |  4 ++--
->> hw/pci-bridge/xio3130_upstream.c    |  4 ++--
->> hw/pci-host/designware.c            |  2 +-
->> hw/pci-host/xilinx-pcie.c           |  2 +-
->> hw/pci/pci.c                        |  4 ++--
->> hw/remote/proxy.c                   |  4 ++--
->> hw/riscv/riscv-iommu-pci.c          |  4 ++--
->> hw/scsi/esp-pci.c                   |  4 ++--
->> hw/scsi/lsi53c895a.c                |  4 ++--
->> hw/scsi/megasas.c                   |  4 ++--
->> hw/scsi/mptsas.c                    |  4 ++--
->> hw/scsi/vmw_pvscsi.c                | 10 ++++------
->> hw/sd/sdhci-pci.c                   |  4 ++--
->> hw/ufs/ufs.c                        |  4 ++--
->> hw/usb/hcd-ehci-pci.c               |  4 ++--
->> hw/usb/hcd-ohci-pci.c               |  8 ++++----
->> hw/usb/hcd-uhci.c                   |  4 ++--
->> hw/usb/hcd-xhci-pci.c               |  4 ++--
->> hw/vfio/pci.c                       |  4 ++--
->> hw/virtio/virtio-pci.c              |  4 ++--
->> hw/watchdog/wdt_i6300esb.c          |  4 ++--
->> hw/xen/xen_pt.c                     |  4 ++--
->> 69 files changed, 151 insertions(+), 155 deletions(-)
->>
-> [...]
->> diff --git a/hw/display/ati.c b/hw/display/ati.c
->> index f7c0006a879..6b9f06b6b36 100644
->> --- a/hw/display/ati.c
->> +++ b/hw/display/ati.c
->> @@ -948,7 +948,7 @@ static const MemoryRegionOps ati_mm_ops = {
->>     .endianness = DEVICE_LITTLE_ENDIAN,
->> };
->>
->> -static void ati_vga_realize(PCIDevice *dev, Error **errp)
->> +static void ati_vga_pci_realize(PCIDevice *dev, Error **errp)
-> 
-> Why rename this?
-> 
->> {
->>     ATIVGAState *s = ATI_VGA(dev);
->>     VGACommonState *vga = &s->vga;
->> @@ -1032,7 +1032,7 @@ static void ati_vga_reset(DeviceState *dev)
->>     s->mode = VGA_MODE;
->> }
->>
->> -static void ati_vga_exit(PCIDevice *dev)
->> +static void ati_vga_pci_unrealize(PCIDevice *dev)
-> 
-> Can you just call it ati_vga_unrealize like in other devices?
+2025-11-20T12:46:46-08:00, Drew Fustini <fustini@kernel.org>:
+> On Thu, Nov 20, 2025 at 05:07:03PM +0100, Radim Kr=C4=8Dm=C3=A1=C5=99 wro=
+te:
+>> 2025-11-19T16:42:17-08:00, Drew Fustini <fustini@kernel.org>:
+>> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> > @@ -216,6 +216,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>> >      ISA_EXT_DATA_ENTRY(ssdbltrp, PRIV_VERSION_1_13_0, ext_ssdbltrp),
+>> >      ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
+>> >      ISA_EXT_DATA_ENTRY(sspm, PRIV_VERSION_1_13_0, ext_sspm),
+>> > +    ISA_EXT_DATA_ENTRY(ssqosid, PRIV_VERSION_1_12_0, ext_ssqosid),
+>>=20
+>> Just out of curiosity, where does PRIV_VERSION_1_12_0 come from?
+>
+> Ssqosid was originally ratified as a separate document but it since was
+> add to the Privileged Architecture document [1]. However, the Supervisor
+> Level ISA was version 1.13 when Ssqosid was added, so I should change
+> the above to PRIV_VERSION_1_13_0.
 
-Sure, will do in v2.
-
+I was mainly wondering if the PRIV_VERSION_* symbols have any meaning.
+I think PRIV_VERSION_1_13_0 refers to manual version 20241017 while the
+changelog has Ssqosid in 20241101...  I guess there is no meaning, and
+PRIV_VERSION_1_12_0 would work just as well. :)
 
