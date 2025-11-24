@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3624CFD347
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 18:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47923CFD347
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 18:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNbQw-0005JA-20; Mon, 24 Nov 2025 13:37:07 -0500
+	id 1vNbRS-0005pX-EY; Mon, 24 Nov 2025 13:37:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vNbQu-0005I9-C2
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 13:37:04 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1vNbR8-0005Ts-R2
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 13:37:18 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vNbQs-0007T4-LE
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 13:37:04 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-299d40b0845so75119565ad.3
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 10:37:02 -0800 (PST)
+ id 1vNbR7-0007W1-4s
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 13:37:18 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-29808a9a96aso53788715ad.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 10:37:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764009421; x=1764614221; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764009436; x=1764614236; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RATSlWM9SDnmkhVVd54eKlVYnmlml6ZviGqry/IFNyo=;
- b=yOr8hkWlBrCY/x/Gb3r5au3LvzAFdiAP9UUAW6vLjNLGPC/FEusR5+XgIOvui0R46e
- J8J9nQwOZBpRpY6LsXM5nGusM1TF64TDdVsdMwxWpZmXtSAZdWfOFvUBdwGnwVHTWr05
- pz7UpqWAgW63pO6nrfaYqghybZmgy6rbCf8youXFNT8Bpheve6gdhdXyztRRk3gjaxbI
- hFv/++lvgNDhVQQcAUAfvVFw5U9fLGDNgnq6QepFCgLk/cNz6LqTt1XFKPg6CkYYX5t3
- RipOI0vkCBhCTjR2mMcn07Ofew7d2OjzB0LGvOITyI2mKeMgDjfSwImocAt3teOyI52q
- 8CMQ==
+ bh=6quMaPOwz3B3ZFUOwtQchFCrYhLZ7Q78n7buu0OahNc=;
+ b=aK8Q577dGyU6CC3s/c/H2xr/sToXEJs58kATc55qcCh+e2GePFvo87sfAWAYiFyhYp
+ nOYa/H8Ace89L4ijXz8V25nfOl+7IKGxmKsJVJY4wxxuVqJqNv/x0hW48NqYe9yNPbN1
+ 5MPwSkfx+e4ABIHutjFokAKNGGqyeO09iJ/e/8fNRpF39QGPj3muyni86Zap0Hqcd6a7
+ Qwv9qVa1rQdcBIwCtErBOrLwD8amCFc86DoI+O15R6Za1QfElQHKQNZA5/gkNjXcVh3u
+ xM1oBtydOcrL+mvjRpmmBrAzkqiGijmqACuq4RTOEFlOlQytAqWbnZp3fy2rDlxrZvep
+ 8t2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764009421; x=1764614221;
+ d=1e100.net; s=20230601; t=1764009436; x=1764614236;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=RATSlWM9SDnmkhVVd54eKlVYnmlml6ZviGqry/IFNyo=;
- b=dQjcf6JXNFlKBpXOZaugXW35BYELspNCTjd/KYWZl+5bP8g1YEjqFs4wA5utRnxwuO
- QjP3/GkXEZwqIkiOnq5Dn8vzwc4BRylxtcCXMnBQOfi+X/VhT873+0QqkkVqazqagRKY
- hwVwSHTJ1bNLphQi7jU4BwPPH32mJaOI6hCeHmf6X0IcIiM0j/k2nsJ4KjQaejhvsYmR
- TnalfOMgJrjWlQO8T7pPSCJYZxoYMZxuZ5srHbSUbfvVF40kXq7QI/YIpbuohim9VVyM
- iZdzzEd/azJ6iVIvncPLnN095YjVwcV8WRw6yOUrvLs8b+CYi9dYv5ZoYBx2sKgZEBHq
- WtjA==
+ bh=6quMaPOwz3B3ZFUOwtQchFCrYhLZ7Q78n7buu0OahNc=;
+ b=XsUjrl1QIn75l+HNYjit7C3a/Y3avH2l6pAD/IptJii6DGONNYIPG4QpXES7PprKQt
+ Psw27MXYzDXtqMzE3Ce93zaeNqY8Cui0Ks5H58Gs6KcuWPPmtCL5Dc29FFn9ijWR/zVD
+ Xv0a42m64IFF+CqWT9F87oT+lgppAweRXZuh383qTLqpSqqgBlcuWOD523+uajVOQLB3
+ L/G9n6t05DPgKJpyBOV8eJLHoo5XR8gJOvHc8SYLOz1cJIRb9PRho+X2LjhRUOkOkBIi
+ zXWxPl1x4p+nP4rs8cJVDK8w4WgJQjsfSEPazCgHW80sA3xwTZ3Cm6k+zV9Os2zF52Qk
+ Kjtw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWQsvpgVUHukdAj5+ZdweleT1qz+fJIOHA/0Ucszf/DruaBlidiUDFzQ89TGafkt7p89hEmyBSSRJCB@nongnu.org
-X-Gm-Message-State: AOJu0YzIPiN0YZfA8N8Ws2KC8yjjsD71nuWQuJn2S4In8A++yyEd9Nlw
- 3S+7OCjxl+R9HGgyf8dlMTjP/wGE9WeOTK6IddQVicXQyyca4B1Npj0KeC63W5pUhwk=
-X-Gm-Gg: ASbGnctnNGm7lYqn/zq9C5BgYw3VI+cJXDo0DZh3OquXKMqPION5XWE/qpkqpjPV2DZ
- m69sMSkcZ8Ek9L/ElONu060SNGqcUTufqmi/wxA3ULGyESPM+MG+QtHWXdRZ0t2fon5UicbbUsT
- 8NZR/7jrglGsPqqDSD9RtlOk3MMbeiGHz1kcBhh7fsiiHRytd7EiamT82rIYFC3HYjM17c6xJ/i
- 6r/nd6fAYkyikhu1SXIjBnO6V/iI9j+swn+PALblsM1UUDgYx6Uyp/Iz6Qm5KRzlVj360phir90
- Aethv4uXKcoGGbQd9D3/0+cjMVrYLSJIP/gfWgfJnmjFlAadPpB+2GVZanCNynwc3jxKNg2FYvP
- t9th/UsFHfgbfGAGElftExWFFoU4M6yASl+qgrcjnwPOSsrqrFaYDXmdItPJv0wk/ITwa85xNOS
- ZxPLhJS0YqAXjpFbVhBzBOFjonwsuwkwSlu8lsjRb0yI/ay+gX1A==
-X-Google-Smtp-Source: AGHT+IFbayaLUdiY7X8gndxDhjgBxmz8VyzrCBBqEtbSeVlm9zzT27rwOmyewdx+Ob/a5pgboCLi6A==
-X-Received: by 2002:a17:903:2c06:b0:297:fc22:3a9f with SMTP id
- d9443c01a7336-29b6bf19f1dmr142629995ad.38.1764009421123; 
- Mon, 24 Nov 2025 10:37:01 -0800 (PST)
+ AJvYcCXLqfiv1Xjl7DekyengX8iE4rvgwDqDF4VsYeesPyYdg48bawV6ErwMp6CylGBbknRCT0iUDSHDuRkP@nongnu.org
+X-Gm-Message-State: AOJu0Yw6LSi8OKiMBfsRHEvD75iD95c6/hErzvX35ZXR6XcsotU3m5dZ
+ 9Z2VBBIlsKBJJeDg/GMPVhsO1nbqQBzs2mLiIP5IPSNFHzRCs/glPPwbjswuZ62E6Lcy/MocuA1
+ XSQ1Q
+X-Gm-Gg: ASbGncspOUT84MnJF7hAfo5T/YSZIkRZhzjcSPNYJ6jGzKOQ5fz+2z73at3MqGXuOav
+ dG0rI40XyvPlV1BoXyBbyk5zf1Ti1t3kOwZ2GDFvnSkc+JSqfF57IEKxnRlQtCjBUYa8KoiOhMv
+ cGgdpZfE4EbNPBv7AujDFc9nG+ZNXwYvILEQGO/t4Y/4TeMEMXQPisMhTFkx8/lcJ2qU301oPr6
+ 4qcM6mrawMMRPGltrcLrdrhwsUPdCOvLbnIW0kjG7jZUIdXI1CF7hDcRo3TnUHF+bLRk3RyzsWS
+ ngKdlc2SmbMITXgEriO3M7PPhqz0qJh9LR/69seVyj065+/KS/+Sri5T6/N1oRqZr7ofzHXJMfQ
+ 5MYl4XnfHsqGoYVqwi7l1rTuAeSfC3SFtAfuEE6/rbY/688Vm7hbNBz17PTGOqSkHVNd8IinOR3
+ mj1IoNArU/ilZj9iuKOa8GFc7AVBV6Jns86NImAvw+EVvWgEkM+w==
+X-Google-Smtp-Source: AGHT+IG697c7BaJT/V+fjrZB76EL97s5FlHsCb/Xr3cR3z6kfFGtb6TPGUVAJYQkijeoo310sGolRw==
+X-Received: by 2002:a17:903:8c3:b0:295:9d7f:9294 with SMTP id
+ d9443c01a7336-29b6becdfdbmr132609875ad.21.1764009435633; 
+ Mon, 24 Nov 2025 10:37:15 -0800 (PST)
 Received: from [192.168.0.4] (174-21-76-60.tukw.qwest.net. [174.21.76.60])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29b5b26fc24sm144558035ad.67.2025.11.24.10.37.00
+ d9443c01a7336-29b5b2bb7c1sm142441675ad.99.2025.11.24.10.37.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Nov 2025 10:37:00 -0800 (PST)
-Message-ID: <ca88a786-d80f-4f66-9562-d6712484c41e@linaro.org>
-Date: Mon, 24 Nov 2025 10:36:59 -0800
+ Mon, 24 Nov 2025 10:37:15 -0800 (PST)
+Message-ID: <f35a7426-b77c-4208-834b-393ccf819fc4@linaro.org>
+Date: Mon, 24 Nov 2025 10:37:13 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL for 10.2 0/6] gitdm updates for 2025
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20251124095337.537277-1-alex.bennee@linaro.org>
+Subject: Re: [PULL 0/4] target-arm queue
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20251124143036.4113886-1-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251124095337.537277-1-alex.bennee@linaro.org>
+In-Reply-To: <20251124143036.4113886-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,59 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/24/25 01:53, Alex Bennée wrote:
+On 11/24/25 06:30, Peter Maydell wrote:
+> Hi; here's an arm pullreq for rc2: three small bug fixes and
+> one trivial removal of a duplicated #define.
+> 
+> thanks
+> -- PMM
+> 
 > The following changes since commit fb241d0a1fd36a1b67ecced29d8b533316cf9e2d:
 > 
->    Merge tag 'staging-pull-request' of https://gitlab.com/peterx/qemu into staging (2025-11-23 11:46:53 -0800)
+>    Merge tag 'staging-pull-request' ofhttps://gitlab.com/peterx/qemu into staging (2025-11-23 11:46:53 -0800)
 > 
 > are available in the Git repository at:
 > 
->    https://gitlab.com/stsquad/qemu.git tags/pull-10.2-gitdm-241125-1
+>    https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20251124
 > 
-> for you to fetch changes up to f5b6ca5606f8a1ed29a127847932fa2bc237ae38:
+> for you to fetch changes up to 579be921f509fb9d2deccc4233496e36b221abb3:
 > 
->    contrib/gitdm: add more individual contributors (2025-11-24 09:48:18 +0000)
+>    hw/display/exynos4210_fimd: Account for zero length in fimd_update_memory_section() (2025-11-24 11:01:23 +0000)
 > 
 > ----------------------------------------------------------------
-> gitdm updates for 2025
-> 
-> With the latest updates the last year has been made possible by:
-> 
->    Top changeset contributors by employer
->    Linaro                    2959 (37.0%)
->    Red Hat                   1919 (24.0%)
->    Intel                      313 (3.9%)
->    (None)                     308 (3.9%)
->    ASPEED Technology Inc.     231 (2.9%)
->    Loongson Technology        227 (2.8%)
->    IBM                        192 (2.4%)
->    Oracle                     187 (2.3%)
->    Nutanix                    133 (1.7%)
->    Academics (various)         99 (1.2%)
-> 
->    Top lines changed by employer
->    Linaro                    109812 (31.8%)
->    Red Hat                   91050 (26.4%)
->    ASPEED Technology Inc.    11811 (3.4%)
->    Intel                     10606 (3.1%)
->    IBM                       10146 (2.9%)
->    (None)                    8965 (2.6%)
->    Oracle                    8574 (2.5%)
->    Loongson Technology       7614 (2.2%)
->    Nutanix                   7404 (2.1%)
->    Microsoft                 6927 (2.0%)
-> 
->    Employers with the most hackers (total 433)
->    Red Hat                     54 (12.5%)
->    IBM                         30 (6.9%)
->    Intel                       17 (3.9%)
->    (None)                      13 (3.0%)
->    AMD                         13 (3.0%)
->    Google                      11 (2.5%)
->    Rivos Inc                   10 (2.3%)
->    Linaro                       9 (2.1%)
->    Oracle                       8 (1.8%)
->    Huawei                       8 (1.8%)
+> target-arm queue:
+>   * hw/display/exynos4210_fimd: Account for zero length in fimd_update_memory_section()
+>   * hw/arm/armv7m: Disable reentrancy guard for v7m_sysreg_ns_ops MRs
+>   * hw/display/exynos4210_fimd: Remove duplicated definition
+>   * hw/arm/Kconfig: Exclude imx8mp-evk machine from KVM-only build
+
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
