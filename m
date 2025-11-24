@@ -4,92 +4,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC89CFD313
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 19:47:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A6EECFD356
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 20:09:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNcW9-0005SE-C4; Mon, 24 Nov 2025 14:46:33 -0500
+	id 1vNcrf-000609-Kk; Mon, 24 Nov 2025 15:08:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vNcW3-0005Gu-7m
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 14:46:28 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vNcVy-0007gC-PK
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 14:46:25 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-7b86e0d9615so5607020b3a.0
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 11:46:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764013576; x=1764618376; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tOvOegWh7Munx3fSN0wi/2oYkGIg7jneLjN/pk3sRhw=;
- b=BVNUp7rdllsZ7+XZOtNu49VhEb9SxVHJPviGiAlTDqeTAMaLnnkFZ6ymNiH7NMPeWp
- nBRe1SrtsbNTaPl0gLrWktKd7khvx4HBYiGn6hInFcZJIDvyKZ+ILyJCnQbCANK1At5/
- GUWbgnJC9Gmnj/4JCt48SgQY+EUlIG5nV9ymKy+hSrD4Api77P27AJbRbTM/dpbfVIEk
- ZcROsIOzjf0m5SoajIPLl0m0MtWCAGoO2G/0IHkXZqx34IqeSWglL64oyPT/NCGNgbiy
- HVGnV/LXgoc9g2+UKDkWHZHnt9Jvwm+jwzQxpv1JG+sI/xJwouoZSRCqWqHOdA815eii
- 7Aaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764013576; x=1764618376;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tOvOegWh7Munx3fSN0wi/2oYkGIg7jneLjN/pk3sRhw=;
- b=K3hT7HWiGCc7WQPjrfo4JZny7tw6g8cCUUZ0euuCNDpf/lJ9L04wRFemze6m87IZg/
- TE4ENSRwnNdcfuYDtCgZtq6bultWBpf1DoTXyVYf5w/cGaR9ElSlAPQK8WmQ2FsfzRpF
- ivf+J5cdy03oxpHmv+i0V+Buo5jni/4wqdWMdJi31LZQa2PXNDzNzhvb6u7LO3y87EOB
- DZCCFH81bt3iLdDE/MLiViWmpIy990Pk7W4PWCl9fXxDdqifgv3Dtf5jp5Lo0qgwqYLy
- wvUAb3pOf2D9cGWZfKUzHoUOqlgsvbX5LwZzt0q4rvCjQnr/kl3qBn4sNEiHCu1k2uX9
- p+YQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWqyx4+Nmzsxzfyv2vS1qBJ9nKahMXExROOGQx+z1/ncbONtJeuP0Ir1nf3R59s1E6yzD3HfKFmvWNK@nongnu.org
-X-Gm-Message-State: AOJu0YyaF8S071YxDnpXSDDDAlhPENsFhlOZ/+jRQKdXYOnsFzqCoaFv
- MBT2+qQJjDTCUZg51npe5Jz/JcSI0UK7HSfwxXrqjXWUtLYhYAwfW7KPpO3tUsxFpy0=
-X-Gm-Gg: ASbGncuRKHhe+nNsj2+plTw9vkguMtW+nSUImygNsQzB8kGk4025dFVt0c+KQe22cb9
- he7XTrc/VAQuKbo2vy2OYdRQHsZabZ1hlQNafdkOnpdMzAmAkS7KPZHAQ/dmF737fDfZhZ+csxo
- pKld/BBlqvhMMVaznaqg0g3/zCa0VSgGyuCaPwDEOTiRqAHJzKRLV6whme56ExBAkrEudqzyBKW
- PnVyDzTuIRmmFDgYpS56uAYapkjfcR+YLxenJRvBBQAkKLHL4RgzyI0Uh+fI2KdUc9w7d7drMPY
- SDgex8uOKSCZH3xMsTKHZzOGYxzDN+/OVQoMBrH6KOKB+YberGGSx2GbeskkcTYL5fZkjttTjPr
- tYT9WHq+DquRIYA+9N/min5Cm8djhaugpMrbhExgaZN3r8OO8nqK5esAZ9r6iJM9VNfTNeZG7WA
- t48CzDc1fbvnfvhmiB9aG0sFxsik7k0wjiQ1QkdJZsiLnSe8/bwg==
-X-Google-Smtp-Source: AGHT+IGZ1bldYrSvEOghB0iI0NBZWGjkMQ7W+dX/1C1bjWPgW0IfXT1Ue/9xMwkM+Aow4e0SgSlUFg==
-X-Received: by 2002:a05:6a00:1ad2:b0:7a2:7237:79ff with SMTP id
- d2e1a72fcca58-7c58c4a4fe3mr12374724b3a.7.1764013576417; 
- Mon, 24 Nov 2025 11:46:16 -0800 (PST)
-Received: from [192.168.0.4] (174-21-76-60.tukw.qwest.net. [174.21.76.60])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7c3f0b63dbcsm15469070b3a.50.2025.11.24.11.46.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Nov 2025 11:46:15 -0800 (PST)
-Message-ID: <119ec250-2532-452d-a8f8-0fdbb2f1a8b8@linaro.org>
-Date: Mon, 24 Nov 2025 11:46:13 -0800
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vNcre-0005zo-7s; Mon, 24 Nov 2025 15:08:46 -0500
+Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vNcrc-00065A-9k; Mon, 24 Nov 2025 15:08:45 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QycrrzDhzHMxvNoGgucn3pVduVFMPpUiyDYfCEcyCfpvLUGzh8BGxZ01bAECUM+8XowiqCGu5PCYwqHWe5dWaUaAHgEotE+eFMUPIe/JudJuEZe8qksuSimBS/GdNNAcM+CahKIUiyaBqwj89VV1N5jkMDmJnHumjynP633XD8QJHOoVQIsBLb+4f+lxVa8dGnDb9+iDUWLdTn25ZOcy7aC1SQvuDDrPVg50L3JbEs+8M1FvlVNXEOcLp3wOYpL2uzDipu0fuByv9hsbJmnPCyUrapvHf/mcIFQnJgL6I/VTGx5kmNX6oU3lYdTxOXaQRixzlQsHCi41k4iAaZgaWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hYw0kg8ZNKon+Pzkn/3b0Vhq6v2BxXSAByX3jM237CE=;
+ b=FGP5+ywB7LUmhoX0zchDWPud6ZU6UI7bc5b+jH2gEJep+FRzyPiQ0HL8gHPNk1TJzJoJMuPo4rX3Yp7fVW0Hi9A8oAnpqA23sjGMIv0GYuu3y786vPtYLvYTZdsrMiMpW9CJpuDoh4g39W44dObG8m+JgQ8gXB2U1/1q/4OuGPmA9cNuDYy1mGCI43LDdpE90+rafssx4QmtiTxj3muROPVYnUicKXPiQSyITEWI7T8usHCyBzObdl9/UMie7MfzAhQ0dNMKlaHuWicqc2PbW1oKMslSAcehjVtqD6sxm4X47vMVL+imhbNgFoENB2u7w60f0ekf177b9eN0ZJQH6A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hYw0kg8ZNKon+Pzkn/3b0Vhq6v2BxXSAByX3jM237CE=;
+ b=umuFPjv9bLNe1Bv51LwfKAdEi7XlnTzWIzCrnjenG5L7UGmB5wHV2EScwt9fJ4I4eSgZvRG9juuBXFgLMRCUcmpCRR9pJNrNxPQzm9lxqJkQlNFOkA/ZnwVe1M2sp2oFkZ7sbX9ZDHFaGHq1Zo0ffXGj8bncOHc3CrvpUdhbhzwZC1pnwTW9wdHxrgBX0y9Y1qPaUd5Z0qGVAFzkp836nmjy4PRA+lD/RlnBbtIVcKwy1EgtVCft3x6ZUS1yA2hWMLpoODjjOGMX6HE2KUqGOGPWMXJj3jM3wea2LZMbhF/lbXpfgVNotrnVKTF+hbopy4g3n4uUP064T0Y47dXwPg==
+Received: from MW4PR02CA0026.namprd02.prod.outlook.com (2603:10b6:303:16d::25)
+ by DM4PR12MB6063.namprd12.prod.outlook.com (2603:10b6:8:b1::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.17; Mon, 24 Nov
+ 2025 20:08:38 +0000
+Received: from SJ5PEPF000001D7.namprd05.prod.outlook.com
+ (2603:10b6:303:16d:cafe::62) by MW4PR02CA0026.outlook.office365.com
+ (2603:10b6:303:16d::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.17 via Frontend Transport; Mon,
+ 24 Nov 2025 20:08:04 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ SJ5PEPF000001D7.mail.protection.outlook.com (10.167.242.59) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9366.7 via Frontend Transport; Mon, 24 Nov 2025 20:08:38 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 24 Nov
+ 2025 12:08:24 -0800
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Mon, 24 Nov 2025 12:08:24 -0800
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 24 Nov 2025 12:08:23 -0800
+Date: Mon, 24 Nov 2025 12:08:21 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, Jason Gunthorpe
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "berrange@redhat.com" <berrange@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, "wangzhou1@hisilicon.com" <wangzhou1@hisilicon.com>,
+ "jiangkunkun@huawei.com" <jiangkunkun@huawei.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, "yi.l.liu@intel.com"
+ <yi.l.liu@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>
+Subject: Re: [PATCH v6 17/33] hw/arm/smmuv3: Add support for providing a
+ direct MSI doorbell GPA
+Message-ID: <aSS7Nbe+JpM1tJxQ@Asurada-Nvidia>
+References: <20251120132213.56581-1-skolothumtho@nvidia.com>
+ <20251120132213.56581-18-skolothumtho@nvidia.com>
+ <aR+Ga0DrveuOd3v7@Asurada-Nvidia>
+ <CH3PR12MB754869BFD4D1B5C65EE30AB8ABD5A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <aSCnyrcIe7kqIncW@Asurada-Nvidia>
+ <CH3PR12MB7548BCF00E128545097E3DE4ABD0A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <aSSlJukXV0C48pFX@Asurada-Nvidia>
+ <CH3PR12MB754878079B614319CC6FB9C0ABD0A@CH3PR12MB7548.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/arm: Enable ID_AA64MMFR4_EL1 register.
-To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
-References: <20251120125833.123813-1-jim.macarthur@linaro.org>
- <20251120125833.123813-2-jim.macarthur@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251120125833.123813-2-jim.macarthur@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CH3PR12MB754878079B614319CC6FB9C0ABD0A@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001D7:EE_|DM4PR12MB6063:EE_
+X-MS-Office365-Filtering-Correlation-Id: 14fd84e7-54b3-4735-d6d6-08de2b954185
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|82310400026|376014|7416014|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?TxOowBUppodp5W/kNjaBygz387zydNanCB8nheqTfo/7WLx7EUK1Tcqn4fQu?=
+ =?us-ascii?Q?O6dm5p93EKsFbY4kzRHhUbDOj8zvLL/48Jrv0DMl1DfVjeAtqajWXG5PXv0s?=
+ =?us-ascii?Q?5vnz9T63ooK3kkcq+FfwUjOVrzIJWkgqomtmZGaDmVt+rqlFqbYy2+VbzMZo?=
+ =?us-ascii?Q?P5dFFnhCp1g2N3I5rBu02pvYJqnO12afU/+2+0k5JGy9SEj4xYcSWoC+DGS4?=
+ =?us-ascii?Q?BwkpMYjr1pjkoPoEOqFec5IoMz7rB8Rv8OOy45vkD4odC41LyFaVrXD9o+Ka?=
+ =?us-ascii?Q?bgNPReZeuTTqbSonUlhmLBWGkCe10IsytvF7+xjdnR59/+EpD14fXOO71xfC?=
+ =?us-ascii?Q?Axlm4oXcj4WUJWW9xXS35AFHvgQESjuV15o0qHP3ttKAVY3b9VpC68dWKRe5?=
+ =?us-ascii?Q?f2yRjtiuB/ibuHEoBpY4ypi4mnIwpn2zLzm3XLfHqAw4Ttkbqe5DdUGGxUWR?=
+ =?us-ascii?Q?IUHr+ZiJBxWJSSO/0q+xjHm001hEKh+0ddpEdYjOQt1jDzOZbFEEx13pIQEp?=
+ =?us-ascii?Q?KBKSe7jrH9qvkRBkKknKgUIH347qDmdRbtAO+n/22xjlCw+cyjWfx1qHmVYD?=
+ =?us-ascii?Q?gW1YlRdpZGN+BfRjgRrMcz4Yeio4XZtDI7hx68q06tndzutD9sPRKzeR9g6Y?=
+ =?us-ascii?Q?OgOf5yu3hNQSBgLN/hpcLgh/gVCpRC+8RbOn6BQ33Mc8YBwQO2KMk91Ka3x7?=
+ =?us-ascii?Q?hnaT0GBSaJdebOh9/hiHEepbfXxjsnyZd2Ey+o/1BXCmZvQipMZAHGMb619X?=
+ =?us-ascii?Q?aESKK7UFzOEwd9JynPLj3J54Flg23ee2LX1VrJ1y3tXHa/gn3GSRbhUd0065?=
+ =?us-ascii?Q?up6eJohhi7PfsWN9BZ7mZaqByOEwB5/HnBw3LK+5FG8/geySQeW9QT/CEkyv?=
+ =?us-ascii?Q?xtBHAcIz8kuALeFPH38e7xyD3YiD3nLEBw0XqIuahKToeu4k+dPclo8omgNm?=
+ =?us-ascii?Q?7MdcuAM79eoweK+Yz6yqIpJmY5RL59iAE7z+pgP4ATHbp3uOzivOVrcfIgoa?=
+ =?us-ascii?Q?y3NloCRefQM2ccpV8T56CdsWzZJUW3bDngvx6fAhaA4OAOWiXAbJlA9DLojv?=
+ =?us-ascii?Q?UAqBFADTEoywuyjQ+qVM89x+TWvGQWQl1HEisjjN5HbISNCzXXMI3m5EmDTm?=
+ =?us-ascii?Q?YuUNOs6l8Ln0W3KHCrblXE0A4hFiRGWd29WIUWsCEoWa8qBDFVdcAvaryJ2j?=
+ =?us-ascii?Q?0tegH1CtFXXLn5xqqsVzYclBCGjv0pQ/vx6z9Wyk3Hgcxgn0SwCc5xeuNGr6?=
+ =?us-ascii?Q?Z9X1Op2yRQ/vfFHogvc/H/GRnjOO1eT7Nt7gCa3kJS0YVmdOnTtiyvByuvqB?=
+ =?us-ascii?Q?a6L4M4iq2MQIkeS6rjale8tV7rtPt7fDy7IsiqKACmLdX+DJZSErtyz/N7tZ?=
+ =?us-ascii?Q?tQBJ7eI8OuORer9vXv0jWK+fABbqANY1crEHyYKFRwiQSQNcFoah/2F3960I?=
+ =?us-ascii?Q?XV4vLqoKsHNbdOSo+oxasYC49UFRfBxzyOe4VPwM7UKIgPdMf2J/YjydAWPP?=
+ =?us-ascii?Q?TrmO6yhFvBdHnLzRbHJnp+Ji+pmWFKgDmwSDYsNHK3P0n8oBBfool5oaOvwd?=
+ =?us-ascii?Q?z2znH26aaS7tFuoHDUg=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(36860700013)(82310400026)(376014)(7416014)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Nov 2025 20:08:38.2314 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 14fd84e7-54b3-4735-d6d6-08de2b954185
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001D7.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6063
+Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+ envelope-from=nicolinc@nvidia.com;
+ helo=PH0PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,45 +172,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/20/25 04:54, Jim MacArthur wrote:
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-> ---
->   target/arm/cpu-sysregs.h.inc | 1 +
->   target/arm/helper.c          | 4 ++--
->   2 files changed, 3 insertions(+), 2 deletions(-)
+On Mon, Nov 24, 2025 at 11:01:57AM -0800, Shameer Kolothum wrote:
+> > On Mon, Nov 24, 2025 at 12:05:38AM -0800, Shameer Kolothum wrote:
+> > > > > > > +        if (object_property_find(OBJECT(dev), "accel") &&
+> > > > > > > +            object_property_get_bool(OBJECT(dev), "accel",
+> > &error_abort)) {
+> > > > > >
+> > > > > > Do we need object_property_find()? A later patch seems to drop it.
+> > > > > > Perhaps we shouldn't add it in the first place?
+> > > > >
+> > > > > We need that at this stage as we haven't added the "accel" property yet
+> > > > > and that will cause "make check" tests to fail without that.
+> > > > >
+> > > > > We remove it once we introduce "accel" property later.
+> > > >
+> > > > Hmm, I assume object_property_get_bool() would return false when
+> > > > "accel" is not available yet? No?
+> > >
+> > > It is the errp that will be set if there is no "accel" is available that will fail the
+> > > tests. Another way to avoid object_property_find() is to pass NULL for errp
+> > in
+> > > object_property_get_bool(), but I think again when we introduce "accel" we
+> > have
+> > > change that into either errp/error_abort here.
+> > >
+> > > I am not sure there is any other way to handle this.
+> > 
+> > This path is to set MSI GPA, which could be optional, right? So,
+> > we don't really need to exit when accel is not found or accel is
+> > set to "n".
+> > 
+> > In that case, could we just use NULL even when "accel" is added?
+> > Why do we use error_abort or errp?
+> 
+> I cant recollect why I used error_abort here in the first place. May be
+> since we used that for the "primary-bus" above. But as you said,
+> we could argue "accel" is optional property. However, if we pass NULL
+> and then for some other reason it fails(even if accel=on),
+> we will end up ignoring the error completely and silently boot without
+> "accel" ?
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+OK. I see now..
 
-r~>
-> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-> index 2bb2861c62..2ba49d8478 100644
-> --- a/target/arm/cpu-sysregs.h.inc
-> +++ b/target/arm/cpu-sysregs.h.inc
-> @@ -14,6 +14,7 @@ DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
->   DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
->   DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
->   DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
-> +DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
->   DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
->   DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
->   DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 27ebc6f29b..c20334fa65 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -6566,11 +6566,11 @@ void register_cp_regs_for_features(ARMCPU *cpu)
->                 .access = PL1_R, .type = ARM_CP_CONST,
->                 .accessfn = access_aa64_tid3,
->                 .resetvalue = GET_IDREG(isar, ID_AA64MMFR3) },
-> -            { .name = "ID_AA64MMFR4_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
-> +            { .name = "ID_AA64MMFR4_EL1", .state = ARM_CP_STATE_AA64,
->                 .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 4,
->                 .access = PL1_R, .type = ARM_CP_CONST,
->                 .accessfn = access_aa64_tid3,
-> -              .resetvalue = 0 },
-> +              .resetvalue = GET_IDREG(isar, ID_AA64MMFR4) },
->               { .name = "ID_AA64MMFR5_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
->                 .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 5,
->                 .access = PL1_R, .type = ARM_CP_CONST,
+What we want are:
+1) When "accel" isn't defined, don't abort it by calling that
+   object_property_find() to make msi-gpa optional.
+2) When "accel" is defined, remove the object_property_find()
+   because object_property_get_bool() will never abort. And it
+   will make the msi-gpa optional depending on accel=on/off.
 
+Perhaps we should re-organize the patch sequence, putting the
+MSI one later. Checking the "accel" before we introduce it is
+a bit odd. But any way, I think we are fine here, if you don't
+want to change.
+
+Thanks
+Nicolin
 
