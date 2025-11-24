@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D51CFD317
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 09:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA6D9CFA466
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 09:56:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNTIm-0006Zi-D8; Mon, 24 Nov 2025 04:56:17 -0500
+	id 1vNTIE-0006P5-MQ; Mon, 24 Nov 2025 04:55:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vNTGW-0004nW-2U
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:53:53 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNTEj-0004UW-Jw
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:52:06 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vNTGR-0001pa-K3
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:53:46 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-42b3c965df5so2085287f8f.1
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 01:53:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNTEg-0001bR-LM
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:51:56 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-47118259fd8so34811145e9.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 01:51:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763978021; x=1764582821; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763977913; x=1764582713; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n1AdHiWKLNOb+I70h5V8aPENIr+UOI5rPE51IDiCYPk=;
- b=L5WIGFZyMdjT+vo00ZhjnHVGLLefHD33TO38Ra+pHTyKameiRNLbXZQIL3lTTPbZvB
- jvMuzcQ85c+2kz9QYAPdbfLSBJ7M2p9wZLYWWCi3HVm+N6SxiV5tfkwwm191xfPGbrZE
- Q94Iu4DA8dNzZsfmXlSHezLIJmU8D2bf5MiZmry1pl1k4fP0b/xcnV9yNoTWg0Jgv2VM
- FtzSRtmrm1GR8uqBhiatRR0RqvoAVaFxzWycWDpSqtKfFQmnPDvpVkODCUeiV35iDIyD
- 6Lf4wawiyCg4bYkj5PEscC23n7IVnRt6FoJm4azWtSrrwMeK0wfBccNAFUQ6S5kDyNrZ
- cQPg==
+ bh=8eh6MHRib1ellMghl3+SNmWwKGGVxvwx21luylnyRog=;
+ b=mr5SxW4CPblrjpnydCuLRf1m8DKAHQ+PFdxsDHq3Zub1IBOmoccv/6Rn31enB8T28G
+ pUAG3isjUj6dqlbSSmep075XuqOlbTzUoUIM1k0C/jtEXo38r6qY7bJnMFtvw6JdUmD6
+ NniEcwuRN0YYz7r1PdrCU6t/VR1yDDArKM+ZqGDYw7JN4NwmGXZlIEWAidtyRwIwEZfL
+ hbGpfVE7eEQDLav9ib75d+n8wCzdGVmVM0Ja8dM47qEDogQJPaktR0Lay0O2lMgucMm4
+ nAAsMhAqESr+f2u1g0BjF85MQOD2jF/BUab9igvfM1/mHIwuIwckvjN5ita+P8RhQWgl
+ P/cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763978021; x=1764582821;
+ d=1e100.net; s=20230601; t=1763977913; x=1764582713;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=n1AdHiWKLNOb+I70h5V8aPENIr+UOI5rPE51IDiCYPk=;
- b=hTErx28t1VNoxcMbUCXgLrm04ZHsUNQ/NWXkYT8OnH9+XtwnENG6/50SB/Z0sMpTLH
- Lptq7PyG8cVajt8aIaK2LD02WvFM1R7f6HyHKyWA1TD4+4lmzJEcrOUGLRQS9AR9f65q
- siog/X+syDC7roTEykgrCqRMsON7rdEg7EwcVLlHwjAWIcb/1aWRps/wX9+fEGmPE5rg
- UK0tkoEAHZPw8v4z1AbwkVw5pj8t5PlAgDKLTL1LJf2m5934gimoTevBMLqeUkMYQKRR
- H+RLItGO54mv1K0SO3V2amnFfZAAxiD344+sr8Uv25sfwVt15QtAXeBHuOh8Uzcz/GHx
- B2Zw==
-X-Gm-Message-State: AOJu0YwLsSJofG1GZOvErloF1cwBgw8NyFl3Vz7N85LCtueuuIgKkQPf
- kEjkeAMGbkoJBmcj4bind/rW52peBr7yW+UlQnTtAGhWrcT07XlhBY74MVEXwLP7AQg=
-X-Gm-Gg: ASbGncvueVpDbTEcGvNsi5pp5RQEHRBQJT5jjHErWeVcg0NIHf/kYZHTIq0IBAxk6Zf
- FVje1kZzYmA3SZHP4fd2NQT3LRqYWGxYRp7nxoBoN+RWN/KdUw8thrXTQ5Wjd8QRO6QqV3w/PW2
- Y8WjjgQVSG06YlKFoNX1f+TYfSG7ZvJ+jhXWhP8IZcU98V4zqHYReNnHwEcVKvglivCayyuJFiT
- UDBjD/0nbDUqn3dDUC9YaYsyB5XIbVEMAF35Q6UAdEJeqvw7zZ9MvHGcnr97q7BZTJZ3MnrrKyN
- Jtk73IjTVbtzq60fzWhFztXas/mVespQkrN0MvgHEz6MNlaehA6fvmbcOU8R86hMAuD8NpYPY0c
- ZineOBHgQRUSEAum8d7s5+c2QS4dKMoJAuA7zFY2kWlVXzEXq9oi3UewUH7hUngKd9ZIXlMr0gu
- VYd3ED9Qgz80o=
-X-Google-Smtp-Source: AGHT+IENYQD+dsQB44XoexfLHNb/eFVa46Mw2GYbzOjbdkK08P9mMdkiQwgRLCUlr3PNa7yw9icI8Q==
-X-Received: by 2002:a05:6000:1789:b0:42b:40b5:e64c with SMTP id
- ffacd0b85a97d-42cc1d0c3bdmr11539054f8f.30.1763978021301; 
- Mon, 24 Nov 2025 01:53:41 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f3635bsm27680374f8f.17.2025.11.24.01.53.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Nov 2025 01:53:38 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C753460216;
- Mon, 24 Nov 2025 09:53:37 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>
-Subject: [PULL 2/6] contrib/gitdm: add group-map for Microsoft
-Date: Mon, 24 Nov 2025 09:53:33 +0000
-Message-ID: <20251124095337.537277-3-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251124095337.537277-1-alex.bennee@linaro.org>
-References: <20251124095337.537277-1-alex.bennee@linaro.org>
+ bh=8eh6MHRib1ellMghl3+SNmWwKGGVxvwx21luylnyRog=;
+ b=Z/Mej+09ptYIn960YAPCZvFWkhfbjWj2XrCj7clvbiAZbz1xDP7zLSre2mYD5UqQNz
+ T2MBEmhY81Mk0RX8ThXVUyVTzadxwJ9yRqZLgxTQ3BCegLMSr2tMm+WuQmfhGBG0QUAj
+ k2GGyA1QwYRusKkjFmiMOibm7GMvmX1NkdLBFhUo3bTGH2SyR5bf7ryeFZ3WtzVihLQ/
+ BdNSbuiyTrk79B0KZq/iBIejTrm1NuwDc2O+RrgHT3gCyhRhz75kqtTryz8uBGCCEzwb
+ 34AIn6c1BcEQP8uC1WFYcOn1po0qBRLdmX+ErT7GPUEN/1BOseJJk92mt9O+uh4hTANV
+ vewA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXeX64J3I4TwtxO+86t/WoxLrx3p6w0WpqIDt/8pLXrrnOjv7IuS80uMj6KrLrN8sr8piUOR0oOmwAH@nongnu.org
+X-Gm-Message-State: AOJu0YyDY58T0svISy33GuRpt0Y0DDb6H5ljsyRD+efrMivto0AjL36P
+ J3F2ON6DSdIbsLaNOmE/Mh0qR6climKcs3/JkA+MsmElaNTTZmg8ogbXSFLfSXYb5To=
+X-Gm-Gg: ASbGnctpuX79+I+/qyAyOKhaZCBU77qTDC7ofbNP/MbHhXjAtnzgk+ynC3Z2S8A9tSl
+ NReWm+QJuqEG82YutoVGfZalZjl/RV4IMe/ewuHLTybWMxXeFxPzRNgdwcCcTtkovWBfUrsv1Gu
+ BAdY96KoDLcS4U8P5OotqYu2lbl3Sv0GGBGqz581yWrJhviINivyKlKJQv2z3KyoURsW7A2basv
+ Fee8rPU3jIhNtSlyFODIhw4PTnZNQ6Mmq92lI3ug0ZGzwJz/8aUFhlGSWWUrA6r1b07xWVClbfb
+ ULRSAHpiGLepeRkkYizHCpCZ+dqMuUy2NTw6NVlb7LdCT5ftIy5xap0Jv/L5WW34glsPxm6CcTW
+ PwQGJMhxPOHo7tlzoBYRInXuuon8wR2iS+TnasDmUWN5+U8/9GRDmBxtdK/R9W06h7ifHgOJbSF
+ xEcveaTbt1CG9l9oQwgoLlLJQpMSsgU/4zCsZh6pnjdupBGI/BwLyB6netJydh
+X-Google-Smtp-Source: AGHT+IFRUPXz9O97zT7tTvi8FfCO8H57dP7njZ+Jy9z/qALg7vYF3PusT8921QsTwHRlo/IuG9ZcXg==
+X-Received: by 2002:a05:600c:1c89:b0:477:8a29:582c with SMTP id
+ 5b1f17b1804b1-477c01fc60amr119087025e9.34.1763977913012; 
+ Mon, 24 Nov 2025 01:51:53 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fb919bsm27301138f8f.34.2025.11.24.01.51.52
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 24 Nov 2025 01:51:52 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+ qemu-devel@nongnu.org
+Cc: Rob Landley <rob@landley.net>, Thorsten Glaser <tg@debian.org>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-11.0 06/13] hw/sh4/r2d: Configure flash (CS#0) as 16-bit
+ accessible
+Date: Mon, 24 Nov 2025 10:51:01 +0100
+Message-ID: <20251124095109.66091-7-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251124095109.66091-1-philmd@linaro.org>
+References: <20251124095109.66091-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,42 +106,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While we do see contributions from the top-level domain we want to
-catch the linux.microsoft subdomain and those contributors also post
-via other addresses.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/sh4/r2d.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Acked-by: Wei Liu <wei.liu@kernel.org>
-Message-ID: <20251119113953.1432303-4-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
-diff --git a/contrib/gitdm/group-map-microsoft b/contrib/gitdm/group-map-microsoft
-new file mode 100644
-index 00000000000..989a307b6db
---- /dev/null
-+++ b/contrib/gitdm/group-map-microsoft
-@@ -0,0 +1,8 @@
-+#
-+# Some Microsoft contributors post from other emails
-+#
-+
-+# Some posting don't use the main domain
-+linux.microsoft.com
-+
-+wei.liu@kernel.org
-diff --git a/gitdm.config b/gitdm.config
-index 05a2dad2291..8764bf2f9ff 100644
---- a/gitdm.config
-+++ b/gitdm.config
-@@ -39,6 +39,7 @@ GroupMap contrib/gitdm/group-map-facebook Facebook
- GroupMap contrib/gitdm/group-map-huawei Huawei
- GroupMap contrib/gitdm/group-map-ibm IBM
- GroupMap contrib/gitdm/group-map-janustech Janus Technologies
-+GroupMap contrib/gitdm/group-map-microsoft Microsoft
- GroupMap contrib/gitdm/group-map-netflix Netflix
- GroupMap contrib/gitdm/group-map-redhat Red Hat
- GroupMap contrib/gitdm/group-map-wavecomp Wave Computing
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index 9de4944ecee..12232fabbdf 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -355,6 +355,7 @@ static void r2d_init(MachineState *machine)
+                           0, MEMTXATTRS_UNSPECIFIED, NULL);
+         address_space_stw(&address_space_memory, SH7750_BCR2,
+                           (0b11 << 2 * 3) | /* Area 3 Bus width is 32 bits */
++                          (0b10 << 14) |    /* Area 0 Bus Width is 16 bits */
+                           0, MEMTXATTRS_UNSPECIFIED, NULL);
+         /* Start from P2 area */
+         reset_info->vector = (sdram_base + LINUX_LOAD_OFFSET) | 0xa0000000;
 -- 
-2.47.3
+2.51.0
 
 
