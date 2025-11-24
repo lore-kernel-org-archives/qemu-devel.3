@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B53CFA466
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 12:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F6FCFD313
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 12:37:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNVp2-0008Rr-Cp; Mon, 24 Nov 2025 07:37:36 -0500
+	id 1vNVpG-0000mF-6d; Mon, 24 Nov 2025 07:37:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daan.j.demeyer@gmail.com>)
- id 1vNVnT-0004Zc-0U
+ id 1vNVnT-0004Zh-1Z
  for qemu-devel@nongnu.org; Mon, 24 Nov 2025 07:36:00 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <daan.j.demeyer@gmail.com>)
- id 1vNVnO-0007JE-RD
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 07:35:58 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4779d47be12so32843495e9.2
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 04:35:38 -0800 (PST)
+ id 1vNVnO-0007J4-RE
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 07:35:57 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-42b3377aaf2so2424719f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 04:35:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1763987737; x=1764592537; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1763987736; x=1764592536; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GzsfYVjLziv8GqLGvmBW2tkLI+AhZ5hpP3y9tNvFPo4=;
- b=kTONt8HB+EN7zGR0PjO40HNOGq26ANr8NbL+NDutINLlIYihczugWqyvtvznLwuX8M
- tCxMdV6TRvRi/1xnkVloMVBUrx3Uu2/ruRtnjM8whjV/piQakP2rAEsShXwePp9rNt9n
- Z8y8FTFV3aUZNUPrWxV0OKpA0Nbgtwv/UIBwdjbHQgkwGLCbxiCvI8kA9UgEfwQ5piBO
- 623NMhJIvLRor/iSKCJQpJSqP/c2itKyLUKPFOPYfXziNdVbwoG/kq4FhG4C9ea3eXga
- R9Lj1XVTw6uCDQ7YEDz0Mc9J60llD0g1A/Y8EHreIsd2ASY/8/iqEGWW1DUPz0PaI+C9
- aMGQ==
+ bh=Zo8S7nGNognO0/VxU7MQDCfV+i+r6phHemy20JEw9V4=;
+ b=hl0laNLFx+bnZhjQcsAWocNzLN2Gbm7VozcaaQRekqRsoyM3w5qmvzHuKc1tAawWcT
+ 97TW96Vy+FQyHGUmRe4xJoxLOaGJabgsRmrtXaWSYPt8P2kw8QYHcuVFTQ2JWVe6bxq1
+ TGMbArDBGW9ckmBh38F1vOAWEC1DV/zLJlzc+r24pQF8qiWM9TyRf0lB45cv2r2XpKNY
+ bQNtaD2iau5TfJRIUcLXHtdEV+oUuhde+ndAY6wQGPnQ3YKTCC4AkIKnucYR5CkTBIec
+ RiSD8Wtpq/wOs3RPuf5sXF7oerOGbCGfPpzEdG5jKIUXp7pOg5SEb/1uyWrQ8UTp44Bv
+ f4RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763987737; x=1764592537;
+ d=1e100.net; s=20230601; t=1763987736; x=1764592536;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GzsfYVjLziv8GqLGvmBW2tkLI+AhZ5hpP3y9tNvFPo4=;
- b=LVm0e5Z3Hc1RDFOvfXb69fGeHqW2TDsmE4ofnhwl0ydx6sEdBOWRsp6RbAurjy7lo4
- z/4V53SrQldfBG178WPvk+GnXJQKvLnDzBKgDp54jvC+1Gvnm290ndsdl1A4OBo/hhy0
- 2bV7LoIHCr5l/+CyqzUau317QPBy+/qbGWRPVH4UTgXYHnDHQ9bGsExG7lGDX+V/Fosc
- 5AlvIyAX23MeUnHzCZ25XxwRFDTkE0yVw61UuPuWXoyTey+hZ+6e/f+YqrFIeSctV3Sq
- cPZt8B/PB1etFi1M2Yhgnrq5UO7RrlySQIM6IS6CsKexyq0OPuzsEPpTt//nB8/1NTiG
- xCLQ==
-X-Gm-Message-State: AOJu0YyW5bwIflGFMBlRiGy84soMmSVLcXrxf9fDeQ67fHmr4JzQ+rjy
- BcOexk0tcPEleK7QfiagvACPW5RH27MJpRPtel1M6hL+8CH61868FSsz1eiNK1rI
-X-Gm-Gg: ASbGnctwDg8/0yoNik7zkw+mwhr/FbTCouXu5f16OuiTYwIh/p6mq3V9o+Jw0LbXJ8M
- TZuFNgKVCHi9gJSjDIZdPlFPn+PFxwO0/n2wmUm7XxLU1UjchJwedkjI4C1TOyr/nNr7YiF/m5o
- ncQCa3vc2SUwjhvjuoGJCZOP/n4qXoRBVWa0HeDDIIf2MEzXKsRfJvb3eLUIs/sUtZb7NHcqqeb
- slYerrtKqvdSZNND1OOhlwDHHR5Ac4Dr1QCAics66D1IRYudt1dZb7oww/1271+apRxVPluxcj6
- 3al08SC+fiFuQXm+O4syHexXxLUA1Npaf62lI/nJiCUjquqb0S+4B5PymkIXjVX44ul1jmTcbJI
- c7EVzsKRtSiixCerefFg+EF0sZE1hoAkfiZQhrVaUDpfbFCRW61nDczh+8TQVKyKSKYL+OyaYIS
- V1vUAxE54MpnyDzo0drU+auK6OgXpx1RQZhNDvcWvyjCNG4giXGVgHPB2LR7K0Y3GC6Q==
-X-Google-Smtp-Source: AGHT+IECsFcAHYR33jFD9mzwfbw4MtaGzS8C7Q4+M0di8doEZj3IJ6rfXGJXfOBVchuLt1wvcHjJHw==
-X-Received: by 2002:a05:600c:1c02:b0:477:9caa:1a26 with SMTP id
- 5b1f17b1804b1-477c01eed7cmr117596175e9.29.1763987737333; 
- Mon, 24 Nov 2025 04:35:37 -0800 (PST)
+ bh=Zo8S7nGNognO0/VxU7MQDCfV+i+r6phHemy20JEw9V4=;
+ b=Oi51f7YXBAPouungMdye/iQajrhLV8D3MYiLM/KzdTMSSnZ9Pxw0InS+W30n/juxZ8
+ /IryZdxcqEfV5a57suArJaRknC4/8RVjgypPdLwl4Xcb/nnye0Xdp4NBp/OMv3BWxep0
+ /gSSgdMiScmjFiE7cZSOC5DU6n+p/dFhZlo8HbJxXIdDwhxUdil+/O/D6/J0V+xRWwvp
+ S9Zp5vUinFkymKDjJZ3SSHeTa1HaVvoVADK/Dg1qqBLdEQUeoYJ71WSk5RmA7GwoeWIB
+ cKIJ80GTS5mj1VwouoOr0G3B930w/akATCZwDYF6oxwdESTYf8XaPUm2jpEI14CJgVYR
+ 4gOg==
+X-Gm-Message-State: AOJu0YwbQAxfnF0gJ/2fk66zUAwMg2s9GEGMTcrnkpFD5kwOrFA1b0lq
+ iMPa/ylwbnL7yU7+pAEfpZZg21Tum+rDUaawJaGO6CoElXNK0iqtlGmbFXFKk7IL
+X-Gm-Gg: ASbGncuk4MHnRZQL45BTd7NiLP8frYwUB0ZGwtJlUUSVzdd0EX1Fh4TDZgimiwDLUW0
+ /4cEefwmQnONT+Erpg98aFVd49YktjS5WDA/SpyEdPhgiYF8XcJEo5FtFbu86uamBtz/7qcgC5s
+ gzx+eylWQbbwBKvx9Jj2al+tHmvZYdtd3l7K7AycT6ZzxtQmti6vblH4DHZuPxTtYuiEr2b7GGI
+ zZlw8qyri9vT89Ei6nhoVvhAJdiV3rEead41+AFJ3Q4eqPK/+CBuKg3qnWV60147WHNzcnKvbFi
+ YrQS02q4ar7XvyRVsGp9ixVhxYGdfl35tQ0JVT7BhUQ8veCCzkZNkE64tgmRj3us1ld2dXMNlPH
+ WFeHI38XM3YtHoLOmd8pQ3B7cA9Z+YJ9JD7eQf39GTz3QLV9h/ro2hzV//xlvrX0/aB6zFDL19m
+ JIFmRWMrrH+V4XihAqeVd2Tu99hLNaQFtIfrGyKQpbwJitNXoplG0qACWz3cb1keEytQ==
+X-Google-Smtp-Source: AGHT+IE5mjXUbXSUZPQGflsVQ11nsrXwNUCOuTNCM4sjec3tFflPiDznw+y9XZKWYlcz/CfBnpkH5w==
+X-Received: by 2002:a05:6000:1445:b0:42b:5448:7b06 with SMTP id
+ ffacd0b85a97d-42cc1cbce56mr11971189f8f.13.1763987735897; 
+ Mon, 24 Nov 2025 04:35:35 -0800 (PST)
 Received: from daandemeyer-fedora-PC1EV17T (d54C349CA.access.telenet.be.
  [84.195.73.202]) by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fd8c47sm29398449f8f.38.2025.11.24.04.35.35
+ ffacd0b85a97d-42cb7fd8c47sm29398449f8f.38.2025.11.24.04.35.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Nov 2025 04:35:36 -0800 (PST)
+ Mon, 24 Nov 2025 04:35:35 -0800 (PST)
 From: Daan De Meyer <daan.j.demeyer@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Aleksandar Rikalo <arikalo@gmail.com>, Paul Burton <paulburton@kernel.org>,
  qemu-arm@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daan De Meyer <daan.j.demeyer@gmail.com>
-Subject: [PATCH v4 2/4] Rename UBOOT_MAX_GUNZIP_BYTES to
- UBOOT_MAX_DECOMPRESSED_BYTES
-Date: Mon, 24 Nov 2025 13:35:19 +0100
-Message-ID: <20251124123521.1058183-3-daan.j.demeyer@gmail.com>
+ Daan De Meyer <daan.j.demeyer@gmail.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4 1/4] Rename LOAD_IMAGE_MAX_GUNZIP_BYTES to
+ LOAD_IMAGE_MAX_DECOMPRESSED_BYTES
+Date: Mon, 24 Nov 2025 13:35:18 +0100
+Message-ID: <20251124123521.1058183-2-daan.j.demeyer@gmail.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251124123521.1058183-1-daan.j.demeyer@gmail.com>
 References: <20251124123521.1058183-1-daan.j.demeyer@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=daan.j.demeyer@gmail.com; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=daan.j.demeyer@gmail.com; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,54 +107,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For consistency with LOAD_IMAGE_MAX_DECOMPRESSED_BYTES.
+Preparation for adding support for zstd compressed efi zboot kernel
+images.
 
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Daan De Meyer <daan.j.demeyer@gmail.com>
 ---
- hw/core/loader-fit.c | 2 +-
- hw/core/loader.c     | 2 +-
- include/hw/loader.h  | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ hw/arm/boot.c       | 4 ++--
+ hw/core/loader.c    | 9 +++++----
+ hw/nvram/fw_cfg.c   | 2 +-
+ include/hw/loader.h | 2 +-
+ 4 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/hw/core/loader-fit.c b/hw/core/loader-fit.c
-index 2dea485ae0..5895e89f22 100644
---- a/hw/core/loader-fit.c
-+++ b/hw/core/loader-fit.c
-@@ -70,7 +70,7 @@ static void *fit_load_image_alloc(const void *itb, const char *name,
-     }
+diff --git a/hw/arm/boot.c b/hw/arm/boot.c
+index b91660208f..6cf8a4b7fd 100644
+--- a/hw/arm/boot.c
++++ b/hw/arm/boot.c
+@@ -823,11 +823,11 @@ static uint64_t load_aarch64_image(const char *filename, hwaddr mem_base,
+     hwaddr kernel_load_offset = KERNEL64_LOAD_ADDR;
+     uint64_t kernel_size = 0;
+     uint8_t *buffer;
++    size_t max_size = LOAD_IMAGE_MAX_DECOMPRESSED_BYTES;
+     ssize_t size;
  
-     if (!strcmp(comp, "gzip")) {
--        uncomp_len = UBOOT_MAX_GUNZIP_BYTES;
-+        uncomp_len = UBOOT_MAX_DECOMPRESSED_BYTES;
-         uncomp_data = g_malloc(uncomp_len);
+     /* On aarch64, it's the bootloader's job to uncompress the kernel. */
+-    size = load_image_gzipped_buffer(filename, LOAD_IMAGE_MAX_GUNZIP_BYTES,
+-                                     &buffer);
++    size = load_image_gzipped_buffer(filename, max_size, &buffer);
  
-         uncomp_len = gunzip(uncomp_data, uncomp_len, (void *) data, sz);
+     if (size < 0) {
+         gsize len;
 diff --git a/hw/core/loader.c b/hw/core/loader.c
-index f940b6a227..090af59df2 100644
+index 590c5b02aa..f940b6a227 100644
 --- a/hw/core/loader.c
 +++ b/hw/core/loader.c
-@@ -739,7 +739,7 @@ static ssize_t load_uboot_image(const char *filename, hwaddr *ep,
-         ssize_t bytes;
+@@ -814,8 +814,8 @@ ssize_t load_image_gzipped_buffer(const char *filename, uint64_t max_sz,
+         goto out;
+     }
  
-         compressed_data = data;
--        max_bytes = UBOOT_MAX_GUNZIP_BYTES;
-+        max_bytes = UBOOT_MAX_DECOMPRESSED_BYTES;
-         data = g_malloc(max_bytes);
+-    if (max_sz > LOAD_IMAGE_MAX_GUNZIP_BYTES) {
+-        max_sz = LOAD_IMAGE_MAX_GUNZIP_BYTES;
++    if (max_sz > LOAD_IMAGE_MAX_DECOMPRESSED_BYTES) {
++        max_sz = LOAD_IMAGE_MAX_DECOMPRESSED_BYTES;
+     }
  
-         bytes = gunzip(data, max_bytes, compressed_data, hdr->ih_size);
+     data = g_malloc(max_sz);
+@@ -885,6 +885,7 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
+     uint8_t *data = NULL;
+     ssize_t ploff, plsize;
+     ssize_t bytes;
++    size_t max_bytes = LOAD_IMAGE_MAX_DECOMPRESSED_BYTES;
+ 
+     /* ignore if this is too small to be a EFI zboot image */
+     if (*size < sizeof(*header)) {
+@@ -916,8 +917,8 @@ ssize_t unpack_efi_zboot_image(uint8_t **buffer, ssize_t *size)
+         return -1;
+     }
+ 
+-    data = g_malloc(LOAD_IMAGE_MAX_GUNZIP_BYTES);
+-    bytes = gunzip(data, LOAD_IMAGE_MAX_GUNZIP_BYTES, *buffer + ploff, plsize);
++    data = g_malloc(max_bytes);
++    bytes = gunzip(data, max_bytes, *buffer + ploff, plsize);
+     if (bytes < 0) {
+         fprintf(stderr, "failed to decompress EFI zboot image\n");
+         g_free(data);
+diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
+index aa24050493..af3b112524 100644
+--- a/hw/nvram/fw_cfg.c
++++ b/hw/nvram/fw_cfg.c
+@@ -1115,7 +1115,7 @@ void load_image_to_fw_cfg(FWCfgState *fw_cfg, uint16_t size_key,
+ 
+     if (try_decompress) {
+         size = load_image_gzipped_buffer(image_name,
+-                                         LOAD_IMAGE_MAX_GUNZIP_BYTES, &data);
++                                         LOAD_IMAGE_MAX_DECOMPRESSED_BYTES, &data);
+     }
+ 
+     if (size == (size_t)-1) {
 diff --git a/include/hw/loader.h b/include/hw/loader.h
-index 3371de506f..cbcb274fce 100644
+index d035e72748..3371de506f 100644
 --- a/include/hw/loader.h
 +++ b/include/hw/loader.h
-@@ -343,7 +343,7 @@ ssize_t rom_add_option(const char *file, int32_t bootindex);
+@@ -82,7 +82,7 @@ ssize_t load_image_mr(const char *filename, MemoryRegion *mr);
+  * load_image_gzipped_buffer() will read. It prevents
+  * g_malloc() in those functions from allocating a huge amount of memory.
+  */
+-#define LOAD_IMAGE_MAX_GUNZIP_BYTES (256 << 20)
++#define LOAD_IMAGE_MAX_DECOMPRESSED_BYTES (256 << 20)
  
- /* This is the usual maximum in uboot, so if a uImage overflows this, it would
-  * overflow on real hardware too. */
--#define UBOOT_MAX_GUNZIP_BYTES (64 << 20)
-+#define UBOOT_MAX_DECOMPRESSED_BYTES (64 << 20)
- 
- typedef struct RomGap {
-     hwaddr base;
+ ssize_t load_image_gzipped_buffer(const char *filename, uint64_t max_sz,
+                                   uint8_t **buffer);
 -- 
 2.51.1
 
