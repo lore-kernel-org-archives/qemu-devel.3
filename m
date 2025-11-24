@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9CEBCFD313
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 04:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1740ECFA466
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 04:09:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNNp6-0000uB-Q4; Sun, 23 Nov 2025 23:05:08 -0500
+	id 1vNNt7-0002iP-AH; Sun, 23 Nov 2025 23:09:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNp5-0000tp-Gg
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 23:05:07 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNsz-0002gX-VS
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 23:09:11 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNp3-0003jd-M0
- for qemu-devel@nongnu.org; Sun, 23 Nov 2025 23:05:07 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-477a2ab455fso41178275e9.3
- for <qemu-devel@nongnu.org>; Sun, 23 Nov 2025 20:05:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNNsy-00047x-EV
+ for qemu-devel@nongnu.org; Sun, 23 Nov 2025 23:09:09 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4777771ed1aso24655015e9.2
+ for <qemu-devel@nongnu.org>; Sun, 23 Nov 2025 20:09:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763957104; x=1764561904; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763957347; x=1764562147; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=2HkgHj/DV52TQhqzh+Gs/2f81DkaKLTHS1KsxZUMtMA=;
- b=J4xzeuFwYCWa0pWFrtK83atBTeisvYh3npl+aY5pLym8rb9pHDl+veOX58nSgZKNdo
- 0NnXrYbbobzsRbh4+y3IaVoxgoGf6ukZS/ZmeFwvxR6LcC9aBAhgt47b/4aDk+6VHQBn
- 2x2e58zmuhLbQ3HbYIB4vtpF1FL3KUMSMqixFrL++0OfxEjRJuDk/Pcf0iTEJ2Qw7iBl
- XhK9BwctZEC9K1Bpkpk5gCxNN9GTot8ozaatAcRy8+d3BYySyqHaO59+lQ4cmuj/0F6E
- MET09sfm3CAK6aZqoN9U3u4RlMZO2qTxp/RCicD06pjQV8q+rZIDqCQu+5ni7I3UlfAF
- rQGw==
+ bh=/klbJN/gHD4VF+aHNU1Mk65m2COcsBn7mL4EyUaOkzw=;
+ b=oOJ5Jy+qQq8EuC0Ki2BHK4m4ACpaZOFLRCFoMvGm9F2eedcp/rCWVGOizLcn2aosj6
+ Eqj9dR9/wHSriB9U2FgHK6jlNMkSQHNykU7YZWJB6o5Ww7t933E4aAJcWcN7N/WToIr4
+ T5iDCgAFNHKK0HNwXxKaGzxgnQhX3y1Knh+cLft8uG5OdpEcWJnriEg+FS9juLPxHlC6
+ n9AqtG/N/b+oc5zdU4a5Ki2qJ7MtMs+jMHkJONbakPBxHVqFhRwawnpgf6fqrAe2+U35
+ +qhqC2D01MX5/c6zRqcie6BYJSPNoULgDpGGRMMmN+u0erEaaWw0P2ESCBMlBvXnf1dh
+ Nr1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763957104; x=1764561904;
+ d=1e100.net; s=20230601; t=1763957347; x=1764562147;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2HkgHj/DV52TQhqzh+Gs/2f81DkaKLTHS1KsxZUMtMA=;
- b=FI2JNMyHepu11CHQlFtg8nw0HDuxwCjvofFuB7dRzbv5iv+HT8LqHK8iqwtiGf0KOx
- +SYTEhACW6sO/9G150EbKhSG7dMZqQlbFtC+3vB5l7LNi10PkfXgKhzH4fiECU2XpnZK
- Zdim+/+pPaYoBnUsbLOfPseO+fhh8Qh2AZb82t1+XR+iM4ef0ymraYjd+t03xfj+NAht
- 1Ijd+HWHNSlpuu/MkDRgJdayK+ZKYiUMehAA0qrbPtzAbTv7mTGnvKUJYYAl3IXAYzYm
- rwna1D3Bpg+O7D89rIGoGPS0dn8OrqSf83Ys0PkvipXWpp+S1xhNvshFqZRTiOSeWWdK
- o8Ow==
+ bh=/klbJN/gHD4VF+aHNU1Mk65m2COcsBn7mL4EyUaOkzw=;
+ b=F/rlCQOZ9pnIhekqsBFBw1wo1ywSMetKEFPOW9Y15926zdUo5y2CZiwEqhShgzHLns
+ Z5H+WSiOwrKKoNSJHcg1wmJWCkt9dKCGy80W3drJJjwm3+9WsvLP9RPDtJeGPF+wgeuB
+ k+hegAXOZHo2txQBoSPbLrM8VbxPJNkmwy63PGzOOocNoQfGR+9n3k1MMafHFzaAHDHk
+ EcZOHzgu9bkIjNIfx9GM94KPA2koRJlq/5OhbSk3eWv6VfHai+vrf2dS6rnUvFi3Gs0F
+ 7sX58HKUrTxRYzbw5kaCGmKiYyPtr8Jp1QOuKwoP/OZumsD+HbK7Qhvvj1xpeo7MIsYc
+ cSZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXV7TdLwq/b9eofAFFGVLMdenIpKi2nTv6CQMI6cjnoAjkUvc0zAbJqRDWXDP2l1NEu2elwk8ZTepn7@nongnu.org
-X-Gm-Message-State: AOJu0YxokumQm6uM5XCOXJaug3ytO2saPVo8cEgR/Utp0M0jYVQFEbte
- w03QmSBTONb19QvmKB7Uo/YdAkyZCzFbnR1rxFSOILvu4E5HH8gLqUcRVfsoHU20H40=
-X-Gm-Gg: ASbGncuMU9J21Is5XMVCPmalY3YGib3jYkAvJvQpCwGszbD9nwLXEkPARJ1+cX9rRKD
- jKbzVoExS0UDTcozlTEZDSYGi/HnTddNRob+V5IDSyWmaP+NDVdev2DA3u/lQgohWxnTGOytscT
- zShbAG+X6hr+kOD7lb+91k5xtkwoKC/jXvaBBVqH5oNIzZo+I4Dl3iUQA4bidpgVHHVdscYJI1o
- DlyIbvnxVjVo6xEvR/ohtFwPoM2HCd0xyujBjwWRJo645+Vlg41gvlXwMb5uCoWpWqEKyFHL1DD
- K3jVlwMpTIKSGR2szsWVtBeFYzqfEHUTWHME1IAJa/G6DfT9t+807ufrP6+6hQZYJmMk0xb1FWl
- kJIVmnDkcU78S/BLMjRFH0i80k18g54PGkKr+C566WpB0QKajrg8l1vaG2/DnD5D8wSXA8whv7T
- bQ9q4ld0FhkNxZOra4tjSWpVFkNhhwVnKOHhI/LJHo/5M8CBwcYBcS+w==
-X-Google-Smtp-Source: AGHT+IH0f1I50LieR9En3YLudQD/NxBqB8Kw2wI5juCuWnK4ZkK3H+XaQ1AvG/56xXsOcdYWbM9QYw==
-X-Received: by 2002:a05:600c:450f:b0:46e:1abc:1811 with SMTP id
- 5b1f17b1804b1-477c1124ecfmr96352945e9.27.1763957103974; 
- Sun, 23 Nov 2025 20:05:03 -0800 (PST)
+ AJvYcCVQv4EHHrQBwntQW6qg9vhDy/Z4H16C+Nipfn3C2uqCzMn6kqChB+gNja4KMmeoTGoiFDvQXiwiqvj0@nongnu.org
+X-Gm-Message-State: AOJu0Yxr3GTCwZ8xLA1GheIskKPXEn3s4K444kKraNwDB1/QMfB7bA4N
+ R4rgUucBlNluepRWmjlNLqsYOCL8HwBQx1M1kFLmZsrpKnauGG3QnzkjmKdWeuFLDqU=
+X-Gm-Gg: ASbGnctb8QLk6NVvvfgWvpDkqYH42HJK9F0ECa0ZwCB8pT07FoYmkI7Bvms7GXjNki2
+ eUohU7McL3EIxSAbHC0RctboFmEky/6hkiBqcIIcpNAMmqawBecJZXqtgOj1G2j7e7mrJoFiXM7
+ CkkyYDN6nxNfwQP4cPIuZUTd5a38YTv3jTpfNnfNsCRVKsOnsh5qOomCt3v8HIH77qkm4cFpcr5
+ iedraporcGUIs0KO7xEUmVRrfG4OHoZHL450KxeCYEuDFcVILFZMaYxVudpq4blCFdM5VAM72C5
+ dc6ndvTrK3QRQtvgQiQ1ansYjg6bdNb4cW8Ei+ToIUUiRUzbaPctghExD8x6QecIrkRxUnh2MVc
+ Ze8DsnW5DSTcWxGhHXyE0KGRfJaEg4ki7sgxjrwsH1Pb1eOMpEAmOoWi0Pb9bPl2JKOVOZ2HpTG
+ 1mYMxfnHlmQsyMvrAJb7Z36+zprNnEODZowsxptLmuBYoI+cvYjSyrSg==
+X-Google-Smtp-Source: AGHT+IHCPnxyzCEKtOE3B0lVxo7PEWAy9HZfM+9Qd1UCiL/aLgWKhS0MV01sMIcJOR8PZMZ/QCrxWw==
+X-Received: by 2002:a05:600c:5253:b0:477:63dc:be00 with SMTP id
+ 5b1f17b1804b1-477c01bf726mr77897445e9.25.1763957346715; 
+ Sun, 23 Nov 2025 20:09:06 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477aa387473sm141578365e9.4.2025.11.23.20.05.01
+ ffacd0b85a97d-42cb7fa35c2sm24718417f8f.25.2025.11.23.20.09.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 23 Nov 2025 20:05:02 -0800 (PST)
-Message-ID: <b87df803-930d-46fb-ad5b-454bdf1ee889@linaro.org>
-Date: Mon, 24 Nov 2025 05:05:00 +0100
+ Sun, 23 Nov 2025 20:09:05 -0800 (PST)
+Message-ID: <a289ad27-20f2-46f1-bd33-a08cf8f1a14e@linaro.org>
+Date: Mon, 24 Nov 2025 05:09:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] hw/sd: Improve performance of read/write/erase
+Subject: Re: [PATCH 3/4] hw/sd/sdcard: Erase blocks to zero
 Content-Language: en-US
 To: Christian Speich <c.speich@avm.de>, qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>, qemu-block@nongnu.org
 References: <20250919-sdcard-performance-b4-v1-0-e1037e481a19@avm.de>
- <4eal54pkozivg367yzt76irxmxn46pjtexvbm2xl7qpbiyfyah@n6milralmryq>
+ <20250919-sdcard-performance-b4-v1-3-e1037e481a19@avm.de>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <4eal54pkozivg367yzt76irxmxn46pjtexvbm2xl7qpbiyfyah@n6milralmryq>
+In-Reply-To: <20250919-sdcard-performance-b4-v1-3-e1037e481a19@avm.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,64 +104,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Christian,
+On 19/9/25 14:34, Christian Speich wrote:
+> Currently, erased blocks are filled with 0xFF. However SCR Bit 55
+> (DATA_STAT_AFTER_ERASE) indicates that an erase produces zeros. One of
+> them is wrong.
 
-On 7/11/25 10:08, Christian Speich wrote:
-> ping, I've not received any reaction on this series[1]. Is there anything I can do to
-> move this forward?
+You are right, we don't set DATA_STAT_AFTER_ERASE correctly.
 
-My apologies for missing this... I was in PTO when you posted and then
-it felt into my INBOX cracks :/
+> As erasing to zero is more performant and allows block devices to
+> use optimizations, we the erase to produce 0x00.
+> 
+> Signed-off-by: Christian Speich <c.speich@avm.de>
+> ---
+>   hw/sd/sd.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index 23764ed99f36cf39ee7abe02f08e51897c05e718..94ef3cc62582717ee044c4b114b7f22bd1b4a256 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -1115,7 +1115,6 @@ static void sd_erase(SDState *sd)
+>       sd->erase_end = INVALID_ADDRESS;
+>       sd->csd[14] |= 0x40;
+>   
+> -    memset(sd->data, 0xff, erase_len);
+>       for (erase_addr = erase_start; erase_addr <= erase_end;
+>            erase_addr += erase_len) {
+>           if (sdsc) {
+> @@ -1127,7 +1126,8 @@ static void sd_erase(SDState *sd)
+>                   continue;
+>               }
+>           }
+> -        sd_blk_write(sd, erase_addr, erase_len);
+> +        blk_pwrite_zeroes(sd->blk, erase_addr + sd_part_offset(sd),
+> +                          erase_len, 0);
+>       }
+>   }
 
-> On Fri, Sep 19, 2025 at 02:34:39PM +0200, Christian Speich wrote:
->> This patch series improves the performance of read/write/erase operations
->> on sdcards.
->>
->> This is done by increasing the maximum buffer size that is worked on.
->> >From 1 byte (master) to 512 bytes (first commit) to larger than 512
->> (adma commit).
->>
->> Testing on my system with fio I see the following rough performance
->> values in MiB/s.
->>
->>                read write readwrite
->>         master:   6     6     3/  3
->>   first commit:  51    43    23/ 23
->> second commit: 392   180   144/143
->>
->> Tested on a 2GiB raw image with:
->>    fio --filename=/dev/mmcblk0 --direct=1 --runtime=60 --time_based --bs=128k --rw={mode}
->>
->> The adma values are somewhat unstable but always >100MiB/s, I'm not sure
->> why but I guess it has something to do with the host side caching.
->>
->> For erasing the third commit changes the erase operation to write zeros,
->> as indicated by DATA_STAT_AFTER_ERASE in SCR.
->>
->> The fourth commit allows erasure in large blocks, to speed it up
->> significantly. Erasing 2GiB now takes 0.1s instead of 26s.
->>
->> Signed-off-by: Christian Speich <c.speich@avm.de>
->> ---
->> Christian Speich (4):
->>        hw/sd: Switch from byte-wise to buf+len read/writes
->>        hw/sd/sdhci: Don't use bounce buffer for ADMA
->>        hw/sd/sdcard: Erase blocks to zero
->>        hw/sd/sdcard: Erase in large blocks
->>
->>   hw/sd/core.c       |  16 +---
->>   hw/sd/sd.c         | 277 ++++++++++++++++++++++++++++++++++++++++-------------
->>   hw/sd/sdhci.c      | 102 +++++++++++---------
->>   include/hw/sd/sd.h |  13 +--
->>   4 files changed, 277 insertions(+), 131 deletions(-)
->> ---
->> base-commit: e7c1e8043a69c5a8efa39d4f9d111f7c72c076e6
->> change-id: 20250912-sdcard-performance-b4-d908bbb5a004
->>
->> Best regards,
->> -- 
->> Christian Speich <c.speich@avm.de>
->>
->>
+I'm OK with this change, but I'd rather having a device boolean property
+so we can keep the old behavior for backward compatibility. Maybe
+'erase-block-as-zero'? Do you mind updating this patch?
 
+Regards,
+
+Phil.
 
