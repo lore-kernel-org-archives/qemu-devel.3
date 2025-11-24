@@ -4,74 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C92C2CFD317
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 11:08:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6FA4CFD313
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 11:08:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNUPv-00079Y-Py; Mon, 24 Nov 2025 06:07:37 -0500
+	id 1vNUQB-0007Ff-CN; Mon, 24 Nov 2025 06:07:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNUPQ-00075V-Bq
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 06:07:12 -0500
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNUPd-000762-Se
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 06:07:19 -0500
+Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNUPO-0003xZ-Ap
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 06:07:04 -0500
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-63bc1aeb427so3295756d50.3
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 03:07:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNUPY-0003z2-5K
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 06:07:13 -0500
+Received: by mail-wr1-x441.google.com with SMTP id
+ ffacd0b85a97d-42b3c965df5so2141174f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 03:07:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763982421; x=1764587221; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=UVYDXx/CpSbW0tAgz27enpYiZ3GMud9tEzwyPLPvFTA=;
- b=nS60qoYyzaUYQjIspucymypYeBTycFOJEzq1gr4dHec2BWYiDxTc3Ue6rFPPFJONUM
- VLqtZjnXoS5uj57epPzYWSjqfxBm+ybk7S/gJuHVDM+k6zm5htA+8QiVJ1pHXSLwswe5
- HPEZiEr6CfWUJUPEwoEQYo6L0dRRrtNx0BrIMPUrXhvpjEIgOC3/3MH33wYMVpx4bh98
- 3ccoZzlSWLmGLxsk2OKDYwYGw9SJvFj4oCv3vpc+Vwll2AO9IZfHh28fE5PFLxb2OciK
- E73rzNujhpVBx1DPeX61zr7hDDTJ/ndMrpEtCN02im0gckUVchHtdv5fcQ+vEfIz6I5V
- IQDQ==
+ d=linaro.org; s=google; t=1763982430; x=1764587230; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/upjQ9H0SVSCgM+bbXBuwZe839PMqXM0bsd8OKlLlL0=;
+ b=nft7OhBy4UA60lfty0ZxVjZcTUYi5gqlEdmWnDEhfQvPpgtfV/be+xF+t3RLGQ4kAI
+ sBBeZ8p4vhLMKNbSN6HkxIXl5A/TxbWHCj/f1weEOtR1y6Y/UbyBuqFGeYs8dzdSXB+f
+ BR9bVh2XilXTn5iEI8VzOmTLGk71OS8D49YVws6dr6gEtDoqWYw0eWhRciZeZt1mZnpo
+ alaAUWnjJZcqu0Xr1Oj+uiWMHUVx5iOa0oHwHf8H/aIlIXVM9UDJdCAGGDGdsbURLmvj
+ MVoX85CpstKr6zJp8hq3ZnGBp3faYQOnEV2Jwhlm/G5cSQxYhPlXOHb3amumWKkAq21V
+ m1mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763982421; x=1764587221;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UVYDXx/CpSbW0tAgz27enpYiZ3GMud9tEzwyPLPvFTA=;
- b=FfOZf8Wma7ERP6yzD3bgIsaBx8yfet9dI0h6EQZG3YiJVZ5kSW6ehaIRbjhSoRL+qf
- ERrDsFhp2F2WK9ZRgSnLzlCYmh5nD34XNdymOr/d/EaV2ZqAY7MQq7aKK6I1rucSEpe6
- GsFH8RxVRqGsiXlUHny4OCw83w1mvnswoEcm8XWyykSUaCpstU+avT8OKyxK6Rhymy8u
- c6X2PjWSotD2thNHENavmeve0DKgwH9MVNymwGVjjD/xsMHr7ODjbYEBee4GJwL4KR7+
- 9m48s0sI3W8bo12BHWzCBLQ/y+axaRaIukc5XRnRh8eEyG3ElYVMUFNFShR9yWWVXG6v
- jouQ==
-X-Gm-Message-State: AOJu0YxPmnCgNTHX69dimb2dbAdcQIVzbhkMlX9q1Mn4qjviI0pX7fR7
- 9lbX8GG2CBZqKbv3wiuMunXVfYfVyArfOIc1rYVzUhYTyeqCBxPeNgJLaRZzLuEb9T54ztmLXB8
- W1ZOk01g1EPbD6U0pWzUSej2MnQcE7Ow9q+gcOeiPKEpYblZdvrAY2mM=
-X-Gm-Gg: ASbGncuYGpfyNeeYWFB0yDEhPoId5L8YClysDcs3uAFuQEOm4LcrpyiBGpCrEtyhuro
- /xP2sYDv1QTLEMszu4UmnIivx10ktmSC4x2/6sdhl5w7oTp2tqwuUEHJ9IZvmdhkUYWiF1NjQwt
- cLbrUmROLBFEff8QW+ihgYZFBlCFIpuVzPrnjaUkszyVRcAS1o5k4yIgZPXJPUtcs5J8yThMXOT
- 5JFMNbfU/WEUif5pgiDXoDZIfMzF42v6BU/mHFkCiN7vxuQhWwO7s/B2eTxjMTdq+WOJcmQysmm
- Qj4C4Lw=
-X-Google-Smtp-Source: AGHT+IH/H2ZD7TyKYhNh6Vv9kyf1K/f2W40BCELEubp6Vvrxv0sPqfEWHvNehYSqpNyEHR0BNeuDWmppgZcHHggc0aA=
-X-Received: by 2002:a05:690e:128c:b0:641:f5bc:694f with SMTP id
- 956f58d0204a3-64302af1699mr6789712d50.83.1763982420883; Mon, 24 Nov 2025
- 03:07:00 -0800 (PST)
+ d=1e100.net; s=20230601; t=1763982430; x=1764587230;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/upjQ9H0SVSCgM+bbXBuwZe839PMqXM0bsd8OKlLlL0=;
+ b=aPvRuBDkUFDEpwBPxuQhH3vATYdXRGbFRpGfe7IoP8dHzELJrv7JxgQ+Vdi4KapWeo
+ e7+oOXURYhkQlGG35VeBFP0LijhiR9wKCvbdq66kxuh332ib9/XPw7YHYJGLCId0uBeV
+ jueKVvNrsuAQ/7FgNdftMtC3dV8BijbuwaHoL6d16ZAEfA7jOedoQ0iesLd/tA6EnPK/
+ KXLX853qLD4vqc3/FlQs2EoJC3pPVJJfMlRbyatGoO9Cwko5rD29O/jmf4lspNV1/Pv8
+ saRDOfMuHwbwiSDzSqUYwCm6VIaKV+zTO9uYKixj9CrP5pYGoFy21b2njd9xhKfaVZL8
+ 1DBw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXH1Xct6fctCu5kdYSul18cdLamiGbds17OfB7ll89U4XZnT4aMGlPzW9levTCi28kpwdW0f4Yj6f7h@nongnu.org
+X-Gm-Message-State: AOJu0YwXZakfqDfNMJ3G1X+DtBGQmSsq0q2EWpjy70UMY+y0mcVftO0I
+ 1U6XrmLo5sLjxG4wxLLOsMT5FBqQmXkaUQO1i62WMtw3REN2dH9fyT2cjZ44XSr8XUukgd4vmp1
+ is5VuasrCugXs
+X-Gm-Gg: ASbGncvruoW/cK9eR1Hwa7bgP75LIhZhbVKeXUksgcF0RD0jVb5FEncjK/D9J+XA0Um
+ oIEIcLUilHjmJsRM27iv7rAhgF6zIm/yRMRt5Qf5n4r2Xgi9BFIbF14tNaiBlcvEBjwCzSj85rR
+ VPi/u0x0kDJOjFr5xvbEbWkXKlD8cC54v8RtzLjvQ8HYJWw2HhcACql/7UWO6+cWP85IIFQE4tG
+ 2A1r+AiKnVKzMR+2vvbKQ3/rOtLQeGwWAlvrbFRc752TRR0sWTM+U3hUlCoiTqiPOjFoQIt8PbB
+ lsetc8aAeJo6Hew6a1ZKUWOUkvCTRqVTghZFTo/QXj7vc4ymAmf6XSdWpylNXBr0Asktk6ErVfb
+ hm9TzkwOSm/6KSabWHrtO+ugKqKGHnEvGKcYuUFtbQGyRUAf2BFFk7AgDzMY9zcO9v++e+WZAt+
+ wUl7RyonOb/cB3D+JpUvpNutUQ2b5Z8Z8020EXlP18rvxAc4dDhBKdyw==
+X-Google-Smtp-Source: AGHT+IGEnMVZZwNHPNq9S194krqfxY5EzZns/dSIyOWDta8DjbBG9k2g9N/EkMMC3EMX0Vm562Ebwg==
+X-Received: by 2002:a05:6000:4305:b0:42b:3592:1b88 with SMTP id
+ ffacd0b85a97d-42cc1d20dddmr11249650f8f.50.1763982430293; 
+ Mon, 24 Nov 2025 03:07:10 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7f2e556sm27384662f8f.5.2025.11.24.03.07.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Nov 2025 03:07:09 -0800 (PST)
+Message-ID: <39f5f781-398b-4974-8b1e-e7061ed9194f@linaro.org>
+Date: Mon, 24 Nov 2025 12:07:08 +0100
 MIME-Version: 1.0
-References: <20251107131044.1321637-1-peter.maydell@linaro.org>
-In-Reply-To: <20251107131044.1321637-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 24 Nov 2025 11:06:48 +0000
-X-Gm-Features: AWmQ_bkpgEXkeonkzYqQKMaPK9ZMUWmwOurXtnuLIiJXAXcoahxMeroecQKPTz8
-Message-ID: <CAFEAcA8Hi0LfjnDVGZ7SVRtSpaOPnNA0aMaBxba+MDewbeMd=w@mail.gmail.com>
-Subject: Re: [PATCH] hw/pci: Make msix_init take a uint32_t for nentries
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/i386/isapc: Remove dead Xen code
+Content-Language: en-US
+To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, David Woodhouse
+ <dwmw2@infradead.org>, Paul Durrant <paul@xen.org>,
+ Eduardo Habkost <eduardo@habkost.net>, xen-devel@lists.xenproject.org,
+ Anthony PERARD <anthony@xenproject.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+References: <20251123185832.53802-1-philmd@linaro.org>
+ <066cb998-e89a-4cd1-a89b-865f4a6dcbbd@nutanix.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <066cb998-e89a-4cd1-a89b-865f4a6dcbbd@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::441;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,116 +112,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Would any of the PCI people like to comment on this?
-It's been reviewed, I can take it via target-arm if you prefer.
+On 24/11/25 11:27, Mark Cave-Ayland wrote:
+> On 23/11/2025 18:58, Philippe Mathieu-Daudé wrote:
+> 
+>> We don't use Xen on the isapc machine: let's remove
+>> pointless code.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/i386/isapc.c | 27 ++++-----------------------
+>>   1 file changed, 4 insertions(+), 23 deletions(-)
+>>
+>> diff --git a/hw/i386/isapc.c b/hw/i386/isapc.c
+>> index 1ba9ae22cc3..1e13a30c505 100644
+>> --- a/hw/i386/isapc.c
+>> +++ b/hw/i386/isapc.c
+>> @@ -17,8 +17,6 @@
+>>   #include "hw/ide/ide-bus.h"
+>>   #include "system/kvm.h"
+>>   #include "hw/i386/kvm/clock.h"
+>> -#include "hw/xen/xen-x86.h"
+>> -#include "system/xen.h"
+>>   #include "hw/rtc/mc146818rtc.h"
+>>   #include "target/i386/cpu.h"
+>> @@ -37,7 +35,6 @@ static void pc_init_isa(MachineState *machine)
+>>       ISABus *isa_bus;
+>>       uint32_t irq;
+>>       GSIState *gsi_state;
+>> -    MemoryRegion *ram_memory;
+>>       DriveInfo *hd[MAX_IDE_BUS * MAX_IDE_DEVS];
+>>       int i;
+>> @@ -77,15 +74,9 @@ static void pc_init_isa(MachineState *machine)
+>>       /*
+>>        * There is no RAM split for the isapc machine
+>>        */
+>> -    if (xen_enabled()) {
+>> -        xen_hvm_init_pc(pcms, &ram_memory);
+>> -    } else {
+>> -        ram_memory = machine->ram;
+>> -
+>> -        pcms->max_ram_below_4g = 3.5 * GiB;
+>> -        x86ms->above_4g_mem_size = 0;
+>> -        x86ms->below_4g_mem_size = machine->ram_size;
+>> -    }
+>> +    pcms->max_ram_below_4g = 3.5 * GiB;
+>> +    x86ms->above_4g_mem_size = 0;
+>> +    x86ms->below_4g_mem_size = machine->ram_size;
+>>       x86_cpus_init(x86ms, pcmc->default_cpu_version);
+>> @@ -94,17 +85,7 @@ static void pc_init_isa(MachineState *machine)
+>>       }
+>>       /* allocate ram and load rom/bios */
+>> -    if (!xen_enabled()) {
+>> -        pc_memory_init(pcms, system_memory, system_memory, 0);
+>> -    } else {
+>> -        assert(machine->ram_size == x86ms->below_4g_mem_size +
+>> -                                    x86ms->above_4g_mem_size);
+>> -
+>> -        if (machine->kernel_filename != NULL) {
+>> -            /* For xen HVM direct kernel boot, load linux here */
+>> -            xen_load_linux(pcms);
+>> -        }
+>> -    }
+>> +    pc_memory_init(pcms, system_memory, system_memory, 0);
+>>       gsi_state = pc_gsi_create(&x86ms->gsi, false);
+> 
+> FWIW I did contact upstream about this (see https://patchew.org/ 
+> QEMU/20250618112828.235087-1- 
+> mark.caveayland@nutanix.com/20250618112828.235087-13- 
+> mark.caveayland@nutanix.com/#91b96b24-af60-4a89-91ec- 
+> d0e660a76a0a@nutanix.com) and they mentioned that it should work, which 
+> is why I left it in.
+> 
+> Unfortunately I don't currently have any way to test it here :/
 
-thanks
--- PMM
-
-On Fri, 7 Nov 2025 at 13:10, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> msix_init() and msix_init_exclusive_bar() take an "unsigned short"
-> argument for the number of MSI-X vectors to try to use.  This is big
-> enough for the maximum permitted number of vectors, which is 2048.
-> Unfortunately, we have several devices (most notably virtio) which
-> allow the user to specify the desired number of vectors, and which
-> use uint32_t properties for this.  If the user sets the property to a
-> value that is too big for a uint16_t, the value will be truncated
-> when it is passed to msix_init(), and msix_init() may then return
-> success if the truncated value is a valid one.
->
-> The resulting mismatch between the number of vectors the msix code
-> thinks the device has and the number of vectors the device itself
-> thinks it has can cause assertions, such as the one in issue 2631,
-> where "-device virtio-mouse-pci,vectors=19923041" is interpreted by
-> msix as "97 vectors" and by the virtio-pci layer as "19923041
-> vectors"; a guest attempt to access vector 97 thus passes the
-> virtio-pci bounds checking and hits an essertion in
-> msix_vector_use().
->
-> Avoid this by making msix_init() and its wrapper function
-> msix_init_exclusive_bar() take the number of vectors as a uint32_t.
-> The erroneous command line will now produce the warning
->
->  qemu-system-i386: -device virtio-mouse-pci,vectors=19923041:
->    warning: unable to init msix vectors to 19923041
->
-> and proceed without crashing.  (The virtio device warns and falls
-> back to not using MSIX, rather than complaining that the option is
-> not a valid value this is the same as the existing behaviour for
-> values that are beyond the MSI-X maximum possible value but fit into
-> a 16-bit integer, like 2049.)
->
-> To ensure this doesn't result in potential overflows in calculation
-> of the BAR size in msix_init_exclusive_bar(), we duplicate the
-> nentries error-check from msix_init() at the top of
-> msix_init_exclusive_bar(), so we know nentries is sane before we
-> start using it.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2631
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> Technically this fixes an assertion, but only if the command
-> line is daft, so I didn't think it worth backporting to stable.
-> ---
->  include/hw/pci/msix.h |  4 ++--
->  hw/pci/msix.c         | 10 ++++++++--
->  2 files changed, 10 insertions(+), 4 deletions(-)
->
-> diff --git a/include/hw/pci/msix.h b/include/hw/pci/msix.h
-> index 11ef9454c13..551a2bcfe73 100644
-> --- a/include/hw/pci/msix.h
-> +++ b/include/hw/pci/msix.h
-> @@ -7,12 +7,12 @@
->
->  void msix_set_message(PCIDevice *dev, int vector, MSIMessage msg);
->  MSIMessage msix_get_message(PCIDevice *dev, unsigned int vector);
-> -int msix_init(PCIDevice *dev, unsigned short nentries,
-> +int msix_init(PCIDevice *dev, uint32_t nentries,
->                MemoryRegion *table_bar, uint8_t table_bar_nr,
->                unsigned table_offset, MemoryRegion *pba_bar,
->                uint8_t pba_bar_nr, unsigned pba_offset, uint8_t cap_pos,
->                Error **errp);
-> -int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
-> +int msix_init_exclusive_bar(PCIDevice *dev, uint32_t nentries,
->                              uint8_t bar_nr, Error **errp);
->
->  void msix_write_config(PCIDevice *dev, uint32_t address, uint32_t val, int len);
-> diff --git a/hw/pci/msix.c b/hw/pci/msix.c
-> index 8c7f6709e2a..b35476d0577 100644
-> --- a/hw/pci/msix.c
-> +++ b/hw/pci/msix.c
-> @@ -318,7 +318,7 @@ static void msix_mask_all(struct PCIDevice *dev, unsigned nentries)
->   * also means a programming error, except device assignment, which can check
->   * if a real HW is broken.
->   */
-> -int msix_init(struct PCIDevice *dev, unsigned short nentries,
-> +int msix_init(struct PCIDevice *dev, uint32_t nentries,
->                MemoryRegion *table_bar, uint8_t table_bar_nr,
->                unsigned table_offset, MemoryRegion *pba_bar,
->                uint8_t pba_bar_nr, unsigned pba_offset, uint8_t cap_pos,
-> @@ -392,7 +392,7 @@ int msix_init(struct PCIDevice *dev, unsigned short nentries,
->      return 0;
->  }
->
-> -int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
-> +int msix_init_exclusive_bar(PCIDevice *dev, uint32_t nentries,
->                              uint8_t bar_nr, Error **errp)
->  {
->      int ret;
-> @@ -401,6 +401,12 @@ int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
->      uint32_t bar_pba_offset = bar_size / 2;
->      uint32_t bar_pba_size = QEMU_ALIGN_UP(nentries, 64) / 8;
->
-> +    /* Sanity-check nentries before we use it in BAR size calculations */
-> +    if (nentries < 1 || nentries > PCI_MSIX_FLAGS_QSIZE + 1) {
-> +        error_setg(errp, "The number of MSI-X vectors is invalid");
-> +        return -EINVAL;
-> +    }
-> +
->      /*
->       * Migration compatibility dictates that this remains a 4k
->       * BAR with the vector table in the lower half and PBA in
-> --
-> 2.43.0
+OK :| IMHO upstream Xen maintainers should provide us a test, otherwise
+we can not make our code base evolve.
 
