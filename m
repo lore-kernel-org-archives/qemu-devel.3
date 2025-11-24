@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08283CFA466
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B85C8CFD317
 	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 14:31:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNXaa-0007rs-LJ; Mon, 24 Nov 2025 09:30:48 -0500
+	id 1vNXaZ-0007rD-Mc; Mon, 24 Nov 2025 09:30:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNXaY-0007r2-HW
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 09:30:46 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1vNXaX-0007qU-5P
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 09:30:45 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNXaW-00034K-Nr
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 09:30:46 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-42b566859ecso3933291f8f.2
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 06:30:44 -0800 (PST)
+ id 1vNXaU-00033r-TQ
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 09:30:44 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-42b38693c4dso1961706f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 06:30:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763994643; x=1764599443; darn=nongnu.org;
+ d=linaro.org; s=google; t=1763994641; x=1764599441; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8L4MDm0H12rm6yYjOjzi8dIkctKRo1jyzug5SgRPaRM=;
- b=POlMl8RX6jKIshmK0A1b9q5UKbq5QtWtY2VX0x32s2hX7jRrogb9iuqT2gGMkFrwpo
- Cz67pLWZ7MwIGhxX7MhaNSZ6ygmgf3MNfiFhRxc9xRmRmqvYzzHPMaVIFBzIIOtltoxu
- eCbHaW+Av8AkW3cDRv0TrnKwZW0gRMJrbmeGv/w8dUREQunfebDnBYQKPiDXw9fRs8C5
- oIOuOCTrwJQTrNV7a9PZUlTGIGCwEs+59QMqtZ4ehSR1vj1YUkLMGhfPjwamkxKKmbRT
- AbuAO4fwyXBK/cXo4wRAjwWpz+DlI4EQ6JXvRdh0PbJId8C6WfQI3Dc+Y12NCNHvBqFx
- sZKA==
+ :reply-to; bh=U2EersBLKb9S6tlHedyCki0WgUrx4IajTbClSVPvW4g=;
+ b=nIFprDF22lIvWf9AkUR1pPElkB7VclEoE7rNCRv+pH+Br+1wcr8SlIbfcR1ZBgusUe
+ ZhyePvEOkxKpdI8hAhBj353weIbSRdpnctz6eSyDWVsNqXKW0JSNuwwDkl1BvNLdIUmK
+ kNic5R9APZzDYzUzMRYDg18kiT1s7p9KaR9php57I+aZkiejHlpCBf3zuDd/JinUlHSI
+ f5PJ3R+CKUVj87HT/TQCZiHMwTluEGhh+Tl8WWHould0/sbqp8q7M9bcJVYtI2jO9rdu
+ fUUyZzXk/7x8UmmBM+4wJ5NUyMbl/L88rrNqzyVG42dzvRcBQTdVzQTL/I6V1Zkg4ueL
+ qvMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763994643; x=1764599443;
+ d=1e100.net; s=20230601; t=1763994641; x=1764599441;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=8L4MDm0H12rm6yYjOjzi8dIkctKRo1jyzug5SgRPaRM=;
- b=HFjXDeCReSisrKaonwK+4s1LFKjSJ6MWeo15ZJjIXFbokDps5O4JFyDXIdE9OrfHB6
- OpZQ9yIuqIzzy2saiVpaar3uLqNAOk+xSal2ldhO2rcExOfaz8k5ddyaZ7sIGlEuG53g
- AM1EAV4jBFX34DtIRYoh6un7pXhvCvn+OIDIShQuBOj1jHECcVUKIhvfFlVOlq7EJmwY
- w6dPS7wEN/zicoB61qcAZ6YHLMdH63r+VAYUvUz8UuGj10oB407OSPQTtr8ZhiA6Dbwi
- AGNqX/e4cMY38w2AUWT4ShsArldpcvg1joTGPrd37GLqilYvUYUt79HjYw82u7qUQRbb
- Arog==
-X-Gm-Message-State: AOJu0YwUBH422FlFQ4jznRxIjvCxPn5m8mZDoG2JQ45pTeZSxSjziaIm
- LlKC8v121E/CSXUo5rd5bd9ObfyGbql/tUVzkM983MvdXm120PYA2/zmWi+ARYhcKnjtqGJtx+O
- VLtzj
-X-Gm-Gg: ASbGncukh2rJMPIJ80kNAkw3rn1Y13KpTtcRIOTpl8eVXulaAra4plrPOxUFl6y8pfg
- bmyxjQICerekA4NYbLSxbrehO9huOrl0zYS8zMddGo50yFVTHD38Nnd6d5zO3RR3rCg9ovQyM+m
- VWUUjt3oFSBTfGymb7r6ekTOf6MPikOT5T6lE26E1K7x1v7gW/gt4EIHGwC/Apl2WZgGA2MChJN
- rSZrX0JMdDLN8+CWQdEQKbicpBwT4G5JqQiho/g6UJ5O8tnDtK3QN3ZeIe8cTilZ5TpCSrBYjRY
- kx2v9fZYKP3I8TKQYGrT00VHb85Fq0T1C7nCzOW2bhXuyp9VCc3vjsO38UvhhgINrmVYhRIb868
- hRGE2ZgO7OGlirK8L32FNUGNWuiMHEq0hLIgypmGVazzOq49hhILafnkgPqQgN+AJOk0nldxG8l
- v8SeBaWKuUtw60Zklz
-X-Google-Smtp-Source: AGHT+IGsxnTfY6TRMnfHoBlCNKD+1NmF5oIkTScFmmayT2K7Won/WsSMbXPQbMDiRZ6xeeuoluiKpA==
-X-Received: by 2002:a05:6000:1448:b0:429:d3e9:65b with SMTP id
- ffacd0b85a97d-42cc1d23c3emr12260115f8f.59.1763994642364; 
- Mon, 24 Nov 2025 06:30:42 -0800 (PST)
+ bh=U2EersBLKb9S6tlHedyCki0WgUrx4IajTbClSVPvW4g=;
+ b=kczJ/N0mY6nxI3hnSXTp9J7nXcKhTXimb9AO8ot17901XVux5g30BRHPZetAeLaNVo
+ H57L/m3xIyeCzWtPnPLgF/rCJOc+OZ8UUdWRk3uVq2jwDu7Lirx/N16PFrVKUr3kj9h/
+ d6L7ORGYdGPZQIeVW91qy0OzKJn3i6hEkN/wo0ntqtm8TEBLh7tAXR8B0SpbAKe+JQOx
+ HIMrN8yP+1jIk6g/TCNCJU93++XdUt60OoHzsi/v6wEjYYHQHL12PQg5oLl9u1SCirIw
+ +DjeLCcfxN3n3sFOq5ryZCbMlIyJkHIEnAExYRP51XcG6gFZlVofUH7ZMBvQCElanNfw
+ 8ltA==
+X-Gm-Message-State: AOJu0YxJFlE7mk544fzcyKza6IcyyO920MuAC7M8V6Qf24xiEIa1OVyS
+ xZdXsvyOqlOxt2RjiOTD4l1wcbIQ9K12KGkDwK0pYs3kJFW+oVeZu2D0kgjMSf3buq1Fy483WYy
+ qhcqe
+X-Gm-Gg: ASbGncuzlok+xNT82I+v+PmkHUJ+aR8PX5PzxLpZ9+ifjHT1f27fYi9BYgvpRwuhUVS
+ o6y/am4AZxXHhydRlGLSSb85SesbKb78EL4AqUhAD0abOJmxts32QHA/HUCsgJBpofJwv6vGYH2
+ V5D/Ar67LK17XLlnL09L/TVONSwYn/wJsjezLS6OmzKpcqtePek1VShcAMXP9R5VufhkrZpbI/t
+ JqPs8PhBDgDzh+YTNVZ08XRm5Lfp7eMFnwHoxnxb7wzqFRLyF5NfswrGwRUXZ3Allrc8BtAQprd
+ Vdw05Y4D2oWFF1dcXpM5wGqrD2q0HdFGGFfyEeDdD+gU0BSGQlIyI/ReRRiKLcT7CskHE2z9hKG
+ qz2P2VDGcOZcTsFrUt7gcMyuEB3CfYK4bdHm4pC0/lAl6hgBFyrtlKyIOqCcgabsCdY+y1QvVfa
+ WwDw/ChG2nVmHjF02j
+X-Google-Smtp-Source: AGHT+IHy9piOAc5XmdUEIca8IiF6ZwTSbAD9INmRPq1HVyQ0++JFGeeIDOypRu35PpemTXRisxon0g==
+X-Received: by 2002:a5d:5c84:0:b0:42b:3ab7:b8a4 with SMTP id
+ ffacd0b85a97d-42cc1d0e42cmr13072184f8f.33.1763994641298; 
+ Mon, 24 Nov 2025 06:30:41 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f34ff3sm29408930f8f.16.2025.11.24.06.30.41
+ ffacd0b85a97d-42cb7f34ff3sm29408930f8f.16.2025.11.24.06.30.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 24 Nov 2025 06:30:41 -0800 (PST)
+ Mon, 24 Nov 2025 06:30:40 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 4/4] hw/display/exynos4210_fimd: Account for zero length in
- fimd_update_memory_section()
-Date: Mon, 24 Nov 2025 14:30:36 +0000
-Message-ID: <20251124143036.4113886-5-peter.maydell@linaro.org>
+Subject: [PULL 3/4] hw/arm/armv7m: Disable reentrancy guard for
+ v7m_sysreg_ns_ops MRs
+Date: Mon, 24 Nov 2025 14:30:35 +0000
+Message-ID: <20251124143036.4113886-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251124143036.4113886-1-peter.maydell@linaro.org>
 References: <20251124143036.4113886-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,49 +102,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In fimd_update_memory_section() we attempt ot find and map part of
-the RAM MR which backs the framebuffer, based on guest-configurable
-size and start address.
+For M-profile cores which support TrustZone, there are some memory
+areas which are "NS aliases" -- a Secure access to these addresses
+really performs an NS access to a different part of the device.  We
+implement these using MemoryRegionOps read and write functions which
+pass the access on with adjusted attributes using
+memory_region_dispatch_read() and memory_region_dispatch_write().
 
-If the guest configures framebuffer settings which result in a
-zero-sized framebuffer, we hit an assertion(), because
-memory_region_find() will return a NULL mem_section.mr.
+Since the MR we are dispatching to is owned by the same device that
+owns the NS-alias MR (the TYPE_ARMV7M container object), this trips
+the reentrancy-guard that is applied by access_with_adjusted_size().
 
-Explicitly check for the zero-size case and treat this as a
-guest error.
+Mark the NS alias MemoryRegions as disable_reentrancy_guard; this is
+safe because v7m_sysreg_ns_read() and v7m_sysreg_ns_write() do not
+touch any of the device's state.  (Any further reentrancy attempts by
+the underlying MR will still be caught.)
 
-Because we now have a code path which can reach error_return without
-calling memory_region_find to set w->mem_section, we must NULL out
-w->mem_section.mr after the unref of the old MR, so that error_return
-does not incorrectly double-unref the old MR.
+Without this fix, an attempt to read from an address like 0xe002e010,
+which is a register in the NS systick alias, will fail and provoke
+
+ qemu-system-arm: warning: Blocked re-entrant IO on MemoryRegion: v7m_systick at addr: 0x0
+
+We didn't notice this earlier because almost all code accesses
+the registers and systick via the non-alias addresses; the NS
+aliases are only need for the rarer case of Secure code that needs
+to manage the NS timer or system state on behalf of NS code.
+
+Note that although the v7m_systick_ops read and write functions
+also call memory_region_dispatch_{read,write}, this MR does not
+need to have the reentrancy-guard disabled because the underlying
+MR that it forwards to is owned by a different device (the
+TYPE_SYSTICK timer device).
+
+Reported via a stackoverflow question:
+https://stackoverflow.com/questions/79808107/what-this-error-is-even-about-qemu-system-arm-warning-blocked-re-entrant-io
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1407
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20251107143913.1341358-1-peter.maydell@linaro.org
+Message-id: 20251114155304.2662414-1-peter.maydell@linaro.org
 ---
- hw/display/exynos4210_fimd.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/arm/armv7m.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-index 6b1eb43987c..49c180fec0c 100644
---- a/hw/display/exynos4210_fimd.c
-+++ b/hw/display/exynos4210_fimd.c
-@@ -1146,6 +1146,13 @@ static void fimd_update_memory_section(Exynos4210fimdState *s, unsigned win)
-     if (w->mem_section.mr) {
-         memory_region_set_log(w->mem_section.mr, false, DIRTY_MEMORY_VGA);
-         memory_region_unref(w->mem_section.mr);
-+        w->mem_section.mr = NULL;
-+    }
-+
-+    if (w->fb_len == 0) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "FIMD: Guest config means framebuffer is zero length\n");
-+        goto error_return;
+diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
+index c4a9c3ac529..7fa1b37630e 100644
+--- a/hw/arm/armv7m.c
++++ b/hw/arm/armv7m.c
+@@ -442,6 +442,12 @@ static void armv7m_realize(DeviceState *dev, Error **errp)
+                               &v7m_sysreg_ns_ops,
+                               sysbus_mmio_get_region(sbd, 0),
+                               "nvic_sysregs_ns", 0x1000);
++        /*
++         * This MR calls memory_region_dispatch_read/write to access the
++         * real region for the NVIC sysregs (which is also owned by this
++         * device), so reentrancy through here is expected and safe.
++         */
++        s->sysreg_ns_mem.disable_reentrancy_guard = true;
+         memory_region_add_subregion(&s->container, 0xe002e000,
+                                     &s->sysreg_ns_mem);
      }
- 
-     w->mem_section = memory_region_find(s->fbmem, fb_start_addr, w->fb_len);
+@@ -499,6 +505,12 @@ static void armv7m_realize(DeviceState *dev, Error **errp)
+         memory_region_init_io(&s->systick_ns_mem, OBJECT(s),
+                               &v7m_sysreg_ns_ops, &s->systickmem,
+                               "v7m_systick_ns", 0xe0);
++        /*
++         * This MR calls memory_region_dispatch_read/write to access the
++         * real region for the systick regs (which is also owned by this
++         * device), so reentrancy through here is expected and safe.
++         */
++        s->systick_ns_mem.disable_reentrancy_guard = true;
+         memory_region_add_subregion_overlap(&s->container, 0xe002e010,
+                                             &s->systick_ns_mem, 1);
+     }
 -- 
 2.43.0
 
