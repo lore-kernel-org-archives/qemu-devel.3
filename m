@@ -4,77 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1525BCFD317
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 10:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AE48CFD317
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 10:46:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNTyI-00087z-Ud; Mon, 24 Nov 2025 05:39:02 -0500
+	id 1vNU4i-0003Nt-Bj; Mon, 24 Nov 2025 05:45:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vNTxw-00084A-0D
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 05:38:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vNU3q-0003D4-BE; Mon, 24 Nov 2025 05:44:50 -0500
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vNTxp-000538-AP
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 05:38:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1763980710;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ndVqlR26o21QahS2NNe1yvPlEbMi/qvI5dpIv23XdBs=;
- b=Gdz/vidgwweWrOBqXEQJutRnaGFvxeg3LoUYeYmJgEfWyCqVBB0lYKihAdjPXrTdiDoHJV
- 1Tu7b0SRGIp9hVMd3Ox6zPKza7rsgrTbBvle9x7UjxkkgrTTRvXRXUwHBZ3AqTikixIfaN
- /TIwEDd9msr81embdw8fo+W5ShWe3yU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-mqXk82qLNLWTsYT6Ey0S7A-1; Mon,
- 24 Nov 2025 05:38:26 -0500
-X-MC-Unique: mqXk82qLNLWTsYT6Ey0S7A-1
-X-Mimecast-MFC-AGG-ID: mqXk82qLNLWTsYT6Ey0S7A_1763980705
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA16F195609F; Mon, 24 Nov 2025 10:38:24 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.33.126])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AC771956056; Mon, 24 Nov 2025 10:38:24 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id DD5E518000A7; Mon, 24 Nov 2025 11:38:21 +0100 (CET)
-Date: Mon, 24 Nov 2025 11:38:21 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, 
- Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Stefano Garzarella <sgarzare@redhat.com>, Luigi Leonardi <leonardi@redhat.com>,
- Oliver Steffen <osteffen@redhat.com>, Michael Tsirkin <mst@redhat.com>
-Subject: Re: [PATCH 2/4] igvm: move file load to complete callback
-Message-ID: <mpld3qfng5twdslchnlsg3t4qzlqklbmkio7v6sadydg55jnkh@7gysqotupku3>
-References: <20251118122133.1695767-1-kraxel@redhat.com>
- <20251118122133.1695767-3-kraxel@redhat.com>
- <17BD5E34-2195-4F84-A96F-83A8054EF62B@redhat.com>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vNU3o-0006wf-Mf; Mon, 24 Nov 2025 05:44:46 -0500
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id A6B7B80212;
+ Mon, 24 Nov 2025 11:44:31 +0100 (CET)
+Message-ID: <3fbb3f9e-ded7-4fc5-9393-30fa3f4baad5@proxmox.com>
+Date: Mon, 24 Nov 2025 11:44:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <17BD5E34-2195-4F84-A96F-83A8054EF62B@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.161,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] block-backend: Fix race when resuming queued requests
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: hreitz@redhat.com, andrey.drobyshev@virtuozzo.com, den@virtuozzo.com,
+ qemu-stable@nongnu.org, qemu-devel@nongnu.org
+References: <20251119172720.135424-1-kwolf@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20251119172720.135424-1-kwolf@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1763981036164
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,47 +60,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> >     memset(&ctx, 0, sizeof(ctx));
-> > -    ctx.file = qigvm_file_init(cfg->filename, errp);
-> > -    if (ctx.file < 0) {
-> > +    if (!cfg->file) {
+Am 19.11.25 um 6:27 PM schrieb Kevin Wolf:
+> When new requests arrive at a BlockBackend that is currently drained,
+> these requests are queued until the drain section ends.
 > 
-> This is not right I think. qigvm_file_init() returns -1 if igvm_new_from_binary() fails and returns < 0. Looking at 
-> https://docs.rs/igvm/latest/igvm/c_api/fn.igvm_new_from_binary.html this seems correct.
+> There is a race window between blk_root_drained_end() waking up a queued
+> request in an iothread from the main thread and blk_wait_while_drained()
+> actually being woken up in the iothread and calling blk_in_flight(). If
 
-Good catch.  We also have to initialize cfg->file with -1 then, to make
-sure we catch the case of qigvm_file_init not being called.
+Small typo here: blk_inc_in_flight()
 
-take care,
-  Gerd
+> the BlockBackend is drained again during this window, drain won't wait
+> for this request and it will sneak in when the BlockBackend is already
+> supposed to be quiesced. This causes assertion failures in
+> bdrv_drain_all_begin() and can have other unintended consequences.
+> 
+> Fix this by increasing the in_flight counter immediately when scheduling
+> the request to be resumed so that the next drain will wait for it to
+> complete.
+> 
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 
----------------------------- incremental fix -----------------------------
-diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
-index c1b45401f429..08e64cdd367e 100644
---- a/backends/igvm-cfg.c
-+++ b/backends/igvm-cfg.c
-@@ -93,6 +93,9 @@ static void igvm_cfg_class_init(ObjectClass *oc, const void *data)
- 
- static void igvm_cfg_init(Object *obj)
- {
-+    IgvmCfg *igvm = IGVM_CFG(obj);
-+
-+    igvm->file = -1;
-     qemu_register_resettable(obj);
- }
- 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index a350c890cc95..b32c84cf4b30 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -900,7 +900,7 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-     QIgvm ctx;
- 
-     memset(&ctx, 0, sizeof(ctx));
--    if (!cfg->file) {
-+    if (cfg->file < 0) {
-         error_setg(errp, "No IGVM file loaded.");
-         return -1;
-     }
+Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
 
 
