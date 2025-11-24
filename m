@@ -4,73 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 716CBCFD31C
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 17:46:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24FC0CFD340
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 17:57:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNadi-0005se-Ta; Mon, 24 Nov 2025 12:46:14 -0500
+	id 1vNanK-00022C-I5; Mon, 24 Nov 2025 12:56:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vNadh-0005ru-Fl
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 12:46:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vNadd-0004ov-Qy
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 12:46:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764006368;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BmDKBfVGBF54B/6CW9BfJUfYffvny7jTASdhSiRW2Jc=;
- b=g7HpVAFu1pw2CgOqMXXLyx6Y+15mzsou3eLuIQu7q7kyNIdIXlFUZ5PqeexQDY8Yh3U1ZA
- xHBfp8tYWeUE9ruqvtqChl0fJq4NpXS9XJBDbVY0dsKov5BwyNu6++H0dVJXYf2vfs6Qhx
- 9jEwz3an1vNr6P1p2PyvvrPgVd2wRzc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-qO9GSB6oPdK09byJM-5j1A-1; Mon,
- 24 Nov 2025 12:46:04 -0500
-X-MC-Unique: qO9GSB6oPdK09byJM-5j1A-1
-X-Mimecast-MFC-AGG-ID: qO9GSB6oPdK09byJM-5j1A_1764006362
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CAC3C1956048; Mon, 24 Nov 2025 17:46:01 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.81])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 450DB1956056; Mon, 24 Nov 2025 17:45:58 +0000 (UTC)
-Date: Mon, 24 Nov 2025 18:45:56 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Jean-Louis Dupond <jean-louis@dupond.be>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Hanna Reitz <hreitz@redhat.com>
-Subject: Re: [PATCH v2 0/3] block: use pwrite_zeroes_alignment when writing
- first sector
-Message-ID: <aSSZ1Jbj2K-G4SnS@redhat.com>
-References: <20251007141700.71891-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
+ id 1vNZgH-0005q2-Mr
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 11:44:49 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
+ id 1vNZgF-00079o-2K
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 11:44:49 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-42b2e9ac45aso2680642f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 08:44:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1764002681; x=1764607481; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Qdm6L8aPTUarri4dLQG06r4ueEE1UnAzh3pNSwoLyIA=;
+ b=OcRlXkUM916UlNZYRcv1W7fzjvQQPknIqXTtd5MLfnQR+WFBUM70HjZatIT6/VNycm
+ uWyYxIm8ebxaby4axl8KDGt3LHTk5oHQ272Ke1YN5jEz5dZ3cSoz75aE/3rBNShS6lFt
+ xGSDlA7YJlqhJ8Bxm9T8pepbAshqvUdxB5gXKduthsUaVY9K9z3wL4UgE/f3Xrs5Gjo2
+ EIjEmumtMDYaEaUAN8N7uLrvuymSgB0b3/PPhMcPAjwqMxgICGYG1R41JkLxGzvX3b8g
+ bZPKdusgUbYyBriIbm7It7WyDJBOGw8RtWOn2RYrI6b3pgct8fN60zQOACqUW2azKe8P
+ PLHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764002681; x=1764607481;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Qdm6L8aPTUarri4dLQG06r4ueEE1UnAzh3pNSwoLyIA=;
+ b=fthBvPsb7f8OtAadAvb0W7TwEHpT7IIDNZ3vw2eqJfC8BBnYHKDBT234N+Soo/sRS2
+ 0xgXfCQD2U0wf3eP5hKDrIGW3D+MnPfXA8ssVBdALA2nA2XReRN0vf+Ks85EyNp8lxLL
+ 8NNGUGh+dER+Kd1iTjBty4rU3kKThOQVWWHi61AmSgkMLcYruCzFmiw9wNEM56/ugV3C
+ ezWE9YPF4sz+pj015KL/U5tfPfGihEUB6xuIhgnDifWceWBw5s3Gh9XJCw0O210AUw6s
+ p6D8uvr5tsagIfNfAPoemQ24BdMDvJP/M4ER5grYujDH/NoxRqSth8TOlw01xcH3Yz1f
+ a2Sg==
+X-Gm-Message-State: AOJu0YygCwkqani0C3+I1+zZWXizVLY2VCI7kg7bLCk8B+5p6cSJRTkN
+ 2SoM8qKdHtQ1gcEYq0sVk525LXaugjhSNkdu1RXfBlvSyD8Vup+vvlEXEXB4GZozcfg=
+X-Gm-Gg: ASbGncsrkQXj3MNVH154I/syxg2Yr8bVmYq73SjKbUuLr9cCs5Vu8YUBL9+D6oBSC9M
+ L/JshMEfaTxtKss2DnMkNiqq1ybONzUKcdSHGCFQCIL1rI2JKJ9Ms0z3n95/v2FEowFhXIuxSWc
+ Up/jE29TAgDG9JfMTLnD9gpR4VmZWY5wUR2VKwIndENGxGY+YyNDrfjhfiDH2AdwNJayi7rGpGL
+ BoWaxBfwc2ZSBH783tF6mdf7+cwc0CJ3l4TlFpSiNDrjPvqw8EoWqJEEmKFqUmAfyPLR+uRZ5NU
+ 6BOzd06pPrhV0xrUzlU+04t2QqYqtxQ56zXgk+q9qJr8kgk+db+TlSsueaICz7Atmyl+fDTeCC8
+ ApMtbDVA8mukmPrGFV/QXJqCptQR1NIBFHkYPZlWly5YhhyUP0Wj9jBRUgKvLGIwMjN2bwg==
+X-Google-Smtp-Source: AGHT+IFcpY7jLwr6hMFMLlh08P2s/lyWcVaNWkJQHyMeUy3zu8nYQXhefijYR+1j5ZAuC32gQqVkBQ==
+X-Received: by 2002:a05:6000:1446:b0:429:c4bb:fbbb with SMTP id
+ ffacd0b85a97d-42cc1cbb561mr12141613f8f.13.1764002681144; 
+ Mon, 24 Nov 2025 08:44:41 -0800 (PST)
+Received: from localhost ([2620:10d:c092:500::4:fda1])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fba20esm29507601f8f.37.2025.11.24.08.44.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Nov 2025 08:44:40 -0800 (PST)
+From: Pawel Zmarzly <pzmarzly0@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: jsnow@redhat.com,
+	michel@michel-slm.name
+Subject: [PATCH RESEND] scripts/analyze-migration: Make it work in Python 3
+Date: Mon, 24 Nov 2025 16:44:39 +0000
+Message-ID: <20251124164439.67948-1-pzmarzly0@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251007141700.71891-1-stefanha@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=pzmarzly0@gmail.com; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 24 Nov 2025 12:56:09 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,28 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 07.10.2025 um 16:16 hat Stefan Hajnoczi geschrieben:
-> v2:
-> - Simplify condition to if (!s->needs_alignment) in patch 1 [Vladimir]
-> 
-> This series fixes a bug I introduced in commit 5634622bcb33 ("file-posix: allow
-> BLKZEROOUT with -t writeback"). The Linux fallocate(2) and ioctl(BLKZEROOUT)
-> syscalls require logical block size alignment of the offset and length, even
-> when the file is opened in buffered I/O mode where read/write operations do not
-> require alignment.
-> 
-> The fix is to populate the pwrite_zeroes_alignment block limits field and to
-> use that limit in create_file_fallback_zero_first_sector().
-> 
-> One issue I want to raise is that pwrite_zeroes_alignment is an "optimal
-> alignment" hint. Hence create_file_fallback_zero_first_sector() had to be
-> modified to honor the limit explicitly. The block layer doesn't automatically
-> apply padding in order to align requests. This is different from how QEMU's
-> block layer pwrite/pread works, where it does automatically apply padding and
-> read/modify/write as necessary. If you want consistency, please let me know.
+Currently crashing on Python 3 with:
 
-Thanks, applied to the block branch.
+    $ scripts/analyze-migration.py -m -f vm.state
+    TypeError: ord() expected string of length 1, but int found
 
-Kevin
+Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
+---
+ scripts/analyze-migration.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+index 67631ac43e..3303c05358 100755
+--- a/scripts/analyze-migration.py
++++ b/scripts/analyze-migration.py
+@@ -56,7 +56,7 @@ def readvar(self, size = None):
+         if size is None:
+             size = self.read8()
+         if size == 0:
+-            return ""
++            return b""
+         value = self.file.read(size)
+         if len(value) != size:
+             raise Exception("Unexpected end of %s at 0x%x" % (self.filename, self.file.tell()))
+@@ -200,7 +200,7 @@ def read(self):
+                     self.files[self.name].seek(addr, os.SEEK_SET)
+                     self.files[self.name].write(data)
+                 if self.dump_memory:
+-                    hexdata = " ".join("{0:02x}".format(ord(c)) for c in data)
++                    hexdata = " ".join("{0:02x}".format(c) for c in data)
+                     self.memory['%s (0x%016x)' % (self.name, addr)] = hexdata
+ 
+                 flags &= ~self.RAM_SAVE_FLAG_PAGE
+-- 
+2.51.1
 
