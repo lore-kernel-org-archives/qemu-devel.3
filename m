@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AD5CCFD317
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 09:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E571BCFD317
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 09:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNTFq-0004bi-Rr; Mon, 24 Nov 2025 04:53:09 -0500
+	id 1vNTGK-0004kU-R7; Mon, 24 Nov 2025 04:53:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNTE5-0004PI-45
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:51:19 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNTF3-0004Xa-9C
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:52:32 -0500
 Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNTE1-0001Vi-27
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:51:16 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNTF1-0001e9-Lb
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:52:16 -0500
 Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-42bb288c219so3573627f8f.1
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 01:51:12 -0800 (PST)
+ ffacd0b85a97d-42bb288c17bso2431011f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 01:52:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763977871; x=1764582671; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=i/akuPZSRd8yV/IOBbKpBMlzTHYzdj74JAoDKo5QUQE=;
- b=vOeIjZnNYu0Lxqv6/nFGAOKcBACZKGhqlwZ/AAW7C+Jz8DDRSz8p63TQzUAWYuMqMx
- QYUTzbB7IAqJQ56V/9gzitJ6xxuet7RSgb56c/zRiIm/SWpeiY+uBzPR7Dm6+9u3lX+3
- bVwbwUwsoXSKtB/JRCDCNRmVDSdgIadXz9Zl5xE7dmORky25TdCRINphkjRkrCrS7xtP
- pGHJnfTn6yR71sQs9fRkQp6ebZUgH4szjZuS60DbMRCMrSqOmYRTR2zovTGW/j70sRkn
- F8HqyV9WhFuFjRhq0XvNjCvOEmn4d8JtULKgM7Nkz4Wp4u97xr2c3NGqh8f15oVbk/52
- gXsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763977871; x=1764582671;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1763977934; x=1764582734; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i/akuPZSRd8yV/IOBbKpBMlzTHYzdj74JAoDKo5QUQE=;
- b=XUKDtAYGvIDCM3HevhWYVQBmn2nePQDV51ZP/SrqXJwXcXyHVmBoUj2Wht57PZDfVn
- 3iDaIgZC6CgPXgxDbtWCbXdAjucMiIVSDA0AOPZcePZYzimOYfohT5EoBYSvhSOVdAix
- 0xsVpSRQ1G7Z/eQQUAVvuDkYhXTarKD5vq3HefSmQfZnLLvHksxv2clptwz/gWbXARlm
- i/pMMDkH+O/cwiN9523E8faX4NOTelnN6V5TwfRGwEuzmOyb82bSGbGu7PsjQ+PSsBdy
- mtaPoeTk1csMErLrqUAyH56Dju76sj/gmZSq5WG9q3LQAeEUm3O7KzJgkFCAhQK4zvTr
- m+zA==
+ bh=Y2ZTFmU6wpQn2o5DKZtDOyBUX7dktOdowLF5I8J/Wto=;
+ b=O7WwIisGf6VOyr6mKjheeMXgQ3XCyy1o6hpmjuhMDh/n55trFgCP1f8ix6oQt6fBlk
+ ie0xJBGOO1RW0M2UhfyzTQe8mJxIKkAPv1wRb5dzkIGDXnvqD9/ceEiPm81xruY4O4hg
+ +wBUJlXBQsbB+yYjq48ExuWBueHxvnkxjQ4mVonYdMhTSOREgQ2NR241dxnMhXDF/aoO
+ LYw+MZ1+d1Vmyz3iM6yPGPZAoWlrI+GGVzRLfMlNgooYEHHHUws8hHpqJVjz0dHxw7do
+ u3v/2lGZ+nR7mEDFOwnEoch7ocICr0GIRtvwLFjQHry9fK+iphia5xBij5hng0v8BL8Q
+ oFEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1763977934; x=1764582734;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Y2ZTFmU6wpQn2o5DKZtDOyBUX7dktOdowLF5I8J/Wto=;
+ b=tjNCFDk6QjrExRvWzi3/J8GcNeWJO2eu14BraHdNeyI60it2YO+Yls/HPusewdH/5V
+ RgrKCtlCvLX+FKxpkA1UKRG0acNAkHc2kRXXXYx1MR78aOKoKvvfc2dHWTNdSgcl3zT8
+ F2p4ghhd9tzsCLJVqdLNjRDVVCRrhjhSv9CcuDJif4GEvHMFmZaHUb76KfT/fprllKD6
+ EILrIpYbJx+3JvoIIalKWySlB+YRuKcGbr8YRo3t2vEH7763jt0s4So3ywM/QTwAd/FZ
+ aO9L0xFPqxEFC/XyLKIeXOSkHYs895qNAqMUaleqrQhonxN+XxvpTgPT+dYcBzr0xy8n
+ GzGg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVrOfUnffxQIxImqnYY8NP7olLXe1SvOrYmeHeM8RbrtN/EKz/Sag1J/HiIj88JTlq/H2t1WyxYbKrO@nongnu.org
-X-Gm-Message-State: AOJu0Yy3fkqWhG7Cp/YI4cCKoqaupjZPAno2WKRFpbPoXzquTYyA60Vn
- YD629Gq9/o6hfy9oLS2W4dyWiWiRkKPwQH4b4i+c1vjJSps/uewI1XulVYRMVPw0Iww=
-X-Gm-Gg: ASbGncuz/qVtKA2aezd2gBdAiwj3Sxljjz2dGDccrsMIC5H1C10e0ISEWI7qQJkTG0f
- 5QuUGIFn2vqXUdT2mo1zFcUb034PIB/ynSDrgTu+gedEloZnhLjj0MniK0tRo2o+HwyMXaoIPoI
- giTjtyvXwHiOw/zaSnrKWj2ZJ/eOebws7mFkB5ILtAumX6F16/stIaTalqemqrDt1P0+AVMGjw9
- xzYK5fluf2X9+wrwIGtSvBg0pT68sVbnGET5nHOyFWrjfOnkqj9F3ydZOlf+tPzmFlqs+1yMvUQ
- NLbQbnSDM2xu7UQVXl0PU2ReGt4w7nCOw08XK1TukST7deOhFuOYPJbkyE25bo/y9n2v7lshkDD
- stwhV8tq8CZfP0Rec4kt9REf6shf2OecYuTspV/9dU/zxnXm7EeLKEiOdDnZ1hbFHbClJpCWK1/
- 37ij0tt1jcimcOfAiqkK71w/m7xXrCFdx7eOKC4PU7TNQcnewiKOy2r8ctHE91
-X-Google-Smtp-Source: AGHT+IEIugpy5dsj9EfZViMSXdNCTb1tTI8/LWY9MdGnn2PVO9rbBDaV1Hp9jAQDKmwjIt0sqE27xg==
-X-Received: by 2002:a5d:5f93:0:b0:42b:30d4:e401 with SMTP id
- ffacd0b85a97d-42cc1ac9d58mr12062574f8f.12.1763977871230; 
- Mon, 24 Nov 2025 01:51:11 -0800 (PST)
+ AJvYcCXPbikqBlKBMX2FeVATVWfXB6k2087nlSwoGiz0m6FkUQHtuxaAUdFEKNogq2xVlLg+/1GwUazpQnhw@nongnu.org
+X-Gm-Message-State: AOJu0YxK7hwN+t93GQYHuTrpD+K3RXG9tWr3uL+epTNR5BVBeUR+ziNt
+ auBdDU1qPRB9805gohmr3/QzBpLQadsNeEGdzaZVI1rof3SL9dr7AomiJ5Er7mHgTopWph3dklk
+ ToxMvOPpuXQ==
+X-Gm-Gg: ASbGncsDAMTF09rypZpRCegq4fYQR79xzH8++CK0Z+WSeyjz+ATdjefhF5bOeXuIHGN
+ cr90PexPz16FzPyhDYuF14ki4HGEO2IfkYlSE7j5bJx0sOA7rXI1M0YABl88TCCM0AMKv2Mz46u
+ XJ+AMhxB+7e3W6oth8dLDcnRv57Vd1qoALVJcYWA+EjqMRl84HGmLNYVJ7he3WTUEeR0qcQWA3u
+ 1f0MDGvMWn+aAwrNAjV3jVMxpJ+fTFngj25T9EEgRFmz4T4aBaINhrqzen9RqRaUPS+e3e8Owte
+ h297K+awMLgp+0+m6YhOW1Czy0/y0TKce4kDooJDmSXOMAuPatwXCbv2s2bKaiIgpSwhrbNgXW5
+ ZiPuk4fzyZ+5eD3Z5N4iu6PtPmkMhBFksSv/+Xj7h5KbpM3lWVWDWBc4pLwc4JbjK867XbGo37d
+ u7BZPl4nXl1CEimsWpl8XkDHwsPJPE8o+55kxkq4Os0Cml0WBqT/W17xU29lMU
+X-Google-Smtp-Source: AGHT+IF8ciSAbgAMy16t5fHYnpWhqWHq8gNIIWtYj7yTLDBkr4adUEI8ruG/Qe4la7CPnBX31SMQmQ==
+X-Received: by 2002:a05:6000:40cb:b0:42b:3ee9:4773 with SMTP id
+ ffacd0b85a97d-42cc1ab89eamr10862156f8f.7.1763977933750; 
+ Mon, 24 Nov 2025 01:52:13 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fb9022sm27298807f8f.36.2025.11.24.01.51.09
+ ffacd0b85a97d-42cb7f34ff3sm27949304f8f.16.2025.11.24.01.52.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 24 Nov 2025 01:51:10 -0800 (PST)
+ Mon, 24 Nov 2025 01:52:13 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
  qemu-devel@nongnu.org
@@ -71,13 +73,15 @@ Cc: Rob Landley <rob@landley.net>, Thorsten Glaser <tg@debian.org>,
  Yoshinori Sato <yoshinori.sato@nifty.com>,
  Magnus Damm <magnus.damm@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.0 00/13] hw/sh4/r2d: Raise amount of RAM from 64 to 192
- MB
-Date: Mon, 24 Nov 2025 10:50:55 +0100
-Message-ID: <20251124095109.66091-1-philmd@linaro.org>
+Subject: [PATCH-for-11.0 09/13] hw/sh4/r2d: Use EXT_CS_BASE() macro for FPGA
+ device
+Date: Mon, 24 Nov 2025 10:51:04 +0100
+Message-ID: <20251124095109.66091-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251124095109.66091-1-philmd@linaro.org>
+References: <20251124095109.66091-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::429;
  envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
@@ -103,58 +107,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is possible to add more RAM on the R2D board:
-- 1 real 64MB SDRAM
-- 1 virtual 64MB SRAM (virtual because back then such
-  SRAM size wouldn't exist).
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/sh4/r2d.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Memory tree change with this series applied:
-
-    $ diff -uw a b
-    --- a  2025-11-24 10:48:58
-    +++ b  2025-11-24 10:49:30
-    @@ -1,4 +1,4 @@
-    -QEMU 10.0.0 monitor - type 'help' for more information
-    +QEMU 10.1.91 monitor - type 'help' for more information
-     (qemu) info mtree -f
-     FlatView #0
-      AS "memory", root: system
-    @@ -6,7 +6,7 @@
-      Root memory region: system
-       0000000000000000-0000000000ffffff (prio 0, romd): r2d.flash
-       0000000004000000-000000000400003f (prio 0, i/o): r2d-fpga
-    -  000000000c000000-000000000fffffff (prio 0, ram): r2d.sdram
-    +  0000000008000000-000000000fffffff (prio 0, ram): ram
-       0000000010000000-00000000107fffff (prio 0, ram): sm501.local
-       0000000013e00000-0000000013e0006b (prio 0, i/o): sm501-system-config
-       0000000013e10040-0000000013e10053 (prio 0, i/o): sm501-i2c
-    @@ -16,6 +16,7 @@
-       0000000013f00000-0000000013f00053 (prio 0, i/o): sm501-2d-engine
-       000000001400080c-000000001400080f (prio 0, i/o): ide-mmio.2
-       0000000014001000-000000001400101f (prio 0, i/o): ide-mmio.1
-    +  0000000018000000-000000001bffffff (prio 0, ram): ram @0000000008000000
-       000000001e080000-000000001e080003 (prio 0, i/o): intc @000000001e080000
-       000000001e080040-000000001e080043 (prio 0, i/o): intc @000000001e080040
-       000000001e080060-000000001e080063 (prio 0, i/o): intc @000000001e080060
-
-Philippe Mathieu-Daudé (13):
-  hw/sh4/r2d: Bail out early if user request invalid RAM size
-  hw/sh4/r2d: Define BOOT_PARAMS_BASE
-  hw/sh4/r2d: Introduce sdram_base and sdram_size variables
-  hw/sh4/r2d: Use memdev allocation for RAM
-  hw/sh4/r2d: Reword SH7750_BCR1 and SH7750_BCR2 initialization comments
-  hw/sh4/r2d: Configure flash (CS#0) as 16-bit accessible
-  hw/sh4/r2d: Introduce EXT_CS_BASE() macro and use it for SDRAM
-  hw/sh4/r2d: Use EXT_CS_BASE() macro for boot flash device
-  hw/sh4/r2d: Use EXT_CS_BASE() macro for FPGA device
-  hw/sh4/r2d: Use EXT_CS_BASE() macro for display controller
-  hw/sh4/r2d: Use EXT_CS_BASE() macro for pseudo ISA bus
-  hw/sh4/r2d: Add 64MB of SDRAM in CS#2
-  hw/sh4/r2d: Add 64MB of SRAM in CS#6
-
- hw/sh4/r2d.c | 76 ++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 56 insertions(+), 20 deletions(-)
-
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index 26edcabf2c0..2229cc6fe66 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -253,6 +253,7 @@ static void r2d_init(MachineState *machine)
+     USBBus *usb_bus;
+     r2d_fpga_t *fpga;
+     const hwaddr flash_base = EXT_CS_BASE(0);
++    const hwaddr fpga_base = EXT_CS_BASE(1);
+     hwaddr sdram_base;
+     uint64_t sdram_size = machine->ram_size;
+ 
+@@ -278,7 +279,7 @@ static void r2d_init(MachineState *machine)
+     memory_region_add_subregion(address_space_mem, sdram_base, sdram);
+     /* Register peripherals */
+     s = sh7750_init(cpu, address_space_mem);
+-    fpga = r2d_fpga_init(address_space_mem, 0x04000000, sh7750_irl(s));
++    fpga = r2d_fpga_init(address_space_mem, fpga_base, sh7750_irl(s));
+ 
+     dev = qdev_new("sh_pci");
+     busdev = SYS_BUS_DEVICE(dev);
 -- 
 2.51.0
 
