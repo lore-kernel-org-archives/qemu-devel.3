@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F34CFD317
-	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 09:57:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B94CFA466
+	for <qemu-devel@archiver.kernel.org>; Mon, 24 Nov 2025 09:57:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNTJ7-0006ui-EO; Mon, 24 Nov 2025 04:56:31 -0500
+	id 1vNTJP-0008J3-Jt; Mon, 24 Nov 2025 04:56:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNTFW-0004bw-3w
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:52:48 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vNTGU-0004nH-26
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:53:53 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNTFT-0001gh-Ba
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:52:45 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-477b5e0323bso26133435e9.0
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 01:52:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vNTGR-0001pG-Ja
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 04:53:45 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4779cc419b2so38959045e9.3
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 01:53:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1763977961; x=1764582761; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uc44ADaQfZAO5yHzRIAGfCESDuHxn2hliuvpghcTObQ=;
- b=lVaehmsbdIJXMzIaF8Pt9rsCGkVDBa0W1gE6TbvrtZlDtJM3f8rbWs6L5ENrLMM2UH
- 3NoUndyZEWXZmMF/QQ+8D/sjrJvOAcduXkhMRSeeyXsNmc7OtIoFcOpIwOROk9ZTrOQ6
- uyOugz97vM/d9/MrsbhH/in/ENWuZ9lTZxEFytVIVc1W+kPmWD4LpsSnkmA0X2F0+eck
- 1gmhPkXwF1en3DKSCsFJjyBRjzOCQVObz61FWn4dq33mGbqhg2fAUXmr8mmYZx/724h0
- F+8wUSKwWafEQH7/30oTZ99Z3Fx8oJIeoVKCwxxRLAJGurrfV2ZsRHkVfv2nj1Y4VEny
- wmng==
+ d=linaro.org; s=google; t=1763978020; x=1764582820; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Fp9vW/h+ca4q19x9PSWavTz6xjdxl3k4o8SOYxcHwkw=;
+ b=mlWU6IqgdUcZyinutoJdfYLNiaMnYPsFm9cc+MgmxjvhlbADBC6ZGnyTjWS36GWS8g
+ DXSyKxRQSwd/32e+Ilr4XJrYzqxKxesTOUfAaGkTVuZTpNhYL2IbQf1KnmKKCwtmkT+r
+ OoBBApaMQMU60eeGgl4c1hWSp1tfaCJ0Aofym6grUE2clfAJqn63LdC4IrCE0NY1fcaN
+ t4T0faZOQXa2h2aEvPIjGMlepkWfcyqN1QoXSg5S4554udUI9TO2oGiqSHNU8A+zh3Hf
+ eqzzyhSxox5aqmEoIRZaqV8sRQ8qkJ5n1G2JqcaU0IrPJSHrHWJYxxCGRbrf5wweTmr1
+ R6xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1763977961; x=1764582761;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uc44ADaQfZAO5yHzRIAGfCESDuHxn2hliuvpghcTObQ=;
- b=XUSO1N89cRvxFyF06XozlZW+FudWnArhgh28McD3GrCWy2PRZMmpFprn+F/ass9S3c
- lXF9o3823+Ga58czEOsLhtvlZU/WaORmqzlWDzcsMCXlYJNWVUjCZY0iDBZ2v6knKvHY
- HOG3ThvFRbZpcTqEP//19dZ3bCaJ4AXIZgtgveMELjIXfg/8oY+tB3zm9KQ0f7oME2xZ
- BSu6EIi713Kazhg3zPsDD99NFeH+yadEAz1jPoMvm+sE5g9f7NKLMeDyrK2ZX8UgjP1Z
- JnTiOR8Bo4ZNMhxGDdesizo5NEit8xlVSBDqjpdA49wNIrQycP3V+nzKRT5F14yhpojE
- Kx7g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVZH3lTv19cS5pLFSFMFQZVYn/fAmLoYaT6itN1QH/b2Pr2zvXiGJYUN/+mbcNOmw16o0wR9L1vi+ns@nongnu.org
-X-Gm-Message-State: AOJu0YxbZbnEM/oH4j6AKaOfPdLpGtsLCVfcuNrtyirzryv1RlrRkRef
- E6pvL0NvGVThU+GbP9ytD17nF+4maXU6Bx+oCbUDgkDafV8Fn6iUSgaQH2sImiPtz/M=
-X-Gm-Gg: ASbGncuwLmBEqd+P4GZARaXsuFMqqZVOty9ZsAM61Kfe/WuoYd7GpPMV2VOKcsKVVtM
- Rqne7UUJgMhG6TwoqXSBwT9Vq6w/I3gZF5UBDxF53V5hnLPTLx6Oj/Q+3MtZ6RkFM7Me3+8Vb6h
- sK4XwueIPndqQ4jik3yKfD5xjG6UURXhtMNWSU4kFbxnOdSV7mAVLoHN45DyYiWzKtjsrBUAXMN
- qDomVji6h1kNt/LhZS6LLWo5xGwlBbzLChKfT7znZBgXJMQPayfywsDyTzPxUtiM1iANQKLR6f4
- rOwq/3yAXudbEHDL/WR+2lTJjnUJk+fMYWtmrgGzahOLiyUsKIrDobLQjb6lqCd37dmE3RBzcIY
- dDejeYazViU2EGzluYaGX7BftkNCEfZYXwDSO3ncZX/cjt22C96biHRsnUO50KwN/8PO5D2I05Z
- cI8LEW1c+1ZZrnGbSTLRDtmmr2bxpHGzK+Q0IV1H0rwUaVx82La+1AgpFJWd3K
-X-Google-Smtp-Source: AGHT+IETD6vrGelvXPBL1ztJ5xzr3iLtn97NmN45wmYdzNSDKptjo554EOwzRXSTyvl+g3FG+XYI2w==
-X-Received: by 2002:a05:600c:642:b0:477:9a61:fd06 with SMTP id
- 5b1f17b1804b1-477b9ead384mr90687895e9.8.1763977961009; 
- Mon, 24 Nov 2025 01:52:41 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477a974cdc8sm153352695e9.2.2025.11.24.01.52.40
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 24 Nov 2025 01:52:40 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
- qemu-devel@nongnu.org
-Cc: Rob Landley <rob@landley.net>, Thorsten Glaser <tg@debian.org>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Magnus Damm <magnus.damm@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.0 13/13] hw/sh4/r2d: Add 64MB of SRAM in CS#6
-Date: Mon, 24 Nov 2025 10:51:08 +0100
-Message-ID: <20251124095109.66091-14-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251124095109.66091-1-philmd@linaro.org>
-References: <20251124095109.66091-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1763978020; x=1764582820;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Fp9vW/h+ca4q19x9PSWavTz6xjdxl3k4o8SOYxcHwkw=;
+ b=jmFz5U6f2Xl7NuCDMLkrYcnHFiUKeUbFJ3wTZyIzrhV/szBqoyR4Fu6BKX3t0qWZCj
+ XMuWk2PoPN+BygOjvJC4UVXIG74pdQL24EPFbFHe+ceHO5XxQ6xuwE7K9bWPYhxfbgRL
+ BTvhGLGDHYNLQkn+fpPz2y6m0tfal6h6otcAE/5GAbUG/6MnnNFhOJnZY56z6gYoYb67
+ YjRj1xo0Zeq65J1P+9Pl8wtyZuYdcOR1YcQKw7R96ERbkoFYb4B9TYh9NuT4RR/wFRdA
+ MkOcyWE4+GS17gvW07qjiL0HXXSPlkOwtv7u7mj4gJKnN9be8WnddsR+ydNfR3K/A4Sk
+ kIMA==
+X-Gm-Message-State: AOJu0YyXkyJxCmFsBIzh/bbWVnrtOrtgxQ3ThNm48RMiZHGzost1fuJq
+ Z/GmkyvLYenisSlQ8M2Xw521fxipdfaXiNFAW3mLK8uFpHG98mLlAYeOFtjMWN160jAp1MahNFO
+ HURK4
+X-Gm-Gg: ASbGncs2DYSX6FmNUUWj0nJrDpc3gs3Y8dvxKXp1mXgrNzg2X2tqZOdsbbQ+fz4HM5b
+ ZJJzXrKQk5Jhqx7ScMQ2EEIRmQ9Z71S58DqM3ATIq7EbwPY2gxxoIyn4kRmSQjLxfJDuWnnOQHT
+ qfDheh6fZmc+aJHAt5zhsutqYXn6FsbIu371Kb/3Chh9aQkJBSZrZ4KPQYHMZYU9UcsydEfS1Pp
+ bRqqIUHQ9Gohtp/KscryC0cO/R2BJt5e0sNPuuaW9CxsG08NVLZTWiVFcfy8Gu0qs9OLY9qOMkD
+ gApgDBAaF1hX3Q3czkN+1VJ+AJ62dBqNL6JNHoj7ZsjZLRxo8QrI/ByVcDLZy598qyfPId7b1Rf
+ XgFX/hMzHSYe150BeHnrxOIrRFIQgb8cNrvRd68SddHj1HxMokw+wvuPT1pEnebPWlgHTM4I9V+
+ TayXkMUX6Owgc=
+X-Google-Smtp-Source: AGHT+IGP4YKHXIJqEdJCQD491EzR13u+UrnCF5OyqhOFffvLYxiGPimxdF0LB9bFEU5XXbzRVtQS9w==
+X-Received: by 2002:a05:600c:1382:b0:477:9b35:3e49 with SMTP id
+ 5b1f17b1804b1-477c1103274mr108397055e9.3.1763978020080; 
+ Mon, 24 Nov 2025 01:53:40 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fd9061sm27806282f8f.41.2025.11.24.01.53.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 24 Nov 2025 01:53:38 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9C4CD5F83A;
+ Mon, 24 Nov 2025 09:53:37 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL for 10.2 0/6] gitdm updates for 2025
+Date: Mon, 24 Nov 2025 09:53:31 +0000
+Message-ID: <20251124095337.537277-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,51 +101,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expand maximum memory from 128MB to 192MB.
+The following changes since commit fb241d0a1fd36a1b67ecced29d8b533316cf9e2d:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/sh4/r2d.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+  Merge tag 'staging-pull-request' of https://gitlab.com/peterx/qemu into staging (2025-11-23 11:46:53 -0800)
 
-diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
-index f5bc7c46965..445cc9a246d 100644
---- a/hw/sh4/r2d.c
-+++ b/hw/sh4/r2d.c
-@@ -245,6 +245,7 @@ static void r2d_init(MachineState *machine)
-     ResetData *reset_info;
-     struct SH7750State *s;
-     MemoryRegion *sdram = g_new(MemoryRegion, 1);
-+    MemoryRegion *sram = g_new(MemoryRegion, 1);
-     DriveInfo *dinfo;
-     DeviceState *dev;
-     SysBusDevice *busdev;
-@@ -266,8 +267,15 @@ static void r2d_init(MachineState *machine)
-     case 128 * MiB:
-         sdram_base = EXT_CS_BASE(2); /* 64M @CS2, 64M@CS3 */
-         break;
-+    case 192 * MiB:
-+        sdram_base = EXT_CS_BASE(2); /* 64M @CS2, 64M@CS3, 64M@CS6 */
-+        sdram_size = 128 * MiB;
-+        memory_region_init_alias(sram, NULL,
-+                                 "sram", machine->ram, 128 * MiB, 64 * MiB);
-+        memory_region_add_subregion(address_space_mem, EXT_CS_BASE(6), sram);
-+        break;
-     default:
--        error_report("This machine can only use 64M or 128M of memory");
-+        error_report("This machine can only use 64M, 128M or 192M of memory");
-         exit(EXIT_FAILURE);
-     }
- 
-@@ -365,6 +373,7 @@ static void r2d_init(MachineState *machine)
-         address_space_stw(&address_space_memory, SH7750_BCR2,
-                           (0b11 << 2 * 2) | /* Area 2 Bus width is 32 bits */
-                           (0b11 << 2 * 3) | /* Area 3 Bus width is 32 bits */
-+                          (0b11 << 2 * 6) | /* Area 6 Bus width is 32 bits */
-                           (0b10 << 14) |    /* Area 0 Bus Width is 16 bits */
-                           0, MEMTXATTRS_UNSPECIFIED, NULL);
-         /* Start from P2 area */
+are available in the Git repository at:
+
+  https://gitlab.com/stsquad/qemu.git tags/pull-10.2-gitdm-241125-1
+
+for you to fetch changes up to f5b6ca5606f8a1ed29a127847932fa2bc237ae38:
+
+  contrib/gitdm: add more individual contributors (2025-11-24 09:48:18 +0000)
+
+----------------------------------------------------------------
+gitdm updates for 2025
+
+With the latest updates the last year has been made possible by:
+
+  Top changeset contributors by employer
+  Linaro                    2959 (37.0%)
+  Red Hat                   1919 (24.0%)
+  Intel                      313 (3.9%)
+  (None)                     308 (3.9%)
+  ASPEED Technology Inc.     231 (2.9%)
+  Loongson Technology        227 (2.8%)
+  IBM                        192 (2.4%)
+  Oracle                     187 (2.3%)
+  Nutanix                    133 (1.7%)
+  Academics (various)         99 (1.2%)
+
+  Top lines changed by employer
+  Linaro                    109812 (31.8%)
+  Red Hat                   91050 (26.4%)
+  ASPEED Technology Inc.    11811 (3.4%)
+  Intel                     10606 (3.1%)
+  IBM                       10146 (2.9%)
+  (None)                    8965 (2.6%)
+  Oracle                    8574 (2.5%)
+  Loongson Technology       7614 (2.2%)
+  Nutanix                   7404 (2.1%)
+  Microsoft                 6927 (2.0%)
+
+  Employers with the most hackers (total 433)
+  Red Hat                     54 (12.5%)
+  IBM                         30 (6.9%)
+  Intel                       17 (3.9%)
+  (None)                      13 (3.0%)
+  AMD                         13 (3.0%)
+  Google                      11 (2.5%)
+  Rivos Inc                   10 (2.3%)
+  Linaro                       9 (2.1%)
+  Oracle                       8 (1.8%)
+  Huawei                       8 (1.8%)
+
+----------------------------------------------------------------
+Alex Bennée (6):
+      contrib/gitdm: add group-map for Huawei
+      contrib/gitdm: add group-map for Microsoft
+      contrib/gitdm: add University of Tokyo to academic group
+      contrib/gitdm: add mapping for Eviden
+      contrib/gitdm: add mapping for Nutanix
+      contrib/gitdm: add more individual contributors
+
+ contrib/gitdm/domain-map            | 2 ++
+ contrib/gitdm/group-map-academics   | 3 +++
+ contrib/gitdm/group-map-huawei      | 5 +++++
+ contrib/gitdm/group-map-individuals | 3 +++
+ contrib/gitdm/group-map-microsoft   | 8 ++++++++
+ gitdm.config                        | 2 ++
+ 6 files changed, 23 insertions(+)
+ create mode 100644 contrib/gitdm/group-map-huawei
+ create mode 100644 contrib/gitdm/group-map-microsoft
+
 -- 
-2.51.0
+2.47.3
 
 
