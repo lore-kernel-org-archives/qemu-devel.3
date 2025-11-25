@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A771D0EE14
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 18:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE64D0EE14
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 18:59:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNy61-0005IN-4D; Tue, 25 Nov 2025 13:49:01 -0500
+	id 1vNyFl-0004fz-34; Tue, 25 Nov 2025 13:59:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vNy5z-0005H3-6z
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 13:48:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1vNyFc-0004dL-HG
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 13:58:58 -0500
+Received: from 7.mo548.mail-out.ovh.net ([46.105.33.25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vNy5w-0004uE-98
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 13:48:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764096534;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Nnqcact2EdIgjSTgUOjubS6o/GHm23dxPYUw0puhoe0=;
- b=J2dgh/lG1Ky5Do80AIwIAEwCLvyLpH+Ig9mgMYSm1nJUO5VBQDpYczYynsmRvSg+MwzoP6
- wjjr6SfhRL86858cwzRUa5welcMWFSaGUMzy/xgEw8ZCwEh1C/dtOiM6XzSjDv7y+sOKzs
- 4S9EgGZqHpwJ5Zex6/ai6dgULmU6PTU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-nPHI7yhNOqy91EHCqn3ilQ-1; Tue,
- 25 Nov 2025 13:48:48 -0500
-X-MC-Unique: nPHI7yhNOqy91EHCqn3ilQ-1
-X-Mimecast-MFC-AGG-ID: nPHI7yhNOqy91EHCqn3ilQ_1764096527
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32C63180035F; Tue, 25 Nov 2025 18:48:47 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F4C918004D8; Tue, 25 Nov 2025 18:48:46 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3E36221E6A27; Tue, 25 Nov 2025 19:48:44 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
- qemu-devel@nongnu.org, farosas@suse.de,  peter.maydell@linaro.org
-Subject: Re: [PATCH] migration: Fix double-free on error path
-In-Reply-To: <aSXPhOV86fyaY53_@x1.local> (Peter Xu's message of "Tue, 25 Nov
- 2025 10:47:16 -0500")
-References: <20251125070554.2256181-1-armbru@redhat.com>
- <CAJ+F1CJ918Y9e=yTHFSqZo0QGmmD3aT6Zq+zxQ81t-gjKkUJPw@mail.gmail.com>
- <875xayxo6t.fsf@pond.sub.org> <aSXPhOV86fyaY53_@x1.local>
-Date: Tue, 25 Nov 2025 19:48:44 +0100
-Message-ID: <87ikeygd83.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1vNyFY-0006Md-IQ
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 13:58:56 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.249.37])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4dGBmD6jfwz5yDs;
+ Tue, 25 Nov 2025 18:58:20 +0000 (UTC)
+Received: from kaod.org (37.59.142.99) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Tue, 25 Nov
+ 2025 19:58:20 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-99G003c4a7f7fc-6396-421a-98b9-1664ad262aed,
+ F44D14359D3F567D284CF0746F87853B98EDC426) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 88.179.9.154
+Date: Tue, 25 Nov 2025 19:58:19 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Andrey Erokhin <language.lawyer@gmail.com>
+CC: <qemu-devel@nongnu.org>, Christian Schoenebeck <qemu_oss@crudebyte.com>
+Subject: Re: [PATCH v2] 9pfs: local: read native symlinks when
+ security-model=mapped
+Message-ID: <20251125195819.5bf1e051@bahia>
+In-Reply-To: <c9461c73-fbda-4963-b96c-3fd4b2d6ce41@gmail.com>
+References: <3c35955d-a57e-4203-81c5-395146e23f83@gmail.com>
+ <20251125150444.5deb5195@bahia>
+ <c9461c73-fbda-4963-b96c-3fd4b2d6ce41@gmail.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.99]
+X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: b7fb3bbe-d3f6-4738-b8ba-fe1c78f2a50b
+X-Ovh-Tracer-Id: 18179905798617668061
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: dmFkZTE3arwzTQnHZ+WhN+ZhG3l9dQ9GTBOWUWKz7tRXegKeW3TDG05r9sX7gN08q5u43X06rsiRwJ6c8H3nRycuHHxNHe5Z0hZBwg+jbMW+Czkwz93JHmYtAJ39OkV6kPRxGiOmBqQ+U78WRPzZBmSwy+dG2AXLMfOl49iu0bYyI2yyGeCOgKKtMvc8EkECEXihAKcaD64nvg0QHOJUVWH/2S7Lr4mSPNkE4Q2MvCaxXlYkTNXVcnB6CfuRWxP/KT/M7MAwsts0HodG6T3A7RPIPwT8YwCGzY0xiEdaaID62C9Z3OUIVGbIl5ScWNqoKL1BLoJxgNLh+PlKgqc9j6FjUW1xcA5UbstCmSPICSk0061Iu/IZzhIp/4n18M7YXuYfnnmAxTcanrtC87RP/++7Jh1Gz7Itdc5fB56XbQ2Hztm1E2Q3ajkbc8WLr3mHy2y68NDPeX+Xgvlx0ec322TqjucT5XTkCVD//T+ceoVEcFr7bTq6j6VEYrSuyGkaKY/cqhBiBAuKUIuOIqvYsKi9ctqH8WJ1e/8Aqxm729/+4DxFrqcPVLoIPQ58uMavGTe+0rJZr8jcwVOvrWcKTlSqYuvEZxDR0Vr8AdtwnDMNzRDDt2zu0X7VkhKbfmWsAm4mELyVF4lmUhR/1zH/wBAYwoHOfIr2D5gs9gmBpOkAuInp4Q
+DKIM-Signature: a=rsa-sha256; bh=W8jodKWXIN6TLg2WyWfv9ECMAkNxN+ndI5mllNQfl1Y=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1764097101; v=1;
+ b=MjGirURt27SQM2i5gRFvqA5xXmlqVcNg2nkUZN2nCAN4qZdyesi5oK2xCSnRbDPr+OKLE0no
+ SB6ED+g01SfAH4dT8p1R3MPA/JNSFn21FLKDfTx6DAV734cF01vfVvB6d2fczALSES6ub1Fq/gZ
+ lvyIrsUGWszYXzNaboWIcBKqyAQKXKXovfSKa/kJpaOfxzHNiPOnNEVlwHOkmFIaZipl1yO3TMN
+ yTvGGRwYzGEhx9vfHVitKFJ+O5IyiyYti5ClKA+/Pyn8xB0LuHxLTX+7RnBJ9utEcxbJ/7my1XI
+ ObsfPdeVBSAQn+3rO1w9ikBJhciyKAf27At6a/za4zZOg==
+Received-SPF: pass client-ip=46.105.33.25; envelope-from=groug@kaod.org;
+ helo=7.mo548.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,106 +85,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Tue, 25 Nov 2025 19:21:00 +0500
+Andrey Erokhin <language.lawyer@gmail.com> wrote:
 
-> On Tue, Nov 25, 2025 at 01:59:54PM +0100, Markus Armbruster wrote:
->> Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com> writes:
->>=20
->> > Hi
->> >
->> > On Tue, Nov 25, 2025 at 11:06=E2=80=AFAM Markus Armbruster <armbru@red=
-hat.com> wrote:
->> >>
->> >> Fixes: ffaa1b50a879 (migration: Use warn_reportf_err() where appropri=
-ate)
->> >> Resolves: Coverity CID 1643463
->> >> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> >
->> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->> >
->> >> ---
->> >>  migration/multifd.c | 2 +-
->> >>  1 file changed, 1 insertion(+), 1 deletion(-)
->> >>
->> >> diff --git a/migration/multifd.c b/migration/multifd.c
->> >> index 6210454838..3203dc98e1 100644
->> >> --- a/migration/multifd.c
->> >> +++ b/migration/multifd.c
->> >> @@ -450,7 +450,7 @@ static void multifd_send_set_error(Error *err)
->> >>   */
->> >>  static void migration_ioc_shutdown_gracefully(QIOChannel *ioc)
->> >>  {
->> >> -    g_autoptr(Error) local_err =3D NULL;
->> >> +    Error *local_err =3D NULL;
->> >>
->> >>      if (!migration_has_failed(migrate_get_current()) &&
->> >>          object_dynamic_cast((Object *)ioc, TYPE_QIO_CHANNEL_TLS)) {
->> >> --
->> >> 2.49.0
->> >>
->> >
->> > Maybe warn_reportf_err() should take a Error **err instead, and clear
->> > it (and accept NULL values)
->>=20
->> Our deallocating functions don't work that way.
+> >> +    native_symlink:;
+> > 
+> > Still has the terminating but unneeded semicolon
+> 
+> I think I've addressed this in the v1 thread, with links to the C11 draft grammar.
+> Can repeat in plain English: a label shall be followed by a statement. (No, declaration is not a statement)
 
-g_free(), g_realloc(), freeaddrinfo(), qapi_free_T(), visit_free(),
-qcrypto_FOO_free(), aio_task_pool_free(), qemu_opts_free(),
-timer_free(), ...
+My bad, I didn't see your answer.
 
->> Having them take a pointer by reference and clear it gets rid of *one*
->> dangling reference.  There may be more.
->
-> True.  However I need to confess I like Marc-Andr=C3=A9's proposal.. Norm=
-ally we
-> only have one Error object, or >1 objects.
->
-> The only thing I'm not sure is such design doesn't match with the error A=
-PI
-> (e.g. current form matches the more famous error_report_err(), and likely
-> others that I'm not familiar).  So at least this will need some more
-> thoughts before all the code churns.
+It is funny that I had to pass -pedantic to gcc to get a complaint (in plain
+English as well) if I drop the semicolon :
 
-The error.h functions and macros that free an Error object are:
+warning: a label can only be part of a statement and a declaration is not a statement [-Wpedantic]
 
-* error_free(), error_free_or_abort()
+Cheers,
 
-  These take a single Error * argument.
-
-* error_report_err(), warn_report_err(), error_reportf_err(),
-  warn_reportf_err(). warn_report_err_once_cond(),
-  warn_report_err_once()
-
-  These take also a single Error * argument.
-
-* error_propagate(), error_propagate_prepend()
-
-  These take an Error ** destination, and an Error * object to be
-  propagated.  They take ownership of the latter.  They either store it
-  in the destination, or free it.
-
-  Changing the latter to Error ** makes these functions vulnerable to
-  swapped arguments.  See "Error ** parameters are almost always for
-  returning errors" below.
-
-* ERRP_GUARD()
-
-  Includes automatic error_propagate() on return, immune to use after
-  free.
-
->
-> Thanks,
->
->>=20
->> Coverity is fairly good at finding the kind of use after free this could
->> avoid.
->>=20
->> Error ** parameters are almost always for returning errors.  Not having
->> to wonder what such a parameter is for makes code easier to read.
-
-My main argument remains this one: our deallocating functions don't work
-that way.  For better or worse.
-
-I don't want the Error API free differently.
-
+-- 
+Greg
 
