@@ -4,86 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 963A1D0E6EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 15:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD5FAD0E6FE
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 15:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNv2J-0006x5-2t; Tue, 25 Nov 2025 10:32:59 -0500
+	id 1vNv6o-0001OL-1I; Tue, 25 Nov 2025 10:37:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vNv2G-0006v9-Pl
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:32:57 -0500
-Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vNv2E-0006Yp-PC
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:32:56 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1764084756; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=VCWFwwG+gI18rK5GcsI0VLVWEAiz/hQz51u7Ch7sCONUgDeqHuPIx+zC1DFMQte6QNu7jwpGVKbn1VDyapss7EPt0G07VwN1Q5d51OfQ0vO3Tj1iH8ouY0UV8nPGBsXrtyxvwOJ73koysVtOcL4nyoHgSK7wITAXFMhiZj9trlo=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1764084756;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=/GVHo103ACKpfm9gv8V940QNFGCrYbMfEpz3UZM8u0Y=; 
- b=Zu/MIgJG7UWQOHsjgXvImiO1yxbZUT5rCGyc+EkBwODJSIMpAJYjvLqwUc/SX1hrGJy0WEtZ7Bo80/yYQN25m6tn/ajuclVO9OB8rkOT1p/udMtf1uilwXtO0v/NDHa9ONupQy5KnbUdSb+5M6H49/o14JqLDjj3nSQ0a1pzKgA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764084756; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=/GVHo103ACKpfm9gv8V940QNFGCrYbMfEpz3UZM8u0Y=;
- b=IHVwLmBTcIt7gYlhMY1ZrALAd+k1620814rRSgaT/2tnpsdPobz/j+BebfF3PfT+
- ye/1Que987Y8CZaJdhHdWBQa9zAeb5qzGwdN/p96+IuqeKeEZ0H2YDRcz+RQdxR4e9G
- GmxXfgzR5l/D7uyNKOVkKQC6o/206xMp8GALq8kY=
-Received: by mx.zohomail.com with SMTPS id 17640847517505.25654896649894;
- Tue, 25 Nov 2025 07:32:31 -0800 (PST)
-Message-ID: <fe171938-9c05-4636-a138-ee62a4eabc3b@collabora.com>
-Date: Tue, 25 Nov 2025 18:32:23 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNv6g-0001LG-PF
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:37:31 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNv6e-0007Q1-RN
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:37:30 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4775e891b5eso24364305e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 07:37:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764085047; x=1764689847; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pal7b2o17HKgT1ionj87xcgpN3Mn34ldZckkp/PmxCU=;
+ b=anx5XnjYlwX2qBcKOYUhX2nXjH2krxD0wlooyhDXQ4Jn9hUCA1MiMtAe6oQr178K02
+ 2RdkFXL9s9rMAYJNClSWpq7l4ZThDL0ePCVxoj8iH7U4eAJGv0LtyPgBfcBJxVDy07ru
+ /jCxo8dQpzy5FLAqBtMqx1oI9vK0aSnAd+NAsXgEmDEUZPCWqQbSd6vVQvfkYo4cvRMc
+ Km41d1MkK+xMFoP9xoz1Yxy3VCoOeE4F9nxYAceX9KddnRQaWpcfSmHfxuGJzE54jE1B
+ tInyFQQaog1XMUJKWcYTklDoI368RYECqp6YbRo5dyMibHf5w8MVeTo65YlR3JyLaIT+
+ k6Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764085047; x=1764689847;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pal7b2o17HKgT1ionj87xcgpN3Mn34ldZckkp/PmxCU=;
+ b=a0UBs6lqrmL+Hz3/7fHI0D3CD6pW9HlXFCcElVBYu8TrJSE9G0+m8UvJqRDWlJaFzo
+ MCyzxWlVjRhJ8fcHLfoM5TsOh78RKfROVHEf/iMhfpyApGU/+xfgtMzZARv8GiYBz+vp
+ IQOCuXG1mICxn6kngHqKC0dkINNJ8PysiA1YGAT99KGvcH2lYpG4084PSSOUTn0D43L7
+ t+wdFQfysGk7B5lCg1MDIWqrATBy4W6fpuWIeVwmeDJ9Werql+sT1v+OfZdsir1CH42O
+ hRDCAoErsxVgAPXWoHVOPA49fMM9k/jOHJbXm2oaQ34N2WtI+We2O4QR2g4xzZ1UmCEY
+ +0DQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVyfyPW+sNkEaTBkFvh6+tUPs4Mt+l3IzlpKC7HbkplUB8Phr5RitRkl1Rza2N74EaiV9CiTwdij/Pw@nongnu.org
+X-Gm-Message-State: AOJu0YyneoyQeZNZGCtZtb9zJ4+1s1zUT+GIJ7ytv/A3hFZMO3UUfwKQ
+ T00S+EeeX3VJIUiAsGw0pYsGA9v4nS4BNiepj7ga9k+Qe3VDFjYdpIzIilqgBz/xns4=
+X-Gm-Gg: ASbGncuU/UFf1f9B89m462ApkVyoI5MjbXuUwJYGZWE146MPxNavXPAY9W4haL1Tzrc
+ lK712VrybQl2v+Rr0cUDxFwqBTzeZYriygZDjGGIDF4jJbshkDth0YZfsYkU8amWWGEUj4zKlDX
+ aDFS1Ae/IyAWzz2UNtkjyyAnCj8TbVO24S4sB2qIuaVsPf/6D5PmoLEOqdeI5CoOv9s8pg1rgu8
+ kPx573Gzwnazg9lvUTDrxW37yRAvgSL+Aa+KgyvObKnfDYtNpm9Yt5tDM+9RtrT0cKive19C93d
+ V/UEMyWo09iCzx5VcQXVQLS9w0kIJwoFx/WPwtDuZBEzCJ+bszW2sRRzEtkvvdOzHGU5Qq2bufI
+ o9rQWrGwjcWp/+EoUrH9SCo6HzGLBdGHa2eA6TtPv4hwALyUdAMTGJAvZxhEW1SCD7U2cSOBXwB
+ v9/ACDAw0surGEQKP60d0vSgIxATzidnyy1st8cQs=
+X-Google-Smtp-Source: AGHT+IGKI+KUW25zjisjs1oiOqlh1rAy+s+pOxb4h1pgZA4kNacJr4fhvpxh4a/aFHhDVmxrce7L9Q==
+X-Received: by 2002:a05:600c:4e87:b0:46d:a04:50c6 with SMTP id
+ 5b1f17b1804b1-477c01ebc76mr159800965e9.30.1764085046907; 
+ Tue, 25 Nov 2025 07:37:26 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7f2e556sm34690151f8f.5.2025.11.25.07.37.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 25 Nov 2025 07:37:26 -0800 (PST)
+Message-ID: <429a1365-489b-4032-bb3b-355831c8b0f9@linaro.org>
+Date: Tue, 25 Nov 2025 16:37:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 2/7] virtio-gpu: Validate hostmem mapping offset
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>,
- Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Robert Beckett <bob.beckett@collabora.com>
-References: <20251125023517.177714-1-dmitry.osipenko@collabora.com>
- <20251125023517.177714-3-dmitry.osipenko@collabora.com>
- <8734628gz0.fsf@draig.linaro.org>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: Re: [PULL 4/4] ui/vnc: Fix qemu abort when query vnc info
 Content-Language: en-US
-In-Reply-To: <8734628gz0.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, "AlanoSong@163.com" <AlanoSong@163.com>
+References: <20251125141726.1755276-1-marcandre.lureau@redhat.com>
+ <20251125141726.1755276-5-marcandre.lureau@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251125141726.1755276-5-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.184.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,39 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/25/25 14:54, Alex Bennée wrote:
-> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+On 25/11/25 15:17, marcandre.lureau@redhat.com wrote:
+> From: "AlanoSong@163.com" <AlanoSong@163.com>
 > 
->> Check hostmem mapping boundaries originated from guest.
->>
->> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->> ---
->>  hw/display/virtio-gpu-virgl.c | 8 ++++++++
->>  1 file changed, 8 insertions(+)
->>
->> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
->> index a6860f63b563..2224f59cf5d7 100644
->> --- a/hw/display/virtio-gpu-virgl.c
->> +++ b/hw/display/virtio-gpu-virgl.c
->> @@ -126,6 +126,14 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
->>          return -EOPNOTSUPP;
->>      }
->>  
->> +    if (offset + res->base.blob_size > b->conf.hostmem ||
->> +        offset + res->base.blob_size < offset) {
+> When there is no display device on qemu machine,
+> and user only access qemu by remote vnc.
+> At the same time user input `info vnc` by QMP,
+> the qemu will abort.
 > 
-> This second check seems weird. offset + blob_size could only every be
-> smaller than offset if blob_size was negative. I feel we should have
-> caught that earlier if it can happen.
+> To avoid the abort above, I add display device check,
+> when query vnc info in qmp_query_vnc_servers().
 > 
-> Are we trying to catch an overflow here?
+> Reviewed-by: Marc-AndréLureau <marcandre.lureau@redhat.com>
 
-The second check catches integer overflow for huge mblob.offset that is
-u64 coming from guest. This wasn't caught before, we missed validation
-of the offset value.
+                          ^
 
--- 
-Best regards,
-Dmitry
+> Signed-off-by: Alano Song <AlanoSong@163.com>
+> [ Marc-André - removed useless Error *err ]
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Message-ID: <20251125131955.7024-1-AlanoSong@163.com>
+> ---
+>   ui/vnc.c | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
+
 
