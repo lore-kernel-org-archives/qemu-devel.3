@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7178D0EE18
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3164FD10366
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:51:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vO0w3-0006gH-Cj; Tue, 25 Nov 2025 16:50:55 -0500
+	id 1vO0w7-00070p-AS; Tue, 25 Nov 2025 16:50:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0vb-0006Kl-V3
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:50:28 -0500
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0vn-0006Xs-No
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:50:52 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0vZ-0005bc-7f
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:50:27 -0500
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-42b427cda88so4112401f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:50:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0vm-0005cv-4j
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:50:39 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-477aa218f20so37225645e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:50:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764107424; x=1764712224; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764107435; x=1764712235; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=UC7sfSHb4yzl/h/C3a4s5MrLYGM73JIMWnz1nW+xFU0=;
- b=YWyBEgAoHuciUtwoG3eKs0iBMF9nu/rMaHwDIdTj3Wc0lpjRdmBkJctfbBDCmj+2U2
- VJEuT5nTj//rTkPKsKOHCGxlKDDxXEXNw4Gl7wN4fVYFPrNlmULvIIi2dvu9YWfCaEIQ
- ZCqy+X9iWEs1OE5SDJcLLMRFd0mc4oIJPilRTSqIRbNCNh53e/O1JTGjHRMMESN3CZGG
- lRuJVl8SXZ+d9oDXJMhzlzHKHE/tM0Kevg5SCnq7ciI0oFXYtKCwGzEMnSAKWAyNstfJ
- fk4RW1SbjvTV4mlfZYB3uU1LSNdgTMVgRaLR/GhzYTKW2A9JCm6BNyATe7YZrnls9P2r
- FhqQ==
+ bh=LgfprpKZ8aqOKxqaZnaTPOqIv/4JTra2RbTcU6e4geA=;
+ b=vSSeio21mG4UaiuMTt40b9sksqT2+xWUFWsBYKBLjDWlVK8J3xCPc5PShVR2rkADTK
+ NiAGSoVONBW9IFSIFxhGZO+v5bJFWV8qKkFvD3vYyfP0dOEXlNmCDymitKHse1Yk/atG
+ l3vOCMadKYNtrE0X72nqocqFbmkWM1x/XJ35JkRnVpJj8CncES+C3uiB0QdU8IJMN0fo
+ 12pbE6nb8gE+JccxQkTEDdWiuL+/9rWf88kIppCPCD9V9rocL7wRvyOaUARtT9NeQ+F0
+ PWnV1QIDsegcVukuJqBE5iv1lIpf2khEGHPSnXIyIxixML9EDqHW1g49qVz21bSk+LA1
+ 6n1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764107424; x=1764712224;
+ d=1e100.net; s=20230601; t=1764107435; x=1764712235;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=UC7sfSHb4yzl/h/C3a4s5MrLYGM73JIMWnz1nW+xFU0=;
- b=lOOU6ktrjAl8XK4ZbjChx19ttKacLpCG2FnfFzEkWbBGtz2I4fZ3ZDjTNB5R15rbiZ
- ILNFdZY7dFH9Z+t0eNX4PD8KbsICcsXkh1aF4yG2puAfMRjqEIukuEm4/mb7Y6I+UiWO
- F/HphHqHtLznLnRiJUk0VEcscQ8TmNrpA4WafLdwWXa5B7g7tq8ueGKs2JVw/8qFufg1
- 3B8TD4Z85wpUbC1huiZxlfFxwTLzmwNdtrgpcfI/gpz/6Ks2k11Cso59RNijSyb2XwR+
- lcu3N18PLIdJdjZ1gj9MV2D6lKU6TlIf3VS+gDT9EnXqgRwefTYncjjpHo9EAccHqu+R
- 15Bg==
+ bh=LgfprpKZ8aqOKxqaZnaTPOqIv/4JTra2RbTcU6e4geA=;
+ b=OyzTQFgzSYHRHCzb6GBLqXjWLHIQTADaEGnyf0zhqHYRWnQ+XQ6gYr08fMPfEPmFa2
+ z/h9Jn2pywmDib+b1IkwRgeW8sV5tkBaBBli+oARXlt5NeRje+b4LApiwBBoKg51QFc/
+ nzLYPeGixeybtc+mbPFWaRxg6wx/bML9liShn0d8qLEmv6F+5VRl4i9hkL7jbpufL84J
+ E3y68yX5edn6R5RM0Tvx9CJGuTdmJXpiu9/BPjoLoGfVrDeZmNqQi5uuBBGdZas+C/cH
+ roWP26cXn/lK9J8h5IzmUu31xFJyPNRHOxtKS0OKVvvW+rTZpK2UNyi6LyS4zf4PKCom
+ F31g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWg98ABn1/4jVr9BmRL9i6hr9Q7QrvbodqSLx7Z/HWPCKyG+6V9SmiZjfr5k8xoO5SlmYrL+j1IYlBL@nongnu.org
-X-Gm-Message-State: AOJu0YwMgwK2LURAo8sZjkq/oD14hTJXTmABC6Aq0eTPR9LilLhJc/Ul
- SjOpPsqCrOf4jrrm8ImI696EGN/A/2bOlcJukmTVn3cpmo3Y9ug7vKQgsW1ReJOxaeQ=
-X-Gm-Gg: ASbGncvVn21gfmEJLrQ/CgivhEViuB+tcFmh5EgBaiti7Y6Dk+mPIF+XpSiWfwboTid
- hFe+Cx64gu6dWwc139p98EX8lUy0wataIuuofwrTqbzC6Pa82dbNpFjqHPgB5EDiaGUaXmRPK8o
- kjiphYvYykmoE2+30jnxxLxPByrRsXXeP7J5B5UVnNV5kbvbSrbhF1MAQ7n0WgMWCKceSO9GIUQ
- bVQ9ho3vPv2Ifd0pJRgI1mUJPKjOgNpl6yyrrDE6FsIQ2IHJ+Y8xkGWXymVCw10+/wbzngbYaZv
- ZKdDTccim0MiD72nBKm6HPWBNZ5PI/ixqalx8TwRU1jG/tdIwJ5RTI0OZZg5kTXMDvbkVT1WuZy
- czxJgB/YWQrDjzGSA1bvX1MHCm10BEyPY1GnBkP9CfifTl+HEFvZlcu68rCfpjNbt8rtHbCdsSx
- thHKmPp5d3MtVe4deVFAVZ8ZBKPHc+yipK+9G7ZGJJAuIe5NIbz+WGtLPj5noAcfy4
-X-Google-Smtp-Source: AGHT+IGnrRT3QMmVDHHx7fmnCZSHNobtlBSSxYFTY+GYT8ha79Eh3M2RrFrUQg6xd8pxFNpL8iITNA==
-X-Received: by 2002:a05:6000:2411:b0:42b:3131:542f with SMTP id
- ffacd0b85a97d-42cc1cbcfd6mr19781643f8f.24.1764107423748; 
- Tue, 25 Nov 2025 13:50:23 -0800 (PST)
+ AJvYcCV3YCCOI5Gzr0xWqFI8kz+mUyQglevvdKV2zPlR6s1+rwwhdPC3ZEg2oc+DJ7Yv44qPWGH0aYU3Pk62@nongnu.org
+X-Gm-Message-State: AOJu0Ywvk+ycbpVVedO+wBo5pNR6GEcX+RA3+haHnWfwafe+TSdLsbYq
+ A36ZFfk+rziJix4cxsm4lMw1JHL2/vEsXkqkeadf8jMJRUpDVa2hqb1R8OTQrvMjoAQ=
+X-Gm-Gg: ASbGncsQLoQZD2zdTdTgbSr3/84/hHJ9Js8M5cD8BOnegqs3ugr4K4z+t5ZEbDWUapw
+ r8CGDxlIbcw5HDBFqPNRcCyfQs6wxlirwIiwrCbOu6iGqNd7dVdzNRzWFCHzfC38eLUrlCX4wgT
+ dHwfMjhz7iPx4vYJEs92yZqaeyY0QRyK/LVitrgKcQY6bXOyCsjUbDN8wlN/ROg1NjXwSKh3zcs
+ 0KOXZWGIh7Jqs594En7dmoEYkvaReRzsmFCL2olkZeuKj5r3d1ZJpdMCYGLvBFGnwQ1BkDImnGz
+ F3aiuVJ3zKadO47hmB8qf4Mh04n0iAoTOEEn1L1X097LTJKlYB4f0zWIkyRYVX+0dD4sVvoy0j4
+ YS9qomhchZb57ZgDwlSmrdPvZtW98mkdG33km5xPGqLG4OetutOTiUkEeF5tsi4AG8++auaLWuu
+ W/99SPSKmIRTfdKMhmlmFV1+AQwBqGYfmm12Q2t89vKOkd0U3TceTVUg==
+X-Google-Smtp-Source: AGHT+IF6Qz2PhPSiWeFpC736JUJRs4lo6WhMiZvGQJH8mUbnyW9rvfs0TaCOSGbiBy35NGZKf30vig==
+X-Received: by 2002:a05:600c:1994:b0:477:7af8:c88b with SMTP id
+ 5b1f17b1804b1-477c01740e1mr166514215e9.11.1764107435358; 
+ Tue, 25 Nov 2025 13:50:35 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f363b0sm37040969f8f.13.2025.11.25.13.50.22
+ 5b1f17b1804b1-4790530e73esm24779595e9.17.2025.11.25.13.50.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Nov 2025 13:50:23 -0800 (PST)
-Message-ID: <2aa92f1f-7d01-44ab-b29b-a3f22ad631af@linaro.org>
-Date: Tue, 25 Nov 2025 22:50:22 +0100
+ Tue, 25 Nov 2025 13:50:34 -0800 (PST)
+Message-ID: <4460eb5e-8d31-4172-8f06-6c4afe2b41ee@linaro.org>
+Date: Tue, 25 Nov 2025 22:50:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/pci: Make msix_init take a uint32_t for nentries
+Subject: Re: [PATCH] qtest: Allow and ignore blank lines in input
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20251107131044.1321637-1-peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+References: <20251106151959.1088095-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251107131044.1321637-1-peter.maydell@linaro.org>
+In-Reply-To: <20251106151959.1088095-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x444.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,54 +104,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/11/25 14:10, Peter Maydell wrote:
-> msix_init() and msix_init_exclusive_bar() take an "unsigned short"
-> argument for the number of MSI-X vectors to try to use.  This is big
-> enough for the maximum permitted number of vectors, which is 2048.
-> Unfortunately, we have several devices (most notably virtio) which
-> allow the user to specify the desired number of vectors, and which
-> use uint32_t properties for this.  If the user sets the property to a
-> value that is too big for a uint16_t, the value will be truncated
-> when it is passed to msix_init(), and msix_init() may then return
-> success if the truncated value is a valid one.
+On 6/11/25 16:19, Peter Maydell wrote:
+> Currently the code that reads the qtest protocol commands insists
+> that every input line has a command.  If it receives a line with
+> nothing but whitespace it will trip an assertion in
+> qtest_process_command().
 > 
-> The resulting mismatch between the number of vectors the msix code
-> thinks the device has and the number of vectors the device itself
-> thinks it has can cause assertions, such as the one in issue 2631,
-> where "-device virtio-mouse-pci,vectors=19923041" is interpreted by
-> msix as "97 vectors" and by the virtio-pci layer as "19923041
-> vectors"; a guest attempt to access vector 97 thus passes the
-> virtio-pci bounds checking and hits an essertion in
-> msix_vector_use().
+> This is a little awkward for the case where we are feeding qtest a
+> set of bug-reproduction commands via standard input or a file,
+> because it means you need to be careful not to leave a blank line at
+> the start or the end when cutting and pasting the command sequence
+> from a bug report.
 > 
-> Avoid this by making msix_init() and its wrapper function
-> msix_init_exclusive_bar() take the number of vectors as a uint32_t.
-> The erroneous command line will now produce the warning
+> Change the code to allow and ignore blank lines in the input.
 > 
->   qemu-system-i386: -device virtio-mouse-pci,vectors=19923041:
->     warning: unable to init msix vectors to 19923041
-> 
-> and proceed without crashing.  (The virtio device warns and falls
-> back to not using MSIX, rather than complaining that the option is
-> not a valid value this is the same as the existing behaviour for
-> values that are beyond the MSI-X maximum possible value but fit into
-> a 16-bit integer, like 2049.)
-> 
-> To ensure this doesn't result in potential overflows in calculation
-> of the BAR size in msix_init_exclusive_bar(), we duplicate the
-> nentries error-check from msix_init() at the top of
-> msix_init_exclusive_bar(), so we know nentries is sane before we
-> start using it.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2631
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> Technically this fixes an assertion, but only if the command
-> line is daft, so I didn't think it worth backporting to stable.
-> ---
->   include/hw/pci/msix.h |  4 ++--
->   hw/pci/msix.c         | 10 ++++++++--
->   2 files changed, 10 insertions(+), 4 deletions(-)
+>   system/qtest.c | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 
 Queued, thanks.
 
