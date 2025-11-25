@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6769CFD315
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 08:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C032CFD364
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 08:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNoiI-0008Bi-U7; Tue, 25 Nov 2025 03:47:54 -0500
+	id 1vNoiC-00086B-4n; Tue, 25 Nov 2025 03:47:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1vNoiG-0008A4-NK; Tue, 25 Nov 2025 03:47:52 -0500
-Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vNoiA-00085Y-26
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 03:47:46 -0500
+Received: from fout-b5-smtp.messagingengine.com ([202.12.124.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1vNoiF-0008Ct-5j; Tue, 25 Nov 2025 03:47:52 -0500
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id E73E97A00FE;
- Tue, 25 Nov 2025 03:47:49 -0500 (EST)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>) id 1vNoi8-0008Bu-70
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 03:47:45 -0500
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.stl.internal (Postfix) with ESMTP id 41AF81D0022C;
+ Tue, 25 Nov 2025 03:47:42 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-06.internal (MEProxy); Tue, 25 Nov 2025 03:47:50 -0500
+ by phl-compute-02.internal (MEProxy); Tue, 25 Nov 2025 03:47:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm2;
- t=1764060469; x=1764146869; bh=7IS0y0KL6f9wIcEoT4675tOP1YM8wZ2g
- L3bKB8rQKTI=; b=SyoFkkAyEIMfn0/TaTFITKdFI7+Epjci+wlkOyLMzH8E47EI
- bPEuC2PVm9jAjQ8A8jka8Wt8U59zKysgg9lhKgN8ArJXmdcCRnxd5qnIWKcBh7Rl
- +W8cWrzpEe4XnxopNJQnJrYdrXs/RN+A874mEUKRpZv40fqtyfZaAdZUThmD9Prv
- MJk/BFde9rSVqguNL8nTfvpiVkBuPveFhb4TaT3lFygbaoIWUyCYKt5iVsENLJ/G
- i2Pyr65aY16aU1RoQLHJnd3HobeqeoZjcwy+eRv14llek3tRofDjHxDMDLMid+d9
- M4pv3tyCUT21czbrjvj78Q8aSP2vERV/5qfjfQ==
+ :date:date:from:from:in-reply-to:message-id:mime-version
+ :reply-to:subject:subject:to:to; s=fm2; t=1764060462; x=
+ 1764146862; bh=SSCHR0ZtlaTFeMPnVBjB9Ad9P+JwctEgEG+9Gh5IdS4=; b=B
+ kwtkdU2gtRK0U3FLqxhyaRSI3fBCdkdt+hxkeUXRONnqSxqbOZphHqp/lGEYkSke
+ +Od6YYNraGpbW35OwzJq9xiXpAk9uOStvQ3r+Mh6N/gocsuFPBRr7ycQVIGlz0CG
+ 8jMIcZVgS9arFlhohKS5bdPoQdvFEMyZKNvvc3nmLFU56RdXF3u2sac+6S1P1W8w
+ iVjIFi+QD4Vwxp/c4MzdVqhY6r6WVQQLe9i6rd30Ds5kfLRhxypDMIaOH3eE9F4b
+ YTvkFB+AVSmafCUbI7yxDrKHAZUtXTqXD6/za4Xfbo0mtnpgR2c2ftjQ+5CsuYJj
+ EruVinG/Zp49bwGmwsiPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1764060469; x=
- 1764146869; bh=7IS0y0KL6f9wIcEoT4675tOP1YM8wZ2gL3bKB8rQKTI=; b=a
- QfusAA6ca15pCgxi214wetINa/CF3UObMdO4j6mBjNPW40KG+/607SwCjAd/AErQ
- SlK0Yd+uXzx4l8zvGZIucMI6hXqkA9XYxEgzvwzZ8eCFfLkMKaA7tpYY7optskZN
- THcXg7uqzwuYLbLl6KeDaz4L3fH1pO3U8k0AJXFQ7kwi1U9uppyO184Js0RCHDGy
- EZe0lgMLMMGW3xbhp+oj1dl4t9pRK8VdMvpUFoRUA/ka3/5Tpf0kc0SYgXpm/20S
- quagh6CgwA/BKsK7qCyw5iok3eyRb8s5pQkdT/0xjmI9wzRKYIqEz/Xy2R3SKUhE
- kKpPFBnL2h+wk3ArzZzbw==
-X-ME-Sender: <xms:NW0laUtz7eM655LUrM6nXKpMIylS5_4GulyRRaTt3G3Bkhfd9mrrjQ>
- <xme:NW0laXfw1Y3aBEj2o3dQLsERG0fwgmPTIXQIR-alNWqyblgAP_e7Ocy6PK5c6GaMS
- hAJPsOgkyQBdo6I8pTDiQg5kmxda45maz_sK4hbaGdNlqIb2bBtQ1M>
-X-ME-Received: <xmr:NW0laam1lg2BUSy5Ote9usF6hqloLebG_NerN5iItFS-6LWQzuj-MEkcXacWJg7QIwCyqgolO8zqo0acWdipOIlF>
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; t=1764060462; x=1764146862; bh=SSCHR0ZtlaTFeMPnVBjB9Ad9P+Jw
+ ctEgEG+9Gh5IdS4=; b=wxThxGzXS8gGLxx1W4UJO5jJkdpB8HxfgNfZhArya4Ha
+ riufinXlewTwyQicSgXHI0ELL6TOJYpHpTiiEmmb17b8pVzQ88LAcGUiDQuaiP5Q
+ ekbn/xMVaS2JedL52sSqaLRJJ6j2t/M18vdI1zuJ8W0G/CM3iaSZI3XH+Fhy1Muf
+ 4HbceYX16NdAxaq5aRzTSkbp4IfVSe1xZUQzQ77734L5j8WOp3N4WIh7muJuOW40
+ k34d+tBQHW5oyw78RVZuEx5w4aQWBBAtkTTQnOwumAYYNRXwy+XhXJiyWpqPx1oI
+ 3WEkCJRbklTBcLxzVdWm7qcUfr6lEPe+Gu6ZSObPig==
+X-ME-Sender: <xms:LW0laZpP0oly1K49y9OtNmU48gh_UlWM_u88GDS6DOKakf1UrcB87w>
+ <xme:LW0laf8roC31O33aTjTYN5IriShb_y-pVKs7E1ykQFg-q-TGp4BKy1s24pXC0ghFI
+ SOr9_oiJqo6OfxzwzSMbCid_o8f5j1eXzNyxoOs1dSW4X8mtnkFVeuk>
+X-ME-Received: <xmr:LW0laVWIYuG_w4ucyqk1Fm6tDakuTmjJ92eryxYv6-Zeivr_WWHBoqoEIbupkKN_nEO3x0b1ZIdLh9JEm8wQRP0->
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgedutdefucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpefmlhgruhhs
- ucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtth
- gvrhhnpeefvedtueetueduffevgffgtdeftdeuleffhfeigeffkeegfeejfeffteejiefh
- vdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehith
- hssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeduuddpmhhouggvpehs
- mhhtphhouhhtpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrgh
- dprhgtphhtthhopehpvghtvghrrdhmrgihuggvlhhlsehlihhnrghrohdrohhrghdprhgt
- phhtthhopehphhhilhhmugeslhhinhgrrhhordhorhhgpdhrtghpthhtohepkhdrjhgvnh
- hsvghnsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohepkhgsuhhstghhsehkvghrnhgv
- lhdrohhrghdprhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughkpdhrtghpth
- htohepfhhoshhsseguvghfmhgrtghrohdrihhtpdhrtghpthhtohepfhgrrhhoshgrshes
- shhushgvrdguvgdprhgtphhtthhopehlvhhivhhivghrsehrvgguhhgrthdrtghomh
-X-ME-Proxy: <xmx:NW0laaA_n_h3K-o6ms_x7PN4t9T6x58mkp5XythWoWQ4VARB2mgCfg>
- <xmx:NW0laUOZ8t_xmPXpwQMoROym_MVk7mStsv4qz6odBAqZv8Yg7Ecf-w>
- <xmx:NW0laZP5ORYP6DPDjwzGSJ51t6-_nA5WS-jVM6Su-0ioOES-ZAcfzQ>
- <xmx:NW0laUmZuxFS4EpNj9bRU7qTjg-3FPtNaApkmTKY_E0uLlHNKvXfZQ>
- <xmx:NW0laW4syO6f6rKOxLtWjfZcmH-zYgSASzFoVZVenzg92oEza8ggGyPZ>
+ gurhephffvvefufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpefmlhgruhhsucfl
+ vghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrh
+ hnpeekvddtvdetiedvjeehjeeujedvkeefvedvkeeftefffffhfeeihfeijeelueefgeen
+ ucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
+ frrghrrghmpehmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgs
+ pghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepqhgvmhhuqd
+ guvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehpvghtvghrrdhmrgihuggv
+ lhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuh
+ hnghdrtghomh
+X-ME-Proxy: <xmx:LW0ladBhnpO96Sl_yb-SR8XnimyCys9FjUf7JGev8L4tOFFnSQEV-Q>
+ <xmx:LW0laeyNjuar_kGIDxOTYumq1RSVpViBZlUaA0ZcrPj-KNlgz8Eyfw>
+ <xmx:LW0laSD5jqT3hMjVBIDsExpVkZJjSAX2WkLwWxFJ_pgc3MH7ytH0hg>
+ <xmx:LW0laTZOlFiVZniO8sAxYWLgINBVVjZRCyvmRh7eD_v9r9z27rEG8g>
+ <xmx:Lm0laZM5GrtWqMtIYZ7ExqbS_AMbq57wxRfidJCTGj5RUQfPzi-Cy6lf>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Nov 2025 03:47:47 -0500 (EST)
+ 25 Nov 2025 03:47:40 -0500 (EST)
 From: Klaus Jensen <its@irrelevant.dk>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Klaus Jensen <k.jensen@samsung.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org
-Subject: [PULL 3/3] hw/nvme: Validate PMR memory size
-Date: Tue, 25 Nov 2025 09:47:25 +0100
-Message-ID: <20251125084725.4632-4-its@irrelevant.dk>
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 0/3] nvme fixes
+Date: Tue, 25 Nov 2025 09:47:22 +0100
+Message-ID: <20251125084725.4632-1-its@irrelevant.dk>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251125084725.4632-1-its@irrelevant.dk>
-References: <20251125084725.4632-1-its@irrelevant.dk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=202.12.124.156; envelope-from=its@irrelevant.dk;
- helo=fhigh-b5-smtp.messagingengine.com
+Received-SPF: pass client-ip=202.12.124.148; envelope-from=its@irrelevant.dk;
+ helo=fout-b5-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -116,79 +106,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-Per the PCI spec 3.0, in section 6.2.5.1, "Address Maps":
+Hi,
 
-  A 32-bit register can be implemented to support a single
-  memory size that is a power of 2 from 16 bytes to 2 GB.
+The following changes since commit de074358e99b8eb5076d3efa267e44c292c90e3e:
 
-Add a check in nvme_init_pmr(), returning an error if the
-PMR region size is too small; and update the QTest.
+  Merge tag 'pull-target-arm-20251124' of https://gitlab.com/pm215/qemu into staging (2025-11-24 09:03:12 -0800)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
----
- hw/nvme/ctrl.c          | 13 +++++++++++--
- tests/qtest/nvme-test.c |  2 +-
- 2 files changed, 12 insertions(+), 3 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 901d4d863355..cc4593cd427a 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -8814,10 +8814,15 @@ static void nvme_init_cmb(NvmeCtrl *n, PCIDevice *pci_dev)
-     }
- }
- 
--static void nvme_init_pmr(NvmeCtrl *n, PCIDevice *pci_dev)
-+static bool nvme_init_pmr(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
- {
-     uint32_t pmrcap = ldl_le_p(&n->bar.pmrcap);
- 
-+    if (memory_region_size(&n->pmr.dev->mr) < 16) {
-+        error_setg(errp, "PMR device must have at least 16 bytes");
-+        return false;
-+    }
-+
-     NVME_PMRCAP_SET_RDS(pmrcap, 1);
-     NVME_PMRCAP_SET_WDS(pmrcap, 1);
-     NVME_PMRCAP_SET_BIR(pmrcap, NVME_PMR_BIR);
-@@ -8832,6 +8837,8 @@ static void nvme_init_pmr(NvmeCtrl *n, PCIDevice *pci_dev)
-                      PCI_BASE_ADDRESS_MEM_PREFETCH, &n->pmr.dev->mr);
- 
-     memory_region_set_enabled(&n->pmr.dev->mr, false);
-+
-+    return true;
- }
- 
- static uint64_t nvme_mbar_size(unsigned total_queues, unsigned total_irqs,
-@@ -9050,7 +9057,9 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
-     }
- 
-     if (n->pmr.dev) {
--        nvme_init_pmr(n, pci_dev);
-+        if (!nvme_init_pmr(n, pci_dev, errp)) {
-+            return false;
-+        }
-     }
- 
-     return true;
-diff --git a/tests/qtest/nvme-test.c b/tests/qtest/nvme-test.c
-index 5ad6821f7af9..4aec1651e6e2 100644
---- a/tests/qtest/nvme-test.c
-+++ b/tests/qtest/nvme-test.c
-@@ -149,7 +149,7 @@ static void nvme_register_nodes(void)
-         .before_cmd_line = "-drive id=drv0,if=none,file=null-co://,"
-                            "file.read-zeroes=on,format=raw "
-                            "-object memory-backend-ram,id=pmr0,"
--                           "share=on,size=8",
-+                           "share=on,size=16",
-     };
- 
-     add_qpci_address(&opts, &(QPCIAddress) { .devfn = QPCI_DEVFN(4, 0) });
--- 
-2.51.0
+  https://gitlab.com/birkelund/qemu.git tags/pull-nvme-20251125
 
+for you to fetch changes up to bd3ba0d342318a61ce22721322c56205d5f3853c:
+
+  hw/nvme: Validate PMR memory size (2025-11-25 09:21:41 +0100)
+
+----------------------------------------------------------------
+nvme queue
+
+----------------------------------------------------------------
+Keith Busch (1):
+      hw/nvme: fix up extended protection information format
+
+Klaus Jensen (1):
+      hw/nvme: fix namespace atomic parameter setup
+
+Philippe Mathieu-Daudé (1):
+      hw/nvme: Validate PMR memory size
+
+ hw/nvme/ctrl.c          | 128 +++++++++++++++---------------
+ hw/nvme/ns.c            | 206 +++++++++++++++++++++++++++++-------------------
+ hw/nvme/nvme.h          |  25 +++---
+ include/block/nvme.h    |   2 +-
+ tests/qtest/nvme-test.c |   2 +-
+ 5 files changed, 209 insertions(+), 154 deletions(-)
 
