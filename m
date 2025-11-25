@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32AA6D10366
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42BAD10366
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:49:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vO0u2-0001ko-Az; Tue, 25 Nov 2025 16:48:50 -0500
+	id 1vO0uE-0002UI-QH; Tue, 25 Nov 2025 16:49:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0tq-0001dB-9S
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:40 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0uC-0002IT-DQ
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:49:00 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0to-0005G3-TF
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:38 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-47774d3536dso1987045e9.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:48:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0uA-0005JY-TC
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:49:00 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-42b38693c4dso2633008f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:48:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764107315; x=1764712115; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764107337; x=1764712137; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2IIA1n/JeVNTSE3MnCSqO40c5B5NHTi2Pu8G8dVM3fg=;
- b=DK9gyFtYGUptN5JIlTsiglym8aQelzQop5CrgGaODWG1JJ8WlDTSigICrKHxOvVdaE
- fdc40mRjW21rsZ+YhzALSue36K5CD7wSxAZeH0IV/ru2Q/Azk5JAbdBfYfzMl1N2sqLe
- 8a2cNB1uDHGahv7c3weDXvHxxmKGB8fuhWthvJdl2WKSAQHVIyKtOMgrRN6Gb6hZfOSF
- 9Af8kqg927LIVtUcx1gxERzBdXSG7ZBvkyz/nSgDJUlftizknevLjxt6q6U5ijecIIOx
- v+l1zct4Ngtopzk32VVwvcekGARMh5S0UUl1TZl57h0LkF51pm9X32SoaNoRRVXdtmlk
- o/Cg==
+ :reply-to; bh=0nHuBXitg7641bu6kmkOgxo7UOR8YoWwGXOBRRXCaPw=;
+ b=lbOpWFXhF9Pd2+3Zp9vKnF+60xUqed9wxsVIVM5WXYDZq/NGqNMRSP/E/BJsXgNx3v
+ WQXkD5GAZSiXtqzOhPJnCv8wugf8gZhxgyAi3OZ8PQ3K5hXf5Gx3p5gEhkuAEytEuccl
+ Cdycts93Ah31dypy4y3lFQ+kyGwk/IzpuNw4+lOqceMnP7pZ5N+6ZKgY5dX1ggz0932i
+ 9vAdiY+JrxjXBRi0olarJIT23CyPVYkDrhf2lrLhKaxLMA2AkVgk8bhPi9jU/irHYAii
+ OjY8UXscRaSjO+V06N2yzOxDvDVg6w2aT4CI9PZdrTAdjzKjcs+AVg3nTKSbzuB+nxbU
+ 0H6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764107315; x=1764712115;
+ d=1e100.net; s=20230601; t=1764107337; x=1764712137;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2IIA1n/JeVNTSE3MnCSqO40c5B5NHTi2Pu8G8dVM3fg=;
- b=IQ4wdt/jsgdbAMu32Lf8XjrROF9t2LHSlSyjlLSaVgJEnLzMcmPNJOXslVAC71UE9o
- muBJ/eMcpTOu+7R5RE1mWnWJxs00AOupJYSspQIdcoPZKdMtmaNZjBwDVVjzTYv+9qLA
- Y0dpr7yOpFCXszRrEmjJhKBEYiGw6EM/2QZKqyq/LBzNCYzfLIsy95kxqmYJ2UdBm4AZ
- elabZpwh/UqrVp6kIy8RYKMU1lrCWWWOHY0i+PlZGBPLokOuThtncYbKLCOW8caMqHbw
- tYfdQ2oMNJjLJpVlxen/PXmrpvQs5joZzlj48EAqsFrJ+iqZEsF9vzaxrYVfSo6YZfnh
- 9b8Q==
-X-Gm-Message-State: AOJu0YybXEetY0oZjr4cPscqqGx5JD+wp5CHHLe/SSwkCyRQmR6gCqwV
- lrsUJ3ANkBdbUSyFMyttBoziNLaqAXlg/Bu/JCNDJ6PBOHef1mD1TKEMT/8ikzpbiYARybCRZam
- r9fIfgc21KQ==
-X-Gm-Gg: ASbGncuzLdUjkVLOHA4TAe5X8vTbLW2zxfXpyXt9Tu7wd+nWOsgiMMHLHSdUQ7UCoNd
- FZdeZYiFlti7K8txls6p+xCwPbhUtMGTyreNm8oW4sECcbMCVF+MHiG12SHSI9uXzgdVxOKgfFc
- I6Cwg6xPniPGzR0mUuQJPgZcnk5BN7Pizoaz/hiXqQd3J1B9POwXoiNpuROKvtccLbYLJ0QmyxY
- tt2Oa2CtRWXc00fKqJfx2VYJs/5kzYG9290ve96kz3TEYxyZBM39/jY3ioON3F7KA2D9KRpjSy3
- XhuVY0PqiluZBuK9lRsNoOQU34jZvDT/dwobYFS7k1FYXPS3m+lXVIjvXJEx1UN/tBRv8Qlmv1U
- Epk0I11lWAEt31MnDhDwrLldQ6961eyVzBOn/I8REWKFoYQIGcvuzlJPoSmn8VQoa8oHV1QjU6Q
- Whcv8BWo0atT8m13+3/iXll3jqHj0qjNMwBoDxIhNo1I0IYsZv+WCcdfVHhPfu
-X-Google-Smtp-Source: AGHT+IEfVTUvQhtQTuSC2MmzPnYvCRU03lW+LIg6HIWrEAfrr1QSJC0shvbZkCh2K+RIDvxIGRGy6A==
-X-Received: by 2002:a05:600c:4eca:b0:46f:a2ba:581f with SMTP id
- 5b1f17b1804b1-477c0540a68mr186355435e9.16.1764107315126; 
- Tue, 25 Nov 2025 13:48:35 -0800 (PST)
+ bh=0nHuBXitg7641bu6kmkOgxo7UOR8YoWwGXOBRRXCaPw=;
+ b=i+NnLHXKtYDQQmEVCPrfUihdGgFumEyHFMIhOOFDPiS7faXzsn/S7OKKuuo+AYliup
+ 9kcZ8EgCpEd/oqIFl+Dr4+0IkQxz2kNrgBPYQcuQwnEOkMQVxSGMmuJgbYevsfKanatS
+ V236xqPd48KGS4b+qpdSCTx9S+pS4bbvJ4J+AzeYlhkGBjqKm6fnQVB9Rbxy2XWGH8gw
+ GM98ZoAOQHXv4pmEPlP1+TRB2ZL4BLqw/8/5U1amHisDmhrQJqYK6HeOTbUAa4qQfPUi
+ bHKwRD1TLe2Q0NH62l0gO2Ezq1yODwgrdAT5MGp0CsvpHiLN6x7+oR1KOUVr6LkSzeJs
+ yriA==
+X-Gm-Message-State: AOJu0YwjsCUMme+PPAVH9ZVH+RmRFmrKjJMQqDKvEsEmmwWX4Gr7AsIi
+ 6TENqpUH5YE1HFGdxLz6rRRZSMkETKCRoWEEh0jbX+6CsFMVjk2gLhGbUMszbR0XeHVV0hbaBvt
+ yjMjYr4sIKA==
+X-Gm-Gg: ASbGncvxamjuQWzSIkSjUr68kDP9uekBUug+bskpVoBAp46srHhlm4hJACGqg8UnRrZ
+ NKFGii9/mkFwHvVhBzbXVxl8sZdQTb2uiIkCgGhh98S+SkNimnquZDNy+3qh5CwsAooA9zqOot+
+ 3EOSgjly9yENvuODPv8tM8SEwVGvFxmtviLNUOjve9f/pH4IIQqpys9Z7KRz8CjFRa+f+lnIZf9
+ Cptw1/miZS1mkwcL2PvHtm8P2OCXDlsa1mwgocLsm7Q1BThh5wFv99W/XKIa9J36BFi4St6hh3A
+ dPGgrJFos6a/uAZN/RFyW509OTlc/ZpkcO8DSR+Irn4cc54xzVbkqXJCZ0nR6v7fZMMi0UuaBq/
+ CSHecyivI0Oo6IyyBDQ7jV+SRbkhH2Jpw/puKGEtUs9zAd/v4aGglRm4Hx8l8aNi8W0xMa+3Aij
+ OLyJkmiLElk/ViKRSZiN9Mb0SdtKLt+hYdZIPIPEYMNVv6bVkwJvMMw3cZAnaK
+X-Google-Smtp-Source: AGHT+IGkFMSR/+r9pMiQOCMw8s+vpkVEMFGScr2R0o+iRFYr0z+dSv4KT0as3cRryENFKDhSxuELyg==
+X-Received: by 2002:a05:6000:430b:b0:42c:b8fd:21b4 with SMTP id
+ ffacd0b85a97d-42e0f35c36bmr4981529f8f.57.1764107336745; 
+ Tue, 25 Nov 2025 13:48:56 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f3635bsm37135940f8f.17.2025.11.25.13.48.34
+ ffacd0b85a97d-42cb7fd9061sm36737712f8f.41.2025.11.25.13.48.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Nov 2025 13:48:34 -0800 (PST)
+ Tue, 25 Nov 2025 13:48:56 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 4/9] hw/usb: Convert to qemu_create() for a better error message
-Date: Tue, 25 Nov 2025 22:47:56 +0100
-Message-ID: <20251125214802.1929-5-philmd@linaro.org>
+Subject: [PULL 7/9] replay: Improve assert in replay_char_read_all_load()
+Date: Tue, 25 Nov 2025 22:47:59 +0100
+Message-ID: <20251125214802.1929-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251125214802.1929-1-philmd@linaro.org>
 References: <20251125214802.1929-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,43 +99,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Markus Armbruster <armbru@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The error message changes from
+In replay_char_read_all_load() we get a buffer and size from the
+replay log.  We know the size has to fit an int because of how we
+write the log.  However the way we assert this is wrong: we cast the
+size_t from replay_get_array() to an int and then check that it is
+non-negative.  This misses cases where an over-large size is
+truncated into a positive value by the cast.
 
-    open FILENAME failed
+Replace the assertion with checking that the size is in-range
+before doing the cast.
 
-to
+Coverity complained about the possible overflow: CID 1643440.
 
-    Could not create 'FILENAME': REASON
-
-where REASON is the value of strerror(errno).
-
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251121121438.1249498-3-armbru@redhat.com>
+Message-ID: <20251124173407.50124-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/usb/bus.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ replay/replay-char.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/usb/bus.c b/hw/usb/bus.c
-index 8dd2ce415eb..714e33989f4 100644
---- a/hw/usb/bus.c
-+++ b/hw/usb/bus.c
-@@ -259,10 +259,9 @@ static void usb_qdev_realize(DeviceState *qdev, Error **errp)
-     }
- 
-     if (dev->pcap_filename) {
--        int fd = qemu_open_old(dev->pcap_filename,
--                               O_CREAT | O_WRONLY | O_TRUNC | O_BINARY, 0666);
-+        int fd = qemu_create(dev->pcap_filename,
-+                             O_WRONLY | O_TRUNC | O_BINARY, 0666, errp);
-         if (fd < 0) {
--            error_setg(errp, "open %s failed", dev->pcap_filename);
-             usb_qdev_unrealize(qdev);
-             return;
-         }
+diff --git a/replay/replay-char.c b/replay/replay-char.c
+index 81dc416e988..4e58dd154af 100644
+--- a/replay/replay-char.c
++++ b/replay/replay-char.c
+@@ -126,8 +126,8 @@ int replay_char_read_all_load(uint8_t *buf)
+         int res;
+         replay_get_array(buf, &size);
+         replay_finish_event();
++        assert(size <= INT_MAX);
+         res = (int)size;
+-        assert(res >= 0);
+         return res;
+     } else if (replay_next_event_is(EVENT_CHAR_READ_ALL_ERROR)) {
+         int res = replay_get_dword();
 -- 
 2.51.0
 
