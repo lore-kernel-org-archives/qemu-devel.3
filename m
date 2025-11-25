@@ -4,57 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D51BD0EE14
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 19:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78577D0EE0F
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 19:33:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNylX-0004Q7-Ue; Tue, 25 Nov 2025 14:31:55 -0500
+	id 1vNyma-0005Yh-H0; Tue, 25 Nov 2025 14:33:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1vNylV-0004Lb-G8
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:31:53 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vNylw-0005QP-25
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:32:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1vNylT-0004Fy-KV
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:31:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=mw+OjuDq+JBedNWeZB9RUJCNwJyGm63p6i8VVJ5DXaY=; b=Y7G41XijingiWOyZk+hptmY5kT
- 0us03kByNLYnK61hL6/vmlqaBdRUddOt8dgHS2J2/sNRFl3XqjLw3vtEWELdblhOVMOsyoDejRJOS
- +K7kOrocJs7rYhBL4kWlyuTrii35yamivWn2QqoOqUOA1O9ZFhH53dZ3731liPSLBANgAzkxbIae9
- tJn8HgdDnm5kl2BPHx0IWTqyaKrzGCeCU31TnAt3aftY3jXLW7vGAoVNHf1bZ/L3xxw5eYN+0W12D
- rvd37SrmIxz59SqI0vTJz8K3+RDR7VwByiG8sg091p89PrT8K8oMDiBKf2NwHLerimKBj12TMVUPp
- i2kmTPASaCnIZdviq2rdS3gksG+ouJTQ2krG87GQ6BXvz4zMdLb1x+XMMg8hy9ObJJgaArr5JqFle
- UxQCkF1jnUy2hP78C0R/gR/hCNYxKxltJFMDsD0c89pEMePpRT5AA9T2/3tufPwPY1pROm+SMkuib
- 9/TvnfFN4SUO1Dm84HFYI8tQyAWYYOnTPJVB53OF/1q3CmfLKCQPIhWTRtLUdmcBCpaYnobD0bYSN
- /4po5JBW/TPZpOTff8Ey2vRsAy/Urgl/JlKonv7y3ka29h97s8m2WaMVX2dvImuwqRvnVqiBQH6AS
- XSLYq/OkSI2KHhxKLnVg0h3/XHxWZlWD1P3JHrNZs=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: Andrey Erokhin <language.lawyer@gmail.com>, Greg Kurz <groug@kaod.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] 9pfs: local: read native symlinks when
- security-model=mapped
-Date: Tue, 25 Nov 2025 20:31:32 +0100
-Message-ID: <13893778.uLZWGnKmhe@weasel>
-In-Reply-To: <20251125195819.5bf1e051@bahia>
-References: <3c35955d-a57e-4203-81c5-395146e23f83@gmail.com>
- <c9461c73-fbda-4963-b96c-3fd4b2d6ce41@gmail.com>
- <20251125195819.5bf1e051@bahia>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vNylt-0004It-Na
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:32:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764099135;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3YRjauSNS84WaoUzSa+mR926p2VNUFICW7HqSaJcKXM=;
+ b=LLy3Z/dap7Ll9SCkFF8ZhF5cjS1nhUAJ+6Iq7n6mOA8yUsCZ+I2cuILQH/ZLHtmvewCUO9
+ 7nnsqVpEZWoS0d4szltBsstWTiNhEcMCY9WEPrwnT3GxAnyBXjzK90KfNnjTp5blgZgcWv
+ cg8prQqV76XKYhyGgh6znN7zpM4sRAw=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-614-SY8aBZEnN2SABJgJCfchmA-1; Tue, 25 Nov 2025 14:32:13 -0500
+X-MC-Unique: SY8aBZEnN2SABJgJCfchmA-1
+X-Mimecast-MFC-AGG-ID: SY8aBZEnN2SABJgJCfchmA_1764099133
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8823c1345c0so65941896d6.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 11:32:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764099133; x=1764703933; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=3YRjauSNS84WaoUzSa+mR926p2VNUFICW7HqSaJcKXM=;
+ b=JesU8ZlfRCFTflyOgFoCErRda/Sg77Vkp1lv7OoTyks6XVIcVPqm2M4WAV4GWtV7Jm
+ QOy04L4WmkeGsLuxHCBY/tL+rV2V4fJ3LG3ntv8WmlKjFMJGn6/uXstjD2BUX81iTc3t
+ +FI21CCRwKYrDwU8iv+mQm0Fa9yiriznIbwFXXJHNkS1dTaOqIxzCWs5oedgneeGT8LJ
+ kbxj69uBLA71aMsAShQn1Tt2W0FbS9qGm3lOeADMdr86m3XL8rsRSPJImMsSrptv/+u4
+ a7iAvZBT5f+sOFmFEy151DJDMGeP3mkWu95+dqj0LBRgWSRsCKBzB6vbXDC/2+f+cKL1
+ JDCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764099133; x=1764703933;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3YRjauSNS84WaoUzSa+mR926p2VNUFICW7HqSaJcKXM=;
+ b=LXAxeFUzdLstmLwUSSAVFBxf1w5KVgUmXFuRF+doWFTlBDMDATfl7PIuSK1iaD/HwA
+ woinuUKNygqN5s8/KcI7e1DPsTng7Tj1aODzaLrysdtTa6ZJit1BM0CLlCpLhgvrHTvm
+ Mi6mS+xBnjztFVa0Qo8luX9ABROFxShceRG0TeSygOtU8JuG92rpIa+cvK6MyYgltE96
+ osdPozKBgQ4L/TqiAvHEoNqtJbjX5YM3KOEhdi5smaW+MeOApnTE/GwD5Wg3VvhF+YSV
+ mZCkFoeBTav0f1EVWNdntHLHw14tv8MrqosE7uRdPIws8+zB/GJX0QJrlADk1WyO4IPe
+ iHOQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV04BNezWIz1+CM/ZEFwhGCxNBDpKHAWY6fC7kt1TKAMpuFJvEozjiLAhvXsvJO9BT2CIi6AKBaNABX@nongnu.org
+X-Gm-Message-State: AOJu0Ywy+HcGvRNtBzP0MIkKZTwjld3Feh3P53dgkwP8iUZbD5Oeaftt
+ ty6bU8gGtLO7zvQWbdEFKcNhVvaqie98GTk6Coi8JALkWgM47+tut5jlKxiHhA9WHdHC9O4c/Kf
+ oQU2++QqDWCrwB35y3cLnei+9s+FsxtlHJ76eZolxsSqehudZS6NZrMht
+X-Gm-Gg: ASbGncshFtOvLWFb7gjPkNE/p25pznk6GsSsUYifAS+FX3+pA01b9U52xcQgJDGWKZD
+ vn0+2kiFj4caSxeJQwD8S98lOkiabsNb9VOLj24WJgoY1Snf0F6Ni2BJnQ0GhEPivdkjzHF4XZF
+ qhC2YEm8tqwT9E3x2La+ESQUWtWiqagI64Hlv6FLUucWudIDudFWTWWqf+DZyCiBEzM0f9AcIjw
+ b76bCSe0mD1RbNOoxh0ERMKtdQuslEOHVnZ2FH9u5Bwn0P1pmGmzssvGDaetjvpgInoGucABZAk
+ Z2/QsONgXfVM0zS8kerbBnrll4MZvp65p2EGo7aXUWlycYVxoMdlDcQEdke4LBPgxY6hy4VbzhN
+ r+gc=
+X-Received: by 2002:a05:6214:20ab:b0:882:4dec:42b9 with SMTP id
+ 6a1803df08f44-8863aeba61cmr54749616d6.26.1764099133111; 
+ Tue, 25 Nov 2025 11:32:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEmh8Am8KAf/MqGzjNTFqHaKafrABHsC1gCM8BjSa4Ay8JBdKD7HCkiZrbNCA7S1xcsUI2xEg==
+X-Received: by 2002:a05:6214:20ab:b0:882:4dec:42b9 with SMTP id
+ 6a1803df08f44-8863aeba61cmr54749246d6.26.1764099132608; 
+ Tue, 25 Nov 2025 11:32:12 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8846e5ba2bfsm128441476d6.57.2025.11.25.11.32.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Nov 2025 11:32:12 -0800 (PST)
+Date: Tue, 25 Nov 2025 14:32:11 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
+ qemu-devel@nongnu.org, farosas@suse.de, peter.maydell@linaro.org
+Subject: Re: [PATCH] migration: Fix double-free on error path
+Message-ID: <aSYEO_S7FfAeZyHG@x1.local>
+References: <20251125070554.2256181-1-armbru@redhat.com>
+ <CAJ+F1CJ918Y9e=yTHFSqZo0QGmmD3aT6Zq+zxQ81t-gjKkUJPw@mail.gmail.com>
+ <875xayxo6t.fsf@pond.sub.org> <aSXPhOV86fyaY53_@x1.local>
+ <87ikeygd83.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ikeygd83.fsf@pond.sub.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -72,47 +121,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday, 25 November 2025 19:58:19 CET Greg Kurz wrote:
-> On Tue, 25 Nov 2025 19:21:00 +0500
+On Tue, Nov 25, 2025 at 07:48:44PM +0100, Markus Armbruster wrote:
+> My main argument remains this one: our deallocating functions don't work
+> that way.  For better or worse.
 > 
-> Andrey Erokhin <language.lawyer@gmail.com> wrote:
-> > >> +    native_symlink:;
-> > > 
-> > > Still has the terminating but unneeded semicolon
-> > 
-> > I think I've addressed this in the v1 thread, with links to the C11 draft
-> > grammar. Can repeat in plain English: a label shall be followed by a
-> > statement. (No, declaration is not a statement)
-> My bad, I didn't see your answer.
-> 
-> It is funny that I had to pass -pedantic to gcc to get a complaint (in plain
-> English as well) if I drop the semicolon :
-> 
-> warning: a label can only be part of a statement and a declaration is not a
-> statement [-Wpedantic]
-> 
-> Cheers,
+> I don't want the Error API free differently.
 
-Yes, I noticed that as well. GCC compiles fine without the semicolon, clang 
-OTOH errors:
+Yes, it's fair.
 
-../hw/9pfs/9p-local.c:481:9: error: expected expression
-        char *dirpath = g_path_get_dirname(fs_path->data);
-        ^
+IMHO, it's a matter of taste, and maybe that's also why I liked
+g_clear_pointer() but not everyone likes it.. said that, when we have
+g_clear_pointer() it also makes the current form more flexible, because we
+can apply g_clear_pointer() on top when we need a reset..
 
-Anyway, Andrey is right of course. The C standard defines a "labeled-
-statement" as
+I'll follow your advise on error reporting for migration.
 
-  identifier : statement
-  ...
+Thanks,
 
-and the subsequent line in the patch is a declaration, not a statement.
-
-But I also understand if GCC developers relaxed this rule. Because it "feels" 
-like both, a declaration and a statement. Interesting, because usually it's 
-clang to be more relaxed than GCC.
-
-/Christian
-
+-- 
+Peter Xu
 
 
