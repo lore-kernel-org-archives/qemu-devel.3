@@ -4,84 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CD40CFD315
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 06:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82B39CFD368
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 06:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNmQy-0001rf-JG; Tue, 25 Nov 2025 01:21:53 -0500
+	id 1vNmRZ-0002Mx-2P; Tue, 25 Nov 2025 01:22:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vNmQv-0001qy-KC
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:21:49 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vNmQq-00035w-U8
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:21:48 -0500
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5AP6LBND004818
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 25 Nov 2025 15:21:11 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=oBXA/r4zdXuNyo4es7iSOIz7EbFYy5vbyeBDMOUh9xE=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1764051671; v=1;
- b=HZ/hLqNP4AXbjb2ZGE+T6LQOSvF/HsjiJEBNLrxASzCs48cQiZN18aJyA7I8R4dk
- RrSUDV307yasLBImn0JLPxLae1ep0Lh8Yg48JUhSJz/mWq7Nepzx12QDsQ4U7NLk
- 4BbVN8dB7iW3b6aPiL4WVOiOipG38Iicqtz9Yce4k8UShXPQZs6jQfDbR/ooZOez
- 5V3jo443pPzOU35vPPJplIozF2i0N5nra39JSBc4cyt29aETbYw+RXXvpV5MVoeH
- yl9fe7HTfNVcIFWFvnxULwh/DxQh+dmxchhOHa5UyH02q6aApvEtK1LGVORtacJS
- Ruk9ZP5PHO5PfdMH36WUUQ==
-Message-ID: <d88cc89b-d796-4bc4-8c90-07da3b88cc7f@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 25 Nov 2025 15:21:10 +0900
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNmRX-0002LV-0a
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:22:27 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNmRV-0003DA-BN
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:22:26 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-477ba2c1ca2so53551335e9.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 22:22:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764051744; x=1764656544; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=f9PMY82i/jaFQBwB85/CZ8mIcoZUJob2eOmqwSq7Cyo=;
+ b=VD/SgKFnSFPmMhaQwn0P6VRyav8K3P4rIAnqPlXdZk4R9kEF70RVC2zL2Q9cCJ4Paw
+ V+47rb61etvubUNRKC93nTUN6AtgDSHOrGa2fD+V5j+3ZUovfmGUDJxxNrsW1kMVPcxj
+ rEUQpvDHaYpppJUcRoR0EbemjKS2obcSqAtEq4FbM27OWxV9D7TQbcUNnTTUMtTpaIOq
+ q+XIL02Zblbpiy9oiTmm6Hdx117W6VIG/+3RBLkTK9k04ACLJyGoi+kvpF7P8BUjKjMn
+ TXvtT33TOy8FLCYzu6GPpdLyLvkLc+kf6OZNkXvcn+Bmxle6nmNAQ8igiZ/fwCINkduA
+ nmcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764051744; x=1764656544;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=f9PMY82i/jaFQBwB85/CZ8mIcoZUJob2eOmqwSq7Cyo=;
+ b=bD2gBiViTKKa4mJpgovMlYMYCr2asXqL2DCIr5MDBRONfOtyo22U8N/9124mROmBYo
+ tpOyu3xa4hCNR7iEJZoO3qxG4znHNM/uthxdPCKhedSK0x+nlnZi4BxYKVk5/WpaxvFX
+ IvSmnNhg+IO/YypVw/EKZSzq2hT2HO0jtvnTHI1Y+zjNaExRIBoI0t5kVWO7rOdJUC2t
+ KhX8sJkKFyeC5czR9d7IVn2/AyWeQFD6+HNDlB2jiQwuCzTMMr55eZv7wny07VPSbUBH
+ nl6AD5+2IsWfWzVqLsUd2a6IRa/m1oyNK24kdN5VWe/M1Swulztm2OpT6d1B20ctI22F
+ HESQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTO29VkIc23b6R5BpYdtSs7F3Npa6rTsz1tNeBmLRfdnhX5WoiGbvMaix3wcZWM6KNg2Na+muEXrKR@nongnu.org
+X-Gm-Message-State: AOJu0YwNcWdAsjVEJMZaagICepDjs/7YCBaPoQgmuPvSIck8+roCVXZ8
+ a0t82nQ391NK+kfgQ/+fixmwIWBh9BXWE/mEmPfat7H9xUIrcbvPs8+OBzQqyVNXwwo=
+X-Gm-Gg: ASbGncsv0YJTlAx9OETAFqhwv/LnXYGYdIWjfUtWqjL/82ITcUMQsCpclnJl8vIYSes
+ uzSesFKmOml+UxKoVcX1bv7QaHoA3wHXBDgHBeJCJ1rgCkADUr0qsFV3sGFUOODyKyRCSiNCfy6
+ dOFTLtoDGMPgmBmBhq/Gl5teOxJAzhcNtxnKeULNqWwP8ZqwZAAoPd1MljLIE2dVKFgi6OAj1Xc
+ 2HOVC1z8DjwDbyEwPIAeRYwSog/i73yQDMJhCc75UwPTKcmdURiWFwTlxXScBrXoiX+Oi8lYhMf
+ hxF8ywfAixB0FotSFDV/W0RYXiTyc4zedlkXghLP9CZv33xIhi+wQIUtNKnr0FEglaCN7kmXxIB
+ jyjMVjvCsjsuaC9VLIro4pQcqhAEx8QgPV3M1wtCPUEtyDtjZVC88gYdHOANygMnSALlnY55g7i
+ C9X7RGGvk+dXWCbkIisI35NigNij99h3og1Tiwuc1/g5XM/lbALvoSPA==
+X-Google-Smtp-Source: AGHT+IFDchfo8wmvxExDOTScFL75Y50QSTKmA05qmrURNbKfXMlTq1TI/FEAoocUx4gEjb2eI/uz8Q==
+X-Received: by 2002:a05:600c:1c87:b0:477:98f7:2aec with SMTP id
+ 5b1f17b1804b1-47904acef12mr14222015e9.3.1764051743857; 
+ Mon, 24 Nov 2025 22:22:23 -0800 (PST)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-477c0d85360sm227844905e9.15.2025.11.24.22.22.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 24 Nov 2025 22:22:23 -0800 (PST)
+Message-ID: <f992f60b-515f-4834-88fd-d033255bed83@linaro.org>
+Date: Tue, 25 Nov 2025 07:22:20 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 5/7] virtio-gpu: Destroy virgl resources on
- virtio-gpu reset
-To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
- Sergio Lopez Pascual <slp@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>,
- Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
- Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
-References: <20251120040632.4036204-1-dmitry.osipenko@collabora.com>
- <20251120040632.4036204-6-dmitry.osipenko@collabora.com>
- <94e92cb0-3e5a-48e3-bf3c-12d27c23c27f@rsg.ci.i.u-tokyo.ac.jp>
- <00064b47-ca94-4eb9-a443-bb2739ed885a@collabora.com>
- <2207c76d-a800-45e5-9acc-66e9d4cfa089@collabora.com>
- <09912e84-3db8-40b2-acdc-1ca62f861b85@collabora.com>
+Subject: Re: [PATCH v2 12/15] error: Use error_setg_errno() to improve error
+ messages
 Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <09912e84-3db8-40b2-acdc-1ca62f861b85@collabora.com>
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, alistair.francis@wdc.com,
+ stefanb@linux.vnet.ibm.com, kwolf@redhat.com, hreitz@redhat.com,
+ sw@weilnetz.de, qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
+ imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
+ shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
+ sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
+ sgarzare@redhat.com, pbonzini@redhat.com, fam@euphon.net, alex@shazbot.org,
+ clg@redhat.com, peterx@redhat.com, farosas@suse.de, lizhijian@fujitsu.com,
+ dave@treblig.org, jasowang@redhat.com, samuel.thibault@ens-lyon.org,
+ michael.roth@amd.com, kkostiuk@redhat.com, zhao1.liu@intel.com,
+ mtosatti@redhat.com, rathc@linux.ibm.com, palmer@dabbelt.com,
+ liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, marcandre.lureau@redhat.com,
+ qemu-block@nongnu.org, qemu-ppc@nongnu.org, xen-devel@lists.xenproject.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org
+References: <20251121121438.1249498-1-armbru@redhat.com>
+ <20251121121438.1249498-13-armbru@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251121121438.1249498-13-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,49 +120,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/25 6:54, Dmitry Osipenko wrote:
-> On 11/20/25 18:02, Dmitry Osipenko wrote:
->> On 11/20/25 17:54, Dmitry Osipenko wrote:
->>> On 11/20/25 08:07, Akihiko Odaki wrote:
->>>>> +int virtio_gpu_virgl_reset(VirtIOGPU *g)
->>>>>    {
->>>>> +    struct virtio_gpu_simple_resource *res, *tmp;
->>>>> +
->>>>> +    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
->>>>> +        virtio_gpu_virgl_resource_destroy(g, res, NULL);
->>>>> +    }
->>>>> +
->>>>> +    if (!QTAILQ_EMPTY(&g->reslist)) {
->>>>> +        error_report("failed to reset virgl resources");
->>>>> +        return -1;
->>>>
->>>> It shouldn't report an error if suspended.
->>>
->>> Could you please expand on what you're meaning by "suspended"?
->>>
->>> Suppose you're talking about guest's kernel suspension. There was a
->>> discussion on [1] RE a need to use `x-pcie-pm-no-soft-reset=true` option
->>> to avoid virtio-gpu resetting across S3 suspend-resume. This option
->>> works with virtio-vga, but not with virtio-vga-gl device where VM hangs
->>> on startup. So currently S3 doesn't work for virgl and needs further fixing.
->>>
->>> [1]
->>> https://lore.kernel.org/dri-devel/20250924194755.1265531-1-dongwon.kim@intel.com/
->>
->> Correction: `x-pcie-pm-no-soft-reset=true` works with virgl without
->> enabled hostmem. It's hostmem that doesn't work with the additional PCI bus.
-
-No, I meant that virtio_gpu_virgl_resource_unref() may set 
-*cmd_suspended true. If that happens, QTAILQ_EMPTY(&g->reslist) will be 
-false, but it is fine so no error log should be emitted.
-
+On 21/11/25 13:14, Markus Armbruster wrote:
+> A few error messages show numeric errno codes.  Use error_setg_errno()
+> to show human-readable text instead.
 > 
-> I'll add a clarifying comment to the code in v4 telling that virgl shall
-> not be reset at runtime.
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   backends/cryptodev-lkcf.c   |  2 +-
+>   hw/ppc/spapr.c              |  6 +++---
+>   hw/vfio/migration-multifd.c |  5 +++--
+>   migration/rdma.c            |  3 +--
+>   net/l2tpv3.c                |  6 ++----
+>   target/riscv/kvm/kvm-cpu.c  | 11 ++++++-----
+>   6 files changed, 16 insertions(+), 17 deletions(-)
 
-It is confusing what "runtime" refers to. This code doesn't care about 
-S3 so such a comment shouldn't be necessary.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Regards,
-Akihiko Odaki
 
