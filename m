@@ -4,95 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D964DD0EE0D
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 17:34:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F78ED0EE00
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 17:35:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNwv4-0005yo-94; Tue, 25 Nov 2025 12:33:38 -0500
+	id 1vNwx7-0007xF-9A; Tue, 25 Nov 2025 12:35:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vNwul-0005iC-C6
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:33:21 -0500
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vNwui-0001OK-Rr
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:33:19 -0500
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-3414de5b27eso4571601a91.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 09:33:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vNwx3-0007tw-9K
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:35:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vNwx0-0001ph-9J
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:35:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764092135;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=6u3kuFPYxyXQs54QLHTbV0ReFH0dCtc+4hHbEPrnMbY=;
+ b=Lt6fGu7mecqSLC43F2yKuxk0NC0VJWmiwcOuwSThmZ0CXWyRoe7RdLUgCLewzqj1jImvK+
+ X63eyA5aF+xcHr9hSuMtOxRHru6O9mHCmVPA19uFHPwUzO3yJ+Kb+gDCsVFKSZi2Mo3qBL
+ UiTZrBNrATE0JHV1mae/S6+m8BOdBWs=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562-XWXVNUSCPw6NCjkEPINoNA-1; Tue, 25 Nov 2025 12:35:32 -0500
+X-MC-Unique: XWXVNUSCPw6NCjkEPINoNA-1
+X-Mimecast-MFC-AGG-ID: XWXVNUSCPw6NCjkEPINoNA_1764092131
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47106720618so72904885e9.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 09:35:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1764091995; x=1764696795; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4cOlhBBT6TLEtaxXJTpmTeLIUIcggYLoDf4sKiNxFvM=;
- b=CYkZd+TAzC17ikdUxpVQ8nqcNlO2x9XsLV+NvIAOJKJFle8SfaXK2sguQ3Gne7gPYu
- dvdx5ngvz2dR/gV/5CaZq0UXGfGYQKVYnv/VkjF99MWi/iBddCYBfDpmq3Pv9kdqyfV1
- AqyS7AmkkwUQLvHAnCJ/xDr2n6S51BEg/V2a5ET5dB/sJ3S9QLPQRFpMx9tA2jEOLwzL
- Hv9Qvyf760qC6jCMBOgmv8DXeHi4j7GAJd3KYEzMnygdsHgHCvbbHkK0Wolkj8gOdE4E
- lysTV4fJ9kza+wgds4GEM2oX9uKTGsQ/YUc4q5XHt5DVXxoDVHKGytE2fcvHfYV0x6zh
- J0hg==
+ d=redhat.com; s=google; t=1764092131; x=1764696931; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=6u3kuFPYxyXQs54QLHTbV0ReFH0dCtc+4hHbEPrnMbY=;
+ b=RmuZ3pCPP2ts7Vkt6/4LBWOaNRPL9WuvBh6DxjNzbVGuiz6irmSxIlzcbT2YkG+PK1
+ 4Ji5qNKQHCnW0MPoAm6ZBbvgPuPWH2OS9fdyw0urmNdjhnhPJDnUuxpzDlry4rjaC731
+ f5cGhonJxypVHNjeQ9LRasKCoKZq5xoeNuReQ4+nKXY32KXVcZ9PwcZkNLuLuH2HMADj
+ xYqDe+wrBwPZu1aiDdUwaNpV9uOquvflvrNKIU/tIAqJ8y1Sas+NYSLa7Z1oROWYvZoy
+ +ncA+JEaSOJb1fOB1qrJQitNvh+POUg3wIf9MCaQs2rQc2Lfrci3h/V7Wxux/Kya96RT
+ 4VRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764091995; x=1764696795;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4cOlhBBT6TLEtaxXJTpmTeLIUIcggYLoDf4sKiNxFvM=;
- b=TX0G/euYvIjlveSVBsklkQuvT93H+gUUtjvMQyiTRESpNW1j/Au/TwJsSTyc7vmsT2
- OdRbkLCp7cyNFRmOT+P18w3IjZwc8ueC0jW2xbPOesHZBtLtfirrDroqEOU3CdRRe6ot
- VdmYRpFFne/zi5PfU17kXdDUomSOB/a52yB+AY9bwHb8DD1q+bTHwDUOTtJ/EODjS2rl
- Hhs8SNtKFirjtnma4LCN3dw0dKcI29bjYzREW6WDrM0L9dxXeceWxnRtqSLFTe6hkLSV
- k20Uc4nufAXSWXC4Udk4fqmrt3nALqkAByRmrq+HY4CteCT0kmNuBoM2KCSm8/JAhDFh
- 7vOA==
+ d=1e100.net; s=20230601; t=1764092131; x=1764696931;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6u3kuFPYxyXQs54QLHTbV0ReFH0dCtc+4hHbEPrnMbY=;
+ b=Wg5ClOY4/I1A7OYAJ154a9Be285NYo3L12c87DbFWGfAMwN2spkCc66tN0uRqlTECd
+ Cpv8SIbLMU0UbXMry7QQbnamSp46bXoAgB7XYvjcvNrjCqXE4OFkZq8FhUROFKZoxr7f
+ vuYiFxG12eIl3QHAtutIgN5NMpJ5J2XPKFcFHQ0OHv1IRs8oEMv+KAJ42GXX5rDtjywP
+ 2rZZANMR/kjCYcAQxv3uzbKrS45PYC8zFgJNu0nTrXJ+JMAgJeLDM23d98gGvus1Mu4K
+ KuURwb1qlc8g1FxoCKEmoRh2BLcKPXsDzcw2XP010bcJfJAw5Ql9i3rlh+nxtt/tVDJ7
+ I16w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVuqsoqwj5KF559MVnXpYNnnSEG+flT07CJICDLm/E28CWM8hzUxaVXSZh2rkZKzqjh5vdR82Ew49b9@nongnu.org
-X-Gm-Message-State: AOJu0YzfsoU2b2uRGyNauROvzJioqUTIaaR64Ofb9M1soL3zWqI9e2Y1
- AUTe996zkieR8gGC3js5DuXsqnpuaz4EproKbEsuhngvm9wlok/LGql18Ec9y0ocbO4=
-X-Gm-Gg: ASbGncszE9VOdam4b7JVE5PSabRWLM1cqbQPtVrUP+2KH0Tlo3qipQqoHrfWzk1Q3KZ
- 7Ghouu6Dh4d/IM0zX2kaJfnFgM9ZMNCEoD5WrRemw0wNU3y3RTm5a06k2MSZxIVM5tv0+kqxR5V
- aiDhM9bChKbwHbS6ZpSaHU5FMT6mBJhCgSpRi0t1DXFDKxIcPadNGS7xNMtlDMWpiJNcK2yLcis
- rYLh56UchdBIBYqVEvF/VqTqHaCia7+uigYtHyo1Dinp0i4D8bzcl6U2OiX6L2eT9UhRf6+30VX
- Br8b8iHXQB7yu34mskxF9yfE4/WXhTrUxpPSzz9SqYmwy0mXXC9nvNXyKx0npvXQBipz31uZuxz
- zgAReBe7DVMDdnMZ9Scsj66TYj005Nrrte3cTNHHXF6qWi9xRoUSks50hgCc0ZLXVdhZwFMzRbG
- Vpcp58CGTJPPgbZjnjrco/hdo6Ow==
-X-Google-Smtp-Source: AGHT+IF+k1XI6jD+Cu2Yk8po/yULtZGxER4bUNGlcrR67HkbxyQMeTdvPmZKvh3QqbENlBYA4ej6IA==
-X-Received: by 2002:a17:90b:1345:b0:343:7f04:79c1 with SMTP id
- 98e67ed59e1d1-34733e8f60bmr14977276a91.9.1764091994710; 
- Tue, 25 Nov 2025 09:33:14 -0800 (PST)
-Received: from [192.168.68.110] ([179.133.97.212])
+ AJvYcCUeJrBNSKWTxLvF4FlTQx+tm0B3Ehj/KaWQ+7Lq2xGoG2lDFxAwiMrMfdmp5qk2EEmLM0f1Hta4hW9I@nongnu.org
+X-Gm-Message-State: AOJu0Yx8WLenZvn1QwZT46ZbnRnoeKxkSzYiq2/3fAIVcTELJu4d6z7A
+ +4CuBm+3mWtQdbNABAiwpeoVjJU056aDtMJ9fNj+lvVsGu3qTmWxzGI1WSXfJUoi/sygWvX/4Fs
+ JESPbz8xuLIeFq+goQMYGKhxCehDZa3nAytcxxf4j3mTI7jTfaWU8tTG2
+X-Gm-Gg: ASbGncs6SZ2CM0k86fYqedLCvLQrp9n97cWyNfy4aBFSZJi+P2y9Qx/B3yjXo3Q95U6
+ TBKkWg6noQTupma6yNskR8Oz1llhWQ/lLcKAieyiyP361N4/9x+hN3CLGnvXGWKwqIWmvAunJzQ
+ pfcJMMiadW37ZG/d17XVY7tO18MMbGX05BDJ/ZRv1iTYUNsTCAqvAIUzqU+pDYEJbuxikrnMDmU
+ FhSoIUVwrCq6nBlToZG71SKdVtQmH5b2Fdzcc7gBwGpSSMsJ+qzYZHmkdWIMInGJO44Ri881+F8
+ kM5f4RDD6m72hBRwi5Op42aPl+Uy+5xyGxn38vwccj8xsg/B6A8ZUtSbabspKY9SKE1cUxFHXfa
+ RYzEbU0S4JaJm+f3Zb6lCq3NbLYr4GRvwHA==
+X-Received: by 2002:a05:600c:524d:b0:477:c71:1fc1 with SMTP id
+ 5b1f17b1804b1-477c01d44b4mr152250065e9.19.1764092131095; 
+ Tue, 25 Nov 2025 09:35:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHZZ+PiPY28ZFoSzjbJHN3I1r5SqYKuzsUpmXL4SbI6h71peCYTZyuG38NwC9V+QKBA0tffJA==
+X-Received: by 2002:a05:600c:524d:b0:477:c71:1fc1 with SMTP id
+ 5b1f17b1804b1-477c01d44b4mr152249775e9.19.1764092130649; 
+ Tue, 25 Nov 2025 09:35:30 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7c3f0b62e95sm18912472b3a.49.2025.11.25.09.33.11
+ 5b1f17b1804b1-479052cf8d9sm20259725e9.9.2025.11.25.09.35.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Nov 2025 09:33:14 -0800 (PST)
-Message-ID: <63fb31b9-23e7-40fc-b7ba-fc03c69d2b1b@ventanamicro.com>
-Date: Tue, 25 Nov 2025 14:33:10 -0300
+ Tue, 25 Nov 2025 09:35:29 -0800 (PST)
+Message-ID: <4d59c999-29bc-48f0-b409-c877f5dd6ff6@redhat.com>
+Date: Tue, 25 Nov 2025 18:35:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/17] hw/riscv, target/riscv: initial e-trace support
-To: Konstantin Semichastnov <k.semichastnov@syntacore.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
-References: <20251111114656.2285048-1-dbarboza@ventanamicro.com>
- <115a56af-4db1-42ee-9541-8077322207c7@syntacore.com>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Content-Language: en-US
-In-Reply-To: <115a56af-4db1-42ee-9541-8077322207c7@syntacore.com>
+Subject: Re: [PATCH] aspeed/{xdma,rtc,sdhci}: Fix endianness to
+ DEVICE_LITTLE_ENDIAN
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+References: <20251125142631.676689-1-clg@redhat.com>
+ <8caeba48-95be-4944-8c0b-5fbfe5b13774@linaro.org>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <8caeba48-95be-4944-8c0b-5fbfe5b13774@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,103 +173,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/20/25 9:14 AM, Konstantin Semichastnov wrote:
+On 11/25/25 16:38, Philippe Mathieu-Daudé wrote:
+> On 25/11/25 15:26, Cédric Le Goater wrote:
+>> When the XDMA, RTC and SDHCI device models of the Aspeed SoCs were
+>> first introduced, their MMIO regions inherited of a DEVICE_NATIVE_ENDIAN
+>> endianness. It should be DEVICE_LITTLE_ENDIAN. Fix that.
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>   hw/misc/aspeed_xdma.c | 2 +-
+>>   hw/rtc/aspeed_rtc.c   | 2 +-
+>>   hw/sd/aspeed_sdhci.c  | 2 +-
+>>   3 files changed, 3 insertions(+), 3 deletions(-)
 > 
+> \o/
 > 
-> On 11/11/25 14:46, Daniel Henrique Barboza wrote:
->> Hi,
->>
->> In this v2 we're addressing a review comment from Konstantin in patch
->> 14. We're also doing changes in the FDT (patch 5) to keep up with the
->> changes that the kernel support is making [1].
->>
->> I've been thinking about adding partial support for N-trace in this work
->> as well. From what I can tell the difference between N-trace and E-trace
->> are the encoding of the packages, with everything else staying the same.
->> In this case we could add hooks in the code to be ready to support
->> N-trace encoding in the future.
->>
->> No other changes made. Patches based on current master.
->>
->> Changes in v2:
->> - patch 5:
->>    - changed tr_compat from "ventana,veyron-v2-trace" to "qemu,trace-component"
->>    - renamed trace encoder prop handler "cpu" to "cpus"
->> - patch 14:
->>    - removed updiscon generation in gen_jal()
->> - v1 link: https://lore.kernel.org/qemu-riscv/20251002112335.2374517-1-dbarboza@ventanamicro.com/
->>
->>
->> [1] https://lore.kernel.org/linux-riscv/20251101154245.162492-1-apatel@ventanamicro.com/
->>
->> Daniel Henrique Barboza (16):
->>    hw/riscv: Trace Encoder initial impl
->>    hw/riscv: Trace RAM Sink initial impl
->>    hw/riscv/trace-encoder: add trace start/stop logic
->>    hw/riscv/virt.c: add trace encoders and trace ram sinks
->>    hw/riscv: add e-trace message helpers
->>    target/riscv: add initial trace instrumentation
->>    hw/riscv/trace-encoder: write e-trace packets to RAM sink
->>    test/qtest: add riscv-trace-test.c
->>    hw/riscv/rv-trace-messages.c: add encoded trap message
->>    hw/riscv, target/riscv: send trace trap messages
->>    target/riscv, hw/riscv: send trace ppccd packets
->>    hw/riscv/trace: add format2 msg helper
->>    hw/riscv, target/riscv: send resync updiscon trace packets
->>    hw/riscv/rv-trace-messages: add format 1 msgs with branch info
->>    hw/riscv/trace-encoder: send branches info
->>    hw/riscv/trace: update branch bit in sync messages
->>
->> Mayuresh Chitale (1):
->>    hw/riscv/virt.c add trace encoder and ramsink fdt nodes
->>
->>   hw/riscv/Kconfig                              |   5 +
->>   hw/riscv/meson.build                          |   2 +
->>   hw/riscv/rv-trace-messages.c                  | 373 +++++++++++
->>   hw/riscv/rv-trace-messages.h                  |  40 ++
->>   hw/riscv/trace-encoder.c                      | 609 ++++++++++++++++++
->>   hw/riscv/trace-encoder.h                      |  62 ++
->>   hw/riscv/trace-events                         |   9 +
->>   hw/riscv/trace-ram-sink.c                     | 263 ++++++++
->>   hw/riscv/trace-ram-sink.h                     |  83 +++
->>   hw/riscv/virt.c                               | 135 ++++
->>   include/hw/riscv/virt.h                       |   2 +
->>   target/riscv/cpu.h                            |  11 +
->>   target/riscv/cpu_helper.c                     |  26 +-
->>   target/riscv/helper.h                         |   6 +
->>   .../riscv/insn_trans/trans_privileged.c.inc   |  11 +
->>   target/riscv/insn_trans/trans_rvi.c.inc       |  15 +
->>   target/riscv/meson.build                      |   3 +-
->>   target/riscv/tcg/tcg-cpu.c                    |   5 +
->>   target/riscv/trace_helper.c                   |  62 ++
->>   target/riscv/translate.c                      |  19 +
->>   tests/qtest/meson.build                       |   2 +-
->>   tests/qtest/riscv-trace-test.c                | 120 ++++
->>   22 files changed, 1860 insertions(+), 3 deletions(-)
->>   create mode 100644 hw/riscv/rv-trace-messages.c
->>   create mode 100644 hw/riscv/rv-trace-messages.h
->>   create mode 100644 hw/riscv/trace-encoder.c
->>   create mode 100644 hw/riscv/trace-encoder.h
->>   create mode 100644 hw/riscv/trace-ram-sink.c
->>   create mode 100644 hw/riscv/trace-ram-sink.h
->>   create mode 100644 target/riscv/trace_helper.c
->>   create mode 100644 tests/qtest/riscv-trace-test.c
->>
-> Hi, I am currently working on adding the N-Trace message format, based on your v1 patch set. Currently I have supported ProgTraceSync, ProgTraceCorrelation, ResourceFull, IndirectBranchHist, IndirectBranchHistSync, Ownership messages.
-> 
-> After finishing the internal review and rebasing over the v2 patch set, I would like to send it here next week.
+> Thanks for the help :)
 
-That's awesome! Let me know if you need any change to be made in this base series
-to properly support N-trace.
+Only 379 left !
 
+Cheers,
 
-Thanks,
-
-Daniel
-
-> 
-> Konstantin
+C.
 
 
