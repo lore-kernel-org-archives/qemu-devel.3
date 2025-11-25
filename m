@@ -4,73 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 797A0D0E6C3
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:39:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26517CFD37F
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:48:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNqSL-0003Hc-8v; Tue, 25 Nov 2025 05:39:33 -0500
+	id 1vNqak-0008NN-NH; Tue, 25 Nov 2025 05:48:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=417ea8bb2=Moritz.Haase@bmw.de>)
- id 1vNqSJ-0003Gm-F1
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:39:31 -0500
-Received: from esa13.hc324-48.eu.iphmx.com ([207.54.72.35])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vNqaj-0008MZ-2N
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:48:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=417ea8bb2=Moritz.Haase@bmw.de>)
- id 1vNqSF-0007Vw-VF
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:39:31 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vNqae-0000E1-MT
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:48:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764067686;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hv5Ak0MaPD3DTUlsFZpK2YD5GN5aNBiQH18NqR3X2f0=;
+ b=DlgjLiU9RHWMJOB7Jk44i8LLmLrL14NJxmGm91vMENeKpxpg2YH70v4577zUcFUozsuT6M
+ Ww6FW9ZmZvbbwRGXENSfs8NROrZqr0PfVbJSW2TAJugrB46xhExMl+SXJEcw0wOWGCrKaQ
+ MR7jlBG0k+GlHyNef4XP+S1cv6Nb7mA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-550-YXN6GFttNteYTUsYJ5xcsw-1; Tue, 25 Nov 2025 05:48:04 -0500
+X-MC-Unique: YXN6GFttNteYTUsYJ5xcsw-1
+X-Mimecast-MFC-AGG-ID: YXN6GFttNteYTUsYJ5xcsw_1764067683
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-429c5f1e9faso5426266f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 02:48:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bmw.de; i=@bmw.de; q=dns/txt; s=mailing1;
- t=1764067167; x=1795603167;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=MZBj1LK0BH+VeELLHeY2dzetJgbgeDjtg8uEPC2hPhI=;
- b=nS7snTkiAc6/Ml5coZcAhCs+1a4H2np8+i6yYCn1140CAP0gvVd264HQ
- aW9tj92RtDVr4hq4dZWoPmiMT8u53GPCowdxblO9PlYMrO27EUF+38gzm
- Qseehdv1ZNgv+7CpaLkSvOlq9C1S0xHjsumFEvu1xL1EQ6LdC+KEP3PaN E=;
-X-CSE-ConnectionGUID: mdI12UFeT5OJLKyvg/9iIQ==
-X-CSE-MsgGUID: l3uakVWMRu+ZKqY7mW9Eig==
-Received: from esagw2.bmwgroup.com (HELO esagw2.muc) ([160.46.252.38]) by
- esa13.hc324-48.eu.iphmx.com with ESMTP/TLS; 25 Nov 2025 11:39:21 +0100
-Received: from unknown (HELO esabb5.muc) ([10.31.187.136]) by esagw2.muc with
- ESMTP/TLS; 25 Nov 2025 11:39:21 +0100
-Received: from smucmp19a.bmwgroup.net (HELO smucmp19a.europe.bmw.corp)
- ([10.30.13.167]) by esabb5.muc with ESMTP/TLS; 25 Nov 2025 11:39:21 +0100
-Received: from smucmp21a.europe.bmw.corp (2a03:1e80:a01:524::1:44) by
- smucmp19a.europe.bmw.corp (2a03:1e80:a15:58f::211a) with Microsoft SMTP
- Server (version=TLS; Tue, 25 Nov 2025 11:39:20 +0100
-Received: from q1054628.de-cci.bmwgroup.net (10.30.85.205) by
- smucmp21a.europe.bmw.corp (2a03:1e80:a01:524::1:44) with Microsoft SMTP
- Server (version=TLS; Tue, 25 Nov 2025 11:39:20 +0100
-X-CSE-ConnectionGUID: Hcp7mlohRy2p9kmUGtzR2Q==
-X-CSE-MsgGUID: b36kcuxzRNuhytNOjHlZtQ==
-X-CSE-ConnectionGUID: lTDTsdK8TY6F2ILDI1OK0Q==
-X-CSE-MsgGUID: HQyh8XesThq3DiUv5b4NyQ==
-From: Moritz Haase <Moritz.Haase@bmw.de>
-To: <qemu-devel@nongnu.org>
-CC: Moritz Haase <Moritz.Haase@bmw.de>, <petrosagg@resin.io>,
- <nghiant2710@gmail.com>, <forumi0721@gmail.com>, <laurent@vivier.eu>
-Subject: [PATCH] linux-user: add option to intercept execve() syscalls
-Date: Tue, 25 Nov 2025 11:38:59 +0100
-Message-ID: <20251125103859.1449760-1-Moritz.Haase@bmw.de>
-X-Mailer: git-send-email 2.51.0
+ d=redhat.com; s=google; t=1764067682; x=1764672482; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hv5Ak0MaPD3DTUlsFZpK2YD5GN5aNBiQH18NqR3X2f0=;
+ b=sf3jXhlZiVvF4+0WALNKWJ4gVhef+9QsJ/k4EG6exf5mSFhdTmEmspjdqeXXhL4NDm
+ CbTf8ZMHmJPWruk4Ss/zIRm3aX86/jH/3QXGqF+vycP1GeRIvHdJBOFngpIvfy0aPLbG
+ BcVI0aoeK0jncfJBkEQTh9ff3zjBD+kI0bM/Hg930puXqoWXmdobjC17zbRMqFkTV+T+
+ 7ZbR0CgMIelxIVVrVT0dfQXZNIRHikubWNE3w6vChyclJzybMGL3CJ/hZLgsTin3d+EN
+ ZNyUVhkRuEwl0ANhLIIm1T/cwKesSOlf9mbIV/xXSxWOFcCcpNkn8xO9ArlKYgaqqAs6
+ +YQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764067682; x=1764672482;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Hv5Ak0MaPD3DTUlsFZpK2YD5GN5aNBiQH18NqR3X2f0=;
+ b=E3yI1s29rdTijLI3S5AvibG4d6OioNDg16KVczWqxQDpnH9wrRIx3r0Dcc5U8/hQMz
+ KPtUsTn207FKSXO0jkNwrQ6lUuATTKod3zoGbxGag0VJF2r+H8bdpCM/2TTnrjX9nPON
+ Nmdvg8tD5cTkmn1JupF3IH+Isl/phy8/KmNAdOSmY1SScYXR4Xj0HXn8ZYjOWRQON948
+ ZCFaZoOtvpXkl+ZFw/BPJiWt3QX803Ywsv1m3CtqrTPICIpx/9TR+3bLnjtUQSS1fTn1
+ wsm90TI6kTIaBKlFSUHVJPtVIawgeQu8dPSqz6o50t+UI1M2ywURnopWSL/07W+QEjb0
+ dZzg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5yDnnHUD/Mrf+5QaNXJ9O7tu0kNzKmDlJFQ5JGajETl6rOPgV5o9RkPr7zHyO1YmkBqXp3Z9ZURie@nongnu.org
+X-Gm-Message-State: AOJu0Yyla1N/CZive8/rXlRMJOPiU+nb9M6Qg3BqaZZwM57jupfMDFY4
+ /VYtO1O79zX4llcj1f4Ii1GiGZMAJZzAhxqLKhZd4HKOMxb9WusvJowb047UlLhq3CONlJBnCqR
+ 7q2HfzsHNKBuJ9ED7veYZ36VmrYkQ3nZJPX0FiLZp3pGLIelPNThRmrG7/XBnlCp4m1vdJF1/L2
+ Ip+Nfc2yX6cRtJr0+4MdsKOCHsQlUbHf8DyzRj/SE=
+X-Gm-Gg: ASbGncuD/lj9M2qvmIok6OD5rKhhU9xPGls/02qe11dXkqd4Qny+xIGnrKd7KjkYOvI
+ ZZ2eYEAGqq5FTOFxA33xsoKhuluZYxd3LBrxE6oBiAWTdRxWLGvreWuXFCgYQtEHdgS80iJjbNI
+ 15sceGuuPmR24fy5lrRaKOG01exTgwxRVLj0DyUUvyXGyr5kuI2ioeTKb0vjz3PkLMc4hHSfyBy
+ MeIICmGqtHN8s74GwJ7KKMY57kWsCWOepWkajpk3kNWmkVVxAwEU0osDUiDxfIxFEiStKo=
+X-Received: by 2002:a05:6000:288b:b0:3e9:ee54:af71 with SMTP id
+ ffacd0b85a97d-42cc1cd8f75mr14937721f8f.12.1764067682566; 
+ Tue, 25 Nov 2025 02:48:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEdKbq0FvCer0sm3NBT6YiljHXSDZHGdssV2C3TN1ZCzbXR8Q5ItbjTVtOqxhf+PZCy5Q3uxrQbJdxgUMf3pyw=
+X-Received: by 2002:a05:6000:288b:b0:3e9:ee54:af71 with SMTP id
+ ffacd0b85a97d-42cc1cd8f75mr14937701f8f.12.1764067682093; Tue, 25 Nov 2025
+ 02:48:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: smucmp18f.europe.bmw.corp (2a03:1e80:a16:52a::1:60) To
- smucmp21a.europe.bmw.corp (2a03:1e80:a01:524::1:44)
-Received-SPF: pass client-ip=207.54.72.35;
- envelope-from=prvs=417ea8bb2=Moritz.Haase@bmw.de;
- helo=esa13.hc324-48.eu.iphmx.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
+References: <cover.1761644606.git.chenmiao@openatom.club>
+In-Reply-To: <cover.1761644606.git.chenmiao@openatom.club>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 25 Nov 2025 11:47:49 +0100
+X-Gm-Features: AWmQ_bnA1vv60Je9_DJLlGKrUEY65wxYG5WiLBLdzRZpg3-DNzo4ldYVtaUUPV8
+Message-ID: <CABgObfap3WcggLUkRh5u6i44fA9krrmr4ufJj8M6tdVy-FQH7A@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 0/5] rust/hw: Add the I2C and the first GPIO device
+To: chenmiao <chenmiao@openatom.club>
+Cc: zhao1.liu@intel.com, manos.pitsidianakis@linaro.org, 
+ richard.henderson@linaro.org, philmd@linaro.org, chao.liu@openatom.club, 
+ qemu-rust@nongnu.org, qemu-devel@nongnu.org, 
+ hust-os-kernel-patches@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,412 +120,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order for one to use QEMU user mode emulation under a chroot, it is
-required to use binfmt_misc. This can be avoided by QEMU never doing a raw
-execve() to the host system, which is especially useful in environments
-where binfmt_misc can't be used.
+On Tue, Oct 28, 2025 at 11:18=E2=80=AFAM chenmiao <chenmiao@openatom.club> =
+wrote:
+>
+> We have implemented I2C and the first GPIO device in Rust for QEMU.
+> Additionally, in the respective patches, we have shared our insights and
+> experiences regarding the use of Rust for device modeling within QEMU.
+>
+> 1. The first patch implements the BusState for the I2CBus infrastructure.
+> 2. The second patch implements the I2CBus and I2CSlave infrastructure, al=
+ong
+>    with a discussion of the challenges encountered during the implementat=
+ion.
+> 3. The third patch moves the struct definition of the PCF8574 to the
+>    corresponding header file.
+> 4. The fourth patch provides a set of necessary helper functions for the =
+PCF8574
+>    GPIO device.
+> 5. The fifth patch implements the PCF8574 GPIO device, along with a discu=
+ssion
+>    of the issues and considerations addressed during the implementation.
+>
+> Regarding this series of patches, we have found that Rust for QEMU is ind=
+eed
+> still not mature enough and requires continuous iteration. Additionally, =
+the
+> lack of basic documentation also needs to be addressed. In this regard, I=
+ hope
+> our team(HUST OpenAtom Open Source Club) can contribute to the documentat=
+ion
+> efforts for Rust for QEMU.
+>
+> Link: https://groups.google.com/g/hust-os-kernel-patches/c/z7vHWg3xvDc
+>
+> Signed-off-by: Chao Liu <chao.liu@openatom.club>
+> Signed-off-by: Chen Miao <chenmiao@openatom.club>
 
-Introduce a new option, -execve, that uses the current QEMU interpreter to
-intercept execve(). In addition, execve mode can also be en- and disabled
-using the 'QEMU_EXECVE' env var.
+Hi! Are you going to send v3?
 
-qemu_execve() will prepend the interpreter path, similar to what binfmt_misc
-would do, and then pass the modified execve() to the host.
+Thanks,
 
-It is necessary to parse hashbang scripts in that function otherwise the
-kernel will try to run the interpreter of a script without QEMU and get an
-invalid exec format error.
+Paolo
 
-Note that a previous incarnation of this patch was submitted a few years ago
-(see [0]) by Petros Angelatos as the original author who confirmed that it's
-OK to resubmit it.
+> ---
+> Changes in V2:
+>   - According to Zhao's suggestions, some modifications were made to the =
+first
+>     and second patches respectively, such as changing some bus names, add=
+ing
+>     some Safety comments, and adding callbacks for I2CSlave.
+>   - While we were making changes to the first PATCH, Chao Liu pointed out=
+ that
+>     the realize function was unnecessary in the bus. After discussion, we
+>     removed the bus::realize function. Since no other components are curr=
+ently
+>     using the bus, we added a TODO comment for clarification.
+>
+> chenmiao (5):
+>   rust/hw/core: Add the BusState of rust version
+>   rust/hw/core: Add rust bindings/funcs for i2c bus
+>   hw/gpio: Move the pcf8574 struct to header
+>   rust/hw/core: Provide some interfaces for the GPIO device
+>   rust/hw/gpio: Add the the first gpio device pcf8574
+>
+>  hw/gpio/Kconfig                      |   5 +
+>  hw/gpio/meson.build                  |   2 +-
+>  hw/gpio/pcf8574.c                    |  32 --
+>  include/hw/gpio/pcf8574.h            |  36 +++
+>  rust/Cargo.lock                      |  21 +-
+>  rust/Cargo.toml                      |   1 +
+>  rust/hw/Kconfig                      |   1 +
+>  rust/hw/core/meson.build             |   2 +
+>  rust/hw/core/src/bus.rs              |  44 +++
+>  rust/hw/core/src/i2c.rs              | 421 +++++++++++++++++++++++++++
+>  rust/hw/core/src/irq.rs              |   6 +-
+>  rust/hw/core/src/lib.rs              |   6 +
+>  rust/hw/core/src/qdev.rs             |  12 +-
+>  rust/hw/core/wrapper.h               |   1 +
+>  rust/hw/gpio/Kconfig                 |   2 +
+>  rust/hw/gpio/meson.build             |   1 +
+>  rust/hw/gpio/pcf8574/Cargo.toml      |  31 ++
+>  rust/hw/gpio/pcf8574/build.rs        |   1 +
+>  rust/hw/gpio/pcf8574/meson.build     |  50 ++++
+>  rust/hw/gpio/pcf8574/src/bindings.rs |  29 ++
+>  rust/hw/gpio/pcf8574/src/device.rs   | 180 ++++++++++++
+>  rust/hw/gpio/pcf8574/src/lib.rs      |   4 +
+>  rust/hw/gpio/pcf8574/wrapper.h       |  51 ++++
+>  rust/hw/meson.build                  |   1 +
+>  24 files changed, 902 insertions(+), 38 deletions(-)
+>  create mode 100644 rust/hw/core/src/bus.rs
+>  create mode 100644 rust/hw/core/src/i2c.rs
+>  create mode 100644 rust/hw/gpio/Kconfig
+>  create mode 100644 rust/hw/gpio/meson.build
+>  create mode 100644 rust/hw/gpio/pcf8574/Cargo.toml
+>  create mode 120000 rust/hw/gpio/pcf8574/build.rs
+>  create mode 100644 rust/hw/gpio/pcf8574/meson.build
+>  create mode 100644 rust/hw/gpio/pcf8574/src/bindings.rs
+>  create mode 100644 rust/hw/gpio/pcf8574/src/device.rs
+>  create mode 100644 rust/hw/gpio/pcf8574/src/lib.rs
+>  create mode 100644 rust/hw/gpio/pcf8574/wrapper.h
+>
+> --
+> 2.43.0
+>
 
-CC: petrosagg@resin.io
-CC: nghiant2710@gmail.com
-CC: forumi0721@gmail.com
-CC: laurent@vivier.eu
-
-Signed-off-by: Moritz Haase <Moritz.Haase@bmw.de>
-
----
-
-We've been using this feature internally for at least five years by now.
-Prior to submission, the code was updated to (hopefully) conform to the
-current QEMU coding style.
-
-I'd be happy to add test cases for this feature, but I'd need some pointers
-given that I'm a first-time contributor. Thanks!
-
-[0]: https://patchwork.kernel.org/project/qemu-devel/patch/1453091602-21843-1-git-send-email-petrosagg@gmail.com/
----
- linux-user/linuxload.c      | 119 ++++++++++++++++++++++++++++++++++--
- linux-user/loader.h         |   1 +
- linux-user/main.c           |  54 ++++++++++++++++
- linux-user/syscall.c        |  94 ++++++++++++++++++++++++----
- linux-user/user-internals.h |   1 +
- 5 files changed, 252 insertions(+), 17 deletions(-)
-
-diff --git a/linux-user/linuxload.c b/linux-user/linuxload.c
-index 85d700953e..eb1fdf3f85 100644
---- a/linux-user/linuxload.c
-+++ b/linux-user/linuxload.c
-@@ -138,15 +138,124 @@ abi_ulong loader_build_argptr(int envc, int argc, abi_ulong sp,
-     return sp;
- }
- 
-+int load_script_file(const char *filename, struct linux_binprm *bprm)
-+{
-+    int retval, fd;
-+    char *i_arg = NULL, *i_name = NULL;
-+    char **new_argv;
-+    char *cp;
-+    char buf[BPRM_BUF_SIZE];
-+
-+    /* Check if it is a script */
-+    fd = open(filename, O_RDONLY);
-+    if (fd == -1) {
-+        return fd;
-+    }
-+
-+    retval = read(fd, buf, BPRM_BUF_SIZE);
-+    if (retval == -1) {
-+        close(fd);
-+        return retval;
-+    }
-+
-+     /* if we have less than 2 bytes, we can guess it is not executable */
-+    if (retval < 2) {
-+        close(fd);
-+        return -ENOEXEC;
-+    }
-+
-+    close(fd);
-+    /*
-+     * adapted from the kernel
-+     * https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/fs/binfmt_script.c
-+     */
-+    if ((buf[0] == '#') && (buf[1] == '!')) {
-+        buf[BPRM_BUF_SIZE - 1] = '\0';
-+        cp = strchr(buf, '\n');
-+        if (cp == NULL) {
-+            cp = buf + BPRM_BUF_SIZE - 1;
-+        }
-+        *cp = '\0';
-+        while (cp > buf) {
-+            cp--;
-+            if ((*cp == ' ') || (*cp == '\t')) {
-+                *cp = '\0';
-+            } else {
-+                break;
-+            }
-+        }
-+        for (cp = buf + 2; (*cp == ' ') || (*cp == '\t'); cp++) {
-+            /* nothing */ ;
-+        }
-+        if (*cp == '\0') {
-+            return -ENOEXEC; /* No interpreter name found */
-+        }
-+        i_name = cp;
-+        i_arg = NULL;
-+        for ( ; *cp && (*cp != ' ') && (*cp != '\t'); cp++) {
-+            /* nothing */ ;
-+        }
-+        while ((*cp == ' ') || (*cp == '\t')) {
-+            *cp++ = '\0';
-+        }
-+
-+        new_argv = NULL;
-+        if (*cp) {
-+            i_arg = cp;
-+        }
-+
-+        if (i_arg) {
-+            new_argv = g_alloca(sizeof(void *));
-+            new_argv[0] = i_arg;
-+        }
-+        bprm->argv = new_argv;
-+        bprm->filename = i_name;
-+    } else {
-+        return 1;
-+    }
-+    return 0;
-+}
-+
- int loader_exec(int fdexec, const char *filename, char **argv, char **envp,
-                 struct image_info *infop, struct linux_binprm *bprm)
- {
--    int retval;
-+    int retval, fd, offset = 1, argc = count(argv);
-+    char **new_argv;
-+
-+    retval = load_script_file(filename, bprm);
-+    if (retval == 0) {
-+        if (bprm->argv != NULL) {
-+            offset = 2;
-+        }
-+        new_argv = g_alloca((argc + offset + 1) * sizeof(void *));
-+
-+        new_argv[0] = (char *)filename;
-+        if (bprm->argv != NULL) {
-+            new_argv[1] = bprm->argv[0];
-+        }
-+        /* Copy the original arguments with offset */
-+        for (int i = 0; i < argc; i++) {
-+            new_argv[i + offset] = argv[i];
-+        }
-+        new_argv[argc + offset] = NULL;
-+
-+        bprm->argc = count(new_argv);
-+        bprm->argv = new_argv;
-+        fd = open(bprm->filename, O_RDONLY);
-+        if (fd < 0) {
-+            printf("Error while loading %s: %s\n",
-+                bprm->filename,
-+                strerror(errno));
-+            _exit(EXIT_FAILURE);
-+        }
-+        bprm->src.fd = fd;
-+    } else {
-+        bprm->filename = (char *)filename;
-+        bprm->argc = count(argv);
-+        bprm->argv = argv;
-+        bprm->src.fd = fdexec;
-+    }
- 
--    bprm->src.fd = fdexec;
--    bprm->filename = (char *)filename;
--    bprm->argc = count(argv);
--    bprm->argv = argv;
-     bprm->envc = count(envp);
-     bprm->envp = envp;
- 
-diff --git a/linux-user/loader.h b/linux-user/loader.h
-index da9ad28db5..2beedc5f0d 100644
---- a/linux-user/loader.h
-+++ b/linux-user/loader.h
-@@ -90,6 +90,7 @@ int loader_exec(int fdexec, const char *filename, char **argv, char **envp,
- uint32_t get_elf_eflags(int fd);
- int load_elf_binary(struct linux_binprm *bprm, struct image_info *info);
- int load_flt_binary(struct linux_binprm *bprm, struct image_info *info);
-+int load_script_file(const char *filename, struct linux_binprm *bprm);
- 
- abi_long memcpy_to_target(abi_ulong dest, const void *src,
-                           unsigned long len);
-diff --git a/linux-user/main.c b/linux-user/main.c
-index db751c0757..3a8a748fda 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -128,6 +128,7 @@ static void usage(int exitcode);
- 
- static const char *interp_prefix = CONFIG_QEMU_INTERP_PREFIX;
- const char *qemu_uname_release;
-+const char *qemu_execve_path;
- 
- #if !defined(TARGET_DEFAULT_STACK_SIZE)
- /* XXX: on x86 MAP_GROWSDOWN only works if ESP <= address + 32, so
-@@ -367,6 +368,56 @@ static void handle_arg_guest_base(const char *arg)
-     have_guest_base = true;
- }
- 
-+static void handle_arg_execve(const char *arg)
-+{
-+    const char *execfn;
-+    char buf[PATH_MAX];
-+    char *ret;
-+    int len;
-+
-+    /*
-+     * Since the 'execve' command line option has no argument ('has_arg' is
-+     * 'false'), this function will always receive NULL for 'arg' during
-+     * argument parsing. If 'arg' is non-NULL, we are being called during env
-+     * var handling, because QEMU_EXECVE is set.
-+     */
-+    if (arg != NULL) {
-+        /*
-+         * If the env var is set, check whether its value is '0'. In this case,
-+         * we don't want to enable 'execve' mode and thus bail out. Please note
-+         * that an empty value will NOT disable 'execve' mode.
-+         */
-+        if (!strcmp(arg, "0")) {
-+            return;
-+        }
-+    }
-+
-+    /* try getauxval() */
-+    execfn = (const char *)qemu_getauxval(AT_EXECFN);
-+
-+    if (execfn != 0) {
-+        ret = realpath(execfn, buf);
-+
-+        if (ret != NULL) {
-+            qemu_execve_path = g_strdup(buf);
-+            return;
-+        }
-+    }
-+
-+    /* try /proc/self/exe */
-+    len = readlink("/proc/self/exe", buf, sizeof(buf) - 1);
-+
-+    if (len != -1) {
-+        buf[len] = '\0';
-+        qemu_execve_path = g_strdup(buf);
-+        return;
-+    }
-+
-+    fprintf(stderr, "qemu_execve: unable to determine interpreter's path\n");
-+    exit(EXIT_FAILURE);
-+}
-+
-+
- static void handle_arg_reserved_va(const char *arg)
- {
-     char *p;
-@@ -497,6 +548,9 @@ static const struct qemu_argument arg_table[] = {
-      "uname",      "set qemu uname release string to 'uname'"},
-     {"B",          "QEMU_GUEST_BASE",  true,  handle_arg_guest_base,
-      "address",    "set guest_base address to 'address'"},
-+    {"execve",     "QEMU_EXECVE",      false, handle_arg_execve,
-+     "",           "use this interpreter when a process calls execve() "
-+     "(disabled if env var is '0', enabled for all other values / when empty)"},
-     {"R",          "QEMU_RESERVED_VA", true,  handle_arg_reserved_va,
-      "size",       "reserve 'size' bytes for guest virtual address space"},
-     {"t",          "QEMU_RTSIG_MAP",   true,  handle_arg_rtsig_map,
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 2060e561a2..bf9e084975 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -127,6 +127,7 @@
- #include <libdrm/drm.h>
- #include <libdrm/i915_drm.h>
- #endif
-+#include <linux/binfmts.h>
- #include "linux_loop.h"
- #include "uname.h"
- 
-@@ -8726,6 +8727,86 @@ ssize_t do_guest_readlink(const char *pathname, char *buf, size_t bufsiz)
-     return ret;
- }
- 
-+static int qemu_execve(const char *filename, char *argv[],
-+                       char *envp[])
-+{
-+    char **new_argv;
-+    const char *new_filename;
-+    int argc, ret, i, offset = 3;
-+    struct linux_binprm *bprm;
-+
-+    /* normal execve case */
-+    if (qemu_execve_path == NULL || *qemu_execve_path == 0) {
-+        new_filename = filename;
-+        new_argv = argv;
-+    } else {
-+        new_filename = qemu_execve_path;
-+
-+        for (argc = 0; argv[argc] != NULL; argc++) {
-+            /* nothing */ ;
-+        }
-+
-+        bprm = g_alloca(sizeof(struct linux_binprm));
-+        ret = load_script_file(filename, bprm);
-+
-+        if (ret < 0) {
-+            if (ret == -1) {
-+                return get_errno(ret);
-+            } else {
-+                return -host_to_target_errno(ENOEXEC);
-+            }
-+        }
-+
-+        if (ret == 0) {
-+            if (bprm->argv != NULL) {
-+                offset = 5;
-+            } else {
-+                offset = 4;
-+            }
-+        }
-+
-+        /* Need to store execve argument */
-+        offset++;
-+
-+        new_argv = g_alloca((argc + offset + 1) * sizeof(void *));
-+
-+        /* Copy the original arguments with offset */
-+        for (i = 0; i < argc; i++) {
-+            new_argv[i + offset] = argv[i];
-+        }
-+
-+        new_argv[0] = g_strdup(qemu_execve_path);
-+        new_argv[1] = g_strdup("-execve"); /* Add execve argument */
-+        new_argv[2] = g_strdup("-0");
-+        new_argv[offset] = g_strdup(filename);
-+        new_argv[argc + offset] = NULL;
-+
-+        if (ret == 0) {
-+            new_argv[3] = bprm->filename;
-+            new_argv[4] = bprm->filename;
-+
-+            if (bprm->argv != NULL) {
-+                new_argv[5] = bprm->argv[0];
-+            }
-+        } else {
-+            new_argv[3] = argv[0];
-+        }
-+    }
-+
-+    /*
-+     * Although execve() is not an interruptible syscall it is
-+     * a special case where we must use the safe_syscall wrapper:
-+     * if we allow a signal to happen before we make the host
-+     * syscall then we will 'lose' it, because at the point of
-+     * execve the process leaves QEMU's control. So we use the
-+     * safe syscall wrapper to ensure that we either take the
-+     * signal as a guest signal, or else it does not happen
-+     * before the execve completes and makes it the other
-+     * program's problem.
-+     */
-+    return safe_execve(new_filename, new_argv, envp);
-+}
-+
- static int do_execv(CPUArchState *cpu_env, int dirfd,
-                     abi_long pathname, abi_long guest_argp,
-                     abi_long guest_envp, int flags, bool is_execveat)
-@@ -8791,17 +8872,6 @@ static int do_execv(CPUArchState *cpu_env, int dirfd,
-     }
-     *q = NULL;
- 
--    /*
--     * Although execve() is not an interruptible syscall it is
--     * a special case where we must use the safe_syscall wrapper:
--     * if we allow a signal to happen before we make the host
--     * syscall then we will 'lose' it, because at the point of
--     * execve the process leaves QEMU's control. So we use the
--     * safe syscall wrapper to ensure that we either take the
--     * signal as a guest signal, or else it does not happen
--     * before the execve completes and makes it the other
--     * program's problem.
--     */
-     p = lock_user_string(pathname);
-     if (!p) {
-         goto execve_efault;
-@@ -8813,7 +8883,7 @@ static int do_execv(CPUArchState *cpu_env, int dirfd,
-     }
-     ret = is_execveat
-         ? safe_execveat(dirfd, exe, argp, envp, flags)
--        : safe_execve(exe, argp, envp);
-+        : qemu_execve(exe, argp, envp);
-     ret = get_errno(ret);
- 
-     unlock_user(p, pathname, 0);
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 7099349ec8..0fd97cdb4f 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -69,6 +69,7 @@ abi_long get_errno(abi_long ret);
- const char *target_strerror(int err);
- int get_osversion(void);
- void init_qemu_uname_release(void);
-+extern const char *qemu_execve_path;
- void fork_start(void);
- void fork_end(pid_t pid);
- 
 
