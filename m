@@ -4,84 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8570CD0EE00
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 17:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63EEBD0EE0D
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 17:43:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNx05-00027H-Ky; Tue, 25 Nov 2025 12:38:50 -0500
+	id 1vNx3J-0003zG-KA; Tue, 25 Nov 2025 12:42:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
- id 1vNx00-000261-8S
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:38:45 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1vNx3G-0003vG-2N
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:42:06 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
- id 1vNwzx-00027c-VL
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:38:43 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-42b3377aaf2so3395034f8f.2
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 09:38:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1764092320; x=1764697120; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=tGVeJ0F4ibxE2fUpl0SKLmrEQxLUitBHAjDBavXfKBI=;
- b=KByKnK61QeOOqvpKYl0SxR0f0s9lh9rqU+9xntbLNJ0lPa6nt772YX1OGYWB7GVxc2
- PgaxhILfhXC4a8v73+LbIer8Wj8a1YuYv32sBrq9Jc4dokn0dhXnHe5WM8XVDtkq5kVw
- qTuNg8so9l8jFtHsf5hwi+LFE7TlVBRbqteo+TUuIMtt8vc8HySPOWtRAFGhtHePhkDL
- VLVAnAJL0vh7lDqTVD5+/7FjsA0wGrFKjcTuLvTXR+oQRvpRw24v5PZ3ABTND5IdnjYj
- zJGL0eokOXGJ56EiU+HtwYzGeGzgK0blCMJpX2V+9cqFL3CLi38NhTaHuGLzUBgqAfYZ
- 8oYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764092320; x=1764697120;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tGVeJ0F4ibxE2fUpl0SKLmrEQxLUitBHAjDBavXfKBI=;
- b=mNCfPX+Hw/Sm36HCZFYUAhtJAd1CkQ+aPWjfohChVJtKtqlxileggdcRg6uEX6xUf8
- +UkYiQcoA9c3qfM3+NzXF4MuyKeNk2TaG6gOQv+OyFCA2OxJFVbET53bD1ko2L3GVAkD
- FTM48kVYdrmIpt0ukM0jKHdRqk2ujYjPFWKpgYys4QUft5P8qxTOHuL0P+PszL+SyYlb
- +jtQ+7j+v9W+vCDsbEqsSlg7HsqbSlz9rPrVBs85QI4ZD4fOLIMgZlezgFqtZnla9X/K
- egiXpbyDPqYHLmLYGei5gKo9lg6Xa6V9pSEr0D8Q19EEfrjWevkEyY47duHhTj3xogx+
- ybvQ==
-X-Gm-Message-State: AOJu0YyZiLFxa2uTz3EWuXRk6NQABM2hzNkSbIIjQ4dWCQEXZWVWcmYE
- E9kvdh+vh3PuB1sIElGPyuZq2ih+1oBo2nkj7ZxVq2dL8LnWYokU4EDAKhJrXZO5B9Lzjg==
-X-Gm-Gg: ASbGncvPit7FNx+zV5/P6GNURfsQFmqUfzwEgXMxE6j94dPKBg7QGlQAl14Irbs5be3
- DBCKHu7W9Q1f7uv9q49rr4Ju3BxCOxZGiIveIxN2GmxHKo44yI/cZuWyxgzIvKdyeg7a4KcVaHY
- IvHf8o4MM3NtmZ6F+Mxn2/5ZNncc415nG7tUXHlXuRdxwJL37oYZ7+l2ZQDr9scLqGKa86sUw3k
- xW2SfLUlElSIqJYlpdi4Sn/rJ1jg/TCbtvsG4ZyfOqZ8BUpNdFojhKRWAmLgZPapexh0/tp3qQl
- lgMjpq9xubRusH4MyRUcWgjPv5H2aT0MnCuXkz/moKvh5wOoK+1rIakfb3m3R3FIm/mCJmDThjC
- I8o62gopG2zDtLy8gOtwRwK4GtZhRq1At6J6Po1pDTMRxYvw28FhespyYwevQaU14dzJQ2VFZiX
- WmrfC/ozU=
-X-Google-Smtp-Source: AGHT+IFrcjv8XneEboSkCqanyuYNE8us2FSlCftHXfUrmX2qnkh4JAEmR01wKVSDOmMk/4pzqmLbvA==
-X-Received: by 2002:a05:6000:1ace:b0:42b:3746:3b87 with SMTP id
- ffacd0b85a97d-42cc1d22d28mr16965034f8f.52.1764092320102; 
- Tue, 25 Nov 2025 09:38:40 -0800 (PST)
-Received: from localhost ([51.37.163.135]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f2e454sm35398740f8f.2.2025.11.25.09.38.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Nov 2025 09:38:39 -0800 (PST)
-From: Pawel Zmarzly <pzmarzly0@gmail.com>
+ (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1vNx3E-0002en-Ga
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:42:05 -0500
+Received: from hawking.nue2.suse.org (unknown
+ [IPv6:2a07:de40:a101:3:92b1:1cff:fe69:ddc])
+ by smtp-out2.suse.de (Postfix) with ESMTP id 3E9E75BD12;
+ Tue, 25 Nov 2025 17:42:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1764092521; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=hu1BUFyuC16J9n18VyCz3JY1QmqEUV1QBw1wENIm5V8=;
+ b=wt0VywSGYhKl9+1R7vw4zHn4S9G5u4QeftPfX+4+D6Fw2MfRggIAGawL68wqxymJLyTubO
+ UOPcTpx9JrJfF3WYJcVD7iTaSfknfDmEfdh5oWbcNdS95bBII6X2qRt4nRbVtCW0vUV5Gw
+ z9cfe30yzcjXpcCyZYlCKXtCBugmmjw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1764092521;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=hu1BUFyuC16J9n18VyCz3JY1QmqEUV1QBw1wENIm5V8=;
+ b=0LL7X5O6ICHYl+0lEjI7DK7jMjOw2m/qG3+wgNtX9eNN2Ga5a4CUPIh8GPfWtPQbGbiUNX
+ Q+szYvQs8uaq+XAA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=wt0VywSG;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=0LL7X5O6
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1764092521; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=hu1BUFyuC16J9n18VyCz3JY1QmqEUV1QBw1wENIm5V8=;
+ b=wt0VywSGYhKl9+1R7vw4zHn4S9G5u4QeftPfX+4+D6Fw2MfRggIAGawL68wqxymJLyTubO
+ UOPcTpx9JrJfF3WYJcVD7iTaSfknfDmEfdh5oWbcNdS95bBII6X2qRt4nRbVtCW0vUV5Gw
+ z9cfe30yzcjXpcCyZYlCKXtCBugmmjw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1764092521;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type;
+ bh=hu1BUFyuC16J9n18VyCz3JY1QmqEUV1QBw1wENIm5V8=;
+ b=0LL7X5O6ICHYl+0lEjI7DK7jMjOw2m/qG3+wgNtX9eNN2Ga5a4CUPIh8GPfWtPQbGbiUNX
+ Q+szYvQs8uaq+XAA==
+Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
+ id 25A1A4A056A; Tue, 25 Nov 2025 18:42:01 +0100 (CET)
+From: Andreas Schwab <schwab@suse.de>
 To: qemu-devel@nongnu.org
-Cc: jsnow@redhat.com,
-	michel@michel-slm.name
-Subject: [PATCH] scripts/analyze-migration: Support mapped-ram snapshot format
-Date: Tue, 25 Nov 2025 17:38:39 +0000
-Message-ID: <20251125173839.249765-1-pzmarzly0@gmail.com>
-X-Mailer: git-send-email 2.52.0
+Cc: laurent@vivier.eu
+Subject: [PATCH] linux-user: look up executable in emulation dir for execve
+ syscall
+Date: Tue, 25 Nov 2025 18:42:01 +0100
+Message-ID: <mvmtsyixb4m.fsf@suse.de>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=pzmarzly0@gmail.com; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [15.27 / 50.00]; SPAM_FLAG(5.00)[];
+ NEURAL_SPAM_LONG(3.50)[1.000]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_SPAM_SHORT(2.98)[0.992];
+ HFILTER_HOSTNAME_UNKNOWN(2.50)[]; RDNS_NONE(2.00)[];
+ ONCE_RECEIVED(1.20)[];
+ HFILTER_HELO_IP_A(1.00)[hawking.nue2.suse.org];
+ HFILTER_HELO_NORES_A_OR_MX(0.30)[hawking.nue2.suse.org];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCVD_NO_TLS_LAST(0.10)[]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FROM_EQ_ENVFROM(0.00)[];
+ DIRECT_TO_MX(0.00)[Gnus/5.13 (Gnus v5.13)];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_TWO(0.00)[2];
+ RCVD_COUNT_ONE(0.00)[1]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MID_RHS_MATCH_FROM(0.00)[]; TO_DN_NONE(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
+ hawking.nue2.suse.org:helo]
+X-Spamd-Bar: +++++++++++++++
+X-Rspamd-Queue-Id: 3E9E75BD12
+X-Rspamd-Action: add header
+X-Spam: Yes
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=schwab@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,103 +115,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The script has not been updated to read mapped-ram snapshots and is currently
-crashing when trying to read such a file.
-
-With this commit, it can now read a snapshot created with:
-
-    (qemu) migrate_set_capability x-ignore-shared on
-    (qemu) migrate_set_capability mapped-ram on
-    (qemu) migrate -d file:vm.state
-
-Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
+Signed-off-by: Andreas Schwab <schwab@suse.de>
 ---
- scripts/analyze-migration.py | 45 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ linux-user/syscall.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index 67631ac43e..73ea7dea2d 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -19,6 +19,7 @@
- 
- import json
- import os
-+import math
- import argparse
- import collections
- import struct
-@@ -127,6 +128,7 @@ def __init__(self, file, version_id, ramargs, section_key):
-         self.dump_memory = ramargs['dump_memory']
-         self.write_memory = ramargs['write_memory']
-         self.ignore_shared = ramargs['ignore_shared']
-+        self.mapped_ram = ramargs['mapped_ram']
-         self.sizeinfo = collections.OrderedDict()
-         self.data = collections.OrderedDict()
-         self.data['section sizes'] = self.sizeinfo
-@@ -170,6 +172,47 @@ def read(self):
-                         self.files[self.name] = f
-                     if self.ignore_shared:
-                         mr_addr = self.file.read64()
-+                    if self.mapped_ram:
-+                        version = self.file.read32()
-+                        if version != 1:
-+                            raise Exception("Unsupported MappedRamHeader version %s" % version)
-+                        page_size = self.file.read64()
-+                        if page_size != self.TARGET_PAGE_SIZE:
-+                            raise Exception("Page size mismatch in MappedRamHeader")
-+                        bitmap_offset = self.file.read64()
-+                        pages_offset = self.file.read64()
-+
-+                        if self.dump_memory or self.write_memory:
-+                            num_pages = len // page_size
-+
-+                            # Read the bitmap to determine which pages are present
-+                            self.file.seek(bitmap_offset, os.SEEK_SET)
-+                            bitmap_len = int(math.ceil(num_pages / 8))
-+                            bitmap = self.file.readvar(size=bitmap_len)
-+
-+                            self.file.seek(pages_offset, os.SEEK_SET)
-+                            for page_num in range(num_pages):
-+                                page_addr = page_num * page_size
-+
-+                                is_filled = (bitmap[page_num // 8] >> page_num % 8) & 1
-+                                if is_filled:
-+                                    data = self.file.readvar(size=self.TARGET_PAGE_SIZE)
-+                                    if self.write_memory:
-+                                        self.files[self.name].seek(page_addr, os.SEEK_SET)
-+                                        self.files[self.name].write(data)
-+                                    if self.dump_memory:
-+                                        hexdata = " ".join("{0:02x}".format(c) for c in data)
-+                                        self.memory['%s (0x%016x)' % (self.name, page_addr)] = hexdata
-+                                else:
-+                                    self.file.seek(self.TARGET_PAGE_SIZE, os.SEEK_CUR)
-+                                    if self.write_memory:
-+                                        self.files[self.name].seek(page_addr, os.SEEK_SET)
-+                                        self.files[self.name].write(b'\x00' * self.TARGET_PAGE_SIZE)
-+                                    if self.dump_memory:
-+                                        self.memory['%s (0x%016x)' % (self.name, page_addr)] = 'Filled with 0x00'
-+
-+                        self.file.seek(pages_offset + len, os.SEEK_SET)
-                 flags &= ~self.RAM_SAVE_FLAG_MEM_SIZE
- 
-             if flags & self.RAM_SAVE_FLAG_COMPRESS:
-@@ -663,6 +706,7 @@ def read(self, desc_only = False, dump_memory = False,
-         ramargs['dump_memory'] = dump_memory
-         ramargs['write_memory'] = write_memory
-         ramargs['ignore_shared'] = False
-+        ramargs['mapped_ram'] = False
-         self.section_classes[('ram',0)][1] = ramargs
- 
-         while True:
-@@ -674,6 +718,7 @@ def read(self, desc_only = False, dump_memory = False,
-                 section = ConfigurationSection(file, config_desc)
-                 section.read()
-                 ramargs['ignore_shared'] = section.has_capability('x-ignore-shared')
-+                ramargs['mapped_ram'] = section.has_capability('mapped-ram')
-             elif section_type == self.QEMU_VM_SECTION_START or section_type == self.QEMU_VM_SECTION_FULL:
-                 section_id = file.read32()
-                 name = file.readstr()
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index f7ca155679..e379ddb1b7 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -8972,6 +8972,7 @@ static int do_execv(CPUArchState *cpu_env, int dirfd,
+     if (is_proc_myself(p, "exe")) {
+         exe = exec_path;
+     }
++    exe = path(exe);
+     ret = is_execveat
+         ? safe_execveat(dirfd, exe, argp, envp, flags)
+         : safe_execve(exe, argp, envp);
 -- 
 2.52.0
+
+
+-- 
+Andreas Schwab, SUSE Labs, schwab@suse.de
+GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
+"And now for something completely different."
 
