@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0803D0E6EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 14:32:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28C1AD0E6E5
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 14:32:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNu5F-0006n2-Cv; Tue, 25 Nov 2025 09:31:57 -0500
+	id 1vNu5H-0006qe-P9; Tue, 25 Nov 2025 09:31:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNu55-0006ih-Np
+ id 1vNu57-0006iy-O0
  for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:31:51 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNu53-0004ep-Ql
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:31:47 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-42b3377aaf2so3254857f8f.2
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 06:31:45 -0800 (PST)
+ id 1vNu56-0004fK-4N
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:31:49 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-42b3c5defb2so3687832f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 06:31:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764081104; x=1764685904; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xmXtLRIJY79eAlv8awNA0XP2w7Ef3VsFWAE0E9MyIFk=;
- b=wdtEts0/VQd+lFEGHTGz8SnbttxzZ/YlvzqWYObzb5M9QCqo2mY01iWpwI55ApfKGI
- aMVp9S9ojQV6lVh7W53Q9uV1RJVIg/c/aSlMjzkJs1i0WYUzwC/iUJQIkMmr8berjgGQ
- 0lddCc8oPjXBofEZ/PzygNr8c6NGFNQKBKMYH1dUVOhsL30/db37AcINKD4joXr8/sIU
- 57UpAghuL8sgbQ00I22pwPNkadySVvOoha6VKg5sH+2VYZsRqixXe/e3/O/fc8KoKo8R
- SQdWQpfCXU14CZOJT621NSZcp/iDnqjH2Bdtze3SsEDihQl9J1JOjIMEnwZCFKUG5/6P
- U56A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764081104; x=1764685904;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1764081107; x=1764685907; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xmXtLRIJY79eAlv8awNA0XP2w7Ef3VsFWAE0E9MyIFk=;
- b=J1uyd7xybamLrgwbhJaN6GGG8YbcsOEzHJFTK1HlJwXrXXOXLPxVk5YBgP3uEi8tYF
- gbdfmIRJT8ADBM9Lf0aTsxKct5uXC1De9j9hFfpZLM9gXxpg2pCb+k6s1wmsVR+k0TIf
- fLT621HQjQWCSHUwCH6xrRBIjYuu9SAdmJ85tDvyQ7c5TNKApFtbjNWQVbIvsFKZzLl+
- 4hAwrrOJJvWwl/0ZUfV+JFIZhtNoQZn+r19IWA2ESp1ekM5gpCSXhEiIHBXAfy+vuVoK
- ElgzWjV2wlCimG71kWy+az5BhBFDO4N826DBKgJqz382/f06sko7Rx4sZgig+vbwRLfz
- o3Ww==
-X-Gm-Message-State: AOJu0YwFh7W+bE8UadCvGvQERMvef1O5f9E6jHX5RIGdIFFwU99J7QL3
- Dw8Dtv5v7xXWUDqlqPIvIqTcv74yEi0NF8qZ6/HTFULXfIq1quIDjL/l2pDipdvSqPOrN7tUZTK
- wwFfz
-X-Gm-Gg: ASbGncu3WWKyDNMEQ4Y02sQOkjazK3jXZremCD/pu3cebagYOwblcjL0IQDS4uxKXMZ
- R/koHtJt59/UODwBbprK1I3iU3+zuGxqpgcLuXzNm0aFvE5EUA8newUNOwPdkbqrHxSW4KdbrTo
- iL+dHdJx/ElPWF0FALNi+Nkj0p7PuDeG7XFLlE2WVq2FhMsaal+5BtumbiiObhk9/XI/RFQu9ib
- iHp4uIB6FQSC1KXHxE4pIrABHGttHnBpMr6cDvnAOHJIw1AVpw6cEh6ziThbEHhR4okFk3+498z
- jk3KoAUzTpIVqI1ozX04TUzo8RNHUzpkZbcKdo/UoANPkQmidAUzDJOcC2G+OLXycN/XXXdp5yc
- xYSyXupaxgMMpmGKeToOjODbbx7/Vvwmxw1R7YnpSNghp4b46yBdc8jxFOP+1dS4U6cSpty2QM1
- XsG0kLuArooOXO
-X-Google-Smtp-Source: AGHT+IGystc2Xg0y3ubEengyAO4xssyx8qHkG6HNykmC5JcpLpux0OT2hletuk6BVM7dUvhs+jz4uA==
-X-Received: by 2002:a05:6000:228a:b0:42b:2eb3:c90f with SMTP id
- ffacd0b85a97d-42cc1ac98b4mr16817394f8f.10.1764081103786; 
- Tue, 25 Nov 2025 06:31:43 -0800 (PST)
+ bh=OzOPFznIgpbTG4xZi/XjCVhfc7BxnDRa1QWSADv6GTo=;
+ b=Oeo0zjleF/qyiSmryIdbWnTIpDB47W4uMI/ZQF3yTkdfAeTpEYSMlcl5dBJMr7gV3D
+ /iixofViboWNZJ/8jkFd6n1Nic5DzQv56mH7Vg4ix5lBjb/CpjG6qcMI95Ygb2i41vPz
+ SSrwQQY/E5+dtBscuHDHn2YbXtBktXAMmw2z7olDGbm+Iw/wuLV9Z5GDYo9egbwS8kGt
+ RO/UoIaWwAcB3SIVHuuNW/gt7288ZODElRUKsbjb6zlLxWdrxOQW0uXW6SDdE1Guy+Zt
+ PM4BNlcvk+2SniDXA2SdVzi8joF5w3g47LMaz0ZiwLUoJaBNkzLsAyjEVFQBAfBxN7WN
+ LjBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764081107; x=1764685907;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OzOPFznIgpbTG4xZi/XjCVhfc7BxnDRa1QWSADv6GTo=;
+ b=QShT4zmuyhmqbBZSmEa4SQ1XuC/I0xx0rfBUdSd+cR6sVZa6R+1JgV4tHQAjQZrcax
+ 9H6PgPvBuoiKdHqLrN48cq/X0zNOtp2puk6SdSPdyF7PYYNKgf35/SJvV1bh8Rfo65AS
+ aveCGyPj9hTFRnXyiJrCLAS61SqtK4TApKXc214S4Ip+p6ODoCfOL8K+FjXKALWc8REl
+ RqJndSziEC+LAn6SbUcYqkOpMHgu7cxOSxcFDL4QnfxM6xDPN2DSy6VIe5tq0smJC+pS
+ hOl4a9x2BpUeTIG7LAsIN2BmPqEyG+wDZjAKYWK0Z93Dma8adn1OwR82GpUG+faleMDX
+ 0UhA==
+X-Gm-Message-State: AOJu0Ywhmm0wPUPJnyW0XMfStCOfz5GYcx/lj8BwZLG3CvjzRdQM/lTb
+ DrBYzdki9kaoIf/umekj+AxVZUg5MowOqWlwTMtDLbNq7bbX4n/UvdsmjVncEBqXSPnvdXJlKQ/
+ sAjCU
+X-Gm-Gg: ASbGncsHqT1PAlcGNcPhKAVoFjMGmgbMEC3k+QXrHQi1cOq41onkLwi0EqUo2oLrC5k
+ n4uftI8XbcB2Yx6Dys79DUG2g9r9OdHcSvF9iZw3sI4x1x+O8dZsvK7yJ0cOmHTPli1iKXAEXAC
+ NgId7DTvCeMOICqE9pdJXJDc9rhoNTjgf0pdI0SaPQ/kmwMxqKI7LLUf6k5US2iEUR88u3/AqBQ
+ b9QAnd9bl3r0c+ENgIpTr0bXw1gQnkUm4nzF+JtCeHrqC8lUvDEQbP3GNDymhDdtyLxLvy+dcRz
+ 9yB+y3IG/H7RY0pIjJ969AlOqBX28sEZRa7WsdiKY1og3MrYIfwC/c6ARzrEOv60q3gBX67xc9K
+ jIal3NgXPC2wKYpJ0mtw2IhR3ceQCVqgaeol7nyLISexWrkvX4H04ZNj3tQt56ka47R32U6eMRx
+ lHNFqtBXmwvC3Z
+X-Google-Smtp-Source: AGHT+IFOP/L/oyvSCRSDQejLlx4K6ylIaC8MzzUeFYRFKJEyIH/6YQN96ChdVoVAI0mo2lGdXu0MpQ==
+X-Received: by 2002:a05:6000:228a:b0:42b:3e60:18ba with SMTP id
+ ffacd0b85a97d-42cc1ac9ca3mr16735919f8f.8.1764081106642; 
+ Tue, 25 Nov 2025 06:31:46 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fb919bsm34485434f8f.34.2025.11.25.06.31.42
+ ffacd0b85a97d-42cb7fb919bsm34485434f8f.34.2025.11.25.06.31.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Nov 2025 06:31:43 -0800 (PST)
+ Tue, 25 Nov 2025 06:31:46 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alistair Francis <alistair@alistair23.me>
-Subject: [PATCH 0/3] generic-loader: improve docs
-Date: Tue, 25 Nov 2025 14:31:38 +0000
-Message-ID: <20251125143141.216056-1-peter.maydell@linaro.org>
+Subject: [PATCH 3/3] docs/system/generic-loader: move TODO to source code
+Date: Tue, 25 Nov 2025 14:31:41 +0000
+Message-ID: <20251125143141.216056-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251125143141.216056-1-peter.maydell@linaro.org>
+References: <20251125143141.216056-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,30 +101,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset makes some minor improvements to the generic-loader
-docs. The main thing I wanted to do is the first patch, which
-makes it clearer that if you don't specify cpu-num when loading
-a file then the PC won't be set to the entry point.
+Currently we have a "Restrictions and ToDos" section at the bottom of
+the document which notes that there's no way to specify a CPU to load
+a file through that doesn't also set that CPU's PC.  This is written
+as a developer-facing note.  Move this to a TODO comment in the
+source code, and provide a shorter user-facing statement of the
+current restriction under the specific sub-option that it applies to.
 
-The second patch is because I noticed a typo ("QemuOps") and then
-realised that rather than fixing the typo we should instead
-rephrase to not mention that implementation detail.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ docs/system/generic-loader.rst | 14 +++-----------
+ hw/core/generic-loader.c       | 18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+), 11 deletions(-)
 
-The third patch moves a TODO out of the user-facing docs.
-
-thanks
--- PMM
-
-Peter Maydell (3):
-  docs/system/generic-loader: Clarify behaviour of cpu-num
-  docs/system/generic-loader: Don't mention QemuOpts implementation
-    detail
-  docs/system/generic-loader: move TODO to source code
-
- docs/system/generic-loader.rst | 56 ++++++++++++++++------------------
- hw/core/generic-loader.c       | 18 +++++++++++
- 2 files changed, 44 insertions(+), 30 deletions(-)
-
+diff --git a/docs/system/generic-loader.rst b/docs/system/generic-loader.rst
+index d5416711e93..0df9b66976a 100644
+--- a/docs/system/generic-loader.rst
++++ b/docs/system/generic-loader.rst
+@@ -99,6 +99,9 @@ shown below:
+   If this option is not specified, then the data will be loaded via
+   the address space of the first CPU, and no CPU will have its PC set.
+ 
++  Note that there is currently no way to specify the address space to
++  load the data without also causing that CPU's PC to be set.
++
+   Since it sets the starting PC, this option should only be used for the boot
+   image.
+ 
+@@ -111,14 +114,3 @@ shown below:
+ An example of loading an ELF file which CPU0 will boot is shown below::
+ 
+     -device loader,file=./images/boot.elf,cpu-num=0
+-
+-Restrictions and ToDos
+-^^^^^^^^^^^^^^^^^^^^^^
+-
+-At the moment it is just assumed that if you specify a cpu-num then
+-you want to set the PC as well. This might not always be the case. In
+-future the internal state 'set_pc' (which exists in the generic loader
+-now) should be exposed to the user so that they can choose if the PC
+-is set or not.
+-
+-
+diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
+index 433efb73872..508c090872a 100644
+--- a/hw/core/generic-loader.c
++++ b/hw/core/generic-loader.c
+@@ -30,6 +30,24 @@
+  * separate backend.
+  */
+ 
++/*
++ * TODO: currently the "load a file" functionality provides no way
++ * for the user to specify which CPU address space to load the data
++ * into without also causing that CPU's PC to be set to the start
++ * address of the file.
++ *
++ * We could fix this by having a new suboption set-pc (default: true)
++ * so the user can say
++ *  -device loader,file=<file>,cpu-num=<cpu-num>
++ * for the current "use this address space and set the PC" behaviour
++ * or
++ *  -device loader,file=<file>,cpu-num=<cpu-num>,set-pc=off
++ * to just pick the address space and not set the PC.
++ *
++ * Using set-pc without file= should be handled as an error; otherwise
++ * it can feed through to what we set s->set_pc to.
++ */
++
+ #include "qemu/osdep.h"
+ #include "system/dma.h"
+ #include "system/reset.h"
 -- 
 2.43.0
 
