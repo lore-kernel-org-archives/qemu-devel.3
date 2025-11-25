@@ -4,96 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BEE3D0E6FA
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 15:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 963A1D0E6EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 15:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNuzS-00058Y-B3; Tue, 25 Nov 2025 10:30:03 -0500
+	id 1vNv2J-0006x5-2t; Tue, 25 Nov 2025 10:32:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
- id 1vNuzC-000501-5g
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:29:49 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
- id 1vNuz7-0005xW-0B
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:29:43 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4779b49d724so6924755e9.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 07:29:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1764084563; x=1764689363; darn=nongnu.org;
- h=in-reply-to:references:from:to:cc:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LCMoh7VIW0MM6oFdeXAtj3YjlYVBka+8QZKsEOMUF6Y=;
- b=Aql4suuNBVgXIpSAk7wFBJipkv+kKAmT14ZPxfXvHNtSsvcy1ygRy59vWu9ZtltK5u
- 99Q97xtfamxzB8W9TELwq84xYjSKQYoCmOwSKPs/7CF/3DE6kAEa5mc/i3dhz6SRAA6X
- IzFtEuv445Hekfpni8J8C6UCiwtaIYE6PgOWRdrbroiPZV0q7Mw69DMkc6TM7DNUbzYT
- BHW0KtiEAGWfASvAwZ5Mv1iRX8/LJqKV7OGji/goWT4ai/fXmp75CKMF2aFQm/ujehj0
- vfcxXLml5pmPDGaEDk+7/dXLuXtatrdBA2mi6SGSvmYhXg37BgQ848/Bpnv0l75wI9Tq
- 50+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764084563; x=1764689363;
- h=in-reply-to:references:from:to:cc:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LCMoh7VIW0MM6oFdeXAtj3YjlYVBka+8QZKsEOMUF6Y=;
- b=EfiGlcuz62FvWVLChNByCFAo5yi0NW/b0iZ8xO5bzvsT9rQneMD7PNyN+dcd2K/gfJ
- hWl3IhmnrKnlrnBkZ8tjmJGUVOPP84YJ9fdTuL4x8iDPmYRfmm6mBvBz7Kl4cFNwkPV0
- iK2ipJm+Ob68gwWNqOYNsxe30K9fRMHh23GGkisg00XAoZOrIYhQzcj7RJdTpifLkNOB
- FyQjhClVGyYM/jZlMHkOdfdHTZYk34srr98mpMZM9gAJprxRJoEz7bF8FqVw1VlhRlmU
- jbnWymyo+Y/bSPOuIi5QEBcwFGLQe/1O/H5yE1fWCahIa0GLQHW/bJDz8DBRxhHJS+8o
- /4Zw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU2v1/pd4CQX2pDiXMyia1TncEBiXSuHsKDESO2XS7bXbwoCUZd+J96ohfhfXfMYnDbIeNAUYVnNv62@nongnu.org
-X-Gm-Message-State: AOJu0Yx69r0b8hFrgi5+HKbuhl5Z3BvS3wi0AWL92K9DqkTbOUnbHwIH
- e4VTgYzjVDe0d97Fsn69sLif0vazwvLjrVrx3+8+wsHMOlvCNl0h05EFUg9Eqv/0zXc=
-X-Gm-Gg: ASbGncspDOAqsqexlADSAjdaLUZupEV/AFoOVcFQQtrWKisJAwyo22HTpp/t/1N9xam
- B8CLAbCT7n8vB6usx9l2ra9O4F6yJtIWyuPvTSiO1cdjfr2mzsicoObuo4wvTDOKbGbGP65oya4
- J02Vd+/9DDfOSzy+sJgWbTZPiM0LPeFPLlg0ICTk2zSGWVntMinLXlQDig6t/6x75nLZ1PPeTEN
- ULZMFlKVDB8sSO4BfcTyx/SwmdE7sXr36S0d47+1WoByoKvY5zYFmVnXOT0on2XLCZAOdBaFeLu
- WwjzLwz4cUn6nzKI5K/qMMMnkDHTYIMr5xni0KjjuTzhJlg2ITFejWxmJGhZ+EaGIdmxsvUIWZE
- EYocIHB5Qc1PliU/gG+y6QwqWZtstM/q8Ai6I5y1TbzqRLcDmB/v9Mhs2+UF2jNp9hHIvlguZI/
- o=
-X-Google-Smtp-Source: AGHT+IEM3WNnuqoyKDeCOdA5RaCjKNZonjFcpj+01afBj7We5gA7Iu4SgpEZ3WF/Spg5kNzTDJ8zuQ==
-X-Received: by 2002:a05:600c:4443:b0:471:1387:377e with SMTP id
- 5b1f17b1804b1-477c01ddc08mr91911775e9.6.1764084563243; 
- Tue, 25 Nov 2025 07:29:23 -0800 (PST)
-Received: from localhost ([2a02:8308:a00c:e200::3052])
- by smtp.gmail.com with UTF8SMTPSA id
- ffacd0b85a97d-42cb7f3635bsm35386798f8f.17.2025.11.25.07.29.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Nov 2025 07:29:22 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vNv2G-0006v9-Pl
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:32:57 -0500
+Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vNv2E-0006Yp-PC
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:32:56 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1764084756; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=VCWFwwG+gI18rK5GcsI0VLVWEAiz/hQz51u7Ch7sCONUgDeqHuPIx+zC1DFMQte6QNu7jwpGVKbn1VDyapss7EPt0G07VwN1Q5d51OfQ0vO3Tj1iH8ouY0UV8nPGBsXrtyxvwOJ73koysVtOcL4nyoHgSK7wITAXFMhiZj9trlo=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1764084756;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=/GVHo103ACKpfm9gv8V940QNFGCrYbMfEpz3UZM8u0Y=; 
+ b=Zu/MIgJG7UWQOHsjgXvImiO1yxbZUT5rCGyc+EkBwODJSIMpAJYjvLqwUc/SX1hrGJy0WEtZ7Bo80/yYQN25m6tn/ajuclVO9OB8rkOT1p/udMtf1uilwXtO0v/NDHa9ONupQy5KnbUdSb+5M6H49/o14JqLDjj3nSQ0a1pzKgA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764084756; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=/GVHo103ACKpfm9gv8V940QNFGCrYbMfEpz3UZM8u0Y=;
+ b=IHVwLmBTcIt7gYlhMY1ZrALAd+k1620814rRSgaT/2tnpsdPobz/j+BebfF3PfT+
+ ye/1Que987Y8CZaJdhHdWBQa9zAeb5qzGwdN/p96+IuqeKeEZ0H2YDRcz+RQdxR4e9G
+ GmxXfgzR5l/D7uyNKOVkKQC6o/206xMp8GALq8kY=
+Received: by mx.zohomail.com with SMTPS id 17640847517505.25654896649894;
+ Tue, 25 Nov 2025 07:32:31 -0800 (PST)
+Message-ID: <fe171938-9c05-4636-a138-ee62a4eabc3b@collabora.com>
+Date: Tue, 25 Nov 2025 18:32:23 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 2/7] virtio-gpu: Validate hostmem mapping offset
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>,
+ Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Robert Beckett <bob.beckett@collabora.com>
+References: <20251125023517.177714-1-dmitry.osipenko@collabora.com>
+ <20251125023517.177714-3-dmitry.osipenko@collabora.com>
+ <8734628gz0.fsf@draig.linaro.org>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <8734628gz0.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 25 Nov 2025 16:28:48 +0100
-Message-Id: <DEHVRWD5YJVI.22DHBNVSQ0UHP@ventanamicro.com>
-Subject: Re: [PATCH v2 4/6] target/riscv: Fix pointer masking for
- virtual-machine load/store insns
-Cc: "Palmer Dabbelt" <palmer@dabbelt.com>, "Alistair Francis"
- <alistair.francis@wdc.com>, "Weiwei Li" <liwei1518@gmail.com>, "Daniel
- Henrique Barboza" <dbarboza@ventanamicro.com>, "Liu Zhiwei"
- <zhiwei_liu@linux.alibaba.com>, "open list:RISC-V TCG CPUs"
- <qemu-riscv@nongnu.org>,
- <qemu-riscv-bounces+qemu-riscv=archiver.kernel.org@nongnu.org>
-To: <frank.chang@sifive.com>, <qemu-devel@nongnu.org>
-From: =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>
-References: <20251121050413.3718427-1-frank.chang@sifive.com>
- <20251121050413.3718427-5-frank.chang@sifive.com>
-In-Reply-To: <20251121050413.3718427-5-frank.chang@sifive.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=rkrcmar@ventanamicro.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.184.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,38 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-2025-11-21T13:04:11+08:00, <frank.chang@sifive.com>:
-> From: Frank Chang <frank.chang@sifive.com>
->
-> The effective privilege of explicit memory accesses made by
-> virtual-machine load/store instructions (HLV.* and HSV.*) is controlled
-> by hstatus.SPVP. mstatus.MPRV does not affect these virtual-machine
-> load/store instructions.
->
-> Signed-off-by: Frank Chang <frank.chang@sifive.com>
-> ---
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> @@ -261,16 +261,25 @@ RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
->  RISCVPmPmm riscv_pm_get_virt_pmm(CPURISCVState *env)
->  {
->  #ifndef CONFIG_USER_ONLY
-> -    int priv_mode =3D cpu_address_mode(env);
-> +    int priv_mode;
-> =20
-> -    if (priv_mode =3D=3D PRV_U) {
-> -        return get_field(env->hstatus, HSTATUS_HUPMM);
-> -    } else {
-> -        if (get_field(env->hstatus, HSTATUS_SPVP)) {
-> -            return get_field(env->henvcfg, HENVCFG_PMM);
-> -        } else {
-> -            return get_field(env->senvcfg, SENVCFG_PMM);
-> -        }
-> +    if (get_field(env->mstatus, MSTATUS_MXR) ||
-> +        !riscv_cpu_cfg(env)->ext_ssnpm) {
-> +        return PMM_FIELD_DISABLED;
-> +    }
+On 11/25/25 14:54, Alex Bennée wrote:
+> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
+> 
+>> Check hostmem mapping boundaries originated from guest.
+>>
+>> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>> ---
+>>  hw/display/virtio-gpu-virgl.c | 8 ++++++++
+>>  1 file changed, 8 insertions(+)
+>>
+>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+>> index a6860f63b563..2224f59cf5d7 100644
+>> --- a/hw/display/virtio-gpu-virgl.c
+>> +++ b/hw/display/virtio-gpu-virgl.c
+>> @@ -126,6 +126,14 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>>          return -EOPNOTSUPP;
+>>      }
+>>  
+>> +    if (offset + res->base.blob_size > b->conf.hostmem ||
+>> +        offset + res->base.blob_size < offset) {
+> 
+> This second check seems weird. offset + blob_size could only every be
+> smaller than offset if blob_size was negative. I feel we should have
+> caught that earlier if it can happen.
+> 
+> Are we trying to catch an overflow here?
 
-The condition also needs to consider vsstatus.MXR.
+The second check catches integer overflow for huge mblob.offset that is
+u64 coming from guest. This wasn't caught before, we missed validation
+of the offset value.
 
-Looks good otherwise, thanks.
+-- 
+Best regards,
+Dmitry
 
