@@ -4,95 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484C4D0E6C3
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:57:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82683D0E6C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:57:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNqiI-0004rc-U8; Tue, 25 Nov 2025 05:56:02 -0500
+	id 1vNqiI-0004pF-A7; Tue, 25 Nov 2025 05:56:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqi8-0004XI-60
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:55:53 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqiE-0004aQ-Uz
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:55:59 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqi4-0001nO-21
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:55:51 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-42b2dc17965so5061955f8f.3
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 02:55:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqi9-0001pi-GJ
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:55:58 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-42b3ad51fecso4279239f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 02:55:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764068143; x=1764672943; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764068151; x=1764672951; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1/moKxyhhhNUAAssiCB4z5/4yHLvVf9L6ospDexZsZ8=;
- b=yOlt9LaYNYjuk6yA/JJ6P4+iYfNT+9NlDEBRdTs2kQAKSia4j+rM7kLZG3CJm2nvGS
- w4key30D/JlP/+8ojziaLxU0oxRTMSffekjlxZKMBTp4r0jfHnf+ZIy79ZOwabm7YdXp
- ijnGtGijz4jL9sXCS4exwsNZsjrfshh/aBzj2HFQbCSv/FEnE+tvs4wFh5L6hAcAsO8/
- N8dLhKIEt9WkpNnq3IekpsNBXLHo8aUSuLf9Ww7jrG40sO1O7dV3bEOkwICTdD7ERbFq
- 2iP9rFbvprUTXPl8f1nbCvpzdf4HI5s5k3obyXYnW+yOVb7A6SU2ZvpxRw9p/I9g+b7c
- 5L6A==
+ bh=yQ3G/f5z9MwEGa9QMBSOfQ0OhqIrmAfETxxhBlriST8=;
+ b=HW6ICViWFx8fuSrzOcD3jeSkj6qEn196PIb5nJnkcVf6mwMMiWEest23aJ6iS6oaBG
+ 6aJFQlwLlAgxF66RadU/Y6/uoZGSjnk3q0e3b75EcSW94Cbh+tmtusREBacM2zN2Anz7
+ zk8PVRuuG0oQjk9xagBy6JsMNYqm/pIT7aTftTTF59ef8E/zD5qZg/OcHKV/XVbMbrcz
+ D9voG5wGgJxmmpc0DbDNf8EhHcA4dLrQdzHHUvZSOv+tD1dWxoSg/DU3Ef3RT7lt/Dwr
+ 11gkUpl/M2yOgK0MyAqcGAyfe91kgVArvx7LPtA5asUGuQg/n7HrNtHpLCDqv6TFpuaa
+ Ew2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764068143; x=1764672943;
+ d=1e100.net; s=20230601; t=1764068151; x=1764672951;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1/moKxyhhhNUAAssiCB4z5/4yHLvVf9L6ospDexZsZ8=;
- b=KpKW9yKzSfzXsikAhAEPSWTgQZIxShw4CUFbV5J/j6LCxyNDU73ZJwQKs/ieV3GhdV
- oLqRmqBEZjb/PfUNYO6xes3qkhN1IAnd0wDpHQur7Kv6EQ4SIhSXOR/XUx7OZyYJ5nKQ
- SrXX9aKb7FOKm531i0KYSvDtlBQB0ty9EZWWTjsH3a3TmUpWP0EbhB6t+lXZ9aV+1GP0
- 8vqSZcswsyupIbnTWcoThDbI/IjTkZxeqKJdfwp1Tzjdr9ioMVQDLLd6R2lBIGDuNHep
- 8kZ5ysECBOo/YHizG23oP63gA9/sJb2pWshYVKHm/Iy9JdV0iBjSC239lZik8p08eD0Q
- GXTg==
-X-Gm-Message-State: AOJu0Yy/qCZOdn4hMN+DAJL+xzeuFfFmViY++MKUjgfOZYUmO4yZlgl6
- TzLMcZaSLNKvq5ETF6tiStpZUhCWp/WJ76HHBccpw5qRHTAETlFVRnSGcCP5+0OLkm18AAmdEtF
- JzwIr5fNiAQ==
-X-Gm-Gg: ASbGncuT0OX7gTn+VHY4c/qOSwc+pwaJqTXJ/Mcckt0GULiROotqTkRJ2FAC1e6lXT8
- Ug7h+mOSY8tshiJ97DSdpcB2bovPdGrE7PnyqQKPdG62GbYUMv6H94FU05YLoFTepIsrSn7XAUw
- bJWhzlimrl8o2pzJecxJP/UkgWlQLWDivEpEYcgNNRLPVP42I5eXSSR+HsFCMyWBTFMC+JKmgGG
- hz6q3L70jdjh+KYE23XgKvyW3cuH4zByT/+OosnFAvWhmV/ZS5JAeFQqUrEWOoyoagOwnhvB92u
- zzh+xvDcs8hDWx218ef8l79Qk5OU+B+P1C6sDVJUDcrDQOhbQC8cXoDPZ2VjSOTS37OlhSqXGvH
- EGjqM1yfb2MwJ+I4xt3n7VHlrAj343t5GG93lUoSOijVFRu2IUUh0YbkVsacRLnB4wBfrOxeDJp
- LL7S0ps6lHkMEETux2kUsREdgttbHV0JfClgILAFYM2hk2F8pbso8IGr/tONTn
-X-Google-Smtp-Source: AGHT+IHyvsxgcQUNPg/NfqXzo+L4q8Axosz32sAX+4NDQUAgn/EY3SkUaSnhck7OcRoCLKievYQ1+w==
-X-Received: by 2002:a05:6000:4022:b0:42b:3746:3b85 with SMTP id
- ffacd0b85a97d-42cc1d198c0mr15200852f8f.45.1764068143512; 
- Tue, 25 Nov 2025 02:55:43 -0800 (PST)
+ bh=yQ3G/f5z9MwEGa9QMBSOfQ0OhqIrmAfETxxhBlriST8=;
+ b=pdhYYMLkLhMgxU/Arw6u2UY7SoBJb+RlB5mZn/gz3SE53Ot+tuv706aPAETTOdkdyw
+ 3c/8i0M2QmX4qz3aO8F+EHDxY+9yEhlgtgvKBH5dQah1fHlW1/99EsyKQCoZIXIRaaNh
+ u2P1UFP6m5G90treRQ36Bhx0TZGhIBWQLgI1HNpd0xulzh+H1AjsH7lVZH0W9nOMzjIT
+ 2k18Y7xI8C/biAf1w+GvTLe/fNizDcDSFDqf+MK36pYDP+JphtCWCpBi8wR8nsA/KIkg
+ QWKoAVlwtE2KM8HTNznhAM5bgMaddXJGHUd4faQaZ4yEWnJ0XFxatz8kqhikE4Svfusj
+ hm+A==
+X-Gm-Message-State: AOJu0YwK4MbaMWv0Vjbr2EJE0shBS4klDaUnsrxfEWYfVz1Br3fd3TMQ
+ rYPb5mbEozpUHnO2bUOrfnXjAg4LlLGLEL9nOw2p5ZVdRWaunExOKi9uOMQUUITey0rigsfDaU7
+ VzRGEb+yivA==
+X-Gm-Gg: ASbGncsBXqzK22dW0aDonn1/HlzimX83ptqCK2iHWZsivqoOw4PY4faKpW0fimGrkw0
+ mMVpR+m57+dLj80c4eKralTDHSfJA/JmbdHnr7dg5pt6CQXfP+CILkAN92h/HRHIY6yNjOvgtoW
+ 0ZdejaLe+dckfCqm5VZ9LN5FVrRrY9KrlwqE3MyyQczu0z+IdTkIG5+0c+WbhhIVy4Zk3ixvzh/
+ joJBCPf1mxf/B/MpSfk6wXVR2IeuCXNca11dzbcnU1l2/49xzddE5pncKhPMxOb+BIl0BO5kj9d
+ BSCvNTP4uwPed/4pXv6rKKdCkvQMG+EKG0LaO7IUoB8Z+TUskUZatFaUTpJF0gsC8uYxCWscznS
+ ZsUzH56db2WwBkYHGOyF48o3JHOxdyh17pa/LUeAf0EbZlRm2Llfs/kqUQph31JzoKVlJE1PvU7
+ cbkFQMVEoFyMcLVfiF6d1rM5rJhmHc3tsRZkbZPHVMIFM53rEvvMOnCPtmmFu6KiPJSAtfh4k=
+X-Google-Smtp-Source: AGHT+IGmr8rG25zaL9CLrRLJSz/n7IqXyNjVat0SFDPCDEhkxdniYE3qgen3PT1iXCuE3DIPg9nYAQ==
+X-Received: by 2002:a05:6000:2c0c:b0:42b:38de:f00b with SMTP id
+ ffacd0b85a97d-42e0f33f7d3mr2380017f8f.35.1764068150673; 
+ Tue, 25 Nov 2025 02:55:50 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cc231dc6esm24754351f8f.7.2025.11.25.02.55.42
+ ffacd0b85a97d-42cb7f2e556sm33315291f8f.5.2025.11.25.02.55.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Nov 2025 02:55:42 -0800 (PST)
+ Tue, 25 Nov 2025 02:55:50 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH-for-11.0 09/12] target/riscv: Use little-endian variant of
- cpu_ld/st_data*() for vector
-Date: Tue, 25 Nov 2025 11:54:30 +0100
-Message-ID: <20251125105434.92355-10-philmd@linaro.org>
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+Subject: [PATCH-for-11.0 10/12] target/sh4: Replace cpu_stl_data() by explicit
+ endianness variants
+Date: Tue, 25 Nov 2025 11:54:31 +0100
+Message-ID: <20251125105434.92355-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251125105434.92355-1-philmd@linaro.org>
 References: <20251125105434.92355-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,49 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V vector "elements are simply packed in order from
-the least-signicant to most-signicant bits of the vector
-register" [*] which is little endianness, therefore the
-cpu_ld/st_data*() definitions expand to the little endian
-declarations. Use the explicit little-endian variants.
-
-[*] RISC-V "V" Vector Extension v1.0
+See commit 852d481faf7 ("SH: Improve movca.l/ocbi emulation")
+for more context on this code.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/vector_helper.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ target/sh4/op_helper.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 2de3358ee86..caa8dd9c125 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -193,9 +193,9 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
- }
+diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+index 557b1bf4972..63515cc5e6c 100644
+--- a/target/sh4/op_helper.c
++++ b/target/sh4/op_helper.c
+@@ -143,7 +143,11 @@ void helper_ocbi(CPUSH4State *env, uint32_t address)
+         if ((a & ~0x1F) == (address & ~0x1F))
+         {
+             memory_content *next = (*current)->next;
+-            cpu_stl_data(env, a, (*current)->value);
++            if (TARGET_BIG_ENDIAN) {
++                cpu_stl_be_data(env, a, (*current)->value);
++            } else {
++                cpu_stl_le_data(env, a, (*current)->value);
++            }
  
- GEN_VEXT_LD_ELEM(lde_b, uint8_t,  H1, ldub)
--GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw)
--GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl)
--GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq)
-+GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw_le)
-+GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl_le)
-+GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq_le)
- 
- #define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)             \
- static inline QEMU_ALWAYS_INLINE                            \
-@@ -214,9 +214,9 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
- }
- 
- GEN_VEXT_ST_ELEM(ste_b, uint8_t,  H1, stb)
--GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw)
--GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl)
--GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq)
-+GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw_le)
-+GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl_le)
-+GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq_le)
- 
- static inline QEMU_ALWAYS_INLINE void
- vext_continuous_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
+             if (next == NULL)
+             {
 -- 
 2.51.0
 
