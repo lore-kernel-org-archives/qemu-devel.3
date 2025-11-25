@@ -4,101 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63EEBD0EE0D
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 17:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03ED4D0EE00
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 17:48:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNx3J-0003zG-KA; Tue, 25 Nov 2025 12:42:09 -0500
+	id 1vNx8i-0000cR-0s; Tue, 25 Nov 2025 12:47:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1vNx3G-0003vG-2N
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:42:06 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
+ id 1vNx7v-00005N-6B
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:46:55 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1vNx3E-0002en-Ga
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:42:05 -0500
-Received: from hawking.nue2.suse.org (unknown
- [IPv6:2a07:de40:a101:3:92b1:1cff:fe69:ddc])
- by smtp-out2.suse.de (Postfix) with ESMTP id 3E9E75BD12;
- Tue, 25 Nov 2025 17:42:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1764092521; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=hu1BUFyuC16J9n18VyCz3JY1QmqEUV1QBw1wENIm5V8=;
- b=wt0VywSGYhKl9+1R7vw4zHn4S9G5u4QeftPfX+4+D6Fw2MfRggIAGawL68wqxymJLyTubO
- UOPcTpx9JrJfF3WYJcVD7iTaSfknfDmEfdh5oWbcNdS95bBII6X2qRt4nRbVtCW0vUV5Gw
- z9cfe30yzcjXpcCyZYlCKXtCBugmmjw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1764092521;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=hu1BUFyuC16J9n18VyCz3JY1QmqEUV1QBw1wENIm5V8=;
- b=0LL7X5O6ICHYl+0lEjI7DK7jMjOw2m/qG3+wgNtX9eNN2Ga5a4CUPIh8GPfWtPQbGbiUNX
- Q+szYvQs8uaq+XAA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=wt0VywSG;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=0LL7X5O6
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1764092521; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=hu1BUFyuC16J9n18VyCz3JY1QmqEUV1QBw1wENIm5V8=;
- b=wt0VywSGYhKl9+1R7vw4zHn4S9G5u4QeftPfX+4+D6Fw2MfRggIAGawL68wqxymJLyTubO
- UOPcTpx9JrJfF3WYJcVD7iTaSfknfDmEfdh5oWbcNdS95bBII6X2qRt4nRbVtCW0vUV5Gw
- z9cfe30yzcjXpcCyZYlCKXtCBugmmjw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1764092521;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=hu1BUFyuC16J9n18VyCz3JY1QmqEUV1QBw1wENIm5V8=;
- b=0LL7X5O6ICHYl+0lEjI7DK7jMjOw2m/qG3+wgNtX9eNN2Ga5a4CUPIh8GPfWtPQbGbiUNX
- Q+szYvQs8uaq+XAA==
-Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
- id 25A1A4A056A; Tue, 25 Nov 2025 18:42:01 +0100 (CET)
-From: Andreas Schwab <schwab@suse.de>
+ (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
+ id 1vNx7s-000418-Rx
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 12:46:54 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-42bb288c17bso3541553f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 09:46:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1764092810; x=1764697610; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qfi1CLXG4bOvuYzMTaadJLv82gpDk+wZiPuzwyT2Xww=;
+ b=GioSrk1RuDrNAaGak3MJVDR5htR7R+gHzhOqBTzfZwtjd7W35cC4IT5hdo6tVLmz2C
+ GxCzT++QvQwuzflbeWHEoXgTu4JgtNW9X6KOt15D691UkZdAHJCnWnq5qBZFlD7/W0Z9
+ tDeZml9qPB24HmFEH72RVOMZwe4HbHrtS9agvBAVYxeMpXqIz2Ly5CopMrAUfGdvM0qN
+ 8X2bPLmSR8HSrSJN2zYHEM7NkZ5xW8KiUj3g1sCSkb4X5mxti9ok1Y/8y4jidTBYURfu
+ rtGEz0LLnP4fwCAoUpJrG80yua6NS0btC7avnm4qc91n3pK3Y6OwHi9bO27272HC3Aya
+ OPjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764092810; x=1764697610;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qfi1CLXG4bOvuYzMTaadJLv82gpDk+wZiPuzwyT2Xww=;
+ b=V/FsJPofLdpmDAf+msgqOW8yE9q0/bEPF+rNq6z5UZoick7gpsZDW0nVWz50AOVv/j
+ TiwaJULddHpezrS7InErVmZ5SL82lW25EFoZXZfJmqodTdnBxNLctBqKoPSbSDmn3gR5
+ JUAWaWKfYoLKCIh1NXFVszP70dhwNtDCqYR8d8C1l47G67tpDldRXee/nSl2OETgontD
+ J4C5siY2iRaC2bxtcvbs+gniYSoChGPednBAlkA6VXDWXVAftE346r5QGE01/MUjdYad
+ W05gPdjeprfwfYdTffl5klEDNPrOXUZlI2+uXgUy+9TTFWkhIvjumaa6/0hKag85xOfY
+ pccg==
+X-Gm-Message-State: AOJu0YxOfvi9c4oRXDCGG6qcCvYgjsou7IqV0YRzZ9xQelLBYgNRNE/U
+ L/AbLsVHl3k4gY5HFI0jvXSr3Rtnhr0cdA6IZI+IJHT9+7CwMHQwXps+QOC9IiHDg+KU4A==
+X-Gm-Gg: ASbGncvAW7YtcZtohZly/v2LlZPc3E4tk/i6U2VNBfznJlCLdX2kqp90nIFlzh5maix
+ LkGJVLL/41znsca0DkucghsX+9cx0NGYIZBrzV6U9ogSnaPTgqZBDsTFze7zwz2PNB+YnzQN+Sb
+ Sg9ZIQQELc5zFNgssWZnKRSiRSqlwZKFgfbx23e5skGMt588QrHV5IFKgGr5FnFz3vTfKidISOX
+ orJYdX/Dr6wZQgNzXQ9hekZXdxS3pcftPvMHE3ZYR2OUYo1ojGiEVGdhDc/8YU8LRW7vqfuiZjA
+ cL9LeuJH2Dr7Qp6w+VR0UbPJ4ya0a+qeDmaXMHhD+EVGfYAtLUdqp06H0PwFWooS5OJES8utEVE
+ lUXuI3DgAW/aNR0OKu401iT/ba4H0diWm3IyAYe8kc47fa5pnZaTwELBhkvTkU2Snig26
+X-Google-Smtp-Source: AGHT+IGK+hgPDPMS1ByVztR0jWBt5qj1h6kubvRJyQR2aljtxLb2MJR16g49rWvuzrmARocIRYyWSA==
+X-Received: by 2002:a05:6000:18a9:b0:42b:3e60:18e9 with SMTP id
+ ffacd0b85a97d-42cc1ab8bf8mr17184720f8f.10.1764092810545; 
+ Tue, 25 Nov 2025 09:46:50 -0800 (PST)
+Received: from localhost ([51.37.163.135]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fa35b7sm36301530f8f.20.2025.11.25.09.46.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Nov 2025 09:46:50 -0800 (PST)
+From: Pawel Zmarzly <pzmarzly0@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: laurent@vivier.eu
-Subject: [PATCH] linux-user: look up executable in emulation dir for execve
- syscall
-Date: Tue, 25 Nov 2025 18:42:01 +0100
-Message-ID: <mvmtsyixb4m.fsf@suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: peterx@redhat.com,
+	farosas@suse.de,
+	michel@michel-slm.name
+Subject: [PATCH] migration: fix parsing snapshots with x-ignore-shared flag
+Date: Tue, 25 Nov 2025 17:46:49 +0000
+Message-ID: <20251125174649.257457-1-pzmarzly0@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [15.27 / 50.00]; SPAM_FLAG(5.00)[];
- NEURAL_SPAM_LONG(3.50)[1.000]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_SPAM_SHORT(2.98)[0.992];
- HFILTER_HOSTNAME_UNKNOWN(2.50)[]; RDNS_NONE(2.00)[];
- ONCE_RECEIVED(1.20)[];
- HFILTER_HELO_IP_A(1.00)[hawking.nue2.suse.org];
- HFILTER_HELO_NORES_A_OR_MX(0.30)[hawking.nue2.suse.org];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_NO_TLS_LAST(0.10)[]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FROM_EQ_ENVFROM(0.00)[];
- DIRECT_TO_MX(0.00)[Gnus/5.13 (Gnus v5.13)];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_COUNT_ONE(0.00)[1]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MID_RHS_MATCH_FROM(0.00)[]; TO_DN_NONE(0.00)[];
- MIME_TRACE(0.00)[0:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid, suse.de:email,
- hawking.nue2.suse.org:helo]
-X-Spamd-Bar: +++++++++++++++
-X-Rspamd-Queue-Id: 3E9E75BD12
-X-Rspamd-Action: add header
-X-Spam: Yes
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=schwab@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=pzmarzly0@gmail.com; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,29 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
----
- linux-user/syscall.c | 1 +
- 1 file changed, 1 insertion(+)
+Snapshots made with mapped-ram and x-ignore-shared flags are
+not parsed properly.
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index f7ca155679..e379ddb1b7 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8972,6 +8972,7 @@ static int do_execv(CPUArchState *cpu_env, int dirfd,
-     if (is_proc_myself(p, "exe")) {
-         exe = exec_path;
-     }
-+    exe = path(exe);
-     ret = is_execveat
-         ? safe_execveat(dirfd, exe, argp, envp, flags)
-         : safe_execve(exe, argp, envp);
+Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
+---
+ migration/ram.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/migration/ram.c b/migration/ram.c
+index 29f016cb25..85fdc810ab 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4277,6 +4277,11 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
+         id[len] = 0;
+         length = qemu_get_be64(f);
+ 
++        if (migrate_ignore_shared()) {
++            /* Read and discard the x-ignore-shared memory region address */
++            qemu_get_be64(f);
++        }
++
+         block = qemu_ram_block_by_name(id);
+         if (block) {
+             ret = parse_ramblock(f, block, length);
 -- 
 2.52.0
 
-
--- 
-Andreas Schwab, SUSE Labs, schwab@suse.de
-GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
-"And now for something completely different."
 
