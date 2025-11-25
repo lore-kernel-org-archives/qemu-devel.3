@@ -4,63 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 538BED0E6D0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE22D0E6CD
 	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 12:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNsDf-0004P8-2v; Tue, 25 Nov 2025 07:32:31 -0500
+	id 1vNsDm-0004QS-FC; Tue, 25 Nov 2025 07:32:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1vNsDS-0004Ni-Uc
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 07:32:20 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1vNsDa-0004Oq-JR
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 07:32:28 -0500
+Received: from m16.mail.163.com ([220.197.31.3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
- id 1vNsDQ-0000e8-30
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 07:32:18 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 181E682DEB;
- Tue, 25 Nov 2025 15:32:05 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:c7c::1:20] (unknown
- [2a02:6bf:8080:c7c::1:20])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 3WbdaJ1FreA0-us4D0wtc; Tue, 25 Nov 2025 15:32:04 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1764073924;
- bh=klcn0RSgaz5YRuz+3PHdPv/P3b/9qw94nWsC7vXSxQs=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=USmL6VcUfQ/GCmWU34VuqbWEleIAl2DUbzpwRnkg4cjpY2Y2sOPFMZVDXx7/tFa0M
- ReHN7JzRPo/IZ8T0F9pOSLHQst2tRR7FVFD6MNdA1kbhEw9jse3rMXDa/P4BqAp3kv
- 4piPBhZVNJfT4suWmxMw5cj/0LGy5VhEGnplznLI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <88bf67fc-1a5d-464c-8e17-49cc4d988044@yandex-team.ru>
-Date: Tue, 25 Nov 2025 15:32:03 +0300
+ (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1vNsDV-0000fX-KY
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 07:32:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=qu
+ //VK0cdHDP8ZpGEq1WJhGTg/BK7zqSMnYv9AmgRdc=; b=WnjYGegAkc0nkI6dKK
+ hnRIlk1X5P+/w+gw4flx3EsIxyPeHjmAD9LIQRBKT5d4sr+UUQOMYiJc2+rtdoB9
+ UKx8qGZN2Rm4ktKY1t2Fw5G6ib8MtLxmWPTzoI8wsD/lBTPfuAOCT0pqDoRiE4ZV
+ 8Ych3tBH7+9Jmzft4JhmzPSV0=
+Received: from DESKTOP-V2BFH29.localdomain (unknown [])
+ by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id
+ _____wBX5cctnyVp8fZPCQ--.1513S2; 
+ Tue, 25 Nov 2025 20:21:03 +0800 (CST)
+From: AlanoSong@163.com
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com,
+	Alano Song <AlanoSong@163.com>
+Subject: [RFC] ui/vnc: Fix qemu abort when query vnc info
+Date: Tue, 25 Nov 2025 20:20:59 +0800
+Message-ID: <20251125122059.24420-1-AlanoSong@163.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio/vhost: don't consider non-MAP_SHARED regions public
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Stefano Garzarella <sgarzare@redhat.com>, qemu-devel@nongnu.org
-References: <20251113085842.323745-1-d-tatianin@yandex-team.ru>
-Content-Language: en-US
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
-In-Reply-To: <20251113085842.323745-1-d-tatianin@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wBX5cctnyVp8fZPCQ--.1513S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Cw1kCFy8JFyxCF1rJF4UXFb_yoW8JFW5pF
+ ZxGas5Wr43Xrn7Crn3Z3y0gFyrGry0yr4fJr1ayw4fKr45Jr4UZryYkryqqFWjkrnY9w4F
+ qay0ga4agw4kGaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRLZ2sUUUUU=
+X-Originating-IP: [59.174.57.70]
+X-CM-SenderInfo: xdod00pvrqwqqrwthudrp/xtbBXwARFGklnDUybAABsg
+Received-SPF: pass client-ip=220.197.31.3; envelope-from=alanosong@163.com;
+ helo=m16.mail.163.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,40 +70,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping :)
+From: Alano Song <AlanoSong@163.com>
 
-On 11/13/25 11:58 AM, Daniil Tatianin wrote:
-> Just having a file descriptor is not enough to consider a memory region
-> public. If QEMU didn't map it as MAP_SHARED (in case of share=off), guest
-> writes to this region won't be visible to the vhost-user backend, thus
-> causing it to read all zeroes or garbage. Make sure we don't pass such
-> regions and include that to our definition of what a private region is.
->
-> Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-> ---
->   hw/virtio/vhost.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index 266a11514a..eb098a25c5 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -591,11 +591,13 @@ static bool vhost_section(struct vhost_dev *dev, MemoryRegionSection *section)
->           /*
->            * Some backends (like vhost-user) can only handle memory regions
->            * that have an fd (can be mapped into a different process). Filter
-> -         * the ones without an fd out, if requested.
-> -         *
-> -         * TODO: we might have to limit to MAP_SHARED as well.
-> +         * the ones without an fd out, if requested. Also make sure that
-> +         * this region is mapped as shared so that the vhost backend can
-> +         * observe modifications to this region, otherwise we consider it
-> +         * private.
->            */
-> -        if (memory_region_get_fd(section->mr) < 0 &&
-> +        if ((memory_region_get_fd(section->mr) < 0 ||
-> +            !qemu_ram_is_shared(section->mr->ram_block)) &&
->               dev->vhost_ops->vhost_backend_no_private_memslots &&
->               dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
->               trace_vhost_reject_section(mr->name, 2);
+When there is no display device on qemu machine,
+and user only access qemu by remote vnc.
+At the same time user input `info vnc` by QMP,
+the qemu will abort.
+
+To avoid the abort above, I add display device check,
+when query vnc info in qmp_query_vnc_servers().
+
+Signed-off-by: Alano Song <AlanoSong@163.com>
+---
+ ui/vnc.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 0d499b208b..2fa79a5494 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -556,9 +556,20 @@ VncInfo2List *qmp_query_vnc_servers(Error **errp)
+         qmp_query_auth(vd->auth, vd->subauth, &info->auth,
+                        &info->vencrypt, &info->has_vencrypt);
+         if (vd->dcl.con) {
+-            dev = DEVICE(object_property_get_link(OBJECT(vd->dcl.con),
+-                                                  "device", &error_abort));
+-            info->display = g_strdup(dev->id);
++            Error *err = NULL;
++            Object *obj = object_property_get_link(OBJECT(vd->dcl.con),
++                                                   "device", &err);
++            if (obj) {
++                dev = DEVICE(obj);
++                if (dev && dev->id) {
++                    info->display = g_strdup(dev->id);
++                } else {
++                    info->display = g_strdup("unknown");
++                }
++            } else {
++                info->display = g_strdup("none");
++                error_free(err);
++            }
+         }
+         if (vd->listener != NULL) {
+             nsioc = qio_net_listener_nsioc(vd->listener);
+-- 
+2.43.0
+
 
