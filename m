@@ -4,106 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBA1ECFD368
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 06:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9CECCFD315
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 06:26:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNmUL-0005DM-GB; Tue, 25 Nov 2025 01:25:21 -0500
+	id 1vNmVf-0006fz-Ft; Tue, 25 Nov 2025 01:26:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNmUH-0004xE-KL
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:25:17 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNmVe-0006es-15
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:26:42 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNmUD-0003nh-TK
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:25:15 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-477bf34f5f5so28869895e9.0
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 22:25:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNmVc-0003y7-17
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:26:41 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4779adb38d3so35809665e9.2
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 22:26:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764051909; x=1764656709; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764051998; x=1764656798; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kq1R/KnIl0tjtGNpVBFK4blvRpvREmYvjs4Wzx+ZU8A=;
- b=r7Fjv1x1QIUZ27TC+N6rW86RME/T4eVzmDQICnymq/Nc7OfzM1yfSQaajjPsd597dS
- YLmm+aRBkl5iU/7MWcKUAFwwNpHUhLizv2t6WqqowSyBLHrpr55CtciZhHMUwIyL/HZM
- 7nvitYK8wn0HVSB6D9TpRyGsfChO7/lND2E/Q0mMoZFKXY8w+HoVeKt2V5zMt1i+oIt3
- CEDZn3PJmIf1T3rI42KagWL9d/1G36ifD0QZXzA5WP/N1Zbepd/eS+hgnJLgEu4U3RQv
- qe9I/pQZB8NlcdBbpkwCzd0WvXTj/XKTBuoDd03uIlpnWA6qEEEK7xQgL+oWLq9lWui9
- 7kgw==
+ bh=APxK6V4RprR6Lw9uWClMKRx5CVH63J3Yv9jjTkdt3cc=;
+ b=SjRU8N5Q7WWfi/+N0SqLQ06Mm7hOnMfqZvxu/IvpaneDGUd9jDaciYrgc4qBPhH/Po
+ UekQ+B0krdSg5F/8k22gA33TkOh2x+co+a+Q/XHw0YcdK1kbmFLyikd6qJbwSrOEw9L9
+ LES8Bz0WnWL6S7VXlIK7v0ekOHyown30hr/pTisDNIEWETR/uGfyL5uE3CP5xa1ufs4/
+ 653eJH/yihm/knKE8nRSIGnGOlI5GHh0nmrLZW2XHORAaEsPg55hbQmKGls/d55aI347
+ dG6N9a8cClCKHqUInRDZ3ITGVk19aemE5W7rA0ZlihGqs42Ehdi98zHL/nC3/4jQhtz8
+ KWrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764051909; x=1764656709;
+ d=1e100.net; s=20230601; t=1764051998; x=1764656798;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=kq1R/KnIl0tjtGNpVBFK4blvRpvREmYvjs4Wzx+ZU8A=;
- b=bykT0bJiUh1E5dS5ACP4nCwOdmEkcS/BSIq4WJuAUQ80IAgV53a1r/ldaoCypNk0sJ
- nlsfIkclu1CSM0CvDPCsr/tzgt4NrWWEdtYc3Q0Lbc3aY/YJ/ddNX7T8uu+Eye0TLAyl
- GVl4wJfH+ETMLk3qFMr2O6ZxH2rSrZh26waCZis2LRxdyEYWnChXKdlZfMdKMnJOf5nx
- cgzXcJY7ykVr1mWNOkDCY+SwkMtwiKnFjP+RTMKvaQAhuupzDUKIq2n8tgLj9tfx3VC2
- E5tsKNnDFpHb1RJ0nrHL83GYp1IxM2nHDeTSS2tlFEXmqT+X0b8qvEDUszBUzJFBk3KW
- q+Mw==
+ bh=APxK6V4RprR6Lw9uWClMKRx5CVH63J3Yv9jjTkdt3cc=;
+ b=C7twNgvjUKDijgxJPQelyjDnLC+siLxwRSNu2vjVVR3xoNf+Fp0VsPr+bvBnmYC2uR
+ r5ljeCtirGMdpebzZXdhFdyreEBHVxnlzDBaAw1dpR+HOGvivKaDYnE6o3CJ4+0EVp1H
+ KaHSezneFumLU9jr+5Li8ojIXwal7fWSxvQ4qlXfqCQ3zL1P2ZSglne8teHkWujATaql
+ up0DFQHHXBtJvro5h/n2CUNFTHwFwpq4MSNug3d3zlvPnHMD3aiFGj37uAjEeBeLJwpx
+ wHQps++eBKdfqdldVYb4pYkRaRMYKbB0GxXUJQeZGq/Lr4ucPxlv8btg+PeggWl5vgeu
+ M4Nw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSBwAbnIl2Wkk8+fZzN2HVmOeYtlKUsRlNjqZOTfVnq7j7ZAZ66peDyEny3chYnraN0m2QX+BG9GJG@nongnu.org
-X-Gm-Message-State: AOJu0YxN2QUeAxaUkQDlJnho9YlPUDlEFCgQKq02hSkYRNtVcCndJbpL
- sGMV/8lnKXf3TEtmrVYhT2CG+31XSTKFHfMTiw4KazQyxq3C/pLzvwpozEQzfWDbSOs=
-X-Gm-Gg: ASbGnctB3rXoURmfaSLSaw1cBP9v6xNIRkX+zomgFa8LdYiQylgZ+44AOF2rJje5R0F
- 3+YvNROa/8q8RfBe/dNs0stHPkcCeyS2ial08oi/faJ1KRt1NT5z1XiW+7409uj2bR0tmtjMyUF
- 18fEv/w+qzthBa37Sr1gKPafXcr4T/Y6lsILT6xkt6ZEZyQG6q0be4iCpL/CEH3mdmp0ovNBlD2
- zihh+BoO0zl+6mUppU/rMBtWMdiFvPhRH5xn8BaJg6uNkanolCytoLzVT4OMZ180dxUTmMq4o79
- Cr3UYT75cpamlQo3vySz9f3JE7ZA/sZtCj/zkcYWDsdc33LGxgIWu3nwX/uGBshfTjDElaizdxM
- TBJAppv1yN9WYZqmwzKmeW82bYfGEF1Mj8N1RLDSLLUpT9LZaInqZQxpQhZhkTve4m8tlhwIWho
- OG32VXNV+gmq82Xy4kifGDBuKy1dojm73i9rXEEDK7zEqo4kpqJc4znw==
-X-Google-Smtp-Source: AGHT+IFprm3vCDsbWVJfgbV9xKa8iHTCEmXL664XoxSCOsyM7eQ2uIrryW9dfBTvUiv91/I4gz9/gg==
-X-Received: by 2002:a05:600c:4685:b0:477:5b0a:e616 with SMTP id
- 5b1f17b1804b1-47904acaf28mr11379725e9.5.1764051908756; 
- Mon, 24 Nov 2025 22:25:08 -0800 (PST)
+ AJvYcCXduKj7OH3mkNqFNi9uDv41WqNXGoqBLN8viHzBVdtOPUNz86QsZBguZOrwdwu2Pjx5YJDJM4+DFvEQ@nongnu.org
+X-Gm-Message-State: AOJu0YxbXy8T1ihg4jNQQSizPbvdD3BuzlA1MONhDg0oTmH6ZBDePIh2
+ EsyGDHrcKDxb9uuvzJY5AXdebkum3HXdWaRaTCMOt/RvZ8jrvRJ00rKtm7MhfgvYhu0=
+X-Gm-Gg: ASbGncvyV9mh5Vry/LyHTKGC/yaZJIb/QVk/T26w2wjg9UTY/0UM0zT2OQvimv4pe1T
+ L56E54fOhsSPo4uI8i2S47VGMjkPIvVb9P7WzY8p/93oTSUeWKTrwmV/xxt+EUuiVFSNaJWHofs
+ ha8dUI1SIENimDNS2uzGweGfG7hOBayfE9298vTKYuUpdRPUI2Ug31oaMWyxS8LeoDZ2Hsv12V7
+ LzTa8M4BUJuhdu7/+5Ln5byz8ro3B0ZQb94Ej1D8HlsU8rLpN1811cYQAsljx0UKF7kSDUnXv6F
+ vxEhPUR14PYw+2Z1Ae/xD8pw1Qu0lzEZAYcCcVMUR65f35AwsqH7hTIwYUrAYXyWeV1dWz76doB
+ cnjrFrRjJywKfFQpCxX440fLrVc7ha5tH4R9i8yD5bS23iRzBpSt0Y8ByJhKVXUEevN2fM9W5Ha
+ biFEyXXuf8FXme2zhEmVEIir+iiZ8rzwSX118LI034YgxjH1TemnuXPTo2AtujcMK8
+X-Google-Smtp-Source: AGHT+IE/b7GlJj4PfRlUYagZUJTeq4oci1zgF2+JDjZVZttCeQP0ylvaFMRgw0kOfVCC3zd5Nkb1mA==
+X-Received: by 2002:a05:600c:3152:b0:458:a7fa:211d with SMTP id
+ 5b1f17b1804b1-47904b24282mr11376395e9.29.1764051998071; 
+ Mon, 24 Nov 2025 22:26:38 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f34ff3sm32968445f8f.16.2025.11.24.22.25.06
+ ffacd0b85a97d-42cb7fd8c47sm33671034f8f.38.2025.11.24.22.26.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Nov 2025 22:25:08 -0800 (PST)
-Message-ID: <54be619f-1de6-47c6-993c-246fa6252596@linaro.org>
-Date: Tue, 25 Nov 2025 07:25:05 +0100
+ Mon, 24 Nov 2025 22:26:37 -0800 (PST)
+Message-ID: <38cd6f40-2653-4510-a020-76da960c44d2@linaro.org>
+Date: Tue, 25 Nov 2025 07:26:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/15] block/file-win32: Improve an error message
+Subject: Re: [PATCH] replay: Improve assert in replay_char_read_all_load()
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, alistair.francis@wdc.com,
- stefanb@linux.vnet.ibm.com, kwolf@redhat.com, hreitz@redhat.com,
- sw@weilnetz.de, qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
- shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
- sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
- sgarzare@redhat.com, pbonzini@redhat.com, fam@euphon.net, alex@shazbot.org,
- clg@redhat.com, peterx@redhat.com, farosas@suse.de, lizhijian@fujitsu.com,
- dave@treblig.org, jasowang@redhat.com, samuel.thibault@ens-lyon.org,
- michael.roth@amd.com, kkostiuk@redhat.com, zhao1.liu@intel.com,
- mtosatti@redhat.com, rathc@linux.ibm.com, palmer@dabbelt.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, marcandre.lureau@redhat.com,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org, xen-devel@lists.xenproject.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org
-References: <20251121121438.1249498-1-armbru@redhat.com>
- <20251121121438.1249498-16-armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20251124173407.50124-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251121121438.1249498-16-armbru@redhat.com>
+In-Reply-To: <20251124173407.50124-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,15 +104,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/11/25 13:14, Markus Armbruster wrote:
-> Two out of three calls of CreateFile() use error_setg_win32() to
-> report errors.  The third uses error_setg_errno(), mapping
-> ERROR_ACCESS_DENIED to EACCES, and everything else to EINVAL, throwing
-> away detail.  Switch it to error_setg_win32().
+On 24/11/25 18:34, Peter Maydell wrote:
+> In replay_char_read_all_load() we get a buffer and size from the
+> replay log.  We know the size has to fit an int because of how we
+> write the log.  However the way we assert this is wrong: we cast the
+> size_t from replay_get_array() to an int and then check that it is
+> non-negative.  This misses cases where an over-large size is
+> truncated into a positive value by the cast.
 > 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Replace the assertion with checking that the size is in-range
+> before doing the cast.
+> 
+> Coverity complained about the possible overflow: CID 1643440.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   block/file-win32.c | 2 +-
+>   replay/replay-char.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
