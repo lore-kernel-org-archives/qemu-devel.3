@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 792B7D10366
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDE17D10366
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:48:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vO0tN-0001M2-RJ; Tue, 25 Nov 2025 16:48:09 -0500
+	id 1vO0ts-0001YP-IF; Tue, 25 Nov 2025 16:48:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0tM-0001GD-3D
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:08 -0500
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0td-0001TL-9z
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:25 -0500
+Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0tK-0005A8-D3
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:07 -0500
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-4779cb0a33fso58841685e9.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:48:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0tb-0005Dd-JX
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:25 -0500
+Received: by mail-wr1-x442.google.com with SMTP id
+ ffacd0b85a97d-42b3c965cc4so125108f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:48:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764107284; x=1764712084; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=CqYEWVMngMY9irhHqURQ6nqbt3uGEvO/BqZ7WT6Zj/0=;
- b=LPS3nKi+14UymlxgOlyrCaVrIdNFBX7GKdG/+9x360pjWg/xik9tsCnudawm/uP2wQ
- ZwAzzaZgD2mWLIuExjFBSXZfv8RTtNPLK8Av+lvSFF/9lyj6BQtkBgD/rNdWOr3ClTy+
- 6aRGR22YP3/Vw06K7kI+seLuR8tIEJizDNbte7LQBR7fvdCwIdte1EY6K/ADR8Q3q8Vg
- KfB3tmrBLljjkiJSHGvLNApNZCrBFlpv8c9WTPeOchC9eQ7OO9WybP9KOvRe5zadGkCP
- ozdtlqWKXNGL2pVu2O6S+3rhhK9Y3mFuLVEDi+r+XQl2Z9R4rBuq0VBIgYRlUAXZEp/Y
- +PcA==
+ d=linaro.org; s=google; t=1764107302; x=1764712102; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=d6d95B2GWp5Ove4p4VnyCUqYCaY8kuW0FwTElFhEInU=;
+ b=E6ZYRZ/5GG1Gz79fkSPOeKWa7SssNATbjIe7M8yobgEtS6BcUBTR+olV9s2lX11/C6
+ VlE8KGNhYGuLQBj4tRPgh1GA9LcFfjv70pVkP/8Y9mLr09ADYJGoATUwUQR5x3Z4oEHI
+ NfCUTOb3L/VKgQB/KV5PtqDpXwXrh04ffa+eHLuYbVJqPWqjJwqxNgVWlUJGl3wuz7lc
+ d2rzCfnDjB6YuLsKpSO1x7N+jSfOJeW0oOsHi47DuX7jVAuuuEHlGoup0EG36o42EjRf
+ G3BlD81AJVygT2wCcItEJ7PAW1rQ+SDSgUqlS6c1Ipy7ojWNSJ4eWdrINCXWIyYi89Vd
+ XYYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764107284; x=1764712084;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CqYEWVMngMY9irhHqURQ6nqbt3uGEvO/BqZ7WT6Zj/0=;
- b=FN0YetgbnJLqiO6AH+ZrYny9MnkX85J7PecRX249DAA1xafMWb7ek13aFtxh+kOtMk
- SzryR3i+ASD51p1fWvffPffX/qXey0SpfuE6y2aBXD6v6i2ZmWK36yL7+8uJfdtapZh+
- ZQAltzxe2Jy/Q7KmGwtxj7CZ0sUqkO0edbYs0T//QiVk94wLRAfZY5SAk3ETtSy4bu3W
- aSaEQZ/fxL4V5J1aNaOSW465UoPKTHOeZnJ7imEIpye97slRJTvBODsDe1lChNKCKikG
- 2VM6IUYSuXuQAW6dI4hxT2cmWZNygy7hcrFm+tBdKhjmYa16oUi3k8TBmPFer6s5WusK
- lnAA==
-X-Gm-Message-State: AOJu0Ywpm+402a+K0PGjGSGnNu8G6JjISG9LIqSlBSMwBCJGja+Wb6+A
- 2RQkckOS1L2scqiq9xpmIlXj21hC9ELLj2bJKmfW+ErhLhDdiKjFaPaL1Upxi99KEG3zwgSeRpY
- AW6075RFybIQr
-X-Gm-Gg: ASbGncukJSxXkGPYuEjnXiF3ie9mfZdpGgnnxVvdW5q/9XqCG90LzSXaxk9v3FCIX4i
- WWzv8VGJMMDfenwu/sfy/L5lAphKi6WtGHYg8zeWa/VurjP0NbkgBjYP9ta6xZ7O0D+4SfJ8tDB
- e8VadrQAtRvH7XKiVHT35mahYB0sdpEVcTaPZthACLW2g5cO2X0R/m896ysfr4KdbkTzaXK3+Ra
- TY/0ZrDAxzGrgpXK/JQVT3tBYvB0+GiBO8JjnqUsdvoONf4z9w4/pN3j50YPePRCpMDZ1XvrgiP
- ztKhTl5C1xhom+giOkVjd/C5/EAjFt99FguUNB/DwObj/ZzCtRubLEGDOxWjw0FZWfbevOIRdM7
- wI+roggFiU4MMxnnt0j8P/ZVjCv77Df44WcsdLx6h8JdU5YgR63LL0M3mKT1+OME5Ueikrm/3fd
- 2kRoh3M8hsHYoIXmvkgOIfiODxWawNm1hTBRSc8QRIcqGymYaqcBEr+4bb4KBH
-X-Google-Smtp-Source: AGHT+IEoUA3zPkeCOkS0hLm68t/Qgynr0jkXYj6JQx0XXlOAt/wyOOJ+6Mxbeg2Zu378ferW2a25wg==
-X-Received: by 2002:a05:600c:314d:b0:477:b0b9:3129 with SMTP id
- 5b1f17b1804b1-477c0175164mr177413865e9.3.1764107283846; 
- Tue, 25 Nov 2025 13:48:03 -0800 (PST)
+ d=1e100.net; s=20230601; t=1764107302; x=1764712102;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=d6d95B2GWp5Ove4p4VnyCUqYCaY8kuW0FwTElFhEInU=;
+ b=jh9KXx9RxO0qQQ6UP0ELnW8DbF6G605LmOOszgu2Gr1xYZd5ZvdJiha443nvXFUG++
+ dVnSKbTSRIAQBWx+Uv+tw40mFCVG1199tNj6wQA++QiG2nhAvmaHam2Z7UK5kW5H+sVL
+ cS3RC9FdytBhyJH+ZtyGk2gJ1SJ4pR4qG4AH5ymR6PpN5CjOul3YnX46VNPzTH9zU2qh
+ LpuYaaDh5GcJceZjCRQbOqBMEjwcl8klF58m8Aa9IC63meR1I9MPFX/GFWLB/BLzD/HP
+ VVqb0NQ9wdgTRf5RUX0ERonDzVVqeMbe+yjwxaQWyD+UAsbM4MAfACdD4muYxrdjPqdA
+ gDdA==
+X-Gm-Message-State: AOJu0Yx1HYXFODed7U0gnvPBGCSHYtzGbYCP26MNYmba0i/f5Cbw/Pxc
+ /vcYtxJEUMq8MqO+qSdG4K8Hr/TIL6WZvKfG447icB5bgqedPive7ydEmzdGK6biz8MQH6aiGLN
+ YWOeYBlEZ7/9d
+X-Gm-Gg: ASbGnct9xjRW0CaAp6uA7AUHJZ6wFYsi7c9oEUOJfOiPwgASF12+AmRp6FbKBMa+0sU
+ PSP31aNWMjf3xXjwf52Lxuiq6/tF+tobCKkl7g6xgTXkAKQHuMgbZpeWOyvExTIQdugs58HHk0y
+ E5FGJ8fdzTcT6pdL7ic2j1xq17r/SehgWw4cibMqdbHHg00cJjAQXwFHdPDtldrBFIwOGAuYAxY
+ zZ5rPt1g0AVtw1GV86GpSpWtAgxhhMjtC5v71ZEfGb1jXtgcyprNFhtNLUIun8Fxy8i4VCxtmxe
+ a/lbeqLLM8T3xVPfH0RVX+Z4/FdV9wsOrm/f93ECVuqNJurla/DvMj2cdwMMR27nfW8/iea2LuF
+ hcm+hk0SJCPLvEzwJ1OI/zhd4zxgKhcS5yV0S6fx2ycAqj4OOq7trg88yqtG/l9QZn1bzC61mmv
+ bmlXaedbtHfMkSIPjmgXYHolDrURGarHZSNNnT80BJ5+xbM5lRTG4N0aXcCIjR
+X-Google-Smtp-Source: AGHT+IFD7SkpHNFLe42ShT6gQ6VD9+0FhGQu0QeIhti0WWdCjJP2+E+5xlSML7Rhq2xclARrW40lRA==
+X-Received: by 2002:a05:6000:2911:b0:429:cfa3:5fde with SMTP id
+ ffacd0b85a97d-42cba652baamr24556664f8f.11.1764107301685; 
+ Tue, 25 Nov 2025 13:48:21 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4790add2c98sm9444145e9.5.2025.11.25.13.48.03
+ ffacd0b85a97d-42cb7fd8baesm36862625f8f.39.2025.11.25.13.48.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Nov 2025 13:48:03 -0800 (PST)
+ Tue, 25 Nov 2025 13:48:20 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/9] Misc HW patches for 2025-11-25
-Date: Tue, 25 Nov 2025 22:47:52 +0100
-Message-ID: <20251125214802.1929-1-philmd@linaro.org>
+Subject: [PULL 2/9] hw/pci: Make msix_init take a uint32_t for nentries
+Date: Tue, 25 Nov 2025 22:47:54 +0100
+Message-ID: <20251125214802.1929-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251125214802.1929-1-philmd@linaro.org>
+References: <20251125214802.1929-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::442;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x442.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,57 +99,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit a8d023be622cab21e90bca8d9618068f0e49b74b:
+From: Peter Maydell <peter.maydell@linaro.org>
 
-  Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging (2025-11-25 10:25:16 -0800)
+msix_init() and msix_init_exclusive_bar() take an "unsigned short"
+argument for the number of MSI-X vectors to try to use.  This is big
+enough for the maximum permitted number of vectors, which is 2048.
+Unfortunately, we have several devices (most notably virtio) which
+allow the user to specify the desired number of vectors, and which
+use uint32_t properties for this.  If the user sets the property to a
+value that is too big for a uint16_t, the value will be truncated
+when it is passed to msix_init(), and msix_init() may then return
+success if the truncated value is a valid one.
 
-are available in the Git repository at:
+The resulting mismatch between the number of vectors the msix code
+thinks the device has and the number of vectors the device itself
+thinks it has can cause assertions, such as the one in issue 2631,
+where "-device virtio-mouse-pci,vectors=19923041" is interpreted by
+msix as "97 vectors" and by the virtio-pci layer as "19923041
+vectors"; a guest attempt to access vector 97 thus passes the
+virtio-pci bounds checking and hits an essertion in
+msix_vector_use().
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20251125
+Avoid this by making msix_init() and its wrapper function
+msix_init_exclusive_bar() take the number of vectors as a uint32_t.
+The erroneous command line will now produce the warning
 
-for you to fetch changes up to 57756aa01fe52c50d655929c43d9a80f8214cf1a:
+ qemu-system-i386: -device virtio-mouse-pci,vectors=19923041:
+   warning: unable to init msix vectors to 19923041
 
-  hw/aspeed/{xdma, rtc, sdhci}: Fix endianness to DEVICE_LITTLE_ENDIAN (2025-11-25 22:45:30 +0100)
+and proceed without crashing.  (The virtio device warns and falls
+back to not using MSIX, rather than complaining that the option is
+not a valid value this is the same as the existing behaviour for
+values that are beyond the MSI-X maximum possible value but fit into
+a 16-bit integer, like 2049.)
 
-----------------------------------------------------------------
-Misc HW patches
+To ensure this doesn't result in potential overflows in calculation
+of the BAR size in msix_init_exclusive_bar(), we duplicate the
+nentries error-check from msix_init() at the top of
+msix_init_exclusive_bar(), so we know nentries is sane before we
+start using it.
 
-Few fixes in hw/; also including qtest and replay fixes.
-----------------------------------------------------------------
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2631
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251107131044.1321637-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/pci/msix.h |  4 ++--
+ hw/pci/msix.c         | 10 ++++++++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-Cédric Le Goater (1):
-  hw/aspeed/{xdma, rtc, sdhci}: Fix endianness to DEVICE_LITTLE_ENDIAN
-
-Markus Armbruster (3):
-  hw/usb: Convert to qemu_create() for a better error message
-  hw/scsi: Use error_setg_file_open() for a better error message
-  hw/virtio: Use error_setg_file_open() for a better error message
-
-Peter Maydell (3):
-  qtest: Allow and ignore blank lines in input
-  hw/pci: Make msix_init take a uint32_t for nentries
-  replay: Improve assert in replay_char_read_all_load()
-
-Peter Xu (1):
-  hw/core/machine: Provide a description for aux-ram-share property
-
-Zhao Liu (1):
-  docs/deprecated: Remove undeprecated SMP description
-
- docs/about/deprecated.rst | 14 --------------
- include/hw/pci/msix.h     |  4 ++--
- hw/core/machine.c         |  2 ++
- hw/misc/aspeed_xdma.c     |  2 +-
- hw/pci/msix.c             | 10 ++++++++--
- hw/rtc/aspeed_rtc.c       |  2 +-
- hw/scsi/vhost-scsi.c      |  3 +--
- hw/sd/aspeed_sdhci.c      |  2 +-
- hw/usb/bus.c              |  5 ++---
- hw/virtio/vhost-vsock.c   |  3 +--
- replay/replay-char.c      |  2 +-
- system/qtest.c            |  9 ++++++++-
- 12 files changed, 28 insertions(+), 30 deletions(-)
-
+diff --git a/include/hw/pci/msix.h b/include/hw/pci/msix.h
+index 11ef9454c13..551a2bcfe73 100644
+--- a/include/hw/pci/msix.h
++++ b/include/hw/pci/msix.h
+@@ -7,12 +7,12 @@
+ 
+ void msix_set_message(PCIDevice *dev, int vector, MSIMessage msg);
+ MSIMessage msix_get_message(PCIDevice *dev, unsigned int vector);
+-int msix_init(PCIDevice *dev, unsigned short nentries,
++int msix_init(PCIDevice *dev, uint32_t nentries,
+               MemoryRegion *table_bar, uint8_t table_bar_nr,
+               unsigned table_offset, MemoryRegion *pba_bar,
+               uint8_t pba_bar_nr, unsigned pba_offset, uint8_t cap_pos,
+               Error **errp);
+-int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
++int msix_init_exclusive_bar(PCIDevice *dev, uint32_t nentries,
+                             uint8_t bar_nr, Error **errp);
+ 
+ void msix_write_config(PCIDevice *dev, uint32_t address, uint32_t val, int len);
+diff --git a/hw/pci/msix.c b/hw/pci/msix.c
+index 8c7f6709e2a..b35476d0577 100644
+--- a/hw/pci/msix.c
++++ b/hw/pci/msix.c
+@@ -318,7 +318,7 @@ static void msix_mask_all(struct PCIDevice *dev, unsigned nentries)
+  * also means a programming error, except device assignment, which can check
+  * if a real HW is broken.
+  */
+-int msix_init(struct PCIDevice *dev, unsigned short nentries,
++int msix_init(struct PCIDevice *dev, uint32_t nentries,
+               MemoryRegion *table_bar, uint8_t table_bar_nr,
+               unsigned table_offset, MemoryRegion *pba_bar,
+               uint8_t pba_bar_nr, unsigned pba_offset, uint8_t cap_pos,
+@@ -392,7 +392,7 @@ int msix_init(struct PCIDevice *dev, unsigned short nentries,
+     return 0;
+ }
+ 
+-int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
++int msix_init_exclusive_bar(PCIDevice *dev, uint32_t nentries,
+                             uint8_t bar_nr, Error **errp)
+ {
+     int ret;
+@@ -401,6 +401,12 @@ int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
+     uint32_t bar_pba_offset = bar_size / 2;
+     uint32_t bar_pba_size = QEMU_ALIGN_UP(nentries, 64) / 8;
+ 
++    /* Sanity-check nentries before we use it in BAR size calculations */
++    if (nentries < 1 || nentries > PCI_MSIX_FLAGS_QSIZE + 1) {
++        error_setg(errp, "The number of MSI-X vectors is invalid");
++        return -EINVAL;
++    }
++
+     /*
+      * Migration compatibility dictates that this remains a 4k
+      * BAR with the vector table in the lower half and PBA in
 -- 
 2.51.0
 
