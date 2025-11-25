@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 013E1D0E6C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C0FAD0E6C3
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNqh4-0003Ye-0H; Tue, 25 Nov 2025 05:54:46 -0500
+	id 1vNqhX-0003xs-Q7; Tue, 25 Nov 2025 05:55:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqh0-0003SH-FS
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:54:42 -0500
-Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqhN-0003j8-EO
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:55:09 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqgy-0001Oc-28
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:54:42 -0500
-Received: by mail-wr1-x441.google.com with SMTP id
- ffacd0b85a97d-42b3c5defb2so3528290f8f.2
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 02:54:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqhK-0001Qj-0n
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:55:04 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-429c7869704so4457953f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 02:55:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764068076; x=1764672876; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Jfyijvl1JFPahxbivQxrrAGa5h/+4fXCl7qTUyuB64s=;
- b=Z2ytID3XEq5wrX9W0qoX5GTwR2C6BSaLNfgqhgGdUpVH3vOnSlVUYQcGMQKjVvgzPn
- ntvCYByGSyZYHyYZXm3SMbrGtXzfn7RIDFUHW4m+6GL6HXKExthNv8cMeQO6aC2EpVxR
- 8nWWIQ1627aEQJVc6d2migzMwN5a+Uh9vCEZllCm+pCqXYFjEKZrU2esVDs49rVWlN+l
- FcMJrZOlANNZfnIWyLyr98r1SamYM2dYMi0QI/7BChOTdVM8vjhXnL2ukDY7tUTbUyrj
- WQRVnqXSP6rXHPy5NLJcsBhysJLfi0zMzEF8KZrGBR62JTnGXNcRJ1CS4PYBWjfHRPc/
- TKEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764068076; x=1764672876;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1764068099; x=1764672899; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Jfyijvl1JFPahxbivQxrrAGa5h/+4fXCl7qTUyuB64s=;
- b=JnSFuKFC29J+lXHdlJIgW2R7yV18pHqRw/RDDlx2ZQ3vAJ3wm/PE2bwu/803S6T4Ru
- b3uAO8rxwVdB4vuc/08bvG74j7JKGcn5GM2xQjJg2+2aLXNY4WvTH9weRsi4S2KawS22
- BtTYZw7CRUvpaohNj8ADznwf39nfOrec45HdCvikDaSQsb7ZWy2SztGh7HAHcSgc7t5e
- /MQzAB8io8ivPixqH6jd8o3dxHmmEiMXIPNKrGAYykBbkBLup1wd7AbZbjvbf9kf82PQ
- ATvKKUkESFuPFJWio4AOADMDfojZxkArJgqSxkwKzGj6HQ7f4N3gbZEFDmTKuJcP67VU
- y13Q==
-X-Gm-Message-State: AOJu0YxWlLDS9CwmcpUBFDFndqDlYJBoTmlNqfmc4862zPNcVxzT4cFu
- AzkqFbQSTrzrnJ6tY9C5rEsuGMMXSbXbZIby3arKkuuXnRCQPmLj/TYJUGfEeRHb34c5FjWy4Ew
- P3qLawafiBPP4
-X-Gm-Gg: ASbGncv4E9jVlrZQYODspw3YrgyY5uIHGtAc/nOtfVwVwKwMG4jBbDAkdGBp2gzQ/wZ
- k52f0t4y11bRIeDKkQVFN+YmlyBrP5qB+OFwD2OIFwFKwqIgacHUcBKPLRFbOxVx99klfO5E1/M
- qvVO6YuDkxFCw4bM5Odkb8q+3vSwUKq+IeOFyt+PyhJj2qjbD0dcOGFcBGasbU0h79FyPSY46MP
- tnlgg7d9a2FsJDiof7Eua8/2B96k5bP3nb28DElA73waJlQDNOMqVIM1gFmMJl/N3ntJbZhDh1Q
- p960xWXmbLiwZy+mxSVfl5izspT1sqXr2q9ljXOcFmWJ3tNEMEQNoLhvS6gGjVzMOuBCyenUuDi
- HrKz04Gz5XOSAb2C2mVk5CaxtOyye53LEHiQl+/bOdfu6MYMeJI+xzUFsSGw0XlBYZJfFFQCEvF
- juQgMmbuzFwLTHIq+SQ96V9+FhdpgMJgZi5hB8P9+kvvc6I9cDcUwA2f2Lh7IP
-X-Google-Smtp-Source: AGHT+IERb9JX2msGUhosBK7KYnxgaVzJeCNqY8/qwfS0VTZe5M/yJxvfuGH+GR0rR4EcCKGJXvCyMA==
-X-Received: by 2002:a05:6000:22ca:b0:42b:30a6:9c10 with SMTP id
- ffacd0b85a97d-42cc1d22e12mr16261013f8f.56.1764068076531; 
- Tue, 25 Nov 2025 02:54:36 -0800 (PST)
+ bh=NVumjk0F6Tq93V240FNbMOnFtVOEoBWTLGnL0WT9/nA=;
+ b=IlTwdXmkY45ydg66iilqx+bOGLC0ywl2qnjjFJ/orAYpF5DEtpTEgoXRIr+nbeSJY/
+ MaMG6WEmEEAzzT7xNEmzCPj7vs+WSEKYKRmBqM+MZHDhdNWr0U+Z1hi0oo+toB8i0gaC
+ nNV3FYtNZ0Mucs1XaWXnGGIJdLWC82iHoOUU96fXo5XJPoIa04c4NY8Syqwbu3KpNO8S
+ rdUqib+vp3N3LlMHPuFclFViPX1KTPm0iIr/ZufMGkhan2h7zhcWJ+0SKFe5iAnLJCjq
+ qyHZoFubO3I5YICJLk+FYnQilgeSuPXPmzsU+93xcrRLMPNK9RS5s8FvgsKnEaksZC8Z
+ TfOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764068099; x=1764672899;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=NVumjk0F6Tq93V240FNbMOnFtVOEoBWTLGnL0WT9/nA=;
+ b=Eeue2wQwax9YQQF3792pH2lB1glUTtKVVG7inqLlYCdWDqFbT3bRxowxATPYukNQH0
+ m2qJ8Jc5pZv8NEPk7FhHqSkX2/5f6kh1SQHo052GQfZu5wK7FMjoTHtf2tW+vIqzaePP
+ O0688rj9vRTSuwf7micc8W0FLB1pgpZZmLPsVjfnz/2L6tFAdfsOl6bIDK4nPMSAtQsT
+ A46i3d3XPsxNvtRZrSElulLlYUVFy8FCBdifhI65YVoBVi+5xj19KhWK/12OGDirqJUs
+ UWEyI3hZK5I65A6CAh78JMbv5JlLSqLbdTq4LGOFMfeMNJzXJW+7HWaxh79Xku6s13m4
+ jkcQ==
+X-Gm-Message-State: AOJu0Yx3/Km5XyRIkWBrDuc6WOAL7+QZDG6Kj6IVNHA6xMYUFwEaQUYv
+ IC4Xy+8nA0kj8oSdv3ICH2qLt6G35HAB3CMMrYyZUn+QuArYfZpzknREa9gnUs+zGYPAgUrswd0
+ Y7hKCkt6nmw==
+X-Gm-Gg: ASbGncsB4vmYIJ3SQ+QV0Fy3kjCw3/dURhTaTmxSIAHTN22BFQU2SiqC4pbM8K+bPdW
+ 1c7+U+jUBI4eaJ5veG3l5r2DLjh5l6SRrImrhBqPmGj6JWAkaZiSfMuufKK/rbBFgeHaIhJnk4B
+ j3tfKUQ/eMEpqMiW39cV8KYUzJer5DereSVaEDkVoDhnvupiMF2F/xL/cS4mYgTSRZ1xu4ydwId
+ 96iLHMrz8sc3MRNWhXoZVCXyWcGgBjsq5FcOeVMFyfWfcNRZ3NgVCiHmedxpg+y4tKTV7F0WGjh
+ wCrbMtaKiNtqjF30tT93pzZ254iYBIBOyIwe4DI+XN6mzf7PkIOqARVstzJERHzN4xGAKDrp3Wy
+ VX4vSHxSx+TZMH/9WO0WssF5UKTtMzQ+L2gf/4A9ReR3BZH4EcULhzgaErkg2Q+740MKzHZ+GSF
+ mi5Ctf+mtU3B9aF/0oglPmPn0+wFTJivCIKCMyk+pUdd/nDuXiJiVIYPGBybC+d3Pf48qcogs=
+X-Google-Smtp-Source: AGHT+IEiVpF5o+SfyjWN7bCv64a0BsvPVLLknCQNWUQyyXwxLPUetlS8IgypNYrMqQE9+aneNqCs1Q==
+X-Received: by 2002:a05:6000:2210:b0:42b:4961:eb4c with SMTP id
+ ffacd0b85a97d-42e0f1d57f9mr2509092f8f.1.1764068098723; 
+ Tue, 25 Nov 2025 02:54:58 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fb8a29sm34188178f8f.30.2025.11.25.02.54.35
+ ffacd0b85a97d-42cb7f363e4sm34060597f8f.12.2025.11.25.02.54.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Nov 2025 02:54:35 -0800 (PST)
+ Tue, 25 Nov 2025 02:54:58 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.0 00/12] accel/tcg: Remove most MO_TE uses in
- cpu_ld/st_data()
-Date: Tue, 25 Nov 2025 11:54:21 +0100
-Message-ID: <20251125105434.92355-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+Subject: [PATCH-for-11.0 03/12] target/rx: Use little-endian variant of
+ cpu_ld/st_data*()
+Date: Tue, 25 Nov 2025 11:54:24 +0100
+Message-ID: <20251125105434.92355-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251125105434.92355-1-philmd@linaro.org>
+References: <20251125105434.92355-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::441;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,57 +104,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Still trying to remove MO_TE uses, here looking at cpu_ld/st_data()
-in fixed-endianness targets.
+We only build the RX target using little endianness order,
+therefore the cpu_ld/st_data*() definitions expand to the little
+endian declarations. Use the explicit little-endian variants.
 
-Series split of bigger one [*] where Richard made a comment on
-*_code() patches. Since not related to *_data() uses, post separetely
-since almost ready (still few PPC/MIPS paths to update, but I'd rather
-check if this is heading in the correct direction before looking at
-them).
+Mechanical change running:
 
-[*] https://lore.kernel.org/qemu-devel/20251121134503.30914-1-philmd@linaro.org/
+  $ tgt=rx; \
+    end=le; \
+    for op in data mmuidx_ra; do \
+      for ac in uw sw l q; do \
+        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+      for ac in w l q; do \
+        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+    done
 
-Philippe Mathieu-Daudé (12):
-  target/hexagon: Use little-endian variant of cpu_ld/st_data*()
-  target/tricore: Use little-endian variant of cpu_ld/st_data*()
-  target/rx: Use little-endian variant of cpu_ld/st_data*()
-  target/m68k: Use little-endian variant of cpu_ld/st_data*()
-  target/s390x: Use little-endian variant of cpu_ld/st_data*()
-  target/sparc: Use little-endian variant of cpu_ld/st_data*()
-  target/i386: Use little-endian variant of cpu_ld/st_data*()
-  target/hppa: Use little-endian variant of cpu_ld/st_data*()
-  target/riscv: Use little-endian variant of cpu_ld/st_data*() for
-    vector
-  target/sh4: Replace cpu_stl_data() by explicit endianness variants
-  target/mips: Use big-endian variant of cpu_ld/st_data*() for MSA
-  accel/tcg: Remove non-explicit endian cpu_ld/st*_data*() helpers
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/rx/helper.c    | 14 +++++++-------
+ target/rx/op_helper.c |  6 +++---
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
- include/accel/tcg/cpu-ldst.h         |  46 --------
- target/hexagon/macros.h              |   6 +-
- target/i386/ops_sse.h                |  12 +--
- target/i386/tcg/seg_helper.h         |  12 +--
- linux-user/vm86.c                    |   4 +-
- target/hexagon/op_helper.c           |   6 +-
- target/hppa/op_helper.c              |  44 ++++----
- target/i386/tcg/mem_helper.c         |   8 +-
- target/i386/tcg/mpx_helper.c         |  28 ++---
- target/i386/tcg/seg_helper.c         |  16 +--
- target/i386/tcg/system/excp_helper.c |   8 +-
- target/i386/tcg/system/svm_helper.c  |  48 ++++-----
- target/m68k/fpu_helper.c             |  12 +--
- target/m68k/op_helper.c              |  88 ++++++++--------
- target/mips/tcg/msa_helper.c         |  51 +++++----
- target/riscv/vector_helper.c         |  12 +--
- target/rx/helper.c                   |  14 +--
- target/rx/op_helper.c                |   6 +-
- target/s390x/tcg/mem_helper.c        |  48 ++++-----
- target/s390x/tcg/vec_helper.c        |   8 +-
- target/sh4/op_helper.c               |   6 +-
- target/sparc/ldst_helper.c           |   6 +-
- target/tricore/op_helper.c           | 152 +++++++++++++--------------
- 23 files changed, 305 insertions(+), 336 deletions(-)
-
+diff --git a/target/rx/helper.c b/target/rx/helper.c
+index e9a7aaf610d..83cd491eb4a 100644
+--- a/target/rx/helper.c
++++ b/target/rx/helper.c
+@@ -68,10 +68,10 @@ void rx_cpu_do_interrupt(CPUState *cs)
+         qemu_log_mask(CPU_LOG_INT, "fast interrupt raised\n");
+     } else if (cpu_test_interrupt(cs, CPU_INTERRUPT_HARD)) {
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, save_psw);
++        cpu_stl_le_data(env, env->isp, save_psw);
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, env->pc);
+-        env->pc = cpu_ldl_data(env, env->intb + env->ack_irq * 4);
++        cpu_stl_le_data(env, env->isp, env->pc);
++        env->pc = cpu_ldl_le_data(env, env->intb + env->ack_irq * 4);
+         env->psw_ipl = env->ack_ipl;
+         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+         qemu_set_irq(env->ack, env->ack_irq);
+@@ -82,14 +82,14 @@ void rx_cpu_do_interrupt(CPUState *cs)
+         const char *expname = "unknown exception";
+ 
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, save_psw);
++        cpu_stl_le_data(env, env->isp, save_psw);
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, env->pc);
++        cpu_stl_le_data(env, env->isp, env->pc);
+ 
+         if (vec < 0x100) {
+-            env->pc = cpu_ldl_data(env, 0xffffff80 + vec * 4);
++            env->pc = cpu_ldl_le_data(env, 0xffffff80 + vec * 4);
+         } else {
+-            env->pc = cpu_ldl_data(env, env->intb + (vec & 0xff) * 4);
++            env->pc = cpu_ldl_le_data(env, env->intb + (vec & 0xff) * 4);
+         }
+ 
+         if (vec == 30) {
+diff --git a/target/rx/op_helper.c b/target/rx/op_helper.c
+index 2b190a4b2cf..ca3e9e85fc7 100644
+--- a/target/rx/op_helper.c
++++ b/target/rx/op_helper.c
+@@ -217,20 +217,20 @@ void helper_scmpu(CPURXState *env)
+ static uint32_t (* const cpu_ldufn[])(CPUArchState *env,
+                                      abi_ptr ptr,
+                                      uintptr_t retaddr) = {
+-    cpu_ldub_data_ra, cpu_lduw_data_ra, cpu_ldl_data_ra,
++    cpu_ldub_data_ra, cpu_lduw_le_data_ra, cpu_ldl_le_data_ra,
+ };
+ 
+ static uint32_t (* const cpu_ldfn[])(CPUArchState *env,
+                                      abi_ptr ptr,
+                                      uintptr_t retaddr) = {
+-    cpu_ldub_data_ra, cpu_lduw_data_ra, cpu_ldl_data_ra,
++    cpu_ldub_data_ra, cpu_lduw_le_data_ra, cpu_ldl_le_data_ra,
+ };
+ 
+ static void (* const cpu_stfn[])(CPUArchState *env,
+                                  abi_ptr ptr,
+                                  uint32_t val,
+                                  uintptr_t retaddr) = {
+-    cpu_stb_data_ra, cpu_stw_data_ra, cpu_stl_data_ra,
++    cpu_stb_data_ra, cpu_stw_le_data_ra, cpu_stl_le_data_ra,
+ };
+ 
+ void helper_sstr(CPURXState *env, uint32_t sz)
 -- 
 2.51.0
 
