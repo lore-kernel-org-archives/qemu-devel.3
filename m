@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2EE7D0E6C6
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 11:06:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14579D0E6C7
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 11:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNqsB-0003Fu-3G; Tue, 25 Nov 2025 06:06:15 -0500
+	id 1vNr3E-0004uM-EU; Tue, 25 Nov 2025 06:17:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqs9-0003CY-0k
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 06:06:13 -0500
-Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqs5-00032Y-Am
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 06:06:12 -0500
-Received: by mail-wm1-x341.google.com with SMTP id
- 5b1f17b1804b1-47775fb6cb4so35176565e9.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 03:06:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764068767; x=1764673567; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PMbNNdOK3FXcxpjGxNcYFCYsbnL48q8Pe37lhBGmw+U=;
- b=ymYvudhxXHXz0Q+FcCX0cqcQRgqvxycjnXNAgSn4GmYciPshwUaIvV7MEy/W6YCWZ/
- gKJbpToK3qwpASIMnG0o7t6kRZwUIvHIXIMT3yUM12p/2iTVmBJ2h/CoM4dVf/qjFG2r
- bb07SDS8NYDQ9QWeGVoaKU7fqas5l5FIxBhowoQ8syT8HeOpbBmxl6x9+9xt0S8B2mL+
- dswK1kmaY4lwqu2WkXm46jaG3G1Kwxr7w+6GFzgvrlAqbC8LSb9jVsrfFsA+U45kzG7y
- IgnybpJEbiazLOgwrsbmhPfpuMwPAOcneN0PNg7DoSUaXBqjLS5TuZJvTA79pOQDacLq
- Gskg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764068767; x=1764673567;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PMbNNdOK3FXcxpjGxNcYFCYsbnL48q8Pe37lhBGmw+U=;
- b=WpKQuZUPmcBkZ89+jFasuY2aw5zAi87KtUH5MBr30Q5yPhUbTl0OwdNaCc6GaXOQJL
- RrND34Lp1lMEOqOW/zwkp6kTrFrWCVPfLQ8erLY9/v0ghBU0A60T+hnojPcm1tzfdfoI
- r9ypNgQy0+hr/bRZ3Sx4QhPFlL/ngjmoC3L0JPEOgOMb7zodokB/dMEU8zxIsTHN8O7H
- 9W0F8x3t0NIaAGeqGVtYbtFEjOwGozIfjrSfme9pnxWcHLVNv4eBCR9ZyDZgEngjkalj
- lRVN4HvtDKpMAv94hDYvgNjqO3c2ElduR45N9t6B2FAmAh2f7etiT1SIAedbaLXGZB8b
- xgIg==
-X-Gm-Message-State: AOJu0Ywj+brpQ38+mjn51NWeMTTe3k7+yo1NsxQu6Vsgjp50cOkTYzXa
- FD1+yMjxykm9CXc8U6Qgk6+zd4IguTTZ3qopZER3hjkpevT1QlSkUMc/Rc7iPidyOwNHQ1UwXM3
- /Ruk+668xXaGC
-X-Gm-Gg: ASbGncuazI2KE8isnTPO4EV5QEpjLj0PflXqTSlGGy8JN4yXcrkJZMYoG7+/STbBtGZ
- bd0paAIrzSsHCevsPFj0+M+/Guo5thvL+72UqTGB04H4RyoFg2B/Pj32+AKGwK2Lpg+LFU+1vwa
- UB1ZrBmcnM52k0GHUzqfP95cGxGlkDFTWJGMw73azb8JwcQLwn+xgbESbuh/Qmg8jrwtZvQP4vW
- UPMJYVGoQreAKQ5cHvP3CjfLTv02vRUQWgg/O0PjbguCfBMSHNSjPrvh+EvZtAZtSqRNtto26ux
- RdP30Ogndx1n0Mh7YcDsBBOYzaPlRsJd4s+RdEbbznc3Cn65JUXORP0zkmg2hnJBaRAw/8XCJfl
- BA6eZtiBGC3lcfIeRPIGio9wSQY5nsGZB6hIlyufK0eMzKDL8CUsi3+2q0FyfnxxPdIGyswStZH
- nL/XbwwSj1l7edbpsXs/MHdQx73IWjMj5Kpsjun5bmwqOEkJ/Q0zUV+Hlabz6FLQMO
-X-Google-Smtp-Source: AGHT+IFBKOYmnV5vC3AlQmANQXFWgcikeE/Cikn0yQsch1+6W/1LY+IHzcWiEdQnY5H3Gdyr8NtQhQ==
-X-Received: by 2002:a05:600c:c490:b0:477:b734:8c41 with SMTP id
- 5b1f17b1804b1-477c10c8596mr148537185e9.1.1764068766963; 
- Tue, 25 Nov 2025 03:06:06 -0800 (PST)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477bf1df392sm248172015e9.1.2025.11.25.03.06.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Nov 2025 03:06:06 -0800 (PST)
-Message-ID: <040d8ba8-0451-4524-8eae-6458aa127945@linaro.org>
-Date: Tue, 25 Nov 2025 12:06:05 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vNr2q-0004sY-T9
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 06:17:19 -0500
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1vNr2o-0004Ds-V3
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 06:17:16 -0500
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8CE1716DFBE;
+ Tue, 25 Nov 2025 14:17:07 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 411AB32505E;
+ Tue, 25 Nov 2025 14:17:11 +0300 (MSK)
+Message-ID: <34abd1db-38fc-43cb-bf49-9a5b30bfcb8a@tls.msk.ru>
+Date: Tue, 25 Nov 2025 14:17:11 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0 04/12] target/m68k: Use little-endian variant of
- cpu_ld/st_data*()
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20251125105434.92355-1-philmd@linaro.org>
- <20251125105434.92355-5-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251125105434.92355-5-philmd@linaro.org>
+Subject: Re: [PATCH] linux-user: add option to intercept execve() syscalls
+To: Moritz Haase <Moritz.Haase@bmw.de>, qemu-devel@nongnu.org
+Cc: petrosagg@resin.io, nghiant2710@gmail.com, forumi0721@gmail.com,
+ laurent@vivier.eu
+References: <20251125103859.1449760-1-Moritz.Haase@bmw.de>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20251125103859.1449760-1-Moritz.Haase@bmw.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::341;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,296 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/11/25 11:54, Philippe Mathieu-Daudé wrote:
-> We only build the M68k target using little endianness order,
-> therefore the cpu_ld/st_data*() definitions expand to the little
-> endian declarations. Use the explicit little-endian variants.
+On 11/25/25 13:38, Moritz Haase wrote:
+> In order for one to use QEMU user mode emulation under a chroot, it is
+> required to use binfmt_misc. This can be avoided by QEMU never doing a raw
+> execve() to the host system, which is especially useful in environments
+> where binfmt_misc can't be used.
+> 
+> Introduce a new option, -execve, that uses the current QEMU interpreter to
+> intercept execve(). In addition, execve mode can also be en- and disabled
+> using the 'QEMU_EXECVE' env var.
 
-Wrong endianness in patch description, code change correct.
+FWIW, this means qemu-user binary has to be available in the chroot.
+And please note the fun stuff about argv[].
 
-> Mechanical change running:
-> 
->    $ tgt=m68k; \
->      end=be; \
->      for op in data mmuidx_ra; do \
->        for ac in uw sw l q; do \
->          sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
->                    $(git grep -l cpu_ target/${tgt}/); \
->        done;
->        for ac in w l q; do \
->          sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
->                    $(git grep -l cpu_ target/${tgt}/); \
->        done;
->      done
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/m68k/fpu_helper.c | 12 +++---
->   target/m68k/op_helper.c  | 88 ++++++++++++++++++++--------------------
->   2 files changed, 50 insertions(+), 50 deletions(-)
-> 
-> diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
-> index 56012863c85..f49f841d489 100644
-> --- a/target/m68k/fpu_helper.c
-> +++ b/target/m68k/fpu_helper.c
-> @@ -510,8 +510,8 @@ static int cpu_ld_floatx80_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
->       uint32_t high;
->       uint64_t low;
->   
-> -    high = cpu_ldl_data_ra(env, addr, ra);
-> -    low = cpu_ldq_data_ra(env, addr + 4, ra);
-> +    high = cpu_ldl_be_data_ra(env, addr, ra);
-> +    low = cpu_ldq_be_data_ra(env, addr + 4, ra);
->   
->       fp->l.upper = high >> 16;
->       fp->l.lower = low;
-> @@ -522,8 +522,8 @@ static int cpu_ld_floatx80_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
->   static int cpu_st_floatx80_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
->                                  uintptr_t ra)
->   {
-> -    cpu_stl_data_ra(env, addr, fp->l.upper << 16, ra);
-> -    cpu_stq_data_ra(env, addr + 4, fp->l.lower, ra);
-> +    cpu_stl_be_data_ra(env, addr, fp->l.upper << 16, ra);
-> +    cpu_stq_be_data_ra(env, addr + 4, fp->l.lower, ra);
->   
->       return 12;
->   }
-> @@ -533,7 +533,7 @@ static int cpu_ld_float64_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
->   {
->       uint64_t val;
->   
-> -    val = cpu_ldq_data_ra(env, addr, ra);
-> +    val = cpu_ldq_be_data_ra(env, addr, ra);
->       fp->d = float64_to_floatx80(*(float64 *)&val, &env->fp_status);
->   
->       return 8;
-> @@ -545,7 +545,7 @@ static int cpu_st_float64_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
->       float64 val;
->   
->       val = floatx80_to_float64(fp->d, &env->fp_status);
-> -    cpu_stq_data_ra(env, addr, *(uint64_t *)&val, ra);
-> +    cpu_stq_be_data_ra(env, addr, *(uint64_t *)&val, ra);
->   
->       return 8;
->   }
-> diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-> index e9c20a8e032..eac45669ce7 100644
-> --- a/target/m68k/op_helper.c
-> +++ b/target/m68k/op_helper.c
-> @@ -32,8 +32,8 @@ static void cf_rte(CPUM68KState *env)
->       uint32_t fmt;
->   
->       sp = env->aregs[7];
-> -    fmt = cpu_ldl_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-> -    env->pc = cpu_ldl_mmuidx_ra(env, sp + 4, MMU_KERNEL_IDX, 0);
-> +    fmt = cpu_ldl_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-> +    env->pc = cpu_ldl_be_mmuidx_ra(env, sp + 4, MMU_KERNEL_IDX, 0);
->       sp |= (fmt >> 28) & 3;
->       env->aregs[7] = sp + 8;
->   
-> @@ -48,13 +48,13 @@ static void m68k_rte(CPUM68KState *env)
->   
->       sp = env->aregs[7];
->   throwaway:
-> -    sr = cpu_lduw_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-> +    sr = cpu_lduw_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
->       sp += 2;
-> -    env->pc = cpu_ldl_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-> +    env->pc = cpu_ldl_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
->       sp += 4;
->       if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
->           /*  all except 68000 */
-> -        fmt = cpu_lduw_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
-> +        fmt = cpu_lduw_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
->           sp += 2;
->           switch (fmt >> 12) {
->           case 0:
-> @@ -250,12 +250,12 @@ static void cf_interrupt_all(CPUM68KState *env, int is_hw)
->       /* ??? This could cause MMU faults.  */
->       sp &= ~3;
->       sp -= 4;
-> -    cpu_stl_mmuidx_ra(env, sp, retaddr, MMU_KERNEL_IDX, 0);
-> +    cpu_stl_be_mmuidx_ra(env, sp, retaddr, MMU_KERNEL_IDX, 0);
->       sp -= 4;
-> -    cpu_stl_mmuidx_ra(env, sp, fmt, MMU_KERNEL_IDX, 0);
-> +    cpu_stl_be_mmuidx_ra(env, sp, fmt, MMU_KERNEL_IDX, 0);
->       env->aregs[7] = sp;
->       /* Jump to vector.  */
-> -    env->pc = cpu_ldl_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
-> +    env->pc = cpu_ldl_be_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
->   
->       do_plugin_vcpu_interrupt_cb(cs, retaddr);
->   }
-> @@ -270,24 +270,24 @@ static inline void do_stack_frame(CPUM68KState *env, uint32_t *sp,
->           switch (format) {
->           case 4:
->               *sp -= 4;
-> -            cpu_stl_mmuidx_ra(env, *sp, env->pc, MMU_KERNEL_IDX, 0);
-> +            cpu_stl_be_mmuidx_ra(env, *sp, env->pc, MMU_KERNEL_IDX, 0);
->               *sp -= 4;
-> -            cpu_stl_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
-> +            cpu_stl_be_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
->               break;
->           case 3:
->           case 2:
->               *sp -= 4;
-> -            cpu_stl_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
-> +            cpu_stl_be_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
->               break;
->           }
->           *sp -= 2;
-> -        cpu_stw_mmuidx_ra(env, *sp, (format << 12) + (cs->exception_index << 2),
-> +        cpu_stw_be_mmuidx_ra(env, *sp, (format << 12) + (cs->exception_index << 2),
->                             MMU_KERNEL_IDX, 0);
->       }
->       *sp -= 4;
-> -    cpu_stl_mmuidx_ra(env, *sp, retaddr, MMU_KERNEL_IDX, 0);
-> +    cpu_stl_be_mmuidx_ra(env, *sp, retaddr, MMU_KERNEL_IDX, 0);
->       *sp -= 2;
-> -    cpu_stw_mmuidx_ra(env, *sp, sr, MMU_KERNEL_IDX, 0);
-> +    cpu_stw_be_mmuidx_ra(env, *sp, sr, MMU_KERNEL_IDX, 0);
->   }
->   
->   static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
-> @@ -346,49 +346,49 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
->           env->mmu.fault = true;
->           /* push data 3 */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* push data 2 */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* push data 1 */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* write back 1 / push data 0 */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* write back 1 address */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* write back 2 data */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* write back 2 address */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* write back 3 data */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* write back 3 address */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
->           /* fault address */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
->           /* write back 1 status */
->           sp -= 2;
-> -        cpu_stw_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* write back 2 status */
->           sp -= 2;
-> -        cpu_stw_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* write back 3 status */
->           sp -= 2;
-> -        cpu_stw_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
-> +        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
->           /* special status word */
->           sp -= 2;
-> -        cpu_stw_mmuidx_ra(env, sp, env->mmu.ssw, MMU_KERNEL_IDX, 0);
-> +        cpu_stw_be_mmuidx_ra(env, sp, env->mmu.ssw, MMU_KERNEL_IDX, 0);
->           /* effective address */
->           sp -= 4;
-> -        cpu_stl_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
-> +        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
->   
->           do_stack_frame(env, &sp, 7, oldsr, 0, env->pc);
->           env->mmu.fault = false;
-> @@ -436,7 +436,7 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
->   
->       env->aregs[7] = sp;
->       /* Jump to vector.  */
-> -    env->pc = cpu_ldl_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
-> +    env->pc = cpu_ldl_be_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
->   
->       do_plugin_vcpu_interrupt_cb(cs, last_pc);
->   }
-> @@ -784,11 +784,11 @@ void HELPER(cas2w)(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2)
->       int16_t l1, l2;
->       uintptr_t ra = GETPC();
->   
-> -    l1 = cpu_lduw_data_ra(env, a1, ra);
-> -    l2 = cpu_lduw_data_ra(env, a2, ra);
-> +    l1 = cpu_lduw_be_data_ra(env, a1, ra);
-> +    l2 = cpu_lduw_be_data_ra(env, a2, ra);
->       if (l1 == c1 && l2 == c2) {
-> -        cpu_stw_data_ra(env, a1, u1, ra);
-> -        cpu_stw_data_ra(env, a2, u2, ra);
-> +        cpu_stw_be_data_ra(env, a1, u1, ra);
-> +        cpu_stw_be_data_ra(env, a2, u2, ra);
->       }
->   
->       if (c1 != l1) {
-> @@ -845,11 +845,11 @@ static void do_cas2l(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2,
->           }
->       } else {
->           /* We're executing in a serial context -- no need to be atomic.  */
-> -        l1 = cpu_ldl_data_ra(env, a1, ra);
-> -        l2 = cpu_ldl_data_ra(env, a2, ra);
-> +        l1 = cpu_ldl_be_data_ra(env, a1, ra);
-> +        l2 = cpu_ldl_be_data_ra(env, a2, ra);
->           if (l1 == c1 && l2 == c2) {
-> -            cpu_stl_data_ra(env, a1, u1, ra);
-> -            cpu_stl_data_ra(env, a2, u2, ra);
-> +            cpu_stl_be_data_ra(env, a1, u1, ra);
-> +            cpu_stl_be_data_ra(env, a2, u2, ra);
->           }
->       }
->   
-> @@ -951,12 +951,12 @@ static uint64_t bf_load(CPUM68KState *env, uint32_t addr, int blen,
->       case 0:
->           return cpu_ldub_data_ra(env, addr, ra);
->       case 1:
-> -        return cpu_lduw_data_ra(env, addr, ra);
-> +        return cpu_lduw_be_data_ra(env, addr, ra);
->       case 2:
->       case 3:
-> -        return cpu_ldl_data_ra(env, addr, ra);
-> +        return cpu_ldl_be_data_ra(env, addr, ra);
->       case 4:
-> -        return cpu_ldq_data_ra(env, addr, ra);
-> +        return cpu_ldq_be_data_ra(env, addr, ra);
->       default:
->           g_assert_not_reached();
->       }
-> @@ -970,14 +970,14 @@ static void bf_store(CPUM68KState *env, uint32_t addr, int blen,
->           cpu_stb_data_ra(env, addr, data, ra);
->           break;
->       case 1:
-> -        cpu_stw_data_ra(env, addr, data, ra);
-> +        cpu_stw_be_data_ra(env, addr, data, ra);
->           break;
->       case 2:
->       case 3:
-> -        cpu_stl_data_ra(env, addr, data, ra);
-> +        cpu_stl_be_data_ra(env, addr, data, ra);
->           break;
->       case 4:
-> -        cpu_stq_data_ra(env, addr, data, ra);
-> +        cpu_stq_be_data_ra(env, addr, data, ra);
->           break;
->       default:
->           g_assert_not_reached();
+Thanks,
+
+/mjt
 
 
