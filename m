@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E42BAD10366
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCDE5D0EE18
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:50:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vO0uE-0002UI-QH; Tue, 25 Nov 2025 16:49:02 -0500
+	id 1vO0u7-00021w-P3; Tue, 25 Nov 2025 16:48:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0uC-0002IT-DQ
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:49:00 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0u5-0001tA-Jq
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:54 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0uA-0005JY-TC
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:49:00 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-42b38693c4dso2633008f8f.3
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:48:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0u4-0005Ip-1W
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:53 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-477b5e0323bso1525285e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:48:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764107337; x=1764712137; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764107330; x=1764712130; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0nHuBXitg7641bu6kmkOgxo7UOR8YoWwGXOBRRXCaPw=;
- b=lbOpWFXhF9Pd2+3Zp9vKnF+60xUqed9wxsVIVM5WXYDZq/NGqNMRSP/E/BJsXgNx3v
- WQXkD5GAZSiXtqzOhPJnCv8wugf8gZhxgyAi3OZ8PQ3K5hXf5Gx3p5gEhkuAEytEuccl
- Cdycts93Ah31dypy4y3lFQ+kyGwk/IzpuNw4+lOqceMnP7pZ5N+6ZKgY5dX1ggz0932i
- 9vAdiY+JrxjXBRi0olarJIT23CyPVYkDrhf2lrLhKaxLMA2AkVgk8bhPi9jU/irHYAii
- OjY8UXscRaSjO+V06N2yzOxDvDVg6w2aT4CI9PZdrTAdjzKjcs+AVg3nTKSbzuB+nxbU
- 0H6Q==
+ :reply-to; bh=TqZ00m1dp5ykFypA1defAPknRVwrY3XHn9VogXTLVOs=;
+ b=PRfJAta9L3IP8sfsjDttSFZfseAhydNVBQcGjc1S9hUY+4myBpMpvI8xZdiwIb/lRT
+ 6cr/EYhgmqXA4/QFKvf9jfI7M4blvav3BDzIIkNUkmHmXW6ORxxOUwS/Wg2YFTlf/XVW
+ As505wuHNTwAT0UUGXQegZ6ZvvlW9UCW4Gri4m/3Y8qIZGhMoOTY/5qxVd4tv/Yo41SH
+ cFtFZSohVaCk6hhZTsf18/F/QU5Siwj9QRxjlxnybgwtOlNP1EpEnsrZObulc3985xxW
+ bY+dtk8AYEVd4ZzzuEQd3ND9mFUUalHpenHk/VWgOLukR28cteCT9srp5WGdGlErrTzF
+ YKAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764107337; x=1764712137;
+ d=1e100.net; s=20230601; t=1764107330; x=1764712130;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=0nHuBXitg7641bu6kmkOgxo7UOR8YoWwGXOBRRXCaPw=;
- b=i+NnLHXKtYDQQmEVCPrfUihdGgFumEyHFMIhOOFDPiS7faXzsn/S7OKKuuo+AYliup
- 9kcZ8EgCpEd/oqIFl+Dr4+0IkQxz2kNrgBPYQcuQwnEOkMQVxSGMmuJgbYevsfKanatS
- V236xqPd48KGS4b+qpdSCTx9S+pS4bbvJ4J+AzeYlhkGBjqKm6fnQVB9Rbxy2XWGH8gw
- GM98ZoAOQHXv4pmEPlP1+TRB2ZL4BLqw/8/5U1amHisDmhrQJqYK6HeOTbUAa4qQfPUi
- bHKwRD1TLe2Q0NH62l0gO2Ezq1yODwgrdAT5MGp0CsvpHiLN6x7+oR1KOUVr6LkSzeJs
- yriA==
-X-Gm-Message-State: AOJu0YwjsCUMme+PPAVH9ZVH+RmRFmrKjJMQqDKvEsEmmwWX4Gr7AsIi
- 6TENqpUH5YE1HFGdxLz6rRRZSMkETKCRoWEEh0jbX+6CsFMVjk2gLhGbUMszbR0XeHVV0hbaBvt
- yjMjYr4sIKA==
-X-Gm-Gg: ASbGncvxamjuQWzSIkSjUr68kDP9uekBUug+bskpVoBAp46srHhlm4hJACGqg8UnRrZ
- NKFGii9/mkFwHvVhBzbXVxl8sZdQTb2uiIkCgGhh98S+SkNimnquZDNy+3qh5CwsAooA9zqOot+
- 3EOSgjly9yENvuODPv8tM8SEwVGvFxmtviLNUOjve9f/pH4IIQqpys9Z7KRz8CjFRa+f+lnIZf9
- Cptw1/miZS1mkwcL2PvHtm8P2OCXDlsa1mwgocLsm7Q1BThh5wFv99W/XKIa9J36BFi4St6hh3A
- dPGgrJFos6a/uAZN/RFyW509OTlc/ZpkcO8DSR+Irn4cc54xzVbkqXJCZ0nR6v7fZMMi0UuaBq/
- CSHecyivI0Oo6IyyBDQ7jV+SRbkhH2Jpw/puKGEtUs9zAd/v4aGglRm4Hx8l8aNi8W0xMa+3Aij
- OLyJkmiLElk/ViKRSZiN9Mb0SdtKLt+hYdZIPIPEYMNVv6bVkwJvMMw3cZAnaK
-X-Google-Smtp-Source: AGHT+IGkFMSR/+r9pMiQOCMw8s+vpkVEMFGScr2R0o+iRFYr0z+dSv4KT0as3cRryENFKDhSxuELyg==
-X-Received: by 2002:a05:6000:430b:b0:42c:b8fd:21b4 with SMTP id
- ffacd0b85a97d-42e0f35c36bmr4981529f8f.57.1764107336745; 
- Tue, 25 Nov 2025 13:48:56 -0800 (PST)
+ bh=TqZ00m1dp5ykFypA1defAPknRVwrY3XHn9VogXTLVOs=;
+ b=cgRPgZmLANdBODMXr418vItToM0/xrqMzx9zKtScuGnYbrr44/OB68B8I6Y1Pq2kwJ
+ eFAHhdHLRsFv1EmO5tq3HhmBHp1zpQJzAkJ643ajCTpVRbA5P2O1sw3+Y767tiSbzDXa
+ nVxexN5AB6WxIlD/mf9rs5x5MQ3oREAT+wSXNJxnmVhE2MncQ7pzttXCfHAjQ0EOgCSl
+ KR4r/gE8mrL7lGOgdQUkaZVGjxym/Qex5f0x3EiWxrBtdtA3VX7wmQ0NnSLUnbRatpvH
+ 2ijeeejVdgr/uMP2qY9bWOoVHIrtdZN1GQvuSaUN2kHDMfIAFunTUSVCcoPDiTdy6pRM
+ jnPA==
+X-Gm-Message-State: AOJu0YzfmHdlOcFRTmmCYHKCtpjU5n+qC9gX4856dWG41iaRhIkEf9mC
+ nPLidqclcbF0aHzU8X1ngqBHeFpnzbXs4T4ukdnuhL4lKdx6ygRFWBYLqhoKmlm/u9aBrpVJNzJ
+ OfaLZsDHMhQ==
+X-Gm-Gg: ASbGncsHiDs8WL+vfJKd+mjOMJeEG08mwbR6u4uw7ioUpy0deKF42KisZ/WOT0f1tIj
+ +YcNEIxPIBey/9FDCiW2P1r6+Hq7XhRX5rP2AL2qxOdqKquQ8eG5iXH5P23r2EbtkO5elBxR+QU
+ MpO9n+26mtN3UCw7+vjM9TavUlw+6aIf7PlXf4KhytedX8DRHp0NoxZ/R75wJ8/AphQGuQIGk2I
+ 54gx0T9Y3US/GtnAxlfifS0pkIQvZtN1ypDtXRkbNnMJuoIndNSKqK7925xFeNjqf/JED6h8gC3
+ QWdmTf5wxeG7QHgPCXW2Z3yIVEd7RSL65Qt9WJf2Q2kyRkwR1iMgyKYkpVh2zCK522VogjN9+9B
+ WM1UK6xmJKmlTChJ3Jurn8QXXaTo6vsBKelFG3IGaRMarUKw/uD4xX+kaAKAG4Wx1P/HxjGArga
+ ZPBiIUrbOOcO1Ec8loP4e+1ejpfxVgLR2TVjfJnVG+hiz+fVG4qNUkatRt6v2B
+X-Google-Smtp-Source: AGHT+IEB89Kx8FICGKk1uMdkc4zzO4l0fjvVDLf9NlDN32Z5tPSRKUFq2tDjKFtnqgnzAYNpILDq7Q==
+X-Received: by 2002:a05:600c:b52:b0:475:d91d:28fb with SMTP id
+ 5b1f17b1804b1-477b9ea35fbmr143250905e9.4.1764107330113; 
+ Tue, 25 Nov 2025 13:48:50 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fd9061sm36737712f8f.41.2025.11.25.13.48.56
+ 5b1f17b1804b1-4790addeeaasm9836885e9.7.2025.11.25.13.48.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Nov 2025 13:48:56 -0800 (PST)
+ Tue, 25 Nov 2025 13:48:47 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 7/9] replay: Improve assert in replay_char_read_all_load()
-Date: Tue, 25 Nov 2025 22:47:59 +0100
-Message-ID: <20251125214802.1929-8-philmd@linaro.org>
+Subject: [PULL 6/9] hw/virtio: Use error_setg_file_open() for a better error
+ message
+Date: Tue, 25 Nov 2025 22:47:58 +0100
+Message-ID: <20251125214802.1929-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251125214802.1929-1-philmd@linaro.org>
 References: <20251125214802.1929-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,42 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Markus Armbruster <armbru@redhat.com>
 
-In replay_char_read_all_load() we get a buffer and size from the
-replay log.  We know the size has to fit an int because of how we
-write the log.  However the way we assert this is wrong: we cast the
-size_t from replay_get_array() to an int and then check that it is
-non-negative.  This misses cases where an over-large size is
-truncated into a positive value by the cast.
+The error message changes from
 
-Replace the assertion with checking that the size is in-range
-before doing the cast.
+    vhost-vsock: failed to open vhost device: REASON
 
-Coverity complained about the possible overflow: CID 1643440.
+to
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+    Could not open '/dev/vhost-vsock': REASON
+
+I think the exact file name is more useful to know than the file's
+purpose.
+
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251124173407.50124-1-peter.maydell@linaro.org>
+Message-ID: <20251121121438.1249498-8-armbru@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- replay/replay-char.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/virtio/vhost-vsock.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/replay/replay-char.c b/replay/replay-char.c
-index 81dc416e988..4e58dd154af 100644
---- a/replay/replay-char.c
-+++ b/replay/replay-char.c
-@@ -126,8 +126,8 @@ int replay_char_read_all_load(uint8_t *buf)
-         int res;
-         replay_get_array(buf, &size);
-         replay_finish_event();
-+        assert(size <= INT_MAX);
-         res = (int)size;
--        assert(res >= 0);
-         return res;
-     } else if (replay_next_event_is(EVENT_CHAR_READ_ALL_ERROR)) {
-         int res = replay_get_dword();
+diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+index 107d88babea..7940b60d8a5 100644
+--- a/hw/virtio/vhost-vsock.c
++++ b/hw/virtio/vhost-vsock.c
+@@ -153,8 +153,7 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+     } else {
+         vhostfd = open("/dev/vhost-vsock", O_RDWR);
+         if (vhostfd < 0) {
+-            error_setg_errno(errp, errno,
+-                             "vhost-vsock: failed to open vhost device");
++            error_setg_file_open(errp, errno, "/dev/vhost-vsock");
+             return;
+         }
+ 
 -- 
 2.51.0
 
