@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D0ECFD36C
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 02:37:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC86CFD374
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 03:23:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNiuy-0003Ss-HO; Mon, 24 Nov 2025 21:36:36 -0500
+	id 1vNje4-0005ls-PU; Mon, 24 Nov 2025 22:23:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vNiuw-0003Md-Gt
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 21:36:34 -0500
-Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vNje2-0005eR-MD
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 22:23:10 -0500
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vNiuv-0001E4-4q
- for qemu-devel@nongnu.org; Mon, 24 Nov 2025 21:36:34 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1764038164; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=G7ZtT9ZAuZFKKXHD/K436s+MkqAiaWifq0EVqXgzsmhREA5SGWKIkRfGyhtt4YG5vUojqoPhUrPRTGp3bjj+suCDoXCOYv58y+n70j9oh2/M2t0QPMqEdfltlDABOgZVFcDJpIdmFXpf4dSD7Fs6LiopgMtjo0dqprufu6V/6MQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1764038164;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=M+QsIdkAhKvVwkgoOhL8/NGlqmlwulOUOE73wzYsFGo=; 
- b=mpFsujJHWmv4Wev0gokwBysvaxz03Ww0eNYkhUhMPimhkJJhBaPu4h6IBvIadZdBK4/6Yp2tAYCJpxBHLG6JU9HgxKLHdzqE/Lh6K6X64pR06/GT9MULUycAU43heAXWo+kS687H3BUYwvw6UyRt2Wf+CRurGLza7VTI06nL8c4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764038164; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=M+QsIdkAhKvVwkgoOhL8/NGlqmlwulOUOE73wzYsFGo=;
- b=EHfzBDoch4Yq5KHba6YCb32+byoRvVGOXp3Uglvs1i9NvLp867oMozvja6v90aVE
- kE18zYJVN7a/tZEY5DYj7UBoEFgrj17wuSC5PC2oKhQ8HzV/XOJee1sNnKu6P5Bk2Ad
- Z+EOYYooSTtpeg+8D/tug/RFN0g7faAGKwQAKw6A=
-Received: by mx.zohomail.com with SMTPS id 1764038163265791.727273863963;
- Mon, 24 Nov 2025 18:36:03 -0800 (PST)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
- Sergio Lopez Pascual <slp@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Robert Beckett <bob.beckett@collabora.com>
-Subject: [RFC PATCH v4 1/7] virtio-gpu: Remove superfluous
- memory_region_set_enabled()
-Date: Tue, 25 Nov 2025 05:35:11 +0300
-Message-ID: <20251125023517.177714-2-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251125023517.177714-1-dmitry.osipenko@collabora.com>
-References: <20251125023517.177714-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vNje0-0000S2-3m
+ for qemu-devel@nongnu.org; Mon, 24 Nov 2025 22:23:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1764040988; x=1795576988;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=swjv2dIStOU/Ubq1bO+NPOfpG3tTacuZ4CVZNTwklFQ=;
+ b=XFeo1Gp1HH4D088vqdiZYwdoN5smxcJlSzjcBJJixYEwQjByQskRa9WP
+ JSyosleLGFzpmo+Niv/gdhMBKezFb8cquTapmEKfkQDGAHV6cYvpYg6ju
+ UPPG5jB0yb3UId1VqhUswgcXSicCDNUFJHwml1Bn+szgfz/WAoOqP4fnR
+ rJ//XbPw9XFQrqOrXKhUeAJGXbGPQdao1O2PeldqQjiktI6b4hUoTc5g+
+ 7iAw3Treq9rfx7pR+XA/N4aF01xtYeDUJjf81UZhaUga5k4pkR2kcVXKH
+ eLPn2jWHC5u9uLBzg+PJhxgwRiiqdfCSXWSVtWq9eGvBmh3G1XyT4B5If w==;
+X-CSE-ConnectionGUID: eOfcWL3ZQy6Rz0YW51TIsA==
+X-CSE-MsgGUID: QMPwx8t1SQqz2bHx4UWTWw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11623"; a="77422607"
+X-IronPort-AV: E=Sophos;i="6.20,224,1758610800"; d="scan'208";a="77422607"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Nov 2025 19:23:05 -0800
+X-CSE-ConnectionGUID: CLPwWsugTx+NOw5BCaXc/Q==
+X-CSE-MsgGUID: C7h77fsXQcSZ3DgpKqKj0g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,224,1758610800"; d="scan'208";a="229792287"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa001.jf.intel.com with ESMTP; 24 Nov 2025 19:23:00 -0800
+Date: Tue, 25 Nov 2025 11:47:39 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
+ likexu@tencent.com, like.xu.linux@gmail.com, groug@kaod.org,
+ khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com,
+ ewanhai-oc@zhaoxin.com, ewanhai@zhaoxin.com
+Subject: Re: [PATCH v7 2/9] target/i386: disable PERFCORE when "-pmu" is
+ configured
+Message-ID: <aSUm22dRG6dczdkp@intel.com>
+References: <20251111061532.36702-1-dongli.zhang@oracle.com>
+ <20251111061532.36702-3-dongli.zhang@oracle.com>
+ <aR2ky5WU8CqH8+lS@intel.com>
+ <077866b9-eaa2-4671-bb96-6c6776d0f72b@oracle.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.184.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <077866b9-eaa2-4671-bb96-6c6776d0f72b@oracle.com>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,38 +92,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no need to explicitly enable/disable memory region when it's
-added or deleted respectively. Remove superfluous set_enabled() calls
-for consistency.
+> Please let me know whether you would like to include Patch 2 on
+> "amd_perfmon_always_on" as part of the "compat_prop" patch, or if you'd prefer
+> that I re-create Patch 2 with your Suggested-by.
+> 
+> Either option works for me.
 
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
----
- hw/display/virtio-gpu-virgl.c | 2 --
- 1 file changed, 2 deletions(-)
+I took some time to revisit the dependency issues with PDCM again, and I
+do think the approach mentioned in previous reply should work.
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 80f71c0b66aa..a6860f63b563 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -139,7 +139,6 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-     mr = &vmr->mr;
-     memory_region_init_ram_ptr(mr, OBJECT(mr), "blob", size, data);
-     memory_region_add_subregion(&b->hostmem, offset, mr);
--    memory_region_set_enabled(mr, true);
- 
-     /*
-      * MR could outlive the resource if MR's reference is held outside of
-@@ -201,7 +200,6 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-         b->renderer_blocked++;
- 
-         /* memory region owns self res->mr object and frees it by itself */
--        memory_region_set_enabled(mr, false);
-         memory_region_del_subregion(&b->hostmem, mr);
-         object_unparent(OBJECT(mr));
-     }
--- 
-2.51.1
+Ok, let me pick your patch 1 & 2. I will rebase these on the CET series
+(since I've also modified the dependency for Arch LBR). The entire
+dependency fix series may take some time and may need to wait for
+several weeks.
+
+However, at least it's decoupled from the rest. :)
+
+At the same time, I'll help go through the remaining patches 3-9 again,
+as it's been quite a while since I last reviewed them.
+
+> It seems the Patches 3 - 9 are not impacted by this Live Migration issue.
+> Perhaps they may be accepted (or as well as Patch 2 "amd_perfmon_always_on")
+> without "compat_prop" patch? They are independent with each other.
+
+Yes, I think so.
+
+> Another concern is Patch 3. Something unexpected may occur when live migrating
+> from a KVM host without KVM_PMU_CAP_DISABLE to one that has it enabled. The
+> migration will succeed, but the perceived perf/vPMU support could change.
+> Can we assume it is the user's responsibility to ensure compatibility between
+> KVM hosts when "-pmu" is specified?
+
+Yes, I think so, too. I understand that QEMU needs to ensure vmstate
+migration compatibility.
+
+Thanks,
+Zhao
 
 
