@@ -4,73 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61400D0E6F0
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 14:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0803D0E6EC
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 14:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNu0I-0003ov-6C; Tue, 25 Nov 2025 09:26:50 -0500
+	id 1vNu5F-0006n2-Cv; Tue, 25 Nov 2025 09:31:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vNu0G-0003mg-SU
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:26:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vNu0D-0003Ny-U5
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:26:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764080804;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=PqlH0f1x/cKcYceC6NAoDFuSjaLJIjQacXn2fB++HBs=;
- b=GLkqbX4CPcd8IvlVhAflcnNEw9zSLhU1rP7JVt7Ja6w8zt3I1TVUSBwB6k/QLOSck7wX1F
- ysEnr5MEX6hmd1jrWB/DAJwF1TfjXje9k0fPwCInR6nfsirFhkDYrlIjF6XplCuBdNC6oa
- yki43Gk6M0UY/W+nZVvpksuaDV2WvKI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-hT-Dt9CaNWCoAzmVucahAA-1; Tue,
- 25 Nov 2025 09:26:40 -0500
-X-MC-Unique: hT-Dt9CaNWCoAzmVucahAA-1
-X-Mimecast-MFC-AGG-ID: hT-Dt9CaNWCoAzmVucahAA_1764080799
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75383180047F; Tue, 25 Nov 2025 14:26:38 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.24])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 370B7195608E; Tue, 25 Nov 2025 14:26:33 +0000 (UTC)
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH] aspeed/{xdma, rtc,
- sdhci}: Fix endianness to DEVICE_LITTLE_ENDIAN
-Date: Tue, 25 Nov 2025 15:26:31 +0100
-Message-ID: <20251125142631.676689-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vNu55-0006ih-Np
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:31:51 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vNu53-0004ep-Ql
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:31:47 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-42b3377aaf2so3254857f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 06:31:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764081104; x=1764685904; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xmXtLRIJY79eAlv8awNA0XP2w7Ef3VsFWAE0E9MyIFk=;
+ b=wdtEts0/VQd+lFEGHTGz8SnbttxzZ/YlvzqWYObzb5M9QCqo2mY01iWpwI55ApfKGI
+ aMVp9S9ojQV6lVh7W53Q9uV1RJVIg/c/aSlMjzkJs1i0WYUzwC/iUJQIkMmr8berjgGQ
+ 0lddCc8oPjXBofEZ/PzygNr8c6NGFNQKBKMYH1dUVOhsL30/db37AcINKD4joXr8/sIU
+ 57UpAghuL8sgbQ00I22pwPNkadySVvOoha6VKg5sH+2VYZsRqixXe/e3/O/fc8KoKo8R
+ SQdWQpfCXU14CZOJT621NSZcp/iDnqjH2Bdtze3SsEDihQl9J1JOjIMEnwZCFKUG5/6P
+ U56A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764081104; x=1764685904;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xmXtLRIJY79eAlv8awNA0XP2w7Ef3VsFWAE0E9MyIFk=;
+ b=J1uyd7xybamLrgwbhJaN6GGG8YbcsOEzHJFTK1HlJwXrXXOXLPxVk5YBgP3uEi8tYF
+ gbdfmIRJT8ADBM9Lf0aTsxKct5uXC1De9j9hFfpZLM9gXxpg2pCb+k6s1wmsVR+k0TIf
+ fLT621HQjQWCSHUwCH6xrRBIjYuu9SAdmJ85tDvyQ7c5TNKApFtbjNWQVbIvsFKZzLl+
+ 4hAwrrOJJvWwl/0ZUfV+JFIZhtNoQZn+r19IWA2ESp1ekM5gpCSXhEiIHBXAfy+vuVoK
+ ElgzWjV2wlCimG71kWy+az5BhBFDO4N826DBKgJqz382/f06sko7Rx4sZgig+vbwRLfz
+ o3Ww==
+X-Gm-Message-State: AOJu0YwFh7W+bE8UadCvGvQERMvef1O5f9E6jHX5RIGdIFFwU99J7QL3
+ Dw8Dtv5v7xXWUDqlqPIvIqTcv74yEi0NF8qZ6/HTFULXfIq1quIDjL/l2pDipdvSqPOrN7tUZTK
+ wwFfz
+X-Gm-Gg: ASbGncu3WWKyDNMEQ4Y02sQOkjazK3jXZremCD/pu3cebagYOwblcjL0IQDS4uxKXMZ
+ R/koHtJt59/UODwBbprK1I3iU3+zuGxqpgcLuXzNm0aFvE5EUA8newUNOwPdkbqrHxSW4KdbrTo
+ iL+dHdJx/ElPWF0FALNi+Nkj0p7PuDeG7XFLlE2WVq2FhMsaal+5BtumbiiObhk9/XI/RFQu9ib
+ iHp4uIB6FQSC1KXHxE4pIrABHGttHnBpMr6cDvnAOHJIw1AVpw6cEh6ziThbEHhR4okFk3+498z
+ jk3KoAUzTpIVqI1ozX04TUzo8RNHUzpkZbcKdo/UoANPkQmidAUzDJOcC2G+OLXycN/XXXdp5yc
+ xYSyXupaxgMMpmGKeToOjODbbx7/Vvwmxw1R7YnpSNghp4b46yBdc8jxFOP+1dS4U6cSpty2QM1
+ XsG0kLuArooOXO
+X-Google-Smtp-Source: AGHT+IGystc2Xg0y3ubEengyAO4xssyx8qHkG6HNykmC5JcpLpux0OT2hletuk6BVM7dUvhs+jz4uA==
+X-Received: by 2002:a05:6000:228a:b0:42b:2eb3:c90f with SMTP id
+ ffacd0b85a97d-42cc1ac98b4mr16817394f8f.10.1764081103786; 
+ Tue, 25 Nov 2025 06:31:43 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fb919bsm34485434f8f.34.2025.11.25.06.31.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Nov 2025 06:31:43 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair@alistair23.me>
+Subject: [PATCH 0/3] generic-loader: improve docs
+Date: Tue, 25 Nov 2025 14:31:38 +0000
+Message-ID: <20251125143141.216056-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,62 +95,34 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-From:  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the XDMA, RTC and SDHCI device models of the Aspeed SoCs were
-first introduced, their MMIO regions inherited of a DEVICE_NATIVE_ENDIAN
-endianness. It should be DEVICE_LITTLE_ENDIAN. Fix that.
+This patchset makes some minor improvements to the generic-loader
+docs. The main thing I wanted to do is the first patch, which
+makes it clearer that if you don't specify cpu-num when loading
+a file then the PC won't be set to the entry point.
 
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/misc/aspeed_xdma.c | 2 +-
- hw/rtc/aspeed_rtc.c   | 2 +-
- hw/sd/aspeed_sdhci.c  | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+The second patch is because I noticed a typo ("QemuOps") and then
+realised that rather than fixing the typo we should instead
+rephrase to not mention that implementation detail.
 
-diff --git a/hw/misc/aspeed_xdma.c b/hw/misc/aspeed_xdma.c
-index 31662ea0f5cc..d9afb0cae1f7 100644
---- a/hw/misc/aspeed_xdma.c
-+++ b/hw/misc/aspeed_xdma.c
-@@ -113,7 +113,7 @@ static void aspeed_xdma_write(void *opaque, hwaddr addr, uint64_t val,
- static const MemoryRegionOps aspeed_xdma_ops = {
-     .read = aspeed_xdma_read,
-     .write = aspeed_xdma_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .valid.min_access_size = 1,
-     .valid.max_access_size = 4,
- };
-diff --git a/hw/rtc/aspeed_rtc.c b/hw/rtc/aspeed_rtc.c
-index c4feea23a0b3..6793e253f472 100644
---- a/hw/rtc/aspeed_rtc.c
-+++ b/hw/rtc/aspeed_rtc.c
-@@ -131,7 +131,7 @@ static void aspeed_rtc_reset(DeviceState *d)
- static const MemoryRegionOps aspeed_rtc_ops = {
-     .read = aspeed_rtc_read,
-     .write = aspeed_rtc_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
- static const VMStateDescription vmstate_aspeed_rtc = {
-diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
-index 7217e20c2a98..339a8d12df26 100644
---- a/hw/sd/aspeed_sdhci.c
-+++ b/hw/sd/aspeed_sdhci.c
-@@ -124,7 +124,7 @@ static void aspeed_sdhci_write(void *opaque, hwaddr addr, uint64_t val,
- static const MemoryRegionOps aspeed_sdhci_ops = {
-     .read = aspeed_sdhci_read,
-     .write = aspeed_sdhci_write,
--    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-     .valid.min_access_size = 1,
-     .valid.max_access_size = 4,
- };
+The third patch moves a TODO out of the user-facing docs.
+
+thanks
+-- PMM
+
+Peter Maydell (3):
+  docs/system/generic-loader: Clarify behaviour of cpu-num
+  docs/system/generic-loader: Don't mention QemuOpts implementation
+    detail
+  docs/system/generic-loader: move TODO to source code
+
+ docs/system/generic-loader.rst | 56 ++++++++++++++++------------------
+ hw/core/generic-loader.c       | 18 +++++++++++
+ 2 files changed, 44 insertions(+), 30 deletions(-)
+
 -- 
-2.51.1
+2.43.0
 
 
