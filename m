@@ -4,86 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E3A6CFD368
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 06:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC5B7CFD36C
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 06:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNmwa-00039H-4F; Tue, 25 Nov 2025 01:54:32 -0500
+	id 1vNmyy-0005El-F6; Tue, 25 Nov 2025 01:57:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vNmwS-000334-LC
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:54:25 -0500
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vNmwQ-0007K0-Ox
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:54:24 -0500
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-4edb6e678ddso63032761cf.2
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 22:54:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1764053661; x=1764658461; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OZLQL2bA8jn9Qduuiac1hxh0vAa9HJ2dKsvIUUF9UcE=;
- b=KOZUlm9eQJ4wVDtdjYHr8lhyCnIfJHFDTVJIgRp4NfBgs+UAbr1ICg4AtvhR+aw6la
- JhKbZNORd/T+0QAt4IKrAJ5rJl2CLOfy7/1Ttf+uBikfm0vB31TWI4gXOrKXmXSDQUcG
- Qs6oZoYI6uP8mvCQ3HScRfQ8ByShmEyQZV55s5eKPfLEZ3d+PeXSq2ypM3AFo9ykzLC6
- vwOBpAT+JcBOX97f3ATUyyxAISo9FvDoGLDETUlwj3B8pbXAPkf5dBSVQb130806YSm1
- hdP1VobgsnRmp7R1l/DFof6R/oSTzyRB7YiUguAZZ1WPM5NNI5JmeHB+wInYh8jxwjmg
- 7iew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764053661; x=1764658461;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OZLQL2bA8jn9Qduuiac1hxh0vAa9HJ2dKsvIUUF9UcE=;
- b=lz8zCNbaoeH/KsGOXMhWnyMkdPUWboaEqp5w1l0YqC3SffVn4c0Zhot7w1WX7ScGpO
- a3a1X+RWUw7RckXhVGqNk/MSkMloJIkUs7uwO9lPQce8jw7rjHVv11f3RhP0P2ZwgyqZ
- tre/RtKCx2s3HZOBktiYjxv8tId4PMRUFScdK09zj2ONP6uKKr3Z69OqgaEPgsVXqGst
- ECviuNeUGomx1SZxQZYvjAjsml9pL73LFrP6yU9j4oMDzrc0qBFa2TmhSijUlS4QY8aq
- XoTRaUwOpZuOQIbG+iVULzg8v5zYOfcIhOjEijmXONbYm8KeEZZPI53uZoD1A8gYrEIL
- vnfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU/7XgNGZgw00GLNxyXOX5lplbQCfRcVRABSzcQmvBwg7AbV6/zmFwB58Tx/5lDA4qpRKNC9lOXTRgC@nongnu.org
-X-Gm-Message-State: AOJu0Yw/MeAWwK4oP0rwEynwSH+zgYhVN9tEsLRL/KE+eMax5gnGZl4M
- W0yiEu9PhMaq2umSLjqeo2FTInOpcyOWMQ0Xa24JHkDLh5pEsuZ4Ti1KU0Rq8j/Oi81o53RgnB6
- HQwHtz9FfLskiG5uuKk1joLogq/B+5bg=
-X-Gm-Gg: ASbGncuI13VP6q1Br0fhR5SO2a4x0fmRMo2lRsSL/edLVYH/VUP8msOhUT26Y+tNH9V
- s4k9t0QVOC1drkgHZFkxK5rNyjRX2Sz6Ejwf39GDhVGStJct6ev9j3FLsoeARtw2/Sv0WmRs5FE
- hfk7jH6lPro5rnyS3JhRqUnTsmVt9OqFvzEt7xjPtSJP0fThVZS2A8GoEnZzeJgK6iC7NAPUMeb
- 07j8r2rWjV+V8nwrtlpGObGGnaw8nvij+dqmUPpn63opp3gLM/7DnlGifHwvPcaFcMsFJAGYM42
- eme0XOx67ab8
-X-Google-Smtp-Source: AGHT+IFZQBUWoANL2UauASwBpdcOaANBtVQa9ULDAjh88sx/OOMEiyRQ8BKPUK7NSkMzjxUippcHJrO0CgWncNKEUnA=
-X-Received: by 2002:a05:622a:1386:b0:4ed:542:bb38 with SMTP id
- d75a77b69052e-4ee58af89e4mr218402131cf.74.1764053660688; Mon, 24 Nov 2025
- 22:54:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vNmyv-0005DD-Ht
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:56:57 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vNmys-0007mh-1Y
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:56:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764053812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Zo9YLpz3SfIDn+v9cji/mY6j++es4tMO/19kEPH8aTs=;
+ b=IRpfu1EGsY/PTGvel/ujbb5hxIMppbNqvzLBPyZOPOEtlAqNZKvP7w4Wq+pQQSU/6+6IJm
+ AUs06paUlgWDV2XZ2tomiUzVqqrbSwHUnmBP/Bkoz0PK9M9gyrdSm+jD3mxNoAFAv6w72R
+ vVhqePuc/2O7Bom1zKB4XKqy4YiFOt4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-Nb1yqBRLPf2DuOOf3mBMdA-1; Tue,
+ 25 Nov 2025 01:56:49 -0500
+X-MC-Unique: Nb1yqBRLPf2DuOOf3mBMdA-1
+X-Mimecast-MFC-AGG-ID: Nb1yqBRLPf2DuOOf3mBMdA_1764053809
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8E064195606D; Tue, 25 Nov 2025 06:56:48 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 110451800947; Tue, 25 Nov 2025 06:56:48 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9128721E6A27; Tue, 25 Nov 2025 07:56:45 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Peter Xu <peterx@redhat.com>,  qemu-devel@nongnu.org,  Fabiano Rosas
+ <farosas@suse.de>
+Subject: Re: [PULL 4/9] migration: Use warn_reportf_err() where appropriate
+In-Reply-To: <CAFEAcA9K8sFKSV+nbQ9UKJW5PNnnQwLNuuyQY7gX2LMEk8ui-g@mail.gmail.com>
+ (Peter Maydell's message of "Mon, 24 Nov 2025 21:22:31 +0000")
+References: <20251122002656.687350-1-peterx@redhat.com>
+ <20251122002656.687350-5-peterx@redhat.com>
+ <CAFEAcA9K8sFKSV+nbQ9UKJW5PNnnQwLNuuyQY7gX2LMEk8ui-g@mail.gmail.com>
+Date: Tue, 25 Nov 2025 07:56:45 +0100
+Message-ID: <87ldjuk3bm.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20251122014656.297693-1-mail@jiesong.me>
-In-Reply-To: <20251122014656.297693-1-mail@jiesong.me>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 25 Nov 2025 10:54:09 +0400
-X-Gm-Features: AWmQ_bn8VIo6VFx8Xqb8Fq5xT6zQy4pFQKNXfKFiAE-EG6uRvvUPIDlczItHZpY
-Message-ID: <CAJ+F1CLhRbqLzaXcm9XizpJgNgwX2Dy0L34aKLSRUrxCOHQSgA@mail.gmail.com>
-Subject: Re: [PATCH v3] monitor/qmp: cleanup SocketChardev listener sources
- early to avoid fd handling race
-To: Jie Song <mail@jiesong.me>
-Cc: eblake@redhat.com, armbru@redhat.com, berrange@redhat.com, 
- qemu-devel@nongnu.org, songjie_yewu@cmss.chinamobile.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,155 +87,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-On Sat, Nov 22, 2025 at 7:33=E2=80=AFAM Jie Song <mail@jiesong.me> wrote:
+> On Sat, 22 Nov 2025 at 02:02, Peter Xu <peterx@redhat.com> wrote:
+>>
+>> From: Markus Armbruster <armbru@redhat.com>
+>>
+>> Replace
+>>
+>>     warn_report("...: %s", ..., error_get_pretty(err));
+>>
+>> by
+>>
+>>     warn_reportf_err(err, "...: ", ...);
+>>
+>> Prior art: commit 5217f1887a8 (error: Use error_reportf_err() where
+>> appropriate).
+>>
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+>> Link: https://lore.kernel.org/r/20251115083500.2753895-3-armbru@redhat.com
+>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>> ---
+>>  migration/multifd.c | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/migration/multifd.c b/migration/multifd.c
+>> index a529c399e4..6210454838 100644
+>> --- a/migration/multifd.c
+>> +++ b/migration/multifd.c
+>> @@ -464,8 +464,8 @@ static void migration_ioc_shutdown_gracefully(QIOChannel *ioc)
+>>           */
+>>          migration_tls_channel_end(ioc, &local_err);
+>>          if (local_err) {
+>> -            warn_report("Failed to gracefully terminate TLS connection: %s",
+>> -                        error_get_pretty(local_err));
+>> +            warn_reportf_err(local_err,
+>> +                        "Failed to gracefully terminate TLS connection: ");
+>>          }
+>>      }
 >
-> From: Jie Song <songjie_yewu@cmss.chinamobile.com>
+> Hi; Coverity points out (CID 1643463) that this introduces a double-free
+> of local_err. In this function local_err is marked up as g_autoptr()
+> so it is automatically freed when it goes out of scope. This was needed
+> because error_get_pretty() doesn't free its argument. But
+> warn_reportf_err() *does* free its error argument, so now we free it twice.
 >
-> When starting a dummy QEMU process with virsh version, monitor_init_qmp()
-> enables IOThread monitoring of the QMP fd by default. However, a race
-> condition exists during the initialization phase: the IOThread only remov=
-es
-> the main thread's fd watch when it reaches qio_net_listener_set_client_fu=
-nc_full(),
-> which may be delayed under high system load.
->
-> This creates a window between monitor_qmp_setup_handlers_bh() and
-> qio_net_listener_set_client_func_full() where both the main thread and
-> IOThread are simultaneously monitoring the same fd and processing events.
-> This race can cause either the main thread or the IOThread to hang and
-> become unresponsive.
+> Dropping the g_autoptr markup would be enough, I think.
 
-Ok, but do you have a backtrace of a hang to share?
+I'll take care of it.  Hand me the brown paper bag, please.
 
->
-> Fix this by proactively cleaning up the listener's IO sources in
-> monitor_init_qmp() before the IOThread initializes QMP monitoring,
-> ensuring exclusive fd ownership and eliminating the race condition.
->
-> Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
-> ---
-> Changes in v3:
-> - Use a more general method to fix the problem.
-> - Link to v2:
->   https://lore.kernel.org/qemu-devel/20251117150142.131694-1-mail@jiesong=
-.me/
-> - Link to v1:
->   https://lore.kernel.org/qemu-devel/20251111150144.76751-1-mail@jiesong.=
-me/
-> ---
->  chardev/char-io.c         | 8 ++++++++
->  chardev/char-socket.c     | 9 +++++++++
->  include/chardev/char-io.h | 2 ++
->  include/chardev/char.h    | 2 ++
->  monitor/qmp.c             | 5 +++++
->  5 files changed, 26 insertions(+)
->
-> diff --git a/chardev/char-io.c b/chardev/char-io.c
-> index 3be17b51ca..998282e526 100644
-> --- a/chardev/char-io.c
-> +++ b/chardev/char-io.c
-> @@ -182,3 +182,11 @@ int io_channel_send(QIOChannel *ioc, const void *buf=
-, size_t len)
->  {
->      return io_channel_send_full(ioc, buf, len, NULL, 0);
->  }
-> +
-> +void remove_listaner_fd_in_watch(Chardev *chr)
-> +{
-> +    ChardevClass *cc =3D CHARDEV_GET_CLASS(chr);
-> +    if (cc->chr_listener_cleanup) {
-> +        cc->chr_listener_cleanup(chr);
-> +    }
-> +}
+> The "prior art" commit 5217f1887a8 also seemed to introduce
+> some double-frees in hw/usb/dev-mtp.c, but it looks like we
+> fixed those in 562a55864 (but with a Fixes: tag that didn't
+> point at the commit that introduced them but at a different
+> blameless one).
 
-I wonder if this code shouldn't just be added to remove_fd_in_watch()
-instead. It would need careful review of all existing users,
-nevermind.
+You're right, it's the one that added the error_free(), which only
+became wrong later.
 
-> diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-> index 26d2f11202..39b3a76638 100644
-> --- a/chardev/char-socket.c
-> +++ b/chardev/char-socket.c
-> @@ -1570,6 +1570,14 @@ char_socket_get_connected(Object *obj, Error **err=
-p)
->      return s->state =3D=3D TCP_CHARDEV_STATE_CONNECTED;
->  }
->
-> +static void tcp_chr_listener_cleanup(Chardev *chr)
-> +{
-> +    SocketChardev *s =3D SOCKET_CHARDEV(chr);
-> +    if (s->listener)
-> +        qio_net_listener_set_client_func_full(s->listener, NULL, NULL,
-> +                                              NULL, chr->gcontext);
+I re-checked all of commit 5217f1887a8, and could not find lingering
+double-frees.
 
-Add braces
+Thanks!
 
-> +}
-> +
->  static void char_socket_class_init(ObjectClass *oc, const void *data)
->  {
->      ChardevClass *cc =3D CHARDEV_CLASS(oc);
-> @@ -1587,6 +1595,7 @@ static void char_socket_class_init(ObjectClass *oc,=
- const void *data)
->      cc->chr_add_client =3D tcp_chr_add_client;
->      cc->chr_add_watch =3D tcp_chr_add_watch;
->      cc->chr_update_read_handler =3D tcp_chr_update_read_handler;
-> +    cc->chr_listener_cleanup =3D tcp_chr_listener_cleanup;
->
->      object_class_property_add(oc, "addr", "SocketAddress",
->                                char_socket_get_addr, NULL,
-> diff --git a/include/chardev/char-io.h b/include/chardev/char-io.h
-> index ac379ea70e..087a250c70 100644
-> --- a/include/chardev/char-io.h
-> +++ b/include/chardev/char-io.h
-> @@ -43,4 +43,6 @@ int io_channel_send(QIOChannel *ioc, const void *buf, s=
-ize_t len);
->  int io_channel_send_full(QIOChannel *ioc, const void *buf, size_t len,
->                           int *fds, size_t nfds);
->
-> +void remove_listaner_fd_in_watch(Chardev *chr);
-> +
->  #endif /* CHAR_IO_H */
-> diff --git a/include/chardev/char.h b/include/chardev/char.h
-> index b65e9981c1..192cad67d4 100644
-> --- a/include/chardev/char.h
-> +++ b/include/chardev/char.h
-> @@ -307,6 +307,8 @@ struct ChardevClass {
->
->      /* handle various events */
->      void (*chr_be_event)(Chardev *s, QEMUChrEvent event);
-> +
-> +    void (*chr_listener_cleanup)(Chardev *chr);
->  };
->
->  Chardev *qemu_chardev_new(const char *id, const char *typename,
-> diff --git a/monitor/qmp.c b/monitor/qmp.c
-> index cb99a12d94..e2b1c49ed6 100644
-> --- a/monitor/qmp.c
-> +++ b/monitor/qmp.c
-> @@ -537,6 +537,11 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Err=
-or **errp)
->           * e.g. the chardev is in client mode, with wait=3Don.
->           */
->          remove_fd_in_watch(chr);
-> +        /*
-> +         * Clean up listener IO sources early to prevent racy fd
-> +         * handling between the main thread and the I/O thread.
-> +         */
-> +        remove_listaner_fd_in_watch(chr);
->          /*
->           * We can't call qemu_chr_fe_set_handlers() directly here
->           * since chardev might be running in the monitor I/O
-> --
-> 2.43.0
->
->
-
-otherwise, looks ok to me
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
---=20
-Marc-Andr=C3=A9 Lureau
 
