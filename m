@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7B05D0EE18
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8D06D10366
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:49:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vO0ty-0001h9-CB; Tue, 25 Nov 2025 16:48:47 -0500
+	id 1vO0tj-0001WU-4D; Tue, 25 Nov 2025 16:48:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0tk-0001Yu-Fq
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:39 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0tV-0001QK-My
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:23 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0ti-0005F0-To
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:32 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-429c7869704so5045942f8f.2
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:48:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vO0tU-0005CS-4E
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:48:17 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-429c48e05aeso128610f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:48:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764107308; x=1764712108; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764107294; x=1764712094; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PHzH+lCK4DEu5MLOOUlhaw7zhQlxhytN2R2hX7cMvgM=;
- b=M2NvBtVAmyesaUDCtfYpYWnFJnTB2cQXlC/GP1fxBzQRB60ZvPPGPITkxiIrYOcMB5
- 6GK05NXGz+tjGQKl/hNbwV9HnkKEoWDGtRrOexNMqQiF9sVjmUkbEK5ZLPmFim4ybL2x
- ftZ4L+KdkhAr2lQYWhYz3NHOHOxnKs0Bz0uHq9LBYRMMn7C/BJgSnDnFnQw3qw3UtIie
- Upr4VHrQ8u5DfkVuwn3o5hFCMOyPwT8lAP9Sar8IqSctn2yJaZ9cihGtbhxjZw7Jwu9/
- X4DgFeAqFYGOn8JH72qblxpcs1tmNXL2dV1QqOP7L0xj598qJv6H6vM941cr5H2Ih19I
- PWjg==
+ :reply-to; bh=0m+k2UyUztzmcb8I6pH4YXiVmZQfT+gR4LS5nZYwQho=;
+ b=vyR3oRPE0W4AE8SfMECR3A4Qx2pB+beXuJa2eW0idKPVkLt7FIvBwNki1K53cv3nCR
+ 90OE8nTn5E+cIhHgXE2di7NJlUVo1hNRC/yVonSMkNBfh2TRwiQv4tMqtjzsXMwIqMbd
+ 7eoxq+jG1YZcLqUZsZgzlFhKbf4OJ8dxae+EtXZw0Jt+fgF56+yzNjLsrRp1PBvzix+p
+ 3qSy6KgK0TdQvAztgSwBe5w7VWFdnh0JkhrRs+DbE0PGP513RVusWuucheeVBHZ1XDZo
+ N5Z0lfd1zVtEY5kovcDoGwMoEobe4kSNVN/k1qbap5DVe0rl8Dc2cli61sMn3J5dTBrc
+ 7D1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764107308; x=1764712108;
+ d=1e100.net; s=20230601; t=1764107294; x=1764712094;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=PHzH+lCK4DEu5MLOOUlhaw7zhQlxhytN2R2hX7cMvgM=;
- b=S5kHOxXDBlDFmoQJfXY1mu06EwCT3XB8Lnpb8Srby5M9enrIJzvj06bJiRrk2rgOGH
- v+fEK4VFM6JqMime436vcujBKHBgcega3Fpxa6UBT0mWdHB15kfsbSMIOUjBTY2fgEp+
- qi0+W42EsYUGWhWiJb8YTbZpc3opbYtPcTTBTUH6uY+s/RDKMAelzFv+GZ81DlPxKJKL
- 3Zy/YM4tVftqcndDrCguJuZLkv1vtCKhk/Ngh3OfVUsxIB8L81GiSEXL/Oe94zCPc5r6
- kvS65tykpd/+lRcLZCZSIFhn+inaIT+JUE57+79pmx2CVK4hhxWCK6VZw+7fPxPTBFoi
- AauA==
-X-Gm-Message-State: AOJu0YwCP4cFBHT9+8EFJG0szHmu2TeXqcypNx4UmMJ/cNY7SAWCyG4Z
- LjCTGZWafawMunJPhWx1eAI3VC8ucKipezVp3kGmn3g+oBvoPwn8IqvotrTdwaByfJsk3Oktebe
- 86V32DlG/1g==
-X-Gm-Gg: ASbGncuPmcha1NW0oOnok9rKM9gLftYQoWj8yCW9KDPcOczGjJf4sEhJBKKVAoKpiBk
- G4uFiAFsBVa8S34IE+SqfpmX54Rk2AHcFSesXsjZ5nAcHOv+e6hakwjQwmUIEry6YHWDtVomTz5
- f1sI4ahtpeitGSoflqTx6qk4iDyhFyWCkl6SJsVEgQNyfbnvDnxR06Q+HxuKAALMIJH4FWVlf4R
- g3oWz0kTe2SJSrL2MY+l/f8K80gp4xwvy/MR2uVOffXOISSYugm9V2uQGsr8BiiMwqDGz7ehKon
- EfM1eLHSiycMqfzoVDjjnT82Zkph4CBQ2nqbbkLnsU7fjAxFxao1QKgsJrnqawi4lnncI0e0yRd
- nrCx6XXBKquyU1kGgbpaBLFjwciHA4/43wg0f6OD4wKBfvu01GB2k3T1J9XpPoNzlw3gypx70Zw
- fdK8/qUjKm/FSVVooVUK0ReTCyfjwfBdAOvAop56Oec037BEesSqxrWASTpk6H
-X-Google-Smtp-Source: AGHT+IHcNW54oX7DBvziDn5MwXe4pi3vz++Mui2Niob9Fw/7S7w4CPbdJNtdCOLt844wqK1/pX+vOQ==
-X-Received: by 2002:a05:6000:184a:b0:42b:38b1:e32e with SMTP id
- ffacd0b85a97d-42e0f34f998mr4581945f8f.46.1764107308462; 
- Tue, 25 Nov 2025 13:48:28 -0800 (PST)
+ bh=0m+k2UyUztzmcb8I6pH4YXiVmZQfT+gR4LS5nZYwQho=;
+ b=DBRZj2aba7v2BeTVWirV5+SgV0A3dnnyArhcn999s1lK+AURaaYH9nfakINRmc2cvT
+ 4RkT9O5SBdLL8PWunWizgvXrAo5N7+riSPmY74zVGX/e5uvyh5vfLDpNyHsaDqWCfkTt
+ pZeb8ul/jo4r2lgnxcKJ4c9VAStzZNX1Kaana9wy92FnhZhH3noNnYYAZZb3Snhdh5Yu
+ a8qxOCDgNxjtRVdQjCEfm7PDs5R5AO2pO/iAUO3NrLtqcPTX3rJ/xjLLOzoT+UF1QEjm
+ vf6OLXNSPl1vmx6zMnL3qb2ZQsUm9U9dguMSY0Bu4oiMRK1MyZ6Gr4azfPkve8ICSyXx
+ lRag==
+X-Gm-Message-State: AOJu0YzGUXC7siVI2kYE81inE3a/04WMnEzNq06y+ScO+3JPNpDkCTe1
+ Rn6iMaHoamaVznNuD0qJiJRaJe8LvlP48/0zoAgApHJUPo9I3nwft92VJE3yWXB7Jcqt7jeznM7
+ 7+OEvtAwIkQ==
+X-Gm-Gg: ASbGncu+98LvzcGJbQy/83HnfN6E2Lw9Rv9MG0qxiR5P3lVfRUFI+bkDN5qikF/pECi
+ n4KaG5abxvckrb1DkWYlVaWwk4XyCfmxoJqEqjuUbXJNIq2W9sWT1RzbcSvFNQ36irPdLX46xro
+ pOCMyWzKnoD2L/arcYiwDrnoi7oID7xPLl3kPjQ97JC/fiMsax1+L5+zJMF4ZktfCdLyzNoKOos
+ 0eEZI+FdfUwr12Nm+bu8zH+F0vI2lKyUgo0BE/oVkFPIQdDAnS8CReiHLCtvNuoFIKuo0p6TpmE
+ cmUE2ArrfOjr2RFTBj81PuDVXAW/gE82/CxOOSl3bXp3a1rvCwden+xEuxGkfZI7Xarv9k/vGEK
+ UQWw/7UvS57St7YCpA7AWkBeCjacsxsndjYXnld9BWEoX3Z2uLkQ6OAM7tWbPFD146v3t4l3ma0
+ lffpPyTmoSr/fg1GE8e8Wy/F5tPdcG1Mzi0GV+Rdm2I33PqFdVlcb5ExRBRdpg
+X-Google-Smtp-Source: AGHT+IEG7a34iYTcnYTKnB2EeWKdfViP10xcsFGjFIFNuYI9ddq01JQajN40YNIBZkoT7wCcjihTjQ==
+X-Received: by 2002:a05:6000:1a8a:b0:42b:47ef:1d59 with SMTP id
+ ffacd0b85a97d-42cba63b5b2mr24795015f8f.4.1764107293971; 
+ Tue, 25 Nov 2025 13:48:13 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fb91f4sm37231193f8f.31.2025.11.25.13.48.27
+ ffacd0b85a97d-42cb7fa3a76sm36678238f8f.24.2025.11.25.13.48.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Nov 2025 13:48:27 -0800 (PST)
+ Tue, 25 Nov 2025 13:48:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 3/9] docs/deprecated: Remove undeprecated SMP description
-Date: Tue, 25 Nov 2025 22:47:55 +0100
-Message-ID: <20251125214802.1929-4-philmd@linaro.org>
+Subject: [PULL 1/9] qtest: Allow and ignore blank lines in input
+Date: Tue, 25 Nov 2025 22:47:53 +0100
+Message-ID: <20251125214802.1929-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251125214802.1929-1-philmd@linaro.org>
 References: <20251125214802.1929-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,53 +99,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-"Unsupported 'parameter=1' SMP configuration" was proposed to be
-deprecated in the commit 54c4ea8f3ae6 ("hw/core/machine-smp: Deprecate
-unsupported "parameter=1" SMP configurations").
+Currently the code that reads the qtest protocol commands insists
+that every input line has a command.  If it receives a line with
+nothing but whitespace it will trip an assertion in
+qtest_process_command().
 
-But the related code was reverted later in the commit 9d7950edb0cd
-("hw/core: allow parameter=1 for SMP topology on any machine").
+This is a little awkward for the case where we are feeding qtest a
+set of bug-reproduction commands via standard input or a file,
+because it means you need to be careful not to leave a blank line at
+the start or the end when cutting and pasting the command sequence
+from a bug report.
 
-Thus, this SMP behavior is still valid and is not actually deprecated.
+Change the code to allow and ignore blank lines in the input.
 
-Remove outdated document descriptions.
-
-Reported-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20251121084416.1031466-1-zhao1.liu@intel.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Message-ID: <20251106151959.1088095-1-peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- docs/about/deprecated.rst | 14 --------------
- 1 file changed, 14 deletions(-)
+ system/qtest.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 30ab72b2a4c..9386cffba26 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -54,20 +54,6 @@ as short-form boolean values, and passed to plugins as ``arg_name=on``.
- However, short-form booleans are deprecated and full explicit ``arg_name=on``
- form is preferred.
+diff --git a/system/qtest.c b/system/qtest.c
+index cbeb7f37728..67e2385f4b0 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -69,6 +69,9 @@ static void *qtest_server_send_opaque;
+  * so clients should always handle many async messages before the response
+  * comes in.
+  *
++ * Extra ASCII space characters in command inputs are permitted and ignored.
++ * Lines containing only spaces are permitted and ignored.
++ *
+  * Valid requests
+  * ^^^^^^^^^^^^^^
+  *
+@@ -367,7 +370,11 @@ static void qtest_process_command(CharFrontend *chr, gchar **words)
+         fprintf(qtest_log_fp, "\n");
+     }
  
--``-smp`` (Unsupported "parameter=1" SMP configurations) (since 9.0)
--'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
--
--Specified CPU topology parameters must be supported by the machine.
--
--In the SMP configuration, users should provide the CPU topology parameters that
--are supported by the target machine.
--
--However, historically it was allowed for users to specify the unsupported
--topology parameter as "1", which is meaningless. So support for this kind of
--configurations (e.g. -smp drawers=1,books=1,clusters=1 for x86 PC machine) is
--marked deprecated since 9.0, users have to ensure that all the topology members
--described with -smp are supported by the target machine.
--
- QEMU Machine Protocol (QMP) commands
- ------------------------------------
- 
+-    g_assert(command);
++    if (!command) {
++        /* Input line was blank: ignore it */
++        return;
++    }
++
+     if (strcmp(words[0], "irq_intercept_out") == 0
+         || strcmp(words[0], "irq_intercept_in") == 0) {
+         DeviceState *dev;
 -- 
 2.51.0
 
