@@ -4,94 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEAB1D0EE01
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 15:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30A51D0EE01
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 15:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNv8l-0002qo-Uq; Tue, 25 Nov 2025 10:39:41 -0500
+	id 1vNvAt-0003uo-VL; Tue, 25 Nov 2025 10:41:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1vNv8O-0002ng-KD
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:39:18 -0500
-Received: from mail-io1-xd44.google.com ([2607:f8b0:4864:20::d44])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1vNv8L-0007ZW-T3
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:39:15 -0500
-Received: by mail-io1-xd44.google.com with SMTP id
- ca18e2360f4ac-948733e7810so229456839f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 07:39:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1764085152; x=1764689952; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=+rE3Tk1rWDT25APTUMQkhbusuRV50MrgtsW6PhHR4Yw=;
- b=KxhlVbeD7pfJF1ksVsjCWKzVT3RKr919ku4BiTntH+ND9KkNXcbG2xUSjHr5oj4MhG
- /9zDUJZM5aqwJEIi98l+P8xqgn0IQL4T5ObAunPz27vyTJWTy5COClkt0GNI5QfxXrc8
- EmuuUkjAGaDl8u08x29s0vJLAoL/Oi4zX+Xtx+Go5kV8JvUq54T+j0XYUNOF6zavnRb+
- HOxFFrrkBnxe3imDdOKiMtk6pHOfyEnWsaVP/IctuzvRxcgLbzPVcw84e+rpJbmiGFXD
- fbobH5Ml3zyN2oYf80afLLDmeH0IMblFd1DadfOSTXNctnH2aUIriVgeKJ8VMdKd5dco
- 0/1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764085152; x=1764689952;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+rE3Tk1rWDT25APTUMQkhbusuRV50MrgtsW6PhHR4Yw=;
- b=npmllzs5aTQrb7Odrs9gGW9G55BjhGADs5QhD10ZjuoJEinZl7PSeXF+DUnG+vfnTX
- YGO0OK3KzDM8I59E7Cr8lAxqo5ELEMgJjfTaL78PZwm7HbciEokhKhxtah5/h706s7QG
- oiv8cNu/gzs0uJ4xlCtXzlRt8SE+Ykj64RaybO1Gh20scglzi2x8TGEEeoy+KkaQDGZq
- oPiVuBemr+jT2dgVxOU8RPlVBV3b1SKgYfRUvAn1JP5vaLwwWvzSoawvQCaKMBxtXmsT
- Rqp6TlvUpaxDjWk35VThdkd592SsQaubG8nlN1l5dLGeV5I/TgCyZuFVuO0yQFsZIucW
- b9MQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU+DGA3uq0Gi+51nZMn9+l1es53VxuOP8hE/6mCCcVGVbbPGiBI8Jcya7KNMrvpA7GM/5+xmylE8jy+@nongnu.org
-X-Gm-Message-State: AOJu0Yw/O0z4ftu/C2IQN8E/0GG+NECkQl6cSuuxyUWCLPqvXocEyPdh
- iAAutMiSHzOD1TIIgo8Pvw5dLvIwSb3o3mWms9dfq/kj/G/49BavTbmuIZutmFBf2xU=
-X-Gm-Gg: ASbGnctoreE+8SkYm2ZS/IRGlYSz1kA8/Fk21wBjAIIziYKpIMz962LNlrt1OQu7bbY
- 78yInRUgQV7M0VdgAfJYYtq19boUXBpOg/ifpe4tNwBDw6SlmTiPtSqmlkuOHOYBqDNcT8z6/EK
- OkxDax+GCOr6vmyGsxz2VCR4km7XFJQyobWPMfh5YO1Tj/cgre0Bz4BibLg9fNDblxsK73hUe6z
- dGjGPOm5qLA5AuUH8RSQXaLpvPlkA7NVFjwaz/K6egShuso9dxJ9fyHW20dc+jMN9HbhgNXYkUO
- 9U4/fzeE+ahe+mpgr2hrowKtDsp17hgpVXMCGCzKS6yq2GgvAKvY3STM+SLvnEd55OsAcz6goAC
- XcGAyD/8nX6p/njn3rPLz/7TuvwxXPZlB1I89iAT1Bbb7fVCcbiAHpnVMBdz9be/c4QMM1UmP8w
- ==
-X-Google-Smtp-Source: AGHT+IH1wxSR50/qXlLM9/LRgrIo27vNXCgXhqArCXg+HFluauJszYSuHw4zcJ1eBnLNIlZN6N1dig==
-X-Received: by 2002:a05:6602:1689:b0:887:56f5:26a2 with SMTP id
- ca18e2360f4ac-9494755df87mr1745181939f.14.1764085152210; 
- Tue, 25 Nov 2025 07:39:12 -0800 (PST)
-Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-949385ae254sm617805339f.1.2025.11.25.07.39.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Nov 2025 07:39:11 -0800 (PST)
-Date: Tue, 25 Nov 2025 09:39:10 -0600
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Chao Liu <chao.liu.riscv@isrc.iscas.ac.cn>, alistair.francis@wdc.com, 
- liwei1518@gmail.com, palmer@dabbelt.com, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, 
- wu.fei9@sanechips.com.cn, zhiwei_liu@linux.alibaba.com, xiaofan@iscas.ac.cn, 
- wangjingwei@iscas.ac.cn
-Subject: Re: [PATCH v4 3/5] hw/riscv: experimental server platform reference
- machine
-Message-ID: <20251125-3e644247d1d73ebad131f69a@orel>
-References: <20251111182944.2895892-4-dbarboza@ventanamicro.com>
- <b1d0bc43-96cd-4919-b5c5-d004e422e902@isrc.iscas.ac.cn>
- <ef829d73-f39c-421a-8ebd-ef5422a7fedc@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vNvAV-0003sl-CW
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:41:34 -0500
+Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vNvAT-00085W-LY
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 10:41:27 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1764085268; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=Z8HwlZd65I9d6OfL+fAqD8ITliUXqoOp2gUeuR73SOz6iuXvEA2c+lpsyj4CmHUix79fkluGwVl2fQcGreDxKZG61hNh2ownqKmImoENpXBIsWqGlZyxPJAYdecang+TTY32G1dpZzfd8FJ8PxFlCOkr/GXHvLIdHo+Ui1Q7bpM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1764085268;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=O6hDttOZtjRkjf/KT4fbvagLMqeDfvwoygKtZanHEPQ=; 
+ b=iBjDhVmUxbHBIZr0ihc7vjqkfuA5TM7ioGnxG/uWu/jlEBu3HyX/BXiqxYJw9YG0mZv7jdfRLSZ9VWJsgjX7LKHiMlir3lF7q4rapCMfgk55A6nYvW8zsnMtcBLxswFT6fIB8PsTSIz4qjf2UEo7gUuM6b/ptRe8tgfOL6cSYSI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764085268; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=O6hDttOZtjRkjf/KT4fbvagLMqeDfvwoygKtZanHEPQ=;
+ b=Gb6wdoqF4QDzvC/4mYt0gITIbHbtkuLb6b1wcROQmgBKYOtbWnchnK8HxArStJRi
+ SUWgN0WI5Cp+gGq2ZbmHFCEPa6+mNxLEr3N+gdOZKisjBiyJ6IOOQb/0uSGfz6HNpyi
+ 1vDXJHMRl2sFil18puom5QHlr+8Dmvp7FmAdAa8s=
+Received: by mx.zohomail.com with SMTPS id 1764085266152444.65801180902463;
+ Tue, 25 Nov 2025 07:41:06 -0800 (PST)
+Message-ID: <98d60063-b66d-4fc3-b187-b3ea1121c523@collabora.com>
+Date: Tue, 25 Nov 2025 18:40:58 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ef829d73-f39c-421a-8ebd-ef5422a7fedc@ventanamicro.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d44;
- envelope-from=ajones@ventanamicro.com; helo=mail-io1-xd44.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v4 3/7] virtio-gpu: Improve
+ virgl_cmd_resource_map_blob() error handling
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>,
+ Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
+ Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
+ Robert Beckett <bob.beckett@collabora.com>
+References: <20251125023517.177714-1-dmitry.osipenko@collabora.com>
+ <20251125023517.177714-4-dmitry.osipenko@collabora.com>
+ <87wm3e725r.fsf@draig.linaro.org>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Content-Language: en-US
+In-Reply-To: <87wm3e725r.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.184.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,43 +100,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 25, 2025 at 08:24:22AM -0300, Daniel Henrique Barboza wrote:
-...
-> So, in the latest spec, section 2.1 RISC-V Harts:
+On 11/25/25 15:00, Alex Bennée wrote:
+>>      if (ret) {
+>>          qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map virgl resource: %s\n",
+>>                        __func__, strerror(-ret));
+>> -        return ret;
+>> +        return -1;
+> If we are using errno's lets use the defines rather than -1, should this
+> be -EPERM?
 > 
-> https://github.com/riscv-non-isa/riscv-server-platform/releases/download/v0.9-rc3/riscv-server-platform.pdf
-> 
-> There's a set of "rules" that each hart should or can follow. Rule RVA_010 states:
-> 
-> "The RISC-V application processor harts in the SoC MUST support the RVA23S64 ISA
-> profile [6]."
-> 
-> The next rule, RVA_020:
-> 
-> "The RISC-V application processor harts in the SoC MUST support the following
-> extensions:
-> - Sv48
-> - Sdtrig [7]
-> - Sdext [7]
-> - Zkr
-> - Ssccfg
-> - Ssstrict [6]
-> - Ssaia [8]"
-> 
-> 
-> I take it that the wording used, **MUST**, indicates that RVA_020 is mandatory so we should
-> in fact support sv48. In this case we can change the default to sv48 without problems
-> 
-> 
-> Drew, is this a fair interpretation? Thanks,
+>>      }
+>>  
+>>      vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
+>> @@ -789,7 +789,16 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+>>      }
+>>  
+>>      ret = virtio_gpu_virgl_map_resource_blob(g, res, mblob.offset);
+>> -    if (ret) {
+>> +
+>> +    switch (ret) {
+>> +    case 0:
+>> +        break;
+>> +
+>> +    case -EINVAL:
+>> +        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+>> +        return;
+> which isn't what can come here. I see EOPNOTSUPP not being handled either.
 
-Yes. The server platform spec is based on rva23, but also mandates
-additional extensions beyond what's mandated by the profile, including
-sv48. (And this is why I stated the default should be sv48 when pointing
-out that it shouldn't be sv57[1]).
+When error comes from external virglrenderer code, we don't know exact
+reason it fails. Using -1 allows clear distinguish of external vs
+internal to QEMU errors.
 
-[1] https://lore.kernel.org/all/20251111-e4f4062f326aef78ef820d00@orel/
+EOPNOTSUPP and everything else that doesn't have a directly matching
+guest code falls into the default error handling returning
+VIRTIO_GPU_RESP_ERR_UNSPEC to guest.
 
-Thanks,
-drew
+-- 
+Best regards,
+Dmitry
 
