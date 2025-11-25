@@ -4,107 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26517CFD37F
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 013E1D0E6C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:55:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNqak-0008NN-NH; Tue, 25 Nov 2025 05:48:14 -0500
+	id 1vNqh4-0003Ye-0H; Tue, 25 Nov 2025 05:54:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vNqaj-0008MZ-2N
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:48:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vNqae-0000E1-MT
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:48:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764067686;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Hv5Ak0MaPD3DTUlsFZpK2YD5GN5aNBiQH18NqR3X2f0=;
- b=DlgjLiU9RHWMJOB7Jk44i8LLmLrL14NJxmGm91vMENeKpxpg2YH70v4577zUcFUozsuT6M
- Ww6FW9ZmZvbbwRGXENSfs8NROrZqr0PfVbJSW2TAJugrB46xhExMl+SXJEcw0wOWGCrKaQ
- MR7jlBG0k+GlHyNef4XP+S1cv6Nb7mA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-YXN6GFttNteYTUsYJ5xcsw-1; Tue, 25 Nov 2025 05:48:04 -0500
-X-MC-Unique: YXN6GFttNteYTUsYJ5xcsw-1
-X-Mimecast-MFC-AGG-ID: YXN6GFttNteYTUsYJ5xcsw_1764067683
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-429c5f1e9faso5426266f8f.3
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 02:48:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqh0-0003SH-FS
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:54:42 -0500
+Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqgy-0001Oc-28
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:54:42 -0500
+Received: by mail-wr1-x441.google.com with SMTP id
+ ffacd0b85a97d-42b3c5defb2so3528290f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 02:54:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764067682; x=1764672482; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hv5Ak0MaPD3DTUlsFZpK2YD5GN5aNBiQH18NqR3X2f0=;
- b=sf3jXhlZiVvF4+0WALNKWJ4gVhef+9QsJ/k4EG6exf5mSFhdTmEmspjdqeXXhL4NDm
- CbTf8ZMHmJPWruk4Ss/zIRm3aX86/jH/3QXGqF+vycP1GeRIvHdJBOFngpIvfy0aPLbG
- BcVI0aoeK0jncfJBkEQTh9ff3zjBD+kI0bM/Hg930puXqoWXmdobjC17zbRMqFkTV+T+
- 7ZbR0CgMIelxIVVrVT0dfQXZNIRHikubWNE3w6vChyclJzybMGL3CJ/hZLgsTin3d+EN
- ZNyUVhkRuEwl0ANhLIIm1T/cwKesSOlf9mbIV/xXSxWOFcCcpNkn8xO9ArlKYgaqqAs6
- +YQg==
+ d=linaro.org; s=google; t=1764068076; x=1764672876; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Jfyijvl1JFPahxbivQxrrAGa5h/+4fXCl7qTUyuB64s=;
+ b=Z2ytID3XEq5wrX9W0qoX5GTwR2C6BSaLNfgqhgGdUpVH3vOnSlVUYQcGMQKjVvgzPn
+ ntvCYByGSyZYHyYZXm3SMbrGtXzfn7RIDFUHW4m+6GL6HXKExthNv8cMeQO6aC2EpVxR
+ 8nWWIQ1627aEQJVc6d2migzMwN5a+Uh9vCEZllCm+pCqXYFjEKZrU2esVDs49rVWlN+l
+ FcMJrZOlANNZfnIWyLyr98r1SamYM2dYMi0QI/7BChOTdVM8vjhXnL2ukDY7tUTbUyrj
+ WQRVnqXSP6rXHPy5NLJcsBhysJLfi0zMzEF8KZrGBR62JTnGXNcRJ1CS4PYBWjfHRPc/
+ TKEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764067682; x=1764672482;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Hv5Ak0MaPD3DTUlsFZpK2YD5GN5aNBiQH18NqR3X2f0=;
- b=E3yI1s29rdTijLI3S5AvibG4d6OioNDg16KVczWqxQDpnH9wrRIx3r0Dcc5U8/hQMz
- KPtUsTn207FKSXO0jkNwrQ6lUuATTKod3zoGbxGag0VJF2r+H8bdpCM/2TTnrjX9nPON
- Nmdvg8tD5cTkmn1JupF3IH+Isl/phy8/KmNAdOSmY1SScYXR4Xj0HXn8ZYjOWRQON948
- ZCFaZoOtvpXkl+ZFw/BPJiWt3QX803Ywsv1m3CtqrTPICIpx/9TR+3bLnjtUQSS1fTn1
- wsm90TI6kTIaBKlFSUHVJPtVIawgeQu8dPSqz6o50t+UI1M2ywURnopWSL/07W+QEjb0
- dZzg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5yDnnHUD/Mrf+5QaNXJ9O7tu0kNzKmDlJFQ5JGajETl6rOPgV5o9RkPr7zHyO1YmkBqXp3Z9ZURie@nongnu.org
-X-Gm-Message-State: AOJu0Yyla1N/CZive8/rXlRMJOPiU+nb9M6Qg3BqaZZwM57jupfMDFY4
- /VYtO1O79zX4llcj1f4Ii1GiGZMAJZzAhxqLKhZd4HKOMxb9WusvJowb047UlLhq3CONlJBnCqR
- 7q2HfzsHNKBuJ9ED7veYZ36VmrYkQ3nZJPX0FiLZp3pGLIelPNThRmrG7/XBnlCp4m1vdJF1/L2
- Ip+Nfc2yX6cRtJr0+4MdsKOCHsQlUbHf8DyzRj/SE=
-X-Gm-Gg: ASbGncuD/lj9M2qvmIok6OD5rKhhU9xPGls/02qe11dXkqd4Qny+xIGnrKd7KjkYOvI
- ZZ2eYEAGqq5FTOFxA33xsoKhuluZYxd3LBrxE6oBiAWTdRxWLGvreWuXFCgYQtEHdgS80iJjbNI
- 15sceGuuPmR24fy5lrRaKOG01exTgwxRVLj0DyUUvyXGyr5kuI2ioeTKb0vjz3PkLMc4hHSfyBy
- MeIICmGqtHN8s74GwJ7KKMY57kWsCWOepWkajpk3kNWmkVVxAwEU0osDUiDxfIxFEiStKo=
-X-Received: by 2002:a05:6000:288b:b0:3e9:ee54:af71 with SMTP id
- ffacd0b85a97d-42cc1cd8f75mr14937721f8f.12.1764067682566; 
- Tue, 25 Nov 2025 02:48:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEdKbq0FvCer0sm3NBT6YiljHXSDZHGdssV2C3TN1ZCzbXR8Q5ItbjTVtOqxhf+PZCy5Q3uxrQbJdxgUMf3pyw=
-X-Received: by 2002:a05:6000:288b:b0:3e9:ee54:af71 with SMTP id
- ffacd0b85a97d-42cc1cd8f75mr14937701f8f.12.1764067682093; Tue, 25 Nov 2025
- 02:48:02 -0800 (PST)
+ d=1e100.net; s=20230601; t=1764068076; x=1764672876;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Jfyijvl1JFPahxbivQxrrAGa5h/+4fXCl7qTUyuB64s=;
+ b=JnSFuKFC29J+lXHdlJIgW2R7yV18pHqRw/RDDlx2ZQ3vAJ3wm/PE2bwu/803S6T4Ru
+ b3uAO8rxwVdB4vuc/08bvG74j7JKGcn5GM2xQjJg2+2aLXNY4WvTH9weRsi4S2KawS22
+ BtTYZw7CRUvpaohNj8ADznwf39nfOrec45HdCvikDaSQsb7ZWy2SztGh7HAHcSgc7t5e
+ /MQzAB8io8ivPixqH6jd8o3dxHmmEiMXIPNKrGAYykBbkBLup1wd7AbZbjvbf9kf82PQ
+ ATvKKUkESFuPFJWio4AOADMDfojZxkArJgqSxkwKzGj6HQ7f4N3gbZEFDmTKuJcP67VU
+ y13Q==
+X-Gm-Message-State: AOJu0YxWlLDS9CwmcpUBFDFndqDlYJBoTmlNqfmc4862zPNcVxzT4cFu
+ AzkqFbQSTrzrnJ6tY9C5rEsuGMMXSbXbZIby3arKkuuXnRCQPmLj/TYJUGfEeRHb34c5FjWy4Ew
+ P3qLawafiBPP4
+X-Gm-Gg: ASbGncv4E9jVlrZQYODspw3YrgyY5uIHGtAc/nOtfVwVwKwMG4jBbDAkdGBp2gzQ/wZ
+ k52f0t4y11bRIeDKkQVFN+YmlyBrP5qB+OFwD2OIFwFKwqIgacHUcBKPLRFbOxVx99klfO5E1/M
+ qvVO6YuDkxFCw4bM5Odkb8q+3vSwUKq+IeOFyt+PyhJj2qjbD0dcOGFcBGasbU0h79FyPSY46MP
+ tnlgg7d9a2FsJDiof7Eua8/2B96k5bP3nb28DElA73waJlQDNOMqVIM1gFmMJl/N3ntJbZhDh1Q
+ p960xWXmbLiwZy+mxSVfl5izspT1sqXr2q9ljXOcFmWJ3tNEMEQNoLhvS6gGjVzMOuBCyenUuDi
+ HrKz04Gz5XOSAb2C2mVk5CaxtOyye53LEHiQl+/bOdfu6MYMeJI+xzUFsSGw0XlBYZJfFFQCEvF
+ juQgMmbuzFwLTHIq+SQ96V9+FhdpgMJgZi5hB8P9+kvvc6I9cDcUwA2f2Lh7IP
+X-Google-Smtp-Source: AGHT+IERb9JX2msGUhosBK7KYnxgaVzJeCNqY8/qwfS0VTZe5M/yJxvfuGH+GR0rR4EcCKGJXvCyMA==
+X-Received: by 2002:a05:6000:22ca:b0:42b:30a6:9c10 with SMTP id
+ ffacd0b85a97d-42cc1d22e12mr16261013f8f.56.1764068076531; 
+ Tue, 25 Nov 2025 02:54:36 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fb8a29sm34188178f8f.30.2025.11.25.02.54.35
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 25 Nov 2025 02:54:35 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-11.0 00/12] accel/tcg: Remove most MO_TE uses in
+ cpu_ld/st_data()
+Date: Tue, 25 Nov 2025 11:54:21 +0100
+Message-ID: <20251125105434.92355-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-References: <cover.1761644606.git.chenmiao@openatom.club>
-In-Reply-To: <cover.1761644606.git.chenmiao@openatom.club>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 25 Nov 2025 11:47:49 +0100
-X-Gm-Features: AWmQ_bnA1vv60Je9_DJLlGKrUEY65wxYG5WiLBLdzRZpg3-DNzo4ldYVtaUUPV8
-Message-ID: <CABgObfap3WcggLUkRh5u6i44fA9krrmr4ufJj8M6tdVy-FQH7A@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 0/5] rust/hw: Add the I2C and the first GPIO device
-To: chenmiao <chenmiao@openatom.club>
-Cc: zhao1.liu@intel.com, manos.pitsidianakis@linaro.org, 
- richard.henderson@linaro.org, philmd@linaro.org, chao.liu@openatom.club, 
- qemu-rust@nongnu.org, qemu-devel@nongnu.org, 
- hust-os-kernel-patches@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::441;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,108 +100,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Oct 28, 2025 at 11:18=E2=80=AFAM chenmiao <chenmiao@openatom.club> =
-wrote:
->
-> We have implemented I2C and the first GPIO device in Rust for QEMU.
-> Additionally, in the respective patches, we have shared our insights and
-> experiences regarding the use of Rust for device modeling within QEMU.
->
-> 1. The first patch implements the BusState for the I2CBus infrastructure.
-> 2. The second patch implements the I2CBus and I2CSlave infrastructure, al=
-ong
->    with a discussion of the challenges encountered during the implementat=
-ion.
-> 3. The third patch moves the struct definition of the PCF8574 to the
->    corresponding header file.
-> 4. The fourth patch provides a set of necessary helper functions for the =
-PCF8574
->    GPIO device.
-> 5. The fifth patch implements the PCF8574 GPIO device, along with a discu=
-ssion
->    of the issues and considerations addressed during the implementation.
->
-> Regarding this series of patches, we have found that Rust for QEMU is ind=
-eed
-> still not mature enough and requires continuous iteration. Additionally, =
-the
-> lack of basic documentation also needs to be addressed. In this regard, I=
- hope
-> our team(HUST OpenAtom Open Source Club) can contribute to the documentat=
-ion
-> efforts for Rust for QEMU.
->
-> Link: https://groups.google.com/g/hust-os-kernel-patches/c/z7vHWg3xvDc
->
-> Signed-off-by: Chao Liu <chao.liu@openatom.club>
-> Signed-off-by: Chen Miao <chenmiao@openatom.club>
+Still trying to remove MO_TE uses, here looking at cpu_ld/st_data()
+in fixed-endianness targets.
 
-Hi! Are you going to send v3?
+Series split of bigger one [*] where Richard made a comment on
+*_code() patches. Since not related to *_data() uses, post separetely
+since almost ready (still few PPC/MIPS paths to update, but I'd rather
+check if this is heading in the correct direction before looking at
+them).
 
-Thanks,
+[*] https://lore.kernel.org/qemu-devel/20251121134503.30914-1-philmd@linaro.org/
 
-Paolo
+Philippe Mathieu-Daudé (12):
+  target/hexagon: Use little-endian variant of cpu_ld/st_data*()
+  target/tricore: Use little-endian variant of cpu_ld/st_data*()
+  target/rx: Use little-endian variant of cpu_ld/st_data*()
+  target/m68k: Use little-endian variant of cpu_ld/st_data*()
+  target/s390x: Use little-endian variant of cpu_ld/st_data*()
+  target/sparc: Use little-endian variant of cpu_ld/st_data*()
+  target/i386: Use little-endian variant of cpu_ld/st_data*()
+  target/hppa: Use little-endian variant of cpu_ld/st_data*()
+  target/riscv: Use little-endian variant of cpu_ld/st_data*() for
+    vector
+  target/sh4: Replace cpu_stl_data() by explicit endianness variants
+  target/mips: Use big-endian variant of cpu_ld/st_data*() for MSA
+  accel/tcg: Remove non-explicit endian cpu_ld/st*_data*() helpers
 
-> ---
-> Changes in V2:
->   - According to Zhao's suggestions, some modifications were made to the =
-first
->     and second patches respectively, such as changing some bus names, add=
-ing
->     some Safety comments, and adding callbacks for I2CSlave.
->   - While we were making changes to the first PATCH, Chao Liu pointed out=
- that
->     the realize function was unnecessary in the bus. After discussion, we
->     removed the bus::realize function. Since no other components are curr=
-ently
->     using the bus, we added a TODO comment for clarification.
->
-> chenmiao (5):
->   rust/hw/core: Add the BusState of rust version
->   rust/hw/core: Add rust bindings/funcs for i2c bus
->   hw/gpio: Move the pcf8574 struct to header
->   rust/hw/core: Provide some interfaces for the GPIO device
->   rust/hw/gpio: Add the the first gpio device pcf8574
->
->  hw/gpio/Kconfig                      |   5 +
->  hw/gpio/meson.build                  |   2 +-
->  hw/gpio/pcf8574.c                    |  32 --
->  include/hw/gpio/pcf8574.h            |  36 +++
->  rust/Cargo.lock                      |  21 +-
->  rust/Cargo.toml                      |   1 +
->  rust/hw/Kconfig                      |   1 +
->  rust/hw/core/meson.build             |   2 +
->  rust/hw/core/src/bus.rs              |  44 +++
->  rust/hw/core/src/i2c.rs              | 421 +++++++++++++++++++++++++++
->  rust/hw/core/src/irq.rs              |   6 +-
->  rust/hw/core/src/lib.rs              |   6 +
->  rust/hw/core/src/qdev.rs             |  12 +-
->  rust/hw/core/wrapper.h               |   1 +
->  rust/hw/gpio/Kconfig                 |   2 +
->  rust/hw/gpio/meson.build             |   1 +
->  rust/hw/gpio/pcf8574/Cargo.toml      |  31 ++
->  rust/hw/gpio/pcf8574/build.rs        |   1 +
->  rust/hw/gpio/pcf8574/meson.build     |  50 ++++
->  rust/hw/gpio/pcf8574/src/bindings.rs |  29 ++
->  rust/hw/gpio/pcf8574/src/device.rs   | 180 ++++++++++++
->  rust/hw/gpio/pcf8574/src/lib.rs      |   4 +
->  rust/hw/gpio/pcf8574/wrapper.h       |  51 ++++
->  rust/hw/meson.build                  |   1 +
->  24 files changed, 902 insertions(+), 38 deletions(-)
->  create mode 100644 rust/hw/core/src/bus.rs
->  create mode 100644 rust/hw/core/src/i2c.rs
->  create mode 100644 rust/hw/gpio/Kconfig
->  create mode 100644 rust/hw/gpio/meson.build
->  create mode 100644 rust/hw/gpio/pcf8574/Cargo.toml
->  create mode 120000 rust/hw/gpio/pcf8574/build.rs
->  create mode 100644 rust/hw/gpio/pcf8574/meson.build
->  create mode 100644 rust/hw/gpio/pcf8574/src/bindings.rs
->  create mode 100644 rust/hw/gpio/pcf8574/src/device.rs
->  create mode 100644 rust/hw/gpio/pcf8574/src/lib.rs
->  create mode 100644 rust/hw/gpio/pcf8574/wrapper.h
->
-> --
-> 2.43.0
->
+ include/accel/tcg/cpu-ldst.h         |  46 --------
+ target/hexagon/macros.h              |   6 +-
+ target/i386/ops_sse.h                |  12 +--
+ target/i386/tcg/seg_helper.h         |  12 +--
+ linux-user/vm86.c                    |   4 +-
+ target/hexagon/op_helper.c           |   6 +-
+ target/hppa/op_helper.c              |  44 ++++----
+ target/i386/tcg/mem_helper.c         |   8 +-
+ target/i386/tcg/mpx_helper.c         |  28 ++---
+ target/i386/tcg/seg_helper.c         |  16 +--
+ target/i386/tcg/system/excp_helper.c |   8 +-
+ target/i386/tcg/system/svm_helper.c  |  48 ++++-----
+ target/m68k/fpu_helper.c             |  12 +--
+ target/m68k/op_helper.c              |  88 ++++++++--------
+ target/mips/tcg/msa_helper.c         |  51 +++++----
+ target/riscv/vector_helper.c         |  12 +--
+ target/rx/helper.c                   |  14 +--
+ target/rx/op_helper.c                |   6 +-
+ target/s390x/tcg/mem_helper.c        |  48 ++++-----
+ target/s390x/tcg/vec_helper.c        |   8 +-
+ target/sh4/op_helper.c               |   6 +-
+ target/sparc/ldst_helper.c           |   6 +-
+ target/tricore/op_helper.c           | 152 +++++++++++++--------------
+ 23 files changed, 305 insertions(+), 336 deletions(-)
+
+-- 
+2.51.0
 
 
