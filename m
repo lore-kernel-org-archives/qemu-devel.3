@@ -4,101 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2307DD0E6C7
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 11:57:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C0A0CFD370
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 12:01:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNrfE-0003Gx-Vv; Tue, 25 Nov 2025 06:56:57 -0500
+	id 1vNrj7-0006Zw-1i; Tue, 25 Nov 2025 07:00:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
- id 1vNrew-000330-9y
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 06:56:43 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vNrip-0006Xk-RR
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 07:00:41 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rkrcmar@ventanamicro.com>)
- id 1vNres-0001Ts-R3
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 06:56:37 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4779d8286d8so5328195e9.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 03:56:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vNrif-00029B-Di
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 07:00:32 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4779d47be12so41633015e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 04:00:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1764071791; x=1764676591; darn=nongnu.org;
- h=in-reply-to:references:cc:subject:from:to:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1764072018; x=1764676818; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7kyw4befvI18aymVdMUr3l27qAPs4Z/qz6RNj8ukU1M=;
- b=O+g92Q9g9z4u0Rtn1y0IVbHFYod1yBNC2IoupR3EWLvpgeDNXjcOfuohrCYfeGt774
- 5f8us6IQk3NRy74FViuDROfm90hoP+jsGDYDwMS6S4gZdOEyEqU/s+Quio+5xnwIFUI1
- ORB2Me/cbRtNxfOulcEmOccnVLxawdYauKXJRZbcginohBFjx5Ci/857w3Ew6Rl3sR/S
- a6t6Nq81+/aheMf4BX8TuUO3YS5xC6IAnTAu3cKQBiKXN1Ndk2bfDfBUq1fdWbzqqqRg
- eW72V3LsXpG9nuj9+d56Koay4wr4vf0S4eFakVL6xnv7OcfjhOzqqklgCVf390fHh3ae
- nD3w==
+ bh=ecypEMEzP73TRq5On9WN7Q9wTXhEMaUh4K+vF8OjU5Y=;
+ b=vu5/fvpFIw/GI7WIrQ+U7tKdB9m3htwFnQTNU1pMUESF8HziwvmA86kIjEH8sIOWtC
+ UhNb8zYFX6sOvF0ZF0+YmK3QkBOxQW6kPMKpkZQChIyhqbiwiU8paMZ2RXgGWl0XCBge
+ 8VNjlTxGvDJJN8UlBZYSmXsMea3hXYGwIhNDQKjknQE8SNxKQ+c5RItX4zpfrKwwL2qC
+ OJnuTqOkMbQOExbyjTgjhlrsEmwg6u8bT2r5phQ592ow/tpJtFbX/T/+AwLixRNA2WK7
+ e07ajdUjrXdmVJOG9jUtPilu9TIUgoH1y/11Yuw132hEL8tbdNNl0gXXfVZRC/CPTju5
+ 1BIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764071791; x=1764676591;
- h=in-reply-to:references:cc:subject:from:to:message-id:date
- :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7kyw4befvI18aymVdMUr3l27qAPs4Z/qz6RNj8ukU1M=;
- b=n2dVBiK2eVjBk0KmENzExxogRmYqPIIWEGWz0pqmau9KremXHrButPftffOsOGmRxs
- QR64b/mpy4+Vny8uYoz5zIjH1IB62LHtSY072NZkZQ3BmKLwKSdR2QcnqJAzuD9/C+Wv
- U60YoUve09HzEvU+OIriZG7ejj48GTDkLj2i624/p3YpY3SjS73J39ww6bQMc7tcfxdp
- eD2yu6ryb+0gKQrwrTqA7rFLVvYE3/IRVZtUzZHO6E2hQs0z6wYmfGmkeqSbOI6xl7lj
- iDSWqMhAXSGM0pXN3CvSHXQFhAobplQB+nLN+UK4myD/DInIevGvPhFD2bFZw/ISH0MV
- 72VQ==
-X-Gm-Message-State: AOJu0YwTAg4g0AsTZhsGy+GISW1EQjG5mkiuFJ+g+blmRUHDOGBrDoCJ
- i0G2OqALEXO0G/ufxuoFa5+pNaVlZHs7oGYAN3uy6NpnXZ8lQs0mmXx58QgBSMuyOaU=
-X-Gm-Gg: ASbGncuLY+1cLqYAxAwYQiuojbopNojIjtusdNEOk7qDO6XwoFlkxw6jVUWGUPaGMLJ
- S4Se+o+O7G2SFxbjr+b2as7MUTJQS92hhT8bsSjJnLUoCGYKfyh49LFYZ9GObIHBWA8IttC6JqV
- G8O5Ndauby2FdF/B7jJ7J2XjDd6sPzT/v8jxWi8Ygq6NKU4bltdT5MrCDeJmfd3qZw88qujFzWs
- 5L9nSJCpOJtuWgSP7CObzcf16ymyx0lE8l1xmVkPL1GevSeEAjFkB5nyZv9VcdaS/Tm3HwAovO+
- +blBJgMBfTYVQnsfrYqq9ZdYOEwazvUqLDA81+p4Th2EDfMwGF1pFkud1Su9AL5JPn+dt28niBH
- yh5AGI+U/7HS/YTilhH9OKPkUxBVQN+BsiHXTAGW90iHdRi/bPwaLqsErk8TJihIIkNSFMKBapc
- k=
-X-Google-Smtp-Source: AGHT+IFZTloe7LfpQtOsFEgjeDg6mpCEPL60xSAbEXBCcFV273O4wWK1+hQSkcnsrqw5+pCP+XgO5A==
-X-Received: by 2002:a05:600c:1551:b0:477:555b:3411 with SMTP id
- 5b1f17b1804b1-477c2ef91d3mr80375375e9.1.1764071790520; 
- Tue, 25 Nov 2025 03:56:30 -0800 (PST)
-Received: from localhost ([2a02:8308:a00c:e200::3052])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-477bf3ba1b4sm251521605e9.15.2025.11.25.03.56.29
+ d=1e100.net; s=20230601; t=1764072018; x=1764676818;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ecypEMEzP73TRq5On9WN7Q9wTXhEMaUh4K+vF8OjU5Y=;
+ b=aPiE5tTfdcn6Z1CX1nFjpuKjjgUcpfANFrTy6dgwRgT6U+NeIOxu5+iGpNcu4SAhoa
+ SntMWXojSGDqEYE9vMWfUjBpQ8Vq1dT+3+n7YmmmLkhv6HCYIC5nLWTR5kzmGfIbhVY/
+ NYk+1fTyOv8V6rkG5H8FFEaaNpIz+i9MHDmIDNXOyexfNjb+aTc4H98e/gL5VAkrHXLs
+ ibtI4hOs/cuDVI7ttKBG6DjRc08mHkCalYWyV2y7ZtApr49G2H6gwxxGlNyHOOCA9wHt
+ KeCXbtm8vmq5DxGR+e/olVMrwnFqQh7GWFgyK8ySFUnn9Yoty3+5iXZO0FXkBh/NDwJf
+ DitA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX6OwHyRh22BjWsRvj1Hvv1Xr+AyDYPiHMbKvKhNyHqooaqdXWtRzO7e18AlVynaeV/TqNAQkPPqpec@nongnu.org
+X-Gm-Message-State: AOJu0YxR3KoI1wQmw7BMKYpis7LMxhMZJWRZhD7qlecS9z/+hR/tn4/6
+ RwAJ2ntfWTH7dah3lTS8pHM7xsOp9bCK62RJ1ZJnuT2fjYc7SFacn56Vj2Pgu2SYbyo=
+X-Gm-Gg: ASbGncsE3y88xPKqzQUQJt2JGc3JMSWyTvvflUS2mlyO/GRao6m5HopaoNf0/VUtgSd
+ 8stoF4hD5blTc6PZ99Y4EvlVHls9FKncjb0SDs51t2paeV7I5p6ATmOt0yk9GpSVpkJE9u8BOAl
+ DytJcqJZhlqK/Ttff44BuR0Ywd65o+28HS6qm3vUx+ZqA80NIewYJkgb97xHFargN+aNLiLaAhm
+ QA6xsSO/oygowhU/wWBorMz9Btli4jh/1UvYoCcUVuyHqo93wtawploALCGxnaDhvWcHoVJg6Po
+ 0fBZlRS06ypcPz8XGfofWbNWVW6gFvL0XRG/NbyiRRY9L3iTxqYFBeFBLBfefPyS7OLGhMpn9vN
+ ZFUXDvsHW2WhFzxrv5UNqC1/T+NT+fqNlbfmdVateOJzJVJQMzx7lyyAY3wM/1Pgqg0qBVKxpob
+ pYcJmrLI4E8yM=
+X-Google-Smtp-Source: AGHT+IGnTDekjuEhUIJKSl/3EuPc0l/h2oLMDCE7HZx43kcKIH/f6nzIPbw+oRHeM185v5V+6HMf2A==
+X-Received: by 2002:a05:600c:1994:b0:46f:c55a:5a8d with SMTP id
+ 5b1f17b1804b1-477c0176437mr159902955e9.4.1764072018404; 
+ Tue, 25 Nov 2025 04:00:18 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fa41d2sm34010951f8f.22.2025.11.25.04.00.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Nov 2025 03:56:30 -0800 (PST)
-Mime-Version: 1.0
+ Tue, 25 Nov 2025 04:00:17 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id EA2035F7EF;
+ Tue, 25 Nov 2025 12:00:16 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Huang Rui
+ <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  "Michael S . Tsirkin"
+ <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Yiwei Zhang
+ <zzyiwei@gmail.com>,  Sergio Lopez Pascual <slp@redhat.com>,  Gert Wollny
+ <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan Singh
+ <gurchetansingh@chromium.org>,  Alyssa Ross <hi@alyssa.is>,  Roger Pau
+ =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,  Alex Deucher
+ <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K?=
+ =?utf-8?Q?=C3=B6nig?=
+ <christian.koenig@amd.com>,  Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,  Julia Zhang
+ <julia.zhang@amd.com>,  Chen Jiqian <Jiqian.Chen@amd.com>,  Rob Clark
+ <robdclark@gmail.com>,  Robert Beckett <bob.beckett@collabora.com>
+Subject: Re: [RFC PATCH v4 3/7] virtio-gpu: Improve
+ virgl_cmd_resource_map_blob() error handling
+In-Reply-To: <20251125023517.177714-4-dmitry.osipenko@collabora.com> (Dmitry
+ Osipenko's message of "Tue, 25 Nov 2025 05:35:13 +0300")
+References: <20251125023517.177714-1-dmitry.osipenko@collabora.com>
+ <20251125023517.177714-4-dmitry.osipenko@collabora.com>
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Tue, 25 Nov 2025 12:00:16 +0000
+Message-ID: <87wm3e725r.fsf@draig.linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 25 Nov 2025 12:55:54 +0100
-Message-Id: <DEHR8WGZCTQW.3GFZR4PZNGOAH@ventanamicro.com>
-To: "Drew Fustini" <fustini@kernel.org>
-From: =?utf-8?q?Radim_Kr=C4=8Dm=C3=A1=C5=99?= <rkrcmar@ventanamicro.com>
-Subject: Re: [PATCH 3/7] hw/riscv: implement CBQRI capacity controller
-Cc: <qemu-devel@nongnu.org>, "Palmer Dabbelt" <palmer@dabbelt.com>,
- "Alistair Francis" <Alistair.Francis@wdc.com>, "Weiwei Li"
- <liwei1518@gmail.com>, "Daniel Henrique Barboza"
- <dbarboza@ventanamicro.com>, "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>,
- <qemu-riscv@nongnu.org>, "Paolo Bonzini" <pbonzini@redhat.com>, "Nicolas
- Pitre" <npitre@baylibre.com>, =?utf-8?q?Kornel_Dul=C4=99ba?=
- <mindal@semihalf.com>, "Atish Kumar Patra" <atishp@rivosinc.com>, "Atish
- Patra" <atish.patra@linux.dev>, "Vasudevan Srinivasan" <vasu@rivosinc.com>,
- "yunhui cui" <cuiyunhui@bytedance.com>, "Chen Pei"
- <cp0613@linux.alibaba.com>, <guo.wenjia23@zte.com.cn>,
- <liu.qingtao2@zte.com.cn>,
- <qemu-riscv-bounces+qemu-riscv=archiver.kernel.org@nongnu.org>
-References: <20251119-riscv-ssqosid-cbqri-v1-0-3392fc760e48@kernel.org>
- <20251119-riscv-ssqosid-cbqri-v1-3-3392fc760e48@kernel.org>
- <DEDROLF9I9YQ.2MQIEGB7I4BKH@ventanamicro.com> <aSDCmrvONUgvzqbV@x1>
- <DEH356RBYAIG.IS7SP4D5XLIQ@ventanamicro.com> <aSSl6+i5fa4+kD3Q@x1>
-In-Reply-To: <aSSl6+i5fa4+kD3Q@x1>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=rkrcmar@ventanamicro.com; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,76 +125,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-2025-11-24T10:37:31-08:00, Drew Fustini <fustini@kernel.org>:
-> On Mon, Nov 24, 2025 at 06:02:37PM +0100, Radim Kr=C4=8Dm=C3=A1=C5=99 wro=
-te:
->> 2025-11-21T11:50:50-08:00, Drew Fustini <fustini@kernel.org>:
->> > On Thu, Nov 20, 2025 at 08:25:44PM +0100, Radim Kr=C4=8Dm=C3=A1=C5=99 =
-wrote:
->> >> 2025-11-19T16:42:19-08:00, Drew Fustini <fustini@kernel.org>:
->> >> > +static void riscv_cbqri_cc_realize(DeviceState *dev, Error **errp)
->> >> > +{
->> >> > +    RiscvCbqriCapacityState *cc =3D RISCV_CBQRI_CC(dev);
->> >> > +
->> >> > +    if (!cc->mmio_base) {
->> >> > +        error_setg(errp, "mmio_base property not set");
->> >> > +        return;
->> >> > +    }
->> >> > +
->> >> > +    assert(cc->mon_counters =3D=3D NULL);
->> >> > +    cc->mon_counters =3D g_new0(MonitorCounter, cc->nb_mcids);
->> >> > +
->> >> > +    assert(cc->alloc_blockmasks =3D=3D NULL);
->> >> > +    uint64_t *end =3D get_blockmask_location(cc, cc->nb_rcids, 0);
->> >> > +    unsigned int blockmasks_size =3D end - cc->alloc_blockmasks;
->> >> > +    cc->alloc_blockmasks =3D g_new0(uint64_t, blockmasks_size);
->> >> > +
->> >> > +    memory_region_init_io(&cc->mmio, OBJECT(dev), &riscv_cbqri_cc_=
-ops,
->> >> > +                          cc, TYPE_RISCV_CBQRI_CC".mmio", 4 * 1024=
-);
->> >>=20
->> >> Shouldn't the region size take cc->ncblks into account?
->> >> (A bitmask for 2^16 ids is 8kB.)
->> >
->> > cc_block_mask field is BMW / 8. In the case of NCBLKS of 12 and NCBLKS
->> > of 16, both end up with a BMW of 64 which would be 8 bytes. I think th=
-e
->> > the only reason the allocation is 4KB is that is meant to be aligned t=
-o
->> > the page size. Otherwise, the capacity controller register layout is
->> > pretty small.
->>=20
->> I understood NCBLKS as the amount of bits in the capacity bitmask, and
->> NCBLKS in encoded in a 16 bit field, which means up to 65536 bits.
->> Is there a lower limit?
->
-> Ah, yes, thank you for correcting me. NCBLKS can be 2^16 therefore BMW
-> can be 8 KB:=20
->
-> x =3D 65536
-> x +=3D 63 =3D> 65599
-> x /=3D 64 =3D> 1024
-> x *=3D 64 =3D> BMW is 65536 bits
-> cc_block_mask =3D BMW/8 =3D 8192 bytes
->
-> This would yield capacity register layout:
->
-> cc_capabilities	8
-> cc_mon_ctl	8
-> cc_mon_ctr_val	8
-> cc_alloc_ctl	8
-> cc_block_mask	8192
-> cc_cunits	8
->
-> Thus I think the mmio size would need to be: (BMW/8) + 40
->
-> In the max NCBLKS case, that would be 8,232 bytes. I am wondering if
-> that a problem as it would not be aligned on a 4 KB page boundary. Do
-> you think that would be a problem?
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-memory_region_init_io will handle it, and I think it is actually better
-to specify the exact size.
+> Make virgl_cmd_resource_map_blob() return -1 for errors originated from
+> external virglrenderer library and respond to guest with most appropriate
+> error message.
+>
+> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> # guest err msg
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>  hw/display/virtio-gpu-virgl.c | 13 +++++++++++--
+>  1 file changed, 11 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 2224f59cf5d7..edcdad0af232 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -138,7 +138,7 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>      if (ret) {
+>          qemu_log_mask(LOG_GUEST_ERROR, "%s: failed to map virgl resource=
+: %s\n",
+>                        __func__, strerror(-ret));
+> -        return ret;
+> +        return -1;
 
-Thanks.
+If we are using errno's lets use the defines rather than -1, should this
+be -EPERM?
+
+>      }
+>=20=20
+>      vmr =3D g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
+> @@ -789,7 +789,16 @@ static void virgl_cmd_resource_map_blob(VirtIOGPU *g,
+>      }
+>=20=20
+>      ret =3D virtio_gpu_virgl_map_resource_blob(g, res, mblob.offset);
+> -    if (ret) {
+> +
+> +    switch (ret) {
+> +    case 0:
+> +        break;
+> +
+> +    case -EINVAL:
+> +        cmd->error =3D VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
+> +        return;
+
+which isn't what can come here. I see EOPNOTSUPP not being handled either.
+
+> +
+> +    default:
+>          cmd->error =3D VIRTIO_GPU_RESP_ERR_UNSPEC;
+>          return;
+>      }
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
