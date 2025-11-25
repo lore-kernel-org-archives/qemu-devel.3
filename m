@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1596CFD315
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 07:06:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98A18CFD364
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 07:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNn7s-0003U6-FV; Tue, 25 Nov 2025 02:06:12 -0500
+	id 1vNnCN-0006vC-Bk; Tue, 25 Nov 2025 02:10:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vNn7p-0003Q6-UJ
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 02:06:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vNnCL-0006tw-ED
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 02:10:49 -0500
+Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vNn7j-0001SZ-Ov
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 02:06:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764054362;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=DZK9oZtk3DC2XEVelKmzlvWizat0Ja1Mp1qEHVxErHg=;
- b=Sy2Dpx6srB+T5wpF2cGsoRoQu8g9tQXb0Gu1ls7z+IJ1Dieio+UixmX955rbtUEu7q3Nh7
- y/aWKBxAWnFGpjoLvaVNzgAJs7bfrL4qqt3RY57H7S1xLgPTue8OPhBkSueXcLUsVx/ZyJ
- IvrjUvuWcqH9LOpy6CEnhZCctnu4MOU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-295-swTkVXClMWev4xB_Iyv3yQ-1; Tue,
- 25 Nov 2025 02:05:58 -0500
-X-MC-Unique: swTkVXClMWev4xB_Iyv3yQ-1
-X-Mimecast-MFC-AGG-ID: swTkVXClMWev4xB_Iyv3yQ_1764054357
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2DDD6180034A; Tue, 25 Nov 2025 07:05:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5ACB18004D8; Tue, 25 Nov 2025 07:05:56 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 77BC521E6A27; Tue, 25 Nov 2025 08:05:54 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
-	farosas@suse.de,
-	peter.maydell@linaro.org
-Subject: [PATCH] migration: Fix double-free on error path
-Date: Tue, 25 Nov 2025 08:05:54 +0100
-Message-ID: <20251125070554.2256181-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vNnCI-00024O-RV
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 02:10:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1764054646; x=1795590646;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Z97xnWPHcuHDol7wfz8W091+foCH7Ni8mcM+R2WTW3g=;
+ b=fZV5Coc2hZhDZ8NH6aZgDvPt+LJ/7bg9gKaexcXUQjVpyZCxaHUarp3X
+ HO6eQVTftxj93JvDoagKf8SIRexbwvl8nccDMQAjZn5SBpfzm9TeQLnQr
+ jbZMb4P2ypJlamHyPkflz0hKgxMjR+ObCJsUBOcClTtKjQBZRrhDOQ5c5
+ xbGHojxj21MgTl+pUemfGh48ZvwMTZ6ApithVDwOuDatbHbZf3MDk7+Dl
+ qhkkF6g4cWzgwnribCp2TRFd/8zh14nf42O5otZIWpolmw36VfKJBVoeZ
+ HJSjroa+XldOYJVdKvgXtC/nMNEKibCp2D2UeLhP19rQOpwZBNynmJ8UE g==;
+X-CSE-ConnectionGUID: v5TwY8P7Tsq6Tc7cZw0VLA==
+X-CSE-MsgGUID: N+9ee8QBQBiVG/PJThZ6hA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11623"; a="65953487"
+X-IronPort-AV: E=Sophos;i="6.20,224,1758610800"; d="scan'208";a="65953487"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Nov 2025 23:10:44 -0800
+X-CSE-ConnectionGUID: pMiHqy8yQKKZjDa1Ge2Rgg==
+X-CSE-MsgGUID: UniVVoJ2RvKDsHHWp9SBNg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,224,1758610800"; d="scan'208";a="192634830"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa008.jf.intel.com with ESMTP; 24 Nov 2025 23:10:42 -0800
+Date: Tue, 25 Nov 2025 15:35:21 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Ewan Hai <ewanhai-oc@zhaoxin.com>
+Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, ewanhai@zhaoxin.com,
+ cobechen@zhaoxin.com
+Subject: Re: [PATCH v2 3/4] target/i386: Introduce Zhaoxin Shijidadao-Client
+ CPU model
+Message-ID: <aSVcOX5WvJYjIEbM@intel.com>
+References: <20251027102139.270662-1-ewanhai-oc@zhaoxin.com>
+ <20251027102139.270662-4-ewanhai-oc@zhaoxin.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251027102139.270662-4-ewanhai-oc@zhaoxin.com>
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,27 +85,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes: ffaa1b50a879 (migration: Use warn_reportf_err() where appropriate)
-Resolves: Coverity CID 1643463
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- migration/multifd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> +        /*
+> +         * TODO: When the Linux kernel introduces other existing definitions
+> +         * for this leaf, remember to update the definitions here.
+> +         */
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 6210454838..3203dc98e1 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -450,7 +450,7 @@ static void multifd_send_set_error(Error *err)
-  */
- static void migration_ioc_shutdown_gracefully(QIOChannel *ioc)
- {
--    g_autoptr(Error) local_err = NULL;
-+    Error *local_err = NULL;
- 
-     if (!migration_has_failed(migrate_get_current()) &&
-         object_dynamic_cast((Object *)ioc, TYPE_QIO_CHANNEL_TLS)) {
--- 
-2.49.0
+This TODO seems a bit vague; it's best to explicitly list the existing
+features that are currently missing. Otherwise, maintainers won't be
+able to understand or clean up this TODO either.
+
+> +        .features[FEAT_C000_0001_EDX] =
+> +            CPUID_C000_0001_EDX_PMM_EN | CPUID_C000_0001_EDX_PMM |
+> +            CPUID_C000_0001_EDX_PHE_EN | CPUID_C000_0001_EDX_PHE |
+> +            CPUID_C000_0001_EDX_ACE2 |
+> +            CPUID_C000_0001_EDX_XCRYPT_EN | CPUID_C000_0001_EDX_XCRYPT |
+> +            CPUID_C000_0001_EDX_XSTORE_EN | CPUID_C000_0001_EDX_XSTORE,
+
+...
+
+> +        .model_id = "Zhaoxin Shijidadao-Client Processor",
+> +        .cache_info = &shijidadao_cache_info,
+> +        .versions = (X86CPUVersionDefinition[]) {
+> +            { .version = 1 },
+> +            {
+> +                .version = 2,
+> +                .note = "with more XSAVE features",
+
+it's better to mention "without smap" as well.
+
+(Based based on my personal experience, the absence of SMAP seems a bit
+odd. Could it be a hardware bug in a specific stepping?)
+
+> +                .props = (PropValue[]) {
+> +                    { "xsavec", "on" },
+> +                    { "xgetbv1", "on" },
+> +                    { "xsaves", "on"},
+> +                    { "vmx-xsaves", "on"},
+> +                    { "smap", "off" },
+> +                    { /* end of list */ }
+> +                },
+> +            },
+
+BTW, if the differences aren't too significant, is it possible to merge
+the server and client models? :)
+
+Thanks,
+Zhao
 
 
