@@ -4,90 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC4A2D0EE14
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 19:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D51BD0EE14
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 19:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNyiz-0002Aw-V1; Tue, 25 Nov 2025 14:29:17 -0500
+	id 1vNylX-0004Q7-Ue; Tue, 25 Nov 2025 14:31:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vNyiw-00027R-JK
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:29:14 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vNyit-0003lY-1F
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:29:12 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2953ad5517dso71092005ad.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 11:29:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764098949; x=1764703749; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=A6sN/uQ+4XPNEXBbjU7wm5XqFLM56AhdQHyyrI9cKJk=;
- b=NNvVOzIc4d4O8KMqUmYZMLscnmega981H/QjK+cE39WcxglZW6PbjxrS3x7R49/Iqk
- mTo0AQUvwed9D9nHv4+gAM0zcLzrDewvqYS3dA9X3R44UY2RZSa1d09wXXOJEGTE4T5U
- M2kwZ+Su9UymmTXR5SmSCknzTXWzGhXYfl84fMJW5E4WCQfQrXeCXLM8BQ9eYnICr4lP
- I83k7a/CLdRTxWRnTO260xNZfr5CjYXBLijd9OVh6HAztsbBUs2Q+7vQYBaRzH0r0ly2
- iNjecHmPSOPGizcrZmtO1pbSm8Bg78Nwjc6XAgloQpjYpzgx0J0B2iVf6M6W/3Lyhyvb
- Nu3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764098949; x=1764703749;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=A6sN/uQ+4XPNEXBbjU7wm5XqFLM56AhdQHyyrI9cKJk=;
- b=uAfQnLwDf07N5lzfW/KCfcF7Wc2Rp4rz83C3bQBuUVzJtpPzZwV+s4LxYYaAdfW0xk
- GPM+iyaS0iCl3Ix776RCYOaRFNP9vH3eHfBNx/FrjE1r66xS6WJY9Ube+uCRQV4+6CPp
- GG/a27i2quX3F2Pjs1YslTUPGeBif/8cPZlif5qN+nj3GUJGgSHSR3BV7oaAAWJgLItU
- Kph2Vlo4xHOdZLlLMOCk1O54R/zq5PmMncNHpYpMTOPCLR5WZM0LvU9FJm1ONcSwgCIW
- 62O6eyZtODC6Sxb8NSJQyWbQBJRLDVKvnoYp3O4+RtrnbOQLsq/QRT730nSN7+UqFWBT
- bukA==
-X-Gm-Message-State: AOJu0YxD7sVsIqmmZOPSXmHE4MRXn0/5Bhxkw/DM2+no39FjACam5zZ/
- C3hkvHimXXtgyaNbn6Gm21bcf36U421diFVGporPlMSlx4g77Awp7YKAmzfjG8JLrmA=
-X-Gm-Gg: ASbGnctmGxuzb83TJ9EsPeZ+ME+RUTaCX6ZE5tb261FQfHiJk6C51pWhmtQ2M1RC/Fv
- 3lY2OzQbGLQGCxwIYCRRyNZ5AtVFTFhQBaImO5Feo/2UjuiMur+C2m1q0az8TQ1ibQY4RPSv3m/
- 3gLU5xqnVRtWH4KlQXkVJFDXfl7DBrMweFYUUGK0/5yyCP1ekHgyQvkVkQfvO1iou1/ypX+Y5FH
- TNpZoDEIHtRLvXvtRB6uuAPoEbLnHENYPsVqkiUSmVa0FUZrA0LYeHCdETSr3tEObnPBIb97Aqf
- icVGjKGmnDZGLeFAcXnrfv50Q7Zdb9d6GKp5VFVx9KRciZnwwXw85J9Z8dmpF91FCGvZKrv3ypc
- Dh8u3CqCfMP/lTybbW3dGYxEBWVnDEyOTCFuZ03yNHF+GiL6kxoNslu4etJmcHvlYGuZcaRtAPe
- acwavv+uBKoWJl+efUc0fmQXGrqJbc0afUPaQxA5XCsYB1WlIAsQ==
-X-Google-Smtp-Source: AGHT+IEdbHY2l19aw+bG8uzstYTlcXxDzgEZc0sDUDZEuS1p0N/CEAVk/CkeQvqogTT4uhGUMdK7rw==
-X-Received: by 2002:a17:903:2342:b0:298:970:b24a with SMTP id
- d9443c01a7336-29bab2fe6c8mr40846925ad.58.1764098949413; 
- Tue, 25 Nov 2025 11:29:09 -0800 (PST)
-Received: from [192.168.0.4] (174-21-76-60.tukw.qwest.net. [174.21.76.60])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29b5b2809b6sm175097495ad.76.2025.11.25.11.29.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Nov 2025 11:29:08 -0800 (PST)
-Message-ID: <5c9ed281-978d-461a-9e16-0ac8994246cb@linaro.org>
-Date: Tue, 25 Nov 2025 11:29:07 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/4] Block layer patches
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vNylV-0004Lb-G8
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:31:53 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vNylT-0004Fy-KV
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:31:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=mw+OjuDq+JBedNWeZB9RUJCNwJyGm63p6i8VVJ5DXaY=; b=Y7G41XijingiWOyZk+hptmY5kT
+ 0us03kByNLYnK61hL6/vmlqaBdRUddOt8dgHS2J2/sNRFl3XqjLw3vtEWELdblhOVMOsyoDejRJOS
+ +K7kOrocJs7rYhBL4kWlyuTrii35yamivWn2QqoOqUOA1O9ZFhH53dZ3731liPSLBANgAzkxbIae9
+ tJn8HgdDnm5kl2BPHx0IWTqyaKrzGCeCU31TnAt3aftY3jXLW7vGAoVNHf1bZ/L3xxw5eYN+0W12D
+ rvd37SrmIxz59SqI0vTJz8K3+RDR7VwByiG8sg091p89PrT8K8oMDiBKf2NwHLerimKBj12TMVUPp
+ i2kmTPASaCnIZdviq2rdS3gksG+ouJTQ2krG87GQ6BXvz4zMdLb1x+XMMg8hy9ObJJgaArr5JqFle
+ UxQCkF1jnUy2hP78C0R/gR/hCNYxKxltJFMDsD0c89pEMePpRT5AA9T2/3tufPwPY1pROm+SMkuib
+ 9/TvnfFN4SUO1Dm84HFYI8tQyAWYYOnTPJVB53OF/1q3CmfLKCQPIhWTRtLUdmcBCpaYnobD0bYSN
+ /4po5JBW/TPZpOTff8Ey2vRsAy/Urgl/JlKonv7y3ka29h97s8m2WaMVX2dvImuwqRvnVqiBQH6AS
+ XSLYq/OkSI2KHhxKLnVg0h3/XHxWZlWD1P3JHrNZs=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: Andrey Erokhin <language.lawyer@gmail.com>, Greg Kurz <groug@kaod.org>
 Cc: qemu-devel@nongnu.org
-References: <20251125161648.259321-1-kwolf@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251125161648.259321-1-kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Subject: Re: [PATCH v2] 9pfs: local: read native symlinks when
+ security-model=mapped
+Date: Tue, 25 Nov 2025 20:31:32 +0100
+Message-ID: <13893778.uLZWGnKmhe@weasel>
+In-Reply-To: <20251125195819.5bf1e051@bahia>
+References: <3c35955d-a57e-4203-81c5-395146e23f83@gmail.com>
+ <c9461c73-fbda-4963-b96c-3fd4b2d6ce41@gmail.com>
+ <20251125195819.5bf1e051@bahia>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,26 +72,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/25/25 08:16, Kevin Wolf wrote:
-> The following changes since commit de074358e99b8eb5076d3efa267e44c292c90e3e:
+On Tuesday, 25 November 2025 19:58:19 CET Greg Kurz wrote:
+> On Tue, 25 Nov 2025 19:21:00 +0500
 > 
->    Merge tag 'pull-target-arm-20251124' ofhttps://gitlab.com/pm215/qemu into staging (2025-11-24 09:03:12 -0800)
+> Andrey Erokhin <language.lawyer@gmail.com> wrote:
+> > >> +    native_symlink:;
+> > > 
+> > > Still has the terminating but unneeded semicolon
+> > 
+> > I think I've addressed this in the v1 thread, with links to the C11 draft
+> > grammar. Can repeat in plain English: a label shall be followed by a
+> > statement. (No, declaration is not a statement)
+> My bad, I didn't see your answer.
 > 
-> are available in the Git repository at:
+> It is funny that I had to pass -pedantic to gcc to get a complaint (in plain
+> English as well) if I drop the semicolon :
 > 
->    https://repo.or.cz/qemu/kevin.git tags/for-upstream
+> warning: a label can only be part of a statement and a declaration is not a
+> statement [-Wpedantic]
 > 
-> for you to fetch changes up to 59a1cf0cd31597d2f6e2c18dc400a1de8427d47d:
-> 
->    iotests: add Linux loop device image creation test (2025-11-25 15:26:22 +0100)
-> 
-> ----------------------------------------------------------------
-> Block layer patches
-> 
-> - Image creation: Honour pwrite_zeroes_alignment for zeroing first sector
-> - block-backend: Fix race (causing a crash) when resuming queued requests
+> Cheers,
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+Yes, I noticed that as well. GCC compiles fine without the semicolon, clang 
+OTOH errors:
 
-r~
+../hw/9pfs/9p-local.c:481:9: error: expected expression
+        char *dirpath = g_path_get_dirname(fs_path->data);
+        ^
+
+Anyway, Andrey is right of course. The C standard defines a "labeled-
+statement" as
+
+  identifier : statement
+  ...
+
+and the subsequent line in the patch is a declaration, not a statement.
+
+But I also understand if GCC developers relaxed this rule. Because it "feels" 
+like both, a declaration and a statement. Interesting, because usually it's 
+clang to be more relaxed than GCC.
+
+/Christian
+
+
 
