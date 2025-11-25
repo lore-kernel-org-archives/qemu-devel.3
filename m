@@ -4,85 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F032DCFD37A
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:02:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0606CFD37B
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:07:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNpre-0000Ys-IE; Tue, 25 Nov 2025 05:01:38 -0500
+	id 1vNpx5-0004QN-0o; Tue, 25 Nov 2025 05:07:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNprb-0000XA-UO
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:01:36 -0500
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vNprY-0001Pz-KE
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:01:35 -0500
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-63fc8c337f2so5050422d50.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 02:01:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764064891; x=1764669691; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HF4PpXuuOQeqXii22oKDVv34al+inM2TG4gP95QmZwM=;
- b=wXtwT5XuJsQixdZO0xQ9+KTVJjvMv4oR8CiNR1jqZk36Z/80HsDsEgzj1NwDVVkoRq
- 2Z4CG5MOcWZuCGS7lu105bf8QCutfqTtMPxpMDve3wKbiOeeSwsGc3v4yb4viMOy2vwL
- arL3oBcKE1XIVUYm0b9lUhLQXroqeS2g3vI9ukffj9hey+KPT8JSsb4fmDcv9X/8RVZb
- Xal2Y4CVZAtnzGGdBpyxDmQhIcNjbCyMdw4nvjwwbFLn/K8WCedfsxnHyT3a7nE+sDQM
- Qgyr5+a+MzmSgvXv9MfEl8PvLwbVz6B65mmHn33UQopYMMOo4JKffZpXAozB6vh+1CSV
- ZdJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764064891; x=1764669691;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HF4PpXuuOQeqXii22oKDVv34al+inM2TG4gP95QmZwM=;
- b=LWC+WV5VAFezleJePXDYkKPs+C48D5HyJHCajBXIbMQdMrzJJ1KH5YFWKl/s1XCVrE
- vVpMm6QaxxEfpHpmJzifeGWWa2EQdbWKeWyvyeCpXbSciHOq92UiU8gPKx0L0BgvWR5h
- Sww+gSwFPA/ZoUGQAwJ7BqstB2vEPWXQ/ZFV47gK1loc9HG5154ZssDz+GXudd20p3Sf
- 4SkntRFmQ3+8OJ0ifzl5d6Ko6pJYfywoipmDGJIvuQV64tla/0D+wstwvxslCZ4UNB5i
- lFr8Y9jIRUudjf9Pe4+RUpSIuUwd7lyS9lrXKWvYk8Fm07rISNm11WrIHxQCAddqHj2T
- yc5g==
-X-Gm-Message-State: AOJu0YyEBvYsW0OXWUEZpdCUSaF/gX/bd7jZFjr/ohdQYvwyJe7r+gR8
- 67iwMqlxL8w0OeLz/sN3UKBEqOvXMYgsJuW9OMHs4nhmaHOkO2FVvMWf+psCncT10TrXAR6NVne
- gsynjQyj2mTbIC4bmeuSy32L06BE4tLLkzo1Ct1le8Q==
-X-Gm-Gg: ASbGncvBm8E3H4VLZebGDRSgPs8bfMQDt6X5/4pgxTfGCtZ0vz+w3499laAESuRxnkK
- /5BS1sQu5Kcj9rtPKF6e+7Hjsl1o6xppeJWkeJsdLWcQN5NqLBUM/j/L/mIOsWE2rSQ0qkk5E0p
- t6BcQUIQcsXUvsva2FfivHfJssjV+8WZLYb4Py3EsKnQKFI6PEO2gFMZIuo8lPky+3RsSsRE8MR
- KERc7zae5XwK46ektFQQu04rieiG+P+G+Z43emzh9qOcH0cT57nRTywDOH1GakXQhVsCvNz
-X-Google-Smtp-Source: AGHT+IFwl+w79ZRJM0W8MVC2hyPfMsVHTffSPeSKi1OMxBMMqcJGXA4UOE3cvXypLFd9lM8kKloLMjUBeeJY9A1fK1Q=
-X-Received: by 2002:a05:690c:6d90:b0:787:d456:2e62 with SMTP id
- 00721157ae682-78ab6efba2emr37114487b3.33.1764064891143; Tue, 25 Nov 2025
- 02:01:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
+ id 1vNpx2-0004Om-SW; Tue, 25 Nov 2025 05:07:12 -0500
+Received: from mail.avm.de ([212.42.244.120])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <c.speich@avm.de>)
+ id 1vNpx0-00026U-Fe; Tue, 25 Nov 2025 05:07:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=avm.de; s=mail;
+ t=1764065224; bh=EGW4hc4a3SUjyBp9tJHMaI4BVJmAal/xPiT9phkyLaU=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=JJr/B6HCzVvOHKziPfKOdcL+8BDeuW82Myislv3SnswDFHf2tpzgK0IoOKFBQkMTF
+ AA6xk3LWvwjIA9vOBw/jA7aInw4tLoccf16VpwMC5bmuEo7TllwTRlMlwqJJWwRvqk
+ q1GPs57kmdh4wcAHlHKKX1lPPBaIFuvJ+DNwz6NI=
+Received: from [172.16.0.1] (helo=mail.avm.de)
+ by mail.avm.de with ESMTP (eXpurgate 4.53.4)
+ (envelope-from <c.speich@avm.de>)
+ id 69257fc8-a0ff-7f0000032729-7f000001cf48-1
+ for <multiple-recipients>; Tue, 25 Nov 2025 11:07:04 +0100
+Received: from mail-notes.avm.de (mail-notes.avm.de [172.16.0.1])
+ by mail.avm.de (Postfix) with ESMTP;
+ Tue, 25 Nov 2025 11:07:04 +0100 (CET)
+Received: from l-cspeich ([172.17.89.139])
+ by mail-notes.avm.de (HCL Domino Release 14.0FP4)
+ with ESMTP id 2025112511070495-8299 ;
+ Tue, 25 Nov 2025 11:07:04 +0100 
+Date: Tue, 25 Nov 2025 11:07:04 +0100
+From: Christian Speich <c.speich@avm.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>, qemu-block@nongnu.org,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>, Bin Meng
+ <bmeng.cn@gmail.com>, Jan Kiszka <jan.kiszka@siemens.com>
+Subject: Re: [PATCH-for-10.2] hw/sd/sdcard: Correct SCR
+ 'DATA_STAT_AFTER_ERASE' bit
+Message-ID: <tbtanvzrukvlyrdb267uxkhsbonzkmtq5zokcnr5szdbbxf53v@pbhuoii77ll2>
+References: <20251124042008.55710-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20251008191936.3069950-1-navidem@google.com>
- <CAFEAcA_kaB5OeRw53Z1u_K4+oB_a6Mi4q-aaNeuOLXpTp-+0jw@mail.gmail.com>
- <CAGXevki+HpoXt=LhopwAQGyn4fnYJHer+GpLFr=mu5NsCXVrUA@mail.gmail.com>
-In-Reply-To: <CAGXevki+HpoXt=LhopwAQGyn4fnYJHer+GpLFr=mu5NsCXVrUA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 25 Nov 2025 10:01:19 +0000
-X-Gm-Features: AWmQ_bkcPjjCmKKkiijf2I973JQOOEHgANyc0vWXjV9G5OYG09hRKkvVWmCewik
-Message-ID: <CAFEAcA-hyn0B-yWE1=g4+NN9=NBjWvk-P8qrAk9L4vpAZpUYvQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] libqos: pci: Avoid fatal assert on zero-sized BARs in
- fuzz builds
-To: Navid Emamdoost <navidem@google.com>
-Cc: qemu-devel@nongnu.org, Zubin Mithra <zsm@google.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+In-Reply-To: <20251124042008.55710-1-philmd@linaro.org>
+X-MIMETrack: Itemize by SMTP Server on ANIS1/AVM(Release 14.0FP4|March 10,
+ 2025) at 25.11.2025 11:07:04,
+ Serialize by Router on ANIS1/AVM(Release 14.0FP4|March 10, 2025) at
+ 25.11.2025 11:07:05, Serialize complete at 25.11.2025 11:07:05
+X-TNEFEvaluated: 1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+X-purgate-ID: 149429::1764065224-8AE21D7E-0FD25696/0/0
+X-purgate-type: clean
+X-purgate-size: 1356
+X-purgate-Ad: Categorized by eleven eXpurgate (R) https://www.eleven.de
+X-purgate: This mail is considered clean (visit https://www.eleven.de for
+ further information)
+X-purgate: clean
+Received-SPF: pass client-ip=212.42.244.120; envelope-from=c.speich@avm.de;
+ helo=mail.avm.de
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,46 +88,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 25 Nov 2025 at 02:31, Navid Emamdoost <navidem@google.com> wrote:
->
-> On Thu, Nov 13, 2025 at 6:03=E2=80=AFAM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
-> > I think if we added the size to the QPCIBar struct then we
-> > could assert in the accessors like qpci_io_readb() and
-> > friends that the offset provided was in range. That would
-> > catch both the unlikely "we implemented the BAR with no
-> > size" case and the rather more likely "we got the size too
-> > small" case (and also the "bug in the test and it got the
-> > offset too big" case), and would mean that we don't lose
-> > anything by not asserting that we have a non-zero-size BAR here.
+On Mon, Nov 24, 2025 at 05:20:08AM +0100, Philippe Mathieu-Daudé wrote:
+> As a 'SD card vendor', QEMU chose to fill blocks with '1'
+> during erase operation. Update the DATA_STAT_AFTER_ERASE
+> SCR bit appropriately.
 
-> That's a much more elegant approach. Thank you for the suggestion!
-> I've done an initial investigation into the impact of adding a size
-> field to QPCIBar and checking it in the accessors. As you anticipated,
-> making the API safer immediately and correctly flushed out a few
-> latent issues in the existing qtest suite.
-> Before I prepare and send the full v2 patch series, I wanted to run my
-> plan for fixing the test failures by you:
->
-> - Issue with qpci_legacy_iomap: Several tests (like ide-test and
-> tco-test) fail because they use qpci_legacy_iomap, which has no way to
-> provide a BAR size. My plan is to change its signature to
-> qpci_legacy_iomap(dev, addr, size) and then update the handful of
-> failing call sites to provide the correct, explicit I/O region size.
-> This seems like the cleanest way to make them compatible and safer.
->
-> - Issue with nvme-test: The qos-test fails during the
-> nvmetest_oob_cmb_test because the test logic was performing an illegal
-> out-of-bounds access on the entire PCI BAR. My plan is to rewrite this
-> specific test to correctly read the CMB registers and perform a valid
-> out-of-bounds check within the BAR's limits, which is what the test
-> was originally intended to do.
->
-> Does this plan for handling the test failures seem correct to you? If
-> yes, I will go ahead and prepare the v2 series with the above fixes.
+Would it be appropiate to let the guest know whether or not the
+DATA_STAT_AFTER_ERASE bit is reliable?
 
-Yes, that all sounds OK.
+Considering, erase-to-zero may become an option with[1] a guest
+needs to actually consider this SCR bit.
 
-thanks
--- PMM
+CID contains a product revision field, maybe that could be
+bumped?
+
+Greetings,
+Christian
+
+[1] https://lore.kernel.org/qemu-devel/20250919-sdcard-performance-b4-v1-3-e1037e481a19@avm.de/
+
+> 
+> Fixes: 818a5cdcfcf ("hw/sd: sd: Actually perform the erase operation")
+> Reported-by: Christian Speich <c.speich@avm.de>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  hw/sd/sd.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index 40a75a43ffb..d35537702b2 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -446,7 +446,7 @@ static void sd_set_scr(SDState *sd)
+>      /* reserved for manufacturer usage */
+>      sd->scr[4] = 0x00;
+>      sd->scr[5] = 0x00;
+> -    sd->scr[6] = 0x00;
+> +    sd->scr[6] = 1 << 7;        /* Data after an erase operation is 0xff */
+>      sd->scr[7] = 0x00;
+>  }
+>  
+> -- 
+> 2.51.0
+> 
+> 
 
