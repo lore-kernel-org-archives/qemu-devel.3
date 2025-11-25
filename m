@@ -4,58 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811C7D0E6EC
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 14:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61400D0E6F0
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 14:27:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNtw2-0007cu-K0; Tue, 25 Nov 2025 09:22:26 -0500
+	id 1vNu0I-0003ov-6C; Tue, 25 Nov 2025 09:26:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1vNtuu-0007FG-AN
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:21:29 -0500
-Received: from relay.virtuozzo.com ([130.117.225.111])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vNu0G-0003mg-SU
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:26:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1vNtun-0002Gs-IN
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:21:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=a+tUUiQC5dHHaCTNVUg/RgFFKDMzkIDuPzrqjC0AfeE=; b=kng0Pw/3P2sF
- ceqrOthptDw7qn1y5fcgEUYZ151k7miN4llKRlh/yxTx3NjuWXk49XstTYtxtFmrW2ahmhOly6IKA
- Z8r5DU1kj2zbD9Oi9fOPQ4ir1gj5FA+BHZLX+WR3oYvzUoJNAZPx7fCiQRI0WNLNyJhSvgKI5XTs4
- O+TUkILcyzgq7GJ9uo2lrhUvvFFjDg8H5Rb1+H4cpN+4+Vljvp7ADCT9zlHNQtrqJI96bawfALuzH
- 5BfjWQTR4HD4o/xQ88q6cdmQFMdeNC2wCD20wNwpkN257F+TPDrIYowZmEFPm3QNPpojbnoJv56KB
- HGD/X0kGiEsOLpuPv1+Plw==;
-Received: from [130.117.225.5] (helo=dev005.ch-qa.vzint.dev)
- by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1vNtsz-003IJo-0V;
- Tue, 25 Nov 2025 15:20:56 +0100
-From: andrey.drobyshev@virtuozzo.com
-To: qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, peterx@redhat.com, stefanha@redhat.com,
- vsementsov@yandex-team.ru, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com
-Subject: [PATCH 3/4] scripts/qemugdb: timers: Improve 'qemu timers' command
- readability
-Date: Tue, 25 Nov 2025 16:21:04 +0200
-Message-ID: <20251125142105.448289-4-andrey.drobyshev@virtuozzo.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20251125142105.448289-1-andrey.drobyshev@virtuozzo.com>
-References: <20251125142105.448289-1-andrey.drobyshev@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vNu0D-0003Ny-U5
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 09:26:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764080804;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=PqlH0f1x/cKcYceC6NAoDFuSjaLJIjQacXn2fB++HBs=;
+ b=GLkqbX4CPcd8IvlVhAflcnNEw9zSLhU1rP7JVt7Ja6w8zt3I1TVUSBwB6k/QLOSck7wX1F
+ ysEnr5MEX6hmd1jrWB/DAJwF1TfjXje9k0fPwCInR6nfsirFhkDYrlIjF6XplCuBdNC6oa
+ yki43Gk6M0UY/W+nZVvpksuaDV2WvKI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-hT-Dt9CaNWCoAzmVucahAA-1; Tue,
+ 25 Nov 2025 09:26:40 -0500
+X-MC-Unique: hT-Dt9CaNWCoAzmVucahAA-1
+X-Mimecast-MFC-AGG-ID: hT-Dt9CaNWCoAzmVucahAA_1764080799
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 75383180047F; Tue, 25 Nov 2025 14:26:38 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.24])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 370B7195608E; Tue, 25 Nov 2025 14:26:33 +0000 (UTC)
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH] aspeed/{xdma, rtc,
+ sdhci}: Fix endianness to DEVICE_LITTLE_ENDIAN
+Date: Tue, 25 Nov 2025 15:26:31 +0100
+Message-ID: <20251125142631.676689-1-clg@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=130.117.225.111;
- envelope-from=andrey.drobyshev@virtuozzo.com; helo=relay.virtuozzo.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,87 +83,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+From:  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+When the XDMA, RTC and SDHCI device models of the Aspeed SoCs were
+first introduced, their MMIO regions inherited of a DEVICE_NATIVE_ENDIAN
+endianness. It should be DEVICE_LITTLE_ENDIAN. Fix that.
 
-* Add the 'attributes' field from QEMUTimer;
-* Stringify the field's value in accordance with macros from
-  include/qemu/timer.h;
-* Make timer expiration times human-readable by converting from nanoseconds
-  to appropriate units (ms/s/min/hrs/days) and showing the scale factor
-  (ns/us/ms/s).
-
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- scripts/qemugdb/timers.py | 49 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 44 insertions(+), 5 deletions(-)
+ hw/misc/aspeed_xdma.c | 2 +-
+ hw/rtc/aspeed_rtc.c   | 2 +-
+ hw/sd/aspeed_sdhci.c  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/qemugdb/timers.py b/scripts/qemugdb/timers.py
-index 1219a96b32..916c71b74a 100644
---- a/scripts/qemugdb/timers.py
-+++ b/scripts/qemugdb/timers.py
-@@ -21,14 +21,53 @@ def __init__(self):
-         gdb.Command.__init__(self, 'qemu timers', gdb.COMMAND_DATA,
-                              gdb.COMPLETE_NONE)
+diff --git a/hw/misc/aspeed_xdma.c b/hw/misc/aspeed_xdma.c
+index 31662ea0f5cc..d9afb0cae1f7 100644
+--- a/hw/misc/aspeed_xdma.c
++++ b/hw/misc/aspeed_xdma.c
+@@ -113,7 +113,7 @@ static void aspeed_xdma_write(void *opaque, hwaddr addr, uint64_t val,
+ static const MemoryRegionOps aspeed_xdma_ops = {
+     .read = aspeed_xdma_read,
+     .write = aspeed_xdma_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid.min_access_size = 1,
+     .valid.max_access_size = 4,
+ };
+diff --git a/hw/rtc/aspeed_rtc.c b/hw/rtc/aspeed_rtc.c
+index c4feea23a0b3..6793e253f472 100644
+--- a/hw/rtc/aspeed_rtc.c
++++ b/hw/rtc/aspeed_rtc.c
+@@ -131,7 +131,7 @@ static void aspeed_rtc_reset(DeviceState *d)
+ static const MemoryRegionOps aspeed_rtc_ops = {
+     .read = aspeed_rtc_read,
+     .write = aspeed_rtc_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+ };
  
-+    def _format_expire_time(self, expire_time, scale):
-+        "Return human-readable expiry time (ns) with scale info."
-+        secs = expire_time / 1e9
-+
-+        # Select unit and compute value
-+        if secs < 1:
-+            val, unit = secs * 1000, "ms"
-+        elif secs < 60:
-+            val, unit = secs, "s"
-+        elif secs < 3600:
-+            val, unit = secs / 60, "min"
-+        elif secs < 86400:
-+            val, unit = secs / 3600, "hrs"
-+        else:
-+            val, unit = secs / 86400, "days"
-+
-+        scale_map = {1: "ns", 1000: "us", 1000000: "ms",
-+                     1000000000: "s"}
-+        scale_str = scale_map.get(scale, f"scale={scale}")
-+        return f"{val:.2f} {unit} [{scale_str}]"
-+
-+    def _format_attribute(self, attr):
-+        "Given QEMUTimer attributes value, return a human-readable string"
-+
-+        # From include/qemu/timer.h
-+        if attr == 0:
-+            value = 'NONE'
-+        elif attr == 1 << 0:
-+            value = 'ATTR_EXTERNAL'
-+        elif attr == int(0xffffffff):
-+            value = 'ATTR_ALL'
-+        else:
-+            value = 'UNKNOWN'
-+        return f'{attr} <{value}>'
-+
-     def dump_timers(self, timer):
-         "Follow a timer and recursively dump each one in the list."
-         # timer should be of type QemuTimer
--        gdb.write("    timer %s/%s (cb:%s,opq:%s)\n" % (
--            timer['expire_time'],
--            timer['scale'],
--            timer['cb'],
--            timer['opaque']))
-+        scale = int(timer['scale'])
-+        expire_time = int(timer['expire_time'])
-+        attributes = int(timer['attributes'])
-+
-+        time_str = self._format_expire_time(expire_time, scale)
-+        attr_str = self._format_attribute(attributes)
-+
-+        gdb.write(f"    timer at {time_str} (attr:{attr_str}, "
-+                  f"cb:{timer['cb']}, opq:{timer['opaque']})\n")
- 
-         if int(timer['next']) > 0:
-             self.dump_timers(timer['next'])
+ static const VMStateDescription vmstate_aspeed_rtc = {
+diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
+index 7217e20c2a98..339a8d12df26 100644
+--- a/hw/sd/aspeed_sdhci.c
++++ b/hw/sd/aspeed_sdhci.c
+@@ -124,7 +124,7 @@ static void aspeed_sdhci_write(void *opaque, hwaddr addr, uint64_t val,
+ static const MemoryRegionOps aspeed_sdhci_ops = {
+     .read = aspeed_sdhci_read,
+     .write = aspeed_sdhci_write,
+-    .endianness = DEVICE_NATIVE_ENDIAN,
++    .endianness = DEVICE_LITTLE_ENDIAN,
+     .valid.min_access_size = 1,
+     .valid.max_access_size = 4,
+ };
 -- 
-2.43.5
+2.51.1
 
 
