@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BF0D0EE0F
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 19:35:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A92BD0EE1C
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 19:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNyp4-0008Qw-Ru; Tue, 25 Nov 2025 14:35:34 -0500
+	id 1vNytb-0005Hw-K3; Tue, 25 Nov 2025 14:40:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vNyp3-0008P1-9d
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:35:33 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vNytX-00058N-LU
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:40:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vNyp1-0004xJ-EA
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:35:33 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vNytU-0005R4-U6
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 14:40:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764099330;
+ s=mimecast20190719; t=1764099607;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BEZgFjImgVFkwcD5O5nrZhJP8gCt8AEu9lMbiCNC3sc=;
- b=TCoUlhh4uqITxVm58qOHYyvQnmX53NEq7rsIGkY0t0vKBqxqbCyPQbAxMcIJHrxy0o/ZUN
- Gv5VA0SgEoUdDWYS0JCs82FyM2m5xLQC+8nAThr415kmuI5DL915QndZYGI7Fno4mKp1+6
- 4DQP2ht6nbSqpINP1YUGBeo7JcKoqdE=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=WppK9tBLLYzjda47L86tYLs3pd8frQrxbyKCRqR3RkI=;
+ b=bebjgWsuWDqvtkstHL9m4nnjnrwQL0StihRHn2PuXbXczxwYQxFzPboinD37Z48i91lvlx
+ opJj6D7VhYrLP1cH8PXD9w5YtWkIcCXYWvEQBeQdF6wqHw2aCPc+vyHPPwXdLLkixAmN3j
+ SCNay7te5Oqn7yvdjIT3pNq9bL4oxU0=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-583--6Z6COHFNLW69ghq8gfuQA-1; Tue, 25 Nov 2025 14:35:28 -0500
-X-MC-Unique: -6Z6COHFNLW69ghq8gfuQA-1
-X-Mimecast-MFC-AGG-ID: -6Z6COHFNLW69ghq8gfuQA_1764099328
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-88050708ac2so185950076d6.2
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 11:35:28 -0800 (PST)
+ us-mta-267-AyNAdsU8Ndaj-lBUmn4Y_g-1; Tue, 25 Nov 2025 14:40:06 -0500
+X-MC-Unique: AyNAdsU8Ndaj-lBUmn4Y_g-1
+X-Mimecast-MFC-AGG-ID: AyNAdsU8Ndaj-lBUmn4Y_g_1764099606
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-88233d526baso194380576d6.1
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 11:40:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764099328; x=1764704128; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=BEZgFjImgVFkwcD5O5nrZhJP8gCt8AEu9lMbiCNC3sc=;
- b=tmOoDwokiGW0vmbdyhKuQoL7DEVo56LEqChbIw+WZHQl5ZnyJNBBNNmjK6fysz0ivJ
- rWH3By/OoeNb+k6IdRq5II6sPaKWkIwF8Q+kCw2rusUgsnnx/dNTD+ma+kGAeM8wLnUf
- 4nkn3t6vTiECx509EF5J0tJW3i4WDkKoBh1n7vYKrb/Uo5YeAPOkeguHBB7AwG/4KPtC
- faYbdZoQdots/xDZ4EaPL+54NarozZ7pu3IFZMD/+JrWiho7w+Rl1w2yVIX+2dsqRC/z
- 979WCI6bquenZLj/pKV7E4W2pNiqKA0VLZ4lpSz28LMNfEqCto1pMHbpIQLV5E7z7X0Y
- o3cg==
+ d=redhat.com; s=google; t=1764099606; x=1764704406; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=WppK9tBLLYzjda47L86tYLs3pd8frQrxbyKCRqR3RkI=;
+ b=bdzU3CzO80PHXXB2h9zivPs958lgZZkMjb5cw3DobSA5dlX+fZcHtGfduPgS1/hv8b
+ vKFn0MM56NBqLnhZhFsWESSsCCDwgejH392rbMZttBFtWkBdf79kGoW6Ktum73IXzXvu
+ 2qUQmM2WcRYlWwzgUz3fh3+8jXMP/U3czMjKlgmrwzSmmRZ2NYnAqR3WaEPowO2BPvHx
+ w6lGpu6DS9z1JKOoIqZMJnCjmCNVLeuTHnbEHcH+uHYGZ66Zev8siBtxVJ9XrP8TyvnS
+ snMl7u1c1pL0KWbxaCLmXrpzCYgyeUwQJgM6MCiA8fiXBmyq7WS+armlmpijZDIfRbt+
+ yftg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764099328; x=1764704128;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BEZgFjImgVFkwcD5O5nrZhJP8gCt8AEu9lMbiCNC3sc=;
- b=JNgHwIbas6GyJ8mc5A3Al08/GCrefLej9If4wseEpNtertGaZQ+kvh7VIDROut6xJI
- X94X4qkX2MdDPOIO5AiRZUfKe78gIOThRowbPTJTrlB4YzkWwdtxB3oNTncHtiXUDuV1
- pm1CQA5nPXrBLJ3IB/pMEHa7PT+aY8/UZKtr5Mxe0toghvZ0ktcminVn39WpMMetYQmu
- xr2tajcym4vJCkvcgIpG+bjpWOs5IhAlamOjZ2Jwr9JvFFl2neqi4W/ZYT/NMDnuOj+n
- wpvhumZKNdC/IKrs6TKIvFQMtOj3DoJYxPWH8HZPe8PYRdZ9/tmP3c7RXMIFULPxjnGl
- yKIQ==
-X-Gm-Message-State: AOJu0Yw201WL3zGkT7IY8u/wsJmoRDYfEoCezSlf16m931LpysTByGlT
- V2GhpJDhJ4mFBi6SCaa4+/ql/XhlqmQjPVqIrJayQxmhfPZwB1LRcZ3z1cWIuVIiLbliwWJNhM5
- 6lfhDVgYAnLVDF2mimIwf1Rhhtwkk0xscT8CRMNW/B9QNeiJ9UxQdBrb5
-X-Gm-Gg: ASbGnct4FyYwRVF0GvcCXowTwL4h322BccV9b1xsW1ZUH4bwj732xyXBEoJ8tW7v6xW
- haOvzMQk9FE9Vdbv/Q8hWKtZ/PnMrecc2RV2P6IJXCepnLhPfVKWV8oE+99aEK06waToOh/X6Au
- iLLB3j+XwQfdR710eZr6B6hO4z8PUpqEmBKgzJEbZwstB9YTtwXukbZ9lF2ZlvaGAfrofw3UHC0
- mkyRBoOgeQsT2+WvJVcjk+vH0V1IZNQ3QVY0Q8XqbeZvNTAEufDm8Lgwbdv1rB7W+Ejmdd02KfC
- CIVzCzbL0K6suK+CsaS+4lZzIR+BdowucBRy3ms8cRjyeZL7BJMQ8/S83srF6gD7PRksyG6yogk
- WRNM=
-X-Received: by 2002:a05:6214:3d12:b0:880:4cfb:ab5d with SMTP id
- 6a1803df08f44-8847c3e4af4mr221684576d6.0.1764099328235; 
- Tue, 25 Nov 2025 11:35:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEt0VAT4Ex/7I+JurOHlBAE3X+9cn+0bd2s716k/rjvhowZdIGWDAq/rDIfaZvIWfkrdWH2+A==
-X-Received: by 2002:a05:6214:3d12:b0:880:4cfb:ab5d with SMTP id
- 6a1803df08f44-8847c3e4af4mr221684026d6.0.1764099327690; 
- Tue, 25 Nov 2025 11:35:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1764099606; x=1764704406;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WppK9tBLLYzjda47L86tYLs3pd8frQrxbyKCRqR3RkI=;
+ b=L9M5hLprJY+IINmo+OyzOr3S0gtQThAxe1W5jiq89iOcm21tH2HZDeWhBYsLfBdiHY
+ wB6W2w0YPnYOa2AoNmPls8ygthmSfjQDaAAlpw9UX/Oq9gfIgEZWc37IdhdJlODXo9ox
+ jABv8jH7aoYEjxzmGk/csWcPAR/ekzYqhk/W19vRdEVQAKSlIlqo0ougmDU61e/Mqm//
+ RNFNmxR5CHNlYNiIBjebIh+VtJL/nJSO1bBimFZuUer6EyK7YhGWWJqRvaVasajnp8v8
+ mFZ7q6YchIriGXZubS76nfQl8eCJNxpmvo1D34Pb0x8TelDXapUXsiQSMqPA4S5ZVFsO
+ FfVQ==
+X-Gm-Message-State: AOJu0YzNyOU9lXL/FVCSgbN+lwDIiheWx8wTX7cc+X+iVg6PTLgUNTWt
+ JqTQvvR0B09Py1c8nlqjL2npgmVSoQNEN9XVpgdhtEaitz8hioNqguIEMt7+PNgea6pQmP+J7+a
+ DhuR0BHb8W41Bpyj5ewxFl0Nn6495ixNn6HB0i9UX0zC24AJFK+9OMl3Ixd44BxvU4QmQ+PDt8y
+ b2IZIV1iB/gYvpMF8kdTBFuTk9zDocpo9g4Zlhuw==
+X-Gm-Gg: ASbGncsoBhqze4yot/8lYig5VCS8W1wva4DItxnVuK1+0hqIwt1qQFdVg10WbzFX3TS
+ thz7Ix40kxMQgTMg8hSn6orlRptOD3pNUXEgALbARs8lG/SjyVv1mygmRtioMw3+QJuRy+3Xk4s
+ 1NLqOiZsv+A5RxYb4VyizL8HeySLMzkr7hHPrgOvbMmGl5Zw8QYJ/O72PEFizYPYYy3uZhOElQ1
+ o65gQhbS2qCEreLgPyuVM/1GsMwurdfxUiGvTV9Gq8e8KFVhXYZalDLaPmvz85KL/z6P3P41/RI
+ tY5jsmzSQfS1lQO9GqCkM5Q5zYzuRGlTZogaShGFPFcmYBh5zPoz8PyUl+blzlOZGY5CFuU0HdC
+ zKWY=
+X-Received: by 2002:a05:6214:2426:b0:880:535d:d191 with SMTP id
+ 6a1803df08f44-8847c496a6emr215862406d6.16.1764099605737; 
+ Tue, 25 Nov 2025 11:40:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH8lNncFYR0/NCFUrKanfeMro1eeqhuZQLI4785y7sdihfZgqLcItsvbk0mW/UW5VzFJselPQ==
+X-Received: by 2002:a05:6214:2426:b0:880:535d:d191 with SMTP id
+ 6a1803df08f44-8847c496a6emr215861926d6.16.1764099605258; 
+ Tue, 25 Nov 2025 11:40:05 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8846e472ae1sm129431806d6.22.2025.11.25.11.35.27
+ 6a1803df08f44-8846e599ac9sm129901416d6.49.2025.11.25.11.40.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 25 Nov 2025 11:35:27 -0800 (PST)
-Date: Tue, 25 Nov 2025 14:35:26 -0500
+ Tue, 25 Nov 2025 11:40:04 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
-To: Pawel Zmarzly <pzmarzly0@gmail.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, michel@michel-slm.name
-Subject: Re: [PATCH] migration: fix parsing snapshots with x-ignore-shared flag
-Message-ID: <aSYE_rdMhH36KBxf@x1.local>
-References: <20251125174649.257457-1-pzmarzly0@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
+ Pawel Zmarzly <pzmarzly0@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ michel@michel-slm.name
+Subject: [PATCH RFC] tests/migration-test: Add mapped-ram + ignore-shared test
+Date: Tue, 25 Nov 2025 14:40:03 -0500
+Message-ID: <20251125194003.833842-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251125174649.257457-1-pzmarzly0@gmail.com>
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
@@ -115,39 +116,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 25, 2025 at 05:46:49PM +0000, Pawel Zmarzly wrote:
-> Snapshots made with mapped-ram and x-ignore-shared flags are
-> not parsed properly.
-> 
-> Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
-> ---
->  migration/ram.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 29f016cb25..85fdc810ab 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -4277,6 +4277,11 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
->          id[len] = 0;
->          length = qemu_get_be64(f);
->  
-> +        if (migrate_ignore_shared()) {
-> +            /* Read and discard the x-ignore-shared memory region address */
-> +            qemu_get_be64(f);
-> +        }
-> +
->          block = qemu_ram_block_by_name(id);
->          if (block) {
->              ret = parse_ramblock(f, block, length);
-> -- 
-> 2.52.0
-> 
+It was broken, add a test for it.
 
-Thanks for the patch, though the u64 was parsed in parse_ramblock()
-instead.  Would you consider refactoring that function instead?
+NOTE: here we do not really need any shared memory blocks, enabling of both
+of the features alone would cover the ramblock layout difference that the
+bug triggers.
 
+Cc: Pawel Zmarzly <pzmarzly0@gmail.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: michel@michel-slm.name
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+
+RFC because currently master branch is broken with it, so need to merge
+only after a proper fix lands.
+
+Pawel, feel free to take this with your fix when repost, or I'll manage.
+---
+ tests/qtest/migration/file-tests.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
+index 4d78ce0855..ab1b477bdf 100644
+--- a/tests/qtest/migration/file-tests.c
++++ b/tests/qtest/migration/file-tests.c
+@@ -137,6 +137,22 @@ static void test_precopy_file_mapped_ram(void)
+     test_file_common(&args, true);
+ }
+ 
++static void test_precopy_file_mapped_ram_ignore_share(void)
++{
++    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
++                                           FILE_TEST_FILENAME);
++    MigrateCommon args = {
++        .connect_uri = uri,
++        .listen_uri = "defer",
++        .start = {
++            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
++            .caps[MIGRATION_CAPABILITY_X_IGNORE_SHARED] = true,
++        },
++    };
++
++    test_file_common(&args, true);
++}
++
+ static void test_multifd_file_mapped_ram_live(void)
+ {
+     g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
+@@ -324,6 +340,8 @@ void migration_test_add_file(MigrationTestEnv *env)
+ 
+     migration_test_add("/migration/precopy/file/mapped-ram",
+                        test_precopy_file_mapped_ram);
++    migration_test_add("/migration/precopy/file/mapped-ram/ignore-share",
++                       test_precopy_file_mapped_ram_ignore_share);
+     migration_test_add("/migration/precopy/file/mapped-ram/live",
+                        test_precopy_file_mapped_ram_live);
+ 
 -- 
-Peter Xu
+2.50.1
 
 
