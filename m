@@ -4,84 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3CE4D0EE3D
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:31:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB219D10362
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 21:41:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vO0c4-0006NF-N4; Tue, 25 Nov 2025 16:30:16 -0500
+	id 1vO0lo-0000W0-HM; Tue, 25 Nov 2025 16:40:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vO0c2-0006JL-A7
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:30:14 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vO0ln-0000TK-6Z
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:40:19 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vO0c0-0001nP-Bt
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:30:14 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-6418b55f86dso10184460a12.1
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 13:30:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764106209; x=1764711009; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4bkoJOtlp2uXy7BPljTNErPmZ2OxaD0w4WD8La9ZV9k=;
- b=YrHHJMGQ5K9kzCDxOSJ8M6cZfwaZzCZxT+vfSzejdNnHLP8Sn2MuH1Kcq5rgLKI4yN
- vLHzwkfy5lqDEr+rk4lj7Wvq6eHZad2REyRCBy6iGUC83qxeWvS3ycVV3vlf+EZUbBnt
- b0n4tgp0xrfQVhdlaxZNwKrDl1OQOZ+yr+2Zy+1Th3y9WqoMTz/J/iJzD494DpYrI6Z5
- i9tnUgRZq7095b6tUVQUuOJD1ijCgDhc+QhstbdnfrOAcq3vbCKU2fiaYLgk1OGCvFz9
- 73swRU+TbU6h/4c7v3bvCTacmzaPbAihabcaau2D5iJWVOT04XhQ/q472AEpnHkGMYK9
- /JyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764106209; x=1764711009;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4bkoJOtlp2uXy7BPljTNErPmZ2OxaD0w4WD8La9ZV9k=;
- b=FmGZoUjFPPSeNbPZQeeKkw0h11EeTKdiLaSDHCS5arYHjdOnQUKUSrEqOLogk233Ei
- 0677nCbh/Q4UEXJiUIlWo42OS7F6cZepPGokhyp9vGm3lrvIu+NMVwo8lfaLrBk6a4Th
- 3MJunUwyJslhR1IiggvIRsGRLMtJNQZKpNAtb6sji6i3P4PgPByAKZ1T3O3Ni17HD8c9
- 2LwRca6qUmmAuVwA/fDf6r2BCm/epoC4JK0t9/5RtrOGJ+XHPP96xAKVH9baAzUjylxo
- XzP+9N44kahuZ5Iy4D3U1KZtU1Df0iC/Aau2eUnwDC7x8RQuKLZ7ZhB4xipDpMCxiUhh
- 42NQ==
-X-Gm-Message-State: AOJu0YycaKWF2iRF4k7JShEpYPau3aDlz6H5KNse0kGEL360NmRepSRN
- Oco7xhL1u3y4vv/3YjnKYQou3eaaBOp8PTyTLFNC1sDL+HPF6pk3rqrngKfyt9S2kL0er+Wmlcr
- y6h5hHugnybEbRWAdECnrqg5+8f5yowQCfNUY1DJ+lA==
-X-Gm-Gg: ASbGncsjUF2IRsTcsOE+EA8iYFbtE8/OnNJhbyprFhRltROwG2zH563zAQA8EQYUl6p
- koClO9DQNrHNPhWCSt18u9BwUEIzH5BQNoRO8jSwz6kKRzr63YIlftpcE5CQX3mYkrgGo0HZ9Eo
- QwX/3qj2dMw4x5VZaKZhP9rMAlQ8TxzaUBD65aQQjPF4H+8oXzqUVp3yvlAnt7HAfAr25BzcMzR
- KnD/yRR/CTQ7hPyUU/J4Qxza+vP+8vsbBKktOHzv5/n97k5v+6JxnZDKYmYCaG4GamC0mM2GZVW
- /mwVY3MW1gbTsODYKOr6ou7IxitCWXBZFiY=
-X-Google-Smtp-Source: AGHT+IHb0+oS3wC1aHKHTdrXlyZ5RSbOHa9+jIcaGgUt91D5a1pgg2y5f7jZeTSWJkgoz65ShSE90dAc13JrFovRCSo=
-X-Received: by 2002:a17:907:9289:b0:b73:76c5:8f7c with SMTP id
- a640c23a62f3a-b767184bc4cmr2008980766b.43.1764106209389; Tue, 25 Nov 2025
- 13:30:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vO0ll-0003qv-GD
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 16:40:18 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 7EDD65BD11;
+ Tue, 25 Nov 2025 21:40:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1764106815; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v9caCpriWRMYRyfGm3fLLWjrexw5F2gwIzV+gu9E0xg=;
+ b=XtHTcG1vL91XQjpU0KjrfYYQLxjZFGL4GmgZP30y2SKOdvQ1UTVHicFdqBygtryGCT388F
+ ba1yPO0+5+wqLPf5HPZSVQDV+NZHgCfKaaSvGrP0/0zEBD1te9FtaG1pHrKuBD1fSQH3WH
+ D9iPt9yjv2DEIl+UCjzgR6oGzi0b6H8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1764106815;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v9caCpriWRMYRyfGm3fLLWjrexw5F2gwIzV+gu9E0xg=;
+ b=HgUoR0K0y9xPBpFmRNhJcRHzHJIBy1GkoK6WbzA/3mlUd/VmiwaF3L1OK4jxZXYCbmRtzg
+ KeZL0KWHJErVSRBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1764106815; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v9caCpriWRMYRyfGm3fLLWjrexw5F2gwIzV+gu9E0xg=;
+ b=XtHTcG1vL91XQjpU0KjrfYYQLxjZFGL4GmgZP30y2SKOdvQ1UTVHicFdqBygtryGCT388F
+ ba1yPO0+5+wqLPf5HPZSVQDV+NZHgCfKaaSvGrP0/0zEBD1te9FtaG1pHrKuBD1fSQH3WH
+ D9iPt9yjv2DEIl+UCjzgR6oGzi0b6H8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1764106815;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v9caCpriWRMYRyfGm3fLLWjrexw5F2gwIzV+gu9E0xg=;
+ b=HgUoR0K0y9xPBpFmRNhJcRHzHJIBy1GkoK6WbzA/3mlUd/VmiwaF3L1OK4jxZXYCbmRtzg
+ KeZL0KWHJErVSRBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EFEB33EA63;
+ Tue, 25 Nov 2025 21:40:14 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id z6E7Kj4iJmkXBQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 25 Nov 2025 21:40:14 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, Pawel Zmarzly <pzmarzly0@gmail.com>
+Cc: qemu-devel@nongnu.org, michel@michel-slm.name
+Subject: Re: [PATCH] migration: fix parsing snapshots with x-ignore-shared flag
+In-Reply-To: <aSYE_rdMhH36KBxf@x1.local>
+References: <20251125174649.257457-1-pzmarzly0@gmail.com>
+ <aSYE_rdMhH36KBxf@x1.local>
+Date: Tue, 25 Nov 2025 18:40:12 -0300
+Message-ID: <87tsyheqpv.fsf@suse.de>
 MIME-Version: 1.0
-References: <20251120125833.123813-1-jim.macarthur@linaro.org>
- <20251120125833.123813-4-jim.macarthur@linaro.org>
- <87fra38ogg.fsf@draig.linaro.org>
-In-Reply-To: <87fra38ogg.fsf@draig.linaro.org>
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Tue, 25 Nov 2025 21:29:58 +0000
-X-Gm-Features: AWmQ_bnY3_WLus7EP799GVl_wVy48ugxfQz-GtjqCeKkiyJVmR1zty2cwV5cbW8
-Message-ID: <CAJfKr9W7DuFGkARhSYfT=aumHcZvFbp3pzV0VLxnqaDUn2JQAg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] tests: Add test for ASID2 and write/read of feature
- bits
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=jim.macarthur@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]; MISSING_XM_UA(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; FREEMAIL_TO(0.00)[redhat.com,gmail.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,49 +116,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 24 Nov 2025 at 15:01, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
-> If we instead use this to test for the presence of the feature and then..=
-.
->
-> > +
-> > +    asm("msr " TCR2_EL1 ", %[x0]\n\t"
-> > +        "mrs %[x1], " TCR2_EL1 "\n\t"
-> > +        : [x1] "=3Dr" (out)
-> > +        : [x0] "r" (in));
-> > +
-> > +    if ((out & feature_mask) =3D=3D in) {
-> > +        ml_printf("OK\n");
-> > +        return 0;
-> > +    } else {
-> > +        ml_printf("FAIL: read value %lx !=3D written value %lx\n",
-> > +                  out & feature_mask, in);
-> > +        return 1;
-> > +    }
->
-> extend this part to check the bits are behaving as the feature dictates
-> then we can add a second test like this (Makefile.softmmu-target):
->
->   run-asid2-oldcpu: asid2
->           $(call run-test, $<, \
->             $(QEMU) -monitor none -display none \
->                     -chardev file$(COMMA)path=3D$<.out$(COMMA)id=3Doutput=
- \
->                     $(QEMU_OPTS) $<)
->
->   run-asid2-oldcpu: QEMU_OPTS=3D-M virt -cpu cortex-a72 -display none $(Q=
-EMU_BASE_ARGS) -kernel
->
->   EXTRA_RUNS +=3D run-asid2-oldcpu
->
-> Although its a bit clunky - one day I'll get around to converting this
-> lot to meson.
+Peter Xu <peterx@redhat.com> writes:
 
-Good idea, but as far as I can see cortex-a72 doesn't implement
-FEAT_TCR2, and nor does anything other than cpu-max, so the write and
-read to TCR2_EL1 will be undefined behaviour (and causes an error in
-the test). I could (and probably should) add a test for FEAT_TCR2 as
-well, but it won't test anything more than my original test covers.
+> On Tue, Nov 25, 2025 at 05:46:49PM +0000, Pawel Zmarzly wrote:
+>> Snapshots made with mapped-ram and x-ignore-shared flags are
+>> not parsed properly.
+>> 
+>> Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
+>> ---
+>>  migration/ram.c | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>> 
+>> diff --git a/migration/ram.c b/migration/ram.c
+>> index 29f016cb25..85fdc810ab 100644
+>> --- a/migration/ram.c
+>> +++ b/migration/ram.c
+>> @@ -4277,6 +4277,11 @@ static int parse_ramblocks(QEMUFile *f, ram_addr_t total_ram_bytes)
+>>          id[len] = 0;
+>>          length = qemu_get_be64(f);
+>>  
+>> +        if (migrate_ignore_shared()) {
+>> +            /* Read and discard the x-ignore-shared memory region address */
+>> +            qemu_get_be64(f);
+>> +        }
+>> +
+>>          block = qemu_ram_block_by_name(id);
+>>          if (block) {
+>>              ret = parse_ramblock(f, block, length);
+>> -- 
+>> 2.52.0
+>> 
+>
+> Thanks for the patch, though the u64 was parsed in parse_ramblock()
+> instead.  Would you consider refactoring that function instead?
 
-Jim
+There's actually not much going on in terms of "parsing" in
+parse_ramblock(). I think we could move the migrate_ignore_shared() from
+the end of the function to before the mapped-ram check().
 
