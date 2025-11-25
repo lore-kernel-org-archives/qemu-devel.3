@@ -4,77 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04AD8CFD368
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 11:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9D91D0E6C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 11:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNrPZ-0006IC-LT; Tue, 25 Nov 2025 06:40:46 -0500
+	id 1vNrQt-0007f1-BH; Tue, 25 Nov 2025 06:42:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vNrPY-0006G8-1I
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 06:40:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vNrPW-0007j9-DC
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 06:40:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764070839;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HV5v/0PX91ze+rqqyXuU8cyV6ZiotaUP3OO2JKWgpBo=;
- b=C/l+H2HIX4kU+K/nihkhAUIQi9MAkpikMZYix4ydVVn2hQ4NS09nsMWvxyr1jigev+GnF0
- rV4IB0n4rqOCf6+XjqWKZPYoSWjdbFXFVOom4w9k0ZYcBDAFuiQEMKjkXS9CPZkAlTDaoi
- 3AxGKBQo2ZKUg597eE7ek6yMv4qpCsQ=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-rOHIm4nHPKaBGrGs89H5Ew-1; Tue,
- 25 Nov 2025 06:40:36 -0500
-X-MC-Unique: rOHIm4nHPKaBGrGs89H5Ew-1
-X-Mimecast-MFC-AGG-ID: rOHIm4nHPKaBGrGs89H5Ew_1764070836
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6FEF180057A; Tue, 25 Nov 2025 11:40:35 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 418EF18004D8; Tue, 25 Nov 2025 11:40:35 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C9A6321E6A27; Tue, 25 Nov 2025 12:40:32 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  pbonzini@redhat.com,  kvm@vger.kernel.org,
- eesposit@redhat.com
-Subject: Re: [PATCH] kvm: Don't assume accel_ioctl_end() preserves @errno
-In-Reply-To: <bdbb568d-0432-4d59-bd1f-cf2eb20bc2a1@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Tue, 25 Nov 2025 11:33:43
- +0100")
-References: <20251125090146.2370735-1-armbru@redhat.com>
- <875xay4h6y.fsf@pond.sub.org>
- <bdbb568d-0432-4d59-bd1f-cf2eb20bc2a1@linaro.org>
-Date: Tue, 25 Nov 2025 12:40:32 +0100
-Message-ID: <871plm2vdb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vNrQm-0007ac-0h
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 06:42:01 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vNrQk-0007qT-J2
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 06:41:59 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-42b39d51dcfso3221374f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 03:41:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764070916; x=1764675716; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JWc2JGrwmNdqrXpcFkor3SJGgMnY1Re1+PW7EF1RyCA=;
+ b=peV3lP06vsTMkc4pa5oaCS0N5uQog5GPLXT7bZ40tDkACZpCfUcqyCt81m/pdYSl3g
+ 0UyMk35rn5vGDNJHkvgfMv43WOKGGM0v1W3tAXy1FbpCwOBHwR6x50TgV476SQhvKlOl
+ 437AT/UAaUTDvedfH3YE4sYZxRPfElbo7PZplr7uDs82EYETv9PkVDqR0euvT93Ix+Jx
+ aPOYfAju2LneeiHJN9aAFjLeeEeeTRBBZ355fs1itJuwUTWF7MDLoStugZ12Ol2QPGZN
+ 0zPpzSLy5JGGNVdg5p8yYBdW6cbaSoIeob2NdD4bAwW55sTeK9kxoxA9i13iBWihp1Zb
+ O/sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764070916; x=1764675716;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JWc2JGrwmNdqrXpcFkor3SJGgMnY1Re1+PW7EF1RyCA=;
+ b=lWU7F9dNZkQS+La1+6zY5oQPhfdjOlC75y1e1NJsFmKwZ3n0F/L4+TyrZfHeKESg1z
+ 01oXSIiU09I+wfHl4WfY3Grnr5o5qNvx2+lz/4gvVUFyZwr21LvdUYJQDxDF6sKlyV+2
+ /ld9HyLWS9XTkWvwcowhqCI+GWCJNKmOb8w0OQNN6K+7JTImATn8Kmgtoy0aFjTwca6w
+ M49a6WzGs8N6X4ogf0frMkfbqrgzXIaUGDAr4XmzeRqcMZzNui2lVNuWW4eEZaVpApG7
+ S/BHH941XJgqwKm33hGS1sv1t0GJasIGFwEupMHJ2IKINqfvHBM5MJeyFBk37+3N6I8+
+ iB8g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUmapLbvVHV05UsT5dTfYzqGbPI6ifBu4GNq+0LsABYLzgGPy9pnNUbbIY/AexOOD8CQAzavmjfNzMu@nongnu.org
+X-Gm-Message-State: AOJu0YxdCWR2nls8zTsLBGLFkkwHBDBBFIzzfajS5xKMq+jBDy5jMW6y
+ Nj43umL4szxCLtmU/uIyLf64yx+AQ5oFXKkoBOxpyf+PaaIBKAuzos0JDfBQ9tx+F6I=
+X-Gm-Gg: ASbGnctBejE2utvLWvX+LFvXshjo5abi4ov2QBkszmdS3dhXs8GSpFvsMTbUos36I4+
+ Nt5zTcsWANYGZSFVlKS+/SKsNJKUSOygNFk/K1d61Lgg68LzJZ9Y9C8le6br9snN2bXhzDcapFS
+ kLE2wzhHG4d14NldkbpcKNYXYg+9/cRk896w5QT403IqDOYBfo0bzGCCXzblXAyBGBZuburxA1J
+ P9zKIks6QsRqvYpi9vbaD8HCZ0DHNJdTl4hQJxWbTTWRJ91vSKgyAjirha6PW+1tfo2psR+dDkQ
+ LcWGhSDuPiF2b0jdq5Nb0q2+tmke0sSIwn8w48nKpykVBVJkV7zXfGZV8dFpmzDGav28G9b71qO
+ eIzKF07Ic1XhJngeMIJ79AWbxeJk4gJfk5KQ7OKSkJUANYBRemjDI7amhZ8pc5Y1vE3ea/Hj5+X
+ rfQ7iiO9ZrzEQ=
+X-Google-Smtp-Source: AGHT+IHpAgbND1azQ7GQv7jHOsG5KZO+3wi6dWu9tlnimGGHAm4VK/A23p+zEO9VWOJo4XMrXCVVzQ==
+X-Received: by 2002:a5d:64e6:0:b0:429:b9bc:e810 with SMTP id
+ ffacd0b85a97d-42cc1d0cf3fmr15145338f8f.45.1764070915861; 
+ Tue, 25 Nov 2025 03:41:55 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fa41d2sm33911904f8f.22.2025.11.25.03.41.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Nov 2025 03:41:55 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 46BD45F7EF;
+ Tue, 25 Nov 2025 11:41:54 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,  Huang Rui
+ <ray.huang@amd.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Pierre-Eric Pelloux-Prayer
+ <pierre-eric.pelloux-prayer@amd.com>,  "Michael S . Tsirkin"
+ <mst@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Yiwei Zhang
+ <zzyiwei@gmail.com>,  Sergio Lopez Pascual <slp@redhat.com>,  Gert Wollny
+ <gert.wollny@collabora.com>,  qemu-devel@nongnu.org,  Gurchetan Singh
+ <gurchetansingh@chromium.org>,  Alyssa Ross <hi@alyssa.is>,  Roger Pau
+ =?utf-8?Q?Monn=C3=A9?= <roger.pau@citrix.com>,  Alex Deucher
+ <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,  Christian =?utf-8?Q?K?=
+ =?utf-8?Q?=C3=B6nig?=
+ <christian.koenig@amd.com>,  Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,  Julia Zhang
+ <julia.zhang@amd.com>,  Chen Jiqian <Jiqian.Chen@amd.com>,  Rob Clark
+ <robdclark@gmail.com>,  Robert Beckett <bob.beckett@collabora.com>
+Subject: Re: [RFC PATCH v4 1/7] virtio-gpu: Remove superfluous
+ memory_region_set_enabled()
+In-Reply-To: <20251125023517.177714-2-dmitry.osipenko@collabora.com> (Dmitry
+ Osipenko's message of "Tue, 25 Nov 2025 05:35:11 +0300")
+References: <20251125023517.177714-1-dmitry.osipenko@collabora.com>
+ <20251125023517.177714-2-dmitry.osipenko@collabora.com>
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Tue, 25 Nov 2025 11:41:54 +0000
+Message-ID: <87a50a8hkt.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,48 +125,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
 
-> On 25/11/25 10:03, Markus Armbruster wrote:
->> Markus Armbruster <armbru@redhat.com> writes:
->>=20
->>> Retrieve the @errno set by ioctl() before we call accel_ioctl_end()
->>> instead of afterwards, so it works whether accel_ioctl_end() preserves
->>> @errno or not.
->>>
->>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->>=20
->> I did not check whether the assumption holds or not.
+> There is no need to explicitly enable/disable memory region when it's
+> added or deleted respectively. Remove superfluous set_enabled() calls
+> for consistency.
 >
-> Indeed, on Linux the futex syscall is called via qemu_event_set.
+> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-So ...
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
->>  If it doesn't,
->> then this needs
->>=20
->>    Fixes: a27dd2de68f3 (KVM: keep track of running ioctls)
-
-... we definitely want this tag, and the commit message should be
-clarified as well.  Here's my try:
-
-    kvm: Fix kvm_vm_ioctl() and kvm_device_ioctl() return value
-
-    These functions wrap ioctl().  When ioctl() fails, it sets @errno.
-    The wrappers then return that @errno negated.
-
-    Except they call accel_ioctl_end() between calling ioctl() and reading
-    @errno.  accel_ioctl_end() can clobber @errno, e.g. when a futex()
-    system call fails.  Seems unlikely, but it's a bug all the same.
-
-    Fix by retrieving @errno before calling accel_ioctl_end().
-
-    Fixes: a27dd2de68f3 (KVM: keep track of running ioctls)
-
-> LGTM.
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-
-Thanks!
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
