@@ -4,107 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7599CFD37F
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:29:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51863CFD37F
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 10:34:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNqIf-0003mc-UF; Tue, 25 Nov 2025 05:29:34 -0500
+	id 1vNqMn-0007VE-Ld; Tue, 25 Nov 2025 05:33:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqIH-0003OZ-LU
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:29:15 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqMm-0007UL-9h
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:33:48 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqIB-0005lv-KF
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:29:06 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-42b32900c8bso3070203f8f.0
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 02:29:02 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNqMk-0006wd-7z
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 05:33:47 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-477ba2c1ca2so56147555e9.2
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 02:33:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764066541; x=1764671341; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764066824; x=1764671624; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FOtq6FkTjjV4xqPH8MCZhBCC4A3ygFQQRD95vDYNiQk=;
- b=Y1ThCxNNk+zh3BvwgbqRwh0g3KcWoNqFlG2FguHQ1oy3sDzZMsoXuF3btB5Hr3BEn3
- 9yQYXVJb0s/PS//yqdVlJtldxIYtUs5JEi5KfvdYjSe0ZS2+7QjpCp044IXl40uJ+KFr
- inUjcySZSwpytTJd/+R8C04YCIQXd+sHcdX9sronq30B3FhvfrnFWAdOqOZFnG7wgQyD
- JNhIDa2N2GjdsvlDhAo/gwtV9kep4O6KvjCEOy/jmTszqvs6zI7AGAB7wPPbmT/rE2mY
- HnNfv+tlvuAZXBK6wQh4tjBW7oxO8EslbXP6bjBAs7FGpvqEE0xL042yN/9eFgO2No2D
- ZMZQ==
+ bh=qVEkuuFCR7NbtFW0OlDkWq+pV/uCWFvNJVFGsL6m1PQ=;
+ b=HIIq2dw2woaaldAavs6/+Pc/e9USKMQSnUGhuV0Ajv9jyCxN+InVMcG2p37fpvzF7p
+ IFtfgm9BEtYkHdo6UXZKxdSpXt7PoJEsqYaSry4N+12CyjoEjtrJrt+8trj4nBk7RHP6
+ i0Su6rjPrSA+VRZ9R8LfKFd2BJ07LYGxZ8dytW7oUfeKJQUbipZfP5gzZhw6DTxvKlJX
+ gCgglcMXkvXgh0Ug/Srq89KyU6WzHjKJAfQJ+XUf9Je/5ejgUaHw8gVxRGUfdBfvi9bE
+ 8ehrRz8Ob1hEa4xS0QgsTcr3RvL8zljI8gPLJ5OZ4cIm0mZjnmQwktIWtY02LF7UlbuI
+ FAUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764066541; x=1764671341;
+ d=1e100.net; s=20230601; t=1764066824; x=1764671624;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FOtq6FkTjjV4xqPH8MCZhBCC4A3ygFQQRD95vDYNiQk=;
- b=k2QJkR8atzvbTU1aVLw+UWIRj6iHnuSZMu304fvHI7k/EGOmvkUyYGzxDem0OyBjx3
- vzyxppyP0zFdR8cLR1B6mtwRWdZdqKnJuf4sFNWyfFCqjMzfJmPsttwetMeIhEhsO/fl
- VpsYXNwXKVXAZQcVek040w3d7N+ndJHX7pEmTzhSgAOAhXf94+GaZzK3/FVEHr/2/c+h
- l10WB+Bw5k5ajnw5bbGfcvKglCZO+uUHFCHe99i8AnaSWjVrrbxshRuYN2I4QsBk9d12
- DNufwCVmyDXNqsx0xslSVJqHBSnMmdCjhvqVmViD29lD/wnuCWecN7noJ1GydQVLdK+X
- cefQ==
+ bh=qVEkuuFCR7NbtFW0OlDkWq+pV/uCWFvNJVFGsL6m1PQ=;
+ b=RzQjqJsPucsyCGNoeHHfNMsQbfBeCAhiCN79BDJj75CHbMopXIlgY1BM7HZD2x10QZ
+ 9HP1ypxLkZKgQZGDzNYd+3DV4rMCSVuGG3ShW2QdpQhOADQoyWG1T5AcqEMSubutWEHH
+ QJ1n+ydxUY3k0hO4ywINtjbR7WZ9JHQ0uVGqIPpqfAvEkjOUrQ3TvOsJEIynm8Q1ff86
+ BVakp4yOfzBLWmumu2eSkMq6d2bcAzNfJmUY5LBoJ+HBQ+W41ib791xlin6gqNrUiCaT
+ CnmOm/pk61MC6JxmBZugD/8fVf/8u2ImhEccxUlLwXmm9dDH65jNLY1e1sD+nUteb+ef
+ elew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWkVnQKAIZndnua4hU6kNLO8CTR7VzytHTvJVDqbwTncJE2z6PruSEv7FZlLEl+Xoo9G9G7mfdOn8k2@nongnu.org
-X-Gm-Message-State: AOJu0YwJMl/YSDeWYZ2Bvt647Y94Bi6IMmtoacnw4X95Zr/wkXAYIXLL
- 9+qKAtokvwYGZVngWYfPuXOT9IEMvHQNinjsSeMVoppOAl6rg0/lBcpDNaRFHJ0i2Zc=
-X-Gm-Gg: ASbGncvSDYfzgzcXB2iEM5LrKwNdztyVftHMn66zekVUh3M4wBvHHHHOv1/3Ox6Cxtj
- mWOD3Aw4esVhBTBzQ6c3cc+6ceDcvUbML5akRxKqqPdlVP7r3Q1MR0h2tpupq5qBAqVoY0S8+k1
- OVFEB42pF1exMF/ttCds+X4tDcZjOp2Bus4uij5rUtou6VdgsdC8TU6ltEGj753zb8yuJYGPKOi
- XrS/Cfi6pI2QnHxUBBMerKL8iM1JENUxNXug/K+WUSC5+jy4U35fWfBZUsEVAsUX6ZLA7CPNPEa
- P3yJVe8IBnybD/Xndl2M5JxJ7DaSuUA2QE7FdfbhssS9PiNME8yX5iick0NK72ET7Lw/o0nxa6D
- UjeuZ80OSpl1jFd0/tR2+thWCqbEeSHsbvQBLGU9QdxuRfPPv++ueHg5e/1WR13FHccbWEUGnn2
- QnJi9U50L6se9dIkFvSn+fxTXcbWD3/IzOkmSOECLth+RWF4bNWnlu4A==
-X-Google-Smtp-Source: AGHT+IEbJeTrLY46fCznAtjfXdYPHTUtYeQtitUWoI1YXftLHuYFMPldzZFqKU9cjG8M/We/w9d/JA==
-X-Received: by 2002:a5d:588b:0:b0:42b:411b:e487 with SMTP id
- ffacd0b85a97d-42cc1cd920amr16516595f8f.2.1764066541445; 
- Tue, 25 Nov 2025 02:29:01 -0800 (PST)
+ AJvYcCXyexeBZnuoAF9F1lzSyyM+oimL4eRPL0Hv4OdirlFicC0sFPR1Qtck1vxZuU6bY2qcNGu38QtsW6/Z@nongnu.org
+X-Gm-Message-State: AOJu0YzlIvHnqHoAEYnfoCMZ2sfIg3RWd+r3FUUKu/owtIBwgimnjHi/
+ 9i8EiNKda0ZawXtzvQ6EC290dm8j/UM0wKGTOmkJUmUDar/+cz0gjQLjpEm9tm+jh2ZhXEgiZsc
+ z/lK58iNrXw==
+X-Gm-Gg: ASbGnct9m81ch46sIwkm+YpUL+TrFwaDkpprbuaX9Elk9ftNiZusH69kJjgKrCZ7vrA
+ DL9incwHFesfuj37b+hFDvUsZm2Jv5VumHB9d01y67OGwIzk/ex20mSSABBHfd9gSQ/IoQMhMRp
+ 27PZ1bHPo3+JzOzkQiqXJ5/IeynM0zoh9yhany+ME3DQkH4JVaFgIAV6WATVcM3IlNovxOhyHw0
+ QH+6PcstVLApcY/jPvI2d0EENEGbIJ4yoZeeFKXQK6R+h2rH3OmO450Zoln8jewAbi7MPSxQHpQ
+ jhf5ytsj07K7QZkNwgVtkvhU/kcvef8imTsIyb/u/fOd4/uQVAOxnU448A524mjWN1FJiNCbjOT
+ lHnypJrs0BV/ieShh4rd1rvaxYEPjcvHKN773gizTnM7LNF4iD+eMb5yrMMrm6vUIAUij3rY9XC
+ U32k914yR/TF2Wvqwxb1NDYQNxjS7YSY/MSwGcJQ5bFsdYw/ZaCDfJGA==
+X-Google-Smtp-Source: AGHT+IFApPn6Dh96fqRXcjIGHqRxteYfW2Ih6XJVhmqOm0vC/WSJ4vAgpMhfjPAF9VAusNd5lbB+qA==
+X-Received: by 2002:a05:600c:1c92:b0:477:7f4a:44b0 with SMTP id
+ 5b1f17b1804b1-47904b2c2c5mr22072355e9.33.1764066824607; 
+ Tue, 25 Nov 2025 02:33:44 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fb9190sm33346517f8f.33.2025.11.25.02.28.58
+ 5b1f17b1804b1-477bf355af6sm245789815e9.3.2025.11.25.02.33.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 25 Nov 2025 02:29:00 -0800 (PST)
-Message-ID: <9922cb86-5c48-464f-a811-05a7a4b4a9cb@linaro.org>
-Date: Tue, 25 Nov 2025 11:28:58 +0100
+ Tue, 25 Nov 2025 02:33:44 -0800 (PST)
+Message-ID: <bdbb568d-0432-4d59-bd1f-cf2eb20bc2a1@linaro.org>
+Date: Tue, 25 Nov 2025 11:33:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/15] qga: Use error_setg_file_open() for better error
- messages
+Subject: Re: [PATCH] kvm: Don't assume accel_ioctl_end() preserves @errno
 Content-Language: en-US
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, alistair.francis@wdc.com,
- stefanb@linux.vnet.ibm.com, kwolf@redhat.com, hreitz@redhat.com,
- sw@weilnetz.de, qemu_oss@crudebyte.com, groug@kaod.org, mst@redhat.com,
- imammedo@redhat.com, anisinha@redhat.com, kraxel@redhat.com,
- shentey@gmail.com, npiggin@gmail.com, harshpb@linux.ibm.com,
- sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
- edgar.iglesias@gmail.com, elena.ufimtseva@oracle.com, jag.raman@oracle.com,
- sgarzare@redhat.com, pbonzini@redhat.com, fam@euphon.net, alex@shazbot.org,
- clg@redhat.com, peterx@redhat.com, farosas@suse.de, lizhijian@fujitsu.com,
- dave@treblig.org, jasowang@redhat.com, samuel.thibault@ens-lyon.org,
- michael.roth@amd.com, kkostiuk@redhat.com, zhao1.liu@intel.com,
- mtosatti@redhat.com, rathc@linux.ibm.com, palmer@dabbelt.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, marcandre.lureau@redhat.com,
- qemu-block@nongnu.org, qemu-ppc@nongnu.org, xen-devel@lists.xenproject.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org
-References: <20251121121438.1249498-1-armbru@redhat.com>
- <20251121121438.1249498-6-armbru@redhat.com>
+Cc: pbonzini@redhat.com, kvm@vger.kernel.org, eesposit@redhat.com
+References: <20251125090146.2370735-1-armbru@redhat.com>
+ <875xay4h6y.fsf@pond.sub.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251121121438.1249498-6-armbru@redhat.com>
+In-Reply-To: <875xay4h6y.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,21 +105,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21/11/25 13:14, Markus Armbruster wrote:
-> Error messages change from
+On 25/11/25 10:03, Markus Armbruster wrote:
+> Markus Armbruster <armbru@redhat.com> writes:
 > 
->      open("FNAME"): REASON
+>> Retrieve the @errno set by ioctl() before we call accel_ioctl_end()
+>> instead of afterwards, so it works whether accel_ioctl_end() preserves
+>> @errno or not.
+>>
+>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > 
-> to
+> I did not check whether the assumption holds or not.
+
+Indeed, on Linux the futex syscall is called via qemu_event_set.
+
+>  If it doesn't,
+> then this needs
 > 
->      Could not open 'FNAME': REASON
-> 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-> Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-> ---
->   qga/commands-linux.c | 11 ++++++-----
->   1 file changed, 6 insertions(+), 5 deletions(-)
+>    Fixes: a27dd2de68f3 (KVM: keep track of running ioctls)
+
+LGTM.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
