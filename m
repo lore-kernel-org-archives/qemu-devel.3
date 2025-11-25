@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3547DD0EE0A
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 16:44:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A9FD0EE0A
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 16:45:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNw8Q-0004iF-17; Tue, 25 Nov 2025 11:43:22 -0500
+	id 1vNwAJ-000639-HK; Tue, 25 Nov 2025 11:45:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vNw7l-0004Hm-6J
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 11:42:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vNw7j-0000wL-Ci
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 11:42:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764088957;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vFX9D6q4sZ1ZfLmYzJPRUOnWCuQ9+4NEuBm2hrgsw+A=;
- b=MzBVdW/OSsFpMvr//djnc+RmBZYjo35dWatbGevqE6KYPrcA3gU2oPrLRs0O55BWozszv4
- APbWndvQNgSwLWl6ZINw58lYojpmqfrLBlmfqjqJBqmZtMUEoIFPIHpq6S3NuJgaj4T/Bj
- wOxCxm+kCSoVaTZ3Pee7xmyF8zhfnn8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-zd-SzBJlME-6j5GXwpIBRw-1; Tue,
- 25 Nov 2025 11:42:34 -0500
-X-MC-Unique: zd-SzBJlME-6j5GXwpIBRw-1
-X-Mimecast-MFC-AGG-ID: zd-SzBJlME-6j5GXwpIBRw_1764088952
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 855631800650; Tue, 25 Nov 2025 16:42:32 +0000 (UTC)
-Received: from localhost (dhcp-192-239.str.redhat.com [10.33.192.239])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 545AF3001E83; Tue, 25 Nov 2025 16:42:30 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
- sebott@redhat.com, gshan@redhat.com, ddutile@redhat.com,
- peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
-Subject: Re: [PATCH v3 01/11] hw/arm/virt: Rename arm_virtio_compat into
- arm_virt_compat_defaults
-In-Reply-To: <20251125100859.506228-2-eric.auger@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20251125100859.506228-1-eric.auger@redhat.com>
- <20251125100859.506228-2-eric.auger@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Tue, 25 Nov 2025 17:42:28 +0100
-Message-ID: <87pl96oyh7.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vNwAH-00061Q-N3
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 11:45:17 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vNwAF-0001Ir-N6
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 11:45:17 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4775895d69cso24168135e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 08:45:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764089114; x=1764693914; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=RNaUZdRbiUXVUOL7MEdGN1nTKnzoXhTzml5g0OyHGvI=;
+ b=EJhKnOHjuNcdQ0NkvQS01zFi9IuPMUTr1xMRrF/YAzsbZLvNTXa8Nb+pb/GyCCF5z+
+ BX82Se63r/8Z1bYTrt1ZQDReCuZeCgHIkKt/8hxitzYMZSqHJCNgq73FZGXwGdS4rvZE
+ VQfMcQ20uaQLUY7DfWc6JZCnRwYtCtJZ/rEtFR42ffrgSxEOt7SqFoddshSw1dR9BmFj
+ cBrRCCAbl5EBFiqjul3YWJRCoptpwXELBaW8Hk0R4KlYpL09hSSnCavZcIO3un38pkmR
+ 3fsOgX576V/QYRXnbzEcHz+YqA4/xy3LQKz00Na5rvWujk40aCTfIA4n520a9N58tRQy
+ B2wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764089114; x=1764693914;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RNaUZdRbiUXVUOL7MEdGN1nTKnzoXhTzml5g0OyHGvI=;
+ b=F1vyweGBIUPLCbWgw944nwYSCWZ/GCRFFJhC+DKIzdXyKB6pwxOp1gnZAyReIw0Xdq
+ 2kdByptjeyQhbp4SMjzZGsmI+yr7IhzfA59tjOU6mqKRnltov3BJ4sjfjt2ZIEGmFKiU
+ 2PT85Jorc3Ae2PQvcGQtZ+T7TOH9zVZopGgkR8ZaiNSEYHjnVhNvb8A/FXkuaL6RvjzL
+ y/A56uvhC5VQN7/C94HcfWdi3mwORNAerFlT51Jgj1goLv4dZLpFGrLMBZwO2Gch70Wj
+ CcRxq4fEcd8OPwiQaT/20KH31/DL1/STq27tJamj5t9C2ZwBcGXbtVGtpTaYdFHEFfrc
+ ItFQ==
+X-Gm-Message-State: AOJu0YzjedGrfayOTeoaOpANRXGbkYeD955EFnf3dFLzJFxoHYYc0d1H
+ mbIZFMsxueEA5hVM8b2KRvbZ3DwsLNIGlPJBvQU6Kbkj/lPyQsL4DdPRXpCLQG0wzp4TiMBQmVW
+ apnMp
+X-Gm-Gg: ASbGncvQ+QcbjQi4SJOG9SZeN5jl86kDVzPOk2y8AN/P/OmEZZeKH4HRSpvIcZY9HUy
+ V476ETYHi7noFTKytsR+ARITHkJVP8SfWKNQKouZJNHgA2FWy8vAmZArBM8PA7EUSpIhWBsf7Bk
+ 1VzP2RP3tvucDaa3lg2XKo2/bSL717S+KFWcyos6NIrZu7M68GDMx9mDO0MmxcnG+KOrLMZ3lVf
+ rU172R7+mhiOqFR7S/g5xGgnh2FJoi/0GXy8+u2+xAkkg6/Lef1aFX5oolt1Vz4C1sNONpBxYpD
+ Ej+FE2uhJp0N74u8mZ2I3zKcQic4gg/Ohohv5iVy6JAUG8zFXVtsamZmmHqa0yejCqwcHd0bwA7
+ InZOJkISeUejOpSIooxgnfWG/vNUe4LSC/NkXOf0IDbkTfsgTcEbmYhAO98oyc1ZskYH9MElqJd
+ Owp8FtaeLC3Ve7623b
+X-Google-Smtp-Source: AGHT+IHPs26/fslIQayMwUzISbd7IE057PZZZ9g0YociFR+2oVE2WX/G6DKGwoF3EidRAfGjJmF1SQ==
+X-Received: by 2002:a05:600c:3545:b0:477:7ab8:aba with SMTP id
+ 5b1f17b1804b1-47904ac3ca4mr31116595e9.1.1764089113875; 
+ Tue, 25 Nov 2025 08:45:13 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4790530f0a4sm19740845e9.8.2025.11.25.08.45.13
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 25 Nov 2025 08:45:13 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] docs/devel: Update URL for make-pullreq script
+Date: Tue, 25 Nov 2025 16:45:11 +0000
+Message-ID: <20251125164511.255550-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,19 +98,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 25 2025, Eric Auger <eric.auger@redhat.com> wrote:
+In the submitting-a-pull-request docs, we have a link to the
+make-pullreq script which might be useful for maintainers.  The
+canonical git repo for this script has moved; update the link.
 
-> Renaming arm_virtio_compat into arm_virt_compat_defaults
-> makes more obvious that those compats apply to all machine
-> types by default, if not overriden for specific ones. This also
-> matches the terminology used for pc-q35.
->
-> Suggested-by: Igor Mammedov <imammedo@redhat.com>
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> ---
->  hw/arm/virt.c | 13 +++++++------
->  1 file changed, 7 insertions(+), 6 deletions(-)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+Cc'd stable because the old URL is likely to stop working soon
+---
+ docs/devel/submitting-a-pull-request.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+diff --git a/docs/devel/submitting-a-pull-request.rst b/docs/devel/submitting-a-pull-request.rst
+index a4cd7ebbb6a..e7d00808782 100644
+--- a/docs/devel/submitting-a-pull-request.rst
++++ b/docs/devel/submitting-a-pull-request.rst
+@@ -67,7 +67,7 @@ subject tag is "PULL SUBSYSTEM s390/block/whatever" rather than just
+ pull requests that should be applied to master.
+ 
+ You might be interested in the `make-pullreq
+-<https://git.linaro.org/people/peter.maydell/misc-scripts.git/tree/make-pullreq>`__
++<https://gitlab.com/pm215/misc-scripts/-/blob/master/make-pullreq>`__
+ script which automates some of this process for you and includes a few
+ sanity checks. Note that you must edit it to configure it suitably for
+ your local situation!
+-- 
+2.43.0
 
 
