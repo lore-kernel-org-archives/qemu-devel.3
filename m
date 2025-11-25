@@ -1,157 +1,172 @@
 Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-Received: from lists.gnu.org (unknown [209.51.188.17])
+Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 129A8CFD364
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 05:28:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C557CFD368
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 05:59:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNlaX-0006aP-E0; Tue, 25 Nov 2025 00:27:41 -0500
+	id 1vNm4O-00045V-Fz; Tue, 25 Nov 2025 00:58:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vNlaV-0006Y4-FK
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 00:27:39 -0500
-Received: from mail-francecentralazon11013067.outbound.protection.outlook.com
- ([40.107.162.67] helo=PA4PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vNm4J-00043r-Kp
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 00:58:29 -0500
+Received: from mail-southcentralusazon11013055.outbound.protection.outlook.com
+ ([40.93.196.55] helo=SA9PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vNlaT-00034d-DO
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 00:27:39 -0500
+ (Exim 4.90_1) (envelope-from <Honglei1.Huang@amd.com>)
+ id 1vNm4H-0007lb-Fq
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 00:58:27 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qqtpylMVa7cU7SnQqGUMcllLMr7GYN6FPm2XU6PTBE8+arNuHxSKgoy/RMARxcxqxcF46DhsA/p9HZGd8jwoQlI1nLBHvCxtThZzuLiTjPCaYpBAZ9i95JfIaWTNDLDhikNYwwSxDhuUS3/tPxk/WkVR9/tyqHaPi/1eTPVJ/Xntley6u8uzRiLdJojT2gDXAr6kpIXu+SGfzzHyioAnMRqdk0MLi/RZ+kKREeMAGKj9fJ8qtHJj2zi+iAdNdIhf2CeG8LkF+eMMt8BpCEfZB8F5RL1maKqqA/jHYTywh2wQo7BBNXKBC+wrHsDDF6VyrsgAgFm5Rl1nGuBU4jRo6w==
+ b=osNv+R06rqs3132tk6qG3f30f3tROkpwd7HnIGgDiXS2WnLaKwNiKvyMCsjhdNr3p2In+wKPFEVfG7Cj6c41IVA6/7tkURuN9d53tL7w8fOWIHkSGZ/bBiAOzLVyJmtBnNn6G66ABO3maPhT934Da3sP+C80Njm3f5I8snozUMr9xKgfUQv02pEVumj0UWANToPQHCW8NORO8+l8YiJYs2xntw70mn/krM77gxcINeocOPE2WhAQ7+lYCVaL5Lo5RisvCaLOXLAmOlkrLFUofNfVPe4Bv5HtVecRokuQdCTuQhlJDG34p4cArGIPA49cv/jPFfOXCLuA/j+28Eafrg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zAtVrxFf8HNNZeyoDvrRmOs9PNnjcmwDZqNy5EYZSO8=;
- b=kFF6n4J/tjW4wWm5Yrg0+UKAbYab+gQqNTxuRnQd4DsyoCBRD02BlxbjGZTz38id+hZ8+AWAUkj6IX0ksSSPzJjaMVV6ErjNiMkRr3co2YtjaZBZ9zpAInjapUb3dxH/bO6hE3W0WkgvabUmVrT03Lg/LwjoiZDxkg1fPJe+3jmAGgb6dRIrCHmjTalNJz0b4m3emUwHHjs3wj/PxQi/gTgazrewW6wW6KLflqzTBKMUDlEDF9LOXhxH3t3DuX9ssERTjXLvGSitb39hbEQ9znqOzvVxuDxBLYrihNdP1YNz+aID0CpfvO8MpFNCFFH832saPjzZbleNGhy8BaMW/g==
+ bh=Bp7PmfHpYscqbCVHlA5y7E833aZjCHN6Pd3piBvwsXQ=;
+ b=bMYN2SiKLIY9VoXQIiGUsgnDZsr/dVob9v1fL/J8VTMiAd4Osh6XLTjoLjPGg8PI2zv1MV6HdBQeTI2+rTSp3iJuZMD6DjG+0U9k+C2JEtAAHYLOybmV5hU8q2iYIrrYl+kZeIRV5YetQwedyOhGuH38VsfyymtKD04UGtKP0SfWfKGahDA1PGZdwGRB/6wmWMXuxPkKnyLTuxJbiorR8+TgP5Ba72hgHfL+yj7DlNFbhq/Jv7wx0pAWq2elN8oNRhf7bBktz7i+N2k/5VRdu8UmhwAvAzcoPM3momSVgQSiOazkVOZml6JWSGehGnIScCJKb3aJSP5aQzfD0pR9Zw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zAtVrxFf8HNNZeyoDvrRmOs9PNnjcmwDZqNy5EYZSO8=;
- b=Wwh/IJKoYEGW+YVbt5VmE/e5+eg+AYLWMdFXdrOoGyssjFu5AX+ga4v6PbS4Gu1KA2YBBdQcXP5ws//fPpBMS+xhETrIxYQvisBu0hrWYu5RYZT4/6bJWi96QHM4YQarIc112jBeg1cw4T1LiZJ+J2A5O6P5jDz1M+3TuGBlEvEBJ54qfbG0myRF69qc/johP5aNCwFvqzbY2STfxKtUiPs6ewjbMobsQFEiSM8X/ue0jSWKVbs4TjDw9+dp4Oj2kAwO0phcSnpXzbv2nP6WJcYsBHP7t2Te7u6I4OLn+4XSU9wLhcPMa9lYHwpAb1GREM4uIuw+5k1gAXr8+4jtBg==
-Received: from AM9PR04MB8487.eurprd04.prod.outlook.com (2603:10a6:20b:41a::6)
- by AM7PR04MB6981.eurprd04.prod.outlook.com (2603:10a6:20b:103::18)
- with Microsoft SMTP Server (version=TLS1_2,
+ bh=Bp7PmfHpYscqbCVHlA5y7E833aZjCHN6Pd3piBvwsXQ=;
+ b=DTXhAXL1ausX8htRbM9SSraAN96FeRb0xslmBy1lCtPhhSbLSHv5I7lKZq+K8VlobLxZA94xNH7OJBlBC+ajY2I8XvvE3Qths9lV/KeJ/IzdEsyUOxEKH95og41phbkJIfzxURK3ggObShYTU/WesF07xS2xDkwwDWEnS39djKc=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from IA1PR12MB6435.namprd12.prod.outlook.com (2603:10b6:208:3ad::10)
+ by CH2PR12MB4088.namprd12.prod.outlook.com (2603:10b6:610:a5::8) with
+ Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.11; Tue, 25 Nov
- 2025 05:22:28 +0000
-Received: from AM9PR04MB8487.eurprd04.prod.outlook.com
- ([fe80::1e08:e81f:d29:e1da]) by AM9PR04MB8487.eurprd04.prod.outlook.com
- ([fe80::1e08:e81f:d29:e1da%4]) with mapi id 15.20.9343.016; Tue, 25 Nov 2025
- 05:22:28 +0000
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "pbonzini@redhat.com" <pbonzini@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>
-Subject: RE: [PATCHv3 00/13] Adding comprehensive support for i.MX8MM EVK board
-Thread-Topic: [PATCHv3 00/13] Adding comprehensive support for i.MX8MM EVK
- board
-Thread-Index: AQHcWVR8XMZOm6lZIkWllt/IB1o56LUC5D4g
-Date: Tue, 25 Nov 2025 05:22:28 +0000
-Message-ID: <AM9PR04MB8487540421160BCD438CFDA987D1A@AM9PR04MB8487.eurprd04.prod.outlook.com>
-References: <20251119130027.3312971-1-gaurav.sharma_7@nxp.com>
-In-Reply-To: <20251119130027.3312971-1-gaurav.sharma_7@nxp.com>
-Accept-Language: en-US
+ 2025 05:53:19 +0000
+Received: from IA1PR12MB6435.namprd12.prod.outlook.com
+ ([fe80::273a:80c9:35fc:6941]) by IA1PR12MB6435.namprd12.prod.outlook.com
+ ([fe80::273a:80c9:35fc:6941%3]) with mapi id 15.20.9343.009; Tue, 25 Nov 2025
+ 05:53:19 +0000
+Message-ID: <4f9eda65-ef9f-4aee-8c69-09f5930d6a13@amd.com>
+Date: Tue, 25 Nov 2025 13:53:11 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v5 2/2] virtio-gpu: use consistent error checking for
+ virtio_gpu_create_mapping_iov
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, Ray.Huang@amd.com, alex.bennee@linaro.org,
+ odaki@rsg.ci.i.u-tokyo.ac.jp, armbru@redhat.com
+References: <20251124032423.227712-1-honghuan@amd.com>
+ <20251124032423.227712-3-honghuan@amd.com>
+ <5d48ae13-eb21-440a-a604-9f90a8e9c11f@collabora.com>
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM9PR04MB8487:EE_|AM7PR04MB6981:EE_
-x-ms-office365-filtering-correlation-id: 03965cdc-6474-441e-5e4f-08de2be2a04a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|19092799006|1800799024|366016|38070700021|7053199007; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?PbVqw1q0qdTqY0DZbEoa9l2YYbfP0T+hv1H4wlAgKY54LkInFtN8QRIEk+EL?=
- =?us-ascii?Q?3U98Bg6PQdyPx9ntNrYUqKdFqrkFFBH52YPdmwD+fPczrLy4Z3qNU8YlIbXy?=
- =?us-ascii?Q?vdUzYOsPwSzWfvoSYspYyaOhSJyfOc3Y8WKTdPPkxuRosI/YTE7ea7CW+sEW?=
- =?us-ascii?Q?G2XIZzYaGMJ2nrBgV9dBlw4Y4o3HMLwn9tfx6IZpYNZT66/QwOuzChnh3qh0?=
- =?us-ascii?Q?PXQC7cFb9HQZZUYwl4ZwEK3AUqd2UMZ/9CtJE8SYptSMbkvS6vluKSl821CX?=
- =?us-ascii?Q?e+lioor0L5vfQeX7vETJAk2vmS26NB7wr5DfQRdbQslPj3UfJYCptIxDbF5M?=
- =?us-ascii?Q?1Baz1PpbTUF1dJl9S3c/4Z+cRiCqe5+6BhfUkpPDHB8DcsAN5d+udF2/RPvt?=
- =?us-ascii?Q?2H73OXDFFs3iHho0ItGY+RCJH7khqu6rRSCOpGTJ4CVHdqh9xgX+BdWuU7zP?=
- =?us-ascii?Q?iscJP6nuD3t//fuQ0TdFbAqfUg+5JSkz447M5pdPW57qEtejSMQDgoLWfvOi?=
- =?us-ascii?Q?7p1uR8SWmcdLhYH42RP9SL6QCcEIPUL6mD6c7bg1489gzjyrDbX4FE0cqq+C?=
- =?us-ascii?Q?W5Ee4j6eTGD+C5b3ljnHEHJe27z9q1d6Pf86mJcVlUgkGQh4npL0XuXrgK6D?=
- =?us-ascii?Q?nGdi/C+Jp67IvpIlJ3hlavAaYfEc2rg7XNeZD6wPAMQPb/zYuFrITezlNo8i?=
- =?us-ascii?Q?OoZ6PKLnMIEwSkB4TWRgJG6Ps1ubU96tgv7K17WKTvt//PXXcP32X+uQobsk?=
- =?us-ascii?Q?yIAtkBDVG9ObDo0zOInTEiF+XxLisA3DpLp19Q+D8lzo4ewXy4y4gB3+PZIo?=
- =?us-ascii?Q?tGRGtVjn5NqnSXUJ8AL1U5nKIQl3FRrVrh2NH+cbG3efsqhyAaR8Jm2TpJ30?=
- =?us-ascii?Q?MMeO6xsZFn0ATeteLnKCE4syRkoKXtxPy1Ehze4lKkFLZ9HrrJzyWTCPPamk?=
- =?us-ascii?Q?aN6GmyUaFpsz6o/zgPRYeBT/oTpwH8TkqOdrnRo7NKf9pPpDlkvvSRA3PTMy?=
- =?us-ascii?Q?WGsImpsJDGjidc/frPGTOvU15Rw3t5UDNTks8TZg4SzGeSzI7NkXWao2LjTz?=
- =?us-ascii?Q?kkdCeMrXuvsLzsR3nqOzJ/dgfqALC+Em46W2I5w0OW1Rys8tyovVyhotM4Fr?=
- =?us-ascii?Q?g+DuByy8TP1ktzlAY136TVezCdAoPmHiwFRZpLCULN3C3e4UvbGomUWroC6U?=
- =?us-ascii?Q?bhfdM5y0kAF61WoLS5pRbFvjNNgyCeH7ioTtBdluZTYOoLBF2gsT5sTUHNcI?=
- =?us-ascii?Q?P7eAnGcgxtb3xKpAqcDnqJQ515sYAs69IrBob4kwNVHV3gB1aKaN2ZAu6Srt?=
- =?us-ascii?Q?2G7mbDI8XRk7VSr63F0L3QgUP1xjnqvwGVOtPOO8iYae8pJFOIu1Qp3TsQxX?=
- =?us-ascii?Q?X2k9aanJ/eRtOpPIzwcbBgrZd/q6ogUhbFsZUIQnzLfOi8QjqaXsz+LpGXzD?=
- =?us-ascii?Q?KBxycLj00oEnQTz/elDNZHk+7oLbz0L5LNgyoMMmFPPw9dfLhFzZSBeh2zXL?=
- =?us-ascii?Q?oqkotfoL0WY8poQISHw/uHUk/K6GEsGkEDba?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR04MB8487.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(19092799006)(1800799024)(366016)(38070700021)(7053199007);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?LOMKm/euFGI7+7sV1NB0SLHXqWQRV3mK8CovFtN2pO6tkCzFnh2K2LvVWKrv?=
- =?us-ascii?Q?fnPwC5NHSABGnjeQm2zUmKdile/dh9JCvcdtBtjfjJFSaLF/RbIxZO3YnkaT?=
- =?us-ascii?Q?3kg6LuEatUwn3MASlSDpCPTi2yxPWghcZyEoMNuB30FrufVZii1RcXekMq2I?=
- =?us-ascii?Q?dK6s0PKCRKxUfGQGnyNqKlEfJZe30EuJwmVVrbL7JdPZxEi9T060dnEJHVWK?=
- =?us-ascii?Q?BxXicLk+qPr3YbGBjvPsCXLtjr9cLzDdhVoVTEJ8Zh37wHltfv+PwYQIN2/Z?=
- =?us-ascii?Q?y1IuMBgXnq67pXB7hl2Zhar360sCecie2tpJpEyqK5FehUyQczCS2HMhiRvF?=
- =?us-ascii?Q?AM+8dL2ydcDkkpDBkW2i2qT+XCE8AF/wGeDITR1t5QmBAcxpVXzqXJ7rSDbs?=
- =?us-ascii?Q?t7lG94wFlh/ePYC6rgxb6JqTm4fr9gH7F78y/AyZGHWjyANPvOvPNi4dw3qg?=
- =?us-ascii?Q?XtTh7D8DO8JpCD9ED/CdffFBubNbboizKeU2IF/xa3oXS7ek9ZqlxYK1ZvCJ?=
- =?us-ascii?Q?kq8pHMjmfVtcPwm3EP+vWdzVe6ne6f5G6vvvoSIwUHH8BKAX902tc5blmUYq?=
- =?us-ascii?Q?h74M6kCKvt/UlCP9QhGjbDqi3xSfNsIYRiHutMz51VDLNZ+ZI11Nny9taOd3?=
- =?us-ascii?Q?Hqb9kcg6NchKqCwTilOp0mVipVhudNN6IEe20sZ9WuMQVy1wy0x1LECBMOnG?=
- =?us-ascii?Q?McGzDXx3kNAZ+XBKDaEPteLE2Z7OG7pRn/OB/QpsnCOqxu706YsoAoWLo6Oe?=
- =?us-ascii?Q?s4CrcDLBUdXHUsSXPVXGGa3khOnsdbYRbOqYgb2wZPbwTWIyYw8WuwkbeThM?=
- =?us-ascii?Q?GxgIQnQ2YsmsP1v/ka5jOBjHHAmxHkjnrYIgDlIbZWJaSihB4ye9H3EJ9/eI?=
- =?us-ascii?Q?HWBkn48UqKNyxgaIOpKqrpDJTIzdcDOakruzfAY2fR4A2TbI3XdbOJ03taQE?=
- =?us-ascii?Q?c8NkW/cDVTdRfBgK96uAJAx/kvvZ/jwJ174FmTI+vw/RHA0vw4fSzM/hcStE?=
- =?us-ascii?Q?Y9W4JH+gUnKeukn7+F61u3wKgnHlvgacdKRRxGBAt1rMwJYnZ+FnZ0pYiF8w?=
- =?us-ascii?Q?r1U/0OFOyZvi4lJtpX6fTS+ch5oib0o1J1vxtlWvZU0mruIrfxN3xH/AlCJa?=
- =?us-ascii?Q?SwqmwBwvqYlRxeVhMTX9BFi1KRi43l7kRrssx004OB10Fjwa/eqPN5QoCssN?=
- =?us-ascii?Q?QQplwPWLQAUxkjkVSO1WeW1dpHXGe4aQmjF1VEjBdCQ4gKLYKDVtTWg/iZnb?=
- =?us-ascii?Q?ia7DGfdvV2RAhlml/gK9J0Kqk2BwZQqb4vF5WeNJNf3WfQJfN5XKGjkD9WXa?=
- =?us-ascii?Q?2lz+ZtvTdwY7Qd78vhWZ7N8e+GoJS2o4X7+QGO6ok5Ut+Ire8is5cZ0FwXJZ?=
- =?us-ascii?Q?CNsS2r3/Qbw0kb2De1J2tl/NtjdZUgDHhf7Xr14f70VmRCrn+LFdVWm0QNMy?=
- =?us-ascii?Q?l28TOWlGarmZVZffUzxXWVACcB2LRvahBRYd8JIUppTHcvb01GDZZ5BgIxvy?=
- =?us-ascii?Q?hq6NXiweEVTSAUiigDQ0j+XK5ixC1rTs04XPNWuF7I5B6oDpQIJ7ZspkNdV/?=
- =?us-ascii?Q?FSm//yBH0Oj+KHUPCuCmlSj3fViFJWS+/oveDnva?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+From: Honglei Huang <honghuan@amd.com>
+In-Reply-To: <5d48ae13-eb21-440a-a604-9f90a8e9c11f@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: KL1PR01CA0075.apcprd01.prod.exchangelabs.com
+ (2603:1096:820:2::15) To IA1PR12MB6435.namprd12.prod.outlook.com
+ (2603:10b6:208:3ad::10)
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB6435:EE_|CH2PR12MB4088:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3240183e-1dd0-4cbc-0d3b-08de2be6ef4b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VXF5TjlYNm1IaFJkMTRadVJCWVRqcVZvTk5qZjQ4UC85bDA5MTZXQTlUekEy?=
+ =?utf-8?B?RWRaL1VwY0daRCtzeUJSVlBHZUNacUIzbWVkNGhxMzlmbnBqblpwZkJjbXhG?=
+ =?utf-8?B?OWpIR2IrOXA5M1c5RFoyR3ZZa3MxS1hDc2pRODI4N2RhN1B5Z0p4NTdpNUpu?=
+ =?utf-8?B?SFVUNGQ2ekluVmNSQlRUZHNVSXBNUDB3eUEzT211Mi9GNHJEYTZCVFBuV1V2?=
+ =?utf-8?B?ZUprNnJQS1dPdmxLVmY5czJiSFV6dUljaFlMQm45a0d6cDI2REMySlIra2dB?=
+ =?utf-8?B?Q1l5QzZVVDE2Q3pVTERmME52MWlwaDIyZDl6UmJLVWJJWFd2eGJFb2I4UE1l?=
+ =?utf-8?B?U1hqSVh0cHR2dXVCYjhLN25jM04yL29xcDRpVWZCRk5Pc0ZSNjJsRFViS0xF?=
+ =?utf-8?B?Sm9YY3pXVXRVSHBYZ08vVlNlQjBnNWxpTWNBNGpvcVRIQ3RNZWJ5Tko0TGxF?=
+ =?utf-8?B?T29EeCtiMVp6a25HVzUxOW01UzUyRnFVTlJEaE1nbDdRQi9zdCtVNDkxSys2?=
+ =?utf-8?B?a2x3UmFSazBZcm1laWlzU1Evbzg2QU1rUU9oYk9XdUY2ajZsbXljY3BDZkxj?=
+ =?utf-8?B?Ri9jTURjMXFEbytSdEpqWGthbUowNjNWOXlVSmdoMUhzays4SElGM1h5TURN?=
+ =?utf-8?B?ZGZ0QlRobmxTL0NuSHg0T2lpNHVOL3FTdkcxMGdsTkRJMFJJWStFNFBWUWVF?=
+ =?utf-8?B?am03c0ppdE1oSHRySVVmNHZxNklqOXpjMTBlNi9ma25iU0diWlorZzE2cFk3?=
+ =?utf-8?B?aGoxRG1jRkd2eWlQU2RqYnEvblNPMW5lRzRKMUlRSGlnNDcrd1RFTDZvT2Yv?=
+ =?utf-8?B?NFg2UEVXc21UZDNETFNET1lmK1lSdTNHSzdhTW52UUdCZk5xZHJ5akVyNXpB?=
+ =?utf-8?B?K2FINXMrQUNGckxqTE5VU2tvQlpBY2UwRGF1U29XMC9GSzF6bTE3MGQ4ejRP?=
+ =?utf-8?B?Ui8yQzRTQlZsa2VjRmE0eStXS2dPbVhEaEJMZU5TZi9JWmJJY1ZXeTdCaGVo?=
+ =?utf-8?B?S1VaZnZPa2hSVjBlbE9XMnN6bXIrUFJ2ejRobnRkYkk5MjJZcjZpNFNtenNY?=
+ =?utf-8?B?M1NqVUQwbFhvSG1QSVZXcmxjc1ZIWi9tcWxVcnBDS1krQm80NXVybUs0dE01?=
+ =?utf-8?B?NmdTVzIvUUVBbHhrZ0FWelZDbnZucGcyakZzQnc0RW5BbGVhQTcwTzBFWEM0?=
+ =?utf-8?B?MUVUT3A2NjFwZGxUR3owbDlWNXQyU2I0ZlZXMThQMGJmUWtDQm5tWUFWcm1N?=
+ =?utf-8?B?SWVIa2huZWNGZlgxWmVab1grVU9xVWVJSGdjQUFtaFUvU2h3bDJKUThUUWEv?=
+ =?utf-8?B?TTVwWkt0d1ZabkNwL3RVU2Y4NEV4QUYxSDlmcUhGNTkxcjUwcUNORjVnVWVP?=
+ =?utf-8?B?QXdtdDNzVGFxNnJ2ekN0SkFlMGViT1pNeEVWb1FRTWxRNjFyUDRFS3FGa2hD?=
+ =?utf-8?B?RW9vdlg5dW1HdjYxOXl3ejZ3NlJoVTB3WnJuc2JOV3Y3U053RWFQbmNzbFho?=
+ =?utf-8?B?V3FyZGE5VDZqUzlLaW5xeStEeHZCeGI3eERFM2VhZHE3RDdKV2dNNDZVSHdP?=
+ =?utf-8?B?WXhKRmdGR3Z4Q2pWMVo0YXlhaXI0a0FsUUlrd3hXZnJVZHFVaVZGMVVUWk9K?=
+ =?utf-8?B?anVTWlNhbzhGMnE4RTgzdFgwcGU2VVlER0o4Ujc2T1dVL1F2eUIwTVBweFVN?=
+ =?utf-8?B?dWwyTVcwVWxIc1BPSmRpcW92OHpVN1NFbmxvQTVaVGVXMm1ZRUhSMytTVEgv?=
+ =?utf-8?B?bktMVTMveHg5WXR1QThrYUI0bWdJQzdFNVI4MklQQk10bWdHaWpvMlRvVG53?=
+ =?utf-8?B?ZjN3eGJkQ3k4WW0wRnBEZTM5d0FVNXBlR2ZicjJyamd6UXRxdTdpWmxRYU9F?=
+ =?utf-8?B?SFBXaXEyZDJqZXJFY0dGNUdUaDZ4RFhpOHlkUFZLMU15SDdzc2xGU2Fyais0?=
+ =?utf-8?Q?nXcerw5U97qUqCD9oKQBEOFfYQP/8nnw?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR12MB6435.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eXpTWWZtbVE0ZHJjc3JXbWZCZzYyYUYxQ21tM0ZRR2RRQ1NrVjh6R1EyWjFj?=
+ =?utf-8?B?ODk0cE1MMlRnRUw0NytlVlY2L2ZjOEJhSkJGYnN5SzdkOXVhOHRGOFFFcDJ4?=
+ =?utf-8?B?b0VicDlKUzlPTlFJcXgyZjZDZE1lT1NYZ3RNWUY2Yk1GWGxmYStncHRQd3ov?=
+ =?utf-8?B?REZKc1JVTDM0MG9VMHkrdk0xckUzWkFubWVzUFBseS9GdFB2amNIZUpKWktm?=
+ =?utf-8?B?eWF0OUFmSXpZOHpRdW5wazFVeFlSSzhzSEFJTmI4UnlOTG5QQzJWUG51OHJz?=
+ =?utf-8?B?NDdOOXJHMjRZbXNOQUdWM25QZkFjOTE1dktlcXRlTjVHZEhDOGRycjJ0ekF3?=
+ =?utf-8?B?T1FURWp2c25FWlZCdjJqNk8zOVRQQ2d0REViODJtc0tQLzJkVGNXM3ZlWlcv?=
+ =?utf-8?B?Zm5pdlc1RG1Bc0dab3VDWW43M0tlQW9nYnRlZEYvV2I0ZWp2TDBNSXdJalh0?=
+ =?utf-8?B?YTVhUHl3N2g0NW1vYTQ5cWpibUZUNDc3amROYXBLOUlnWFZsYjRmaWYwSDRv?=
+ =?utf-8?B?NVd2RDF2ejFYaldMdUttSWhUVkNudEo3L1VoTDZsTUY5ckQySGFLK3daYThM?=
+ =?utf-8?B?NmxCR2ZpdC9yU1F1cnE5SitZUDE0WkpVSXBJaXJTTmpTSm0raXFSNyt2Qy90?=
+ =?utf-8?B?MlFhWjV5Y0VZbmdqMnE1dzhOcTBXVytzSythV2VtVUlhaXI4S1lUZm5EWDVQ?=
+ =?utf-8?B?NTFKNytlTTczOSs2Tk80TldVeHdxQ3JIem9LZWtFdXgrKy8waGVLSTlzM2Ra?=
+ =?utf-8?B?NEpKWWpDcksvTW5WT0ZKcHl3STBxLzZuT2hFR1ZMYlZESlBjNmxldkV5YjZ1?=
+ =?utf-8?B?RGpDTE1KakdrNkJHR1ZpVDdNUlk1aHV4Qm84dm9vVTZsY3FUWjhLcnU4Qmov?=
+ =?utf-8?B?a1JIVi9FdjlwYkV6YnVsaFpXSlRQcGNQMTBWSEJIc1dGSUVDNEJnWFR2WGg0?=
+ =?utf-8?B?b2g0RkUyaDQ4QTJUcUs3YTd0bzdHQnYwWVVmOHJCNTUzcE50Q2g4THVRRnFS?=
+ =?utf-8?B?dEJUZDFKSlJpdHRKaWNteGdCeUZHd00vWWcxNVc1TUFIalh4SVVVc2hvYzBM?=
+ =?utf-8?B?bmFJbmVIOVdtdjN6TGFkUkM0a0FnMDI5TlJOSmhxa2lzaGNSSUtHR0JiTjlh?=
+ =?utf-8?B?VzZRSTRMSEVNaXNtcmFTaFMxaGhnMU9aUEFmdUVGKzhRazRnM0Yzbk1ZUGNM?=
+ =?utf-8?B?RldlZXhVTDRXNFBGV0ZMaEZsa1VoWVhqaWU4QVgrUnNnQVMzd0doRmRQRHJ1?=
+ =?utf-8?B?anVLakVZTVBrclh1RWJSNXFweHRjRTZkNmU4UDlVMXlwVWE3WkFzdHFOQjNw?=
+ =?utf-8?B?WWd2TE9BbTZJTENnN2tIOXZnbk5GQWR5YnFuYjhJdnpJQlVReWxaemdVek5G?=
+ =?utf-8?B?UGtMdkNCQXFXYVJkU0RxMUFQTmtUeThITGpEd1dlYTBualhDSS9GWDJOUzV5?=
+ =?utf-8?B?TVIrR29FVzJYSm41SXZnRVM1bGJaZUJzTTJtNHlVL29SSFIzVi9oNExTZ0NO?=
+ =?utf-8?B?L21jM0w5Q21PYnZ1UHk2TEYzb0FPUGVuYUhxdzFtYmRkVSs4UzIwcHRlSWh1?=
+ =?utf-8?B?VmdrRHRBQ212NWdKSGIraG5aV3ZyMTJzenM0L3BxUXZDMVIrV3NjUm9FRjRl?=
+ =?utf-8?B?MDhQVk1LVjBscUhVN2x4SFZlR1RTUXU0NG9jRXMra1MzT09mVDd6a2pSYWlM?=
+ =?utf-8?B?aWQ3UWgzWXhVajZXNS83ZzNTaUNkZDZ2dGZZbnQyT3F4cU8zYzFIanJTRzZs?=
+ =?utf-8?B?ZFJnMU1LT2xZaDZvOVB4cldWQnhTL3VrcklKd1hySlJSVnhjcTc5b3RFbStU?=
+ =?utf-8?B?dW0rOTlYRmVyTFRJMUhGeTZYWTlyM01pTm55anBoYlliaGJNL1VwSDNDVmNU?=
+ =?utf-8?B?QUlzRXZqSE1FVEtDUnFrS0l5emJvRlduRGR6a2tUVVVGZktQRnBWNGtSYzJY?=
+ =?utf-8?B?cys1TTY4YU90bmpLeUMrcnpYM0Ezd2prM0tKSm94L0ZRdmZZeXY4bGxkM2RO?=
+ =?utf-8?B?NGQvRjZFRVU5clJnYk9DWWI3S053eWdLUGdTK2dMQ05Ddm53QXg0OHBtbEJr?=
+ =?utf-8?B?T2lUYU56Vm9acDArNnhkR21nMFEzVWk5bS9wOHBmTEQ3Y3orMC9OamdnWE1w?=
+ =?utf-8?Q?O0x+NiJhDEQ+0sz/xKHK0yr+l?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3240183e-1dd0-4cbc-0d3b-08de2be6ef4b
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB6435.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8487.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 03965cdc-6474-441e-5e4f-08de2be2a04a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Nov 2025 05:22:28.4447 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: na3I2UKujBbMQdu2CsoQCDi35xXFZ5446WCXxm74gC9HFjeE1vhyPyKRYON7jPQwkbAdMQ2pWeYTOfWrov+XkQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7PR04MB6981
-Received-SPF: pass client-ip=40.107.162.67;
- envelope-from=gaurav.sharma_7@nxp.com;
- helo=PA4PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Nov 2025 05:53:19.3904 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6tTbg+OV6A+M82I/CXp1KAlwfvJOpKeRPklwgCX6ixDxRKQZHVznT2CxtG4SCEJnhWHg7qu677wmQcRzrCYicQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4088
+Received-SPF: permerror client-ip=40.93.196.55;
+ envelope-from=Honglei1.Huang@amd.com;
+ helo=SA9PR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.075,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,100 +182,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-ping
 
------Original Message-----
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>=20
-Sent: 19 November 2025 18:30
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com; peter.maydell@linaro.org; Gaurav Sharma <gaurav.sh=
-arma_7@nxp.com>
-Subject: [PATCHv3 00/13] Adding comprehensive support for i.MX8MM EVK board
 
-Changes in v3:
-- Minor documentation change - Added KVM Acceleration section in docs/syste=
-m/arm/imx8mm-evk.rst
-=20
-Changes in v2:
-- Fixed the DTB offset in functional testing script test_imx8mm_evk.py
-  and preserved alphabetical order of machine names in tests/functional/aar=
-ch64/meson.build
-- Fixed a typo and updated the documentation
-- Modified structures type to static const in fsl-imx8mm.c wherever
-  applicable.
-- Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk.c. This
-  is needed because the default DTB in the iMX LF BSP images have CSI
-  and DSI enabled. Developers/Hobbyists using these BSP images will
-  observe CSI and DSI crash logs on the console since these are unimplement=
-ed.
-  With this change, both debian and iMX LF images will boot up without any =
-issues.
+On 2025/11/25 05:31, Dmitry Osipenko wrote:
+> On 11/24/25 06:24, Honglei Huang wrote:
+>> diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+>> index ed5ae52acb..ea2928b706 100644
+>> --- a/hw/display/virtio-gpu-rutabaga.c
+>> +++ b/hw/display/virtio-gpu-rutabaga.c
+>> @@ -466,7 +466,7 @@ rutabaga_cmd_attach_backing(VirtIOGPU *g, struct virtio_gpu_ctrl_command *cmd)
+>>   
+>>       ret = virtio_gpu_create_mapping_iov(g, att_rb.nr_entries, sizeof(att_rb),
+>>                                           cmd, NULL, &res->iov, &res->iov_cnt);
+>> -    CHECK(!ret, cmd);
+>> +    CHECK(ret >= 0, cmd);
+>>   
+>>       vecs.iovecs = res->iov;
+>>       vecs.num_iovecs = res->iov_cnt;
+>> @@ -616,7 +616,7 @@ rutabaga_cmd_resource_create_blob(VirtIOGPU *g,
+>>           result = virtio_gpu_create_mapping_iov(g, cblob.nr_entries,
+>>                                                  sizeof(cblob), cmd, &res->addrs,
+>>                                                  &res->iov, &res->iov_cnt);
+>> -        CHECK(!result, cmd);
+>> +        CHECK(result >= 0, cmd);
+>>       }
+> 
+> The ret < 0 part looks okay, but ret >= 0 feels dubious to me given that
+> this func doesn't return positive values.
+> 
 
-Changes in v1:
+Really thanks for the review.
 
-This patch series adds support for the NXP i.MX8MM EVK (Evaluation Kit) boa=
-rd to QEMU, enabling emulation of this ARM Cortex-A53 based development pla=
-tform.
+How about split patch 1 and patch 2 into different threads, for the 
+error checking style I will submit a another thread, maybe change the 
+virtio_gpu_create_mapping_iov return value to true or false is a better 
+choice?
 
-The series includes:
 
-1. Core peripheral support (CCM clock controller, Analog module) 2. GPT(Gen=
-eral Purpose Timer) and WDT(Watchdog Timer) Emulation support 3. GPIO,I2C,S=
-PI,USDHC and USB Emulation support 4. PCIe and ENET Controller Emulation su=
-pport 5. Documentation and functional test included
-
-Key features ported:
-- Basic boot support with Linux
-- UART console for serial communication
-- Interrupt handling
-- Clock and power management infrastructure
-
-Testing:
-- Linux kernel boots to console
-
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-
-Gaurav Sharma (13):
-  hw/arm: Add the i.MX 8MM EVK(Evaluation Kit) board
-  hw/arm/fsl-imx8mm: Implemented CCM(Clock Control Module) and Analog IP
-  hw/arm/fsl-imx8mm: Implemented support for SNVS
-  hw/arm/fsl-imx8mm: Adding support for USDHC storage controllers
-  hw/arm/fsl-imx8mm: Add PCIe support
-  hw/arm/fsl-imx8mm: Add GPIO controllers
-  hw/arm/fsl-imx8mm: Adding support for I2C emulation
-  hw/arm/fsl-imx8mm: Adding support for SPI controller
-  hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
-  hw/arm/fsl-imx8mm: Adding support for General Purpose Timers
-  hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller
-  hw/arm/fsl-imx8mm: Adding support for USB controller
-  hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM emulation
-
- docs/system/arm/imx8mm-evk.rst              |  79 +++
- docs/system/target-arm.rst                  |   1 +
- hw/arm/Kconfig                              |  24 +
- hw/arm/fsl-imx8mm.c                         | 687 ++++++++++++++++++++
- hw/arm/imx8mm-evk.c                         | 127 ++++
- hw/arm/meson.build                          |   2 +
- hw/misc/Kconfig                             |   6 +
- hw/misc/imx8mm_analog.c                     | 160 +++++
- hw/misc/imx8mm_ccm.c                        | 175 +++++
- hw/misc/meson.build                         |   2 +
- hw/timer/imx_gpt.c                          |  26 +
- include/hw/arm/fsl-imx8mm.h                 | 240 +++++++
- include/hw/misc/imx8mm_analog.h             |  81 +++
- include/hw/misc/imx8mm_ccm.h                |  30 +
- include/hw/timer/imx_gpt.h                  |   2 +
- tests/functional/aarch64/meson.build        |   2 +
- tests/functional/aarch64/test_imx8mm_evk.py |  67 ++
- 17 files changed, 1711 insertions(+)
- create mode 100644 docs/system/arm/imx8mm-evk.rst  create mode 100644 hw/a=
-rm/fsl-imx8mm.c  create mode 100644 hw/arm/imx8mm-evk.c  create mode 100644=
- hw/misc/imx8mm_analog.c  create mode 100644 hw/misc/imx8mm_ccm.c  create m=
-ode 100644 include/hw/arm/fsl-imx8mm.h  create mode 100644 include/hw/misc/=
-imx8mm_analog.h  create mode 100644 include/hw/misc/imx8mm_ccm.h  create mo=
-de 100755 tests/functional/aarch64/test_imx8mm_evk.py
-
---
-2.34.1
 
 
