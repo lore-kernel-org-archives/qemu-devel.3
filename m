@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82B39CFD368
-	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 06:22:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 606CECFD368
+	for <qemu-devel@archiver.kernel.org>; Tue, 25 Nov 2025 06:23:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vNmRZ-0002Mx-2P; Tue, 25 Nov 2025 01:22:29 -0500
+	id 1vNmSg-0003QI-PN; Tue, 25 Nov 2025 01:23:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNmRX-0002LV-0a
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:22:27 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNmSe-0003Ot-Ch
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:23:36 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNmRV-0003DA-BN
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:22:26 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-477ba2c1ca2so53551335e9.2
- for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 22:22:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vNmSb-0003PS-I1
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 01:23:35 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-47778b23f64so26927745e9.0
+ for <qemu-devel@nongnu.org>; Mon, 24 Nov 2025 22:23:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764051744; x=1764656544; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764051812; x=1764656612; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=f9PMY82i/jaFQBwB85/CZ8mIcoZUJob2eOmqwSq7Cyo=;
- b=VD/SgKFnSFPmMhaQwn0P6VRyav8K3P4rIAnqPlXdZk4R9kEF70RVC2zL2Q9cCJ4Paw
- V+47rb61etvubUNRKC93nTUN6AtgDSHOrGa2fD+V5j+3ZUovfmGUDJxxNrsW1kMVPcxj
- rEUQpvDHaYpppJUcRoR0EbemjKS2obcSqAtEq4FbM27OWxV9D7TQbcUNnTTUMtTpaIOq
- q+XIL02Zblbpiy9oiTmm6Hdx117W6VIG/+3RBLkTK9k04ACLJyGoi+kvpF7P8BUjKjMn
- TXvtT33TOy8FLCYzu6GPpdLyLvkLc+kf6OZNkXvcn+Bmxle6nmNAQ8igiZ/fwCINkduA
- nmcA==
+ bh=UOOQl3kZW1bVC+fk7t2YWU1R6hWEB46Dmnal7magMFw=;
+ b=QmKlvv7Q+Zu8djKPc5aBr4sGJ36pXkr4GUGOLbCwK20Xr07aGaUSNpKejYxOsko7i8
+ jwAdMQKWjP677IKMVyJTBQBBwLKuOvtEDf/aIpBvmUfr9t+gK1WE6BXsdU0tU8bn49Mo
+ h3Ja4tLNUQ37/yHEV2AI6hthUo1nL5khlNwrBXNFo7q9HOyo5nYC8kkkyE++04o7+5qj
+ +jCsxBZ/3h6rg50tSs1Y3uwRaBZ0o+21o58RikD7MQ36N1YyLHMwbYnxDqT0GB0oea3j
+ 4Kw4oWV51hWGgfnp8hRPr7jLyPz+5cNKEStMD7u9ojOYZAjDfvto3j4z5wwXG87f/Q8g
+ MUGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764051744; x=1764656544;
+ d=1e100.net; s=20230601; t=1764051812; x=1764656612;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=f9PMY82i/jaFQBwB85/CZ8mIcoZUJob2eOmqwSq7Cyo=;
- b=bD2gBiViTKKa4mJpgovMlYMYCr2asXqL2DCIr5MDBRONfOtyo22U8N/9124mROmBYo
- tpOyu3xa4hCNR7iEJZoO3qxG4znHNM/uthxdPCKhedSK0x+nlnZi4BxYKVk5/WpaxvFX
- IvSmnNhg+IO/YypVw/EKZSzq2hT2HO0jtvnTHI1Y+zjNaExRIBoI0t5kVWO7rOdJUC2t
- KhX8sJkKFyeC5czR9d7IVn2/AyWeQFD6+HNDlB2jiQwuCzTMMr55eZv7wny07VPSbUBH
- nl6AD5+2IsWfWzVqLsUd2a6IRa/m1oyNK24kdN5VWe/M1Swulztm2OpT6d1B20ctI22F
- HESQ==
+ bh=UOOQl3kZW1bVC+fk7t2YWU1R6hWEB46Dmnal7magMFw=;
+ b=BsNe0H09loHyANHUOjNokOZ+uWbLqZ/ihcRge5TZivP78DqYgHnnLUxNmDKlsKwHof
+ d5RlZ5kDJiJsjHmrDOLt1p8hC4mxlklE5oQlyb8xABcjnHkC5DGji/UAmrmvAPVZm85d
+ IW266m+zHY4yFj/AM9dGS8qRPMxZb0cd6+zoNi6O/uTPXVPJIYN9kCyW5caDzS9B0TQ/
+ l3j/RLZ43ICXp9DwwEDx/keEK1Wa3of8XklvrIx3cA3i2B11xfndOOzptCZWrLyPKP4o
+ yIv/tH+uZYN3AUuoip7s3oZG46RPqVX0sQyfehvdbvZeNVnaEE9VKUsc7qkJGn/A5EQ3
+ A+qQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTO29VkIc23b6R5BpYdtSs7F3Npa6rTsz1tNeBmLRfdnhX5WoiGbvMaix3wcZWM6KNg2Na+muEXrKR@nongnu.org
-X-Gm-Message-State: AOJu0YwNcWdAsjVEJMZaagICepDjs/7YCBaPoQgmuPvSIck8+roCVXZ8
- a0t82nQ391NK+kfgQ/+fixmwIWBh9BXWE/mEmPfat7H9xUIrcbvPs8+OBzQqyVNXwwo=
-X-Gm-Gg: ASbGncsv0YJTlAx9OETAFqhwv/LnXYGYdIWjfUtWqjL/82ITcUMQsCpclnJl8vIYSes
- uzSesFKmOml+UxKoVcX1bv7QaHoA3wHXBDgHBeJCJ1rgCkADUr0qsFV3sGFUOODyKyRCSiNCfy6
- dOFTLtoDGMPgmBmBhq/Gl5teOxJAzhcNtxnKeULNqWwP8ZqwZAAoPd1MljLIE2dVKFgi6OAj1Xc
- 2HOVC1z8DjwDbyEwPIAeRYwSog/i73yQDMJhCc75UwPTKcmdURiWFwTlxXScBrXoiX+Oi8lYhMf
- hxF8ywfAixB0FotSFDV/W0RYXiTyc4zedlkXghLP9CZv33xIhi+wQIUtNKnr0FEglaCN7kmXxIB
- jyjMVjvCsjsuaC9VLIro4pQcqhAEx8QgPV3M1wtCPUEtyDtjZVC88gYdHOANygMnSALlnY55g7i
- C9X7RGGvk+dXWCbkIisI35NigNij99h3og1Tiwuc1/g5XM/lbALvoSPA==
-X-Google-Smtp-Source: AGHT+IFDchfo8wmvxExDOTScFL75Y50QSTKmA05qmrURNbKfXMlTq1TI/FEAoocUx4gEjb2eI/uz8Q==
-X-Received: by 2002:a05:600c:1c87:b0:477:98f7:2aec with SMTP id
- 5b1f17b1804b1-47904acef12mr14222015e9.3.1764051743857; 
- Mon, 24 Nov 2025 22:22:23 -0800 (PST)
+ AJvYcCUys/wVxGJpSYL/BCbq0xKfkcXLQ8CM3QFgmLY07FoifzdHO9lrbFl3tDVGPIeyoQJtCsHkthZ+vNPK@nongnu.org
+X-Gm-Message-State: AOJu0YzjNIM2vTugKQi2abYGiayD4j9LiK0x8h2mUsaOL6ZKZkUIuCZD
+ BL3FWThxWOteF/CgNLmcWXk6eHdl9JGgOfk8xz814URYh8xNbdm4Zj6fFs1aWmCwOSA=
+X-Gm-Gg: ASbGncuBBJ37E/EvabGZaO5bRq3VWbXfKhzlUW1krx2qR8GZ/8fbA8s1TfABObGYY9l
+ obpJIQ8Xu4n0oDdQHqiD+VFrjPQ63kWcFSk/ibBTRKjXl1EHkw/r+NKvINq/h4Geb9eeZcapcbA
+ XWt2/AeebAtvbxJMElc/um4dNP9KzQ75e6MhWUVIjPf8sLqlsNoZXzUE8JpnUDjV5IktYjknPCo
+ 80cktHpVclN4TW4+RnP5ivvpHFKEAB4MjrKYzamAMXACgBa1EUlrbU/SF5ahDzyX7SwYEiRP+ps
+ SS1sl3qH5vtnPpq6a/FQZLkNz/ChI5V0HHlC8TlWx99BP8zMXHjtpq5D1oWoPNpRHr6RG9nvCAI
+ MVJtaQDE0tiDq7FzTFQesq6nKj/EKAhE10+go2tmHftgPgDZHYX9+O/kPach3vVp4ldbxN0WJyi
+ jbcsq5G83gURyHk0Z8C2SGyLoMvV4VN3BQFR4KV5P7L/2nTSfpPMXXHZVWjQ5HAyIY
+X-Google-Smtp-Source: AGHT+IGLa5fRK9K5L3FkUn0xfaMF4zkOQClpsNtdNtMutakIaGVpTMJc0y08tQVlCwv9gBeMm+157Q==
+X-Received: by 2002:a05:600c:3543:b0:477:1ae1:fa5d with SMTP id
+ 5b1f17b1804b1-477c1142268mr112956985e9.20.1764051811939; 
+ Mon, 24 Nov 2025 22:23:31 -0800 (PST)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-477c0d85360sm227844905e9.15.2025.11.24.22.22.21
+ 5b1f17b1804b1-477bf226c2asm231059685e9.10.2025.11.24.22.23.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 24 Nov 2025 22:22:23 -0800 (PST)
-Message-ID: <f992f60b-515f-4834-88fd-d033255bed83@linaro.org>
-Date: Tue, 25 Nov 2025 07:22:20 +0100
+ Mon, 24 Nov 2025 22:23:31 -0800 (PST)
+Message-ID: <541f756c-0fde-488b-b386-814fb276ebae@linaro.org>
+Date: Tue, 25 Nov 2025 07:23:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 12/15] error: Use error_setg_errno() to improve error
- messages
+Subject: Re: [PATCH v2 13/15] error: Use error_setg_errno() for simplicity and
+ consistency
 Content-Language: en-US
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
 Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, alistair.francis@wdc.com,
@@ -91,13 +91,13 @@ Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, alistair.francis@wdc.com,
  qemu-block@nongnu.org, qemu-ppc@nongnu.org, xen-devel@lists.xenproject.org,
  kvm@vger.kernel.org, qemu-riscv@nongnu.org
 References: <20251121121438.1249498-1-armbru@redhat.com>
- <20251121121438.1249498-13-armbru@redhat.com>
+ <20251121121438.1249498-14-armbru@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251121121438.1249498-13-armbru@redhat.com>
+In-Reply-To: <20251121121438.1249498-14-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,18 +121,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 21/11/25 13:14, Markus Armbruster wrote:
-> A few error messages show numeric errno codes.  Use error_setg_errno()
-> to show human-readable text instead.
+> Use error_setg_errno() instead of passing the value of strerror() or
+> g_strerror() to error_setg().
+> 
+> The separator between the error message proper and the value of
+> strerror() changes from " : ", "", " - ", "- " to ": " in places.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->   backends/cryptodev-lkcf.c   |  2 +-
->   hw/ppc/spapr.c              |  6 +++---
->   hw/vfio/migration-multifd.c |  5 +++--
->   migration/rdma.c            |  3 +--
->   net/l2tpv3.c                |  6 ++----
->   target/riscv/kvm/kvm-cpu.c  | 11 ++++++-----
->   6 files changed, 16 insertions(+), 17 deletions(-)
+>   backends/spdm-socket.c      |  4 ++--
+>   backends/tpm/tpm_emulator.c | 13 +++++--------
+>   hw/9pfs/9p.c                |  3 +--
+>   hw/acpi/core.c              |  3 +--
+>   hw/intc/openpic_kvm.c       |  3 +--
+>   hw/intc/xics_kvm.c          |  5 +++--
+>   hw/remote/vfio-user-obj.c   | 18 +++++++++---------
+>   hw/sensor/emc141x.c         |  4 ++--
+>   hw/sensor/tmp421.c          |  4 ++--
+>   hw/smbios/smbios.c          |  4 ++--
+>   hw/virtio/vdpa-dev.c        |  4 ++--
+>   migration/postcopy-ram.c    | 10 +++++-----
+>   net/slirp.c                 |  5 +++--
+>   qga/commands-posix-ssh.c    | 23 +++++++++++++----------
+>   system/vl.c                 |  2 +-
+>   target/ppc/kvm.c            |  5 ++---
+>   16 files changed, 54 insertions(+), 56 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
