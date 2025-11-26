@@ -4,71 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51045D10381
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 12:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96FDD1039D
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 12:12:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOEKP-0005tj-33; Wed, 26 Nov 2025 07:08:57 -0500
+	id 1vOENz-0007sF-0V; Wed, 26 Nov 2025 07:12:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vOEKF-0005st-IT
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:08:47 -0500
-Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vOEKD-0001ac-7l
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:08:47 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1764158909; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=blqD83/Kg1JbjWVJ8y78zbRNWrd2fLDL1RoQeNfSTkby7bq1oXqzm5fO0tZ0a5xOmb33JXcpvM8J8rPaBuWdwT4rPvSNnfdSexQ+4h+Ow9g3y5hqBJptJDFF/tkBf7E9qT1Io3yJFzzCYsuZZuSSpjMlEaUxc2aBsGXnZZparbs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1764158909;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=mdFF1S46chWaQKQrMyZ6rTugJFjhgDLB6eVZ2vbhfn8=; 
- b=CEuHs8opd7RoVdxx2Aom+lP/tssF1h11uQLqZrXjFuAJrsBlk3DNmy7vw3iTXQ5ZdjOzuOEGBxa0PnQPawMED2p4eJ1BqCyZKB80ZgrfCHw/WTYIRO6kaieudlUO4rt/HcbAQST4DmAx8hfIObUIaKDLG9u0dqYtuL/Oc1XIFH8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764158909; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=mdFF1S46chWaQKQrMyZ6rTugJFjhgDLB6eVZ2vbhfn8=;
- b=MEe+BmZbL9D5Cqe0iHIahiGyG6ULa2bf5dNdtrHgM7uSwuuRlk78Ms+jD0VbtDnx
- H71pH2+uuMd61czzJlAVJeaSdkEqpd028vah01upbKbXVcRMc4zOXOmWGKOd3zaB6Yc
- OFGxVxsExwF39oFGe05w7Wgsb4BBFujQBMP5ib3A=
-Received: by mx.zohomail.com with SMTPS id 1764158906465455.6297610652814;
- Wed, 26 Nov 2025 04:08:26 -0800 (PST)
-Message-ID: <624b3a45-24f5-4802-801b-748e20442366@collabora.com>
-Date: Wed, 26 Nov 2025 15:08:22 +0300
+ (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
+ id 1vOENx-0007r1-Rm
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:12:37 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
+ id 1vOENw-0002Aw-AN
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:12:37 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4775ae77516so62952455e9.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 04:12:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1764159155; x=1764763955; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NjGlMxqmi4jFAS3XRyH9VgyPblT7jZzO2mgmFvDZU7Y=;
+ b=AfGNNNIHomhMw8l8hen0cHFkGT2xmyexPKSu0lsg40GtJCaHPM+eTxtUy4OEVjMcYR
+ YVL7A/d3WnSjFszyvdZ0yjpo67b++CaAka5+J0AIZl59GCmE2moUIxlydRabgoCYY0dJ
+ xj64F4qf6CIzDM+UgQpcJAc/3LrGB0xcBrVGijJTO86ocupnn8FQJHQShtwSPBb1SiRb
+ JoELJO0AdurtdrKrIZx5ybRFadJ3uDgU+Ihz+iG8jj1NXIsW3GxZpdMfXE3PlKfPgf6d
+ AHrfPk7oSlWzHhPK3IZcGbRht3g/BH9ADdI6QgG4p1GrZ++D8bgryUWdquPDMy19jAsg
+ zOOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764159155; x=1764763955;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NjGlMxqmi4jFAS3XRyH9VgyPblT7jZzO2mgmFvDZU7Y=;
+ b=BC0HbNkbIcuAwhf1E6VxGISqAchamKFR/3Cc7I7uKfNeyF12pcv7ub25svt82sZRVX
+ XJq41FUK1mn4R0Uoyc3gM0vI2x/mOxRBjC0uV32JP0V6Z7y1xbglKyQ4YMJyWhUS+v5j
+ gZsKKqgN7bQOctW+8o+99Yk4Q/uwtNfXSnZaAF+n7ANadYcnVEueucvELxktFKetuTIY
+ GSD7pZCHtIFX7PA53kq3tlcgavD263cVI1tsCu7dr58RqFkJ0vwZ9zbxSIS47ABeidmS
+ mGCkdeT5hMcIgy3pb9sAT5ljt/n+vMdynR6q9pmkWuOUAbm7MZqfodX661ByH5RZd8ac
+ 7TuA==
+X-Gm-Message-State: AOJu0Yy2kPfnwKIgvaLQu4xJQUJcXSzXVvyDcEM7we30c2eokh2kkmZ5
+ lQ1AeZhQvmdg3njc5ACEm80n/PIX4dywqa1Bk+m+ovaoybh/dLqAfbQllBXknTYzjmOprQ==
+X-Gm-Gg: ASbGncuTSIzZvyB1Ltaeux1XSodRhedbBcTVPynDBXe3k34+Jrh8CB3Q7spCTqFaOib
+ c7AtVjKM0QasRIZdlgb4EFAld/sun2NIV6wfhQiJwErclFgcAiZ2XeHRGPN/1CmLbL/s72R+diC
+ 98gKytx8sPeG0pNK2M2PEXRyR5/FDz45yzZOa93SGA5tFI9U7XFxuyK0I28XJIr2DpqKCHPpRV8
+ gNP1A9XqSEjSU9OmZoIcKVuUn/5AcecDHg+uSW0Zo1aTsD5Inv3O98zzckIwi+Cq9kZMFzxKBZx
+ 0UfCJ2A8saD7DFr4dZ2Y03STdBt5iqbxGeP8nG9GltYv1SkEl/0GhD1kI7quE1gQ4c2v4i2fF8K
+ FlKpNPupM0TY+xymjZt9JTxfyQd7NSeE8lwNrSXPjSBjb3YORhP0Jsd5DfeipRIR3grpliGINUO
+ MtcTV7ouE=
+X-Google-Smtp-Source: AGHT+IESUI2vKM5vrFZpyegg9JqJzXIzC/4VtUcGAxnprIsf7pQscfSO9xyqdunNj5/tlhYm/6dFfg==
+X-Received: by 2002:a05:600c:19cd:b0:477:c37:2ea7 with SMTP id
+ 5b1f17b1804b1-477c1115febmr143812655e9.21.1764159154409; 
+ Wed, 26 Nov 2025 04:12:34 -0800 (PST)
+Received: from localhost ([109.76.183.78]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7f2e5a3sm39923344f8f.6.2025.11.26.04.12.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Nov 2025 04:12:33 -0800 (PST)
+From: Pawel Zmarzly <pzmarzly0@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com,
+	farosas@suse.de
+Subject: [PATCH v2] migration: fix parsing snapshots with x-ignore-shared flag
+Date: Wed, 26 Nov 2025 12:12:33 +0000
+Message-ID: <20251126121233.542473-1-pzmarzly0@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [v6 2/2] virtio-gpu: use consistent error checking for
- virtio_gpu_create_mapping_iov
-To: Honglei Huang <honghuan@amd.com>, alex.bennee@linaro.org,
- odaki@rsg.ci.i.u-tokyo.ac.jp, armbru@redhat.com
-Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, Ray.Huang@amd.com
-References: <20251126020208.2449414-1-honghuan@amd.com>
- <20251126020208.2449414-3-honghuan@amd.com>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Language: en-US
-In-Reply-To: <20251126020208.2449414-3-honghuan@amd.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.184.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=pzmarzly0@gmail.com; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,85 +98,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/26/25 05:02, Honglei Huang wrote:
-> Unify error checking style for virtio_gpu_create_mapping_iov() across the
-> codebase to improve consistency and readability.
-> 
-> virtio_gpu_create_mapping_iov() returns 0 on success and negative values
-> on error. The original code used inconsistent patterns for checking errors:
-> - Some used 'if (ret != 0)' in virtio-gpu-virgl.c and virtio-gpu.c
-> - Some used 'CHECK(!ret, cmd)' in virtio-gpu-rutabaga.c
-> 
-> For if-statement checks, change to 'if (ret < 0)' which is the preferred
-> QEMU coding convention for functions that return 0 on success and negative
-> on error. This makes the return value convention immediately clear to code
-> readers.
-> 
-> For CHECK macro usage in virtio-gpu-rutabaga.c, keep the original
-> 'CHECK(!ret, cmd)' pattern as it is more concise and consistent with other
-> error checks in the same file.
-> 
-> Updated locations:
-> - hw/display/virtio-gpu-virgl.c: virgl_resource_attach_backing()
-> - hw/display/virtio-gpu-virgl.c: virgl_cmd_resource_create_blob()
-> - hw/display/virtio-gpu.c: virtio_gpu_resource_create_blob()
-> - hw/display/virtio-gpu.c: virtio_gpu_resource_attach_backing()
-> 
-> Signed-off-by: Honglei Huang <honghuan@amd.com>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  hw/display/virtio-gpu-virgl.c | 4 ++--
->  hw/display/virtio-gpu.c       | 4 ++--
->  2 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index e60e1059df..6ebd9293e5 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -557,7 +557,7 @@ static void virgl_resource_attach_backing(VirtIOGPU *g,
->  
->      ret = virtio_gpu_create_mapping_iov(g, att_rb.nr_entries, sizeof(att_rb),
->                                          cmd, NULL, &res_iovs, &res_niov);
-> -    if (ret != 0) {
-> +    if (ret < 0) {
->          cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
->          return;
->      }
-> @@ -701,7 +701,7 @@ static void virgl_cmd_resource_create_blob(VirtIOGPU *g,
->          ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
->                                              cmd, &res->base.addrs,
->                                              &res->base.iov, &res->base.iov_cnt);
-> -        if (ret != 0) {
-> +        if (ret < 0) {
->              cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
->              return;
->          }
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 0a1a625b0e..1038c6a49f 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -352,7 +352,7 @@ static void virtio_gpu_resource_create_blob(VirtIOGPU *g,
->      ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries, sizeof(cblob),
->                                          cmd, &res->addrs, &res->iov,
->                                          &res->iov_cnt);
-> -    if (ret != 0) {
-> +    if (ret < 0) {
->          cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
->          g_free(res);
->          return;
-> @@ -931,7 +931,7 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
->  
->      ret = virtio_gpu_create_mapping_iov(g, ab.nr_entries, sizeof(ab), cmd,
->                                          &res->addrs, &res->iov, &res->iov_cnt);
-> -    if (ret != 0) {
-> +    if (ret < 0) {
->          cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
->          return;
->      }
+Snapshots made with mapped-ram and x-ignore-shared flags are
+not parsed properly.
 
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Co-authored-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
+---
+ migration/ram.c                    | 21 +++++++++++----------
+ tests/qtest/migration/file-tests.c | 18 ++++++++++++++++++
+ 2 files changed, 29 insertions(+), 10 deletions(-)
 
+diff --git a/migration/ram.c b/migration/ram.c
+index 29f016cb25..7d024b88b5 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4205,6 +4205,17 @@ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
+ 
+     assert(block);
+ 
++    if (migrate_ignore_shared()) {
++        hwaddr addr = qemu_get_be64(f);
++        if (migrate_ram_is_ignored(block) &&
++            block->mr->addr != addr) {
++            error_report("Mismatched GPAs for block %s "
++                         "%" PRId64 "!= %" PRId64, block->idstr,
++                         (uint64_t)addr, (uint64_t)block->mr->addr);
++            return -EINVAL;
++        }
++    }
++
+     if (migrate_mapped_ram()) {
+         parse_ramblock_mapped_ram(f, block, length, &local_err);
+         if (local_err) {
+@@ -4244,16 +4255,6 @@ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
+             return -EINVAL;
+         }
+     }
+-    if (migrate_ignore_shared()) {
+-        hwaddr addr = qemu_get_be64(f);
+-        if (migrate_ram_is_ignored(block) &&
+-            block->mr->addr != addr) {
+-            error_report("Mismatched GPAs for block %s "
+-                         "%" PRId64 "!= %" PRId64, block->idstr,
+-                         (uint64_t)addr, (uint64_t)block->mr->addr);
+-            return -EINVAL;
+-        }
+-    }
+     ret = rdma_block_notification_handle(f, block->idstr);
+     if (ret < 0) {
+         qemu_file_set_error(f, ret);
+diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
+index 4d78ce0855..c196a703ff 100644
+--- a/tests/qtest/migration/file-tests.c
++++ b/tests/qtest/migration/file-tests.c
+@@ -303,6 +303,22 @@ static void migration_test_add_file_smoke(MigrationTestEnv *env)
+                        test_multifd_file_mapped_ram_dio);
+ }
+ 
++static void test_precopy_file_mapped_ram_ignore_shared(void)
++{
++    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
++                                           FILE_TEST_FILENAME);
++    MigrateCommon args = {
++        .connect_uri = uri,
++        .listen_uri = "defer",
++        .start = {
++            .caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true,
++            .caps[MIGRATION_CAPABILITY_X_IGNORE_SHARED] = true,
++        },
++    };
++
++    test_file_common(&args, true);
++}
++
+ void migration_test_add_file(MigrationTestEnv *env)
+ {
+     tmpfs = env->tmpfs;
+@@ -329,6 +345,8 @@ void migration_test_add_file(MigrationTestEnv *env)
+ 
+     migration_test_add("/migration/multifd/file/mapped-ram",
+                        test_multifd_file_mapped_ram);
++    migration_test_add("/migration/multifd/file/mapped-ram/ignore-shared",
++                       test_precopy_file_mapped_ram_ignore_shared);
+     migration_test_add("/migration/multifd/file/mapped-ram/live",
+                        test_multifd_file_mapped_ram_live);
+ 
 -- 
-Best regards,
-Dmitry
+2.52.0
 
