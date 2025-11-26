@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B20D10F4D
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 13:45:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29376D10F4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 14:02:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOFpJ-0002Vk-1T; Wed, 26 Nov 2025 08:44:57 -0500
+	id 1vOG5u-0002vH-O4; Wed, 26 Nov 2025 09:02:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOFp5-0002MF-6d
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 08:44:45 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOFp0-0000eu-9P
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 08:44:40 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4779aa4f928so55363225e9.1
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 05:44:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764164676; x=1764769476; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=opiub8bHokm5FkeSx/igEXrcRHxOwN8/+eMddbC16cs=;
- b=cQ01svm9W0oV507pMmFdOWlbDEm+Y8XhFlZoAGNiPur1i6s0dRqz7QXNG44b20SzQR
- WWkfo0xecU1HRI6sgqD/PubvUzdD667j2W2mY2OhINWQWbMXScaBIhZHlLEQKShfedvr
- Htc31RGqo+FZqEHXOH32mJU8BULZRvDVmGaiXq+D60+Vpik9/vwPZiQNkSBDFp/IVqt0
- B02pifwtgPi3UifveciBDlGUtT4/20yCPZjopTLyejgfRcYOzqWA0mx5SPgtKFn/p9dU
- imsfyNlNfR5kuTucYd/VWdgY0qFKPIezPb7YdHK3+DX4ZpTFTth49ujUTK/uzG5ZuMCP
- N72w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764164676; x=1764769476;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=opiub8bHokm5FkeSx/igEXrcRHxOwN8/+eMddbC16cs=;
- b=ZSs/q0T8JB9b3HTGRQOqylUhuunp7FjUyomKfZJ343PGhImTlVbuysIGQyEU7YqVV8
- 2WGSSNwK+VO+UMSANenp/uKrxU44rz4wrXo5QPZYzxS3YTkPj9nxXl1OF9aHpobsX5zE
- U7FwYKR2XuwixOtKQYmpaE8UlR7ujscWJx67+4G9muawjK7hDtKHF1JCje6S5TVC1N1u
- EaN5nwA7lrtKsK3oPoCr7HA/XnDx0tfUCnekIcHPBtReTqAOWuRjgZ2Yv8ICAxhFSmbN
- At3uucKHVzFP5H0BsCgzXLXbkfTQIIR8Bra365cR+/GHVWkhstKZYpveJLXtuK1Aq7m7
- le5g==
-X-Gm-Message-State: AOJu0Yzm8OUcaG+W/OKTKpgKcRx+s/dy6OY5Cmj9oPL0uF3CuHreuIL5
- x2HMEWRTs8O3WRu96Jq7zasFVMYY/CMeAR740nrLBgbyRpIcA556cX5tA2qWzRhb6VvYX69s42w
- FWpXCVlk=
-X-Gm-Gg: ASbGncs/GDN6qT8jZB8t4jQ3QmkIvBwq32guI/7Jjtie8MUa7ywCngFevzBIvOvqH5m
- gySZs/fVMkZ5R3RWxF52oM+GxHu4aopU4Meys0sniIeWsORxyoRDOZbWlnLGJUIN/wsKs7ZKWpJ
- wir7eHg3b+djoD6HXmsIEAcR7g8k7jkdcy3iLVHy+rTWwwSD0jc8qwquMHSLsNShStMAXkwamcP
- 1CYG29LiIZ923un2fp5eGXfhhdGc8pjQQLyCIYgFb2GGnX7dwPgrQFaQjrOLKV0vDg/zrzKsetV
- KsbGPqP6EtxQrrUHsA/lxTbCfxgL3rEQ5NWT5bp7mKuPYELY1p5I537UJq9WKx9hHBPqW4YYmnv
- k0O/AkvpYJFHQIu24qecKcHvtK37sWPKbWRnjgPJE2J8bkrucrbH/RGXpnWEgxcdBX5Kp1QOppS
- TlysZuBFpcqDynXV2u5u7ZCGNBzGN6QKaHH0mM74PQsglBKw==
-X-Google-Smtp-Source: AGHT+IFlEUSkVjYWrzoF/H17sSGosg+YvB4U7fgnsLLHm6YER2tSAKlnXy6cRQshcLeLKnkFkr96wA==
-X-Received: by 2002:a05:600c:1c87:b0:477:98f7:2aec with SMTP id
- 5b1f17b1804b1-47904acef12mr78375085e9.3.1764164676327; 
- Wed, 26 Nov 2025 05:44:36 -0800 (PST)
-Received: from localhost.localdomain ([83.247.137.20])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4790b0c3a28sm46249025e9.9.2025.11.26.05.44.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 26 Nov 2025 05:44:35 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Roman Bolshakov <rbolshakov@ddn.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Cameron Esfahani <dirty@apple.com>, Mads Ynddal <mads@ynddal.dk>,
- Nguyen Dinh Phi <phind.uet@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-10.2 v2] accel/hvf: Fix i386 HVF compilation failures
-Date: Wed, 26 Nov 2025 14:44:34 +0100
-Message-ID: <20251126134434.14355-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOG5s-0002uM-6f
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 09:02:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOG5q-0004eD-4p
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 09:02:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764165719;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HV1tvnH0i3TlTbqQavvnylQJ/d5Pb3c6nh5fwaCW0O4=;
+ b=F7/LvAAeMeYA3tgD7sU73nboiKRpF8SjEJ81hPW1BDt8ibJCfJqYTDnvoKiq8T/iJgn21u
+ tY5fyPNJ4mdE1ODrn61EXhXL37hcgudMmUMd1Y/KJ+omYozHjAKSmUwsJ8ik7jvjAb3YgD
+ 0hBW/LbFeC2E2BT9Itzo/2etbRmkObA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-JeIpCvzpMBaUNNdBlO1pyg-1; Wed,
+ 26 Nov 2025 09:01:55 -0500
+X-MC-Unique: JeIpCvzpMBaUNNdBlO1pyg-1
+X-Mimecast-MFC-AGG-ID: JeIpCvzpMBaUNNdBlO1pyg_1764165713
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C2211955F12; Wed, 26 Nov 2025 14:01:53 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFAC9180047F; Wed, 26 Nov 2025 14:01:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4DE6D21E6A27; Wed, 26 Nov 2025 15:01:50 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,  Peter Xu <peterx@redhat.com>,  qemu-devel@nongnu.org,
+ farosas@suse.de
+Subject: Re: g_autoptr(Error)
+In-Reply-To: <CAFEAcA_Xjzp12zB5Gv1pZPJQYicb1GkoHkt6Tt3QQK0n_YQZ5g@mail.gmail.com>
+ (Peter Maydell's message of "Wed, 26 Nov 2025 13:27:28 +0000")
+References: <20251125070554.2256181-1-armbru@redhat.com>
+ <871plmk1bc.fsf@pond.sub.org> <aSWSLMi6ZhTCS_p2@redhat.com>
+ <87jyzexrly.fsf@pond.sub.org> <aSXWKcjoIBK4LW59@x1.local>
+ <769f5a57-7006-4cef-a5cb-12d53b7c30a5@redhat.com>
+ <c0aa79ad-d6f4-413f-ade6-43e7609e37ac@redhat.com>
+ <87ecplc8yn.fsf@pond.sub.org> <aSbr--ZbqzKVNDuC@redhat.com>
+ <CAFEAcA_Xjzp12zB5Gv1pZPJQYicb1GkoHkt6Tt3QQK0n_YQZ5g@mail.gmail.com>
+Date: Wed, 26 Nov 2025 15:01:50 +0100
+Message-ID: <878qfsc2pd.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,95 +95,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Recent changes introduced build errors in the i386 HVF backend:
+> On Wed, 26 Nov 2025 at 12:01, Daniel P. Berrang=C3=A9 <berrange@redhat.co=
+m> wrote:
+>> The other thing that plays in here is that we actively encourage use of
+>> g_autoptr everywhere. It is very unusual for "Error" to be a type that
+>> does NOT want g_autoptr, and thus the mistake is very much on the cards.
+>>
+>> I've proposed it before myself & Markus caught it. I also caught one
+>> other proposals to add it since my attempt. This third time it slipped
+>> through review. I expect we'll see a 4th attempt to add it at some point.
+>
+> We could add a comment to the header explaining the rationale for
+> not providing a g_autoptr handler, so that at least we have it
+> written down, and are more likely to remember it when it comes
+> up again in future...
 
-- ../accel/hvf/hvf-accel-ops.c:163:17: error: no member named 'guest_debug_enabled' in 'struct AccelCPUState'
-  163 |     cpu->accel->guest_debug_enabled = false;
-
-- ../accel/hvf/hvf-accel-ops.c:151:51
-  error: no member named 'unblock_ipi_mask' in 'struct AccelCPUState'
-
-- ../target/i386/hvf/hvf.c:736:5
-  error: use of undeclared identifier 'rip'
-
-- ../target/i386/hvf/hvf.c:737:5
-  error: use of undeclared identifier 'env'
-
-This patch corrects the field usage and move identifier to correct
-function ensuring successful compilation of the i386 HVF backend.
-
-These issues were caused by:
-
-Fixes: 2ad756383e1b (“accel/hvf: Restrict ARM-specific fields of AccelCPUState”)
-Fixes: 2a21c9244740 (“target/i386/hvf: Factor hvf_handle_vmexit() out”)
-
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-[PMD: Keep setting vcpu_dirty on AArch64]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-Superseeded: <20251126094601.56403-1-phind.uet@gmail.com>
-
-Untested. Once tested, worth to apply as buildfix before tagging?
----
- accel/hvf/hvf-accel-ops.c | 5 ++---
- target/i386/hvf/hvf.c     | 6 ++----
- 2 files changed, 4 insertions(+), 7 deletions(-)
-
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index 3e5feecd8a7..e4c62522e10 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -148,10 +148,11 @@ static int hvf_init_vcpu(CPUState *cpu)
-     sigact.sa_handler = dummy_signal;
-     sigaction(SIG_IPI, &sigact, NULL);
- 
-+#ifdef __aarch64__
-     pthread_sigmask(SIG_BLOCK, NULL, &cpu->accel->unblock_ipi_mask);
-     sigdelset(&cpu->accel->unblock_ipi_mask, SIG_IPI);
-+    cpu->accel->guest_debug_enabled = false;
- 
--#ifdef __aarch64__
-     r = hv_vcpu_create(&cpu->accel->fd,
-                        (hv_vcpu_exit_t **)&cpu->accel->exit, NULL);
- #else
-@@ -160,8 +161,6 @@ static int hvf_init_vcpu(CPUState *cpu)
-     assert_hvf_ok(r);
-     cpu->vcpu_dirty = true;
- 
--    cpu->accel->guest_debug_enabled = false;
--
-     return hvf_arch_init_vcpu(cpu);
- }
- 
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index 16febbac48f..2023a7bfbb0 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -728,7 +728,8 @@ static int hvf_handle_vmexit(CPUState *cpu)
-     uint64_t exit_qual = rvmcs(cpu->accel->fd, VMCS_EXIT_QUALIFICATION);
-     uint32_t ins_len = (uint32_t)rvmcs(cpu->accel->fd,
-                                        VMCS_EXIT_INSTRUCTION_LENGTH);
--
-+    CPUX86State *env = &x86_cpu->env;
-+    uint64_t rip = 0;
-     uint64_t idtvec_info = rvmcs(cpu->accel->fd, VMCS_IDT_VECTORING_INFO);
-     int ret = 0;
- 
-@@ -966,10 +967,7 @@ static int hvf_handle_vmexit(CPUState *cpu)
- 
- int hvf_arch_vcpu_exec(CPUState *cpu)
- {
--    X86CPU *x86_cpu = X86_CPU(cpu);
--    CPUX86State *env = &x86_cpu->env;
-     int ret = 0;
--    uint64_t rip = 0;
- 
-     if (hvf_process_events(cpu)) {
-         return EXCP_HLT;
--- 
-2.51.0
+Good idea.  I'll take care of it.
 
 
