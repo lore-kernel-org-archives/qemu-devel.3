@@ -4,103 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DBDD10F58
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 16:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A85CFD10F58
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 16:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOIES-0008FU-Sk; Wed, 26 Nov 2025 11:19:05 -0500
+	id 1vOINq-0004q1-GO; Wed, 26 Nov 2025 11:28:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vOIER-0008FD-2Q
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 11:19:03 -0500
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vOINo-0004pV-Pl
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 11:28:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vOIEO-0002ng-Jw
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 11:19:02 -0500
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vOINm-0004f2-15
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 11:28:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764173938;
+ s=mimecast20190719; t=1764174519;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iXuF7kMAHT5UxTglPhSovU0V/p1FugbL6sFif7j33Gg=;
- b=SHZg8n3hMsLmiULEE/inheN41XXpaseOSGuXRX8OzEHQzFFPaxZtWDU7uUz5+bTl5u/ATs
- gwZfcordtdVxls1zOWeOTlQISLzK9mBYMgxB9uUCZ2CbB5PVgXE9t99SBlKDU1d537CtnX
- p5F776UdG7mqeohYRqq+gzaJYl9D5qY=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TJdvnOPZS0tH0Udf3ZQJ0GFmrJWE/5g7v4KwoNwxmNM=;
+ b=YDOq3iwqme40isz0wKxsrJcGkItKBDHj67Jnrv0blb2uRLVhB6O4iSz82x+60mI4dPj20A
+ eUm2+GUB8Z4yyze11vo0iKMy31jvBC6ex/ItiMjtD29Wly+yBeYiY7v73lJieEjx6HxiGh
+ lUZ68iTBEbKE1X4SS/uxiB3sqaDruuQ=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-251-R7LP8yvUM5277A8Jhdqu5Q-1; Wed, 26 Nov 2025 11:18:56 -0500
-X-MC-Unique: R7LP8yvUM5277A8Jhdqu5Q-1
-X-Mimecast-MFC-AGG-ID: R7LP8yvUM5277A8Jhdqu5Q_1764173936
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8b2f0be2cf0so2280637085a.0
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 08:18:56 -0800 (PST)
+ us-mta-155-UiZUKIoSNgWrk5l0yhDERQ-1; Wed, 26 Nov 2025 11:28:38 -0500
+X-MC-Unique: UiZUKIoSNgWrk5l0yhDERQ-1
+X-Mimecast-MFC-AGG-ID: UiZUKIoSNgWrk5l0yhDERQ_1764174517
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-42b3c965ce5so1988f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 08:28:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764173936; x=1764778736; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=iXuF7kMAHT5UxTglPhSovU0V/p1FugbL6sFif7j33Gg=;
- b=dC+Zj+qIIkKCzOKwBcHs8PzM4Mrxf5hIVhW8Qhjdup/eeOmDVxBplgMnnxmiyAeUkY
- dyzs79EembIVukbnJnrXwxr+MG5ZmWxiiJ8fmm54LJSJ5i2fIYtILpqV2X68I/CgUC5s
- sG1et3lEqVux/3Brs9e75jpYKaa1TydOeVnLHLu8DcHjMnwbUtUW686Hvq7gvo/ZCtse
- kR0Y1uUVE4thwR0igzliQ6pg4juRSBCnxhG8/OWi7tpIiOHntBwwXvtm5jsrs1IZuHyV
- 9CX0cxJ/rXpdtgsUXzN/EfwihxQ4+EFcgkriNNTrkDUlAwjBhiuKxI+2sirksWnV5Q0X
- 3TEA==
+ d=redhat.com; s=google; t=1764174517; x=1764779317; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=TJdvnOPZS0tH0Udf3ZQJ0GFmrJWE/5g7v4KwoNwxmNM=;
+ b=hYD9QBvn+2XvUJe64a9ZotdrHyvcL7SF/qZQ+x4Xf5fC0IZgVRrMpHl6zvC5uGHsfR
+ M2cHn3FMIbRhJeWZfPPHAHi4ykeKXuh/Uj2UfvLB81XWclbikhRmXxNLAAFO1Xi75sQJ
+ qRUnUjIgJ8zKlwYsQm0OnAYCE23Sfz0NKThjtJ3Ecc3np9mD3G4Koi2n2qOPUFD4Kflc
+ tYxUoEa+mgawdfwXDmjpkb4/Iqq6h+b6jbMS1RLxj1+CEWlPqm395hbmKP1TFdOw2i2x
+ jI6ZJ9kYwLdEoSJ1Qi8eZOpTQAcjmuK6P3dxbgJz6EC5Dv5tW07hzmSuM/HDhlKfOe0n
+ wuew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764173936; x=1764778736;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iXuF7kMAHT5UxTglPhSovU0V/p1FugbL6sFif7j33Gg=;
- b=RPqBv+udpOoR3tRyGxzyxsaBOEVnmrXsfDwz+t1ERKX1t9DVbW+IDyfoka817El36g
- TBWLLBNLfbtlaglSngkcFgO6AKrEad+3DUrfevE0TwBT1iif7ME7/KxlD5WxxnDVwUZN
- Zoo/M6fpiQIStJYUiV920TxEy7WraXjsH5KXYMSspaMNL6/4XBTQ+pHgXqhJky1I4sap
- 7RdBVvYBY0e7N0IznAEZC2hGuT9k6cXjrhcmY2uL2QkT6TDPJsUySjd7w7UXT02FXEHb
- fvtsZTeN52Se5Jnh5G/eo0GXzuzRJoPv45OnlrhRsnNnlhTTqKvJQ+LOi6FxhH8uPSfc
- Rm0A==
+ d=1e100.net; s=20230601; t=1764174517; x=1764779317;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TJdvnOPZS0tH0Udf3ZQJ0GFmrJWE/5g7v4KwoNwxmNM=;
+ b=f6k1yky6CE3zfeSMlVylHfNxQjZsBH2FiZf145it/uKQybILZXMCfcENyg8pseImVc
+ XV+12ZOSd92Ac54w0bijLIOO3mxDDf+fiIxU6jwj2jxji0/3k8r/Uj3NB3GTYSfiWqaU
+ OadwuSuoYu8K6VGieoCqXCU8oF0ZgmYjSiirE5c4lZqIeLGEi3QVOyIO2u+OVlsB0pAf
+ eJ7/SSrApKw6HyyT3jGbRqvalp9v20OmBS95QcC2yrDjjWjW7GpWsulIcj8FKVXiBtXR
+ tLecsRLYyroToBAX5Wvk7qyOzPaI75y5psCRdpoW9aCKmH+ORp4c2tZ0/IeqCTMTrcqx
+ 1W8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPylVN2CqiCQkQX8UttXsqlyHB3pSaDaR1BnyWr7b6XqL7zGYaZmCAO1MsaS/ylU0f39O/0iO+qOIs@nongnu.org
-X-Gm-Message-State: AOJu0YzOhyx50l+BcoUR7Kpl3r0AgoXx9GWi5g5EJY1hd/TUFGauG9XI
- pZPKILy182EZMYvYyrpa12/cD8GzsHAsLtA4vSkTasgi2CPOn0VZ4IRkZpv7qsP4gaIUlcd7kA2
- 4PfMDwsdyAS/u53ik3kbrq+pmo2/aPc/DlZ6KvjeEL4sNt8TrV4IJ58iM
-X-Gm-Gg: ASbGnctP5EW6JUvDNq0xGC2efzHlaYfwAeOpvP99M5xWcOclFaU3InpaMx4ycdP+hEv
- tAJNmEHt4CDE/tIqTXEBBtpnNTWYajTb7K7JkbmDKYptSUheSmvrzb+WdbXskbp/VXV1ZfyAtcB
- EySI+dfW6xGLRagz6xLS0IFvAsrxRaF/FzxLVBb8qBDpK82FnvF6qSm9HR8dzjvblwjALOVELBf
- wzcU2tJLj0xg4XfmHCeEEnGfVDOcDAkc3d/DcxZp+lVi6ZDSzZxkR9PK4roIi9XJ0bRS84/MdsL
- +E2cVChQUjkgWzRWEUC0uUCXtQVc8TSqAi7ccPxx+L8UZ1FIt6p66Qnq+PvL00pvY+l7J9cyUA7
- mCSU=
-X-Received: by 2002:a05:620a:46a0:b0:8b2:7165:544f with SMTP id
- af79cd13be357-8b33d1fd878mr2651453385a.25.1764173936075; 
- Wed, 26 Nov 2025 08:18:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFQLzezK6cnPgwqe3GsQehgIVd0sTHHe8qTopw+80DN1CAhsVgib8D0EwBm+FRaf+MxWA2XRw==
-X-Received: by 2002:a05:620a:46a0:b0:8b2:7165:544f with SMTP id
- af79cd13be357-8b33d1fd878mr2651448085a.25.1764173935572; 
- Wed, 26 Nov 2025 08:18:55 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b3295e8338sm1423399685a.46.2025.11.26.08.18.53
+ AJvYcCXlLqdysIvIH/SC8uObn16xSxoBTen2knQdvRN6FKts7JCatcbqNTIKHnCozv62TJo+qzvqjOOI8OdE@nongnu.org
+X-Gm-Message-State: AOJu0YxCkQt8cfuM2rVnWnt92J5tkaNhsL8rsWSWSnoTiZ5sya6A2KBH
+ PyRYLtMbVoLOwzxEiBOoJTmyTrDQjLI9NM+TM3SGsqf4CDrTeeNfFM4HbN6qwZOrBe5kEHG48Cj
+ O6rnOLcktAuFnTorxLseyKn5LchRVjJDC3J7p8uYTA7tybQgcTMaQOl8C
+X-Gm-Gg: ASbGncud+4VaFMhz3xjcx8FtOmTLMBTZwGTzIBI8xNbc/PCN86qwqgjf75DeGoC4jIn
+ m9UhhK5GXayc3zB07mS6HVD70/8xzg7P4/nQt8n6w0dEMKFEaIx97wsDsBgYqRRIBoMHbO3Q2Jl
+ 8Cs9i+5LM/z9hWr80/bZ0kJ4Sv9HXQuv1AR7oWFXTqpUmgju8rn6C2fDy7ZOMpKfsp70Y+0yrg/
+ Y1ivbU2N2Kia2YMZiy4neKSLJ0sxbwDh/rlKdCklPHphqynJ2Hf24bjCxHnpNDOUVyjWNLhgz0z
+ K5PcDGALK6oaDfbg44P5GUK5ibP1yQOCWvQnyldvKJw8fiudwZqTujKNvCSN7i7rXy/4bOXlOSK
+ GhEGARWdIJHT78GhMWzxaIS0s3yu/LdtLk8oOmwSlYfSDc83tSenl/PSTmQ==
+X-Received: by 2002:a05:6000:2c0c:b0:42b:2c61:86f1 with SMTP id
+ ffacd0b85a97d-42e0f34a082mr8042809f8f.35.1764174517044; 
+ Wed, 26 Nov 2025 08:28:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHIHiBtTEC+GB2idM5msCaHnYuhv/BudNRpMJKHSA2WN1SdtfsBDoXFhWlKh03j+ARnRkne6g==
+X-Received: by 2002:a05:6000:2c0c:b0:42b:2c61:86f1 with SMTP id
+ ffacd0b85a97d-42e0f34a082mr8042777f8f.35.1764174516620; 
+ Wed, 26 Nov 2025 08:28:36 -0800 (PST)
+Received: from rh (p200300f6af35a800883b071bf1f3e4b6.dip0.t-ipconnect.de.
+ [2003:f6:af35:a800:883b:71b:f1f3:e4b6])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7fd9b45sm42175143f8f.43.2025.11.26.08.28.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Nov 2025 08:18:55 -0800 (PST)
-Date: Wed, 26 Nov 2025 11:18:52 -0500
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- jmarcin@redhat.com, marcandre.lureau@redhat.com, farosas@suse.de,
- berrange@redhat.com, vsementsov@yandex-team.ru,
- mail@maciej.szmigiero.name, peter.maydell@linaro.org
-Subject: Re: [PATCH 2.5/6] error: Explain why we don't g_autoptr(Error)
-Message-ID: <aScobLHb0FQ6o_Gj@x1.local>
-References: <20251125204648.857018-3-peterx@redhat.com>
- <20251126143427.2470598-1-armbru@redhat.com>
- <620bdcd0-a7e0-4b23-95c9-9752156a55e1@redhat.com>
+ Wed, 26 Nov 2025 08:28:36 -0800 (PST)
+Date: Wed, 26 Nov 2025 17:28:34 +0100 (CET)
+From: Sebastian Ott <sebott@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ peter.maydell@linaro.org, cohuck@redhat.com, maz@kernel.org, 
+ oliver.upton@linux.dev, gshan@redhat.com, ddutile@redhat.com, 
+ peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH v3 03/11] target/arm/cpu: Allow registers to be hidden
+In-Reply-To: <20251125100859.506228-4-eric.auger@redhat.com>
+Message-ID: <d053b75f-1a09-d929-1cd8-9485672cb4ed@redhat.com>
+References: <20251125100859.506228-1-eric.auger@redhat.com>
+ <20251125100859.506228-4-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <620bdcd0-a7e0-4b23-95c9-9752156a55e1@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Type: multipart/mixed;
+ boundary="-1463806286-70621147-1764174516=:22658"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -109,7 +107,7 @@ X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,63 +123,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 26, 2025 at 04:14:55PM +0100, Cédric Le Goater wrote:
-> On 11/26/25 15:34, Markus Armbruster wrote:
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> > ---
-> >   include/qapi/error.h | 17 +++++++++++++++++
-> >   1 file changed, 17 insertions(+)
-> > 
-> > diff --git a/include/qapi/error.h b/include/qapi/error.h
-> > index f3ce4a4a2d..fc018b4c59 100644
-> > --- a/include/qapi/error.h
-> > +++ b/include/qapi/error.h
-> > @@ -437,6 +437,23 @@ Error *error_copy(const Error *err);
-> >    */
-> >   void error_free(Error *err);
-> > +/*
-> > + * Note: we intentionally do not enable g_autoptr(Error) with
-> > + * G_DEFINE_AUTO_CLEANUP_CLEAR_FUNC(Error, error_free).
-> > + *
-> > + * Functions that report or propagate an error take ownership of the
-> > + * Error object.  Explicit error_free() is needed when you handle an
-> > + * error in some other way.  This is rare.
-> > + *
-> > + * g_autoptr(Error) would call error_free() automatically on return.
-> > + * To avoid a double-free, we'd have to manually clear the pointer
-> > + * every time we propagate or report.
-> > + *
-> > + * Thus, g_autoptr(Error) would make the rare case easier to get right
-> > + * (less prone to leaks), and the common case easier to get wrong
-> > + * (more prone to double-free).
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-How about we further poison the auto free altogether?
+---1463806286-70621147-1764174516=:22658
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-IIUC this should work:
+On Tue, 25 Nov 2025, Eric Auger wrote:
+> More recent kernels sometimes expose new registers in an
+> unconditionnal manner. This situation breaks backward migration
+> as qemu notices there are more registers in the input stream
+> than supported on the destination host. This leads to a
+> "failed to load cpu:cpreg_vmstate_array_len" error.
+>
+> A good example is the introduction of KVM_REG_ARM_VENDOR_HYP_BMAP_2
+> pseudo FW register in v6.16 by commit C0000e58c74e (“KVM: arm64:
+> Introduce KVM_REG_ARM_VENDOR_HYP_BMAP_2”). Trying to do backward
+> migration from a host kernel that features the commit to a destination
+> host that doesn't, fail with above error.
+>
+> Currently QEMU is not using that feature so ignoring this latter
+> is not a problem. An easy way to fix the migration issue is to teach
+> qemu we don't care about that register and we can simply ignore it
+> when syncing its state during migration.
+>
+> This patch introduces an array of such hidden registers. Soon it will
+> be settable through an array property.
+>
+> If hidden, the register is moved out of the array of cpreg which is
+> built in kvm_arm_init_cpreg_list(). That way their state won't be
+> synced.
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-+extern void
-+__attribute__((error("Error should not be used with g_autoptr")))
-+error_free_poisoned(Error *err);
-+
-+G_DEFINE_AUTOPTR_CLEANUP_FUNC(Error, error_free_poisoned)
-
-> > + */
-> > +
-> >   /*
-> >    * Convenience function to assert that *@errp is set, then silently free it.
-> >    */
-> 
-> 
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> 
-> Thanks,
-> 
-> C.
-> 
-> 
-
--- 
-Peter Xu
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+---1463806286-70621147-1764174516=:22658--
 
 
