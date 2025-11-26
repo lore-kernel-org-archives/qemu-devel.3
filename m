@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97D04D11196
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:24:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF955D11196
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:25:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOM2d-00036N-Bb; Wed, 26 Nov 2025 15:23:07 -0500
+	id 1vOM2W-0002uf-4A; Wed, 26 Nov 2025 15:23:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM2b-00032T-0M
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:23:05 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM2T-0002tW-IS
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:57 -0500
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM2X-0002Q0-Rd
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:23:04 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4779cb0a33fso1058985e9.0
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:23:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM2Q-0002OR-8c
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:57 -0500
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-4777771ed1aso573275e9.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:22:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764188580; x=1764793380; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764188572; x=1764793372; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WS7GKcpVsm6chESD7cJOz+J25JMyZfvS0l7pjZVz5Jw=;
- b=gfWFNVTDMTPtfJKjBhIyO3E76L4Sag7KK9ygOYr0I/v5lNIz1+XhKaLdbhZBfRldYM
- H1s0sOD0NvILe6OLd8+ekjKOI8QIYXbcHjM+OXFQ8f7Hx71bzO9VGmpEjfyAzi9ZII9N
- q534oWZD+KYbn6B8z7RZ+XtQtMv2Ls8FEWn8IhTkx69L7op3FrWI262WNuW6T0bpbAi4
- zBNY6yrLma4yukfiFOK7mabDSQLLue3fMhf+M19RBNNNzos/3Ak//yHCJrRJc9lXqEMf
- RU02d/Z3ta/+jmfRdYBJtiHil8hNIQ8Q7iVqFh4dIvdF/4CmdjjOyit3btvyf2gaRgIF
- Ydyg==
+ bh=OWYkx3YUV2r5XP/TpYmiIMZC5Qw2jmeZIu0kQf7aT+g=;
+ b=sFE/wuBE0+rot1Ck1NqnfHdA/fxxz1UyvfCIH8Ql3C85WTImablNFcaZ5fgu5NVcCD
+ Xbjwg1Q3Om3GktL6R5EPnkaRmzNmf3TPofWPuNfO8VbyIJZ0FDHPocYTSANChAHdiBmA
+ svc6cGilIKcRpOwVJ+GvjyBZztVvQwYI49lhbjSYd7H8Pcp/42j6bSZfJM1Np6pAuz6n
+ 5vPC1a4vDIoPaPi7nxvVSjYFCQHplkweIATubz5Vik+A1haWkEaO7ri8c3T0v7BsxGp0
+ Ss58HwvzHKY3v74Qq/gJVYt1l75xG3ubOsLS76kczEDsJOLwwoxNgabyd+R278Klyy5T
+ b4mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764188580; x=1764793380;
+ d=1e100.net; s=20230601; t=1764188572; x=1764793372;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WS7GKcpVsm6chESD7cJOz+J25JMyZfvS0l7pjZVz5Jw=;
- b=Cs9oZzSrfKi8VJ3AUmZlmp7jC5m5oizKPXTtC++YeVdJX+Kyr+ARgbHoU/2EQXGYDY
- JgIDXaKUqBVMkYpHxVIodaLd6tmhMTktY7viXmWZ/yA7vRDyOH8pgM7RghpaYTJ7y2FW
- EAZn6d33dQto9AHjCxkZJHCa8i3uBtqNf32WJxviREiGQxVuwY2V84bs2ASQP9NKuobz
- gcGF8hxvTPxAcyIcqqMTj4DHn1eiHArx/XhMeKA1gWxIcMNUhzb6Y2U+HPjKOD1H9IJw
- Z7wpeF+edAkaJy+CQ0ynpklNqUYBsI4xBAJjby8Dzrxp7KZo7xLQ1lhbhlX9WYak6YFx
- JUjQ==
-X-Gm-Message-State: AOJu0YwhDyLgG+hOWLzbKy2D34mdEYonjLV4wGKBZUt10xbkgDMqxixh
- sjB14G47jAt0Mq1r6rJSzZgc4Q8vZe5+8IqDDqBC+GfnkSmYVsrHC5KeYS5Tee/efPMMyVB7m7U
- MkUFMdf+2aC71
-X-Gm-Gg: ASbGncsbdZIsV/8UPbHIjG6fNGQD0QP0F2coQlen8BlBXaBAwwAY7eyi8+fXCl/41QR
- kezO5haKnabxFIjLVYl+RiKc9BAFOjEPOmkas5svYN86ZidOWNXcyAMfVue4X2+6H4WRc9wiQds
- 1a0bThMrTEaDep8gp0rmdsNZ6bgkhH7sjBHX31aKNajGgXHvCCAz1+dXe1ceI+fOvg8rVDmyct3
- zQ2wD7hNVoTfuJLMnYuytY56b+IYucp+AWaIzMz2UeODijhdcDRjFFdfeZ+DWE2PJ6V8YrW8Yaf
- uzwG1wWD2ua5kInVEuyxpuJOwghD5cXpH/devu5QBmVBsIQUvcrjdFLrKprddgGB72OoszAbQpQ
- R2pyYwyykRUMyj9IH24tEALZse3TlW/1RC/vPE5N5JbN9VRdnv9Ahmp1STD4JFu06NGpYSma/Xy
- JJOgyQrSWJThZ+/Ucz1shxVOdj21vuk/cIeCFe8+Pr6sRYIlLcfnvNopm7uYhB
-X-Google-Smtp-Source: AGHT+IH2JJSaP/fggN4tgfIi3FH8bMK6jCYSBBgIjfhCJvYRm5HMx88CWzkZ11caRFE6NYbL0pA1Ug==
-X-Received: by 2002:a05:600c:3553:b0:477:63b5:7148 with SMTP id
- 5b1f17b1804b1-477c0174840mr194724595e9.6.1764188580038; 
- Wed, 26 Nov 2025 12:23:00 -0800 (PST)
+ bh=OWYkx3YUV2r5XP/TpYmiIMZC5Qw2jmeZIu0kQf7aT+g=;
+ b=i1GLvTLFovj4n9yhsnG5+4vEvPYDiPlZstUdr4bSyVQnsH7ns46ERHVXqpCbe5dC86
+ +QNcvZY39KepLazC49eXoBaMemj4CWqiOEnE8N2mwM1dYR1APcWVtErphCzX3s99x+Wu
+ TWeo/sRkMB3eNfORbbuy3jBCLbaQfAKy+LElA3gMde8L7Yqk6Sc5HQ7aFJz590LPoRL8
+ +ucnpN/90xBhZP4aOZ30mgJ1X3s8vqiEh1iV8/YCOEvuV5nzuqWsLTSv048H5U14cZ82
+ Chlgrk0tIXcB0CaZRqwPk4U3i9PY5fK/XVeBuSJkeeyKU9cjsaMnnFKr3TadPvwYjyFo
+ QVPg==
+X-Gm-Message-State: AOJu0YwS85Gd83T7iHccmLIsaKWdKla+l4fD55cxpp/R8L64ccB1J8yn
+ LNVpBeVAAwz4k9lDq8caWQxodk5Ipowk+rnduKCMIsCUqr1kF3SFKRPxnlrnhV57UJ7rWbbECni
+ quop/YE8rKX92pxI=
+X-Gm-Gg: ASbGncteBWlkdSD+N9DZTpJ3a7IJH+2ZczY8RgCNtz9aZrLVPvkaXIht1TA7Aagej1s
+ i0DJP4l7d2e0CpGldIPp8ECjyYUKORoj+L0oOzMz6Esr4QsGA4VYBB892hvhlPdgLVBC2azsJ1d
+ 0EkvBduldPhEJgNLQnyOyryM/bgpBX5/iev2lpoYuM4G+4zPk5zxeRkiyj6j65P+bBRqJw5Le7F
+ tvnGE/9oP3wZxhvilVOojAMcafc21lZ6z+kgFv0aijyK5gQlveTmoAitRjweyc0VAuZvJGQcnAh
+ XG/vnruQUPwsXcSZfmG5wPc1qMtIIlAWQ7+lZWF8EfSWfGLxHK8DETm+Hq8tqCA/CB588lOsyFh
+ lcl4fJR+4VXU7P/AFc8vuqI8h/ptLSq8Gz/OAvPsUhB0X/rJJ1C7rPP0FJpLJRU5/bvps7OIKMO
+ x/IRYrVH7EpZ3XXOjbDBUW/TLDcI1fnw+3i7LOw/3+W7VUkVtowE7u7f6Hq/kK
+X-Google-Smtp-Source: AGHT+IE/7wGYmgKgkdMa2z7T7ptr7EW7DFy49I3i+RyWw0nOPexic4pYWI/hRSYj5cNDF4eEU8q1WQ==
+X-Received: by 2002:a05:600c:1f0f:b0:456:1a69:94fa with SMTP id
+ 5b1f17b1804b1-477c017ba5amr200908905e9.13.1764188572329; 
+ Wed, 26 Nov 2025 12:22:52 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-479040c70c5sm52411705e9.4.2025.11.26.12.22.58
+ 5b1f17b1804b1-4790b0cc39csm63570975e9.14.2025.11.26.12.22.50
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 26 Nov 2025 12:22:59 -0800 (PST)
+ Wed, 26 Nov 2025 12:22:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>
-Subject: [PATCH-for-11.0 v3 08/22] target/s390x: Use big-endian variant of
+ Laurent Vivier <laurent@vivier.eu>
+Subject: [PATCH-for-11.0 v3 07/22] target/m68k: Use big-endian variant of
  cpu_ld/st_data*()
-Date: Wed, 26 Nov 2025 21:21:44 +0100
-Message-ID: <20251126202200.23100-9-philmd@linaro.org>
+Date: Wed, 26 Nov 2025 21:21:43 +0100
+Message-ID: <20251126202200.23100-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251126202200.23100-1-philmd@linaro.org>
 References: <20251126202200.23100-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,13 +104,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only build the S390x target using big endianness order,
+We only build the M68k target using big endianness order,
 therefore the cpu_ld/st_data*() definitions expand to the
 big endian declarations. Use the explicit big-endian variants.
 
 Mechanical change running:
 
-  $ tgt=s390x; \
+  $ tgt=m68k; \
     end=be; \
     for op in data mmuidx_ra; do \
       for ac in uw sw l q; do \
@@ -124,240 +123,279 @@ Mechanical change running:
       done;
     done
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
----
- target/s390x/tcg/mem_helper.c | 48 +++++++++++++++++------------------
- target/s390x/tcg/vec_helper.c |  8 +++---
- 2 files changed, 28 insertions(+), 28 deletions(-)
+Then adapting indentation in do_stack_frame() to pass checkpatch.pl.
 
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index 24675fc818d..482c3febf91 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -101,7 +101,7 @@ static inline uint64_t cpu_ldusize_data_ra(CPUS390XState *env, uint64_t addr,
-     case 1:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/m68k/fpu_helper.c | 12 +++---
+ target/m68k/op_helper.c  | 91 ++++++++++++++++++++--------------------
+ 2 files changed, 52 insertions(+), 51 deletions(-)
+
+diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
+index 56012863c85..f49f841d489 100644
+--- a/target/m68k/fpu_helper.c
++++ b/target/m68k/fpu_helper.c
+@@ -510,8 +510,8 @@ static int cpu_ld_floatx80_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
+     uint32_t high;
+     uint64_t low;
+ 
+-    high = cpu_ldl_data_ra(env, addr, ra);
+-    low = cpu_ldq_data_ra(env, addr + 4, ra);
++    high = cpu_ldl_be_data_ra(env, addr, ra);
++    low = cpu_ldq_be_data_ra(env, addr + 4, ra);
+ 
+     fp->l.upper = high >> 16;
+     fp->l.lower = low;
+@@ -522,8 +522,8 @@ static int cpu_ld_floatx80_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
+ static int cpu_st_floatx80_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
+                                uintptr_t ra)
+ {
+-    cpu_stl_data_ra(env, addr, fp->l.upper << 16, ra);
+-    cpu_stq_data_ra(env, addr + 4, fp->l.lower, ra);
++    cpu_stl_be_data_ra(env, addr, fp->l.upper << 16, ra);
++    cpu_stq_be_data_ra(env, addr + 4, fp->l.lower, ra);
+ 
+     return 12;
+ }
+@@ -533,7 +533,7 @@ static int cpu_ld_float64_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
+ {
+     uint64_t val;
+ 
+-    val = cpu_ldq_data_ra(env, addr, ra);
++    val = cpu_ldq_be_data_ra(env, addr, ra);
+     fp->d = float64_to_floatx80(*(float64 *)&val, &env->fp_status);
+ 
+     return 8;
+@@ -545,7 +545,7 @@ static int cpu_st_float64_ra(CPUM68KState *env, uint32_t addr, FPReg *fp,
+     float64 val;
+ 
+     val = floatx80_to_float64(fp->d, &env->fp_status);
+-    cpu_stq_data_ra(env, addr, *(uint64_t *)&val, ra);
++    cpu_stq_be_data_ra(env, addr, *(uint64_t *)&val, ra);
+ 
+     return 8;
+ }
+diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
+index e9c20a8e032..7139a8445d4 100644
+--- a/target/m68k/op_helper.c
++++ b/target/m68k/op_helper.c
+@@ -32,8 +32,8 @@ static void cf_rte(CPUM68KState *env)
+     uint32_t fmt;
+ 
+     sp = env->aregs[7];
+-    fmt = cpu_ldl_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
+-    env->pc = cpu_ldl_mmuidx_ra(env, sp + 4, MMU_KERNEL_IDX, 0);
++    fmt = cpu_ldl_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
++    env->pc = cpu_ldl_be_mmuidx_ra(env, sp + 4, MMU_KERNEL_IDX, 0);
+     sp |= (fmt >> 28) & 3;
+     env->aregs[7] = sp + 8;
+ 
+@@ -48,13 +48,13 @@ static void m68k_rte(CPUM68KState *env)
+ 
+     sp = env->aregs[7];
+ throwaway:
+-    sr = cpu_lduw_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
++    sr = cpu_lduw_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
+     sp += 2;
+-    env->pc = cpu_ldl_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
++    env->pc = cpu_ldl_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
+     sp += 4;
+     if (m68k_feature(env, M68K_FEATURE_EXCEPTION_FORMAT_VEC)) {
+         /*  all except 68000 */
+-        fmt = cpu_lduw_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
++        fmt = cpu_lduw_be_mmuidx_ra(env, sp, MMU_KERNEL_IDX, 0);
+         sp += 2;
+         switch (fmt >> 12) {
+         case 0:
+@@ -250,12 +250,12 @@ static void cf_interrupt_all(CPUM68KState *env, int is_hw)
+     /* ??? This could cause MMU faults.  */
+     sp &= ~3;
+     sp -= 4;
+-    cpu_stl_mmuidx_ra(env, sp, retaddr, MMU_KERNEL_IDX, 0);
++    cpu_stl_be_mmuidx_ra(env, sp, retaddr, MMU_KERNEL_IDX, 0);
+     sp -= 4;
+-    cpu_stl_mmuidx_ra(env, sp, fmt, MMU_KERNEL_IDX, 0);
++    cpu_stl_be_mmuidx_ra(env, sp, fmt, MMU_KERNEL_IDX, 0);
+     env->aregs[7] = sp;
+     /* Jump to vector.  */
+-    env->pc = cpu_ldl_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
++    env->pc = cpu_ldl_be_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
+ 
+     do_plugin_vcpu_interrupt_cb(cs, retaddr);
+ }
+@@ -270,24 +270,25 @@ static inline void do_stack_frame(CPUM68KState *env, uint32_t *sp,
+         switch (format) {
+         case 4:
+             *sp -= 4;
+-            cpu_stl_mmuidx_ra(env, *sp, env->pc, MMU_KERNEL_IDX, 0);
++            cpu_stl_be_mmuidx_ra(env, *sp, env->pc, MMU_KERNEL_IDX, 0);
+             *sp -= 4;
+-            cpu_stl_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
++            cpu_stl_be_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
+             break;
+         case 3:
+         case 2:
+             *sp -= 4;
+-            cpu_stl_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
++            cpu_stl_be_mmuidx_ra(env, *sp, addr, MMU_KERNEL_IDX, 0);
+             break;
+         }
+         *sp -= 2;
+-        cpu_stw_mmuidx_ra(env, *sp, (format << 12) + (cs->exception_index << 2),
+-                          MMU_KERNEL_IDX, 0);
++        cpu_stw_be_mmuidx_ra(env, *sp,
++                             (format << 12) + (cs->exception_index << 2),
++                             MMU_KERNEL_IDX, 0);
+     }
+     *sp -= 4;
+-    cpu_stl_mmuidx_ra(env, *sp, retaddr, MMU_KERNEL_IDX, 0);
++    cpu_stl_be_mmuidx_ra(env, *sp, retaddr, MMU_KERNEL_IDX, 0);
+     *sp -= 2;
+-    cpu_stw_mmuidx_ra(env, *sp, sr, MMU_KERNEL_IDX, 0);
++    cpu_stw_be_mmuidx_ra(env, *sp, sr, MMU_KERNEL_IDX, 0);
+ }
+ 
+ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
+@@ -346,49 +347,49 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
+         env->mmu.fault = true;
+         /* push data 3 */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* push data 2 */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* push data 1 */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* write back 1 / push data 0 */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* write back 1 address */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* write back 2 data */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* write back 2 address */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* write back 3 data */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* write back 3 address */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
+         /* fault address */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
+         /* write back 1 status */
+         sp -= 2;
+-        cpu_stw_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* write back 2 status */
+         sp -= 2;
+-        cpu_stw_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* write back 3 status */
+         sp -= 2;
+-        cpu_stw_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
++        cpu_stw_be_mmuidx_ra(env, sp, 0, MMU_KERNEL_IDX, 0);
+         /* special status word */
+         sp -= 2;
+-        cpu_stw_mmuidx_ra(env, sp, env->mmu.ssw, MMU_KERNEL_IDX, 0);
++        cpu_stw_be_mmuidx_ra(env, sp, env->mmu.ssw, MMU_KERNEL_IDX, 0);
+         /* effective address */
+         sp -= 4;
+-        cpu_stl_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
++        cpu_stl_be_mmuidx_ra(env, sp, env->mmu.ar, MMU_KERNEL_IDX, 0);
+ 
+         do_stack_frame(env, &sp, 7, oldsr, 0, env->pc);
+         env->mmu.fault = false;
+@@ -436,7 +437,7 @@ static void m68k_interrupt_all(CPUM68KState *env, int is_hw)
+ 
+     env->aregs[7] = sp;
+     /* Jump to vector.  */
+-    env->pc = cpu_ldl_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
++    env->pc = cpu_ldl_be_mmuidx_ra(env, env->vbr + vector, MMU_KERNEL_IDX, 0);
+ 
+     do_plugin_vcpu_interrupt_cb(cs, last_pc);
+ }
+@@ -784,11 +785,11 @@ void HELPER(cas2w)(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2)
+     int16_t l1, l2;
+     uintptr_t ra = GETPC();
+ 
+-    l1 = cpu_lduw_data_ra(env, a1, ra);
+-    l2 = cpu_lduw_data_ra(env, a2, ra);
++    l1 = cpu_lduw_be_data_ra(env, a1, ra);
++    l2 = cpu_lduw_be_data_ra(env, a2, ra);
+     if (l1 == c1 && l2 == c2) {
+-        cpu_stw_data_ra(env, a1, u1, ra);
+-        cpu_stw_data_ra(env, a2, u2, ra);
++        cpu_stw_be_data_ra(env, a1, u1, ra);
++        cpu_stw_be_data_ra(env, a2, u2, ra);
+     }
+ 
+     if (c1 != l1) {
+@@ -845,11 +846,11 @@ static void do_cas2l(CPUM68KState *env, uint32_t regs, uint32_t a1, uint32_t a2,
+         }
+     } else {
+         /* We're executing in a serial context -- no need to be atomic.  */
+-        l1 = cpu_ldl_data_ra(env, a1, ra);
+-        l2 = cpu_ldl_data_ra(env, a2, ra);
++        l1 = cpu_ldl_be_data_ra(env, a1, ra);
++        l2 = cpu_ldl_be_data_ra(env, a2, ra);
+         if (l1 == c1 && l2 == c2) {
+-            cpu_stl_data_ra(env, a1, u1, ra);
+-            cpu_stl_data_ra(env, a2, u2, ra);
++            cpu_stl_be_data_ra(env, a1, u1, ra);
++            cpu_stl_be_data_ra(env, a2, u2, ra);
+         }
+     }
+ 
+@@ -951,12 +952,12 @@ static uint64_t bf_load(CPUM68KState *env, uint32_t addr, int blen,
+     case 0:
          return cpu_ldub_data_ra(env, addr, ra);
-     case 2:
+     case 1:
 -        return cpu_lduw_data_ra(env, addr, ra);
 +        return cpu_lduw_be_data_ra(env, addr, ra);
-     default:
-         abort();
-     }
-@@ -117,7 +117,7 @@ static inline void cpu_stsize_data_ra(CPUS390XState *env, uint64_t addr,
-         cpu_stb_data_ra(env, addr, value, ra);
-         break;
      case 2:
--        cpu_stw_data_ra(env, addr, value, ra);
-+        cpu_stw_be_data_ra(env, addr, value, ra);
-         break;
-     default:
-         abort();
-@@ -865,7 +865,7 @@ void HELPER(srstu)(CPUS390XState *env, uint32_t r1, uint32_t r2)
-             env->cc_op = 2;
-             return;
-         }
--        v = cpu_lduw_data_ra(env, str + len, ra);
-+        v = cpu_lduw_be_data_ra(env, str + len, ra);
-         if (v == c) {
-             /* Character found.  Set R1 to the location; R2 is unmodified.  */
-             env->cc_op = 1;
-@@ -1022,7 +1022,7 @@ void HELPER(lam)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-     }
- 
-     for (i = r1;; i = (i + 1) % 16) {
--        env->aregs[i] = cpu_ldl_data_ra(env, a2, ra);
-+        env->aregs[i] = cpu_ldl_be_data_ra(env, a2, ra);
-         a2 += 4;
- 
-         if (i == r3) {
-@@ -1042,7 +1042,7 @@ void HELPER(stam)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-     }
- 
-     for (i = r1;; i = (i + 1) % 16) {
--        cpu_stl_data_ra(env, a2, env->aregs[i], ra);
-+        cpu_stl_be_data_ra(env, a2, env->aregs[i], ra);
-         a2 += 4;
- 
-         if (i == r3) {
-@@ -1363,7 +1363,7 @@ Int128 HELPER(cksm)(CPUS390XState *env, uint64_t r1,
- 
-     /* Process full words as available.  */
-     for (len = 0; len + 4 <= max_len; len += 4, src += 4) {
--        cksm += (uint32_t)cpu_ldl_data_ra(env, src, ra);
-+        cksm += (uint32_t)cpu_ldl_be_data_ra(env, src, ra);
-     }
- 
-     switch (max_len - len) {
-@@ -1372,11 +1372,11 @@ Int128 HELPER(cksm)(CPUS390XState *env, uint64_t r1,
-         len += 1;
-         break;
-     case 2:
--        cksm += cpu_lduw_data_ra(env, src, ra) << 16;
-+        cksm += cpu_lduw_be_data_ra(env, src, ra) << 16;
-         len += 2;
-         break;
      case 3:
--        cksm += cpu_lduw_data_ra(env, src, ra) << 16;
-+        cksm += cpu_lduw_be_data_ra(env, src, ra) << 16;
-         cksm += cpu_ldub_data_ra(env, src + 2, ra) << 8;
-         len += 3;
+-        return cpu_ldl_data_ra(env, addr, ra);
++        return cpu_ldl_be_data_ra(env, addr, ra);
+     case 4:
+-        return cpu_ldq_data_ra(env, addr, ra);
++        return cpu_ldq_be_data_ra(env, addr, ra);
+     default:
+         g_assert_not_reached();
+     }
+@@ -970,14 +971,14 @@ static void bf_store(CPUM68KState *env, uint32_t addr, int blen,
+         cpu_stb_data_ra(env, addr, data, ra);
          break;
-@@ -1955,7 +1955,7 @@ void HELPER(lctlg)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-     }
- 
-     for (i = r1;; i = (i + 1) % 16) {
--        uint64_t val = cpu_ldq_data_ra(env, src, ra);
-+        uint64_t val = cpu_ldq_be_data_ra(env, src, ra);
-         if (env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-         }
-@@ -1992,7 +1992,7 @@ void HELPER(lctl)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-     }
- 
-     for (i = r1;; i = (i + 1) % 16) {
--        uint32_t val = cpu_ldl_data_ra(env, src, ra);
-+        uint32_t val = cpu_ldl_be_data_ra(env, src, ra);
-         uint64_t val64 = deposit64(env->cregs[i], 0, 32, val);
-         if ((uint32_t)env->cregs[i] != val && i >= 9 && i <= 11) {
-             PERchanged = true;
-@@ -2028,7 +2028,7 @@ void HELPER(stctg)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-     }
- 
-     for (i = r1;; i = (i + 1) % 16) {
--        cpu_stq_data_ra(env, dest, env->cregs[i], ra);
-+        cpu_stq_be_data_ra(env, dest, env->cregs[i], ra);
-         dest += sizeof(uint64_t);
- 
-         if (i == r3) {
-@@ -2048,7 +2048,7 @@ void HELPER(stctl)(CPUS390XState *env, uint32_t r1, uint64_t a2, uint32_t r3)
-     }
- 
-     for (i = r1;; i = (i + 1) % 16) {
--        cpu_stl_data_ra(env, dest, env->cregs[i], ra);
-+        cpu_stl_be_data_ra(env, dest, env->cregs[i], ra);
-         dest += sizeof(uint32_t);
- 
-         if (i == r3) {
-@@ -2065,7 +2065,7 @@ uint32_t HELPER(testblock)(CPUS390XState *env, uint64_t real_addr)
-     real_addr = wrap_address(env, real_addr) & TARGET_PAGE_MASK;
- 
-     for (i = 0; i < TARGET_PAGE_SIZE; i += 8) {
--        cpu_stq_mmuidx_ra(env, real_addr + i, 0, MMU_REAL_IDX, ra);
-+        cpu_stq_be_mmuidx_ra(env, real_addr + i, 0, MMU_REAL_IDX, ra);
-     }
- 
-     return 0;
-@@ -2324,11 +2324,11 @@ void HELPER(idte)(CPUS390XState *env, uint64_t r1, uint64_t r2, uint32_t m4)
-         for (i = 0; i < entries; i++) {
-             /* addresses are not wrapped in 24/31bit mode but table index is */
-             raddr = table + ((index + i) & 0x7ff) * sizeof(entry);
--            entry = cpu_ldq_mmuidx_ra(env, raddr, MMU_REAL_IDX, ra);
-+            entry = cpu_ldq_be_mmuidx_ra(env, raddr, MMU_REAL_IDX, ra);
-             if (!(entry & REGION_ENTRY_I)) {
-                 /* we are allowed to not store if already invalid */
-                 entry |= REGION_ENTRY_I;
--                cpu_stq_mmuidx_ra(env, raddr, entry, MMU_REAL_IDX, ra);
-+                cpu_stq_be_mmuidx_ra(env, raddr, entry, MMU_REAL_IDX, ra);
-             }
-         }
-     }
-@@ -2355,9 +2355,9 @@ void HELPER(ipte)(CPUS390XState *env, uint64_t pto, uint64_t vaddr,
-     pte_addr += VADDR_PAGE_TX(vaddr) * 8;
- 
-     /* Mark the page table entry as invalid */
--    pte = cpu_ldq_mmuidx_ra(env, pte_addr, MMU_REAL_IDX, ra);
-+    pte = cpu_ldq_be_mmuidx_ra(env, pte_addr, MMU_REAL_IDX, ra);
-     pte |= PAGE_ENTRY_I;
--    cpu_stq_mmuidx_ra(env, pte_addr, pte, MMU_REAL_IDX, ra);
-+    cpu_stq_be_mmuidx_ra(env, pte_addr, pte, MMU_REAL_IDX, ra);
- 
-     /* XXX we exploit the fact that Linux passes the exact virtual
-        address here - it's not obliged to! */
-@@ -2695,7 +2695,7 @@ static int decode_utf16(CPUS390XState *env, uint64_t addr, uint64_t ilen,
-     if (ilen < 2) {
-         return 0;
-     }
--    s0 = cpu_lduw_data_ra(env, addr, ra);
-+    s0 = cpu_lduw_be_data_ra(env, addr, ra);
-     if ((s0 & 0xfc00) != 0xd800) {
-         /* one word character */
-         l = 2;
-@@ -2706,7 +2706,7 @@ static int decode_utf16(CPUS390XState *env, uint64_t addr, uint64_t ilen,
-         if (ilen < 4) {
-             return 0;
-         }
--        s1 = cpu_lduw_data_ra(env, addr + 2, ra);
-+        s1 = cpu_lduw_be_data_ra(env, addr + 2, ra);
-         c = extract32(s0, 6, 4) + 1;
-         c = (c << 6) | (s0 & 0x3f);
-         c = (c << 10) | (s1 & 0x3ff);
-@@ -2730,7 +2730,7 @@ static int decode_utf32(CPUS390XState *env, uint64_t addr, uint64_t ilen,
-     if (ilen < 4) {
-         return 0;
-     }
--    c = cpu_ldl_data_ra(env, addr, ra);
-+    c = cpu_ldl_be_data_ra(env, addr, ra);
-     if ((c >= 0xd800 && c <= 0xdbff) || c > 0x10ffff) {
-         /* invalid unicode character */
-         return 2;
-@@ -2792,7 +2792,7 @@ static int encode_utf16(CPUS390XState *env, uint64_t addr, uint64_t ilen,
-         if (ilen < 2) {
-             return 1;
-         }
--        cpu_stw_data_ra(env, addr, c, ra);
-+        cpu_stw_be_data_ra(env, addr, c, ra);
-         *olen = 2;
-     } else {
-         /* two word character */
-@@ -2802,8 +2802,8 @@ static int encode_utf16(CPUS390XState *env, uint64_t addr, uint64_t ilen,
-         d1 = 0xdc00 | extract32(c, 0, 10);
-         d0 = 0xd800 | extract32(c, 10, 6);
-         d0 = deposit32(d0, 6, 4, extract32(c, 16, 5) - 1);
--        cpu_stw_data_ra(env, addr + 0, d0, ra);
--        cpu_stw_data_ra(env, addr + 2, d1, ra);
-+        cpu_stw_be_data_ra(env, addr + 0, d0, ra);
-+        cpu_stw_be_data_ra(env, addr + 2, d1, ra);
-         *olen = 4;
-     }
- 
-@@ -2816,7 +2816,7 @@ static int encode_utf32(CPUS390XState *env, uint64_t addr, uint64_t ilen,
-     if (ilen < 4) {
-         return 1;
-     }
--    cpu_stl_data_ra(env, addr, c, ra);
-+    cpu_stl_be_data_ra(env, addr, c, ra);
-     *olen = 4;
-     return -1;
- }
-diff --git a/target/s390x/tcg/vec_helper.c b/target/s390x/tcg/vec_helper.c
-index 46ec4a947dd..304745c971b 100644
---- a/target/s390x/tcg/vec_helper.c
-+++ b/target/s390x/tcg/vec_helper.c
-@@ -45,9 +45,9 @@ void HELPER(vll)(CPUS390XState *env, void *v1, uint64_t addr, uint64_t bytes)
-     if (likely(bytes >= 16)) {
-         uint64_t t0, t1;
- 
--        t0 = cpu_ldq_data_ra(env, addr, GETPC());
-+        t0 = cpu_ldq_be_data_ra(env, addr, GETPC());
-         addr = wrap_address(env, addr + 8);
--        t1 = cpu_ldq_data_ra(env, addr, GETPC());
-+        t1 = cpu_ldq_be_data_ra(env, addr, GETPC());
-         s390_vec_write_element64(v1, 0, t0);
-         s390_vec_write_element64(v1, 1, t1);
-     } else {
-@@ -195,9 +195,9 @@ void HELPER(vstl)(CPUS390XState *env, const void *v1, uint64_t addr,
-     probe_write_access(env, addr, MIN(bytes, 16), GETPC());
- 
-     if (likely(bytes >= 16)) {
--        cpu_stq_data_ra(env, addr, s390_vec_read_element64(v1, 0), GETPC());
-+        cpu_stq_be_data_ra(env, addr, s390_vec_read_element64(v1, 0), GETPC());
-         addr = wrap_address(env, addr + 8);
--        cpu_stq_data_ra(env, addr, s390_vec_read_element64(v1, 1), GETPC());
-+        cpu_stq_be_data_ra(env, addr, s390_vec_read_element64(v1, 1), GETPC());
-     } else {
-         int i;
- 
+     case 1:
+-        cpu_stw_data_ra(env, addr, data, ra);
++        cpu_stw_be_data_ra(env, addr, data, ra);
+         break;
+     case 2:
+     case 3:
+-        cpu_stl_data_ra(env, addr, data, ra);
++        cpu_stl_be_data_ra(env, addr, data, ra);
+         break;
+     case 4:
+-        cpu_stq_data_ra(env, addr, data, ra);
++        cpu_stq_be_data_ra(env, addr, data, ra);
+         break;
+     default:
+         g_assert_not_reached();
 -- 
 2.51.0
 
