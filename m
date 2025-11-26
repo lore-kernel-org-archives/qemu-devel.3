@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29376D10F4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 14:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 599C3D10F58
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 14:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOG5u-0002vH-O4; Wed, 26 Nov 2025 09:02:06 -0500
+	id 1vOGIY-0000xG-UB; Wed, 26 Nov 2025 09:15:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOG5s-0002uM-6f
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 09:02:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <me@wesleyac.com>) id 1vO6pA-0005hA-KI
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 23:08:13 -0500
+Received: from fhigh-a4-smtp.messagingengine.com ([103.168.172.155])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOG5q-0004eD-4p
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 09:02:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764165719;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HV1tvnH0i3TlTbqQavvnylQJ/d5Pb3c6nh5fwaCW0O4=;
- b=F7/LvAAeMeYA3tgD7sU73nboiKRpF8SjEJ81hPW1BDt8ibJCfJqYTDnvoKiq8T/iJgn21u
- tY5fyPNJ4mdE1ODrn61EXhXL37hcgudMmUMd1Y/KJ+omYozHjAKSmUwsJ8ik7jvjAb3YgD
- 0hBW/LbFeC2E2BT9Itzo/2etbRmkObA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-JeIpCvzpMBaUNNdBlO1pyg-1; Wed,
- 26 Nov 2025 09:01:55 -0500
-X-MC-Unique: JeIpCvzpMBaUNNdBlO1pyg-1
-X-Mimecast-MFC-AGG-ID: JeIpCvzpMBaUNNdBlO1pyg_1764165713
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C2211955F12; Wed, 26 Nov 2025 14:01:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AFAC9180047F; Wed, 26 Nov 2025 14:01:52 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4DE6D21E6A27; Wed, 26 Nov 2025 15:01:50 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Peter Xu <peterx@redhat.com>,  qemu-devel@nongnu.org,
- farosas@suse.de
-Subject: Re: g_autoptr(Error)
-In-Reply-To: <CAFEAcA_Xjzp12zB5Gv1pZPJQYicb1GkoHkt6Tt3QQK0n_YQZ5g@mail.gmail.com>
- (Peter Maydell's message of "Wed, 26 Nov 2025 13:27:28 +0000")
-References: <20251125070554.2256181-1-armbru@redhat.com>
- <871plmk1bc.fsf@pond.sub.org> <aSWSLMi6ZhTCS_p2@redhat.com>
- <87jyzexrly.fsf@pond.sub.org> <aSXWKcjoIBK4LW59@x1.local>
- <769f5a57-7006-4cef-a5cb-12d53b7c30a5@redhat.com>
- <c0aa79ad-d6f4-413f-ade6-43e7609e37ac@redhat.com>
- <87ecplc8yn.fsf@pond.sub.org> <aSbr--ZbqzKVNDuC@redhat.com>
- <CAFEAcA_Xjzp12zB5Gv1pZPJQYicb1GkoHkt6Tt3QQK0n_YQZ5g@mail.gmail.com>
-Date: Wed, 26 Nov 2025 15:01:50 +0100
-Message-ID: <878qfsc2pd.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <me@wesleyac.com>) id 1vO6p8-0007tU-1I
+ for qemu-devel@nongnu.org; Tue, 25 Nov 2025 23:08:12 -0500
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfhigh.phl.internal (Postfix) with ESMTP id C8E0914001ED;
+ Tue, 25 Nov 2025 23:08:03 -0500 (EST)
+Received: from phl-imap-16 ([10.202.2.88])
+ by phl-compute-05.internal (MEProxy); Tue, 25 Nov 2025 23:08:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wesleyac.com; h=
+ cc:content-transfer-encoding:content-type:content-type:date:date
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to; s=fm1; t=1764130083; x=1764216483; bh=Xh+scfLymd
+ oCuWFu5/Tkle5QpWNn2GqqlN1vrgBZ9PQ=; b=O0W4JQnsV1D3b6O/Eh4t8jbfXl
+ xdi4bpJguzrwR7TnUTB1HGGtNDXc6607ol82Elr0Ynt7oKOwWFYtNS/PIs8LoasM
+ K9hr1lz1/K/AnVfVTMIihFBhJ7b4uHJoWWFM4M9Qdb9jCtEdIfGT77Fcsd9cFERi
+ 5O7Z37C5KnZazoLmohbeLbWINu7vWyR1zfh/otQsLJ3nYRO7gNWxVIdsHuuR5bWy
+ QOORLdU012G08ETBS0cuR/2Z3ypDQJpLzThvkC/m44zbtzw+TJMBqzcQ6i/dFQhG
+ VuXw656b4MOtBHIMWlAfttzLuy7PkwAXCdW6QTh2Q04U7eogkCckKcjA/QIQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-transfer-encoding:content-type
+ :content-type:date:date:feedback-id:feedback-id:from:from
+ :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+ 1764130083; x=1764216483; bh=Xh+scfLymdoCuWFu5/Tkle5QpWNn2GqqlN1
+ vrgBZ9PQ=; b=W9kr41tHj59uoHQhGiQEMTdUsGI/U+OdZ8Kis/TzpWj2bE1bbks
+ rEjGBoFr92g2AbAHiHq+cQ40lRLGhnLTD8qEiMwnC0XXb3T360b4YyRYJs/ImrNV
+ eeuxQdmV26KuN7qTyN/Jq2lgniB5bSK84DR85/JcB2bXjUTw8QfCNfoUc09SX57n
+ l6XV7feTplCd2z6zsPtV7FxYFgzTHz5iJ0xXtdFkMcM1jcp1eACtk4BMrAT3UVe2
+ Xct7XZbedi54W1e0mobe34mLW4Fejuy/5NC2lIihBL7u9bFcAHo9Xv5Bo1O8By0i
+ wfsskQF+F0fKtE78jzkSLPxLkV1JPLXjXMQ==
+X-ME-Sender: <xms:I30maXo40jHoIsaAaTmRxEl_joBb2jlaOlD6qV87fgGa2CPNrSD-1A>
+ <xme:I30macd7Rs3hVHtgJq6-Qyx1ZeFVqYUt1F9c1dOpZcDLTOmug4B9hQC2BhJp002LS
+ DKoY3Dtwwalewe_XYADeGFalY35fLDKR57oUPZnaiPq0Py-bp4fQQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeeffeehucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkffutgfgsehtjeertdertd
+ dtnecuhfhrohhmpedfhggvshhlvgihucetphhtvghkrghrqdevrghsshgvlhhsfdcuoehm
+ vgesfigvshhlvgihrggtrdgtohhmqeenucggtffrrghtthgvrhhnpeeivdefuefglefgke
+ ejfeehgeeluedvfeffkeevjeehgeetffelveettdejkeffveenucevlhhushhtvghrufhi
+ iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmvgesfigvshhlvgihrggtrdgtoh
+ hmpdhnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehq
+ vghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:I30madPYLNm8_uvDuVQJejq2lM4P3NiQH1XympSTVKM_I9ImWpLL_g>
+ <xmx:I30maW74CUaAJK5jZLZbV3GL72DuDCt2lRrkWM9JRJLW7POfqXypWg>
+ <xmx:I30maR4G_Kw8pzwC_pubgKxYLqPDBvK8tMyuLjwZIoFN6Zt_vNoKUA>
+ <xmx:I30mae0P6yR182ZV6Z43jdCs5jZXReTlqBWchZyy_rh8YZriOU495w>
+ <xmx:I30maZFQ1-wFi5yzlvlXpOPzUCtFSVEN0EfpHnllpJeYuiqqBGM8QsXr>
+Feedback-ID: i0c594533:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+ id 7CAFA2CC0083; Tue, 25 Nov 2025 23:08:03 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Date: Tue, 25 Nov 2025 23:07:43 -0500
+From: "Wesley Aptekar-Cassels" <me@wesleyac.com>
+To: qemu-devel@nongnu.org
+Message-Id: <4156bca7-ef99-4158-867d-c41893f7c8e3@app.fastmail.com>
+Subject: [PATCH] hw/usb/pcap: Prevent truncation of USB data in pacp files.
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=103.168.172.155; envelope-from=me@wesleyac.com;
+ helo=fhigh-a4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 26 Nov 2025 09:14:44 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,23 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Currently, packet data is truncated to 256 bytes in pcap files. The
+original length is recorded, but the actual data is discarded. This
+shows up in Wireshark as "bytes captured" being smaller than "bytes on
+wire".
 
-> On Wed, 26 Nov 2025 at 12:01, Daniel P. Berrang=C3=A9 <berrange@redhat.co=
-m> wrote:
->> The other thing that plays in here is that we actively encourage use of
->> g_autoptr everywhere. It is very unusual for "Error" to be a type that
->> does NOT want g_autoptr, and thus the mistake is very much on the cards.
->>
->> I've proposed it before myself & Markus caught it. I also caught one
->> other proposals to add it since my attempt. This third time it slipped
->> through review. I expect we'll see a 4th attempt to add it at some point.
->
-> We could add a comment to the header explaining the rationale for
-> not providing a g_autoptr handler, so that at least we have it
-> written down, and are more likely to remember it when it comes
-> up again in future...
+This is because DATA_LEN is used to limit the maximum pcap size.
 
-Good idea.  I'll take care of it.
+I'm not sure why 256 was initially picked. There are several sources
+that report 1024 as the maximum size of a USB packet, so that seems like
+a reasonable thing to set it to.
 
+It also might be reasonable to allow the value to be configurable. I
+have opted not to do this, since it's more complex, and there does not
+seem to be a significant downside to increasing it to the maximum, other
+than the potential increase in size of the pcap files, which is a
+tradeoff that people capturing pcaps are likely to want to make.
+
+Signed-off-by: Wesley Aptekar-Cassels <me@wesleyac.com>
+---
+ hw/usb/pcap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/usb/pcap.c b/hw/usb/pcap.c
+index dbff00be25..86eb603b5b 100644
+--- a/hw/usb/pcap.c
++++ b/hw/usb/pcap.c
+@@ -70,7 +70,7 @@ struct usbmon_packet {
+ /* ------------------------------------------------------------------------ */
+ 
+ #define CTRL_LEN                     4096
+-#define DATA_LEN                     256
++#define DATA_LEN                     1024
+ 
+ static int usbmon_status(USBPacket *p)
+ {
+-- 
+2.50.1
 
