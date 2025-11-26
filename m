@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58545D10F4F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 13:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBA58D10F4D
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 13:40:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOFYp-0002hT-ME; Wed, 26 Nov 2025 08:27:56 -0500
+	id 1vOFkX-00084x-Cx; Wed, 26 Nov 2025 08:40:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vOFYf-0002gA-VH
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 08:27:47 -0500
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOFkO-00082c-8y
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 08:39:54 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vOFYc-0001vc-4p
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 08:27:44 -0500
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-78665368a5cso64345097b3.3
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 05:27:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOFkL-00062k-TI
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 08:39:51 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-477a219db05so40262585e9.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 05:39:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764163660; x=1764768460; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UXtMhZdIBOyiMJybbPSMLS2QzpM/Ed2prcithz7IuJQ=;
- b=iBQm4fsX4le91lCye1xwY3Apu3YguMkTNSdwN1cYOa6eMHh/pCwx3OrUpVNVes03Jo
- SRt3eUvYsnZjtHSsAE6139+FcFHtu9cDHbyAmwlCQ1af1YnKrk3q7TxyXkw10jGBWTOG
- 7roDFVQHBHbEJqzp0E3RsnfsLtt81Zf2GFptU00fqb70SJhkJTAnHYsmhgEtNdBamfmp
- GiHZrMT/cG0IAkvQ1TbaWiKoZ3n5EX1srecnA67wJfbIa64Ccp+kBVtsC6PV73Oyw8P9
- T2f/xTyDEpLJI1ooJb2Tzqsm1Z4a0qBmmgJsjT9h5yjvvuxiYiegvOh6hHKuxi6EyC8P
- zfJg==
+ d=linaro.org; s=google; t=1764164388; x=1764769188; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=P2ShG1zP0ro5KXcn3ZzBQt2ZlDityOea7o6dsOWT+zA=;
+ b=UsIrthNxjJuW4Do0ce7jP3bfnfORoMzUWH3XiePmDTOocV/tfDOGMsPj1un4mcdnF/
+ yxou23FBQOMC5/4nEA+TvmkWR52GmkqrhuENn5nx8bhWorIG83CCnDPsPlXViARSAs9c
+ Ndci4/dGsR7QiJZQbG+hs2F5HKx9J870Al4dGdOJLeO+FduEARLRsf8RjSEgz45PJbkL
+ 7ZPLtEHoisVLPAShKvRm6Kar1taAjtpKW9RWLVVIpvZQnNb6HI1iUccf32sfaL30Yzk1
+ ucQRrLeWxyuzJKu0zPbQV3VSknz19JFhwPO64ld8BtzSzbaPKvJiCzYRIAIRTyXKvLCx
+ 4ufw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764163660; x=1764768460;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=UXtMhZdIBOyiMJybbPSMLS2QzpM/Ed2prcithz7IuJQ=;
- b=nTe3LxtL92foJyJUiwj6mP39zH9pCqB7EiNRJCA7HuqiKUfVvQgUHWaj2DRtkI9r/p
- QVOx1Ci2QSamlkCcTiuCS3DniXsHnZXOEqMH0oWs2ksSeciY1uQRIUgm6GHA/bDnWcI2
- JxHd/2h/ov8oxqaycjMo1Zsn5d7cn8/q/hXXC86+bbrX0uKJifEm/XRv5TRb29OTJteZ
- 6exizMBKwYv3LY1k98BZAyzcSeO3DoLi8BRXrP7P5J6ctVtr+UVvfG5+3UsRKBebIABU
- CLdNCfUHjKDhnEwtiEcUIukR9U9v/w96PFQVEUSsJZT5YJttSrtV0OxLFJG1pRSBpGvG
- kG/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFIZn57tnSSbEU/7WraHlSUeiO5zPFpnvArnRdScGWhKWOiBrzeiYLsFGxaiA2cJ2SYar8dJa2dhrY@nongnu.org
-X-Gm-Message-State: AOJu0YwGCjdkRjO1fGdmOJRX7CnjvdTQlQu6zkDfQVFrA5mxdMOHbB/2
- KJd0UAtZTxLkC3481pZ9J4SbCsqLq//ostfXDGeQVVSw3KzNBJ7raH0pcsN0Om1pWSerJ1l5Oji
- gBFj8PLkmCVk2X6MNzuZUU1dAoF3uR3duODnj7pJUlQ==
-X-Gm-Gg: ASbGncu3Go7WwIk/ZEKMvcwbHdgsNKSa9kvHCsmPHN69bFGP9bd+fqrd7ui8vUb33L0
- hlxck8N/Fov4RDYxJ/ofTO9c/sz7V7LhXJeyRdIOuStxsKguLoUWViancS+mjXwM7SWBMQZt318
- 3zkRnlln+WBvOdVWbzEM3QPvO5oQ9e6kFB5GCaSzn2QqooJ2v3xirSJygPj6YbHL1HIWEPsu+Ei
- NSmP5KEvhVYHwTD307hNOTEzfm/jAMkVd3UjtGoLUpFIVAP/y0z/yPM/b7zOm3LXqOojlUy
-X-Google-Smtp-Source: AGHT+IFKedMeTMkf8kdv3tpR+JmIn4jSuuU46zNFAklS6FadDqIbVdtuHnN7h+6gKq6D+O3f8+iXlsKqP4BlPvhfVAQ=
-X-Received: by 2002:a05:690c:905:b0:786:5ebb:4837 with SMTP id
- 00721157ae682-78a8b50c0f9mr194365557b3.33.1764163660689; Wed, 26 Nov 2025
- 05:27:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1764164388; x=1764769188;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=P2ShG1zP0ro5KXcn3ZzBQt2ZlDityOea7o6dsOWT+zA=;
+ b=DmK53CGEcbEySq2Ld1IIGyxI8C52rnFip0Ab4hwEszve6T/wHSNMr9j+Qk/dgyC3J6
+ NsDQvAhPeRKbmxioSZcFMBEtlTQ7SzZGpRIkap3+ebptDhMxWhYM85w50YG5ciyuKtn7
+ SKaoiAjk7vWXo+V1HQCm8YFy+kwkPVX5QwUjIaQ0tZPSilsvObqJ6pzhLOVUNhQgOkM2
+ u7FPGRBCoNFz/jpT5MlL+lEPh2D712bAR2QVHfk5ZhcGQap/xdvoE6S5781aorXne5ip
+ ZO9qj+5YMpAG96z32liywXOmkgHvgAVEKwDiZS1pOx0uhzzPCs0xxLmPM9QEN3CkRRl9
+ 85qQ==
+X-Gm-Message-State: AOJu0YzLQikyBhlrlvhEFXCJ2GEh2aV9XU+kRrtEu7nwlZiEH5YjwRgm
+ son+M1Y84FbtE2iCSXp3r4aIBg1s9zcdZhgIhIp6/uljYvJJoaHaGVG97iEQ3AS3x30=
+X-Gm-Gg: ASbGncupxi9xfq+mZZZpIojABZL3Rnv+7VptbbZc9SZo2UVFXhQzVcj8j/Wkpaba7+W
+ scR5vNva4O6C8jIsXDxR10KRbioQ7q7k/5UmcSvfOGDVfBGgYUDyM+mcspC6CImQBIEKjxHyI0F
+ Eh8WPs9NW+9fjwfUUuV6U6VSmseWKHYJu8YqKFwfSJwkR2A3Xs7BEMSq5yk+eIQ+Dl6gDkBFHLU
+ MAUrh+J+vXbZ4bEcOnZTrZaIzNP1A6yUX7S9VglWtYPW3OyCay4VFU4umcDXrjKUup6hTT7bRfd
+ y5tFwTRUvuNliMRLw7E/Nm5bfneVU0NfMFoF6KogEu/QGDbFlh/N03Z9gmtUMv0dkyxiXxwPpcp
+ eAXRGNJFDK6jonkGVHrKrkpaywf1uZQLzx+Q04ijhjIWPLC3d3TMASyocuuO7p6Hc6XKbJ5YdNC
+ IMYUIPmpcDb/tfSERrMEnwZJJs
+X-Google-Smtp-Source: AGHT+IFlj31YhjAlLk4Jkv0WTCNVgTD+D5xMHIwQ8S41w7Bz6iEzrZyB03znS4688+s9htekMVpMlQ==
+X-Received: by 2002:a05:600c:a08:b0:477:aed0:f401 with SMTP id
+ 5b1f17b1804b1-477c11254damr191585325e9.23.1764164388162; 
+ Wed, 26 Nov 2025 05:39:48 -0800 (PST)
+Received: from [10.79.43.20] ([83.247.137.20])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47905303963sm42057905e9.7.2025.11.26.05.39.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Nov 2025 05:39:47 -0800 (PST)
+Message-ID: <8f6eb2ec-d6a7-49dd-b425-ee771d2f9be3@linaro.org>
+Date: Wed, 26 Nov 2025 14:39:45 +0100
 MIME-Version: 1.0
-References: <20251125070554.2256181-1-armbru@redhat.com>
- <871plmk1bc.fsf@pond.sub.org>
- <aSWSLMi6ZhTCS_p2@redhat.com> <87jyzexrly.fsf@pond.sub.org>
- <aSXWKcjoIBK4LW59@x1.local> <769f5a57-7006-4cef-a5cb-12d53b7c30a5@redhat.com>
- <c0aa79ad-d6f4-413f-ade6-43e7609e37ac@redhat.com>
- <87ecplc8yn.fsf@pond.sub.org> <aSbr--ZbqzKVNDuC@redhat.com>
-In-Reply-To: <aSbr--ZbqzKVNDuC@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 26 Nov 2025 13:27:28 +0000
-X-Gm-Features: AWmQ_bmKYX6H5YMUhakq6KKFeMXErS0qjPS-D7ylXbTaJv0WUlCv9uLdQu-g_3o
-Message-ID: <CAFEAcA_Xjzp12zB5Gv1pZPJQYicb1GkoHkt6Tt3QQK0n_YQZ5g@mail.gmail.com>
-Subject: Re: g_autoptr(Error)
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, farosas@suse.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Fix i386 HVF compilation failures
+Content-Language: en-US
+To: phind.uet@gmail.com, Cameron Esfahani <dirty@apple.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Phil Dennis-Jordan
+ <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>
+Cc: qemu-devel@nongnu.org
+References: <20251126094601.56403-1-phind.uet@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251126094601.56403-1-phind.uet@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,20 +103,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 26 Nov 2025 at 12:01, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
-> The other thing that plays in here is that we actively encourage use of
-> g_autoptr everywhere. It is very unusual for "Error" to be a type that
-> does NOT want g_autoptr, and thus the mistake is very much on the cards.
->
-> I've proposed it before myself & Markus caught it. I also caught one
-> other proposals to add it since my attempt. This third time it slipped
-> through review. I expect we'll see a 4th attempt to add it at some point.
+On 26/11/25 10:46, phind.uet@gmail.com wrote:
+> From: Nguyen Dinh Phi <phind.uet@gmail.com>
+> 
+> Recent changes introduced build errors in the i386 HVF backend:
+> 
+> - ../accel/hvf/hvf-accel-ops.c:163:17: error: no member named 'guest_debug_enabled' in 'struct AccelCPUState'
+>    163 |     cpu->accel->guest_debug_enabled = false;
+> 
+> - ../accel/hvf/hvf-accel-ops.c:151:51
+>    error: no member named 'unblock_ipi_mask' in 'struct AccelCPUState'
+> 
+> - ../target/i386/hvf/hvf.c:736:5
+>    error: use of undeclared identifier 'rip'
+> 
+> - ../target/i386/hvf/hvf.c:737:5
+>    error: use of undeclared identifier 'env'
+> 
+> This patch corrects the field usage and move identifier to correct
+> function ensuring successful compilation of the i386 HVF backend.
+> 
+> These issues were caused by:
+> 
+> Fixes: 2ad756383e1b (“accel/hvf: Restrict ARM-specific fields of AccelCPUState”)
+> Fixes: 2a21c9244740 (“target/i386/hvf: Factor hvf_handle_vmexit() out”)
 
-We could add a comment to the header explaining the rationale for
-not providing a g_autoptr handler, so that at least we have it
-written down, and are more likely to remember it when it comes
-up again in future...
+Oops.
 
--- PMM
+> 
+> Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+> ---
+>   accel/hvf/hvf-accel-ops.c | 5 +++--
+>   target/i386/hvf/hvf.c     | 6 ++----
+>   2 files changed, 5 insertions(+), 6 deletions(-)
+> 
+> diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+> index 3e5feecd8a..e2cb8f202b 100644
+> --- a/accel/hvf/hvf-accel-ops.c
+> +++ b/accel/hvf/hvf-accel-ops.c
+> @@ -148,19 +148,20 @@ static int hvf_init_vcpu(CPUState *cpu)
+>       sigact.sa_handler = dummy_signal;
+>       sigaction(SIG_IPI, &sigact, NULL);
+>   
+> +#ifdef __aarch64__
+>       pthread_sigmask(SIG_BLOCK, NULL, &cpu->accel->unblock_ipi_mask);
+>       sigdelset(&cpu->accel->unblock_ipi_mask, SIG_IPI);
+>   
+> -#ifdef __aarch64__
+>       r = hv_vcpu_create(&cpu->accel->fd,
+>                          (hv_vcpu_exit_t **)&cpu->accel->exit, NULL);
+>   #else
+>       r = hv_vcpu_create(&cpu->accel->fd, HV_VCPU_DEFAULT);
+>   #endif
+>       assert_hvf_ok(r);
+> +#ifdef __aarch64__
+>       cpu->vcpu_dirty = true;
+
+Don't we want the ifdef *after* this line?
+
+> -
+>       cpu->accel->guest_debug_enabled = false;
+> +#endif
+>   
+>       return hvf_arch_init_vcpu(cpu);
+>   }
+> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+> index 16febbac48..2023a7bfbb 100644
+> --- a/target/i386/hvf/hvf.c
+> +++ b/target/i386/hvf/hvf.c
+> @@ -728,7 +728,8 @@ static int hvf_handle_vmexit(CPUState *cpu)
+>       uint64_t exit_qual = rvmcs(cpu->accel->fd, VMCS_EXIT_QUALIFICATION);
+>       uint32_t ins_len = (uint32_t)rvmcs(cpu->accel->fd,
+>                                          VMCS_EXIT_INSTRUCTION_LENGTH);
+> -
+> +    CPUX86State *env = &x86_cpu->env;
+> +    uint64_t rip = 0;
+>       uint64_t idtvec_info = rvmcs(cpu->accel->fd, VMCS_IDT_VECTORING_INFO);
+>       int ret = 0;
+>   
+> @@ -966,10 +967,7 @@ static int hvf_handle_vmexit(CPUState *cpu)
+>   
+>   int hvf_arch_vcpu_exec(CPUState *cpu)
+>   {
+> -    X86CPU *x86_cpu = X86_CPU(cpu);
+> -    CPUX86State *env = &x86_cpu->env;
+>       int ret = 0;
+> -    uint64_t rip = 0;
+>   
+>       if (hvf_process_events(cpu)) {
+>           return EXCP_HLT;
+
+Otherwise:
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
