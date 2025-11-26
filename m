@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38229D11196
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61FCED11196
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOM2M-0002lx-TG; Wed, 26 Nov 2025 15:22:50 -0500
+	id 1vOM29-0002Ql-JU; Wed, 26 Nov 2025 15:22:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM2L-0002gy-Ed
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:49 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM27-0002MV-1Y
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:35 -0500
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM2I-0002NO-BK
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:49 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM24-0002Kr-Hl
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:34 -0500
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47789cd2083so444175e9.2
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:22:45 -0800 (PST)
+ 5b1f17b1804b1-477619f8ae5so494175e9.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:22:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764188565; x=1764793365; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764188551; x=1764793351; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PZSAUqnvuevQAefUrk8Hx13fLywfY4qytxjtSoxjWic=;
- b=NkzwJIm33/0ea68RlSRNVftGlFvzt0DAAKTspihIEMzKD1dqz50SYcBwChpjo4GUCs
- IGLz3/UsIuqjhNNAKIasN4vlTjBttJukiCE3wDpgVxA4avrnPiZ6rKo5i6ya8MGsw0eu
- GNf96SoVwogG+bSB1fB0Q/f/IvXLQWtwfGTIna3RmQUFbFX4x88XQ6JpAbMJJ1M+nAu2
- YBlWVwYWP0yx/UVxpxDnnS63xe9N37eaTKeUmmPzWolTSdIk7uOIArBs6vpGQvEr7o1a
- MKOTP9Qoqg0oORoJCqqNVtpCyic8tmVjslr4kXqF+haVIPyAwR6FZE5GBfIKsMuWKKa0
- VrtA==
+ bh=VIPG/naiBj4JXek6sevzzf+dt9iCr5C8g6EGc2RUz7w=;
+ b=ndFSz1FNhmbqaFgjHpnbdbmqyMLvsCc2i1k1jc8VyUvqkRScn9IZCvIgIISWLzJ5FF
+ YwL9NRJCetB3Hk1iizW3giaWvn/4sMFFwD4xtbuO/oCR0lGPsA0PoA2N7rHR6aarmy9H
+ IzJpLV1eOA/tWVnf0M853ADCU7tPecp3PWlSosE+Bsayf7qVaFPxKQKyt64AbCBrY5AS
+ RzrUdqEdXgjvgFAHALd2U18kAv7BctBS/6GrkYWcsu3rs3IC7jaywuFkvWmudEmy8BAH
+ jvD4PdtsqDTnKByAN1sHuZDNKq6V1VOwtLJJ1XAdGRMEILphOOPTCa24JbFm5wATEhwj
+ TbSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764188565; x=1764793365;
+ d=1e100.net; s=20230601; t=1764188551; x=1764793351;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PZSAUqnvuevQAefUrk8Hx13fLywfY4qytxjtSoxjWic=;
- b=b5b8M8uoG1oCsRgQoZWPytF6JtUN1mwq9dLyZusfNReb3SOZcaywbOKmq9vb2J/tO7
- f0FtCpFNfS7oSVPCol0y/GXpBmcHqunzcgCKiZw1n6uj7GNHcP8pOqzTo/9MKRkRttJ6
- c715+TyhDS2os0M11cQ6f9sPoHYv2Ag/EjqSxE4qH6hBh/4yW6WVK9urRVwPSIwH7uDN
- itdxh4lT/Xnj61KVR16GczA8aovfhnPH0YK7nGT2qvrbaCoVNOlGPSn/bmLrOg/kHrVw
- vXNXboySH/0ht48Rlr5jBHgxQ3SFJ1rFl+5PNIfGLuYOieZlFJUbkfQU7AiBjvryg6VC
- ke9g==
-X-Gm-Message-State: AOJu0YxMz9rjgn+FrK97pYfYiAdibXhmChLLYuCucjXifI7eOZTCFmnN
- ATWk79ssn2BsBKGpWXpsSkoF6pwuAcBSNCcLqf5MVv3hdv3s0f0t2inykNS0torkonwsQAbh/J/
- Wl1lhWsSOxvyr
-X-Gm-Gg: ASbGncuE91SciKIwhk5DLTcQYGl7OQvBmiUmqzUMl5NYireeHLk4kjLvPIhgII+2Uoi
- 8HkIsAsaUzSu/8fTatiTxOxiPWu1ruuAAy3y29QRV6EAMvzYbey1wqRPrREOksDHRvt2/KB0phi
- WScn1P7vAove3fymRhwCN5Esrsvdlur9CO0B9Metvu+nqEnMKqGpYqRsIT2l+mLHc95s1NX4y3/
- 0aB0aovfQdh8Z2ZN+6PR710hkp7AC6epFtqw8rEBVoGKXRKZKFXjPIzd74+511jwUtShtKwy9p/
- eLc7R+3ZzpIGvlioXkCi1Tb0zLzlK/lfTn0VLRzAkyGul2Th8yAhe7FCS9IoMLY9lT35MdUiGk9
- 0fio0XLB6z3TWNUKVAVTLxudnw5YSNGv4mP1CalLIGNQ5l59bJioMS1wJ/T4Pv+D++FiOV1d8mt
- VHhhFgPqvDJVFiTJE1HCRITLvNi0CgaViSrP92iS2DLb/YpbQR3xo+6DVV7+7a
-X-Google-Smtp-Source: AGHT+IEqH5PPtlsz2rKIuhlqRdsiyW4YoqoaweVHL31FbSDBUnQh67Tt+Ddr20q/xiOiGZcfBHC9Lw==
-X-Received: by 2002:a05:600c:4691:b0:477:8a2a:1244 with SMTP id
- 5b1f17b1804b1-477c110e521mr211171625e9.11.1764188564570; 
- Wed, 26 Nov 2025 12:22:44 -0800 (PST)
+ bh=VIPG/naiBj4JXek6sevzzf+dt9iCr5C8g6EGc2RUz7w=;
+ b=wJR5lPNyqteJLisfUlMWLm/FecYIENC0BgQtjrw1D5wB2w7xdxcnKk1Xj5vF5+D+rn
+ Im6JKdjuT51s+hzYDCpo6BCVmzqmCsklerVltnz1yxLDcYH8OI6n1AVMYrBSBm8oSCc7
+ uO9zy1BBqgfcR6GQjRABrtZyulpV0mNAFzEloRmmjmBPYXYqY+vZec97C9Elo4G9/mmM
+ hhEr6tJ8WJDYYynD0spndKKcuPBXWeXKT3lGw4Ux9lxTYDNbMseZpzVsfJQODXdI5Hxe
+ qUUFTzC0h4DXzvfXnLgajjoOJLvmY/7ilxLqH35ff9J+G8/LslWQ8bXKyUUNZXTZ+Srj
+ ezoA==
+X-Gm-Message-State: AOJu0YwOju+V5UvsTK6Jgr1kaH2xpGaiYyBucjkbMgxbSZy+fA8Dc6gR
+ Pnl2a9WGTgJ6pBm8kUDNyDOEpvTyU56WFQL9E1YuZM7jZOEn5T/dQC6JFhwkh6kzGNjYnbsbH6O
+ HnYJy5vG2W0G9
+X-Gm-Gg: ASbGncsNDLnPoCn2ub4RTEYyAO8PR67fBi9Y0HYHKTCmiKLZjlytXGG/9k2nfHixOMg
+ RNAkZeDCFpvSCor/8bva5+6ykX1jUR6wacSQVa2r+Np7YB3XY7SrgSFq8+R9iLIJvRdcdujCtWs
+ I6OEmKXw07JEcW6au9CbmzdV8FVRR4oCWh6Ad9GgAxa+Lk3Ove3gdM8IpoSKDqZoRa2LovZ3ax5
+ BclR9Ss8AAD8h0bwetxv6sU7JwQpJXG0ULndPL0fZ0rEF34Gm0SgXcgzeSqN7LLzgDyqSZqxK0g
+ qH52tSbYVFBpsi3jljrbLAOC2dlXpeaPnRS4gB5RbX4YCC4p3ICWHRbiztBiFJB+6JS3pOK5sf7
+ 6vATMkhOEOWEKtHDeNEEGFn7M3kaxqwmksEJn2Pus3zR8KFAdXxIEnb+uhx8sAranyn/wXoSHJU
+ sCV1CER+eK0cvn6NLX9pHSvUamsfT4hP6vCZ4u3jtQG7eQfu+7jYyq7yGf2Veb
+X-Google-Smtp-Source: AGHT+IE+J4hkPc+qoDBzLlo50hXYN9XPtG+xb4Q3feL46FZeUSlPs/IpusCjFjCSzhOQ7W/cwQ0vJA==
+X-Received: by 2002:a05:600c:1994:b0:477:5aaa:57a6 with SMTP id
+ 5b1f17b1804b1-477c016e402mr186697295e9.10.1764188550847; 
+ Wed, 26 Nov 2025 12:22:30 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fa3a81sm43302273f8f.26.2025.11.26.12.22.43
+ ffacd0b85a97d-42cb7f49a7bsm42205519f8f.19.2025.11.26.12.22.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 26 Nov 2025 12:22:44 -0800 (PST)
+ Wed, 26 Nov 2025 12:22:30 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Helge Deller <deller@gmx.de>
-Subject: [PATCH-for-11.0 v3 06/22] target/hppa: Use big-endian variant of
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+Subject: [PATCH-for-11.0 v3 04/22] target/rx: Use little-endian variant of
  cpu_ld/st_data*()
-Date: Wed, 26 Nov 2025 21:21:42 +0100
-Message-ID: <20251126202200.23100-7-philmd@linaro.org>
+Date: Wed, 26 Nov 2025 21:21:40 +0100
+Message-ID: <20251126202200.23100-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251126202200.23100-1-philmd@linaro.org>
 References: <20251126202200.23100-1-philmd@linaro.org>
@@ -104,14 +104,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We only build the HPPA target using big endianness order,
-therefore the cpu_ld/st_data*() definitions expand to the big
-endian declarations. Use the explicit big-endian variants.
+We only build the RX target using little endianness order,
+therefore the cpu_ld/st_data*() definitions expand to the little
+endian declarations. Use the explicit little-endian variants.
 
 Mechanical change running:
 
-  $ tgt=hppa; \
-    end=be; \
+  $ tgt=rx; \
+    end=le; \
     for op in data mmuidx_ra; do \
       for ac in uw sw l q; do \
         sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
@@ -126,161 +126,75 @@ Mechanical change running:
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hppa/op_helper.c | 44 ++++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ target/rx/helper.c    | 14 +++++++-------
+ target/rx/op_helper.c |  6 +++---
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
-index 0458378abb2..65faf03cd0a 100644
---- a/target/hppa/op_helper.c
-+++ b/target/hppa/op_helper.c
-@@ -107,7 +107,7 @@ static void do_stby_b(CPUHPPAState *env, target_ulong addr, target_ulong val,
-         cpu_stb_data_ra(env, addr, val, ra);
-         break;
-     case 2:
--        cpu_stw_data_ra(env, addr, val, ra);
-+        cpu_stw_be_data_ra(env, addr, val, ra);
-         break;
-     case 1:
-         /* The 3 byte store must appear atomic.  */
-@@ -115,11 +115,11 @@ static void do_stby_b(CPUHPPAState *env, target_ulong addr, target_ulong val,
-             atomic_store_mask32(env, addr, val, 0x00ffffffu, ra);
+diff --git a/target/rx/helper.c b/target/rx/helper.c
+index e9a7aaf610d..83cd491eb4a 100644
+--- a/target/rx/helper.c
++++ b/target/rx/helper.c
+@@ -68,10 +68,10 @@ void rx_cpu_do_interrupt(CPUState *cs)
+         qemu_log_mask(CPU_LOG_INT, "fast interrupt raised\n");
+     } else if (cpu_test_interrupt(cs, CPU_INTERRUPT_HARD)) {
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, save_psw);
++        cpu_stl_le_data(env, env->isp, save_psw);
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, env->pc);
+-        env->pc = cpu_ldl_data(env, env->intb + env->ack_irq * 4);
++        cpu_stl_le_data(env, env->isp, env->pc);
++        env->pc = cpu_ldl_le_data(env, env->intb + env->ack_irq * 4);
+         env->psw_ipl = env->ack_ipl;
+         cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+         qemu_set_irq(env->ack, env->ack_irq);
+@@ -82,14 +82,14 @@ void rx_cpu_do_interrupt(CPUState *cs)
+         const char *expname = "unknown exception";
+ 
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, save_psw);
++        cpu_stl_le_data(env, env->isp, save_psw);
+         env->isp -= 4;
+-        cpu_stl_data(env, env->isp, env->pc);
++        cpu_stl_le_data(env, env->isp, env->pc);
+ 
+         if (vec < 0x100) {
+-            env->pc = cpu_ldl_data(env, 0xffffff80 + vec * 4);
++            env->pc = cpu_ldl_le_data(env, 0xffffff80 + vec * 4);
          } else {
-             cpu_stb_data_ra(env, addr, val >> 16, ra);
--            cpu_stw_data_ra(env, addr + 1, val, ra);
-+            cpu_stw_be_data_ra(env, addr + 1, val, ra);
+-            env->pc = cpu_ldl_data(env, env->intb + (vec & 0xff) * 4);
++            env->pc = cpu_ldl_le_data(env, env->intb + (vec & 0xff) * 4);
          }
-         break;
-     default:
--        cpu_stl_data_ra(env, addr, val, ra);
-+        cpu_stl_be_data_ra(env, addr, val, ra);
-         break;
-     }
- }
-@@ -132,7 +132,7 @@ static void do_stdby_b(CPUHPPAState *env, target_ulong addr, uint64_t val,
-         cpu_stb_data_ra(env, addr, val, ra);
-         break;
-     case 6:
--        cpu_stw_data_ra(env, addr, val, ra);
-+        cpu_stw_be_data_ra(env, addr, val, ra);
-         break;
-     case 5:
-         /* The 3 byte store must appear atomic.  */
-@@ -140,11 +140,11 @@ static void do_stdby_b(CPUHPPAState *env, target_ulong addr, uint64_t val,
-             atomic_store_mask32(env, addr, val, 0x00ffffffu, ra);
-         } else {
-             cpu_stb_data_ra(env, addr, val >> 16, ra);
--            cpu_stw_data_ra(env, addr + 1, val, ra);
-+            cpu_stw_be_data_ra(env, addr + 1, val, ra);
-         }
-         break;
-     case 4:
--        cpu_stl_data_ra(env, addr, val, ra);
-+        cpu_stl_be_data_ra(env, addr, val, ra);
-         break;
-     case 3:
-         /* The 5 byte store must appear atomic.  */
-@@ -152,7 +152,7 @@ static void do_stdby_b(CPUHPPAState *env, target_ulong addr, uint64_t val,
-             atomic_store_mask64(env, addr, val, 0x000000ffffffffffull, 5, ra);
-         } else {
-             cpu_stb_data_ra(env, addr, val >> 32, ra);
--            cpu_stl_data_ra(env, addr + 1, val, ra);
-+            cpu_stl_be_data_ra(env, addr + 1, val, ra);
-         }
-         break;
-     case 2:
-@@ -160,8 +160,8 @@ static void do_stdby_b(CPUHPPAState *env, target_ulong addr, uint64_t val,
-         if (parallel) {
-             atomic_store_mask64(env, addr, val, 0x0000ffffffffffffull, 6, ra);
-         } else {
--            cpu_stw_data_ra(env, addr, val >> 32, ra);
--            cpu_stl_data_ra(env, addr + 2, val, ra);
-+            cpu_stw_be_data_ra(env, addr, val >> 32, ra);
-+            cpu_stl_be_data_ra(env, addr + 2, val, ra);
-         }
-         break;
-     case 1:
-@@ -170,12 +170,12 @@ static void do_stdby_b(CPUHPPAState *env, target_ulong addr, uint64_t val,
-             atomic_store_mask64(env, addr, val, 0x00ffffffffffffffull, 7, ra);
-         } else {
-             cpu_stb_data_ra(env, addr, val >> 48, ra);
--            cpu_stw_data_ra(env, addr + 1, val >> 32, ra);
--            cpu_stl_data_ra(env, addr + 3, val, ra);
-+            cpu_stw_be_data_ra(env, addr + 1, val >> 32, ra);
-+            cpu_stl_be_data_ra(env, addr + 3, val, ra);
-         }
-         break;
-     default:
--        cpu_stq_data_ra(env, addr, val, ra);
-+        cpu_stq_be_data_ra(env, addr, val, ra);
-         break;
-     }
- }
-@@ -211,12 +211,12 @@ static void do_stby_e(CPUHPPAState *env, target_ulong addr, target_ulong val,
-         if (parallel) {
-             atomic_store_mask32(env, addr - 3, val, 0xffffff00u, ra);
-         } else {
--            cpu_stw_data_ra(env, addr - 3, val >> 16, ra);
-+            cpu_stw_be_data_ra(env, addr - 3, val >> 16, ra);
-             cpu_stb_data_ra(env, addr - 1, val >> 8, ra);
-         }
-         break;
-     case 2:
--        cpu_stw_data_ra(env, addr - 2, val >> 16, ra);
-+        cpu_stw_be_data_ra(env, addr - 2, val >> 16, ra);
-         break;
-     case 1:
-         cpu_stb_data_ra(env, addr - 1, val >> 24, ra);
-@@ -239,8 +239,8 @@ static void do_stdby_e(CPUHPPAState *env, target_ulong addr, uint64_t val,
-             atomic_store_mask64(env, addr - 7, val,
-                                 0xffffffffffffff00ull, 7, ra);
-         } else {
--            cpu_stl_data_ra(env, addr - 7, val >> 32, ra);
--            cpu_stw_data_ra(env, addr - 3, val >> 16, ra);
-+            cpu_stl_be_data_ra(env, addr - 7, val >> 32, ra);
-+            cpu_stw_be_data_ra(env, addr - 3, val >> 16, ra);
-             cpu_stb_data_ra(env, addr - 1, val >> 8, ra);
-         }
-         break;
-@@ -250,8 +250,8 @@ static void do_stdby_e(CPUHPPAState *env, target_ulong addr, uint64_t val,
-             atomic_store_mask64(env, addr - 6, val,
-                                 0xffffffffffff0000ull, 6, ra);
-         } else {
--            cpu_stl_data_ra(env, addr - 6, val >> 32, ra);
--            cpu_stw_data_ra(env, addr - 2, val >> 16, ra);
-+            cpu_stl_be_data_ra(env, addr - 6, val >> 32, ra);
-+            cpu_stw_be_data_ra(env, addr - 2, val >> 16, ra);
-         }
-         break;
-     case 5:
-@@ -260,24 +260,24 @@ static void do_stdby_e(CPUHPPAState *env, target_ulong addr, uint64_t val,
-             atomic_store_mask64(env, addr - 5, val,
-                                 0xffffffffff000000ull, 5, ra);
-         } else {
--            cpu_stl_data_ra(env, addr - 5, val >> 32, ra);
-+            cpu_stl_be_data_ra(env, addr - 5, val >> 32, ra);
-             cpu_stb_data_ra(env, addr - 1, val >> 24, ra);
-         }
-         break;
-     case 4:
--        cpu_stl_data_ra(env, addr - 4, val >> 32, ra);
-+        cpu_stl_be_data_ra(env, addr - 4, val >> 32, ra);
-         break;
-     case 3:
-         /* The 3 byte store must appear atomic.  */
-         if (parallel) {
-             atomic_store_mask32(env, addr - 3, val >> 32, 0xffffff00u, ra);
-         } else {
--            cpu_stw_data_ra(env, addr - 3, val >> 48, ra);
-+            cpu_stw_be_data_ra(env, addr - 3, val >> 48, ra);
-             cpu_stb_data_ra(env, addr - 1, val >> 40, ra);
-         }
-         break;
-     case 2:
--        cpu_stw_data_ra(env, addr - 2, val >> 48, ra);
-+        cpu_stw_be_data_ra(env, addr - 2, val >> 48, ra);
-         break;
-     case 1:
-         cpu_stb_data_ra(env, addr - 1, val >> 56, ra);
+ 
+         if (vec == 30) {
+diff --git a/target/rx/op_helper.c b/target/rx/op_helper.c
+index 2b190a4b2cf..ca3e9e85fc7 100644
+--- a/target/rx/op_helper.c
++++ b/target/rx/op_helper.c
+@@ -217,20 +217,20 @@ void helper_scmpu(CPURXState *env)
+ static uint32_t (* const cpu_ldufn[])(CPUArchState *env,
+                                      abi_ptr ptr,
+                                      uintptr_t retaddr) = {
+-    cpu_ldub_data_ra, cpu_lduw_data_ra, cpu_ldl_data_ra,
++    cpu_ldub_data_ra, cpu_lduw_le_data_ra, cpu_ldl_le_data_ra,
+ };
+ 
+ static uint32_t (* const cpu_ldfn[])(CPUArchState *env,
+                                      abi_ptr ptr,
+                                      uintptr_t retaddr) = {
+-    cpu_ldub_data_ra, cpu_lduw_data_ra, cpu_ldl_data_ra,
++    cpu_ldub_data_ra, cpu_lduw_le_data_ra, cpu_ldl_le_data_ra,
+ };
+ 
+ static void (* const cpu_stfn[])(CPUArchState *env,
+                                  abi_ptr ptr,
+                                  uint32_t val,
+                                  uintptr_t retaddr) = {
+-    cpu_stb_data_ra, cpu_stw_data_ra, cpu_stl_data_ra,
++    cpu_stb_data_ra, cpu_stw_le_data_ra, cpu_stl_le_data_ra,
+ };
+ 
+ void helper_sstr(CPURXState *env, uint32_t sz)
 -- 
 2.51.0
 
