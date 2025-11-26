@@ -4,57 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E70D10F28
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 16:46:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31744D11188
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 16:56:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOIdx-00019r-2J; Wed, 26 Nov 2025 11:45:25 -0500
+	id 1vOIoA-0004bC-Hy; Wed, 26 Nov 2025 11:55:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1vOIcu-0000os-TC; Wed, 26 Nov 2025 11:44:28 -0500
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vOIo6-0004aD-GY
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 11:55:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1vOIcj-0003RG-Js; Wed, 26 Nov 2025 11:44:17 -0500
-Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
- by Atcsqr.andestech.com with ESMTPS id 5AQGhavG005668
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Nov 2025 00:43:36 +0800 (+08)
- (envelope-from alvinga@andestech.com)
-Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS31.andestech.com
- (10.0.1.89) with Microsoft SMTP Server id 14.3.498.0;
- Thu, 27 Nov 2025 00:43:36 +0800
-To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <vivahavey@gmail.com>, Alvin Chang
- <alvinga@andestech.com>, Yu-Ming Chang <yumin686@andestech.com>
-Subject: [PATCH v2 2/2] target/riscv: Simpily support versioning of debug
- trigger module
-Date: Thu, 27 Nov 2025 00:43:29 +0800
-Message-ID: <20251126164329.2157287-3-alvinga@andestech.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251126164329.2157287-1-alvinga@andestech.com>
-References: <20251126164329.2157287-1-alvinga@andestech.com>
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vOIo4-00065t-2b
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 11:55:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764176149;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=aJLUpd+rJEXzrKsCKI2u5XMM3fXsKV4AkeEBKQyzh68=;
+ b=XKAVvEB/YRPqnokgPZHIGgZC37KDM/s0tGCnVuKhYrryDJQdBzwm5o73gqT5h/dthHJFwN
+ LDdnQoNLopn/1kLfEeN2l6NrkwNMPkAXAL5fdoikZpRufhL1DjmvF0BpkJM/6EHL2y5YZb
+ k4S7foUyeVGQ8kXBk5OomWApWx/F7Pg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-451-7FNsNhP9PWm84XjLUYu8sw-1; Wed, 26 Nov 2025 11:55:47 -0500
+X-MC-Unique: 7FNsNhP9PWm84XjLUYu8sw-1
+X-Mimecast-MFC-AGG-ID: 7FNsNhP9PWm84XjLUYu8sw_1764176146
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-477563a0c75so37427445e9.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 08:55:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764176146; x=1764780946; darn=nongnu.org;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=aJLUpd+rJEXzrKsCKI2u5XMM3fXsKV4AkeEBKQyzh68=;
+ b=FPj2xiOWKqIa7nGUaXa6YNaeerkJ0apl17DEguwwMik8aqyTnaKygAxuQQWD3zKoNN
+ FO1mi3CD4TfzMNn4uTvkKTGx2+ePGce4R5QoaW8J8gjF0qrGW2l/D+EXMo6TV0tfTGM+
+ 2jntxRhR0spKGSK9+susnBW/arazDIzMEzFki/i9ChzbJ4mfwMVgXAGB0Uk2cnIKqg/+
+ 5qOpPmFspwLr9LO8XyMR2NT8n/TlC2w6HuqV6hNLFkKVhTFLOQnF/x0MX8n2f6tXzPmI
+ 68VLaseBvrSxlTJ5PKhioOMWMPebybnzyRt+rIcFIjso/Bfz2ii3eieHmTzCtQ59gYgd
+ +Ylg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764176146; x=1764780946;
+ h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+ :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aJLUpd+rJEXzrKsCKI2u5XMM3fXsKV4AkeEBKQyzh68=;
+ b=i3jg7W7ZhaCMI7dPUht7tshB7VPFSyZeH/ER7YS0FMqHJsltMV73lVYYKYM0oY4wER
+ gNcIQiJwLgUbaD1AhyBob691bAE8qjELP9K1CeNez+X43mJGiy/hIYW6oGASk4oJU7Vw
+ qyHJ/9wUuaEwwtfEIaECSe7ZF4Gpht/2EGyYiN+BTGLhL+kWeTTUQDybdzxR8ND3fBfZ
+ MrPu9njSFYZdwMUvvifjmjj5IEBEPArT2s4Js/cCjw35M5RC9ddJ/mcYYTfWAr/WdVXq
+ JwwGsL6nzCpV6uch4hfkaAmpcpoWnob8tu1k0dz1FjwQZNlYoMvFm9piK6hYb+FTXh+2
+ 5bSA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMMD1x/mrVLOLFW6KK8dxd655VMH//irgT6II7WCFCtc13j0yyXJjt2FNTCauQrKHa6z1/8B536jdb@nongnu.org
+X-Gm-Message-State: AOJu0Yz/LpdbnfAv77rNzn6C6EguZgOdHV2XMBCKThztkoGloWzm9aRh
+ TfH3+NcZ6mtbbfbHzNQtUWnMqPPIsSmbSbNa7pc0kVdWUv++gaIc/HeOMMaswW9aklBA/oHYgKT
+ RzAIEmWamPY4xx+T2JgLgOgyobCQdaz+Qw23DvavXnj7O2DRKR0pNowcyZ433tHBH
+X-Gm-Gg: ASbGncubGq1V9mF5q/63ANqwD07GrubOq/JUKJMmDEoKYYRDodgEQuPu/uksWPRBrzK
+ DC2u0inbAuFvpMHSmi/KKpx2fpE8DEWLGXeHDBUTPtCSFECatVB3GhkdyWeVTbyUCgpm5fJhIYn
+ JUAwYkIsTjUQ5t+gUbu81s9YToNls9NBlEbbGlUgFK01M4hjTC5DDqEPuK9GYdi7F9PWvE7+Aux
+ 5EVxpbsOhxjDDBjo0cJFlIiE6ixo9qcgOAYPG7cWdhyNCbYCnKlTKsKsaZSpRA4g8XL+aN003OT
+ QR7CSUmzkoRDPvxYM7UuKFecHVkuotMbyMxL31IYFgoBoixrHWqhE7bnXEiHlb20tkZ+t8xtMfZ
+ tkPgEhnoJweVt9ursjg4dZf2/PisdBM0hra6j5W6CMR/vn3UYEqKaL8MOjw==
+X-Received: by 2002:a05:600c:4f41:b0:477:942:7521 with SMTP id
+ 5b1f17b1804b1-47904ae2429mr84466505e9.14.1764176146151; 
+ Wed, 26 Nov 2025 08:55:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF09IBIccivEpbmV01U+C4pbSSmmaQjR8iJhr0O/0dLP0/6/iTi6+8UUCpdI2Cv+sF9wRrZvQ==
+X-Received: by 2002:a05:600c:4f41:b0:477:942:7521 with SMTP id
+ 5b1f17b1804b1-47904ae2429mr84466125e9.14.1764176145699; 
+ Wed, 26 Nov 2025 08:55:45 -0800 (PST)
+Received: from rh (p200300f6af35a800883b071bf1f3e4b6.dip0.t-ipconnect.de.
+ [2003:f6:af35:a800:883b:71b:f1f3:e4b6])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4790adfd181sm54145695e9.14.2025.11.26.08.55.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Nov 2025 08:55:45 -0800 (PST)
+Date: Wed, 26 Nov 2025 17:55:44 +0100 (CET)
+From: Sebastian Ott <sebott@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ peter.maydell@linaro.org, cohuck@redhat.com, maz@kernel.org, 
+ oliver.upton@linux.dev, gshan@redhat.com, ddutile@redhat.com, 
+ peterx@redhat.com, philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH v3 07/11] target/arm/cpu: Implement hide_reg callback()
+In-Reply-To: <20251125100859.506228-8-eric.auger@redhat.com>
+Message-ID: <55899f12-4452-d788-c2e5-8716173dc515@redhat.com>
+References: <20251125100859.506228-1-eric.auger@redhat.com>
+ <20251125100859.506228-8-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.15.183]
-X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 5AQGhavG005668
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; format=flowed; charset=US-ASCII
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_DYNAMIC=0.982, SPF_PASS=-0.001, TVD_RCVD_IP=0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,139 +119,14 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alvin Chang <alvinga@andestech.com>
-From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To support multiple versions of debug specification, we have added
-"debug-1.0" CPU property. Now the debug trigger module inspects this
-property to determine the supported trigger types by the CPU. In this
-commit we validate written trigger type with CPU debug version. For
-example, the debug specification v0.13 does not support mcontrol6, and
-the indended tdata_csr_write() on tdata1 with type=mcontrol6 will be
-ignored.
+On Tue, 25 Nov 2025, Eric Auger wrote:
+> Check if the register is hidden.
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-If debug v1.0 is selected, the default trigger type is mcontrol6
-instead of legacy mcontrol.
-
-Signed-off-by: Alvin Chang <alvinga@andestech.com>
-Reviewed-by: Yu-Ming Chang <yumin686@andestech.com>
----
- target/riscv/debug.c | 56 +++++++++++++++++++++++++++++++++++++++++---
- target/riscv/debug.h |  1 +
- 2 files changed, 54 insertions(+), 3 deletions(-)
-
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 5664466..5163193 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -64,6 +64,26 @@ static tdata_avail tdata_mapping[TRIGGER_TYPE_NUM] = {
-     [TRIGGER_TYPE_UNAVAIL] = { true, true, true }
- };
- 
-+/* Valid trigger types supported by debug specification v0.13 */
-+static bool valid_trigger_type_v013[TRIGGER_TYPE_NUM] = {
-+    [TRIGGER_TYPE_AD_MATCH] = true,
-+    [TRIGGER_TYPE_INST_CNT] = true,
-+    [TRIGGER_TYPE_INT] = true,
-+    [TRIGGER_TYPE_EXCP] = true,
-+    [TRIGGER_TYPE_UNAVAIL] = true
-+};
-+
-+/* Valid trigger types supported by debug specification v1.0 */
-+static bool valid_trigger_type_v100[TRIGGER_TYPE_NUM] = {
-+    [TRIGGER_TYPE_AD_MATCH] = true,
-+    [TRIGGER_TYPE_INST_CNT] = true,
-+    [TRIGGER_TYPE_INT] = true,
-+    [TRIGGER_TYPE_EXCP] = true,
-+    [TRIGGER_TYPE_AD_MATCH6] = true,
-+    [TRIGGER_TYPE_EXT_SRC] = true,
-+    [TRIGGER_TYPE_DISABLED] = true
-+};
-+
- /* only breakpoint size 1/2/4/8 supported */
- static int access_size[SIZE_NUM] = {
-     [SIZE_ANY] = 0,
-@@ -95,6 +115,20 @@ static inline target_ulong get_trigger_type(CPURISCVState *env,
-     return extract_trigger_type(env, env->tdata1[trigger_index]);
- }
- 
-+static inline bool validate_trigger_type(CPURISCVState *env,
-+                                         target_ulong trigger_type)
-+{
-+    if (trigger_type >= TRIGGER_TYPE_NUM) {
-+        return false;
-+    }
-+
-+    if (riscv_cpu_cfg(env)->debug_1_00) {
-+        return valid_trigger_type_v100[trigger_type];
-+    }
-+
-+    return valid_trigger_type_v013[trigger_type];
-+}
-+
- static trigger_action_t get_trigger_action(CPURISCVState *env,
-                                            target_ulong trigger_index)
- {
-@@ -889,6 +923,13 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
-         trigger_type = get_trigger_type(env, env->trigger_cur);
-     }
- 
-+    if (!validate_trigger_type(env, trigger_type)) {
-+        /* Since the tdada1.type is WARL, we simpily ignore write here. */
-+        qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n",
-+                      trigger_type);
-+        return;
-+    }
-+
-     switch (trigger_type) {
-     case TRIGGER_TYPE_AD_MATCH:
-         type2_reg_write(env, env->trigger_cur, tdata_index, val);
-@@ -918,8 +959,11 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
- target_ulong tinfo_csr_read(CPURISCVState *env)
- {
-     /* assume all triggers support the same types of triggers */
--    return BIT(TRIGGER_TYPE_AD_MATCH) |
--           BIT(TRIGGER_TYPE_AD_MATCH6);
-+    if (riscv_cpu_cfg(env)->debug_1_00) {
-+        return BIT(TRIGGER_TYPE_AD_MATCH) | BIT(TRIGGER_TYPE_AD_MATCH6);
-+    }
-+
-+    return BIT(TRIGGER_TYPE_AD_MATCH);
- }
- 
- void riscv_cpu_debug_excp_handler(CPUState *cs)
-@@ -1056,9 +1100,15 @@ void riscv_trigger_realize(CPURISCVState *env)
- 
- void riscv_trigger_reset_hold(CPURISCVState *env)
- {
--    target_ulong tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH, 0, 0);
-+    target_ulong tdata1;
-     int i;
- 
-+    if (riscv_cpu_cfg(env)->debug_1_00) {
-+        tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH6, 0, 0);
-+    } else {
-+        tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH, 0, 0);
-+    }
-+
-     /* init to type 2 triggers */
-     for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-         /*
-diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-index f76b8f9..0127cb9 100644
---- a/target/riscv/debug.h
-+++ b/target/riscv/debug.h
-@@ -43,6 +43,7 @@ typedef enum {
-     TRIGGER_TYPE_AD_MATCH6 = 6,     /* new address/data match trigger */
-     TRIGGER_TYPE_EXT_SRC = 7,       /* external source trigger */
-     TRIGGER_TYPE_UNAVAIL = 15,      /* trigger exists, but unavailable */
-+    TRIGGER_TYPE_DISABLED = 15,     /* trigger exists, but disabled */
-     TRIGGER_TYPE_NUM
- } trigger_type_t;
- 
--- 
-2.43.0
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
 
 
