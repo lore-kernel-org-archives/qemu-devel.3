@@ -4,80 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9BED1039A
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 09:04:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10000D10399
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 09:17:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOBRg-0005Qu-NI; Wed, 26 Nov 2025 04:04:16 -0500
+	id 1vOBe7-0003sG-4r; Wed, 26 Nov 2025 04:17:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <k.semichastnov@syntacore.com>)
- id 1vOBRe-0005KV-UZ; Wed, 26 Nov 2025 04:04:15 -0500
-Received: from m.syntacore.com ([178.249.69.228])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <k.semichastnov@syntacore.com>)
- id 1vOBRa-0008FT-FL; Wed, 26 Nov 2025 04:04:12 -0500
-Received: from MRN-SC-KSMG-01.corp.syntacore.com (localhost [127.0.0.1])
- by m.syntacore.com (Postfix) with ESMTP id 5795C1A0003;
- Wed, 26 Nov 2025 09:04:01 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 m.syntacore.com 5795C1A0003
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com; s=m;
- t=1764147841; bh=kB4n1yI0v52Phsj6kNoj3VF5+RhkooRR5y7nD3A9gdc=;
- h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:From;
- b=FS7bNrZSDdfCoLTxEbGeuf1QlRkKRVRMuSKUgz/44K6AdP/Vk5UqEaZX5pZYdFUDe
- Y7BTSS1XrZGOBhmgQMR9Zt18MZV1d3a5QUR6/4XebCP7/HE38J+i7axidUsJ1r+9UP
- JJi/BfKvg50nWERfPKDFEmbe1kwRUWJCA/2NZiVUMBBCPhjLYUY1vek1ExA084KuQm
- UpMlcn39mqJ0PVkzcJ7xDWlHltK3uYdih6jXotA+pLNYCy1oPYxq1w7dhOqFn6qNsF
- ucs64yQtcrJqfcxJ950Q91gU9/BgfkmGcgCvH8YiFIZKYLfAuS0Mk4O0/24gPag5jc
- Ql1cmepF8jLiw==
-Received: from S-SC-EXCH-01.corp.syntacore.com (exchange.syntacore.com
- [10.76.202.20])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by m.syntacore.com (Postfix) with ESMTPS;
- Wed, 26 Nov 2025 09:04:00 +0000 (UTC)
-Received: from [10.30.18.170] (10.30.18.170) by
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Wed, 26 Nov 2025 12:03:18 +0300
-Message-ID: <cfde73ab-c9aa-4cef-a1ad-5a32d2a33261@syntacore.com>
-Date: Wed, 26 Nov 2025 12:03:59 +0300
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vOBdy-0003o6-Bh
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 04:16:58 -0500
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1vOBdv-0001s8-BN
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 04:16:58 -0500
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-b9a5b5b47bfso5379289a12.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 01:16:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1764148613; x=1764753413; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CJiBJyD+EKlH9P23zr7fIV9G9RXve7uf9tA7ZQIquFQ=;
+ b=Gq+YMxP9XN52stgR8ShMSJjPbXcU7qQu3HaYyXKMrem7ykZCBGBtpDmgZ3zsi1umYX
+ PhblqJT/LAv9jaoA+jQbUsDBEam1h9RUM1XJTyPsRXMhat0WIb/Ifax/MiqpvdKglpC0
+ WLibaG+ZwYPOPSeYRyy8Xpl4cjqw1yCXVb6YBkBAZ4rnPGUMiCcpBTxM+3lFysLB9IEZ
+ Rd25kbC9Hs6jRjlHRO73tCqvBmgu6y7In60SFj0L1kScQ/CsnxaUO9puJTgpxI6ja/n+
+ 3W454CsT8+r8ygyL+b2dcbeS9pLxmAYVpUEBfcYe1L3uI59yLu/NuOzVQHd5qoK6ce7o
+ alPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764148613; x=1764753413;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CJiBJyD+EKlH9P23zr7fIV9G9RXve7uf9tA7ZQIquFQ=;
+ b=qea8HnHJs53uS24dJcUnmNI+2z3wcLZd3qtxQHtJdpjOjEcMCMsIH8oKj5Ug2y2mnH
+ xRaGSD0ZJCJsU/aywTukS7dXdaq+fshmrY0W9lL1YnBMIKwjcs16qTOtMbEeOizoqO33
+ ck2bMMNkll+3ToYWW+/ZmaiYmf/hFXvNDe+uEdw5KKC9KUFGE+FJbdm+arPEKykAvssB
+ 75yQ7tx2VKbpwRPM2jY6usBlbGwS/75DCY+19qEhx9WHzkdaX+FP0dv1OS+VEWzkMmlQ
+ HG9px3MyeyDLf/Up2N0UjYEeMx5ABKUUjOdrtcXS2EynHo69TvQ0bvG758FQCk84aaGj
+ OkuA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUg8IuEFbMFrkDdSJqJ9XZXcfSUJhih062sE87UN1J7UWVBbdg8k9l6iSoEL17t9NL93nrgwgbZHIwK@nongnu.org
+X-Gm-Message-State: AOJu0YzTHBYLnkzc/4gB3+bQzYMQVhf1Fs1LzWJZTi8I2cnoyE2TnO3a
+ ofLcGzEu+qKXhFTadgFw1YuzqDyXosJ/wLy6C6QSfU7f4O1oYJCR1HFhzbR98+havpI=
+X-Gm-Gg: ASbGncvhvjsBIN1ftUw6Cthm06HBzr1Q3cbXpjjBoAiiXEhXmx84soGzZ25bkO20Yzj
+ ucW52jvDqehDs+lI2M1vqviId+2jeOa2is2T00qEGwViDAWH/f4hRvUUDTjegNizNDHw+3pEsFl
+ 9DAmqAgzQcqgNBBoYJK/Uaxj9/wD1/2mfw47MEDLrvKfItxzf5koGH/s2/OTjGAGIZcU1A1QzRC
+ 6KAZAHzI5hsPB/wUgzHHS+wmysDNwd3IfkElaeKIQ6Pt6gpSQK1FOFUY9BJdpmTHFRv0Ih8kA1o
+ 0nmHH508WFf/1sja1fKkanMneTHW+3zD2cZFg0Mj+nUkTaFuLtq53dzV7y3ifE0wwHvllRUxtbS
+ 4ql/smJZLcQoYUQbc48pqhQmZXLqTzAsuAtrSAFIlLfYxj4jwDPO1lgkf6kYMfVFSv6ThDK27Y6
+ xYpGT7/hZalgB2y46VyHKIV60PgQ==
+X-Google-Smtp-Source: AGHT+IHVPI+0tuGT8VHvL0O0YiOPAzUHgynt0s1wpUriuIVK9rFte6UGr1ATJDyH6TN83PYzmAzubw==
+X-Received: by 2002:a05:7301:a08:b0:2a4:5129:feaf with SMTP id
+ 5a478bee46e88-2a719560b71mr9084918eec.10.1764148613415; 
+ Wed, 26 Nov 2025 01:16:53 -0800 (PST)
+Received: from [192.168.68.110] ([179.133.97.212])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2a6fc38a66bsm69332364eec.1.2025.11.26.01.16.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 26 Nov 2025 01:16:53 -0800 (PST)
+Message-ID: <fa118b78-681e-4e32-bc1c-98375a268a97@ventanamicro.com>
+Date: Wed, 26 Nov 2025 06:16:48 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/17] hw/riscv: add e-trace message helpers
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- <qemu-devel@nongnu.org>
-CC: <qemu-riscv@nongnu.org>, <alistair.francis@wdc.com>,
- <liwei1518@gmail.com>, <zhiwei_liu@linux.alibaba.com>, <palmer@dabbelt.com>
-References: <20251111114656.2285048-1-dbarboza@ventanamicro.com>
- <20251111114656.2285048-7-dbarboza@ventanamicro.com>
+Subject: Re: [PATCH-for-11.0 v2 04/12] target/riscv: Use little-endian variant
+ of cpu_ld/st_data*() for vector
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20251126075003.4826-1-philmd@linaro.org>
+ <20251126075003.4826-5-philmd@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-From: Konstantin Semichastnov <k.semichastnov@syntacore.com>
-In-Reply-To: <20251111114656.2285048-7-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.30.18.170]
-X-ClientProxiedBy: S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) To
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20)
-X-KSMG-AntiPhishing: not scanned, disabled by settings
-X-KSMG-AntiSpam-Interceptor-Info: not scanned
-X-KSMG-AntiSpam-Status: not scanned, disabled by settings
-X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310,
- bases: 2025/11/26 05:52:00 #27975606
-X-KSMG-AntiVirus-Status: NotDetected, skipped
-X-KSMG-LinksScanning: NotDetected
-X-KSMG-Message-Action: skipped
-X-KSMG-Rule-ID: 5
-Received-SPF: pass client-ip=178.249.69.228;
- envelope-from=k.semichastnov@syntacore.com; helo=m.syntacore.com
+In-Reply-To: <20251126075003.4826-5-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,262 +114,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 11/11/25 14:46, Daniel Henrique Barboza wrote:
-> Before making the trace encoder writing into the RAM sink we need a way
-> to encode the messages/packets. The encoding is LSB (least significant
-> bit) based. The doc "Efficient Trace for RISC-V", Chapter 7, mentions:
+On 11/26/25 4:49 AM, Philippe Mathieu-Daudé wrote:
+> RISC-V vector "elements are simply packed in order from
+> the least-signicant to most-signicant bits of the vector
+> register" [*] which is little endianness, therefore the
+> cpu_ld/st_data*() definitions expand to the little endian
+> declarations. Use the explicit little-endian variants.
 > 
-> "The remainder of this section describes the contents of the payload
-> portion which should be independent of the infrastructure. In each
-> table, the fields are listed in transmission order: first field in
-> the table is transmitted first, and multi-bit fields are transmitted
-> LSB first."
+> [*] RISC-V "V" Vector Extension v1.0
 > 
-> The "RISC-V Trace Control Interface Specification" docs, Chapter 7,
-> states when talking about the Trace RAM Sink:
-> 
-> "Trace data is placed in memory in LSB order (first byte of trace
-> packet/data is placed on LSB)."
-> 
-> This means that the LSB encoding must be used to write into the RAM Sink
-> memory, which is our goal.
-> 
-> The design we're going for is to have all these encoder helpers, along
-> with the message formats, in a separated file. The trace encoder will
-> make use of these helpers to blindly write a byte array with the packet
-> desired, and then write it as is in the RAM Sink.
-> 
-> We'll start by modeling the synchronisation packet first, adding more
-> formats as we increment the Trace Encoder capabilities.
-> 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/riscv/meson.build         |  3 +-
->   hw/riscv/rv-trace-messages.c | 94 ++++++++++++++++++++++++++++++++++++
->   hw/riscv/rv-trace-messages.h | 25 ++++++++++
->   3 files changed, 121 insertions(+), 1 deletion(-)
->   create mode 100644 hw/riscv/rv-trace-messages.c
->   create mode 100644 hw/riscv/rv-trace-messages.h
+
+
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   target/riscv/vector_helper.c | 12 ++++++------
+>   1 file changed, 6 insertions(+), 6 deletions(-)
 > 
-> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-> index 2aadbe1e50..7d3576fcdf 100644
-> --- a/hw/riscv/meson.build
-> +++ b/hw/riscv/meson.build
-> @@ -14,6 +14,7 @@ riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
->   	'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
->   riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
->   riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
-> -riscv_ss.add(when: 'CONFIG_RISCV_TRACE', if_true: files('trace-encoder.c', 'trace-ram-sink.c'))
-> +riscv_ss.add(when: 'CONFIG_RISCV_TRACE', if_true: files('trace-encoder.c',
-> +        'trace-ram-sink.c', 'rv-trace-messages.c'))
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 2de3358ee86..caa8dd9c125 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -193,9 +193,9 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
+>   }
 >   
->   hw_arch += {'riscv': riscv_ss}
-> diff --git a/hw/riscv/rv-trace-messages.c b/hw/riscv/rv-trace-messages.c
-> new file mode 100644
-> index 0000000000..215135dd47
-> --- /dev/null
-> +++ b/hw/riscv/rv-trace-messages.c
-> @@ -0,0 +1,94 @@
-> +/*
-> + * Helpers for RISC-V Trace Messages
-> + *
-> + * Copyright (C) 2025 Ventana Micro Systems Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +
-> +#include "rv-trace-messages.h"
-> +#include "qemu/bitops.h"
-> +#include "qemu/log.h"
-> +#include "qemu/module.h"
-> +#include "qapi/error.h"
-> +#include "trace.h"
-> +
-> +typedef struct RVTraceMessageHeader {
-> +    uint8_t length:5;
-> +    uint8_t flow:2;
-> +    uint8_t extend:1;
-> +} RVTraceMessageHeader;
-> +#define HEADER_SIZE 1
-I suggest to move all such size macros
-to single enum to keep them all in one place:
+>   GEN_VEXT_LD_ELEM(lde_b, uint8_t,  H1, ldub)
+> -GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw)
+> -GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl)
+> -GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq)
+> +GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw_le)
+> +GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl_le)
+> +GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq_le)
+>   
+>   #define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)             \
+>   static inline QEMU_ALWAYS_INLINE                            \
+> @@ -214,9 +214,9 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
+>   }
+>   
+>   GEN_VEXT_ST_ELEM(ste_b, uint8_t,  H1, stb)
+> -GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw)
+> -GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl)
+> -GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq)
+> +GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw_le)
+> +GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl_le)
+> +GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq_le)
+>   
+>   static inline QEMU_ALWAYS_INLINE void
+>   vext_continuous_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
 
-typedef enum {
-     HEADER_SIZE              = 1,
-     SYNC_PAYLOAD_SIZE_64BITS = 9,
-     /* and other */
-} RVTraceMessagePayloadSize;
-
-> +
-> +/*
-> + * Format 3 subformat 0 without 'time' and 'context' fields
-> + */
-> +typedef struct RVTraceSyncPayload {
-> +    uint8_t format:2;
-> +    uint8_t subformat:2;
-> +    uint8_t branch:1;
-> +    uint8_t privilege:3;
-> +    uint32_t addressLow;
-> +    uint32_t addressHigh;
-> +} RVTraceSyncPayload;
-> +#define SYNC_PAYLOAD_SIZE_64BITS 9
-> +
-> +static void rv_etrace_write_bits(uint8_t *bytes, uint32_t bit_pos,
-> +                                 uint32_t num_bits, uint32_t val)
-Let's return num_bits here, so we could increment bit offset with return 
-value.
-
-> +{
-> +    uint32_t pos, byte_index, byte_pos, byte_bits = 0;
-> +
-> +    if (!num_bits || 32 < num_bits) {
-> +        return;
-> +    }
-> +
-> +    for (pos = 0; pos < num_bits; pos += byte_bits) {
-> +        byte_index = (bit_pos + pos) >> 3;
-> +        byte_pos = (bit_pos + pos) & 0x7;
-> +        byte_bits = (8 - byte_pos) < (num_bits - pos) ?
-> +                    (8 - byte_pos) : (num_bits - pos);
-> +        bytes[byte_index] &= ~(((1U << byte_bits) - 1) << byte_pos);
-> +        bytes[byte_index] |= ((val >> pos) & ((1U << byte_bits) - 1)) << byte_pos;
-I suggest to break this down a bit, because it very overloaded,
-and this is very unclear without comments or references to
-specification.
-
-1. Let's add a reference to chapter 7 of e-trace spec in comment.
-
-2. Let's use arithmetic operations to compute byte_index
-and byte_pos:
-
-     byte_index = (bit_pos + pos) / 8;
-     byte_pos = (bit_pos + pos) % 8;
-
-Compiler will optimize it anyway, but it is more clear what does
-division and reminder mean compared to bitwise "shift" and "and".
-
-3. Let's use macro MIN to comute byte_bits:
-
-     byte_bits = MIN(8 - byte_pos, num_bits - pos);
-
-4. Let's use extract32 and deposit32 to move bits from "val" to
-"bytes" instead of manually shifting bits:
-
-     uint8_t chunk = extract32(val, pos, byte_bits);
-     bytes[byte_index] = deposit32(bytes[byte_index], byte_pos, 
-byte_bits, chunk);
-
-
-> +    }
-> +}
-> +
-> +static void rv_etrace_write_header(uint8_t *buf, RVTraceMessageHeader header)
-> +{
-> +    /* flow and extend are always zero, i.e just write length */
-> +    rv_etrace_write_bits(buf, 0, 5, header.length);
-Flow and extend are, indeed, always zero, but we still need to write 
-them to buffer.
-Also, let's keep it as generic as possible, and write all fields from 
-header, and not hardcoded zeroes.
-
-     uint8_t bit_pos = 0;
-
-     bit_pos += rv_etrace_write_bits(buf, bit_pos, 5, header.length);
-     bit_pos += rv_etrace_write_bits(buf, bit_pos, 2, header.flow);
-     bit_pos += rv_etrace_write_bits(buf, bit_pos, 1, header.extend);
-> +}
-> +
-> +size_t rv_etrace_gen_encoded_sync_msg(uint8_t *buf, uint64_t pc,
-> +                                      TracePrivLevel priv_level)
-> +{
-> +    RVTraceSyncPayload payload = {.format = 0b11,
-> +                                  .subformat = 0b00,
-> +                                  .branch = 1,
-> +                                  .privilege = priv_level};
-Let's assign addressLow and addressHigh right away:
-
-     RVTraceSyncPayload payload = {.format = 0b11,
-                                   .subformat = 0b00,
-                                   .branch = 1,
-                                   .privilege = priv_level,
-                                   .addressLow = extract64(pc, 0, 32),
-                                   .addressHigh = extract64(pc, 32, 32)};
-
-
-> +    RVTraceMessageHeader header = {.flow = 0, .extend = 0,
-> +                                   .length = SYNC_PAYLOAD_SIZE_64BITS};
-> +    uint8_t bit_pos;
-> +
-> +    payload.addressLow = extract64(pc, 0, 32);
-> +    payload.addressHigh = extract64(pc, 32, 32);
-> +
-> +    rv_etrace_write_header(buf, header);
-> +    bit_pos = 8;
-> +
-> +    rv_etrace_write_bits(buf, bit_pos, 2, payload.format);
-> +    bit_pos += 2;
-> +    rv_etrace_write_bits(buf, bit_pos, 2, payload.subformat);
-> +    bit_pos += 2;
-> +    rv_etrace_write_bits(buf, bit_pos, 1, payload.branch);
-> +    bit_pos += 1;
-> +    rv_etrace_write_bits(buf, bit_pos, 3, payload.privilege);
-> +    bit_pos += 3;
-> +
-> +    rv_etrace_write_bits(buf, bit_pos, 32, payload.addressLow);
-> +    bit_pos += 32;
-> +    rv_etrace_write_bits(buf, bit_pos, 32, payload.addressHigh);
-Let's return num_bits value from rv_etrace_write_bits(), so we could 
-just increment bit_pos with return value:
-
-
-     uint8_t bit_pos = 0;
-
-     bit_pos += rv_etrace_write_header(buf, header);
-
-     bit_pos += rv_etrace_write_bits(buf, bit_pos, 2, payload.format);
-     bit_pos += rv_etrace_write_bits(buf, bit_pos, 2, payload.subformat);
-     bit_pos += rv_etrace_write_bits(buf, bit_pos, 1, payload.branch);
-     bit_pos += rv_etrace_write_bits(buf, bit_pos, 3, payload.privilege);
-
-     bit_pos += rv_etrace_write_bits(buf, bit_pos, 32,
-                                     payload.addressLow);
-     bit_pos += rv_etrace_write_bits(buf, bit_pos, 32,
-                                     payload.addressHigh);
-
-> +
-> +    return HEADER_SIZE + SYNC_PAYLOAD_SIZE_64BITS;
-> +}
-> diff --git a/hw/riscv/rv-trace-messages.h b/hw/riscv/rv-trace-messages.h
-> new file mode 100644
-> index 0000000000..aeafea8849
-> --- /dev/null
-> +++ b/hw/riscv/rv-trace-messages.h
-> @@ -0,0 +1,25 @@
-> +/*
-> + * Helpers for RISC-V Trace Messages
-> + *
-> + * Copyright (C) 2025 Ventana Micro Systems Inc.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef RISCV_RV_TRACE_MESSAGES_H
-> +#define RISCV_RV_TRACE_MESSAGES_H
-> +
-> +typedef enum {
-> +    U = 0,
-> +    S_HS = 1,
-> +    RESERVED = 2,
-> +    M = 3,
-> +    D = 4,
-> +    VU = 5,
-> +    VS = 6,
-> +} TracePrivLevel;
-> +
-> +size_t rv_etrace_gen_encoded_sync_msg(uint8_t *buf, uint64_t pc,
-> +                                      TracePrivLevel priv_level);
-> +
-> +#endif
 
