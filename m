@@ -4,80 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F71CD11193
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 19:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43642D1118E
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:22:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOLB6-0004kj-Ft; Wed, 26 Nov 2025 14:27:48 -0500
+	id 1vOM1V-00025n-1F; Wed, 26 Nov 2025 15:21:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vOLAk-0004hy-Ob
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 14:27:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vOM1T-00025c-8g
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:21:55 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vOLAj-000489-7S
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 14:27:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764185244;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mfdHw6osTT0BaUP9o9b9He3D/uTLUvXEroWP8+YkA/4=;
- b=Q2U+vDmtBlJnIUKCCQ2z8cQt2sJofyDM/n3LWCHH78k2SKT+mtBUMfzhN0gd+0dox4Go8/
- FAZSRy606dpswIM/SpAi+DjvUhbqXlrqwcoTSDgAiLFql9bsr+e1JvTufrJ/x0j3FOpU2L
- pMxXdi21WWn2/zth9zRcOFBSH1YGlL4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-kD_6EkmoM4Gr0JjMn-exQQ-1; Wed,
- 26 Nov 2025 14:27:20 -0500
-X-MC-Unique: kD_6EkmoM4Gr0JjMn-exQQ-1
-X-Mimecast-MFC-AGG-ID: kD_6EkmoM4Gr0JjMn-exQQ_1764185239
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45F56195609E; Wed, 26 Nov 2025 19:27:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CB2E3180035F; Wed, 26 Nov 2025 19:27:15 +0000 (UTC)
-Date: Wed, 26 Nov 2025 20:27:13 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: =?iso-8859-1?Q?Cl=E9ment?= Chigot <chigot@adacore.com>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, hreitz@redhat.com, eblake@redhat.com,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: Re: [PATCH v2 1/5] vvfat: introduce partitioned option
-Message-ID: <aSdUfZsqipQ4gacW@redhat.com>
-References: <878qgenqum.fsf@pond.sub.org>
- <CAJ307Eg7x_rKb5qybgW3XxAKLP=1ds524gqgXettv2cZ8WTMww@mail.gmail.com>
- <757f66d0-625c-9d1b-5090-3d5210903173@eik.bme.hu>
- <87346mkos9.fsf@pond.sub.org> <aRH_2gcYOH31UB38@redhat.com>
- <87ecq5f201.fsf@pond.sub.org>
- <CAJ307EjFMrXOmQMF5YckQ6hMGdFGtdYdAH3fWShcvwEXAtBrrw@mail.gmail.com>
- <87c7d0d6-8f8f-b6f2-3c81-0b0572dbad2c@eik.bme.hu>
- <CAJ307Eg74VNkYvewc5bnhafD+ccXzALmvS400Gz++8Mx5gcKkQ@mail.gmail.com>
- <CAJ307EjdoHZjSYCt7TKSLo=hqDS7y_azUBYsQszh3cAKG3jU-A@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vOM1R-0001wu-CA
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:21:55 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vOM1G-00000003fWs-2xYu; Wed, 26 Nov 2025 21:21:42 +0100
+Message-ID: <154a893e-982a-4461-8763-afbf1b72f7db@maciej.szmigiero.name>
+Date: Wed, 26 Nov 2025 21:21:37 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.0 2/6] Revert "error: define g_autoptr() cleanup
+ function for the Error type"
+To: Peter Xu <peterx@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Juraj Marcin <jmarcin@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20251125204648.857018-1-peterx@redhat.com>
+ <20251125204648.857018-3-peterx@redhat.com>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <20251125204648.857018-3-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJ307EjdoHZjSYCt7TKSLo=hqDS7y_azUBYsQszh3cAKG3jU-A@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,49 +110,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 26.11.2025 um 10:59 hat Clément Chigot geschrieben:
-> On Fri, Nov 14, 2025 at 2:47 PM Clément Chigot <chigot@adacore.com> wrote:
-> > On Fri, Nov 14, 2025 at 2:25 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
-> > > On Fri, 14 Nov 2025, Clément Chigot wrote:
-> > > > 1. "mbr" vs "partitioned".
-> > > > I do think "partitioned" is clearer, a bit more casual friendly. "mbr"
-> > > > requires knowledge about FAT format, while what's a partition should
-> > > > be known by a wider audience.
-> > > > Side note, in V3, I'll remove the "unpartitioned" keyword to simply
-> > > > replace it by "partitoned=false" (I wasn't aware such an obvious
-> > > > possibility was working...). So we might even call it
-> > > > "partition/partitions=true|false".
+On 25.11.2025 21:46, Peter Xu wrote:
+> This reverts commit 18eb55546a54e443d94a4c49286348176ad4b00a.  Discussion
+> can be seen at:
+> 
+> https://lore.kernel.org/r/aSWSLMi6ZhTCS_p2@redhat.com
+> 
+> Cc: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
+> Cc: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   include/qapi/error.h | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/include/qapi/error.h b/include/qapi/error.h
+> index b16c6303f8..f3ce4a4a2d 100644
+> --- a/include/qapi/error.h
+> +++ b/include/qapi/error.h
+> @@ -437,8 +437,6 @@ Error *error_copy(const Error *err);
+>    */
+>   void error_free(Error *err);
+>   
+> -G_DEFINE_AUTOPTR_CLEANUP_FUNC(Error, error_free)
+> -
+>   /*
+>    * Convenience function to assert that *@errp is set, then silently free it.
+>    */
 
-As I said, either one works for me.
+Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 
-> > > > 2. The default value. Should it be "false" for @floppy ?
-> > > > IMO, having a default value independent of other arguments is always
-> > > > better. Hence, I'll push for keeping "partitioned=true" as the
-> > > > default, and having users forcing "partitioned=false" for floppy (an
-> > > > error being raised otherwise). As we'll probably change the default
-> > > > behavior with floppy anyway (cf patch 2), I don't think it will hurt a
-> > > > lot to make users passing a new flag.
-
-I'm very much in favour of defaulting to partitioned for hard disks and
-unpartitioned for floppies. This is not only the option that stays most
-compatible with what we have in existing QEMU versions, but also the
-most intuitive setting.
-
-With the change to the default behaviour with floppy, we were forced to
-pick between options that all meant changing the default, so I proposed
-taking the most intuitive default there, too: I'm relatively sure that
-when you mention floppy, most people will think of 1.44 MB first.
-
-> > > 2. Having different defaults for floppy or disk would keep existing
-> > > command lines working. Otherwise why not make partitioned=false the
-> > > default and let users who need it set explicitly. That would also
-> > > work for most cases without having to type out this option.
-
-Slightly better than an unconditional partitioned=true default and
-getting partitioned floppies, which is most definitely unexpected. But
-it's still not usually the thing the user will want with hard disks, so
-as I said above, I prefer the conditional default here.
-
-Kevin
+Thanks,
+Maciej
 
 
