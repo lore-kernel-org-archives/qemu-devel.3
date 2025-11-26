@@ -4,67 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0007AD11181
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 15:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 820B2D10F5F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 15:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOHih-0006xg-Gg; Wed, 26 Nov 2025 10:46:15 -0500
+	id 1vOHkC-0002Lj-OZ; Wed, 26 Nov 2025 10:47:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vOHif-0006wj-M5; Wed, 26 Nov 2025 10:46:13 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vOHid-00080E-Vn; Wed, 26 Nov 2025 10:46:13 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwA3JVzBICdpOZ0EAQ--.4560S2;
- Wed, 26 Nov 2025 23:46:09 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwC3D+2yICdpkqMHAA--.780S7;
- Wed, 26 Nov 2025 23:46:08 +0800 (CST)
-From: Tao Tang <tangtao1634@phytium.com.cn>
-To: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC RESEND v5 4/4] tests/qtest: Add SMMUv3 bare-metal test using
- iommu-testdev
-Date: Wed, 26 Nov 2025 23:45:47 +0800
-Message-Id: <20251126154547.1300748-5-tangtao1634@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251126154547.1300748-1-tangtao1634@phytium.com.cn>
-References: <20251126154547.1300748-1-tangtao1634@phytium.com.cn>
+ (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
+ id 1vOHk4-00024z-Og
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 10:47:40 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
+ id 1vOHk2-00089W-7T
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 10:47:39 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-47789cd2083so40653715e9.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 07:47:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1764172056; x=1764776856; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qLca+SjWpTyHxDEhKAsHhI0VNOBtyR6cwHKmxcrWQyI=;
+ b=gIyrDyle/XnHuowiopHvylFiAbR1ZfWbjZU1HGJaPZcCCsi8edS1G3ZIK5kXXaxC3w
+ eC34ALvgAxdYn8aDoe6vufgWArWzfQFj6+jdzXzfk4CXUPO3WK4jgZWAKRwzzNTt29ho
+ Vi4o1+C491gOyIgK0RaqYsJCmTKuwosXZtgU1Pp9VN10Q2ZZrDwVq+WmpkCGY8x3bWl+
+ EEULd/pnl0RCTGBaVEI0JX5kM18Q4mqgARH0DSToh2fzB5JIrmCuw9SPqJ7iZ2lrWpHU
+ en7oMS9K8aSKB9pkORkJhmvgIDMk4KvuPlDg/QHfvIK40ZLJdlau8xSUEZyzhF+NAXQf
+ Sz1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764172056; x=1764776856;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qLca+SjWpTyHxDEhKAsHhI0VNOBtyR6cwHKmxcrWQyI=;
+ b=WzE/Ak0j/CNivBhoV7y5a0VoQUey1hbbN4IIW9mWOwrAhvRsqRtTfpxJxYDQzr8QGh
+ z0xBbbhY4/8/h77Xe4PQGVxQniMi+GK+ym6osDzMxpY6cC8zsG1Cy6l0ilDLzoGxg99n
+ 3ZvYFjVQGo2JGj+9se1OH2MoCRyL2L5JFBfHKK4RC7BA4I5rRBVILeiFnQLCVEkGyREE
+ KZPrZConzWCf6fLBh53zc4Ok4snfNbB3qQ/cHzestW7rBEXkBHKBgvFAGojvI++l0wF/
+ r6h6yHrVmse2svLbNlDjkCzKBLgX92V2p2eCkPuXKnzoF3OziI3iOsftdgVXIRxrINDn
+ atZA==
+X-Gm-Message-State: AOJu0Yw8RX6Oa3NWwM4GSjYgyOtRBxjL1Q2j+sOaCnC3Xhn4ahIfxq2z
+ 1i/cMCQxx3zKEbLlLBdTFpFlaGu3TZ4uMWzCqdOskIRGoBRLnTs2cPSBB9DnxZEPlrc=
+X-Gm-Gg: ASbGncvxcBjmMRCdkhDp9FApAl9hrcxXhQO2wTpjpT20q25LQXD9XZPZYtlhUelCt7E
+ ZLfuYCZN2hi1dSEXp5XrE1XMc3wFME/uVZLkg6epBAS2xKsNAttPsv2SADxM91dq5ISBtzm6LF1
+ 83bSn3xdFKV9CmAL4S39mv8u6TFka1jtkJRMhuE6DyhJd7gRXrpRG3Cz6CqUtpVxyysA/wvsZ9U
+ Oxnt8wPVRFfqE6za1ymMAn+sfbozGvsGi5zZC5ZhnEEqA+ShAftRM1ik940cgZAcFkB4yxQJEJb
+ F9xgmAhhZu2sGmrj5kQ4ibo0jWEj9vJmW4HYLQbq6r2QDDxozQMXnzHvCn8zv9hup9TrRP8+PJC
+ +qkfdXz5baiYwvIR/YOUtXlu2UQ0AhTiv1Or4OnrNXYYWwhDQWVB3tpikEy9RexZrF1bxP5Zjoe
+ diihD1Ims=
+X-Google-Smtp-Source: AGHT+IHcS17YkmaeovVgvpVmEo9rL2qNdsYed+BczwsYBIKtRaphi6psCwEpaVfW30U/+7rxWgBEbw==
+X-Received: by 2002:a05:600c:19ca:b0:477:a978:3a7b with SMTP id
+ 5b1f17b1804b1-477c1143073mr189621965e9.22.1764172055872; 
+ Wed, 26 Nov 2025 07:47:35 -0800 (PST)
+Received: from localhost ([109.76.183.78]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-479052daee3sm43234345e9.12.2025.11.26.07.47.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Nov 2025 07:47:35 -0800 (PST)
+From: Pawel Zmarzly <pzmarzly0@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com,
+	farosas@suse.de
+Subject: [PATCH] migration: Fix writing mapped_ram + ignore_shared snapshots
+Date: Wed, 26 Nov 2025 15:47:34 +0000
+Message-ID: <20251126154734.940066-1-pzmarzly0@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwC3D+2yICdpkqMHAA--.780S7
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWkmDa4HqgAAsD
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3Jw1DCF13JF4rCw47Jr17Awb_yoW7WrWrpF
- yDCFyakF4kJF1fC3Z3Ga18Gr1rtan3Aw1UGr13Krnakrs8A34UtrZ7KFy7KFZ7J3ykXF1U
- Za4kKF45Gr18XaUanT9S1TB71UUUUj7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=pzmarzly0@gmail.com; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,169 +98,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a qtest suite that validates ARM SMMUv3 translation without guest
-firmware or OS. The tests leverage iommu-testdev to trigger DMA
-operations and the qos-smmuv3 library to configure IOMMU translation
-structures.
+Currently if you set these flags and have any shared memory object, saving
+a snapshot will fail with:
 
-This test suite targets the virt machine and covers:
-- Stage 1 only translation (VA -> PA via CD page tables)
-- Stage 2 only translation (IPA -> PA via STE S2 tables)
-- Nested translation (VA -> IPA -> PA, Stage 1 + Stage 2)
-- Design to extended to support multiple security spaces
-    (Non-Secure, Secure, Root, Realm)
+    Failed to write bitmap to file: Unable to write to file: Bad address
 
-Each test case follows this sequence:
-1. Initialize SMMUv3 with appropriate command/event queues
-2. Build translation tables (STE/CD/PTE) for the target scenario
-3. Configure iommu-testdev with IOVA and DMA attributes via MMIO
-4. Trigger DMA and validate successful translation
-5. Verify data integrity through a deterministic write-read pattern
+We need to skip writing RAMBlocks that are backed by shared objects.
 
-This bare-metal approach provides deterministic IOMMU testing with
-minimal dependencies, making failures directly attributable to the SMMU
-translation path.
+Also, we should mark these RAMBlocks as skipped, so the snapshot format stays
+readable to tools that later don't know QEMU's command line (for example
+scripts/analyze-migration.py). I used bitmap_offset=0 pages_offset=0 for this.
 
-Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+This minor change to snapshot format should be safe, as offset=0 should not
+have ever been possible.
+
+Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
 ---
- tests/qtest/iommu-smmuv3-test.c | 114 ++++++++++++++++++++++++++++++++
- tests/qtest/meson.build         |   1 +
- 2 files changed, 115 insertions(+)
- create mode 100644 tests/qtest/iommu-smmuv3-test.c
+This requires my previous patch "migration: fix parsing snapshots with
+x-ignore-shared flag". To make things easier, you can see the stack at
+https://gitlab.com/pzmarzly/qemu/-/commits/pzmarzly?ref_type=heads
+---
+ migration/ram.c | 51 ++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 33 insertions(+), 18 deletions(-)
 
-diff --git a/tests/qtest/iommu-smmuv3-test.c b/tests/qtest/iommu-smmuv3-test.c
-new file mode 100644
-index 0000000000..af438ecce0
---- /dev/null
-+++ b/tests/qtest/iommu-smmuv3-test.c
-@@ -0,0 +1,114 @@
-+/*
-+ * QTest for SMMUv3 with iommu-testdev
-+ *
-+ * This QTest file is used to test the SMMUv3 with iommu-testdev so that we can
-+ * test SMMUv3 without any guest kernel or firmware.
-+ *
-+ * Copyright (c) 2025 Phytium Technology
-+ *
-+ * Author:
-+ *  Tao Tang <tangtao1634@phytium.com.cn>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+diff --git a/migration/ram.c b/migration/ram.c
+index 7d024b88b5..8063522a14 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3042,28 +3042,36 @@ static void mapped_ram_setup_ramblock(QEMUFile *file, RAMBlock *block)
+     header = g_new0(MappedRamHeader, 1);
+     header_size = sizeof(MappedRamHeader);
+ 
+-    num_pages = block->used_length >> TARGET_PAGE_BITS;
+-    bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
+-
+-    /*
+-     * Save the file offsets of where the bitmap and the pages should
+-     * go as they are written at the end of migration and during the
+-     * iterative phase, respectively.
+-     */
+-    block->bitmap_offset = qemu_get_offset(file) + header_size;
+-    block->pages_offset = ROUND_UP(block->bitmap_offset +
+-                                   bitmap_size,
+-                                   MAPPED_RAM_FILE_OFFSET_ALIGNMENT);
+-
+     header->version = cpu_to_be32(MAPPED_RAM_HDR_VERSION);
+     header->page_size = cpu_to_be64(TARGET_PAGE_SIZE);
+-    header->bitmap_offset = cpu_to_be64(block->bitmap_offset);
+-    header->pages_offset = cpu_to_be64(block->pages_offset);
 +
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "libqos/pci.h"
-+#include "libqos/generic-pcihost.h"
-+#include "hw/pci/pci_regs.h"
-+#include "hw/misc/iommu-testdev.h"
-+#include "libqos/qos-smmuv3.h"
++    if (migrate_ram_is_ignored(block)) {
++        header->bitmap_offset = 0;
++        header->pages_offset = 0;
++    } else {
++        num_pages = block->used_length >> TARGET_PAGE_BITS;
++        bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
 +
-+#define DMA_LEN           4
++        /*
++         * Save the file offsets of where the bitmap and the pages should
++         * go as they are written at the end of migration and during the
++         * iterative phase, respectively.
++         */
++        block->bitmap_offset = qemu_get_offset(file) + header_size;
++        block->pages_offset = ROUND_UP(block->bitmap_offset +
++                                       bitmap_size,
++                                       MAPPED_RAM_FILE_OFFSET_ALIGNMENT);
 +
-+/* Test configurations for different SMMU modes and spaces */
-+static const QSMMUTestConfig base_test_configs[] = {
-+    {
-+        .trans_mode = QSMMU_TM_S1_ONLY,
-+        .sec_sid = QSMMU_SEC_SID_NONSECURE,
-+        .dma_iova = QSMMU_IOVA_OR_IPA,
-+        .dma_len = DMA_LEN,
-+        .expected_result = 0
-+    },
-+    {
-+        .trans_mode = QSMMU_TM_S2_ONLY,
-+        .sec_sid = QSMMU_SEC_SID_NONSECURE,
-+        .dma_iova = QSMMU_IOVA_OR_IPA,
-+        .dma_len = DMA_LEN,
-+        .expected_result = 0
-+    },
-+    {
-+        .trans_mode = QSMMU_TM_NESTED,
-+        .sec_sid = QSMMU_SEC_SID_NONSECURE,
-+        .dma_iova = QSMMU_IOVA_OR_IPA,
-+        .dma_len = DMA_LEN,
-+        .expected_result = 0
++        header->bitmap_offset = cpu_to_be64(block->bitmap_offset);
++        header->pages_offset = cpu_to_be64(block->pages_offset);
 +    }
-+};
-+
-+static QPCIDevice *setup_qtest_pci_device(QTestState *qts, QGenericPCIBus *gbus,
-+                                          QPCIBar *bar)
-+{
-+    uint16_t vid, did;
-+    QPCIDevice *dev = NULL;
-+
-+    qpci_init_generic(gbus, qts, NULL, false);
-+
-+    /* Find device by vendor/device ID to avoid slot surprises. */
-+    for (int s = 0; s < 32 && !dev; s++) {
-+        for (int fn = 0; fn < 8 && !dev; fn++) {
-+            QPCIDevice *cand = qpci_device_find(&gbus->bus, QPCI_DEVFN(s, fn));
-+            if (!cand) {
-+                continue;
-+            }
-+            vid = qpci_config_readw(cand, PCI_VENDOR_ID);
-+            did = qpci_config_readw(cand, PCI_DEVICE_ID);
-+            if (vid == IOMMU_TESTDEV_VENDOR_ID &&
-+                did == IOMMU_TESTDEV_DEVICE_ID) {
-+                dev = cand;
-+                g_test_message("Found iommu-testdev! devfn: 0x%x", cand->devfn);
-+            } else {
-+                g_free(cand);
-+            }
+ 
+     qemu_put_buffer(file, (uint8_t *) header, header_size);
+ 
+-    /* prepare offset for next ramblock */
+-    qemu_set_offset(file, block->pages_offset + block->used_length, SEEK_SET);
++    if (!migrate_ram_is_ignored(block)) {
++        /* leave space for block data */
++        qemu_set_offset(file, block->pages_offset + block->used_length, SEEK_SET);
++    }
+ }
+ 
+ static bool mapped_ram_read_header(QEMUFile *file, MappedRamHeader *header,
+@@ -3146,7 +3154,6 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+             if (migrate_ignore_shared()) {
+                 qemu_put_be64(f, block->mr->addr);
+             }
+-
+             if (migrate_mapped_ram()) {
+                 mapped_ram_setup_ramblock(f, block);
+             }
+@@ -3217,6 +3224,10 @@ static void ram_save_file_bmap(QEMUFile *f)
+     RAMBlock *block;
+ 
+     RAMBLOCK_FOREACH_MIGRATABLE(block) {
++        if (migrate_ram_is_ignored(block)) {
++            continue;
 +        }
++
+         long num_pages = block->used_length >> TARGET_PAGE_BITS;
+         long bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
+ 
+@@ -4162,6 +4173,10 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+         return;
+     }
+ 
++    if (migrate_ignore_shared() && header.bitmap_offset == 0 && header.pages_offset == 0) {
++        return;
 +    }
-+    g_assert(dev);
 +
-+    qpci_device_enable(dev);
-+    *bar = qpci_iomap(dev, 0, NULL);
-+    g_assert_false(bar->is_io);
-+
-+    return dev;
-+}
-+
-+static void test_smmuv3_translation(void)
-+{
-+    QTestState *qts;
-+    QGenericPCIBus gbus;
-+    QPCIDevice *dev;
-+    QPCIBar bar;
-+
-+    /* Initialize QEMU environment for SMMU testing */
-+    qts = qtest_init("-machine virt,acpi=off,gic-version=3,iommu=smmuv3 "
-+                     "-smp 1 -m 512 -cpu max -net none "
-+                     "-device iommu-testdev");
-+
-+    /* Setup and configure PCI device */
-+    dev = setup_qtest_pci_device(qts, &gbus, &bar);
-+    g_assert(dev);
-+
-+    /* Run the enhanced translation tests */
-+    g_test_message("### Starting SMMUv3 translation tests...###");
-+    qsmmu_translation_batch(base_test_configs, ARRAY_SIZE(base_test_configs),
-+                            qts, dev, bar, VIRT_SMMU_BASE);
-+    g_test_message("### SMMUv3 translation tests completed successfully! ###");
-+    qtest_quit(qts);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("/iommu-testdev/translation", test_smmuv3_translation);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 669d07c06b..e2d2e68092 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -263,6 +263,7 @@ qtests_aarch64 = \
-    config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
-   (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
-   (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx : []) + \
-+  (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') ? ['iommu-smmuv3-test'] : []) + \
-   qtests_cxl +                                                                                  \
-   ['arm-cpu-features',
-    'numa-test',
+     block->pages_offset = header.pages_offset;
+ 
+     /*
 -- 
-2.34.1
-
+2.52.0
 
