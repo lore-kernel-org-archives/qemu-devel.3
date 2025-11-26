@@ -4,86 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CF7DD11181
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 15:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87DBDD10F58
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 16:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOHmv-0001K9-NL; Wed, 26 Nov 2025 10:50:37 -0500
+	id 1vOIES-0008FU-Sk; Wed, 26 Nov 2025 11:19:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
- id 1vOHmg-0000eo-5t
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 10:50:30 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
- id 1vOHmc-0000vp-CH
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 10:50:21 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-477a2ab455fso73497175e9.3
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 07:50:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vOIER-0008FD-2Q
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 11:19:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vOIEO-0002ng-Jw
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 11:19:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764173938;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iXuF7kMAHT5UxTglPhSovU0V/p1FugbL6sFif7j33Gg=;
+ b=SHZg8n3hMsLmiULEE/inheN41XXpaseOSGuXRX8OzEHQzFFPaxZtWDU7uUz5+bTl5u/ATs
+ gwZfcordtdVxls1zOWeOTlQISLzK9mBYMgxB9uUCZ2CbB5PVgXE9t99SBlKDU1d537CtnX
+ p5F776UdG7mqeohYRqq+gzaJYl9D5qY=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-251-R7LP8yvUM5277A8Jhdqu5Q-1; Wed, 26 Nov 2025 11:18:56 -0500
+X-MC-Unique: R7LP8yvUM5277A8Jhdqu5Q-1
+X-Mimecast-MFC-AGG-ID: R7LP8yvUM5277A8Jhdqu5Q_1764173936
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8b2f0be2cf0so2280637085a.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 08:18:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1764172216; x=1764777016; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=OnYA1X95KyQj+3iDTUiFgqfXlpUaFheDZtHSW65r120=;
- b=H02RJbDKKGVVxKsLuyL4I6JDeYVZ3XnJ/jCXb4ONlWYw6Aq7etoMaqi6cgpfo+VJS+
- vKkXQ3+rCxZ2Dd90+K7dqi0WeGg0qKHmH9Mr8sp4upGguG6z3IZpT84Ts22Ee8uhCxlD
- oHbaB8FgqMDQL8WSmgMordvCDrjxK7n/10724obCQy21GExmEPgvtIjEBfkA5QQB0eBZ
- rVrTSSDpOttSIKtbcB2geeDJX91FiDHtmfX4rBJoMygwbhy8uWrg6nqIclAUfs4bsGqF
- F43q6ADrfioDSd2hzZk1ZDpz4dlXljEir8Z57IdDvfEmZ6C66/G/cOpwWdsB9X8DOiKv
- Mp5A==
+ d=redhat.com; s=google; t=1764173936; x=1764778736; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=iXuF7kMAHT5UxTglPhSovU0V/p1FugbL6sFif7j33Gg=;
+ b=dC+Zj+qIIkKCzOKwBcHs8PzM4Mrxf5hIVhW8Qhjdup/eeOmDVxBplgMnnxmiyAeUkY
+ dyzs79EembIVukbnJnrXwxr+MG5ZmWxiiJ8fmm54LJSJ5i2fIYtILpqV2X68I/CgUC5s
+ sG1et3lEqVux/3Brs9e75jpYKaa1TydOeVnLHLu8DcHjMnwbUtUW686Hvq7gvo/ZCtse
+ kR0Y1uUVE4thwR0igzliQ6pg4juRSBCnxhG8/OWi7tpIiOHntBwwXvtm5jsrs1IZuHyV
+ 9CX0cxJ/rXpdtgsUXzN/EfwihxQ4+EFcgkriNNTrkDUlAwjBhiuKxI+2sirksWnV5Q0X
+ 3TEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764172216; x=1764777016;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OnYA1X95KyQj+3iDTUiFgqfXlpUaFheDZtHSW65r120=;
- b=aw1ffAzWjdVMXz4xEQhNEBA8yQNjdA5At1g/UY4XY6SN+T1nqajqr1lsn54XyGXWh9
- C+nvFD5fWK4qThs1fJ55OZE826vmB3FgFY33gUWJhO22OTTYg0IoR4oEpN8G22j+3Fxy
- 6NNkpdv+Qlw1aL89PfvMonci8yNAxok5hCqOfwYpOPkl7Pj7ZhjJHB+fc8x7GodRmWL4
- 3Sy2gA/StAWpAdRpGHQindRGb6RonH+zS9b8btx1oMsfYulup4BKGxG92GA+hNG+V4xU
- XGnzs4My7Ka+N/7j8Ddo8rPWZ8ZHOVVfYhC6taUX1SyIHmSUtTTmLa4QhQrRBL6Rgm1B
- 5jlA==
-X-Gm-Message-State: AOJu0Yw+XC4pkWDpCtjHWX7lY0g8BlL1IbVBLxBKPoI1Jv/Gji5zVx/m
- A0+2mImatxGg/tivS0pTrOIyu2JptFnE7662TCz1gZFa1AQLCdk2OchdTsdh2/e4QOo=
-X-Gm-Gg: ASbGnct4TZf5ILDpNZC4A/RsObUUzfn/UBwTGJ89a2VionEkIZffbtc+LWRUMZuI1Dd
- 0BiMDwR+JBL7dgRfye32oWQ39YqpQFo7uR2iLb4H4fQ4MLpPq6NLr/X9PVYWFTY47UZVevvKFG7
- wufoRQXFZW1DJFeGzJCp18kb7o3aUc+u3Wn4nzj9IPjdoaPXa0ZJcXS2Y7yU1Ev1pE3pHCCEH0U
- WfKv665Puc0Mf0o5+p5+5JXsWiGfRCDfSuC8rPrcnODiji+chP9JoBgUR6pIec79JySlbKThRhL
- GTartf4BErTt4Jltl5yKhCU+0V3+cjKXq5h6hnloy49m0LBTiGY4CRGU1Jfyxzmgtdg6pG9Ewfg
- CwGfnNC/L9U/cUw1s+eC7WxTbnHK20UJSAOsQetjjgnHjLEqsfY3Q3kikyl4hBMXlz5w/kiDXaJ
- 0nF7+8A3KgUrIelNo7Wg==
-X-Google-Smtp-Source: AGHT+IE7DUgFjwWjluQAHGDdI8gADleYB4sWACIBSDGGH04dQFxBvuOvU8SXd81J9l8WV60Uv6+aew==
-X-Received: by 2002:a05:600c:350e:b0:477:ae31:1311 with SMTP id
- 5b1f17b1804b1-477c10e2a64mr174739785e9.13.1764172216304; 
- Wed, 26 Nov 2025 07:50:16 -0800 (PST)
-Received: from localhost ([109.76.183.78]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-479040c5f89sm48504525e9.2.2025.11.26.07.50.15
+ d=1e100.net; s=20230601; t=1764173936; x=1764778736;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iXuF7kMAHT5UxTglPhSovU0V/p1FugbL6sFif7j33Gg=;
+ b=RPqBv+udpOoR3tRyGxzyxsaBOEVnmrXsfDwz+t1ERKX1t9DVbW+IDyfoka817El36g
+ TBWLLBNLfbtlaglSngkcFgO6AKrEad+3DUrfevE0TwBT1iif7ME7/KxlD5WxxnDVwUZN
+ Zoo/M6fpiQIStJYUiV920TxEy7WraXjsH5KXYMSspaMNL6/4XBTQ+pHgXqhJky1I4sap
+ 7RdBVvYBY0e7N0IznAEZC2hGuT9k6cXjrhcmY2uL2QkT6TDPJsUySjd7w7UXT02FXEHb
+ fvtsZTeN52Se5Jnh5G/eo0GXzuzRJoPv45OnlrhRsnNnlhTTqKvJQ+LOi6FxhH8uPSfc
+ Rm0A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVPylVN2CqiCQkQX8UttXsqlyHB3pSaDaR1BnyWr7b6XqL7zGYaZmCAO1MsaS/ylU0f39O/0iO+qOIs@nongnu.org
+X-Gm-Message-State: AOJu0YzOhyx50l+BcoUR7Kpl3r0AgoXx9GWi5g5EJY1hd/TUFGauG9XI
+ pZPKILy182EZMYvYyrpa12/cD8GzsHAsLtA4vSkTasgi2CPOn0VZ4IRkZpv7qsP4gaIUlcd7kA2
+ 4PfMDwsdyAS/u53ik3kbrq+pmo2/aPc/DlZ6KvjeEL4sNt8TrV4IJ58iM
+X-Gm-Gg: ASbGnctP5EW6JUvDNq0xGC2efzHlaYfwAeOpvP99M5xWcOclFaU3InpaMx4ycdP+hEv
+ tAJNmEHt4CDE/tIqTXEBBtpnNTWYajTb7K7JkbmDKYptSUheSmvrzb+WdbXskbp/VXV1ZfyAtcB
+ EySI+dfW6xGLRagz6xLS0IFvAsrxRaF/FzxLVBb8qBDpK82FnvF6qSm9HR8dzjvblwjALOVELBf
+ wzcU2tJLj0xg4XfmHCeEEnGfVDOcDAkc3d/DcxZp+lVi6ZDSzZxkR9PK4roIi9XJ0bRS84/MdsL
+ +E2cVChQUjkgWzRWEUC0uUCXtQVc8TSqAi7ccPxx+L8UZ1FIt6p66Qnq+PvL00pvY+l7J9cyUA7
+ mCSU=
+X-Received: by 2002:a05:620a:46a0:b0:8b2:7165:544f with SMTP id
+ af79cd13be357-8b33d1fd878mr2651453385a.25.1764173936075; 
+ Wed, 26 Nov 2025 08:18:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQLzezK6cnPgwqe3GsQehgIVd0sTHHe8qTopw+80DN1CAhsVgib8D0EwBm+FRaf+MxWA2XRw==
+X-Received: by 2002:a05:620a:46a0:b0:8b2:7165:544f with SMTP id
+ af79cd13be357-8b33d1fd878mr2651448085a.25.1764173935572; 
+ Wed, 26 Nov 2025 08:18:55 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8b3295e8338sm1423399685a.46.2025.11.26.08.18.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Nov 2025 07:50:15 -0800 (PST)
-From: Pawel Zmarzly <pzmarzly0@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com,
-	farosas@suse.de
-Subject: [PATCH v2] scripts/analyze-migration: Support mapped-ram snapshot
- format
-Date: Wed, 26 Nov 2025 15:50:15 +0000
-Message-ID: <20251126155015.941129-1-pzmarzly0@gmail.com>
-X-Mailer: git-send-email 2.52.0
+ Wed, 26 Nov 2025 08:18:55 -0800 (PST)
+Date: Wed, 26 Nov 2025 11:18:52 -0500
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ jmarcin@redhat.com, marcandre.lureau@redhat.com, farosas@suse.de,
+ berrange@redhat.com, vsementsov@yandex-team.ru,
+ mail@maciej.szmigiero.name, peter.maydell@linaro.org
+Subject: Re: [PATCH 2.5/6] error: Explain why we don't g_autoptr(Error)
+Message-ID: <aScobLHb0FQ6o_Gj@x1.local>
+References: <20251125204648.857018-3-peterx@redhat.com>
+ <20251126143427.2470598-1-armbru@redhat.com>
+ <620bdcd0-a7e0-4b23-95c9-9752156a55e1@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=pzmarzly0@gmail.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <620bdcd0-a7e0-4b23-95c9-9752156a55e1@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,111 +125,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The script has not been updated to read mapped-ram snapshots and is currently
-crashing when trying to read such a file.
+On Wed, Nov 26, 2025 at 04:14:55PM +0100, Cédric Le Goater wrote:
+> On 11/26/25 15:34, Markus Armbruster wrote:
+> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> > ---
+> >   include/qapi/error.h | 17 +++++++++++++++++
+> >   1 file changed, 17 insertions(+)
+> > 
+> > diff --git a/include/qapi/error.h b/include/qapi/error.h
+> > index f3ce4a4a2d..fc018b4c59 100644
+> > --- a/include/qapi/error.h
+> > +++ b/include/qapi/error.h
+> > @@ -437,6 +437,23 @@ Error *error_copy(const Error *err);
+> >    */
+> >   void error_free(Error *err);
+> > +/*
+> > + * Note: we intentionally do not enable g_autoptr(Error) with
+> > + * G_DEFINE_AUTO_CLEANUP_CLEAR_FUNC(Error, error_free).
+> > + *
+> > + * Functions that report or propagate an error take ownership of the
+> > + * Error object.  Explicit error_free() is needed when you handle an
+> > + * error in some other way.  This is rare.
+> > + *
+> > + * g_autoptr(Error) would call error_free() automatically on return.
+> > + * To avoid a double-free, we'd have to manually clear the pointer
+> > + * every time we propagate or report.
+> > + *
+> > + * Thus, g_autoptr(Error) would make the rare case easier to get right
+> > + * (less prone to leaks), and the common case easier to get wrong
+> > + * (more prone to double-free).
 
-With this commit, it can now read a snapshot created with:
+How about we further poison the auto free altogether?
 
-    (qemu) migrate_set_capability x-ignore-shared on
-    (qemu) migrate_set_capability mapped-ram on
-    (qemu) migrate -d file:vm.state
+IIUC this should work:
 
-Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
----
-V2: Added support for format change in my other patch "migration: Fix writing
-mapped_ram + ignore_shared snapshots". You can see whole stack at
-https://gitlab.com/pzmarzly/qemu/-/commits/pzmarzly?ref_type=heads
----
- scripts/analyze-migration.py | 48 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
++extern void
++__attribute__((error("Error should not be used with g_autoptr")))
++error_free_poisoned(Error *err);
++
++G_DEFINE_AUTOPTR_CLEANUP_FUNC(Error, error_free_poisoned)
 
-diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
-index 3303c05358..b6694bbd23 100755
---- a/scripts/analyze-migration.py
-+++ b/scripts/analyze-migration.py
-@@ -19,6 +19,7 @@
- 
- import json
- import os
-+import math
- import argparse
- import collections
- import struct
-@@ -127,6 +128,7 @@ def __init__(self, file, version_id, ramargs, section_key):
-         self.dump_memory = ramargs['dump_memory']
-         self.write_memory = ramargs['write_memory']
-         self.ignore_shared = ramargs['ignore_shared']
-+        self.mapped_ram = ramargs['mapped_ram']
-         self.sizeinfo = collections.OrderedDict()
-         self.data = collections.OrderedDict()
-         self.data['section sizes'] = self.sizeinfo
-@@ -170,6 +172,50 @@ def read(self):
-                         self.files[self.name] = f
-                     if self.ignore_shared:
-                         mr_addr = self.file.read64()
-+                    if self.mapped_ram:
-+                        version = self.file.read32()
-+                        if version != 1:
-+                            raise Exception("Unsupported MappedRamHeader version %s" % version)
-+                            
-+                        page_size = self.file.read64()
-+                        if page_size != self.TARGET_PAGE_SIZE:
-+                            raise Exception("Page size mismatch in MappedRamHeader")
-+
-+                        bitmap_offset = self.file.read64()
-+                        pages_offset = self.file.read64()
-+                        
-+                        if self.ignore_shared and bitmap_offset == 0 and pages_offset == 0:
-+                            continue
-+
-+                        if self.dump_memory or self.write_memory:
-+                            num_pages = len // page_size
-+
-+                            self.file.seek(bitmap_offset, os.SEEK_SET)
-+                            bitmap_len = int(math.ceil(num_pages / 8))
-+                            bitmap = self.file.readvar(size=bitmap_len)
-+
-+                            self.file.seek(pages_offset, os.SEEK_SET)
-+                            for page_num in range(num_pages):
-+                                page_addr = page_num * page_size
-+
-+                                is_filled = (bitmap[page_num // 8] >> page_num % 8) & 1
-+                                if is_filled:
-+                                    data = self.file.readvar(size=self.TARGET_PAGE_SIZE)
-+                                    if self.write_memory:
-+                                        self.files[self.name].seek(page_addr, os.SEEK_SET)
-+                                        self.files[self.name].write(data)
-+                                    if self.dump_memory:
-+                                        hexdata = " ".join("{0:02x}".format(c) for c in data)
-+                                        self.memory['%s (0x%016x)' % (self.name, page_addr)] = hexdata
-+                                else:
-+                                    self.file.seek(self.TARGET_PAGE_SIZE, os.SEEK_CUR)
-+                                    if self.write_memory:
-+                                        self.files[self.name].seek(page_addr, os.SEEK_SET)
-+                                        self.files[self.name].write(b'\x00' * self.TARGET_PAGE_SIZE)
-+                                    if self.dump_memory:
-+                                        self.memory['%s (0x%016x)' % (self.name, page_addr)] = 'Filled with 0x00'
-+
-+                        self.file.seek(pages_offset + len, os.SEEK_SET)
-                 flags &= ~self.RAM_SAVE_FLAG_MEM_SIZE
- 
-             if flags & self.RAM_SAVE_FLAG_COMPRESS:
-@@ -663,6 +709,7 @@ def read(self, desc_only = False, dump_memory = False,
-         ramargs['dump_memory'] = dump_memory
-         ramargs['write_memory'] = write_memory
-         ramargs['ignore_shared'] = False
-+        ramargs['mapped_ram'] = False
-         self.section_classes[('ram',0)][1] = ramargs
- 
-         while True:
-@@ -674,6 +721,7 @@ def read(self, desc_only = False, dump_memory = False,
-                 section = ConfigurationSection(file, config_desc)
-                 section.read()
-                 ramargs['ignore_shared'] = section.has_capability('x-ignore-shared')
-+                ramargs['mapped_ram'] = section.has_capability('mapped-ram')
-             elif section_type == self.QEMU_VM_SECTION_START or section_type == self.QEMU_VM_SECTION_FULL:
-                 section_id = file.read32()
-                 name = file.readstr()
+> > + */
+> > +
+> >   /*
+> >    * Convenience function to assert that *@errp is set, then silently free it.
+> >    */
+> 
+> 
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+
 -- 
-2.52.0
+Peter Xu
+
 
