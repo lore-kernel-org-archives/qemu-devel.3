@@ -4,100 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B588CD1038C
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 08:23:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AF0AD10390
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 08:44:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOAo6-0006L8-Na; Wed, 26 Nov 2025 03:23:22 -0500
+	id 1vOB88-0003Y5-SO; Wed, 26 Nov 2025 03:44:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOAo3-0006CN-UK
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 03:23:19 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOB7x-0003W5-Go
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 03:43:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOAo2-0005ms-Gf
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 03:23:19 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOB7t-0003J6-1q
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 03:43:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764145397;
+ s=mimecast20190719; t=1764146627;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cK9qgzZob7EA+KW+GuMQJ4tQbrfuFRwzIv+RTh6NZ6M=;
- b=W1l09Sce4XYkXMC0KHnabkzGBHLwGN15jGqYy02OAwiDkW7BIUVz9fqDkPAjPtgIiLcW9x
- LFUhuKEQtXgXZbfKKgDD1aDsxIMQ8DunwCPGFxf/mvXV9yT2xexx2QnE7O5YExNpCxi2v3
- O2n9tFiu79NfHfhSI19A/FIzhloqhRg=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SWt3xA+ZgJHYVMq9IIXvFZMzqF/epU10bHZNQXzeuf8=;
+ b=CN9OTGx3FWbNf8wqwQKgNPqwc7eR6ZuVTwWBVxx/uvrFW9NtapaoiLZyxJf5kiqR5K+oCg
+ dQGkbEn89qcJgp6zH0sMYCMHDkyAuNsPJn7OBcvtVARXw+v8hOMxtrtjJe9Do4tJKoLT22
+ 4NqrSeSuKCG3YeWkyQnocyE1oOzylWs=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-4FNtXo_8ME2bqto1ZJI2Xg-1; Wed, 26 Nov 2025 03:23:14 -0500
-X-MC-Unique: 4FNtXo_8ME2bqto1ZJI2Xg-1
-X-Mimecast-MFC-AGG-ID: 4FNtXo_8ME2bqto1ZJI2Xg_1764145393
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b763acb793fso809002166b.3
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 00:23:13 -0800 (PST)
+ us-mta-677-Nel9k5fCPhqsqf1uE9COfA-1; Wed, 26 Nov 2025 03:43:45 -0500
+X-MC-Unique: Nel9k5fCPhqsqf1uE9COfA-1
+X-Mimecast-MFC-AGG-ID: Nel9k5fCPhqsqf1uE9COfA_1764146624
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b70b2a89c22so69264966b.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 00:43:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764145393; x=1764750193; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764146624; x=1764751424; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=cK9qgzZob7EA+KW+GuMQJ4tQbrfuFRwzIv+RTh6NZ6M=;
- b=WPWZ3MyQJKAzUq/vesMTShuBWg4+8FrsrjaGbv7TNnGiRubxTfj2QsDYx3osbX9s9b
- dEgcZ0VXNdrAcUqXYoJSisuxKTMFoCBDrJ08gxv/ABJg3mT2Zgy+muQ7JlGWgPL9wxAC
- 536rpoYTI8xG0BQZCoPTuBuC6DZkYqATJpCegT78T//o1kPltFx5pGTilVmlKdCvw2s/
- wWNrhY3lf7WSb/rsVCv32s49+obMRMac5g0FXL2XOxECFYNrUB/8r1iTsng+VOt+ZX6U
- lPro3QX9Id+MuiOjU6crB9/71vJSS/7lWqf/X7mpf8xNC+495VFQ8E9Lr5yu/HgW5ufl
- bWCg==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SWt3xA+ZgJHYVMq9IIXvFZMzqF/epU10bHZNQXzeuf8=;
+ b=ABvOUxsedEP4jV6oK6KNZ/zEx8cx53z/gtHBgyH8b1a48bMCH7wZwW04NlQDh15aQf
+ ABulZPCbx7mSNZ8jTfz0poDrYKlFbhyUtLhBWHs7fVjOwTQznleuRz7dF+tMfwO3e1jW
+ HUkkez6p0fcv9BAVwpSKelIYQ14VPME+fmk/EinpWxfQZA+EHgXpLwo+AmqJYkcAw0j8
+ M5IJccHbxgEgVwPLQb9v8MUk5bmOXOE0Z/eqPJzo3srKD8Ox6qc1YT0LJQAUc4cn3qww
+ 14qx7+eSFT0zA5VvDDkMKQAMucNA8YEv3LM47gD4VCk1+d4bFq0vT+kIXReaW38VLZzZ
+ TNZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764145393; x=1764750193;
+ d=1e100.net; s=20230601; t=1764146624; x=1764751424;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cK9qgzZob7EA+KW+GuMQJ4tQbrfuFRwzIv+RTh6NZ6M=;
- b=KgLSd8YXC8i1Hq3SaIoAkHGELCBwKRYdfWy8npQ6m4IaafvEAYI/rJtc3q2K6nG8LT
- bkKbNfKSQ5XRxBXK/i+G75tPrkvQJhFezASV0HrgVMSeKCSO3fkDdOHqr9+z886dH0t2
- Th6tAqHws0L1OKKV8NynoU6cmT+b/+My5sjBW3lHmNm1ndq/x534BgfYKe/t3514aBTh
- 0R325JqIqP9C9Cck5cgx5hLErXgVa3Kyv66iQ3qAtKIoWV7Eqi1UAjBisy25BySLRmNr
- CARJ5CD13/vQqVtByodX1kQC0C5+iuJuP+y0If7SCHmxzCypwQ+HyjdFt/vrQ4YShl8f
- 9P9w==
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SWt3xA+ZgJHYVMq9IIXvFZMzqF/epU10bHZNQXzeuf8=;
+ b=WZmChDKEU1vj0P9uBhqDADEEq9wxeO0Cj9PLHKUcaLjHUEzvmnbyndke+rj2tYnhXj
+ +HNkI6cg+Hfd29npYtnaXMkJXyf7pFxo81rWqvJZJ7TSZP7L9YA2mFqt9aCIGeKs5Dgl
+ b/i1c+4wFnR0QrmtDf2va9QgQdpK6mIOExlR/YxtM1WHfKs87gXtqGYkCFbEFmlpesQy
+ 85b/vlpSlxi7CQSfjEdSH04wJozzW0ZUv/Jp6jLoAID2QJOaTT2+eguLJM7/t/3O9tOb
+ 2pGf9ppbzy7Zahacl5vncs+EUmMi8TMgQ/SOM28Jqd0sHJI1dt3U4nqZQk1bCdyQ5vBs
+ G//g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4C7VMDKagfLcH442zuX4w4Iooxf6qzItUsA2FQS4YUcmBEok97TOJwV/Aaz3X/8wlRnM470Hfwpr/@nongnu.org
-X-Gm-Message-State: AOJu0Yw5zSa6kQNTTVzQGWxZOfVAReNSAFK8bPvKdmts4loHrfFukrxy
- cJ38GNdjjwEiU/A65Rw05cIYmmfM6b0CcIejZAx9YnAPD3btp9QzYYirlOLyobfUoDJ1qrgiZY/
- 0a7x3RFTEMPW3I/sgiZyDE+xKNG7QYrdt+ftUVjIYZ39PuGDP+vgjPE6p
-X-Gm-Gg: ASbGncsel8IeaTuzljbsR4Rw7HW3Tb67awajiA9yWNl1bw4UNqhaEhSuTyV1uz/lV9p
- KI1cOdNXhwuCd5Bzj7bPZ2K+bBFyNY1+bYV02dal+O3CvJfcmqycm/tG3FuEF+1zNveCX8gqHyI
- hoI6fq+PzWbxvOdDbXjE3U2+4Jk1CvUOx6pq+OvJ8L3QN19folicc2HtZ9nTLuZHJ96KjIw6cQu
- Sf+UziasuejY7E4eskTEZzlnNaVhWaOS9xr24anLEhEZtrS+VtR+HeXP6EABemJ7PyUAfBkjW2d
- L/tYlAi3/GLtTslY8fFFdKHCu+4f9SOcZd63w7XZslMP+4tfxMVkR4htk/tNVhM1WRoTMLxnxuX
- Mew95dwo=
-X-Received: by 2002:a05:6402:524c:b0:640:edb3:90b5 with SMTP id
- 4fb4d7f45d1cf-645eb2241a7mr5401011a12.7.1764145392927; 
- Wed, 26 Nov 2025 00:23:12 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH4NZ4mThh9ugGt8tknRc9ecoRZ1PIaVJDBRd3hxRNTlgRnmUiNkiCpLOG7z/IOgHqS8UHJRw==
-X-Received: by 2002:a05:6402:524c:b0:640:edb3:90b5 with SMTP id
- 4fb4d7f45d1cf-645eb2241a7mr5400993a12.7.1764145392591; 
- Wed, 26 Nov 2025 00:23:12 -0800 (PST)
+ AJvYcCWiqcTjjO6P5Y0HaVhYRm8HflYrjIjFZaCU3QsDy11VoSgLATXDwqS+YlR4s15truPCEzNTiVZYx00d@nongnu.org
+X-Gm-Message-State: AOJu0YyJtTLExjLrZPTgAtve9QKoxYJXjn3yqgsqNO7tt/EXH1CwpNVC
+ n7cA6kMkU6kj7bYrb+uDJMfYLSjrlwk5QIHVIhGlbMVFZogkl8h8WHAIYxK2loNMWDT6w68QfxN
+ bLsNG3suUneR833yHN/hZ2sEyGLeAoaVp8eta69D9TtHcQ71Sa194oCBh
+X-Gm-Gg: ASbGnctorBAiNCgD1lmcwXqCNKo6PLgc9DF+JL0Ee8ohBNr8MdkuDL/3zyPKoZEE4/K
+ IePlDVfofwevsxCeUbYi+AMu8Fmn/xv+lAqWguG1kfSWr4Kq7M2MHzj0dQvup7SzWT3mRWhUqZ1
+ s2oF5TwV6J/6SLjgcTIlU9m96E13B2JbTuCCO+NGl8VTGtf4JPliYFf8Q3SmCbGG5VO357ZfAWB
+ 2SPBjSAO9guI558+601CHVd3IbzkYLvUgQp4PLR2V8maD5CC35WZMoRBtYJcmOLtNpu96xdt20R
+ zF0xbhkFHVdU3XvhAfnc6T+bLRBvk4GY8lwVkrMyljCcaX+nN4BTdBkbeBuCvLDiLkD43bDg1Gi
+ zelvHDJA=
+X-Received: by 2002:a17:907:d19:b0:b07:87f1:fc42 with SMTP id
+ a640c23a62f3a-b766ef1d094mr2507087466b.16.1764146624428; 
+ Wed, 26 Nov 2025 00:43:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHLIo6tMhoCSckM4F84CZHZiX3Qz9iqdj4BVmilhErNA8cEDOCS51zaiBSDZQfzlgSekdKMkw==
+X-Received: by 2002:a17:907:d19:b0:b07:87f1:fc42 with SMTP id
+ a640c23a62f3a-b766ef1d094mr2507084666b.16.1764146623748; 
+ Wed, 26 Nov 2025 00:43:43 -0800 (PST)
 Received: from [192.168.0.5] ([47.64.115.162])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6453645f2easm17062679a12.33.2025.11.26.00.23.10
+ a640c23a62f3a-b7654ff4096sm1848582966b.49.2025.11.26.00.43.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Nov 2025 00:23:11 -0800 (PST)
-Message-ID: <90ea99f1-8cc5-4f13-af5e-5cc1f9499609@redhat.com>
-Date: Wed, 26 Nov 2025 09:23:10 +0100
+ Wed, 26 Nov 2025 00:43:43 -0800 (PST)
+Message-ID: <e9dbf6bb-d5b8-407c-86e5-93f056b287c3@redhat.com>
+Date: Wed, 26 Nov 2025 09:43:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0 v2 08/12] target/s390x: Use big-endian variant of
- cpu_ld/st_data*()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>
-References: <20251126075003.4826-1-philmd@linaro.org>
- <20251126075003.4826-9-philmd@linaro.org>
+Subject: Re: [PATCH] docs/devel: Update URL for make-pullreq script
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20251125164511.255550-1-peter.maydell@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -142,9 +136,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251126075003.4826-9-philmd@linaro.org>
+In-Reply-To: <20251125164511.255550-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
@@ -154,7 +148,7 @@ X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,31 +164,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/11/2025 08.49, Philippe Mathieu-Daudé wrote:
-> We only build the S390x target using big endianness order,
-> therefore the cpu_ld/st_data*() definitions expand to the
-> big endian declarations. Use the explicit big-endian variants.
+On 25/11/2025 17.45, Peter Maydell wrote:
+> In the submitting-a-pull-request docs, we have a link to the
+> make-pullreq script which might be useful for maintainers.  The
+> canonical git repo for this script has moved; update the link.
 > 
-> Mechanical change running:
-> 
->    $ tgt=s390x; \
->      end=be; \
->      for op in data mmuidx_ra; do \
->        for ac in uw sw l q; do \
->          sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
->                    $(git grep -l cpu_ target/${tgt}/); \
->        done;
->        for ac in w l q; do \
->          sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
->                    $(git grep -l cpu_ target/${tgt}/); \
->        done;
->      done
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/s390x/tcg/mem_helper.c | 48 +++++++++++++++++------------------
->   target/s390x/tcg/vec_helper.c |  8 +++---
->   2 files changed, 28 insertions(+), 28 deletions(-)
+> Cc'd stable because the old URL is likely to stop working soon
+> ---
+>   docs/devel/submitting-a-pull-request.rst | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/docs/devel/submitting-a-pull-request.rst b/docs/devel/submitting-a-pull-request.rst
+> index a4cd7ebbb6a..e7d00808782 100644
+> --- a/docs/devel/submitting-a-pull-request.rst
+> +++ b/docs/devel/submitting-a-pull-request.rst
+> @@ -67,7 +67,7 @@ subject tag is "PULL SUBSYSTEM s390/block/whatever" rather than just
+>   pull requests that should be applied to master.
+>   
+>   You might be interested in the `make-pullreq
+> -<https://git.linaro.org/people/peter.maydell/misc-scripts.git/tree/make-pullreq>`__
+> +<https://gitlab.com/pm215/misc-scripts/-/blob/master/make-pullreq>`__
+>   script which automates some of this process for you and includes a few
+>   sanity checks. Note that you must edit it to configure it suitably for
+>   your local situation!
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
