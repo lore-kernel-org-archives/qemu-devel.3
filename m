@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7143D1039D
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 12:35:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8A4D1039D
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 12:42:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOEjb-0004YU-9G; Wed, 26 Nov 2025 07:34:59 -0500
+	id 1vOEq4-0001pu-NT; Wed, 26 Nov 2025 07:41:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
- id 1vOEja-0004Xy-4E
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:34:58 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vOEpm-0001cp-L8
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:41:23 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
- id 1vOEjY-0001y1-HQ
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:34:57 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7bb710d1d1dso10125621b3a.1
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 04:34:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vOEpk-0003Nm-QX
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:41:22 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-47798ded6fcso39526665e9.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 04:41:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1764160495; x=1764765295; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2OslEuSLHm8TR5n6qgPi3UkDFWebVf7JQYbC8JEywVM=;
- b=a6w9e9BCVEy5IJWKScN6PjzdrSJcPiad7+OiRl58ZSB+mF0MhD5h8qbizG57iKReI5
- EKg5TdMrxWTcAw15KCuJNHCGnf7TAnTXuDIUl2utn19RAlWJeXXXOrOgw6FfDIyZwT0b
- 192qZwAmYk7Ey7mS4R9PxpcCWzny8aPwZj6ab9yBwV7tA4GHWR98vmhXr5jvKdvGt1pV
- 6ZKFuC5AQRCUgiIFrNeyR5OOBZ2ktlUfcfORw5eqShD8Ye2pkkccReaRUNm8vtDbQ9Ob
- SZJcaf5ehyhNI7LYkVmdfb8ofKTuoFLgqcvwlQiRWIlzAnZaqhU67hR4XhcNxtHKwBS0
- T2IQ==
+ d=linaro.org; s=google; t=1764160879; x=1764765679; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FCn/RFtesIvSy+oCDXPuPETQANWEumhqApq9lXNOCC4=;
+ b=cl0+4NbjptX5F1HQuCpvbI4AAJbuVPmbfJH93Ja7Gw6l1irwQmN4mKTd2+CtRQtZwW
+ vZeIIZ06T3AtiYqC42mvmX9YI+tas3NjxUmO8LTSs7G8o3S08su1x6I6V0+BCbG47/il
+ xq7Mg+GNrgS2YskTM8qzw8fO3oweZbKHKops2BM+XHExjLn5ig0QVyv039BApWmZpXzl
+ gYJSRNGgLHOTSp8ckELNPv6JDIOj7JvJ2hVStfj1vypf4E3bOAxvXGcllZfrg2KQp29p
+ 9E0BvE08a+ZLGRddSgDLbp93u92HWOy3HxKWHHh2EupQbCVdCXK9TtTouLN3Lh6kFZiu
+ xfTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764160495; x=1764765295;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1764160879; x=1764765679;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2OslEuSLHm8TR5n6qgPi3UkDFWebVf7JQYbC8JEywVM=;
- b=FlLTAr8PG4GqJ6AXJNsRrebCedjb2RKwohohMxel6sjLC/4crpaaLjYJW9VTk1r5d8
- q+y9o0YfNZT1DDvh38/rfZJi2eexteB4D/XpvU9KCt2fIcBPWI0Icc0Aq3nkq77vgVIk
- z9E1+UgS7u2oZgaWP6ampjmQZZcLo/gQ1KCHKPm5HZHH93VmU17mE0DVfInFDQg302Zl
- fdN8iEZ80RoCsw3Vo06EJ3TY45Jzd27GXi02LBkghkWr0W/6Ojoo++2ECr0I2d9wfqaA
- IQJ5+Y2T1fDRjt7BcYKUr5VtcKKcz9FhN6gqajy4/8H9fHb7a/ile+yoJs6oLIFkAuuA
- nL3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXVJFNTm7ICUuEPd60JmOohU1+3CM23Ylpm9d7GQYG/bNpHAu4z83WxKXvyRJ5olL0HdKbbHbPsy6KO@nongnu.org
-X-Gm-Message-State: AOJu0YxKhDP8zfTRWMo/fvD09sS5++pQW8nAeDlr//vj+E7P69T5c0VY
- S1cGIs4QvJpOm8ENdaVjcqMlCwDTrd1C7i5f6mYGtuEZuF7mMxLtUjAZ6L+y+X1/Z7unYWexY5h
- kh96T8NgctJfr+Vz1+gHwPJD612gLBkE=
-X-Gm-Gg: ASbGncsKrV+K8+kv4uG7sDb/bmkuhZlYRJW1ulOrv+b7me/67G5HinXg5rxlaJbeR3M
- WmxTYPfwr/v8KJmgYaA0yrtPn7d3zE/bMmoTmwPnXwynuwA9TSGfI0r3slgbAssdoJIsOS1JKT+
- cbX/1p8cjub1WWiH6XmLkT84owmCUrcui/e7AjQzBqdAfo8ga5EbxiDNtJVgbuNK8u7GIB9Wl3T
- gpAgsU0uYdMASjAkfnpWgwpVFKikQMsNdpNdIOxo8lUDzIcptFO1YyOHiQrZslGGQReH7FiPRF2
- YpjsoQ==
-X-Google-Smtp-Source: AGHT+IFv3bkCMXz51iSc1oNG1lS0gYbIR8PXyaLRSu4jr7VXehu4NXxSpumMkTAL7lQ9VqfoRr66IWSiwOzssugkuoE=
-X-Received: by 2002:a05:7022:ec89:b0:11b:af12:b9f5 with SMTP id
- a92af1059eb24-11cb3ec36a4mr4340219c88.5.1764160494967; Wed, 26 Nov 2025
- 04:34:54 -0800 (PST)
+ bh=FCn/RFtesIvSy+oCDXPuPETQANWEumhqApq9lXNOCC4=;
+ b=PmwxWeWfdsybiTWeegRL2WMkK+I58H5zIB9HPMZWmAzUvQDU6vJv4oqr7ureu/p3Mr
+ Pl84ayLpqh9Z3HDye6flghOVQlnv4J48OKOREisEMED7cLoPmQJHN46JqNfQbqOCkY4H
+ tVuZ7fRO5YRF9Mv/rZAlzNqwaili2jEHtYddJKaaqNlYmDt9UFDwbbnmjCHONa/SJoZk
+ GMEBTiWwJBBRzXs/KvcEfSwFxRsiPQJy5ziApcyxZbM9irwxdKSOyvzs+nq9Q1L4ThCT
+ UnXLvMlkXJ+d3/DICmKR/1w/EeJ2fkBy7daNpITZeBrVdTP8tuJKsXxbFFjaZqRlE5QL
+ ZTSA==
+X-Gm-Message-State: AOJu0Ywo6lb27pFntqBqEGL9pU9Mnteh5Bi5j1/vAfWWbRms3RL3cWMa
+ TMxk65xCcq+K3SfrFatlApv3uiQnnWerQbu/MufC601yUcyO2YegGCtCjvtr/Ia4fUa0W0yzSk/
+ zB/hS
+X-Gm-Gg: ASbGncsxmldOODFXIy1Qi7GXOH+ZBhkx/xD9RIl7iKEjBJO2BnARkDrC3MgpzGIZ3+Q
+ 8lZFQ3dYH7rC84rY2yVdW/906UDCRJ6lTgHBF2OKcWb5099J3Hh3GsoX1TjbLVMMGuxs1cttjTB
+ CM/HHFZuJUv15Lv18vuG/kSaEEJWfSLevsXWda+3wQWuoO7nz+WVCsDo1ckeMrb5hcTaN5482Xr
+ PnmFKiLx1Eq9jqvQJkkJh7GM9Cz/P/5jxULTiRmwYTZL+/7ywdWKWmpuEzmUbNMO/MnDhwE3XzZ
+ z1MT1lPVN6xS3B7JW26Aw1oiUnDy8ks7MI6wkjev9uFiR2fSHuztGd1ehxZHiS2/x9zPN5F/2BZ
+ WXEMuMAKzbZy6kZ9+JiVDHDwb5LgK7CHv0nseKUW4L1NoOW0r2hkTMA1GTHKVOy0KWUi/sZDH7l
+ ypCsaRlr6jdL0=
+X-Google-Smtp-Source: AGHT+IHvwaXPOdYtD577PYNDgJTbzWzYrlpV/VH/40EK/opNl23cXH1tJWdq9HijSps1Sg+/rNZ34g==
+X-Received: by 2002:a05:600c:4f14:b0:477:7b16:5f77 with SMTP id
+ 5b1f17b1804b1-477c10c802bmr203197165e9.3.1764160878818; 
+ Wed, 26 Nov 2025 04:41:18 -0800 (PST)
+Received: from jimm-x1.. ([2a10:d582:31e:0:a692:d4e2:eaed:fc4e])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7f2e556sm40044246f8f.5.2025.11.26.04.41.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Nov 2025 04:41:18 -0800 (PST)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Jim MacArthur <jim.macarthur@linaro.org>
+Subject: [PATCH V3 0/4] Basic ASID2 Support
+Date: Wed, 26 Nov 2025 12:36:46 +0000
+Message-ID: <20251126124116.351685-1-jim.macarthur@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20251125174649.257457-1-pzmarzly0@gmail.com>
- <aSYE_rdMhH36KBxf@x1.local>
- <87tsyheqpv.fsf@suse.de> <aSYt4MUUESAcThrr@x1.local>
-In-Reply-To: <aSYt4MUUESAcThrr@x1.local>
-From: =?UTF-8?B?UGF3ZcWCIFptYXJ6xYJ5?= <pzmarzly0@gmail.com>
-Date: Wed, 26 Nov 2025 12:34:43 +0000
-X-Gm-Features: AWmQ_bnqxgnPBRlK-bQakD4YM4F4PJFR0BkMkQA4_TTUL7zMI0_atxQOJpTHHsc
-Message-ID: <CAEZNvss0C0KaqgEJx3-_6XwagXGNe3S1QwTpKrMxg8irjRn9ig@mail.gmail.com>
-Subject: Re: [PATCH] migration: fix parsing snapshots with x-ignore-shared flag
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- michel@michel-slm.name
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=pzmarzly0@gmail.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,73 +98,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 25 Nov 2025 at 22:29, Peter Xu <peterx@redhat.com> wrote:
-> On Tue, Nov 25, 2025 at 06:40:12PM -0300, Fabiano Rosas wrote:
-> > Peter Xu <peterx@redhat.com> writes:
-> >
-> > > Thanks for the patch, though the u64 was parsed in parse_ramblock()
-> > > instead.  Would you consider refactoring that function instead?
+Addressed some more review comments - thank you Alex and Richard for the reviews.
 
-Refactored in V2.
+Changes in v3:
+- Patch 2&3 (was 2):
+  - Split patch 2 into 2 parts, one enabling FNG1, FNG0, and A2, and another
+    enabling ASID2 for cpu_max. The patch enabling cpu_max can be dropped or
+    reverted later if not desired at this time.
+- Patch 4 (was 3):
+  - Check for presence of TCR2_EL1 in test, abort test if not present.
+  - Additionally test that new fields read as RES0 if ASID2 is not present.
 
-> (1) When mapped-ram is enabled, do we actually need to setup those
->     ramblocks in mapped_ram_setup_ramblock()?
->
->     That is, when a ramblock returns migrate_ram_is_ignored()==true, IIUC
->     we don't need to allocate bitmap or page chunks for it?
->
->     We likely don't need to change this easily, because this will change
->     file format.. I'm also not sure if this is a major issue, logically
->     when ignore-shared is used we normally shouldn't need mapped-ram.. vice
->     versa.  So I may need to better understand the use case first on
->     enabling the two..
+Changes in v2:
+- patch 2:
+  - Added FNG1, FNG0, A2 to mask for tcr2_el2_write
+- patch 3:
+  - Changed test for ASID from "=0x100" to "!= 0"
 
-Re "when ignore-shared is used we normally shouldn't need mapped-ram" : since
-memory-backend-file + numa only affect pc.ram and the rest of RAMBlocks are
-serialized as usual, I can imagine someone may want to use mapped-ram format
-for these remaining RAMBlocks for minor gains. This is hypothetical though, as
-currently the memory-backend-file + numa + mapped-ram + ignore-shared
-combination
-causes QEMU to fail to write migration to disk:
+*** BLURB HERE ***
 
-    $ build/qemu-system-x86_64 \
-        -m 1024 \
-        -nographic \
-        -object
-memory-backend-file,id=ram0,size=1G,mem-path=/home/pzmarzly/repos/qemu-data/mem.img,align=1M,share=on
-\
-        -numa node,memdev=ram0
-    (qemu) migrate_set_capability x-ignore-shared on
-    (qemu) migrate_set_capability mapped-ram on
-    (qemu) migrate -d file:/home/pzmarzly/repos/qemu-data/vm-shared.state
-    (qemu) qemu-system-x86_64: Failed to write bitmap to file: Unable
-to write to file: Bad address
+Jim MacArthur (4):
+  target/arm: Enable ID_AA64MMFR4_EL1 register.
+  target/arm: Allow writes to FNG1, FNG0, A2
+  target/arm/tcg/cpu64.c: Enable ASID2 for cpu_max
+  tests: Add test for ASID2 and write/read of feature bits
 
-Seems like another bug, I'll give it a shot.
+ target/arm/cpu-features.h        |  7 +++
+ target/arm/cpu-sysregs.h.inc     |  1 +
+ target/arm/helper.c              | 10 ++++-
+ target/arm/tcg/cpu64.c           |  4 ++
+ tests/tcg/aarch64/system/asid2.c | 75 ++++++++++++++++++++++++++++++++
+ 5 files changed, 95 insertions(+), 2 deletions(-)
+ create mode 100644 tests/tcg/aarch64/system/asid2.c
 
-> (2) Is the check proper on validating mr->addr didn't change?
->
->     This is a question on the check itself when ignore-shared enabled,
->     with/without mapped-ram enabled.  That is, I question whether this
->     check is useful or valid at all:
->
->     if (migrate_ignore_shared()) {
->         hwaddr addr = qemu_get_be64(f);
->         if (migrate_ram_is_ignored(block) &&
->             block->mr->addr != addr) {
->             error_report("Mismatched GPAs for block %s "
->                          "%" PRId64 "!= %" PRId64, block->idstr,
->                          (uint64_t)addr, (uint64_t)block->mr->addr);
->             return -EINVAL;
->         }
->     }
->
->     In the error, it said "GPA", but mr->addr isn't GPA.. it's the offset
->     of the MR within the MR's parent container MR..  So if the parent is
->     the root MR / system_memory, then it is the GPA, however I don't see it
->     guaranteed..
+-- 
+2.43.0
 
-I only understand some of these words, having only started to dig into
-QEMU codebase.
-Feel free to change/remove this check as you wish.
 
