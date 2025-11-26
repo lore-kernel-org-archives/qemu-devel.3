@@ -4,88 +4,191 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 599C3D10F58
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 306CED10F53
 	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 14:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOGIY-0000xG-UB; Wed, 26 Nov 2025 09:15:11 -0500
+	id 1vOGId-000173-On; Wed, 26 Nov 2025 09:15:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@wesleyac.com>) id 1vO6pA-0005hA-KI
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 23:08:13 -0500
-Received: from fhigh-a4-smtp.messagingengine.com ([103.168.172.155])
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1vOC8W-0002AA-6w
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 04:48:32 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@wesleyac.com>) id 1vO6p8-0007tU-1I
- for qemu-devel@nongnu.org; Tue, 25 Nov 2025 23:08:12 -0500
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfhigh.phl.internal (Postfix) with ESMTP id C8E0914001ED;
- Tue, 25 Nov 2025 23:08:03 -0500 (EST)
-Received: from phl-imap-16 ([10.202.2.88])
- by phl-compute-05.internal (MEProxy); Tue, 25 Nov 2025 23:08:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wesleyac.com; h=
- cc:content-transfer-encoding:content-type:content-type:date:date
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to; s=fm1; t=1764130083; x=1764216483; bh=Xh+scfLymd
- oCuWFu5/Tkle5QpWNn2GqqlN1vrgBZ9PQ=; b=O0W4JQnsV1D3b6O/Eh4t8jbfXl
- xdi4bpJguzrwR7TnUTB1HGGtNDXc6607ol82Elr0Ynt7oKOwWFYtNS/PIs8LoasM
- K9hr1lz1/K/AnVfVTMIihFBhJ7b4uHJoWWFM4M9Qdb9jCtEdIfGT77Fcsd9cFERi
- 5O7Z37C5KnZazoLmohbeLbWINu7vWyR1zfh/otQsLJ3nYRO7gNWxVIdsHuuR5bWy
- QOORLdU012G08ETBS0cuR/2Z3ypDQJpLzThvkC/m44zbtzw+TJMBqzcQ6i/dFQhG
- VuXw656b4MOtBHIMWlAfttzLuy7PkwAXCdW6QTh2Q04U7eogkCckKcjA/QIQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:content-transfer-encoding:content-type
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
- 1764130083; x=1764216483; bh=Xh+scfLymdoCuWFu5/Tkle5QpWNn2GqqlN1
- vrgBZ9PQ=; b=W9kr41tHj59uoHQhGiQEMTdUsGI/U+OdZ8Kis/TzpWj2bE1bbks
- rEjGBoFr92g2AbAHiHq+cQ40lRLGhnLTD8qEiMwnC0XXb3T360b4YyRYJs/ImrNV
- eeuxQdmV26KuN7qTyN/Jq2lgniB5bSK84DR85/JcB2bXjUTw8QfCNfoUc09SX57n
- l6XV7feTplCd2z6zsPtV7FxYFgzTHz5iJ0xXtdFkMcM1jcp1eACtk4BMrAT3UVe2
- Xct7XZbedi54W1e0mobe34mLW4Fejuy/5NC2lIihBL7u9bFcAHo9Xv5Bo1O8By0i
- wfsskQF+F0fKtE78jzkSLPxLkV1JPLXjXMQ==
-X-ME-Sender: <xms:I30maXo40jHoIsaAaTmRxEl_joBb2jlaOlD6qV87fgGa2CPNrSD-1A>
- <xme:I30macd7Rs3hVHtgJq6-Qyx1ZeFVqYUt1F9c1dOpZcDLTOmug4B9hQC2BhJp002LS
- DKoY3Dtwwalewe_XYADeGFalY35fLDKR57oUPZnaiPq0Py-bp4fQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvgeeffeehucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucenucfjughrpefoggffhffvkffutgfgsehtjeertdertd
- dtnecuhfhrohhmpedfhggvshhlvgihucetphhtvghkrghrqdevrghsshgvlhhsfdcuoehm
- vgesfigvshhlvgihrggtrdgtohhmqeenucggtffrrghtthgvrhhnpeeivdefuefglefgke
- ejfeehgeeluedvfeffkeevjeehgeetffelveettdejkeffveenucevlhhushhtvghrufhi
- iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmvgesfigvshhlvgihrggtrdgtoh
- hmpdhnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehq
- vghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
-X-ME-Proxy: <xmx:I30madPYLNm8_uvDuVQJejq2lM4P3NiQH1XympSTVKM_I9ImWpLL_g>
- <xmx:I30maW74CUaAJK5jZLZbV3GL72DuDCt2lRrkWM9JRJLW7POfqXypWg>
- <xmx:I30maR4G_Kw8pzwC_pubgKxYLqPDBvK8tMyuLjwZIoFN6Zt_vNoKUA>
- <xmx:I30mae0P6yR182ZV6Z43jdCs5jZXReTlqBWchZyy_rh8YZriOU495w>
- <xmx:I30maZFQ1-wFi5yzlvlXpOPzUCtFSVEN0EfpHnllpJeYuiqqBGM8QsXr>
-Feedback-ID: i0c594533:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
- id 7CAFA2CC0083; Tue, 25 Nov 2025 23:08:03 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1vOC8T-0000Pl-GB
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 04:48:31 -0500
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 5AQ97HTQ220212; Wed, 26 Nov 2025 01:48:23 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-id:content-transfer-encoding:content-type:date:from
+ :in-reply-to:message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=d9OV3RhM84TUQ4Du9Fc77j1AWF32Y8tdam66cZ4GW
+ 7I=; b=wByCbPjDrhSJ4cBFJxg4/gjiPdPTxDU7v+ku46eGeHAxFVrpQ7dhywno5
+ x9FHKh/VdotwRqqQ63P42Hd5XoeE8fn6ooLviOgVdZFUuu0Qf62b1S04a4PUr8RP
+ fpn2ixNQGfejyLMsrMsphgMyFeOrIzITPzIDiRgxG9svLNU4k1davlVumXT81VU3
+ QgwTuVG2/IkYynw/T/43mYbDMYiY4eOoTgfaVw8ZPwBF2OeA10nTmJOpWqSAgY2U
+ Us5pa8HF/RTde8cgaqXVNwG80e2+SEGEyMchTMYIMqEZHrBelDBgi3QKadUr7h8c
+ jk+aJ43fNdM38FiRKONWG7vfywK6Q==
+Received: from dm5pr21cu001.outbound.protection.outlook.com
+ (mail-centralusazon11021133.outbound.protection.outlook.com [52.101.62.133])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4angxyspft-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 26 Nov 2025 01:48:23 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=px+2S1Y7OZ7DNhvmnwXCAlMGFH7Xch9rE9+ISgNbGyUzgPimlk2bCsHtf6UpVxo1LubtBrSccgc3YZnDfiV2ANqfnrLZX/7NOAvVSsxg7JuoT88Uk/9gTYrG+Kn7DzwE9nD6gHWVYHjf5LsgC31/f7LSu1UXx9wR/qZDn1LU7cFqKhTXFsloZS+l429cQ0191YvoCJ8EaLQRD5Lulq8BfcsCV/UWoqvSsgRIf9y54ryJ6asSZ12xZGAa8aSn98Ibl4dSNuLZ748okaWJsFjfaQfBrA0Y+IpITapGnM2e90fSYSB55GkHkOjgE3FNIv7m0rENhJFNSp117ZHKvaghcA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=d9OV3RhM84TUQ4Du9Fc77j1AWF32Y8tdam66cZ4GW7I=;
+ b=RrrmkUr2CLhrGj4jz4CP7MJn9ZeyvA32oN18rQeUE2lCdDFxpoI0SirQExMljykSxrqtVD7nnPl53SOwJCHydu6n28E5XlhkneOypHc1mCg6qrDNO9qxJqEMT5QqQBA5IydCgaHmXyW5jN3TUqIjnbsMg8hPBh8WSQo7mOJ3EYO4/KNiUjcMkajF5qzCHM54dycUcyqyeEFHMneLgeN3KKLCs3awW3uetONGqlxpV6DYVt4Dw0N5Nz+qXegJZjRXosNfpF86h4yyAjwRH7Mpdn/1UuDzMucDLQ81dFiT5sdM6K7lCqvZ3Z0RZWI1FBhdZ9lGjuMvPW7H943UfU8Czg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d9OV3RhM84TUQ4Du9Fc77j1AWF32Y8tdam66cZ4GW7I=;
+ b=y6fGMlGm41oLhoNJZNeyWDrhfhHILv5efDWLVoDo6bGRaJDVu10Bmj7djIjuAOdoPzDP8AHHY/TZ+ANY1OtVlBVfFahE2SxvbmGYDaFCDR0xKeCmpI6bP1HIwTsu5HfXt+Ou4N+/3fD9QoN9vua70cKFwqrI6O7yrIn59shEU2KyJviinKca8fNSLgTd1w9C+dZ6cpFPpVcFVtxXjMb71Op+6giu2IHlpiUe2nZjbFlGOqmRIr99oq8Vb9s2etjyTPEStt6uYXMEk9DiQRWy7dQKOX9nJc8kbUpx13MjIySFHH3rVZTL/XbSibMjCSvrO7A879gToUxwFoSRmqVf3w==
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
+ by CO6PR02MB7682.namprd02.prod.outlook.com (2603:10b6:303:aa::24)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.11; Wed, 26 Nov
+ 2025 09:48:20 +0000
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::27c4:c948:370:572b]) by SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::27c4:c948:370:572b%4]) with mapi id 15.20.9366.009; Wed, 26 Nov 2025
+ 09:48:20 +0000
+From: Khushit Shah <khushit.shah@nutanix.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+CC: Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Sean Christopherson <seanjc@google.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
+Thread-Topic: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
+Thread-Index: AQHcXrhurlricMg9iE6/H6LGVi6DLrUEthqA
+Date: Wed, 26 Nov 2025 09:48:19 +0000
+Message-ID: <F09B2DC7-6825-48B4-94A9-741260832167@nutanix.com>
+References: <20251126093742.2110483-1-khushit.shah@nutanix.com>
+In-Reply-To: <20251126093742.2110483-1-khushit.shah@nutanix.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|CO6PR02MB7682:EE_
+x-ms-office365-filtering-correlation-id: a0ade3a1-5c3e-4ac6-b983-08de2cd0ee86
+x-proofpoint-crosstenant: true
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|376014|1800799024|366016|38070700021;
+x-microsoft-antispam-message-info: =?us-ascii?Q?qzvpbk940yDO/2DGCmrz2px3Wh23ENFWcUTHzGiKvm9BmIte3nA0LkK7iILf?=
+ =?us-ascii?Q?ckb+josW/8dzmzDN0ZmvNnxBchLN7h69k0I6GRViY1siZ3eCcjmhaiWk+Um6?=
+ =?us-ascii?Q?3c3VBbNHvSMEhZhgQWLY5wTXxqe6LEs9QaE6a7rFo9q5ZuFJOghh4zHQuJqS?=
+ =?us-ascii?Q?0ZmdOChTVR/KC9jG5aaHMCj+PlfvodoUAKG1Oy4jqpxFGMAMYdTaSswcl3zk?=
+ =?us-ascii?Q?wQHvUE5CHkrDRLJWsfE+rn/gjwB6+Jwaxx4SgB/H8LtFZvGK4RiOrMKtcFlo?=
+ =?us-ascii?Q?heMUoldxyHkHXXBKKltrXHREvCUbMlYhTcchedcX/CqYop4OANKA0wScxIPi?=
+ =?us-ascii?Q?fshajgyRHp+MSLDCcVg72sVaZoL8ev7BszhGOxjqUifnoESYGqqX/j/NNZ50?=
+ =?us-ascii?Q?jKmQP6f6Ut6ndF2uv7XVubgfRfM0j4/lyIzlQyxmoSm90HFuRldjuKWG3L2M?=
+ =?us-ascii?Q?h9ivfdb/Fzvin6A/mQKRvDZQlR2FtnGDo0jv8+nabqddCIPU1DDUkPfKjJbh?=
+ =?us-ascii?Q?q1OjypSAQSPdBsss1A1CDDk4UhTYvTS5PZl2p5ABBzl7fMmZq9FlFmQIXoqs?=
+ =?us-ascii?Q?eQu9D15e/HJBjjfettQv7IljFEI/28PlF0JCW6gsCbADgTfP+L//8wZ5cUB0?=
+ =?us-ascii?Q?YcYS9GoICQJyx0i24fy+csjg7nSx8FQFoj9PT60CEWOX4BiX4U9erF7jE0LV?=
+ =?us-ascii?Q?XfAvJIa0qEb5FDaekCI2jj1Hrau6A5HAIpcmjCLXDhZInukx1GM7OYwPWvbO?=
+ =?us-ascii?Q?G8Hwr/a2A2BRBP68WuoGnwqBhnBXS+qEQGLsAekr713G293QJmjVxreY0bC6?=
+ =?us-ascii?Q?/anewgpU+g/ILsqMhsqDJLn/LPHTDKFFdy6WfC0ksVxOMec5cYraV9N0kZaU?=
+ =?us-ascii?Q?pEZ+ONftqK4pa3RFB9Un4/LTVTnbTLOe/i4CtFhz/p3fzLxdHkQlTPtgeqa4?=
+ =?us-ascii?Q?6Z5pHmMqFy9t8FL3sWwi8l2PRPROH/Z2n+dmnrztiin1mh617Djr8uVvotGW?=
+ =?us-ascii?Q?rKnABdx/VCyz9SR6qo0nBDCRfNnuBL8mWvzQMucP/pCDeNyW2E3VvJYrsf7R?=
+ =?us-ascii?Q?UroFd/2pxuJgfhtBfc8lWp/w6ekh3a+xDNysUKyQ72Lu3K6GZNrgwQpGjWu3?=
+ =?us-ascii?Q?M6LVZZufocZc4M2YtdJsatqhiaRX3/5C4niMZqXUIJ2Glp8EPJdaO0AfDWUI?=
+ =?us-ascii?Q?SMG0rbbPqNKgb5B3J2mcsxGUhvHtqm/JEKpB1GbMQHDUdlZ4Y9WVaVWmfcJk?=
+ =?us-ascii?Q?sPXNuer2FlFoJCUrW2peLXNWGwjYYqIs9PKu7oxspOkDaZdVEKp6U0lgxuBu?=
+ =?us-ascii?Q?srNulrFqGDzrpBGpEAKJw585A2IoQLRbJdLuoYjnvF1elTfn+swPwO5UajEn?=
+ =?us-ascii?Q?OxxLiL8/8fwZOyIwmyJvgQ25M3OPXm+vILi4fg/TCeY1lFeoVLPew5FUB2Ba?=
+ =?us-ascii?Q?q3LwCoRehtzngaHHE0qq+lsolV+Qdi2Fpu8o1oD6/NxOh7ZcT0QT11o/LrBB?=
+ =?us-ascii?Q?mMhHfmJKdI+Hhz4gy8J69qiTSe0MosjP+S/G?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?gtTRScA9dPDnBro3WodVsj3N528O5GjanoMSbKOeLT8YrucX0hzzyN9mh+Zk?=
+ =?us-ascii?Q?WqmiTC3acileNrVtf/BoieAXnTHzFxVgKVraoXdi/kMYEGRudNBNorO2wSuH?=
+ =?us-ascii?Q?T7ATsBYQc+DY9bI9F4PHK83QZsenS7bQUMMmzEE+X5GlyjxB6J6wgUhnGHR5?=
+ =?us-ascii?Q?jpr+TdJl2j9fwu6ZhStgmf1TNWaig4I39lbsXfyvxVPrlpwIzQ1yCXCP1RXN?=
+ =?us-ascii?Q?56Y1SW03eRCsQ9EGKcgAXM0LoKPdGzDjHSnz0kSClh1cZdg6uCDNgUqpatQs?=
+ =?us-ascii?Q?+uqZzqnCmgY8TJYoiK1sJzjSdjlUgiAz+r5X62PjTA2IUP4wctP/q/ROSC4v?=
+ =?us-ascii?Q?PxEZ6BT4qYRUew+HzvXWkS2m6l7duzicT8+CaTYcOsYF9/BT9UIRQB56XlDU?=
+ =?us-ascii?Q?jCXTHWKvTeuOy9UTG8CILt52leSnvwofl46s38pLI7nhAlIdFlrRgfKVty+o?=
+ =?us-ascii?Q?eTpnyubwAg6WhH70S1o5n/eZafoPxhvxA+K88Qm/mR4k79BW2k3r3EO7nOdv?=
+ =?us-ascii?Q?6rcOlFTobEj/0/w71cxoj+Rsx7m3fufg0M5IWpNID63YJsYlrZ4BlfOc+4yc?=
+ =?us-ascii?Q?dT6JjC3v35w9XZjVKQc/zvxeuFeA9GFRfDzDNjeGxhad6/NcWi/w402MKgnu?=
+ =?us-ascii?Q?KaLrDR/O8UHr8050ZvxyhenepMIUlMKlsBYSHFaXnazoM+lDCeuOeM0vgji5?=
+ =?us-ascii?Q?7MEdtbuH2uFjspmgxfabBhqOTel6DAKKALBMzq9W8MQ2TAXS2yMuhIIjduVR?=
+ =?us-ascii?Q?fUnKcot+fe4mO03uL4kWJr0MSERJ87tgGtKe0pEuDAh8W8Why4vomuv4Bb4O?=
+ =?us-ascii?Q?J6E5mTTkb7VHq0+82DJGXs0Mo3jzeCVH52ntqnC4iSDs0J+sYKAMBYNGLXH4?=
+ =?us-ascii?Q?YWOwGnfalH64bowinXJsMJlGkm2VFl8Q6mmbPIVqpLbt1V+7ki7d5eQOcV0O?=
+ =?us-ascii?Q?gwClCTb2Bxk9k2lREHW/M6vSr55PE4Q6l5gfKkv5HAqmmlXzky9up8Ope3GW?=
+ =?us-ascii?Q?+bBg1C9rMS/MhbjCCagg3a0z/5kmR39HG4gK7rW54AFkShrJ9GS98q4Sd4k5?=
+ =?us-ascii?Q?43/uQyDM7Hq37C2djjgQsKBGiXFFz87vXjUHAsBCM1R/Z/47a3U8Q2OyYbTp?=
+ =?us-ascii?Q?JnioJaAnzY3Qx/ukjb2uyGgXARlX2hm6NfWqFjBe2ZMan2fErDwTMCv1PqKz?=
+ =?us-ascii?Q?kxMApX6NKFemxSl2uBEVFKx6LEApfJmxAqokY230HNehAwa4mxXYxTt9+u/r?=
+ =?us-ascii?Q?mEAMYt/1Ocos3wnFcV0Cu8uyr4vAgwwKIs62Kw/P2DQF5IxgwP6zOSHHRPg2?=
+ =?us-ascii?Q?Tlbwwo9vZivJz+cxRqIW+bEF3QzT2QrIArmI0oOumjoSW99UcN+8jZ5pom+m?=
+ =?us-ascii?Q?Mcs35i1TPZuc8ZE6/K5kEB5aFOaJ1UoQ5mU/TRs3YUTx5bYe+zNwqYEKShje?=
+ =?us-ascii?Q?log2TQepRBTQ/bESUr3fgrxqk36EM+X5VxLZL/Y6Zze9EKG6jnUsTJ4aObR6?=
+ =?us-ascii?Q?OLefrGBeAjfO0V+iyjYDS2P2so2f9e0KBfAjC5L+zqHHd2RNZB8gZIow0B4M?=
+ =?us-ascii?Q?Lc7GE0iM+g8h6Opmp2vDHpx1lHnSbzBpIqK38M2XkjKVIhxgnXk/2AnrvIEW?=
+ =?us-ascii?Q?cQ=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <3FDEEAF97377CE41B24843CCAD9E7541@namprd02.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Date: Tue, 25 Nov 2025 23:07:43 -0500
-From: "Wesley Aptekar-Cassels" <me@wesleyac.com>
-To: qemu-devel@nongnu.org
-Message-Id: <4156bca7-ef99-4158-867d-c41893f7c8e3@app.fastmail.com>
-Subject: [PATCH] hw/usb/pcap: Prevent truncation of USB data in pacp files.
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=103.168.172.155; envelope-from=me@wesleyac.com;
- helo=fhigh-a4-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a0ade3a1-5c3e-4ac6-b983-08de2cd0ee86
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Nov 2025 09:48:19.9800 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Uf9cAOmHooTTWAyd0RBpLE4zy2yvC79v4+opdLr+/t+sRsuKdln0GIXBivZfiJVjd9znEzm3Z+0tH7p4kJFoBZxipV++fmrdkGeNaaTLQQ8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR02MB7682
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI2MDA4MCBTYWx0ZWRfX+8DcqZ7MHtNs
+ wzijuYmSOXVTYI2RsGd9OsgrD8FLlQdnNDOsO1phuUQKFjAqqWN5QHUzwqsmt6bXDKqJcUbFN7B
+ DgL3psbvpaIci8a0rYeiJvY4dlYH7mUbJHIoPWdJITMYGSZgALQoglckQWMjUCkeBy/DajAQw+E
+ hbyFRroKW7rXhjqBuYNLdL8CAsUURwHCKePq72OuOr1DcelgD6k5gizvrDmBt9a8q2wwBtKzvC5
+ KHPF3TFzY7KuJUGp5GS8X0jy8o0Q2H+bxMm9eK97uFU/rmZcOaQm/oiQuJ2jTy0zgbjJjss4TGr
+ ALe9IerzxbeQ+cCKQ2d1JcA/X/RkqTpswq1ih51Uj+GSzLX+ayQjZ85PQG7gSTsfB42vkrthmhL
+ ugYkm9oP0rZAtJlBtVHJnTlabXFWiw==
+X-Proofpoint-ORIG-GUID: utd1dZOOq5JNnceULbrJclynNfN36BuE
+X-Proofpoint-GUID: utd1dZOOq5JNnceULbrJclynNfN36BuE
+X-Authority-Analysis: v=2.4 cv=BeXVE7t2 c=1 sm=1 tr=0 ts=6926cce7 cx=c_pps
+ a=0TjXLQglyxsLlDBGQ9rQow==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=6UeiqGixMTsA:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=yEmMrvy33JanpkBWaFwA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-25_02,2025-11-25_01,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=khushit.shah@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 26 Nov 2025 09:14:44 -0500
+X-Mailman-Approved-At: Wed, 26 Nov 2025 09:14:54 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,41 +203,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, packet data is truncated to 256 bytes in pcap files. The
-original length is recorded, but the actual data is discarded. This
-shows up in Wireshark as "bytes captured" being smaller than "bytes on
-wire".
+Testing summary:
 
-This is because DATA_LEN is used to limit the maximum pcap size.
+Power-on (split-irqchip):
+  - An unpatched kernel with patched QEMU using IOAPIC versions 0x11 and 0x=
+20
+    shows the expected legacy QUIRKED behavior.
+  - A patched kernel with patched QEMU using IOAPIC version 0x11 does not
+    advertise SEOIB.
+  - A patched kernel with patched QEMU using IOAPIC version 0x20 advertises
+    SEOIB and correctly honors suppression.
 
-I'm not sure why 256 was initially picked. There are several sources
-that report 1024 as the maximum size of a USB packet, so that seems like
-a reasonable thing to set it to.
+Migration:
+  - Patched QEMU to patched QEMU:
+      If the SEOIB state is not QUIRKED and the destination kernel is
+      unpatched, migration fails. Otherwise the correct SEOIB state is appl=
+ied
+      before vCPU execution resumes.
+  - Patched QEMU to unpatched QEMU:
+      Migration succeeds only when the SEOIB state is QUIRKED.
+  - Unpatched QEMU to patched QEMU:
+      Migration succeeds and preserves the legacy QUIRKED behavior.
 
-It also might be reasonable to allow the value to be configurable. I
-have opted not to do this, since it's more complex, and there does not
-seem to be a significant downside to increasing it to the maximum, other
-than the potential increase in size of the pcap files, which is a
-tradeoff that people capturing pcaps are likely to want to make.
-
-Signed-off-by: Wesley Aptekar-Cassels <me@wesleyac.com>
----
- hw/usb/pcap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/usb/pcap.c b/hw/usb/pcap.c
-index dbff00be25..86eb603b5b 100644
---- a/hw/usb/pcap.c
-+++ b/hw/usb/pcap.c
-@@ -70,7 +70,7 @@ struct usbmon_packet {
- /* ------------------------------------------------------------------------ */
- 
- #define CTRL_LEN                     4096
--#define DATA_LEN                     256
-+#define DATA_LEN                     1024
- 
- static int usbmon_status(USBPacket *p)
- {
--- 
-2.50.1
 
