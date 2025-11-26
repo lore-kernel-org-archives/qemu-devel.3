@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D9BD10F34
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 12:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8B66D10F34
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 12:42:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOEqL-0002wW-Pa; Wed, 26 Nov 2025 07:41:57 -0500
+	id 1vOEqH-0002Iz-C9; Wed, 26 Nov 2025 07:41:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOEqI-0002bB-0n
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:41:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOEqF-0003QT-50
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:41:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764160909;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wYqgSylkBCj0+dBZz5KYyTjBUHFJLZyjG6hsYfolYc8=;
- b=YoVGnJgIwTbVA4FxfKnSJiKWFg3GUCoNKJm+HwxjySiL3QoEXbQkF4NoMSyi5vVkYYM89E
- xuUO0pzSVU0mcVf7WU+yVak8ckHNBG/oziHweYAsJpPvrO00G4Rgu6eLJNzvGnKaWFeDrk
- IhmLXhDQ2i3TzKuXXqSMdWytXonCVFU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-153-qx4v7SB7NMunQhBXbtw2Ig-1; Wed,
- 26 Nov 2025 07:41:45 -0500
-X-MC-Unique: qx4v7SB7NMunQhBXbtw2Ig-1
-X-Mimecast-MFC-AGG-ID: qx4v7SB7NMunQhBXbtw2Ig_1764160905
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A8ABE1954B0B; Wed, 26 Nov 2025 12:41:44 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3EB5C195608E; Wed, 26 Nov 2025 12:41:44 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B9DA821E6A27; Wed, 26 Nov 2025 13:41:41 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,  Peter Xu
- <peterx@redhat.com>,
- qemu-devel@nongnu.org,  farosas@suse.de,  peter.maydell@linaro.org
-Subject: Re: g_autoptr(Error)
-In-Reply-To: <aSbr--ZbqzKVNDuC@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 26 Nov 2025 12:00:59 +0000")
-References: <20251125070554.2256181-1-armbru@redhat.com>
- <871plmk1bc.fsf@pond.sub.org> <aSWSLMi6ZhTCS_p2@redhat.com>
- <87jyzexrly.fsf@pond.sub.org> <aSXWKcjoIBK4LW59@x1.local>
- <769f5a57-7006-4cef-a5cb-12d53b7c30a5@redhat.com>
- <c0aa79ad-d6f4-413f-ade6-43e7609e37ac@redhat.com>
- <87ecplc8yn.fsf@pond.sub.org> <aSbr--ZbqzKVNDuC@redhat.com>
-Date: Wed, 26 Nov 2025 13:41:41 +0100
-Message-ID: <87v7ixarui.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vOEpo-0001nA-FO
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:41:25 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vOEpl-0003Nr-Rc
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:41:23 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4775e891b5eso28640005e9.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 04:41:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764160880; x=1764765680; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3pWIda8e2UrEXXWq+lxi04bS+9Uhurh/4yQC9gLnIYs=;
+ b=f6Y1Ew7uBNj0WGte654VcVSF5F6Es1XIO05AjIWSYl28kmeGixYigWlSfcRjHQYOLQ
+ w7XDEOXJRrcAxvTPEelQ38jUkbTIVIR/Rw+HtWOvC3WuxLOSwCBeS1mJQ2fVxTb88mWk
+ l/V4D75KQkH7L1YXjpm0rSv4Ra9c1KFth5EvTphxVJa1bsUAnOtKldX+wSvvdpxMf3er
+ +fXurBJuAoCUPWg/r7IJK1nHF6u/IWRS2kK5Ll/XlLgpExu6Yc7LpUb62Dr4xrnHYw66
+ 60Z385fI+WLLSyGQ400EVs4voKQPKJhidaSEYxV2Cw2Z/k+emvMosA7bckmXN73gdjz+
+ Ox9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764160880; x=1764765680;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3pWIda8e2UrEXXWq+lxi04bS+9Uhurh/4yQC9gLnIYs=;
+ b=TryDaC6EqY71FQGRGYaxYMa7LbOktWvU9dpsQ7wDfdw+XWHkHl4o3HYlJ0zvpnwPK/
+ 9pHC30+ckUMoygyXwiskuNK2Hah2FxSLncHrBCUxEYdAfEYhxNtfhlxoBGO+7Vqn+UMy
+ wBoBuHT2np0izS1klfOxDJJhE51ZV+p0Sb+HJy9wjesIyw7e3Gln0rm38eBIuzDalaFD
+ RoB+wi5LLakgh4T4FNkTNQUoa1B+6Eqen1oRDI/NNaFQwd/4PPNp15kZlajz44z0cbkH
+ xgcdHIk3LmJAis6rlkyiNBAWSo+0fWRZ4UOQwOpBNePNztBT3UwgB2pdH9CVISRLNQko
+ aNKQ==
+X-Gm-Message-State: AOJu0Yxg+Rcxm4+lPQaZ+NpQef660XwimXvFajImxaw7LbusRi9d68UG
+ NqK07PtAYFsyEpNIiyghOVMEhgftQUNZSrxOLkxOOw353MtLxfu/A4ggBabfBRM5VXP1lEijSPL
+ ppxAh
+X-Gm-Gg: ASbGncsvxmt+b0rWWzUTExdB4/J5od9ZJN5at1OwIY+ZcIStimwU+ZVM8aPJ2QgI8tn
+ K/STo3/j8e/uOPb51kGhem3fC/bn4vrw6QOpCqY+OqLxcjyP/4CqGpjX+b1/U8P7XRDtIuSmF5P
+ IUqw/cpvmk0mgeqqx0Ism5y3mMOFtd9teneZPveJ/Ohj7EwEyKgSxkG8m3+gOs7KxfSRcMkyS4B
+ C6xAwRo9QAR43DyJWoYPDBKOCB1r0SrxwwTnX0jzBX8QptuqeEj7ULmbyDrmXkqOfY39JcoqCf3
+ eJp4DdkfO/7MLwl5Tc5j/2xJuutbUIM140XHASUMC6SthzIYt+YT7RJ0okd8ef2NmW05y/JTq3G
+ jj4mgdE1wKsYJTVIPf1clSNNYrrs/VvyKeYHX7/JxqYRSfHm8rs3OkHRTifY/O/bxqwS094xDD1
+ 3QU5Vq9Atmd9RLuINfhB6ueQ==
+X-Google-Smtp-Source: AGHT+IGFeW24VR/G/m/izLHz2352nqwtAI5sx7N7liUTDUi2THJVUtmED8ts2jMXrG+2hILzndQbRQ==
+X-Received: by 2002:a05:600c:4fcc:b0:471:9da:5252 with SMTP id
+ 5b1f17b1804b1-477c01ebe2amr187502335e9.29.1764160879841; 
+ Wed, 26 Nov 2025 04:41:19 -0800 (PST)
+Received: from jimm-x1.. ([2a10:d582:31e:0:a692:d4e2:eaed:fc4e])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42cb7f2e556sm40044246f8f.5.2025.11.26.04.41.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Nov 2025 04:41:19 -0800 (PST)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Jim MacArthur <jim.macarthur@linaro.org>
+Subject: [PATCH V3 1/4] target/arm: Enable ID_AA64MMFR4_EL1 register.
+Date: Wed, 26 Nov 2025 12:36:47 +0000
+Message-ID: <20251126124116.351685-2-jim.macarthur@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251126124116.351685-1-jim.macarthur@linaro.org>
+References: <20251126124116.351685-1-jim.macarthur@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,32 +101,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+ target/arm/cpu-sysregs.h.inc | 1 +
+ target/arm/helper.c          | 4 ++--
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-> On Wed, Nov 26, 2025 at 12:46:40PM +0100, Markus Armbruster wrote:
-
-[...]
-
->> Don't worry about it!  From my point of view, the process worked okay.
->> A big series got reviewed by maintainers, except for one little patch
->> touching another subsystem, where that subsystem's maintainer (me)
->> remained silent.  The series was then merged without further delay.
->>=20
->> Would I have appreciate a timely nudge on that little patch?  Sure.  Is
->> not nudging me a failure of sorts?  Nope.
->
-> The other thing that plays in here is that we actively encourage use of
-> g_autoptr everywhere.
-
-We do, and for good reasons.
-
->                       It is very unusual for "Error" to be a type that
-> does NOT want g_autoptr, and thus the mistake is very much on the cards.
->
-> I've proposed it before myself & Markus caught it. I also caught one
-> other proposals to add it since my attempt. This third time it slipped
-> through review. I expect we'll see a 4th attempt to add it at some point.
-
-%-}
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+index 2bb2861c62..2ba49d8478 100644
+--- a/target/arm/cpu-sysregs.h.inc
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -14,6 +14,7 @@ DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
+ DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
+ DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
+ DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
++DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
+ DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
+ DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
+ DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 27ebc6f29b..c20334fa65 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -6566,11 +6566,11 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa64_tid3,
+               .resetvalue = GET_IDREG(isar, ID_AA64MMFR3) },
+-            { .name = "ID_AA64MMFR4_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
++            { .name = "ID_AA64MMFR4_EL1", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 4,
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa64_tid3,
+-              .resetvalue = 0 },
++              .resetvalue = GET_IDREG(isar, ID_AA64MMFR4) },
+             { .name = "ID_AA64MMFR5_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 5,
+               .access = PL1_R, .type = ARM_CP_CONST,
+-- 
+2.43.0
 
 
