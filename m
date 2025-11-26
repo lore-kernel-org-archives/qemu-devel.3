@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8A4D1039D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D9BD10F34
 	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 12:42:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOEq4-0001pu-NT; Wed, 26 Nov 2025 07:41:45 -0500
+	id 1vOEqL-0002wW-Pa; Wed, 26 Nov 2025 07:41:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vOEpm-0001cp-L8
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:41:23 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vOEpk-0003Nm-QX
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:41:22 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-47798ded6fcso39526665e9.1
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 04:41:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764160879; x=1764765679; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=FCn/RFtesIvSy+oCDXPuPETQANWEumhqApq9lXNOCC4=;
- b=cl0+4NbjptX5F1HQuCpvbI4AAJbuVPmbfJH93Ja7Gw6l1irwQmN4mKTd2+CtRQtZwW
- vZeIIZ06T3AtiYqC42mvmX9YI+tas3NjxUmO8LTSs7G8o3S08su1x6I6V0+BCbG47/il
- xq7Mg+GNrgS2YskTM8qzw8fO3oweZbKHKops2BM+XHExjLn5ig0QVyv039BApWmZpXzl
- gYJSRNGgLHOTSp8ckELNPv6JDIOj7JvJ2hVStfj1vypf4E3bOAxvXGcllZfrg2KQp29p
- 9E0BvE08a+ZLGRddSgDLbp93u92HWOy3HxKWHHh2EupQbCVdCXK9TtTouLN3Lh6kFZiu
- xfTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764160879; x=1764765679;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FCn/RFtesIvSy+oCDXPuPETQANWEumhqApq9lXNOCC4=;
- b=PmwxWeWfdsybiTWeegRL2WMkK+I58H5zIB9HPMZWmAzUvQDU6vJv4oqr7ureu/p3Mr
- Pl84ayLpqh9Z3HDye6flghOVQlnv4J48OKOREisEMED7cLoPmQJHN46JqNfQbqOCkY4H
- tVuZ7fRO5YRF9Mv/rZAlzNqwaili2jEHtYddJKaaqNlYmDt9UFDwbbnmjCHONa/SJoZk
- GMEBTiWwJBBRzXs/KvcEfSwFxRsiPQJy5ziApcyxZbM9irwxdKSOyvzs+nq9Q1L4ThCT
- UnXLvMlkXJ+d3/DICmKR/1w/EeJ2fkBy7daNpITZeBrVdTP8tuJKsXxbFFjaZqRlE5QL
- ZTSA==
-X-Gm-Message-State: AOJu0Ywo6lb27pFntqBqEGL9pU9Mnteh5Bi5j1/vAfWWbRms3RL3cWMa
- TMxk65xCcq+K3SfrFatlApv3uiQnnWerQbu/MufC601yUcyO2YegGCtCjvtr/Ia4fUa0W0yzSk/
- zB/hS
-X-Gm-Gg: ASbGncsxmldOODFXIy1Qi7GXOH+ZBhkx/xD9RIl7iKEjBJO2BnARkDrC3MgpzGIZ3+Q
- 8lZFQ3dYH7rC84rY2yVdW/906UDCRJ6lTgHBF2OKcWb5099J3Hh3GsoX1TjbLVMMGuxs1cttjTB
- CM/HHFZuJUv15Lv18vuG/kSaEEJWfSLevsXWda+3wQWuoO7nz+WVCsDo1ckeMrb5hcTaN5482Xr
- PnmFKiLx1Eq9jqvQJkkJh7GM9Cz/P/5jxULTiRmwYTZL+/7ywdWKWmpuEzmUbNMO/MnDhwE3XzZ
- z1MT1lPVN6xS3B7JW26Aw1oiUnDy8ks7MI6wkjev9uFiR2fSHuztGd1ehxZHiS2/x9zPN5F/2BZ
- WXEMuMAKzbZy6kZ9+JiVDHDwb5LgK7CHv0nseKUW4L1NoOW0r2hkTMA1GTHKVOy0KWUi/sZDH7l
- ypCsaRlr6jdL0=
-X-Google-Smtp-Source: AGHT+IHvwaXPOdYtD577PYNDgJTbzWzYrlpV/VH/40EK/opNl23cXH1tJWdq9HijSps1Sg+/rNZ34g==
-X-Received: by 2002:a05:600c:4f14:b0:477:7b16:5f77 with SMTP id
- 5b1f17b1804b1-477c10c802bmr203197165e9.3.1764160878818; 
- Wed, 26 Nov 2025 04:41:18 -0800 (PST)
-Received: from jimm-x1.. ([2a10:d582:31e:0:a692:d4e2:eaed:fc4e])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f2e556sm40044246f8f.5.2025.11.26.04.41.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 26 Nov 2025 04:41:18 -0800 (PST)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Jim MacArthur <jim.macarthur@linaro.org>
-Subject: [PATCH V3 0/4] Basic ASID2 Support
-Date: Wed, 26 Nov 2025 12:36:46 +0000
-Message-ID: <20251126124116.351685-1-jim.macarthur@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOEqI-0002bB-0n
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:41:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOEqF-0003QT-50
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:41:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764160909;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wYqgSylkBCj0+dBZz5KYyTjBUHFJLZyjG6hsYfolYc8=;
+ b=YoVGnJgIwTbVA4FxfKnSJiKWFg3GUCoNKJm+HwxjySiL3QoEXbQkF4NoMSyi5vVkYYM89E
+ xuUO0pzSVU0mcVf7WU+yVak8ckHNBG/oziHweYAsJpPvrO00G4Rgu6eLJNzvGnKaWFeDrk
+ IhmLXhDQ2i3TzKuXXqSMdWytXonCVFU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-153-qx4v7SB7NMunQhBXbtw2Ig-1; Wed,
+ 26 Nov 2025 07:41:45 -0500
+X-MC-Unique: qx4v7SB7NMunQhBXbtw2Ig-1
+X-Mimecast-MFC-AGG-ID: qx4v7SB7NMunQhBXbtw2Ig_1764160905
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A8ABE1954B0B; Wed, 26 Nov 2025 12:41:44 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.3])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3EB5C195608E; Wed, 26 Nov 2025 12:41:44 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B9DA821E6A27; Wed, 26 Nov 2025 13:41:41 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,  Peter Xu
+ <peterx@redhat.com>,
+ qemu-devel@nongnu.org,  farosas@suse.de,  peter.maydell@linaro.org
+Subject: Re: g_autoptr(Error)
+In-Reply-To: <aSbr--ZbqzKVNDuC@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Wed, 26 Nov 2025 12:00:59 +0000")
+References: <20251125070554.2256181-1-armbru@redhat.com>
+ <871plmk1bc.fsf@pond.sub.org> <aSWSLMi6ZhTCS_p2@redhat.com>
+ <87jyzexrly.fsf@pond.sub.org> <aSXWKcjoIBK4LW59@x1.local>
+ <769f5a57-7006-4cef-a5cb-12d53b7c30a5@redhat.com>
+ <c0aa79ad-d6f4-413f-ade6-43e7609e37ac@redhat.com>
+ <87ecplc8yn.fsf@pond.sub.org> <aSbr--ZbqzKVNDuC@redhat.com>
+Date: Wed, 26 Nov 2025 13:41:41 +0100
+Message-ID: <87v7ixarui.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,40 +94,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Addressed some more review comments - thank you Alex and Richard for the reviews.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Changes in v3:
-- Patch 2&3 (was 2):
-  - Split patch 2 into 2 parts, one enabling FNG1, FNG0, and A2, and another
-    enabling ASID2 for cpu_max. The patch enabling cpu_max can be dropped or
-    reverted later if not desired at this time.
-- Patch 4 (was 3):
-  - Check for presence of TCR2_EL1 in test, abort test if not present.
-  - Additionally test that new fields read as RES0 if ASID2 is not present.
+> On Wed, Nov 26, 2025 at 12:46:40PM +0100, Markus Armbruster wrote:
 
-Changes in v2:
-- patch 2:
-  - Added FNG1, FNG0, A2 to mask for tcr2_el2_write
-- patch 3:
-  - Changed test for ASID from "=0x100" to "!= 0"
+[...]
 
-*** BLURB HERE ***
+>> Don't worry about it!  From my point of view, the process worked okay.
+>> A big series got reviewed by maintainers, except for one little patch
+>> touching another subsystem, where that subsystem's maintainer (me)
+>> remained silent.  The series was then merged without further delay.
+>>=20
+>> Would I have appreciate a timely nudge on that little patch?  Sure.  Is
+>> not nudging me a failure of sorts?  Nope.
+>
+> The other thing that plays in here is that we actively encourage use of
+> g_autoptr everywhere.
 
-Jim MacArthur (4):
-  target/arm: Enable ID_AA64MMFR4_EL1 register.
-  target/arm: Allow writes to FNG1, FNG0, A2
-  target/arm/tcg/cpu64.c: Enable ASID2 for cpu_max
-  tests: Add test for ASID2 and write/read of feature bits
+We do, and for good reasons.
 
- target/arm/cpu-features.h        |  7 +++
- target/arm/cpu-sysregs.h.inc     |  1 +
- target/arm/helper.c              | 10 ++++-
- target/arm/tcg/cpu64.c           |  4 ++
- tests/tcg/aarch64/system/asid2.c | 75 ++++++++++++++++++++++++++++++++
- 5 files changed, 95 insertions(+), 2 deletions(-)
- create mode 100644 tests/tcg/aarch64/system/asid2.c
+>                       It is very unusual for "Error" to be a type that
+> does NOT want g_autoptr, and thus the mistake is very much on the cards.
+>
+> I've proposed it before myself & Markus caught it. I also caught one
+> other proposals to add it since my attempt. This third time it slipped
+> through review. I expect we'll see a 4th attempt to add it at some point.
 
--- 
-2.43.0
+%-}
 
 
