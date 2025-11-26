@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79CAD11197
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E728D1118E
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOM1z-0002E8-Vc; Wed, 26 Nov 2025 15:22:28 -0500
+	id 1vOM2p-0003la-6Z; Wed, 26 Nov 2025 15:23:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM1j-00026u-At
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:12 -0500
-Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM2n-0003gJ-Qf
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:23:17 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM1c-00023X-7j
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:08 -0500
-Received: by mail-wm1-x343.google.com with SMTP id
- 5b1f17b1804b1-477a1c28778so1007765e9.3
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:22:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM2l-0002TA-OW
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:23:17 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-47755de027eso687545e9.0
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:23:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764188522; x=1764793322; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Vfni1IOQGN3g8RROC5YF75DC2PBdoHAs3xiWfJCop/k=;
- b=rtHquGmdEXU9fBpPNIb1tKgbZIK8EMlGPWyl17ggDQZdgs+ak4qtsFt99LmE8NwXrL
- MAOetcsddS2z7ZAiumYcw7A4IdiyebDBNokdKfwXsO5IhtYF2+hLIsSUlFxv/lFTNsCl
- /rCIq0RC0EzRXRpuFmoe/FmiJKl9DfZTZ09m2xkyZaM04RKvBsB2pnWkPvQqc4uJO0my
- eC+L3Kw2h+qZ4wjUKC4LzNvy6Vva8PjghKqBOtOhXo951vapKqEkkap0dfu5qr4X6blt
- wQhHCwK7VnW/xqxWV0DwyPkTAYt6CGyrZwF/MmzW+PcvzjCO7R9gToKkc/fPGFaAXim/
- iaOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764188522; x=1764793322;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1764188594; x=1764793394; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Vfni1IOQGN3g8RROC5YF75DC2PBdoHAs3xiWfJCop/k=;
- b=ZpMgXmz/qaOuo2t8Pdoo9of/HxmVl6Rlvpazt95y/RXCWgtteMEfGcn7LZQgbrV0o8
- OXPwVjopLMvTB4PSv05JRUtChanZtTOD29RZHmpEKSjOas0dabCSOJ4T0u+B7/uX0HXm
- hYyk3UhjnwJc9ufcwnhYW7n5kiKFRNs1jznVpF8f6zOLP7YTWHlvb4BUgZgi9HgBH06f
- sWP10lf6EdsxXFR0EWfwBtEcg5DVX06nOGRwEjN2ToOr+IE0CRtGfLbL7C+GCBdP3CPb
- 8hlW+eeI/swFnQJRx5FfSNR/Z368B1L1FhAqq8CbOc8UWkE2/4Fv6iX6k2QWURlSZm6a
- SDlQ==
-X-Gm-Message-State: AOJu0YwTqowNZmILeolFHro9fweixyvwxQbnwDyY2Htcaxn07+dRgXr8
- PIaDfD8gnJX4BajqnmdeEECs6zHjGZ2CNp3+hEyeCtuMqU4mgeUZC7uTG41Nlxp8NgiMutSa2mC
- oLox4F4CKwO4z8TY=
-X-Gm-Gg: ASbGncvj8MVRdC4zkuibxdZpB4qSC03t+LBv0mU9hkGuJ0lxGU4jtomu8/AY5WkYTM4
- FflTZuAihPX3Zm7m+mK7G+xRTxjuBBCmyFGLwj4QFvTG199Fp0lQNNRNP3+nUkW34tw8uqhd3Bm
- i+OlM10oxwbeteZwGXEF8aQ60hxDHANJhZtyguZgXUX33pD2HjyJVlG1bOD146DCH1mkOli/7Md
- pwnxrAraS7MR0mynd0zSB5reGqQJu9KGausTfy3T7Z1JoZcHHfMeL/EkQ99JjQQ2TevQx8qT91n
- ZvfPvTIJy2KThzyvrTLQ94MeaRRoRpuh6mBWwuluKEwZLyCA3Znci0reKTZwHHsy6Bdm3xBru8R
- KS7wI9DvNycBOPpIjRKiEt7P21RKH+PeF4SoEYGrICgwmpXeVMi5l/ERwH0iY7M6hKH6eXi4WsN
- aAREaCUCRFw5GWe9WHfLsWGSWDzioM1zqVt1F1aUgfYJOKw6YCtcEi8+xGz6Mm
-X-Google-Smtp-Source: AGHT+IEP6tsuteUmqKX0XpNrTRGTxbTPt+mRAu1nTsuHCjcA5oSUt8XKRzS17rPSMjsNnUnpRFPsNg==
-X-Received: by 2002:a05:600c:3b1a:b0:477:55ce:f3bc with SMTP id
- 5b1f17b1804b1-47904b12f1dmr74230945e9.19.1764188522322; 
- Wed, 26 Nov 2025 12:22:02 -0800 (PST)
+ bh=6h9P9iv/p2bvUhSVVmHLosiz6MFHN9Sri9gbONaHVNg=;
+ b=qV5q3Kd8nfI3qzjJdAqvprEQtO+PN3Oh6Lu5k8phYUHuoY38WgDueSW3obAKud8P2u
+ 8bciPQsEO5wfNGyKpxsJDVCok66emH4Il6t0uhTJd9ZA5K5Y9g/FCRCxx5bT4widMCt/
+ YcL9dp76p0inNCpBg/SfJtX3eLWLmP0UDSvgu02IeZuguXLY/uqhR0y4z3Y18SlVyiKk
+ mPUXYdZ8LqG0qQPEecRdgiS+0CpV6Csha8r08Ef5m7rfI8GHBBIEGykEs9+/5ft80lqL
+ ut07MndY53O0+Qk7V7fU7BXmKTAN7BNYYd4BVxACmwyQN5g/DEJV+zO24r+8qVgY9Qdi
+ +QUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764188594; x=1764793394;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6h9P9iv/p2bvUhSVVmHLosiz6MFHN9Sri9gbONaHVNg=;
+ b=wiPf/zVJy1lth92kuo2x/RRBAeKU6Mnfu/Q9Fu7av2uSIQD/rpg/4qh4T4uB5AViGL
+ AKyT9bn27ggpbDjKNlh+OEWZzBySIfkDY9+5T4DiwBa8sojo05LLsUooYzMROIkXZFj1
+ ZzgbdzbjvBTmhMJhKfLMX0II6Yc86thZfA+nknVCF4FHHgeNCOCvyJ2qmgBanLld5ZUx
+ 6ycTThy9lHJ3z4x4GvECPsh+wvau3n/yd+3DYsMDOlpz/yY+clELajbWGt+RWOd8517f
+ RPdHQWfA6rMJPDOhFba1WHLvYqVic19EWGrm+VEX1JpHtVWTLQ8RRzUGs+E52K7r9rJZ
+ HTEQ==
+X-Gm-Message-State: AOJu0Yxq2pH0Bq1p2LPt6NT3HD+ngLeaHHhz9VrD+VIWnvqM1ywowUiZ
+ qu9khh6Gp15Mh/Wf7HqN3hxGqAVN/0j+sBCy7k8rkxKGtCNblBs524zZ7GbmZlitv2kLcj7/o35
+ K8kcpqrC1+6Bz
+X-Gm-Gg: ASbGncvjPRRvuaa60rznpsbmhtVBMk7h09tJgNchd56yLnIh8Sh7M831aYFc5O83D00
+ ty04qmBMJeUE2Zs00smk98mgvZovXUhhiccf+KlcLyAlGslyQeQ8hvBrEthFndXmWFNDzV0DTfT
+ 3se8r/mgttsV7FLdrFg3PyK0gkDDqqTkNHCJb1aCYD/vNDTDNY45wZbJp+UfCClCFdwl2wXOIii
+ wTzbDgZZcwwvpauvMj7NTEW6u6/ZjRpLsWSmFxGURefmOICdbkdG1WJY1jLArQKy/B9EBF46/NG
+ uk+Ebb2ZxngPcxFNg0M+SXx9afG6whFLDrQ9rU9Uc9WEuEibDLw7wBQMSM/xpBT/Xez6Lajs9pI
+ XEtO7n4On2SKt9eqX/riuqSioMMj57k98OzK8n1EY08yYTcOhbWYShr3bUvqrV3imYDJoAvUecI
+ ewtkhP1lyvgpfbZTCOmqMY39ojSfpGGHHSQPNjJcgP6pfwm6eArX4RwkkCcmEeSlUKcFpf3Dc=
+X-Google-Smtp-Source: AGHT+IGEB4a8fUsY9oL6v+VZHuR+VkxWKVybhu8Ftb1MCD36QEhJbY9XwPArVBaG4vIVkeWDxSuUrQ==
+X-Received: by 2002:a05:600c:3541:b0:477:7991:5d1e with SMTP id
+ 5b1f17b1804b1-47904b24871mr81746675e9.25.1764188593749; 
+ Wed, 26 Nov 2025 12:23:13 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cc231dc6esm33009191f8f.7.2025.11.26.12.22.01
+ 5b1f17b1804b1-4790add2648sm65371565e9.4.2025.11.26.12.23.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 26 Nov 2025 12:22:01 -0800 (PST)
+ Wed, 26 Nov 2025 12:23:13 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.0 v3 00/22] accel/tcg: Remove most MO_TE uses in
- cpu_ld/st_data()
-Date: Wed, 26 Nov 2025 21:21:36 +0100
-Message-ID: <20251126202200.23100-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+Subject: [PATCH-for-11.0 v3 10/22] target/sh4: Replace cpu_stl_data() call in
+ OCBI helper
+Date: Wed, 26 Nov 2025 21:21:46 +0100
+Message-ID: <20251126202200.23100-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251126202200.23100-1-philmd@linaro.org>
+References: <20251126202200.23100-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::343;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x343.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,78 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v2:
-- Reworked SH4
-- Completed PPC / MIPS.
-Since v1:
-- Fixed s/little/big/ typo (thuth)
+In preparation of removing the cpu_stl_data() call,
+inline it. Set the return address argument.
 
-Still trying to remove MO_TE uses, here looking at cpu_ld/st_data()
-in fixed-endianness targets.
+See commit 852d481faf7 ("SH: Improve movca.l/ocbi
+emulation") for more context on this code.
 
-Series split of bigger one [*] where Richard made a comment on
-*_code() patches. Since not related to *_data() uses, post separetely
-since almost ready (still few PPC/MIPS paths to update, but I'd rather
-check if this is heading in the correct direction before looking at
-them).
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/sh4/op_helper.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-[*] https://lore.kernel.org/qemu-devel/20251121134503.30914-1-philmd@linaro.org/
-
-Philippe Mathieu-Daudé (22):
-  target/hexagon: Use little-endian variant of cpu_ld/st_data*()
-  target/i386: Use little-endian variant of cpu_ld/st_data*()
-  target/riscv: Use little-endian variant of cpu_ld/st_data*() for
-    vector
-  target/rx: Use little-endian variant of cpu_ld/st_data*()
-  target/tricore: Use little-endian variant of cpu_ld/st_data*()
-  target/hppa: Use big-endian variant of cpu_ld/st_data*()
-  target/m68k: Use big-endian variant of cpu_ld/st_data*()
-  target/s390x: Use big-endian variant of cpu_ld/st_data*()
-  target/sparc: Use big-endian variant of cpu_ld/st_data*()
-  target/sh4: Replace cpu_stl_data() call in OCBI helper
-  target/mips: Use big-endian variant of cpu_ld/st_data*() for MSA
-    opcode
-  target/mips: Introduce loadu8() & loads4() helpers
-  target/mips: Pass MemOpIdx to atomic load helpers
-  target/mips: Drop almask argument of HELPER_LD_ATOMIC() macro
-  target/mips: Inline cpu_ld*_mmuidx_ra() calls in atomic load helpers
-  target/mips: Expand HELPER_LD_ATOMIC()
-  target/mips: Inline cpu_ld/st_mmuidx_ra() calls in memory helpers
-  target/ppc: Inline cpu_ld/st_data_ra() calls in do_hash()
-  target/ppc: Inline cpu_ld/st_mmuidx_ra() calls in memory helpers
-  target/ppc: Inline cpu_ldl_data_ra() calls in ICBI helper
-  target/ppc: Simplify endianness handling in Altivec opcodes
-  accel/tcg: Remove non-explicit endian cpu_ld/st*_data*() helpers
-
- include/accel/tcg/cpu-ldst.h         |  46 --------
- target/hexagon/macros.h              |   6 +-
- target/i386/ops_sse.h                |  12 +--
- target/i386/tcg/seg_helper.h         |  12 +--
- linux-user/vm86.c                    |   4 +-
- target/hexagon/op_helper.c           |   6 +-
- target/hppa/op_helper.c              |  44 ++++----
- target/i386/tcg/mem_helper.c         |   8 +-
- target/i386/tcg/mpx_helper.c         |  28 ++---
- target/i386/tcg/seg_helper.c         |  16 +--
- target/i386/tcg/system/excp_helper.c |   8 +-
- target/i386/tcg/system/svm_helper.c  |  69 ++++++------
- target/m68k/fpu_helper.c             |  12 +--
- target/m68k/op_helper.c              |  91 ++++++++--------
- target/mips/tcg/ldst_helper.c        | 108 ++++++++++++-------
- target/mips/tcg/msa_helper.c         |  51 +++++----
- target/mips/tcg/translate.c          |   9 +-
- target/ppc/mem_helper.c              |  75 +++++++------
- target/ppc/tcg-excp_helper.c         |   9 +-
- target/riscv/vector_helper.c         |  12 +--
- target/rx/helper.c                   |  14 +--
- target/rx/op_helper.c                |   6 +-
- target/s390x/tcg/mem_helper.c        |  48 ++++-----
- target/s390x/tcg/vec_helper.c        |   8 +-
- target/sh4/op_helper.c               |   5 +-
- target/sparc/ldst_helper.c           |   6 +-
- target/tricore/op_helper.c           | 152 +++++++++++++--------------
- 27 files changed, 440 insertions(+), 425 deletions(-)
-
+diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+index 557b1bf4972..669bc84cb64 100644
+--- a/target/sh4/op_helper.c
++++ b/target/sh4/op_helper.c
+@@ -136,6 +136,8 @@ void helper_discard_movcal_backup(CPUSH4State *env)
+ 
+ void helper_ocbi(CPUSH4State *env, uint32_t address)
+ {
++    unsigned mmu_idx = cpu_mmu_index(env_cpu(env), false);
++    MemOpIdx oi = make_memop_idx(MO_TE | MO_UL | MO_UNALN, mmu_idx);
+     memory_content **current = &(env->movcal_backup);
+     while (*current)
+     {
+@@ -143,7 +145,8 @@ void helper_ocbi(CPUSH4State *env, uint32_t address)
+         if ((a & ~0x1F) == (address & ~0x1F))
+         {
+             memory_content *next = (*current)->next;
+-            cpu_stl_data(env, a, (*current)->value);
++
++            cpu_stl_mmu(env, a, (*current)->value, oi, GETPC());
+ 
+             if (next == NULL)
+             {
 -- 
 2.51.0
 
