@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B492D11197
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51093D11196
 	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:24:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOM23-0002Ks-Sb; Wed, 26 Nov 2025 15:22:31 -0500
+	id 1vOM21-0002Ik-IT; Wed, 26 Nov 2025 15:22:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM22-0002J7-8F
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:30 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM1z-0002Dw-Qd
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:27 -0500
+Received: from mail-wm1-x341.google.com ([2a00:1450:4864:20::341])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM1z-0002Bb-IC
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:29 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-477632b0621so521745e9.2
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:22:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM1u-00026G-BT
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:22:26 -0500
+Received: by mail-wm1-x341.google.com with SMTP id
+ 5b1f17b1804b1-4775ae77516so930445e9.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:22:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764188544; x=1764793344; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764188538; x=1764793338; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hsPausPqrloQrq508COV9bsRJTugcYSClY5k0EJlLQQ=;
- b=Khq+C0+cLiTHahGJ0aX4qdOz4XDaVBkOU6Q7WoecYa9/9GbZO1URqADxhL6hnku/zx
- 4+8EuN6gqsNuHs8o6dj68W7Lc8oxICJy5FDVojIEx8eWvNFvJ5qbe4VGCcF/uiuqHuJj
- r3bI2DlnuZbQvlKYgYYt+Zf3XkYpR8dDDpRdv2HxiEMQn/XbMu9VE/0KOhESFkEz0mzr
- eMZfTV/we2azxdJHdqaXQn0rBqMM2Fs/vVXOejGKPz3ny1YCAbUIWHVsjHWdexXIjZvm
- d7Ju+lshaf5vn2J12VH6JcvipdMGrS24c6wURbUH5GjwRRP84g33lqGYnq7L70AZElzU
- tAyQ==
+ bh=5F4dDYY71Q++E/ouz6o5QMXDI/1gbMs/5Vg/XDgnw60=;
+ b=bCf7C1vsgK4NiWB/XJxe9jCUp7CjMjZ55P77TC1OrWfNC6tnJKxRWdYXerwasw4H9X
+ +Yb7DA9CLaJ7VedymyWjcNVSAuWK08IOhcFIwmrObqmV67RbGMsCg48+Eld78CxLxHrx
+ JNMO0ZIwrPXUCt+NN112rPESDP0lRUB32gg/Z1qpeljTSrzIQeUS4vXjwvXboghKcqH6
+ yu/jmQG68DTu0QhwCsBB0oAJOn8hzcUbVRFqaO4k5JsYiRNpMdWjWDyFrztLnPazmCw+
+ 1Y5YVAPrA9ROJNORwahSj4XFMs1IVGAm+8lZlZOptTh7wWvRk1uA2GVZF4+VtFTkC4d8
+ zmVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764188544; x=1764793344;
+ d=1e100.net; s=20230601; t=1764188538; x=1764793338;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hsPausPqrloQrq508COV9bsRJTugcYSClY5k0EJlLQQ=;
- b=DsPm3LhbmEHt5aRZ63EXLD2rzHiPOWOmYAovhUf0Eo4lReVlZqvHyCe1wCBJy03bpB
- 2/SIIzD18wbC6MZl7PIIVwiHI7L4hOS+SjPrybfmLL8M6Pdr29WNntipGXAcVSyDWe1f
- CPkyKQWIi4ECKAaiviOZcxqOjkmpxkUNNsmyDSPUeuC/01dCXWEcorlrIfjV3eex0g0d
- y1UX2VxB54c05FRQ1PfiDGPdu9WApJOgsKbBgdZiCASt8caJof2+BNMEp4Zpgn2nHpR5
- eK+bv+vseiefh7SidGI9hsC/U3KLlFSFzz7ucgDmkZaD4CeKe03w3Y0bEBrPOebr8Eq9
- ziyA==
-X-Gm-Message-State: AOJu0Yygrzz+GhoYJNCocvTF127bBCuu7gky3G7Y7uVxsn8TL14+7oXP
- hMPVZ938aN3zfH40nmCo1h87H8knXufdnrOgF78nlPU4Rt9Ju8fbFi1qDAJ4zYo5+1uO/668vAK
- ZntlIEri0dvhU
-X-Gm-Gg: ASbGncvsNWUnnT98ShpuYAheBRxZBJ2BnvMjZn1XBDCg+4CjMR7NKvMypjdEL0rUW6A
- ylFsKB9jtgufFKUXW6KLYQE36mkDDH73SySYJRXywXAcjsVXU1WasLWMJAH4l+CkV2IIHYgXRIq
- swQYUn8v/pntPvnewSa4+s6y1zssUR/lbrz69n2b+V5k49RWYdJ9cwUDilmbHUa5j0jfA5tEdPD
- 2VE6P1HQ93Nr3FKDAXA+I2U5MtAcaGx2HXHT/TBui4kD+lnxF3lVzKQH/AShr53W8lDOofOitHx
- BjVJKyIiNeDSZTXxo/WG8GTdq2eVzr5aKqQKiJsWss9uHGFPb/7cECnqU84P50XqvbAc7BnsRGS
- frBpGoHDVBUg+5k/e6xo4wLV63uHR2GfCJ62V89/cQZausMfhR8EnUZXjC54A3S5A4eC1XM82PX
- d+n12Owi7sf2CIXMc3a2Q/z/d6xWsepParfikySUEp8nAsO0hU+KSQeZM2ZOWY
-X-Google-Smtp-Source: AGHT+IEEcq6KnjXQD50q2Oay0zYykpyi+HvAy//RCkYtkxmEperdPSJ6HBsmoQ/ZA7TfXyDkIjPKRA==
-X-Received: by 2002:a05:600c:4ec7:b0:477:9b4a:a82 with SMTP id
- 5b1f17b1804b1-477c1138445mr205257405e9.35.1764188544031; 
- Wed, 26 Nov 2025 12:22:24 -0800 (PST)
+ bh=5F4dDYY71Q++E/ouz6o5QMXDI/1gbMs/5Vg/XDgnw60=;
+ b=u6om2sCrm+RxCzqiG6G89+QGsBiQXTzKr2BmgMO7Bbbp/Pi2nWJOuBNA8pP1pdn8H/
+ +JeJd3M3SSVPdCC3bhDqexgjpMdZO7gbqEMNEn0BmrLy5TzTvmtqa61XAKLimFoSY0v9
+ tyDaRZ602mU1YIgKD0kvZiKN6hwKu/HJ5f34ZE3fMk2MKVPHbXmkFXfvnCcts7HgaLZz
+ GDTAK//ydvSl3dDCeAP2l9stJPobNKZr31QOF6eNAnDUZju+JX0/lI4qFIy5i4jnAXbm
+ hUs0w+TcGE/ZzH36f07QjAZYsokSiuxKjnzX2rSbhH94TgvsL3dCxUj94CpX8dU5LL1E
+ JAHw==
+X-Gm-Message-State: AOJu0YxQB0QoNfVwAKQZ2eWjBxMXwMjOuRGJ6jArMAmXTyiqG3ACGdYO
+ NTOJoHcaFDPGfUkS0OKRZwijMTKnChWALuEUA4XssVAP/lGoYWwbytc/oJFCJ8U415ZTBAvrwcK
+ b9QUYhx4Fm7EnXgA=
+X-Gm-Gg: ASbGncv+ihV7arFwhoN8+fFF9GwWyRKX167KlFlc7SqFRPL2aAe+Qzv4UL63RmieeZd
+ sJWznd5m9NutTIhfNGg0YtSQAs0S3LQlxqsiW1sNtihoQEu8BpxK0uP6faPuWOiFnBcNoCbvYHX
+ oxFe96A0y03FhWfmRzwaU4A+T/sy5NVgDB/L7v01aSm4fa1NiicBtNn0kY66xnsdUYfAyVp+/jA
+ 5WyIMeQh066Op6riuI4/BLtupkci/oTOp8FjRU1LEEds2PY8qwnFqyz/imFVc+YexgOjY5x+hTE
+ wA6jge65t1p7faL7CUAeD7DTQcxpEo5DrWmdoxv2HfL0HmNnMcGYDRQPgo01zwGKOlWlNdW3noo
+ cRCVzO5sKtGnJAG7f1WUtNHsGRcIELMaghew+Ebn2TIOe1MzbVcQrMKjSxTaOBXytNMd81+I3/3
+ i8Wn0Nwx9Sf8dKI0TeQZo+kJ+cM2fCVQAYV45Dh5RNf5avKe2yQIHMsLHEANbk
+X-Google-Smtp-Source: AGHT+IEjkRqrwSSzE8+oFaiS7pcSdm+uRNGe2rFieBJW8PeXOuK90CSLUQTgkAaFSQW0D892/tVGGw==
+X-Received: by 2002:a05:6000:2084:b0:42b:3b62:cd9b with SMTP id
+ ffacd0b85a97d-42cc1d2d52amr22567261f8f.37.1764188536854; 
+ Wed, 26 Nov 2025 12:22:16 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4790add2648sm65344925e9.4.2025.11.26.12.22.22
+ ffacd0b85a97d-42cb7fb8e62sm42718588f8f.35.2025.11.26.12.22.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 26 Nov 2025 12:22:23 -0800 (PST)
+ Wed, 26 Nov 2025 12:22:16 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Subject: [PATCH-for-11.0 v3 03/22] target/riscv: Use little-endian variant of
- cpu_ld/st_data*() for vector
-Date: Wed, 26 Nov 2025 21:21:39 +0100
-Message-ID: <20251126202200.23100-4-philmd@linaro.org>
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH-for-11.0 v3 02/22] target/i386: Use little-endian variant of
+ cpu_ld/st_data*()
+Date: Wed, 26 Nov 2025 21:21:38 +0100
+Message-ID: <20251126202200.23100-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251126202200.23100-1-philmd@linaro.org>
 References: <20251126202200.23100-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::341;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x341.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,50 +105,480 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-RISC-V vector "elements are simply packed in order from
-the least-signicant to most-signicant bits of the vector
-register" [*] which is little endianness, therefore the
-cpu_ld/st_data*() definitions expand to the little endian
-declarations. Use the explicit little-endian variants.
+We only build the X86 targets using little endianness order,
+therefore the cpu_ld/st_data*() definitions expand to the little
+endian declarations. Use the explicit little-endian variants.
 
-[*] RISC-V "V" Vector Extension v1.0
+Mechanical change running:
+
+  $ tgt=i386; \
+    end=le; \
+    for op in data mmuidx_ra; do \
+      for ac in uw sw l q; do \
+        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+      for ac in w l q; do \
+        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+    done
+
+Then adapting indentation in helper_vmload() to pass checkpatch.pl.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/riscv/vector_helper.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ target/i386/ops_sse.h                | 12 ++---
+ target/i386/tcg/seg_helper.h         | 12 ++---
+ linux-user/vm86.c                    |  4 +-
+ target/i386/tcg/mem_helper.c         |  8 ++--
+ target/i386/tcg/mpx_helper.c         | 28 +++++------
+ target/i386/tcg/seg_helper.c         | 16 +++----
+ target/i386/tcg/system/excp_helper.c |  8 ++--
+ target/i386/tcg/system/svm_helper.c  | 69 +++++++++++++++-------------
+ 8 files changed, 80 insertions(+), 77 deletions(-)
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 2de3358ee86..caa8dd9c125 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -193,9 +193,9 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
+diff --git a/target/i386/ops_sse.h b/target/i386/ops_sse.h
+index a2e4d480399..213db53382c 100644
+--- a/target/i386/ops_sse.h
++++ b/target/i386/ops_sse.h
+@@ -2326,7 +2326,7 @@ void glue(helper_vpmaskmovd_st, SUFFIX)(CPUX86State *env,
+ 
+     for (i = 0; i < (2 << SHIFT); i++) {
+         if (v->L(i) >> 31) {
+-            cpu_stl_data_ra(env, a0 + i * 4, s->L(i), GETPC());
++            cpu_stl_le_data_ra(env, a0 + i * 4, s->L(i), GETPC());
+         }
+     }
+ }
+@@ -2338,7 +2338,7 @@ void glue(helper_vpmaskmovq_st, SUFFIX)(CPUX86State *env,
+ 
+     for (i = 0; i < (1 << SHIFT); i++) {
+         if (v->Q(i) >> 63) {
+-            cpu_stq_data_ra(env, a0 + i * 8, s->Q(i), GETPC());
++            cpu_stq_le_data_ra(env, a0 + i * 8, s->Q(i), GETPC());
+         }
+     }
+ }
+@@ -2369,7 +2369,7 @@ void glue(helper_vpgatherdd, SUFFIX)(CPUX86State *env,
+         if (v->L(i) >> 31) {
+             target_ulong addr = a0
+                 + ((target_ulong)(int32_t)s->L(i) << scale);
+-            d->L(i) = cpu_ldl_data_ra(env, addr, GETPC());
++            d->L(i) = cpu_ldl_le_data_ra(env, addr, GETPC());
+         }
+         v->L(i) = 0;
+     }
+@@ -2383,7 +2383,7 @@ void glue(helper_vpgatherdq, SUFFIX)(CPUX86State *env,
+         if (v->Q(i) >> 63) {
+             target_ulong addr = a0
+                 + ((target_ulong)(int32_t)s->L(i) << scale);
+-            d->Q(i) = cpu_ldq_data_ra(env, addr, GETPC());
++            d->Q(i) = cpu_ldq_le_data_ra(env, addr, GETPC());
+         }
+         v->Q(i) = 0;
+     }
+@@ -2397,7 +2397,7 @@ void glue(helper_vpgatherqd, SUFFIX)(CPUX86State *env,
+         if (v->L(i) >> 31) {
+             target_ulong addr = a0
+                 + ((target_ulong)(int64_t)s->Q(i) << scale);
+-            d->L(i) = cpu_ldl_data_ra(env, addr, GETPC());
++            d->L(i) = cpu_ldl_le_data_ra(env, addr, GETPC());
+         }
+         v->L(i) = 0;
+     }
+@@ -2415,7 +2415,7 @@ void glue(helper_vpgatherqq, SUFFIX)(CPUX86State *env,
+         if (v->Q(i) >> 63) {
+             target_ulong addr = a0
+                 + ((target_ulong)(int64_t)s->Q(i) << scale);
+-            d->Q(i) = cpu_ldq_data_ra(env, addr, GETPC());
++            d->Q(i) = cpu_ldq_le_data_ra(env, addr, GETPC());
+         }
+         v->Q(i) = 0;
+     }
+diff --git a/target/i386/tcg/seg_helper.h b/target/i386/tcg/seg_helper.h
+index ea98e1a98ed..20ce47d62d9 100644
+--- a/target/i386/tcg/seg_helper.h
++++ b/target/i386/tcg/seg_helper.h
+@@ -40,18 +40,18 @@ int cpu_mmu_index_kernel(CPUX86State *env);
+  * and use *_mmuidx_ra directly.
+  */
+ #define cpu_lduw_kernel_ra(e, p, r) \
+-    cpu_lduw_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
++    cpu_lduw_le_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
+ #define cpu_ldl_kernel_ra(e, p, r) \
+-    cpu_ldl_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
++    cpu_ldl_le_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
+ #define cpu_ldq_kernel_ra(e, p, r) \
+-    cpu_ldq_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
++    cpu_ldq_le_mmuidx_ra(e, p, cpu_mmu_index_kernel(e), r)
+ 
+ #define cpu_stw_kernel_ra(e, p, v, r) \
+-    cpu_stw_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
++    cpu_stw_le_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
+ #define cpu_stl_kernel_ra(e, p, v, r) \
+-    cpu_stl_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
++    cpu_stl_le_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
+ #define cpu_stq_kernel_ra(e, p, v, r) \
+-    cpu_stq_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
++    cpu_stq_le_mmuidx_ra(e, p, v, cpu_mmu_index_kernel(e), r)
+ 
+ #define cpu_lduw_kernel(e, p)    cpu_lduw_kernel_ra(e, p, 0)
+ #define cpu_ldl_kernel(e, p)     cpu_ldl_kernel_ra(e, p, 0)
+diff --git a/linux-user/vm86.c b/linux-user/vm86.c
+index 5091d53fb84..4e120875a06 100644
+--- a/linux-user/vm86.c
++++ b/linux-user/vm86.c
+@@ -44,7 +44,7 @@ static inline int is_revectored(int nr, struct target_revectored_struct *bitmap)
+ static inline void vm_putw(CPUX86State *env, uint32_t segptr,
+                            unsigned int reg16, unsigned int val)
+ {
+-    cpu_stw_data(env, segptr + (reg16 & 0xffff), val);
++    cpu_stw_le_data(env, segptr + (reg16 & 0xffff), val);
  }
  
- GEN_VEXT_LD_ELEM(lde_b, uint8_t,  H1, ldub)
--GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw)
--GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl)
--GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq)
-+GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw_le)
-+GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl_le)
-+GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq_le)
+ void save_v86_state(CPUX86State *env)
+@@ -157,7 +157,7 @@ static void do_int(CPUX86State *env, int intno)
+                                        &ts->vm86plus.int21_revectored))
+         goto cannot_handle;
+     int_addr = (intno << 2);
+-    segoffs = cpu_ldl_data(env, int_addr);
++    segoffs = cpu_ldl_le_data(env, int_addr);
+     if ((segoffs >> 16) == TARGET_BIOSSEG)
+         goto cannot_handle;
+     LOG_VM86("VM86: emulating int 0x%x. CS:IP=%04x:%04x\n",
+diff --git a/target/i386/tcg/mem_helper.c b/target/i386/tcg/mem_helper.c
+index 9e7c2d80293..c15a32d60ad 100644
+--- a/target/i386/tcg/mem_helper.c
++++ b/target/i386/tcg/mem_helper.c
+@@ -30,8 +30,8 @@ void helper_boundw(CPUX86State *env, target_ulong a0, int v)
+ {
+     int low, high;
  
- #define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)             \
- static inline QEMU_ALWAYS_INLINE                            \
-@@ -214,9 +214,9 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
+-    low = cpu_ldsw_data_ra(env, a0, GETPC());
+-    high = cpu_ldsw_data_ra(env, a0 + 2, GETPC());
++    low = cpu_ldsw_le_data_ra(env, a0, GETPC());
++    high = cpu_ldsw_le_data_ra(env, a0 + 2, GETPC());
+     v = (int16_t)v;
+     if (v < low || v > high) {
+         if (env->hflags & HF_MPX_EN_MASK) {
+@@ -45,8 +45,8 @@ void helper_boundl(CPUX86State *env, target_ulong a0, int v)
+ {
+     int low, high;
+ 
+-    low = cpu_ldl_data_ra(env, a0, GETPC());
+-    high = cpu_ldl_data_ra(env, a0 + 4, GETPC());
++    low = cpu_ldl_le_data_ra(env, a0, GETPC());
++    high = cpu_ldl_le_data_ra(env, a0 + 4, GETPC());
+     if (v < low || v > high) {
+         if (env->hflags & HF_MPX_EN_MASK) {
+             env->bndcs_regs.sts = 0;
+diff --git a/target/i386/tcg/mpx_helper.c b/target/i386/tcg/mpx_helper.c
+index fa8abcc4820..73d33bf5e4a 100644
+--- a/target/i386/tcg/mpx_helper.c
++++ b/target/i386/tcg/mpx_helper.c
+@@ -44,7 +44,7 @@ static uint64_t lookup_bte64(CPUX86State *env, uint64_t base, uintptr_t ra)
+     }
+ 
+     bde = (extract64(base, 20, 28) << 3) + (extract64(bndcsr, 20, 44) << 12);
+-    bt = cpu_ldq_data_ra(env, bde, ra);
++    bt = cpu_ldq_le_data_ra(env, bde, ra);
+     if ((bt & 1) == 0) {
+         env->bndcs_regs.sts = bde | 2;
+         raise_exception_ra(env, EXCP05_BOUND, ra);
+@@ -64,7 +64,7 @@ static uint32_t lookup_bte32(CPUX86State *env, uint32_t base, uintptr_t ra)
+     }
+ 
+     bde = (extract32(base, 12, 20) << 2) + (bndcsr & TARGET_PAGE_MASK);
+-    bt = cpu_ldl_data_ra(env, bde, ra);
++    bt = cpu_ldl_le_data_ra(env, bde, ra);
+     if ((bt & 1) == 0) {
+         env->bndcs_regs.sts = bde | 2;
+         raise_exception_ra(env, EXCP05_BOUND, ra);
+@@ -79,9 +79,9 @@ uint64_t helper_bndldx64(CPUX86State *env, target_ulong base, target_ulong ptr)
+     uint64_t bte, lb, ub, pt;
+ 
+     bte = lookup_bte64(env, base, ra);
+-    lb = cpu_ldq_data_ra(env, bte, ra);
+-    ub = cpu_ldq_data_ra(env, bte + 8, ra);
+-    pt = cpu_ldq_data_ra(env, bte + 16, ra);
++    lb = cpu_ldq_le_data_ra(env, bte, ra);
++    ub = cpu_ldq_le_data_ra(env, bte + 8, ra);
++    pt = cpu_ldq_le_data_ra(env, bte + 16, ra);
+ 
+     if (pt != ptr) {
+         lb = ub = 0;
+@@ -96,9 +96,9 @@ uint64_t helper_bndldx32(CPUX86State *env, target_ulong base, target_ulong ptr)
+     uint32_t bte, lb, ub, pt;
+ 
+     bte = lookup_bte32(env, base, ra);
+-    lb = cpu_ldl_data_ra(env, bte, ra);
+-    ub = cpu_ldl_data_ra(env, bte + 4, ra);
+-    pt = cpu_ldl_data_ra(env, bte + 8, ra);
++    lb = cpu_ldl_le_data_ra(env, bte, ra);
++    ub = cpu_ldl_le_data_ra(env, bte + 4, ra);
++    pt = cpu_ldl_le_data_ra(env, bte + 8, ra);
+ 
+     if (pt != ptr) {
+         lb = ub = 0;
+@@ -113,9 +113,9 @@ void helper_bndstx64(CPUX86State *env, target_ulong base, target_ulong ptr,
+     uint64_t bte;
+ 
+     bte = lookup_bte64(env, base, ra);
+-    cpu_stq_data_ra(env, bte, lb, ra);
+-    cpu_stq_data_ra(env, bte + 8, ub, ra);
+-    cpu_stq_data_ra(env, bte + 16, ptr, ra);
++    cpu_stq_le_data_ra(env, bte, lb, ra);
++    cpu_stq_le_data_ra(env, bte + 8, ub, ra);
++    cpu_stq_le_data_ra(env, bte + 16, ptr, ra);
  }
  
- GEN_VEXT_ST_ELEM(ste_b, uint8_t,  H1, stb)
--GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw)
--GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl)
--GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq)
-+GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw_le)
-+GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl_le)
-+GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq_le)
+ void helper_bndstx32(CPUX86State *env, target_ulong base, target_ulong ptr,
+@@ -125,9 +125,9 @@ void helper_bndstx32(CPUX86State *env, target_ulong base, target_ulong ptr,
+     uint32_t bte;
  
- static inline QEMU_ALWAYS_INLINE void
- vext_continuous_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
+     bte = lookup_bte32(env, base, ra);
+-    cpu_stl_data_ra(env, bte, lb, ra);
+-    cpu_stl_data_ra(env, bte + 4, ub, ra);
+-    cpu_stl_data_ra(env, bte + 8, ptr, ra);
++    cpu_stl_le_data_ra(env, bte, lb, ra);
++    cpu_stl_le_data_ra(env, bte + 4, ub, ra);
++    cpu_stl_le_data_ra(env, bte + 8, ptr, ra);
+ }
+ 
+ void helper_bnd_jmp(CPUX86State *env)
+diff --git a/target/i386/tcg/seg_helper.c b/target/i386/tcg/seg_helper.c
+index 227336c4ef2..58aac720119 100644
+--- a/target/i386/tcg/seg_helper.c
++++ b/target/i386/tcg/seg_helper.c
+@@ -65,20 +65,20 @@ typedef struct StackAccess
+ static void pushw(StackAccess *sa, uint16_t val)
+ {
+     sa->sp -= 2;
+-    cpu_stw_mmuidx_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
++    cpu_stw_le_mmuidx_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
+                       val, sa->mmu_index, sa->ra);
+ }
+ 
+ static void pushl(StackAccess *sa, uint32_t val)
+ {
+     sa->sp -= 4;
+-    cpu_stl_mmuidx_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
++    cpu_stl_le_mmuidx_ra(sa->env, sa->ss_base + (sa->sp & sa->sp_mask),
+                       val, sa->mmu_index, sa->ra);
+ }
+ 
+ static uint16_t popw(StackAccess *sa)
+ {
+-    uint16_t ret = cpu_lduw_mmuidx_ra(sa->env,
++    uint16_t ret = cpu_lduw_le_mmuidx_ra(sa->env,
+                                       sa->ss_base + (sa->sp & sa->sp_mask),
+                                       sa->mmu_index, sa->ra);
+     sa->sp += 2;
+@@ -87,7 +87,7 @@ static uint16_t popw(StackAccess *sa)
+ 
+ static uint32_t popl(StackAccess *sa)
+ {
+-    uint32_t ret = cpu_ldl_mmuidx_ra(sa->env,
++    uint32_t ret = cpu_ldl_le_mmuidx_ra(sa->env,
+                                      sa->ss_base + (sa->sp & sa->sp_mask),
+                                      sa->mmu_index, sa->ra);
+     sa->sp += 4;
+@@ -905,12 +905,12 @@ static void do_interrupt_protected(CPUX86State *env, int intno, int is_int,
+ static void pushq(StackAccess *sa, uint64_t val)
+ {
+     sa->sp -= 8;
+-    cpu_stq_mmuidx_ra(sa->env, sa->sp, val, sa->mmu_index, sa->ra);
++    cpu_stq_le_mmuidx_ra(sa->env, sa->sp, val, sa->mmu_index, sa->ra);
+ }
+ 
+ static uint64_t popq(StackAccess *sa)
+ {
+-    uint64_t ret = cpu_ldq_mmuidx_ra(sa->env, sa->sp, sa->mmu_index, sa->ra);
++    uint64_t ret = cpu_ldq_le_mmuidx_ra(sa->env, sa->sp, sa->mmu_index, sa->ra);
+     sa->sp += 8;
+     return ret;
+ }
+@@ -1887,7 +1887,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+                 pushl(&sa, env->segs[R_SS].selector);
+                 pushl(&sa, env->regs[R_ESP]);
+                 for (i = param_count - 1; i >= 0; i--) {
+-                    val = cpu_ldl_data_ra(env,
++                    val = cpu_ldl_le_data_ra(env,
+                                           old_ssp + ((env->regs[R_ESP] + i * 4) & old_sp_mask),
+                                           GETPC());
+                     pushl(&sa, val);
+@@ -1896,7 +1896,7 @@ void helper_lcall_protected(CPUX86State *env, int new_cs, target_ulong new_eip,
+                 pushw(&sa, env->segs[R_SS].selector);
+                 pushw(&sa, env->regs[R_ESP]);
+                 for (i = param_count - 1; i >= 0; i--) {
+-                    val = cpu_lduw_data_ra(env,
++                    val = cpu_lduw_le_data_ra(env,
+                                            old_ssp + ((env->regs[R_ESP] + i * 2) & old_sp_mask),
+                                            GETPC());
+                     pushw(&sa, val);
+diff --git a/target/i386/tcg/system/excp_helper.c b/target/i386/tcg/system/excp_helper.c
+index f622b5d588e..d7ea77c8558 100644
+--- a/target/i386/tcg/system/excp_helper.c
++++ b/target/i386/tcg/system/excp_helper.c
+@@ -90,7 +90,7 @@ static inline uint32_t ptw_ldl(const PTETranslate *in, uint64_t ra)
+     if (likely(in->haddr)) {
+         return ldl_p(in->haddr);
+     }
+-    return cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
++    return cpu_ldl_le_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
+ }
+ 
+ static inline uint64_t ptw_ldq(const PTETranslate *in, uint64_t ra)
+@@ -98,7 +98,7 @@ static inline uint64_t ptw_ldq(const PTETranslate *in, uint64_t ra)
+     if (likely(in->haddr)) {
+         return ldq_p(in->haddr);
+     }
+-    return cpu_ldq_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
++    return cpu_ldq_le_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, ra);
+ }
+ 
+ /*
+@@ -116,9 +116,9 @@ static bool ptw_setl_slow(const PTETranslate *in, uint32_t old, uint32_t new)
+     cpu_exec_end(cpu);
+     /* Does x86 really perform a rmw cycle on mmio for ptw? */
+     start_exclusive();
+-    cmp = cpu_ldl_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
++    cmp = cpu_ldl_le_mmuidx_ra(in->env, in->gaddr, in->ptw_idx, 0);
+     if (cmp == old) {
+-        cpu_stl_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
++        cpu_stl_le_mmuidx_ra(in->env, in->gaddr, new, in->ptw_idx, 0);
+     }
+     end_exclusive();
+     cpu_exec_start(cpu);
+diff --git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/system/svm_helper.c
+index 4b86796518f..3e236094d6f 100644
+--- a/target/i386/tcg/system/svm_helper.c
++++ b/target/i386/tcg/system/svm_helper.c
+@@ -30,13 +30,13 @@
+ static void svm_save_seg(CPUX86State *env, int mmu_idx, hwaddr addr,
+                          const SegmentCache *sc)
+ {
+-    cpu_stw_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, selector),
++    cpu_stw_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, selector),
+                       sc->selector, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, base),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, base),
+                       sc->base, mmu_idx, 0);
+-    cpu_stl_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, limit),
++    cpu_stl_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, limit),
+                       sc->limit, mmu_idx, 0);
+-    cpu_stw_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, attrib),
++    cpu_stw_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, attrib),
+                       ((sc->flags >> 8) & 0xff)
+                       | ((sc->flags >> 12) & 0x0f00),
+                       mmu_idx, 0);
+@@ -58,16 +58,16 @@ static void svm_load_seg(CPUX86State *env, int mmu_idx, hwaddr addr,
+     unsigned int flags;
+ 
+     sc->selector =
+-        cpu_lduw_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, selector),
++        cpu_lduw_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, selector),
+                            mmu_idx, 0);
+     sc->base =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, base),
++        cpu_ldq_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, base),
+                           mmu_idx, 0);
+     sc->limit =
+-        cpu_ldl_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, limit),
++        cpu_ldl_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, limit),
+                           mmu_idx, 0);
+     flags =
+-        cpu_lduw_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, attrib),
++        cpu_lduw_le_mmuidx_ra(env, addr + offsetof(struct vmcb_seg, attrib),
+                            mmu_idx, 0);
+     sc->flags = ((flags & 0xff) << 8) | ((flags & 0x0f00) << 12);
+ 
+@@ -507,32 +507,35 @@ void helper_vmload(CPUX86State *env, int aflag)
+ 
+ #ifdef TARGET_X86_64
+     env->kernelgsbase =
+-        cpu_ldq_mmuidx_ra(env,
+-                          addr + offsetof(struct vmcb, save.kernel_gs_base),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env,
++                             addr + offsetof(struct vmcb, save.kernel_gs_base),
++                             mmu_idx, 0);
+     env->lstar =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.lstar),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.lstar),
++                             mmu_idx, 0);
+     env->cstar =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.cstar),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.cstar),
++                             mmu_idx, 0);
+     env->fmask =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sfmask),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sfmask),
++                             mmu_idx, 0);
+     svm_canonicalization(env, &env->kernelgsbase);
+ #endif
+     env->star =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.star),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.star),
++                             mmu_idx, 0);
+     env->sysenter_cs =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_cs),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env,
++                             addr + offsetof(struct vmcb, save.sysenter_cs),
++                             mmu_idx, 0);
+     env->sysenter_esp =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_esp),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env,
++                             addr + offsetof(struct vmcb, save.sysenter_esp),
++                             mmu_idx, 0);
+     env->sysenter_eip =
+-        cpu_ldq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_eip),
+-                          mmu_idx, 0);
++        cpu_ldq_le_mmuidx_ra(env,
++                             addr + offsetof(struct vmcb, save.sysenter_eip),
++                             mmu_idx, 0);
+ }
+ 
+ void helper_vmsave(CPUX86State *env, int aflag)
+@@ -567,22 +570,22 @@ void helper_vmsave(CPUX86State *env, int aflag)
+                  &env->ldt);
+ 
+ #ifdef TARGET_X86_64
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.kernel_gs_base),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.kernel_gs_base),
+                       env->kernelgsbase, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.lstar),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.lstar),
+                       env->lstar, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.cstar),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.cstar),
+                       env->cstar, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sfmask),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sfmask),
+                       env->fmask, mmu_idx, 0);
+ #endif
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.star),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.star),
+                       env->star, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_cs),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_cs),
+                       env->sysenter_cs, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_esp),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_esp),
+                       env->sysenter_esp, mmu_idx, 0);
+-    cpu_stq_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_eip),
++    cpu_stq_le_mmuidx_ra(env, addr + offsetof(struct vmcb, save.sysenter_eip),
+                       env->sysenter_eip, mmu_idx, 0);
+ }
+ 
 -- 
 2.51.0
 
