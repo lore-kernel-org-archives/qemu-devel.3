@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27478D10386
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 07:50:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F1A4D10384
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 07:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOAI8-0000Ng-Cg; Wed, 26 Nov 2025 02:50:20 -0500
+	id 1vOAIZ-0000fx-JQ; Wed, 26 Nov 2025 02:50:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOAI2-0008R4-Qw
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 02:50:15 -0500
-Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOAI5-00007p-QJ
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 02:50:17 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOAHz-0003MG-GI
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 02:50:14 -0500
-Received: by mail-wr1-x441.google.com with SMTP id
- ffacd0b85a97d-42b3c5defb2so4212574f8f.2
- for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 23:50:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOAI2-0003Nf-K5
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 02:50:17 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-477bf34f5f5so37641225e9.0
+ for <qemu-devel@nongnu.org>; Tue, 25 Nov 2025 23:50:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764143406; x=1764748206; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qNK7II+ob1aAAffPP5gg9nQ3Itex8KQvb/+OIAOBaqQ=;
- b=RbJAG10sudqw77zL75jX4a/6fUF/+mt/m7ztm0q96XN1aXopXbtzknEtshhxLRCNtC
- 5O6sTvCr4oSll0rE2+GEs7vDFtDmaIv8aT49WkwKBecCAzJ6kemkYBQVs5OiTg4vEBe2
- 7KEqFYJJsBZoB4hYaOwfVUWKa9VjoGTDwz6TOiGempkILex6KxHf9d3QyvSxDCIGsVLm
- TLffg0F8Ztt39vSxmCnDpkId+0ce4MSmX/n21qd4XFZfrqy9KCW5tJpCJ1I6a2l8bU8O
- QVvnOSut0oR7nFfpczvjpMZ9vDBuNetGMC4qFiDf7WOsabIBBrMFT0vvvkSyeWxPiQVE
- RyIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764143406; x=1764748206;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1764143412; x=1764748212; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qNK7II+ob1aAAffPP5gg9nQ3Itex8KQvb/+OIAOBaqQ=;
- b=ViXyryP9tbVPhoie4aecdVr47zNLJpYi/zUHBoQWak77Dg+jeWhXBZByrxi5erZkM+
- a4n2WH5LoyMcIkbaLXut8H83Df9ZT4bYmt9la466QM0J9X785xGeYwyIC9mvOtmSj4SW
- UJHjKFGwtwqieE9wYef45rVwASVP8DZkkqzLTI5NnuDoQ2aumARtv1BA4OUmDU59dssX
- Bc793M+YIAIs4qPaaKZ9XbdeNynoC87wXfguJCLCJ+WX9aM8iI14snMUfkcXfuZGJpNQ
- M7d10MJQDw6TM5arZARLVsasnwO45kcg881Mz15k/Fy9D3P5175ptrFupg2GesigI2V9
- MDYw==
-X-Gm-Message-State: AOJu0YxsyucB9bOvU9SVqGQzow4qHuUHLD2ppL/+ZhshkZujzXQrVQih
- 8BrwYlm6WmrRgRFP9XV945vGgs4Py2vTc25L+awo8DsdndByYLyDAkyI5QywvTcFEVPot4U23Yv
- OGQVz2CK36U2T
-X-Gm-Gg: ASbGncsxa/0fmydnn0+Nuu4DL+2AxS5v+OFSsa8uHy+iDlsP8jFmOztl/MAAwVa5Wbt
- +PwSADGRn4C/RA0vw0MxCMzo9TYX2eZyPFpPAzWpp8KJtFlaUg1sHsBMN5tOeDFtBno4tWxR85U
- 9bcn5pTtDwoYZ+IkfChWhgHajwh7WGrh2ZCiTCqqfeK3E5KeMsuQQR7wkTqr+X5vFuq/wSGnrx/
- n/QRrwiNUWT6Qap49TOKX9d6bu9p435BOpdBOu6RK6xe3NhvKgZmXrgLLF3MvPW11mEORASNl99
- OVyeUJHb28+X2YQ7v+yCjmravySXYx6ih4LVvLSxCpHIRyqE2ARpyj2RPhLaJf1rabWrquyvKB9
- nQGuYSjdmGhRxGufOvHHEGrCrTSeRUarlbsOsO+I6Z3M0F9q+o3T9nLSWUTqP2h783YKqYTSsRk
- 7Yf5aT6SYIkSAbX14CCFs0ENIPDk+opODrDE6fV/ojxE0oVzCI+broIhw/eK/V
-X-Google-Smtp-Source: AGHT+IGTpHekWxMMN5uwaFczo3mIeZsr16LulI5B5OjaGhkohE5hbwzooesEPj01O+nr8egTmKuPtA==
-X-Received: by 2002:a5d:588c:0:b0:42b:3131:5438 with SMTP id
- ffacd0b85a97d-42cc1d22f29mr21399485f8f.54.1764143405673; 
- Tue, 25 Nov 2025 23:50:05 -0800 (PST)
+ bh=FtKth+b9TdPq30wZ/hp2A5R8f47SbZbi440xtKAdXk8=;
+ b=qYVlRNYGYA5cNJqhkN+2bLxqpeXfz1XmZijuqPswk5ntnnmCgI848pUGHVJJUDIdTb
+ glKzOkckztnN5YUSQSWf+b71D6RNPSZ5PdqCi0ArMBwtc2SmBPbPVQAgYfuVOolLTziC
+ nVbA1rO6P0I+nzJmZYCBhlLWR9hdQ36ymgUsG/tiOepoCyhYLsBdLmbR4enzgz7hqtMp
+ rvcIKimA2paQeaZMa8VdlfN6zsrkZ7M6/3DzdPWy9blxq7y2W+eQRP2SlxuTnc6Txjol
+ 9hQdR6kC/tDEoTQGECncvZXtGf7DIpWs/0qjPjiTtxapF6dgobd3PcrWQV2F1PF58WV1
+ bThQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764143412; x=1764748212;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FtKth+b9TdPq30wZ/hp2A5R8f47SbZbi440xtKAdXk8=;
+ b=W8qOWXPfesDKYc2Ed9iNVkoU3YuIPSpuadtaD46xlM8PkYIXugsTHoLpvOjgZLae62
+ GZNL+A+neYzWyzwz4MKY/saAz3CZSU6V6yp3IRD/wT1n8SKnk8vj4LWimXNiYY7Iak8d
+ UWZxJOckavsaWKnm9lyekqbR+Lf0vvLHBT0H7hIQR6Cm+Zq5tRAahlV5DHRH0qOdZ6Pg
+ e/RIvstC3DypWCSlkDVQmUpu75zOg4ZPJDJLEvAVXoiW7UwpKBI/gSpB8qk7rVMNsjP2
+ ycCExfJslRSJga04kcznwDH0XPLZmm/Ot4fn01fc+4o/RKZVtUPT1L8Y1pDgBqo/8UDW
+ ylRQ==
+X-Gm-Message-State: AOJu0YyiXJOr4PQZt/b3ju5JC58B2lyaYaxB0N72u8jqBWfHPW1Z/HPP
+ p/wKXKxP80UL/yzoLb4YouKHysQxRfySjwoqd4i3cXsO7xBRfmp5+fwAJsdJXfBi35zwzAFKSQQ
+ S9zMoSo5/QQ==
+X-Gm-Gg: ASbGncvtzMpTlgEyvmf48pCd6WoRk9fHt+0DvboHuSBoDfS9yiG4HqrSKptayOAOaFe
+ HgrqIHf5LYqc4tGekmOj/lZJkuBAL2b0Yjc2brDnsXfPOlNgG6U6SfkgrouInhPhsc/TxrrNaEf
+ 3sMhbFlYr9KBIhsRfgGRN4NoGH7+tqBOIVgiNDr6lKa4gLyVISQYbXsFH+k/TVZkXgF1yghIQLr
+ Rt7jwQZBxhLY1c2Hcw6Gc/Bevrk8ogqa/Idrfz9jS14/nrBdi8RQc5KLMRS3/Ruaq4zlkO+oyAU
+ 4OPH6geaV28MGobZmXa2RE2FrFim7jYzNPxjiPved151x368ujUVJ+/iSADYYnKwNiMllMWX/Vc
+ XIWs1TyioN2KH3xeUQ5m8VTyEbiM8/HHlAkoFNbCpNwzGlTL0QrC2tZNMoIC4TXZDjlybxdGgJB
+ ezvcNgxSxNcl5WYoZmtFIw3VTHfbRA+Fyh/2M+egCo1Fpr7b6utgpKIr232p3V
+X-Google-Smtp-Source: AGHT+IE39MONzmqfOsccrgSI1GSL9Vf9zFIhUSES1/kq2pkLjgVmAkmngwovYocZuZ44faHQKiAklw==
+X-Received: by 2002:a05:600c:1554:b0:46e:7e22:ff6a with SMTP id
+ 5b1f17b1804b1-47904aebeb2mr62332085e9.15.1764143412544; 
+ Tue, 25 Nov 2025 23:50:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7fa7affsm38955316f8f.23.2025.11.25.23.50.04
+ 5b1f17b1804b1-479052def4bsm34010905e9.13.2025.11.25.23.50.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 25 Nov 2025 23:50:05 -0800 (PST)
+ Tue, 25 Nov 2025 23:50:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.0 v2 00/12] accel/tcg: Remove most MO_TE uses in
- cpu_ld/st_data()
-Date: Wed, 26 Nov 2025 08:49:51 +0100
-Message-ID: <20251126075003.4826-1-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Subject: [PATCH-for-11.0 v2 01/12] target/hexagon: Use little-endian variant
+ of cpu_ld/st_data*()
+Date: Wed, 26 Nov 2025 08:49:52 +0100
+Message-ID: <20251126075003.4826-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251126075003.4826-1-philmd@linaro.org>
+References: <20251126075003.4826-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::441;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x441.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,61 +104,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1:
-- Fixed s/little/big/ typo (thuth)
+We only build the Hexagon target using little endianness order,
+therefore the cpu_ld/st_data*() definitions expand to the little
+endian declarations. Use the explicit little-endian variants.
 
-Still trying to remove MO_TE uses, here looking at cpu_ld/st_data()
-in fixed-endianness targets.
+Mechanical change running:
 
-Series split of bigger one [*] where Richard made a comment on
-*_code() patches. Since not related to *_data() uses, post separetely
-since almost ready (still few PPC/MIPS paths to update, but I'd rather
-check if this is heading in the correct direction before looking at
-them).
+  $ tgt=hexagon; \
+    end=le; \
+    for op in data mmuidx_ra; do \
+      for ac in uw sw l q; do \
+        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+      for ac in w l q; do \
+        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+    done
 
-[*] https://lore.kernel.org/qemu-devel/20251121134503.30914-1-philmd@linaro.org/
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+---
+ target/hexagon/macros.h    | 6 +++---
+ target/hexagon/op_helper.c | 6 +++---
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-Philippe Mathieu-Daudé (12):
-  target/hexagon: Use little-endian variant of cpu_ld/st_data*()
-  target/hppa: Use little-endian variant of cpu_ld/st_data*()
-  target/i386: Use little-endian variant of cpu_ld/st_data*()
-  target/riscv: Use little-endian variant of cpu_ld/st_data*() for
-    vector
-  target/rx: Use little-endian variant of cpu_ld/st_data*()
-  target/tricore: Use little-endian variant of cpu_ld/st_data*()
-  target/m68k: Use big-endian variant of cpu_ld/st_data*()
-  target/s390x: Use big-endian variant of cpu_ld/st_data*()
-  target/sparc: Use big-endian variant of cpu_ld/st_data*()
-  target/sh4: Replace cpu_stl_data() by explicit endianness variants
-  target/mips: Use big-endian variant of cpu_ld/st_data*() for MSA
-    opcode
-  accel/tcg: Remove non-explicit endian cpu_ld/st*_data*() helpers
-
- include/accel/tcg/cpu-ldst.h         |  46 --------
- target/hexagon/macros.h              |   6 +-
- target/i386/ops_sse.h                |  12 +--
- target/i386/tcg/seg_helper.h         |  12 +--
- linux-user/vm86.c                    |   4 +-
- target/hexagon/op_helper.c           |   6 +-
- target/hppa/op_helper.c              |  44 ++++----
- target/i386/tcg/mem_helper.c         |   8 +-
- target/i386/tcg/mpx_helper.c         |  28 ++---
- target/i386/tcg/seg_helper.c         |  16 +--
- target/i386/tcg/system/excp_helper.c |   8 +-
- target/i386/tcg/system/svm_helper.c  |  69 ++++++------
- target/m68k/fpu_helper.c             |  12 +--
- target/m68k/op_helper.c              |  91 ++++++++--------
- target/mips/tcg/msa_helper.c         |  51 +++++----
- target/riscv/vector_helper.c         |  12 +--
- target/rx/helper.c                   |  14 +--
- target/rx/op_helper.c                |   6 +-
- target/s390x/tcg/mem_helper.c        |  48 ++++-----
- target/s390x/tcg/vec_helper.c        |   8 +-
- target/sh4/op_helper.c               |   6 +-
- target/sparc/ldst_helper.c           |   6 +-
- target/tricore/op_helper.c           | 152 +++++++++++++--------------
- 23 files changed, 319 insertions(+), 346 deletions(-)
-
+diff --git a/target/hexagon/macros.h b/target/hexagon/macros.h
+index 088e5961ab7..6c2862a2320 100644
+--- a/target/hexagon/macros.h
++++ b/target/hexagon/macros.h
+@@ -519,9 +519,9 @@ static inline TCGv gen_read_ireg(TCGv result, TCGv val, int shift)
+ #define fLOAD(NUM, SIZE, SIGN, EA, DST) MEM_LOAD##SIZE##SIGN(DST, EA)
+ #else
+ #define MEM_LOAD1 cpu_ldub_data_ra
+-#define MEM_LOAD2 cpu_lduw_data_ra
+-#define MEM_LOAD4 cpu_ldl_data_ra
+-#define MEM_LOAD8 cpu_ldq_data_ra
++#define MEM_LOAD2 cpu_lduw_le_data_ra
++#define MEM_LOAD4 cpu_ldl_le_data_ra
++#define MEM_LOAD8 cpu_ldq_le_data_ra
+ 
+ #define fLOAD(NUM, SIZE, SIGN, EA, DST) \
+     do { \
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+index e2e80ca7efa..08db1e9c56b 100644
+--- a/target/hexagon/op_helper.c
++++ b/target/hexagon/op_helper.c
+@@ -77,13 +77,13 @@ static void commit_store(CPUHexagonState *env, int slot_num, uintptr_t ra)
+         cpu_stb_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
+         break;
+     case 2:
+-        cpu_stw_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
++        cpu_stw_le_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
+         break;
+     case 4:
+-        cpu_stl_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
++        cpu_stl_le_data_ra(env, va, env->mem_log_stores[slot_num].data32, ra);
+         break;
+     case 8:
+-        cpu_stq_data_ra(env, va, env->mem_log_stores[slot_num].data64, ra);
++        cpu_stq_le_data_ra(env, va, env->mem_log_stores[slot_num].data64, ra);
+         break;
+     default:
+         g_assert_not_reached();
 -- 
 2.51.0
 
