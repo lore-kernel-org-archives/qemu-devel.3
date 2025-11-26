@@ -4,25 +4,25 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E08D10F28
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 16:46:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20E70D10F28
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 16:46:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOIdx-0001A0-BW; Wed, 26 Nov 2025 11:45:25 -0500
+	id 1vOIdx-00019r-2J; Wed, 26 Nov 2025 11:45:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1vOIcw-0000pg-Qp; Wed, 26 Nov 2025 11:44:28 -0500
+ id 1vOIcu-0000os-TC; Wed, 26 Nov 2025 11:44:28 -0500
 Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1vOIck-0003R2-PN; Wed, 26 Nov 2025 11:44:22 -0500
+ id 1vOIcj-0003RG-Js; Wed, 26 Nov 2025 11:44:17 -0500
 Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
- by Atcsqr.andestech.com with ESMTPS id 5AQGhZrx005667
+ by Atcsqr.andestech.com with ESMTPS id 5AQGhavG005668
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Nov 2025 00:43:35 +0800 (+08)
+ Thu, 27 Nov 2025 00:43:36 +0800 (+08)
  (envelope-from alvinga@andestech.com)
 Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS31.andestech.com
  (10.0.1.89) with Microsoft SMTP Server id 14.3.498.0;
@@ -32,10 +32,10 @@ CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
  <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
  <zhiwei_liu@linux.alibaba.com>, <vivahavey@gmail.com>, Alvin Chang
  <alvinga@andestech.com>, Yu-Ming Chang <yumin686@andestech.com>
-Subject: [PATCH v2 1/2] target/riscv: Add "debug-1.0" to specify debug
- specification v1.0
-Date: Thu, 27 Nov 2025 00:43:28 +0800
-Message-ID: <20251126164329.2157287-2-alvinga@andestech.com>
+Subject: [PATCH v2 2/2] target/riscv: Simpily support versioning of debug
+ trigger module
+Date: Thu, 27 Nov 2025 00:43:29 +0800
+Message-ID: <20251126164329.2157287-3-alvinga@andestech.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251126164329.2157287-1-alvinga@andestech.com>
 References: <20251126164329.2157287-1-alvinga@andestech.com>
@@ -45,7 +45,7 @@ Content-Type: text/plain
 X-Originating-IP: [10.0.15.183]
 X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 5AQGhZrx005667
+X-MAIL: Atcsqr.andestech.com 5AQGhavG005668
 Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
  helo=Atcsqr.andestech.com
 X-Spam_score_int: -8
@@ -72,49 +72,133 @@ From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently RISC-V CPU has a property "debug" which is equivalent to old
-debug specification v0.13 version. Now we have ratified debug
-specification v1.0 version. To support both versions, we add "debug-1.0"
-as one of RISC-V CPU property to let user specify that debug v0.13 or
-debug v1.0 is enabled. When debug-1.0=false CPU fallbacks to default
-v0.13 version.
+To support multiple versions of debug specification, we have added
+"debug-1.0" CPU property. Now the debug trigger module inspects this
+property to determine the supported trigger types by the CPU. In this
+commit we validate written trigger type with CPU debug version. For
+example, the debug specification v0.13 does not support mcontrol6, and
+the indended tdata_csr_write() on tdata1 with type=mcontrol6 will be
+ignored.
 
-Note that "debug-1.0" depends on "debug" property:
-- debug=false,debug-1.0={true|false} --> debug is disabled
-- debug=true,debug-1.0=false         --> debug v0.13 is enabled
-- debug=true,debug-1.0=true          --> debug v1.0  is enabled
+If debug v1.0 is selected, the default trigger type is mcontrol6
+instead of legacy mcontrol.
 
 Signed-off-by: Alvin Chang <alvinga@andestech.com>
 Reviewed-by: Yu-Ming Chang <yumin686@andestech.com>
 ---
- target/riscv/cpu.c                | 1 +
- target/riscv/cpu_cfg_fields.h.inc | 1 +
- 2 files changed, 2 insertions(+)
+ target/riscv/debug.c | 56 +++++++++++++++++++++++++++++++++++++++++---
+ target/riscv/debug.h |  1 +
+ 2 files changed, 54 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 73d4280..082035b 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2637,6 +2637,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+index 5664466..5163193 100644
+--- a/target/riscv/debug.c
++++ b/target/riscv/debug.c
+@@ -64,6 +64,26 @@ static tdata_avail tdata_mapping[TRIGGER_TYPE_NUM] = {
+     [TRIGGER_TYPE_UNAVAIL] = { true, true, true }
+ };
  
- static const Property riscv_cpu_properties[] = {
-     DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
-+    DEFINE_PROP_BOOL("debug-1.0", RISCVCPU, cfg.debug_1_00, false),
++/* Valid trigger types supported by debug specification v0.13 */
++static bool valid_trigger_type_v013[TRIGGER_TYPE_NUM] = {
++    [TRIGGER_TYPE_AD_MATCH] = true,
++    [TRIGGER_TYPE_INST_CNT] = true,
++    [TRIGGER_TYPE_INT] = true,
++    [TRIGGER_TYPE_EXCP] = true,
++    [TRIGGER_TYPE_UNAVAIL] = true
++};
++
++/* Valid trigger types supported by debug specification v1.0 */
++static bool valid_trigger_type_v100[TRIGGER_TYPE_NUM] = {
++    [TRIGGER_TYPE_AD_MATCH] = true,
++    [TRIGGER_TYPE_INST_CNT] = true,
++    [TRIGGER_TYPE_INT] = true,
++    [TRIGGER_TYPE_EXCP] = true,
++    [TRIGGER_TYPE_AD_MATCH6] = true,
++    [TRIGGER_TYPE_EXT_SRC] = true,
++    [TRIGGER_TYPE_DISABLED] = true
++};
++
+ /* only breakpoint size 1/2/4/8 supported */
+ static int access_size[SIZE_NUM] = {
+     [SIZE_ANY] = 0,
+@@ -95,6 +115,20 @@ static inline target_ulong get_trigger_type(CPURISCVState *env,
+     return extract_trigger_type(env, env->tdata1[trigger_index]);
+ }
  
-     {.name = "pmu-mask", .info = &prop_pmu_mask},
-     {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index a154ecd..402b255 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -151,6 +151,7 @@ BOOL_FIELD(ext_XVentanaCondOps)
- BOOL_FIELD(mmu)
- BOOL_FIELD(pmp)
- BOOL_FIELD(debug)
-+BOOL_FIELD(debug_1_00)
- BOOL_FIELD(misa_w)
++static inline bool validate_trigger_type(CPURISCVState *env,
++                                         target_ulong trigger_type)
++{
++    if (trigger_type >= TRIGGER_TYPE_NUM) {
++        return false;
++    }
++
++    if (riscv_cpu_cfg(env)->debug_1_00) {
++        return valid_trigger_type_v100[trigger_type];
++    }
++
++    return valid_trigger_type_v013[trigger_type];
++}
++
+ static trigger_action_t get_trigger_action(CPURISCVState *env,
+                                            target_ulong trigger_index)
+ {
+@@ -889,6 +923,13 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+         trigger_type = get_trigger_type(env, env->trigger_cur);
+     }
  
- BOOL_FIELD(short_isa_string)
++    if (!validate_trigger_type(env, trigger_type)) {
++        /* Since the tdada1.type is WARL, we simpily ignore write here. */
++        qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n",
++                      trigger_type);
++        return;
++    }
++
+     switch (trigger_type) {
+     case TRIGGER_TYPE_AD_MATCH:
+         type2_reg_write(env, env->trigger_cur, tdata_index, val);
+@@ -918,8 +959,11 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+ target_ulong tinfo_csr_read(CPURISCVState *env)
+ {
+     /* assume all triggers support the same types of triggers */
+-    return BIT(TRIGGER_TYPE_AD_MATCH) |
+-           BIT(TRIGGER_TYPE_AD_MATCH6);
++    if (riscv_cpu_cfg(env)->debug_1_00) {
++        return BIT(TRIGGER_TYPE_AD_MATCH) | BIT(TRIGGER_TYPE_AD_MATCH6);
++    }
++
++    return BIT(TRIGGER_TYPE_AD_MATCH);
+ }
+ 
+ void riscv_cpu_debug_excp_handler(CPUState *cs)
+@@ -1056,9 +1100,15 @@ void riscv_trigger_realize(CPURISCVState *env)
+ 
+ void riscv_trigger_reset_hold(CPURISCVState *env)
+ {
+-    target_ulong tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH, 0, 0);
++    target_ulong tdata1;
+     int i;
+ 
++    if (riscv_cpu_cfg(env)->debug_1_00) {
++        tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH6, 0, 0);
++    } else {
++        tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH, 0, 0);
++    }
++
+     /* init to type 2 triggers */
+     for (i = 0; i < RV_MAX_TRIGGERS; i++) {
+         /*
+diff --git a/target/riscv/debug.h b/target/riscv/debug.h
+index f76b8f9..0127cb9 100644
+--- a/target/riscv/debug.h
++++ b/target/riscv/debug.h
+@@ -43,6 +43,7 @@ typedef enum {
+     TRIGGER_TYPE_AD_MATCH6 = 6,     /* new address/data match trigger */
+     TRIGGER_TYPE_EXT_SRC = 7,       /* external source trigger */
+     TRIGGER_TYPE_UNAVAIL = 15,      /* trigger exists, but unavailable */
++    TRIGGER_TYPE_DISABLED = 15,     /* trigger exists, but disabled */
+     TRIGGER_TYPE_NUM
+ } trigger_type_t;
+ 
 -- 
 2.43.0
 
