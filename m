@@ -4,159 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF844D1038C
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 08:22:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B588CD1038C
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 08:23:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOAmZ-00035x-De; Wed, 26 Nov 2025 03:21:47 -0500
+	id 1vOAo6-0006L8-Na; Wed, 26 Nov 2025 03:23:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vOAmX-0002zC-Qy
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 03:21:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOAo3-0006CN-UK
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 03:23:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vOAmV-0005GI-Pa
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 03:21:45 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOAo2-0005ms-Gf
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 03:23:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764145302;
+ s=mimecast20190719; t=1764145397;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=H+VA6Pg1eEjV5FHvHC64VYelZeiqkfschI+tgUuYGM4=;
- b=gZNL8kGaa5APuUGkhlv9G4SLn66UWiEf1aIVomwuTCRTpJBZUqKzQtkhPhB5lza0JLxtBP
- JIchKx6MfMtNorAOOXNj6lqAUubEv4L0Whp46tJA506ZobznBTElU43Nw5D0m9Ev3wDC9d
- R7U+7ydWktKVKcTS7V+uiPt6e4MLPQM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cK9qgzZob7EA+KW+GuMQJ4tQbrfuFRwzIv+RTh6NZ6M=;
+ b=W1l09Sce4XYkXMC0KHnabkzGBHLwGN15jGqYy02OAwiDkW7BIUVz9fqDkPAjPtgIiLcW9x
+ LFUhuKEQtXgXZbfKKgDD1aDsxIMQ8DunwCPGFxf/mvXV9yT2xexx2QnE7O5YExNpCxi2v3
+ O2n9tFiu79NfHfhSI19A/FIzhloqhRg=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-cbcF74HwP4WApDfm3z2nSA-1; Wed, 26 Nov 2025 03:21:41 -0500
-X-MC-Unique: cbcF74HwP4WApDfm3z2nSA-1
-X-Mimecast-MFC-AGG-ID: cbcF74HwP4WApDfm3z2nSA_1764145300
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-42b2c8fb84fso3395059f8f.2
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 00:21:40 -0800 (PST)
+ us-mta-617-4FNtXo_8ME2bqto1ZJI2Xg-1; Wed, 26 Nov 2025 03:23:14 -0500
+X-MC-Unique: 4FNtXo_8ME2bqto1ZJI2Xg-1
+X-Mimecast-MFC-AGG-ID: 4FNtXo_8ME2bqto1ZJI2Xg_1764145393
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b763acb793fso809002166b.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 00:23:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764145300; x=1764750100; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764145393; x=1764750193; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=H+VA6Pg1eEjV5FHvHC64VYelZeiqkfschI+tgUuYGM4=;
- b=BCJNskefpLk7dhB0p9eTnNL+hl3/9F9r0UcqIAFS/edvBHiAPUuenRkIWZZCkKE6TK
- Ag9DOoRxFmHE8ESPYhqbGq2nTwGdOH7YDKWiQENw78ua9M0qBAhVr9qla4k2sGofxXAK
- hCjYeYAVykyPlxqo+z1ygYxy6y0Pa/NEWy+9zvqBXTDvz0uGVwXp6NIyfjvWYv92maU5
- ZvNhvhhO45ZxzsdFDmaCSeqzeuaHo6X6uUWJuSKXPkeo69G0kk2X4+NlYEDFDUVFUmkO
- nXy2vvO5dFaICTJul5ZUxHYDDEH/whcyiwHPAwHQFIE04VYIy9ZX/y+DUN+rm1+iolhk
- WLEA==
+ bh=cK9qgzZob7EA+KW+GuMQJ4tQbrfuFRwzIv+RTh6NZ6M=;
+ b=WPWZ3MyQJKAzUq/vesMTShuBWg4+8FrsrjaGbv7TNnGiRubxTfj2QsDYx3osbX9s9b
+ dEgcZ0VXNdrAcUqXYoJSisuxKTMFoCBDrJ08gxv/ABJg3mT2Zgy+muQ7JlGWgPL9wxAC
+ 536rpoYTI8xG0BQZCoPTuBuC6DZkYqATJpCegT78T//o1kPltFx5pGTilVmlKdCvw2s/
+ wWNrhY3lf7WSb/rsVCv32s49+obMRMac5g0FXL2XOxECFYNrUB/8r1iTsng+VOt+ZX6U
+ lPro3QX9Id+MuiOjU6crB9/71vJSS/7lWqf/X7mpf8xNC+495VFQ8E9Lr5yu/HgW5ufl
+ bWCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764145300; x=1764750100;
+ d=1e100.net; s=20230601; t=1764145393; x=1764750193;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=H+VA6Pg1eEjV5FHvHC64VYelZeiqkfschI+tgUuYGM4=;
- b=sKj3P0DNzHehnEchvtRLydwGgzkc5ah8c4WdyzIqvANVQCIWdxqvQ/u5jXGhYHW0dJ
- J5oX+cEXlek7o1jRqVE83q60Ti6w8GQqdpBIdu2lF4CZErs5xvpmjGglwgbzgrpRYfXy
- 60UtGVuXdWCMY+YtydB3fMeH8NQ6M+nl/lPXK8S/mKQarqN2dT1taH42UIl1aX+nQl4q
- xCx2U+sLy49GI06NHEAaI4N3ebI0igudXuk2/UNZ6LdENZCjpCimHbwpJg3QTEQKElhm
- SCSZ4LE16vb66gANX6zisHTFi96qqdXM7X8XWhFbHXrhVhv6i6LC6e3QYSyAiH6avNaJ
- Ww4g==
+ bh=cK9qgzZob7EA+KW+GuMQJ4tQbrfuFRwzIv+RTh6NZ6M=;
+ b=KgLSd8YXC8i1Hq3SaIoAkHGELCBwKRYdfWy8npQ6m4IaafvEAYI/rJtc3q2K6nG8LT
+ bkKbNfKSQ5XRxBXK/i+G75tPrkvQJhFezASV0HrgVMSeKCSO3fkDdOHqr9+z886dH0t2
+ Th6tAqHws0L1OKKV8NynoU6cmT+b/+My5sjBW3lHmNm1ndq/x534BgfYKe/t3514aBTh
+ 0R325JqIqP9C9Cck5cgx5hLErXgVa3Kyv66iQ3qAtKIoWV7Eqi1UAjBisy25BySLRmNr
+ CARJ5CD13/vQqVtByodX1kQC0C5+iuJuP+y0If7SCHmxzCypwQ+HyjdFt/vrQ4YShl8f
+ 9P9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWl0h2vXxa/qf7HKHkx8S08+CqZd0DoUj8qeNaGn9Q/JdNHq+uiehmgO2f3YXONSrxpmY1qtUcGLuEG@nongnu.org
-X-Gm-Message-State: AOJu0YxqWoiJlMYzwguGuvAPZTXE0EaeWnU3DihyEQQT6k68K7VtVQ4z
- qZ5zN/xutd7PTqDDHojcINj2iXOEIq0zXcPJwWNTiwTnTgRHJxKzLZhrGEu2RYHrgrfikbzmNP1
- FipqUs/gcG1IgBuPej5jiwS+dgZ86pYDkXv/989bfY6qhbBKFHcd5LZhM
-X-Gm-Gg: ASbGncvuR7SpGy8RYA7YIHQOPBPwTmB38H7bTktzBW/PtlLaBelLoImeDmeiEmsF139
- 7wkkxnDlotVtzp5zKk7tYOUUjkG5SJ+lHEKh9CW3JByEVRP6UFNlJe4P9Mj+FSUtBSeKYQnLCso
- vYEbjN3XypgbZrREK6BgKGIXfAZv7L2GraBTRZEPjkwOKODsDDfhLvQ8Kx5KQ4S3/upImQ5fhkU
- mPhUYljiB1Qdxkrcd7OuzHH2NQdZp92s4m1huoqDrf2E4f58fDMF4GpfsrDaKGbC0Ss6qzx5N9m
- sYiTbRc3iz0OWhsLpk4LX/Pt+RAXNDzCWkrkuEmyADUUoluxY4ZChJAUKFrGYMzEmBkML0oIfzz
- OKhIjUa+bwMXMCn0xZ5wrnsL+u8W/aamZEc130sSsEv1KNCwP
-X-Received: by 2002:a05:6000:2f85:b0:42b:4247:b077 with SMTP id
- ffacd0b85a97d-42e0f34fa15mr5961070f8f.41.1764145299635; 
- Wed, 26 Nov 2025 00:21:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE1Yz0QCUwDsEhB8h2mzBZ7LDhY3jJAmL3rMCF6nqYdT4RsvdEMZAl+KPCaL21fLEeT4Y6g/g==
-X-Received: by 2002:a05:6000:2f85:b0:42b:4247:b077 with SMTP id
- ffacd0b85a97d-42e0f34fa15mr5961038f8f.41.1764145299240; 
- Wed, 26 Nov 2025 00:21:39 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ AJvYcCV4C7VMDKagfLcH442zuX4w4Iooxf6qzItUsA2FQS4YUcmBEok97TOJwV/Aaz3X/8wlRnM470Hfwpr/@nongnu.org
+X-Gm-Message-State: AOJu0Yw5zSa6kQNTTVzQGWxZOfVAReNSAFK8bPvKdmts4loHrfFukrxy
+ cJ38GNdjjwEiU/A65Rw05cIYmmfM6b0CcIejZAx9YnAPD3btp9QzYYirlOLyobfUoDJ1qrgiZY/
+ 0a7x3RFTEMPW3I/sgiZyDE+xKNG7QYrdt+ftUVjIYZ39PuGDP+vgjPE6p
+X-Gm-Gg: ASbGncsel8IeaTuzljbsR4Rw7HW3Tb67awajiA9yWNl1bw4UNqhaEhSuTyV1uz/lV9p
+ KI1cOdNXhwuCd5Bzj7bPZ2K+bBFyNY1+bYV02dal+O3CvJfcmqycm/tG3FuEF+1zNveCX8gqHyI
+ hoI6fq+PzWbxvOdDbXjE3U2+4Jk1CvUOx6pq+OvJ8L3QN19folicc2HtZ9nTLuZHJ96KjIw6cQu
+ Sf+UziasuejY7E4eskTEZzlnNaVhWaOS9xr24anLEhEZtrS+VtR+HeXP6EABemJ7PyUAfBkjW2d
+ L/tYlAi3/GLtTslY8fFFdKHCu+4f9SOcZd63w7XZslMP+4tfxMVkR4htk/tNVhM1WRoTMLxnxuX
+ Mew95dwo=
+X-Received: by 2002:a05:6402:524c:b0:640:edb3:90b5 with SMTP id
+ 4fb4d7f45d1cf-645eb2241a7mr5401011a12.7.1764145392927; 
+ Wed, 26 Nov 2025 00:23:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH4NZ4mThh9ugGt8tknRc9ecoRZ1PIaVJDBRd3hxRNTlgRnmUiNkiCpLOG7z/IOgHqS8UHJRw==
+X-Received: by 2002:a05:6402:524c:b0:640:edb3:90b5 with SMTP id
+ 4fb4d7f45d1cf-645eb2241a7mr5400993a12.7.1764145392591; 
+ Wed, 26 Nov 2025 00:23:12 -0800 (PST)
+Received: from [192.168.0.5] ([47.64.115.162])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42cb7f363c0sm39808837f8f.18.2025.11.26.00.21.38
+ 4fb4d7f45d1cf-6453645f2easm17062679a12.33.2025.11.26.00.23.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Nov 2025 00:21:38 -0800 (PST)
-Message-ID: <df1498e6-70ea-4122-867f-9ccd574f65ec@redhat.com>
-Date: Wed, 26 Nov 2025 09:21:38 +0100
+ Wed, 26 Nov 2025 00:23:11 -0800 (PST)
+Message-ID: <90ea99f1-8cc5-4f13-af5e-5cc1f9499609@redhat.com>
+Date: Wed, 26 Nov 2025 09:23:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Should functions that free memory clear the pointer?
-To: Markus Armbruster <armbru@redhat.com>, Peter Xu <peterx@redhat.com>
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- qemu-devel@nongnu.org, farosas@suse.de, peter.maydell@linaro.org
-References: <20251125070554.2256181-1-armbru@redhat.com>
- <CAJ+F1CJ918Y9e=yTHFSqZo0QGmmD3aT6Zq+zxQ81t-gjKkUJPw@mail.gmail.com>
- <875xayxo6t.fsf@pond.sub.org> <aSXPhOV86fyaY53_@x1.local>
- <87ikeygd83.fsf@pond.sub.org> <aSYEO_S7FfAeZyHG@x1.local>
- <87wm3dfhk9.fsf_-_@pond.sub.org>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <87wm3dfhk9.fsf_-_@pond.sub.org>
+Subject: Re: [PATCH-for-11.0 v2 08/12] target/s390x: Use big-endian variant of
+ cpu_ld/st_data*()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>
+References: <20251126075003.4826-1-philmd@linaro.org>
+ <20251126075003.4826-9-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251126075003.4826-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.152,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,65 +170,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/26/25 07:12, Markus Armbruster wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 26/11/2025 08.49, Philippe Mathieu-Daudé wrote:
+> We only build the S390x target using big endianness order,
+> therefore the cpu_ld/st_data*() definitions expand to the
+> big endian declarations. Use the explicit big-endian variants.
 > 
->> On Tue, Nov 25, 2025 at 07:48:44PM +0100, Markus Armbruster wrote:
->>> My main argument remains this one: our deallocating functions don't work
->>> that way.  For better or worse.
->>>
->>> I don't want the Error API free differently.
->>
->> Yes, it's fair.
->>
->> IMHO, it's a matter of taste,
+> Mechanical change running:
 > 
-> Depends on context.
+>    $ tgt=s390x; \
+>      end=be; \
+>      for op in data mmuidx_ra; do \
+>        for ac in uw sw l q; do \
+>          sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+>                    $(git grep -l cpu_ target/${tgt}/); \
+>        done;
+>        for ac in w l q; do \
+>          sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+>                    $(git grep -l cpu_ target/${tgt}/); \
+>        done;
+>      done
 > 
-> Modula-2's DISPOSE takes the pointer by reference and clears it.  C's
-> free() takes it by value.  Matter of taste when these were designed.
-> 
-> But when one style has become overwhelmingly prevalent, it's no longer a
-> matter of taste.  This is arguably the case in C.
-> 
->>                                and maybe that's also why I liked
->> g_clear_pointer() but not everyone likes it.. said that, when we have
->> g_clear_pointer() it also makes the current form more flexible, because we
->> can apply g_clear_pointer() on top when we need a reset..
-> 
-> I'm no friend of g_clear_pointer().  I find
-> 
->      g_clear_pointer(&ptr, free_frob);
-> 
-> a rather roundabout way to say
-> 
->      free_frob(ptr);
->      ptr = NULL;
-> 
-> Any C programmer will immediately understand the latter.  For the
-> former, you need to know one more little thing.  Yes, we can all get
-> used to these little things, but it's one more little thing new people
-> have to learn and internalize.  Even little things add up.
-> 
-> If an entire project gets into the habit of using it religiously, it may
-> reduce "forgot to zap the reference" bugs some.  Until then, it feels
-> like a net negative to me.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/s390x/tcg/mem_helper.c | 48 +++++++++++++++++------------------
+>   target/s390x/tcg/vec_helper.c |  8 +++---
+>   2 files changed, 28 insertions(+), 28 deletions(-)
 
-I'm not a big fan of g_clear_pointer() either; I prefer being explicit,
-even if it means a bit of redundancy.
-
-
-Thanks,
-
-C.
-
-
-
-> 
->> I'll follow your advise on error reporting for migration.
-> 
-> Thank you!
-> 
-> 
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
