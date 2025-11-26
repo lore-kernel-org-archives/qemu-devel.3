@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A27F4D1037E
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 06:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B24FBD1037F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 06:57:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vO9KU-0007nu-NL; Wed, 26 Nov 2025 01:48:42 -0500
+	id 1vO9SF-00086c-5V; Wed, 26 Nov 2025 01:56:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vO9KJ-0007a5-Mh; Wed, 26 Nov 2025 01:48:32 -0500
+ id 1vO9SA-00084W-Dt; Wed, 26 Nov 2025 01:56:38 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vO9KH-00088F-Pe; Wed, 26 Nov 2025 01:48:31 -0500
+ id 1vO9S7-0000zy-Sm; Wed, 26 Nov 2025 01:56:38 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 61D9616E5CC;
- Wed, 26 Nov 2025 09:48:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 8E67516E5D8;
+ Wed, 26 Nov 2025 09:56:25 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 73E9F32602F;
- Wed, 26 Nov 2025 09:48:26 +0300 (MSK)
-Message-ID: <b8170e28-e4ba-479c-bbbb-1b94a2fca81c@tls.msk.ru>
-Date: Wed, 26 Nov 2025 09:48:25 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id A35E7326039;
+ Wed, 26 Nov 2025 09:56:30 +0300 (MSK)
+Message-ID: <0faef1dc-6fde-41b1-bf1e-8ecfe49033f7@tls.msk.ru>
+Date: Wed, 26 Nov 2025 09:56:30 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] aspeed/{xdma, rtc, sdhci}: Fix endianness to
- DEVICE_LITTLE_ENDIAN
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH v3 00/10] chardev: Improve @docstring and clarify
+ qemu_chr_write() uses
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20251125142631.676689-1-clg@redhat.com>
+References: <20251112134143.27194-1-philmd@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,7 +83,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20251125142631.676689-1-clg@redhat.com>
+In-Reply-To: <20251112134143.27194-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -110,16 +109,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/25/25 17:26, Cédric Le Goater via wrote:
-> When the XDMA, RTC and SDHCI device models of the Aspeed SoCs were
-> first introduced, their MMIO regions inherited of a DEVICE_NATIVE_ENDIAN
-> endianness. It should be DEVICE_LITTLE_ENDIAN. Fix that.
+On 11/12/25 16:41, Philippe Mathieu-Daudé wrote:
+> v3:
+> - Addressed Marc-André & Daniel comments
+> - Document qemu_chr_fe_write()
+> - Rename replay arguments
+> 
+> v2:
+> - Document ChardevClass::chr_write() and qemu_chr_write[_all]()
+> 
+> Few chardev fixes:
+> - preserve %errno
+> - allow partial writes in qemu_chr_write()
+> 
+> Improve chardev methods documentation.
+> 
+> While @c for frontend and @s for backend is accepted, it
+> confuses me, so I prefer to document for my own mental health.
+> 
+> Based-on: <20251022074612.1258413-1-marcandre.lureau@redhat.com>
+> 
+> Philippe Mathieu-Daudé (10):
+>    chardev/char-fe: Improve @docstrings
+>    chardev/char-io: Add @docstrings for io_channel_send[_full]()
+>    chardev/char: Improve ChardevClass::chr_write() docstring
+>    chardev/char: Document qemu_chr_write[_all]()
+>    chardev/char-pty: Do not ignore chr_write() failures
+>    chardev/char: Allow partial writes in qemu_chr_write()
+>    chardev/char: Preserve %errno in qemu_chr_write()
+>    chardev/char: Document qemu_chr_fe_write()'s return value
+>    hw/char: Simplify when qemu_chr_fe_write() could not write
+>    system/replay: Rename some method parameters
 
-This looks like another bit for qemu-stable.  I'm picking it up
-for 10.0 and 10.1 series.  Please let me know if I shouldn't.
+Hi!
+
+ From this patchset, 1 change has now found its way to the master
+branch:
+
+  chardev/char-pty: Do not ignore chr_write() failures
+
+Besides it, the following 2 changes were marked for-stable:
+
+  chardev/char: Allow partial writes in qemu_chr_write()
+  chardev/char: Preserve %errno in qemu_chr_write()
+
+Are other changes (including the above 2) not needed anymore?
 
 Thanks,
 
 /mjt
-
 
