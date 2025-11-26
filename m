@@ -4,77 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF13D10F43
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 13:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58545D10F4F
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 13:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOF88-0001F3-4v; Wed, 26 Nov 2025 08:00:22 -0500
+	id 1vOFYp-0002hT-ME; Wed, 26 Nov 2025 08:27:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vOF7k-0000uW-GJ
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:59:59 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vOF7i-0001Ku-Bv
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 07:59:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764161992;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SsjkXx6OaswXl8ikDM5Biep/jkNZbnax5RCRyj0b6nc=;
- b=G9Cwx1EL28Gf0E3+oF2aehj+/MRY86OaKvjLT7I8kOF165hRil3v0JVqb2pxvxOCa+P+1W
- F8K6w0mJFjWR1YsZWwUQcKtMKOrx8Ur3TkMc3DzziCwADfwF9AEypHtp7Bpf6HdYlr6ZT3
- fqpBVicokqHPkRtcbJSgs3Y3kvLczpY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-8iKjtOhePgi6s_4qdjpJ8g-1; Wed,
- 26 Nov 2025 07:59:48 -0500
-X-MC-Unique: 8iKjtOhePgi6s_4qdjpJ8g-1
-X-Mimecast-MFC-AGG-ID: 8iKjtOhePgi6s_4qdjpJ8g_1764161988
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C466180122B; Wed, 26 Nov 2025 12:59:47 +0000 (UTC)
-Received: from localhost (dhcp-192-239.str.redhat.com [10.33.192.239])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7238518004D8; Wed, 26 Nov 2025 12:59:46 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Eric Auger
- <eric.auger@redhat.com>
-Subject: Re: [PATCH for-11.0] arm: add DCZID_EL0 to idregs array
-In-Reply-To: <CAFEAcA_zXVk39GzeMeTtpMVPr5xm23H7RPzbvX9Sxhgr=WzN+Q@mail.gmail.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Avril Crosse O'Flaherty"
-References: <20251119134414.2892640-1-cohuck@redhat.com>
- <CAFEAcA8r7_6fbEFtkEL4vi-wqABewcPU3P73RWh08RRQnQ5Baw@mail.gmail.com>
- <87see2ozzu.fsf@redhat.com>
- <CAFEAcA_zXVk39GzeMeTtpMVPr5xm23H7RPzbvX9Sxhgr=WzN+Q@mail.gmail.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Wed, 26 Nov 2025 13:59:44 +0100
-Message-ID: <875xaxosov.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vOFYf-0002gA-VH
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 08:27:47 -0500
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vOFYc-0001vc-4p
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 08:27:44 -0500
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-78665368a5cso64345097b3.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 05:27:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764163660; x=1764768460; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UXtMhZdIBOyiMJybbPSMLS2QzpM/Ed2prcithz7IuJQ=;
+ b=iBQm4fsX4le91lCye1xwY3Apu3YguMkTNSdwN1cYOa6eMHh/pCwx3OrUpVNVes03Jo
+ SRt3eUvYsnZjtHSsAE6139+FcFHtu9cDHbyAmwlCQ1af1YnKrk3q7TxyXkw10jGBWTOG
+ 7roDFVQHBHbEJqzp0E3RsnfsLtt81Zf2GFptU00fqb70SJhkJTAnHYsmhgEtNdBamfmp
+ GiHZrMT/cG0IAkvQ1TbaWiKoZ3n5EX1srecnA67wJfbIa64Ccp+kBVtsC6PV73Oyw8P9
+ T2f/xTyDEpLJI1ooJb2Tzqsm1Z4a0qBmmgJsjT9h5yjvvuxiYiegvOh6hHKuxi6EyC8P
+ zfJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764163660; x=1764768460;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UXtMhZdIBOyiMJybbPSMLS2QzpM/Ed2prcithz7IuJQ=;
+ b=nTe3LxtL92foJyJUiwj6mP39zH9pCqB7EiNRJCA7HuqiKUfVvQgUHWaj2DRtkI9r/p
+ QVOx1Ci2QSamlkCcTiuCS3DniXsHnZXOEqMH0oWs2ksSeciY1uQRIUgm6GHA/bDnWcI2
+ JxHd/2h/ov8oxqaycjMo1Zsn5d7cn8/q/hXXC86+bbrX0uKJifEm/XRv5TRb29OTJteZ
+ 6exizMBKwYv3LY1k98BZAyzcSeO3DoLi8BRXrP7P5J6ctVtr+UVvfG5+3UsRKBebIABU
+ CLdNCfUHjKDhnEwtiEcUIukR9U9v/w96PFQVEUSsJZT5YJttSrtV0OxLFJG1pRSBpGvG
+ kG/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUFIZn57tnSSbEU/7WraHlSUeiO5zPFpnvArnRdScGWhKWOiBrzeiYLsFGxaiA2cJ2SYar8dJa2dhrY@nongnu.org
+X-Gm-Message-State: AOJu0YwGCjdkRjO1fGdmOJRX7CnjvdTQlQu6zkDfQVFrA5mxdMOHbB/2
+ KJd0UAtZTxLkC3481pZ9J4SbCsqLq//ostfXDGeQVVSw3KzNBJ7raH0pcsN0Om1pWSerJ1l5Oji
+ gBFj8PLkmCVk2X6MNzuZUU1dAoF3uR3duODnj7pJUlQ==
+X-Gm-Gg: ASbGncu3Go7WwIk/ZEKMvcwbHdgsNKSa9kvHCsmPHN69bFGP9bd+fqrd7ui8vUb33L0
+ hlxck8N/Fov4RDYxJ/ofTO9c/sz7V7LhXJeyRdIOuStxsKguLoUWViancS+mjXwM7SWBMQZt318
+ 3zkRnlln+WBvOdVWbzEM3QPvO5oQ9e6kFB5GCaSzn2QqooJ2v3xirSJygPj6YbHL1HIWEPsu+Ei
+ NSmP5KEvhVYHwTD307hNOTEzfm/jAMkVd3UjtGoLUpFIVAP/y0z/yPM/b7zOm3LXqOojlUy
+X-Google-Smtp-Source: AGHT+IFKedMeTMkf8kdv3tpR+JmIn4jSuuU46zNFAklS6FadDqIbVdtuHnN7h+6gKq6D+O3f8+iXlsKqP4BlPvhfVAQ=
+X-Received: by 2002:a05:690c:905:b0:786:5ebb:4837 with SMTP id
+ 00721157ae682-78a8b50c0f9mr194365557b3.33.1764163660689; Wed, 26 Nov 2025
+ 05:27:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+References: <20251125070554.2256181-1-armbru@redhat.com>
+ <871plmk1bc.fsf@pond.sub.org>
+ <aSWSLMi6ZhTCS_p2@redhat.com> <87jyzexrly.fsf@pond.sub.org>
+ <aSXWKcjoIBK4LW59@x1.local> <769f5a57-7006-4cef-a5cb-12d53b7c30a5@redhat.com>
+ <c0aa79ad-d6f4-413f-ade6-43e7609e37ac@redhat.com>
+ <87ecplc8yn.fsf@pond.sub.org> <aSbr--ZbqzKVNDuC@redhat.com>
+In-Reply-To: <aSbr--ZbqzKVNDuC@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 26 Nov 2025 13:27:28 +0000
+X-Gm-Features: AWmQ_bmKYX6H5YMUhakq6KKFeMXErS0qjPS-D7ylXbTaJv0WUlCv9uLdQu-g_3o
+Message-ID: <CAFEAcA_Xjzp12zB5Gv1pZPJQYicb1GkoHkt6Tt3QQK0n_YQZ5g@mail.gmail.com>
+Subject: Re: g_autoptr(Error)
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, farosas@suse.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,39 +103,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 25 2025, Peter Maydell <peter.maydell@linaro.org> wrote:
-
-> On Tue, 25 Nov 2025 at 16:09, Cornelia Huck <cohuck@redhat.com> wrote:
->>
->> On Mon, Nov 24 2025, Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> > On Wed, 19 Nov 2025 at 13:44, Cornelia Huck <cohuck@redhat.com> wrote:
->> >>
->> >> This requires a bit of care, since we still have to handle the EL
->> >> specific part (DCZID_EL0.DZP). Callers can set/access dcz_blocksize
->> >> via a wrapper working on DCZID_EL.BS.
->> >>
->> >> KVM currently does not support DCZID_EL0 via ONE_REG, and actually
->> >> does not need to work with it, so provide a dummy value for now.
->> >
->> > That seems like an odd (unintended?) omission -- is it worth
->> > adding? (We would need to handle older kernels that don't
->> > expose it anyway, of course.)
->>
->> I'm not sure whether there's actually a usecase for KVM exposing this to
->> the VMM - AFAICS, KVM doesn't do anything special for DC ZVA and
->> friends, and doesn't tweak HCR_EL2.TDZ which would change behaviour.
+On Wed, 26 Nov 2025 at 12:01, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+> The other thing that plays in here is that we actively encourage use of
+> g_autoptr everywhere. It is very unusual for "Error" to be a type that
+> does NOT want g_autoptr, and thus the mistake is very much on the cards.
 >
-> I guess the only one I can think of is to correctly fail
-> migration from a source CPU with a DCZID_EL0.BS that doesn't
-> match the one on the destination CPU. (We can't lie to the
-> guest about the blocksize as part of "tell the guest it has
-> a different CPU type from the actual host" unless we want to
-> trap and emulate all the DC ZVA etc insns...)
+> I've proposed it before myself & Markus caught it. I also caught one
+> other proposals to add it since my attempt. This third time it slipped
+> through review. I expect we'll see a 4th attempt to add it at some point.
 
-Agreed.
+We could add a comment to the header explaining the rationale for
+not providing a g_autoptr handler, so that at least we have it
+written down, and are more likely to remember it when it comes
+up again in future...
 
-Might actually be best to assert that kvm code is not doing anything
-with the reg, rather than providing a dummy value. I'll respin.
-
+-- PMM
 
