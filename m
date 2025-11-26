@@ -4,78 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A385D1118E
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 18:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C747D11191
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 18:40:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOK5T-0003O4-75; Wed, 26 Nov 2025 13:17:55 -0500
+	id 1vOKR1-0004ey-3Q; Wed, 26 Nov 2025 13:40:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vOK5K-0003Nq-TU
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 13:17:47 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vOKQz-0004ep-IO
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 13:40:09 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vOK5I-000725-IW
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 13:17:46 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vOKQx-0006TQ-Nk
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 13:40:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764181062;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1764182398;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=hz9+Rz8X8oSU6qtaZYARK5brv2KJTugejhJd87EYqWo=;
- b=Kod0eE7sO3bIqDUuoXZFoAKTBbrKpZOvndqhsC404vobl1ec1978s8BKkZg0ZV9ty17Aea
- FoimWw3lMRN79TzqTmMFHJm874hJ+8qW1MkhKmTX6ciAK9dO/GqmoAPlvOPTKELu1A8JJd
- e3BCysPOd9zQe+2WVLYm+vDbsKL9VBc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-ozOrKSSNOQG_2b11QdnLGw-1; Wed,
- 26 Nov 2025 13:17:38 -0500
-X-MC-Unique: ozOrKSSNOQG_2b11QdnLGw-1
-X-Mimecast-MFC-AGG-ID: ozOrKSSNOQG_2b11QdnLGw_1764181058
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CB0031954B11; Wed, 26 Nov 2025 18:17:37 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD4C7180047F; Wed, 26 Nov 2025 18:17:35 +0000 (UTC)
-Date: Wed, 26 Nov 2025 18:17:32 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Jon Kohler <jon@nutanix.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v2] util/oslib-posix: increase memprealloc thread count
- to 32
-Message-ID: <aSdEPK3U6B_9gSKV@redhat.com>
-References: <20251106163143.4185468-1-jon@nutanix.com>
- <aQzEjov7dGPQeR3f@redhat.com>
- <FA4A9CAA-F033-4F1A-8197-799913A65DDA@nutanix.com>
+ bh=VgJIgZGjX1/Nnj1GlBbUGt0e1rb+9C4doZcOlxTCEl0=;
+ b=C5bFP2qeV1i9sagMS9rWHE3J8IbzsIaFwN/dyQn/eu10GiGQLjM48GusSHElQbAcsZCVGY
+ VF9LtNgK8dB4vWXNBaiXt/v0MT7cA64edRC01yDYtMOKDRnU6u6LrDyuTOoH9KpTdmqb92
+ cxzwRpS9yboCROIwAtUO9lNolWUbzWY=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-465-8bQlbAvOP_6odBkFHkfvzw-1; Wed, 26 Nov 2025 13:39:56 -0500
+X-MC-Unique: 8bQlbAvOP_6odBkFHkfvzw-1
+X-Mimecast-MFC-AGG-ID: 8bQlbAvOP_6odBkFHkfvzw_1764182396
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-7880e7c048cso816547b3.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 10:39:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764182396; x=1764787196; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=VgJIgZGjX1/Nnj1GlBbUGt0e1rb+9C4doZcOlxTCEl0=;
+ b=EW6+2r5L64MSMOBVzcgQVHAfaTSJV2TkPd/q4cW0kcWTFL9SndJYgF2Mu+K+ZWTW0f
+ ENEBnAlClYlKRx/S18mCHzohjLkD3MM9CyttNGQQvnskKUwfqdRV2YqQCjIzfviqFqsf
+ YzLjAEsTtX+IrpSw67tuGAv3l+ADF1Qacl1YLSm5GsaHxEtByx2XhFhkebK6qjvKTfuH
+ 4vsSpiUoajejL7p+Gg84cwRSKawjQL8oML6MYzO9GJ5VLFT0cHWc6p1SheY/2cNhCbZr
+ wSz791eG3jyIEtNo9zRAkyjfT6Fp4KB9dRmnyMFYUGmpClMz9u5GTFsnWD18+dxwfTAs
+ W+TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764182396; x=1764787196;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VgJIgZGjX1/Nnj1GlBbUGt0e1rb+9C4doZcOlxTCEl0=;
+ b=nBoIJRh4H2BQ4dRhV0mm8rpifKqXy5x02uOVTfx37snw/WvjQAMWQvlGQuUZ29C5a1
+ eTANE7CIZDhHqB5cljhhdnxsLfnmcrK5hvMU9xkGyR2Jr83FTCfuvUALwRJeYhGQc+jh
+ 4x0o67GwhRt8yMmXsQHEEnsY6p5+tsWwUCwxYzAI30FuHBesG4CD+OunhIPceydEPWvw
+ 1lfousFYS1kaqaczBNUWGWLUsEfxIgBpwFUQdIysffsnkDTg6slj/HR36qhuKVaJbbH6
+ JEdh5FUC5kyuVs7F1SVd1fcFE4f7jCTnk+QNd19Hu4+WzjM0aFuAsdOwcA5iyimXeCJi
+ C5uw==
+X-Gm-Message-State: AOJu0YzsCEZNkBEgnNQh24FYsDa/M0ft9vg0zNKKiyImNEyqRFGJOHvH
+ NaJAMoz3jsvS7d6Z05It+v3z2z3mLcLsyB+FDPnYX+F5OxSvaQBQnN2rooWTHpXFVKjw/u0wl7a
+ NlQKEL7qLGTdU7N/gicewqF4yWuMmN95YurSbJvXEwkux5UnzK4Lm4J5tSPIdnXyjXSWRDEzfYI
+ 23RWvtrqEmJvemK6l1ugeEMvvfrOdgSY4=
+X-Gm-Gg: ASbGnctnMdRI7MJlZujJSutj/fE3kw0POeJix3CxxyyedPYm+/H/MwgJq0yKpKkT894
+ AwLNL/1fAJXVMM/gy3qyUuwBgsRv+/si0XFEHNRo5od1Rzn9YJRULsSIQ3COZluzy4cDzmNDvoF
+ yefJmkOhhOoECsQeBNaUmi80Wfj/u7j5AG/vKjaEgkCxWAhGKoO+ieZtqZA/AOIoUczFEQhT6Nu
+ apmg6r/P19zs6636bZDxSBXvQ==
+X-Received: by 2002:a05:690c:3511:b0:789:29ba:562c with SMTP id
+ 00721157ae682-78a8b56aa72mr177944227b3.64.1764182396171; 
+ Wed, 26 Nov 2025 10:39:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE+9GTG7sLfU48FJ2T8bU9ufEPPyFQe/1yHRm5amI04eQXMhqvv0MR8wCOwndz35v3Z6YKRQFEfbMeUDr6z1AE=
+X-Received: by 2002:a05:690c:3511:b0:789:29ba:562c with SMTP id
+ 00721157ae682-78a8b56aa72mr177943967b3.64.1764182395743; Wed, 26 Nov 2025
+ 10:39:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <FA4A9CAA-F033-4F1A-8197-799913A65DDA@nutanix.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+References: <20251125040045.461148-1-jsnow@redhat.com>
+ <20a0d8d1-d617-4a2d-93f7-c8f84d7b334f@redhat.com>
+In-Reply-To: <20a0d8d1-d617-4a2d-93f7-c8f84d7b334f@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 26 Nov 2025 13:39:44 -0500
+X-Gm-Features: AWmQ_bl-tSNSZAdZI_QCwVekUqq2tPDDaLa9QsoyrjrmXY0lOK1J-W_Pm4qJyto
+Message-ID: <CAFn=p-ZnD5dVxaa16aMUpbPJTZpsc1HEh-exXW-HQKyaj53Gxw@mail.gmail.com>
+Subject: Re: [PATCH v2 00/16] python: drop qemu.qmp from qemu.git tree
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Markus Armbruster <armbru@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, Qemu-block <qemu-block@nongnu.org>
+Content-Type: multipart/alternative; boundary="00000000000004e597064483b950"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,87 +116,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 26, 2025 at 06:14:43PM +0000, Jon Kohler wrote:
-> 
-> 
-> > On Nov 6, 2025, at 10:53 AM, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > 
-> > On Thu, Nov 06, 2025 at 09:31:43AM -0700, Jon Kohler wrote:
-> >> Increase MAX_MEM_PREALLOC_THREAD_COUNT from 16 to 32. This was last
-> >> touched in 2017 [1] and, since then, physical machine sizes and VMs
-> >> therein have continue to get even bigger, both on average and on the
-> >> extremes.
-> >> 
-> >> For very large VMs, using 16 threads to preallocate memory can be a
-> >> non-trivial bottleneck during VM start-up and migration. Increasing
-> >> this limit to 32 threads reduces the time taken for these operations.
-> >> 
-> >> Test results from quad socket Intel 8490H (4x 60 cores) show a fairly
-> >> linear gain of 50% with the 2x thread count increase.
-> >> 
-> >> ---------------------------------------------
-> >> Idle Guest w/ 2M HugePages   | Start-up time
-> >> ---------------------------------------------
-> >> 240 vCPU, 7.5TB (16 threads) | 2m41.955s
-> >> ---------------------------------------------
-> >> 240 vCPU, 7.5TB (32 threads) | 1m19.404s
-> >> ---------------------------------------------
-> >> 
-> >> Note: Going above 32 threads appears to have diminishing returns at
-> >> the point where the memory bandwidth and context switching costs
-> >> appear to be a limiting factor to linear scaling. For posterity, on
-> >> the same system as above:
-> >> - 32 threads: 1m19s
-> >> - 48 threads: 1m4s
-> >> - 64 threads: 59s
-> >> - 240 threads: 50s
-> >> 
-> >> Additional thread counts also get less interesting as the amount of
-> >> memory is to be preallocated is smaller. Putting that all together,
-> >> 32 threads appears to be a sane number with a solid speedup on fairly
-> >> modern hardware. To go faster, we'd either need to improve the hardware
-> >> (CPU/memory) itself or improve clear_pages_*() on the kernel side to
-> >> be more efficient.
-> >> 
-> >> [1] 1e356fc14bea ("mem-prealloc: reduce large guest start-up and migration time.")
-> >> 
-> >> Signed-off-by: Jon Kohler <jon@nutanix.com>
-> >> ---
-> >> util/oslib-posix.c | 2 +-
-> >> 1 file changed, 1 insertion(+), 1 deletion(-)
-> > 
-> > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> Thanks, Daniel !
-> 
-> Is there anything else we need on this one? Want to
-> make sure it doesn’t get lost.
+--00000000000004e597064483b950
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Paolo (CCd) is primary maintainer for this code and should queue it.
+On Wed, Nov 26, 2025, 12:34=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrote=
+:
 
-> >> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-> >> index 3c14b72665..dc001da66d 100644
-> >> --- a/util/oslib-posix.c
-> >> +++ b/util/oslib-posix.c
-> >> @@ -61,7 +61,7 @@
-> >> #include "qemu/memalign.h"
-> >> #include "qemu/mmap-alloc.h"
-> >> 
-> >> -#define MAX_MEM_PREALLOC_THREAD_COUNT 16
-> >> +#define MAX_MEM_PREALLOC_THREAD_COUNT 32
-> >> 
-> >> struct MemsetThread;
+> On 25/11/2025 05.00, John Snow wrote:
+> > Hi, this series does a few things, but it's ultimately in service of
+> > dropping the python qemu.qmp package from the qemu.git tree in favor of
+> > using the standalone package instead, to prevent any further issues fro=
+m
+> > the two codebases diverging.
+> >
+> > v2:
+> >
+> >   - move "make check-venv" earlier in GitLab CI/CD pipeline, to avoid
+> >     re-running configure
+> >   - Fix functional tests not using PyPI to fetch pygdbmi package
+> >   - Remove pre-requisites which are now merged
+> >
+> > I think this series is probably close, but with some attention needed o=
+n
+> > the mkvenv packages to allow installing the local python
+> > packages. Everything else feels good-to-go, as far as I can tell.
+>
+>   Hi John,
+>
+> I gave the series a try in the CI, but the macOS and FreeBSD jobs are
+> failing now:
+>
+>   https://gitlab.com/thuth/qemu/-/jobs/12211713065
+>   https://gitlab.com/thuth/qemu/-/jobs/12211713061
+>
+> Have a look at .gitlab-ci.d/cirrus/README.rst if you want to enable these
+> jobs in your gitlab CI, too.
+>
+>   HTH,
+>    Thomas
+>
 
+Ah, nuts. OK, let me get those and then I'll apply any of your RBs that
+still apply.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Thanks for the check.
+
+>
+
+--00000000000004e597064483b950
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Nov 26, 2025, 12:34=E2=
+=80=AFAM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.c=
+om</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 25/11/2025 05.=
+00, John Snow wrote:<br>
+&gt; Hi, this series does a few things, but it&#39;s ultimately in service =
+of<br>
+&gt; dropping the python qemu.qmp package from the qemu.git tree in favor o=
+f<br>
+&gt; using the standalone package instead, to prevent any further issues fr=
+om<br>
+&gt; the two codebases diverging.<br>
+&gt; <br>
+&gt; v2:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0- move &quot;make check-venv&quot; earlier in GitLab CI/CD=
+ pipeline, to avoid<br>
+&gt;=C2=A0 =C2=A0 =C2=A0re-running configure<br>
+&gt;=C2=A0 =C2=A0- Fix functional tests not using PyPI to fetch pygdbmi pac=
+kage<br>
+&gt;=C2=A0 =C2=A0- Remove pre-requisites which are now merged<br>
+&gt; <br>
+&gt; I think this series is probably close, but with some attention needed =
+on<br>
+&gt; the mkvenv packages to allow installing the local python<br>
+&gt; packages. Everything else feels good-to-go, as far as I can tell.<br>
+<br>
+=C2=A0 Hi John,<br>
+<br>
+I gave the series a try in the CI, but the macOS and FreeBSD jobs are <br>
+failing now:<br>
+<br>
+=C2=A0 <a href=3D"https://gitlab.com/thuth/qemu/-/jobs/12211713065" rel=3D"=
+noreferrer noreferrer" target=3D"_blank">https://gitlab.com/thuth/qemu/-/jo=
+bs/12211713065</a><br>
+=C2=A0 <a href=3D"https://gitlab.com/thuth/qemu/-/jobs/12211713061" rel=3D"=
+noreferrer noreferrer" target=3D"_blank">https://gitlab.com/thuth/qemu/-/jo=
+bs/12211713061</a><br>
+<br>
+Have a look at .gitlab-ci.d/cirrus/README.rst if you want to enable these <=
+br>
+jobs in your gitlab CI, too.<br>
+<br>
+=C2=A0 HTH,<br>
+=C2=A0 =C2=A0Thomas<br></blockquote></div></div><div dir=3D"auto"><br></div=
+><div dir=3D"auto">Ah, nuts. OK, let me get those and then I&#39;ll apply a=
+ny of your RBs that still apply.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">Thanks for the check.</div><div dir=3D"auto"><div class=3D"gmail_=
+quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
+</blockquote></div></div></div>
+
+--00000000000004e597064483b950--
 
 
