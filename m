@@ -4,93 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50DD6D11195
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16622D111A5
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 21:09:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOMC2-00007w-Kz; Wed, 26 Nov 2025 15:32:52 -0500
+	id 1vOMkq-0003JI-P6; Wed, 26 Nov 2025 16:08:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOMBq-0008SI-Bq
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:32:41 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1vOMko-0003Iz-9g
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 16:08:47 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOMBn-00042t-Fa
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:32:38 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-477aa218f20so691145e9.0
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:32:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1vOMkn-0006QF-0E
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 16:08:46 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-477a1c28778so1361105e9.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 13:08:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764189153; x=1764793953; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ygtGNrynoety6Nl6+Rn6/dKCisvm5xnZk2KyWUw3Tak=;
- b=g8vQALZwX0A3rUbEXORNrAU4Oso+ao4b+JyUcs7lkwxh2HKf7Lhei9wePFvn1bxeuI
- dFRrEv2jvk1ENqsoJBN1deaGGP5dxljfFqBHu6M3cSTo6I+QqAHUistDtwLnE+iBGIiE
- nDcmNTbO84q5Z2d/JWMM4ty8P1DBMKt6+HG/O+BVgZU7DKj04qvVoKcw1bUDs4yFuFih
- wljI2BhdQa2NCdMMnfjZfBBNfbptgEj4TZXNr/mkacroTvhWEJDQ7roB8+bAYCHGX8jx
- iphair5hk7t71fE70sOlzsRvZAnQQV8X4km1Jpl4+d1COjaAGFHsPb3v61EHEDJZp5/t
- zRjA==
+ d=gmail.com; s=20230601; t=1764191322; x=1764796122; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=32XumUilB+w7sTx0WIPuMLTNtwG2NKGEm829/Inhxfg=;
+ b=Ub6xWKrigx+weSrLU/SudTQ4wNqIX7qtX/bWZW4soTOTU11iHJPcDUKR9hlB2It+RG
+ xacdNllmhIjcYOgGY46dUxbDZQEwYPqhK+9oJ9ZBoSjL8zoK513q+NAEWpr452cwkZkm
+ RF88L1XV9fbRjqxDWYWkAFnY59uG03iCjMl1LoiNGARDIonkeeeOEc8uY1Tlu6vJ8zbj
+ GQFLfIU+57lopf1n3XtL2ENETFbaOS9qzsgfUv5jQtxzXUz/P0BagtiETywsBNojxrvr
+ hrGZFRnRjiBFgAmEgsrgpSDrLW1U4ulV82eENCFSwGUFtvGebmDhDjhHC5tRULMWr0wC
+ 10eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764189153; x=1764793953;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ygtGNrynoety6Nl6+Rn6/dKCisvm5xnZk2KyWUw3Tak=;
- b=J8iDIz7kBQqV7kz8tljHJS8GmLpnzZFErs3FwyRxvoks0IJwB0HC0AEZuCEic1FsPw
- 0TeN2w5qHIuyHitSZCR+10aC8Vn8FMxlPpqJgFSmiIt0tIFkvuFD3wBNx09vFrRJgpK6
- gTiMr7yS4svqWkRXHUB2KHsIb8f+DDt2EJPsOEzURI4ACBrMDuVP7EndOPXCOAXa4y8n
- cJ5HT+Z0faVHGrwO5N82KKnv/QzE4EagdRalTD+Z8Pu4apgOXnvmvUr9/cMLlrerUUhE
- /LDavlTIwJLWtfGVSFZoWwlgBn6/+qA84rgLKMB15kMn542Cz9H2YUG4WHNipxQCtEz6
- ceoA==
-X-Gm-Message-State: AOJu0YxgstGVs7LQRvlvoIsMCZnmjp/0O3QoBxPHligcEDvuIgFhR2Qx
- rh4zxPyi1aOUYkJY0neoXY9TanAku0DTEGPC5xl+J4xzBirVgAXsCsKrfi1awG+QCFMeb6NB7iH
- yP8Z1XgLL1Bll
-X-Gm-Gg: ASbGnctDWROv7st8s9OMbKTvHu6c+hKn2gSJCaphbHICGRhsvpfhN0FJOOFEQNz2urN
- fNEd8VO6mCLbWYpTv/bC99WBPirphzV6ZxJNWZDXS5hfyeN6lFZd6u12ENH5w9nwcLMr5OIpyd9
- M22v6gVi7mB+p9j2xIUDWzxnkRuTEq626R1td+xcZdKnGx4wB+/qozXcDrUSgTNe9Cz+3M19owD
- 81VTVtk27yp8IXOM54nBCCKEXcgp9c2SsV4kii6ALv1YOddyAdiLinSPUQktL+vEH92y84XEP/G
- 1wT2OlxoBKi7VZCrLmccu4KPJcgkzyjtmP1gy71S+RFf7rmjtmz+f8orbayd3L50zpS3hT8KYXr
- 5UqdOksWnKYIvS6DovrcoXU/3S2LnzOLHPklViipK6BDVnvBrZ70SWwRwzAYTvgkInVQfy1G5pg
- zck56kAurvUdZPZn8Wd9X/NlgUd5Ejd/0KX3wlZXT5LMBwyUMiG+yU+A==
-X-Google-Smtp-Source: AGHT+IH2CJrzQEquAQRUhnfKn7U4s0O2h5qH1+16p3f8jqzHrvM+12YfM6Pjohyceon3QiJDeLfWRg==
-X-Received: by 2002:a05:600c:3baa:b0:475:de12:d3b5 with SMTP id
- 5b1f17b1804b1-477c01ecc7cmr205301885e9.34.1764189152984; 
- Wed, 26 Nov 2025 12:32:32 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-479040b3092sm51610795e9.1.2025.11.26.12.32.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 26 Nov 2025 12:32:32 -0800 (PST)
-Message-ID: <d6d5cd40-ac5c-41f2-85f9-db038fa8b5a6@linaro.org>
-Date: Wed, 26 Nov 2025 21:32:31 +0100
+ d=1e100.net; s=20230601; t=1764191322; x=1764796122;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=32XumUilB+w7sTx0WIPuMLTNtwG2NKGEm829/Inhxfg=;
+ b=UnIAVKXUzRx2a0bttGeDlaK+LHwoOD3mLpF7owYHhBPoSt5apskZ4bbxZhpEbzoz3Q
+ Egcj6h7QY487ZGNe2NUS6ZmzTqhrsyvcDSWQA0uosMWK9AlH2cjKQWZOG17Ca2C339Yz
+ lUj+LxVwdMX8d0VMDBHn57Y8aoGnH0fNwjqh2aAtutEuf7AmE1hduEATGEaPHeJwJDGR
+ xvvzt1t7dmE5r6vx/y0Gql7JBjDNh/PKqu5o+GW6rGvcmNyXbu3l+9IJtkbwkXYxC4Wj
+ T1YFDXV7ac7dXvBtPnvGpAmyQU/X5rZFb7y8+YjlRJA3GH8shzZL7LJCRSLsdlV+6IIs
+ ubZw==
+X-Gm-Message-State: AOJu0Yw3vspF1nyH7qoNH89Bwzd8k/glwMpkRTcpOj3OqjZGJV9oDIyX
+ WOMVbH4VXVPm85L8TpDd7JbHec8qDkbh7vpShbW1IEPE+uS3NrqU0t3Qf5I8+g==
+X-Gm-Gg: ASbGncsJ9FnwFXMv5KWCS8ETSmm5yzvQyvh3OkTgEK2vHMrS3QLqVdM3B4Ns8SVLqnk
+ tNtNiuLhuOQyRZTZbbZQku6fY3um6G3pyn9GecaqUvN2rfkhsdEDLDmy9deTRRV5r7dmkuffk9h
+ fZnd+dabaxKAGsLPDdTm5LpX/4Tglrcd/NtaPCyrW30+ftQUFurQejD1fMF3mUkEfmao5whETBB
+ VNadBDOWA1QnSPVomX5vcwbn95uE0zyL1xJy2hw1IOyeBR24X8cvpOTUDgps0SUHstuPrbaDCR8
+ ED2EpOxaNxpRZ8/hDCzJFLZGEsx3WfvIexsluYE/lXB6UyTeLlZJXxIdzVL5dMQAdPROG6BXlWk
+ mH0yV6W6eSMj0qY3SUDM8N2omGwvJ7oSfUD7neOw+23Qp1IOg53G3hCbyes8EpubZP2egUGIJQj
+ 5OHaOcMDSOQ/AmKCo=
+X-Google-Smtp-Source: AGHT+IGAVNd6NB5K03h4V6kyIUFC/9OoDoz0uhRhFjAcirtWFQ5ZHsIlhhr5ligbYcaMpBdPc3HS4w==
+X-Received: by 2002:a05:600c:35c6:b0:477:a36f:1a57 with SMTP id
+ 5b1f17b1804b1-47904acae1fmr93313765e9.3.1764191321763; 
+ Wed, 26 Nov 2025 13:08:41 -0800 (PST)
+Received: from osama.. ([2c0f:fc89:129:990a:83a3:6137:cef9:6de9])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4790ab8bb21sm65626785e9.0.2025.11.26.13.08.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 26 Nov 2025 13:08:40 -0800 (PST)
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
+To: qemu-devel@nongnu.org,
+	pbonzini@redhat.com
+Cc: Osama Abdelkader <osama.abdelkader@gmail.com>
+Subject: [PATCH] hw/core: remove duplicate include
+Date: Wed, 26 Nov 2025 23:08:32 +0200
+Message-ID: <20251126210832.34011-1-osama.abdelkader@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0 v3 22/22] accel/tcg: Remove non-explicit endian
- cpu_ld/st*_data*() helpers
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-References: <20251126202200.23100-1-philmd@linaro.org>
- <20251126202200.23100-23-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251126202200.23100-23-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=osama.abdelkader@gmail.com; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,113 +98,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/11/25 21:21, Philippe Mathieu-Daudé wrote:
-> All uses were converted to the explicit cpu_ld/st*_{be,le}_data*()
-> helpers, no need for the non-explicit versions anymore.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/accel/tcg/cpu-ldst.h | 46 ------------------------------------
->   1 file changed, 46 deletions(-)
-> 
-> diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
-> index 0de7f5eaa6b..12dd38599a6 100644
-> --- a/include/accel/tcg/cpu-ldst.h
-> +++ b/include/accel/tcg/cpu-ldst.h
-> @@ -428,52 +428,6 @@ cpu_stq_le_data(CPUArchState *env, abi_ptr addr, uint64_t val)
->       cpu_stq_le_data_ra(env, addr, val, 0);
->   }
->   
-> -#if TARGET_BIG_ENDIAN
-> -# define cpu_lduw_data        cpu_lduw_be_data
-> -# define cpu_ldsw_data        cpu_ldsw_be_data
-> -# define cpu_ldl_data         cpu_ldl_be_data
-> -# define cpu_ldq_data         cpu_ldq_be_data
-> -# define cpu_lduw_data_ra     cpu_lduw_be_data_ra
-> -# define cpu_ldsw_data_ra     cpu_ldsw_be_data_ra
-> -# define cpu_ldl_data_ra      cpu_ldl_be_data_ra
-> -# define cpu_ldq_data_ra      cpu_ldq_be_data_ra
-> -# define cpu_lduw_mmuidx_ra   cpu_lduw_be_mmuidx_ra
-> -# define cpu_ldsw_mmuidx_ra   cpu_ldsw_be_mmuidx_ra
-> -# define cpu_ldl_mmuidx_ra    cpu_ldl_be_mmuidx_ra
-> -# define cpu_ldq_mmuidx_ra    cpu_ldq_be_mmuidx_ra
-> -# define cpu_stw_data         cpu_stw_be_data
-> -# define cpu_stl_data         cpu_stl_be_data
-> -# define cpu_stq_data         cpu_stq_be_data
-> -# define cpu_stw_data_ra      cpu_stw_be_data_ra
-> -# define cpu_stl_data_ra      cpu_stl_be_data_ra
-> -# define cpu_stq_data_ra      cpu_stq_be_data_ra
-> -# define cpu_stw_mmuidx_ra    cpu_stw_be_mmuidx_ra
-> -# define cpu_stl_mmuidx_ra    cpu_stl_be_mmuidx_ra
-> -# define cpu_stq_mmuidx_ra    cpu_stq_be_mmuidx_ra
-> -#else
-> -# define cpu_lduw_data        cpu_lduw_le_data
-> -# define cpu_ldsw_data        cpu_ldsw_le_data
-> -# define cpu_ldl_data         cpu_ldl_le_data
-> -# define cpu_ldq_data         cpu_ldq_le_data
-> -# define cpu_lduw_data_ra     cpu_lduw_le_data_ra
-> -# define cpu_ldsw_data_ra     cpu_ldsw_le_data_ra
-> -# define cpu_ldl_data_ra      cpu_ldl_le_data_ra
-> -# define cpu_ldq_data_ra      cpu_ldq_le_data_ra
-> -# define cpu_lduw_mmuidx_ra   cpu_lduw_le_mmuidx_ra
-> -# define cpu_ldsw_mmuidx_ra   cpu_ldsw_le_mmuidx_ra
-> -# define cpu_ldl_mmuidx_ra    cpu_ldl_le_mmuidx_ra
-> -# define cpu_ldq_mmuidx_ra    cpu_ldq_le_mmuidx_ra
-> -# define cpu_stw_data         cpu_stw_le_data
-> -# define cpu_stl_data         cpu_stl_le_data
-> -# define cpu_stq_data         cpu_stq_le_data
-> -# define cpu_stw_data_ra      cpu_stw_le_data_ra
-> -# define cpu_stl_data_ra      cpu_stl_le_data_ra
-> -# define cpu_stq_data_ra      cpu_stq_le_data_ra
-> -# define cpu_stw_mmuidx_ra    cpu_stw_le_mmuidx_ra
-> -# define cpu_stl_mmuidx_ra    cpu_stl_le_mmuidx_ra
-> -# define cpu_stq_mmuidx_ra    cpu_stq_le_mmuidx_ra
-> -#endif
-> -
-
-Missing to squash:
-
--- >8 --
-diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
-index c906c6509ee..e956aece673 100644
---- a/docs/devel/loads-stores.rst
-+++ b/docs/devel/loads-stores.rst
-@@ -152,3 +152,3 @@ store: ``cpu_st{size}{end}_mmuidx_ra(env, ptr, val, 
-mmuidx, retaddr)``
-  ``end``
-- - (empty) : for target endian, or 8 bit sizes
-+ - (empty) : for 8 bit sizes
-   - ``_be`` : big endian
-@@ -157,4 +157,4 @@ store: ``cpu_st{size}{end}_mmuidx_ra(env, ptr, val, 
-mmuidx, retaddr)``
-  Regexes for git grep:
-- - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_mmuidx_ra\>``
-- - ``\<cpu_st[bwlq]\(_[bl]e\)\?_mmuidx_ra\>``
-+ - ``\<cpu_ld[us]\?\(b\|[wlq]\(_[bl]e\)\)_mmuidx_ra\>``
-+ - ``\<cpu_st\(b\|[wlq]\(_[bl]e\)\)_mmuidx_ra\>``
-
-@@ -190,3 +190,3 @@ store: ``cpu_st{size}{end}_data_ra(env, ptr, val, ra)``
-  ``end``
-- - (empty) : for target endian, or 8 bit sizes
-+ - (empty) : for 8 bit sizes
-   - ``_be`` : big endian
-@@ -195,4 +195,4 @@ store: ``cpu_st{size}{end}_data_ra(env, ptr, val, ra)``
-  Regexes for git grep:
-- - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_data_ra\>``
-- - ``\<cpu_st[bwlq]\(_[bl]e\)\?_data_ra\>``
-+ - ``\<cpu_ld[us]\?\(b\|[wlq]\(_[bl]e\)\)_data_ra\>``
-+ - ``\<cpu_st\(b\|[wlq]\(_[bl]e\)\)_data_ra\>``
-
-@@ -229,3 +229,3 @@ store: ``cpu_st{size}{end}_data(env, ptr, val)``
-  ``end``
-- - (empty) : for target endian, or 8 bit sizes
-+ - (empty) : for 8 bit sizes
-   - ``_be`` : big endian
-@@ -234,4 +234,4 @@ store: ``cpu_st{size}{end}_data(env, ptr, val)``
-  Regexes for git grep:
-- - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_data\>``
-- - ``\<cpu_st[bwlq]\(_[bl]e\)\?_data\+\>``
-+ - ``\<cpu_ld[us]\?\(b\|[wlq]\(_[bl]e\)\)_data\>``
-+ - ``\<cpu_st\(b\|[wlq]\(_[bl]e\)\)_data\+\>``
+qemu/target-info.h is included twice.
 ---
+ system/vl.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/system/vl.c b/system/vl.c
+index 5091fe52d9..d2b53ea772 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -41,7 +41,6 @@
+ #include "qemu/help_option.h"
+ #include "qemu/hw-version.h"
+ #include "qemu/uuid.h"
+-#include "qemu/target-info.h"
+ #include "system/reset.h"
+ #include "system/runstate.h"
+ #include "system/runstate-action.h"
+-- 
+2.43.0
+
 
