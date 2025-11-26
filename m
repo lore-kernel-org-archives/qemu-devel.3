@@ -4,26 +4,26 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78115D10F5F
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 15:46:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66DCDD11180
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 15:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOHig-0006xZ-Oy; Wed, 26 Nov 2025 10:46:14 -0500
+	id 1vOHin-0007CS-Nt; Wed, 26 Nov 2025 10:46:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vOHid-0006s9-HW; Wed, 26 Nov 2025 10:46:11 -0500
+ id 1vOHii-0006yb-MS; Wed, 26 Nov 2025 10:46:17 -0500
 Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vOHiZ-0007ym-Qz; Wed, 26 Nov 2025 10:46:11 -0500
+ id 1vOHie-00080A-Ig; Wed, 26 Nov 2025 10:46:16 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDHtVy6ICdpJp0EAQ--.4126S2;
- Wed, 26 Nov 2025 23:46:02 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBXOCW_ICdpMJ0EAQ--.41117S2;
+ Wed, 26 Nov 2025 23:46:07 +0800 (CST)
 Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwC3D+2yICdpkqMHAA--.780S4;
- Wed, 26 Nov 2025 23:45:59 +0800 (CST)
+ by mail (Coremail) with SMTP id AQAAfwC3D+2yICdpkqMHAA--.780S6;
+ Wed, 26 Nov 2025 23:46:06 +0800 (CST)
 From: Tao Tang <tangtao1634@phytium.com.cn>
 To: Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
@@ -37,22 +37,22 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Mostafa Saleh <smostafa@google.com>,
  CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
  Tao Tang <tangtao1634@phytium.com.cn>
-Subject: [RFC RESEND v5 1/4] hw/arm/smmuv3: Extract common definitions to
- smmuv3-common.h
-Date: Wed, 26 Nov 2025 23:45:44 +0800
-Message-Id: <20251126154547.1300748-2-tangtao1634@phytium.com.cn>
+Subject: [RFC RESEND v5 3/4] tests/qtest/libqos: Add SMMUv3 helper library
+Date: Wed, 26 Nov 2025 23:45:46 +0800
+Message-Id: <20251126154547.1300748-4-tangtao1634@phytium.com.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251126154547.1300748-1-tangtao1634@phytium.com.cn>
 References: <20251126154547.1300748-1-tangtao1634@phytium.com.cn>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwC3D+2yICdpkqMHAA--.780S4
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWkmDa4HpAAAsN
+X-CM-TRANSID: AQAAfwC3D+2yICdpkqMHAA--.780S6
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAGBWkmDa4HqAAAsB
 Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvAXoWfZw13ZF1xXFy8AFy3GF15urg_yoW5GrWrZo
- WUCF13K3s8XFWxAF4DW34xXr4vvFy0k3Z5ur1Fyw48ZFsFvF90kFyFk3y3Wr47JFZYgFy3
- Xa1Iy3Z5XrZ0vF45n29KB7ZKAUJUUUU3529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
+X-Coremail-Antispam: 1Uk129KBjvAXoWfZFyrZryrAw4xKryfKw1kuFg_yoW5tw15Co
+ W3XFs8Z3WkWw17ur12kF1xtan7WFWv9FWxAr45Jw4q9an3GrWY9a4ftws8X3Wftr15Gry8
+ Ar95JayxJFykJr95n29KB7ZKAUJUUUU3529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
  J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
  UUUUUUU==
 Received-SPF: pass client-ip=129.150.39.64;
@@ -79,787 +79,1065 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move register definitions, command enums, and Stream Table Entry (STE) /
-Context Descriptor (CD) structure definitions from the internal header
-hw/arm/smmuv3-internal.h to a new common header
-include/hw/arm/smmuv3-common.h.
+Introduce qos-smmuv3, a reusable library for SMMUv3-related qtest
+operations. This module encapsulates common tasks like:
 
-This allows other components, such as generic SMMUv3 tests or test devices,
-to utilize these definitions without including the specific SMMUv3 device
-internal state.
+- SMMUv3 initialization (enabling, configuring command/event queues)
+- Stream Table Entry (STE) and Context Descriptor (CD) setup
+- Multi-level page table construction (L0-L3 for 4KB granules)
+- Support for Stage 1, Stage 2, and nested translation modes
+- Could be easily extended to support multi-space testing infrastructure
+    (Non-Secure, Secure, Root, Realm)
 
-In addition, refactor the STE and CD field definitions to consistently use
-the 'hw/registerfields.h' API and introduce corresponding setter macros to
-facilitate structure manipulation.
+The library provides high-level abstractions that allow test code to
+focus on IOMMU behavior validation rather than low-level register
+manipulation and page table encoding. Key features include:
+
+- Automatic memory allocation for translation structures with proper
+    alignment
+- Helper functions to build valid STEs/CDs for different translation
+    scenarios
+- Page table walkers that handle address offset calculations per
+    security space
+- Command queue management for SMMU configuration commands
+
+This infrastructure is designed to be used by iommu-testdev-based tests
+and future SMMUv3 test suites, reducing code duplication and improving
+test maintainability.
 
 Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 ---
- hw/arm/smmuv3-internal.h       | 255 +-----------------
- include/hw/arm/smmuv3-common.h | 461 +++++++++++++++++++++++++++++++++
- 2 files changed, 462 insertions(+), 254 deletions(-)
- create mode 100644 include/hw/arm/smmuv3-common.h
+ tests/qtest/libqos/meson.build  |   3 +
+ tests/qtest/libqos/qos-smmuv3.c | 731 ++++++++++++++++++++++++++++++++
+ tests/qtest/libqos/qos-smmuv3.h | 267 ++++++++++++
+ 3 files changed, 1001 insertions(+)
+ create mode 100644 tests/qtest/libqos/qos-smmuv3.c
+ create mode 100644 tests/qtest/libqos/qos-smmuv3.h
 
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index b6b7399347..8679ab6d09 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -23,6 +23,7 @@
+diff --git a/tests/qtest/libqos/meson.build b/tests/qtest/libqos/meson.build
+index 1ddaf7b095..8d6758ec2b 100644
+--- a/tests/qtest/libqos/meson.build
++++ b/tests/qtest/libqos/meson.build
+@@ -60,6 +60,9 @@ libqos_srcs = files(
+         'x86_64_pc-machine.c',
+         'riscv-virt-machine.c',
+         'loongarch-virt-machine.c',
++
++        # SMMU:
++        'qos-smmuv3.c',
+ )
  
- #include "hw/registerfields.h"
- #include "hw/arm/smmu-common.h"
-+#include "hw/arm/smmuv3-common.h"
- 
- typedef enum SMMUTranslationStatus {
-     SMMU_TRANS_DISABLE,
-@@ -38,147 +39,6 @@ typedef enum SMMUTranslationClass {
-     SMMU_CLASS_IN,
- } SMMUTranslationClass;
- 
--/* MMIO Registers */
--
--REG32(IDR0,                0x0)
--    FIELD(IDR0, S2P,         0 , 1)
--    FIELD(IDR0, S1P,         1 , 1)
--    FIELD(IDR0, TTF,         2 , 2)
--    FIELD(IDR0, COHACC,      4 , 1)
--    FIELD(IDR0, BTM,         5 , 1)
--    FIELD(IDR0, HTTU,        6 , 2)
--    FIELD(IDR0, DORMHINT,    8 , 1)
--    FIELD(IDR0, HYP,         9 , 1)
--    FIELD(IDR0, ATS,         10, 1)
--    FIELD(IDR0, NS1ATS,      11, 1)
--    FIELD(IDR0, ASID16,      12, 1)
--    FIELD(IDR0, MSI,         13, 1)
--    FIELD(IDR0, SEV,         14, 1)
--    FIELD(IDR0, ATOS,        15, 1)
--    FIELD(IDR0, PRI,         16, 1)
--    FIELD(IDR0, VMW,         17, 1)
--    FIELD(IDR0, VMID16,      18, 1)
--    FIELD(IDR0, CD2L,        19, 1)
--    FIELD(IDR0, VATOS,       20, 1)
--    FIELD(IDR0, TTENDIAN,    21, 2)
--    FIELD(IDR0, ATSRECERR,   23, 1)
--    FIELD(IDR0, STALL_MODEL, 24, 2)
--    FIELD(IDR0, TERM_MODEL,  26, 1)
--    FIELD(IDR0, STLEVEL,     27, 2)
--    FIELD(IDR0, RME_IMPL,    30, 1)
--
--REG32(IDR1,                0x4)
--    FIELD(IDR1, SIDSIZE,      0 , 6)
--    FIELD(IDR1, SSIDSIZE,     6 , 5)
--    FIELD(IDR1, PRIQS,        11, 5)
--    FIELD(IDR1, EVENTQS,      16, 5)
--    FIELD(IDR1, CMDQS,        21, 5)
--    FIELD(IDR1, ATTR_PERMS_OVR, 26, 1)
--    FIELD(IDR1, ATTR_TYPES_OVR, 27, 1)
--    FIELD(IDR1, REL,          28, 1)
--    FIELD(IDR1, QUEUES_PRESET, 29, 1)
--    FIELD(IDR1, TABLES_PRESET, 30, 1)
--    FIELD(IDR1, ECMDQ,        31, 1)
--
--#define SMMU_IDR1_SIDSIZE 16
--#define SMMU_CMDQS   19
--#define SMMU_EVENTQS 19
--
--REG32(IDR2,                0x8)
--     FIELD(IDR2, BA_VATOS, 0, 10)
--
--REG32(IDR3,                0xc)
--     FIELD(IDR3, HAD,         2, 1);
--     FIELD(IDR3, PBHA,        3, 1);
--     FIELD(IDR3, XNX,         4, 1);
--     FIELD(IDR3, PPS,         5, 1);
--     FIELD(IDR3, MPAM,        7, 1);
--     FIELD(IDR3, FWB,         8, 1);
--     FIELD(IDR3, STT,         9, 1);
--     FIELD(IDR3, RIL,        10, 1);
--     FIELD(IDR3, BBML,       11, 2);
--     FIELD(IDR3, E0PD,       13, 1);
--     FIELD(IDR3, PTWNNC,     14, 1);
--     FIELD(IDR3, DPT,        15, 1);
--
--REG32(IDR4,                0x10)
--
--REG32(IDR5,                0x14)
--     FIELD(IDR5, OAS,         0, 3);
--     FIELD(IDR5, GRAN4K,      4, 1);
--     FIELD(IDR5, GRAN16K,     5, 1);
--     FIELD(IDR5, GRAN64K,     6, 1);
--     FIELD(IDR5, VAX,        10, 2);
--     FIELD(IDR5, STALL_MAX,  16, 16);
--
--#define SMMU_IDR5_OAS 4
--
--REG32(IIDR,                0x18)
--REG32(AIDR,                0x1c)
--REG32(CR0,                 0x20)
--    FIELD(CR0, SMMU_ENABLE,   0, 1)
--    FIELD(CR0, EVENTQEN,      2, 1)
--    FIELD(CR0, CMDQEN,        3, 1)
--
--#define SMMU_CR0_RESERVED 0xFFFFFC20
--
--REG32(CR0ACK,              0x24)
--REG32(CR1,                 0x28)
--REG32(CR2,                 0x2c)
--REG32(STATUSR,             0x40)
--REG32(GBPA,                0x44)
--    FIELD(GBPA, ABORT,        20, 1)
--    FIELD(GBPA, UPDATE,       31, 1)
--
--/* Use incoming. */
--#define SMMU_GBPA_RESET_VAL 0x1000
--
--REG32(IRQ_CTRL,            0x50)
--    FIELD(IRQ_CTRL, GERROR_IRQEN,        0, 1)
--    FIELD(IRQ_CTRL, PRI_IRQEN,           1, 1)
--    FIELD(IRQ_CTRL, EVENTQ_IRQEN,        2, 1)
--
--REG32(IRQ_CTRL_ACK,        0x54)
--REG32(GERROR,              0x60)
--    FIELD(GERROR, CMDQ_ERR,           0, 1)
--    FIELD(GERROR, EVENTQ_ABT_ERR,     2, 1)
--    FIELD(GERROR, PRIQ_ABT_ERR,       3, 1)
--    FIELD(GERROR, MSI_CMDQ_ABT_ERR,   4, 1)
--    FIELD(GERROR, MSI_EVENTQ_ABT_ERR, 5, 1)
--    FIELD(GERROR, MSI_PRIQ_ABT_ERR,   6, 1)
--    FIELD(GERROR, MSI_GERROR_ABT_ERR, 7, 1)
--    FIELD(GERROR, MSI_SFM_ERR,        8, 1)
--
--REG32(GERRORN,             0x64)
--
--#define A_GERROR_IRQ_CFG0  0x68 /* 64b */
--REG32(GERROR_IRQ_CFG1, 0x70)
--REG32(GERROR_IRQ_CFG2, 0x74)
--
--#define A_STRTAB_BASE      0x80 /* 64b */
--
--#define SMMU_BASE_ADDR_MASK 0xfffffffffffc0
--
--REG32(STRTAB_BASE_CFG,     0x88)
--    FIELD(STRTAB_BASE_CFG, FMT,      16, 2)
--    FIELD(STRTAB_BASE_CFG, SPLIT,    6 , 5)
--    FIELD(STRTAB_BASE_CFG, LOG2SIZE, 0 , 6)
--
--#define A_CMDQ_BASE        0x90 /* 64b */
--REG32(CMDQ_PROD,           0x98)
--REG32(CMDQ_CONS,           0x9c)
--    FIELD(CMDQ_CONS, ERR, 24, 7)
--
--#define A_EVENTQ_BASE      0xa0 /* 64b */
--REG32(EVENTQ_PROD,         0xa8)
--REG32(EVENTQ_CONS,         0xac)
--
--#define A_EVENTQ_IRQ_CFG0  0xb0 /* 64b */
--REG32(EVENTQ_IRQ_CFG1,     0xb8)
--REG32(EVENTQ_IRQ_CFG2,     0xbc)
--
--#define A_IDREGS           0xfd0
--
- static inline int smmu_enabled(SMMUv3State *s)
- {
-     return FIELD_EX32(s->cr[0], CR0, SMMU_ENABLE);
-@@ -272,37 +132,6 @@ static inline void smmu_write_cmdq_err(SMMUv3State *s, uint32_t err_type)
-     s->cmdq.cons = FIELD_DP32(s->cmdq.cons, CMDQ_CONS, ERR, err_type);
- }
- 
--/* Commands */
--
--typedef enum SMMUCommandType {
--    SMMU_CMD_NONE            = 0x00,
--    SMMU_CMD_PREFETCH_CONFIG       ,
--    SMMU_CMD_PREFETCH_ADDR,
--    SMMU_CMD_CFGI_STE,
--    SMMU_CMD_CFGI_STE_RANGE,
--    SMMU_CMD_CFGI_CD,
--    SMMU_CMD_CFGI_CD_ALL,
--    SMMU_CMD_CFGI_ALL,
--    SMMU_CMD_TLBI_NH_ALL     = 0x10,
--    SMMU_CMD_TLBI_NH_ASID,
--    SMMU_CMD_TLBI_NH_VA,
--    SMMU_CMD_TLBI_NH_VAA,
--    SMMU_CMD_TLBI_EL3_ALL    = 0x18,
--    SMMU_CMD_TLBI_EL3_VA     = 0x1a,
--    SMMU_CMD_TLBI_EL2_ALL    = 0x20,
--    SMMU_CMD_TLBI_EL2_ASID,
--    SMMU_CMD_TLBI_EL2_VA,
--    SMMU_CMD_TLBI_EL2_VAA,
--    SMMU_CMD_TLBI_S12_VMALL  = 0x28,
--    SMMU_CMD_TLBI_S2_IPA     = 0x2a,
--    SMMU_CMD_TLBI_NSNH_ALL   = 0x30,
--    SMMU_CMD_ATC_INV         = 0x40,
--    SMMU_CMD_PRI_RESP,
--    SMMU_CMD_RESUME          = 0x44,
--    SMMU_CMD_STALL_TERM,
--    SMMU_CMD_SYNC,
--} SMMUCommandType;
--
- static const char *cmd_stringify[] = {
-     [SMMU_CMD_PREFETCH_CONFIG] = "SMMU_CMD_PREFETCH_CONFIG",
-     [SMMU_CMD_PREFETCH_ADDR]   = "SMMU_CMD_PREFETCH_ADDR",
-@@ -525,64 +354,6 @@ typedef struct SMMUEventInfo {
- 
- void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *event);
- 
--/* Configuration Data */
--
--/* STE Level 1 Descriptor */
--typedef struct STEDesc {
--    uint32_t word[2];
--} STEDesc;
--
--/* CD Level 1 Descriptor */
--typedef struct CDDesc {
--    uint32_t word[2];
--} CDDesc;
--
--/* Stream Table Entry(STE) */
--typedef struct STE {
--    uint32_t word[16];
--} STE;
--
--/* Context Descriptor(CD) */
--typedef struct CD {
--    uint32_t word[16];
--} CD;
--
--/* STE fields */
--
--#define STE_VALID(x)   extract32((x)->word[0], 0, 1)
--
--#define STE_CONFIG(x)  extract32((x)->word[0], 1, 3)
--#define STE_CFG_S1_ENABLED(config) (config & 0x1)
--#define STE_CFG_S2_ENABLED(config) (config & 0x2)
--#define STE_CFG_ABORT(config)      (!(config & 0x4))
--#define STE_CFG_BYPASS(config)     (config == 0x4)
--
--#define STE_S1FMT(x)       extract32((x)->word[0], 4 , 2)
--#define STE_S1CDMAX(x)     extract32((x)->word[1], 27, 5)
--#define STE_S1STALLD(x)    extract32((x)->word[2], 27, 1)
--#define STE_EATS(x)        extract32((x)->word[2], 28, 2)
--#define STE_STRW(x)        extract32((x)->word[2], 30, 2)
--#define STE_S2VMID(x)      extract32((x)->word[4], 0 , 16)
--#define STE_S2T0SZ(x)      extract32((x)->word[5], 0 , 6)
--#define STE_S2SL0(x)       extract32((x)->word[5], 6 , 2)
--#define STE_S2TG(x)        extract32((x)->word[5], 14, 2)
--#define STE_S2PS(x)        extract32((x)->word[5], 16, 3)
--#define STE_S2AA64(x)      extract32((x)->word[5], 19, 1)
--#define STE_S2ENDI(x)      extract32((x)->word[5], 20, 1)
--#define STE_S2AFFD(x)      extract32((x)->word[5], 21, 1)
--#define STE_S2HD(x)        extract32((x)->word[5], 23, 1)
--#define STE_S2HA(x)        extract32((x)->word[5], 24, 1)
--#define STE_S2S(x)         extract32((x)->word[5], 25, 1)
--#define STE_S2R(x)         extract32((x)->word[5], 26, 1)
--
--#define STE_CTXPTR(x)                                   \
--    ((extract64((x)->word[1], 0, 16) << 32) |           \
--     ((x)->word[0] & 0xffffffc0))
--
--#define STE_S2TTB(x)                                    \
--    ((extract64((x)->word[7], 0, 16) << 32) |           \
--     ((x)->word[6] & 0xfffffff0))
--
- static inline int oas2bits(int oas_field)
- {
-     switch (oas_field) {
-@@ -603,30 +374,6 @@ static inline int oas2bits(int oas_field)
-     g_assert_not_reached();
- }
- 
--/* CD fields */
--
--#define CD_VALID(x)   extract32((x)->word[0], 31, 1)
--#define CD_ASID(x)    extract32((x)->word[1], 16, 16)
--#define CD_TTB(x, sel)                                          \
--    ((extract64((x)->word[(sel) * 2 + 3], 0, 19) << 32) |       \
--     ((x)->word[(sel) * 2 + 2] & ~0xfULL))
--
--#define CD_HAD(x, sel)   extract32((x)->word[(sel) * 2 + 2], 1, 1)
--
--#define CD_TSZ(x, sel)   extract32((x)->word[0], (16 * (sel)) + 0, 6)
--#define CD_TG(x, sel)    extract32((x)->word[0], (16 * (sel)) + 6, 2)
--#define CD_EPD(x, sel)   extract32((x)->word[0], (16 * (sel)) + 14, 1)
--#define CD_ENDI(x)       extract32((x)->word[0], 15, 1)
--#define CD_IPS(x)        extract32((x)->word[1], 0 , 3)
--#define CD_AFFD(x)       extract32((x)->word[1], 3 , 1)
--#define CD_TBI(x)        extract32((x)->word[1], 6 , 2)
--#define CD_HD(x)         extract32((x)->word[1], 10 , 1)
--#define CD_HA(x)         extract32((x)->word[1], 11 , 1)
--#define CD_S(x)          extract32((x)->word[1], 12, 1)
--#define CD_R(x)          extract32((x)->word[1], 13, 1)
--#define CD_A(x)          extract32((x)->word[1], 14, 1)
--#define CD_AARCH64(x)    extract32((x)->word[1], 9 , 1)
--
- /**
-  * tg2granule - Decodes the CD translation granule size field according
-  * to the ttbr in use
-diff --git a/include/hw/arm/smmuv3-common.h b/include/hw/arm/smmuv3-common.h
+ if have_virtfs
+diff --git a/tests/qtest/libqos/qos-smmuv3.c b/tests/qtest/libqos/qos-smmuv3.c
 new file mode 100644
-index 0000000000..814ebbdec9
+index 0000000000..377ceb9e53
 --- /dev/null
-+++ b/include/hw/arm/smmuv3-common.h
-@@ -0,0 +1,461 @@
++++ b/tests/qtest/libqos/qos-smmuv3.c
+@@ -0,0 +1,731 @@
 +/*
-+ * ARM SMMUv3 support
++ * QOS SMMUv3 Module
 + *
-+ * Copyright (C) 2014-2016 Broadcom Corporation
-+ * Copyright (c) 2017 Red Hat, Inc.
-+ * Written by Prem Mallappa, Eric Auger
++ * This module provides SMMUv3-specific helper functions for libqos tests,
++ * encapsulating SMMUv3 setup, assertion, and cleanup operations.
 + *
-+ * This program is free software; you can redistribute it and/or modify
-+ * it under the terms of the GNU General Public License version 2 as
-+ * published by the Free Software Foundation.
++ * Copyright (c) 2025 Phytium Technology
 + *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
++ * Author:
++ *  Tao Tang <tangtao1634@phytium.com.cn>
 + *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program; if not, see <http://www.gnu.org/licenses/>.
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef HW_ARM_SMMUV3_COMMON_H
-+#define HW_ARM_SMMUV3_COMMON_H
++#include "qemu/osdep.h"
++#include "hw/arm/smmuv3-common.h"
++#include "tests/qtest/libqos/pci.h"
++#include "hw/misc/iommu-testdev.h"
++#include "qos-smmuv3.h"
 +
-+#include "hw/registerfields.h"
++#define QSMMU_STE_S2T0SZ_VAL 0x14
 +
-+/* Configuration Data */
++/* Apply space offset to address */
++static inline uint64_t qsmmu_apply_space_offs(QSMMUSpace sp,
++                                              uint64_t address)
++{
++    return address + qsmmu_space_offset(sp);
++}
 +
-+/* STE Level 1 Descriptor */
-+typedef struct STEDesc {
-+    uint32_t word[2];
-+} STEDesc;
++uint32_t qsmmu_expected_dma_result(QSMMUTestContext *ctx)
++{
++    /* Currently only non-secure space is supported. */
++    if (ctx->tx_space != QSMMU_SPACE_NONSECURE) {
++        return ITD_DMA_ERR_TX_FAIL;
++    }
++    return ctx->config.expected_result;
++}
 +
-+/* CD Level 1 Descriptor */
-+typedef struct CDDesc {
-+    uint32_t word[2];
-+} CDDesc;
++uint32_t qsmmu_build_dma_attrs(QSMMUSpace space)
++{
++    uint32_t attrs = 0;
++    switch (space) {
++    case QSMMU_SPACE_NONSECURE:
++        /* Non-secure: secure=0, space=1 */
++        attrs = ITD_ATTRS_SET_SECURE(attrs, 0);
++        attrs = ITD_ATTRS_SET_SPACE(attrs, QSMMU_SPACE_NONSECURE);
++        break;
++    default:
++        g_assert_not_reached();
++    }
 +
-+/* Stream Table Entry(STE) */
-+typedef struct STE {
-+    uint32_t word[16];
-+} STE;
++    return attrs;
++}
 +
-+/* Context Descriptor(CD) */
-+typedef struct CD {
-+    uint32_t word[16];
-+} CD;
++uint32_t qsmmu_setup_and_enable_translation(QSMMUTestContext *ctx)
++{
++    uint32_t build_result;
 +
-+/* STE fileds */
-+REG32(STE_0, 0)
-+    FIELD(STE_0, VALID, 0, 1)
-+    FIELD(STE_0, CONFIG, 1, 3)
-+    FIELD(STE_0, S1FMT, 4, 2)
-+    FIELD(STE_0, CTXPTR, 6, 26)
-+REG32(STE_1, 4)
-+    FIELD(STE_1, CTXPTR_HI, 0, 16)
-+    FIELD(STE_1, S1CDMAX, 27, 5)
-+REG32(STE_2, 8)
-+    FIELD(STE_2, NSCFG, 14, 2)
-+    FIELD(STE_2, S1STALLD, 27, 1)
-+    FIELD(STE_2, EATS, 28, 2)
-+    FIELD(STE_2, STRW, 30, 2)
-+REG32(STE_4, 16)
-+    FIELD(STE_4, S2VMID, 0, 16)
-+REG32(STE_5, 20)
-+    FIELD(STE_5, S2T0SZ, 0, 6)
-+    FIELD(STE_5, S2SL0, 6, 2)
-+    FIELD(STE_5, S2TG, 14, 2)
-+    FIELD(STE_5, S2PS, 16, 3)
-+    FIELD(STE_5, S2AA64, 19, 1)
-+    FIELD(STE_5, S2ENDI, 20, 1)
-+    FIELD(STE_5, S2AFFD, 21, 1)
-+    FIELD(STE_5, S2HD, 23, 1)
-+    FIELD(STE_5, S2HA, 24, 1)
-+    FIELD(STE_5, S2S, 25, 1)
-+    FIELD(STE_5, S2R, 26, 1)
-+REG32(STE_6, 24)
-+    FIELD(STE_6, S2TTB_LO, 4, 28)
-+REG32(STE_7, 28)
-+    FIELD(STE_7, S2TTB_HI, 0, 16)
++    /* Build page tables and SMMU structures first */
++    build_result = qsmmu_build_translation(
++                       ctx->qts, ctx->config.trans_mode,
++                       ctx->tx_space, ctx->sid);
++    if (build_result != 0) {
++        g_test_message("Build failed: mode=%u sid=%u status=0x%x",
++                       ctx->config.trans_mode, ctx->sid, build_result);
++        ctx->trans_status = build_result;
++        return ctx->trans_status;
++    }
 +
-+/* CD fields */
-+REG32(CD_0, 0)
-+    FIELD(CD_0, TSZ0, 0, 6)
-+    FIELD(CD_0, TG0, 6, 2)
-+    FIELD(CD_0, EPD0, 14, 1)
-+    FIELD(CD_0, ENDI, 15, 1)
-+    FIELD(CD_0, TSZ1, 16, 6)
-+    FIELD(CD_0, TG1, 22, 2)
-+    FIELD(CD_0, EPD1, 30, 1)
-+    FIELD(CD_0, VALID, 31, 1)
-+REG32(CD_1, 4)
-+    FIELD(CD_1, IPS, 0, 3)
-+    FIELD(CD_1, AFFD, 3, 1)
-+    FIELD(CD_1, TBI, 6, 2)
-+    FIELD(CD_1, AARCH64, 9, 1)
-+    FIELD(CD_1, HD, 10, 1)
-+    FIELD(CD_1, HA, 11, 1)
-+    FIELD(CD_1, S, 12, 1)
-+    FIELD(CD_1, R, 13, 1)
-+    FIELD(CD_1, A, 14, 1)
-+    FIELD(CD_1, ASID, 16, 16)
-+REG32(CD_2, 8)
-+    FIELD(CD_2, NSCFG0, 0, 1)
-+    FIELD(CD_2, HAD0, 1, 1)
-+    FIELD(CD_2, TTB0_LO, 4, 28)
-+REG32(CD_3, 12)
-+    FIELD(CD_3, TTB0_HI, 0, 19)
-+REG32(CD_4, 16)
-+    FIELD(CD_4, NSCFG1, 0, 1)
-+    FIELD(CD_4, HAD1, 1, 1)
-+    FIELD(CD_4, TTB1_LO, 4, 28)
-+REG32(CD_5, 20)
-+    FIELD(CD_5, TTB1_HI, 0, 19)
-+REG32(CD_6, 24)
-+REG32(CD_7, 28)
++    /* Program SMMU registers for the appropriate security space */
++    qsmmu_program_regs(ctx->qts, ctx->smmu_base, ctx->tx_space);
 +
-+/* Get STE fields */
-+#define STE_VALID(x)      FIELD_EX32((x)->word[0], STE_0, VALID)
-+#define STE_CONFIG(x)     FIELD_EX32((x)->word[0], STE_0, CONFIG)
-+#define STE_S1FMT(x)      FIELD_EX32((x)->word[0], STE_0, S1FMT)
-+#define STE_S1CDMAX(x)    FIELD_EX32((x)->word[1], STE_1, S1CDMAX)
-+#define STE_S1STALLD(x)   FIELD_EX32((x)->word[2], STE_2, S1STALLD)
-+#define STE_EATS(x)       FIELD_EX32((x)->word[2], STE_2, EATS)
-+#define STE_STRW(x)       FIELD_EX32((x)->word[2], STE_2, STRW)
-+#define STE_NSCFG(x)      FIELD_EX32((x)->word[2], STE_2, NSCFG)
-+#define STE_S2VMID(x)     FIELD_EX32((x)->word[4], STE_4, S2VMID)
-+#define STE_S2T0SZ(x)     FIELD_EX32((x)->word[5], STE_5, S2T0SZ)
-+#define STE_S2SL0(x)      FIELD_EX32((x)->word[5], STE_5, S2SL0)
-+#define STE_S2TG(x)       FIELD_EX32((x)->word[5], STE_5, S2TG)
-+#define STE_S2PS(x)       FIELD_EX32((x)->word[5], STE_5, S2PS)
-+#define STE_S2AA64(x)     FIELD_EX32((x)->word[5], STE_5, S2AA64)
-+#define STE_S2ENDI(x)     FIELD_EX32((x)->word[5], STE_5, S2ENDI)
-+#define STE_S2AFFD(x)     FIELD_EX32((x)->word[5], STE_5, S2AFFD)
-+#define STE_S2HD(x)       FIELD_EX32((x)->word[5], STE_5, S2HD)
-+#define STE_S2HA(x)       FIELD_EX32((x)->word[5], STE_5, S2HA)
-+#define STE_S2S(x)        FIELD_EX32((x)->word[5], STE_5, S2S)
-+#define STE_S2R(x)        FIELD_EX32((x)->word[5], STE_5, S2R)
-+#define STE_CTXPTR(x)                                            \
-+    (((uint64_t)FIELD_EX32((x)->word[1], STE_1, CTXPTR_HI) << 32) | \
-+     ((uint64_t)FIELD_EX32((x)->word[0], STE_0, CTXPTR) << 6))
-+#define STE_S2TTB(x)                                              \
-+    (((uint64_t)FIELD_EX32((x)->word[7], STE_7, S2TTB_HI) << 32) | \
-+     ((uint64_t)FIELD_EX32((x)->word[6], STE_6, S2TTB_LO) << 4))
-+#define STE_CFG_S1_ENABLED(config) ((config) & 0x1)
-+#define STE_CFG_S2_ENABLED(config) ((config) & 0x2)
-+#define STE_CFG_ABORT(config)      (!((config) & 0x4))
-+#define STE_CFG_BYPASS(config)     ((config) == 0x4)
++    ctx->trans_status = 0;
++    return ctx->trans_status;
++}
 +
-+/* Update STE fields */
-+#define STE_SET_VALID(ste, v) \
-+    ((ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, VALID, (v)))
-+#define STE_SET_CONFIG(ste, v) \
-+    ((ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, CONFIG, (v)))
-+#define STE_SET_S1FMT(ste, v) \
-+    ((ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, S1FMT, (v)))
-+#define STE_SET_CTXPTR(ste, v) do { \
-+    (ste)->word[0] = FIELD_DP32((ste)->word[0], STE_0, CTXPTR, (v) >> 6); \
-+    (ste)->word[1] = FIELD_DP32((ste)->word[1], STE_1, CTXPTR_HI, (v) >> 32); \
-+} while (0)
-+#define STE_SET_S1CDMAX(ste, v) \
-+    ((ste)->word[1] = FIELD_DP32((ste)->word[1], STE_1, S1CDMAX, (v)))
-+#define STE_SET_S1STALLD(ste, v) \
-+    ((ste)->word[2] = FIELD_DP32((ste)->word[2], STE_2, S1STALLD, (v)))
-+#define STE_SET_EATS(ste, v) \
-+    ((ste)->word[2] = FIELD_DP32((ste)->word[2], STE_2, EATS, (v)))
-+#define STE_SET_STRW(ste, v) \
-+    ((ste)->word[2] = FIELD_DP32((ste)->word[2], STE_2, STRW, (v)))
-+#define STE_SET_NSCFG(ste, v) \
-+    ((ste)->word[2] = FIELD_DP32((ste)->word[2], STE_2, NSCFG, (v)))
-+#define STE_SET_S2VMID(ste, v) \
-+    ((ste)->word[4] = FIELD_DP32((ste)->word[4], STE_4, S2VMID, (v)))
-+#define STE_SET_S2T0SZ(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2T0SZ, (v)))
-+#define STE_SET_S2SL0(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2SL0, (v)))
-+#define STE_SET_S2TG(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2TG, (v)))
-+#define STE_SET_S2PS(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2PS, (v)))
-+#define STE_SET_S2AA64(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2AA64, (v)))
-+#define STE_SET_S2ENDI(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2ENDI, (v)))
-+#define STE_SET_S2AFFD(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2AFFD, (v)))
-+#define STE_SET_S2HD(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2HD, (v)))
-+#define STE_SET_S2HA(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2HA, (v)))
-+#define STE_SET_S2S(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2S, (v)))
-+#define STE_SET_S2R(ste, v) \
-+    ((ste)->word[5] = FIELD_DP32((ste)->word[5], STE_5, S2R, (v)))
-+#define STE_SET_S2TTB(ste, v) do { \
-+    (ste)->word[6] = FIELD_DP32((ste)->word[6], STE_6, S2TTB_LO, (v) >> 4); \
-+    (ste)->word[7] = FIELD_DP32((ste)->word[7], STE_7, S2TTB_HI, (v) >> 32); \
-+} while (0)
++uint32_t qsmmu_trigger_dma(QSMMUTestContext *ctx)
++{
++    uint32_t result, attrs_val;
 +
-+/* Get CD fields */
-+#define CD_VALID(x)      FIELD_EX32((x)->word[0], CD_0, VALID)
-+#define CD_ASID(x)       FIELD_EX32((x)->word[1], CD_1, ASID)
-+#define CD_TTB(x, sel)                                           \
-+    ((sel) ? (((uint64_t)FIELD_EX32((x)->word[5], CD_5, TTB1_HI) << 32) | \
-+              ((uint64_t)FIELD_EX32((x)->word[4], CD_4, TTB1_LO) << 4)) :    \
-+             (((uint64_t)FIELD_EX32((x)->word[3], CD_3, TTB0_HI) << 32) | \
-+              ((uint64_t)FIELD_EX32((x)->word[2], CD_2, TTB0_LO) << 4)))
-+#define CD_HAD(x, sel)   ((sel) ? \
-+    FIELD_EX32((x)->word[4], CD_4, HAD1) : \
-+    FIELD_EX32((x)->word[2], CD_2, HAD0))
-+#define CD_TSZ(x, sel)   ((sel) ? \
-+    FIELD_EX32((x)->word[0], CD_0, TSZ1) : \
-+    FIELD_EX32((x)->word[0], CD_0, TSZ0))
-+#define CD_TG(x, sel)    ((sel) ? \
-+    FIELD_EX32((x)->word[0], CD_0, TG1) : \
-+    FIELD_EX32((x)->word[0], CD_0, TG0))
-+#define CD_EPD(x, sel)   ((sel) ? \
-+    FIELD_EX32((x)->word[0], CD_0, EPD1) : \
-+    FIELD_EX32((x)->word[0], CD_0, EPD0))
-+#define CD_ENDI(x)       FIELD_EX32((x)->word[0], CD_0, ENDI)
-+#define CD_IPS(x)        FIELD_EX32((x)->word[1], CD_1, IPS)
-+#define CD_AFFD(x)       FIELD_EX32((x)->word[1], CD_1, AFFD)
-+#define CD_TBI(x)        FIELD_EX32((x)->word[1], CD_1, TBI)
-+#define CD_HD(x)         FIELD_EX32((x)->word[1], CD_1, HD)
-+#define CD_HA(x)         FIELD_EX32((x)->word[1], CD_1, HA)
-+#define CD_S(x)          FIELD_EX32((x)->word[1], CD_1, S)
-+#define CD_R(x)          FIELD_EX32((x)->word[1], CD_1, R)
-+#define CD_A(x)          FIELD_EX32((x)->word[1], CD_1, A)
-+#define CD_AARCH64(x)    FIELD_EX32((x)->word[1], CD_1, AARCH64)
-+#define CD_NSCFG(x, sel) ((sel) ? \
-+    FIELD_EX32((x)->word[4], CD_4, NSCFG1) : \
-+    FIELD_EX32((x)->word[2], CD_2, NSCFG0))
++    /* Program DMA parameters */
++    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_GVA_LO,
++                   (uint32_t)ctx->config.dma_iova);
++    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_GVA_HI,
++                   (uint32_t)(ctx->config.dma_iova >> 32));
++    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_LEN,
++                   ctx->config.dma_len);
 +
-+/* Update CD fields */
-+#define CD_SET_VALID(cd, v) \
-+    ((cd)->word[0] = FIELD_DP32((cd)->word[0], CD_0, VALID, (v)))
-+#define CD_SET_ASID(cd, v) \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, ASID, (v)))
-+#define CD_SET_TTB(cd, sel, v) do { \
-+    if (sel) { \
-+        (cd)->word[4] = FIELD_DP32((cd)->word[4], CD_4, TTB1_LO, (v) >> 4); \
-+        (cd)->word[5] = FIELD_DP32((cd)->word[5], CD_5, TTB1_HI, (v) >> 32); \
-+    } else { \
-+        (cd)->word[2] = FIELD_DP32((cd)->word[2], CD_2, TTB0_LO, (v) >> 4); \
-+        (cd)->word[3] = FIELD_DP32((cd)->word[3], CD_3, TTB0_HI, (v) >> 32); \
-+    } \
-+} while (0)
-+#define CD_SET_HAD(cd, sel, v) do { \
-+    if (sel) { \
-+        (cd)->word[4] = FIELD_DP32((cd)->word[4], CD_4, HAD1, (v)); \
-+    } else { \
-+        (cd)->word[2] = FIELD_DP32((cd)->word[2], CD_2, HAD0, (v)); \
-+    } \
-+} while (0)
-+#define CD_SET_TSZ(cd, sel, v) \
-+    ((cd)->word[0] = (sel) ? FIELD_DP32((cd)->word[0], CD_0, TSZ1, (v)) : \
-+                             FIELD_DP32((cd)->word[0], CD_0, TSZ0, (v)))
-+#define CD_SET_TG(cd, sel, v) \
-+    ((cd)->word[0] = (sel) ? FIELD_DP32((cd)->word[0], CD_0, TG1, (v)) : \
-+                             FIELD_DP32((cd)->word[0], CD_0, TG0, (v)))
-+#define CD_SET_EPD(cd, sel, v) \
-+    ((cd)->word[0] = (sel) ? FIELD_DP32((cd)->word[0], CD_0, EPD1, (v)) : \
-+                             FIELD_DP32((cd)->word[0], CD_0, EPD0, (v)))
-+#define CD_SET_ENDI(cd, v) \
-+    ((cd)->word[0] = FIELD_DP32((cd)->word[0], CD_0, ENDI, (v)))
-+#define CD_SET_IPS(cd, v) \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, IPS, (v)))
-+#define CD_SET_AFFD(cd, v) \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, AFFD, (v)))
-+#define CD_SET_TBI(cd, v) \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, TBI, (v)))
-+#define CD_SET_HD(cd, v) \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, HD, (v)))
-+#define CD_SET_HA(cd, v) \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, HA, (v)))
-+#define CD_SET_S(cd, v) \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, S, (v)))
-+#define CD_SET_R(cd, v) \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, R, (v)))
-+#define CD_SET_A(cd, v) \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, A, (v)))
-+#define CD_SET_AARCH64(cd, v) \
-+    ((cd)->word[1] = FIELD_DP32((cd)->word[1], CD_1, AARCH64, (v)))
-+#define CD_SET_NSCFG(cd, sel, v) \
-+    ((sel) ? ((cd)->word[4] = FIELD_DP32((cd)->word[4], CD_4, NSCFG1, (v))) : \
-+             ((cd)->word[2] = FIELD_DP32((cd)->word[2], CD_2, NSCFG0, (v))))
-+#define CD_SET_MAIR0(cd, v) ((cd)->word[6] = (v))
-+#define CD_SET_MAIR1(cd, v) ((cd)->word[7] = (v))
++    /* Build and write DMA attributes based on device security state. */
++    attrs_val = qsmmu_build_dma_attrs(QSMMU_SPACE_NONSECURE);
++    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_ATTRS, attrs_val);
 +
-+/* MMIO Registers */
++    /* Flip status */
++    /* Arm iommu-testdev so the next read triggers DMA */
++    qpci_io_writel(ctx->dev, ctx->bar, ITD_REG_DMA_DBELL, ITD_DMA_DBELL_ARM);
 +
-+REG32(IDR0,                0x0)
-+    FIELD(IDR0, S2P,         0 , 1)
-+    FIELD(IDR0, S1P,         1 , 1)
-+    FIELD(IDR0, TTF,         2 , 2)
-+    FIELD(IDR0, COHACC,      4 , 1)
-+    FIELD(IDR0, BTM,         5 , 1)
-+    FIELD(IDR0, HTTU,        6 , 2)
-+    FIELD(IDR0, DORMHINT,    8 , 1)
-+    FIELD(IDR0, HYP,         9 , 1)
-+    FIELD(IDR0, ATS,         10, 1)
-+    FIELD(IDR0, NS1ATS,      11, 1)
-+    FIELD(IDR0, ASID16,      12, 1)
-+    FIELD(IDR0, MSI,         13, 1)
-+    FIELD(IDR0, SEV,         14, 1)
-+    FIELD(IDR0, ATOS,        15, 1)
-+    FIELD(IDR0, PRI,         16, 1)
-+    FIELD(IDR0, VMW,         17, 1)
-+    FIELD(IDR0, VMID16,      18, 1)
-+    FIELD(IDR0, CD2L,        19, 1)
-+    FIELD(IDR0, VATOS,       20, 1)
-+    FIELD(IDR0, TTENDIAN,    21, 2)
-+    FIELD(IDR0, ATSRECERR,   23, 1)
-+    FIELD(IDR0, STALL_MODEL, 24, 2)
-+    FIELD(IDR0, TERM_MODEL,  26, 1)
-+    FIELD(IDR0, STLEVEL,     27, 2)
-+    FIELD(IDR0, RME_IMPL,    30, 1)
++    /* Trigger DMA by reading ID register */
++    qpci_io_readl(ctx->dev, ctx->bar, ITD_REG_DMA_TRIGGERING);
 +
-+REG32(IDR1,                0x4)
-+    FIELD(IDR1, SIDSIZE,      0 , 6)
-+    FIELD(IDR1, SSIDSIZE,     6 , 5)
-+    FIELD(IDR1, PRIQS,        11, 5)
-+    FIELD(IDR1, EVENTQS,      16, 5)
-+    FIELD(IDR1, CMDQS,        21, 5)
-+    FIELD(IDR1, ATTR_PERMS_OVR, 26, 1)
-+    FIELD(IDR1, ATTR_TYPES_OVR, 27, 1)
-+    FIELD(IDR1, REL,          28, 1)
-+    FIELD(IDR1, QUEUES_PRESET, 29, 1)
-+    FIELD(IDR1, TABLES_PRESET, 30, 1)
-+    FIELD(IDR1, ECMDQ,        31, 1)
++    /* Poll for DMA completion */
++    for (int i = 0; i < 1000; i++) {
++        result = qpci_io_readl(ctx->dev, ctx->bar, ITD_REG_DMA_RESULT);
++        if (result != ITD_DMA_RESULT_BUSY) {
++            ctx->dma_result = result;
++            break;
++        }
++        g_usleep(1000);
++    }
 +
-+#define SMMU_IDR1_SIDSIZE 16
-+#define SMMU_CMDQS   19
-+#define SMMU_EVENTQS 19
++    /* Fallback for timeout */
++    if (ctx->dma_result == ITD_DMA_RESULT_BUSY) {
++        ctx->dma_result = ITD_DMA_ERR_TX_FAIL;
++    }
 +
-+REG32(IDR2,                0x8)
-+     FIELD(IDR2, BA_VATOS, 0, 10)
++    return ctx->dma_result;
++}
 +
-+REG32(IDR3,                0xc)
-+     FIELD(IDR3, HAD,         2, 1);
-+     FIELD(IDR3, PBHA,        3, 1);
-+     FIELD(IDR3, XNX,         4, 1);
-+     FIELD(IDR3, PPS,         5, 1);
-+     FIELD(IDR3, MPAM,        7, 1);
-+     FIELD(IDR3, FWB,         8, 1);
-+     FIELD(IDR3, STT,         9, 1);
-+     FIELD(IDR3, RIL,        10, 1);
-+     FIELD(IDR3, BBML,       11, 2);
-+     FIELD(IDR3, E0PD,       13, 1);
-+     FIELD(IDR3, PTWNNC,     14, 1);
-+     FIELD(IDR3, DPT,        15, 1);
++static void qsmmu_push_cfgi_cmd(QTestState *qts, uint64_t smmu_base,
++                                QSMMUSpace bank_sp, uint32_t type,
++                                uint32_t sid, bool ssec)
++{
++    hwaddr bank_off;
++    uint32_t new_prod, base_lo, base_hi, log2size, prod;
++    uint32_t index_mask, slot, words[4];
++    uint64_t base, qbase, entry_pa;
 +
-+REG32(IDR4,                0x10)
++    g_assert_false(ssec);
 +
-+REG32(IDR5,                0x14)
-+     FIELD(IDR5, OAS,         0, 3);
-+     FIELD(IDR5, GRAN4K,      4, 1);
-+     FIELD(IDR5, GRAN16K,     5, 1);
-+     FIELD(IDR5, GRAN64K,     6, 1);
-+     FIELD(IDR5, VAX,        10, 2);
-+     FIELD(IDR5, STALL_MAX,  16, 16);
++    bank_off = 0;
 +
-+#define SMMU_IDR5_OAS 4
++    /* Read CMDQ_BASE register */
++    base_lo = qtest_readl(qts, smmu_base + bank_off + A_CMDQ_BASE);
++    base_hi = qtest_readl(qts, smmu_base + bank_off + A_CMDQ_BASE + 4);
++    base = ((uint64_t)base_hi << 32) | base_lo;
++    log2size = base & 0x1f;
++    qbase = base & SMMU_BASE_ADDR_MASK;
 +
-+REG32(IIDR,                0x18)
-+REG32(AIDR,                0x1c)
-+REG32(CR0,                 0x20)
-+    FIELD(CR0, SMMU_ENABLE,   0, 1)
-+    FIELD(CR0, EVENTQEN,      2, 1)
-+    FIELD(CR0, CMDQEN,        3, 1)
++    /* Read CMDQ_PROD register */
++    prod = qtest_readl(qts, smmu_base + bank_off + A_CMDQ_PROD);
++    index_mask = (1u << log2size) - 1u;
++    slot = prod & index_mask;
++    entry_pa = qbase + (uint64_t)slot * 16u;
 +
-+#define SMMU_CR0_RESERVED 0xFFFFFC20
++    /* Prepare command words */
++    memset(words, 0, sizeof(words));
++    words[0] = (type & 0xff) | (ssec ? (1u << 10) : 0u);
++    words[1] = sid;
 +
-+REG32(CR0ACK,              0x24)
-+REG32(CR1,                 0x28)
-+REG32(CR2,                 0x2c)
-+REG32(STATUSR,             0x40)
-+REG32(GBPA,                0x44)
-+    FIELD(GBPA, ABORT,        20, 1)
-+    FIELD(GBPA, UPDATE,       31, 1)
++    /* Write command to the command queue */
++    for (int i = 0; i < 4; i++) {
++        qtest_writel(qts, entry_pa + i * 4, words[i]);
++    }
 +
-+/* Use incoming. */
-+#define SMMU_GBPA_RESET_VAL 0x1000
++    /* Update PROD to trigger command handler */
++    new_prod = (prod + 1) & ((1u << (log2size + 1)) - 1u);
++    qtest_writel(qts, smmu_base + bank_off + A_CMDQ_PROD, new_prod);
++}
 +
-+REG32(IRQ_CTRL,            0x50)
-+    FIELD(IRQ_CTRL, GERROR_IRQEN,        0, 1)
-+    FIELD(IRQ_CTRL, PRI_IRQEN,           1, 1)
-+    FIELD(IRQ_CTRL, EVENTQ_IRQEN,        2, 1)
++void qsmmu_cleanup_translation(QSMMUTestContext *ctx)
++{
++    static const QSMMUSpace spaces[] = { QSMMU_SPACE_NONSECURE };
++    size_t ste_cd_entry_bytes = sizeof(STE); /* STE size == CD size */
++    uint32_t sid;
++    uint64_t ste_addr, ste_addr_real, cd_addr_real;
++    QSMMUSpace build_space;
 +
-+REG32(IRQ_CTRL_ACK,        0x54)
-+REG32(GERROR,              0x60)
-+    FIELD(GERROR, CMDQ_ERR,           0, 1)
-+    FIELD(GERROR, EVENTQ_ABT_ERR,     2, 1)
-+    FIELD(GERROR, PRIQ_ABT_ERR,       3, 1)
-+    FIELD(GERROR, MSI_CMDQ_ABT_ERR,   4, 1)
-+    FIELD(GERROR, MSI_EVENTQ_ABT_ERR, 5, 1)
-+    FIELD(GERROR, MSI_PRIQ_ABT_ERR,   6, 1)
-+    FIELD(GERROR, MSI_GERROR_ABT_ERR, 7, 1)
-+    FIELD(GERROR, MSI_SFM_ERR,        8, 1)
++    sid = ctx->sid;
++    ste_addr = sid * ste_cd_entry_bytes + QSMMU_STR_TAB_BASE;
 +
-+REG32(GERRORN,             0x64)
++    /* Clear page table entries and configuration structures */
++    for (int idx = 0; idx < ARRAY_SIZE(spaces); idx++) {
++        build_space = spaces[idx];
 +
-+#define A_GERROR_IRQ_CFG0  0x68 /* 64b */
-+REG32(GERROR_IRQ_CFG1, 0x70)
-+REG32(GERROR_IRQ_CFG2, 0x74)
++        ste_addr_real = qsmmu_apply_space_offs(build_space, ste_addr);
++        cd_addr_real = qsmmu_apply_space_offs(build_space, QSMMU_CD_GPA);
++        for (int i = 0; i < ste_cd_entry_bytes / sizeof(uint32_t); i++) {
++            qtest_writel(ctx->qts, ste_addr_real + i * 4, 0);
++            g_assert_cmpint(qtest_readl(ctx->qts, ste_addr_real + i * 4),
++                            ==, 0);
 +
-+#define A_STRTAB_BASE      0x80 /* 64b */
++            qtest_writel(ctx->qts, cd_addr_real + i * 4, 0);
++            g_assert_cmpint(qtest_readl(ctx->qts, cd_addr_real + i * 4),
++                            ==, 0);
++        }
++    }
 +
-+#define SMMU_BASE_ADDR_MASK 0xfffffffffffc0
++    /* Invalidate SMMU caches via configuration invalidation commands */
++    if (ctx->smmu_base) {
++        /* Issue cache invalidation commands to SMMU */
++        qsmmu_push_cfgi_cmd(ctx->qts, ctx->smmu_base, QSMMU_SPACE_NONSECURE,
++                            SMMU_CMD_CFGI_STE, sid, false);
++        qsmmu_push_cfgi_cmd(ctx->qts, ctx->smmu_base, QSMMU_SPACE_NONSECURE,
++                            SMMU_CMD_CFGI_CD, sid, false);
++        qsmmu_push_cfgi_cmd(ctx->qts, ctx->smmu_base, QSMMU_SPACE_NONSECURE,
++                            SMMU_CMD_TLBI_NSNH_ALL, sid, false);
++    }
++}
 +
-+REG32(STRTAB_BASE_CFG,     0x88)
-+    FIELD(STRTAB_BASE_CFG, FMT,      16, 2)
-+    FIELD(STRTAB_BASE_CFG, SPLIT,    6 , 5)
-+    FIELD(STRTAB_BASE_CFG, LOG2SIZE, 0 , 6)
++bool qsmmu_validate_test_result(QSMMUTestContext *ctx)
++{
++    uint32_t expected = qsmmu_expected_dma_result(ctx);
++    g_test_message("-> Validating result: expected=0x%x actual=0x%x",
++                   expected, ctx->dma_result);
++    return (ctx->dma_result == expected);
++}
 +
-+#define A_CMDQ_BASE        0x90 /* 64b */
-+REG32(CMDQ_PROD,           0x98)
-+REG32(CMDQ_CONS,           0x9c)
-+    FIELD(CMDQ_CONS, ERR, 24, 7)
++QSMMUSpace qsmmu_sec_sid_to_space(QSMMUSecSID sec_sid)
++{
++    switch (sec_sid) {
++    case QSMMU_SEC_SID_NONSECURE:
++        return QSMMU_SPACE_NONSECURE;
++    default:
++        g_assert_not_reached();
++    }
++}
 +
-+#define A_EVENTQ_BASE      0xa0 /* 64b */
-+REG32(EVENTQ_PROD,         0xa8)
-+REG32(EVENTQ_CONS,         0xac)
++uint64_t qsmmu_space_offset(QSMMUSpace sp)
++{
++    switch (sp) {
++    case QSMMU_SPACE_NONSECURE:
++        return QSMMU_SPACE_OFFS_NS;
++    default:
++        g_assert_not_reached();
++    }
++}
 +
-+#define A_EVENTQ_IRQ_CFG0  0xb0 /* 64b */
-+REG32(EVENTQ_IRQ_CFG1,     0xb8)
-+REG32(EVENTQ_IRQ_CFG2,     0xbc)
++void qsmmu_single_translation(QSMMUTestContext *ctx)
++{
++    uint32_t config_result;
++    uint32_t dma_result;
++    bool test_passed;
 +
-+#define A_IDREGS           0xfd0
++    /* Configure SMMU translation */
++    config_result = qsmmu_setup_and_enable_translation(ctx);
++    if (config_result != 0) {
++        g_test_message("Configuration failed: mode=%u status=0x%x",
++                       ctx->config.trans_mode, config_result);
++        return;
++    }
 +
-+/* Commands */
++    /* Trigger DMA operation */
++    dma_result = qsmmu_trigger_dma(ctx);
++    if (dma_result != 0) {
++        g_test_message("DMA failed: mode=%u result=0x%x",
++                       ctx->config.trans_mode, dma_result);
++    } else {
++        g_test_message("-> DMA succeeded: mode=%u", ctx->config.trans_mode);
++    }
 +
-+typedef enum SMMUCommandType {
-+    SMMU_CMD_NONE            = 0x00,
-+    SMMU_CMD_PREFETCH_CONFIG       ,
-+    SMMU_CMD_PREFETCH_ADDR,
-+    SMMU_CMD_CFGI_STE,
-+    SMMU_CMD_CFGI_STE_RANGE,
-+    SMMU_CMD_CFGI_CD,
-+    SMMU_CMD_CFGI_CD_ALL,
-+    SMMU_CMD_CFGI_ALL,
-+    SMMU_CMD_TLBI_NH_ALL     = 0x10,
-+    SMMU_CMD_TLBI_NH_ASID,
-+    SMMU_CMD_TLBI_NH_VA,
-+    SMMU_CMD_TLBI_NH_VAA,
-+    SMMU_CMD_TLBI_EL3_ALL    = 0x18,
-+    SMMU_CMD_TLBI_EL3_VA     = 0x1a,
-+    SMMU_CMD_TLBI_EL2_ALL    = 0x20,
-+    SMMU_CMD_TLBI_EL2_ASID,
-+    SMMU_CMD_TLBI_EL2_VA,
-+    SMMU_CMD_TLBI_EL2_VAA,
-+    SMMU_CMD_TLBI_S12_VMALL  = 0x28,
-+    SMMU_CMD_TLBI_S2_IPA     = 0x2a,
-+    SMMU_CMD_TLBI_NSNH_ALL   = 0x30,
-+    SMMU_CMD_ATC_INV         = 0x40,
-+    SMMU_CMD_PRI_RESP,
-+    SMMU_CMD_RESUME          = 0x44,
-+    SMMU_CMD_STALL_TERM,
-+    SMMU_CMD_SYNC,
-+} SMMUCommandType;
++    /* Validate test result */
++    test_passed = qsmmu_validate_test_result(ctx);
++    g_assert_true(test_passed);
 +
-+#endif /* HW_ARM_SMMUV3_COMMON_H */
++    /* Clean up translation state to prepare for the next test */
++    qsmmu_cleanup_translation(ctx);
++}
++
++void qsmmu_translation_batch(const QSMMUTestConfig *configs, size_t count,
++                             QTestState *qts, QPCIDevice *dev,
++                             QPCIBar bar, uint64_t smmu_base)
++{
++    for (int i = 0; i < count; i++) {
++        /* Initialize test memory */
++        qtest_memset(qts, configs[i].dma_iova, 0x00, configs[i].dma_len);
++        /* Execute each test configuration */
++        QSMMUTestContext ctx = {
++            .qts = qts,
++            .dev = dev,
++            .bar = bar,
++            .smmu_base = smmu_base,
++            .config = configs[i],
++            .trans_status = 0,
++            .dma_result = 0,
++            .sid = dev->devfn,
++            .tx_space = qsmmu_sec_sid_to_space(configs[i].sec_sid),
++        };
++
++        qsmmu_single_translation(&ctx);
++        g_test_message("--> Test %d completed: mode=%u sec_sid=%u "
++                       "status=0x%x result=0x%x", i, configs[i].trans_mode,
++                       configs[i].sec_sid, ctx.trans_status, ctx.dma_result);
++    }
++}
++
++uint32_t qsmmu_build_translation(QTestState *qts, QSMMUTransMode mode,
++                                 QSMMUSpace tx_space, uint32_t sid)
++{
++    uint64_t ste_addr, ste_addr_real, cd_addr_real;
++    uint64_t cd_ttb, vttb, vttb_real;
++    uint8_t nscfg0, nscfg1;
++    QSMMUSpace build_space;
++    size_t ste_cd_entry_bytes = sizeof(STE);
++    STE ste;
++    CD cd;
++
++    build_space = tx_space;
++    if (build_space != QSMMU_SPACE_NONSECURE) {
++        return 0xdeadbeafu;
++    }
++
++    /* Build STE image */
++    memset(&ste, 0, sizeof(ste));
++    switch (mode) {
++    case QSMMU_TM_S1_ONLY:
++        STE_SET_CONFIG(&ste, 0x5);
++        break;
++    case QSMMU_TM_S2_ONLY:
++        STE_SET_CONFIG(&ste, 0x6);
++        break;
++    case QSMMU_TM_NESTED:
++    default:
++        STE_SET_CONFIG(&ste, 0x7);
++        break;
++    }
++
++    STE_SET_VALID(&ste, 1);
++    STE_SET_S2T0SZ(&ste, QSMMU_STE_S2T0SZ_VAL);
++    STE_SET_S2SL0(&ste, 0x2);
++    STE_SET_S2TG(&ste, 0);
++    STE_SET_S2PS(&ste, 0x5);
++    STE_SET_S2AA64(&ste, 1);
++    STE_SET_S2ENDI(&ste, 0);
++    STE_SET_S2AFFD(&ste, 0);
++
++    /*
++     * The consistent policy also extends to pointer fetches. For cases that
++     * require reading STE.S1ContextPtr or STE.S2TTB, we still follow the same
++     * policy:
++     * - The PA space security attribute of the address pointed to
++     *   (e.g., the CD or S2L1 table) must also match the input 'SEC_SID'.
++     */
++    cd_addr_real = qsmmu_apply_space_offs(build_space, QSMMU_CD_GPA);
++    STE_SET_CTXPTR(&ste, cd_addr_real);
++
++    vttb = QSMMU_VTTB;
++    vttb_real = qsmmu_apply_space_offs(build_space, vttb);
++    STE_SET_S2TTB(&ste, vttb_real);
++
++    ste_addr = sid * ste_cd_entry_bytes + QSMMU_STR_TAB_BASE;
++    ste_addr_real = qsmmu_apply_space_offs(build_space, ste_addr);
++
++    /* Write STE to memory */
++    for (int i = 0; i < ARRAY_SIZE(ste.word); i++) {
++        qtest_writel(qts, ste_addr_real + i * 4, ste.word[i]);
++    }
++
++    switch (tx_space) {
++    case QSMMU_SPACE_NONSECURE:
++        nscfg0 = 0x1;
++        nscfg1 = 0x1;
++        break;
++    default:
++        g_assert_not_reached();
++    }
++    /* Build CD image for S1 path if needed */
++    if (mode != QSMMU_TM_S2_ONLY) {
++        memset(&cd, 0, sizeof(cd));
++
++        CD_SET_ASID(&cd, 0x1e20);
++        CD_SET_AARCH64(&cd, 1);
++        CD_SET_VALID(&cd, 1);
++        CD_SET_A(&cd, 1);
++        CD_SET_S(&cd, 0);
++        CD_SET_HD(&cd, 0);
++        CD_SET_HA(&cd, 0);
++        CD_SET_IPS(&cd, 0x4);
++        CD_SET_TBI(&cd, 0x0);
++        CD_SET_AFFD(&cd, 0x0);
++        CD_SET_EPD(&cd, 0, 0x0);
++        CD_SET_EPD(&cd, 1, 0x1);
++        CD_SET_TSZ(&cd, 0, 0x10);
++        CD_SET_TG(&cd, 0, 0x0);
++        CD_SET_ENDI(&cd, 0x0);
++
++        CD_SET_NSCFG(&cd, 0, nscfg0);
++        CD_SET_NSCFG(&cd, 1, nscfg1);
++        CD_SET_R(&cd, 0x1);
++        cd_ttb = vttb_real;
++        CD_SET_TTB(&cd, 0, cd_ttb);
++
++        for (int i = 0; i < ARRAY_SIZE(cd.word); i++) {
++            /* TODO: Maybe need more work to write to secure RAM in future */
++            qtest_writel(qts, cd_addr_real + i * 4, cd.word[i]);
++            g_assert_cmpint(qtest_readl(qts, cd_addr_real + i * 4), ==,
++                            cd.word[i]);
++        }
++    }
++
++    qsmmu_setup_translation_tables(qts, QSMMU_IOVA_OR_IPA, build_space,
++                                   false, mode);
++    /* Nested extras: CD S2 tables */
++    if (mode == QSMMU_TM_NESTED) {
++        /*
++         * Extra Stage 2 page tables is needed if
++         *          SMMUTranslationClass == SMMU_CLASS_CD
++         * as smmuv3_do_translate would translate an IPA of the CD to the final
++         * output CD after a Stage 2 translation.
++         */
++        qsmmu_setup_translation_tables(qts, cd_addr_real, build_space,
++                                       true, mode);
++    }
++
++    return 0;
++}
++
++uint64_t qsmmu_bank_base(uint64_t base, QSMMUSpace sp)
++{
++    switch (sp) {
++    case QSMMU_SPACE_NONSECURE:
++        return base;
++    default:
++        g_assert_not_reached();
++    }
++}
++
++void qsmmu_program_bank(QTestState *qts, uint64_t bank_base, QSMMUSpace sp)
++{
++    uint64_t cmdq_base, eventq_base, strtab_base;
++
++    qtest_writel(qts, bank_base + A_GBPA, 0x80000000);  /* UPDATE */
++    qtest_writel(qts, bank_base + A_CR0, 0x0);          /* Disable */
++    qtest_writel(qts, bank_base + A_CR1, 0x0d75);       /* Config */
++
++    /* CMDQ_BASE: add address-space offset*/
++    cmdq_base = qsmmu_apply_space_offs(sp, QSMMU_CMDQ_BASE_ADDR);
++    cmdq_base |= 0x0a;  /* Size and valid bits */
++    qtest_writeq(qts, bank_base + A_CMDQ_BASE, cmdq_base);
++
++    qtest_writel(qts, bank_base + A_CMDQ_CONS, 0x0);
++    qtest_writel(qts, bank_base + A_CMDQ_PROD, 0x0);
++
++    /* EVENTQ_BASE: add address-space offset */
++    eventq_base = qsmmu_apply_space_offs(sp, QSMMU_EVENTQ_BASE_ADDR);
++    eventq_base |= 0x0a;  /* Size and valid bits */
++    qtest_writeq(qts, bank_base + A_EVENTQ_BASE, eventq_base);
++
++    qtest_writel(qts, bank_base + A_EVENTQ_PROD, 0x0);
++    qtest_writel(qts, bank_base + A_EVENTQ_CONS, 0x0);
++
++    /* STRTAB_BASE_CFG: linear stream table, LOG2SIZE=5 */
++    qtest_writel(qts, bank_base + A_STRTAB_BASE_CFG, 0x5);
++
++    /* STRTAB_BASE: add address-space offset */
++    strtab_base = qsmmu_apply_space_offs(sp, QSMMU_STR_TAB_BASE);
++    qtest_writeq(qts, bank_base + A_STRTAB_BASE, strtab_base);
++
++    /* CR0: Enable SMMU with appropriate flags */
++    qtest_writel(qts, bank_base + A_CR0, 0xd);
++}
++
++void qsmmu_program_regs(QTestState *qts, uint64_t smmu_base, QSMMUSpace space)
++{
++    uint64_t sp_base;
++    /* Always program Non-Secure bank first */
++    uint64_t ns_base = qsmmu_bank_base(smmu_base, QSMMU_SPACE_NONSECURE);
++    qsmmu_program_bank(qts, ns_base, QSMMU_SPACE_NONSECURE);
++
++    /* Program the requested space if different from Non-Secure */
++    sp_base = qsmmu_bank_base(smmu_base, space);
++    if (sp_base != ns_base) {
++        qsmmu_program_bank(qts, sp_base, space);
++    }
++}
++
++static uint32_t qsmmu_get_table_index(uint64_t addr, int level)
++{
++    switch (level) {
++    case 0:
++        return (addr >> 39) & 0x1ff;
++    case 1:
++        return (addr >> 30) & 0x1ff;
++    case 2:
++        return (addr >> 21) & 0x1ff;
++    case 3:
++        return (addr >> 12) & 0x1ff;
++    default:
++        g_assert_not_reached();
++    }
++}
++
++static uint64_t qsmmu_get_table_addr(uint64_t base, int level, uint64_t iova)
++{
++    uint32_t index = qsmmu_get_table_index(iova, level);
++    return (base & QSMMU_PTE_MASK) + (index * 8);
++}
++
++/*
++ * qsmmu_get_pte_attrs - Calculate the S1 leaf PTE value
++ *
++ * IOMMU need to set different attributes for PTEs based on the translation mode
++ */
++static uint64_t qsmmu_get_pte_attrs(QSMMUTransMode mode, bool is_leaf,
++                                    QSMMUSpace space)
++{
++    uint64_t rw_mask = QSMMU_LEAF_PTE_RW_MASK;
++    uint64_t ro_mask = QSMMU_LEAF_PTE_RO_MASK;
++    uint64_t non_leaf_mask = QSMMU_NON_LEAF_PTE_MASK;
++
++    switch (space) {
++    case QSMMU_SPACE_NONSECURE:
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    if (!is_leaf) {
++        return non_leaf_mask;
++    }
++
++    /* For leaf PTE */
++    if (mode == QSMMU_TM_NESTED || mode == QSMMU_TM_S1_ONLY) {
++        return rw_mask;
++    }
++
++    return ro_mask;
++}
++
++/*
++ * qsmmu_setup_s2_walk_for_ipa - Setup Stage 2 page table walk for an IPA
++ *
++ * @qts: QTest state handle
++ * @space: Security space
++ * @ipa: Intermediate Physical Address to translate
++ * @s2_vttb: Stage 2 VTTB (page table base)
++ * @mode: Translation mode
++ * @is_final: Whether this is the final S2 walk (not nested within S1)
++ *
++ * Calculates and writes a 4-level Stage 2 page table walk for the given IPA.
++ * This function dynamically generates and writes all page table entries
++ * (L0-L3) to guest memory based on the input IPA and configuration.
++ */
++static void qsmmu_setup_s2_walk_for_ipa(QTestState *qts,
++                                        QSMMUSpace space,
++                                        uint64_t ipa,
++                                        uint64_t s2_vttb,
++                                        QSMMUTransMode mode,
++                                        bool is_final)
++{
++    uint64_t all_s2_l0_pte_val;
++    uint64_t all_s2_l1_pte_val;
++    uint64_t all_s2_l2_pte_val;
++    uint64_t all_s2_l3_pte_val;
++    uint64_t s2_l0_addr, s2_l1_addr, s2_l2_addr, s2_l3_addr;
++
++    /* Shared intermediate PTE values for all S2 walks */
++    all_s2_l0_pte_val = qsmmu_apply_space_offs(
++        space, QSMMU_L0_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
++    all_s2_l1_pte_val = qsmmu_apply_space_offs(
++        space, QSMMU_L1_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
++    all_s2_l2_pte_val = qsmmu_apply_space_offs(
++        space, QSMMU_L2_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
++
++    /* Stage 2 Level 0 */
++    s2_l0_addr = qsmmu_get_table_addr(s2_vttb, 0, ipa);
++    qtest_writeq(qts, s2_l0_addr, all_s2_l0_pte_val);
++
++    /* Stage 2 Level 1 */
++    s2_l1_addr = qsmmu_get_table_addr(all_s2_l0_pte_val, 1, ipa);
++    qtest_writeq(qts, s2_l1_addr, all_s2_l1_pte_val);
++
++    /* Stage 2 Level 2 */
++    s2_l2_addr = qsmmu_get_table_addr(all_s2_l1_pte_val, 2, ipa);
++    qtest_writeq(qts, s2_l2_addr, all_s2_l2_pte_val);
++
++    /* Stage 2 Level 3 (leaf) */
++    s2_l3_addr = qsmmu_get_table_addr(all_s2_l2_pte_val, 3, ipa);
++
++    /*
++     * Stage 2 L3 PTE attributes depend on the context:
++     * - For nested S1 table address translations (!is_final):
++     *   Use LEAF attrs (0x763) because these PTEs map S1 table pages directly
++     * - For final S2 walk (is_final):
++     *   Use TABLE attrs (0x7e3) for the final IPA→PA mapping
++     */
++    if (!is_final) {
++        all_s2_l3_pte_val =
++            (ipa & QSMMU_PTE_MASK) |
++            qsmmu_get_pte_attrs(QSMMU_TM_NESTED, true, space);
++    } else {
++        all_s2_l3_pte_val =
++            (ipa & QSMMU_PTE_MASK) |
++            qsmmu_get_pte_attrs(QSMMU_TM_S2_ONLY, true, space);
++    }
++
++    qtest_writeq(qts, s2_l3_addr, all_s2_l3_pte_val);
++}
++
++/*
++ * qsmmu_setup_s1_level_with_nested_s2 - Setup S1 level with nested S2 walk
++ *
++ * @qts: QTest state handle
++ * @space: Security space
++ * @s1_level: Stage 1 level (0-3)
++ * @s1_pte_addr: Stage 1 PTE address (as IPA)
++ * @s1_pte_val: Stage 1 PTE value to write
++ * @s2_vttb: Stage 2 VTTB for nested translation
++ * @mode: Translation mode
++ *
++ * For nested translation, each S1 table access requires a full S2 walk
++ * to translate the S1 table's IPA to PA. This function performs the nested
++ * S2 walk and writes the S1 PTE value to guest memory.
++ */
++static void qsmmu_setup_s1_level_with_nested_s2(QTestState *qts,
++                                                QSMMUSpace space,
++                                                int s1_level,
++                                                uint64_t s1_pte_addr,
++                                                uint64_t s1_pte_val,
++                                                uint64_t s2_vttb,
++                                                QSMMUTransMode mode)
++{
++    /*
++     * Perform nested S2 walk to translate S1 table IPA to PA.
++     * This is always needed for S1_ONLY/S2_ONLY/NESTED modes because:
++     * - S1_ONLY: Needs S2 tables for "IPA as PA" mapping (for testing)
++     * - S2_ONLY: Needs S2 tables for direct translation
++     * - NESTED: Needs S2 tables for nested translation
++     */
++    qsmmu_setup_s2_walk_for_ipa(qts, space, s1_pte_addr,
++                                s2_vttb, mode, false);
++
++    /* Write the S1 PTE value */
++    qtest_writeq(qts, s1_pte_addr, s1_pte_val);
++}
++
++/*
++ * qsmmu_setup_translation_tables - Setup SMMU translation tables
++ *
++ * The 'SEC_SID' represents the input security state of the device/transaction,
++ * whether it's a static Secure state or a dynamically-switched Realm state.
++ * SEC_SID has been converted to the corresponding SEcurity Space (QSMMUSpace)
++ * before calling this function.
++ *
++ * In a real SMMU translation, this input security state does not unilaterally
++ * determine the output Physical Address (PA) space. The output PA space is
++ * ultimately determined by attributes encountered during the page table walk,
++ * such as NSCFG and NSTable.
++ *
++ * However, for the specific context of testing the SMMU with the iommu-testdev,
++ * and to simplify the future support for Secure and Realm states, we adopt a
++ * consistent policy:
++ *
++ * - We always ensure that the page table attributes (e.g., nscfg, nstable)
++ * *match* the input 'SEC_SID' of the test case.
++ *
++ * For example: If 'SEC_SID' is Non-Secure, the corresponding nscfg and nstable
++ * attributes in the translation tables will always be set to 1.
++ *
++ */
++void qsmmu_setup_translation_tables(QTestState *qts,
++                                    uint64_t iova,
++                                    QSMMUSpace space,
++                                    bool is_cd,
++                                    QSMMUTransMode mode)
++{
++    uint64_t all_s2_l0_pte_val, all_s2_l1_pte_val, all_s2_l2_pte_val;
++    uint64_t s1_vttb, s2_vttb, s1_leaf_pte_val;
++    uint64_t l0_addr, l1_addr, l2_addr, l3_addr;
++
++    g_test_message("Begin of construction: IOVA=0x%lx mode=%d is_building_CD=%s"
++                   " ===", iova, mode, is_cd ? "yes" : "no");
++
++    /* Initialize shared S2 PTE values used across all walks */
++    all_s2_l0_pte_val = qsmmu_apply_space_offs(
++        space, QSMMU_L0_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
++    all_s2_l1_pte_val = qsmmu_apply_space_offs(
++        space, QSMMU_L1_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
++    all_s2_l2_pte_val = qsmmu_apply_space_offs(
++        space, QSMMU_L2_PTE_VAL | qsmmu_get_pte_attrs(mode, false, space));
++
++    /* Both S1 and S2 share the same VTTB base */
++    s1_vttb = qsmmu_apply_space_offs(space, QSMMU_VTTB & QSMMU_PTE_MASK);
++    s2_vttb = s1_vttb;
++
++    if (!is_cd) {
++        /*
++         * Setup Stage 1 page tables with nested Stage 2 walks.
++         * For each S1 level (L0-L3), we need to:
++         * 1. Calculate S1 PTE address (as IPA)
++         * 2. Perform nested S2 walk to translate that IPA to PA
++         * 3. Write the S1 PTE value
++         */
++
++        /* Stage 1 Level 0 */
++        l0_addr = qsmmu_get_table_addr(s1_vttb, 0, iova);
++        qsmmu_setup_s1_level_with_nested_s2(qts, space, 0, l0_addr,
++                                            all_s2_l0_pte_val, s2_vttb, mode);
++
++        /* Stage 1 Level 1 */
++        l1_addr = qsmmu_get_table_addr(all_s2_l0_pte_val & QSMMU_PTE_MASK,
++                                       1, iova);
++        qsmmu_setup_s1_level_with_nested_s2(qts, space, 1, l1_addr,
++                                            all_s2_l1_pte_val, s2_vttb, mode);
++
++        /* Stage 1 Level 2 */
++        l2_addr = qsmmu_get_table_addr(all_s2_l1_pte_val & QSMMU_PTE_MASK,
++                                       2, iova);
++        qsmmu_setup_s1_level_with_nested_s2(qts, space, 2, l2_addr,
++                                            all_s2_l2_pte_val, s2_vttb, mode);
++
++        /* Stage 1 Level 3 (leaf) */
++        l3_addr = qsmmu_get_table_addr(all_s2_l2_pte_val & QSMMU_PTE_MASK,
++                                       3, iova);
++
++        s1_leaf_pte_val = qsmmu_apply_space_offs(
++            space, QSMMU_L3_PTE_VAL | qsmmu_get_pte_attrs(mode, true, space)
++        );
++
++        qsmmu_setup_s1_level_with_nested_s2(qts, space, 3, l3_addr,
++                                            s1_leaf_pte_val, s2_vttb, mode);
++    } else {
++        /*
++         * For CD address translation, we start directly with the IPA.
++         */
++        s1_leaf_pte_val = iova | qsmmu_get_pte_attrs(QSMMU_TM_NESTED,
++                                                     false, space);
++    }
++
++    /*
++     * Final Stage 2 walk: Translate the result from Stage 1.
++     * - For S1_ONLY: This is skipped in hardware but we set it up for testing
++     * - For S2_ONLY: This is the only walk
++     * - For NESTED: This translates the IPA from S1 to final PA
++     * - For CD address (is_cd=true): This is a table address, use !is_final
++     */
++    qsmmu_setup_s2_walk_for_ipa(qts, space, s1_leaf_pte_val, s2_vttb,
++                                mode, !is_cd);
++
++    /* Calculate and log final translated PA */
++    g_test_message("End of construction: PA=0x%llx ===",
++                   (s1_leaf_pte_val & QSMMU_PTE_MASK) + (iova & 0xfff));
++}
+diff --git a/tests/qtest/libqos/qos-smmuv3.h b/tests/qtest/libqos/qos-smmuv3.h
+new file mode 100644
+index 0000000000..8f1dbfeb10
+--- /dev/null
++++ b/tests/qtest/libqos/qos-smmuv3.h
+@@ -0,0 +1,267 @@
++/*
++ * QOS SMMUv3 Module
++ *
++ * This module provides SMMUv3-specific helper functions for libqos tests,
++ * encapsulating SMMUv3 setup, assertion, and cleanup operations.
++ *
++ * Copyright (c) 2025 Phytium Technology
++ *
++ * Author:
++ *  Tao Tang <tangtao1634@phytium.com.cn>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QTEST_LIBQOS_SMMUV3_H
++#define QTEST_LIBQOS_SMMUV3_H
++
++#include "hw/misc/iommu-testdev.h"
++
++/*
++ * SMMU MMIO register base. We hardcode this as base_memmap is 'static const'
++ * in hw/arm/virt.c and not directly accessible here.
++ */
++#define VIRT_SMMU_BASE            0x0000000009050000ull
++
++/* SMMU queue and table base addresses */
++#define QSMMU_CMDQ_BASE_ADDR      0x000000000e16b000ull
++#define QSMMU_EVENTQ_BASE_ADDR    0x000000000e170000ull
++
++/*
++ * Translation tables and descriptors for a mapping of
++ *   - IOVA(Stage 1 only)
++ *   - IPA (Stage 2 only)
++ * to GPA.
++ *
++ * The translation is based on the Arm architecture with the following
++ * prerequisites:
++ * - Granule size: 4KB pages.
++ * - Page table levels: 4 levels (L0, L1, L2, L3), starting at level 0.
++ * - IOVA size: The walk resolves a IOVA: 0x8080604567
++ * - Address space: The 4-level lookup with 4KB granules supports up to a
++ * 48-bit (256TB) virtual address space. Each level uses a 9-bit index
++ * (512 entries per table). The breakdown is:
++ * - L0 index: IOVA bits [47:39]
++ * - L1 index: IOVA bits [38:30]
++ * - L2 index: IOVA bits [29:21]
++ * - L3 index: IOVA bits [20:12]
++ * - Page offset: IOVA bits [11:0]
++ *
++ * NOTE: All physical addresses defined here (QSMMU_VTTB, table addresses, etc.)
++ * appear to be within a secure RAM region. In practice, an offset is added
++ * to these values to place them in non-secure RAM. For example, when running
++ * in a virt machine type, the RAM base address (e.g., 0x40000000) is added to
++ * these constants.
++ */
++#define QSMMU_IOVA_OR_IPA               0x0000008080604567ull
++#define QSMMU_VTTB                      0x000000000e4d0000ull
++#define QSMMU_STR_TAB_BASE              0x000000000e179000ull
++#define QSMMU_CD_GPA                    (QSMMU_STR_TAB_BASE - 0x40ull)
++
++
++#define QSMMU_L0_PTE_VAL                0x000000000e4d1000ull
++#define QSMMU_L1_PTE_VAL                0x000000000e4d2000ull
++#define QSMMU_L2_PTE_VAL                0x000000000e4d3000ull
++#define QSMMU_L3_PTE_VAL                0x000000000ecba000ull
++
++#define QSMMU_NON_LEAF_PTE_MASK         0x8000000000000003ull
++#define QSMMU_LEAF_PTE_RO_MASK          0x04000000000007e3ull
++#define QSMMU_LEAF_PTE_RW_MASK          0x0400000000000763ull
++#define QSMMU_PTE_MASK                  0x0000fffffffff000ull
++
++/*
++ * Address-space base offsets for test tables.
++ * - Non-Secure uses a fixed offset, keeping internal layout identical.
++ *
++ * Note: Future spaces (e.g. Secure/Realm/Root) are not implemented here.
++ * When needed, introduce new offsets and reuse the helpers below so relative
++ * layout stays identical across spaces.
++ */
++#define QSMMU_SPACE_OFFS_NS             0x0000000040000000ull
++
++typedef enum QSMMUSecSID {
++    QSMMU_SEC_SID_NONSECURE    = 0,
++} QSMMUSecSID;
++
++typedef enum QSMMUSpace {
++    QSMMU_SPACE_NONSECURE      = 1,
++} QSMMUSpace;
++
++typedef enum QSMMUTransMode {
++    QSMMU_TM_S1_ONLY           = 0,
++    QSMMU_TM_S2_ONLY           = 1,
++    QSMMU_TM_NESTED            = 2,
++} QSMMUTransMode;
++
++typedef struct QSMMUTestConfig {
++    QSMMUTransMode trans_mode;        /* Translation mode (S1, S2, Nested) */
++    QSMMUSecSID sec_sid;              /* SEC_SID of test device */
++    uint64_t dma_iova;                /* DMA IOVA address for testing */
++    uint32_t dma_len;                 /* DMA length for testing */
++    uint32_t expected_result;         /* Expected DMA result for validation */
++} QSMMUTestConfig;
++
++typedef struct QSMMUTestContext {
++    QTestState *qts;            /* QTest state handle */
++    QPCIDevice *dev;            /* PCI device handle */
++    QPCIBar bar;                /* PCI BAR for MMIO access */
++    QSMMUTestConfig config;     /* Test configuration */
++    uint64_t smmu_base;         /* SMMU base address */
++    uint32_t trans_status;      /* Translation configuration status */
++    uint32_t dma_result;        /* DMA operation result */
++    uint32_t sid;               /* Stream ID for the test */
++    QSMMUSpace tx_space;        /* Cached transaction space */
++} QSMMUTestContext;
++
++/* Convert SEC_SID to corresponding Security Space */
++QSMMUSpace qsmmu_sec_sid_to_space(QSMMUSecSID sec_sid);
++
++/* Get base offset of the specific Security space */
++uint64_t qsmmu_space_offset(QSMMUSpace sp);
++
++uint32_t qsmmu_build_dma_attrs(QSMMUSpace space);
++
++/*
++ * qsmmu_setup_and_enable_translation - Complete translation setup and enable
++ *
++ * @ctx: Test context containing configuration and device handles
++ *
++ * Returns: Translation status (0 = success, non-zero = error)
++ *
++ * This function performs the complete translation setup sequence:
++ * 1. Builds all required SMMU structures (STE, CD, page tables)
++ * 2. Programs SMMU registers for the appropriate security space
++ * 3. Returns configuration status
++ */
++uint32_t qsmmu_setup_and_enable_translation(QSMMUTestContext *ctx);
++
++/*
++ * qsmmu_build_translation - Build SMMU translation structures
++ *
++ * @qts: QTest state handle
++ * @mode: Translation mode (S1_ONLY, S2_ONLY, NESTED)
++ * @tx_space: Transaction security space
++ * @sid: Stream ID
++ *
++ * Returns: Build status (0 = success, non-zero = error)
++ *
++ * Constructs all necessary SMMU translation structures in guest memory:
++ * - Stream Table Entry (STE) for the given SID
++ * - Context Descriptor (CD) if Stage 1 translation is involved
++ * - Complete page table hierarchy based on translation mode
++ *
++ * The structures are written to security-space-specific memory regions.
++ */
++uint32_t qsmmu_build_translation(QTestState *qts, QSMMUTransMode mode,
++                                 QSMMUSpace tx_space, uint32_t sid);
++
++/*
++ * qsmmu_bank_base - Get SMMU control bank base address
++ *
++ * @base: SMMU base address
++ * @sp: Security space
++ *
++ * Returns: Bank base address for the given security space
++ *
++ * Maps security space to the corresponding SMMU control register bank.
++ * Currently only Non-Secure bank is supported.
++ */
++uint64_t qsmmu_bank_base(uint64_t base, QSMMUSpace sp);
++
++/*
++ * qsmmu_program_bank - Program SMMU control bank registers
++ *
++ * @qts: QTest state handle
++ * @bank_base: SMMU bank base address
++ * @sp: Security space
++ *
++ * Programs a specific SMMU control bank with minimal configuration:
++ * - Global Bypass Attribute (GBPA)
++ * - Control registers (CR0, CR1)
++ * - Command queue (base, producer, consumer)
++ * - Event queue (base, producer, consumer)
++ * - Stream table configuration (base, format)
++ *
++ * Addresses are adjusted based on security space offset.
++ */
++void qsmmu_program_bank(QTestState *qts, uint64_t bank_base, QSMMUSpace sp);
++
++/*
++ * qsmmu_program_regs - Program all required SMMU register banks
++ *
++ * @qts: QTest state handle
++ * @smmu_base: SMMU base address
++ * @space: Target security space
++ *
++ * Programs SMMU registers for the requested security space which is called in
++ * qsmmu_setup_and_enable_translation. Always programs Non-Secure bank first,
++ * then the target space if different.
++ */
++void qsmmu_program_regs(QTestState *qts, uint64_t smmu_base, QSMMUSpace space);
++
++uint32_t qsmmu_trigger_dma(QSMMUTestContext *ctx);
++
++/*
++ * qsmmu_cleanup_translation - Clean up translation configuration
++ *
++ * @ctx: Test context containing configuration and device handles
++ *
++ * Clears all translation structures and invalidates SMMU caches:
++ * - Clears STE and CD entries
++ * - Issues SMMU invalidation commands (CFGI_STE, CFGI_CD, TLBI_NSNH_ALL)
++ */
++void qsmmu_cleanup_translation(QSMMUTestContext *ctx);
++
++/* qsmmu_expected_dma_result - Calculate expected DMA result */
++uint32_t qsmmu_expected_dma_result(QSMMUTestContext *ctx);
++
++/*
++ * qsmmu_validate_test_result - Validate actual VS expected test result
++ *
++ * @ctx: Test context containing actual and expected results
++ *
++ * Returns: true if test passed (actual == expected), false otherwise
++ *
++ * Compares the actual DMA result with the expected result and logs
++ * the comparison for debugging purposes.
++ */
++bool qsmmu_validate_test_result(QSMMUTestContext *ctx);
++
++/*
++ * qsmmu_setup_translation_tables - Setup complete SMMU page table hierarchy
++ *
++ * @qts: QTest state handle
++ * @iova: Input Virtual Address or IPA to translate
++ * @space: Security space (NONSECURE, SECURE, REALM, ROOT)
++ * @is_cd: Whether translating CD address (vs regular IOVA)
++ * @mode: Translation mode (S1_ONLY, S2_ONLY, NESTED)
++ *
++ * This function builds the complete page table structure for translating
++ * the given IOVA through the SMMU. The structure varies based on mode:
++ *
++ * - S1_ONLY: Single Stage 1 walk (IOVA -> PA)
++ * - S2_ONLY: Single Stage 2 walk (IPA -> PA)
++ * - NESTED: Stage 1 walk (IOVA -> IPA) with nested S2 walks for each
++ *   S1 table access, plus final S2 walk for the result IPA
++ *
++ * For nested mode, this creates a complex hierarchy:
++ * - 4 Stage 1 levels (L0-L3), each requiring a 4-level Stage 2 walk
++ * - 1 final Stage 2 walk for the resulting IPA
++ *
++ * The function writes all necessary Page Table Entries (PTEs) to guest
++ * memory using qtest_writeq(), setting up the complete translation path
++ * that the SMMU hardware will traverse during DMA operations.
++ */
++void qsmmu_setup_translation_tables(QTestState *qts,
++                                    uint64_t iova,
++                                    QSMMUSpace space,
++                                    bool is_cd,
++                                    QSMMUTransMode mode);
++
++/* High-level test execution functions */
++void qsmmu_single_translation(QSMMUTestContext *ctx);
++void qsmmu_translation_batch(const QSMMUTestConfig *configs, size_t count,
++                             QTestState *qts, QPCIDevice *dev,
++                             QPCIBar bar, uint64_t smmu_base);
++
++#endif /* QTEST_LIBQOS_SMMUV3_H */
 -- 
 2.34.1
 
