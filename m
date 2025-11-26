@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D748D11196
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5427CD11198
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 20:27:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOM3Z-0005a2-P8; Wed, 26 Nov 2025 15:24:06 -0500
+	id 1vOM2j-0003TX-Go; Wed, 26 Nov 2025 15:23:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM3U-0005KM-V0
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:24:01 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM2h-0003Ik-57
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:23:11 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM3S-0002cf-Fe
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:24:00 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-47798ded6fcso534415e9.1
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:23:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOM2e-0002Rf-Ms
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 15:23:10 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-42b38de7940so94845f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 12:23:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764188636; x=1764793436; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764188587; x=1764793387; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EfwJWQq9l5xaVFukygP6b1kdZjjf6Z4zWUecnl8bZmA=;
- b=g4wHSttFKuzDkdwzFT9R60R4rQzgIdG/dXCXvxcZMUS3BO2296Nsdyw8nHwPpszN3x
- SIvc+QD1NmxOQ4Dnfa++PdbgTYNUE2xJTXp3own+kiDSr57gViFgXDkNlwARnGmf86Fu
- JQXW7FF0R03HKGe8yRhbhOUs0klhGfmDMYOyKkxxoSp/0Ci09lFglBnzLrKuuskVC/2s
- IB1MLl5J9bZa07UDRblR6RAua3obY9hccwkHEiOE3DuiZRihW1GXVw315AwyBVHPwBAS
- j7v+c53YHLXvsk54MhumA2l/JIBTsW47aIUIrOoMnnVPhdUOVoW/Lkw63MwEHuC4Lp+G
- 3RrA==
+ bh=Pidw5T6Zpmn8AtM8Pz/FN7kD5XrD+2TAbGQhpUrAR/g=;
+ b=veMmjgwIR1QuT+5YhFVPvvBuX08UJolMC2tjgZ3hXS/P4DP+fTOnmEkFb+FrbVTjAK
+ M/iTF183Vtne8s8rbtdH27q2E9vWsEW6fFcHkxjWKh2t7jQhgjrTgOAIFhtTSSSMbhks
+ qNSbGRe49gSkdqgqd7ilzq/xoiO3HtjBwFlzYvF4Ffj7HRPAMNyuwJO+kRZTwE9zcPh4
+ dTS8RWU7TtNPk8tmXQDgtCfqLrym0iAxIi8mAwnJQzPlofLx1jFGraBJOwtk0sKCeaI4
+ o3svQOGFBIHRIRGXSz3dcQJba0XmoEcXiYH8gVB/qLKEjQFSNyxJeELRBWyFgfyeIHnA
+ Ieig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764188636; x=1764793436;
+ d=1e100.net; s=20230601; t=1764188587; x=1764793387;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=EfwJWQq9l5xaVFukygP6b1kdZjjf6Z4zWUecnl8bZmA=;
- b=mlNuyAaWiFxQXRaj4tbvvt0HjMAq03YSn0SU6mogzzeSI1585XDmaa0DstJDBIUMLB
- oXJ5Vi9b4bWs6F4jxMkgIeZtoEvDbRssr1cx9k+IGCtLh8afv47g5Iicljh7X+bM5P0j
- Qk+rENRbReH1q/ea8RBdql6tEsVtgu5ixaGId1xFcgqnUgrrUGgn5ONGLGPvnYhz6paY
- g7g7QIXGtfD1MYWvh4R8RtWUXYO4FjWAgimUP/InL47qcAOLUYZ62f9SYiVu9t1OEUwF
- hN2m1CADLR/MNTqmN2tsBYgzOzo+EpFQB6DLPwBCbLp6yvj/YAsIQCrznrL+wnG20F4l
- C2Vw==
-X-Gm-Message-State: AOJu0YwIcI+J/yAdhnUUKgl/02mr1gLJMCwVwN3amIMkJPJaF3OB+TAG
- xJxySM8Bv3c4Qjv5vgjFuuMO3SNTEXaIb6ZIbzFJweDzJc4FlgmSID2pfh5s+ozjh/2HaaBRk5E
- 0Y+jZitB5MJ4H
-X-Gm-Gg: ASbGncv2y6Wa35fs0S8Q7SeEthB+NrffVohz6U0+GdqvymuN0gnzD8Z2FwOano+uklt
- MJvNWCEQ3/rUVp7mn18So0b9/yCBVTUofv4Z9g33QOnZQHKiA4HfE6LO6IXdwaJ5QaguBoJROFc
- HNWqWzWWp5q4rDz5TsfOpE1IHRgeJt3UbhJqLx+7R0q5UMawyT9QlN6Z1frCQFMF9BLV7hwJa8C
- uypMe/SFzGQPFGGnz12cvthlLl3XShSKJTwjeuVTAfQfLdk0sWYeD9IcW7XFAI51VR11stDeDTh
- Q+alM3FrXfKkUoz1fxLttZz3bWDrOP3iWBFLYyAJqvYtIx9vNm1H/kfDNzNy0lxVIQ3VqeUQVSZ
- 8+LKh0W/rS3Se2sNj1J7rGWgz8G60xEtECSjSgJWLHzAGo4M9iIQ/EQpQCDamLN9K9+PAJQvs52
- pK+pkzaNnq4GfphWj6YRDgddwv8XcIiQQ7e0woCDji8mDEK+03cyreLLliH/r+re2aiNPJVB0=
-X-Google-Smtp-Source: AGHT+IF0CZwJnAeZXjmhNJC4xxVAoMs/WntUBeNV1FGayZ55KSNYWge/7S1UXJJ9T2FUTscYRa9OiA==
-X-Received: by 2002:a05:600c:4e93:b0:471:9da:5232 with SMTP id
- 5b1f17b1804b1-477c10e1ccdmr222091045e9.15.1764188636610; 
- Wed, 26 Nov 2025 12:23:56 -0800 (PST)
+ bh=Pidw5T6Zpmn8AtM8Pz/FN7kD5XrD+2TAbGQhpUrAR/g=;
+ b=oLCm6ZhMhpJyJfab1aidBS+kxnlnUOXojLVWRME6jIEWvcXtPpLHobvDYOSQS2Fu13
+ rW+LnCAjO4yJop+H0Dx2nu3tzuHYKgzjRyokH9cm4+0jgtBkYy8XpxOda1mLaU83Q1//
+ syTN2nogEAD5VPp6XWtu6sjwhb8XT7AtmBG78wcrQWaLQ+EukK9nJY8Y/SowBmlUy6bO
+ mADGmEf+xjj3+uDK8aCj2UGyPTF83V9Bz72hwKuzgBUKIgUB+2KYdIrcyo+1av4SAFJu
+ 4EryTriASJZxedHgV46q2ubaYSgG+7lbhuRlY4GI0yuDhuMckNKsDDzPSEDVcI5bQU1b
+ hNgw==
+X-Gm-Message-State: AOJu0YxphaimiT+gBlFKUanjy4QAPqcWkaKw7e9GR/HBLKLyRwJo9QMZ
+ 5W40tDTSA6TdD8unJ4M2b3yrz4dyvpZjGy5lP2CnUJWOvCB5igAU66Yod1FBlGOr8CX9DPrD0+1
+ w7Hm0yIBNjgD6
+X-Gm-Gg: ASbGncugPkNuj2tMB8/G2VO/BqQqS4C/9SFFPsw8OYJfaj5lulCiBx6Vg+pmIVrkxgm
+ jyUQ6PcQoCc5TVPlgnTHZ4cr+5/GyOXC0J3jPwZLr3nc4uvo+cNSQk8Ii6M3sl+z6+rNwihz6ZR
+ SaxH6WOgMdUNfPsL0G2LlA87ClVyasovfbsgHvJA4C4QQnEY++BjEF7Z/6QUBIw83TnQrdKBGOi
+ Jph/EFqLzUWG1A7HLebQT7TYdZgcyg0ZKH/5r0AbOlIKdX6vNWPbhOOlJ+vuWxN7QRGvb5lQDdL
+ fGQmdlvjmF2DZRpF/RSgT9PMqBPn9Mj4eOaAavGyUM+C32DTbJjPvvLTLKuHnT5ImRPhldIwVxD
+ 0gGVhGhd4pntMCi3q/FCl/KbSV0fjuUO4r954+HwU6B8i5AW3CO4o1nMBb3n+RQWhesjCiVyXwm
+ s52cEjrCvXEYhGODOgRo6vmrKcf7kBw5jfZdNeyc6xc8os44N0ZIx2At+FEUc7
+X-Google-Smtp-Source: AGHT+IGvJuPSNVRj/S/F737sI/9otdZJ93L9g24a+RFEOkkbYzfNltaLmzyBztbVGoPsAMxLcjq0xA==
+X-Received: by 2002:a05:6000:4310:b0:429:c54d:8bd3 with SMTP id
+ ffacd0b85a97d-42cc1d192e7mr22800878f8f.53.1764188586920; 
+ Wed, 26 Nov 2025 12:23:06 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4790add4b46sm64568165e9.4.2025.11.26.12.23.55
+ ffacd0b85a97d-42cb7fa7affsm43170047f8f.23.2025.11.26.12.23.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 26 Nov 2025 12:23:56 -0800 (PST)
+ Wed, 26 Nov 2025 12:23:06 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>
-Subject: [PATCH-for-11.0 v3 16/22] target/mips: Expand HELPER_LD_ATOMIC()
-Date: Wed, 26 Nov 2025 21:21:52 +0100
-Message-ID: <20251126202200.23100-17-philmd@linaro.org>
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH-for-11.0 v3 09/22] target/sparc: Use big-endian variant of
+ cpu_ld/st_data*()
+Date: Wed, 26 Nov 2025 21:21:45 +0100
+Message-ID: <20251126202200.23100-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251126202200.23100-1-philmd@linaro.org>
 References: <20251126202200.23100-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,90 +105,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since it is easier to maintain a plain C function,
-expand the HELPER_LD_ATOMIC() macro as do_ll().
+We only build the SPARC targets using big endianness order,
+therefore the cpu_ld/st_data*() definitions expand to the big
+endian declarations. Use the explicit big-endian variants.
+
+Mechanical change running:
+
+  $ tgt=sparc; \
+    end=be; \
+    for op in data mmuidx_ra; do \
+      for ac in uw sw l q; do \
+        sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+      for ac in w l q; do \
+        sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+                  $(git grep -l cpu_ target/${tgt}/); \
+      done;
+    done
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/mips/tcg/ldst_helper.c | 51 +++++++++++++++++++++--------------
- 1 file changed, 31 insertions(+), 20 deletions(-)
+ target/sparc/ldst_helper.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
-index 85f73c9081d..f3652034afa 100644
---- a/target/mips/tcg/ldst_helper.c
-+++ b/target/mips/tcg/ldst_helper.c
-@@ -29,23 +29,26 @@
- 
- #ifndef CONFIG_USER_ONLY
- 
--#define HELPER_LD_ATOMIC(name, cpu_load)                                      \
--target_ulong helper_##name(CPUMIPSState *env, target_ulong arg, int memop_idx)\
--{                                                                             \
--    MemOpIdx oi = memop_idx;                                                  \
--    MemOp op = get_memop(oi);                                                 \
--    unsigned size = memop_size(op);                                           \
--    if (arg & (size - 1)) {                                                   \
--        if (!(env->hflags & MIPS_HFLAG_DM)) {                                 \
--            env->CP0_BadVAddr = arg;                                          \
--        }                                                                     \
--        do_raise_exception(env, EXCP_AdEL, GETPC());                          \
--    }                                                                         \
--    env->CP0_LLAddr = cpu_mips_translate_address(env, arg, MMU_DATA_LOAD,     \
--                                                 GETPC());                    \
--    env->lladdr = arg;                                                        \
--    env->llval = cpu_load(env, arg, oi, GETPC());                             \
--    return env->llval;                                                        \
-+static target_ulong do_ll(target_ulong (*cpu_load_mmu)(CPUMIPSState *,
-+                                                       target_ulong,
-+                                                       MemOpIdx, uintptr_t),
-+                          CPUMIPSState *env, target_ulong arg,
-+                          MemOpIdx oi, uintptr_t ra)
-+{
-+    MemOp op = get_memop(oi);
-+    unsigned size = memop_size(op);
-+
-+    if (arg & (size - 1)) {
-+        if (!(env->hflags & MIPS_HFLAG_DM)) {
-+            env->CP0_BadVAddr = arg;
-+        }
-+        do_raise_exception(env, EXCP_AdEL, ra);
-+    }
-+    env->CP0_LLAddr = cpu_mips_translate_address(env, arg, MMU_DATA_LOAD, ra);
-+    env->llval = cpu_load_mmu(env, arg, oi, ra);
-+    env->lladdr = arg;
-+
-+    return env->llval;
- }
- 
- static target_ulong loads4(CPUMIPSState *env, target_ulong arg,
-@@ -53,16 +56,24 @@ static target_ulong loads4(CPUMIPSState *env, target_ulong arg,
- {
-     return (target_long)(int32_t)cpu_ldl_mmu(env, arg, oi, ra);
- }
--HELPER_LD_ATOMIC(ll, loads4)
-+
-+target_ulong helper_ll(CPUMIPSState *env, target_ulong arg, int memop_idx)
-+{
-+    return do_ll(loads4, env, arg, memop_idx, GETPC());
-+}
-+
- #ifdef TARGET_MIPS64
- static target_ulong loadu8(CPUMIPSState *env, target_ulong arg,
-                            MemOpIdx oi, uintptr_t ra)
- {
-     return (target_ulong)cpu_ldq_mmu(env, arg, oi, ra);
- }
--HELPER_LD_ATOMIC(lld, loadu8)
-+
-+target_ulong helper_lld(CPUMIPSState *env, target_ulong arg, int memop_idx)
-+{
-+    return do_ll(loadu8, env, arg, memop_idx, GETPC());
-+}
- #endif
--#undef HELPER_LD_ATOMIC
- 
- #endif /* !CONFIG_USER_ONLY */
- 
+diff --git a/target/sparc/ldst_helper.c b/target/sparc/ldst_helper.c
+index 2c63eb9e036..bd0257d313a 100644
+--- a/target/sparc/ldst_helper.c
++++ b/target/sparc/ldst_helper.c
+@@ -1228,13 +1228,13 @@ uint64_t helper_ld_asi(CPUSPARCState *env, target_ulong addr,
+             ret = cpu_ldub_data(env, addr);
+             break;
+         case 2:
+-            ret = cpu_lduw_data(env, addr);
++            ret = cpu_lduw_be_data(env, addr);
+             break;
+         case 4:
+-            ret = cpu_ldl_data(env, addr);
++            ret = cpu_ldl_be_data(env, addr);
+             break;
+         case 8:
+-            ret = cpu_ldq_data(env, addr);
++            ret = cpu_ldq_be_data(env, addr);
+             break;
+         default:
+             g_assert_not_reached();
 -- 
 2.51.0
 
