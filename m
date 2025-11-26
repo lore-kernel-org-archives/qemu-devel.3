@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CAA8D10F28
-	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 16:46:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E08D10F28
+	for <qemu-devel@archiver.kernel.org>; Wed, 26 Nov 2025 16:46:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOIdy-0001AH-98; Wed, 26 Nov 2025 11:45:26 -0500
+	id 1vOIdx-0001A0-BW; Wed, 26 Nov 2025 11:45:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1vOIcu-0000ot-Tf; Wed, 26 Nov 2025 11:44:28 -0500
+ id 1vOIcw-0000pg-Qp; Wed, 26 Nov 2025 11:44:28 -0500
 Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1vOIcj-0003Qt-Ib; Wed, 26 Nov 2025 11:44:18 -0500
+ id 1vOIck-0003R2-PN; Wed, 26 Nov 2025 11:44:22 -0500
 Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
- by Atcsqr.andestech.com with ESMTPS id 5AQGhYDW005666
+ by Atcsqr.andestech.com with ESMTPS id 5AQGhZrx005667
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 27 Nov 2025 00:43:34 +0800 (+08)
+ Thu, 27 Nov 2025 00:43:35 +0800 (+08)
  (envelope-from alvinga@andestech.com)
 Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS31.andestech.com
  (10.0.1.89) with Microsoft SMTP Server id 14.3.498.0;
- Thu, 27 Nov 2025 00:43:34 +0800
+ Thu, 27 Nov 2025 00:43:36 +0800
 To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
  <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
  <zhiwei_liu@linux.alibaba.com>, <vivahavey@gmail.com>, Alvin Chang
- <alvinga@andestech.com>
-Subject: [PATCH v2 0/2] RISC-V: Initial support versioning of debug
- specification
-Date: Thu, 27 Nov 2025 00:43:27 +0800
-Message-ID: <20251126164329.2157287-1-alvinga@andestech.com>
+ <alvinga@andestech.com>, Yu-Ming Chang <yumin686@andestech.com>
+Subject: [PATCH v2 1/2] target/riscv: Add "debug-1.0" to specify debug
+ specification v1.0
+Date: Thu, 27 Nov 2025 00:43:28 +0800
+Message-ID: <20251126164329.2157287-2-alvinga@andestech.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251126164329.2157287-1-alvinga@andestech.com>
+References: <20251126164329.2157287-1-alvinga@andestech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-Originating-IP: [10.0.15.183]
 X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 5AQGhYDW005666
+X-MAIL: Atcsqr.andestech.com 5AQGhZrx005667
 Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
  helo=Atcsqr.andestech.com
 X-Spam_score_int: -8
@@ -70,29 +72,49 @@ From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series try to support versioning of debug specification. The early debug
-implementation supports debug specification v0.13, and later new trigger types
-were added which are defined in debug specification v1.0 version. To support
-both v0.13 and v1.0, we add 'debug-1.0' as CPU property to let user choose
-debug specification v1.0 by specifying "debug-1.0=true". The default version is
-still v0.13 if 'debug-1.0' is not provided and set.
+Currently RISC-V CPU has a property "debug" which is equivalent to old
+debug specification v0.13 version. Now we have ratified debug
+specification v1.0 version. To support both versions, we add "debug-1.0"
+as one of RISC-V CPU property to let user specify that debug v0.13 or
+debug v1.0 is enabled. When debug-1.0=false CPU fallbacks to default
+v0.13 version.
 
-For example, to enable debug specification v1.0 on max CPU:
-1. -cpu max,debug-1.0=true
+Note that "debug-1.0" depends on "debug" property:
+- debug=false,debug-1.0={true|false} --> debug is disabled
+- debug=true,debug-1.0=false         --> debug v0.13 is enabled
+- debug=true,debug-1.0=true          --> debug v1.0  is enabled
 
-Changes since v1
-- Apply suggestions from Daniel. Using boolean property instead of string.
+Signed-off-by: Alvin Chang <alvinga@andestech.com>
+Reviewed-by: Yu-Ming Chang <yumin686@andestech.com>
+---
+ target/riscv/cpu.c                | 1 +
+ target/riscv/cpu_cfg_fields.h.inc | 1 +
+ 2 files changed, 2 insertions(+)
 
-Alvin Chang (2):
-  target/riscv: Add "debug-1.0" to specify debug specification v1.0
-  target/riscv: Simpily support versioning of debug trigger module
-
- target/riscv/cpu.c                |  1 +
- target/riscv/cpu_cfg_fields.h.inc |  1 +
- target/riscv/debug.c              | 56 +++++++++++++++++++++++++++++--
- target/riscv/debug.h              |  1 +
- 4 files changed, 56 insertions(+), 3 deletions(-)
-
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 73d4280..082035b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2637,6 +2637,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+ 
+ static const Property riscv_cpu_properties[] = {
+     DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
++    DEFINE_PROP_BOOL("debug-1.0", RISCVCPU, cfg.debug_1_00, false),
+ 
+     {.name = "pmu-mask", .info = &prop_pmu_mask},
+     {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index a154ecd..402b255 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -151,6 +151,7 @@ BOOL_FIELD(ext_XVentanaCondOps)
+ BOOL_FIELD(mmu)
+ BOOL_FIELD(pmp)
+ BOOL_FIELD(debug)
++BOOL_FIELD(debug_1_00)
+ BOOL_FIELD(misa_w)
+ 
+ BOOL_FIELD(short_isa_string)
 -- 
 2.43.0
 
