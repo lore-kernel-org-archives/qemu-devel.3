@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42AE6D111A8
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 13:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C985DCFD2F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 13:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vObtC-00069v-Lr; Thu, 27 Nov 2025 08:18:26 -0500
+	id 1vObso-0004zG-F1; Thu, 27 Nov 2025 08:18:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vObrC-0002rD-Gg
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:16:22 -0500
+ id 1vObr4-0002jt-Jk
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:16:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vObr6-0001Js-GT
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:16:21 -0500
+ id 1vObqs-0001I4-HV
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:16:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764249375;
+ s=mimecast20190719; t=1764249358;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qY+rQ8H8hkB4As/VQV6sKAHUnvXUagRrq1D5YbzHfpY=;
- b=R3nI0AIHuFrZTTaW3mXZyDk1kNtI4OAAPs53/UlL2kJZFKW8WrZUw8E/ghmn5ow2Skz3XK
- sIkoyIfnXa1OKaQq6Zbkc7jtWg2uuKToEWNAnHgp5fRsAOOLTm9/rVAhYgshCF9PocxKFN
- xSRKTswySGCCaDDNrZo9wyAxod8kM34=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1c/CqcdEjL/bbWaeAxqSK1h7PX2itfCl8C7yrGM9yhg=;
+ b=F179FdyD68a9X7Jdug2hOA0LodvsetS5/JoybuFxBW6FQLBThSI2wY5jVVmSNtRKHHORcI
+ PvsN25wv9RgQBT1aEuGa+Xi7GWIHJVeQ2PWdiUojFGcT1DQ4ojoQeLd8ZSZ3Kq2TV756Aa
+ Bl7keDW6QzfTbKLOkdLKj3ZfenVUNlI=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-JCG7tl6rOq-Y4tZbizRejw-1; Thu, 27 Nov 2025 08:16:12 -0500
-X-MC-Unique: JCG7tl6rOq-Y4tZbizRejw-1
-X-Mimecast-MFC-AGG-ID: JCG7tl6rOq-Y4tZbizRejw_1764249371
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-6450f3e7e71so808023a12.3
- for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 05:16:11 -0800 (PST)
+ us-mta-491-WObiYR2-OzC0x2YAYhvmbw-1; Thu, 27 Nov 2025 08:15:56 -0500
+X-MC-Unique: WObiYR2-OzC0x2YAYhvmbw-1
+X-Mimecast-MFC-AGG-ID: WObiYR2-OzC0x2YAYhvmbw_1764249355
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-b70b974b818so77247466b.1
+ for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 05:15:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764249370; x=1764854170; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764249355; x=1764854155; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qY+rQ8H8hkB4As/VQV6sKAHUnvXUagRrq1D5YbzHfpY=;
- b=edzh1Bbge/eMWG8wn1Ew0ZeLIr+b/RKc0xojWqtn7oxJHBPSAWw/dttFy1z0320+N8
- DkrCmcuf2bX8BVT+qiBmzenmpP43rY5qBBat+tbjQK/jWvzEGYFg+zkGBoQ7QQaLfOJM
- 0jM+0wGCS6r3QwWOARqmFttTN4BpVRVmfSBqx1FIynzfHultboIleMynUtwFLGIGzjad
- qCgvzyIrnRq5c+/v3ouvmARTxH+qJWGNIx7f+tElWodMOA/v1oQ6i1DCITrIGij34e2v
- Q8Qog/2MvTcows43ulOF9frZiosoa4crDCoUqL67wTMeLBkZueuYGgcFCWi+B8UtLzMH
- Xpnw==
+ :reply-to; bh=1c/CqcdEjL/bbWaeAxqSK1h7PX2itfCl8C7yrGM9yhg=;
+ b=Vlv+LsXXU90hX+SVgRKPl4zk/gGJCxCDgZnB/Kc7AVbXne7HXkniX7NpZgV5odR4dx
+ ljcxzVNmmqKYN14u6BO7QjrzT/C8nkUEI/a6TwWOfL/B58XN4qwDuqZ/GMj2rYQhD6tu
+ 3megNXtx5bB+PaTjI8Qs+y1Z3/Nsirt/BPzmjTIPuOSLFC1uQgH1FLh1KpZm4clVjlc6
+ pigu+L7lqgspYc7X5+56JoD3DmXIypQjc5Z89Fc58OaPVZh9YO4DIuCLjzrf84H7uLRt
+ 5ZcIwolzW2Q2pMuqLSX8otK1IKHOBmCaslVyYhlW+/MzUIiRifI9O6rB1K4IF6J21OJM
+ qFRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764249370; x=1764854170;
+ d=1e100.net; s=20230601; t=1764249355; x=1764854155;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=qY+rQ8H8hkB4As/VQV6sKAHUnvXUagRrq1D5YbzHfpY=;
- b=wyfZPL23K73XmYWeNpRDtZgszUx8Cqi+nBvVOTMFFDpvcW7u+g79tHHa3Aq07YqPp5
- 8yOSdoiW/3X/0JgdHf5DSAn/Jmt05m3oNG9wfuCXoD540o/Mx8i5hTIBsBn5n+8jaGCI
- UmToHiCtbe8ZkeXGCggRghTz9A9gCleK1OlUMbNFxXkdue1cWWxVMl0H2l1AQpv5P7BG
- +45dS/kqVMAQ+xD7TgAM29jSMizcWETDqt0yTap2L5uW7mAB/4a8k1W0om0bQJ4HqETT
- 2eGA2AJSv+ChnabOmmmH9mwkYVo22jJetzNja9wIXVcZ2JTIxzq19zzDvE2qPJ6g/ukd
- /Sew==
-X-Gm-Message-State: AOJu0YzkP6hO2+Zykp52jDG20a+wsrSgUonhB9LUGtzNMy8AyABrAbDv
- xq+CaDUQ+WD+wRH03LkkK1EZ0k+5JJ6Zr2S+hZUMhHZlVLycc4vARoh6ha7ZZkYrxTTryM5V4HU
- 9LVUnE7113YzA1VBJDe6Vt6U16gIYgnW0h4CQmuM4wHUxs/bcOlJdTGhqIfqBMrV4QyPNR7Y+Xy
- CMvkXIymScW9fAsHfaoEPFw8YbvTEGTL7FY5I8tyyO
-X-Gm-Gg: ASbGncuzAJuSH9x3ZAjTCOaqaw6ayZo/mwmou1D/MWu7I1A2vVVj3yVSBuPwZHDo7md
- lehg2BQNJlyXpRGDMmQnfMOggz6eEXybdsmgRc7ZGkVuG/+YOt7MZlt73T2qBRLZMUpnzQV/3/6
- z7IDLEGPtgtqJWkmXdlURXpHu8ozokKx1qZTo4saXD8ASMSEoBRQ6epbnsZve5de+9PgRyhDQTB
- dJSemdS6OERYKPhD0Oh+WCnn6OtXmYmcDd8kkMGQSHdjrbr+OCZkmCPmX39vhOEgmek7PzIp9rg
- I4SF1pCXzcrjY1vjUHVTGbkL1B1LPY0q4Wb3vdFt4ApPrW11bfFIiTDd3+aaeiE4zXsyjj/Wj+G
- 6jDBMwsx88SvDIVUFKcBNJQXpIJd6u0f1R97gmQ9hqqh+nvhtL/m6ZRf8hz2zclcSQonxz+7J6R
- gsPhlRqxbbgJ4iB7Q=
-X-Received: by 2002:a05:6402:280a:b0:645:d75d:3dc2 with SMTP id
- 4fb4d7f45d1cf-645eb258ff8mr10590707a12.10.1764249369191; 
- Thu, 27 Nov 2025 05:16:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHqkCUDjB3lw9dCLoae7m0naA3RaYuEeSfFWRYg+RPLXgokY7WxNZFkQXCOY0PtsHPoMN66PA==
-X-Received: by 2002:a05:6402:280a:b0:645:d75d:3dc2 with SMTP id
- 4fb4d7f45d1cf-645eb258ff8mr10590617a12.10.1764249367580; 
- Thu, 27 Nov 2025 05:16:07 -0800 (PST)
+ bh=1c/CqcdEjL/bbWaeAxqSK1h7PX2itfCl8C7yrGM9yhg=;
+ b=NU5lxmJewFN2L/SsYrw4PeayzDkGi6PzwUzpSjropUGctDzovNpUjUyZLTlRTQhaH4
+ Eh18hdBt7whk0Fk7et5hXfvVymoGjWen0oOvuwAZtdjDvwIh7Juqcj2UPnv9Ujho1NJ/
+ Hbz76qzkfjI2aM2grRjP8O2L9iIIzKZJepFOhHhhP0xSu30Gz7Cq+IpXc4GXp4VTZCxI
+ UnfJ4+XSCjXl5EEMo9nY0H8kOBzuAi0qiNU9xmmhe0d0Adqe1cuYcswcu2pEkAnX3ted
+ ykCs2jOirKg2uzyrEXfEIl7ca1HgVImN/l/37IjlUbqn7QovBsA83UwsSRvK3kBEiAOe
+ 6tPA==
+X-Gm-Message-State: AOJu0YxKpn/ztSf6okzTr4vJxZp/eaFv6PQkJAN5wJ0VXePhx9O+mw8S
+ dNYg6gUxdceR/ewbpdGwUTBWmITBdgrYdBrw8IhLYxN5QraBQUxoauoUDNgfKpmJ5+732K/VW2T
+ T/QZogOfRBq/KawIaCA8ztbHyDwlFrf9xYnZkt5/WFvzLgqGu/dj3QYpH49Eb3oikPiC1JLtFbF
+ 6JqThu3jd0FSk8GyvLUqaqzAVp0R2PrYKmGMmmtgcK
+X-Gm-Gg: ASbGnctLKLB5dkMROenXAfgwt20cnC9+5rk7LkKDWIpBPYogmPYz/YI5t95LmRdV9oE
+ Jom/iBSDCkTyvATHMC74AWXs3rU30yhtiXFB4HJNWlHcKgQwISdxU6p3A+JtgoSZzIKFshN/PKS
+ j/LNOEykjvMlCr2r8HGrPdG6zzzCRck17uzkNOMt87o2IucDFLdruCAPcAd8DCvd+6ilu28WjYu
+ ZAgCgckAiSgWKbdPeOB1PQ84TbThPSBl6ISKDviR0k0kcRqBGoLidiMnMJ7KNUkMxES5gxGvIcI
+ ddIgmUvze6uwAGqEBXFjMrRylJi0gVZlRycuOcAshabh2rUv9JZInXZYCV10JVSSU1seSeb/F13
+ T3f5iElN2yNoU53A7uMnQvETgcxQ8T0I3ZaXF9qN+Iu3xlstkpazI6+9BpYY1LQdDcc6ZnAV5Dx
+ gpOJykP3NOhTAYJJ8=
+X-Received: by 2002:a17:906:a191:b0:b76:7f64:77a5 with SMTP id
+ a640c23a62f3a-b767f64a792mr1848031066b.20.1764249353637; 
+ Thu, 27 Nov 2025 05:15:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGLkyVDC3/19oH2lfZjaCRxqzU4Sx2od5v1yicSTM+ZoORiP1AR4uBGuuBy2BHOKqFGudannw==
+X-Received: by 2002:a17:906:a191:b0:b76:7f64:77a5 with SMTP id
+ a640c23a62f3a-b767f64a792mr1848018366b.20.1764249352138; 
+ Thu, 27 Nov 2025 05:15:52 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-64751035c3bsm1463046a12.19.2025.11.27.05.16.05
+ a640c23a62f3a-b76f516a6c1sm165513366b.13.2025.11.27.05.15.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Nov 2025 05:16:05 -0800 (PST)
+ Thu, 27 Nov 2025 05:15:51 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 28/28] include: reorganize memory API headers
-Date: Thu, 27 Nov 2025 14:15:15 +0100
-Message-ID: <20251127131516.80807-29-pbonzini@redhat.com>
+Subject: [PATCH 20/28] include: move hw/qdev-properties-system.h to hw/core/
+Date: Thu, 27 Nov 2025 14:15:07 +0100
+Message-ID: <20251127131516.80807-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251127131516.80807-1-pbonzini@redhat.com>
 References: <20251127131516.80807-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -124,1707 +123,1370 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS                              |   2 +-
- include/exec/cpu-common.h                |  76 +----------
- include/hw/core/qdev-properties-system.h |   1 +
- include/hw/i2c/smbus_eeprom.h            |   2 +-
- include/hw/xen/xen-hvm-common.h          |   1 +
- include/system/balloon.h                 |   2 +-
- include/system/block-ram-registrar.h     |   2 +-
- include/system/iommufd.h                 |   2 +-
- include/system/memory.h                  |  16 ++-
- include/system/memory_mapping.h          |   4 +-
- include/system/physmem.h                 |   2 +-
- include/system/ram_addr.h                | 136 +++----------------
- include/system/ramblock.h                | 160 ++++++++++++++++++++++-
- include/{exec => system}/ramlist.h       |  10 +-
- include/system/xen-mapcache.h            |   1 -
- include/system/xen.h                     |   3 +-
- migration/migration.h                    |   3 +-
- accel/mshv/mshv-all.c                    |   1 +
- accel/tcg/cputlb.c                       |   2 +-
- accel/tcg/tcg-accel-ops-mttcg.c          |   1 +
- backends/hostmem.c                       |   1 +
- block/blkio.c                            |   2 +-
- dump/dump.c                              |   1 +
- hw/acpi/ghes.c                           |   1 +
- hw/acpi/nvdimm.c                         |   1 +
- hw/acpi/vmgenid.c                        |   1 +
- hw/arm/omap1.c                           |   1 +
- hw/audio/marvell_88w8618.c               |   1 +
- hw/char/riscv_htif.c                     |   1 +
- hw/core/cpu-common.c                     |   1 +
- hw/core/machine-qmp-cmds.c               |   1 +
- hw/core/numa.c                           |   3 +-
- hw/display/exynos4210_fimd.c             |   1 +
- hw/display/omap_lcdc.c                   |   1 +
- hw/display/ramfb.c                       |   1 +
- hw/display/vga.c                         |   1 +
- hw/dma/i8257.c                           |   1 +
- hw/dma/omap_dma.c                        |   1 +
- hw/dma/rc4030.c                          |   1 +
- hw/dma/sifive_pdma.c                     |   1 +
- hw/hyperv/hyperv.c                       |   1 +
- hw/hyperv/syndbg.c                       |   1 +
- hw/hyperv/vmbus.c                        |   1 +
- hw/i386/kvm/clock.c                      |   1 +
- hw/i386/vapic.c                          |   1 +
- hw/intc/apic.c                           |   1 +
- hw/intc/xive2.c                          |   1 +
- hw/m68k/next-cube.c                      |   1 +
- hw/microblaze/boot.c                     |   1 +
- hw/misc/pc-testdev.c                     |   1 +
- hw/net/fsl_etsec/rings.c                 |   1 +
- hw/net/mcf_fec.c                         |   1 +
- hw/net/opencores_eth.c                   |   1 +
- hw/net/xgmac.c                           |   1 +
- hw/nvram/spapr_nvram.c                   |   1 +
- hw/ppc/amigaone.c                        |   1 +
- hw/ppc/e500.c                            |   1 +
- hw/ppc/pegasos.c                         |   1 +
- hw/ppc/pnv.c                             |   1 +
- hw/ppc/ppc440_uc.c                       |   1 +
- hw/ppc/spapr.c                           |   1 +
- hw/ppc/spapr_drc.c                       |   1 +
- hw/ppc/spapr_events.c                    |   1 +
- hw/ppc/spapr_hcall.c                     |   1 +
- hw/ppc/spapr_rtas.c                      |   1 +
- hw/ppc/spapr_tpm_proxy.c                 |   1 +
- hw/ppc/virtex_ml507.c                    |   1 +
- hw/remote/proxy-memory-listener.c        |   1 +
- hw/s390x/css.c                           |   1 +
- hw/s390x/ipl.c                           |   1 +
- hw/s390x/s390-pci-bus.c                  |   1 +
- hw/s390x/virtio-ccw.c                    |   1 +
- hw/scsi/vmw_pvscsi.c                     |   1 +
- hw/sparc/leon3.c                         |   1 +
- hw/vfio-user/container.c                 |   1 +
- hw/vfio/container.c                      |   2 +-
- hw/vfio/helpers.c                        |   1 +
- hw/vfio/migration.c                      |   2 +-
- hw/virtio/vhost.c                        |   1 +
- hw/xen/xen-mapcache.c                    |   1 +
- hw/xen/xen_pt_graphics.c                 |   1 +
- hw/xtensa/xtfpga.c                       |   1 +
- migration/ram.c                          |   2 +-
- stubs/physmem.c                          |   2 +-
- stubs/ram-block.c                        |   4 +-
- system/ioport.c                          |   1 +
- system/memory.c                          |   2 +-
- system/physmem.c                         |   2 +-
- target/arm/kvm.c                         |   1 +
- target/i386/kvm/kvm.c                    |   1 +
- target/i386/sev.c                        |   1 +
- target/ppc/kvm.c                         |   2 +-
- target/s390x/kvm/kvm.c                   |   2 +-
- util/vfio-helpers.c                      |   2 +-
- 94 files changed, 290 insertions(+), 226 deletions(-)
- rename include/{exec => system}/ramlist.h (94%)
+ include/hw/block/block.h                       | 2 +-
+ include/hw/{ => core}/qdev-properties-system.h | 0
+ include/net/net.h                              | 2 +-
+ include/qemu/audio.h                           | 2 +-
+ migration/options.h                            | 2 +-
+ rust/hw/core/wrapper.h                         | 2 +-
+ backends/spdm-socket.c                         | 2 +-
+ hw/acpi/vmclock.c                              | 2 +-
+ hw/acpi/vmgenid.c                              | 2 +-
+ hw/arm/strongarm.c                             | 2 +-
+ hw/block/fdc-isa.c                             | 2 +-
+ hw/block/fdc.c                                 | 2 +-
+ hw/block/m25p80.c                              | 2 +-
+ hw/block/pflash_cfi01.c                        | 2 +-
+ hw/block/pflash_cfi02.c                        | 2 +-
+ hw/block/vhost-user-blk.c                      | 2 +-
+ hw/char/avr_usart.c                            | 2 +-
+ hw/char/bcm2835_aux.c                          | 2 +-
+ hw/char/cadence_uart.c                         | 2 +-
+ hw/char/cmsdk-apb-uart.c                       | 2 +-
+ hw/char/debugcon.c                             | 2 +-
+ hw/char/digic-uart.c                           | 2 +-
+ hw/char/diva-gsp.c                             | 2 +-
+ hw/char/escc.c                                 | 2 +-
+ hw/char/exynos4210_uart.c                      | 2 +-
+ hw/char/goldfish_tty.c                         | 2 +-
+ hw/char/grlib_apbuart.c                        | 2 +-
+ hw/char/ibex_uart.c                            | 2 +-
+ hw/char/imx_serial.c                           | 2 +-
+ hw/char/ipoctal232.c                           | 2 +-
+ hw/char/max78000_uart.c                        | 2 +-
+ hw/char/mcf_uart.c                             | 2 +-
+ hw/char/nrf51_uart.c                           | 2 +-
+ hw/char/parallel.c                             | 2 +-
+ hw/char/pl011.c                                | 2 +-
+ hw/char/renesas_sci.c                          | 2 +-
+ hw/char/sclpconsole-lm.c                       | 2 +-
+ hw/char/sclpconsole.c                          | 2 +-
+ hw/char/serial-pci-multi.c                     | 2 +-
+ hw/char/serial.c                               | 2 +-
+ hw/char/sh_serial.c                            | 2 +-
+ hw/char/shakti_uart.c                          | 2 +-
+ hw/char/sifive_uart.c                          | 2 +-
+ hw/char/spapr_vty.c                            | 2 +-
+ hw/char/stm32f2xx_usart.c                      | 2 +-
+ hw/char/stm32l4x5_usart.c                      | 2 +-
+ hw/char/terminal3270.c                         | 2 +-
+ hw/char/virtio-console.c                       | 2 +-
+ hw/char/xen_console.c                          | 2 +-
+ hw/char/xilinx_uartlite.c                      | 2 +-
+ hw/core/qdev-properties-system.c               | 2 +-
+ hw/hyperv/vmbus.c                              | 2 +-
+ hw/i386/kvm/i8254.c                            | 2 +-
+ hw/intc/xilinx_intc.c                          | 2 +-
+ hw/ipmi/ipmi_bmc_extern.c                      | 2 +-
+ hw/ipmi/ipmi_bmc_sim.c                         | 2 +-
+ hw/mem/cxl_type3.c                             | 2 +-
+ hw/misc/allwinner-sid.c                        | 2 +-
+ hw/misc/allwinner-sramc.c                      | 2 +-
+ hw/misc/ivshmem-flat.c                         | 2 +-
+ hw/misc/ivshmem-pci.c                          | 2 +-
+ hw/misc/mac_via.c                              | 2 +-
+ hw/misc/sifive_u_otp.c                         | 2 +-
+ hw/misc/stm32l4x5_rcc.c                        | 2 +-
+ hw/misc/xlnx-versal-cfu.c                      | 2 +-
+ hw/net/rocker/rocker.c                         | 2 +-
+ hw/net/xen_nic.c                               | 2 +-
+ hw/net/xilinx_ethlite.c                        | 2 +-
+ hw/nvram/eeprom_at24c.c                        | 2 +-
+ hw/nvram/mac_nvram.c                           | 2 +-
+ hw/nvram/spapr_nvram.c                         | 2 +-
+ hw/nvram/xlnx-bbram.c                          | 2 +-
+ hw/nvram/xlnx-efuse.c                          | 2 +-
+ hw/pci-bridge/cxl_downstream.c                 | 2 +-
+ hw/pci-bridge/cxl_root_port.c                  | 2 +-
+ hw/pci-bridge/cxl_upstream.c                   | 2 +-
+ hw/pci-bridge/gen_pcie_root_port.c             | 2 +-
+ hw/pci/pci.c                                   | 2 +-
+ hw/ppc/pnv_pnor.c                              | 2 +-
+ hw/rtc/mc146818rtc.c                           | 2 +-
+ hw/scsi/scsi-disk.c                            | 2 +-
+ hw/scsi/scsi-generic.c                         | 2 +-
+ hw/scsi/vhost-user-scsi.c                      | 2 +-
+ hw/sd/sd.c                                     | 2 +-
+ hw/sh4/sh7750.c                                | 2 +-
+ hw/ssi/ibex_spi_host.c                         | 2 +-
+ hw/ssi/xilinx_spi.c                            | 2 +-
+ hw/timer/xilinx_timer.c                        | 2 +-
+ hw/usb/ccid-card-passthru.c                    | 2 +-
+ hw/usb/dev-serial.c                            | 2 +-
+ hw/usb/redirect.c                              | 2 +-
+ hw/vfio/pci.c                                  | 2 +-
+ hw/virtio/vdpa-dev.c                           | 2 +-
+ hw/virtio/vhost-user-fs.c                      | 2 +-
+ hw/virtio/vhost-user-vsock.c                   | 2 +-
+ hw/virtio/virtio-iommu-pci.c                   | 2 +-
+ hw/xen/xen_pt.c                                | 2 +-
+ target/s390x/cpu.c                             | 2 +-
+ 98 files changed, 97 insertions(+), 97 deletions(-)
+ rename include/hw/{ => core}/qdev-properties-system.h (100%)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0a70bc03889..dab02da37a7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3254,9 +3254,9 @@ R: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Supported
- F: include/system/ioport.h
- F: include/exec/memop.h
-+F: include/exec/ram_addr.h
- F: include/system/memory.h
- F: include/system/physmem.h
--F: include/system/ram_addr.h
- F: include/system/ramblock.h
- F: include/system/memory_mapping.h
- F: system/dma-helpers.c
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index e0be4ee2b8f..fba4d782e91 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -10,6 +10,8 @@
+diff --git a/include/hw/block/block.h b/include/hw/block/block.h
+index b4d914624ee..7dc19d8a453 100644
+--- a/include/hw/block/block.h
++++ b/include/hw/block/block.h
+@@ -13,7 +13,7 @@
  
- #include "exec/vaddr.h"
  #include "exec/hwaddr.h"
-+#include "exec/hwaddr.h"
-+#include "system/ram_addr.h"
- #include "hw/core/cpu.h"
- #include "tcg/debug-assert.h"
- #include "exec/page-protection.h"
-@@ -38,69 +40,6 @@ int cpu_get_free_index(void);
- void tcg_iommu_init_notifier_list(CPUState *cpu);
- void tcg_iommu_free_notifier_list(CPUState *cpu);
+ #include "qapi/qapi-types-block-core.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
  
--enum device_endian {
--    DEVICE_NATIVE_ENDIAN,
--    DEVICE_BIG_ENDIAN,
--    DEVICE_LITTLE_ENDIAN,
--};
--
--/* address in the RAM (different from a physical address) */
--#if defined(CONFIG_XEN_BACKEND)
--typedef uint64_t ram_addr_t;
--#  define RAM_ADDR_MAX UINT64_MAX
--#  define RAM_ADDR_FMT "%" PRIx64
--#else
--typedef uintptr_t ram_addr_t;
--#  define RAM_ADDR_MAX UINTPTR_MAX
--#  define RAM_ADDR_FMT "%" PRIxPTR
--#endif
--
--/* memory API */
--
--void qemu_ram_remap(ram_addr_t addr);
--/* This should not be used by devices.  */
--ram_addr_t qemu_ram_addr_from_host(void *ptr);
--ram_addr_t qemu_ram_addr_from_host_nofail(void *ptr);
--RAMBlock *qemu_ram_block_by_name(const char *name);
--
--/*
-- * Translates a host ptr back to a RAMBlock and an offset in that RAMBlock.
-- *
-- * @ptr: The host pointer to translate.
-- * @round_offset: Whether to round the result offset down to a target page
-- * @offset: Will be set to the offset within the returned RAMBlock.
-- *
-- * Returns: RAMBlock (or NULL if not found)
-- *
-- * By the time this function returns, the returned pointer is not protected
-- * by RCU anymore.  If the caller is not within an RCU critical section and
-- * does not hold the BQL, it must have other means of protecting the
-- * pointer, such as a reference to the memory region that owns the RAMBlock.
-- */
--RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
--                                   ram_addr_t *offset);
--ram_addr_t qemu_ram_block_host_offset(RAMBlock *rb, void *host);
--void qemu_ram_set_idstr(RAMBlock *block, const char *name, DeviceState *dev);
--void qemu_ram_unset_idstr(RAMBlock *block);
--const char *qemu_ram_get_idstr(RAMBlock *rb);
--void *qemu_ram_get_host_addr(RAMBlock *rb);
--ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
--ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
--ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
--ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
--bool qemu_ram_is_shared(RAMBlock *rb);
--bool qemu_ram_is_noreserve(RAMBlock *rb);
--bool qemu_ram_is_uf_zeroable(RAMBlock *rb);
--void qemu_ram_set_uf_zeroable(RAMBlock *rb);
--bool qemu_ram_is_migratable(RAMBlock *rb);
--void qemu_ram_set_migratable(RAMBlock *rb);
--void qemu_ram_unset_migratable(RAMBlock *rb);
--bool qemu_ram_is_named_file(RAMBlock *rb);
--int qemu_ram_get_fd(RAMBlock *rb);
--
--size_t qemu_ram_pagesize(RAMBlock *block);
--size_t qemu_ram_pagesize_largest(void);
--
- /**
-  * cpu_address_space_init:
-  * @cpu: CPU to add this address space to
-@@ -139,17 +78,6 @@ void *cpu_physical_memory_map(hwaddr addr,
- void cpu_physical_memory_unmap(void *buffer, hwaddr len,
-                                bool is_write, hwaddr access_len);
+ /* Configuration */
  
--/* Coalesced MMIO regions are areas where write operations can be reordered.
-- * This usually implies that write operations are side-effect free.  This allows
-- * batching which can make a major impact on performance when using
-- * virtualization.
-- */
--void qemu_flush_coalesced_mmio_buffer(void);
--
--typedef int (RAMBlockIterFunc)(RAMBlock *rb, void *opaque);
--
--int qemu_ram_foreach_block(RAMBlockIterFunc func, void *opaque);
--
- /* vl.c */
- void list_cpus(void);
+diff --git a/include/hw/qdev-properties-system.h b/include/hw/core/qdev-properties-system.h
+similarity index 100%
+rename from include/hw/qdev-properties-system.h
+rename to include/hw/core/qdev-properties-system.h
+diff --git a/include/net/net.h b/include/net/net.h
+index 72b476ee1dc..45bc86fc86b 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -4,7 +4,7 @@
+ #include "qemu/queue.h"
+ #include "qapi/qapi-types-net.h"
+ #include "net/queue.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
  
-diff --git a/include/hw/core/qdev-properties-system.h b/include/hw/core/qdev-properties-system.h
-index ec39ef3bd6e..ec21732ce52 100644
---- a/include/hw/core/qdev-properties-system.h
-+++ b/include/hw/core/qdev-properties-system.h
-@@ -2,6 +2,7 @@
- #define HW_QDEV_PROPERTIES_SYSTEM_H
+ #define MAC_FMT "%02X:%02X:%02X:%02X:%02X:%02X"
+ #define MAC_ARG(x) ((uint8_t *)(x))[0], ((uint8_t *)(x))[1], \
+diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+index c56af895d62..a92e0b70ef0 100644
+--- a/include/qemu/audio.h
++++ b/include/qemu/audio.h
+@@ -27,7 +27,7 @@
+ 
+ #include "qemu/queue.h"
+ #include "qapi/qapi-types-audio.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #ifdef CONFIG_GIO
+ #include "gio/gio.h"
+ #endif
+diff --git a/migration/options.h b/migration/options.h
+index d6f1742e5b9..0c3043f1ffb 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -15,7 +15,7 @@
+ #define QEMU_MIGRATION_OPTIONS_H
  
  #include "hw/core/qdev-properties.h"
-+#include "qapi/qapi-types-common.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/client-options.h"
  
- bool qdev_prop_sanitize_s390x_loadparm(uint8_t *loadparm, const char *str,
-                                        Error **errp);
-diff --git a/include/hw/i2c/smbus_eeprom.h b/include/hw/i2c/smbus_eeprom.h
-index 68b0063ab6f..61a54cda761 100644
---- a/include/hw/i2c/smbus_eeprom.h
-+++ b/include/hw/i2c/smbus_eeprom.h
-@@ -23,7 +23,7 @@
- #ifndef HW_SMBUS_EEPROM_H
- #define HW_SMBUS_EEPROM_H
- 
--#include "exec/cpu-common.h"
-+#include "system/ram_addr.h"
- #include "hw/i2c/i2c.h"
- 
- void smbus_eeprom_init_one(I2CBus *bus, uint8_t address, uint8_t *eeprom_buf);
-diff --git a/include/hw/xen/xen-hvm-common.h b/include/hw/xen/xen-hvm-common.h
-index 19df5600a39..e1beca062ff 100644
---- a/include/hw/xen/xen-hvm-common.h
-+++ b/include/hw/xen/xen-hvm-common.h
-@@ -5,6 +5,7 @@
- #include "exec/hwaddr.h"
- #include "hw/xen/xen_native.h"
- #include "hw/xen/xen_backend_ops.h"
-+#include "system/runstate.h"
- #include <xen/hvm/ioreq.h>
- 
- extern MemoryRegion xen_memory;
-diff --git a/include/system/balloon.h b/include/system/balloon.h
-index 867687b73ac..066c7e1ddf4 100644
---- a/include/system/balloon.h
-+++ b/include/system/balloon.h
+ /* migration properties */
+diff --git a/rust/hw/core/wrapper.h b/rust/hw/core/wrapper.h
+index 8fda78924d8..f6b34161a68 100644
+--- a/rust/hw/core/wrapper.h
++++ b/rust/hw/core/wrapper.h
+@@ -28,5 +28,5 @@ typedef enum memory_order {
+ #include "hw/core/clock.h"
+ #include "hw/core/qdev-clock.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/core/irq.h"
+diff --git a/backends/spdm-socket.c b/backends/spdm-socket.c
+index 07aea375165..bc5c7afb3cd 100644
+--- a/backends/spdm-socket.c
++++ b/backends/spdm-socket.c
 @@ -14,7 +14,7 @@
- #ifndef QEMU_BALLOON_H
- #define QEMU_BALLOON_H
- 
--#include "exec/cpu-common.h"
-+#include "system/ram_addr.h"
- #include "qapi/qapi-types-machine.h"
- 
- typedef void (QEMUBalloonEvent)(void *opaque, ram_addr_t target);
-diff --git a/include/system/block-ram-registrar.h b/include/system/block-ram-registrar.h
-index d8b2f7942ba..61b0dff3400 100644
---- a/include/system/block-ram-registrar.h
-+++ b/include/system/block-ram-registrar.h
-@@ -7,7 +7,7 @@
- #ifndef BLOCK_RAM_REGISTRAR_H
- #define BLOCK_RAM_REGISTRAR_H
- 
--#include "exec/ramlist.h"
-+#include "system/ramlist.h"
- 
- /**
-  * struct BlockRAMRegistrar:
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index a659f36a20f..9f5eb872454 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -16,7 +16,7 @@
- 
- #include "qom/object.h"
- #include "exec/hwaddr.h"
--#include "exec/cpu-common.h"
-+#include "system/ram_addr.h"
- #include "system/host_iommu_device.h"
- 
- #define TYPE_IOMMUFD_BACKEND "iommufd"
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 1cacc117cc6..b3597fb2d04 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -14,11 +14,10 @@
- #ifndef SYSTEM_MEMORY_H
- #define SYSTEM_MEMORY_H
- 
--#include "exec/cpu-common.h"
- #include "exec/hwaddr.h"
-+#include "system/ram_addr.h"
- #include "exec/memattrs.h"
- #include "exec/memop.h"
--#include "exec/ramlist.h"
- #include "qemu/bswap.h"
- #include "qemu/queue.h"
- #include "qemu/int128.h"
-@@ -27,6 +26,12 @@
- #include "qom/object.h"
- #include "qemu/rcu.h"
- 
-+enum device_endian {
-+    DEVICE_NATIVE_ENDIAN,
-+    DEVICE_BIG_ENDIAN,
-+    DEVICE_LITTLE_ENDIAN,
-+};
-+
- #define RAM_ADDR_INVALID (~(ram_addr_t)0)
- 
- #define MAX_PHYS_ADDR_SPACE_BITS 62
-@@ -3266,6 +3271,13 @@ address_space_write_cached(MemoryRegionCache *cache, hwaddr addr,
- MemTxResult address_space_set(AddressSpace *as, hwaddr addr,
-                               uint8_t c, hwaddr len, MemTxAttrs attrs);
- 
-+/* Coalesced MMIO regions are areas where write operations can be reordered.
-+ * This usually implies that write operations are side-effect free.  This allows
-+ * batching which can make a major impact on performance when using
-+ * virtualization.
-+ */
-+void qemu_flush_coalesced_mmio_buffer(void);
-+
- /*
-  * Inhibit technologies that require discarding of pages in RAM blocks, e.g.,
-  * to manage the actual amount of memory consumed by the VM (then, the memory
-diff --git a/include/system/memory_mapping.h b/include/system/memory_mapping.h
-index 021e0a62309..4c770bf0b83 100644
---- a/include/system/memory_mapping.h
-+++ b/include/system/memory_mapping.h
-@@ -15,7 +15,9 @@
- #define MEMORY_MAPPING_H
- 
- #include "qemu/queue.h"
--#include "exec/cpu-common.h"
-+#include "exec/hwaddr.h"
-+#include "exec/vaddr.h"
-+#include "system/ram_addr.h"
- 
- typedef struct GuestPhysBlock {
-     /* visible to guest, reflects PCI hole, etc */
-diff --git a/include/system/physmem.h b/include/system/physmem.h
-index 879f6eae38b..ed337130228 100644
---- a/include/system/physmem.h
-+++ b/include/system/physmem.h
-@@ -9,7 +9,7 @@
- #define QEMU_SYSTEM_PHYSMEM_H
- 
- #include "exec/hwaddr.h"
--#include "exec/ramlist.h"
-+#include "system/ramlist.h"
- 
- #define DIRTY_CLIENTS_ALL     ((1 << DIRTY_MEMORY_NUM) - 1)
- #define DIRTY_CLIENTS_NOCODE  (DIRTY_CLIENTS_ALL & ~(1 << DIRTY_MEMORY_CODE))
-diff --git a/include/system/ram_addr.h b/include/system/ram_addr.h
-index 683485980ce..129f6b8757d 100644
---- a/include/system/ram_addr.h
-+++ b/include/system/ram_addr.h
-@@ -1,5 +1,5 @@
- /*
-- * Declarations for cpu physical memory functions
-+ * Declarations of basic RAMBlock-related types and macros
-  *
-  * Copyright 2011 Red Hat, Inc. and/or its affiliates
-  *
-@@ -11,125 +11,23 @@
-  *
-  */
- 
--/*
-- * This header is for use by exec.c and memory.c ONLY.  Do not include it.
-- * The functions declared here will be removed soon.
-- */
-+#ifndef RAM_ADDR_H
-+#define RAM_ADDR_H
- 
--#ifndef SYSTEM_RAM_ADDR_H
--#define SYSTEM_RAM_ADDR_H
-+/* address in the RAM (different from a physical address) */
-+#if defined(CONFIG_XEN_BACKEND)
-+typedef uint64_t ram_addr_t;
-+#  define RAM_ADDR_MAX UINT64_MAX
-+#  define RAM_ADDR_FMT "%" PRIx64
-+#else
-+typedef uintptr_t ram_addr_t;
-+#  define RAM_ADDR_MAX UINTPTR_MAX
-+#  define RAM_ADDR_FMT "%" PRIxPTR
-+#endif
- 
--#include "system/ramblock.h"
--#include "exec/target_page.h"
--#include "exec/hwaddr.h"
--
--extern uint64_t total_dirty_pages;
--
--/**
-- * clear_bmap_size: calculate clear bitmap size
-- *
-- * @pages: number of guest pages
-- * @shift: guest page number shift
-- *
-- * Returns: number of bits for the clear bitmap
-- */
--static inline long clear_bmap_size(uint64_t pages, uint8_t shift)
--{
--    return DIV_ROUND_UP(pages, 1UL << shift);
--}
--
--/**
-- * clear_bmap_set: set clear bitmap for the page range.  Must be with
-- * bitmap_mutex held.
-- *
-- * @rb: the ramblock to operate on
-- * @start: the start page number
-- * @size: number of pages to set in the bitmap
-- *
-- * Returns: None
-- */
--static inline void clear_bmap_set(RAMBlock *rb, uint64_t start,
--                                  uint64_t npages)
--{
--    uint8_t shift = rb->clear_bmap_shift;
--
--    bitmap_set(rb->clear_bmap, start >> shift, clear_bmap_size(npages, shift));
--}
--
--/**
-- * clear_bmap_test_and_clear: test clear bitmap for the page, clear if set.
-- * Must be with bitmap_mutex held.
-- *
-- * @rb: the ramblock to operate on
-- * @page: the page number to check
-- *
-- * Returns: true if the bit was set, false otherwise
-- */
--static inline bool clear_bmap_test_and_clear(RAMBlock *rb, uint64_t page)
--{
--    uint8_t shift = rb->clear_bmap_shift;
--
--    return bitmap_test_and_clear(rb->clear_bmap, page >> shift, 1);
--}
--
--static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
--                                                            RAMBlock *rb)
--{
--    uint64_t host_addr_offset =
--            (uint64_t)(uintptr_t)(host_addr - (void *)rb->host);
--    return host_addr_offset >> TARGET_PAGE_BITS;
--}
--
--/**
-- * qemu_ram_alloc_from_file,
-- * qemu_ram_alloc_from_fd:  Allocate a ram block from the specified backing
-- *                          file or device
-- *
-- * Parameters:
-- *  @size: the size in bytes of the ram block
-- *  @max_size: the maximum size of the block after resizing
-- *  @mr: the memory region where the ram block is
-- *  @resized: callback after calls to qemu_ram_resize
-- *  @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
-- *              RAM_NORESERVE, RAM_PROTECTED, RAM_NAMED_FILE, RAM_READONLY,
-- *              RAM_READONLY_FD, RAM_GUEST_MEMFD
-- *  @mem_path or @fd: specify the backing file or device
-- *  @offset: Offset into target file
-- *  @grow: extend file if necessary (but an empty file is always extended).
-- *  @errp: pointer to Error*, to store an error if it happens
-- *
-- * Return:
-- *  On success, return a pointer to the ram block.
-- *  On failure, return NULL.
-- */
--typedef void (*qemu_ram_resize_cb)(const char *, uint64_t length, void *host);
--
--RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
--                                   uint32_t ram_flags, const char *mem_path,
--                                   off_t offset, Error **errp);
--RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
--                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
--                                 uint32_t ram_flags, int fd, off_t offset,
--                                 bool grow,
--                                 Error **errp);
--
--RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
--                                  MemoryRegion *mr, Error **errp);
--RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags, MemoryRegion *mr,
--                         Error **errp);
--RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t max_size,
--                                    qemu_ram_resize_cb resized,
--                                    MemoryRegion *mr, Error **errp);
--void qemu_ram_free(RAMBlock *block);
--
--int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp);
--
--void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length);
--
--/* Clear whole block of mem */
--static inline void qemu_ram_block_writeback(RAMBlock *block)
--{
--    qemu_ram_msync(block, 0, block->used_length);
--}
-+#define DIRTY_MEMORY_VGA       0
-+#define DIRTY_MEMORY_CODE      1
-+#define DIRTY_MEMORY_MIGRATION 2
-+#define DIRTY_MEMORY_NUM       3        /* num of dirty bits */
- 
- #endif
-diff --git a/include/system/ramblock.h b/include/system/ramblock.h
-index 76694fe1b5b..e9f58ac0457 100644
---- a/include/system/ramblock.h
-+++ b/include/system/ramblock.h
-@@ -14,9 +14,9 @@
- #ifndef SYSTEM_RAMBLOCK_H
- #define SYSTEM_RAMBLOCK_H
- 
--#include "exec/cpu-common.h"
- #include "qemu/rcu.h"
--#include "exec/ramlist.h"
-+#include "system/ram_addr.h"
-+#include "system/ramlist.h"
- #include "system/hostmem.h"
- 
- #define TYPE_RAM_BLOCK_ATTRIBUTES "ram-block-attributes"
-@@ -130,4 +130,160 @@ static inline void *ramblock_ptr(RAMBlock *block, ram_addr_t offset)
-     return (char *)block->host + offset;
- }
- 
-+/* memory API */
-+
-+void qemu_ram_remap(ram_addr_t addr);
-+/* This should not be used by devices.  */
-+ram_addr_t qemu_ram_addr_from_host(void *ptr);
-+ram_addr_t qemu_ram_addr_from_host_nofail(void *ptr);
-+RAMBlock *qemu_ram_block_by_name(const char *name);
-+
-+/*
-+ * Translates a host ptr back to a RAMBlock and an offset in that RAMBlock.
-+ *
-+ * @ptr: The host pointer to translate.
-+ * @round_offset: Whether to round the result offset down to a target page
-+ * @offset: Will be set to the offset within the returned RAMBlock.
-+ *
-+ * Returns: RAMBlock (or NULL if not found)
-+ *
-+ * By the time this function returns, the returned pointer is not protected
-+ * by RCU anymore.  If the caller is not within an RCU critical section and
-+ * does not hold the BQL, it must have other means of protecting the
-+ * pointer, such as a reference to the memory region that owns the RAMBlock.
-+ */
-+RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
-+                                   ram_addr_t *offset);
-+ram_addr_t qemu_ram_block_host_offset(RAMBlock *rb, void *host);
-+void qemu_ram_set_idstr(RAMBlock *block, const char *name, DeviceState *dev);
-+void qemu_ram_unset_idstr(RAMBlock *block);
-+const char *qemu_ram_get_idstr(RAMBlock *rb);
-+void *qemu_ram_get_host_addr(RAMBlock *rb);
-+ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
-+ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
-+ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
-+ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
-+bool qemu_ram_is_shared(RAMBlock *rb);
-+bool qemu_ram_is_noreserve(RAMBlock *rb);
-+bool qemu_ram_is_uf_zeroable(RAMBlock *rb);
-+void qemu_ram_set_uf_zeroable(RAMBlock *rb);
-+bool qemu_ram_is_migratable(RAMBlock *rb);
-+void qemu_ram_set_migratable(RAMBlock *rb);
-+void qemu_ram_unset_migratable(RAMBlock *rb);
-+bool qemu_ram_is_named_file(RAMBlock *rb);
-+int qemu_ram_get_fd(RAMBlock *rb);
-+
-+size_t qemu_ram_pagesize(RAMBlock *block);
-+size_t qemu_ram_pagesize_largest(void);
-+#include "exec/target_page.h"
-+#include "exec/hwaddr.h"
-+
-+extern uint64_t total_dirty_pages;
-+
-+/**
-+ * clear_bmap_size: calculate clear bitmap size
-+ *
-+ * @pages: number of guest pages
-+ * @shift: guest page number shift
-+ *
-+ * Returns: number of bits for the clear bitmap
-+ */
-+static inline long clear_bmap_size(uint64_t pages, uint8_t shift)
-+{
-+    return DIV_ROUND_UP(pages, 1UL << shift);
-+}
-+
-+/**
-+ * clear_bmap_set: set clear bitmap for the page range.  Must be with
-+ * bitmap_mutex held.
-+ *
-+ * @rb: the ramblock to operate on
-+ * @start: the start page number
-+ * @size: number of pages to set in the bitmap
-+ *
-+ * Returns: None
-+ */
-+static inline void clear_bmap_set(RAMBlock *rb, uint64_t start,
-+                                  uint64_t npages)
-+{
-+    uint8_t shift = rb->clear_bmap_shift;
-+
-+    bitmap_set(rb->clear_bmap, start >> shift, clear_bmap_size(npages, shift));
-+}
-+
-+/**
-+ * clear_bmap_test_and_clear: test clear bitmap for the page, clear if set.
-+ * Must be with bitmap_mutex held.
-+ *
-+ * @rb: the ramblock to operate on
-+ * @page: the page number to check
-+ *
-+ * Returns: true if the bit was set, false otherwise
-+ */
-+static inline bool clear_bmap_test_and_clear(RAMBlock *rb, uint64_t page)
-+{
-+    uint8_t shift = rb->clear_bmap_shift;
-+
-+    return bitmap_test_and_clear(rb->clear_bmap, page >> shift, 1);
-+}
-+
-+static inline unsigned long int ramblock_recv_bitmap_offset(void *host_addr,
-+                                                            RAMBlock *rb)
-+{
-+    uint64_t host_addr_offset =
-+            (uint64_t)(uintptr_t)(host_addr - (void *)rb->host);
-+    return host_addr_offset >> TARGET_PAGE_BITS;
-+}
-+
-+/**
-+ * qemu_ram_alloc_from_file,
-+ * qemu_ram_alloc_from_fd:  Allocate a ram block from the specified backing
-+ *                          file or device
-+ *
-+ * Parameters:
-+ *  @size: the size in bytes of the ram block
-+ *  @max_size: the maximum size of the block after resizing
-+ *  @mr: the memory region where the ram block is
-+ *  @resized: callback after calls to qemu_ram_resize
-+ *  @ram_flags: RamBlock flags. Supported flags: RAM_SHARED, RAM_PMEM,
-+ *              RAM_NORESERVE, RAM_PROTECTED, RAM_NAMED_FILE, RAM_READONLY,
-+ *              RAM_READONLY_FD, RAM_GUEST_MEMFD
-+ *  @mem_path or @fd: specify the backing file or device
-+ *  @offset: Offset into target file
-+ *  @grow: extend file if necessary (but an empty file is always extended).
-+ *  @errp: pointer to Error*, to store an error if it happens
-+ *
-+ * Return:
-+ *  On success, return a pointer to the ram block.
-+ *  On failure, return NULL.
-+ */
-+typedef void (*qemu_ram_resize_cb)(const char *, uint64_t length, void *host);
-+
-+RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
-+                                   uint32_t ram_flags, const char *mem_path,
-+                                   off_t offset, Error **errp);
-+RAMBlock *qemu_ram_alloc_from_fd(ram_addr_t size, ram_addr_t max_size,
-+                                 qemu_ram_resize_cb resized, MemoryRegion *mr,
-+                                 uint32_t ram_flags, int fd, off_t offset,
-+                                 bool grow,
-+                                 Error **errp);
-+
-+RAMBlock *qemu_ram_alloc_from_ptr(ram_addr_t size, void *host,
-+                                  MemoryRegion *mr, Error **errp);
-+RAMBlock *qemu_ram_alloc(ram_addr_t size, uint32_t ram_flags, MemoryRegion *mr,
-+                         Error **errp);
-+RAMBlock *qemu_ram_alloc_resizeable(ram_addr_t size, ram_addr_t max_size,
-+                                    qemu_ram_resize_cb resized,
-+                                    MemoryRegion *mr, Error **errp);
-+void qemu_ram_free(RAMBlock *block);
-+
-+int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp);
-+
-+void qemu_ram_msync(RAMBlock *block, ram_addr_t start, ram_addr_t length);
-+
-+/* Clear whole block of mem */
-+static inline void qemu_ram_block_writeback(RAMBlock *block)
-+{
-+    qemu_ram_msync(block, 0, block->used_length);
-+}
- #endif
-diff --git a/include/exec/ramlist.h b/include/system/ramlist.h
-similarity index 94%
-rename from include/exec/ramlist.h
-rename to include/system/ramlist.h
-index d9cfe530bea..c7f388f487d 100644
---- a/include/exec/ramlist.h
-+++ b/include/system/ramlist.h
-@@ -5,14 +5,10 @@
- #include "qemu/thread.h"
- #include "qemu/rcu.h"
- #include "qemu/rcu_queue.h"
-+#include "system/ram_addr.h"
- 
- typedef struct RAMBlockNotifier RAMBlockNotifier;
- 
--#define DIRTY_MEMORY_VGA       0
--#define DIRTY_MEMORY_CODE      1
--#define DIRTY_MEMORY_MIGRATION 2
--#define DIRTY_MEMORY_NUM       3        /* num of dirty bits */
--
- /* The dirty memory bitmap is split into fixed-size blocks to allow growth
-  * under RCU.  The bitmap for a block can be accessed as follows:
-  *
-@@ -75,6 +71,10 @@ struct RAMBlockNotifier {
-     QLIST_ENTRY(RAMBlockNotifier) next;
- };
- 
-+typedef int (RAMBlockIterFunc)(RAMBlock *rb, void *opaque);
-+
-+int qemu_ram_foreach_block(RAMBlockIterFunc func, void *opaque);
-+
- void ram_block_notifier_add(RAMBlockNotifier *n);
- void ram_block_notifier_remove(RAMBlockNotifier *n);
- void ram_block_notify_add(void *host, size_t size, size_t max_size);
-diff --git a/include/system/xen-mapcache.h b/include/system/xen-mapcache.h
-index bb454a7c96c..fa2cff38d1a 100644
---- a/include/system/xen-mapcache.h
-+++ b/include/system/xen-mapcache.h
-@@ -9,7 +9,6 @@
- #ifndef XEN_MAPCACHE_H
- #define XEN_MAPCACHE_H
- 
--#include "exec/cpu-common.h"
- #include "system/xen.h"
- 
- typedef hwaddr (*phys_offset_to_gaddr_t)(hwaddr phys_offset,
-diff --git a/include/system/xen.h b/include/system/xen.h
-index c2f283d1c26..9a7c53f2838 100644
---- a/include/system/xen.h
-+++ b/include/system/xen.h
-@@ -10,7 +10,8 @@
- #ifndef SYSTEM_XEN_H
- #define SYSTEM_XEN_H
- 
--#include "exec/cpu-common.h"
-+#include "exec/hwaddr.h"
-+#include "system/ram_addr.h"
- 
- #ifdef COMPILING_PER_TARGET
- # ifdef CONFIG_XEN
-diff --git a/migration/migration.h b/migration/migration.h
-index fbe02d5bb1a..43fbe5488ca 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -14,7 +14,8 @@
- #ifndef QEMU_MIGRATION_H
- #define QEMU_MIGRATION_H
- 
--#include "exec/cpu-common.h"
-+#include "system/ram_addr.h"
-+#include "system/ramblock.h"
- #include "hw/core/qdev.h"
- #include "qapi/qapi-types-migration.h"
- #include "qobject/json-writer.h"
-diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-index 47c67ef8cc9..4675cb886fe 100644
---- a/accel/mshv/mshv-all.c
-+++ b/accel/mshv/mshv-all.c
-@@ -31,6 +31,7 @@
- #include "qemu/guest-random.h"
- #include "accel/accel-ops.h"
- #include "accel/accel-cpu-ops.h"
-+#include "exec/cpu-common.h"
- #include "system/cpus.h"
- #include "system/runstate.h"
- #include "system/accel-blocker.h"
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index fd1606c8565..655d1e113f9 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -30,7 +30,7 @@
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/cputlb.h"
- #include "exec/tb-flush.h"
--#include "system/ram_addr.h"
-+#include "system/ramblock.h"
- #include "exec/mmu-access-type.h"
- #include "exec/tlb-common.h"
- #include "exec/vaddr.h"
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index 89299829c3a..4160e2ba947 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -24,6 +24,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "exec/cpu-common.h"
- #include "system/tcg.h"
- #include "system/replay.h"
- #include "exec/icount.h"
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index 67827c42b87..15d4365b697 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -12,6 +12,7 @@
- 
- #include "qemu/osdep.h"
- #include "system/hostmem.h"
-+#include "system/ramblock.h"
- #include "hw/core/boards.h"
+ #include "system/spdm-socket.h"
  #include "qapi/error.h"
- #include "qapi/qapi-builtin-visit.h"
-diff --git a/block/blkio.c b/block/blkio.c
-index 41426739847..20f138a38c5 100644
---- a/block/blkio.c
-+++ b/block/blkio.c
-@@ -12,7 +12,7 @@
- #include <blkio.h>
- #include "block/block_int.h"
- #include "system/memory.h"
--#include "exec/cpu-common.h" /* for qemu_ram_get_fd() */
-+#include "system/ramblock.h"
- #include "qemu/defer-call.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-diff --git a/dump/dump.c b/dump/dump.c
-index 15bbcc0c619..f7a99a7af2e 100644
---- a/dump/dump.c
-+++ b/dump/dump.c
-@@ -15,6 +15,7 @@
- #include "qemu/cutils.h"
- #include "elf.h"
- #include "qemu/bswap.h"
-+#include "exec/cpu-common.h"
- #include "exec/target_page.h"
- #include "monitor/monitor.h"
- #include "system/dump.h"
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 06555905ceb..365156dff90 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -27,6 +27,7 @@
- #include "hw/acpi/generic_event_device.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/core/qdev-prop-internal.h"
+ 
+ static bool read_bytes(const int socket, uint8_t *buffer,
+diff --git a/hw/acpi/vmclock.c b/hw/acpi/vmclock.c
+index 55c9f950662..d51cab2e20a 100644
+--- a/hw/acpi/vmclock.c
++++ b/hw/acpi/vmclock.c
+@@ -18,7 +18,7 @@
+ #include "hw/acpi/vmclock.h"
  #include "hw/nvram/fw_cfg.h"
- #include "qemu/uuid.h"
-+#include "exec/cpu-common.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "system/reset.h"
  
- #define ACPI_HW_ERROR_FW_CFG_FILE           "etc/hardware_errors"
- #define ACPI_HW_ERROR_ADDR_FW_CFG_FILE      "etc/hardware_errors_addr"
-diff --git a/hw/acpi/nvdimm.c b/hw/acpi/nvdimm.c
-index 732d613ac09..eb4b4770765 100644
---- a/hw/acpi/nvdimm.c
-+++ b/hw/acpi/nvdimm.c
-@@ -36,6 +36,7 @@
- #include "hw/mem/nvdimm.h"
- #include "qemu/nvdimm-utils.h"
- #include "trace.h"
-+#include "exec/cpu-common.h"
- 
- /*
-  * define Byte Addressable Persistent Memory (PM) Region according to
 diff --git a/hw/acpi/vmgenid.c b/hw/acpi/vmgenid.c
-index e87c0256964..70ad029057b 100644
+index fcf9a94daf1..e87c0256964 100644
 --- a/hw/acpi/vmgenid.c
 +++ b/hw/acpi/vmgenid.c
-@@ -21,6 +21,7 @@
- #include "hw/core/qdev-properties-system.h"
+@@ -18,7 +18,7 @@
+ #include "hw/acpi/vmgenid.h"
+ #include "hw/nvram/fw_cfg.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
  #include "migration/vmstate.h"
  #include "system/reset.h"
-+#include "exec/cpu-common.h"
  
- void vmgenid_build_acpi(VmGenIdState *vms, GArray *table_data, GArray *guid,
-                         BIOSLinker *linker, const char *oem_id)
-diff --git a/hw/arm/omap1.c b/hw/arm/omap1.c
-index f5ff4b107ae..9ca8eecfa09 100644
---- a/hw/arm/omap1.c
-+++ b/hw/arm/omap1.c
-@@ -24,6 +24,7 @@
- #include "qapi/error.h"
- #include "cpu.h"
- #include "system/address-spaces.h"
-+#include "exec/cpu-common.h"
- #include "hw/core/hw-error.h"
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
-diff --git a/hw/audio/marvell_88w8618.c b/hw/audio/marvell_88w8618.c
-index 6d5e99123d6..4ad4a220a98 100644
---- a/hw/audio/marvell_88w8618.c
-+++ b/hw/audio/marvell_88w8618.c
-@@ -12,6 +12,7 @@
- 
+diff --git a/hw/arm/strongarm.c b/hw/arm/strongarm.c
+index 3ee73ee4594..acc75476c34 100644
+--- a/hw/arm/strongarm.c
++++ b/hw/arm/strongarm.c
+@@ -30,7 +30,7 @@
  #include "qemu/osdep.h"
- #include "hw/core/sysbus.h"
-+#include "exec/cpu-common.h"
- #include "migration/vmstate.h"
  #include "hw/core/irq.h"
  #include "hw/core/qdev-properties.h"
-diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-index a78ea9b01c0..e9efab16e99 100644
---- a/hw/char/riscv_htif.c
-+++ b/hw/char/riscv_htif.c
-@@ -31,6 +31,7 @@
- #include "system/address-spaces.h"
- #include "system/dma.h"
- #include "system/runstate.h"
-+#include "exec/cpu-common.h"
- #include "trace.h"
- 
- #define HTIF_DEV_SHIFT          56
-diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
-index 2e925880afa..6d54c12a778 100644
---- a/hw/core/cpu-common.c
-+++ b/hw/core/cpu-common.c
-@@ -19,6 +19,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "exec/cpu-common.h"
- #include "qapi/error.h"
- #include "hw/core/cpu.h"
- #include "system/hw_accel.h"
-diff --git a/hw/core/machine-qmp-cmds.c b/hw/core/machine-qmp-cmds.c
-index d23466177d8..79cbcdd63e8 100644
---- a/hw/core/machine-qmp-cmds.c
-+++ b/hw/core/machine-qmp-cmds.c
-@@ -26,6 +26,7 @@
- #include "system/hostmem.h"
- #include "system/hw_accel.h"
- #include "system/numa.h"
-+#include "system/ramlist.h"
- #include "system/runstate.h"
- #include "system/system.h"
- #include "hw/s390x/storage-keys.h"
-diff --git a/hw/core/numa.c b/hw/core/numa.c
-index fa78dacb6be..f462883c87c 100644
---- a/hw/core/numa.c
-+++ b/hw/core/numa.c
-@@ -27,7 +27,8 @@
- #include "system/hostmem.h"
- #include "system/numa.h"
- #include "exec/cpu-common.h"
--#include "exec/ramlist.h"
-+#include "system/ramlist.h"
-+#include "system/ramblock.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qapi/opts-visitor.h"
-diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-index a97054132fb..2d8fa7ee944 100644
---- a/hw/display/exynos4210_fimd.c
-+++ b/hw/display/exynos4210_fimd.c
-@@ -27,6 +27,7 @@
- #include "hw/core/hw-error.h"
- #include "hw/core/irq.h"
- #include "hw/core/sysbus.h"
-+#include "exec/cpu-common.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/sysbus.h"
  #include "migration/vmstate.h"
- #include "ui/console.h"
- #include "ui/pixel_ops.h"
-diff --git a/hw/display/omap_lcdc.c b/hw/display/omap_lcdc.c
-index 90a97314541..c41c65bb2e0 100644
---- a/hw/display/omap_lcdc.c
-+++ b/hw/display/omap_lcdc.c
-@@ -23,6 +23,7 @@
- #include "hw/arm/omap.h"
- #include "framebuffer.h"
- #include "ui/pixel_ops.h"
-+#include "exec/cpu-common.h"
- 
- struct omap_lcd_panel_s {
-     MemoryRegion *sysmem;
-diff --git a/hw/display/ramfb.c b/hw/display/ramfb.c
-index ad12fb1782e..50c25706a52 100644
---- a/hw/display/ramfb.c
-+++ b/hw/display/ramfb.c
-@@ -18,6 +18,7 @@
- #include "hw/display/bochs-vbe.h" /* for limits */
- #include "ui/console.h"
- #include "system/reset.h"
-+#include "exec/cpu-common.h"
- 
- struct QEMU_PACKED RAMFBCfg {
-     uint64_t addr;
-diff --git a/hw/display/vga.c b/hw/display/vga.c
-index 90b89cf4044..59a65cbbff5 100644
---- a/hw/display/vga.c
-+++ b/hw/display/vga.c
-@@ -25,6 +25,7 @@
- #include "qemu/osdep.h"
- #include "qemu/units.h"
- #include "system/reset.h"
-+#include "system/ramblock.h"
- #include "qapi/error.h"
- #include "qemu/target-info.h"
- #include "hw/display/vga.h"
-diff --git a/hw/dma/i8257.c b/hw/dma/i8257.c
-index d909d6c8fc2..3637d8f82d7 100644
---- a/hw/dma/i8257.c
-+++ b/hw/dma/i8257.c
-@@ -27,6 +27,7 @@
- #include "hw/core/qdev-properties.h"
- #include "migration/vmstate.h"
- #include "hw/dma/i8257.h"
-+#include "exec/cpu-common.h"
- #include "qapi/error.h"
- #include "qemu/main-loop.h"
- #include "qemu/module.h"
-diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
-index 2bf9ebad565..963ce6fd102 100644
---- a/hw/dma/omap_dma.c
-+++ b/hw/dma/omap_dma.c
-@@ -23,6 +23,7 @@
- #include "hw/arm/omap.h"
- #include "hw/core/irq.h"
- #include "hw/arm/soc_dma.h"
-+#include "exec/cpu-common.h"
- 
- struct omap_dma_channel_s {
-     /* transfer data */
-diff --git a/hw/dma/rc4030.c b/hw/dma/rc4030.c
-index 93db286e690..159d0173913 100644
---- a/hw/dma/rc4030.c
-+++ b/hw/dma/rc4030.c
-@@ -27,6 +27,7 @@
- #include "hw/core/irq.h"
- #include "hw/mips/mips.h"
- #include "hw/core/sysbus.h"
-+#include "exec/cpu-common.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- #include "qemu/timer.h"
-diff --git a/hw/dma/sifive_pdma.c b/hw/dma/sifive_pdma.c
-index 2844515b2d7..6d06ec0375f 100644
---- a/hw/dma/sifive_pdma.c
-+++ b/hw/dma/sifive_pdma.c
-@@ -27,6 +27,7 @@
- #include "hw/core/irq.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/sysbus.h"
-+#include "exec/cpu-common.h"
- #include "migration/vmstate.h"
- #include "system/dma.h"
- #include "hw/dma/sifive_pdma.h"
-diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-index e4d0688dbfa..27e323a8196 100644
---- a/hw/hyperv/hyperv.c
-+++ b/hw/hyperv/hyperv.c
-@@ -14,6 +14,7 @@
- #include "system/address-spaces.h"
- #include "system/memory.h"
- #include "exec/target_page.h"
-+#include "exec/cpu-common.h"
- #include "linux/kvm.h"
- #include "system/kvm.h"
- #include "qemu/bitops.h"
-diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
-index dc6cc84b503..1e177f9dd82 100644
---- a/hw/hyperv/syndbg.c
-+++ b/hw/hyperv/syndbg.c
-@@ -19,6 +19,7 @@
- #include "hw/hyperv/hyperv.h"
- #include "hw/hyperv/vmbus-bridge.h"
- #include "hw/hyperv/hyperv-proto.h"
-+#include "exec/cpu-common.h"
- #include "net/net.h"
- #include "net/eth.h"
- #include "net/checksum.h"
-diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-index c01f3392360..c5bab5d2452 100644
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -19,6 +19,7 @@
- #include "hw/hyperv/vmbus.h"
- #include "hw/hyperv/vmbus-bridge.h"
- #include "hw/core/sysbus.h"
-+#include "exec/cpu-common.h"
- #include "exec/target_page.h"
- #include "trace.h"
- 
-diff --git a/hw/i386/kvm/clock.c b/hw/i386/kvm/clock.c
-index 8ca88afae24..aba6842a22c 100644
---- a/hw/i386/kvm/clock.c
-+++ b/hw/i386/kvm/clock.c
-@@ -24,6 +24,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/i386/kvm/clock.h"
- #include "hw/core/qdev-properties.h"
-+#include "exec/cpu-common.h"
- #include "qapi/error.h"
- 
- #include <linux/kvm.h>
-diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
-index 32f92a28b88..670a50524d6 100644
---- a/hw/i386/vapic.c
-+++ b/hw/i386/vapic.c
-@@ -21,6 +21,7 @@
- #include "hw/i386/apic_internal.h"
- #include "hw/core/sysbus.h"
- #include "hw/core/boards.h"
-+#include "exec/cpu-common.h"
- #include "migration/vmstate.h"
- #include "qom/object.h"
- 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index aad253af158..dd8c77f8180 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -30,6 +30,7 @@
- #include "system/mshv.h"
- #include "trace.h"
- #include "hw/i386/apic-msidef.h"
-+#include "exec/cpu-common.h"
- #include "qapi/error.h"
- #include "qom/object.h"
- 
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index 495925196a8..d353391208e 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -17,6 +17,7 @@
- #include "hw/ppc/xive.h"
- #include "hw/ppc/xive2.h"
- #include "hw/ppc/xive2_regs.h"
-+#include "exec/cpu-common.h"
- #include "trace.h"
- 
- static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index ca3df7b887b..26177c7b867 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -12,6 +12,7 @@
- 
- #include "qemu/osdep.h"
- #include "exec/hwaddr.h"
-+#include "exec/cpu-common.h"
- #include "exec/cpu-interrupt.h"
- #include "system/system.h"
- #include "system/qtest.h"
-diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
-index 8ff99b3339d..a6f9ebab90c 100644
---- a/hw/microblaze/boot.c
-+++ b/hw/microblaze/boot.c
-@@ -33,6 +33,7 @@
- #include "qemu/guest-random.h"
- #include "system/device_tree.h"
- #include "system/reset.h"
-+#include "exec/cpu-common.h"
- #include "hw/core/boards.h"
- #include "hw/core/loader.h"
- #include "elf.h"
-diff --git a/hw/misc/pc-testdev.c b/hw/misc/pc-testdev.c
-index 4093cb3c99c..228012e772f 100644
---- a/hw/misc/pc-testdev.c
-+++ b/hw/misc/pc-testdev.c
-@@ -39,6 +39,7 @@
- #include "qemu/module.h"
+ #include "strongarm.h"
+diff --git a/hw/block/fdc-isa.c b/hw/block/fdc-isa.c
+index ebb3d2f7cd8..a10f34a20f5 100644
+--- a/hw/block/fdc-isa.c
++++ b/hw/block/fdc-isa.c
+@@ -36,7 +36,7 @@
  #include "hw/core/irq.h"
  #include "hw/isa/isa.h"
-+#include "exec/cpu-common.h"
- #include "qom/object.h"
- 
- #define IOMEM_LEN    0x10000
-diff --git a/hw/net/fsl_etsec/rings.c b/hw/net/fsl_etsec/rings.c
-index 42216de6c9a..22660c32b84 100644
---- a/hw/net/fsl_etsec/rings.c
-+++ b/hw/net/fsl_etsec/rings.c
-@@ -26,6 +26,7 @@
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "hw/block/block.h"
+ #include "system/block-backend.h"
+diff --git a/hw/block/fdc.c b/hw/block/fdc.c
+index 1747f6506fd..4585640af92 100644
+--- a/hw/block/fdc.c
++++ b/hw/block/fdc.c
+@@ -36,7 +36,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/isa/isa.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "hw/block/block.h"
+ #include "system/block-backend.h"
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index 648e6bdc008..4a758f83dc7 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -27,7 +27,7 @@
+ #include "hw/block/block.h"
+ #include "hw/block/flash.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/ssi/ssi.h"
+ #include "migration/vmstate.h"
+ #include "qemu/bitops.h"
+diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
+index f93b812c024..d1673a1b411 100644
+--- a/hw/block/pflash_cfi01.c
++++ b/hw/block/pflash_cfi01.c
+@@ -40,7 +40,7 @@
+ #include "hw/block/block.h"
+ #include "hw/block/flash.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "system/block-backend.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+diff --git a/hw/block/pflash_cfi02.c b/hw/block/pflash_cfi02.c
+index 6a74bcb7a1b..423516cb301 100644
+--- a/hw/block/pflash_cfi02.c
++++ b/hw/block/pflash_cfi02.c
+@@ -36,7 +36,7 @@
+ #include "hw/block/block.h"
+ #include "hw/block/flash.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "qemu/bitmap.h"
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 62295f187ca..4d81d2dc347 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -22,7 +22,7 @@
+ #include "qemu/cutils.h"
+ #include "hw/core/qdev.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/virtio/virtio-blk-common.h"
+ #include "hw/virtio/vhost.h"
+ #include "hw/virtio/vhost-user-blk.h"
+diff --git a/hw/char/avr_usart.c b/hw/char/avr_usart.c
+index c3515b6f7d0..30e135a244b 100644
+--- a/hw/char/avr_usart.c
++++ b/hw/char/avr_usart.c
+@@ -24,7 +24,7 @@
  #include "qemu/log.h"
- #include "etsec.h"
- #include "registers.h"
-+#include "exec/cpu-common.h"
- 
- /* #define ETSEC_RING_DEBUG */
- /* #define HEX_DUMP */
-diff --git a/hw/net/mcf_fec.c b/hw/net/mcf_fec.c
-index 5f267e5ea38..79a5c4385c6 100644
---- a/hw/net/mcf_fec.c
-+++ b/hw/net/mcf_fec.c
-@@ -16,6 +16,7 @@
- #include "hw/net/mii.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/sysbus.h"
-+#include "exec/cpu-common.h"
- #include <zlib.h> /* for crc32 */
- 
- //#define DEBUG_FEC 1
-diff --git a/hw/net/opencores_eth.c b/hw/net/opencores_eth.c
-index ec3301414cc..6abeffcc9c7 100644
---- a/hw/net/opencores_eth.c
-+++ b/hw/net/opencores_eth.c
-@@ -36,6 +36,7 @@
- #include "hw/net/mii.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/core/sysbus.h"
-+#include "exec/cpu-common.h"
- #include "net/net.h"
- #include "qemu/module.h"
- #include "net/eth.h"
-diff --git a/hw/net/xgmac.c b/hw/net/xgmac.c
-index 8d316e94c17..204c78aba37 100644
---- a/hw/net/xgmac.c
-+++ b/hw/net/xgmac.c
-@@ -28,6 +28,7 @@
  #include "hw/core/irq.h"
  #include "hw/core/qdev-properties.h"
- #include "hw/core/sysbus.h"
-+#include "exec/cpu-common.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ 
+ static int avr_usart_can_receive(void *opaque)
+ {
+diff --git a/hw/char/bcm2835_aux.c b/hw/char/bcm2835_aux.c
+index 47e24c5bba1..d1e114f2dea 100644
+--- a/hw/char/bcm2835_aux.c
++++ b/hw/char/bcm2835_aux.c
+@@ -24,7 +24,7 @@
+ #include "hw/char/bcm2835_aux.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+diff --git a/hw/char/cadence_uart.c b/hw/char/cadence_uart.c
+index 58c4c95fded..c24ece5fe88 100644
+--- a/hw/char/cadence_uart.c
++++ b/hw/char/cadence_uart.c
+@@ -32,7 +32,7 @@
+ #include "hw/char/cadence_uart.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-clock.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "trace.h"
+ 
+ #ifdef CADENCE_UART_ERR_DEBUG
+diff --git a/hw/char/cmsdk-apb-uart.c b/hw/char/cmsdk-apb-uart.c
+index a5ec61a0044..c3645a553ec 100644
+--- a/hw/char/cmsdk-apb-uart.c
++++ b/hw/char/cmsdk-apb-uart.c
+@@ -27,7 +27,7 @@
+ #include "chardev/char-serial.h"
+ #include "hw/char/cmsdk-apb-uart.h"
+ #include "hw/core/irq.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ 
+ REG32(DATA, 0)
+ REG32(STATE, 4)
+diff --git a/hw/char/debugcon.c b/hw/char/debugcon.c
+index 36607d0c1c7..a1b370b90be 100644
+--- a/hw/char/debugcon.c
++++ b/hw/char/debugcon.c
+@@ -30,7 +30,7 @@
+ #include "chardev/char-fe.h"
+ #include "hw/isa/isa.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qom/object.h"
+ 
+ #define TYPE_ISA_DEBUGCON_DEVICE "isa-debugcon"
+diff --git a/hw/char/digic-uart.c b/hw/char/digic-uart.c
+index 04dec0df8a6..8a704dfcf50 100644
+--- a/hw/char/digic-uart.c
++++ b/hw/char/digic-uart.c
+@@ -35,7 +35,7 @@
+ 
+ #include "hw/char/digic-uart.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ 
+ enum {
+     ST_RX_RDY = (1 << 0),
+diff --git a/hw/char/diva-gsp.c b/hw/char/diva-gsp.c
+index 1dafc1e80c3..280d0413c6e 100644
+--- a/hw/char/diva-gsp.c
++++ b/hw/char/diva-gsp.c
+@@ -21,7 +21,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ 
+ #define PCI_DEVICE_ID_HP_DIVA           0x1048
+diff --git a/hw/char/escc.c b/hw/char/escc.c
+index 496bbc56dea..a2fb682f8be 100644
+--- a/hw/char/escc.c
++++ b/hw/char/escc.c
+@@ -25,7 +25,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/sysbus.h"
  #include "migration/vmstate.h"
  #include "qemu/module.h"
- #include "net/net.h"
-diff --git a/hw/nvram/spapr_nvram.c b/hw/nvram/spapr_nvram.c
-index 58d81f77c88..3af7e6ecbec 100644
---- a/hw/nvram/spapr_nvram.c
-+++ b/hw/nvram/spapr_nvram.c
-@@ -38,6 +38,7 @@
+diff --git a/hw/char/exynos4210_uart.c b/hw/char/exynos4210_uart.c
+index 387156d5e34..d1c2f249150 100644
+--- a/hw/char/exynos4210_uart.c
++++ b/hw/char/exynos4210_uart.c
+@@ -32,7 +32,7 @@
+ #include "hw/arm/exynos4210.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ 
+ #include "trace.h"
+ #include "qom/object.h"
+diff --git a/hw/char/goldfish_tty.c b/hw/char/goldfish_tty.c
+index 821b3218502..35bcb2a9676 100644
+--- a/hw/char/goldfish_tty.c
++++ b/hw/char/goldfish_tty.c
+@@ -9,7 +9,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/core/irq.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/sysbus.h"
+ #include "migration/vmstate.h"
+ #include "chardev/char-fe.h"
+diff --git a/hw/char/grlib_apbuart.c b/hw/char/grlib_apbuart.c
+index 9731e664c1b..7be847d0932 100644
+--- a/hw/char/grlib_apbuart.c
++++ b/hw/char/grlib_apbuart.c
+@@ -27,7 +27,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/char/grlib_uart.h"
+ #include "hw/sysbus.h"
+ #include "qemu/module.h"
+diff --git a/hw/char/ibex_uart.c b/hw/char/ibex_uart.c
+index ac4a43af84e..3166f6d3094 100644
+--- a/hw/char/ibex_uart.c
++++ b/hw/char/ibex_uart.c
+@@ -30,7 +30,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-clock.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/registerfields.h"
+ #include "migration/vmstate.h"
+ #include "qemu/log.h"
+diff --git a/hw/char/imx_serial.c b/hw/char/imx_serial.c
+index 78d2c25f86f..080b7f6331c 100644
+--- a/hw/char/imx_serial.c
++++ b/hw/char/imx_serial.c
+@@ -22,7 +22,7 @@
+ #include "hw/char/imx_serial.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+diff --git a/hw/char/ipoctal232.c b/hw/char/ipoctal232.c
+index 19f312b9d30..b66c20f4fa8 100644
+--- a/hw/char/ipoctal232.c
++++ b/hw/char/ipoctal232.c
+@@ -12,7 +12,7 @@
+ #include "hw/ipack/ipack.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "qemu/bitops.h"
+ #include "qemu/module.h"
+diff --git a/hw/char/max78000_uart.c b/hw/char/max78000_uart.c
+index 59ec24a15e8..85fc6eed3e5 100644
+--- a/hw/char/max78000_uart.c
++++ b/hw/char/max78000_uart.c
+@@ -10,7 +10,7 @@
+ #include "hw/char/max78000_uart.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "migration/vmstate.h"
+diff --git a/hw/char/mcf_uart.c b/hw/char/mcf_uart.c
+index 391674dbcc6..51edf917c94 100644
+--- a/hw/char/mcf_uart.c
++++ b/hw/char/mcf_uart.c
+@@ -13,7 +13,7 @@
+ #include "qapi/error.h"
+ #include "hw/m68k/mcf.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "chardev/char-fe.h"
+ #include "qom/object.h"
+ 
+diff --git a/hw/char/nrf51_uart.c b/hw/char/nrf51_uart.c
+index 6087cabeb3c..73069232441 100644
+--- a/hw/char/nrf51_uart.c
++++ b/hw/char/nrf51_uart.c
+@@ -18,7 +18,7 @@
+ #include "hw/char/nrf51_uart.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "trace.h"
+ 
+diff --git a/hw/char/parallel.c b/hw/char/parallel.c
+index 6708d7658bd..07bbc9443fb 100644
+--- a/hw/char/parallel.c
++++ b/hw/char/parallel.c
+@@ -29,7 +29,7 @@
+ #include "chardev/char-parallel.h"
+ #include "hw/acpi/acpi_aml_interface.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "hw/char/parallel-isa.h"
+ #include "hw/char/parallel.h"
+diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+index f37ffd349f6..0b0af677988 100644
+--- a/hw/char/pl011.c
++++ b/hw/char/pl011.c
+@@ -25,7 +25,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/core/qdev-clock.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "chardev/char-fe.h"
+ #include "chardev/char-serial.h"
+diff --git a/hw/char/renesas_sci.c b/hw/char/renesas_sci.c
+index 3c1cc43954b..f1c5d5ae6b3 100644
+--- a/hw/char/renesas_sci.c
++++ b/hw/char/renesas_sci.c
+@@ -26,7 +26,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/registerfields.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/char/renesas_sci.h"
+ #include "migration/vmstate.h"
+ 
+diff --git a/hw/char/sclpconsole-lm.c b/hw/char/sclpconsole-lm.c
+index ed08cf42da2..9a16896d228 100644
+--- a/hw/char/sclpconsole-lm.c
++++ b/hw/char/sclpconsole-lm.c
+@@ -23,7 +23,7 @@
+ #include "migration/vmstate.h"
+ #include "hw/s390x/event-facility.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/s390x/ebcdic.h"
+ #include "qom/object.h"
+ 
+diff --git a/hw/char/sclpconsole.c b/hw/char/sclpconsole.c
+index ab444fe1fa4..179d12745cc 100644
+--- a/hw/char/sclpconsole.c
++++ b/hw/char/sclpconsole.c
+@@ -20,7 +20,7 @@
+ #include "hw/s390x/sclp.h"
+ #include "migration/vmstate.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/s390x/event-facility.h"
+ #include "chardev/char-fe.h"
+ #include "qom/object.h"
+diff --git a/hw/char/serial-pci-multi.c b/hw/char/serial-pci-multi.c
+index f0af12c14f9..17796b93dd7 100644
+--- a/hw/char/serial-pci-multi.c
++++ b/hw/char/serial-pci-multi.c
+@@ -33,7 +33,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ 
+ #define PCI_SERIAL_MAX_PORTS 4
+diff --git a/hw/char/serial.c b/hw/char/serial.c
+index cbff68a7111..adbd1d1d4ab 100644
+--- a/hw/char/serial.c
++++ b/hw/char/serial.c
+@@ -36,7 +36,7 @@
+ #include "qemu/error-report.h"
+ #include "trace.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ 
+ #define UART_LCR_DLAB   0x80    /* Divisor latch access bit */
+ 
+diff --git a/hw/char/sh_serial.c b/hw/char/sh_serial.c
+index 9cd79fce334..b3bed2bb7bf 100644
+--- a/hw/char/sh_serial.c
++++ b/hw/char/sh_serial.c
+@@ -30,7 +30,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/sh4/sh.h"
+ #include "chardev/char-fe.h"
+ #include "qapi/error.h"
+diff --git a/hw/char/shakti_uart.c b/hw/char/shakti_uart.c
+index 51e45351d95..2d1bc9cb8e2 100644
+--- a/hw/char/shakti_uart.c
++++ b/hw/char/shakti_uart.c
+@@ -25,7 +25,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/char/shakti_uart.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qemu/log.h"
+ 
+ static uint64_t shakti_uart_read(void *opaque, hwaddr addr, unsigned size)
+diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+index 473374d3de1..af17cf9a6ce 100644
+--- a/hw/char/sifive_uart.c
++++ b/hw/char/sifive_uart.c
+@@ -24,7 +24,7 @@
+ #include "chardev/char-fe.h"
+ #include "hw/core/irq.h"
+ #include "hw/char/sifive_uart.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ 
+ #define TX_INTERRUPT_TRIGGER_DELAY_NS 100
+ 
+diff --git a/hw/char/spapr_vty.c b/hw/char/spapr_vty.c
+index 17a17c47c36..1dd9fb155cb 100644
+--- a/hw/char/spapr_vty.c
++++ b/hw/char/spapr_vty.c
+@@ -7,7 +7,7 @@
+ #include "hw/ppc/spapr.h"
  #include "hw/ppc/spapr_vio.h"
  #include "hw/core/qdev-properties.h"
- #include "hw/core/qdev-properties-system.h"
-+#include "exec/cpu-common.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qom/object.h"
+ 
+ #define VTERM_BUFSIZE   16
+diff --git a/hw/char/stm32f2xx_usart.c b/hw/char/stm32f2xx_usart.c
+index 2c19ec69cc8..2bf0161fa58 100644
+--- a/hw/char/stm32f2xx_usart.c
++++ b/hw/char/stm32f2xx_usart.c
+@@ -26,7 +26,7 @@
+ #include "hw/char/stm32f2xx_usart.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ 
+diff --git a/hw/char/stm32l4x5_usart.c b/hw/char/stm32l4x5_usart.c
+index 8b208ba9b6a..664d03d6b96 100644
+--- a/hw/char/stm32l4x5_usart.c
++++ b/hw/char/stm32l4x5_usart.c
+@@ -27,7 +27,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-clock.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/registerfields.h"
+ #include "trace.h"
+ 
+diff --git a/hw/char/terminal3270.c b/hw/char/terminal3270.c
+index 821a75c37a2..1d857bad9bc 100644
+--- a/hw/char/terminal3270.c
++++ b/hw/char/terminal3270.c
+@@ -16,7 +16,7 @@
+ #include "qemu/module.h"
+ #include "chardev/char-fe.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/s390x/3270-ccw.h"
+ #include "qom/object.h"
+ 
+diff --git a/hw/char/virtio-console.c b/hw/char/virtio-console.c
+index 8c2a6a9d1d3..25db0f019b8 100644
+--- a/hw/char/virtio-console.c
++++ b/hw/char/virtio-console.c
+@@ -16,7 +16,7 @@
+ #include "qemu/module.h"
+ #include "trace.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/virtio/virtio-serial.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-events-char.h"
+diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
+index a0d142582ee..8ee098d9ad4 100644
+--- a/hw/char/xen_console.c
++++ b/hw/char/xen_console.c
+@@ -30,7 +30,7 @@
+ #include "hw/xen/xen-backend.h"
+ #include "hw/xen/xen-bus-helper.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/xen/interface/io/console.h"
+ #include "hw/xen/interface/io/xs_wire.h"
+ #include "hw/xen/interface/grant_table.h"
+diff --git a/hw/char/xilinx_uartlite.c b/hw/char/xilinx_uartlite.c
+index 9d81cd904c6..ba7e9e339b6 100644
+--- a/hw/char/xilinx_uartlite.c
++++ b/hw/char/xilinx_uartlite.c
+@@ -28,7 +28,7 @@
+ #include "hw/char/xilinx_uartlite.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/sysbus.h"
+ #include "qemu/module.h"
+ #include "chardev/char-fe.h"
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index d0a66358b5a..fe5464c7da1 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -12,7 +12,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
+ #include "qapi/qapi-types-block.h"
+diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+index 639d932b094..86b53a23ade 100644
+--- a/hw/hyperv/vmbus.c
++++ b/hw/hyperv/vmbus.c
+@@ -14,7 +14,7 @@
+ #include "qapi/error.h"
+ #include "migration/vmstate.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/hyperv/hyperv.h"
+ #include "hw/hyperv/vmbus.h"
+ #include "hw/hyperv/vmbus-bridge.h"
+diff --git a/hw/i386/kvm/i8254.c b/hw/i386/kvm/i8254.c
+index 14b78f30a83..81e742f8667 100644
+--- a/hw/i386/kvm/i8254.c
++++ b/hw/i386/kvm/i8254.c
+@@ -32,7 +32,7 @@
+ #include "system/runstate.h"
+ #include "hw/timer/i8254.h"
+ #include "hw/timer/i8254_internal.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "system/kvm.h"
+ #include "target/i386/kvm/kvm_i386.h"
+ #include "qom/object.h"
+diff --git a/hw/intc/xilinx_intc.c b/hw/intc/xilinx_intc.c
+index 465df1c3af2..f93f0d6e7ea 100644
+--- a/hw/intc/xilinx_intc.c
++++ b/hw/intc/xilinx_intc.c
+@@ -31,7 +31,7 @@
+ #include "qemu/module.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qom/object.h"
+ 
+ #define D(x)
+diff --git a/hw/ipmi/ipmi_bmc_extern.c b/hw/ipmi/ipmi_bmc_extern.c
+index fb90a7d7c30..fa08ed6c217 100644
+--- a/hw/ipmi/ipmi_bmc_extern.c
++++ b/hw/ipmi/ipmi_bmc_extern.c
+@@ -35,7 +35,7 @@
+ #include "chardev/char-fe.h"
+ #include "hw/ipmi/ipmi.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "qom/object.h"
+ 
+diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
+index b86943c3245..3d4fe1a699a 100644
+--- a/hw/ipmi/ipmi_bmc_sim.c
++++ b/hw/ipmi/ipmi_bmc_sim.c
+@@ -30,7 +30,7 @@
+ #include "qemu/module.h"
+ #include "hw/core/loader.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ 
+ #define IPMI_NETFN_CHASSIS            0x00
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 26baa1c3d6c..6eb20137a04 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -18,7 +18,7 @@
+ #include "hw/mem/pc-dimm.h"
+ #include "hw/pci/pci.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qapi/error.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+diff --git a/hw/misc/allwinner-sid.c b/hw/misc/allwinner-sid.c
+index 17faf67e606..92a0c7918bc 100644
+--- a/hw/misc/allwinner-sid.c
++++ b/hw/misc/allwinner-sid.c
+@@ -26,7 +26,7 @@
+ #include "qemu/guest-random.h"
+ #include "qapi/error.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/misc/allwinner-sid.h"
+ #include "trace.h"
+ 
+diff --git a/hw/misc/allwinner-sramc.c b/hw/misc/allwinner-sramc.c
+index bd7f59fec97..423e0a844fa 100644
+--- a/hw/misc/allwinner-sramc.c
++++ b/hw/misc/allwinner-sramc.c
+@@ -25,7 +25,7 @@
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/misc/allwinner-sramc.h"
+ #include "trace.h"
+ 
+diff --git a/hw/misc/ivshmem-flat.c b/hw/misc/ivshmem-flat.c
+index 790500d34de..1248f9e81bc 100644
+--- a/hw/misc/ivshmem-flat.c
++++ b/hw/misc/ivshmem-flat.c
+@@ -14,7 +14,7 @@
+ #include "qemu/module.h"
+ #include "qapi/error.h"
+ #include "hw/core/irq.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/sysbus.h"
+ #include "chardev/char-fe.h"
+ #include "system/address-spaces.h"
+diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
+index fb69af52f62..b9162589a02 100644
+--- a/hw/misc/ivshmem-pci.c
++++ b/hw/misc/ivshmem-pci.c
+@@ -23,7 +23,7 @@
+ #include "qemu/cutils.h"
+ #include "hw/pci/pci.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/pci/msi.h"
+ #include "hw/pci/msix.h"
+ #include "system/kvm.h"
+diff --git a/hw/misc/mac_via.c b/hw/misc/mac_via.c
+index 887397ae842..0c608c3dc63 100644
+--- a/hw/misc/mac_via.c
++++ b/hw/misc/mac_via.c
+@@ -28,7 +28,7 @@
+ #include "qapi/error.h"
+ #include "qemu/cutils.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "system/block-backend.h"
+ #include "system/rtc.h"
+ #include "trace.h"
+diff --git a/hw/misc/sifive_u_otp.c b/hw/misc/sifive_u_otp.c
+index 1d352680468..899bc31745c 100644
+--- a/hw/misc/sifive_u_otp.c
++++ b/hw/misc/sifive_u_otp.c
+@@ -21,7 +21,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/sysbus.h"
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+diff --git a/hw/misc/stm32l4x5_rcc.c b/hw/misc/stm32l4x5_rcc.c
+index c2b25e9a4de..cf7fa28cbe9 100644
+--- a/hw/misc/stm32l4x5_rcc.c
++++ b/hw/misc/stm32l4x5_rcc.c
+@@ -27,7 +27,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-clock.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/registerfields.h"
+ #include "trace.h"
+ 
+diff --git a/hw/misc/xlnx-versal-cfu.c b/hw/misc/xlnx-versal-cfu.c
+index 80f9612b2ff..13cd597da49 100644
+--- a/hw/misc/xlnx-versal-cfu.c
++++ b/hw/misc/xlnx-versal-cfu.c
+@@ -19,7 +19,7 @@
+ #include "qemu/units.h"
+ #include "migration/vmstate.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/misc/xlnx-versal-cfu.h"
+ 
+ #ifndef XLNX_VERSAL_CFU_APB_ERR_DEBUG
+diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
+index 935e74fd7d1..3eb7b445113 100644
+--- a/hw/net/rocker/rocker.c
++++ b/hw/net/rocker/rocker.c
+@@ -18,7 +18,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "hw/pci/msix.h"
+ #include "net/net.h"
+diff --git a/hw/net/xen_nic.c b/hw/net/xen_nic.c
+index 4ef1b7dd29a..f4d0b060130 100644
+--- a/hw/net/xen_nic.c
++++ b/hw/net/xen_nic.c
+@@ -38,7 +38,7 @@
+ #include "hw/xen/xen-backend.h"
+ #include "hw/xen/xen-bus-helper.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ 
+ #include "hw/xen/interface/io/netif.h"
+ #include "hw/xen/interface/io/xs_wire.h"
+diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
+index 39e64a46e26..72b14811a9d 100644
+--- a/hw/net/xilinx_ethlite.c
++++ b/hw/net/xilinx_ethlite.c
+@@ -34,7 +34,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/misc/unimp.h"
+ #include "net/net.h"
+ #include "trace.h"
+diff --git a/hw/nvram/eeprom_at24c.c b/hw/nvram/eeprom_at24c.c
+index e947cf8a3b2..8b7f2dc13f1 100644
+--- a/hw/nvram/eeprom_at24c.c
++++ b/hw/nvram/eeprom_at24c.c
+@@ -15,7 +15,7 @@
+ #include "hw/i2c/i2c.h"
+ #include "hw/nvram/eeprom_at24c.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "system/block-backend.h"
+ #include "qom/object.h"
+ 
+diff --git a/hw/nvram/mac_nvram.c b/hw/nvram/mac_nvram.c
+index b048db0777a..efadb3c943c 100644
+--- a/hw/nvram/mac_nvram.c
++++ b/hw/nvram/mac_nvram.c
+@@ -28,7 +28,7 @@
+ #include "hw/nvram/chrp_nvram.h"
+ #include "hw/nvram/mac_nvram.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "system/block-backend.h"
+ #include "migration/vmstate.h"
+ #include "qemu/cutils.h"
+diff --git a/hw/nvram/spapr_nvram.c b/hw/nvram/spapr_nvram.c
+index c9202ddfcd4..58d81f77c88 100644
+--- a/hw/nvram/spapr_nvram.c
++++ b/hw/nvram/spapr_nvram.c
+@@ -37,7 +37,7 @@
+ #include "hw/ppc/spapr.h"
+ #include "hw/ppc/spapr_vio.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
  #include "qom/object.h"
  
  struct SpaprNvram {
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index 4b858443806..8074713fbe9 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -21,6 +21,7 @@
- #include "hw/ide/pci.h"
- #include "hw/i2c/smbus_eeprom.h"
- #include "hw/ppc/ppc.h"
-+#include "exec/cpu-common.h"
- #include "system/block-backend.h"
- #include "system/qtest.h"
- #include "system/reset.h"
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index 113a2daca1d..eb0d3a418e2 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -52,6 +52,7 @@
- #include "hw/core/irq.h"
- #include "hw/sd/sdhci.h"
- #include "hw/misc/unimp.h"
-+#include "exec/cpu-common.h"
- 
- #define EPAPR_MAGIC                (0x45504150)
- #define DTC_LOAD_PAD               0x1800000
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index 3e4d19fbe84..ac9fc5a6542 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -39,6 +39,7 @@
- #include "qemu/datadir.h"
- #include "system/device_tree.h"
- #include "hw/ppc/vof.h"
-+#include "exec/cpu-common.h"
- 
- #include <libfdt.h>
- 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index f891c3a797c..1513575b8f3 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -58,6 +58,7 @@
- #include "hw/isa/isa.h"
- #include "hw/char/serial-isa.h"
- #include "hw/rtc/mc146818rtc.h"
-+#include "exec/cpu-common.h"
- 
- #include <libfdt.h>
- 
-diff --git a/hw/ppc/ppc440_uc.c b/hw/ppc/ppc440_uc.c
-index fc6dd332e88..0f28a7937fb 100644
---- a/hw/ppc/ppc440_uc.c
-+++ b/hw/ppc/ppc440_uc.c
-@@ -17,6 +17,7 @@
- #include "hw/pci-host/ppc4xx.h"
+diff --git a/hw/nvram/xlnx-bbram.c b/hw/nvram/xlnx-bbram.c
+index aad445b9018..60ede7e40fb 100644
+--- a/hw/nvram/xlnx-bbram.c
++++ b/hw/nvram/xlnx-bbram.c
+@@ -32,7 +32,7 @@
+ #include "system/blockdev.h"
+ #include "migration/vmstate.h"
  #include "hw/core/qdev-properties.h"
- #include "hw/pci/pci.h"
-+#include "exec/cpu-common.h"
- #include "system/reset.h"
- #include "cpu.h"
- #include "ppc440.h"
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index eb626547ebd..bcf6aa560f3 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -43,6 +43,7 @@
- #include "system/reset.h"
- #include "system/runstate.h"
- #include "qemu/log.h"
-+#include "exec/cpu-common.h"
- #include "hw/core/fw-path-provider.h"
- #include "elf.h"
- #include "net/net.h"
-diff --git a/hw/ppc/spapr_drc.c b/hw/ppc/spapr_drc.c
-index d2044b4fb52..9bc65c760ea 100644
---- a/hw/ppc/spapr_drc.c
-+++ b/hw/ppc/spapr_drc.c
-@@ -23,6 +23,7 @@
- #include "hw/ppc/spapr.h" /* for RTAS return codes */
- #include "hw/pci-host/spapr.h" /* spapr_phb_remove_pci_device_cb callback */
- #include "hw/ppc/spapr_nvdimm.h"
-+#include "exec/cpu-common.h"
- #include "system/device_tree.h"
- #include "system/reset.h"
- #include "trace.h"
-diff --git a/hw/ppc/spapr_events.c b/hw/ppc/spapr_events.c
-index b1774e88f2b..1a21ac7bbf8 100644
---- a/hw/ppc/spapr_events.c
-+++ b/hw/ppc/spapr_events.c
-@@ -41,6 +41,7 @@
- #include "qemu/bcd.h"
- #include "qemu/main-loop.h"
- #include "hw/ppc/spapr_ovec.h"
-+#include "exec/cpu-common.h"
- #include <libfdt.h>
- #include "migration/blocker.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/nvram/xlnx-efuse.h"
  
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index 8f03b3e7764..032805a8d0d 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -24,6 +24,7 @@
- #include "hw/ppc/spapr_numa.h"
- #include "mmu-book3s-v3.h"
- #include "hw/mem/memory-device.h"
-+#include "exec/cpu-common.h"
- 
- bool is_ram_address(SpaprMachineState *spapr, hwaddr addr)
- {
-diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
-index a6715b4026d..cb79ad34053 100644
---- a/hw/ppc/spapr_rtas.c
-+++ b/hw/ppc/spapr_rtas.c
-@@ -46,6 +46,7 @@
- #include "qemu/cutils.h"
- #include "trace.h"
- #include "hw/ppc/fdt.h"
-+#include "exec/cpu-common.h"
- #include "target/ppc/mmu-hash64.h"
- #include "target/ppc/mmu-book3s-v3.h"
- #include "migration/blocker.h"
-diff --git a/hw/ppc/spapr_tpm_proxy.c b/hw/ppc/spapr_tpm_proxy.c
-index a48dab7e7a6..361a3dc817d 100644
---- a/hw/ppc/spapr_tpm_proxy.c
-+++ b/hw/ppc/spapr_tpm_proxy.c
-@@ -16,6 +16,7 @@
- #include "system/reset.h"
- #include "hw/ppc/spapr.h"
- #include "hw/core/qdev-properties.h"
-+#include "exec/cpu-common.h"
- #include "trace.h"
- 
- #define TPM_SPAPR_BUFSIZE 4096
-diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-index 8b3e67b627c..51b3d7d7121 100644
---- a/hw/ppc/virtex_ml507.c
-+++ b/hw/ppc/virtex_ml507.c
-@@ -44,6 +44,7 @@
- #include "hw/ppc/ppc.h"
- #include "hw/ppc/ppc4xx.h"
- #include "hw/core/qdev-properties.h"
-+#include "exec/cpu-common.h"
- 
- #include <libfdt.h>
- 
-diff --git a/hw/remote/proxy-memory-listener.c b/hw/remote/proxy-memory-listener.c
-index e1a52d24f0b..d0c856b0939 100644
---- a/hw/remote/proxy-memory-listener.c
-+++ b/hw/remote/proxy-memory-listener.c
-@@ -11,6 +11,7 @@
- #include "qemu/int128.h"
- #include "qemu/range.h"
- #include "system/memory.h"
-+#include "system/ramblock.h"
- #include "exec/cpu-common.h"
+ #ifndef XLNX_BBRAM_ERR_DEBUG
+diff --git a/hw/nvram/xlnx-efuse.c b/hw/nvram/xlnx-efuse.c
+index 7eb156f9413..facbef3fc4c 100644
+--- a/hw/nvram/xlnx-efuse.c
++++ b/hw/nvram/xlnx-efuse.c
+@@ -32,7 +32,7 @@
  #include "qapi/error.h"
- #include "qemu/error-report.h"
-diff --git a/hw/s390x/css.c b/hw/s390x/css.c
-index d2c0af6a9bf..ccc9c1c243b 100644
---- a/hw/s390x/css.c
-+++ b/hw/s390x/css.c
-@@ -22,6 +22,7 @@
- #include "hw/s390x/s390_flic.h"
- #include "hw/s390x/s390-virtio-ccw.h"
- #include "hw/s390x/s390-ccw.h"
-+#include "exec/cpu-common.h"
- 
- typedef struct CrwContainer {
-     CRW crw;
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index b119a87a864..d34adb55220 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -28,6 +28,7 @@
- #include "hw/s390x/ebcdic.h"
- #include "hw/scsi/scsi.h"
- #include "hw/virtio/virtio-net.h"
-+#include "exec/cpu-common.h"
- #include "ipl.h"
- #include "qemu/error-report.h"
- #include "qemu/config-file.h"
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index ff415b6312d..30fdca1e8a6 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -25,6 +25,7 @@
+ #include "system/blockdev.h"
  #include "hw/core/qdev-properties.h"
- #include "hw/pci/pci_bridge.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ 
+ #define TBIT0_OFFSET     28
+ #define TBIT1_OFFSET     29
+diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
+index 1265e40c395..f7b131e67e8 100644
+--- a/hw/pci-bridge/cxl_downstream.c
++++ b/hw/pci-bridge/cxl_downstream.c
+@@ -14,7 +14,7 @@
+ #include "hw/pci/pcie.h"
+ #include "hw/pci/pcie_port.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/cxl/cxl.h"
+ #include "qapi/error.h"
+ 
+diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
+index df359dee670..616d5d934cc 100644
+--- a/hw/pci-bridge/cxl_root_port.c
++++ b/hw/pci-bridge/cxl_root_port.c
+@@ -24,7 +24,7 @@
+ #include "hw/pci/pcie_port.h"
  #include "hw/pci/msi.h"
-+#include "exec/cpu-common.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/sysbus.h"
+ #include "qapi/error.h"
+ #include "hw/cxl/cxl.h"
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index 019c311bb5b..6d708fadc25 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -11,7 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/pci/msi.h"
+ #include "hw/pci/pcie.h"
+ #include "hw/pci/pcie_port.h"
+diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
+index fa1cf5e58fd..2f7257d166a 100644
+--- a/hw/pci-bridge/gen_pcie_root_port.c
++++ b/hw/pci-bridge/gen_pcie_root_port.c
+@@ -16,7 +16,7 @@
+ #include "hw/pci/msix.h"
+ #include "hw/pci/pcie_port.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "qom/object.h"
+ 
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 2371a916809..5996229c813 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -31,7 +31,7 @@
+ #include "hw/pci/pci_bus.h"
+ #include "hw/pci/pci_host.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/cpr.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+diff --git a/hw/ppc/pnv_pnor.c b/hw/ppc/pnv_pnor.c
+index 1083e42ab57..365c4d78b8a 100644
+--- a/hw/ppc/pnv_pnor.c
++++ b/hw/ppc/pnv_pnor.c
+@@ -16,7 +16,7 @@
+ #include "hw/core/loader.h"
+ #include "hw/ppc/pnv_pnor.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ 
+ static uint64_t pnv_pnor_read(void *opaque, hwaddr addr, unsigned size)
+ {
+diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+index 56f8c79479e..ccbb2797169 100644
+--- a/hw/rtc/mc146818rtc.c
++++ b/hw/rtc/mc146818rtc.c
+@@ -30,7 +30,7 @@
+ #include "hw/intc/kvm_irqcount.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qemu/timer.h"
+ #include "system/system.h"
+ #include "system/replay.h"
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 9c78c9e18e2..0f896c27f47 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -37,7 +37,7 @@
+ #include "system/blockdev.h"
+ #include "hw/block/block.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "system/dma.h"
+ #include "system/system.h"
+ #include "qemu/cutils.h"
+diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
+index 2ac4fd66c37..0a676a16fa4 100644
+--- a/hw/scsi/scsi-generic.c
++++ b/hw/scsi/scsi-generic.c
+@@ -19,7 +19,7 @@
+ #include "hw/scsi/scsi.h"
+ #include "migration/qemu-file-types.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/scsi/emulation.h"
+ #include "system/block-backend.h"
+ #include "trace.h"
+diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
+index 89f06066b70..3612897d4b9 100644
+--- a/hw/scsi/vhost-user-scsi.c
++++ b/hw/scsi/vhost-user-scsi.c
+@@ -21,7 +21,7 @@
+ #include "hw/core/fw-path-provider.h"
+ #include "hw/core/qdev.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/virtio/vhost.h"
+ #include "hw/virtio/vhost-backend.h"
+ #include "hw/virtio/vhost-user-scsi.h"
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index 3df331d5611..5aa34f1d5bd 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -43,7 +43,7 @@
+ #include "qapi/error.h"
+ #include "qemu/bitmap.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qemu/error-report.h"
+ #include "qemu/timer.h"
+ #include "qemu/log.h"
+diff --git a/hw/sh4/sh7750.c b/hw/sh4/sh7750.c
+index aff45320bc5..a0aa89ad318 100644
+--- a/hw/sh4/sh7750.c
++++ b/hw/sh4/sh7750.c
+@@ -31,7 +31,7 @@
+ #include "system/system.h"
+ #include "target/sh4/cpu.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "sh7750_regs.h"
+ #include "sh7750_regnames.h"
+ #include "hw/sh4/sh_intc.h"
+diff --git a/hw/ssi/ibex_spi_host.c b/hw/ssi/ibex_spi_host.c
+index a7dc0c2f032..50cf08de9c9 100644
+--- a/hw/ssi/ibex_spi_host.c
++++ b/hw/ssi/ibex_spi_host.c
+@@ -30,7 +30,7 @@
+ #include "hw/ssi/ibex_spi_host.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
+ #include "trace.h"
+ 
+diff --git a/hw/ssi/xilinx_spi.c b/hw/ssi/xilinx_spi.c
+index 6dcdd63916a..cf406d08246 100644
+--- a/hw/ssi/xilinx_spi.c
++++ b/hw/ssi/xilinx_spi.c
+@@ -33,7 +33,7 @@
+ 
+ #include "hw/core/irq.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/ssi/ssi.h"
+ #include "qom/object.h"
+ 
+diff --git a/hw/timer/xilinx_timer.c b/hw/timer/xilinx_timer.c
+index 57a2c7101d1..9c2969a2c4f 100644
+--- a/hw/timer/xilinx_timer.c
++++ b/hw/timer/xilinx_timer.c
+@@ -31,7 +31,7 @@
+ #include "hw/core/irq.h"
+ #include "hw/core/ptimer.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "qom/object.h"
+diff --git a/hw/usb/ccid-card-passthru.c b/hw/usb/ccid-card-passthru.c
+index 306dd7d9146..5ab7855272a 100644
+--- a/hw/usb/ccid-card-passthru.c
++++ b/hw/usb/ccid-card-passthru.c
+@@ -14,7 +14,7 @@
+ #include <libcacard.h>
+ #include "chardev/char-fe.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "migration/vmstate.h"
  #include "qemu/error-report.h"
  #include "qemu/module.h"
- #include "system/reset.h"
-diff --git a/hw/s390x/virtio-ccw.c b/hw/s390x/virtio-ccw.c
-index 4a3ffb84f8f..b4011c4049d 100644
---- a/hw/s390x/virtio-ccw.c
-+++ b/hw/s390x/virtio-ccw.c
-@@ -32,6 +32,7 @@
- #include "trace.h"
- #include "hw/s390x/css-bridge.h"
- #include "hw/s390x/s390-virtio-ccw.h"
-+#include "exec/cpu-common.h"
- #include "system/replay.h"
- 
- #define NR_CLASSIC_INDICATOR_BITS 64
-diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
-index b3cdc255b46..11ae6b9b747 100644
---- a/hw/scsi/vmw_pvscsi.c
-+++ b/hw/scsi/vmw_pvscsi.c
-@@ -34,6 +34,7 @@
- #include "scsi/constants.h"
- #include "hw/pci/msi.h"
+diff --git a/hw/usb/dev-serial.c b/hw/usb/dev-serial.c
+index 286c7711f64..b238cb79375 100644
+--- a/hw/usb/dev-serial.c
++++ b/hw/usb/dev-serial.c
+@@ -14,7 +14,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
  #include "hw/core/qdev-properties.h"
-+#include "exec/cpu-common.h"
- #include "vmw_pvscsi.h"
- #include "trace.h"
- #include "qom/object.h"
-diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-index ec9a386b48d..d4e25f761a6 100644
---- a/hw/sparc/leon3.c
-+++ b/hw/sparc/leon3.c
-@@ -29,6 +29,7 @@
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "qemu/datadir.h"
-+#include "exec/cpu-common.h"
- #include "cpu.h"
- #include "hw/core/irq.h"
- #include "qemu/timer.h"
-diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
-index dab7a23224c..d5275a463b8 100644
---- a/hw/vfio-user/container.c
-+++ b/hw/vfio-user/container.c
-@@ -15,6 +15,7 @@
- #include "hw/vfio-user/trace.h"
- #include "hw/vfio/vfio-device.h"
- #include "hw/vfio/vfio-listener.h"
-+#include "system/ramblock.h"
- #include "qapi/error.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/usb/usb.h"
+ #include "migration/vmstate.h"
+ #include "desc.h"
+diff --git a/hw/usb/redirect.c b/hw/usb/redirect.c
+index 6fd04b7b421..fda5bbca676 100644
+--- a/hw/usb/redirect.c
++++ b/hw/usb/redirect.c
+@@ -42,7 +42,7 @@
+ #include <usbredirfilter.h>
  
- /*
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 013a691bc5a..5993d905457 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -15,7 +15,7 @@
- #include <linux/vfio.h>
- 
- #include "system/tcg.h"
--#include "system/ram_addr.h"
-+#include "system/ramblock.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "hw/vfio/vfio-container.h"
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 2cbc7b4964f..c595f860cea 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -23,6 +23,7 @@
- #include <sys/ioctl.h>
- 
- #include "system/kvm.h"
-+#include "exec/cpu-common.h"
- #include "hw/vfio/vfio-device.h"
- #include "hw/core/hw-error.h"
- #include "qapi/error.h"
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index fde343f06e3..58a4940b00e 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -27,7 +27,7 @@
- #include "migration-multifd.h"
- #include "qapi/error.h"
- #include "qapi/qapi-events-vfio.h"
--#include "exec/ramlist.h"
-+#include "system/ramlist.h"
- #include "pci.h"
- #include "trace.h"
- #include "hw/core/hw-error.h"
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 266a11514a1..2e33e78e775 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -28,6 +28,7 @@
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/usb/usb.h"
  #include "migration/qemu-file-types.h"
- #include "system/dma.h"
- #include "system/memory.h"
-+#include "system/ramblock.h"
- #include "trace.h"
- 
- /* enabled until disconnected backend stabilizes */
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index e31d3797025..11115f60845 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -18,6 +18,7 @@
- #include "hw/xen/xen_native.h"
- #include "qemu/bitmap.h"
- 
-+#include "system/ramlist.h"
- #include "system/runstate.h"
- #include "system/xen-mapcache.h"
- #include "trace.h"
-diff --git a/hw/xen/xen_pt_graphics.c b/hw/xen/xen_pt_graphics.c
-index 2c0cec97234..445f33e1726 100644
---- a/hw/xen/xen_pt_graphics.c
-+++ b/hw/xen/xen_pt_graphics.c
-@@ -5,6 +5,7 @@
+ #include "migration/vmstate.h"
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 6b71605dd97..a0a66b105aa 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -28,7 +28,7 @@
+ #include "hw/pci/msix.h"
+ #include "hw/pci/pci_bridge.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/vfio/vfio-cpr.h"
+ #include "migration/vmstate.h"
+ #include "migration/cpr.h"
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index 3a6de7ebb43..f2377d2d501 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -21,7 +21,7 @@
+ #include "qemu/cutils.h"
+ #include "hw/core/qdev.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/virtio/vhost.h"
+ #include "hw/virtio/virtio.h"
+ #include "hw/virtio/virtio-bus.h"
+diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
+index 0acd9580b13..ad6fcacf066 100644
+--- a/hw/virtio/vhost-user-fs.c
++++ b/hw/virtio/vhost-user-fs.c
+@@ -16,7 +16,7 @@
+ #include "standard-headers/linux/virtio_fs.h"
  #include "qapi/error.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/virtio/virtio-access.h"
+ #include "qemu/error-report.h"
+diff --git a/hw/virtio/vhost-user-vsock.c b/hw/virtio/vhost-user-vsock.c
+index e20e0aee439..c2cd376e732 100644
+--- a/hw/virtio/vhost-user-vsock.c
++++ b/hw/virtio/vhost-user-vsock.c
+@@ -13,7 +13,7 @@
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/virtio/vhost-user-vsock.h"
+ 
+ static const int user_feature_bits[] = {
+diff --git a/hw/virtio/virtio-iommu-pci.c b/hw/virtio/virtio-iommu-pci.c
+index 9d32b8a7b3c..f5f6ce7359d 100644
+--- a/hw/virtio/virtio-iommu-pci.c
++++ b/hw/virtio/virtio-iommu-pci.c
+@@ -14,7 +14,7 @@
+ #include "hw/virtio/virtio-pci.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "qapi/error.h"
+ #include "hw/core/boards.h"
+ #include "hw/pci/pci_bus.h"
+diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
+index c1b92d90cf9..0fe9c0aada8 100644
+--- a/hw/xen/xen_pt.c
++++ b/hw/xen/xen_pt.c
+@@ -59,7 +59,7 @@
+ 
+ #include "hw/pci/pci.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
  #include "hw/xen/xen_pt.h"
  #include "hw/xen/xen_igd.h"
-+#include "exec/cpu-common.h"
- #include "xen-host-pci-device.h"
- 
- static unsigned long igd_guest_opregion;
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index 5e6f897429d..d427d68e505 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -49,6 +49,7 @@
- #include "bootparam.h"
- #include "xtensa_memory.h"
- #include "hw/xtensa/mx_pic.h"
-+#include "exec/cpu-common.h"
- #include "migration/vmstate.h"
- 
- typedef struct XtfpgaFlashDesc {
-diff --git a/migration/ram.c b/migration/ram.c
-index 6b469238ad2..a57f4f49b34 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -48,7 +48,7 @@
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qmp/qerror.h"
- #include "trace.h"
--#include "system/ram_addr.h"
-+#include "system/ramblock.h"
- #include "exec/target_page.h"
- #include "qemu/rcu_queue.h"
- #include "migration/colo.h"
-diff --git a/stubs/physmem.c b/stubs/physmem.c
-index 1fc5f2df29f..14667f2bd8f 100644
---- a/stubs/physmem.c
-+++ b/stubs/physmem.c
-@@ -1,5 +1,5 @@
- #include "qemu/osdep.h"
--#include "exec/cpu-common.h"
-+#include "system/ramblock.h"
- 
- RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
-                                    ram_addr_t *offset)
-diff --git a/stubs/ram-block.c b/stubs/ram-block.c
-index e88fab31a5d..8790a59593e 100644
---- a/stubs/ram-block.c
-+++ b/stubs/ram-block.c
-@@ -1,6 +1,6 @@
- #include "qemu/osdep.h"
--#include "exec/ramlist.h"
--#include "exec/cpu-common.h"
-+#include "system/ramlist.h"
-+#include "system/ramblock.h"
- #include "system/memory.h"
- 
- void *qemu_ram_get_host_addr(RAMBlock *rb)
-diff --git a/system/ioport.c b/system/ioport.c
-index 4f96e9119fc..801e2490c36 100644
---- a/system/ioport.c
-+++ b/system/ioport.c
-@@ -29,6 +29,7 @@
- #include "system/ioport.h"
- #include "system/memory.h"
- #include "system/address-spaces.h"
-+#include "hw/core/qdev.h"
- #include "trace.h"
- 
- struct MemoryRegionPortioList {
-diff --git a/system/memory.c b/system/memory.c
-index b65219c2e49..25950756604 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -26,7 +26,7 @@
- #include "qom/object.h"
- #include "trace.h"
- #include "system/physmem.h"
--#include "system/ram_addr.h"
-+#include "system/ramblock.h"
- #include "system/kvm.h"
- #include "system/runstate.h"
- #include "system/tcg.h"
-diff --git a/system/physmem.c b/system/physmem.c
-index e3221ce00de..2547687d137 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -68,7 +68,7 @@
- #include "qemu/main-loop.h"
- #include "system/replay.h"
- 
--#include "system/ram_addr.h"
-+#include "system/ramblock.h"
- 
- #include "qemu/pmem.h"
- 
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 12a63602b11..48f853fff80 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -22,6 +22,7 @@
- #include "qapi/error.h"
- #include "system/system.h"
- #include "system/runstate.h"
-+#include "system/ramblock.h"
- #include "system/kvm.h"
- #include "system/kvm_int.h"
- #include "kvm_arm.h"
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 60c79811382..e98da47a451 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -35,6 +35,7 @@
+ #include "hw/xen/xen.h"
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index be99b2ab94c..da536fb30ed 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -31,7 +31,7 @@
+ #include "qapi/qapi-types-machine.h"
  #include "system/hw_accel.h"
- #include "system/kvm_int.h"
- #include "system/runstate.h"
-+#include "system/ramblock.h"
- #include "kvm_i386.h"
- #include "../confidential-guest.h"
- #include "sev.h"
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index fd2dada013b..fb5a3b5d778 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -41,6 +41,7 @@
- #include "confidential-guest.h"
- #include "hw/i386/pc.h"
- #include "system/address-spaces.h"
-+#include "system/ramlist.h"
- #include "hw/i386/e820_memory_layout.h"
- #include "qemu/queue.h"
- #include "qemu/cutils.h"
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 2c96eca584e..3b2f1077da6 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -41,7 +41,7 @@
- #include "trace.h"
- #include "gdbstub/enums.h"
- #include "exec/memattrs.h"
--#include "system/ram_addr.h"
-+#include "system/ramblock.h"
- #include "system/hostmem.h"
- #include "qemu/cutils.h"
- #include "qemu/main-loop.h"
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 916dac1f14e..fe3bf408dda 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -41,7 +41,7 @@
- #include "system/runstate.h"
- #include "system/device_tree.h"
- #include "gdbstub/enums.h"
--#include "system/ram_addr.h"
-+#include "system/ramblock.h"
- #include "trace.h"
- #include "hw/s390x/s390-pci-inst.h"
- #include "hw/s390x/s390-pci-bus.h"
-diff --git a/util/vfio-helpers.c b/util/vfio-helpers.c
-index fdff042ab46..44b457c442f 100644
---- a/util/vfio-helpers.c
-+++ b/util/vfio-helpers.c
-@@ -14,7 +14,7 @@
- #include <sys/ioctl.h>
- #include <linux/vfio.h>
- #include "qapi/error.h"
--#include "exec/ramlist.h"
-+#include "system/ramlist.h"
- #include "exec/cpu-common.h"
- #include "system/memory.h"
- #include "trace.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/qdev-properties-system.h"
++#include "hw/core/qdev-properties-system.h"
+ #include "hw/resettable.h"
+ #include "fpu/softfloat-helpers.h"
+ #include "disas/capstone.h"
 -- 
 2.51.1
 
