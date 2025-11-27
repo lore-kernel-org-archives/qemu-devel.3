@@ -4,39 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96417CFD2F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 17:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D64CFD2F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 17:35:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOfsh-0004U0-KV; Thu, 27 Nov 2025 12:34:11 -0500
+	id 1vOfsg-0004TP-Ek; Thu, 27 Nov 2025 12:34:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vOfsb-0004Rq-UX
+ id 1vOfsb-0004Rp-UK
  for qemu-devel@nongnu.org; Thu, 27 Nov 2025 12:34:05 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vOfsX-0001GD-Dz
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 12:34:03 -0500
+ id 1vOfsW-0001Fp-Vd
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 12:34:04 -0500
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 448DD80DEE;
- Thu, 27 Nov 2025 20:33:56 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 04A1680C40;
+ Thu, 27 Nov 2025 20:33:55 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:834::1:7])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id rXiJgL0F7Os0-nKkrkL6N; Thu, 27 Nov 2025 20:33:55 +0300
+ ESMTPSA id rXiJgL0F7Os0-9emaeKjH; Thu, 27 Nov 2025 20:33:54 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1764264835;
- bh=21bOsdj8Db2Anq8WOkQGn/n5zY4kVb5bAQZaJlGVSSI=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=1hVeVE77GNWGI2qNR8WR98AF8wtVXR3eUvkw0xQ4N39a0BGAJxRZWAhnJN5+09TEg
- d0Es3kHlrmDpr9xsxemX0op+U+hsF2iJO/+aIbuX0jCiqTqILNeMZOlVmIStlQroPe
- wSyIC+rBIa8nmwCKBu+Lp3DzD5T5To1aAf4tdtVs=
+ s=default; t=1764264834;
+ bh=tFRKw0vBWvv++xCEOYc1TZr0psCfpx6qx1pEqp6qrIM=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=HLtrr9B7NtFnqM2zfMGqBDi8RbTfTU3xyMRomcudxubmfliiMOXyKv0IjRSsqcKtf
+ xpNr79A2qxd07cl15Nt6hd1Dj/FdssuRocHOOL8lvkuGv0dGTPxRBf5AlFYGFGveJm
+ 54P1guvgDYRd/Yez9l1ERi6cHaVeTDTbOXnUWk2s=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,22 +43,21 @@ To: dave@treblig.org,
 	armbru@redhat.com
 Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
  vsementsov@yandex-team.ru
-Subject: [PATCH 2/5] monitor: remove unused error_printf_unless_qmp() function
-Date: Thu, 27 Nov 2025 20:33:49 +0300
-Message-ID: <20251127173352.283731-3-vsementsov@yandex-team.ru>
+Subject: [PATCH for-11.0 0/5] some improvements around error reporting
+Date: Thu, 27 Nov 2025 20:33:47 +0300
+Message-ID: <20251127173352.283731-1-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251127173352.283731-1-vsementsov@yandex-team.ru>
-References: <20251127173352.283731-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,73 +73,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
----
- include/monitor/monitor.h |  3 ---
- monitor/monitor.c         | 24 ------------------------
- stubs/error-printf.c      |  5 -----
- 3 files changed, 32 deletions(-)
+Hi all. The main thing I wanted to do is to enable timestamps
+for errer_report() and friends when QMP monitor is active.
+Analyzing logs without timestamps is painful.
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index c3740ec616..296690e1f1 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -59,7 +59,4 @@ void monitor_register_hmp(const char *name, bool info,
- void monitor_register_hmp_info_hrt(const char *name,
-                                    HumanReadableText *(*handler)(Error **errp));
- 
--int error_vprintf_unless_qmp(const char *fmt, va_list ap) G_GNUC_PRINTF(1, 0);
--int error_printf_unless_qmp(const char *fmt, ...) G_GNUC_PRINTF(1, 2);
--
- #endif /* MONITOR_H */
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index c5a5d30877..b5007c1851 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -281,30 +281,6 @@ int error_vprintf(const char *fmt, va_list ap)
-     return vfprintf(stderr, fmt, ap);
- }
- 
--int error_vprintf_unless_qmp(const char *fmt, va_list ap)
--{
--    Monitor *cur_mon = monitor_cur();
--
--    if (!cur_mon) {
--        return vfprintf(stderr, fmt, ap);
--    }
--    if (!monitor_cur_is_qmp()) {
--        return monitor_vprintf(cur_mon, fmt, ap);
--    }
--    return -1;
--}
--
--int error_printf_unless_qmp(const char *fmt, ...)
--{
--    va_list ap;
--    int ret;
--
--    va_start(ap, fmt);
--    ret = error_vprintf_unless_qmp(fmt, ap);
--    va_end(ap);
--    return ret;
--}
--
- static MonitorQAPIEventConf monitor_qapi_event_conf[QAPI_EVENT__MAX] = {
-     /* Limit guest-triggerable events to 1 per second */
-     [QAPI_EVENT_RTC_CHANGE]        = { 1000 * SCALE_MS },
-diff --git a/stubs/error-printf.c b/stubs/error-printf.c
-index 0e326d8010..1afa0f62ca 100644
---- a/stubs/error-printf.c
-+++ b/stubs/error-printf.c
-@@ -16,8 +16,3 @@ int error_vprintf(const char *fmt, va_list ap)
-     }
-     return vfprintf(stderr, fmt, ap);
- }
--
--int error_vprintf_unless_qmp(const char *fmt, va_list ap)
--{
--    return error_vprintf(fmt, ap);
--}
+And some enhancements here and there around.
+
+Vladimir Sementsov-Ogievskiy (5):
+  ui/vnc: don't use of error_printf_unless_qmp()
+  monitor: remove unused error_printf_unless_qmp() function
+  monitor: rework monitor_cur_is_qmp() into monitor_cur_is_hmp()
+  error: print error_report timestamp when QMP monitor is active
+  error-report: fix doc for vreport()
+
+ include/monitor/monitor.h      |  5 +----
+ monitor/monitor.c              | 30 +++---------------------------
+ stubs/error-printf.c           |  5 -----
+ stubs/monitor-core.c           |  5 +++++
+ tests/unit/test-util-sockets.c |  1 +
+ ui/vnc.c                       |  9 ++++-----
+ util/error-report.c            | 25 +++++++++++++++----------
+ 7 files changed, 29 insertions(+), 51 deletions(-)
+
 -- 
 2.48.1
 
