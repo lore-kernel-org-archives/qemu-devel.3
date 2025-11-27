@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E9ECFD2F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 09:42:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0828ED11183
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 09:57:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOYVC-0006FL-5l; Thu, 27 Nov 2025 04:41:26 -0500
+	id 1vOYjo-0004XW-TV; Thu, 27 Nov 2025 04:56:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vOYVA-0006En-BE
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 04:41:24 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vOYV7-0002J3-9h
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 04:41:23 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxB9G3HChpqLAoAA--.22367S3;
- Thu, 27 Nov 2025 17:41:11 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJAxQMKxHChpBORAAQ--.36258S3;
- Thu, 27 Nov 2025 17:41:07 +0800 (CST)
-Subject: Re: virtio-crypto: Inquiry about virtio crypto
-To: "Gonglei (Arei)" <arei.gonglei@huawei.com>
-Cc: "linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
- "virtualization@lists.linux.dev" <virtualization@lists.linux.dev>,
- linux-kernel <linux-kernel@vger.kernel.org>,
- QEMU devel <qemu-devel@nongnu.org>
-References: <d4258604-e678-f975-0733-71190cf4067d@loongson.cn>
- <027ff08db97d414da0ccc24a439e75d0@huawei.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <8b902563-4cb6-5409-4339-1afecc26803a@loongson.cn>
-Date: Thu, 27 Nov 2025 17:38:39 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vOYji-0004Vs-8W
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 04:56:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vOYjf-00063v-BF
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 04:56:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764237381;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=j3jsijaX9E5IJhaTwRaE3+V2ffrJ3L3g3vqtDYbXUPE=;
+ b=DkcGRSe9NpxAzeMs+Gp6VjNOg7K49ir0KSZrXFCjUL/BSPhBGATVdLsAndoaTqeiw6h2iq
+ AMDoAdlTh9hEImF6HTE4WVV3Il+A0Crf24BFSqYqXCdtcZOy/2HKlBvYfDQRiNHQFW8Gxm
+ nY9jwPWdDNYsxDTDcE4d8SrT7wGOwHg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-310-V2eODFPONzOhFVaZE8hf9Q-1; Thu,
+ 27 Nov 2025 04:56:19 -0500
+X-MC-Unique: V2eODFPONzOhFVaZE8hf9Q-1
+X-Mimecast-MFC-AGG-ID: V2eODFPONzOhFVaZE8hf9Q_1764237378
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5D48195606F; Thu, 27 Nov 2025 09:56:17 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.116])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 062C51800872; Thu, 27 Nov 2025 09:56:14 +0000 (UTC)
+Date: Thu, 27 Nov 2025 10:56:12 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: andrey.drobyshev@virtuozzo.com
+Cc: qemu-devel@nongnu.org, peterx@redhat.com, stefanha@redhat.com,
+ vsementsov@yandex-team.ru, den@virtuozzo.com
+Subject: Re: [PATCH 4/4] scripts/qemugdb: coroutine: Add option for obtaining
+ detailed trace in coredump
+Message-ID: <aSggPDzhqem_jxnR@redhat.com>
+References: <20251125142105.448289-1-andrey.drobyshev@virtuozzo.com>
+ <20251125142105.448289-5-andrey.drobyshev@virtuozzo.com>
 MIME-Version: 1.0
-In-Reply-To: <027ff08db97d414da0ccc24a439e75d0@huawei.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxQMKxHChpBORAAQ--.36258S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7uw4fXFWfZrW3ZFW5KrWUWrX_yoW8WFWfpa
- y3KFWFkrZ8Jr1xCa4vqFy5CFW5ZFZ8Cr13WrZrWry3CrZ8AF92vr1avr1vq3srAF1rCF1D
- Xw40qFy0kr98ZagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvSb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
- 67AKxVWxJVW8Jr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2
- xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAq
- x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r
- 1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF
- 7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxV
- WxJVW8Jr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7I
- U1NBMJUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.604,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251125142105.448289-5-andrey.drobyshev@virtuozzo.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,59 +84,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Am 25.11.2025 um 15:21 hat andrey.drobyshev@virtuozzo.com geschrieben:
+> From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> 
+> Commit 772f86839f ("scripts/qemu-gdb: Support coroutine dumps in
+> coredumps") introduced coroutine traces in coredumps using raw stack
+> unwinding.  While this works, this approach does not allow to view the
+> function arguments in the corresponding stack frames.
+> 
+> As an alternative, we can obtain saved registers from the coroutine's
+> jmpbuf, copy the original coredump file into a temporary file, patch the
+> saved registers into the tmp coredump's struct elf_prstatus and execute
+> another gdb subprocess to get backtrace from the patched temporary coredump.
+> 
+> While providing more detailed info, this alternative approach, however, is
+> quite heavyweight as it takes significantly more time and disk space.
+> So, instead of making it a new default, let's keep raw unwind the default
+> behaviour, but add the '--detailed' option for 'qemu bt' and 'qemu coroutine'
+> command which would enforce the new behaviour.
+> [...]
 
-Hi gonglei,
+> +def clone_coredump(source, target, set_regs):
+> +    shutil.copyfile(source, target)
+> +    write_regs_to_coredump(target, set_regs)
+> +
+> +def dump_backtrace_patched(regs):
+> +    files = gdb.execute('info files', False, True).split('\n')
+> +    executable = re.match('^Symbols from "(.*)".$', files[0]).group(1)
+> +    dump = re.search("`(.*)'", files[2]).group(1)
+> +
+> +    with tempfile.NamedTemporaryFile(dir='/tmp', delete=False) as f:
+> +        tmpcore = f.name
+> +
+> +    clone_coredump(dump, tmpcore, regs)
 
-Sorry to bother you again.
+I think this is what makes it so heavy, right? Coredumps can be quite
+large and /tmp is probably a different filesystem, so you end up really
+copying the full size of the coredump around.
 
-I notice that numa node is supported with virtio-crypto device. Is there 
-multiple PCIE root bridges with different numa nodes supported on some 
-VM models?
+Wouldn't it be better in the general case if we could just do a reflink
+copy of the coredump and then do only very few writes for updating the
+register values? Then the overhead should actually be quite negligible
+both in terms of time and disk space.
 
-I ask this question because I do not know whether it is possible to 
-preallocate virtio_crypto_op_data_req buffer and IV buffer within 
-structure virtio_crypto_sym_request. Only that there is no node 
-information when virtio_crypto_sym_request is allocated.
-
-Regards
-Bibo Mao
-
-
-On 2025/11/27 上午10:56, Gonglei (Arei) wrote:
-> Hi,
-> 
->> -----Original Message-----
->> From: Bibo Mao <maobibo@loongson.cn>
->> Sent: Thursday, November 27, 2025 9:43 AM
->> To: Gonglei (Arei) <arei.gonglei@huawei.com>
->> Cc: linux-crypto@vger.kernel.org; virtualization@lists.linux.dev; linux-kernel
->> <linux-kernel@vger.kernel.org>; QEMU devel <qemu-devel@nongnu.org>
->> Subject: virtio-crypto: Inquiry about virtio crypto
->>
->> Hi gonglei,
->>
->>      I am investigating how to use HW crypto accelerator in VM. It seems that
->> virtio-crypto is one option, however only aes skcipher algo is supported and
-> 
-> Actually akcipher service had been supported by virtio-crypto in 2022.
-> 
->> virtio-crypto device is not suggested by RHEL 10.
->>
->> https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html
->> /configuring_and_managing_linux_virtual_machines/feature-support-and-limit
->> ations-in-rhel-10-virtualization
->>
->>     I want to know what is the potential issued with virtio-crypto.
->>
-> 
-> This question is too big, maybe you'd better ask RHEL guys. :(
-> 
-> Regards,
-> -Gonglei
-> 
->> Regards
->> Bibo Mao
-> 
-> 
+Kevin
 
 
