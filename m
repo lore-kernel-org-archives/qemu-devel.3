@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7077FD116E0
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 00:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C20DED116E1
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 00:13:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOPd4-0002jw-3l; Wed, 26 Nov 2025 19:12:58 -0500
+	id 1vOPdF-0002pb-8Q; Wed, 26 Nov 2025 19:13:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3gpcnaQcKCp8M9UHCDLFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--navidem.bounces.google.com>)
- id 1vOPd1-0002gy-Sp
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 19:12:55 -0500
-Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
+ <3j5cnaQcKCqwZMhUPQYSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--navidem.bounces.google.com>)
+ id 1vOPdD-0002p7-K9
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 19:13:07 -0500
+Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3gpcnaQcKCp8M9UHCDLFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--navidem.bounces.google.com>)
- id 1vOPd0-0005yY-7D
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 19:12:55 -0500
-Received: by mail-pf1-x449.google.com with SMTP id
- d2e1a72fcca58-7b8a12f0cb4so213889b3a.3
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 16:12:52 -0800 (PST)
+ <3j5cnaQcKCqwZMhUPQYSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--navidem.bounces.google.com>)
+ id 1vOPdC-000603-5j
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 19:13:07 -0500
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-295952a4dd6so15220695ad.1
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 16:13:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1764202371; x=1764807171; darn=nongnu.org;
+ d=google.com; s=20230601; t=1764202384; x=1764807184; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=uSoBoVL9DjBHsGRfYe8XYLj51gZGrhVymhTsNNjP0Es=;
- b=UGAP/f5hKXHhGmQRvJFovwh1ZdOKhVCt2MUhDq8GqyJLqvYJ20vk0Y8Y2Bzgw4EKYJ
- Y0osPKsygHXZ9blXHM8usA7hrzaq3GzI9yMAWEAmhd2g18D/+y+N2GiChqflsy2dN/u9
- kHb3FSxh/n/6+6DETiCpgekQorxYZVqU2T9l7tdqdjmEfifY6E9kvigjmnPuxwzp+hE4
- NjQEWtFIaaJQUMEnicJ4CBh4Tu6zOv5bk6wgDz3WREpHOlMRCOx7EsOtDfnNHgTHXh30
- 6Tg+uNL5YCUCExhaey6pi4i9Tl+emVbLWIxNotwrVeguRUOKOp4lHVXgjb24e9RCDVp4
- t0gw==
+ bh=LnAzc27LiQK6IQy24x9xB/i64MPHYZS7/qEEHPh3edU=;
+ b=L/zProrqlU19m4I8RnkBhqPEPHHRg37iI/A+Wz9BDv9NyqouvGG0lbAj0lN9Y7GhEd
+ UurWry5PENrrqrzu5xOf2T11zoncMo2DVhjVJiCSIZnhWamA09NJRQEQdWoCsoNefJ5r
+ 46eYKEmiddrhvYkNbL5Mgh+TDqnL37+1NCVr0LosxgFk3b7cMnVy4vYCrz9nWoQ9yk3F
+ Y+H6jCKfMLVCBw69C31S7EfP6WPb46hjTJPGScWKu0WRziigqtwEuwf+j+V80CT4BvSh
+ uzrIJDvLQuoKDDWFrB45cHOoptcACyJvxZe3KB+25vNLGTqo3FMduljhzSXCRw/t6A01
+ uHXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764202371; x=1764807171;
+ d=1e100.net; s=20230601; t=1764202384; x=1764807184;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uSoBoVL9DjBHsGRfYe8XYLj51gZGrhVymhTsNNjP0Es=;
- b=bEzG2wq0XnehFXH0MIbZmtNacFWRiklIiMPb0Pur1Js/UdNiiaoluQIcmP+0UFWKmt
- biYnMxdGwKHlgL/LVJGHmdx5+gSSJCtMzg8keW2WGKsNnJbjJJdejUaXvJ5jJbLY9ZS0
- cXKYOTOcpSmKCKLv36ztz42h+0nWISqByz8qaW3wBF8En9fBVkXQ9G5DJv9nU4GgOFqZ
- faePaHnEcogDaxSLI5qFr7rOZ2QxSk03RPcXiW9/VfQKE7OoBMqHfp3bhjOElYv65vlH
- UaFTaro5q2Jew96KHorRDbxelbrNhOjDZXZpkSrFrCekXwOUavFMgVkJUHYyQ1DRXvpR
- /tDg==
-X-Gm-Message-State: AOJu0YwtMo5ePgIlsU7GjSyiFYVrTeWLhymxLn6sovRgZ4JRT9oIWEL/
- RtkXqpfNpO8rzc7rNlfDLC9449NgPT4d+6bIcXG5wxwn0srcAotyTtyIbLwoGcF6h19LUypyHlP
- GFkhWe/1uAM3fM9dlMn+15cB3Rg+zleIp2J/rtGbXlMRW0gi3h3k7mySrJHIGuMKTn9HNItehBl
- 0fWgsSNcfdVLpsdAuAfcgCcUaoazcP7tV9vL4kXni1
-X-Google-Smtp-Source: AGHT+IEC4YBp8uF6bdbTNFhbtdJ2yCP/6X8FcBczQ40MwhRjxugIjCGomGqGPPltM2dZRabS6DH5mc5sAiTm
-X-Received: from pfmu8.prod.google.com ([2002:aa7:8388:0:b0:799:398b:a4a])
+ bh=LnAzc27LiQK6IQy24x9xB/i64MPHYZS7/qEEHPh3edU=;
+ b=wiS57moinfG0EGBzA/DiNlBNi/eMcT0YKZH5NXFcAPXGFVMSYvfuyw7KxB1EWuTOBj
+ /h1yIT65q+wNQQtxxbrAcDQwSo7iqhjB/LXLPSAFDaDmr93QWRU7atB5Ew1EgeWMS0Ua
+ MOzOqbelIDFZX9CeFPYocaPrs5BMDE/YKDZbkoRWqS2eOXbvg66saI2mcRpLbGdswnmf
+ 86GD90w0rMnSRajH+O4YgL0B0hct1GG/WM+IFvKe2Jw/hS9Sp0PJK/QZ7cswCoJPJ9R9
+ RSpcTqxvmnPx1QJMtbbN6M9sFKuMmJA4JQ4rnxKOh6L2WJwqG1HGqa90gmr16diBpxZP
+ BCXw==
+X-Gm-Message-State: AOJu0YwJZfhS7FzuBDHAM4rSG9gsjSTiKoJ/YsQSkttMkkvAkOJwTOZW
+ ZR9J0ZPkQopSTsMROidfFUUJ8PUP15bezkBUTcECHHjHT9z4Rb5jvHpOoeZkMTp9SbI2MFjQtCe
+ 8KwsHlTAGTtGNuk4HN1Ka1N35EX/+CNVCdKQwLXoAXjNlmadUdXlgNsdDgj6Br1jr0AuGo7ftbv
+ CgTSvJed7JgGJJOr0sza6JHZf8SoB810/XhCo+tl47
+X-Google-Smtp-Source: AGHT+IFm+oWf3dffHZsfWphXzUQs2N2I4E5TDGLT2J5JnQVFZuawANcaOzo3brKAWVtpTTEceEwW2+bCMhGY
+X-Received: from pjnm17.prod.google.com ([2002:a17:90a:8591:b0:340:a5c6:acc3])
  (user=navidem job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:2191:b0:7a3:455e:3fa5
- with SMTP id d2e1a72fcca58-7ca8627223fmr8934127b3a.0.1764202370871; Wed, 26
- Nov 2025 16:12:50 -0800 (PST)
-Date: Thu, 27 Nov 2025 00:12:42 +0000
-In-Reply-To: <CAFEAcA-hyn0B-yWE1=g4+NN9=NBjWvk-P8qrAk9L4vpAZpUYvQ@mail.gmail.com>
+ 2002:a17:902:fc48:b0:297:e897:6f6d
+ with SMTP id d9443c01a7336-29b5e2f794amr274934625ad.9.1764202383896; Wed, 26
+ Nov 2025 16:13:03 -0800 (PST)
+Date: Thu, 27 Nov 2025 00:12:47 +0000
+In-Reply-To: <20251127001247.1672873-1-navidem@google.com>
 Mime-Version: 1.0
 References: <CAFEAcA-hyn0B-yWE1=g4+NN9=NBjWvk-P8qrAk9L4vpAZpUYvQ@mail.gmail.com>
+ <20251127001247.1672873-1-navidem@google.com>
 X-Mailer: git-send-email 2.52.0.158.g65b55ccf14-goog
-Message-ID: <20251127001247.1672873-1-navidem@google.com>
-Subject: [PATCH v2 0/5] tests/qtest: Rework libqos PCI BAR handling to support
- fuzzing
+Message-ID: <20251127001247.1672873-6-navidem@google.com>
+Subject: [PATCH v2 5/5] tests/qtest/fuzz: Add generic fuzzer for
+ pcie-pci-bridge
 From: Navid Emamdoost <navidem@google.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org
 Cc: farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com, zsm@google.com, 
- alxndr@bu.edu, Navid Emamdoost <navidem@google.com>
+ alxndr@bu.edu, Navid Emamdoost <navidem@google.com>,
+ Bandan Das <bsd@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Darren Kenny <darren.kenny@oracle.com>, 
+ Qiuhao Li <Qiuhao.Li@outlook.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
- envelope-from=3gpcnaQcKCp8M9UHCDLFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--navidem.bounces.google.com;
- helo=mail-pf1-x449.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
+ envelope-from=3j5cnaQcKCqwZMhUPQYSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--navidem.bounces.google.com;
+ helo=mail-pl1-x649.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -95,52 +99,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
-
-Thank you for the excellent feedback on the first version of this series.
-I have implemented your suggestions in this new version of the patch series.
-
-The original prerequisite patch (which used #ifdef CONFIG_FUZZ) has been
-expanded into a 4-patch series that makes the libqos PCI API safer and more
-robust for all use cases. This involved fixing several tests in the suite
-that were performing invalid memory accesses, which the new API now
-correctly catches.
-
-The final patch in the series, which adds the pcie-pci-bridge fuzzer,
-remains unchanged.
+Add a new generic fuzz target for the 'pcie-pci-bridge' device. This
+target uses a Q35 machine with a multi-level PCI hierarchy to exercise
+the bridge's functionality.
+This is made possible by the preceding change to handle unimplemented
+BARs during fuzzing.
 
 ---
 
-Changes in v2:
+This new target significantly improves code coverage for the pcie-pci-bridge
+implementation. The baseline coverage shown below was generated by
+running all existing fuzz targets with the oss-fuzz corpus.
 
-- Reworked the prerequisite from a single #ifdef-based patch into a
-4-patch series that improves the core libqos API.
-- (1/5) The core change now adds a size field to QPCIBar and moves
-bounds checking into the accessor functions.
-- (2/5) The qpci_legacy_iomap function is updated to require a size,
-and its callers (ide-test, tco-test) are fixed.
-- (3/5) ahci-test is fixed to check only implemented ports.
-- (4/5) nvme-test is reworked to be compatible with the new strict
-BAR checks.
-- (5/5) The fuzzer patch is unchanged.
+=== Component: hw/pci  ===
+-------------------------------------------------------------------------------
+File                           New Target           Baseline             Change
+-------------------------------------------------------------------------------
+shpc.c                         359/511 (70.3%)      0/511 (0.0%)         +359
+pci_bridge.c                   255/304 (83.9%)      12/304 (3.9%)        +243
+pcie.c                         390/774 (50.4%)      160/774 (20.7%)      +230
+pcie_aer.c                     119/524 (22.7%)      38/524 (7.3%)        +81
+pci.c                          1154/2069 (55.8%)    1084/2069 (52.4%)    +70
+pcie_port.c                    58/119 (48.7%)       17/119 (14.3%)       +41
+pci.h                          86/132 (65.2%)       81/132 (61.4%)       +5
 
+=== Component: hw/pci-bridge  ===
+-------------------------------------------------------------------------------
+File                           New Target           Baseline             Change
+-------------------------------------------------------------------------------
+pcie_root_port.c               86/127 (67.7%)       13/127 (10.2%)       +73
+pcie_pci_bridge.c              62/94 (66.0%)        20/94 (21.3%)        +42
+gen_pcie_root_port.c           45/66 (68.2%)        19/66 (28.8%)        +26
 
-Navid Emamdoost (5):
-  libqos: pci: Handle zero-sized BARs gracefully
-  libqos: pci: Require size for legacy I/O port mapping
-  tests/qtest: ahci-test: Check only implemented ports in verify_state
-  tests/qtest: Rework nvmetest_oob_cmb_test for BAR check
-  tests/qtest/fuzz: Add generic fuzzer for pcie-pci-bridge
+Signed-off-by: Navid Emamdoost <navidem@google.com>
+---
+ tests/qtest/fuzz/generic_fuzz_configs.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
- tests/qtest/ahci-test.c                 |  8 +++++++
- tests/qtest/fuzz/generic_fuzz_configs.h |  8 +++++++
- tests/qtest/ide-test.c                  |  2 +-
- tests/qtest/libqos/pci.c                | 29 +++++++++++++++++++---
- tests/qtest/libqos/pci.h                |  3 ++-
- tests/qtest/nvme-test.c                 | 32 ++++++++++++++++++-------
- tests/qtest/tco-test.c                  |  2 +-
- 7 files changed, 69 insertions(+), 15 deletions(-)
-
+diff --git a/tests/qtest/fuzz/generic_fuzz_configs.h b/tests/qtest/fuzz/generic_fuzz_configs.h
+index ef0ad95712..e025f57a3e 100644
+--- a/tests/qtest/fuzz/generic_fuzz_configs.h
++++ b/tests/qtest/fuzz/generic_fuzz_configs.h
+@@ -247,6 +247,14 @@ const generic_fuzz_config predefined_configs[] = {
+         .args = "-machine q35 -nodefaults "
+         "-parallel file:/dev/null",
+         .objects = "parallel*",
++    },{
++        .name = "pcie-pci-bridge",
++        .args = "-machine q35 -nodefaults "
++        "-device pcie-root-port,port=0x10,chassis=1,id=pci.1,bus=pcie.0,multifunction=true,addr=0x2 "
++        "-device pcie-pci-bridge,id=pci.2,bus=pci.1,addr=0x0 "
++        "-netdev user,id=net0 "
++        "-device e1000,netdev=net0,id=nic0,bus=pci.2,addr=0x3",
++        .objects = "pci* shpc*"
+     }
+ };
+ 
 -- 
 2.52.0.158.g65b55ccf14-goog
 
