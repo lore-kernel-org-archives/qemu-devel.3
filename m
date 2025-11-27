@@ -4,76 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32054CFD2F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 16:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBF01D111A8
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 16:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOf2S-0002ET-Jj; Thu, 27 Nov 2025 11:40:12 -0500
+	id 1vOf5f-0003DA-00; Thu, 27 Nov 2025 11:43:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vOf2J-00028u-DE
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 11:40:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOf5d-0003CN-7v
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 11:43:29 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vOf2H-0008W2-C2
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 11:40:03 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOf5b-0000bK-7Q
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 11:43:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764261600;
+ s=mimecast20190719; t=1764261806;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=efb7eo4B9tvrWSL9qQevQYCC+Gdp4QnLw/nYp1DI8sc=;
- b=gjMg1j4RhYR8BhKbtlOj3T4mDGlWmB1L8SSsANGzPszzUlvBCrkLdcbdlJk57qO3gAF78B
- cySh4neLuQKJsNNDgG6QrkpGfuv9uj7GWxsDx4qKDxCvuHnLXLj2lr9jTUYE90mNQM2N2J
- r0MNAhR9N+dPhMPqxS0JW7l4/dpsb28=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-_RpI6urgNxW31sdRDCfIaw-1; Thu,
- 27 Nov 2025 11:39:59 -0500
-X-MC-Unique: _RpI6urgNxW31sdRDCfIaw-1
-X-Mimecast-MFC-AGG-ID: _RpI6urgNxW31sdRDCfIaw_1764261598
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 443A8180045C; Thu, 27 Nov 2025 16:39:57 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9613030001A4; Thu, 27 Nov 2025 16:39:53 +0000 (UTC)
-Date: Thu, 27 Nov 2025 17:39:51 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, peterx@redhat.com, stefanha@redhat.com,
- vsementsov@yandex-team.ru, den@virtuozzo.com
-Subject: Re: [PATCH 4/4] scripts/qemugdb: coroutine: Add option for obtaining
- detailed trace in coredump
-Message-ID: <aSh-1_qLRNGCzV9H@redhat.com>
-References: <20251125142105.448289-1-andrey.drobyshev@virtuozzo.com>
- <20251125142105.448289-5-andrey.drobyshev@virtuozzo.com>
- <aSggPDzhqem_jxnR@redhat.com> <aSghvhrBXL0xxL1a@redhat.com>
- <ef51cf63-16b1-48c4-8070-0acaf618ef3c@virtuozzo.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=U/rrTJNeEyvm6rIYq8jifjOkmHqA4mYCQaPzopL3pcg=;
+ b=c00QNLjejgmU+C36hzZZZ90AX1viyCSl44jQNKOl7w8Ip7qMEkJ258qyXEQmVXWG5LqlZ7
+ 8CsI0eM2Pu3EjBBNNr/e5m6zy0+oubji7ECcTu/bfvPDdzacJw7HLuGJRtZmIm0Izc8BGb
+ eiJtnO84FS4FhTxQsApI5AcM38u1j6c=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-446-0ZQl8989PtOKhnrL3Y-UuA-1; Thu, 27 Nov 2025 11:43:24 -0500
+X-MC-Unique: 0ZQl8989PtOKhnrL3Y-UuA-1
+X-Mimecast-MFC-AGG-ID: 0ZQl8989PtOKhnrL3Y-UuA_1764261804
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-47799717212so8192105e9.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 08:43:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764261804; x=1764866604; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=U/rrTJNeEyvm6rIYq8jifjOkmHqA4mYCQaPzopL3pcg=;
+ b=OK4BOI19Vt2dCGhLzA3nSM+DoGG9/P0c2TqopnlfuM+JhJICBROF1pnYZ/p+spbhce
+ UXcQzB8nClKB+5gaSUbfKBPvUyP6ceL0SEeh0YKL1Dqxcs3ekb8qKRr+h3c283fDNPfE
+ 5HRYxaraXV20aZoFnwFDA0Ycib/rj8kBF2q14Mt3Ee9y+wqIU6cv9D2MooUPRMq7wQiN
+ Hrc+s3sX94nN1/2C2LBuEDmrBTiCMLs61dPd4kHwV/QSyjlKpBDxWbamRgXnCJKWydoc
+ ODMbyhg2mRDDEKa56RiQaqGhxu2UCGPJv/x1BHLIT7n8m8n2ymPOIT1VEik6f48qeAQV
+ v78A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764261804; x=1764866604;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U/rrTJNeEyvm6rIYq8jifjOkmHqA4mYCQaPzopL3pcg=;
+ b=tO5t3dS50Nv4jar6EmsY+nv/viKTbWC6DHmaUSKaOp7G6qGi2PoAMPIQVAW8A79P27
+ kZpomBAoqbER0V1obg8rD9y2CFGkWghPv0IpxvVBTOe6AVFzaTduvlF7/Ht2MPdEXKg9
+ 5VVUNgdLtOJi1XwXHWPBl0ndiLu0IJSk3KTv4w0zfirAOGrf0SElc180w8CQjsOkc8hH
+ 8uuLK7KJKYLw217gBnnXda6M0qp2W3GHPD34kZDzcbLLsgqxT1tZHE5GC/No+OklJ4EZ
+ EGGL1yjZO1mm8+K6RJiI28E25KjbuWks2MAX/LTGIPp5rKwI/DzBbJWnwz4Pt7efQNck
+ DxXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUubAxWaxAnaaLuZIRdp3QC6nzOCKb4bGtLbJu8IiYVnR9VDiWN6BShFErJkAnBErLiRR3Jy37rh91R@nongnu.org
+X-Gm-Message-State: AOJu0YyKAWj/cqmNGQrlhyfET3m28QidJ2vX++nlwvvjAvovI2pYAvSn
+ 8R8tfFhpiGVEIwONqTa6onuYCLPxvjrJX+2jUEIbxrjmtHnvAAFvYUImTvammit61N9VTu8mu8E
+ vUBGkDLzEovR/A8GILjSs8yQljFo2xEOz75RsFmLrxX8Rz4SIxS354rOk
+X-Gm-Gg: ASbGnctakvBY8XpEYXj61PwQ+G/FSyYSptZHcNxL+FX6VaSeiRTkKgU+oRoQ2vMenGU
+ UyY3Mfz4MVKjlK1YP2YBjP505YP0bcET+Rjc4mArZygTjf61v1qfYB65sak2d0jkXkZ38lti4Kk
+ hJY13lHAfheLW6VJSjnB7LxIAkkN3pbGQJpbmo7NEcw4PN7R/n8JcDzGC0srv9XD7v4YZmufOGS
+ HXL+obw7xawdSzMziY5Z0CrVCIXyhRrqnWrssxdFWNjN5L3AoidjnebrYdCBD13vKpnHBpEJOFb
+ 6V/3qW+S6JMwIcZuIEt8uZtKK28M7FNe54+4wkY4Jc90mgK+yVH5ebR87OmpydFBF7sIItXMl3r
+ WePW6nYK0mcjADN8fY53HMRnuwLhMHsTmfCo=
+X-Received: by 2002:a05:600c:8b35:b0:477:3543:3a3b with SMTP id
+ 5b1f17b1804b1-477c10c85d5mr228480165e9.6.1764261803631; 
+ Thu, 27 Nov 2025 08:43:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHyVaI9ucdvRmoMYblaZmeLlPoZ9QJbqc6cpUfUG68E7v0hH007gyL84fSvzSoXTK9pUVeKeQ==
+X-Received: by 2002:a05:600c:8b35:b0:477:3543:3a3b with SMTP id
+ 5b1f17b1804b1-477c10c85d5mr228479895e9.6.1764261803239; 
+ Thu, 27 Nov 2025 08:43:23 -0800 (PST)
+Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4790adc6f7bsm112414735e9.2.2025.11.27.08.43.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 27 Nov 2025 08:43:22 -0800 (PST)
+Message-ID: <a0accce9-6042-4a7b-a7c7-218212818891@redhat.com>
+Date: Thu, 27 Nov 2025 17:43:21 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ef51cf63-16b1-48c4-8070-0acaf618ef3c@virtuozzo.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/4] target/s390x: Fix missing interrupts for small CKC
+ values
+To: Ilya Leoshkevich <iii@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20251016175954.41153-1-iii@linux.ibm.com>
+ <20251016175954.41153-2-iii@linux.ibm.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20251016175954.41153-2-iii@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,86 +169,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 27.11.2025 um 15:31 hat Andrey Drobyshev geschrieben:
-> On 11/27/25 12:02 PM, Daniel P. Berrangé wrote:
-> > On Thu, Nov 27, 2025 at 10:56:12AM +0100, Kevin Wolf wrote:
-> >> Am 25.11.2025 um 15:21 hat andrey.drobyshev@virtuozzo.com geschrieben:
-> >>> From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> >>>
-> >>> Commit 772f86839f ("scripts/qemu-gdb: Support coroutine dumps in
-> >>> coredumps") introduced coroutine traces in coredumps using raw stack
-> >>> unwinding.  While this works, this approach does not allow to view the
-> >>> function arguments in the corresponding stack frames.
-> >>>
-> >>> As an alternative, we can obtain saved registers from the coroutine's
-> >>> jmpbuf, copy the original coredump file into a temporary file, patch the
-> >>> saved registers into the tmp coredump's struct elf_prstatus and execute
-> >>> another gdb subprocess to get backtrace from the patched temporary coredump.
-> >>>
-> >>> While providing more detailed info, this alternative approach, however, is
-> >>> quite heavyweight as it takes significantly more time and disk space.
-> >>> So, instead of making it a new default, let's keep raw unwind the default
-> >>> behaviour, but add the '--detailed' option for 'qemu bt' and 'qemu coroutine'
-> >>> command which would enforce the new behaviour.
-> >>> [...]
-> >>
-> >>> +def clone_coredump(source, target, set_regs):
-> >>> +    shutil.copyfile(source, target)
-> >>> +    write_regs_to_coredump(target, set_regs)
-> >>> +
-> >>> +def dump_backtrace_patched(regs):
-> >>> +    files = gdb.execute('info files', False, True).split('\n')
-> >>> +    executable = re.match('^Symbols from "(.*)".$', files[0]).group(1)
-> >>> +    dump = re.search("`(.*)'", files[2]).group(1)
-> >>> +
-> >>> +    with tempfile.NamedTemporaryFile(dir='/tmp', delete=False) as f:
-> >>> +        tmpcore = f.name
-> >>> +
-> >>> +    clone_coredump(dump, tmpcore, regs)
-> >>
-> >> I think this is what makes it so heavy, right? Coredumps can be quite
-> >> large and /tmp is probably a different filesystem, so you end up really
-> >> copying the full size of the coredump around.
-> > 
-> > On my system /tmp is  tmpfs, so this is actually bringing the whole
-> > coredump into RAM which is not a sensible approach.
-> > 
-> >> Wouldn't it be better in the general case if we could just do a reflink
-> >> copy of the coredump and then do only very few writes for updating the
-> >> register values? Then the overhead should actually be quite negligible
-> >> both in terms of time and disk space.
-> > 
+On 16/10/2025 19.58, Ilya Leoshkevich wrote:
+> Suppose TOD clock value is 0x1111111111111111 and clock-comparator
+> value is 0, in which case clock-comparator interruption should occur
+> immediately.
 > 
-> That's correct, copying the file to /tmp takes most of the time with
-> this approach.
+> With the current code, tod2time(env->ckc - td->base.low) ends up being
+> a very large number, so this interruption never happens.
 > 
-> As for reflink copy, this might've been a great solution.  However, it
-> would largely depend on the FS used.  E.g. in my system coredumpctl
-> places uncompressed coredump at /var/tmp, which is mounted as ext4.  And
-> in this case:
+> Fix by firing the timer immediately if env->ckc < td->base.low.
 > 
-> # cp --reflink /var/tmp/coredump-MQCZQc /root
-> cp: failed to clone '/root/coredump-MQCZQc' from
-> '/var/tmp/coredump-MQCZQc': Invalid cross-device link
-> 
-> # cp --reflink /var/tmp/coredump-MQCZQc /var/tmp/coredump.ref
-> cp: failed to clone '/var/tmp/coredump.ref' from
-> '/var/tmp/coredump-MQCZQc': Operation not supported
-> 
-> Apparently, ext4 doesn't support reflink copy. xfs and btrfs do.  But I
-> guess our implementation better be FS-agnostic.
+> Cc: qemu-stable@nongnu.org
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
 
-Yes, we might still need a slow copy fallback for those filesystems,
-i.e. essentially a 'cp --reflink=auto'. For myself, coredumps will
-generally live on XFS, so I would benefit from creating that copy in the
-same filesystem where the coredump lives, and for you it shouldn't hurt
-at least.
+  Hi Ilya,
 
-Another thought... it's a bit crazy, but... we're QEMU, we have our own
-tools for this. We could create a qcow2 overlay for the coredump and
-export it using FUSE! :-D (Probably not very practical because you need
-the right paths for the binaries, but I had to mention it.)
+this patch unfortunately broke reverse debugging on the s390x target. 
+Something like this used to work before:
 
-Kevin
+  qemu-img create -f qcow2 /tmp/disk.qcow2 2G
+  ./qemu-system-s390x -nographic \
+    -icount shift=6,rr=record,rrfile=replay.bin,rrsnapshot=init \
+    -net none -drive file=/tmp/disk.qcow2,if=none
+  ./qemu-system-s390x -nographic \
+    -icount shift=6,rr=replay,rrfile=replay.bin,rrsnapshot=init \
+    -net none -drive file=/tmp/disk.qcow2,if=none
+
+With this commit and later, the replay hangs somewhere in an endless loop.
+Do you have any ideas what could go wrong here?
+
+  Thanks,
+   Thomas
+
+
+> diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
+> index 6d9d601d29a..215b5b9d933 100644
+> --- a/target/s390x/tcg/misc_helper.c
+> +++ b/target/s390x/tcg/misc_helper.c
+> @@ -199,11 +199,15 @@ static void update_ckc_timer(CPUS390XState *env)
+>           return;
+>       }
+>   
+> -    /* difference between origins */
+> -    time = env->ckc - td->base.low;
+> +    if (env->ckc < td->base.low) {
+> +        time = 0;
+> +    } else {
+> +        /* difference between origins */
+> +        time = env->ckc - td->base.low;
+>   
+> -    /* nanoseconds */
+> -    time = tod2time(time);
+> +        /* nanoseconds */
+> +        time = tod2time(time);
+> +    }
+>   
+>       timer_mod(env->tod_timer, time);
+>   }
 
 
