@@ -4,90 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA48D11183
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 09:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E9ECFD2F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 09:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOYRi-0004Pe-B0; Thu, 27 Nov 2025 04:37:50 -0500
+	id 1vOYVC-0006FL-5l; Thu, 27 Nov 2025 04:41:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOYRf-0004P0-Rm
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 04:37:47 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOYRd-0001cX-GB
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 04:37:46 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-42b39d51dcfso423781f8f.2
- for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 01:37:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764236263; x=1764841063; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aV9iA0fqbIWmmeGD4DmNrXoNJ4DDWFmQV1y96XwQ2Q8=;
- b=yvYhGXCAywronuebldbIU2mdDTGYqvEs7LF6qguDMB5fhBbn5sLPkHgiMCdhPL3Szo
- srs2FlGcGUbTEdAQAR+PAsqZ6cUE93JHDKUyoctRr04HJXNkZJmBrhW9vdfhpZMtN0G8
- hReZZF8fq4fifgxuNIuOUyiyIP+cZZw15lPC/x+yJZypO/ETiyBEDahO5ah4JhOt5yMo
- NlgP19CaO4oTYV3+Sg0Ufo3/s+5/jaVvTZiaw1Sw60N2V9yV4IgUkVRX8CM7vQglxWnp
- h4EWWrYYmZnh+LFM9l9KUPOV5IC5f4ftay+YRVv8UeVdzOY2KxVy47UxmrIMxHBmh1L/
- P16A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764236263; x=1764841063;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aV9iA0fqbIWmmeGD4DmNrXoNJ4DDWFmQV1y96XwQ2Q8=;
- b=E8CwzSmwYqyoB33qNVLjccWq3d9UaZmWR+tu6Qlyvf7YQJOXNoA12AOjqfg74kh3OW
- V9uv1gsFZaDRmiet/bB+nZRU+JDNRyNvHpW9c9SAiBuf11T71EiSyIaQSzTbT3Hoyb0s
- qgK0VZcqGUXQdQ39dPHiQ9rZAd0kj4hbmPC1yvq8+911Mq9l+oZPktYePAerjiSWkGJU
- 00oW+nJdlxg8BE4OSA2SsbKPeMHIKYUA2+Lj6Ejrf77bSV6vHu/Z9wLC78UTSclKT0pW
- k4CBKp7jAeXMa5k/gmn5jb03AxIDs1S9xfeDHQNvZ6lhylW3iIMpXpsbHFKZqiU64Ikd
- 6vkw==
-X-Gm-Message-State: AOJu0Yxf7Xl7spD4pIRqTcQIDzmb9HbzPkZfkhB6WsPEHq4ApowCW3vZ
- rMD5/KdiFvnc59C17dnrCOJgpGXgsPzuMuT3XRWhNoKpm15nRMjP4vmd452VD1GuYbA=
-X-Gm-Gg: ASbGncufT68snt/iCPUbxFvUNR4Flo388nI19zu1rkiQeqdr/Gtm0soZBscdiSD/T/a
- hg29om6sbht3hqMugpHRL5+YBtKXQ9UwHhW+kiUV+guF9A7Iv8hFxv9CD0fF/2e5wpQzC3fmM2j
- SNeqLxvmXq1fTB2Hq8TZ5VBKQhiX/JE78j6mbqcj8pFOOHFNLHdol8rgNVSJ+JyAjlIwfyovrMx
- hHtiv6+qYj7vxWp7oMbJCsOPrbChcKFODsM2oFXdwqB7NnwZhGV+y294DGICj6NZeyzAc+fZtco
- LWVNizTylinf8Nvf1hB3f7os0KrpoEyQuvHodCnb2JopJ3HHhUymO52tOoAKw0UZrdI9BJ4P3G3
- KeS9gd9rteRzzFB1BPCgdrWXC6w19fFiEaAsHNdNyCTd5LM2/bfxoqkDzn1QFO49QwC88q7ue1W
- rzqBauHj1w/KFog1PnNjaQkZuqzGXHPyWtF+GxYW92XBZcWEUR1GJtuVzVFhTHuVVa
-X-Google-Smtp-Source: AGHT+IF1YkLHAV8k5WeKHn5PCmOwl57wvYilZ70OtdIIB5JnGzCehIDuI5znjAzuzkeQf2zkHYDK+A==
-X-Received: by 2002:a05:6000:184d:b0:42b:2de5:251e with SMTP id
- ffacd0b85a97d-42cc1cbe567mr23304697f8f.26.1764236263152; 
- Thu, 27 Nov 2025 01:37:43 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1ca8bae9sm2321476f8f.33.2025.11.27.01.37.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Nov 2025 01:37:42 -0800 (PST)
-Message-ID: <509fe01f-cb50-4428-b085-25b026e15287@linaro.org>
-Date: Thu, 27 Nov 2025 10:37:41 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vOYVA-0006En-BE
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 04:41:24 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1vOYV7-0002J3-9h
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 04:41:23 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxB9G3HChpqLAoAA--.22367S3;
+ Thu, 27 Nov 2025 17:41:11 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJAxQMKxHChpBORAAQ--.36258S3;
+ Thu, 27 Nov 2025 17:41:07 +0800 (CST)
+Subject: Re: virtio-crypto: Inquiry about virtio crypto
+To: "Gonglei (Arei)" <arei.gonglei@huawei.com>
+Cc: "linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>,
+ "virtualization@lists.linux.dev" <virtualization@lists.linux.dev>,
+ linux-kernel <linux-kernel@vger.kernel.org>,
+ QEMU devel <qemu-devel@nongnu.org>
+References: <d4258604-e678-f975-0733-71190cf4067d@loongson.cn>
+ <027ff08db97d414da0ccc24a439e75d0@huawei.com>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <8b902563-4cb6-5409-4339-1afecc26803a@loongson.cn>
+Date: Thu, 27 Nov 2025 17:38:39 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/xtensa: Implement xtensa_isa_is_big_endian()
+In-Reply-To: <027ff08db97d414da0ccc24a439e75d0@huawei.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To: Max Filippov <jcmvbkbc@gmail.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-References: <20241205232437.85235-1-philmd@linaro.org>
- <20241205232437.85235-2-philmd@linaro.org>
- <CAMo8Bf+621bwyf523i_P11q7rgr=DgpcPPdyh2vaiixZRqN3_Q@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAMo8Bf+621bwyf523i_P11q7rgr=DgpcPPdyh2vaiixZRqN3_Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJAxQMKxHChpBORAAQ--.36258S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7uw4fXFWfZrW3ZFW5KrWUWrX_yoW8WFWfpa
+ y3KFWFkrZ8Jr1xCa4vqFy5CFW5ZFZ8Cr13WrZrWry3CrZ8AF92vr1avr1vq3srAF1rCF1D
+ Xw40qFy0kr98ZagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvSb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv
+ 67AKxVWxJVW8Jr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2
+ xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAq
+ x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r
+ 1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF
+ 7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxV
+ WxJVW8Jr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7I
+ U1NBMJUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.604,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,64 +85,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Max,
 
-On 6/12/24 13:35, Max Filippov wrote:
-> On Thu, Dec 5, 2024 at 3:24 PM Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->> Xtensa internal fields are opaque, only accessible by
->> the Xtensa libisa. Implement xtensa_isa_is_big_endian()
->> to get vCPU endianness. This should be implemented in
->> libisa, not QEMU, but I couldn't figure out where to
->> contribute this.
-> 
-> This is a beautified version of what xtensa has in binutils, but
-> binutils is also
-> just another user of that internal Tensilica library. Perhaps I should make
-> an artificial "upstream" for this library just to track this kind of changes.
-> Let me look at it.
+Hi gonglei,
 
-Could you add this method to the Tensilica library?
+Sorry to bother you again.
 
+I notice that numa node is supported with virtio-crypto device. Is there 
+multiple PCIE root bridges with different numa nodes supported on some 
+VM models?
+
+I ask this question because I do not know whether it is possible to 
+preallocate virtio_crypto_op_data_req buffer and IV buffer within 
+structure virtio_crypto_sym_request. Only that there is no node 
+information when virtio_crypto_sym_request is allocated.
+
+Regards
+Bibo Mao
+
+
+On 2025/11/27 上午10:56, Gonglei (Arei) wrote:
+> Hi,
 > 
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   include/hw/xtensa/xtensa-isa.h | 1 +
->>   target/xtensa/xtensa-isa.c     | 7 +++++++
->>   2 files changed, 8 insertions(+)
+>> -----Original Message-----
+>> From: Bibo Mao <maobibo@loongson.cn>
+>> Sent: Thursday, November 27, 2025 9:43 AM
+>> To: Gonglei (Arei) <arei.gonglei@huawei.com>
+>> Cc: linux-crypto@vger.kernel.org; virtualization@lists.linux.dev; linux-kernel
+>> <linux-kernel@vger.kernel.org>; QEMU devel <qemu-devel@nongnu.org>
+>> Subject: virtio-crypto: Inquiry about virtio crypto
 >>
->> diff --git a/include/hw/xtensa/xtensa-isa.h b/include/hw/xtensa/xtensa-isa.h
->> index a289531bdc8..1cb8e6ccb66 100644
->> --- a/include/hw/xtensa/xtensa-isa.h
->> +++ b/include/hw/xtensa/xtensa-isa.h
->> @@ -829,6 +829,7 @@ const char *xtensa_funcUnit_name(xtensa_isa isa, xtensa_funcUnit fun);
+>> Hi gonglei,
 >>
->>   int xtensa_funcUnit_num_copies(xtensa_isa isa, xtensa_funcUnit fun);
+>>      I am investigating how to use HW crypto accelerator in VM. It seems that
+>> virtio-crypto is one option, however only aes skcipher algo is supported and
+> 
+> Actually akcipher service had been supported by virtio-crypto in 2022.
+> 
+>> virtio-crypto device is not suggested by RHEL 10.
 >>
->> +bool xtensa_isa_is_big_endian(xtensa_isa isa);
+>> https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html
+>> /configuring_and_managing_linux_virtual_machines/feature-support-and-limit
+>> ations-in-rhel-10-virtualization
+>>
+>>     I want to know what is the potential issued with virtio-crypto.
+>>
 > 
-> This file doesn't include stdbool.h and other boolean functions in it
-> (e.g. xtensa_opcode_is_branch()) return int. I'd suggest sticking with
-> that. With that change:
+> This question is too big, maybe you'd better ask RHEL guys. :(
 > 
-> Acked-by: Max Filippov <jcmvbkbc@gmail.com>
+> Regards,
+> -Gonglei
 > 
->>   #ifdef __cplusplus
->>   }
->> diff --git a/target/xtensa/xtensa-isa.c b/target/xtensa/xtensa-isa.c
->> index 630b4f9da1b..36eb4bcf3d4 100644
->> --- a/target/xtensa/xtensa-isa.c
->> +++ b/target/xtensa/xtensa-isa.c
->> @@ -1741,3 +1741,10 @@ int xtensa_funcUnit_num_copies(xtensa_isa isa, xtensa_funcUnit fun)
->>       CHECK_FUNCUNIT(intisa, fun, XTENSA_UNDEFINED);
->>       return intisa->funcUnits[fun].num_copies;
->>   }
->> +
->> +bool xtensa_isa_is_big_endian(xtensa_isa isa)
->> +{
->> +    xtensa_isa_internal *intisa = (xtensa_isa_internal *)isa;
->> +
->> +    return intisa->is_big_endian;
->> +}
+>> Regards
+>> Bibo Mao
+> 
 > 
 
 
