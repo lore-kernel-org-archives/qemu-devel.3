@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97DF4D111A8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94495CFD2F6
 	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 13:16:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vObqc-0002cW-RB; Thu, 27 Nov 2025 08:15:46 -0500
+	id 1vObqQ-0002YT-NU; Thu, 27 Nov 2025 08:15:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vObqL-0002Xh-Jx
+ id 1vObqL-0002Xi-K9
  for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:15:29 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vObqI-0001AI-84
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:15:28 -0500
+ id 1vObqI-0001A4-81
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:15:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764249324;
+ s=mimecast20190719; t=1764249323;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VCvRN3OWsF1O4M8RCr/9wSLhXxc99p7+KHRdfTdsKPk=;
- b=EplMVTLsbi5VtTwOYGf/zR6AuUepEw7ZmK/xcL0Nu0tZTV0x/QabYKsGsaGbbin/MVeQje
- xZQX91ACe7j9tkbKyslUhwTX5Pch/XilZ5nd3z7qBFNghgZiTQZ1Y1UvcB93RUeCUup+rZ
- ju9yA+zNdRirmthUlSTqC7BfCgYAkU0=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nudtLyfLpePiOGbflXoAvWZ1qHAsYssnltuIZxxkF4g=;
+ b=FpgMPe5xANSk2O74w7r6AEnX8lIZo+FsIAaf/iClPOkoQ72d8Kk8TGhjWf75wjsLPShtTX
+ zHZaWzmkVotZZtK6gScHYNVLfKYfhGgRtMco5yuZvbFZMFeBRtGyqK2gz4oxUGva7eaYyX
+ z7r80xiL7tdl7nu5ZK8dfRoP/vT2Pzw=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-190-rHUzViLvNAWn3wLlEQz_ow-1; Thu, 27 Nov 2025 08:15:22 -0500
-X-MC-Unique: rHUzViLvNAWn3wLlEQz_ow-1
-X-Mimecast-MFC-AGG-ID: rHUzViLvNAWn3wLlEQz_ow_1764249321
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-b763acb793fso81452466b.3
- for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 05:15:22 -0800 (PST)
+ us-mta-662-HBQEjPHeNKeAkWEMq4kyeA-1; Thu, 27 Nov 2025 08:15:21 -0500
+X-MC-Unique: HBQEjPHeNKeAkWEMq4kyeA-1
+X-Mimecast-MFC-AGG-ID: HBQEjPHeNKeAkWEMq4kyeA_1764249321
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-640bae7d83aso957828a12.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 05:15:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764249321; x=1764854121; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764249320; x=1764854120; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VCvRN3OWsF1O4M8RCr/9wSLhXxc99p7+KHRdfTdsKPk=;
- b=JCM+s/QPh6X27zD2c/rOPTyskwsgLbOrm+T1cj//lQBsy8MJ6YStblZaP2ozjUMKF3
- XUs42xaVZqPOVVE3MBlQ2fIxKbIlLWWF/uhoKU3R2PbM1dlKNP022A+b9867FBfNRfUg
- nGXkyDAy08iiKPA0q09gpzO8Zms9BBF7JCRnS54k4ghZlDl0iWK25AekaBfxs4YC+XwF
- 2QMVR7u/+w+sniMBr4wa4d9lLOXUTynTYFDXcgk/7rpDojBW/MFUZxDo3sim+UkCQoBR
- PYPUUR4xmRXhG2vIPgnbybuktVnTbkwzd5YxYhnhv+Vxa24fwh7sdMCuXp2U3GOBmfXL
- MPFQ==
+ :reply-to; bh=nudtLyfLpePiOGbflXoAvWZ1qHAsYssnltuIZxxkF4g=;
+ b=DAMoHQhJhNK/Vu+uZqbxcvLegANYEfXHXMV2ukuqDyOHnAjqz5rzLdZ8KTmhV3Sbqv
+ HvJPOBvA7korhoyD2OY3IANtKbYP37+Z2mR1KQPAU+VMr1LIpV3fcAwzgKw/g2F5BseD
+ UMVcDXLI1ACzaeapaSrAW3iiyEIjNgW+6wMss5ujJWpOYaFhTE+FAHAwDqP4elaQh/Um
+ cxeUhBn1fYalXR212cmIYgwoaH72sye/pXjDuMPKVxECEBOVNDYTE2fPCX8T8POAlAK5
+ ZAJ43qTEazgAGrjKKudfP+FaGMke0AGWc3lhDb8heYWo1d1BlMVjaFRfVaZcopwONmsd
+ xAzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764249321; x=1764854121;
+ d=1e100.net; s=20230601; t=1764249320; x=1764854120;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=VCvRN3OWsF1O4M8RCr/9wSLhXxc99p7+KHRdfTdsKPk=;
- b=VjifBPcaGZ9LdlBa4hAL4r0yC1/fn+9LZbzNiOluBSW07g7zj4q15AU8yUmnMxKhwJ
- J/7V8aN4T6utd8BD+qrxjh4eUlIKBiBb8pPlHA2ZHBDFS6eiQGma6WUj37d8TQSjGZTY
- 2Dez16mFAsH41Dy0WvpPVKvH2nQdvSjNcZxIu8XFvHIsoN6/EUh9/xb8YUd/lwyev6Oo
- 5PUZYZcLQ377iK6qvvQrZx5RZ6iMWqYWTtCyBpvh7ghv6LDV36dne0YEquqtWNjFf9o3
- QFZ12RvgwdqmkGE77VJC0YraI9Cm6elbGyoUi4RfP7iBdop+E5kJWitJnOrOymHOWg8u
- saxw==
-X-Gm-Message-State: AOJu0YyvuSFIO70bsDpzeQPy3PeQz5e73ZP8c91CduL2BiM0MoKoK4jm
- AtEsUE8v9WkEhPK/rinx7tCAOfomVZMMWSbIVZ2NivTc3v90HCOycGgaPvOcudrHqZf1ONGWo9g
- R8pz36I11fqIVLBQQgeGEI315xODUb8fw9eF/a/bNYRZDcl1Pn5ltNrgXlvXWwDEOiCs8dxrw/f
- qpvf5bSoALYS25d4S5XwQgeMMUGcq+heUENvsP4MFR
-X-Gm-Gg: ASbGncucfksmn558s1ozb2U20ty2S9IHwlFfk4YhrxAUTcff0yF3//gkHZ8Ou+tS83w
- WklDRmIcb49T5tLU1qq2V/Di9KTN2rNkQeCDM+KNSqMqSYJRDjblZd8aD2vT1NRLu47guX5LiZ5
- WO2OU05/PGQVuubSPfHoj9zbsmp1jlbl9BtqPD7nXhey+jLFNllTRcOFDv0vJlWii6BDyZ21Mo/
- J3avANmTzeGBf2O5Go0/vgj7bBxhH7xZ369ICYtBKoFmRcu3ybZJZQx6zUCdEzSytuPcjJKLpfM
- g3O5CmlogKRuIigowJ5ObQVLGgddvkXb11aC8ntHrYVGJf1Fd4Oc5t4IYswBBygPZOKyiYQgsYH
- YWYkGRRIXtoO73ZWD4Gvc0dHJ1GjCehRTiyWP2tNEdOGkc4n3Ye80Omg9hIL9M/R7zMiiYuuQ9L
- cIJN1bd6AFm4Q++qo=
-X-Received: by 2002:a17:907:7ba1:b0:b76:b7fe:3198 with SMTP id
- a640c23a62f3a-b76c5514685mr1220214566b.26.1764249321030; 
- Thu, 27 Nov 2025 05:15:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHjQiX6akvTpQn6cIkESqS1So+Y0aaXF9df3jVMBUm6k0KOUMc4pjj2mz6IUMPNwAZlXf5Dnw==
-X-Received: by 2002:a17:907:7ba1:b0:b76:b7fe:3198 with SMTP id
- a640c23a62f3a-b76c5514685mr1220210266b.26.1764249320445; 
- Thu, 27 Nov 2025 05:15:20 -0800 (PST)
+ bh=nudtLyfLpePiOGbflXoAvWZ1qHAsYssnltuIZxxkF4g=;
+ b=Dj/xnBnpGESepuLseBtcVUTcxWSi4NgHlMyQGjLJ66duo4PRqiSJ72YCni/794Hbvb
+ Yv1TQD6pQcXtyIZwbv5B2EIxU19dO+DhVy6xGlfNoXOpKxk5Zg+2DZOcSjrs2u4/VhUi
+ dc7FxfG5n3+xJW934InIg3REucrUFWzl37XyICBUO2O6Z01WGpF+5CUIlvzD4VrdZQIK
+ DRLWWKa56GogqFFfexSOZz7AMafTmHMVmDQ4T4T/R7BI2AfH0nhJ7HEsg3yuUPBRMWjk
+ 8WeRz1iHwF5+r5O8rGWJuquWiloHKcq2CAgg2C9+ijKpE8Gm62wexXOhICQeAMixYHFH
+ q0Vw==
+X-Gm-Message-State: AOJu0YyoKW5NPybXd4wMJ1/6+cNcfCa3GIYajJU9saFogmRW05yqlJ0D
+ qCZrczXiMVUG6uUCfRtssKa/OXGFBIKqEnZkDcvZ/9gQTgJg/lZyuynZdkNQXvdBnUMslMUCnUk
+ E1esaTKuYLIpKfkfx0cfajQipqDOS5C7sE/ciqMe1/1Grebl8Da/I2wlo6IyeHFLRbU2JrpS6AG
+ JoyrWqkHO+rJ+Z+BVl2E/wKbunp/Sq7vVMCAyq9g7Q
+X-Gm-Gg: ASbGncuqeZ94bcQIo+OgxAslWAGgkhGM1FNznv0XAanS9eoVIzhgfDImw61eazAWFvZ
+ GMlM0X8r01g2XrMweSYCDjWD51surIzmTCiQTEt7KBjbAWXlLXYlGfMQSFhahaAe4D3WLYmeSwG
+ CSBiF6imF7Z4rkrcednM9vE+Kms5PRkK+/hQBfpTrQxJUrQjrfpgNRbdqG4IVSgXnhViN4jWDeo
+ 3UuYLiPtIxOsz9T/XsA83xsjcQnR/2sOPkXaUX20wo9uY0EWUdvC+PcjazgKx6QALor7Er+jQ5N
+ j4JqYx64F6pwdkF+qDsnZ5iyfhacU5rGfNnfUciMgOZVmcEmyoihbbiFYyTo6FPXZfzG0WfHoWu
+ tJdaWCY+EVC8K+eaOTNjSmT3m8eXcBAr3ho5gOtGBdDSaAn4BqLv7OFCoNfMB4sUq2zYjlwjmfD
+ cvOAY7w/Fhso6ptJQ=
+X-Received: by 2002:a05:6402:27c8:b0:634:b7a2:3eaf with SMTP id
+ 4fb4d7f45d1cf-64554664dd9mr22772820a12.18.1764249319870; 
+ Thu, 27 Nov 2025 05:15:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHq+3JBYq0VHEnpAKXaHuGEjh6pmImjM+gkuEc+MaGrfw/Wg0MQ/6FuuWSaUFa7LPFNqhgarg==
+X-Received: by 2002:a05:6402:27c8:b0:634:b7a2:3eaf with SMTP id
+ 4fb4d7f45d1cf-64554664dd9mr22772786a12.18.1764249319398; 
+ Thu, 27 Nov 2025 05:15:19 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b76f59eb401sm153647966b.54.2025.11.27.05.15.19
+ 4fb4d7f45d1cf-647510615c0sm1541102a12.30.2025.11.27.05.15.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Nov 2025 05:15:20 -0800 (PST)
+ Thu, 27 Nov 2025 05:15:18 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 02/28] include: name the MemReentrancyGuard struct
-Date: Thu, 27 Nov 2025 14:14:49 +0100
-Message-ID: <20251127131516.80807-3-pbonzini@redhat.com>
+Subject: [PATCH 01/28] include: move qemu_irq_handler out of typedefs.h
+Date: Thu, 27 Nov 2025 14:14:48 +0100
+Message-ID: <20251127131516.80807-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251127131516.80807-1-pbonzini@redhat.com>
 References: <20251127131516.80807-1-pbonzini@redhat.com>
@@ -123,22 +123,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/qdev-core.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/hw/irq.h        | 2 ++
+ include/hw/qdev-core.h  | 1 +
+ include/qemu/typedefs.h | 1 -
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
+diff --git a/include/hw/irq.h b/include/hw/irq.h
+index 291fdd67df4..81b81ed493c 100644
+--- a/include/hw/irq.h
++++ b/include/hw/irq.h
+@@ -8,6 +8,8 @@
+ #define TYPE_IRQ "irq"
+ OBJECT_DECLARE_SIMPLE_TYPE(IRQState, IRQ)
+ 
++typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
++
+ struct IRQState {
+     Object parent_obj;
+ 
 diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 9802b6896de..018c134011e 100644
+index 2caa0cbd26f..9802b6896de 100644
 --- a/include/hw/qdev-core.h
 +++ b/include/hw/qdev-core.h
-@@ -209,7 +209,7 @@ struct NamedClockList {
-     QLIST_ENTRY(NamedClockList) node;
- };
+@@ -8,6 +8,7 @@
+ #include "qemu/rcu_queue.h"
+ #include "qom/object.h"
+ #include "hw/hotplug.h"
++#include "hw/irq.h"
+ #include "hw/resettable.h"
  
--typedef struct {
-+typedef struct MemReentrancyGuard {
-     bool engaged_in_io;
- } MemReentrancyGuard;
- 
+ /**
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 4a94af9665a..cf931ff549c 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -132,7 +132,6 @@ typedef struct IRQState *qemu_irq;
+ /*
+  * Function types
+  */
+-typedef void (*qemu_irq_handler)(void *opaque, int n, int level);
+ typedef bool (*MigrationLoadThread)(void *opaque, bool *should_quit,
+                                     Error **errp);
+ typedef bool (*SaveCompletePrecopyThreadHandler)(SaveCompletePrecopyThreadData *d,
 -- 
 2.51.1
 
