@@ -4,144 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDACED111A8
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 15:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7477D111A8
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 15:35:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOdvy-0005Sw-15; Thu, 27 Nov 2025 10:29:26 -0500
+	id 1vOe13-0007nG-1Z; Thu, 27 Nov 2025 10:34:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOdvs-0005Ps-UP
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 10:29:22 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vOe10-0007eM-9S
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 10:34:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOdvp-0008Ti-80
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 10:29:19 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vOe0y-0001SS-3d
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 10:34:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764257351;
+ s=mimecast20190719; t=1764257674;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OUZ6TUiBHRVHWPmxhhsUMoQx9jy50CaRUke64btcajw=;
- b=Hgja4DC7EOiub38+gQ6f0y1/7NUty85KNroksr8UHT700Zhig/Pno1t6tGD29V5n5m97eq
- NPoljF9Nq13Uo8z3agiOKdvPciYfpaAYzkvr3U4JrTve1u4FpG7F7SWiA4C5oh46iRYFEd
- fY/6cLHPJiMk4XA2+CfHSsgY1U9snDU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Y8r1yOOz9Khbbk1GkOMold/wudTKJBJ7bMRJcmnlAMI=;
+ b=G8YsRhvU+P50htATfXJGcVCQdIbKLXpJ8n4kfm+vyrpX78HJEnr/mAPWeO1i0hFcEmaye0
+ OThfBHGW7B2ISrV3R+nDrSV5AEm+pEp6xw4OGprrhZUWZ4NtVdSVxIiKXFX9ALlC8y2IY2
+ Pe3Kkhqphd6vVhJ39LwVSX8uYuP5B8g=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-134-QVMxtLO-NWCOivkFojwhow-1; Thu, 27 Nov 2025 10:29:10 -0500
-X-MC-Unique: QVMxtLO-NWCOivkFojwhow-1
-X-Mimecast-MFC-AGG-ID: QVMxtLO-NWCOivkFojwhow_1764257349
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477a11d9e67so6077655e9.2
- for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 07:29:10 -0800 (PST)
+ us-mta-322-WDKJHH_iPpGDyIRkrp28rQ-1; Thu, 27 Nov 2025 10:34:32 -0500
+X-MC-Unique: WDKJHH_iPpGDyIRkrp28rQ-1
+X-Mimecast-MFC-AGG-ID: WDKJHH_iPpGDyIRkrp28rQ_1764257671
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-429c7b0ae36so799661f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 07:34:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764257349; x=1764862149; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764257671; x=1764862471; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=OUZ6TUiBHRVHWPmxhhsUMoQx9jy50CaRUke64btcajw=;
- b=V4rv8G0A7aVgh5a7f1G5oSawUudZWXBqBT1LDDYLcvQJ3s/I8Qbc074VqGQBpLCoVT
- 6Yigl/3cs6+fUIsljpks97M+/heGOU0Xx5yYcnF1/nPpUcCAJdDnuXsnJ8AnmoEUlg3C
- GX86c8ET2mQMFNIRNDonU5Cic05+o4nhZkLUJqgkrIckBsPlt70K2TY/7orVgl+J4SBC
- 9yK/5tBDNgnkIOB5FvARcBrX2Ys/h+ns7Ub0/svjjmCXweo/43ZxpFE4kLMoVOGNosZ3
- H4gtBtKoUTz0J3QIelIcy1c7CNOQ5GHMpTtqn+e/hfmfc6fip+YkOnu4LaKOzVQz+sq8
- oWJA==
+ bh=Y8r1yOOz9Khbbk1GkOMold/wudTKJBJ7bMRJcmnlAMI=;
+ b=GN6HbZMWLbLUkB+e2geGE5ZAzPwBuX7vt2C+HRpnLwpaVgeCExQrORFPktEdpQzFBl
+ M9QryOdb8vENsYvfzAorQF7kZ8tCtu1hWesGqN8CpKSVV2YPGNMDSlqDIMg/FK2rniuj
+ GFXl6SSHuInjv0mzGs6z3XE/v40oP5B3d89ZNqKrGeAKbEdUSyfEhIi704A/u7/Dzwh7
+ xwsnxI7jDaV9+3jR+bJNXdVRtfUyvfISuJv5/UHFQzk6E6MuFbc+0i/zafLyREFJDXKQ
+ 3Oi9KZRh9MNQN6D34RsMXV/UtBi7IzeIYYF4mh4MDV45ub60RTx+xadnnFqnARWwvxvX
+ s7lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764257349; x=1764862149;
+ d=1e100.net; s=20230601; t=1764257671; x=1764862471;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OUZ6TUiBHRVHWPmxhhsUMoQx9jy50CaRUke64btcajw=;
- b=Ta8ag5y1cayvbzgjtUpnPyl6hZl9t21GhbEJ7CKGd32Cft6nmJdL6hsqTvN8+NvpiD
- hSocGg/6HJl0M2LJwSRO0lYJzHRs2av+I+eQwmCQx4L2eE0ngYuvZ4C3wtqmOCAb6y9y
- 5D+tZBfqbj3BSXJoTudXhkg1wROGvFnRc7CkwhEp8P5p3+SKMNRYqmiysde6XtueABQF
- 2brJhmiohh9S0XibDUSJZvYz0kYMISKDk7Ud5JlLZ2bLkyqu0NMg8Qm0qEdiNv5BZew3
- 6TE7YuqU3obzRS6zuIwh6p2ri+Q3EXgJaeDNAkJNB3Gv6Hb6IKoywkdb+cRVYsnyrlsc
- ks5A==
+ bh=Y8r1yOOz9Khbbk1GkOMold/wudTKJBJ7bMRJcmnlAMI=;
+ b=eQTYfBmytrJn30dAreB7JPtdv/DD8YchBQNuYOmExS7cxIPuwtCJ1J2xK7z/X5RKkY
+ J4ZF27Gd0NF3QlaTerhBXmp7IKamRxNjHot75k8i+0U62Kq5C62grV04T+8rwKZoQ6qD
+ tey2G7Tgr4kK6Reb5aXl16ruxz3sREs9rARABuoYcSdyy5Pj/LTmeUwpCD1w74ChpmC8
+ AjvlQSoEtdObKd19nslRqHv2cEACaRRlo0hyLi92drixxpzkXgd/1g1k4z/DRJtkHasy
+ rhxJRXy/tr7qI73oWenno/FZ8SiMioX2Iw4Xlf/zvprWSMf+aAW62UrWCh7klUvgWwDq
+ apHA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTrKO3lccq2NfE3mQFbekN6PeHlg5kGJNvSDvU4dz3sTgGtriT487kyNqZXjGdRiRE/dRliAKP/A8r@nongnu.org
-X-Gm-Message-State: AOJu0Yw83Vy1oaTxKAA9t/9xlJpgajyB7O4VKtItvs7FTH2/By48nhtl
- 175q4Dux7eC5gcNcPf66PYpN1MtAOyjIWmPi8JSZVjpDNGq1z1BJvfeIXudtw6AZlT/9MMct47N
- rxnW5AoBxU7PVz2ygc9p+oCYwJpmjuRV6fjDwOF+Xibi24QySrmx6OC4Z
-X-Gm-Gg: ASbGnctKBeXdWF+YgIHt9FN6PvpRxShYCR4eNyt29a20FzsQupVZDL05cH+wu25qbGz
- S3GupquAF+vSM1IzfhyyN0W5s8waSIu1gAKzoh4if3jYZDQlQRj3LkBC76LJOvJz4LkQajHyBlA
- KNvN8Td/CVQhqKzueL0LNTZf9GP0FBKNgem+U9+9N4SSnZ60+Pdz7+yfjZ96Rlv6wVzgpzJv/vp
- NTW0+wucXqkh1et9j7m/Q/b5OGj/8Lq1HA3+tElx9dFY3t2vKIMFeCY9mvQvEz9Mqbg8/oiDCLN
- t7qIGVJ5QcY1dqBJs++Cyn/Xy71T5kL87cQ6o9JLRINWhQtcOd7uWxhNs+RNC3JvdUsccMzaFPT
- BnNIKNTx73OU7AvRDNYPNhwINgF2A9gXVHGo=
-X-Received: by 2002:a05:600c:45cc:b0:475:daba:d03c with SMTP id
- 5b1f17b1804b1-477c10dc259mr227480225e9.13.1764257349082; 
- Thu, 27 Nov 2025 07:29:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGXF2Jfrd0OWSGimkSiPNtOzLlYSfLNaJLle9yzP7zw4R13+FE3RFl813c5Fp+yAZp/tz6LVw==
-X-Received: by 2002:a05:600c:45cc:b0:475:daba:d03c with SMTP id
- 5b1f17b1804b1-477c10dc259mr227479785e9.13.1764257348689; 
- Thu, 27 Nov 2025 07:29:08 -0800 (PST)
-Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ AJvYcCV6ulIwJu5hFlGmwaBDANuUQNg+TF+n/t9qW7GS068oLQYjdQm/OHae9aJtGSdJo3k1/vDeEU+mpVKn@nongnu.org
+X-Gm-Message-State: AOJu0Yz3YozMnIrbxvqIRdwD7B5ughL1d4RwxHjAMETR45LVESgcIrAx
+ FChb8+DAzdYKlno2TkPue9n1DCTUStyf31efHFZG7q8Frr+fuh0i/kb9BGHPHW92cflmUNAzeck
+ T09aSep9GrZ0P1VNxDnx0lis7o8fLatPbhGa7Q5zQq9zbyJNKx3vgdhNBViwv3gOy
+X-Gm-Gg: ASbGncvsOJlObfPADwpDQW1KuwWIYR6dtbBITVPOBGKbnUH+DxDwOmAlWaOvHERGUFM
+ igQf1rUQx1+KV0c+8hiH65Q0cKpmkpxh8m6GOpMd4EP09r4EJg9rvDOIOOELpV/zk6F3Myd9CpB
+ aQRyRaMOG8lHdtVT/mGfreRvM+sH+hO3XGiIafVifqxY58FcQhqcBz+JEffrhJYQfXHNFZmgH51
+ xBi9BTJeCT5q5BAIlSA3Ompd1UO8gK29cKF49vdF7WUxS8wkTk6qfEYw/+KnSXM0Bu96U1tIpgJ
+ 9+VrvQTiArd+PDEVitn8AdypK8j0QB8zkUsq5rDDuQYcjuSmPmitopDBD6c2TaoiQXMbv4VdDjH
+ q2buh2haAWukIJLIMaZP12X8skUW/3/En9E2qsJkcV45qazsZ
+X-Received: by 2002:a5d:584f:0:b0:428:56ed:c68e with SMTP id
+ ffacd0b85a97d-42cba652ec0mr32452047f8f.9.1764257671024; 
+ Thu, 27 Nov 2025 07:34:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGIqsnhWIP23qSq5Dx3s3wyj2bP561pNoO+ptmio1U+aPOSvU+bLm/ZX3XuwB3uf2ZParwZbQ==
+X-Received: by 2002:a5d:584f:0:b0:428:56ed:c68e with SMTP id
+ ffacd0b85a97d-42cba652ec0mr32451999f8f.9.1764257670548; 
+ Thu, 27 Nov 2025 07:34:30 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-479052def4bsm67893295e9.13.2025.11.27.07.29.07
+ ffacd0b85a97d-42e1ca7880asm4206890f8f.31.2025.11.27.07.34.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 27 Nov 2025 07:29:08 -0800 (PST)
-Message-ID: <7ba134db-bf51-491b-91a1-588e4495b387@redhat.com>
-Date: Thu, 27 Nov 2025 16:29:07 +0100
+ Thu, 27 Nov 2025 07:34:30 -0800 (PST)
+Message-ID: <678d6b37-6799-4029-9ed0-6c20db807e6c@redhat.com>
+Date: Thu, 27 Nov 2025 16:34:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] scripts/device-crash-test: ERROR_RULE_LIST garbage
- collection
+Subject: Re: [PATCH 2.5/6] error: Poison g_autoptr(Error) to prevent its use
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: jsnow@redhat.com
-References: <20251127144954.3023865-1-armbru@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251127144954.3023865-1-armbru@redhat.com>
+Cc: jmarcin@redhat.com, peterx@redhat.com, marcandre.lureau@redhat.com,
+ farosas@suse.de, berrange@redhat.com, vsementsov@yandex-team.ru,
+ mail@maciej.szmigiero.name, peter.maydell@linaro.org
+References: <20251125204648.857018-3-peterx@redhat.com>
+ <20251127071028.2745789-1-armbru@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20251127071028.2745789-1-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
@@ -166,39 +170,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/11/2025 15.49, Markus Armbruster wrote:
-> Device 'nand' was dropped in commit commit e86c1f967a3.
+On 11/27/25 08:10, Markus Armbruster wrote:
+> The previous commit reverted support for g_autoptr(Error).  This one
+> should stop it from coming back.
 > 
-> Device 'vfio-amd-xgbe' was dropped in commit aeb1a50d4a7.
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   include/qapi/error.h | 20 ++++++++++++++++++++
+>   1 file changed, 20 insertions(+)
 > 
-> Device 'vfio-calxeda-xgmac' was dropped in commit 8ebc416ac17.
-> 
-> The last error messages matching r"images* must be given with the
-> 'pflash' parameter" was dropped in commit a2ccff4d2bc.
-> 
-> The error message matching r"Option '-device [\w.,-]+' cannot be
-> handled by this machine" was dropped in commit commit db78a605599.
-> 
-> As far as I can tell, we never had message matching r"Ignoring
-> smp_cpus value"
+> diff --git a/include/qapi/error.h b/include/qapi/error.h
+> index f3ce4a4a2d..2356b84bb3 100644
+> --- a/include/qapi/error.h
+> +++ b/include/qapi/error.h
+> @@ -437,6 +437,26 @@ Error *error_copy(const Error *err);
+>    */
+>   void error_free(Error *err);
+>   
+> +/*
+> + * Poison g_autoptr(Error) to prevent its use.
+> + *
+> + * Functions that report or propagate an error take ownership of the
+> + * Error object.  Explicit error_free() is needed when you handle an
+> + * error in some other way.  This is rare.
+> + *
+> + * g_autoptr(Error) would call error_free() automatically on return.
+> + * To avoid a double-free, we'd have to manually clear the pointer
+> + * every time we propagate or report.
+> + *
+> + * Thus, g_autoptr(Error) would make the rare case easier to get right
+> + * (less prone to leaks), and the common case easier to get wrong
+> + * (more prone to double-free).
+> + */
+> +extern void
+> +__attribute__((error("Do not use g_autoptr() to declare Error * variables")))
+> +error_free_poisoned(Error *err);
+> +G_DEFINE_AUTOPTR_CLEANUP_FUNC(Error, error_free_poisoned)
+> +
+>   /*
+>    * Convenience function to assert that *@errp is set, then silently free it.
+>    */
 
-This was a wrapped string, it has been changed in comnit 
-f2ad5140fa521bda30b9c3c3db5b6913f6dda1ae ("hw/arm/exynos: Convert fprintf to 
-qemu_log_mask/error_report") and finally been removed in commit
-7264961934130df50d151def5eb415efa2e28ec5.
+broken build, even better.
 
-> or r"MSI-X support is mandatory in the S390
-> architecture".
+Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-This (split) string still exists in hw/s390x/s390-pci-bus.c:
+Thanks,
 
-$ grep -r -A1 MSI-X.support.is.mandatory hw/
-hw/s390x/s390-pci-bus.c:            error_setg(errp, "MSI-X support is 
-mandatory "
-hw/s390x/s390-pci-bus.c-                       "in the S390 architecture");
+C.
 
-So I think we should keep it.
-
-  Thomas
 
 
