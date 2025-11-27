@@ -4,50 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1E02CFD2F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 14:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFD75CFD2F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 14:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOcbO-0004kp-SQ; Thu, 27 Nov 2025 09:04:06 -0500
+	id 1vOch6-00007j-LW; Thu, 27 Nov 2025 09:10:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vOcbK-0004c8-FH; Thu, 27 Nov 2025 09:04:04 -0500
-Received: from mgamail.intel.com ([192.198.163.9])
+ id 1vOch2-00005J-J6; Thu, 27 Nov 2025 09:09:56 -0500
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vOcbH-00039u-Sw; Thu, 27 Nov 2025 09:04:01 -0500
+ id 1vOcgz-00040M-Bx; Thu, 27 Nov 2025 09:09:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764252240; x=1795788240;
+ t=1764252593; x=1795788593;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=wbIpXOHrAhUYTz4YKeYSdJQ6eJC9BtOYzZPt+wa1Bpo=;
- b=hM7eGOu1nGVv+WcBcuQ5dPKzxGszP/o9K2zDjHqJrna2AjlT4XQm9AfH
- 2/YfOcPnm8VBLWVrmgepslh52D3nuTKm3hTN+StPflEjQHvGmvlwLqQdr
- dDSL7eyIa8FPfngz3OZOLsN8jilZQcZiKMFW1C7qQaZqx+qdziyAsrIYc
- RqwcFIJJmprpiGMmdGP251VmpEC4TbM2Wr6gMWFCs6thGE8b2IQgNxOJu
- prM6/Ij+iZSVyK3myKNnUa8XBptE902ubyprdOSulMdB+GqKhqHbITuC0
- xTWA6fHWb32Ab3RZRDUDxnE86Zj/1sO6bfgwD2hcCHAjYbeSMacl+NvD+ g==;
-X-CSE-ConnectionGUID: uB61wwTdRSu8SckVRq6c3Q==
-X-CSE-MsgGUID: 8Ds/8cKWRpmo6ZtfLZDMRQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11625"; a="76988049"
-X-IronPort-AV: E=Sophos;i="6.20,231,1758610800"; d="scan'208";a="76988049"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Nov 2025 06:03:56 -0800
-X-CSE-ConnectionGUID: ZiYc/Z/CSz60FVKebjEsIQ==
-X-CSE-MsgGUID: ybI2bXHdSTGszpa08vP/ow==
+ bh=bQdYilWGa9Wi2rdUzt6QN0o4fezK94Yfgc3qXyRYmE0=;
+ b=L9bVZuWXdzRN5jQIae+lIy1PcPXhm02Tf9q0fyRm5jfT4ctGb+aOQy2A
+ R0hCOurfxe4f7vn5zKJc7NK695PV0rQTe6KFm8dn2anE1MgWzY6oO6sbB
+ vDKZ/cyvWJBS2rUAwott8J8UX11zY4LJ2DZot9KzfAgKIMnuSghxT1EmO
+ Y9zDFb7YvyVZn/NEGWgupoDT5Uu+Hw4MAQp+2J4bBqOJiJbm/rTw2K5up
+ ZNkx7pdsTs01ethu1dX3fU1Bt7SgcJlMzBNeCZp0Lke2A7OtTy2F0Bnoh
+ i9KE4hfRu1hYcyWs75rjTtT4D2fyGq7slrsjKG50EDhcSQ8qVUMdnrElB w==;
+X-CSE-ConnectionGUID: Gr+69KyaTJKrcitki+L2eQ==
+X-CSE-MsgGUID: 32DugJjOTBCkHilmXCP30g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11625"; a="77402711"
+X-IronPort-AV: E=Sophos;i="6.20,231,1758610800"; d="scan'208";a="77402711"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 27 Nov 2025 06:09:49 -0800
+X-CSE-ConnectionGUID: H8ufkZXVQg67BZP6Ctky/g==
+X-CSE-MsgGUID: 2bH9/39aR9GF4XcDljhEyA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,231,1758610800"; d="scan'208";a="216594607"
+X-IronPort-AV: E=Sophos;i="6.20,231,1758610800"; d="scan'208";a="193042281"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa002.fm.intel.com with ESMTP; 27 Nov 2025 06:03:48 -0800
-Date: Thu, 27 Nov 2025 22:28:28 +0800
+ by orviesa009.jf.intel.com with ESMTP; 27 Nov 2025 06:09:42 -0800
+Date: Thu, 27 Nov 2025 22:34:22 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -61,26 +62,26 @@ Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
  Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
  Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
- Palmer Dabbelt <palmer@dabbelt.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
  qemu-arm@nongnu.org,
  =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
  Huacai Chen <chenhuacai@kernel.org>,
- Jason Wang <jasowang@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v4 09/27] hw/nvram/fw_cfg: Remove
- fw_cfg_io_properties::dma_enabled
-Message-ID: <aShgDDow//CQsMhF@intel.com>
+ Jason Wang <jasowang@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v4 10/27] hw/i386/pc: Remove linuxboot.bin
+Message-ID: <aShhbuuW/CVsoLvP@intel.com>
 References: <20250508133550.81391-1-philmd@linaro.org>
- <20250508133550.81391-10-philmd@linaro.org>
+ <20250508133550.81391-11-philmd@linaro.org>
+ <20250509180411.10f6e683@imammedo.users.ipa.redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250508133550.81391-10-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250509180411.10f6e683@imammedo.users.ipa.redhat.com>
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -45
 X-Spam_score: -4.6
@@ -105,58 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 08, 2025 at 03:35:32PM +0200, Philippe Mathieu-Daudé wrote:
-> Date: Thu,  8 May 2025 15:35:32 +0200
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v4 09/27] hw/nvram/fw_cfg: Remove
->  fw_cfg_io_properties::dma_enabled
-> X-Mailer: git-send-email 2.47.1
+On Fri, May 09, 2025 at 06:04:11PM +0200, Igor Mammedov wrote:
+> Date: Fri, 9 May 2025 18:04:11 +0200
+> From: Igor Mammedov <imammedo@redhat.com>
+> Subject: Re: [PATCH v4 10/27] hw/i386/pc: Remove linuxboot.bin
+> X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 > 
-> Now than all calls to fw_cfg_init_io_dma() pass DMA arguments,
+> On Thu,  8 May 2025 15:35:33 +0200
+> Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+> 
+> > All PC machines now use the linuxboot_dma.bin binary,
+> > we can remove the non-DMA version (linuxboot.bin).
+> > 
+> > Suggested-by: Thomas Huth <thuth@redhat.com>
+> > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > ---
+> >  hw/i386/pc.c                  |   3 +-
+ 
+(After a long interval, more of a note.)
 
-Yes,
+> linuxboot.bin is referenced in a few more files:
+> 
+> hw/i386/x86-common.c:    option_rom[nb_option_roms].name = "linuxboot.bin";
 
-> the 'dma_enabled' of the TYPE_FW_CFG_IO type is not used anymore.
-> Remove it, simplifying fw_cfg_init_io_dma() and fw_cfg_io_realize().
+this case is removed in previous patch (which considerred x86 machines
+all have DMA enabled).
 
-but the 'dma_enabled' of the TYPE_FW_CFG_IO type is still used in
-hw/sparc64/sun4u.c:
+> hw/nvram/fw_cfg.c:    { "genroms/linuxboot.bin", 60 },
 
-    dev = qdev_new(TYPE_FW_CFG_IO);
-    qdev_prop_set_bit(dev, "dma_enabled", false);
-
-The creation of TYPE_FW_CFG_IO is similar to fw_cfg_init_io_dma(), but
-it still has little difference so I find sun4uv can't use
-fw_cfg_init_io_dma() directly for now, or it may require more careful
-clarification that it can use fw_cfg_init_io_dma().
-
-So, at least we have to keep "dma_enabled" property in
-fw_cfg_io_properties[].
-
-...
-
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index 27254a0e9f1..ee594364415 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -991,10 +991,7 @@ void x86_load_linux(X86MachineState *x86ms,
->      }
->  
->      option_rom[nb_option_roms].bootindex = 0;
-> -    option_rom[nb_option_roms].name = "linuxboot.bin";
-> -    if (fw_cfg_dma_enabled(fw_cfg)) {
-> -        option_rom[nb_option_roms].name = "linuxboot_dma.bin";
-> -    }
-> +    option_rom[nb_option_roms].name = "linuxboot_dma.bin";
->      nb_option_roms++;
->  }
-
-But now all x86 machines have enabled dma, so it's still possible to
-drop "linuxboot.bin".
-
-For this, I think we could add a DMA check in the x86 common code to
-guarantee DMA is enabled and then we won't need to constantly check
-DMA enable in every corner.
+this case is removed in commit 6160ce208419 ("hw/nvram/fw_cfg: Remove
+legacy FW_CFG_ORDER_OVERRIDE").
 
 Regards,
 Zhao
