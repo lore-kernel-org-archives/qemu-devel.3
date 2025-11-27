@@ -4,82 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9EC0D11183
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 11:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED742CFD2F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 12:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOaHU-0004Ri-2X; Thu, 27 Nov 2025 06:35:24 -0500
+	id 1vOajX-0001LM-QT; Thu, 27 Nov 2025 07:04:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
- id 1vOaHS-0004RI-98
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 06:35:22 -0500
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pzmarzly0@gmail.com>)
- id 1vOaHQ-00028k-Qd
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 06:35:22 -0500
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-7a9cdf62d31so975475b3a.3
- for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 03:35:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1764243317; x=1764848117; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nRuf9e9htrjlcoWjm82qmYj7ZbkH7/9T0fHo1lzijoQ=;
- b=ip2L3KZMs40cQ6+y0mvwna5XOtQ6J+76h+QkpI7LqT8/NFkaLeibQcGQSljoNGLoHj
- vAhZ/OEpzAjMTpfONAd/8ibNYo1Kfh1IxtVx5tnbuGQ3HhWM5LqdqLy2mQ05/tSEvp2f
- BQPdPuCyossPSSKfFae7QC691CErNHmdqwYnOZDN/uNvpgsk8P0exwGIV/FD+mUEfiD9
- 34zeD6XBIFXxtM9nchV7EWoqjkRsM2FDgt+o9PnE+4R8utBuirX8SoZFR9MqSmncu+Ox
- v3VQbcY5ijDeENuh94+Y3TwNRcA7ywUyOBsiAohHqc0x6rmiqzqiwZV9wf3swg9vuSGs
- 2QQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764243317; x=1764848117;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nRuf9e9htrjlcoWjm82qmYj7ZbkH7/9T0fHo1lzijoQ=;
- b=cLn3TYXGKI8/QVRNpbxi4xZjRgZ7ddnmpGnXAgweCzdV5LuEHgMZeeMk/X0r0Ac5f/
- DnlOsOyDlnp9UP5h21jgArVaZE1nZjexMUVybD0KIT2sOfOKEvRjy6F6CgR97lPoqSE9
- la/DKEKUylmwwbJL9h01O93vyqIGVnZfd0yE1d1MU4FkZ7BztRgXMMpZa7tKolD9HzlU
- JaXtVQQHyE54ZzWvHRE1tDXS6rUnY1JdU7crSPPoMo8C99RmioCI6D3SXaTs0BfSn7Sr
- H39GOx+iQUs47ox11j0eSAcOTrl84/t6xO/KHGdv67AkxdjQVixvAYaf7akOVPDBhwWY
- bjkg==
-X-Gm-Message-State: AOJu0YyLgQlpKNvgXgp3IOqCFfhct2UyV3xjPPfVOJYCDfbGWuJ3tQfi
- dAKOlx/OZ3vHBMJ1qYwLzNVOnSLKF+kDQOhxakLjGWeL61VkzTf2LgsxOye1tihQ+4RVc4bHzI4
- Gndx8v3jb5nxsreVZ8nm2Yr9ASOgc5g8=
-X-Gm-Gg: ASbGnctKcsnfELvqIxe3WlykvDW4T9iaAcjX5He2yCl+lJk9/7YSlej6Wr0NYhTSwkd
- 0X9Mml0+u0AsqTDa7/meVdGq9ALHRkHkzwzEQpv86jPw1bU49ffNz2jWYr6MpR6SE3mxo4uowJS
- z57i4ppOprmsMbvkNb63riHf86qJUnJ9zWlcWtl0No2S+xEvGpH3isH/gHamExsIzm1Vm/QR7Z5
- NxEPLJ5BWQyIoOhDLPrBnTwGY0hO9lvYH2PKJKss6DV8EGvNnv0fHXuUlAw2U55C2NFcQ==
-X-Google-Smtp-Source: AGHT+IEuU5IR7wgy6jCNXIg1Hn7J8V/bAIXc8BLAARXvH4oqZlZG3ue8gQWAkqDhPBu6175WvJ67d05YznMhXdrsQF0=
-X-Received: by 2002:a05:7022:b881:b0:11b:a8e3:8468 with SMTP id
- a92af1059eb24-11c9d861131mr13038689c88.33.1764243317178; Thu, 27 Nov 2025
- 03:35:17 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1vOajU-0001Ka-QU; Thu, 27 Nov 2025 07:04:20 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1vOajT-0007Ln-6K; Thu, 27 Nov 2025 07:04:20 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AR28EDd004883;
+ Thu, 27 Nov 2025 12:03:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=92fOwJk7srCarpgC0
+ m3RdISN4XCpWDKYrSP1HvpgqKk=; b=cjF1VmLaitV7zHPMQaQC1frQNvrrDNw2f
+ UFbmpGyWDGP6jYa2U1z56aiCSvaULNafFMx0iYd5M4NmkBn24TIZdnyR2kuLH5qe
+ 3WdAcj3QAg4Saa9CsXN5rcDAbVfvRScV9UjHK0hGB8GpDfM2mPHuuwYTRondOYAY
+ 6FA6+R+i7aYHBHWmwcUVAZiSxSNXPyHcAW7IRe8fCoNRDYT8ILPPqIHE5kkYWXF/
+ WEImx8o202c8pQ36+puZlxeO5eoZXR7aWR4FcqgQS+4MnvUiCkHTctE9K3CXo97K
+ 0rALd8gAfHu/+/17HbbJKRNJ3p6wW4ErcUstA75/VS5x1o8lD8JYg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ak4u283up-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Nov 2025 12:03:47 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5ARC3knc023877;
+ Thu, 27 Nov 2025 12:03:46 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ak4u283uf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Nov 2025 12:03:46 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5ARANmld016428;
+ Thu, 27 Nov 2025 12:03:45 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4aks0kfvwg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 27 Nov 2025 12:03:45 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5ARC3ihb54133044
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 27 Nov 2025 12:03:44 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 783365805B;
+ Thu, 27 Nov 2025 12:03:44 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 737B158058;
+ Thu, 27 Nov 2025 12:03:43 +0000 (GMT)
+Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 27 Nov 2025 12:03:43 +0000 (GMT)
+From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+To: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
+ saif.abrar@linux.vnet.ibm.com, nikhilks@linux.ibm.com,
+ stefanha@redhat.com, fam@euphon.net, philmd@linaro.org
+Subject: [PATCH v4 2/2] hw/nvme: Add property for user-specified IEEE-OUI ID
+Date: Thu, 27 Nov 2025 06:02:51 -0600
+Message-ID: <20251127120322.2997269-3-saif.abrar@linux.vnet.ibm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251127120322.2997269-1-saif.abrar@linux.vnet.ibm.com>
+References: <20251127120322.2997269-1-saif.abrar@linux.vnet.ibm.com>
 MIME-Version: 1.0
-References: <20251126154734.940066-1-pzmarzly0@gmail.com>
- <aSd0ROg_3snWMuCB@x1.local>
-In-Reply-To: <aSd0ROg_3snWMuCB@x1.local>
-From: =?UTF-8?B?UGF3ZcWCIFptYXJ6xYJ5?= <pzmarzly0@gmail.com>
-Date: Thu, 27 Nov 2025 11:35:06 +0000
-X-Gm-Features: AWmQ_blbvIVxuevPv2ADMrwCJMATwF3PCrp0HqD12ggWL7m_Yloz0vByq12FNy0
-Message-ID: <CAEZNvsuV=++SxRhSXe__zSCO7ShyQheL8yHVsbeAH2J4ReJ08Q@mail.gmail.com>
-Subject: Re: [PATCH] migration: Fix writing mapped_ram + ignore_shared
- snapshots
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=pzmarzly0@gmail.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTIyMDAyMSBTYWx0ZWRfX3nafrpTEc+Kx
+ v07DyMF9pjdmqlHNjO/fFM6Q9sm/g0K6qm1rbfuyZyrAAJzCcHbIwWnfyNSpRBmtSQMQCBiFbVn
+ wenj7Ojg+EFBV/HSmB/4WzxGslXUn8uhh0ahBscZkGlPvlc3QIUS653lXZjTkIf7RTC6y8Oh0Vg
+ qJUt4uHlkTSU4kZYCt6RrjmwTvkcd7h37zs+G1w6dR2g+u4mN+5LOZGHohc0HUp7sGOdapfNK2y
+ CcbmYBCIBE80y8GF85zaS4wC4P6VoUH7vwAErHpWJtJAZw2bgit1A2wfcrrAxcVsUhiSBDHK32P
+ n5E8uK1x5Jsvj/VaJI5NgFdmuoIY9b1p6kBclvPl0cpmgnaf6s3m2c7zJ22gE/XzbEAUqO/QTVw
+ E6E6DfERxVvAylL6VGvfjSn0yfGOFw==
+X-Authority-Analysis: v=2.4 cv=SuidKfO0 c=1 sm=1 tr=0 ts=69283e23 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=KVMyRY1XTioQRLGtwEgA:9
+X-Proofpoint-ORIG-GUID: NM5Mr2H0wd1U2lmaDfqmMZbsQtsbjzcl
+X-Proofpoint-GUID: Gxdu1jxVrRh9Jqoy0JFcAHItAK4csB5F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-25_02,2025-11-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 impostorscore=0
+ malwarescore=0 spamscore=0 suspectscore=0 phishscore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
+ definitions=main-2511220021
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,28 +125,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 26 Nov 2025 at 21:42, Peter Xu <peterx@redhat.com> wrote:
-> Now I start to question whether I should have that other fix of yours to be
-> for this release or next.
->
-> If this use case is completely broken, we shouldn't need to rush -rc
-> window, now I plan to merge all these fixes later when 11.0 dev window
-> opens.  Let me know if you, or Fabiano, has any comments.
+User-specified IEEE-OUI ID (Identify Controller bytes 75:73)
+is to be specified in LE format.
+(e.g. ieee_oui=0xABCDEF => Byte[73]=0xEF, Byte[74]=0xCD, Byte[75]=0xAB)
 
-It is broken if you set ignore-shared and actually have any shared
-block, but what could work today is if you just toggle the
-ignore-shared flag on without setting up any shared blocks. In that
-case, writing will work fine, but reading will crash. That's how I
-stumbled upon this rabbithole in the first place: I forgot to unset
-the flag and was surprised by parsing error. Whether it is worth
-fixing now - I don't know, setting ignore-shared when there are no
-shared blocks doesn't really make sense, so most likely nobody does it
-on purpose.
+Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+---
+v3 -> v4: Resolve merge commits when moving to the latest repo.
 
-In either case, I need to stop working on this for now, I thought this
-will be a tiny side project that'll help me get my first patches in
-(and get used to collaborating over email), but now it's growing in
-complexity and I have other things that I need to prioritize.
-Hopefully I'll come back to this within 11.x window. Thanks for all
-the help so far, Peter, Fabiano!
+ hw/nvme/ctrl.c | 24 ++++++++++++++++++++++++
+ hw/nvme/nvme.h |  2 ++
+ 2 files changed, 26 insertions(+)
+
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index d857be5496..c66524c78c 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -9131,6 +9131,10 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
+         id->ieee[0] = 0xb3;
+         id->ieee[1] = 0x02;
+         id->ieee[2] = 0x00;
++     } else if (n->params.ieee_oui) {
++        id->ieee[0] = extract32(n->params.ieee_oui, 0,  8);
++        id->ieee[1] = extract32(n->params.ieee_oui, 8,  8);
++        id->ieee[2] = extract32(n->params.ieee_oui, 16, 8);
+     } else {
+         id->ieee[0] = 0x00;
+         id->ieee[1] = 0x54;
+@@ -9384,6 +9388,24 @@ static void nvme_exit(PCIDevice *pci_dev)
+     memory_region_del_subregion(&n->bar0, &n->iomem);
+ }
+ 
++static void nvme_prop_ieee_set(Object *obj, Visitor *v, const char *name,
++        void *opaque, Error **errp)
++{
++    Property *prop = opaque;
++    uint32_t *val = object_field_prop_ptr(obj, prop);
++    if (!visit_type_uint32(v, name, val, errp)) {
++        return;
++    }
++}
++
++static const PropertyInfo nvme_prop_ieee = {
++    .type = "uint32",
++    .description = "IEEE OUI: Identify Controller bytes 75:73\
++ in LE format. (e.g. ieee_oui=0xABCDEF => Byte[73]=0xEF, Byte[74]=0xCD,\
++ Byte[75]=0xAB)",
++    .set = nvme_prop_ieee_set,
++};
++
+ static const Property nvme_props[] = {
+     DEFINE_BLOCK_PROPERTIES(NvmeCtrl, namespace.blkconf),
+     DEFINE_PROP_LINK("pmrdev", NvmeCtrl, pmr.dev, TYPE_MEMORY_BACKEND,
+@@ -9431,6 +9453,8 @@ static const Property nvme_props[] = {
+     DEFINE_PROP_UINT16("id_subsys_vendor", NvmeCtrl,
+                                                     params.id_subsys_vendor, 0),
+     DEFINE_PROP_UINT16("id_subsys", NvmeCtrl, params.id_subsys, 0),
++    DEFINE_PROP("ieee_oui", NvmeCtrl, params.ieee_oui, nvme_prop_ieee,
++                uint32_t),
+ };
+ 
+ static void nvme_get_smart_warning(Object *obj, Visitor *v, const char *name,
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index 65fb168bc9..be49acaec6 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -576,6 +576,8 @@ typedef struct NvmeParams {
+     uint16_t id_device;
+     uint16_t id_subsys_vendor;
+     uint16_t id_subsys;
++
++    uint32_t ieee_oui;
+ } NvmeParams;
+ 
+ typedef struct NvmeCtrl {
+-- 
+2.47.3
+
 
