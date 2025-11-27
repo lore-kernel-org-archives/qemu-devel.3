@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAAEBD11183
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 08:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4A02CFD2F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 08:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOX1U-000221-E7; Thu, 27 Nov 2025 03:06:40 -0500
+	id 1vOX5t-000465-Qk; Thu, 27 Nov 2025 03:11:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOX1S-0001yv-NS
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 03:06:38 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOX5n-00041I-CQ
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 03:11:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOX1R-0005kT-3r
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 03:06:38 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vOX5l-0006Bf-1J
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 03:11:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764230794;
+ s=mimecast20190719; t=1764231064;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=odTaX9SCJEIxv6WemmaZZj8/+9ZA+2YsQknZ9nts5n4=;
- b=BaVNsc9Gv3RxKSSn1Lmg0QT/kTQlwkwEOUx2CIGyqonb/LPKTuDF0HbjTix0UvEYSkcjsh
- 55SN3guXgYtNtihU4l4rrPhkw5t+r22Afn6WyBvi5II8HYDB1YBYDmnOjSx3dm8o3ac6Qw
- EFpkhHR0R5teDI2j9ddFJFnb7xOhrbU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lqlNgSmM0CenFZOt2WW9pebfDKuWgDOJuhHiN2tGSWY=;
+ b=Zx7hiDti0bRqgo/4n/930uO5bNEIJzEHdV/bssC7ycjg5NXysP7cizTisRWyXRBKWVmXhU
+ GMR7LMgy3AR9OHO1i0NIg3elDkwpYFBKrF16Ko2EUwLHlyyfPIcGpJ667nJEP6A7dLDE/e
+ V10U+lWMpup4ftDL4D5+bBwIR52PYRk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-152-xU5HwO_LMqGfSDRPQ5QTMw-1; Thu,
- 27 Nov 2025 03:06:30 -0500
-X-MC-Unique: xU5HwO_LMqGfSDRPQ5QTMw-1
-X-Mimecast-MFC-AGG-ID: xU5HwO_LMqGfSDRPQ5QTMw_1764230789
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-Ss_dT6FcN6asAysoR6IuFw-1; Thu,
+ 27 Nov 2025 03:10:58 -0500
+X-MC-Unique: Ss_dT6FcN6asAysoR6IuFw-1
+X-Mimecast-MFC-AGG-ID: Ss_dT6FcN6asAysoR6IuFw_1764231057
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 855C1195608F; Thu, 27 Nov 2025 08:06:28 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F27C21956060; Thu, 27 Nov 2025 08:10:56 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D95B619560B0; Thu, 27 Nov 2025 08:06:27 +0000 (UTC)
+ id 1509B19560BC; Thu, 27 Nov 2025 08:10:56 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5A27C21E6A27; Thu, 27 Nov 2025 09:06:25 +0100 (CET)
+ id 6B4CB21E6A27; Thu, 27 Nov 2025 09:10:53 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Gavin Shan <gshan@redhat.com>
 Cc: qemu-arm@nongnu.org,  qemu-devel@nongnu.org,  mchehab+huawei@kernel.org,
  jonathan.cameron@huawei.com,  mst@redhat.com,  imammedo@redhat.com,
  anisinha@redhat.com,  gengdongjiu1@gmail.com,  peter.maydell@linaro.org,
  pbonzini@redhat.com,  shan.gavin@gmail.com
-Subject: Re: [PATCH 1/5] acpi/ghes: Automate data block cleanup in
- acpi_ghes_memory_errors()
-In-Reply-To: <20251127004435.2098335-2-gshan@redhat.com> (Gavin Shan's message
- of "Thu, 27 Nov 2025 10:44:31 +1000")
+Subject: Re: [PATCH 4/5] acpi/ghes: Bail early on error from
+ get_ghes_source_offsets()
+In-Reply-To: <20251127004435.2098335-5-gshan@redhat.com> (Gavin Shan's message
+ of "Thu, 27 Nov 2025 10:44:34 +1000")
 References: <20251127004435.2098335-1-gshan@redhat.com>
- <20251127004435.2098335-2-gshan@redhat.com>
-Date: Thu, 27 Nov 2025 09:06:25 +0100
-Message-ID: <87wm3b7vcu.fsf@pond.sub.org>
+ <20251127004435.2098335-5-gshan@redhat.com>
+Date: Thu, 27 Nov 2025 09:10:53 +0100
+Message-ID: <87sedz7v5e.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -91,11 +91,18 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Gavin Shan <gshan@redhat.com> writes:
 
-> Use g_auto_ptr() to automate data block cleanup in the function so
-> that it won't be a burden to us.
+> For one particular error (Error), we can't call error_setg() for twice.
+> Otherwise, the assert(*errp == NULL) will be triggered unexpectedly in
+> error_setv(). In ghes_record_cper_errors(), get_ghes_source_offsets()
+> can return a error initialized by error_setg(). Without bailing on
+> this error, it can call into the second error_setg() due to the
+> unexpected value from the read acknowledgement register.
 >
-> Suggested-by: Markus Armbruster <armbru@redhat.com>
+> Bail early in ghes_record_cper_errors() when error is received from
+> get_ghes_source_offsets() to avoid the exception.
+>
 > Signed-off-by: Gavin Shan <gshan@redhat.com>
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
