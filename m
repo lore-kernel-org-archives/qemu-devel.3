@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C20DED116E1
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 00:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B40D116E0
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 00:13:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOPdF-0002pb-8Q; Wed, 26 Nov 2025 19:13:09 -0500
+	id 1vOPd8-0002mk-MI; Wed, 26 Nov 2025 19:13:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3j5cnaQcKCqwZMhUPQYSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--navidem.bounces.google.com>)
- id 1vOPdD-0002p7-K9
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 19:13:07 -0500
-Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
+ <3iJcnaQcKCqUSFaNIJRLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--navidem.bounces.google.com>)
+ id 1vOPd6-0002lY-Lt
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 19:13:00 -0500
+Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3j5cnaQcKCqwZMhUPQYSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--navidem.bounces.google.com>)
- id 1vOPdC-000603-5j
- for qemu-devel@nongnu.org; Wed, 26 Nov 2025 19:13:07 -0500
-Received: by mail-pl1-x649.google.com with SMTP id
- d9443c01a7336-295952a4dd6so15220695ad.1
- for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 16:13:04 -0800 (PST)
+ <3iJcnaQcKCqUSFaNIJRLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--navidem.bounces.google.com>)
+ id 1vOPd5-0005z6-3Q
+ for qemu-devel@nongnu.org; Wed, 26 Nov 2025 19:13:00 -0500
+Received: by mail-pf1-x449.google.com with SMTP id
+ d2e1a72fcca58-7be94e1a073so436768b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 26 Nov 2025 16:12:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1764202384; x=1764807184; darn=nongnu.org;
+ d=google.com; s=20230601; t=1764202377; x=1764807177; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=LnAzc27LiQK6IQy24x9xB/i64MPHYZS7/qEEHPh3edU=;
- b=L/zProrqlU19m4I8RnkBhqPEPHHRg37iI/A+Wz9BDv9NyqouvGG0lbAj0lN9Y7GhEd
- UurWry5PENrrqrzu5xOf2T11zoncMo2DVhjVJiCSIZnhWamA09NJRQEQdWoCsoNefJ5r
- 46eYKEmiddrhvYkNbL5Mgh+TDqnL37+1NCVr0LosxgFk3b7cMnVy4vYCrz9nWoQ9yk3F
- Y+H6jCKfMLVCBw69C31S7EfP6WPb46hjTJPGScWKu0WRziigqtwEuwf+j+V80CT4BvSh
- uzrIJDvLQuoKDDWFrB45cHOoptcACyJvxZe3KB+25vNLGTqo3FMduljhzSXCRw/t6A01
- uHXg==
+ bh=0j7T4SaSBzhQATVQOHGTTTyyPAyiP7oXEQJJ+/D5CCo=;
+ b=WJ8GrQQkLDDfRfI4KbzV4h7IP0o4TgjIzI637Ao4wNnqPz4AEJwY/PtcsRG8GdZ3Ai
+ P5QZuapU5Lu0Esy4Wze43sV2A3R8Xe2bzBrgwWQiGUdbO/7XiyNMyfSSUzgWAVYXEKPI
+ x0JHeqzmGsYvnntIxe2V2AY6SKEACDcN52M1XF+wHMdOygDP2kB9yseqlsp5iBVxb+xr
+ x7KkPEorHUi89+iNV0rpExNpCIS0LsQjTrv2c/wtCG/XWQwlODks6V9HWBvFZ4utGzaF
+ cziNCx0U8V9QaMi18QjaS5GWKCm2kjQYk+Gcam0mrAnuJ0QXHQQ0nF6AR3FxoS4cZ7wa
+ 7rRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764202384; x=1764807184;
+ d=1e100.net; s=20230601; t=1764202377; x=1764807177;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LnAzc27LiQK6IQy24x9xB/i64MPHYZS7/qEEHPh3edU=;
- b=wiS57moinfG0EGBzA/DiNlBNi/eMcT0YKZH5NXFcAPXGFVMSYvfuyw7KxB1EWuTOBj
- /h1yIT65q+wNQQtxxbrAcDQwSo7iqhjB/LXLPSAFDaDmr93QWRU7atB5Ew1EgeWMS0Ua
- MOzOqbelIDFZX9CeFPYocaPrs5BMDE/YKDZbkoRWqS2eOXbvg66saI2mcRpLbGdswnmf
- 86GD90w0rMnSRajH+O4YgL0B0hct1GG/WM+IFvKe2Jw/hS9Sp0PJK/QZ7cswCoJPJ9R9
- RSpcTqxvmnPx1QJMtbbN6M9sFKuMmJA4JQ4rnxKOh6L2WJwqG1HGqa90gmr16diBpxZP
- BCXw==
-X-Gm-Message-State: AOJu0YwJZfhS7FzuBDHAM4rSG9gsjSTiKoJ/YsQSkttMkkvAkOJwTOZW
- ZR9J0ZPkQopSTsMROidfFUUJ8PUP15bezkBUTcECHHjHT9z4Rb5jvHpOoeZkMTp9SbI2MFjQtCe
- 8KwsHlTAGTtGNuk4HN1Ka1N35EX/+CNVCdKQwLXoAXjNlmadUdXlgNsdDgj6Br1jr0AuGo7ftbv
- CgTSvJed7JgGJJOr0sza6JHZf8SoB810/XhCo+tl47
-X-Google-Smtp-Source: AGHT+IFm+oWf3dffHZsfWphXzUQs2N2I4E5TDGLT2J5JnQVFZuawANcaOzo3brKAWVtpTTEceEwW2+bCMhGY
-X-Received: from pjnm17.prod.google.com ([2002:a17:90a:8591:b0:340:a5c6:acc3])
+ bh=0j7T4SaSBzhQATVQOHGTTTyyPAyiP7oXEQJJ+/D5CCo=;
+ b=GalYRMSAOYe9pLXx4imwtzze/Hp+wcXYL+S4zs74uPAqeiplLevtxReu7ts/am7l/A
+ 8+dX89o8spGZPe9kC1dcBXjG30uMN+uvpTbbTYS5V40+BWm5JBNFlDAFUgUUkDtMn/3I
+ NOywPs5OzALPYDpLsvWRsQAHjrJVQqJ0GwJI6/myAld1h+xzzOveyPRyoIqLUsoEtcfu
+ YLAgZyk0YemSvXDzNPqCz1UhAdN091wSgvjsSTPJVX+xNXTSNPDYN8osgDGBilIlqKdS
+ AbX3p5Z3LXhvP019/nR+zoViHX8y7FvOJcmsln+o38svWr1Uy4cgJsuXS1zW7NVAK3JA
+ OrKQ==
+X-Gm-Message-State: AOJu0YxcjnbkO9BhhSqyMztOZI74ah5KowtDPcZO2w3+ZqascbMWyT1/
+ fA3BqHFqH/o8lTPNmE0nDRd2s6pDFw/LMGqBGp0d+jf2qZIuUwHdSatvRQMzLW3XwhOtSN+/tnQ
+ NJiuuL6lcyMObO6d4plSIxjg3fCEIN8n13jLtT4XV339aXyg8ZONZ4isClX3Zj5/D7UCu4EAm0W
+ ACWn0DtndVtvUHSbaQTflwgZ5Y20akLBtygZ0rBp7f
+X-Google-Smtp-Source: AGHT+IG6mr3eIXbPb19wwOkBKn8D1Bl1SdV0RWx0bvYMnE/tJ6s3bT6pJ4RE4gSC7IjbIAfCkKwwrwIX4kOE
+X-Received: from pgzz7.prod.google.com ([2002:a63:3307:0:b0:b62:df8e:e831])
  (user=navidem job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:fc48:b0:297:e897:6f6d
- with SMTP id d9443c01a7336-29b5e2f794amr274934625ad.9.1764202383896; Wed, 26
- Nov 2025 16:13:03 -0800 (PST)
-Date: Thu, 27 Nov 2025 00:12:47 +0000
+ 2002:a05:6a20:6a0e:b0:334:a523:abec
+ with SMTP id adf61e73a8af0-3614ee01766mr20813467637.60.1764202376217; Wed, 26
+ Nov 2025 16:12:56 -0800 (PST)
+Date: Thu, 27 Nov 2025 00:12:44 +0000
 In-Reply-To: <20251127001247.1672873-1-navidem@google.com>
 Mime-Version: 1.0
 References: <CAFEAcA-hyn0B-yWE1=g4+NN9=NBjWvk-P8qrAk9L4vpAZpUYvQ@mail.gmail.com>
  <20251127001247.1672873-1-navidem@google.com>
 X-Mailer: git-send-email 2.52.0.158.g65b55ccf14-goog
-Message-ID: <20251127001247.1672873-6-navidem@google.com>
-Subject: [PATCH v2 5/5] tests/qtest/fuzz: Add generic fuzzer for
- pcie-pci-bridge
+Message-ID: <20251127001247.1672873-3-navidem@google.com>
+Subject: [PATCH v2 2/5] libqos: pci: Require size for legacy I/O port mapping
 From: Navid Emamdoost <navidem@google.com>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org
 Cc: farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com, zsm@google.com, 
  alxndr@bu.edu, Navid Emamdoost <navidem@google.com>,
- Bandan Das <bsd@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Darren Kenny <darren.kenny@oracle.com>, 
- Qiuhao Li <Qiuhao.Li@outlook.com>
+ John Snow <jsnow@redhat.com>, "open list:IDE" <qemu-block@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
- envelope-from=3j5cnaQcKCqwZMhUPQYSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--navidem.bounces.google.com;
- helo=mail-pl1-x649.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
+ envelope-from=3iJcnaQcKCqUSFaNIJRLTTLQJ.HTRVJRZ-IJaJQSTSLSZ.TWL@flex--navidem.bounces.google.com;
+ helo=mail-pf1-x449.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,61 +96,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new generic fuzz target for the 'pcie-pci-bridge' device. This
-target uses a Q35 machine with a multi-level PCI hierarchy to exercise
-the bridge's functionality.
-This is made possible by the preceding change to handle unimplemented
-BARs during fuzzing.
+The accessor functions for QPCIBar (qpci_io_readb, etc.) perform
+strict bounds checking to ensure memory safety. However, the
+qpci_legacy_iomap function created QPCIBar tokens for legacy I/O
+ports without an associated size, making this safety check impossible.
 
----
+To fix this, modify the signature of qpci_legacy_iomap to require the
+caller to explicitly provide the size of the legacy I/O region.
 
-This new target significantly improves code coverage for the pcie-pci-bridge
-implementation. The baseline coverage shown below was generated by
-running all existing fuzz targets with the oss-fuzz corpus.
-
-=== Component: hw/pci  ===
--------------------------------------------------------------------------------
-File                           New Target           Baseline             Change
--------------------------------------------------------------------------------
-shpc.c                         359/511 (70.3%)      0/511 (0.0%)         +359
-pci_bridge.c                   255/304 (83.9%)      12/304 (3.9%)        +243
-pcie.c                         390/774 (50.4%)      160/774 (20.7%)      +230
-pcie_aer.c                     119/524 (22.7%)      38/524 (7.3%)        +81
-pci.c                          1154/2069 (55.8%)    1084/2069 (52.4%)    +70
-pcie_port.c                    58/119 (48.7%)       17/119 (14.3%)       +41
-pci.h                          86/132 (65.2%)       81/132 (61.4%)       +5
-
-=== Component: hw/pci-bridge  ===
--------------------------------------------------------------------------------
-File                           New Target           Baseline             Change
--------------------------------------------------------------------------------
-pcie_root_port.c               86/127 (67.7%)       13/127 (10.2%)       +73
-pcie_pci_bridge.c              62/94 (66.0%)        20/94 (21.3%)        +42
-gen_pcie_root_port.c           45/66 (68.2%)        19/66 (28.8%)        +26
+Update all existing callers of this function, including the IDE
+(ide-test.c) and TCO watchdog (tco-test.c) test suites, to provide
+the correct, known sizes for the hardware they are testing. This not
+only fixes the test failures but also makes the tests more robust and
+explicit about the I/O regions they interact with.
 
 Signed-off-by: Navid Emamdoost <navidem@google.com>
 ---
- tests/qtest/fuzz/generic_fuzz_configs.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tests/qtest/ide-test.c   | 2 +-
+ tests/qtest/libqos/pci.c | 4 ++--
+ tests/qtest/libqos/pci.h | 2 +-
+ tests/qtest/tco-test.c   | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tests/qtest/fuzz/generic_fuzz_configs.h b/tests/qtest/fuzz/generic_fuzz_configs.h
-index ef0ad95712..e025f57a3e 100644
---- a/tests/qtest/fuzz/generic_fuzz_configs.h
-+++ b/tests/qtest/fuzz/generic_fuzz_configs.h
-@@ -247,6 +247,14 @@ const generic_fuzz_config predefined_configs[] = {
-         .args = "-machine q35 -nodefaults "
-         "-parallel file:/dev/null",
-         .objects = "parallel*",
-+    },{
-+        .name = "pcie-pci-bridge",
-+        .args = "-machine q35 -nodefaults "
-+        "-device pcie-root-port,port=0x10,chassis=1,id=pci.1,bus=pcie.0,multifunction=true,addr=0x2 "
-+        "-device pcie-pci-bridge,id=pci.2,bus=pci.1,addr=0x0 "
-+        "-netdev user,id=net0 "
-+        "-device e1000,netdev=net0,id=nic0,bus=pci.2,addr=0x3",
-+        .objects = "pci* shpc*"
-     }
- };
+diff --git a/tests/qtest/ide-test.c b/tests/qtest/ide-test.c
+index ceee444a9e..524458e9f6 100644
+--- a/tests/qtest/ide-test.c
++++ b/tests/qtest/ide-test.c
+@@ -173,7 +173,7 @@ static QPCIDevice *get_pci_device(QTestState *qts, QPCIBar *bmdma_bar,
+     /* Map bmdma BAR */
+     *bmdma_bar = qpci_iomap(dev, 4, NULL);
+ 
+-    *ide_bar = qpci_legacy_iomap(dev, IDE_BASE);
++    *ide_bar = qpci_legacy_iomap(dev, IDE_BASE, 8);
+ 
+     qpci_device_enable(dev);
+ 
+diff --git a/tests/qtest/libqos/pci.c b/tests/qtest/libqos/pci.c
+index 70caf382cc..f07fc9140e 100644
+--- a/tests/qtest/libqos/pci.c
++++ b/tests/qtest/libqos/pci.c
+@@ -603,9 +603,9 @@ void qpci_iounmap(QPCIDevice *dev, QPCIBar bar)
+     /* FIXME */
+ }
+ 
+-QPCIBar qpci_legacy_iomap(QPCIDevice *dev, uint16_t addr)
++QPCIBar qpci_legacy_iomap(QPCIDevice *dev, uint16_t addr, uint64_t size)
+ {
+-    QPCIBar bar = { .addr = addr, .is_io = true };
++    QPCIBar bar = { .addr = addr, .size = size, .is_io = true };
+     return bar;
+ }
+ 
+diff --git a/tests/qtest/libqos/pci.h b/tests/qtest/libqos/pci.h
+index e790e5293d..6e8e0fbff6 100644
+--- a/tests/qtest/libqos/pci.h
++++ b/tests/qtest/libqos/pci.h
+@@ -123,7 +123,7 @@ void qpci_memwrite(QPCIDevice *bus, QPCIBar token, uint64_t off,
+                    const void *buf, size_t len);
+ QPCIBar qpci_iomap(QPCIDevice *dev, int barno, uint64_t *sizeptr);
+ void qpci_iounmap(QPCIDevice *dev, QPCIBar addr);
+-QPCIBar qpci_legacy_iomap(QPCIDevice *dev, uint16_t addr);
++QPCIBar qpci_legacy_iomap(QPCIDevice *dev, uint16_t addr, uint64_t size);
+ 
+ void qpci_unplug_acpi_device_test(QTestState *qs, const char *id, uint8_t slot);
+ 
+diff --git a/tests/qtest/tco-test.c b/tests/qtest/tco-test.c
+index 20ccefabcb..3af7c14e73 100644
+--- a/tests/qtest/tco-test.c
++++ b/tests/qtest/tco-test.c
+@@ -77,7 +77,7 @@ static void test_init(TestData *d)
+     /* set Root Complex BAR */
+     qpci_config_writel(d->dev, ICH9_LPC_RCBA, RCBA_BASE_ADDR | 0x1);
+ 
+-    d->tco_io_bar = qpci_legacy_iomap(d->dev, PM_IO_BASE_ADDR + 0x60);
++    d->tco_io_bar = qpci_legacy_iomap(d->dev, PM_IO_BASE_ADDR + 0x60, 32);
+     d->qts = qs;
+ }
  
 -- 
 2.52.0.158.g65b55ccf14-goog
