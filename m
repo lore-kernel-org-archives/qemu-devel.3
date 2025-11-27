@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B03ECFD2F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 13:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59C63D11183
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 13:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vObt4-0005UY-6Y; Thu, 27 Nov 2025 08:18:18 -0500
+	id 1vObt8-0005wQ-IM; Thu, 27 Nov 2025 08:18:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vObr4-0002jx-RL
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:16:20 -0500
+ id 1vObqj-0002ed-Jb
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:15:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vObqy-0001Iw-Tv
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:16:13 -0500
+ id 1vObqh-0001Gj-CJ
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:15:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764249367;
+ s=mimecast20190719; t=1764249350;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VrToXuxWMQX+VSlgPV4t+2UnY8wDDrkLi4Lyow0yjpk=;
- b=fxars/F5Rg7SFg8NTTYEiXCCbH1Yz7UeOvy6ElXjE9Q0I1s4K0MGq7jjAGSjcsLYN3owei
- SYRkGhJRzPmmpweX2AudEp6ZzCzO84xbOHj37IaPqLkzFSc5iFddl6C3COS9cL5Zwu5lOw
- A3RnvNGvYT12N5QtJIVp9WlEWHeUS7w=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rPn3s6GJ8euZXEVXy/H77NzWhVh7YdtKya5PhJ0IVoA=;
+ b=UH2DCTc56xZFFEhONtCPJ91Npx4iKP5rR/ScVq17KSDjqPdkTO+gH3sdr6+Ng7A+HSjTjQ
+ 3+EYuFHGnVBRkAKe+QcUleVeCeslglky5pUbaWHhgXYOnzzVA/2maFd50Xdjul55SVX5kS
+ NjZr5IMxwKn205Yp8K/RpLK/Oc0SEHw=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-548-YyZ5tEDqMCGvZQB6LLCpvw-1; Thu, 27 Nov 2025 08:16:05 -0500
-X-MC-Unique: YyZ5tEDqMCGvZQB6LLCpvw-1
-X-Mimecast-MFC-AGG-ID: YyZ5tEDqMCGvZQB6LLCpvw_1764249364
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-b72a8546d73so103139966b.2
- for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 05:16:05 -0800 (PST)
+ us-mta-32-bYsKR0DbO36SC5Cs44izPA-1; Thu, 27 Nov 2025 08:15:49 -0500
+X-MC-Unique: bYsKR0DbO36SC5Cs44izPA-1
+X-Mimecast-MFC-AGG-ID: bYsKR0DbO36SC5Cs44izPA_1764249343
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-b767784598dso63259066b.3
+ for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 05:15:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764249363; x=1764854163; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764249342; x=1764854142; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VrToXuxWMQX+VSlgPV4t+2UnY8wDDrkLi4Lyow0yjpk=;
- b=q0IUO1rHIgUe1eWpHcj7Dkx5NJrWZR2u2rOJkHekMrWEqcu0xWPeD43HQY0yDMDUEB
- zQdA4N1jB1a+Omcncmh8G4wABVyqy3Ntf63e1TGL3XMI5FEcXDZ+lQ7XxncwZ5kVjmS3
- 83Uk8xfs+fe3NXnIhSlIAmooMKR1DarMexkgvC7GtiLWeiHW9MKNVjK/7qYy75t+6AVi
- DYW7Xk/BTlx85EE2NFzNLnXvBuNWIPwxQ9EoC6OTz9gCXG0F/Inb7VknazPXt9eK2asm
- OVqmA4rgPVSL+U0Cf777pAleIMr1nvRrplGflbfYZa3MtWJDzBIWWFAoOeDYZxS2qnqk
- 6CYQ==
+ :reply-to; bh=rPn3s6GJ8euZXEVXy/H77NzWhVh7YdtKya5PhJ0IVoA=;
+ b=W4HhvSJfZ86NXcnjNc5NI6EsiY9W5xPBKmoMa4X19ENzq0Fx8FXj+q6zpRdLlk1txJ
+ E0FzsY7scjFp1S1iRdttYhzOb97J0Fhu02V0aV87Lely9fQdRjQGdiQ8wuHrv6ubO5qz
+ Up9MqKgh5SW7gtf+WrPTI/TMDg2J/R8Jm/51P4+RLqL6KHzyq7dWGJ87V2ONi7hcLhaC
+ lEozBKkqxTd/lqOibncF2spDuZrV2xcvHZ5TyuS2H22PbbdMktXeT4YtkpffwWjfEapF
+ 0L4+8SVCmrMlawb8Y44UQAsftBLpFJmkRMn5nyuUDSwW+jf4G8JVR+EQYkzGQut6q7wF
+ kNbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764249363; x=1764854163;
+ d=1e100.net; s=20230601; t=1764249342; x=1764854142;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=VrToXuxWMQX+VSlgPV4t+2UnY8wDDrkLi4Lyow0yjpk=;
- b=dkKNWsysbmG6SDfEU8A0YXkaW3LxX59y4QLOBHakMqGBktH6WmjyM216KZOuIdEIl1
- nRE8oEJLKE9Fb9OsW03KmZhzGK9LBWY+rajDyi86uGOd6G0w4iEs8M1AR7kwQuDJKo4z
- jGCG3UPe1VjpvatsTOzb5mYWqvL3QsGBOXA5vws5sHfL8+Vn1sFhOEqRxdjlYKR0OIUS
- iiOwmMqcTFnerhv1vTIExqQ1LuJPrhO1BXVcmJ2RlsCM+6clp0zd63uON14JasrEfnPk
- rIU+6dKeNH3gui+mHaZIsH43Tl/5jSn23H47FwgUeEAiKiPJSncjMryp79+0TneYyAnS
- QoXQ==
-X-Gm-Message-State: AOJu0YyE6Sj4jFRQDIbLzPugXn2Evtdu30PF9+hULhXL1tCvWA7ZSsf2
- qKZtyH2KKlA4h1Q6PhudwO3cfOL8KlbmbDApCKgK8rFw810YYLRvUuZoMRo6MZjyFP+tKQIZxdt
- DTGQDynXMhqZ/LgA5fr0tzpR/GZUkMi2wppOxHOUAXHmCevZaiS6EfWHmsZ1Rw3cDkH5FEogk89
- 146Gh6B4QwzTJGOs3dRguz81oR3AM4zXjxj8F8+I4/
-X-Gm-Gg: ASbGncuABcmYJBhpT0yo9YcEtoyzAYH0bqrgQmWzB+KlacwQM6ymqjSvrhDOrhcpr48
- 08sSH5NtS4RcefS1Bcp6NlxrVFHyrI3ABzzUfxq625sMlNvpAE+7abKAnkadCAVIcn2SYvX9n06
- i4UaPebErHqYX5GTii7Uet5PcdzZkAAX78HXIqzMfHl3SiWkFOxTEIytXYSJdW3uIMHmlKs/ZCn
- bfbgoeXcmF76vLRi+9NwDIo4P3RHj66b5yrAgBSJFpiF24w5o8c/uqUT/1DlXbbHIZy3CedhABs
- MjBUvrdKMr+6NsichOT18qb/chhtmLATeyHCr7Dn0xZo9TlUgjBYteIFRXd430M5GTTq4UHZ4/G
- fNdLv5nBVXs/U3Ok5qgiybpXgWRou27lLOQXCIfse+WWbRWr8y+3pNbo+JFfVmU+HQfy6ytP81V
- t9dnJl5XaDVJ/zmW8=
-X-Received: by 2002:a17:907:968c:b0:b3c:8940:6239 with SMTP id
- a640c23a62f3a-b7671b12672mr2645630666b.52.1764249363399; 
- Thu, 27 Nov 2025 05:16:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFR4zAUtB4DxYLxMVzjdn/2JS54LebqOs/4YoSUFB6HoNTN8BB+vMQ0qzr1abDd27DwPQ4zSg==
-X-Received: by 2002:a17:907:968c:b0:b3c:8940:6239 with SMTP id
- a640c23a62f3a-b7671b12672mr2645625766b.52.1764249362929; 
- Thu, 27 Nov 2025 05:16:02 -0800 (PST)
+ bh=rPn3s6GJ8euZXEVXy/H77NzWhVh7YdtKya5PhJ0IVoA=;
+ b=AlETIlOadCEybgTTjBJhEN7reNbeyLGpTFx/Lo58qVYd+3kI6qLM+kBd+fawtQMym6
+ /Bp9+bnz4aELmeLR/s+DNnPmGLyd8bnRBb4rDdFd4AZ3Prw12LcPV/0Q1k6upGLYuu9N
+ ApP4oOaRzDZ5gujVh6+UBBXo6ImAdFqUgHxvcQGq/8lyNiMGGQOczsaxoq4zbjjhfbOz
+ utIVyyRyhAYvTRYNHoRyWXP8jlg8wpxtbiKwkiwm9PqkBZNLANTfztEMSrB4yjkhRB2h
+ RXPmTaAc8mHgYBf8vzHZFs6CvmLL89iAkk/qXpl5r/PP3BS7mx63xOfu7W+U6YK2mGXe
+ Khsg==
+X-Gm-Message-State: AOJu0YzOSSgByGSg3DN1ysLSwSaU0kWCk2lqAawvM7u5Q29egzy51NUW
+ MkASOJBVwlsHVf2WkpO8eJp7WdXlO0LcvZbdYbk7t+fwp5Qmh8Ng7tHEEeMrtWwWYL4kUICHcM2
+ /rjSJyUMPhNqFI4Kl/uwkRgd9G1x5//ziTyORGgkroqEESTKuujesDzkmst+wFcyc/kdESNGXzh
+ 20OKRO/ilpCPTAdP/PL8UgiAHMkC+adlyLFVcXfhlA
+X-Gm-Gg: ASbGncvaDcqnd+57miKcyF05j/8vyx3l8GLaPy/C2JBorKACbnD/kCMfSyqbOVH2J2b
+ EanjUTrJm59IQukcS0a1/N1u3QFT57PW1KjUd/jYBFz08C9i1Iu0A+21Si8+L3Hkx3mZPsCwGpR
+ OFpT7xbJ+FWhpn4AkH7oASX/PSAhYOIcbE/KwdVTZK3Pxeve9zBqMcaGt0TOC85YmDaP/7SlfKW
+ 4KxE6kVKUCYa3WCf+aIXJZdnbQILY4GVhPvk8FNu/azmEUSn5h0Owfz1SzOBnTLc6rmWYLunzd8
+ 8qbGnuHOLNp3tW+QcxJsx8BpHU7mOnA51nbEl9JIJns2BAltornbDGfbLpXr7lyJtMc8Y4MGwtm
+ K3INLlMGd0AEZkyidKrJHF93g12u6PsmZyBt/u+eq666Mv1qrJFTmgPu5gOqZb9D82eNAzOJOQT
+ 2XJ+/Ko338/PP4i8I=
+X-Received: by 2002:a17:907:97d6:b0:b76:2d96:6c28 with SMTP id
+ a640c23a62f3a-b76715acbd4mr2409933866b.24.1764249341688; 
+ Thu, 27 Nov 2025 05:15:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGhiZxlursCvNaT6bq97EqynLxYV8JjekLOP/S09qU2IH1vHJyl0x583KHfB8adwD1gorEevw==
+X-Received: by 2002:a17:907:97d6:b0:b76:2d96:6c28 with SMTP id
+ a640c23a62f3a-b76715acbd4mr2409930866b.24.1764249341160; 
+ Thu, 27 Nov 2025 05:15:41 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b76f5a7b4bcsm153020266b.71.2025.11.27.05.16.02
+ a640c23a62f3a-b76f59eb3f6sm154811066b.55.2025.11.27.05.15.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Nov 2025 05:16:02 -0800 (PST)
+ Thu, 27 Nov 2025 05:15:40 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 26/28] include: move hw/vmstate-if.h to hw/core/
-Date: Thu, 27 Nov 2025 14:15:13 +0100
-Message-ID: <20251127131516.80807-27-pbonzini@redhat.com>
+Subject: [PATCH 14/28] include: move hw/platform-bus.h to hw/core/
+Date: Thu, 27 Nov 2025 14:15:01 +0100
+Message-ID: <20251127131516.80807-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251127131516.80807-1-pbonzini@redhat.com>
 References: <20251127131516.80807-1-pbonzini@redhat.com>
@@ -123,70 +123,140 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS                        | 2 +-
- include/hw/{ => core}/vmstate-if.h | 0
- include/migration/register.h       | 2 +-
- include/migration/vmstate.h        | 2 +-
- hw/core/vmstate-if.c               | 2 +-
- 5 files changed, 4 insertions(+), 4 deletions(-)
- rename include/hw/{ => core}/vmstate-if.h (100%)
+ hw/ppc/e500.h                        | 2 +-
+ include/hw/{ => core}/platform-bus.h | 0
+ hw/arm/virt-acpi-build.c             | 2 +-
+ hw/arm/virt.c                        | 2 +-
+ hw/core/platform-bus.c               | 2 +-
+ hw/core/sysbus-fdt.c                 | 2 +-
+ hw/loongarch/virt-acpi-build.c       | 2 +-
+ hw/loongarch/virt.c                  | 2 +-
+ hw/ppc/e500.c                        | 2 +-
+ hw/riscv/virt.c                      | 2 +-
+ 10 files changed, 9 insertions(+), 9 deletions(-)
+ rename include/hw/{ => core}/platform-bus.h (100%)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 72c70a46553..0a70bc03889 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3656,7 +3656,7 @@ M: Peter Xu <peterx@redhat.com>
- M: Fabiano Rosas <farosas@suse.de>
- S: Maintained
- F: hw/core/vmstate-if.c
--F: include/hw/vmstate-if.h
-+F: include/hw/core/vmstate-if.h
- F: include/migration/
- F: include/qemu/userfaultfd.h
- F: migration/
-diff --git a/include/hw/vmstate-if.h b/include/hw/core/vmstate-if.h
+diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
+index cda539bda18..11f8ae53177 100644
+--- a/hw/ppc/e500.h
++++ b/hw/ppc/e500.h
+@@ -2,7 +2,7 @@
+ #define PPCE500_H
+ 
+ #include "hw/core/boards.h"
+-#include "hw/platform-bus.h"
++#include "hw/core/platform-bus.h"
+ #include "qom/object.h"
+ 
+ #define PLATFORM_CLK_FREQ_HZ (400 * 1000 * 1000)
+diff --git a/include/hw/platform-bus.h b/include/hw/core/platform-bus.h
 similarity index 100%
-rename from include/hw/vmstate-if.h
-rename to include/hw/core/vmstate-if.h
-diff --git a/include/migration/register.h b/include/migration/register.h
-index ae79794cdd4..d0f37f5f438 100644
---- a/include/migration/register.h
-+++ b/include/migration/register.h
-@@ -14,7 +14,7 @@
- #ifndef MIGRATION_REGISTER_H
- #define MIGRATION_REGISTER_H
- 
--#include "hw/vmstate-if.h"
-+#include "hw/core/vmstate-if.h"
- 
- /**
-  * struct SaveVMHandlers: handler structure to finely control
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index df57e6550a2..84775474277 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -27,7 +27,7 @@
- #ifndef QEMU_VMSTATE_H
- #define QEMU_VMSTATE_H
- 
--#include "hw/vmstate-if.h"
-+#include "hw/core/vmstate-if.h"
- 
- typedef struct VMStateInfo VMStateInfo;
- typedef struct VMStateField VMStateField;
-diff --git a/hw/core/vmstate-if.c b/hw/core/vmstate-if.c
-index bf453620fed..c39631c7586 100644
---- a/hw/core/vmstate-if.c
-+++ b/hw/core/vmstate-if.c
-@@ -7,7 +7,7 @@
+rename from include/hw/platform-bus.h
+rename to include/hw/core/platform-bus.h
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 200e2a1da70..03b43425746 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -54,7 +54,7 @@
+ #include "hw/arm/virt.h"
+ #include "hw/intc/arm_gicv3_its_common.h"
+ #include "hw/mem/nvdimm.h"
+-#include "hw/platform-bus.h"
++#include "hw/core/platform-bus.h"
+ #include "system/numa.h"
+ #include "system/reset.h"
+ #include "system/tpm.h"
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index c005eb914cb..0d2652e6dbc 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -62,7 +62,7 @@
+ #include "hw/pci-bridge/pci_expander_bridge.h"
+ #include "hw/virtio/virtio-pci.h"
+ #include "hw/core/sysbus-fdt.h"
+-#include "hw/platform-bus.h"
++#include "hw/core/platform-bus.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/arm/fdt.h"
+ #include "hw/intc/arm_gic.h"
+diff --git a/hw/core/platform-bus.c b/hw/core/platform-bus.c
+index 6950063de4f..4b6cc5f6498 100644
+--- a/hw/core/platform-bus.c
++++ b/hw/core/platform-bus.c
+@@ -20,7 +20,7 @@
   */
  
  #include "qemu/osdep.h"
--#include "hw/vmstate-if.h"
-+#include "hw/core/vmstate-if.h"
+-#include "hw/platform-bus.h"
++#include "hw/core/platform-bus.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+diff --git a/hw/core/sysbus-fdt.c b/hw/core/sysbus-fdt.c
+index 59f1d17de11..89d0c464454 100644
+--- a/hw/core/sysbus-fdt.c
++++ b/hw/core/sysbus-fdt.c
+@@ -32,7 +32,7 @@
+ #include "system/device_tree.h"
+ #include "system/tpm.h"
+ #include "hw/arm/smmuv3.h"
+-#include "hw/platform-bus.h"
++#include "hw/core/platform-bus.h"
+ #include "hw/display/ramfb.h"
+ #include "hw/uefi/var-service-api.h"
+ #include "hw/arm/fdt.h"
+diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+index 3694c9827f0..8ff9ebdcd9e 100644
+--- a/hw/loongarch/virt-acpi-build.c
++++ b/hw/loongarch/virt-acpi-build.c
+@@ -32,7 +32,7 @@
+ #include "hw/pci-host/gpex.h"
+ #include "system/system.h"
+ #include "system/tpm.h"
+-#include "hw/platform-bus.h"
++#include "hw/core/platform-bus.h"
+ #include "hw/acpi/aml-build.h"
+ #include "hw/acpi/hmat.h"
  
- static const TypeInfo vmstate_if_info = {
-     .name = TYPE_VMSTATE_IF,
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index ea53941aeb9..6efa15da473 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -37,7 +37,7 @@
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/acpi/generic_event_device.h"
+ #include "hw/mem/nvdimm.h"
+-#include "hw/platform-bus.h"
++#include "hw/core/platform-bus.h"
+ #include "hw/display/ramfb.h"
+ #include "hw/uefi/var-service-api.h"
+ #include "hw/mem/pc-dimm.h"
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 769f18023d5..7c65757e215 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -46,7 +46,7 @@
+ #include "qemu/option.h"
+ #include "hw/pci-host/ppce500.h"
+ #include "qemu/error-report.h"
+-#include "hw/platform-bus.h"
++#include "hw/core/platform-bus.h"
+ #include "hw/net/fsl_etsec/etsec.h"
+ #include "hw/i2c/i2c.h"
+ #include "hw/core/irq.h"
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 0505bffa44a..9cb4f16432e 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -43,7 +43,7 @@
+ #include "hw/intc/riscv_aplic.h"
+ #include "hw/intc/sifive_plic.h"
+ #include "hw/misc/sifive_test.h"
+-#include "hw/platform-bus.h"
++#include "hw/core/platform-bus.h"
+ #include "chardev/char.h"
+ #include "system/device_tree.h"
+ #include "system/system.h"
 -- 
 2.51.1
 
