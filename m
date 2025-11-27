@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBBC7CFD2F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 13:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1524D11183
+	for <qemu-devel@archiver.kernel.org>; Thu, 27 Nov 2025 13:18:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vObqZ-0002b9-Cq; Thu, 27 Nov 2025 08:15:43 -0500
+	id 1vObsj-0004Ep-Jm; Thu, 27 Nov 2025 08:17:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vObqT-0002ZR-5F
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:15:37 -0500
+ id 1vObr4-0002ju-KY
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:16:20 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vObqR-0001Cu-90
- for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:15:36 -0500
+ id 1vObqv-0001IK-7h
+ for qemu-devel@nongnu.org; Thu, 27 Nov 2025 08:16:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764249334;
+ s=mimecast20190719; t=1764249361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AVhaavhb2GPoBraNf9DUEEmc85CVGAd40biEW+z/h1w=;
- b=ZpIAwOykf8qzi5WDCJCPPheN18VsgjZFGNCfAnSjYu4f5sn1u4RMR4yxgxWH0EuNxA73ee
- vSecThN+TLyNOmYA2ZPmuB2pX48P0276btQI6e5fW0US2frVnEsKJWcagI0Rpn7P73sOlA
- y7smDe6edpRqUI9RpaLuCtuR341WPc4=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wpnrAdD3xbORyd8otri4oXizO/2tYcx3tnVtrMiGUzw=;
+ b=Mr+Z37+V8bMLXRyEczvskYDqwEnrdqakmINHzJE96SJ1AAuS7uWdngKU/oCZcNzr9AhuVU
+ PXBzsrGlFo6NTLWfhO7K8qDndoOjIyx0bngB6BLv7q3RyF4kwYmvXCN5uKTUnRNlXzVB8K
+ +7gkFEb8vdYHDAg98f2hthBx6lBQPtI=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-EilB7tNpNFCLtfxxjwedZA-1; Thu, 27 Nov 2025 08:15:32 -0500
-X-MC-Unique: EilB7tNpNFCLtfxxjwedZA-1
-X-Mimecast-MFC-AGG-ID: EilB7tNpNFCLtfxxjwedZA_1764249332
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b7336ad128cso83585566b.1
- for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 05:15:32 -0800 (PST)
+ us-mta-553-W96hsvx7MR2T009z7sh86g-1; Thu, 27 Nov 2025 08:15:59 -0500
+X-MC-Unique: W96hsvx7MR2T009z7sh86g-1
+X-Mimecast-MFC-AGG-ID: W96hsvx7MR2T009z7sh86g_1764249359
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-6411e349b73so976421a12.2
+ for <qemu-devel@nongnu.org>; Thu, 27 Nov 2025 05:15:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764249331; x=1764854131; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764249357; x=1764854157; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AVhaavhb2GPoBraNf9DUEEmc85CVGAd40biEW+z/h1w=;
- b=bPFnO/Dqo0lyJ+WTdztzH4GCeu2WPy5qRma+35Id3j7CvSczRnQWSXfIqaMcIeF9gS
- Cjt0bAG0sasJZeVXtiWk8OrqRzKDTdqiON+TNUDasCUKFeY6pgUNSwmjbHULN/DJYMmW
- oe+RhCLvqkguUNcKS+pi33NWL5fRHfVslgN99xBubu/wmiiWs5yIdaUk2ORb377YvoZP
- lxRcz3JIqPCzXDnIuhHEppcupJWfvTJOmWgrOz3vq0bAH2ZixithznZ9hc47Ey+mz8YO
- 463uBu+Pmxmat6H5sETPlFP8/p+wiCS0IFX/fSDlTFfbPZgG7R4E0yfQaiuNLmmUE7Wf
- ZlSg==
+ :reply-to; bh=wpnrAdD3xbORyd8otri4oXizO/2tYcx3tnVtrMiGUzw=;
+ b=RwHfkrr1MEfStor6b/9vZjLlIPGb3hjTFy/YWiSEyUobW2uxUeBELj7HQJUUrMIQwl
+ 6acyPpQHkOWwn8W3KH8VK+BmftWtFAXHwEgX9D9IE9tz8k1PYa8l+TSE8VmSH1qfyBwL
+ zOCGcuapaASKGkF/u4MBiIhb5+fvcEEgtoMQPGGoBEhxzymD9f6KMEztbb7L19TNanho
+ GdTRWBrCabP0pFpVFpxbZah9r23btEAci94mCLzFp3SH6cQ0+pgA5wyH7920OuMH1voP
+ 4skds282GPgBfC/FB4X7SNJiqXEOQduA9YcSLrwooBMMw6EhMOatRGzvFc9VGo8H+jqR
+ TbUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764249331; x=1764854131;
+ d=1e100.net; s=20230601; t=1764249357; x=1764854157;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=AVhaavhb2GPoBraNf9DUEEmc85CVGAd40biEW+z/h1w=;
- b=kHGWDvTuM0JUblQxb4yRGVzNxe9F9o2/svzGU0JmEEg7RMLcrf/6EeqXUB577xwMP9
- DDtV8JoOOk8iDKHhdqkToifTNwXI9iAbfQlLohdXQt9gHddyWeO/oEe0q9rcq1xJRvbG
- xexG4bKIH3szTOmteOSNoggJDTpKVIJ8vVnaI7okARgsrtlPgCDXnCC8egjGgUDYhuYT
- iuT49NqboWAZfcgtcyqYT5xpl52Oj8CkaJy89FHI7jm7svOFiuX7hIjzHs5je+xo7aJJ
- cZ4SWY7asT2rA0IIij4XtHQVkJvvbYm3KpTzyzC1kegSs8LaC+AH7l7/ffMoWn59OiEh
- h77Q==
-X-Gm-Message-State: AOJu0YwISNlOdDhodlEfdrKeNOUTX6v+LNoRlfEjRlbc84bo8T1C2JzN
- Llh0U8HUR9efRdnctkkhjBcOcXb5pM8GtuNIudc12f37URTJbQTK/UZ6XyPZP7K3K9hOpPrqqXR
- YZUYpdA9Y0xhhDp9XuS99/FFvNinHuGwDZKnV5b/6HYvMaelReAqhKJZztEHChUZ1Iy2B0KA1TN
- sdZsOUmWTHQRvPHMZzCgq/+UiP0j+yHLSAxMPaZfWm
-X-Gm-Gg: ASbGncu+d4/ofGp2FCczO0PDB01K3P7pLBVopjyFGGUl0FGq2r9FPurNfkZRVh6w3bz
- JDCJ5iyLODMXaxvO5Oi7gcsr5mD1P43j6W7qqKrHB1R6n/atA7cXHPpuQcrqcxIMYKuax+a7G31
- Ciojn8jLbfssxyU8d94crLwJRrglkpvNoduUU74aqpiIF37v8PK8AKnid4waSSs2RONLuaCicwX
- UpVwxG1h3JsgiSozfVRZR/3KvtAWnfv/GcCOuqOZGFwSRcWi/LiCUKVZnIkqJZNQCROGPzmQyc7
- lx/9v7SJg4oqx5Mi/uJ6ua9rOj2oHi2qwNNS3YS27nDcZSPvDWBCVqucl6vUSPlQJiDgBupXS7u
- dgKe6EPIKRfrxDfs1Wsujw6Vuq6cjCO5JVjPHbjW05pT8n6/cxfU0KOCTN2JmVaC8bKWqPlO6p/
- skIyip7TXviaNfKkI=
-X-Received: by 2002:a17:907:1b12:b0:b76:7e0e:4246 with SMTP id
- a640c23a62f3a-b76c546da56mr1165980266b.12.1764249330708; 
- Thu, 27 Nov 2025 05:15:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHb7zuvFVDfBZw913/shAVEqGxBXfvMcd4GyLcmQ1qqjnS3/+uV6HknX9zw/NBNxTVFYU4Xcg==
-X-Received: by 2002:a17:907:1b12:b0:b76:7e0e:4246 with SMTP id
- a640c23a62f3a-b76c546da56mr1165976566b.12.1764249330169; 
- Thu, 27 Nov 2025 05:15:30 -0800 (PST)
+ bh=wpnrAdD3xbORyd8otri4oXizO/2tYcx3tnVtrMiGUzw=;
+ b=AjyC7UOGk4LtHgrMMJZowmHDqaTODdcwzPeQFbn65HcWGbdn+VDHE076FXK9aDh43m
+ vvX2XNUYfbMj8Br7d970UTi0D+wag5AzRZuTq9Y/cs9vKFu8LuX+YOm2p66cmJpwNyCb
+ H2CyRr/Qt9PHJaqvWSXrlsaJdKGMOwmONHkv20j18PJs//f7kb7b15StLwGzwSNzaYJq
+ I4eqEBK4odW4vjUu6SJKSWKh2EJ7iresbQhQH+At4wa9jDIq7i2BYvVagw1xbwRlWMbI
+ x4VJ1dsfa3KE094X6s/j4FpoV6LgQ9KD5g6mw7pXErvlKLDY3vDoa6JxZ77BHdAsY3vQ
+ 6i0A==
+X-Gm-Message-State: AOJu0Yzno+pxZorPiirYm0nxNVnu6QtBEJ+iuXZ4dXfpf4McFfGWUUl2
+ +U5xUO1IgpXQHeHoOvsGpZOtfirj9VVihF2a0VbzlExvEOgMu1g0nlllePgdn52yGunhoHT+4kW
+ Pz4Rpdy9HuPw8Fb3h3Je8j2+hss/YpL1GvXpuqS8Zj4ZvyXrJ+d25ZSTn2CsrQnzENTr4P/An7n
+ jbUgMR0wrTj2KTJqakWRZUVQEJiu0JCLqOvFQSp9ml
+X-Gm-Gg: ASbGncuKTaIOe4S7UI+/+NaF9Vlogm0XX3E0ogl+r9DFaRbQ/ckG2jvRKlP6B/wT3mC
+ 7UrVeLIwvOkvYqQVJbvQu+5bXTX5d81Ae432yHU2DocZW8rt7uCoo3unkPSCzrlvjnNIPBPmpA3
+ vM1ATXhgvxtfn1J1egdal2FmQtDcu9ka/UPvT9G9wwqkTSFbc7KZKid2+K+zwGYgIkHKcoq/6M7
+ SxROlnSZP8y5QMm/f35j185X1A5mofIcCZcTK4tQRfYzZ9wqa3WJDBOg5ohnefdswtSqxJxemLf
+ aSSjLUXFLSFREP6B3nZ/DxtOQ5GWjzV6k82/oxKrI7dJp0YUa6yrTWTaOPibK4Ar0zOP3/nfncD
+ L7VEgm90TrNjt4jMOeoFvCK4wMFD3vuuDYOxT9qsSssK1PDIUxfWlWvD+PeNUXI2Kl4H8V0RtCR
+ Rc9fONXGc2BfB7GeQ=
+X-Received: by 2002:a05:6402:51d0:b0:643:804a:fb5e with SMTP id
+ 4fb4d7f45d1cf-64555cd9f23mr18359581a12.21.1764249357460; 
+ Thu, 27 Nov 2025 05:15:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHtvP/aKYmrnE6TE/oxiPG4Vb8tq/H1pvd+sXdTz6EFwiIesJxKWOeZbT0wF3iJDkVZQ4e31A==
+X-Received: by 2002:a05:6402:51d0:b0:643:804a:fb5e with SMTP id
+ 4fb4d7f45d1cf-64555cd9f23mr18359550a12.21.1764249356918; 
+ Thu, 27 Nov 2025 05:15:56 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b76f59aed2esm159140266b.42.2025.11.27.05.15.29
+ 4fb4d7f45d1cf-64751051313sm1529185a12.28.2025.11.27.05.15.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 27 Nov 2025 05:15:29 -0800 (PST)
+ Thu, 27 Nov 2025 05:15:55 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 07/28] include: move hw/fw-path-provider.h to hw/core/
-Date: Thu, 27 Nov 2025 14:14:54 +0100
-Message-ID: <20251127131516.80807-8-pbonzini@redhat.com>
+Subject: [PATCH 23/28] include: move hw/resettable.h to hw/core/
+Date: Thu, 27 Nov 2025 14:15:10 +0100
+Message-ID: <20251127131516.80807-24-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251127131516.80807-1-pbonzini@redhat.com>
 References: <20251127131516.80807-1-pbonzini@redhat.com>
@@ -123,168 +123,238 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/{ => core}/fw-path-provider.h | 0
- include/hw/virtio/vhost-scsi-common.h    | 2 +-
- hw/core/fw-path-provider.c               | 2 +-
- hw/core/qdev-fw.c                        | 2 +-
- hw/ppc/mac_newworld.c                    | 2 +-
- hw/ppc/mac_oldworld.c                    | 2 +-
- hw/ppc/pegasos.c                         | 2 +-
- hw/ppc/spapr.c                           | 2 +-
- hw/scsi/vhost-scsi-common.c              | 2 +-
- hw/scsi/vhost-scsi.c                     | 2 +-
- hw/scsi/vhost-user-scsi.c                | 2 +-
- hw/sparc64/sun4u.c                       | 2 +-
- 12 files changed, 11 insertions(+), 11 deletions(-)
- rename include/hw/{ => core}/fw-path-provider.h (100%)
+ MAINTAINERS                        | 2 +-
+ docs/devel/reset.rst               | 2 +-
+ include/hw/core/boards.h           | 2 +-
+ include/hw/core/qdev.h             | 2 +-
+ include/hw/{ => core}/resettable.h | 0
+ include/hw/virtio/virtio-balloon.h | 2 +-
+ include/hw/virtio/virtio-mem.h     | 2 +-
+ include/system/reset.h             | 2 +-
+ hw/core/reset.c                    | 2 +-
+ hw/core/resetcontainer.c           | 2 +-
+ hw/core/resettable.c               | 2 +-
+ hw/misc/xlnx-versal-crl.c          | 2 +-
+ hw/net/lan9118_phy.c               | 2 +-
+ hw/pci-host/fsl_imx8m_phy.c        | 2 +-
+ hw/rtc/rs5c372.c                   | 2 +-
+ system/runstate.c                  | 2 +-
+ target/s390x/cpu.c                 | 2 +-
+ 17 files changed, 16 insertions(+), 16 deletions(-)
+ rename include/hw/{ => core}/resettable.h (100%)
 
-diff --git a/include/hw/fw-path-provider.h b/include/hw/core/fw-path-provider.h
-similarity index 100%
-rename from include/hw/fw-path-provider.h
-rename to include/hw/core/fw-path-provider.h
-diff --git a/include/hw/virtio/vhost-scsi-common.h b/include/hw/virtio/vhost-scsi-common.h
-index d54d9c916f2..7f34c7cb4fe 100644
---- a/include/hw/virtio/vhost-scsi-common.h
-+++ b/include/hw/virtio/vhost-scsi-common.h
-@@ -16,7 +16,7 @@
+diff --git a/MAINTAINERS b/MAINTAINERS
+index b9cc00a5582..e34c3e6dac2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3961,7 +3961,7 @@ F: docs/devel/clocks.rst
+ Reset framework
+ M: Peter Maydell <peter.maydell@linaro.org>
+ S: Maintained
+-F: include/hw/resettable.h
++F: include/hw/core/resettable.h
+ F: include/hw/core/resetcontainer.h
+ F: include/system/reset.h
+ F: hw/core/reset.c
+diff --git a/docs/devel/reset.rst b/docs/devel/reset.rst
+index c02fe0a405c..91e8c21189e 100644
+--- a/docs/devel/reset.rst
++++ b/docs/devel/reset.rst
+@@ -4,7 +4,7 @@ Reset in QEMU: the Resettable interface
+ =======================================
  
- #include "hw/virtio/virtio-scsi.h"
- #include "hw/virtio/vhost.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "qom/object.h"
+ The reset of qemu objects is handled using the resettable interface declared
+-in ``include/hw/resettable.h``.
++in ``include/hw/core/resettable.h``.
  
- #define TYPE_VHOST_SCSI_COMMON "vhost-scsi-common"
-diff --git a/hw/core/fw-path-provider.c b/hw/core/fw-path-provider.c
-index 4840faefd1a..2a9da1aa4a2 100644
---- a/hw/core/fw-path-provider.c
-+++ b/hw/core/fw-path-provider.c
-@@ -16,7 +16,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
+ This interface allows objects to be grouped (on a tree basis); so that the
+ whole group can be reset consistently. Each individual member object does not
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index a48ed4f86a3..815845207b0 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -10,7 +10,7 @@
  #include "qemu/module.h"
+ #include "qom/object.h"
+ #include "hw/core/cpu.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
  
- char *fw_path_provider_get_dev_path(FWPathProvider *p, BusState *bus,
-diff --git a/hw/core/qdev-fw.c b/hw/core/qdev-fw.c
-index a31958355ff..a587d2ddf90 100644
---- a/hw/core/qdev-fw.c
-+++ b/hw/core/qdev-fw.c
+ #define TYPE_MACHINE_SUFFIX "-machine"
+ 
+diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+index da93611d373..0b62580a0fb 100644
+--- a/include/hw/core/qdev.h
++++ b/include/hw/core/qdev.h
+@@ -9,7 +9,7 @@
+ #include "qom/object.h"
+ #include "hw/core/hotplug.h"
+ #include "hw/core/irq.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ 
+ /**
+  * DOC: The QEMU Device API
+diff --git a/include/hw/resettable.h b/include/hw/core/resettable.h
+similarity index 100%
+rename from include/hw/resettable.h
+rename to include/hw/core/resettable.h
+diff --git a/include/hw/virtio/virtio-balloon.h b/include/hw/virtio/virtio-balloon.h
+index 0456c211c6e..79ac194ccec 100644
+--- a/include/hw/virtio/virtio-balloon.h
++++ b/include/hw/virtio/virtio-balloon.h
 @@ -16,7 +16,7 @@
+ #define QEMU_VIRTIO_BALLOON_H
+ 
+ #include "standard-headers/linux/virtio_balloon.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ #include "hw/virtio/virtio.h"
+ #include "system/iothread.h"
+ #include "qom/object.h"
+diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-mem.h
+index e0ab31b45a4..221cfd76bf9 100644
+--- a/include/hw/virtio/virtio-mem.h
++++ b/include/hw/virtio/virtio-mem.h
+@@ -14,7 +14,7 @@
+ #define HW_VIRTIO_MEM_H
+ 
+ #include "standard-headers/linux/virtio_mem.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ #include "hw/virtio/virtio.h"
+ #include "qapi/qapi-types-misc.h"
+ #include "system/hostmem.h"
+diff --git a/include/system/reset.h b/include/system/reset.h
+index 97131d94cfc..62e9977e3c2 100644
+--- a/include/system/reset.h
++++ b/include/system/reset.h
+@@ -27,7 +27,7 @@
+ #ifndef QEMU_SYSTEM_RESET_H
+ #define QEMU_SYSTEM_RESET_H
+ 
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ #include "qapi/qapi-events-run-state.h"
+ 
+ typedef void QEMUResetHandler(void *opaque);
+diff --git a/hw/core/reset.c b/hw/core/reset.c
+index 65f82fa43d9..e7230b49b70 100644
+--- a/hw/core/reset.c
++++ b/hw/core/reset.c
+@@ -25,7 +25,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "system/reset.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ #include "hw/core/resetcontainer.h"
+ 
+ /*
+diff --git a/hw/core/resetcontainer.c b/hw/core/resetcontainer.c
+index 5ff17002e75..ef84aa2374a 100644
+--- a/hw/core/resetcontainer.c
++++ b/hw/core/resetcontainer.c
+@@ -15,7 +15,7 @@
   */
  
  #include "qemu/osdep.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "hw/qdev-core.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ #include "hw/core/resetcontainer.h"
  
- const char *qdev_fw_name(DeviceState *dev)
-diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-index bdc6c7ed7fe..3a6e47eb8b7 100644
---- a/hw/ppc/mac_newworld.c
-+++ b/hw/ppc/mac_newworld.c
-@@ -66,7 +66,7 @@
- #include "hw/misc/macio/macio.h"
- #include "hw/ppc/openpic.h"
- #include "hw/loader.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "elf.h"
- #include "qemu/error-report.h"
- #include "system/kvm.h"
-diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
-index 8d35080b9d1..8f9ce68b8b0 100644
---- a/hw/ppc/mac_oldworld.c
-+++ b/hw/ppc/mac_oldworld.c
-@@ -43,7 +43,7 @@
- #include "hw/char/escc.h"
- #include "hw/misc/macio/macio.h"
- #include "hw/loader.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "elf.h"
- #include "qemu/error-report.h"
- #include "system/kvm.h"
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index 3b48a54e7a0..e7396a729f3 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -26,7 +26,7 @@
- #include "system/qtest.h"
- #include "hw/core/boards.h"
- #include "hw/loader.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "elf.h"
- #include "qemu/log.h"
- #include "qemu/error-report.h"
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 6f2d10330d6..7c695ac4ecc 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -43,7 +43,7 @@
- #include "system/reset.h"
- #include "system/runstate.h"
- #include "qemu/log.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "elf.h"
- #include "net/net.h"
- #include "system/device_tree.h"
-diff --git a/hw/scsi/vhost-scsi-common.c b/hw/scsi/vhost-scsi-common.c
-index 43525ba46d3..0bb4305de61 100644
---- a/hw/scsi/vhost-scsi-common.c
-+++ b/hw/scsi/vhost-scsi-common.c
-@@ -24,7 +24,7 @@
- #include "hw/virtio/virtio-scsi.h"
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/virtio-access.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
+ struct ResettableContainer {
+diff --git a/hw/core/resettable.c b/hw/core/resettable.c
+index 5cdb4a4f8d3..86e16c8c6e4 100644
+--- a/hw/core/resettable.c
++++ b/hw/core/resettable.c
+@@ -12,7 +12,7 @@
  
- int vhost_scsi_common_start(VHostSCSICommon *vsc, Error **errp)
- {
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index cdf405b0f86..b356bd9762e 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -26,7 +26,7 @@
- #include "hw/virtio/vhost.h"
- #include "hw/virtio/virtio-scsi.h"
- #include "hw/virtio/virtio-bus.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "hw/qdev-properties.h"
- #include "qemu/cutils.h"
- #include "system/system.h"
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index 25f2d894e7c..0d7bbb52aba 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -18,7 +18,7 @@
  #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "hw/qdev-core.h"
- #include "hw/qdev-properties.h"
- #include "hw/qdev-properties-system.h"
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index 961d599f48d..62ceb7eef4d 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -54,7 +54,7 @@
- #include "hw/sysbus.h"
- #include "hw/ide/pci.h"
- #include "hw/loader.h"
--#include "hw/fw-path-provider.h"
-+#include "hw/core/fw-path-provider.h"
- #include "elf.h"
+ #include "qemu/module.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
  #include "trace.h"
+ 
+ /**
+diff --git a/hw/misc/xlnx-versal-crl.c b/hw/misc/xlnx-versal-crl.c
+index 072d6d98591..9bbf44def6b 100644
+--- a/hw/misc/xlnx-versal-crl.c
++++ b/hw/misc/xlnx-versal-crl.c
+@@ -13,7 +13,7 @@
+ #include "hw/sysbus.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/register.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ 
+ #include "target/arm/arm-powerctl.h"
+ #include "target/arm/multiprocessing.h"
+diff --git a/hw/net/lan9118_phy.c b/hw/net/lan9118_phy.c
+index f0f6e55d807..2fc027d112c 100644
+--- a/hw/net/lan9118_phy.c
++++ b/hw/net/lan9118_phy.c
+@@ -16,7 +16,7 @@
+ #include "hw/net/lan9118_phy.h"
+ #include "hw/net/mii.h"
+ #include "hw/core/irq.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ #include "migration/vmstate.h"
+ #include "qemu/log.h"
+ #include "trace.h"
+diff --git a/hw/pci-host/fsl_imx8m_phy.c b/hw/pci-host/fsl_imx8m_phy.c
+index 04da3f99a07..0afa6167e0d 100644
+--- a/hw/pci-host/fsl_imx8m_phy.c
++++ b/hw/pci-host/fsl_imx8m_phy.c
+@@ -8,7 +8,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/pci-host/fsl_imx8m_phy.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ #include "migration/vmstate.h"
+ 
+ #define CMN_REG075 0x1d4
+diff --git a/hw/rtc/rs5c372.c b/hw/rtc/rs5c372.c
+index 58f12b836d3..20015dd6c1e 100644
+--- a/hw/rtc/rs5c372.c
++++ b/hw/rtc/rs5c372.c
+@@ -11,7 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/i2c/i2c.h"
+ #include "hw/core/qdev-properties.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ #include "migration/vmstate.h"
+ #include "qemu/bcd.h"
  #include "qom/object.h"
+diff --git a/system/runstate.c b/system/runstate.c
+index 89bbfe7fbf9..ed2db564806 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -32,7 +32,7 @@
+ #include "exec/cpu-common.h"
+ #include "gdbstub/syscalls.h"
+ #include "hw/core/boards.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ #include "migration/misc.h"
+ #include "migration/postcopy-ram.h"
+ #include "monitor/monitor.h"
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index da536fb30ed..6c4198eb1b1 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -32,7 +32,7 @@
+ #include "system/hw_accel.h"
+ #include "hw/core/qdev-properties.h"
+ #include "hw/core/qdev-properties-system.h"
+-#include "hw/resettable.h"
++#include "hw/core/resettable.h"
+ #include "fpu/softfloat-helpers.h"
+ #include "disas/capstone.h"
+ #include "system/tcg.h"
 -- 
 2.51.1
 
