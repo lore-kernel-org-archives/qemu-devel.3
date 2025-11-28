@@ -4,83 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90C19CFD376
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 09:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 433EDCFD376
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 09:43:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOupN-0000cb-N5; Fri, 28 Nov 2025 04:31:45 -0500
+	id 1vOv0B-0003ds-G2; Fri, 28 Nov 2025 04:42:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vOupL-0000aT-LO
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 04:31:43 -0500
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vOupJ-0006uW-S5
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 04:31:43 -0500
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-640f2c9cc72so1484565d50.3
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 01:31:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vOv09-0003dH-Rd
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 04:42:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vOv07-0007yn-F3
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 04:42:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764322969;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=KAbRuebQpS5YcNDD4J2eZLQvWeeGyNZf76fc2t913LI=;
+ b=NgYaxajAsKmEtoTLeIsIUNLW880JAhZpOWOyaINvlRz00AkBmEe7dEmWVSCefy1MMWvyu2
+ DWCEUatuCYspYiCr8t20+VJMTjvcamIjEfXsKV8ZyPst1/ZpyhGzkR+0IkYqzxKcK2o92M
+ N7UHZcrPjRjfecp2dkO9aP46S5CkO3g=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-451-jVu08-GqOrGvNibzsYcW1g-1; Fri, 28 Nov 2025 04:42:48 -0500
+X-MC-Unique: jVu08-GqOrGvNibzsYcW1g-1
+X-Mimecast-MFC-AGG-ID: jVu08-GqOrGvNibzsYcW1g_1764322967
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b73533b84eeso133612966b.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 01:42:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764322300; x=1764927100; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VS+fFN04bnuMi6NAtG5NzMdq7p6a0VRK05Ap413lUYk=;
- b=N5N1pcT7I9jSO7fke36MBC5RlpLa04yrpFipa8s5Ya2kV4n1QI5qiTwc3bPd4SwSXq
- 39I/xlBKFP5hZZXCLPjVnznMbNgyLzp5e3ze3c7tWHWVlBd0/72k3DkHQxnd3gqNx8jy
- ESEXGl4anYs2Jqhaaoc3A/4Tb00kJYnZQOp662ujOMbqCnnk6r7fzBMUtMjSzVTCma7X
- ccsK03qwI1ff8HI1eI7wFc95Wm/1nlw7wgIlKZTFZvRmx5TXTVkHkxz/b7n77SXTkyRh
- SBdtQL7RZjpx7KdCnSkQbt8HNEaCItpE5afUkGKKxx0KxxNVtWf6v21vm48x4zz5IN9E
- sD4w==
+ d=redhat.com; s=google; t=1764322967; x=1764927767; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=KAbRuebQpS5YcNDD4J2eZLQvWeeGyNZf76fc2t913LI=;
+ b=UOK7YBFpwsgTCDsn7K+QZzpoJIvmBRdGTPJXso4yw+9gHrWBeESijhXW+8J9lvoesH
+ cLTSNiNSV/5mSIXytEdOXio8rAFnt9IqmFTdQOpnJpZhORw0zHqNQqxWLncEeemu1L+x
+ ZxvEVwzjLC4fwUHg4Kr0t6As3LY/s+bYtDyPnMsd6VfMsCQ0vqMg5UsaUM3SIR4oJKUa
+ mJ77fz2SQSq3vqpWH042ET80LaaDP1zA+7Q4QEs3Mn13tnAgTOAxnu4tGysDvcq2yvBE
+ ISP2B6uHOrD64YB5lDuneq6W7KkLG1ooJ8uaNguQGlaUegBm7aNEQbA20B30Mj0Bw8r3
+ Oghg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764322300; x=1764927100;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1764322967; x=1764927767;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VS+fFN04bnuMi6NAtG5NzMdq7p6a0VRK05Ap413lUYk=;
- b=mU0PA8nExCJrFVa8IQQBuF29ObrnHcW5giqum3H+8lDU9GNAbE6k3op7jj50Pj2NBk
- YQzJhFlJfYQ5Tn+T5byKwv6k6NVtyl3wijuxecqDdUzGEmwrBtuVWlu9OlCcaeJHlIM/
- zTSkrJcffgJLlCLR62sE6Zw/pfPxWWSBtz+STLxOC6wOtmh2J4qSikt7P7oy1e8bM2WD
- WX0D+oINXlrKoeeYtu5v7SbxAvtqb+Ns/T/8cJ8e5julITVNOM0OACm00p6+J98116DR
- +b0WVSfq76Wxn3SNpGu7yfqLzo1b3h1vYl0iqtj3/q/KtnRsClVKt0HeUGNwLBnF26Gg
- q/9w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCqNx5t1NsH47ZjePYgqlQRKG5Qlm7qMvoNvLgznbJKk+x37WNzESWb++EB6vJ2r5yTLi4v445kz1K@nongnu.org
-X-Gm-Message-State: AOJu0YyZqiF0FIN5HXPqU0weFjWXm4W/69e5TKNo/GkauDwiJPWKrH2d
- lRtToAZtMXe6RzJ4cjWzVy08mNRe7vF/ugZzAlKBqjoNMMkyxdCBqQ7F3OaCWqOQo03fvd6nkIj
- 5o9XwoCafs039X5nSq69sKqBzNfRprkmqUiOHTpeAuw==
-X-Gm-Gg: ASbGncsfEqILetIk7pNwGLTYVq/I0tXlJ9ds3NAvEYUQxhC5JlWC+wnT+ZplOMeDyGR
- Njit8YWM8Y4fe4Yw84CkVW7+9S3Yix+KBKQov7TmjqQPbtm0eH7aMI4gLRrF0/Scps7KxGXt/8k
- izCeW6s4pUkjGeH6A/6hOmE/DcRWSOnwcQf7oADzI6n7JWfm1Oq9efOKqthjlGzdMZa1wMA6/gZ
- sQNMwJx3M6DStSjxnRImHvXNfZY014FRWOOW0AU6TXuMroZVJOzxXYV3UebYT8HbbzYcTGY
-X-Google-Smtp-Source: AGHT+IHPv0+2uHHl9KK/iJgzTT3FCYtPlB2owDK800JQpL0UnCImrQETYZR5vz4E94Xh/o4yIic9ZXC+mQB/ACUDJck=
-X-Received: by 2002:a05:690c:7484:b0:787:ca0f:2687 with SMTP id
- 00721157ae682-78ab6efdda1mr218975937b3.34.1764322300309; Fri, 28 Nov 2025
- 01:31:40 -0800 (PST)
+ bh=KAbRuebQpS5YcNDD4J2eZLQvWeeGyNZf76fc2t913LI=;
+ b=RKYu9K1vMc8ReWC/hko/h9hfFehtTjDHkvgk51YlzKzTn111ifNY4w6w7I3el5QGOZ
+ QHL2gxCwGwMw842ZCEsy6AqKZ4yGcIwLTibBK4pB/yXFVzAfQhTnGUnUtxRc0cJSfvOs
+ 9lzcCzRU7qUUt6OwgXpb9hm8Y+fiq/Xfu6kOWFuvyxvcEzyOWLB8Yndw5U6in95ui8Jo
+ BvPe+3H3VbRYkICG4b+GIN/AZuwO5bedQhEP/cFQCskB7EFHQgNYzxfugvt8IfMNSHqF
+ TYyrK5tdrfJWjMU81S3wJntQ/GOqgS1Ehq6eO2LfrXt/teLBNYTOu56NzEAl5v9cx1q3
+ lC/g==
+X-Gm-Message-State: AOJu0Yx9d3W0e3TITnccL9pyV10+RH3ITK7n0BbA1pOkYHEVGnlW4/PE
+ uDmvYjVBo9qwo43FUNkafCQeZdRc3EMJmtKGJfIMrAnYtllmffxPtq7WzIOwDSdp0EL51scvZA1
+ 4B378hUFxlXOGJuoWOC2Sa4vtS9+/eVAIkEFIwU07KYzdReNci3GgVdBbgqlf1Uc0x/XFl4MZpa
+ hYVy9gZsQJpcyolbD/MWDuirJvaYhlb0aJZmCoFrXz
+X-Gm-Gg: ASbGncv4affm+i9+IxHwvbP5cWg9YpvcE0XxzqNxMA5CIn5xZjAltOQRZWTw3g/YsQK
+ zC3xHo6RvHqwK3/6Wyhnj+T6cr+bHahc7+mwWUEJT0wjQvB5IJulJIxvDVeA9Lz4BbzxnS9NpvK
+ B7ty0vOvsv7MBb0OSHWWfiNTVOvn+Cv8ZsOFhjPT2rh/sT9swvq+HGc9i/D8NFqTe+yfcrbnYhq
+ 9bE3uW80cVSNE3yCu7LBOUytVgnjvpqu9Wt/yoXMqf9Z2YTeyEReHfzn7xPrrumJOT0c7nm1oAh
+ h8WvusmWGJnOcWsshdmFAeia/ZOTnAJ7EVVTg26Ch869dwwqmxt2uwsPh1qjdmCJrK0CK6jn7eb
+ jgWIfjg1MuoK8KQ9gYOU7bMRCciLN2yo6dJC4SW64WN4Qjgpu9403N//mxG7rLH+yA0f9yyG917
+ rgoTBT8AePjhzj/R8=
+X-Received: by 2002:a17:907:2d20:b0:b73:8bdd:eec9 with SMTP id
+ a640c23a62f3a-b7671558a7dmr3102720266b.5.1764322966577; 
+ Fri, 28 Nov 2025 01:42:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGIOzOUuiiWm3D2OJnQklqF1IDhiXRoxgpcyZMJlR+oeevanI4Z3+lfcQasy5HljeJd8hSNSQ==
+X-Received: by 2002:a17:907:2d20:b0:b73:8bdd:eec9 with SMTP id
+ a640c23a62f3a-b7671558a7dmr3102717066b.5.1764322965975; 
+ Fri, 28 Nov 2025 01:42:45 -0800 (PST)
+Received: from [192.168.10.48] ([176.206.119.13])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b76f59aebecsm390140966b.39.2025.11.28.01.42.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Nov 2025 01:42:45 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org
+Subject: [PATCH] rust: workaround compilation failures with Meson <1.10
+Date: Fri, 28 Nov 2025 10:42:44 +0100
+Message-ID: <20251128094244.208571-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.51.1
 MIME-Version: 1.0
-References: <d2265ebb-84bc-41b7-a2d7-05dc9a5a2055@accesssoftek.com>
-In-Reply-To: <d2265ebb-84bc-41b7-a2d7-05dc9a5a2055@accesssoftek.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 28 Nov 2025 09:31:28 +0000
-X-Gm-Features: AWmQ_bmndgwbsC0udVqpm2SRvQ52lFI4RE99hOhD-SXdMPDnkbqbc0PgeReRL8Q
-Message-ID: <CAFEAcA8j6sAmm-uT9LdDt1VP2fWmui9ETXn90bDWbCh4aEMG4A@mail.gmail.com>
-Subject: Re: [PATCH v2] target/arm: Fix assert on BRA.
-To: Harald van Dijk <hdijk@accesssoftek.com>
-Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.224,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,94 +118,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 28 Nov 2025 at 04:38, Harald van Dijk <hdijk@accesssoftek.com> wrote:
->
-> trans_BRA does
->
->     gen_a64_set_pc(s, dst);
->     set_btype_for_br(s, a->rn);
->
-> gen_a64_set_pc does
->
->     s->pc_save = -1;
->
-> set_btype_for_br (if aa64_bti is enabled and the register is not x16 or
-> x17) does
->
->     gen_pc_plus_diff(s, pc, 0);
->
-> gen_pc_plus_diff does
->
->     assert(s->pc_save != -1);
->
-> Hence, this assert is getting hit. We need to call set_btype_for_br
-> before gen_a64_set_pc, and there is nothing in set_btype_for_br that
-> depends on gen_a64_set_pc having already been called, so this commit
-> simply swaps the calls.
->
-> Signed-off-by: Harald van Dijk <hdijk@accesssoftek.com>
-> ---
->  target/arm/tcg/translate-a64.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index 08b21d7dbf..cde22a5cca 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -1916,8 +1916,8 @@ static bool trans_BRA(DisasContext *s, arg_bra *a)
->          return false;
->      }
->      dst = auth_branch_target(s, cpu_reg(s,a->rn), cpu_reg_sp(s, a->rm), !a->m);
-> -    gen_a64_set_pc(s, dst);
->      set_btype_for_br(s, a->rn);
-> +    gen_a64_set_pc(s, dst);
->      s->base.is_jmp = DISAS_JUMP;
->      return true;
->  }
+Prior to Meson 1.10, if the config-host.h dependency of qemuutil ends up
+as the first source file, it can be passed to rustc---which gets rather
+confused because config-host.h looks nothing like Rust code.
 
-The commit message on commit 64678fc45d8f6 says
-    The set_btype_for_br call must be moved after the gen_a64_set_pc
-    call to ensure the current pc can still be computed.
+While this can usually be avoided in the individual targets, a simple
+and universal workaround is to remove the sources (and C compile
+arguments, while at it) from the "util_rs" dependency.  This hides
+config-host.h from the Rust targets---and they don't need it anyway.
 
-but I think that is incorrect and it meant to say "moved before",
-because the actual code changes it makes to trans_BR() and
-trans_BRAZ() are
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/util/meson.build | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-@@ -1521,8 +1528,8 @@ static void set_btype_for_blr(DisasContext *s)
+diff --git a/rust/util/meson.build b/rust/util/meson.build
+index 95aa211ef0b..2aa32a233eb 100644
+--- a/rust/util/meson.build
++++ b/rust/util/meson.build
+@@ -41,7 +41,9 @@ _util_rs = static_library(
+   dependencies: [anyhow_rs, libc_rs, foreign_rs, glib_sys_rs, common_rs],
+ )
+ 
+-util_rs = declare_dependency(link_with: [_util_rs], dependencies: [qemuutil, qom])
++util_rs = declare_dependency(link_with: [_util_rs], dependencies: [
++  qemuutil.partial_dependency(links: true, link_args: true),
++  qom])
+ 
+ rust.test('rust-util-tests', _util_rs,
+           dependencies: [qemuutil, qom],
+-- 
+2.51.1
 
- static bool trans_BR(DisasContext *s, arg_r *a)
- {
--    gen_a64_set_pc(s, cpu_reg(s, a->rn));
-     set_btype_for_br(s, a->rn);
-+    gen_a64_set_pc(s, cpu_reg(s, a->rn));
-     s->base.is_jmp = DISAS_JUMP;
-     return true;
- }
-@@ -1581,8 +1588,8 @@ static bool trans_BRAZ(DisasContext *s, arg_braz *a)
-     }
-
-     dst = auth_branch_target(s, cpu_reg(s, a->rn), tcg_constant_i64(0), !a->m);
--    gen_a64_set_pc(s, dst);
-     set_btype_for_br(s, a->rn);
-+    gen_a64_set_pc(s, dst);
-     s->base.is_jmp = DISAS_JUMP;
-     return true;
- }
-
-which move the set_btype_for_br() call to before gen_a64_set_pc().
-
-So I think that we just forgot to also include trans_BRA() in
-that change, and your patch here fixes that.
-
-Richard,  does that sound right?
-
-If so, this should be:
-Cc: qemu-stable@nongnu.org
-Fixes: 64678fc45d8f6 ("target/arm: Fix BTI versus CF_PCREL")
-
-and you can have
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
 
