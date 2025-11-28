@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B0F8D116E2
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 17:16:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C92BAD116EA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 17:16:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vP24j-000075-8B; Fri, 28 Nov 2025 12:16:05 -0500
+	id 1vP24f-00005f-3X; Fri, 28 Nov 2025 12:16:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vP24J-0008VR-Ou
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 12:15:41 -0500
+ id 1vP24H-0008VB-8d
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 12:15:37 -0500
 Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vP24H-0000xU-IL
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 12:15:39 -0500
+ id 1vP24E-0000wx-Dr
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 12:15:37 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id F386B429D5
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 17:15:35 +0000 (UTC)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 65C7E42818
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 17:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1764350136;
- bh=wLaBxp12SX/QCF/HIMLKN6NzjlqPgSh7SP+3g8sHmzA=;
+ s=20210803; t=1764350132;
+ bh=M8uG8Od8gfb2UUnygBw5Z5bRg/bZK4iQ3pN44d83rtw=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=VTs7yqBqFTLoVlH/K76yaich6s8V5xszNU/eDFpRKz/hTD3hsVep/29SP1vT2VLB5
- v3WzY/n5ElgQPRv7Qrv1CdZUPXxZNS0Ydjy0O0w2PXURkPPpfWbokyLcELkNaCZYKA
- aeUGiKwDiQ9xj4CQqaIGu3btnNFwym7o+8cgXqwHRLaKXxlxl03tOwEHpJM1gXxcI7
- 1e6jNeb9BlIUjTTjicQiTHYly3M9s2ExfXhcoKcNcEO4t3stLJs5M/j3541mmNDV4P
- Y6H6eRSIP0NPg8GSfEzyBq2GX1AaHtUTfTzWsiYExPHmeua/mirqfbG3t66QxTDsOu
- Jy9xaArjzkHSg==
+ b=Mswh6eLYnb/0QIlw5LGVpuRy2x2Bd1wzxqxte4owha1L9qaifspQSsYDiuiW04C0o
+ UhCcT+HX0X2MW9tgL4m3Pr738aEB7fV5t20Au6WNMVhHG9XFHiM9eUIwMw76+W/JnJ
+ u2ssVOxOssdNS3p/WcFJXPoG8c2M8x7U2V6vwrhHUdjnk4zGBK07PACR36kds8ppIY
+ gKwy+HOUB5CXsggnCZnRmJ8t9LapcOKWSqgCqXzEK4A85p2Bhmux2tWulwuVX1y/Vn
+ L72SZ9DsW6PEWCg0ckjUNMfTNjVzFT3vnHp+4waV7hSu3SNPOdnfvgtGILJDf5Nu9A
+ iWfJnB22z2wyA==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id D79097EE61
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 17:15:35 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 1E7BC7ED7A
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 17:15:32 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 28 Nov 2025 17:09:16 -0000
-From: Launchpad Bug Tracker <2133188@bugs.launchpad.net>
+Date: Fri, 28 Nov 2025 17:08:54 -0000
+From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
 X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
@@ -56,9 +56,9 @@ X-Launchpad-Bug-Private: no
 X-Launchpad-Bug-Security-Vulnerability: no
 X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
 X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
-X-Launchpad-Bug-Modifier: Launchpad Janitor (janitor)
+X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
 References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <176434975666.150158.11804390889280542179.malone@juju-98d295-prod-launchpad-7>
+Message-Id: <176434973426.422358.15453536254639043329.malone@juju-98d295-prod-launchpad-2>
 Subject: [Bug 2133188] Re: Illegal instruction in memset under qemu-user for
  riscv64
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -67,7 +67,7 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="bf536a74252f65aa2f145d87a74873da841e2ec9";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: b9ea6cc245ffd717477577e976638b8fc3af82ce
+X-Launchpad-Hash: 139f795817fd1985f244129d6f464ed22e23bcf2
 Received-SPF: pass client-ip=185.125.188.250;
  envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
 X-Spam_score_int: -42
@@ -92,10 +92,30 @@ Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Status changed to 'Confirmed' because the bug affects multiple users.
+On Ubuntu 26.04 I used a Dockerfile:
 
-** Changed in: qemu (Ubuntu)
-       Status: New =3D> Confirmed
+# Ubuntu noble-riscv64-20251013
+FROM ubuntu:noble@sha256:4fdf0125919d24aec972544669dcd7d6a26a8ad7e6561c73d5=
+549bd6db258ac2
+
+I could log into the container with
+
+docker buildx build --platform linux/riscv64 -t lp2133188:latest .
+docker run --platform linux/riscv64 -ti lp2133188:latest /bin/bash
+
+I the created a Dockerfile
+
+# Ubuntu resolute-riscv64-20251101
+FROM ubuntu:resolute@sha256:e5bd70f715735ea3e9c95414af38151aaa6619b7393e254=
+852a0a2c879685bb4
+
+I build it with
+docker buildx build --platform linux/riscv64 -t lp2133188:latest .
+
+But when trying to log in with
+docker run --platform linux/riscv64 -ti lp2133188:latest /bin/bash
+
+But there was no console output
 
 --=20
 You received this bug notification because you are a member of qemu-
