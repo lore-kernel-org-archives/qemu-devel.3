@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33437D116E2
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 17:36:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DBF5D116E2
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 18:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vP2Nk-0006IU-Kv; Fri, 28 Nov 2025 12:35:45 -0500
+	id 1vP2vj-0008LG-7V; Fri, 28 Nov 2025 13:10:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vP2Nh-0006HW-Bq
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 12:35:41 -0500
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ id 1vP2vi-0008Ky-0g
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 13:10:50 -0500
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vP2Ne-0003es-US
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 12:35:41 -0500
+ id 1vP2vf-0001PJ-H1
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 13:10:49 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id B56643F0D5
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 17:35:36 +0000 (UTC)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 83C46429F4
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 18:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1764351336;
- bh=ns+9XEVKfskcNr5Lou9+7jgsv31ezBPuRFbTlmnv9YE=;
+ s=20210803; t=1764353445;
+ bh=UWqs0U0ebBcjx/8c2jMaYQRT02O0XHzchLZbfe2cAbY=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=mGF6hZI0jX1iGtNLPnhs62XFwv5F7UqMpvnOAbITr9ZjQHx0pr4x5JGCzCjh/QvF0
- 8BGZRMCVA9qmZ7lMtK2w0c0W0FBNVKBvJ9bk0LiT4g6r5eM5PezKbs2UIDQFEo0oeQ
- wLaV3fFWHQzbdMbW7rVeWD7/bSS7MnhqG/EaPj8C7CWIsoEI1eZfZLCNEh7kGGnZx4
- fewa/XkvvkQrJ3XJNzxK1h5wV4Tj+bGBz+DcufEA66zCZtBYiqJk5XwwoM2Keo6hJX
- LUdKa69wsRT5NZhf0LCAAeTTJXp0KprQplwCaRpvGxmcoCF/JDDfJDHpaR8+iVTypS
- +guqgxIGRsxAg==
+ b=cY1UiyQviXnxHfq17XRVtngk5f4Dy+Ui28NiBSQ/sb+oUxg0ExsFqde2cC/y3Oxr8
+ 504WitL4FDj5KraW9ocLN60KjlzHjOnoJc4nbKchflvhPBiJHYrtozdrGG78Bi4qJz
+ qYqt6w3N1u+zNdpzEtowxwkdCr3Qc8pa0t4H83dKWnxjfFoxncpXG72H2K4dk1cd8m
+ u2n0Z6qs++B1rL8YA45IUPN4tTCkJ1WhW6lhhiDYOk4b1u+/lcpLFHQUuZtpbv4y8M
+ 1lNG5WeqoQUugewMt7MVf8D6eEgpnFPmmkGKEdi3kJ+yLKZEg0WSvZUXAQ2ZDe+1be
+ vKOuAH0R64jqA==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id A975F7ED79
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 17:35:36 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 73E3E7ED7A
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 18:10:45 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Fri, 28 Nov 2025 17:29:16 -0000
+Date: Fri, 28 Nov 2025 18:04:47 -0000
 From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -58,7 +58,7 @@ X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
 X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
 X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
 References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <176435095642.1077914.5835173029101108514.malone@juju-98d295-prod-launchpad-4>
+Message-Id: <176435308712.517512.16785511547997710854.malone@juju-98d295-prod-launchpad-2>
 Subject: [Bug 2133188] Re: Illegal instruction in memset under qemu-user for
  riscv64
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -67,9 +67,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="bf536a74252f65aa2f145d87a74873da841e2ec9";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: ac5b2aa98c13d131a21d8d9fa7f4a08c6da368ee
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Launchpad-Hash: cdd2ed637c1cdc325ba01bb968cd1946d25b88e7
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -92,20 +92,73 @@ Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Inside the noble image the following extension where shown in
-/proc/cpuinfo:
+In the noble Docker container I have been running the following program:
 
-rv64imafdcbvh_zic64b_zicbom_zicbop_zicboz_ziccamoa_ziccif_zicclsm_ziccrse_z=
-icfilp_zicfiss_zicond_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zim=
-op_zmmul_za64rs_zaamo_zabha_zacas_zalrsc_zama16b_zawrs_zfa_zfbfmin_zfh_zfhm=
-in_zca_zcb_zcd_zcmop_zba_zbb_zbc_zbkb_zbkc_zbkx_zbs_zk_zkn_zknd_zkne_zknh_z=
-kr_zks_zksed_zksh_zkt_ztso_zvbb_zvbc_zve32f_zve32x_zve64f_zve64d_zve64x_zvf=
-bfmin_zvfbfwma_zvfh_zvfhmin_zvkb_zvkg_zvkn_zvknc_zvkned_zvkng_zvknha_zvknhb=
-_zvks_zvksc_zvksed_zvksg_zvksh_zvkt_sdtrig_shcounterenw_sha_shgatpa_shtvala=
-_shvsatpa_shvstvala_shvstvecd_smaia_smcdeleg_smcntrpmf_smcsrind_smepmp_smmp=
-m_smnpm_smstateen_ssaia_ssccfg_ssccptr_sscofpmf_sscounterenw_sscsrind_ssdbl=
-trp_ssnpm_sspm_ssstateen_ssstrict_sstc_sstvala_sstvecd_ssu64xl_supm_smctr_s=
-sctr_svadu_svinval_svnapot_svpbmt_svrsw60t59b_svvptc
+
+#include <stdio.h>
+#include <stdint.h>
+
+#define VECTOR_SIZE 8  // Number of 64-bit elements
+
+void store_vector_values(int64_t* buffer) {
+    int64_t values[VECTOR_SIZE] =3D {0x1000000000000001, 0x2, 0x3, 0x4, 0x5=
+, 0x6, 0x7, 0x8};
+
+    // Inline assembly to load values into the vector register and store th=
+em
+    asm volatile (
+        "vsetvli t0, zero, e64, m2;"   // Set vector length to 2 elements o=
+f 64 bits
+        "vle64.v v0, (%0);"            // Load values into vector register =
+v0
+        "vse64.v v0, (%1);"            // Store the contents of v0 into the=
+ buffer
+        :
+        : "r"(values), "r"(buffer)     // Input operands
+        : "v0", "t0", "memory"         // Clobbered registers
+    );
+}
+
+int main() {
+    int64_t buffer[VECTOR_SIZE] =3D {0}; // Buffer to store 64-bit values
+
+    for (int i =3D 0; i < VECTOR_SIZE; i++) {
+        printf("buffer[%d] =3D 0x%lx\n", i, buffer[i]);
+    }
+    store_vector_values(buffer);
+
+    // Output the stored values for verification
+    printf("Stored vector values:\n");
+    for (int i =3D 0; i < VECTOR_SIZE; i++) {
+        printf("buffer[%d] =3D 0x%lx\n", i, buffer[i]);
+    }
+
+    return 0;
+}
+
+And received this output:
+
+./test
+buffer[0] =3D 0x0
+buffer[1] =3D 0x0
+buffer[2] =3D 0x0
+buffer[3] =3D 0x0
+buffer[4] =3D 0x0
+buffer[5] =3D 0x0
+buffer[6] =3D 0x0
+buffer[7] =3D 0x0
+Stored vector values:
+buffer[0] =3D 0x1000000000000001
+buffer[1] =3D 0x2
+buffer[2] =3D 0x3
+buffer[3] =3D 0x4
+buffer[4] =3D 0x0
+buffer[5] =3D 0x0
+buffer[6] =3D 0x0
+buffer[7] =3D 0x0
+
+So it seems that QEMU can emulate the vse64.v instruction. It is not
+clear to me why for "m2" four elements are transferred and not two.
 
 --=20
 You received this bug notification because you are a member of qemu-
