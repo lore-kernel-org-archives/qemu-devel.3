@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D4FCD116F1
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 18:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8AD4D116EA
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 18:23:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vP36u-00033B-3t; Fri, 28 Nov 2025 13:22:24 -0500
+	id 1vP36t-000322-GR; Fri, 28 Nov 2025 13:22:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vP36k-0002zW-P3
+ id 1vP36k-0002zU-Dc
  for qemu-devel@nongnu.org; Fri, 28 Nov 2025 13:22:15 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vP36h-00039u-JV
+ id 1vP36h-000372-JT
  for qemu-devel@nongnu.org; Fri, 28 Nov 2025 13:22:14 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-42b39d51dcfso1410527f8f.2
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 10:22:02 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-42b32a3e78bso2028675f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 10:22:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764354122; x=1764958922; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764354120; x=1764958920; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i4XS1mjCDo4NWoAdI8vYhiDsjbq4lRngZIqqDpS45Z8=;
- b=kC4JXPROr3OXj29p/1pdA5HPPjOa8qKLI4rVm3ueUXC+oZnLgDKtz3WXRan5Z3vM9/
- QWz4UmwbK5i3x/FnOC4TlLMFvweawIGaDYxpFzL4ak57MmD/lBUjMSZRySc56AJQyjBO
- /tgpxHjl59gc9XZzA4vAfLd2FzTW4x7fA+T/DU7PxCtRIQGRRW2k2DJQvWex65udjoZB
- YA5jamsm5rsVvGoYWbxIAK0+cfavtkxYEsjImbZon79gnno4AVfcJy6HV4tXfv0BuB+w
- lnpEZd1AuqpU579OlbNvtRNdqhFEc5ZUMNBamxhIV8Go+Rnavw6yhng9KW7blzE+YtGF
- SqZw==
+ bh=1DGGN972COszVw0XgwjUe95FT8j0aUdcqd6miQIJWy4=;
+ b=PjBfgI6MomUQ+0+iSSGbsMIVC7tWelwRuuZ9C/99vBBwpyyNwRAB3FdNviWFgDY+3j
+ 3RBw34W+UDzIa93g07TgOMpMqCZjP+UzujBGgJ3dqjUdiQpTvOqxQ790E69z9KYb4eBQ
+ 2T3vUBItcdeIb4Sa1ZN3thwpFVQXpBercoj5owwE4rT+jfDSoz3ae2Ks3j0psLVB4Vxl
+ n+zB/w45rmZxzMmxYH0/g0hzMFUnhl+NoSA7Nf004fBDBrp/8MHHFT43p8njBxUQ1jID
+ xMQMolxbZTJtTrhsNFM7ANrpaa1WbdDu+23J1RXklzQdSWOP4Ttfj1633X8bpL1af+Sv
+ OCHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764354122; x=1764958922;
+ d=1e100.net; s=20230601; t=1764354120; x=1764958920;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=i4XS1mjCDo4NWoAdI8vYhiDsjbq4lRngZIqqDpS45Z8=;
- b=mb9uZSwtfqU4nh9FiM8Qk+76dMOlglGganzTA36XQfDkKHceN05ZnFCYIDo8OQsYH7
- 72Qhaxj2rg/IWMU9u3Uxsr37xuBdDWvCLGx+7ZQWNm+Eyz8UYOfWd/2rSMdJi9U1qhkd
- hXciqq2co4WMkTiGggo8WgWYDXl2MDlwntiSHbIQQdeuiZXKBzx9aRop5cORvync58bo
- 4HUO8AOPpJN8zn3iGQ8DPxpUtw6vds4+mHmU/mwqSoqTmrZ6NiOx/MRoGQmFqW73YR7f
- uPuj4bS7iLTOPvFs8W4aTfqxmEBzPcgNZ7TXXOmLM9qY8Jn+V+bi+8/0wxzAoGqzSEpP
- qnrg==
-X-Gm-Message-State: AOJu0Yw0b7LSlclAouWnMsdbWcqF3MeXzNR7nRbk0Je41LnHTI0yTaO7
- oSeO99eTDnzM4JL0csQTFVUl2YsNprlGhRekdf3NuUt59iZE3mT5UZk6VIme4Bxd4yo=
-X-Gm-Gg: ASbGncvXzZ1yo1Exj46Bdok7y3WlWYxIT98J2M2ihI/CZsCrqkI/YR936Ow2Y0du2Jy
- nTrhkLnpOJX3Qp0e5Adgp8oOe351mRNYEuJbwJrVPmQCG4CPzV/igWu9f4oEx3uuXp0/dgX+TaO
- fPOBuyAzF5aCwsUWvzzVvf+2qU8MsP3T8dIEI7Sw0IXBE/nge8wMaXCabN/FXzF53pw/BMS0qAx
- vzwZ9JfktLwjF1h187NcHAf0rH/6QLL7eWxPJUY3Arq2xE8rlGKm7NhJn0l8JSaHDAlgJH+uymf
- I9Y/1vnuApFCWQ05OmUiZtQPtpMWUPULl5uKanQs1SWLaYw5UGjlP7ajEuJseE8xy/sRjyKTAOe
- 2N8okyfa1TlubOwkak4ZPljTiud+MrYUdUhyOkO1E+LsArOeeGe5nKtYrBObMtYohtc+zwxIZiW
- QEwRkqqLsWrws=
-X-Google-Smtp-Source: AGHT+IHJhG0r9kSDwTx8qOBPvFfgInulipzZLNqECfzKPh0CG6a9OpYaQhwzRSKCJUEOOoP6xGlUsA==
-X-Received: by 2002:a5d:588b:0:b0:42b:3806:2bb5 with SMTP id
- ffacd0b85a97d-42cc1abe1fbmr33396766f8f.12.1764354121562; 
- Fri, 28 Nov 2025 10:22:01 -0800 (PST)
+ bh=1DGGN972COszVw0XgwjUe95FT8j0aUdcqd6miQIJWy4=;
+ b=ugz/E6GMTwQGJognqgp+j8Wg6VduLkUa4lOtLURYmVlOAq0v6UiJWQrDb9KifgGjr6
+ +Qxp9gkyRhXR0KXnYDF4EHdctozwh7u0yuTRyxH9JvWJl1XnJmsuMc7EYz4bfpDcerle
+ DN183mrO3UJIwdJ3hIKSu3r/CqA+NUy6jbup+TRUopLDeuPusPpI55e2kffigf7Fc1UT
+ JNTbvhhK4xMU0siCElHJ5Rjm32zFpim7Qffchc9+InqjjLCDWvu9HQCu02dFCyd2z76S
+ KQ03Zm6YkJkfk6Eo9qLHhSnCmAGiIiN43jKyNbuSfXfIVRFy2lZ5tFtHOA7lLIqcwSph
+ ZLDA==
+X-Gm-Message-State: AOJu0Yx2/ZeYatGtWZjaN/P6zwU+/UW1Vy+if2T1ZWQuFs43mOsJuy/s
+ aEc+9M167+lwkW7p8gP5Or/mv4qE7gK68E37XUD5PgA8QcvdYUfRbca+lGPdrQuvwtA=
+X-Gm-Gg: ASbGnctWsCRFJzIs0PBrh2WzZDc0Tpl8wAEYfEv/RIJryvNp9PkrkSdu9CPTPyc1Jea
+ bvvdxJdinycmrJMTWcVAEPk0IFmByLv9QRLoFiCKkDPMjYBwokWkPEkVek/WIL4g72dr1UgjPvf
+ s3asTbYxrNsjzUXdqAFV+uOPfjL0Wq3Y7wpgXNl9Lgcw/0SNEtGkxlmd8xFDrNq4qWwyw+Nr4Zr
+ VUOJujRazkPQO+WNBAXPsR+4qCJGtQ5q00Tzf1ZbNjfd7lCg2t2IZIS6XFkD77JmryfxuR/Tdgi
+ w9SFnTijSC9KPJczKGpl19jDBqlWJeEjlmDNJq7HZbzgNYdnoxwMGqJ5VXZM/na7+r8N+nTzKmO
+ PiH7hKH0Cf2f6fQUmT4P0c1pdo80qtW2vtCZLqfl35LiXkniuwwwMM8pA4AVQHzbgRPa+hnMuep
+ CV5Thb0HQ0gNauQ/0tw9Tmiw==
+X-Google-Smtp-Source: AGHT+IEnIZBfOdH7h0Hh53uTrnI3vcLTh3LFkAu9RTvy0bbzoYigwm2w+yYI28QOXog9Rkc5lWneTg==
+X-Received: by 2002:a05:6000:22ca:b0:42b:30a6:9c10 with SMTP id
+ ffacd0b85a97d-42cc1d22e12mr32401337f8f.56.1764354119628; 
+ Fri, 28 Nov 2025 10:21:59 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1ca8e00fsm10997483f8f.34.2025.11.28.10.21.58
+ ffacd0b85a97d-42e1caa86d0sm10876989f8f.39.2025.11.28.10.21.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 28 Nov 2025 10:21:58 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2731A5F8FE;
- Fri, 28 Nov 2025 18:21:58 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id D6C6B5F8DA;
+ Fri, 28 Nov 2025 18:21:57 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
@@ -77,17 +77,18 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 4/5] docs/devel: update build environment setup documentation
-Date: Fri, 28 Nov 2025 18:21:56 +0000
-Message-ID: <20251128182157.4125745-5-alex.bennee@linaro.org>
+Subject: [PATCH 1/5] tests/tcg: honour the available QEMU binaries when
+ running check-tcg
+Date: Fri, 28 Nov 2025 18:21:53 +0000
+Message-ID: <20251128182157.4125745-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251128182157.4125745-1-alex.bennee@linaro.org>
 References: <20251128182157.4125745-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,187 +111,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Bring `libvirt-ci` front and centre when discussing dependencies for
-QEMU. While we are at it:
+Currently configure can identify all the targets that have
+cross-compilers available from the supplied target-list. By default
+this is the default_target_list which is all possible targets we can
+build.
 
-  - drop links to additional instructions (libvirt is more upto date)
-  - compress pkg installs into a table
-  - call out distro/upstream dep difference in a proper note
+At the same time the target list passed to meson is filtered down
+depending on various factors including not building 64 bit targets on
+32 bit hosts. As a result make check-tcg will erroneously attempt to
+run tests for which we haven't built a QEMU.
+
+Solve this by filtering the final list of TCG_TEST_TARGETS based on
+what actually was configured by meson. Rename the variable that
+configure spits out to TCG_TESTS_WITH_COMPILERS for clarity and to
+avoid larger churn in the Makefile.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- docs/devel/build-environment.rst | 145 ++++++++++++++++++++-----------
- 1 file changed, 96 insertions(+), 49 deletions(-)
+ configure              | 6 +++---
+ tests/Makefile.include | 9 +++++++++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/docs/devel/build-environment.rst b/docs/devel/build-environment.rst
-index 661f6ea8504..61b2dc0d1bc 100644
---- a/docs/devel/build-environment.rst
-+++ b/docs/devel/build-environment.rst
-@@ -4,55 +4,103 @@
- Setup build environment
- =======================
+diff --git a/configure b/configure
+index a2f66f7ff9c..82cace1bc95 100755
+--- a/configure
++++ b/configure
+@@ -1801,7 +1801,7 @@ if test "$plugins" = "yes" ; then
+ fi
+ echo "PYTHON=$python" >> tests/tcg/$config_host_mak
  
--QEMU uses a lot of dependencies on the host system. glib2 is used everywhere in
--the code base, and most of the other dependencies are optional.
--
--We present here simple instructions to enable native builds on most popular
--systems.
--
--You can find additional instructions on `QEMU wiki <https://wiki.qemu.org/>`_:
--
--- `Linux <https://wiki.qemu.org/Hosts/Linux>`_
--- `MacOS <https://wiki.qemu.org/Hosts/Mac>`_
--- `Windows <https://wiki.qemu.org/Hosts/W32>`_
--- `BSD <https://wiki.qemu.org/Hosts/BSD>`_
--
--Note: Installing dependencies using your package manager build dependencies may
--miss out on deps that have been newly introduced in qemu.git. In more, it misses
--deps the distribution has decided to exclude.
--
--Linux
-------
--
--Fedora
--++++++
--
--::
--
--    sudo dnf update && sudo dnf builddep qemu
--
--Debian/Ubuntu
--+++++++++++++
--
--You first need to enable `Sources List <https://wiki.debian.org/SourcesList>`_.
--Then, use apt to install dependencies:
--
--::
--
--    sudo apt update && sudo apt build-dep qemu
--
--MacOS
-------
--
--You first need to install `Homebrew <https://brew.sh/>`_. Then, use it to
--install dependencies:
--
--::
--
--    brew update && brew install $(brew deps --include-build qemu)
-+QEMU uses a lot of dependencies on the host system a large number of
-+which are optional. At a minimum we expect to have a system C library
-+(usually glibc but others can work), the glib2 library (used heavily
-+in the code base) and a few other core libraries for interfacing with
-+code modules and system build descriptions.
-+
-+We use the ``libvirt-ci`` project to handle the mapping of
-+dependencies to a wide variety output formats including system install
-+scripts. For example:
-+
-+.. code-block:: bash
-+
-+  # THIS FILE WAS AUTO-GENERATED
-+  #
-+  #  $ lcitool buildenvscript debian-13 ./tests/lcitool/projects/qemu-minimal.yml
-+  #
-+  # https://gitlab.com/libvirt/libvirt-ci
-+
-+  function install_buildenv() {
-+      export DEBIAN_FRONTEND=noninteractive
-+      apt-get update
-+      apt-get dist-upgrade -y
-+      apt-get install --no-install-recommends -y \
-+              bash \
-+              bc \
-+              bison \
-+              bzip2 \
-+              ca-certificates \
-+              ccache \
-+              findutils \
-+              flex \
-+              gcc \
-+              git \
-+              libc6-dev \
-+              libfdt-dev \
-+              libffi-dev \
-+              libglib2.0-dev \
-+              libpixman-1-dev \
-+              locales \
-+              make \
-+              meson \
-+              ninja-build \
-+              pkgconf \
-+              python3 \
-+              python3-venv \
-+              sed \
-+              tar
-+      sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen
-+      dpkg-reconfigure locales
-+      rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED
-+      dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
-+      mkdir -p /usr/libexec/ccache-wrappers
-+      ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/cc
-+      ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
-+  }
-+
-+  export CCACHE_WRAPPERSDIR="/usr/libexec/ccache-wrappers"
-+  export LANG="en_US.UTF-8"
-+  export MAKE="/usr/bin/make"
-+  export NINJA="/usr/bin/ninja"
-+  export PYTHON="/usr/bin/python3"
-+
-+If you instead select the ``qemu.yml`` project file you will get all
-+the dependencies that the project can use.
-+
-+Using you system package manager
-+--------------------------------
-+
-+.. note::
-+
-+   Installing dependencies using your package manager build dependencies may
-+   miss out on deps that have been newly introduced in qemu.git. It
-+   also misses deps the distribution has decided to exclude.
-+
-+Systems with Package Managers
-++++++++++++++++++++++++++++++
-+
-+.. list-table:: Package Manager Commands
-+  :widths: 10 50 40
-+  :header-rows: 1
-+
-+  * - System
-+    - Command
-+    - Notes
-+  * - Fedora
-+    - ``sudo dnf update && sudo dnf builddep qemu``
-+    -
-+  * - Debian/Ubuntu
-+    - ``sudo apt update && sudo apt build-dep qemu``
-+    - Must enable `Sources List
-+      <https://wiki.debian.org/SourcesList>`_ first
-+  * - MacOS
-+    - ``brew update && brew install $(brew deps --include-build qemu)``
-+    - Using `Homebrew <https://brew.sh/>`_.
+-tcg_tests_targets=
++tcg_tests_with_compilers=
+ for target in $target_list; do
+   arch=${target%%-*}
  
- Windows
---------
-++++++++
+@@ -1852,12 +1852,12 @@ for target in $target_list; do
+       fi
  
- You first need to install `MSYS2 <https://www.msys2.org/>`_.
- MSYS2 offers `different environments <https://www.msys2.org/docs/environments/>`_.
-@@ -104,7 +152,7 @@ build QEMU in MSYS2 itself.
-     makepkg --syncdeps --nobuild PKGBUILD || true
+       echo "run-tcg-tests-$target: $qemu\$(EXESUF)" >> Makefile.prereqs
+-      tcg_tests_targets="$tcg_tests_targets $target"
++      tcg_tests_with_compilers="$tcg_tests_with_compilers $target"
+   fi
+ done
  
- Build on windows-aarch64
--++++++++++++++++++++++++
-+~~~~~~~~~~~~~~~~~~~~~~~~
+ if test "$tcg" = "enabled"; then
+-    echo "TCG_TESTS_TARGETS=$tcg_tests_targets" >> $config_host_mak
++    echo "TCG_TESTS_WITH_COMPILERS=$tcg_tests_with_compilers" >> $config_host_mak
+ fi
  
- When trying to cross compile meson for x86_64 using UCRT64 or MINGW64 env,
- configure will run into an error because the cpu detected is not correct.
-@@ -115,4 +163,3 @@ and force a cross compilation (with empty prefix).
- ::
+ if test "$skip_meson" = no; then
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index d4dfbf3716d..7728098981d 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -37,6 +37,15 @@ export SRC_PATH
  
-     ./configure --cpu=x86_64 --cross-prefix=
--
+ SPEED = quick
+ 
++
++# TCG_TESTS_WITH_COMPILERS represents the test targets we have cross compiler
++# support for, CONFIGURED_TEST_TARGETS it what meson has finally
++# configured having rejected stuff we can't build.
++CONFIGURED_TCG_TARGETS=$(patsubst %-config-target.h, %, $(wildcard *-config-target.h))
++
++# This is the intersection of what tests we can build and is configured
++TCG_TESTS_TARGETS=$(filter $(CONFIGURED_TCG_TARGETS), $(TCG_TESTS_WITH_COMPILERS))
++
+ # Per guest TCG tests
+ BUILD_TCG_TARGET_RULES=$(patsubst %,build-tcg-tests-%, $(TCG_TESTS_TARGETS))
+ CLEAN_TCG_TARGET_RULES=$(patsubst %,clean-tcg-tests-%, $(TCG_TESTS_TARGETS))
 -- 
 2.47.3
 
