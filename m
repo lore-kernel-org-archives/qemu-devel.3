@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32222CFD376
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 12:05:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AAD4CFD376
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 12:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOxDV-0001rI-6F; Fri, 28 Nov 2025 07:04:49 -0500
+	id 1vOxOp-0005fq-Hx; Fri, 28 Nov 2025 07:16:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vOxDT-0001nV-43
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:04:47 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1vOxOn-0005fT-Uw
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:16:30 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vOxDQ-0005Fb-Vu
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:04:46 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7b75e366866so880660b3a.2
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 04:04:43 -0800 (PST)
+ id 1vOxOm-0007Fy-C9
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:16:29 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2958db8ae4fso18287435ad.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 04:16:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1764331482; x=1764936282; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1764332186; x=1764936986; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Whl/NJnC+XYvVl2CYaDDbR8WPhdyUcTaxO3NB2XTVnw=;
- b=fDvsTUpBgKnJQ5QzjnkoS4pbg9xWRCa5FvJbvcPamHoqFSgRmpPP7XU7Qfrkn0H78b
- YC73UiOQKwQYCv5KI9xXm98NAWXuV2iqscjj/pm0LpErHLaGwfYCWAnfRF5MS9kjopZA
- UDBZMk9zFORRvh+aROoLzp9y+q6X4apYg7xX5fGlGlYCaMWib99kkcVWisOG72NAeu/T
- FJE+8qH48g1LtL6qS12z2CX1vuru5XaLFqJz3C9BKjhhgwQXDLuwImlK6ddHNKTS8s7F
- RAD5Gn7U/HzinO4RUdBzUh8rfF8NRsq01bIVC9WEI28HzG7BR0GWbRwLemHyuyV4M6JC
- eqQQ==
+ bh=9tDSFsZqND37BFIxQSlZZTg8fMpJxxlaF2wzP0al1T8=;
+ b=VhnaBSz8dcNzwOy/+qACQKvRDeLS3JIdE7B9w1yCBU/l6Ielo71IJ6am2VDXy0KZKO
+ IeIcTdVduXO0aayR2tUrcswGi4FRrPyzR6Uql9xbAkLC4AKIzdIYrHUoKaF165g0+tej
+ zro65YorP883o79O6jiZ4GI+3D+09O/ChxBtNuqTthVLINlMC8YkAL//jgpI4em2ArEj
+ oVL/VzW+J2EMnW1Jv5X86nkl5ZjREteM0HzsWDTbMv9beZtDBJy/muCHEf98zUU7lxuc
+ 1Oq4REzocCwhjrZsvkigHMoFlWp8bH1woyjL7CbdJ/m0uDyqM0jwG2E0f5Glb76pTRJd
+ e/7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764331482; x=1764936282;
+ d=1e100.net; s=20230601; t=1764332186; x=1764936986;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Whl/NJnC+XYvVl2CYaDDbR8WPhdyUcTaxO3NB2XTVnw=;
- b=ee41P6LVob1OjveZpKBzr5yH06eOf0Wfp94puIVzuPCH7aG1OnWKQnyA9zw2avIo0w
- QmsR+ZOX3VN0vUsaiR+/YMYWmtYzxt2QNYn0jTM2c3qupPP4vZiLxxOD3MFjFUYI5XZN
- +YOjDb/x30T4/8f620gKnf7MtJVvIjf5FYMQ9r0xnhovGXfmrXcFcIRuPKvu9YjkWvp7
- W8bIeIPtuFuEd7r8VPESEBEqVrXTnqoYA9f+Yd8/h476P0aeJMGR5UJLq62TRPT5jQJZ
- rXx7vp375COdH3pSGci21zYhpovfjXDvW1NItQ5vYJCWkXeeOtCY3TuQDx6+dRombBiM
- zH+A==
+ bh=9tDSFsZqND37BFIxQSlZZTg8fMpJxxlaF2wzP0al1T8=;
+ b=ANV2xZjxV+c0tEXIdUEfqYgpxP4zr6TDrmgojqRPC5uGGAWOpvD1pEARyzdsH1iOlo
+ p+7d2Iq6PpSTw5PVReLE3EAee3cvyqelsmn02szJN902gE+sj700PQNlJtxczWuxvMs0
+ 21/pAEEOgR9p+6o2p7KQJJUhwP9GxyHrn2FFWNzVHzwUsNFOCPQ+8p1kMRRtep5MTlMW
+ SaUjszDlBEbvW33ZFLMzfh+LRc7IRVrBhjw70HnVKAGvbIhSwmyxH/Jwp+EoOXpG+li7
+ NLaVL4Fv8qd0Xc8BS2ZWKSKrAdUgAfIXTZKQ5623vmxumZ4lvWWud6X749rxOdHkQ+9q
+ Kmtg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUpagGui+zN8jgw2F/GGD7nHbxzuhQWHwcXqY3CEm7al0Tt1oILHqFSgALnvwO8o/BcUwHhVGyD2JdD@nongnu.org
-X-Gm-Message-State: AOJu0YxpShG1zyTRBhTQfeEXuhbZqC9g/tqAEXQZjq80wOG4I96oAsKy
- Tkmuby1cihPZeEdSpiD8PK0DpjShDt7RDyawmufZDatYNCJvu3aIPyCvJfAraeZ64E0=
-X-Gm-Gg: ASbGncsfcYaxKpRmyWWe2wHOf2o/4dWuKCRbeRARPNShKAvGkzBcoLPqKgAavqRK0pp
- YkZS+yvd0hsxNgOyTE/kZ5ISfs6ih/+d5hew7BKgiI5Q3MKyuueHNBEzdHlW1TqHolQ9pjMytoZ
- iQSHYKSF9SqlpjAqUQTgAv3D0np19tSnCaYM25jbX44xpB+JYVyDZiYs7G/4xLfZFeO8GKs7eIU
- Yv3ivqFCdAfnOGwplmaNPNSKF2ycQ/a2fgzTbOAyg8SmWBH1H3Nx2xD2rPHd45yF2XBzrr5LQ9j
- fwPdpiz6hDMDACAbn0AgniLw8zltAtzmyYNFSsl/OfJ3lAXFQSifd1W0wvgizD5a0l+/FGpW/3S
- NqSYvve2ActdDu1hlN87TmC35lCP6437b3/w3kZukR3s2TgT3ZzGTHPBZgcZiPk9D7ok1tnqEcy
- KGoWAaIy5LmrQl/dQOPIKf+jQ+Iw==
-X-Google-Smtp-Source: AGHT+IGk38H5ufyOoeUYvhuVQDPJoVYpyKUQg9jkdabm8L2aJv6L9o/yCPraCTNXYCWscxnLjAo+4w==
-X-Received: by 2002:a05:6a00:2d97:b0:7a4:f552:b522 with SMTP id
- d2e1a72fcca58-7ca8b1b9334mr13762895b3a.27.1764331482241; 
- Fri, 28 Nov 2025 04:04:42 -0800 (PST)
+ AJvYcCW+DqIlUqdlgvfy12mcAa/yBMyp1FTYjM+lngt9G/sx6eNxijVGqIx/3xYTH6QXL9cSHtgfMIecIELT@nongnu.org
+X-Gm-Message-State: AOJu0Yyop5ORoRElDdgv1jzE1dA86VdIJt3E1pC0q+xjwmm1QIxOwuxB
+ FdL4OZZLihobzfBOP4oQeh1pJo9mpvRo6S+TQ9acRCObsoUYhshtwq29Qd91wkoIOwg=
+X-Gm-Gg: ASbGncs8NqktOQObB8CG3KiiNqdXBhjy2OmdB2+3CYUR9DhnXTUXCh0WLsDT996FkW7
+ crW1DQEcIVF4motMffEHWXy1a5g740YbkJUwiMGTsjweVDtssO/APjHDjRgG53MO2UOcAz6wTVh
+ Ex1FY26o8A7PNuO+1ezLTHVjXerHXz/ve+9mPNcOINqAwFThjeCPZaInSxHHGok5k66375W0dAK
+ t0zafrwQVHfSPwz+cusxqUqbx4oln2/xmfqaFOzyECGkgt+yoRxWCt3L3+f9SDKDbqDtqxcgvsJ
+ bTYfUFMOabQyc+PYWXUsBGsWasD/RJTsoyI4At3ZMsTy7M0CFVqa97LQx/yTcVZmMnXqZM2qTFg
+ ZC1zDpGECw6zYnyQIBNW39UGNLRDeRNdVKCM6Ll/zzRu2pqkigamXAOZ3hRMr37YLVPeX3e2Zzt
+ +pd10NLvJxLdRtZAY45df7G5xIWQ==
+X-Google-Smtp-Source: AGHT+IGwW42KRmZJP6Dp5/9tqXjTbPNlq3GeaQ8esfwD/KCzC0CHE+HM15+WOXuFl9tY5s0ErpEsFQ==
+X-Received: by 2002:a17:902:d4ca:b0:294:f6e2:cea1 with SMTP id
+ d9443c01a7336-29b6c571f11mr311405135ad.38.1764332186197; 
+ Fri, 28 Nov 2025 04:16:26 -0800 (PST)
 Received: from [192.168.68.110] ([179.133.97.212])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7d15e7db416sm4777288b3a.41.2025.11.28.04.04.38
+ 41be03b00d2f7-be508b06867sm4515045a12.23.2025.11.28.04.16.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Nov 2025 04:04:41 -0800 (PST)
-Message-ID: <2c4fff31-161d-4896-b164-23ba58435784@ventanamicro.com>
-Date: Fri, 28 Nov 2025 09:04:36 -0300
+ Fri, 28 Nov 2025 04:16:25 -0800 (PST)
+Message-ID: <02259145-b8b7-4c94-a7ef-e1084a90e541@ventanamicro.com>
+Date: Fri, 28 Nov 2025 09:16:21 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Fix index of fired breakpoint and watchpoint
-To: Alvin Chang <alvinga@andestech.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, vivahavey@gmail.com,
- Yu-Ming Chang <yumin686@andestech.com>
-References: <20251128080928.3160155-1-alvinga@andestech.com>
+Subject: Re: [PATCH v2 1/2] target/riscv: Update MISA.C for Zc* extensions
+To: frank.chang@sifive.com, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
+ Max Chou <max.chou@sifive.com>
+References: <20251128022302.970294-1-frank.chang@sifive.com>
+ <20251128022302.970294-2-frank.chang@sifive.com>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <20251128080928.3160155-1-alvinga@andestech.com>
+In-Reply-To: <20251128022302.970294-2-frank.chang@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,57 +112,77 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 11/28/25 5:09 AM, Alvin Chang wrote:
-> The do_trigger_action() receives index of fired trigger as second
-> parameter. However, in current implementation, the argument is hardcoded
-> as DBG_ACTION_BP which is 0. This is a bug because we may match/fire any
-> breakpoints or watchpoints at other index than 0.
+On 11/27/25 11:23 PM, frank.chang@sifive.com wrote:
+> From: Frank Chang <frank.chang@sifive.com>
 > 
-> Fix this bug by iterating cpu_breakpoint[] and cpu_watchpoint[] to
-> compare and match necessary checkpoints. The index of the fired
-> cpu_breakpoint or the cpu_watchpoint is the index of the trigger we want
-> to provide to do_trigger_action().
+> MISA.C is set if the following extensions are selected:
+>    * Zca and not F.
+>    * Zca, Zcf and F (but not D) is specified (RV32 only).
+>    * Zca, Zcf and Zcd if D is specified (RV32 only).
+>    * Zca, Zcd if D is specified (RV64 only).
 > 
-> Signed-off-by: Alvin Chang <alvinga@andestech.com>
-> Reviewed-by: Yu-Ming Chang <yumin686@andestech.com>
+> Therefore, we need to set MISA.C according to the rules for Zc*
+> extensions.
+> 
+> Signed-off-by: Frank Chang <frank.chang@sifive.com>
+> Reviewed-by: Max Chou <max.chou@sifive.com>
 > ---
 
 
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
->   target/riscv/debug.c | 17 +++++++++++++++--
->   1 file changed, 15 insertions(+), 2 deletions(-)
+>   target/riscv/tcg/tcg-cpu.c | 32 ++++++++++++++++++++++++++++++++
+>   1 file changed, 32 insertions(+)
 > 
-> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index 5664466..f3bca8e 100644
-> --- a/target/riscv/debug.c
-> +++ b/target/riscv/debug.c
-> @@ -929,11 +929,24 @@ void riscv_cpu_debug_excp_handler(CPUState *cs)
->   
->       if (cs->watchpoint_hit) {
->           if (cs->watchpoint_hit->flags & BP_CPU) {
-> -            do_trigger_action(env, DBG_ACTION_BP);
-> +            /* Search fired trigger and do its action */
-> +            for (int i = 0; i < ARRAY_SIZE(env->cpu_watchpoint); i++) {
-> +                if (cs->watchpoint_hit == env->cpu_watchpoint[i]) {
-> +                    do_trigger_action(env, i);
-> +                    break;
-> +                }
-> +            }
->           }
->       } else {
->           if (cpu_breakpoint_test(cs, env->pc, BP_CPU)) {
-> -            do_trigger_action(env, DBG_ACTION_BP);
-> +            /* Search fired trigger and do its action */
-> +            for (int i = 0; i < ARRAY_SIZE(env->cpu_breakpoint); i++) {
-> +                CPUBreakpoint *bp = env->cpu_breakpoint[i];
-> +                if (bp && bp->pc == env->pc && (bp->flags & BP_CPU)) {
-> +                    do_trigger_action(env, i);
-> +                    break;
-> +                }
-> +            }
->           }
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 440626ddfad..752eee32289 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -1150,6 +1150,37 @@ static void riscv_cpu_enable_implied_rules(RISCVCPU *cpu)
 >       }
 >   }
+>   
+> +/*
+> + * MISA.C is set if the following extensions are selected:
+> + *   - Zca and not F.
+> + *   - Zca, Zcf and F (but not D) is specified on RV32.
+> + *   - Zca, Zcf and Zcd if D is specified on RV32.
+> + *   - Zca, Zcd if D is specified on RV64.
+> + */
+> +static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
+> +{
+> +    CPURISCVState *env = &cpu->env;
+> +
+> +    if (cpu->cfg.ext_zca && !riscv_has_ext(env, RVF)) {
+> +        riscv_cpu_set_misa_ext(env, env->misa_ext | RVC);
+> +        return;
+> +    }
+> +
+> +    if (riscv_cpu_mxl(env) == MXL_RV32 &&
+> +        cpu->cfg.ext_zca && cpu->cfg.ext_zcf &&
+> +        (riscv_has_ext(env, RVD) ? cpu->cfg.ext_zcd :
+> +                                   riscv_has_ext(env, RVF))) {
+> +        riscv_cpu_set_misa_ext(env, env->misa_ext | RVC);
+> +        return;
+> +    }
+> +
+> +    if (riscv_cpu_mxl(env) == MXL_RV64 &&
+> +        cpu->cfg.ext_zca && cpu->cfg.ext_zcd) {
+> +        riscv_cpu_set_misa_ext(env, env->misa_ext | RVC);
+> +        return;
+> +    }
+> +}
+> +
+>   void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+>   {
+>       CPURISCVState *env = &cpu->env;
+> @@ -1157,6 +1188,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+>   
+>       riscv_cpu_init_implied_exts_rules();
+>       riscv_cpu_enable_implied_rules(cpu);
+> +    riscv_cpu_update_misa_c(cpu);
+>   
+>       riscv_cpu_validate_misa_priv(env, &local_err);
+>       if (local_err != NULL) {
 
 
