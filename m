@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EB76D116F3
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 11:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA86AD116F3
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 11:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOwid-0007Bk-Ok; Fri, 28 Nov 2025 06:32:55 -0500
+	id 1vOwoR-0002Cw-Lo; Fri, 28 Nov 2025 06:38:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vOwia-0007Az-Hb
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 06:32:52 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1vOwoK-0002Ax-OM
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 06:38:49 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vOwiX-0008JT-Su
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 06:32:51 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2981f9ce15cso19522785ad.1
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 03:32:49 -0800 (PST)
+ id 1vOwoE-0000wW-OI
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 06:38:47 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-29845b06dd2so23767015ad.2
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 03:38:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1764329568; x=1764934368; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1764329921; x=1764934721; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=auikiTq0Xwm6i2dKamn80StXz9HZ5YgBzkcvk1MmHVM=;
- b=oQu/j/gsXiJltwv/K44m6McN/1Eeq+wqjeRalysLyaBcbVsvyT8sJH4Y49b5UD2ieg
- N2JGlmy/5vaSg7mfw4jPU7LwozRhPnfC6/YmA+ly/fknK/RoHDW3OQR0O6GmYn3XeJUt
- RBUMKsCEBNCq1Kr0xumZ5ULj+BaIF1kwCqb5qPzW0PlXftrH4uHvElVZPDXMf/14ws05
- TMkjSLqAQ9ESZDY2AmLCYdlUnRjCr9yS8MEKR5nk5ak4UeEBAF0YmuG7mi16MZA1CHew
- uuWmqlUdMwV+avN30fvSBp2IqwSTGVrMjLlVH4NVkt4MO+S8ACVAAi3c8DzGCo9pjEJZ
- tQ4g==
+ bh=B3W3zaRuryIzEchU4VZXi8OZPPCsajr5u8lNnhbimyY=;
+ b=kLmh81+/egSM1vPmVrWTseZXQqJKtIsm+E2uDhTfeXy2pOUHZV65tqhlDwJW5DuTdM
+ bLen8QH3R6gr4uTStfciUkYAihTlEI9WwCWP6VR10CoNMzVLZTqIGO/h0zGKro2iGj+Z
+ 2ZmLfe8x6zyFkWv3IKFy2yj/4c/YDNVIFg3Qbn0J61Rm85Kz01iR0hUGwkoBCXNxdaus
+ 61nTG9BDOvh/rhciENQAxnV2y+vHK5p3oVeNcyTFqIiEIGl5j/Fue26YkC6/pP54PGKg
+ eDEDa7IkQKvCv658+Iew4jwmvneJcf7tquVv54JizpjEky24E9TsSY11ax0/yN5LN2jA
+ 67eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764329568; x=1764934368;
+ d=1e100.net; s=20230601; t=1764329921; x=1764934721;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=auikiTq0Xwm6i2dKamn80StXz9HZ5YgBzkcvk1MmHVM=;
- b=ioFxg16nJHnkOy/I8kZSMXRsJNlCVwlvWi1OrgrEX3zT6ND0FKzOG8KOrEudIz0XKp
- PLWmvXSpeFlrnN9D7AniwW2Orbq444BF02j9ATpRto4x+yUSHSS3Sqkxi4VnGnYlogkW
- Gydhu69Wgba5f55YK8ICMPSli5LlgJgWUTAFbMFDno1x9gVRWLrzGvkHQzg26Op8Akq7
- Zzxyr0R8JQM2XWsafi3WPFiC2U3nyFCIuOf8EyP4eFTXVBFiqkxLzn7jUU3uPfCOEyke
- rjoyR3Dg0OnZqdQo1i98pWyKBe4GaxknWzL3V58af+oR3BVToGiqPc5UQC+mUpl0MhwU
- kbWg==
+ bh=B3W3zaRuryIzEchU4VZXi8OZPPCsajr5u8lNnhbimyY=;
+ b=i/XaOhdt89q4YqIZ3i5g1UgPLXo8/u4ziaQ7LIJ1WI2ArzkWgB8kj24c1xUr9RZ7Er
+ VzQGdMpZ6cUfZJ2ZzWHQyEx6kLEBwOYbF6u0BY2V0BHJbL7Bf+CtLmuRtVAczdNgxB5o
+ ul4rjPpc9wZ+K5DNVpP0BWTZSH0YGR2FdAMMFEARgokwKTupt7N6wjnaE8DeVg7N1o3E
+ rwsb49AXHAk1SnFzsf+18yql+g97sCYmyhe52gRIY+hb2TQ3YAR8btX3NB+I2qI+oEdR
+ 8wseMKJh4u/CKqHk1URxY4DTXihFKl9RrgLi1zV9TtY2V1Vi3pkFOMpFhEU6THD77fVz
+ VrYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNObTFU3gdGM9JF/8LzIBdOnVRda4slAKWDTmt/a+mKSi9fYKxT0675srYPJ0BglI/bYMhcBwb0nvY@nongnu.org
-X-Gm-Message-State: AOJu0YxHeybQdf3oojKC68VBny2a0FTLYKuB2jxwTAVaW8rygwNvQEi8
- KPN4i0NGNJYfKxHLIVJ5Q4Jh29Dv8M+vEaus/LkOi5ByYQ8eCALaJiRPaswPgA6R0vU=
-X-Gm-Gg: ASbGncsdgbsldK9fFaYIjBE/atuYZumnQPt1YnJfVvm7bKVKmiK0jqA1TG8BpOERHS+
- +2836abaSxPReZ/3XBlyGCLOcxkzSGuEyFLPxRzTmvgNsw0LDvkLeqwIBg9qF9UzpUiUkxZSMrD
- lkDSu7D2GgaCeE8ze8qqS1+r1ctf0J7bV+6r58ciOdnbaDBO3P7adQugPpbRwh0YaqXze97ETXt
- XNAB8L+UJsGuXmKs1i0IAYIH0PjAMWfD6jNpEqBqHo6xlLeQICuk7rYYBQFnEUt6Lj3LTT33u41
- 3VNIjpwBRApkC0kr90CQOiRLPYERtWHPqB+6Ac8c6As8ODKjMF38o3BuZbvID6lYx/m+xYGML5k
- JfJ0F3GeFg4DGnK8wByURu8iClYAv31gqYvdvtlenLNg2qVLzMVUdiCRKfdNlM+hbhmMHaatiI0
- MreEepWZiLvqfw2Vd5rxvwL3gDlw==
-X-Google-Smtp-Source: AGHT+IE4dTK1HhHDOpqIiGpseP0Ja/y45Uhqrq9hjFDyWSbiitK+1wFCknVZeOcw1RmoQStgzHqsjw==
-X-Received: by 2002:a17:903:2c06:b0:295:9d7f:9296 with SMTP id
- d9443c01a7336-29b6bf77f5emr311628015ad.45.1764329567843; 
- Fri, 28 Nov 2025 03:32:47 -0800 (PST)
+ AJvYcCXy/Bhd2gmcgNYBjvMifdlLVtrpyWYIMU0s2VjmRUZTn7WRgMW82brMaB9BzZCb8cuxRwa3b+/F4Vmx@nongnu.org
+X-Gm-Message-State: AOJu0Yw7rXD/oO5fYl/PAbOa1pqqeTVvQQCchWSj2cdD5aky0RkmA6KP
+ +XNaz66teYWcfQvtPGIzJQTCVKkiHk93vLFxYOAPeSFAxCsUPBmh3kMSmiCM3Hf97tA=
+X-Gm-Gg: ASbGncsoqtqI6WazP9YHdSz+VVltlzncC5TIECIZUHLzmMBkilVFV12Qhlr3o2ye8vk
+ uSwXvqspikNZF2GhY6vRzFqiT3upVUJ5WEXj5g/lwohK8K/yuva5zQX2ftOnH6WVBIQlsFNY6i0
+ QbwIGWn3LUhE/JszXF1PIZAI8j+3IjS+4YX8Y4vdCRZlSv1NRQheBe6F7/FklwHdvS5RokoXUF3
+ PxBG6gynPXEvv2QYNw3C8cfWYOOuiPM0T0G1GXpGTEEUay6bX7ARbKB0YF8PKhe1kprRlIRZxGf
+ hmxzLEdskDjY0JZR1Pl0ZiCe5tzM/Awc3zGXEzyfZhg1wdJmRSr2P62g2tX138ttVE8YbJNkoIC
+ gVtlnRIn35JekGGvRiw0aRyL+6OYDQI8HXfkM51mbLji1WsNekv9us/+1jLh4/Mgcoy1w3YsdZk
+ gu2g6ef0g1VvFUH5+lPr1IYAvhazHVDy4RL8Wz
+X-Google-Smtp-Source: AGHT+IHAaI7YAIu9eA8D7pbNZuxsxlBG5YsOn9tHBz9oH3l9E8qXEKOC7jyAKvXlv4HWO2Ibq+7DUw==
+X-Received: by 2002:a17:903:19ec:b0:29b:5c65:4520 with SMTP id
+ d9443c01a7336-29b6c5750f1mr272471275ad.29.1764329921035; 
+ Fri, 28 Nov 2025 03:38:41 -0800 (PST)
 Received: from [192.168.68.110] ([179.133.97.212])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-be508a1142esm4332414a12.19.2025.11.28.03.32.45
+ 41be03b00d2f7-be4fbde37d7sm4459955a12.13.2025.11.28.03.38.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Nov 2025 03:32:47 -0800 (PST)
-Message-ID: <a50869b2-d348-42e4-abec-d47dea8587f2@ventanamicro.com>
-Date: Fri, 28 Nov 2025 08:32:42 -0300
+ Fri, 28 Nov 2025 03:38:40 -0800 (PST)
+Message-ID: <dbe5461f-2388-4dd0-a876-37d16bca2fa5@ventanamicro.com>
+Date: Fri, 28 Nov 2025 08:38:36 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] target/riscv: Add "debug-1.0" to specify debug
- specification v1.0
+Subject: Re: [PATCH v2 2/2] target/riscv: Simpily support versioning of debug
+ trigger module
 To: Alvin Chang <alvinga@andestech.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org
 Cc: alistair.francis@wdc.com, bin.meng@windriver.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, vivahavey@gmail.com,
  Yu-Ming Chang <yumin686@andestech.com>
 References: <20251126164329.2157287-1-alvinga@andestech.com>
- <20251126164329.2157287-2-alvinga@andestech.com>
+ <20251126164329.2157287-3-alvinga@andestech.com>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <20251126164329.2157287-2-alvinga@andestech.com>
+In-Reply-To: <20251126164329.2157287-3-alvinga@andestech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,58 +113,140 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 11/26/25 1:43 PM, Alvin Chang wrote:
-> Currently RISC-V CPU has a property "debug" which is equivalent to old
-> debug specification v0.13 version. Now we have ratified debug
-> specification v1.0 version. To support both versions, we add "debug-1.0"
-> as one of RISC-V CPU property to let user specify that debug v0.13 or
-> debug v1.0 is enabled. When debug-1.0=false CPU fallbacks to default
-> v0.13 version.
-> 
-> Note that "debug-1.0" depends on "debug" property:
-> - debug=false,debug-1.0={true|false} --> debug is disabled
-> - debug=true,debug-1.0=false         --> debug v0.13 is enabled
-> - debug=true,debug-1.0=true          --> debug v1.0  is enabled
+> To support multiple versions of debug specification, we have added
+> "debug-1.0" CPU property. Now the debug trigger module inspects this
+> property to determine the supported trigger types by the CPU. In this
+> commit we validate written trigger type with CPU debug version. For
+> example, the debug specification v0.13 does not support mcontrol6, and
+> the indended tdata_csr_write() on tdata1 with type=mcontrol6 will be
+
+I suppose you meant 'intended'.
 
 
-It is worth noticing that 'debug' is default true, so setting debug-1.0=true alone
-is enough to enable debug v1.0.
-
-If a new version becomes necessary we can add this clarification in the commit msg.
-
+With the typo fixed:
 
 Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
+> ignored.
+> 
+> If debug v1.0 is selected, the default trigger type is mcontrol6
+> instead of legacy mcontrol.
 > 
 > Signed-off-by: Alvin Chang <alvinga@andestech.com>
 > Reviewed-by: Yu-Ming Chang <yumin686@andestech.com>
 > ---
->   target/riscv/cpu.c                | 1 +
->   target/riscv/cpu_cfg_fields.h.inc | 1 +
->   2 files changed, 2 insertions(+)
+>   target/riscv/debug.c | 56 +++++++++++++++++++++++++++++++++++++++++---
+>   target/riscv/debug.h |  1 +
+>   2 files changed, 54 insertions(+), 3 deletions(-)
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 73d4280..082035b 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2637,6 +2637,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+> diff --git a/target/riscv/debug.c b/target/riscv/debug.c
+> index 5664466..5163193 100644
+> --- a/target/riscv/debug.c
+> +++ b/target/riscv/debug.c
+> @@ -64,6 +64,26 @@ static tdata_avail tdata_mapping[TRIGGER_TYPE_NUM] = {
+>       [TRIGGER_TYPE_UNAVAIL] = { true, true, true }
+>   };
 >   
->   static const Property riscv_cpu_properties[] = {
->       DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
-> +    DEFINE_PROP_BOOL("debug-1.0", RISCVCPU, cfg.debug_1_00, false),
+> +/* Valid trigger types supported by debug specification v0.13 */
+> +static bool valid_trigger_type_v013[TRIGGER_TYPE_NUM] = {
+> +    [TRIGGER_TYPE_AD_MATCH] = true,
+> +    [TRIGGER_TYPE_INST_CNT] = true,
+> +    [TRIGGER_TYPE_INT] = true,
+> +    [TRIGGER_TYPE_EXCP] = true,
+> +    [TRIGGER_TYPE_UNAVAIL] = true
+> +};
+> +
+> +/* Valid trigger types supported by debug specification v1.0 */
+> +static bool valid_trigger_type_v100[TRIGGER_TYPE_NUM] = {
+> +    [TRIGGER_TYPE_AD_MATCH] = true,
+> +    [TRIGGER_TYPE_INST_CNT] = true,
+> +    [TRIGGER_TYPE_INT] = true,
+> +    [TRIGGER_TYPE_EXCP] = true,
+> +    [TRIGGER_TYPE_AD_MATCH6] = true,
+> +    [TRIGGER_TYPE_EXT_SRC] = true,
+> +    [TRIGGER_TYPE_DISABLED] = true
+> +};
+> +
+>   /* only breakpoint size 1/2/4/8 supported */
+>   static int access_size[SIZE_NUM] = {
+>       [SIZE_ANY] = 0,
+> @@ -95,6 +115,20 @@ static inline target_ulong get_trigger_type(CPURISCVState *env,
+>       return extract_trigger_type(env, env->tdata1[trigger_index]);
+>   }
 >   
->       {.name = "pmu-mask", .info = &prop_pmu_mask},
->       {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index a154ecd..402b255 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -151,6 +151,7 @@ BOOL_FIELD(ext_XVentanaCondOps)
->   BOOL_FIELD(mmu)
->   BOOL_FIELD(pmp)
->   BOOL_FIELD(debug)
-> +BOOL_FIELD(debug_1_00)
->   BOOL_FIELD(misa_w)
+> +static inline bool validate_trigger_type(CPURISCVState *env,
+> +                                         target_ulong trigger_type)
+> +{
+> +    if (trigger_type >= TRIGGER_TYPE_NUM) {
+> +        return false;
+> +    }
+> +
+> +    if (riscv_cpu_cfg(env)->debug_1_00) {
+> +        return valid_trigger_type_v100[trigger_type];
+> +    }
+> +
+> +    return valid_trigger_type_v013[trigger_type];
+> +}
+> +
+>   static trigger_action_t get_trigger_action(CPURISCVState *env,
+>                                              target_ulong trigger_index)
+>   {
+> @@ -889,6 +923,13 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+>           trigger_type = get_trigger_type(env, env->trigger_cur);
+>       }
 >   
->   BOOL_FIELD(short_isa_string)
+> +    if (!validate_trigger_type(env, trigger_type)) {
+> +        /* Since the tdada1.type is WARL, we simpily ignore write here. */
+> +        qemu_log_mask(LOG_UNIMP, "trigger type: %d is not supported\n",
+> +                      trigger_type);
+> +        return;
+> +    }
+> +
+>       switch (trigger_type) {
+>       case TRIGGER_TYPE_AD_MATCH:
+>           type2_reg_write(env, env->trigger_cur, tdata_index, val);
+> @@ -918,8 +959,11 @@ void tdata_csr_write(CPURISCVState *env, int tdata_index, target_ulong val)
+>   target_ulong tinfo_csr_read(CPURISCVState *env)
+>   {
+>       /* assume all triggers support the same types of triggers */
+> -    return BIT(TRIGGER_TYPE_AD_MATCH) |
+> -           BIT(TRIGGER_TYPE_AD_MATCH6);
+> +    if (riscv_cpu_cfg(env)->debug_1_00) {
+> +        return BIT(TRIGGER_TYPE_AD_MATCH) | BIT(TRIGGER_TYPE_AD_MATCH6);
+> +    }
+> +
+> +    return BIT(TRIGGER_TYPE_AD_MATCH);
+>   }
+>   
+>   void riscv_cpu_debug_excp_handler(CPUState *cs)
+> @@ -1056,9 +1100,15 @@ void riscv_trigger_realize(CPURISCVState *env)
+>   
+>   void riscv_trigger_reset_hold(CPURISCVState *env)
+>   {
+> -    target_ulong tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH, 0, 0);
+> +    target_ulong tdata1;
+>       int i;
+>   
+> +    if (riscv_cpu_cfg(env)->debug_1_00) {
+> +        tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH6, 0, 0);
+> +    } else {
+> +        tdata1 = build_tdata1(env, TRIGGER_TYPE_AD_MATCH, 0, 0);
+> +    }
+> +
+>       /* init to type 2 triggers */
+>       for (i = 0; i < RV_MAX_TRIGGERS; i++) {
+>           /*
+> diff --git a/target/riscv/debug.h b/target/riscv/debug.h
+> index f76b8f9..0127cb9 100644
+> --- a/target/riscv/debug.h
+> +++ b/target/riscv/debug.h
+> @@ -43,6 +43,7 @@ typedef enum {
+>       TRIGGER_TYPE_AD_MATCH6 = 6,     /* new address/data match trigger */
+>       TRIGGER_TYPE_EXT_SRC = 7,       /* external source trigger */
+>       TRIGGER_TYPE_UNAVAIL = 15,      /* trigger exists, but unavailable */
+> +    TRIGGER_TYPE_DISABLED = 15,     /* trigger exists, but disabled */
+>       TRIGGER_TYPE_NUM
+>   } trigger_type_t;
+>   
 
 
