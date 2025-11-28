@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A23CFD376
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 12:57:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B5D2CFD376
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 12:59:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOy2a-0002Wd-UM; Fri, 28 Nov 2025 07:57:36 -0500
+	id 1vOy46-0003OE-08; Fri, 28 Nov 2025 07:59:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOy2U-0002VV-OG
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:57:31 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOy42-0003N1-JA
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:59:06 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOy2T-0005RB-6g
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:57:30 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-47798ded6fcso9805935e9.1
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 04:57:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vOy40-0005Wr-8T
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:59:05 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-429ce7e79f8so1222823f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 04:59:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764334647; x=1764939447; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764334743; x=1764939543; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PQaX/QltTNqm3fwcIFoERFUth1fTW91e+uqNRpNB3Z0=;
- b=O/qzhPzdb1ROcwmKQ8ltXcJZ8yS54hQZJ9CM4apAjwr0bkxC352Vt0R/vPxuNIYakN
- orI5w8K63wFF+jcAVNzbFsJGWVAuCzBlB+xex5NqvG7N5/8Hi53YD4RUWxjpLDbE6ikr
- 13xX2GsUKfgpNkWrJWSRDUeSUd5wVt8/Alx+5EuXVmKE3PvtCNKlWGct5lq9ocUEpVep
- LWkkNuWHS/YAla+ZFBIjmZY840GDlCu24I09h3lIMcEU7VfiYmQ1+mhnQldwy4w2km4N
- cI2VSiXDH2GqzaV4gGXfWNVWWbvKyNd6zIKCVxoTulKfOt11uayYpc7oFxZgqXq3CcJJ
- EryA==
+ bh=MuTKezzHjxSk7oohEchM/aHVnU6HmHyLwzueORdHAeU=;
+ b=c8NFklQplyUNMu8epmLSpQeUxLcqm5WB8FCBB0S5qjrPyZc6aCnfBhBY6CW67vl9t0
+ dHKlkrLHq0Wp3YRgmzk8e6+isfOgw9sM+i/MqBQBP+vHvpN7gXivUIUp9MwaZRdMe/QU
+ 4ZAvkD+JqthG69KzKPW9WhWX7GXmfe/MUKLRjQhLiMze692FmP8kl8IlC+t1CepAssyq
+ 5mAvC8bjRr/Wao6KZQjchfDJ9af8FmJlIAbh9QLEi9CY7CKoCWQHxUeMsfU4F9cJ83iA
+ +wBfh+KMbZAjcxiBcOm1icQwBxxzM/Rt3rprB93NwGPIWK2e/TSZfMk7g5Fbkwybz4JP
+ h7xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764334647; x=1764939447;
+ d=1e100.net; s=20230601; t=1764334743; x=1764939543;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PQaX/QltTNqm3fwcIFoERFUth1fTW91e+uqNRpNB3Z0=;
- b=HxO1aiFRbrBFeIHhaU1lp0QJn+klqMDsR+ucMBEBDZGCcv7mtclNjXML3HynnEDjST
- 7tGqwo+7uD7OzadC4CCzHj9sOJEFNS6ujIuNUHo4eLZxGwZQFy86O2gLSruw5aDm1oYh
- POKLusR9vRoYz56brqjendI347XFt9RO4Jdu05fIVB2eicYEZTi6Ej+unRiRB6/VDnzq
- zL+548efjxKEVOrHsECF42cYKyQxfzmsERK3wy//VZFGdIez+u47eBkeD1PXI9IXzEi+
- lRVPAp1zHeQXv8mUcOnWYRzFUhGxLFushuQKPlX0/0BbX7vhcuGHkM22Rx80W6f6ZErX
- hzyw==
+ bh=MuTKezzHjxSk7oohEchM/aHVnU6HmHyLwzueORdHAeU=;
+ b=oWRx2NSayO4it95MCftJLg/BQ9kM9fdaf/PqlcCzj68+FQUG0upvwEj1+wolJRprlZ
+ KEfBUbdexFjFul1n9mAXcctNWBt1d445YbOfEMpp5LJsD3J41LeyDZAbO/gWmITd2DOf
+ Zzfcm5fHAPou4KSBCiGTxO+BrvBAuH5Fdk2bwITYM9Fs+LiLaikvOP9Rh/GJl1abi+ab
+ jyVN+C8VI8A5keM44q0+QXcqVFi0d/oxmSkQrxMQIIaP0Vn5TRuSDiPkLvAslrkTgQWG
+ Cb1SCrTImNBdJryjeL1zwvMlAygiMD1fDzvfCLwLldReTt0TGDMnKirli88WDn7IASBc
+ RnjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXSgz49MhEO9WOXEei2nXRXyG8/9tQuBjHfDQCh4LRxwL1OjfPFSjT9qBJnMoXKlRaVyN09sc6mmcPc@nongnu.org
-X-Gm-Message-State: AOJu0YwdhPz4Tu2BiCT8HqjfJMddOIIAwBTSKsnAibCCp/EcAka6BGwM
- EAsc3hgePEiL8t8IclIFAW18yScKeCJ6nMqaz/TjxrBpcxZ1YKBej7wJlzi7A6eI+N4=
-X-Gm-Gg: ASbGncsJvZGQwB2udm7Yf153EXLUmWebXO0TRTcUgzVmaJTGjym8LpBQNo1jeDNBIxm
- BI8VpDwU2NrVKoAugHXkpkW9ueEPy5tVOX0snfrYGxfR0rYo7IfzP/kKD3hgvHqPAVBal3QusMW
- kIwa4e60zc8hAwVx6Hac+5zyu4lZtxeKpW7QAuYiHDPYgdT+bv+1imEh2SgwIbDiXE1qvFAeHdo
- VP9EsV6H+4oqFSALpCtQsHaATReCYMinKuKSsuHt+wN+007efI9xlFbHOZKnrHyaXl53EQdPSjE
- iisTb/K4mI3cS2SZE/+13nTbNVDDOJ02P//KQgwlFbxqLlpRyckz19TVxtcqpuXhE2ScN1w4I6w
- Z8fxWyYsl4vC7rQqUk31uyn1yOx6bp1O4MfKMNsGMuDqBdZo2Xi5fVNoh0OodB7kyomBxvrXv3x
- BP16dUBczhHKjGQXt9l0kRrCtDpHBfqLuZbSDmxCXwrzfVvSmGVhbGhibnrWqoJ7lA
-X-Google-Smtp-Source: AGHT+IG65iZbQxckgG+WkXzdfbCi665ESyWBjDVu4GaezecdQH077Y664I5XX05e6RCA2U8HG2adZw==
-X-Received: by 2002:a05:600c:310f:b0:475:de14:db1e with SMTP id
- 5b1f17b1804b1-477c1125568mr312362445e9.24.1764334647493; 
- Fri, 28 Nov 2025 04:57:27 -0800 (PST)
+ AJvYcCWsk3fh31X/2caNXTZCPF462kb0/9wuJhRRtip3E8kr6mYur79okUgHrSNUqHRuwvJgPBEi/hvVonWt@nongnu.org
+X-Gm-Message-State: AOJu0YzRUrKDdBDefLN6LYlroZOzaLMLJRORTfsBqz6Ilap+89NF/Bxf
+ duVduFJLtUR/oCaR8rnc0CiY6pnyaNetjtzFylpFFBxoRDVhAtI0kwlyfxzVtPtUDPhL2CyV2XT
+ ImJOViSGklg==
+X-Gm-Gg: ASbGncvKYxzl9FbdYZPGbTuU+gVXLT0+4bVSk6NpP9LRql3Lch8HzDMQgeQF9NsYnnR
+ gGl1Dx+BAbR2wSrFQ2z/a2jh+GoVJZAKpSf7rzagUjY8EV06dQR+DnJ8EgajtZTQFVrDow6XI8h
+ Lr0OH5YM0cTV0LahpOpukHPxDcm7EF+nfMjjIOcNBMJXpKl+dcIAoPk8mqvZnJob9U2M49F7JRt
+ hBiHEbfKaytwLrWD2VFrXTkEItYxGx5S9sC8wuI4G3Fu7PcT+7uWnRw0/YPYFOmtcphpJPpd5aY
+ mmMS2GNrttnDgfBivTyoI2s/iXTaGewKqhoageIaXG10RyP7gu1WjN9T8VHyF9G1U7dvTi13n0Y
+ O7BRtyPW5N3vvLTk0MRYHVYTBi8NIfoMTEqBYCjjoaqisu4qTy7V//e7TZPEK6D90DV0Bf0PUKV
+ lj1P2WC8BGQrON9MjRBwTcYr1/teV2nPT67JwVN+cgej5eiHp3RqfpNg==
+X-Google-Smtp-Source: AGHT+IEPInx34OZ8jBuX7Of8Wmk8bMqjxciu8Zxd18D1XH8COkQv0TBO0ssMNCgcZlRLvHLEntcmiA==
+X-Received: by 2002:a05:6000:1789:b0:42b:3ccc:91ec with SMTP id
+ ffacd0b85a97d-42e0f2047b3mr15370113f8f.22.1764334742644; 
+ Fri, 28 Nov 2025 04:59:02 -0800 (PST)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4790add4b46sm158969195e9.4.2025.11.28.04.57.26
+ ffacd0b85a97d-42e1c5c3c8csm11918426f8f.2.2025.11.28.04.59.01
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 28 Nov 2025 04:57:26 -0800 (PST)
-Message-ID: <6041639d-a63d-45fb-8466-43290bfa6567@linaro.org>
-Date: Fri, 28 Nov 2025 13:57:26 +0100
+ Fri, 28 Nov 2025 04:59:01 -0800 (PST)
+Message-ID: <a2567dda-9484-44ea-94f5-7bc6d969ae57@linaro.org>
+Date: Fri, 28 Nov 2025 13:59:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/9] edk2: drop 32-bit binaries (ia32 and arm)
+Subject: Re: [PATCH v2 4/9] edk2: drop 32-bit build config (ia32 and arm),
+ update aarch64 vars
 Content-Language: en-US
 To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov
  <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
 References: <20251128084524.363989-1-kraxel@redhat.com>
- <20251128084524.363989-6-kraxel@redhat.com>
+ <20251128084524.363989-5-kraxel@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251128084524.363989-6-kraxel@redhat.com>
+In-Reply-To: <20251128084524.363989-5-kraxel@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,22 +108,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 28/11/25 09:45, Gerd Hoffmann wrote:
-> Keep and rename edk2-arm-vars.fd.bz2 (identical for arm and aarch64) to
-> reduce confusion.
+> Upstream edk2 has dropped support for 32-bit architectures.  Remove the
+> build config for these builds, update aarch64 (which used to share the
+> 'vars' image with arm).
+> 
+> Drop references to the 32-bit builds in a number of places.
 > 
 > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
 > ---
->   ...m-vars.fd.bz2 => edk2-aarch64-vars.fd.bz2} | Bin
->   pc-bios/edk2-arm-code.fd.bz2                  | Bin 1570311 -> 0 bytes
->   pc-bios/edk2-i386-code.fd.bz2                 | Bin 1780004 -> 0 bytes
->   pc-bios/edk2-i386-secure-code.fd.bz2          | Bin 1858666 -> 0 bytes
->   pc-bios/edk2-i386-vars.fd.bz2                 | Bin 190 -> 0 bytes
->   5 files changed, 0 insertions(+), 0 deletions(-)
->   rename pc-bios/{edk2-arm-vars.fd.bz2 => edk2-aarch64-vars.fd.bz2} (100%)
->   delete mode 100644 pc-bios/edk2-arm-code.fd.bz2
->   delete mode 100644 pc-bios/edk2-i386-code.fd.bz2
->   delete mode 100644 pc-bios/edk2-i386-secure-code.fd.bz2
->   delete mode 100644 pc-bios/edk2-i386-vars.fd.bz2
+>   tests/qtest/bios-tables-test.c               | 28 ++++++-------
+>   pc-bios/descriptors/50-edk2-i386-secure.json | 34 ---------------
+>   pc-bios/descriptors/60-edk2-aarch64.json     |  2 +-
+>   pc-bios/descriptors/60-edk2-arm.json         | 31 --------------
+>   pc-bios/descriptors/60-edk2-i386.json        | 33 ---------------
+>   pc-bios/descriptors/meson.build              |  3 --
+>   pc-bios/meson.build                          |  6 +--
+>   roms/edk2-build.config                       | 44 ++------------------
+>   8 files changed, 19 insertions(+), 162 deletions(-)
+>   delete mode 100644 pc-bios/descriptors/50-edk2-i386-secure.json
+>   delete mode 100644 pc-bios/descriptors/60-edk2-arm.json
+>   delete mode 100644 pc-bios/descriptors/60-edk2-i386.json
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
