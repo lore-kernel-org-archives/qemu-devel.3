@@ -4,82 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DBF5D116E2
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 18:11:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA84D116E2
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 18:22:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vP2vj-0008LG-7V; Fri, 28 Nov 2025 13:10:51 -0500
+	id 1vP36s-00031R-MO; Fri, 28 Nov 2025 13:22:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vP2vi-0008Ky-0g
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 13:10:50 -0500
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vP2vf-0001PJ-H1
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 13:10:49 -0500
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 83C46429F4
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 18:10:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1764353445;
- bh=UWqs0U0ebBcjx/8c2jMaYQRT02O0XHzchLZbfe2cAbY=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=cY1UiyQviXnxHfq17XRVtngk5f4Dy+Ui28NiBSQ/sb+oUxg0ExsFqde2cC/y3Oxr8
- 504WitL4FDj5KraW9ocLN60KjlzHjOnoJc4nbKchflvhPBiJHYrtozdrGG78Bi4qJz
- qYqt6w3N1u+zNdpzEtowxwkdCr3Qc8pa0t4H83dKWnxjfFoxncpXG72H2K4dk1cd8m
- u2n0Z6qs++B1rL8YA45IUPN4tTCkJ1WhW6lhhiDYOk4b1u+/lcpLFHQUuZtpbv4y8M
- 1lNG5WeqoQUugewMt7MVf8D6eEgpnFPmmkGKEdi3kJ+yLKZEg0WSvZUXAQ2ZDe+1be
- vKOuAH0R64jqA==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 73E3E7ED7A
- for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 18:10:45 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vP36j-0002yp-7R
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 13:22:13 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vP36h-0003A1-KU
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 13:22:12 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-477a2ab455fso21793365e9.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 10:22:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764354122; x=1764958922; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VH0vJM7+U/YI9Ekj72lGuEmq3CIiJueJTkyD77UU3KY=;
+ b=L38+/yIjora5GciiSYlIibxjlCEMRwuygoSc1FYoLqEQM9AAE0ag35JuPxp+9iD/z0
+ 19GmWeSzYr9xPQEtynJ1EKgOb70zmvWKOgf+kf7m3rNqs3SYSgeDRenGdV9DI1AMz0RQ
+ FmpIqoNxkO0SbZzYzp/5o2ABqV0zEFntyoemSiTHyPiOmovObSkjjYjNMLerfB3CDsnz
+ DyekNRxK3lrwjP0zYLbn4GSeb2/KcHMafcQxDUN5BALkdp176HhOUML2Jq2NcOyEZv7t
+ MUmkKXWzq63jSpJ3Itru6uyufUXKj5sZTenlrP/vxA/iIuGIWrNAqttK+BgR8ij3VUhq
+ jTwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764354122; x=1764958922;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VH0vJM7+U/YI9Ekj72lGuEmq3CIiJueJTkyD77UU3KY=;
+ b=Gx4kKVb3bRmi5xAw218POuy+pPfC7ebiEZ21oZZovwOtrEyMw/nAWph49h6HJWft9G
+ JxaTYnhtyHVZA0BhA/om33VTo6Gd1OS066D0yq4aLwQFUaaYAz7bB4QXED+riCVlBD2w
+ of5cIF0jDiXm+0jJ0VjhLUG7sqzlpVUQMsX/DrmxpLaht4PAIJcJ6Zp56f+WPUdxkhl/
+ MrWyYhmotKdm1X4iYwS2uZWmwsAISu+VTk9ROKbfFISvbqrcl5R+4AwJ3tAzaHU3vXUb
+ Rs6GCb89SpifggPxANBkbulapRzXZKI6oZmvCDpsfBu8SjRi+1wuITDhKWuq6gwpfunX
+ gK0w==
+X-Gm-Message-State: AOJu0Yxfx5xdPF1CaF21X80FskpTKWhf7n4QsBzOdWyKfUly6yo5tjKq
+ FYUvmuUReaACYgSdEnR1zpiqchTN2/m1rdYpbug2M3WBX7RnnzYPPL8ujO7B0hUh2Mg=
+X-Gm-Gg: ASbGncvnBcqrMZjFvijEMmJDzuOw9o9PomZzqNgZwV9N20gff6Y9VgyA2VhsXTDaeHj
+ 3oNAPmQm4rtE7yJB40HBf+OXrZoz2TQOaMmQ6hgrUpbobZFwMnDBQAsulyO6mHc5a32EKicvV3J
+ ohKi14/6/T2C/uKafmd69HeKvzy5cVkaNeFJ8afWsxYH2WGWyN3XYr4f+X/Ej/Ek2WL4X2viRsE
+ VEH9XoIgbJ8xuqMX+E98EG6IbhYnTYhBZt2PC5fNW1gTxtZhVb7w6AM+VFnloH3rWYz1/YbgmHv
+ vk7R0E3mmThQ7iELdVcW4agIQS45RgFsuZqVn274jE14t5lqeaAVcULnD9uVYUkJIggVNir2qze
+ qthTr1S1vFOsbdF0PuzsYkA5dWEHnlYWkZ98qLpowLLaDKnxV6NIqyOTnOZKkMsSJZVwi2jWXj1
+ Vq6enIHdVu85w=
+X-Google-Smtp-Source: AGHT+IGwQJXIY5Tn0QHrayyPs33RbZQDd4nmKhgxwHyIO8N12MGjtkM3XaPNY2nbJ0wYXMZzIqtCxA==
+X-Received: by 2002:a05:600c:1ca4:b0:45d:f83b:96aa with SMTP id
+ 5b1f17b1804b1-477c10c92d8mr349981965e9.7.1764354121967; 
+ Fri, 28 Nov 2025 10:22:01 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42e1ca1a310sm11205270f8f.26.2025.11.28.10.21.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Nov 2025 10:21:58 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BF1A95F7F6;
+ Fri, 28 Nov 2025 18:21:57 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/5] Final fixes for 10.2 (build, docs, dockerfiles, plugins)
+Date: Fri, 28 Nov 2025 18:21:52 +0000
+Message-ID: <20251128182157.4125745-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Fri, 28 Nov 2025 18:04:47 -0000
-From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- status=Confirmed; importance=Medium;
- assignee=heinrich.schuchardt@canonical.com; 
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
-X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
-X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
-References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <176435308712.517512.16785511547997710854.malone@juju-98d295-prod-launchpad-2>
-Subject: [Bug 2133188] Re: Illegal instruction in memset under qemu-user for
- riscv64
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="bf536a74252f65aa2f145d87a74873da841e2ec9";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: cdd2ed637c1cdc325ba01bb968cd1946d25b88e7
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -88,212 +104,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the noble Docker container I have been running the following program:
+I'm on the fence if these are needed for 10.2. There is at least one
+bug fix (plugins) but the build and documentation fixes can easily be
+punted to 11.0 if we are feeling nervous.
 
+Alex.
 
-#include <stdio.h>
-#include <stdint.h>
+Alex Bennée (5):
+  tests/tcg: honour the available QEMU binaries when running check-tcg
+  tests/lcitool: add bzip2 to the minimal dependency list
+  tests/dockerfiles: transition debian-all-test-cross to lcitool
+  docs/devel: update build environment setup documentation
+  plugins/core: allow reading of registers during discon events
 
-#define VECTOR_SIZE 8  // Number of 64-bit elements
+ docs/devel/build-environment.rst              | 145 ++++++++++++------
+ configure                                     |   6 +-
+ plugins/core.c                                |   2 +
+ tests/Makefile.include                        |   9 ++
+ .../dockerfiles/debian-all-test-cross.docker  | 122 ++++++++-------
+ tests/lcitool/projects/qemu-minimal.yml       |   1 +
+ tests/lcitool/refresh                         |  43 ++++++
+ 7 files changed, 222 insertions(+), 106 deletions(-)
 
-void store_vector_values(int64_t* buffer) {
-    int64_t values[VECTOR_SIZE] =3D {0x1000000000000001, 0x2, 0x3, 0x4, 0x5=
-, 0x6, 0x7, 0x8};
-
-    // Inline assembly to load values into the vector register and store th=
-em
-    asm volatile (
-        "vsetvli t0, zero, e64, m2;"   // Set vector length to 2 elements o=
-f 64 bits
-        "vle64.v v0, (%0);"            // Load values into vector register =
-v0
-        "vse64.v v0, (%1);"            // Store the contents of v0 into the=
- buffer
-        :
-        : "r"(values), "r"(buffer)     // Input operands
-        : "v0", "t0", "memory"         // Clobbered registers
-    );
-}
-
-int main() {
-    int64_t buffer[VECTOR_SIZE] =3D {0}; // Buffer to store 64-bit values
-
-    for (int i =3D 0; i < VECTOR_SIZE; i++) {
-        printf("buffer[%d] =3D 0x%lx\n", i, buffer[i]);
-    }
-    store_vector_values(buffer);
-
-    // Output the stored values for verification
-    printf("Stored vector values:\n");
-    for (int i =3D 0; i < VECTOR_SIZE; i++) {
-        printf("buffer[%d] =3D 0x%lx\n", i, buffer[i]);
-    }
-
-    return 0;
-}
-
-And received this output:
-
-./test
-buffer[0] =3D 0x0
-buffer[1] =3D 0x0
-buffer[2] =3D 0x0
-buffer[3] =3D 0x0
-buffer[4] =3D 0x0
-buffer[5] =3D 0x0
-buffer[6] =3D 0x0
-buffer[7] =3D 0x0
-Stored vector values:
-buffer[0] =3D 0x1000000000000001
-buffer[1] =3D 0x2
-buffer[2] =3D 0x3
-buffer[3] =3D 0x4
-buffer[4] =3D 0x0
-buffer[5] =3D 0x0
-buffer[6] =3D 0x0
-buffer[7] =3D 0x0
-
-So it seems that QEMU can emulate the vse64.v instruction. It is not
-clear to me why for "m2" four elements are transferred and not two.
-
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133188
-
-Title:
-  Illegal instruction in memset under qemu-user for riscv64
-
-Status in QEMU:
-  New
-Status in qemu package in Ubuntu:
-  Confirmed
-
-Bug description:
-  # Title
-  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
-et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
-
-  ## Summary
-  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
- 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
-gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
- (core dumped)" or "died with signal 4". The illegal instruction is observe=
-d inside glibc's memset implementation at an instruction that uses RISC-V v=
-ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
-e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
-nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
-lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
-code generation / state corruption), not a cmake bug.
-
-  ## Affects
-  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
-untu3)
-  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
-qemu-user static interpreter
-
-  ## Environment / Context
-  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
-  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
-  - Container image: ubuntu:26.04 for riscv64
-  - qemu package used:
-    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
-b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
--user_10.0.6+ds-0+deb13u2).=20
-    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
-ost and registered via /proc/sys/fs/binfmt_misc/register
-  - CMake version used inside container (bootstrap/build may use system-pro=
-vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
-ggers crash)
-  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
-eral consecutive successes or failures)
-  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
-t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
-QEMU_STRACE also makes it much harder to reproduce.
-   =20
-
-  ## Full reproduction steps
-  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
-ry:
-     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
-uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
-     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
--5ubuntu3_amd64
-     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
-in/qemu-riscv64-static
-
-  2. Register qemu-riscv64 with binfmt_misc:
-     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
-     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
-00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
-\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
- >/proc/sys/fs/binfmt_misc/register
-
-  3. Start riscv64 ubuntu container:
-     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
-4 bash
-     docker exec -it ubuntu26 bash -i
-
-  4. Inside container:
-     apt update
-     apt install -y build-essential cmake
-
-  5. Reproducer 1:
-     cmake --system-information
-     -> Often fails with:
-        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
-        Illegal instruction (core dumped)
-
-  6. Reproducer 2 (minimal C project):
-     Create test_cmake/CMakeLists.txt:
-     cmake_minimum_required(VERSION 3.10)
-     project(HelloCMake C)
-     add_executable(hello main.c)
-
-     Create test_cmake/main.c:
-     #include <stdio.h>
-     int main() {
-         printf("Hello, CMake!\n");
-         return 0;
-     }
-
-     cd test_cmake
-     cmake .
-     -> Crash with:
-        -- Detecting C compiler ABI info
-        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
-
-  7. Reproducer 3 (rebuild cmake from source inside container):
-     apt source cmake
-     cd cmake
-     apt-get build-dep .
-     dpkg-buildpackage -us -uc -b
-     -> Bootstrapping error:
-        Illegal instruction (core dumped)
-        Error when bootstrapping CMake:
-        Problem while running initial CMake
-
-  8. Observed crash location (from gdb/QEMU_STRACE when available):
-     - Illegal instruction is in memset@@GLIBC_2.27+0x52
-     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
-bit elements)
-
-
-  ## Workarounds
-  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
- using vectorized memset.
-  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
-=E2=80=94 both make the failure much less likely.
-
-  Note: The same workload does not reproduce the crash when run under
-  qemu-system (full-system emulation). The issue appears specific to
-  qemu-user
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
+-- 
+2.47.3
 
 
