@@ -4,67 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 308FAD116F1
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 13:40:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FCC7D116F1
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 13:58:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOyhf-0001rk-4P; Fri, 28 Nov 2025 08:40:03 -0500
+	id 1vOyys-0006GR-Nr; Fri, 28 Nov 2025 08:57:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOyhc-0001qq-Rb
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 08:40:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vOyyr-0006Fm-5S
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 08:57:49 -0500
+Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vOyhZ-0002dO-VB
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 08:40:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764337197;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=KsFo8xY/CGs753K1Z9F3q7jVAI7IiQENnOKq3Bc00Vc=;
- b=fFqakZ6qvIkcGa4PZYnnOG5IpRgsD3OP82n8G8Ke5xStGJJSWmCq/bwGjC01Ikb0e28zM8
- TlA0yOUrRr2HRycmxOv/NDoBab/IXAhZ3SVMZIuTAk0BVeY2VL4EjtRj5ABi7OPI8U90je
- ehjolsMBwYvXR5sUtbL/Td0OGnLBFNo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-FJO9CRryOwiwM_HRMmsqgg-1; Fri,
- 28 Nov 2025 08:39:54 -0500
-X-MC-Unique: FJO9CRryOwiwM_HRMmsqgg-1
-X-Mimecast-MFC-AGG-ID: FJO9CRryOwiwM_HRMmsqgg_1764337193
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E32F5180057A; Fri, 28 Nov 2025 13:39:52 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.225.146])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7BBF21800840; Fri, 28 Nov 2025 13:39:51 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org
-Subject: [RFC PATCH] tests/functional/s390x: Add reverse debugging test for
- s390x
-Date: Fri, 28 Nov 2025 14:39:49 +0100
-Message-ID: <20251128133949.181828-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
+ id 1vOyyp-0004Qk-8z
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 08:57:48 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1764338250; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=id9SfLAMI+/HVuEe6yUSYp93P6b3Mdsb802d1t+UrfYawMKhKshr0AMOIUzVq4jCoU1ZNRcJHqF9LknRJ2OCNa0nAUYDeAuPuhxP9UvbfVTGlrj9wzxrx8kNNgQPTCaOld4PSIxTzldUbRSHsERNYVsO/4FxPwKRuK/O1sl2xlQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1764338250;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=Qo0o8I///qZQrEXN4clr/ApKOgQtsJz0xxXHHCzypcw=; 
+ b=H3NFrcZMRbD1kWUXFyg0SgRBusK59AXZxNrGsMN0Rh9C7LDM2LY9hcMw6PgQ+AwlRdcNOxzZEg8bwJ/MLqu6cYdVGReGrlyM+AXDAkuDPqJkPGP9iK5sBXDUrkTn7mmXONXAEzUtASXmFFHA7yfVYW6Ux5kCFH3bK8hZDF15L6c=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=collabora.com;
+ spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
+ dmarc=pass header.from=<dmitry.osipenko@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764338250; 
+ s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
+ h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=Qo0o8I///qZQrEXN4clr/ApKOgQtsJz0xxXHHCzypcw=;
+ b=XzLQGFd+++lEaUQ5fD7c+2XEYNQVeHj+knV0mGjd0cISujHT9w9yu2Pphj4kt6Pn
+ C6g0lBYUy9PLlKoICnKHaej8VtSjdvsUj3m/eFf2jSjY3OsGQUDFvALXDBZHUj/ZTZo
+ XKOlWqrzbyh8OE1p6bLUl9gIyuLdUy+cngCTn8GY=
+Received: by mx.zohomail.com with SMTPS id 1764338249264607.0979766878306;
+ Fri, 28 Nov 2025 05:57:29 -0800 (PST)
+Message-ID: <6c11567c-29c3-4336-b1af-58efab5ec0aa@collabora.com>
+Date: Fri, 28 Nov 2025 16:57:24 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [v6 2/2] virtio-gpu: use consistent error checking for
+ virtio_gpu_create_mapping_iov
+To: Honglei Huang <honghuan@amd.com>, odaki@rsg.ci.i.u-tokyo.ac.jp
+Cc: mst@redhat.com, cohuck@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org, Ray.Huang@amd.com, armbru@redhat.com,
+ alex.bennee@linaro.org
+References: <20251126020208.2449414-1-honghuan@amd.com>
+ <20251126020208.2449414-3-honghuan@amd.com>
+ <624b3a45-24f5-4802-801b-748e20442366@collabora.com>
+ <80177b1d-54f6-4e88-847f-bf1e58d957a2@amd.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <80177b1d-54f6-4e88-847f-bf1e58d957a2@amd.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.184.112;
+ envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.014,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,85 +86,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+On 11/27/25 05:55, Honglei Huang wrote:
+> 
+> 
+> On 2025/11/26 20:08, Dmitry Osipenko wrote:
+>> On 11/26/25 05:02, Honglei Huang wrote:
+>>> Unify error checking style for virtio_gpu_create_mapping_iov() across
+>>> the
+>>> codebase to improve consistency and readability.
+>>>
+>>> virtio_gpu_create_mapping_iov() returns 0 on success and negative values
+>>> on error. The original code used inconsistent patterns for checking
+>>> errors:
+>>> - Some used 'if (ret != 0)' in virtio-gpu-virgl.c and virtio-gpu.c
+>>> - Some used 'CHECK(!ret, cmd)' in virtio-gpu-rutabaga.c
+>>>
+>>> For if-statement checks, change to 'if (ret < 0)' which is the preferred
+>>> QEMU coding convention for functions that return 0 on success and
+>>> negative
+>>> on error. This makes the return value convention immediately clear to
+>>> code
+>>> readers.
+>>>
+>>> For CHECK macro usage in virtio-gpu-rutabaga.c, keep the original
+>>> 'CHECK(!ret, cmd)' pattern as it is more concise and consistent with
+>>> other
+>>> error checks in the same file.
+>>>
+>>> Updated locations:
+>>> - hw/display/virtio-gpu-virgl.c: virgl_resource_attach_backing()
+>>> - hw/display/virtio-gpu-virgl.c: virgl_cmd_resource_create_blob()
+>>> - hw/display/virtio-gpu.c: virtio_gpu_resource_create_blob()
+>>> - hw/display/virtio-gpu.c: virtio_gpu_resource_attach_backing()
+>>>
+>>> Signed-off-by: Honglei Huang <honghuan@amd.com>
+>>> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+>>> ---
+>>>   hw/display/virtio-gpu-virgl.c | 4 ++--
+>>>   hw/display/virtio-gpu.c       | 4 ++--
+>>>   2 files changed, 4 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-
+>>> virgl.c
+>>> index e60e1059df..6ebd9293e5 100644
+>>> --- a/hw/display/virtio-gpu-virgl.c
+>>> +++ b/hw/display/virtio-gpu-virgl.c
+>>> @@ -557,7 +557,7 @@ static void
+>>> virgl_resource_attach_backing(VirtIOGPU *g,
+>>>         ret = virtio_gpu_create_mapping_iov(g, att_rb.nr_entries,
+>>> sizeof(att_rb),
+>>>                                           cmd, NULL, &res_iovs,
+>>> &res_niov);
+>>> -    if (ret != 0) {
+>>> +    if (ret < 0) {
+>>>           cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+>>>           return;
+>>>       }
+>>> @@ -701,7 +701,7 @@ static void
+>>> virgl_cmd_resource_create_blob(VirtIOGPU *g,
+>>>           ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries,
+>>> sizeof(cblob),
+>>>                                               cmd, &res->base.addrs,
+>>>                                               &res->base.iov, &res-
+>>> >base.iov_cnt);
+>>> -        if (ret != 0) {
+>>> +        if (ret < 0) {
+>>>               cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+>>>               return;
+>>>           }
+>>> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+>>> index 0a1a625b0e..1038c6a49f 100644
+>>> --- a/hw/display/virtio-gpu.c
+>>> +++ b/hw/display/virtio-gpu.c
+>>> @@ -352,7 +352,7 @@ static void
+>>> virtio_gpu_resource_create_blob(VirtIOGPU *g,
+>>>       ret = virtio_gpu_create_mapping_iov(g, cblob.nr_entries,
+>>> sizeof(cblob),
+>>>                                           cmd, &res->addrs, &res->iov,
+>>>                                           &res->iov_cnt);
+>>> -    if (ret != 0) {
+>>> +    if (ret < 0) {
+>>>           cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+>>>           g_free(res);
+>>>           return;
+>>> @@ -931,7 +931,7 @@ virtio_gpu_resource_attach_backing(VirtIOGPU *g,
+>>>         ret = virtio_gpu_create_mapping_iov(g, ab.nr_entries,
+>>> sizeof(ab), cmd,
+>>>                                           &res->addrs, &res->iov,
+>>> &res->iov_cnt);
+>>> -    if (ret != 0) {
+>>> +    if (ret < 0) {
+>>>           cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+>>>           return;
+>>>       }
+>>
+>> Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>
+> 
+> Really thanks for the review and patience.
 
-We just have to make sure that we can set the endianness to big endian,
-then we can also run this test on s390x.
+There is a last word from Alex here, though likely the current version
+will be good to him, Thanks for the contribution.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- Marked as RFC since it depends on the fix for this bug (so it cannot
- be merged yet):
- https://lore.kernel.org/qemu-devel/a0accce9-6042-4a7b-a7c7-218212818891@redhat.com/
-
- tests/functional/reverse_debugging.py        |  4 +++-
- tests/functional/s390x/meson.build           |  1 +
- tests/functional/s390x/test_reverse_debug.py | 21 ++++++++++++++++++++
- 3 files changed, 25 insertions(+), 1 deletion(-)
- create mode 100755 tests/functional/s390x/test_reverse_debug.py
-
-diff --git a/tests/functional/reverse_debugging.py b/tests/functional/reverse_debugging.py
-index 86fca8d81f1..8b9507674a0 100644
---- a/tests/functional/reverse_debugging.py
-+++ b/tests/functional/reverse_debugging.py
-@@ -64,7 +64,7 @@ def vm_get_icount(vm):
- 
-     @skipIfMissingImports("pygdbmi") # Required by GDB class
-     @skipIfMissingEnv("QEMU_TEST_GDB")
--    def reverse_debugging(self, gdb_arch, shift=7, args=None):
-+    def reverse_debugging(self, gdb_arch, shift=7, args=None, big_endian=False):
-         from qemu_test import GDB
- 
-         # create qcow2 for snapshots
-@@ -99,6 +99,8 @@ def reverse_debugging(self, gdb_arch, shift=7, args=None):
-             gdb_cmd = os.getenv('QEMU_TEST_GDB')
-             gdb = GDB(gdb_cmd)
-             try:
-+                if big_endian:
-+                    gdb.cli("set endian big")
-                 self.reverse_debugging_run(gdb, vm, port, gdb_arch, last_icount)
-             finally:
-                 self.log.info('exiting gdb and qemu')
-diff --git a/tests/functional/s390x/meson.build b/tests/functional/s390x/meson.build
-index 70cd36e2913..0f03e1c9db8 100644
---- a/tests/functional/s390x/meson.build
-+++ b/tests/functional/s390x/meson.build
-@@ -6,6 +6,7 @@ test_s390x_timeouts = {
- 
- tests_s390x_system_quick = [
-   'vmstate',
-+  'reverse_debug',
- ]
- 
- tests_s390x_system_thorough = [
-diff --git a/tests/functional/s390x/test_reverse_debug.py b/tests/functional/s390x/test_reverse_debug.py
-new file mode 100755
-index 00000000000..0767dc91678
---- /dev/null
-+++ b/tests/functional/s390x/test_reverse_debug.py
-@@ -0,0 +1,21 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+'''
-+Reverse debugging test for s390x
-+'''
-+
-+from reverse_debugging import ReverseDebugging
-+
-+
-+class ReverseDebuggingS390x(ReverseDebugging):
-+
-+    def test_revdbg(self):
-+        self.set_machine('s390-ccw-virtio')
-+        self.reverse_debugging(gdb_arch='s390:64-bit', shift=6,
-+                               big_endian=True, args=('-no-shutdown',))
-+
-+
-+if __name__ == '__main__':
-+    ReverseDebugging.main()
 -- 
-2.51.1
-
+Best regards,
+Dmitry
 
