@@ -4,71 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D076CFD376
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 12:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CDDCFD376
+	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 12:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vOxe6-0005g2-GG; Fri, 28 Nov 2025 07:32:18 -0500
+	id 1vOxo3-00021A-G8; Fri, 28 Nov 2025 07:42:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1vOxe4-0005fI-6n
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:32:16 -0500
-Received: from 6.mo548.mail-out.ovh.net ([188.165.58.48])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1vOxe1-00024C-C2
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:32:15 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.109.254.86])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4dHt352wdKz5ybs;
- Fri, 28 Nov 2025 12:32:00 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Fri, 28 Nov
- 2025 13:31:59 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-108S002a5c11985-a51a-410f-a2d1-5c25975cb940,
- 29BF13B6EDCC8D8EF27D98D9A979CEAD397ABB69) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 88.179.9.154
-Date: Fri, 28 Nov 2025 13:31:58 +0100
-From: Greg Kurz <groug@kaod.org>
-To: Joel Stanley <joel@jms.id.au>
-CC: Alex =?UTF-8?B?QmVubsOpZQ==?= <alex.bennee@linaro.org>, <aik@ozlabs.ru>,
- <andrew@aj.id.au>, <benh@kernel.crashing.org>, <clg@kaod.org>,
- <danielhb413@gmail.com>, <sjitindarsingh@gmail.com>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] gitdm: Update IBM map
-Message-ID: <20251128133158.77e41286@bahia>
-In-Reply-To: <20251128012151.711182-1-joel@jms.id.au>
-References: <20251128012151.711182-1-joel@jms.id.au>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vOxnw-0001qq-RO
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:42:28 -0500
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1vOxnu-00035S-0m
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 07:42:28 -0500
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-55cb8cabb4bso508453e0c.1
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 04:42:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764333741; x=1764938541; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bG3O2jvVZFk8sYsOKPgYYB/R6tJPsLi9aFfjEWjZe/A=;
+ b=jO9XA29oPR2uNmSJQ+GbKzPArAw/XtcnX2onNklWu8PwD6kM4WiaSBGeQDSBZAO9Mz
+ tVyfxkyOB6lp3wJQBa23vizZWqBnowK88Yft/hh4FPh2iGFJN1KJ6B1S+q9qDsswUXX4
+ RNkcYu+KX7PJYMYl7DCtDiUxrgxMtxJC67Y2JRDhdwnkvQKqTPBdUy0v1/RIZu0+j/tk
+ J9VQCM9EDrfsqiCLPtkHBinNu2JbkhHbN7dDT2Z/9H1EagzBFHtnCqITBEFAEfpUY1F6
+ +eqwspgyIXPDG8Sw8N+tOiI1C2pXBPqHAb5PEDaqJYbDrXmlPCDZPA8WuNErhhNNqvbw
+ 5xBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764333741; x=1764938541;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bG3O2jvVZFk8sYsOKPgYYB/R6tJPsLi9aFfjEWjZe/A=;
+ b=UjEQfpPuxmgP4k92DC6QhMk8yvPBrX/RjBJfV7oRCJsZ1gbdSM6F5yB/1jPFH5zhXE
+ 4G3yZYsi+sN+1i9dfn0IEyqsfGkEU9aztQ3wB9C04nVxOQDmCsuNhsHD/Ju9DBqPC+HY
+ 2+n7n+tG28XI/DGDUG9BIkYxh/Af8zsaPDKWXZ9To2xhFTpq9c7988b0Y3bP96rZnWZF
+ rM+cdVS4RqUpxaDNSsTEgwUYMHdDCpde1GQtmnUsMSE7nDtZSu77htPRSH2kOf81+iKf
+ LA5h28HVdEskAMH9bBC6Zmph9ky1x8XHWlGc2BxfHs1Aq9nhn8qcMi4PGKjPv0gzDzHv
+ qGuQ==
+X-Gm-Message-State: AOJu0YzDCdsQL7LGth/H1w6/xXMG5UQrdmiZ5uB3vI2ePb+8/HrKbujc
+ SCi8/8BlSTL6e7HgC9+q/Zgscv9pDJaN/xZuXQzxWELBSrXODI/8RkJAY6gtCYi0ej1GqVdpK+0
+ /VY5G
+X-Gm-Gg: ASbGncvyMnWZ3kNFpTPAnoNC/ITthKdLiSX3y4WomS/KvzsPaC2oAPlzNHvDtT+grDg
+ 5N4HCBT9rr4TVrgy4uIWVoHPi0Ht5Im3qLLq0QwDwayRP0No81sDylJJs3/rmr0MiQStHuTUfV/
+ WOzlghnsil0vzJteH4fvl29TBAAQeih+nAaU0a/J+UqU1NaP1XyxDKuIEHHuLxH9F4/hR3MM+NK
+ b9DwsID7uC42U2z33MInpCQTYf/k797/zO3qWoBMK6bk2YB645BgJI867u2W4zLu49utycXZ7HC
+ UvhZ/CUExDIBqO/4iHkXj0jiQVfovFd3UwggGnnKzaf1Su+7L1l2qaetka4kPfd7liL5QMBO5kS
+ FcoxUR/f8V1mZZLCka9wJTdWxkl44gjC7BA/j5dz9ZmZRv54clDm4uDSh3S3jxQxyVdGzBAMqlz
+ mKo3rAEjf0eGimIcA=
+X-Google-Smtp-Source: AGHT+IFxln2o/E+Y4LM17Iwrh+jw3hEgE2H0xYvJ1mqJ4RKBj2R8g4AFkLP5KWVeIZN14ThKV6R4JQ==
+X-Received: by 2002:a05:6122:a08:b0:556:e951:b544 with SMTP id
+ 71dfb90a1353d-55b8ef92419mr8107814e0c.9.1764333741254; 
+ Fri, 28 Nov 2025 04:42:21 -0800 (PST)
+Received: from gromero0.. ([177.139.2.175]) by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-55cf4e1d56asm1776930e0c.4.2025.11.28.04.42.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 28 Nov 2025 04:42:20 -0800 (PST)
+From: Gustavo Romero <gustavo.romero@linaro.org>
+To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, philmd@linaro.org
+Cc: peter.maydell@linaro.org,
+	gustavo.romero@linaro.org
+Subject: [PATCH v1 0/6] system/physmem: Enhance the Address Space API
+Date: Fri, 28 Nov 2025 12:41:04 +0000
+Message-Id: <20251128124110.1272336-1-gustavo.romero@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG2EX2.mxp5.local (172.16.2.12) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: 31412654-7a55-40b2-bce1-7f19f57def3b
-X-Ovh-Tracer-Id: 10826653506102270316
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF5I/tzPri0UQpwTWhhiP37LGdbWhqB0cokCth0vCNkuuzms060Mq1NdlP5rWuNoa2OzL8IomRxFj1h8YvAl5eCT0xI4IwuYtR8adCTchqFlL2UsV7MSrZKizNq76YngNUgtBrpMIZ3n+eSLsITig2jIbbsG7JbAg1a/pE5FP9gpsRxG0+8yG6XITwa3IoteUlG3+U3RPNcEu2yvL49o5SM40uSW9Iw6kxBoBHnU+fY4d0ga6g4W2xit2/BAKSAvF9tlbh0rhMYlC+NoFVTdbbSIbqEwxYSKKnM5c2/9+4RiLORWnt5nIh/vZ8Ugrq4wxJPnWXi+njQ+wCnA3cvFSZAn1LX0lJ2at07WykP82b6H5MzD/LRZfzuSECbttPhMAAlBr/Yz5s0WOBTzO3OwGyGgXP4/NOaKesvuYLCVonWkPwhrzuSsi+1b/yZx//lgsaticsN6s6kzbZLLin6eQTD4pNuKLJfpDyRnNt6CtKC7IEcPIwvvT+n5hHb66tbcqIbw6SJwPatuNTvmUrH84OdGXoLJqzXfgAaufM8A2L8apVQkwVELI9Ei0bUlc1ZVHXJpoY+KzNPrRxnv4S+a4fpFBhoA0z9jcGIni6HW/+ojrcYgPp/v+w1T5rnoC9jBbb4/PYd1o+r9nMWFtIKUuqfQiY0rHvL1/lfhAzpoMYoyQ
-DKIM-Signature: a=rsa-sha256; bh=mdxE41igJD3nO0tu+v4uimryoPCWUk7Rgfupfx2bEes=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1764333122; v=1;
- b=CY1/5m2H6ZvC8QTRFizWlRxf6EwrGtz8hlri6uGJWG9AlSRKbfJzfhHfAzvpM3vfucgqe1y2
- ARZN9XMMxBiGSOQc7sKTZEVDZPaxQRmN3psu0DJTHLDjiWkCkAOopOi+Y0XK0PCC+0ivoGyhyB8
- vQtz92ENq/GFHyOrfZ4QeDEmT1uYudfTMT2boQhO0VkJ4D6zVJNXlpT3Meu8kua9ecbrcQLskaE
- mVo9albFtRMKVCJTmPPlU3rQ0nf2VDZH8y8BpDZEyqY4DHL380fFU+zp1xPqKFj6R797dWSIWRv
- sYwULyHf0CPQzUJTEAdZK9AepRk1DsPwIAf+lSHeTXJFQ==
-Received-SPF: pass client-ip=188.165.58.48; envelope-from=groug@kaod.org;
- helo=6.mo548.mail-out.ovh.net
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-vk1-xa2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,55 +100,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 28 Nov 2025 11:51:50 +1030
-Joel Stanley <joel@jms.id.au> wrote:
+CPUAddressSpace structures are currently allocated statically in
+cpu_address_space_init(). This approach is clunky to use because
+cpu->num_ases needs to be set immediately before the function is called.
 
-> A number of us have moved on from IBM.
-> 
->  * Alexey moved to AMD in 2022.
->  * Andrew moved to Code Construct in 2023.
->  * Ben moved to Amazon in 2019.
->  * Cedric moved to Redhat.
->  * Daniel moved to Ventana in 2024.
->  * Greg moved to Redhat.
+Moreover, the static allocation is tightly coupled to the Address Space
+(AS) indexes, which, depending on the CPU features, can leave unused
+CPUAddressSpace structures.
 
-So still in IBM then... just kidding ;)
+For instance, on aarch64's 'virt' machine, if secure=off but mte=on,
+three ASes are allocated, but only two ASes (ARMASIdx_NS and
+ARMASIdx_Tag) are actually used.
 
->  * Joel moved to Tenstorrent in 2025.
->  * Suraj moved to Amazon in 2019
-> 
-> Most have either stopped working on QEMU or swtiched to corp addresses.
-> 
+This situation gets worse when new CPU features that require additional
+ASes are added, such as FEAT_MEC (which I'm working on right now).
 
-Acked-by: Greg Kurz <groug@kaod.org>
+This series addresses these limitations by allocating the
+CPUAddressSpace dynamically.
 
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
->  contrib/gitdm/group-map-ibm | 8 --------
->  1 file changed, 8 deletions(-)
-> 
-> diff --git a/contrib/gitdm/group-map-ibm b/contrib/gitdm/group-map-ibm
-> index 24d8dc1b8657..39c53a42ca1b 100644
-> --- a/contrib/gitdm/group-map-ibm
-> +++ b/contrib/gitdm/group-map-ibm
-> @@ -2,14 +2,6 @@
->  # Some IBM contributors submit via another domain
->  #
->  
-> -aik@ozlabs.ru
-> -andrew@aj.id.au
-> -benh@kernel.crashing.org
-> -clg@kaod.org
-> -danielhb413@gmail.com
-> -groug@kaod.org
->  jcfaracco@gmail.com
-> -joel@jms.id.au
-> -sjitindarsingh@gmail.com
->  tommusta@gmail.com
->  idan.horowitz@gmail.com
+The last 4 patches in the series probably need to get squashed with the
+changes in the API, but I kept them separate so it's easy to see how
+simple the changes needed on the target side are.
+
+CI results:
+
+https://gitlab.com/gusbromero/qemu/-/pipelines/2184288007 
 
 
+Cheers,
+Gustavo
+
+Gustavo Romero (6):
+  system/physmem: Enhance the Address Space API
+  target/arm: Initialize AS 0 first
+  target/arm: Add a _MAX sentinel to ARMASIdx enum
+  target/arm: Use new CPU address space API
+  target/i386: Add a _MAX sentinel to X86ASIdx enum
+  target/i386: Use new CPU address space API
+
+ include/exec/cpu-common.h          | 16 +++++++--
+ include/hw/core/cpu.h              |  6 +++-
+ stubs/cpu-destroy-address-spaces.c |  2 +-
+ system/cpus.c                      |  4 +--
+ system/physmem.c                   | 56 ++++++++++++++++++++++--------
+ target/arm/cpu.c                   | 20 ++++-------
+ target/arm/cpu.h                   |  1 +
+ target/i386/cpu.h                  |  1 +
+ target/i386/kvm/kvm-cpu.c          |  4 +--
+ target/i386/kvm/kvm.c              |  4 +--
+ target/i386/tcg/system/tcg-cpu.c   |  6 ++--
+ 11 files changed, 78 insertions(+), 42 deletions(-)
 
 -- 
-Greg
+2.34.1
+
 
