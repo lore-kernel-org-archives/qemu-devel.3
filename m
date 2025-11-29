@@ -4,58 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F11D116EA
-	for <qemu-devel@archiver.kernel.org>; Fri, 28 Nov 2025 22:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B934BD116EA
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Nov 2025 01:22:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vP6jz-0005qB-7L; Fri, 28 Nov 2025 17:14:59 -0500
+	id 1vP9fB-0002bD-Qr; Fri, 28 Nov 2025 20:22:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vP6jy-0005pm-BT
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 17:14:58 -0500
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vP9f9-0002a5-D5
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 20:22:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vP6jv-0001pU-S1
- for qemu-devel@nongnu.org; Fri, 28 Nov 2025 17:14:57 -0500
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vP9f6-0001cl-Ro
+ for qemu-devel@nongnu.org; Fri, 28 Nov 2025 20:22:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764368093;
+ s=mimecast20190719; t=1764379325;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=arUAn8A0mrgOrgxWmfwc3KeJBjfD18NQ8AmawHuQnUw=;
- b=Nb/V7z0t2wmgNS66tSzNVNVOZYCKyYiG+0fYpEmQD89gdmEvUkAquiUnMCJAdMjXc9BXy+
- dg6u1cinkLYiqVBIWqttXhWF/tT6284joy4ALE1w5yuSWk3YUMY/C6LPjKfm9Rp9vVsca0
- 9ly8zoLPi886+L6ztYR6dFsZN7Dbk60=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-hz1TuJqlOWugEITTRVQRdQ-1; Fri,
- 28 Nov 2025 17:14:49 -0500
-X-MC-Unique: hz1TuJqlOWugEITTRVQRdQ-1
-X-Mimecast-MFC-AGG-ID: hz1TuJqlOWugEITTRVQRdQ_1764368088
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 275F61800358; Fri, 28 Nov 2025 22:14:48 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.45.224.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5B2101800451; Fri, 28 Nov 2025 22:14:44 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, qinwang@redhat.com,
- bmarzins@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: [PATCH for-10.2] file-posix: Handle suspended dm-multipath better for
- SG_IO
-Date: Fri, 28 Nov 2025 23:14:40 +0100
-Message-ID: <20251128221440.89125-1-kwolf@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aaXld7QRK+hOb9QqSes3j1caeP+4l3n/jwswr44E1L4=;
+ b=Yyv7PzFixw7IgBJXZDyjZRIjYYVKSgF/Wpjk5q+uKtEeu6jQyiFG8eL2C3VaJ6iZyvVsd8
+ VE2wGWLxUnQfVGFU7r9yNHk0YlWW7r5JFxsmh8TvJSXykAs2LCIXPZ8RlP/n++WXwBu2lp
+ tNY/42L2E5Szkg7NjJKAYjbHIWauXrQ=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-583-tQ6xMJwdOnSUefmniOa3Rw-1; Fri, 28 Nov 2025 20:22:03 -0500
+X-MC-Unique: tQ6xMJwdOnSUefmniOa3Rw-1
+X-Mimecast-MFC-AGG-ID: tQ6xMJwdOnSUefmniOa3Rw_1764379323
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-7b80de683efso3459417b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 28 Nov 2025 17:22:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764379323; x=1764984123; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aaXld7QRK+hOb9QqSes3j1caeP+4l3n/jwswr44E1L4=;
+ b=AKbqvtwxC0g7QaVa1pWoK0JPIA+Jvkki99AlQOu38zjBIUVGsa3HW4KB3PJ2d2qvTw
+ X1YTDsRvnOY5cjOy2+DppTJ5GqgzZLryNp6NxM9HEuWalbSpT3yOdOJQ9TVuCtqdFxYu
+ vY/BLgvJMlM+0ehupYT31Hav3ZelIhRlsPf7+I+Cpeq+8aQjx/GzO4BiQ2gn9V7HZq4O
+ TVtfFSm+1Q1yeYIySKe1wXOgdAFknlUpXa2DhrGbnNOVB0s6QJ0fYmoq3794C7K1UHTy
+ jjAPL+0PvPBSn6BSFy3eHG6MZAxUQBUoXeMTM1WfacfW89e2UGtUAqa8tKfBx262nhp+
+ 3eFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764379323; x=1764984123;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aaXld7QRK+hOb9QqSes3j1caeP+4l3n/jwswr44E1L4=;
+ b=RpIZRrrgl3AtOKaDBckxJej8UObCUPb6zYX1r9t8WdyHsJLf5wLUwCafHm650e0IMO
+ vT4Y659VsvkWMDif72jtk2hxnqBAWMgJ7vzMb0nW/GbuR39tcloKyCez13melLsizmVx
+ KnZ8EW+ZbHDx2byBc3ZG9PSwEunqY1j5Tmanf4hDHfmbWpzWqklKv7ltLo7V2Lm6TogM
+ nVQVR66AZVpVuSUAYVnjTIG5LDRweWDRb3vMEgXRNWBjlEGEpl9fe/6HYap/bOUYP2cA
+ JVkRozXc8DCK7RDsUirlH7Kz+T+nrmw9h8tMi8K5UeSdiEXKGtm/gvIkkrTn1fXWYV0W
+ Evpw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU6Y5ChUhqYbLy5mcLR+q86Gjvh3399SdYLeoVwDODzPHTWi4VRf0r27OYNezS+WtmpvSss04QO8fTi@nongnu.org
+X-Gm-Message-State: AOJu0YweqIiS4aoU/4Cm/ybwIDgBIqDnkegNalsYHLOFaKlApPFA9PkQ
+ CxmyD0hTt/hCI13Dyvs4oi7vJ3TA61RNn6PgxM38vA4if053WEwx6p1efLdV4UNDfVhyR7Xl3Oq
+ kt/n3rIc8NsnPMN+vxO0MbFbhkRc/eHSSmob6qKEQMeTswPLOYdK4f/Qk
+X-Gm-Gg: ASbGncvGkfsyyyuxnWYRTBBUIF3N7+wTi1gArnRyiYaIlPiyM7HNPi5JjmH1Wf8fBS8
+ otoanEGySpP82xuTlN/3I693fbCj58lSoSLst1e9J4ndzQSE3wLN8Yyne6cRUZrFOVSRy/4AC3g
+ 9Yf+nMUcqV7cQpZzYqGL8m03y8317xqHpV8tL9T+C23/HVosQpo3YooBrE7Ax1NFFmnasMVj9W5
+ ssixP4j6v9z7+Yqm1FHIXx6kA/NahejTV/iPWsT8LLJysAGSGUBly9Empj1RkPnkl43UeD9FIpT
+ V0Jrou+ditZtQlsmTPdRF6eIzT63byrb4rbrh4RkLfMEvvk3ABsV/zf920Hfiv6uA+YrFDbziCB
+ X2MRdxNdmlzP4oXlNkmstesBHJuN1Zp3TwlL+4wMKDDdyUsjnEw==
+X-Received: by 2002:a05:6a21:33a3:b0:35e:4b35:3669 with SMTP id
+ adf61e73a8af0-3614ed962d0mr32247881637.31.1764379322688; 
+ Fri, 28 Nov 2025 17:22:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGD/6y3yAZEsqUQBC1nJ6TunkYnaU4h+HVdAIBKEdrnk3b6L33o36MHqLLUTIw/BYUqgDsOVA==
+X-Received: by 2002:a05:6a21:33a3:b0:35e:4b35:3669 with SMTP id
+ adf61e73a8af0-3614ed962d0mr32247863637.31.1764379322337; 
+ Fri, 28 Nov 2025 17:22:02 -0800 (PST)
+Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
+ [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7d54b003177sm794831b3a.14.2025.11.28.17.21.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 28 Nov 2025 17:22:01 -0800 (PST)
+Message-ID: <53c3c2c4-b8e3-4ca1-a0dd-88148520ad82@redhat.com>
+Date: Sat, 29 Nov 2025 11:21:55 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] acpi/ghes: Error object handling improvement
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mchehab+huawei@kernel.org,
+ jonathan.cameron@huawei.com, armbru@redhat.com, mst@redhat.com,
+ anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
+ pbonzini@redhat.com, shan.gavin@gmail.com
+References: <20251127004435.2098335-1-gshan@redhat.com>
+ <20251128150926.78bebacb@imammedo>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20251128150926.78bebacb@imammedo>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -80,113 +127,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When introducing DM_MPATH_PROBE_PATHS, we already anticipated that
-dm-multipath devices might be suspended for a short time when the DM
-tables are reloaded and that they return -EAGAIN in this case. The
-behaviour promised in the comment wasn't actually implemented, though:
-We don't get SG_IO_MAX_RETRIES in practice, because after the first
-1ms sleep, DM_MPATH_PROBE_PATHS is called and if that still fails with
--EAGAIN, we error out immediately without any retry.
+Hi Igor,
 
-However, meanwhile it has also turned out that libmpathpersist (which is
-used by qemu-pr-helper) may need to perform more complex recovery
-operations to get reservations back to expected state if a path failure
-happened in the middle of a PR operation. In this case, the device is
-suspended for a longer time compared to the case we originally expected.
+On 11/29/25 12:09 AM, Igor Mammedov wrote:
+> On Thu, 27 Nov 2025 10:44:30 +1000
+> Gavin Shan <gshan@redhat.com> wrote:
+> 
+>> This series is curved from that for memory error handling improvement
+>                   ^^^ confusing
+> based on above I'm not sure if it depends on [1] and shoul be applied on top
+> or it can be merged on its own
+> 
 
-This patch changes hdev_co_ioctl() to treat -EAGAIN separately so that
-it doesn't result in an immediate failure if the device is suspended for
-more than 1ms, and moves to incremental backoff to cover both quick and
-slow cases without excessive delays.
+The current series is a standalone series and expected to be merged by its own.
 
-Buglink: https://issues.redhat.com/browse/RHEL-121543
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- block/file-posix.c | 56 ++++++++++++++++++++++++++++------------------
- 1 file changed, 34 insertions(+), 22 deletions(-)
+For (v4) series of memory error improvement [1], Jonathan wants to extend
+the handlers in the guest kernel so that the granularity in CPER record
+will be used to isolate the corresponding memory address range. With this,
+the patches in the (v4) series to send 16x continuous errors become useless.
+However, those patches in (v4) series to improve the Error (object) hanlding
+are still useful. So I pulled those patches for the Error (object) hanlding
+improvement from (v4) series to form this series.
 
-diff --git a/block/file-posix.c b/block/file-posix.c
-index c9e367a222..6265d2e248 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -4288,25 +4288,8 @@ hdev_open_Mac_error:
- static bool coroutine_fn sgio_path_error(int ret, sg_io_hdr_t *io_hdr)
- {
-     if (ret < 0) {
--        switch (ret) {
--        case -ENODEV:
--            return true;
--        case -EAGAIN:
--            /*
--             * The device is probably suspended. This happens while the dm table
--             * is reloaded, e.g. because a path is added or removed. This is an
--             * operation that should complete within 1ms, so just wait a bit and
--             * retry.
--             *
--             * If the device was suspended for another reason, we'll wait and
--             * retry SG_IO_MAX_RETRIES times. This is a tolerable delay before
--             * we return an error and potentially stop the VM.
--             */
--            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, 1000000);
--            return true;
--        default:
--            return false;
--        }
-+        /* Path errors sometimes result in -ENODEV */
-+        return ret == -ENODEV;
-     }
- 
-     if (io_hdr->host_status != SCSI_HOST_OK) {
-@@ -4375,6 +4358,7 @@ hdev_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
- {
-     BDRVRawState *s = bs->opaque;
-     RawPosixAIOData acb;
-+    uint64_t eagain_sleep_ns = 1 * SCALE_MS;
-     int retries = SG_IO_MAX_RETRIES;
-     int ret;
- 
-@@ -4403,9 +4387,37 @@ hdev_co_ioctl(BlockDriverState *bs, unsigned long int req, void *buf)
-         },
-     };
- 
--    do {
--        ret = raw_thread_pool_submit(handle_aiocb_ioctl, &acb);
--    } while (req == SG_IO && retries-- && hdev_co_ioctl_sgio_retry(&acb, ret));
-+retry:
-+    ret = raw_thread_pool_submit(handle_aiocb_ioctl, &acb);
-+    if (req == SG_IO && s->use_mpath) {
-+        if (ret == -EAGAIN && eagain_sleep_ns < NANOSECONDS_PER_SECOND) {
-+            /*
-+             * If this is a multipath device, it is probably suspended.
-+             *
-+             * This can happen while the dm table is reloaded, e.g. because a
-+             * path is added or removed. This is an operation that should
-+             * complete within 1ms, so just wait a bit and retry.
-+             *
-+             * There are also some cases in which libmpathpersist must recover
-+             * from path failure during its operation, which can leave the
-+             * device suspended for a bit longer while the library brings back
-+             * reservations into the expected state.
-+             *
-+             * Use increasing delays to cover both cases without waiting
-+             * excessively, and stop after a bit more than a second (1023 ms).
-+             * This is a tolerable delay before we return an error and
-+             * potentially stop the VM.
-+             */
-+            qemu_co_sleep_ns(QEMU_CLOCK_REALTIME, eagain_sleep_ns);
-+            eagain_sleep_ns *= 2;
-+            goto retry;
-+        }
-+
-+        /* Even for ret == 0, the SG_IO header can contain an error */
-+        if (retries-- && hdev_co_ioctl_sgio_retry(&acb, ret)) {
-+            goto retry;
-+        }
-+    }
- 
-     return ret;
- }
--- 
-2.51.1
+>> [1] based on the received comments, to improve the error object handling
+>> in various aspects.
+>>
+>> [1] https://lists.nongnu.org/archive/html/qemu-arm/2025-11/msg00534.html
+>>
+
+Thanks,
+Gavin
+
+>> Gavin Shan (5):
+>>    acpi/ghes: Automate data block cleanup in acpi_ghes_memory_errors()
+>>    acpi/ghes: Abort in acpi_ghes_memory_errors() if necessary
+>>    target/arm/kvm: Exit on error from acpi_ghes_memory_errors()
+>>    acpi/ghes: Bail early on error from get_ghes_source_offsets()
+>>    acpi/ghes: Use error_fatal in acpi_ghes_memory_errors()
+>>
+>>   hw/acpi/ghes-stub.c    |  6 +++---
+>>   hw/acpi/ghes.c         | 45 ++++++++++++++++++------------------------
+>>   include/hw/acpi/ghes.h |  6 +++---
+>>   target/arm/kvm.c       | 10 +++-------
+>>   4 files changed, 28 insertions(+), 39 deletions(-)
+>>
+> 
 
 
