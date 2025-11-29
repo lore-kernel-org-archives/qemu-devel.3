@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC09CFD2F6
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Nov 2025 14:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED6AD116EA
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Nov 2025 14:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vPLdF-0002YC-Qw; Sat, 29 Nov 2025 09:09:01 -0500
+	id 1vPLlT-0005be-2G; Sat, 29 Nov 2025 09:17:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vPLdC-0002Wh-QS
- for qemu-devel@nongnu.org; Sat, 29 Nov 2025 09:08:59 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vPLlQ-0005b9-VU
+ for qemu-devel@nongnu.org; Sat, 29 Nov 2025 09:17:28 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vPLdB-0005Vn-6x
- for qemu-devel@nongnu.org; Sat, 29 Nov 2025 09:08:58 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-42b2a0c18caso1525918f8f.1
- for <qemu-devel@nongnu.org>; Sat, 29 Nov 2025 06:08:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vPLlP-0006vW-Gs
+ for qemu-devel@nongnu.org; Sat, 29 Nov 2025 09:17:28 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-47774d3536dso21838145e9.0
+ for <qemu-devel@nongnu.org>; Sat, 29 Nov 2025 06:17:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764425335; x=1765030135; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764425845; x=1765030645; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=p9G6POTo9sEtvHUBM47IxolVawTQMbNYA2QBBChmkmE=;
- b=pZLVbC1NlR9wSaMCT10UfEbdbWr0m364V4y2PhXprIANXRe7FapD4xDlGcGjmeahCg
- raqC6HmpC9lc7fJeUsb8rCJ3aSUwACJNpkVnnNXHh7yj2qj3lTfZZLXWIhUFp5BnZ8nh
- evjc2Y8uecaHiIdDGrkjgrVCDE4zXQHNeH7ZGNvqLzMKM12mVk8Ztr4MnJ3CtbKV9/Hk
- 2jQP1kmdLZl0CY76QSBUV/BOw3M9kCOB1AY6FtgDYCCdmphobS1CL6uQGpuIDUnmUtmv
- 0XDgrQrqAAxcW/h1NOmDRQW+A5IBqYSqxaCO/MKACekT3INGt2E0FAII49GjPuW2IJhr
- rCRA==
+ bh=Jnhk6bB2EkTrcFrInfuDuaY7eciA+m/hwXFEtwcfF7Q=;
+ b=vd+q0l0m7BxVV7sfUa12otr4zt5+AiD0NdCQtxvJ9kCC/mU0nGqGj1REepiuSXSfjD
+ dBOYS80+8fmE7eTVvs3Ft4MaVkXrOi10CRg0EHZ3iWZlnkM4PgWb0A80CCe4uFvYU70+
+ rmuuxy/p5tBtJiDoOr/MMAAI/2pimSVfUcyqTutVBc0JIi8fzserpRJtRmCEZbEOJs9r
+ omimWypb0cpY9eIyfK94Oyy+H9GsZ3oZRaR3DMAs+4JFrLNn0ycnbp6quS6/ycc/ASwM
+ 2t9ebg/zQC/uS1dwpgO/NlwKYXRcCj+eUWz/Zw1jsG7ey5vcDGNQRtKGDCeW+UWlrwpk
+ KS0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764425335; x=1765030135;
+ d=1e100.net; s=20230601; t=1764425845; x=1765030645;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=p9G6POTo9sEtvHUBM47IxolVawTQMbNYA2QBBChmkmE=;
- b=uScyk15cKY0AlGBD6l8SuRsCJOtK8z0/8u0BZhcN+SLsX/iDjVeT2vwD5El8MdeC/P
- h0bVRdWf8I0YQQ8GTg92jg7k1kRLQ3lUDSUMNO9vkgoa3br5rFZXuKbFDe5J9pe7uCZS
- czN1uLKJsvJVniN4hdmtpfFS0z7TPHAQRPBAJzEF3LcI5UCZK2QyXl6PCKdBVQD3PW4G
- 7KmUJPsXOpMI2genvuKYbYMks2PUysF6u9aSTgehCdl71ZV0mfPMga9VS3SXE+O2imh8
- eQRGCqeuoWfS54s2NuBUASgtTvJkJKIfFulPePOMGwsnH+Ou/4dzRbqiBRP3IvWnfvt9
- 9E1Q==
+ bh=Jnhk6bB2EkTrcFrInfuDuaY7eciA+m/hwXFEtwcfF7Q=;
+ b=jGJPO7JKJERQSwMRnN9jr35mw7vMDhQxXnYywRwyM9MqSRiUEX2xvunW+LGoS1HE17
+ escd5oLratb72luXuauNU1VAS+faK85ciUEJMUsw/nTahAf82JAnErDJs+ISMC1qG8ha
+ x5Rn500gRrPrvRLgO/vA8gKq1U/6Dwhc9OVRK38Xv7M5x0AMcDWK6/+g50zeHX1/Qq0v
+ 6JaK7YuWWCAV0NM8ZZzbuo5M2bCeeNDkiIJFc75CpqGSZ3W2w/pa4xYImt+HuC1itYvu
+ Hvz/4vF3celIPCN4fFyaxGomzc7mY0lV8CeK8zYMt9V32jxnAUkhdReonJxOuLO7K4UY
+ xk0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNXWseU77pdxwHTR73KhKKAv4NgGac5675BHF0nrAcu1Zr+llaz7AV9tiiyXEHo3T7GmRwpuJsVIz/@nongnu.org
-X-Gm-Message-State: AOJu0Ywq8uTDYS5oMC6b08egyM+EwXYZ7EQCiO8tkfh60dWKkusVoFty
- iZ9FmdNKVkFB1M2j+0qtx1fx3Wxc4oTR+ctGBoiw5SIrtKnA4vqnD2DDI9SE2y4cK+c=
-X-Gm-Gg: ASbGncufitKgv9SPDi1yDMQHw4HvVlegKAQbre/Bq5hQsniuOY13QeD9Aof9A/njO/p
- 1cUjGL8fadydeRdPlsLfGNsvXxBWRrLdmJh3PLqeoDTQPmbJ4v18ioBaEQm4hjEBN4qOKYoggkN
- atMgDTsvatCk66TJvD2sasOB6rS4i9EtHylZzqucOdSxORFkIv9OsouM+O6u5oD+s9pWmGRAr0n
- kVkbhX9AEa4kWjNG/g10MEwmyGjjtW4jSqn/GMMQ8/Qg5Exq/HCAEDS+QG62UHi5dVEuWb/kfJy
- cYeyq2yMxKr1wR6mBi8ZMBr+Uk97Nxj6JjiSLXJN4XxplASoDT3vXMFwqBxMiSjIbtnwJ0sR+Rg
- y1Nwf8RQHtbX7b/sYD1geYrl1UNCrQoyUDCVEfKSQ90dvd8JjsvkaR49IdolpRqBw9ZMdw/lOAu
- 3bv+cn+8q5tWV74WN6iiio7m1TQbgYAkA=
-X-Google-Smtp-Source: AGHT+IF2DHlGgOQ9nokNkwik2iaX+AMdYR9ZA8oZl8qvS3J3f6TBpWgrUD0cK7g5Vhvwe7AHHcvK+w==
-X-Received: by 2002:a05:6000:40dc:b0:429:66bf:1475 with SMTP id
- ffacd0b85a97d-42cc1ac9d4dmr33576423f8f.3.1764425335354; 
- Sat, 29 Nov 2025 06:08:55 -0800 (PST)
+ AJvYcCUFfqJcSA2g6SSlb6WtAe8+ZVkLDVOAzDClZpOSjGoKsmsAjq8X9c2NmvHhU6j34PTGFkiT7jDZW2ek@nongnu.org
+X-Gm-Message-State: AOJu0YwZK0uM5TiSiUxHaDq9U+NcK/OmtMcbe7rdgru9PjqcFCrafbv5
+ /cTZCIOxuyukWNmLK004F8CBbQ0MArrCeXIGdFELMwr0r+W1EOCuFxu1/C8kWfseBOQ=
+X-Gm-Gg: ASbGncvzzetYUmpOlaiETCZkpRIbOqZN2/JMoBvHwvP8JmCSSKmXGKylkzJxdwrp/Ia
+ LzN35wukVDzSrw4gOrJmkiFfEB15iqD7QwTEcTohFDd7uZActFlnOkcLh2ryq+9SHnzuKOSJlqY
+ h35rZmB+fPw2bEndCb1LY7FQPeOFKQEpk9kz/3hc+7/rN1qg6e74bGB7heSerW+PRf3YRvbb1FR
+ gro1Fn+rzzOLb72zLvT5iTqXFvqTBOg2R9xtlJ+7X1NYRCR8ORRmPh1UziuiOWlULVLjtjk875A
+ c39CIjEX8wWfsNv1lDK8HqBRb3WIZVrFUm1eZ+r9GbQY9gEv69tb5xjcNQwfYvu3GXuruPP4SkB
+ PZqMZIMVlnPUvuqPxCCqmnqHdbliWj5Pyefwsk6bx8iliQfTdAtS8abEqDKnKEZz6bXHHfUBFK6
+ pmNw/SxalnDY0b4gAod5ChsRc1kF47//w=
+X-Google-Smtp-Source: AGHT+IEaufXXM5qRZ6u3bD5YrrwEjgho8E+s1w3UNY642rwVKbX0RrxYjA7ovPlllzhqu/Bv1oQc9w==
+X-Received: by 2002:a05:600c:3b01:b0:475:d9de:952e with SMTP id
+ 5b1f17b1804b1-477c04c357dmr285218315e9.1.1764425845502; 
+ Sat, 29 Nov 2025 06:17:25 -0800 (PST)
 Received: from [192.168.1.152] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1c5d618csm15334207f8f.14.2025.11.29.06.08.54
+ 5b1f17b1804b1-4790ab8bb21sm207530665e9.0.2025.11.29.06.17.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 29 Nov 2025 06:08:54 -0800 (PST)
-Message-ID: <6b47721f-0fb5-4546-abff-30746df5826b@linaro.org>
-Date: Sat, 29 Nov 2025 15:08:53 +0100
+ Sat, 29 Nov 2025 06:17:24 -0800 (PST)
+Message-ID: <6546cd49-008a-492a-ac0a-5f63ac21e39e@linaro.org>
+Date: Sat, 29 Nov 2025 15:17:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/8] chardev: .chr_open(): add boolean return value
+Subject: Re: [PATCH 8/8] chardev/char: qemu_char_open(): add return value
 Content-Language: en-US
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  marcandre.lureau@redhat.com
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, d-tatianin@yandex-team.ru,
- Samuel Thibault <samuel.thibault@ens-lyon.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, d-tatianin@yandex-team.ru
 References: <20251129134350.487839-1-vsementsov@yandex-team.ru>
- <20251129134350.487839-5-vsementsov@yandex-team.ru>
+ <20251129134350.487839-9-vsementsov@yandex-team.ru>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251129134350.487839-5-vsementsov@yandex-team.ru>
+In-Reply-To: <20251129134350.487839-9-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,37 +106,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 29/11/25 14:43, Vladimir Sementsov-Ogievskiy wrote:
-> Add boolean return value to follow common recommendations for functions
-> with errrp in include/qapi/error.h
+> Accordingly with recommendations in include/qapi/error.h accompany
+> errp by boolean return value and get rid of error propagation.
 > 
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > ---
->   chardev/baum.c           |  5 +++--
->   chardev/char-console.c   |  1 +
->   chardev/char-file.c      | 13 +++++++------
->   chardev/char-hub.c       | 11 ++++++-----
->   chardev/char-mux.c       |  8 +++++---
->   chardev/char-null.c      |  4 ++--
->   chardev/char-parallel.c  | 14 ++++++++------
->   chardev/char-pipe.c      | 12 +++++++-----
->   chardev/char-pty.c       |  9 ++++++---
->   chardev/char-ringbuf.c   |  5 +++--
->   chardev/char-serial.c    | 15 +++++++++------
->   chardev/char-socket.c    | 17 +++++++++--------
->   chardev/char-stdio.c     | 11 ++++++-----
->   chardev/char-udp.c       |  5 +++--
->   chardev/char-win-stdio.c |  7 ++++---
->   chardev/msmouse.c        |  3 ++-
->   chardev/spice.c          | 13 ++++++++-----
->   chardev/wctablet.c       |  3 ++-
->   gdbstub/system.c         |  3 ++-
->   include/chardev/char.h   |  2 +-
->   ui/console-vc.c          |  3 ++-
->   ui/dbus-chardev.c        |  6 +++---
->   ui/gtk.c                 |  5 +++--
->   ui/spice-app.c           | 10 ++++++----
->   ui/vdagent.c             | 10 +++++-----
->   25 files changed, 113 insertions(+), 82 deletions(-)
+>   chardev/char.c | 15 +++++++--------
+>   1 file changed, 7 insertions(+), 8 deletions(-)
+
+
+> -    if (cc->chr_open) {
+> -        cc->chr_open(chr, backend, errp);
+> +    if (cc->chr_open && !cc->chr_open(chr, backend, errp)) {
+> +        return false;
+>       }
+> +
+> +    return true;
+>   }
+
+Alternatively:
+
+     if (!cc->chr_open) {
+         return true;
+     }
+     return cc->chr_open(chr, backend, errp);
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
