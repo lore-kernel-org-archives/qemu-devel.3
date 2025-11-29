@@ -4,96 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B89AD116EA
-	for <qemu-devel@archiver.kernel.org>; Sat, 29 Nov 2025 16:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C076FD116EA
+	for <qemu-devel@archiver.kernel.org>; Sat, 29 Nov 2025 21:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vPNy7-0001R1-8p; Sat, 29 Nov 2025 11:38:43 -0500
+	id 1vPSZj-0003xa-FA; Sat, 29 Nov 2025 16:33:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenmiao.ku@gmail.com>)
- id 1vPN6q-0001kZ-KY
- for qemu-devel@nongnu.org; Sat, 29 Nov 2025 10:43:40 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chenmiao.ku@gmail.com>)
- id 1vPN6o-0007dZ-8l
- for qemu-devel@nongnu.org; Sat, 29 Nov 2025 10:43:40 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2984dfae0acso44283645ad.0
- for <qemu-devel@nongnu.org>; Sat, 29 Nov 2025 07:43:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1764431017; x=1765035817; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bSwW4pf421IMnpAOpJLVJ0KcWmgP1/il42L6E6pTLTg=;
- b=O1pGNb2Isa4DtQ0+VcqHrERPQQ1+08F6a1B8kcdno4cb+YikzHFEWVDRXbdhxtYrXY
- Zl1KP1egf/wto4UG0hWU9I7JWzGuX5SgQuRsUxiOCJsefMKxnp5MIeea+0y5VTWtj/QV
- iJVjmChNsrOKos87xth2fI3D2UCAdqbqEansOPXpIb/aSa7OWV2BbAAHkplcPgrI7rTv
- 4KSDs2fgeWEyTFDLucuC0OeBOBy90r0ySWtTk8jQkAR4vl6Zz2yVS00B27byr9rv30bE
- L+ay6iFdKkRyVxdfDHjC+0akZt0vmOSkIJXOkB7/Np48dQwuP7Vvs8EYdic4VeH3nMR2
- SDrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764431017; x=1765035817;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bSwW4pf421IMnpAOpJLVJ0KcWmgP1/il42L6E6pTLTg=;
- b=aVgQZWHTEF8bLiBzgVBxlqALDes2ghehNLcHZi3bnkBrXX19HYIl3JQDIwLpvbNT9M
- /jR9ffYJKzuWX9+RRLTb01Gh+7c2yKXyY+IEjxwJkMJI6Z8ua5JWVxj79CDntT+aX3at
- 4u3KpMrFruHypQ+G6BE+/kcWe868N1dyiAFe6KNQ+rZs/ZN4JuNUMqWhnV6KA/bRidl6
- e/Ec1Kfr9Vg2c7Kin5lZ/Lfv+eqSA7jv7/Yw/WHfgTIl4FCw74elGxUuX+Au+MLLu6RE
- ZwMURRBypYOF2Va9AVr9pyNvOZMreDOK/a8hQ582BlPUuJ1I9ho1/yiefSoTD8BEvwOR
- VdIQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX6u3etNVdG5fh27ERBbbIISRbujbtg0SGqMGdB+JAnTFEyyC3+R5JNAunEKRv+/lPRIGjm/ESlb9qa@nongnu.org
-X-Gm-Message-State: AOJu0Yz4N6i1u4SVDgg1LDz+3aKSe1fN98inSq/SQkDX6UrL4zSUwxua
- ZL/Hlmz+xKaa0LtTftliyftPAq3RgmklCOAyY739/W9DcDPtCp+yrEBB
-X-Gm-Gg: ASbGncvojUkzR2lZ7+/wq+kcx+skpDmTemVZwEEhXAjvaj++uoXkGengnthFyCapXOb
- G8DMH+l8UAKzHnBIfvRFRDtre9K6Vgzon8i7CzK9lwjw5aFy/uhHaiPwaPLGBOIvIGZ/QnUBaXy
- 9TwlKPCrc3VHEGXyRE6u6h1i6AgzIN8vSMbtSx2up7dNiftJ7hwpOHFp4KNYC7bs4xmPuHF2igE
- ij9+m3D6BhALevvQdfR6RSo1kJgVimoOn0gpUbE/Z4G9Fd/G2XVvOlJ7v5I/8xApOOybyJ5jhwP
- wuyNaSVSxbvALxs5XDqUCAIdpP+vPISjbmrodltTDBt6taegdAX9m7m7KfiFbh5NfZWZjQygYxI
- kqIrDzwo3JhuX3frZP3Z3BMAT9MwvhAtO5G5DDfklxcfr4CSy3YufMS17t1VvNxjIiKQBM+aVD2
- tDUZ7UVeIfAcYe2OBc2cZMZOZ6B//tnHNA30RghgxqEm3+AQ==
-X-Google-Smtp-Source: AGHT+IH2LMLBisx6iUJ48EIpnlRPSlIa+NXdS+diW+TA6vP9hX/OlzyJHPZRiMEvsmwuP2k8uCJRsw==
-X-Received: by 2002:a17:903:acf:b0:295:7806:1d7b with SMTP id
- d9443c01a7336-29bab19c771mr223540445ad.45.1764431016696; 
- Sat, 29 Nov 2025 07:43:36 -0800 (PST)
-Received: from nyaos.localdomain ([166.0.199.48])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3476a546ed0sm11799767a91.3.2025.11.29.07.43.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 29 Nov 2025 07:43:36 -0800 (PST)
-From: ChenMiao <chenmiao.ku@gmail.com>
-To: zhao1.liu@intel.com, pbonzini@redhat.com, manos.pitsidianakis@linaro.org,
- richard.henderson@linaro.org, philmd@linaro.org
-Cc: chao.liu@openatom.club , dzm91@openatom.club , qemu-rust@nongnu.org,
- qemu-devel@nongnu.org, hust-os-kernel-patches@googlegroups.com,
- chenmiao <chenmiao@openatom.club>
-Subject: [RESEND RFC PATCH V3 2/4] rust/hw/core: Add rust bindings/funcs for
- i2c bus
-Date: Sat, 29 Nov 2025 15:43:19 +0000
-Message-ID: <48bfe2bd3b11f09bd501622370ca64bdb1f68afb.1764426204.git.chenmiao@openatom.club>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1764426204.git.chenmiao@openatom.club>
-References: <cover.1764426204.git.chenmiao@openatom.club>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1vPSZh-0003vU-40; Sat, 29 Nov 2025 16:33:49 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1vPSZf-0007Mx-4L; Sat, 29 Nov 2025 16:33:48 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5ATIpwYo008694;
+ Sat, 29 Nov 2025 21:33:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=akrIXA
+ 9KcRQ+ijdGechK3pxQ8HWOKVo+GHl50DDT5k4=; b=WRZTcC/gkeq4jGvdpeww4Z
+ Uizw58W1CYbJWMBBYEtUPtRB1V+qotPa8HuMw8I/MIP51aimRZEXuk/5KS4ie2Yv
+ GMV42G2NKBMo+WpPJhp7d0kMXFb8Ve/BFqXGYYZyb7UwjDAsouKTKf10vVjPlb2e
+ n0V2cZBRLts30S90V7CqT2sfW97qnkHzM9hFGCVNAPl/k8qR8EhatlWmKxGzHzI/
+ 6Slz4kL+HC7UmxxkiNxys01Z2F+uXlmHJMgTZ7lYWF15NdS7fuVJozI+GCDeyKqk
+ /L3/6vfUBDzXKYZOsq4xkKPcFGqSf+7iAcVHiDJKWMm0JD+BwlHkbbb39h+DU8Dg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aqrh6hpnu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 29 Nov 2025 21:33:42 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5ATK1gi7027443;
+ Sat, 29 Nov 2025 21:33:41 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4anq4hkbbk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 29 Nov 2025 21:33:41 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5ATLXect28836398
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 29 Nov 2025 21:33:40 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 25C1E20043;
+ Sat, 29 Nov 2025 21:33:40 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DACDF20040;
+ Sat, 29 Nov 2025 21:33:39 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.111.1.154])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Sat, 29 Nov 2025 21:33:39 +0000 (GMT)
+Message-ID: <8efd73b100f7e78b1a5bbbe89bc221397a0a115a.camel@linux.ibm.com>
+Subject: Re: [RFC PATCH] tests/functional/s390x: Add reverse debugging test
+ for s390x
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org
+Date: Sat, 29 Nov 2025 22:33:39 +0100
+In-Reply-To: <37260d74733d7631698dd9d1dc41a991b1248d3a.camel@linux.ibm.com>
+References: <20251128133949.181828-1-thuth@redhat.com>
+ <37260d74733d7631698dd9d1dc41a991b1248d3a.camel@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=chenmiao.ku@gmail.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=dK+rWeZb c=1 sm=1 tr=0 ts=692b66b6 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=Nu0YOgDW9tCwb_60XP8A:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: FdRj0EQTuWl4Pk-s2tLVJ6l_S45p3rpG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI5MDAyMCBTYWx0ZWRfX2ZuuOU6Ac0x6
+ AvHTFS9RGCLQEQyMa+kjBP1jdptsoAImZSuwNH/BoWS+OAi5S8G31np8l+fXJ1HU9UrU+4X2VDp
+ CRfvH5F+il9LKUj2nX1tHAOQUhAtxhlGjjiPo9wwMkZj0qz4rgNZmf/GBlEE+PRcaSLm4Bwq6Rb
+ OWrNdeewYg16cE4pR/rxJZjXTN3FyIAH9dKrYPaVCDMquyaIrSVV+OQRrFg+GBx2vwfTcLDnUjO
+ 4g9P6qLjJuUB8W82Ns4BsYMZrQ/vKp1GXEhqMJ5efsvZGGrj+u3xrfS7ansJf19AaFdWjLNxDi5
+ ZhX6EwdrZMgIuNUZB2S2VA8HwJf6Jigm8WXmk/HpwAGbwefXEJ7jFlRpRRRBFTtAgJ8UdZ46bAy
+ yMX1QkOk605/Y1ylCLb+x/8fBQHVhw==
+X-Proofpoint-ORIG-GUID: FdRj0EQTuWl4Pk-s2tLVJ6l_S45p3rpG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-28_08,2025-11-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
+ bulkscore=0 adultscore=0 phishscore=0 impostorscore=0 spamscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
+ definitions=main-2511290020
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 29 Nov 2025 11:38:37 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,379 +120,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
-Message-ID: <20251129154319.1hdTWsSjpshbNIx3vME0TXv2J7LBs2V-Tcjsc1Tulh8@z>
 
-From: chenmiao <chenmiao@openatom.club>
+On Fri, 2025-11-28 at 18:25 +0100, Ilya Leoshkevich wrote:
+> On Fri, 2025-11-28 at 14:39 +0100, Thomas Huth wrote:
+> > From: Thomas Huth <thuth@redhat.com>
+> >=20
+> > We just have to make sure that we can set the endianness to big
+> > endian,
+> > then we can also run this test on s390x.
+> >=20
+> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > ---
+> > =C2=A0Marked as RFC since it depends on the fix for this bug (so it
+> > cannot
+> > =C2=A0be merged yet):
+> > =C2=A0
+> > https://lore.kernel.org/qemu-devel/a0accce9-6042-4a7b-a7c7-218212818891=
+@redhat.com
+> > /
+> >=20
+> > =C2=A0tests/functional/reverse_debugging.py=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 |=C2=A0 4 +++-
+> > =C2=A0tests/functional/s390x/meson.build=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 +
+> > =C2=A0tests/functional/s390x/test_reverse_debug.py | 21
+> > ++++++++++++++++++++
+> > =C2=A03 files changed, 25 insertions(+), 1 deletion(-)
+> > =C2=A0create mode 100755 tests/functional/s390x/test_reverse_debug.py
+>=20
+> Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>=20
+>=20
+> I have a simple fix which helps with your original report, but not
+> with this test. I'm still investigating.
+>=20
+> --- a/target/s390x/machine.c
+> +++ b/target/s390x/machine.c
+> @@ -52,6 +52,14 @@ static int cpu_pre_save(void *opaque)
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kvm_s390_vcpu_interrupt_=
+pre_save(cpu);
+> =C2=A0=C2=A0=C2=A0=C2=A0 }
+> =C2=A0
+> +=C2=A0=C2=A0=C2=A0 if (tcg_enabled()) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * Ensure symmetry with =
+cpu_post_load() with respect to
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * CHECKPOINT_CLOCK_VIRT=
+UAL.
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tcg_s390_tod_updated(CPU(cpu)=
+, RUN_ON_CPU_NULL);
+> +=C2=A0=C2=A0=C2=A0 }
+> +
+> =C2=A0=C2=A0=C2=A0=C2=A0 return 0;
+> =C2=A0}
 
-We have implemented the I2CBus and I2CSlave infrastructure in Rust by referring
-to the SysBus device model.
+Interestingly enough, this patch fails only under load, e.g., if I run
+make check -j"$(nproc)" or if I run your test in isolation, but with
+stress-ng cpu in background. The culprit appears to be:
 
-Initially, we assumed that the I2CBus was at the same hierarchical level as the
-PL011 device. Therefore, we followed the implementation paradigm of the PL011
-device as a reference. However, in the end, we discovered that the I2CBus is
-actually at the same level as the SysBus. As a result, we adopted the binding
-implementation paradigm used for SysBus devices. With this adjustment, we
-successfully compiled the code locally.
+s390_tod_load()
+  qemu_s390_tod_set()
+    async_run_on_cpu(tcg_s390_tod_updated)
 
-During the implementation process, we found that the current two paradigms in
-Rust — bindings and impl — are extremely complex and lack comprehensive
-documentation. There is no clear explanation as to why Bus and Device models
-need to be implemented using different approaches. Furthermore, the
-implementation of Bus and Device following these paradigms still has many
-limitations. At present, at least vmstate is not easily supported.
+Depending on the system load, this additional tcg_s390_tod_updated()
+may or may not end up being called during handle_backward(). If it
+does, we get an infinite loop again, because now we need two
+checkpoints.
 
-Signed-off-by: Chao Liu <chao.liu@openatom.club>
-Signed-off-by: Chen Miao <chenmiao@openatom.club>
----
- rust/hw/core/meson.build |   1 +
- rust/hw/core/src/i2c.rs  | 303 +++++++++++++++++++++++++++++++++++++++
- rust/hw/core/src/lib.rs  |   3 +
- rust/hw/core/wrapper.h   |   1 +
- 4 files changed, 308 insertions(+)
- create mode 100644 rust/hw/core/src/i2c.rs
-
-diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
-index efcda50fef..1a27c1cff7 100644
---- a/rust/hw/core/meson.build
-+++ b/rust/hw/core/meson.build
-@@ -52,6 +52,7 @@ _hwcore_rs = static_library(
-       'src/bindings.rs',
-       'src/bus.rs',
-       'src/irq.rs',
-+      'src/i2c.rs',
-       'src/qdev.rs',
-       'src/sysbus.rs',
-     ],
-diff --git a/rust/hw/core/src/i2c.rs b/rust/hw/core/src/i2c.rs
-new file mode 100644
-index 0000000000..85ec34357a
---- /dev/null
-+++ b/rust/hw/core/src/i2c.rs
-@@ -0,0 +1,303 @@
-+// Copyright 2025 HUST OpenAtom Open Source Club.
-+// Author(s): Chao Liu <chao.liu@openatom.club>
-+// Author(s): Chen Miao <chenmiao@openatom.club>
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+//! Bindings to access `i2c` functionality from Rust.
-+
-+use std::{ffi::CStr, ptr::NonNull};
-+
-+pub use crate::bindings::I2CSlaveClass;
-+use common::{self, Opaque};
-+use migration::impl_vmstate_c_struct;
-+use qom::{prelude::*, Owned};
-+
-+use crate::{
-+    bindings,
-+    bus::{BusClass, BusState},
-+    qdev::{DeviceImpl, DeviceState},
-+};
-+
-+/// A safe wrapper around [`bindings::I2CBus`].
-+#[repr(transparent)]
-+#[derive(Debug, common::Wrapper)]
-+pub struct I2CBus(Opaque<bindings::I2CBus>);
-+
-+unsafe impl Send for I2CBus {}
-+unsafe impl Sync for I2CBus {}
-+
-+unsafe impl ObjectType for I2CBus {
-+    type Class = BusClass;
-+    const TYPE_NAME: &'static CStr =
-+        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_I2C_BUS) };
-+}
-+
-+qom_isa!(I2CBus: BusState, Object);
-+
-+/// Trait for methods of [`I2CBus`] and its subclasses.
-+pub trait I2CBusMethods: ObjectDeref
-+where
-+    Self::Target: IsA<I2CBus>,
-+{
-+    /// # Safety
-+    ///
-+    /// Initialize an I2C bus
-+    fn init_bus(&self, parent: &DeviceState, name: &str) -> Owned<I2CBus> {
-+        assert!(bql::is_locked());
-+        unsafe {
-+            let bus = bindings::i2c_init_bus(parent.as_mut_ptr(), name.as_ptr().cast());
-+            let bus: &I2CBus = I2CBus::from_raw(bus);
-+            Owned::from(bus)
-+        }
-+    }
-+
-+    /// # Safety
-+    ///
-+    /// Start a transfer on an I2C bus
-+    fn start_transfer(&self, address: u8, is_recv: bool) -> i32 {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_start_transfer(self.upcast().as_mut_ptr(), address, is_recv) }
-+    }
-+
-+    /// # Safety
-+    ///
-+    /// Start a receive transfer on an I2C bus
-+    fn start_recv(&self, address: u8) -> i32 {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_start_recv(self.upcast().as_mut_ptr(), address) }
-+    }
-+
-+    /// # Safety
-+    ///
-+    /// Start a send transfer on an I2C bus
-+    fn start_send(&self, address: u8) -> i32 {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_start_send(self.upcast().as_mut_ptr(), address) }
-+    }
-+
-+    /// # Safety
-+    ///
-+    /// End a transfer on an I2C bus
-+    fn end_transfer(&self) {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_end_transfer(self.upcast().as_mut_ptr()) }
-+    }
-+
-+    /// # Safety
-+    ///
-+    /// Send NACK on an I2C bus
-+    fn nack(&self) {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_nack(self.upcast().as_mut_ptr()) }
-+    }
-+
-+    /// # Safety
-+    ///
-+    /// Send ACK on an I2C bus
-+    fn ack(&self) {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_ack(self.upcast().as_mut_ptr()) }
-+    }
-+
-+    /// # Safety
-+    ///
-+    /// Send data on an I2C bus
-+    fn send(&self, data: u8) -> i32 {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_send(self.upcast().as_mut_ptr(), data) }
-+    }
-+
-+    /// # Safety
-+    ///
-+    /// Receive data from an I2C bus
-+    fn recv(&self) -> u8 {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_recv(self.upcast().as_mut_ptr()) }
-+    }
-+
-+    /// # Safety
-+    ///
-+    /// Check if the I2C bus is busy.
-+    ///
-+    /// Returns `true` if the bus is busy, `false` otherwise.
-+    fn is_busy(&self) -> bool {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_bus_busy(self.upcast().as_mut_ptr()) != 0 }
-+    }
-+
-+    /// # Safety
-+    ///
-+    /// Schedule pending master on an I2C bus
-+    fn schedule_pending_master(&self) {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_schedule_pending_master(self.upcast().as_mut_ptr()) }
-+    }
-+
-+    /// Sets the I2C bus master.
-+    ///
-+    /// # Safety
-+    ///
-+    /// This function is unsafe because:
-+    /// - `bh` must be a valid pointer to a `QEMUBH`.
-+    /// - The caller must ensure that `self` is in a valid state.
-+    /// - The caller must guarantee no data races occur during execution.
-+    ///
-+    /// TODO ("`i2c_bus_master` missing until QEMUBH is wrapped")
-+    unsafe fn set_master(&self, bh: *mut bindings::QEMUBH) {
-+        assert!(bql::is_locked());
-+        unsafe { bindings::i2c_bus_master(self.upcast().as_mut_ptr(), bh) }
-+    }
-+}
-+
-+impl<R: ObjectDeref> I2CBusMethods for R where R::Target: IsA<I2CBus> {}
-+
-+/// A safe wrapper around [`bindings::I2CSlave`].
-+#[repr(transparent)]
-+#[derive(Debug, common::Wrapper)]
-+pub struct I2CSlave(Opaque<bindings::I2CSlave>);
-+
-+unsafe impl Send for I2CSlave {}
-+unsafe impl Sync for I2CSlave {}
-+
-+unsafe impl ObjectType for I2CSlave {
-+    type Class = I2CSlaveClass;
-+    const TYPE_NAME: &'static CStr =
-+        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_I2C_SLAVE) };
-+}
-+
-+qom_isa!(I2CSlave: DeviceState, Object);
-+
-+impl_vmstate_c_struct!(I2CSlave, bindings::vmstate_i2c_slave);
-+
-+#[derive(common::TryInto)]
-+#[repr(u64)]
-+#[allow(non_camel_case_types)]
-+pub enum I2CResult {
-+    ACK = 0,
-+    NACK = 1,
-+}
-+
-+// TODO: add virtual methods
-+pub trait I2CSlaveImpl: DeviceImpl + IsA<I2CSlave> {
-+    /// Master to slave. Returns non-zero for a NAK, 0 for success.
-+    const SEND: Option<fn(&Self, data: u8) -> I2CResult> = None;
-+
-+    /// Slave to master. This cannot fail, the device should always return something here.
-+    const RECV: Option<fn(&Self) -> u8> = None;
-+
-+    /// Notify the slave of a bus state change. For start event,
-+    /// returns non-zero to NAK an operation. For other events the
-+    /// return code is not used and should be zero.
-+    const EVENT: Option<fn(&Self, event: I2CEvent) -> I2CEvent> = None;
-+
-+    /// Check if this device matches the address provided. Returns bool of
-+    /// true if it matches (or broadcast), and updates the device list, false
-+    /// otherwise.
-+    ///
-+    /// If broadcast is true, match should add the device and return true.
-+    #[allow(clippy::type_complexity)]
-+    const MATCH_AND_ADD: Option<
-+        fn(&Self, address: u8, broadcast: bool, current_devs: *mut bindings::I2CNodeList) -> bool,
-+    > = None;
-+}
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer that
-+/// can be downcasted to type `T`. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+unsafe extern "C" fn rust_i2c_slave_send_fn<T: I2CSlaveImpl>(
-+    obj: *mut bindings::I2CSlave,
-+    data: u8,
-+) -> std::os::raw::c_int {
-+    let state = NonNull::new(obj).unwrap().cast::<T>();
-+    T::SEND.unwrap()(unsafe { state.as_ref() }, data).into_bits() as std::os::raw::c_int
-+}
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer that
-+/// can be downcasted to type `T`. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+unsafe extern "C" fn rust_i2c_slave_recv_fn<T: I2CSlaveImpl>(obj: *mut bindings::I2CSlave) -> u8 {
-+    let state = NonNull::new(obj).unwrap().cast::<T>();
-+    T::RECV.unwrap()(unsafe { state.as_ref() })
-+}
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer that
-+/// can be downcasted to type `T`. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+unsafe extern "C" fn rust_i2c_slave_event_fn<T: I2CSlaveImpl>(
-+    obj: *mut bindings::I2CSlave,
-+    event: bindings::i2c_event,
-+) -> std::os::raw::c_int {
-+    let state = NonNull::new(obj).unwrap().cast::<T>();
-+    T::EVENT.unwrap()(unsafe { state.as_ref() }, I2CEvent::from_bits(event)).into_bits()
-+        as std::os::raw::c_int
-+}
-+
-+/// # Safety
-+///
-+/// We expect the FFI user of this function to pass a valid pointer that
-+/// can be downcasted to type `T`. We also expect the device is
-+/// readable/writeable from one thread at any time.
-+unsafe extern "C" fn rust_i2c_slave_match_and_add_fn<T: I2CSlaveImpl>(
-+    obj: *mut bindings::I2CSlave,
-+    address: u8,
-+    broadcast: bool,
-+    current_devs: *mut bindings::I2CNodeList,
-+) -> bool {
-+    let state = NonNull::new(obj).unwrap().cast::<T>();
-+    T::MATCH_AND_ADD.unwrap()(unsafe { state.as_ref() }, address, broadcast, current_devs)
-+}
-+
-+impl I2CSlaveClass {
-+    /// Fill in the virtual methods of `I2CSlaveClass` based on the
-+    /// definitions in the `I2CSlaveImpl` trait.
-+    pub fn class_init<T: I2CSlaveImpl>(&mut self) {
-+        if <T as I2CSlaveImpl>::SEND.is_some() {
-+            self.send = Some(rust_i2c_slave_send_fn::<T>);
-+        }
-+        if <T as I2CSlaveImpl>::RECV.is_some() {
-+            self.recv = Some(rust_i2c_slave_recv_fn::<T>);
-+        }
-+        if <T as I2CSlaveImpl>::EVENT.is_some() {
-+            self.event = Some(rust_i2c_slave_event_fn::<T>);
-+        }
-+        if <T as I2CSlaveImpl>::MATCH_AND_ADD.is_some() {
-+            self.match_and_add = Some(rust_i2c_slave_match_and_add_fn::<T>);
-+        }
-+        self.parent_class.class_init::<T>();
-+    }
-+}
-+
-+/// Trait for methods of [`I2CSlave`] and its subclasses.
-+pub trait I2CSlaveMethods: ObjectDeref
-+where
-+    Self::Target: IsA<I2CSlave>,
-+{
-+    /// Get the I2C bus address of a slave device
-+    fn get_address(&self) -> u8 {
-+        assert!(bql::is_locked());
-+        // SAFETY: the BQL ensures that no one else writes to the I2CSlave structure,
-+        // and the I2CSlave must be initialized to get an IsA<I2CSlave>.
-+        let slave = unsafe { *self.upcast().as_ptr() };
-+        slave.address
-+    }
-+}
-+
-+impl<R: ObjectDeref> I2CSlaveMethods for R where R::Target: IsA<I2CSlave> {}
-+
-+/// Enum representing I2C events
-+#[derive(common::TryInto)]
-+#[repr(u32)]
-+#[allow(non_camel_case_types)]
-+pub enum I2CEvent {
-+    START_RECV = bindings::I2C_START_RECV,
-+    START_SEND = bindings::I2C_START_SEND,
-+    START_SEND_ASYNC = bindings::I2C_START_SEND_ASYNC,
-+    FINISH = bindings::I2C_FINISH,
-+    NACK = bindings::I2C_NACK,
-+}
-diff --git a/rust/hw/core/src/lib.rs b/rust/hw/core/src/lib.rs
-index 10cc516664..3f3aecb258 100644
---- a/rust/hw/core/src/lib.rs
-+++ b/rust/hw/core/src/lib.rs
-@@ -16,3 +16,6 @@
- 
- mod bus;
- pub use bus::*;
-+
-+mod i2c;
-+pub use i2c::*;
-diff --git a/rust/hw/core/wrapper.h b/rust/hw/core/wrapper.h
-index 3bdbd1249e..399be594da 100644
---- a/rust/hw/core/wrapper.h
-+++ b/rust/hw/core/wrapper.h
-@@ -30,3 +30,4 @@ typedef enum memory_order {
- #include "hw/qdev-properties.h"
- #include "hw/qdev-properties-system.h"
- #include "hw/irq.h"
-+#include "hw/i2c/i2c.h"
--- 
-2.43.0
-
+I have a feeling that this code may be violating some record-replay
+requirement, but I can't quite put my finger on it. For example,
+async_run_on_cpu() does not sound like something deterministic, but
+then again it just queues work for rr_cpu_thread_fn(), which is
+supposed to be deterministic.
 
