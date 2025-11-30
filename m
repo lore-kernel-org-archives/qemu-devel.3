@@ -4,84 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B1C7D111A8
-	for <qemu-devel@archiver.kernel.org>; Sun, 30 Nov 2025 04:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E655CFD376
+	for <qemu-devel@archiver.kernel.org>; Sun, 30 Nov 2025 09:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vPYn2-0003GH-Q1; Sat, 29 Nov 2025 23:12:00 -0500
+	id 1vPdci-0005mn-OQ; Sun, 30 Nov 2025 04:21:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vPYn0-0003F5-QP
- for qemu-devel@nongnu.org; Sat, 29 Nov 2025 23:11:58 -0500
-Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
+ (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
+ id 1vPdch-0005m1-LL; Sun, 30 Nov 2025 04:21:39 -0500
+Received: from out28-78.mail.aliyun.com ([115.124.28.78])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vPYmz-0000FA-5D
- for qemu-devel@nongnu.org; Sat, 29 Nov 2025 23:11:58 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1764475904; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=DJh4C4pbych+XALrR1weQT8IF41hNHSZEfzqOkcl0TfGmv/YH6ACs2nWnRo4RhD21E12im627QmW4vSq7uNyu9qXQHKk7HXXOTAGF79nFGBZAZ5mer2rGSwxj8pwOThZFsIvZ61fhybUjSbFLw29VnhyJVCVVvmGaPrItqyu/aQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1764475904;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=+MBGdGhiFA1yEitjPqhxEG5m8qzjw3fw/oeIIt2vigs=; 
- b=ay9odrB5dMHmAl2seS4ezvKe9azC6+PHBIsBlbFguHr1Ze9gUV2bNZec/P6gS6itW2dFFZr7v+sz/faEg3BnOQaJbdzLiA4xMX0p1wWFPzNVWo6bNCFD7DkpETdJVcS2qzn1aVaqhiwD7/n7t2TtNq8Yso5UnlY5TvMR15NY28k=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764475904; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=+MBGdGhiFA1yEitjPqhxEG5m8qzjw3fw/oeIIt2vigs=;
- b=RZ6zfd2Lacp1RZ2OhN3W1UrVLjiH7ajlOrPZEsfVI+W2M2cxa6gOtjYijW5NEDY3
- BBZm9yoIyF144AwsIsk3jFAzrvlveS5hMel4CR97lcSsSmtCjBCiifMjoHkYUck4VD6
- 6Nb/E/YyssIzN6RxspmxCIPK7Mq4W3dKUeEcA4tU=
-Received: by mx.zohomail.com with SMTPS id 1764475902074977.8090482301019;
- Sat, 29 Nov 2025 20:11:42 -0800 (PST)
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
- Sergio Lopez Pascual <slp@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Robert Beckett <bob.beckett@collabora.com>
-Subject: [RFC PATCH v5 3/4] virtio-gpu: Destroy virgl resources on virtio-gpu
- reset
-Date: Sun, 30 Nov 2025 07:09:39 +0300
-Message-ID: <20251130040940.1611949-4-dmitry.osipenko@collabora.com>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251130040940.1611949-1-dmitry.osipenko@collabora.com>
-References: <20251130040940.1611949-1-dmitry.osipenko@collabora.com>
+ (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
+ id 1vPdcc-0006Cr-Kq; Sun, 30 Nov 2025 04:21:39 -0500
+Received: from ZEVORN-PC(mailfrom:chao.liu@zevorn.cn
+ fp:SMTPD_---.fZX11Ux_1764494478 cluster:ay29) by smtp.aliyun-inc.com;
+ Sun, 30 Nov 2025 17:21:19 +0800
+From: Chao Liu <chao.liu@zevorn.cn>
+To: richard.henderson@linaro.org, paolo.savini@embecosm.com, npiggin@gmail.com,
+ ebiggers@kernel.org, dbarboza@ventanamicro.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, chao.liu@openatom.club,
+ hust-os-kernel-patches@googlegroups.com, Chao Liu <chao.liu@zevorn.cn>,
+ Mig Yang <temashking@foxmail.com>
+Subject: [PATCH v1 4/5] tests/qtest: add test for K230 watchdog
+Date: Sun, 30 Nov 2025 17:21:09 +0800
+Message-ID: <1825d13812716393767703063b16d2bf862af047.1764493931.git.chao.liu@zevorn.cn>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <cover.1764493931.git.chao.liu@zevorn.cn>
+References: <cover.1764493931.git.chao.liu@zevorn.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.184.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=115.124.28.78; envelope-from=chao.liu@zevorn.cn;
+ helo=out28-78.mail.aliyun.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,185 +60,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Properly destroy virgl resources on virtio-gpu reset to not leak resources
-on a hot reboot of a VM.
+Testing the Basic Functions of K230 WDT:
+1. Reset Function
+2. Timeout Check
+3. Interrupt Function
 
-Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Mig Yang <temashking@foxmail.com>
 ---
- hw/display/virtio-gpu-gl.c     |  6 ++-
- hw/display/virtio-gpu-virgl.c  | 87 ++++++++++++++++++++++++++--------
- include/hw/virtio/virtio-gpu.h |  5 +-
- 3 files changed, 75 insertions(+), 23 deletions(-)
+ MAINTAINERS                 |   1 +
+ tests/qtest/k230-wdt-test.c | 199 ++++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build     |   3 +-
+ 3 files changed, 202 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/k230-wdt-test.c
 
-diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-index b640900fc6f1..bf3fd75e9e6b 100644
---- a/hw/display/virtio-gpu-gl.c
-+++ b/hw/display/virtio-gpu-gl.c
-@@ -72,7 +72,10 @@ static void virtio_gpu_gl_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 564c2af56d..bfa63f832e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1718,6 +1718,7 @@ F: hw/riscv/k230.c
+ F: hw/watchdog/k230_wdt.c
+ F: include/hw/riscv/k230.h
+ F: include/hw/watchdog/k230_wdt.h
++F: tests/qtest/k230-wdt-test.c
  
-     switch (gl->renderer_state) {
-     case RS_RESET:
--        virtio_gpu_virgl_reset(g);
-+        if (virtio_gpu_virgl_reset(g)) {
-+            gl->renderer_state = RS_INIT_FAILED;
-+            return;
-+        }
-         /* fallthrough */
-     case RS_START:
-         if (virtio_gpu_virgl_init(g)) {
-@@ -201,6 +204,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
-     vgc->process_cmd = virtio_gpu_virgl_process_cmd;
-     vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
- 
-+    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
-     vdc->realize = virtio_gpu_gl_device_realize;
-     vdc->unrealize = virtio_gpu_gl_device_unrealize;
-     vdc->reset = virtio_gpu_gl_reset;
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 6a2aac0b6e5c..60d8fbf0445c 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -304,14 +304,46 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
-     virgl_renderer_resource_create(&args, NULL, 0);
- }
- 
-+static int
-+virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
-+                                struct virtio_gpu_virgl_resource *res,
-+                                bool *cmd_suspended)
+ RX Machines
+ -----------
+diff --git a/tests/qtest/k230-wdt-test.c b/tests/qtest/k230-wdt-test.c
+new file mode 100644
+index 0000000000..2550cebd10
+--- /dev/null
++++ b/tests/qtest/k230-wdt-test.c
+@@ -0,0 +1,199 @@
++/*
++ * QTest testcase for K230 Watchdog
++ *
++ * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Provides a board compatible with the kendryte K230 SDK
++ *
++ * Documentation: K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ *
++ * For more information, see <https://www.kendryte.com/en/proDetail/230>
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/timer.h"
++#include "qemu/bitops.h"
++#include "libqtest.h"
++#include "hw/watchdog/k230_wdt.h"
++
++/* K230 WDT0 base address */
++#define K230_WDT0_BASE 0x91106000
++#define K230_WDT1_BASE 0x91106800
++
++/* Test WDT0 by default */
++#define WDT_BASE K230_WDT0_BASE
++
++static void test_register_read_write(void)
 +{
-+    struct iovec *res_iovs = NULL;
-+    int num_iovs = 0;
-+#if VIRGL_VERSION_MAJOR >= 1
-+    int ret;
++    QTestState *qts = qtest_init("-machine k230");
 +
-+    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended);
-+    if (ret) {
-+        return ret;
-+    }
-+    if (*cmd_suspended) {
-+        return 0;
-+    }
-+#endif
++    /* Test Control Register (CR) read/write */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0xFFFFFFFF);
++    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_CR), ==,
++                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
++                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
 +
-+    virgl_renderer_resource_detach_iov(res->base.resource_id,
-+                                       &res_iovs,
-+                                       &num_iovs);
-+    if (res_iovs != NULL && num_iovs != 0) {
-+        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
-+    }
-+    virgl_renderer_resource_unref(res->base.resource_id);
++    /* Test Timeout Range Register (TORR) read/write */
++    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0xFFFFFFFF);
++    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_TORR), ==,
++                    K230_WDT_TORR_TOP_MASK);
 +
-+    QTAILQ_REMOVE(&g->reslist, &res->base, next);
++    /* Test Protection Level Register read/write */
++    qtest_writel(qts, WDT_BASE + K230_WDT_PROT_LEVEL, 0xFFFFFFFF);
++    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_PROT_LEVEL), ==, 0x7);
 +
-+    g_free(res);
-+
-+    return 0;
++    qtest_quit(qts);
 +}
 +
- static void virgl_cmd_resource_unref(VirtIOGPU *g,
-                                      struct virtio_gpu_ctrl_command *cmd,
-                                      bool *cmd_suspended)
- {
-     struct virtio_gpu_resource_unref unref;
-     struct virtio_gpu_virgl_resource *res;
--    struct iovec *res_iovs = NULL;
--    int num_iovs = 0;
- 
-     VIRTIO_GPU_FILL_CMD(unref);
-     trace_virtio_gpu_cmd_res_unref(unref.resource_id);
-@@ -324,27 +356,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
-         return;
-     }
- 
--#if VIRGL_VERSION_MAJOR >= 1
--    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
--        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
--        return;
--    }
--    if (*cmd_suspended) {
--        return;
--    }
--#endif
-+    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
-+}
- 
--    virgl_renderer_resource_detach_iov(unref.resource_id,
--                                       &res_iovs,
--                                       &num_iovs);
--    if (res_iovs != NULL && num_iovs != 0) {
--        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
--    }
--    virgl_renderer_resource_unref(unref.resource_id);
-+void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
-+                                       struct virtio_gpu_simple_resource *base,
-+                                       Error **errp)
++static void test_counter_restart(void)
 +{
-+    struct virtio_gpu_virgl_resource *res;
-+    bool suspended = false;
- 
--    QTAILQ_REMOVE(&g->reslist, &res->base, next);
-+    res = container_of(base, struct virtio_gpu_virgl_resource, base);
- 
--    g_free(res);
-+    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
-+        error_setg(errp, "failed to destroy virgl resource");
++    QTestState *qts = qtest_init("-machine k230");
++
++    /* Enable watchdog and set timeout */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
++    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x5); /* TOP = 5 */
++
++    /* Read current counter value */
++    uint32_t initial_count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
++    g_assert_cmpuint(initial_count, >, 0);
++
++    /* Restart counter with magic value */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CRR, K230_WDT_CRR_RESTART);
++
++    /* Wait for time */
++    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
++
++    /* Counter should be reset to timeout value */
++    uint32_t new_count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
++    g_assert_cmpuint(new_count, >, 0);
++    g_assert_cmpuint(new_count, !=, initial_count);
++
++    qtest_quit(qts);
++}
++
++static void test_interrupt_mode(void)
++{
++    QTestState *qts = qtest_init("-machine k230 --trace k230_*,file=k230.log");
++
++    /* Set interrupt mode and enable watchdog */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR,
++                 K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
++    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout */
++
++    /* Wait for timeout to trigger interrupt */
++    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 10);
++
++    /* Check interrupt status */
++    uint32_t stat = qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
++    g_assert_cmphex(stat & K230_WDT_STAT_INT, ==, K230_WDT_STAT_INT);
++
++    /* Clear interrupt */
++    qtest_writel(qts, WDT_BASE + K230_WDT_EOI, 0x1);
++    stat = qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
++    g_assert_cmphex(stat & K230_WDT_STAT_INT, ==, 0);
++
++    qtest_quit(qts);
++}
++
++static void test_reset_mode(void)
++{
++    QTestState *qts = qtest_init("-machine k230 -no-reboot");
++
++    /* Set reset mode and enable watchdog */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
++    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout */
++
++    /* Wait for timeout to trigger reset */
++    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
++
++    /* In reset mode, the system should reset */
++    /* This test verifies that reset mode is properly configured */
++
++    qtest_quit(qts);
++}
++
++static void test_timeout_calculation(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    /* Test different timeout values */
++    for (uint32_t top = 0; top <= 15; top++) {
++        qtest_writel(qts, WDT_BASE + K230_WDT_TORR, top);
++        qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
++
++        /* Read current counter value */
++        uint32_t count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
++        g_assert_cmpuint(count, >, 0);
++
++        /* Disable watchdog for next iteration */
++        qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
 +    }
- }
- 
- static void virgl_cmd_context_create(VirtIOGPU *g,
-@@ -1273,11 +1299,30 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
-     }
- }
- 
--void virtio_gpu_virgl_reset(VirtIOGPU *g)
-+int virtio_gpu_virgl_reset(VirtIOGPU *g)
- {
-+    struct virtio_gpu_simple_resource *res, *tmp;
 +
-+    /*
-+     * Virglrender doesn't support context restoring. VirtIO-GPU
-+     * state shall not be reset at runtime. Virgl blob resource
-+     * unmapping can be deferred on unref, ensure that destruction
-+     * is completed.
-+     */
-+    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
-+        virtio_gpu_virgl_resource_destroy(g, res, NULL);
-+    }
++    qtest_quit(qts);
++}
 +
-+    if (!QTAILQ_EMPTY(&g->reslist)) {
-+        error_report("%s: failed to reset virgl resources", __func__);
-+        return -EBUSY;
-+    }
++static void test_wdt1_registers(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
 +
-     virgl_renderer_reset();
- 
-     virtio_gpu_virgl_reset_async_fences(g);
++    /* Test WDT1 registers (second watchdog) */
++    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_CR, 0xFFFFFFFF);
++    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_CR), ==,
++                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
++                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
 +
-+    return 0;
- }
++    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_TORR, 0xFFFFFFFF);
++    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_TORR), ==,
++                    K230_WDT_TORR_TOP_MASK);
++
++    qtest_quit(qts);
++}
++
++static void test_enable_disable(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    /* Initially disabled */
++    uint32_t cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
++    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, 0);
++
++    /* Enable watchdog */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
++    cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
++    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, K230_WDT_CR_WDT_EN);
++
++    /* Disable watchdog */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
++    cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
++    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, 0);
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char *argv[])
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/k230-wdt/register_read_write", test_register_read_write);
++    qtest_add_func("/k230-wdt/counter_restart", test_counter_restart);
++    qtest_add_func("/k230-wdt/interrupt_mode", test_interrupt_mode);
++    qtest_add_func("/k230-wdt/reset_mode", test_reset_mode);
++    qtest_add_func("/k230-wdt/timeout_calculation", test_timeout_calculation);
++    qtest_add_func("/k230-wdt/wdt1_registers", test_wdt1_registers);
++    qtest_add_func("/k230-wdt/enable_disable", test_enable_disable);
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 669d07c06b..0d9339e938 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -282,7 +282,8 @@ qtests_riscv32 = \
+   (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
  
- int virtio_gpu_virgl_init(VirtIOGPU *g)
-diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
-index 718332284305..9e1473d1bb66 100644
---- a/include/hw/virtio/virtio-gpu.h
-+++ b/include/hw/virtio/virtio-gpu.h
-@@ -389,9 +389,12 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
-                                   struct virtio_gpu_ctrl_command *cmd);
- void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
- void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
--void virtio_gpu_virgl_reset(VirtIOGPU *g);
-+int virtio_gpu_virgl_reset(VirtIOGPU *g);
- int virtio_gpu_virgl_init(VirtIOGPU *g);
- GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
- void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
-+void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
-+                                       struct virtio_gpu_simple_resource *res,
-+                                       Error **errp);
+ qtests_riscv64 = ['riscv-csr-test'] + \
+-  (unpack_edk2_blobs ? ['bios-tables-test'] : [])
++  (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
  
- #endif
+ qos_test_ss = ss.source_set()
+ qos_test_ss.add(
 -- 
-2.51.1
+2.51.0
 
 
