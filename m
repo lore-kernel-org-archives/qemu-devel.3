@@ -4,102 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D082D116F1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 10:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFD6ED111A8
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 11:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ1Gx-0006wU-CY; Mon, 01 Dec 2025 05:36:47 -0500
+	id 1vQ1eI-0003NO-TT; Mon, 01 Dec 2025 06:00:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vQ1Gw-0006wL-Ac
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 05:36:46 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vQ1Gs-0007n0-9B
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 05:36:46 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47775fb6cb4so27679775e9.0
- for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 02:36:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <r.mills@ngc.com>) id 1vQ1eE-0003Mt-FD
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:00:50 -0500
+Received: from esa5.ngc.iphmx.com ([207.54.93.154])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <r.mills@ngc.com>) id 1vQ1e1-0002rO-IX
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:00:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764585400; x=1765190200; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mZlxXvrfSJClyWPuc3pE9daHxkFF4SgqcMiy6LS0qjI=;
- b=tWcpjCEkEuKWrKJIcavhot+e/hsy695AyL7Gd/vp2cjiuIaZgzVxcFFnc9OcZCkpt/
- 1/+J8kQFXa4U/ORxb/r7OL+m2pngTFqkFtUOHNr9CMwdixzNzF1DPb6lH2um+4/kjZGw
- 7UpvfSRMCzhtex98gF9PQbeIX2YgOoPFP+9i7o7qqOHOnCwWMk1GZxbj3Zompd40317M
- Z2zFy4Hv4MiGt4C2hEZJ2SxzxCoAoe4agceBO+IljBApqvzAtKlwqi/aFE1kWWGOPDYY
- bqVq90/n84cZeSVCM2t3P7vlZyACTcFy+gd0JBE14xa2tR8EnefjU1UfqJlJE/lWGlh/
- KJXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764585400; x=1765190200;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mZlxXvrfSJClyWPuc3pE9daHxkFF4SgqcMiy6LS0qjI=;
- b=nusBnLyHKf4aPVJkRJQc2ZXMrD755lsrGz3cA88OLda1sqfkuwzmYe703YnXCM6Xjo
- PCs0/odjcEbSN6J39SiSQhQLVy4Y2QSM/N5yO3ndB8QQjVqd8YX22dvgqxWk9rMyNo+8
- Mo/ZXp0d8rcOIMAKdPtz9LZwviFpXj3N7kX+F8K7Gv1xxBuUJ/AqhAjN9PVaNGDofgMd
- 9ldbBhJQLMzEBYbI0H58wkfO/oq21tWsODgoP+G8aZmgiEAMVRHIKrk1x2roX7Bg6XT7
- fhthnM5GGlLgO+O+KEQYI9ZVF0Z5uST9kwVRF1d4savvQQezv14fMPkTqYoC7psz+QZg
- cO5g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUSnyp3Jakolnbc5WxbM0kQMCDmv2Iii95jmWxNiP2gJxNU7zZylRTzfglzxU7344vH17M/oYNSfqoM@nongnu.org
-X-Gm-Message-State: AOJu0Yx74li/W6+cgftfKvNg706CRAfyHhGIRruatT7MRLvsp63Y8B3A
- A5MpaloqFiJCbVqUxmhK2f2bz+8bq7SlBmTAXobC+da/95BQxkeTEBTpeLIiAO9Zfok2p9u7ZZs
- MjDVK
-X-Gm-Gg: ASbGncufbkTxhfc/fwDj1+6TNM4xQXVP5t+zYKj/5tVr3pLppDMfbjRQdfaPbybKpUk
- G6NzRuZv3trvsYYT4MtM/ibi93ILjqH+asE7HN/IpfeQblzhl/WWEE19HFCA0i53rTZXzDS7lqx
- K34IwnZ1hcCm/L0AU6lYvAB4u4kXuJXqc6V4K77q+kf3OPjqX2OYWN76RgmRnVzj9hUMCAtIzPF
- BGhef7hvvXBXNE/8K5rsn9yGnKz77JUAwUM/gXgtIHNAmNGEwP9ESFPGdPMOcTsl1RYXCeWNzU7
- sRwPU4tKDRLrKZ+F9TKQ4DlOe3ShLwVItOZ+fT6WBoKGGBhRFSssiloEuZwjS+MDwx1AVl6/uDa
- /dG+ArPs1WodBGR715hzffG5E+UJkVt9Old6JxJ0BCND+wvZk+BfQmbdJt5153Kx6r2lnuzpgL6
- Q6pY5UxEmbccM=
-X-Google-Smtp-Source: AGHT+IEPqx9qvPTIqglMI4ulT1mjHrAdKY1ma1cpDu5bneyd+E20i/yCxLELCBnY0Wj30ZwZCVV6cA==
-X-Received: by 2002:a05:600c:4f82:b0:477:952d:fc11 with SMTP id
- 5b1f17b1804b1-477c11175a9mr448503265e9.16.1764585399967; 
- Mon, 01 Dec 2025 02:36:39 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4790ade13ddsm293712485e9.8.2025.12.01.02.36.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Dec 2025 02:36:39 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 582485F80B;
- Mon, 01 Dec 2025 10:36:38 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Thomas Huth <thuth@redhat.com>,  qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Subject: Re: [RFC PATCH] tests/functional/s390x: Add reverse debugging test
- for s390x
-In-Reply-To: <6181bc6bd6b41f46a835cee58ab3215b8cefedb4.camel@linux.ibm.com>
- (Ilya Leoshkevich's message of "Sun, 30 Nov 2025 23:59:48 +0100")
-References: <20251128133949.181828-1-thuth@redhat.com>
- <37260d74733d7631698dd9d1dc41a991b1248d3a.camel@linux.ibm.com>
- <8efd73b100f7e78b1a5bbbe89bc221397a0a115a.camel@linux.ibm.com>
- <87zf838o2w.fsf@draig.linaro.org>
- <4bf61173827c033f9591f637f83d1aedc056a51e.camel@linux.ibm.com>
- <dfc4b7b2bdb7a6678364516de03a23959965de1e.camel@linux.ibm.com>
- <6181bc6bd6b41f46a835cee58ab3215b8cefedb4.camel@linux.ibm.com>
-User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Mon, 01 Dec 2025 10:36:38 +0000
-Message-ID: <87ldjmv689.fsf@draig.linaro.org>
+ d=ngc.com; i=@ngc.com; q=dns/txt; s=ngc2020;
+ t=1764586837; x=1796122837;
+ h=from:to:subject:date:message-id:mime-version;
+ bh=2XmJgyWgpPTLFbj65ht6bQcPvVR4OcczFWYkjhMvjvs=;
+ b=oBUr7g7j1KXksa7mEHiVmFke+kvj9+QW9R/f+JgVQqqz/46IwTjgwP4C
+ 55GcZfeY2qrHKcgYLbMhTa4VwKuDnl1zIYfTI4gYx9BhUBWq+WKt/Do2V
+ ew6Woj9Wjbc0yTCy8pmMwT7+JYkUhNFzpwwazYd9Ndtlkh5CTFDufxC+z
+ sJhauRIAfkx9T0NsG5meBOQk5/4911iSS14FVYEoPut23xxZMDWW0j2/v
+ xHizNylxGWIFg1HDJ/RMpTeQCkfvjlnGZVbk7WgkzHk8uuakorxoo/GPE
+ g8WbwpCZzc7kCD/FOsav/AvUJ5AhDoq28xECMUf40xo6ePdPfb6IhV6IS w==;
+X-CSE-ConnectionGUID: Su4dQaOrStyPbzTguvHDHg==
+X-CSE-MsgGUID: WsDkuUc6RF2WVLUDu1GJpA==
+X-IronPort-AV: E=Sophos;i="6.20,240,1758603600"; d="scan'208,217";a="99603535"
+X-Amp-Result: SKIPPED(no attachment in message)
+X-Amp-File-Uploaded: False
+Received: from unknown (HELO XMRC0122.ngfedus.ngext.com) ([157.127.149.151])
+ by esa5.ngc.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Dec 2025 05:00:26 -0600
+Received: from XHTC3020.northgrum.com (134.223.210.94) by
+ XMRC0122.ngfedus.ngext.com (157.127.149.151) with Microsoft SMTP Server id
+ 15.2.2562.29; Mon, 1 Dec 2025 05:00:26 -0600
+Received: from XHYC3001.northgrum.com (134.223.213.160) by
+ XHTC3020.northgrum.com (134.223.210.94) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Mon, 1 Dec 2025 05:00:26 -0600
+Received: from XHYC3001.northgrum.com (134.223.213.160) by
+ XHYC3001.northgrum.com (134.223.213.160) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Mon, 1 Dec 2025 05:00:26 -0600
+Received: from USG02-CY1-obe.outbound.protection.office365.us (23.103.199.180)
+ by XHYC3001.northgrum.com (134.223.213.160) with Microsoft SMTP
+ Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29 via Frontend Transport; Mon, 1 Dec 2025 05:00:26 -0600
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector5401; d=microsoft.com; cv=none;
+ b=ZGWOpuUO1iFsHayGo7qXSYSMpmEeSkgZLtCSnQnki1hgIARTWNKP14dYNmBYs0V63ZNrwGzMeNzI3zhqhf7nvyghXNdUHbfv0IHPaoGz8D3oDFNrNVYvVRYIamk7rmblay7bfwzr5IBTtZNfsc+M/vgFdXjcjBWVR1ANFESBYWLgWNleOtO3txEU280wR5P8xYjr/8jaM05t00crN6QwD1w3geP0s8z9nFAGS2tyj1oSpqs7aZ2wxyWmVA/E5AQwIBoekWvvD83fPhxg1QPjeSzxIdzNprQSkqadfsH2SfHCSozM3eeFtyq7hopsLN18upav76/GFMoT4/CGLTDABQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector5401;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2XmJgyWgpPTLFbj65ht6bQcPvVR4OcczFWYkjhMvjvs=;
+ b=rrfypm9IyvLxXetlKhh6ZK0aoSsrnCfh2Uo2hSaF7n+G7WsznX0mq1T7d/+lyHPOOAoXYApzU8sNEwDpPyIM5u13Ie1dLUG+6jM+rXyuuTeESIUGugQySaJT+O/PP8EyIGWqTU1sZT4sTtD331fz6dRxxzCB/FcaWwGSp7+ZCPd9gBHnCfDdkUAyPVyNohMc9Ll8ig8nTj+cxXNZr61AOPaIJ8evDjOPa+WC5QU+0bWbhf3DqvBoJms6w2D4o5jLew2JaP75l1vqwgAIvZeq203sqXmSoWjlJ37Vn70hFNezQniTS1FOnLYZOOvahYkwvYFiHmObklpOntJ/dGKtfQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=ngc.com; dmarc=pass action=none header.from=ngc.com; dkim=pass
+ header.d=ngc.com; arc=none
+Received: from BN2P110MB0947.NAMP110.PROD.OUTLOOK.COM (2001:489a:200:168::9)
+ by BN2P110MB1621.NAMP110.PROD.OUTLOOK.COM (2001:489a:200:17b::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Mon, 1 Dec
+ 2025 11:00:24 +0000
+Received: from BN2P110MB0947.NAMP110.PROD.OUTLOOK.COM
+ ([fe80::2e6a:f257:d356:18a]) by BN2P110MB0947.NAMP110.PROD.OUTLOOK.COM
+ ([fe80::2e6a:f257:d356:18a%6]) with mapi id 15.20.9320.013; Mon, 1 Dec 2025
+ 11:00:24 +0000
+From: "Mills, Ryan D [US] (SP)" <r.mills@ngc.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Preemption of userspace PCI device model
+Thread-Topic: Preemption of userspace PCI device model
+Thread-Index: AdxisZ9Bc1dOdPWbRpek6bzv9QNr8w==
+Date: Mon, 1 Dec 2025 11:00:24 +0000
+Message-ID: <BN2P110MB0947A58124BB23CE861C5763F4DBA@BN2P110MB0947.NAMP110.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=ngc.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BN2P110MB0947:EE_|BN2P110MB1621:EE_
+x-ms-office365-filtering-correlation-id: e1690491-4167-4cd9-9793-08de30c8d43b
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|19092799006|1800799024|8096899003|38070700021; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?ZeHi/wWfsgpaQIgNC4PoyzBYCvbltUjQOaqJLc5JYpkTJtyuLO7mi+mSctQ8?=
+ =?us-ascii?Q?SN61d3Bz+ubkiIC2nEVMx2SS7qHTaK6lad3SZvdovxgBxNriPGwLP3vBhUUE?=
+ =?us-ascii?Q?dWMspI6jSUKVD3MzfVYcH5ZQUqHhh0cyE3Oiiq5sd8DHQLLbQBdwTQ4FEpjH?=
+ =?us-ascii?Q?Nyi3DuNfvnEhPeg2OVXpAcwuRH8I8bBUMw9Qm3sXk4w3aAZo7jr1yAW07T81?=
+ =?us-ascii?Q?jfEVJNXl/I328jsd0EdsyaWjk4JwLD9NgJVN4GllrGCmnJdUtsIwxl5zLeL5?=
+ =?us-ascii?Q?tXigmOdwvQxz++cfHB/4a8A1FKVQFjnGsshvsYfskTSvVCc1uYDyZv8Xqj4T?=
+ =?us-ascii?Q?7jSKqIyKXiG4ELo1UhfznCTvfwZIb3fZB7+1FpUKK6/T6IdcIdLwV1JtBrdE?=
+ =?us-ascii?Q?ld4IwhFphQ+GDZgM+anS0s99T/TZHtbPTHFSIeSsw9/NGlAn9B3RBs5iB9Zp?=
+ =?us-ascii?Q?14IBod3Mmel2JvOBjk/Vr9plnUSaMdEs4Ojnc0k4Thf2oLWLkrejh0US647r?=
+ =?us-ascii?Q?x4uFFH9TgtcWwgjzKbQA1oNbdqQZLHcwG893lvbxb+6oOhozhgxMBTPP/tqx?=
+ =?us-ascii?Q?2HM55/iclFdBTh9ja7GgmWGYMmgF2ICZITdFZtRc5+/PoSQS+sZI6Iu+OrLn?=
+ =?us-ascii?Q?MAPm8DeWfKFTDmY1Dj0wvKi5hu7QL0uBTv+GtJB8Xv6I0dXQX+3qw4/TooXx?=
+ =?us-ascii?Q?tTRvPrJqAde9j0d9bx86gvvCpRmXQC73tUeQLCzRMIxK2os2R2kpQKS+ODXy?=
+ =?us-ascii?Q?lhAc7ePlU6Ryv0huq5L+URoPFm6JevG4DPpfEtZY+uIVaEsn2TB+BEnkZxAY?=
+ =?us-ascii?Q?F25F1aZitUAOBeJpOVW+e2wYXvAmzO8QDqc2a7K5RHJkWd6B3wTwnEKcXo7S?=
+ =?us-ascii?Q?fcVuPJyUJbufEj/cwiO1LpSd0KcVLJaau/kfk1nxrWlgAlu/1L26upDR74hg?=
+ =?us-ascii?Q?VFxfYWmLiyL4Iv5anm23HIPDGyPs6pLRXO42szP5fovbdLKylSwJbVkqzp2i?=
+ =?us-ascii?Q?QkS8HlXkvVNChlVaamWBAaBYpcPM349v1hAtDJLoZ181FeTFrmAZr+JzqHcI?=
+ =?us-ascii?Q?YJ10U8ZbACrEa5zWSVFqyHGMrdHkzpxK5MdU+PzAKfQ30vQTmI6UrPf8khGL?=
+ =?us-ascii?Q?8cVIGVS/ANAKsOFISLSsSLccZP+FgcDymEsKQonAWmWgZME2mTK9fPSSz/MA?=
+ =?us-ascii?Q?0iCgEO6PRg/dR08hDHBaefdYaqS7A5ItGaB2N6d6fZQLjluQXXLaqa/lUslw?=
+ =?us-ascii?Q?Ljs9Y7a5Wt5GlDo5pvKr1X6PyBB2RO/ZwOk/YKMsiCojshjx6rZ6PtKbhRfc?=
+ =?us-ascii?Q?B7pR7W1GZDKo9WS9lmUDti4nRZpa9fFQ4KN8OMvW7H6yb4PrtsvwATwl8hO4?=
+ =?us-ascii?Q?8fFcBIpadnMO905+iJQLXAz+jJ3xKQ+a5abUPxq+izPKR2Hmf6ufAOgkvOu1?=
+ =?us-ascii?Q?OL5KjoYadGzZ8IU5SvjP53Vs0NCjeDRxsKAKoffnbmFL67/zrUNrIAkw5o83?=
+ =?us-ascii?Q?OKjoxjmN/PLa2SO6qQvu86O526OgmhnioQnc?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BN2P110MB0947.NAMP110.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(19092799006)(1800799024)(8096899003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?UBPin9MxjWhsbMhGPKr/VlbWnvMiFqwtayPjpxaHwGOodb97c/x6onCZr/My?=
+ =?us-ascii?Q?b7EAw7pSmlu3gRfFAG9Yo4WvqYaTlHTWEenrGCPg35GmgAN+MFypHO+FqkkB?=
+ =?us-ascii?Q?+LwVVBaHUtuxU2WfVsuliWgpiATKg2lDzj/07//dg6UA9kZV0tKEvW2MiwJi?=
+ =?us-ascii?Q?isnj10lBq6Cv4eDfGIEyjTswM54TUQL927MZQfbSQX/SZINUKpm89WCt5GD9?=
+ =?us-ascii?Q?m3FLiBaZk9CX90HJz3K5Wgu/33IVNjGYXnsXf6Ja2UfGXW9qrhIzTzLY5baF?=
+ =?us-ascii?Q?UvOTObYdjYS2339c2e9SEO+pedEa2/miUvqQlatoYJDryXOrqfVjnSwedklz?=
+ =?us-ascii?Q?z9NXGJapVPLJm4WazmrE7SuwBICaggMqbt0O2Fj+YD4JshvdntxPlCzSukFH?=
+ =?us-ascii?Q?f7sl7+Trq3ukngnjDZoENw0kCgqA6rWdFcfQ1q2VyTLgOnAeFT2r5h0MduEl?=
+ =?us-ascii?Q?PeGCIPw4e4S4b3nt2N6RFFMm9Q4oQEWTLZJseQhtZncB3V5PAR7IqH/U9FAD?=
+ =?us-ascii?Q?iWR8EWJBdqIByBY5oTL7L+bhR+AJ7LCbh3lO8IgEa8XTJtsvB0+Q8XL9MssV?=
+ =?us-ascii?Q?aeaM7+XXCfdQ1CmHX2GmRSqSCKDkRzFfchPIe43EVyU1xIMkupUEojWMx5+C?=
+ =?us-ascii?Q?c4fIXVk0WnxfwESCYrXPK0XJWS90U5qAQJS1Num/psZnDk1sxdtQek8c1j5a?=
+ =?us-ascii?Q?GfRskHt8nIXLxwHgdteDDRUpiFIHiM7EoYZm0MT2zjxRjdm9X4KdF+ELTwWK?=
+ =?us-ascii?Q?t33gzbmRjW0zsGOy0RyA5GWnBLHRpmff57UUWszlYWpsDkGmdRPsvPqGz+rP?=
+ =?us-ascii?Q?+3MEiMzNmCfI0Z48ryu3eKK6RSQBs9W8O83AGN72L1jClpFNjOMBbwb8GDhY?=
+ =?us-ascii?Q?7r1STnRzC8Q8h097GMfkZApIuaoXifefutNDlyK9R8IE0ZI8/KCd/nppFYyJ?=
+ =?us-ascii?Q?G1w5TRKAjKhqz99W8C2eMRIC40D7hcHONUqai3/8z+dkbDcMKUvlvpau3KUh?=
+ =?us-ascii?Q?btGQImFYmaDpbVDX0DRqneZkPEPhiHGFpK91NCpH7T9ZC97v5ipuHbG6AjbB?=
+ =?us-ascii?Q?i6t/2pAE3Sdv8RhqTsWzDI1p8Aki6JtZsL+mTYjOxAdVSKtZLzCxzfSgptgU?=
+ =?us-ascii?Q?DG7lDCbIS3PQHpDD/seyDmJeU07AJz7BRgUT5ro6ZdFzUsXHULrjxMvvOzeo?=
+ =?us-ascii?Q?I/7zbbsWUk9+bXHZTAChQhFBIEix9AcLNTBNoYTUrNuR63yuUaKUmU58QMNS?=
+ =?us-ascii?Q?C+mtziC2v7GohSD8vVCbFS5tTinu4+VYNQvS9Kg9NNT4x1erfAJpYuWTpsVV?=
+ =?us-ascii?Q?VIJdP8UAGBQtI7RIK6PiRAwgWov9E6k7qGebu13gmWs+63wPZqNMlZ270TS2?=
+ =?us-ascii?Q?yZoj00rIt62v5PGSdr/Fff6Eup+Bw5UCeuqMrqO2r9tlClE35a8HocIIpqE7?=
+ =?us-ascii?Q?8EPr3AmRcaU/tH388edShfCUgMH3CGZ+l/tuK7Hn4eXoh12YchwXsPyKgebH?=
+ =?us-ascii?Q?xcQ4W53tNdT9uQY=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_BN2P110MB0947A58124BB23CE861C5763F4DBABN2P110MB0947NAMP_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BN2P110MB0947.NAMP110.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: e1690491-4167-4cd9-9793-08de30c8d43b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Dec 2025 11:00:24.4991 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 83116fc8-b4d8-4b27-8ddf-e8f32e080b8e
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN2P110MB1621
+Received-SPF: pass client-ip=207.54.93.154; envelope-from=r.mills@ngc.com;
+ helo=esa5.ngc.iphmx.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,230 +182,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ilya Leoshkevich <iii@linux.ibm.com> writes:
+--_000_BN2P110MB0947A58124BB23CE861C5763F4DBABN2P110MB0947NAMP_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-> On Sun, 2025-11-30 at 20:03 +0100, Ilya Leoshkevich wrote:
->> On Sun, 2025-11-30 at 19:32 +0100, Ilya Leoshkevich wrote:
->> > On Sun, 2025-11-30 at 16:47 +0000, Alex Benn=C3=A9e wrote:
->> > > Ilya Leoshkevich <iii@linux.ibm.com> writes:
->> > >=20
->> > > > On Fri, 2025-11-28 at 18:25 +0100, Ilya Leoshkevich wrote:
->> > > > > On Fri, 2025-11-28 at 14:39 +0100, Thomas Huth wrote:
->> > > > > > From: Thomas Huth <thuth@redhat.com>
->> > > > > >=20
->> > > > > > We just have to make sure that we can set the endianness to
->> > > > > > big
->> > > > > > endian,
->> > > > > > then we can also run this test on s390x.
->> > > > > >=20
->> > > > > > Signed-off-by: Thomas Huth <thuth@redhat.com>
->> > > > > > ---
->> > > > > > =C2=A0Marked as RFC since it depends on the fix for this bug (=
-so
->> > > > > > it
->> > > > > > cannot
->> > > > > > =C2=A0be merged yet):
->> > > > > > =C2=A0
->> > > > > > https://lore.kernel.org/qemu-devel/a0accce9-6042-4a7b-a7c7-218=
-212818891@redhat.com
->> > > > > > /
->> > > > > >=20
->> > > > > > =C2=A0tests/functional/reverse_debugging.py=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 +++-
->> > > > > > =C2=A0tests/functional/s390x/meson.build=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 +
->> > > > > > =C2=A0tests/functional/s390x/test_reverse_debug.py | 21
->> > > > > > ++++++++++++++++++++
->> > > > > > =C2=A03 files changed, 25 insertions(+), 1 deletion(-)
->> > > > > > =C2=A0create mode 100755
->> > > > > > tests/functional/s390x/test_reverse_debug.py
->> > > > >=20
->> > > > > Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
->> > > > >=20
->> > > > >=20
->> > > > > I have a simple fix which helps with your original report,
->> > > > > but
->> > > > > not
->> > > > > with this test. I'm still investigating.
->> > > > >=20
->> > > > > --- a/target/s390x/machine.c
->> > > > > +++ b/target/s390x/machine.c
->> > > > > @@ -52,6 +52,14 @@ static int cpu_pre_save(void *opaque)
->> > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kvm_s390_vcpu_i=
-nterrupt_pre_save(cpu);
->> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 }
->> > > > > =C2=A0
->> > > > > +=C2=A0=C2=A0=C2=A0 if (tcg_enabled()) {
->> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /*
->> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * Ensure symme=
-try with cpu_post_load() with respect
->> > > > > to
->> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * CHECKPOINT_C=
-LOCK_VIRTUAL.
->> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 */
->> > > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tcg_s390_tod_updated=
-(CPU(cpu), RUN_ON_CPU_NULL);
->> > > > > +=C2=A0=C2=A0=C2=A0 }
->> > > > > +
->> > > > > =C2=A0=C2=A0=C2=A0=C2=A0 return 0;
->> > > > > =C2=A0}
->> > > >=20
->> > > > Interestingly enough, this patch fails only under load, e.g.,
->> > > > if
->> > > > I
->> > > > run
->> > > > make check -j"$(nproc)" or if I run your test in isolation, but
->> > > > with
->> > > > stress-ng cpu in background. The culprit appears to be:
->> > > >=20
->> > > > s390_tod_load()
->> > > > =C2=A0 qemu_s390_tod_set()
->> > > > =C2=A0=C2=A0=C2=A0 async_run_on_cpu(tcg_s390_tod_updated)
->> > > >=20
->> > > > Depending on the system load, this additional
->> > > > tcg_s390_tod_updated()
->> > > > may or may not end up being called during handle_backward(). If
->> > > > it
->> > > > does, we get an infinite loop again, because now we need two
->> > > > checkpoints.
->> > > >=20
->> > > > I have a feeling that this code may be violating some record-
->> > > > replay
->> > > > requirement, but I can't quite put my finger on it. For
->> > > > example,
->> > > > async_run_on_cpu() does not sound like something deterministic,
->> > > > but
->> > > > then again it just queues work for rr_cpu_thread_fn(), which is
->> > > > supposed to be deterministic.
->> > >=20
->> > > The the async_run_on_cpu is called from the vcpu thread in
->> > > response
->> > > to a
->> > > deterministic event at a known point in time it should be fine.
->> > > If
->> > > it
->> > > came from another thread that is not synchronised via replay_lock
->> > > then
->> > > things will go wrong.
->> > >=20
->> > > But this is a VM load save helper?
->> >=20
->> > Yes, and it's called from the main thread. Either during
->> > initialization, or as a reaction to GDB packets.
->> >=20
->> > Here is the call stack:
->> >=20
->> > =C2=A0 qemu_loadvm_state()
->> > =C2=A0=C2=A0=C2=A0 qemu_loadvm_state_main()
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qemu_loadvm_section_start_full()
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 vmstate_load()
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 vmstate_load_st=
-ate()
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 cpu=
-_post_load()
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 tcg_s390_tod_updated()
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 update_ckc_timer()
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 timer_mod()
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 s390_tod_load()
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qem=
-u_s390_tod_set()=C2=A0 # via tdc->set()
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 async_run_on_cpu(tcg_s390_tod_updated)
->> >=20
->> > So you think we may have to take the replay lock around
->> > load_snapshot()? So that all async_run_on_cpu() calls it makes end
->> > up
->> > being handled by the vCPU thread deterministically.
->>=20
->> To answer my own question: apparently this is already the case; at
->> least, the following does not cause any fallout:
->>=20
->> diff --git a/include/system/replay.h b/include/system/replay.h
->> index 6859df09580..e1cd9b2f900 100644
->> --- a/include/system/replay.h
->> +++ b/include/system/replay.h
->> @@ -60,6 +60,7 @@ extern char *replay_snapshot;
->> =C2=A0
->> =C2=A0void replay_mutex_lock(void);
->> =C2=A0void replay_mutex_unlock(void);
->> +bool replay_mutex_locked(void);
->> =C2=A0
->> =C2=A0static inline void replay_unlock_guard(void *unused)
->> =C2=A0{
->> diff --git a/migration/savevm.c b/migration/savevm.c
->> index 62cc2ce25cb..ba945d3a1ea 100644
->> --- a/migration/savevm.c
->> +++ b/migration/savevm.c
->> @@ -3199,6 +3199,8 @@ bool save_snapshot(const char *name, bool
->> overwrite, const char *vmstate,
->> =C2=A0=C2=A0=C2=A0=C2=A0 uint64_t vm_state_size;
->> =C2=A0=C2=A0=C2=A0=C2=A0 g_autoptr(GDateTime) now =3D g_date_time_new_no=
-w_local();
->> =C2=A0
->> +=C2=A0=C2=A0=C2=A0 g_assert(replay_mutex_locked());
->> +
->> =C2=A0=C2=A0=C2=A0=C2=A0 GLOBAL_STATE_CODE();
->> =C2=A0
->> =C2=A0=C2=A0=C2=A0=C2=A0 if (!migrate_can_snapshot(errp)) {
->> @@ -3390,6 +3392,8 @@ bool load_snapshot(const char *name, const char
->> *vmstate,
->> =C2=A0=C2=A0=C2=A0=C2=A0 int ret;
->> =C2=A0=C2=A0=C2=A0=C2=A0 MigrationIncomingState *mis =3D migration_incom=
-ing_get_current();
->> =C2=A0
->> +=C2=A0=C2=A0=C2=A0 g_assert(replay_mutex_locked());
->> +
->> =C2=A0=C2=A0=C2=A0=C2=A0 if (!migrate_can_snapshot(errp)) {
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return false;
->> =C2=A0=C2=A0=C2=A0=C2=A0 }
->> diff --git a/replay/replay-internal.h b/replay/replay-internal.h
->> index 75249b76936..30825a0753e 100644
->> --- a/replay/replay-internal.h
->> +++ b/replay/replay-internal.h
->> @@ -124,7 +124,6 @@ void replay_get_array_alloc(uint8_t **buf, size_t
->> *size);
->> =C2=A0 * synchronisation between vCPU and main-loop threads. */
->> =C2=A0
->> =C2=A0void replay_mutex_init(void);
->> -bool replay_mutex_locked(void);
->> =C2=A0
->> =C2=A0/*! Checks error status of the file. */
->> =C2=A0void replay_check_error(void);
->
-> I believe now I at least understand what the race is about:
->
-> - cpu_post_load() fires the TOD timer immediately.
->
-> - s390_tod_load() schedules work for firing the TOD timer.
+I am using libvfio-user to model a PCI device for QEMU. Occasionally, the P=
+CI device model process gets preempted by the host, resulting in the kernel=
+ driver running in QEMU thinking that the device has timed out. The kernel =
+driver then begins timeout recovery logic, only for the host to resume the =
+PCI device model process. This results in a non-sensical PCI device state w=
+ithin the kernel driver.
+I think the correct solution to this is to harden the timeout logic in the =
+kernel driver code, but I was wondering if there is a way to have QEMU pend=
+ for vfio device operations rather than asynchronously continue kernel exec=
+ution. A single iowrite32() call in a kernel driver would realistically nev=
+er take such an excessive amount of time to complete that it would cause a =
+driver timeout.
 
-Is this a duplicate of work then? Could we just rely on one or the
-other? If you drop the cpu_post_load() tweak then the vmstate load
-helper should still ensure everything works right?
+--_000_BN2P110MB0947A58124BB23CE861C5763F4DBABN2P110MB0947NAMP_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-> - If rr loop sees work and then timer, we get one timer callback.
+<html xmlns:o=3D"urn:schemas-microsoft-com:office:office" xmlns:w=3D"urn:sc=
+hemas-microsoft-com:office:word" xmlns:m=3D"http://schemas.microsoft.com/of=
+fice/2004/12/omml" xmlns=3D"http://www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-> - If rr loop sees timer and then work, we get two timer callbacks.
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Aptos;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:12.0pt;
+	font-family:"Aptos",sans-serif;
+	mso-ligatures:standardcontextual;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Aptos",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style>
+</head>
+<body lang=3D"EN-US" link=3D"#467886" vlink=3D"#96607D" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">I am using libvfio-user to model a PCI device for QE=
+MU. Occasionally, the PCI device model process gets preempted by the host, =
+resulting in the kernel driver running in QEMU thinking that the device has=
+ timed out. The kernel driver then
+ begins timeout recovery logic, only for the host to resume the PCI device =
+model process. This results in a non-sensical PCI device state within the k=
+ernel driver.<o:p></o:p></p>
+<p class=3D"MsoNormal">I think the correct solution to this is to harden th=
+e timeout logic in the kernel driver code, but I was wondering if there is =
+a way to have QEMU pend for vfio device operations rather than asynchronous=
+ly continue kernel execution. A single
+ iowrite32() call in a kernel driver would realistically never take such an=
+ excessive amount of time to complete that it would cause a driver timeout.=
+<o:p></o:p></p>
+</div>
+</body>
+</html>
 
-If the timer is armed we should expect at least to execute a few
-instructions before triggering the timer, unless it was armed ready
-expired.=20
-
-> - Record and replay may diverge due to this race.
->
-> - In this particular case divergence makes rr loop spin: it sees that
->   TOD timer has expired, but cannot invoke its callback, because there
->   is no recorded CHECKPOINT_CLOCK_VIRTUAL.
->
-> - The order in which rr loop sees work and timer depends on whether
->   and when rr loop wakes up during load_snapshot().
->
-> - rr loop may wake up after the main thread kicks the CPU and drops
->   the BQL, which may happen if it calls, e.g., qemu_cond_wait_bql().
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+--_000_BN2P110MB0947A58124BB23CE861C5763F4DBABN2P110MB0947NAMP_--
 
