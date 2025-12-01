@@ -4,54 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C561DD111A8
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 08:07:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE56FD116F1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 09:24:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vPyvC-0006SD-NN; Mon, 01 Dec 2025 03:06:11 -0500
+	id 1vQ07w-0003xS-53; Mon, 01 Dec 2025 04:23:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1vPyv4-0006Pm-KU; Mon, 01 Dec 2025 03:06:03 -0500
-Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
- helo=Atcsqr.andestech.com)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vQ07s-0003wj-Rk
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 04:23:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
- id 1vPyv1-0002Th-CL; Mon, 01 Dec 2025 03:06:02 -0500
-Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
- by Atcsqr.andestech.com with ESMTPS id 5B185UmR081446
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 1 Dec 2025 16:05:30 +0800 (+08)
- (envelope-from alvinga@andestech.com)
-Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS31.andestech.com
- (10.0.1.89) with Microsoft SMTP Server id 14.3.498.0; Mon, 1 Dec 2025
- 16:05:30 +0800
-To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <vivahavey@gmail.com>, Alvin Chang
- <alvinga@andestech.com>, Yu-Ming Chang <yumin686@andestech.com>
-Subject: [PATCH] target/riscv: Make number of debug triggers configurable
-Date: Mon, 1 Dec 2025 16:05:24 +0800
-Message-ID: <20251201080524.186697-1-alvinga@andestech.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vQ07p-0004WO-Lv
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 04:23:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764580993;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cPHGzFu7m+cyDWsE33J604APZPfPlxebXaHZJGvmWbw=;
+ b=XvcX7JwlhRq79GCKzwdbmWKH3Fg0ipxWZaCFbBxGXBDyt4CjP6zn6dJkLXyi8k0nslQ2nH
+ 28NYZ4SQkH1+/Dlh4ms7SLIS5kFeRY5qjR9MtvnlJhvSGf4tOeDPtOCCd/epUJRivWeS86
+ l0UjTjvbApIgpH5GtIPc+yjIyQjLljc=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-277--A-R4lxiP6G86gVsbAlbKg-1; Mon, 01 Dec 2025 04:23:11 -0500
+X-MC-Unique: -A-R4lxiP6G86gVsbAlbKg-1
+X-Mimecast-MFC-AGG-ID: -A-R4lxiP6G86gVsbAlbKg_1764580990
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-42b2fb13b79so2072601f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 01:23:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764580990; x=1765185790; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cPHGzFu7m+cyDWsE33J604APZPfPlxebXaHZJGvmWbw=;
+ b=aidlZ0UBzHUnyv2Z1ab0yYAy8PHtgXzbzsmfOXURnOD8DquDvgEnd5wNpZuE3h0bCg
+ EDDRkCDobVlgpWCCGds/u+LjdUPoFsOHxBksRBtWaBG7nDdmScNTjRrOS6pwYR5jB9mt
+ 31q8NnjNaqAdcTBbUnllNjJf4cOASoK5dkSba8BWq8nJDkwCVepmryCSbzsN6ZZILZJ/
+ TQDhDLrUzoowLUoKSiW7lXhA7dV5X8Cwmkd1xAc5q5OpMntUOV8cMPwdmCk2nSj6EiyN
+ cnb7Nv6AOtVQPjn+VTp98PC+/s1Vl5eO7NjIoSNRCr4AGNvhD/C1D/1qWmvidAQWqhsF
+ q6QA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764580990; x=1765185790;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cPHGzFu7m+cyDWsE33J604APZPfPlxebXaHZJGvmWbw=;
+ b=juABCkjtztNMHEhARYHiywvMftdoTscIeKYbRLp43AvjkhpWmPMk1QylcjQwmGVqT1
+ JJwWXyDrNPZCSf8e1IfhlS3yl7Cz2v0JFs6wG02cozhQuO9c6soWj8e8mCesLABenOng
+ RgHp36vkg5kvCD9OO0IA4z0A/5wktfqpIckFia4nsqWKrtKJBpLSIM2JTZcYiE3DadK8
+ J/t0MWEQ+u57McKpjlmejtKLZirI+yLGIE+/Ar4XfZwRPC/NeQ4mYL+YxuhDRlIe7CSU
+ dQ5DAVfBx7KWiXmTONIiy1ucdRAHSXW/2DNCbwtAUOkYXceusbXHMYXD9aA8qnfh4jcg
+ raUw==
+X-Gm-Message-State: AOJu0Yx88aSJAOzbxT3e0iIvOVkOZ5js8mDChw966fcqPcff719txu5f
+ lLOB8vZlA5BsFVdqjnYDsEWtA5Wkf7dhOu+B1wLJs2lJKFiEqw7OqBHodf15ZBpE8E+Xhr57IuZ
+ wBRTCKejRWQM6hNJWUmVxyjcpDrZIj6Lou+4G0irXvDTSlJ1A5cC6lgyw
+X-Gm-Gg: ASbGncsmPFaKIJ/FGBQ4yPdCvJ/FO8p60CApLULwDG+cZ0bSrbn/hxJZ5oONyAJ0Pur
+ l106fzdpGsF9y68dzL5XHlxvb2VoNPoV71aSLqTkjlJLafx6COgxupSLWuoxtfyENR/ekEyrvk5
+ 3pXKDTBDU1r5M1lQFT8vOzOWByDW2qls7uje0jaKRztif84hzjyPrZlryuPszVwxprzLzBAyyhv
+ bsYaQ0l0SRpc8rI09jljNopepOlRlJzfs+O3dc74ks1gThxhZZRRZ40LaER5YJUHrvpVAIJHbN9
+ gSM63orXDWhjZ/+yu3evc/EAwlYFxGjTufx5z85Zc1MAOgj3JL3xIDOOxx5plhyfEk6rbA==
+X-Received: by 2002:a5d:5f44:0:b0:42c:a4e7:3975 with SMTP id
+ ffacd0b85a97d-42cc1cf3be2mr38956529f8f.30.1764580990451; 
+ Mon, 01 Dec 2025 01:23:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGPofmDjU/Uwzz35OA/oVYA9bmDRbanSyb4n5MtZqq1p3HICpPUdg4UBxeGFGh2ikbsbNZYQA==
+X-Received: by 2002:a5d:5f44:0:b0:42c:a4e7:3975 with SMTP id
+ ffacd0b85a97d-42cc1cf3be2mr38956486f8f.30.1764580989974; 
+ Mon, 01 Dec 2025 01:23:09 -0800 (PST)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42e1c5c304csm24879703f8f.8.2025.12.01.01.23.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Dec 2025 01:23:09 -0800 (PST)
+Date: Mon, 1 Dec 2025 10:23:08 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v5] hw/i386/pc: Remove
+ PCMachineClass::legacy_cpu_hotplug field
+Message-ID: <20251201102308.5012f5e8@imammedo>
+In-Reply-To: <aScevCMDynm1dtIo@intel.com>
+References: <20250508133550.81391-3-philmd@linaro.org>
+ <20251031142825.179239-1-imammedo@redhat.com>
+ <aScevCMDynm1dtIo@intel.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.15.183]
-X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 5B185UmR081446
-Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
- helo=Atcsqr.andestech.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,275 +119,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alvin Chang <alvinga@andestech.com>
-From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In current implementation, the number of debug triggers was hardcoded as
-RV_MAX_TRIGGERS macro. This commit replaces the fixed value with a new
-"num_triggers" configuration, allowing platforms to configure the number
-of debug triggers they want.
+On Wed, 26 Nov 2025 23:37:32 +0800
+Zhao Liu <zhao1.liu@intel.com> wrote:
 
-If no specific option is provided, the default number of debug triggers
-remains 2 as before.
+> Hi Igor,
+> 
+> I find after removing legacy cpu hotplug totally, it seems necessary to
+> update docs/specs/acpi_cpu_hotplug.rst as well, since then QEMU doesn't
+> have legacy cpu hotplug. Do you agree?
+> 
+> I also attached my update for that doc. If this change is fine for you,
+> I will squash that doc change into another patch that removes
+> cpu_hotplug.[h|c] - I split your this patch into several parts
+> (following you another previous suggestion [*] to make review easier).
+> :)
 
-A new CPU property "num-triggers" is added to let users configure the
-number of debug triggers from the command line. For example:
+sure thing, whatever makes it easier to read/review
 
-  -cpu max,num-triggers=8
+> 
+> [*]: https://lore.kernel.org/qemu-devel/20250509171847.0b505c96@imammedo.users.ipa.redhat.com/
+> 
+> Thanks,
+> Zhao
+> ---
+> From ff3da76cf7de097c42bdaf64850dc4df65b4bf4a Mon Sep 17 00:00:00 2001
+> From: Zhao Liu <zhao1.liu@intel.com>
+> Date: Wed, 26 Nov 2025 23:06:09 +0800
+> Subject: [PATCH] docs/specs/acpi_cpu_hotplug.rst: remove legacy cpu hotplug
+>  descriptions
+> 
+> Legacy cpu hotplug has been removed totally and machines start with
+> modern cpu hotplug interface directly.
+> 
+> Therefore, update the documentation to describe current QEMU cpu hotplug
+> logic.
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-Signed-off-by: Alvin Chang <alvinga@andestech.com>
-Reviewed-by: Yu-Ming Chang <yumin686@andestech.com>
----
- target/riscv/cpu.c                | 34 +++++++++++++++++++++++++++++++
- target/riscv/cpu.h                | 12 +++++------
- target/riscv/cpu_cfg_fields.h.inc |  1 +
- target/riscv/csr.c                |  3 ++-
- target/riscv/debug.c              | 23 +++++++++++++--------
- target/riscv/debug.h              |  2 --
- target/riscv/machine.c            | 16 ++++++++++-----
- 7 files changed, 69 insertions(+), 22 deletions(-)
+LGTM
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 73d4280..5996d13 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1122,6 +1122,7 @@ static void riscv_cpu_init(Object *obj)
-     cpu->cfg.cboz_blocksize = 64;
-     cpu->cfg.pmp_regions = 16;
-     cpu->cfg.pmp_granularity = MIN_RISCV_PMP_GRANULARITY;
-+    cpu->cfg.num_triggers = 2;
-     cpu->env.vext_ver = VEXT_VERSION_1_00_0;
-     cpu->cfg.max_satp_mode = -1;
- 
-@@ -1644,6 +1645,38 @@ static const PropertyInfo prop_pmp_granularity = {
-     .set = prop_pmp_granularity_set,
- };
- 
-+static void prop_num_triggers_set(Object *obj, Visitor *v, const char *name,
-+                                  void *opaque, Error **errp)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+    uint32_t value;
-+
-+    visit_type_uint32(v, name, &value, errp);
-+
-+    if (cpu->cfg.num_triggers != value && riscv_cpu_is_vendor(obj)) {
-+        cpu_set_prop_err(cpu, name, errp);
-+        return;
-+    }
-+
-+    cpu_option_add_user_setting(name, value);
-+    cpu->cfg.num_triggers = value;
-+}
-+
-+static void prop_num_triggers_get(Object *obj, Visitor *v, const char *name,
-+                                  void *opaque, Error **errp)
-+{
-+    uint32_t value = RISCV_CPU(obj)->cfg.pmp_regions;
-+
-+    visit_type_uint32(v, name, &value, errp);
-+}
-+
-+static const PropertyInfo prop_num_triggers = {
-+    .type = "uint32",
-+    .description = "num-triggers",
-+    .get = prop_num_triggers_get,
-+    .set = prop_num_triggers_set,
-+};
-+
- static int priv_spec_from_str(const char *priv_spec_str)
- {
-     int priv_version = -1;
-@@ -2645,6 +2678,7 @@ static const Property riscv_cpu_properties[] = {
-     {.name = "pmp", .info = &prop_pmp},
-     {.name = "num-pmp-regions", .info = &prop_num_pmp_regions},
-     {.name = "pmp-granularity", .info = &prop_pmp_granularity},
-+    {.name = "num-triggers", .info = &prop_num_triggers},
- 
-     {.name = "priv_spec", .info = &prop_priv_spec},
-     {.name = "vext_spec", .info = &prop_vext_spec},
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 36e7f10..b32ed78 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -450,13 +450,13 @@ struct CPUArchState {
- 
-     /* trigger module */
-     target_ulong trigger_cur;
--    target_ulong tdata1[RV_MAX_TRIGGERS];
--    target_ulong tdata2[RV_MAX_TRIGGERS];
--    target_ulong tdata3[RV_MAX_TRIGGERS];
-+    target_ulong *tdata1;
-+    target_ulong *tdata2;
-+    target_ulong *tdata3;
-     target_ulong mcontext;
--    struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
--    struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
--    QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
-+    struct CPUBreakpoint **cpu_breakpoint;
-+    struct CPUWatchpoint **cpu_watchpoint;
-+    QEMUTimer **itrigger_timer;
-     int64_t last_icount;
-     bool itrigger_enabled;
- 
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index a154ecd..840e8c4 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -167,6 +167,7 @@ TYPED_FIELD(uint16_t, cbop_blocksize, 0)
- TYPED_FIELD(uint16_t, cboz_blocksize, 0)
- TYPED_FIELD(uint8_t,  pmp_regions, 0)
- TYPED_FIELD(uint32_t, pmp_granularity, 0)
-+TYPED_FIELD(uint32_t, num_triggers, 0)
- 
- TYPED_FIELD(int8_t, max_satp_mode, -1)
- 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 5c91658..fce5f94 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -5346,7 +5346,8 @@ static RISCVException read_tdata(CPURISCVState *env, int csrno,
-                                  target_ulong *val)
- {
-     /* return 0 in tdata1 to end the trigger enumeration */
--    if (env->trigger_cur >= RV_MAX_TRIGGERS && csrno == CSR_TDATA1) {
-+    if (env->trigger_cur >= riscv_cpu_cfg(env)->num_triggers &&
-+        csrno == CSR_TDATA1) {
-         *val = 0;
-         return RISCV_EXCP_NONE;
-     }
-diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-index 5664466..460363f 100644
---- a/target/riscv/debug.c
-+++ b/target/riscv/debug.c
-@@ -171,7 +171,7 @@ target_ulong tselect_csr_read(CPURISCVState *env)
- 
- void tselect_csr_write(CPURISCVState *env, target_ulong val)
- {
--    if (val < RV_MAX_TRIGGERS) {
-+    if (val < riscv_cpu_cfg(env)->num_triggers) {
-         env->trigger_cur = val;
-     }
- }
-@@ -700,7 +700,7 @@ static bool check_itrigger_priv(CPURISCVState *env, int index)
- bool riscv_itrigger_enabled(CPURISCVState *env)
- {
-     int count;
--    for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (int i = 0; i < riscv_cpu_cfg(env)->num_triggers; i++) {
-         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-             continue;
-         }
-@@ -720,7 +720,7 @@ bool riscv_itrigger_enabled(CPURISCVState *env)
- void helper_itrigger_match(CPURISCVState *env)
- {
-     int count;
--    for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (int i = 0; i < riscv_cpu_cfg(env)->num_triggers; i++) {
-         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-             continue;
-         }
-@@ -749,7 +749,7 @@ static void riscv_itrigger_update_count(CPURISCVState *env)
-     int64_t last_icount = env->last_icount, current_icount;
-     current_icount = env->last_icount = icount_get_raw();
- 
--    for (int i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (int i = 0; i < riscv_cpu_cfg(env)->num_triggers; i++) {
-         if (get_trigger_type(env, i) != TRIGGER_TYPE_INST_CNT) {
-             continue;
-         }
-@@ -949,7 +949,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
-     int i;
- 
-     QTAILQ_FOREACH(bp, &cs->breakpoints, entry) {
--        for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+        for (i = 0; i < riscv_cpu_cfg(env)->num_triggers; i++) {
-             trigger_type = get_trigger_type(env, i);
- 
-             if (!trigger_common_match(env, trigger_type, i)) {
-@@ -995,7 +995,7 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
-     int flags;
-     int i;
- 
--    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (i = 0; i < riscv_cpu_cfg(env)->num_triggers; i++) {
-         trigger_type = get_trigger_type(env, i);
- 
-         if (!trigger_common_match(env, trigger_type, i)) {
-@@ -1046,9 +1046,16 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
- 
- void riscv_trigger_realize(CPURISCVState *env)
- {
-+    uint32_t num_triggers = riscv_cpu_cfg(env)->num_triggers;
-     int i;
- 
--    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    env->tdata1 = g_new0(target_ulong, num_triggers);
-+    env->tdata2 = g_new0(target_ulong, num_triggers);
-+    env->tdata3 = g_new0(target_ulong, num_triggers);
-+    env->cpu_breakpoint = g_new0(struct CPUBreakpoint *, num_triggers);
-+    env->cpu_watchpoint = g_new0(struct CPUWatchpoint *, num_triggers);
-+    env->itrigger_timer = g_new0(QEMUTimer *, num_triggers);
-+    for (i = 0; i < num_triggers; i++) {
-         env->itrigger_timer[i] = timer_new_ns(QEMU_CLOCK_VIRTUAL,
-                                               riscv_itrigger_timer_cb, env);
-     }
-@@ -1060,7 +1067,7 @@ void riscv_trigger_reset_hold(CPURISCVState *env)
-     int i;
- 
-     /* init to type 2 triggers */
--    for (i = 0; i < RV_MAX_TRIGGERS; i++) {
-+    for (i = 0; i < riscv_cpu_cfg(env)->num_triggers; i++) {
-         /*
-          * type = TRIGGER_TYPE_AD_MATCH
-          * dmode = 0 (both debug and M-mode can write tdata)
-diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-index f76b8f9..d3aae61 100644
---- a/target/riscv/debug.h
-+++ b/target/riscv/debug.h
-@@ -24,8 +24,6 @@
- 
- #include "exec/breakpoint.h"
- 
--#define RV_MAX_TRIGGERS         2
--
- /* register index of tdata CSRs */
- enum {
-     TDATA1 = 0,
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 18d790a..c7244b7 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -239,15 +239,21 @@ static int debug_post_load(void *opaque, int version_id)
- 
- static const VMStateDescription vmstate_debug = {
-     .name = "cpu/debug",
--    .version_id = 2,
--    .minimum_version_id = 2,
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-     .needed = debug_needed,
-     .post_load = debug_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
--        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
--        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
--        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
-+        VMSTATE_VARRAY_UINT32(env.tdata1, RISCVCPU,
-+                              cfg.num_triggers, 0,
-+                              vmstate_info_uinttl, target_ulong),
-+        VMSTATE_VARRAY_UINT32(env.tdata2, RISCVCPU,
-+                              cfg.num_triggers, 0,
-+                              vmstate_info_uinttl, target_ulong),
-+        VMSTATE_VARRAY_UINT32(env.tdata3, RISCVCPU,
-+                              cfg.num_triggers, 0,
-+                              vmstate_info_uinttl, target_ulong),
-         VMSTATE_END_OF_LIST()
-     }
- };
--- 
-2.43.0
+> ---
+>  docs/specs/acpi_cpu_hotplug.rst | 28 +++-------------------------
+>  1 file changed, 3 insertions(+), 25 deletions(-)
+> 
+> diff --git a/docs/specs/acpi_cpu_hotplug.rst b/docs/specs/acpi_cpu_hotplug.rst
+> index 351057c96761..f49678100044 100644
+> --- a/docs/specs/acpi_cpu_hotplug.rst
+> +++ b/docs/specs/acpi_cpu_hotplug.rst
+> @@ -8,22 +8,6 @@ ACPI BIOS GPE.2 handler is dedicated for notifying OS about CPU hot-add
+>  and hot-remove events.
+> 
+> 
+> -Legacy ACPI CPU hotplug interface registers
+> --------------------------------------------
+> -
+> -CPU present bitmap for:
+> -
+> -- ICH9-LPC (IO port 0x0cd8-0xcf7, 1-byte access)
+> -- PIIX-PM  (IO port 0xaf00-0xaf1f, 1-byte access)
+> -- One bit per CPU. Bit position reflects corresponding CPU APIC ID. Read-only.
+> -- The first DWORD in bitmap is used in write mode to switch from legacy
+> -  to modern CPU hotplug interface, write 0 into it to do switch.
+> -
+> -QEMU sets corresponding CPU bit on hot-add event and issues SCI
+> -with GPE.2 event set. CPU present map is read by ACPI BIOS GPE.2 handler
+> -to notify OS about CPU hot-add events. CPU hot-remove isn't supported.
+> -
+> -
+>  Modern ACPI CPU hotplug interface registers
+>  -------------------------------------------
+> 
+> @@ -189,20 +173,14 @@ Typical usecases
+>  (x86) Detecting and enabling modern CPU hotplug interface
+>  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 
+> -QEMU starts with legacy CPU hotplug interface enabled. Detecting and
+> -switching to modern interface is based on the 2 legacy CPU hotplug features:
+> -
+> -#. Writes into CPU bitmap are ignored.
+> -#. CPU bitmap always has bit #0 set, corresponding to boot CPU.
+> -
+> -Use following steps to detect and enable modern CPU hotplug interface:
+> +QEMU starts with modern CPU hotplug interface enabled. Use following steps to
+> +detect modern CPU hotplug interface:
+> 
+> -#. Store 0x0 to the 'CPU selector' register, attempting to switch to modern mode
+>  #. Store 0x0 to the 'CPU selector' register, to ensure valid selector value
+>  #. Store 0x0 to the 'Command field' register
+>  #. Read the 'Command data 2' register.
+>     If read value is 0x0, the modern interface is enabled.
+> -   Otherwise legacy or no CPU hotplug interface available
+> +   Otherwise no CPU hotplug interface available
+> 
+>  Get a cpu with pending event
+>  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> --
+> 2.34.1
+> 
 
 
