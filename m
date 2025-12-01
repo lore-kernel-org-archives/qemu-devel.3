@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06F75D116F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 15:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4827DD116F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 15:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ5j8-0004ge-LM; Mon, 01 Dec 2025 10:22:10 -0500
+	id 1vQ5kx-0006Fk-Tl; Mon, 01 Dec 2025 10:24:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+cd717ce28a9accd739e3+8135+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1vQ5il-0004bI-9W
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 10:21:49 -0500
+ id 1vQ5kt-0006DX-Rw
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 10:23:59 -0500
 Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+cd717ce28a9accd739e3+8135+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1vQ5ib-0001Az-Dm
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 10:21:43 -0500
+ id 1vQ5ks-0001SN-BU
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 10:23:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=MIME-Version:Content-Type:References:
  In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
  Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=7dceTfOsXnKqavweK3k+44eM+5C0wRrSR4LydTGCVdM=; b=XWd8pqL1gOngI7q6PUolbcZ8U1
- jtJVZ0tOz34P7aGCdEbM6ia5zwKfhzNzxTLjm4duUmb3/8542ahUyUklr4YD3mRmcqnGJpgS8HxGz
- 7IWpxzDly5sT+6YXWHJKiPEiY7NKKEoz+xYvGcW4MvfgfpuzfSTOW2CX4/kagO9/lg5Qv6c0TRtom
- 4odwikcyWLnV7u4zZJ3RVUFPgKGTQHUkWr3hLRPLAWlkHji8GvaG+aJ+tzg3m5p0mB38TysjpNloj
- CUQ3uoPpeth7hb352SInAyrPMiq603WRPIjg/tkTwSnCZg6o8I1lTHR6SpabGfZR0ktubeqW32YRA
- pT4WGWKg==;
+ bh=To8av4PkogRS6v1Xr1+oXj10ut+9/eX7WWCg4wXaTeI=; b=CZYTYtQKANNimhFvR0LbVAJ8CY
+ dqTwVcFiVQRMIw5gmH6jBB9tLZvZk3BPZfJdd5z9+Cn+OjbUC4+5rbnhpvN+UR12e85ZgP63RnvSQ
+ yqsOAirJvsmIsRTOwosFNS5ums12DkckYmlBDY7T0/jcWevOb5ud7o1SrSnLTJiEFJzUaaXIXGzDS
+ sernj2pZZwYvYFoSQ5r0LX0bB91Y2KB0WX0IN2irkVRke84cHGlOojzR2RqnyfrVhwmHlj/UOfRGn
+ wEdLtzw/9KG1BjCq54UZC6lNk3WsY2Q/ZO2Y9LLY9LAvmUfbMvrtidCLCRIDz8ChO5xYf3LqZJsFi
+ kerSYQ6Q==;
 Received: from [172.31.31.148] (helo=u09cd745991455d.lumleys.internal)
  by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
- id 1vQ4qu-0000000G5CY-2PQZ; Mon, 01 Dec 2025 14:26:09 +0000
-Message-ID: <026f6176b09f4a2d8f1d1e10c256eeed54a407e9.camel@infradead.org>
-Subject: Re: [RFC PATCH 2/4] hw/acpi: add new fields in VMClock ABI
+ id 1vQ4tA-0000000G5S8-1AOJ; Mon, 01 Dec 2025 14:28:33 +0000
+Message-ID: <74932716b6165b5b69ecdca65c7668c622d8a257.camel@infradead.org>
+Subject: Re: [RFC PATCH 0/4] vmclock: add support for VM generation counter
+ and notifications
 From: David Woodhouse <dwmw2@infradead.org>
-To: Babis Chalios <bchalios@amazon.es>, Cornelia Huck <cohuck@redhat.com>, 
- "mst@redhat.com"
- <mst@redhat.com>, "imammedo@redhat.com" <imammedo@redhat.com>, 
- "pbonzini@redhat.com" <pbonzini@redhat.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "Graf (AWS), Alexander"
+To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>, 
+ "Chalios, Babis" <bchalios@amazon.es>
+Cc: "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "cohuck@redhat.com" <cohuck@redhat.com>, 
+ "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "Graf (AWS), Alexander"
  <graf@amazon.de>, "mzxreary@0pointer.de" <mzxreary@0pointer.de>
-Date: Mon, 01 Dec 2025 15:21:29 +0000
-In-Reply-To: <5ba3ab6924b47613665f801193f7bcfd0584a0e1.camel@amazon.es>
+Date: Mon, 01 Dec 2025 15:23:48 +0000
+In-Reply-To: <aS2v1nTakVbWYbht@redhat.com>
 References: <20251201125023.18344-1-bchalios@amazon.es>
- <20251201125023.18344-4-bchalios@amazon.es> <87qztenykd.fsf@redhat.com>
- <196b8afa77ec3253006dcde712b07f4e9c70de30.camel@infradead.org>
- <87ldjmnwyt.fsf@redhat.com>
- <8e8ab56ce4f8f2a0f0c084bd4e48958a441b40f1.camel@infradead.org>
- <5ba3ab6924b47613665f801193f7bcfd0584a0e1.camel@amazon.es>
+ <aS2v1nTakVbWYbht@redhat.com>
 Content-Type: multipart/signed; micalg="sha-256";
  protocol="application/pkcs7-signature"; 
- boundary="=-/cF5Dvz83LsHx7Af91Cs"
+ boundary="=-nOiHCC758IUoDzWUejYY"
 User-Agent: Evolution 3.52.3-0ubuntu1 
 MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
@@ -85,29 +84,54 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---=-/cF5Dvz83LsHx7Af91Cs
+--=-nOiHCC758IUoDzWUejYY
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2025-12-01 at 16:05 +0100, Babis Chalios wrote:
-> On Mon, 2025-12-01 at 14:27 +0000, David Woodhouse wrote:
-> > That's exactly what we *don't* want, and why we say that the canonical
-> > definition of this structure is the actual specification. There's no
-> > need for QEMU to only ever follow Linux.
+On Mon, 2025-12-01 at 15:10 +0000, Daniel P. Berrang=C3=A9 wrote:
+> On Mon, Dec 01, 2025 at 12:50:24PM +0000, Chalios, Babis wrote:
+> > Latest specification of VMClock[1] adds support for VM generation count=
+er
+> > and notifications. VM generation counter is similar to disruption_marke=
+r
+> > but it only changes when the guest has been loaded from a snapshot, not
+> > on live migration. Its purpose is to notify the guest about snapshot
+> > events and let it perform actions such as recreating UUIDs, resetting
+> > network connections, reseeding entropy, etc.
 > >=20
-> > In that case, probably best *not* to use the Linux header and instead
-> > to build our own specifically for QEMU based on the specification.
+> > Moreover, the spec now describes a notification that the device can sen=
+d
+> > after updating the seq counter to a new even number.
+> >=20
+> > I have already sent the Linux changes to the mailing list here:
+> > https://lore.kernel.org/lkml/20251127103159.19816-1-bchalios@amazon.es/=
+T/#u
+> >=20
+> > [1] https://david.woodhou.se/VMClock.pdf
 >=20
-> I can do that for v1!
+> Should that spec document the expected behaviour of guests when a hypervi=
+sor
+> advertizes both vmclock and vmgenid devices ?
 >=20
-> > It can be almost byte-for-byte identical
+> QEMU supports both, and to avoid assumptions about whether a guest suppor=
+ts
+> the newer vmclock, I could expect mgmt apps to expose both these QEMU
+> devices.
 >=20
-> Why "almost", though?
+> IIUC, your intent is that 'vmclock' obsoletes the need for 'vmgenid', so
+> should the spec say that explicitly, and suggest that guest kernels ignor=
+e
+> the vmgenid if both=C2=A0 are present, to avoid the same kind of actions =
+being
+> triggered twice ?
 
-Well, the SPDX tag probably changes at least? And don't we change the
-Linux __leXX types to proper C99 types as we import?
+The intent is not to obsolete vmgenid, but we do signal when a clock
+disruption is associated with a snapshot (and thus with a vmgenid
+change), and the conditions for bumping that counter (which is what you
+were reviewing) will be the same as the conditions for when to
+regenerate a new vmgenid UUID.
 
---=-/cF5Dvz83LsHx7Af91Cs
+--=-nOiHCC758IUoDzWUejYY
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -186,22 +210,22 @@ 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
-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
+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
-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
+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
 
 
---=-/cF5Dvz83LsHx7Af91Cs--
+--=-nOiHCC758IUoDzWUejYY--
 
