@@ -4,59 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811B3D116F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 20:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D60D116F1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 21:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQAyX-00018P-Ik; Mon, 01 Dec 2025 15:58:25 -0500
+	id 1vQBnk-0003qy-AO; Mon, 01 Dec 2025 16:51:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@caoua.org>) id 1vQAyU-00017g-FH
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 15:58:22 -0500
-Received: from vm3.arverb.com ([116.202.17.78])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vQBnZ-0003l9-Tt
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 16:51:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@caoua.org>) id 1vQAyQ-0007jV-7t
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 15:58:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; s=default; bh=l/rePmsVReWp
- dAJHcBrNg/Fp01phWduHiGfdYPs4Wp8=;
- h=in-reply-to:references:subject:cc:
- to:from:date; d=caoua.org; b=ld7gS0J7nSIEyd5AhWdKLWS2s8stnHLCvqybR96k1
- SKIbqrfFhNBhUFuNWRRy6CDv7uFI+Bj4z/z/9V7CwykSjr0816c0gKfEykWnfWzyte+Dtr
- uaNUNpf7NYS6QNADDETBP3voCNmKdqPE+ymClaRu4Am1p1KKMeAnNlLRHnW0=
-Received: from localhost (vm3.arverb.com [local])
- by vm3.arverb.com (OpenSMTPD) with ESMTPA id 94a4eb30;
- Mon, 1 Dec 2025 21:58:13 +0100 (CET)
-Date: Mon, 1 Dec 2025 21:58:13 +0100
-From: Alexandre Ratchov <alex@caoua.org>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, dirty.ice.hu@gmail.com,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Volker =?utf-8?Q?R=C3=BCmelin?= <vr_qemu@t-online.de>,
- geoff@hostfission.com
-Subject: Re: [RFC 00/24] audio: add GStreamer backend
-Message-ID: <aS4BZZnzQPUHzbaD@vm3.arverb.com>
-References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
- <e6ada475-da8a-4643-4986-2ffc1d5b9c66@eik.bme.hu>
- <CAMxuvayr-qyjzsexWL1wt72mJA_-Dew9JAofjELhSVYC_w8SvA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vQBnY-0006aE-5t
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 16:51:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764625865;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=snll9VX+f1i7V5LAz2XVXRC2qfXV76TLACxDG4VlZWA=;
+ b=Ih+z0QcgwtSuYE1sPty0Lp4vrQJ0ZDOCt5xI9uJvWJIbJClLIghJa55MRh2MGuHJQqPoRb
+ I4xBZrc7aGGvV1NRd1QUHfVKRLSwhhOHRqyjVGv3OmywLgGIOkRULLQtB7cXXXGwLeCbmh
+ he2QpKWgW4h1iCDaoUUpZx/C6nTE/Tk=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-574-SELpKsntPNqzCctftJoZiQ-1; Mon, 01 Dec 2025 16:51:03 -0500
+X-MC-Unique: SELpKsntPNqzCctftJoZiQ-1
+X-Mimecast-MFC-AGG-ID: SELpKsntPNqzCctftJoZiQ_1764625863
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4ee0488e746so78226931cf.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 13:51:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764625863; x=1765230663; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=snll9VX+f1i7V5LAz2XVXRC2qfXV76TLACxDG4VlZWA=;
+ b=uL922sDwUnPp6vc760lIwO8P46CAI3hcN9Z+A9WrOSw05Mrd1gXqAHJL/6uzHvomPD
+ OEfjLDTV0gdyu34ieooqbaaowAD/EFAFZceO4V0nNdyY/f8J+NtpgsDls487w/OWCMVP
+ y8P0SF/fcLIFl6h27QR9rJ1AFlw67CqttP4k3uJMhkOkKdJoDpEc0p6i831chfwehA6i
+ FUTBSUUbWmVgxpKXYURoZP602pgaZtbZKLoxx0gAwiP1bouJK8iE0O5+XC0kGn9eyxbC
+ Eq6Zvw76YY5cSGmKtwVye0g05AUOkQj0eluuxipEitKkH8JrK/UhSWzAiz2wWP7KfNGo
+ bQkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764625863; x=1765230663;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=snll9VX+f1i7V5LAz2XVXRC2qfXV76TLACxDG4VlZWA=;
+ b=im1VDkk3+fRhvUuMKZWab+MiGS8FXET94c0hDZpbd6w9d11i6oU99wmuGqzPf8unFl
+ evdp7YsH+ktsHTu0EVEn+5QkOClbjEmPg5kEZqJqdXOthzJRCr/R644GYt1v6KMWTWAX
+ iS/B/MCp/i45GCrKpX14lHDny/4Y2lK1CB2VlcUYBPnfaj/KWA6QPuRekpp+FC8ubNrv
+ sUeMYEBSpjyQnKrzY7zrSKctAR5b8nSPABdXR1eKscJ1lW/UGAi3tqoQ+Qo+jhmO4aHn
+ YxnZUAfww8vQApDC8uAGOEATdDMAX0FGmaHCxNuMWeDyuAFFdeULFUomcSy+YfSl2tq6
+ rgbg==
+X-Gm-Message-State: AOJu0Yy7zCgudn+yTXwqs3KriWcGvYL7PU6iMTx1NrJY/D75QHutPpAX
+ Gf4/xL0ONmk/YWzSRmnppdPECPvLbHx0hnM0MGS2Q899vDTnhlDfKwTFn7sG81akW+Dm73dZJSY
+ RHPUq6UDDxXMIz/3MtAUu0tZb1otwKaO2ilp2Qo3rcCinoVoQCg+nAst1
+X-Gm-Gg: ASbGncugDmECaU6np3ZJqNbE5Cex6hK0xk5CfT9rSkNORagaIc/0jfKPoYnhd/LMrdI
+ 0/VSTHigIYElrKoMMMWaYWmig9vy8by0vSTpsM2ER+FKZXxWGaaFuW6g32QgvwUJYyCq5C4ogeX
+ zZuqsArtfnq2XS4F24FG7bogvlj1KTE3NlRbk8O4ZmiGC4DBpd9UpLH2RfxF/6+Ov7dIBy0Nr/9
+ HTCpXU9x+Z1qLOHjgGNm8pUEqn9hdxRLsmUgT4UV0IMsZX5JOdzL4vDn76vTB+JpIDeBuRENbd7
+ iAozCZNY/4ZT8WxJauy5PH3zlTXT3EktXv1C1OTbghYaXtcLloIXjM3onNhj92kBSz0XTwHc1B2
+ hZrY=
+X-Received: by 2002:a05:622a:1a1e:b0:4ed:ba4c:bda8 with SMTP id
+ d75a77b69052e-4f00894e9a6mr1237041cf.18.1764625863034; 
+ Mon, 01 Dec 2025 13:51:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGy+LeOszV0f4BWfnG2CjYb0wgzlAgbwyWbgvhQkRcyCBfVNdRJyG9Snr3M0MAjjmlAUcLfow==
+X-Received: by 2002:a05:622a:1a1e:b0:4ed:ba4c:bda8 with SMTP id
+ d75a77b69052e-4f00894e9a6mr1236701cf.18.1764625862566; 
+ Mon, 01 Dec 2025 13:51:02 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4efd2f9a3b5sm82617371cf.1.2025.12.01.13.51.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Dec 2025 13:51:02 -0800 (PST)
+Date: Mon, 1 Dec 2025 16:51:01 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Pawel Zmarzly <pzmarzly0@gmail.com>
+Cc: qemu-devel@nongnu.org, jsnow@redhat.com, michel@michel-slm.name
+Subject: Re: [PATCH] scripts/analyze-migration: Rename RAM_SAVE_FLAG_COMPRESS
+ to RAM_SAVE_FLAG_ZERO
+Message-ID: <aS4NxQ3MxEmY5Ryx@x1.local>
+References: <20251125173007.245607-1-pzmarzly0@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMxuvayr-qyjzsexWL1wt72mJA_-Dew9JAofjELhSVYC_w8SvA@mail.gmail.com>
-Received-SPF: pass client-ip=116.202.17.78; envelope-from=alex@caoua.org;
- helo=vm3.arverb.com
+In-Reply-To: <20251125173007.245607-1-pzmarzly0@gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,36 +116,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 01, 2025 at 10:20:49PM +0400, Marc-André Lureau wrote:
-> > cases. Also when using jack you'd want to have a QEMU backend for it not
-> > going through multiple layers. So adding a GStreamer backend has its use
-> >
+On Tue, Nov 25, 2025 at 05:30:07PM +0000, Pawel Zmarzly wrote:
+> It has been renamed on the C side a few years ago. In modern QEMU versions,
+> fill_byte must be zero. Updating the Python script to make grepping and
+> understanding the code easier.
 > 
-> I wonder what are the advantages of using JACK compared to ALSA, or
-> pulse/pipewire, tbh.
+> Signed-off-by: Pawel Zmarzly <pzmarzly0@gmail.com>
+> ---
+>  scripts/analyze-migration.py | 14 +++++---------
+>  1 file changed, 5 insertions(+), 9 deletions(-)
+> 
+> diff --git a/scripts/analyze-migration.py b/scripts/analyze-migration.py
+> index 67631ac43e..6364fe4f72 100755
+> --- a/scripts/analyze-migration.py
+> +++ b/scripts/analyze-migration.py
+> @@ -107,7 +107,7 @@ def close(self):
+>          self.file.close()
+>  
+>  class RamSection(object):
+> -    RAM_SAVE_FLAG_COMPRESS = 0x02
+> +    RAM_SAVE_FLAG_ZERO     = 0x02
+>      RAM_SAVE_FLAG_MEM_SIZE = 0x04
+>      RAM_SAVE_FLAG_PAGE     = 0x08
+>      RAM_SAVE_FLAG_EOS      = 0x10
+> @@ -172,19 +172,15 @@ def read(self):
+>                          mr_addr = self.file.read64()
+>                  flags &= ~self.RAM_SAVE_FLAG_MEM_SIZE
+>  
+> -            if flags & self.RAM_SAVE_FLAG_COMPRESS:
+> +            if flags & self.RAM_SAVE_FLAG_ZERO:
+>                  if flags & self.RAM_SAVE_FLAG_CONTINUE:
+>                      flags &= ~self.RAM_SAVE_FLAG_CONTINUE
+>                  else:
+>                      self.name = self.file.readstr()
+> -                fill_char = self.file.read8()
+> -                # The page in question is filled with fill_char now
+> -                if self.write_memory and fill_char != 0:
+> -                    self.files[self.name].seek(addr, os.SEEK_SET)
+> -                    self.files[self.name].write(chr(fill_char) * self.TARGET_PAGE_SIZE)
+> +                _fill_char = self.file.read8()
+
+We can sanity check this is zero.  But it's fine; no big deal.
+
+Queued, thanks.
+
+>                  if self.dump_memory:
+> -                    self.memory['%s (0x%016x)' % (self.name, addr)] = 'Filled with 0x%02x' % fill_char
+> -                flags &= ~self.RAM_SAVE_FLAG_COMPRESS
+> +                    self.memory['%s (0x%016x)' % (self.name, addr)] = 'Filled with 0x00'
+> +                flags &= ~self.RAM_SAVE_FLAG_ZERO
+>              elif flags & self.RAM_SAVE_FLAG_PAGE:
+>                  if flags & self.RAM_SAVE_FLAG_CONTINUE:
+>                      flags &= ~self.RAM_SAVE_FLAG_CONTINUE
+> -- 
+> 2.52.0
 > 
 
-Jack can connect programs with deterministic latency. My wild guess is
-that it would be to run a synths in the vm.
+-- 
+Peter Xu
 
-> > as another audio backend but not as a replacement for QEMU's audio
-> > handling logic and backends.
-> >
-> 
-> It would be great if people with very specific or constrained requirements
-> on qemu audio could check if the GStreamer backend fits their need.
-
-I'm thinking mainly about their simplicity.
-
-Dropping the system API backends would add an extra sophisticated
-layer (GStreamer) between the system and the program. In theory, an
-unlimited number of software layers may be stacked in a program, but
-the more layers there are, the more fragile the program tends to
-be. Based on my limited experience, when things went wrong, the system
-backends were simpler to debug and make work than the big frameworks.
-
-IMHO, the system API backends won't hurt GStreamer users, so I see no
-reason to remove them.
-
-My 2 cents.
 
