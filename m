@@ -4,76 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B3D9D116F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 19:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A56D116F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 19:46:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ9pZ-0000fa-3l; Mon, 01 Dec 2025 14:45:05 -0500
+	id 1vQ9py-0000nm-Mb; Mon, 01 Dec 2025 14:45:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vQ9pV-0000f6-L3
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 14:45:01 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vQ9pv-0000n0-Q7
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 14:45:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vQ9pT-00054X-NY
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 14:45:01 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vQ9pu-0005I9-Cy
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 14:45:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764618296;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1764618325;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=769chCCXjX1Rlh/91X7Jq6ZVZjPBGeAlHQo7YYerjxc=;
- b=cXNQXFbCdJYeAG6E2WIsWW1cK9kAA+eBuMgdGgw0WJnqXFkID1GtDGt0yWk/MDj7EEeexY
- L6y+RXL392B7qx4d5Js/YaBukdQvf/zf0gMyaZU7SFlM0aU0tI9H+KOLmLl0hd8Doki1H8
- iBzahHGMgzW9G8doKIUYjXajV2d7ZCU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-EyJfE-dONli8_e0q42qUFw-1; Mon,
- 01 Dec 2025 14:44:53 -0500
-X-MC-Unique: EyJfE-dONli8_e0q42qUFw-1
-X-Mimecast-MFC-AGG-ID: EyJfE-dONli8_e0q42qUFw_1764618291
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 15CBC180049F; Mon,  1 Dec 2025 19:44:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.139])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89F9F180047F; Mon,  1 Dec 2025 19:44:45 +0000 (UTC)
-Date: Mon, 1 Dec 2025 19:44:42 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Thomas Huth <huth@tuxfamily.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Alexandre Ratchov <alex@caoua.org>, dirty.ice.hu@gmail.com,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Volker =?utf-8?Q?R=C3=BCmelin?= <vr_qemu@t-online.de>,
- geoff@hostfission.com
-Subject: Re: [RFC 00/24] audio: add GStreamer backend
-Message-ID: <aS3wKkxxrekvIWuc@redhat.com>
-References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
- <e6ada475-da8a-4643-4986-2ffc1d5b9c66@eik.bme.hu>
- <CAMxuvayr-qyjzsexWL1wt72mJA_-Dew9JAofjELhSVYC_w8SvA@mail.gmail.com>
- <fdd7e1c4-a2a5-4039-59a9-9afda763feea@eik.bme.hu>
+ bh=fhlRpcavjCvGF29D/uw6s5hCLFCnLOe1fbEz6fTyAew=;
+ b=goWIx8GeMI9cuAiNx7OQi2Vd79iK7D8v0rXWo/yIJF4eVAoUZ8Hpcja3WKBdmlRS/cPo/Y
+ 0VOdgDfTsrVGMvo3BZ56N2kqpjb5xxEKEejFJZWsFtxxPmg4KXkZZelezWXVjZuytLY127
+ pG73925Wx/FZ7wTAjQXrLLxdPPofiyk=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-586-nR9j8snTN5u4ae-ChpB14w-1; Mon, 01 Dec 2025 14:45:24 -0500
+X-MC-Unique: nR9j8snTN5u4ae-ChpB14w-1
+X-Mimecast-MFC-AGG-ID: nR9j8snTN5u4ae-ChpB14w_1764618324
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4ed6e701d26so84669911cf.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 11:45:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764618323; x=1765223123; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fhlRpcavjCvGF29D/uw6s5hCLFCnLOe1fbEz6fTyAew=;
+ b=PeQFjkSsfhrAumE8BzRmuMFDTXQXSc8dG4z821SDsIDgjJW1hzHX92jECkSKB6PzAs
+ DKeIQkRpZUbsQicHAxeO1+ft7YNySx/PX7xVLGS2dcbyy9XEhHJH2XEVaxli8OcRGopP
+ i80PiSdOqLdB5Q8799bCQfs9f4/2ctOmnZosqjoGReFT8hd6hitOs7LlSVQOO3P+uzD3
+ j/D5Xr6tBP3MDSfVLbRIF4k8umjNODB2cj3XGYGPBclRZarllx706huSdl/i7IH3gDPY
+ 8qxfgypyc4Pi2I3c96yY4DsxOfSj1Ba1cSE0LLMgxwqJlVpMNHmUkm2ESK4Iel99PfIB
+ lzLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764618323; x=1765223123;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fhlRpcavjCvGF29D/uw6s5hCLFCnLOe1fbEz6fTyAew=;
+ b=XNMBox4tivgsaSlbCtSH3b2kHVe6YvbriuTVKxXvgPK6j/Br/tfxWhOogdM1o+iJG3
+ wDyiX9yYaE5+Xg0f8cJhUURFYzzYW2M92Z+J9S3XfOzrNy8r2xjHHq1WgEFR05Ka4KkS
+ oEAxQjMI4dP82xbNVlLSjwTdrBWDMMuayH+OHPbol91csz+eNDLWuuQpy6pCTse/j5+O
+ 77NGTKJ8xakSryejyC8TrTuNkeRvFCf177hanTAgpB3/9UJUZ3QbFqxUSSEHEvfrs68c
+ hun3XntCQpVKCF6YLhT5xbgdXJwBwxOePYiDejRGvsq4v5RpdaTD4TXWM+390BYY4zim
+ pSrA==
+X-Gm-Message-State: AOJu0Yw7H3N8Cv1wr5TJnJjRuV5b9+FkarClSb93Ohc6jyYr+x/ZIosp
+ kIfGQW7V2DEuFcsHPQLE5n680Q+My2pHjEMCmuJ0WZ5lx1EQNvykFtVCfSWzX7fUBkOB7JP/RE0
+ TARmKeRvTBFUH8DeOCCC3MCEf4+X3h7DmG7mUj6HyJNeoCQSp3TEUEbIjpaxMRInitqLEypbW0c
+ eYSGz86TPLq8xaih+dAatMyO3P/03ikOHB/klumA==
+X-Gm-Gg: ASbGncvRkMyuuqyca+tEBWV4Ajbj0V7oIXWNXNt/zfgjjiOZ3R5y5H3dZGTiEJSQIUC
+ Jv95NZ8D8eUi/92+dtneSMqu6fYiYt/HYpSov54qJhPCWQgkL1UEcDJQwUHx0f+nMd2ofmDVFoA
+ OuObhLDDAgnMHFNmwhKnIakl+DBfyrYF2X6gortYkVEzDziM3e7vyOguHe/QjF251ic9IDtWL68
+ GSTeJTXEjweot0HlQ1xQx6F8TxbUL3VrK8o+iqXBWkHXiXyBMNSdmDRw1g7iFNUnwMtfzu4tqfm
+ zePFzNkn3y3bEPuWG2U+xzXRNC25efahqsvboZYaBo7oBygo1BgwNEi+mZFutbtH2OjtuY/QZps
+ B
+X-Received: by 2002:a05:622a:144c:b0:4ed:b012:9716 with SMTP id
+ d75a77b69052e-4ee5895b9c4mr508296191cf.80.1764618323144; 
+ Mon, 01 Dec 2025 11:45:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEOIrg9RsmQ/oAhu1v2Yo+uLIG7J9YKzMFgd9GJn44S+bTaXDG+xtCBRgIjHju42aWIItJOSA==
+X-Received: by 2002:a05:622a:144c:b0:4ed:b012:9716 with SMTP id
+ d75a77b69052e-4ee5895b9c4mr508294981cf.80.1764618322299; 
+ Mon, 01 Dec 2025 11:45:22 -0800 (PST)
+Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-88652b91ba3sm88835156d6.53.2025.12.01.11.45.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 01 Dec 2025 11:45:21 -0800 (PST)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>
+Subject: [PATCH for-11.0 v2 6/7] migration: Make
+ multifd_recv_terminate_threads() own the error
+Date: Mon,  1 Dec 2025 14:45:09 -0500
+Message-ID: <20251201194510.1121221-7-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20251201194510.1121221-1-peterx@redhat.com>
+References: <20251201194510.1121221-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <fdd7e1c4-a2a5-4039-59a9-9afda763feea@eik.bme.hu>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -95,74 +121,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 01, 2025 at 08:30:26PM +0100, BALATON Zoltan wrote:
-> On Mon, 1 Dec 2025, Marc-André Lureau wrote:
-> > On Mon, Dec 1, 2025 at 5:03 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
-> > > On Mon, 1 Dec 2025, marcandre.lureau@redhat.com wrote:
-> > > > From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > > > 
-> > > > Hi,
-> > > > 
-> > > > The following patch series provides a GStreamer-based audio backend,
-> > > which could
-> > > > ultimately allow QEMU to leverage the framework to support the various
-> > > audio
-> > > > subsystems and simplify the audio handling logic (timing, resampling,
-> > > mixing
-> > > > etc), as well as allow greater pipeline flexibility and customization.
-> > > 
-> > > While it's good to have a GStreamer backend to integrate well into systems
-> > > already using that, this should not replace existing audio backends in
-> > > QEMU. The reason is that GStreamer has extensive dependencies that I would
-> > > 
-> > 
-> > GStreamer itself is not so big and doesn't have that many dependencies that
-> > qemu doesn't already have.
-> 
-> Except that this proposal uses GStreamer from rust so would also pull in all
-> the rust dependencies too which is still not needed for QEMU. Saying that
-> it's optional but then you lose audio output is also not quite acceptable.
+Make multifd_recv_terminate_threads() take ownership of the error always.
+Paving way for making migrate_set_error() to take ownership.
 
-In terms of replacing the existing audio backends, it would simply have to
-wait until we declare Rust to be a mandatory dependency of QEMU, before
-proposing any removal of existing backends.
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/multifd.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-> > > as another audio backend but not as a replacement for QEMU's audio
-> > > handling logic and backends.
-> > 
-> > It would be great if people with very specific or constrained requirements
-> > on qemu audio could check if the GStreamer backend fits their need.
-> 
-> At least one of them already said it wouldn't. Also why somebody not running
-> a desktop environment that uses GStreamer would want to add that dependency
-> and use a GStreamer plugin to get the sound back to their native sound
-> service when it is probably already supported by QEMU directly? QEMU also
-> has to support Windows and macOS sound services so having a few more
-> Linux/Unix ones does not make it much more complex.
-
-GStreamer is not merely for desktop environments. It is a general purpose
-audio system, and in terms of QEMU, it is already used by the Spice server
-for video encoding purposes.  IMHO it is reasonable to consider whether
-QEMU could use GStreamer for all audio output regardless of whether it is
-running from a desktop session or not.
-
-Personally my main concern with gstreamer is that when things go wrong
-it can be very difficult to understand why and thus hard to figure out
-how to fix it, unless you're pretty experienced with gstreamer.
-
-If we do consider rationalizing how many backends we have, IMHO, it
-would be desirable to retain at least one other QEMU audio backend
-that is considered simple & reliable (fool proof) to use & debug.
-
-With regards,
-Daniel
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 651ea3d14b..52e4d25857 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -1068,6 +1068,7 @@ static void multifd_recv_terminate_threads(Error *err)
+     if (err) {
+         MigrationState *s = migrate_get_current();
+         migrate_set_error(s, err);
++        error_free(err);
+         if (s->state == MIGRATION_STATUS_SETUP ||
+             s->state == MIGRATION_STATUS_ACTIVE) {
+             migrate_set_state(&s->state, s->state,
+@@ -1434,7 +1435,6 @@ static void *multifd_recv_thread(void *opaque)
+ 
+     if (local_err) {
+         multifd_recv_terminate_threads(local_err);
+-        error_free(local_err);
+     }
+ 
+     rcu_unregister_thread();
+@@ -1535,7 +1535,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+     if (use_packets) {
+         id = multifd_recv_initial_packet(ioc, &local_err);
+         if (id < 0) {
+-            multifd_recv_terminate_threads(local_err);
++            multifd_recv_terminate_threads(error_copy(local_err));
+             error_propagate_prepend(errp, local_err,
+                                     "failed to receive packet"
+                                     " via multifd channel %d: ",
+@@ -1551,7 +1551,7 @@ void multifd_recv_new_channel(QIOChannel *ioc, Error **errp)
+     if (p->c != NULL) {
+         error_setg(&local_err, "multifd: received id '%d' already setup'",
+                    id);
+-        multifd_recv_terminate_threads(local_err);
++        multifd_recv_terminate_threads(error_copy(local_err));
+         error_propagate(errp, local_err);
+         return;
+     }
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.50.1
 
 
