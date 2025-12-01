@@ -4,115 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24DDDD116F1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 11:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA86D116F1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 12:00:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ2XF-0001If-LX; Mon, 01 Dec 2025 06:57:41 -0500
+	id 1vQ2Z6-00022o-6c; Mon, 01 Dec 2025 06:59:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vQ2XD-0001Hx-Vg; Mon, 01 Dec 2025 06:57:39 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vQ2Z4-00022Q-Em
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:59:34 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1vQ2XB-0002qs-UX; Mon, 01 Dec 2025 06:57:39 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5AULxtl8014086;
- Mon, 1 Dec 2025 11:57:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=HmJq7C
- MYQ9bEbzgs7XbXfEyzhwPvUUePc4yKVFopaqY=; b=gMJJSUbYCMTX8TZEVLk1XG
- 9LAT8uVMc8+ZGLOLXLvnjf0+l++xK9VeX8ilYx42RX4A+iOKJ2MBAEkZidClPpLs
- oo/p/4f3BYvn7SqtPz8yVUlrXQauBozo5n32LYNo7Uyd90cVJfF8MBSezE3oAbQK
- Z/bSZAv/Z6iQQuX5k0t6+oI8nPb7OwvOyrWNRJZE7arMDCYCJLpuaGMQz0bNgE2l
- 7HRlYRBLut1jd1o6NsQupL4e3O8ThPG4nvRiyNMyK0aubxRrfGuaelEGJDnYqzSn
- O7zLTNYi+KkTw06TWgb95viksFCTr4U0gG8uPJLRY/zEz359geiD59R07zcF1CCg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aqrg56s4t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Dec 2025 11:57:34 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B19bdh2008521;
- Mon, 1 Dec 2025 11:57:34 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4arc5mp5s8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 01 Dec 2025 11:57:33 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5B1BvVtQ15663542
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 1 Dec 2025 11:57:32 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC21320049;
- Mon,  1 Dec 2025 11:57:31 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 99BB520040;
- Mon,  1 Dec 2025 11:57:31 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.111.1.154])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  1 Dec 2025 11:57:31 +0000 (GMT)
-Message-ID: <d569827e7ef381842771738fae6c8f8bb30062ad.camel@linux.ibm.com>
-Subject: Re: [RFC PATCH] tests/functional/s390x: Add reverse debugging test
- for s390x
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Date: Mon, 01 Dec 2025 12:57:31 +0100
-In-Reply-To: <f5a9796601bb90f754be75b9366149aafa2a9bb0.camel@linux.ibm.com>
-References: <20251128133949.181828-1-thuth@redhat.com>
- <37260d74733d7631698dd9d1dc41a991b1248d3a.camel@linux.ibm.com>
- <8efd73b100f7e78b1a5bbbe89bc221397a0a115a.camel@linux.ibm.com>
- <87zf838o2w.fsf@draig.linaro.org>
- <4bf61173827c033f9591f637f83d1aedc056a51e.camel@linux.ibm.com>
- <dfc4b7b2bdb7a6678364516de03a23959965de1e.camel@linux.ibm.com>
- <6181bc6bd6b41f46a835cee58ab3215b8cefedb4.camel@linux.ibm.com>
- <87ldjmv689.fsf@draig.linaro.org>
- <f5a9796601bb90f754be75b9366149aafa2a9bb0.camel@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vQ2Z1-00032Y-9l
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:59:34 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5B1BvQeN055236
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Mon, 1 Dec 2025 20:57:26 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=aq0jpSQmRk5xdJ1vUbZmey10oH68fI+xWqwi64mx4ss=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1764590247; v=1;
+ b=pao1Lgi8PIrL0CKlBjp/os3t+NkZt6uG4VcKVsG8Yw+0Trd/vCP4B2CoUNae/EFe
+ n7WMpyYel9lAd3Wrj8XTw0A2DDZkxtILSuUMJobw2so6ljEgKqzzliWhmooKXsIk
+ vd8z0x5ME+3JrOkKu5hkjFR8Z12HFaUfGI1mei3gGBnGr7tuhcNf3dS5RZ6mPWAL
+ HjlYej0zWxgYZDr5MxCmdYbWMA+VjWIe3bHWR1DQbFs7fZQLLi5VFl4XTMph5Nzf
+ Jz2X14YLeqwBn7joWw4LT4r/8UVntfOb3I10swdp+L9c6hh39kc9gJPrf7blpoPL
+ 6MnaudjEVU3Q9gjYUsUzuA==
+Message-ID: <97def678-f5cb-482c-b322-8337339f2d58@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 1 Dec 2025 20:57:25 +0900
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: CiMBj4eRpNqMmjzfVCsrIODFQ_UrO2Yo
-X-Authority-Analysis: v=2.4 cv=Ir0Tsb/g c=1 sm=1 tr=0 ts=692d82ae cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=5anqSEiUEPLlCeInwvMA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI5MDAyMCBTYWx0ZWRfX4Zh70FYPsIxq
- qImrhSZVHyj6pnwFVAwy47YUNtF4DwNbwECJ08Bfpan3S2DOFaxMPIkppWTKO7oENW6cW0l2Kje
- aKhh9U8pwNw7bhZnrBkufJd+O4x+CHuG6OE+d9FuMdhHoUPKjxIr5zSq3dkHGB7TERErmYu29Fc
- ePmcsMW9Q3WrHmbpLdCvj4T18ofNMCL58FHozIkSC6qaKESdXvRd6s1EoQU941L0ZvfJzdMAtiJ
- C8VymJiK9KnJ8f4Ij2GYlmM2RexCRGsslMx5PP5Ro894UcsbbB6PROlnXaaHsdDZXyGp3597h4v
- HbNJgUBoqUl7vYjFF2M7Sh1cp1kkhNkgN1Bo+N1gIpzEbBAHW9wKOONnULoMhMYDyH7q99daU/7
- DHmMuFU+buJv38jCAThip5KDld7SwQ==
-X-Proofpoint-GUID: CiMBj4eRpNqMmjzfVCsrIODFQ_UrO2Yo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-11-28_08,2025-11-27_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
- bulkscore=0 spamscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2511290020
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v5 3/4] virtio-gpu: Destroy virgl resources on
+ virtio-gpu reset
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Huang Rui <ray.huang@amd.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
+ =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ Stefano Stabellini <stefano.stabellini@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
+ Honglei Huang <honglei1.huang@amd.com>,
+ Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
+ Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
+References: <20251130040940.1611949-1-dmitry.osipenko@collabora.com>
+ <20251130040940.1611949-4-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251130040940.1611949-4-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,99 +93,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2025-12-01 at 12:17 +0100, Ilya Leoshkevich wrote:
-> On Mon, 2025-12-01 at 10:36 +0000, Alex Benn=C3=A9e wrote:
-> > Ilya Leoshkevich <iii@linux.ibm.com> writes:
-> >=20
-> > > On Sun, 2025-11-30 at 20:03 +0100, Ilya Leoshkevich wrote:
-> > > > On Sun, 2025-11-30 at 19:32 +0100, Ilya Leoshkevich wrote:
-> > > > > On Sun, 2025-11-30 at 16:47 +0000, Alex Benn=C3=A9e wrote:
-> > > > > > Ilya Leoshkevich <iii@linux.ibm.com> writes:
-> > > > > >=20
-> > > > > > > On Fri, 2025-11-28 at 18:25 +0100, Ilya Leoshkevich
-> > > > > > > wrote:
-> > > > > > > > On Fri, 2025-11-28 at 14:39 +0100, Thomas Huth wrote:
-> > > > > > > > > From: Thomas Huth <thuth@redhat.com>
-> > > > > > > > >=20
-> > > > > > > > > We just have to make sure that we can set the
-> > > > > > > > > endianness to
-> > > > > > > > > big
-> > > > > > > > > endian,
-> > > > > > > > > then we can also run this test on s390x.
-> > > > > > > > >=20
-> > > > > > > > > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > > > > > > > > ---
-> > > > > > > > > =C2=A0Marked as RFC since it depends on the fix for this
-> > > > > > > > > bug
-> > > > > > > > > (so
-> > > > > > > > > it
-> > > > > > > > > cannot
-> > > > > > > > > =C2=A0be merged yet):
-> > > > > > > > > =C2=A0
-> > > > > > > > > https://lore.kernel.org/qemu-devel/a0accce9-6042-4a7b-a7c=
-7-218212818891@redhat.com
-> > > > > > > > > /
-> > > > > > > > >=20
-> > > > > > > > > =C2=A0tests/functional/reverse_debugging.py=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4
-> > > > > > > > > +++-
-> > > > > > > > > =C2=A0tests/functional/s390x/meson.build=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 +
-> > > > > > > > > =C2=A0tests/functional/s390x/test_reverse_debug.py | 21
-> > > > > > > > > ++++++++++++++++++++
-> > > > > > > > > =C2=A03 files changed, 25 insertions(+), 1 deletion(-)
-> > > > > > > > > =C2=A0create mode 100755
-> > > > > > > > > tests/functional/s390x/test_reverse_debug.py
+On 2025/11/30 13:09, Dmitry Osipenko wrote:
+> Properly destroy virgl resources on virtio-gpu reset to not leak resources
+> on a hot reboot of a VM.
+> 
+> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   hw/display/virtio-gpu-gl.c     |  6 ++-
+>   hw/display/virtio-gpu-virgl.c  | 87 ++++++++++++++++++++++++++--------
+>   include/hw/virtio/virtio-gpu.h |  5 +-
+>   3 files changed, 75 insertions(+), 23 deletions(-)
+> 
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index b640900fc6f1..bf3fd75e9e6b 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -72,7 +72,10 @@ static void virtio_gpu_gl_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+>   
+>       switch (gl->renderer_state) {
+>       case RS_RESET:
+> -        virtio_gpu_virgl_reset(g);
+> +        if (virtio_gpu_virgl_reset(g)) {
+> +            gl->renderer_state = RS_INIT_FAILED;
+> +            return;
+> +        }
+>           /* fallthrough */
+>       case RS_START:
+>           if (virtio_gpu_virgl_init(g)) {
+> @@ -201,6 +204,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
+>       vgc->process_cmd = virtio_gpu_virgl_process_cmd;
+>       vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
+>   
+> +    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
+>       vdc->realize = virtio_gpu_gl_device_realize;
+>       vdc->unrealize = virtio_gpu_gl_device_unrealize;
+>       vdc->reset = virtio_gpu_gl_reset;
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 6a2aac0b6e5c..60d8fbf0445c 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -304,14 +304,46 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+>       virgl_renderer_resource_create(&args, NULL, 0);
+>   }
+>   
+> +static int
+> +virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
+> +                                struct virtio_gpu_virgl_resource *res,
+> +                                bool *cmd_suspended)
+> +{
+> +    struct iovec *res_iovs = NULL;
+> +    int num_iovs = 0;
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +    int ret;
+> +
+> +    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended);
+> +    if (ret) {
+> +        return ret;
+> +    }
+> +    if (*cmd_suspended) {
+> +        return 0;
+> +    }
+> +#endif
+> +
+> +    virgl_renderer_resource_detach_iov(res->base.resource_id,
+> +                                       &res_iovs,
+> +                                       &num_iovs);
+> +    if (res_iovs != NULL && num_iovs != 0) {
+> +        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+> +    }
+> +    virgl_renderer_resource_unref(res->base.resource_id);
+> +
+> +    QTAILQ_REMOVE(&g->reslist, &res->base, next);
+> +
+> +    g_free(res);
+> +
+> +    return 0;
+> +}
+> +
+>   static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>                                        struct virtio_gpu_ctrl_command *cmd,
+>                                        bool *cmd_suspended)
+>   {
+>       struct virtio_gpu_resource_unref unref;
+>       struct virtio_gpu_virgl_resource *res;
+> -    struct iovec *res_iovs = NULL;
+> -    int num_iovs = 0;
+>   
+>       VIRTIO_GPU_FILL_CMD(unref);
+>       trace_virtio_gpu_cmd_res_unref(unref.resource_id);
+> @@ -324,27 +356,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>           return;
+>       }
+>   
+> -#if VIRGL_VERSION_MAJOR >= 1
+> -    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
+> -        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+> -        return;
+> -    }
+> -    if (*cmd_suspended) {
+> -        return;
+> -    }
+> -#endif
+> +    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
+> +}
+>   
+> -    virgl_renderer_resource_detach_iov(unref.resource_id,
+> -                                       &res_iovs,
+> -                                       &num_iovs);
+> -    if (res_iovs != NULL && num_iovs != 0) {
+> -        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+> -    }
+> -    virgl_renderer_resource_unref(unref.resource_id);
+> +void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+> +                                       struct virtio_gpu_simple_resource *base,
+> +                                       Error **errp)
+> +{
+> +    struct virtio_gpu_virgl_resource *res;
+> +    bool suspended = false;
+>   
+> -    QTAILQ_REMOVE(&g->reslist, &res->base, next);
+> +    res = container_of(base, struct virtio_gpu_virgl_resource, base);
+>   
+> -    g_free(res);
+> +    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
+> +        error_setg(errp, "failed to destroy virgl resource");
+> +    }
+>   }
+>   
+>   static void virgl_cmd_context_create(VirtIOGPU *g,
+> @@ -1273,11 +1299,30 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+>       }
+>   }
+>   
+> -void virtio_gpu_virgl_reset(VirtIOGPU *g)
+> +int virtio_gpu_virgl_reset(VirtIOGPU *g)
+>   {
+> +    struct virtio_gpu_simple_resource *res, *tmp;
+> +
+> +    /*
+> +     * Virglrender doesn't support context restoring. VirtIO-GPU
+> +     * state shall not be reset at runtime. Virgl blob resource
+> +     * unmapping can be deferred on unref, ensure that destruction
+> +     * is completed.
+> +     */
+> +    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
+> +        virtio_gpu_virgl_resource_destroy(g, res, NULL);
+> +    }
+> +
+> +    if (!QTAILQ_EMPTY(&g->reslist)) {
+> +        error_report("%s: failed to reset virgl resources", __func__);
+> +        return -EBUSY;
 
-[...]
+I think you missed my reply for an old comment (which was too late and 
+sent for v3 despite you have already sent v4) so please check it out:
+https://lore.kernel.org/qemu-devel/d88cc89b-d796-4bc4-8c90-07da3b88cc7f@rsg.ci.i.u-tokyo.ac.jp/
 
-> > > I believe now I at least understand what the race is about:
-> > >=20
-> > > - cpu_post_load() fires the TOD timer immediately.
-> > >=20
-> > > - s390_tod_load() schedules work for firing the TOD timer.
-> >=20
-> > Is this a duplicate of work then? Could we just rely on one or the
-> > other? If you drop the cpu_post_load() tweak then the vmstate load
-> > helper should still ensure everything works right?
->=20
-> Getting rid of it fixes the problem and makes sense anyway.
+> +    }
+> +
+>       virgl_renderer_reset();
+>   
+>       virtio_gpu_virgl_reset_async_fences(g);
+> +
+> +    return 0;
+>   }
+>   
+>   int virtio_gpu_virgl_init(VirtIOGPU *g)
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 718332284305..9e1473d1bb66 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -389,9 +389,12 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>                                     struct virtio_gpu_ctrl_command *cmd);
+>   void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
+>   void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+> -void virtio_gpu_virgl_reset(VirtIOGPU *g);
+> +int virtio_gpu_virgl_reset(VirtIOGPU *g);
+>   int virtio_gpu_virgl_init(VirtIOGPU *g);
+>   GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+>   void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
+> +void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+> +                                       struct virtio_gpu_simple_resource *res,
+> +                                       Error **errp);
+>   
+>   #endif
 
-Hmm, on the other hand, this appears to have been done this way
-deliberately:
-
-
-commit 7c12f710bad60dc7e509da4e80c77e952ef0490c
-Author: David Hildenbrand <david@kernel.org>
-Date:   Wed Jun 27 15:44:09 2018 +0200
-
-    s390x/tcg: rearm the CKC timer during migration
-   =20
-    If the CPU data is migrated after the TOD clock, the CKC timer of a
-CPU
-    is not rearmed. Let's rearm it when loading the CPU state.
-   =20
-    Introduce tcg-stub.c just like kvm-stub.c for tcg specific stubs.
-
-
-I guess introducing a dependency on migration order is indeed not great
-for maintainability.
-
-> > > - If rr loop sees work and then timer, we get one timer callback.
-> > >=20
-> > > - If rr loop sees timer and then work, we get two timer
-> > > callbacks.
-> >=20
-> > If the timer is armed we should expect at least to execute a few
-> > instructions before triggering the timer, unless it was armed ready
-> > expired.
->=20
-> Yes, it is armed expired.
->=20
->=20
-> Isn't it a deficiency in record-replay that work and timers are not
-> ordered relative to each other? Can't it bite us somewhere else?
-
-[...]
->=20
 
