@@ -4,85 +4,182 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2574D111A8
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 09:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95217D111A8
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 09:57:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ0NG-0001DV-2Z; Mon, 01 Dec 2025 04:39:14 -0500
+	id 1vQ0e4-000697-Vc; Mon, 01 Dec 2025 04:56:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vQ0NF-0001Cg-1F
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 04:39:13 -0500
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vQ0ND-0007jv-6K
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 04:39:12 -0500
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-78aa49cde3dso37497107b3.1
- for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 01:39:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764581949; x=1765186749; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Vk7N776ubxPfKBx1hNktvScJzUjhOlG47pzildGEWB0=;
- b=HbfiYzena3jkCo9LNPzqOJMUT/yrDM2bfrJ9GDkczoBWx1bGFOTzU6F8z+h9pQyOsC
- 2YQZhVpJcM2etRkxSLyps9TsUbQk3Su/sov2AI8onAHJKPDl9zmVJVX4D/cJeCd6AX+a
- 3PZCJrtD1yycOZp0grNOfEP/9fmZPbE4TvUDei1xpJL4mewVSpGQwXanrt9CN7xvRqrt
- htGAbNoroNPvPOLkbV8dXdg6Yf0+kiHb9RrbEcqekZYS+kPMkgdi4eitZzToEushkV5x
- ArISA8B/vPF55tpGfQ6rPtzfkxE6sFutdVy9KJPM3v/5hzZOJm7xIFtNXP5xGawMMDXB
- /c+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764581949; x=1765186749;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Vk7N776ubxPfKBx1hNktvScJzUjhOlG47pzildGEWB0=;
- b=VIBpd4lfXNE3k2783aQFUlffUt5zYpZiAenRtRZfmBjTr0DALEaiTqTe3b9GUN3wG7
- xbq7LOe+i6PwZigznIKCTZmvTpCVqy8gzlMAXoQu77ZDNplNUj6qAWNi1pj4E7HWIgh+
- 6BelGerzWXm3Hu8mgUdx4BK0Q/n/KHQoEm/u2bZ+NZVX5mQYZZsdOz8hC7tJA937sxYz
- z99ZroixJWKFZTR+mlHmGXkWPKy/mxtw9zmS2nBlJKHt3ErFrKy2zzXDUu54t/bem87s
- ygQhDszpsPjHol7yavd1g2kxoqAMtJqGK13SpTyoSOQgrLbJl5naGjd3ucEXFFkeY4od
- rAjg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIdlS1QT7azfz/mtscbRTEKi3G15006ix8tSQ5hkBkgiNkiqQTbLDxEteXPDD1eN+gCf7ol3834v0+@nongnu.org
-X-Gm-Message-State: AOJu0YwME48XNlKKnlMZ0c3L6H4a6YxYFquSpjarEp8VgxhfcmOmZwRA
- wmEdl2AK2jFZbTP1OC8CsoLVibr58+NODKQKyVqAbf6QStz8Ki5r7GjmQiwnl7WWcvJ3i0CX5Iu
- wf44X6xJpZ1GPGf8ROCwl1/wp/n6vdDnFdFwMcXkb+A==
-X-Gm-Gg: ASbGncuZd8q+/QLQPbL70IboZ8+dHOvK/PQdYYOtjE4bHKrXP5Akf1Yaq5lANorjCB3
- sD4eT3UGnaHUI8uRABnob509ya5aixziRpVEGROcGGq//n8XtMP3bIyMFxzODe4fGUoeBJJ3bti
- QXZli+XPqaRvP+1IlSZzeYC5oi4Zo7ClKVWpY13bSp/UeFtKLfmOEiPrOKzd0gV8Hms0l5ueMOc
- McxNTOnPrPXHNC1HDcyiJzcQKyrcZW39irUYax2rtl1RqqO5ea8TSMK9aj+9RaL1UndU8w6BglM
- j0ueaVA=
-X-Google-Smtp-Source: AGHT+IFTOPmMb+n9M0I4LBtTZUDPrbItivAwxig4hjFGYP2rrInJ2IlvhEheRt0C/VxneCVDZ7EFM5BakwCZ27jERv0=
-X-Received: by 2002:a05:690c:6e07:b0:77f:9dae:34f0 with SMTP id
- 00721157ae682-78a8b549d41mr310847237b3.46.1764581949025; Mon, 01 Dec 2025
- 01:39:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1vQ0e2-00067v-6w
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 04:56:34 -0500
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1vQ0dz-0001vh-Ms
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 04:56:33 -0500
+Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 5AUNdBbW2263336; Mon, 1 Dec 2025 01:56:29 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=hUg8MCOdkRKztLz01jIic76so/Ql/SYafk+7hRerE
+ /c=; b=x88YPOiYjFpyW73RP94xctWm+tnABFZQaW60kbVloiLI3fTsQMtwGFHxG
+ qs+HK6YhxC3ByzLBpU1aljwemdLtHJtqbsx1bL/pinVQMv0x0HCyuJV5iAMxBKZz
+ qeRkwE4f6e8qTvF2H8YQY6Xse6g+Svk98PP8p7Ch124IkwnXvQMBgSZ8iF25KOJM
+ Wu6+0bwhEc3g9YczGFcqGSRkSF0ydpVdvtAaaa8qyA7qlFwn67bUEYN4UEv1Jhl2
+ v3Wi9H5sGCcSXeB+oixESlQiWQYmgqODhMEo/PCT9eoOHrxUe+D83P5a36qilYtg
+ KTleBHWRM3I5iCiUPTChR+eAljY8Q==
+Received: from bl0pr03cu003.outbound.protection.outlook.com
+ (mail-eastusazon11022081.outbound.protection.outlook.com [52.101.53.81])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4aqytnjkna-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 01 Dec 2025 01:56:28 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=BS3U4bmhlspMXU/GXezJOvy+7lvqj7VUOAByybbSuP0CxDl67PnqKhyX9yUhIECFMP7VQeLG/OkXaKlCD59rwoi13Zr6c3Yxp+QxHK0KGZwbx2bUiKsamt841fnKPYtFdujM/CLhJgioPToe5u9gMPe/YCIAD+jolNDPKsxxQjF6gWKJAlnYzYsqlSg/bDNiouXYNGgz1a/XnxIGajgEG4edDx+46iroTw6wED4ZaODQBt1Edf8zAiuHIwKIVjT0CZiyTCnlvAiazPG68ZfdgRxl7tufaMmQhf4mpBMsVFoACGxzUumkxerdszHreZ3c8aJ709QSR+vBKWQGd//knw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hUg8MCOdkRKztLz01jIic76so/Ql/SYafk+7hRerE/c=;
+ b=EKFBMbc/92OLgUExXR1CqsflFUYMgheap4vgbu6VlAyKieN3YE+k7gTLkO2CdDESuSuVi5yz1fkSQpkO9bbr7ZfQL9pv2B/KjyDHJTiN3KcwFjHFGvUD2vnbYlwnj76gAmClhk6lCtTfDKgfqiBprGJRWwhb77j3HeBFZ2uWqiPQHJmrX0NCxlgFRnkOA92SamgE8CRqcU1Uyd69snQ9+nVmZgAVhtyQFqCTzcZ578Hg2Y5AQXVcyO5bPLTR7lWlVv4TWg2kojoZmx36MnFENR76B8X8fZtHJEePGvRx+yLFUuw0gsxhQvrmabYQ9dyIJINGAuMPutaYq4BVfDFyBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hUg8MCOdkRKztLz01jIic76so/Ql/SYafk+7hRerE/c=;
+ b=TjKrHPQT7APy0Ar5jU4X27ItGBGcbu+CPHgBFIUXPa71x4323JO8SW++aX8MyMRhzPK4lvmEjW972Cs6lvAVBk8PDFSKajYg/JzkHXMshjMSuFTFSLHBR1VtNWX0Ttea29/sBcQOVpMywm2O9BlrW76VWdQ9vJZQcvQ7VwPqNQUPNtAFkHQBBJjYfBtbuNAJPbMHwlse5Gl+NCV1t4+k2JAZf/SW/xtZUoeOLHMQkjkiSqEtV0uR2VJAcyO35cH+zC2OXaOa4AHmSxSD4kLSq/v26O6+qIQBK660fm6mG6uKlFtMw3zdu43FRVnRbWtBH03Q5w6/5ML6XPuSXrYE5A==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by SA1PR02MB9865.namprd02.prod.outlook.com (2603:10b6:806:384::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Mon, 1 Dec
+ 2025 09:56:27 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51%7]) with mapi id 15.20.9366.012; Mon, 1 Dec 2025
+ 09:56:27 +0000
+From: John Levon <john.levon@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: John Levon <john.levon@nutanix.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 2/5] vfio-user: clarify partial message handling
+Date: Mon,  1 Dec 2025 15:26:18 +0530
+Message-ID: <20251201095621.2786318-3-john.levon@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251201095621.2786318-1-john.levon@nutanix.com>
+References: <20251201095621.2786318-1-john.levon@nutanix.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: LO4P123CA0576.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:276::23) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
 MIME-Version: 1.0
-References: <d2265ebb-84bc-41b7-a2d7-05dc9a5a2055@accesssoftek.com>
- <CAFEAcA8j6sAmm-uT9LdDt1VP2fWmui9ETXn90bDWbCh4aEMG4A@mail.gmail.com>
- <1706a491-f76a-45e1-9653-f3ba730690ec@linaro.org>
-In-Reply-To: <1706a491-f76a-45e1-9653-f3ba730690ec@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 1 Dec 2025 09:38:57 +0000
-X-Gm-Features: AWmQ_bksnXU9o-MEVg0d_MH7N1_aRKGWMiymZxr0eUZrJuH8C9RxZ4Au_ZuCDyU
-Message-ID: <CAFEAcA-z1p7iPmRUm0O3CboqGYpO--H98SaMu=xEK17dCgp=4A@mail.gmail.com>
-Subject: Re: [PATCH v2] target/arm: Fix assert on BRA.
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Harald van Dijk <hdijk@accesssoftek.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|SA1PR02MB9865:EE_
+X-MS-Office365-Filtering-Correlation-Id: bcb80a06-0fec-49f3-ae80-08de30bfe513
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?FhqxQLkXzr6iVoXxFXG4JsQt5LjFfcRGpDZgn38RRdoT1x+YnBhUVgUjfud1?=
+ =?us-ascii?Q?Baset1XIsnUqY3QSQy60x8ZHJrYnaWpDzU3mAGvDCTUKny0CC2phKycNciQs?=
+ =?us-ascii?Q?7AblEL7JN3IW7HddrZS474Vn8ELOliWuw1UTxaRBus4Dt0RjTxM70BBnZiur?=
+ =?us-ascii?Q?n9GSvJxmT7TZrFwabmLOBq/9t0Wl/KyGa1njXAgWjETU5EV9XFd8UklflIAO?=
+ =?us-ascii?Q?GbcpqcRyKHzA2MgOcGUU4R4uWIuw/ZAvJw4YEczJHOB9hB/hdRqDen735DHs?=
+ =?us-ascii?Q?RmyopWSxcJbPrhc4i/DhXBlbZcpRz8hIqxCvsF8U+fqDkGoPynyHaUcPi00N?=
+ =?us-ascii?Q?1rPwdSr9ugVb4ZaZfyxBsgh+rUQMZVtsKY2HZhLBKbxB9KR7re4LshWAmXVc?=
+ =?us-ascii?Q?oeHNe8TcSysV2ccx0Z9Ytlbuz1TmVgasXH/kTqGs61ScwfQnkl0JI/cxhzax?=
+ =?us-ascii?Q?QqdAKDMiZwXRsznioxrkBFYXMZWx3iL1fpsADPTn5lkqbuOeGDXHxIQvty7W?=
+ =?us-ascii?Q?HUYje15sN5wk13eGGBA+qAooqNnLquMJupph/C/Cge8nyn7GLkhXCvmpsDej?=
+ =?us-ascii?Q?+iS7wd1qmP+5fwLda2YmRnQ/G5pikC7q3hVQpbX7asT0u2SV1jIUGZcS/rPL?=
+ =?us-ascii?Q?8PCTZEp+X4/+01wrDiK3qmOLRXgGxd+Te248G9fBCusFwkdhylK/KmsmW94W?=
+ =?us-ascii?Q?qAHrK9qxn24c/qny/n4VKoLfe8+ZlxEnVNWKN+uRM7GS5wisUvm96kMLTjkJ?=
+ =?us-ascii?Q?+dbjs7mdMg3RoiAzl/S+T8o6WRJUD3NV5M6iz5ws8aCEuRCBIDPUS8bxqzQM?=
+ =?us-ascii?Q?7x9Nb6wFbZdeNNjy2Nhl94ZT5Be9fWbZgyx101c6QOHY1WbB+lB1u6YYj3Mi?=
+ =?us-ascii?Q?RQAApMibIRaoxgihKqtHeUYO0a0t8CBZnEMIfMIQK2mMWrVF/1JIg9ExAEqr?=
+ =?us-ascii?Q?ip/Kh7j6L1e9p/DCTASoNWt78jCJJiSWpP9J6nwUI43ir0MYZxHaUQSiJFZS?=
+ =?us-ascii?Q?WRohIP7gXioBs16nwjkfH7VvkGtLF2AlK5eq7aLgaBQQdofgYOwLMXXOdCXS?=
+ =?us-ascii?Q?ob9m38/JNpMDd1ipHXxqRGuMtwxQQgX4cefuQsWM7Uldeg6iy3ANZJzuN98I?=
+ =?us-ascii?Q?hBbVZ1/7+pT4lseZC3hO56CzxsA5q7I45mdJWx5/p3yP0cEYVKmrI0SuDOZt?=
+ =?us-ascii?Q?B7uCQUwF5LQ+Y6o177+EWfQeQosDMXG7xw46qzY6JmcDpLBF5ylGUOoB7/tV?=
+ =?us-ascii?Q?/EmO/5WMCCPgFDpmOeNAQT2YefcoHhlf4Ljynvbf+ejtSxWF7w8ijGN35mc0?=
+ =?us-ascii?Q?0zvPvbEHGVJADUTqKyb49bg8pa66mE8j3ZcYR895/mLA7ZuARts4LwnAbmzV?=
+ =?us-ascii?Q?Ip4mLZOZQc4e9GGLmH59zYJmKQ02aqUH0o3T7v+ajBfZ3bfSD/QrBcGOiJ1W?=
+ =?us-ascii?Q?hheczVGoCiuDsJsu/jrVyt3NiaAorXuU?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?atf6xhNA1XtCq9cQLhIFYs0lHMBAe/xhMq6bi1Nke8BOAIeCq5CY/cL+RGrk?=
+ =?us-ascii?Q?5QYS+D2f1tcq3i+4QEc6SdWKWhDom7pChsUZQy/GEkiI/nh1gQZZM2/LdQnT?=
+ =?us-ascii?Q?L0i4P3qN9eDLRW9PZhkdfvITCyGnX8q0A46JjKxrAFA+fE8iZr96xdoVDauo?=
+ =?us-ascii?Q?yahhrxQ4UMaPmu0CczvUfhedJACyl/ITy4P2MW4V2/LmDLOG2mf5f3UHuonD?=
+ =?us-ascii?Q?MRV+zO7F/EOAswMod/gWCxXyxrV63j2a1hFTmMHzt479BtRnhkg+JnIg17QT?=
+ =?us-ascii?Q?JpAw6wVMdWguT/BOypzW/RTj1op4T9wpGvnUIUZiFb9SJaQHZ2TqpOm5dgkD?=
+ =?us-ascii?Q?J3UVEaJkqjCKEsmcYu+UZMkgE8dc2mFwfAkshOSr6KsE3Oq8eMa+xGLLKKKz?=
+ =?us-ascii?Q?+NRHpxqHb9Li5A7sH79JMx/UnqRYhzw26XWbxH8aAe5beQYGMOuXRlr2vfez?=
+ =?us-ascii?Q?s9XugWGHoAmNc9S/n/n8pqgUwQfD/bl82vmLKvyLpMyWOyKzq+lJ88cOIDli?=
+ =?us-ascii?Q?tRQ1xTDBvs1x6s+AMe6S+aFbvU/SCny7/8Osrv+KsCqYBcxlV+2/9zah4mI3?=
+ =?us-ascii?Q?A3GQQYHBS1Buu3zEYQ1JPOTSkXqIy2azK9H48JkKQUvL46qIOahI+7aP+8k0?=
+ =?us-ascii?Q?OTwnpGrr7O8kc1J3pWpxmkCOqx9C6w9IdlNAVcyvJYbfAFrMVvXpCX0PJIVj?=
+ =?us-ascii?Q?2bHP+OruFx+q3ZvqV2aEkajHaGvYlVTst5CtE3rUBunwN/34CM8EXpIXc4D0?=
+ =?us-ascii?Q?Wn8P5eIPlYQ9ZCFtFg/zta+pF4blbSgGBHlQw6VHDCcLbhVVlVTMFM08Bydr?=
+ =?us-ascii?Q?TXNd0/c2TC81Ia+s8iV/1kLwaGRGPx1QBzeNfxT3yzB0X2/aa7gIQGr+rk+N?=
+ =?us-ascii?Q?xj0p9stZN7QcEwv0luRANMESIQKLmV9n2egrnBb/c5yaqq+wHlS4D699Cxlc?=
+ =?us-ascii?Q?gy+1SPbSiV8OucNSKgwsqWt1uHO5aIxJSfW2BSKtc2SzzIOan1tOBZP7H9wg?=
+ =?us-ascii?Q?//BPNaf0JcQVSn9+CxptL+6C+d7g/DPMxD005k3v6H7NgYQulHW01rRawrtC?=
+ =?us-ascii?Q?oV+FsNewDlNQj83/aqT+bz7bQwgEg3XCnms4LWAXjKfewAggFpIbjjh/nH9/?=
+ =?us-ascii?Q?rmwt6eYdPIBv4Y2s97Z6o22uL1YdEW+CMcbZDj6TJjRF9Gt5vIdcbBA3dUVR?=
+ =?us-ascii?Q?pdVUSfU8xGVQifRIHGXwq0oSq+QSCsC4QzfM/XNcHUg/lGXU60WWQSTsMFic?=
+ =?us-ascii?Q?FAFi85WWf/3P9ysDfMoWafL3Yk3Y0aSACXrVNb9ywzMfwSf8fdTI0KRq1QBq?=
+ =?us-ascii?Q?xh0Kh8bseVS9XYyUYjAPGfENlxcvygnKlv4bnZG9McVkAlv8rSzA0K2bY4bB?=
+ =?us-ascii?Q?Ggi5HO/w/6kgIYT3o1FLCFt7N8epYnAFY84tPo2z8cINMlUYxTL5NhYP+87p?=
+ =?us-ascii?Q?M/5T4+QtUhKN+icIKRRjBL9s4FoGWQqnaiLk907FaIiZKJG3VGlQKuHiikkK?=
+ =?us-ascii?Q?PBwIuQ1KAtEtx8Aeyl+q78svAkp0eeyvidvScKBchQ3jH1TbWzw5UmfTEDtg?=
+ =?us-ascii?Q?nAgamU3cUI5Khbiaa+x2zbCzBiu7l3RP4JB9QzIM?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bcb80a06-0fec-49f3-ae80-08de30bfe513
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Dec 2025 09:56:27.5580 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: OrWdcaM8Ge8q4ce8ww2I9yiLCw/8+sIfUnuSoJBd37Mbd3Mchxpikzxbw8rc/PiQUkDhjKCjH9N0zSRaRjIbxw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR02MB9865
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAxMDA4MCBTYWx0ZWRfX9yc2LWHxK6+4
+ mNENw0BET6Dp9ov+6DRi17fNsX0lnmLCbrPIpUp6oCSuOZw68DjwsKAIlccXf3NeUIHdvMOmtaw
+ Ahzi7IEcetIk5H/cLSKrRpiuoK7D/2m7VNZjlUhvaTg6aizgjP94xoET6t7qyjMmANNGMKLrSq6
+ rh4O8y05IIekF4Z5YBKFj/DHQY/tylp5nQYCqmaarR2IqycsK1rJDMXxrI1k0qG3xat1NODsk8W
+ DbuBZ92Qh6La+bpqN9y+lTuOlDwE8wQZYiPtAPbv9nGAy69irhsECEBwdmEQft0oHkPuwyCXp/A
+ 5vxb67U/b+HcG0afQdSYG5KSV+tgvSr3wWiFrbHGmUxYGHHUoW0oUQBnAHhXnE1bUbeT+jT3Tdq
+ AYiKMdo9eLEyuOkt1RWwfGwOntv4zQ==
+X-Authority-Analysis: v=2.4 cv=TvjrRTXh c=1 sm=1 tr=0 ts=692d664c cx=c_pps
+ a=MVTdNaybHAW3nHwJGrV5wQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=wP3pNCr1ah4A:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=64Cc0HZtAAAA:8 a=UsTzQZW-myzRIYlug1wA:9
+X-Proofpoint-ORIG-GUID: totH1I4oc4DMeIsgQBTWhHfkb01Hf_6y
+X-Proofpoint-GUID: totH1I4oc4DMeIsgQBTWhHfkb01Hf_6y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-11-28_08,2025-11-27_02,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,105 +196,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 30 Nov 2025 at 20:27, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 11/28/25 01:31, Peter Maydell wrote:
-> > On Fri, 28 Nov 2025 at 04:38, Harald van Dijk <hdijk@accesssoftek.com> wrote:
-> >>
-> >> trans_BRA does
-> >>
-> >>      gen_a64_set_pc(s, dst);
-> >>      set_btype_for_br(s, a->rn);
-> >>
-> >> gen_a64_set_pc does
-> >>
-> >>      s->pc_save = -1;
-> >>
-> >> set_btype_for_br (if aa64_bti is enabled and the register is not x16 or
-> >> x17) does
-> >>
-> >>      gen_pc_plus_diff(s, pc, 0);
-> >>
-> >> gen_pc_plus_diff does
-> >>
-> >>      assert(s->pc_save != -1);
-> >>
-> >> Hence, this assert is getting hit. We need to call set_btype_for_br
-> >> before gen_a64_set_pc, and there is nothing in set_btype_for_br that
-> >> depends on gen_a64_set_pc having already been called, so this commit
-> >> simply swaps the calls.
-> >>
-> >> Signed-off-by: Harald van Dijk <hdijk@accesssoftek.com>
-> >> ---
-> >>   target/arm/tcg/translate-a64.c | 2 +-
-> >>   1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> >> index 08b21d7dbf..cde22a5cca 100644
-> >> --- a/target/arm/tcg/translate-a64.c
-> >> +++ b/target/arm/tcg/translate-a64.c
-> >> @@ -1916,8 +1916,8 @@ static bool trans_BRA(DisasContext *s, arg_bra *a)
-> >>           return false;
-> >>       }
-> >>       dst = auth_branch_target(s, cpu_reg(s,a->rn), cpu_reg_sp(s, a->rm), !a->m);
-> >> -    gen_a64_set_pc(s, dst);
-> >>       set_btype_for_br(s, a->rn);
-> >> +    gen_a64_set_pc(s, dst);
-> >>       s->base.is_jmp = DISAS_JUMP;
-> >>       return true;
-> >>   }
-> >
-> > The commit message on commit 64678fc45d8f6 says
-> >      The set_btype_for_br call must be moved after the gen_a64_set_pc
-> >      call to ensure the current pc can still be computed.
-> >
-> > but I think that is incorrect and it meant to say "moved before",
-> > because the actual code changes it makes to trans_BR() and
-> > trans_BRAZ() are
-> >
-> > @@ -1521,8 +1528,8 @@ static void set_btype_for_blr(DisasContext *s)
-> >
-> >   static bool trans_BR(DisasContext *s, arg_r *a)
-> >   {
-> > -    gen_a64_set_pc(s, cpu_reg(s, a->rn));
-> >       set_btype_for_br(s, a->rn);
-> > +    gen_a64_set_pc(s, cpu_reg(s, a->rn));
-> >       s->base.is_jmp = DISAS_JUMP;
-> >       return true;
-> >   }
-> > @@ -1581,8 +1588,8 @@ static bool trans_BRAZ(DisasContext *s, arg_braz *a)
-> >       }
-> >
-> >       dst = auth_branch_target(s, cpu_reg(s, a->rn), tcg_constant_i64(0), !a->m);
-> > -    gen_a64_set_pc(s, dst);
-> >       set_btype_for_br(s, a->rn);
-> > +    gen_a64_set_pc(s, dst);
-> >       s->base.is_jmp = DISAS_JUMP;
-> >       return true;
-> >   }
-> >
-> > which move the set_btype_for_br() call to before gen_a64_set_pc().
-> >
-> > So I think that we just forgot to also include trans_BRA() in
-> > that change, and your patch here fixes that.
-> >
-> > Richard,  does that sound right?
->
-> Yep.
->
-> >
-> > If so, this should be:
-> > Cc: qemu-stable@nongnu.org
-> > Fixes: 64678fc45d8f6 ("target/arm: Fix BTI versus CF_PCREL")
-> >
-> > and you can have
-> > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Improve a comment for this.
 
+Signed-off-by: John Levon <john.levon@nutanix.com>
+---
+ hw/vfio-user/proxy.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Applied to target-arm.next, thanks.
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index 75845d7c89..82c76c6665 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -362,7 +362,10 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
+     while (msgleft > 0) {
+         ret = qio_channel_read(proxy->ioc, data, msgleft, errp);
+ 
+-        /* prepare to complete read on next iternation */
++        /*
++         * We'll complete this read on the next go around; keep track of the
++         * partial message until then.
++         */
+         if (ret == QIO_CHANNEL_ERR_BLOCK) {
+             proxy->part_recv = msg;
+             proxy->recv_left = msgleft;
+-- 
+2.43.0
 
--- PMM
 
