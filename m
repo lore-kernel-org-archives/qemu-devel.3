@@ -4,109 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A02DD116F1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 17:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C27D116F1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 18:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ7lU-0004F3-0A; Mon, 01 Dec 2025 12:32:44 -0500
+	id 1vQ8DO-0004Sp-AB; Mon, 01 Dec 2025 13:01:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vQ7lR-0004Eh-Co
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 12:32:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vQ7lO-000447-W6
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 12:32:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764610356;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=H21hfoxPxXM94PbpsvaHzAdADe55PKb2Lg7eqvCRITc=;
- b=AcMEUfeSnWRuS7thpUovfpdMPbUuA+25xgLoSy/mXc4PiSnLee01Y/Jo8FdQnQMuxme4mA
- sw0b49/T2j5M061ReYf3Jxk7DiLadT/GW7S91E6eH7vqqGCrMLIqhIuBllGmBo4F2ojbH8
- JyY0HWOD2mkKGeZpe9HPqZVX2CyAAwE=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-ZH-jzF7YPOy0i6DwueOI1g-1; Mon, 01 Dec 2025 12:32:35 -0500
-X-MC-Unique: ZH-jzF7YPOy0i6DwueOI1g-1
-X-Mimecast-MFC-AGG-ID: ZH-jzF7YPOy0i6DwueOI1g_1764610354
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8823f4666abso87466806d6.0
- for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 09:32:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
+ id 1vQ8D2-0004Sd-3o
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 13:01:12 -0500
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
+ id 1vQ8Cx-00084v-8D
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 13:01:11 -0500
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-5959d9a8eceso3926547e87.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 10:01:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764610354; x=1765215154; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=H21hfoxPxXM94PbpsvaHzAdADe55PKb2Lg7eqvCRITc=;
- b=VpEXz4eqI1VGDXzuckZQT/Sqze9Yp/SN9HcAXY/HSP238VI56+JXtSDBCyinBiBujL
- YJqCzrTSJvRgyGXNuktdLFLN2Z15ltDAM+8eSTQGy7pD9VFb7KJQ1xK4ZDFbqti+aCAk
- BopGC0jBQ6Xc4oGaTLgoMfF7DllP+rG6Ba2ere6QN2dxLf+cu6139578+C+mnLBA1G5B
- wkWmyhvBXI+XInU4rHoTSnKigJrn3xPXcoftRBikQqn/UuDg/8uJhI6cG/zDpDpBnh0L
- a1+VTvvIle3Dglv40rLIgj1g3YlTsZd0Kyei6eTrV+Z2nIUT6KlnkQddfwP/u8mUnS4Q
- 2wKA==
+ d=gmail.com; s=20230601; t=1764612060; x=1765216860; darn=nongnu.org;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+rrPKU+C+PoV3fBCCNpUSodQaRGibhXiLY/RrjSQ7tg=;
+ b=IMa3E2wBvVNfX4Fztcyk362VkO0U5Ane/fMS3TALYP7Dc8SP0Yl9IxWudS4N1ntLpu
+ Js5r/Cjwhi6X2cRl5/GOXwKplau80b7FbSPmQgjYonWQGn5J50hJaH5OH8vhu2nZ8vdo
+ v633iaRmwifXNo79JLQPCG6V5D28TZT8tA0Rv8gU/pdMs5KUp6jUzNWF7te9EcK806y7
+ CM3UIpprpGj4Udkgm1iNWx72BsThdYGUQzzJAmrpJM9ZlrbMOIC79/kSMCkSD0qaJxoG
+ iAV12gD+M4QMicKwYqkrP4OPftXm2oU2MlJ0qv/pP0CV0lF9QzScXfpUPL+qyxYtfXI5
+ qijw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764610354; x=1765215154;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=H21hfoxPxXM94PbpsvaHzAdADe55PKb2Lg7eqvCRITc=;
- b=fvEBibSZm4HdtYOYg2bSe1lz+JmWvofDkmPqP4M1nGgx5KUe0Z8u8vuJTygiVobO/t
- lEuZsx6XscFk8xKPVB4T4jLeqQkv2DBrONxBFh5uJuLs+x4wcuquJfitFkhzRx6jths3
- yCgTAB6p+/jklqajY3fRIvPekOxo8daPeEt9L4Dg2CqBYcOrZIGD/QhScVK2ZH7QoDa2
- p58KzjBDPgqlxINeOmmRveJi3MZNjjzWZVYMCtqrSuSEdinSgg9QQOZXY5QskXdtjcCo
- GkLyC2wQ2R+P95zd9mCRYBnfOXSeBbnNs038xdTzQsdBXOzuQ5F6rOCShIcIdVM53V6q
- YkCw==
-X-Gm-Message-State: AOJu0Yy8fxR3qejPYBLpvIKbbDA1DLmWTwheNy6g+wpe4tcTsbSF6IGS
- rwyFhPgdVjwGZAV+m+fMu86Ey6lfujhAg26OFn0KQvmanqKtI5ZpGagCMOlnM1XQCrIZ0DfmxvS
- 7Foe463zKlZKOeb46nvOm4jYlbPYO0PIXnmiX0QpDs3wTUwvAYuserHT3
-X-Gm-Gg: ASbGncug3AFFGySTVYL/lI+xaolDXQDDddh88kf4PPaOU/dxls5sKQTnrzL5WnZAY1J
- mwmY6l0QDWOeb1KhFxdRoetjeg2P2Yvu2HSG90I5fvEKIg/F3FCGDTc+LGlehNvRu7rbxjUcRXv
- u9blLUBO3n9dZ6vyj/uSbldtytP5babSRR1ZQz6B6fhGl++/OzWsyAWT5cUIzoUTP8II7/IsQp7
- Bd305sMokfzWBGyvsVhh6Pf6023BPOZhmYq+VyybShUBIb89d96kLNuunUt+el7OaeRfDBD3wSd
- SEsQPOKmbr3FUOHuJfiZubuEMw/OBWNqs1aUS+S+hXLbqa8Tq1WQYCjG10rNM5GJyJEZnRJjJjl
- EaB8=
-X-Received: by 2002:a05:6214:dca:b0:87c:20b5:6685 with SMTP id
- 6a1803df08f44-8847c535a2bmr636160916d6.55.1764610354344; 
- Mon, 01 Dec 2025 09:32:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEDuKvQvseRgqknz/5Cf4JXejZxUpALY1PveAME6j3yOoi/Yq6LvMEQ72LqqtI00dgCFnqqNw==
-X-Received: by 2002:a05:6214:dca:b0:87c:20b5:6685 with SMTP id
- 6a1803df08f44-8847c535a2bmr636156476d6.55.1764610351535; 
- Mon, 01 Dec 2025 09:32:31 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-886524b1722sm87209636d6.2.2025.12.01.09.32.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Dec 2025 09:32:30 -0800 (PST)
-Date: Mon, 1 Dec 2025 12:32:23 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Subject: Re: [PATCH for-11.0 6/6] migration: Replace migrate_set_error() with
- migrate_error_propagate()
-Message-ID: <aS3RJ__MD54Vig-4@x1.local>
-References: <20251125204648.857018-1-peterx@redhat.com>
- <20251125204648.857018-7-peterx@redhat.com>
- <87pl95dy4o.fsf@pond.sub.org>
+ d=1e100.net; s=20230601; t=1764612060; x=1765216860;
+ h=content-transfer-encoding:subject:from:cc:to:content-language
+ :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+rrPKU+C+PoV3fBCCNpUSodQaRGibhXiLY/RrjSQ7tg=;
+ b=pSu0GfYbGrYx0sdVYmP1TTK1ivPgllKTBHYJybe2urPGFXFvxPECpsNj9n0IxLmU3+
+ TJYr1OeHkNWR8q/T5fCij4XFnBvEHi/axktzA8u+FEdgQSiERcoS7QgpnD4ox/lwuPSC
+ 0pNkmwFP2YNQAWL6kmgTiccZBl6Mpd5RJEVVFu3WJuLwDCnDrUOOAAFV1RcaUn5hdXeU
+ 9Zb8L5//Bihr2D6arzthTUZZZRtZhtp4ywDRnQtJD1GSqXAF0Mj1wviKU0iA/ge91wC/
+ qRmS7F7iJuTqI4R0OE5ya5DqFEeZkQO6Gyhhklb/5imyMwQzkDci/6SXd0wlH0fC/mc5
+ TIvQ==
+X-Gm-Message-State: AOJu0YzD0X35N1m7A9dVLo/YzgOJtlwyHk0i92AP0XYduSfTRvofur/z
+ W9M6XRUe+Is1+Gn7d8FAq+Oioo+K4Yaiy9mp47XeW+ARxyZIzYj8WJqFMWltBw==
+X-Gm-Gg: ASbGncs6fwYQmRbQh9/1PvuXOrQkrLpzN19JWLHx8Ap+sSz/HNxc1iJKeISHoKicAlC
+ FdtzXACe3aiMLzEjhfX1UYjOGFQXaKstIf6ThzLdnSv5HKOzu1MH8noyRR16cUo4ie1AGWt1WSL
+ zQEEhjgBd25eHACI5vr4lBdcB3oQ35OhWUezpbARJEhznwGQ51kzdKusKudEVDAgkeV0KBUt3Ub
+ gk4QWLm1SV/lQTeq+PckdK7z1x/rgX/0vO2yCa2D+waqM9huEhdj6rrP1vyVjnHKJu1fexYIKO8
+ vdMfX5dqSPmILsU/mhBxD1+xE4Rku03gbSqr/y3m7yjGKAFdnxJwZFZInBlUepqujKlVpnlQaTY
+ Gz/6ddSYMRFEAZCqhaKLtkuFMCym7jeLfM7iTBzKY3Wu7cgjZO7Bux23kbDlaLAH3Q7bDEKTdPd
+ oCSeehrIlGzWNGGqHRGX7pQQ==
+X-Google-Smtp-Source: AGHT+IF9D/PhLbsIrZsfFjeYtbUAGm61YH/8cIJoq5JXTO8Q78quhWj7ppGP01fKVPLpmWbGDVxNWQ==
+X-Received: by 2002:a05:6512:4005:b0:594:7380:98c0 with SMTP id
+ 2adb3069b0e04-596a3ea9d32mr13479345e87.17.1764612059443; 
+ Mon, 01 Dec 2025 10:00:59 -0800 (PST)
+Received: from [192.168.88.252] ([82.215.83.93])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-596bf8a7cffsm3850429e87.18.2025.12.01.10.00.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Dec 2025 10:00:57 -0800 (PST)
+Message-ID: <fe7665bc-5ff6-4f78-82b7-1bea853583e3@gmail.com>
+Date: Mon, 1 Dec 2025 23:00:53 +0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87pl95dy4o.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>
+From: Andrey Erokhin <language.lawyer@gmail.com>
+Subject: [RFC PATCH] virtfs: 9p: local: add default uid and gid options
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=language.lawyer@gmail.com; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,412 +100,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 26, 2025 at 08:57:43AM +0100, Markus Armbruster wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > migrate_set_error() currently doesn't take ownership of the error being
-> > passed in.  It's not aligned with the error API and meanwhile it also
-> > makes most of the caller free the error explicitly.
-> >
-> > Change the API to take the ownership of the Error object instead.  When at
-> > it, remove the first parameter so it's friendly to g_clear_pointer().  It
-> > can be used whenever the caller wants to provide extra safety measure (or
-> > reuse the pointer) to reset the Error* pointer after stolen.
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> 
-> Worth mentioning that this avoids Error object copies?
+I was trying to boot from a directory tree owned by an ordinary user,
+and some daemons weren't happy about non-root ownership of some files
 
-Sure.
+Example use:
+-virtfs local,path=rootfs,mount_tag=root,security_model=mapped,uid=0,gid=0
 
-> 
-> > ---
-> >  migration/migration.h            |  2 +-
-> >  migration/cpr-exec.c             |  4 +--
-> >  migration/migration.c            | 46 +++++++++++++++-----------------
-> >  migration/multifd-device-state.c |  5 +---
-> >  migration/multifd.c              | 19 +++++++------
-> >  migration/postcopy-ram.c         |  5 ++--
-> >  migration/ram.c                  |  4 +--
-> >  migration/savevm.c               | 15 ++++-------
-> >  8 files changed, 42 insertions(+), 58 deletions(-)
-> >
-> > diff --git a/migration/migration.h b/migration/migration.h
-> > index 213b33fe6e..df74f9b14f 100644
-> > --- a/migration/migration.h
-> > +++ b/migration/migration.h
-> > @@ -525,7 +525,7 @@ void migration_incoming_process(void);
-> >  
-> >  bool  migration_has_all_channels(void);
-> >  
-> > -void migrate_set_error(MigrationState *s, const Error *error);
-> > +void migrate_error_propagate(Error *error);
-> >  bool migrate_has_error(MigrationState *s);
-> >  
-> >  void migration_connect(MigrationState *s, Error *error_in);
-> > diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
-> > index 0b8344a86f..13e6138f56 100644
-> > --- a/migration/cpr-exec.c
-> > +++ b/migration/cpr-exec.c
-> > @@ -158,9 +158,7 @@ static void cpr_exec_cb(void *opaque)
-> >  
-> >      error_report_err(error_copy(err));
-> >      migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-> > -    migrate_set_error(s, err);
-> > -    error_free(err);
-> > -    err = NULL;
-> > +    g_clear_pointer(&err, migrate_error_propagate);
-> >  
-> >      /* Note, we can go from state COMPLETED to FAILED */
-> >      migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
-> 
-> I dislike g_clear_pointer(), and I dislike the change from taking the
-> migration state as argument to getting the global migration state with
-> migrate_get_current().  The loss of similarity to error_propagate() is
-> unfortunate, but tolerable.  This is not a demand.
-> 
-> For each hunk, we need to prove that the migrate_set_error()'s first
-> argument before the patch equals migrate_get_current() afterwards.
+Works with any security_model
 
-It's guaranteed; the only point of set_error() is to persist the error to
-the global MigrationState's error field that which will be queried later.
+Signed-off-by: Andrey Erokhin <language.lawyer@gmail.com>
+---
+ fsdev/file-op-9p.h      |  5 +++++
+ fsdev/qemu-fsdev-opts.c | 12 ++++++++++++
+ fsdev/qemu-fsdev.c      |  2 ++
+ hw/9pfs/9p-local.c      | 15 +++++++++++++++
+ hw/9pfs/9p.c            |  2 ++
+ system/vl.c             |  9 +++++++++
+ 6 files changed, 45 insertions(+)
 
-> 
-> For this hunk, it's locally obvious: @s is initialized to
-> migrate_get_current() at the beginning of the funtion.
-> 
-> Where it's not locally obvious, I guess we could argue that just one
-> MigrationState object exists, so a MigrationState * can only point to
-> that one.
-> 
-> If locally non-obvious hunks exist, such an argument needs to be made in
-> the commit message.
-> 
-> I did *not* check this aspect of the patch.
-
-Personally I liked the safety measure that g_clear_pointer() enforces, on
-pointer reset together with object release.  migrate_error_propagate() is
-almost a free function to me, except that it optionally remembers the error
-if it's the first one for migration purpose.
-
-But since you don't like it, and Cedric also similarly shared his opinion,
-I can keep the MigrationState* arg, and remove this g_clear_pointer() for
-now.
-
-Maybe I'll try to "fight" more if we have more use cases of explicit
-resetting Error* pointer for reuse like what cpr_exec_cb() does.  But that
-seems the only use case anyway..  I think we can keep it open-coded.
-
-> 
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 4fe69cc2ef..219d3129cb 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -914,9 +914,7 @@ process_incoming_migration_co(void *opaque)
-> >  fail:
-> >      migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
-> >                        MIGRATION_STATUS_FAILED);
-> > -    migrate_set_error(s, local_err);
-> > -    error_free(local_err);
-> > -
-> > +    migrate_error_propagate(local_err);
-> >      migration_incoming_state_destroy();
-> >  
-> >      if (mis->exit_on_error) {
-> > @@ -1548,14 +1546,22 @@ static void migration_cleanup_bh(void *opaque)
-> >      migration_cleanup(opaque);
-> >  }
-> >  
-> > -void migrate_set_error(MigrationState *s, const Error *error)
-> > +/*
-> > + * Propagate the Error* object to migration core.  The caller mustn't
-> > + * reference the error pointer after the function returned, because the
-> > + * Error* object might be freed.
-> > + */
-> > +void migrate_error_propagate(Error *error)
-> >  {
-> > -    QEMU_LOCK_GUARD(&s->error_mutex);
-> > +    MigrationState *s = migrate_get_current();
-> >  
-> > +    QEMU_LOCK_GUARD(&s->error_mutex);
-> >      trace_migrate_error(error_get_pretty(error));
-> >  
-> >      if (!s->error) {
-> > -        s->error = error_copy(error);
-> > +        s->error = error;
-> > +    } else {
-> > +        error_free(error);
-> >      }
-> >  }
-> >  
-> > @@ -1601,8 +1607,7 @@ static void migration_connect_set_error(MigrationState *s, Error *error)
-> >      }
-> >  
-> >      migrate_set_state(&s->state, current, next);
-> > -    migrate_set_error(s, error);
-> > -    error_free(error);
-> > +    migrate_error_propagate(error);
-> >  }
-> >  
-> >  void migration_cancel(void)
-> > @@ -2014,8 +2019,7 @@ void qmp_migrate_pause(Error **errp)
-> >  
-> >          /* Tell the core migration that we're pausing */
-> >          error_setg(&error, "Postcopy migration is paused by the user");
-> > -        migrate_set_error(ms, error);
-> > -        error_free(error);
-> > +        migrate_error_propagate(error);
-> >  
-> >          qemu_mutex_lock(&ms->qemu_file_lock);
-> >          if (ms->to_dst_file) {
-> > @@ -2647,8 +2651,7 @@ static void *source_return_path_thread(void *opaque)
-> >  
-> >  out:
-> >      if (err) {
-> > -        migrate_set_error(ms, err);
-> > -        error_free(err);
-> > +        migrate_error_propagate(err);
-> >          trace_source_return_path_thread_bad_end();
-> >      }
-> >  
-> > @@ -3094,12 +3097,10 @@ static void migration_completion(MigrationState *s)
-> >  
-> >  fail:
-> >      if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
-> > -        migrate_set_error(s, local_err);
-> > -        error_free(local_err);
-> > +        migrate_error_propagate(local_err);
-> >      } else if (ret) {
-> >          error_setg_errno(&local_err, -ret, "Error in migration completion");
-> > -        migrate_set_error(s, local_err);
-> > -        error_free(local_err);
-> > +        migrate_error_propagate(local_err);
-> >      }
-> >  
-> >      if (s->state != MIGRATION_STATUS_CANCELLING) {
-> > @@ -3326,8 +3327,7 @@ static MigThrError migration_detect_error(MigrationState *s)
-> >      }
-> >  
-> >      if (local_error) {
-> > -        migrate_set_error(s, local_error);
-> > -        error_free(local_error);
-> > +        migrate_error_propagate(local_error);
-> >      }
-> >  
-> >      if (state == MIGRATION_STATUS_POSTCOPY_ACTIVE && ret) {
-> > @@ -3522,7 +3522,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-> >          if (must_precopy <= s->threshold_size &&
-> >              can_switchover && qatomic_read(&s->start_postcopy)) {
-> >              if (postcopy_start(s, &local_err)) {
-> > -                migrate_set_error(s, local_err);
-> > +                migrate_error_propagate(error_copy(local_err));
-> 
-> First hunk where we don't save a copy.  Reason: we report in addition to
-> propagate.  There are a several more below.
-> 
-> "Forking" the error like this gives me an uneasy feeling, as explained
-> in
->     Subject: Re: [PATCH 0/3] migration: Error fixes and improvements
->     Date: Tue, 18 Nov 2025 08:44:32 +0100
->     Message-ID: <87a50jlr8f.fsf@pond.sub.org>
-> 
-> Clearly out of scope for this series.
-
-Yes, and we discussed the need of doing that in the other thread as well.
-Hope that justifies we should keep it until we want to change the behavior
-of error reports.
-
-Thanks,
-
-> 
-> >                  error_report_err(local_err);
-> >              }
-> >              return MIG_ITERATE_SKIP;
-> > @@ -3819,8 +3819,7 @@ static void *migration_thread(void *opaque)
-> >       * devices to unplug. This to preserve migration state transitions.
-> >       */
-> >      if (ret) {
-> > -        migrate_set_error(s, local_err);
-> > -        error_free(local_err);
-> > +        migrate_error_propagate(local_err);
-> >          migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-> >                            MIGRATION_STATUS_FAILED);
-> >          goto out;
-> > @@ -3944,8 +3943,7 @@ static void *bg_migration_thread(void *opaque)
-> >       * devices to unplug. This to preserve migration state transitions.
-> >       */
-> >      if (ret) {
-> > -        migrate_set_error(s, local_err);
-> > -        error_free(local_err);
-> > +        migrate_error_propagate(local_err);
-> >          migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-> >                            MIGRATION_STATUS_FAILED);
-> >          goto fail_setup;
-> > @@ -4127,7 +4125,7 @@ void migration_connect(MigrationState *s, Error *error_in)
-> >      return;
-> >  
-> >  fail:
-> > -    migrate_set_error(s, local_err);
-> > +    migrate_error_propagate(error_copy(local_err));
-> >      if (s->state != MIGRATION_STATUS_CANCELLING) {
-> >          migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-> >      }
-> > diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
-> > index db3239fef5..3040d70872 100644
-> > --- a/migration/multifd-device-state.c
-> > +++ b/migration/multifd-device-state.c
-> > @@ -143,8 +143,6 @@ static int multifd_device_state_save_thread(void *opaque)
-> >      Error *local_err = NULL;
-> >  
-> >      if (!data->hdlr(data, &local_err)) {
-> > -        MigrationState *s = migrate_get_current();
-> > -
-> >          /*
-> >           * Can't call abort_device_state_save_threads() here since new
-> >           * save threads could still be in process of being launched
-> > @@ -158,8 +156,7 @@ static int multifd_device_state_save_thread(void *opaque)
-> >           * In case of multiple save threads failing which thread error
-> >           * return we end setting is purely arbitrary.
-> >           */
-> > -        migrate_set_error(s, local_err);
-> > -        error_free(local_err);
-> > +        migrate_error_propagate(local_err);
-> >      }
-> >  
-> >      return 0;
-> > diff --git a/migration/multifd.c b/migration/multifd.c
-> > index c861b4b557..99717b64e9 100644
-> > --- a/migration/multifd.c
-> > +++ b/migration/multifd.c
-> > @@ -428,8 +428,9 @@ static void multifd_send_set_error(Error *err)
-> >  
-> >      if (err) {
-> >          MigrationState *s = migrate_get_current();
-> > -        migrate_set_error(s, err);
-> > -        error_free(err);
-> > +
-> > +        migrate_error_propagate(err);
-> > +
-> >          if (s->state == MIGRATION_STATUS_SETUP ||
-> >              s->state == MIGRATION_STATUS_PRE_SWITCHOVER ||
-> >              s->state == MIGRATION_STATUS_DEVICE ||
-> > @@ -588,8 +589,7 @@ void multifd_send_shutdown(void)
-> >          Error *local_err = NULL;
-> >  
-> >          if (!multifd_send_cleanup_channel(p, &local_err)) {
-> > -            migrate_set_error(migrate_get_current(), local_err);
-> > -            error_free(local_err);
-> > +            migrate_error_propagate(local_err);
-> >          }
-> >      }
-> >  
-> > @@ -962,8 +962,7 @@ bool multifd_send_setup(void)
-> >          p->write_flags = 0;
-> >  
-> >          if (!multifd_new_send_channel_create(p, &local_err)) {
-> > -            migrate_set_error(s, local_err);
-> > -            error_free(local_err);
-> > +            migrate_error_propagate(local_err);
-> >              ret = -1;
-> >          }
-> >      }
-> > @@ -987,8 +986,7 @@ bool multifd_send_setup(void)
-> >  
-> >          ret = multifd_send_state->ops->send_setup(p, &local_err);
-> >          if (ret) {
-> > -            migrate_set_error(s, local_err);
-> > -            error_free(local_err);
-> > +            migrate_error_propagate(local_err);
-> >              goto err;
-> >          }
-> >          assert(p->iov);
-> > @@ -1067,8 +1065,9 @@ static void multifd_recv_terminate_threads(Error *err)
-> >  
-> >      if (err) {
-> >          MigrationState *s = migrate_get_current();
-> > -        migrate_set_error(s, err);
-> > -        error_free(err);
-> > +
-> > +        migrate_error_propagate(err);
-> > +
-> >          if (s->state == MIGRATION_STATUS_SETUP ||
-> >              s->state == MIGRATION_STATUS_ACTIVE) {
-> >              migrate_set_state(&s->state, s->state,
-> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> > index 7c9fe61041..856366072a 100644
-> > --- a/migration/postcopy-ram.c
-> > +++ b/migration/postcopy-ram.c
-> > @@ -1927,8 +1927,7 @@ postcopy_preempt_send_channel_done(MigrationState *s,
-> >                                     QIOChannel *ioc, Error *local_err)
-> >  {
-> >      if (local_err) {
-> > -        migrate_set_error(s, local_err);
-> > -        error_free(local_err);
-> > +        migrate_error_propagate(local_err);
-> >      } else {
-> >          migration_ioc_register_yank(ioc);
-> >          s->postcopy_qemufile_src = qemu_file_new_output(ioc);
-> > @@ -2162,7 +2161,7 @@ static void *postcopy_listen_thread(void *opaque)
-> >               * exit depending on if postcopy-exit-on-error is true, but the
-> >               * migration cannot be recovered.
-> >               */
-> > -            migrate_set_error(migr, local_err);
-> > +            migrate_error_propagate(error_copy(local_err));
-> >              error_report_err(local_err);
-> >              migrate_set_state(&mis->state, mis->state, MIGRATION_STATUS_FAILED);
-> >              goto out;
-> > diff --git a/migration/ram.c b/migration/ram.c
-> > index 29f016cb25..1d2a47526e 100644
-> > --- a/migration/ram.c
-> > +++ b/migration/ram.c
-> > @@ -4730,9 +4730,7 @@ static void ram_mig_ram_block_resized(RAMBlockNotifier *n, void *host,
-> >           * Abort and indicate a proper reason.
-> >           */
-> >          error_setg(&err, "RAM block '%s' resized during precopy.", rb->idstr);
-> > -        migrate_set_error(migrate_get_current(), err);
-> > -        error_free(err);
-> > -
-> > +        migrate_error_propagate(err);
-> >          migration_cancel();
-> >      }
-> >  
-> > diff --git a/migration/savevm.c b/migration/savevm.c
-> > index 638e9b364f..ab9d1e579e 100644
-> > --- a/migration/savevm.c
-> > +++ b/migration/savevm.c
-> > @@ -1125,13 +1125,12 @@ void qemu_savevm_send_open_return_path(QEMUFile *f)
-> >  int qemu_savevm_send_packaged(QEMUFile *f, const uint8_t *buf, size_t len)
-> >  {
-> >      uint32_t tmp;
-> > -    MigrationState *ms = migrate_get_current();
-> >      Error *local_err = NULL;
-> >  
-> >      if (len > MAX_VM_CMD_PACKAGED_SIZE) {
-> >          error_setg(&local_err, "%s: Unreasonably large packaged state: %zu",
-> >                       __func__, len);
-> > -        migrate_set_error(ms, local_err);
-> > +        migrate_error_propagate(error_copy(local_err));
-> >          error_report_err(local_err);
-> >          return -1;
-> >      }
-> > @@ -1373,7 +1372,7 @@ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
-> >          if (se->vmsd && se->vmsd->early_setup) {
-> >              ret = vmstate_save(f, se, vmdesc, errp);
-> >              if (ret) {
-> > -                migrate_set_error(ms, *errp);
-> > +                migrate_error_propagate(error_copy(*errp));
-> 
-> Here, we need to keep the copy because we additionally propagate to the
-> caller.
-> 
-> >                  qemu_file_set_error(f, ret);
-> >                  break;
-> >              }
-> 
-> [...]
-> 
-
+diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+index b9dae8c84c..46fb88001e 100644
+--- a/fsdev/file-op-9p.h
++++ b/fsdev/file-op-9p.h
+@@ -15,6 +15,7 @@
+ #define FILE_OP_9P_H
+ 
+ #include <dirent.h>
++#include <sys/types.h>
+ #include <utime.h>
+ #include "qemu-fsdev-throttle.h"
+ #include "p9array.h"
+@@ -94,6 +95,8 @@ typedef struct FsDriverEntry {
+     FsThrottle fst;
+     mode_t fmode;
+     mode_t dmode;
++    uid_t dflt_uid;
++    gid_t dflt_gid;
+ } FsDriverEntry;
+ 
+ struct FsContext {
+@@ -107,6 +110,8 @@ struct FsContext {
+     void *private;
+     mode_t fmode;
+     mode_t dmode;
++    uid_t dflt_uid;
++    gid_t dflt_gid;
+ };
+ 
+ struct V9fsPath {
+diff --git a/fsdev/qemu-fsdev-opts.c b/fsdev/qemu-fsdev-opts.c
+index 07a18c6e48..c99abb3de6 100644
+--- a/fsdev/qemu-fsdev-opts.c
++++ b/fsdev/qemu-fsdev-opts.c
+@@ -46,6 +46,12 @@ static QemuOptsList qemu_fsdev_opts = {
+         }, {
+             .name = "dmode",
+             .type = QEMU_OPT_NUMBER,
++        }, {
++            .name = "uid",
++            .type = QEMU_OPT_NUMBER,
++        }, {
++            .name = "gid",
++            .type = QEMU_OPT_NUMBER,
+         },
+ 
+         THROTTLE_OPTS,
+@@ -92,6 +98,12 @@ static QemuOptsList qemu_virtfs_opts = {
+         }, {
+             .name = "dmode",
+             .type = QEMU_OPT_NUMBER,
++        }, {
++            .name = "uid",
++            .type = QEMU_OPT_NUMBER,
++        }, {
++            .name = "gid",
++            .type = QEMU_OPT_NUMBER,
+         },
+ 
+         { /*End of list */ }
+diff --git a/fsdev/qemu-fsdev.c b/fsdev/qemu-fsdev.c
+index 57877dad0a..faa84dc033 100644
+--- a/fsdev/qemu-fsdev.c
++++ b/fsdev/qemu-fsdev.c
+@@ -58,6 +58,8 @@ static FsDriverTable FsDrivers[] = {
+             "writeout",
+             "fmode",
+             "dmode",
++            "uid",
++            "gid",
+             "multidevs",
+             "throttling.bps-total",
+             "throttling.bps-read",
+diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+index 5ce97b76a6..cecf4aa50c 100644
+--- a/hw/9pfs/9p-local.c
++++ b/hw/9pfs/9p-local.c
+@@ -198,6 +198,12 @@ static int local_lstat(FsContext *fs_ctx, V9fsPath *fs_path, struct stat *stbuf)
+     if (err) {
+         goto err_out;
+     }
++    if (fs_ctx->dflt_uid != -1) {
++        stbuf->st_uid = fs_ctx->dflt_uid;
++    }
++    if (fs_ctx->dflt_gid != -1) {
++        stbuf->st_gid = fs_ctx->dflt_gid;
++    }
+     if (fs_ctx->export_flags & V9FS_SM_MAPPED) {
+         /* Actual credentials are part of extended attrs */
+         uid_t tmp_uid;
+@@ -788,6 +794,12 @@ static int local_fstat(FsContext *fs_ctx, int fid_type,
+     if (err) {
+         return err;
+     }
++    if (fs_ctx->dflt_uid != -1) {
++        stbuf->st_uid = fs_ctx->dflt_uid;
++    }
++    if (fs_ctx->dflt_gid != -1) {
++        stbuf->st_gid = fs_ctx->dflt_gid;
++    }
+     if (fs_ctx->export_flags & V9FS_SM_MAPPED) {
+         /* Actual credentials are part of extended attrs */
+         uid_t tmp_uid;
+@@ -1570,6 +1582,9 @@ static int local_parse_opts(QemuOpts *opts, FsDriverEntry *fse, Error **errp)
+         return -1;
+     }
+ 
++    fse->dflt_uid = qemu_opt_get_number(opts, "uid", -1);
++    fse->dflt_gid = qemu_opt_get_number(opts, "gid", -1);
++
+     if (fse->export_flags & V9FS_SM_MAPPED ||
+         fse->export_flags & V9FS_SM_MAPPED_FILE) {
+         fse->fmode =
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index acfa7db4e1..492379d361 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -4317,6 +4317,8 @@ int v9fs_device_realize_common(V9fsState *s, const V9fsTransport *t,
+ 
+     s->ctx.fmode = fse->fmode;
+     s->ctx.dmode = fse->dmode;
++    s->ctx.dflt_uid = fse->dflt_uid;
++    s->ctx.dflt_gid = fse->dflt_gid;
+ 
+     s->fids = g_hash_table_new(NULL, NULL);
+     qemu_co_rwlock_init(&s->rename_lock);
+diff --git a/system/vl.c b/system/vl.c
+index 3b7057e6c6..d363b046a6 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -3253,6 +3253,7 @@ void qemu_init(int argc, char **argv)
+                 QemuOpts *fsdev;
+                 QemuOpts *device;
+                 const char *writeout, *sock_fd, *socket, *path, *security_model,
++                           *uid, *gid,
+                            *multidevs;
+ 
+                 olist = qemu_find_opts("virtfs");
+@@ -3301,6 +3302,14 @@ void qemu_init(int argc, char **argv)
+                     qemu_opt_set(fsdev, "security_model", security_model,
+                                  &error_abort);
+                 }
++                uid = qemu_opt_get(opts, "uid");
++                if (uid) {
++                    qemu_opt_set(fsdev, "uid", uid, &error_abort);
++                }
++                gid = qemu_opt_get(opts, "gid");
++                if (gid) {
++                    qemu_opt_set(fsdev, "gid", gid, &error_abort);
++                }
+                 socket = qemu_opt_get(opts, "socket");
+                 if (socket) {
+                     qemu_opt_set(fsdev, "socket", socket, &error_abort);
 -- 
-Peter Xu
-
+2.34.1
 
