@@ -4,87 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EB04D116F1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 14:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41CCBD116F1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 14:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ51P-0006pZ-4k; Mon, 01 Dec 2025 09:37:01 -0500
+	id 1vQ52d-0007XI-ME; Mon, 01 Dec 2025 09:38:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vQ51I-0006nc-Iz
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 09:36:53 -0500
-Received: from sender3-pp-f112.zoho.com ([136.143.184.112])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vQ52V-0007T6-O2
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 09:38:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dmitry.osipenko@collabora.com>)
- id 1vQ51G-0002dS-Km
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 09:36:52 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1764599784; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=cYA55ZAs8x4W1TTDBS0wmDWE28tPZc20WMA5yIqvR5q3xH0PH1AWJIYsjLjmC+wJOtlTN6rd7Yn6pTKhBKcvkNqMelowthZpDyVTAgG5cYRgAqtsQ7YLHtfMN+2gCCmYaqTW8YHzdX1P1hvon0BdjpOvjHbwR7+s+Rj+1m8YxpA=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1764599784;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=oYSz/gQ9J7vGJ/fM9QLfU2TnfqKauP8XTonMBdJ/iXI=; 
- b=ONVW+psf/k7zPWFV7RkBpO8Pui1bDtBeKScAUKSF3nd70//D0Rj8tPxR6c8cr53vBiIIbTBicCvS4al6jFKq1DqpRuJ6uv4RxLc9q6tGLMU99qTVABiX5ViCenRJVXZxY9wjOcF5AebVEeKyQrz26XZtMu3zg4gstfhpN4mf1D8=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=collabora.com;
- spf=pass  smtp.mailfrom=dmitry.osipenko@collabora.com;
- dmarc=pass header.from=<dmitry.osipenko@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1764599784; 
- s=zohomail; d=collabora.com; i=dmitry.osipenko@collabora.com; 
- h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=oYSz/gQ9J7vGJ/fM9QLfU2TnfqKauP8XTonMBdJ/iXI=;
- b=JIim0Uk79tXX9lnwnPDxEjjklLdCsWfSQpv4rNNMMjX500Lcpzzx/OLLtcCa7Id9
- Bo8DOB3p9rRzD/rBZ+Jd2mN3AVazxFkWmWfHl/ptZxxdqY1UDZt82t6eINyVZNs6Yx+
- ezUvHqMyumjtkxG5jfgi107H9ZKjIMwOdtZiYYqQ=
-Received: by mx.zohomail.com with SMTPS id 1764599779076537.4177964358089;
- Mon, 1 Dec 2025 06:36:19 -0800 (PST)
-Message-ID: <96b75cbb-7394-41ec-9013-625ea2d8d010@collabora.com>
-Date: Mon, 1 Dec 2025 17:36:08 +0300
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1vQ52U-0002it-1Q
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 09:38:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764599883;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Q7v+lweDAC/ONxi5Ke+G7XPhiCVaYiQxzBE48FlTPxk=;
+ b=Wy/cz759HxeGR9ohd3ZQutk45xiQWxSeAe7H/snYwDUIlFgp6bRf9CEXx6FEB9AAMOJpNC
+ S3YAC0hoNK5o2e7XjT0+PYccwUADwGdL882wF7mgZstI66Ou/37/NgKDKNNb4ARM9hSKxK
+ Lt1n2m4urz4a/5kGcT98YbNxndnwCRk=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-533-eWihxX3oNQ2cF78VCameeA-1; Mon, 01 Dec 2025 09:38:01 -0500
+X-MC-Unique: eWihxX3oNQ2cF78VCameeA-1
+X-Mimecast-MFC-AGG-ID: eWihxX3oNQ2cF78VCameeA_1764599880
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-295592eb5dbso73700375ad.0
+ for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 06:38:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764599880; x=1765204680; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Q7v+lweDAC/ONxi5Ke+G7XPhiCVaYiQxzBE48FlTPxk=;
+ b=ZB+5KKIDVFwDpmIb2bD8MJOvG5cLBl1TdLe8F7JpRCcZRT8shJWU0iR1bUqIRtthJe
+ jhGOhb29TA1yl8f0gXVivw1ecfc9lqiC/fPgtTiu6MfRODHFTT7VCRooAqfxUqy1vOGA
+ ILJuhmJb/nvbjJaSgerFpKEPKXCo8d5NCmXcceUNJ2Iuc/kiGrAvn+qTWIOY/SxkKRel
+ OOa4cClnRmM2BK31OMEW9S3iLOOPj8MptzZgjHQ4qYI0X20fjzfXMr2b9IB43y+A7ykV
+ FysTkgHbS75LkVEs4PDZJngF5r42nUKN5FWx2Q4rJRn9MgoEEi6gNgwS1HiN27wVkvY0
+ 1DXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764599880; x=1765204680;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Q7v+lweDAC/ONxi5Ke+G7XPhiCVaYiQxzBE48FlTPxk=;
+ b=fQIta8CZGAV5S+HL9kI/PmfcJRg2rapCcl62Afxmke/fk45z8xrKKIPbMTaPelvdHm
+ psZ5wzA/gPQhQD3u+3q1tNaNPab7NjpI9BJNIulolaiozz3WnXrAXohVz34k4gtwUK+H
+ ww3jC26Xf4wgOhZIYxM/ZWrkvCEXLhEss0IthIMY+4Qk/92J5JTuuTUgnmtWlgmKvfJx
+ LCE8uWKJx1MgaOkgH3HhpVGHc8OSTKoBC5dgN18vEbWbLCdv1kr1U0hCLM4jaImBRXTk
+ RQgNoSiyBNz//Hg0ROBqWUDyBVTtNF/QTRp7UWl6fMkRT5K54LD84uXJISA3LUYN1MdO
+ 5tTA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUHUGeLeCw+evHnC1dHYWnEr8HVXkOiRsknX+2F4X7Ayu7/rt7ofnjduiP5BwJvx3dICX5oVr2o7n5U@nongnu.org
+X-Gm-Message-State: AOJu0YyuEu7iKmSIe8A1boKbXSvudTACwZCcgIOdEQIgfawtjTeffqZK
+ RArRiNJnidN2t4lCpZH8/ggV/01JRd4ewfU+xGLiOxbsh6sOMknHoFNDIdPdjfOmGX4pFb2WmVg
+ 7BfghYB/uxrxij0ClPDQe1wgq19wwbpzOBzZcNI6mPOCuzkUcU8OCVWms
+X-Gm-Gg: ASbGnctRzmCm0LCbSYtdugxZ4wG65Kj7Tr/f+C4mp/fQoX43aSpDbUFEyBNuuxHIe8G
+ JQDzO3Q4ETW26CfBnk/YaEavhgbss9WOa/kM5or+tRYbs8x/KXnxxzMxiAzEgr6LCJtsckg/xin
+ w62iH66460cNsvCgous7mrnDpFHWlTA4IkV7yqp5v/V61o+3n71pP5EgYQWWfHDZtISlfzKgaC6
+ cw5GNo2qctQHQHk+mYUN0jCxI9bSW9XDXltVJV3Rp0Riym5+6eY8hOELQQYv/2SopoIMcjz/R2z
+ RnUOK8lBWLymKO7MDS9HMsGY1WqtnDLE/ALYNsEdHRIbMXiHyBgpOTNkF7C+wJHUiqaFfqOvLET
+ Fpp2j8orPCTZbMKnxEcxtM/55QvC1pOV72vIm6IfJZkFdbqvSUQ==
+X-Received: by 2002:a17:903:1209:b0:298:3e3a:ae6 with SMTP id
+ d9443c01a7336-29b6c6ae64fmr409151375ad.48.1764599880498; 
+ Mon, 01 Dec 2025 06:38:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFlDc4+C/44Vkt4/h7bMFtt2THg+cgiTD3THaQnCU6xxAcSL8m/OAjvBVmNt6+A+ncrbhNFIQ==
+X-Received: by 2002:a17:903:1209:b0:298:3e3a:ae6 with SMTP id
+ d9443c01a7336-29b6c6ae64fmr409150995ad.48.1764599879946; 
+ Mon, 01 Dec 2025 06:37:59 -0800 (PST)
+Received: from [192.168.68.51] (n175-34-62-5.mrk21.qld.optusnet.com.au.
+ [175.34.62.5]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29bceb277ebsm125734955ad.56.2025.12.01.06.37.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 01 Dec 2025 06:37:59 -0800 (PST)
+Message-ID: <dd43197e-ff56-4adf-a413-03f63d5f5078@redhat.com>
+Date: Tue, 2 Dec 2025 00:37:53 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v5 3/4] virtio-gpu: Destroy virgl resources on
- virtio-gpu reset
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Huang Rui <ray.huang@amd.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>,
- Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Yiwei Zhang <zzyiwei@gmail.com>, Sergio Lopez Pascual <slp@redhat.com>
-Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
- Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
- =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- Stefano Stabellini <stefano.stabellini@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- Xenia Ragiadakou <xenia.ragiadakou@amd.com>,
- Honglei Huang <honglei1.huang@amd.com>, Julia Zhang <julia.zhang@amd.com>,
- Chen Jiqian <Jiqian.Chen@amd.com>, Rob Clark <robdclark@gmail.com>,
- Robert Beckett <bob.beckett@collabora.com>
-References: <20251130040940.1611949-1-dmitry.osipenko@collabora.com>
- <20251130040940.1611949-4-dmitry.osipenko@collabora.com>
- <97def678-f5cb-482c-b322-8337339f2d58@rsg.ci.i.u-tokyo.ac.jp>
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Subject: Re: [PATCH 0/5] acpi/ghes: Error object handling improvement
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, jonathan.cameron@huawei.com,
+ armbru@redhat.com, mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ gengdongjiu1@gmail.com, peter.maydell@linaro.org, pbonzini@redhat.com,
+ shan.gavin@gmail.com
+References: <20251127004435.2098335-1-gshan@redhat.com>
+ <20251201131729.615abe68@foz.lan>
+ <12b7baee-1d6d-440a-a119-971b47d7f3ad@redhat.com>
+ <20251201153121.190c22ec@foz.lan>
 Content-Language: en-US
-In-Reply-To: <97def678-f5cb-482c-b322-8337339f2d58@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.184.112;
- envelope-from=dmitry.osipenko@collabora.com; helo=sender3-pp-f112.zoho.com
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20251201153121.190c22ec@foz.lan>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,178 +129,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/1/25 14:57, Akihiko Odaki wrote:
-> On 2025/11/30 13:09, Dmitry Osipenko wrote:
->> Properly destroy virgl resources on virtio-gpu reset to not leak
->> resources
->> on a hot reboot of a VM.
+Hi Mauro,
+
+On 12/2/25 12:31 AM, Mauro Carvalho Chehab wrote:
+> On Tue, 2 Dec 2025 00:13:06 +1000
+> Gavin Shan <gshan@redhat.com> wrote:
+>> On 12/1/25 10:17 PM, Mauro Carvalho Chehab wrote:
+>>> On Thu, 27 Nov 2025 10:44:30 +1000
+>>> Gavin Shan <gshan@redhat.com> wrote:
+
+[...]
+
+>>>
+>>> Btw, what setup are you using to test memory errors? It would be
+>>> nice to have it documented somewhere, maybe at
+>>> docs/specs/acpi_hest_ghes.rst.
+>>>    
 >>
->> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->> ---
->>   hw/display/virtio-gpu-gl.c     |  6 ++-
->>   hw/display/virtio-gpu-virgl.c  | 87 ++++++++++++++++++++++++++--------
->>   include/hw/virtio/virtio-gpu.h |  5 +-
->>   3 files changed, 75 insertions(+), 23 deletions(-)
->>
->> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
->> index b640900fc6f1..bf3fd75e9e6b 100644
->> --- a/hw/display/virtio-gpu-gl.c
->> +++ b/hw/display/virtio-gpu-gl.c
->> @@ -72,7 +72,10 @@ static void virtio_gpu_gl_handle_ctrl(VirtIODevice
->> *vdev, VirtQueue *vq)
->>         switch (gl->renderer_state) {
->>       case RS_RESET:
->> -        virtio_gpu_virgl_reset(g);
->> +        if (virtio_gpu_virgl_reset(g)) {
->> +            gl->renderer_state = RS_INIT_FAILED;
->> +            return;
->> +        }
->>           /* fallthrough */
->>       case RS_START:
->>           if (virtio_gpu_virgl_init(g)) {
->> @@ -201,6 +204,7 @@ static void virtio_gpu_gl_class_init(ObjectClass
->> *klass, const void *data)
->>       vgc->process_cmd = virtio_gpu_virgl_process_cmd;
->>       vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
->>   +    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
->>       vdc->realize = virtio_gpu_gl_device_realize;
->>       vdc->unrealize = virtio_gpu_gl_device_unrealize;
->>       vdc->reset = virtio_gpu_gl_reset;
->> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-
->> virgl.c
->> index 6a2aac0b6e5c..60d8fbf0445c 100644
->> --- a/hw/display/virtio-gpu-virgl.c
->> +++ b/hw/display/virtio-gpu-virgl.c
->> @@ -304,14 +304,46 @@ static void
->> virgl_cmd_create_resource_3d(VirtIOGPU *g,
->>       virgl_renderer_resource_create(&args, NULL, 0);
->>   }
->>   +static int
->> +virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
->> +                                struct virtio_gpu_virgl_resource *res,
->> +                                bool *cmd_suspended)
->> +{
->> +    struct iovec *res_iovs = NULL;
->> +    int num_iovs = 0;
->> +#if VIRGL_VERSION_MAJOR >= 1
->> +    int ret;
->> +
->> +    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended);
->> +    if (ret) {
->> +        return ret;
->> +    }
->> +    if (*cmd_suspended) {
->> +        return 0;
->> +    }
->> +#endif
->> +
->> +    virgl_renderer_resource_detach_iov(res->base.resource_id,
->> +                                       &res_iovs,
->> +                                       &num_iovs);
->> +    if (res_iovs != NULL && num_iovs != 0) {
->> +        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
->> +    }
->> +    virgl_renderer_resource_unref(res->base.resource_id);
->> +
->> +    QTAILQ_REMOVE(&g->reslist, &res->base, next);
->> +
->> +    g_free(res);
->> +
->> +    return 0;
->> +}
->> +
->>   static void virgl_cmd_resource_unref(VirtIOGPU *g,
->>                                        struct virtio_gpu_ctrl_command
->> *cmd,
->>                                        bool *cmd_suspended)
->>   {
->>       struct virtio_gpu_resource_unref unref;
->>       struct virtio_gpu_virgl_resource *res;
->> -    struct iovec *res_iovs = NULL;
->> -    int num_iovs = 0;
->>         VIRTIO_GPU_FILL_CMD(unref);
->>       trace_virtio_gpu_cmd_res_unref(unref.resource_id);
->> @@ -324,27 +356,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
->>           return;
->>       }
->>   -#if VIRGL_VERSION_MAJOR >= 1
->> -    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
->> -        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
->> -        return;
->> -    }
->> -    if (*cmd_suspended) {
->> -        return;
->> -    }
->> -#endif
->> +    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
->> +}
->>   -    virgl_renderer_resource_detach_iov(unref.resource_id,
->> -                                       &res_iovs,
->> -                                       &num_iovs);
->> -    if (res_iovs != NULL && num_iovs != 0) {
->> -        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
->> -    }
->> -    virgl_renderer_resource_unref(unref.resource_id);
->> +void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
->> +                                       struct
->> virtio_gpu_simple_resource *base,
->> +                                       Error **errp)
->> +{
->> +    struct virtio_gpu_virgl_resource *res;
->> +    bool suspended = false;
->>   -    QTAILQ_REMOVE(&g->reslist, &res->base, next);
->> +    res = container_of(base, struct virtio_gpu_virgl_resource, base);
->>   -    g_free(res);
->> +    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
->> +        error_setg(errp, "failed to destroy virgl resource");
->> +    }
->>   }
->>     static void virgl_cmd_context_create(VirtIOGPU *g,
->> @@ -1273,11 +1299,30 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
->>       }
->>   }
->>   -void virtio_gpu_virgl_reset(VirtIOGPU *g)
->> +int virtio_gpu_virgl_reset(VirtIOGPU *g)
->>   {
->> +    struct virtio_gpu_simple_resource *res, *tmp;
->> +
->> +    /*
->> +     * Virglrender doesn't support context restoring. VirtIO-GPU
->> +     * state shall not be reset at runtime. Virgl blob resource
->> +     * unmapping can be deferred on unref, ensure that destruction
->> +     * is completed.
->> +     */
->> +    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
->> +        virtio_gpu_virgl_resource_destroy(g, res, NULL);
->> +    }
->> +
->> +    if (!QTAILQ_EMPTY(&g->reslist)) {
->> +        error_report("%s: failed to reset virgl resources", __func__);
->> +        return -EBUSY;
+>> I don't think docs/specs/acpi_hest_ghes.rst is the right place for that
+>> as it's for specifications.
 > 
-> I think you missed my reply for an old comment (which was too late and
-> sent for v3 despite you have already sent v4) so please check it out:
-> https://lore.kernel.org/qemu-devel/d88cc89b-
-> d796-4bc4-8c90-07da3b88cc7f@rsg.ci.i.u-tokyo.ac.jp/
+> Perhaps not, but it would be nice to have it documented somewhere,
+> either there or at QEMU wiki.
+> 
 
-Totally missed that reply from you, thanks for pointing at it!
+QEMU wiki may be the best place for it. I never updated to QEMU wiki and
+any guiding steps on how to do that?
 
-Inlining it here:
+>> I'm sharing how this is tested here to make the thread complete.
+> 
+> Thanks!
+> 
+>>
+>> - Both host and guest has 4KB page size
+>>
+>> - Start the guest by the following command lines
+>>
+>>     /home/gavin/sandbox/qemu.main/build/qemu-system-aarch64                  \
+>>     -accel kvm -machine virt,gic-version=host,nvdimm=on,ras=on               \
+>>     -cpu host -smp maxcpus=8,cpus=8,sockets=2,clusters=2,cores=2,threads=1   \
+>>     -m 4096M,slots=16,maxmem=128G                                            \
+>>     -object memory-backend-ram,id=mem0,size=4096M                            \
+>>     -numa node,nodeid=0,cpus=0-7,memdev=mem0                                 \
+>>     -L /home/gavin/sandbox/qemu.main/build/pc-bios                           \
+>>     -monitor none -serial mon:stdio -nographic                               \
+>>     -gdb tcp::6666 -qmp tcp:localhost:5555,server,wait=off                   \
+>>     -bios /home/gavin/sandbox/qemu.main/build/pc-bios/edk2-aarch64-code.fd   \
+>>     -boot c                                                                  \
+>>     -device pcie-root-port,bus=pcie.0,chassis=1,id=pcie.1                    \
+>>     -device pcie-root-port,bus=pcie.0,chassis=2,id=pcie.2                    \
+>>     -device pcie-root-port,bus=pcie.0,chassis=3,id=pcie.3                    \
+>>        :                                                                     \
+>>     -device pcie-root-port,bus=pcie.0,chassis=16,id=pcie.16                  \
+>>     -drive file=/home/gavin/sandbox/images/disk.qcow2,if=none,id=drive0      \
+>>     -device virtio-blk-pci,id=virtblk0,bus=pcie.1,drive=drive0,num-queues=4  \
+>>     -netdev tap,id=tap1,vhost=true,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown \
+>>     -device virtio-net-pci,bus=pcie.8,netdev=tap1,mac=52:54:00:f1:26:b0
+>>
+>> - Trigger 'victim -d' in the guest
+> 
+> Hmm... from where I can get victim?
+> 
 
-> No, I meant that virtio_gpu_virgl_resource_unref() may set 
-> *cmd_suspended true. If that happens, QTAILQ_EMPTY(&g->reslist) will be 
-> false, but it is fine so no error log should be emitted.
+https://git.kernel.org/pub/scm/utils/cpu/mce/mce-test.git
 
-Alright, the virtio_gpu_virgl_resource_destroy() itself should print out
-error message when it fails. Will remove the additional error_report().
-> It is confusing what "runtime" refers to. This code doesn't care about 
-> S3 so such a comment shouldn't be necessary.
+> Regards,
+> Mauro
+> 
 
-Will remove the part of comment talking about the runtime. Thanks a lot
-for the review.
+Thanks,
+Gavin
 
--- 
-Best regards,
-Dmitry
 
