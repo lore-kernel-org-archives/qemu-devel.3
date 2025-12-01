@@ -4,107 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811B6D116F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 18:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27893D116F1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 19:31:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ8se-0006Jv-0j; Mon, 01 Dec 2025 13:44:12 -0500
+	id 1vQ9bw-0004bN-EZ; Mon, 01 Dec 2025 14:31:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vQ8sR-0006JP-Te
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 13:44:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vQ9bV-0004V6-TU
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 14:30:36 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vQ8sP-0005nz-In
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 13:43:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764614635;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=C2eH5KD6Kms7ohdnaJsjqFf8Dfq6DQCOK9Upj59dm9M=;
- b=N6oe9gTGuGNVqOLuupC/q8nf9k6I+thft1YdBlWTumZRAV6nK1q3+sdY/8kEL4fqlsmwlf
- R0AyRc4y05IZD3FR3WZ23RWs5darj9dChmQtU2c/JNle8+Jh4c8isnL+S089dxtNKcFjEB
- fMCdNhVeikspUg5FW8mGhGhxGZ0cNYM=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-544-G8oaCYLcNQW0N7Ij0xhDfA-1; Mon, 01 Dec 2025 13:43:51 -0500
-X-MC-Unique: G8oaCYLcNQW0N7Ij0xhDfA-1
-X-Mimecast-MFC-AGG-ID: G8oaCYLcNQW0N7Ij0xhDfA_1764614631
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-297f587dc2eso90774205ad.2
- for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 10:43:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764614631; x=1765219431; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=C2eH5KD6Kms7ohdnaJsjqFf8Dfq6DQCOK9Upj59dm9M=;
- b=cxs1O1Q4YwsOkpMU4j/QJUULuSCJeZX5yXWrn0ZPQcuQ2MHOxH3X/CWlbgetAlDSg9
- vWbdXzaBlXmd880uimasn7N1gcaVueqTeboFpN9VS4DXQc6CF+Om6qrsGN+wgNZDV6bX
- tm+zLqn0tfPdurNtZitdN8+easli7+P0cpvhh8ndeZUUA9HuGjyMCvzCL2QUTirplV9R
- cfwwCe4Ttd2w1TODEcbajOf4cfiWjuZtH//XhEsipQG6xD0RCacbQ0J8BDklEy9lEwd4
- f03rEJKI3otYFso1hiHvAvzb1SLLRxg0a0Phhf9aWzWtpmlj3bef/SmfuTIZvW+yNq68
- yvLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764614631; x=1765219431;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=C2eH5KD6Kms7ohdnaJsjqFf8Dfq6DQCOK9Upj59dm9M=;
- b=w9Ayr5Jrtvctz3NwXKh5Qo+1LvcshwTcK6yI8wUFBOGQJCgwGm8Vb6fxV7kF3gMBRK
- cW6djRLMk7puKoxB75V+vBWsA6Bn/Zs03unLr+oqDI438N9qWYN4JfSKdj0DHm90gGZ8
- Y6jDO2uJvFxMvbM8a4aX4+Br+kMIsO3/w9dK9zzthFRn+3Qu3jOhYQXZlilC4x3sxDS3
- gm5YsvPBIv8TAmlTrmK5nFS0yokZAGkZnvlxVGAX5rrpBoW80kFYXkMXWFP+Xdpd5inQ
- IsvaYDK/CErkD0jzSSlBV2FdxlYZxkAk1szeF3DLaIA2u7w8QRs7pUnt7YxUyqAwNMNk
- +Y8A==
-X-Gm-Message-State: AOJu0Yz1+aq1a3jksJ+gs4gQQCejjC3qnfQFDIEYP+usPLulaJ49l72O
- LEF58G7TVGZZTa2hT97S8wanCC94tfnJDPpPDed1Oxl5MgH6IjPIWQv3ikZvqF3KNq8Mq7DRS0X
- mTklOVSqriUMRPqWdvS7vBiGDYPsHntGIqQDnO01ZOiiYuZhZaJw3Z8Uk6QI7oNy9ttjnxFCONf
- kgyN+5cWrYJtIQI1HJj9W7ssuqqQFf22I=
-X-Gm-Gg: ASbGnctjsGxALECZrvm64x3lh7z1Vue77jayvTz+1+2Ims/rkv8Lo9EJ23lFSfcv4h8
- FWxAeuQOpH+EFhAlpe0xftPgTF0h3u9n78e6Jwb4Qcl07Y79X4Gbp2uRBckwNCAGx6Bv4kYFY0l
- joZWJ4Levanj7VPg0Wqm65SbeE9BHEXvy1wxEZOCk+5aeXSi2Uu97kgTj6lbdNrLTt5MOvOVetT
- M+1ttKdYtqp0hTf/tFR0YqJpA==
-X-Received: by 2002:a17:903:19ed:b0:24b:25f:5f81 with SMTP id
- d9443c01a7336-29b6beb1e22mr459984055ad.17.1764614630788; 
- Mon, 01 Dec 2025 10:43:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGhr/QEDszNAJuFWOFICNF5RW2GBpCxrv9rHGFyswVprifd/SuNVjmvNhsEYOv3B5hnsrv7xoU0RvPHc+eWp0w=
-X-Received: by 2002:a17:903:19ed:b0:24b:25f:5f81 with SMTP id
- d9443c01a7336-29b6beb1e22mr459983705ad.17.1764614630344; Mon, 01 Dec 2025
- 10:43:50 -0800 (PST)
-MIME-Version: 1.0
-References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
- <20251201112309.4163921-9-marcandre.lureau@redhat.com>
- <f25c53b4-3f47-242f-0e39-778fa0bc3f35@eik.bme.hu>
-In-Reply-To: <f25c53b4-3f47-242f-0e39-778fa0bc3f35@eik.bme.hu>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 1 Dec 2025 22:43:39 +0400
-X-Gm-Features: AWmQ_bmSSuRVcajf6kso9UJ-ECzWzSy2Mdy9s9O6GUzKwYzEJ5z0pog-KtdvyFg
-Message-ID: <CAMxuvaw=9v_TPytdW3kTtd9mD0r6-H4V8BUiZ6VS4UJkc0_Lfw@mail.gmail.com>
-Subject: Re: [RFC 08/24] audio: add QOM module-objects for each backend
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- Thomas Huth <huth@tuxfamily.org>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vQ9bT-0003PN-S2
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 14:30:33 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id B7A155969FA;
+ Mon, 01 Dec 2025 20:30:28 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 5Vdp5bPjGtTh; Mon,  1 Dec 2025 20:30:26 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id ABB685969F6; Mon, 01 Dec 2025 20:30:26 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A98BA5969F4;
+ Mon, 01 Dec 2025 20:30:26 +0100 (CET)
+Date: Mon, 1 Dec 2025 20:30:26 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Thomas Huth <huth@tuxfamily.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  Alexandre Ratchov <alex@caoua.org>, dirty.ice.hu@gmail.com, 
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-Content-Type: multipart/alternative; boundary="000000000000351a730644e85c4e"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ =?ISO-8859-15?Q?Volker_R=FCmelin?= <vr_qemu@t-online.de>, 
+ geoff@hostfission.com
+Subject: Re: [RFC 00/24] audio: add GStreamer backend
+In-Reply-To: <CAMxuvayr-qyjzsexWL1wt72mJA_-Dew9JAofjELhSVYC_w8SvA@mail.gmail.com>
+Message-ID: <fdd7e1c4-a2a5-4039-59a9-9afda763feea@eik.bme.hu>
+References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
+ <e6ada475-da8a-4643-4986-2ffc1d5b9c66@eik.bme.hu>
+ <CAMxuvayr-qyjzsexWL1wt72mJA_-Dew9JAofjELhSVYC_w8SvA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+ boundary="3866299591-1105212417-1764617426=:37052"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,111 +75,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000351a730644e85c4e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Hi
+--3866299591-1105212417-1764617426=:37052
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On Mon, Dec 1, 2025 at 5:20=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu> =
-wrote:
-
-> On Mon, 1 Dec 2025, marcandre.lureau@redhat.com wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > This will allow to use QOM and the dynamic object module loading.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> > audio/audio_int.h   |  2 ++
-> > audio/alsaaudio.c   | 39 +++++++++++++++++++++++++++++++++++++++
-> > audio/dbusaudio.c   | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/dsoundaudio.c | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/jackaudio.c   | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/noaudio.c     | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/ossaudio.c    | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/paaudio.c     | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/pwaudio.c     | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/sdlaudio.c    | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/sndioaudio.c  | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/spiceaudio.c  | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/wavaudio.c    | 36 ++++++++++++++++++++++++++++++++++++
-> > audio/coreaudio.m   | 36 ++++++++++++++++++++++++++++++++++++
-> > 14 files changed, 473 insertions(+)
+On Mon, 1 Dec 2025, Marc-André Lureau wrote:
+> On Mon, Dec 1, 2025 at 5:03 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>> On Mon, 1 Dec 2025, marcandre.lureau@redhat.com wrote:
+>>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>
+>>> Hi,
+>>>
+>>> The following patch series provides a GStreamer-based audio backend,
+>> which could
+>>> ultimately allow QEMU to leverage the framework to support the various
+>> audio
+>>> subsystems and simplify the audio handling logic (timing, resampling,
+>> mixing
+>>> etc), as well as allow greater pipeline flexibility and customization.
+>>
+>> While it's good to have a GStreamer backend to integrate well into systems
+>> already using that, this should not replace existing audio backends in
+>> QEMU. The reason is that GStreamer has extensive dependencies that I would
+>>
 >
-> This patch is entirely QOM boiler plate... Are the empty functions really
-> needed? Could this use OBJECT_DECLARE_SIMPLE_TYPE instead to cut this
-> down?
+> GStreamer itself is not so big and doesn't have that many dependencies that
+> qemu doesn't already have.
+
+Except that this proposal uses GStreamer from rust so would also pull in 
+all the rust dependencies too which is still not needed for QEMU. Saying 
+that it's optional but then you lose audio output is also not quite 
+acceptable.
+
+>> like to avoid and still be able to use QEMU with just an ALSA or SDL audio
+>> backend that are much leaner and provide the needed functionality for most
+>>
 >
+> SDL audio is itself a wrapper for various audio backends, much like
+> GStreamer in the end, but with arguably less flexibility.
 
-Right, I did this patch systematically, and to provide placeholders for the
-later patches. But I can now simplify it.
+Yes, but as QEMU has SDL for systems where that's supported it could also 
+have GStreamer as another option but not as the sole option replacing 
+other backends.
 
-thanks
-
-
+>> cases. Also when using jack you'd want to have a QEMU backend for it not
+>> going through multiple layers. So adding a GStreamer backend has its use
+>>
 >
-> Regards,
-> BALATON Zoltan
+> I wonder what are the advantages of using JACK compared to ALSA, or
+> pulse/pipewire, tbh.
 
---000000000000351a730644e85c4e
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Jack has capability to route between sources and sinks with low latency 
+which pulse/pipewire does not have and it allows processing sound better 
+than using plain ALSA. Jack is useful for example when running sound tools 
+in virtual machines and want to integrate with host sound tools that 
+usually support jack. ALSA is useful if you just want to output sound the 
+simplest way without adding latency or complexity. The other backends are 
+useful to integrate with other apps/environments using those sound 
+services.
 
-<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
-il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Dec 1, 20=
-25 at 5:20=E2=80=AFPM BALATON Zoltan &lt;<a href=3D"mailto:balaton@eik.bme.=
-hu">balaton@eik.bme.hu</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">On Mon, 1 Dec 2025, <a href=3D"mailto:marcandre.lurea=
-u@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a> wrote:<br>
-&gt; From: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@re=
-dhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
-&gt;<br>
-&gt; This will allow to use QOM and the dynamic object module loading.<br>
-&gt;<br>
-&gt; Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
-lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br=
+>> as another audio backend but not as a replacement for QEMU's audio
+>> handling logic and backends.
 >
-&gt; ---<br>
-&gt; audio/audio_int.h=C2=A0 =C2=A0|=C2=A0 2 ++<br>
-&gt; audio/alsaaudio.c=C2=A0 =C2=A0| 39 +++++++++++++++++++++++++++++++++++=
-++++<br>
-&gt; audio/dbusaudio.c=C2=A0 =C2=A0| 36 +++++++++++++++++++++++++++++++++++=
-+<br>
-&gt; audio/dsoundaudio.c | 36 ++++++++++++++++++++++++++++++++++++<br>
-&gt; audio/jackaudio.c=C2=A0 =C2=A0| 36 +++++++++++++++++++++++++++++++++++=
-+<br>
-&gt; audio/noaudio.c=C2=A0 =C2=A0 =C2=A0| 36 ++++++++++++++++++++++++++++++=
-++++++<br>
-&gt; audio/ossaudio.c=C2=A0 =C2=A0 | 36 +++++++++++++++++++++++++++++++++++=
-+<br>
-&gt; audio/paaudio.c=C2=A0 =C2=A0 =C2=A0| 36 ++++++++++++++++++++++++++++++=
-++++++<br>
-&gt; audio/pwaudio.c=C2=A0 =C2=A0 =C2=A0| 36 ++++++++++++++++++++++++++++++=
-++++++<br>
-&gt; audio/sdlaudio.c=C2=A0 =C2=A0 | 36 +++++++++++++++++++++++++++++++++++=
-+<br>
-&gt; audio/sndioaudio.c=C2=A0 | 36 ++++++++++++++++++++++++++++++++++++<br>
-&gt; audio/spiceaudio.c=C2=A0 | 36 ++++++++++++++++++++++++++++++++++++<br>
-&gt; audio/wavaudio.c=C2=A0 =C2=A0 | 36 +++++++++++++++++++++++++++++++++++=
-+<br>
-&gt; audio/coreaudio.m=C2=A0 =C2=A0| 36 +++++++++++++++++++++++++++++++++++=
-+<br>
-&gt; 14 files changed, 473 insertions(+)<br>
-<br>
-This patch is entirely QOM boiler plate... Are the empty functions really <=
-br>
-needed? Could this use OBJECT_DECLARE_SIMPLE_TYPE instead to cut this <br>
-down?<br></blockquote><div><br></div><div>Right, I did this patch systemati=
-cally, and to provide placeholders for the later patches. But I can now sim=
-plify it.</div><div><br></div><div>thanks</div><div>=C2=A0</div><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
-lid rgb(204,204,204);padding-left:1ex">
-<br>
-Regards,<br>
-BALATON Zoltan</blockquote></div></div>
+> It would be great if people with very specific or constrained requirements
+> on qemu audio could check if the GStreamer backend fits their need.
 
---000000000000351a730644e85c4e--
+At least one of them already said it wouldn't. Also why somebody not 
+running a desktop environment that uses GStreamer would want to add that 
+dependency and use a GStreamer plugin to get the sound back to their 
+native sound service when it is probably already supported by QEMU 
+directly? QEMU also has to support Windows and macOS sound services so 
+having a few more Linux/Unix ones does not make it much more complex.
 
+Regards,
+BALATON Zoltan
+--3866299591-1105212417-1764617426=:37052--
 
