@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C54A7D111A8
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 11:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE8E3D116F5
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 11:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ20H-0008RJ-AB; Mon, 01 Dec 2025 06:23:37 -0500
+	id 1vQ20b-00005H-4f; Mon, 01 Dec 2025 06:24:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vQ208-0008Q4-Ko
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:23:29 -0500
+ id 1vQ20J-0008SG-9W
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:23:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vQ204-0006Tl-Mb
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:23:28 -0500
+ id 1vQ20H-0006Vf-Mx
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:23:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764588201;
+ s=mimecast20190719; t=1764588217;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=UfKD1dAneQMl9KPhBBJt92KInCx6QYgxj9Dan5ayojk=;
- b=cBsIx3cJ9ENOVTHQlGRwXN8WwWXZboDxTkKitBBktlHfbW6nvzSRr3XqCUJ+5sYxGQATpO
- DxXhST1p2s9/cDwnlb+o6mNwDaIIrUoQMwNVQFEGvEXFMMWUah42xpqfpvW3wd2hKvQryw
- 26XjfWbd/pKnwDuNDnywlzLn1lL1nCk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3kYSTSuwqhKH9Sm+PFHYKfCorVGrfWqK5KxrHlVSMac=;
+ b=XMs4vpQh4SrNweEjJkQZGCHM9/ImWI3udnX+UdbN0AEdXWqLG4G7++ljOBYG/d2jpsLwyB
+ M24cOeOeLyF5Nq+HKz1CK8NuHwqEdOg10SBm3MqWAn+gh76houi5oAmAO7CD26+IzRvzbq
+ XG6qPVsEGSV+cb14DhNHaykW7tg14M0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-691-b45AoULmP7ue0ILgypCmMQ-1; Mon,
- 01 Dec 2025 06:23:18 -0500
-X-MC-Unique: b45AoULmP7ue0ILgypCmMQ-1
-X-Mimecast-MFC-AGG-ID: b45AoULmP7ue0ILgypCmMQ_1764588197
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-311-0_rzaTGSOc6vRU6lOowJrg-1; Mon,
+ 01 Dec 2025 06:23:31 -0500
+X-MC-Unique: 0_rzaTGSOc6vRU6lOowJrg-1
+X-Mimecast-MFC-AGG-ID: 0_rzaTGSOc6vRU6lOowJrg_1764588210
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 464E6180035D; Mon,  1 Dec 2025 11:23:16 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C134718001FE; Mon,  1 Dec 2025 11:23:29 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.40])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B657419560B7; Mon,  1 Dec 2025 11:23:13 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C130530001A4; Mon,  1 Dec 2025 11:23:27 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
@@ -55,13 +56,15 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [RFC 00/24] audio: add GStreamer backend
-Date: Mon,  1 Dec 2025 15:22:41 +0400
-Message-ID: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
+Subject: [RFC 02/24] audio: remove obsolete/obscure functions
+Date: Mon,  1 Dec 2025 15:22:43 +0400
+Message-ID: <20251201112309.4163921-3-marcandre.lureau@redhat.com>
+In-Reply-To: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
+References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -90,134 +93,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Hi,
+AUD_init_time_stamp_{in,out} and AUD_get_elapsed_usec_{in,out} are only
+used by the adlib device. The result isn't actually being used since
+ADLIB_KILL_TIMERS was set some 20y ago. Let's drop this dead code now.
 
-The following patch series provides a GStreamer-based audio backend, which could
-ultimately allow QEMU to leverage the framework to support the various audio
-subsystems and simplify the audio handling logic (timing, resampling, mixing
-etc), as well as allow greater pipeline flexibility and customization.
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ audio/audio_template.h | 34 ----------------------------------
+ include/qemu/audio.h   |  6 ------
+ hw/audio/adlib.c       | 18 +-----------------
+ 3 files changed, 1 insertion(+), 57 deletions(-)
 
-The preliminary patches consist of additional cleanups started in QEMU 10.2, in
-order to make the code more modular and use QOM.
-
-Finally, the last patch introduces the "audio" rust crate that implements the
-GStreamer backend. See the TODO list in the commit message for the remaining or
-related work items.
-
-Please review and test!
-
-Based-on: https://gitlab.com/bonzini/qemu.git rust-cargo
-Requires meson from https://github.com/bonzini/meson.git cargo-object-full
-
-Marc-André Lureau (24):
-  rust: patch thiserror to work with meson
-  audio: remove obsolete/obscure functions
-  audio/dbus: make "dbus" the default backend when using -display dbus
-  qemu-options.hx: clarify default audio backend selection
-  audio: introduce AudioDriver
-  audio: simplify audio_init()
-  audio: move object creation to audio_driver_init()
-  audio: add QOM module-objects for each backend
-  audio: remove set_dbus_server from audio_driver
-  audio: lookup "audio-" object types, and realize them
-  audio: switch to module-object, drop audio driver registration
-  module: remove audio module support
-  audio: keep a strong reference on the backend
-  audio: make list type declaration private
-  audio: make create_pdos() private
-  replay: remove dependency on audio/
-  audio: make all the backend-specific APIs take the be
-  audio: make AudioBackend truely abstract
-  audio: split AudioBackend
-  audio: AUD_ -> audio_be_
-  audio-be: add common pre-conditions
-  audio-be: add some state trace
-  audio: split AudioDriver code in audio-driver.c
-  WIP: rust/audio: add GStreamer backend
-
- qapi/audio.json                               |   29 +
- ...dio_template.h => audio-driver_template.h} |   76 +-
- audio/audio_int.h                             |   50 +-
- include/qemu/audio-capture.h                  |   24 +-
- include/qemu/audio.h                          |  129 +-
- include/qemu/module.h                         |    3 +-
- include/system/replay.h                       |    8 +-
- replay/replay-internal.h                      |    2 +
- rust/audio/wrapper.h                          |   27 +
- audio/alsaaudio.c                             |   42 +-
- audio/audio-be.c                              |  276 ++
- audio/audio-driver.c                          | 1988 +++++++++++++++
- audio/audio.c                                 | 2248 ++---------------
- audio/dbusaudio.c                             |   57 +-
- audio/dsoundaudio.c                           |   37 +-
- audio/jackaudio.c                             |   37 +-
- audio/noaudio.c                               |   37 +-
- audio/ossaudio.c                              |   41 +-
- audio/paaudio.c                               |   37 +-
- audio/pwaudio.c                               |   37 +-
- audio/sdlaudio.c                              |   37 +-
- audio/sndioaudio.c                            |   37 +-
- audio/spiceaudio.c                            |   37 +-
- audio/wavaudio.c                              |   37 +-
- audio/wavcapture.c                            |    7 +-
- hw/audio/ac97.c                               |   42 +-
- hw/audio/adlib.c                              |   29 +-
- hw/audio/asc.c                                |   20 +-
- hw/audio/cs4231a.c                            |   18 +-
- hw/audio/es1370.c                             |   26 +-
- hw/audio/gus.c                                |   11 +-
- hw/audio/hda-codec.c                          |   26 +-
- hw/audio/lm4549.c                             |   20 +-
- hw/audio/pcspk.c                              |    8 +-
- hw/audio/sb16.c                               |   22 +-
- hw/audio/via-ac97.c                           |   20 +-
- hw/audio/virtio-snd.c                         |   36 +-
- hw/audio/wm8750.c                             |   42 +-
- hw/display/xlnx_dp.c                          |   14 +-
- hw/usb/dev-audio.c                            |   18 +-
- replay/replay-audio.c                         |   51 +-
- replay/replay.c                               |    2 +-
- replay/stubs-system.c                         |    8 +-
- ui/dbus.c                                     |   16 +-
- ui/vnc.c                                      |    4 +-
- Cargo.lock                                    |  572 ++++-
- Cargo.toml                                    |    6 +
- audio/coreaudio.m                             |   37 +-
- audio/meson.build                             |    2 +
- audio/trace-events                            |    9 +
- qemu-options.hx                               |   20 +-
- rust/audio/Cargo.toml                         |   29 +
- rust/audio/build.rs                           |   49 +
- rust/audio/meson.build                        |   75 +
- rust/audio/src/audio.rs                       |  516 ++++
- rust/audio/src/bindings.rs                    |   32 +
- rust/audio/src/gstreamer.rs                   | 1070 ++++++++
- rust/audio/src/lib.rs                         |   99 +
- rust/meson.build                              |    6 +
- .../packagefiles/syn-2-rs/meson/meson.build   |    3 +
- .../thiserror-2.0.17-include.patch            |   14 +
- .../thiserror-impl-2.0.17-include.patch       |   13 +
- subprojects/syn-2-rs.wrap                     |   11 +-
- subprojects/thiserror-2-rs.wrap               |   10 +
- subprojects/thiserror-impl-2-rs.wrap          |   10 +
- 65 files changed, 5862 insertions(+), 2494 deletions(-)
- rename audio/{audio_template.h => audio-driver_template.h} (90%)
- create mode 100644 rust/audio/wrapper.h
- create mode 100644 audio/audio-be.c
- create mode 100644 audio/audio-driver.c
- create mode 100644 rust/audio/Cargo.toml
- create mode 100644 rust/audio/build.rs
- create mode 100644 rust/audio/meson.build
- create mode 100644 rust/audio/src/audio.rs
- create mode 100644 rust/audio/src/bindings.rs
- create mode 100644 rust/audio/src/gstreamer.rs
- create mode 100644 rust/audio/src/lib.rs
- create mode 100644 subprojects/packagefiles/syn-2-rs/meson/meson.build
- create mode 100644 subprojects/packagefiles/thiserror-2.0.17-include.patch
- create mode 100644 subprojects/packagefiles/thiserror-impl-2.0.17-include.patch
- create mode 100644 subprojects/thiserror-2-rs.wrap
- create mode 100644 subprojects/thiserror-impl-2-rs.wrap
-
+diff --git a/audio/audio_template.h b/audio/audio_template.h
+index 7a8c431f2d..1ab3c47fd7 100644
+--- a/audio/audio_template.h
++++ b/audio/audio_template.h
+@@ -569,40 +569,6 @@ bool glue(AUD_is_active_, TYPE)(SW *sw)
+     return sw ? sw->active : 0;
+ }
+ 
+-void glue (AUD_init_time_stamp_, TYPE) (SW *sw, QEMUAudioTimeStamp *ts)
+-{
+-    if (!sw) {
+-        return;
+-    }
+-
+-    ts->old_ts = sw->hw->ts_helper;
+-}
+-
+-uint64_t glue (AUD_get_elapsed_usec_, TYPE) (SW *sw, QEMUAudioTimeStamp *ts)
+-{
+-    uint64_t delta, cur_ts, old_ts;
+-
+-    if (!sw) {
+-        return 0;
+-    }
+-
+-    cur_ts = sw->hw->ts_helper;
+-    old_ts = ts->old_ts;
+-    /* dolog ("cur %" PRId64 " old %" PRId64 "\n", cur_ts, old_ts); */
+-
+-    if (cur_ts >= old_ts) {
+-        delta = cur_ts - old_ts;
+-    } else {
+-        delta = UINT64_MAX - old_ts + cur_ts;
+-    }
+-
+-    if (!delta) {
+-        return 0;
+-    }
+-
+-    return muldiv64 (delta, sw->hw->info.freq, 1000000);
+-}
+-
+ #undef TYPE
+ #undef HW
+ #undef SW
+diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+index c56af895d6..2562710bec 100644
+--- a/include/qemu/audio.h
++++ b/include/qemu/audio.h
+@@ -71,9 +71,6 @@ int  AUD_get_buffer_size_out (SWVoiceOut *sw);
+ void AUD_set_active_out(SWVoiceOut *sw, bool on);
+ bool AUD_is_active_out(SWVoiceOut *sw);
+ 
+-void     AUD_init_time_stamp_out (SWVoiceOut *sw, QEMUAudioTimeStamp *ts);
+-uint64_t AUD_get_elapsed_usec_out (SWVoiceOut *sw, QEMUAudioTimeStamp *ts);
+-
+ #define AUDIO_MAX_CHANNELS 16
+ typedef struct Volume {
+     bool mute;
+@@ -112,9 +109,6 @@ size_t AUD_read (SWVoiceIn *sw, void *pcm_buf, size_t size);
+ void AUD_set_active_in(SWVoiceIn *sw, bool on);
+ bool AUD_is_active_in(SWVoiceIn *sw);
+ 
+-void     AUD_init_time_stamp_in (SWVoiceIn *sw, QEMUAudioTimeStamp *ts);
+-uint64_t AUD_get_elapsed_usec_in (SWVoiceIn *sw, QEMUAudioTimeStamp *ts);
+-
+ void audio_cleanup(void);
+ 
+ typedef struct st_sample st_sample;
+diff --git a/hw/audio/adlib.c b/hw/audio/adlib.c
+index 19d3a5f128..2a2fe7d04f 100644
+--- a/hw/audio/adlib.c
++++ b/hw/audio/adlib.c
+@@ -34,8 +34,6 @@
+ 
+ #define DEBUG 0
+ 
+-#define ADLIB_KILL_TIMERS 1
+-
+ #define ADLIB_DESC "Yamaha YM3812 (OPL2)"
+ 
+ #if DEBUG
+@@ -71,7 +69,6 @@ struct AdlibState {
+     uint64_t dexp[2];
+     SWVoiceOut *voice;
+     int left, pos, samples;
+-    QEMUAudioTimeStamp ats;
+     FM_OPL *opl;
+     PortioList port_list;
+ };
+@@ -88,19 +85,7 @@ static void adlib_kill_timers (AdlibState *s)
+ 
+     for (i = 0; i < 2; ++i) {
+         if (s->ticking[i]) {
+-            uint64_t delta;
+-
+-            delta = AUD_get_elapsed_usec_out (s->voice, &s->ats);
+-            ldebug (
+-                "delta = %f dexp = %f expired => %d",
+-                delta / 1000000.0,
+-                s->dexp[i] / 1000000.0,
+-                delta >= s->dexp[i]
+-                );
+-            if (ADLIB_KILL_TIMERS || delta >= s->dexp[i]) {
+-                adlib_stop_opl_timer (s, i);
+-                AUD_init_time_stamp_out (s->voice, &s->ats);
+-            }
++            adlib_stop_opl_timer(s, i);
+         }
+     }
+ }
+@@ -149,7 +134,6 @@ static void timer_handler (void *opaque, int c, double interval_Sec)
+ #endif
+ 
+     s->dexp[n] = interval_Sec * 1000000.0;
+-    AUD_init_time_stamp_out (s->voice, &s->ats);
+ }
+ 
+ static int write_audio (AdlibState *s, int samples)
 -- 
 2.51.1
 
