@@ -4,76 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAE5DD116E2
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 06:01:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E8CD111A8
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 07:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vPwxX-0006BW-Ch; Mon, 01 Dec 2025 01:00:27 -0500
+	id 1vPyO7-0004k5-Mh; Mon, 01 Dec 2025 02:31:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vPwxV-000694-Ki
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 01:00:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vPwxP-0004fx-Kn
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 01:00:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764568815;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XBPBpbsS2JyvptKS0jTD17AI3l/fBMkx7rikPQaQ/aE=;
- b=gOhR8TPUruXun6Hg92lL6gwP8DBF12DOF9mQ4Rk0szkwmH+olugf7jO81FVJneRuzTwkTB
- TJc3FqdfFO0RCoP7B/KaMFzhnlajyvWKlJ+emfHv5HlnUva3gUaajBp2lvAX6ja3fwHPo9
- KRrAkQzRM5cc9cXnVly5cUusOfqTRi0=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-9F9v1LzsP4WRje1esxdb1g-1; Mon,
- 01 Dec 2025 01:00:11 -0500
-X-MC-Unique: 9F9v1LzsP4WRje1esxdb1g-1
-X-Mimecast-MFC-AGG-ID: 9F9v1LzsP4WRje1esxdb1g_1764568810
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 602C61955F2A; Mon,  1 Dec 2025 06:00:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9A55195608E; Mon,  1 Dec 2025 06:00:09 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DCF1321E6A27; Mon, 01 Dec 2025 07:00:06 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Jie Song <mail@jiesong.me>
-Cc: marcandre.lureau@gmail.com,  eblake@redhat.com,  berrange@redhat.com,
- qemu-devel@nongnu.org,  songjie_yewu@cmss.chinamobile.com,  =?utf-8?Q?Ma?=
- =?utf-8?Q?rc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vPyO5-0004jK-T8
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 02:31:58 -0500
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1vPyO3-0006l1-ND
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 02:31:56 -0500
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-4ee2014c228so30962561cf.2
+ for <qemu-devel@nongnu.org>; Sun, 30 Nov 2025 23:31:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1764574314; x=1765179114; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mmW/W6ZmE1Z/XIbg3R9HSYzl+vJvUftLQsi/LCskuis=;
+ b=BeKFVwKLg2rquolv+GOUlxB/3xdDG1ekFlON8bKHvrgeSZXV8kPuOvGHkdlhuBfw/g
+ ugy+CEGb7Nd77XHLv78sflo5Tvvf7z+wBxQA5bqCjByc0Z87+Aclzy1FZ3IIwNN8Jlpf
+ x464OsT8YL42E5vOFv7tqh9/uU/OEUxpTbCg4TmUA+U2JMlPsYQBQGlvEa9xOkSfuS0s
+ ryp+jC0Znc3IjHfVGkdB2+tYVBgsUcZrhX65AQhOBv9NoNL1D35dVjpnv79SvSH2rpgK
+ YnmTWynVWh/Io5+eB5ky4gik3cJFV+9DiVGwu0tWfkd37AkIawJhGBF1kunIcxkA02l6
+ Y/ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764574314; x=1765179114;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=mmW/W6ZmE1Z/XIbg3R9HSYzl+vJvUftLQsi/LCskuis=;
+ b=RdxW3/L7YzNttu2syAuqxIHPsnRjBpFdCzUAafz2v4p5i79JJvQJavfiD7iIJj9+O2
+ thoOj5hVQhxLV8sxcD5fTByL6sNmr8VSngitr+4uU6PbaBDaFvP+YnonoesWVs9c70Af
+ S8Mov3P/C42Rdti8iYvKza3t6aK99NSkbfyxDEHotNRoVNJQItr66fBHc7FOAdyA5Blx
+ HX11Pl8fWyjoFrJnLRs1l0UeMJCphWbG70IuZv9zcQ+F6HPliZDcRalsvS5IYIhaxd29
+ 2eIGohG9wrCyrvIch8MkUvk8Js36jvphmbHFMZ0Y4jzRkNFvTNhhcL/H9NwaFhRpie1W
+ JRrA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVe75ZWOhpraKHuMgN7fd+HkD9bilxVVfCpQAaZW85ljkDGDwi2IZVyiEx0Eih9PblGKXsA2RVVsXaf@nongnu.org
+X-Gm-Message-State: AOJu0Ywt2lB+x4HAZunLcLW14jcKu/WnC95RKgajQAP8tSr7Ah+DKyYJ
+ uqRYjfGOhuUoBSCX+L3G0kJGNTWfGbHRGbVwUQrNQLHX5MamQskFMRrFuY5le6zFbrC+4pkavUg
+ LQjA9VZxs90j8g7/WeJ5N3IPTgwI0OpI=
+X-Gm-Gg: ASbGnctKMlQ/heCVpYviKj2NHMyLbmx+lJ6bXPYKVM2w6TdZ98+/OSBCFep9QshR2TT
+ L4tN3REKgoY3Wg6GC503Rerm8XFq7GSRAiEQwlHq+j6AYRDgIxLMEMdOTcyzESfztfVAKkygV5D
+ eCg79s0NknBjKT2+NJztmSZSX8G74DYuTDs9KEMaYDZ4yQyCvx3FbhMYfwCaFmGVnugzwEkAoNY
+ 0ZPGsKBRm0KHg5YP8dBglPWJzlPuAM1mq2O+mngRIqeut7IQBJAOig7jD1n5Ob+cFFXOL0HHAb5
+ lSbEm8gJt+uFNNwgZTQA+aOy9spz99XH8C1t0Q==
+X-Google-Smtp-Source: AGHT+IHM0MEzgoUkFDGzFAR8RHPW25AWN5pHLqorIBvRQ3zVH6/55mJYS4zrpXQFGrZFp0ZlzVuk63yKfN5NRAt982M=
+X-Received: by 2002:a05:622a:64d:b0:4ee:1f5b:73c3 with SMTP id
+ d75a77b69052e-4efbdafae82mr343391631cf.60.1764574313779; Sun, 30 Nov 2025
+ 23:31:53 -0800 (PST)
+MIME-Version: 1.0
+References: <20251125140706.114197-1-mail@jiesong.me>
+ <87ms424u8p.fsf@pond.sub.org>
+In-Reply-To: <87ms424u8p.fsf@pond.sub.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 1 Dec 2025 11:31:42 +0400
+X-Gm-Features: AWmQ_bnHAi1pRv5KkaTVVdfAAGIt1ke_wiY21g4NOmN1h7JmqGMsjeWiXZKx6CE
+Message-ID: <CAJ+F1CKXSHJ=uhtUSTmzaBMS5oMqHEzw3Y0weOE2MxmMbQsL6Q@mail.gmail.com>
 Subject: Re: [PATCH v4] monitor/qmp: cleanup SocketChardev listener sources
  early to avoid fd handling race
-In-Reply-To: <20251125140706.114197-1-mail@jiesong.me> (Jie Song's message of
- "Tue, 25 Nov 2025 22:07:06 +0800")
-References: <20251125140706.114197-1-mail@jiesong.me>
-Date: Mon, 01 Dec 2025 07:00:06 +0100
-Message-ID: <87ms424u8p.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Jie Song <mail@jiesong.me>, eblake@redhat.com, berrange@redhat.com, 
+ qemu-devel@nongnu.org, songjie_yewu@cmss.chinamobile.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x832.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,33 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jie Song, Marc-Andr=C3=A9, is this bug serious enough and the fix safe enou=
-gh
-to still go into 10.2?
+Hi Markus
 
-Jie Song <mail@jiesong.me> writes:
+On Mon, Dec 1, 2025 at 10:00=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> Jie Song, Marc-Andr=C3=A9, is this bug serious enough and the fix safe en=
+ough
+> to still go into 10.2?
+>
 
-> From: Jie Song <songjie_yewu@cmss.chinamobile.com>
->
-> When starting a dummy QEMU process with virsh version, monitor_init_qmp()
-> enables IOThread monitoring of the QMP fd by default. However, a race
-> condition exists during the initialization phase: the IOThread only remov=
-es
-> the main thread's fd watch when it reaches qio_net_listener_set_client_fu=
-nc_full(),
-> which may be delayed under high system load.
->
-> This creates a window between monitor_qmp_setup_handlers_bh() and
-> qio_net_listener_set_client_func_full() where both the main thread and
-> IOThread are simultaneously monitoring the same fd and processing events.
-> This race can cause either the main thread or the IOThread to hang and
-> become unresponsive.
->
-> Fix this by proactively cleaning up the listener's IO sources in
-> monitor_init_qmp() before the IOThread initializes QMP monitoring,
-> ensuring exclusive fd ownership and eliminating the race condition.
->
-> Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
-> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+My feeling is that it's a bit late for 10.2, as I suppose this bug has
+been present for a long time and the risk of regression is high. Also
+not enough people reviewed it.
 
+> Jie Song <mail@jiesong.me> writes:
+>
+> > From: Jie Song <songjie_yewu@cmss.chinamobile.com>
+> >
+> > When starting a dummy QEMU process with virsh version, monitor_init_qmp=
+()
+> > enables IOThread monitoring of the QMP fd by default. However, a race
+> > condition exists during the initialization phase: the IOThread only rem=
+oves
+> > the main thread's fd watch when it reaches qio_net_listener_set_client_=
+func_full(),
+> > which may be delayed under high system load.
+> >
+> > This creates a window between monitor_qmp_setup_handlers_bh() and
+> > qio_net_listener_set_client_func_full() where both the main thread and
+> > IOThread are simultaneously monitoring the same fd and processing event=
+s.
+> > This race can cause either the main thread or the IOThread to hang and
+> > become unresponsive.
+> >
+> > Fix this by proactively cleaning up the listener's IO sources in
+> > monitor_init_qmp() before the IOThread initializes QMP monitoring,
+> > ensuring exclusive fd ownership and eliminating the race condition.
+> >
+> > Signed-off-by: Jie Song <songjie_yewu@cmss.chinamobile.com>
+> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
