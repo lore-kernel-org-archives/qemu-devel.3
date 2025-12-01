@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CB4FD116F5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1D01D116FC
 	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 11:25:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ22F-0004Yv-By; Mon, 01 Dec 2025 06:25:39 -0500
+	id 1vQ22L-0004sE-UR; Mon, 01 Dec 2025 06:25:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vQ229-0004DI-Bv
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:25:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vQ22C-0004MK-Rc
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:25:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1vQ21l-0006sT-J8
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:25:12 -0500
+ id 1vQ227-00070d-Om
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 06:25:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764588304;
+ s=mimecast20190719; t=1764588326;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SjlS5jM2VJyjoucUnciKUWXKQgrLk2dMyYE8uQ43Koc=;
- b=J1+tuWCUug+gRuzD+JFT956adwVS/l6tez51pnOkLe885N/yla/gtbbySv/opx11a+LJuF
- mJiN4L6w/vK/TPQdwlVF0UGCscHgBYsieEDqrDQzjjGaKUE+kLEhZP9hSKOWOHJ4r5sj9I
- ZED6zQQ6jK96ABXv9V5Ch2jd2moYVBc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=WeVZF3ijdiVf7ReEzERlNJDV4DDQf1oUAP+81yN3YQE=;
+ b=WRP/a5SbTQLizTglIPv2lU32o40w0Gqelkh6UaC7/oc16Q75nmt3TctZLaTFcl3hTZQ4Kx
+ zDEYD/bqsowlDwOP/tnWaFdWUHz0qiHYTXPIvj/rewDQ8wL1fNzzjfY9YcUURuetCjW19F
+ Gg/8kfaVDBQ+hz2zQn1ZNmy/Gp4+FO0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528--mAunWC7MrqrahD7a1k-Yg-1; Mon,
- 01 Dec 2025 06:25:01 -0500
-X-MC-Unique: -mAunWC7MrqrahD7a1k-Yg-1
-X-Mimecast-MFC-AGG-ID: -mAunWC7MrqrahD7a1k-Yg_1764588300
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-217-oQhTXVkrPIy818hj7Rrjcg-1; Mon,
+ 01 Dec 2025 06:25:23 -0500
+X-MC-Unique: oQhTXVkrPIy818hj7Rrjcg-1
+X-Mimecast-MFC-AGG-ID: oQhTXVkrPIy818hj7Rrjcg_1764588321
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D89C1955DC0; Mon,  1 Dec 2025 11:25:00 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F2611956094; Mon,  1 Dec 2025 11:25:21 +0000 (UTC)
 Received: from localhost (unknown [10.45.242.40])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A64861800451; Mon,  1 Dec 2025 11:24:58 +0000 (UTC)
+ id 8DF9618002AC; Mon,  1 Dec 2025 11:25:19 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
@@ -55,19 +55,17 @@ Cc: Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
  Christian Schoenebeck <qemu_oss@crudebyte.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC 16/24] replay: remove dependency on audio/
-Date: Mon,  1 Dec 2025 15:22:57 +0400
-Message-ID: <20251201112309.4163921-17-marcandre.lureau@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [RFC 19/24] audio: split AudioBackend
+Date: Mon,  1 Dec 2025 15:23:00 +0400
+Message-ID: <20251201112309.4163921-20-marcandre.lureau@redhat.com>
 In-Reply-To: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
 References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -75,7 +73,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,251 +93,554 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The replay infrastructure shouldn't depend on internals of audio/.
-(st_sample is an internal implementation detail and could be different)
-
-Let audio drive the audio samples recording/replaying.
-
-Notice also we don't need to save & restore the internal ring "wpos",
-all replay should care about is the number of samples and the samples.
-
-Bump the replay version.
+Code clean-up, to allow building bare abstract class separately.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/audio_int.h        |  5 ++++
- include/qemu/audio.h     |  5 ----
- include/system/replay.h  |  8 +++++--
- replay/replay-internal.h |  2 ++
- audio/audio.c            | 23 ++++++++++++++++--
- replay/replay-audio.c    | 51 +++++++++++++++++++++++-----------------
- replay/replay.c          |  2 +-
- replay/stubs-system.c    |  8 ++++++-
- 8 files changed, 72 insertions(+), 32 deletions(-)
+ include/qemu/audio.h |   2 +
+ audio/audio-be.c     | 210 +++++++++++++++++++++++++++++++++++++++++++
+ audio/audio.c        | 188 --------------------------------------
+ audio/meson.build    |   1 +
+ 4 files changed, 213 insertions(+), 188 deletions(-)
+ create mode 100644 audio/audio-be.c
 
-diff --git a/audio/audio_int.h b/audio/audio_int.h
-index d2d54b924e..79e54fd60a 100644
---- a/audio/audio_int.h
-+++ b/audio/audio_int.h
-@@ -316,6 +316,11 @@ static inline size_t audio_ring_posb(size_t pos, size_t dist, size_t len)
- AudiodevPerDirectionOptions *audio_get_pdo_in(Audiodev *dev);
- AudiodevPerDirectionOptions *audio_get_pdo_out(Audiodev *dev);
- 
-+void audio_sample_to_uint64(const st_sample *sample, int pos,
-+                            uint64_t *left, uint64_t *right);
-+void audio_sample_from_uint64(st_sample *sample, int pos,
-+                              uint64_t left, uint64_t right);
-+
- #define TYPE_AUDIO_DRIVER "audio-driver"
- OBJECT_DECLARE_TYPE(AudioDriver, AudioDriverClass, AUDIO_DRIVER)
- 
 diff --git a/include/qemu/audio.h b/include/qemu/audio.h
-index 3abf1037f8..07a2e23998 100644
+index 672f9befe5..649fb89de2 100644
 --- a/include/qemu/audio.h
 +++ b/include/qemu/audio.h
-@@ -124,11 +124,6 @@ void audio_cleanup(void);
+@@ -118,6 +118,8 @@ typedef struct QEMUAudioTimeStamp {
  
- typedef struct st_sample st_sample;
+ bool AUD_backend_check(AudioBackend **be, Error **errp);
  
--void audio_sample_to_uint64(const st_sample *sample, int pos,
--                            uint64_t *left, uint64_t *right);
--void audio_sample_from_uint64(st_sample *sample, int pos,
--                            uint64_t left, uint64_t right);
--
- void audio_add_audiodev(Audiodev *audio);
- void audio_add_default_audiodev(Audiodev *dev, Error **errp);
- void audio_parse_option(const char *opt);
-diff --git a/include/system/replay.h b/include/system/replay.h
-index 68f91bdfbf..0ee5230586 100644
---- a/include/system/replay.h
-+++ b/include/system/replay.h
-@@ -165,8 +165,12 @@ void replay_net_packet_event(ReplayNetState *rns, unsigned flags,
- 
- /*! Saves/restores number of played samples of audio out operation. */
- void replay_audio_out(size_t *played);
--/*! Saves/restores recorded samples of audio in operation. */
--void replay_audio_in(size_t *recorded, st_sample *samples, size_t *wpos, size_t size);
-+/*! Start saves/restores recorded samples of audio in operation, must be called before replay_audio_in_sample_lr(). */
-+void replay_audio_in_start(size_t *recorded);
-+/*! Saves/restores recorded samples. */
-+void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right);
-+/*! Finish saves/restores recorded samples. */
-+void replay_audio_in_finish(void);
- 
- /* VM state operations */
- 
-diff --git a/replay/replay-internal.h b/replay/replay-internal.h
-index 75249b7693..643b357da1 100644
---- a/replay/replay-internal.h
-+++ b/replay/replay-internal.h
-@@ -85,6 +85,7 @@ enum ReplayEvents {
-  * @file_offset: offset into replay log at replay snapshot
-  * @block_request_id: current serialised block request id
-  * @read_event_id: current async read event id
-+ * @n_audio_samples: expected audio samples
-  */
- typedef struct ReplayState {
-     int64_t cached_clock[REPLAY_CLOCK_COUNT];
-@@ -96,6 +97,7 @@ typedef struct ReplayState {
-     uint64_t file_offset;
-     uint64_t block_request_id;
-     uint64_t read_event_id;
-+    size_t n_audio_samples;
- } ReplayState;
- extern ReplayState replay_state;
- 
++AudioBackend *audio_be_new(Audiodev *dev, Error **errp);
++
+ SWVoiceOut *AUD_open_out(
+     AudioBackend *be,
+     SWVoiceOut *sw,
+diff --git a/audio/audio-be.c b/audio/audio-be.c
+new file mode 100644
+index 0000000000..565b7a4cc5
+--- /dev/null
++++ b/audio/audio-be.c
+@@ -0,0 +1,210 @@
++/* SPDX-License-Identifier: MIT */
++
++#include "qemu/osdep.h"
++#include "qemu/audio.h"
++#include "qemu/audio-capture.h"
++#include "qapi/error.h"
++
++bool AUD_backend_check(AudioBackend **be, Error **errp)
++{
++    assert(be != NULL);
++
++    if (!*be) {
++        *be = audio_get_default_audio_be(errp);
++        if (!*be) {
++            return false;
++        }
++    }
++
++    return true;
++}
++
++SWVoiceIn *AUD_open_in(
++    AudioBackend *be,
++    SWVoiceIn *sw,
++    const char *name,
++    void *callback_opaque ,
++    audio_callback_fn callback_fn,
++    struct audsettings *as)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->open_in(be, sw, name, callback_opaque, callback_fn, as);
++}
++
++SWVoiceOut *AUD_open_out(
++    AudioBackend *be,
++    SWVoiceOut *sw,
++    const char *name,
++    void *callback_opaque ,
++    audio_callback_fn callback_fn,
++    struct audsettings *as)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->open_out(be, sw, name, callback_opaque, callback_fn, as);
++}
++
++void AUD_close_out(AudioBackend *be, SWVoiceOut *sw)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->close_out(be, sw);
++}
++
++void AUD_close_in(AudioBackend *be, SWVoiceIn *sw)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->close_in(be, sw);
++}
++
++bool AUD_is_active_out(AudioBackend *be, SWVoiceOut *sw)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->is_active_out(be, sw);
++}
++
++bool AUD_is_active_in(AudioBackend *be, SWVoiceIn *sw)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->is_active_in(be, sw);
++}
++
++size_t AUD_write(AudioBackend *be, SWVoiceOut *sw, void *buf, size_t size)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->write(be, sw, buf, size);
++}
++
++size_t AUD_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->read(be, sw, buf, size);
++}
++
++int AUD_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->get_buffer_size_out(be, sw);
++}
++
++void AUD_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->set_active_out(be, sw, on);
++}
++
++void AUD_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->set_active_in(be, sw, on);
++}
++
++void AUD_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    klass->set_volume_out(be, sw, vol);
++}
++
++void AUD_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    klass->set_volume_in(be, sw, vol);
++}
++
++CaptureVoiceOut *AUD_add_capture(
++    AudioBackend *be,
++    struct audsettings *as,
++    struct audio_capture_ops *ops,
++    void *cb_opaque)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->add_capture(be, as, ops, cb_opaque);
++}
++
++void AUD_del_capture(AudioBackend *be, CaptureVoiceOut *cap, void *cb_opaque)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    klass->del_capture(be, cap, cb_opaque);
++}
++
++#ifdef CONFIG_GIO
++bool audio_be_can_set_dbus_server(AudioBackend *be)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    return klass->set_dbus_server != NULL;
++}
++
++bool audio_be_set_dbus_server(AudioBackend *be,
++                              GDBusObjectManagerServer *server,
++                              bool p2p,
++                              Error **errp)
++{
++    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
++
++    if (!audio_be_can_set_dbus_server(be)) {
++        error_setg(errp, "Audiodev '%s' is not compatible with DBus",
++                   audio_be_get_id(be));
++        return false;
++    }
++
++    return klass->set_dbus_server(be, server, p2p, errp);
++}
++#endif
++
++const char *audio_be_get_id(AudioBackend *be)
++{
++    if (be) {
++        return AUDIO_BACKEND_GET_CLASS(be)->get_id(be);
++    } else {
++        return "";
++    }
++}
++
++AudioBackend *audio_be_new(Audiodev *dev, Error **errp)
++{
++    const char *drvname = AudiodevDriver_str(dev->driver);
++    g_autofree char *type = g_strconcat("audio-", drvname, NULL);
++    AudioBackend *be = AUDIO_BACKEND(object_new(type));
++
++    if (!be) {
++        error_setg(errp, "Unknown audio driver `%s'", drvname);
++        return NULL;
++    }
++
++    if (!AUDIO_BACKEND_GET_CLASS(be)->realize(be, dev, errp)) {
++        object_unref(OBJECT(be));
++        return NULL;
++    }
++
++    return be;
++}
++
++
++static const TypeInfo audio_be_info = {
++    .name = TYPE_AUDIO_BACKEND,
++    .parent = TYPE_OBJECT,
++    .instance_size = sizeof(AudioBackend),
++    .abstract = true,
++    .class_size = sizeof(AudioBackendClass),
++};
++
++static void register_types(void)
++{
++    type_register_static(&audio_be_info);
++}
++
++type_init(register_types);
 diff --git a/audio/audio.c b/audio/audio.c
-index 7e5fb4ff8a..f0e31ce4a0 100644
+index d9c338ea91..3d1c650cc0 100644
 --- a/audio/audio.c
 +++ b/audio/audio.c
-@@ -1301,13 +1301,32 @@ static void audio_run_in(AudioDriver *s)
-     while ((hw = audio_pcm_hw_find_any_enabled_in(s, hw))) {
-         SWVoiceIn *sw;
-         size_t captured = 0, min;
-+        int pos;
+@@ -868,13 +868,6 @@ static void audio_timer (void *opaque)
+      }
+  }
  
-         if (replay_mode != REPLAY_MODE_PLAY) {
-             captured = audio_pcm_hw_run_in(
-                 hw, hw->conv_buf.size - audio_pcm_hw_get_live_in(hw));
-         }
--        replay_audio_in(&captured, hw->conv_buf.buffer, &hw->conv_buf.pos,
--                        hw->conv_buf.size);
-+
-+        replay_audio_in_start(&captured);
-+        assert(captured <= hw->conv_buf.size);
-+        if (replay_mode == REPLAY_MODE_PLAY) {
-+            hw->conv_buf.pos = (hw->conv_buf.pos + captured) % hw->conv_buf.size;
-+        }
-+        for (pos = (hw->conv_buf.pos - captured + hw->conv_buf.size) % hw->conv_buf.size;
-+             pos != hw->conv_buf.pos;
-+             pos = (pos + 1) % hw->conv_buf.size) {
-+                uint64_t left, right;
-+
-+                if (replay_mode == REPLAY_MODE_RECORD) {
-+                    audio_sample_to_uint64(hw->conv_buf.buffer, pos, &left, &right);
-+                }
-+                replay_audio_in_sample_lr(&left, &right);
-+                if (replay_mode == REPLAY_MODE_PLAY) {
-+                    audio_sample_from_uint64(hw->conv_buf.buffer, pos, left, right);
-+                }
-+        }
-+        replay_audio_in_finish();
- 
-         min = audio_pcm_hw_find_min_in (hw);
-         hw->total_samples_captured += captured - min;
-diff --git a/replay/replay-audio.c b/replay/replay-audio.c
-index 1b614f4137..7d20ae9110 100644
---- a/replay/replay-audio.c
-+++ b/replay/replay-audio.c
-@@ -13,7 +13,6 @@
- #include "qemu/error-report.h"
- #include "system/replay.h"
- #include "replay-internal.h"
--#include "qemu/audio.h"
- 
- void replay_audio_out(size_t *played)
+-size_t AUD_write(AudioBackend *be, SWVoiceOut *sw, void *buf, size_t size)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->write(be, sw, buf, size);
+-}
+-
+ static size_t audio_driver_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
  {
-@@ -35,38 +34,48 @@ void replay_audio_out(size_t *played)
+     HWVoiceIn *hw;
+@@ -898,13 +891,6 @@ static size_t audio_driver_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size
+ 
+ }
+ 
+-size_t AUD_read(AudioBackend *be, SWVoiceIn *sw, void *buf, size_t size)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->read(be, sw, buf, size);
+-}
+-
+ static int audio_driver_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
+ {
+     if (!sw) {
+@@ -918,13 +904,6 @@ static int audio_driver_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
+     return sw->hw->samples * sw->hw->info.bytes_per_frame;
+ }
+ 
+-int AUD_get_buffer_size_out(AudioBackend *be, SWVoiceOut *sw)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->get_buffer_size_out(be, sw);
+-}
+-
+ static void audio_driver_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
+ {
+     HWVoiceOut *hw;
+@@ -974,13 +953,6 @@ static void audio_driver_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool o
+ 
+ }
+ 
+-void AUD_set_active_out(AudioBackend *be, SWVoiceOut *sw, bool on)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->set_active_out(be, sw, on);
+-}
+-
+ static void audio_driver_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
+ {
+     HWVoiceIn *hw;
+@@ -1026,13 +998,6 @@ static void audio_driver_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
      }
  }
  
--void replay_audio_in(size_t *recorded, st_sample *samples, size_t *wpos, size_t size)
-+void replay_audio_in_start(size_t *nsamples)
+-void AUD_set_active_in(AudioBackend *be, SWVoiceIn *sw, bool on)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->set_active_in(be, sw, on);
+-}
+-
+ static size_t audio_get_avail(SWVoiceIn *sw)
  {
--    int pos;
--    uint64_t left, right;
-     if (replay_mode == REPLAY_MODE_RECORD) {
-         g_assert(replay_mutex_locked());
-         replay_save_instructions();
-         replay_put_event(EVENT_AUDIO_IN);
--        replay_put_qword(*recorded);
--        replay_put_qword(*wpos);
--        for (pos = (*wpos - *recorded + size) % size ; pos != *wpos
--             ; pos = (pos + 1) % size) {
--            audio_sample_to_uint64(samples, pos, &left, &right);
--            replay_put_qword(left);
--            replay_put_qword(right);
+     size_t live;
+@@ -1683,14 +1648,6 @@ static void audio_vm_change_state_handler (void *opaque, bool running,
+ 
+ static const VMStateDescription vmstate_audio;
+ 
+-static void audio_be_init(Object *obj)
+-{
+-}
+-
+-static void audio_be_finalize(Object *obj)
+-{
+-}
+-
+ static const char *audio_driver_get_id(AudioBackend *be)
+ {
+     return AUDIO_DRIVER(be)->dev->id;
+@@ -1710,60 +1667,6 @@ static void audio_driver_del_capture(
+ static void audio_driver_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol);
+ static void audio_driver_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol);
+ 
+-SWVoiceOut *AUD_open_out(
+-    AudioBackend *be,
+-    SWVoiceOut *sw,
+-    const char *name,
+-    void *callback_opaque ,
+-    audio_callback_fn callback_fn,
+-    struct audsettings *as)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->open_out(be, sw, name, callback_opaque, callback_fn, as);
+-}
+-
+-SWVoiceIn *AUD_open_in(
+-    AudioBackend *be,
+-    SWVoiceIn *sw,
+-    const char *name,
+-    void *callback_opaque ,
+-    audio_callback_fn callback_fn,
+-    struct audsettings *as)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->open_in(be, sw, name, callback_opaque, callback_fn, as);
+-}
+-
+-void AUD_close_out(AudioBackend *be, SWVoiceOut *sw)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->close_out(be, sw);
+-}
+-
+-void AUD_close_in(AudioBackend *be, SWVoiceIn *sw)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->close_in(be, sw);
+-}
+-
+-bool AUD_is_active_out(AudioBackend *be, SWVoiceOut *sw)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->is_active_out(be, sw);
+-}
+-
+-bool AUD_is_active_in(AudioBackend *be, SWVoiceIn *sw)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->is_active_in(be, sw);
+-}
+-
+ static void audio_driver_class_init(ObjectClass *klass, const void *data)
+ {
+     AudioBackendClass *be = AUDIO_BACKEND_CLASS(klass);
+@@ -1966,20 +1869,6 @@ AudioBackend *audio_get_default_audio_be(Error **errp)
+     return default_audio_be;
+ }
+ 
+-bool AUD_backend_check(AudioBackend **be, Error **errp)
+-{
+-    assert(be != NULL);
+-
+-    if (!*be) {
+-        *be = audio_get_default_audio_be(errp);
+-        if (!*be) {
+-            return false;
 -        }
-+        replay_put_qword(*nsamples);
-+        replay_state.n_audio_samples = *nsamples;
-     } else if (replay_mode == REPLAY_MODE_PLAY) {
-         g_assert(replay_mutex_locked());
-         replay_account_executed_instructions();
-         if (replay_next_event_is(EVENT_AUDIO_IN)) {
--            *recorded = replay_get_qword();
--            *wpos = replay_get_qword();
--            for (pos = (*wpos - *recorded + size) % size ; pos != *wpos
--                 ; pos = (pos + 1) % size) {
--                left = replay_get_qword();
--                right = replay_get_qword();
--                audio_sample_from_uint64(samples, pos, left, right);
--            }
--            replay_finish_event();
-+            *nsamples = replay_get_qword();
-+            replay_state.n_audio_samples = *nsamples;
-         } else {
-             error_report("Missing audio in event in the replay log");
-             abort();
-         }
+-    }
+-
+-    return true;
+-}
+-
+ static struct audio_pcm_ops capture_pcm_ops;
+ 
+ static CaptureVoiceOut *audio_driver_add_capture(
+@@ -2057,17 +1946,6 @@ static CaptureVoiceOut *audio_driver_add_capture(
+     return cap;
+ }
+ 
+-CaptureVoiceOut *AUD_add_capture(
+-    AudioBackend *be,
+-    struct audsettings *as,
+-    struct audio_capture_ops *ops,
+-    void *cb_opaque)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->add_capture(be, as, ops, cb_opaque);
+-}
+-
+ static void audio_driver_del_capture(
+     AudioBackend *be,
+     CaptureVoiceOut *cap,
+@@ -2110,13 +1988,6 @@ static void audio_driver_del_capture(
      }
  }
-+
-+void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
-+{
-+    if (replay_mode == REPLAY_MODE_RECORD) {
-+        replay_put_qword(*left);
-+        replay_put_qword(*right);
-+    } else if (replay_mode == REPLAY_MODE_PLAY) {
-+        *left = replay_get_qword();
-+        *right = replay_get_qword();
-+    } else {
-+        return;
-+    }
-+
-+    assert(replay_state.n_audio_samples > 0);
-+    replay_state.n_audio_samples--;
-+}
-+
-+void replay_audio_in_finish(void)
-+{
-+    assert(replay_state.n_audio_samples == 0);
-+
-+    if (replay_mode == REPLAY_MODE_PLAY) {
-+        replay_finish_event();
-+    }
-+}
-diff --git a/replay/replay.c b/replay/replay.c
-index b2121788c1..2e5c6fa82e 100644
---- a/replay/replay.c
-+++ b/replay/replay.c
-@@ -22,7 +22,7 @@
  
- /* Current version of the replay mechanism.
-    Increase it when file format changes. */
--#define REPLAY_VERSION              0xe0200c
-+#define REPLAY_VERSION              0xe0200d
- /* Size of replay log header */
- #define HEADER_SIZE                 (sizeof(uint32_t) + sizeof(uint64_t))
+-void AUD_del_capture(AudioBackend *be, CaptureVoiceOut *cap, void *cb_opaque)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    klass->del_capture(be, cap, cb_opaque);
+-}
+-
+ static void audio_driver_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
+ {
+     if (sw) {
+@@ -2133,13 +2004,6 @@ static void audio_driver_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume
+     }
+ }
  
-diff --git a/replay/stubs-system.c b/replay/stubs-system.c
-index 7f85764936..b2c52bc404 100644
---- a/replay/stubs-system.c
-+++ b/replay/stubs-system.c
-@@ -15,7 +15,13 @@ void replay_input_sync_event(void)
- void replay_add_blocker(const char *feature)
+-void AUD_set_volume_out(AudioBackend *be, SWVoiceOut *sw, Volume *vol)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    klass->set_volume_out(be, sw, vol);
+-}
+-
+ static void audio_driver_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
  {
+     if (sw) {
+@@ -2156,13 +2020,6 @@ static void audio_driver_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *
+     }
  }
--void replay_audio_in(size_t *recorded, st_sample *samples, size_t *wpos, size_t size)
-+void replay_audio_in_start(size_t *nsamples)
-+{
-+}
-+void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
-+{
-+}
-+void replay_audio_in_finish(void)
+ 
+-void AUD_set_volume_in(AudioBackend *be, SWVoiceIn *sw, Volume *vol)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    klass->set_volume_in(be, sw, vol);
+-}
+-
+ static void audio_create_pdos(Audiodev *dev)
  {
+     switch (dev->driver) {
+@@ -2416,40 +2273,6 @@ AudioBackend *audio_be_by_name(const char *name, Error **errp)
+     }
  }
- void replay_audio_out(size_t *played)
+ 
+-#ifdef CONFIG_GIO
+-bool audio_be_can_set_dbus_server(AudioBackend *be)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    return klass->set_dbus_server != NULL;
+-}
+-
+-bool audio_be_set_dbus_server(AudioBackend *be,
+-                              GDBusObjectManagerServer *server,
+-                              bool p2p,
+-                              Error **errp)
+-{
+-    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+-
+-    if (!audio_be_can_set_dbus_server(be)) {
+-        error_setg(errp, "Audiodev '%s' is not compatible with DBus",
+-                   audio_be_get_id(be));
+-        return false;
+-    }
+-
+-    return klass->set_dbus_server(be, server, p2p, errp);
+-}
+-#endif
+-
+-const char *audio_be_get_id(AudioBackend *be)
+-{
+-    if (be) {
+-        return AUDIO_BACKEND_GET_CLASS(be)->get_id(be);
+-    } else {
+-        return "";
+-    }
+-}
+-
+ const char *audio_application_name(void)
+ {
+     const char *vm_name;
+@@ -2513,16 +2336,6 @@ AudiodevList *qmp_query_audiodevs(Error **errp)
+     return ret;
+ }
+ 
+-static const TypeInfo audio_be_info = {
+-    .name = TYPE_AUDIO_BACKEND,
+-    .parent = TYPE_OBJECT,
+-    .instance_size = sizeof(AudioBackend),
+-    .instance_init = audio_be_init,
+-    .instance_finalize = audio_be_finalize,
+-    .abstract = true,
+-    .class_size = sizeof(AudioBackendClass),
+-};
+-
+ static const TypeInfo audio_driver_info = {
+     .name = TYPE_AUDIO_DRIVER,
+     .parent = TYPE_AUDIO_BACKEND,
+@@ -2536,7 +2349,6 @@ static const TypeInfo audio_driver_info = {
+ 
+ static void register_types(void)
+ {
+-    type_register_static(&audio_be_info);
+     type_register_static(&audio_driver_info);
+ }
+ 
+diff --git a/audio/meson.build b/audio/meson.build
+index b2dca2c640..2450098eb8 100644
+--- a/audio/meson.build
++++ b/audio/meson.build
+@@ -1,5 +1,6 @@
+ system_ss.add(files(
+   'audio.c',
++  'audio-be.c',
+   'mixeng.c',
+   'noaudio.c',
+   'wavaudio.c',
 -- 
 2.51.1
 
