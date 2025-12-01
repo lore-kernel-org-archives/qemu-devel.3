@@ -4,111 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A1DBD111A8
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 09:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADDF9D116F9
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 09:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ0Gq-0006vH-78; Mon, 01 Dec 2025 04:32:36 -0500
+	id 1vQ0MG-0000am-56; Mon, 01 Dec 2025 04:38:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vQ0GR-0006pD-8f
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 04:32:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vQ0M6-0000aI-T4
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 04:38:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vQ0GP-0006q6-TF
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 04:32:11 -0500
+ id 1vQ0M4-0007em-U7
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 04:38:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764581529;
+ s=mimecast20190719; t=1764581878;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ggam1p3bDbUrKkAlbW0ViRxlboz+mv+LhL9b/kQ64jc=;
- b=IWSMtX0mPZBjXpZ0Bk0yEpZ1U58hjAsn/KP1bSNUOVAqfPw2yNMj/09YlyPW3nfP3p9eTS
- zZRWzuJD60WRoMzPSDaEbCgN5L230EX3BorV0AOXswsX2CaPpGyfdqa2Cxs46KA6ybM97t
- 16V1YmZyacrgC0MECfMFTXjjFRe+fMY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DaEty387PH/ejKI8m8D9xKfy25pAxHPUdctNf1oV5uQ=;
+ b=WU1UHbDQtXKJv3aeTmTYWiGf7mf+0duUqmXwFh72G0Gb2pIX2wjdCBBYXj9A5uuwEbOYjE
+ RW1O0tAvMeC7ps5i4WZtZvr7h473RkmQS2Z2howuGR2NOiZ/tRib51zNzuALPCHXV6raY0
+ WDmBGULOLE7/ELYpmGFXImRQYTYuFLk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-113-PY0xH_JoNiiVJ2YpYano5w-1; Mon, 01 Dec 2025 04:32:07 -0500
-X-MC-Unique: PY0xH_JoNiiVJ2YpYano5w-1
-X-Mimecast-MFC-AGG-ID: PY0xH_JoNiiVJ2YpYano5w_1764581526
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-42b2c8fb84fso2203652f8f.2
- for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 01:32:07 -0800 (PST)
+ us-mta-626-la9pu3kCPEm_r_RVAE0RqA-1; Mon, 01 Dec 2025 04:37:57 -0500
+X-MC-Unique: la9pu3kCPEm_r_RVAE0RqA-1
+X-Mimecast-MFC-AGG-ID: la9pu3kCPEm_r_RVAE0RqA_1764581876
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4779393221aso21885145e9.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 01:37:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764581526; x=1765186326; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764581876; x=1765186676; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ggam1p3bDbUrKkAlbW0ViRxlboz+mv+LhL9b/kQ64jc=;
- b=LvdhoeaTfRYGtgNFBFZEz5oi34pgsTYCDIq1hkdLP1wSRf32jjzfbXXq6CyzUc8/OK
- +LMFhvk4rbvPQEoqisp/l5+wPN6h9p6gcl8PxWnZgbV7ngGtyFQP4elCS1JIfzqdUTnv
- b10j5Tzvsx/RbhiMIn+lOiKmvzG0tXJgIwI4CzpRF8oi8pkx4iOd63xxWPy1i1lyNM+v
- y+ZC/oYtTOWKyo97bet+y5jC0nIKFi7NLRY1v3jedqHtqK4LqAewWN36kF5FyGLglX4q
- 12yMQ9LUbNQcz2sHji5EqyhroHffFp9nQ/XFfzQAh1iJcgajAtUffSZadoxVRg3RvLyt
- 5mnA==
+ bh=DaEty387PH/ejKI8m8D9xKfy25pAxHPUdctNf1oV5uQ=;
+ b=aSQ4YDyazX0+5g8flHicjDdV3Z59TOYUK5xpKusGu64IG0zeTlpufmPXLS23VvPA01
+ G1LsemCYOAYYBs18I3Hwpx4U3ZHI1FXlTDZ4p86c87wO8/hIa+NQtX/op8d0QRcwHP1G
+ OpFRQCz9+0RMueTl5lQe4k6I0cAJXsAiygrwQCYt3BfrN7iKWnbsw6WQkyrqRQAFGY39
+ 4gAWaIdjA3WS3whu3GlITykPsLCnrr6Jzat+h3W3LP8AuU6oPCTFFss+jQM4OP5ZLn+A
+ XCIFDzQD02qwP3Ny2zDWgovaop6wuj6JrKqxus39H2VigzvPDaYHJ9sidUemZr73RYPI
+ 8dDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764581526; x=1765186326;
+ d=1e100.net; s=20230601; t=1764581876; x=1765186676;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ggam1p3bDbUrKkAlbW0ViRxlboz+mv+LhL9b/kQ64jc=;
- b=ZkprrROfTn1f1KlHEXkkej7hef2sbqoj0CML4365MALXuW7J3EpyN56p9Ii6vVSdPP
- WTm56uqi05XvvUOEZxXLFbu14ZCpiYRXMXd5VWz+GrXVyqkp+WQO2lWv44p2B7+m0vwY
- pBoO5xyVSd1iGGWonue/XEGrai7QOHZYwzqnrNV0bSZKx2IhyFSiTV4Vi2o/2ItkE+Kl
- TBue59i5bWchgTP6C1HB8egggBHI/VUrkWFokfMCfEEhG1/dKmpkqsHq+ENlFyhDu2Ra
- 4F9szRLd1JNjuE491JJEbiLfFGEki8yeLIvwHOCMC74/iBGlg7m1U9QzW7IwiSMMIXgN
- B7vA==
+ bh=DaEty387PH/ejKI8m8D9xKfy25pAxHPUdctNf1oV5uQ=;
+ b=ELG6DAz6TdK++zEqVdHIj5G1Bpyos1C4V3//FUCHolA6HyNZceNDy51BHNy+NborJL
+ +mmHwrwODj76iM3Dm0vsougqJ/YH1+tIwJ+x5ruPje/y9xLThuACo+O9nDzB/AhA7ns1
+ /Fuf7sNeg1F8/T4WcfpBP0V9eVeYMF4hcgahLvyotdy9iH8mzJTOKAOFZroywnNenzhm
+ ibqmQ954mHl1YS2isploc6GqI3LYRh8C1vx7b6/XZStU7S9Cgb18BJZFn8DcAZMLIUec
+ avTMenQF5pB58jXOUNOnAOEbAwmqIH9WZPWCDafyXKkqAm/6GmONLf3/OmE+8fJUYxRM
+ ohxQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVIYKdbo4eTIlJ7nvsvwDlAvwk4XSKBbfl8G+htIpZhzOqT19ojku4U1tb988ANPiMCMNfsPNPYzEKK@nongnu.org
-X-Gm-Message-State: AOJu0YwithYhN+JVRH9/gUOtOlvG6JM/4CWRqQ8jVscqjpacNrKzbvjH
- 0tNJIc6r9v3OZa3nY4wCdrD48/x/QHEgxwgWLDiE3uMWceWhBWNKUlmJ3ZXzWDFUHqg65lB0Xou
- OozaCTi4hhmoMRxRaFGwwY+O7oausUp6ahruEE6KiPvdVCnihrYlRYZoa
-X-Gm-Gg: ASbGncuUQ145EjSYXClulmX5pXyu4dGVYqKO4zTYJX7vt4ZwHvrj+q4ODhjtiiz2axj
- DwzplHLJA0lEVxbROu3aKkv+TST9dyz/Kb2YZwsWOdCMSVu8gubkdcSecor8dDE+2uviJnat544
- GCwN9n8HPoNLNYHy3RmUeGpiPgEgA1qpXZ8J4RCWhfbRFGFKJmTnVrD1NQpy2u2Mh9h/qgNKkQx
- 83+6pYGTr7ec5iNhQjjzKcepj4OwKZ24Frb1CEqGeeK3gkwPJcSUSj7RZtxOtJaO2zvmbDYBYSB
- DPcXOEbYdi5+CuC7BKT7LWEOOMaKUqZFD2K9OmfOnf5DVLqDi6p0sGNMd/R/FBmV2sy+Aw==
-X-Received: by 2002:a05:6000:2f81:b0:425:75c6:7125 with SMTP id
- ffacd0b85a97d-42e0f213a9cmr27425522f8f.16.1764581526318; 
- Mon, 01 Dec 2025 01:32:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEEYHiRpHiZg0CsCP2pRSAbCbekFKXcvVHxZH2gOqrMZE1YiuAgh6kf+L6HoEpouqiPRNcnGA==
-X-Received: by 2002:a05:6000:2f81:b0:425:75c6:7125 with SMTP id
- ffacd0b85a97d-42e0f213a9cmr27425473f8f.16.1764581525926; 
- Mon, 01 Dec 2025 01:32:05 -0800 (PST)
-Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1c5c3041sm24106306f8f.6.2025.12.01.01.32.05
+ AJvYcCU8pcUajq35zL6OpZ6LdrMZT8B4s7FUAAd305jTFbR7oVJAsYVl3KetxnslXYq1L82YhGj3c9fhiG/M@nongnu.org
+X-Gm-Message-State: AOJu0YyaIEllIz/OjXV2VgYZqWPxQGqf3HHj2DZtVp5m1AEyhrr95jjl
+ AgElb+UDSt/nz4n2V43EYesSuBuSj4y1k6VL5pwQ+IxilKHzyMkYKcYnqPuZngs3YCtMV0PFqxB
+ WPr0EXY4IUUJt4z3Qt6+GnRxx8N5VhLflPAiNdpJmdyFqXXzdaJvOyBvs
+X-Gm-Gg: ASbGncvLrQ/Q6lIQRNnyxCNrQka7UYnncq5N2G8wgDGTxxgDaJwQiVL+j3ea8mdUETk
+ aaA29Iy86rkg9AT1goQcsC9b3v2/A6sz1J3a5cKj/QvtWe1p9aFtwh1FIfGWr83uOGLoN4Rgaye
+ Ri9v+EVcuKmGXXex3wowOt+UjNmxAoZg7oEOm2QWrWcKXwBmnpC9Az2uk/RXtYQmY3E8xdbjJ34
+ ba523mRQTWeMln0wfKoXL/McUKYCbdJX/iYAUKG2irMd8OMlVS2wGCMtuWskKJWUAR2Lfc+8AXL
+ BbjM2eMUEINF2SX9uwaz+NAbnlndf8kS6eSrxEWw6mqnv4SKE2/y/4NPU4/cwoR84fYfxw==
+X-Received: by 2002:a05:600c:1c13:b0:471:786:94d3 with SMTP id
+ 5b1f17b1804b1-477c01b201fmr359198275e9.22.1764581876243; 
+ Mon, 01 Dec 2025 01:37:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH2dsjbP7qIEs0Mvap0gO4378zyZOjamu2Mt9MeM8OtAAirolTU8yo+0XKPhbmeONNYnOjZpA==
+X-Received: by 2002:a05:600c:1c13:b0:471:786:94d3 with SMTP id
+ 5b1f17b1804b1-477c01b201fmr359197905e9.22.1764581875871; 
+ Mon, 01 Dec 2025 01:37:55 -0800 (PST)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4791163e3cbsm234661745e9.10.2025.12.01.01.37.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 01 Dec 2025 01:32:05 -0800 (PST)
-Date: Mon, 1 Dec 2025 10:32:04 +0100
+ Mon, 01 Dec 2025 01:37:55 -0800 (PST)
+Date: Mon, 1 Dec 2025 10:37:54 +0100
 From: Igor Mammedov <imammedo@redhat.com>
 To: Gavin Shan <gshan@redhat.com>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mchehab+huawei@kernel.org,
  jonathan.cameron@huawei.com, armbru@redhat.com, mst@redhat.com,
  anisinha@redhat.com, gengdongjiu1@gmail.com, peter.maydell@linaro.org,
  pbonzini@redhat.com, shan.gavin@gmail.com
-Subject: Re: [PATCH 1/5] acpi/ghes: Automate data block cleanup in
- acpi_ghes_memory_errors()
-Message-ID: <20251201103204.19ff614e@imammedo>
-In-Reply-To: <20251127004435.2098335-2-gshan@redhat.com>
+Subject: Re: [PATCH 2/5] acpi/ghes: Abort in acpi_ghes_memory_errors() if
+ necessary
+Message-ID: <20251201103754.770941aa@imammedo>
+In-Reply-To: <20251127004435.2098335-3-gshan@redhat.com>
 References: <20251127004435.2098335-1-gshan@redhat.com>
- <20251127004435.2098335-2-gshan@redhat.com>
+ <20251127004435.2098335-3-gshan@redhat.com>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,11 +126,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 27 Nov 2025 10:44:31 +1000
+On Thu, 27 Nov 2025 10:44:32 +1000
 Gavin Shan <gshan@redhat.com> wrote:
 
-> Use g_auto_ptr() to automate data block cleanup in the function so
-> that it won't be a burden to us.
+> The function hw/acpi/ghes-stub.c::acpi_ghes_memory_errors() shouldn't
+> be called by any one. Take g_assert_not_reached() as a clearer indication.
 > 
 > Suggested-by: Markus Armbruster <armbru@redhat.com>
 > Signed-off-by: Gavin Shan <gshan@redhat.com>
@@ -138,32 +138,21 @@ Gavin Shan <gshan@redhat.com> wrote:
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
 > ---
->  hw/acpi/ghes.c | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
+>  hw/acpi/ghes-stub.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 06555905ce..6366c74248 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -565,9 +565,7 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->                    0xED, 0x7C, 0x83, 0xB1);
->      Error *errp = NULL;
->      int data_length;
-> -    GArray *block;
-> -
-> -    block = g_array_new(false, true /* clear */, 1);
-> +    g_autoptr(GArray) block = g_array_new(false, true /* clear */, 1);
+> diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
+> index 40f660c246..b54f1b093c 100644
+> --- a/hw/acpi/ghes-stub.c
+> +++ b/hw/acpi/ghes-stub.c
+> @@ -14,7 +14,7 @@
+>  int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
+>                              uint64_t physical_address)
+>  {
+> -    return -1;
+> +    g_assert_not_reached();
+>  }
 >  
->      data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH;
->      /*
-> @@ -585,8 +583,6 @@ int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->      /* Report the error */
->      ghes_record_cper_errors(ags, block->data, block->len, source_id, &errp);
->  
-> -    g_array_free(block, true);
-> -
->      if (errp) {
->          error_report_err(errp);
->          return -1;
+>  AcpiGhesState *acpi_ghes_get_state(void)
 
 
