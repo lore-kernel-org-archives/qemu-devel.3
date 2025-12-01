@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 016D0D116F1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 14:27:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08737D116F1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 14:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ4ry-0003m4-8P; Mon, 01 Dec 2025 09:27:14 -0500
+	id 1vQ4un-0004K8-N1; Mon, 01 Dec 2025 09:30:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+cd717ce28a9accd739e3+8135+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1vQ4rv-0003lM-D4
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 09:27:11 -0500
+ id 1vQ4ui-0004Ju-3B
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 09:30:04 -0500
 Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+cd717ce28a9accd739e3+8135+infradead.org+dwmw2@desiato.srs.infradead.org>)
- id 1vQ4rr-0001QZ-J0
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 09:27:11 -0500
+ id 1vQ4ue-0001nd-3w
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 09:30:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=desiato.20200630; h=MIME-Version:Content-Type:References:
  In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
  Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=l4KZSIH8XyHR8x2G6CzvraJaHHQB+OqJSq+t93DZiwM=; b=RSxijtNkVtqaPQFkwKfFoRLgJj
- PwvWTJJWrgWxCLBz4C5wZW68MtizaqR7JJRT5WajvUuYTdTVA0IqfLv/MJ/hF/JKLDSEAZNj9g9U9
- x8KsWuabOAMtblsebKVpNJfYi9+TQKAjCX3TnczwHeIpsyZyXKUqYfRbj6UlIO5zE0lLkPRNgTSH4
- pHcAyksr1qRzvz+MAMbRbtCsg6ScvltRb8NKLqtpKvQ9QaM/whO/Sfj041UrvG+YztAlTegfRtu2d
- ft1U/VTVJoHT8Qw8ZVl2l5DSB5IPG7ZzSmPMPnbkWPrK1fP2WbBjUvCFQwBSoBIalphblsG5AxjlX
- l78hQUbw==;
+ bh=mck1VJCxedYfJ/28tsMS4mZzMApVTeca+kVHIIjnA2Q=; b=COVnP3Qcjyq3xjXK8Wq09DDllS
+ UDouaoilgJTD9xNG+VTV+UjBO8Ox95QevV0LkpHzEw3tKlHEMHbdtsap/EyH8BjqAcnOMt8uHZuRp
+ cyIznqizcwsAn7MHo3M3+ymOs+nPTuCsE6hBT9MOPj7YFkvlseCZPRk6MyJzUChzNoMpt/HMyjZEe
+ 8IOZnVKY1MS/77Lu1Yb2EQ1VHd+Iqc0bmsyz8GXMb62wJc7p47FXONBxa6wlbLeJzfK0bXONTC9X5
+ p7CqBIlmtOudsjq/8BwmYrsACxZppBYkDRWZ3weN/GvAkZd+9lL89uQjYduKNrCEeM8Jpr/kz9spZ
+ acqhhQsQ==;
 Received: from [172.31.31.148] (helo=u09cd745991455d.lumleys.internal)
  by desiato.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
- id 1vQ40C-0000000G0Su-1gIH; Mon, 01 Dec 2025 13:31:40 +0000
-Message-ID: <8e8ab56ce4f8f2a0f0c084bd4e48958a441b40f1.camel@infradead.org>
-Subject: Re: [RFC PATCH 2/4] hw/acpi: add new fields in VMClock ABI
+ id 1vQ432-0000000G0gS-1os8; Mon, 01 Dec 2025 13:34:36 +0000
+Message-ID: <e10030cec8809f16e41a2a3baaf07cf22894f8ff.camel@infradead.org>
+Subject: Re: [RFC PATCH 3/4] hw/acpi: add VM generation counter field to
+ VMClock
 From: David Woodhouse <dwmw2@infradead.org>
-To: Cornelia Huck <cohuck@redhat.com>, "Chalios, Babis"
- <bchalios@amazon.es>,  "mst@redhat.com" <mst@redhat.com>,
- "imammedo@redhat.com" <imammedo@redhat.com>,  "pbonzini@redhat.com"
- <pbonzini@redhat.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "Graf (AWS), Alexander"
+To: "Daniel P." =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>, 
+ "Chalios, Babis" <bchalios@amazon.es>
+Cc: "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com"
+ <imammedo@redhat.com>, "cohuck@redhat.com" <cohuck@redhat.com>, 
+ "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "Graf (AWS), Alexander"
  <graf@amazon.de>, "mzxreary@0pointer.de" <mzxreary@0pointer.de>
-Date: Mon, 01 Dec 2025 14:27:00 +0000
-In-Reply-To: <87ldjmnwyt.fsf@redhat.com>
+Date: Mon, 01 Dec 2025 14:29:57 +0000
+In-Reply-To: <aS2iOER6KBMMtJ0X@redhat.com>
 References: <20251201125023.18344-1-bchalios@amazon.es>
- <20251201125023.18344-4-bchalios@amazon.es> <87qztenykd.fsf@redhat.com>
- <196b8afa77ec3253006dcde712b07f4e9c70de30.camel@infradead.org>
- <87ldjmnwyt.fsf@redhat.com>
+ <20251201125023.18344-5-bchalios@amazon.es> <aS2iOER6KBMMtJ0X@redhat.com>
 Content-Type: multipart/signed; micalg="sha-256";
  protocol="application/pkcs7-signature"; 
- boundary="=-RQSwJ6P6u57FGIPijfem"
+ boundary="=-KPW+5Qpz4YMGbULmFdVb"
 User-Agent: Evolution 3.52.3-0ubuntu1 
 MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
@@ -83,63 +84,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---=-RQSwJ6P6u57FGIPijfem
+--=-KPW+5Qpz4YMGbULmFdVb
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 2025-12-01 at 14:38 +0100, Cornelia Huck wrote:
-> On Mon, Dec 01 2025, David Woodhouse <dwmw2@infradead.org> wrote:
+On Mon, 2025-12-01 at 14:12 +0000, Daniel P. Berrang=C3=A9 wrote:
+> From QEMU's POV, live migration and snapshots
+> are indistiguishable operations, both using the same functionaility.
 >=20
-> > On Mon, 2025-12-01 at 14:04 +0100, Cornelia Huck wrote:
-> > > On Mon, Dec 01 2025, "Chalios, Babis" <bchalios@amazon.es> wrote:
-> > >=20
-> > > > VMClock now supports a vm_generation_counter field in the struct it
-> > > > exposes to userspace. The field signals a disruption that happened =
-due
-> > > > to a guest loaded from a snapshot.
-> > > >=20
-> > > > Moreover, VMClock now optionally supports device notifications when=
- the
-> > > > seq_count changes to a new even value.
-> > > >=20
-> > > > Signed-off-by: Babis Chalios <bchalios@amazon.es>
-> > > > ---
-> > > > =C2=A0include/standard-headers/linux/vmclock-abi.h | 20 +++++++++++=
-+++++++++
-> > > > =C2=A01 file changed, 20 insertions(+)
-> > >=20
-> > > Please either do a full linux-headers update against a specific Linux
-> > > kernel version, or mark this as a placeholder patch if the code is no=
-t
-> > > yet merged.
-> >=20
-> > The Linux patches are being posted simultaneously, so they'll be in
-> > Linux 6.20 (7.0?) at the earliest. We'll want to ingest the update
-> > before then.
-> >=20
-> > The intent is not for the Linux source to be the canonical definition
-> > of the data structure; we *are* working on publishing the spec, and
-> > Babis referenced the current draft. It isn't in the form of C source
-> > code though, so I suspect it makes sense to keep including the Linux
-> > header?
+> eg
+> =C2=A0 $ qemu-system-x86_64 -monitor stdio -device vmclock
+> =C2=A0 (qemu) migrate file:snapshot.img
 >=20
-> Oh, including the Linux header sounds fine; but as long as the code has
-> not yet been merged there, this needs to be marked as not yet ready to
-> merge on the QEMU side. (And it needs to be updated by a full headers
-> update when merged.)
+> and
+>=20
+> =C2=A0 $ qemu-system-x86_64 -monitor stdio -device vmclock -incoming file=
+:snapshot.img
+>=20
+>=20
+> and we can't check the QEMU migration target being "file:" and mgmt
+> apps can use the "fd:" protocol to pass in a pre-opened target which can
+> be a socket or pipe or file.
 
-That's exactly what we *don't* want, and why we say that the canonical
-definition of this structure is the actual specification. There's no
-need for QEMU to only ever follow Linux.
+What triggers the vmgenid to actually get updated for a snapshot?
+That's the condition we're after, isn't it?
 
-In that case, probably best *not* to use the Linux header and instead
-to build our own specifically for QEMU based on the specification. It
-can be almost byte-for-byte identical, but just needs to live elsewhere
-rather than in <standard-headers/linux>
-
-
-
---=-RQSwJ6P6u57FGIPijfem
+--=-KPW+5Qpz4YMGbULmFdVb
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -218,22 +188,22 @@ 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
-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
+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
-cmUgRW1haWwgRzICEAfkkQ9qA1FdgOJE92VzW+AwDQYJKoZIhvcNAQEBBQAEggIAQdl6NwZnh7LQ
-0Uvt9yf0kCUlRyWhbfXtxbiweURnXADxxZ6KYvOYw/HxMFm7I690zyIehnXeM53c7jF+YUEfMWKP
-iocn9YKUpKraTN8SczqpmG+Gnu7/90+Lvco8wG/dB4zicJ7X9dc/dudRcasb1Ulh8aKIdpOwPnSW
-k+xSoctSPRG9LHDvV0ot9GFoidz5dGjj+uarER6y7GRbf+hQtHaWHzN+exeMfTcoLtFnlsVRSOd0
-IDnhmDj9VhSaORtZBSCvIs/KuQEq+TtqUWc0AHlzF6g/BXca1jGmuVr6iy9BG5Ep7+la6RZm+/ta
-WefGmynaB4F/kCU3i3YJCAE3qVJIeqT908La1c6IY5NDqfGDNK0E3moMtdlTOda8fQyUji/mzkk0
-o44ZQKeG5Y6OPWUDapw7qxttukjRff+OR/JHtgegVn9rMyNCPWn8Svl8+/72tLQ9rNbNiEcTkO00
-4/2fJf5P6md3zMMOcCBhdNYgZJtkyEUEp3vdohqc7uQsaEm9bJmtmIDMv1ldDwxH4r9iAjhz/s2B
-XUAx6n3MNn4d2aDUNXc+kwdjKsdCKsVE1FcBXurCNpC7OsjMcFT6hTE6p5xlS/8oNr+GMNAYHSNn
-kRbm/HDB6qOdj+GxyXT+a7Hr05HnorI2pNDYWJ/dwUIq7ZTCHcE7poqFbZVn7lYAAAAAAAA=
+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
 
 
---=-RQSwJ6P6u57FGIPijfem--
+--=-KPW+5Qpz4YMGbULmFdVb--
 
