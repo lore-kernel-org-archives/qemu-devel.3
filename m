@@ -4,91 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C45FD116F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 18:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 811B6D116F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 18:44:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ8bX-0004oB-PS; Mon, 01 Dec 2025 13:26:36 -0500
+	id 1vQ8se-0006Jv-0j; Mon, 01 Dec 2025 13:44:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vQ8bQ-0004nk-S5
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 13:26:24 -0500
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1vQ8bN-0003de-6p
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 13:26:24 -0500
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-4ed82ee9e57so58001511cf.0
- for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 10:26:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1vQ8sR-0006JP-Te
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 13:44:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1vQ8sP-0005nz-In
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 13:43:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764614635;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C2eH5KD6Kms7ohdnaJsjqFf8Dfq6DQCOK9Upj59dm9M=;
+ b=N6oe9gTGuGNVqOLuupC/q8nf9k6I+thft1YdBlWTumZRAV6nK1q3+sdY/8kEL4fqlsmwlf
+ R0AyRc4y05IZD3FR3WZ23RWs5darj9dChmQtU2c/JNle8+Jh4c8isnL+S089dxtNKcFjEB
+ fMCdNhVeikspUg5FW8mGhGhxGZ0cNYM=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-544-G8oaCYLcNQW0N7Ij0xhDfA-1; Mon, 01 Dec 2025 13:43:51 -0500
+X-MC-Unique: G8oaCYLcNQW0N7Ij0xhDfA-1
+X-Mimecast-MFC-AGG-ID: G8oaCYLcNQW0N7Ij0xhDfA_1764614631
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-297f587dc2eso90774205ad.2
+ for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 10:43:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1764613579; x=1765218379; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JN01+63+EeTohwdDreZ2DzDX4iyn1BgZN3+b0Y3x1b0=;
- b=FGJMiyZqqmV6ALJ1kLyJzER437WvW5jdmTkNGiq2beFi/FLQv5EEEv1LK2CMODj58P
- UnHO0TA3CXwpKxJMK3F4e1B59Z4dENApY+HHTEd1mujtm1q0bQUhFRyr2/BP1Qs+PMW4
- 5cAPpDfnTQx4SbpcQL3LgDFGvr7NYFAXx0N+vKxu02dn2PmwT8lRjhk1lDeAC+BfS+Xi
- FJRsYvdcXHMSk3th/210G2qeCEVwQ4po/pE9799N6MXDPHIAIzhF5hX/IDc/3SXBbxxo
- 910yt51qh3YeYzWecRUjNjsDOEj4SaaLy/yW2+HIyghhg43EPfmWTMBjvm0MWrlZmGkX
- mD7Q==
+ d=redhat.com; s=google; t=1764614631; x=1765219431; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=C2eH5KD6Kms7ohdnaJsjqFf8Dfq6DQCOK9Upj59dm9M=;
+ b=cxs1O1Q4YwsOkpMU4j/QJUULuSCJeZX5yXWrn0ZPQcuQ2MHOxH3X/CWlbgetAlDSg9
+ vWbdXzaBlXmd880uimasn7N1gcaVueqTeboFpN9VS4DXQc6CF+Om6qrsGN+wgNZDV6bX
+ tm+zLqn0tfPdurNtZitdN8+easli7+P0cpvhh8ndeZUUA9HuGjyMCvzCL2QUTirplV9R
+ cfwwCe4Ttd2w1TODEcbajOf4cfiWjuZtH//XhEsipQG6xD0RCacbQ0J8BDklEy9lEwd4
+ f03rEJKI3otYFso1hiHvAvzb1SLLRxg0a0Phhf9aWzWtpmlj3bef/SmfuTIZvW+yNq68
+ yvLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764613579; x=1765218379;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JN01+63+EeTohwdDreZ2DzDX4iyn1BgZN3+b0Y3x1b0=;
- b=oiagBu8Gr1RV5+DjLNtAHg/J3H5dMIXDD3tHeHIOmAd+12Skx8KmdelnUdaP6Vvbyd
- 6DbhgUadFFyp/mhJX3++tr7GkRnywnDwfgUDwvxQ/ZoEVpfhkwUCsgGqIZIo3ZTcaKZo
- es7QCo9bnjtC9aNeh2+6Jz1gq/qip8llQKrlTmqkYhC1ynymMRqoELKgndXuGUt4f0LI
- 09dL0xWtpW/bHBzk4MhwuXShRiQqyB93YHT8RuebAvA98GDGQzp3R2esaBpKqjtE6ZbL
- Xb+QQ8YkkGbRn4Jz9Kp2kjPejf6Jk6x6W1mzXlPqmgm+sPlDNO8M99bnAtPtc+YU4jqi
- vNgQ==
-X-Gm-Message-State: AOJu0YyRddYckvXP34RmgWmcks8u8GBMsEZVmuKf7QR9esnX6/IgGWhi
- M4fB2GYbebYXZ0njL0F9aiYec6TDRHFrUn+VWVLCEVE4orha6eiYY91gQC+YwHfr0ImFywwEBym
- 05aWfE1JjZ3vfDQyn5zpg6T77wCTjfOw=
-X-Gm-Gg: ASbGncs3LdkpCknilZhXDeGGJ/rFiys9lVbfXP/qLQvsDZqh+e9C8sRAhZNDNVRvVfe
- X5Q427Sp5agmCh/fYhLHJME3g1M3csJPPCaeHFeLVOFVXo2hXBne9CeU5/KRbsyONrXJHmdIQAf
- L8BuLcn6VTntjI6y23seUy2jRYET0j8F0MqoUR3ZoQ5HtRRRIejVAzTKj5abEJjpkK6AF7TrOEi
- H+NZTf8e4qM9qdZjr8XoFuwX6+LVRbpNVoncmb0HgP8x8sVBrqQtQln5dmi2jKdeSNh0FouuvK1
- 8JTZP6wSVqoFhQpz/7WgRc2IxC4=
-X-Google-Smtp-Source: AGHT+IHqvg+pQ5RNToGbvd2Mcg68+D2n/p+B9o2jWnTn4/o1aEfTseoylYxlumqFd89zPO5CZxhqrI52J9RfQT1XsWo=
-X-Received: by 2002:a05:622a:409:b0:4ee:296c:c7cf with SMTP id
- d75a77b69052e-4ee58af74dbmr570189691cf.71.1764613578438; Mon, 01 Dec 2025
- 10:26:18 -0800 (PST)
+ d=1e100.net; s=20230601; t=1764614631; x=1765219431;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=C2eH5KD6Kms7ohdnaJsjqFf8Dfq6DQCOK9Upj59dm9M=;
+ b=w9Ayr5Jrtvctz3NwXKh5Qo+1LvcshwTcK6yI8wUFBOGQJCgwGm8Vb6fxV7kF3gMBRK
+ cW6djRLMk7puKoxB75V+vBWsA6Bn/Zs03unLr+oqDI438N9qWYN4JfSKdj0DHm90gGZ8
+ Y6jDO2uJvFxMvbM8a4aX4+Br+kMIsO3/w9dK9zzthFRn+3Qu3jOhYQXZlilC4x3sxDS3
+ gm5YsvPBIv8TAmlTrmK5nFS0yokZAGkZnvlxVGAX5rrpBoW80kFYXkMXWFP+Xdpd5inQ
+ IsvaYDK/CErkD0jzSSlBV2FdxlYZxkAk1szeF3DLaIA2u7w8QRs7pUnt7YxUyqAwNMNk
+ +Y8A==
+X-Gm-Message-State: AOJu0Yz1+aq1a3jksJ+gs4gQQCejjC3qnfQFDIEYP+usPLulaJ49l72O
+ LEF58G7TVGZZTa2hT97S8wanCC94tfnJDPpPDed1Oxl5MgH6IjPIWQv3ikZvqF3KNq8Mq7DRS0X
+ mTklOVSqriUMRPqWdvS7vBiGDYPsHntGIqQDnO01ZOiiYuZhZaJw3Z8Uk6QI7oNy9ttjnxFCONf
+ kgyN+5cWrYJtIQI1HJj9W7ssuqqQFf22I=
+X-Gm-Gg: ASbGnctjsGxALECZrvm64x3lh7z1Vue77jayvTz+1+2Ims/rkv8Lo9EJ23lFSfcv4h8
+ FWxAeuQOpH+EFhAlpe0xftPgTF0h3u9n78e6Jwb4Qcl07Y79X4Gbp2uRBckwNCAGx6Bv4kYFY0l
+ joZWJ4Levanj7VPg0Wqm65SbeE9BHEXvy1wxEZOCk+5aeXSi2Uu97kgTj6lbdNrLTt5MOvOVetT
+ M+1ttKdYtqp0hTf/tFR0YqJpA==
+X-Received: by 2002:a17:903:19ed:b0:24b:25f:5f81 with SMTP id
+ d9443c01a7336-29b6beb1e22mr459984055ad.17.1764614630788; 
+ Mon, 01 Dec 2025 10:43:50 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGhr/QEDszNAJuFWOFICNF5RW2GBpCxrv9rHGFyswVprifd/SuNVjmvNhsEYOv3B5hnsrv7xoU0RvPHc+eWp0w=
+X-Received: by 2002:a17:903:19ed:b0:24b:25f:5f81 with SMTP id
+ d9443c01a7336-29b6beb1e22mr459983705ad.17.1764614630344; Mon, 01 Dec 2025
+ 10:43:50 -0800 (PST)
 MIME-Version: 1.0
 References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
- <20251201112309.4163921-25-marcandre.lureau@redhat.com>
- <87pl8y1h3u.fsf@pond.sub.org>
-In-Reply-To: <87pl8y1h3u.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 1 Dec 2025 22:26:06 +0400
-X-Gm-Features: AWmQ_blgNSDHhT49ceRMHDXcMYNnXObve2BdY3atX99zcSMn5CAIVNKBXYaoLmE
-Message-ID: <CAJ+F1C+w+eGs+1YNCL1ZxsFxu29zz_Ef+Fr=7SzUEpjdoONpSQ@mail.gmail.com>
-Subject: Re: [RFC 24/24] WIP: rust/audio: add GStreamer backend
-To: Markus Armbruster <armbru@redhat.com>
+ <20251201112309.4163921-9-marcandre.lureau@redhat.com>
+ <f25c53b4-3f47-242f-0e39-778fa0bc3f35@eik.bme.hu>
+In-Reply-To: <f25c53b4-3f47-242f-0e39-778fa0bc3f35@eik.bme.hu>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 1 Dec 2025 22:43:39 +0400
+X-Gm-Features: AWmQ_bmSSuRVcajf6kso9UJ-ECzWzSy2Mdy9s9O6GUzKwYzEJ5z0pog-KtdvyFg
+Message-ID: <CAMxuvaw=9v_TPytdW3kTtd9mD0r6-H4V8BUiZ6VS4UJkc0_Lfw@mail.gmail.com>
+Subject: Re: [RFC 08/24] audio: add QOM module-objects for each backend
+To: BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
  Thomas Huth <huth@tuxfamily.org>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Alexandre Ratchov <alex@caoua.org>, dirty.ice.hu@gmail.com, 
  Christian Schoenebeck <qemu_oss@crudebyte.com>,
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>, 
- Eric Blake <eblake@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- "open list:Rust-related patc..." <qemu-rust@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qt1-x82f.google.com
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+Content-Type: multipart/alternative; boundary="000000000000351a730644e85c4e"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,168 +120,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus
+--000000000000351a730644e85c4e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Dec 1, 2025 at 5:13=E2=80=AFPM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> marcandre.lureau@redhat.com writes:
->
+Hi
+
+On Mon, Dec 1, 2025 at 5:20=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu> =
+wrote:
+
+> On Mon, 1 Dec 2025, marcandre.lureau@redhat.com wrote:
 > > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > >
-> > This patch introduce a rust/audio crate that replaces QEMU audio/
-> > mixing/resampling code with GStreamer and Rust. It could potentially
-> > remove the need for all the system-specific audio API implementation,
-> > since GStreamer has audio elements for
-> > ALSA/Pipewire/PulseAudio/jack/OSX/WASAPI etc (removing ~10k loc).
-> >
-> > TODO:
-> > - test on various system, with various configuration to see if this
-> >   backend can replace the other QEMU audio backends
-> > - add a spicesink/spicesrc to handle spice, or rewrite spice to use
-> >   the capture approach used by VNC code. Or drop capture support, and
-> >   use custom qemusrc/qemusink for both Spice and VNC, lowering the feat=
-ure
-> >   and behaviour disparity.
-> > - build-sys: make gstreamer optional
-> > - build-sys: loadable module support
-> > - investigate dropping get_buffer_size_out()
-> > - investigate improving emulated devices to not require regular
-> >   timers (appsrc need-data is called once)
-> > - add generic audio backend tests
-> > - more tests for the mixing/liveadder behaviour (synchronization)
-> > - other: replace audio/dbus with a rust implementation (not using gstre=
-amer)
+> > This will allow to use QOM and the dynamic object module loading.
 > >
 > > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > > ---
-> >  qapi/audio.json               |   29 +
-> >  audio/audio-driver_template.h |    2 +
-> >  rust/audio/wrapper.h          |   27 +
-> >  audio/audio.c                 |    5 +
-> >  Cargo.lock                    |  572 ++++++++++++++++--
-> >  Cargo.toml                    |    6 +
-> >  audio/trace-events            |    5 +
-> >  rust/audio/Cargo.toml         |   29 +
-> >  rust/audio/build.rs           |   49 ++
-> >  rust/audio/meson.build        |   75 +++
-> >  rust/audio/src/audio.rs       |  516 ++++++++++++++++
-> >  rust/audio/src/bindings.rs    |   32 +
-> >  rust/audio/src/gstreamer.rs   | 1070 +++++++++++++++++++++++++++++++++
-> >  rust/audio/src/lib.rs         |   99 +++
-> >  rust/meson.build              |    6 +
-> >  15 files changed, 2467 insertions(+), 55 deletions(-)
-> >  create mode 100644 rust/audio/wrapper.h
-> >  create mode 100644 rust/audio/Cargo.toml
-> >  create mode 100644 rust/audio/build.rs
-> >  create mode 100644 rust/audio/meson.build
-> >  create mode 100644 rust/audio/src/audio.rs
-> >  create mode 100644 rust/audio/src/bindings.rs
-> >  create mode 100644 rust/audio/src/gstreamer.rs
-> >  create mode 100644 rust/audio/src/lib.rs
-> >
-> > diff --git a/qapi/audio.json b/qapi/audio.json
-> > index 2df87b9710..76dc7cbfa6 100644
-> > --- a/qapi/audio.json
-> > +++ b/qapi/audio.json
-> > @@ -128,6 +128,33 @@
-> >      '*out':       'AudiodevAlsaPerDirectionOptions',
-> >      '*threshold': 'uint32' } }
-> >
-> > +    ##
-> > +    # @AudiodevGStreamerOptions:
-> > +    #
-> > +    # Options of the GStreamer audio backend.
-> > +    #
-> > +    # @in: options of the capture stream
-> > +    #
-> > +    # @out: options of the playback stream
-> > +    #
-> > +    # @sink: the name of the GStreamer sink element to use
-> > +    #        (default 'autoaudiosink')
-> > +    #
-> > +    # @source: the name of the GStreamer source element to use
-> > +    #        (default 'autoaudiosrc')
+> > audio/audio_int.h   |  2 ++
+> > audio/alsaaudio.c   | 39 +++++++++++++++++++++++++++++++++++++++
+> > audio/dbusaudio.c   | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/dsoundaudio.c | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/jackaudio.c   | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/noaudio.c     | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/ossaudio.c    | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/paaudio.c     | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/pwaudio.c     | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/sdlaudio.c    | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/sndioaudio.c  | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/spiceaudio.c  | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/wavaudio.c    | 36 ++++++++++++++++++++++++++++++++++++
+> > audio/coreaudio.m   | 36 ++++++++++++++++++++++++++++++++++++
+> > 14 files changed, 473 insertions(+)
 >
-> Are 'autoaudiosink' and 'autoaudiosrc' well-known GStreamer names, or
-> arbitrary?
-
-Yes, they are well-known elements from the base plugins.
-
->
-> > +    #
-> > +    # Since: 11.0
-> > +    ##
-> > +    { 'struct': 'AudiodevGStreamerOptions',
-> > +      'data': {
-> > +        '*in':        'AudiodevPerDirectionOptions',
-> > +        '*out':       'AudiodevPerDirectionOptions',
-> > +        '*sink':      'str',
-> > +        '*source':    'str'
-> > +      }
-> > +    }
->
-> Unindent by four, and format the doc comment like this:
->
-> ##
-> # @AudiodevGStreamerOptions:
-> #
-> # Options of the GStreamer audio backend.
-> #
-> # @in: options of the capture stream
-> #
-> # @out: options of the playback stream
-> #
-> # @sink: the name of the GStreamer sink element to use
-> #     (default 'autoaudiosink')
-> #
-> # @source: the name of the GStreamer source element to use
-> #     (default 'autoaudiosrc')
-> #
-> # Since: 11.0
-> ##
->
->
-> > +
-> > +
-> >  ##
-> >  # @AudiodevSndioOptions:
-> >  #
-> > @@ -484,6 +511,7 @@
-> >              { 'name': 'sdl', 'if': 'CONFIG_AUDIO_SDL' },
-> >              { 'name': 'sndio', 'if': 'CONFIG_AUDIO_SNDIO' },
-> >              { 'name': 'spice', 'if': 'CONFIG_SPICE' },
-> > +            { 'name': 'gstreamer' },
->
-> Short form suffices:
->
->                'gstreamer',
->
-> >              'wav' ] }
-> >
-> >  ##
-> > @@ -530,6 +558,7 @@
-> >                     'if': 'CONFIG_AUDIO_SNDIO' },
-> >      'spice':     { 'type': 'AudiodevGenericOptions',
-> >                     'if': 'CONFIG_SPICE' },
-> > +    'gstreamer': { 'type': 'AudiodevGStreamerOptions' },
->
-> Short form suffices:
->
->        'gstreamer': 'AudiodevGStreamerOptions',
->
-> >      'wav':       'AudiodevWavOptions' } }
-> >
-> >  ##
->
-> [...]
->
+> This patch is entirely QOM boiler plate... Are the empty functions really
+> needed? Could this use OBJECT_DECLARE_SIMPLE_TYPE instead to cut this
+> down?
 >
 
-Thanks for the early check, I will likely have to update the schema in
-future revision, for making GStreamer optional & module to the very
-least.
+Right, I did this patch systematically, and to provide placeholders for the
+later patches. But I can now simplify it.
 
---=20
-Marc-Andr=C3=A9 Lureau
+thanks
+
+
+>
+> Regards,
+> BALATON Zoltan
+
+--000000000000351a730644e85c4e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
+il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Dec 1, 20=
+25 at 5:20=E2=80=AFPM BALATON Zoltan &lt;<a href=3D"mailto:balaton@eik.bme.=
+hu">balaton@eik.bme.hu</a>&gt; wrote:<br></div><blockquote class=3D"gmail_q=
+uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
+04);padding-left:1ex">On Mon, 1 Dec 2025, <a href=3D"mailto:marcandre.lurea=
+u@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a> wrote:<br>
+&gt; From: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@re=
+dhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+&gt;<br>
+&gt; This will allow to use QOM and the dynamic object module loading.<br>
+&gt;<br>
+&gt; Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.=
+lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br=
+>
+&gt; ---<br>
+&gt; audio/audio_int.h=C2=A0 =C2=A0|=C2=A0 2 ++<br>
+&gt; audio/alsaaudio.c=C2=A0 =C2=A0| 39 +++++++++++++++++++++++++++++++++++=
+++++<br>
+&gt; audio/dbusaudio.c=C2=A0 =C2=A0| 36 +++++++++++++++++++++++++++++++++++=
++<br>
+&gt; audio/dsoundaudio.c | 36 ++++++++++++++++++++++++++++++++++++<br>
+&gt; audio/jackaudio.c=C2=A0 =C2=A0| 36 +++++++++++++++++++++++++++++++++++=
++<br>
+&gt; audio/noaudio.c=C2=A0 =C2=A0 =C2=A0| 36 ++++++++++++++++++++++++++++++=
+++++++<br>
+&gt; audio/ossaudio.c=C2=A0 =C2=A0 | 36 +++++++++++++++++++++++++++++++++++=
++<br>
+&gt; audio/paaudio.c=C2=A0 =C2=A0 =C2=A0| 36 ++++++++++++++++++++++++++++++=
+++++++<br>
+&gt; audio/pwaudio.c=C2=A0 =C2=A0 =C2=A0| 36 ++++++++++++++++++++++++++++++=
+++++++<br>
+&gt; audio/sdlaudio.c=C2=A0 =C2=A0 | 36 +++++++++++++++++++++++++++++++++++=
++<br>
+&gt; audio/sndioaudio.c=C2=A0 | 36 ++++++++++++++++++++++++++++++++++++<br>
+&gt; audio/spiceaudio.c=C2=A0 | 36 ++++++++++++++++++++++++++++++++++++<br>
+&gt; audio/wavaudio.c=C2=A0 =C2=A0 | 36 +++++++++++++++++++++++++++++++++++=
++<br>
+&gt; audio/coreaudio.m=C2=A0 =C2=A0| 36 +++++++++++++++++++++++++++++++++++=
++<br>
+&gt; 14 files changed, 473 insertions(+)<br>
+<br>
+This patch is entirely QOM boiler plate... Are the empty functions really <=
+br>
+needed? Could this use OBJECT_DECLARE_SIMPLE_TYPE instead to cut this <br>
+down?<br></blockquote><div><br></div><div>Right, I did this patch systemati=
+cally, and to provide placeholders for the later patches. But I can now sim=
+plify it.</div><div><br></div><div>thanks</div><div>=C2=A0</div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">
+<br>
+Regards,<br>
+BALATON Zoltan</blockquote></div></div>
+
+--000000000000351a730644e85c4e--
+
 
