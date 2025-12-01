@@ -4,74 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5118AD116F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 20:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D5D2D116F1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 20:27:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQANG-00064p-Nn; Mon, 01 Dec 2025 15:19:55 -0500
+	id 1vQATv-0007ai-Mh; Mon, 01 Dec 2025 15:26:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vQAN6-00060a-W2
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 15:19:46 -0500
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQATo-0007aE-9t
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 15:26:41 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vQAN4-000158-A2
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 15:19:43 -0500
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-6432842cafdso4200769d50.2
- for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 12:19:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQATm-0002Hp-Id
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 15:26:40 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-477b1cc8fb4so28189165e9.1
+ for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 12:26:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764620381; x=1765225181; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=efnfXqO+iZnUYeX4fmRz/HKzTLNfWqIAz9K5dEZKoXg=;
- b=EQHh4agoRyN1yAydXqEDRqd/b8B09v3coPtQU4bWwYn5qnyYCI/ZJzOU1X2UhgOmlo
- BLUWgLGoA3KHfT1iNRaRH8nyKEx3es+C+bq2W3xeI8B9udrdhkDVofleQ5or2lkcWcZ7
- H9va2dxYn0a6OouYtt9j+Vjgo8oZK7hCTTODkYEtm5dIcJkHcIrmJFQODuTXJ6aIRF6n
- /VlThDn2ER1EhnQvGeZ6pIv/DOK1wplzpYM7XLIAF2ZJJgYaEm1mdFcw1i87+n/7SO1d
- OO+RpUh0MIa5tJyPbD6JIhfxQUQ9fxee46iy8wMWb8k66yC4QpNeq2wZv7knfLxAy9e6
- 8Phw==
+ d=linaro.org; s=google; t=1764620796; x=1765225596; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dGo7HwaYmm3RUbpO4wwSLRoJ5HEPwxxBa7Gq9BFgGSw=;
+ b=TVcEVKKvWJq7rFBNMA/S3gyQhC/Mt5ixxa7kCGW5wL2j78ruv4AV8IDpFpULB6lkH8
+ YE11ujauvtZQ3AeEgzJPFMf+9SngH5h33TabCViuAk5/xqbBAs57wbcBhqGCvpcCn8MS
+ KUGQC9Yh7auWku/cPDgat20RyCE+goNOdneeiJNI6xFsWivndPeS37Xc4IA4mbVBXvpL
+ RKXoULchXZsfzn36hl0ADOYSEtUh5Qeck3W0/Tg7nGbhlVeS7G9pUEcyHe4anZ1cajW5
+ IN5U8jcdUdX0aNO4GAzshTYlRiUHSDlRlXPj02WzlJuAeqMLcsTQTVOQAhi7yD6+CYdB
+ icxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764620381; x=1765225181;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=efnfXqO+iZnUYeX4fmRz/HKzTLNfWqIAz9K5dEZKoXg=;
- b=uAQ7Soc7Ik/MF0uDpxuHRmJ+0WwzZw1XwUviGbstod9HguxalKKLbBjX1e3tZqC+ad
- Ku6tgvafQobynQqkOooBOWRXQrhu3i1LEUT/PfoXkr13/TVFeRYXuUZTJKcZKgS4qhEI
- cp9C5VWNZiTTxkD0zyPs4aNr3a3WhFzJrBNiBQC38PMT2wdGK+AWvI7YpgGLZoN6RSky
- VyDlgJnhFqdO8Tmb4uC+0b2vNOKdRAFKRTyNwVP5Q4wUlskgTGXEbt4rRYExqB9TYjUF
- hlsB2JvZ9WMJrntVavDsPR+f4szX8TGjrtV9TPdZ4hRO2bso717KrgeqyGbTeFQjFlN/
- vJ0A==
-X-Gm-Message-State: AOJu0Yzkgm+rOnStdPz+WOlljOGbu6bFI0qIbuoUgHaibbD7i/mwRLLV
- l4vShf1XYmgYRkyC5jyVQBbYS/XZM6v2eHfVWao0UkLB+5qWCCa+ZGxG9lscpO+2rYN4NAOw6XU
- uScFU+Bf8ltzoZ9gHA3Yd4mGeJ+cwuHQ0Ku0DjwbAqA==
-X-Gm-Gg: ASbGncsV0LKwGJ+IE8OEkhZ8cxnDeSzLJ+3dKbAd11PrmpGsZ2IjREDEJbX0T+jXxGM
- gAOX71k0FK3KWDUPhTTsybd8O5cRPQqDydnAFAr4hWevyVd0g1/qpjrvGeHSBJU+lfdhcKfNSJ2
- 3GBaVuZFATYZBnKDiVPvO6P6O+XvpcNqfL61+RqZ9tYfcit3scXxX1ojKSDyTmJPO3LQNlcmqZi
- Nr6xnwylqrAYRSrMajT0aoS0M8RixJ7gtxhjLW0k9+7PNjoB/Az+SjvfIwcYMNRPatJlGZR
-X-Google-Smtp-Source: AGHT+IFkKgx6BhtfTZT/h99UcYvbZjKsfIVqMxEdnrQojlzdZrIBjThXPDOlnguwyj0gmhHwjprLTKHIdbOQV5e7kqI=
-X-Received: by 2002:a05:690e:bcb:b0:644:2e5b:4124 with SMTP id
- 956f58d0204a3-6442e5b4555mr456334d50.25.1764620380801; Mon, 01 Dec 2025
- 12:19:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1764620796; x=1765225596;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dGo7HwaYmm3RUbpO4wwSLRoJ5HEPwxxBa7Gq9BFgGSw=;
+ b=LkfgfE/PvkREJ8plL91t75fLznZs6SAnyfYl+Yh9J7v1UzS0M2hWXyVxrhi2wHANOu
+ qMFfz5s27zWoKn1yZ3siJp+1ZhNgpfJEyNNl07fzxIW0TWLo1060Ipi+vUKVoLWHQLul
+ yRdi0z9Q8jM8ODf3fH0y2gUcduvzCnu+btkGW0ZxPA6Eoq8yBoxwR8TnxuaMOBDiQr2h
+ l8Hf2k1jfZwDHJYAkAb2E/AWTEoShR54v77C6wQ4yt5f+9yMqt1uStN4/KJK2lxP76LC
+ CiJyzhSvh+gj8VEsitMsIGgPAQiCxvrBPvlGnPgNe6/P+gT576zVmdKdbZevVnUtAM7Z
+ S9GA==
+X-Gm-Message-State: AOJu0YxWxjZQKZqC0fkNskerdt9DLXC69NPa6jYbVijAXZka4Vzs5e5q
+ g69JACJZP0ltdMoz8HdpXfQ//xC4vIppKBsOB3hTVfbB1jxo5fo7Np8JRdBgugonbhme7mbZNKu
+ 0U8XVarln+A==
+X-Gm-Gg: ASbGncsr+yMzml0WmksvQzfqgq8kxJu6vHjt5u0nrME1Pkghux/qxuAI53uSOu+KNbt
+ QWVMHUqrhPt77t8BEmjjVcxWJam9NMtrX5tWrnd/TNyHY0+WhoseiVIrLklxLPKS3P+GuntG84l
+ LHZQr1JHmTUvJuurN417wlU8vJsnpBtxCp6AYI+WS9aRO7FULqP6luDH7Qlf7JsCUW3DShv7gWq
+ TRSPI2e3FdfVQ8r5ovBCRuZD9uqqYbperqDqtceIED5ivSEoTkkLRE4NbiP8536+ITUrzDw3Z6f
+ bTYgrGfk5RAyRCNo3qIAqD7LIt+QHc0yCsPO2sLWuHxifiiZWeHjKlPcexxhiMOg/V3ZYR9DNkR
+ 8jUvf43cx3ofQCHwOUZCb2GoBO//ETb+FzbxuW0i58F4ybgjUDQRA5R3WT0LCAdv4bPgMcNMn3S
+ q/9fzi22PBGRXcez6p0I11MXiCSWYJnZM0ubbQrA3Wwu+/YJL89vj0DeSwNLIJ
+X-Google-Smtp-Source: AGHT+IEYVh0/qVKp+4EZrYOjyQ467DM3iYgEp3zx77Mm79ag9dI99FHILr084mBTLDObPxnma8S48w==
+X-Received: by 2002:a05:600c:8b37:b0:477:79f8:da9d with SMTP id
+ 5b1f17b1804b1-47904b1b270mr277349615e9.24.1764620796475; 
+ Mon, 01 Dec 2025 12:26:36 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42e1ca1a303sm30053265f8f.27.2025.12.01.12.26.35
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 01 Dec 2025 12:26:35 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 0/1] Accelerators patches for 2025-12-01
+Date: Mon,  1 Dec 2025 21:26:33 +0100
+Message-ID: <20251201202634.98188-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-References: <20251119130027.3312971-1-gaurav.sharma_7@nxp.com>
- <AM9PR04MB8487540421160BCD438CFDA987D1A@AM9PR04MB8487.eurprd04.prod.outlook.com>
-In-Reply-To: <AM9PR04MB8487540421160BCD438CFDA987D1A@AM9PR04MB8487.eurprd04.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 1 Dec 2025 20:19:29 +0000
-X-Gm-Features: AWmQ_bme53rRZ-9dNk35G5JHec3cBHtEzxFWp0hjLIvLD16EamvTb6zsnv1bM7E
-Message-ID: <CAFEAcA96wEquV-rWRU8x7DZBkNUOLYb_DVi80GRSZ_ekGGLUhw@mail.gmail.com>
-Subject: Re: [PATCHv3 00/13] Adding comprehensive support for i.MX8MM EVK board
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,42 +97,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 25 Nov 2025 at 05:22, Gaurav Sharma <gaurav.sharma_7@nxp.com> wrote:
->
-> ping
->
-> -----Original Message-----
-> From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> Sent: 19 November 2025 18:30
-> To: qemu-devel@nongnu.org
-> Cc: pbonzini@redhat.com; peter.maydell@linaro.org; Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> Subject: [PATCHv3 00/13] Adding comprehensive support for i.MX8MM EVK board
->
-> Changes in v3:
-> - Minor documentation change - Added KVM Acceleration section in docs/system/arm/imx8mm-evk.rst
->
-> Changes in v2:
-> - Fixed the DTB offset in functional testing script test_imx8mm_evk.py
->   and preserved alphabetical order of machine names in tests/functional/aarch64/meson.build
-> - Fixed a typo and updated the documentation
-> - Modified structures type to static const in fsl-imx8mm.c wherever
->   applicable.
-> - Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk.c. This
->   is needed because the default DTB in the iMX LF BSP images have CSI
->   and DSI enabled. Developers/Hobbyists using these BSP images will
->   observe CSI and DSI crash logs on the console since these are unimplemented.
->   With this change, both debian and iMX LF images will boot up without any issues.
+The following changes since commit 9ef49528b5286f078061b52ac41e0ca19fa10e36:
 
-At least some of these patches were reviewed by Philippe in v1.
-Did they all change?
+  Merge tag 'hw-misc-20251125' of https://github.com/philmd/qemu into staging (2025-11-25 14:22:39 -0800)
 
-The way this is supposed to work is that where a patch has been
-reviewed and hasn't changed in a followup respin of a patchset,
-you keep the reviewed-by tag, which tells us that we don't need
-to repeat that bit of the review. More detail:
+are available in the Git repository at:
 
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#proper-use-of-reviewed-by-tags-can-aid-review
+  https://github.com/philmd/qemu.git tags/accel-20251201
 
-thanks
--- PMM
+for you to fetch changes up to 3bee93b9abf5509f1ac25909478dd52a724bf0c3:
+
+  accel/hvf: Fix i386 HVF compilation failures (2025-12-01 21:21:16 +0100)
+
+Spurious checkpatch.pl warning:
+
+  WARNING: architecture specific defines should be avoided
+  #49: FILE: accel/hvf/hvf-accel-ops.c:151:
+  +#ifdef __aarch64__
+
+----------------------------------------------------------------
+Accelerators patches queue
+
+- Fix HVF/x86 build
+----------------------------------------------------------------
+
+Nguyen Dinh Phi (1):
+  accel/hvf: Fix i386 HVF compilation failures
+
+ accel/hvf/hvf-accel-ops.c | 5 ++---
+ target/i386/hvf/hvf.c     | 6 ++----
+ 2 files changed, 4 insertions(+), 7 deletions(-)
+
+-- 
+2.51.0
+
 
