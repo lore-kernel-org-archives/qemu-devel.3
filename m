@@ -4,101 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0131D116F5
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 13:01:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5AB8D116F1
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 13:03:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ3Wi-0000kY-It; Mon, 01 Dec 2025 08:01:13 -0500
+	id 1vQ3Yr-0003ti-3W; Mon, 01 Dec 2025 08:03:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vQ3WK-0000gk-Ox
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 08:00:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vQ3Ye-0003sb-5h
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 08:03:13 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vQ3WI-000592-OZ
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 08:00:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764594045;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=h6vWgu7DzEpUN+5z8NnPxG7JQ7i1Kevp48aLJTg72yw=;
- b=RYarqSybJYBipAduXn9udGdHHUQyZGFblDw0i+3qybwDnjQZE1ct80UBfZcQbvDLyuQjYI
- 0iRRQoOdQsIYIusUxuhBn1nbDgDAQAkRmVThafJpbgtXAXVdnJZUjqTcbvSBE4lj9S68MQ
- O5J7p3c6y1USiJKDYNQ5LRJZsB7GbeI=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-490-icOK_d7sOzy3SQ_oVOhtoQ-1; Mon, 01 Dec 2025 08:00:43 -0500
-X-MC-Unique: icOK_d7sOzy3SQ_oVOhtoQ-1
-X-Mimecast-MFC-AGG-ID: icOK_d7sOzy3SQ_oVOhtoQ_1764594042
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-343d73e159aso8058136a91.3
- for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 05:00:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764594042; x=1765198842; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=h6vWgu7DzEpUN+5z8NnPxG7JQ7i1Kevp48aLJTg72yw=;
- b=bFrfiXjjfjWscNKYk9Lcp6BtG5TscqQ0lt7lS1eHrTkx96LRqHSDyfysWH0mq4M+Cc
- Z59txGmZbUp9nGZm2CvVgUq9pVuoZ0/TFOe9fdoYt3nBYTbQKDaVasYiTNS5xdo6016u
- i5Lrqn+Zl+8z/XKnJYEQr2WGbwWQ0MUpK1vZZGG8KYa3i76pzwBXRkdK11vwtZ0vp/cI
- pIP+4UJ8SLyDD1H0DmZ6pqWuOWpK/aoJcbDqvHdZ61+Rpfh9z30NurF4LANrAWADSZgv
- Y5x3axJg1pjnDWeeRgjL2r+NwSWA5e35tVviaVfRrgi63S0pgtO9ZBF7Jx5cHGcyJfB9
- XP5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764594042; x=1765198842;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h6vWgu7DzEpUN+5z8NnPxG7JQ7i1Kevp48aLJTg72yw=;
- b=hrhZ2pcpUYVTe1g/brtgFDzm9KaC2EiCuGyLq8Gz3cgzxcPWGiM8D9iZBga/vkzdB1
- ojveHRD7y83gZ/vzCmT9YsmLOX+x53DSTCR57xty3h8xzj4MlMbDRvf1QTxyjO3Zj0k4
- K0UStBYaICjAVulTkxJCm/nWi9KA7za0RUttTNwTZoCW+tDByuoq2mXlPnDksYTjPR/Q
- i9VNGPanPXK4Tsg3sqyPRF2LRASRulH0E0Et5F7F/KCFA/dJGn7wmp5kowGfK6bXkyx5
- yZseCBRhZUHDh0N4keUZkpfVx1VzYEwckOanAtF1gQB7CIqNpuwS6vgrPOCUS7t4K5p2
- fqqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVVcPHTABpJPGXM8PLGBzk6q6bAmCn1oPEwRSYzDLT18XhCMztjUvYXsoSWcmETA6OjRSc5NpPPw0CN@nongnu.org
-X-Gm-Message-State: AOJu0YxdVPy0DJ9X2pVxO+HfbamEVgp44CEDgWbgoktta+W2UslqeUm3
- 3IQvh+pmqgdaJecUtFH8IZYAte/TvyMIvj+3IpH96WXLmU73LaV36dAO9tEgS6Bqkf8d9dfde72
- DJiT4yZaMeSq2WjgSAEf9l/oZ9SfVzf/SBoaIz80T6QGiwba/OjSqK2LwTL8KBZHPbyjFmYrX5P
- Pow9maayvxbuGtBJl2BRrqfNQmEUgoHcs=
-X-Gm-Gg: ASbGncvxZicJPawNKnGT55Y+ksTP7ZnAtATP9zPXcmXKeOxsLdsI/DgenRL+RQSE8CR
- FN0OPS5Zg3pGiZNYKyDhgT+4/K/53okqBzPZ5kqOXdpa5XV5XlHxY/FIXqbAJPg7s2X7B6dQRw9
- cAXqwkodsztWaKGYvY1pa5mwHp7rdX5fjq3LYAR2Aixb3qZAcMkz6te21SLHbGfEaqCwTw77Xka
- etva3HpNO53nG/nkAtY0WPdBQ==
-X-Received: by 2002:a17:90b:53c3:b0:33f:ebc2:634 with SMTP id
- 98e67ed59e1d1-3475ebe8173mr22321226a91.9.1764594040398; 
- Mon, 01 Dec 2025 05:00:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE3LSWmQnY8SLoOSa7C7W9i9usN5UP9SjD91v8ZDBuXX5p1LY4aIf3PHFgvvKEOGXLOMmxqXIyUECplxEMfW8I=
-X-Received: by 2002:a17:90b:53c3:b0:33f:ebc2:634 with SMTP id
- 98e67ed59e1d1-3475ebe8173mr22321198a91.9.1764594039803; Mon, 01 Dec 2025
- 05:00:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vQ3YY-0005NF-8M
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 08:03:11 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 377FF5969F6;
+ Mon, 01 Dec 2025 14:02:44 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id BHl0eNn0DSd2; Mon,  1 Dec 2025 14:02:41 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id CD5015969FC; Mon, 01 Dec 2025 14:02:41 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id CB1DD5969FA;
+ Mon, 01 Dec 2025 14:02:41 +0100 (CET)
+Date: Mon, 1 Dec 2025 14:02:41 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Thomas Huth <huth@tuxfamily.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Alexandre Ratchov <alex@caoua.org>, dirty.ice.hu@gmail.com, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ =?ISO-8859-15?Q?Volker_R=FCmelin?= <vr_qemu@t-online.de>
+Subject: Re: [RFC 00/24] audio: add GStreamer backend
+In-Reply-To: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
+Message-ID: <e6ada475-da8a-4643-4986-2ffc1d5b9c66@eik.bme.hu>
+References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-References: <20251129134350.487839-1-vsementsov@yandex-team.ru>
-In-Reply-To: <20251129134350.487839-1-vsementsov@yandex-team.ru>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 1 Dec 2025 17:00:27 +0400
-X-Gm-Features: AWmQ_bme_sBEs8fx043anzN-nqpTCHuwLXJzSB6Ct_25vE4zf2JU-gi1ADHPX3I
-Message-ID: <CAMxuvayCqRwWJyni5KuG_J_DO0PVA3uNqKWsu2vFqm_R61UoWw@mail.gmail.com>
-Subject: Re: [PATCH for-11.0 0/8] chardev: cleanup
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, d-tatianin@yandex-team.ru
-Content-Type: multipart/alternative; boundary="000000000000ea67690644e39047"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1267199532-1764594161=:31615"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,158 +71,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ea67690644e39047
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Hi
+--3866299591-1267199532-1764594161=:31615
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On Sat, Nov 29, 2025 at 5:44=E2=80=AFPM Vladimir Sementsov-Ogievskiy <
-vsementsov@yandex-team.ru> wrote:
-
-> Hi all.
+On Mon, 1 Dec 2025, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
 >
-> Here is a cleanup for chardev code:
+> Hi,
 >
->  - improve naming
->  - add boolean return for some errp-functions
->  - simplify open() API
->
-> Vladimir Sementsov-Ogievskiy (8):
->   chardev: ChardevClass: consistent naming for handlers
->   chardev: consistent naming for ChardevClass handlers implementations
->   chardev: .chr_open(): drop be_opened parameter
->   chardev: .chr_open(): add boolean return value
->   chardev/char-pty: store pty_name into PtyChardev state
->   chardev: introduce .chr_get_pty_name() handler
->   chardev: rework filename handling
->   chardev/char: qemu_char_open(): add return value
->
+> The following patch series provides a GStreamer-based audio backend, which could
+> ultimately allow QEMU to leverage the framework to support the various audio
+> subsystems and simplify the audio handling logic (timing, resampling, mixing
+> etc), as well as allow greater pipeline flexibility and customization.
 
-Except 3rd patch, lgtm. (it conflicts a bit with "[PATCH v3 00/10] chardev:
-Improve @docstring and clarify qemu_chr_write() uses
-<https://patchew.org/QEMU/20251112134143.27194-1-philmd@linaro.org/>"
-though, I guess I will handle that)
+While it's good to have a GStreamer backend to integrate well into systems 
+already using that, this should not replace existing audio backends in 
+QEMU. The reason is that GStreamer has extensive dependencies that I would 
+like to avoid and still be able to use QEMU with just an ALSA or SDL audio 
+backend that are much leaner and provide the needed functionality for most 
+cases. Also when using jack you'd want to have a QEMU backend for it not 
+going through multiple layers. So adding a GStreamer backend has its use 
+as another audio backend but not as a replacement for QEMU's audio 
+handling logic and backends.
 
+Regards,
+BALATON Zoltan
 
+> The preliminary patches consist of additional cleanups started in QEMU 10.2, in
+> order to make the code more modular and use QOM.
 >
->  chardev/baum.c                                | 12 ++--
->  chardev/char-console.c                        | 10 ++--
->  chardev/char-fe.c                             |  8 +--
->  chardev/char-file.c                           | 26 ++++----
->  chardev/char-hub.c                            | 27 ++++-----
->  chardev/char-mux.c                            | 30 ++++++----
->  chardev/char-null.c                           |  9 +--
->  chardev/char-parallel.c                       | 41 ++++++-------
->  chardev/char-pipe.c                           | 30 +++++-----
->  chardev/char-pty.c                            | 52 ++++++++--------
->  chardev/char-ringbuf.c                        | 20 ++++---
->  chardev/char-serial.c                         | 39 ++++++------
->  chardev/char-socket.c                         | 59 +++++++++----------
->  chardev/char-stdio.c                          | 30 +++++-----
->  chardev/char-udp.c                            | 16 ++---
->  chardev/char-win-stdio.c                      | 25 ++++----
->  chardev/char.c                                | 51 ++++++++--------
->  chardev/msmouse.c                             | 13 ++--
->  chardev/spice.c                               | 50 ++++++++--------
->  chardev/wctablet.c                            | 10 ++--
->  gdbstub/system.c                              | 12 ++--
->  hw/char/xen_console.c                         |  7 ++-
->  hw/misc/ivshmem-pci.c                         |  4 +-
->  include/chardev/char.h                        | 37 +++++++++---
->  .../codeconverter/test_regexps.py             |  2 +-
->  ui/console-vc.c                               | 12 ++--
->  ui/dbus-chardev.c                             | 16 +++--
->  ui/dbus.c                                     |  4 +-
->  ui/gtk.c                                      | 14 ++---
->  ui/spice-app.c                                | 18 +++---
->  ui/vdagent.c                                  | 17 +++---
->  31 files changed, 354 insertions(+), 347 deletions(-)
+> Finally, the last patch introduces the "audio" rust crate that implements the
+> GStreamer backend. See the TODO list in the commit message for the remaining or
+> related work items.
 >
-> --
-> 2.48.1
+> Please review and test!
+>
+> Based-on: https://gitlab.com/bonzini/qemu.git rust-cargo
+> Requires meson from https://github.com/bonzini/meson.git cargo-object-full
+>
+> Marc-André Lureau (24):
+>  rust: patch thiserror to work with meson
+>  audio: remove obsolete/obscure functions
+>  audio/dbus: make "dbus" the default backend when using -display dbus
+>  qemu-options.hx: clarify default audio backend selection
+>  audio: introduce AudioDriver
+>  audio: simplify audio_init()
+>  audio: move object creation to audio_driver_init()
+>  audio: add QOM module-objects for each backend
+>  audio: remove set_dbus_server from audio_driver
+>  audio: lookup "audio-" object types, and realize them
+>  audio: switch to module-object, drop audio driver registration
+>  module: remove audio module support
+>  audio: keep a strong reference on the backend
+>  audio: make list type declaration private
+>  audio: make create_pdos() private
+>  replay: remove dependency on audio/
+>  audio: make all the backend-specific APIs take the be
+>  audio: make AudioBackend truely abstract
+>  audio: split AudioBackend
+>  audio: AUD_ -> audio_be_
+>  audio-be: add common pre-conditions
+>  audio-be: add some state trace
+>  audio: split AudioDriver code in audio-driver.c
+>  WIP: rust/audio: add GStreamer backend
+>
+> qapi/audio.json                               |   29 +
+> ...dio_template.h => audio-driver_template.h} |   76 +-
+> audio/audio_int.h                             |   50 +-
+> include/qemu/audio-capture.h                  |   24 +-
+> include/qemu/audio.h                          |  129 +-
+> include/qemu/module.h                         |    3 +-
+> include/system/replay.h                       |    8 +-
+> replay/replay-internal.h                      |    2 +
+> rust/audio/wrapper.h                          |   27 +
+> audio/alsaaudio.c                             |   42 +-
+> audio/audio-be.c                              |  276 ++
+> audio/audio-driver.c                          | 1988 +++++++++++++++
+> audio/audio.c                                 | 2248 ++---------------
+> audio/dbusaudio.c                             |   57 +-
+> audio/dsoundaudio.c                           |   37 +-
+> audio/jackaudio.c                             |   37 +-
+> audio/noaudio.c                               |   37 +-
+> audio/ossaudio.c                              |   41 +-
+> audio/paaudio.c                               |   37 +-
+> audio/pwaudio.c                               |   37 +-
+> audio/sdlaudio.c                              |   37 +-
+> audio/sndioaudio.c                            |   37 +-
+> audio/spiceaudio.c                            |   37 +-
+> audio/wavaudio.c                              |   37 +-
+> audio/wavcapture.c                            |    7 +-
+> hw/audio/ac97.c                               |   42 +-
+> hw/audio/adlib.c                              |   29 +-
+> hw/audio/asc.c                                |   20 +-
+> hw/audio/cs4231a.c                            |   18 +-
+> hw/audio/es1370.c                             |   26 +-
+> hw/audio/gus.c                                |   11 +-
+> hw/audio/hda-codec.c                          |   26 +-
+> hw/audio/lm4549.c                             |   20 +-
+> hw/audio/pcspk.c                              |    8 +-
+> hw/audio/sb16.c                               |   22 +-
+> hw/audio/via-ac97.c                           |   20 +-
+> hw/audio/virtio-snd.c                         |   36 +-
+> hw/audio/wm8750.c                             |   42 +-
+> hw/display/xlnx_dp.c                          |   14 +-
+> hw/usb/dev-audio.c                            |   18 +-
+> replay/replay-audio.c                         |   51 +-
+> replay/replay.c                               |    2 +-
+> replay/stubs-system.c                         |    8 +-
+> ui/dbus.c                                     |   16 +-
+> ui/vnc.c                                      |    4 +-
+> Cargo.lock                                    |  572 ++++-
+> Cargo.toml                                    |    6 +
+> audio/coreaudio.m                             |   37 +-
+> audio/meson.build                             |    2 +
+> audio/trace-events                            |    9 +
+> qemu-options.hx                               |   20 +-
+> rust/audio/Cargo.toml                         |   29 +
+> rust/audio/build.rs                           |   49 +
+> rust/audio/meson.build                        |   75 +
+> rust/audio/src/audio.rs                       |  516 ++++
+> rust/audio/src/bindings.rs                    |   32 +
+> rust/audio/src/gstreamer.rs                   | 1070 ++++++++
+> rust/audio/src/lib.rs                         |   99 +
+> rust/meson.build                              |    6 +
+> .../packagefiles/syn-2-rs/meson/meson.build   |    3 +
+> .../thiserror-2.0.17-include.patch            |   14 +
+> .../thiserror-impl-2.0.17-include.patch       |   13 +
+> subprojects/syn-2-rs.wrap                     |   11 +-
+> subprojects/thiserror-2-rs.wrap               |   10 +
+> subprojects/thiserror-impl-2-rs.wrap          |   10 +
+> 65 files changed, 5862 insertions(+), 2494 deletions(-)
+> rename audio/{audio_template.h => audio-driver_template.h} (90%)
+> create mode 100644 rust/audio/wrapper.h
+> create mode 100644 audio/audio-be.c
+> create mode 100644 audio/audio-driver.c
+> create mode 100644 rust/audio/Cargo.toml
+> create mode 100644 rust/audio/build.rs
+> create mode 100644 rust/audio/meson.build
+> create mode 100644 rust/audio/src/audio.rs
+> create mode 100644 rust/audio/src/bindings.rs
+> create mode 100644 rust/audio/src/gstreamer.rs
+> create mode 100644 rust/audio/src/lib.rs
+> create mode 100644 subprojects/packagefiles/syn-2-rs/meson/meson.build
+> create mode 100644 subprojects/packagefiles/thiserror-2.0.17-include.patch
+> create mode 100644 subprojects/packagefiles/thiserror-impl-2.0.17-include.patch
+> create mode 100644 subprojects/thiserror-2-rs.wrap
+> create mode 100644 subprojects/thiserror-impl-2-rs.wrap
 >
 >
-
---000000000000ea67690644e39047
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
-
-PGRpdiBkaXI9Imx0ciI+PGRpdiBkaXI9Imx0ciI+PGRpdiBkaXI9Imx0ciI+SGk8L2Rpdj48YnI+
-PGRpdiBjbGFzcz0iZ21haWxfcXVvdGUiPjxkaXYgZGlyPSJsdHIiIGNsYXNzPSJnbWFpbF9hdHRy
-Ij5PbiBTYXQsIE5vdiAyOSwgMjAyNSBhdCA1OjQ04oCvUE0gVmxhZGltaXIgU2VtZW50c292LU9n
-aWV2c2tpeSAmbHQ7PGEgaHJlZj0ibWFpbHRvOnZzZW1lbnRzb3ZAeWFuZGV4LXRlYW0ucnUiIHRh
-cmdldD0iX2JsYW5rIj52c2VtZW50c292QHlhbmRleC10ZWFtLnJ1PC9hPiZndDsgd3JvdGU6PGJy
-PjwvZGl2PjxibG9ja3F1b3RlIGNsYXNzPSJnbWFpbF9xdW90ZSIgc3R5bGU9Im1hcmdpbjowcHgg
-MHB4IDBweCAwLjhleDtib3JkZXItbGVmdDoxcHggc29saWQgcmdiKDIwNCwyMDQsMjA0KTtwYWRk
-aW5nLWxlZnQ6MWV4Ij5IaSBhbGwuPGJyPg0KPGJyPg0KSGVyZSBpcyBhIGNsZWFudXAgZm9yIGNo
-YXJkZXYgY29kZTo8YnI+DQo8YnI+DQrCoC0gaW1wcm92ZSBuYW1pbmc8YnI+DQrCoC0gYWRkIGJv
-b2xlYW4gcmV0dXJuIGZvciBzb21lIGVycnAtZnVuY3Rpb25zPGJyPg0KwqAtIHNpbXBsaWZ5IG9w
-ZW4oKSBBUEk8YnI+DQo8YnI+DQpWbGFkaW1pciBTZW1lbnRzb3YtT2dpZXZza2l5ICg4KTo8YnI+
-DQrCoCBjaGFyZGV2OiBDaGFyZGV2Q2xhc3M6IGNvbnNpc3RlbnQgbmFtaW5nIGZvciBoYW5kbGVy
-czxicj4NCsKgIGNoYXJkZXY6IGNvbnNpc3RlbnQgbmFtaW5nIGZvciBDaGFyZGV2Q2xhc3MgaGFu
-ZGxlcnMgaW1wbGVtZW50YXRpb25zPGJyPg0KwqAgY2hhcmRldjogLmNocl9vcGVuKCk6IGRyb3Ag
-YmVfb3BlbmVkIHBhcmFtZXRlcjxicj4NCsKgIGNoYXJkZXY6IC5jaHJfb3BlbigpOiBhZGQgYm9v
-bGVhbiByZXR1cm4gdmFsdWU8YnI+DQrCoCBjaGFyZGV2L2NoYXItcHR5OiBzdG9yZSBwdHlfbmFt
-ZSBpbnRvIFB0eUNoYXJkZXYgc3RhdGU8YnI+DQrCoCBjaGFyZGV2OiBpbnRyb2R1Y2UgLmNocl9n
-ZXRfcHR5X25hbWUoKSBoYW5kbGVyPGJyPg0KwqAgY2hhcmRldjogcmV3b3JrIGZpbGVuYW1lIGhh
-bmRsaW5nPGJyPg0KwqAgY2hhcmRldi9jaGFyOiBxZW11X2NoYXJfb3BlbigpOiBhZGQgcmV0dXJu
-IHZhbHVlPGJyPjwvYmxvY2txdW90ZT48ZGl2Pjxicj48L2Rpdj48ZGl2PkV4Y2VwdCAzcmQgcGF0
-Y2gsIGxndG0uIChpdCBjb25mbGljdHMgYSBiaXQgd2l0aCAmcXVvdDs8YSBpZD0iZ21haWwtMjAy
-NTExMTIxMzQxNDMuMjcxOTQtMS1waGlsbWRAbGluYXJvLm9yZyIgaHJlZj0iaHR0cHM6Ly9wYXRj
-aGV3Lm9yZy9RRU1VLzIwMjUxMTEyMTM0MTQzLjI3MTk0LTEtcGhpbG1kQGxpbmFyby5vcmcvIiBj
-bGFzcz0iZ21haWwtc2VyaWVzLXN1YmplY3QiPltQQVRDSCB2MyAwMC8xMF0gY2hhcmRldjogSW1w
-cm92ZSBAZG9jc3RyaW5nIGFuZCBjbGFyaWZ5IHFlbXVfY2hyX3dyaXRlKCkgdXNlczwvYT4mcXVv
-dDsgdGhvdWdoLCBJIGd1ZXNzIEkgd2lsbCBoYW5kbGUgdGhhdCk8L2Rpdj48ZGl2PsKgPC9kaXY+
-PGJsb2NrcXVvdGUgY2xhc3M9ImdtYWlsX3F1b3RlIiBzdHlsZT0ibWFyZ2luOjBweCAwcHggMHB4
-IDAuOGV4O2JvcmRlci1sZWZ0OjFweCBzb2xpZCByZ2IoMjA0LDIwNCwyMDQpO3BhZGRpbmctbGVm
-dDoxZXgiPg0KPGJyPg0KwqBjaGFyZGV2L2JhdW0uY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIHwgMTIgKystLTxicj4NCsKgY2hhcmRldi9jaGFyLWNvbnNv
-bGUuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHwgMTAgKystLTxicj4NCsKg
-Y2hhcmRldi9jaGFyLWZlLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoHzCoCA4ICstLTxicj4NCsKgY2hhcmRldi9jaGFyLWZpbGUuY8KgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfCAyNiArKysrLS0tLTxicj4NCsKgY2hhcmRldi9jaGFy
-LWh1Yi5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfCAyNyArKysr
-LS0tLS08YnI+DQrCoGNoYXJkZXYvY2hhci1tdXguY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIHwgMzAgKysrKysrLS0tLTxicj4NCsKgY2hhcmRldi9jaGFyLW51bGwu
-Y8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIDkgKy0tPGJyPg0K
-wqBjaGFyZGV2L2NoYXItcGFyYWxsZWwuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgfCA0MSArKysrKystLS0tLS0tPGJyPg0KwqBjaGFyZGV2L2NoYXItcGlwZS5jwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8IDMwICsrKysrLS0tLS08YnI+DQrCoGNo
-YXJkZXYvY2hhci1wdHkuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IHwgNTIgKysrKysrKystLS0tLS0tLTxicj4NCsKgY2hhcmRldi9jaGFyLXJpbmdidWYuY8KgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHwgMjAgKysrKy0tLTxicj4NCsKgY2hhcmRl
-di9jaGFyLXNlcmlhbC5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8IDM5
-ICsrKysrKy0tLS0tLTxicj4NCsKgY2hhcmRldi9jaGFyLXNvY2tldC5jwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8IDU5ICsrKysrKysrKy0tLS0tLS0tLS08YnI+DQrCoGNo
-YXJkZXYvY2hhci1zdGRpby5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-fCAzMCArKysrKy0tLS0tPGJyPg0KwqBjaGFyZGV2L2NoYXItdWRwLmPCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8IDE2ICsrLS0tPGJyPg0KwqBjaGFyZGV2L2NoYXIt
-d2luLXN0ZGlvLmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8IDI1ICsrKystLS0t
-PGJyPg0KwqBjaGFyZGV2L2NoYXIuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIHwgNTEgKysrKysrKystLS0tLS0tLTxicj4NCsKgY2hhcmRldi9tc21vdXNl
-LmPCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHwgMTMgKystLTxi
-cj4NCsKgY2hhcmRldi9zcGljZS5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqB8IDUwICsrKysrKysrLS0tLS0tLS08YnI+DQrCoGNoYXJkZXYvd2N0YWJsZXQu
-Y8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHwgMTAgKystLTxicj4N
-CsKgZ2Ric3R1Yi9zeXN0ZW0uY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIHwgMTIgKystLTxicj4NCsKgaHcvY2hhci94ZW5fY29uc29sZS5jwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgNyArKy08YnI+DQrCoGh3L21pc2MvaXZzaG1l
-bS1wY2kuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfMKgIDQgKy08YnI+
-DQrCoGluY2x1ZGUvY2hhcmRldi9jaGFyLmjCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCB8IDM3ICsrKysrKysrKy0tLTxicj4NCsKgLi4uL2NvZGVjb252ZXJ0ZXIvdGVzdF9yZWdl
-eHBzLnB5wqAgwqAgwqAgwqAgwqAgwqAgwqB8wqAgMiArLTxicj4NCsKgdWkvY29uc29sZS12Yy5j
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqB8IDEyICsrLS08
-YnI+DQrCoHVpL2RidXMtY2hhcmRldi5jwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqB8IDE2ICsrKy0tPGJyPg0KwqB1aS9kYnVzLmPCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHzCoCA0ICstPGJyPg0KwqB1aS9n
-dGsuY8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIHwgMTQgKystLS08YnI+DQrCoHVpL3NwaWNlLWFwcC5jwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfCAxOCArKystLS08YnI+DQrCoHVpL3ZkYWdlbnQu
-Y8KgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHwgMTcg
-KysrLS0tPGJyPg0KwqAzMSBmaWxlcyBjaGFuZ2VkLCAzNTQgaW5zZXJ0aW9ucygrKSwgMzQ3IGRl
-bGV0aW9ucygtKTxicj4NCjxicj4NCi0tIDxicj4NCjIuNDguMTxicj4NCjxicj4NCjwvYmxvY2tx
-dW90ZT48L2Rpdj48L2Rpdj4NCjwvZGl2Pg0K
---000000000000ea67690644e39047--
-
+--3866299591-1267199532-1764594161=:31615--
 
