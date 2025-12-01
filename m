@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D2C7D116F1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 13:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144F7D116F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 13:15:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ3hX-0007eW-8R; Mon, 01 Dec 2025 08:12:23 -0500
+	id 1vQ3k9-0008Ri-2l; Mon, 01 Dec 2025 08:15:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vQ3hT-0007bQ-Gl
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 08:12:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <prvs=423f6341f=bchalios@amazon.es>)
+ id 1vQ3k6-0008OC-7Y
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 08:15:02 -0500
+Received: from fra-out-013.esa.eu-central-1.outbound.mail-perimeter.amazon.com
+ ([63.178.132.221])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vQ3hP-0006m4-5L
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 08:12:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764594732;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bdZCcNebu58rRAcq7dcItAh2rzu+RqOqYxDStj16jN4=;
- b=h8oRY7u6hbHHsbhtXSeqz3k+4TeAiHbl576/0/cJ2WIjTBp7jCUZhI8Sim2k87Uyh4SsT4
- WJ9hxns199pLpGaDmvTHN2iJs0TI1pJvM31THZbLdgbeBMkmMIZe4JZcDDZdxdo8AXlMoo
- PJoIlQtGQoU1yt3fYmWqHWtx+UKn86E=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-d-IW7-W9PxW01VVmKDNetg-1; Mon,
- 01 Dec 2025 08:12:11 -0500
-X-MC-Unique: d-IW7-W9PxW01VVmKDNetg-1
-X-Mimecast-MFC-AGG-ID: d-IW7-W9PxW01VVmKDNetg_1764594729
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A3C65195608D; Mon,  1 Dec 2025 13:12:09 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E7573180047F; Mon,  1 Dec 2025 13:12:08 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0139D21E6A27; Mon, 01 Dec 2025 14:12:05 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,  Gerd Hoffmann <kraxel@redhat.com>,  Thomas Huth
- <huth@tuxfamily.org>,  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Alexandre Ratchov <alex@caoua.org>,  dirty.ice.hu@gmail.com,  Christian
- Schoenebeck <qemu_oss@crudebyte.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  Volker =?utf-8?Q?R=C3=BCmelin?=
- <vr_qemu@t-online.de>,  Eric Blake
- <eblake@redhat.com>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  qemu-rust@nongnu.org (open
- list:Rust-related patc...)
-Subject: Re: [RFC 24/24] WIP: rust/audio: add GStreamer backend
-In-Reply-To: <20251201112309.4163921-25-marcandre.lureau@redhat.com>
- (marcandre lureau's message of "Mon, 1 Dec 2025 15:23:05 +0400")
-References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
- <20251201112309.4163921-25-marcandre.lureau@redhat.com>
-Date: Mon, 01 Dec 2025 14:12:05 +0100
-Message-ID: <87pl8y1h3u.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <prvs=423f6341f=bchalios@amazon.es>)
+ id 1vQ3k4-0006wd-AT
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 08:15:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.es; i=@amazon.es; q=dns/txt; s=amazoncorp2;
+ t=1764594900; x=1796130900;
+ h=message-id:date:mime-version:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:subject;
+ bh=+AIf40NNtHyvJ9r1L27kk0sQDl1WVhJi9nM8Ar0sOg0=;
+ b=jmM8EGehUPBQUQIFMPRbo5Jio8DzrhuNpw+GBQKvcrSyBy/z4w1n0A1Z
+ /NunuO7unYC/bnKgVLONFACmZ8N8dtdpVA4hzeXG9fWJ0xXWLaK/GQ7xa
+ co8/HWeAZ39t6VeuVk0VEVQ65AhyxTXDDytEL/ZnEgKD6Cus926E5Ve4M
+ /3O61MYlkh/aYdN2wSVb2setEtitIoJhAPmsnyrsRoxopv1prfHm3CvDu
+ dOGaFoUaZPId7AsH1NdIZOrgWOKkvkDOWm0EvPjMqGZC+P8EnrEcmculB
+ RZDtrkZcz8TJdMWaTFSCpNJwFUN25rJzYLRB8Idl6v1Q+xvM8/05++fgt w==;
+X-CSE-ConnectionGUID: rvClp81iSly/vZdFIB099A==
+X-CSE-MsgGUID: TmL5nczTSRiyIX8DWPtkwg==
+X-IronPort-AV: E=Sophos;i="6.20,240,1758585600"; d="scan'208,217";a="5950605"
+Subject: Re: [RFC PATCH 2/4] hw/acpi: add new fields in VMClock ABI
+Received: from ip-10-6-3-216.eu-central-1.compute.internal (HELO
+ smtpout.naws.eu-central-1.prod.farcaster.email.amazon.dev) ([10.6.3.216])
+ by internal-fra-out-013.esa.eu-central-1.outbound.mail-perimeter.amazon.com
+ with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2025 13:11:51 +0000
+Received: from EX19MTAEUA001.ant.amazon.com [54.240.197.233:30436]
+ by smtpin.naws.eu-central-1.prod.farcaster.email.amazon.dev [10.0.44.247:2525]
+ with esmtp (Farcaster)
+ id b0a5c08e-298f-4ae7-8ee9-20cf36ade27d; Mon, 1 Dec 2025 13:11:51 +0000 (UTC)
+X-Farcaster-Flow-ID: b0a5c08e-298f-4ae7-8ee9-20cf36ade27d
+Received: from EX19D012EUA001.ant.amazon.com (10.252.50.122) by
+ EX19MTAEUA001.ant.amazon.com (10.252.50.223) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.29;
+ Mon, 1 Dec 2025 13:11:43 +0000
+Received: from [0.0.0.0] (10.13.181.70) by EX19D012EUA001.ant.amazon.com
+ (10.252.50.122) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.29; Mon, 1 Dec 2025
+ 13:11:39 +0000
+Message-ID: <cb2e2892-3e11-4e1e-b0e4-7191a78cc497@amazon.es>
+Date: Mon, 1 Dec 2025 14:11:34 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+To: Cornelia Huck <cohuck@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "imammedo@redhat.com" <imammedo@redhat.com>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "dwmw2@infradead.org"
+ <dwmw2@infradead.org>, "Graf (AWS), Alexander" <graf@amazon.de>,
+ "mzxreary@0pointer.de" <mzxreary@0pointer.de>, <bchalios@amazon.es>
+References: <20251201125023.18344-1-bchalios@amazon.es>
+ <20251201125023.18344-4-bchalios@amazon.es> <87qztenykd.fsf@redhat.com>
+Content-Language: en-US
+From: Babis Chalios <bchalios@amazon.es>
+In-Reply-To: <87qztenykd.fsf@redhat.com>
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.13.181.70]
+X-ClientProxiedBy: EX19D040UWA002.ant.amazon.com (10.13.139.113) To
+ EX19D012EUA001.ant.amazon.com (10.252.50.122)
+Received-SPF: pass client-ip=63.178.132.221;
+ envelope-from=prvs=423f6341f=bchalios@amazon.es;
+ helo=fra-out-013.esa.eu-central-1.outbound.mail-perimeter.amazon.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, MIME_HTML_ONLY=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,151 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-marcandre.lureau@redhat.com writes:
+<!DOCTYPE html>
+<html data-lt-installed="true">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body style="padding-bottom: 1px;">
+    <div class="moz-cite-prefix">On 12/1/25 14:04, Cornelia Huck wrote:<span
+      style="white-space: pre-wrap">
+</span></div>
+    <blockquote type="cite" cite="mid:87qztenykd.fsf@redhat.com">
+      <pre wrap="" class="moz-quote-pre">
+On Mon, Dec 01 2025, "Chalios, Babis" <a class="moz-txt-link-rfc2396E" href="mailto:bchalios@amazon.es">&lt;bchalios@amazon.es&gt;</a> wrote:
 
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> This patch introduce a rust/audio crate that replaces QEMU audio/
-> mixing/resampling code with GStreamer and Rust. It could potentially
-> remove the need for all the system-specific audio API implementation,
-> since GStreamer has audio elements for
-> ALSA/Pipewire/PulseAudio/jack/OSX/WASAPI etc (removing ~10k loc).
->
-> TODO:
-> - test on various system, with various configuration to see if this
->   backend can replace the other QEMU audio backends
-> - add a spicesink/spicesrc to handle spice, or rewrite spice to use
->   the capture approach used by VNC code. Or drop capture support, and
->   use custom qemusrc/qemusink for both Spice and VNC, lowering the feature
->   and behaviour disparity.
-> - build-sys: make gstreamer optional
-> - build-sys: loadable module support
-> - investigate dropping get_buffer_size_out()
-> - investigate improving emulated devices to not require regular
->   timers (appsrc need-data is called once)
-> - add generic audio backend tests
-> - more tests for the mixing/liveadder behaviour (synchronization)
-> - other: replace audio/dbus with a rust implementation (not using gstream=
-er)
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> ---
->  qapi/audio.json               |   29 +
->  audio/audio-driver_template.h |    2 +
->  rust/audio/wrapper.h          |   27 +
->  audio/audio.c                 |    5 +
->  Cargo.lock                    |  572 ++++++++++++++++--
->  Cargo.toml                    |    6 +
->  audio/trace-events            |    5 +
->  rust/audio/Cargo.toml         |   29 +
->  rust/audio/build.rs           |   49 ++
->  rust/audio/meson.build        |   75 +++
->  rust/audio/src/audio.rs       |  516 ++++++++++++++++
->  rust/audio/src/bindings.rs    |   32 +
->  rust/audio/src/gstreamer.rs   | 1070 +++++++++++++++++++++++++++++++++
->  rust/audio/src/lib.rs         |   99 +++
->  rust/meson.build              |    6 +
->  15 files changed, 2467 insertions(+), 55 deletions(-)
->  create mode 100644 rust/audio/wrapper.h
->  create mode 100644 rust/audio/Cargo.toml
->  create mode 100644 rust/audio/build.rs
->  create mode 100644 rust/audio/meson.build
->  create mode 100644 rust/audio/src/audio.rs
->  create mode 100644 rust/audio/src/bindings.rs
->  create mode 100644 rust/audio/src/gstreamer.rs
->  create mode 100644 rust/audio/src/lib.rs
->
-> diff --git a/qapi/audio.json b/qapi/audio.json
-> index 2df87b9710..76dc7cbfa6 100644
-> --- a/qapi/audio.json
-> +++ b/qapi/audio.json
-> @@ -128,6 +128,33 @@
->      '*out':       'AudiodevAlsaPerDirectionOptions',
->      '*threshold': 'uint32' } }
->=20=20
-> +    ##
-> +    # @AudiodevGStreamerOptions:
-> +    #
-> +    # Options of the GStreamer audio backend.
-> +    #
-> +    # @in: options of the capture stream
-> +    #
-> +    # @out: options of the playback stream
-> +    #
-> +    # @sink: the name of the GStreamer sink element to use
-> +    #        (default 'autoaudiosink')
-> +    #
-> +    # @source: the name of the GStreamer source element to use
-> +    #        (default 'autoaudiosrc')
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">VMClock now supports a vm_generation_counter field in the struct it
+exposes to userspace. The field signals a disruption that happened due
+to a guest loaded from a snapshot.
 
-Are 'autoaudiosink' and 'autoaudiosrc' well-known GStreamer names, or
-arbitrary?
+Moreover, VMClock now optionally supports device notifications when the
+seq_count changes to a new even value.
 
-> +    #
-> +    # Since: 11.0
-> +    ##
-> +    { 'struct': 'AudiodevGStreamerOptions',
-> +      'data': {
-> +        '*in':        'AudiodevPerDirectionOptions',
-> +        '*out':       'AudiodevPerDirectionOptions',
-> +        '*sink':      'str',
-> +        '*source':    'str'
-> +      }
-> +    }
+Signed-off-by: Babis Chalios <a class="moz-txt-link-rfc2396E" href="mailto:bchalios@amazon.es">&lt;bchalios@amazon.es&gt;</a>
+---
+ include/standard-headers/linux/vmclock-abi.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+Please either do a full linux-headers update against a specific Linux
+kernel version, or mark this as a placeholder patch if the code is not
+yet merged.
 
-Unindent by four, and format the doc comment like this:
-
-##
-# @AudiodevGStreamerOptions:
-#
-# Options of the GStreamer audio backend.
-#
-# @in: options of the capture stream
-#
-# @out: options of the playback stream
-#
-# @sink: the name of the GStreamer sink element to use
-#     (default 'autoaudiosink')
-#
-# @source: the name of the GStreamer source element to use
-#     (default 'autoaudiosrc')
-#
-# Since: 11.0
-##
-
-
-> +
-> +
->  ##
->  # @AudiodevSndioOptions:
->  #
-> @@ -484,6 +511,7 @@
->              { 'name': 'sdl', 'if': 'CONFIG_AUDIO_SDL' },
->              { 'name': 'sndio', 'if': 'CONFIG_AUDIO_SNDIO' },
->              { 'name': 'spice', 'if': 'CONFIG_SPICE' },
-> +            { 'name': 'gstreamer' },
-
-Short form suffices:
-
-               'gstreamer',
-
->              'wav' ] }
->=20=20
->  ##
-> @@ -530,6 +558,7 @@
->                     'if': 'CONFIG_AUDIO_SNDIO' },
->      'spice':     { 'type': 'AudiodevGenericOptions',
->                     'if': 'CONFIG_SPICE' },
-> +    'gstreamer': { 'type': 'AudiodevGStreamerOptions' },
-
-Short form suffices:
-
-       'gstreamer': 'AudiodevGStreamerOptions',
-
->      'wav':       'AudiodevWavOptions' } }
->=20=20
->  ##
-
-[...]
-
+</pre>
+    </blockquote>
+    <br>
+    Indeed, that's a placeholder. What's the process to mark this as a
+    placeholder?<br>
+    <br>
+    Cheers,<br>
+    Babis
+  </body>
+  <lt-container></lt-container>
+</html>
 
