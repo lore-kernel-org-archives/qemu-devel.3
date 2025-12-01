@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A75DD116F1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 12:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E868D116F9
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 12:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ3Mk-0007o7-FO; Mon, 01 Dec 2025 07:50:54 -0500
+	id 1vQ3NE-00089k-1C; Mon, 01 Dec 2025 07:51:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=423f6341f=bchalios@amazon.es>)
- id 1vQ3Mg-0007jD-Ow
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 07:50:51 -0500
-Received: from fra-out-010.esa.eu-central-1.outbound.mail-perimeter.amazon.com
- ([63.178.143.178])
+ id 1vQ3N6-00082l-F6
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 07:51:18 -0500
+Received: from fra-out-013.esa.eu-central-1.outbound.mail-perimeter.amazon.com
+ ([63.178.132.221])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <prvs=423f6341f=bchalios@amazon.es>)
- id 1vQ3Me-0003ZH-Fb
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 07:50:50 -0500
+ id 1vQ3N3-0003lG-Qf
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 07:51:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=amazon.es; i=@amazon.es; q=dns/txt; s=amazoncorp2;
- t=1764593448; x=1796129448;
- h=from:to:cc:subject:date:message-id:
- content-transfer-encoding:mime-version;
+ t=1764593473; x=1796129473;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
  bh=GpvcrHoLLiCW8zGBZinEleXUqigeCd//NOhCARn/C6U=;
- b=FvQ/49MiXu7Pt4ZKrmqv4uB2Fehc5V70Jb/o85e8v3PPOZMQFjzrkok3
- qopNwoWsRuiiQm4pag5vca1RoEEnlavNziGLe7B9pEdj902q8OzGd28Ki
- wgCssnOtps9yhNg2Jiqcf9AwzBa5NFX8FOGT026kTrvVPQ9zDs65NGWcC
- AHWoZhc0TXx9U2jYV9/oVQV9wDUlj8FriE65zKVpwV2V7LWBAJhZyfYR4
- x9Rhf9dY3Nc0aF9gnC6M1aK/LbiKbc+6M5E4CLzWXhey5fP10u7DvvnjM
- x00aKuEUpvjUZqWe745S6fCjXZMdRx2h/RFVqpdLOww6jbeN/vYL5yzgY w==;
-X-CSE-ConnectionGUID: lchPSLiMSzGAo1nB9rBOWQ==
-X-CSE-MsgGUID: l7DBdsyYRs2puW5f/QC20A==
+ b=gbcEL/a0EhQ6EM4StGzgaNeCxU0MTywfMIRKQLbvogvSJ/uWBcxYABQ8
+ CY/TAPkWhekEzT5y5F70xtwexipQADgQ9lBUjKwNMigKSVY3MHDU/s+EC
+ 5/B8h6FPUvNKQ92nqnJv73S5vUnCtktmlupTI/LUm8/O+DvAjgY/rcBKL
+ TMUrLdyfZuYGsTrAetdvPzdJCbZevzrUQdhtWQzuWdkY/hZ57iNXfYgEz
+ ssKiThHCLPqIXlrVfZ9u4KYEZbVJwvub+tiV0lyx0IYKJqiPwS5XDrDXm
+ ebsQwA/UtbrDjeYQ7ppqGUIe3E0aPEQGbYVSbBn/lOBVITCUuLmQgDkQA A==;
+X-CSE-ConnectionGUID: VCUs5cz4Ro+wjfeJD3Ps4A==
+X-CSE-MsgGUID: HFYDoz4wSN+34yO7esZYKQ==
 X-IronPort-AV: E=Sophos;i="6.20,240,1758585600"; 
-   d="scan'208";a="5946528"
+   d="scan'208";a="5948352"
 Received: from ip-10-6-11-83.eu-central-1.compute.internal (HELO
  smtpout.naws.eu-central-1.prod.farcaster.email.amazon.dev) ([10.6.11.83])
- by internal-fra-out-010.esa.eu-central-1.outbound.mail-perimeter.amazon.com
- with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2025 12:50:25 +0000
-Received: from EX19MTAEUA002.ant.amazon.com [54.240.197.232:27103]
- by smtpin.naws.eu-central-1.prod.farcaster.email.amazon.dev [10.0.31.35:2525]
+ by internal-fra-out-013.esa.eu-central-1.outbound.mail-perimeter.amazon.com
+ with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Dec 2025 12:50:46 +0000
+Received: from EX19MTAEUA002.ant.amazon.com [54.240.197.232:17969]
+ by smtpin.naws.eu-central-1.prod.farcaster.email.amazon.dev [10.0.21.117:2525]
  with esmtp (Farcaster)
- id c9e37288-9386-4930-a215-6e6e56803d24; Mon, 1 Dec 2025 12:50:25 +0000 (UTC)
-X-Farcaster-Flow-ID: c9e37288-9386-4930-a215-6e6e56803d24
-Received: from EX19D012EUA003.ant.amazon.com (10.252.50.98) by
- EX19MTAEUA002.ant.amazon.com (10.252.50.124) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.29;
- Mon, 1 Dec 2025 12:50:25 +0000
+ id 795ad669-02ed-45b1-a621-6821e279ac59; Mon, 1 Dec 2025 12:50:43 +0000 (UTC)
+X-Farcaster-Flow-ID: 795ad669-02ed-45b1-a621-6821e279ac59
 Received: from EX19D012EUA001.ant.amazon.com (10.252.50.122) by
- EX19D012EUA003.ant.amazon.com (10.252.50.98) with Microsoft SMTP Server
+ EX19MTAEUA002.ant.amazon.com (10.252.50.126) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.29;
- Mon, 1 Dec 2025 12:50:24 +0000
+ Mon, 1 Dec 2025 12:50:36 +0000
+Received: from EX19D012EUA001.ant.amazon.com (10.252.50.122) by
+ EX19D012EUA001.ant.amazon.com (10.252.50.122) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.29;
+ Mon, 1 Dec 2025 12:50:36 +0000
 Received: from EX19D012EUA001.ant.amazon.com ([fe80::b7ea:84f7:2c4b:2719]) by
  EX19D012EUA001.ant.amazon.com ([fe80::b7ea:84f7:2c4b:2719%3]) with
- mapi id 15.02.2562.029; Mon, 1 Dec 2025 12:50:24 +0000
+ mapi id 15.02.2562.029; Mon, 1 Dec 2025 12:50:36 +0000
 From: "Chalios, Babis" <bchalios@amazon.es>
 To: "mst@redhat.com" <mst@redhat.com>, "imammedo@redhat.com"
  <imammedo@redhat.com>, "cohuck@redhat.com" <cohuck@redhat.com>,
@@ -68,9 +68,11 @@ Subject: [RFC PATCH 0/4] vmclock: add support for VM generation counter and
  notifications
 Thread-Topic: [RFC PATCH 0/4] vmclock: add support for VM generation counter
  and notifications
-Thread-Index: AQHcYsEPTMhCf9QsoUSKU63ujcPAyQ==
-Date: Mon, 1 Dec 2025 12:50:24 +0000
-Message-ID: <20251201125023.18344-1-bchalios@amazon.es>
+Thread-Index: AQHcYsEPTMhCf9QsoUSKU63ujcPAybUMvJaA
+Date: Mon, 1 Dec 2025 12:50:36 +0000
+Message-ID: <20251201125023.18344-2-bchalios@amazon.es>
+References: <20251201125023.18344-1-bchalios@amazon.es>
+In-Reply-To: <20251201125023.18344-1-bchalios@amazon.es>
 Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -79,9 +81,9 @@ x-originating-ip: [10.13.247.161]
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Received-SPF: pass client-ip=63.178.143.178;
+Received-SPF: pass client-ip=63.178.132.221;
  envelope-from=prvs=423f6341f=bchalios@amazon.es;
- helo=fra-out-010.esa.eu-central-1.outbound.mail-perimeter.amazon.com
+ helo=fra-out-013.esa.eu-central-1.outbound.mail-perimeter.amazon.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
