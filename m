@@ -4,61 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A55D116F1
-	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 13:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7469CD116F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  1 Dec 2025 14:13:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQ49b-0006P0-Gj; Mon, 01 Dec 2025 08:41:26 -0500
+	id 1vQ4dc-00063k-Kt; Mon, 01 Dec 2025 09:12:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1vQ49U-0006Jr-S8
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 08:41:17 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vQ4db-00063a-L4
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 09:12:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1vQ49T-0002oI-3C
- for qemu-devel@nongnu.org; Mon, 01 Dec 2025 08:41:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=dBfYrPfxweRn6UjvLAK8p8V9ZP8fUFLyM1QeAMgbyBQ=; b=HD0N7/s2mE/oJFk+erLqbYgX+0
- uyN6AmgrT7n6fT04reV2lV7DCDCgezDO7AXvanf1mvYZKiozrCh0eegj1jVajR49ofJkixqDJUit/
- K9iEY2zn6vlJDzF3uHEZqa0tSMrjmdplBPfwfy0XnGW2uji13fvSuOnnKlAqvv25YfKWNXaIkGeY5
- 0ogyjikwGID/E8ejuz7XMxqpiAlJvHCiY4Yb71xL3ghsG7nKkLTFEkIuX0MuJs5z8MUPjFbl5nZ62
- WUCWq3B19xrrcsPTGEN/HEyix5t4Qbpjpjp5yxY4ECymxeQCtTvH/OotKchngEs8bybVUfhh72u+k
- chjhARj6oBBgJxpmw0s6/aug4nwSM+cpp7LZYo2XOTtLDGcfU/iGn5u8IaGJsVMEj0bIbtLrykh2e
- 7J5uNzirmWE+ique1kqGP5jqHwDy06sZ1cjj15UUoKeGDtol+rlWQ0vcVCxJD8Y0Oe/FBye4yj/i9
- z8Csk+MtMSq5dsZBUku/o8+hZJNysd0tbKX9PG2Ja9oav5SBKlY63Gtcyoh0hYDVKPMedkBHq8noI
- bVEtqW9ivuFJ7Uh2BpBGdP8qDmHSDeaAG+VYXTTWGwFGrm5VAdcxsyezw6QRZI0AOdIsUJItH/UIl
- tdO6u5MJLJyKjm66F/Yu0GJtgZ0jt+SfQa4cYinlE=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
-Cc: Thomas Huth <huth@tuxfamily.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Alexandre Ratchov <alex@caoua.org>, dirty.ice.hu@gmail.com,
- Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- Volker =?UTF-8?B?UsO8bWVsaW4=?= <vr_qemu@t-online.de>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Subject: Re: [RFC 00/24] audio: add GStreamer backend
-Date: Mon, 01 Dec 2025 14:41:08 +0100
-Message-ID: <17303071.geO5KgaWL5@weasel>
-In-Reply-To: <e6ada475-da8a-4643-4986-2ffc1d5b9c66@eik.bme.hu>
-References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
- <e6ada475-da8a-4643-4986-2ffc1d5b9c66@eik.bme.hu>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vQ4da-0007cE-1S
+ for qemu-devel@nongnu.org; Mon, 01 Dec 2025 09:12:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764598340;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=0B0imrKlv6KQ4GG03oIU6wgaNWxHtxb3Y2lJz4xSfaI=;
+ b=bETmvPc/IJtmkEsY/wcg+hL/I9WfvnFrFxDqim/ouKZiCA7Bt2spR6BzXFnERp4c87a3gj
+ IZPEvPWvl2krX/RzbsiSlCM5A6WU0k3toK+URIuGcAb4srb59EZztdgB5WGaBWa1t+gUYQ
+ j6mcJ8+3EDCamTS/OtJaWpsyshynkAk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-204-o9Q7cfJBMhaPOk-li8EKFQ-1; Mon,
+ 01 Dec 2025 09:12:18 -0500
+X-MC-Unique: o9Q7cfJBMhaPOk-li8EKFQ-1
+X-Mimecast-MFC-AGG-ID: o9Q7cfJBMhaPOk-li8EKFQ_1764598337
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 061CC19560BF; Mon,  1 Dec 2025 14:12:17 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.139])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 60946195608E; Mon,  1 Dec 2025 14:12:12 +0000 (UTC)
+Date: Mon, 1 Dec 2025 14:12:08 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: "Chalios, Babis" <bchalios@amazon.es>
+Cc: "mst@redhat.com" <mst@redhat.com>,
+ "imammedo@redhat.com" <imammedo@redhat.com>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "dwmw2@infradead.org" <dwmw2@infradead.org>,
+ "Graf (AWS), Alexander" <graf@amazon.de>,
+ "mzxreary@0pointer.de" <mzxreary@0pointer.de>
+Subject: Re: [RFC PATCH 3/4] hw/acpi: add VM generation counter field to
+ VMClock
+Message-ID: <aS2iOER6KBMMtJ0X@redhat.com>
+References: <20251201125023.18344-1-bchalios@amazon.es>
+ <20251201125023.18344-5-bchalios@amazon.es>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251201125023.18344-5-bchalios@amazon.es>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -73,39 +90,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Monday, 1 December 2025 14:02:41 CET BALATON Zoltan wrote:
-> On Mon, 1 Dec 2025, marcandre.lureau@redhat.com wrote:
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-[...]
-> > The following patch series provides a GStreamer-based audio backend, wh=
-ich
-> > could ultimately allow QEMU to leverage the framework to support the
-> > various audio subsystems and simplify the audio handling logic (timing,
-> > resampling, mixing etc), as well as allow greater pipeline flexibility
-> > and customization.
->
-> While it's good to have a GStreamer backend to integrate well into systems
-> already using that, this should not replace existing audio backends in
-> QEMU. The reason is that GStreamer has extensive dependencies that I would
-> like to avoid and still be able to use QEMU with just an ALSA or SDL audio
-> backend that are much leaner and provide the needed functionality for most
-> cases. Also when using jack you'd want to have a QEMU backend for it not
-> going through multiple layers. So adding a GStreamer backend has its use
-> as another audio backend but not as a replacement for QEMU's audio
-> handling logic and backends.
->=20
-> Regards,
-> BALATON Zoltan
+On Mon, Dec 01, 2025 at 12:51:10PM +0000, Chalios, Babis wrote:
+> The final published version of the VMClock specification adds support
+> for an extra vm_generation_counter field which allows hypervisors to
+> differentiate between live migration and snapshot loading events. During
+> the latter, apart from adjusting clocks, guests might want to take
+> further actions such as resetting network devices, updating UUIDs,
+> reseeding entropy pools, etc.
+> 
+> VM generation counter itself is stored in the guest memory region and
+> exposed to guest userspace, so we don't need to serialize it within
+> vmstate_vmclock as well.
+> 
+> Signed-off-by: Babis Chalios <bchalios@amazon.es>
+> ---
+>  hw/acpi/vmclock.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/hw/acpi/vmclock.c b/hw/acpi/vmclock.c
+> index c582c0c1f8..47cbba4496 100644
+> --- a/hw/acpi/vmclock.c
+> +++ b/hw/acpi/vmclock.c
+> @@ -20,6 +20,7 @@
+>  #include "hw/qdev-properties.h"
+>  #include "hw/qdev-properties-system.h"
+>  #include "migration/vmstate.h"
+> +#include "migration/misc.h"
+>  #include "system/reset.h"
+>  
+>  #include "standard-headers/linux/vmclock-abi.h"
+> @@ -64,6 +65,7 @@ void vmclock_build_acpi(VmclockState *vms, GArray *table_data,
+>  static void vmclock_update_guest(VmclockState *vms)
+>  {
+>      uint64_t disruption_marker;
+> +    uint64_t vm_generation_counter;
+>      uint32_t seq_count;
+>  
+>      if (!vms->clk) {
+> @@ -79,6 +81,16 @@ static void vmclock_update_guest(VmclockState *vms)
+>      disruption_marker++;
+>      vms->clk->disruption_marker = cpu_to_le64(disruption_marker);
+>  
+> +    /*
+> +     * We only increase the vm_generation_counter when loading from a snapshot,
+> +     * not during live migration
+> +     */
+> +    if (!migration_is_running()) {
+> +        vm_generation_counter = le64_to_cpu(vms->clk->vm_generation_counter);
+> +        vm_generation_counter++;
+> +        vms->clk->vm_generation_counter = cpu_to_le64(vm_generation_counter);
+> +    }
 
-I agree with Zoltan on this. GStreamer is nice as new backend, but I would=
-=20
-also preserve the existing audio backends for the same reasons already=20
-described by Zoltan.
+I don't believe this conditional works. Run it with
 
-/Christian
+  $ qemu-system-x86_64 -monitor stdio -device vmclock
+  (qemu) migrate tcp:localhost:9000
 
+and
+
+  $ qemu-system-x86_64 -monitor stdio -device vmclock -incoming tcp:localhost:9000
+
+
+and the vm_generation_counter always gets updated on every migrate
+operation.
+
+'migration_is_running()' is always returning 'false' when this callback
+is triggered on the target.
+
+Even if it were to return 'true' as this code expects, this would not
+allow to distinguish between snapshots and live migration. The QEMU
+"migrate" / "migrate-incoming" commands are used by mgmt apps to
+implement snapshots. From QEMU's POV, live migration and snapshots
+are indistiguishable operations, both using the same functionaility.
+
+eg
+  $ qemu-system-x86_64 -monitor stdio -device vmclock
+  (qemu) migrate file:snapshot.img
+
+and
+
+  $ qemu-system-x86_64 -monitor stdio -device vmclock -incoming file:snapshot.img
+
+
+and we can't check the QEMU migration target being "file:" and mgmt
+apps can use the "fd:" protocol to pass in a pre-opened target which can
+be a socket or pipe or file.
+
+Only the mgmt app knows if this is for a snapshot or a live migration or
+something else.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
