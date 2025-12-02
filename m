@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E508BD12687
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 23:08:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 908D0D1267F
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 23:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQZT5-0005RV-S8; Tue, 02 Dec 2025 18:07:35 -0500
+	id 1vQZT0-0005Ps-AL; Tue, 02 Dec 2025 18:07:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asb@igalia.com>) id 1vQZSy-0005Q8-Iu
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 18:07:30 -0500
+ (Exim 4.90_1) (envelope-from <asb@igalia.com>) id 1vQZSu-0005PC-S4
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 18:07:24 -0500
 Received: from fanzine2.igalia.com ([213.97.179.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asb@igalia.com>) id 1vQZSw-0005aE-Ac
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 18:07:27 -0500
+ (Exim 4.90_1) (envelope-from <asb@igalia.com>) id 1vQZSs-0005Zt-Nj
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 18:07:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
  s=20170329;
  h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
@@ -25,24 +25,25 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive;
- bh=QmTQx7yfPGhmuO07X/peGrpsG1Xz1dTipb7VhMHYbcw=; b=o+3JbMXj56FvJ84n72VDRgldH4
- k89NFG8ZfPN1qDzy42nHnP+bidZd6GBgnuavq4xCFz9bsQ2D/YronBCQpCmqvsHvSVZDcQb+ue2x1
- zCeHV5OdUI4gZdSAn9U1VARu6mHmwEekPQAjVzHdHU1QNnnY8Q6caMcCykxRbRMkwNSN8jmi0PBdr
- SF2xwtawayDnNggAtkV4bcb4RdfIqbzAg/FYB/0HoF4MSLhiMZL8PMgcoR6hfsYmpA1POHBQkvMqb
- +T28envGnJJQvf3HEvPKpOKmW0w7/IXQF5KUKCEFlg2CvnKEda9Z6bU1CDOSPYTqKYrw1THzABI9I
- voSCo5yg==;
+ bh=UVSDrQj2EE2Xom2fSCqutr2x2fz+iiadtu9ED7/RGkM=; b=rfq9SuMUSdxQ4bVfme2QD96TpV
+ mKOT5okhR7kww8QCkQ0CHqwkMpvuTxAINoYIt7mF2FBmYz9w7as8oqpuHE66iibxxiBZxvPa0LHeN
+ LwAEeh730DeDWY5rrFeYQ+nvnYJlEprvGq5xfEwOyjza+HUxosjVCK/2urIHgo0PqvVerVZlz1j/O
+ Ocy70BHRtDXmnyJfka0DOp2LFfCrXE+QbtDrLh+M/lffyBtSJSNhrAJezeHxVjSdqDMS60kqIbxrx
+ 5FF6Gq+1AqUPMavkA8VV6NxM+1bxMfF9Z+EhvkJ2md3ZJpT4AVmKsdcTUiWW2Pv/ABG04FRrv0EEC
+ EufRR+jg==;
 Received: from 82-69-92-151.dsl.in-addr.zen.co.uk ([82.69.92.151]
  helo=localhost.localdomain) by fanzine2.igalia.com with esmtpsa 
  (Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
- id 1vQZSt-0082ga-KD; Wed, 03 Dec 2025 00:07:23 +0100
+ id 1vQZSq-0082ga-Mr; Wed, 03 Dec 2025 00:07:20 +0100
 From: Alex Bradbury <asb@igalia.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Bradbury <asb@igalia.com>, alex.bennee@linaro.org, erdnaxe@crans.org,
- ma.mandourr@gmail.com, pierrick.bouvier@linaro.org
-Subject: [PATCH v2 5/5] contrib/plugins/hotblocks: Allow limit to be set as a
- command line argument
-Date: Tue,  2 Dec 2025 23:05:58 +0000
-Message-ID: <bf04947f9a694a4d3adf5f0775dbb8d5013fd8c9.1764716538.git.asb@igalia.com>
+ ma.mandourr@gmail.com, pierrick.bouvier@linaro.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH v2 3/5] contrib/plugins/hotblocks: Print uint64_t with PRIu64
+ rather than PRId64
+Date: Tue,  2 Dec 2025 23:05:56 +0000
+Message-ID: <46f83ac83c6cabace91b9be85da2547ff7b08204.1764716538.git.asb@igalia.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <cover.1764716538.git.asb@igalia.com>
 References: <cover.1764716538.git.asb@igalia.com>
@@ -72,59 +73,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Also add documentation for this argument. This allows the default of 20
-to be overridden, and is helpful for using the hotblocks plugin for
-analysis scripts that require collecting data on a larger number of
-blocks (e.g. setting limit=0 to dump information on all blocks).
+qemu_plugin_u64_sum returns a uint64_t, so PRIu64 is the correct format
+specifier.
 
 Signed-off-by: Alex Bradbury <asb@igalia.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/hotblocks.c | 10 +++++++++-
- docs/about/emulation.rst    |  2 ++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ contrib/plugins/hotblocks.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index 40d8dae1cd..8ecf033997 100644
+index cf4d6b8c36..40d8dae1cd 100644
 --- a/contrib/plugins/hotblocks.c
 +++ b/contrib/plugins/hotblocks.c
-@@ -84,7 +84,8 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     if (sorted_counts) {
-         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
- 
--        for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
-+        for (i = 0, it = sorted_counts; (limit == 0 || i < limit) && it;
-+             i++, it = it->next) {
+@@ -87,7 +87,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+         for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
              ExecCount *rec = (ExecCount *) it->data;
              g_string_append_printf(
-                 report, "0x%016"PRIx64", %d, %ld, %"PRIu64"\n",
-@@ -170,6 +171,13 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
-                 fprintf(stderr, "boolean argument parsing failed: %s\n", opt);
-                 return -1;
-             }
-+        } else if (g_strcmp0(tokens[0], "limit") == 0) {
-+            char *endptr = NULL;
-+            limit = g_ascii_strtoull(tokens[1], &endptr, 10);
-+            if (endptr == tokens[1] || *endptr != '\0') {
-+                fprintf(stderr, "unsigned integer parsing failed: %s\n", opt);
-+                return -1;
-+            }
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
-             return -1;
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index 543efc4d7d..e8793b0f9c 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -473,6 +473,8 @@ Behaviour can be tweaked with the following arguments:
-     - Description
-   * - inline=true|false
-     - Use faster inline addition of a single counter.
-+  * - limit=N
-+    - The number of blocks to be printed. (Default: N = 20, use 0 for no limit).
- 
- Hot Pages
- .........
+-                report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
++                report, "0x%016"PRIx64", %d, %ld, %"PRIu64"\n",
+                 rec->start_addr, rec->trans_count,
+                 rec->insns,
+                 qemu_plugin_u64_sum(
 -- 
 2.52.0
 
