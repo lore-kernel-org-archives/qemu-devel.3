@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3639CD12673
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 21:11:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B38BD12679
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 22:31:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQXdl-0006Wm-1Q; Tue, 02 Dec 2025 16:10:29 -0500
+	id 1vQYta-0003kD-BF; Tue, 02 Dec 2025 17:30:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vQXdi-0006WF-Sb
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 16:10:27 -0500
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ id 1vQYtZ-0003jx-5U
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 17:30:53 -0500
+Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vQXdh-0004nN-AI
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 16:10:26 -0500
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7c6cc44ff62so4112232a34.3
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 13:10:24 -0800 (PST)
+ id 1vQYtX-0004QT-Fz
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 17:30:52 -0500
+Received: by mail-oa1-x2e.google.com with SMTP id
+ 586e51a60fabf-3ed15120e55so3674385fac.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 14:30:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764709823; x=1765314623; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764714650; x=1765319450; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=eP2dOlRdHDHuJ0joOA57uKndYTdH4d2UcJCpnf5hRjI=;
- b=i6dBJQm7wTqh8X0tCoMb2ytCMtK4Jy63/eejiKp0bWH0ekZkoQ53dziFg9gBi/VrC6
- rjhfG6CbVDYCeyS48LeQmOVexuKcL4kcv2Nq34dcnJjPgcNquEdPHugPFwMkb97/R7AB
- +NZtZgnOQ/T4r+Tzu8hzNCDnAbYf0ArjgYe+2WMC7w1mYoEqhGtvSXeCOQbpuE0RZqcc
- oyMarDyInYue6blvtCkedDQb4s3hgOuBp8lOkeJTZdDRViNdu8JgAGsOIz6fZor/Tz0N
- SFYVbYuZhCE6s+TmAXm6RbLnUdC9VndNRFZA5PiUWOTdKsiM64TB532LijVVPUElo8Il
- JHWw==
+ bh=491M1MMKif/og9SD2X+oox6ypjy+LJ56gB+lCOA76rE=;
+ b=bOk3IHZfAI3KWL1wSHN86o/JtUsGK4El6qfLzd1xCPNqvki1Kihei/4bslE5Lw8hKo
+ mZ9DLILD4RXFpHn4ZDBmT3XEKNPh5sSfFRrGwPkSASmy3aZhyIhq0mP98KDA628i8DJj
+ GNxxn+b3PuJnse+piOFF5w09Wze8n1M3u7ncncXYDusBUtMvs7UFfm1MFklt4wnIUlUd
+ ojUmGjgrZ8TbpjzocpMOKxlrlNKItRLIMhfPmMzZx3FK940+X+Mjtx1IyrJH3e6U+wyv
+ 8NUp8NGpRyVIwL2ILEle/hOfASBnFlPlh9hQ9r0zsb3l28VV+71lNDpVZVmEzBWUf8pW
+ 9Ckw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764709823; x=1765314623;
+ d=1e100.net; s=20230601; t=1764714650; x=1765319450;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=eP2dOlRdHDHuJ0joOA57uKndYTdH4d2UcJCpnf5hRjI=;
- b=pr+bZtfiRo9JL8g8LotZg+qBJOaqaapLwS2I/UypJAPd53XwrhpuXL+s1rBNfSxpy4
- Bw8n+Gk7pu5GwisQuBFEselyA/edqW+ephItlb7oosqqx7MptsNTI5RWM/1Cm3QpsJyn
- ZtwXqCEW9/xYq9KMx9b/wA60NxFwpqHUFoOxSRoK74Yxe7mskidityXa1VYvkyOJRXoF
- xymh+k8k56X1azEbcwD4UXI26w/meGt8KpJ2YyiXf9w3z5Kv76fzJ4ax94BRQE/IZ0HH
- lC6YQ4IR0Ox9SAjNJVBFOtru95Oy/8ay4juOaWIrBRFO1l7hyRJTYcaPpwnRvcM6ZHPW
- 32nQ==
+ bh=491M1MMKif/og9SD2X+oox6ypjy+LJ56gB+lCOA76rE=;
+ b=MiY9IatHWCxinmtENmyECdtrz7C/YXq6ww2sPp08dSlbEUNNpWC4x3so+YMtTxrDPo
+ DLTb/mAcBQ+hwsZWu5/ii8ydVQ4HvjF3xklnk//+FiKXmEU2btg1fdGBbROLN5fDRm1Z
+ iAeK+6asGxAh5sNAFhPXhj0g9jks2dMgKEbYHEP4CO8XCTKM9DRB1pc+2EOPHGjtO/3Y
+ c4aAjmn2lLU6VwN6NytVV7mK+Swq+Zk+yTIaRO6M4kHGjVPXoZEa0huCRnxmWaBHzwp0
+ GmF+Ly643p7W8B8oBqIH8UPqx+jA7U/G8qlJKk0oPeTATekglsedeJ+c/Ja5lVCLugGy
+ 1nDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVPbE5W1qTT9WAlEhUMoi1LPCV4V56vhqPyw2wkqTw3OTYtgpQlFf+t+7u9y8vPvfC3pffOkhrXj/9y@nongnu.org
-X-Gm-Message-State: AOJu0Yxatm75zX9kHW4xcb4x+bw5H2C1AcyoVqFU5cPv+flaX3nBxa05
- JgssEgSmK2RVKr6jow6st6nD5Jks0mYxmQxjdXg8MC+H0LJheD6e9n8XOvouOf/U6H8=
-X-Gm-Gg: ASbGncvLnlb8kXAQyOqpkRGSJnYsQboRs6wiToWT4OP8FCQbU/2XSKFbhZH35bsrWLu
- eRKHy4cnRry4dXbezcTx7EfsVuWpRMwsLUEvPTkSXN8Hcq0S6pZmgmpiE6DjyovuyI1A8mYRBZJ
- iYRLH6W6r1f7b9OBhszOHKbVZ5LJP3aRJ5FCSAKUGdfUsRq2Am//bMMwkM0D51fgwzyCLKNUH8Q
- cGoTqxTt1PLDjEGqsVgws5zJ0MXJk9QflNxjHssYJ0fBNCGJwzeDRcSxwxn5PfgrEnp1OoKvvTY
- wocMCEFK0mXKfFNog1Ak5Z730lEx0lyn43vJF4MrXgwFbbP5QbM1xVYCbsnpOjg9sMtQ+NUPI3f
- jFsL9aWqcBFoMh29RHRcJn+hTo2KNZkre7KuX2Ho0S+TdAesXx6kJg5Ls5k7Nt1BcMDjEfxgf0Z
- Zwb6EKK+bW0IgkPZTotAZWeJ72gA==
-X-Google-Smtp-Source: AGHT+IFet4oF3ipLzuQgxwdZ7W/ZBhn8WJ1yZQ2S/Ru9BBplSlWM75SArGb+YUdhXLP9eZ2AVc4qEw==
-X-Received: by 2002:a05:6830:44a3:b0:7c7:541f:64c1 with SMTP id
- 46e09a7af769-7c94db476e6mr38209a34.31.1764709823213; 
- Tue, 02 Dec 2025 13:10:23 -0800 (PST)
+ AJvYcCUDkVZ1GwqDjPb4Vmp4K2q7l6Z5xUGdDnL7bXJyzEA6VC3gI5RzZ8Yh+Xlgocibo8zBfwh/8f46risP@nongnu.org
+X-Gm-Message-State: AOJu0Yy++hqdscPRHPshvpYHfs2gBbAw/ECOgatHGNFqd55g8K/7iA5U
+ jmVDnuFSTWv2arms7nUeuqy8bAw9e5UniXS30uybO2gkZzXCGWZJVgkOsjNE5xM03s8=
+X-Gm-Gg: ASbGncsC9qnMMr239kD7AOX9HKmKPzTA8sxaIIhj0BoQWW2VUx4A78lh6j3kO2nKskt
+ HEsTMdP61YxDGtTXVd8/6OQh/++iw4mt/H1tg7bo4Mx0pz1DoWn6GSFZfdbeKgMpgCM6Ciw4Pb4
+ 2+CaT8xqWs05IZ1gW5YRyFjEHql51sKpyIaUArT14jbDJYNDWl8NJsVwlHTTsVMPDMC0a71lvbl
+ ijGFMit+0HSzmeSt8xkTwWJwaEx76wdN1k9KQxsKxnhhDsQh1eK2LR7sLucY1REwVgnbYZmvhaV
+ /7vly+3Jri4cKoN410SQqf+gHPwbJ46VZNOR8SkWAZnoxca+XwBKjJ5eti2AqYQGt9RCJyX1HGH
+ e1UyFcjId0gFmTyaD+uPWMlLB4SZjGnMXy+7m1NhFn0HyF/koSiwZjYm9kh3EvNtuOgH+0Dn0AG
+ Zh3aKfivlsIWqZE78SgKcmZpJ2Ag==
+X-Google-Smtp-Source: AGHT+IELQZ+XP7KfiQ93b3Y0bsuuHu/ujjujJ1Uf+O3eJ6Li4uZOIxR06A10MAcqAibUijRtyAylYg==
+X-Received: by 2002:a05:6870:9495:b0:3ec:4089:f963 with SMTP id
+ 586e51a60fabf-3f1693e5f69mr38672fac.44.1764714649886; 
+ Tue, 02 Dec 2025 14:30:49 -0800 (PST)
 Received: from [10.27.3.244] ([187.210.107.189])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7c90f5fe927sm7348359a34.9.2025.12.02.13.10.22
+ 586e51a60fabf-3f0dc766dc3sm8788853fac.0.2025.12.02.14.30.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Dec 2025 13:10:22 -0800 (PST)
-Message-ID: <78f97b85-29b2-4057-8484-053dfd1466d4@linaro.org>
-Date: Tue, 2 Dec 2025 13:10:20 -0800
+ Tue, 02 Dec 2025 14:30:49 -0800 (PST)
+Message-ID: <2f307b46-42d8-445a-8aec-91fa101244f2@linaro.org>
+Date: Tue, 2 Dec 2025 14:30:47 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tcg: Zero extend 32-bit addresses for TCI
+Subject: Re: [PATCH-for-10.2 2/2] tcg/tci: Disable Int128 support
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, peter.maydell@linaro.org
-References: <20251202011228.503007-1-richard.henderson@linaro.org>
- <20251202011228.503007-3-richard.henderson@linaro.org>
- <e336abf5-589b-49b7-98b6-9206ead80197@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20251202184653.33998-1-philmd@linaro.org>
+ <20251202184653.33998-3-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <e336abf5-589b-49b7-98b6-9206ead80197@linaro.org>
+In-Reply-To: <20251202184653.33998-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,27 +109,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 11:58, Philippe Mathieu-Daudé wrote:
-> On 2/12/25 02:12, Richard Henderson wrote:
->> For native code generation, zero-extending 32-bit addresses for
->> the slow path helpers happens in tcg_out_{ld,st}_helper_args,
->> but there isn't really a slow path for TCI, so that didn't happen.
->>
->> Make the extension for TCI explicit in the opcode stream,
->> much like we already do for plugins and atomic helpers.
->>
->> Fixes: 24e46e6c9d9 ("accel/tcg: Widen tcg-ldst.h addresses to uint64_t")
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   tcg/tcg-op-ldst.c | 222 ++++++++++++++++++++++------------------------
->>   1 file changed, 107 insertions(+), 115 deletions(-)
+On 12/2/25 10:46, Philippe Mathieu-Daudé wrote:
+> Disable Int128 on TCI, otherwise build fails:
 > 
-> Was slightly simpler to review with preliminary patch 1.5 posted
-> (consider taking it in between). Anyway:
+>    In file included from ../../tcg/optimize.c:29:
+>    In file included from include/tcg/tcg-op-common.h:12:
+>    In file included from include/exec/helper-proto-common.h:10:
+>    In file included from include/qemu/atomic128.h:62:
+>    In file included from host/include/aarch64/host/atomic128-cas.h.inc:16:
+>    host/include/generic/host/atomic128-cas.h.inc:37:12: error: initializing 'Int128' (aka 'struct Int128') with an expression of incompatible type '__int128_t' (aka '__int128')
+>       37 |     Int128 old = *ptr_align;
+>          |            ^     ~~~~~~~~~~
+>    host/include/generic/host/atomic128-cas.h.inc:39:52: warning: incompatible pointer types passing 'Int128 *' (aka 'struct Int128 *') to parameter of type '__int128_t *' (aka '__int128 *') [-Wincompatible-pointer-types]
+>       39 |     while (!__atomic_compare_exchange_n(ptr_align, &old, new, true,
+>          |                                                    ^~~~
+>    host/include/generic/host/atomic128-cas.h.inc:39:58: error: passing 'Int128' (aka 'struct Int128') to parameter of incompatible type '__int128_t' (aka '__int128')
+>       39 |     while (!__atomic_compare_exchange_n(ptr_align, &old, new, true,
+>          |                                                          ^~~
+>    host/include/generic/host/atomic128-cas.h.inc:50:12: error: initializing 'Int128' (aka 'struct Int128') with an expression of incompatible type '__int128_t' (aka '__int128')
+>       50 |     Int128 old = *ptr_align;
+>          |            ^     ~~~~~~~~~~
+>    host/include/generic/host/atomic128-cas.h.inc:52:62: error: invalid operands to binary expression ('Int128' (aka 'struct Int128') and 'Int128')
+>       52 |     while (!__atomic_compare_exchange_n(ptr_align, &old, old & val, true,
+>          |                                                          ~~~ ^ ~~~
+>    host/include/generic/host/atomic128-cas.h.inc:63:12: error: initializing 'Int128' (aka 'struct Int128') with an expression of incompatible type '__int128_t' (aka '__int128')
+>       63 |     Int128 old = *ptr_align;
+>          |            ^     ~~~~~~~~~~
+>    host/include/generic/host/atomic128-cas.h.inc:65:62: error: invalid operands to binary expression ('Int128' (aka 'struct Int128') and 'Int128')
+>       65 |     while (!__atomic_compare_exchange_n(ptr_align, &old, old | val, true,
+>          |                                                          ~~~ ^ ~~~
+>    1 warning and 6 errors generated.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-I hadn't been moving maybe_{extend,free}_addr64 at all, but replacing them.
-But yes, this larger patch could be usefully refactored.
+And what of the CONFIG_TCG_INTERPRETER test that already exists in int128.h?
+
+There's got to be more to this than that.
 
 
 r~
+
+> ---
+>   meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index d9293294d8e..692a62e6c18 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -2996,7 +2996,7 @@ config_host_data.set('CONFIG_ATOMIC64', cc.links('''
+>   
+>   # has_int128_type is set to false on Emscripten to avoid errors by libffi
+>   # during runtime.
+> -has_int128_type = host_os != 'emscripten' and cc.compiles('''
+> +has_int128_type = host_os != 'emscripten' and tcg_arch != 'tci' and cc.compiles('''
+>     __int128_t a;
+>     __uint128_t b;
+>     int main(void) { b = a; }''')
+
 
