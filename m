@@ -4,94 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 480BDD11708
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5830ED11705
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQSud-0002kc-63; Tue, 02 Dec 2025 11:07:35 -0500
+	id 1vQSxz-0007C3-WF; Tue, 02 Dec 2025 11:11:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQSuF-00029u-RI; Tue, 02 Dec 2025 11:07:13 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vQSw7-0004xD-T5
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:09:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQSuE-00088I-2Y; Tue, 02 Dec 2025 11:07:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764691630; x=1796227630;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=89F41mSOuYhugFJj7jF488k0MReP/Q9Ed85C0vFns40=;
- b=CwoEuQJ/lGWGvChr59hUvjSGDjwE9ocIhEtRZSyk75H+gIRto/01SIGf
- EwsUf5ZV3blPcJlWhWz5laL37woyR83jZTASep3QK1MM5mfTeUOlFjb8l
- IKjGl5ci8WEjtcC1b7YdkYleJNJQfSibP7lHarccKZXqneIaMt8KoXG3F
- lC2Ae8gw+lDawsr5p6sevBmeLDN/FJt6KerVYxdM0FzJIb5ZoxX49t6QU
- Fo9w8r02iM0dZaDlGXpivvPRz9Hu2JdgWooEZlDoA/o2COzZJaBA7lGRO
- 2Oug5xZeFEslRU2qzIV0agTNdPR82zMwHY7AejCxIo25ghIOcSS+cEg8y A==;
-X-CSE-ConnectionGUID: EUUoXNg1QaaX1EzKqxgN6w==
-X-CSE-MsgGUID: ca31zYg5RPaz/PqPnz6XDA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="92142856"
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="92142856"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Dec 2025 08:07:08 -0800
-X-CSE-ConnectionGUID: chFndAIkR6Gryt9wY9xekA==
-X-CSE-MsgGUID: cqcEw527TwmS1tzvB+S+yA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="199537786"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 02 Dec 2025 08:06:59 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Yi Liu <yi.l.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- Amit Shah <amit@kernel.org>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
- Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 20/28] hw/virtio/virtio-mmio: Remove
- VirtIOMMIOProxy::format_transport_address field
-Date: Wed,  3 Dec 2025 00:28:27 +0800
-Message-Id: <20251202162835.3227894-21-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251202162835.3227894-1-zhao1.liu@intel.com>
-References: <20251202162835.3227894-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vQSw5-00006W-5P
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:09:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764691741;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=VN5D96R/t76acLMeIjKxcWybmi4kuwmjRsxRAB7XktE=;
+ b=UCfzE55bIOhuT395iNYjQbkKzLXK/VpND2cG2aMfq7CZHJ25UWEJ/7461fWaMVk8h4FTUE
+ zFZ6CVQL9lB5I3/MoYgA2PHKQvKoCwe5+6upmHVP3QxxB4Snb9U3gOkOwbTh4e9JmSqIsC
+ HxfuJZK1yHTPT733SGNSDKQrE7wpODo=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-422-urD26W68PReOBIVPg4E3eA-1; Tue, 02 Dec 2025 11:09:00 -0500
+X-MC-Unique: urD26W68PReOBIVPg4E3eA-1
+X-Mimecast-MFC-AGG-ID: urD26W68PReOBIVPg4E3eA_1764691739
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-42b366a76ffso3715724f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 08:08:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764691739; x=1765296539; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VN5D96R/t76acLMeIjKxcWybmi4kuwmjRsxRAB7XktE=;
+ b=O9n63kxFu3GSR9YvC0nRShBvZyEnulJqXK0mBwDxhKOpyc0q2+J1tM2+Fq4LYNGvRb
+ W9juRz3eZg6ZnrkSuexU2TrwSkdyYBFhElqoQ8U43WhDnijrClP84n3jQDKR5jG0Xq8l
+ ijTTyQ3u/GW9PlS2J+/R3uSRKK4U34CvoGPGU8PboE4amPkOuc0wZ7mvuqQf9ZX2N7JL
+ w+TVUyKU8Peaih/mO9+b9yYEytwcdBw7i7vTk75h0wwhCFNbFIdaPqNeqJyGSX1V80Fv
+ mzYMxKIO+RVh8r2UD0/HIaDjOI+qnBm0ApNpyupVO66R2XSaG/g12a57KrfaeQ7JswPb
+ eOeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764691739; x=1765296539;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VN5D96R/t76acLMeIjKxcWybmi4kuwmjRsxRAB7XktE=;
+ b=lmz4qWpzFr1wOIq2nKCN24FSoTerxWwWyiYJqFwRypMZOYeUoSjJqYHJWvhqGap/Pl
+ qeSUIPdt4xBa/PkV2mArMmic2jAjDnOATMe06NxecB6OQQ/wnMw9iJCBCTynTXYNStkH
+ s0KAO+BuBfXNjfdQthdtbmzrq6H+QdC4qbZtADcm5Y1yiMEUzgOTfytit6FeE4Cj6tWH
+ GfBYv96zrBg9GG61IIkhCPFrLqMs+GbpCQSd4m6pGijXgEbmTh8JbKU1LflmFtGAEAVW
+ NZHR45t7TdQXQf+cq9ScGfWdJU9Dw5tsP8YLzm1fo1mRdoBOkOOgSCmxUrVaXWMyN7O6
+ 5gsQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWtTCu3ewvUCslbYlU7PaNURZgniRSbapmYPihgypLZRSQHMk3b36zo7lMGRSiCThJZ7LzlLM9O+Wdk@nongnu.org
+X-Gm-Message-State: AOJu0YyaS7fRCFGZSCB+CycS5UT2/zRCMhB5xV5bh1h42ljpuiCDwHQR
+ DPI+Vvp3eNOCg7O+0FZHhxyRrZgNpboePAMES/sHt/URS0hJ4iI0mqx+H4s7IxLJ3zdtJlvWkiQ
+ HGVcImJuyu/gHbFamGue3D1Ul7Jgb8el6l1xbcr35PJirsj0uukVY4Z0t
+X-Gm-Gg: ASbGncthDPfR92XwQofGvqq7cUxITAIL8B8G6oyIVhGAnvfkxgv29WTbbDqamFkoZZC
+ w1QYM+0tfJylJs+TG4NsYrUqf4AoOLtea7B58LAOlgHFzjME8RmZ2mMVN0R/2u5ZMQvBZbcqdlv
+ u3h9pGevuAuEo7zwuzlhv/MQUpmMBfKosgUz1AbWBHPlaGiadkWpPdTCJLt4qgJMlZgnSG93jUm
+ dgb8zoJCFBAqxPYlpWXfO182rV0Wd4K1E7NdFydWLho4xXqhQjcifYFiHD5T3/qrz0D8wJXPx4V
+ Fg7HBtOP/3+mFJMihD3xAZHns62z2U7ka8wd6Gpu/MIgBFVWPRWfQ6FXVaa0bGpkeXP2ZDQGgVR
+ j9Wil+Kux7x11jjupuBaKLiOfHPqk+tTxsxtiIxOhiFB345v7hGsa1CVwPu8lsodHOA/txoR3
+X-Received: by 2002:a05:6000:2307:b0:42b:3bc4:16dc with SMTP id
+ ffacd0b85a97d-42e0f213b9emr32166633f8f.21.1764691738809; 
+ Tue, 02 Dec 2025 08:08:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFlWgvgyCrCdB68a/vDVtdUnY3Hzqt9cNDCyK0z8du3Hyb0hPWF5OXcMS0TvNkdQ42xNIogkQ==
+X-Received: by 2002:a05:6000:2307:b0:42b:3bc4:16dc with SMTP id
+ ffacd0b85a97d-42e0f213b9emr32166604f8f.21.1764691738387; 
+ Tue, 02 Dec 2025 08:08:58 -0800 (PST)
+Received: from rh.redhat.com
+ (p200300f6af35a800883b071bf1f3e4b6.dip0.t-ipconnect.de.
+ [2003:f6:af35:a800:883b:71b:f1f3:e4b6])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42e1caa767dsm34300899f8f.38.2025.12.02.08.08.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Dec 2025 08:08:58 -0800 (PST)
+From: Sebastian Ott <sebott@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev, Sebastian Ott <sebott@redhat.com>
+Subject: [PATCH v4 0/2] arm: add kvm-psci-version vcpu property
+Date: Tue,  2 Dec 2025 17:08:51 +0100
+Message-ID: <20251202160853.22560-1-sebott@redhat.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,69 +120,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+This series adds a vcpu knob to request a specific PSCI version
+from KVM via the KVM_REG_ARM_PSCI_VERSION FW register.
 
-The VirtIOMMIOProxy::format_transport_address boolean was only set
-in the hw_compat_2_6[] array, via the 'format_transport_address=off'
-property. We removed all machines using that array, lets remove
-that property, simplifying virtio_mmio_bus_get_dev_path().
+The use case for this is to support migration between host kernels
+that differ in their default (a.k.a. most recent) PSCI version.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- hw/virtio/virtio-mmio.c         | 15 ---------------
- include/hw/virtio/virtio-mmio.h |  1 -
- 2 files changed, 16 deletions(-)
+Note: in order to support PSCI v0.1 we need to drop vcpu
+initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
+Alternatively we could limit support to versions >=0.2 .
 
-diff --git a/hw/virtio/virtio-mmio.c b/hw/virtio/virtio-mmio.c
-index c05c00bcd4a7..c779836201d5 100644
---- a/hw/virtio/virtio-mmio.c
-+++ b/hw/virtio/virtio-mmio.c
-@@ -764,8 +764,6 @@ static void virtio_mmio_pre_plugged(DeviceState *d, Error **errp)
- /* virtio-mmio device */
- 
- static const Property virtio_mmio_properties[] = {
--    DEFINE_PROP_BOOL("format_transport_address", VirtIOMMIOProxy,
--                     format_transport_address, true),
-     DEFINE_PROP_BOOL("force-legacy", VirtIOMMIOProxy, legacy, true),
-     DEFINE_PROP_BIT("ioeventfd", VirtIOMMIOProxy, flags,
-                     VIRTIO_IOMMIO_FLAG_USE_IOEVENTFD_BIT, true),
-@@ -827,19 +825,6 @@ static char *virtio_mmio_bus_get_dev_path(DeviceState *dev)
-     virtio_mmio_proxy = VIRTIO_MMIO(virtio_mmio_bus->parent);
-     proxy_path = qdev_get_dev_path(DEVICE(virtio_mmio_proxy));
- 
--    /*
--     * If @format_transport_address is false, then we just perform the same as
--     * virtio_bus_get_dev_path(): we delegate the address formatting for the
--     * device on the virtio-mmio bus to the bus that the virtio-mmio proxy
--     * (i.e., the device that implements the virtio-mmio bus) resides on. In
--     * this case the base address of the virtio-mmio transport will be
--     * invisible.
--     */
--    if (!virtio_mmio_proxy->format_transport_address) {
--        return proxy_path;
--    }
--
--    /* Otherwise, we append the base address of the transport. */
-     section = memory_region_find(&virtio_mmio_proxy->iomem, 0, 0x200);
-     assert(section.mr);
- 
-diff --git a/include/hw/virtio/virtio-mmio.h b/include/hw/virtio/virtio-mmio.h
-index aa492620228d..8b19ec2291ac 100644
---- a/include/hw/virtio/virtio-mmio.h
-+++ b/include/hw/virtio/virtio-mmio.h
-@@ -66,7 +66,6 @@ struct VirtIOMMIOProxy {
-     uint32_t guest_page_shift;
-     /* virtio-bus */
-     VirtioBusState bus;
--    bool format_transport_address;
-     /* Fields only used for non-legacy (v2) devices */
-     uint32_t guest_features[2];
-     VirtIOMMIOQueue vqs[VIRTIO_QUEUE_MAX];
+Changes since V3 [3]:
+* changed variable name as requested by Eric
+* added R-B
+Changes since V2 [2]:
+* fix kvm_get_psci_version() when the prop is not specified - thanks Eric!
+* removed the assertion in kvm_get_psci_version() so that this also works
+  with a future kernel/psci version
+* added R-B
+Changes since V1 [1]:
+* incorporated feedback from Peter and Eric
+
+[1] https://lore.kernel.org/kvmarm/20250911144923.24259-1-sebott@redhat.com/
+[2] https://lore.kernel.org/kvmarm/20251030165905.73295-1-sebott@redhat.com/
+[3] https://lore.kernel.org/kvmarm/20251112181357.38999-1-sebott@redhat.com/
+
+Sebastian Ott (2):
+  target/arm/kvm: add constants for new PSCI versions
+  target/arm/kvm: add kvm-psci-version vcpu property
+
+ docs/system/arm/cpu-features.rst |  5 +++
+ target/arm/cpu.h                 |  6 +++
+ target/arm/kvm-consts.h          |  2 +
+ target/arm/kvm.c                 | 64 +++++++++++++++++++++++++++++++-
+ 4 files changed, 76 insertions(+), 1 deletion(-)
+
 -- 
-2.34.1
+2.42.0
 
 
