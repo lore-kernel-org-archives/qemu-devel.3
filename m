@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9B4DD11704
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0545D11702
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQStv-0008Bc-Ny; Tue, 02 Dec 2025 11:06:51 -0500
+	id 1vQSuC-0001gz-UB; Tue, 02 Dec 2025 11:07:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQStA-0006G8-IP; Tue, 02 Dec 2025 11:06:08 -0500
+ id 1vQSu8-0001IC-74; Tue, 02 Dec 2025 11:07:05 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQSt4-0007EB-K7; Tue, 02 Dec 2025 11:06:01 -0500
+ id 1vQSu6-00088I-23; Tue, 02 Dec 2025 11:07:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764691559; x=1796227559;
+ t=1764691622; x=1796227622;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=XMzTshkaREcl++9l12TEk06snzZmGLE5fioILBSOwEY=;
- b=b3J89hja1jp/DvO7j0viSwulmsIcEkZeBgCM2wje7sZKjwKppWIZJipw
- 4Mw04lMUUTjdKObGarvZh/GX86xqGx3dmkKKvksTmF9qAa/dnVkb0gdZz
- GsanAsXCNwhc1gMx0uSAu3vJWf+EM6ngte24ZP3CVOim7tT/G2UxxeVDr
- B5MRKOR7EiL4znto7c+BuxU70CYE/AKpYzjzTs9AFlCtg1rynBmpzMF/g
- 4skF08bfKCowfl1RDwTp/42vW6u7KDde48GJD8xQfoPg5bwq6OsN4mxf1
- qww2ykY9gEhvPPSeTqAAJL1lgqFxqlry9gtu6T0v+efMc6yJlPugrWk+9 A==;
-X-CSE-ConnectionGUID: jw+RcajRTj+HjotI4G5POQ==
-X-CSE-MsgGUID: OL5dqWf6QuKHnJ8Wi5TmHA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="92142639"
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="92142639"
+ bh=RsQ6/qtVOHFdGZqvXJxXqntdhc5LGSpKlPjXHt5uQYE=;
+ b=Rjak2nTnjFVpfceetEKMwiAlov42jhcIN6TelKbFklUJkcIkEN88+6SL
+ YzM2ePMKeR5NaTlg26A0Nh2LdGNrt1anmdcfjYuNCXQ99wD+M1ez6Agfh
+ hokNwf2Q1M4RfEgtSfzRTmXa4+BKpIObxixpCyD4u1xzF5YKRYoGvj0uJ
+ O1TUqachkCcnYsdhdugq9yGV0n0Tvv5J1yC0V35bZ2SX2ykaak32VnFKY
+ xtdKkF1KhRdkjRei2mzpf/CtatyXBmjBhcZPol9mIpwUQ2axTuiBMHvA8
+ jJVR/fYd0zJ0c5cFxvdr7nmmpGSKHP8ZSkLdyLrnubZDt8zwo+vXQtYd5 A==;
+X-CSE-ConnectionGUID: mT0EodHORjSBxwnFIMi2lg==
+X-CSE-MsgGUID: 72E0VfQjRhe23H3MLdigDw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="92142834"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="92142834"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Dec 2025 08:05:56 -0800
-X-CSE-ConnectionGUID: 8e0YFFBSR32Urk+LnN8yIA==
-X-CSE-MsgGUID: AdMXHMP1TNeoXsUgtwF2ig==
+ 02 Dec 2025 08:06:59 -0800
+X-CSE-ConnectionGUID: EinztglXSUK+73FcbQmKdA==
+X-CSE-MsgGUID: c0SXrOUFR8mz7d2l4jASAA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="199537304"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="199537762"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 02 Dec 2025 08:05:47 -0800
+ by orviesa005.jf.intel.com with ESMTP; 02 Dec 2025 08:06:50 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,10 +72,9 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 12/28] hw/nvram/fw_cfg: Rename fw_cfg_init_mem_wide() ->
- fw_cfg_init_mem_dma()
-Date: Wed,  3 Dec 2025 00:28:19 +0800
-Message-Id: <20251202162835.3227894-13-zhao1.liu@intel.com>
+Subject: [PATCH v5 19/28] hw/core/machine: Remove hw_compat_2_6[] array
+Date: Wed,  3 Dec 2025 00:28:26 +0800
+Message-Id: <20251202162835.3227894-20-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251202162835.3227894-1-zhao1.liu@intel.com>
 References: <20251202162835.3227894-1-zhao1.liu@intel.com>
@@ -109,103 +108,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-"wide" in fw_cfg_init_mem_wide() means "DMA support".
-Rename for clarity.
+The hw_compat_2_6[] array was only used by the pc-q35-2.6 and
+pc-i440fx-2.6 machines, which got removed. Remove it.
 
-Suggested-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes since v4:
- * Fix a missing case in hw/loongarch/fw_cfg.c.
----
- hw/arm/virt.c             | 2 +-
- hw/loongarch/fw_cfg.c     | 4 ++--
- hw/nvram/fw_cfg.c         | 6 +++---
- hw/riscv/virt.c           | 4 ++--
- include/hw/nvram/fw_cfg.h | 6 +++---
- 5 files changed, 11 insertions(+), 11 deletions(-)
+ hw/core/machine.c   | 8 --------
+ include/hw/boards.h | 3 ---
+ 2 files changed, 11 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 25fb2bab5680..23d88e2fd014 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1412,7 +1412,7 @@ static FWCfgState *create_fw_cfg(const VirtMachineState *vms, AddressSpace *as)
-     FWCfgState *fw_cfg;
-     char *nodename;
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 27372bb01ef4..0b10adb5d538 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -290,14 +290,6 @@ GlobalProperty hw_compat_2_7[] = {
+ };
+ const size_t hw_compat_2_7_len = G_N_ELEMENTS(hw_compat_2_7);
  
--    fw_cfg = fw_cfg_init_mem_wide(base + 8, base, 8, base + 16, as);
-+    fw_cfg = fw_cfg_init_mem_dma(base + 8, base, 8, base + 16, as);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)ms->smp.cpus);
+-GlobalProperty hw_compat_2_6[] = {
+-    { "virtio-mmio", "format_transport_address", "off" },
+-    /* Optional because not all virtio-pci devices support legacy mode */
+-    { "virtio-pci", "disable-modern", "on",  .optional = true },
+-    { "virtio-pci", "disable-legacy", "off", .optional = true },
+-};
+-const size_t hw_compat_2_6_len = G_N_ELEMENTS(hw_compat_2_6);
+-
+ MachineState *current_machine;
  
-     nodename = g_strdup_printf("/fw-cfg@%" PRIx64, base);
-diff --git a/hw/loongarch/fw_cfg.c b/hw/loongarch/fw_cfg.c
-index 493563669e5b..d2a79efbf767 100644
---- a/hw/loongarch/fw_cfg.c
-+++ b/hw/loongarch/fw_cfg.c
-@@ -23,8 +23,8 @@ FWCfgState *virt_fw_cfg_init(ram_addr_t ram_size, MachineState *ms)
-     int max_cpus = ms->smp.max_cpus;
-     int smp_cpus = ms->smp.cpus;
+ static char *machine_get_kernel(Object *obj, Error **errp)
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index a48ed4f86a35..5ddadbfd8a83 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -882,7 +882,4 @@ extern const size_t hw_compat_2_8_len;
+ extern GlobalProperty hw_compat_2_7[];
+ extern const size_t hw_compat_2_7_len;
  
--    fw_cfg = fw_cfg_init_mem_wide(VIRT_FWCFG_BASE + 8, VIRT_FWCFG_BASE, 8,
--                                  VIRT_FWCFG_BASE + 16, &address_space_memory);
-+    fw_cfg = fw_cfg_init_mem_dma(VIRT_FWCFG_BASE + 8, VIRT_FWCFG_BASE, 8,
-+                                 VIRT_FWCFG_BASE + 16, &address_space_memory);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, (uint16_t)max_cpus);
-     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, (uint64_t)ram_size);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)smp_cpus);
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index c65deeb7c382..3f0d337eb9c5 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1088,9 +1088,9 @@ static FWCfgState *fw_cfg_init_mem_internal(hwaddr ctl_addr,
-     return s;
- }
- 
--FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
--                                 hwaddr data_addr, uint32_t data_width,
--                                 hwaddr dma_addr, AddressSpace *dma_as)
-+FWCfgState *fw_cfg_init_mem_dma(hwaddr ctl_addr,
-+                                hwaddr data_addr, uint32_t data_width,
-+                                hwaddr dma_addr, AddressSpace *dma_as)
- {
-     assert(dma_addr && dma_as);
-     return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_width,
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 17909206c7ef..bfbb28f5bd26 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1274,8 +1274,8 @@ static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
- {
-     FWCfgState *fw_cfg;
- 
--    fw_cfg = fw_cfg_init_mem_wide(base + 8, base, 8, base + 16,
--                                  &address_space_memory);
-+    fw_cfg = fw_cfg_init_mem_dma(base + 8, base, 8, base + 16,
-+                                 &address_space_memory);
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)ms->smp.cpus);
- 
-     return fw_cfg;
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index d5161a794362..c4c49886754c 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -309,9 +309,9 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
-                                 AddressSpace *dma_as);
- FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
-                                   unsigned data_width);
--FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
--                                 hwaddr data_addr, uint32_t data_width,
--                                 hwaddr dma_addr, AddressSpace *dma_as);
-+FWCfgState *fw_cfg_init_mem_dma(hwaddr ctl_addr,
-+                                hwaddr data_addr, uint32_t data_width,
-+                                hwaddr dma_addr, AddressSpace *dma_as);
- 
- FWCfgState *fw_cfg_find(void);
- bool fw_cfg_dma_enabled(void *opaque);
+-extern GlobalProperty hw_compat_2_6[];
+-extern const size_t hw_compat_2_6_len;
+-
+ #endif
 -- 
 2.34.1
 
