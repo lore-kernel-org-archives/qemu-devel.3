@@ -4,94 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B17CD11707
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:12:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A33F6D11707
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQSxK-0006ZB-Ob; Tue, 02 Dec 2025 11:10:25 -0500
+	id 1vQTDu-0001Om-OA; Tue, 02 Dec 2025 11:27:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQSvC-0004Yf-Fr; Tue, 02 Dec 2025 11:08:14 -0500
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vQTDV-0001IY-1S
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:27:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQSv9-0008Qy-HI; Tue, 02 Dec 2025 11:08:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764691688; x=1796227688;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=LYlhMK9M65AN6LsBIxG9EyNjVw5658FVMCWbPIOZ0AU=;
- b=AhxXvuzexXi6qaLojYJRw4dWsVsLxdyHxDYBqhn9oBwqhzq2CfWBALYg
- ww1EMrrVL7ZImleUTlXAPMXdpQNFaVYJhdLv24MoXyFW3s+Ylk3T6zIhS
- B76uKjp28rV5lY1YUbkpwkVLNsQ4zYOMs8t0ppGwPtYlkfel67cyk050g
- Q1boSYPvetvkjqlFuBWN0Qfo4jNg04n+HfgBYNiLtZxHpKE/OzW6w0Omi
- zOkriDPip4yF8Bipey/I3j9S6yqbs04kjEGE8btfYbv2uNCvQpdzOZX+C
- bnimhQ/DZG3kmgNkoMHVjeV2lNWU2BEtQvA2bA7JpLLhPXn3sHA4yccGs w==;
-X-CSE-ConnectionGUID: 5zSEcyW9RnSMpA/qLlEpgw==
-X-CSE-MsgGUID: ekfPZiD2SVO7TIk5fmDgtg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="92143116"
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="92143116"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Dec 2025 08:08:05 -0800
-X-CSE-ConnectionGUID: EQtWttR6QlWyEtDMkhNbfw==
-X-CSE-MsgGUID: AdkTaU+YS/Gejs1OqjGa2w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="199538010"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 02 Dec 2025 08:07:55 -0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Yi Liu <yi.l.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- Amit Shah <amit@kernel.org>, Xiaoyao Li <xiaoyao.li@intel.com>,
- Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
- Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 26/28] hw/i386/intel_iommu: Remove
- IntelIOMMUState::buggy_eim field
-Date: Wed,  3 Dec 2025 00:28:33 +0800
-Message-Id: <20251202162835.3227894-27-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251202162835.3227894-1-zhao1.liu@intel.com>
-References: <20251202162835.3227894-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vQTDR-0004j6-Nw
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:27:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764692819;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qh1W3aoF36kAbxT8BtCU3jJMg8lG6NhprtDyEC42MzY=;
+ b=OL64v5AS9hsKjQXi/henIFQbcBy1/Y0aHuRUdE/jQAN+u8eoFBFYK++ouXTILC7aO4p14p
+ EEr+3t74kDlQaiXHg2hbW6q2sidfkFamSJzJekTujJ76uZiZ8+hBKcCtUAjTf3iT8IW5TP
+ RV56hCh16Qj2tq6p6PzclRzYMF54GBQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-9HaBNUl-MbuFPxNCJk1rdw-1; Tue,
+ 02 Dec 2025 11:26:55 -0500
+X-MC-Unique: 9HaBNUl-MbuFPxNCJk1rdw-1
+X-Mimecast-MFC-AGG-ID: 9HaBNUl-MbuFPxNCJk1rdw_1764692813
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E5AE01955F03; Tue,  2 Dec 2025 16:26:52 +0000 (UTC)
+Received: from merkur.redhat.com (unknown [10.45.225.249])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 38F1E3001E83; Tue,  2 Dec 2025 16:26:50 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	richard.henderson@linaro.org,
+	qemu-devel@nongnu.org
+Subject: [PULL 0/1] Block layer patches
+Date: Tue,  2 Dec 2025 17:26:44 +0100
+Message-ID: <20251202162645.182909-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,62 +80,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+The following changes since commit 66ec38b6fa593afcc26a2dfb5d1f9871dd15f527:
 
-The IntelIOMMUState::buggy_eim boolean was only set in
-the hw_compat_2_7[] array, via the 'x-buggy-eim=true'
-property. We removed all machines using that array, lets
-remove that property, simplifying vtd_decide_config().
+  Merge tag 'pull-target-arm-20251201' of https://gitlab.com/pm215/qemu into staging (2025-12-01 12:08:52 -0800)
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- hw/i386/intel_iommu.c         | 5 ++---
- include/hw/i386/intel_iommu.h | 1 -
- 2 files changed, 2 insertions(+), 4 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 78b142cceab3..0113cba32890 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4092,7 +4092,6 @@ static const Property vtd_properties[] = {
-     DEFINE_PROP_UINT32("version", IntelIOMMUState, version, 0),
-     DEFINE_PROP_ON_OFF_AUTO("eim", IntelIOMMUState, intr_eim,
-                             ON_OFF_AUTO_AUTO),
--    DEFINE_PROP_BOOL("x-buggy-eim", IntelIOMMUState, buggy_eim, false),
-     DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
-                       VTD_HOST_ADDRESS_WIDTH),
-     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
-@@ -5359,11 +5358,11 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-     }
- 
-     if (s->intr_eim == ON_OFF_AUTO_AUTO) {
--        s->intr_eim = (kvm_irqchip_in_kernel() || s->buggy_eim)
-+        s->intr_eim = kvm_irqchip_in_kernel()
-                       && x86_iommu_ir_supported(x86_iommu) ?
-                                               ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-     }
--    if (s->intr_eim == ON_OFF_AUTO_ON && !s->buggy_eim) {
-+    if (s->intr_eim == ON_OFF_AUTO_ON) {
-         if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-             error_setg(errp, "eim=on requires support on the KVM side"
-                              "(X2APIC_API, first shipped in v4.7)");
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index ca7f7bb6618a..34ba13ffa8de 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -310,7 +310,6 @@ struct IntelIOMMUState {
-     uint32_t intr_size;             /* Number of IR table entries */
-     bool intr_eime;                 /* Extended interrupt mode enabled */
-     OnOffAuto intr_eim;             /* Toggle for EIM cabability */
--    bool buggy_eim;                 /* Force buggy EIM unless eim=off */
-     uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
-     bool dma_drain;                 /* Whether DMA r/w draining enabled */
-     bool pasid;                     /* Whether to support PASID */
--- 
-2.34.1
+  https://repo.or.cz/qemu/kevin.git tags/for-upstream
+
+for you to fetch changes up to d94ea1a10bdfb99c5822e64a5b6ee3e352719326:
+
+  file-posix: Handle suspended dm-multipath better for SG_IO (2025-12-02 16:51:47 +0100)
+
+----------------------------------------------------------------
+Block layer patches
+
+- SCSI passthrough: Fix errors on temporarily suspended dm-multipath
+
+----------------------------------------------------------------
+Kevin Wolf (1):
+      file-posix: Handle suspended dm-multipath better for SG_IO
+
+ block/file-posix.c | 56 +++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 34 insertions(+), 22 deletions(-)
 
 
