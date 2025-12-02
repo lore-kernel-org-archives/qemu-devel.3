@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B09FCFD376
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 10:00:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0C60CFD2F6
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 10:01:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQNAj-0001L1-SI; Tue, 02 Dec 2025 04:59:49 -0500
+	id 1vQNBx-0001tO-3G; Tue, 02 Dec 2025 05:01:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vQNAh-0001KV-RU
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 04:59:47 -0500
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ id 1vQNBu-0001qT-6R
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 05:01:02 -0500
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vQNAf-0002wV-F7
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 04:59:47 -0500
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-78ac9f30833so42691397b3.0
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 01:59:44 -0800 (PST)
+ id 1vQNBs-0003Pr-RI
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 05:01:01 -0500
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-640c857ce02so4770656d50.0
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 02:00:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764669584; x=1765274384; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764669657; x=1765274457; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=M61zbiKGh+28tMQvSneWKLphvK1HV0LNOeNffpRI8DQ=;
- b=bdZgrmCKX4S9ObVck9jYtow4fMdUw44MDi44qx5OzUmxcmhwr+vO1DD6Fba8ZsY8bI
- mfGzJeafKiUMDJ8s1OL6muRKkicvb6VKgB1RHTDCRzTDgkjkNxPR38EHYCUbQxKZ7JSC
- s7ttf2QvBrtCjacEW2Yt505IuPyHiDe4FdMmUS/ieD7Tkp+kQgKmkxuk865u9h4dLcD+
- iM4sCDuWg5MWYDlwtwa9mlKsJHz2DQ6wIRyhb3sUd2vjgb3dXukozCgPZsjpV/K0q/Te
- fM7Z+eoHbmwaukNSZakhFD4aiitvWYzDGZCltYLGdKb9HWK93XMgVAcH43n5mxgbua65
- zuMA==
+ bh=mKfnrdubD+3aWGIMw1TQgaMqIjKjNRHhJyadp8VkiZQ=;
+ b=E5cKHa3eDU39lRRpL5ba0wGHI22whzpGc+Qr7C2ce5hdHRWdE6RqmVsUl0nX0MbyKx
+ IqHT/4qbquaKvheLmjpB6II9l3Z2Nr83DTyk+upRIyOTvbEQTgOgSE6YBC67NdurtPgA
+ /NxSzpxp5dOa8orZG3v/3iyZcPtVPtoLs28hkwlzf5kLx8/VLQrA/svVkpHcMzZJQUTU
+ PcO6HBpBxiMhvYkvzpCpCP5bP7GOpAUGUTn+XCTiVVsE64v60Oup8uGlcOK4ZJbphD0v
+ jlkWiaR8YwGPmFqJazYWLE8nCktIc7cmQBRhiVlPW5JAFXHGPPkGEpqs7kF1uzm86JHd
+ qJkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764669584; x=1765274384;
+ d=1e100.net; s=20230601; t=1764669657; x=1765274457;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M61zbiKGh+28tMQvSneWKLphvK1HV0LNOeNffpRI8DQ=;
- b=sbDbzPi6ZrcF+XHN6p5+yqNLSZnmX9CYW9WKxvJckCwpJMehc5FMAIHTkgsCahXhTx
- Hcc7fkY8oIfch2aPx/FssTQIeQmzdU6BA0Z4scdUwe1kaIPA7Uxu5+py3uOHOe/9JB5K
- qYn3g1f/85eoOvpd2Mdh4729xOEzFW+y/JK3UZEwubHNLSQb4B3IbTPK3I2Hdd61PNv4
- wQkkQxnaZSIK5A8JWNrsnsCqRZVXhwZitmsj7smyXb8S+h1YUl2w5uk+TzAMv1dR0SVY
- cFLBIUgItKh1PhLmV+kAHIHKgRXMzoZjUbkX5/bzA18CpVVjog+vsaN1dmWyqXjsjqLy
- MgNQ==
-X-Gm-Message-State: AOJu0YyDh5DjfqRiwj7dfvXbZ1ltLZ/jJ7BEHt1UB6QHOQ0dSxX41HEt
- XmumeewPsCNFv9LL5UFSlltq6qr+P3xitBpi1NAy90cZA51sFIkyu9s8NgWT+PWtr/HfMq2k7Th
- ncEpAIZHqWcaQbmeBzJ9CPlYJoRsXBaNHcj8JH3HTLsixPORaMNV23gM=
-X-Gm-Gg: ASbGncsEenIL3DFul5vI8LevaWEu+Z55H9AwrfqOCNTbjAEcjmD7DNm4Me5UrF+NNty
- OBSGu8BFrzuoWMBYsNg37koEeTpig7EBBf9Ex6Ku+5xwu5WNr0v/jRGT02wvowrt9XdySktVyGZ
- nnbBvNn+R5PJ5eLs+NBb+xmBaBlETY/oEISEiGcRE+z7Skmkx1RQQnmYqLt7SINpaTmGVELqffm
- lpYc6wqDxw2BhQEhD44cuhUQckKzqPvWLSF1Kq7aeJAcOPq29sfNrCb5JX22kt3Vc35GpB4
-X-Google-Smtp-Source: AGHT+IFocvcHtelExyMKbVThc05t67yA6W2K/6jOUfqWNWog37iKLONHVbYAVxdWAW47xvDnXNdtdfcgTlkQFjy7Oso=
-X-Received: by 2002:a05:690c:d93:b0:784:8153:c61a with SMTP id
- 00721157ae682-78a8b529edcmr376673497b3.34.1764669583965; Tue, 02 Dec 2025
- 01:59:43 -0800 (PST)
+ bh=mKfnrdubD+3aWGIMw1TQgaMqIjKjNRHhJyadp8VkiZQ=;
+ b=vomauEShPkGb1wyttt4u+zgvJPkQnOwH/b1fGLg9QU1e6qzNV1yo9r2lKMMfKgdA8E
+ 3mTg08Jl2jqqeK/x6TbeuGOjTVd1fOVVpWC/V4g0ZNymKtMHWIJMD3D7zvBsEgr5IeUE
+ FYmToV5dckfpN8tBek7gRnE6ddEHSeAwRSvAg7zVvJ7FplfqYPMmhk996HSfdi1pHcGS
+ 2lhnVrhyUCzwJVUrR+QiEq6/yLPDEN2RL9SQ0mq0h94ps07xlXepjkrKHSyK55N591Se
+ e43axAFmC3vOnZoUTaIuMvclOvzC4BMz+Rf7zeWJGiW8iSSI0x4YlwOYyAeSRnpgyHN0
+ 4HOw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV9sBFoFl7ThczNj54N7dOCrvEyb/RBJZ4+UD41rghWjNyvsFhNBUivtbBjFZjnw/ckH6Vgb/MBsdTD@nongnu.org
+X-Gm-Message-State: AOJu0Yzfwjj4Ycjvf3Ar8rdcHKAU29hPYiKkwqb1FNndhnS1bk79L+xo
+ KF0Z0ORcd1cVRspt3xmmFi/HMQnYf0avN1dop+boNj/VDGuR2qJ8f5HBC30xhRZmJ5JvjjVm/6c
+ 9RWonJ0zgdGehZWAVILCPvnMUpbIWDLeueuySwXItLA==
+X-Gm-Gg: ASbGncuG+4KRDatHfzPJMgDjHDF56neUYRkYTTEOxBJE8ZWW0Ea9jDMLPxpJHYgxUSp
+ Vdd2YewOxjQKBIMIN/Wv/TCmETehakLBhZBO+bpCDE5VjjwYs6BIuC/RL1iOThOF5uiSGicYdUi
+ nR1y6ZEuLxmVCfcwaM7fztfC8xSMx/keV27O6b1LQwxCdq9VVdr9cL3CmWpvagS/WtM7X8l0xwB
+ oSFR2oWHdTrEjwNFeGlFglUtasMDGtOoxRRkV7zdg1QCZ/lEKs+xAOcVaCMhUegm0NJxU/s
+X-Google-Smtp-Source: AGHT+IE7C5hUU6dftA4/yPcXA1SwoOCG0n0kIJDwKwJlsRsajlKV7L9jjIHgSIY/kmX77VXclRmXNc26P9Jxm8S+vE8=
+X-Received: by 2002:a05:690c:6f10:b0:787:d46e:c567 with SMTP id
+ 00721157ae682-78a8b5424dfmr380241697b3.59.1764669657385; Tue, 02 Dec 2025
+ 02:00:57 -0800 (PST)
 MIME-Version: 1.0
-References: <20251119130027.3312971-1-gaurav.sharma_7@nxp.com>
- <20251119130027.3312971-2-gaurav.sharma_7@nxp.com>
-In-Reply-To: <20251119130027.3312971-2-gaurav.sharma_7@nxp.com>
+References: <20251128162306.13701-1-osama.abdelkader@gmail.com>
+In-Reply-To: <20251128162306.13701-1-osama.abdelkader@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 2 Dec 2025 09:59:31 +0000
-X-Gm-Features: AWmQ_bl16XRVXcV-7-qvmqSLAP4x3lexZRHbjyla-EUBBejGylaSexlcXBmHiRQ
-Message-ID: <CAFEAcA8pb6cJ0h+L=fsE28HYpgkC2BWrT=kcwgVxCazJMPMy+A@mail.gmail.com>
-Subject: Re: [PATCHv3 01/13] hw/arm: Add the i.MX 8MM EVK(Evaluation Kit) board
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+Date: Tue, 2 Dec 2025 10:00:45 +0000
+X-Gm-Features: AWmQ_bnH_1Q8ACUybd_2vCPzKb9cMC8-aX2zV6GMF81QWCP_4wmjE2bq94gaNcA
+Message-ID: <CAFEAcA__=TnXrcprp464uw6VNZKLcSBKYP0oj1T2e33Jysk18w@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/raspi: remove duplicate include
+To: Osama Abdelkader <osama.abdelkader@gmail.com>
+Cc: philmd@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,46 +94,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 19 Nov 2025 at 13:00, Gaurav Sharma <gaurav.sharma_7@nxp.com> wrote:
+On Fri, 28 Nov 2025 at 16:23, Osama Abdelkader
+<osama.abdelkader@gmail.com> wrote:
 >
-> Implemented CPUs, RAM, UARTs and Interrupt Controller
-> Other peripherals are represented as TYPE_UNIMPLEMENTED_DEVICE
-> Complete memory map of the SoC is provided.
+> hw/arm/boot.h is included twice
 >
-> Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
 > ---
->  docs/system/arm/imx8mm-evk.rst |  68 ++++++
->  docs/system/target-arm.rst     |   1 +
->  hw/arm/Kconfig                 |  12 ++
->  hw/arm/fsl-imx8mm.c            | 363 +++++++++++++++++++++++++++++++++
->  hw/arm/imx8mm-evk.c            | 109 ++++++++++
->  hw/arm/meson.build             |   2 +
->  include/hw/arm/fsl-imx8mm.h    | 156 ++++++++++++++
-
-Could you also add a section to MAINTAINERS for this
-new board, please?
-
-> diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-> new file mode 100644
-> index 0000000000..0c658141cf
-> --- /dev/null
-> +++ b/hw/arm/fsl-imx8mm.c
-> @@ -0,0 +1,363 @@
-> +/*
-> + * i.MX 8MM SoC Implementation
-> + *
-> + * Based on hw/arm/fsl-imx6.c
-> + *
-> + * Copyright (c) 2025, Gaurav Sharma <gaurav.sharma_7@nxp.com>
-
-Are these files really Copyright you personally, rather than NXP ?
-
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-
-Is there a URL for a reference manual for this SoC that
-we could give here ?
+>  hw/arm/raspi.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/hw/arm/raspi.c b/hw/arm/raspi.c
+> index 81d2fa1b67..bc723dd7d6 100644
+> --- a/hw/arm/raspi.c
+> +++ b/hw/arm/raspi.c
+> @@ -24,7 +24,6 @@
+>  #include "qemu/error-report.h"
+>  #include "hw/boards.h"
+>  #include "hw/loader.h"
+> -#include "hw/arm/boot.h"
+>  #include "hw/arm/machines-qom.h"
+>  #include "qom/object.h"
+>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
