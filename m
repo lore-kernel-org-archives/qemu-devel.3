@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67303D11713
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:42:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBCA0D11713
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQTR4-0001CN-06; Tue, 02 Dec 2025 11:41:06 -0500
+	id 1vQTQx-00013e-Qq; Tue, 02 Dec 2025 11:40:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQTQq-00010Y-KI
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:53 -0500
+ id 1vQTQh-0000yg-NJ
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:45 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQTQm-0002BI-48
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:52 -0500
+ id 1vQTQg-0002BI-4k
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764693648; x=1796229648;
+ t=1764693642; x=1796229642;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=0KCmiyIpAB52wYzC4kWIy02+TdGBgkInAHjQESaNq0s=;
- b=Q/870l/lWrQlfqXq9OCepRCh/XwIO2W0cislkOwtUhuC9vtnyzA/xV62
- s5Br4Ll6eEkCoknIFpkIXNejZyH+1xo8jz86EHrbv5Pg8N04Sit66P7jN
- IDXs3sEwpRk5nFvqLZlkSrSFmNzjaG/tDVKIqQlLAY+SJV2BnHGmvI75f
- wr/ymRvQkdX6BSZHzheGw0iDDRY6MH8Zxns5HxLr+Xnihxrx3PWymUOV4
- TtbkkJn84Qz3djqQNjyyjUNOCsiHexlcLdL80OJAbHxCHjGm8mvHvgM1K
- G+EjcJBM/U/1OLcuCNJ3mdIduP9aNISmLOAKrlctmrNrtqcUGAJiR3SUH A==;
-X-CSE-ConnectionGUID: EU8spNoAT8+2rCJLlCcBsA==
-X-CSE-MsgGUID: go45Yqy8SNSSKmze/UpxpQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="66555347"
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="66555347"
+ bh=eK18Rb0gdGJlNH012rca504qCms7GSkuLIsrlDHKrYU=;
+ b=RGV/3sqqS6TZqcUnUF0G8lahcXqYma/xhejRBOGqy1bkIpcrOnMzxs8r
+ ZetQsQ0ck6b0p3POgRIECUTFdTgeyeCtCBPjlJP+yGChfl9BZdr7bvDzV
+ ZhHOw8yxeCcmHxWe6XL+pH+RAhdDmurDRnsUh7KTsabk6yzSTkFfc5ypk
+ EkF1xb67aWwIwClnw0DugQZ8ZIwKaf1lKWLozIyMT26VAC/AOWbh/mBUY
+ u/6nUqQ0mf+hQeTl8DdjMikvT5TPzeJ4UloD1bfy08I3XV4hFubWiXBie
+ vV+Rsgd/nj5oc5Zj3529QcMJePQZJBOFWPOP5vTyere/lehLDBYi0vaga Q==;
+X-CSE-ConnectionGUID: 8IB44/R0Sp6ug5WIP932ag==
+X-CSE-MsgGUID: hug7CH7kRee8UAizlkfaKQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="66555328"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="66555328"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Dec 2025 08:40:47 -0800
-X-CSE-ConnectionGUID: 6Zgi4yFGTZm3WZ1TGP1L8g==
-X-CSE-MsgGUID: j+3EFEyhTOSNAtDmMUVZfA==
+ 02 Dec 2025 08:40:40 -0800
+X-CSE-ConnectionGUID: mousTyneT6+4xI9PexJ6dQ==
+X-CSE-MsgGUID: eGnzuLPkRoGYYl3RJSgdVA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="231751314"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="231751270"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 02 Dec 2025 08:40:44 -0800
+ by orviesa001.jf.intel.com with ESMTP; 02 Dec 2025 08:40:37 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,10 +57,10 @@ Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>, devel@lists.libvirt.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 06/10] qom/qom-hmp-cmd: Check property deprecation flag for
- "qom-set" command
-Date: Wed,  3 Dec 2025 01:04:58 +0800
-Message-Id: <20251202170502.3228625-7-zhao1.liu@intel.com>
+Subject: [RFC 04/10] qom: Check property deprecation flag for properities from
+ qdict
+Date: Wed,  3 Dec 2025 01:04:56 +0800
+Message-Id: <20251202170502.3228625-5-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251202170502.3228625-1-zhao1.liu@intel.com>
 References: <20251202170502.3228625-1-zhao1.liu@intel.com>
@@ -91,27 +91,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"qom-set" can be used to set object property by external users, so it's
-necessary to enable deprecation check for this case.
+The sources of properities parsed into qdict include:
+
+ 1) External ("TYPE_USER_CREATABLE") object:
+    * -object command line used for external ("TYPE_USER_CREATABLE")
+      object.
+
+ 2) External device:
+    * -device command line - parsed based on keyval or json.
+
+ 3) External machine options:
+    * -machine command line - parsed based on keyval.
+
+ 4) Internal machine options:
+    * Builtin default machine options string:
+      MachineClass::default_machine_opts - parsed based on keyval, too.
+
+All of these cases are using object_set_properties_from_qdict() to set
+properties. It's necessary to detect and report deprecated properities
+for these cases.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- qom/qom-hmp-cmds.c | 2 +-
+ qom/object_interfaces.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qom/qom-hmp-cmds.c b/qom/qom-hmp-cmds.c
-index a00a564b1e22..1bfef0837e30 100644
---- a/qom/qom-hmp-cmds.c
-+++ b/qom/qom-hmp-cmds.c
-@@ -58,7 +58,7 @@ void hmp_qom_set(Monitor *mon, const QDict *qdict)
-             error_set(&err, ERROR_CLASS_DEVICE_NOT_FOUND,
-                       "Device '%s' not found", path);
-         } else {
--            object_property_parse(obj, property, value, &err);
-+            object_property_parse_with_check(obj, property, value, &err);
+diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
+index 415cbee8c5cf..b58a24c27ce7 100644
+--- a/qom/object_interfaces.c
++++ b/qom/object_interfaces.c
+@@ -53,7 +53,7 @@ static void object_set_properties_from_qdict(Object *obj, const QDict *qdict,
+         return;
+     }
+     for (e = qdict_first(qdict); e; e = qdict_next(qdict, e)) {
+-        if (!object_property_set(obj, e->key, v, errp)) {
++        if (!object_property_set_full(obj, e->key, v, true, errp)) {
+             goto out;
          }
-     } else {
-         QObject *obj = qobject_from_json(value, &err);
+     }
 -- 
 2.34.1
 
