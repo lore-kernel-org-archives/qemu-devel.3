@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87FB9D11712
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9590DD11712
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:42:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQTR8-0001E4-5M; Tue, 02 Dec 2025 11:41:10 -0500
+	id 1vQTQr-000106-ID; Tue, 02 Dec 2025 11:40:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQTQl-000103-7c
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:47 -0500
+ id 1vQTQe-0000xo-EV
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:43 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQTQj-0002BI-NL
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:46 -0500
+ id 1vQTQc-0002An-MN
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764693645; x=1796229645;
+ t=1764693638; x=1796229638;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=EJDsM/gh9OJ5qk69Sy+KHH99/lnhQAd7uQZJey2ngdU=;
- b=Gf9DmGOY7SnBOqB1tSNMinwneEJewcQBmN2+AqbOSnEbhI8SpdlD+Tpn
- yBfrZer7zH4mrHmpF/mYlHqgy8YfXS5/RFKss9f4Fs458mNnDyICDLLKu
- tsDfQsIXFu1u0NC+QKJVWHlgZ6JoAI11vC9zcSc4+cPYZADbZuzasODfP
- ZuSUn9wefYLkMYbeqvx4uIcl6QjkL10QhXAOaIuBjL2PJqLaY9npMx5E/
- NA3iqYUocbPkYfpECggxSwUPHloTXjlZ5RqyyOzl44eZTMXhRUvXRWIER
- OKP++LuzVl8OG21BnCiY4KGrLd3Fj+tjeOiEGF5uA9ycFX4YgcGlqHWTp w==;
-X-CSE-ConnectionGUID: KvWxagzHSw+G4osywzIMJw==
-X-CSE-MsgGUID: acwgExhXScacYVneFgjvyw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="66555338"
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="66555338"
+ bh=BOun+Sp72zYjrToMaMpmKaY7e2ddR1tkuk9rWueIHxo=;
+ b=DKqal6UtHl0dA4GvHTJlbJXhIAi5K52hXcIe2/X90euymA/Ul8+oWDbb
+ FRAIxqoz1NlTqqydO9JLrHYNfKbfzNMTdfeGWeb9a4w6nNHMxryy0pJs+
+ U1usLNgZKzIbF36v/4BP/al16PcRMxlqugDmiofpc2+ZRN2Lr1hw6Ucwv
+ wTa58THGZxJHwQj42iFx2RqK40rOiw7cdVosYWDQLschaVlbnszjP7trn
+ cI8oKa8oZdW+ku+j1EHr57AOdipHHi3lr5MgZrBQRTIBnnhIw86is71dC
+ uv7FFs9ToPlw9qOb88oUWtFqsPq1PfdGTKouQXmCzr5qKVJHSxUY93sLE A==;
+X-CSE-ConnectionGUID: 0jknPbSdSkWsJzDSOmcpmQ==
+X-CSE-MsgGUID: 8LS7FJ44SXu0YSsuikBkbQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="66555319"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="66555319"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Dec 2025 08:40:43 -0800
-X-CSE-ConnectionGUID: +pE6H92VRJO5eRRxMlTI4A==
-X-CSE-MsgGUID: bgciHmu9QDCeH985Upn5Lw==
+ 02 Dec 2025 08:40:37 -0800
+X-CSE-ConnectionGUID: USnf6YqQRWeHSGZ9FE1wAA==
+X-CSE-MsgGUID: Dd0ER/bfSUevOgoPYLuQ4Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="231751287"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="231751249"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 02 Dec 2025 08:40:41 -0800
+ by orviesa001.jf.intel.com with ESMTP; 02 Dec 2025 08:40:34 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,10 +57,9 @@ Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>, devel@lists.libvirt.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 05/10] system/vl: Check property deprecation flag for
- properities of accelerator
-Date: Wed,  3 Dec 2025 01:04:57 +0800
-Message-Id: <20251202170502.3228625-6-zhao1.liu@intel.com>
+Subject: [RFC 03/10] qom: Check property deprecation flag for global property
+Date: Wed,  3 Dec 2025 01:04:55 +0800
+Message-Id: <20251202170502.3228625-4-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251202170502.3228625-1-zhao1.liu@intel.com>
 References: <20251202170502.3228625-1-zhao1.liu@intel.com>
@@ -91,29 +90,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now, object_parse_property_opt() is only used for -accel, which would
-also have the need to deprecate properties.
+Global properties can be set up in these cases:
+ 1) external global properties:
+    * -global command line option.
+    * -cpu command line features.
+    * suger properties from object_compat_props[2]
 
-So, use object_property_parse_with_check() for -accel.
+ 2) internal global properties:
+    * compat properties from object_compat_props[0,1].
+
+In principle, when a compat property is marked as deprecated, it should
+not be added to any object_compat_props[] as a compat "fix". Therefore,
+internal compat "global" property use cases should also be considered.
+
+All of these global cases are using object_property_parse() to parse and
+set propertyies, ao add a object_property_parse_with_check() to enable
+deprecation checks for global properties.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- system/vl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/qom/object.h | 20 ++++++++++++++++++++
+ qom/object.c         | 13 ++++++++++++-
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/system/vl.c b/system/vl.c
-index 5091fe52d925..e1bcd4d713d7 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1709,7 +1709,7 @@ static int object_parse_property_opt(Object *obj,
-         return 0;
-     }
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 8f4c2f44d835..bdeba113f40f 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -1555,6 +1555,26 @@ bool object_property_set_full(Object *obj, const char *name,
+ bool object_property_parse(Object *obj, const char *name,
+                            const char *string, Error **errp);
  
--    if (!object_property_parse(obj, name, value, errp)) {
-+    if (!object_property_parse_with_check(obj, name, value, errp)) {
-         return -1;
-     }
++/**
++ * object_property_parse_with_check:
++ *
++ * Same as object_property_parse() with extra check over property flags
++ * (ObjectPropertyFlags). This interface should be used to handle
++ * property settings for external users or internal legacy or compatibility
++ * cases.
++ *
++ * @obj: the object
++ * @name: the name of the property
++ * @string: the string that will be used to parse the property value.
++ * @errp: returns an error if this function fails
++ *
++ * Parses a string and writes the result into a property of an object.
++ *
++ * Returns: %true on success, %false on failure.
++ */
++bool object_property_parse_with_check(Object *obj, const char *name,
++                                      const char *string, Error **errp);
++
+ /**
+  * object_property_print:
+  * @obj: the object
+diff --git a/qom/object.c b/qom/object.c
+index 184afc6730dd..2973d8876555 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -460,7 +460,8 @@ bool object_apply_global_props(Object *obj, const GPtrArray *props,
+             continue;
+         }
+         p->used = true;
+-        if (!object_property_parse(obj, p->property, p->value, &err)) {
++        if (!object_property_parse_with_check(obj, p->property,
++                                              p->value, &err)) {
+             error_prepend(&err, "can't apply global %s.%s=%s: ",
+                           p->driver, p->property, p->value);
+             /*
+@@ -1745,6 +1746,16 @@ bool object_property_parse(Object *obj, const char *name,
+     return ok;
+ }
  
++bool object_property_parse_with_check(Object *obj, const char *name,
++                                      const char *string, Error **errp)
++{
++    Visitor *v = string_input_visitor_new(string);
++    bool ok = object_property_set_full(obj, name, v, true, errp);
++
++    visit_free(v);
++    return ok;
++}
++
+ char *object_property_print(Object *obj, const char *name, bool human,
+                             Error **errp)
+ {
 -- 
 2.34.1
 
