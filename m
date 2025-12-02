@@ -4,108 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B265ECFD2F6
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 13:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01399CFD2F6
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 13:55:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQQoa-00038w-Ky; Tue, 02 Dec 2025 08:53:12 -0500
+	id 1vQQqc-0003xk-WC; Tue, 02 Dec 2025 08:55:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vQQoY-00038P-6K
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 08:53:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vQQoV-0001tU-Vf
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 08:53:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764683586;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vQQqc-0003xM-9o
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 08:55:18 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vQQqZ-00038g-H2
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 08:55:17 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 3650B336C8;
+ Tue,  2 Dec 2025 13:55:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1764683709; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ccZkKYpG6reUrqX/P/HODGfeaPwHtUq9ExmRzikWyPg=;
- b=Q9M6ZlbuOYvNOn5xDgPCk2m/yWplx6EGiP9XP1kwfbCpadJgIkjYITdPsW2PreLL8nhZp7
- f7XCkuq/fNXH+KY0G1arFSrEcD/gaFKpoMwNBC54glM5UhYqfpgn6/uuRiEcK2oSAF4ROU
- PYITR/9RFEbfmPGYCn60vYrduslG47I=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-93-5xyBNNL_P7Kp8cCMTFQkhw-1; Tue, 02 Dec 2025 08:53:05 -0500
-X-MC-Unique: 5xyBNNL_P7Kp8cCMTFQkhw-1
-X-Mimecast-MFC-AGG-ID: 5xyBNNL_P7Kp8cCMTFQkhw_1764683584
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8b2e19c8558so1005652585a.2
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 05:53:04 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764683584; x=1765288384;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ccZkKYpG6reUrqX/P/HODGfeaPwHtUq9ExmRzikWyPg=;
- b=FEdm7g+T84JJDDrenXgz4bvRdj/Ybht740vaJCvknDpprr103GsC9tsQM16Ag2CjSL
- COIarc71XysTdz5PDOz+tEgS2guG+0w98OoAdZ8W8ZEZusfkHvZKjSbe2OCMDJEDvVCv
- xORHoAZ3VaAplLkFtdwAJd/nOAuOh1R/cj/Mj51enZ1/Dd++u3eYnhDZ8ojdL+HJBuJQ
- YBH6Wt98S6ltyrC0WnDgabUXDQ9Xl8SxGia780bglIrXfLZNz8CPxkMVJbNdOhDMVOvs
- Rsc1JXMg+un4Iw1E37lu61ycendK60NVItM4aQfHuJVbNYTRmCUPmnTkQTMNsYqDD68G
- 1gtw==
-X-Gm-Message-State: AOJu0YyO6BHAxE3U5UmD/ihpyz4VYdLDRrF3m8Zfyn4liCGYXRzj1/du
- AmCPYtjtkrX4F5OtKnYpY9YJwnfyHqU1wkEFiyvl69kCxIs9FseiPanwguwlC5oBTn++g2JNkxW
- J4BIow2ngeXZq+NzSgwuplxOBIsedWT8Tv98zGifSTLH8dSV6yXS7c6xe
-X-Gm-Gg: ASbGncsLdP9DoCspXI8xwZBFujOxhFz8jxf+BnaQGq+a+gUYnE5FjFQalwWRsVb0gLx
- X88YkV+GYAyNUwTS8xtViKfE1CbjwpYrx7twUFpn30wCUtjM966psJSYpQbZWpDQNo5dq5bEKUG
- mYuOOlgHNvZAundxZMLDEsNRiAKnAcNz2hvmojaeqZwhO6azleZYbcdilgnMZRd7ttJLKEo4G7S
- VqbisvX6Twh7o3Vh9hxjuNHWwp+AbgKub7rAveLhnIafvweMQbPap0YLgl0VMsVuReft4qH6HU7
- ti4CC31jlDHRQKdKueXJszwQJ2I17xtzG7amosKTdQDKmoVxUgxEWx1/pI7dalSVq9ndluuLmAP
- Gu3pu2sUStnyANBwfefxYDe02FswVOdGutSCpzOMbiaFJ1tpiTTlK+TZj3Q==
-X-Received: by 2002:a05:620a:4012:b0:888:f40a:256 with SMTP id
- af79cd13be357-8b33d469e26mr5988566685a.65.1764683584294; 
- Tue, 02 Dec 2025 05:53:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFmv7c8d2ZM3yY/6nK6zWHVp4LHdHRNNk8muK54O5kKPIoCSVgJChET2fbFhOsR4tMbtP1h2g==
-X-Received: by 2002:a05:620a:4012:b0:888:f40a:256 with SMTP id
- af79cd13be357-8b33d469e26mr5988562285a.65.1764683583771; 
- Tue, 02 Dec 2025 05:53:03 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:fa3:e4b0:95dc:ab11:92db:6f9e?
- ([2a01:e0a:fa3:e4b0:95dc:ab11:92db:6f9e])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b52a1df6b9sm1076584585a.53.2025.12.02.05.53.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Dec 2025 05:53:02 -0800 (PST)
-Message-ID: <ac4ba17f-47ac-4c67-b2e6-c8d835ee0e6f@redhat.com>
-Date: Tue, 2 Dec 2025 14:53:00 +0100
+ bh=2+TxJBKM5wt77Bdyf5gbISIquXOagx5At2SN2KYxzX0=;
+ b=QN1FWiiNs2OzSMZInbMRXMWZ6Jt3jKzA/HPAHBUtRmfXyjGwaWeNWzFaVb+8IviPikrh5X
+ kQnhn1HPODEbGxScJRk9HB0WfJRPLBXkyqTv1UAr+HVRikQg4It08Tn9tPY8obR2q39KGy
+ nSZSfX6wN1bYrDH2nfUoO2mWXOUYFr0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1764683709;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2+TxJBKM5wt77Bdyf5gbISIquXOagx5At2SN2KYxzX0=;
+ b=DcuvMNuNsfW60Dy0LShfnvw+8EYE48ppqveIELC714X/Hh2yy3a1AcMw7WhTKWb1qVZoXi
+ oHaCShfV780ADwAw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Mz1glClG;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Ohr4BFF9
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1764683708; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2+TxJBKM5wt77Bdyf5gbISIquXOagx5At2SN2KYxzX0=;
+ b=Mz1glClGHqmo/pviqIW6dNs5Z9GGfgDINejooaCQAWmXNWZpfpgQG+lPMl6/DXwj8DY8rd
+ BzZvewPVDICGuvU2nClditSUKcWuvPg11zD2UgfLQf+WlFI1hw5qbhYleNO/r56zcczFZT
+ In47hYJiBDx0uHHJX1WOUkwysVGxR/s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1764683708;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2+TxJBKM5wt77Bdyf5gbISIquXOagx5At2SN2KYxzX0=;
+ b=Ohr4BFF9OMjkGvraoCfWj28Q8fVzPlewlFn3RuqdDSjxMxFxZMlm7nq2ZnEV+xT3iRDbin
+ 43uLORXZCJG4g9CQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A73A83EA63;
+ Tue,  2 Dec 2025 13:55:07 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uwreGLvvLmnlVwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 02 Dec 2025 13:55:07 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Vladimir
+ Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Markus Armbruster
+ <armbru@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH for-11.0 v2 0/7] migration: Error reporting cleanups
+In-Reply-To: <20251201194510.1121221-1-peterx@redhat.com>
+References: <20251201194510.1121221-1-peterx@redhat.com>
+Date: Tue, 02 Dec 2025 10:55:04 -0300
+Message-ID: <877bv5aszr.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 08/21] hw/arm/smmuv3: Add separate address space for
- secure SMMU accesses
-Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
-References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012150701.4127034-9-tangtao1634@phytium.com.cn>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251012150701.4127034-9-tangtao1634@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
+ MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCPT_COUNT_SEVEN(0.00)[8]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; MISSING_XM_UA(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 3650B336C8
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,128 +126,73 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tao,
+Peter Xu <peterx@redhat.com> writes:
 
-On 10/12/25 5:06 PM, Tao Tang wrote:
-> According to the Arm architecture, SMMU-originated memory accesses,
-> such as fetching commands or writing events for a secure stream, must
-> target the Secure Physical Address (PA) space. The existing model sends
-> all DMA to the global non-secure address_space_memory.
+> Based-on: <20251125070554.2256181-1-armbru@redhat.com>
 >
-> This patch introduces the infrastructure to differentiate between secure
-> and non-secure memory accesses. Firstly, SMMU_SEC_SID_S is added in
-> SMMUSecSID enum to represent the secure context. Then a weak global
-> symbol, arm_secure_address_space, is added, which can be provided by the
-> machine model to represent the Secure PA space.
+> This series is based on Markus's recent fix:
 >
-> A new helper, smmu_get_address_space(), selects the target address
-> space based on SEC_SID. All internal DMA calls
-> (dma_memory_read/write) will be updated to use this helper in follow-up
-> patches.
+> [PATCH] migration: Fix double-free on error path
+> https://lore.kernel.org/r/20251125070554.2256181-1-armbru@redhat.com
 >
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->  hw/arm/smmu-common.c         |  8 ++++++++
->  hw/arm/virt.c                |  5 +++++
->  include/hw/arm/smmu-common.h | 27 +++++++++++++++++++++++++++
->  3 files changed, 40 insertions(+)
+> v2:
+> - Added R-bs
+> - Patch 1:
+>   - update commit message on s/accidentally merged/merged without proper
+>     review/ [Markus]
+> - Patch 2:
+>   - Added a new follow up patch here from Markus to poison Error's autoptr
+> - Patch 3:
+>   - Rename migration_connect_set_error to migration_connect_error_propagate
+>     [Markus]
+>   - Add comments in commit log for both migrate_connect() and the rename
+>     [Markus]
+> - Patch 4:
+>   - Rename multifd_send_set_error to multifd_send_error_propagate [Markus]
+> - Patch 6:
+>   - Make migrate_error_propagate() take MigrationState* as before [Markus]
+>   - Remove the one use case of g_clear_pointer() [Markus]
+>   - Touch up commit message for the change
 >
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index 62a7612184..24db448683 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -30,6 +30,14 @@
->  #include "hw/arm/smmu-common.h"
->  #include "smmu-internal.h"
->  
-> +/* Global state for secure address space availability */
-> +bool arm_secure_as_available;
-don't you need to initialize it?
+> This series should address the issues discussed in this thread here:
+>
+> https://lore.kernel.org/r/871plmk1bc.fsf@pond.sub.org
 
-why is it local to the SMMU. To me the secure address space sounds
-global like address_space_memory usable by other IPs than the SMMU and
-the CPUs.
-> +
-> +void smmu_enable_secure_address_space(void)
-> +{
-> +    arm_secure_as_available = true;
-> +}
-> +
->  /* IOTLB Management */
->  
->  static guint smmu_iotlb_key_hash(gconstpointer v)
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 175023897a..83dc62a095 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -92,6 +92,8 @@
->  #include "hw/cxl/cxl_host.h"
->  #include "qemu/guest-random.h"
->  
-> +AddressSpace arm_secure_address_space;
-> +
->  static GlobalProperty arm_virt_compat[] = {
->      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
->  };
-> @@ -2257,6 +2259,9 @@ static void machvirt_init(MachineState *machine)
->          memory_region_init(secure_sysmem, OBJECT(machine), "secure-memory",
->                             UINT64_MAX);
->          memory_region_add_subregion_overlap(secure_sysmem, 0, sysmem, -1);
-> +        address_space_init(&arm_secure_address_space, secure_sysmem,
-> +                           "secure-memory-space");
-besides using dynamic allocation like in cpu_address_space_init() would
-allow to get rid of arm_secure_as_available
-> +        smmu_enable_secure_address_space();
->      }
->  
->      firmware_loaded = virt_firmware_init(vms, sysmem,
-> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-> index b0dae18a62..d54558f94b 100644
-> --- a/include/hw/arm/smmu-common.h
-> +++ b/include/hw/arm/smmu-common.h
-> @@ -43,9 +43,36 @@
->  /* StreamID Security state */
->  typedef enum SMMUSecSID {
->      SMMU_SEC_SID_NS = 0,
-> +    SMMU_SEC_SID_S,
->      SMMU_SEC_SID_NUM,
->  } SMMUSecSID;
->  
-> +extern AddressSpace __attribute__((weak)) arm_secure_address_space;
-> +extern bool arm_secure_as_available;
-> +void smmu_enable_secure_address_space(void);
-> +
-> +/*
-> + * Return the address space corresponding to the SEC_SID.
-> + * If SEC_SID is Secure, but secure address space is not available,
-> + * return NULL and print a warning message.
-> + */
-> +static inline AddressSpace *smmu_get_address_space(SMMUSecSID sec_sid)
-> +{
-> +    switch (sec_sid) {
-> +    case SMMU_SEC_SID_NS:
-> +        return &address_space_memory;
-> +    case SMMU_SEC_SID_S:
-> +        if (!arm_secure_as_available || arm_secure_address_space.root == NULL) {
-> +            printf("Secure address space requested but not available");
-> +            return NULL;
-> +        }
-> +        return &arm_secure_address_space;
-> +    default:
-> +        printf("Unknown SEC_SID value %d", sec_sid);
-> +        return NULL;
-> +    }
-> +}
-> +
->  /*
->   * Page table walk error types
->   */
-Thanks
+Thank you Markus for this. It's very helpful to have someone keeping us
+in check regarding the usage of generic QEMU interfaces. Migration code
+tends to drift incredibly..
 
-Eric
+>
+> The problem is Error is not a good candidate of g_autoptr, however the
+> cleanup function was merged without enough review.  Luckily, we only have
+> two users so far (after Markus's patch above lands).  This series removes
+> the last two in migration code and reverts the auto cleanup function for
+> Error.  Instead, poison the auto cleanup function.
+>
+> When at it, it'll also change migrate_set_error() to start taking ownership
+> of errors, just like what most error APIs do.  When at it, it is renamed to
+> migrate_error_propagate() to imply migration version of error_propagate().
+>
+> Comments welcomed, thanks.
+>
+
+I think with this series we could now work to reduce the complexity of
+migration_connect():
+
+The outgoing code in socket.c and tls.c could call
+migration_connect_error_propagate directly so migration_channel_connect
+only needs to check migrate_has_error() and then exit as early as
+possible. From migration_connect onwards we can assume connection
+success.
+
+What do you think?
+
+tangent:
+(is it too much bikeshedding if I send a patch doing s/migrat*_/mig_/
+all over the place? it's so annoying having to check the code to get the
+prefix correct when writing emails)
 
 
