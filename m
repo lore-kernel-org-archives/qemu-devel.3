@@ -4,152 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57076D11711
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:33:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D419D1170E
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:36:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQTIe-00049I-LG; Tue, 02 Dec 2025 11:32:24 -0500
+	id 1vQTMV-0006pE-7d; Tue, 02 Dec 2025 11:36:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1vQTIc-00048s-Jw
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:32:22 -0500
-Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vQTMT-0006op-SD
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:36:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1vQTIb-0005yG-1s
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:32:22 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=c3pYT+eznn74YC8yt3jgwTznRTf1+e7V0yeZY8wo75jRlfXpIlnTokg4IAu8Sw/Uj+zNRLEMdRrVtn36LiBhofKlJqQkK1Zk01ZmBfhqZ7jnY7BDHpbD2Ojl7+LX1mnpYqneL96raNDjRh20H9p8rNeqhbA2j/RKWKMVWoAER6P6pq/nL4cJg9k/bjODVL/aCW1V9mWNyGIEmzk5n0i03kUQ2Nha1uaqFIOe7y+mWks1Jn4XniD3Xt9B1u3TJGmJNlxgbBOVwI+qGdaluNRuOHVHCj2hPKiVDm72Kaptpoy149QYATlXkd1swUox/8c7WFJ+S7sihtz4D+Gi0FKg8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FXbwsgq2K6eVm4heJD3wssEIynts8bL76glfWpTGwrs=;
- b=uODvcx32LYw6Ey7yR/ENOEIldrOr6EATH7H4h0jc1wSndjad/F/h5aIAobzzju46Za8dWkPRQlZZJxKJH811rIuA7b1VBwYbEoAZq8MrsHgvtISZ40CjVs/FPP800PktEFQ3qkNF9xczSDtBA8EtDYe4RFYdU1ULK63KQF4zzR0qdZlNVN2EfacWog/wybRpYs3lDYHVpIAa1+Q52CcMTFQayd+VZYUNSUlJwSViV73IpGZbIZqTu8lqbeFpAMCLh7kGEizAZbz+fsuFuIoY4AHwetpxo5Y4okHsedk8ffp15d3sm8pF+Mpff0T5TvbIfYTaXG42Mb4v3fa2QXTbfw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FXbwsgq2K6eVm4heJD3wssEIynts8bL76glfWpTGwrs=;
- b=HW3IFO11mk3EzqYzLXJ71nJYbG897Bpt8V+wSedYpjnD2Oy3L1JM1oCPq5KRax4VeJ3p2qj9Flcvzx07fVSZBbBM5JyuRVBDFhVm74uJgaWq7O+wopXtJQZrKg3Hapki5neumInaejaM7URbzFx55rdyeh9K7EX2NkqP8+sSxdmB72JESXepwEPiinsxk2iR0AVRtIyROfI6z1IYH3DO/Djy6bhitDlmodV9AM8l9MOoTjRWqPH9DBdDfXM1FQb6dOljq9FFCgnbODbk945ZX0PblOeMjCxLsBLZkPLrxUhnk8yrdYPPqKX6MoaHnWBySdEkVQZwvjfBcmSLOdXlZg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12) by GV1PR08MB11051.eurprd08.prod.outlook.com
- (2603:10a6:150:1ef::20) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Tue, 2 Dec
- 2025 16:31:44 +0000
-Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
- ([fe80::4e37:b189:ddcd:3dd8%3]) with mapi id 15.20.9366.012; Tue, 2 Dec 2025
- 16:31:43 +0000
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-To: qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, peterx@redhat.com, stefanha@redhat.com,
- vsementsov@yandex-team.ru, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com
-Subject: [PATCH v2 3/4] scripts/qemugdb: timers: Improve 'qemu timers' command
- readability
-Date: Tue,  2 Dec 2025 18:31:18 +0200
-Message-ID: <20251202163119.363969-4-andrey.drobyshev@virtuozzo.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20251202163119.363969-1-andrey.drobyshev@virtuozzo.com>
-References: <20251202163119.363969-1-andrey.drobyshev@virtuozzo.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: FR3P281CA0120.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:a3::18) To VI0PR08MB10656.eurprd08.prod.outlook.com
- (2603:10a6:800:20a::12)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vQTMR-0007VT-AT
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:36:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764693377;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iWFCPVK34q9qvoDCrpvi/7OctcBRYtz25HrbFC+7+j8=;
+ b=jR9f2sl66hPnfw5L+rTXQTRNGNozyNKH+5s5Ibn3zLWaYpWt0x+83PvDjnWiDvhYS7RLQa
+ nYVcJUMreOeaLHm7EX41BR7asHd5WoG+I9GlZhglx5ON+PxxasN1ykEly4RKEiy6KrWBAJ
+ Qrrt0sBLQLErNqdnpZUEn+yldl+HeO4=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-360-WuunpFP8OzOUV0-trbWnHg-1; Tue, 02 Dec 2025 11:36:16 -0500
+X-MC-Unique: WuunpFP8OzOUV0-trbWnHg-1
+X-Mimecast-MFC-AGG-ID: WuunpFP8OzOUV0-trbWnHg_1764693375
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-882381f2092so179372496d6.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 08:36:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764693375; x=1765298175;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iWFCPVK34q9qvoDCrpvi/7OctcBRYtz25HrbFC+7+j8=;
+ b=g2SZqRaZWT3p+vOqcVFwQxNqOQ6ufC4J62l2+AowzatZEt2npB0qKrRZkPEpmmCvRY
+ /fddVroKLC0Qv1S6bh0WOPWWWD3vT4cS2eL77oaUDUcpyqqo82qQcBRPIZcN8HavHZKR
+ NYlw/hGOHLAFzRmdRF8pE1zoI28cmIycHrc4MgfNqj74fEgGFOrk8smBufgBd8sUdKCo
+ J3rS8XZ8YB4cwzNM+aRjpdj32SxE8s67fdhoo2Wk2t5DAze4pabHqjuts+HGS8N4P1se
+ deqvwLdLvRkLKAmIu+nNOnyxkmzhttKPXEY0Wswkc9xj7GsDXrF9d5wHGiAHUjKtqTDO
+ yZRg==
+X-Gm-Message-State: AOJu0YwLR2UXvdOREkK8Kfi+hNJgFwiJOhX1wwrcuCTXVgAkX8hgF9eG
+ bMIClW4O829rZWmXFqYSGk8KJLP0yrX/rT4ObQrIZYHDN37RNLl/Reh21rvtsVfwVTBhzaqacS3
+ bi6pUpGK1CiE2G1jjZfrz9SeRbf6enWSbcYPlfjIOYX2UZFDi2ElwPCUp
+X-Gm-Gg: ASbGncsg5i6WBDD3Nf+69O9MWmj9GfZ1XlJgiz8YmUXzx2ze+ITwHCNw3s47p/KRSfD
+ FWOVM6myIwnABhhw2s7FFgRgJO8O+QNQojwonl468kNbUunyPXKNT6tB9XSWG3O5Yen24pQHgVe
+ HHbFxOXZYkuZBvxj5Oby3xPZ6JieHpNYzGYKmN2y2jyGxugmkFlbxbwJC/mfDEcRqDk3fcNkdrI
+ soKZGWec9XGA4mIrA/w/Nektfuq9O+aGr0RPvT0IW2UF2iCO9Bic/sEdFzrYQ8t/mkLkEYuwg7Z
+ aBN7bNv3/47kbbYDf8uFqEFBTyGrp1CTKUouD8uoOatYuevTLyfT+OD7F1jr6ap1+Va4RFhy5xN
+ zxjuP8YbhvBlIBgb7IPSTI9g8jtow9TIDOnOWKAITqrJ635S+2VUUNRQ8yA==
+X-Received: by 2002:a05:6214:e6c:b0:880:4c2f:5075 with SMTP id
+ 6a1803df08f44-8847c5365e7mr686073486d6.56.1764693375404; 
+ Tue, 02 Dec 2025 08:36:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE//GRtdwiqihoAZ0nOj6FQDYAgxNEU0uDbno4BsJ1nxfqYyCQV/nmuYLrnlEnLCKAvJyz1wg==
+X-Received: by 2002:a05:6214:e6c:b0:880:4c2f:5075 with SMTP id
+ 6a1803df08f44-8847c5365e7mr686072926d6.56.1764693374985; 
+ Tue, 02 Dec 2025 08:36:14 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:fa3:e4b0:95dc:ab11:92db:6f9e?
+ ([2a01:e0a:fa3:e4b0:95dc:ab11:92db:6f9e])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-88652b493f3sm106872176d6.31.2025.12.02.08.36.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Dec 2025 08:36:14 -0800 (PST)
+Message-ID: <a63b3689-ef46-48b1-ae28-34976ab34d0b@redhat.com>
+Date: Tue, 2 Dec 2025 17:36:12 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|GV1PR08MB11051:EE_
-X-MS-Office365-Filtering-Correlation-Id: a3703955-4fba-4dcc-de9f-08de31c04780
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|52116014|38350700014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?tWB7C+uqiSw7FPPjEPIBIuQUXB/Mh9lhPofCZ7CH6DNid3Nb/S0Nf4yulhKM?=
- =?us-ascii?Q?2DAQ3NRw6z5cxLe+2vjalqZpyf2cKPJZEgktsuxJdGV8FEWBuhq9uugxAXWE?=
- =?us-ascii?Q?iAQf0MxMl2gq2rDTH8ZitRf9crvj8IekaKpvoMqJmLThmlLxuNFTgwjXkYgQ?=
- =?us-ascii?Q?rrq6KQ4ApteTN08wc6uDTzb91ys89ok0PdbeCoY3qPleyrtaV6ZFi9EvZAEk?=
- =?us-ascii?Q?9gvWbTF2Bi7Ik6sj22paGcMT9t3lUapCMYUtg/hzKENPShsMBIvnZSCKy5Ka?=
- =?us-ascii?Q?gdiJleC5vU9IBYc6IesrhfMofNsNdQryn27RtS9a+jWTGCgCyMNEMsrl82/E?=
- =?us-ascii?Q?eWQSG1a4e5iF8ZBUxv/z97YS2VDxmT2NPREbGDPT25FUdulVCbDfFxaewxNa?=
- =?us-ascii?Q?Xe2tE4sga+ocRKqzr+QF9YUL7s+wUh6j2qHJ4/W1y/i7OQxXz/xhOxLCEhwj?=
- =?us-ascii?Q?LYe6iw3lUjwtSF9rCkmphD1y4cHgQfriv+c1IExUIBf16G69E/8Yh+63qiju?=
- =?us-ascii?Q?LTSl3MtDCoDyV5uEhB2ey06UcnYy/n6vLiNYciviUcd2XcYzvQh4YY/To1np?=
- =?us-ascii?Q?cDdVEsT24kz9ZHlj7ikhjb6lzWUNMf+Ug3iFQxJlL1cauhFwDDBQRBanCxtF?=
- =?us-ascii?Q?IwJhbWq8SMBcTZedSu9aSPyJegVEIKusGAdOq5S1zP7cX1sNBuftR7Pa5wiK?=
- =?us-ascii?Q?GmXd/akWyNf6KH9O7gMqc/pkrLm7SC2hoGijMjjBOjGIjeIw+WEmfPb+fpdL?=
- =?us-ascii?Q?pUfZ5/qbD+sjcmqbAp7lplFPP4toy1sXPp0gb5TpuFfQOi717C2GwMZyBpoZ?=
- =?us-ascii?Q?rQ879ztTuLCARhpISq+c2szAwOp0sJp99qucXZ/b0E1GjlXWzIXXJyRL0Lve?=
- =?us-ascii?Q?wC4po14pBANNZg+zNekXgtPVtI+X2gaVby++RT/q9ggI04RApdymL0BPyz0f?=
- =?us-ascii?Q?TMFwO532ISPpKCTO1jYO/VxGN2Dy0bnABIxAJswOIkMbbtuDxijkPC7MFC2T?=
- =?us-ascii?Q?fR4EKu7xGsAzZSzc1PGxPuR0+XoeogesbZcYVxM0iqpjrXP89rKemyiObk8J?=
- =?us-ascii?Q?fbb0t25AICOpS/cF2HSeRYLibikbOh6umb56FSZhIVJSKkDK/SHaBpLHkpJF?=
- =?us-ascii?Q?kBZx4GtgVx6reFMrQ3m8VOWYO9H3NojoU4tCk1jDxEH6ztEG+henkl08P/DX?=
- =?us-ascii?Q?x/WAM91evfTjO8MuRfa/RoTVlTLenQe/gaBeuPnjdMfPeWFRhe3TMK+F5RqA?=
- =?us-ascii?Q?lyxxOtRd/jCBqheCg6m4G8v7Urd0i5giD3+HTtwV2TJiVQZOgyeqL59tjRzj?=
- =?us-ascii?Q?xeBJ0kAtzsfdQuwwoJJm3b0Y0lGfpCs/tj40KKxf6M5UqEoWIeF/LexCxqfw?=
- =?us-ascii?Q?Xj3uoDgq+jzEmhgeOV1WDxy+z2uE4+IdB+yLSIR3eAiVYBbK/whchdtNwBHi?=
- =?us-ascii?Q?mLvFdKUM22iUFPh4aiZ0NVpgq6y5x4NMBqn3osRJVuIo85JOXWNNxco7rH2n?=
- =?us-ascii?Q?Y07N91rcTNsBUMCUMEXdqudUbvdtoScqXynj?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(52116014)(38350700014); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?yesKUtoiK2akKcNwiHDM93PX1hMh/Yo6EVKT2mqzOs4ie3+WSl19UczRXtT1?=
- =?us-ascii?Q?eFrFAAHJrFATEDDpbsmyIimPbpkry+vwXhFhv4pdsTnwzYxOKc3sVPWw2CaP?=
- =?us-ascii?Q?gY30sUkbDfjX4juaV6HAFjo6wVdyMggcKKHU/udzv/goraEqJyLmfpZnI7Pg?=
- =?us-ascii?Q?kmu5fIpB8iQ3zFA1oRcFlzFVIAXkNuULEfvu/8y2CI6T6OWJQBsWQPnvJrPJ?=
- =?us-ascii?Q?Sv7vt9y93izOc/xDSaiLiOE1rN0GrawpMZ1ls31bq1pd4nCToXi65F67XFi0?=
- =?us-ascii?Q?SlJaeN+qx/1ykqN5Fvbqx5FAM+xZihKZFg/RZG03tqU7QkktvrGK/qO4G1Oq?=
- =?us-ascii?Q?6sU+AZSLZ96GqnCOek9iXaaTYdROosyKFPgYFQalrut6gOVk7hFi5eWs7otL?=
- =?us-ascii?Q?kjhjS0LvaGuVxYQXVtXy0NF9+r0KyDmku8quZv03E4N9iKdPVZ1jhpKQR3ob?=
- =?us-ascii?Q?N0dp2EdkmtrJH9oRNd9NlHHPiSnjza9RTB/2joX3hzFWr5VFJPwqA93At4KJ?=
- =?us-ascii?Q?v1tr8VnII27SntKzMj8R/BugO2B1CnOg8e7XPGOgmrDPEo/Jk/EKg+w9fBJ1?=
- =?us-ascii?Q?LHr9+VUGhFHF0WZRTeySf/vgR4CozOvJvdsCeEkJkbKX/toiOpSBPC5QO2+x?=
- =?us-ascii?Q?f7RlC1+dDFs/PnWLlHDdIhrdj0T2AzRTaXgWkIJE6fFypfaUhdh/By4pU+o3?=
- =?us-ascii?Q?D28hEo3lV8KUytgGQR8juxzSOZUbd9elxYIiEhmGgUuHrcxz2Fc1lAYtuI2q?=
- =?us-ascii?Q?4BTDNCKP8uWyiHfhbY5G8qblflFp32o9sirLdEBe04eEiS15AVIy1wV1n4v2?=
- =?us-ascii?Q?BmqvUl3ndpVDtT5v/CXDx3FTM7aE6yER3hfdjGDjnErmzyEZ4T0US8rCeUJ5?=
- =?us-ascii?Q?v6Ax491TNxPyaoveOa9t1Lk3CqdoCsoMIf615hglGZ4N11NFT1oVNa2MITeG?=
- =?us-ascii?Q?NkvZBivBNQQiOvH1x0ENkuvo2H7PPaRZnkYPqKx9h52J95ag0tRFJqqslvm8?=
- =?us-ascii?Q?XioLb7lK+omXV5YdBgXHu7gEEGq1xcisrF6QMCC7kebM63c4ohUEo1G7yjcm?=
- =?us-ascii?Q?W2jofW9mUWBiYaWxKgFw61ZREGLxrtm7pUZJanoHLbavJVbFFxQZdt0zllHV?=
- =?us-ascii?Q?ynoV4UNyWkt75XQ3rB+kPXINMjlWA7Rzjhwsr8aDnLxG4kPX11Wrp0JQMDbT?=
- =?us-ascii?Q?tu7/OEEeigQ4Pmudc9it4LPCUprsEcoDEAlUjd7CYsP7wufVk8Iar5hxBLr5?=
- =?us-ascii?Q?nSsSQYqQ+vOdw0rNpLTKzF5X7Zw2CLzHBvihIHmnr2x9mBOodUING0DKzGP7?=
- =?us-ascii?Q?5V89pza/eMGnbCgpZS+vmD3Ka2g0/Ld/pJu/Xrz7TsdY8EfI+WnLoqLOuEHC?=
- =?us-ascii?Q?QzXejBkLytwY0151UZCm30f4GZ6U92ix2eJo3cW5q+0wukOFIIdFMtvS4ml1?=
- =?us-ascii?Q?ESROowl4X/YfQzUk1X9/NRHwBy0Ie5HCkhzujgPWVYF4M5sAHU+tLl0ZDnQk?=
- =?us-ascii?Q?SIbuzjLRlzIiFrnffftgNs+2p9ffA4pMFksNSQel6YSjLir5WQ2GBaNOakfl?=
- =?us-ascii?Q?2escbE53Fl+xU5IIGumaTv7lPGcM0qyj8RUZDu+a5nLGK3cNac4RfbSK0kK9?=
- =?us-ascii?Q?1Q=3D=3D?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a3703955-4fba-4dcc-de9f-08de31c04780
-X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Dec 2025 16:31:43.8598 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 89+LmZAex99uVWIzRjMLy0mzUg1fmXwEFcCv+CBRYVzKTak52hqMbaA/Ajy0l226AxoI3oSpC5N7nYJ6zBoMT21E76poHkjScGAMhPE8WBk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR08MB11051
-Received-SPF: pass client-ip=2a01:111:f403:c200::1;
- envelope-from=andrey.drobyshev@virtuozzo.com;
- helo=DB3PR0202CU003.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v3 20/21] hw/arm/smmuv3: Initialize the secure register bank
+Content-Language: en-US
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>
+References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
+ <20251012151542.4131398-1-tangtao1634@phytium.com.cn>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251012151542.4131398-1-tangtao1634@phytium.com.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,86 +117,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Add the 'attributes' field from QEMUTimer;
-* Stringify the field's value in accordance with macros from
-  include/qemu/timer.h;
-* Make timer expiration times human-readable by converting from nanoseconds
-  to appropriate units (ms/s/min/hrs/days) and showing the scale factor
-  (ns/us/ms/s).
+Hi Tao,
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- scripts/qemugdb/timers.py | 49 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 44 insertions(+), 5 deletions(-)
+On 10/12/25 5:15 PM, Tao Tang wrote:
+> Initialize the secure register bank (SMMU_SEC_SID_S) with sane default
+> values during the SMMU's reset sequence.
+>
+> This change ensures that key fields, such as the secure ID registers,
+> GBPA reset value, and queue entry sizes, are set to a known-good state.
+> The SECURE_IMPL attribute of the S_IDR1 register will be introduced
+> later via device properties.
+>
+> This is a necessary step to prevent undefined behavior when secure SMMU
+> features are subsequently enabled and used by software.
+>
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> ---
+>  hw/arm/smmuv3.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index b44859540f..0b366895ec 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -331,6 +331,15 @@ static void smmuv3_init_regs(SMMUv3State *s)
+>      bk->gerrorn = 0;
+>      s->statusr = 0;
+>      bk->gbpa = SMMU_GBPA_RESET_VAL;
+> +
+> +    /* Initialize Secure bank */
+> +    SMMUv3RegBank *sbk = &s->bank[SMMU_SEC_SID_S];
+> +
+> +    memset(sbk->idr, 0, sizeof(sbk->idr));
+> +    sbk->idr[1] = FIELD_DP32(sbk->idr[1], S_IDR1, S_SIDSIZE, SMMU_IDR1_SIDSIZE);
+> +    sbk->gbpa = SMMU_GBPA_RESET_VAL;
+> +    sbk->cmdq.entry_size = sizeof(struct Cmd);
+> +    sbk->eventq.entry_size = sizeof(struct Evt);
+what about prod, cons, base? Don't they need to initialized as for NS.
 
-diff --git a/scripts/qemugdb/timers.py b/scripts/qemugdb/timers.py
-index 1219a96b32..916c71b74a 100644
---- a/scripts/qemugdb/timers.py
-+++ b/scripts/qemugdb/timers.py
-@@ -21,14 +21,53 @@ def __init__(self):
-         gdb.Command.__init__(self, 'qemu timers', gdb.COMMAND_DATA,
-                              gdb.COMPLETE_NONE)
- 
-+    def _format_expire_time(self, expire_time, scale):
-+        "Return human-readable expiry time (ns) with scale info."
-+        secs = expire_time / 1e9
-+
-+        # Select unit and compute value
-+        if secs < 1:
-+            val, unit = secs * 1000, "ms"
-+        elif secs < 60:
-+            val, unit = secs, "s"
-+        elif secs < 3600:
-+            val, unit = secs / 60, "min"
-+        elif secs < 86400:
-+            val, unit = secs / 3600, "hrs"
-+        else:
-+            val, unit = secs / 86400, "days"
-+
-+        scale_map = {1: "ns", 1000: "us", 1000000: "ms",
-+                     1000000000: "s"}
-+        scale_str = scale_map.get(scale, f"scale={scale}")
-+        return f"{val:.2f} {unit} [{scale_str}]"
-+
-+    def _format_attribute(self, attr):
-+        "Given QEMUTimer attributes value, return a human-readable string"
-+
-+        # From include/qemu/timer.h
-+        if attr == 0:
-+            value = 'NONE'
-+        elif attr == 1 << 0:
-+            value = 'ATTR_EXTERNAL'
-+        elif attr == int(0xffffffff):
-+            value = 'ATTR_ALL'
-+        else:
-+            value = 'UNKNOWN'
-+        return f'{attr} <{value}>'
-+
-     def dump_timers(self, timer):
-         "Follow a timer and recursively dump each one in the list."
-         # timer should be of type QemuTimer
--        gdb.write("    timer %s/%s (cb:%s,opq:%s)\n" % (
--            timer['expire_time'],
--            timer['scale'],
--            timer['cb'],
--            timer['opaque']))
-+        scale = int(timer['scale'])
-+        expire_time = int(timer['expire_time'])
-+        attributes = int(timer['attributes'])
-+
-+        time_str = self._format_expire_time(expire_time, scale)
-+        attr_str = self._format_attribute(attributes)
-+
-+        gdb.write(f"    timer at {time_str} (attr:{attr_str}, "
-+                  f"cb:{timer['cb']}, opq:{timer['opaque']})\n")
- 
-         if int(timer['next']) > 0:
-             self.dump_timers(timer['next'])
--- 
-2.43.5
+Also I am surprised only one IDR field is set. No need for some others?
+
+Eric
+>  }
+>  
+>  static int smmu_get_ste(SMMUv3State *s, dma_addr_t addr, STE *buf,
 
 
