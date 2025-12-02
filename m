@@ -4,77 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4616D116F6
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 12:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91619CFD2F6
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 12:01:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQP34-0005DZ-IO; Tue, 02 Dec 2025 07:00:02 -0500
+	id 1vQP4G-0005oi-ST; Tue, 02 Dec 2025 07:01:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vQP2y-0005DG-4U
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 06:59:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vQP4F-0005oV-9T
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 07:01:15 -0500
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vQP2v-0004VK-OT
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 06:59:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764676790;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Zw87keFOa5uYYKknnfEjadLNJ8Tt85K22V05rIfTHIM=;
- b=X2fRt/xDMRcygGjQGbp8AxxaVNpKRg4w7w/D5OdcfvTlIJzSMevfsm3yY77azm/sh/M/bl
- 1AkQR08Jy0zwgU2Z23nftr0ypkiGDjHljdRQoL2e++WwNGFtIRu2fg6hrVyko7xd+6YU2E
- vbnE11puSjSVLcm/3Hhp0GXbrVsUyvU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-235-j3cO9tQxPzyb9AsFfMWHtQ-1; Tue,
- 02 Dec 2025 06:59:47 -0500
-X-MC-Unique: j3cO9tQxPzyb9AsFfMWHtQ-1
-X-Mimecast-MFC-AGG-ID: j3cO9tQxPzyb9AsFfMWHtQ_1764676786
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 59B641800370; Tue,  2 Dec 2025 11:59:44 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8570919560B7; Tue,  2 Dec 2025 11:59:43 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C4BC121E6A27; Tue, 02 Dec 2025 12:59:40 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,  Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,  Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH for-11.0 v2 7/7] migration: Replace migrate_set_error()
- with migrate_error_propagate()
-In-Reply-To: <20251201194510.1121221-8-peterx@redhat.com> (Peter Xu's message
- of "Mon, 1 Dec 2025 14:45:10 -0500")
-References: <20251201194510.1121221-1-peterx@redhat.com>
- <20251201194510.1121221-8-peterx@redhat.com>
-Date: Tue, 02 Dec 2025 12:59:40 +0100
-Message-ID: <87fr9tumab.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vQP48-0005st-Sk
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 07:01:15 -0500
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0D6205969FB;
+ Tue, 02 Dec 2025 13:01:07 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id LWBfakUaoU7k; Tue,  2 Dec 2025 13:01:05 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 121BD5969F9; Tue, 02 Dec 2025 13:01:05 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 102E15969F6;
+ Tue, 02 Dec 2025 13:01:05 +0100 (CET)
+Date: Tue, 2 Dec 2025 13:01:05 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+cc: =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ Thomas Huth <huth@tuxfamily.org>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Alexandre Ratchov <alex@caoua.org>, dirty.ice.hu@gmail.com, 
+ Christian Schoenebeck <qemu_oss@crudebyte.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ =?ISO-8859-15?Q?Volker_R=FCmelin?= <vr_qemu@t-online.de>, 
+ geoff@hostfission.com
+Subject: Re: [RFC 00/24] audio: add GStreamer backend
+In-Reply-To: <aS3wKkxxrekvIWuc@redhat.com>
+Message-ID: <a79a1247-a218-fb0b-746c-01c97a9781e6@eik.bme.hu>
+References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
+ <e6ada475-da8a-4643-4986-2ffc1d5b9c66@eik.bme.hu>
+ <CAMxuvayr-qyjzsexWL1wt72mJA_-Dew9JAofjELhSVYC_w8SvA@mail.gmail.com>
+ <fdd7e1c4-a2a5-4039-59a9-9afda763feea@eik.bme.hu>
+ <aS3wKkxxrekvIWuc@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-138701619-1764676865=:34920"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,400 +78,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> migrate_set_error() currently doesn't take ownership of the error being
-> passed in.  It's not aligned with the error API and meanwhile it also
-> makes most of the caller free the error explicitly.
+--3866299591-138701619-1764676865=:34920
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Mon, 1 Dec 2025, Daniel P. Berrangé wrote:
+> On Mon, Dec 01, 2025 at 08:30:26PM +0100, BALATON Zoltan wrote:
+>> On Mon, 1 Dec 2025, Marc-André Lureau wrote:
+>>> On Mon, Dec 1, 2025 at 5:03 PM BALATON Zoltan <balaton@eik.bme.hu> wrote:
+>>>> On Mon, 1 Dec 2025, marcandre.lureau@redhat.com wrote:
+>>>>> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>>>>
+>>>>> Hi,
+>>>>>
+>>>>> The following patch series provides a GStreamer-based audio backend,
+>>>> which could
+>>>>> ultimately allow QEMU to leverage the framework to support the various
+>>>> audio
+>>>>> subsystems and simplify the audio handling logic (timing, resampling,
+>>>> mixing
+>>>>> etc), as well as allow greater pipeline flexibility and customization.
+>>>>
+>>>> While it's good to have a GStreamer backend to integrate well into systems
+>>>> already using that, this should not replace existing audio backends in
+>>>> QEMU. The reason is that GStreamer has extensive dependencies that I would
+>>>>
+>>>
+>>> GStreamer itself is not so big and doesn't have that many dependencies that
+>>> qemu doesn't already have.
+>>
+>> Except that this proposal uses GStreamer from rust so would also pull in all
+>> the rust dependencies too which is still not needed for QEMU. Saying that
+>> it's optional but then you lose audio output is also not quite acceptable.
 >
-> Change the API to take the ownership of the Error object instead.  This
-> should save a lot of error_copy() invocations.
+> In terms of replacing the existing audio backends, it would simply have to
+> wait until we declare Rust to be a mandatory dependency of QEMU, before
+> proposing any removal of existing backends.
 >
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  migration/migration.h            |  2 +-
->  migration/cpr-exec.c             |  5 ++--
->  migration/migration.c            | 44 +++++++++++++++-----------------
->  migration/multifd-device-state.c |  5 +---
->  migration/multifd.c              | 19 +++++++-------
->  migration/postcopy-ram.c         |  5 ++--
->  migration/ram.c                  |  4 +--
->  migration/savevm.c               | 16 +++++-------
->  8 files changed, 43 insertions(+), 57 deletions(-)
+>>>> as another audio backend but not as a replacement for QEMU's audio
+>>>> handling logic and backends.
+>>>
+>>> It would be great if people with very specific or constrained requirements
+>>> on qemu audio could check if the GStreamer backend fits their need.
+>>
+>> At least one of them already said it wouldn't. Also why somebody not running
+>> a desktop environment that uses GStreamer would want to add that dependency
+>> and use a GStreamer plugin to get the sound back to their native sound
+>> service when it is probably already supported by QEMU directly? QEMU also
+>> has to support Windows and macOS sound services so having a few more
+>> Linux/Unix ones does not make it much more complex.
 >
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 213b33fe6e..e4b4f25deb 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -525,7 +525,7 @@ void migration_incoming_process(void);
->  
->  bool  migration_has_all_channels(void);
->  
-> -void migrate_set_error(MigrationState *s, const Error *error);
-> +void migrate_error_propagate(MigrationState *s, Error *error);
->  bool migrate_has_error(MigrationState *s);
->  
->  void migration_connect(MigrationState *s, Error *error_in);
-> diff --git a/migration/cpr-exec.c b/migration/cpr-exec.c
-> index 0b8344a86f..da287d8031 100644
-> --- a/migration/cpr-exec.c
-> +++ b/migration/cpr-exec.c
-> @@ -158,8 +158,9 @@ static void cpr_exec_cb(void *opaque)
->  
->      error_report_err(error_copy(err));
->      migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
-> -    migrate_set_error(s, err);
-> -    error_free(err);
-> +
-> +    migrate_error_propagate(s, err);
-> +    /* We must reset the error because it'll be reused later */
->      err = NULL;
->  
->      /* Note, we can go from state COMPLETED to FAILED */
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 0ff8b31a88..70813e5006 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -914,9 +914,7 @@ process_incoming_migration_co(void *opaque)
->  fail:
->      migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
->                        MIGRATION_STATUS_FAILED);
-> -    migrate_set_error(s, local_err);
-> -    error_free(local_err);
-> -
-> +    migrate_error_propagate(s, local_err);
->      migration_incoming_state_destroy();
->  
->      if (mis->exit_on_error) {
-> @@ -1548,14 +1546,20 @@ static void migration_cleanup_bh(void *opaque)
->      migration_cleanup(opaque);
->  }
->  
-> -void migrate_set_error(MigrationState *s, const Error *error)
-> +/*
-> + * Propagate the Error* object to migration core.  The caller mustn't
-> + * reference the error pointer after the function returned, because the
-> + * Error* object might be freed.
-> + */
-> +void migrate_error_propagate(MigrationState *s, Error *error)
->  {
->      QEMU_LOCK_GUARD(&s->error_mutex);
-> -
->      trace_migrate_error(error_get_pretty(error));
->  
->      if (!s->error) {
-> -        s->error = error_copy(error);
-> +        s->error = error;
-> +    } else {
-> +        error_free(error);
->      }
+> GStreamer is not merely for desktop environments. It is a general purpose
+> audio system, and in terms of QEMU, it is already used by the Spice server
+> for video encoding purposes.  IMHO it is reasonable to consider whether
+> QEMU could use GStreamer for all audio output regardless of whether it is
+> running from a desktop session or not.
 
-This is correct.  Also correct, and possibly easier to understand at a
-glance:
+But it's most likely found as dependency in apps that already use other 
+libraries from the same family that usually come with a certain desktop 
+environment. Also spice does not want to replace all the other display 
+backends or SDL does not replace other sound backends so the same way it's 
+fine to add a GStreamer as another optional way to output sound but not as 
+replacing the existing backends and sound infrastructure in QEMU.
 
-       error_propagate(&s->error, error);
+> Personally my main concern with gstreamer is that when things go wrong
+> it can be very difficult to understand why and thus hard to figure out
+> how to fix it, unless you're pretty experienced with gstreamer.
+>
+> If we do consider rationalizing how many backends we have, IMHO, it
+> would be desirable to retain at least one other QEMU audio backend
+> that is considered simple & reliable (fool proof) to use & debug.
 
-error_propagate() has code for a number of additional conditions, but
-these are all impossible:
+That probably means we should retain at least the lowest level output for 
+the native sound systems of the OSes where QEMU runs but then we can also 
+have other backends as the main complexity is in the audio infrastructure 
+and not in the backends. What may be possible is to drop OSS and the 
+mixing support that is mainly needed for OSS arguing that ALSA has 
+replaced OSS on Linux and sndio replaced it on BSD and these can already 
+do resampling and mixing themselves so this could simplify QEMU audio code 
+to just pass data to a sound service but I'm not sure this feature isn't 
+used by some people in QEMU with other backends or to record to wav for 
+example. If we remove that too saying that recording can be done from the 
+system native sound service then maybe no need for resampling and mixing 
+in QEMU at least for output. But what about input where both the system 
+and the emulated cards are limited to some specific samping rates and they 
+are not set to use the same? Or do the sound services take care of that 
+too and you can ask for arbitrary input rate and will it convert from 
+hardware rate or you get back an error and QEMU has to handle this?
 
-* @error cannot be null here (because error_get_pretty(error) above)
-
-* &s->error cannot be &error_abort, &error_fatal, or null
-
-Thoughts?
-
->  }
->  
-> @@ -1601,8 +1605,7 @@ static void migration_connect_error_propagate(MigrationState *s, Error *error)
->      }
->  
->      migrate_set_state(&s->state, current, next);
-> -    migrate_set_error(s, error);
-> -    error_free(error);
-> +    migrate_error_propagate(s, error);
->  }
->  
->  void migration_cancel(void)
-> @@ -2014,8 +2017,7 @@ void qmp_migrate_pause(Error **errp)
->  
->          /* Tell the core migration that we're pausing */
->          error_setg(&error, "Postcopy migration is paused by the user");
-> -        migrate_set_error(ms, error);
-> -        error_free(error);
-> +        migrate_error_propagate(ms, error);
->  
->          qemu_mutex_lock(&ms->qemu_file_lock);
->          if (ms->to_dst_file) {
-> @@ -2647,8 +2649,7 @@ static void *source_return_path_thread(void *opaque)
->  
->  out:
->      if (err) {
-> -        migrate_set_error(ms, err);
-> -        error_free(err);
-> +        migrate_error_propagate(ms, err);
->          trace_source_return_path_thread_bad_end();
->      }
->  
-> @@ -3094,12 +3095,10 @@ static void migration_completion(MigrationState *s)
->  
->  fail:
->      if (qemu_file_get_error_obj(s->to_dst_file, &local_err)) {
-> -        migrate_set_error(s, local_err);
-> -        error_free(local_err);
-> +        migrate_error_propagate(s, local_err);
->      } else if (ret) {
->          error_setg_errno(&local_err, -ret, "Error in migration completion");
-> -        migrate_set_error(s, local_err);
-> -        error_free(local_err);
-> +        migrate_error_propagate(s, local_err);
->      }
->  
->      if (s->state != MIGRATION_STATUS_CANCELLING) {
-> @@ -3326,8 +3325,7 @@ static MigThrError migration_detect_error(MigrationState *s)
->      }
->  
->      if (local_error) {
-> -        migrate_set_error(s, local_error);
-> -        error_free(local_error);
-> +        migrate_error_propagate(s, local_error);
->      }
->  
->      if (state == MIGRATION_STATUS_POSTCOPY_ACTIVE && ret) {
-> @@ -3522,7 +3520,7 @@ static MigIterateState migration_iteration_run(MigrationState *s)
->          if (must_precopy <= s->threshold_size &&
->              can_switchover && qatomic_read(&s->start_postcopy)) {
->              if (postcopy_start(s, &local_err)) {
-> -                migrate_set_error(s, local_err);
-> +                migrate_error_propagate(s, error_copy(local_err));
->                  error_report_err(local_err);
->              }
->              return MIG_ITERATE_SKIP;
-> @@ -3819,8 +3817,7 @@ static void *migration_thread(void *opaque)
->       * devices to unplug. This to preserve migration state transitions.
->       */
->      if (ret) {
-> -        migrate_set_error(s, local_err);
-> -        error_free(local_err);
-> +        migrate_error_propagate(s, local_err);
->          migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
->                            MIGRATION_STATUS_FAILED);
->          goto out;
-> @@ -3944,8 +3941,7 @@ static void *bg_migration_thread(void *opaque)
->       * devices to unplug. This to preserve migration state transitions.
->       */
->      if (ret) {
-> -        migrate_set_error(s, local_err);
-> -        error_free(local_err);
-> +        migrate_error_propagate(s, local_err);
->          migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
->                            MIGRATION_STATUS_FAILED);
->          goto fail_setup;
-> @@ -4127,7 +4123,7 @@ void migration_connect(MigrationState *s, Error *error_in)
->      return;
->  
->  fail:
-> -    migrate_set_error(s, local_err);
-> +    migrate_error_propagate(s, error_copy(local_err));
->      if (s->state != MIGRATION_STATUS_CANCELLING) {
->          migrate_set_state(&s->state, s->state, MIGRATION_STATUS_FAILED);
->      }
-> diff --git a/migration/multifd-device-state.c b/migration/multifd-device-state.c
-> index db3239fef5..91d5d81556 100644
-> --- a/migration/multifd-device-state.c
-> +++ b/migration/multifd-device-state.c
-> @@ -143,8 +143,6 @@ static int multifd_device_state_save_thread(void *opaque)
->      Error *local_err = NULL;
->  
->      if (!data->hdlr(data, &local_err)) {
-> -        MigrationState *s = migrate_get_current();
-> -
->          /*
->           * Can't call abort_device_state_save_threads() here since new
->           * save threads could still be in process of being launched
-> @@ -158,8 +156,7 @@ static int multifd_device_state_save_thread(void *opaque)
->           * In case of multiple save threads failing which thread error
->           * return we end setting is purely arbitrary.
->           */
-> -        migrate_set_error(s, local_err);
-> -        error_free(local_err);
-> +        migrate_error_propagate(migrate_get_current(), local_err);
->      }
->  
->      return 0;
-> diff --git a/migration/multifd.c b/migration/multifd.c
-> index 52e4d25857..bf6da85af8 100644
-> --- a/migration/multifd.c
-> +++ b/migration/multifd.c
-> @@ -428,8 +428,9 @@ static void multifd_send_error_propagate(Error *err)
->  
->      if (err) {
->          MigrationState *s = migrate_get_current();
-> -        migrate_set_error(s, err);
-> -        error_free(err);
-> +
-> +        migrate_error_propagate(s, err);
-> +
->          if (s->state == MIGRATION_STATUS_SETUP ||
->              s->state == MIGRATION_STATUS_PRE_SWITCHOVER ||
->              s->state == MIGRATION_STATUS_DEVICE ||
-> @@ -588,8 +589,7 @@ void multifd_send_shutdown(void)
->          Error *local_err = NULL;
->  
->          if (!multifd_send_cleanup_channel(p, &local_err)) {
-> -            migrate_set_error(migrate_get_current(), local_err);
-> -            error_free(local_err);
-> +            migrate_error_propagate(migrate_get_current(), local_err);
->          }
->      }
->  
-> @@ -962,8 +962,7 @@ bool multifd_send_setup(void)
->          p->write_flags = 0;
->  
->          if (!multifd_new_send_channel_create(p, &local_err)) {
-> -            migrate_set_error(s, local_err);
-> -            error_free(local_err);
-> +            migrate_error_propagate(s, local_err);
->              ret = -1;
->          }
->      }
-> @@ -987,8 +986,7 @@ bool multifd_send_setup(void)
->  
->          ret = multifd_send_state->ops->send_setup(p, &local_err);
->          if (ret) {
-> -            migrate_set_error(s, local_err);
-> -            error_free(local_err);
-> +            migrate_error_propagate(s, local_err);
->              goto err;
->          }
->          assert(p->iov);
-> @@ -1067,8 +1065,9 @@ static void multifd_recv_terminate_threads(Error *err)
->  
->      if (err) {
->          MigrationState *s = migrate_get_current();
-> -        migrate_set_error(s, err);
-> -        error_free(err);
-> +
-> +        migrate_error_propagate(s, err);
-> +
->          if (s->state == MIGRATION_STATUS_SETUP ||
->              s->state == MIGRATION_STATUS_ACTIVE) {
->              migrate_set_state(&s->state, s->state,
-> diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> index 7c9fe61041..dd8e31f5ae 100644
-> --- a/migration/postcopy-ram.c
-> +++ b/migration/postcopy-ram.c
-> @@ -1927,8 +1927,7 @@ postcopy_preempt_send_channel_done(MigrationState *s,
->                                     QIOChannel *ioc, Error *local_err)
->  {
->      if (local_err) {
-> -        migrate_set_error(s, local_err);
-> -        error_free(local_err);
-> +        migrate_error_propagate(s, local_err);
->      } else {
->          migration_ioc_register_yank(ioc);
->          s->postcopy_qemufile_src = qemu_file_new_output(ioc);
-> @@ -2162,7 +2161,7 @@ static void *postcopy_listen_thread(void *opaque)
->               * exit depending on if postcopy-exit-on-error is true, but the
->               * migration cannot be recovered.
->               */
-> -            migrate_set_error(migr, local_err);
-> +            migrate_error_propagate(migr, error_copy(local_err));
->              error_report_err(local_err);
->              migrate_set_state(&mis->state, mis->state, MIGRATION_STATUS_FAILED);
->              goto out;
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 29f016cb25..a2f456d858 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -4730,9 +4730,7 @@ static void ram_mig_ram_block_resized(RAMBlockNotifier *n, void *host,
->           * Abort and indicate a proper reason.
->           */
->          error_setg(&err, "RAM block '%s' resized during precopy.", rb->idstr);
-> -        migrate_set_error(migrate_get_current(), err);
-> -        error_free(err);
-> -
-> +        migrate_error_propagate(migrate_get_current(), err);
->          migration_cancel();
->      }
->  
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 638e9b364f..67f10a5dbe 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -1125,13 +1125,12 @@ void qemu_savevm_send_open_return_path(QEMUFile *f)
->  int qemu_savevm_send_packaged(QEMUFile *f, const uint8_t *buf, size_t len)
->  {
->      uint32_t tmp;
-> -    MigrationState *ms = migrate_get_current();
->      Error *local_err = NULL;
->  
->      if (len > MAX_VM_CMD_PACKAGED_SIZE) {
->          error_setg(&local_err, "%s: Unreasonably large packaged state: %zu",
->                       __func__, len);
-> -        migrate_set_error(ms, local_err);
-> +        migrate_error_propagate(migrate_get_current(), error_copy(local_err));
-
-I'd break this line between the arguments.  Matter of taste, up to you.
-
->          error_report_err(local_err);
->          return -1;
->      }
-> @@ -1373,7 +1372,7 @@ int qemu_savevm_state_setup(QEMUFile *f, Error **errp)
->          if (se->vmsd && se->vmsd->early_setup) {
->              ret = vmstate_save(f, se, vmdesc, errp);
->              if (ret) {
-> -                migrate_set_error(ms, *errp);
-> +                migrate_error_propagate(ms, error_copy(*errp));
->                  qemu_file_set_error(f, ret);
->                  break;
->              }
-> @@ -1681,7 +1680,7 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
->  
->          ret = vmstate_save(f, se, vmdesc, &local_err);
->          if (ret) {
-> -            migrate_set_error(ms, local_err);
-> +            migrate_error_propagate(ms, error_copy(local_err));
->              error_report_err(local_err);
->              qemu_file_set_error(f, ret);
->              return ret;
-> @@ -1858,7 +1857,6 @@ void qemu_savevm_live_state(QEMUFile *f)
->  
->  int qemu_save_device_state(QEMUFile *f)
->  {
-> -    MigrationState *ms = migrate_get_current();
->      Error *local_err = NULL;
->      SaveStateEntry *se;
->  
-> @@ -1876,7 +1874,8 @@ int qemu_save_device_state(QEMUFile *f)
->          }
->          ret = vmstate_save(f, se, NULL, &local_err);
->          if (ret) {
-> -            migrate_set_error(ms, local_err);
-> +            migrate_error_propagate(migrate_get_current(),
-> +                                    error_copy(local_err));
->              error_report_err(local_err);
->              return ret;
->          }
-> @@ -2826,8 +2825,6 @@ static int qemu_loadvm_load_thread(void *thread_opaque)
->      Error *local_err = NULL;
->  
->      if (!data->function(data->opaque, &mis->load_threads_abort, &local_err)) {
-> -        MigrationState *s = migrate_get_current();
-> -
->          /*
->           * Can't set load_threads_abort here since processing of main migration
->           * channel data could still be happening, resulting in launching of new
-> @@ -2840,8 +2837,7 @@ static int qemu_loadvm_load_thread(void *thread_opaque)
->           * In case of multiple load threads failing which thread error
->           * return we end setting is purely arbitrary.
->           */
-> -        migrate_set_error(s, local_err);
-> -        error_free(local_err);
-> +        migrate_error_propagate(migrate_get_current(), local_err);
->      }
->  
->      return 0;
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-
+Regards,
+BALATON Zoltan
+--3866299591-138701619-1764676865=:34920--
 
