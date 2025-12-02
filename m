@@ -4,107 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0390CFD2F6
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 11:06:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80E86CFD376
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 11:10:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQOCb-0001tH-0M; Tue, 02 Dec 2025 06:05:49 -0500
+	id 1vQOGh-0004La-Tf; Tue, 02 Dec 2025 06:10:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vQOCY-0001rP-G1
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 06:05:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1vQOGd-0004FG-T3
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 06:09:59 -0500
+Received: from mail-francesouthazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c207::3] helo=MRWPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vQOCW-0002xu-3H
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 06:05:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764673542;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TDlBVicT8IcRINwNs453/NqnuA5DJjUHTiKCrCsFqCE=;
- b=QrHhTVeIvoALX0KU7lb4jrU9K3ygTWW8TXzoAZ40ddvy8Sc6WJV8zGcXnkhXyHV6TcO8gy
- pjB4e5BpNkdm/IXJVvAdYX8+OPEuHHaWPlPrUlcv5GJyMKyslJPM+E4x8uEtG3yQW4HLu6
- DuKrq56kMCp7vIXYQtPi8dmcK82Mma0=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-318-PpN5dyvbN76b6dcV6YYCKg-1; Tue, 02 Dec 2025 06:05:40 -0500
-X-MC-Unique: PpN5dyvbN76b6dcV6YYCKg-1
-X-Mimecast-MFC-AGG-ID: PpN5dyvbN76b6dcV6YYCKg_1764673540
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8b29b4864b7so1190038185a.0
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 03:05:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764673540; x=1765278340;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TDlBVicT8IcRINwNs453/NqnuA5DJjUHTiKCrCsFqCE=;
- b=gW/qcS8eGpLwXRNyfDmzg+mTifOlQ4bxppxPKJ+lMcV2SUkgfx7LLb4xQA1iXZUXg5
- MIp4ddRrzZYG2syPTt6nZw1XUZL4dBoNAkBIEjnCuhmhHovSVcDiFqbYfcTvD3aOGxqA
- Wf7YMWgzr5PHB9fgq97WvYPHWcQYrYJ6Gr0XFdeO8ocBApeMssF7y9E/JmR9lCvbZTd8
- bLBHro0m7iK4HKjtkxdpnpIe8CixbbrXUY442kGhpafleXr8nMOAqnUV8+U/KYEC2xmQ
- kkmgbUZ6jztrsAh3g8C4zLfKOiWM9VZScVjmf0swCBGW9bZgOjqRsmM+1ReS8Lrjcsiz
- 27DA==
-X-Gm-Message-State: AOJu0Yy+stIASYNcTa8vqwUrr+SAOpp4PmOOxRbxixRBYQI4glqFa4Bf
- o81oOx/TXYIsFKT9ZvRWK8vJp0wQ0deXXpFu4C9uXCMOjYLsperg++bsYXm0IwHWl6x5ek8SoHK
- 47mRtyTswRu/XDQVxiZx++O5hPWdaFgEScPSWzoDtH7lagLmcfTxAoWp2
-X-Gm-Gg: ASbGncsvv1bWwyIIIomd/FSxgONgR7iRd6QWpyQigC6x5S8C9jp8euKkXkFS2mI9wvE
- OO06vfDuQLKPCbGft5hNIpa9+DpnBX252Qqb7bNeyXdSymYYI5iDEJyPoyZtS4K+a+FcTW4HIka
- cJA36SEzkGgzhT55xeuC4rIcQPKnf76h4lTzCV/AYjDKWHhWZ80e61rLMmn7S9vNlw23nSCkCQy
- 3rfeho7BYHSsLq18eGRnYt891ggtm9/7fSSpL5Cugq4f2Y7cJ0UjnR3w4dRpfU7DiA1esczZOEC
- oMj1UtX5FIu6UVzOqEjc2tEHoNz60aAmnj9PAZepJyQYrWmvLMwXjKq87qJcykE8RTdScKkhLbB
- QXcIJJlmv/DOfdV68k8KP95laUpx6n5iTk9jiIWbtSJchsHUgQA2Q6dENNg==
-X-Received: by 2002:ad4:5caf:0:b0:882:4901:e959 with SMTP id
- 6a1803df08f44-8863b076c00mr466343186d6.60.1764673540189; 
- Tue, 02 Dec 2025 03:05:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEr+J0H8C6cfuEbB9V5yIckQXiifc4QaL24q+zxzYwx9NFoAhjH95+mTqxLN2RNBqLvHTo7dg==
-X-Received: by 2002:ad4:5caf:0:b0:882:4901:e959 with SMTP id
- 6a1803df08f44-8863b076c00mr466342536d6.60.1764673539753; 
- Tue, 02 Dec 2025 03:05:39 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:fa3:e4b0:95dc:ab11:92db:6f9e?
- ([2a01:e0a:fa3:e4b0:95dc:ab11:92db:6f9e])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-886524e6088sm103014076d6.21.2025.12.02.03.05.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Dec 2025 03:05:39 -0800 (PST)
-Message-ID: <8c9dc342-46ff-412b-aaf1-cdd34a079b4c@redhat.com>
-Date: Tue, 2 Dec 2025 12:05:37 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 07/21] hw/arm/smmuv3: Track SEC_SID in configs and events
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1vQOGb-0003oE-IY
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 06:09:59 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=R4HjOtCfoS6bzyY+QpYVjSZgaoI90jCN1A74x4HoLG5KEVdSdaLkd/d/EkJjmwSs+07s3vjUP5wWngWDyha9pbJVO1A9EM3D5MwF7971vREDZ7+JRVFDgdjFJO4pUnis82XiI0vbC5jyD76qwGuH/esbMtdpvZ45zXUi4DBYu5gkjgQCRzJXA1mfj5xo8qRmtJBk/n61BWbHxq10QpzxiHaBztpq8jvjKPrRScq3fMSxACDBwVKM0WOIm8r4TDlsvgAP1cwkVEKcIRK+7MMFGF1YAEhHvjTZj4MZi5fvq5ZauU2t2M0S0taIbDQL6/X1qO2LAjKFXmSOkbEvyOd5sQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pbeSlsUvA7myMMa+6daYbvA/QjO24hZxeKjKSFHH+jo=;
+ b=AQUg0qux3bCOsCEPyimpMJqk+glviZtI3KMV/WPqIIhjYxiKyF026hbr9VDTafU+ou4RhZku0Zjqy3Geu+Lq8wgVZ6oDz9OD7akIiJbyBGGf0R2wbfrbZFk3peg7rbTqpI66rCABeZsr3KPFPW4KV8p8Ipus+I4rCcJeBMwibTUN7D9Z9wbfAtOrXdh7zkx+kHhbpgLT36n/WnGlDVO1P1J2BUvGVq0OhSXbk2mvSQmyH11D1kffWvYR0XIiE6pokl/l7dchh0m7qcKitx7+Cw/RzYZj4Bedah59t/1mpY3pzDwOoEuLEfBAujb8I+L4A974fXPD1F/EGf6Yw2c3vg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pbeSlsUvA7myMMa+6daYbvA/QjO24hZxeKjKSFHH+jo=;
+ b=CfPjuNPCjVRXiBxq1j7HBgaJhc92qaQU9/nJWU3pDfMte9d2MtFCO8lwSRQChbL+OK0ofdlc2J15OsvXpc7nAuIbSW6l8VU1liBmX4kOfIgoFKuxfc/GsQXlXTD06dw82gZSoEnbpqVJeigVghxkiEGPLjk3jKFngrDkx6ys1D1Wz4j1UD4gfGzOBRkXMlIBynbvVGnMxiLrzQo/vRVSqQoNnbHL50nefsQbKxBP4NpnwnTgiIaMeFabqbtoEGHnICYHaufmIIotmOjOrA6zuSsbqlTgHt8q1aBYpz/dVMOmlO+fQCHyPEY3XxA8M6vi3W30fnwLQ78aD8gczZlHkw==
+Received: from AM9PR04MB8487.eurprd04.prod.outlook.com (2603:10a6:20b:41a::6)
+ by AS1PR04MB9583.eurprd04.prod.outlook.com (2603:10a6:20b:472::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Tue, 2 Dec
+ 2025 11:09:52 +0000
+Received: from AM9PR04MB8487.eurprd04.prod.outlook.com
+ ([fe80::1e08:e81f:d29:e1da]) by AM9PR04MB8487.eurprd04.prod.outlook.com
+ ([fe80::1e08:e81f:d29:e1da%4]) with mapi id 15.20.9366.012; Tue, 2 Dec 2025
+ 11:09:51 +0000
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>
+Subject: RE: [EXT] Re: [PATCHv3 01/13] hw/arm: Add the i.MX 8MM EVK(Evaluation
+ Kit) board
+Thread-Topic: [EXT] Re: [PATCHv3 01/13] hw/arm: Add the i.MX 8MM
+ EVK(Evaluation Kit) board
+Thread-Index: AQHcWVR8vg+OgN6fY0K/4kkQkn7INbUOMgyAgAACORCAAArJgIAABlBA
+Date: Tue, 2 Dec 2025 11:09:51 +0000
+Message-ID: <AM9PR04MB84879B6DBD813146CD28208587D8A@AM9PR04MB8487.eurprd04.prod.outlook.com>
+References: <20251119130027.3312971-1-gaurav.sharma_7@nxp.com>
+ <20251119130027.3312971-2-gaurav.sharma_7@nxp.com>
+ <CAFEAcA8pb6cJ0h+L=fsE28HYpgkC2BWrT=kcwgVxCazJMPMy+A@mail.gmail.com>
+ <AM9PR04MB848728E3D09323B636E7D54387D8A@AM9PR04MB8487.eurprd04.prod.outlook.com>
+ <CAFEAcA-1MJ5oDVihy1Uo-bv5FUtCF_xPaS9oSoDtrnGsWe-2wg@mail.gmail.com>
+In-Reply-To: <CAFEAcA-1MJ5oDVihy1Uo-bv5FUtCF_xPaS9oSoDtrnGsWe-2wg@mail.gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
-References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012150701.4127034-8-tangtao1634@phytium.com.cn>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251012150701.4127034-8-tangtao1634@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM9PR04MB8487:EE_|AS1PR04MB9583:EE_
+x-ms-office365-filtering-correlation-id: b99f0435-1fe6-4ac4-7846-08de3193509f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|19092799006|366016|1800799024|376014|38070700021; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?j7HlN/PHEgkqEY00KwjnvTBCHmGd3uSAYX4dDBXt5J0Ua/S16tZyci8pLYMz?=
+ =?us-ascii?Q?r5ZbRhn0amsmNQWdL0zUsS1oZEy7iaILJg8UNFjmfwboKjSxT2AkPOxoburH?=
+ =?us-ascii?Q?dZsJbu3+NWOAtXqB+p2BsbrKQIh2NuD/SaCMEBASG9zbbdy2idLHToLOKFd1?=
+ =?us-ascii?Q?8eMNBU6kst8T5FxOFEXPdcklUDRtzaOK10BoQgse9E0+RQVfrSWURva5lFln?=
+ =?us-ascii?Q?ujEuaVX8CfFzQFdsyXQsaNUxmy5N3joSpaC+76sy24A/c0P8clZ97L7MF9Yf?=
+ =?us-ascii?Q?VUJjULtqwHCXksyC1AK31NOok17ZytNS08AZwMeXImnI+RzdcHMVNhx6JSb5?=
+ =?us-ascii?Q?lWpxLDlDh+rAkhqqfrcvSGBiwoHMLt9KT32KnvJ7RQhpO7cfojGVbRK3CG93?=
+ =?us-ascii?Q?gKprD+JGFK0MqRO7LSlx9ukCFKtvi+ObXBJByfOTtUK80YOwyFTi/gqoaBxZ?=
+ =?us-ascii?Q?GF7EkYTLkKw7navtPZRBSl4hLSdHkTtYDzmvKoHnjgjzqH0znX+FGluT31oz?=
+ =?us-ascii?Q?pyFEDMJw99SUFwIgYzM94dYtE248xeP3XYPE6VfKvAyFcGa2NMBAa/Q2lqPE?=
+ =?us-ascii?Q?/LTNAi15aUM+TN/0hwJsT/AmjlUWFnbtrOF21oqUiF4vAGiDPXFr0D5iJT+3?=
+ =?us-ascii?Q?inS3JO+rELTA1TeHnQktl1rxTbPVjK4IlcDvfHFL3pY+wbCLP9dI9Icvu5sG?=
+ =?us-ascii?Q?uDQtwJPqnWB0P8RCNTVFOpI9dcH9yIgR1LBWCaao7QxEdvCAmdduJ32ybVOv?=
+ =?us-ascii?Q?UCN4XzhihbnKdluGa+HJgYTO69HLx/F8K1hOYu3at6Vm7ol/PBEGUYLHdWAN?=
+ =?us-ascii?Q?djzW2DM0Uu7MnBLhwU1NcAdzC+keILDLcKRaNaqk7Dvyslm33hdCwbeOhqX8?=
+ =?us-ascii?Q?ZSBdBlgwVeNZW5ga2/+8NKKfHCxOkKfUsRTmE0OcyRTC+Ii//PUMwMprMDWH?=
+ =?us-ascii?Q?6p7FNWoQxfSNAJf/oF5puQqU8dmdLScM2mGj0VbdzhXM56OvJYqhdIuqc1Jo?=
+ =?us-ascii?Q?5G5rlvtjcg8QExrWQsKjQBHjHZAuo9lCFE7tb3D+SyT7+xsVlbY2SMvkXT7q?=
+ =?us-ascii?Q?zVQXbRn4dRa0M39g9Holvl1dmir25kit7CG80taU6iu0S1WhS3AgFJOfZfY0?=
+ =?us-ascii?Q?dOL1PnnFhA+bcAh13NpQrzvxY8sD2+31rD+HK7LDhagVlezAVXC1nof+5fGF?=
+ =?us-ascii?Q?s5hp88uLbuFHxfwjrozhfcZU2SWuy1a0oqHnzVy0EaS8ScR+CL0KjTLCkVyk?=
+ =?us-ascii?Q?oxBxeOKyMC6tm3fiMAYPzZx9lwkJIjPUPYe+rTCqSZtkajRueO2LEY3dStx1?=
+ =?us-ascii?Q?gJq3N+x9rPbuBoYODloJDAyWiAZql0HoCbIJwEFByeu8xjtCLyjZav3NnjoX?=
+ =?us-ascii?Q?yGrdnCYq2yYjv4t1TS+b6ISVu9v0wJFBIQvlXYV8gw2KKhppNel6QLjKFou+?=
+ =?us-ascii?Q?Rf8dMR7oHg0m+uA4DDyyEaeYdmIFV+vty7Wg6xxpyGITtNvi5tm6pg=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM9PR04MB8487.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(19092799006)(366016)(1800799024)(376014)(38070700021); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?zTlxp4Eo7jWRZ7UVPd8L5SgYMt3pdTA2KlICm3VSkX7Eg9THEIWU6K09BlY6?=
+ =?us-ascii?Q?Am2hdBeMHMWrtOuPcq3hhpWzXkyIgpd0L1PBMFpEORNxZfxN1PJOR+8m6WF5?=
+ =?us-ascii?Q?7f+saQatNkhwqydLKgxM41j6sITu0vVBPRXn2x5f/YJWFJkljkMPUjcgaedZ?=
+ =?us-ascii?Q?diU7RrBYuPZXZmaaVhwWcssnw81HcvormH1o9sU5cipWVC3/dz8TbS1cfJnj?=
+ =?us-ascii?Q?/cF/1zPkQpfpp3aAMooD2LC0QZQvCq6616/K6drc9jPnk8hegsuqo2/evLP9?=
+ =?us-ascii?Q?9Wq9IOspo0t+2a2qco/PLyerdQfHUF8TyVHiN3TRGMFdOx0dkiTsO9FYmjlr?=
+ =?us-ascii?Q?aM0sXKMH0BFr33Dr43J7XmyaxDCyKYPpXwsB4jEwidFCwKU202HxJekJsE4i?=
+ =?us-ascii?Q?75kpnMHjocRfQk5ZS52y9OXzclgbVC9+5KLYcS1U3DVN8QwwCuitUliaXVvh?=
+ =?us-ascii?Q?K4tYw/Bl9WWEMgwVBmTlSJM7b8Pg0tQ7H1HwyBnxGITqvm8um8dE7DLb8DgI?=
+ =?us-ascii?Q?xux/SwCMEkC1iHaF9TsmU1APnhCKteKdX7u/Kil0lh/toCKJTyGCr4FL4xW4?=
+ =?us-ascii?Q?pVt3/YcFJ7Xh10iQmWA6s1frFYUZQQUuz+98py4en5L1Qioy8ZlcdaJaTiyp?=
+ =?us-ascii?Q?7XulRLpwewG1ps0JnAEfkWMBiRavRsg97MFn13VGLM33smR2raRCPeaUoKTI?=
+ =?us-ascii?Q?KztmemxvqgT96ovAbee33o0gQUeqwJPu9cUoZPoF+mssSLVgdihA2u/vEgGo?=
+ =?us-ascii?Q?E0WSoWYpKveDLA5QuH/J9ubzLGWi47701LUhbtpv5yJ6oWvwkdvQprGAm5jN?=
+ =?us-ascii?Q?ep8DDU+3P5vWAlmQQJOVuwAa+CPgpIEqIhVCUFUTAbxwbEz080FJPKzFWhkR?=
+ =?us-ascii?Q?ibG3C2ybiiMAqV5kRIG0ShUpMkpV2DDidSTOS0IAduSA5qsUPRA7/dQy0sW7?=
+ =?us-ascii?Q?2RarOIa4lL8+4A5RlmH6RjclOhO9BAiO6AS9YydGJwWIOQzQ6oLqXleEr/Xm?=
+ =?us-ascii?Q?ezDUFWRpKSrTOzIiJExcPXYHutGiBC4R+HlTnaUXzmEf5uc2QC8h6h0Gd7ig?=
+ =?us-ascii?Q?yA/mRdiw6sXi1qReh1GDFEI7uEKhtLmXb66c9KsqvIghNNcfNkT96Q+1FNK0?=
+ =?us-ascii?Q?H+xSAG8kTHa4tvTsMN+Y9me9bWfJ6pW2XC+SoOtnbhKsgOLJc60PYFX/eFsz?=
+ =?us-ascii?Q?4OuGSpIEDZcJx7TMjAdUEOqNF+wRIZ9zpFQo8g+lAb5L12/AK+Kok1S4YhG6?=
+ =?us-ascii?Q?1N7eKI9iHgWEaXmteEhq92qnyq0frEsSD4ob5nEqt03LVN+1vJJm2QeWP4KX?=
+ =?us-ascii?Q?Pfu9tkQH26MkYs39wglmLcfEAIO/+5+4hPQHjiZ9yyR0otL051rX5pWW95Wa?=
+ =?us-ascii?Q?6V/365mKv8pNQUgQihSO9YdaOKSAesHVfsB/N7k8MUJetZMqapzikRiYVWCy?=
+ =?us-ascii?Q?5R5nUboVyJ7BulTg6xgnfiKNwKyIAPVJTWZZpVe3a0fZ8+RlKSxO+4qgSFaL?=
+ =?us-ascii?Q?h5ImJ3yt1oax/Tx/PMrmUSV3nTzOEdRia/mmBuh+wsGAOAZyIGJE/5ZMQVYi?=
+ =?us-ascii?Q?Xfz410jqnWeGutoD9wPdx588G8R3AKAeX85HCxb4?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8487.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b99f0435-1fe6-4ac4-7846-08de3193509f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Dec 2025 11:09:51.5279 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: QsedCWnESypPdOAW1aEXRNK+r0A+KXb7wuxlioieOEuSWuUTBJBB0jS3sEWbtFUuTzVX/rDVSFaRjrcwYcx07Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR04MB9583
+Received-SPF: permerror client-ip=2a01:111:f403:c207::3;
+ envelope-from=gaurav.sharma_7@nxp.com;
+ helo=MRWPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_SPF_HELO=1,
+ SPF_HELO_PASS=-0.001, T_SPF_PERMERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,141 +165,91 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 10/12/25 5:06 PM, Tao Tang wrote:
-> Cache the SEC_SID inside SMMUTransCfg to keep configuration lookups
-> tied to the correct register bank.
+> -----Original Message-----
+> From: Peter Maydell <peter.maydell@linaro.org>
+> Sent: 02 December 2025 16:16
+> To: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> Cc: qemu-devel@nongnu.org; pbonzini@redhat.com
+> Subject: Re: [EXT] Re: [PATCHv3 01/13] hw/arm: Add the i.MX 8MM
+> EVK(Evaluation Kit) board
 >
-> Plumb the SEC_SID through tracepoints and queue helpers so diagnostics
-> and event logs always show which security interface emitted the record.
-> To support this, the SEC_SID is placed in SMMUEventInfo so the bank is
-> identified as soon as an event record is built.
+> Caution: This is an external email. Please take care when clicking links =
+or
+> opening attachments. When in doubt, report the message using the 'Report
+> this email' button
 >
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->  hw/arm/smmuv3-internal.h     |  1 +
->  hw/arm/smmuv3.c              | 22 +++++++++++++++-------
->  hw/arm/trace-events          |  2 +-
->  include/hw/arm/smmu-common.h |  1 +
->  4 files changed, 18 insertions(+), 8 deletions(-)
 >
-> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-> index af0e0b32b3..99fdbcf3f5 100644
-> --- a/hw/arm/smmuv3-internal.h
-> +++ b/hw/arm/smmuv3-internal.h
-> @@ -512,6 +512,7 @@ static inline const char *smmu_event_string(SMMUEventType type)
->  
->  /*  Encode an event record */
->  typedef struct SMMUEventInfo {
-> +    SMMUSecSID sec_sid;
->      SMMUEventType type;
->      uint32_t sid;
->      bool recorded;
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 6d05bb1310..a87ae36e8b 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -146,9 +146,9 @@ static MemTxResult queue_write(SMMUQueue *q, Evt *evt_in)
->      return MEMTX_OK;
->  }
->  
-> -static MemTxResult smmuv3_write_eventq(SMMUv3State *s, Evt *evt)
-> +static MemTxResult smmuv3_write_eventq(SMMUv3State *s, SMMUSecSID sec_sid,
-> +                                       Evt *evt)
->  {
-> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
->      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->      SMMUQueue *q = &bank->eventq;
->      MemTxResult r;
-> @@ -176,7 +176,10 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
->  {
->      Evt evt = {};
->      MemTxResult r;
-> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUSecSID sec_sid = info->sec_sid;
-> +    if (sec_sid >= SMMU_SEC_SID_NUM) {
-> +        g_assert_not_reached();
-simply use g_assert(cond)
-> +    }
->  
->      if (!smmuv3_eventq_enabled(s, sec_sid)) {
->          return;
-> @@ -256,8 +259,9 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
->          g_assert_not_reached();
->      }
->  
-> -    trace_smmuv3_record_event(smmu_event_string(info->type), info->sid);
-> -    r = smmuv3_write_eventq(s, &evt);
-> +    trace_smmuv3_record_event(sec_sid, smmu_event_string(info->type),
-> +                              info->sid);
-> +    r = smmuv3_write_eventq(s, sec_sid, &evt);
->      if (r != MEMTX_OK) {
->          smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_EVENTQ_ABT_ERR_MASK);
->      }
-> @@ -900,6 +904,7 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event)
->                              100 * sdev->cfg_cache_hits /
->                              (sdev->cfg_cache_hits + sdev->cfg_cache_misses));
->          cfg = g_new0(SMMUTransCfg, 1);
-> +        cfg->sec_sid = SMMU_SEC_SID_NS;
->  
->          if (!smmuv3_decode_config(&sdev->iommu, cfg, event)) {
->              g_hash_table_insert(bc->configs, sdev, cfg);
-> @@ -1057,7 +1062,8 @@ static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
->      SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->      SMMUEventInfo event = {.type = SMMU_EVT_NONE,
->                             .sid = sid,
-> -                           .inval_ste_allowed = false};
-> +                           .inval_ste_allowed = false,
-> +                           .sec_sid = sec_sid};
->      SMMUTranslationStatus status;
->      SMMUTransCfg *cfg = NULL;
->      IOMMUTLBEntry entry = {
-> @@ -1159,7 +1165,9 @@ static void smmuv3_notify_iova(IOMMUMemoryRegion *mr,
->                                 uint64_t num_pages, int stage)
->  {
->      SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
-> -    SMMUEventInfo eventinfo = {.inval_ste_allowed = true};
-> +    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
-> +    SMMUEventInfo eventinfo = {.sec_sid = sec_sid,
-> +                               .inval_ste_allowed = true};
->      SMMUTransCfg *cfg = smmuv3_get_config(sdev, &eventinfo);
->      IOMMUTLBEvent event;
->      uint8_t granule;
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index f3386bd7ae..96ebd1b11b 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -40,7 +40,7 @@ smmuv3_cmdq_opcode(const char *opcode) "<--- %s"
->  smmuv3_cmdq_consume_out(uint32_t prod, uint32_t cons, uint8_t prod_wrap, uint8_t cons_wrap) "prod:%d, cons:%d, prod_wrap:%d, cons_wrap:%d "
->  smmuv3_cmdq_consume_error(const char *cmd_name, uint8_t cmd_error) "Error on %s command execution: %d"
->  smmuv3_write_mmio(uint64_t addr, uint64_t val, unsigned size, uint32_t r) "addr: 0x%"PRIx64" val:0x%"PRIx64" size: 0x%x(%d)"
-> -smmuv3_record_event(const char *type, uint32_t sid) "%s sid=0x%x"
-> +smmuv3_record_event(int sec_sid, const char *type, uint32_t sid) "sec_sid=%d %s sid=0x%x"
->  smmuv3_find_ste(uint16_t sid, uint32_t features, uint16_t sid_split) "sid=0x%x features:0x%x, sid_split:0x%x"
->  smmuv3_find_ste_2lvl(uint64_t strtab_base, uint64_t l1ptr, int l1_ste_offset, uint64_t l2ptr, int l2_ste_offset, int max_l2_ste) "strtab_base:0x%"PRIx64" l1ptr:0x%"PRIx64" l1_off:0x%x, l2ptr:0x%"PRIx64" l2_off:0x%x max_l2_ste:%d"
->  smmuv3_get_ste(uint64_t addr) "STE addr: 0x%"PRIx64
-> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
-> index 2dd6cfa895..b0dae18a62 100644
-> --- a/include/hw/arm/smmu-common.h
-> +++ b/include/hw/arm/smmu-common.h
-> @@ -107,6 +107,7 @@ typedef struct SMMUS2Cfg {
->  typedef struct SMMUTransCfg {
->      /* Shared fields between stage-1 and stage-2. */
->      SMMUStage stage;           /* translation stage */
-> +    SMMUSecSID sec_sid;        /* cached sec sid */
->      bool disabled;             /* smmu is disabled */
->      bool bypassed;             /* translation is bypassed */
->      bool aborted;              /* translation is aborted */
-Besides
+> On Tue, 2 Dec 2025 at 10:33, Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> wrote:
+> >
+> >
+> >
+> > > -----Original Message-----
+> > > From: Peter Maydell <peter.maydell@linaro.org>
+> > > Sent: 02 December 2025 15:30
+> > > To: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> > > Cc: qemu-devel@nongnu.org; pbonzini@redhat.com
+> > > Subject: [EXT] Re: [PATCHv3 01/13] hw/arm: Add the i.MX 8MM
+> > > EVK(Evaluation Kit) board
+> > >
+> > > Caution: This is an external email. Please take care when clicking
+> > > links or opening attachments. When in doubt, report the message
+> > > using the 'Report this email' button
+> > >
+> > >
+> > > On Wed, 19 Nov 2025 at 13:00, Gaurav Sharma
+> > > <gaurav.sharma_7@nxp.com>
+> > > wrote:
+> > > >
+> > > > Implemented CPUs, RAM, UARTs and Interrupt Controller Other
+> > > > peripherals are represented as TYPE_UNIMPLEMENTED_DEVICE
+> Complete
+> > > > memory map of the SoC is provided.
+> > > >
+> > > > Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> > > > ---
+> > > >  docs/system/arm/imx8mm-evk.rst |  68 ++++++
+> > > >  docs/system/target-arm.rst     |   1 +
+> > > >  hw/arm/Kconfig                 |  12 ++
+> > > >  hw/arm/fsl-imx8mm.c            | 363
+> +++++++++++++++++++++++++++++++++
+> > > >  hw/arm/imx8mm-evk.c            | 109 ++++++++++
+> > > >  hw/arm/meson.build             |   2 +
+> > > >  include/hw/arm/fsl-imx8mm.h    | 156 ++++++++++++++
+> > >
+> > > Could you also add a section to MAINTAINERS for this new board, pleas=
+e?
+> >
+> > I was going through this
+> https://www.q/
+> emu.org%2Fdocs%2Fmaster%2Fdevel%2Fmaintainers.html&data=3D05%7C02%
+> 7Cgaurav.sharma_7%40nxp.com%7C78fd8b65fb3546c9714e08de31900661%7
+> C686ea1d3bc2b4c6fa92cd99c5c301635%7C0%7C0%7C639002691828235135
+> %7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAu
+> MDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%
+> 7C%7C&sdata=3DJ2Xk9jxc1zm84042UrNGYjmprPKTB7tuX%2BcRDOZWwOc%3D
+> &reserved=3D0. It implies that the contributors are generally people who =
+have
+> been actively contributing to the community for a while. Since this is my=
+ first
+> contribution to the community, whose name will go up as a Maintainer ?
+>
+> Mostly what we want here is that there's a section in the MAINTAINERS fil=
+e so
+> the new source files for this board get listed. It's more about ensuring =
+the
+> right people get cc'd for reviewing future patches than anything else:
+> for Arm boards I do the "collect the patches up and send pull requests" p=
+art.
+> For this you can list yourself with either an M: or R: tag, as you prefer=
+.  Include
+> the
+> "L: qemu-arm@nongnu.org" line also, and some S: tag.
 
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
-
-
+Got it. Will update.
 
