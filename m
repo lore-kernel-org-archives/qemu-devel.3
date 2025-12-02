@@ -4,116 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01399CFD2F6
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 13:55:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16402D116F5
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 14:02:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQQqc-0003xk-WC; Tue, 02 Dec 2025 08:55:19 -0500
+	id 1vQQws-0007Af-MW; Tue, 02 Dec 2025 09:01:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vQQqc-0003xM-9o
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 08:55:18 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vQQqZ-00038g-H2
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 08:55:17 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 3650B336C8;
- Tue,  2 Dec 2025 13:55:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1764683709; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vQQwr-0007AU-KY
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 09:01:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vQQwo-0004yt-A3
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 09:01:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764684100;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2+TxJBKM5wt77Bdyf5gbISIquXOagx5At2SN2KYxzX0=;
- b=QN1FWiiNs2OzSMZInbMRXMWZ6Jt3jKzA/HPAHBUtRmfXyjGwaWeNWzFaVb+8IviPikrh5X
- kQnhn1HPODEbGxScJRk9HB0WfJRPLBXkyqTv1UAr+HVRikQg4It08Tn9tPY8obR2q39KGy
- nSZSfX6wN1bYrDH2nfUoO2mWXOUYFr0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1764683709;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2+TxJBKM5wt77Bdyf5gbISIquXOagx5At2SN2KYxzX0=;
- b=DcuvMNuNsfW60Dy0LShfnvw+8EYE48ppqveIELC714X/Hh2yy3a1AcMw7WhTKWb1qVZoXi
- oHaCShfV780ADwAw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Mz1glClG;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Ohr4BFF9
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1764683708; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2+TxJBKM5wt77Bdyf5gbISIquXOagx5At2SN2KYxzX0=;
- b=Mz1glClGHqmo/pviqIW6dNs5Z9GGfgDINejooaCQAWmXNWZpfpgQG+lPMl6/DXwj8DY8rd
- BzZvewPVDICGuvU2nClditSUKcWuvPg11zD2UgfLQf+WlFI1hw5qbhYleNO/r56zcczFZT
- In47hYJiBDx0uHHJX1WOUkwysVGxR/s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1764683708;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2+TxJBKM5wt77Bdyf5gbISIquXOagx5At2SN2KYxzX0=;
- b=Ohr4BFF9OMjkGvraoCfWj28Q8fVzPlewlFn3RuqdDSjxMxFxZMlm7nq2ZnEV+xT3iRDbin
- 43uLORXZCJG4g9CQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A73A83EA63;
- Tue,  2 Dec 2025 13:55:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uwreGLvvLmnlVwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 02 Dec 2025 13:55:07 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Vladimir
- Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, Markus Armbruster
- <armbru@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH for-11.0 v2 0/7] migration: Error reporting cleanups
-In-Reply-To: <20251201194510.1121221-1-peterx@redhat.com>
-References: <20251201194510.1121221-1-peterx@redhat.com>
-Date: Tue, 02 Dec 2025 10:55:04 -0300
-Message-ID: <877bv5aszr.fsf@suse.de>
+ bh=IQRynqXWyji59LrbZeNLVD+MKN2shfPDl6qjcdravfI=;
+ b=NUbMfc/1uXzRQFQl20IevSIsU6iGD4KC2BpFfZlIuDooVvkpXP+TFuTidRqdWeRA2ELevi
+ wr4EfmIq5bbpEMHd8WcyM6MCqAWXx5TWW1GhA4HEk9fR8sn5SUUNzYfKHiT2o4Jc3rBLhf
+ Ich9uaSKBiMdKqjW2vx9qwDdQy5mpjQ=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-532-iddUmz6LMumQQYJc4jyjqg-1; Tue, 02 Dec 2025 09:01:36 -0500
+X-MC-Unique: iddUmz6LMumQQYJc4jyjqg-1
+X-Mimecast-MFC-AGG-ID: iddUmz6LMumQQYJc4jyjqg_1764684095
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-340c07119bfso9107753a91.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 06:01:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764684095; x=1765288895; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IQRynqXWyji59LrbZeNLVD+MKN2shfPDl6qjcdravfI=;
+ b=KEQbfMu8OrEVfIBFDHyOwDgBUwEvJYJ+p80MOlFhdYbvrsZiA5gkTgUV2eNtazkGaX
+ COO0Zwb5G3jTIhF/BX0eKZtdNJApmbZsua1J5uKUsmr9PQ3wGG26gVHc6p/UYOegv7t0
+ oP2OQo1DaY8X8ivjFWryO8DFBrBN1hU/UmxgIFxrSp6UMuy/2Id4AEDKZOD5mcbdEseI
+ rS5ps8KwAGYodYk97UPDQKv6fd21dBeA19wgKWoLJHQPnzbQdwgr2V956gESFcUk8WgE
+ AqaQFBQs3wXFvNpAucHXPeNui27G7v7AMGGhFG4cnkvQldmU5MY4W8bbXlH8B7IS19og
+ LuRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764684095; x=1765288895;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IQRynqXWyji59LrbZeNLVD+MKN2shfPDl6qjcdravfI=;
+ b=vx9krdYMOBppLdTRulPazKPh7pTQIN+99c13cSFEb9ZrpX9R3p2OTJRK48mlPqLpW4
+ 74WIUwLxGc3h2lg4YeB5JU+to+UL+R6+NgCQEt1yg5xGgbImieo9U1iVK2qjorPtynbx
+ RoUO+C8/ZyltPMVEgRk+k38ulSr3uErS4E+txAY9c+mt1XC6d8UBe3yQcJrMKquQH5X2
+ N4aVWV4lKNeJ8+dZS4M0D5IKzf9LfDMJqgBFAjPuY5Wul8Lxaj6KSS4yPUbfk/WcvgOf
+ TjlBMs0LIq04y49LbmPk5fu1p5/F+7dVdwd5OtdkjOY3I1hM4k3sLcQ7JbPq44QvvpU+
+ Fadw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWMIEHh76YSB53bGYUNjO+/8JK2G0iycGSGetxf3J5BGd8k6wTc6vOkQSfObItbwg0W4eZTw0RljUiv@nongnu.org
+X-Gm-Message-State: AOJu0Yy0fwg9sRdChqrTGtEzX5reT6xaEKXhRewce3KNSDyrYvfDV99w
+ okXAS2GF+VN8/6g7+QZquQiLF4XLhDddSYBPvWb961Kh46/1sePdRJmngFBAhwkzpPpLBo8ItAv
+ Kutv1fjMFf+mhYi+hDwWF19M35DXcM8klnKp5CEVIvbw9c4dSBwjGJ+3JNj+bjldLASLHtS+3hi
+ of8XBxN/Kou5b/HNoyWvCzNYcHvSsHtxM=
+X-Gm-Gg: ASbGncv16HMd0UyvpVqZLG/6duPfuIi+dnpoZ8xghN6HDIq4cBe1LrYROFffN3jKtcq
+ n9MzoPpj2WUu8Lu8/GIIjaVZ3P+Acfx/ZuUiZpCijJATWeoxAfJQi/MCSRwh3rbe8aclpgpamQ5
+ H7IgYIRmUuFGkOv4sugGUax3qwXs6hrIpOERb6BSUeSm1DIojzmtexeUAq9GOAOofx
+X-Received: by 2002:a17:90b:3c48:b0:340:48f2:5e2d with SMTP id
+ 98e67ed59e1d1-34733e7194bmr41689551a91.9.1764684094511; 
+ Tue, 02 Dec 2025 06:01:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE0jThMsdUQ7/tcFaH2k4hJq6JmV+wrFvOD98F2hI8b09+QQk7rc5eWw0WJzav50ShUBOrg8BQU1SisU+11vks=
+X-Received: by 2002:a17:90b:3c48:b0:340:48f2:5e2d with SMTP id
+ 98e67ed59e1d1-34733e7194bmr41689388a91.9.1764684093195; Tue, 02 Dec 2025
+ 06:01:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- URIBL_BLOCKED(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCPT_COUNT_SEVEN(0.00)[8]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim]; MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 3650B336C8
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241107180309.1713601-1-dbassey@redhat.com>
+ <CAJ+F1CLRkDKVojdk2DbNeSO3Z9Z4BHN7Ds8N1mwzf9qF9HmCsQ@mail.gmail.com>
+In-Reply-To: <CAJ+F1CLRkDKVojdk2DbNeSO3Z9Z4BHN7Ds8N1mwzf9qF9HmCsQ@mail.gmail.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
+Date: Tue, 2 Dec 2025 15:01:21 +0100
+X-Gm-Features: AWmQ_blh-7-Jmn5-kZjZlfgT3mqLFVA2xO4-5jdMRHxv8ZVA--SMcNfMXbMGjb8
+Message-ID: <CAGxU2F6mZ=S0AFHzRsmswtsMkgiU_XCtbrtooHM_V2zu6p5r+g@mail.gmail.com>
+Subject: Re: [PATCH v2] virtio-dmabuf: Ensure UUID persistence for hash table
+ insertion
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Cc: Dorinda Bassey <dbassey@redhat.com>, qemu-devel@nongnu.org,
+ aesteve@redhat.com, Michael Tsirkin <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,70 +119,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Tue, 2 Dec 2025 at 14:51, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@gmail.com> wrote:
+>
+> Hi
+>
+> On Thu, Nov 7, 2024 at 10:04=E2=80=AFPM Dorinda Bassey <dbassey@redhat.co=
+m> wrote:
+> >
+> > In `virtio_add_resource` function, the UUID used as a key for
+> > `g_hash_table_insert` was temporary, which could lead to
+> > invalid lookups when accessed later. This patch ensures that
+> > the UUID remains valid by duplicating it into a newly allocated
+> > memory space. The value is then inserted into the hash table
+> > with this persistent UUID key to ensure that the key stored in
+> > the hash table remains valid as long as the hash table entry
+> > exists.
+> >
+> > Fixes: faefdba847 ("hw/display: introduce virtio-dmabuf")
+> >
+> > Signed-off-by: Dorinda Bassey <dbassey@redhat.com>
+>
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> We missed this patch during the -rc period. Can it be included?
 
-> Based-on: <20251125070554.2256181-1-armbru@redhat.com>
->
-> This series is based on Markus's recent fix:
->
-> [PATCH] migration: Fix double-free on error path
-> https://lore.kernel.org/r/20251125070554.2256181-1-armbru@redhat.com
->
-> v2:
-> - Added R-bs
-> - Patch 1:
->   - update commit message on s/accidentally merged/merged without proper
->     review/ [Markus]
-> - Patch 2:
->   - Added a new follow up patch here from Markus to poison Error's autoptr
-> - Patch 3:
->   - Rename migration_connect_set_error to migration_connect_error_propagate
->     [Markus]
->   - Add comments in commit log for both migrate_connect() and the rename
->     [Markus]
-> - Patch 4:
->   - Rename multifd_send_set_error to multifd_send_error_propagate [Markus]
-> - Patch 6:
->   - Make migrate_error_propagate() take MigrationState* as before [Markus]
->   - Remove the one use case of g_clear_pointer() [Markus]
->   - Touch up commit message for the change
->
-> This series should address the issues discussed in this thread here:
->
-> https://lore.kernel.org/r/871plmk1bc.fsf@pond.sub.org
+I guess we missed this in several releases since it was sent 1 year ago :-)
 
-Thank you Markus for this. It's very helpful to have someone keeping us
-in check regarding the usage of generic QEMU interfaces. Migration code
-tends to drift incredibly..
+BTW I think the main issue here was not ccing Michael (now in CC):
+
+$ ./scripts/get_maintainer.pl -f hw/display/virtio-dmabuf.c
+Albert Esteve <aesteve@redhat.com> (supporter:virtio-dmabuf)
+"Michael S. Tsirkin" <mst@redhat.com> (supporter:virtio)
+qemu-devel@nongnu.org (open list:All patches CC here)
+
+So, I'm not sure if it's better to rebase and resend (including the
+R-b) with the right maintainers in CC.
+
+Stefano
 
 >
-> The problem is Error is not a good candidate of g_autoptr, however the
-> cleanup function was merged without enough review.  Luckily, we only have
-> two users so far (after Markus's patch above lands).  This series removes
-> the last two in migration code and reverts the auto cleanup function for
-> Error.  Instead, poison the auto cleanup function.
+> it fixes invalid memory access / use-after-free .
 >
-> When at it, it'll also change migrate_set_error() to start taking ownership
-> of errors, just like what most error APIs do.  When at it, it is renamed to
-> migrate_error_propagate() to imply migration version of error_propagate().
+> Note: I think the original intent was that the @uuid argument
+> ownership was passed:
+> virtio_add_dmabuf/virtio_add_vhost_device
+>  * @uuid: new resource's UUID
 >
-> Comments welcomed, thanks.
+> It could be clarified and be passed as const like getters to eventually h=
+elp...
 >
-
-I think with this series we could now work to reduce the complexity of
-migration_connect():
-
-The outgoing code in socket.c and tls.c could call
-migration_connect_error_propagate directly so migration_channel_connect
-only needs to check migrate_has_error() and then exit as early as
-possible. From migration_connect onwards we can assume connection
-success.
-
-What do you think?
-
-tangent:
-(is it too much bikeshedding if I send a patch doing s/migrat*_/mig_/
-all over the place? it's so annoying having to check the code to get the
-prefix correct when writing emails)
+> > ---
+> >  hw/display/virtio-dmabuf.c | 6 ++++--
+> >  1 file changed, 4 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/hw/display/virtio-dmabuf.c b/hw/display/virtio-dmabuf.c
+> > index 3dba4577ca7..5e0395be77c 100644
+> > --- a/hw/display/virtio-dmabuf.c
+> > +++ b/hw/display/virtio-dmabuf.c
+> > @@ -35,11 +35,13 @@ static bool virtio_add_resource(QemuUUID *uuid, Vir=
+tioSharedObject *value)
+> >      if (resource_uuids =3D=3D NULL) {
+> >          resource_uuids =3D g_hash_table_new_full(qemu_uuid_hash,
+> >                                                 uuid_equal_func,
+> > -                                               NULL,
+> > +                                               g_free,
+> >                                                 g_free);
+> >      }
+> >      if (g_hash_table_lookup(resource_uuids, uuid) =3D=3D NULL) {
+> > -        g_hash_table_insert(resource_uuids, uuid, value);
+> > +        g_hash_table_insert(resource_uuids,
+> > +                            g_memdup2(uuid, sizeof(*uuid)),
+> > +                            value);
+> >      } else {
+> >          result =3D false;
+> >      }
+> > --
+> > 2.47.0
+> >
+> >
+>
+>
+> --
+> Marc-Andr=C3=A9 Lureau
+>
 
 
