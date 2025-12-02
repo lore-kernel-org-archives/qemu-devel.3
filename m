@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E328FD11704
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:06:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07334D11704
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQSsF-0005Au-El; Tue, 02 Dec 2025 11:05:07 -0500
+	id 1vQSsE-00057A-JT; Tue, 02 Dec 2025 11:05:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQSro-0004oZ-1H; Tue, 02 Dec 2025 11:04:40 -0500
+ id 1vQSrY-0004ki-CF; Tue, 02 Dec 2025 11:04:27 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQSrl-00066J-UD; Tue, 02 Dec 2025 11:04:39 -0500
+ id 1vQSrU-00066J-Re; Tue, 02 Dec 2025 11:04:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764691478; x=1796227478;
+ t=1764691461; x=1796227461;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=cAs6bw0KmZSVoszi1tKDPUtU38bYlPExdFSpB/hNDPA=;
- b=LniFwi9E+Ik9P2SiGJ/wWBeSE7lazQzsTXr8oMHjrgKjRDoll1D4tOVX
- BwSBE9Ewnug0oMnYxNNu88C3MA81iGLee6B2cYEkt1oZ+LPMFle4FE+h6
- g14Uo8SrGDLMvVkqJuDTEwTBWLEOwnUAJwGSq6GQnadHaZ0czh65I7ZGn
- eYlXLdNaSq5jyHLGsSUjvWIQw4PYyo7xlEDdm/bb4Mv0tWgu3/o5Wj3Ms
- NdK7QTDa0yMWJdiQxL0yQmEr/FvHL/BtWseRS59pYqCcwN+B+Pg9lrI87
- 7UbjXJHR5ipy3TwphrvRH60jE7GStWzszy/eL6bExKklPrP8AQ/MVRJa+ A==;
-X-CSE-ConnectionGUID: 7d0ntzwuTcqrEY2JMnCT5g==
-X-CSE-MsgGUID: BeZ7L3U9R+uJk3N9F0oKLw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="92142307"
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="92142307"
+ bh=FRrmV+SoZHgUnSI+cKxq36vwXjmiwjc/fhyRjGjnn8o=;
+ b=lmBpUnCQaJRAro1fmzPocw0OO/n5FZHBntjF79iJTscrvwImGDn8ZyVr
+ 4TmxDSFmTdcpuSVBvRXRtRH+TQMgSHuJBP1LYC+sQckGj1kSTxFpISSKT
+ xfR6dmOEo/tuYhCxs6kO0ujOjifebAS0JF4yI+stqpNvpxt0jkEZFvWJV
+ GJmId3A/44db2o0v1FWlP9O0jrrdNMlFTczhTxEjOa6gKPbDKqXedp4z7
+ 8OY4sNQ8ivNJqy21AV4LQJl3Xs5GFp0ObNf9YIa2P9qxpSrc+P8EgdCKl
+ +bNGy8YLmQHNUGCQHF8zmGgzINfRcbQLlfrDPLCJ8wJYc8GBoaERM9PdD w==;
+X-CSE-ConnectionGUID: 8vDNEW3RSzG1ZJO0jQseLg==
+X-CSE-MsgGUID: Wx75Izo6QFqZOiCz+lMVXA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="92142217"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="92142217"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Dec 2025 08:04:35 -0800
-X-CSE-ConnectionGUID: yVI0wB3VSS+Uwfk62bsVGw==
-X-CSE-MsgGUID: /Z51xDunQSKg1vLyWrR0Fw==
+ 02 Dec 2025 08:04:17 -0800
+X-CSE-ConnectionGUID: 0S0hPeOORAazOXg5pbjX5w==
+X-CSE-MsgGUID: 5BNztvnKSCiMJIGY7vHGmw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="199536970"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="199536907"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 02 Dec 2025 08:04:26 -0800
+ by orviesa005.jf.intel.com with ESMTP; 02 Dec 2025 08:04:08 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,14 +72,15 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 03/28] pc: Start with modern CPU hotplug interface by
- default
-Date: Wed,  3 Dec 2025 00:28:10 +0800
-Message-Id: <20251202162835.3227894-4-zhao1.liu@intel.com>
+Subject: [PATCH v5 01/28] hw/i386/pc: Remove deprecated pc-q35-2.6 and
+ pc-i440fx-2.6 machines
+Date: Wed,  3 Dec 2025 00:28:08 +0800
+Message-Id: <20251202162835.3227894-2-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251202162835.3227894-1-zhao1.liu@intel.com>
 References: <20251202162835.3227894-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
@@ -106,204 +107,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-For compatibility reasons PC/Q35 will start with legacy CPU hotplug
-interface by default but with new CPU hotplug AML code since 2.7
-machine type (in commit 679dd1a957df ("pc: use new CPU hotplug interface
-since 2.7 machine type")). In that way, legacy firmware that doesn't use
-QEMU generated ACPI tables was able to continue using legacy CPU hotplug
-interface.
+These machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") they can now be removed.
 
-While later machine types, with firmware supporting QEMU provided ACPI
-tables, generate new CPU hotplug AML, which will switch to new CPU
-hotplug interface when guest OS executes its _INI method on ACPI tables
-loading.
-
-Since 2.6 machine type is now gone, and consider that the legacy BIOS
-(based on QEMU ACPI prior to v2.7) should be no longer in use, previous
-compatibility requirements are no longer necessary. So initialize
-'modern' hotplug directly from the very beginning for PC/Q35 machines
-with cpu_hotplug_hw_init(), and drop _INIT method.
-
-Additionally, remove the checks and settings around cpu_hotplug_legacy
-in cpuhp VMState (for piix4 & ich9), to eliminate the risk of
-segmentation faults, as gpe_cpu no longer has the opportunity to be
-initialized. This is safe because all hotplug now start with the modern
-way, and it's impossible to switch to legacy way at runtime (even the
-"cpu-hotplug-legacy" properties does not allow it either).
-
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes since v4:
- * New patch split off from Igor's v5 [*].
+ hw/i386/pc_piix.c | 14 --------------
+ hw/i386/pc_q35.c  | 14 --------------
+ 2 files changed, 28 deletions(-)
 
-[*]: https://lore.kernel.org/qemu-devel/20251031142825.179239-1-imammedo@redhat.com/
----
- hw/acpi/cpu.c                  | 10 ----------
- hw/acpi/ich9.c                 | 22 +++-------------------
- hw/acpi/piix4.c                | 21 +++------------------
- hw/i386/acpi-build.c           |  2 +-
- hw/loongarch/virt-acpi-build.c |  1 -
- include/hw/acpi/cpu.h          |  1 -
- 6 files changed, 7 insertions(+), 50 deletions(-)
-
-diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-index 6f1ae79edbf3..d63ca83c1bcd 100644
---- a/hw/acpi/cpu.c
-+++ b/hw/acpi/cpu.c
-@@ -408,16 +408,6 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
-         aml_append(field, aml_reserved_field(4 * 8));
-         aml_append(field, aml_named_field(CPU_DATA, 32));
-         aml_append(cpu_ctrl_dev, field);
--
--        if (opts.has_legacy_cphp) {
--            method = aml_method("_INI", 0, AML_SERIALIZED);
--            /* switch off legacy CPU hotplug HW and use new one,
--             * on reboot system is in new mode and writing 0
--             * in CPU_SELECTOR selects BSP, which is NOP at
--             * the time _INI is called */
--            aml_append(method, aml_store(zero, aml_name(CPU_SELECTOR)));
--            aml_append(cpu_ctrl_dev, method);
--        }
-     }
-     aml_append(sb_scope, cpu_ctrl_dev);
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 7b3611e973cd..4628d491d5b5 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -733,20 +733,6 @@ static void pc_i440fx_machine_2_7_options(MachineClass *m)
  
-diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-index 2b3b493c014b..54590129c695 100644
---- a/hw/acpi/ich9.c
-+++ b/hw/acpi/ich9.c
-@@ -183,26 +183,10 @@ static const VMStateDescription vmstate_tco_io_state = {
-     }
- };
+ DEFINE_I440FX_MACHINE(2, 7);
  
--static bool vmstate_test_use_cpuhp(void *opaque)
+-static void pc_i440fx_machine_2_6_options(MachineClass *m)
 -{
--    ICH9LPCPMRegs *s = opaque;
--    return !s->cpu_hotplug_legacy;
+-    X86MachineClass *x86mc = X86_MACHINE_CLASS(m);
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_i440fx_machine_2_7_options(m);
+-    pcmc->legacy_cpu_hotplug = true;
+-    x86mc->fwcfg_dma_enabled = false;
+-    compat_props_add(m->compat_props, hw_compat_2_6, hw_compat_2_6_len);
+-    compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
 -}
 -
--static int vmstate_cpuhp_pre_load(void *opaque)
--{
--    ICH9LPCPMRegs *s = opaque;
--    Object *obj = OBJECT(s->gpe_cpu.device);
--    object_property_set_bool(obj, "cpu-hotplug-legacy", false, &error_abort);
--    return 0;
--}
+-DEFINE_I440FX_MACHINE(2, 6);
 -
- static const VMStateDescription vmstate_cpuhp_state = {
-     .name = "ich9_pm/cpuhp",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .needed = vmstate_test_use_cpuhp,
--    .pre_load = vmstate_cpuhp_pre_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_CPU_HOTPLUG(cpuhp_state, ICH9LPCPMRegs),
-         VMSTATE_END_OF_LIST()
-@@ -338,8 +322,8 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
-     pm->powerdown_notifier.notify = pm_powerdown_req;
-     qemu_register_powerdown_notifier(&pm->powerdown_notifier);
- 
--    legacy_acpi_cpu_hotplug_init(pci_address_space_io(lpc_pci),
--        OBJECT(lpc_pci), &pm->gpe_cpu, ICH9_CPU_HOTPLUG_IO_BASE);
-+    cpu_hotplug_hw_init(pci_address_space_io(lpc_pci),
-+        OBJECT(lpc_pci), &pm->cpuhp_state, ICH9_CPU_HOTPLUG_IO_BASE);
- 
-     acpi_memory_hotplug_init(pci_address_space_io(lpc_pci), OBJECT(lpc_pci),
-                              &pm->acpi_memory_hotplug,
-@@ -419,7 +403,7 @@ void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm)
+ #ifdef CONFIG_XEN
+ static void xenfv_machine_4_2_options(MachineClass *m)
  {
-     static const uint32_t gpe0_len = ICH9_PMIO_GPE0_LEN;
-     pm->acpi_memory_hotplug.is_enabled = true;
--    pm->cpu_hotplug_legacy = true;
-+    pm->cpu_hotplug_legacy = false;
-     pm->disable_s3 = 0;
-     pm->disable_s4 = 0;
-     pm->s4_val = 2;
-diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
-index 7a18f18dda21..a7a29b0d09a9 100644
---- a/hw/acpi/piix4.c
-+++ b/hw/acpi/piix4.c
-@@ -195,25 +195,10 @@ static const VMStateDescription vmstate_memhp_state = {
-     }
- };
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 6015e639d7bc..0ae19eb9f1e4 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -681,17 +681,3 @@ static void pc_q35_machine_2_7_options(MachineClass *m)
+ }
  
--static bool vmstate_test_use_cpuhp(void *opaque)
+ DEFINE_Q35_MACHINE(2, 7);
+-
+-static void pc_q35_machine_2_6_options(MachineClass *m)
 -{
--    PIIX4PMState *s = opaque;
--    return !s->cpu_hotplug_legacy;
+-    X86MachineClass *x86mc = X86_MACHINE_CLASS(m);
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_q35_machine_2_7_options(m);
+-    pcmc->legacy_cpu_hotplug = true;
+-    x86mc->fwcfg_dma_enabled = false;
+-    compat_props_add(m->compat_props, hw_compat_2_6, hw_compat_2_6_len);
+-    compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
 -}
 -
--static int vmstate_cpuhp_pre_load(void *opaque)
--{
--    Object *obj = OBJECT(opaque);
--    object_property_set_bool(obj, "cpu-hotplug-legacy", false, &error_abort);
--    return 0;
--}
--
- static const VMStateDescription vmstate_cpuhp_state = {
-     .name = "piix4_pm/cpuhp",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .needed = vmstate_test_use_cpuhp,
--    .pre_load = vmstate_cpuhp_pre_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_CPU_HOTPLUG(cpuhp_state, PIIX4PMState),
-         VMSTATE_END_OF_LIST()
-@@ -573,12 +558,12 @@ static void piix4_acpi_system_hot_add_init(MemoryRegion *parent,
-         qbus_set_hotplug_handler(BUS(pci_get_bus(PCI_DEVICE(s))), OBJECT(s));
-     }
- 
--    s->cpu_hotplug_legacy = true;
-+    s->cpu_hotplug_legacy = false;
-     object_property_add_bool(OBJECT(s), "cpu-hotplug-legacy",
-                              piix4_get_cpu_hotplug_legacy,
-                              piix4_set_cpu_hotplug_legacy);
--    legacy_acpi_cpu_hotplug_init(parent, OBJECT(s), &s->gpe_cpu,
--                                 PIIX4_CPU_HOTPLUG_IO_BASE);
-+    cpu_hotplug_hw_init(parent, OBJECT(s), &s->cpuhp_state,
-+                        PIIX4_CPU_HOTPLUG_IO_BASE);
- 
-     if (s->acpi_memory_hotplug.is_enabled) {
-         acpi_memory_hotplug_init(parent, OBJECT(s), &s->acpi_memory_hotplug,
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 9446a9f862ca..23147ddc25e7 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -964,7 +964,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
-         build_legacy_cpu_hotplug_aml(dsdt, machine, pm->cpu_hp_io_base);
-     } else {
-         CPUHotplugFeatures opts = {
--            .acpi_1_compatible = true, .has_legacy_cphp = true,
-+            .acpi_1_compatible = true,
-             .smi_path = pm->smi_on_cpuhp ? "\\_SB.PCI0.SMI0.SMIC" : NULL,
-             .fw_unplugs_cpu = pm->smi_on_cpu_unplug,
-         };
-diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
-index 3694c9827f04..8d01c8e3de87 100644
---- a/hw/loongarch/virt-acpi-build.c
-+++ b/hw/loongarch/virt-acpi-build.c
-@@ -369,7 +369,6 @@ build_la_ged_aml(Aml *dsdt, MachineState *machine)
- 
-     if (event & ACPI_GED_CPU_HOTPLUG_EVT) {
-         opts.acpi_1_compatible = false;
--        opts.has_legacy_cphp = false;
-         opts.fw_unplugs_cpu = false;
-         opts.smi_path = NULL;
- 
-diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
-index 32654dc274fd..2cb0ca4f3dce 100644
---- a/include/hw/acpi/cpu.h
-+++ b/include/hw/acpi/cpu.h
-@@ -54,7 +54,6 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
- 
- typedef struct CPUHotplugFeatures {
-     bool acpi_1_compatible;
--    bool has_legacy_cphp;
-     bool fw_unplugs_cpu;
-     const char *smi_path;
- } CPUHotplugFeatures;
+-DEFINE_Q35_MACHINE(2, 6);
 -- 
 2.34.1
 
