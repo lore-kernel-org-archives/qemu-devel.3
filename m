@@ -4,96 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B38BD12679
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 22:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57AF5D12689
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 23:07:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQYta-0003kD-BF; Tue, 02 Dec 2025 17:30:54 -0500
+	id 1vQZSu-0005P5-OH; Tue, 02 Dec 2025 18:07:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vQYtZ-0003jx-5U
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 17:30:53 -0500
-Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vQYtX-0004QT-Fz
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 17:30:52 -0500
-Received: by mail-oa1-x2e.google.com with SMTP id
- 586e51a60fabf-3ed15120e55so3674385fac.2
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 14:30:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764714650; x=1765319450; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=491M1MMKif/og9SD2X+oox6ypjy+LJ56gB+lCOA76rE=;
- b=bOk3IHZfAI3KWL1wSHN86o/JtUsGK4El6qfLzd1xCPNqvki1Kihei/4bslE5Lw8hKo
- mZ9DLILD4RXFpHn4ZDBmT3XEKNPh5sSfFRrGwPkSASmy3aZhyIhq0mP98KDA628i8DJj
- GNxxn+b3PuJnse+piOFF5w09Wze8n1M3u7ncncXYDusBUtMvs7UFfm1MFklt4wnIUlUd
- ojUmGjgrZ8TbpjzocpMOKxlrlNKItRLIMhfPmMzZx3FK940+X+Mjtx1IyrJH3e6U+wyv
- 8NUp8NGpRyVIwL2ILEle/hOfASBnFlPlh9hQ9r0zsb3l28VV+71lNDpVZVmEzBWUf8pW
- 9Ckw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764714650; x=1765319450;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=491M1MMKif/og9SD2X+oox6ypjy+LJ56gB+lCOA76rE=;
- b=MiY9IatHWCxinmtENmyECdtrz7C/YXq6ww2sPp08dSlbEUNNpWC4x3so+YMtTxrDPo
- DLTb/mAcBQ+hwsZWu5/ii8ydVQ4HvjF3xklnk//+FiKXmEU2btg1fdGBbROLN5fDRm1Z
- iAeK+6asGxAh5sNAFhPXhj0g9jks2dMgKEbYHEP4CO8XCTKM9DRB1pc+2EOPHGjtO/3Y
- c4aAjmn2lLU6VwN6NytVV7mK+Swq+Zk+yTIaRO6M4kHGjVPXoZEa0huCRnxmWaBHzwp0
- GmF+Ly643p7W8B8oBqIH8UPqx+jA7U/G8qlJKk0oPeTATekglsedeJ+c/Ja5lVCLugGy
- 1nDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUDkVZ1GwqDjPb4Vmp4K2q7l6Z5xUGdDnL7bXJyzEA6VC3gI5RzZ8Yh+Xlgocibo8zBfwh/8f46risP@nongnu.org
-X-Gm-Message-State: AOJu0Yy++hqdscPRHPshvpYHfs2gBbAw/ECOgatHGNFqd55g8K/7iA5U
- jmVDnuFSTWv2arms7nUeuqy8bAw9e5UniXS30uybO2gkZzXCGWZJVgkOsjNE5xM03s8=
-X-Gm-Gg: ASbGncsC9qnMMr239kD7AOX9HKmKPzTA8sxaIIhj0BoQWW2VUx4A78lh6j3kO2nKskt
- HEsTMdP61YxDGtTXVd8/6OQh/++iw4mt/H1tg7bo4Mx0pz1DoWn6GSFZfdbeKgMpgCM6Ciw4Pb4
- 2+CaT8xqWs05IZ1gW5YRyFjEHql51sKpyIaUArT14jbDJYNDWl8NJsVwlHTTsVMPDMC0a71lvbl
- ijGFMit+0HSzmeSt8xkTwWJwaEx76wdN1k9KQxsKxnhhDsQh1eK2LR7sLucY1REwVgnbYZmvhaV
- /7vly+3Jri4cKoN410SQqf+gHPwbJ46VZNOR8SkWAZnoxca+XwBKjJ5eti2AqYQGt9RCJyX1HGH
- e1UyFcjId0gFmTyaD+uPWMlLB4SZjGnMXy+7m1NhFn0HyF/koSiwZjYm9kh3EvNtuOgH+0Dn0AG
- Zh3aKfivlsIWqZE78SgKcmZpJ2Ag==
-X-Google-Smtp-Source: AGHT+IELQZ+XP7KfiQ93b3Y0bsuuHu/ujjujJ1Uf+O3eJ6Li4uZOIxR06A10MAcqAibUijRtyAylYg==
-X-Received: by 2002:a05:6870:9495:b0:3ec:4089:f963 with SMTP id
- 586e51a60fabf-3f1693e5f69mr38672fac.44.1764714649886; 
- Tue, 02 Dec 2025 14:30:49 -0800 (PST)
-Received: from [10.27.3.244] ([187.210.107.189])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3f0dc766dc3sm8788853fac.0.2025.12.02.14.30.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Dec 2025 14:30:49 -0800 (PST)
-Message-ID: <2f307b46-42d8-445a-8aec-91fa101244f2@linaro.org>
-Date: Tue, 2 Dec 2025 14:30:47 -0800
+ (Exim 4.90_1) (envelope-from <asb@igalia.com>) id 1vQZSs-0005Og-V5
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 18:07:22 -0500
+Received: from fanzine2.igalia.com ([213.97.179.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <asb@igalia.com>) id 1vQZSq-0005Za-Bx
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 18:07:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
+ s=20170329;
+ h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=CN+1UZVLa45qQRicW1aM6nWsTAgOWP7zCStmqGa6D9Q=; b=hv4qrqWmSWtlXmKLYS0JfS2YMz
+ tHuScacbRIOVNrepM1wVOPCUoLoe2ML+t0iluqz+gGpxfoc/efQlE1PeraP/kTzvYBaouFO9kcKlE
+ WF67W0cLiU60J/TqRcKfAzJCiAGCEJ3OPI8hKPLQw15/l3aHiXY4pFLm+9GlLNjVKv7S7cYCIGSbv
+ 5Tsup9L7D/MDinC8QZGWe8pV/+7SQAHXPSKi6Vu0StfG+4ISUWi1PafLpivMytThSCAogrcIDvEzi
+ Oc7Lbd1okdOAev+slnktnw5K8zzovX5/T7ErIWh8YAFgzUyYx2lfTLQdeRRazEMu7KWLLVHCktK2n
+ I4L4EKIg==;
+Received: from 82-69-92-151.dsl.in-addr.zen.co.uk ([82.69.92.151]
+ helo=localhost.localdomain) by fanzine2.igalia.com with esmtpsa 
+ (Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+ id 1vQZSo-0082ga-OY; Wed, 03 Dec 2025 00:07:18 +0100
+From: Alex Bradbury <asb@igalia.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Bradbury <asb@igalia.com>, alex.bennee@linaro.org, erdnaxe@crans.org,
+ ma.mandourr@gmail.com, pierrick.bouvier@linaro.org
+Subject: [PATCH v2 2/5] contrib/plugins/hotblocks: Fix off by one error in
+ iteration of sorted blocks
+Date: Tue,  2 Dec 2025 23:05:55 +0000
+Message-ID: <2e1c404fd21d064610391ebb2ffe24d0c536f8dd.1764716538.git.asb@igalia.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <cover.1764716538.git.asb@igalia.com>
+References: <cover.1764716538.git.asb@igalia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2 2/2] tcg/tci: Disable Int128 support
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20251202184653.33998-1-philmd@linaro.org>
- <20251202184653.33998-3-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251202184653.33998-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
+Received-SPF: pass client-ip=213.97.179.56; envelope-from=asb@igalia.com;
+ helo=fanzine2.igalia.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,62 +72,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/2/25 10:46, Philippe Mathieu-Daudé wrote:
-> Disable Int128 on TCI, otherwise build fails:
-> 
->    In file included from ../../tcg/optimize.c:29:
->    In file included from include/tcg/tcg-op-common.h:12:
->    In file included from include/exec/helper-proto-common.h:10:
->    In file included from include/qemu/atomic128.h:62:
->    In file included from host/include/aarch64/host/atomic128-cas.h.inc:16:
->    host/include/generic/host/atomic128-cas.h.inc:37:12: error: initializing 'Int128' (aka 'struct Int128') with an expression of incompatible type '__int128_t' (aka '__int128')
->       37 |     Int128 old = *ptr_align;
->          |            ^     ~~~~~~~~~~
->    host/include/generic/host/atomic128-cas.h.inc:39:52: warning: incompatible pointer types passing 'Int128 *' (aka 'struct Int128 *') to parameter of type '__int128_t *' (aka '__int128 *') [-Wincompatible-pointer-types]
->       39 |     while (!__atomic_compare_exchange_n(ptr_align, &old, new, true,
->          |                                                    ^~~~
->    host/include/generic/host/atomic128-cas.h.inc:39:58: error: passing 'Int128' (aka 'struct Int128') to parameter of incompatible type '__int128_t' (aka '__int128')
->       39 |     while (!__atomic_compare_exchange_n(ptr_align, &old, new, true,
->          |                                                          ^~~
->    host/include/generic/host/atomic128-cas.h.inc:50:12: error: initializing 'Int128' (aka 'struct Int128') with an expression of incompatible type '__int128_t' (aka '__int128')
->       50 |     Int128 old = *ptr_align;
->          |            ^     ~~~~~~~~~~
->    host/include/generic/host/atomic128-cas.h.inc:52:62: error: invalid operands to binary expression ('Int128' (aka 'struct Int128') and 'Int128')
->       52 |     while (!__atomic_compare_exchange_n(ptr_align, &old, old & val, true,
->          |                                                          ~~~ ^ ~~~
->    host/include/generic/host/atomic128-cas.h.inc:63:12: error: initializing 'Int128' (aka 'struct Int128') with an expression of incompatible type '__int128_t' (aka '__int128')
->       63 |     Int128 old = *ptr_align;
->          |            ^     ~~~~~~~~~~
->    host/include/generic/host/atomic128-cas.h.inc:65:62: error: invalid operands to binary expression ('Int128' (aka 'struct Int128') and 'Int128')
->       65 |     while (!__atomic_compare_exchange_n(ptr_align, &old, old | val, true,
->          |                                                          ~~~ ^ ~~~
->    1 warning and 6 errors generated.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The logic to iterate over the hottest blocks will never reach the last
+item in the list, as it checks `it->next != NULL` before entering the
+loop. It's hard to trigger this off-by-one error with the default
+limit=20, but it is a bug and is problematic if that default is changed
+to something larger.
 
-And what of the CONFIG_TCG_INTERPRETER test that already exists in int128.h?
+Signed-off-by: Alex Bradbury <asb@igalia.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/hotblocks.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-There's got to be more to this than that.
-
-
-r~
-
-> ---
->   meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index d9293294d8e..692a62e6c18 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2996,7 +2996,7 @@ config_host_data.set('CONFIG_ATOMIC64', cc.links('''
->   
->   # has_int128_type is set to false on Emscripten to avoid errors by libffi
->   # during runtime.
-> -has_int128_type = host_os != 'emscripten' and cc.compiles('''
-> +has_int128_type = host_os != 'emscripten' and tcg_arch != 'tci' and cc.compiles('''
->     __int128_t a;
->     __uint128_t b;
->     int main(void) { b = a; }''')
+diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+index d3dd23ed9f..cf4d6b8c36 100644
+--- a/contrib/plugins/hotblocks.c
++++ b/contrib/plugins/hotblocks.c
+@@ -82,10 +82,9 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
+ 
+     if (sorted_counts) {
+-        it = sorted_counts;
+         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
+ 
+-        for (i = 0; i < limit && it->next; i++, it = it->next) {
++        for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
+             ExecCount *rec = (ExecCount *) it->data;
+             g_string_append_printf(
+                 report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
+-- 
+2.52.0
 
 
