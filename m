@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4416D1170E
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:41:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9330D11712
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQTR9-0001Ox-SH; Tue, 02 Dec 2025 11:41:11 -0500
+	id 1vQTQh-0000xU-A0; Tue, 02 Dec 2025 11:40:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQTR2-0001Co-FG
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:41:05 -0500
+ id 1vQTQX-0000wq-RK
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:34 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQTR0-0002FS-Q7
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:41:04 -0500
+ id 1vQTQW-0001lq-0b
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764693662; x=1796229662;
+ t=1764693631; x=1796229631;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qOKjCAtqtAm/6XWCHVrwryYKG3D/GYbe6E3AbYog1nQ=;
- b=CN6LOUoYMmJCRxzx45we1NZ+uNT33qJ72Ev0ZY8X8JJ/809CxVMs9+PL
- QosQAu1UO/Crgq1hEWZ/eHMf+d0X7rUXEjo+RmTyKXMRbk49TUc5d0IRM
- b+pZO0riYi8G5PQCcRFEA6J7XtyW+q/HZ8tAPX3ovKxlNI1StqabhQDTj
- vvPoCMXyuX0Pb08guk78IhiHdrV8KoRsvuLjNCBhCxDq1nIUdrb/smAT9
- k1Vc4Jn2qKJ5mMKckNg0eUr/yu3tSfEqbbiNKWKCmZLLJb5Xhos27RirW
- JJGiS0VpswE+qSqT24cySL+imD0nY+8ibjoDgihX3kU9L5V4uL8VifI1K A==;
-X-CSE-ConnectionGUID: y0sapYteT9uWWtV3i0i9ig==
-X-CSE-MsgGUID: poifVCYFTCu308oq9SFLAw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="66555413"
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="66555413"
+ bh=Ri+hE0aEh63QaQ4qr99LpLC5VPDanP5Ow2vhQA4wQY4=;
+ b=ZQEles1fx1bj9wKn7G3WH/FjpM3qGxjfCWDi1KeCrpp8u+wnp5WtSpwd
+ mFB7W054a8R4qpp5OXlOx9Qc51HdCoXA4xdEyFq8fAUyccP7j3EHWT83Z
+ oTaty8MrefP572eVMRYCNkoArZfnlMBL4fiJbiXug0fUOYZcSinF0CJIi
+ 8IRwaS8tQ4VxZuilS6ZGnUkbFhSSY6HvW3fFKeGhHr8n1PP/Q1ODtoVzy
+ YaVtOFqJhb85HfK5/iuhnuilM1yqkjHMUQ+4dZ+GjBf/VYZD81D0I9+/T
+ Nhf5boBPAmhLpXEWiVxI/ug4v0WqG7/WaGVQbfAmRlYToTlQTjNd660F1 g==;
+X-CSE-ConnectionGUID: g5yqNmrXSgSgTocTNlBW5g==
+X-CSE-MsgGUID: DAANyP1DQs+FDJq/cVOGgg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="66555296"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="66555296"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Dec 2025 08:41:01 -0800
-X-CSE-ConnectionGUID: s8q5CRv2Rau/r0OjKyOOuQ==
-X-CSE-MsgGUID: y77f/wUfQbKBVPnI+znA6g==
+ 02 Dec 2025 08:40:29 -0800
+X-CSE-ConnectionGUID: PWHPbr76TMmUfIXFdpdFPg==
+X-CSE-MsgGUID: 1maLxthjSC6dnbTfwtI+ZA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="231751459"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="231751216"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 02 Dec 2025 08:40:59 -0800
+ by orviesa001.jf.intel.com with ESMTP; 02 Dec 2025 08:40:26 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,9 +57,10 @@ Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>, devel@lists.libvirt.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 10/10] hw/intc/ioapic: Deprecate version property
-Date: Wed,  3 Dec 2025 01:05:02 +0800
-Message-Id: <20251202170502.3228625-11-zhao1.liu@intel.com>
+Subject: [RFC 01/10] qom: Rename ObjectPropertyFlags to
+ ObjectPropertyAccessorFlags
+Date: Wed,  3 Dec 2025 01:04:53 +0800
+Message-Id: <20251202170502.3228625-2-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251202170502.3228625-1-zhao1.liu@intel.com>
 References: <20251202170502.3228625-1-zhao1.liu@intel.com>
@@ -90,57 +91,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"version" was previously set to "0x11" for v2.7 x86 machines, but v2.7
-machines have been removed. And since v2.8, all x86 machines are using
-IOAPIC with "0x20" version. So it should be not needed to configure the
-version back to "0x11" again.
+At present, ObjectPropertyFlags is used to select accessors and such
+flags won't be stored in ObjectProperty itself.
 
-Considerring it may have external use, so deprecate it before removal.
+So it's not proper to extend this ObjectPropertyFlags for "deprecated"
+or "internal" flags.
+
+Therefore, rename ObjectPropertyFlags to ObjectPropertyAccessorFlags,
+and then the original name ObjectPropertyFlags can be used for other
+cases.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- docs/about/deprecated.rst | 13 +++++++++++++
- hw/intc/ioapic.c          |  3 ++-
- 2 files changed, 15 insertions(+), 1 deletion(-)
+ include/qom/object.h | 28 ++++++++++++++--------------
+ qom/object.c         | 16 ++++++++--------
+ 2 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 741c1a71728b..076940ad0826 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -522,6 +522,19 @@ It was implemented as a no-op instruction in TCG up to QEMU 9.0, but
- only with ``-cpu max`` (which does not guarantee migration compatibility
- across versions).
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 26df6137b911..3f807a03f5aa 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -1846,14 +1846,14 @@ typedef enum {
+     OBJ_PROP_FLAG_WRITE = 1 << 1,
+     /* Automatically add a getter and a setter to the property */
+     OBJ_PROP_FLAG_READWRITE = (OBJ_PROP_FLAG_READ | OBJ_PROP_FLAG_WRITE),
+-} ObjectPropertyFlags;
++} ObjectPropertyAccessorFlags;
  
-+
-+Global options
-+--------------
-+
-+``-device -global ioapic.version=version_id`` (since 11.0)
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+The ``version`` configures IOAPIC version for x86 machines. It was previously
-+set to ``0x11`` for v2.7 machines, and since v2.8, the default version is
-+bumped up to ``0x20``. The v2.7 machines have been removed, and ``0x11``
-+version should be not needed. Deprecate this property to stop external use.
-+
-+
- Backwards compatibility
- -----------------------
+ /**
+  * object_property_add_uint8_ptr:
+  * @obj: the object to add a property to
+  * @name: the name of the property
+  * @v: pointer to value
+- * @flags: bitwise-or'd ObjectPropertyFlags
++ * @flags: bitwise-or'd ObjectPropertyAccessorFlags
+  *
+  * Add an integer property in memory.  This function will add a
+  * property of type 'uint8'.
+@@ -1861,20 +1861,20 @@ typedef enum {
+  * Returns: The newly added property on success, or %NULL on failure.
+  */
+ ObjectProperty *object_property_add_uint8_ptr(Object *obj, const char *name,
+-                                              const uint8_t *v,
+-                                              ObjectPropertyFlags flags);
++                                        const uint8_t *v,
++                                        ObjectPropertyAccessorFlags flags);
  
-diff --git a/hw/intc/ioapic.c b/hw/intc/ioapic.c
-index 38e438464861..45fdfb56636b 100644
---- a/hw/intc/ioapic.c
-+++ b/hw/intc/ioapic.c
-@@ -483,7 +483,8 @@ static void ioapic_unrealize(DeviceState *dev)
- }
+ ObjectProperty *object_class_property_add_uint8_ptr(ObjectClass *klass,
+                                          const char *name,
+                                          const uint8_t *v,
+-                                         ObjectPropertyFlags flags);
++                                         ObjectPropertyAccessorFlags flags);
  
- static const Property ioapic_properties[] = {
--    DEFINE_PROP_UINT8("version", IOAPICCommonState, version, IOAPIC_VER_DEF),
-+    DEFINE_PROP_UINT8_DEPRECATED("version", IOAPICCommonState,
-+                                  version, IOAPIC_VER_DEF),
- };
+ /**
+  * object_property_add_uint16_ptr:
+  * @obj: the object to add a property to
+  * @name: the name of the property
+  * @v: pointer to value
+- * @flags: bitwise-or'd ObjectPropertyFlags
++ * @flags: bitwise-or'd ObjectPropertyAccessorFlags
+  *
+  * Add an integer property in memory.  This function will add a
+  * property of type 'uint16'.
+@@ -1883,19 +1883,19 @@ ObjectProperty *object_class_property_add_uint8_ptr(ObjectClass *klass,
+  */
+ ObjectProperty *object_property_add_uint16_ptr(Object *obj, const char *name,
+                                     const uint16_t *v,
+-                                    ObjectPropertyFlags flags);
++                                    ObjectPropertyAccessorFlags flags);
  
- static void ioapic_class_init(ObjectClass *klass, const void *data)
+ ObjectProperty *object_class_property_add_uint16_ptr(ObjectClass *klass,
+                                           const char *name,
+                                           const uint16_t *v,
+-                                          ObjectPropertyFlags flags);
++                                          ObjectPropertyAccessorFlags flags);
+ 
+ /**
+  * object_property_add_uint32_ptr:
+  * @obj: the object to add a property to
+  * @name: the name of the property
+  * @v: pointer to value
+- * @flags: bitwise-or'd ObjectPropertyFlags
++ * @flags: bitwise-or'd ObjectPropertyAccessorFlags
+  *
+  * Add an integer property in memory.  This function will add a
+  * property of type 'uint32'.
+@@ -1904,19 +1904,19 @@ ObjectProperty *object_class_property_add_uint16_ptr(ObjectClass *klass,
+  */
+ ObjectProperty *object_property_add_uint32_ptr(Object *obj, const char *name,
+                                     const uint32_t *v,
+-                                    ObjectPropertyFlags flags);
++                                    ObjectPropertyAccessorFlags flags);
+ 
+ ObjectProperty *object_class_property_add_uint32_ptr(ObjectClass *klass,
+                                           const char *name,
+                                           const uint32_t *v,
+-                                          ObjectPropertyFlags flags);
++                                          ObjectPropertyAccessorFlags flags);
+ 
+ /**
+  * object_property_add_uint64_ptr:
+  * @obj: the object to add a property to
+  * @name: the name of the property
+  * @v: pointer to value
+- * @flags: bitwise-or'd ObjectPropertyFlags
++ * @flags: bitwise-or'd ObjectPropertyAccessorFlags
+  *
+  * Add an integer property in memory.  This function will add a
+  * property of type 'uint64'.
+@@ -1925,12 +1925,12 @@ ObjectProperty *object_class_property_add_uint32_ptr(ObjectClass *klass,
+  */
+ ObjectProperty *object_property_add_uint64_ptr(Object *obj, const char *name,
+                                     const uint64_t *v,
+-                                    ObjectPropertyFlags flags);
++                                    ObjectPropertyAccessorFlags flags);
+ 
+ ObjectProperty *object_class_property_add_uint64_ptr(ObjectClass *klass,
+                                           const char *name,
+                                           const uint64_t *v,
+-                                          ObjectPropertyFlags flags);
++                                          ObjectPropertyAccessorFlags flags);
+ 
+ /**
+  * object_property_add_alias:
+diff --git a/qom/object.c b/qom/object.c
+index 4f32c1aba7d7..85d31bb64b36 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -2636,7 +2636,7 @@ static void property_set_uint64_ptr(Object *obj, Visitor *v, const char *name,
+ ObjectProperty *
+ object_property_add_uint8_ptr(Object *obj, const char *name,
+                               const uint8_t *v,
+-                              ObjectPropertyFlags flags)
++                              ObjectPropertyAccessorFlags flags)
+ {
+     ObjectPropertyAccessor *getter = NULL;
+     ObjectPropertyAccessor *setter = NULL;
+@@ -2656,7 +2656,7 @@ object_property_add_uint8_ptr(Object *obj, const char *name,
+ ObjectProperty *
+ object_class_property_add_uint8_ptr(ObjectClass *klass, const char *name,
+                                     const uint8_t *v,
+-                                    ObjectPropertyFlags flags)
++                                    ObjectPropertyAccessorFlags flags)
+ {
+     ObjectPropertyAccessor *getter = NULL;
+     ObjectPropertyAccessor *setter = NULL;
+@@ -2676,7 +2676,7 @@ object_class_property_add_uint8_ptr(ObjectClass *klass, const char *name,
+ ObjectProperty *
+ object_property_add_uint16_ptr(Object *obj, const char *name,
+                                const uint16_t *v,
+-                               ObjectPropertyFlags flags)
++                               ObjectPropertyAccessorFlags flags)
+ {
+     ObjectPropertyAccessor *getter = NULL;
+     ObjectPropertyAccessor *setter = NULL;
+@@ -2696,7 +2696,7 @@ object_property_add_uint16_ptr(Object *obj, const char *name,
+ ObjectProperty *
+ object_class_property_add_uint16_ptr(ObjectClass *klass, const char *name,
+                                      const uint16_t *v,
+-                                     ObjectPropertyFlags flags)
++                                     ObjectPropertyAccessorFlags flags)
+ {
+     ObjectPropertyAccessor *getter = NULL;
+     ObjectPropertyAccessor *setter = NULL;
+@@ -2716,7 +2716,7 @@ object_class_property_add_uint16_ptr(ObjectClass *klass, const char *name,
+ ObjectProperty *
+ object_property_add_uint32_ptr(Object *obj, const char *name,
+                                const uint32_t *v,
+-                               ObjectPropertyFlags flags)
++                               ObjectPropertyAccessorFlags flags)
+ {
+     ObjectPropertyAccessor *getter = NULL;
+     ObjectPropertyAccessor *setter = NULL;
+@@ -2736,7 +2736,7 @@ object_property_add_uint32_ptr(Object *obj, const char *name,
+ ObjectProperty *
+ object_class_property_add_uint32_ptr(ObjectClass *klass, const char *name,
+                                      const uint32_t *v,
+-                                     ObjectPropertyFlags flags)
++                                     ObjectPropertyAccessorFlags flags)
+ {
+     ObjectPropertyAccessor *getter = NULL;
+     ObjectPropertyAccessor *setter = NULL;
+@@ -2756,7 +2756,7 @@ object_class_property_add_uint32_ptr(ObjectClass *klass, const char *name,
+ ObjectProperty *
+ object_property_add_uint64_ptr(Object *obj, const char *name,
+                                const uint64_t *v,
+-                               ObjectPropertyFlags flags)
++                               ObjectPropertyAccessorFlags flags)
+ {
+     ObjectPropertyAccessor *getter = NULL;
+     ObjectPropertyAccessor *setter = NULL;
+@@ -2776,7 +2776,7 @@ object_property_add_uint64_ptr(Object *obj, const char *name,
+ ObjectProperty *
+ object_class_property_add_uint64_ptr(ObjectClass *klass, const char *name,
+                                      const uint64_t *v,
+-                                     ObjectPropertyFlags flags)
++                                     ObjectPropertyAccessorFlags flags)
+ {
+     ObjectPropertyAccessor *getter = NULL;
+     ObjectPropertyAccessor *setter = NULL;
 -- 
 2.34.1
 
