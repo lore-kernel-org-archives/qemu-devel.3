@@ -4,65 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D338D12668
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 19:31:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C15ADD1266B
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 19:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQW4j-0001GW-Ft; Tue, 02 Dec 2025 14:30:13 -0500
+	id 1vQWOM-0008Lz-Ku; Tue, 02 Dec 2025 14:50:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vQW4i-0001GO-0x
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 14:30:12 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vQWOJ-0008KC-Qb
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 14:50:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vQW4f-0008KH-Tj
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 14:30:11 -0500
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vQWOH-0005c2-Dx
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 14:50:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764703806;
+ s=mimecast20190719; t=1764705023;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cpNraFvPB85O+/FnHMRPjEY49VYP9wLwaQ37CZFVHjw=;
- b=fyN/ff5+b4Ls4q8hy9YRlvU9PYwZ9t9MKF8A+aUBYWn3CZ9QbBpD0O04ryBX0yh29QTZYp
- rMTWLDtvkJ38dGVLFNGXE14euem5AkOIGXusSsw2yROP4jfrXesHpCRGQ5SWZN8yCx6B3h
- upQddOjh/SEe//p295hJztXYc/3tQtg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-2NKGn3ZsOoCPkMdY34L_aQ-1; Tue,
- 02 Dec 2025 14:30:05 -0500
-X-MC-Unique: 2NKGn3ZsOoCPkMdY34L_aQ-1
-X-Mimecast-MFC-AGG-ID: 2NKGn3ZsOoCPkMdY34L_aQ_1764703804
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8EED819560B2; Tue,  2 Dec 2025 19:30:03 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.249])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 84630180087B; Tue,  2 Dec 2025 19:30:02 +0000 (UTC)
-Date: Tue, 2 Dec 2025 14:30:01 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, peterx@redhat.com,
- vsementsov@yandex-team.ru, den@virtuozzo.com
-Subject: Re: [PATCH v2 4/4] scripts/qemugdb: coroutine: Add option for
- obtaining detailed trace in coredump
-Message-ID: <20251202193001.GB964933@fedora>
-References: <20251202163119.363969-1-andrey.drobyshev@virtuozzo.com>
- <20251202163119.363969-5-andrey.drobyshev@virtuozzo.com>
+ bh=bwjVE6iHopEY0A4ZakmHTrRo7/mVn3KaUNm34cRn34M=;
+ b=FYfJVa3NMCeR6y9hBflgDzSxMD72jo1q2w+nW/NUy7od8wgvzg9pcML4RFWb/lrIRxWxE0
+ 7xhJxeK5QUcLYHio3h3eZeYA8zyXJZ2+wVhAoGSbfzwuaSnpNmAr49F9asf44q0MIp1kL/
+ md0lupO9Ade1LfpFq68BNCXLAIix8no=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-651-tK98RmvMMXGDVxDTdXxOBw-1; Tue, 02 Dec 2025 14:50:21 -0500
+X-MC-Unique: tK98RmvMMXGDVxDTdXxOBw-1
+X-Mimecast-MFC-AGG-ID: tK98RmvMMXGDVxDTdXxOBw_1764705020
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4775d110fabso43492315e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 11:50:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764705020; x=1765309820; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=bwjVE6iHopEY0A4ZakmHTrRo7/mVn3KaUNm34cRn34M=;
+ b=DGXUfwuGy6H3SL25Idof8wEcDKuzw+61TVhbrOSON1KHUTYpx+zbwSyld2SSdGaMLm
+ VFvKkJK40L+zJdteLKg6uJ7Y7ZgIve4MtVYnnQF5FBT44Emcc9338urd8wUSJda9OcJ5
+ U75HprT6EDN4CF6w9TPA+ey5vSKGBnJvSIdVx7WyytddvpHHn/eXZXpfO226xIsRkgYI
+ tBMhkGMtf/K+Sr2CoYekjUBK1iclpXudSFt+U9ETQkpYK376R5Tg1t3Y5v1eV90QTE2y
+ gn6q+mKyeRhhv8CyNrMScm1UuWi9K9wDnqozreH8+f7TjCJ/h+Iovvbev4GDokFuecFe
+ lVuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764705020; x=1765309820;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bwjVE6iHopEY0A4ZakmHTrRo7/mVn3KaUNm34cRn34M=;
+ b=Hh1HnqBEOtYjCSm49hhPSChgK7eYTEZXvz8dW7MlF8g2Ed0qUcV4/rdYgEe4kM/cdk
+ 4EwikK+aMHbfecDxxtjqG2RJVU+tdJp06Mldwyya6Gg6MoR8SWW5U105weOl+7kTw2sv
+ mYSZECHH/J3aDMhHOKNSUKgaoFSGFcGhihhVFLbBP51cv9bJTMxAQHuTmPxef/Zi0/oN
+ B7mSYY2zhziEUtHxoHQ48zVdzSU/X4VC4iUnLnPd7oE2/KI02anrjnTiRISkfdyeMy2Y
+ Z8HBUVph2qX3wtu0Ym/3jPPV48TrDubgHCDnFg+ZfBGDjcidb3xd+KFt12gLPWJa2Mn/
+ HcTA==
+X-Gm-Message-State: AOJu0YyOm+kwq9o64OXdv6ENzV9+kAJtqV7gslVn6P2GDAPKcQOYO0QH
+ 75m9yHcEJUXqO1SKFhxTngQeldHRD3IouNG0grD/t0SDtpICSnb8FAxFIkjAq2TP6pxAMb7HoaM
+ 1eEx9irnIz3GE/867h9lmQzQL9u2K8nb7pWw0dfuZ2ZJKRgJREwhN46Lh
+X-Gm-Gg: ASbGncvQctRT1V5+K3zKS2xYXMzgWcS3V1nDFXOGd5cAEVfqVWX81meTQXII2Wv1lmj
+ 9bNpQixVvxt2TCDq/dtfl2Zrh9qLP67sqGC/xdHdRz62U1+aOy6+HvIFINb5ETHFk51BLOeNrLx
+ vsvJ8Ib3Ok+XY5LE5hmVThbAyXGyWbiYGKxJTKBUC4N9iy2eAkcLEtNyvoGIiZTW12kSecXnP+v
+ cNAkn9zkcoK9UacMWhKndib3PGTbfeT0TYfSDoif3wQ6rUsQSymygMXfcKik75FZRGpKzKWoLUf
+ csHjC3ycWrW+sIFg/re3ofdElc6Ml+SNUVSwc4lKuHr907mr0brsrptPL5mROr60oSqw8KHz6p+
+ vlHqtXKqtFAYeGshM3DWbZf4DmltTiaH/
+X-Received: by 2002:a05:600c:1c92:b0:477:7f4a:44b0 with SMTP id
+ 5b1f17b1804b1-47904b2c2c5mr358930385e9.33.1764705020206; 
+ Tue, 02 Dec 2025 11:50:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH54XkNE0a3SodqkM24NRkNojkdVxBe8l6lR1kXq4lZzXZO3RQfI548fq53VcSt3RzbuaewCA==
+X-Received: by 2002:a05:600c:1c92:b0:477:7f4a:44b0 with SMTP id
+ 5b1f17b1804b1-47904b2c2c5mr358930105e9.33.1764705019736; 
+ Tue, 02 Dec 2025 11:50:19 -0800 (PST)
+Received: from redhat.com (IGLD-80-230-38-228.inter.net.il. [80.230.38.228])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4792a5bcf08sm3961075e9.7.2025.12.02.11.50.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 02 Dec 2025 11:50:18 -0800 (PST)
+Date: Tue, 2 Dec 2025 14:50:15 -0500
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Albert Esteve <aesteve@redhat.com>
+Cc: qemu-devel@nongnu.org, dbassey@redhat.com,
+ manos.pitsidianakis@linaro.org, slp@redhat.com, stefanha@redhat.com,
+ Fabiano Rosas <farosas@suse.de>, jasowang@redhat.com,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, david@redhat.com, hi@alyssa.is,
+ stevensd@chromium.org, Stefano Garzarella <sgarzare@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH v11 0/7] vhost-user: Add SHMEM_MAP/UNMAP requests
+Message-ID: <20251202144821-mutt-send-email-mst@kernel.org>
+References: <20251111091058.879669-1-aesteve@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="t7rcOUcg6c9O3YfR"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251202163119.363969-5-andrey.drobyshev@virtuozzo.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+In-Reply-To: <20251111091058.879669-1-aesteve@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,157 +122,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Nov 11, 2025 at 10:10:51AM +0100, Albert Esteve wrote:
+> Hi all,
+> 
+> v10->v11
+> - Rebase to grab commit fde5930cc37175cfcd0f03a089e26f4458a52311
+>   and explicitly unset reply_ack on the SHMEM_MAP/UNMAP msg.
+> - Mention mapping cleanup on device reset in the spec.
+> v9->v10
+> - Fix transaction_commit invoked without transaction_begin
+>   on vhost_user_backend_handle_shmem_map() early errors
+> - Removed fd tracking on VirtioSharedMemoryMapping, it
+>   is handled by the RAMBlock
+> - Reject invalid BAR configurations when VIRTIO Shared Memory
+>   Regions are in use by vhost-user-test-device
+> v8->v9
+> - Fixed vhost-user new handlers to ensure that they always
+>   reply
+> - Made MMAP request flags field u64 everywhere
+> - Fixed double memory_region_del_subregion() on UNMAP
+> - Add mappings cleaning on virtio_reset()
+> - Some small typos and fixes
+> - Fixed virtio pci bar mapping for vhost-user-test-device
+> v7->v8
+> - Unified VhostUserShmemObject and VirtioSharedMemoryMapping
+> - Refined shmem_obj lifecycle by transferring ownership
+> - Other small improvements
+> 
+> This patch series implements dynamic fd-backed memory mapping support
+> for vhost-user backends, enabling backends to dynamically request memory
+> mappings and unmappings during runtime through the new
+> VHOST_USER_BACKEND_SHMEM_MAP/UNMAP protocol messages.
+> 
+> This feature benefits various VIRTIO devices that require dynamic shared
+> memory management, including virtiofs (for DAX mappings), virtio-gpu
+> (for resource sharing), and the recently standardized virtio-media.
+> 
+> The implementation introduces a QOM-based architecture for managing
+> shared memory lifecycle:
+> 
+> - VirtioSharedMemoryMapping: an intermediate object that manages
+>   individual memory mappings by acting as generic container for regions
+>   declared in any vhost-user device type
+> - Dynamic Mapping: backends can request mappings via SHMEM_MAP messages,
+>   with the frontend creating MemoryRegions from the provided file
+>   descriptors and adding them as subregions
+> 
+> When a SHMEM_MAP request is received, the frontend:
+> 1. Creates VirtioSharedMemoryMapping to manage the mapping lifecycle
+> 2. Maps the provided fd with memory_region_init_ram_from_fd()
+> 3. Creates a MemoryRegion backed by the mapped memory
+> 4. Adds it as a subregion of the appropiate VIRTIO Shared Memory Region
+> 
+> The QOM reference counting ensures automatic cleanup when mappings are
+> removed or the device is destroyed.
+> 
+> This patch also includes:
+> - VHOST_USER_GET_SHMEM_CONFIG: a new frontend request allowing generic
+>   vhost-user devices to query shared memory configuration from backends
+>   at device initialization, enabling the generic vhost-user-device
+>   frontend to work with any backend regardless of specific shared memory
+>   requirements.
 
---t7rcOUcg6c9O3YfR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Looks good, we are in freeze so will merge after 10.2.
+If it's not too much trouble, pls ping me after the release
+to help make sure it's not forgotten.
 
-On Tue, Dec 02, 2025 at 06:31:19PM +0200, Andrey Drobyshev wrote:
-> Commit 772f86839f ("scripts/qemu-gdb: Support coroutine dumps in
-> coredumps") introduced coroutine traces in coredumps using raw stack
-> unwinding.  While this works, this approach does not allow to view the
-> function arguments in the corresponding stack frames.
->=20
-> As an alternative, we can obtain saved registers from the coroutine's
-> jmpbuf, patch them into the coredump's struct elf_prstatus in place, and
-> execute another gdb subprocess to get backtrace from the patched temporary
-> coredump.
->=20
-> While providing more detailed info, this alternative approach, however, is
-> more invasive as it might potentially corrupt the coredump file. We do ta=
-ke
-> precautions by saving the original registers values into a separate binary
-> blob /path/to/coredump.ptregs, so that it can be restores in the next
-> GDB session.  Still, instead of making it a new deault, let's keep raw un=
-wind
-> the default behaviour, but add the '--detailed' option for 'qemu bt' and
-> 'qemu coroutine' command which would enforce the new behaviour.
->=20
-> That's how this looks:
->=20
->   (gdb) qemu coroutine 0x7fda9335a508
->   #0  0x5602bdb41c26 in qemu_coroutine_switch<+214> () at ../util/corouti=
-ne-ucontext.c:321
->   #1  0x5602bdb3e8fe in qemu_aio_coroutine_enter<+493> () at ../util/qemu=
--coroutine.c:293
->   #2  0x5602bdb3c4eb in co_schedule_bh_cb<+538> () at ../util/async.c:547
->   #3  0x5602bdb3b518 in aio_bh_call<+119> () at ../util/async.c:172
->   #4  0x5602bdb3b79a in aio_bh_poll<+457> () at ../util/async.c:219
->   #5  0x5602bdb10f22 in aio_poll<+1201> () at ../util/aio-posix.c:719
->   #6  0x5602bd8fb1ac in iothread_run<+123> () at ../iothread.c:63
->   #7  0x5602bdb18a24 in qemu_thread_start<+355> () at ../util/qemu-thread=
--posix.c:393
->=20
->   (gdb) qemu coroutine 0x7fda9335a508 --detailed
->   patching core file /tmp/tmpq4hmk2qc
->   found "CORE" at 0x10c48
->   assume pt_regs at 0x10cbc
->   write r15 at 0x10cbc
->   write r14 at 0x10cc4
->   write r13 at 0x10ccc
->   write r12 at 0x10cd4
->   write rbp at 0x10cdc
->   write rbx at 0x10ce4
->   write rip at 0x10d3c
->   write rsp at 0x10d54
->=20
->   #0  0x00005602bdb41c26 in qemu_coroutine_switch (from_=3D0x7fda9335a508=
-, to_=3D0x7fda8400c280, action=3DCOROUTINE_ENTER) at ../util/coroutine-ucon=
-text.c:321
->   #1  0x00005602bdb3e8fe in qemu_aio_coroutine_enter (ctx=3D0x5602bf7147c=
-0, co=3D0x7fda8400c280) at ../util/qemu-coroutine.c:293
->   #2  0x00005602bdb3c4eb in co_schedule_bh_cb (opaque=3D0x5602bf7147c0) a=
-t ../util/async.c:547
->   #3  0x00005602bdb3b518 in aio_bh_call (bh=3D0x5602bf714a40) at ../util/=
-async.c:172
->   #4  0x00005602bdb3b79a in aio_bh_poll (ctx=3D0x5602bf7147c0) at ../util=
-/async.c:219
->   #5  0x00005602bdb10f22 in aio_poll (ctx=3D0x5602bf7147c0, blocking=3Dtr=
-ue) at ../util/aio-posix.c:719
->   #6  0x00005602bd8fb1ac in iothread_run (opaque=3D0x5602bf42b100) at ../=
-iothread.c:63
->   #7  0x00005602bdb18a24 in qemu_thread_start (args=3D0x5602bf7164a0) at =
-=2E./util/qemu-thread-posix.c:393
->   #8  0x00007fda9e89f7f2 in start_thread (arg=3D<optimized out>) at pthre=
-ad_create.c:443
->   #9  0x00007fda9e83f450 in clone3 () at ../sysdeps/unix/sysv/linux/x86_6=
-4/clone3.S:81
->=20
-> CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-> CC: Peter Xu <peterx@redhat.com>
-> Originally-by: Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->  scripts/qemugdb/coroutine.py | 243 +++++++++++++++++++++++++++++++++--
->  1 file changed, 233 insertions(+), 10 deletions(-)
->=20
-> diff --git a/scripts/qemugdb/coroutine.py b/scripts/qemugdb/coroutine.py
-> index e98fc48a4b..280c02c12d 100644
-> --- a/scripts/qemugdb/coroutine.py
-> +++ b/scripts/qemugdb/coroutine.py
-> @@ -10,9 +10,116 @@
->  # or later.  See the COPYING file in the top-level directory.
-> =20
->  import gdb
-> +import os
-> +import pty
-> +import re
-> +import struct
-> +import textwrap
-> +
-> +from collections import OrderedDict
-> +from copy import deepcopy
-> =20
->  VOID_PTR =3D gdb.lookup_type('void').pointer()
-> =20
-> +# Registers in the same order they're present in ELF coredump file.
-> +# See asm/ptrace.h
-> +PT_REGS =3D ['r15', 'r14', 'r13', 'r12', 'rbp', 'rbx', 'r11', 'r10', 'r9=
-',
-> +           'r8', 'rax', 'rcx', 'rdx', 'rsi', 'rdi', 'orig_rax', 'rip', '=
-cs',
-> +           'eflags', 'rsp', 'ss']
-> +
-> +coredump =3D None
-> +
-> +
-> +class Coredump:
-> +    _ptregs_suff =3D '.ptregs'
-> +
-> +    def __init__(self, coredump, executable):
-> +        gdb.events.exited.connect(self._cleanup)
 
-It's not clear to me that this cleanup mechanism is reliable:
-
-- The restore_regs() method is called from invoke(), but not in a
-  `finally` block that would guarantee it runs even when an exception is
-  thrown. Maybe _cleanup() can be called without a prior restore_regs()
-  call. It would be inconvenient to lose the original register values.
-
-- I'm not sure if gdb.events.exited (when GDB's inferior terminates) is
-  the correct event to ensure cleanup. The worst case is that the
-  temporary file is leaked, which is not a serious problem.
-
-But then this is a debugging script and it's probably fine:
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
---t7rcOUcg6c9O3YfR
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmkvPjkACgkQnKSrs4Gr
-c8iARAf9EFtYqUQYi/147eKt6tppX/cJo1NfU+sL6c7oAcxZiDMxb9upt8Jcj1Js
-4LtP+PNbq7WIywmhkQvhvVrdufCG4ntTIB6zVDKfah89MKpRegueJjU5eF47iAUa
-agTGgaWMXCC0a6p9GBKk5QGjAdAoref+cqR/FjU9GHWxPl/ZqIEAlBlVVLiwdMQy
-30EzO0DG4+7zeWqVYYd2erJ/Si8ucL1kMwvqIu0qbheeuGzM+lyjNGKjJsDlzplh
-4wsf3EvSILZRRx36LlbLLulgtPtlMrPgbYe5HbtlqRoDFrjquCff0IMZvipkTMdy
-PR3mJULZB+YB8fJCZHIAhnbmw1sSTg==
-=4DYz
------END PGP SIGNATURE-----
-
---t7rcOUcg6c9O3YfR--
+> The implementation has been tested with rust-vmm based backends.
+> 
+> Albert Esteve (7):
+>   vhost-user: Add VirtIO Shared Memory map request
+>   vhost_user.rst: Align VhostUserMsg excerpt members
+>   vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
+>   vhost_user: Add frontend get_shmem_config command
+>   vhost_user.rst: Add GET_SHMEM_CONFIG message
+>   qmp: add shmem feature map
+>   vhost-user-device: Add shared memory BAR
+> 
+>  docs/interop/vhost-user.rst               | 102 ++++++++
+>  hw/virtio/vhost-user-base.c               |  47 +++-
+>  hw/virtio/vhost-user-test-device-pci.c    |  39 +++-
+>  hw/virtio/vhost-user.c                    | 269 ++++++++++++++++++++++
+>  hw/virtio/virtio-qmp.c                    |   3 +
+>  hw/virtio/virtio.c                        | 199 ++++++++++++++++
+>  include/hw/virtio/vhost-backend.h         |  10 +
+>  include/hw/virtio/vhost-user.h            |   1 +
+>  include/hw/virtio/virtio.h                | 137 +++++++++++
+>  subprojects/libvhost-user/libvhost-user.c |  70 ++++++
+>  subprojects/libvhost-user/libvhost-user.h |  54 +++++
+>  11 files changed, 926 insertions(+), 5 deletions(-)
+> 
+> -- 
+> 2.49.0
 
 
