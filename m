@@ -4,97 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E11EFCFD376
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 07:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B83AECFD2F6
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 07:48:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQL1p-0000iH-4V; Tue, 02 Dec 2025 02:42:29 -0500
+	id 1vQL6z-0003Q2-70; Tue, 02 Dec 2025 02:47:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vQL1j-0000h5-CQ
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 02:42:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vQL6w-0003PL-Oy
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 02:47:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vQL1h-0007SW-CY
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 02:42:22 -0500
+ id 1vQL6u-0008L5-TG
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 02:47:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764661338;
+ s=mimecast20190719; t=1764661664;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZAauWGgy4ApDyt1Si+YltjTa8dpfVYM/y+FPEZr/QQY=;
- b=FTZh60C+2qKS1WLku2HJm91O/8rCnqBxbtvXAYC3tmu6B7/c+HEo9ieJTrldpku1aw7Ro8
- ONCMuBlu0J37Z4S+KJc6IKvVpkoGBPNSVSCWU+CgdO8W1SiGYs6OpqDZFD6ItOcXbEjMBm
- i28mX4KZ4wdkjksXz1WgKO1b+BNsTcw=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lhGI90u3lG0jQ/lk1uJEavBnJNz6fBbLoVOWHiZIh18=;
+ b=Tw7GC1GBbzDw0H/oD4hOBCiLpVcEtVVpuY5P2wCs/zurPlpwp5sP+cUZOUPhIQ98Qt7Ard
+ k9BcnhSHzfZkVW3Bly0D7uoJ4iqAMuzdgcx8CSxxgbKrBFaQ1VZPn8HJcaOWKmIbKsQfAu
+ +UelG32Hk1+xRc1iEuz/2GW2UFuR68I=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-394-V1N5ABQIM7macP-5lXIUOw-1; Tue, 02 Dec 2025 02:42:16 -0500
-X-MC-Unique: V1N5ABQIM7macP-5lXIUOw-1
-X-Mimecast-MFC-AGG-ID: V1N5ABQIM7macP-5lXIUOw_1764661335
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b739f418149so541801266b.1
- for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 23:42:16 -0800 (PST)
+ us-mta-33-CETf_CsQN8aGbGKDTPSv-g-1; Tue, 02 Dec 2025 02:47:42 -0500
+X-MC-Unique: CETf_CsQN8aGbGKDTPSv-g-1
+X-Mimecast-MFC-AGG-ID: CETf_CsQN8aGbGKDTPSv-g_1764661661
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-6450e804cd9so4829894a12.3
+ for <qemu-devel@nongnu.org>; Mon, 01 Dec 2025 23:47:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764661335; x=1765266135; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764661661; x=1765266461; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=ZAauWGgy4ApDyt1Si+YltjTa8dpfVYM/y+FPEZr/QQY=;
- b=Wm4LqNRittabHT1xotWmr3EZdxsbrMjfc9NmoLC1p9hhP2c9EaEQrQOKpppz76EVNn
- DvWBdzPrFwxZf6kceZyNJa3AAPtxgHhtk+6ZuI0HbTfLJjyavByIUFx0eXe8eC2Gtcj7
- iKkRkQTLNouW6JEppJi+2O5x/qdociFhDFFC62JumNg6rfps7zLrldp7O3v8C3gkIjAG
- yTHF/v0vpqOGlQthUhZygbwEIoaqIAKVw7LgYjMrElGsCdOjvkNVx6HylzK1UCvfFhB0
- 7sXZ2N3QWHIJxMaqKALXb40I5w+kSzUDs3CNg6UXfBZ1Cvhs31usHEtbPud2QexfjH0s
- NPJw==
+ bh=lhGI90u3lG0jQ/lk1uJEavBnJNz6fBbLoVOWHiZIh18=;
+ b=UYyc+yupBHz0il4NHpHpIkkTtin+PjZcNb0dGiyuvtQ0rNf+JcHpOLO7cp/2I6xKMp
+ QIrYb0ZtRE6sl7j5jCX7/eT/bB5sVBpkgbA7BM6cAA6kfbLDiIZJOl+JMDtMR+KIhCD3
+ rkA1BAu/XlR4lR4AtmcohDogoVbgCjol9mJETCLy3tIMCC8ipQwBBw33jqlJ/nWAGFYf
+ V2I2cgkRYloLwmdJH3IEDXzZ0UA3bfcCIUI0Ui9Cdjrbi1P0Yxjn2DmIecHlUQueOOXN
+ az5v5ubJj3JxuiwfAM4g/IKOiH7O6Ebg9jossOwyFLx+Xxcqea6x5n7FS3gFJa4wIcyu
+ x6zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764661335; x=1765266135;
+ d=1e100.net; s=20230601; t=1764661661; x=1765266461;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZAauWGgy4ApDyt1Si+YltjTa8dpfVYM/y+FPEZr/QQY=;
- b=lUdhcq0YjyX5lXBUr+X/rOlmnnuHb99Xi/qoNuFlKIV38mVnpj7mp2HoPNbA1eVmo7
- OyjDUA1patGU5s23j3w3TXMrGOblJvTa1p0zwyPpe5wm5PF8FRrCwTQUpMPTz1MbfMMM
- mSs5ryvOhFwRe+4LT1DF+N9rTvu02nw/NZ80rJWfWP1kWm0m8ca0SC9XZEEaySxgSIIm
- JKW2mmNg4FFXbHLmDVzYmFK2bOezqx/64T63FkhP+abdt2nNIq4U8dMkK1T8whC7s5tP
- xFQnTXfHadGRyN3m8LA+ijSmnAWNBxZNX3ypVQoiECdt38xs2AICvtj7zvxRGV3gQche
- vOWQ==
-X-Gm-Message-State: AOJu0YyYYA8nFzl8XOLxFSrihPBT7hLZbtnWmcLK8W31Qb1Omh7px1EK
- L8sgEt9VSNn0kimWeampV/WqfLcut710YI05Qwk6YFTvw8ZdwHIb561Y1dSuOPoIxc1bOBa2S4u
- zUIe/jyyibESAzA3juP/02y7zBXpk9PTY46sVH5Rpl5lv8JKNvgcCS/JT
-X-Gm-Gg: ASbGncsjOqaZnTQKCYHjrVHOw2Dwuvi6oeCSycTYiR2h7n3RfK+aGy/gkJaWq9LnqWZ
- mp1P5zarvNZvLCN1R0Kx6fPsovgvQljru+HK5i4ZzeWf5TwAvOQdzBIwURCnoe9xxJgaUDvIVyV
- cjvYAIqLPxTI/NkZQNli5R7vj6f0kx2CrH3OqTAP7Vpn8G9Cz4XuAblttC2oOtZ0A6yv+sCPMBO
- P83jvyEKywf7AhsMfI1SiKpP2zzimiSqnmegmw8aW83ZHDZwoNGMQkDe01VurK6MYufIFLxRV8Z
- Rsy49JioUXKv5YVWV6CDljQv7/rphWMpDpqQ5THCSekQUiy0Mx9y9bl9tFLOmwIvOvynYo8mC9X
- FrR1oBIl26SpTDIGehJ3yFG8+wZ93AQqYVQESUW8twM3U1Qy7Gp719OgbvZ01SX1bQCHLawSwC8
- VFDioKIv1C8Mmr3+k=
-X-Received: by 2002:a17:906:eec4:b0:b73:6f8c:612a with SMTP id
- a640c23a62f3a-b767150be15mr4605817066b.11.1764661335055; 
- Mon, 01 Dec 2025 23:42:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH1QaCEH8Tlom7zcrbeCJFCVWKGN31f12RCwYYAKirBMODjqqafNDab7Yy40sE+JGSGOAYI8A==
-X-Received: by 2002:a17:906:eec4:b0:b73:6f8c:612a with SMTP id
- a640c23a62f3a-b767150be15mr4605814566b.11.1764661334649; 
- Mon, 01 Dec 2025 23:42:14 -0800 (PST)
+ bh=lhGI90u3lG0jQ/lk1uJEavBnJNz6fBbLoVOWHiZIh18=;
+ b=AwJZaHIpJaNjfGml5GG0SmqUmwkT9chzerU1XbeWSU0/i7guwfSVWuKFHCtZn78dRb
+ HZn10qppnhOTskbu9qHFUBitgwy57HNA2A6rYiWVnFT0dii3pUDQJ7B/WyVoCTdhkZOo
+ r8KFYJPeqzoAc9O/79RbyPjZI6fj2Bqn6Dox3O7vR+86hBAiyHIaRuWTe9iXuVEj+uJL
+ GNJ8nWS2FOR7fY4HQziORTMtybiQbBrWiI4t5/lZ9MFpT+23H0WfYQtbzvxN0YVshohz
+ 8j2tUnVz6P9XToddC7fz6eYBl4sCEALmL6pflfsxV0Rk8V2d/Pe47aGi8tj9F/746wxo
+ XEtQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWnsQtv1rLZZou8Uk0qh2xxQAsOHGvgEIqo+FS4IPzsB3okTi3nWpeFq9a5tQV1SmdPcGGZ1ugAB/Sn@nongnu.org
+X-Gm-Message-State: AOJu0YwybpiNNMnETqGrk07QQ3WP9cYXHuiFHpbW8OYpI5ogHe2Gtgzy
+ 3Pco0bOinDDVMxkQLFebpGb8QihkUhbRPulvDftumWOb6sCrKT1iuDJuC37seaiYhTN3oevpAVj
+ iFLBjYmbB7mTfLCDfVYWjlAzQdKR48WG0N6ApIHFut1vkTPf3IRRU1qQI
+X-Gm-Gg: ASbGncuE+ROYgM0xZt7hhH8fVpcfzvlnlyEp0QoTsuH7meNatuEwK/Tng1ADsgL17hr
+ f2qHKG6Tjaf+YzqiEN9R6tKMn6Ooy1nBcSIrHdLYCKlryte6bQRhDsHY/AvAs+28dJisB/t5qHr
+ ovIJD5J3dvNSez9WBWVRIh413ZF0lkUJdCXqCrwjWkR9gZg8Mm+Jw0Hn0/fBsCN2N6IZuQD5/to
+ 7igKhjGPPHqf7T5kTiskNUajJVOK94MsHV1LD46ehrQx1dgjMQAH43nBslig7YhJbjXz6BC9e0A
+ VOlz3Iowb8garEJPLGbiojSS0cD1/0PZPh69RWrcETHg/Ofa2h8eVZTfPmISFf9qKNxC6dTTe2N
+ qKt18lvIiBKFnwmURTmEZCYx2QItOxvl7IG2LjZTcRjQSELj8e0p0PUbmso9hsxv+KNcIYU9QPD
+ iLH2rFNOoQqHKbhFQ=
+X-Received: by 2002:a17:906:fd83:b0:b73:8e7d:4f87 with SMTP id
+ a640c23a62f3a-b767184be2bmr4453489266b.45.1764661660728; 
+ Mon, 01 Dec 2025 23:47:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHEjue/uKltBmasT3UsCNePSvEOjTgh74Wqwen5w2FIDL2ghjp/F6RLeoy8BWszospbj8gKMw==
+X-Received: by 2002:a17:906:fd83:b0:b73:8e7d:4f87 with SMTP id
+ a640c23a62f3a-b767184be2bmr4453486266b.45.1764661660255; 
+ Mon, 01 Dec 2025 23:47:40 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b76f59a6a67sm1427470966b.34.2025.12.01.23.42.13
+ a640c23a62f3a-b76f51c8393sm1448431466b.31.2025.12.01.23.47.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 01 Dec 2025 23:42:14 -0800 (PST)
-Message-ID: <93ab4c50-08d6-4692-82bd-1d01121f7362@redhat.com>
-Date: Tue, 2 Dec 2025 08:42:12 +0100
+ Mon, 01 Dec 2025 23:47:39 -0800 (PST)
+Message-ID: <c6b78af8-7da6-4ac0-9e74-dc67e2b4d4d7@redhat.com>
+Date: Tue, 2 Dec 2025 08:47:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: split qemu/aio.h out of block/aio.h
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20251128101555.227630-1-pbonzini@redhat.com>
- <CAE8KmOwfKfTpE8YOwd6GV0vAetf+rfLW648ALvNWdC0ciL9k8w@mail.gmail.com>
+Subject: Re: [PATCH] qemu-options.hx: Replace deprecated -M example
+To: Thomas Huth <thuth@redhat.com>, dave@treblig.org,
+ qemu-trivial@nongnu.org, mjt@tls.msk.ru, laurent@vivier.eu
+Cc: jak@jak-linux.org, qemu-devel@nongnu.org
+References: <20251202005740.299524-1-dave@treblig.org>
+ <95dd7914-8e58-42e7-9988-cd7822f17bca@redhat.com>
 Content-Language: en-US
 From: Paolo Bonzini <pbonzini@redhat.com>
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -132,17 +135,17 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <CAE8KmOwfKfTpE8YOwd6GV0vAetf+rfLW648ALvNWdC0ciL9k8w@mail.gmail.com>
+In-Reply-To: <95dd7914-8e58-42e7-9988-cd7822f17bca@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -160,21 +163,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/28/25 14:14, Prasad Pandit wrote:
-> Should  block/aio.h include qemu/aio.h?  User can include them both
-> where needed.
+On 12/2/25 08:14, Thomas Huth wrote:
+> On 02/12/2025 01.57, dave@treblig.org wrote:
+>> From: "Dr. David Alan Gilbert" <dave@treblig.org>
+>>
+>> The -M option was deprecated by -machine in 2011 by 80f52a669
+>> and isn't actually documented in the manpage, but is still used in
+>> one of the examples.  Replace it by -machine.
+>> -M still gets used all over the place in other docs, and I'm
+>> not sure I realised it was deprecated until Julian pointed out it
+>> wasn't actually documented.
+> 
+> -M is not mentioned in docs/about/deprecated.rst, so no, it's not 
+> officially deprecated. And I think it's a nice short hand feature for an 
+> option that is used very often, so I also don't think that we should 
+> ever remove it. Thus I think it would be better to simply add it back to 
+> qemu-options.hx instead.
 
-block/aio.h is quite useless without functions like aio_co_wake(), so it 
-includes qemu/aio.h.
+Yes, its status as a synonym of -machine started only in 2015, in a 
+commit that didn't even mention that effect:
+
+     commit 364c3e6b8dd7912e01d19122d791b8c8f6df4f6c
+     Author: Marcel Apfelbaum <marcel@redhat.com>
+     Date:   Wed Jan 7 14:11:38 2015 +0200
+
+     vl.c: fix regression when reading machine type from config file
+
+     After 'Machine as QOM' series the machine type input triggers
+     the creation of the machine class.
+     If the machine type is set in the configuration file, the machine
+     class is not updated accordingly and remains the default.
+
+     Fixed that by querying the machine options after the configuration
+     file is loaded.
+
+     Cc: qemu-stable@nongnu.org
+     Reported-by: William Dauchy <william@gandi.net>
+     Signed-off-by: Marcel Apfelbaum <marcel@redhat.com>
+     Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+
+(I wonder who's the guy that committed it).  But it was a good idea, and 
+there's no need to change this.
 
 Paolo
-
-> Otherwise looks okay.
-> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-> 
-> Thank you.
-> ---
->    - Prasad
-> 
 
 
