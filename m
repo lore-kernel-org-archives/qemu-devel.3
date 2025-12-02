@@ -4,72 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3DFFD12669
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 18:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79D2DD12663
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 18:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQVGh-0000af-RX; Tue, 02 Dec 2025 13:38:31 -0500
+	id 1vQVOt-00033s-UG; Tue, 02 Dec 2025 13:46:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1vQVGd-0000aG-TW
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 13:38:28 -0500
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQVOs-00033h-Ob
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 13:46:58 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1vQVGb-00008i-Hh
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 13:38:27 -0500
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-3e37ad3d95aso3910469fac.3
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 10:38:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQVOr-0002Fh-BH
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 13:46:58 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-477b1cc8fb4so36153765e9.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 10:46:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764700703; x=1765305503; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=G1+eqSyexgI6kb1KPvc3ooBFGxniW7Bx2C7w0AtYulQ=;
- b=VdGj06SG5eB/jRYC2W0wJVsyE3E/l/qbY8xyHBNCrqGQlXxR/d4m8x/JbyCqzfnI5N
- TJGwFKpJRt0xOJm1Z1x/4r2LQx8zb0Vqi4MS6rRjBXfI1UZrpEzTsEQWyyyQjNq1secM
- JGcvsxzIWOoGMaVyFoKQDNCGZipKRPkOzwfoU4+DsfMsLENM0wZ6gI7s6/FAZfHWkyYu
- Fhc3X6D/iC3BPGTC0R/L+21lXRmnl4H//rV9vHcgofkhHMQPXZJuKhiLw2r5MdKdUyyc
- ZxzN+YGAOVfbTamui/NFEJrL6LB5jTKdWib5yNrc5ucfw/ne/oeuWJtijO3LzpGVz8Ii
- PMCw==
+ d=linaro.org; s=google; t=1764701215; x=1765306015; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=HKk5GtRZ9dC0idT+rWCzPItLFgkjImKuUnByVLupPVs=;
+ b=Dh6N1t6eqRbN8RMFXurfDpZBg6VvpTVeK6IC5wqwmrg7AT4ZfeI5Nb5jq2o4GXXgR8
+ q3zrYBqWzi5ALyLcIGpdUdQZgC0OU5EbhWgPGTEw5blENQ6Qrw0a6zg3H2eq2NMozqhh
+ GmWa3N9X+qnp0M5N2ZgXiQ2WXXfiGzuoilqpeBFE4N1wslDJogVAW8BwsGqBw2BPYnFK
+ 76DGA0hKkyMw1rluCk172JuIZUGFhe9XJrwTgz/16mrKVI8V0ee1i4MNj9phCZgHWEZW
+ Doiazu7qh0/HdM1W8zUiHfhW7TjJLNtwDEu8Vy6s3AY/bAI+wI58QvIfNxPydnu6Fj2v
+ 0hjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764700703; x=1765305503;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G1+eqSyexgI6kb1KPvc3ooBFGxniW7Bx2C7w0AtYulQ=;
- b=FaFlw7d4BRy1Abh+3c140ohV9+rv9OoKBGib7aOxV29FkYKyJi3XdZcrzyunjlR8k4
- TsBqeYWkq+zSq4lDMPHiNUGyH7t2wC6DNQdNVbQhR93AEn8sbkPGI/GCvAml1bJ9aOyu
- 4kdK7LeILf3/bnraPXa3R27vMectW1d+Twy5GFTj29QNyNlOA5r+qSi5w3PmyY/P+UD+
- hqiCi/tey1rkrg1j0TZM2rEMqA4Ti9vOUYuMJ+I0l5xwgr11d7TNUrId4iX15w7lVD8m
- hfGUWyHwiSO7DFH/AQBzhysNMQjP42qkVCRFlb2HGwR/wIMNN99T4OOuYvX9llDyjel1
- lhlg==
-X-Gm-Message-State: AOJu0Yz8ymoiz66aUJ6CQ3TfiBAshjwuqK/lR0H87E9qw7M0D/hCzKFJ
- ZYy9bHRfQM/Aj07GmXmNFNE1wew3aBvr4WqHxk0bSb7SS6hcrmsCoxX7zU+XqJ6c19o1vnOnnmA
- QTdd/5/1suCJB7q4NPIgz1mdCSc7WJ9hkuS4cI91Fqw==
-X-Gm-Gg: ASbGncvFH8cIYuljGwDoF5CvV2mMqaL+1N1Oqd2JX1pdSpRFmicclNyi6LyoBPoXbSN
- WGuHeNr0SNQ6M6V1s7/gAV2S/rjFIUe6UIyD949CdQyYTWWGrSYXy+k7fH2PZyRDVo5BuwHm9Kt
- OzmHsNOzv+emYwHBikPU9+EnN/6Ydb+ZheaIMH2nnyQLTQZGTrS6egqSNXY8frOhYsnEsL7XCgl
- B7lzeC+n+AXMb8G+DKDflkE/47o48ZI6vYg0FaXfaryTEvvyeLrUmpw4qr00BR5GPqMgJ0=
-X-Google-Smtp-Source: AGHT+IEXvrjuYpGPC17ExohBO0sXYCIEO6FBsm+JRthkUjTmFhUzMErMG32twfyJfK9u7XJgU+izBIDyeD4Z4j1jrd4=
-X-Received: by 2002:a05:6808:4616:b0:453:f85:79e9 with SMTP id
- 5614622812f47-4530f859857mr9661857b6e.18.1764700703122; Tue, 02 Dec 2025
- 10:38:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1764701215; x=1765306015;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HKk5GtRZ9dC0idT+rWCzPItLFgkjImKuUnByVLupPVs=;
+ b=s/+/xdpyCGp6oAEKm+OAESPn2hzx4bMHN0ewuoA49ADwua1PYP436wFWZsttuo9Pw2
+ fHqNoSBTdPGJyfwF2X7+CxYKbhrHKRrBe94w/o7KX0JgOWvUQx4eWQ/qcmM7gLBpmrCq
+ R8IGeuV7aZa9fsD7g1k3bXYuQJkOiiKttUvofRbkecAt14kyiAhWWQwyZ7AM+oQ4z5fi
+ eReXAWwVIfLbgco3HN3+n7ejYoaX+/BxjsQFHCxmPfDUObATp8MCw33aZHs8ZkS8mw6D
+ xTMjpf2XwAPQJ5REudoxWb5Kz/LEsF70HYw/LTScOVTeBUVeCqoJ2dpyD8+KntO45Arr
+ GtYg==
+X-Gm-Message-State: AOJu0Yy9EhWeVLPJjM6Sp6stoCZePqjHQMTAMreLitI7vRD9pzHjoeV2
+ rPl+rdUYIbyeHlgN/9Gxke685lounl+Qowd9B01zunHt2v6EM5mvO/L+tt+wA7c+lFEVCWum3Fl
+ SitfLzcQ=
+X-Gm-Gg: ASbGncv9mJ8pno71W7VwUZHaOGzUPcDCyREMi5g7/YOIODoIN+0Oog3vhXTUV8vqS0T
+ kiH6kQinlGTlYu+ibfr56YmnETOVIKItpQH9WKnJcrtw9uxhC0rP4xv86BDYV2Sme37oeWHAxcV
+ /PUjeuujg6AWnR2tTsyiZnVtLv997OWHSiL4Ukmg9aQRUg7de/w/u97LLQEHIwwGheOKVIR3tiM
+ nWyVPzN2qh88FGFp0J4SosgD60pADNGS5SLJ2N7KV0sIQ6WPlJIMpC8bVOTtcDxQ0368qjaC6Uc
+ Dy0qL1Xk/Tzs1UYpNd7xsvmq5QUBs8PXjjLY18Jhpfh/57bLP18mTJ41LiQVkZQm1WHQBISInfB
+ xtDxrEKF/t0aoTv1xde6M+cHK16EzMRC9reHb32a41mkN0r1zqmPU43W+TPvTNxMioo2jaPAK+Y
+ wVKcBzU4jKODNn5BjKjCQqarTDf1IzoFFmfiE0fvgZXybSGKe2XNWsod4Sp7A8
+X-Google-Smtp-Source: AGHT+IH8jDodP90OavswYYsNmTtNALPfAH8n/XftXLv6g60rF1vMicoMcVDMJXBX7+/yjG77C9aXYg==
+X-Received: by 2002:a05:600c:4fce:b0:477:73e9:dc17 with SMTP id
+ 5b1f17b1804b1-47904b2bff2mr289012275e9.35.1764701215172; 
+ Tue, 02 Dec 2025 10:46:55 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4792a65ff2asm2624745e9.8.2025.12.02.10.46.54
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 02 Dec 2025 10:46:54 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-10.2 0/2] tcg: Fix TCI build on macOS
+Date: Tue,  2 Dec 2025 19:46:51 +0100
+Message-ID: <20251202184653.33998-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Date: Tue, 2 Dec 2025 19:38:12 +0100
-X-Gm-Features: AWmQ_blmBm81JO7J0GV86g6khYFyBf3KZE-fi1eOVU43sysaWBbXf2ZzHmrs8ic
-Message-ID: <CAPMQPEKqX2+EOen0fRL1sO=pBOL-rs3-zwz9tJh+e2857kCFWA@mail.gmail.com>
-Subject: Re: [PATCH v2 63/93] tcg/tci: Use ffi for calls
-To: Stefan Weil <sw@weilnetz.de>,
- Jeremy Huddleston Sequoia <jeremyhu@apple.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-oa1-x2c.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,86 +101,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/2/21 22:33, Stefan Weil wrote:
-> On 07.02.21 21:12, Richard Henderson wrote:
->> On 2/7/21 11:52 AM, Peter Maydell wrote:
->>> On Sun, 7 Feb 2021 at 17:41, Richard Henderson
->>> <richard.henderson@linaro.org> wrote:
->>>>
->>>> On 2/7/21 8:25 AM, Stefan Weil wrote:
->>>>>> +#include "qemu-common.h"
->>>>>> +#include "tcg/tcg.h"           /* MAX_OPC_PARAM_IARGS */
->>>>>> +#include "exec/cpu_ldst.h"
->>>>>> +#include "tcg/tcg-op.h"
->>>>>> +#include "qemu/compiler.h"
->>>>>> +#include <ffi.h>
->>>>>> +
->>>>>
->>>>>
->>>>> ffi.h is not found on macOS with Homebrew.
->>>>>
->>>>> This can be fixed by using pkg-config to find the right compiler (and maybe
->>>>> also linker) flags:
->>>>>
->>>>> % pkg-config --cflags libffi
->>>>> -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/ffi
->>>>> % pkg-config --libs libffi
->>>>> -lffi
->>>>
->>>>
->>>> Which is exactly what I do in the previous patch:
->>>>
->>>>
->>>>> +++ b/meson.build
->>>>> @@ -1901,7 +1901,14 @@ specific_ss.add(when: 'CONFIG_TCG', if_true: files(
->>>>>     'tcg/tcg-op.c',
->>>>>     'tcg/tcg.c',
->>>>>   ))
->>>>> -specific_ss.add(when: 'CONFIG_TCG_INTERPRETER', if_true: files('tcg/tci.c'))
->>>>> +
->>>>> +if get_option('tcg_interpreter')
->>>>> +  libffi = dependency('libffi', version: '>=3.0',
->>>>> +                      static: enable_static, method: 'pkg-config',
->>>>> +                      required: true)
->>>>> +  specific_ss.add(libffi)
->>>>> +  specific_ss.add(files('tcg/tci.c'))
->>>>> +endif
->>>>
->>>> Did you need a PKG_CONFIG_LIBDIR set for homebrew?
->>>
->>> Is this the "meson doesn't actually add the cflags everywhere it should"
->>> bug again ?
->>
->> I guess so.  I realized after sending this reply that PKG_CONFIG_LIBDIR can't
->> be the answer, since the original configure should have failed if pkg-config
->> didn't find ffi.
->>
->> Was there a resolution to said meson bug?
->
-> Meanwhile I noticed an additional detail:
->
-> There exist two different pkg-config configurations for libffi on Homebrew:
->
-> % pkg-config --cflags libffi
-> -I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/ffi
-> % export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
-> % pkg-config --cflags libffi
-> -I/opt/homebrew/Cellar/libffi/3.3_2/include
->
-> By default it points to a system directory which does not exist at all
-> on my Mac, so that will never work.
->
-> With the right PKG_CONFIG_PATH a correct include directory is set, and
-> the latest rebased tci-next branch now works for me with a compiler warning:
->
-> /opt/homebrew/Cellar/libffi/3.3_2/include/ffi.h:441:5: warning:
-> 'FFI_GO_CLOSURES' is not defined, evaluates to 0 [-Wundef]
+We don't test TCG+TCI on macOS host and it is broken.
+Luckyly the fix is easy.
 
-This got introduced in
-https://github.com/libffi/libffi/commit/e951d64c0852; should we report there?
+Philippe Mathieu-Daudé (2):
+  tcg/tci: Disable -Wundef FFI_GO_CLOSURES warning
+  tcg/tci: Disable Int128 support
 
-Cc'ing Jeremy who sent patches around FFI_GO_CLOSURES:
-https://github.com/libffi/libffi/pull/586/commits/8c25da7d2cdf8
+ meson.build               | 2 +-
+ include/tcg/helper-info.h | 3 +++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-Meanwhile, about 5 years have passed, I'll post a patch...
+-- 
+2.51.0
+
 
