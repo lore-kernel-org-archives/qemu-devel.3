@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9590DD11712
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 249E2D1170E
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:42:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQTQr-000106-ID; Tue, 02 Dec 2025 11:40:53 -0500
+	id 1vQTR8-0001J4-Un; Tue, 02 Dec 2025 11:41:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQTQe-0000xo-EV
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:43 -0500
+ id 1vQTQw-00013c-47
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:59 -0500
 Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQTQc-0002An-MN
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:40 -0500
+ id 1vQTQt-0002BI-IW
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:40:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764693638; x=1796229638;
+ t=1764693655; x=1796229655;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=BOun+Sp72zYjrToMaMpmKaY7e2ddR1tkuk9rWueIHxo=;
- b=DKqal6UtHl0dA4GvHTJlbJXhIAi5K52hXcIe2/X90euymA/Ul8+oWDbb
- FRAIxqoz1NlTqqydO9JLrHYNfKbfzNMTdfeGWeb9a4w6nNHMxryy0pJs+
- U1usLNgZKzIbF36v/4BP/al16PcRMxlqugDmiofpc2+ZRN2Lr1hw6Ucwv
- wTa58THGZxJHwQj42iFx2RqK40rOiw7cdVosYWDQLschaVlbnszjP7trn
- cI8oKa8oZdW+ku+j1EHr57AOdipHHi3lr5MgZrBQRTIBnnhIw86is71dC
- uv7FFs9ToPlw9qOb88oUWtFqsPq1PfdGTKouQXmCzr5qKVJHSxUY93sLE A==;
-X-CSE-ConnectionGUID: 0jknPbSdSkWsJzDSOmcpmQ==
-X-CSE-MsgGUID: 8LS7FJ44SXu0YSsuikBkbQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="66555319"
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="66555319"
+ bh=yma8Elypab7lSdreYaeRchfYeGC+2elRnGnxOQ2FVyQ=;
+ b=imvZ0kak9g3p4jEpRvoTa0NL1CUqBvPyHCi2GlBUxgypCKCTlDRFmyP2
+ 2IaK72DbFhZx/2tTKBQ4nv2pN5vUypgbhbqQzL8LzsEGXEa8O6CjDMg35
+ mxAEZzTyQ1dMsFBa111kTGA395tC1ELHziFMEnLtGue4sKkdltfzcGNx/
+ qAv9ZX927kD3zOJ5q7LT1q8tIi88v/m4iLO/Tg4k0l4QcH38RFlr1f47Q
+ 3fiuyRG0qF0/P2lNq2oZv9SHiY4RwP12Dh1UNUiRuewQZTmH/xIk51aRC
+ CzgPlYcAnTME6jG+DvJK3S6SM/9NBsSNYfVEltlOI2wOQuSWO1gJEXzw1 A==;
+X-CSE-ConnectionGUID: zg62bnBVTauoSgw7PcAXew==
+X-CSE-MsgGUID: +KjFaSGiQhO3KRmJiKAwFw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="66555381"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="66555381"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Dec 2025 08:40:37 -0800
-X-CSE-ConnectionGUID: USnf6YqQRWeHSGZ9FE1wAA==
-X-CSE-MsgGUID: Dd0ER/bfSUevOgoPYLuQ4Q==
+ 02 Dec 2025 08:40:54 -0800
+X-CSE-ConnectionGUID: oIiajSjiRLaglhAyNlQ1gw==
+X-CSE-MsgGUID: NjD/+LT5Qy+0D3kUmtd12w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="231751249"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="231751372"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 02 Dec 2025 08:40:34 -0800
+ by orviesa001.jf.intel.com with ESMTP; 02 Dec 2025 08:40:51 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -57,9 +57,9 @@ Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>, devel@lists.libvirt.org,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [RFC 03/10] qom: Check property deprecation flag for global property
-Date: Wed,  3 Dec 2025 01:04:55 +0800
-Message-Id: <20251202170502.3228625-4-zhao1.liu@intel.com>
+Subject: [RFC 08/10] target/i386: Deprecate fill-mtrr-mask property
+Date: Wed,  3 Dec 2025 01:05:00 +0800
+Message-Id: <20251202170502.3228625-9-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251202170502.3228625-1-zhao1.liu@intel.com>
 References: <20251202170502.3228625-1-zhao1.liu@intel.com>
@@ -90,91 +90,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Global properties can be set up in these cases:
- 1) external global properties:
-    * -global command line option.
-    * -cpu command line features.
-    * suger properties from object_compat_props[2]
+"fill-mtee-mask" was previously disabled only on PC-Q35-2.6 and
+PC-I440FX-2.6 machines, but PC v2.6 machines have been removed.
 
- 2) internal global properties:
-    * compat properties from object_compat_props[0,1].
-
-In principle, when a compat property is marked as deprecated, it should
-not be added to any object_compat_props[] as a compat "fix". Therefore,
-internal compat "global" property use cases should also be considered.
-
-All of these global cases are using object_property_parse() to parse and
-set propertyies, ao add a object_property_parse_with_check() to enable
-deprecation checks for global properties.
+Considerring it may have external use, so deprecate it before removal.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- include/qom/object.h | 20 ++++++++++++++++++++
- qom/object.c         | 13 ++++++++++++-
- 2 files changed, 32 insertions(+), 1 deletion(-)
+ docs/about/deprecated.rst | 8 ++++++++
+ target/i386/cpu.c         | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 8f4c2f44d835..bdeba113f40f 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1555,6 +1555,26 @@ bool object_property_set_full(Object *obj, const char *name,
- bool object_property_parse(Object *obj, const char *name,
-                            const char *string, Error **errp);
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 9386cffba26d..c60924b4f313 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -487,6 +487,14 @@ Backend ``memory`` (since 9.0)
+ CPU device properties
+ '''''''''''''''''''''
  
-+/**
-+ * object_property_parse_with_check:
-+ *
-+ * Same as object_property_parse() with extra check over property flags
-+ * (ObjectPropertyFlags). This interface should be used to handle
-+ * property settings for external users or internal legacy or compatibility
-+ * cases.
-+ *
-+ * @obj: the object
-+ * @name: the name of the property
-+ * @string: the string that will be used to parse the property value.
-+ * @errp: returns an error if this function fails
-+ *
-+ * Parses a string and writes the result into a property of an object.
-+ *
-+ * Returns: %true on success, %false on failure.
-+ */
-+bool object_property_parse_with_check(Object *obj, const char *name,
-+                                      const char *string, Error **errp);
++``fill-mtrr-mask`` on x86 (since 11.0)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 +
- /**
-  * object_property_print:
-  * @obj: the object
-diff --git a/qom/object.c b/qom/object.c
-index 184afc6730dd..2973d8876555 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -460,7 +460,8 @@ bool object_apply_global_props(Object *obj, const GPtrArray *props,
-             continue;
-         }
-         p->used = true;
--        if (!object_property_parse(obj, p->property, p->value, &err)) {
-+        if (!object_property_parse_with_check(obj, p->property,
-+                                              p->value, &err)) {
-             error_prepend(&err, "can't apply global %s.%s=%s: ",
-                           p->driver, p->property, p->value);
-             /*
-@@ -1745,6 +1746,16 @@ bool object_property_parse(Object *obj, const char *name,
-     return ok;
- }
++The ``fill-mtrr-mask=true`` fill the bits between 51..number-of-physical-address
++-bits in the MTRR_PHYSMASKn variable range mtrr masks. It was previously set to
++false only on PC-Q35-2.6 and PC-I440FX-2.6 machines, but PC v2.6 machines have
++been removed. Deprecate this property to stop external use.
++
+ ``pmu-num=n`` on RISC-V CPUs (since 8.2)
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
  
-+bool object_property_parse_with_check(Object *obj, const char *name,
-+                                      const char *string, Error **errp)
-+{
-+    Visitor *v = string_input_visitor_new(string);
-+    bool ok = object_property_set_full(obj, name, v, true, errp);
-+
-+    visit_free(v);
-+    return ok;
-+}
-+
- char *object_property_print(Object *obj, const char *name, bool human,
-                             Error **errp)
- {
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 72c69ba81c1b..1f0a8cb6cec1 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9997,7 +9997,7 @@ static const Property x86_cpu_properties[] = {
+     DEFINE_PROP_UINT32("guest-phys-bits", X86CPU, guest_phys_bits, -1),
+     DEFINE_PROP_BOOL("host-phys-bits", X86CPU, host_phys_bits, false),
+     DEFINE_PROP_UINT8("host-phys-bits-limit", X86CPU, host_phys_bits_limit, 0),
+-    DEFINE_PROP_BOOL("fill-mtrr-mask", X86CPU, fill_mtrr_mask, true),
++    DEFINE_PROP_BOOL_DEPRECATED("fill-mtrr-mask", X86CPU, fill_mtrr_mask, true),
+     DEFINE_PROP_UINT32("level-func7", X86CPU, env.cpuid_level_func7,
+                        UINT32_MAX),
+     DEFINE_PROP_UINT32("level", X86CPU, env.cpuid_level, UINT32_MAX),
 -- 
 2.34.1
 
