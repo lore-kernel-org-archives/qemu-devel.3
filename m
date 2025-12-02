@@ -4,107 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5830ED11705
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04EC3D11707
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:11:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQSxz-0007C3-WF; Tue, 02 Dec 2025 11:11:04 -0500
+	id 1vQSy0-0007GF-CF; Tue, 02 Dec 2025 11:11:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vQSw7-0004xD-T5
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:09:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vQSvT-0004c6-0l; Tue, 02 Dec 2025 11:08:32 -0500
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1vQSw5-00006W-5P
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 11:09:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764691741;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=VN5D96R/t76acLMeIjKxcWybmi4kuwmjRsxRAB7XktE=;
- b=UCfzE55bIOhuT395iNYjQbkKzLXK/VpND2cG2aMfq7CZHJ25UWEJ/7461fWaMVk8h4FTUE
- zFZ6CVQL9lB5I3/MoYgA2PHKQvKoCwe5+6upmHVP3QxxB4Snb9U3gOkOwbTh4e9JmSqIsC
- HxfuJZK1yHTPT733SGNSDKQrE7wpODo=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-urD26W68PReOBIVPg4E3eA-1; Tue, 02 Dec 2025 11:09:00 -0500
-X-MC-Unique: urD26W68PReOBIVPg4E3eA-1
-X-Mimecast-MFC-AGG-ID: urD26W68PReOBIVPg4E3eA_1764691739
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-42b366a76ffso3715724f8f.1
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 08:08:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764691739; x=1765296539; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VN5D96R/t76acLMeIjKxcWybmi4kuwmjRsxRAB7XktE=;
- b=O9n63kxFu3GSR9YvC0nRShBvZyEnulJqXK0mBwDxhKOpyc0q2+J1tM2+Fq4LYNGvRb
- W9juRz3eZg6ZnrkSuexU2TrwSkdyYBFhElqoQ8U43WhDnijrClP84n3jQDKR5jG0Xq8l
- ijTTyQ3u/GW9PlS2J+/R3uSRKK4U34CvoGPGU8PboE4amPkOuc0wZ7mvuqQf9ZX2N7JL
- w+TVUyKU8Peaih/mO9+b9yYEytwcdBw7i7vTk75h0wwhCFNbFIdaPqNeqJyGSX1V80Fv
- mzYMxKIO+RVh8r2UD0/HIaDjOI+qnBm0ApNpyupVO66R2XSaG/g12a57KrfaeQ7JswPb
- eOeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764691739; x=1765296539;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VN5D96R/t76acLMeIjKxcWybmi4kuwmjRsxRAB7XktE=;
- b=lmz4qWpzFr1wOIq2nKCN24FSoTerxWwWyiYJqFwRypMZOYeUoSjJqYHJWvhqGap/Pl
- qeSUIPdt4xBa/PkV2mArMmic2jAjDnOATMe06NxecB6OQQ/wnMw9iJCBCTynTXYNStkH
- s0KAO+BuBfXNjfdQthdtbmzrq6H+QdC4qbZtADcm5Y1yiMEUzgOTfytit6FeE4Cj6tWH
- GfBYv96zrBg9GG61IIkhCPFrLqMs+GbpCQSd4m6pGijXgEbmTh8JbKU1LflmFtGAEAVW
- NZHR45t7TdQXQf+cq9ScGfWdJU9Dw5tsP8YLzm1fo1mRdoBOkOOgSCmxUrVaXWMyN7O6
- 5gsQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtTCu3ewvUCslbYlU7PaNURZgniRSbapmYPihgypLZRSQHMk3b36zo7lMGRSiCThJZ7LzlLM9O+Wdk@nongnu.org
-X-Gm-Message-State: AOJu0YyaS7fRCFGZSCB+CycS5UT2/zRCMhB5xV5bh1h42ljpuiCDwHQR
- DPI+Vvp3eNOCg7O+0FZHhxyRrZgNpboePAMES/sHt/URS0hJ4iI0mqx+H4s7IxLJ3zdtJlvWkiQ
- HGVcImJuyu/gHbFamGue3D1Ul7Jgb8el6l1xbcr35PJirsj0uukVY4Z0t
-X-Gm-Gg: ASbGncthDPfR92XwQofGvqq7cUxITAIL8B8G6oyIVhGAnvfkxgv29WTbbDqamFkoZZC
- w1QYM+0tfJylJs+TG4NsYrUqf4AoOLtea7B58LAOlgHFzjME8RmZ2mMVN0R/2u5ZMQvBZbcqdlv
- u3h9pGevuAuEo7zwuzlhv/MQUpmMBfKosgUz1AbWBHPlaGiadkWpPdTCJLt4qgJMlZgnSG93jUm
- dgb8zoJCFBAqxPYlpWXfO182rV0Wd4K1E7NdFydWLho4xXqhQjcifYFiHD5T3/qrz0D8wJXPx4V
- Fg7HBtOP/3+mFJMihD3xAZHns62z2U7ka8wd6Gpu/MIgBFVWPRWfQ6FXVaa0bGpkeXP2ZDQGgVR
- j9Wil+Kux7x11jjupuBaKLiOfHPqk+tTxsxtiIxOhiFB345v7hGsa1CVwPu8lsodHOA/txoR3
-X-Received: by 2002:a05:6000:2307:b0:42b:3bc4:16dc with SMTP id
- ffacd0b85a97d-42e0f213b9emr32166633f8f.21.1764691738809; 
- Tue, 02 Dec 2025 08:08:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFlWgvgyCrCdB68a/vDVtdUnY3Hzqt9cNDCyK0z8du3Hyb0hPWF5OXcMS0TvNkdQ42xNIogkQ==
-X-Received: by 2002:a05:6000:2307:b0:42b:3bc4:16dc with SMTP id
- ffacd0b85a97d-42e0f213b9emr32166604f8f.21.1764691738387; 
- Tue, 02 Dec 2025 08:08:58 -0800 (PST)
-Received: from rh.redhat.com
- (p200300f6af35a800883b071bf1f3e4b6.dip0.t-ipconnect.de.
- [2003:f6:af35:a800:883b:71b:f1f3:e4b6])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1caa767dsm34300899f8f.38.2025.12.02.08.08.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 02 Dec 2025 08:08:58 -0800 (PST)
-From: Sebastian Ott <sebott@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- kvmarm@lists.linux.dev, Sebastian Ott <sebott@redhat.com>
-Subject: [PATCH v4 0/2] arm: add kvm-psci-version vcpu property
-Date: Tue,  2 Dec 2025 17:08:51 +0100
-Message-ID: <20251202160853.22560-1-sebott@redhat.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vQSvQ-0008Qy-Il; Tue, 02 Dec 2025 11:08:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1764691705; x=1796227705;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=jqtFvxj+10vNXec+3ARQzdivBUizNnzSIyg2+TGZekw=;
+ b=J0E4XsqEqJjp4Llw93tfEZ9w9RmD2jFYkfNKar8LgA8tj1/KIs7Z8yNR
+ CY7YrRe3Pt0r9bXeiZfSMolDbwn7nIByzjnVqCsyGnz7J62jbM8vsTUK8
+ 2B+8Y+75GmSL9XTQ7cuL9Unkvwby/vKtzMctJH1GiNrr1JOk+shuFJDWa
+ aRNeuzSXXskyPOGSjWIudXRBEg4guMdyZEnxVUgt16vGskNi3/zdyjX6W
+ g84GoQYuc4wgMRvgPq9BkqXY6SXQDnHaXIYjNFTngWY6DU4YToJ68Paqs
+ 9UkOwriJeXTA2l/t9uwAgr+R+uUY1mCA+ygL7LYIpf/Kf2XpvEJjHsnSY Q==;
+X-CSE-ConnectionGUID: NAoEKpb3Tn2S22CUQStQfA==
+X-CSE-MsgGUID: hbPihsjuRgCLEIm7HP1u5w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="92143176"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="92143176"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Dec 2025 08:08:22 -0800
+X-CSE-ConnectionGUID: SjU4LmDdQTiDLSlfpBYPSQ==
+X-CSE-MsgGUID: ZAw4+8F8SNSUfxJX7KFWXA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="199538081"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by orviesa005.jf.intel.com with ESMTP; 02 Dec 2025 08:08:13 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Amit Shah <amit@kernel.org>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
+ Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v5 28/28] hw/char/virtio-serial: Do not expose the
+ 'emergency-write' property
+Date: Wed,  3 Dec 2025 00:28:35 +0800
+Message-Id: <20251202162835.3227894-29-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251202162835.3227894-1-zhao1.liu@intel.com>
+References: <20251202162835.3227894-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=sebott@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,42 +107,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds a vcpu knob to request a specific PSCI version
-from KVM via the KVM_REG_ARM_PSCI_VERSION FW register.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-The use case for this is to support migration between host kernels
-that differ in their default (a.k.a. most recent) PSCI version.
+The VIRTIO_CONSOLE_F_EMERG_WRITE feature bit was only set
+in the hw_compat_2_7[] array, via the 'emergency-write=off'
+property. We removed all machines using that array, lets remove
+that property. All instances have this feature bit set and
+it can not be disabled. VirtIOSerial::host_features mask is
+now unused, remove it.
 
-Note: in order to support PSCI v0.1 we need to drop vcpu
-initialization with KVM_CAP_ARM_PSCI_0_2 in that case.
-Alternatively we could limit support to versions >=0.2 .
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ hw/char/virtio-serial-bus.c       | 9 +++------
+ include/hw/virtio/virtio-serial.h | 2 --
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
-Changes since V3 [3]:
-* changed variable name as requested by Eric
-* added R-B
-Changes since V2 [2]:
-* fix kvm_get_psci_version() when the prop is not specified - thanks Eric!
-* removed the assertion in kvm_get_psci_version() so that this also works
-  with a future kernel/psci version
-* added R-B
-Changes since V1 [1]:
-* incorporated feedback from Peter and Eric
-
-[1] https://lore.kernel.org/kvmarm/20250911144923.24259-1-sebott@redhat.com/
-[2] https://lore.kernel.org/kvmarm/20251030165905.73295-1-sebott@redhat.com/
-[3] https://lore.kernel.org/kvmarm/20251112181357.38999-1-sebott@redhat.com/
-
-Sebastian Ott (2):
-  target/arm/kvm: add constants for new PSCI versions
-  target/arm/kvm: add kvm-psci-version vcpu property
-
- docs/system/arm/cpu-features.rst |  5 +++
- target/arm/cpu.h                 |  6 +++
- target/arm/kvm-consts.h          |  2 +
- target/arm/kvm.c                 | 64 +++++++++++++++++++++++++++++++-
- 4 files changed, 76 insertions(+), 1 deletion(-)
-
+diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+index 673c50f0be08..7abb7b5e31bf 100644
+--- a/hw/char/virtio-serial-bus.c
++++ b/hw/char/virtio-serial-bus.c
+@@ -557,7 +557,7 @@ static uint64_t get_features(VirtIODevice *vdev, uint64_t features,
+ 
+     vser = VIRTIO_SERIAL(vdev);
+ 
+-    features |= vser->host_features;
++    features |= BIT_ULL(VIRTIO_CONSOLE_F_EMERG_WRITE);
+     if (vser->bus.max_nr_ports > 1) {
+         virtio_add_feature(&features, VIRTIO_CONSOLE_F_MULTIPORT);
+     }
+@@ -587,8 +587,7 @@ static void set_config(VirtIODevice *vdev, const uint8_t *config_data)
+     VirtIOSerialPortClass *vsc;
+     uint8_t emerg_wr_lo;
+ 
+-    if (!virtio_has_feature(vser->host_features,
+-        VIRTIO_CONSOLE_F_EMERG_WRITE) || !config->emerg_wr) {
++    if (!config->emerg_wr) {
+         return;
+     }
+ 
+@@ -1040,7 +1039,7 @@ static void virtio_serial_device_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
+-    if (!virtio_has_feature(vser->host_features,
++    if (!virtio_has_feature(vdev->host_features,
+                             VIRTIO_CONSOLE_F_EMERG_WRITE)) {
+         config_size = offsetof(struct virtio_console_config, emerg_wr);
+     }
+@@ -1156,8 +1155,6 @@ static const VMStateDescription vmstate_virtio_console = {
+ static const Property virtio_serial_properties[] = {
+     DEFINE_PROP_UINT32("max_ports", VirtIOSerial, serial.max_virtserial_ports,
+                                                   31),
+-    DEFINE_PROP_BIT64("emergency-write", VirtIOSerial, host_features,
+-                      VIRTIO_CONSOLE_F_EMERG_WRITE, true),
+ };
+ 
+ static void virtio_serial_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/virtio/virtio-serial.h b/include/hw/virtio/virtio-serial.h
+index 60641860bf83..da0c91e1a403 100644
+--- a/include/hw/virtio/virtio-serial.h
++++ b/include/hw/virtio/virtio-serial.h
+@@ -186,8 +186,6 @@ struct VirtIOSerial {
+     struct VirtIOSerialPostLoad *post_load;
+ 
+     virtio_serial_conf serial;
+-
+-    uint64_t host_features;
+ };
+ 
+ /* Interface to the virtio-serial bus */
 -- 
-2.42.0
+2.34.1
 
 
