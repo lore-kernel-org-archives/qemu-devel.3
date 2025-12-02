@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFAF8D11704
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2757CD11704
+	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 16:05:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQSsB-0004y4-JN; Tue, 02 Dec 2025 11:05:03 -0500
+	id 1vQSsG-0005Cl-Sh; Tue, 02 Dec 2025 11:05:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQSrg-0004mm-JQ; Tue, 02 Dec 2025 11:04:33 -0500
+ id 1vQSsD-00054U-NP; Tue, 02 Dec 2025 11:05:05 -0500
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vQSrb-00066J-Dt; Tue, 02 Dec 2025 11:04:30 -0500
+ id 1vQSsB-00066J-Nx; Tue, 02 Dec 2025 11:05:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764691468; x=1796227468;
+ t=1764691504; x=1796227504;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=e4mdg7MHTyp2siZ7qIaL0Pyfd9suhc4f/nJUY1HSAmA=;
- b=XvcKb9YlglIgDplzbtIgmgtKxXzRbiDw+cgmDqypnS4lP7NKEzoo9ota
- gKmySymw2f25qO1tS89HEjLUGH/K6QqyTwtXTQ1QQhOingnkbklTjN77g
- DqSPDxCDGoIC3ghUvWwFmRmYrzEzVJbu22lV7qHu9yzYNCu+4fvwJBzm3
- qCSAS08mr1bLqEGCbrGF5zZPPJgBdLJ6PvK7dkfkEiYA5HnHE232bmx7F
- V+SIuP6fJuxDdG5rNsvtWROk/51xea2oIBN2+6NVMy78Tr4ix5E8bGT4E
- Ka13tJASS/DfeCEOrsJl8eILougmMEZXesGr8xuKQOYZkLRl/WdAX/GQU Q==;
-X-CSE-ConnectionGUID: FFeQxNzASlWpEr0Cnjlx+Q==
-X-CSE-MsgGUID: 09w7WK/IQKWcI/g1zu66pw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="92142263"
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="92142263"
+ bh=XlIGSj5lhO4Iz2SQI4ugiBcfuTEO7n1T8R6MNiVxNhc=;
+ b=MaPQfyZZTfGgprVFr5uSl/v0D5PTLN6jprJqeHcArru+5u9IRyi3MGA3
+ kuu3YIPtFqfK/EtGp+9HQVLNeWtm3yY2so32KrZrUcZCYz5JSCWmVKHkR
+ tOwSgR0C8PEu7AMu9VPQURShMItEnUmpKwZu0K/4QrLQK9UCw/anW2s+r
+ X2hf1gYMOUJu/fyaU7N8L1+2T53IbPfosItiyU8sS/Ta0/qBhTUHLTHAs
+ QauxqAlhgo88kd8mOl/WfynHf9+qZAVyatvOBlRqCvOOoeUY9QENC+4GG
+ gLkF9p+nVRin3ip39HwRPUa5zDNHOL3BbjgzrCStT2Hco8jqw1N4cGl4C g==;
+X-CSE-ConnectionGUID: +9eMkx7HSji108PC//hQyQ==
+X-CSE-MsgGUID: yhCb/hq6Rrq2QqQfGOLViQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="92142399"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="92142399"
 Received: from orviesa005.jf.intel.com ([10.64.159.145])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Dec 2025 08:04:26 -0800
-X-CSE-ConnectionGUID: UuxHKMjhRFmkTkj/MwEgmQ==
-X-CSE-MsgGUID: Ws8UnzFvTwONA3cAGiGF4Q==
+ 02 Dec 2025 08:05:02 -0800
+X-CSE-ConnectionGUID: rtOdz7YASjSKQ1dh7A6/bg==
+X-CSE-MsgGUID: DswU6ju5RweXLybViEBGvw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="199536935"
+X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; d="scan'208";a="199537043"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 02 Dec 2025 08:04:17 -0800
+ by orviesa005.jf.intel.com with ESMTP; 02 Dec 2025 08:04:53 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
@@ -72,9 +72,10 @@ Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
  BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
  Jiri Denemark <jdenemar@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 02/28] tests/acpi: Allow DSDT table change for x86 machines
-Date: Wed,  3 Dec 2025 00:28:09 +0800
-Message-Id: <20251202162835.3227894-3-zhao1.liu@intel.com>
+Subject: [PATCH v5 06/28] docs/specs/acpi_cpu_hotplug: Remove legacy cpu
+ hotplug descriptions
+Date: Wed,  3 Dec 2025 00:28:13 +0800
+Message-Id: <20251202162835.3227894-7-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251202162835.3227894-1-zhao1.liu@intel.com>
 References: <20251202162835.3227894-1-zhao1.liu@intel.com>
@@ -105,70 +106,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+Legacy cpu hotplug has been removed totally and machines start with
+modern cpu hotplug interface directly.
 
-Before dropping legacy CPU hotplug code, mark and allow the affected
-ACPI tables, to avoid breaking ACPI table testing.
+Therefore, update the documentation to describe current QEMU cpu hotplug
+logic.
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changes since v4:
- * New patch split off from Igor's v5 [*].
-
-[*]: https://lore.kernel.org/qemu-devel/20251031142825.179239-1-imammedo@redhat.com/
+ * New patch.
 ---
- tests/qtest/bios-tables-test-allowed-diff.h | 42 +++++++++++++++++++++
- 1 file changed, 42 insertions(+)
+ docs/specs/acpi_cpu_hotplug.rst | 28 +++-------------------------
+ 1 file changed, 3 insertions(+), 25 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8bf4..eed8ded69335 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,43 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/x86/pc/DSDT",
-+"tests/data/acpi/x86/pc/DSDT.bridge",
-+"tests/data/acpi/x86/pc/DSDT.ipmikcs",
-+"tests/data/acpi/x86/pc/DSDT.cphp",
-+"tests/data/acpi/x86/pc/DSDT.numamem",
-+"tests/data/acpi/x86/pc/DSDT.nohpet",
-+"tests/data/acpi/x86/pc/DSDT.memhp",
-+"tests/data/acpi/x86/pc/DSDT.dimmpxm",
-+"tests/data/acpi/x86/pc/DSDT.acpihmat",
-+"tests/data/acpi/x86/pc/DSDT.acpierst",
-+"tests/data/acpi/x86/pc/DSDT.roothp",
-+"tests/data/acpi/x86/pc/DSDT.hpbridge",
-+"tests/data/acpi/x86/pc/DSDT.hpbrroot",
-+"tests/data/acpi/x86/q35/DSDT",
-+"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
-+"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
-+"tests/data/acpi/x86/q35/DSDT.bridge",
-+"tests/data/acpi/x86/q35/DSDT.noacpihp",
-+"tests/data/acpi/x86/q35/DSDT.multi-bridge",
-+"tests/data/acpi/x86/q35/DSDT.ipmibt",
-+"tests/data/acpi/x86/q35/DSDT.cphp",
-+"tests/data/acpi/x86/q35/DSDT.numamem",
-+"tests/data/acpi/x86/q35/DSDT.nohpet",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x",
-+"tests/data/acpi/x86/q35/DSDT.memhp",
-+"tests/data/acpi/x86/q35/DSDT.dimmpxm",
-+"tests/data/acpi/x86/q35/DSDT.acpihmat",
-+"tests/data/acpi/x86/q35/DSDT.mmio64",
-+"tests/data/acpi/x86/q35/DSDT.acpierst",
-+"tests/data/acpi/x86/q35/DSDT.applesmc",
-+"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
-+"tests/data/acpi/x86/q35/DSDT.ivrs",
-+"tests/data/acpi/x86/q35/DSDT.type4-count",
-+"tests/data/acpi/x86/q35/DSDT.core-count",
-+"tests/data/acpi/x86/q35/DSDT.core-count2",
-+"tests/data/acpi/x86/q35/DSDT.thread-count",
-+"tests/data/acpi/x86/q35/DSDT.thread-count2",
-+"tests/data/acpi/x86/q35/DSDT.viot",
-+"tests/data/acpi/x86/q35/DSDT.cxl",
-+"tests/data/acpi/x86/q35/DSDT.ipmismbus",
-+"tests/data/acpi/x86/q35/DSDT.xapic",
+diff --git a/docs/specs/acpi_cpu_hotplug.rst b/docs/specs/acpi_cpu_hotplug.rst
+index 351057c96761..f49678100044 100644
+--- a/docs/specs/acpi_cpu_hotplug.rst
++++ b/docs/specs/acpi_cpu_hotplug.rst
+@@ -8,22 +8,6 @@ ACPI BIOS GPE.2 handler is dedicated for notifying OS about CPU hot-add
+ and hot-remove events.
+ 
+ 
+-Legacy ACPI CPU hotplug interface registers
+--------------------------------------------
+-
+-CPU present bitmap for:
+-
+-- ICH9-LPC (IO port 0x0cd8-0xcf7, 1-byte access)
+-- PIIX-PM  (IO port 0xaf00-0xaf1f, 1-byte access)
+-- One bit per CPU. Bit position reflects corresponding CPU APIC ID. Read-only.
+-- The first DWORD in bitmap is used in write mode to switch from legacy
+-  to modern CPU hotplug interface, write 0 into it to do switch.
+-
+-QEMU sets corresponding CPU bit on hot-add event and issues SCI
+-with GPE.2 event set. CPU present map is read by ACPI BIOS GPE.2 handler
+-to notify OS about CPU hot-add events. CPU hot-remove isn't supported.
+-
+-
+ Modern ACPI CPU hotplug interface registers
+ -------------------------------------------
+ 
+@@ -189,20 +173,14 @@ Typical usecases
+ (x86) Detecting and enabling modern CPU hotplug interface
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+-QEMU starts with legacy CPU hotplug interface enabled. Detecting and
+-switching to modern interface is based on the 2 legacy CPU hotplug features:
+-
+-#. Writes into CPU bitmap are ignored.
+-#. CPU bitmap always has bit #0 set, corresponding to boot CPU.
+-
+-Use following steps to detect and enable modern CPU hotplug interface:
++QEMU starts with modern CPU hotplug interface enabled. Use following steps to
++detect modern CPU hotplug interface:
+ 
+-#. Store 0x0 to the 'CPU selector' register, attempting to switch to modern mode
+ #. Store 0x0 to the 'CPU selector' register, to ensure valid selector value
+ #. Store 0x0 to the 'Command field' register
+ #. Read the 'Command data 2' register.
+    If read value is 0x0, the modern interface is enabled.
+-   Otherwise legacy or no CPU hotplug interface available
++   Otherwise no CPU hotplug interface available
+ 
+ Get a cpu with pending event
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 -- 
 2.34.1
 
