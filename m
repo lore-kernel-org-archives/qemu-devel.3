@@ -4,36 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD60ED116F3
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 09:37:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 692CDD12695
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 09:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQjHo-0000Og-AE; Wed, 03 Dec 2025 04:36:36 -0500
+	id 1vQjIG-0000uc-36; Wed, 03 Dec 2025 04:37:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQjHm-0000No-GQ; Wed, 03 Dec 2025 04:36:34 -0500
+ id 1vQjI8-0000oC-GR; Wed, 03 Dec 2025 04:36:57 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQjHk-000764-JH; Wed, 03 Dec 2025 04:36:34 -0500
+ id 1vQjI5-00076D-QV; Wed, 03 Dec 2025 04:36:56 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D551D1708B5;
+ by isrv.corpit.ru (Postfix) with ESMTP id E989F1708B6;
  Wed, 03 Dec 2025 12:35:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BDBC032B5AC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D251632B5AD;
  Wed, 03 Dec 2025 12:36:12 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Hanna Czenczek <hreitz@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 86/96] block-backend: Fix race when resuming queued
- requests
-Date: Wed,  3 Dec 2025 12:35:19 +0300
-Message-ID: <20251203093612.2370716-10-mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 87/96] file-posix: populate pwrite_zeroes_alignment
+Date: Wed,  3 Dec 2025 12:35:20 +0300
+Message-ID: <20251203093612.2370716-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251203111246@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251203111246@cover.tls.msk.ru>
@@ -62,63 +61,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-When new requests arrive at a BlockBackend that is currently drained,
-these requests are queued until the drain section ends.
+Linux block devices require write zeroes alignment whereas files do not.
 
-There is a race window between blk_root_drained_end() waking up a queued
-request in an iothread from the main thread and blk_wait_while_drained()
-actually being woken up in the iothread and calling blk_inc_in_flight().
-If the BlockBackend is drained again during this window, drain won't
-wait for this request and it will sneak in when the BlockBackend is
-already supposed to be quiesced. This causes assertion failures in
-bdrv_drain_all_begin() and can have other unintended consequences.
+It may come as a surprise that block devices opened in buffered I/O mode
+require the alignment for write zeroes requests although normal
+read/write requests do not.
 
-Fix this by increasing the in_flight counter immediately when scheduling
-the request to be resumed so that the next drain will wait for it to
-complete.
+Therefore it is necessary to populate the pwrite_zeroes_alignment field.
 
 Cc: qemu-stable@nongnu.org
-Reported-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20251119172720.135424-1-kwolf@redhat.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-Tested-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20251007141700.71891-2-stefanha@redhat.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
 Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 8eeaa706ba73251063cb80d87ae838d2d5b08e9a)
+(cherry picked from commit 98e788b91ad037193b1fb375561ef7e0fef3c2fd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index f8d6ba65c1..d6df369188 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -1318,9 +1318,9 @@ static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
-          * section.
-          */
-         qemu_mutex_lock(&blk->queued_requests_lock);
-+        /* blk_root_drained_end() has the corresponding blk_inc_in_flight() */
-         blk_dec_in_flight(blk);
-         qemu_co_queue_wait(&blk->queued_requests, &blk->queued_requests_lock);
--        blk_inc_in_flight(blk);
-         qemu_mutex_unlock(&blk->queued_requests_lock);
-     }
- }
-@@ -2767,9 +2767,11 @@ static void blk_root_drained_end(BdrvChild *child)
-             blk->dev_ops->drained_end(blk->dev_opaque);
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 8c738674ce..827ffa77a5 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1602,6 +1602,22 @@ static void raw_refresh_limits(BlockDriverState *bs, Error **errp)
+ 
+             bs->bl.pdiscard_alignment = dalign;
          }
-         qemu_mutex_lock(&blk->queued_requests_lock);
--        while (qemu_co_enter_next(&blk->queued_requests,
--                                  &blk->queued_requests_lock)) {
-+        while (!qemu_co_queue_empty(&blk->queued_requests)) {
-             /* Resume all queued requests */
-+            blk_inc_in_flight(blk);
-+            qemu_co_enter_next(&blk->queued_requests,
-+                               &blk->queued_requests_lock);
-         }
-         qemu_mutex_unlock(&blk->queued_requests_lock);
++
++#ifdef __linux__
++        /*
++         * Linux requires logical block size alignment for write zeroes even
++         * when normal reads/writes do not require alignment.
++         */
++        if (!s->needs_alignment) {
++            ret = probe_logical_blocksize(s->fd,
++                                          &bs->bl.pwrite_zeroes_alignment);
++            if (ret < 0) {
++                error_setg_errno(errp, -ret,
++                                 "Failed to probe logical block size");
++                return;
++            }
++        }
++#endif /* __linux__ */
      }
+ 
+     raw_refresh_zoned_limits(bs, &st, errp);
 -- 
 2.47.3
 
