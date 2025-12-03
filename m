@@ -4,110 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95311D1BDD0
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61AB3D1BDCC
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:53:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQrx8-0007aK-HZ; Wed, 03 Dec 2025 13:51:50 -0500
+	id 1vQrwq-0007So-VV; Wed, 03 Dec 2025 13:51:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vQrx7-0007ZO-12
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1vQrwp-0007RK-Sg
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:31 -0500
+Received: from mx0a-00190b01.pphosted.com ([2620:100:9001:583::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vQrx5-00012n-DM
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764787906;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lYzrc17+VBNLzV0q5mb2F00YL2Y2UiMTeTfct14Gr/A=;
- b=U2uO6Fd1fs1OHkg4CwZHOD2HsgaixvixpKY99LD0/uYpBSQUlaahQCb11j1iHiLROQ9Esr
- AyfViUrKBptLtMwBjL8U2LoPLUz3oJhzePJmE+2snlaZrpkIuhj9OPcxUYwlb46rvJrPFd
- GarkciqVoAx33BXNP+JLDAqVbmHc6JE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-t4WpS3b2O56UkpfVIZhG3w-1; Wed, 03 Dec 2025 13:51:45 -0500
-X-MC-Unique: t4WpS3b2O56UkpfVIZhG3w-1
-X-Mimecast-MFC-AGG-ID: t4WpS3b2O56UkpfVIZhG3w_1764787904
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4779d8fd4ecso408745e9.1
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 10:51:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764787903; x=1765392703; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lYzrc17+VBNLzV0q5mb2F00YL2Y2UiMTeTfct14Gr/A=;
- b=rCzdfGHBntCrBcnarXK/pMdhg7f9Y42vyDGz1uRXwHcOCEqPvlmYgDwIenTt4aN1QR
- 59Lu3GCsM+BgBeXTKtad7pooMgZdL5KYzrJC3EPYpq7nIszW1+rTKFYUrOW2YUg9uTbM
- VXqYa9rvYiaXvTASxDdJaVAuVCinnHKGmlSEYxjOcIIBnY2g5z8ekdBFXXc4rmE/asoe
- r+UNSaeWdNpmmr/hMHh/U2zIHKSv6bntK9sBBg4j9C+VMb0ObtJrYKvl70vExW17iuLs
- VyKR1AsUobSRX5cyeezmubfKo/eI1yl6TaCqWOx0FN22L/RkCaGSbWW2OPmrJBZch/zx
- oX+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764787903; x=1765392703;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lYzrc17+VBNLzV0q5mb2F00YL2Y2UiMTeTfct14Gr/A=;
- b=XyXU76kDRBuz0wI6BVJ+2L+KXkahYNJaaqBHMWG6gH+aeym0Lo8Z4R/hIraFDwYFM0
- fPJDV1KT6/tukbvREkgB9rjhQO0eqMVCt6EaAqb7Z97JNnG628SJAbLiA7sk+WNA61uE
- w3rOYmOmFW2ulutpow6VaLCeFrMOZFnrkNUk1NSw6YzuWYHlyelXEbCpS2uLcYfDZGBJ
- ayFRpKtI6iLPklqlzPZjJNthKl2XS8akm0g9Ua0pbKo0jVrEqvkCqCNcSy53OezrNH5v
- BssyMZPv3a11c2wMn3G9gN8+Z+3KfJuQakqLZeY1KLlIReC5YYD11+au1kqbE9PVGBWS
- O6sQ==
-X-Gm-Message-State: AOJu0Yw8e80RKIB4ZT7WUhHm9smFvaBEfeGX7hxqmqGd9wz/Iucn+p8p
- 3oJLJdsUEbRn/9S4DXWsn57x/Q6KZt8WWkSUOxGjKUNExtvJ3s/Lgs6IjzkLr05td4jNYj3a2CQ
- YIuuMTGMsuPI/3cwp9OLHmTegln21kGw4CaCmSZfzntcWT6C5hghVbfhdoC3UEZQ5FT6ZNtk6ir
- R9KCJnOm/InXIVzOLDZAlrBcTeas/5OKMZ/wSVxYhH
-X-Gm-Gg: ASbGnctteineU1ROvt5ZVvCcThzv0OR5YYkVHswdpn2RI+STcQQad0mFLnr2Xk8pK3e
- tThytrrkMQILafTfgCue3DcuKh8JHh/u1VM/ABD21i6RCti/EFddZaTCShIzyOs7UTf/IzhmNAz
- oIryOPJuRuBVI73sSVIezCNYG633Tn0xW4mqg8fQ0jdq23yakA8ry72/2nPoahymfYf6xCfJcJR
- BERpRml7W1wUarC9KTDURcAbQxLeS8C4fG31wEN10mmFHZqAVUJAjpe5IbLFmqMV8464e1rlIVJ
- E4wfpCxDPcvT+5CGp6JBTio9pYebKNbma1uu9dAtnqb6KcdJ3Xs5mXZcbBApXBTMeKqSFkrLE1W
- ARDj4ArprrXZi1t90ojFXKRsaAER4PMC4h484FhbPSgwiRsKV5jbGGXK8dbd7iJNjzLIDKaijHq
- XLMiaqocitf6Eo75c=
-X-Received: by 2002:a05:600c:3151:b0:479:255f:8805 with SMTP id
- 5b1f17b1804b1-4792eb10e97mr5419545e9.4.1764787903107; 
- Wed, 03 Dec 2025 10:51:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHEUW3YyNCYO1y+vU8FGieudGnHLDk3S+naLY15jST1X+p4ScQlx0j3qj8vrpuk+71/KgvmLg==
-X-Received: by 2002:a05:600c:3151:b0:479:255f:8805 with SMTP id
- 5b1f17b1804b1-4792eb10e97mr5419265e9.4.1764787902688; 
- Wed, 03 Dec 2025 10:51:42 -0800 (PST)
-Received: from [192.168.10.48] ([176.206.119.13])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4792b02e7fbsm21794075e9.2.2025.12.03.10.51.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Dec 2025 10:51:41 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org,
-	kwolf@redhat.omc
-Subject: [PATCH 3/5] block: reduce files included by block/aio.h
-Date: Wed,  3 Dec 2025 19:51:31 +0100
-Message-ID: <20251203185133.2458207-4-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251203185133.2458207-1-pbonzini@redhat.com>
-References: <20251203185133.2458207-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1vQrwn-0000zX-LE
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:31 -0500
+Received: from pps.filterd (m0050095.ppops.net [127.0.0.1])
+ by m0050095.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 5B3IgRqW274411; Wed, 3 Dec 2025 18:51:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=jan2016.eng;
+ bh=ljRmB77NnqAdrgPEzQrr268ITHscsnHq1PoRVyI/Pzk=; b=PdQGilVoAKBs
+ uZelBYn2NQyhZ9E4p5Y197cGB6Xo51/7pLjJsVhFl2UvmqFhi8mMvcE4zwhNhe+j
+ kl+/wYe5Evg7lux92HjOC4c9Oz1FzJThjWAxehTeFtbWpA6/VZPzbO2Q8WAF2yGg
+ 6m7bYWzm8EDY7opnq2UkYZRqqy07kEwWix0VVYkS/s4MxED+PMQWoq9WZ1Xj/6m3
+ jfvb2zYviLhmKuIBwj8NW5OtcUtHS1diCJJX+3migRnsp3ceR4Pl1pfLpnykoD9U
+ qzkyB/Q2dljfK6pJ54zHuL6R8pwvfA6Zez3GbaBIonMg6auCUx6/S39C5NJ7yKrW
+ j8GdTu/VjA==
+Received: from prod-mail-ppoint6 (prod-mail-ppoint6.akamai.com [184.51.33.61])
+ by m0050095.ppops.net-00190b01. (PPS) with ESMTPS id 4atm5s6d01-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 03 Dec 2025 18:51:27 +0000 (GMT)
+Received: from pps.filterd (prod-mail-ppoint6.akamai.com [127.0.0.1])
+ by prod-mail-ppoint6.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
+ 5B3FZraq026859; Wed, 3 Dec 2025 13:51:26 -0500
+Received: from prod-mail-relay01.akamai.com ([172.27.118.31])
+ by prod-mail-ppoint6.akamai.com (PPS) with ESMTP id 4aqw21kxw3-1;
+ Wed, 03 Dec 2025 13:51:26 -0500
+Received: from bos-lhvkhf.bos01.corp.akamai.com
+ (bos-lhvkhf.bos01.corp.akamai.com [172.28.40.75])
+ by prod-mail-relay01.akamai.com (Postfix) with ESMTP id A91DF97;
+ Wed,  3 Dec 2025 18:51:26 +0000 (UTC)
+From: Ben Chaney <bchaney@akamai.com>
+Date: Wed, 03 Dec 2025 13:51:20 -0500
+Subject: [PATCH v3 3/8] vhost: reset vhost devices for cpr
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251203-cpr-tap-v3-3-3c12e0a61f8e@akamai.com>
+References: <20251203-cpr-tap-v3-0-3c12e0a61f8e@akamai.com>
+In-Reply-To: <20251203-cpr-tap-v3-0-3c12e0a61f8e@akamai.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Hamza Khan <hamza.khan@nutanix.com>,
+ Mark Kanda <mark.kanda@oracle.com>, Joshua Hunt <johunt@akamai.com>,
+ Max Tottenham <mtottenh@akamai.com>, Ben Chaney <bchaney@akamai.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1764787886; l=5230;
+ i=bchaney@akamai.com; s=20251203; h=from:subject:message-id;
+ bh=6kTSGt3ELi899SPi+eJ4MTXel5sLxi3unzD950w6j/M=;
+ b=2vhlu4zmfRGEftDje4PhskkfZjP3zx3oOQARS8sNrREatZVToDTYrrzWyXmx/RE4MbvmWxQjM
+ ZJrTmfATuGfBqoiBKL5EtDV3rWBnbm4+QGMCjJJ+spjwCYa15YekUHP
+X-Developer-Key: i=bchaney@akamai.com; a=ed25519;
+ pk=6+w9cse5QEeVdy3tjqFxs/4rAaRdQ2/fkTxVFq+lWy4=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-03_02,2025-12-03_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ mlxscore=0 phishscore=0
+ bulkscore=0 spamscore=0 suspectscore=0 adultscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2510240000
+ definitions=main-2512030148
+X-Proofpoint-GUID: RVkisURAx_c3pRunJDSZVbm65r6TfD-C
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDE0NyBTYWx0ZWRfX2sKSOrMead+G
+ d7JCGWZ9kh43d7SmEygI9fwOegwJ/jUBkNK+eor7ORIW88HwBQAojilIEICahZGAJEWKkztR6Fp
+ jLgl/iUNVTc5ZTaZJAt5f1QYEU/zA4Aw+WPQ+gUcPvCaxW83ErYAhy56nK3kyG+qkJmcQSxh2c5
+ ZwK2O7opZn5+VKyO+gukV/86PAVcjZd4PdtMTzO7SNN9YIj8VaDCutdd2kpF53yrhxNQYsG7l6f
+ 7s2bGvRY/KJyJmMSmiqrbpLlPK3I8l1Km/UnXlf7eQ5x9vV91pwtr94BkzQSNBRhePbJi6V8iYY
+ Mt7iIFLN9/v70fuiYc2q9KCaP+tl/xIcpj52wqAojJPCbxgQfMzkAyrFQipGIqqZOY2mKSnT/ym
+ yb0s/iKIONgSGEtcwpOCOOOWaWj+dg==
+X-Authority-Analysis: v=2.4 cv=VdH6/Vp9 c=1 sm=1 tr=0 ts=693086b0 cx=c_pps
+ a=WPLAOKU3JHlOa4eSsQmUFQ==:117 a=WPLAOKU3JHlOa4eSsQmUFQ==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=6lTwf2g7YyX0f-ifu7AA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: RVkisURAx_c3pRunJDSZVbm65r6TfD-C
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-03_02,2025-12-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ phishscore=0 bulkscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
+ suspectscore=0 clxscore=1015 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512030147
+Received-SPF: pass client-ip=2620:100:9001:583::1;
+ envelope-from=bchaney@akamai.com; helo=mx0a-00190b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,197 +130,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid including all of qdev everywhere (the hw/core/qdev.h header in fact
-brings in a lot more headers too), instead declare a couple structs for
-which only a pointer type is needed.
+From: Steve Sistare <steven.sistare@oracle.com>
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+When preserving a vhost fd using CPR, call VHOST_RESET_OWNER prior to CPR
+in old QEMU.  Otherwise, new QEMU will fail when it calls VHOST_SET_OWNER
+during vhost_dev_init.
+
+Signed-off-by: Mark Kanda <mark.kanda@oracle.com>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Signed-off-by: Ben Chaney <bchaney@akamai.com>
 ---
- include/block/aio.h                |  7 +++----
- include/block/block-copy.h         |  1 +
- include/block/block-global-state.h |  1 +
- include/block/block-io.h           |  1 +
- include/block/dirty-bitmap.h       |  1 +
- include/hw/core/qdev.h             |  6 +-----
- include/qemu/job.h                 |  1 +
- include/qemu/main-loop.h           |  2 +-
- include/qemu/mem-reentrancy.h      | 10 ++++++++++
- net/net.c                          |  1 +
- util/async.c                       |  1 +
- 11 files changed, 22 insertions(+), 10 deletions(-)
- create mode 100644 include/qemu/mem-reentrancy.h
+ hw/virtio/vhost-backend.c         |  6 ++++++
+ hw/virtio/vhost.c                 | 32 ++++++++++++++++++++++++++++++++
+ include/hw/virtio/vhost-backend.h |  1 +
+ include/hw/virtio/vhost.h         |  1 +
+ 4 files changed, 40 insertions(+)
 
-diff --git a/include/block/aio.h b/include/block/aio.h
-index 59c56d695ee..8cca2360d1a 100644
---- a/include/block/aio.h
-+++ b/include/block/aio.h
-@@ -23,9 +23,8 @@
- #include "qemu/lockcnt.h"
- #include "qemu/thread.h"
- #include "qemu/timer.h"
--#include "block/graph-lock.h"
--#include "hw/core/qdev.h"
+diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
+index 4367db0d95..1447d12963 100644
+--- a/hw/virtio/vhost-backend.c
++++ b/hw/virtio/vhost-backend.c
+@@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
+     return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
+ }
  
-+struct MemReentrancyGuard;
++static int vhost_kernel_reset_owner(struct vhost_dev *dev)
++{
++    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
++}
++
+ static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
+ {
+     assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
+@@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
+         .vhost_get_features_ex = vhost_kernel_get_features,
+         .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
+         .vhost_set_owner = vhost_kernel_set_owner,
++        .vhost_reset_owner = vhost_kernel_reset_owner,
+         .vhost_get_vq_index = vhost_kernel_get_vq_index,
+         .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
+         .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 266a11514a..011d73dae2 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -24,6 +24,7 @@
+ #include "standard-headers/linux/vhost_types.h"
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/mem/memory-device.h"
++#include "migration/misc.h"
+ #include "migration/blocker.h"
+ #include "migration/qemu-file-types.h"
+ #include "system/dma.h"
+@@ -1540,6 +1541,32 @@ static int vhost_dev_get_features(struct vhost_dev *hdev,
+     return r;
+ }
  
- typedef struct AioHandler AioHandler;
- typedef QLIST_HEAD(, AioHandler) AioHandlerList;
-@@ -211,7 +210,7 @@ struct AioContext {
-      * of nodes and edges from block graph while some
-      * other thread is traversing it.
-      */
--    BdrvGraphRWlock *bdrv_graph;
-+    struct BdrvGraphRWlock *bdrv_graph;
++static int vhost_cpr_notifier(NotifierWithReturn *notifier,
++                              MigrationEvent *e, Error **errp)
++{
++    struct vhost_dev *dev;
++    int r;
++
++    dev = container_of(notifier, struct vhost_dev, cpr_transfer_notifier);
++
++    if (dev->vhost_ops->backend_type != VHOST_BACKEND_TYPE_KERNEL) {
++        return 0;
++    }
++
++    if (e->type == MIG_EVENT_PRECOPY_SETUP) {
++        r = dev->vhost_ops->vhost_reset_owner(dev);
++        if (r < 0) {
++            VHOST_OPS_DEBUG(r, "vhost_reset_owner failed");
++        }
++    } else if (e->type == MIG_EVENT_PRECOPY_FAILED) {
++        r = dev->vhost_ops->vhost_set_owner(dev);
++        if (r < 0) {
++            VHOST_OPS_DEBUG(r, "vhost_set_owner failed");
++        }
++    }
++    return 0;
++}
++
+ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    VhostBackendType backend_type, uint32_t busyloop_timeout,
+                    Error **errp)
+@@ -1550,6 +1577,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
  
-     /* The list of registered AIO handlers.  Protected by ctx->list_lock. */
-     AioHandlerList aio_handlers;
-@@ -393,7 +392,7 @@ void aio_bh_schedule_oneshot_full(AioContext *ctx, QEMUBHFunc *cb, void *opaque,
-  * device-reentrancy issues
-  */
- QEMUBH *aio_bh_new_full(AioContext *ctx, QEMUBHFunc *cb, void *opaque,
--                        const char *name, MemReentrancyGuard *reentrancy_guard);
-+                        const char *name, struct MemReentrancyGuard *reentrancy_guard);
+     hdev->vdev = NULL;
+     hdev->migration_blocker = NULL;
++    hdev->cpr_transfer_notifier.notify = NULL;
  
- /**
-  * aio_bh_new: Allocate a new bottom half structure
-diff --git a/include/block/block-copy.h b/include/block/block-copy.h
-index dd5cc82f3b2..0df2771181b 100644
---- a/include/block/block-copy.h
-+++ b/include/block/block-copy.h
-@@ -16,6 +16,7 @@
- #define BLOCK_COPY_H
+     r = vhost_set_backend_type(hdev, backend_type);
+     assert(r >= 0);
+@@ -1650,6 +1678,9 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     hdev->log_enabled = false;
+     hdev->started = false;
+     memory_listener_register(&hdev->memory_listener, &address_space_memory);
++    migration_add_notifier_mode(&hdev->cpr_transfer_notifier,
++                                vhost_cpr_notifier,
++                                MIG_MODE_CPR_TRANSFER);
+     QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
  
- #include "block/block-common.h"
-+#include "block/graph-lock.h"
- #include "qemu/progress_meter.h"
- 
- /* All APIs are thread-safe */
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index c2127f17249..ed89999f0fb 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -25,6 +25,7 @@
- #define BLOCK_GLOBAL_STATE_H
- 
- #include "qemu/aiocb.h"
-+#include "block/graph-lock.h"
- #include "block/block-common.h"
- #include "qemu/coroutine.h"
- #include "qemu/transactions.h"
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index e5efe0efb2f..7925e2241e6 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -27,6 +27,7 @@
- #include "qemu/aiocb.h"
- #include "block/aio-wait.h"
- #include "block/block-common.h"
-+#include "block/graph-lock.h"
- #include "qemu/coroutine.h"
- #include "qemu/iov.h"
- 
-diff --git a/include/block/dirty-bitmap.h b/include/block/dirty-bitmap.h
-index fa956debfb2..28029bbc2bc 100644
---- a/include/block/dirty-bitmap.h
-+++ b/include/block/dirty-bitmap.h
-@@ -2,6 +2,7 @@
- #define BLOCK_DIRTY_BITMAP_H
- 
- #include "block/block-common.h"
-+#include "block/graph-lock.h"
- #include "qapi/qapi-types-block-core.h"
- #include "qemu/hbitmap.h"
- 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index e211d807e82..4b2730e9d8e 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -4,6 +4,7 @@
- #include "qemu/atomic.h"
- #include "qemu/queue.h"
- #include "qemu/bitmap.h"
-+#include "qemu/mem-reentrancy.h"
- #include "qemu/rcu.h"
- #include "qemu/rcu_queue.h"
- #include "qom/object.h"
-@@ -208,11 +209,6 @@ struct NamedClockList {
-     QLIST_ENTRY(NamedClockList) node;
+     /*
+@@ -1702,6 +1733,7 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
+         QLIST_REMOVE(hdev, entry);
+     }
+     migrate_del_blocker(&hdev->migration_blocker);
++    migration_remove_notifier(&hdev->cpr_transfer_notifier);
+     g_free(hdev->mem);
+     g_free(hdev->mem_sections);
+     if (hdev->vhost_ops) {
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index ff94fa1734..18ce5ea9a0 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -196,6 +196,7 @@ typedef struct VhostOps {
+     vhost_get_features_op vhost_get_features;
+     vhost_set_backend_cap_op vhost_set_backend_cap;
+     vhost_set_owner_op vhost_set_owner;
++    vhost_set_owner_op vhost_reset_owner;
+     vhost_reset_device_op vhost_reset_device;
+     vhost_get_vq_index_op vhost_get_vq_index;
+     vhost_set_vring_enable_op vhost_set_vring_enable;
+diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
+index 08bbb4dfe9..5d11a97e43 100644
+--- a/include/hw/virtio/vhost.h
++++ b/include/hw/virtio/vhost.h
+@@ -133,6 +133,7 @@ struct vhost_dev {
+     QLIST_ENTRY(vhost_dev) logdev_entry;
+     QLIST_HEAD(, vhost_iommu) iommu_list;
+     IOMMUNotifier n;
++    NotifierWithReturn cpr_transfer_notifier;
+     const VhostDevConfigOps *config_ops;
  };
  
--typedef struct MemReentrancyGuard {
--    bool engaged_in_io;
--} MemReentrancyGuard;
--
--
- typedef QLIST_HEAD(, NamedGPIOList) NamedGPIOListHead;
- typedef QLIST_HEAD(, NamedClockList) NamedClockListHead;
- typedef QLIST_HEAD(, BusState) BusStateHead;
-diff --git a/include/qemu/job.h b/include/qemu/job.h
-index af29b8c6531..2b163602c56 100644
---- a/include/qemu/job.h
-+++ b/include/qemu/job.h
-@@ -32,6 +32,7 @@
- #include "qemu/progress_meter.h"
- #include "qemu/coroutine.h"
- #include "block/aio.h"
-+#include "block/graph-lock.h"
- 
- typedef struct JobDriver JobDriver;
- typedef struct JobTxn JobTxn;
-diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
-index 0d55c636b21..241dc87be50 100644
---- a/include/qemu/main-loop.h
-+++ b/include/qemu/main-loop.h
-@@ -431,7 +431,7 @@ void qemu_cond_timedwait_bql(QemuCond *cond, int ms);
- #define qemu_bh_new(cb, opaque) \
-     qemu_bh_new_full((cb), (opaque), (stringify(cb)), NULL)
- QEMUBH *qemu_bh_new_full(QEMUBHFunc *cb, void *opaque, const char *name,
--                         MemReentrancyGuard *reentrancy_guard);
-+                         struct MemReentrancyGuard *reentrancy_guard);
- void qemu_bh_schedule_idle(QEMUBH *bh);
- 
- enum {
-diff --git a/include/qemu/mem-reentrancy.h b/include/qemu/mem-reentrancy.h
-new file mode 100644
-index 00000000000..07cafd47179
---- /dev/null
-+++ b/include/qemu/mem-reentrancy.h
-@@ -0,0 +1,10 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef QEMU_MEM_REENTRANCY_H
-+#define QEMU_MEM_REENTRANCY_H 1
-+
-+typedef struct MemReentrancyGuard {
-+    bool engaged_in_io;
-+} MemReentrancyGuard;
-+
-+#endif
-diff --git a/net/net.c b/net/net.c
-index 4930b573ed3..a176936f9bc 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -39,6 +39,7 @@
- #include "qobject/qdict.h"
- #include "qapi/qmp/qerror.h"
- #include "qemu/error-report.h"
-+#include "qemu/mem-reentrancy.h"
- #include "qemu/sockets.h"
- #include "qemu/cutils.h"
- #include "qemu/config-file.h"
-diff --git a/util/async.c b/util/async.c
-index 48f88286369..39f391fb71a 100644
---- a/util/async.c
-+++ b/util/async.c
-@@ -29,6 +29,7 @@
- #include "block/thread-pool.h"
- #include "block/graph-lock.h"
- #include "qemu/main-loop.h"
-+#include "qemu/mem-reentrancy.h"
- #include "qemu/atomic.h"
- #include "qemu/lockcnt.h"
- #include "qemu/rcu_queue.h"
+
 -- 
-2.52.0
+2.34.1
 
 
