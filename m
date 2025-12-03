@@ -4,63 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 422B3D1BDC7
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:10:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79B1D1BDC9
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQrIk-0000kU-Op; Wed, 03 Dec 2025 13:10:06 -0500
+	id 1vQrJ9-0000oc-Jl; Wed, 03 Dec 2025 13:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arbn@yandex-team.com>)
- id 1vQrIj-0000jg-97; Wed, 03 Dec 2025 13:10:05 -0500
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1vQrJ7-0000o1-DO
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:10:29 -0500
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arbn@yandex-team.com>)
- id 1vQrIg-0001dj-Pq; Wed, 03 Dec 2025 13:10:05 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 8D6C7C025D;
- Wed, 03 Dec 2025 21:09:55 +0300 (MSK)
-Received: from dellarbn.yandex.net (unknown [10.214.35.248])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id i9pC1H0FiiE0-TW3owxNw; Wed, 03 Dec 2025 21:09:54 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1764785394;
- bh=5VEwO6j3obQQ2TRfdfxCT6aJ77MYSAFjHU/OOToQmDE=;
- h=Message-ID:Date:Cc:Subject:To:From;
- b=1YSXKKk5Aif1tHig/autYfoiCDrqYTEEYFYEqbz63NFt6Wvzgen50EvKsk+jIsz9U
- hq1O8U06LgjlJYNXH6sdhy8vKuPohf24hUkc19HAnip5Bs+8yu4N1bdw3EKnDgGPoz
- KnRvvk+CKsiTELrAzcT83DqCrbGhTBpQS9UMC74U=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.com
-From: Andrey Ryabinin <arbn@yandex-team.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org,
- Andrey Ryabinin <arbn@yandex-team.com>, qemu-stable@nongnu.org
-Subject: [PATCH] q35: Fix migration of SMRAM state
-Date: Wed,  3 Dec 2025 19:08:51 +0100
-Message-ID: <20251203180851.6390-1-arbn@yandex-team.com>
-X-Mailer: git-send-email 2.51.2
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1vQrJ5-0001sc-0b
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:10:29 -0500
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id CAB444CA43
+ for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 18:10:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1764785424;
+ bh=NpsZVEACQT0iz40flFTD0RazS5NlxLI0jy8SYbsuX9Y=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=GCvk+MBn9atKakHNLO6ZFBByWhYhkGFo8yPfXIiNj4DptU5+M24MRzijIHL+57+id
+ 4o2xZyUFzAGVOP4ZmpwQHqZ9cAaOa/hWDlbWsGYGW/HBjelRY3Dl529AwlOetSdi9r
+ mmswpRBr3WhKeFQ0vQ8rDvxFIUuxJL1RZTRhQpyc9mUqKAgW0aQTnNNw8wAL9pUW/b
+ x/xrH7WML9gf1e5q2yZjDU7KoY2pEaBVEvUWxiHbkSfbrs7jQAmg7EidKlF03MteKk
+ j9yy5+F5MHPXWI2IM6qpOpk38evYZ304EwIbalYEw9nte21mK15aOqtfKQh52DIw76
+ J/MoNbDCiJSRg==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id B4D0C7EA93
+ for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 18:10:24 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72; envelope-from=arbn@yandex-team.com;
- helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 03 Dec 2025 18:01:56 -0000
+From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=Confirmed; importance=Medium;
+ assignee=heinrich.schuchardt@canonical.com; 
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
+X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
+X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
+References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
+Message-Id: <176478491609.3945780.7736196911036547793.malone@juju-98d295-prod-launchpad-3>
+Subject: [Bug 2133188] Re: Illegal instruction in memset under qemu-user for
+ riscv64
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="379e22b8475e3402088a4cdb4a6e7936a4d28414";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 67c91081155666388f6327e35d42a082eaef6877
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -69,96 +88,151 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-mch_update_smbase_smram() essentially uses wmask[MCH_HOST_BRIDGE_F_SMBASE]
-to track SMBASE area state. Since 'wmask' state is not migrated is not
-migrated, the destination QEMU always sees
- wmask[MCH_HOST_BRIDGE_F_SMBASE] == 0xff
+@qianqiu wrote in a mail:
 
-As a result, when mch_update() calls mch_update_smbase_smram() on the
-destination, it resets ->config[MCH_HOST_BRIDGE_F_SMBASE] and disables
-the smbase-window memory region—even if it was enabled on the source.
+Inside the RISC-V container:
+QEMU_GDB=3D10000 cmake --system-information
+This launches your program with QEMU=E2=80=99s built-in GDB server listenin=
+g on port 10000.
 
-'info mtree' on source:
-  address-space: KVM-SMRAM
-    0000000000000000-ffffffffffffffff (prio 0, i/o): mem-container-smram
-      0000000000000000-00000000ffffffff (prio 10, i/o): smram
-        0000000000030000-000000000004ffff (prio 0, i/o): alias smbase-window @pc.ram
-        00000000000a0000-00000000000bffff (prio 0, i/o): alias smram-low @pc.ram
-        000000007f000000-000000007fffffff (prio 0, i/o): alias tseg-window @pc.ram
-      0000000000000000-ffffffffffffffff (prio 0, i/o): alias mem-smram @system
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133188
 
-'info mtree' on dest after migration:
-  address-space: KVM-SMRAM
-    0000000000000000-ffffffffffffffff (prio 0, i/o): mem-container-smram
-      0000000000000000-00000000ffffffff (prio 10, i/o): smram
-        00000000000a0000-00000000000bffff (prio 0, i/o): alias smram-low @pc.ram
-        000000007f000000-000000007fffffff (prio 0, i/o): alias tseg-window @pc.ram
-      0000000000000000-ffffffffffffffff (prio 0, i/o): alias mem-smram @system
+Title:
+  Illegal instruction in memset under qemu-user for riscv64
 
-This mismatch in memory regions breaks CPR-transfer migration with VFIO:
-the DMA mappings sent via VFIO_IOMMU_MAP_DMA on the destination must
-match the source. Otherwise, the destination QEMU aborts:
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Confirmed
 
-    qemu: vfio_container_dma_map(0x..., 0x0, 0xa0000, 0x....) = -22 (Invalid argument)
-    qemu: hardware error: vfio: DMA mapping failed, unable to continue
+Bug description:
+  # Title
+  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
+et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
 
-According to mch_update_smbase_smram() the valid combinations of
-->config and ->wmask for MCH_HOST_BRIDGE_F_SMBASE are:
+  ## Summary
+  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
+ 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
+gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
+ (core dumped)" or "died with signal 4". The illegal instruction is observe=
+d inside glibc's memset implementation at an instruction that uses RISC-V v=
+ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
+e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
+nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
+lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
+code generation / state corruption), not a cmake bug.
 
-  1) ->config[] == 0x0 && ->wmask[] == 0xff
-  2) ->config[] == MCH_HOST_BRIDGE_F_SMBASE_IN_RAM &&
-          ->wmask[] == MCH_HOST_BRIDGE_F_SMBASE_LCK
-  3) ->config[] == MCH_HOST_BRIDGE_F_SMBASE_LCK &&
-          ->wmask[] == 0
+  ## Affects
+  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
+untu3)
+  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
+qemu-user static interpreter
 
-Add mch_smbase_smram_post_load() to restore ->wmask of
-MCH_HOST_BRIDGE_F_SMBASE based on ->config[] value, ensuring that the
-follow-up call to mch_update_smbase_smram() correctly reinstates the
-smbase-window region if it was enabled on the source.
+  ## Environment / Context
+  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
+  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
+  - Container image: ubuntu:26.04 for riscv64
+  - qemu package used:
+    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
+b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
+-user_10.0.6+ds-0+deb13u2).=20
+    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
+ost and registered via /proc/sys/fs/binfmt_misc/register
+  - CMake version used inside container (bootstrap/build may use system-pro=
+vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
+ggers crash)
+  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
+eral consecutive successes or failures)
+  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
+t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
+QEMU_STRACE also makes it much harder to reproduce.
+   =20
 
-Cc: qemu-stable@nongnu.org
-Fixes: f404220e279c ("q35: implement 128K SMRAM at default SMBASE address")
-Signed-off-by: Andrey Ryabinin <arbn@yandex-team.com>
----
- hw/pci-host/q35.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+  ## Full reproduction steps
+  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
+ry:
+     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
+uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
+     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
+-5ubuntu3_amd64
+     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
+in/qemu-riscv64-static
 
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index a708758d36..2466a1aded 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -517,9 +517,27 @@ static void mch_update(MCHPCIState *mch)
-                      IO_APIC_DEFAULT_ADDRESS - 1);
- }
- 
-+static void mch_smbase_smram_post_load(MCHPCIState *mch)
-+{
-+    PCIDevice *pd = PCI_DEVICE(mch);
-+    uint8_t *reg = pd->config + MCH_HOST_BRIDGE_F_SMBASE;
-+
-+    if (!mch->has_smram_at_smbase) {
-+        return;
-+    }
-+
-+    if (*reg == MCH_HOST_BRIDGE_F_SMBASE_IN_RAM) {
-+        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] =
-+            MCH_HOST_BRIDGE_F_SMBASE_LCK;
-+    } else if (*reg == MCH_HOST_BRIDGE_F_SMBASE_LCK) {
-+        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = 0;
-+    }
-+}
- static int mch_post_load(void *opaque, int version_id)
- {
-     MCHPCIState *mch = opaque;
-+
-+    mch_smbase_smram_post_load(mch);
-     mch_update(mch);
-     return 0;
- }
--- 
-2.51.2
+  2. Register qemu-riscv64 with binfmt_misc:
+     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
+     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
+00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
+\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
+ >/proc/sys/fs/binfmt_misc/register
+
+  3. Start riscv64 ubuntu container:
+     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
+4 bash
+     docker exec -it ubuntu26 bash -i
+
+  4. Inside container:
+     apt update
+     apt install -y build-essential cmake
+
+  5. Reproducer 1:
+     cmake --system-information
+     -> Often fails with:
+        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
+        Illegal instruction (core dumped)
+
+  6. Reproducer 2 (minimal C project):
+     Create test_cmake/CMakeLists.txt:
+     cmake_minimum_required(VERSION 3.10)
+     project(HelloCMake C)
+     add_executable(hello main.c)
+
+     Create test_cmake/main.c:
+     #include <stdio.h>
+     int main() {
+         printf("Hello, CMake!\n");
+         return 0;
+     }
+
+     cd test_cmake
+     cmake .
+     -> Crash with:
+        -- Detecting C compiler ABI info
+        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
+
+  7. Reproducer 3 (rebuild cmake from source inside container):
+     apt source cmake
+     cd cmake
+     apt-get build-dep .
+     dpkg-buildpackage -us -uc -b
+     -> Bootstrapping error:
+        Illegal instruction (core dumped)
+        Error when bootstrapping CMake:
+        Problem while running initial CMake
+
+  8. Observed crash location (from gdb/QEMU_STRACE when available):
+     - Illegal instruction is in memset@@GLIBC_2.27+0x52
+     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
+bit elements)
+
+
+  ## Workarounds
+  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
+ using vectorized memset.
+  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
+=E2=80=94 both make the failure much less likely.
+
+  Note: The same workload does not reproduce the crash when run under
+  qemu-system (full-system emulation). The issue appears specific to
+  qemu-user
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
 
 
