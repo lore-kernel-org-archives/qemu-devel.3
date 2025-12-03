@@ -4,157 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D704ED12D68
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 14:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8EA8D12D60
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 14:15:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQnUT-0001zc-PD; Wed, 03 Dec 2025 09:05:58 -0500
+	id 1vQnd1-0005xa-L2; Wed, 03 Dec 2025 09:14:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vQnUR-0001yk-PT
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 09:05:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1vQgdV-0004p7-Lo
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:46:51 -0500
+Received: from ci-2002k-snip4-2.eps.apple.com ([57.103.88.233]
+ helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vQnUP-00045z-NJ
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 09:05:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764770748;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=YGPG2BDHUJ2l1WS+IL8JR9jycU1efWCbEY48TqMdn5c=;
- b=NYFUZq9oipJ1JoOGXC+Z9LHxg5hGA7Gn4QBPA1KEkp0u9j4+BPgTLK7Kp3Sehk96zOPZGV
- K/Nt/SH5IbWeQVrez26P7vHDvTGQpmpeLHuZGoD8sxTssxgP/OzY38vsxTMms+iqv1oGwh
- OmrCMJmd43xT8nOJCpfh/LgyukmRekk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-283-IBeMUlHWP0eWQB4eOn78Xg-1; Wed, 03 Dec 2025 09:05:45 -0500
-X-MC-Unique: IBeMUlHWP0eWQB4eOn78Xg-1
-X-Mimecast-MFC-AGG-ID: IBeMUlHWP0eWQB4eOn78Xg_1764770744
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4776079ada3so59297415e9.1
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 06:05:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764770744; x=1765375544; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=YGPG2BDHUJ2l1WS+IL8JR9jycU1efWCbEY48TqMdn5c=;
- b=hT5D29IAwaYrUHRdUnvrQm2JH6N63gafe0XR/BD7FOdN2ZAL9ljZJ08/AEj/xJcxPI
- KMpw0wXPE7gDfARdOxTJsMyrzkNkX5yUPljIOq1llTRK7ZwpGF+B1xjgYegbet8KQchx
- b6k5mo24qczV6gPjFf/ix2yv2zbJjEv8nIXjNEzKa/3qec5Y1lQuH0d8E7LAK7agaXOK
- je6Vc8J9wRtvosBH2iCbvHDC2p6QkKEJGtILSw1/NuCufDUgPFstSVW+sQBLscp2Ftmm
- sToHOWsb5+ZIvJ1Eejro0GHo2LO4hWL2GU4epVJR27Uep0fFwGqwa6RnJnO+2JwXqiPq
- 5/mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764770744; x=1765375544;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YGPG2BDHUJ2l1WS+IL8JR9jycU1efWCbEY48TqMdn5c=;
- b=D3UfWTJwQtdRaLPLmeUZXT+Dh7tePmtyBRr9PsTTdwTyjCV6iZxBe8phgi1E6+cKFc
- CnYHw4dWwdOeBXuEhMtxzxTKYqql4R4BjvWUXGL+HOPyKaxTHZhrRzL/o88Btyy/TnGJ
- 1E5D8C2NCZi6Tc8yF+A7gLhzycprF/6Vqj578YlMX3fj1eYGZQfw4ze46KncqDsbrgpr
- xAHt/0wz3kDF+AYAT8a4FNF6sxY6GOhzWbqEEMqWwNI9bRPiuKqRApgAi8sCi86hRKWG
- bjD3JbM6lrGAqSvSi4DF8hMtnZGamE9hTIyyOgtRYGFM9IzC+7kezQ4YLKyt1uIEaf1K
- rr/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUjpZu1QiF1r9EW4QjIHDx+J3UO4Qwz8voJ2BDQAmLxhBCpcoEIL5PU0JYxbWh2o2izNUnJ7awNNVo@nongnu.org
-X-Gm-Message-State: AOJu0YxsSeLG1mlSoer0bndSPXX0RSBORHb/1Pi2GO5CQ1OE6yyEIaMf
- W7PvCkOsJkqg1zyeKKzhRz3e9Np/2JVJB06R6NkZDKguHq9v/+gMliDmt9bbc2L06+dafsVCekR
- wwld03/ZTuVT8e87OyXxxTtzH12Yul/shSaZKRY9oXdFcoMKLWVpd3GjI
-X-Gm-Gg: ASbGncviNrIoju1W+Lmi+4aqdycTFz+rlUmdAeK2Ldw+BnPu5ERVxCe9E2HOaHa/etw
- RC5bxRU1PWdXdmYcmOYUP7nuTkcKHQCaTlgpTeUtHiDDZHkIbCzXgqcSMe4CfJrE0jkh0UFp1gk
- jIEm2khzJi1tC0+Lo1NRqL3pVqON0cloeFRThbheHiizFUMFJDbt8T4xwHo5m4w3/sN55Y3S+pJ
- qlR2jxtyNN0RIdlvvnGI58a8tlXlkD4/hCZCM8w/P3PbEslXrUFuNhYD9SVT/dyRN5JFWD8gkLy
- K1XdfNU3FfAB4DOemHiYA+vilpx+ufVRq6wDNK3svg+bG/WnD8D6rgW4AgOshgwjw038Slz32Em
- BGYoHpaYLJ2n4EQ+/bRGVs8zHuwapq/NE/XX3gIQ1djBsb7SA
-X-Received: by 2002:a05:6000:2689:b0:42b:32f5:ad18 with SMTP id
- ffacd0b85a97d-42f73180f9dmr2818577f8f.9.1764770744154; 
- Wed, 03 Dec 2025 06:05:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFFKibXKfNVNkA5OBhvRY++EIlWnmCown9+3olkL/NyjhZEMMmupDLtel/vWHMur5nb+6NCCA==
-X-Received: by 2002:a05:6000:2689:b0:42b:32f5:ad18 with SMTP id
- ffacd0b85a97d-42f73180f9dmr2818542f8f.9.1764770743660; 
- Wed, 03 Dec 2025 06:05:43 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1c5d6277sm39436806f8f.17.2025.12.03.06.05.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Dec 2025 06:05:42 -0800 (PST)
-Message-ID: <f2986f27-5279-4236-9013-ba1adb8a1d95@redhat.com>
-Date: Wed, 3 Dec 2025 15:05:42 +0100
+ (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1vQgdT-0000YG-EX
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:46:49 -0500
+Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-central-1k-10-percent-0 (Postfix) with ESMTPS id
+ 1E98B1800116; Wed,  3 Dec 2025 06:46:41 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+ bh=2oSTwT6BrLzVT/Xa63N9kAZ3pdM3XV2BWBbUU5+Rwjk=;
+ h=From:To:Subject:Date:Message-Id:MIME-Version:x-icloud-hme;
+ b=PW8m+aBkywxVKogN33vewhNiNM0Vls/wsfMTSlJBngwQLXO2pODXKFWKnzpaicoQ7gUzt8Ximn2Y3MKr9p76At54GolYZ/S16fOC39s1TP42SQWty8ZIL8NRcHkXiNN/IVjmmygHHi1sNF33iSf4axinCZOs29RO28uAkrJEPiF4qE9C0XayfLpi6DLT7iV5rcpPs62MadivQX0NmcKHRy2c7MvAg8Ig2ohR22fwnix+gu36Dyld983j45l/jGjQk9xoG0moI/8vzSODBwpDbq2+GMwuCplwvOaK+MKZYktG8fZ6zLQymTEhZ2Ghric0mGcJX+zCdRtfseegv0DqZA==
+Received: from localhost.localdomain (unknown [17.57.156.36])
+ by p00-icloudmta-asmtp-us-central-1k-10-percent-0 (Postfix) with ESMTPSA id
+ 0CDC7180009B; Wed,  3 Dec 2025 06:46:41 +0000 (UTC)
+From: Matt Jacobson <mhjacobson@me.com>
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Matt Jacobson <mhjacobson@me.com>
+Subject: [PATCH 0/1] hw/m68k: add working floppy controller for q800
+Date: Wed,  3 Dec 2025 01:43:35 -0500
+Message-Id: <20251203064336.79847-1-mhjacobson@me.com>
+X-Mailer: git-send-email 2.37.1 (Apple Git-137.1)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/5] vfio-user: refactor out header handling
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Thanos Makatos <thanos.makatos@nutanix.com>
-References: <20251203100316.3604456-1-john.levon@nutanix.com>
- <20251203100316.3604456-4-john.levon@nutanix.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251203100316.3604456-4-john.levon@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Proofpoint-GUID: bvPk_XUMzBBHFvkeIvqe6ViiFJXQq5MG
+X-Authority-Info: v=2.4 cv=SLBPlevH c=1 sm=1 tr=0 ts=692fdcd2 cx=c_apl:c_pps
+ a=2G65uMN5HjSv0sBfM2Yj2w==:117 a=2G65uMN5HjSv0sBfM2Yj2w==:17
+ a=wP3pNCr1ah4A:10 a=x7bEGLp0ZPQA:10 a=Z7GCepxVSdIA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=a4NEJbfMAAAA:8 a=jTNvsa8-qGaS9nKWCzkA:9
+X-Proofpoint-ORIG-GUID: bvPk_XUMzBBHFvkeIvqe6ViiFJXQq5MG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDA1MiBTYWx0ZWRfXzFsfIIgS25uu
+ p2FwYde3PXfFSoPXYnQaO/6OIFkTkaL8hy/ErlPDAMMMWKkiq4rCHlleSegjwBE+3Fne7ZQMWQP
+ 0XHHPYsOlay/HHuSfjsPZekHzPIGo1Qo3LM+30Y6uqvsWUUTwZ8wBB2M2M78LojOrnQiESeWU77
+ c73oRVnFFQSK3F/H/31HCxahoWPmZFcJHuELxXTXXtN7+WsUrVLq2gr8/PtFfKZ/XO27rzchVIR
+ qjHk1uDLyS7b2N88TzEo8vl0Rx5FXFtBjZfUFR46I3IH/4Cng8SjWMf57Rm+sIgm0ulU0AfWVxd
+ lknMlz3nSMPpAhh32MZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-01_01,2025-11-27_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ mlxlogscore=527 malwarescore=0 clxscore=1011 bulkscore=0 adultscore=0
+ spamscore=0 suspectscore=0 phishscore=0 classifier=spam authscore=0 adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512030052
+X-JNJ: AAAAAAAB9aLkSCAszqTa7zhmIZdckYxsuZOQeIgqQeNMcl2Lks4phVgCmsbf9MDwZkjCdrZ7uEEtyFY/9p+p5waR7wSsYVajZkAiS8KklUe53sSRfTabeb+0YvmvsOmbfE7UGjAzaWpc7DNkZgPEbc0xaxdtE00A7WFw7qk+Wn2VqxrLRELRSULBCmaC0i9e/CBvk0dKxaASq9HI8/i9B8DrogLCzaTrA8RsS9bdEfml4BtevDE8BrmIge6ltKvP5htp+mD6ItVP791KS3Sy6Qr8zYztwXh5mpiSCplxbdVYPueXYA2tjFcQbfOpkEFcIeB6jx2zl4q2uLl/wG07aqSNCllj6LNXuGFeGB65Xv0U+o0eVy4d1UYRIH0CisdIvbTDRW6tKYpFNGKMVI0KvN8FetgK3dPDYpzJk3WaJA2mGUHb8VpxAHezCqFVASuiVJ6VsnsoCh5yNn7GUiKXFArxbabWtd4kEJzCQzLjfGl3/0wlFrLd1mM/DsJuBkNv+YYhvrncL1t7/xfhCWQlGc5izgdDRcWDxFDzxslJAB1ZByrkay0g2KQZVWVLAmMLnqRMpErUz5YSd5f5/uDtg01T/d6m3Gyh/0wLwMOwk5SUUSFvGWyJJSf8JTKY6kUsDIfha+3e1Pf3OE4Pahaw0veb3b4Z+17mOsYq736/aQw/uNT4pBRmcD0gJZAhIw==
+Received-SPF: pass client-ip=57.103.88.233; envelope-from=mhjacobson@me.com;
+ helo=outbound.ci.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 03 Dec 2025 09:14:31 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -169,157 +85,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/25 11:03, John Levon wrote:
-> Simplify vfio_user_recv_one() by moving the header handling out to a
-> helper function.
-> 
-> Signed-off-by: John Levon <john.levon@nutanix.com>
-> ---
->   hw/vfio-user/proxy.c | 101 +++++++++++++++++++++++++------------------
->   1 file changed, 60 insertions(+), 41 deletions(-)
-> 
-> diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-> index 82c76c6665..e0f9202535 100644
-> --- a/hw/vfio-user/proxy.c
-> +++ b/hw/vfio-user/proxy.c
-> @@ -218,6 +218,61 @@ static int vfio_user_complete(VFIOUserProxy *proxy, Error **errp)
->       return 1;
->   }
->   
-> +static int vfio_user_recv_hdr(VFIOUserProxy *proxy, Error **errp,
-> +                              VFIOUserHdr *hdr, int **fdp, size_t *numfdp,
-> +                              bool *isreply)
-> +{
-> +    struct iovec iov = {
-> +        .iov_base = hdr,
-> +        .iov_len = sizeof(*hdr),
-> +    };
-> +    int ret;
-> +
-> +    /*
-> +     * Read header
-> +     */
-> +    ret = qio_channel_readv_full(proxy->ioc, &iov, 1, fdp, numfdp, 0,
-> +                                 errp);
-> +    if (ret == QIO_CHANNEL_ERR_BLOCK) {
-> +        return ret;
-> +    }
-> +
-> +    if (ret < 0) {
-> +        error_setg_errno(errp, errno, "failed to read header");
-> +        return -1;
-> +    } else if (ret == 0) {
-> +        error_setg(errp, "failed to read header: EOF");
-> +        return -1;
-> +    } else if (ret < sizeof(*hdr)) {
-> +        error_setg(errp, "short read of header");
-> +        return -1;
-> +    }
-> +
-> +    /*
-> +     * Validate header
-> +     */
-> +    if (hdr->size < sizeof(*hdr)) {
-> +        error_setg(errp, "bad header size");
-> +        return -1;
-> +    }
-> +
-> +    switch (hdr->flags & VFIO_USER_TYPE) {
-> +    case VFIO_USER_REQUEST:
-> +        *isreply = false;
-> +        break;
-> +    case VFIO_USER_REPLY:
-> +        *isreply = true;
-> +        break;
-> +    default:
-> +        error_setg(errp, "unknown message type");
-> +        return -1;
-> +    }
-> +
-> +    trace_vfio_user_recv_hdr(proxy->sockname, hdr->id, hdr->command, hdr->size,
-> +                             hdr->flags);
-> +    return 0;
-> +}
-> +
->   /*
->    * Receive and process one incoming message.
->    *
-> @@ -230,10 +285,6 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
->       g_autofree int *fdp = NULL;
->       VFIOUserFDs *reqfds;
->       VFIOUserHdr hdr;
-> -    struct iovec iov = {
-> -        .iov_base = &hdr,
-> -        .iov_len = sizeof(hdr),
-> -    };
->       bool isreply = false;
->       int i, ret;
->       size_t msgleft, numfds = 0;
-> @@ -257,45 +308,13 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
+[Please notify me of any process errors -- this is my first contribution to
+QEMU.  Thanks.]
 
-I wouldn't say vfio_user_recv_one() is nice to read ...
+Implement the SWIM2 floppy controller for the q800 machine.
+(For details, see: <https://archive.org/details/SWIMDesignDocs/SWIM2%20ERS/>.)
 
->           /* else fall into reading another msg */
->       }
->   
-> -    /*
-> -     * Read header
-> -     */
-> -    ret = qio_channel_readv_full(proxy->ioc, &iov, 1, &fdp, &numfds, 0,
-> -                                 errp);
-> -    if (ret == QIO_CHANNEL_ERR_BLOCK) {
-> -        return ret;
-> -    }
-> -
-> -    /* read error or other side closed connection */
-> -    if (ret <= 0) {
-> -        goto fatal;
-> -    }
-> -
-> -    if (ret < sizeof(hdr)) {
-> -        error_setg(errp, "short read of header");
-> -        goto fatal;
-> -    }
-> -
-> -    /*
-> -     * Validate header
-> -     */
-> -    if (hdr.size < sizeof(VFIOUserHdr)) {
-> -        error_setg(errp, "bad header size");
-> -        goto fatal;
-> -    }
-> -    switch (hdr.flags & VFIO_USER_TYPE) {
-> -    case VFIO_USER_REQUEST:
-> -        isreply = false;
-> -        break;
-> -    case VFIO_USER_REPLY:
-> -        isreply = true;
-> -        break;
-> -    default:
-> -        error_setg(errp, "unknown message type");
-> +    ret = vfio_user_recv_hdr(proxy, errp, &hdr, &fdp, &numfds, &isreply);
-> +    if (ret < 0) {
-> +        if (ret == QIO_CHANNEL_ERR_BLOCK) {
-> +            return ret;
+Reading and writing work, and booting from a system disk works.
+Tested with the Quadra 800 ROM and System 7.
 
-OK. That's how the goto fatal is avoided.
+Future areas of work here could include:
 
-> +        }
->           goto fatal;
->       }
-> -    trace_vfio_user_recv_hdr(proxy->sockname, hdr.id, hdr.command, hdr.size,
-> -                             hdr.flags);
->   
->       /*
->        * For replies, find the matching pending request.
-Looks ok to me.
+* Allowing for disk formatting/duplication to work
+* Fleshing out the SWIM1 and hooking it up to the emulated drive
+* Implementing the IWM for earlier machines (this could share code with SWIM1)
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Matt Jacobson (1):
+  hw/m68k: add working floppy controller for q800
 
-Thanks,
+ hw/block/meson.build               |   2 +-
+ hw/block/sony_superdrive.c         | 940 +++++++++++++++++++++++++++++
+ hw/block/swim2.c                   | 657 ++++++++++++++++++++
+ hw/block/trace-events              |  17 +
+ hw/m68k/q800.c                     |   4 +-
+ include/hw/block/sony_superdrive.h |  55 ++
+ include/hw/block/swim2.h           |  66 ++
+ include/hw/m68k/q800.h             |   4 +-
+ 8 files changed, 1740 insertions(+), 5 deletions(-)
+ create mode 100644 hw/block/sony_superdrive.c
+ create mode 100644 hw/block/swim2.c
+ create mode 100644 include/hw/block/sony_superdrive.h
+ create mode 100644 include/hw/block/swim2.h
 
-C.
-
-
+-- 
+2.37.1 (Apple Git-137.1)
 
 
