@@ -4,33 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62EA1D116F3
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:05:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EFDAD116F3
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:05:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQhnZ-0001am-Tq; Wed, 03 Dec 2025 03:01:18 -0500
+	id 1vQhoU-0004r0-HA; Wed, 03 Dec 2025 03:02:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQhnX-0001Qm-Ga; Wed, 03 Dec 2025 03:01:15 -0500
+ id 1vQhoT-0004nK-7w; Wed, 03 Dec 2025 03:02:13 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQhnV-000735-DZ; Wed, 03 Dec 2025 03:01:15 -0500
+ id 1vQhoR-00076g-BH; Wed, 03 Dec 2025 03:02:12 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 71EB7170773;
- Wed, 03 Dec 2025 10:59:23 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0826217077A;
+ Wed, 03 Dec 2025 10:59:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 36FDF32B49A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C67F532B4A1;
  Wed, 03 Dec 2025 10:59:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jack Wang <jinpu.wang@ionos.com>,
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Hanna Czenczek <hreitz@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 102/116] qmp: Fix a typo for a USO feature
-Date: Wed,  3 Dec 2025 10:59:22 +0300
-Message-ID: <20251203075939.2366131-21-mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 109/116] block-backend: Fix race when resuming queued
+ requests
+Date: Wed,  3 Dec 2025 10:59:29 +0300
+Message-ID: <20251203075939.2366131-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251203105830@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251203105830@cover.tls.msk.ru>
@@ -59,30 +62,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jack Wang <jinpu.wang@ionos.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-There is a copy & paste error, USO6 should be there.
+When new requests arrive at a BlockBackend that is currently drained,
+these requests are queued until the drain section ends.
 
-Fixes: 58f81689789f ("qmp: update virtio feature maps, vhost-user-gpio introspection")
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+There is a race window between blk_root_drained_end() waking up a queued
+request in an iothread from the main thread and blk_wait_while_drained()
+actually being woken up in the iothread and calling blk_inc_in_flight().
+If the BlockBackend is drained again during this window, drain won't
+wait for this request and it will sneak in when the BlockBackend is
+already supposed to be quiesced. This causes assertion failures in
+bdrv_drain_all_begin() and can have other unintended consequences.
+
+Fix this by increasing the in_flight counter immediately when scheduling
+the request to be resumed so that the next drain will wait for it to
+complete.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20251119172720.135424-1-kwolf@redhat.com>
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+Tested-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 8eeaa706ba73251063cb80d87ae838d2d5b08e9a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit 5fbcbf76a19a0d3500a4103fc8876c6cace2afcf)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 3b6377cf0d..f2c7a327d0 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -299,7 +299,7 @@ static const qmp_virtio_feature_map_t virtio_net_feature_map[] = {
-     FEATURE_ENTRY(VIRTIO_NET_F_GUEST_USO4, \
-             "VIRTIO_NET_F_GUEST_USO4: Driver can receive USOv4"),
-     FEATURE_ENTRY(VIRTIO_NET_F_GUEST_USO6, \
--            "VIRTIO_NET_F_GUEST_USO4: Driver can receive USOv6"),
-+            "VIRTIO_NET_F_GUEST_USO6: Driver can receive USOv6"),
-     FEATURE_ENTRY(VIRTIO_NET_F_HOST_USO, \
-             "VIRTIO_NET_F_HOST_USO: Device can receive USO"),
-     FEATURE_ENTRY(VIRTIO_NET_F_HASH_REPORT, \
+diff --git a/block/block-backend.c b/block/block-backend.c
+index a402db13f2..50ccf3663f 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -1318,9 +1318,9 @@ static void coroutine_fn blk_wait_while_drained(BlockBackend *blk)
+          * section.
+          */
+         qemu_mutex_lock(&blk->queued_requests_lock);
++        /* blk_root_drained_end() has the corresponding blk_inc_in_flight() */
+         blk_dec_in_flight(blk);
+         qemu_co_queue_wait(&blk->queued_requests, &blk->queued_requests_lock);
+-        blk_inc_in_flight(blk);
+         qemu_mutex_unlock(&blk->queued_requests_lock);
+     }
+ }
+@@ -2767,9 +2767,11 @@ static void blk_root_drained_end(BdrvChild *child)
+             blk->dev_ops->drained_end(blk->dev_opaque);
+         }
+         qemu_mutex_lock(&blk->queued_requests_lock);
+-        while (qemu_co_enter_next(&blk->queued_requests,
+-                                  &blk->queued_requests_lock)) {
++        while (!qemu_co_queue_empty(&blk->queued_requests)) {
+             /* Resume all queued requests */
++            blk_inc_in_flight(blk);
++            qemu_co_enter_next(&blk->queued_requests,
++                               &blk->queued_requests_lock);
+         }
+         qemu_mutex_unlock(&blk->queued_requests_lock);
+     }
 -- 
 2.47.3
 
