@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1976CD15DB7
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 17:41:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4BB5D15DAD
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:01:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQqqD-0007b6-Mc; Wed, 03 Dec 2025 12:40:38 -0500
+	id 1vQr9h-0006Ga-KJ; Wed, 03 Dec 2025 13:00:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vQqqB-0007a9-W3
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 12:40:36 -0500
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ id 1vQr9d-0006G8-NT
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:00:41 -0500
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vQqq7-0004Qk-NO
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 12:40:34 -0500
+ id 1vQr9b-0005Yr-5F
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:00:41 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 8EF084C972
- for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 17:40:29 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 005C347BD7
+ for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 18:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1764783629;
- bh=Uty2yDK5kcMEZMpmCr6dMTcF3i7uGp0REdeTSMs/XH4=;
+ s=20210803; t=1764784836;
+ bh=OHlye2ZAQqxCz3/KUtTkkvzumV4gCbwR8YOIOlxvga8=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=lBxSvr+7iJJHSZ6P5uEntOem4gPAldg7iZPRv4k2M/z0Twb3Y1If+BK3Kbc7diJa6
- 5bAZ8+yj6kVqr27M9W70l72xTBJAjLMSe205o8Hc/AY115bBKLac2emDxE9oQ0fLmR
- 0COr8AoSLvnB3ZGuPRJxz22KTeUVctoxVpSlz0mX+gN5vt440Nng50bP1ml0RxVtEz
- prlEqPHiWMLpzVKJMJqATwZqRtirc4pI16GtwT2MdA3x1TCQn74QxWlI7xCN4hkgkJ
- EMbOTktbNw7WcwrN6tBSdGYEWCOZEOnfo/rQovKRqgrDFCCnpgNp9IgndLNFHIMcwS
- McRQ6NNHERN7A==
+ b=Aib6degYRsqX3GhkKkDzD/8SrnQI0+rl307jN2j4SdpGhq1OWiYke0WTB6sGunSHQ
+ U1SUV8OchYPHBTDq3kjX/iG0cp5sGEBCEKYj53gTbPIpxBa/Ezm+e1WjcmRccI51mc
+ ryfYlpuWMMj3MXqmZUnx7whqjTRk09/mrw6xBw8Y9HHcA8Ju/5+JIW2i8AjEd3zdz7
+ AIJhBK0RVIuxEXeRIR5FjmaAeHvhtLF4tUOshQcWidQYV9QCsaZ5vO3AeqC34yrwoR
+ tkpaxSJdP9s200L1ydgbIj1cikvti0HHNMd0ps16+KIjvH/9oPVCIVRXXRopi7THeT
+ 7q2dzgrC9b8bg==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 64D2A7EA93
- for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 17:40:29 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id DD4447F1C0
+ for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 18:00:35 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 03 Dec 2025 17:33:24 -0000
+Date: Wed, 03 Dec 2025 17:53:17 -0000
 From: qianqiu <2133188@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -58,7 +58,7 @@ X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
 X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
 X-Launchpad-Bug-Modifier: qianqiu (qianqiu-2020)
 References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <176478320421.3126480.12144414213764815897.malone@juju-98d295-prod-launchpad-7>
+Message-Id: <176478439800.3432632.8043110854492333492.malone@juju-98d295-prod-launchpad-2>
 Subject: [Bug 2133188] Re: Illegal instruction in memset under qemu-user for
  riscv64
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -67,9 +67,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="379e22b8475e3402088a4cdb4a6e7936a4d28414";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: d90322679b1df1471bb8de97b6d78bd38329e5ae
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Launchpad-Hash: e5db04de1dd06c2636722bc0fbc045530f42df60
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -92,48 +92,11 @@ Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@xypron You can set the QEMU_GDB environment variable inside the riscv64
-container, then launch the cross-toolchain gdb on your external x86 host
-(for example, from Spacemit toolchain
-https://archive.spacemit.com/toolchain/spacemit-toolchain-linux-
-glibc-x86_64-v1.1.2.tar.xz) to debug RISC-V applications.
-
-Steps:
-
-Inside the RISC-V container:
-
-QEMU_GDB=3D10000 cmake --system-information
-This launches your program with QEMU=E2=80=99s built-in GDB server listenin=
-g on port 10000.
-
-On your x86 host, start the RISC-V cross GDB:
-
-./spacemit-toolchain-linux-glibc-x86_64-v1.1.2/bin/riscv64-unknown-linux-gn=
-u-gdb
-(Standard GDB output...)
-
-Then connect to the remote target:
-
-(gdb) target remote :10000
-If the connection times out, check that your container exposes the port, an=
-d QEMU is running.
-
-Once connected, run your program. If you hit a SIGILL (illegal
-instruction):
-
-Program received signal SIGILL, Illegal instruction.
-0x00007fffee44695a in ?? ()
-(gdb) bt
-#0  0x00007fffee44695a in ?? ()
-(gdb) x/16i $pc-32
-You observe output like this, including:
-
-=3D> 0x7fffee44695a:.insn4, 0x0207f0a7
-When decoding 0x0207f0a7 with an online RISC-V disassembler (such as AboutR=
-V, https://www.aboutrv.com/tools/disassembler?code=3DIDB4MDIwN2YwYTc%3D), y=
-ou find the instruction is:
-
-0x0207f0a7 =E2=86=92 vse64.v v1, (a5)
+The root cause of the invalid instructions is that qemu-user does not corre=
+ctly handle saving and restoring the vector context when switching signal s=
+tack frames. Although community patches addressing this issue exist, they r=
+emain unmerged. Details can be found here:
+https://lists.nongnu.org/archive/html/qemu-riscv/2025-09/msg00096.html
 
 --=20
 You received this bug notification because you are a member of qemu-
