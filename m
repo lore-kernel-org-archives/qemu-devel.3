@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8910ED1266D
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:04:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3995CD1266D
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:05:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQhoZ-00055A-FY; Wed, 03 Dec 2025 03:02:19 -0500
+	id 1vQho7-0002mb-L2; Wed, 03 Dec 2025 03:01:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQhoX-0004zj-0Y; Wed, 03 Dec 2025 03:02:17 -0500
+ id 1vQhnx-0002XK-E1; Wed, 03 Dec 2025 03:01:44 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQhoU-0007C6-Q8; Wed, 03 Dec 2025 03:02:16 -0500
+ id 1vQhns-00073u-Vk; Wed, 03 Dec 2025 03:01:39 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2BF5017077C;
- Wed, 03 Dec 2025 10:59:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 96A50170775;
+ Wed, 03 Dec 2025 10:59:23 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EE18832B4A3;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6460832B49C;
  Wed, 03 Dec 2025 10:59:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 111/116] hw/pci: Make msix_init take a uint32_t for
- nentries
-Date: Wed,  3 Dec 2025 10:59:31 +0300
-Message-ID: <20251203075939.2366131-30-mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 104/116] hw/arm/aspeed: Fix missing SPI IRQ connection
+ causing DMA interrupt failure
+Date: Wed,  3 Dec 2025 10:59:24 +0300
+Message-ID: <20251203075939.2366131-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251203105830@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251203105830@cover.tls.msk.ru>
@@ -62,108 +62,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-msix_init() and msix_init_exclusive_bar() take an "unsigned short"
-argument for the number of MSI-X vectors to try to use.  This is big
-enough for the maximum permitted number of vectors, which is 2048.
-Unfortunately, we have several devices (most notably virtio) which
-allow the user to specify the desired number of vectors, and which
-use uint32_t properties for this.  If the user sets the property to a
-value that is too big for a uint16_t, the value will be truncated
-when it is passed to msix_init(), and msix_init() may then return
-success if the truncated value is a valid one.
+It did not connect SPI IRQ to the Interrupt Controller, so even the SPI
+model raised the IRQ, the interrupt was not received. The CPU therefore
+did not trigger an interrupt via the controller, and the firmware never
+received the interrupt.
 
-The resulting mismatch between the number of vectors the msix code
-thinks the device has and the number of vectors the device itself
-thinks it has can cause assertions, such as the one in issue 2631,
-where "-device virtio-mouse-pci,vectors=19923041" is interpreted by
-msix as "97 vectors" and by the virtio-pci layer as "19923041
-vectors"; a guest attempt to access vector 97 thus passes the
-virtio-pci bounds checking and hits an essertion in
-msix_vector_use().
-
-Avoid this by making msix_init() and its wrapper function
-msix_init_exclusive_bar() take the number of vectors as a uint32_t.
-The erroneous command line will now produce the warning
-
- qemu-system-i386: -device virtio-mouse-pci,vectors=19923041:
-   warning: unable to init msix vectors to 19923041
-
-and proceed without crashing.  (The virtio device warns and falls
-back to not using MSIX, rather than complaining that the option is
-not a valid value this is the same as the existing behaviour for
-values that are beyond the MSI-X maximum possible value but fit into
-a 16-bit integer, like 2049.)
-
-To ensure this doesn't result in potential overflows in calculation
-of the BAR size in msix_init_exclusive_bar(), we duplicate the
-nentries error-check from msix_init() at the top of
-msix_init_exclusive_bar(), so we know nentries is sane before we
-start using it.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2631
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251107131044.1321637-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit ef44cc0a762438ebc84c4997a5ce29c6f00622c3)
+Fixes: 356b230ed13889e09d087a96498887de695df17e ("aspeed/soc: Add AST1030 support")
+Fixes: f25c0ae1079dc0b9de02676eb3e3949a09df9f41 ("aspeed/soc: Add AST2600 support")
+Fixes: 5dd883ab0635c9f715c77cc32622e458a0724581 ("aspeed/soc: Add AST2700 support")
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20251106084925.1253704-2-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 510d5c61ad3eb1690b61c804d38c984527a5ea62)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci/msix.c b/hw/pci/msix.c
-index 66f27b9d71..bf579621b6 100644
---- a/hw/pci/msix.c
-+++ b/hw/pci/msix.c
-@@ -318,7 +318,7 @@ static void msix_mask_all(struct PCIDevice *dev, unsigned nentries)
-  * also means a programming error, except device assignment, which can check
-  * if a real HW is broken.
-  */
--int msix_init(struct PCIDevice *dev, unsigned short nentries,
-+int msix_init(struct PCIDevice *dev, uint32_t nentries,
-               MemoryRegion *table_bar, uint8_t table_bar_nr,
-               unsigned table_offset, MemoryRegion *pba_bar,
-               uint8_t pba_bar_nr, unsigned pba_offset, uint8_t cap_pos,
-@@ -392,7 +392,7 @@ int msix_init(struct PCIDevice *dev, unsigned short nentries,
-     return 0;
- }
+diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+index ec329f4991..98905a077a 100644
+--- a/hw/arm/aspeed_ast10x0.c
++++ b/hw/arm/aspeed_ast10x0.c
+@@ -357,6 +357,8 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
+                         sc->memmap[ASPEED_DEV_SPI1 + i]);
+         aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 1,
+                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[i]), 0,
++                           aspeed_soc_ast1030_get_irq(s, ASPEED_DEV_SPI1 + i));
+     }
  
--int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
-+int msix_init_exclusive_bar(PCIDevice *dev, uint32_t nentries,
-                             uint8_t bar_nr, Error **errp)
- {
-     int ret;
-@@ -401,6 +401,12 @@ int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
-     uint32_t bar_pba_offset = bar_size / 2;
-     uint32_t bar_pba_size = QEMU_ALIGN_UP(nentries, 64) / 8;
+     /* Secure Boot Controller */
+diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+index 1f994ba26c..3528ad3b50 100644
+--- a/hw/arm/aspeed_ast2600.c
++++ b/hw/arm/aspeed_ast2600.c
+@@ -467,6 +467,8 @@ static void aspeed_soc_ast2600_realize(DeviceState *dev, Error **errp)
+                         sc->memmap[ASPEED_DEV_SPI1 + i]);
+         aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 1,
+                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[i]), 0,
++                           aspeed_soc_ast2600_get_irq(s, ASPEED_DEV_SPI1 + i));
+     }
  
-+    /* Sanity-check nentries before we use it in BAR size calculations */
-+    if (nentries < 1 || nentries > PCI_MSIX_FLAGS_QSIZE + 1) {
-+        error_setg(errp, "The number of MSI-X vectors is invalid");
-+        return -EINVAL;
-+    }
-+
+     /* EHCI */
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index b810891b16..2d6e6245b7 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -709,6 +709,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+                         sc->memmap[ASPEED_DEV_SPI0 + i]);
+         aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->spi[i]), 1,
+                         ASPEED_SMC_GET_CLASS(&s->spi[i])->flash_window_base);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[i]), 0,
++                           aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_SPI0 + i));
+     }
+ 
      /*
-      * Migration compatibility dictates that this remains a 4k
-      * BAR with the vector table in the lower half and PBA in
-diff --git a/include/hw/pci/msix.h b/include/hw/pci/msix.h
-index 0e6f257e45..b060f10d40 100644
---- a/include/hw/pci/msix.h
-+++ b/include/hw/pci/msix.h
-@@ -7,12 +7,12 @@
- 
- void msix_set_message(PCIDevice *dev, int vector, MSIMessage msg);
- MSIMessage msix_get_message(PCIDevice *dev, unsigned int vector);
--int msix_init(PCIDevice *dev, unsigned short nentries,
-+int msix_init(PCIDevice *dev, uint32_t nentries,
-               MemoryRegion *table_bar, uint8_t table_bar_nr,
-               unsigned table_offset, MemoryRegion *pba_bar,
-               uint8_t pba_bar_nr, unsigned pba_offset, uint8_t cap_pos,
-               Error **errp);
--int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
-+int msix_init_exclusive_bar(PCIDevice *dev, uint32_t nentries,
-                             uint8_t bar_nr, Error **errp);
- 
- void msix_write_config(PCIDevice *dev, uint32_t address, uint32_t val, int len);
 -- 
 2.47.3
 
