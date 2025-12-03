@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78562D1BDD2
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A77DDD1BDCC
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQrpP-0001j8-OX; Wed, 03 Dec 2025 13:43:51 -0500
+	id 1vQrpR-0001jS-Ji; Wed, 03 Dec 2025 13:43:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vQrpJ-0001gX-TW
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:43:45 -0500
-Received: from mx0b-00190b01.pphosted.com ([2620:100:9005:57f::1])
+ id 1vQrpK-0001h5-AE
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:43:46 -0500
+Received: from mx0a-00190b01.pphosted.com ([67.231.149.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vQrpH-0005hG-9U
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:43:45 -0500
-Received: from pps.filterd (m0050102.ppops.net [127.0.0.1])
- by m0050102.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
- 5B38t2Gb3356703
+ id 1vQrpH-0005hN-8R
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:43:46 -0500
+Received: from pps.filterd (m0409409.ppops.net [127.0.0.1])
+ by m0409409.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 5B3CtocL3416317
  for <qemu-devel@nongnu.org>; Wed, 3 Dec 2025 18:43:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=jan2016.eng;
- bh=2tqwxUShjbp6xB29PdE2LrVae4u2i8bzJmQKHr4yHxs=; b=aXE+96i1w2SG
- /SFo9fIZwJ63hYM0Tt8g8Fx9zpyZxRogi/N92sObt/TVAiL4uZeH8D9hWZkMFnr9
- osHyMDViSXtw/eLmLUYFdrORxtVpMhtMdel/mdcqzx9wOD2J7T00NvVbNmnsvVDd
- zhf65QKB+duPRyZPN5Nz3gMEFFjTIPqYv3KZLrQ2F/dCSL1SG9wB4LbqYg+ZtnOm
- WrGsdnMyMk7rEOzkvOWNwDnVBd4LqJUy226BXJJBue9ojEiY9SZyFkd/KqQSogdi
- WAzYOXDNW+uYaTaQ1b6GsgiWtY8KEpk5C7nGasSPI7sh+8x3VMzAI3SyKaDE7VbD
- qNk/Op39SQ==
+ bh=SCJJjeHJL3zvQFZyNH6s4ysT7NMl476yKiQWW9PF388=; b=XTOaEPR/ST5p
+ aJZZ2KEHWrxqsSH7xA0a5gjsU9dXb43J3eBjVP5J+Cu30bICvsX2fi5rdjF7jC8N
+ 07SZurv9pZQ2LpLi0qAuLWuiWroLqiaNAWITRxYOYBJ5iwEGxbF16BgWjkym2jEf
+ SP+bwMoT1LJhRK6eUpodUYpTkJazItiWeMEH4DptxKFSWQKoAgRtRUAY1fxItRWr
+ ZgvR2Dx6Yxk0V7Fp7mP0CbLSyaCP7YX6hzk7tcLORgjZnLn5JGGZ1mN/NuHO2bkj
+ 6+fsZY18MiseaGM9UyO+SE8+SIUya8l8T7kvkvSbViuFfQbsppUT0Xb2jlpnr12J
+ 6EwAf4pmuQ==
 Received: from prod-mail-ppoint6 (prod-mail-ppoint6.akamai.com [184.51.33.61])
- by m0050102.ppops.net-00190b01. (PPS) with ESMTPS id 4at1wwjahr-1
+ by m0409409.ppops.net-00190b01. (PPS) with ESMTPS id 4at0bcqqsh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
  for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 18:43:39 +0000 (GMT)
 Received: from pps.filterd (prod-mail-ppoint6.akamai.com [127.0.0.1])
  by prod-mail-ppoint6.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 5B3F5lqu013415
+ 5B3GNRsp018041
  for <qemu-devel@nongnu.org>; Wed, 3 Dec 2025 13:43:38 -0500
 Received: from prod-mail-relay02.akamai.com ([172.27.118.35])
- by prod-mail-ppoint6.akamai.com (PPS) with ESMTP id 4aqw21kx8f-1
+ by prod-mail-ppoint6.akamai.com (PPS) with ESMTP id 4aqw21kx8c-1
  for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 13:43:38 -0500
 Received: from bos-lhvkhf.bos01.corp.akamai.com
  (bos-lhvkhf.bos01.corp.akamai.com [172.28.40.75])
- by prod-mail-relay02.akamai.com (Postfix) with ESMTP id 4AB7F9A
+ by prod-mail-relay02.akamai.com (Postfix) with ESMTP id 44CC48A
  for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 18:43:38 +0000 (UTC)
 From: Ben Chaney <bchaney@akamai.com>
-Date: Wed, 03 Dec 2025 13:43:29 -0500
-Subject: [PATCH v3 8/8] tap: cpr fixes
+Date: Wed, 03 Dec 2025 13:43:22 -0500
+Subject: [PATCH v3 1/8] migration: stop vm earlier for cpr
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251203-cpr-tap-v3-8-3cc89e9b19e4@akamai.com>
+Message-Id: <20251203-cpr-tap-v3-1-3cc89e9b19e4@akamai.com>
 References: <20251203-cpr-tap-v3-0-3cc89e9b19e4@akamai.com>
 In-Reply-To: <20251203-cpr-tap-v3-0-3cc89e9b19e4@akamai.com>
 To: qemu-devel@nongnu.org
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764787418; l=3243;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1764787418; l=4737;
  i=bchaney@akamai.com; s=20251203; h=from:subject:message-id;
- bh=zPYWBDaP+GisG/WA7Z9aDp07+oXAyy1rWdyxkJgQ9vw=;
- b=YLbhfEKTPKOw1E5Wu2f4OfUxksPTaCMFq3bL2uNAsqcaOM9thMj/RYamouWALJHxBhlQ6mY28
- fjxynlxkc6IC+J2J6ly8X/zeLPhV+jDny0Nh26RWdCC7m+gY32PFg2s
+ bh=6VO5q5TE5yuukYkhY6LLyhvDeAXk7NNxQPT3gWn7Grw=;
+ b=8s3CgnMjKTslbm0GkP5MEP9sCJvcavRPPRjxQ0HKVJR5nOBevRTcvNrAmPjlHLabIUkQVUv4/
+ 0VVUHz3mLjCDxK9J8i7JyBhRx0LF5MgiyicAlNdpdtEJkpgWa9Ctt8V
 X-Developer-Key: i=bchaney@akamai.com; a=ed25519;
  pk=6+w9cse5QEeVdy3tjqFxs/4rAaRdQ2/fkTxVFq+lWy4=
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -75,37 +75,38 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  bulkscore=0 spamscore=0 suspectscore=0 adultscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2510240000
  definitions=main-2512030146
-X-Proofpoint-ORIG-GUID: xjoHhUPw4zGn1QW5jvq_oVp7ie5k0eJb
-X-Authority-Analysis: v=2.4 cv=EffFgfmC c=1 sm=1 tr=0 ts=693084db cx=c_pps
+X-Authority-Analysis: v=2.4 cv=AvfjHe9P c=1 sm=1 tr=0 ts=693084db cx=c_pps
  a=WPLAOKU3JHlOa4eSsQmUFQ==:117 a=WPLAOKU3JHlOa4eSsQmUFQ==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=6R7veym_AAAA:8 a=MOkVEwTOFFmkGxDkLR0A:9
- a=QEXdDO2ut3YA:10 a=ILCOIF4F_8SzUMnO7jNM:22
-X-Proofpoint-GUID: xjoHhUPw4zGn1QW5jvq_oVp7ie5k0eJb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDE0NyBTYWx0ZWRfX/iQeGB1ymNbM
- SdeT7yTvIXMvTHbgGIBdVcjH+I8bqVud1Qzxr+zLlQuGYPQT7FIZNI/Su0X0h903hwsFVJa2qPm
- O1g+5ZU8KsfNrt+if6EIhkrYK8r7dDbm8QYeJCQiqECGCJhZ4b9+Ge2rBgfarYmqSctIo6frq6d
- m0DNKKu00MxZuAcf2oUpJOZnHAYYHmD1yhc5Svqa0RFoKbkHxquLazmg5IM1B5ke2OHZVNQIUW6
- IVttY217rJ9CrUEwF2k/jha3VSBWq/rPah+Xubq4Njv/rqln1mpcTm6W3lKkH1OJ6hFC1hoDLLm
- f2ykq5iKYKNVtFn4GqQbLlIB7adERcXtcHSxukMJgCK/D60PPQFpsfyyA7ZtRMWYxsC7SzJh4cr
- Xo+5pqjQ2D7Sxp0S83gWQUzlp/sdJw==
+ a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=Q2gaB0lLyM3LBXvKuXcA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDE0NyBTYWx0ZWRfXwM/GYrc21IJ8
+ 3uHS2p55kBxtPp8+TLmLU+2mn9uDeYhZnsucPL0nIbEWb1HdcdGcSZGq8oC2UMSrf1pG7cNH3IV
+ 4mcxXNhBWclnyjxGK1tJSnkWfxig8SBcBJxu0VcTnHPoximOZKJ5sxTNjqprdKRVq+EgtXIFQdE
+ EOOOPqby7DrADwwQU93RvPNqlJnPN7koWkrwPwTVB4A9sE24LbcawES44JCkmVBIjMPI8wgQFxy
+ MAjDZf/3bj6fL/QeNP9yVMIDskYB/bLBeNqLm/4syJN+rACQkerRTaGx2W7A1Vwed6Cpg+n2hl/
+ j/hD17QTOAgA4cXRfdytpeOEALm4fu+wkbOiyNaDjP3gxYJnzGh+/ewzhDvGNhdZsOSUSFUj5BV
+ kzLeF8QmolfNWsrcF1d6PvaWPs4ADA==
+X-Proofpoint-ORIG-GUID: 98VtIq2peLnV0gnEB5GFMRTi-cTdBb1p
+X-Proofpoint-GUID: 98VtIq2peLnV0gnEB5GFMRTi-cTdBb1p
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-03_02,2025-12-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 clxscore=1015
- bulkscore=0 spamscore=0 phishscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ impostorscore=0 phishscore=0 bulkscore=0
+ priorityscore=1501 spamscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512030147
-Received-SPF: pass client-ip=2620:100:9005:57f::1;
- envelope-from=bchaney@akamai.com; helo=mx0b-00190b01.pphosted.com
+Received-SPF: pass client-ip=67.231.149.131; envelope-from=bchaney@akamai.com;
+ helo=mx0a-00190b01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,107 +124,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-Fix "virtio_net_set_queue_pairs: Assertion `!r' failed."
-Fix "virtio-net: saved image requires vnet_hdr=on"
-Do not change blocking mode of incoming cpr fd's.
+Stop the vm earlier for cpr, before cpr_save_state which causes new QEMU
+to proceed and initialize devices.  We must guarantee devices are stopped
+in old QEMU, and all source notifiers called, before they are initialized
+in new QEMU.
 
-Reported-by: Ben Chaney <bchaney@akamai.com>
-Reported-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Signed-off-by: Ben Chaney <bchaney@akamai.com>
 ---
- hw/net/virtio-net.c | 6 ++++++
- io/channel-socket.c | 4 +++-
- net/tap.c           | 2 ++
- stubs/cpr.c         | 8 ++++++++
- stubs/meson.build   | 1 +
- 5 files changed, 20 insertions(+), 1 deletion(-)
+ migration/migration.c | 57 +++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 48 insertions(+), 9 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 38ec7ac109..fd6b30b296 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -37,6 +37,7 @@
- #include "qapi/qapi-types-migration.h"
- #include "qapi/qapi-events-migration.h"
- #include "hw/virtio/virtio-access.h"
-+#include "migration/cpr.h"
- #include "migration/misc.h"
- #include "standard-headers/linux/ethtool.h"
- #include "system/system.h"
-@@ -789,6 +790,11 @@ static void virtio_net_set_queue_pairs(VirtIONet *n)
-     int i;
-     int r;
+diff --git a/migration/migration.c b/migration/migration.c
+index c2daab6bdd..6d40697767 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1657,6 +1657,7 @@ void migration_cancel(void)
+                           MIGRATION_STATUS_CANCELLED);
+         cpr_state_close();
+         migrate_hup_delete(s);
++        vm_resume(s->vm_old_state);
+     }
+ }
  
-+    if (cpr_is_incoming()) {
-+        /* peers are already attached, do nothing */
-+        return;
-+    }
-+
-     if (n->nic->peer_deleted) {
+@@ -2216,6 +2217,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+     MigrationAddress *addr = NULL;
+     MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
+     MigrationChannel *cpr_channel = NULL;
++    bool stopped = false;
+ 
+     /*
+      * Having preliminary checks for uri and channel
+@@ -2268,6 +2270,46 @@ void qmp_migrate(const char *uri, bool has_channels,
          return;
      }
-diff --git a/io/channel-socket.c b/io/channel-socket.c
-index 3053b35ad8..443ca8cb7c 100644
---- a/io/channel-socket.c
-+++ b/io/channel-socket.c
-@@ -24,6 +24,7 @@
- #include "io/channel-socket.h"
- #include "io/channel-util.h"
- #include "io/channel-watch.h"
-+#include "migration/cpr.h"
- #include "trace.h"
- #include "qapi/clone-visitor.h"
- #ifdef CONFIG_LINUX
-@@ -521,7 +522,8 @@ static bool qio_channel_handle_fds(int *fds, size_t nfds,
  
-         if (!preserve_blocking) {
-             /* O_NONBLOCK is preserved across SCM_RIGHTS so reset it */
--            if (!qemu_set_blocking(*fd, true, errp)) {
-+              if (!cpr_is_incoming() &&
-+                  qemu_set_blocking(*fd, true, errp)) {
-                 return false;
-             }
-         }
-diff --git a/net/tap.c b/net/tap.c
-index 5acda81146..5e04099c87 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -1050,6 +1050,8 @@ free_fail:
-                 if (cpr && fd >= 0) {
-                     cpr_save_fd(name, TAP_FD_INDEX(i), fd);
-                 }
-+            } else {
-+                vnet_hdr = tap->has_vnet_hdr ? tap->vnet_hdr : 1;
-             }
-             if (fd == -1) {
-                 ret = -1;
-diff --git a/stubs/cpr.c b/stubs/cpr.c
-new file mode 100644
-index 0000000000..1a4dbbb2d7
---- /dev/null
-+++ b/stubs/cpr.c
-@@ -0,0 +1,8 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+#include "qemu/osdep.h"
-+#include "migration/cpr.h"
++    /*
++     * CPR-transfer  ordering:
++     *
++     *   SOURCE                              TARGET
++     *   ------                              ------
++     *                                       cpr_state_load() blocks
++     *   |                                        |
++     *   |  1. migration_stop_vm()                |
++     *   |     VM stopped, devices quiesced       |
++     *   |                                        | Waiting for
++     *   |  2. notifiers (PRECOPY_SETUP)          | FDs from source
++     *   |     vhost_reset_owner() releases       |
++     *   |     device ownership                   |
++     *   |                                        |
++     *   |  3. cpr_state_save() ---- FDs -------> |
++     *   |                                        |
++     *   v                                        v
++     *   postmigrate                         Device init begins
++     *                                       - cpr_find_fd()
++     *                                       - vhost_dev_init()
++     *                                       - VHOST_SET_OWNER
++     *
++     * Step 3 is the synchronization/cut-over point. Target proceeds immediately
++     * upon receiving FDs, so steps 1-2 must complete otherwise:
++     * - Target's VHOST_SET_OWNER fails with -EBUSY (source still owns)
++     * - Race between source I/O and target device init
++     *
++     *  We stop the VM early (before FD transfer) to prevent this race.
++     *  Unlike regular migration, CPR-transfer passes memory via FD (memfd)
++     *  rather than copying RAM, so early VM stop should have minimal downtime.
++     */
++    if (migrate_mode_is_cpr(s)) {
++        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
++        if (ret < 0) {
++            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
++            goto out;
++        }
++        stopped = true;
++    }
 +
-+bool cpr_is_incoming(void)
-+{
-+    return false;
-+}
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 0b2778c568..87af733528 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -10,6 +10,7 @@ stub_ss.add(files('is-daemonized.c'))
- stub_ss.add(files('monitor-core.c'))
- stub_ss.add(files('replay-mode.c'))
- stub_ss.add(files('trace-control.c'))
-+stub_ss.add(files('cpr.c'))
+     if (!cpr_state_save(cpr_channel, &local_err)) {
+         goto out;
+     }
+@@ -2294,6 +2336,9 @@ out:
+     if (local_err) {
+         migration_connect_set_error(s, local_err);
+         error_propagate(errp, local_err);
++        if (stopped) {
++            vm_resume(s->vm_old_state);
++        }
+     }
+ }
  
- if have_block
-   stub_ss.add(files('bdrv-next-monitor-owned.c'))
+@@ -2339,6 +2384,9 @@ static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
+         }
+         migration_connect_set_error(s, local_err);
+         error_propagate(errp, local_err);
++        if (migrate_mode_is_cpr(s)) {
++            vm_resume(s->vm_old_state);
++        }
+         return;
+     }
+ }
+@@ -4028,7 +4076,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+     Error *local_err = NULL;
+     uint64_t rate_limit;
+     bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+-    int ret;
+ 
+     /*
+      * If there's a previous error, free it and prepare for another one.
+@@ -4099,14 +4146,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+         return;
+     }
+ 
+-    if (migrate_mode_is_cpr(s)) {
+-        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+-        if (ret < 0) {
+-            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+-            goto fail;
+-        }
+-    }
+-
+     /*
+      * Take a refcount to make sure the migration object won't get freed by
+      * the main thread already in migration_shutdown().
 
 -- 
 2.34.1
