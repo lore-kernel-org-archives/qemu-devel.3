@@ -4,111 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E6DED1BDD0
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:53:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8604AD1BDD1
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:53:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQrx7-0007Zc-HI; Wed, 03 Dec 2025 13:51:49 -0500
+	id 1vQrwr-0007TM-Cg; Wed, 03 Dec 2025 13:51:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vQrx5-0007Yp-OC
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1vQrwp-0007R3-Ja
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:31 -0500
+Received: from mx0b-00190b01.pphosted.com ([67.231.157.127])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vQrx3-00012E-Rb
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764787904;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aHNzjllbBUzUbH3e9EozX0+yCDvl12oO5bAZL6BQpCU=;
- b=fw0FZbZrg1fNRBpw4FCC6IPAhy13uE1ShJfqk3ql5v3RkMSIaXwt9053Xm86c2RtNhT2hl
- yqTdQJGFYNy5jDiIBsOyDZoV5DtcmGfeMuqkplyeADxaSScex7yat8vcW60zwta86pgdaf
- GKBZeGgBJMzfNJoyRZIl8IyBFz0xwPw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-596-y4q31VbYPdSl7f2IdOM6og-1; Wed, 03 Dec 2025 13:51:43 -0500
-X-MC-Unique: y4q31VbYPdSl7f2IdOM6og-1
-X-Mimecast-MFC-AGG-ID: y4q31VbYPdSl7f2IdOM6og_1764787902
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-47775585257so556295e9.1
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 10:51:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764787901; x=1765392701; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aHNzjllbBUzUbH3e9EozX0+yCDvl12oO5bAZL6BQpCU=;
- b=N7M4X5Jbje467wLhupRB6RxlShrt5OM4yVtBbpRPsJbrrH6L+DppF9igqc7aOSzy2D
- G7ATWU3Jb+reog1tDFOUKqUD3sM0ZTdQBjoUPfyGDAZDC10gXHQ1OW29CKxzq9Q/i88x
- YkYea91hjFmdnZ/JfYAOJ0fGwEDKHsYxCs5NDZToC0nHgtALgAC8gplKvbbOIA+9TWC+
- LREGLs5DfA6KqnKDbgveUgwPOOezuppqWHrbjP2m/pYTk26Ytfl6Af2JkxMJ813iamuv
- YTzJNWyZn6u9qCBgSaTpWF7WXlLBI2onC5Fs2aLcqI3+nxyG9afDFdKCLrB3V6TpYnj9
- vI7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764787901; x=1765392701;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aHNzjllbBUzUbH3e9EozX0+yCDvl12oO5bAZL6BQpCU=;
- b=iWzT55PQ3TBnh1vPTK4yxuKYEsV21FbfNQ/D2PkLWADFy7MXB4dglX3ir4lI03IFMB
- FToyLH8oDAb1aghS+xrMc1mg5lZqp7/AW4pH/aEesDXHV+SNJlc+0zz9K8IYOp0JuZ+7
- rH8k22l/rlZzkSd0uTryjosDNgW42l4poQKApiZzI/yUgpcNoJup8+xPOevsSyFXPjiY
- SAz9ybjINrcueYdaWQ78Spgtdyx+QSjBS2nYX4YenmigCXvzPZ1N7ySgl/WgeAxu3jga
- s+y7IKnbS1RK18qn/BK7Edx3gIVvmprlBh2EKEn/A/A8HXpzRVaOgfdsxUfly1CYJtH5
- 8L2g==
-X-Gm-Message-State: AOJu0Yx7IVJq0HL4kiXYFpHFOxa5Qi7Fv8ZaEbhvY3oBck+ucxXnAnpz
- MTpJUPWknb4faH/awFs64kH0evP3aZe5MQmWBI5D3Wr+OvUOGKU2fy4hsNKqlzUZy6EKhE/R2w7
- etukFwcR/xX7pTVrOQ5CMGZ4QvalC8Zi6rMLfWFvU9MKRQ0PuWoriu9MUEqXlzfUmGvd3WLuDzR
- v62A5IQLlkr4WQPb2ryENYruORqyBrCJzOBI8HLTMJ
-X-Gm-Gg: ASbGncuB7UWxFKMmazAkSmlfQq/Ohr18g2k0Kb9DGao3SsTTf3Ro4haE3DRWvuq5Cle
- 1XO6OTPwY0Zso0qYw030+JNJJ2V8gQGi1ckS8xmP493PAU+7OKNPJ/uaX92ufYLnvHX8B7EMJ0G
- 5W4havQLM/g2X04eVvLzdH1DCny78lY3ez5h5ouoMM9RPiccO/RHy0N9T4B8j/jRlBkgeTAPotG
- W2m71KgOMMLKfdmcHQ5TxwQtkzsXsjCVwVy0UzT5yfGKfxuzjBS0hYFSiHZWl4c5w7DtJSeUY4h
- DPN18mqDQNoVDhtQRS2WFeXA5oglNkf/x+N+Jtj16CmAtrmSzN4saXSQL44TqH6VYEQgcCfJWg8
- HkGZnqAsWxyyd/rNa7SGfCzWbakN8PFg+GuDVBqyKxS/XWQlyJxntq+vMssLME06tw/Db0OOAsq
- KM3K7o+ORj8Vg9b5I=
-X-Received: by 2002:a05:600c:35d5:b0:477:8b2e:aa7d with SMTP id
- 5b1f17b1804b1-4792af40437mr42485165e9.30.1764787900895; 
- Wed, 03 Dec 2025 10:51:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE3zHtej+xWRSEmXryrtZtgCWqTXzbqEAAuWs4blNcR4U6gtRgei+xBVybRbCTS4pupY31tEw==
-X-Received: by 2002:a05:600c:35d5:b0:477:8b2e:aa7d with SMTP id
- 5b1f17b1804b1-4792af40437mr42484855e9.30.1764787900404; 
- Wed, 03 Dec 2025 10:51:40 -0800 (PST)
-Received: from [192.168.10.48] ([176.206.119.13])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4792a8ccdfbsm66579645e9.14.2025.12.03.10.51.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Dec 2025 10:51:38 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org,
-	kwolf@redhat.omc
-Subject: [PATCH 2/5] block: extract include/qemu/aiocb.h out of
- include/block/aio.h
-Date: Wed,  3 Dec 2025 19:51:30 +0100
-Message-ID: <20251203185133.2458207-3-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251203185133.2458207-1-pbonzini@redhat.com>
-References: <20251203185133.2458207-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1vQrwn-0000zQ-Bg
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:31 -0500
+Received: from pps.filterd (m0409411.ppops.net [127.0.0.1])
+ by m0409411.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 5B3HaD9k365124; Wed, 3 Dec 2025 18:51:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=jan2016.eng;
+ bh=t/8WC/8W9FdsPsEYza0XQgEda9PqZPLJMpsz9vEOBB8=; b=ZjbO1FblYWdt
+ 9uwR0d9nrRpvLrlGXPdoWDn+uxKFoIINk+UhC49yBqxySNPf39DtUvpe/DknWhHx
+ F88/f+hAMm/hV4viuWCJFnMmfNiqE+9w9mTfzcjcBnEJgut++qNfv38FbxOi8KCJ
+ ZXp1sQi19V6GFmCF56G3yDDh8pzYxp5/RD+xbZihiu0ofezHqWzCvJRlceQ9Cu3E
+ hjX74b8sjxfIoNeRgRGv2SHv+K3h3UztkSa+pz5+yMz367GR8l/zxasnS+vVKQ8j
+ CdO2Y4WHGmwEsBHjAxI40RkmovVPU8Vd5pDrjypBE8uwqzwKF9R5V2gg/uFBvv15
+ KZyobEHV5Q==
+Received: from prod-mail-ppoint2 (prod-mail-ppoint2.akamai.com [184.51.33.19])
+ by m0409411.ppops.net-00190b01. (PPS) with ESMTPS id 4at31m8y0c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 03 Dec 2025 18:51:27 +0000 (GMT)
+Received: from pps.filterd (prod-mail-ppoint2.akamai.com [127.0.0.1])
+ by prod-mail-ppoint2.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
+ 5B3FFwRH029135; Wed, 3 Dec 2025 13:51:26 -0500
+Received: from prod-mail-relay01.akamai.com ([172.27.118.31])
+ by prod-mail-ppoint2.akamai.com (PPS) with ESMTP id 4aqw21kuh7-1;
+ Wed, 03 Dec 2025 13:51:26 -0500
+Received: from bos-lhvkhf.bos01.corp.akamai.com
+ (bos-lhvkhf.bos01.corp.akamai.com [172.28.40.75])
+ by prod-mail-relay01.akamai.com (Postfix) with ESMTP id A1B5094;
+ Wed,  3 Dec 2025 18:51:26 +0000 (UTC)
+From: Ben Chaney <bchaney@akamai.com>
+Date: Wed, 03 Dec 2025 13:51:19 -0500
+Subject: [PATCH v3 2/8] migration: cpr setup notifier
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251203-cpr-tap-v3-2-3c12e0a61f8e@akamai.com>
+References: <20251203-cpr-tap-v3-0-3c12e0a61f8e@akamai.com>
+In-Reply-To: <20251203-cpr-tap-v3-0-3c12e0a61f8e@akamai.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Hamza Khan <hamza.khan@nutanix.com>,
+ Mark Kanda <mark.kanda@oracle.com>, Joshua Hunt <johunt@akamai.com>,
+ Max Tottenham <mtottenh@akamai.com>, Ben Chaney <bchaney@akamai.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1764787886; l=1432;
+ i=bchaney@akamai.com; s=20251203; h=from:subject:message-id;
+ bh=ybfQKPvFeL2sBlrQktra1uae8irgJMED5+q0/d3iGMY=;
+ b=rg7zTjfT3ixnbbFdX2jzPZ/ISY6BkmHvB+4CRKRmZwTQh2JA3SldPyqy8PGjcJKH6L+B+IzbQ
+ YomMPLzKLJmBFvJQykbYnCYLXt1TBxPPdC8j6bdqa05gRbj20+MWiCD
+X-Developer-Key: i=bchaney@akamai.com; a=ed25519;
+ pk=6+w9cse5QEeVdy3tjqFxs/4rAaRdQ2/fkTxVFq+lWy4=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-03_02,2025-12-03_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ adultscore=0 mlxscore=0
+ malwarescore=0 suspectscore=0 mlxlogscore=999 phishscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2510240000
+ definitions=main-2512030148
+X-Proofpoint-GUID: rHBQMF77W4e5ezlpkbQaGCRR5cRxmGsc
+X-Authority-Analysis: v=2.4 cv=I6Nohdgg c=1 sm=1 tr=0 ts=693086af cx=c_pps
+ a=BpD+HMUBsFIkYY1OQe22Yw==:117 a=BpD+HMUBsFIkYY1OQe22Yw==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=9e0HOU0VQPgVKZhTx6MA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: rHBQMF77W4e5ezlpkbQaGCRR5cRxmGsc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDE0NyBTYWx0ZWRfX6stM5Kuyw+v+
+ sEfy4AwwAmNyi1icEJqliZZNLz4se99mlCrEr+KY9Oyz02++3wyFjAxLbBgQuZDUt3KWOgSaWMo
+ 6FbAU8bRPaK74dmv6ticmg2jVhHjlzgiNebvzE4WtanxdDI/LD15MttMrZr7kCkoryCKCh9Hhyv
+ /VSzVKPp/zz3bAt80fzUgY8Ba77ggUtUyd4cxiogYzA+RzvxKK9HFiu82PaOe5ZDwO7D95X3EQ+
+ /q2HJGTSy9vIRIAw3uGVaDzmTDJGk9rPXg1PtfEzwC0jYIGvfhj0gZmSVVAYd4qCWXEwiygGcg/
+ DQnDpukTwnPjpCPxhjldYPOhWsUUtcFDNHnU6DgS4iE1/NQLXsHCBILrl/lG8AxxUZdeVIjLCi6
+ SrAykQQJiJcUvUA7y68O8wllPaXbmA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-03_02,2025-12-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ clxscore=1011 spamscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512030147
+Received-SPF: pass client-ip=67.231.157.127; envelope-from=bchaney@akamai.com;
+ helo=mx0b-00190b01.pphosted.com
+X-Spam_score_int: 5
+X-Spam_score: 0.5
+X-Spam_bar: /
+X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,347 +132,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create a new header corresponding to functions defined in
-util/aiocb.c, and include it whenever AIOCBs are used but
-AioContext is not.
+From: Steve Sistare <steven.sistare@oracle.com>
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Call MIG_EVENT_PRECOPY_SETUP earlier, before CPR starts.  An early notifier
+is needed for resetting vhost devices, as explained in the next patch.
+
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Signed-off-by: Ben Chaney <bchaney@akamai.com>
 ---
- fsdev/qemu-fsdev-throttle.h        |  1 -
- include/block/aio.h                | 21 -----------------
- include/block/block-global-state.h |  1 +
- include/block/block-io.h           |  1 +
- include/block/block_int-common.h   |  2 +-
- include/block/raw-aio.h            |  1 +
- include/block/thread-pool.h        |  1 +
- include/hw/ide/ide-dma.h           |  2 +-
- include/hw/scsi/scsi.h             |  1 +
- include/qemu/aiocb.h               | 38 ++++++++++++++++++++++++++++++
- include/qemu/job.h                 |  1 +
- include/qemu/throttle.h            |  1 +
- block/win32-aio.c                  |  1 +
- hw/core/ptimer.c                   |  1 -
- hw/misc/i2c-echo.c                 |  1 -
- hw/virtio/virtio-pmem.c            |  1 -
- scsi/qemu-pr-helper.c              |  1 -
- tests/unit/test-thread-pool.c      |  1 +
- ui/input-linux.c                   |  1 -
- ui/vnc-jobs.c                      |  1 -
- util/aiocb.c                       |  2 +-
- 21 files changed, 50 insertions(+), 31 deletions(-)
- create mode 100644 include/qemu/aiocb.h
+ migration/migration.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/fsdev/qemu-fsdev-throttle.h b/fsdev/qemu-fsdev-throttle.h
-index daa8ca2494d..a1dc0307903 100644
---- a/fsdev/qemu-fsdev-throttle.h
-+++ b/fsdev/qemu-fsdev-throttle.h
-@@ -15,7 +15,6 @@
- #ifndef QEMU_FSDEV_THROTTLE_H
- #define QEMU_FSDEV_THROTTLE_H
+diff --git a/migration/migration.c b/migration/migration.c
+index 6d40697767..60850c232e 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -2310,7 +2310,14 @@ void qmp_migrate(const char *uri, bool has_channels,
+         stopped = true;
+     }
  
--#include "block/aio.h"
- #include "qemu/coroutine.h"
- #include "qemu/throttle.h"
++    /* Notify before starting migration thread, and before starting cpr */
++    if (!resume_requested &&
++        migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
++        goto out;
++    }
++
+     if (!cpr_state_save(cpr_channel, &local_err)) {
++        migration_call_notifiers(s, MIG_EVENT_PRECOPY_FAILED, NULL);
+         goto out;
+     }
  
-diff --git a/include/block/aio.h b/include/block/aio.h
-index cc3d5f25a24..59c56d695ee 100644
---- a/include/block/aio.h
-+++ b/include/block/aio.h
-@@ -27,27 +27,6 @@
- #include "hw/core/qdev.h"
- 
- 
--typedef struct BlockAIOCB BlockAIOCB;
--typedef void BlockCompletionFunc(void *opaque, int ret);
+@@ -4108,11 +4115,6 @@ void migration_connect(MigrationState *s, Error *error_in)
+     } else {
+         /* This is a fresh new migration */
+         rate_limit = migrate_max_bandwidth();
 -
--typedef struct AIOCBInfo {
--    void (*cancel_async)(BlockAIOCB *acb);
--    size_t aiocb_size;
--} AIOCBInfo;
--
--struct BlockAIOCB {
--    const AIOCBInfo *aiocb_info;
--    BlockDriverState *bs;
--    BlockCompletionFunc *cb;
--    void *opaque;
--    int refcnt;
--};
--
--void *qemu_aio_get(const AIOCBInfo *aiocb_info, BlockDriverState *bs,
--                   BlockCompletionFunc *cb, void *opaque);
--void qemu_aio_unref(void *p);
--void qemu_aio_ref(void *p);
--
- typedef struct AioHandler AioHandler;
- typedef QLIST_HEAD(, AioHandler) AioHandlerList;
- typedef void QEMUBHFunc(void *opaque);
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index 479ca2858e1..c2127f17249 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -24,6 +24,7 @@
- #ifndef BLOCK_GLOBAL_STATE_H
- #define BLOCK_GLOBAL_STATE_H
+-        /* Notify before starting migration thread */
+-        if (migration_call_notifiers(s, MIG_EVENT_PRECOPY_SETUP, &local_err)) {
+-            goto fail;
+-        }
+     }
  
-+#include "qemu/aiocb.h"
- #include "block/block-common.h"
- #include "qemu/coroutine.h"
- #include "qemu/transactions.h"
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index 4cf83fb3674..e5efe0efb2f 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -24,6 +24,7 @@
- #ifndef BLOCK_IO_H
- #define BLOCK_IO_H
- 
-+#include "qemu/aiocb.h"
- #include "block/aio-wait.h"
- #include "block/block-common.h"
- #include "qemu/coroutine.h"
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index cb0143ea77b..6d0898e53d1 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -24,10 +24,10 @@
- #ifndef BLOCK_INT_COMMON_H
- #define BLOCK_INT_COMMON_H
- 
--#include "block/aio.h"
- #include "block/block-common.h"
- #include "block/block-global-state.h"
- #include "block/snapshot.h"
-+#include "qemu/aiocb.h"
- #include "qemu/iov.h"
- #include "qemu/rcu.h"
- #include "qemu/stats64.h"
-diff --git a/include/block/raw-aio.h b/include/block/raw-aio.h
-index 30e5fc9a9fd..d568b887f1c 100644
---- a/include/block/raw-aio.h
-+++ b/include/block/raw-aio.h
-@@ -16,6 +16,7 @@
- #ifndef QEMU_RAW_AIO_H
- #define QEMU_RAW_AIO_H
- 
-+#include "qemu/aiocb.h"
- #include "block/aio.h"
- #include "block/block-common.h"
- #include "qemu/iov.h"
-diff --git a/include/block/thread-pool.h b/include/block/thread-pool.h
-index dd48cf07e85..65cabfc1388 100644
---- a/include/block/thread-pool.h
-+++ b/include/block/thread-pool.h
-@@ -18,6 +18,7 @@
- #ifndef QEMU_THREAD_POOL_H
- #define QEMU_THREAD_POOL_H
- 
-+#include "qemu/aiocb.h"
- #include "block/aio.h"
- 
- #define THREAD_POOL_MAX_THREADS_DEFAULT         64
-diff --git a/include/hw/ide/ide-dma.h b/include/hw/ide/ide-dma.h
-index d0b19ac9c57..296010a4e0d 100644
---- a/include/hw/ide/ide-dma.h
-+++ b/include/hw/ide/ide-dma.h
-@@ -1,7 +1,7 @@
- #ifndef HW_IDE_DMA_H
- #define HW_IDE_DMA_H
- 
--#include "block/aio.h"
-+#include "qemu/aiocb.h"
- #include "qemu/iov.h"
- 
- typedef struct IDEState IDEState;
-diff --git a/include/hw/scsi/scsi.h b/include/hw/scsi/scsi.h
-index 83782339d4b..75b4d781a5c 100644
---- a/include/hw/scsi/scsi.h
-+++ b/include/hw/scsi/scsi.h
-@@ -1,6 +1,7 @@
- #ifndef QEMU_HW_SCSI_H
- #define QEMU_HW_SCSI_H
- 
-+#include "qemu/aiocb.h"
- #include "block/aio.h"
- #include "hw/block/block.h"
- #include "hw/core/qdev.h"
-diff --git a/include/qemu/aiocb.h b/include/qemu/aiocb.h
-new file mode 100644
-index 00000000000..0622646f31d
---- /dev/null
-+++ b/include/qemu/aiocb.h
-@@ -0,0 +1,38 @@
-+/*
-+ * Data structures representing asynchronous I/O operations
-+ *
-+ * Copyright IBM, Corp. 2008
-+ *
-+ * Authors:
-+ *  Anthony Liguori   <aliguori@us.ibm.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2.  See
-+ * the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#ifndef QEMU_AIOCB_H
-+#define QEMU_AIOCB_H
-+
-+typedef struct BlockAIOCB BlockAIOCB;
-+typedef void BlockCompletionFunc(void *opaque, int ret);
-+
-+typedef struct AIOCBInfo {
-+    void (*cancel_async)(BlockAIOCB *acb);
-+    size_t aiocb_size;
-+} AIOCBInfo;
-+
-+struct BlockAIOCB {
-+    const AIOCBInfo *aiocb_info;
-+    BlockDriverState *bs;
-+    BlockCompletionFunc *cb;
-+    void *opaque;
-+    int refcnt;
-+};
-+
-+void *qemu_aio_get(const AIOCBInfo *aiocb_info, BlockDriverState *bs,
-+                   BlockCompletionFunc *cb, void *opaque);
-+void qemu_aio_unref(void *p);
-+void qemu_aio_ref(void *p);
-+
-+#endif
-diff --git a/include/qemu/job.h b/include/qemu/job.h
-index ead31578d3d..af29b8c6531 100644
---- a/include/qemu/job.h
-+++ b/include/qemu/job.h
-@@ -27,6 +27,7 @@
- #define JOB_H
- 
- #include "qapi/qapi-types-job.h"
-+#include "qemu/aiocb.h"
- #include "qemu/queue.h"
- #include "qemu/progress_meter.h"
- #include "qemu/coroutine.h"
-diff --git a/include/qemu/throttle.h b/include/qemu/throttle.h
-index 181245d29bc..8fa2b29452a 100644
---- a/include/qemu/throttle.h
-+++ b/include/qemu/throttle.h
-@@ -25,6 +25,7 @@
- #ifndef THROTTLE_H
- #define THROTTLE_H
- 
-+#include "block/aio.h"
- #include "qapi/qapi-types-block-core.h"
- #include "qemu/timer.h"
- 
-diff --git a/block/win32-aio.c b/block/win32-aio.c
-index f0689f3ee95..539f1c81c65 100644
---- a/block/win32-aio.c
-+++ b/block/win32-aio.c
-@@ -28,6 +28,7 @@
- #include "block/block_int.h"
- #include "block/aio.h"
- #include "block/raw-aio.h"
-+#include "qemu/aiocb.h"
- #include "qemu/event_notifier.h"
- #include "qemu/iov.h"
- #include "qemu/memalign.h"
-diff --git a/hw/core/ptimer.c b/hw/core/ptimer.c
-index e42e06fa4de..0cbe1ed5787 100644
---- a/hw/core/ptimer.c
-+++ b/hw/core/ptimer.c
-@@ -13,7 +13,6 @@
- #include "exec/replay-core.h"
- #include "exec/icount.h"
- #include "system/qtest.h"
--#include "block/aio.h"
- #include "hw/core/clock.h"
- 
- #define DELTA_ADJUST     1
-diff --git a/hw/misc/i2c-echo.c b/hw/misc/i2c-echo.c
-index 2bb99ec0dbf..54d07db6fae 100644
---- a/hw/misc/i2c-echo.c
-+++ b/hw/misc/i2c-echo.c
-@@ -11,7 +11,6 @@
- #include "qemu/osdep.h"
- #include "qemu/timer.h"
- #include "qemu/main-loop.h"
--#include "block/aio.h"
- #include "hw/i2c/i2c.h"
- #include "trace.h"
- 
-diff --git a/hw/virtio/virtio-pmem.c b/hw/virtio/virtio-pmem.c
-index 854d08abf6e..5381d592824 100644
---- a/hw/virtio/virtio-pmem.c
-+++ b/hw/virtio/virtio-pmem.c
-@@ -22,7 +22,6 @@
- #include "standard-headers/linux/virtio_ids.h"
- #include "standard-headers/linux/virtio_pmem.h"
- #include "system/hostmem.h"
--#include "block/aio.h"
- #include "block/thread-pool.h"
- #include "trace.h"
- 
-diff --git a/scsi/qemu-pr-helper.c b/scsi/qemu-pr-helper.c
-index 074b4db4720..9dcd3ec7111 100644
---- a/scsi/qemu-pr-helper.c
-+++ b/scsi/qemu-pr-helper.c
-@@ -52,7 +52,6 @@
- #include "trace/control.h"
- #include "qemu-version.h"
- 
--#include "block/aio.h"
- #include "block/thread-pool.h"
- 
- #include "scsi/constants.h"
-diff --git a/tests/unit/test-thread-pool.c b/tests/unit/test-thread-pool.c
-index 33407b595d3..ea5234f9f48 100644
---- a/tests/unit/test-thread-pool.c
-+++ b/tests/unit/test-thread-pool.c
-@@ -3,6 +3,7 @@
- #include "block/thread-pool.h"
- #include "block/block.h"
- #include "qapi/error.h"
-+#include "qemu/aiocb.h"
- #include "qemu/timer.h"
- #include "qemu/error-report.h"
- #include "qemu/main-loop.h"
-diff --git a/ui/input-linux.c b/ui/input-linux.c
-index 44d0c15a9b7..c16726a3b79 100644
---- a/ui/input-linux.c
-+++ b/ui/input-linux.c
-@@ -13,7 +13,6 @@
- #include "ui/input.h"
- #include "qom/object_interfaces.h"
- #include "system/iothread.h"
--#include "block/aio.h"
- 
- #include <sys/ioctl.h>
- #include "standard-headers/linux/input.h"
-diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
-index bed33950a87..b296d19e089 100644
---- a/ui/vnc-jobs.c
-+++ b/ui/vnc-jobs.c
-@@ -31,7 +31,6 @@
- #include "vnc-jobs.h"
- #include "qemu/sockets.h"
- #include "qemu/main-loop.h"
--#include "block/aio.h"
- #include "trace.h"
- 
- /*
-diff --git a/util/aiocb.c b/util/aiocb.c
-index 5aef3a069c8..d1a581080d3 100644
---- a/util/aiocb.c
-+++ b/util/aiocb.c
-@@ -23,7 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "block/aio.h"
-+#include "qemu/aiocb.h"
- 
- void *qemu_aio_get(const AIOCBInfo *aiocb_info, BlockDriverState *bs,
-                    BlockCompletionFunc *cb, void *opaque)
+     migration_rate_set(rate_limit);
+
 -- 
-2.52.0
+2.34.1
 
 
