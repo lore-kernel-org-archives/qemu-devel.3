@@ -4,98 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 552CED12694
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 06:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3C5D1268E
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 06:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQg53-0006uq-Up; Wed, 03 Dec 2025 01:11:14 -0500
+	id 1vQg5o-0008AR-6W; Wed, 03 Dec 2025 01:12:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQg52-0006t6-NG
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:11:12 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQg5Z-0007ZD-Fo
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:11:47 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQg51-0001As-75
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:11:12 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so61546665e9.3
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 22:11:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQg5X-0001Dh-4q
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:11:45 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47789cd2083so37524105e9.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 22:11:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764742270; x=1765347070; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=46vnfSxGy1j6e0vUyHlJU/9mdbC6bpVvSwQgBjgZ5ZI=;
- b=k/nyHj2BkUlWnN/gtgSqGWn1h5p9lff32E6voN4cOhTAZ23X+EeV8gMnTcAUMACf11
- odwG3vuiQMNfh71PaXByCOAuFjrmrxcQ6K6eQcpUOJuUpUDCfO9ZahXKFygVyS7usykZ
- tJysK+K/idmCFUu+JU/OmJGoDCF+GiBlF1i4qPTRHpuzN3ZxKCnlFm+W0J6GoGfOkp+2
- iE4Ho0QEExouA8kqINtS2owyB3H3/Iv6q/rSHN9d4X4kuBUvsDtGJuuKAri0g+y/iatS
- cmbQPOmRxPkGH4LK8CiIcZznGmjRsdjqvMUqvWsBEdhr+Eg8I9xMy2BxtK7KD7EyAG90
- 4bkA==
+ d=linaro.org; s=google; t=1764742299; x=1765347099; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dlyYuqrBIco0T5Nx+vrsokniVf0Y0mIPJ5rNnrQW6jE=;
+ b=Kl1nOj93hprFj63rSc84NgUwjljsddCn8UqBoxVWd78j92Imr4TrvGkHZsrEGfvUvn
+ +Nbpja5SSc9Hd4ePlDIBOSqpo4EnDh84+D6EeBZLaMqffmK74YXJwr89D4VVxmlaAkLQ
+ qIiNwke7qTJSuhODEidgl/JGsaOjXa96BpKSq4+G/0d9djLKOElW6Z13qIi1/1j+xCBj
+ I/lZirc/Rm1c3T7al0NWjOAZ1nX8hXOoB6I0E0SMKT+ZOoyD1Ed7p7yMEk/HsVjwmrvW
+ fL0kdg2DbFcAs0m8ycN6cB1j8L74sv7Jzutc2oznsZIqFMeP6ZkHCULy05fRFFK+uJOI
+ PxyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764742270; x=1765347070;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=46vnfSxGy1j6e0vUyHlJU/9mdbC6bpVvSwQgBjgZ5ZI=;
- b=RgHwP4nvTHImIe/lzC94hNUxfFGaqw269vjgQycXbfo7DDliYd2t9ur7ogstSc06FL
- WbcOEzBDeJlZ+m01/GwR6cA4ocvlspIDoGjUIK3/dtrv9CDVWaXlWjy9fBg3UIcSPgEV
- 8iBquejUyyu6u0J0tBsdX8E4x16LEdID1A4paC8HY/L/vUv52m9UAHWDXPxgiFIgP0e5
- ii1jWLC5g0upLiZGfOkqTlVz+8BXCuOUvD2+S1w1EGlKEgqWLs4IoMnnjj+1etTFQe/n
- Ljxqn//31JKA3q+l9WSFPXSxIPfUjo39GGRg+4RNbPHDrpEkXPY34L3MKK5nMeYKUyxp
- jzqA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVjCTJtTJ23UrdvBK4QnzSuDn3RnCRXFpTt6A/wJ6L0LVWua/4al7nSYn+f0fshBHLNRCHKIqwQt9m@nongnu.org
-X-Gm-Message-State: AOJu0YwAmW5zDD7RxgPSARv3pwX3cV+Mg+TrDf6UlA/khUdOP+xzGiG1
- I+OxLPwErRh+52OnjRFmVMwayjprcmlmjzJeeUGZinsf17Svlzmu+JIsDfqvk5gSmoo=
-X-Gm-Gg: ASbGnctuIYhiLTDCNAQMBA8ZGSqmvWSU+/3+GkpxrwZJWrRtwG2CVzq9JeCVI4iNhvh
- PehiR/rc+Rd1+08VR3CgrK5G4NZ5Q84mO977WwRg7oXXvayMvTUf9jdwVzp4oOqojDVkW0Ezfn+
- Doxsy8I3vvVRuRp59WaifM88H8bfMHI8z4Vxyv9DyYZiAhkmBw4jtrdgGoTspuEh5ROajcvVm9O
- nM1FoKQT0C/VNyz0YiC8In50IPkn0EntWd7uwvx4KyZoFHJXWM77P+Q/uynTEdhg9msI/eCqOu4
- 27mAZDuYKZ6mcvDBmairNOa7FgwfPs1xxkH0hhwkIZ2NfMJfi0WZoGk6c5yzKNWcLtDut6do4PU
- 3MQwH3kAHgugcJFx50ggeTH3vSkQhgtexq8HwELjPqLpXWF4gGlhKOnXRZR9oUFz69sAKX6hMxf
- zYIP3Iw56bZjcOT/ZD5hPyHcIfppwxr+fhEuder1Q80nQpc/QqE9m5S8+pQ9VU
-X-Google-Smtp-Source: AGHT+IGzIDwCTKOLlr77oNq8MxfixjC7xfMHSOwbndl59QPqIUvmZvz3PAzc9CbmGpRB+GWaMuMioA==
-X-Received: by 2002:a05:6000:612:b0:42b:5603:3ce6 with SMTP id
- ffacd0b85a97d-42f73173debmr899975f8f.18.1764742269796; 
- Tue, 02 Dec 2025 22:11:09 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1764742299; x=1765347099;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dlyYuqrBIco0T5Nx+vrsokniVf0Y0mIPJ5rNnrQW6jE=;
+ b=vw0UY4yFuJ4K1sVP6rWk9I9/WJzETz3dbWrl4B5TeBKFn+oFiOF+9SyRnUDWqsCHNL
+ h3pyoN1559MCm7eFUYH/nt6muKuUKXrjmNzj8gh3nZ2F7+ZBfeZn6R5yJCDBQFHpiMl4
+ /zY5uPa2jeaRQr1PIvTO6An+rncLHLcGxk4UzU6JF8BZdBZ/HzBXvxwCg8BaE834eEyy
+ xvxzAo8NghF0Ae/iwd3pS5HSLTJCqzFnjl+UeH9c7HwiNZ9971WatGahgP9pTp+t26Ce
+ mkXVDWGuFzHYP0WpGFc1Vh+DJqzPwQQEs3qMBTkK3Z7Y4BG1rIVLfE4MykLItdHdmMSO
+ /E1w==
+X-Gm-Message-State: AOJu0YxqWgmMhFYcHEg59z4pLAIC/illqtLHHdDc4cO6gP3v7WYbxf9N
+ Ih/JhAvzRXGM5BhHWuijA09HAwCMF8Z/bGVC+6c/Sr7pK8miRwWkclRq97J35XpRj2A=
+X-Gm-Gg: ASbGncsfjRcRxNinz10Z+fDOkKfeWMeJzNoVmGHEasabJck6RHm7UKDu9oH5tptTN5J
+ ZQRJ02K1ap4UMRuJuvEE0FjSG8hWWYPfgU0bCvefCvAjhR+lIk5cFWcF141VYISIIdWfp/dyoLt
+ pJxcqGVKL4buhgRlDuPu7Mdon8hb2jaC39w3ZW+2HYit5Tp+YKUz1PUlvKy8ptrqprHeisa+TMb
+ u/HW7jKuM8XiwtwkAegobBCLibl3M73vcWMKhbPf25RqLGt9JXKbfbyjDgeSyRB0AZaoW3H1ej0
+ n1RcNVgk2Iwb8APTg5RgmJFOFDrK65PpA6ek87V+AcEJgVYGHScy2BLHqEA6lSKAlOv4kl0LCWy
+ O1yS5E2qmxfOFJsOl1rG0Wu0xY2ri1MvqWfKsDftnWUTgBaCd90zwF+Qvzkknkl7vOH4mhU/jiJ
+ SHWPM3Y5MYNpaV6QGb/2AIh2o08jFBgu2UACMvZSMsxAqvfWk4dicbx9Ug9n93oSlx
+X-Google-Smtp-Source: AGHT+IHvIQmfDwnTD8drf7tdAaJELXEvl7wBw+FoUcPNb0LeOYFoiFRBKneLkS5TxZ8trSwEw5E/YQ==
+X-Received: by 2002:a05:6000:1ac9:b0:42b:2fc8:186 with SMTP id
+ ffacd0b85a97d-42f731bc03amr722215f8f.46.1764742299461; 
+ Tue, 02 Dec 2025 22:11:39 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1c5d618csm36471747f8f.14.2025.12.02.22.11.08
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Dec 2025 22:11:09 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Zhao Liu <zhao1.liu@intel.com>,
-	qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-riscv@nongnu.org,
- qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH-for-11.0 v6 12/13] hw/i386: Assume fw_cfg DMA is always enabled
-Date: Wed,  3 Dec 2025 07:09:40 +0100
-Message-ID: <20251203060942.57851-13-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251203060942.57851-1-philmd@linaro.org>
-References: <20251203060942.57851-1-philmd@linaro.org>
+ ffacd0b85a97d-42e1caa86d0sm35622115f8f.39.2025.12.02.22.11.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Dec 2025 22:11:38 -0800 (PST)
+Message-ID: <3991ece0-b49a-4c09-9309-ed0c50ce2a24@linaro.org>
+Date: Wed, 3 Dec 2025 07:11:36 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 15/28] hw/i386: Assume fw_cfg DMA is always enabled
+Content-Language: en-US
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, kvm@vger.kernel.org,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
+ <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Amit Shah <amit@kernel.org>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Huacai Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>,
+ Jiri Denemark <jdenemar@redhat.com>
+References: <20251202162835.3227894-1-zhao1.liu@intel.com>
+ <20251202162835.3227894-16-zhao1.liu@intel.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251202162835.3227894-16-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,52 +125,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+On 2/12/25 17:28, Zhao Liu wrote:
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> Now all calls of x86 machines to fw_cfg_init_io_dma() pass DMA
+> arguments, so the FWCfgState (FWCfgIoState) created by x86 machines
+> enables DMA by default.
+> 
+> Although other callers of fw_cfg_init_io_dma() besides x86 also pass
+> DMA arguments to create DMA-enabled FwCfgIoState, the "dma_enabled"
+> property of FwCfgIoState cannot yet be removed, because Sun4u and Sun4v
+> still create DMA-disabled FwCfgIoState (bypass fw_cfg_init_io_dma()) in
+> sun4uv_init() (hw/sparc64/sun4u.c).
+> 
+> Maybe reusing fw_cfg_init_io_dma() for them would be a better choice, or
+> adding fw_cfg_init_io_nodma(). However, before that, first simplify the
+> handling of FwCfgState in x86.
 
-Now all calls of x86 machines to fw_cfg_init_io_dma() pass DMA
-arguments, so the FWCfgState (FWCfgIoState) created by x86 machines
-enables DMA by default.
+I answered these concerns here:
+https://lore.kernel.org/qemu-devel/20251203060942.57851-1-philmd@linaro.org/
 
-Then 'linuxboot.bin' isn't used anymore, and it will be removed in the
-next commit.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/i386/fw_cfg.c     | 1 +
- hw/i386/x86-common.c | 6 ++----
- 2 files changed, 3 insertions(+), 4 deletions(-)
-
-diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-index bf38338fb47..528862d2e33 100644
---- a/hw/i386/fw_cfg.c
-+++ b/hw/i386/fw_cfg.c
-@@ -226,6 +226,7 @@ void fw_cfg_add_acpi_dsdt(Aml *scope, FWCfgState *fw_cfg)
-      * of the i/o region used is FW_CFG_CTL_SIZE; And the DMA control
-      * register is located at FW_CFG_DMA_IO_BASE + 4
-      */
-+    assert(fw_cfg_dma_enabled(fw_cfg));
-     io_size = ROUND_UP(FW_CFG_CTL_SIZE, 4) + sizeof(dma_addr_t);
- 
-     aml_append(dev, aml_name_decl("_HID", aml_string("QEMU0002")));
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 1ee55382dab..e8dc4d903bd 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -1002,10 +1002,8 @@ void x86_load_linux(X86MachineState *x86ms,
-     }
- 
-     option_rom[nb_option_roms].bootindex = 0;
--    option_rom[nb_option_roms].name = "linuxboot.bin";
--    if (fw_cfg_dma_enabled(fw_cfg)) {
--        option_rom[nb_option_roms].name = "linuxboot_dma.bin";
--    }
-+    assert(fw_cfg_dma_enabled(fw_cfg));
-+    option_rom[nb_option_roms].name = "linuxboot_dma.bin";
-     nb_option_roms++;
- }
- 
--- 
-2.51.0
+> Considering that FwCfgIoState in x86 enables DMA by default, remove the
+> handling for DMA-disabled cases and replace DMA checks with assertions
+> to ensure that the default DMA-enabled setting is not broken.
+> 
+> Then 'linuxboot.bin' isn't used anymore, and it will be removed in the
+> next commit.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+> Changes since v4:
+>   * Keep "dma_enabled" property in fw_cfg_io_properties[].
+>   * Replace DMA checks with assertions for x86 machines.
+> ---
+>   hw/i386/fw_cfg.c     | 16 ++++++++--------
+>   hw/i386/x86-common.c |  6 ++----
+>   2 files changed, 10 insertions(+), 12 deletions(-)
 
 
