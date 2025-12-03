@@ -4,69 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E82F9D12696
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 09:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E40D12696
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 09:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQjbu-0000MR-H3; Wed, 03 Dec 2025 04:57:22 -0500
+	id 1vQjd3-00015D-Vy; Wed, 03 Dec 2025 04:58:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vQjbq-0000Kw-OC
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 04:57:19 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vQjd2-00014n-NN
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 04:58:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vQjbn-0000Ii-N7
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 04:57:18 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vQjd1-0001Dd-D5
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 04:58:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764755833;
+ s=mimecast20190719; t=1764755910;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3VOpkSPncg7vJ9pqxag1v1H8QoDTXCXXMxs7qQiUB0s=;
- b=FjOGow5Fcb+NklhSOewF6AmPMjUUqJVr/jtZhzmPBGrQ5jwMoAL6gjWeHmMOUEA95lGi+A
- rRovxt98sVTryhJ9br1swNJw57zqM2x1p/HrF5bdHfN6Uz6nUEF4wj1DjkN4mLBe9TZ2E+
- /8jwNJJthWMhjgcx4Bc/efbB3nj+mhQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HdwmBiVN7sGIfsb1JFq3VFitpgAe4cS0FOz6SI9is+4=;
+ b=JAkSGDS4YL5BEV3LFgEe/+7bSUQuC2DSyCnqPf/4GDpDqtyj1Q/Qy47BmvKX7DIP2/slH9
+ 72Q/LH3efQtZUPeP5m1Updotfqqz7JzxAFqfKYE/XctGIsXdznFc350PFsS+ADH2cA1pya
+ kZZbIJcOnzXhglM9hMhc4Q4otcwR77w=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-0KYz-nfBPZ6JjbMz6uFlJg-1; Wed,
- 03 Dec 2025 04:57:09 -0500
-X-MC-Unique: 0KYz-nfBPZ6JjbMz6uFlJg-1
-X-Mimecast-MFC-AGG-ID: 0KYz-nfBPZ6JjbMz6uFlJg_1764755828
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-uEeabMVEOhmrqv3BvxYslQ-1; Wed,
+ 03 Dec 2025 04:58:29 -0500
+X-MC-Unique: uEeabMVEOhmrqv3BvxYslQ-1
+X-Mimecast-MFC-AGG-ID: uEeabMVEOhmrqv3BvxYslQ_1764755908
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5120D1809C92; Wed,  3 Dec 2025 09:56:59 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7EE7F180060D; Wed,  3 Dec 2025 09:58:28 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0AEC30001A2; Wed,  3 Dec 2025 09:56:58 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 42C641800581; Wed,  3 Dec 2025 09:58:28 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5CD0621E6A27; Wed, 03 Dec 2025 10:56:56 +0100 (CET)
+ id BB22721E6A27; Wed, 03 Dec 2025 10:58:25 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
- qemu-devel@nongnu.org,
- pbonzini@redhat.com,  berrange@redhat.com,  eduardo@habkost.net,
- philmd@linaro.org
-Subject: Re: [PATCH 3/3] qdev: Legacy properties are now unused, drop
-In-Reply-To: <87ms5jf83d.fsf@pond.sub.org> (Markus Armbruster's message of
- "Wed, 22 Oct 2025 14:12:54 +0200")
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com,  pbonzini@redhat.com,  berrange@redhat.com,
+ eduardo@habkost.net,  philmd@linaro.org
+Subject: Re: [PATCH 0/3] qdev: Fix "info qtree" to show links
+In-Reply-To: <20251022101420.36059-1-armbru@redhat.com> (Markus Armbruster's
+ message of "Wed, 22 Oct 2025 12:14:17 +0200")
 References: <20251022101420.36059-1-armbru@redhat.com>
- <20251022101420.36059-4-armbru@redhat.com>
- <CAJ+F1C+2vp+Byp2Q40GQZUYLW0xpoTbFAj5oc2R=nbsy8i_8Eg@mail.gmail.com>
- <87ms5jf83d.fsf@pond.sub.org>
-Date: Wed, 03 Dec 2025 10:56:56 +0100
-Message-ID: <87h5u7q45z.fsf@pond.sub.org>
+Date: Wed, 03 Dec 2025 10:58:25 +0100
+Message-ID: <87cy4vq43i.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -94,71 +89,10 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Markus Armbruster <armbru@redhat.com> writes:
 
-> Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com> writes:
->
->> Hi
->>
->>
->> On Wed, Oct 22, 2025 at 2:15=E2=80=AFPM Markus Armbruster <armbru@redhat=
-.com> wrote:
->>>
->>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->>
->> I don't think we have much reasonable way to use those "legacy-*"
->> properties from qom-get and similar, so it's probably ok to just
->> remove them without deprecation.
->
-> Almost all of them are unreadable via qom-get:
->
->     (qemu) qom-get /machine/unattached/device[3]/pm bus
->     "/machine/i440fx/pci.0"
->     (qemu) qom-get /machine/unattached/device[3]/pm legacy-bus
->     Error: Property 'PIIX4_PM.legacy-bus' is not readable
->
-> Same for all the other properties where the qdev property doesn't have a
-> .get().
->
-> Only the ones with a .print() are readable, i.e. only PCI address
-> properties:
->
->     (qemu) qom-get /machine/unattached/device[3]/pm addr
->     11
->     (qemu) qom-get /machine/unattached/device[3]/pm legacy-addr
->     "01.3"
->
-> PATCH 2's commit message explains why.
->
-> If a deprecation period is wanted, I'll replace this patch.
->
-> If not, I can work the above into the commit message.
+> This is an alternative to Marc-Andr=C3=A9's "[PATCH] RFC: qdev: add legacy
+> properties only for those print()-able"
+> Message-ID: <20251015105419.2975542-1-marcandre.lureau@redhat.com>
 
-In my tree now:
-
-    qdev: Legacy properties are now unused internally, drop
-
-    Legacy properties are an accidental and undocumented external
-    interface.  qom-set doesn't work for them (no .set() method).  qom-get
-    and qom-list-get work only when the underlying qdev property has a
-    .print() method, i.e. the PCI address properties, as explained in the
-    previous commit.  Here's one that works:
-
-        (qemu) qom-get /machine/unattached/device[3]/pm addr
-        11
-        (qemu) qom-get /machine/unattached/device[3]/pm legacy-addr
-        "01.3"
-
-    And here's one that doesn't:
-
-        (qemu) qom-get /machine/unattached/device[3]/pm bus
-        "/machine/i440fx/pci.0"
-        (qemu) qom-get /machine/unattached/device[3]/pm legacy-bus
-        Error: Property 'PIIX4_PM.legacy-bus' is not readable
-
-    Actual use of this undocumented interface seems quite unlikely.  A
-    deprecation period seems unnecessary.  Drop it.
-
->> Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> Thanks!
+Queued for 11.0.
 
 
