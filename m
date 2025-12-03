@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E7D4D1268E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ECCDD116F3
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 06:10:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQg43-0005AO-Iw; Wed, 03 Dec 2025 01:10:11 -0500
+	id 1vQg4C-0005Jq-2j; Wed, 03 Dec 2025 01:10:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQg41-00058z-Qv
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:10:09 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQg4A-0005JL-Sc
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:10:18 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQg3y-0000y3-Mp
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:10:09 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-42e2e3c0dccso1963214f8f.2
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 22:10:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQg49-0000za-2z
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:10:18 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-42e2e50c233so1655992f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 22:10:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764742205; x=1765347005; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764742213; x=1765347013; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AUczG/p4f5yoluuGUkVYvQx6mSQhYMxYgU12rhZJcv0=;
- b=OyB7u95WC1p08b2iWJa/gwYrnhtr6EZ/LD3OBLkjT45Mm0PM/5nUybP+vAhhzpdjjk
- UuEWEVIunpLmIn/WHnbjYbfIQbDpbSzBxWQaEEdKiq5x/MtBFHvkYk4bN03XyMs+O6i7
- RDPYYPA4e/nhysntzDbKWaolA0y46kmRPznJkCTR0cNsBS/d/ySXp5IhC8S2LJpSK7Re
- ViQmOTSGN2C6bFFwLbEUwcHsXSLVUG125+dlM6wccTMiFHJJ+ZMhlJuewjE2DVRhayAu
- Jx0jLDHu7cIIhiQoGcPxW+Peulw2hSe2hDegLHvV+Pm0zO6/VWjUiGvASUMRkVDuz/Rn
- 3QHw==
+ bh=1Aelh7UWqNgbcmPHyVQy8EjDJIrtSb25vmBSRy1lOpo=;
+ b=sJ5A75c1BFdxUVH8XlnYwJEQW+qTM0CMCrXSPb0UwYHHbQk3YCsQrM81MgO06814p3
+ xB3FScXvrE9KLRxd3TVXywJrFYhvJ6jhYpmZHAe/ziaiD7/iRhxVDxAYJaCp4z64od1K
+ WQLbegUnPBthJks8c++hUKdJveJYagtG/iTyDCpeQUyWcZ6JBwCS5X74h1PnFq3/rtXL
+ 56Stmy6fXXNpbTd7pF+qRftMZL8DbORgbtjEfts+KoQ6MWQcr6zH4q7wr1tHoyHBxs2A
+ mbmRNBFhFyU7lm9rBf5O5KvL40NVJfUBEAtY43F6nMby5kKnUsNXN2JUy1y8hMIDbpOE
+ EntQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764742205; x=1765347005;
+ d=1e100.net; s=20230601; t=1764742213; x=1765347013;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=AUczG/p4f5yoluuGUkVYvQx6mSQhYMxYgU12rhZJcv0=;
- b=YJXx4fi7grfkjxwe5oTy7yVOaUCkBHqyutI3QLo5J055ME3uyaPpM2Y3S6OiBrP6zF
- ZSJQHmCYWkXGVqpoOpWK3JpabmxUEDHFFPoQtdXW93bYknTfV1pvIaVkmFXbjIcA8HMW
- FL789PcbvISTcsNJsqk9nJg+K+v4S77Rgux3KO3iOd6I+YgQFTTjbqcvdQTkqDIB5H02
- nB/ayivfNZQwZcXrcTFGbcUPFGXAkJ1hPAk8dSCFVnXLU0ppgXJ0tY/YdXK8LFb0vVN0
- IDDKA94fn+zj3jhhHtIe6If4YXvWBr3l7D69Upp2WK/HCRsUX385LXY4ju8tGZ7K5639
- 7ubA==
+ bh=1Aelh7UWqNgbcmPHyVQy8EjDJIrtSb25vmBSRy1lOpo=;
+ b=OWE4lxduebRilbOlQKiE+8B5CFmB8BwGBLUksc0ZUQazL7dDeUuSuAsKj/xtaM+xPo
+ TA8qFKIamTQnviQIfUuHl+xUgWNMwrcRCNWPtC9C1FXmUydjDtVCVemlBQlE4spV5/4c
+ jtmwdzpLSseFwhh7+aYzNjPm1qxBGXgsJsuBfqEjTkL94X8a5bspfbcTk44BormU0L1P
+ VeCuEaSx8/9homMfmT/cxM9t9TOB2OKM97S8DAYCRNsvngro5oV/lESAzr3h7c3VyNre
+ x4ANUgv4m8JiP70mbc86oeKPIg7Au3AdJBgmqV+F75nPd6gxALzsGH8W6XOiUyT71LjU
+ hj8Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+yUuV0YtMZk0F7wp70bhpGYbrPPgxDNobwcay8hfMiE58G2tUmZ8dYmYq7ui4gWJNYRR0mEqU+qty@nongnu.org
-X-Gm-Message-State: AOJu0YwR3aWlirZ1APY7KCDMnvL9rNNChrOELeEnWZ5E3WK0WryrLdSz
- uTYmLWul8R+gzLsJnfU8Qp70bLGI2QszEw4coOGipJWEHsKEH2gxjGfNmNEnEImfGkk=
-X-Gm-Gg: ASbGncvEMdU/OVLFo73MF0GFAglGuv3IAcMhGnmlzlH+8qiXWXZrK2TgWpyOQhkYcsK
- 6vHMD+tL1cGO9RWPPp4Jgqw8TigD0N6Py/jMP8GLLajWkepAlfw2/O45iwgBDkiLGo75fgUl47Z
- 80b/0RPDPJHtCJSXsIZ2hehBCLeYWqmNLVosZcBIpqa8N4VMFl58qAVyWapy4ttlL89Uw3qc82U
- L+IvLqeXjYGVmA//Rm54QCNUzwfcOUV7xh5X80R0wffRQC8XPgAD8Ce3dm8Z15RODAT6wQ80c/X
- V9o/vAuUJ+OK/nI6W0InQ+BLrnh+TAxUDl57+oRXCOW7KtUvdbWNVtSamsfk4vVHTOp9FEQZi7A
- LFo3NMXGrivs3E6ryQJ26tGFEwibTFFEziWl1mNIbew2JFxg6HwMsWuzRRYzVBIha74VLawvkoD
- YEg/UqqXK28r+rEAlGaj1qkYbSY+ihJWN3Eo/uLaq/0nVZmKLdaSPbgnka9fdC
-X-Google-Smtp-Source: AGHT+IE22k9yxCvZOYe9YhjyN+DdWq4PFkHWWGEu8Y8vIYjFFLKFYQp0V3g9ZFALoeQ4/kScq0zoog==
-X-Received: by 2002:a05:6000:40cc:b0:42b:2e39:6d58 with SMTP id
- ffacd0b85a97d-42f731bc534mr726343f8f.51.1764742205225; 
- Tue, 02 Dec 2025 22:10:05 -0800 (PST)
+ AJvYcCW9v5gdcGQCpCLoZaAQD7OwofsQn76kwDmS+hUTlZudkhKaiT+brQ/aioeVdNLe4XMkmoCq5CIEvdW4@nongnu.org
+X-Gm-Message-State: AOJu0YwZyEiPRpDDLNmxjzFaFfDTqOpVsoLqEARsmKJSgyajatGbpEW1
+ TbQyZyckx/AAPhK8OBq9YMOnSlfPvLDm/xSlQSqjneWPWbKmjI3EV/ETFKoZ2xbMoxM=
+X-Gm-Gg: ASbGncsLtAjP7tTKmENV5NdnUOIq9gHRHp8iFbN6j2wi9RFGUN+b6cOXEO0dpd6ZFbT
+ ZMJUsUjAx31bciJxXMJzIE6j90Gop4/QHc9l7Tm4H0QZTSWF3KO9fVA0lTJHCeG6blTqBTUYZwL
+ A8pstLohZbBb8E58/nMKOEYue73R2Z8UIDJgtjRaVorLoT1/KOZSi1g9XGuf1v7PlaKk2iNAah6
+ Rj1rISjA3ZwQffbYexNsNBTcewyKwGw3CJ+ZxQ9CSXzcljbrPriXXaxyi+XXyBV+y6/1pMuw13s
+ C5Ntga6I+gr7hE0VO8npjvX+GdbSw4cS7t2iSCOTlYl+86h8OM8hgyHqV6qsM+dIn+OCanMK3RK
+ ArFmL7DiKouAO8SYHbuUYhpMulqsrjnmC6gW3yRIsvbQ18HL6tKLWRwd5bE06Cfe7qvzNbg9sbz
+ vW81//vSk1fGBGSKBw4ZBYgcvDyrCNCcoWtJ9R0ICIIEycrFckLRdJqgGwwf+p
+X-Google-Smtp-Source: AGHT+IHRw9eH1u/Tjksz7z2yBy1gzSLCZcDugsLH106IbTnKIiOWLmvHbO9jCXsIaCxf4X8O14gYUw==
+X-Received: by 2002:a5d:5c89:0:b0:42b:3339:c7ff with SMTP id
+ ffacd0b85a97d-42f731bcd33mr861328f8f.43.1764742212594; 
+ Tue, 02 Dec 2025 22:10:12 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1c5c304csm36722072f8f.8.2025.12.02.22.10.04
+ ffacd0b85a97d-42e1c5d618csm36467457f8f.14.2025.12.02.22.10.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 02 Dec 2025 22:10:04 -0800 (PST)
+ Tue, 02 Dec 2025 22:10:12 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Zhao Liu <zhao1.liu@intel.com>,
 	qemu-devel@nongnu.org
@@ -73,19 +73,25 @@ Cc: qemu-ppc@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-riscv@nongnu.org,
  qemu-arm@nongnu.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH-for-11.0 v6 03/13] hw/nvram/fw_cfg: Factor
- fw_cfg_init_mem_internal() out
-Date: Wed,  3 Dec 2025 07:09:31 +0100
-Message-ID: <20251203060942.57851-4-philmd@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
+ Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH-for-11.0 v6 04/13] hw/nvram/fw_cfg: Rename
+ fw_cfg_init_mem_wide() -> fw_cfg_init_mem_dma()
+Date: Wed,  3 Dec 2025 07:09:32 +0100
+Message-ID: <20251203060942.57851-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251203060942.57851-1-philmd@linaro.org>
 References: <20251203060942.57851-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,57 +114,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor fw_cfg_init_mem_internal() out of fw_cfg_init_mem_wide().
-In fw_cfg_init_mem_wide(), assert DMA arguments are provided.
-Callers without DMA have to use the fw_cfg_init_mem() helper.
+"wide" in fw_cfg_init_mem_wide() means "DMA support".
+Rename for clarity.
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Suggested-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- hw/nvram/fw_cfg.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ include/hw/nvram/fw_cfg.h | 6 +++---
+ hw/arm/virt.c             | 2 +-
+ hw/loongarch/fw_cfg.c     | 4 ++--
+ hw/nvram/fw_cfg.c         | 6 +++---
+ hw/riscv/virt.c           | 4 ++--
+ 5 files changed, 11 insertions(+), 11 deletions(-)
 
+diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
+index d5161a79436..c4c49886754 100644
+--- a/include/hw/nvram/fw_cfg.h
++++ b/include/hw/nvram/fw_cfg.h
+@@ -309,9 +309,9 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
+                                 AddressSpace *dma_as);
+ FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
+                                   unsigned data_width);
+-FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
+-                                 hwaddr data_addr, uint32_t data_width,
+-                                 hwaddr dma_addr, AddressSpace *dma_as);
++FWCfgState *fw_cfg_init_mem_dma(hwaddr ctl_addr,
++                                hwaddr data_addr, uint32_t data_width,
++                                hwaddr dma_addr, AddressSpace *dma_as);
+ 
+ FWCfgState *fw_cfg_find(void);
+ bool fw_cfg_dma_enabled(void *opaque);
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 25fb2bab568..23d88e2fd01 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1412,7 +1412,7 @@ static FWCfgState *create_fw_cfg(const VirtMachineState *vms, AddressSpace *as)
+     FWCfgState *fw_cfg;
+     char *nodename;
+ 
+-    fw_cfg = fw_cfg_init_mem_wide(base + 8, base, 8, base + 16, as);
++    fw_cfg = fw_cfg_init_mem_dma(base + 8, base, 8, base + 16, as);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)ms->smp.cpus);
+ 
+     nodename = g_strdup_printf("/fw-cfg@%" PRIx64, base);
+diff --git a/hw/loongarch/fw_cfg.c b/hw/loongarch/fw_cfg.c
+index 493563669e5..d2a79efbf76 100644
+--- a/hw/loongarch/fw_cfg.c
++++ b/hw/loongarch/fw_cfg.c
+@@ -23,8 +23,8 @@ FWCfgState *virt_fw_cfg_init(ram_addr_t ram_size, MachineState *ms)
+     int max_cpus = ms->smp.max_cpus;
+     int smp_cpus = ms->smp.cpus;
+ 
+-    fw_cfg = fw_cfg_init_mem_wide(VIRT_FWCFG_BASE + 8, VIRT_FWCFG_BASE, 8,
+-                                  VIRT_FWCFG_BASE + 16, &address_space_memory);
++    fw_cfg = fw_cfg_init_mem_dma(VIRT_FWCFG_BASE + 8, VIRT_FWCFG_BASE, 8,
++                                 VIRT_FWCFG_BASE + 16, &address_space_memory);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_MAX_CPUS, (uint16_t)max_cpus);
+     fw_cfg_add_i64(fw_cfg, FW_CFG_RAM_SIZE, (uint64_t)ram_size);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)smp_cpus);
 diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index 2b8715679fe..c65deeb7c38 100644
+index c65deeb7c38..3f0d337eb9c 100644
 --- a/hw/nvram/fw_cfg.c
 +++ b/hw/nvram/fw_cfg.c
-@@ -1054,9 +1054,9 @@ FWCfgState *fw_cfg_init_io_dma(uint32_t iobase, uint32_t dma_iobase,
+@@ -1088,9 +1088,9 @@ static FWCfgState *fw_cfg_init_mem_internal(hwaddr ctl_addr,
      return s;
  }
  
 -FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
 -                                 hwaddr data_addr, uint32_t data_width,
 -                                 hwaddr dma_addr, AddressSpace *dma_as)
-+static FWCfgState *fw_cfg_init_mem_internal(hwaddr ctl_addr,
-+                                            hwaddr data_addr, uint32_t data_width,
-+                                            hwaddr dma_addr, AddressSpace *dma_as)
++FWCfgState *fw_cfg_init_mem_dma(hwaddr ctl_addr,
++                                hwaddr data_addr, uint32_t data_width,
++                                hwaddr dma_addr, AddressSpace *dma_as)
  {
-     DeviceState *dev;
-     SysBusDevice *sbd;
-@@ -1088,10 +1088,19 @@ FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-     return s;
- }
- 
-+FWCfgState *fw_cfg_init_mem_wide(hwaddr ctl_addr,
-+                                 hwaddr data_addr, uint32_t data_width,
-+                                 hwaddr dma_addr, AddressSpace *dma_as)
-+{
-+    assert(dma_addr && dma_as);
-+    return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_width,
-+                                    dma_addr, dma_as);
-+}
-+
- FWCfgState *fw_cfg_init_mem_nodma(hwaddr ctl_addr, hwaddr data_addr,
-                                   unsigned data_width)
+     assert(dma_addr && dma_as);
+     return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_width,
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 17909206c7e..bfbb28f5bd2 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1274,8 +1274,8 @@ static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
  {
--    return fw_cfg_init_mem_wide(ctl_addr, data_addr, data_width, 0, NULL);
-+    return fw_cfg_init_mem_internal(ctl_addr, data_addr, data_width, 0, NULL);
- }
+     FWCfgState *fw_cfg;
  
+-    fw_cfg = fw_cfg_init_mem_wide(base + 8, base, 8, base + 16,
+-                                  &address_space_memory);
++    fw_cfg = fw_cfg_init_mem_dma(base + 8, base, 8, base + 16,
++                                 &address_space_memory);
+     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, (uint16_t)ms->smp.cpus);
  
+     return fw_cfg;
 -- 
 2.51.0
 
