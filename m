@@ -4,175 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB7AD12D69
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 14:32:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2446D1268E
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 14:34:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQntr-00031d-1N; Wed, 03 Dec 2025 09:32:11 -0500
+	id 1vQnvY-0004l1-UP; Wed, 03 Dec 2025 09:33:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1vQntJ-0002wc-IT; Wed, 03 Dec 2025 09:31:43 -0500
-Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vQnvT-0004iD-0d
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 09:33:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1vQntD-0000Iw-3n; Wed, 03 Dec 2025 09:31:32 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JcEX7wXUabcsP1i/azSJe1imRPXlAY/8zG6UHtwjcL8CWp8ZI2Ot1/q4V6XPC/gfsUITQvuEktA+byQHgNsDgl/FWsbjNya1WpAbiPMtYKhASeplvmUB2rDSjTM2SW7ukcPbV6nWX6hgOfwC2J7t9cUXQ4cHVy/Xe1f+YS5gBwlTDS3kEpo3A6jNy0Kmd/UYKPKa/XuGZoqvsd7TVoKCaqNe8uX9Nwwyv+pXB0oBbJOMlf/4ixt+YgrSpNIUAI/LO0zllxhmn8qHMAcS9jS3ahWtARznz+undkDrGMFubNmwXSDCdYUamVI4Ff5D2p5LrwJoAIYTsSDNKtgWIgHdsA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=D0qVRJp5WuyL84hLvmDEYDpVK0bXxTsIgkE1hUwij4I=;
- b=JcffJOrz3X/k/ecOaU/ixMOmF1mT/qJrRVe4I+ag9wKyFWIJr6z+3P5e+Oo4WSy825OcPbwsQ2OKvnyqUEHmu6JLeaoCFuXqEGeuKsZ0tv6eZvjpkT8vBlsyjSBN2GSIS7xV/4BleVkrAr19lYlkDutGyrdwysWMS5bxaiUi78j47jBroAGPQSU3w8ubFd8qoeUnG2OuP7lcGrmw2gq1P2O5QXODilSDA0nRaFB2TPaptZjAE34oOGWRF55ofHflHhp/+DgCV3RNuH8AYSYrfSHHrzzwvOcYZrfzRVcJ+qeeXeKD7gTLjJjOPd9IC6jfk7p620v8ncKQ810P//4RZw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=htecgroup.com; dmarc=pass action=none
- header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=D0qVRJp5WuyL84hLvmDEYDpVK0bXxTsIgkE1hUwij4I=;
- b=C37rjfyBOfvSnAwt7zFeX/5mANWK0zoB8O42iNm3eRnLHokrxVxEgs5XYmgkXOnozwovFzmG09yShSfpp1i+5sa5FpjLQzi5YoZIGxam8Lot7+QDhzuKtWHsUNJrMbtG9DJzPjZjEqgKJsDElNbisAy7AYVa6hoClWxm17xjLPeQ4Dp2utmf98JuhtXwev9G5Z9s5XM1x7uLQz/sLZ0XRsHVzfGTHi06VLiJls2iyKK9rPNIQx5GEj085d10PzIJlUqePJEXksi+NscQr7iGuTjfTEgEwR0rUYTYBppXE5n0gdb3bHlUFkhnw1JbUW/zGVlNKScTwiNxzP+3HpAYVw==
-Received: from VE1PR09MB3471.eurprd09.prod.outlook.com (2603:10a6:802:b1::23)
- by DUZPR09MB6851.eurprd09.prod.outlook.com (2603:10a6:10:4df::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.9; Wed, 3 Dec
- 2025 14:31:23 +0000
-Received: from VE1PR09MB3471.eurprd09.prod.outlook.com
- ([fe80::ec5d:d9c5:f6b6:1f19]) by VE1PR09MB3471.eurprd09.prod.outlook.com
- ([fe80::ec5d:d9c5:f6b6:1f19%3]) with mapi id 15.20.9366.012; Wed, 3 Dec 2025
- 14:31:23 +0000
-From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
- <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
- "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
- "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
- "alistair23@gmail.com" <alistair23@gmail.com>, "thuth@redhat.com"
- <thuth@redhat.com>
-Subject: Re: [PATCH v14 00/14] riscv: Add support for MIPS P8700 CPU
-Thread-Topic: [PATCH v14 00/14] riscv: Add support for MIPS P8700 CPU
-Thread-Index: AQHcWGlzXWwAZOkBrEyyKNzERrDbDLUP3fUAgAAINACAACwCAA==
-Date: Wed, 3 Dec 2025 14:31:23 +0000
-Message-ID: <9893e4bd-a0b6-491f-95dd-6a23e102a685@htecgroup.com>
-References: <20251118085758.3996513-1-djordje.todorovic@htecgroup.com>
- <d11d7f92-d992-4d4d-8456-707cf42f93b6@htecgroup.com>
- <88c37ed0-2e1f-4a6d-8032-f153309eeaac@linaro.org>
-In-Reply-To: <88c37ed0-2e1f-4a6d-8032-f153309eeaac@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla Thunderbird
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=htecgroup.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: VE1PR09MB3471:EE_|DUZPR09MB6851:EE_
-x-ms-office365-filtering-correlation-id: be7b765a-8968-41e3-5c65-08de3278a21b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700021;
-x-microsoft-antispam-message-info: =?utf-8?B?WEFEaXZiamd0WVVhY2tpM084RkI2K2xzUDlWWHhzOXllZDQrVWlyNHB0YW9s?=
- =?utf-8?B?d0V0MHZwUldFcUNybHJwemxjdE54d3M0U2dpMG5JbjBXaDFEa0FxY3NjQ0hR?=
- =?utf-8?B?Nk5qSU9tNDQzVGw4K1Q4bGk4bkZ6Qis5MEtIbERoaTVYZ0I4eUtWQktKcm9s?=
- =?utf-8?B?QXdZUisxam9aVXhROU5GWHlWRDJHTHh1S1UraXdGSEMzSGVmdUthdGtoQnlM?=
- =?utf-8?B?cU1HanE5c0t1ZFNmT2c3amVQSDcrYW56UjRaZHdvSzc5UTNPOEFCRVFIN1Rl?=
- =?utf-8?B?U0dKOGhwR0F5Um94MVBuRjBVdnUvNjJ5YnA5QlA4aVF2MFN0cWlobHkvNWxz?=
- =?utf-8?B?a1VKRm13SU9MTDFNQUlkVjVCbmRJNmhSQlJxc21Dcnk2eWJrMnUyU3ZPWTZF?=
- =?utf-8?B?Y1E1dnE2ZG40N1loOHN3QWdrWHg4NUVMVllMNjFqQVJxRHFFcjhIVTQzS0lW?=
- =?utf-8?B?SDY0RXovYlU5Q2Q4M2M1NVcwTDdLUG9waGowakhtSUkwbm5GWlUyVFRBdlY4?=
- =?utf-8?B?dTdpMmFLVktHUDhsVTQ5eklNWHRUaVJuKzdKN1IwekZUVWpRTnVpaXV4cDh4?=
- =?utf-8?B?SDBucVl3Vk5DRmpJcjRkRUk1VDFwN1RnVmJ2RkxyZCt1VkFvMkFyZ2ZOWTZB?=
- =?utf-8?B?clVucTB2TkNmUXR2YTllT3lHVThOQU9QbWVHdzZsY29XQS9QY1piaWJqSTY5?=
- =?utf-8?B?cWhRbnI0eDVWWXhyZHFOUkZ2ZGlGYWdhQm5kZEZsWFYzTXhObXIrMnJQazNO?=
- =?utf-8?B?MEpGWkRFTllrU2hkeWZGMUlrbnZNb3Q5bS9qT1dNYk9ZU2ZQMnFyTVljR3lV?=
- =?utf-8?B?cGE4ZVpNYS9UV2JBMVJwWnFlTlhBZnpSVGIxSjZLYlRpTnkwN0JoL1kvUWFx?=
- =?utf-8?B?Z0JHSlI1R1VjY2cvOXRBTnJsZDJ2aE5XQlREQjNHM0ZaOGU0ejNUQkxjNklm?=
- =?utf-8?B?NTJrN0xjdjJXZ0s2N0NCV3ozSTBubGp6TTEwcGJoR1BKTW9pamUxeWs1UXpR?=
- =?utf-8?B?MXc5Z1doZkxZTlRQcEhqSWRUZ3AzYUtEWDdtLzVxQi8wOG5ZZzJwZmVuQSs5?=
- =?utf-8?B?aUlac2hBV2grTUNrcXlVZktVUDQ3NDRaTVRQbEl6T1Fuc2hnWS8rdEhGUG9w?=
- =?utf-8?B?dEhiYm41cnJiaVJrWlBZbmpDWnhGWnZIVnI0b0V1SzdVRnRxSlJkd3BjTG5h?=
- =?utf-8?B?UFIxVHZoRmVTcE9kS0JjVzkvQ3FqQ01NdnhwNVk2WlIxdFpISG1lV2hkcDBq?=
- =?utf-8?B?WnJXc3UrSStJNmYyS21mVngzMHVYUlQ5MmVITC9INmRqVHQwUjB6RFErMkI0?=
- =?utf-8?B?L210VG5MdHlXdk9ROGozUi9LYWpIbk1UR3AxaHZURGRkNngwKzlSSWVGUzBS?=
- =?utf-8?B?RVQzNWtySlpUQUxPOXhiUTQrK0FxQXlFTi9zZlloWmFaS29DVnYzaExMdmg5?=
- =?utf-8?B?aVdTMCsxL2JLMGxqZnlBdGNVSTNuNDdveCsxN2ErUGZrZHBvdDlaV2Jad0Zs?=
- =?utf-8?B?VXIxdjJLV2xBNzF3dEdCdWdXQ3FQUjdZK2MzNjBjR29FUHZMZDB1N0FhSitJ?=
- =?utf-8?B?blVLNW9sSFZEM3MrVG1uTXZNQWs5MkdRZ0thK25BTngvN2Rsb0gyM3hvSm5i?=
- =?utf-8?B?aEJSZHl3WTBvZDJ2YTJEYlRVK0RMZHhRT3MyTG1CRXc1VnRZVVZLQWJLT1N4?=
- =?utf-8?B?Ry9QOXIrZ2FVcTJjTGNSWkUwYjZpdlluN0t4L1QxOTJzcHFTYzJIdG51SFFo?=
- =?utf-8?B?dXpCWGQ4R3czMHpoZldMZkNHQWdEQXRNSk1yNSszc1doWU9qcmxwclEzUkx5?=
- =?utf-8?B?TzdCRG1IQUdqdXpMZzBLNFBpcUFmbjVjRldwYTAxVFkzM25QbTg4dTJleFdI?=
- =?utf-8?B?SWhlbzY5dHdUZ3luT1Q2NXZFUHJmMFZ1NC9UcDQydjhRWEMxZkExUHZSUnNv?=
- =?utf-8?B?ZTJ0TEQxVVg1Z3lkVkRZUkluSG43SGJ0ankrQXJ3MG8zTVpSanc1aUdQUlBK?=
- =?utf-8?B?OGh0bkNuem5FUHplazN2RVdvckkra0lWU1I0TDdhUGhyVkVRM0RHQjB6R0lx?=
- =?utf-8?Q?4fKtPj?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:VE1PR09MB3471.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(38070700021); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NW1sU0Q0bmdNcjgwYmoydlVkZ0JIRUhHTmd6TlVYZ0ROU2IrdG5WcHVxZVBD?=
- =?utf-8?B?dlBBeG14di9UUWRWd1FPS0J5SEJQaENQV0lhbnI1QUdPMU9QcnRkN3BDOU9N?=
- =?utf-8?B?K0tPRkNMZ0xCaDlVTUFlYjl6UkptRzhPbjVHaFBOc2xORGFRNXdEZDZuS2l1?=
- =?utf-8?B?MSs0bDZiMVhoSXpoY1p0MjdoWStWTTgyL1RmUmJvRXlGT2Jwd0pNZUNVZW14?=
- =?utf-8?B?c29VQThVRTE5REtoZ01laExYOEhydllBdFFpbmZVOGZudWNCK1NSY3BoTWNI?=
- =?utf-8?B?WjR5Vk9Ca3p3TURabG94NGVZUlE5UnYwTlc3VndqdFViYzhzZU1LTmdzRDdr?=
- =?utf-8?B?NjF3QnV6bVhkTUxjVkI5RS84TDljWXdpb0NZMFNZMERaN1pYNnR2b2E2ejJ2?=
- =?utf-8?B?VFBkY250dVZkR2UyMzFzVkg2K0RsandtaTduNkFDVkN4MjQvMkRHWmJHS0pG?=
- =?utf-8?B?eFNSRDkzU2JSUm5BWWFxTVBPbGlUWmdxYWpCRURvNklaQlpkMVFGbS8wQmt5?=
- =?utf-8?B?UFFCRlc4bnhDVjRuN2R6U3htSkFKMkVBeHQyZHEzNjlQU1ZhRzgvMDRoeXNC?=
- =?utf-8?B?Zkt1ZVI2aElvTjVuVjVmNGdPTk9wVFlVSlA0eURzanNHQ0xtWjdOZFBJcCtU?=
- =?utf-8?B?bjJnaU1YeEp3VWhzS2RUNWNjdThhNmFhTGUvZEp0WTBxWUpDUGlpM0VQWldK?=
- =?utf-8?B?TDNDd3Vud0RBVUJ1a0lDbHhSajZVUDdQenRhWDI0TTEyUWV6Tm81cGdNS09N?=
- =?utf-8?B?NHpmbWdoM1pES09BY2tJTlh5WVF5cU9MOVMzUEszMENmUzBSa0ZyUlNqSCti?=
- =?utf-8?B?OHNTQXJ4QjhyUlhhWmRhWFVkRHQ0NGlSeHZrWWYxYmkxY2lpUXJhYm1HUUsw?=
- =?utf-8?B?ekM1SHFSMG1UT0FSKzRCZlpaN0YzRkxta1c1My82RDlZTmJLLzhRNDRUT2hw?=
- =?utf-8?B?Yy9vY0RJWDZlY3lFa3pHNG9BTmM4SXVRKzlQbjJhSllmRVUxaUtTQTEwZEVJ?=
- =?utf-8?B?T0NNMVVLK2ZRU0dRTWt5UHovQlA4M0wzNmhLU2d3elQ4L1E4SXZVY1JPb1ZJ?=
- =?utf-8?B?Skt6ZHlDZ0Zjd1czRkh4WUNmMTVBa1l2bmhpR0REZTBPUnhFQ0lnOUQxVEdx?=
- =?utf-8?B?MVNOWW1ZUXdpSjNmMDhVbWhxaU9vTjl3RE9JNUtoZ3JrNEk2Z0U0Qk9JTXNC?=
- =?utf-8?B?eGFkTUtQZldUMWhNekx4S0d1VWxJY2NoUC9QbW90ZEp3N1JneTMrWHV1d3NF?=
- =?utf-8?B?TlYzVW1YalZLSlYySlk5MmozZ1pYNVgwZ2lRcU14QnpudGFGK1VkemxuSW5a?=
- =?utf-8?B?R0hPRnhXMjF3d0V0TzhtWVlYejk5c3NkaFpWZmxBcVVHNXpmdE4xU1VISEtT?=
- =?utf-8?B?UG1tT3pmcVlwUVdLR2FCb0IwcEZTRlBOc0NwaHprT1hBNEdtY2xEV0oxajV5?=
- =?utf-8?B?YjZBdVRhZWJYWXk3empUek1NcHpBakRUeEJibmpRYVFxSWE2ZURSSFZVZnQr?=
- =?utf-8?B?UjdweGpjNy9IS1hNNU4wK2ZGeW8wdE00V0d5czA3c3lDQldvaXFJcCtUdUlO?=
- =?utf-8?B?YXA0KzlrbkpUc0JBUmoxMkVDZHZOYWFCSDViVG5QMm1Kb2Q5bE9ndlpvTkx1?=
- =?utf-8?B?MFBIN0dzcnRXOXNsV051N21JR1VablI2NXo2SHpLdlVBdGJkR0pPdjRIdVNM?=
- =?utf-8?B?NTJKUnYrYkwwZGdxVEgxNlBpdmp4ekh4cFF5ZU9sU005MExXYTRsbWFxR0ds?=
- =?utf-8?B?QnlGcWVUTVpYOHZnMzBpTVhKU1hKQUsvcTRrY0J6ZWdDK0hENG9iUnVRT3Ba?=
- =?utf-8?B?d2M1UU5YbllQZ2ZSank0Yk5BcnJqNi9nNUZtbmd4M0RFa3BXUVUxVUwxQ0g1?=
- =?utf-8?B?dFVmcHFzSDJaQ0N2ZXc5UWEzOGJXQmNKQU5Ibll6WHlEbnorbGo1NjlWSzVu?=
- =?utf-8?B?TXNyNUltR3VmeFZzakZqRHJEZXZIdHU3S001czY3V2hKYnlweXNBeHNZQzhl?=
- =?utf-8?B?eCtTdmxPYk5JdkY2L1p4N1ZkRkhENW9xcDZLamgvSWJMKzV5SkNzU1ZGOWNJ?=
- =?utf-8?B?ck1CeVRUUXdTWkE2TUJScHZSR2ZIZ0tZOG1xKzhKbURoMFJ0ckNRRjFiZFZp?=
- =?utf-8?B?ZjJXL2ZxUHUwZng3OTh3bnJMbEZZWU14TEtFRFpVdFB6K0U0UFNrMndLQ3ZC?=
- =?utf-8?Q?P5XvYWYL3QpJcI+accrCDLE=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <850D089555CF0A4B8A892F542096A546@eurprd09.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vQnvR-0001hX-3c
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 09:33:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764772427;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5GEVcoLMRG+UDsw+yf635pEfIhNum5LmNropUw8//tg=;
+ b=YPm/WTwrs0XMKb14+wkj90UWcIRfABM9LKNYkicbd+ESGCUFtTg5VcXtzB/o/U0cBeO0yx
+ Fdgi5FAU8ap98+vLrPl37wDVcx63TQq8D8yFgvJfhX/Xr5jL5ZwK3IoFQ74VrNukVSdlrw
+ mbsoraftDoowL+zz4JtixEwJicouOG8=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-206-qEV9Kv8RMKST1CYh_vxzQg-1; Wed, 03 Dec 2025 09:33:46 -0500
+X-MC-Unique: qEV9Kv8RMKST1CYh_vxzQg-1
+X-Mimecast-MFC-AGG-ID: qEV9Kv8RMKST1CYh_vxzQg_1764772426
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8b2e4b78e35so1317276785a.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 06:33:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764772425; x=1765377225; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=5GEVcoLMRG+UDsw+yf635pEfIhNum5LmNropUw8//tg=;
+ b=InyfdmDxOKJAoPk/hQYq7dhxiImgL3sTvscC95BYf4Eo8iIkLi9MXHdRoUmyPtAddx
+ ds3/Zx6LI9ZnqSgcdf7YH9NC6DJkTxkjP2xKoFFB7kXv7VAOZ8P4tTWb8mgfqAH9+426
+ kwn3YmzzYgQV8cnpJBFpFKJefzdkHl002BYjEOrfj1FHw7qosXNlEhGi4s/RwRCrq32c
+ drbVCd6u1txKDn/FjCqugiKOloPx86Ivw/rI50icZE1pWv620VqHvbFNZ9A8UF0+f6j0
+ BFZL8u2p4uePJ5gZdZ0kPbcN7pxuiYlQ9mipM/JO5168J66TMixkvPIPIjKB7o7lHUK4
+ 7EWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764772425; x=1765377225;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5GEVcoLMRG+UDsw+yf635pEfIhNum5LmNropUw8//tg=;
+ b=Rk6wLS/LNMD5Nz7KjHhITvl3xC+UDzX4P0ePFdn4CIK5eZ3j+l7qDYQsTu1zfEhF3D
+ amdZGFaVAfvbrMVjDQEiUS4yn9NYYR8TaD01sjpCT57jFCBsN9gQfVv85+72+D1TiZcr
+ bZiz7V/FYXk52SEhHw8gPVGSFbHuzmt7TP7NzH99asrvFCgAmgP4mh/l5KTpRW2/yJh7
+ r06D0LtsWFi1jFjU0nnJnnYfLTGa89ApBgW+q6qUpHWnWbAxz0sz8pD4CynIllKQluYm
+ rti2TrxmbH04Oh0W77l4dZjNFklH99iQspoTHICjaW/olOCiq0uju/wqxh+1vo6Vql8w
+ kVGQ==
+X-Gm-Message-State: AOJu0YzhJ5MfUDK0vBzvAO43qNqDzH//gN/QohhaczIaqWZFX1MXgYwg
+ L1lgA0RzBf6Kxy3KSUXEJoqyPK0hCE859f5EQP+Xe9JVJ3ar9D9QxUrn7x8Up0MV88eVZV7Zy9l
+ Yx7QosRFTU+NauJk6fvdj6OUOwyUJEvDNYcjfyw2e5YM9AMWSrGmkABuFRC4cg8b25995QRjRYA
+ gCu67VQPVM1l+DoJX95qJCJiNKVrasqM0fINcxpQ==
+X-Gm-Gg: ASbGncsHiZu7fxLZ5EsozTAE0W/FLA8agy2PjHkx4vImyBMLPZ1+q7PdN7WO8lE/KIE
+ F2vZCMQyYbbPekAlJtzt5trPF1oABtuObElk7Bq2WxW8oWDXz4sKUNBe4YG/louDUaLMa546j40
+ jCBVRIYX4UufYBQiEvydW03bslH0On3jstEptWV8qP2mk4Gvhv0eLiBr4I767PsNPhmXTkqFQDJ
+ cWqRCd5/UJxROMrgSNkd/5TUFh8/UCQjgVD+DEFLCZruZWWOzwKLCa5y6NzTEHOm9r90VZc2gni
+ JAFqdpGjMhr/K44SF6QfOcziJ56rqhGNiTfAcMSd3YYDG9EDt0LHNte33i17A3CDlfKpxfxc6+m
+ NiOc=
+X-Received: by 2002:a05:620a:2953:b0:8b2:ea5a:4149 with SMTP id
+ af79cd13be357-8b5e699a3afmr303857385a.65.1764772425422; 
+ Wed, 03 Dec 2025 06:33:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF233AyYMQVwgqoqFAy63P9ioZHANywtqyW1X998uMn/zTZRsVNYUtL4qsNxDdqfTWgdReT8A==
+X-Received: by 2002:a05:620a:2953:b0:8b2:ea5a:4149 with SMTP id
+ af79cd13be357-8b5e699a3afmr303850385a.65.1764772424771; 
+ Wed, 03 Dec 2025 06:33:44 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8b5299a5377sm1296799585a.14.2025.12.03.06.33.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Dec 2025 06:33:44 -0800 (PST)
+Date: Wed, 3 Dec 2025 09:33:43 -0500
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH for-11.0 v2 0/7] migration: Error reporting cleanups
+Message-ID: <aTBKR-zsOltzi8hB@x1.local>
+References: <20251201194510.1121221-1-peterx@redhat.com>
 MIME-Version: 1.0
-X-OriginatorOrg: htecgroup.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: VE1PR09MB3471.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: be7b765a-8968-41e3-5c65-08de3278a21b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Dec 2025 14:31:23.0317 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: UteTmvfBapA5SfRscPglSuB3VJEEAfcWPYTHDWHb4xymbzXJlTqebbI7k8RFz2Hn8eXk2DnFTjYenVLv0rc6Bzbn8VGf2LqazYodIHbY+uU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DUZPR09MB6851
-Received-SPF: pass client-ip=2a01:111:f403:c200::3;
- envelope-from=Djordje.Todorovic@htecgroup.com;
- helo=DU2PR03CU002.outbound.protection.outlook.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251201194510.1121221-1-peterx@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -188,16 +121,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGksDQoNClRoYW5rcyBhIGxvdCBmb3IgdGhlIGZlZWRiYWNrIQ0KDQpEam9yZGplDQoNCg0KT24g
-My4gMTIuIDI1LiAxMjo1MywgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IENBVVRJ
-T046IFRoaXMgZW1haWwgb3JpZ2luYXRlZCBmcm9tIG91dHNpZGUgb2YgdGhlIG9yZ2FuaXphdGlv
-bi4gRG8gDQo+IG5vdCBjbGljayBsaW5rcyBvciBvcGVuIGF0dGFjaG1lbnRzIHVubGVzcyB5b3Ug
-cmVjb2duaXplIHRoZSBzZW5kZXIgDQo+IGFuZCBrbm93IHRoZSBjb250ZW50IGlzIHNhZmUuDQo+
-DQo+DQo+IEhpLA0KPg0KPiBPbiAzLzEyLzI1IDEyOjI0LCBEam9yZGplIFRvZG9yb3ZpYyB3cm90
-ZToNCj4+IEhpIGFsbCwNCj4+DQo+PiBXaGF0IGlzIHRoZSBzdGF0dXMgZm9yIHRoaXM/IDopDQo+
-DQo+IFNlcmllcyBsb29rcyBPSyBmb3IgYmVpbmcgcXVldWVkIGJ5IEFsaXN0YWlyIChSSVNDLVYg
-dHJlZSkuDQo+IFFFTVUgdHJlZSBpcyBub3cgZnJlZXplZCB1bnRpbCB0aGUgbmV4dCByZWxlYXNl
-ICh2MTAuMi4wKS4NCj4gV2Ugbm93IGFsbCB3YWl0IHRoZSB0cmVlIHRvIHJlLW9wZW4gZm9yIGRl
-dmVsb3BtZW50Li4uDQo+DQo+IFJlZ2FyZHMsDQo+DQo+IFBoaWwuDQo+DQo+Pg0KPj4gQmVzdCBy
-ZWdhcmRzLA0KPj4NCj4+IERqb3JkamU=
+On Mon, Dec 01, 2025 at 02:45:03PM -0500, Peter Xu wrote:
+> Based-on: <20251125070554.2256181-1-armbru@redhat.com>
+> 
+> This series is based on Markus's recent fix:
+> 
+> [PATCH] migration: Fix double-free on error path
+> https://lore.kernel.org/r/20251125070554.2256181-1-armbru@redhat.com
+> 
+> v2:
+> - Added R-bs
+> - Patch 1:
+>   - update commit message on s/accidentally merged/merged without proper
+>     review/ [Markus]
+> - Patch 2:
+>   - Added a new follow up patch here from Markus to poison Error's autoptr
+> - Patch 3:
+>   - Rename migration_connect_set_error to migration_connect_error_propagate
+>     [Markus]
+>   - Add comments in commit log for both migrate_connect() and the rename
+>     [Markus]
+> - Patch 4:
+>   - Rename multifd_send_set_error to multifd_send_error_propagate [Markus]
+> - Patch 6:
+>   - Make migrate_error_propagate() take MigrationState* as before [Markus]
+>   - Remove the one use case of g_clear_pointer() [Markus]
+>   - Touch up commit message for the change
+> 
+> This series should address the issues discussed in this thread here:
+> 
+> https://lore.kernel.org/r/871plmk1bc.fsf@pond.sub.org
+> 
+> The problem is Error is not a good candidate of g_autoptr, however the
+> cleanup function was merged without enough review.  Luckily, we only have
+> two users so far (after Markus's patch above lands).  This series removes
+> the last two in migration code and reverts the auto cleanup function for
+> Error.  Instead, poison the auto cleanup function.
+> 
+> When at it, it'll also change migrate_set_error() to start taking ownership
+> of errors, just like what most error APIs do.  When at it, it is renamed to
+> migrate_error_propagate() to imply migration version of error_propagate().
+> 
+> Comments welcomed, thanks.
+> 
+> Markus Armbruster (1):
+>   error: Poison g_autoptr(Error) to prevent its use
+> 
+> Peter Xu (6):
+>   migration: Use explicit error_free() instead of g_autoptr
+>   Revert "error: define g_autoptr() cleanup function for the Error type"
+>   migration: Make migration_connect_set_error() own the error
+>   migration: Make multifd_send_set_error() own the error
+>   migration: Make multifd_recv_terminate_threads() own the error
+>   migration: Replace migrate_set_error() with migrate_error_propagate()
+> 
+>  include/qapi/error.h             | 20 ++++++++++++-
+>  migration/migration.h            |  2 +-
+>  migration/channel.c              |  1 -
+>  migration/cpr-exec.c             |  5 ++--
+>  migration/migration.c            | 51 +++++++++++++++-----------------
+>  migration/multifd-device-state.c |  6 ++--
+>  migration/multifd.c              | 30 +++++++++----------
+>  migration/postcopy-ram.c         |  5 ++--
+>  migration/ram.c                  |  4 +--
+>  migration/savevm.c               | 17 +++++------
+>  10 files changed, 73 insertions(+), 68 deletions(-)
+
+Thanks for the reviews, I queued all 8 patches for 11.0 (with small
+tweaks per discussion).
+
+-- 
+Peter Xu
+
 
