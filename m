@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71230D12690
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 15:32:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7B0BD15DA1
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 15:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQoq9-0000Bl-JJ; Wed, 03 Dec 2025 10:32:25 -0500
+	id 1vQp63-0004qp-Al; Wed, 03 Dec 2025 10:48:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQoq8-0000AG-6x; Wed, 03 Dec 2025 10:32:24 -0500
+ id 1vQp5g-0004pA-4D; Wed, 03 Dec 2025 10:48:30 -0500
 Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQoq6-0004bE-CA; Wed, 03 Dec 2025 10:32:23 -0500
+ id 1vQp5e-0001f4-9K; Wed, 03 Dec 2025 10:48:27 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwAXHJgCWDBpxF35Ag--.309S2;
- Wed, 03 Dec 2025 23:32:18 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBnbyfAWzBphgcsAQ--.57476S2;
+ Wed, 03 Dec 2025 23:48:16 +0800 (CST)
 Received: from [192.168.31.152] (unknown [113.246.234.131])
- by mail (Coremail) with SMTP id AQAAfwDnP+0BWDBpgVQJAA--.3606S2;
- Wed, 03 Dec 2025 23:32:17 +0800 (CST)
-Message-ID: <4636f0d5-cdf2-4900-b43e-020fc3a45df3@phytium.com.cn>
-Date: Wed, 3 Dec 2025 23:32:17 +0800
+ by mail (Coremail) with SMTP id AQAAfwAXcO2_WzBp51QJAA--.18499S2;
+ Wed, 03 Dec 2025 23:48:15 +0800 (CST)
+Message-ID: <8ee83b18-9121-43df-b7e7-94be172cf511@phytium.com.cn>
+Date: Wed, 3 Dec 2025 23:48:13 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 14/21] hw/arm/smmuv3: Add access checks for MMIO registers
+Subject: Re: [RFC v3 20/21] hw/arm/smmuv3: Initialize the secure register bank
 To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Chen Baozi <chenbaozi@phytium.com.cn>,
@@ -37,19 +37,19 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Jean-Philippe Brucker <jean-philippe@linaro.org>,
  Mostafa Saleh <smostafa@google.com>
 References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012151303.4129730-1-tangtao1634@phytium.com.cn>
- <b5e2e404-1067-4ea2-bede-deaf692b2973@redhat.com>
+ <20251012151542.4131398-1-tangtao1634@phytium.com.cn>
+ <a63b3689-ef46-48b1-ae28-34976ab34d0b@redhat.com>
 From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <b5e2e404-1067-4ea2-bede-deaf692b2973@redhat.com>
+In-Reply-To: <a63b3689-ef46-48b1-ae28-34976ab34d0b@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAfwDnP+0BWDBpgVQJAA--.3606S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWkvSDQGnQAFst
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwAXcO2_WzBp51QJAA--.18499S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWkvSDQGnQAGsu
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxAr4DZFW8Cr1xZryxKFW3Wrg_yoW5Jw4fpw
- 1fJ3ZI9F4DJ3WxJ3Way3WjqF15G397Kr17tr47Gr18Zw1jvr1rtF4UKr4FgFyDWryUAw48
- ZF1jgFnxur1qy3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoW7CrW3JFy8JF1ktFykuFWfKrg_yoW8Aw17pa
+ n7G3Z0ka4UG3W8WrZFqr1rAF1Iq3ySqr1UCrW5KF15Aw15Arn5JryUKayYgFZakrZ8CF40
+ 9F4j9aykZrsxZFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
 Received-SPF: pass client-ip=162.243.164.118;
@@ -77,67 +77,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Eric,
 
-On 2025/12/3 00:31, Eric Auger wrote:
+On 2025/12/3 00:36, Eric Auger wrote:
 > Hi Tao,
 >
-> On 10/12/25 5:13 PM, Tao Tang wrote:
->> The SMMUv3 model was missing checks for register accessibility under
->> certain conditions. This allowed guest software to write to registers
->> like STRTAB_BASE when they should be read-only, or read from
->> GERROR_IRQ_CFG registers when they should be RES0.
+> On 10/12/25 5:15 PM, Tao Tang wrote:
+>> Initialize the secure register bank (SMMU_SEC_SID_S) with sane default
+>> values during the SMMU's reset sequence.
 >>
->> This patch fixes this by introducing helper functions, such as the
->> smmu_(reg_name)_writable pattern, to encapsulate the architectural
->> access rules. In addition, writes to registers like STRTAB_BASE,
->> queue bases, and IRQ configurations are now masked to correctly
->> handle reserved bits.
+>> This change ensures that key fields, such as the secure ID registers,
+>> GBPA reset value, and queue entry sizes, are set to a known-good state.
+>> The SECURE_IMPL attribute of the S_IDR1 register will be introduced
+>> later via device properties.
 >>
->> The MMIO handlers are updated to call these functions before accessing
->> registers. To purely fix the missing checks without introducing new
->> functionality, the security context in the MMIO handlers is explicitly
->> fixed to Non-secure. This ensures that the scope of this patch is
->> limited to fixing existing Non-secure logic.
+>> This is a necessary step to prevent undefined behavior when secure SMMU
+>> features are subsequently enabled and used by software.
 >>
->> If a register is not accessible, the access is now correctly handled
->> and a guest error is logged, bringing the model's behavior in line with
->> the specification.
->>
->> Fixes: fae4be38b35d ("hw/arm/smmuv3: Implement MMIO write operations")
->> Fixes: 10a83cb9887e ("hw/arm/smmuv3: Skeleton")
 >> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 >> ---
->>   hw/arm/smmuv3.c | 304 +++++++++++++++++++++++++++++++++++++++++++++++-
->>   1 file changed, 298 insertions(+), 6 deletions(-)
+>>   hw/arm/smmuv3.c | 9 +++++++++
+>>   1 file changed, 9 insertions(+)
 >>
 >> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index f9395c3821..f161dd3eff 100644
+>> index b44859540f..0b366895ec 100644
 >> --- a/hw/arm/smmuv3.c
 >> +++ b/hw/arm/smmuv3.c
->> @@ -1321,6 +1321,127 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage,
->>       }
->> ------------------------------<snip>------------------------------
->>
->>
->>
->> ------------------------------<snip>------------------------------
+>> @@ -331,6 +331,15 @@ static void smmuv3_init_regs(SMMUv3State *s)
+>>       bk->gerrorn = 0;
+>>       s->statusr = 0;
+>>       bk->gbpa = SMMU_GBPA_RESET_VAL;
 >> +
->>           bank->gerror_irq_cfg1 = data;
->>           return MEMTX_OK;
->>       case A_GERROR_IRQ_CFG2:
->> @@ -1644,12 +1824,32 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->>           }
->>           return MEMTX_OK;
->>       case A_STRTAB_BASE: /* 64b */
->> +        if (!smmu_strtab_base_writable(s, reg_sec_sid)) {
-> would you mind splitting this patch into 2, changes related to
+>> +    /* Initialize Secure bank */
+>> +    SMMUv3RegBank *sbk = &s->bank[SMMU_SEC_SID_S];
+>> +
+>> +    memset(sbk->idr, 0, sizeof(sbk->idr));
+>> +    sbk->idr[1] = FIELD_DP32(sbk->idr[1], S_IDR1, S_SIDSIZE, SMMU_IDR1_SIDSIZE);
+>> +    sbk->gbpa = SMMU_GBPA_RESET_VAL;
+>> +    sbk->cmdq.entry_size = sizeof(struct Cmd);
+>> +    sbk->eventq.entry_size = sizeof(struct Evt);
+> what about prod, cons, base? Don't they need to initialized as for NS.
 >
-> smmu_gerror_irq_cfg_writable and changes related to smmu_strtab_base_writable if confirmed they are effectively independent on each others
+> Also I am surprised only one IDR field is set. No need for some others?
 >
 > Eric
 
 
-Sure. I'll split it in V4. Thanks for your suggestion.
+I’ll add the missing initializations in the next version, and will try 
+to keep the secure and non-secure banks as close to mirrored as 
+possible, and only diverging where a field doesn’t exist on one side.
+
+
+Thanks,
 
 Tao
 
