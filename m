@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A8D8D15DB7
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 17:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C91D15DB7
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 17:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQqWK-0004uW-MZ; Wed, 03 Dec 2025 12:20:04 -0500
+	id 1vQqXd-0005oy-Lh; Wed, 03 Dec 2025 12:21:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vQqWG-0004sM-Rh
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 12:20:00 -0500
-Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQqXc-0005oU-FT
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 12:21:24 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1vQqWE-0002mO-Dl
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 12:20:00 -0500
-Received: by mail-ot1-x336.google.com with SMTP id
- 46e09a7af769-7c75fc222c3so2853488a34.0
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 09:19:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQqXa-00036m-Rg
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 12:21:24 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-477b1cc8fb4so53255e9.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 09:21:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1764782397; x=1765387197; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1764782480; x=1765387280; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5M32mqkAIot2qvrxmcQG0qzK+Aet+B+6X3OipO/Rt3k=;
- b=gtkDdarCrhPopsynzQBIU3EkIewD8h7+lmFoRb8tZPICwxOvTnuK0xtDzrMvFil7FE
- gKLd9iZ7lnj966HwUaJIMvv6DvPdDvMcsHL7JlzkC3AMeBq/HGwIzLLO3Qtgq1Ck1acH
- 9JOZfW2R52gcJ+/cXE71zJ7q0wfyAhDKlQgdJQHiA7R3hMAN1dHvEcTZOufBHbrBnPZj
- aNWm2aDUt33k3HStOTwRp8qOalSuXQJR4rBC3ANdMrmFadkKUUXmqcYOdGf4g6R/RKAq
- q7gnC2C9y0ApyDtQQNxWSTLsZMIwsbjpjrTxjXKo8MMglm30COgBJOWspQDj2vobixLo
- 9U5A==
+ bh=GHqajnmIxGvXg9K0u2NS8NvNPE9iYsqzlsGnJyvTnGI=;
+ b=F4NV/j96XSYA55/WIZAF9G0nZfdCpFC09SOnyCO/ZrPNecIt6zZkVifNKo3xQZWB3Q
+ ZeqTd/Yfjm/qD1I4TnyQKUgBGJFwGc2e7GwfqCEfReZtWCtsX9ly7Xx5+8dxQBHUZOtS
+ HGDTS/3M3o6TtJuHK/UTpdkaVzd/2RqdJZBoGvp8bJYRzdm2BKYU0prjuufV3igvoDRb
+ SIeEJRIPuYdpRMrr18I8CxyyQnkvLOvy7tHzaZMOVcKqfAwNd/uqzNQK6WN7GAfAv1Jw
+ k8MKA9Es1Ov3nMW3V0O/ckcujXPx1GY9OyNmIVv4tP5T8kfiCpvUM+quJwSIdIe4dicr
+ yN4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764782397; x=1765387197;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1764782480; x=1765387280;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5M32mqkAIot2qvrxmcQG0qzK+Aet+B+6X3OipO/Rt3k=;
- b=mhZkH3YZ+hwZIfvXstK4EaL1GCADKyDuicWI/8HevlMZFTXXmEnEFaozj652tkEr4W
- BSszTSDF+6wKeAB33aZMe0tAydNnyUsTKdVrSYJd47FTcCFU2IHXj1Det80H2R4SYW5U
- gJ98bkacCA6K/3kKoMgNZ7UXPzm0efmb0K1tfwC6urUR4Q1nV39/8RTeDhQvldJbdgM6
- iML0Z2qXbFOkRxe7LatSDOxy9axOT0oMqnu4XC0ynhcWN9ePlT36pcAyBC5IDtpmsS/F
- FG98VCmFjOC2OFiyGBnX/o5Ml8Q2rvD0Xpa07UFIYf1E+jUzHloczV8OFoIK1A6pukuO
- niYw==
+ bh=GHqajnmIxGvXg9K0u2NS8NvNPE9iYsqzlsGnJyvTnGI=;
+ b=L8WQloCiYn605IlW2VGUaLq/RGTdYkTFmUDTMwmqOESfG6wTddO67nVkkn0cInO7w7
+ YWFvia6EQSlM01iUolP0HXEf3rZfZWpblNP8anilFW6LX/Zz9rZmdDbJq9rWU6i7hF3W
+ fU1lkHmk5/zjBHa5ZeKwIUlD6z6LeaxqS+yDkx165komkm7UNZ1feqluCbTsduzEGTFi
+ IIc0s7okPljpxsg0awtXvLBq6TNIMU6W6V8/8YUXQs09D/2c4oH02hXommoyl19K+84e
+ KqGQgJN/vutAruqFfThS33KHcL/PwnTYygdz8tgnJufoYPO8XsOgPpfPgBIyfOvF6RHT
+ KVuQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0Xj0EiHigkBqt4Mq1hGSk2m53hxWnqsy3CLTOPcu/eIg/X/y+ruicGePc+mVJKqkLw0gc4ZQhrAPe@nongnu.org
-X-Gm-Message-State: AOJu0YxkTX4Rm9+RzG4dzP4k8nTOn9m0Fc9f1e4OupgGU4bHODmvuvYE
- yI0NbDcPJpQGU2773oiF0Ac0WStD5f0k4Gh9i6nm5Fy5UZYMNuGridkOwGc2zZSm0K4=
-X-Gm-Gg: ASbGncuBVBHRgnj9M52k9to8FOWR99kghu6KOom03oAR+SiC6fkC1DlKTv902a+qwD7
- M6CRTbCaaIRthqOXG8BzBsVk8MmbI6F5u/zu3kgSb8bnICFGqDGZbro3IYr1SXV9PVhQXTXhn7i
- v6c7yyFYr9S1qwSFwbRG+xoOKSP82H7GYq24gD8QWopqhPtqPT+w7+F3+3pK3TC3K937kJ4498S
- 2EVf+l1xmcg5XJn7eFi0RXWVak1ITZyVUjT/2/1hrixnFgTbrKgaiSMcORmzVz6DX7209XScb1r
- Y4tH3Ov3BgRcg0S+LNXaLdIMxv2Y3uTdAebBDUk08pjipVxJjAH/wBZ2ctwTAA0beCV1hDA5UN4
- r5W22ZQaclVwPvRtzBuvH80FwojCt5y7HBW0zDas8p8WcHGE3yY/6IcgrA4dKGOKPRZisx3XLpl
- idz9+AEXOWMKHqQrdc/Qq8wJa0oAQ=
-X-Google-Smtp-Source: AGHT+IEup/LUr/d0da63nhvgNSCNupUzv/Zo1YPFq5nmpOGsOr/FxgamqZqy43/R0JAMCttWASK2kQ==
-X-Received: by 2002:a05:6830:6dc5:b0:7c7:5770:d2bd with SMTP id
- 46e09a7af769-7c94db475c6mr1573293a34.12.1764782396847; 
- Wed, 03 Dec 2025 09:19:56 -0800 (PST)
-Received: from [192.168.68.110] ([189.110.107.217])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7c910025f8bsm8927454a34.29.2025.12.03.09.19.52
+ AJvYcCVb23CW2hsKe55dHcz4Qfyln25OdCZvyt0sgpLe+eI+hoIgCTK5zLg5eYsV3pzLQAl269UsvoYaNrNt@nongnu.org
+X-Gm-Message-State: AOJu0Yzpc5SxQMC6wAsmxUBkXBNSGKv795fAy7BMx7IkncfpQQavyhKF
+ 2uROO3AFKsDuSc60JPVrvcmfC34tbFspNQeJ4uyqVMVw5scTMOEZ8KEOIa98v+cF1dE=
+X-Gm-Gg: ASbGncsD+lMvvK8t2UTv7Jb6FlqwNf6IF1UWBTKY5OCtggbiz+j5tfzyK1s4BslKH18
+ +7jCRmWgFkoLd2qdhrZJ7YOP5BK+qVbnEu6abXSteMvofjI5eO3VNNyan6V/xEFAZ0fKb6xDXkX
+ 8XkfQVy1xlj8upZGpfpfaCBcTEYtTIDyIenIE5n2qlgUOXyLkTVCqrjPR4aakpolrbV/E/eTwcP
+ vCgVZVNhofoNUV1NQRB2fWD2Jv0C8Nnt6ImwB+SFot0d10V+9IZGdUKZgWe79vDHp1dsSn5/K2k
+ n/T7v86MrSD6uEf2LqKhssfKAXio3nbS1IMEikQX6ECi41XxwnniCexBaSZknDKUa2s6fuVhrLY
+ 290256B138GWnOb2ANzrYDiEBOFBjLnhkQdPihF8uj4iyQM2W+oVeIrkR5eS9CKcKmTO1vgGFPD
+ ettTcDO1E7AguNwgn3Urdp5ATOmRfJmHrm8iL2rqTZ/kFWzL2zLvvY97QlkFJkwuYE
+X-Google-Smtp-Source: AGHT+IGNAYDZWP/+L7hzObh8qymRC2eQghv3moGycgME8uAUaPmXdVfQlq8qdyCLM/bVRGwi4w9NaA==
+X-Received: by 2002:a05:6000:290e:b0:429:c4bb:fbbb with SMTP id
+ ffacd0b85a97d-42f73173ba8mr3571023f8f.13.1764782479938; 
+ Wed, 03 Dec 2025 09:21:19 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42e1ca1a6fesm41491085f8f.20.2025.12.03.09.21.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Dec 2025 09:19:56 -0800 (PST)
-Message-ID: <6163ffd5-b0ff-4993-9db2-36492702487c@ventanamicro.com>
-Date: Wed, 3 Dec 2025 14:19:51 -0300
+ Wed, 03 Dec 2025 09:21:19 -0800 (PST)
+Message-ID: <e6e3c7fb-0d3b-44b4-8a34-e07359de82af@linaro.org>
+Date: Wed, 3 Dec 2025 18:21:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 5/5] docs/system/riscv: add documentation for k230
- machine
-To: Chao Liu <chao.liu@zevorn.cn>, richard.henderson@linaro.org,
- paolo.savini@embecosm.com, npiggin@gmail.com, ebiggers@kernel.org,
- palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, chao.liu@openatom.club,
- hust-os-kernel-patches@googlegroups.com
-References: <cover.1764493931.git.chao.liu@zevorn.cn>
- <a303c6a1f48e7ba076bb62d78084d0008ae39526.1764493931.git.chao.liu@zevorn.cn>
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: Re: [PATCH v3 4/6] tcg/tci: Disable -Wundef FFI_GO_CLOSURES warning
 Content-Language: en-US
-In-Reply-To: <a303c6a1f48e7ba076bb62d78084d0008ae39526.1764493931.git.chao.liu@zevorn.cn>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20251203161500.501084-1-richard.henderson@linaro.org>
+ <20251203161500.501084-5-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251203161500.501084-5-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-ot1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,104 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-This patch won't build in my env:
-
-[3031/3032] Generating docs/QEMU manual with a custom command
-FAILED: docs/docs.stamp
-/usr/bin/env CONFDIR=etc/qemu /home/danielhb/work/qemu/build/pyvenv/bin/sphinx-build -q -W -Dkerneldoc_werror=1 -j auto -Dversion=10.1.92 -Drelease= -Ddepfile=docs/docs.d -Ddepfile_stamp=docs/docs.stamp -b html -d /home/danielhb/work/qemu/build/docs/manual.p /home/danielhb/work/qemu/docs /home/danielhb/work/qemu/build/docs/manual
-/home/danielhb/work/qemu/docs/system/riscv/k230.rst: WARNING: document isn't included in any toctree
-ninja: build stopped: subcommand failed.
-
-
-
-This diff fixes it:
-
-
-$ git diff
-diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
-index 89b2cb732c..2103ff6173 100644
---- a/docs/system/target-riscv.rst
-+++ b/docs/system/target-riscv.rst
-@@ -66,6 +66,7 @@ undocumented; you can get a complete list by running
-  .. toctree::
-     :maxdepth: 1
-  
-+   riscv/k230
-     riscv/microblaze-v-generic
-     riscv/microchip-icicle-kit
-     riscv/shakti-c
-
-
-
-Thanks,
-
-Daniel
-
-
-On 11/30/25 6:21 AM, Chao Liu wrote:
-> Add documentation for k230 virt reference platform.
+On 3/12/25 17:14, Richard Henderson wrote:
+> Since we build TCI with FFI (commit 22f15579fa1 "tcg: Build ffi data
+> structures for helpers") we get on Darwin:
 > 
-> Signed-off-by: Chao Liu <chao.liu@zevorn.cn>
+>    In file included from ../../tcg/tci.c:22:
+>    In file included from include/tcg/helper-info.h:13:
+>    /Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/usr/include/ffi/ffi.h:483:5: warning: 'FFI_GO_CLOSURES' is not defined, evaluates to 0 [-Wundef]
+>      483 | #if FFI_GO_CLOSURES
+>          |     ^
+>    1 warning generated.
+> 
+> This was fixed in upstream libffi in 2023, but not backported to MacOSX.
+> Simply disable the warning locally.
+> 
+> Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   docs/system/riscv/k230.rst | 48 ++++++++++++++++++++++++++++++++++++++
->   1 file changed, 48 insertions(+)
->   create mode 100644 docs/system/riscv/k230.rst
-> 
-> diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
-> new file mode 100644
-> index 0000000000..3e6ca295df
-> --- /dev/null
-> +++ b/docs/system/riscv/k230.rst
-> @@ -0,0 +1,48 @@
-> +Kendryte K230 virt reference platform (``k230``)
-> +==========================================================================
-> +The ``k230`` machine is compatible with with Kendryte K230 SDK.
-> +
-> +The K230 is a chip from the AIoT SoC series made by Kendryte ® — a part of
-> +Canaan Inc. It uses a brand-new multi-heterogeneous unit accelerated computing
-> +structure.
-> +
-> +This chip has 2 RISC-V computing cores and a new-generation KPU (Knowledge
-> +Process Unit) smart computing unit.
-> +
-> +It has multi-precision AI computing ability, works with many common AI computing
-> +frameworks, and for some typical networks, its usage rate is over 70%. Besides,
-> +the K230 chip supports many peripheral connections and has several special
-> +hardware acceleration units (like 2D and 2.5D accelerators). It can speed up
-> +different tasks (such as image processing, video processing, audio processing
-> +and AI computing). It also has many good features: low delay, high performance,
-> +low power use and fast start-up.
-> +
-> +For more information, see <https://www.kendryte.com/en/proDetail/230>
-> +
-> +Supported devices
-> +-----------------
-> +The ``k230`` machine supports the following devices:
-> +
-> +* 1 c908 cores
-> +* Core Local Interruptor (CLINT)
-> +* Incoming MSI Controller (IMSIC)
-> +* 2 K230 Watchdog Timer
-> +* 4 UART
-> +
-> +Boot options
-> +------------
-> +The ``k230`` machine can start using the standard ``-bios``
-> +functionality for loading the boot image. You need to compile and link
-> +the firmware, kernel, and Device Tree (FDT) into a single binary file with
-> +K230 SDK(k230_canmv_defconfig), such as ``uboot``.
-> +
-> +Running
-> +-------
-> +Below is an example command line for running the ``k230``
-> +machine:
-> +
-> +.. code-block:: bash
-> +
-> +   $ qemu-system-riscv64 -machine k230 \
-> +      -bios k230_sdk/output/k230_canmv_defconfig/little/uboot/u-boot \
-> +      -nographic
+>   include/tcg/helper-info.h | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
