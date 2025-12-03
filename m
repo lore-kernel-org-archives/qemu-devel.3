@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07493D116F3
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A131D1266D
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:51:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQiWd-0003GR-2i; Wed, 03 Dec 2025 03:47:51 -0500
+	id 1vQia8-0004v3-WB; Wed, 03 Dec 2025 03:51:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQiWb-0003G8-8A
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 03:47:49 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQia4-0004ud-IF
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 03:51:24 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQiWZ-0003As-N5
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 03:47:49 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4779a637712so40470995e9.1
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 00:47:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQia2-0003iu-UT
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 03:51:24 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-42e2d44c727so1777856f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 00:51:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764751665; x=1765356465; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yyd626JdZ/YYY28SKVRVVIZGCfbD1/LEXubgu34Cic4=;
- b=eszZ9DxIE6v/G6r6UuRRUqpxopHT/h1Q9Z2XXyNM+NQe4/Q2C5OytPEcc1zk6Br68B
- 03UVHD1Nsj0rUrZ4nyNkqcUSwyfItFkOkekHS5VP/vhaIcsN7r5t2f38/tZg5eNjvwvd
- jLoGvo6nJgy3S1h7WLOdmycEWbdEQcAaii/txqDFIJo1hmljaR6EJqJPo+pUq9d/UR6u
- ln/MnMf/McPO9dH/cMyOcMarslMLd3U6RCfqZ4eArg9sFPlc9YaVDGQY/s0rYjoIompQ
- uJks8G80GQ+/2Vy4Ryh+mKC2ee3CXgBpqOVqk313CvanSIKuqrONyvI8mcxk14Bs5rmU
- p4mw==
+ d=linaro.org; s=google; t=1764751880; x=1765356680; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+KOuTArHrH3TSVaiu7Nfp9Vmwdn9GEDudyjQq0VY6LA=;
+ b=Hat3EuNdyJYzwE1e8WTrwzYYV4hsF8LU0nQkN8n2xqLZuFddzG24tmZOOoRyaJCbxi
+ 1A3ry/7VWYwsfxIbry/stAqdbeh0SrbOBgHI8Nc7pv1g4m14CCKN2gna/R79KjPT7+9M
+ YHE2D1ZmTzlZyhLLegXpd5mXETOYVBZCCEfIIrPUxJ71PNj9+ouX1HSPUvTZoEYahs7J
+ lu10yKVUMg9RP5FYq8PkES8w0ZfN/PuSYs7p79Y3oRmA7MXR/FDGJSTZanKLqx5Oe8td
+ LJU9priCXXDKgsXIVCizRib7EnuJ0Vcg/rGn6RbwTHhe3mi7kqElTJqzgx8RvIOUusoA
+ lmCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764751665; x=1765356465;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yyd626JdZ/YYY28SKVRVVIZGCfbD1/LEXubgu34Cic4=;
- b=JzPpv+588zMwbysuk4zKykLuWJrY2iWyrvk9M5RAipbpJlihS6ueec7iHtC55gYfjL
- 1LLWUfJ4iGayjOYUZyt2Cg9N6RDw7jDCvK5JkPmf+w9zsRWddX90lyCxnqfu7kQLSjR0
- Vd9de12r+fNJw2uli49h/zTXQGeNMxZ7uoajQRqo2yBhlwITfVgCNDC97rHJtRY8A2om
- IPUSX6hb/bwJa91xd3vI8k+Xp0tsAg/lwotk2OKorYh9PQxqnUt03CPSzi5yZTB7/zyb
- 7AZpV13caLpUANS1vDoG3GgvoIBsk9KFPmq8Zd3UrOSFYemOQUvCbeMVjOew52RscQ5i
- SqEg==
-X-Gm-Message-State: AOJu0YwboucX+knDKbAl3gaRi7KzuulkcUJ1WtrPn898vB22ME/AWzeU
- Um73drzeyMGKaJOqJnup40hviVbFQA3yaYOrSjUQh6BahZ46pVOY0fU8pPI/ObQNc0LIaFODJvA
- a8CnhVII=
-X-Gm-Gg: ASbGncuzdLeZ967XdxmyuDE4TGBhzpL5Js6XWBxI6QYN+tHvL8hx5ElAnSaX8E634BP
- GiQDF0wY2IOMuOR054YAu6R8snWhGZzqKgDrYLzUrBahEoVS4C0wEGwo7PRFuI48fdNyPGifOay
- 48oL4scY62+4a6jP6MhCeiUZU9viAY888F6+EN2qoXSr44FuMJB9DlRWyjRZYKnK0RkoOHVTpoX
- u5ZEAMfmVQYtr88cWAAKjy731UQmvRr0zF8BgkpTigpYkmNwnfM+rnJ+vjhF3Xzr8vI0JRuRk7j
- 5eMVMc83H+UyBP0k9SLVwel6ZQKPa2y5KMX2k0oaevSuNlTOVbcGU2Qk5yIiHO7C9TqV0qHguSz
- IZJWBWyNwbvJl/6USnWwW6yA/rorhACkhKF60sdZ772W3ukFIOR+/fiO47x8Kv+1aJ1SEetXBl8
- L3MY9Nr9yjAESvs827Poqk3WkM5uaI6x3hJWpCKf1+lbeTDvlb7e1NsmzRhiqd
-X-Google-Smtp-Source: AGHT+IGMFZ4BEUUnJKkfd+74sc/ihLW+WIhc16QhWZk0mUlSnRa8M0GmMab5gsLF2Rp5aZk6ExzLig==
-X-Received: by 2002:a05:600c:a49:b0:475:da1a:53f9 with SMTP id
- 5b1f17b1804b1-4792aef4202mr13097565e9.14.1764751665551; 
- Wed, 03 Dec 2025 00:47:45 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1764751880; x=1765356680;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+KOuTArHrH3TSVaiu7Nfp9Vmwdn9GEDudyjQq0VY6LA=;
+ b=bYUe5PNzi/pephsb1K7gHWkX2JyRfmjhJqjhwNgb+OqO1r5qcaErSpQnF4Mgc0CTuE
+ FQ0Vtq9AvlJSXFv4N95oMkqU/7/v6dqve44uAuSr4yhJfHj2tLeLSY2nBFn8zKWdskZ3
+ BOWUGEXjhvSJw8GpKOQDoVGHjObVXLzZDKJyfjog0JYPBEDuPFH/63WGotEvr0evMEOf
+ WZla1N8cMgT3Gh2VWxIZGcrhhmRrbNAAw1Zwt4Y06hsinqfl3zbukSqKraOAbexghXMa
+ MKFOH4CgLOnKyv4mQT6wtMjXQh5mNwMKN8LbdgsHsAN1TvT4nRF0sLAlC1QOw95EAqmz
+ v9tw==
+X-Gm-Message-State: AOJu0YyXWbqm4Hqmr3NmRsH5jBlHQy1L+XwIps6JlBFXNJw5Y5vGKmZh
+ i35nJNQnBzAnnqbGDR+2XenEvveEej2AlDxurqnPjkvuvlf0pj+GK3r+moM+ZRd603OVQcB/aWd
+ 3z9jt0bs=
+X-Gm-Gg: ASbGncvb16dvLK7/ShHmwPeCX4LbcHCSS4KHPLdkPdQG4OyE6CJjTCn/AI05ZCiybIp
+ ovBaj3Gj98f72QQIPXrj7inD6gyAx4LyikWZ5ETNDzjEQ8OI2OBe6BUy5cHzmQt5K/EBl8B+q9g
+ 5CKsdtnhuZoXYpiIpXnzjYQgDD5JwAIYFMfDk+MSQ8LFlJ0vM9LnsXS1JzXeAvr47TwUCwRVoD8
+ BvC+sMlkYjJt1AXh/c9u1qFbjKcAYoNBk65hK1+pIqzw6dFqCp1v6mpuc4YwUoB/V+q7/c60zWq
+ WjYxqDb7D5A60+92Ylegqkg1XwS/tU1uXttx7oPT6wnYhr1Ow+rnNv1K4NhIo3bRBZ97bPbmmUZ
+ xbl/mNUeLMP9YYX5Y2im/vlM5dIfuz9J19dC8hP3CePnZfgPj1WPeKSRhtJe+aHoO8kcN81AM7a
+ E5uDmOkqx5ato45nsJFIfNBWf6nCvd9yDXJ7SjYBHKueZPRqrqePvTQQ==
+X-Google-Smtp-Source: AGHT+IEJC+LjDHS0ddmnS7WCscTh+KwWlFHjX6dsF++rVnSon3QtoBHiFhbHk6dgJayBcxbIAomtJg==
+X-Received: by 2002:a05:6000:430d:b0:42b:3ee9:4773 with SMTP id
+ ffacd0b85a97d-42f7318fd33mr1338679f8f.7.1764751880236; 
+ Wed, 03 Dec 2025 00:51:20 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1ca7880asm38226036f8f.31.2025.12.03.00.47.44
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 03 Dec 2025 00:47:45 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-10.2?] tests/tcg: Skip syscall catchpoint test if
- pipe2() syscall not available
-Date: Wed,  3 Dec 2025 09:47:43 +0100
-Message-ID: <20251203084743.60753-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.51.0
+ ffacd0b85a97d-42e1c5d6049sm39673094f8f.10.2025.12.03.00.51.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Dec 2025 00:51:19 -0800 (PST)
+Message-ID: <f4d2bdbf-fd6d-4391-a909-37c69007eb38@linaro.org>
+Date: Wed, 3 Dec 2025 09:51:18 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH-for-10.2?] tests/tcg: Skip syscall catchpoint test if
+ pipe2() syscall not available
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>
+References: <20251203084743.60753-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251203084743.60753-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,67 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid the following errors testing i386 and ppc64:
+On 3/12/25 09:47, Philippe Mathieu-Daudé wrote:
+> Avoid the following errors testing i386 and ppc64:
+> 
+>    $ make check-tcg
+>    ...
+>      TEST    hitting a syscall catchpoint on i386
+>    warning: File transfers from remote targets can be slow. Use "set sysroot" to access files locally instead.
+>    Traceback (most recent call last):
+>      File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 53, in <module>
+>        main(run_test)
+>      File "tests/guest-debug/test_gdbstub.py", line 53, in main
+>        test()
+>      File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 22, in run_test
+>        gdb.execute("catch syscall pipe2 read")
+>    gdb.error: Unknown syscall name 'pipe2'.
+>    qemu-i386: QEMU: Terminated via GDBstub
+>    ...
+>      TEST    hitting a syscall catchpoint on ppc64
+>    warning: File transfers from remote targets can be slow. Use "set sysroot" to access files locally instead.
+>    Traceback (most recent call last):
+>      File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 53, in <module>
+>        main(run_test)
+>      File "tests/guest-debug/test_gdbstub.py", line 53, in main
+>        test()
+>      File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 22, in run_test
+>        gdb.execute("catch syscall pipe2 read")
+>    gdb.error: Unknown syscall name 'pipe2'.
+>    qemu-ppc64: QEMU: Terminated via GDBstub
+>    ...
+>      TEST    hitting a syscall catchpoint on ppc64le
+>    warning: File transfers from remote targets can be slow. Use "set sysroot" to access files locally instead.
+>    Traceback (most recent call last):
+>      File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 53, in <module>
+>        main(run_test)
+>      File "tests/guest-debug/test_gdbstub.py", line 53, in main
+>        test()
+>      File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 22, in run_test
+>        gdb.execute("catch syscall pipe2 read")
+>    gdb.error: Unknown syscall name 'pipe2'.
+>    qemu-ppc64le: QEMU: Terminated via GDBstub
+>    make: Target 'check-tcg' not remade because of errors.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   tests/tcg/multiarch/gdbstub/catch-syscalls.py | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 
-  $ make check-tcg
-  ...
-    TEST    hitting a syscall catchpoint on i386
-  warning: File transfers from remote targets can be slow. Use "set sysroot" to access files locally instead.
-  Traceback (most recent call last):
-    File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 53, in <module>
-      main(run_test)
-    File "tests/guest-debug/test_gdbstub.py", line 53, in main
-      test()
-    File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 22, in run_test
-      gdb.execute("catch syscall pipe2 read")
-  gdb.error: Unknown syscall name 'pipe2'.
-  qemu-i386: QEMU: Terminated via GDBstub
-  ...
-    TEST    hitting a syscall catchpoint on ppc64
-  warning: File transfers from remote targets can be slow. Use "set sysroot" to access files locally instead.
-  Traceback (most recent call last):
-    File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 53, in <module>
-      main(run_test)
-    File "tests/guest-debug/test_gdbstub.py", line 53, in main
-      test()
-    File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 22, in run_test
-      gdb.execute("catch syscall pipe2 read")
-  gdb.error: Unknown syscall name 'pipe2'.
-  qemu-ppc64: QEMU: Terminated via GDBstub
-  ...
-    TEST    hitting a syscall catchpoint on ppc64le
-  warning: File transfers from remote targets can be slow. Use "set sysroot" to access files locally instead.
-  Traceback (most recent call last):
-    File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 53, in <module>
-      main(run_test)
-    File "tests/guest-debug/test_gdbstub.py", line 53, in main
-      test()
-    File "tests/tcg/multiarch/gdbstub/catch-syscalls.py", line 22, in run_test
-      gdb.execute("catch syscall pipe2 read")
-  gdb.error: Unknown syscall name 'pipe2'.
-  qemu-ppc64le: QEMU: Terminated via GDBstub
-  make: Target 'check-tcg' not remade because of errors.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/tcg/multiarch/gdbstub/catch-syscalls.py | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/tests/tcg/multiarch/gdbstub/catch-syscalls.py b/tests/tcg/multiarch/gdbstub/catch-syscalls.py
-index ccce35902fb..5c654b63f56 100644
---- a/tests/tcg/multiarch/gdbstub/catch-syscalls.py
-+++ b/tests/tcg/multiarch/gdbstub/catch-syscalls.py
-@@ -22,7 +22,8 @@ def run_test():
-         gdb.execute("catch syscall pipe2 read")
-     except gdb.error as exc:
-         exc_str = str(exc)
--        if "not supported on this architecture" in exc_str:
-+        if "not supported on this architecture" in exc_str \
-+                or if "Unknown syscall name 'pipe2'" in exc_str:
-             print("SKIP: {}".format(exc_str))
-             return
-         raise
--- 
-2.51.0
-
+(RFC because I have no clue whether SYS_pipe2 should be present
+  on these targets, I just want the CI to pass full green).
 
