@@ -4,93 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8E1D12D59
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 12:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FD59D12D59
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 12:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQm5X-0007eF-Rf; Wed, 03 Dec 2025 07:36:07 -0500
+	id 1vQm8L-0000eA-TM; Wed, 03 Dec 2025 07:39:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQm5S-0007dc-Gr
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 07:36:04 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQm5R-0006c7-0Z
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 07:36:02 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4779adb38d3so51470585e9.2
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 04:36:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764765357; x=1765370157; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Zh5iV/E10i9DbHpIxVQxYETjkHiOrRCUk0cvdQdfiEg=;
- b=bnXikbbrktynsK4jwrPO70VENWw0vlhvQI7XaEGV4/2XIDEDljRVqYQYalLm2ueEmn
- sPz0hxZi7ShMztQzQ72/Jr9wTX1zrjD2mM/4N6dyzDG9NYKVacn89vDtPi5/b0PdN5sa
- NWEE1OYi1kbV0MNP9KwSqkWKEsyiQZWiUqWt2kHvLGj2J41/Pb5lZNxBngGvVmPqkP+b
- vueKDFZ+xMvSSpS1WQmfp4GOH6sPBZ6hH3Uct/ZcN8J6vBYJOyzzwgI4XMEMTOJhPs/9
- OA7L4oLhS73dqUodW26kkuMYnpC+HTjA0bbton0o3Qs+lOPO98IpSxoAgxk8m7VFDpJC
- alXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764765357; x=1765370157;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Zh5iV/E10i9DbHpIxVQxYETjkHiOrRCUk0cvdQdfiEg=;
- b=PGAnVrsJbk5A7NqIh6rKOa2BjP9FmF7j+Hj/e2h221qFq3IhQnsQslHjhRUvHl91qp
- jVBwX8d0o8s7HImgfZIrqSMyCFTClQMryCa2R9Ykce186SJ/FfhwVU0FTSCvZ1Ljtw0i
- Ukd8DyxR3M4uVRNnEGTd04tXNer/lRW81FqmCDWrCCNNICcD2tgT9MBWSR0SPv+Dz6R5
- B5dU5ctKgw0YaPUpXXKCGsDRtB1iJTtX2e67QeYUbxZQgZKaQQlWZzQrIdjd4zspE3pU
- K2ATcadUhnn6p/trfOlkwJZ099CQ4qp1puWO2sElHhf4lTZE1ImZMpMf3MMl64rgcGvL
- GxhA==
-X-Gm-Message-State: AOJu0YxAcpHXL47DlC9tcrILseA1QHXpR7cRvlIOnCwQpn4e/Poq3PlY
- YoOPsMJRHljhkHTyrAX/35nXciNRrl6TgAn2QUbgO9o/vrYVRsgeuhTFo4TvKIthKJXXyrCo4hV
- pufS9ddg=
-X-Gm-Gg: ASbGncuXbTB0bjSmnVIckQ2X81NvianFCH+RewkQQ9UXgg1SPtZJpCqbcniaIoVl2xW
- +D/VtLBN0ydgBFlobosY9VrAzHTmVeCh9SIV6QwTDdmhhNXLHiwceTegYWpMPBzEpJVQbmLHgYI
- 4OMMsXhokaCuYtb2Ac73s7xADaBann5CSrC+AuqPATJ6spWVTEpe/RolWPOLlIgsqXM3lzsmVCQ
- bzm88ma3hwScgidTMciiv6lFvm3lvbbJZxwDlRbeERSOlY5h7ADQvwPMKP68GXVsaRG0DsuZNPx
- mdxoahSKehcJMTBozkd7vAW4gfQd8zZ12SIqbY/I0iv7+THztfYJnJ+FDCp6dZxDe5gS7tX1+CL
- IZh24tWJb/YTYAzANatiZXVw0kdHlrvzo1xfH1DnIcGaXPP1DDUDaT1MRYfCcAZAhP0z4+wHJIY
- +j5w5RaKyzirtiCBBYuGdq8jtKppBvPg15sgK6o5c22t8nOhutuZ1wEg==
-X-Google-Smtp-Source: AGHT+IGSLs78NnfLrEWQ0Wq6xQ7UE1BKZ8sxwC0n6htmfLdjV2jU0nyJSWJh+Kkhsm0VIqSY1ScvLw==
-X-Received: by 2002:a05:600c:4504:b0:477:73cc:82c2 with SMTP id
- 5b1f17b1804b1-4792aef0368mr18716865e9.9.1764765357095; 
- Wed, 03 Dec 2025 04:35:57 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1ca1a310sm41449359f8f.26.2025.12.03.04.35.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Dec 2025 04:35:56 -0800 (PST)
-Message-ID: <6e38b976-6dbf-43eb-ba41-ab12ce3556fb@linaro.org>
-Date: Wed, 3 Dec 2025 13:35:55 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2] target/arm/hvf: Break loop if guest halted vCPU
- during hv_vcpu_run()
-Content-Language: en-US
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vQm8F-0000dK-Ve; Wed, 03 Dec 2025 07:38:56 -0500
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1vQm8E-0006vq-6o; Wed, 03 Dec 2025 07:38:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=m8zoo95n2aBfEFUrw3VI3r0Qc0YBatHFEv6FHIrKFYw=; b=fu7f7J12PHK8RNsXga7jDGBBmw
+ Lvv/M1Nv2HGNr99ZvY7nPTlpkq+WdhYGIAFor0/RG+3JKnBObG8aOJwS4lSFdDeu6jmITD+F3W35Z
+ 56zQzPPMpLePuff/on3a+ng9hi7CPQ1qL6qQMpGI/RIK5JjMr4Kltta31ZTeR2ggWf/KGX0k1QYbM
+ CTc/xlzwL2uSYDJdxOpACDJCVPLlTvKj154cCM19Z9pYEexyK4+Nw0deGQ70B4+hwYR8lwNLaOXI9
+ CPb5YRQer7yUr4L0aqh0Sa0V027XIQhLJguKVFyyA362/nQ+Kg5qSa/gwfXQ4ywW58npvdrgZIBpo
+ S5yy1Z47hUyLDD9hz14Nu9VU7Wmtr3N7Wu0vjCPpv+SHayYGgSYZQyTO65QLhrCq7WnbghBgEbNJO
+ eJD/GNLl7v8GYIzct4sF1bgfAeNM8h9p+wO/UaeGAYBQ6LeftkUeAGL4iDAsk3csSeiA+sdwOaUcM
+ KdOnGyWxyZ1lAb8SnBe09uwBGa15Y93cvrAIOfl0rwzVhljr10kyHQrNNpilGVwz3M8AQ1DVzF9gu
+ bLyKcvx/6dpPhwDvmFxB6Ky1LQR1DXj5ct+HTwipjLthcftvR4zxQd2pTd/47eGp6tY4Uqk7dD7YJ
+ yiXM9CKWNGtTeaH7S3Em8Ik12cyxDLn2szu10jfAs=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 To: qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
- Christian Stussak <christian.stussak@imaginary.org>, qemu-arm@nongnu.org
-References: <20251202175146.20331-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251202175146.20331-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Cc: alex.bennee@linaro.org, berrange@redhat.com,
+ Alano Song <AlanoSong@163.com>, AlanoSong@163.com,
+ QEMU Trivial <qemu-trivial@nongnu.org>
+Subject: Re: [PATCH 1/2] docs/devel: Correct typo
+Date: Wed, 03 Dec 2025 13:38:48 +0100
+Message-ID: <10763876.nUPlyArG6x@weasel>
+In-Reply-To: <20251202131934.17324-1-AlanoSong@163.com>
+References: <20251202131934.17324-1-AlanoSong@163.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,19 +69,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/12/25 18:51, Philippe Mathieu-Daudé wrote:
-> Since commit 93ac765076a we try to call hv_vcpu_run() many times
-> in a row, but we missed the guest could have halted a vCPU; if so
-> we need to return to outer loop.
+On Tuesday, 2 December 2025 14:19:34 CET AlanoSong@163.com wrote:
+> Correct typo in atomics.rst
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3228
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3230
-> Fixes: 93ac765076a ("target/arm/hvf: Keep calling hv_vcpu_run() in loop")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Alano Song <AlanoSong@163.com>
 > ---
->   target/arm/hvf/hvf.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
 
-Per https://gitlab.com/qemu-project/qemu/-/issues/3228#note_2928617511,
-this doesn't work; so self-NAck.
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+
+
+
 
