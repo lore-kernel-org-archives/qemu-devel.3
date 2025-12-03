@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80EBBD1266D
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8910ED1266D
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQhmE-0008Gu-8a; Wed, 03 Dec 2025 02:59:54 -0500
+	id 1vQhoZ-00055A-FY; Wed, 03 Dec 2025 03:02:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQhmB-0008FG-DO; Wed, 03 Dec 2025 02:59:51 -0500
+ id 1vQhoX-0004zj-0Y; Wed, 03 Dec 2025 03:02:17 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQhm9-0006PM-7C; Wed, 03 Dec 2025 02:59:50 -0500
+ id 1vQhoU-0007C6-Q8; Wed, 03 Dec 2025 03:02:16 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1791C170761;
- Wed, 03 Dec 2025 10:59:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2BF5017077C;
+ Wed, 03 Dec 2025 10:59:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DA58032B488;
- Wed, 03 Dec 2025 10:59:39 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EE18832B4A3;
+ Wed, 03 Dec 2025 10:59:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 084/116] tests/functional: Move the check for the
- parameters from avocado to functional
-Date: Wed,  3 Dec 2025 10:59:04 +0300
-Message-ID: <20251203075939.2366131-3-mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 111/116] hw/pci: Make msix_init take a uint32_t for
+ nentries
+Date: Wed,  3 Dec 2025 10:59:31 +0300
+Message-ID: <20251203075939.2366131-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251203105830@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251203105830@cover.tls.msk.ru>
@@ -62,103 +62,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-test_x86_64_pc in tests/avocado/boot_linux_console.py only checks
-whether the kernel parameters have correctly been passed to the
-kernel in the guest by looking for them in the console output of the
-guest. Let's move that to the functional test framework now, but
-instead of doing it in a separate test, let's do it for all tuxrun
-tests instead, so it is done automatically for all targets that have
-a tuxrun test.
+msix_init() and msix_init_exclusive_bar() take an "unsigned short"
+argument for the number of MSI-X vectors to try to use.  This is big
+enough for the maximum permitted number of vectors, which is 2048.
+Unfortunately, we have several devices (most notably virtio) which
+allow the user to specify the desired number of vectors, and which
+use uint32_t properties for this.  If the user sets the property to a
+value that is too big for a uint16_t, the value will be truncated
+when it is passed to msix_init(), and msix_init() may then return
+success if the truncated value is a valid one.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20250414113031.151105-3-thuth@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit bc65ae696104c15e52a5e26f225b689e2c2cdba6)
+The resulting mismatch between the number of vectors the msix code
+thinks the device has and the number of vectors the device itself
+thinks it has can cause assertions, such as the one in issue 2631,
+where "-device virtio-mouse-pci,vectors=19923041" is interpreted by
+msix as "97 vectors" and by the virtio-pci layer as "19923041
+vectors"; a guest attempt to access vector 97 thus passes the
+virtio-pci bounds checking and hits an essertion in
+msix_vector_use().
+
+Avoid this by making msix_init() and its wrapper function
+msix_init_exclusive_bar() take the number of vectors as a uint32_t.
+The erroneous command line will now produce the warning
+
+ qemu-system-i386: -device virtio-mouse-pci,vectors=19923041:
+   warning: unable to init msix vectors to 19923041
+
+and proceed without crashing.  (The virtio device warns and falls
+back to not using MSIX, rather than complaining that the option is
+not a valid value this is the same as the existing behaviour for
+values that are beyond the MSI-X maximum possible value but fit into
+a 16-bit integer, like 2049.)
+
+To ensure this doesn't result in potential overflows in calculation
+of the BAR size in msix_init_exclusive_bar(), we duplicate the
+nentries error-check from msix_init() at the top of
+msix_init_exclusive_bar(), so we know nentries is sane before we
+start using it.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2631
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251107131044.1321637-1-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit ef44cc0a762438ebc84c4997a5ce29c6f00622c3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index c15f39ae1f..cbb1e2fb50 100644
---- a/tests/avocado/boot_linux_console.py
-+++ b/tests/avocado/boot_linux_console.py
-@@ -9,17 +9,9 @@
- # later.  See the COPYING file in the top-level directory.
+diff --git a/hw/pci/msix.c b/hw/pci/msix.c
+index 66f27b9d71..bf579621b6 100644
+--- a/hw/pci/msix.c
++++ b/hw/pci/msix.c
+@@ -318,7 +318,7 @@ static void msix_mask_all(struct PCIDevice *dev, unsigned nentries)
+  * also means a programming error, except device assignment, which can check
+  * if a real HW is broken.
+  */
+-int msix_init(struct PCIDevice *dev, unsigned short nentries,
++int msix_init(struct PCIDevice *dev, uint32_t nentries,
+               MemoryRegion *table_bar, uint8_t table_bar_nr,
+               unsigned table_offset, MemoryRegion *pba_bar,
+               uint8_t pba_bar_nr, unsigned pba_offset, uint8_t cap_pos,
+@@ -392,7 +392,7 @@ int msix_init(struct PCIDevice *dev, unsigned short nentries,
+     return 0;
+ }
  
- import os
--import lzma
--import gzip
- import shutil
+-int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
++int msix_init_exclusive_bar(PCIDevice *dev, uint32_t nentries,
+                             uint8_t bar_nr, Error **errp)
+ {
+     int ret;
+@@ -401,6 +401,12 @@ int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
+     uint32_t bar_pba_offset = bar_size / 2;
+     uint32_t bar_pba_size = QEMU_ALIGN_UP(nentries, 64) / 8;
  
--from avocado import skip
--from avocado import skipUnless
--from avocado import skipUnless
- from avocado_qemu import QemuSystemTest
--from avocado_qemu import exec_command
--from avocado_qemu import exec_command_and_wait_for_pattern
--from avocado_qemu import interrupt_interactive_console_until_pattern
- from avocado_qemu import wait_for_console_pattern
- from avocado.utils import process
- from avocado.utils import archive
-@@ -68,29 +60,3 @@ def extract_from_rpm(self, rpm, path):
-         process.run("rpm2cpio %s | cpio -id %s" % (rpm, path), shell=True)
-         os.chdir(cwd)
-         return os.path.normpath(os.path.join(self.workdir, path))
--
--class BootLinuxConsole(LinuxKernelTest):
--    """
--    Boots a Linux kernel and checks that the console is operational and the
--    kernel command line is properly passed from QEMU to the kernel
--    """
--    timeout = 90
--
--    def test_x86_64_pc(self):
--        """
--        :avocado: tags=arch:x86_64
--        :avocado: tags=machine:pc
--        """
--        kernel_url = ('https://archives.fedoraproject.org/pub/archive/fedora'
--                      '/linux/releases/29/Everything/x86_64/os/images/pxeboot'
--                      '/vmlinuz')
--        kernel_hash = '23bebd2680757891cf7adedb033532163a792495'
--        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--
--        self.vm.set_console()
--        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
--        self.vm.add_args('-kernel', kernel_path,
--                         '-append', kernel_command_line)
--        self.vm.launch()
--        console_pattern = 'Kernel command line: %s' % kernel_command_line
--        self.wait_for_console_pattern(console_pattern)
-diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
-index ad74156f9c..c2bd5baaae 100644
---- a/tests/functional/qemu_test/tuxruntest.py
-+++ b/tests/functional/qemu_test/tuxruntest.py
-@@ -77,12 +77,12 @@ def prepare_run(self, kernel, disk, drive, dtb=None, console_index=0):
-         blockdev = "driver=raw,file.driver=file," \
-             + f"file.filename={disk},node-name=hd0"
++    /* Sanity-check nentries before we use it in BAR size calculations */
++    if (nentries < 1 || nentries > PCI_MSIX_FLAGS_QSIZE + 1) {
++        error_setg(errp, "The number of MSI-X vectors is invalid");
++        return -EINVAL;
++    }
++
+     /*
+      * Migration compatibility dictates that this remains a 4k
+      * BAR with the vector table in the lower half and PBA in
+diff --git a/include/hw/pci/msix.h b/include/hw/pci/msix.h
+index 0e6f257e45..b060f10d40 100644
+--- a/include/hw/pci/msix.h
++++ b/include/hw/pci/msix.h
+@@ -7,12 +7,12 @@
  
--        kcmd_line = self.KERNEL_COMMON_COMMAND_LINE
--        kcmd_line += f" root=/dev/{self.root}"
--        kcmd_line += f" console={self.console}"
-+        self.kcmd_line = self.KERNEL_COMMON_COMMAND_LINE
-+        self.kcmd_line += f" root=/dev/{self.root}"
-+        self.kcmd_line += f" console={self.console}"
+ void msix_set_message(PCIDevice *dev, int vector, MSIMessage msg);
+ MSIMessage msix_get_message(PCIDevice *dev, unsigned int vector);
+-int msix_init(PCIDevice *dev, unsigned short nentries,
++int msix_init(PCIDevice *dev, uint32_t nentries,
+               MemoryRegion *table_bar, uint8_t table_bar_nr,
+               unsigned table_offset, MemoryRegion *pba_bar,
+               uint8_t pba_bar_nr, unsigned pba_offset, uint8_t cap_pos,
+               Error **errp);
+-int msix_init_exclusive_bar(PCIDevice *dev, unsigned short nentries,
++int msix_init_exclusive_bar(PCIDevice *dev, uint32_t nentries,
+                             uint8_t bar_nr, Error **errp);
  
-         self.vm.add_args('-kernel', kernel,
--                         '-append', kcmd_line,
-+                         '-append', self.kcmd_line,
-                          '-blockdev', blockdev)
- 
-         # Sometimes we need extra devices attached
-@@ -103,6 +103,7 @@ def run_tuxtest_tests(self, haltmsg):
-         wait to exit cleanly.
-         """
-         ps1='root@tuxtest:~#'
-+        self.wait_for_console_pattern(self.kcmd_line)
-         self.wait_for_console_pattern('tuxtest login:')
-         exec_command_and_wait_for_pattern(self, 'root', ps1)
-         exec_command_and_wait_for_pattern(self, 'cat /proc/interrupts', ps1)
+ void msix_write_config(PCIDevice *dev, uint32_t address, uint32_t val, int len);
 -- 
 2.47.3
 
