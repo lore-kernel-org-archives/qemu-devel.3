@@ -4,107 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BDE4D1BDCC
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:45:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 689EDD1BDD0
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQrpT-0001lD-3t; Wed, 03 Dec 2025 13:43:55 -0500
+	id 1vQrwu-0007Vg-Ql; Wed, 03 Dec 2025 13:51:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vQrpL-0001hV-57
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:43:47 -0500
-Received: from mx0b-00190b01.pphosted.com ([2620:100:9005:57f::1])
+ id 1vQrwr-0007TB-7l
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:33 -0500
+Received: from mx0a-00190b01.pphosted.com ([67.231.149.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vQrpH-0005hC-8S
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:43:46 -0500
-Received: from pps.filterd (m0122331.ppops.net [127.0.0.1])
- by mx0b-00190b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 5B3I6NhR980940
- for <qemu-devel@nongnu.org>; Wed, 3 Dec 2025 18:43:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
+ id 1vQrwo-0000zh-CM
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:33 -0500
+Received: from pps.filterd (m0409409.ppops.net [127.0.0.1])
+ by m0409409.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 5B35lAR22445836; Wed, 3 Dec 2025 18:51:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=jan2016.eng;
- bh=QoR6CzW42yFuzK4C/5cibENCPr6ROAzmTT9DkEW4Iy8=; b=cJTr6tVwlxcx
- Ln1CwlcsZyAlbcvxku6XFhF5Utfp+uazm2hXPg+W8Sb414UV0ATns3J4K+TaQzUQ
- Ho29UlSyDcnBcr70oiopYoXv14WoikpxreWH/paSE/5C1L72TVbSx+uESWMm9tDn
- kE3MgbJuQqH+7xLymYYXWTqnICj10AjM9wp4D3Xl0nELIcfsniOejXLakJMIr0AY
- AT4Ux8oXzrCcOHHp8sESF4iZE+vUO64vak/zfluGkp/G+hXfWOSdEcSnaQ9lj/iK
- Crm4Jb97+xozzvef7RxaqdYaEalz2JEoEgkf2wEXiANp37vM6ajSArtWAoQ4Hsge
- 4DpFu/V6JA==
+ bh=QoR6CzW42yFuzK4C/5cibENCPr6ROAzmTT9DkEW4Iy8=; b=J/TL4B/XdrCh
+ mIXXuUu8/k5TcGNg38c3pbGb+5z2sdBGoW4nZcKpH/ti0xaRcDN7iF3pGJ2aj+z0
+ Dn6tsyXl/28GB7bg66oKPLZV0aFXK+7kSvapOJWT+PGxE5jEXLNZGwWn9CbQdpmi
+ /NpZIwOMWdNXnX1bdD0qoN02Mv0MIGiWYJ9by7z+0ZUW48PBLykxpWTDX3j25Xf0
+ 3aV9izqj5sJnfObHGNuAO1ap1BEm1qH7c6xWkAsiBEJ0PEnRHFQblD0k4B38zcdB
+ epHYf9dgUnzMF+ZGe3FSI9zqmINpaizCjGXP7PRYU8FyedzDMI7ZxodHWOcLlHvt
+ qT1xyeBI3w==
 Received: from prod-mail-ppoint6 (prod-mail-ppoint6.akamai.com [184.51.33.61])
- by mx0b-00190b01.pphosted.com (PPS) with ESMTPS id 4aswun4u6c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 18:43:39 +0000 (GMT)
+ by m0409409.ppops.net-00190b01. (PPS) with ESMTPS id 4at0bcqtuf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 03 Dec 2025 18:51:28 +0000 (GMT)
 Received: from pps.filterd (prod-mail-ppoint6.akamai.com [127.0.0.1])
  by prod-mail-ppoint6.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 5B3FId4q013420
- for <qemu-devel@nongnu.org>; Wed, 3 Dec 2025 13:43:38 -0500
-Received: from prod-mail-relay02.akamai.com ([172.27.118.35])
- by prod-mail-ppoint6.akamai.com (PPS) with ESMTP id 4aqw21kx8e-1
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 13:43:38 -0500
+ 5B3FSw37013454; Wed, 3 Dec 2025 13:51:27 -0500
+Received: from prod-mail-relay01.akamai.com ([172.27.118.31])
+ by prod-mail-ppoint6.akamai.com (PPS) with ESMTP id 4aqw21kxw4-1;
+ Wed, 03 Dec 2025 13:51:27 -0500
 Received: from bos-lhvkhf.bos01.corp.akamai.com
  (bos-lhvkhf.bos01.corp.akamai.com [172.28.40.75])
- by prod-mail-relay02.akamai.com (Postfix) with ESMTP id 49EEC99
- for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 18:43:38 +0000 (UTC)
+ by prod-mail-relay01.akamai.com (Postfix) with ESMTP id C5108AD;
+ Wed,  3 Dec 2025 18:51:26 +0000 (UTC)
 From: Ben Chaney <bchaney@akamai.com>
-Date: Wed, 03 Dec 2025 13:43:28 -0500
+Date: Wed, 03 Dec 2025 13:51:24 -0500
 Subject: [PATCH v3 7/8] tap: postload fix for cpr
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251203-cpr-tap-v3-7-3cc89e9b19e4@akamai.com>
-References: <20251203-cpr-tap-v3-0-3cc89e9b19e4@akamai.com>
-In-Reply-To: <20251203-cpr-tap-v3-0-3cc89e9b19e4@akamai.com>
+Message-Id: <20251203-cpr-tap-v3-7-3c12e0a61f8e@akamai.com>
+References: <20251203-cpr-tap-v3-0-3c12e0a61f8e@akamai.com>
+In-Reply-To: <20251203-cpr-tap-v3-0-3c12e0a61f8e@akamai.com>
 To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Stefan Weil <sw@weilnetz.de>,
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Hamza Khan <hamza.khan@nutanix.com>,
+ Mark Kanda <mark.kanda@oracle.com>, Joshua Hunt <johunt@akamai.com>,
+ Max Tottenham <mtottenh@akamai.com>, Ben Chaney <bchaney@akamai.com>,
+ Steve Sistare <steven.sistare@oracle.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764787418; l=3307;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1764787886; l=3307;
  i=bchaney@akamai.com; s=20251203; h=from:subject:message-id;
  bh=trjqxlGTjzbMkDT7mRMw3NXMaJd7F2w+gOl7JrhHwFU=;
- b=xiRtR9bMqe91YsEssJiS9eCrb6s34M3UIBl0tEopYQ5oqVqm8+6yBcXqIDKTyQDsdg+TKC/Ww
- U+UqfvGaaElAv4/HnsnFtX5vOfAsF6kqICNI8gto8sbQ5piGA9sTyc8
+ b=KASaKdIYRViwhLCPvoDl/4aura5SsKK/BZNj31N/hBE561HUCpLeNJeLCwgPNXoTRiVtXjvEX
+ dbVbbFNRxZiBydr31kfBj6DJK1sZ4/Nqq74psOVaLl9fGGbwG/Lb3rq
 X-Developer-Key: i=bchaney@akamai.com; a=ed25519;
  pk=6+w9cse5QEeVdy3tjqFxs/4rAaRdQ2/fkTxVFq+lWy4=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-03_02,2025-12-03_01,2025-10-01_01
+ definitions=2025-12-03_02,2025-12-03_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  mlxscore=0 phishscore=0
  bulkscore=0 spamscore=0 suspectscore=0 adultscore=0 malwarescore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2510240000
- definitions=main-2512030146
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDE0NyBTYWx0ZWRfX0oeDVIOcog9K
- yiCYVPxwqyAwZl1Q2pnfR+slo194iNA1ioa6T3xLfX+QhOBs0oWqJ1YY8h5oPR+8GF72a+ljBGV
- LHN1Gj9DyVHEWHKXWIHeSn5LqsZka3/P10UNJA9JnIinZd9jgSMtwRMUUMvDWFNGs6qlAsOJNPF
- XXRh0M/RIuAPJvXlLfIWARW4aNaGLuOpgLPvm623p9bvV4Hz3PAAPkBX1CM/wqCw31376QF2H7o
- Q02QYkdlFkBh5TawMGwK9wIGzGV0h6xzcBYgk3dWW2HulKtYU5p7IAP8kvwjD+ogbfW9ZcjhZ+/
- BZgINKQzHfh+YFyDSnEMw81STLzxXM4w2yfnlRZILmOt5EDfN4cYjUmBMrcJRdMHYemKYMjUjOE
- OnNk2ZRIiO3PpTXDsOAzfGf1MVS7nA==
-X-Proofpoint-ORIG-GUID: XrZv3EPl5W0bwQHO6dOg25Tvm8yO-n85
-X-Authority-Analysis: v=2.4 cv=O+o0fR9W c=1 sm=1 tr=0 ts=693084db cx=c_pps
+ definitions=main-2512030148
+X-Authority-Analysis: v=2.4 cv=AvfjHe9P c=1 sm=1 tr=0 ts=693086b0 cx=c_pps
  a=WPLAOKU3JHlOa4eSsQmUFQ==:117 a=WPLAOKU3JHlOa4eSsQmUFQ==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
  a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=h1OFwVCXqnWUJWdIchYA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: XrZv3EPl5W0bwQHO6dOg25Tvm8yO-n85
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDE0NyBTYWx0ZWRfX7DDURGHGMDVc
+ +fFyxPMaeFVcw5bL0e3AeOVVnqXl9VqAL/QECLBngotcgvv6SeY0ErUqp/gYTUrpKosW6A2UXS9
+ 2j2Nx7rsmc1vjfbWV0VhtdmV0gbUIlJDw7oKK8gqKrQdp83Bfx+NqfKrz9X+lCzOeZWQUdPWS2O
+ HbPHVkFDKwV0lGh++bJgxbKQuzPuNuboyxRm42+4eY9qLjolf7Wuq6iXH8WY/PMGNuYIIheYNJ2
+ 4Alu2KhNKGWbKgSOSyV3ZNIqocGMrjO+TqUH+kk5TmUxqaCwBwsN0/A5hQXQhdgUgamrEfel723
+ BxT++Nipv2eeoBlcgMUDsQ6V2zSTiVoeErF+F6140UlJP1nFf168WEIxGg4LlKoaypge3IvfBvj
+ j8THIC6+rx1+3pgshE11oZu1ChDgmA==
+X-Proofpoint-ORIG-GUID: mvYb3buKW0Na5AehXPWbGpI8XwXmzzb_
+X-Proofpoint-GUID: mvYb3buKW0Na5AehXPWbGpI8XwXmzzb_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-03_02,2025-12-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- priorityscore=1501 phishscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
- clxscore=1015 malwarescore=0 impostorscore=0 adultscore=0 suspectscore=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
+ impostorscore=0 phishscore=0 bulkscore=0
+ priorityscore=1501 spamscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512030147
-Received-SPF: pass client-ip=2620:100:9005:57f::1;
- envelope-from=bchaney@akamai.com; helo=mx0b-00190b01.pphosted.com
+Received-SPF: pass client-ip=67.231.149.131; envelope-from=bchaney@akamai.com;
+ helo=mx0a-00190b01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
