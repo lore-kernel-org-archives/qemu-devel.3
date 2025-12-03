@@ -4,65 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD2A3D12D62
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 13:51:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 281EAD12D60
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 14:00:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQnFa-0003Jv-NL; Wed, 03 Dec 2025 08:50:35 -0500
+	id 1vQnOB-0007Ru-GK; Wed, 03 Dec 2025 08:59:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQnFX-0003Ik-Id; Wed, 03 Dec 2025 08:50:31 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQnFV-0000Si-Bu; Wed, 03 Dec 2025 08:50:31 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDn7SUXQDBpvZwrAQ--.12510S2;
- Wed, 03 Dec 2025 21:50:15 +0800 (CST)
-Received: from [192.168.31.152] (unknown [113.246.234.131])
- by mail (Coremail) with SMTP id AQAAfwAnge4VQDBpl1EJAA--.24071S2;
- Wed, 03 Dec 2025 21:50:14 +0800 (CST)
-Message-ID: <11a16f71-6849-4601-9a62-61d37eaa8265@phytium.com.cn>
-Date: Wed, 3 Dec 2025 21:50:13 +0800
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vQnO9-0007RE-SK
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 08:59:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vQnO7-00020B-Sr
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 08:59:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764770362;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=K1Ejb3mZxt9s6Hq8k2GbYOHpKhIqT0ccwHtr5SyWPSgJae0yqm0Paqr5dIsUQBSG0+8R6f
+ feTXWHBTPndWYnu7ELG6eo2Jq12b4fcwjuqSr73VN5szP2wOYkivUiWitB7951rs6yFw55
+ yzD+YYYG19irxi+97xJkilFtWeujuAk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-551-WCcsa7_tO-uQsUbmw3Zt3A-1; Wed, 03 Dec 2025 08:59:20 -0500
+X-MC-Unique: WCcsa7_tO-uQsUbmw3Zt3A-1
+X-Mimecast-MFC-AGG-ID: WCcsa7_tO-uQsUbmw3Zt3A_1764770359
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-477a11d9f89so30580355e9.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 05:59:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764770359; x=1765375159; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=dm+Hde9nZEUni9HpcVxSbk5BmlR9MyZaPAoNc+ZVDLPz8EyHFy7UOtNVvdQhFXKKcg
+ imgF48wUl5pW3nYQQ6PLLC/pFbLjaDVWfPxeHPs++zKntCFtAcT4u7wu9UI39IXQ17fv
+ tD0qFKovuMIySvm3zlK4OvTuZyMUzE2mcpQboK0le2EVJ/rF2mmzodv4v47z9eByfWv0
+ nd+V4vmNXyd0e/4XQ4WIrbeBFUkiNpRfAtcg/HwsmwsIMJcoipjQOu+zTWCaVwyabPwy
+ EXk7oP0nFilss8XzJcj0bTjk00MCBJmxGJA9BbYAgA+PGSnDJncrBJyj10htoFBxoaO/
+ R5Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764770359; x=1765375159;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=ZEGnXp93QpoCI7HUN1Afm0mMMP4SjWtxeobNZoyU+AV5BA4xk3mlWKnJTsaI9pxXK8
+ hK8NAzHYSc2FSzIgsIskVC5oBDntrMmk4jJQRnxIqmYhY5GXn+vIlKuCsrBAQHqw5XQW
+ wWSvX/k6SvPtgga9o4CRFWu/7jqRIMgTVtfJQzlF3ES4/Tkf+FgRCGDW3QYjMckkqr7N
+ QaJ0+A4DyKAATcEXreXPv2Ceqou8Zw+x/FyrXJ24GCaYaU4WHFwFq2nXuMcg9ZsrYpfY
+ iQX6xIsQk4yO6dYTsUeX7+kU9Go9vpnCJ/SLibnEWdEmIJaoNfCZN6z5pfpR37JOv3Bv
+ Mu0Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5Ub0pYzep51Fh0WY51q75QikK2ge5QBQEpvGA2FXfw6sD4OVD0MVMCgDyWJ/eksv//rnw+u5ONwHy@nongnu.org
+X-Gm-Message-State: AOJu0Yyde7LKD3wIUy2RJy5enUwguFQeorcf51Jf+8NIfvwCmYbfEkW0
+ yUO8i3LgrduOYJvzRBXIzte5r109epp60x8lgGVGo832CzUJ4fnWOhw5XPbBOGLFErSLkmtcq6i
+ sEYi69qs3ceiC/PKU6zbGOfkGvuPUZTzjjItBdvSHMBYyrxMdwMuByNr6
+X-Gm-Gg: ASbGnctGWZOcicKnOcQYBuXqhpgzNs8RQUSrQdCPpLwqnUZmS51/fAGDuwPPPf9n7hw
+ N//5xTCQeiZGlw7pnEVKXdvZRcdfbraoTfoNlh8DKAdjhYxAyDQJU7e7aLlFW0OjLfSL+X2GaJp
+ RLenohwC4pEhnuFaMlG8Pz5kXBmBFLoKYMqBqh9MX9rt20XxMQhxcLmOJZEMAZGOlPozqBOSCwa
+ +fYqM7y98vyC6sVqF9dYNF5N6eAQvoBk3RG012SUW6+0t3i1ahwxFh82Y96q9S2eZ2bEc/FN3nf
+ 90UUwHtkHyizzE5lxjAv2k0C3LMux8fLDpUDw4Gp1jQAmLceRn3PaulvxEqir6+yw26hu/LqDNl
+ 7aJwFX2nYOIn8lGCrAdiUOcGq/zCwl3qxLZg2q0i9B0JALksO3dHTcBq3YukyQdbzS/sKbL4sby
+ zuANfpSohElXIm+B4=
+X-Received: by 2002:a05:600c:19d2:b0:477:df7:b020 with SMTP id
+ 5b1f17b1804b1-4792af39a3dmr22829395e9.18.1764770358744; 
+ Wed, 03 Dec 2025 05:59:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEN8S0BRaCMjBkEMw/RIvJ6eFhHrEBKgDTu1ron4RcftS85vDSCrWhBpt0nVE/VS61XkjVzzw==
+X-Received: by 2002:a05:600c:19d2:b0:477:df7:b020 with SMTP id
+ 5b1f17b1804b1-4792af39a3dmr22829145e9.18.1764770358341; 
+ Wed, 03 Dec 2025 05:59:18 -0800 (PST)
+Received: from [192.168.10.48] ([176.206.119.13])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4792a7a2148sm49708265e9.8.2025.12.03.05.59.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Dec 2025 05:59:17 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: dave@treblig.org
+Cc: qemu-trivial@nongnu.org, mjt@tls.msk.ru, laurent@vivier.eu,
+ thuth@redhat.com, pbonzini@redhat.com, jak@jak-linux.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] qemu-options.hx: Document -M as -machine alias
+Date: Wed,  3 Dec 2025 14:59:14 +0100
+Message-ID: <20251203135915.1566082-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251203131511.153460-1-dave@treblig.org>
+References: 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 08/21] hw/arm/smmuv3: Add separate address space for
- secure SMMU accesses
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
-References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012150701.4127034-9-tangtao1634@phytium.com.cn>
- <ac4ba17f-47ac-4c67-b2e6-c8d835ee0e6f@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <ac4ba17f-47ac-4c67-b2e6-c8d835ee0e6f@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwAnge4VQDBpl1EJAA--.24071S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWkvSDQGnQAAso
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxCw4Dur1UGFyxWw17Jr1UJrb_yoW5tr45pF
- Z5AFZ0y3yDK3W7ZFs3Xr1UuFy8u395WF4UGrs7Krn5CF1a9r1ayr1qkw1YkFykJr18J3W2
- vF1UZr4fXF1YqrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,98 +125,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+Queued, thanks.
 
-On 2025/12/2 21:53, Eric Auger wrote:
-> Hi Tao,
->
-> On 10/12/25 5:06 PM, Tao Tang wrote:
->> According to the Arm architecture, SMMU-originated memory accesses,
->> such as fetching commands or writing events for a secure stream, must
->> target the Secure Physical Address (PA) space. The existing model sends
->> all DMA to the global non-secure address_space_memory.
->>
->> This patch introduces the infrastructure to differentiate between secure
->> and non-secure memory accesses. Firstly, SMMU_SEC_SID_S is added in
->> SMMUSecSID enum to represent the secure context. Then a weak global
->> symbol, arm_secure_address_space, is added, which can be provided by the
->> machine model to represent the Secure PA space.
->>
->> A new helper, smmu_get_address_space(), selects the target address
->> space based on SEC_SID. All internal DMA calls
->> (dma_memory_read/write) will be updated to use this helper in follow-up
->> patches.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   hw/arm/smmu-common.c         |  8 ++++++++
->>   hw/arm/virt.c                |  5 +++++
->>   include/hw/arm/smmu-common.h | 27 +++++++++++++++++++++++++++
->>   3 files changed, 40 insertions(+)
->>
->> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->> index 62a7612184..24db448683 100644
->> --- a/hw/arm/smmu-common.c
->> +++ b/hw/arm/smmu-common.c
->> @@ -30,6 +30,14 @@
->>   #include "hw/arm/smmu-common.h"
->>   #include "smmu-internal.h"
->>   
->> +/* Global state for secure address space availability */
->> +bool arm_secure_as_available;
-> don't you need to initialize it?
->
-> why is it local to the SMMU. To me the secure address space sounds
-> global like address_space_memory usable by other IPs than the SMMU and
-> the CPUs.
->> +
->> +void smmu_enable_secure_address_space(void)
->> +{
->> +    arm_secure_as_available = true;
->> +}
->> +
->>   /* IOTLB Management */
->>   
->>   static guint smmu_iotlb_key_hash(gconstpointer v)
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 175023897a..83dc62a095 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -92,6 +92,8 @@
->>   #include "hw/cxl/cxl_host.h"
->>   #include "qemu/guest-random.h"
->>   
->> +AddressSpace arm_secure_address_space;
->> +
->>   static GlobalProperty arm_virt_compat[] = {
->>       { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
->>   };
->> @@ -2257,6 +2259,9 @@ static void machvirt_init(MachineState *machine)
->>           memory_region_init(secure_sysmem, OBJECT(machine), "secure-memory",
->>                              UINT64_MAX);
->>           memory_region_add_subregion_overlap(secure_sysmem, 0, sysmem, -1);
->> +        address_space_init(&arm_secure_address_space, secure_sysmem,
->> +                           "secure-memory-space");
-> besides using dynamic allocation like in cpu_address_space_init() would
-> allow to get rid of arm_secure_as_available
-
-
-Thanks for the feedback.
-
-I also think the extra arm_secure_as_available flag is unnecessary after 
-read the cpu_address_space_init code.
-
-For the next version I plan to:
-
-- Drop the arm_secure_as_available concept entirely.
-
-- Make the secure address space dynamically allocated in the machine 
-code : secure_address_space = g_new0(AddressSpace, 1);
-
-- Have smmu_get_address_space() simply check whether the secure 
-AddressSpace * is non-NULL, instead of relying on a separate 
-availability flag.
-
-Thanks again for the review and suggestions. Best regards, Tao
+Paolo
 
 
