@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF12D12696
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 09:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C69A5D116F3
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 09:37:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQjHa-0000A1-It; Wed, 03 Dec 2025 04:36:22 -0500
+	id 1vQjHg-0000Fk-GJ; Wed, 03 Dec 2025 04:36:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQjHZ-00009R-7Y; Wed, 03 Dec 2025 04:36:21 -0500
+ id 1vQjHd-0000Cs-51; Wed, 03 Dec 2025 04:36:25 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQjHX-00073M-IV; Wed, 03 Dec 2025 04:36:20 -0500
+ id 1vQjHb-000748-9H; Wed, 03 Dec 2025 04:36:24 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B21B1708AD;
+ by isrv.corpit.ru (Postfix) with ESMTP id 733CB1708B0;
  Wed, 03 Dec 2025 12:35:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2450A32B5A4;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 605A332B5A7;
  Wed, 03 Dec 2025 12:36:12 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
- Zhang Chen <zhangckid@gmail.com>, Peter Xu <peterx@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 78/96] migration: Fix transition to COLO state from
- precopy
-Date: Wed,  3 Dec 2025 12:35:11 +0300
-Message-ID: <20251203093612.2370716-2-mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 81/96] hw/arm/armv7m: Disable reentrancy guard for
+ v7m_sysreg_ns_ops MRs
+Date: Wed,  3 Dec 2025 12:35:14 +0300
+Message-ID: <20251203093612.2370716-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.3-20251203111246@cover.tls.msk.ru>
 References: <qemu-stable-10.1.3-20251203111246@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,42 +62,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Commit 4881411136 ("migration: Always set DEVICE state") set a new DEVICE
-state before completed during migration, which broke the original transition
-to COLO. The migration flow for precopy has changed to:
-active -> pre-switchover -> device -> completed.
+For M-profile cores which support TrustZone, there are some memory
+areas which are "NS aliases" -- a Secure access to these addresses
+really performs an NS access to a different part of the device.  We
+implement these using MemoryRegionOps read and write functions which
+pass the access on with adjusted attributes using
+memory_region_dispatch_read() and memory_region_dispatch_write().
 
-This patch updates the transition state to ensure that the Pre-COLO
-state corresponds to DEVICE state correctly.
+Since the MR we are dispatching to is owned by the same device that
+owns the NS-alias MR (the TYPE_ARMV7M container object), this trips
+the reentrancy-guard that is applied by access_with_adjusted_size().
 
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Fixes: 4881411136 ("migration: Always set DEVICE state")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reviewed-by: Zhang Chen <zhangckid@gmail.com>
-Tested-by: Zhang Chen <zhangckid@gmail.com>
-Link: https://lore.kernel.org/r/20251104013606.1937764-1-lizhijian@fujitsu.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
-(cherry picked from commit 0b5bf4ea76205a93386c5e02fbb519871a62e677)
+Mark the NS alias MemoryRegions as disable_reentrancy_guard; this is
+safe because v7m_sysreg_ns_read() and v7m_sysreg_ns_write() do not
+touch any of the device's state.  (Any further reentrancy attempts by
+the underlying MR will still be caught.)
+
+Without this fix, an attempt to read from an address like 0xe002e010,
+which is a register in the NS systick alias, will fail and provoke
+
+ qemu-system-arm: warning: Blocked re-entrant IO on MemoryRegion: v7m_systick at addr: 0x0
+
+We didn't notice this earlier because almost all code accesses
+the registers and systick via the non-alias addresses; the NS
+aliases are only need for the rarer case of Secure code that needs
+to manage the NS timer or system state on behalf of NS code.
+
+Note that although the v7m_systick_ops read and write functions
+also call memory_region_dispatch_{read,write}, this MR does not
+need to have the reentrancy-guard disabled because the underlying
+MR that it forwards to is owned by a different device (the
+TYPE_SYSTICK timer device).
+
+Reported via a stackoverflow question:
+https://stackoverflow.com/questions/79808107/what-this-error-is-even-about-qemu-system-arm-warning-blocked-re-entrant-io
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20251114155304.2662414-1-peter.maydell@linaro.org
+(cherry picked from commit 4a934d284dfac9fa19b0f47874f12d9b3519c21c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 32b8ce5613..e806481456 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3047,9 +3047,9 @@ static void migration_completion(MigrationState *s)
-         goto fail;
+diff --git a/hw/arm/armv7m.c b/hw/arm/armv7m.c
+index cea3eb49ee..d16fb20d3e 100644
+--- a/hw/arm/armv7m.c
++++ b/hw/arm/armv7m.c
+@@ -442,6 +442,12 @@ static void armv7m_realize(DeviceState *dev, Error **errp)
+                               &v7m_sysreg_ns_ops,
+                               sysbus_mmio_get_region(sbd, 0),
+                               "nvic_sysregs_ns", 0x1000);
++        /*
++         * This MR calls memory_region_dispatch_read/write to access the
++         * real region for the NVIC sysregs (which is also owned by this
++         * device), so reentrancy through here is expected and safe.
++         */
++        s->sysreg_ns_mem.disable_reentrancy_guard = true;
+         memory_region_add_subregion(&s->container, 0xe002e000,
+                                     &s->sysreg_ns_mem);
      }
- 
--    if (migrate_colo() && s->state == MIGRATION_STATUS_ACTIVE) {
-+    if (migrate_colo() && s->state == MIGRATION_STATUS_DEVICE) {
-         /* COLO does not support postcopy */
--        migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
-+        migrate_set_state(&s->state, MIGRATION_STATUS_DEVICE,
-                           MIGRATION_STATUS_COLO);
-     } else {
-         migration_completion_end(s);
+@@ -499,6 +505,12 @@ static void armv7m_realize(DeviceState *dev, Error **errp)
+         memory_region_init_io(&s->systick_ns_mem, OBJECT(s),
+                               &v7m_sysreg_ns_ops, &s->systickmem,
+                               "v7m_systick_ns", 0xe0);
++        /*
++         * This MR calls memory_region_dispatch_read/write to access the
++         * real region for the systick regs (which is also owned by this
++         * device), so reentrancy through here is expected and safe.
++         */
++        s->systick_ns_mem.disable_reentrancy_guard = true;
+         memory_region_add_subregion_overlap(&s->container, 0xe002e010,
+                                             &s->systick_ns_mem, 1);
+     }
 -- 
 2.47.3
 
