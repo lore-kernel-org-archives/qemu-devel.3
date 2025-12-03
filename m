@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B784D12696
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 09:56:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E82F9D12696
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 09:57:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQjaV-00080k-9v; Wed, 03 Dec 2025 04:55:55 -0500
+	id 1vQjbu-0000MR-H3; Wed, 03 Dec 2025 04:57:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vQjaT-0007zp-3a
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 04:55:53 -0500
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vQjbq-0000Kw-OC
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 04:57:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vQjaQ-0000As-5W
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 04:55:52 -0500
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vQjbn-0000Ii-N7
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 04:57:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764755833;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3VOpkSPncg7vJ9pqxag1v1H8QoDTXCXXMxs7qQiUB0s=;
+ b=FjOGow5Fcb+NklhSOewF6AmPMjUUqJVr/jtZhzmPBGrQ5jwMoAL6gjWeHmMOUEA95lGi+A
+ rRovxt98sVTryhJ9br1swNJw57zqM2x1p/HrF5bdHfN6Uz6nUEF4wj1DjkN4mLBe9TZ2E+
+ /8jwNJJthWMhjgcx4Bc/efbB3nj+mhQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-0KYz-nfBPZ6JjbMz6uFlJg-1; Wed,
+ 03 Dec 2025 04:57:09 -0500
+X-MC-Unique: 0KYz-nfBPZ6JjbMz6uFlJg-1
+X-Mimecast-MFC-AGG-ID: 0KYz-nfBPZ6JjbMz6uFlJg_1764755828
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 0C4DE43946
- for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 09:55:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1764755742;
- bh=k6K/7+NPpnYSgX+JriUmcjZFDe1nifmZaDUz0ZpdiYU=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=pGHFkm73SaUYGyP4EqUryiFQ4Q6zAZPlr8q4OLE76LJZ5ghXK/mrn1uA/5PsoZuFF
- L/SpX59CJc4/a46D7FbNNIkSN1mmH8Etth8W7XxVsSITAseoqV1cwrJ9onXScHy0gk
- DCPlEj+TAniZaUmU/Wz8fQFC09lZYcs8EIO9KHxe29RBciNDIyXEcKXy1+xU+OrTqY
- kJlQWATKZEpjJLkN4+aT6goR8jA02WjJ/3aHvg+WoUaN0FXwlJZssDnhtuXlbsavKe
- kTVmnCYit12PyjBTLYcAW9wjZ1g892bp1MwZhxDYiueM3c2zKhSmI2MAnSQEExRy0t
- 6Gg6OZleLdvOA==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id F07537EA56
- for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 09:55:41 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5120D1809C92; Wed,  3 Dec 2025 09:56:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C0AEC30001A2; Wed,  3 Dec 2025 09:56:58 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5CD0621E6A27; Wed, 03 Dec 2025 10:56:56 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@gmail.com>,
+ qemu-devel@nongnu.org,
+ pbonzini@redhat.com,  berrange@redhat.com,  eduardo@habkost.net,
+ philmd@linaro.org
+Subject: Re: [PATCH 3/3] qdev: Legacy properties are now unused, drop
+In-Reply-To: <87ms5jf83d.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Wed, 22 Oct 2025 14:12:54 +0200")
+References: <20251022101420.36059-1-armbru@redhat.com>
+ <20251022101420.36059-4-armbru@redhat.com>
+ <CAJ+F1C+2vp+Byp2Q40GQZUYLW0xpoTbFAj5oc2R=nbsy8i_8Eg@mail.gmail.com>
+ <87ms5jf83d.fsf@pond.sub.org>
+Date: Wed, 03 Dec 2025 10:56:56 +0100
+Message-ID: <87h5u7q45z.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 03 Dec 2025 09:48:41 -0000
-From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- status=Confirmed; importance=Medium;
- assignee=heinrich.schuchardt@canonical.com; 
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
-X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
-X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
-References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <176475532155.3024679.10573189117781257759.malone@juju-98d295-prod-launchpad-3>
-Subject: [Bug 2133188] Re: Illegal instruction in memset under qemu-user for
- riscv64
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="379e22b8475e3402088a4cdb4a6e7936a4d28414";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: 788730fec425b3e610bbfeb6462a12c5e8c20726
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -88,163 +89,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the failing Questing and Resolute docker images the tty command
-shows:
+Markus Armbruster <armbru@redhat.com> writes:
 
-tty
-not a tty
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@gmail.com> writes:
+>
+>> Hi
+>>
+>>
+>> On Wed, Oct 22, 2025 at 2:15=E2=80=AFPM Markus Armbruster <armbru@redhat=
+.com> wrote:
+>>>
+>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>>
+>> I don't think we have much reasonable way to use those "legacy-*"
+>> properties from qom-get and similar, so it's probably ok to just
+>> remove them without deprecation.
+>
+> Almost all of them are unreadable via qom-get:
+>
+>     (qemu) qom-get /machine/unattached/device[3]/pm bus
+>     "/machine/i440fx/pci.0"
+>     (qemu) qom-get /machine/unattached/device[3]/pm legacy-bus
+>     Error: Property 'PIIX4_PM.legacy-bus' is not readable
+>
+> Same for all the other properties where the qdev property doesn't have a
+> .get().
+>
+> Only the ones with a .print() are readable, i.e. only PCI address
+> properties:
+>
+>     (qemu) qom-get /machine/unattached/device[3]/pm addr
+>     11
+>     (qemu) qom-get /machine/unattached/device[3]/pm legacy-addr
+>     "01.3"
+>
+> PATCH 2's commit message explains why.
+>
+> If a deprecation period is wanted, I'll replace this patch.
+>
+> If not, I can work the above into the commit message.
 
-In Plucky I get:
+In my tree now:
 
-root@2e594bfd4897:/# tty
-/dev/pts/0
+    qdev: Legacy properties are now unused internally, drop
 
-In both cases I see
+    Legacy properties are an accidental and undocumented external
+    interface.  qom-set doesn't work for them (no .set() method).  qom-get
+    and qom-list-get work only when the underlying qdev property has a
+    .print() method, i.e. the PCI address properties, as explained in the
+    previous commit.  Here's one that works:
 
-mount | grep devpts
-devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=3D5,mode=3D62=
-0,ptmxmode=3D666)
-devpts on /dev/console type devpts (rw,nosuid,noexec,relatime,gid=3D5,mode=
-=3D620,ptmxmode=3D666)
+        (qemu) qom-get /machine/unattached/device[3]/pm addr
+        11
+        (qemu) qom-get /machine/unattached/device[3]/pm legacy-addr
+        "01.3"
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133188
+    And here's one that doesn't:
 
-Title:
-  Illegal instruction in memset under qemu-user for riscv64
+        (qemu) qom-get /machine/unattached/device[3]/pm bus
+        "/machine/i440fx/pci.0"
+        (qemu) qom-get /machine/unattached/device[3]/pm legacy-bus
+        Error: Property 'PIIX4_PM.legacy-bus' is not readable
 
-Status in QEMU:
-  New
-Status in qemu package in Ubuntu:
-  Confirmed
+    Actual use of this undocumented interface seems quite unlikely.  A
+    deprecation period seems unnecessary.  Drop it.
 
-Bug description:
-  # Title
-  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
-et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
-
-  ## Summary
-  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
- 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
-gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
- (core dumped)" or "died with signal 4". The illegal instruction is observe=
-d inside glibc's memset implementation at an instruction that uses RISC-V v=
-ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
-e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
-nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
-lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
-code generation / state corruption), not a cmake bug.
-
-  ## Affects
-  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
-untu3)
-  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
-qemu-user static interpreter
-
-  ## Environment / Context
-  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
-  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
-  - Container image: ubuntu:26.04 for riscv64
-  - qemu package used:
-    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
-b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
--user_10.0.6+ds-0+deb13u2).=20
-    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
-ost and registered via /proc/sys/fs/binfmt_misc/register
-  - CMake version used inside container (bootstrap/build may use system-pro=
-vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
-ggers crash)
-  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
-eral consecutive successes or failures)
-  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
-t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
-QEMU_STRACE also makes it much harder to reproduce.
-   =20
-
-  ## Full reproduction steps
-  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
-ry:
-     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
-uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
-     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
--5ubuntu3_amd64
-     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
-in/qemu-riscv64-static
-
-  2. Register qemu-riscv64 with binfmt_misc:
-     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
-     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
-00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
-\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
- >/proc/sys/fs/binfmt_misc/register
-
-  3. Start riscv64 ubuntu container:
-     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
-4 bash
-     docker exec -it ubuntu26 bash -i
-
-  4. Inside container:
-     apt update
-     apt install -y build-essential cmake
-
-  5. Reproducer 1:
-     cmake --system-information
-     -> Often fails with:
-        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
-        Illegal instruction (core dumped)
-
-  6. Reproducer 2 (minimal C project):
-     Create test_cmake/CMakeLists.txt:
-     cmake_minimum_required(VERSION 3.10)
-     project(HelloCMake C)
-     add_executable(hello main.c)
-
-     Create test_cmake/main.c:
-     #include <stdio.h>
-     int main() {
-         printf("Hello, CMake!\n");
-         return 0;
-     }
-
-     cd test_cmake
-     cmake .
-     -> Crash with:
-        -- Detecting C compiler ABI info
-        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
-
-  7. Reproducer 3 (rebuild cmake from source inside container):
-     apt source cmake
-     cd cmake
-     apt-get build-dep .
-     dpkg-buildpackage -us -uc -b
-     -> Bootstrapping error:
-        Illegal instruction (core dumped)
-        Error when bootstrapping CMake:
-        Problem while running initial CMake
-
-  8. Observed crash location (from gdb/QEMU_STRACE when available):
-     - Illegal instruction is in memset@@GLIBC_2.27+0x52
-     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
-bit elements)
-
-
-  ## Workarounds
-  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
- using vectorized memset.
-  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
-=E2=80=94 both make the failure much less likely.
-
-  Note: The same workload does not reproduce the crash when run under
-  qemu-system (full-system emulation). The issue appears specific to
-  qemu-user
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
+>> Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Thanks!
 
 
