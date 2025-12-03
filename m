@@ -4,64 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7546DD12D7A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 15:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A0A7D12D7A
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 16:07:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQpBe-00071p-CK; Wed, 03 Dec 2025 10:54:38 -0500
+	id 1vQpNM-0001s5-HV; Wed, 03 Dec 2025 11:06:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQpBc-00071b-5W; Wed, 03 Dec 2025 10:54:36 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQpBZ-0004uF-EU; Wed, 03 Dec 2025 10:54:35 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwB3WCUyXTBpvgwsAQ--.57818S2;
- Wed, 03 Dec 2025 23:54:26 +0800 (CST)
-Received: from [192.168.31.152] (unknown [113.246.234.131])
- by mail (Coremail) with SMTP id AQAAfwB3zeoxXTBpDFUJAA--.3558S2;
- Wed, 03 Dec 2025 23:54:25 +0800 (CST)
-Message-ID: <dd874033-0294-4b6b-9ab1-6a2c32f60e3c@phytium.com.cn>
-Date: Wed, 3 Dec 2025 23:54:24 +0800
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vQpNI-0001rS-SF
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 11:06:40 -0500
+Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vQpNF-00039g-3L
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 11:06:40 -0500
+Received: by mail-yw1-x1136.google.com with SMTP id
+ 00721157ae682-78ab039ddb4so69522907b3.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 08:06:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764777995; x=1765382795; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Q5ifr1hwvxTDvDqqLo4QHVtN/OZU32OPGGSADU/Loe4=;
+ b=zSg8QjG2FNeGw4xrRSOFIRxp5RGNVJKz+LYzEGwhopBgnlOKNy7SIRDVpP1LiShVcs
+ 7Ffb4d+tlVpgQ1rMECJJqCFyzfWoFQQ9BOgbvSHJkVCtGa273lVo/+JEtbrZK/ZXzs5G
+ oxkWblQbQOLoJoGtSmoaxnStVPIXmWsH8m50CzP9tB80co9TgW6SAvkQRSIZ1N+hYUHG
+ Nr/JLyCNcTkxKtLUH1bfEoXmCWs0Gk5n7bAxCrPO0QG4pIUMGB9Y0oLAomSj01Y2mGzg
+ KE4/kynEFnGj1zbyCRevTkshfAlZN6VoichCqJVxZzqHYN7aGDOyLzBzwfeCBaJ40PA9
+ 35/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764777995; x=1765382795;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Q5ifr1hwvxTDvDqqLo4QHVtN/OZU32OPGGSADU/Loe4=;
+ b=C6xb4t4zpq2ehQTw+yLsNcLVKBI137kSh8OiKVg+DBt79rbbZSlE0aar/NMXAyHyjp
+ tgL4KvnRyXn2/svBe4qeC6b/nv+I/+WPVChQPNm8H9tHna5RLQKeVxXxydB4ScshlsBJ
+ AldlZMMggEkSkK/lQ3/srfglb+70QZrvnFAyZfGaxm7O9lK4D9XIr65ZBji9rNyc0gkt
+ XBMWEhaliJdGtYgc40cMi7DMWHZMDjj6AmBKb+6ChtuHMDg0g4uSTmb8Uc+uP5/4WRN2
+ ie+LeBdxzd4ka5gnVsQCyW1svDU/jeNwwdO+46ami6lDEhU2WWEes8ZBLlbyxoEQjCuZ
+ Zsng==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3dtpPJ192ouPkv6XTViCBUUoSmlg4w3W9Gc8TdoUeKnddACpsCBZbyWTIgBSMUgi85WcWuvt0g+o5@nongnu.org
+X-Gm-Message-State: AOJu0YyiBB/so1hsn9lOEU0WcTbfCD4hl/LmHFqssUA9eng7bPEFSC2M
+ 8hsK88+6XOu/9faReexYnG9FovvdDl6+MANdkigbLUDv9BgxLITP87evExA5JASHMdwyRmKBD65
+ UQXwdPVv47IWnQslWAlhGdPwon5ESS2odGcRJIBlAFQ==
+X-Gm-Gg: ASbGncubzlW6idWA41AtgruDPBJQTIp5yToN2KI8vt3QEDQ7TasPXt0hEXmm3KwoVW7
+ TTQsGi3Gpqa6WSFhehuFUrblR8ndFSm4rtkH8ZAZjK/64RhBce/t4yvF3+pDkOqGjNMEJj+CE+V
+ 4xPJCV4xZFZFmD5puy8uasydtL1OMlOlKkuZkHFTSg38w0bOP3uonOQLD49iuHmpgEfoz4dVsJa
+ RLYowVD2m/JhvssN1/WBiyhs6iWs7eavslEPoKDavJN+Kfpl0+IwOCyTin1S5Xe5ob9xyFs
+X-Google-Smtp-Source: AGHT+IEIDjelFCA/HQ8SJO8/kZiYK/BzXn2/MrVaU0UE1uG0oAzpp/Rx21iHY4NoF1ZG9+19PAtKNYrJ5tB0skXuq6Q=
+X-Received: by 2002:a05:690e:d89:b0:641:f5bc:6982 with SMTP id
+ 956f58d0204a3-6443704baffmr2070029d50.78.1764777995067; Wed, 03 Dec 2025
+ 08:06:35 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 21/21] hw/arm/smmuv3: Add secure migration and enable
- secure state
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
-References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012151611.4131627-1-tangtao1634@phytium.com.cn>
- <2ba17310-e032-44f6-a17f-a8f5b9dec003@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <2ba17310-e032-44f6-a17f-a8f5b9dec003@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwB3zeoxXTBpDFUJAA--.3558S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWkvSDQGnQAHsv
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxtFyDWw1xJF4DXw1xCr4kWFg_yoW7XrW8pr
- Z8G3W5Kr1DGF17ZrWfJw4rZFsYkrWSvr45CrZrKFWayan5Grs3twn2kry5W34kurWUJa1I
- vF4jka9rWrnxArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20251203131511.153460-1-dave@treblig.org>
+ <87a4zzu230.fsf@draig.linaro.org> <aTBCLbDbpXgkTLHr@gallifrey>
+In-Reply-To: <aTBCLbDbpXgkTLHr@gallifrey>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 3 Dec 2025 16:06:23 +0000
+X-Gm-Features: AWmQ_bmhz82ZVXPHixH8Mu6_wvBa13mvkJgyWAVh9C2TTQbqB3uXnZsjsatqG2s
+Message-ID: <CAFEAcA-Uy0UQwGEK+f95BJmDripg1-8vhzPF5qRSY40=duhRUQ@mail.gmail.com>
+Subject: Re: [PATCH] qemu-options.hx: Document -M as -machine alias
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-trivial@nongnu.org, mjt@tls.msk.ru, laurent@vivier.eu, thuth@redhat.com, 
+ pbonzini@redhat.com, jak@jak-linux.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,142 +99,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 2025/12/3 00:39, Eric Auger wrote:
+On Wed, 3 Dec 2025 at 14:00, Dr. David Alan Gilbert <dave@treblig.org> wrot=
+e:
 >
-> On 10/12/25 5:16 PM, Tao Tang wrote:
->> Introduce a bool secure_impl field to SMMUv3State and expose it as
->> a secure-impl device property. The introduction of this property is the
->> culminating step that activates the entire secure access data path,
->> tying together all previously merged logic to provide full support for
->> secure state accesses.
->>
->> Add live migration support for the SMMUv3 secure register bank.
->>
->> To correctly migrate the secure state, the migration logic must know
->> if the secure functionality is enabled. To facilitate this, a bool
->> secure_impl field is introduced and exposed as the secure-impl device
->> property. This property is introduced at the point it is first
->> required—for migration—and serves as the final piece of the series.
->>
->> The introduction of this property also completes and activates the
->> entire secure access data path, tying together all previously merged
->> logic to provide full support for secure state accesses.
->>
->> Usage:
->>      -global arm-smmuv3,secure-impl=true
->>
->> When this property is enabled, the capability is advertised to the
->> guest via the S_IDR1.SECURE_IMPL bit.
->>
->> The migration is implemented as follows:
->>
->> - A new vmstate_smmuv3_secure_bank, referenced by the smmuv3/bank_s
->> subsection, serializes the secure bank's registers and queues.
->>
->> - A companion smmuv3/gbpa_secure subsection mirrors the non-secure
->> GBPA handling, migrating the register only if its value diverges
->> from the reset default.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   hw/arm/smmuv3.c         | 75 +++++++++++++++++++++++++++++++++++++++++
->>   include/hw/arm/smmuv3.h |  1 +
->>   2 files changed, 76 insertions(+)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 0b366895ec..ce41a12a36 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -337,6 +337,7 @@ static void smmuv3_init_regs(SMMUv3State *s)
->>   
->>       memset(sbk->idr, 0, sizeof(sbk->idr));
->>       sbk->idr[1] = FIELD_DP32(sbk->idr[1], S_IDR1, S_SIDSIZE, SMMU_IDR1_SIDSIZE);
->> +    sbk->idr[1] = FIELD_DP32(sbk->idr[1], S_IDR1, SECURE_IMPL, s->secure_impl);
->>       sbk->gbpa = SMMU_GBPA_RESET_VAL;
->>       sbk->cmdq.entry_size = sizeof(struct Cmd);
->>       sbk->eventq.entry_size = sizeof(struct Evt);
->> @@ -2452,6 +2453,53 @@ static const VMStateDescription vmstate_smmuv3_queue = {
->>       },
->>   };
->>   
->> +static const VMStateDescription vmstate_smmuv3_secure_bank = {
->> +    .name = "smmuv3_secure_bank",
->> +    .version_id = 1,
->> +    .minimum_version_id = 1,
->> +    .fields = (const VMStateField[]) {
->> +        VMSTATE_UINT32(features, SMMUv3RegBank),
->> +        VMSTATE_UINT8(sid_split, SMMUv3RegBank),
->> +        VMSTATE_UINT32_ARRAY(cr, SMMUv3RegBank, 3),
->> +        VMSTATE_UINT32(cr0ack, SMMUv3RegBank),
->> +        VMSTATE_UINT32(irq_ctrl, SMMUv3RegBank),
->> +        VMSTATE_UINT32(gerror, SMMUv3RegBank),
->> +        VMSTATE_UINT32(gerrorn, SMMUv3RegBank),
->> +        VMSTATE_UINT64(gerror_irq_cfg0, SMMUv3RegBank),
->> +        VMSTATE_UINT32(gerror_irq_cfg1, SMMUv3RegBank),
->> +        VMSTATE_UINT32(gerror_irq_cfg2, SMMUv3RegBank),
->> +        VMSTATE_UINT64(strtab_base, SMMUv3RegBank),
->> +        VMSTATE_UINT32(strtab_base_cfg, SMMUv3RegBank),
->> +        VMSTATE_UINT64(eventq_irq_cfg0, SMMUv3RegBank),
->> +        VMSTATE_UINT32(eventq_irq_cfg1, SMMUv3RegBank),
->> +        VMSTATE_UINT32(eventq_irq_cfg2, SMMUv3RegBank),
->> +        VMSTATE_STRUCT(cmdq, SMMUv3RegBank, 0,
->> +                       vmstate_smmuv3_queue, SMMUQueue),
->> +        VMSTATE_STRUCT(eventq, SMMUv3RegBank, 0,
->> +                       vmstate_smmuv3_queue, SMMUQueue),
->> +        VMSTATE_END_OF_LIST(),
->> +    },
->> +};
->> +
->> +static bool smmuv3_secure_bank_needed(void *opaque)
->> +{
->> +    SMMUv3State *s = opaque;
->> +
->> +    return s->secure_impl;
->> +}
->> +
->> +static const VMStateDescription vmstate_smmuv3_bank_s = {
->> +    .name = "smmuv3/bank_s",
->> +    .version_id = 1,
->> +    .minimum_version_id = 1,
->> +    .needed = smmuv3_secure_bank_needed,
->> +    .fields = (const VMStateField[]) {
->> +        VMSTATE_STRUCT(bank[SMMU_SEC_SID_S], SMMUv3State, 0,
->> +                       vmstate_smmuv3_secure_bank, SMMUv3RegBank),
->> +        VMSTATE_END_OF_LIST(),
->> +    },
->> +};
->> +
->>   static bool smmuv3_gbpa_needed(void *opaque)
->>   {
->>       SMMUv3State *s = opaque;
->> @@ -2472,6 +2520,25 @@ static const VMStateDescription vmstate_gbpa = {
->>       }
->>   };
->>   
->> +static bool smmuv3_gbpa_secure_needed(void *opaque)
-> I don't think you need that subsection. You can directly put this in the
-> secure subsection one. This was needed for NS to avoid breaking
-> migration but here you shall not need it.
+> * Alex Benn=C3=A9e (alex.bennee@linaro.org) wrote:
+> > dave@treblig.org writes:
+> >
+> > > From: "Dr. David Alan Gilbert" <dave@treblig.org>
+> > >
+> > > -M is used heavily in documentation and scripts, but isn't actually
+> > > documented anywhere.
+> > > Document it as equivalent to -machine.
+> > >
+> > > Reported-by: Julian Andres Klode <jak@jak-linux.org>
+> > > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+> > > ---
+> > >  qemu-options.hx | 12 +++++++-----
+> > >  1 file changed, 7 insertions(+), 5 deletions(-)
+> > >
+> > > diff --git a/qemu-options.hx b/qemu-options.hx
+> > > index fca2b7bc74..ec92723f10 100644
+> > > --- a/qemu-options.hx
+> > > +++ b/qemu-options.hx
+> > > @@ -44,6 +44,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+> > >  #endif
+> > >      "                memory-backend=3D'backend-id' specifies explici=
+tly provided backend for main RAM (default=3Dnone)\n"
+> > >      "                cxl-fmw.0.targets.0=3Dfirsttarget,cxl-fmw.0.tar=
+gets.1=3Dsecondtarget,cxl-fmw.0.size=3Dsize[,cxl-fmw.0.interleave-granulari=
+ty=3Dgranularity]\n"
+> > > +    "                sgx-epc.0.memdev=3Dmemid,sgx-epc.0.node=3Dnumai=
+d\n"
+> > >      "                smp-cache.0.cache=3Dcachename,smp-cache.0.topol=
+ogy=3Dtopologylevel\n",
+> > >      QEMU_ARCH_ALL)
+> > >  SRST
+> > > @@ -179,6 +180,9 @@ SRST
+> > >
+> > >              -machine cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=
+=3Dcxl.1,cxl-fmw.0.size=3D128G,cxl-fmw.0.interleave-granularity=3D512
+> > >
+> > > +    ``sgx-epc.0.memdev=3D@var{memid},sgx-epc.0.node=3D@var{numaid}``
+> > > +        Define an SGX EPC section.
+> > > +
+> >
+> > This seems unrelated.
+> >
+> > >      ``smp-cache.0.cache=3Dcachename,smp-cache.0.topology=3Dtopologyl=
+evel``
+> > >          Define cache properties for SMP system.
+> > >
+> > > @@ -208,12 +212,10 @@ SRST
+> > >  ERST
+> > >
+> > >  DEF("M", HAS_ARG, QEMU_OPTION_M,
+> > > -    "                sgx-epc.0.memdev=3Dmemid,sgx-epc.0.node=3Dnumai=
+d\n",
+> > > -    QEMU_ARCH_ALL)
+> > > -
+> > > +    "-M              as -machine\n", QEMU_ARCH_ALL)
+> > >  SRST
+> > > -``sgx-epc.0.memdev=3D@var{memid},sgx-epc.0.node=3D@var{numaid}``
+> > > -    Define an SGX EPC section.
+> > > +``-M``
+> > > +    as -machine.
+
+Surprisingly, this and -h/--help are our only two options where
+we provide a short synonym. I note that this handling of -M
+is not consistent with how we document -h/--help, where we
+print both on a single line:
+-h or -help     display this help and exit
+
+But it would be trickier to fit that in for -machine and
+perhaps confusing given the suboptions.
+
+> > Did we have a merge conflict at some point that messed things up?
 >
-> Thanks
->
-> Eric
+> It's not clear - it was the only option hanging around in -M and it was
+> already appearing wrong in the man output.
+> I wondered if it was some requirement to have *something* in the -M
+> definition so thought it best to move it at the same time.
 
+It looks like this was incorrectly added under -M by
+commit dfce81f1b9 ("vl: Add sgx compound properties to expose
+SGX EPC sections to guest"), which should have put it under
+-machine like all our other machine suboption documentation.
 
-Thanks for the clarification. I'll drop the smmuv3/gbpa_secure 
-subsection and just migrate the secure GBPA as part of the smmuv3/bank_s 
-secure subsection, since we don't have any existing migration ABI to 
-preserve for the secure state.
+The result is that the sgx-epc documentation appears OK
+in --help because the --help output just concatenates
+everything so it gets tacked on after the -machine help,
+but it is misrendered in the HTML docs:
+https://qemu-project.gitlab.io/qemu/system/invocation.html
+as it appears as if a top level option rather than one
+indented to indicate that it's a machine sub-option.
+So this change fixes that bug (and should ideally say so
+in its commit message).
 
+Before that it simply read
+-HXCOMM Deprecated by -machine
+-DEF("M", HAS_ARG, QEMU_OPTION_M, "", QEMU_ARCH_ALL)
 
-Also, many thanks for all your review work on this series. I'll prepare 
-and send a v4 shortly, and if you have some time to look at it as well, 
-that would be greatly appreciated.
+(Commit dfce81f1b9 also silently dropped that "deprecated"
+comment, which it shouldn't really have done.)
 
-
-Yours,
-
-Tao
-
+thanks
+-- PMM
 
