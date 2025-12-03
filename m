@@ -4,35 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CDCAD12694
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 09:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE31D12694
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 09:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQjHY-00008K-2C; Wed, 03 Dec 2025 04:36:20 -0500
+	id 1vQjHb-0000AV-1o; Wed, 03 Dec 2025 04:36:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQjHW-0008WU-OV; Wed, 03 Dec 2025 04:36:18 -0500
+ id 1vQjHZ-00009m-Py; Wed, 03 Dec 2025 04:36:21 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQjHT-00072N-It; Wed, 03 Dec 2025 04:36:18 -0500
+ id 1vQjHY-00073V-5o; Wed, 03 Dec 2025 04:36:21 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0F89F1708AB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 54D081708AE;
  Wed, 03 Dec 2025 12:35:54 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F0A9A32B5A2;
- Wed, 03 Dec 2025 12:36:11 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 376D432B5A5;
+ Wed, 03 Dec 2025 12:36:12 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.3 v2 00/96] Patch Round-up for stable 10.1.3,
- freeze on 2025-12-01 (actually on 2025-12-03, frozen)
-Date: Wed,  3 Dec 2025 12:35:09 +0300
-Message-ID: <qemu-stable-10.1.3-20251203111246@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Nabih Estefan <nabihestefan@google.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.3 79/96] hw/arm/ast27x0: Fix typo in LTPI address
+Date: Wed,  3 Dec 2025 12:35:12 +0300
+Message-ID: <20251203093612.2370716-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.1.3-20251203111246@cover.tls.msk.ru>
+References: <qemu-stable-10.1.3-20251203111246@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -59,224 +61,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v10.1.3:
+From: Nabih Estefan <nabihestefan@google.com>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.1
+The address for LTPI has one more 0 that it should, bug introduced in
+commit 91064bea6b2d747a981cb3bd2904e56f443e6c67.
 
-Patch freeze was 2025-12-01, and the release was planned for 2025-12-03;
-however, both dates were moved by 2 days:
+Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+Fixes: 91064bea6b2d ("aspeed: ast27x0: Map unimplemented devices in SoC memory")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20251104233742.2147367-1-nabihestefan@google.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit cacd8fb08d3f992ef9cdf4c26a2d28ced409cfd4)
+(Mjt: context fixup)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-  https://wiki.qemu.org/Planning/10.1
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 6aa3841b69..356e8c239b 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -81,8 +81,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_UART11]    =  0x14C33A00,
+     [ASPEED_DEV_UART12]    =  0x14C33B00,
+     [ASPEED_DEV_WDT]       =  0x14C37000,
++    [ASPEED_DEV_LTPI]      =  0x30000000,
+     [ASPEED_DEV_SPI_BOOT]  =  0x100000000,
+-    [ASPEED_DEV_LTPI]      =  0x300000000,
+     [ASPEED_DEV_SDRAM]     =  0x400000000,
+ };
+ 
+-- 
+2.47.3
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
-
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
-
-Thanks!
-
-/mjt
-
---------------------------------------
-01* 27ea28a0b369 Richard Henderson:
-   tcg/arm: Fix tgen_deposit
-02* 77dc9d662f80 Peter Maydell:
-   tests/tcg/multiarch/linux/linux-test: Don't try to test atime update
-03* 270b28681e36 Thomas Huth:
-   hw/ppc/e500: Check for compatible CPU type instead of aborting 
-   ungracefully
-04* aaca725884b5 John Levon:
-   vfio: rename field to "num_initial_regions"
-05* ecbe424a63c9 John Levon:
-   vfio: only check region info cache for initial regions
-06* 3f462d79a080 Peter Maydell:
-   target/arm: Fix reads of CNTFRQ_EL0 in linux-user mode
-07* e41139eaad1d Zejun Zhao:
-   hw/riscv: Correct mmu-type property of sifive_u harts in device tree
-08* 5e3e066e4ac8 Jialong Yang:
-   aplic: fix mask for smsiaddrcfgh
-09* 2a21cbee47a1 Daniel Henrique Barboza:
-   target/riscv/kvm: fix env->priv setting in reset_regs_csr()
-10* 06e01941ffca Daniel Henrique Barboza:
-   target/riscv: fix riscv_cpu_sirq_pending() mask
-11* 2c147611cf56 Daniel P. Berrangé:
-   io: release active GSource in TLS channel finalizer
-12* 322c3c4f3abe Daniel P. Berrangé:
-   io: move websock resource release to close method
-13* b7a1f2ca45c7 Daniel P. Berrangé:
-   io: fix use after free in websocket handshake code
-14* 3995fc238e05 Daniel P. Berrangé:
-   crypto: stop requiring "key encipherment" usage in x509 certs
-15* 6910f04aa646 Fiona Ebner:
-   hw/scsi: avoid deadlock upon TMF request cancelling with VirtIO
-16* 1a8ffd6172f3 Peter Maydell:
-   target/hppa: Set FPCR exception flag bits for non-trapped exceptions
-17* fb722e1dc2d8 Helge Deller:
-   hw/hppa: Fix interrupt of LASI parallel port
-18* 36ec1a829a07 Mark Cave-Ayland:
-   esp.c: fix esp_cdb_ready() FIFO wraparound limit calculation
-19* e9d02b59316f Mark Cave-Ayland:
-   qtest/am53c974-test: add additional test for cmdfifo overflow
-20* 7c7089321670 Bastian Blank:
-   linux-user: Use correct type for FIBMAP and FIGETBSZ emulation
-21* 0db2de22fcbf Peter Maydell:
-   linux-user: permit sendto() with NULL buf and 0 len
-22* d5e1d2dea11b Paolo Bonzini:
-   target/i386: clear CPU_INTERRUPT_SIPI for all accelerators
-23* d1193481dee6 peng guo:
-   hw/i386/pc: Avoid overlap between CXL window and PCI 64bit BARs in QEMU
-24* 639a29422754 Xiaoyao Li:
-   i386/kvm/cpu: Init SMM cpu address space for hotplugged CPUs
-25* 6eda39a87f4f Daniel P. Berrangé:
-   block: remove 'detached-header' option from opts after use
-26* c86488abaf01 Daniel P. Berrangé:
-   block: fix luks 'amend' when run in coroutine
-27* ad97769e9dcf Richard W.M. Jones:
-   block/curl.c: Fix CURLOPT_VERBOSE parameter type
-28* 524fc77d2322 Sean Anderson:
-   gdbstub: Fix %s formatting
-29* a04c5ba543c1 Edgar E. Iglesias:
-   target/microblaze: Remove unused arg from check_divz()
-30* 0e46b4d1f13b Edgar E. Iglesias:
-   target/microblaze: div: Break out raise_divzero()
-31* cfc1d54251d3 Edgar E. Iglesias:
-   target/microblaze: Handle signed division overflows
-32* df7e9243d540 Ilya Leoshkevich:
-   target/s390x: Fix missing interrupts for small CKC values
-33* dacfec5157fb Ilya Leoshkevich:
-   target/s390x: Fix missing clock-comparator interrupts after reset
-34* fc976a67ded4 Ilya Leoshkevich:
-   target/s390x: Use address generation for register branch targets
-35* 0408c61e27ac Ilya Leoshkevich:
-   tests/tcg/s390x: Test SET CLOCK COMPARATOR
-36* 8922a758b292 Chenyi Qiang:
-   ram-block-attributes: fix interaction with hugetlb memory backends
-37* 75e2cb144191 Xiaoyao Li:
-   hostmem/shm: Allow shm memory backend serve as shared memory for coco-VMs
-38* 4f503afc7eb5 Peter Maydell:
-   target/x86: Correctly handle invalid 0x0f 0xc7 0xxx insns
-39* fde5930cc371 Albert Esteve:
-   vhost-user: fix shared object lookup handler logic
-40* 3e6ad83f209e Shameer Kolothum:
-   tests/qtest/bios-tables-test: Prepare for _DSM change in the DSDT table
-41* 325aa2d86a20 Eric Auger:
-   hw/pci-host/gpex-acpi: Fix _DSM function 0 support return value
-42* ccf166d89dcf Shameer Kolothum:
-   tests/qtest/bios-tables-test: Update DSDT blobs after GPEX _DSM change
-43* f00bcc833790 Akihiko Odaki:
-   qemu-img: Fix amend option parse error handling
-44* 909852ba6b4a Alberto Garcia:
-   qemu-img rebase: don't exceed IO_BUF_SIZE in one operation
-45* 4c91719a6a78 Alberto Garcia:
-   tests/qemu-iotest: fix iotest 024 with qed images
-46* 59506e59e0f0 Eric Blake:
-   qio: Add trace points to net_listener
-47* 6e03d5cdc991 Eric Blake:
-   qio: Unwatch before notify in QIONetListener
-48* b5676493a08b Eric Blake:
-   qio: Remember context of qio_net_listener_set_client_func_full
-49* 9d86181874ab Eric Blake:
-   qio: Protect NetListener callback with mutex
-50* 6da0c9828194 Peter Maydell:
-   hw/net/e1000e_core: Don't advance desc_offset for NULL buffer RX 
-   descriptors
-51* 9d946d56a2ac Peter Maydell:
-   hw/net/e1000e_core: Correct rx oversize packet checks
-52* bab496a18358 Peter Maydell:
-   hw/net/e1000e_core: Adjust e1000e_write_payload_frag_to_rx_buffers() 
-   assert
-53* a01344d9d780 Peter Maydell:
-   net: pad packets to minimum length in qemu_receive_packet()
-54* f52db7f34242 Peter Maydell:
-   hw/display/xlnx_dp.c: Don't abort on AUX FIFO overrun/underrun
-55* 032333eba77b Peter Maydell:
-   hw/display/xlnx_dp: Don't abort for unsupported graphics formats
-56* 5fc50b4ec841 Peter Maydell:
-   hw/misc/npcm_clk: Don't divide by zero when calculating frequency
-57* 863449cc8ec7 Alex Bennée:
-   tests: move test_xen assets to share.linaro.org
-58* dfaf3695b20d Alex Bennée:
-   tests: move test_virt assets to share.linaro.org
-59* 5ff8d1fac98b Alex Bennée:
-   tests: move test_netdev_ethtool to share.linaro.org
-60* 533b5ac2d6a8 Alex Bennée:
-   tests: move test_kvm_xen to share.linaro.org
-61* ced9f2ffc20d Alex Bennée:
-   tests: move test_kvm to share.linaro.org
-62* 497d3e87ce2d Alex Bennée:
-   tests: move test_virt_gpu to share.linaro.org
-63* 89d22536d1a1 Hanna Czenczek:
-   rbd: Run co BH CB in the coroutine’s AioContext
-64* deb35c129b85 Hanna Czenczek:
-   nfs: Run co BH CB in the coroutine’s AioContext
-65* 53d5c7ffac7b Hanna Czenczek:
-   curl: Fix coroutine waking
-66* 7a501bbd5194 Hanna Czenczek:
-   nvme: Kick and check completions in BDS context
-67* 0f142cbd919f Hanna Czenczek:
-   nvme: Fix coroutine waking
-68* 9b9ee60c07f5 Hanna Czenczek:
-   block/io: Take reqs_lock for tracked_requests
-69* 124ab930ba38 Daniel P. Berrangé:
-   tests/functional: fix formatting of exception args
-70* 335da23abec8 Daniel P. Berrangé:
-   tests/functional: handle URLError when fetching assets
-71* a344e22917f4 Yannick Voßen:
-   hw/dma/zynq-devcfg: Fix register memory
-72* 9c3b76a0d406 Philippe Mathieu-Daudé:
-   hw/southbridge/lasi: Correct LasiState parent
-73* ebd9ea2947d8 Peter Maydell:
-   target/i386: Mark VPERMILPS as not valid with prefix 0
-74* ebb46ba6a4a2 Paolo Bonzini:
-   target/i386/tcg: validate segment registers
-75* 9c3afb9d9b92 Paolo Bonzini:
-   target/i386: svm: fix sign extension of exit code
-76* 106d766c9d5b Paolo Bonzini:
-   target/i386: fix stack size when delivering real mode interrupts
-77 5fbcbf76a19a Jack Wang:
-   qmp: Fix a typo for a USO feature
-78 0b5bf4ea7620 Li Zhijian:
-   migration: Fix transition to COLO state from precopy
-79 cacd8fb08d3f Nabih Estefan:
-   hw/arm/ast27x0: Fix typo in LTPI address
-80 510d5c61ad3e Jamin Lin:
-   hw/arm/aspeed: Fix missing SPI IRQ connection causing DMA interrupt 
-   failure
-81 4a934d284dfa Peter Maydell:
-   hw/arm/armv7m: Disable reentrancy guard for v7m_sysreg_ns_ops MRs
-82 579be921f509 Peter Maydell:
-   hw/display/exynos4210_fimd: Account for zero length in 
-   fimd_update_memory_section()
-83 4be62d311791 Marc-André Lureau:
-   ui/vdagent: fix windows agent regression
-84 303f6049358e Philippe Mathieu-Daudé:
-   chardev/char-pty: Do not ignore chr_write() failures
-85 4c1646e23f76 AlanoSong@163.com:
-   ui/vnc: Fix qemu abort when query vnc info
-86 8eeaa706ba73 Kevin Wolf:
-   block-backend: Fix race when resuming queued requests
-87 98e788b91ad0 Stefan Hajnoczi:
-   file-posix: populate pwrite_zeroes_alignment
-88 d704a13d2c02 Stefan Hajnoczi:
-   block: use pwrite_zeroes_alignment when writing first sector
-89 59a1cf0cd315 Stefan Hajnoczi:
-   iotests: add Linux loop device image creation test
-90 2bb0153cd8 Fiona Ebner:
-   block/io_uring: avoid potentially getting stuck after resubmit at the end 
-   of ioq_submit()
-91 ef44cc0a7624 Peter Maydell:
-   hw/pci: Make msix_init take a uint32_t for nentries
-92 98ee8aa92e93 Peter Xu:
-   hw/core/machine: Provide a description for aux-ram-share property
-93 57756aa01fe5 Cédric Le Goater:
-   hw/aspeed/{xdma, rtc, sdhci}: Fix endianness to DEVICE_LITTLE_ENDIAN
-94 7248dab3c9d7 Harald van Dijk:
-   target/arm: Fix assert on BRA.
-95 ebb625262c7f Peter Maydell:
-   docs/devel: Update URL for make-pullreq script
-96 88be119fb19b Markus Armbruster:
-   kvm: Fix kvm_vm_ioctl() and kvm_device_ioctl() return value
-
-(commit(s) marked with * were in previous series and are not resent)
 
