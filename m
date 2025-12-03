@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 957D5D12D55
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 12:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15CB4D12D55
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 12:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQlqP-0001vk-RQ; Wed, 03 Dec 2025 07:20:29 -0500
+	id 1vQlqh-00026b-Sp; Wed, 03 Dec 2025 07:20:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vQlqM-0001th-H6
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 07:20:26 -0500
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ id 1vQlqc-00024g-H8
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 07:20:42 -0500
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vQlqK-0003Oq-Pv
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 07:20:26 -0500
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-4507605e19aso3447859b6e.2
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 04:20:24 -0800 (PST)
+ id 1vQlqZ-0003W9-C9
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 07:20:41 -0500
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7c76d855ddbso1230757a34.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 04:20:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764764422; x=1765369222; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764764435; x=1765369235; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TGkTPdKIyyiYeobjZc1lnFF0gddFnBlSXgF82GcrW4I=;
- b=Z/Gu22/3sw9PWotVMu680oup+ETv/A1vtOu2rDHdhPurNE9JGng/gAPiGFbTOB4VCG
- fNt2NH+za+XwC7eFHxCw/GYdFkmDJiji4QFFW2WIqYKzNQk1lgBKnHnFq1q7CFl6Q85D
- FzaRov9aynLzk4/qakaWruOdjxqDlOdrZch06/rm3jAPtINMw1ZnTGhwZh6srggFdYkD
- Gw0rbcoSJd56BRrPi/iVgsRc75PGUZfD5Q0uT5dmDjmnWLG8VyiysoW+oMjO06gKBPkT
- FHwznjYr2hPA9HCVeXUO1SRj97Iq04QXm7xKMioymWPkZsGgBNXyotbojOgjEQaGP27c
- tinw==
+ bh=pqW304W3ISjK3sGD+I68Yvprgj2KMjUVAMgE/klyJCU=;
+ b=w89JA8GeTlKTjOrYeAqySxuzhufHjCdgBUidyoZ5UNvhoDoJ0tvD8Aik5UNlhvoous
+ vcLmrokKJFqGzIn95VZcXojMNE6lQOPDKqfbqc1jSb9S2EyxvEvXk3QCpC0XyjxdtXWN
+ CZZeFWBXwRzg5oewSYl0lw26H7z/xdmrU37usKZW/dh+wCQvMM4EQLv38LAPLZxvYnYu
+ rsMhJ0PGlqtHwxVgE92JiOlMn9GzwHMFDiYtO9x0wz0z7eQR+Wmh47/OchWpf0y0dlfN
+ KLJq5VzZwLpH/t8t/3O/YvLWufuZniSEfOnsMqeEf8HkyruU1MT8RdGygaolt3fpz/YA
+ Zx+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764764422; x=1765369222;
+ d=1e100.net; s=20230601; t=1764764435; x=1765369235;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TGkTPdKIyyiYeobjZc1lnFF0gddFnBlSXgF82GcrW4I=;
- b=QQ7jGLLha3ODyWPljDq2LaaMGN7JHdO2FCSNQWRiLfhRFrO3g3SUVvjWFpjN2KZ84+
- pj0yoq1UDdy2IWm42brXZD5Hvx/a6zEuABxHMb/kj+iBFIlc5B3t7EZ3O37ZVTjqmWHw
- tA1bjr+DvdjuZJjhg5oGS2l4+HlWgI3AnnD/WzzYMlIkmIiwDmlkDrMAtuXwqtZpQ0Wo
- UFSD1U5OxKEpylRLvR2bdMeUHcv3ZCJLiwUgmVx8nV0T7VUbZ5se9rHuylP/ffomhUzl
- 7Hr/4dI/gV2a7ZLq3v2acyR1An2p0DVnbZNi/tz/dRO/1FfNQCu0INQ5O8MGqtuxAU8X
- fjvw==
-X-Gm-Message-State: AOJu0Yx0/cryQKV+hBfTKoeu0pzE0cExxnulzZCnLpsMh2m9k7meyeE7
- DYZ90b6kMiKol5I7I4AMO0oosw8c+mn/gP+N+KGtcR2Vre2DexdVx/SMhTkdIrRH9d2xhznvAq4
- bEdR+6Mg=
-X-Gm-Gg: ASbGncsVuVr4pWDxVxuse9QsycdNCfrlV/qmTUb67kwn2OPlXXZx57YIHLNKpsNzVkg
- kEolEXWjyC/klkEHkDCmdJaF4pNDoOuG9tKuSLkJdLJOTvWNfH9YXQwvnl6VxUao8BpfswfPuaw
- rINZYLmNjPYhoMp7dJNyPrAjmZA9Ky67nQRrjL45WJF9vZviEq9Y/GIHxMMo2wz5BAx5p46fqPb
- 5mPqWzhwtJqlITFz3utJjqW6dEArEyvrhVXPPFzlblgkxz99/pOqcZ8Sf7bs0Uf118T4MGknIeK
- y/+DSTg3lL/NqzGOkObhcJ0q7lCXJHAkp/3AJz566AvGPsVfGSxvZ6a/XlmhmAQz2y377U+hNkP
- p8mxXvvt/nG9REo8G4919+sCzTHffeWVyVpCN9cLc9hjOI/FLhPVHGJKusGbm4cBLsi9S7sY+yG
- k5158wOL08KfzRKoIkOAd5ItrwbQ==
-X-Google-Smtp-Source: AGHT+IEN1Qz7KbURxhtm8rIXHuAG9PraSberxx4TUTaaB2nUPUQvlU7wnWEJyBhFpCJshKyzKMVmyg==
-X-Received: by 2002:a05:6808:11c4:b0:450:b3ec:c154 with SMTP id
- 5614622812f47-4536e3de299mr962771b6e.25.1764764421923; 
- Wed, 03 Dec 2025 04:20:21 -0800 (PST)
+ bh=pqW304W3ISjK3sGD+I68Yvprgj2KMjUVAMgE/klyJCU=;
+ b=cgoomDUG6NnBHF9C7t0Mg42qxGhS4Xz2t45/m5ckFh8WiZgCopcD0jujzl6TKEhcus
+ A6b9jBMy7/LfKVlYtDLGJr10qhVPloABNSN7A4Lh/zXCSn04xtI49mauXalPtjk/6JLT
+ kb5T4ZLEiOEBKrUjNhkTxeoPhOdOGJh6RZXHFJLuSREzQDFvMR4RcGjvPGZBVWOpqtuB
+ VJIYZfIe82oTqBhSYKfv1ynlrFWvKb9kXCECqc3RNqdWzotz+r4v370lXV9Ld9++RAPi
+ 2lQvEDG9JoL9nqARXhQJAGVfLO6d0be11sVQvoX5nszJwMUhw2bYZH4ej1CtXjVTcYIr
+ Y2hw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7tJgnLr56gQGW2SIOy/o0PbjJsypAfIu9jI6FBzlXO+IHM65BCg4Yr1PwhWSWoWq0wpciXRRDk0ZU@nongnu.org
+X-Gm-Message-State: AOJu0YwB4+g17Dc14oUb87AoMjREitqw1pFj4Roru5ON+YpZEq1TiFG3
+ TQI+l3oxjjtlMxGepNX21wrMqQwFQnSdQIj9wmEmx2o8g3XT59XS96BNaWgGRR1aQSQ=
+X-Gm-Gg: ASbGncs72TjCDnCqJXAHeMlqK8dBfrDQrluDNK3IRfSHu5ix0xrHmXmX83lUA8oRYxe
+ QlOT9vMeOAakiEJX3+qskwABTNzILYs+i9ZkCdTGZMpyeuC1eTvmHQyFSbqALE/E6w7lD9PZpQz
+ FXZ2WKtwm9nLJ8FR7qVT+wpzSM0D7hhUUhPBvkYGIqt66Fof6Joy2079gsV7LqfdczSWb0kDu80
+ 5/CVOxEe0ANihRTfv1MZbW+TGlG5LD0qgYS/1UQqdH2g5Tdw4iwSLjthd/tGPTX66q57O2HfLG/
+ 2PvqJve/yZfoAF8r9VKJznK9P2vMl9KuJUckoKo2s+a7IPZ3BIhc6K4k4yEkZ/MbVHpC3EqQkNM
+ d3mDDJvWcVe6fEk6ecozIXonuHHwC+2Aty/Xt7QgF0m4qysJ1uFOyqA8JI9oe5CYzoeARpPQRw/
+ acuqlGADShLvAoHv0yxCT3RT6Pyg==
+X-Google-Smtp-Source: AGHT+IE9l4JZ658zPs2+uzLZyQzyb7hS4F5V7QTjsc+YBr/5di+AAfdBXfSLJLklq/b5KlwfUaJm8A==
+X-Received: by 2002:a05:6830:2e03:b0:7c7:5f09:8792 with SMTP id
+ 46e09a7af769-7c94dc03b7emr1856765a34.17.1764764435479; 
+ Wed, 03 Dec 2025 04:20:35 -0800 (PST)
 Received: from [10.27.7.193] ([187.210.107.189])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-45317113578sm7117129b6e.22.2025.12.03.04.20.21
- for <qemu-devel@nongnu.org>
+ 46e09a7af769-7c90f5fe927sm8547799a34.9.2025.12.03.04.20.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Dec 2025 04:20:21 -0800 (PST)
-Message-ID: <e43cc268-63ee-4572-9db0-89c980576368@linaro.org>
-Date: Wed, 3 Dec 2025 04:20:18 -0800
+ Wed, 03 Dec 2025 04:20:35 -0800 (PST)
+Message-ID: <32712cf5-2df0-4a62-8137-dde4f9328b0e@linaro.org>
+Date: Wed, 3 Dec 2025 04:20:32 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/1] Accelerators patches for 2025-12-01
-To: qemu-devel@nongnu.org
-References: <20251201202634.98188-1-philmd@linaro.org>
+Subject: Re: [PULL 0/2] Error reporting patches for 2025-12-02
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+References: <20251202083206.4180561-1-armbru@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251201202634.98188-1-philmd@linaro.org>
+In-Reply-To: <20251202083206.4180561-1-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x229.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,39 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/1/25 12:26, Philippe Mathieu-Daudé wrote:
+On 12/2/25 00:32, Markus Armbruster wrote:
 > The following changes since commit 9ef49528b5286f078061b52ac41e0ca19fa10e36:
 > 
->    Merge tag 'hw-misc-20251125' of https://github.com/philmd/qemu into staging (2025-11-25 14:22:39 -0800)
+>    Merge tag 'hw-misc-20251125' ofhttps://github.com/philmd/qemu into staging (2025-11-25 14:22:39 -0800)
 > 
 > are available in the Git repository at:
 > 
->    https://github.com/philmd/qemu.git tags/accel-20251201
+>    https://repo.or.cz/qemu/armbru.git tags/pull-error-2025-12-02
 > 
-> for you to fetch changes up to 3bee93b9abf5509f1ac25909478dd52a724bf0c3:
+> for you to fetch changes up to 88be119fb19b8ee04d681ad9048cde9f6a37c631:
 > 
->    accel/hvf: Fix i386 HVF compilation failures (2025-12-01 21:21:16 +0100)
-> 
-> Spurious checkpatch.pl warning:
-> 
->    WARNING: architecture specific defines should be avoided
->    #49: FILE: accel/hvf/hvf-accel-ops.c:151:
->    +#ifdef __aarch64__
+>    kvm: Fix kvm_vm_ioctl() and kvm_device_ioctl() return value (2025-12-02 07:46:21 +0100)
 > 
 > ----------------------------------------------------------------
-> Accelerators patches queue
-> 
-> - Fix HVF/x86 build
-> ----------------------------------------------------------------
-> 
-> Nguyen Dinh Phi (1):
->    accel/hvf: Fix i386 HVF compilation failures
-> 
->   accel/hvf/hvf-accel-ops.c | 5 ++---
->   target/i386/hvf/hvf.c     | 6 ++----
->   2 files changed, 4 insertions(+), 7 deletions(-)
-> 
-
+> Error reporting patches for 2025-12-02
 
 Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
