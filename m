@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20388D12D56
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D58D12D60
 	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 13:26:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQmrR-00016i-J5; Wed, 03 Dec 2025 08:25:38 -0500
+	id 1vQmrn-0001Bm-GK; Wed, 03 Dec 2025 08:26:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vQmrP-00016D-Nk
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 08:25:35 -0500
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ id 1vQmrZ-0001Af-Jx
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 08:25:46 -0500
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vQmrM-0003kS-S2
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 08:25:35 -0500
+ id 1vQmrP-0003ko-71
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 08:25:37 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id DF5D541FFE
- for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 13:25:30 +0000 (UTC)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 858BA4794A
+ for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 13:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1764768330;
- bh=7K0Qj6ITYQgQqkaHMi/RorD0f1CJLhMK13BPXiXeH/8=;
+ s=20210803; t=1764768333;
+ bh=KlUAXtGTRIzETysUbMBLh23XsDsY3oaDC1sG2H9gxbE=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=r8Dsl5Ooh3NDXrWoQ/gQ8x0/E7G5WsEQdOX+ncp66MvaAnUqIawhrd41U/fV1t5nK
- F2Ko9YOqNkcR8gxzQhcmk3J9FKKLsiWwVEbezZDW//AiKeN5kGRgMB1c2gZqmtgRZl
- +tKrB2Df/nRvVKVg2i+c83lI0Wh9NnyBYTOBtG3uctLJPCAu+yGqBCd6yi7ZqnsYYn
- oRHaB79dt3GP2bh1pYW4K2BYzYh4rG37JRlKC7v4VN92Ks9FiShcPGTFol5rb9Trkw
- iF+Tbi/IsEuGMZ/Yvs+Oo1hpcSE+2vX8x8jdRhFENB6GAVuKc0wKkFEg1l4i2PIL+f
- lbSosnOb9/zXA==
+ b=LSliPgdzNT6rsbr2upTsxtq900y909fx3uSIQSdDBxaVJszNvJn9eB6cd+4ImsuWp
+ 8ClaX7YDgM+jyjUWZMyMyY0ERAU9oWGG6sAMRmdwKr9G1kWL7E1ZMV4anV7wPKZoa5
+ o+NpgEsVCnMmw31tEyy4K9k/w292Zt514wkpW3AZS4DAzQNkwjSBlesRalsl204fEy
+ cuPPzh74i5ixcbjUgo3szRo/+d6rSmDF5Pd3onNmFz1VpIvFN7chvoA8H2EtzIUkNI
+ UWLJhntLhrb7l0rc5yvUJ1+3rAzU0JcFPbWzdPolmcSTcjtCK5zd4EKBk8IPk8jw1n
+ Vx+YUnrTjnfVg==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id BF2407F1BF
- for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 13:25:30 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 5F0E97F394
+ for <qemu-devel@nongnu.org>; Wed,  3 Dec 2025 13:25:33 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Wed, 03 Dec 2025 13:13:21 -0000
+Date: Wed, 03 Dec 2025 13:18:19 -0000
 From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -58,7 +58,7 @@ X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
 X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
 X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
 References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <176476760180.3405822.6036068048475863810.malone@juju-98d295-prod-launchpad-3>
+Message-Id: <176476789962.3543418.14941451906841465617.malone@juju-98d295-prod-launchpad-4>
 Subject: [Bug 2133188] Re: Illegal instruction in memset under qemu-user for
  riscv64
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -67,9 +67,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="379e22b8475e3402088a4cdb4a6e7936a4d28414";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: c590798e646cb5c53eb098013a328964b1b0287c
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Launchpad-Hash: 66c4849e35a66aace4c36fab7af28772d47341ff
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -92,57 +92,7 @@ Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the resolute container I get the following output
-
-./check_tcgets_2504 /dev/pts/0
-/dev/pts/0 is a terminal (tty) using TCGETS.
-/dev/pts/0 is NOT a terminal (tty) using TCGETS2.
-
-with this program
-
-#include <stdio.h>
-#include <fcntl.h>
-#include <unistd.h>
-#include <sys/ioctl.h>
-#include <linux/tty.h>                 // For TCGETS2
-#include <asm-generic/termbits.h>      // For struct termios2
-
-int main(int argc, char *argv[]) {
-    // Check for the correct number of command-line arguments
-    if (argc !=3D 2) {
-        fprintf(stderr, "Usage: %s <device>\n", argv[0]);
-        return 1;
-    }
-
-    // Open the specified device
-    int fd =3D open(argv[1], O_RDONLY);
-    if (fd < 0) {
-        perror("Failed to open device");
-        return 1;
-    }
-
-    // Check using TCGETS
-    struct termios tty;
-    if (ioctl(fd, TCGETS, &tty) =3D=3D 0) {
-        printf("%s is a terminal (tty) using TCGETS.\n", argv[1]);
-    } else {
-        printf("%s is NOT a terminal (tty) using TCGETS.\n", argv[1]);
-    }
-
-    // Check using TCGETS2 with struct termios2
-    struct termios2 tty2;
-    if (ioctl(fd, TCGETS2, &tty2) =3D=3D 0) {
-        printf("%s is a terminal (tty) using TCGETS2.\n", argv[1]);
-    } else {
-        printf("%s is NOT a terminal (tty) using TCGETS2.\n", argv[1]);
-    }
-
-    // Close the device
-    close(fd);
-    return 0;
-}
-
-Something might be wrong in the translation of TCGETS2 in QEMU.
+TCGETS2 is missing in QEMU's linux-user/ioctls.h.
 
 --=20
 You received this bug notification because you are a member of qemu-
