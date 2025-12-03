@@ -4,71 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70010D15D81
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 15:14:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8D02D12D75
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 15:15:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQoYY-0007dF-7t; Wed, 03 Dec 2025 10:14:14 -0500
+	id 1vQoZP-0000xj-BT; Wed, 03 Dec 2025 10:15:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vQoXZ-0006Si-Rs
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 10:13:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vQoZK-0000x6-TQ; Wed, 03 Dec 2025 10:15:02 -0500
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vQoXX-0002j4-QS
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 10:13:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764774791;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LEW2UfNdED2lFgqYqppyNm5h6ZDcg1lFChiE7ZEFkO0=;
- b=Ou+dvqvtovuh5ppGwU8E81GWCun2mCt1L2ZwEtFTLD35nZ/kNt047U8dyVtFaF+jtlotEA
- b3BhKMDwRL7mFIYLwPuOL8mzf2lP02j8AhZsQg1zoJiEZjOANScR7SEf4e58Jv9WEytkrP
- sPv5IWYQTxn5LvmdyKcTt8LF1i8aSAY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-423-d4sxeehqM7W781voywBnUw-1; Wed,
- 03 Dec 2025 10:13:06 -0500
-X-MC-Unique: d4sxeehqM7W781voywBnUw-1
-X-Mimecast-MFC-AGG-ID: d4sxeehqM7W781voywBnUw_1764774786
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D09D118002F9; Wed,  3 Dec 2025 15:13:05 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.32.23])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5FC38180045B; Wed,  3 Dec 2025 15:13:04 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: John Levon <john.levon@nutanix.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 6/6] vfio-user: recycle msg on failure
-Date: Wed,  3 Dec 2025 16:12:49 +0100
-Message-ID: <20251203151249.2707207-7-clg@redhat.com>
-In-Reply-To: <20251203151249.2707207-1-clg@redhat.com>
-References: <20251203151249.2707207-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vQoZI-0003Bu-PW; Wed, 03 Dec 2025 10:15:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1764774900; x=1796310900;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=Dhw8fv3CIwT8oGsLVbK4XVzTRdwtyRhTvyp06Yg14dA=;
+ b=SbriqtujuZDnwZr6gV4vwJdpD7xaXc/+z3LDa0fJKr7H60r6jsMeome6
+ DBv38oNGzKA2+4cWzfl83hIcE6oBbFP+Nre2DKcpEyuzyx+yGlgJ7YmgB
+ 82ojAZAGjfwFr/gKXH4kMxf3mpGHPOSanbEFFjIx9JWutnnAEva7lOCBk
+ HlPcIcIx8dvI+EHS7Udvm1akwG4jJK/e/MvXRQ+8TNJSKCmegLHFHAg2F
+ iBC3HjBlH0tkykGFqPMfq2jok3Vcx+y1Kh8kBsrn6FHeqsMU8HL8MGRLm
+ CGWhweUEMtWCjW9MSYBittfuelebhZLE1eE2wIwEBV4pKJGqK6XuRrcZd A==;
+X-CSE-ConnectionGUID: wn9WRBBLTvOMIOAE3t+Zgw==
+X-CSE-MsgGUID: DM7gEMfARliJBjmUe35slA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11631"; a="70622268"
+X-IronPort-AV: E=Sophos;i="6.20,246,1758610800"; d="scan'208";a="70622268"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Dec 2025 07:14:54 -0800
+X-CSE-ConnectionGUID: FbgYcUlHT/CNn3V4JacTMw==
+X-CSE-MsgGUID: eGvCaaZqT0m05lj1Gtzkqg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,246,1758610800"; d="scan'208";a="199176729"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa004.jf.intel.com with ESMTP; 03 Dec 2025 07:14:51 -0800
+Date: Wed, 3 Dec 2025 23:39:34 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sergio Lopez <slp@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH-for-11.0 v6 05/13] hw/nvram/fw_cfg: Propagate I/O
+ MemoryRegion to fw_cfg_init_io_dma()
+Message-ID: <aTBZtv7SHRUGbidV@intel.com>
+References: <20251203060942.57851-1-philmd@linaro.org>
+ <20251203060942.57851-6-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20251203060942.57851-6-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,53 +92,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Levon <john.levon@nutanix.com>
+On Wed, Dec 03, 2025 at 07:09:33AM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Wed,  3 Dec 2025 07:09:33 +0100
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: [PATCH-for-11.0 v6 05/13] hw/nvram/fw_cfg: Propagate I/O
+>  MemoryRegion to fw_cfg_init_io_dma()
+> X-Mailer: git-send-email 2.51.0
+> 
+> To allow callers to use I/O MemoryRegion different than the
+> global get_system_io(), pass it as argument.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  include/hw/nvram/fw_cfg.h | 4 ++--
+>  hw/i386/fw_cfg.c          | 3 ++-
+>  hw/i386/microvm.c         | 3 ++-
+>  hw/i386/pc.c              | 3 ++-
+>  hw/nvram/fw_cfg.c         | 5 ++---
+>  5 files changed, 10 insertions(+), 8 deletions(-)
 
-If we fail to read an incoming request, recycle the message.
+...
 
-Resolves: Coverity CID 1611807
-Resolves: Coverity CID 1611808
-Signed-off-by: John Levon <john.levon@nutanix.com>
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20251203100316.3604456-6-john.levon@nutanix.com
-Signed-off-by: CÃ©dric Le Goater <clg@redhat.com>
----
- hw/vfio-user/proxy.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+> diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+> index 94d22a232ac..69f04d74a15 100644
+> --- a/hw/i386/microvm.c
+> +++ b/hw/i386/microvm.c
+> @@ -289,6 +289,7 @@ static void microvm_memory_init(MicrovmMachineState *mms)
+>      X86MachineState *x86ms = X86_MACHINE(mms);
+>      MemoryRegion *ram_below_4g, *ram_above_4g;
+>      MemoryRegion *system_memory = get_system_memory();
+> +    MemoryRegion *io_memory = get_system_io();
+>      FWCfgState *fw_cfg;
+>      ram_addr_t lowmem = 0xc0000000; /* 3G */
+>      int i;
+> @@ -319,7 +320,7 @@ static void microvm_memory_init(MicrovmMachineState *mms)
+>          e820_add_entry(0x100000000ULL, x86ms->above_4g_mem_size, E820_RAM);
+>      }
+>  
+> -    fw_cfg = fw_cfg_init_io_dma(FW_CFG_IO_BASE, FW_CFG_IO_BASE + 4,
+> +    fw_cfg = fw_cfg_init_io_dma(io_memory, FW_CFG_IO_BASE, FW_CFG_IO_BASE + 4,
 
-diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-index f2601eada5b9c8010e88bf4b3035a27811769b0d..314dfd23d8af385532bb87219fb3153961942cba 100644
---- a/hw/vfio-user/proxy.c
-+++ b/hw/vfio-user/proxy.c
-@@ -412,11 +412,22 @@ err:
-     for (i = 0; i < numfds; i++) {
-         close(fdp[i]);
-     }
--    if (isreply && msg != NULL) {
--        /* force an error to keep sending thread from hanging */
--        vfio_user_set_error(msg->hdr, EINVAL);
--        msg->complete = true;
--        qemu_cond_signal(&msg->cv);
-+    if (msg != NULL) {
-+        if (msg->type == VFIO_MSG_REQ) {
-+            /*
-+             * Clean up the request message on failure. Change type back to
-+             * NOWAIT to free.
-+             */
-+            msg->type = VFIO_MSG_NOWAIT;
-+            vfio_user_recycle(proxy, msg);
-+        } else {
-+            /*
-+             * Report an error back to the sender. Sender will recycle msg.
-+             */
-+            vfio_user_set_error(msg->hdr, EINVAL);
-+            msg->complete = true;
-+            qemu_cond_signal(&msg->cv);
-+        }
-     }
-     return -1;
- }
--- 
-2.52.0
+It seems here we can use get_system_io() directly :).
 
+Otherwise,
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+>                                  &address_space_memory);
+>  
+>      fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, machine->smp.cpus);
 
