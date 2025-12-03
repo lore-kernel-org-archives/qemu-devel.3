@@ -4,87 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6BFBD12D7A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 16:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0694DD15DAB
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 16:21:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQpVV-0004Aw-Nn; Wed, 03 Dec 2025 11:15:09 -0500
+	id 1vQpap-0001Yt-6P; Wed, 03 Dec 2025 11:20:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vQpVT-00049N-LM
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 11:15:07 -0500
-Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vQpVR-0006Xw-2g
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 11:15:07 -0500
-Received: by mail-oa1-x30.google.com with SMTP id
- 586e51a60fabf-3f0d1a39cabso3952462fac.3
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 08:15:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764778504; x=1765383304; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9j2crjoCrA/yBIViXmRa5qDZhpH7ZS6YU+XGm2gA7ZM=;
- b=ASGKaOJv6LK2caauWyvaH7e/PhwEw20Mq7HUUmyXYcZoK9oGdxi9bD+C3ApdGh/sIZ
- n4rfNqew1PJh3SDYuF6oC06o3uVoj1PHHI65hFotm0oY69QFjcLknvRIX35qdbmLTLCl
- NeBHosJyaA3NLUVur2icHuYhy9k0F9rUax6VdxoRaMId/x7TUptMaYQNKBoS+vytgoFI
- Hzo8s/iH47fBf1wCH5nYpQhWUF2chT1xHE2kMTqnBcEfKZ4AMdcVBRakQ/TawuPMuduV
- oz+27izWmTaLTUVs6mgqSmCL/4RDpU4FT8tw+TuU1WMs61+F2VU5Ugvacd4QGgZtih8M
- exRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764778504; x=1765383304;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9j2crjoCrA/yBIViXmRa5qDZhpH7ZS6YU+XGm2gA7ZM=;
- b=m9FwcneIG63SUhq5CwBNynkJatrElg8JESW0N3jeT68EHoaWp8C3UZY4C1S3+iZMDp
- 89kJTwSpw2I26c/JZUOlKbM4kmYhX0FeXACW6pV1R1QCgRqtlmlLwsO61Im+2tJiXB/b
- 6OMaV1DkanaDZCqhCsbXXEQ+eXGgPnC15IW+DK4Lt9d83BILKgeoXRdT7UWRiHx3zaaN
- oxYdjIsy/LVbAa1PmSsA6SZFMDevom50QB4TfzDpcAMhF73cUZbUZj43BNsr7/LbcHO0
- bXL63/g4AKMdU4/CWs0s0Rfq9oZQAs2jj6Qib1JuiivxxmLQEoWKdYvEgx8RhcwZmatw
- l6vA==
-X-Gm-Message-State: AOJu0YxM2NrPktVBK71CGghO2sk8xu1sdRuN9xZAZr/KYEwkrZlifU0d
- AC6xRqU/sagdIGbKkNBscrV4MCru33duizW3sGa1dSO1QH4O/AC/MJn/x5SgbTH3fuGX83PUIEt
- hKUXB1ZI=
-X-Gm-Gg: ASbGncv87X27xnfPL63em5pi7WtWVJ+lZkAXROI/wuYJ7MCr/fnt/5CvIQ1YH45MrCd
- HnP2d1SWW0W3gCBuU4iPEZxAuXj0OteIn/2y9XKtPMYyQjMXa6ggCfcDkALIO1fTj1UNrZoV1a4
- CkxfgPDqDrbd4Q3SLH4kL61PC10/g8SDDdRcswSeG8y1dSIT5KVpOs+pIw0UBrw5dEMP9aGAAwA
- wXBJmajrFlo/s2Ygo6tL9detteo2JB4UKV/clUUqBF6Jo+sOR1xySD7hRDHpenp2Khq14G+8qUh
- pscSmPuzK48TWuLmITTySMmm13NEbOTj5RPSXKOHftC2W0wArTejcv/OcvFOqWyU8Y1r3SpzKWm
- m0X4Kj62BX7r+hcyzNNau9dIECfZVRIZ/MzRrhkBdiRdEQqMu9Iw4Pf0UPLQ4KPfJdQFYPKhoUk
- lHi8hS2KGT6zt1QnxKsg==
-X-Google-Smtp-Source: AGHT+IFGmd1k1BNZTKfVL4qiCp1IrUNDlISdhhU4WvzL6Lw1x2IiUMBGaEYo6zm3rIa7wLsc4nWGhA==
-X-Received: by 2002:a05:6870:9f13:b0:3e8:172f:da82 with SMTP id
- 586e51a60fabf-3f16922c30dmr1433033fac.19.1764778503753; 
- Wed, 03 Dec 2025 08:15:03 -0800 (PST)
-Received: from stoup.. ([187.210.107.189]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3f0dca40d4dsm10141625fac.9.2025.12.03.08.15.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Dec 2025 08:15:03 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v3 2/6] tcg/tci: Introduce INDEX_op_tci_qemu_{ld,st}_rrr
-Date: Wed,  3 Dec 2025 08:14:55 -0800
-Message-ID: <20251203161500.501084-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251203161500.501084-1-richard.henderson@linaro.org>
-References: <20251203161500.501084-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1vQpan-0001XH-Lp; Wed, 03 Dec 2025 11:20:37 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>)
+ id 1vQpal-0007iw-6n; Wed, 03 Dec 2025 11:20:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=dqgK+P4qYm+GSe2xDOScXplx9fT6JiXfJfDPb9zDfYY=; b=kV66gLuLR1hWYEFd
+ iGu7cfM3bDEeyxbSP8Oh8OyWeeTET/btC9ngZn2Z75UF7uTiblC/pw6CQteB2O0fAWRRMQhb50scP
+ Ye5b7+f4ksV7ukqHkcNI9PeNSHMIwbtt1+scyQhBpCQ9jEVY+n/c9yWcHgXhR1uHGufi5UnRkjlNI
+ r4mNlvz6Z3azAFeyoQVp/Ds71nxRP/WvxAFF022BD/nM6qqXZtua09hzgLZ0PCGAFQo/RUzJJIHr3
+ g80HiwqmJpoQoj0sCg+NU2Z/xKZOCf+vJR06WTmTITzajXH+lfnort330Bio/1/tghZPvmAEHFUWM
+ A6+7u+fehcXDz0P+Iw==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1vQpah-00000007rmV-2st3;
+ Wed, 03 Dec 2025 16:20:31 +0000
+Date: Wed, 3 Dec 2025 16:20:31 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-trivial@nongnu.org, mjt@tls.msk.ru, laurent@vivier.eu,
+ thuth@redhat.com, pbonzini@redhat.com, jak@jak-linux.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] qemu-options.hx: Document -M as -machine alias
+Message-ID: <aTBjTzbaX0befChO@gallifrey>
+References: <20251203131511.153460-1-dave@treblig.org>
+ <87a4zzu230.fsf@draig.linaro.org> <aTBCLbDbpXgkTLHr@gallifrey>
+ <CAFEAcA-Uy0UQwGEK+f95BJmDripg1-8vhzPF5qRSY40=duhRUQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::30;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x30.google.com
+In-Reply-To: <CAFEAcA-Uy0UQwGEK+f95BJmDripg1-8vhzPF5qRSY40=duhRUQ@mail.gmail.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
+X-Uptime: 16:18:13 up 37 days, 15:54,  3 users,  load average: 0.01, 0.01, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,106 +74,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since d182123974c4, the number of bits in a MemOpIdx tops out at 17.
-which won't fit in the TCI rrm format, thus an assertion failure.
-Introduce new opcodes that take the MemOpIdx from a register, as
-we already do for qemu_ld2 and qemu_st2.
+* Peter Maydell (peter.maydell@linaro.org) wrote:
+> On Wed, 3 Dec 2025 at 14:00, Dr. David Alan Gilbert <dave@treblig.org> wrote:
+> >
+> > * Alex BennÈe (alex.bennee@linaro.org) wrote:
+> > > dave@treblig.org writes:
+> > >
+> > > > From: "Dr. David Alan Gilbert" <dave@treblig.org>
+> > > >
+> > > > -M is used heavily in documentation and scripts, but isn't actually
+> > > > documented anywhere.
+> > > > Document it as equivalent to -machine.
+> > > >
+> > > > Reported-by: Julian Andres Klode <jak@jak-linux.org>
+> > > > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+> > > > ---
+> > > >  qemu-options.hx | 12 +++++++-----
+> > > >  1 file changed, 7 insertions(+), 5 deletions(-)
+> > > >
+> > > > diff --git a/qemu-options.hx b/qemu-options.hx
+> > > > index fca2b7bc74..ec92723f10 100644
+> > > > --- a/qemu-options.hx
+> > > > +++ b/qemu-options.hx
+> > > > @@ -44,6 +44,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+> > > >  #endif
+> > > >      "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
+> > > >      "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
+> > > > +    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n"
+> > > >      "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
+> > > >      QEMU_ARCH_ALL)
+> > > >  SRST
+> > > > @@ -179,6 +180,9 @@ SRST
+> > > >
+> > > >              -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
+> > > >
+> > > > +    ``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
+> > > > +        Define an SGX EPC section.
+> > > > +
+> > >
+> > > This seems unrelated.
+> > >
+> > > >      ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
+> > > >          Define cache properties for SMP system.
+> > > >
+> > > > @@ -208,12 +212,10 @@ SRST
+> > > >  ERST
+> > > >
+> > > >  DEF("M", HAS_ARG, QEMU_OPTION_M,
+> > > > -    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n",
+> > > > -    QEMU_ARCH_ALL)
+> > > > -
+> > > > +    "-M              as -machine\n", QEMU_ARCH_ALL)
+> > > >  SRST
+> > > > -``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
+> > > > -    Define an SGX EPC section.
+> > > > +``-M``
+> > > > +    as -machine.
+> 
+> Surprisingly, this and -h/--help are our only two options where
+> we provide a short synonym. I note that this handling of -M
+> is not consistent with how we document -h/--help, where we
+> print both on a single line:
+> -h or -help     display this help and exit
+> 
+> But it would be trickier to fit that in for -machine and
+> perhaps confusing given the suboptions.
 
-Fixes: d182123974c4 ("include/exec/memopidx: Adjust for 32 mmu indexes")
-Tested-by: Alex Benn√©e <alex.bennee@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/tci.c                    | 19 +++++++++++++++++++
- tcg/tci/tcg-target-opc.h.inc |  2 ++
- tcg/tci/tcg-target.c.inc     | 14 ++++++++++++--
- 3 files changed, 33 insertions(+), 2 deletions(-)
+Right, that's one of the two reasons I kept it separate.
+The other reason, is that I couldn't figure out how '-help' and '-h'
+both got defined - why is the second DEF(...) not needed?
 
-diff --git a/tcg/tci.c b/tcg/tci.c
-index 700e672616..e15d4e8e08 100644
---- a/tcg/tci.c
-+++ b/tcg/tci.c
-@@ -794,12 +794,24 @@ uintptr_t QEMU_DISABLE_CFI tcg_qemu_tb_exec(CPUArchState *env,
-             taddr = regs[r1];
-             regs[r0] = tci_qemu_ld(env, taddr, oi, tb_ptr);
-             break;
-+        case INDEX_op_tci_qemu_ld_rrr:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            taddr = regs[r1];
-+            oi = regs[r2];
-+            regs[r0] = tci_qemu_ld(env, taddr, oi, tb_ptr);
-+            break;
- 
-         case INDEX_op_qemu_st:
-             tci_args_rrm(insn, &r0, &r1, &oi);
-             taddr = regs[r1];
-             tci_qemu_st(env, taddr, regs[r0], oi, tb_ptr);
-             break;
-+        case INDEX_op_tci_qemu_st_rrr:
-+            tci_args_rrr(insn, &r0, &r1, &r2);
-+            taddr = regs[r1];
-+            oi = regs[r2];
-+            tci_qemu_st(env, taddr, regs[r0], oi, tb_ptr);
-+            break;
- 
-         case INDEX_op_qemu_ld2:
-             tcg_debug_assert(TCG_TARGET_REG_BITS == 32);
-@@ -1050,6 +1062,13 @@ int print_insn_tci(bfd_vma addr, disassemble_info *info)
-                            op_name, str_r(r0), str_r(r1), oi);
-         break;
- 
-+    case INDEX_op_tci_qemu_ld_rrr:
-+    case INDEX_op_tci_qemu_st_rrr:
-+        tci_args_rrr(insn, &r0, &r1, &r2);
-+        info->fprintf_func(info->stream, "%-12s  %s, %s, %s",
-+                           op_name, str_r(r0), str_r(r1), str_r(r2));
-+        break;
-+
-     case INDEX_op_qemu_ld2:
-     case INDEX_op_qemu_st2:
-         tci_args_rrrr(insn, &r0, &r1, &r2, &r3);
-diff --git a/tcg/tci/tcg-target-opc.h.inc b/tcg/tci/tcg-target-opc.h.inc
-index 4eb32ed736..f8bfffc125 100644
---- a/tcg/tci/tcg-target-opc.h.inc
-+++ b/tcg/tci/tcg-target-opc.h.inc
-@@ -13,3 +13,5 @@ DEF(tci_rotl32, 1, 2, 0, TCG_OPF_NOT_PRESENT)
- DEF(tci_rotr32, 1, 2, 0, TCG_OPF_NOT_PRESENT)
- DEF(tci_setcond32, 1, 2, 1, TCG_OPF_NOT_PRESENT)
- DEF(tci_movcond32, 1, 2, 1, TCG_OPF_NOT_PRESENT)
-+DEF(tci_qemu_ld_rrr, 1, 2, 0, TCG_OPF_NOT_PRESENT)
-+DEF(tci_qemu_st_rrr, 0, 3, 0, TCG_OPF_NOT_PRESENT)
-diff --git a/tcg/tci/tcg-target.c.inc b/tcg/tci/tcg-target.c.inc
-index 35c66a4836..532f87262c 100644
---- a/tcg/tci/tcg-target.c.inc
-+++ b/tcg/tci/tcg-target.c.inc
-@@ -1188,7 +1188,12 @@ static const TCGOutOpStore outop_st = {
- static void tgen_qemu_ld(TCGContext *s, TCGType type, TCGReg data,
-                          TCGReg addr, MemOpIdx oi)
- {
--    tcg_out_op_rrm(s, INDEX_op_qemu_ld, data, addr, oi);
-+    if (oi & ~0xffff) {
-+        tcg_out_movi(s, TCG_TYPE_I32, TCG_REG_TMP, oi);
-+        tcg_out_op_rrr(s, INDEX_op_tci_qemu_ld_rrr, data, addr, TCG_REG_TMP);
-+    } else {
-+        tcg_out_op_rrm(s, INDEX_op_qemu_ld, data, addr, oi);
-+    }
- }
- 
- static const TCGOutOpQemuLdSt outop_qemu_ld = {
-@@ -1213,7 +1218,12 @@ static const TCGOutOpQemuLdSt2 outop_qemu_ld2 = {
- static void tgen_qemu_st(TCGContext *s, TCGType type, TCGReg data,
-                          TCGReg addr, MemOpIdx oi)
- {
--    tcg_out_op_rrm(s, INDEX_op_qemu_st, data, addr, oi);
-+    if (oi & ~0xffff) {
-+        tcg_out_movi(s, TCG_TYPE_I32, TCG_REG_TMP, oi);
-+        tcg_out_op_rrr(s, INDEX_op_tci_qemu_st_rrr, data, addr, TCG_REG_TMP);
-+    } else {
-+        tcg_out_op_rrm(s, INDEX_op_qemu_st, data, addr, oi);
-+    }
- }
- 
- static const TCGOutOpQemuLdSt outop_qemu_st = {
+> > > Did we have a merge conflict at some point that messed things up?
+> >
+> > It's not clear - it was the only option hanging around in -M and it was
+> > already appearing wrong in the man output.
+> > I wondered if it was some requirement to have *something* in the -M
+> > definition so thought it best to move it at the same time.
+> 
+> It looks like this was incorrectly added under -M by
+> commit dfce81f1b9 ("vl: Add sgx compound properties to expose
+> SGX EPC sections to guest"), which should have put it under
+> -machine like all our other machine suboption documentation.
+> 
+> The result is that the sgx-epc documentation appears OK
+> in --help because the --help output just concatenates
+> everything so it gets tacked on after the -machine help,
+> but it is misrendered in the HTML docs:
+> https://qemu-project.gitlab.io/qemu/system/invocation.html
+> as it appears as if a top level option rather than one
+> indented to indicate that it's a machine sub-option.
+> So this change fixes that bug (and should ideally say so
+> in its commit message).
+> 
+> Before that it simply read
+> -HXCOMM Deprecated by -machine
+> -DEF("M", HAS_ARG, QEMU_OPTION_M, "", QEMU_ARCH_ALL)
+> 
+> (Commit dfce81f1b9 also silently dropped that "deprecated"
+> comment, which it shouldn't really have done.)
+
+Ah.
+
+Dave
+
+> thanks
+> -- PMM
 -- 
-2.43.0
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
