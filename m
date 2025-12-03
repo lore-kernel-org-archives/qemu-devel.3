@@ -4,119 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70D63D1BDCC
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:52:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A16D1BDCC
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:52:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQrwq-0007SG-A2; Wed, 03 Dec 2025 13:51:32 -0500
+	id 1vQrx2-0007Xo-St; Wed, 03 Dec 2025 13:51:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vQrwp-0007Qp-14
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:31 -0500
-Received: from mx0b-00190b01.pphosted.com ([67.231.157.127])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vQrx1-0007XR-Sp
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
- id 1vQrwn-0000zR-5z
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:30 -0500
-Received: from pps.filterd (m0409411.ppops.net [127.0.0.1])
- by m0409411.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
- 5B3FwH85148441; Wed, 3 Dec 2025 18:51:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=jan2016.eng;
- bh=SCJJjeHJL3zvQFZyNH6s4ysT7NMl476yKiQWW9PF388=; b=Uy6tsZ86GKI0
- Ee/lp5OZYKvBAsIgv+dYboExsM/fr849GjrtMgaX86mMsvpf39/tw1drbQoc3gpY
- DbAyXcJPZ90XK1oY1w6HLgaOGGsIND9m69MHQ4REG5UFUI9CHmXLtiaOv528++he
- 7Uxy0KitMddrfr10+N39IGWO4oMEqE1Bsm0Wa3llCSuaDq0S1k7SPw0qso1wdUUV
- RhKaRDIBPrG1u4FSTwe+SPS1AGMJxrBnSH0q1/1TcWh52ch64OB68E04ysN1M5AS
- dspyLwe5IjvzyeiVeDKKkw9tXk7774PomEEEA7vUfZYaK2t8xATC4ohJKu2quUTo
- o41j2FmJkQ==
-Received: from prod-mail-ppoint2 (prod-mail-ppoint2.akamai.com [184.51.33.19])
- by m0409411.ppops.net-00190b01. (PPS) with ESMTPS id 4at31m8y0b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 03 Dec 2025 18:51:27 +0000 (GMT)
-Received: from pps.filterd (prod-mail-ppoint2.akamai.com [127.0.0.1])
- by prod-mail-ppoint2.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
- 5B3IZ4A0014679; Wed, 3 Dec 2025 13:51:26 -0500
-Received: from prod-mail-relay01.akamai.com ([172.27.118.31])
- by prod-mail-ppoint2.akamai.com (PPS) with ESMTP id 4aqw21kuh6-1;
- Wed, 03 Dec 2025 13:51:26 -0500
-Received: from bos-lhvkhf.bos01.corp.akamai.com
- (bos-lhvkhf.bos01.corp.akamai.com [172.28.40.75])
- by prod-mail-relay01.akamai.com (Postfix) with ESMTP id 9CA8184;
- Wed,  3 Dec 2025 18:51:26 +0000 (UTC)
-From: Ben Chaney <bchaney@akamai.com>
-Date: Wed, 03 Dec 2025 13:51:18 -0500
-Subject: [PATCH v3 1/8] migration: stop vm earlier for cpr
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251203-cpr-tap-v3-1-3c12e0a61f8e@akamai.com>
-References: <20251203-cpr-tap-v3-0-3c12e0a61f8e@akamai.com>
-In-Reply-To: <20251203-cpr-tap-v3-0-3c12e0a61f8e@akamai.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vQrx0-00011s-Dg
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764787901;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cXebI6NrLoDz4RV0wSCSw2yTB6kyWf9EWw7Kp6QRaIY=;
+ b=bcoA+net0SX+E7o+2eNPDT9tOiqS8FYvbWlTyyzuOQj6bWyez/sQQT8ZPa8sgT0wzTpc/k
+ 3xuGkDZVRL/wHpQ+ZBA6zkf3nvn8IzqKPedH5xKqDhR2w+NrCCILRo+8nFrDYP3xVMljxW
+ LV6JOLYv7fOuBupx7YV477/DLxVcrnY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-140-Zyk0TPxwM_ybnCxj9CCmEA-1; Wed, 03 Dec 2025 13:51:40 -0500
+X-MC-Unique: Zyk0TPxwM_ybnCxj9CCmEA-1
+X-Mimecast-MFC-AGG-ID: Zyk0TPxwM_ybnCxj9CCmEA_1764787899
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4775d110fabso558925e9.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 10:51:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764787898; x=1765392698; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cXebI6NrLoDz4RV0wSCSw2yTB6kyWf9EWw7Kp6QRaIY=;
+ b=TDkQPvx0HMoTRxgr3W8PqxTCS2Q5qDrpKfCLaTIB24oLaWBoVljHY7w69kNF+Lzrk8
+ eRLvzrqQFXSf0UBwez3dabjnMT3I3GWUad/mTscAJVIzpGXP5HLzDtNiXjQNSRlJNvmn
+ 2DAVlM+nvUBLC0QpNJQrPwfcnk0czaS9SZY4//kN+WLT5OJVbsgMZHBStdzeIrBsdQGY
+ Nj0WttyLcAVy8hIISpnyjuv7yEc0ZmjgMnnqCCJXlT58iHXWtDPOT90XOkgR6MMRRumD
+ P6jocHemyVNaE+Z/LiicdPhYfDgS46d6DOHvjLatxuCROz1kRL3rekHKfctWnVfFh+82
+ aGkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764787898; x=1765392698;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cXebI6NrLoDz4RV0wSCSw2yTB6kyWf9EWw7Kp6QRaIY=;
+ b=nnqYPX+bMZSoxRur8ft9+82M7yRPMd1oYJff9ZssWcIGHRpSuPoq55aJVCuH471dsq
+ CJsrvJ/TeD/i3bbA7kD0i21vBUZBqRzc0zZ44GttB4MnQT0M0iOg2Ucc7FgxOb1g1LOa
+ 2Gsev6eBOw9KHCqdO7IEw1Nbc0SnBXIRw83ZyxRLFYq7UH5LUi1yR+GbfrkJrFwAq4S+
+ yOfjT9Rpyod7C9g2qwB8fWIBkKmLkive3cvmNu10afOyYH8sAdTcUzurmWCik5K9/wVj
+ 7qNTJFO7JBDF0uZNDm8xJAat91E/mMV6Ycl5NeRG+YEliO2UKxpMP/ggzhKSZ/JK+f8O
+ jpEg==
+X-Gm-Message-State: AOJu0YwERUkE9cp6D3+7fPztJYhvdI2riYhqEHFVtu4TfyhM0/RUchiI
+ fyrRTc0XrmqzqXpJPFHGbb+kVJkrkcOLCa78qA+vGN/HEHD84xzym0dqUVlR6RPiysV8B9eK1IJ
+ 5g1z81QvL4IXEvzPKbOcEPCZmOzc3ZBUfD0SxoGcpHhxM+RGP+JNifg6iQHuGca2q4nDaOVMVcJ
+ SP53hl/Y1ZJwPAj7VK2LVXWB2A6YJv47yMoHymB0+R
+X-Gm-Gg: ASbGncss6XDqsaw7qJGSCik1u0jTlyuGe7nZZPb7ny0OQBDwX0L3F56ehsdnEPLutpy
+ ihVo9fsVcym8Iq51Ql3NqrhmSb6OcSUu4pYK0PPByqeZSXPnF1WD3zk44OhFV53PDiVwCY2GMVV
+ VRskbtbZac0CzGrKuerCcjrflR2DSvm9My0q0xQ9joWxSKepexH9ATFh3nQDiFMxZknJVUi+BOn
+ LhZQ48v6Jv2iWbhfdDcS9fDsVMljvL57U92JyMAN3V4jGpWWyI6p8c4uYuIZ4fqzzRdzUXLKIhp
+ Oc/yLuyNirhcYmECsLMmW5bXnF1yEdZp1TcH3VFSF9msXdYqaI94aOY9kOip06PnuM5jbNnvvKr
+ t1FtltlwcPGkFatdX3mEYFjA4SVB1NQAC7ljyGLVRs3LvSzUlwH8yA0p6x0PC99kSW09/vkwawH
+ CGlQSYlG/YWhPeX9A=
+X-Received: by 2002:a05:600c:1f8e:b0:477:8985:4036 with SMTP id
+ 5b1f17b1804b1-4792f23c727mr1729045e9.1.1764787898449; 
+ Wed, 03 Dec 2025 10:51:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFe54FHEkEyp3HQgbdF1ffHa/PvsyBnrdOiVzgbhK/wjfNO0B5rJ1dCrcQMg2XyF/IpvpudCg==
+X-Received: by 2002:a05:600c:1f8e:b0:477:8985:4036 with SMTP id
+ 5b1f17b1804b1-4792f23c727mr1728725e9.1.1764787898018; 
+ Wed, 03 Dec 2025 10:51:38 -0800 (PST)
+Received: from [192.168.10.48] ([176.206.119.13])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42e1c5c3016sm40403411f8f.1.2025.12.03.10.51.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Dec 2025 10:51:35 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Alex Williamson <alex@shazbot.org>,
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Stefan Weil <sw@weilnetz.de>,
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Hamza Khan <hamza.khan@nutanix.com>,
- Mark Kanda <mark.kanda@oracle.com>, Joshua Hunt <johunt@akamai.com>,
- Max Tottenham <mtottenh@akamai.com>, Ben Chaney <bchaney@akamai.com>,
- Steve Sistare <steven.sistare@oracle.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1764787886; l=4737;
- i=bchaney@akamai.com; s=20251203; h=from:subject:message-id;
- bh=6VO5q5TE5yuukYkhY6LLyhvDeAXk7NNxQPT3gWn7Grw=;
- b=jmB3MnmsjpjuBR/wnVMra/A/TNmA/dppEn5qBFxRW1X9N+Qzwm8MSIeLmEoyL6bBW4kfGSpTe
- KBQX1b8RC8JCBAbmBEwwsEuzkp3Yi6MwqTXXziriNInNkHbQnMZt6qc
-X-Developer-Key: i=bchaney@akamai.com; a=ed25519;
- pk=6+w9cse5QEeVdy3tjqFxs/4rAaRdQ2/fkTxVFq+lWy4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-03_02,2025-12-03_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- adultscore=0 mlxscore=0
- malwarescore=0 suspectscore=0 mlxlogscore=999 phishscore=0 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2510240000
- definitions=main-2512030148
-X-Proofpoint-GUID: X363mFYwB-pYD7snl9ZTA5UTk2bKOKDW
-X-Authority-Analysis: v=2.4 cv=I6Nohdgg c=1 sm=1 tr=0 ts=693086af cx=c_pps
- a=BpD+HMUBsFIkYY1OQe22Yw==:117 a=BpD+HMUBsFIkYY1OQe22Yw==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=yPCof4ZbAAAA:8 a=X7Ea-ya5AAAA:8 a=Q2gaB0lLyM3LBXvKuXcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: X363mFYwB-pYD7snl9ZTA5UTk2bKOKDW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjAzMDE0NyBTYWx0ZWRfXyRMrCv7efKI4
- J0fG9e7AoGAIaTK/g2DnvAh0BYkYO1uJhegDdLplFQVZ03pZWTFNrB8M1GikGIIyzVVMjJgqotO
- 6BHvCV8vooMm011YWkfLYmu3qxJ9FtCCdjKM3GrF2VST78BnyaFATDfNOTZi3h4zhQaPFJYEKY9
- rQG4lXAATcRASrVBX32Ypz7uO0KBk+mj2XNJCitOYk1m7wmMjzDBRdI6SXb5/WlBtWV6SukhLKF
- 8fAXveIW48hw4LTLt4M1u9FcWEKPN8ke8pCiPo4FgX6W5qeRh1mUIDF1PL2k4U8MUOaiHTYkXQX
- erUSpPB1FawxYWMCauQ0jf97ZZIfkfHWqH4YhFYhYH7/wf7xc/VTrS0zDwHSAUV4gMO+O84wEv7
- 2Xdo95s5s8zP9suNutu85SE05BJ8Tw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-03_02,2025-12-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0 bulkscore=0
- clxscore=1011 spamscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512030147
-Received-SPF: pass client-ip=67.231.157.127; envelope-from=bchaney@akamai.com;
- helo=mx0b-00190b01.pphosted.com
-X-Spam_score_int: 5
-X-Spam_score: 0.5
-X-Spam_bar: /
-X-Spam_report: (0.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Cc: qemu-block@nongnu.org,
+	kwolf@redhat.omc
+Subject: [PATCH 1/5] hw: add missing includes hidden by block/aio.h
+Date: Wed,  3 Dec 2025 19:51:29 +0100
+Message-ID: <20251203185133.2458207-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251203185133.2458207-1-pbonzini@redhat.com>
+References: <20251203185133.2458207-1-pbonzini@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,131 +123,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Steve Sistare <steven.sistare@oracle.com>
+hw/qdev/core.h being included by core headers means that it was quite
+easy to forget including it, or anything that hw/qdev/core.h included.
+Add the missing inclusions.
 
-Stop the vm earlier for cpr, before cpr_save_state which causes new QEMU
-to proceed and initialize devices.  We must guarantee devices are stopped
-in old QEMU, and all source notifiers called, before they are initialized
-in new QEMU.
-
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Signed-off-by: Ben Chaney <bchaney@akamai.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- migration/migration.c | 57 +++++++++++++++++++++++++++++++++++++++++++--------
- 1 file changed, 48 insertions(+), 9 deletions(-)
+ include/hw/char/serial.h        | 1 +
+ hw/virtio/iothread-vq-mapping.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index c2daab6bdd..6d40697767 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1657,6 +1657,7 @@ void migration_cancel(void)
-                           MIGRATION_STATUS_CANCELLED);
-         cpr_state_close();
-         migrate_hup_delete(s);
-+        vm_resume(s->vm_old_state);
-     }
- }
+diff --git a/include/hw/char/serial.h b/include/hw/char/serial.h
+index b804e225886..ea82ffac476 100644
+--- a/include/hw/char/serial.h
++++ b/include/hw/char/serial.h
+@@ -26,6 +26,7 @@
+ #ifndef HW_SERIAL_H
+ #define HW_SERIAL_H
  
-@@ -2216,6 +2217,7 @@ void qmp_migrate(const char *uri, bool has_channels,
-     MigrationAddress *addr = NULL;
-     MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
-     MigrationChannel *cpr_channel = NULL;
-+    bool stopped = false;
++#include "hw/core/qdev.h"
+ #include "chardev/char-fe.h"
+ #include "system/memory.h"
+ #include "qemu/fifo8.h"
+diff --git a/hw/virtio/iothread-vq-mapping.c b/hw/virtio/iothread-vq-mapping.c
+index 15909eb9332..55ce62986c7 100644
+--- a/hw/virtio/iothread-vq-mapping.c
++++ b/hw/virtio/iothread-vq-mapping.c
+@@ -8,6 +8,7 @@
  
-     /*
-      * Having preliminary checks for uri and channel
-@@ -2268,6 +2270,46 @@ void qmp_migrate(const char *uri, bool has_channels,
-         return;
-     }
+ #include "qemu/osdep.h"
+ #include "system/iothread.h"
++#include "qemu/bitmap.h"
+ #include "hw/virtio/iothread-vq-mapping.h"
  
-+    /*
-+     * CPR-transfer  ordering:
-+     *
-+     *   SOURCE                              TARGET
-+     *   ------                              ------
-+     *                                       cpr_state_load() blocks
-+     *   |                                        |
-+     *   |  1. migration_stop_vm()                |
-+     *   |     VM stopped, devices quiesced       |
-+     *   |                                        | Waiting for
-+     *   |  2. notifiers (PRECOPY_SETUP)          | FDs from source
-+     *   |     vhost_reset_owner() releases       |
-+     *   |     device ownership                   |
-+     *   |                                        |
-+     *   |  3. cpr_state_save() ---- FDs -------> |
-+     *   |                                        |
-+     *   v                                        v
-+     *   postmigrate                         Device init begins
-+     *                                       - cpr_find_fd()
-+     *                                       - vhost_dev_init()
-+     *                                       - VHOST_SET_OWNER
-+     *
-+     * Step 3 is the synchronization/cut-over point. Target proceeds immediately
-+     * upon receiving FDs, so steps 1-2 must complete otherwise:
-+     * - Target's VHOST_SET_OWNER fails with -EBUSY (source still owns)
-+     * - Race between source I/O and target device init
-+     *
-+     *  We stop the VM early (before FD transfer) to prevent this race.
-+     *  Unlike regular migration, CPR-transfer passes memory via FD (memfd)
-+     *  rather than copying RAM, so early VM stop should have minimal downtime.
-+     */
-+    if (migrate_mode_is_cpr(s)) {
-+        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
-+        if (ret < 0) {
-+            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
-+            goto out;
-+        }
-+        stopped = true;
-+    }
-+
-     if (!cpr_state_save(cpr_channel, &local_err)) {
-         goto out;
-     }
-@@ -2294,6 +2336,9 @@ out:
-     if (local_err) {
-         migration_connect_set_error(s, local_err);
-         error_propagate(errp, local_err);
-+        if (stopped) {
-+            vm_resume(s->vm_old_state);
-+        }
-     }
- }
- 
-@@ -2339,6 +2384,9 @@ static void qmp_migrate_finish(MigrationAddress *addr, bool resume_requested,
-         }
-         migration_connect_set_error(s, local_err);
-         error_propagate(errp, local_err);
-+        if (migrate_mode_is_cpr(s)) {
-+            vm_resume(s->vm_old_state);
-+        }
-         return;
-     }
- }
-@@ -4028,7 +4076,6 @@ void migration_connect(MigrationState *s, Error *error_in)
-     Error *local_err = NULL;
-     uint64_t rate_limit;
-     bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
--    int ret;
- 
-     /*
-      * If there's a previous error, free it and prepare for another one.
-@@ -4099,14 +4146,6 @@ void migration_connect(MigrationState *s, Error *error_in)
-         return;
-     }
- 
--    if (migrate_mode_is_cpr(s)) {
--        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
--        if (ret < 0) {
--            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
--            goto fail;
--        }
--    }
--
-     /*
-      * Take a refcount to make sure the migration object won't get freed by
-      * the main thread already in migration_shutdown().
-
+ static bool
 -- 
-2.34.1
+2.52.0
 
 
