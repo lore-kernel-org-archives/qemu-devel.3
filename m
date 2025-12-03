@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A0A7D12D7A
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 16:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92516D12D7A
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 16:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQpNM-0001s5-HV; Wed, 03 Dec 2025 11:06:44 -0500
+	id 1vQpVY-0004ES-10; Wed, 03 Dec 2025 11:15:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vQpNI-0001rS-SF
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 11:06:40 -0500
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vQpVV-0004Az-Mc
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 11:15:09 -0500
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vQpNF-00039g-3L
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 11:06:40 -0500
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-78ab039ddb4so69522907b3.3
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 08:06:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vQpVU-0006Z4-3K
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 11:15:09 -0500
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-6592f1f55a8so1549445eaf.2
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 08:15:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764777995; x=1765382795; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1764778507; x=1765383307; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Q5ifr1hwvxTDvDqqLo4QHVtN/OZU32OPGGSADU/Loe4=;
- b=zSg8QjG2FNeGw4xrRSOFIRxp5RGNVJKz+LYzEGwhopBgnlOKNy7SIRDVpP1LiShVcs
- 7Ffb4d+tlVpgQ1rMECJJqCFyzfWoFQQ9BOgbvSHJkVCtGa273lVo/+JEtbrZK/ZXzs5G
- oxkWblQbQOLoJoGtSmoaxnStVPIXmWsH8m50CzP9tB80co9TgW6SAvkQRSIZ1N+hYUHG
- Nr/JLyCNcTkxKtLUH1bfEoXmCWs0Gk5n7bAxCrPO0QG4pIUMGB9Y0oLAomSj01Y2mGzg
- KE4/kynEFnGj1zbyCRevTkshfAlZN6VoichCqJVxZzqHYN7aGDOyLzBzwfeCBaJ40PA9
- 35/g==
+ bh=umT5Z14AhC/R+eDB/nFLqwC+LDiOvYbjL0xjqvp99eo=;
+ b=eJW5/pw/Lc0pCbK5PL7T9sivS+l99TfMdAWconEOT+xXNvR9Hm5haLYrKB1R+GYeaX
+ BdyZYpxFKDNh/7EP3W9HDq6FR0s7C8S3LmqQASBrITNiGTjOz6JI5tGuijHcjoTiGPxd
+ qBWNkR4z7jkPAlHix7yRsHmE/IyINNc8DvIHr7s+lKDobjoJ+q//lfz/rM4GhvkLKrDy
+ k7U2OWY3Cu/xOEY8tQMJPZ25IY/L8zlWQ3pb3DYXWesjc+oVjS/oF63oQXVVkBgxFhXL
+ w+2uy3gS5mjw8AeOfkXxfbwidBCWgQKeabRxJAKoraAt4bsK3zzfRTEkoUuyhRa8GBke
+ sTJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764777995; x=1765382795;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20230601; t=1764778507; x=1765383307;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Q5ifr1hwvxTDvDqqLo4QHVtN/OZU32OPGGSADU/Loe4=;
- b=C6xb4t4zpq2ehQTw+yLsNcLVKBI137kSh8OiKVg+DBt79rbbZSlE0aar/NMXAyHyjp
- tgL4KvnRyXn2/svBe4qeC6b/nv+I/+WPVChQPNm8H9tHna5RLQKeVxXxydB4ScshlsBJ
- AldlZMMggEkSkK/lQ3/srfglb+70QZrvnFAyZfGaxm7O9lK4D9XIr65ZBji9rNyc0gkt
- XBMWEhaliJdGtYgc40cMi7DMWHZMDjj6AmBKb+6ChtuHMDg0g4uSTmb8Uc+uP5/4WRN2
- ie+LeBdxzd4ka5gnVsQCyW1svDU/jeNwwdO+46ami6lDEhU2WWEes8ZBLlbyxoEQjCuZ
- Zsng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU3dtpPJ192ouPkv6XTViCBUUoSmlg4w3W9Gc8TdoUeKnddACpsCBZbyWTIgBSMUgi85WcWuvt0g+o5@nongnu.org
-X-Gm-Message-State: AOJu0YyiBB/so1hsn9lOEU0WcTbfCD4hl/LmHFqssUA9eng7bPEFSC2M
- 8hsK88+6XOu/9faReexYnG9FovvdDl6+MANdkigbLUDv9BgxLITP87evExA5JASHMdwyRmKBD65
- UQXwdPVv47IWnQslWAlhGdPwon5ESS2odGcRJIBlAFQ==
-X-Gm-Gg: ASbGncubzlW6idWA41AtgruDPBJQTIp5yToN2KI8vt3QEDQ7TasPXt0hEXmm3KwoVW7
- TTQsGi3Gpqa6WSFhehuFUrblR8ndFSm4rtkH8ZAZjK/64RhBce/t4yvF3+pDkOqGjNMEJj+CE+V
- 4xPJCV4xZFZFmD5puy8uasydtL1OMlOlKkuZkHFTSg38w0bOP3uonOQLD49iuHmpgEfoz4dVsJa
- RLYowVD2m/JhvssN1/WBiyhs6iWs7eavslEPoKDavJN+Kfpl0+IwOCyTin1S5Xe5ob9xyFs
-X-Google-Smtp-Source: AGHT+IEIDjelFCA/HQ8SJO8/kZiYK/BzXn2/MrVaU0UE1uG0oAzpp/Rx21iHY4NoF1ZG9+19PAtKNYrJ5tB0skXuq6Q=
-X-Received: by 2002:a05:690e:d89:b0:641:f5bc:6982 with SMTP id
- 956f58d0204a3-6443704baffmr2070029d50.78.1764777995067; Wed, 03 Dec 2025
- 08:06:35 -0800 (PST)
+ bh=umT5Z14AhC/R+eDB/nFLqwC+LDiOvYbjL0xjqvp99eo=;
+ b=lxGDJFYX/L2ARnaHlHqivChtV0oasLAcfc8xdSpb1/fOKi6LZujOJoAPL2lFOI11WR
+ 4gZ7X+QgiETocQ+edS8xzxnHtHustGXhmnp15heEuQxdYYNlCHk7jzDqVGXXtFq6BMIe
+ 8M+K9642sg4+z+4jkAtc4Yr3wIUThwT8mob7yrmM/9IgctbdDY3n51HbIjcuzat3XLHl
+ UE/7x1mz/lVq46rYQrzEYvNoDzlvCh2Fm4VPtX/cr4QTRXrmwMsRwnMyyxw+7SZl/gbl
+ VLUgRFLrV7xy5JNTMh5k+u43CFDGTW3R0kfC2IFAqBJGDkT7nL+/7L/j4TM9rFa49gnV
+ /5QQ==
+X-Gm-Message-State: AOJu0YzvL16VnkUKA5bPC2SIw3cVskbb1LVuAL9w9/4oJcGSlrzNwdMi
+ RKHJSoKD0nD2nJRkxlJ9i9b4kswKQlUepV4QbdNgKhW58ZVrV0FR+xoArSSvcs+TPlGGZlSprXF
+ zaOgq9sM=
+X-Gm-Gg: ASbGncsuMUFq3IyPizt5qe45Y/e3i9UoI2W1V6+cyPOYV9GYTF3BENdWQA+gL4jkG4w
+ m4hvgQZSq8ZPkfm5Gbz6Lwm33rgRvlcoua9RUppGncgFTW9fXYoN8hZ1hgAanrwuQgkURMOxCZH
+ R6+fFavqfhRLIVAVDBrsjUI1VIiKUJl6e31lT0svGu0uyfgt45jYraf7L+dFMcWwLWU9olBJOFI
+ Hs6rXFgKDUXLPX59qOxiuPlbMixZ76sZTL6zCQ0QUkl0GVn8aMb30/mTeFaRomWLl6KMFl/s+Aw
+ NK+fX+WMbsRX5qM68izNxru2X6f5EposBYJbjpV4ciLbGQTst/tp54190bIDIVgd3CHSZxnievC
+ Ew391OlUK48DNoDeDxTxX4Ht2WGUomN53iug8eaNAekdsyq6lV0ucIxMb589+DShcHNxHrc1m/A
+ zmq5FvFIkMwDHAGy6Cmg==
+X-Google-Smtp-Source: AGHT+IH3a4q63OEu0NQL+DmhoqYlJ6AdSKiTKm5+J38YvoEwFDinabdhoRmw0eA1VUlfEJVGrMjj1g==
+X-Received: by 2002:a05:6808:3099:b0:442:e596:1189 with SMTP id
+ 5614622812f47-4536e56ead8mr1342129b6e.45.1764778506732; 
+ Wed, 03 Dec 2025 08:15:06 -0800 (PST)
+Received: from stoup.. ([187.210.107.189]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-3f0dca40d4dsm10141625fac.9.2025.12.03.08.15.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 03 Dec 2025 08:15:06 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org
+Subject: [PATCH v3 5/6] include/generic/host: Fix atomic128-cas.h.inc for
+ Int128 structure
+Date: Wed,  3 Dec 2025 08:14:58 -0800
+Message-ID: <20251203161500.501084-6-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251203161500.501084-1-richard.henderson@linaro.org>
+References: <20251203161500.501084-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20251203131511.153460-1-dave@treblig.org>
- <87a4zzu230.fsf@draig.linaro.org> <aTBCLbDbpXgkTLHr@gallifrey>
-In-Reply-To: <aTBCLbDbpXgkTLHr@gallifrey>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 3 Dec 2025 16:06:23 +0000
-X-Gm-Features: AWmQ_bmhz82ZVXPHixH8Mu6_wvBa13mvkJgyWAVh9C2TTQbqB3uXnZsjsatqG2s
-Message-ID: <CAFEAcA-Uy0UQwGEK+f95BJmDripg1-8vhzPF5qRSY40=duhRUQ@mail.gmail.com>
-Subject: Re: [PATCH] qemu-options.hx: Document -M as -machine alias
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-trivial@nongnu.org, mjt@tls.msk.ru, laurent@vivier.eu, thuth@redhat.com, 
- pbonzini@redhat.com, jak@jak-linux.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,109 +102,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 3 Dec 2025 at 14:00, Dr. David Alan Gilbert <dave@treblig.org> wrot=
-e:
->
-> * Alex Benn=C3=A9e (alex.bennee@linaro.org) wrote:
-> > dave@treblig.org writes:
-> >
-> > > From: "Dr. David Alan Gilbert" <dave@treblig.org>
-> > >
-> > > -M is used heavily in documentation and scripts, but isn't actually
-> > > documented anywhere.
-> > > Document it as equivalent to -machine.
-> > >
-> > > Reported-by: Julian Andres Klode <jak@jak-linux.org>
-> > > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-> > > ---
-> > >  qemu-options.hx | 12 +++++++-----
-> > >  1 file changed, 7 insertions(+), 5 deletions(-)
-> > >
-> > > diff --git a/qemu-options.hx b/qemu-options.hx
-> > > index fca2b7bc74..ec92723f10 100644
-> > > --- a/qemu-options.hx
-> > > +++ b/qemu-options.hx
-> > > @@ -44,6 +44,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
-> > >  #endif
-> > >      "                memory-backend=3D'backend-id' specifies explici=
-tly provided backend for main RAM (default=3Dnone)\n"
-> > >      "                cxl-fmw.0.targets.0=3Dfirsttarget,cxl-fmw.0.tar=
-gets.1=3Dsecondtarget,cxl-fmw.0.size=3Dsize[,cxl-fmw.0.interleave-granulari=
-ty=3Dgranularity]\n"
-> > > +    "                sgx-epc.0.memdev=3Dmemid,sgx-epc.0.node=3Dnumai=
-d\n"
-> > >      "                smp-cache.0.cache=3Dcachename,smp-cache.0.topol=
-ogy=3Dtopologylevel\n",
-> > >      QEMU_ARCH_ALL)
-> > >  SRST
-> > > @@ -179,6 +180,9 @@ SRST
-> > >
-> > >              -machine cxl-fmw.0.targets.0=3Dcxl.0,cxl-fmw.0.targets.1=
-=3Dcxl.1,cxl-fmw.0.size=3D128G,cxl-fmw.0.interleave-granularity=3D512
-> > >
-> > > +    ``sgx-epc.0.memdev=3D@var{memid},sgx-epc.0.node=3D@var{numaid}``
-> > > +        Define an SGX EPC section.
-> > > +
-> >
-> > This seems unrelated.
-> >
-> > >      ``smp-cache.0.cache=3Dcachename,smp-cache.0.topology=3Dtopologyl=
-evel``
-> > >          Define cache properties for SMP system.
-> > >
-> > > @@ -208,12 +212,10 @@ SRST
-> > >  ERST
-> > >
-> > >  DEF("M", HAS_ARG, QEMU_OPTION_M,
-> > > -    "                sgx-epc.0.memdev=3Dmemid,sgx-epc.0.node=3Dnumai=
-d\n",
-> > > -    QEMU_ARCH_ALL)
-> > > -
-> > > +    "-M              as -machine\n", QEMU_ARCH_ALL)
-> > >  SRST
-> > > -``sgx-epc.0.memdev=3D@var{memid},sgx-epc.0.node=3D@var{numaid}``
-> > > -    Define an SGX EPC section.
-> > > +``-M``
-> > > +    as -machine.
+Use the Int128Alias structure more when we need to convert
+between Int128 and __int128_t, when Int128 is a struct.
 
-Surprisingly, this and -h/--help are our only two options where
-we provide a short synonym. I note that this handling of -M
-is not consistent with how we document -h/--help, where we
-print both on a single line:
--h or -help     display this help and exit
+Fixes the build on aarch64 host with TCI, which forces
+the use of the struct.
 
-But it would be trickier to fit that in for -machine and
-perhaps confusing given the suboptions.
+Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ host/include/generic/host/atomic128-cas.h.inc | 24 ++++++++++++-------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-> > Did we have a merge conflict at some point that messed things up?
->
-> It's not clear - it was the only option hanging around in -M and it was
-> already appearing wrong in the man output.
-> I wondered if it was some requirement to have *something* in the -M
-> definition so thought it best to move it at the same time.
+diff --git a/host/include/generic/host/atomic128-cas.h.inc b/host/include/generic/host/atomic128-cas.h.inc
+index 990162c56f..8bf5f47768 100644
+--- a/host/include/generic/host/atomic128-cas.h.inc
++++ b/host/include/generic/host/atomic128-cas.h.inc
+@@ -34,39 +34,45 @@ static inline Int128 ATTRIBUTE_ATOMIC128_OPT
+ atomic16_xchg(Int128 *ptr, Int128 new)
+ {
+     __int128_t *ptr_align = __builtin_assume_aligned(ptr, 16);
+-    Int128 old = *ptr_align;
++    Int128Alias o, n;
+ 
+-    while (!__atomic_compare_exchange_n(ptr_align, &old, new, true,
++    n.s = new;
++    o.i = *ptr_align;
++    while (!__atomic_compare_exchange_n(ptr_align, &o.i, n.i, true,
+                                         __ATOMIC_SEQ_CST, 0)) {
+         continue;
+     }
+-    return old;
++    return o.s;
+ }
+ 
+ static inline Int128 ATTRIBUTE_ATOMIC128_OPT
+ atomic16_fetch_and(Int128 *ptr, Int128 val)
+ {
+     __int128_t *ptr_align = __builtin_assume_aligned(ptr, 16);
+-    Int128 old = *ptr_align;
++    Int128Alias o, v;
+ 
+-    while (!__atomic_compare_exchange_n(ptr_align, &old, old & val, true,
++    v.s = val;
++    o.i = *ptr_align;
++    while (!__atomic_compare_exchange_n(ptr_align, &o.i, o.i & v.i, true,
+                                         __ATOMIC_SEQ_CST, 0)) {
+         continue;
+     }
+-    return old;
++    return o.s;
+ }
+ 
+ static inline Int128 ATTRIBUTE_ATOMIC128_OPT
+ atomic16_fetch_or(Int128 *ptr, Int128 val)
+ {
+     __int128_t *ptr_align = __builtin_assume_aligned(ptr, 16);
+-    Int128 old = *ptr_align;
++    Int128Alias o, v;
+ 
+-    while (!__atomic_compare_exchange_n(ptr_align, &old, old | val, true,
++    v.s = val;
++    o.i = *ptr_align;
++    while (!__atomic_compare_exchange_n(ptr_align, &o.i, o.i | v.i, true,
+                                         __ATOMIC_SEQ_CST, 0)) {
+         continue;
+     }
+-    return old;
++    return o.s;
+ }
+ # define HAVE_CMPXCHG128 1
+ #elif defined(CONFIG_CMPXCHG128)
+-- 
+2.43.0
 
-It looks like this was incorrectly added under -M by
-commit dfce81f1b9 ("vl: Add sgx compound properties to expose
-SGX EPC sections to guest"), which should have put it under
--machine like all our other machine suboption documentation.
-
-The result is that the sgx-epc documentation appears OK
-in --help because the --help output just concatenates
-everything so it gets tacked on after the -machine help,
-but it is misrendered in the HTML docs:
-https://qemu-project.gitlab.io/qemu/system/invocation.html
-as it appears as if a top level option rather than one
-indented to indicate that it's a machine sub-option.
-So this change fixes that bug (and should ideally say so
-in its commit message).
-
-Before that it simply read
--HXCOMM Deprecated by -machine
--DEF("M", HAS_ARG, QEMU_OPTION_M, "", QEMU_ARCH_ALL)
-
-(Commit dfce81f1b9 also silently dropped that "deprecated"
-comment, which it shouldn't really have done.)
-
-thanks
--- PMM
 
