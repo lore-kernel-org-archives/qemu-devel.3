@@ -4,65 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAE5CD1268E
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 14:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEB7AD12D69
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 14:32:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQnt9-0002rc-4D; Wed, 03 Dec 2025 09:31:32 -0500
+	id 1vQntr-00031d-1N; Wed, 03 Dec 2025 09:32:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQnsg-0002ou-FU; Wed, 03 Dec 2025 09:31:03 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQnsc-0008HG-IR; Wed, 03 Dec 2025 09:30:57 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwB3f2OXSTBp1tX4Ag--.1967S2;
- Wed, 03 Dec 2025 22:30:47 +0800 (CST)
-Received: from [192.168.31.152] (unknown [113.246.234.131])
- by mail (Coremail) with SMTP id AQAAfwAHXuuWSTBp5VIJAA--.3550S2;
- Wed, 03 Dec 2025 22:30:46 +0800 (CST)
-Message-ID: <d5dfb06e-b80a-4f13-b629-87f9545c4b4e@phytium.com.cn>
-Date: Wed, 3 Dec 2025 22:30:46 +0800
+ (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
+ id 1vQntJ-0002wc-IT; Wed, 03 Dec 2025 09:31:43 -0500
+Received: from mail-northeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::3] helo=DU2PR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
+ id 1vQntD-0000Iw-3n; Wed, 03 Dec 2025 09:31:32 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=JcEX7wXUabcsP1i/azSJe1imRPXlAY/8zG6UHtwjcL8CWp8ZI2Ot1/q4V6XPC/gfsUITQvuEktA+byQHgNsDgl/FWsbjNya1WpAbiPMtYKhASeplvmUB2rDSjTM2SW7ukcPbV6nWX6hgOfwC2J7t9cUXQ4cHVy/Xe1f+YS5gBwlTDS3kEpo3A6jNy0Kmd/UYKPKa/XuGZoqvsd7TVoKCaqNe8uX9Nwwyv+pXB0oBbJOMlf/4ixt+YgrSpNIUAI/LO0zllxhmn8qHMAcS9jS3ahWtARznz+undkDrGMFubNmwXSDCdYUamVI4Ff5D2p5LrwJoAIYTsSDNKtgWIgHdsA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=D0qVRJp5WuyL84hLvmDEYDpVK0bXxTsIgkE1hUwij4I=;
+ b=JcffJOrz3X/k/ecOaU/ixMOmF1mT/qJrRVe4I+ag9wKyFWIJr6z+3P5e+Oo4WSy825OcPbwsQ2OKvnyqUEHmu6JLeaoCFuXqEGeuKsZ0tv6eZvjpkT8vBlsyjSBN2GSIS7xV/4BleVkrAr19lYlkDutGyrdwysWMS5bxaiUi78j47jBroAGPQSU3w8ubFd8qoeUnG2OuP7lcGrmw2gq1P2O5QXODilSDA0nRaFB2TPaptZjAE34oOGWRF55ofHflHhp/+DgCV3RNuH8AYSYrfSHHrzzwvOcYZrfzRVcJ+qeeXeKD7gTLjJjOPd9IC6jfk7p620v8ncKQ810P//4RZw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=htecgroup.com; dmarc=pass action=none
+ header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=D0qVRJp5WuyL84hLvmDEYDpVK0bXxTsIgkE1hUwij4I=;
+ b=C37rjfyBOfvSnAwt7zFeX/5mANWK0zoB8O42iNm3eRnLHokrxVxEgs5XYmgkXOnozwovFzmG09yShSfpp1i+5sa5FpjLQzi5YoZIGxam8Lot7+QDhzuKtWHsUNJrMbtG9DJzPjZjEqgKJsDElNbisAy7AYVa6hoClWxm17xjLPeQ4Dp2utmf98JuhtXwev9G5Z9s5XM1x7uLQz/sLZ0XRsHVzfGTHi06VLiJls2iyKK9rPNIQx5GEj085d10PzIJlUqePJEXksi+NscQr7iGuTjfTEgEwR0rUYTYBppXE5n0gdb3bHlUFkhnw1JbUW/zGVlNKScTwiNxzP+3HpAYVw==
+Received: from VE1PR09MB3471.eurprd09.prod.outlook.com (2603:10a6:802:b1::23)
+ by DUZPR09MB6851.eurprd09.prod.outlook.com (2603:10a6:10:4df::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.9; Wed, 3 Dec
+ 2025 14:31:23 +0000
+Received: from VE1PR09MB3471.eurprd09.prod.outlook.com
+ ([fe80::ec5d:d9c5:f6b6:1f19]) by VE1PR09MB3471.eurprd09.prod.outlook.com
+ ([fe80::ec5d:d9c5:f6b6:1f19%3]) with mapi id 15.20.9366.012; Wed, 3 Dec 2025
+ 14:31:23 +0000
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
+ <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "alistair23@gmail.com" <alistair23@gmail.com>, "thuth@redhat.com"
+ <thuth@redhat.com>
+Subject: Re: [PATCH v14 00/14] riscv: Add support for MIPS P8700 CPU
+Thread-Topic: [PATCH v14 00/14] riscv: Add support for MIPS P8700 CPU
+Thread-Index: AQHcWGlzXWwAZOkBrEyyKNzERrDbDLUP3fUAgAAINACAACwCAA==
+Date: Wed, 3 Dec 2025 14:31:23 +0000
+Message-ID: <9893e4bd-a0b6-491f-95dd-6a23e102a685@htecgroup.com>
+References: <20251118085758.3996513-1-djordje.todorovic@htecgroup.com>
+ <d11d7f92-d992-4d4d-8456-707cf42f93b6@htecgroup.com>
+ <88c37ed0-2e1f-4a6d-8032-f153309eeaac@linaro.org>
+In-Reply-To: <88c37ed0-2e1f-4a6d-8032-f153309eeaac@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=htecgroup.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: VE1PR09MB3471:EE_|DUZPR09MB6851:EE_
+x-ms-office365-filtering-correlation-id: be7b765a-8968-41e3-5c65-08de3278a21b
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|366016|376014|1800799024|38070700021;
+x-microsoft-antispam-message-info: =?utf-8?B?WEFEaXZiamd0WVVhY2tpM084RkI2K2xzUDlWWHhzOXllZDQrVWlyNHB0YW9s?=
+ =?utf-8?B?d0V0MHZwUldFcUNybHJwemxjdE54d3M0U2dpMG5JbjBXaDFEa0FxY3NjQ0hR?=
+ =?utf-8?B?Nk5qSU9tNDQzVGw4K1Q4bGk4bkZ6Qis5MEtIbERoaTVYZ0I4eUtWQktKcm9s?=
+ =?utf-8?B?QXdZUisxam9aVXhROU5GWHlWRDJHTHh1S1UraXdGSEMzSGVmdUthdGtoQnlM?=
+ =?utf-8?B?cU1HanE5c0t1ZFNmT2c3amVQSDcrYW56UjRaZHdvSzc5UTNPOEFCRVFIN1Rl?=
+ =?utf-8?B?U0dKOGhwR0F5Um94MVBuRjBVdnUvNjJ5YnA5QlA4aVF2MFN0cWlobHkvNWxz?=
+ =?utf-8?B?a1VKRm13SU9MTDFNQUlkVjVCbmRJNmhSQlJxc21Dcnk2eWJrMnUyU3ZPWTZF?=
+ =?utf-8?B?Y1E1dnE2ZG40N1loOHN3QWdrWHg4NUVMVllMNjFqQVJxRHFFcjhIVTQzS0lW?=
+ =?utf-8?B?SDY0RXovYlU5Q2Q4M2M1NVcwTDdLUG9waGowakhtSUkwbm5GWlUyVFRBdlY4?=
+ =?utf-8?B?dTdpMmFLVktHUDhsVTQ5eklNWHRUaVJuKzdKN1IwekZUVWpRTnVpaXV4cDh4?=
+ =?utf-8?B?SDBucVl3Vk5DRmpJcjRkRUk1VDFwN1RnVmJ2RkxyZCt1VkFvMkFyZ2ZOWTZB?=
+ =?utf-8?B?clVucTB2TkNmUXR2YTllT3lHVThOQU9QbWVHdzZsY29XQS9QY1piaWJqSTY5?=
+ =?utf-8?B?cWhRbnI0eDVWWXhyZHFOUkZ2ZGlGYWdhQm5kZEZsWFYzTXhObXIrMnJQazNO?=
+ =?utf-8?B?MEpGWkRFTllrU2hkeWZGMUlrbnZNb3Q5bS9qT1dNYk9ZU2ZQMnFyTVljR3lV?=
+ =?utf-8?B?cGE4ZVpNYS9UV2JBMVJwWnFlTlhBZnpSVGIxSjZLYlRpTnkwN0JoL1kvUWFx?=
+ =?utf-8?B?Z0JHSlI1R1VjY2cvOXRBTnJsZDJ2aE5XQlREQjNHM0ZaOGU0ejNUQkxjNklm?=
+ =?utf-8?B?NTJrN0xjdjJXZ0s2N0NCV3ozSTBubGp6TTEwcGJoR1BKTW9pamUxeWs1UXpR?=
+ =?utf-8?B?MXc5Z1doZkxZTlRQcEhqSWRUZ3AzYUtEWDdtLzVxQi8wOG5ZZzJwZmVuQSs5?=
+ =?utf-8?B?aUlac2hBV2grTUNrcXlVZktVUDQ3NDRaTVRQbEl6T1Fuc2hnWS8rdEhGUG9w?=
+ =?utf-8?B?dEhiYm41cnJiaVJrWlBZbmpDWnhGWnZIVnI0b0V1SzdVRnRxSlJkd3BjTG5h?=
+ =?utf-8?B?UFIxVHZoRmVTcE9kS0JjVzkvQ3FqQ01NdnhwNVk2WlIxdFpISG1lV2hkcDBq?=
+ =?utf-8?B?WnJXc3UrSStJNmYyS21mVngzMHVYUlQ5MmVITC9INmRqVHQwUjB6RFErMkI0?=
+ =?utf-8?B?L210VG5MdHlXdk9ROGozUi9LYWpIbk1UR3AxaHZURGRkNngwKzlSSWVGUzBS?=
+ =?utf-8?B?RVQzNWtySlpUQUxPOXhiUTQrK0FxQXlFTi9zZlloWmFaS29DVnYzaExMdmg5?=
+ =?utf-8?B?aVdTMCsxL2JLMGxqZnlBdGNVSTNuNDdveCsxN2ErUGZrZHBvdDlaV2Jad0Zs?=
+ =?utf-8?B?VXIxdjJLV2xBNzF3dEdCdWdXQ3FQUjdZK2MzNjBjR29FUHZMZDB1N0FhSitJ?=
+ =?utf-8?B?blVLNW9sSFZEM3MrVG1uTXZNQWs5MkdRZ0thK25BTngvN2Rsb0gyM3hvSm5i?=
+ =?utf-8?B?aEJSZHl3WTBvZDJ2YTJEYlRVK0RMZHhRT3MyTG1CRXc1VnRZVVZLQWJLT1N4?=
+ =?utf-8?B?Ry9QOXIrZ2FVcTJjTGNSWkUwYjZpdlluN0t4L1QxOTJzcHFTYzJIdG51SFFo?=
+ =?utf-8?B?dXpCWGQ4R3czMHpoZldMZkNHQWdEQXRNSk1yNSszc1doWU9qcmxwclEzUkx5?=
+ =?utf-8?B?TzdCRG1IQUdqdXpMZzBLNFBpcUFmbjVjRldwYTAxVFkzM25QbTg4dTJleFdI?=
+ =?utf-8?B?SWhlbzY5dHdUZ3luT1Q2NXZFUHJmMFZ1NC9UcDQydjhRWEMxZkExUHZSUnNv?=
+ =?utf-8?B?ZTJ0TEQxVVg1Z3lkVkRZUkluSG43SGJ0ankrQXJ3MG8zTVpSanc1aUdQUlBK?=
+ =?utf-8?B?OGh0bkNuem5FUHplazN2RVdvckkra0lWU1I0TDdhUGhyVkVRM0RHQjB6R0lx?=
+ =?utf-8?Q?4fKtPj?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VE1PR09MB3471.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(38070700021); DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NW1sU0Q0bmdNcjgwYmoydlVkZ0JIRUhHTmd6TlVYZ0ROU2IrdG5WcHVxZVBD?=
+ =?utf-8?B?dlBBeG14di9UUWRWd1FPS0J5SEJQaENQV0lhbnI1QUdPMU9QcnRkN3BDOU9N?=
+ =?utf-8?B?K0tPRkNMZ0xCaDlVTUFlYjl6UkptRzhPbjVHaFBOc2xORGFRNXdEZDZuS2l1?=
+ =?utf-8?B?MSs0bDZiMVhoSXpoY1p0MjdoWStWTTgyL1RmUmJvRXlGT2Jwd0pNZUNVZW14?=
+ =?utf-8?B?c29VQThVRTE5REtoZ01laExYOEhydllBdFFpbmZVOGZudWNCK1NSY3BoTWNI?=
+ =?utf-8?B?WjR5Vk9Ca3p3TURabG94NGVZUlE5UnYwTlc3VndqdFViYzhzZU1LTmdzRDdr?=
+ =?utf-8?B?NjF3QnV6bVhkTUxjVkI5RS84TDljWXdpb0NZMFNZMERaN1pYNnR2b2E2ejJ2?=
+ =?utf-8?B?VFBkY250dVZkR2UyMzFzVkg2K0RsandtaTduNkFDVkN4MjQvMkRHWmJHS0pG?=
+ =?utf-8?B?eFNSRDkzU2JSUm5BWWFxTVBPbGlUWmdxYWpCRURvNklaQlpkMVFGbS8wQmt5?=
+ =?utf-8?B?UFFCRlc4bnhDVjRuN2R6U3htSkFKMkVBeHQyZHEzNjlQU1ZhRzgvMDRoeXNC?=
+ =?utf-8?B?Zkt1ZVI2aElvTjVuVjVmNGdPTk9wVFlVSlA0eURzanNHQ0xtWjdOZFBJcCtU?=
+ =?utf-8?B?bjJnaU1YeEp3VWhzS2RUNWNjdThhNmFhTGUvZEp0WTBxWUpDUGlpM0VQWldK?=
+ =?utf-8?B?TDNDd3Vud0RBVUJ1a0lDbHhSajZVUDdQenRhWDI0TTEyUWV6Tm81cGdNS09N?=
+ =?utf-8?B?NHpmbWdoM1pES09BY2tJTlh5WVF5cU9MOVMzUEszMENmUzBSa0ZyUlNqSCti?=
+ =?utf-8?B?OHNTQXJ4QjhyUlhhWmRhWFVkRHQ0NGlSeHZrWWYxYmkxY2lpUXJhYm1HUUsw?=
+ =?utf-8?B?ekM1SHFSMG1UT0FSKzRCZlpaN0YzRkxta1c1My82RDlZTmJLLzhRNDRUT2hw?=
+ =?utf-8?B?Yy9vY0RJWDZlY3lFa3pHNG9BTmM4SXVRKzlQbjJhSllmRVUxaUtTQTEwZEVJ?=
+ =?utf-8?B?T0NNMVVLK2ZRU0dRTWt5UHovQlA4M0wzNmhLU2d3elQ4L1E4SXZVY1JPb1ZJ?=
+ =?utf-8?B?Skt6ZHlDZ0Zjd1czRkh4WUNmMTVBa1l2bmhpR0REZTBPUnhFQ0lnOUQxVEdx?=
+ =?utf-8?B?MVNOWW1ZUXdpSjNmMDhVbWhxaU9vTjl3RE9JNUtoZ3JrNEk2Z0U0Qk9JTXNC?=
+ =?utf-8?B?eGFkTUtQZldUMWhNekx4S0d1VWxJY2NoUC9QbW90ZEp3N1JneTMrWHV1d3NF?=
+ =?utf-8?B?TlYzVW1YalZLSlYySlk5MmozZ1pYNVgwZ2lRcU14QnpudGFGK1VkemxuSW5a?=
+ =?utf-8?B?R0hPRnhXMjF3d0V0TzhtWVlYejk5c3NkaFpWZmxBcVVHNXpmdE4xU1VISEtT?=
+ =?utf-8?B?UG1tT3pmcVlwUVdLR2FCb0IwcEZTRlBOc0NwaHprT1hBNEdtY2xEV0oxajV5?=
+ =?utf-8?B?YjZBdVRhZWJYWXk3empUek1NcHpBakRUeEJibmpRYVFxSWE2ZURSSFZVZnQr?=
+ =?utf-8?B?UjdweGpjNy9IS1hNNU4wK2ZGeW8wdE00V0d5czA3c3lDQldvaXFJcCtUdUlO?=
+ =?utf-8?B?YXA0KzlrbkpUc0JBUmoxMkVDZHZOYWFCSDViVG5QMm1Kb2Q5bE9ndlpvTkx1?=
+ =?utf-8?B?MFBIN0dzcnRXOXNsV051N21JR1VablI2NXo2SHpLdlVBdGJkR0pPdjRIdVNM?=
+ =?utf-8?B?NTJKUnYrYkwwZGdxVEgxNlBpdmp4ekh4cFF5ZU9sU005MExXYTRsbWFxR0ds?=
+ =?utf-8?B?QnlGcWVUTVpYOHZnMzBpTVhKU1hKQUsvcTRrY0J6ZWdDK0hENG9iUnVRT3Ba?=
+ =?utf-8?B?d2M1UU5YbllQZ2ZSank0Yk5BcnJqNi9nNUZtbmd4M0RFa3BXUVUxVUwxQ0g1?=
+ =?utf-8?B?dFVmcHFzSDJaQ0N2ZXc5UWEzOGJXQmNKQU5Ibll6WHlEbnorbGo1NjlWSzVu?=
+ =?utf-8?B?TXNyNUltR3VmeFZzakZqRHJEZXZIdHU3S001czY3V2hKYnlweXNBeHNZQzhl?=
+ =?utf-8?B?eCtTdmxPYk5JdkY2L1p4N1ZkRkhENW9xcDZLamgvSWJMKzV5SkNzU1ZGOWNJ?=
+ =?utf-8?B?ck1CeVRUUXdTWkE2TUJScHZSR2ZIZ0tZOG1xKzhKbURoMFJ0ckNRRjFiZFZp?=
+ =?utf-8?B?ZjJXL2ZxUHUwZng3OTh3bnJMbEZZWU14TEtFRFpVdFB6K0U0UFNrMndLQ3ZC?=
+ =?utf-8?Q?P5XvYWYL3QpJcI+accrCDLE=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <850D089555CF0A4B8A892F542096A546@eurprd09.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 11/21] hw/arm/smmuv3: Decode security attributes from
- descriptors
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
-References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012150701.4127034-12-tangtao1634@phytium.com.cn>
- <6173cde1-ee30-45b5-a8dc-0cdb09a4b1f1@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <6173cde1-ee30-45b5-a8dc-0cdb09a4b1f1@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwAHXuuWSTBp5VIJAA--.3550S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWkvSDQGnQACsq
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxXrW7Ww45Kw43WrWxCw1UGFg_yoWrGrykpr
- WkGFn8KFW8J3WxKws2qr4avFs3Xws5tF1DCrn0gr95Aws0vryfWF1Ikry5KasF9rn5Jr42
- vr4qvas5urZFqrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-OriginatorOrg: htecgroup.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: VE1PR09MB3471.eurprd09.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: be7b765a-8968-41e3-5c65-08de3278a21b
+X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Dec 2025 14:31:23.0317 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: UteTmvfBapA5SfRscPglSuB3VJEEAfcWPYTHDWHb4xymbzXJlTqebbI7k8RFz2Hn8eXk2DnFTjYenVLv0rc6Bzbn8VGf2LqazYodIHbY+uU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DUZPR09MB6851
+Received-SPF: pass client-ip=2a01:111:f403:c200::3;
+ envelope-from=Djordje.Todorovic@htecgroup.com;
+ helo=DU2PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,115 +188,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric
-
-On 2025/12/2 23:19, Eric Auger wrote:
-> Hi Tao,
->
-> On 10/12/25 5:06 PM, Tao Tang wrote:
->> As the first step in implementing secure page table walks, this patch
->> introduces the logic to decode security-related attributes from various
->> SMMU structures.
->>
->> The NSCFG bits from the Context Descriptor are now decoded and stored.
->> These bits control the security attribute of the starting-level
->> translation table, which is crucial for managing secure and non-secure
->> memory accesses.
->>
->> The SMMU_S_IDR1.SEL2 bit is read to determine if Secure stage 2
->> translations are supported. This capability is cached in the
->> SMMUTransCfg structure for the page table walker's use.
->>
->> Finally, new macros (PTE_NS, PTE_NSTABLE) are added to prepare for
->> extracting attributes from page and table descriptors. To improve
->> clarity, these different attribute bits are organized into distinct
->> subsections in the header file.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   hw/arm/smmu-internal.h       | 16 ++++++++++++++--
->>   hw/arm/smmuv3-internal.h     |  2 ++
->>   hw/arm/smmuv3.c              |  2 ++
->>   include/hw/arm/smmu-common.h |  3 +++
->>   4 files changed, 21 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/arm/smmu-internal.h b/hw/arm/smmu-internal.h
->> index d143d296f3..a0454f720d 100644
->> --- a/hw/arm/smmu-internal.h
->> +++ b/hw/arm/smmu-internal.h
->> @@ -58,16 +58,28 @@
->>       ((level == 3) &&                                                    \
->>        ((pte & ARM_LPAE_PTE_TYPE_MASK) == ARM_LPAE_L3_PTE_TYPE_PAGE))
->>   
->> +/* Block & page descriptor attributes */
->> +/* Non-secure bit */
->> +#define PTE_NS(pte) \
->> +    (extract64(pte, 5, 1))
->> +
->>   /* access permissions */
->>   
->>   #define PTE_AP(pte) \
->>       (extract64(pte, 6, 2))
->>   
->> +/* access flag */
->> +#define PTE_AF(pte) \
->> +    (extract64(pte, 10, 1))
->> +
->> +
->> +/* Table descriptor attributes */
->>   #define PTE_APTABLE(pte) \
->>       (extract64(pte, 61, 2))
->>   
->> -#define PTE_AF(pte) \
->> -    (extract64(pte, 10, 1))
->> +#define PTE_NSTABLE(pte) \
->> +    (extract64(pte, 63, 1))
->> +
->>   /*
->>    * TODO: At the moment all transactions are considered as privileged (EL1)
->>    * as IOMMU translation callback does not pass user/priv attributes.
->> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
->> index 99fdbcf3f5..1e757af459 100644
->> --- a/hw/arm/smmuv3-internal.h
->> +++ b/hw/arm/smmuv3-internal.h
->> @@ -703,6 +703,8 @@ static inline int oas2bits(int oas_field)
->>   #define CD_R(x)          extract32((x)->word[1], 13, 1)
->>   #define CD_A(x)          extract32((x)->word[1], 14, 1)
->>   #define CD_AARCH64(x)    extract32((x)->word[1], 9 , 1)
->> +#define CD_NSCFG0(x)     extract32((x)->word[2], 0, 1)
->> +#define CD_NSCFG1(x)     extract32((x)->word[4], 0, 1)
->>   
->>   /**
->>    * tg2granule - Decodes the CD translation granule size field according
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 55f4ad1757..3686056d8e 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -812,6 +812,7 @@ static int decode_cd(SMMUv3State *s, SMMUTransCfg *cfg,
->>               tt->ttb = CACHED_ENTRY_TO_ADDR(entry, tt->ttb);
->>           }
->>   
->> +        tt->nscfg = i ? CD_NSCFG1(cd) : CD_NSCFG0(cd);
->>           tt->had = CD_HAD(cd, i);
->>           trace_smmuv3_decode_cd_tt(i, tt->tsz, tt->ttb, tt->granule_sz, tt->had);
->>       }
->> @@ -915,6 +916,7 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event,
->>               cfg = NULL;
->>               return cfg;
->>           }
->> +        cfg->sel2 = FIELD_EX32(s->bank[SMMU_SEC_SID_S].idr[1], S_IDR1, SEL2);
-> I don't get why we store sel2 in the cfg as it does not vary.
->
-> Thanks
->
-> Eric
-
-You're absolutely right—caching SEL2 in SMMUTransCfg was unnecessary. I 
-didn’t think it through carefully at the time. I’ll drop that change in 
-the next revision.
-
-Thanks,
-
-Tao
-
+SGksDQoNClRoYW5rcyBhIGxvdCBmb3IgdGhlIGZlZWRiYWNrIQ0KDQpEam9yZGplDQoNCg0KT24g
+My4gMTIuIDI1LiAxMjo1MywgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IENBVVRJ
+T046IFRoaXMgZW1haWwgb3JpZ2luYXRlZCBmcm9tIG91dHNpZGUgb2YgdGhlIG9yZ2FuaXphdGlv
+bi4gRG8gDQo+IG5vdCBjbGljayBsaW5rcyBvciBvcGVuIGF0dGFjaG1lbnRzIHVubGVzcyB5b3Ug
+cmVjb2duaXplIHRoZSBzZW5kZXIgDQo+IGFuZCBrbm93IHRoZSBjb250ZW50IGlzIHNhZmUuDQo+
+DQo+DQo+IEhpLA0KPg0KPiBPbiAzLzEyLzI1IDEyOjI0LCBEam9yZGplIFRvZG9yb3ZpYyB3cm90
+ZToNCj4+IEhpIGFsbCwNCj4+DQo+PiBXaGF0IGlzIHRoZSBzdGF0dXMgZm9yIHRoaXM/IDopDQo+
+DQo+IFNlcmllcyBsb29rcyBPSyBmb3IgYmVpbmcgcXVldWVkIGJ5IEFsaXN0YWlyIChSSVNDLVYg
+dHJlZSkuDQo+IFFFTVUgdHJlZSBpcyBub3cgZnJlZXplZCB1bnRpbCB0aGUgbmV4dCByZWxlYXNl
+ICh2MTAuMi4wKS4NCj4gV2Ugbm93IGFsbCB3YWl0IHRoZSB0cmVlIHRvIHJlLW9wZW4gZm9yIGRl
+dmVsb3BtZW50Li4uDQo+DQo+IFJlZ2FyZHMsDQo+DQo+IFBoaWwuDQo+DQo+Pg0KPj4gQmVzdCBy
+ZWdhcmRzLA0KPj4NCj4+IERqb3JkamU=
 
