@@ -4,37 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D8FD1266D
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D88D4D1268E
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:03:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQhnR-00013e-Ry; Wed, 03 Dec 2025 03:01:10 -0500
+	id 1vQhnY-0001SN-2L; Wed, 03 Dec 2025 03:01:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQhnQ-00012n-4V; Wed, 03 Dec 2025 03:01:08 -0500
+ id 1vQhnV-0001KY-UC; Wed, 03 Dec 2025 03:01:14 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQhnN-00070c-5i; Wed, 03 Dec 2025 03:01:07 -0500
+ id 1vQhnS-00071H-TR; Wed, 03 Dec 2025 03:01:13 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 34417170770;
+ by isrv.corpit.ru (Postfix) with ESMTP id 45B81170771;
  Wed, 03 Dec 2025 10:59:23 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F159932B497;
- Wed, 03 Dec 2025 10:59:40 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1397B32B498;
+ Wed, 03 Dec 2025 10:59:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 099/116] tests/functional: Remove semicolons at the
- end of lines
-Date: Wed,  3 Dec 2025 10:59:19 +0300
-Message-ID: <20251203075939.2366131-18-mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 100/116] tests/functional: Remove unnecessary import
+ statements
+Date: Wed,  3 Dec 2025 10:59:20 +0300
+Message-ID: <20251203075939.2366131-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251203105830@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251203105830@cover.tls.msk.ru>
@@ -66,346 +64,327 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Yes, we are all C coders who try to write Python code for testing...
-but still, let's better avoid semicolons at the end of the lines
-to keep "pylint" happy!
+pylint complains about these unnecessary import statements,
+so let's remove them.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Message-ID: <20250327201305.996241-1-thuth@redhat.com>
+Message-ID: <20250414145457.261734-1-thuth@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 858640eaee9f3039580118f5629825825cea311a)
+(cherry picked from commit 99fb9256b761c3cec4a82d2e9597b6cf24ae1285)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
-index 77dc8930fa..7a40d5dda7 100644
---- a/tests/functional/aspeed.py
-+++ b/tests/functional/aspeed.py
-@@ -44,7 +44,7 @@ def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'
+diff --git a/tests/functional/qemu_test/ports.py b/tests/functional/qemu_test/ports.py
+index cc39939d48..631b77abf6 100644
+--- a/tests/functional/qemu_test/ports.py
++++ b/tests/functional/qemu_test/ports.py
+@@ -10,12 +10,11 @@
+ import fcntl
+ import os
+ import socket
+-import sys
+-import tempfile
  
-     def do_test_arm_aspeed_buildroot_poweroff(self):
-         exec_command_and_wait_for_pattern(self, 'poweroff',
--                                          'System halted');
-+                                          'System halted')
+ from .config import BUILD_DIR
+ from typing import List
  
-     def do_test_arm_aspeed_sdk_start(self, image):
-         self.require_netdev('user')
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index c25c966278..c7f3b3b319 100755
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -85,7 +85,7 @@ def start_ast2700_test(self, name):
++
+ class Ports():
  
-         exec_command_and_wait_for_pattern(self,
-             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-1/device/new_device ',
--            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d');
-+            'i2c i2c-1: new_device: Instantiated device lm75 at 0x4d')
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/bus/i2c/devices/1-004d/hwmon/hwmon*/temp1_input', '0')
-         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
+     PORTS_ADDR = '127.0.0.1'
+diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
+index c2bd5baaae..6c442ff0dc 100644
+--- a/tests/functional/qemu_test/tuxruntest.py
++++ b/tests/functional/qemu_test/tuxruntest.py
+@@ -10,8 +10,6 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ import os
+-import stat
+-from subprocess import check_call, DEVNULL
+ 
+ from qemu_test import QemuSystemTest
+ from qemu_test import exec_command_and_wait_for_pattern
+diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
+index ce79da1b68..b7ef8f759b 100644
+--- a/tests/functional/qemu_test/uncompress.py
++++ b/tests/functional/qemu_test/uncompress.py
+@@ -13,7 +13,7 @@
+ import stat
+ import shutil
+ from urllib.parse import urlparse
+-from subprocess import run, CalledProcessError, DEVNULL
++from subprocess import run, CalledProcessError
+ 
+ from .asset import Asset
+ 
+diff --git a/tests/functional/test_aarch64_rme_sbsaref.py b/tests/functional/test_aarch64_rme_sbsaref.py
+index 0f4f6103a1..746770e776 100755
+--- a/tests/functional/test_aarch64_rme_sbsaref.py
++++ b/tests/functional/test_aarch64_rme_sbsaref.py
+@@ -9,15 +9,13 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-import time
+ import os
+-import logging
+ 
+-from qemu_test import QemuSystemTest, Asset
+-from qemu_test import exec_command, wait_for_console_pattern
++from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
+ from qemu_test import exec_command_and_wait_for_pattern
+ from test_aarch64_rme_virt import test_realms_guest
+ 
++
+ class Aarch64RMESbsaRefMachine(QemuSystemTest):
+ 
+     # Stack is built with OP-TEE build environment from those instructions:
+diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional/test_aarch64_rme_virt.py
+index a1abf584f0..8452d27928 100755
+--- a/tests/functional/test_aarch64_rme_virt.py
++++ b/tests/functional/test_aarch64_rme_virt.py
+@@ -9,9 +9,7 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-import time
+ import os
+-import logging
+ 
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import exec_command, wait_for_console_pattern
+diff --git a/tests/functional/test_aarch64_sbsaref_alpine.py b/tests/functional/test_aarch64_sbsaref_alpine.py
+index c660cc7a40..6108ec65a5 100755
+--- a/tests/functional/test_aarch64_sbsaref_alpine.py
++++ b/tests/functional/test_aarch64_sbsaref_alpine.py
+@@ -10,11 +10,8 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-import os
+-
+ from qemu_test import QemuSystemTest, Asset, skipSlowTest
+ from qemu_test import wait_for_console_pattern
+-from unittest import skipUnless
+ from test_aarch64_sbsaref import fetch_firmware
+ 
+ 
+diff --git a/tests/functional/test_aarch64_sbsaref_freebsd.py b/tests/functional/test_aarch64_sbsaref_freebsd.py
+index 2a26281d25..92ebc69c9b 100755
+--- a/tests/functional/test_aarch64_sbsaref_freebsd.py
++++ b/tests/functional/test_aarch64_sbsaref_freebsd.py
+@@ -10,8 +10,6 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-import os
+-
+ from qemu_test import QemuSystemTest, Asset, skipSlowTest
+ from qemu_test import wait_for_console_pattern
+ from test_aarch64_sbsaref import fetch_firmware
+diff --git a/tests/functional/test_aarch64_tcg_plugins.py b/tests/functional/test_aarch64_tcg_plugins.py
+index 4ea71f5f88..cb7e9298fb 100755
+--- a/tests/functional/test_aarch64_tcg_plugins.py
++++ b/tests/functional/test_aarch64_tcg_plugins.py
+@@ -13,7 +13,6 @@
+ 
+ import tempfile
+ import mmap
+-import os
+ import re
+ 
+ from qemu.machine.machine import VMLaunchFailure
+diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
+index 249f22d978..7a6297f75c 100755
+--- a/tests/functional/test_aarch64_virt.py
++++ b/tests/functional/test_aarch64_virt.py
+@@ -13,12 +13,8 @@
+ import logging
+ from subprocess import check_call, DEVNULL
+ 
+-from qemu.machine.machine import VMLaunchFailure
+-
+-from qemu_test import QemuSystemTest, Asset
+-from qemu_test import exec_command, exec_command_and_wait_for_pattern
+-from qemu_test import wait_for_console_pattern
+-from qemu_test import skipIfMissingCommands, get_qemu_img
++from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
++from qemu_test import wait_for_console_pattern, get_qemu_img
+ 
+ 
+ class Aarch64VirtMachine(QemuSystemTest):
 diff --git a/tests/functional/test_arm_aspeed_ast2500.py b/tests/functional/test_arm_aspeed_ast2500.py
-index 1ffba6c995..ddc6459f71 100755
+index ddc6459f71..a3b44572fc 100755
 --- a/tests/functional/test_arm_aspeed_ast2500.py
 +++ b/tests/functional/test_arm_aspeed_ast2500.py
-@@ -22,17 +22,17 @@ def test_arm_ast2500_evb_buildroot(self):
-         image_path = self.ASSET_BR2_202411_AST2500_FLASH.fetch()
+@@ -4,9 +4,8 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-         self.vm.add_args('-device',
--                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
-+                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test')
-         self.do_test_arm_aspeed_buildroot_start(image_path, '0x0',
-                                                 'ast2500-evb login:')
+-from qemu_test import Asset
++from qemu_test import Asset, exec_command_and_wait_for_pattern
+ from aspeed import AspeedTest
+-from qemu_test import exec_command_and_wait_for_pattern
  
-         exec_command_and_wait_for_pattern(self,
-              'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
--             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
-+             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d')
-         exec_command_and_wait_for_pattern(self,
-                              'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
-         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
--                    property='temperature', value=18000);
-+                    property='temperature', value=18000)
-         exec_command_and_wait_for_pattern(self,
-                              'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
  
-diff --git a/tests/functional/test_arm_aspeed_ast2600.py b/tests/functional/test_arm_aspeed_ast2600.py
-index 6ae4ed636a..5ef52f0659 100755
---- a/tests/functional/test_arm_aspeed_ast2600.py
-+++ b/tests/functional/test_arm_aspeed_ast2600.py
-@@ -27,38 +27,38 @@ def test_arm_ast2600_evb_buildroot(self):
-         image_path = self.ASSET_BR2_202411_AST2600_FLASH.fetch()
- 
-         self.vm.add_args('-device',
--                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test');
-+                         'tmp105,bus=aspeed.i2c.bus.3,address=0x4d,id=tmp-test')
-         self.vm.add_args('-device',
--                         'ds1338,bus=aspeed.i2c.bus.3,address=0x32');
-+                         'ds1338,bus=aspeed.i2c.bus.3,address=0x32')
-         self.vm.add_args('-device',
--                         'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42');
-+                         'i2c-echo,bus=aspeed.i2c.bus.3,address=0x42')
-         self.do_test_arm_aspeed_buildroot_start(image_path, '0xf00',
-                                                 'ast2600-evb login:')
- 
-         exec_command_and_wait_for_pattern(self,
-              'echo lm75 0x4d > /sys/class/i2c-dev/i2c-3/device/new_device',
--             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d');
-+             'i2c i2c-3: new_device: Instantiated device lm75 at 0x4d')
-         exec_command_and_wait_for_pattern(self,
-                              'cat /sys/class/hwmon/hwmon1/temp1_input', '0')
-         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
--                    property='temperature', value=18000);
-+                    property='temperature', value=18000)
-         exec_command_and_wait_for_pattern(self,
-                              'cat /sys/class/hwmon/hwmon1/temp1_input', '18000')
- 
-         exec_command_and_wait_for_pattern(self,
-              'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-3/device/new_device',
--             'i2c i2c-3: new_device: Instantiated device ds1307 at 0x32');
-+             'i2c i2c-3: new_device: Instantiated device ds1307 at 0x32')
-         year = time.strftime("%Y")
--        exec_command_and_wait_for_pattern(self, 'hwclock -f /dev/rtc1', year);
-+        exec_command_and_wait_for_pattern(self, 'hwclock -f /dev/rtc1', year)
- 
-         exec_command_and_wait_for_pattern(self,
-              'echo slave-24c02 0x1064 > /sys/bus/i2c/devices/i2c-3/new_device',
--             'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64');
-+             'i2c i2c-3: new_device: Instantiated device slave-24c02 at 0x64')
-         exec_command_and_wait_for_pattern(self,
--             'i2cset -y 3 0x42 0x64 0x00 0xaa i', '#');
-+             'i2cset -y 3 0x42 0x64 0x00 0xaa i', '#')
-         exec_command_and_wait_for_pattern(self,
-              'hexdump /sys/bus/i2c/devices/3-1064/slave-eeprom',
--             '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff');
-+             '0000000 ffaa ffff ffff ffff ffff ffff ffff ffff')
-         self.do_test_arm_aspeed_buildroot_poweroff()
- 
-     ASSET_BR2_202302_AST2600_TPM_FLASH = Asset(
-@@ -90,10 +90,10 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
- 
-         exec_command_and_wait_for_pattern(self,
-             'echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device',
--            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)');
-+            'tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)')
-         exec_command_and_wait_for_pattern(self,
-             'cat /sys/class/tpm/tpm0/pcr-sha256/0',
--            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0');
-+            'B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0')
- 
-         self.do_test_arm_aspeed_buildroot_poweroff()
- 
-@@ -107,9 +107,9 @@ def test_arm_ast2600_evb_sdk(self):
-         self.archive_extract(self.ASSET_SDK_V806_AST2600_A2)
- 
-         self.vm.add_args('-device',
--            'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test');
-+            'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test')
-         self.vm.add_args('-device',
--            'ds1338,bus=aspeed.i2c.bus.5,address=0x32');
-+            'ds1338,bus=aspeed.i2c.bus.5,address=0x32')
-         self.do_test_arm_aspeed_sdk_start(
-             self.scratch_file("ast2600-a2", "image-bmc"))
- 
-@@ -120,20 +120,20 @@ def test_arm_ast2600_evb_sdk(self):
- 
-         exec_command_and_wait_for_pattern(self,
-             'echo lm75 0x4d > /sys/class/i2c-dev/i2c-5/device/new_device',
--            'i2c i2c-5: new_device: Instantiated device lm75 at 0x4d');
-+            'i2c i2c-5: new_device: Instantiated device lm75 at 0x4d')
-         exec_command_and_wait_for_pattern(self,
-              'cat /sys/class/hwmon/hwmon19/temp1_input', '0')
-         self.vm.cmd('qom-set', path='/machine/peripheral/tmp-test',
--                    property='temperature', value=18000);
-+                    property='temperature', value=18000)
-         exec_command_and_wait_for_pattern(self,
-              'cat /sys/class/hwmon/hwmon19/temp1_input', '18000')
- 
-         exec_command_and_wait_for_pattern(self,
-              'echo ds1307 0x32 > /sys/class/i2c-dev/i2c-5/device/new_device',
--             'i2c i2c-5: new_device: Instantiated device ds1307 at 0x32');
-+             'i2c i2c-5: new_device: Instantiated device ds1307 at 0x32')
-         year = time.strftime("%Y")
-         exec_command_and_wait_for_pattern(self,
--             '/sbin/hwclock -f /dev/rtc1', year);
-+             '/sbin/hwclock -f /dev/rtc1', year)
- 
- if __name__ == '__main__':
-     AspeedTest.main()
-diff --git a/tests/functional/test_arm_aspeed_bletchley.py b/tests/functional/test_arm_aspeed_bletchley.py
-index 0da856c5ed..5a60b24b3d 100644
---- a/tests/functional/test_arm_aspeed_bletchley.py
-+++ b/tests/functional/test_arm_aspeed_bletchley.py
-@@ -12,14 +12,14 @@ class BletchleyMachine(AspeedTest):
- 
-     ASSET_BLETCHLEY_FLASH = Asset(
-         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/bletchley-bmc/openbmc-20250128071329/obmc-phosphor-image-bletchley-20250128071329.static.mtd.xz',
--        'db21d04d47d7bb2a276f59d308614b4dfb70b9c7c81facbbca40a3977a2d8844');
-+        'db21d04d47d7bb2a276f59d308614b4dfb70b9c7c81facbbca40a3977a2d8844')
- 
-     def test_arm_ast2600_bletchley_openbmc(self):
-         image_path = self.uncompress(self.ASSET_BLETCHLEY_FLASH)
- 
-         self.do_test_arm_aspeed_openbmc('bletchley-bmc', image=image_path,
-                                         uboot='2019.04', cpu_id='0xf00',
--                                        soc='AST2600 rev A3');
-+                                        soc='AST2600 rev A3')
- 
- if __name__ == '__main__':
-     AspeedTest.main()
-diff --git a/tests/functional/test_arm_aspeed_palmetto.py b/tests/functional/test_arm_aspeed_palmetto.py
-index 35d832bc98..ff0b821be6 100755
---- a/tests/functional/test_arm_aspeed_palmetto.py
-+++ b/tests/functional/test_arm_aspeed_palmetto.py
-@@ -12,14 +12,14 @@ class PalmettoMachine(AspeedTest):
- 
-     ASSET_PALMETTO_FLASH = Asset(
-         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/palmetto-bmc/openbmc-20250128071432/obmc-phosphor-image-palmetto-20250128071432.static.mtd',
--        'bce7c392eec75c707a91cfc8fad7ca9a69d7e4f10df936930d65c1cb9897ac81');
-+        'bce7c392eec75c707a91cfc8fad7ca9a69d7e4f10df936930d65c1cb9897ac81')
- 
-     def test_arm_ast2400_palmetto_openbmc(self):
-         image_path = self.ASSET_PALMETTO_FLASH.fetch()
- 
-         self.do_test_arm_aspeed_openbmc('palmetto-bmc', image=image_path,
-                                         uboot='2019.04', cpu_id='0x0',
--                                        soc='AST2400 rev A1');
-+                                        soc='AST2400 rev A1')
- 
- if __name__ == '__main__':
-     AspeedTest.main()
-diff --git a/tests/functional/test_arm_aspeed_romulus.py b/tests/functional/test_arm_aspeed_romulus.py
-index b97ed951b1..0447212bbf 100755
---- a/tests/functional/test_arm_aspeed_romulus.py
-+++ b/tests/functional/test_arm_aspeed_romulus.py
-@@ -12,14 +12,14 @@ class RomulusMachine(AspeedTest):
- 
-     ASSET_ROMULUS_FLASH = Asset(
-         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/romulus-bmc/openbmc-20250128071340/obmc-phosphor-image-romulus-20250128071340.static.mtd',
--        '6d031376440c82ed9d087d25e9fa76aea75b42f80daa252ec402c0bc3cf6cf5b');
-+        '6d031376440c82ed9d087d25e9fa76aea75b42f80daa252ec402c0bc3cf6cf5b')
- 
-     def test_arm_ast2500_romulus_openbmc(self):
-         image_path = self.ASSET_ROMULUS_FLASH.fetch()
- 
-         self.do_test_arm_aspeed_openbmc('romulus-bmc', image=image_path,
-                                         uboot='2019.04', cpu_id='0x0',
--                                        soc='AST2500 rev A1');
-+                                        soc='AST2500 rev A1')
- 
- if __name__ == '__main__':
-     AspeedTest.main()
-diff --git a/tests/functional/test_arm_aspeed_witherspoon.py b/tests/functional/test_arm_aspeed_witherspoon.py
-index ea1ce89b05..51a2d47af2 100644
---- a/tests/functional/test_arm_aspeed_witherspoon.py
-+++ b/tests/functional/test_arm_aspeed_witherspoon.py
-@@ -12,14 +12,14 @@ class WitherspoonMachine(AspeedTest):
- 
-     ASSET_WITHERSPOON_FLASH = Asset(
-         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/witherspoon-bmc/openbmc-20240618035022/obmc-phosphor-image-witherspoon-20240618035022.ubi.mtd',
--        '937d9ed449ea6c6cbed983519088a42d0cafe276bcfe4fce07772ca6673f9213');
-+        '937d9ed449ea6c6cbed983519088a42d0cafe276bcfe4fce07772ca6673f9213')
- 
-     def test_arm_ast2500_witherspoon_openbmc(self):
-         image_path = self.ASSET_WITHERSPOON_FLASH.fetch()
- 
-         self.do_test_arm_aspeed_openbmc('witherspoon-bmc', image=image_path,
-                                         uboot='2016.07', cpu_id='0x0',
--                                        soc='AST2500 rev A1');
-+                                        soc='AST2500 rev A1')
- 
- if __name__ == '__main__':
-     AspeedTest.main()
-diff --git a/tests/functional/test_arm_bpim2u.py b/tests/functional/test_arm_bpim2u.py
-index 8de6ccba88..8bed64b702 100755
---- a/tests/functional/test_arm_bpim2u.py
-+++ b/tests/functional/test_arm_bpim2u.py
-@@ -163,7 +163,7 @@ def test_arm_bpim2u_openwrt_22_03_3(self):
-                 self, 'Hit any key to stop autoboot:', '=>')
-         exec_command_and_wait_for_pattern(self, "setenv extraargs '" +
-                                                 kernel_command_line + "'", '=>')
--        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...');
-+        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...')
- 
-         self.wait_for_console_pattern(
-             'Please press Enter to activate this console.')
+ class AST2500Machine(AspeedTest):
 diff --git a/tests/functional/test_arm_cubieboard.py b/tests/functional/test_arm_cubieboard.py
-index b87a28154d..1eaca0272b 100755
+index 1eaca0272b..b536c2f77a 100755
 --- a/tests/functional/test_arm_cubieboard.py
 +++ b/tests/functional/test_arm_cubieboard.py
-@@ -128,7 +128,7 @@ def test_arm_cubieboard_openwrt_22_03_2(self):
-                 self, 'Hit any key to stop autoboot:', '=>')
-         exec_command_and_wait_for_pattern(self, "setenv extraargs '" +
-                                                 kernel_command_line + "'", '=>')
--        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...');
-+        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...')
+@@ -4,8 +4,6 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-         self.wait_for_console_pattern(
-             'Please press Enter to activate this console.')
-diff --git a/tests/functional/test_arm_orangepi.py b/tests/functional/test_arm_orangepi.py
-index 1815f56e02..f9bfa8c78d 100755
---- a/tests/functional/test_arm_orangepi.py
-+++ b/tests/functional/test_arm_orangepi.py
-@@ -174,7 +174,7 @@ def test_arm_orangepi_armbian(self):
-         exec_command_and_wait_for_pattern(self, ' ', '=>')
-         exec_command_and_wait_for_pattern(self, "setenv extraargs '" +
-                                                 kernel_command_line + "'", '=>')
--        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...');
-+        exec_command_and_wait_for_pattern(self, 'boot', 'Starting kernel ...')
+-import os
+-
+ from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
+ from qemu_test import interrupt_interactive_console_until_pattern
+ from qemu_test import skipBigDataTest
+diff --git a/tests/functional/test_arm_quanta_gsj.py b/tests/functional/test_arm_quanta_gsj.py
+index da60aeb659..cb0545f7bf 100755
+--- a/tests/functional/test_arm_quanta_gsj.py
++++ b/tests/functional/test_arm_quanta_gsj.py
+@@ -4,8 +4,6 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-         self.wait_for_console_pattern('systemd[1]: Hostname set ' +
-                                       'to <orangepipc>')
-diff --git a/tests/functional/test_s390x_topology.py b/tests/functional/test_s390x_topology.py
-index eefd9729cb..1b5dc65135 100755
---- a/tests/functional/test_s390x_topology.py
-+++ b/tests/functional/test_s390x_topology.py
-@@ -217,12 +217,12 @@ def test_polarization(self):
-         self.assertEqual(res['return']['polarization'], 'horizontal')
-         self.check_topology(0, 0, 0, 0, 'medium', False)
+-import os
+-
+ from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
+ from qemu_test import interrupt_interactive_console_until_pattern, skipSlowTest
  
--        self.guest_set_dispatching('1');
-+        self.guest_set_dispatching('1')
-         res = self.vm.qmp('query-s390x-cpu-polarization')
-         self.assertEqual(res['return']['polarization'], 'vertical')
-         self.check_topology(0, 0, 0, 0, 'medium', False)
+diff --git a/tests/functional/test_arm_smdkc210.py b/tests/functional/test_arm_smdkc210.py
+index 0fda45c63a..3154e7f732 100755
+--- a/tests/functional/test_arm_smdkc210.py
++++ b/tests/functional/test_arm_smdkc210.py
+@@ -4,8 +4,6 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
--        self.guest_set_dispatching('0');
-+        self.guest_set_dispatching('0')
-         res = self.vm.qmp('query-s390x-cpu-polarization')
-         self.assertEqual(res['return']['polarization'], 'horizontal')
-         self.check_topology(0, 0, 0, 0, 'medium', False)
-@@ -283,7 +283,7 @@ def test_entitlement(self):
-         self.check_polarization('vertical:high')
-         self.check_topology(0, 0, 0, 0, 'high', False)
+-import os
+-
+ from qemu_test import LinuxKernelTest, Asset
  
--        self.guest_set_dispatching('0');
-+        self.guest_set_dispatching('0')
-         self.check_polarization("horizontal")
-         self.check_topology(0, 0, 0, 0, 'high', False)
  
-@@ -310,11 +310,11 @@ def test_dedicated(self):
-         self.check_topology(0, 0, 0, 0, 'high', True)
-         self.check_polarization("horizontal")
+diff --git a/tests/functional/test_migration.py b/tests/functional/test_migration.py
+index 181223a69e..c4393c3543 100755
+--- a/tests/functional/test_migration.py
++++ b/tests/functional/test_migration.py
+@@ -11,14 +11,13 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
  
--        self.guest_set_dispatching('1');
-+        self.guest_set_dispatching('1')
-         self.check_topology(0, 0, 0, 0, 'high', True)
-         self.check_polarization("vertical:high")
+-
+ import tempfile
+-import os
+ import time
  
--        self.guest_set_dispatching('0');
-+        self.guest_set_dispatching('0')
-         self.check_topology(0, 0, 0, 0, 'high', True)
-         self.check_polarization("horizontal")
+ from qemu_test import QemuSystemTest, skipIfMissingCommands
+ from qemu_test.ports import Ports
  
-@@ -360,7 +360,7 @@ def test_dedicated_error(self):
++
+ class MigrationTest(QemuSystemTest):
  
-         self.check_topology(0, 0, 0, 0, 'high', True)
+     timeout = 10
+diff --git a/tests/functional/test_mips64el_replay.py b/tests/functional/test_mips64el_replay.py
+index 4f63d7fb34..26a6ccff3f 100755
+--- a/tests/functional/test_mips64el_replay.py
++++ b/tests/functional/test_mips64el_replay.py
+@@ -4,11 +4,7 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
--        self.guest_set_dispatching('1');
-+        self.guest_set_dispatching('1')
+-import os
+-import logging
+-
+-from qemu_test import Asset, exec_command_and_wait_for_pattern
+-from qemu_test import skipIfMissingImports, skipFlakyTest, skipUntrustedTest
++from qemu_test import Asset, skipUntrustedTest
+ from replay_kernel import ReplayKernelBase
  
-         self.check_topology(0, 0, 0, 0, 'high', True)
  
+diff --git a/tests/functional/test_mips_replay.py b/tests/functional/test_mips_replay.py
+index eda031ccad..4327481e35 100755
+--- a/tests/functional/test_mips_replay.py
++++ b/tests/functional/test_mips_replay.py
+@@ -4,7 +4,7 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-from qemu_test import Asset, skipSlowTest, exec_command_and_wait_for_pattern
++from qemu_test import Asset, skipSlowTest
+ from replay_kernel import ReplayKernelBase
+ 
+ 
+diff --git a/tests/functional/test_mipsel_replay.py b/tests/functional/test_mipsel_replay.py
+index 0a330de43f..5f4796cf89 100644
+--- a/tests/functional/test_mipsel_replay.py
++++ b/tests/functional/test_mipsel_replay.py
+@@ -4,7 +4,7 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-from qemu_test import Asset, wait_for_console_pattern, skipSlowTest
++from qemu_test import Asset, skipSlowTest
+ from replay_kernel import ReplayKernelBase
+ 
+ 
+diff --git a/tests/functional/test_ppc64_hv.py b/tests/functional/test_ppc64_hv.py
+index 1920e91f18..d87f440fa7 100755
+--- a/tests/functional/test_ppc64_hv.py
++++ b/tests/functional/test_ppc64_hv.py
+@@ -9,14 +9,14 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
++import os
++import subprocess
++
++from datetime import datetime
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import wait_for_console_pattern, exec_command
+ from qemu_test import skipIfMissingCommands, skipBigDataTest
+ from qemu_test import exec_command_and_wait_for_pattern
+-import os
+-import time
+-import subprocess
+-from datetime import datetime
+ 
+ # Alpine is a light weight distro that supports QEMU. These tests boot
+ # that on the machine then run a QEMU guest inside it in KVM mode,
+diff --git a/tests/functional/test_vnc.py b/tests/functional/test_vnc.py
+index d4e9dd0279..5c0ee5f927 100755
+--- a/tests/functional/test_vnc.py
++++ b/tests/functional/test_vnc.py
+@@ -11,12 +11,12 @@
+ # later.  See the COPYING file in the top-level directory.
+ 
+ import socket
+-from typing import List
+-from qemu.machine.machine import VMLaunchFailure
+ 
++from qemu.machine.machine import VMLaunchFailure
+ from qemu_test import QemuSystemTest
+ from qemu_test.ports import Ports
+ 
++
+ VNC_ADDR = '127.0.0.1'
+ 
+ def check_connect(port: int) -> bool:
+diff --git a/tests/functional/test_x86_64_kvm_xen.py b/tests/functional/test_x86_64_kvm_xen.py
+index 0f1f5d8f0b..424d4b2001 100755
+--- a/tests/functional/test_x86_64_kvm_xen.py
++++ b/tests/functional/test_x86_64_kvm_xen.py
+@@ -11,8 +11,6 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-import os
+-
+ from qemu.machine import machine
+ 
+ from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
 -- 
 2.47.3
 
