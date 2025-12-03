@@ -4,103 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DBB0D1266D
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 07:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EB1FD116F3
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 07:43:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQhTs-000808-Fx; Wed, 03 Dec 2025 02:40:56 -0500
+	id 1vQhVz-0000wL-EE; Wed, 03 Dec 2025 02:43:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vQhTk-0007yR-9b
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 02:40:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vQhVx-0000vo-KH
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 02:43:05 -0500
+Received: from 5.mo548.mail-out.ovh.net ([188.165.49.213])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vQhTi-00031f-Gd
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 02:40:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764747645;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cDzepYrRfqrPnahNj+ZYP64d9c9UwUQEVVAKAV+buyE=;
- b=dSlrzJIr5rmlpcRCMXOn/vf8VLHLMgA4cpQp6WDB+6Z5GlIwNlNyuaukaUb6FWGvId3yoW
- 4VC8dhgBb5MmoPsbbAmUGfRLKWUut8Ig82ysC6/U/trJW0zXEV97X1m646jr3BKHq0E5HC
- zGJT03XJqHemD+kZI7qvJMMK4UcqshY=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-66-UPgWgk22NvilKnAdR12iCw-1; Wed, 03 Dec 2025 02:40:42 -0500
-X-MC-Unique: UPgWgk22NvilKnAdR12iCw-1
-X-Mimecast-MFC-AGG-ID: UPgWgk22NvilKnAdR12iCw_1764747641
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-42b2c8fb84fso3784974f8f.2
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 23:40:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764747641; x=1765352441; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=cDzepYrRfqrPnahNj+ZYP64d9c9UwUQEVVAKAV+buyE=;
- b=iT/2CoRILZVXHhgV1NO6GHwk2OsdxYrdP+ttSWn+lGwZG2DE7s9wYb+e/faSUqZ1zI
- WcK5QDMsne5qFke9Glk/bBtweH73DDoVRgDaeCmlVp1CTY/eOmaoIDiafi3QWIBs4Onv
- zUDRNlmtEBhZ/iiOBYyyB8oAdQ23Tmc5IdmfExwy/ASrYiGLARCb3a2WdSbeNNbpA9oT
- yrv0bDH4y8tZ/f0D/YxZApGB1ry5gAgr7HCVHo2TW3G3frp9RCHHkK1hDERKunzkVmcp
- WOKUr+83OfNBlrz39FJFtpGpwQGAoyv5z3KuB/IauE13s1OI/JZ7uQNr7KWRQAnNitUx
- BcnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764747641; x=1765352441;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cDzepYrRfqrPnahNj+ZYP64d9c9UwUQEVVAKAV+buyE=;
- b=QnFinzM2vtWfm72e2aIV4ijNaFov2W/LP0s568KBd1knwElSqZ0/EK8inxUrUYl6ne
- 6uFbOVt2kkl4ZmGLQicQR+rbuhDVciiEr4a4ipnZsQxhsjFl8Sc5uez9oeH4zD3lLDoH
- 2vSmje/Je97jRiltr0ri4OsrSo/mIH9RjTX0oqvLSei5CcCCA9YGMK/fGY/NdqPi/xNe
- 117qClJP2tcitIItAjxmqorpTLcAITe92uArEomzGwMWi1ujPCnBtHUJB5IU1AtaczcN
- TCbA9LoMo3JDrUlOC61tqCQaRbh/8Wpo7hAeqAtfer+xWmvKYBMNjVjF7pRm8gsvfU5/
- fAzg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVQklsG8dpv/MW+ZOzn323Y/GerdXns1hMDo1wX48tgKiQ0PhAb+/Wr4y0ifA1BhxGFn4gwF5P0eOqr@nongnu.org
-X-Gm-Message-State: AOJu0YxxYmiF/SKtQbhHegtBjs4s1Dx9RCLOv/Ec4mhgho9R0lwwPcNU
- IzPCbeb9iDYCwDh/rwmhaZVd5J+da6TYtOnW23V9v7ecbRmR4qVu6k2zgzv69uHEh2eFshwl1h/
- croUD7LT0gk/dgujlGvKtdnbymUtkq4+7hWMly08Nt0jqL3c2Lq2Lwvo8
-X-Gm-Gg: ASbGncsbEeVVdu9ByjmBOGIOtJBFhg2ZhNrjzJ67Nh+n93O69XyFkjZpyL6QwjpMHyu
- IhkfblQWj/P6DVlnj8wyUqLQeK9vJhj4D3Z9tYf0wDEu09QxTfN/ZPQ3yG1oUrW2IacQBFo/Jw6
- ja5daj8RCdiE6SRNCfcgbqth3brL9RdKBdPkMfZSGlR0qcW9GpmYtR6bKKXsd0fCqzS3bs+sNUS
- 448XqHblQswti14N9UDXi/ypzr8rva3v0lAFv6cFYKISpw7UW6K7ijLwzbwxjmjHFnCoA8EhU8T
- 4Klt08KAGIsOnWOk/Oj+wCPLM2Dkm1f0B2iggj5X4rRO2NWc2Dx7Ctrm6ZvvH/X/hqTvvmNGrp9
- jp3n6YL374b6WYAyHE2gndaggbgR8pCHAzQt63UV8wnMNh+/H
-X-Received: by 2002:a05:6000:615:b0:42b:39fb:e87f with SMTP id
- ffacd0b85a97d-42f731a39d2mr1185774f8f.49.1764747640766; 
- Tue, 02 Dec 2025 23:40:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFv1iJynUt3XNclYGaq/pKC0WrXB3O4yu+iVxRK7i7LzD7HwWvtQMDzYWT3ulTiUrtVDzutUg==
-X-Received: by 2002:a05:6000:615:b0:42b:39fb:e87f with SMTP id
- ffacd0b85a97d-42f731a39d2mr1185758f8f.49.1764747640342; 
- Tue, 02 Dec 2025 23:40:40 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f6ffa18ffsm6692381f8f.5.2025.12.02.23.40.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Dec 2025 23:40:39 -0800 (PST)
-Message-ID: <e5d2d505-009e-412e-b032-8b80af493d32@redhat.com>
-Date: Wed, 3 Dec 2025 08:40:39 +0100
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vQhVt-0003CN-B4
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 02:43:05 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.190])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4dLqP42BdFz5xx4;
+ Wed,  3 Dec 2025 07:42:48 +0000 (UTC)
+Received: from kaod.org (37.59.142.114) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Wed, 3 Dec
+ 2025 08:42:47 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-114S008e0e6ef19-46c0-4b61-b9a0-b4f8f1365fd2,
+ 7CF4215FC0CD5ED8F770F0F10A27EC8E0B7CCE65) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <8f8fb825-891a-4c06-9676-4aa232cd4642@kaod.org>
+Date: Wed, 3 Dec 2025 08:42:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/5] vfio-user: refactor out header handling
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20251201095621.2786318-1-john.levon@nutanix.com>
- <20251201095621.2786318-4-john.levon@nutanix.com>
- <b7a282bc-bd97-4101-bf88-b69aef59eb54@nutanix.com>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Subject: Re: [PATCH] aspeed: Deprecate the fby35 machine
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Delevoryas <peter@pjd.dev>
+References: <20251126102424.927527-1-clg@redhat.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
+Autocrypt: addr=clg@kaod.org; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
  8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
  yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
@@ -110,52 +54,67 @@ Autocrypt: addr=clg@redhat.com; keydata=
  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
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <b7a282bc-bd97-4101-bf88-b69aef59eb54@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ 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
+In-Reply-To: <20251126102424.927527-1-clg@redhat.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-Originating-IP: [37.59.142.114]
+X-ClientProxiedBy: DAG6EX1.mxp5.local (172.16.2.51) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: e1a66fb2-730e-45e6-ad10-f371b3a4d3d7
+X-Ovh-Tracer-Id: 16859225205124598773
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEiJDI6xp1wtHoBhKHxt/a/gaqAsJk/T0a2Peml+dGXwjObAnmGKErGk8E2bNxh2P2FLe3rrqXWYs+HV/vMtUoF7Rck57mNFxio5krBKkZZFhBfxmtvSf/Y0zMbS/R1N/fSRo3dgJO4jk0+h8J52i2nzGjPG2vDnaQ78Bma4Mdx439VhoXauCFpVCicCij2SvzjM0aTBFhUnJBFupeUiAMlCRpTt8YXC+fIJ7d/6iTKNRjBHWAcxccsXO6wQWsQqhiBqeoelMpMeQgXFLZlgH1HodiVc6/qwKDzjbjdAAROljmnQg5s6mk0s8ceHAlV+G+V3FRSD6T4qiGQ3kEBpO5JhS6qqEaTIG/T8g9soeWbXM+2BfIuOG5sFJ707PcXTEwZuRfsP26thBsDk6YMHmg3v5CXnTMkZyjnZObiBydOO/ux/D4vBLdIUs6shR2rlUZOx1EBzLDMjS+Xq8vg36KbHLod2lY+STLvjlRo5euXS9uAweK4fGgcKY31qjpz5eTAFn1qkfrDf1xTc5VvvIDiXBqTj4m696bmmcjJTZazog+YZct2e4vP60kDXDI1FAcB4R3wz1VImnCcYJICeW+L33MFVQn96yUeLpaNmwS6KNStezmU+zjFINhruyFeagsHHpIV8yTIM3xZr/q3+oToxRKVTmquN3XGHfkng/Q9ng
+DKIM-Signature: a=rsa-sha256; bh=cNxu5mVapLPyJ9OxitqpO+7QXJHIloBBgxoSaRf1kLg=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1764747771; v=1;
+ b=daFlUXc0/zYX3WpxoQH+Bb6oanQfQBgmpJL2pBLf6K/a3TJriLixvqGTybAyK7ixo0NF3l1f
+ B0uQa/PiC6OuNOhu7Yq8QvMQUQ7FgPstKLJs/H1LdzOgqzVWrib3icinWhcbPVeuZNQeGfzM8i4
+ rARaInm/McFk2PrPfkSk1I+bXRvexeLv7eTVkK0r5Yzrw/jtH0NqLA8AoaGIGlSHhCAfbBXd642
+ EWWXtuXQW1Xqa+roWKqtvFjZhV2XaorwuNgB+nIISWAnrRb3OGhY2caOq/Ha53Yrry2t8mfHUD1
+ PjiWU+pXZyS/dM/7Hv87zeI7lEVkj4ujfbk/bqeCsOyHg==
+Received-SPF: pass client-ip=188.165.49.213; envelope-from=clg@kaod.org;
+ helo=5.mo548.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,165 +130,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello John,
+Hello,
 
-On 12/2/25 11:53, Mark Cave-Ayland wrote:
-> On 01/12/2025 09:56, John Levon wrote:
+On 11/26/25 11:24, Cédric Le Goater wrote:
+> There are no functional tests for the 'fby35' machine which makes
+> harder to determine when something becomes deprecated or unused.
 > 
->> Simplify vfio_user_recv_one() by moving the header handling out to a
->> helper function.
->>
->> Signed-off-by: John Levon <john.levon@nutanix.com>
->> ---
->>   hw/vfio-user/proxy.c | 101 +++++++++++++++++++++++++------------------
->>   1 file changed, 60 insertions(+), 41 deletions(-)
->>
->> diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
->> index 82c76c6665..87e50501af 100644
->> --- a/hw/vfio-user/proxy.c
->> +++ b/hw/vfio-user/proxy.c
->> @@ -218,6 +218,61 @@ static int vfio_user_complete(VFIOUserProxy *proxy, Error **errp)
->>       return 1;
->>   }
->> +static int vfio_user_recv_hdr(VFIOUserProxy *proxy, Error **errp,
->> +                              VFIOUserHdr *hdr, int **fdp, size_t *numfdp,
->> +                              bool *isreply)
->> +{
->> +    struct iovec iov = {
->> +        .iov_base = hdr,
->> +        .iov_len = sizeof(*hdr),
->> +    };
->> +    int ret;
->> +
->> +    /*
->> +     * Read header
->> +     */
->> +    ret = qio_channel_readv_full(proxy->ioc, &iov, 1, fdp, numfdp, 0,
->> +                                 errp);
->> +    if (ret == QIO_CHANNEL_ERR_BLOCK) {
->> +        return ret;
->> +    }
->> +
->> +    /* read error or other side closed connection */
->> +    if (ret <= 0) {
->> +        error_setg(errp, "failed to read header");
+> The 'fby35' machine was originally added as an example of a multi-SoC
+> system, with the expectation the models would evolve over time in an
+> heterogeneous system. This hasn't happened and no public firmware is
+> available to boot it. It can be replaced by the 'ast2700fc', another
+> multi-SoC machine based on the newer AST2700 SoCs which are excepted
+> to receive better support in the future.
 > 
-> Can we use error_setg_errno() here to record the real underlying return code in errp? Otherwise with this change it gets lost due to vfio_user_recv_hdr() always returning -1 if there is an error.
+> Cc: Peter Delevoryas <peter@pjd.dev>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 
-Can you please send a v4 with this change requested by Mark ?
 
-I will then prepare a last QEMU 10.2 PR with this series and
-the vfio-user doc update I left behind.
+No objections ? If not, I will queue the deprecation for QEMU 10.2.
+Since deprecation is tolerated in the -rc phase.
 
 Thanks,
 
 C.
-
-
-
-
-> 
->> +        return -1;
->> +    }
->> +
->> +    if (ret < sizeof(*hdr)) {
->> +        error_setg(errp, "short read of header");
->> +        return -1;
->> +    }
->> +
->> +    /*
->> +     * Validate header
->> +     */
->> +    if (hdr->size < sizeof(*hdr)) {
->> +        error_setg(errp, "bad header size");
->> +        return -1;
->> +    }
->> +
->> +    switch (hdr->flags & VFIO_USER_TYPE) {
->> +    case VFIO_USER_REQUEST:
->> +        *isreply = false;
->> +        break;
->> +    case VFIO_USER_REPLY:
->> +        *isreply = true;
->> +        break;
->> +    default:
->> +        error_setg(errp, "unknown message type");
->> +        return -1;
->> +    }
->> +
->> +    trace_vfio_user_recv_hdr(proxy->sockname, hdr->id, hdr->command, hdr->size,
->> +                             hdr->flags);
->> +    return 0;
->> +}
->> +
->>   /*
->>    * Receive and process one incoming message.
->>    *
->> @@ -230,10 +285,6 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
->>       g_autofree int *fdp = NULL;
->>       VFIOUserFDs *reqfds;
->>       VFIOUserHdr hdr;
->> -    struct iovec iov = {
->> -        .iov_base = &hdr,
->> -        .iov_len = sizeof(hdr),
->> -    };
->>       bool isreply = false;
->>       int i, ret;
->>       size_t msgleft, numfds = 0;
->> @@ -257,45 +308,13 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
->>           /* else fall into reading another msg */
->>       }
->> -    /*
->> -     * Read header
->> -     */
->> -    ret = qio_channel_readv_full(proxy->ioc, &iov, 1, &fdp, &numfds, 0,
->> -                                 errp);
->> -    if (ret == QIO_CHANNEL_ERR_BLOCK) {
->> -        return ret;
->> -    }
->> -
->> -    /* read error or other side closed connection */
->> -    if (ret <= 0) {
->> -        goto fatal;
->> -    }
->> -
->> -    if (ret < sizeof(hdr)) {
->> -        error_setg(errp, "short read of header");
->> -        goto fatal;
->> -    }
->> -
->> -    /*
->> -     * Validate header
->> -     */
->> -    if (hdr.size < sizeof(VFIOUserHdr)) {
->> -        error_setg(errp, "bad header size");
->> -        goto fatal;
->> -    }
->> -    switch (hdr.flags & VFIO_USER_TYPE) {
->> -    case VFIO_USER_REQUEST:
->> -        isreply = false;
->> -        break;
->> -    case VFIO_USER_REPLY:
->> -        isreply = true;
->> -        break;
->> -    default:
->> -        error_setg(errp, "unknown message type");
->> +    ret = vfio_user_recv_hdr(proxy, errp, &hdr, &fdp, &numfds, &isreply);
->> +    if (ret < 0) {
->> +        if (ret == QIO_CHANNEL_ERR_BLOCK) {
->> +            return ret;
->> +        }
->>           goto fatal;
->>       }
->> -    trace_vfio_user_recv_hdr(proxy->sockname, hdr.id, hdr.command, hdr.size,
->> -                             hdr.flags);
->>       /*
->>        * For replies, find the matching pending request.
-> 
-> 
-> ATB,
-> 
-> Mark.
-> 
 
 
