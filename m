@@ -4,61 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0694DD15DAB
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 16:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96DED15DAF
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 16:29:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQpap-0001Yt-6P; Wed, 03 Dec 2025 11:20:39 -0500
+	id 1vQpip-0004zq-Ek; Wed, 03 Dec 2025 11:28:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1vQpan-0001XH-Lp; Wed, 03 Dec 2025 11:20:37 -0500
-Received: from mx.treblig.org ([2a00:1098:5b::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>)
- id 1vQpal-0007iw-6n; Wed, 03 Dec 2025 11:20:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
- ; s=bytemarkmx;
- h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=dqgK+P4qYm+GSe2xDOScXplx9fT6JiXfJfDPb9zDfYY=; b=kV66gLuLR1hWYEFd
- iGu7cfM3bDEeyxbSP8Oh8OyWeeTET/btC9ngZn2Z75UF7uTiblC/pw6CQteB2O0fAWRRMQhb50scP
- Ye5b7+f4ksV7ukqHkcNI9PeNSHMIwbtt1+scyQhBpCQ9jEVY+n/c9yWcHgXhR1uHGufi5UnRkjlNI
- r4mNlvz6Z3azAFeyoQVp/Ds71nxRP/WvxAFF022BD/nM6qqXZtua09hzgLZ0PCGAFQo/RUzJJIHr3
- g80HiwqmJpoQoj0sCg+NU2Z/xKZOCf+vJR06WTmTITzajXH+lfnort330Bio/1/tghZPvmAEHFUWM
- A6+7u+fehcXDz0P+Iw==;
-Received: from dg by mx.treblig.org with local (Exim 4.98.2)
- (envelope-from <dg@treblig.org>) id 1vQpah-00000007rmV-2st3;
- Wed, 03 Dec 2025 16:20:31 +0000
-Date: Wed, 3 Dec 2025 16:20:31 +0000
-From: "Dr. David Alan Gilbert" <dave@treblig.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-trivial@nongnu.org, mjt@tls.msk.ru, laurent@vivier.eu,
- thuth@redhat.com, pbonzini@redhat.com, jak@jak-linux.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] qemu-options.hx: Document -M as -machine alias
-Message-ID: <aTBjTzbaX0befChO@gallifrey>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vQpim-0004y5-Bf
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 11:28:53 -0500
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vQpij-0002xb-Uu
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 11:28:52 -0500
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-642fcb38f35so5429106d50.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 08:28:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764779327; x=1765384127; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Kv1ONXZalTzUliu3Lf3hacUz8qwrxGUwXvTGqJG1wgI=;
+ b=dXPo115Dko0kpuIzXTt0Qc048odvkMpAluchELjZ4cSa5821wIE3VVMlhQSHjE+kXm
+ cL3pEArnkfk+7bH0x+BODXfohjUFC5wTg++7kD4ugVpLy63K6SqcYd2r8GFkactGFAem
+ YqNwRvKkXZlkOsnOHAPcVUubGAG0byuHHmI6FiNXUfObqUh2yx4deczQPv8tOGiHA7J0
+ XP6IpEDwNzt1hj8DO46Iqe+iHzSZ2bIMik3LVNA/O/3rjKCc+r6L5NCUH6wPpDTn1VE6
+ XaUK6D0w11Yl4PQqSMvAx4tYD5PhH111uAcgMxfzagl33r8RgfxuOm7XXZZEFhVz53Tj
+ h3og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764779327; x=1765384127;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Kv1ONXZalTzUliu3Lf3hacUz8qwrxGUwXvTGqJG1wgI=;
+ b=rmXcSGcVdGUlyjHxIysgZDHqhfBLmVECOAgIHK3mddedbX5NlHNIbWhiuHKFzrmtKb
+ Ld4loezspGa5vwqTWlDNAMOe9nFYnxBYQkLihR+WB9RmX2oUqwhFGnGVBwTz7gD95LCk
+ nnkipRa3agnVvYOPcdESPEOpFFjP8Z8VUvZMm3niyvNtT54h9EjmsYFFFj5FAKV2mD4p
+ ZQD9attQZkAh9XuvQjLmboLriwa5qWrGdd1+Y8Q+Z0a01dgBjnwNJBWOxgTiZdX4rzND
+ JMY3Gt05RitcBT68U/cXO1clnr1c5Hs4s3o/oZSenmiYxgVx/cYJrC8Y6+njTNyffd1C
+ C3Iw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX7XQ46EFDltUAQ+XPHpw2stwNQRNSSzMJJNSMZX1Zz8Du/i16VwuuufvyIAFs6ccBmEBbnfAwkLC13@nongnu.org
+X-Gm-Message-State: AOJu0YwxGiXy0V1Wuv5SZ22/g4LLVQv5FTwCwxD+Wp15fDM2P8pbIUbM
+ HcHSMl/k7Tl7rAK2eIHPDo1z6+TpLXyG6vSeh84JH82VBn3PyaaceOe9jRamJHI0QTDrCnwskcg
+ AuaicQbNcpHaYNGadJ0P3kE6fHatuG8SPNaNczA6WGQ==
+X-Gm-Gg: ASbGncuACP2SOgU3NmcBGClxdQxcKpcUWlXHa6PcHsXH8eCtECeWryWDjMnHCTX8zIK
+ Su4huWf/hVCdySYZUdqDWy/eS8+BhGoSKByuGfmS7/bHwTxhFKxuXNSnXeMIQFM84opDKEykYJ7
+ VMYAkSbKJmYeFG1H+QsPUleFLs/qQsrYrSLKfR4KEuU2w0w5vbQ1gDEKYe+J+4pkQztYJOT7V1u
+ dEjShj5qdpBYcTW366UD2seItjBxRvDEydJsvsja4p1a/8HK0zA2i2YltpQ0dcQPP5iiRsk
+X-Google-Smtp-Source: AGHT+IFTyV0plQbL7g6XrqADTbAVgQFyEy0YpWk2YvVgxRSkzxwuQ5lWfM4E4GzxBhfRRvUVsGf1S7o7b0xKaiQH/BU=
+X-Received: by 2002:a05:690c:6107:b0:786:91ac:e16b with SMTP id
+ 00721157ae682-78c0bf06e61mr21460807b3.9.1764779327313; Wed, 03 Dec 2025
+ 08:28:47 -0800 (PST)
+MIME-Version: 1.0
 References: <20251203131511.153460-1-dave@treblig.org>
  <87a4zzu230.fsf@draig.linaro.org> <aTBCLbDbpXgkTLHr@gallifrey>
  <CAFEAcA-Uy0UQwGEK+f95BJmDripg1-8vhzPF5qRSY40=duhRUQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA-Uy0UQwGEK+f95BJmDripg1-8vhzPF5qRSY40=duhRUQ@mail.gmail.com>
-X-Chocolate: 70 percent or better cocoa solids preferably
-X-Operating-System: Linux/6.12.48+deb13-amd64 (x86_64)
-X-Uptime: 16:18:13 up 37 days, 15:54,  3 users,  load average: 0.01, 0.01, 0.00
-User-Agent: Mutt/2.2.13 (2024-03-09)
-Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
- helo=mx.treblig.org
+ <aTBjTzbaX0befChO@gallifrey>
+In-Reply-To: <aTBjTzbaX0befChO@gallifrey>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 3 Dec 2025 16:28:35 +0000
+X-Gm-Features: AWmQ_bmKHQQ_YhvSy6UczQB4KFywWqzPdsfZy-7wLfs6xNs3GYGEc-n_hvBIGiE
+Message-ID: <CAFEAcA-y5ucBTOgngim5cpuKbFYXajOz0zEeT2S0rC3wnMPSrw@mail.gmail.com>
+Subject: Re: [PATCH] qemu-options.hx: Document -M as -machine alias
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-trivial@nongnu.org, mjt@tls.msk.ru, laurent@vivier.eu, thuth@redhat.com, 
+ pbonzini@redhat.com, jak@jak-linux.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,114 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-* Peter Maydell (peter.maydell@linaro.org) wrote:
-> On Wed, 3 Dec 2025 at 14:00, Dr. David Alan Gilbert <dave@treblig.org> wrote:
+On Wed, 3 Dec 2025 at 16:20, Dr. David Alan Gilbert <dave@treblig.org> wrote:
+>
+> * Peter Maydell (peter.maydell@linaro.org) wrote:
+> > Surprisingly, this and -h/--help are our only two options where
+> > we provide a short synonym. I note that this handling of -M
+> > is not consistent with how we document -h/--help, where we
+> > print both on a single line:
+> > -h or -help     display this help and exit
 > >
-> > * Alex Bennée (alex.bennee@linaro.org) wrote:
-> > > dave@treblig.org writes:
-> > >
-> > > > From: "Dr. David Alan Gilbert" <dave@treblig.org>
-> > > >
-> > > > -M is used heavily in documentation and scripts, but isn't actually
-> > > > documented anywhere.
-> > > > Document it as equivalent to -machine.
-> > > >
-> > > > Reported-by: Julian Andres Klode <jak@jak-linux.org>
-> > > > Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-> > > > ---
-> > > >  qemu-options.hx | 12 +++++++-----
-> > > >  1 file changed, 7 insertions(+), 5 deletions(-)
-> > > >
-> > > > diff --git a/qemu-options.hx b/qemu-options.hx
-> > > > index fca2b7bc74..ec92723f10 100644
-> > > > --- a/qemu-options.hx
-> > > > +++ b/qemu-options.hx
-> > > > @@ -44,6 +44,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
-> > > >  #endif
-> > > >      "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
-> > > >      "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
-> > > > +    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n"
-> > > >      "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
-> > > >      QEMU_ARCH_ALL)
-> > > >  SRST
-> > > > @@ -179,6 +180,9 @@ SRST
-> > > >
-> > > >              -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
-> > > >
-> > > > +    ``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
-> > > > +        Define an SGX EPC section.
-> > > > +
-> > >
-> > > This seems unrelated.
-> > >
-> > > >      ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
-> > > >          Define cache properties for SMP system.
-> > > >
-> > > > @@ -208,12 +212,10 @@ SRST
-> > > >  ERST
-> > > >
-> > > >  DEF("M", HAS_ARG, QEMU_OPTION_M,
-> > > > -    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n",
-> > > > -    QEMU_ARCH_ALL)
-> > > > -
-> > > > +    "-M              as -machine\n", QEMU_ARCH_ALL)
-> > > >  SRST
-> > > > -``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
-> > > > -    Define an SGX EPC section.
-> > > > +``-M``
-> > > > +    as -machine.
-> 
-> Surprisingly, this and -h/--help are our only two options where
-> we provide a short synonym. I note that this handling of -M
-> is not consistent with how we document -h/--help, where we
-> print both on a single line:
-> -h or -help     display this help and exit
-> 
-> But it would be trickier to fit that in for -machine and
-> perhaps confusing given the suboptions.
+> > But it would be trickier to fit that in for -machine and
+> > perhaps confusing given the suboptions.
+>
+> Right, that's one of the two reasons I kept it separate.
+> The other reason, is that I couldn't figure out how '-help' and '-h'
+> both got defined - why is the second DEF(...) not needed?
 
-Right, that's one of the two reasons I kept it separate.
-The other reason, is that I couldn't figure out how '-help' and '-h'
-both got defined - why is the second DEF(...) not needed?
+A piece of delicious fudge lurking in system/vl.c: we have
+this hardcoded entry in the qemu_options[] array before
+the ones that are generated via the macro-magic from
+qemu-options.hx:
 
-> > > Did we have a merge conflict at some point that messed things up?
-> >
-> > It's not clear - it was the only option hanging around in -M and it was
-> > already appearing wrong in the man output.
-> > I wondered if it was some requirement to have *something* in the -M
-> > definition so thought it best to move it at the same time.
-> 
-> It looks like this was incorrectly added under -M by
-> commit dfce81f1b9 ("vl: Add sgx compound properties to expose
-> SGX EPC sections to guest"), which should have put it under
-> -machine like all our other machine suboption documentation.
-> 
-> The result is that the sgx-epc documentation appears OK
-> in --help because the --help output just concatenates
-> everything so it gets tacked on after the -machine help,
-> but it is misrendered in the HTML docs:
-> https://qemu-project.gitlab.io/qemu/system/invocation.html
-> as it appears as if a top level option rather than one
-> indented to indicate that it's a machine sub-option.
-> So this change fixes that bug (and should ideally say so
-> in its commit message).
-> 
-> Before that it simply read
-> -HXCOMM Deprecated by -machine
-> -DEF("M", HAS_ARG, QEMU_OPTION_M, "", QEMU_ARCH_ALL)
-> 
-> (Commit dfce81f1b9 also silently dropped that "deprecated"
-> comment, which it shouldn't really have done.)
+    { "h", 0, QEMU_OPTION_h, QEMU_ARCH_ALL },
 
-Ah.
+So we recognize -h on the command line and turn it into
+QEMU_OPTION_h, the same as -help, but it doesn't result in
+anything in the documentation (we leave that up to the
+strings and RST in the DEF("help"...) section).
 
-Dave
-
-> thanks
-> -- PMM
--- 
- -----Open up your eyes, open up your mind, open up your code -------   
-/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
-\        dave @ treblig.org |                               | In Hex /
- \ _________________________|_____ http://www.treblig.org   |_______/
+thanks
+-- PMM
 
