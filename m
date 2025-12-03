@@ -4,60 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 908D0D1267F
-	for <qemu-devel@archiver.kernel.org>; Tue,  2 Dec 2025 23:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 186CFD12688
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 00:35:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQZT0-0005Ps-AL; Tue, 02 Dec 2025 18:07:32 -0500
+	id 1vQapn-0004me-DZ; Tue, 02 Dec 2025 19:35:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asb@igalia.com>) id 1vQZSu-0005PC-S4
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 18:07:24 -0500
-Received: from fanzine2.igalia.com ([213.97.179.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <asb@igalia.com>) id 1vQZSs-0005Zt-Nj
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 18:07:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
- s=20170329;
- h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
- Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
- List-Post:List-Owner:List-Archive;
- bh=UVSDrQj2EE2Xom2fSCqutr2x2fz+iiadtu9ED7/RGkM=; b=rfq9SuMUSdxQ4bVfme2QD96TpV
- mKOT5okhR7kww8QCkQ0CHqwkMpvuTxAINoYIt7mF2FBmYz9w7as8oqpuHE66iibxxiBZxvPa0LHeN
- LwAEeh730DeDWY5rrFeYQ+nvnYJlEprvGq5xfEwOyjza+HUxosjVCK/2urIHgo0PqvVerVZlz1j/O
- Ocy70BHRtDXmnyJfka0DOp2LFfCrXE+QbtDrLh+M/lffyBtSJSNhrAJezeHxVjSdqDMS60kqIbxrx
- 5FF6Gq+1AqUPMavkA8VV6NxM+1bxMfF9Z+EhvkJ2md3ZJpT4AVmKsdcTUiWW2Pv/ABG04FRrv0EEC
- EufRR+jg==;
-Received: from 82-69-92-151.dsl.in-addr.zen.co.uk ([82.69.92.151]
- helo=localhost.localdomain) by fanzine2.igalia.com with esmtpsa 
- (Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
- id 1vQZSq-0082ga-Mr; Wed, 03 Dec 2025 00:07:20 +0100
-From: Alex Bradbury <asb@igalia.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Bradbury <asb@igalia.com>, alex.bennee@linaro.org, erdnaxe@crans.org,
- ma.mandourr@gmail.com, pierrick.bouvier@linaro.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v2 3/5] contrib/plugins/hotblocks: Print uint64_t with PRIu64
- rather than PRId64
-Date: Tue,  2 Dec 2025 23:05:56 +0000
-Message-ID: <46f83ac83c6cabace91b9be85da2547ff7b08204.1764716538.git.asb@igalia.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1764716538.git.asb@igalia.com>
-References: <cover.1764716538.git.asb@igalia.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vQapk-0004mB-V8
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 19:35:06 -0500
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vQapj-0007aq-6F
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 19:35:04 -0500
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-44fff8c46bbso1794114b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 16:35:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764722101; x=1765326901; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2DyuuXrUg8kV3lzgriRI7OZ7LfRAI/c5VOVeGP5B4gw=;
+ b=yHU0FR72PE2aquEQL16V6Ehj+uH62GAOi4sooJj7NYEOrvjsYlbHsjiE1Pu76tjmHY
+ 4mWx2v3YYEUbO41618Lz+GCmKCXAf8u4c5xmA6k4QxdvwGDJt9cFkEvQUr5IeLKL173o
+ 5O95IBKH4a/dPm2gk9KDjANNmHZHA6X+FuZ7Q6sIi0IsysR/Zi/hOv1m9L31wwnb9MfC
+ Dvre6R+aFbIsJKPFYjR7R6gbalZ/oTa1mf41PfCUfwwkbE8G57KgbVE6YQd2Lsu9GKVy
+ 2Dz4BAuDq56BTXH1z5dbrmWY2xFzwOvzE4L21WQ8dhoF10uX/z86dWsJ3UzSun+ia9Lw
+ T/7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764722101; x=1765326901;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2DyuuXrUg8kV3lzgriRI7OZ7LfRAI/c5VOVeGP5B4gw=;
+ b=ZqvfB9LYqhsH2iHMIbGQFzoI7dhN/KpKM7922aQX8SX43Ucd3UzpyY8oedVH35D9XW
+ mc9QRF6oZOKahiG0eV6csLIrnbVQlHBlJYggjiHYerO3DS660/GZsTmc1XDvXabKDV6l
+ YAiweHdF7g9c1LVG2A+t7vSQQfcS2eP9i3BfkP2uC3cCWI+VQFtqkf6r97aUrsrMyFdv
+ COoeQ8T0SxXmdPuN3zv/Nfp5TIRHF6Mae2Sxgx4grhX4CgnHa8uVJtw78RDWIk+ZV9Yu
+ 7afHkZfKctt91KHp8kPdMWtLD8GI3aNryeBqgwqv7eAlfQdTnNhX29Ajm56+stqVcLgW
+ 6Nqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJZ4L2Pa7VUznvdefuKQ1wrmBnAC2YatPxT/btUK+QicsmKoS8FaK5y6r/L5aKG7bTnW0cihFKOctg@nongnu.org
+X-Gm-Message-State: AOJu0YwI4ymBSZAPNt991x0O5V4B3HqTlb6CjIlfnHzx4Z8i9E5Bh3dO
+ Kq1ARkigEUj4eVj0voSBZ9Xeg6veGVspnx0ffI5ROFNj1plla9fePo1WJ2Mvhghg5hU=
+X-Gm-Gg: ASbGnctblDzEx1H7Jxf6DS5FOW3S37yShUvAJ9JY0cda6DHoXoE5FsgXa92ikT+yOnL
+ sg6pYeo0yMtQWxQm1yM6RiPLKDZ3GCZmkNOqhZvHXPx17VugkNkHZlhdhCuNlNOtPRuUoovu2nO
+ Pfdwh5WquU4KXBXEmjHlOVC0utCAunE9ZKj651zNMhm4ZbWUPyuE7e5Gh7nb+ns7SHKVIVVpj9/
+ dXnN73wJdkh5XVKVJvAReTpcJyzEpDtLw/MuOKweK/H3geQRyxn6AHbE7q4kmhZ6IJpZxXQShW7
+ X4V3LbgdyTMPHP20AWC8jXZsMtrDkvV057ericqTYAumoygUaICcmKKsrD3pAzWtVuCZXN0QI/Z
+ bGMjINpjR+OyY8yRLoq0HOaLb8G+CqKVSBRNe5XQI942zIuSU+sGoDwS0+wEtBBzaQwVFQkFpUa
+ TVgZlpHub0fGZtaAAlKvUZrrXxfQ==
+X-Google-Smtp-Source: AGHT+IFxI7oCM6s7rj4ywOe8kclj9k2TB5h+YnyaNwVokjowIiV6XQHaUyTPjmwKVZ2RniASMv/JgA==
+X-Received: by 2002:a05:6808:1807:b0:450:b3a:539e with SMTP id
+ 5614622812f47-4536e43882cmr176178b6e.28.1764722101481; 
+ Tue, 02 Dec 2025 16:35:01 -0800 (PST)
+Received: from [10.27.3.244] ([187.210.107.189])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-453170cefc2sm6472396b6e.18.2025.12.02.16.35.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 02 Dec 2025 16:35:01 -0800 (PST)
+Message-ID: <87170e51-931b-415f-b79e-949fae0f3216@linaro.org>
+Date: Tue, 2 Dec 2025 16:34:58 -0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.2? 1/2] tcg/tci: Disable -Wundef FFI_GO_CLOSURES
+ warning
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20251202184653.33998-1-philmd@linaro.org>
+ <20251202184653.33998-2-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251202184653.33998-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.97.179.56; envelope-from=asb@igalia.com;
- helo=fanzine2.igalia.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,30 +110,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_plugin_u64_sum returns a uint64_t, so PRIu64 is the correct format
-specifier.
+On 12/2/25 10:46, Philippe Mathieu-Daudé wrote:
+> Since we build TCI with FFI (commit 22f15579fa1 "tcg: Build ffi data
+> structures for helpers") we get on Darwin:
+> 
+>    In file included from ../../tcg/tci.c:22:
+>    In file included from include/tcg/helper-info.h:13:
+>    /Library/Developer/CommandLineTools/SDKs/MacOSX15.sdk/usr/include/ffi/ffi.h:483:5: warning: 'FFI_GO_CLOSURES' is not defined, evaluates to 0 [-Wundef]
+>      483 | #if FFI_GO_CLOSURES
+>          |     ^
+>    1 warning generated.
+> 
+> Since this libffi change was committed more than 10 years ago (see
+> https://github.com/libffi/libffi/commit/e951d64c0852), just define
+> the missing definition on QEMU to silence the warning.
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- contrib/plugins/hotblocks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+See also c23e9a1c from 2023, which fixed that to use an ifdef.
 
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index cf4d6b8c36..40d8dae1cd 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -87,7 +87,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-         for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
-             ExecCount *rec = (ExecCount *) it->data;
-             g_string_append_printf(
--                report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
-+                report, "0x%016"PRIx64", %d, %ld, %"PRIu64"\n",
-                 rec->start_addr, rec->trans_count,
-                 rec->insns,
-                 qemu_plugin_u64_sum(
--- 
-2.52.0
+I suppose the inclusion or exclusion of the go interface is neither here nor there, so 
+long as it compiles.
 
+r~
 
