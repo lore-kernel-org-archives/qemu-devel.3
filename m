@@ -4,65 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5E5D12D65
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 14:04:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D704ED12D68
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 14:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQnS3-0000vn-0j; Wed, 03 Dec 2025 09:03:27 -0500
+	id 1vQnUT-0001zc-PD; Wed, 03 Dec 2025 09:05:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQnS0-0000us-Ap; Wed, 03 Dec 2025 09:03:24 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQnRx-0002k1-Fz; Wed, 03 Dec 2025 09:03:23 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwD3_5sgQzBpM5r4Ag--.2141S2;
- Wed, 03 Dec 2025 22:03:12 +0800 (CST)
-Received: from [192.168.31.152] (unknown [113.246.234.131])
- by mail (Coremail) with SMTP id AQAAfwA3juseQzBp5lEJAA--.3622S2;
- Wed, 03 Dec 2025 22:03:11 +0800 (CST)
-Message-ID: <e80c6fbc-47a4-490a-8615-be2ee122eb94@phytium.com.cn>
-Date: Wed, 3 Dec 2025 22:03:07 +0800
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vQnUR-0001yk-PT
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 09:05:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vQnUP-00045z-NJ
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 09:05:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764770748;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=YGPG2BDHUJ2l1WS+IL8JR9jycU1efWCbEY48TqMdn5c=;
+ b=NYFUZq9oipJ1JoOGXC+Z9LHxg5hGA7Gn4QBPA1KEkp0u9j4+BPgTLK7Kp3Sehk96zOPZGV
+ K/Nt/SH5IbWeQVrez26P7vHDvTGQpmpeLHuZGoD8sxTssxgP/OzY38vsxTMms+iqv1oGwh
+ OmrCMJmd43xT8nOJCpfh/LgyukmRekk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-283-IBeMUlHWP0eWQB4eOn78Xg-1; Wed, 03 Dec 2025 09:05:45 -0500
+X-MC-Unique: IBeMUlHWP0eWQB4eOn78Xg-1
+X-Mimecast-MFC-AGG-ID: IBeMUlHWP0eWQB4eOn78Xg_1764770744
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4776079ada3so59297415e9.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 06:05:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764770744; x=1765375544; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=YGPG2BDHUJ2l1WS+IL8JR9jycU1efWCbEY48TqMdn5c=;
+ b=hT5D29IAwaYrUHRdUnvrQm2JH6N63gafe0XR/BD7FOdN2ZAL9ljZJ08/AEj/xJcxPI
+ KMpw0wXPE7gDfARdOxTJsMyrzkNkX5yUPljIOq1llTRK7ZwpGF+B1xjgYegbet8KQchx
+ b6k5mo24qczV6gPjFf/ix2yv2zbJjEv8nIXjNEzKa/3qec5Y1lQuH0d8E7LAK7agaXOK
+ je6Vc8J9wRtvosBH2iCbvHDC2p6QkKEJGtILSw1/NuCufDUgPFstSVW+sQBLscp2Ftmm
+ sToHOWsb5+ZIvJ1Eejro0GHo2LO4hWL2GU4epVJR27Uep0fFwGqwa6RnJnO+2JwXqiPq
+ 5/mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764770744; x=1765375544;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YGPG2BDHUJ2l1WS+IL8JR9jycU1efWCbEY48TqMdn5c=;
+ b=D3UfWTJwQtdRaLPLmeUZXT+Dh7tePmtyBRr9PsTTdwTyjCV6iZxBe8phgi1E6+cKFc
+ CnYHw4dWwdOeBXuEhMtxzxTKYqql4R4BjvWUXGL+HOPyKaxTHZhrRzL/o88Btyy/TnGJ
+ 1E5D8C2NCZi6Tc8yF+A7gLhzycprF/6Vqj578YlMX3fj1eYGZQfw4ze46KncqDsbrgpr
+ xAHt/0wz3kDF+AYAT8a4FNF6sxY6GOhzWbqEEMqWwNI9bRPiuKqRApgAi8sCi86hRKWG
+ bjD3JbM6lrGAqSvSi4DF8hMtnZGamE9hTIyyOgtRYGFM9IzC+7kezQ4YLKyt1uIEaf1K
+ rr/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUjpZu1QiF1r9EW4QjIHDx+J3UO4Qwz8voJ2BDQAmLxhBCpcoEIL5PU0JYxbWh2o2izNUnJ7awNNVo@nongnu.org
+X-Gm-Message-State: AOJu0YxsSeLG1mlSoer0bndSPXX0RSBORHb/1Pi2GO5CQ1OE6yyEIaMf
+ W7PvCkOsJkqg1zyeKKzhRz3e9Np/2JVJB06R6NkZDKguHq9v/+gMliDmt9bbc2L06+dafsVCekR
+ wwld03/ZTuVT8e87OyXxxTtzH12Yul/shSaZKRY9oXdFcoMKLWVpd3GjI
+X-Gm-Gg: ASbGncviNrIoju1W+Lmi+4aqdycTFz+rlUmdAeK2Ldw+BnPu5ERVxCe9E2HOaHa/etw
+ RC5bxRU1PWdXdmYcmOYUP7nuTkcKHQCaTlgpTeUtHiDDZHkIbCzXgqcSMe4CfJrE0jkh0UFp1gk
+ jIEm2khzJi1tC0+Lo1NRqL3pVqON0cloeFRThbheHiizFUMFJDbt8T4xwHo5m4w3/sN55Y3S+pJ
+ qlR2jxtyNN0RIdlvvnGI58a8tlXlkD4/hCZCM8w/P3PbEslXrUFuNhYD9SVT/dyRN5JFWD8gkLy
+ K1XdfNU3FfAB4DOemHiYA+vilpx+ufVRq6wDNK3svg+bG/WnD8D6rgW4AgOshgwjw038Slz32Em
+ BGYoHpaYLJ2n4EQ+/bRGVs8zHuwapq/NE/XX3gIQ1djBsb7SA
+X-Received: by 2002:a05:6000:2689:b0:42b:32f5:ad18 with SMTP id
+ ffacd0b85a97d-42f73180f9dmr2818577f8f.9.1764770744154; 
+ Wed, 03 Dec 2025 06:05:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFFKibXKfNVNkA5OBhvRY++EIlWnmCown9+3olkL/NyjhZEMMmupDLtel/vWHMur5nb+6NCCA==
+X-Received: by 2002:a05:6000:2689:b0:42b:32f5:ad18 with SMTP id
+ ffacd0b85a97d-42f73180f9dmr2818542f8f.9.1764770743660; 
+ Wed, 03 Dec 2025 06:05:43 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42e1c5d6277sm39436806f8f.17.2025.12.03.06.05.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 03 Dec 2025 06:05:42 -0800 (PST)
+Message-ID: <f2986f27-5279-4236-9013-ba1adb8a1d95@redhat.com>
+Date: Wed, 3 Dec 2025 15:05:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 09/21] hw/arm/smmuv3: Plumb transaction attributes into
- config helpers
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
-References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012150701.4127034-10-tangtao1634@phytium.com.cn>
- <096dabf7-3ae3-4739-86f5-d3c76a96432a@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <096dabf7-3ae3-4739-86f5-d3c76a96432a@redhat.com>
+Subject: Re: [PATCH v4 3/5] vfio-user: refactor out header handling
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Thanos Makatos <thanos.makatos@nutanix.com>
+References: <20251203100316.3604456-1-john.levon@nutanix.com>
+ <20251203100316.3604456-4-john.levon@nutanix.com>
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Content-Language: en-US, fr
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20251203100316.3604456-4-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwA3juseQzBp5lEJAA--.3622S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWkvSDQGnQABsp
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxKw1DJw15GrW7Kw1Uuw45Wrg_yoWxKF4xpr
- Z7JFn8tw4rtFyI9FZIqw4qva4Sv39YgF1DGrW7KF95CFn0vrn7ZryUKw15C34Dury8JFs2
- vF47WF43urn0yrJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,192 +169,157 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On 12/3/25 11:03, John Levon wrote:
+> Simplify vfio_user_recv_one() by moving the header handling out to a
+> helper function.
+> 
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>   hw/vfio-user/proxy.c | 101 +++++++++++++++++++++++++------------------
+>   1 file changed, 60 insertions(+), 41 deletions(-)
+> 
+> diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+> index 82c76c6665..e0f9202535 100644
+> --- a/hw/vfio-user/proxy.c
+> +++ b/hw/vfio-user/proxy.c
+> @@ -218,6 +218,61 @@ static int vfio_user_complete(VFIOUserProxy *proxy, Error **errp)
+>       return 1;
+>   }
+>   
+> +static int vfio_user_recv_hdr(VFIOUserProxy *proxy, Error **errp,
+> +                              VFIOUserHdr *hdr, int **fdp, size_t *numfdp,
+> +                              bool *isreply)
+> +{
+> +    struct iovec iov = {
+> +        .iov_base = hdr,
+> +        .iov_len = sizeof(*hdr),
+> +    };
+> +    int ret;
+> +
+> +    /*
+> +     * Read header
+> +     */
+> +    ret = qio_channel_readv_full(proxy->ioc, &iov, 1, fdp, numfdp, 0,
+> +                                 errp);
+> +    if (ret == QIO_CHANNEL_ERR_BLOCK) {
+> +        return ret;
+> +    }
+> +
+> +    if (ret < 0) {
+> +        error_setg_errno(errp, errno, "failed to read header");
+> +        return -1;
+> +    } else if (ret == 0) {
+> +        error_setg(errp, "failed to read header: EOF");
+> +        return -1;
+> +    } else if (ret < sizeof(*hdr)) {
+> +        error_setg(errp, "short read of header");
+> +        return -1;
+> +    }
+> +
+> +    /*
+> +     * Validate header
+> +     */
+> +    if (hdr->size < sizeof(*hdr)) {
+> +        error_setg(errp, "bad header size");
+> +        return -1;
+> +    }
+> +
+> +    switch (hdr->flags & VFIO_USER_TYPE) {
+> +    case VFIO_USER_REQUEST:
+> +        *isreply = false;
+> +        break;
+> +    case VFIO_USER_REPLY:
+> +        *isreply = true;
+> +        break;
+> +    default:
+> +        error_setg(errp, "unknown message type");
+> +        return -1;
+> +    }
+> +
+> +    trace_vfio_user_recv_hdr(proxy->sockname, hdr->id, hdr->command, hdr->size,
+> +                             hdr->flags);
+> +    return 0;
+> +}
+> +
+>   /*
+>    * Receive and process one incoming message.
+>    *
+> @@ -230,10 +285,6 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
+>       g_autofree int *fdp = NULL;
+>       VFIOUserFDs *reqfds;
+>       VFIOUserHdr hdr;
+> -    struct iovec iov = {
+> -        .iov_base = &hdr,
+> -        .iov_len = sizeof(hdr),
+> -    };
+>       bool isreply = false;
+>       int i, ret;
+>       size_t msgleft, numfds = 0;
+> @@ -257,45 +308,13 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy, Error **errp)
 
-On 2025/12/2 22:03, Eric Auger wrote:
->
-> On 10/12/25 5:06 PM, Tao Tang wrote:
->> As a preliminary step towards a multi-security-state configuration
->> cache, introduce MemTxAttrs and AddressSpace * members to the
->> SMMUTransCfg struct. The goal is to cache these attributes so that
->> internal DMA calls (dma_memory_read/write) can use them directly.
->>
->> To facilitate this, hw/arm/arm-security.h is now included in
->> smmu-common.h. This is a notable change, as it marks the first time
->> these Arm CPU-specific security space definitions are used outside of
->> cpu.h, making them more generally available for device models.
->>
->> The decode helpers (smmu_get_ste, smmu_get_cd, smmu_find_ste,
->> smmuv3_get_config) are updated to use these new attributes for memory
->> accesses. This ensures that reads of SMMU structures from memory, such
->> as the Stream Table, use the correct security context.
->>
->> For now, the configuration cache lookup key remains unchanged and is
->> still based solely on the SMMUDevice pointer. The new attributes are
->> populated during a cache miss in smmuv3_get_config.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   hw/arm/smmu-common.c         | 19 ++++++++++++++++++
->>   hw/arm/smmuv3.c              | 38 ++++++++++++++++++++++--------------
->>   include/hw/arm/smmu-common.h |  6 ++++++
->>   3 files changed, 48 insertions(+), 15 deletions(-)
->>
->> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->> index 24db448683..82308f0e33 100644
->> --- a/hw/arm/smmu-common.c
->> +++ b/hw/arm/smmu-common.c
->> @@ -30,6 +30,25 @@
->>   #include "hw/arm/smmu-common.h"
->>   #include "smmu-internal.h"
->>   
->> +ARMSecuritySpace smmu_get_security_space(SMMUSecSID sec_sid)
->> +{
->> +    switch (sec_sid) {
->> +    case SMMU_SEC_SID_S:
->> +        return ARMSS_Secure;
->> +    case SMMU_SEC_SID_NS:
->> +    default:
->> +        return ARMSS_NonSecure;
->> +    }
->> +}
->> +
->> +MemTxAttrs smmu_get_txattrs(SMMUSecSID sec_sid)
->> +{
->> +    return (MemTxAttrs) {
->> +        .secure = sec_sid > SMMU_SEC_SID_NS ? 1 : 0,
->> +        .space = smmu_get_security_space(sec_sid),
->> +    };
->> +}
->> +
->>   /* Global state for secure address space availability */
->>   bool arm_secure_as_available;
->>   
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index a87ae36e8b..351bbf1ae9 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -333,14 +333,13 @@ static void smmuv3_init_regs(SMMUv3State *s)
->>   }
->>   
->>   static int smmu_get_ste(SMMUv3State *s, dma_addr_t addr, STE *buf,
->> -                        SMMUEventInfo *event)
->> +                        SMMUEventInfo *event, SMMUTransCfg *cfg)
->>   {
->>       int ret, i;
->>   
->>       trace_smmuv3_get_ste(addr);
->>       /* TODO: guarantee 64-bit single-copy atomicity */
->> -    ret = dma_memory_read(&address_space_memory, addr, buf, sizeof(*buf),
->> -                          MEMTXATTRS_UNSPECIFIED);
->> +    ret = dma_memory_read(cfg->as, addr, buf, sizeof(*buf), cfg->txattrs);
->>       if (ret != MEMTX_OK) {
->>           qemu_log_mask(LOG_GUEST_ERROR,
->>                         "Cannot fetch pte at address=0x%"PRIx64"\n", addr);
->> @@ -385,8 +384,7 @@ static int smmu_get_cd(SMMUv3State *s, STE *ste, SMMUTransCfg *cfg,
->>       }
->>   
->>       /* TODO: guarantee 64-bit single-copy atomicity */
->> -    ret = dma_memory_read(&address_space_memory, addr, buf, sizeof(*buf),
->> -                          MEMTXATTRS_UNSPECIFIED);
->> +    ret = dma_memory_read(cfg->as, addr, buf, sizeof(*buf), cfg->txattrs);
->>       if (ret != MEMTX_OK) {
->>           qemu_log_mask(LOG_GUEST_ERROR,
->>                         "Cannot fetch pte at address=0x%"PRIx64"\n", addr);
->> @@ -639,18 +637,19 @@ bad_ste:
->>    * @sid: stream ID
->>    * @ste: returned stream table entry
->>    * @event: handle to an event info
->> + * @cfg: translation configuration cache
->>    *
->>    * Supports linear and 2-level stream table
->>    * Return 0 on success, -EINVAL otherwise
->>    */
->>   static int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste,
->> -                         SMMUEventInfo *event)
->> +                         SMMUEventInfo *event, SMMUTransCfg *cfg)
->>   {
->>       dma_addr_t addr, strtab_base;
->>       uint32_t log2size;
->>       int strtab_size_shift;
->>       int ret;
->> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
->> +    SMMUSecSID sec_sid = cfg->sec_sid;
->>       SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
->>   
->>       trace_smmuv3_find_ste(sid, bank->features, bank->sid_split);
->> @@ -678,8 +677,8 @@ static int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste,
->>           l2_ste_offset = sid & ((1 << bank->sid_split) - 1);
->>           l1ptr = (dma_addr_t)(strtab_base + l1_ste_offset * sizeof(l1std));
->>           /* TODO: guarantee 64-bit single-copy atomicity */
->> -        ret = dma_memory_read(&address_space_memory, l1ptr, &l1std,
->> -                              sizeof(l1std), MEMTXATTRS_UNSPECIFIED);
->> +        ret = dma_memory_read(cfg->as, l1ptr, &l1std, sizeof(l1std),
->> +                              cfg->txattrs);
->>           if (ret != MEMTX_OK) {
->>               qemu_log_mask(LOG_GUEST_ERROR,
->>                             "Could not read L1PTR at 0X%"PRIx64"\n", l1ptr);
->> @@ -721,7 +720,7 @@ static int smmu_find_ste(SMMUv3State *s, uint32_t sid, STE *ste,
->>           addr = strtab_base + sid * sizeof(*ste);
->>       }
->>   
->> -    if (smmu_get_ste(s, addr, ste, event)) {
->> +    if (smmu_get_ste(s, addr, ste, event, cfg)) {
->>           return -EINVAL;
->>       }
->>   
->> @@ -850,7 +849,7 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
->>       /* ASID defaults to -1 (if s1 is not supported). */
->>       cfg->asid = -1;
->>   
->> -    ret = smmu_find_ste(s, sid, &ste, event);
->> +    ret = smmu_find_ste(s, sid, &ste, event, cfg);
->>       if (ret) {
->>           return ret;
->>       }
->> @@ -884,7 +883,8 @@ static int smmuv3_decode_config(IOMMUMemoryRegion *mr, SMMUTransCfg *cfg,
->>    * decoding under the form of an SMMUTransCfg struct. The hash table is indexed
->>    * by the SMMUDevice handle.
->>    */
->> -static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event)
->> +static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event,
->> +                                       SMMUSecSID sec_sid)
->>   {
->>       SMMUv3State *s = sdev->smmu;
->>       SMMUState *bc = &s->smmu_state;
->> @@ -904,7 +904,15 @@ static SMMUTransCfg *smmuv3_get_config(SMMUDevice *sdev, SMMUEventInfo *event)
->>                               100 * sdev->cfg_cache_hits /
->>                               (sdev->cfg_cache_hits + sdev->cfg_cache_misses));
->>           cfg = g_new0(SMMUTransCfg, 1);
->> -        cfg->sec_sid = SMMU_SEC_SID_NS;
->> +        cfg->sec_sid = sec_sid;
->> +        cfg->txattrs = smmu_get_txattrs(sec_sid);
->> +        cfg->as = smmu_get_address_space(sec_sid);
->> +        if (!cfg->as) {
->> +            /* Can't get AddressSpace, free cfg and return. */
->> +            g_free(cfg);
->> +            cfg = NULL;
->> +            return cfg;
-> don't you want to report an error in that case. Which type?
+I wouldn't say vfio_user_recv_one() is nice to read ...
 
-Thanks for your review!
+>           /* else fall into reading another msg */
+>       }
+>   
+> -    /*
+> -     * Read header
+> -     */
+> -    ret = qio_channel_readv_full(proxy->ioc, &iov, 1, &fdp, &numfds, 0,
+> -                                 errp);
+> -    if (ret == QIO_CHANNEL_ERR_BLOCK) {
+> -        return ret;
+> -    }
+> -
+> -    /* read error or other side closed connection */
+> -    if (ret <= 0) {
+> -        goto fatal;
+> -    }
+> -
+> -    if (ret < sizeof(hdr)) {
+> -        error_setg(errp, "short read of header");
+> -        goto fatal;
+> -    }
+> -
+> -    /*
+> -     * Validate header
+> -     */
+> -    if (hdr.size < sizeof(VFIOUserHdr)) {
+> -        error_setg(errp, "bad header size");
+> -        goto fatal;
+> -    }
+> -    switch (hdr.flags & VFIO_USER_TYPE) {
+> -    case VFIO_USER_REQUEST:
+> -        isreply = false;
+> -        break;
+> -    case VFIO_USER_REPLY:
+> -        isreply = true;
+> -        break;
+> -    default:
+> -        error_setg(errp, "unknown message type");
+> +    ret = vfio_user_recv_hdr(proxy, errp, &hdr, &fdp, &numfds, &isreply);
+> +    if (ret < 0) {
+> +        if (ret == QIO_CHANNEL_ERR_BLOCK) {
+> +            return ret;
 
-Honestly I’m not actually sure there is an architecturally correct event 
-type for this case.
+OK. That's how the goto fatal is avoided.
 
-Here smmu_get_address_space(sec_sid) returning NULL means the machine 
-didn’t provide an AddressSpace for SMMU-originated DMA in that security 
-context, which feels like a QEMU board/integration bug rather than 
-something the SMMU spec defines an event for (the existing events are 
-all driven by STE/CD and transaction attributes). Synthesizing something 
-like F_STREAM_DISABLED would therefore be misleading from the guest’s 
-point of view.
+> +        }
+>           goto fatal;
+>       }
+> -    trace_vfio_user_recv_hdr(proxy->sockname, hdr.id, hdr.command, hdr.size,
+> -                             hdr.flags);
+>   
+>       /*
+>        * For replies, find the matching pending request.
+Looks ok to me.
 
-Maybe we could use g_assert() hard failure here? But I also look forward 
-to different opinions.
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Yours,
+Thanks,
 
-Tao
+C.
+
+
 
 
