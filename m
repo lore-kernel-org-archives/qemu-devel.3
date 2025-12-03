@@ -4,90 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF05D12D50
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 13:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C3D0D12D5F
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 13:16:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQmbG-0002yl-S3; Wed, 03 Dec 2025 08:08:54 -0500
+	id 1vQmhb-0005zi-3j; Wed, 03 Dec 2025 08:15:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vQmbF-0002yc-KI
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 08:08:53 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vQmbD-0000HX-BB
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 08:08:53 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-42b3b0d76fcso4406726f8f.3
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 05:08:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764767329; x=1765372129; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yKRAQovvaI+/XnwttJqWqWC3SBPD0B4UsXTxV0X3LhY=;
- b=flR8/Da2j3Zh0Utgjmo5eg0jmDfIHGE2xdzsYeZmprH4R3iyZG0KvebglRVMsQeyyQ
- hJ8mZdlWysmKAv+osgPlKSGy+b/2GgnHw903FR3p9qbe5zhcXDniKouzFISRLBop0UE6
- KQMv2EHFblDFH3tHC2+gtiiDrfYuSfU+wnvT1CcEQBAzQeMGgrhksuZjgQ+F2iKPHEv1
- LpROtNZrzL/K/PdeiPK8kBWGX2jeRSTM+IMbK+/k3B5S5K+69n2EB9XaNbHnsoXwLK+9
- w1gBD0ZllGHgvZ4Nl5xMUkw50fAdCgnurpKaRNx5/Hr2nqSHpPxk3UgF6I6d/uPN/R0w
- w3zQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764767329; x=1765372129;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yKRAQovvaI+/XnwttJqWqWC3SBPD0B4UsXTxV0X3LhY=;
- b=pwjFRO73hOlxJrBC/L8ADb8pnc3200MRsK3jRrNlRl4cPoPoKtfdbUHIP6Jzd9wDtE
- O4++CFCXSGmghmP/aM8B754eP8Um7MVJySU/UqIcQ1chSvf0SllIF5PvrlNLjH9Au+ix
- jJQzxNFXHs69zLIIGLhBETqWEA2RwalJQVwUw8GNwyF9UIAnvgIX8PQI//t3AXyYhJwN
- ABIdaRZy8U+0G6Gbr6NWfmQ16svZTOPbS8BnNqwz7VGn9v+sJfQx4gc2ykSi4FjnH1rI
- 8wVfuxlLl14WCczp2Jn4N6ADGtYXTQ9r5ScDyyUOmKAOgri4sZzn19SnlwarPg6TZ9Kw
- Kotg==
-X-Gm-Message-State: AOJu0YxW9vu9TUAw24akx4a39I6SPHdKWx0t1FSaeGJ6HFmRK8/9SQPC
- qudQ1ERq/zhntACnDbsTTX1pyj85w5xKROpGOFNNogTpW2CuDAJVVo1EcG7Iucyg+IY=
-X-Gm-Gg: ASbGncvKz9e9QwUKZ8tqIC3uPvrBKMd6g1qSv82vewgTvpyiWaqUlcIORcsNE5Mfhau
- fc/x4QQDZExd0gStnzXC2GCOr6PeEVgoVaB2RuRVry1U3hYQ95K482m0yp1jjXSX08ua6+UEnaH
- XfemgtdHIUZTwkHgnL7jyuG5uZ2SIJVedc1f5kffvF6XsRPbjrDy94Vavm7B9CdoXeaxnzUDLLc
- ztHUBYK5CpNXtEs3HDbBZJlNZGFZFA585naBHWqA2tFQQIGz24BL64DsNdHWeYUOrHwqy2AsvKk
- WJVj9vQwi2M3XeFrvItV7je+Jzl7jwyv6olUQJv6GgCDzcoEibrJg/4R/PHuwZBlyocycoXUjUH
- beuzhRO12C3R/3PGR+JY5LcodtWZIDavpv7CA2WzlsHDps/+eLLblKw/iWy7bHR0A3D9Cdhi1fz
- +pS/5XkQ/x55g=
-X-Google-Smtp-Source: AGHT+IEVt2uYKglnaWvxqM6QwWHo3cUPY2zZ4MpwiWzwL5/QoI4EQl+eSa1uhfBMcc2uwnmOmZ5Jfg==
-X-Received: by 2002:a05:6000:25c2:b0:42b:2a09:2e55 with SMTP id
- ffacd0b85a97d-42f73105c6emr2436821f8f.0.1764767329164; 
- Wed, 03 Dec 2025 05:08:49 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42e1c5d6133sm42417811f8f.16.2025.12.03.05.08.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Dec 2025 05:08:48 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A03F55F7B3;
- Wed, 03 Dec 2025 13:08:47 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: AlanoSong@163.com
-Cc: qemu-devel@nongnu.org,  berrange@redhat.com
-Subject: Re: [PATCH 1/2] docs/devel: Correct typo
-In-Reply-To: <20251202131934.17324-1-AlanoSong@163.com> (AlanoSong@163.com's
- message of "Tue, 2 Dec 2025 21:19:34 +0800")
-References: <20251202131934.17324-1-AlanoSong@163.com>
-User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Wed, 03 Dec 2025 13:08:47 +0000
-Message-ID: <87fr9ru2zk.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>)
+ id 1vQmhZ-0005w8-G1; Wed, 03 Dec 2025 08:15:25 -0500
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>)
+ id 1vQmhX-0001MK-LX; Wed, 03 Dec 2025 08:15:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
+ :Subject; bh=pBE9nwi6TppjSeUttbju5Apd99/M9N3r+cNvcFRlW5k=; b=U4pETs9AkiJVVa7Q
+ IQv7+PDpN3be4tM4AtZ9Xg2gpqL7X7PSxt/fqogVmAU/TJILQC/XVZ8PKAHQCkDhQtCXwAXS6LFJ5
+ 1j2KA3ZteRkaoZ/HNU/VmmyJ7Ny7YYSGkgugIkHDN95X3GFkB8h6LHUPo/9s7pgCpk3yWD7hgPeY2
+ L2mmlYKc5DnYQWKmeK1FJrpmAy3Nhw4WoOTpsrkAk8WQP6+Y1Y1KSfkVJ+v+/97p9eHSyTgtGd7u4
+ MRRUGUtD/ACo6miEgzj+1C2YkRKc7DNv+ZLY68IlP9T52pQKK/iuGh+QOrk7hVsm/n0Fwvvr46N5a
+ 9gCwVKlr8pmlKoHSyw==;
+Received: from localhost ([127.0.0.1] helo=dalek)
+ by mx.treblig.org with esmtp (Exim 4.98.2)
+ (envelope-from <dave@treblig.org>) id 1vQmhS-00000007qGj-0KZf;
+ Wed, 03 Dec 2025 13:15:18 +0000
+From: dave@treblig.org
+To: qemu-trivial@nongnu.org, mjt@tls.msk.ru, laurent@vivier.eu,
+ thuth@redhat.com, pbonzini@redhat.com
+Cc: jak@jak-linux.org, qemu-devel@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH] qemu-options.hx: Document -M as -machine alias
+Date: Wed,  3 Dec 2025 13:15:11 +0000
+Message-ID: <20251203131511.153460-1-dave@treblig.org>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dave@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,13 +65,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AlanoSong@163.com writes:
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-> Correct typo in atomics.rst
+-M is used heavily in documentation and scripts, but isn't actually
+documented anywhere.
+Document it as equivalent to -machine.
 
-Queued to for-10.2/final-fixes, thanks.
+Reported-by: Julian Andres Klode <jak@jak-linux.org>
+Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+---
+ qemu-options.hx | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/qemu-options.hx b/qemu-options.hx
+index fca2b7bc74..ec92723f10 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -44,6 +44,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
+ #endif
+     "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
+     "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
++    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n"
+     "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
+     QEMU_ARCH_ALL)
+ SRST
+@@ -179,6 +180,9 @@ SRST
+ 
+             -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
+ 
++    ``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
++        Define an SGX EPC section.
++
+     ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
+         Define cache properties for SMP system.
+ 
+@@ -208,12 +212,10 @@ SRST
+ ERST
+ 
+ DEF("M", HAS_ARG, QEMU_OPTION_M,
+-    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n",
+-    QEMU_ARCH_ALL)
+-
++    "-M              as -machine\n", QEMU_ARCH_ALL)
+ SRST
+-``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
+-    Define an SGX EPC section.
++``-M``
++    as -machine.
+ ERST
+ 
+ DEF("cpu", HAS_ARG, QEMU_OPTION_cpu,
+-- 
+2.52.0
+
 
