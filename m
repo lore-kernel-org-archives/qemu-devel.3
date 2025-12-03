@@ -4,31 +4,31 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7374ED15D86
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 15:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71230D12690
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 15:32:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQomS-0007BE-6E; Wed, 03 Dec 2025 10:28:36 -0500
+	id 1vQoq9-0000Bl-JJ; Wed, 03 Dec 2025 10:32:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQomP-0007A6-Mr; Wed, 03 Dec 2025 10:28:33 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ id 1vQoq8-0000AG-6x; Wed, 03 Dec 2025 10:32:24 -0500
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vQomN-0003lV-HG; Wed, 03 Dec 2025 10:28:33 -0500
+ id 1vQoq6-0004bE-CA; Wed, 03 Dec 2025 10:32:23 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDX31MYVzBplfcrAQ--.57783S2;
- Wed, 03 Dec 2025 23:28:24 +0800 (CST)
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwAXHJgCWDBpxF35Ag--.309S2;
+ Wed, 03 Dec 2025 23:32:18 +0800 (CST)
 Received: from [192.168.31.152] (unknown [113.246.234.131])
- by mail (Coremail) with SMTP id AQAAfwCX8O0XVzBpaVQJAA--.18357S2;
- Wed, 03 Dec 2025 23:28:23 +0800 (CST)
-Message-ID: <2b350edb-8637-474a-80ab-9f8e5ce3ea74@phytium.com.cn>
-Date: Wed, 3 Dec 2025 23:28:22 +0800
+ by mail (Coremail) with SMTP id AQAAfwDnP+0BWDBpgVQJAA--.3606S2;
+ Wed, 03 Dec 2025 23:32:17 +0800 (CST)
+Message-ID: <4636f0d5-cdf2-4900-b43e-020fc3a45df3@phytium.com.cn>
+Date: Wed, 3 Dec 2025 23:32:17 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 13/21] hw/arm/smmuv3: Tag IOTLB cache keys with SEC_SID
+Subject: Re: [RFC v3 14/21] hw/arm/smmuv3: Add access checks for MMIO registers
 To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Chen Baozi <chenbaozi@phytium.com.cn>,
@@ -37,31 +37,31 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Jean-Philippe Brucker <jean-philippe@linaro.org>,
  Mostafa Saleh <smostafa@google.com>
 References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012151244.4129572-1-tangtao1634@phytium.com.cn>
- <1798040a-dd6c-4f6d-b03b-8e2e96b7cf55@redhat.com>
+ <20251012151303.4129730-1-tangtao1634@phytium.com.cn>
+ <b5e2e404-1067-4ea2-bede-deaf692b2973@redhat.com>
 From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <1798040a-dd6c-4f6d-b03b-8e2e96b7cf55@redhat.com>
+In-Reply-To: <b5e2e404-1067-4ea2-bede-deaf692b2973@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCX8O0XVzBpaVQJAA--.18357S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWkvSDQGnQAEss
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: AQAAfwDnP+0BWDBpgVQJAA--.3606S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQANBWkvSDQGnQAFst
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxCF4rZrWDXryruFW8CFyDZFb_yoWrCryDpF
- WktF4Yyr4vyF17Zrn3uF17Z3ZIvw1kWryUJr43Wr95tas5trykXF4vkayFkrZrZry8Jrs2
- va4vqr45GF13WrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxAr4DZFW8Cr1xZryxKFW3Wrg_yoW5Jw4fpw
+ 1fJ3ZI9F4DJ3WxJ3Way3WjqF15G397Kr17tr47Gr18Zw1jvr1rtF4UKr4FgFyDWryUAw48
+ ZF1jgFnxur1qy3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
+Received-SPF: pass client-ip=162.243.164.118;
  envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,119 +77,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
 
-On 2025/12/3 00:08, Eric Auger wrote:
+On 2025/12/3 00:31, Eric Auger wrote:
 > Hi Tao,
 >
-> On 10/12/25 5:12 PM, Tao Tang wrote:
->> To prevent aliasing between secure and non-secure translations for the
->> same address space, the IOTLB lookup key must incorporate the security
->> state of the transaction. This commit expands SMMUIOTLBKey with the
->> SEC_SID, plumbs the new argument through common helpers, and ensures
->> that secure and non-secure TLB entries are treated as distinct
->> entities within the cache.
+> On 10/12/25 5:13 PM, Tao Tang wrote:
+>> The SMMUv3 model was missing checks for register accessibility under
+>> certain conditions. This allowed guest software to write to registers
+>> like STRTAB_BASE when they should be read-only, or read from
+>> GERROR_IRQ_CFG registers when they should be RES0.
 >>
->> As a final step, this patch ensures the target address space
->> (target_as) from a cached IOTLB entry is correctly propagated to the
->> final translation result. Previously, the result defaulted to the
->> non-secure address space, nullifying the benefits of the
->> security-aware cache key.
+>> This patch fixes this by introducing helper functions, such as the
+>> smmu_(reg_name)_writable pattern, to encapsulate the architectural
+>> access rules. In addition, writes to registers like STRTAB_BASE,
+>> queue bases, and IRQ configurations are now masked to correctly
+>> handle reserved bits.
 >>
->> This change provides robust management for secure TLB entries,
->> preventing TLB pollution between security worlds and allowing for proper
->> initialization by secure software.
+>> The MMIO handlers are updated to call these functions before accessing
+>> registers. To purely fix the missing checks without introducing new
+>> functionality, the security context in the MMIO handlers is explicitly
+>> fixed to Non-secure. This ensures that the scope of this patch is
+>> limited to fixing existing Non-secure logic.
 >>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn
+>> If a register is not accessible, the access is now correctly handled
+>> and a guest error is logged, bringing the model's behavior in line with
+>> the specification.
+>>
+>> Fixes: fae4be38b35d ("hw/arm/smmuv3: Implement MMIO write operations")
+>> Fixes: 10a83cb9887e ("hw/arm/smmuv3: Skeleton")
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
 >> ---
->>   hw/arm/smmu-common.c         | 25 ++++++++++++---------
->>   hw/arm/smmuv3.c              | 42 +++++++++++++++++++++---------------
->>   hw/arm/trace-events          |  2 +-
->>   include/hw/arm/smmu-common.h |  9 +++++---
->>   4 files changed, 47 insertions(+), 31 deletions(-)
+>>   hw/arm/smmuv3.c | 304 +++++++++++++++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 298 insertions(+), 6 deletions(-)
 >>
->> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->> index a092bb5a8d..4131a31ae0 100644
->> --- a/hw/arm/smmu-common.c
->> +++ b/hw/arm/smmu-common.c
->> @@ -86,7 +86,7 @@ static guint smmu_iotlb_key_hash(gconstpointer v)
->>   
->>       /* Jenkins hash */
->>       a = b = c = JHASH_INITVAL + sizeof(*key);
->> -    a += key->asid + key->vmid + key->level + key->tg;
->> +    a += key->asid + key->vmid + key->level + key->tg + key->sec_sid;
->>       b += extract64(key->iova, 0, 32);
->>       c += extract64(key->iova, 32, 32);
->>   
->> @@ -102,14 +102,15 @@ static gboolean smmu_iotlb_key_equal(gconstpointer v1, gconstpointer v2)
->>   
->>       return (k1->asid == k2->asid) && (k1->iova == k2->iova) &&
->>              (k1->level == k2->level) && (k1->tg == k2->tg) &&
->> -           (k1->vmid == k2->vmid);
->> +           (k1->vmid == k2->vmid) && (k1->sec_sid == k2->sec_sid);
->>   }
->>   
->>   SMMUIOTLBKey smmu_get_iotlb_key(int asid, int vmid, uint64_t iova,
->> -                                uint8_t tg, uint8_t level)
->> +                                uint8_t tg, uint8_t level,
->> +                                SMMUSecSID sec_sid)
->>   {
->>       SMMUIOTLBKey key = {.asid = asid, .vmid = vmid, .iova = iova,
->> -                        .tg = tg, .level = level};
->> +                        .tg = tg, .level = level, .sec_sid = sec_sid};
->>   
->>       return key;
->>   }
->> @@ -131,7 +132,7 @@ static SMMUTLBEntry *smmu_iotlb_lookup_all_levels(SMMUState *bs,
->>           SMMUIOTLBKey key;
->>   
->>           key = smmu_get_iotlb_key(cfg->asid, cfg->s2cfg.vmid,
->> -                                 iova & ~mask, tg, level);
->> +                                 iova & ~mask, tg, level, cfg->sec_sid);
->>           entry = g_hash_table_lookup(bs->iotlb, &key);
->>           if (entry) {
->>               break;
->> @@ -195,7 +196,7 @@ void smmu_iotlb_insert(SMMUState *bs, SMMUTransCfg *cfg, SMMUTLBEntry *new)
+>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>> index f9395c3821..f161dd3eff 100644
+>> --- a/hw/arm/smmuv3.c
+>> +++ b/hw/arm/smmuv3.c
+>> @@ -1321,6 +1321,127 @@ static void smmuv3_range_inval(SMMUState *s, Cmd *cmd, SMMUStage stage,
 >>       }
->>   
->>       *key = smmu_get_iotlb_key(cfg->asid, cfg->s2cfg.vmid, new->entry.iova,
->> -                              tg, new->level);
->> +                              tg, new->level, cfg->sec_sid);
->>       trace_smmu_iotlb_insert(cfg->asid, cfg->s2cfg.vmid, new->entry.iova,
->>                               tg, new->level);
->>       g_hash_table_insert(bs->iotlb, key, new);
->> @@ -314,13 +315,15 @@ void smmu_configs_inv_sdev(SMMUState *s, SMMUDevice *sdev)
->>   }
->>   
->>   void smmu_iotlb_inv_iova(SMMUState *s, int asid, int vmid, dma_addr_t iova,
->> -                         uint8_t tg, uint64_t num_pages, uint8_t ttl)
->> +                         uint8_t tg, uint64_t num_pages, uint8_t ttl,
->> +                         SMMUSecSID sec_sid)
->>   {
->>       /* if tg is not set we use 4KB range invalidation */
->>       uint8_t granule = tg ? tg * 2 + 10 : 12;
->>   
->>       if (ttl && (num_pages == 1) && (asid >= 0)) {
->> -        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, iova, tg, ttl);
->> +        SMMUIOTLBKey key = smmu_get_iotlb_key(asid, vmid, iova,
->> +                                              tg, ttl, sec_sid);
-> what about the other invalidation commands?
+>> ------------------------------<snip>------------------------------
+>>
+>>
+>>
+>> ------------------------------<snip>------------------------------
+>> +
+>>           bank->gerror_irq_cfg1 = data;
+>>           return MEMTX_OK;
+>>       case A_GERROR_IRQ_CFG2:
+>> @@ -1644,12 +1824,32 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
+>>           }
+>>           return MEMTX_OK;
+>>       case A_STRTAB_BASE: /* 64b */
+>> +        if (!smmu_strtab_base_writable(s, reg_sec_sid)) {
+> would you mind splitting this patch into 2, changes related to
 >
-> I see CMD_TLBI_NH_ASID(VMID, ASID), NH_ALL are selective depending on
-> the cmd queue it is issued from?
->
-> Thanks
+> smmu_gerror_irq_cfg_writable and changes related to smmu_strtab_base_writable if confirmed they are effectively independent on each others
 >
 > Eric
->
-
-Thanks for the pointer. I’m going to extend the security-state plumbing 
-you highlighted so that all TLBI commands honor the queue’s security 
-domain in the next version, refactoring relative smmu_iotlb_inv_* and 
-smmu_hash_* functions for example.
 
 
-Thanks,
+Sure. I'll split it in V4. Thanks for your suggestion.
 
 Tao
 
