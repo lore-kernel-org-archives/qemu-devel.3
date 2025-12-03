@@ -4,84 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F5FD1266D
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 07:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC56ED1266D
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 07:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQgq7-0001VR-AI; Wed, 03 Dec 2025 01:59:51 -0500
+	id 1vQgsB-0002VB-EJ; Wed, 03 Dec 2025 02:01:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQgpy-0001Ov-GB
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:59:43 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQgru-0002K7-KW
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 02:01:46 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQgpw-0001T4-RQ
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 01:59:42 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-477aa218f20so43708545e9.0
- for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 22:59:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vQgrt-0001oA-3g
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 02:01:42 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-42e2d5e119fso1971347f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 02 Dec 2025 23:01:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764745176; x=1765349976; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764745299; x=1765350099; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=IH6H/JAQVk1cE39zGDzQaUYfKlHp31S07r+yrJPdFtw=;
- b=us3mIs4vU9Mq7oGz4Is5fJrYcFnnBpWmgaZNsjB0WxhkRBQDpe7XltOHwuEHGZLHOu
- XQ2LcvYjjA8g2eaHE/6hnRR4sczTIaIGelIbpkNQdsKKmrrnwHRxo/KcRpmbHgPjn1vo
- ZSqhiA7o1YMeq5gKW9P86TOGDRl57mYMIZAHmVBlhWQ5oIGyteKmaY4lGlW8hUuITC4N
- B9UVdlbB59LIh0oWsJ/arepBsR++6I3XCUxGM5P2b5AjYG8q58i01MIzudqvX8RCkRJ9
- HEJEqV56UpHM8t9UAU2cIKV7MY/MrUg5vpGIghLqfhw836eCNxpndJw25vDrGJF1qfy2
- 6LvA==
+ bh=iLegxef/YiqYKWzWPFEOA2BIUc7KYmVqjzdVrXKPuiA=;
+ b=FCzkrSu+hSxXFItoXRLA0vw2PD2AWFL/QusmA2ZFGCqpSccfUA21tarLME28MaXxYK
+ Ip3TsvXzIWzR6FQ9o7dI6sHeqNC6pFe7sEGla7bUZ5PHNYmksOqAsbZ2CrZ1YNe3YZWn
+ S8dylEV3P3DOg0+2mt6SxI5h/4oVGufnDN1mgcaJqTL6cJ60BCuOfXzsOQwtJcNIu2An
+ VueCv+SFYj9baUFqamxpa51Cm2Eh5wVqcPXkp25o4KzUJeLMl2AavAyBoAXgHt9RW90C
+ BA3rewq61YWkZq70jTrVFToRulrODYimHuY3DAlxJmb1GOV+myXqth8yaICSmh/ZrmHA
+ Ms6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764745176; x=1765349976;
+ d=1e100.net; s=20230601; t=1764745299; x=1765350099;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=IH6H/JAQVk1cE39zGDzQaUYfKlHp31S07r+yrJPdFtw=;
- b=juSUaXtcxeznZ6rjitil21tNSCpNpegq4eUnD/BQTvJydjZ/IpqeShEznyVIxhafFb
- LYHQkEeZl1wz5MO81TPIxCOVxgUA3UkJ/LVv4+7fIXFlIcgwKfEbfGJ3BoSGcEk9FyDJ
- k6SD8yWhznlphgDGxKIrlmBLa76czlf1F3cqGgL/TN+33EwdVbCUHRdDyDSUuSUbDKgd
- ayxYj0SV/ycfpMpO5xqz5zxmthEReKLTyE4i29xWAi1CCw+MilVB/enjcTf8QjKd5QSR
- cq12aazlLTWZxKxP8B4rok9erEjGOP+iPFVfIkOccjLsI5lB8TTkOxUfdy99HVd8DrEU
- J5MA==
+ bh=iLegxef/YiqYKWzWPFEOA2BIUc7KYmVqjzdVrXKPuiA=;
+ b=ByVnlp44y9q0JRiqvE1Oo/BshbTOuK8iHegrgZXx4R2DqY3LwbQWORhstV2SIbvTEe
+ pnZEs9wSi50C9LBSC+z4X2o5Gwq8C9TL7AeDe1XPvIaNyWq9Wc+v+8RxmLdp+P+NEbhu
+ tBqnppExMVilgjqQ7BGQh7NLzdJqSr5J+Ouz4NpSwwrm4zQGvsBT3SwY1LTuGiX23bVh
+ M0vUFR1Eae9vELjhj7zPSQU+Gz6i6ObaZYkJhLeQXlIpgnFOEHBj/8ytp1WNhcx2uT2b
+ 4zp5pdef0EOfM9Pq/X9PZz5Uxf/utHVWtwcqEWJTIUhPnHKFtYd6Q4ZufOQpZzuzHrf0
+ aQwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFrPbAqGSOmYZw90z8JiNVzwxE/gO31xtLzAjadV9+RwYitNXtc4SyI2L+YSh95pw6IYKal2xgDlGl@nongnu.org
-X-Gm-Message-State: AOJu0Yxc2UxUMm4CXwfB2hsediXuc5yVFgvemT9UyrTgY9wEEYnUWtAV
- 76/RZKnl5roT8yyVfrg0koDnr0QZ1K6Yw7fqD9CyrPyJYM4qasTFc+sE/4F9NF/90rk=
-X-Gm-Gg: ASbGnctc7lSrqw7tA9RjtbaQ4JNwI/LWHcfN8jtGLDrXPSoh9wO39dI+6n537VuvMiX
- +SOGUqe/58un1bXBHlqtyTXZTyC73uWuzZFu77LGZ+7cGUnMnC7aSvujkoSAuQlHPBLIFWOfVOr
- oVPbOQ/hLk9ZL5fA5+Y9DJPl6ptZ5q10ubf7GqLgPfBEO44ZesBJIdSESiQYhxaSGa88BVPBaSd
- Wpu+Vo1A0XgtVDqXVXnxQa2A/KDcQhEl1HHB6kGIsu0KIyIYmNdZ0yJEU/yyINOzBOR6dkudIn5
- vAL0xjBs4w/V4ovz7pbb12ta+GOd7RWCh+JXTjm6rfKVSG9TKJLkQQo1feKWPRQJsQvXaQaRkwr
- ck1EsBCt/WiQq34yyGCY7i7tYi8tQ/Zwosfkx1z+tEY7e9hw8os/NOIEAN5/YPTp7irQwFlpdeD
- hvK3GnJnYYA7FCPTh/q0hTI8F3lU0hEuLCo8LWsR4aoRsaOFDIik5ZTH0gnqfWi5Tv
-X-Google-Smtp-Source: AGHT+IENt+Ug1ebDyUVrZL2J/Tpb/gfFULOzK2CRZ7YUIGUmw44XUZ1X1QKrIVAKwnTbZHVowulSfQ==
-X-Received: by 2002:a05:600c:c491:b0:477:632c:5b91 with SMTP id
- 5b1f17b1804b1-4792af30e95mr12804005e9.16.1764745176523; 
- Tue, 02 Dec 2025 22:59:36 -0800 (PST)
+ AJvYcCUj6pRQmeE5hYnZlejouuUb6yAtglDYisC8i83mq1rNu/SVSr+kRvqatw2esa+2MzJOFXnsy6gFWE7Z@nongnu.org
+X-Gm-Message-State: AOJu0YypCz0FbuFZwerj5SugJCvULPr+dlWxAN7T3coiAmPbPhA/0DVE
+ MfMwKduKH1sY5JGMZuOs+0eAgQxSq+UtuqcT9IerZmvF3RwVNMCU1ZZ7l5ceZsLGb5M=
+X-Gm-Gg: ASbGncu17uQPRPVv27vye1IcutzTtNYBjjyZHrM9ftUZgYgjKsL7LNlmUjabCPJDc6u
+ 7lVJB2e08Hcv+gI0LT3OGDFEE7x94I7E/6/I4pZDk7I1FCM+hkEZpVMXLsfP2l+ghSSJx+sgX9r
+ tvSzGXVbjmK/P60rmwOssOk5l8Y5OuOw4IANkOTXXX+BAAEh45Vyavtyj9/8zjJZ4E65a55jkXt
+ V0O4t1qZ8H3urAD0yQW4GpGTYe2GQoSCat/AtfiW/QnJq1LOSnDZLghoDRKOPKvU1vk9K8H3fmk
+ 3zf1jFDS/3CnBsc/Mt2tsLj3xSuW0hf8rDpdYkMjX5ASSUjw+XVH5Keha/b52lOb5dVfqzyALUM
+ 0GmsCvZm4OS/U1L2rJUyLZUFnRuA3JMUsKcmAy8EaP8TjNg5pl++FotPBPzMItrVHzkqt8fXVp9
+ ir3pRxFdQ9JtkGrD5vAAufzlmpPHGuShfZEbW2HZAPqyVCt1erGggv6w==
+X-Google-Smtp-Source: AGHT+IFWayL7dZkqCSl/nVOxv4Bv/f6eF21QUbKlrnYnU7+tA8VCf5qu+N8vib84rXuH2Fw2mN1z9g==
+X-Received: by 2002:a05:6000:428a:b0:42b:2f79:755e with SMTP id
+ ffacd0b85a97d-42f7319051fmr900134f8f.3.1764745299574; 
+ Tue, 02 Dec 2025 23:01:39 -0800 (PST)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4792a79dd66sm31622355e9.6.2025.12.02.22.59.35
+ ffacd0b85a97d-42e1ca1a3e4sm37760730f8f.25.2025.12.02.23.01.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 02 Dec 2025 22:59:35 -0800 (PST)
-Message-ID: <75b1bf03-1f65-46e7-bbd2-0fa106cf8fae@linaro.org>
-Date: Wed, 3 Dec 2025 07:59:35 +0100
+ Tue, 02 Dec 2025 23:01:39 -0800 (PST)
+Message-ID: <74013c3c-c8c3-482e-8811-265dfc557fb5@linaro.org>
+Date: Wed, 3 Dec 2025 08:01:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hvf: allow slot size to increase
+Subject: Re: [PATCH-for-11.0 v6 12/13] hw/i386: Assume fw_cfg DMA is always
+ enabled
 Content-Language: en-US
-To: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org
-Cc: Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>
-References: <20251203035847.94102-1-j@getutm.app>
+To: Zhao Liu <zhao1.liu@intel.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, qemu-riscv@nongnu.org,
+ qemu-arm@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20251203060942.57851-1-philmd@linaro.org>
+ <20251203060942.57851-13-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251203035847.94102-1-j@getutm.app>
+In-Reply-To: <20251203060942.57851-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,20 +112,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Joelle,
-
-On 3/12/25 04:58, Joelle van Dyne wrote:
-> Instead of having a fixed limit of 32 slots, we allow the number of slots
-> to expand. Currently there does not seem to be a need to add a limit, but
-> if the allocation fails, we will abort. The KVM backend was used for
-> inspiration here.
+On 3/12/25 07:09, Philippe Mathieu-Daudé wrote:
+> From: Zhao Liu <zhao1.liu@intel.com>
 > 
-> Signed-off-by: Joelle van Dyne <j@getutm.app>
-> ---
->   include/system/hvf_int.h | 12 ++++++-
->   accel/hvf/hvf-all.c      | 78 ++++++++++++++++++++++++++++++----------
->   2 files changed, 71 insertions(+), 19 deletions(-)
+> Now all calls of x86 machines to fw_cfg_init_io_dma() pass DMA
+> arguments, so the FWCfgState (FWCfgIoState) created by x86 machines
+> enables DMA by default.
+> 
+> Then 'linuxboot.bin' isn't used anymore, and it will be removed in the
+> next commit.
+> 
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-See first 12 patches of:
-https://lore.kernel.org/qemu-devel/20251114200422.4280-1-philmd@linaro.org/
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/i386/fw_cfg.c     | 1 +
+>   hw/i386/x86-common.c | 6 ++----
+>   2 files changed, 3 insertions(+), 4 deletions(-)
+
 
