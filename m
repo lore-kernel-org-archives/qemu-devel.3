@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE9D3D1BDD1
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:52:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95311D1BDD0
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 18:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQrxK-0007jF-Fn; Wed, 03 Dec 2025 13:52:02 -0500
+	id 1vQrx8-0007aK-HZ; Wed, 03 Dec 2025 13:51:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vQrxD-0007bH-4E
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:55 -0500
+ id 1vQrx7-0007ZO-12
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vQrxB-00013e-2G
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:54 -0500
+ id 1vQrx5-00012n-DM
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 13:51:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764787911;
+ s=mimecast20190719; t=1764787906;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rOHEKYT4pyWLpkUTHzbPky15P6Jkd4KrLjQiaUa4++c=;
- b=IMwybbPx17hbPP+ujeXJEl0l6wgmTfhMDhJK3Klrv5XbRD3epJLMNwgGcyd+Mupvm5/6zL
- VPHLar2+0N5PRZQg9mPr+gI6DfWOx1vgvLd5e7rJboh0k4P5pKTaJIZmv9PbCTaCcQERmO
- SYFNvf3DIEhQWTGUkZ90mcHWMNRe04c=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lYzrc17+VBNLzV0q5mb2F00YL2Y2UiMTeTfct14Gr/A=;
+ b=U2uO6Fd1fs1OHkg4CwZHOD2HsgaixvixpKY99LD0/uYpBSQUlaahQCb11j1iHiLROQ9Esr
+ AyfViUrKBptLtMwBjL8U2LoPLUz3oJhzePJmE+2snlaZrpkIuhj9OPcxUYwlb46rvJrPFd
+ GarkciqVoAx33BXNP+JLDAqVbmHc6JE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-92zQ_BsePkuXFVc5gWAlOQ-1; Wed, 03 Dec 2025 13:51:50 -0500
-X-MC-Unique: 92zQ_BsePkuXFVc5gWAlOQ-1
-X-Mimecast-MFC-AGG-ID: 92zQ_BsePkuXFVc5gWAlOQ_1764787909
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-42e2e50cfaeso68933f8f.3
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 10:51:50 -0800 (PST)
+ us-mta-695-t4WpS3b2O56UkpfVIZhG3w-1; Wed, 03 Dec 2025 13:51:45 -0500
+X-MC-Unique: t4WpS3b2O56UkpfVIZhG3w-1
+X-Mimecast-MFC-AGG-ID: t4WpS3b2O56UkpfVIZhG3w_1764787904
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4779d8fd4ecso408745e9.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 10:51:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764787907; x=1765392707; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764787903; x=1765392703; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rOHEKYT4pyWLpkUTHzbPky15P6Jkd4KrLjQiaUa4++c=;
- b=JsllujVPoslRJK6cudTJAfHkPsd6iZe4/YWT0d7NRYKPyn7iwoKg+mm5/xYravaWYB
- UKvwSAhz1aF8GXExAhuCpVpdjHhbcu3mz8tJwL8xYSXGRUfGcQP/cq8jIy+578Rnqkj0
- Zrg6x//SO+EuJq6cAfZllCTHiv/MZLXwElXPLybshILdF3XgFJb7DfHRbmfzBUtN94YN
- z2beT4wnCTnwvbFp7NVx78sW+7GDDh4xMFhtrjF2XPue4sqMRXuqX0WIS3yn9V6qMz5P
- kYd4DCyamlyN3McmP/5zqSq9fs/L5p85jL/t53Q4fCKDFBqPaSv1QcmhkVTiJYgLW/VX
- TwxA==
+ bh=lYzrc17+VBNLzV0q5mb2F00YL2Y2UiMTeTfct14Gr/A=;
+ b=rCzdfGHBntCrBcnarXK/pMdhg7f9Y42vyDGz1uRXwHcOCEqPvlmYgDwIenTt4aN1QR
+ 59Lu3GCsM+BgBeXTKtad7pooMgZdL5KYzrJC3EPYpq7nIszW1+rTKFYUrOW2YUg9uTbM
+ VXqYa9rvYiaXvTASxDdJaVAuVCinnHKGmlSEYxjOcIIBnY2g5z8ekdBFXXc4rmE/asoe
+ r+UNSaeWdNpmmr/hMHh/U2zIHKSv6bntK9sBBg4j9C+VMb0ObtJrYKvl70vExW17iuLs
+ VyKR1AsUobSRX5cyeezmubfKo/eI1yl6TaCqWOx0FN22L/RkCaGSbWW2OPmrJBZch/zx
+ oX+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764787907; x=1765392707;
+ d=1e100.net; s=20230601; t=1764787903; x=1765392703;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rOHEKYT4pyWLpkUTHzbPky15P6Jkd4KrLjQiaUa4++c=;
- b=hPtuaVvx5Ti7Jm0zrtHV98uOOoadHkpRijatLZiQZHxKIBP0hnAD3+f7pOlpJfC828
- W+NgKY4fXpCkBKgVikgqm3jcgPAM0J7avc/yVu/Cz+DpqInYcw+EGadYcMj97qI7g+gc
- +HNjAcNzDAcYS7jJBOVI6hPQhVVY+Ai20WTDLAkb9nGHUpL/vU1J1/YRYOhf/6U+p/2D
- VIOOoeeylz4xrwH7T3q9znmow9Jr9WzPD2ytCXtONFCKRREDL4i0jeHz28fJBJbu4+3Y
- 92vhx58jYKHosABlZ0+Vi3XOIpTdy9RpHlvEWGgcbSDztiCGhnA3BmbBg3WFlJi7egjv
- l/OA==
-X-Gm-Message-State: AOJu0YxLavOsQ/Z7uAKCr29u+jFSv7RWKwYelN6I0+6qRsa2r1+Y6R1H
- 2uM+NXPigQqbNRG61gZAelhiZgEd/r6XsD02BLATESe6RoyVajSKIZXUtXW40qf94MvyIDI0MG4
- ObuQu4eoMDVhU/dO2Tzh832BgbCsrmdsji7EQtHNU7QOhTghm5gtjVlMfveYWuAriuSwh6tZzYH
- gtkIR2L2TdcPygYLKRB5sEoZYbNBylS6gbiAwj+OET
-X-Gm-Gg: ASbGncv35y3T4lPdTjek8WD8M5IrXOvaKHn2RHglEYPicryPt9PWQ+vn665QG6dIYPE
- ysXfEAlMpUyw/lNesnKh5u+txds3DVjJjifTv04UFh5+pPss7ScFLDk0z/lWT0CRVuuVH/aZdPW
- 7ptBkZ/bsDhexAlpUAFQICspG6l6UCwySVYQzoyzM/Td6HelWxk8IYmBRX95VC6yEwpOED0sEuA
- nvErYgWNf1+zxXeSdjXaKEoipvkAeIveUFAUCiNFAnPQNqs3I5Swpfu1ccRMmanJhrPUEWwvLBn
- fOIi4CLsXwvUDqPyKsGve2EbooOyn+o1+ipR8CpJUdmEBeRKRPLfOgJnSiXNzA2rSDWYze57Bho
- m/YBFRMTIk32tboM9P7e5GA5xPrD/GgcV0K2k+13GBUEFQHmTc9Bk+fFWta3gQZMYDRTOZFf+0D
- EgU5RB/ZZCVVrLTr8=
-X-Received: by 2002:a05:600c:4f54:b0:479:1348:c614 with SMTP id
- 5b1f17b1804b1-4792f3954f4mr1223185e9.26.1764787907160; 
- Wed, 03 Dec 2025 10:51:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHL9g7PkzdZcODNM84vuAtPVz/gXvLoexhpoolPnNGezQDDuivly5miPVsLBT6jzPSwgEwnAA==
-X-Received: by 2002:a05:600c:4f54:b0:479:1348:c614 with SMTP id
- 5b1f17b1804b1-4792f3954f4mr1222805e9.26.1764787906619; 
- Wed, 03 Dec 2025 10:51:46 -0800 (PST)
+ bh=lYzrc17+VBNLzV0q5mb2F00YL2Y2UiMTeTfct14Gr/A=;
+ b=XyXU76kDRBuz0wI6BVJ+2L+KXkahYNJaaqBHMWG6gH+aeym0Lo8Z4R/hIraFDwYFM0
+ fPJDV1KT6/tukbvREkgB9rjhQO0eqMVCt6EaAqb7Z97JNnG628SJAbLiA7sk+WNA61uE
+ w3rOYmOmFW2ulutpow6VaLCeFrMOZFnrkNUk1NSw6YzuWYHlyelXEbCpS2uLcYfDZGBJ
+ ayFRpKtI6iLPklqlzPZjJNthKl2XS8akm0g9Ua0pbKo0jVrEqvkCqCNcSy53OezrNH5v
+ BssyMZPv3a11c2wMn3G9gN8+Z+3KfJuQakqLZeY1KLlIReC5YYD11+au1kqbE9PVGBWS
+ O6sQ==
+X-Gm-Message-State: AOJu0Yw8e80RKIB4ZT7WUhHm9smFvaBEfeGX7hxqmqGd9wz/Iucn+p8p
+ 3oJLJdsUEbRn/9S4DXWsn57x/Q6KZt8WWkSUOxGjKUNExtvJ3s/Lgs6IjzkLr05td4jNYj3a2CQ
+ YIuuMTGMsuPI/3cwp9OLHmTegln21kGw4CaCmSZfzntcWT6C5hghVbfhdoC3UEZQ5FT6ZNtk6ir
+ R9KCJnOm/InXIVzOLDZAlrBcTeas/5OKMZ/wSVxYhH
+X-Gm-Gg: ASbGnctteineU1ROvt5ZVvCcThzv0OR5YYkVHswdpn2RI+STcQQad0mFLnr2Xk8pK3e
+ tThytrrkMQILafTfgCue3DcuKh8JHh/u1VM/ABD21i6RCti/EFddZaTCShIzyOs7UTf/IzhmNAz
+ oIryOPJuRuBVI73sSVIezCNYG633Tn0xW4mqg8fQ0jdq23yakA8ry72/2nPoahymfYf6xCfJcJR
+ BERpRml7W1wUarC9KTDURcAbQxLeS8C4fG31wEN10mmFHZqAVUJAjpe5IbLFmqMV8464e1rlIVJ
+ E4wfpCxDPcvT+5CGp6JBTio9pYebKNbma1uu9dAtnqb6KcdJ3Xs5mXZcbBApXBTMeKqSFkrLE1W
+ ARDj4ArprrXZi1t90ojFXKRsaAER4PMC4h484FhbPSgwiRsKV5jbGGXK8dbd7iJNjzLIDKaijHq
+ XLMiaqocitf6Eo75c=
+X-Received: by 2002:a05:600c:3151:b0:479:255f:8805 with SMTP id
+ 5b1f17b1804b1-4792eb10e97mr5419545e9.4.1764787903107; 
+ Wed, 03 Dec 2025 10:51:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHEUW3YyNCYO1y+vU8FGieudGnHLDk3S+naLY15jST1X+p4ScQlx0j3qj8vrpuk+71/KgvmLg==
+X-Received: by 2002:a05:600c:3151:b0:479:255f:8805 with SMTP id
+ 5b1f17b1804b1-4792eb10e97mr5419265e9.4.1764787902688; 
+ Wed, 03 Dec 2025 10:51:42 -0800 (PST)
 Received: from [192.168.10.48] ([176.206.119.13])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4792a8ccbfesm63249675e9.13.2025.12.03.10.51.45
+ 5b1f17b1804b1-4792b02e7fbsm21794075e9.2.2025.12.03.10.51.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 03 Dec 2025 10:51:46 -0800 (PST)
+ Wed, 03 Dec 2025 10:51:41 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org,
 	kwolf@redhat.omc
-Subject: [PATCH 5/5] block: rename block/aio-wait.h to qemu/aio-wait.h
-Date: Wed,  3 Dec 2025 19:51:33 +0100
-Message-ID: <20251203185133.2458207-6-pbonzini@redhat.com>
+Subject: [PATCH 3/5] block: reduce files included by block/aio.h
+Date: Wed,  3 Dec 2025 19:51:31 +0100
+Message-ID: <20251203185133.2458207-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203185133.2458207-1-pbonzini@redhat.com>
 References: <20251203185133.2458207-1-pbonzini@redhat.com>
@@ -123,187 +123,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AIO_WAIT_WHILE is used even outside the block layer; move the header file
-out of block/ just like the implementation is in util/.
+Avoid including all of qdev everywhere (the hw/core/qdev.h header in fact
+brings in a lot more headers too), instead declare a couple structs for
+which only a pointer type is needed.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- MAINTAINERS                        | 2 +-
- include/block/block-io.h           | 2 +-
- include/{block => qemu}/aio-wait.h | 0
- block/io.c                         | 2 +-
- blockjob.c                         | 2 +-
- io/channel.c                       | 2 +-
- job.c                              | 2 +-
- net/colo-compare.c                 | 2 +-
- net/filter-mirror.c                | 2 +-
- util/aio-wait.c                    | 2 +-
- util/vhost-user-server.c           | 2 +-
- hw/display/apple-gfx-mmio.m        | 2 +-
- hw/display/apple-gfx.m             | 2 +-
- 13 files changed, 12 insertions(+), 12 deletions(-)
- rename include/{block => qemu}/aio-wait.h (100%)
+ include/block/aio.h                |  7 +++----
+ include/block/block-copy.h         |  1 +
+ include/block/block-global-state.h |  1 +
+ include/block/block-io.h           |  1 +
+ include/block/dirty-bitmap.h       |  1 +
+ include/hw/core/qdev.h             |  6 +-----
+ include/qemu/job.h                 |  1 +
+ include/qemu/main-loop.h           |  2 +-
+ include/qemu/mem-reentrancy.h      | 10 ++++++++++
+ net/net.c                          |  1 +
+ util/async.c                       |  1 +
+ 11 files changed, 22 insertions(+), 10 deletions(-)
+ create mode 100644 include/qemu/mem-reentrancy.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 24cf2946e77..4582c5f72a9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3072,7 +3072,7 @@ F: util/defer-call.c
- F: util/fdmon-*.c
- F: block/io.c
- F: include/qemu/aio.h
--F: include/block/aio-wait.h
-+F: include/qemu/aio-wait.h
- F: include/qemu/defer-call.h
- F: scripts/qemugdb/aio.py
- F: tests/unit/test-fdmon-epoll.c
-diff --git a/include/block/block-io.h b/include/block/block-io.h
-index 7925e2241e6..d34d846bb2a 100644
---- a/include/block/block-io.h
-+++ b/include/block/block-io.h
-@@ -25,7 +25,7 @@
- #define BLOCK_IO_H
+diff --git a/include/block/aio.h b/include/block/aio.h
+index 59c56d695ee..8cca2360d1a 100644
+--- a/include/block/aio.h
++++ b/include/block/aio.h
+@@ -23,9 +23,8 @@
+ #include "qemu/lockcnt.h"
+ #include "qemu/thread.h"
+ #include "qemu/timer.h"
+-#include "block/graph-lock.h"
+-#include "hw/core/qdev.h"
+ 
++struct MemReentrancyGuard;
+ 
+ typedef struct AioHandler AioHandler;
+ typedef QLIST_HEAD(, AioHandler) AioHandlerList;
+@@ -211,7 +210,7 @@ struct AioContext {
+      * of nodes and edges from block graph while some
+      * other thread is traversing it.
+      */
+-    BdrvGraphRWlock *bdrv_graph;
++    struct BdrvGraphRWlock *bdrv_graph;
+ 
+     /* The list of registered AIO handlers.  Protected by ctx->list_lock. */
+     AioHandlerList aio_handlers;
+@@ -393,7 +392,7 @@ void aio_bh_schedule_oneshot_full(AioContext *ctx, QEMUBHFunc *cb, void *opaque,
+  * device-reentrancy issues
+  */
+ QEMUBH *aio_bh_new_full(AioContext *ctx, QEMUBHFunc *cb, void *opaque,
+-                        const char *name, MemReentrancyGuard *reentrancy_guard);
++                        const char *name, struct MemReentrancyGuard *reentrancy_guard);
+ 
+ /**
+  * aio_bh_new: Allocate a new bottom half structure
+diff --git a/include/block/block-copy.h b/include/block/block-copy.h
+index dd5cc82f3b2..0df2771181b 100644
+--- a/include/block/block-copy.h
++++ b/include/block/block-copy.h
+@@ -16,6 +16,7 @@
+ #define BLOCK_COPY_H
+ 
+ #include "block/block-common.h"
++#include "block/graph-lock.h"
+ #include "qemu/progress_meter.h"
+ 
+ /* All APIs are thread-safe */
+diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
+index c2127f17249..ed89999f0fb 100644
+--- a/include/block/block-global-state.h
++++ b/include/block/block-global-state.h
+@@ -25,6 +25,7 @@
+ #define BLOCK_GLOBAL_STATE_H
  
  #include "qemu/aiocb.h"
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
++#include "block/graph-lock.h"
  #include "block/block-common.h"
- #include "block/graph-lock.h"
  #include "qemu/coroutine.h"
-diff --git a/include/block/aio-wait.h b/include/qemu/aio-wait.h
-similarity index 100%
-rename from include/block/aio-wait.h
-rename to include/qemu/aio-wait.h
-diff --git a/block/io.c b/block/io.c
-index c4a43013210..cace297f226 100644
---- a/block/io.c
-+++ b/block/io.c
-@@ -25,7 +25,7 @@
- #include "qemu/osdep.h"
- #include "trace.h"
- #include "system/block-backend.h"
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
- #include "block/blockjob.h"
- #include "block/blockjob_int.h"
- #include "block/block_int.h"
-diff --git a/blockjob.c b/blockjob.c
-index db7c3a69a0c..f3b11cc7a19 100644
---- a/blockjob.c
-+++ b/blockjob.c
-@@ -24,7 +24,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
- #include "block/block.h"
- #include "block/blockjob_int.h"
- #include "block/block_int.h"
-diff --git a/io/channel.c b/io/channel.c
-index b7966abc4f0..cc02d997a4d 100644
---- a/io/channel.c
-+++ b/io/channel.c
-@@ -19,7 +19,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
- #include "io/channel.h"
- #include "qapi/error.h"
- #include "qemu/main-loop.h"
-diff --git a/job.c b/job.c
-index 0653bc2ba69..e7479084726 100644
---- a/job.c
-+++ b/job.c
-@@ -28,7 +28,7 @@
- #include "qemu/job.h"
- #include "qemu/id.h"
- #include "qemu/main-loop.h"
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
- #include "trace/trace-root.h"
- #include "qapi/qapi-events-job.h"
- 
-diff --git a/net/colo-compare.c b/net/colo-compare.c
-index 95018b47049..c356419d6a8 100644
---- a/net/colo-compare.c
-+++ b/net/colo-compare.c
-@@ -30,7 +30,7 @@
- #include "migration/colo.h"
- #include "util.h"
- 
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
+ #include "qemu/transactions.h"
+diff --git a/include/block/block-io.h b/include/block/block-io.h
+index e5efe0efb2f..7925e2241e6 100644
+--- a/include/block/block-io.h
++++ b/include/block/block-io.h
+@@ -27,6 +27,7 @@
+ #include "qemu/aiocb.h"
+ #include "block/aio-wait.h"
+ #include "block/block-common.h"
++#include "block/graph-lock.h"
  #include "qemu/coroutine.h"
- 
- #define TYPE_COLO_COMPARE "colo-compare"
-diff --git a/net/filter-mirror.c b/net/filter-mirror.c
-index 8e01e98f405..d2bfde42e85 100644
---- a/net/filter-mirror.c
-+++ b/net/filter-mirror.c
-@@ -20,7 +20,7 @@
- #include "chardev/char-fe.h"
  #include "qemu/iov.h"
- #include "qemu/sockets.h"
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
  
- #define TYPE_FILTER_MIRROR "filter-mirror"
- typedef struct MirrorState MirrorState;
-diff --git a/util/aio-wait.c b/util/aio-wait.c
-index b5336cf5fd2..53913c4bd1b 100644
---- a/util/aio-wait.c
-+++ b/util/aio-wait.c
-@@ -24,7 +24,7 @@
+diff --git a/include/block/dirty-bitmap.h b/include/block/dirty-bitmap.h
+index fa956debfb2..28029bbc2bc 100644
+--- a/include/block/dirty-bitmap.h
++++ b/include/block/dirty-bitmap.h
+@@ -2,6 +2,7 @@
+ #define BLOCK_DIRTY_BITMAP_H
  
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
+ #include "block/block-common.h"
++#include "block/graph-lock.h"
+ #include "qapi/qapi-types-block-core.h"
+ #include "qemu/hbitmap.h"
  
- AioWait global_aio_wait;
+diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+index e211d807e82..4b2730e9d8e 100644
+--- a/include/hw/core/qdev.h
++++ b/include/hw/core/qdev.h
+@@ -4,6 +4,7 @@
+ #include "qemu/atomic.h"
+ #include "qemu/queue.h"
+ #include "qemu/bitmap.h"
++#include "qemu/mem-reentrancy.h"
+ #include "qemu/rcu.h"
+ #include "qemu/rcu_queue.h"
+ #include "qom/object.h"
+@@ -208,11 +209,6 @@ struct NamedClockList {
+     QLIST_ENTRY(NamedClockList) node;
+ };
  
-diff --git a/util/vhost-user-server.c b/util/vhost-user-server.c
-index 1dbe409f829..1536d97baf8 100644
---- a/util/vhost-user-server.c
-+++ b/util/vhost-user-server.c
-@@ -11,7 +11,7 @@
+-typedef struct MemReentrancyGuard {
+-    bool engaged_in_io;
+-} MemReentrancyGuard;
+-
+-
+ typedef QLIST_HEAD(, NamedGPIOList) NamedGPIOListHead;
+ typedef QLIST_HEAD(, NamedClockList) NamedClockListHead;
+ typedef QLIST_HEAD(, BusState) BusStateHead;
+diff --git a/include/qemu/job.h b/include/qemu/job.h
+index af29b8c6531..2b163602c56 100644
+--- a/include/qemu/job.h
++++ b/include/qemu/job.h
+@@ -32,6 +32,7 @@
+ #include "qemu/progress_meter.h"
+ #include "qemu/coroutine.h"
+ #include "block/aio.h"
++#include "block/graph-lock.h"
+ 
+ typedef struct JobDriver JobDriver;
+ typedef struct JobTxn JobTxn;
+diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
+index 0d55c636b21..241dc87be50 100644
+--- a/include/qemu/main-loop.h
++++ b/include/qemu/main-loop.h
+@@ -431,7 +431,7 @@ void qemu_cond_timedwait_bql(QemuCond *cond, int ms);
+ #define qemu_bh_new(cb, opaque) \
+     qemu_bh_new_full((cb), (opaque), (stringify(cb)), NULL)
+ QEMUBH *qemu_bh_new_full(QEMUBHFunc *cb, void *opaque, const char *name,
+-                         MemReentrancyGuard *reentrancy_guard);
++                         struct MemReentrancyGuard *reentrancy_guard);
+ void qemu_bh_schedule_idle(QEMUBH *bh);
+ 
+ enum {
+diff --git a/include/qemu/mem-reentrancy.h b/include/qemu/mem-reentrancy.h
+new file mode 100644
+index 00000000000..07cafd47179
+--- /dev/null
++++ b/include/qemu/mem-reentrancy.h
+@@ -0,0 +1,10 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#ifndef QEMU_MEM_REENTRANCY_H
++#define QEMU_MEM_REENTRANCY_H 1
++
++typedef struct MemReentrancyGuard {
++    bool engaged_in_io;
++} MemReentrancyGuard;
++
++#endif
+diff --git a/net/net.c b/net/net.c
+index 4930b573ed3..a176936f9bc 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -39,6 +39,7 @@
+ #include "qobject/qdict.h"
+ #include "qapi/qmp/qerror.h"
  #include "qemu/error-report.h"
++#include "qemu/mem-reentrancy.h"
+ #include "qemu/sockets.h"
+ #include "qemu/cutils.h"
+ #include "qemu/config-file.h"
+diff --git a/util/async.c b/util/async.c
+index 48f88286369..39f391fb71a 100644
+--- a/util/async.c
++++ b/util/async.c
+@@ -29,6 +29,7 @@
+ #include "block/thread-pool.h"
+ #include "block/graph-lock.h"
  #include "qemu/main-loop.h"
- #include "qemu/vhost-user-server.h"
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
- 
- /*
-  * Theory of operation:
-diff --git a/hw/display/apple-gfx-mmio.m b/hw/display/apple-gfx-mmio.m
-index 983fc1724a0..58beaadd1f1 100644
---- a/hw/display/apple-gfx-mmio.m
-+++ b/hw/display/apple-gfx-mmio.m
-@@ -14,7 +14,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/log.h"
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
- #include "hw/core/sysbus.h"
- #include "hw/core/irq.h"
- #include "apple-gfx.h"
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index 174d56ae05b..e0a765fcb1f 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
-@@ -17,7 +17,7 @@
- #include "qemu/log.h"
- #include "qapi/visitor.h"
- #include "qapi/error.h"
--#include "block/aio-wait.h"
-+#include "qemu/aio-wait.h"
- #include "system/address-spaces.h"
- #include "system/dma.h"
- #include "migration/blocker.h"
++#include "qemu/mem-reentrancy.h"
+ #include "qemu/atomic.h"
+ #include "qemu/lockcnt.h"
+ #include "qemu/rcu_queue.h"
 -- 
 2.52.0
 
