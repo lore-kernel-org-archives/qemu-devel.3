@@ -4,55 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1A52D1268E
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 03:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FAD8D1268E
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 04:09:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQe1L-0008ED-QV; Tue, 02 Dec 2025 22:59:15 -0500
+	id 1vQeA6-0002Ct-Sx; Tue, 02 Dec 2025 23:08:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce.x8k9of7zkabb1w5=xzjezy0rkw99=e7l6md1o6apd9i@em483429.getutm.app>)
- id 1vQe1K-0008Dh-Kx
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 22:59:14 -0500
+ <bounce.9ot15psxo03ay46=czmyygxm8oxv=0gczprgkdhs2gn@em483429.getutm.app>)
+ id 1vQeA4-0002CU-IT
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 23:08:16 -0500
 Received: from a4i956.smtp2go.com ([158.120.83.188])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce.x8k9of7zkabb1w5=xzjezy0rkw99=e7l6md1o6apd9i@em483429.getutm.app>)
- id 1vQe1I-00007p-8U
- for qemu-devel@nongnu.org; Tue, 02 Dec 2025 22:59:14 -0500
+ <bounce.9ot15psxo03ay46=czmyygxm8oxv=0gczprgkdhs2gn@em483429.getutm.app>)
+ id 1vQeA2-0000Pz-RS
+ for qemu-devel@nongnu.org; Tue, 02 Dec 2025 23:08:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
- i=@getutm.app; q=dns/txt; s=s483429; t=1764734342; h=from : subject :
+ i=@getutm.app; q=dns/txt; s=s483429; t=1764734881; h=from : subject :
  to : message-id : date;
- bh=a7Dkb2KHnm/ht47tdJWttydGvnkucrr+JAvb4EnnYSg=;
- b=CoULHtPecpSBpVxirBnsQ0hxXVuLAqufcfhqkTFGWn0373ydlFeboRaBmtZU3cbXq+S7r
- rAPEzF3C3iw1BhpKJ03LdNm5fMLevFrOOhPh1Rwj4DwoW9/OV+h0KtCj0keGnvvuFzLRiMY
- tQEMANObOVPb9r/cQ6x4m8Fp6tdbjkcAOAzQLF3mDgcXCgGRB31RLBol4tiGrgzvxxWMt8X
- QbfLLXr3L+2pvIt7i7UPI/qzrE/w4MEuKS1C/wNsFqxiXpDEqku6aaqcL8GGKmZ/XpQWodV
- ofkMdN/+6PCr2u+/S5z/71T6Yy0hhSjjt6WtHT5VHjW7RZNK8OyJBRpR2HUQ==
+ bh=w+PGv34ufTyfNwTz/5E0WbkIAR6l27kn+dhUuw3EabQ=;
+ b=J5i2xzjeorAmbaw+Dgx3zdoNq8XuKMSEhoZ+aeQ0D+rAdRtP7N9zJI06sdW+mny/AKOKz
+ c5KxI3LvtnfA+WNTwmGKwMnUYlQHzg1Nx9XH3KAHW1CEBcT0vkdDFHC4ZopmxJRiQRyHxVr
+ y6GHO5s+KbMzp5glfw8ibDhWdnvzH6g4LlkbcBDcZUSPtVXj5BVt1/CRf96clyx+JrfLIIJ
+ M1ze9ffjjp7CQb4jf3Qth+c5i4NSznBZd/tvmgdzRuXsUVNf+FAmvW+/xwOunyPMHHQHKH8
+ AQQL5QOM67yRn2SIhldHKouGOFVhdlk2ynsrDCw1QWW7NFVIW799YnmQFRFA==
 Received: from [10.159.238.187] (helo=localhost.localdomain)
  by smtpcorp.com with esmtpsa
  (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA512__CHACHA20_POLY1305:256)
  (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
- id 1vQe11-FnQW0hPuz7X-VkJn; Wed, 03 Dec 2025 03:58:55 +0000
+ id 1vQe9l-FnQW0hPv7oK-WEm2 for qemu-devel@nongnu.org;
+ Wed, 03 Dec 2025 04:07:58 +0000
 From: Joelle van Dyne <j@getutm.app>
 To: qemu-devel@nongnu.org
-Cc: Joelle van Dyne <j@getutm.app>, Cameron Esfahani <dirty@apple.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH] hvf: allow slot size to increase
-Date: Tue,  2 Dec 2025 19:58:46 -0800
-Message-ID: <20251203035847.94102-1-j@getutm.app>
+Subject: [PATCH RFC 0/7] virtio-gpu-virgl: introduce Venus support for macOS
+Date: Tue,  2 Dec 2025 20:07:47 -0800
+Message-ID: <20251203040754.94487-1-j@getutm.app>
 X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Report-Abuse: Please forward a copy of this message, including all headers,
  to <abuse-report@smtp2go.com>
-Feedback-ID: 483429m:483429abrvJvs:483429skAbc49uMO
-X-smtpcorp-track: expYtByXnsVz.k1HGI-DjMiJK.CjD3hwFsKqP
+Feedback-ID: 483429m:483429abrvJvs:483429sep1CPAI28
+X-smtpcorp-track: gfzeeXQIFiWy.dJ0mDHaKpjUC.uTmdQgIKWn5
 Received-SPF: pass client-ip=158.120.83.188;
- envelope-from=bounce.x8k9of7zkabb1w5=xzjezy0rkw99=e7l6md1o6apd9i@em483429.getutm.app;
+ envelope-from=bounce.9ot15psxo03ay46=czmyygxm8oxv=0gczprgkdhs2gn@em483429.getutm.app;
  helo=a4i956.smtp2go.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -76,179 +74,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Instead of having a fixed limit of 32 slots, we allow the number of slots
-to expand. Currently there does not seem to be a need to add a limit, but
-if the allocation fails, we will abort. The KVM backend was used for
-inspiration here.
+This brings Vulkan guest paravirtualization to macOS hosts. The bulk of the work
+is being submitted to the virglrenderer project so this is a RFC for now.
 
-Signed-off-by: Joelle van Dyne <j@getutm.app>
----
- include/system/hvf_int.h | 12 ++++++-
- accel/hvf/hvf-all.c      | 78 ++++++++++++++++++++++++++++++----------
- 2 files changed, 71 insertions(+), 19 deletions(-)
+In addition to Vulkan, we also introduce Metal texture scanout for GLES guests
+as well. We also added Metal texture rendering in the Cocoa backend but that
+builds upon the GLES work by Akihiko Odaki which is not currently upstream.
 
-diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-index 3d2be4092e..1d2616595c 100644
---- a/include/system/hvf_int.h
-+++ b/include/system/hvf_int.h
-@@ -27,6 +27,7 @@ typedef hv_vcpuid_t hvf_vcpuid;
- /* hvf_slot flags */
- #define HVF_SLOT_LOG (1 << 0)
- 
-+/* Represent memory logically mapped by QEMU */
- typedef struct hvf_slot {
-     uint64_t start;
-     uint64_t size;
-@@ -36,6 +37,14 @@ typedef struct hvf_slot {
-     MemoryRegion *region;
- } hvf_slot;
- 
-+/* Represent memory currently mapped in HVF */
-+typedef struct hvf_mac_slot {
-+    int present;
-+    uint64_t size;
-+    uint64_t gpa_start;
-+    uint64_t gva;
-+} hvf_mac_slot;
-+
- typedef struct hvf_vcpu_caps {
-     uint64_t vmx_cap_pinbased;
-     uint64_t vmx_cap_procbased;
-@@ -48,7 +57,8 @@ typedef struct hvf_vcpu_caps {
- struct HVFState {
-     AccelState parent_obj;
- 
--    hvf_slot slots[32];
-+    hvf_slot *slots;
-+    hvf_mac_slot *mac_slots;
-     int num_slots;
- 
-     hvf_vcpu_caps *hvf_caps;
-diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index 0a4b498e83..367ff4fd40 100644
---- a/accel/hvf/hvf-all.c
-+++ b/accel/hvf/hvf-all.c
-@@ -21,14 +21,8 @@
- 
- bool hvf_allowed;
- 
--struct mac_slot {
--    int present;
--    uint64_t size;
--    uint64_t gpa_start;
--    uint64_t gva;
--};
--
--struct mac_slot mac_slots[32];
-+/* Default num of memslots to be allocated when VM starts */
-+#define  HVF_MEMSLOTS_NUM_ALLOC_DEFAULT                      32
- 
- const char *hvf_return_string(hv_return_t ret)
- {
-@@ -58,12 +52,60 @@ void assert_hvf_ok_impl(hv_return_t ret, const char *file, unsigned int line,
-     abort();
- }
- 
-+static bool hvf_slots_grow(HVFState *state, unsigned int num_slots_new)
-+{
-+    unsigned int i, cur = state->num_slots;
-+    hvf_slot *slots;
-+    hvf_mac_slot *mac_slots;
-+
-+    assert(num_slots_new > cur);
-+    if (cur == 0) {
-+        slots = g_new0(hvf_slot, num_slots_new);
-+        if (!slots) {
-+            return false;
-+        }
-+        mac_slots = g_new0(hvf_mac_slot, num_slots_new);
-+        if (!mac_slots) {
-+            g_free(slots);
-+            return false;
-+        }
-+    } else {
-+        slots = g_renew(hvf_slot, state->slots, num_slots_new);
-+        if (!slots) {
-+            return false;
-+        }
-+        mac_slots = g_renew(hvf_mac_slot, state->mac_slots, num_slots_new);
-+        if (!mac_slots) {
-+            /* save allocated slots but not new size */
-+            state->slots = slots;
-+            return false;
-+        }
-+        /*
-+         * g_renew() doesn't initialize extended buffers, however hvf
-+         * memslots require fields to be zero-initialized. E.g. pointers,
-+         * memory_size field, etc.
-+         */
-+        memset(&slots[cur], 0x0, sizeof(slots[0]) * (num_slots_new - cur));
-+        memset(&mac_slots[cur], 0x0, sizeof(mac_slots[0]) * (num_slots_new - cur));
-+    }
-+
-+    for (i = cur; i < num_slots_new; i++) {
-+        slots[i].slot_id = i;
-+    }
-+
-+    state->slots = slots;
-+    state->mac_slots = mac_slots;
-+    state->num_slots = num_slots_new;
-+
-+    return true;
-+}
-+
- static int do_hvf_set_memory(hvf_slot *slot, hv_memory_flags_t flags)
- {
--    struct mac_slot *macslot;
-+    hvf_mac_slot *macslot;
-     hv_return_t ret;
- 
--    macslot = &mac_slots[slot->slot_id];
-+    macslot = &hvf_state->mac_slots[slot->slot_id];
- 
-     if (macslot->present) {
-         if (macslot->size != slot->size) {
-@@ -160,8 +202,11 @@ static void hvf_set_phys_mem(MemoryRegionSection *section, bool add)
-     }
- 
-     if (x == hvf_state->num_slots) {
--        error_report("No free slots");
--        abort();
-+        if (!hvf_slots_grow(hvf_state, hvf_state->num_slots * 2)) {
-+            error_report("Cannot allocate any more slots");
-+            abort();
-+        }
-+        mem = &hvf_state->slots[x];
-     }
- 
-     mem->size = int128_get64(section->size);
-@@ -250,11 +295,11 @@ static MemoryListener hvf_memory_listener = {
- 
- static int hvf_accel_init(AccelState *as, MachineState *ms)
- {
--    int x;
-     hv_return_t ret;
-     HVFState *s = HVF_STATE(as);
-     int pa_range = 36;
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-+    bool success;
- 
-     if (mc->hvf_get_physical_address_range) {
-         pa_range = mc->hvf_get_physical_address_range(ms);
-@@ -271,11 +316,8 @@ static int hvf_accel_init(AccelState *as, MachineState *ms)
-     }
-     assert_hvf_ok(ret);
- 
--    s->num_slots = ARRAY_SIZE(s->slots);
--    for (x = 0; x < s->num_slots; ++x) {
--        s->slots[x].size = 0;
--        s->slots[x].slot_id = x;
--    }
-+    success = hvf_slots_grow(s, HVF_MEMSLOTS_NUM_ALLOC_DEFAULT);
-+    assert(success);
- 
-     QTAILQ_INIT(&s->hvf_sw_breakpoints);
- 
+Fork with all dependent changes:
+  https://github.com/utmapp/qemu/tree/submit/macos-venus
+Instructions for building and testing with all related projects:
+  https://gist.github.com/osy/a8f705050eed1c8421ad1a0855a8faa9
+
+Joelle van Dyne (7):
+  egl-helpers: store handle to native device
+  virtio-gpu-virgl: check page alignment of blob mapping
+  console: rename `d3d_tex2d` to `native`
+  virtio-gpu-virgl: update virglrenderer defines
+  virtio-gpu-virgl: support scanout of Metal textures
+  console: add cleanup callback for ScanoutTexture
+  virtio-gpu-virgl: add support for native blob scanout
+
+ meson.build                   |   9 +++
+ include/ui/console.h          |  31 ++++++++-
+ include/ui/egl-helpers.h      |   2 +-
+ include/ui/gtk.h              |   4 +-
+ include/ui/sdl2.h             |   2 +-
+ hw/display/virtio-gpu-virgl.c | 126 +++++++++++++++++++++++++++++++---
+ hw/display/virtio-gpu.c       |   2 +
+ ui/console.c                  |  60 +++++++++++++---
+ ui/dbus-console.c             |   2 +-
+ ui/dbus-listener.c            |   8 +--
+ ui/egl-headless.c             |   2 +-
+ ui/egl-helpers.c              |   4 +-
+ ui/gtk-egl.c                  |   2 +-
+ ui/gtk-gl-area.c              |   2 +-
+ ui/sdl2-gl.c                  |   2 +-
+ ui/spice-display.c            |   2 +-
+ 16 files changed, 225 insertions(+), 35 deletions(-)
+
 -- 
 2.41.0
 
