@@ -4,41 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D48ED116F3
-	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D33D0D1266D
+	for <qemu-devel@archiver.kernel.org>; Wed,  3 Dec 2025 08:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQhoc-0005AX-Pr; Wed, 03 Dec 2025 03:02:22 -0500
+	id 1vQhp8-0005QC-8V; Wed, 03 Dec 2025 03:02:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQhoa-00056I-01; Wed, 03 Dec 2025 03:02:20 -0500
+ id 1vQhoy-0005MB-DV; Wed, 03 Dec 2025 03:02:45 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vQhoY-0007D9-2T; Wed, 03 Dec 2025 03:02:19 -0500
+ id 1vQhov-0007Ir-NO; Wed, 03 Dec 2025 03:02:43 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4AB9E17077D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8A125170780;
  Wed, 03 Dec 2025 10:59:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0B28632B4A4;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4CE4632B4A7;
  Wed, 03 Dec 2025 10:59:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Xu <peterx@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.7 112/116] hw/core/machine: Provide a description for
- aux-ram-share property
-Date: Wed,  3 Dec 2025 10:59:32 +0300
-Message-ID: <20251203075939.2366131-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.7 115/116] docs/devel: Update URL for make-pullreq script
+Date: Wed,  3 Dec 2025 10:59:35 +0300
+Message-ID: <20251203075939.2366131-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.7-20251203105830@cover.tls.msk.ru>
 References: <qemu-stable-10.0.7-20251203105830@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -63,33 +59,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-It was forgotten when being introduced in commit 91792807d1 ("machine:
-aux-ram-share option").
+In the submitting-a-pull-request docs, we have a link to the
+make-pullreq script which might be useful for maintainers.  The
+canonical git repo for this script has moved; update the link.
 
 Cc: qemu-stable@nongnu.org
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <20251124191408.783473-1-peterx@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 98ee8aa92e930a447c6108d4689f0bf8b535359d)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-id: 20251125164511.255550-1-peter.maydell@linaro.org
+(cherry picked from commit ebb625262c7f9837d6c7b9d8a0c1349fe8a8f4ff)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 63c6ef93d2..ed1418883d 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -1190,6 +1190,8 @@ static void machine_class_init(ObjectClass *oc, void *data)
-     object_class_property_add_bool(oc, "aux-ram-share",
-                                    machine_get_aux_ram_share,
-                                    machine_set_aux_ram_share);
-+    object_class_property_set_description(oc, "aux-ram-share",
-+        "Use anonymous shared memory for auxiliary guest RAMs");
- #endif
+diff --git a/docs/devel/submitting-a-pull-request.rst b/docs/devel/submitting-a-pull-request.rst
+index a4cd7ebbb6..e7d0080878 100644
+--- a/docs/devel/submitting-a-pull-request.rst
++++ b/docs/devel/submitting-a-pull-request.rst
+@@ -67,7 +67,7 @@ subject tag is "PULL SUBSYSTEM s390/block/whatever" rather than just
+ pull requests that should be applied to master.
  
-     object_class_property_add_bool(oc, "usb",
+ You might be interested in the `make-pullreq
+-<https://git.linaro.org/people/peter.maydell/misc-scripts.git/tree/make-pullreq>`__
++<https://gitlab.com/pm215/misc-scripts/-/blob/master/make-pullreq>`__
+ script which automates some of this process for you and includes a few
+ sanity checks. Note that you must edit it to configure it suitably for
+ your local situation!
 -- 
 2.47.3
 
