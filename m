@@ -4,86 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDDD0D1D868
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 05:38:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E749D1D86A
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 06:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR22f-0005tv-NF; Thu, 04 Dec 2025 00:38:13 -0500
+	id 1vR2ly-0003qH-Qg; Thu, 04 Dec 2025 01:25:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <apatel@ventanamicro.com>)
- id 1vR22a-0005t5-9n
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 00:38:09 -0500
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <apatel@ventanamicro.com>)
- id 1vR22X-0005WC-Ve
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 00:38:08 -0500
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-5957db5bdedso592008e87.2
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 21:38:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1764826683; x=1765431483; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TENGsAuzFQj0J9MlW6A17jxyYqLF1csPJGDikk7elEw=;
- b=T83tM2V1ai2YfTnScDSoBGzHmB6DbHHlc/o+zAS2kGyO1YXdYEnPhWGGf7glqRXJxx
- 5AQB8pSwv3AEMi3Qnyr4//QZrK9/1qMu21K8KzoRD6oWu0TQE/XJQxgwMFPB1W8M5fgY
- 13Y/S4RVFdfsZD5pzMcFFSKKaIyoz0um5S/J3habHytjH44Ui2BfNktuaG8cZ7wLNKD5
- j6Itf8eSAxuG8zFmCFHJ//XF8gO7koP9Gwj30koja0/wtiYbMI+rJ/SZPN8NpURfpq2E
- H+AgY6Rv9fz0Ryhxa3ow/0C923CBcy/K44EBaZpgH8EA7mxmChY/dzOInQDds1zPQqP3
- YCmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764826683; x=1765431483;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=TENGsAuzFQj0J9MlW6A17jxyYqLF1csPJGDikk7elEw=;
- b=iUyxGiNqoNBXBtOSOaUi9Oxcd+iRAGN3gyF6JZwwowBdKnYOlzkHORZF22YoIN2lmB
- mJbIxgqFgZvg2Ud+maKNAR43U762Y3qnfe4pIxXfpCV4ujCu4fLBAKLBRYbgu+iQJq7T
- /ay0vler5woakzdmTxY8XGXpewWfyR8rmdza5OqHucIvFVU5Idx1sJRpjT1ioNk964YK
- A8KdKnGdACsd45pqkMoxv3GrZf/SapqraGTHi0XiokNFEXpXk6/lGA4AkVnEYN+1mUxl
- cCfbA8tvTPbuXL1z2buxkxOuzn66ITNMdhWV8wHsDxaPva8dXpmPfMjAXe+QcrqdqgWH
- FmWA==
-X-Gm-Message-State: AOJu0YyWw1PouA5X/VbvICQy/4Nr7faIy1pTg14Xpka2HtHvQi5G7xr9
- mzs3neEMzRtwN4ZfE/FgnqkzbeJh1f9abXOuzGDSrxw5zKbHpXa1/JubBRjxE/nBKFi2XmBZS9x
- Krmr0pJs6UktKC1SjiSNbQdXDAMr31WBUAtye1rOHuA==
-X-Gm-Gg: ASbGnctWb2ad6NW+ZrHTtYO1pEApY6bekEChGjJ0/RN5YQA1b/TlVgsooD20B2PJOSb
- qxKTGKk4lkzB9/8PDU+TOsowIbJDxXNykXKpmtsOCge0yd3VyQKrISfvvwkGsMiVvd+3cP9MDoz
- /MYdTAopECswIaFcr5tzQWp22XzJwCrxs37CkQUDwt7l8KKYTlXI0PbeOWQDruwK94scupLOlvX
- LxsV3XVuOp23rNZXcce0DID+oeC6Re6xX1SBU6Gq+5T4CDqFNDJlZ3YCbldpHc7MTBCyrk=
-X-Google-Smtp-Source: AGHT+IEaUljsOdQ+iM0nMQyiZCVjJIodGfUjV70wVK6LVltoA9qfLiekdKRmHbtkH/IfIJRL21F0R2MMp9Z+5lCbtWM=
-X-Received: by 2002:a05:6512:1092:b0:594:522b:c6a4 with SMTP id
- 2adb3069b0e04-597d3fa656cmr2078819e87.23.1764826683220; Wed, 03 Dec 2025
- 21:38:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vR2lx-0003oi-9T
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 01:25:01 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vR2lt-00046E-UR
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 01:25:00 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5B46Nm8X046440
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 4 Dec 2025 15:24:44 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=fA8fFASsMh0LHHtx3YWB0U5HBWtTBQpiKMCHK3BQ57g=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1764829485; v=1;
+ b=pwIzW5Got14R6ycUbhAtvydpbJ9MnGZX6Z+6Z15kYbxLQ7T51wYXgpNxupD8wdAd
+ Zm85MMePNt+lvFvsQTyc7Douo886nY7oYjEUsFMqk+j05evlreKQhbjhiaNJWsmz
+ TzYhuCnYG2JLs0gvaNEGSCkWe7Jy6O0g2tasjSbUaU5wAZyKl2e6kTTwocMubqCY
+ h5ntEzWSNpy4/A8emqeh6XI6mVUtueyDgDh0gXNfyH1Yx7mQ2N3dWkZEtJgeOqC0
+ UVKPJuJgMC4L9oiomXZwKOTU7NPNQH3L5IwGRl26Wte+G4ARdOPHZkzDQz22ZoFF
+ 6ftZ9/wyFzDtZS/9oYl3VA==
+Message-ID: <0d24a45f-fff9-4a37-89cc-f1d9943c83a7@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 4 Dec 2025 15:23:48 +0900
 MIME-Version: 1.0
-References: <20251111182944.2895892-1-dbarboza@ventanamicro.com>
- <20251111182944.2895892-4-dbarboza@ventanamicro.com>
-In-Reply-To: <20251111182944.2895892-4-dbarboza@ventanamicro.com>
-From: Anup Patel <apatel@ventanamicro.com>
-Date: Thu, 4 Dec 2025 11:07:51 +0530
-X-Gm-Features: AWmQ_bm8zDPy9Hm587cei3bCECclSN7QzvjQ4E5CXuoyv61Ggd5H7nogpEfvqQI
-Message-ID: <CAK9=C2V32O_toANCx5MDSoSYMtA7W0tRTrhE1djXA1etTuKVuQ@mail.gmail.com>
-Subject: Re: [PATCH v4 3/5] hw/riscv: experimental server platform reference
- machine
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- Fei Wu <wu.fei9@sanechips.com.cn>, Sunil V L <sunilvl@ventanamicro.com>, 
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=apatel@ventanamicro.com; helo=mail-lf1-x12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 6/7] console: add cleanup callback for ScanoutTexture
+To: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20251203040754.94487-1-j@getutm.app>
+ <20251203040754.94487-7-j@getutm.app>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251203040754.94487-7-j@getutm.app>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,304 +77,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 12, 2025 at 12:02=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> From: Fei Wu <wu.fei9@sanechips.com.cn>
->
-> The RISC-V Server Platform specification [1] defines a standardized set
-> of hardware and software capabilities, that portable system software,
-> such as OS and hypervisors can rely on being present in a RISC-V server
-> platform.
->
-> We do not have all the required extensions in QEMU: we're missing
-> 'sdext'. In theory we shouldn't go ahead with this work, but the
-> emulation as is now is proving to be useful for development and testing
-> of other parts of the SW stack (firmware, kernel) and we would like to
-> make it broadly available to everyone. We're contributing it as
-> 'experimental', hopefully making it clear that the board does NOT
-> complies 100% with [1].
->
-> The main features included in this emulation are:
->
->  - Based on riscv virt machine type
->  - A new memory map as close as virt machine as possible
->  - A new virt CPU type rvsp-ref-cpu for server platform compliance
->  - AIA
->  - PCIe AHCI
->  - PCIe NIC
->  - No virtio device
->  - No fw_cfg device
->  - No ACPI table provided
->  - Only minimal device tree nodes
->
-> [1] https://github.com/riscv-non-isa/riscv-server-platform
->
-> Signed-off-by: Fei Wu <fei2.wu@intel.com>
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+On 2025/12/03 13:07, Joelle van Dyne wrote:
+> Before we introduce changes that allow for QemuConsole to take ownership
+> of a texture handle, we need scaffolding that will allow us to callback
+> into a cleanup function any time the ScanoutTexture becomes invalid, which
+> is whenever the `scanout.kind` or `scanout.texture` gets updated.
+> 
+> The ordering is important: we need to first update the DisplayScanout,
+> then we need to notify all the listeners, and once all the listeners have
+> had the chance to finish using the previous native texture, we are safe to
+> call the cleanup function. This means we need to hold on to the previous
+> scanout native handle locally until all listeners are notified.
+> 
+> Signed-off-by: Joelle van Dyne <j@getutm.app>
 > ---
->  configs/devices/riscv64-softmmu/default.mak |    1 +
->  hw/riscv/Kconfig                            |   14 +
->  hw/riscv/meson.build                        |    1 +
->  hw/riscv/server_platform_ref.c              | 1276 +++++++++++++++++++
->  4 files changed, 1292 insertions(+)
->  create mode 100644 hw/riscv/server_platform_ref.c
->
-> diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/device=
-s/riscv64-softmmu/default.mak
-> index e485bbd1a3..e6075a7113 100644
-> --- a/configs/devices/riscv64-softmmu/default.mak
-> +++ b/configs/devices/riscv64-softmmu/default.mak
-> @@ -9,6 +9,7 @@
->  # CONFIG_SIFIVE_E=3Dn
->  # CONFIG_SIFIVE_U=3Dn
->  # CONFIG_RISCV_VIRT=3Dn
-> +# CONFIG_SERVER_PLATFORM_REF=3Dn
->  # CONFIG_MICROCHIP_PFSOC=3Dn
->  # CONFIG_SHAKTI_C=3Dn
->  # CONFIG_XIANGSHAN_KUNMINGHU=3Dn
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index fc9c35bd98..6a5085c7a5 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -69,6 +69,20 @@ config RISCV_VIRT
->      select ACPI
->      select ACPI_PCI
->
-> +config SERVER_PLATFORM_REF
-
-s/SERVER_PLATFORM_REF/RISCV_SERVER_PLATFORM/
-
-> +    bool
-> +    default y
-> +    depends on RISCV64
-> +    select RISCV_NUMA
-> +    select GOLDFISH_RTC
-> +    select PCI
-> +    select PCI_EXPRESS_GENERIC_BRIDGE
-> +    select PFLASH_CFI01
-> +    select SERIAL
-> +    select RISCV_ACLINT
-> +    select RISCV_APLIC
-> +    select RISCV_IMSIC
-> +
->  config SHAKTI_C
->      bool
->      default y
-> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-> index 2a8d5b136c..0daf77e887 100644
-> --- a/hw/riscv/meson.build
-> +++ b/hw/riscv/meson.build
-> @@ -4,6 +4,7 @@ riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('n=
-uma.c'))
->  riscv_ss.add(files('riscv_hart.c'))
->  riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
->  riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
-> +riscv_ss.add(when: 'CONFIG_SERVER_PLATFORM_REF', if_true: files('server_=
-platform_ref.c'))
->  riscv_ss.add(when: 'CONFIG_SHAKTI_C', if_true: files('shakti_c.c'))
->  riscv_ss.add(when: 'CONFIG_SIFIVE_E', if_true: files('sifive_e.c'))
->  riscv_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
-> diff --git a/hw/riscv/server_platform_ref.c b/hw/riscv/server_platform_re=
-f.c
-> new file mode 100644
-> index 0000000000..ef2891a9d7
-> --- /dev/null
-> +++ b/hw/riscv/server_platform_ref.c
-> @@ -0,0 +1,1276 @@
-> +/*
-> + * QEMU RISC-V Server Platform (RVSP) Reference Board
-
-Instead of "rvsp" name it is better to use a more obvious and
-meaningful full name such as "rvserver".
-
-> + *
-> + * Copyright (c) 2024 Intel, Inc.
-> + * Copyright (c) 2025 Ventana Micro Systems Inc.
-> + *
-> + * This board is compliant RISC-V Server platform specification and leve=
-raging
-> + * a lot of riscv virt code.
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or la=
-ter.
-> + * See the COPYING file in the top-level directory.
+>   include/ui/console.h          |  9 +++++-
+>   hw/display/virtio-gpu-virgl.c |  2 +-
+>   ui/console.c                  | 56 +++++++++++++++++++++++++++++++----
+>   3 files changed, 59 insertions(+), 8 deletions(-)
+> 
+> diff --git a/include/ui/console.h b/include/ui/console.h
+> index a45b524c57..df9c083a16 100644
+> --- a/include/ui/console.h
+> +++ b/include/ui/console.h
+> @@ -149,6 +149,11 @@ typedef struct ScanoutTextureNative {
+>       .type = SCANOUT_TEXTURE_NATIVE_TYPE_NONE \
+>   })
+>   
+> +/**
+> + * Cleanup callback function when ScanoutTexture is about to be destroyed
 > + */
+> +typedef void (*dpy_cleanup_texture)(ScanoutTextureNative *native);
+
+Please name this typedef CamelCase as like others.
+
 > +
-> +#include "qemu/osdep.h"
-> +#include "qemu/units.h"
-> +#include "qemu/error-report.h"
-> +#include "qemu/guest-random.h"
-> +#include "qapi/error.h"
-> +#include "qapi/qapi-visit-common.h"
-> +#include "hw/boards.h"
-> +#include "hw/loader.h"
-> +#include "hw/sysbus.h"
-> +#include "hw/qdev-properties.h"
-> +#include "hw/char/serial.h"
-> +#include "hw/block/flash.h"
-> +#include "hw/ide/pci.h"
-> +#include "hw/ide/ahci-pci.h"
-> +#include "hw/pci/pci.h"
-> +#include "hw/pci-host/gpex.h"
-> +#include "hw/core/sysbus-fdt.h"
-> +#include "hw/riscv/riscv_hart.h"
-> +#include "hw/riscv/boot.h"
-> +#include "hw/riscv/numa.h"
-> +#include "hw/intc/riscv_aclint.h"
-> +#include "hw/intc/riscv_aplic.h"
-> +#include "hw/intc/riscv_imsic.h"
-> +#include "chardev/char.h"
-> +#include "hw/char/serial-mm.h"
-> +#include "system/device_tree.h"
-> +#include "system/runstate.h"
-> +#include "system/system.h"
-> +#include "system/tcg.h"
-> +#include "system/qtest.h"
-> +#include "target/riscv/cpu.h"
-> +#include "target/riscv/pmu.h"
-> +#include "net/net.h"
-> +
-> +#define RVSP_CPUS_MAX_BITS             9
-> +#define RVSP_CPUS_MAX                  (1 << RVSP_CPUS_MAX_BITS)
-> +#define RVSP_SOCKETS_MAX_BITS          2
-> +#define RVSP_SOCKETS_MAX               (1 << RVSP_SOCKETS_MAX_BITS)
-> +
-> +#define RVSP_IRQCHIP_NUM_MSIS 255
-> +#define RVSP_IRQCHIP_NUM_SOURCES 96
-> +#define RVSP_IRQCHIP_NUM_PRIO_BITS 3
-> +#define RVSP_IRQCHIP_MAX_GUESTS_BITS 3
-> +#define RVSP_IRQCHIP_MAX_GUESTS ((1U << RVSP_IRQCHIP_MAX_GUESTS_BITS) - =
-1U)
-> +
-> +#define FDT_PCI_ADDR_CELLS    3
-> +#define FDT_PCI_INT_CELLS     1
-> +#define FDT_APLIC_INT_CELLS   2
-> +#define FDT_IMSIC_INT_CELLS   0
-> +#define FDT_MAX_INT_CELLS     2
-> +#define FDT_MAX_INT_MAP_WIDTH (FDT_PCI_ADDR_CELLS + FDT_PCI_INT_CELLS + =
-\
-> +                                 1 + FDT_MAX_INT_CELLS)
-> +#define FDT_APLIC_INT_MAP_WIDTH (FDT_PCI_ADDR_CELLS + FDT_PCI_INT_CELLS =
-+ \
-> +                                 1 + FDT_APLIC_INT_CELLS)
-> +
-> +#define NUM_SATA_PORTS  6
-> +
-> +#define SYSCON_RESET     0x1
-> +#define SYSCON_POWEROFF  0x2
-> +
-> +#define TYPE_RVSP_REF_MACHINE MACHINE_TYPE_NAME("rvsp-ref")
-> +OBJECT_DECLARE_SIMPLE_TYPE(RVSPMachineState, RVSP_REF_MACHINE)
-> +
-> +struct RVSPMachineState {
-> +    /*< private >*/
-> +    MachineState parent;
-> +
-> +    /*< public >*/
-> +    Notifier machine_done;
-> +    RISCVHartArrayState soc[RVSP_SOCKETS_MAX];
-> +    DeviceState *irqchip[RVSP_SOCKETS_MAX];
-> +    PFlashCFI01 *flash[2];
-> +
-> +    int fdt_size;
-> +    int aia_guests;
-> +    const MemMapEntry *memmap;
+>   typedef struct ScanoutTexture {
+>       uint32_t backing_id;
+>       bool backing_y_0_top;
+> @@ -159,6 +164,7 @@ typedef struct ScanoutTexture {
+>       uint32_t width;
+>       uint32_t height;
+>       ScanoutTextureNative native;
+> +    dpy_cleanup_texture cb_cleanup;
+>   } ScanoutTexture;
+>   
+>   typedef struct QemuUIInfo {
+> @@ -347,7 +353,8 @@ void dpy_gl_scanout_texture(QemuConsole *con,
+>                               uint32_t backing_id, bool backing_y_0_top,
+>                               uint32_t backing_width, uint32_t backing_height,
+>                               uint32_t x, uint32_t y, uint32_t w, uint32_t h,
+> -                            ScanoutTextureNative native);
+> +                            ScanoutTextureNative native,
+> +                            dpy_cleanup_texture cb_cleanup);
+>   void dpy_gl_scanout_dmabuf(QemuConsole *con,
+>                              QemuDmaBuf *dmabuf);
+>   void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index e091eb0c76..b7bc095676 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -492,7 +492,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+>               info.flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP,
+>               info.width, info.height,
+>               ss.r.x, ss.r.y, ss.r.width, ss.r.height,
+> -            native);
+> +            native, NULL);
+>       } else {
+>           dpy_gfx_replace_surface(
+>               g->parent_obj.scanout[ss.scanout_id].con, NULL);
+> diff --git a/ui/console.c b/ui/console.c
+> index 9378afd53d..8271c36586 100644
+> --- a/ui/console.c
+> +++ b/ui/console.c
+> @@ -808,6 +808,41 @@ void dpy_gfx_update_full(QemuConsole *con)
+>       dpy_gfx_update(con, 0, 0, w, h);
+>   }
+>   
+> +struct scanout_change {
+> +    ScanoutTextureNative native;
+> +    dpy_cleanup_texture cb_cleanup;
 > +};
-> +
-> +enum {
-> +    RVSP_DEBUG,
-> +    RVSP_MROM,
-> +    RVSP_RESET_SYSCON,
-> +    RVSP_RTC,
-> +    RVSP_ACLINT,
-> +    RVSP_APLIC_M,
-> +    RVSP_APLIC_S,
-> +    RVSP_UART0,
-> +    RVSP_IMSIC_M,
-> +    RVSP_IMSIC_S,
-> +    RVSP_FLASH,
-> +    RVSP_DRAM,
-> +    RVSP_PCIE_MMIO,
-> +    RVSP_PCIE_PIO,
-> +    RVSP_PCIE_ECAM,
-> +    RVSP_PCIE_MMIO_HIGH
-> +};
-> +
-> +enum {
-> +    RVSP_UART0_IRQ =3D 10,
-> +    RVSP_RTC_IRQ =3D 11,
-> +    RVSP_PCIE_IRQ =3D 0x20, /* 32 to 35 */
-> +};
-> +
-> +/*
-> + * The server soc reference machine physical address space used by some =
-of the
-> + * devices namely ACLINT, APLIC and IMSIC depend on number of Sockets, n=
-umber
-> + * of CPUs, and number of IMSIC guest files.
-> + *
-> + * Various limits defined by RVSP_SOCKETS_MAX_BITS, RVSP_CPUS_MAX_BITS, =
-and
-> + * RVSP_IRQCHIP_MAX_GUESTS_BITS are tuned for maximum utilization of ser=
-ver soc
-> + * reference machine physical address space.
-> + */
-> +
-> +#define RVSP_IMSIC_GROUP_MAX_SIZE      (1U << IMSIC_MMIO_GROUP_MIN_SHIFT=
-)
-> +#if RVSP_IMSIC_GROUP_MAX_SIZE < \
-> +    IMSIC_GROUP_SIZE(RVSP_CPUS_MAX_BITS, RVSP_IRQCHIP_MAX_GUESTS_BITS)
-> +#error "Can't accomodate single IMSIC group in address space"
-> +#endif
-> +
-> +#define RVSP_IMSIC_MAX_SIZE            (RVSP_SOCKETS_MAX * \
-> +                                        RVSP_IMSIC_GROUP_MAX_SIZE)
-> +#if 0x4000000 < RVSP_IMSIC_MAX_SIZE
-> +#error "Can't accomodate all IMSIC groups in address space"
-> +#endif
-> +
-> +static const MemMapEntry rvsp_ref_memmap[] =3D {
-> +    [RVSP_DEBUG] =3D          {        0x0,         0x100 },
-> +    [RVSP_MROM] =3D           {     0x1000,        0xf000 },
-> +    [RVSP_RESET_SYSCON] =3D   {   0x100000,        0x1000 },
-> +    [RVSP_RTC] =3D            {   0x101000,        0x1000 },
-> +    [RVSP_ACLINT] =3D         {  0x2000000,       0x10000 },
-> +    [RVSP_PCIE_PIO] =3D       {  0x3000000,       0x10000 },
-> +    [RVSP_APLIC_M] =3D        {  0xc000000, APLIC_SIZE(RVSP_CPUS_MAX) },
-> +    [RVSP_APLIC_S] =3D        {  0xd000000, APLIC_SIZE(RVSP_CPUS_MAX) },
-> +    [RVSP_UART0] =3D          { 0x10000000,         0x100 },
-> +    [RVSP_FLASH] =3D          { 0x20000000,     0x4000000 },
-> +    [RVSP_IMSIC_M] =3D        { 0x24000000, RVSP_IMSIC_MAX_SIZE },
-> +    [RVSP_IMSIC_S] =3D        { 0x28000000, RVSP_IMSIC_MAX_SIZE },
-> +    [RVSP_PCIE_ECAM] =3D      { 0x30000000,    0x10000000 },
-> +    [RVSP_PCIE_MMIO] =3D      { 0x40000000,    0x40000000 },
-> +    [RVSP_DRAM] =3D           { 0x80000000, 0xff80000000ull },
-> +    [RVSP_PCIE_MMIO_HIGH] =3D { 0x10000000000ull, 0x10000000000ull },
 
-I think goal should be to have minimal possible MMIO devices in
-"rvserver" and wherever required prefer PCIe devices or RPMI
-messaging protocol. The "rvserver" must always have an IOMMU
-as well. In general, the bar for adding MMIO device in "rvserver"
-should be really high.
-
-My suggestion is to drop the RESET_SYSCON and FLASH devices
-in-favor of the RPMI system reset service group and RPMI MM service
-group. Also, with RPMI support in "rvserver", we can have graceful
-shutdown and reboot available using system MSIs. In other words,
-"rvserver" should have RPMI shared memory transport emulated by
-QEMU using the librpmi project.
-
-For distros friendly boot flow, we can use U-Boot SPL as the bios such
-that U-Boot SPL will load FIT image from ESP (EFI system partition)
-of some PCIe storage device (as described in the EBBR specification).
-The FIT image will contain OpenSBI and the final bootloader where the
-final bootloader can be regular U-Boot or EDK2.
-
-In fact, we (Ventana) have an internal PoC based on the above
-suggestions which helps us use unmodified Ubuntu RISC-V
-distributed by Canonical.
+Struct should have typedef according to: docs/devel/style.rst
 
 Regards,
-Anup
+Akihiko Odaki
+
+> +
+> +#define SCANOUT_CHANGE_NONE ((struct scanout_change){ NO_NATIVE_TEXTURE })
+> +
+> +static struct scanout_change dpy_change_scanout_kind(DisplayScanout *scanout,
+> +                                                     enum display_scanout kind)
+> +{
+> +    struct scanout_change change = SCANOUT_CHANGE_NONE;
+> +
+> +    /**
+> +     * We cannot cleanup until the resource is no longer in use, so we record it
+> +     * You MUST call dpy_complete_scanout_change after all listeners are updated
+> +     */
+> +    if (scanout->kind == SCANOUT_TEXTURE && scanout->texture.cb_cleanup) {
+> +        change.native = scanout->texture.native;
+> +        change.cb_cleanup = scanout->texture.cb_cleanup;
+> +    }
+> +    scanout->kind = kind;
+> +
+> +    return change;
+> +}
+> +
+> +static void dpy_complete_scanout_change(struct scanout_change *change)
+> +{
+> +    /**
+> +     * If we previously have a texture and cleanup is required, we call it now
+> +     */
+> +    if (change->native.type != SCANOUT_TEXTURE_NATIVE_TYPE_NONE && change->cb_cleanup) {
+> +        change->cb_cleanup(&change->native);
+> +    }
+> +}
+> +
+>   void dpy_gfx_replace_surface(QemuConsole *con,
+>                                DisplaySurface *surface)
+>   {
+> @@ -818,6 +853,7 @@ void dpy_gfx_replace_surface(QemuConsole *con,
+>       DisplayChangeListener *dcl;
+>       int width;
+>       int height;
+> +    struct scanout_change change = SCANOUT_CHANGE_NONE;
+>   
+>       if (!surface) {
+>           if (old_surface) {
+> @@ -833,7 +869,7 @@ void dpy_gfx_replace_surface(QemuConsole *con,
+>   
+>       assert(old_surface != new_surface);
+>   
+> -    con->scanout.kind = SCANOUT_SURFACE;
+> +    change = dpy_change_scanout_kind(&con->scanout, SCANOUT_SURFACE);
+>       con->surface = new_surface;
+>       dpy_gfx_create_texture(con, new_surface);
+>       QLIST_FOREACH(dcl, &s->listeners, next) {
+> @@ -844,6 +880,7 @@ void dpy_gfx_replace_surface(QemuConsole *con,
+>       }
+>       dpy_gfx_destroy_texture(con, old_surface);
+>       qemu_free_displaysurface(old_surface);
+> +    dpy_complete_scanout_change(&change);
+>   }
+>   
+>   bool dpy_gfx_check_format(QemuConsole *con,
+> @@ -1002,9 +1039,10 @@ void dpy_gl_scanout_disable(QemuConsole *con)
+>   {
+>       DisplayState *s = con->ds;
+>       DisplayChangeListener *dcl;
+> +    struct scanout_change change = SCANOUT_CHANGE_NONE;
+>   
+>       if (con->scanout.kind != SCANOUT_SURFACE) {
+> -        con->scanout.kind = SCANOUT_NONE;
+> +        change = dpy_change_scanout_kind(&con->scanout, SCANOUT_NONE);
+>       }
+>       QLIST_FOREACH(dcl, &s->listeners, next) {
+>           if (con != dcl->con) {
+> @@ -1014,6 +1052,7 @@ void dpy_gl_scanout_disable(QemuConsole *con)
+>               dcl->ops->dpy_gl_scanout_disable(dcl);
+>           }
+>       }
+> +    dpy_complete_scanout_change(&change);
+>   }
+>   
+>   void dpy_gl_scanout_texture(QemuConsole *con,
+> @@ -1023,15 +1062,17 @@ void dpy_gl_scanout_texture(QemuConsole *con,
+>                               uint32_t backing_height,
+>                               uint32_t x, uint32_t y,
+>                               uint32_t width, uint32_t height,
+> -                            ScanoutTextureNative native)
+> +                            ScanoutTextureNative native,
+> +                            dpy_cleanup_texture cb_cleanup)
+>   {
+>       DisplayState *s = con->ds;
+>       DisplayChangeListener *dcl;
+> +    struct scanout_change change = SCANOUT_CHANGE_NONE;
+>   
+> -    con->scanout.kind = SCANOUT_TEXTURE;
+> +    change = dpy_change_scanout_kind(&con->scanout, SCANOUT_TEXTURE);
+>       con->scanout.texture = (ScanoutTexture) {
+>           backing_id, backing_y_0_top, backing_width, backing_height,
+> -        x, y, width, height, native,
+> +        x, y, width, height, native, cb_cleanup
+>       };
+>       QLIST_FOREACH(dcl, &s->listeners, next) {
+>           if (con != dcl->con) {
+> @@ -1045,6 +1086,7 @@ void dpy_gl_scanout_texture(QemuConsole *con,
+>                                                native);
+>           }
+>       }
+> +    dpy_complete_scanout_change(&change);
+>   }
+>   
+>   void dpy_gl_scanout_dmabuf(QemuConsole *con,
+> @@ -1052,8 +1094,9 @@ void dpy_gl_scanout_dmabuf(QemuConsole *con,
+>   {
+>       DisplayState *s = con->ds;
+>       DisplayChangeListener *dcl;
+> +    struct scanout_change change = SCANOUT_CHANGE_NONE;
+>   
+> -    con->scanout.kind = SCANOUT_DMABUF;
+> +    change = dpy_change_scanout_kind(&con->scanout, SCANOUT_DMABUF);
+>       con->scanout.dmabuf = dmabuf;
+>       QLIST_FOREACH(dcl, &s->listeners, next) {
+>           if (con != dcl->con) {
+> @@ -1063,6 +1106,7 @@ void dpy_gl_scanout_dmabuf(QemuConsole *con,
+>               dcl->ops->dpy_gl_scanout_dmabuf(dcl, dmabuf);
+>           }
+>       }
+> +    dpy_complete_scanout_change(&change);
+>   }
+>   
+>   void dpy_gl_cursor_dmabuf(QemuConsole *con, QemuDmaBuf *dmabuf,
+
 
