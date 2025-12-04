@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F78D1F9B4
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 10:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE3BD1F9B5
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 10:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR6vq-0002qg-6e; Thu, 04 Dec 2025 05:51:30 -0500
+	id 1vR6vo-0002i6-EW; Thu, 04 Dec 2025 05:51:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1vR6vg-0002Xd-3h
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 05:51:20 -0500
+ id 1vR6va-0002UJ-6V
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 05:51:14 -0500
 Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
  ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1vR6vd-0002Jp-UO
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 05:51:19 -0500
+ id 1vR6vY-0002Jp-Dp
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 05:51:13 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gNH9ZusaXudsE3WtenxcemMKKOXlvCVhofuzAwkqqq4MHWfuW8K1w/ji3EUHlR817I2ynwv9vPsucIuvLQ/CsnnvnqlviV1Tm79Vvrh9ZiwDWTEuECDDUBYrjNZh8oDJZdYJNNa3HH5yC26rtptNIyetybqtSvMU9Gn8QwHuwdihQxP60ji8LI/TWJT81wpDVHoY9/EPWHcubSxS+Bn181boKM/Stddy2+IPtjd9s/9T5mkjt9zVYiizdtYeGQtMqMnEu4iDtUeL0Lyoed/BMVqOhlhhImtVAuJLN7wzknlfG13Q8TGxngu50e+vEA0FK7OH+l9fBQeO0CFbw6ONHA==
+ b=n7VH8ngWoGPQQ6zNTqirA0hLG0EkYepgZ0KdOQvi6Dl/h2LpI2vfbPYP3kEgDGMwm4BzpaHGC9fSNuRN9ttnx2WFn6gUoYKS24P1h5O2rj5R3Q+MVmtiekdfb8P7x+C0ZJCtgbStiiRhLQ7Ak7VEb8qgp6QMqHGDB8YOS1Bd/THOxAnlZfAdjYVMgWVhXJ+7YUxtqEanNCVu1x/SgtFObJm3aB4FdOomu4SBpniOgBtoB6ZUBh5YFZPgtqJAW8RzGeML19RhYUKWvgmEslOytK8pOvu86yUeEpWAB+vDe+K3GoA159slAvl3W13MmVDMGV0Ve8mLB/XsSuoFzqRC7A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TbknO5ts8yZZ4Q56PLuC2FPxt3MwNizC9foykmeXwdU=;
- b=Fy6ilRQ0IdQ80ReQE0ziVynzN18Q5bJpe9Q9FMdTVk9RMjdgKxtwaID3snBLVEisxmhPcwlIYNPHIINCAgl+Kz7G0Rtlfjb9LqRNFVXRENPvRwczfJkYp87EgBskDg5G1MFFTw3tu97482DS7ol8+9Hq6r1RulJAYt1EyFKQ8PNyrGKiWLl6M3RQ5xLRa6LQRVQh5qPoT3ZrdeenOJ8p3SJYR0QH4uOTXRny5OYwKRaqKAfMf+U38y2Zev4hYyNDuelqLn7g4ToczvJSqFaOiz3d++R2ZTBkIa8WD9JVS0W8RCeIAeHpAcUmjBeRzc9jXOXU4Xkiw4RT7/bcrkz+wA==
+ bh=nkdLg61EAjLiGyTPzAAR9Y5JdjmyslZNraIikIB4ltw=;
+ b=fhmQ0Ruh+T0p9DfJJjmLl4jGX+lgHstesV2VHUE6S9Ql3ctGeDtyQD4qvXKP5VLHXvT5ZPdgca1BREByBMfyklf+wcK9Zlv82wOMDXYw5UTX3/248rSaHkjR99wuKd2x0UQVlUdPh9TdN49FE3rCskFpjw+bcH5qOgU5PrdCWJeBmVJtUVEWE6uxbmsgR9rLNHMxqXUP/0nahuexnRgwfaonpJf5v8wuR4/1yKRCD9GY4kc8/hFaZfzSBGy/kPDpSPJogepQjEKAmBMafy7kNBOUxFSzopJg3gBSK/MP2ghH6sZ+8CcOuY0jApWPvGveYc+EpuWYHofAoMHIZJtBiw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
  header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TbknO5ts8yZZ4Q56PLuC2FPxt3MwNizC9foykmeXwdU=;
- b=YbkxpJpy1xInp2iDcazyBVHPpyccjYG/Mgbn9OoT57NIvKOymg/QheagKdpJu2vJ4YyHzlssRbhasKJvmSbdrM81rpKFQjEGpUsTaqFbZpmUt3vFnIIIT561pTMFwG0nDI7loiK83U8Rw8g9XOSL8OvI+0lhpqWCYutbNkXH8L68Gv3Ua0NfV+ieudXsQ6oQGmU4rK2oSfxpgZf30aSxBaQIATBhYg8HsDsVZWuczDA89ugtegswpYWIUeS3+Bdqmb/G5sxaMleOH2+AFPeJg5ssbYDMXu0vI2W6GhtC6/twFissdhWVc5CYQgvSl+mHWWIEpSxKNc0TmyX/IDNvTA==
+ bh=nkdLg61EAjLiGyTPzAAR9Y5JdjmyslZNraIikIB4ltw=;
+ b=ge9Wx2L0qGCTmPUKMNhSxBrWO1Gg2YKY6xmUPQh9G5hpU905I/PULDbaY1bTa6dqvxUgVw8kMnJsAfo/ZKb92LuixE8vxhCDg4Xq2dQEWn/m6barH6tbBUqMTTFYqlf1kfNF99IfOQ5lWl7ZXDJIb46pAUW9CNXyd9KzDdtsntYyGzaq+Wl/DQegA4wPICqRDBzC2kU1tdcbIcuukldRL6cB/38pZxKlc8C3yE4NdiplX5O2+uvdV94HIfOKZHPY1No0Wni2t9IIo9hJFto6fxnhHwLqrsEktNJXahKSnWE272EZXIQUvk8LPnWHC2qWOvEtLsmfJX+8RL7BGFMcPg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=virtuozzo.com;
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  (2603:10a6:800:20a::12) by AS8PR08MB7718.eurprd08.prod.outlook.com
  (2603:10a6:20b:50a::22) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.9; Thu, 4 Dec
- 2025 10:50:34 +0000
+ 2025 10:50:33 +0000
 Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
  ([fe80::4e37:b189:ddcd:3dd8%3]) with mapi id 15.20.9366.012; Thu, 4 Dec 2025
- 10:50:34 +0000
+ 10:50:33 +0000
 From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: kwolf@redhat.com, peterx@redhat.com, stefanha@redhat.com,
  vsementsov@yandex-team.ru, den@virtuozzo.com,
  andrey.drobyshev@virtuozzo.com
-Subject: [PATCH v3 4/4] scripts/qemugdb: coroutine: Add option for obtaining
- detailed trace in coredump
-Date: Thu,  4 Dec 2025 12:50:19 +0200
-Message-ID: <20251204105019.455060-5-andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH v3 1/4] scripts/qemugdb: mtree: Fix OverflowError in mtree
+ with 128-bit addresses
+Date: Thu,  4 Dec 2025 12:50:16 +0200
+Message-ID: <20251204105019.455060-2-andrey.drobyshev@virtuozzo.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20251204105019.455060-1-andrey.drobyshev@virtuozzo.com>
 References: <20251204105019.455060-1-andrey.drobyshev@virtuozzo.com>
@@ -67,79 +67,79 @@ X-ClientProxiedBy: FR3P281CA0158.DEUP281.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|AS8PR08MB7718:EE_
-X-MS-Office365-Filtering-Correlation-Id: 329061d7-1a5d-4fb5-0769-08de3322f37f
+X-MS-Office365-Filtering-Correlation-Id: 0bd8a6f1-e4e1-4d26-d54e-08de3322f26b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|366016|376014|52116014|1800799024|38350700014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?w+NftptH0OH92Sfsq8ZG7Fa1g3yH/DQw57r7608iFC5Qb/Tiv42czUHSTb9m?=
- =?us-ascii?Q?z51gR27KEDnYQdTrzEOKQrLQ+qhz1rAapq3D/w4OBMfJtNzRGYCcilXx0GRZ?=
- =?us-ascii?Q?K34MbWMQisF2NQDbudQIbv/YTPH9RJ5QXHin3K38OwdWEgWAuI5anZl+pB79?=
- =?us-ascii?Q?ki5EJMXYisRmtEB7eqOIV4SumXytTGY2uGXWTbd8ooNRQ45yvXNX3BgIAapc?=
- =?us-ascii?Q?OE17071sTUKzfIeaGmDaNSk3f20eQQb+WyyskCy1klExCmnp8pm/UEbsn/9N?=
- =?us-ascii?Q?abe2MdR2uau4UowJ2DerXOCD7TOPCaTA+JD7fC/OfdLZ+CONtpSwInaAEms9?=
- =?us-ascii?Q?scj1xiYaanSu4Fx2gFTcNc0YqlTu3H18GGqeoRCIeRapL6cozxsIh4Mn8ayw?=
- =?us-ascii?Q?aFdfcCj41RRazXWhBtG91mgdE+jBtUPSR/81z78vIKbn6jhBi7/YlRkwfsxr?=
- =?us-ascii?Q?wC7P7+giNPt4SJw/NtNMi1Ds4kQfZFfGVpFauwETQCWueLhuCG4DKUJKqihV?=
- =?us-ascii?Q?kYz3GMEkLzK0QTT6e+NkGIcNTz79SUydzM3/dFvZAZa5tDBxSwLnFtMiWzmV?=
- =?us-ascii?Q?Lvq6g6LbYdiz8vkhCg3/XpnAgCUMPdFpA4BgDkd5+BDATCDzfp/Dm/xEpUZe?=
- =?us-ascii?Q?RfEUVK4OsVDM2lEuqdEzjGKYE4GYOiN7oz+1Pn1kdhv9mUfJLjhL4ivLMRjr?=
- =?us-ascii?Q?MTDRbuPmyEHSNkw/eFKwwfPnQooQxlrQgCa0CfZpBciMPqIT4qHnFr5Xlq8f?=
- =?us-ascii?Q?hmHHaBTZd44kIlwXBlCS/mxk8NyGuzjBlEnhBFzEPl9abP+Mirrxs/Ao4jwD?=
- =?us-ascii?Q?KYaRrmGWJdXWublsN1i1dKeufMEg5XR7L4qKs4Hk8Pu4NLAzOD73k8bbW7Ol?=
- =?us-ascii?Q?5RkowoI3V1yaGSDA/StnWTSMGgyAV/3yJuxUI15oeImN17VM5Ay3vueBi2wm?=
- =?us-ascii?Q?8CNEwdzINUmTbGesWZfa1FrW+pXrDQm16WvsJpdginrt99uMYfjR+RwHe3NP?=
- =?us-ascii?Q?nhT7Znwsfb2b2tf1k3dRV36TNVRUhwehpVJepwe6GkwTw6P9xC2q640ua+5T?=
- =?us-ascii?Q?ByFwKefBWMbubV/6wDpLQ1pdw9niqO/2KwwDqFUj9RXHRfOTG8HAt0ySfaCW?=
- =?us-ascii?Q?6Ov7aBce5dDiBVHceYeE4StyNJS45U5QZb4N4OFN4BvPV7kpS/DGKHkUscoS?=
- =?us-ascii?Q?eDvZWTRnd9tVeefKWqG0+IEa6bGAEFnu+yFGG35Oo63kShoZA2s0Xy6aNcrZ?=
- =?us-ascii?Q?Y84rqgtEbb6jpu09QS/8YIMJWIGVeS3uZENDVIgl0dayihZbiEnnW+nKHtrD?=
- =?us-ascii?Q?UrY70xHDWuWomqDt+nKQVRwdfVzCEwODSYmpo/1+9AozFadj+FTrPuIcrMt7?=
- =?us-ascii?Q?F177wxfsfeDx2FLsVnVTg+R79cVu5zm5Tvw7EJlgFwNKR6Sl0a9Vgzz6+oE/?=
- =?us-ascii?Q?KbA4cA7HQNI/yAY9s84XrQtZ58U0udeCl/ZdkvVTX/x+06axZC6D7IuLi+kp?=
- =?us-ascii?Q?ZjkRb/ZOP6kWfktea89geK2rgxqZDDUcjkEY?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?WT0BdfOwaPmBz9RUV9hYqM8n8Im/dUpiwT+sjEo7QIqJz3J6Oh3In7pkGEko?=
+ =?us-ascii?Q?jil+yuS/5QHwiQ3ik2cq+Q99B1NiBq6JxMMfrXR58z71T9pYEVhnJAEW2eV0?=
+ =?us-ascii?Q?PfUHZE6+EF5z0gMwOWbCPoN5vwZypnbd4kyaYEiCbMGbVdbkkRTdz/mfpzpO?=
+ =?us-ascii?Q?vXJkmrZ0zhrYcZXgTbAFl6OjHuEMXeWGNkjnfJqW/ZIyacxYeUzV8G7GudO0?=
+ =?us-ascii?Q?7FYjKuAw9/hUMMSJAyeBSumixIZjQSd0VPvlF8zjUyIVoQ+HUAuJh85fwq0o?=
+ =?us-ascii?Q?Pwyh1J14NUgGSlZgAkxI4WlACzh6o6eZuLn3oSIXfUsZoIqQ+k0grL4SjopK?=
+ =?us-ascii?Q?NDHx+tCWPNJfRnYIvyN0qIu/e+/DhfLXnPFdODW4ae0wF/V2oes3aalQxMwW?=
+ =?us-ascii?Q?PPiRnewiLlvSzQ1Qah13F1gdHSUMcoh1yZu6M3AjdvbNEDYOWv78EKqyRlzY?=
+ =?us-ascii?Q?+qPkYVFYdc2roMVL+cBJT8K2ehosU+kFe4r7RTt/bsgr/kno891truTQtamT?=
+ =?us-ascii?Q?WYXcdZtIus2k2XXbiwHaiy0/UyEZZgbMMtyeJ79RdabPRQK9RSVwLW1K7TDh?=
+ =?us-ascii?Q?5XpCxCRicBYng7LMjfTXy6M8qlmfnIdLVl/lBg7I9n9WxoCpZiSc8EMmsD9e?=
+ =?us-ascii?Q?D6cSAgPQpJ5hpZkLIcU/2O+r4RVgS684AhRIlR/CA+k7XC5WavoHAa5MmGQm?=
+ =?us-ascii?Q?Ur2Lh2d1wJU/7SM9RAEgI6j21X47H49+QBEHdc5VZFD3HEqqcmwE4uWjY1MJ?=
+ =?us-ascii?Q?8BfC/AC7U//9u4+YifvuFtdfx/yWh6c4OFK8gbpBbnACUekrMyQdLiuUBFq2?=
+ =?us-ascii?Q?y8gsiWa65+iMa1wf4ckbVClyrO9nKQN2Vr0Zd9S2+FzzCaTXNbsuxV7NbuFy?=
+ =?us-ascii?Q?+nwBtkb17hPhoGZPTwhcP6SUeSCn3ZXPoJ4stOJ1TIMqkRthNsHJ9bn79kzh?=
+ =?us-ascii?Q?UBOp4wI8PfYjrZ1RGusjxemUY7K6zMnbgKg0QMKY3R41cZxSBisJRkfUckKf?=
+ =?us-ascii?Q?NYqnLtx3ZWFiwfWlxqJy6oa4rurqmd1En7EaSNa2dVHz+6menJLC5gkVxEK/?=
+ =?us-ascii?Q?KMZ0utQCF5ywwSvfPCdU5IlFTqqi3eI21bK7fOAyinAuWrEiCJ0sUPsOLBof?=
+ =?us-ascii?Q?YUoHvOVky6Wj2/mE+jkv8Rl/pzPgjCeTHy8HU+Be+HjrX1dlf+5E/ETUrknS?=
+ =?us-ascii?Q?QaNQPShAsCttNeYRkbcgOxlGft+PY0p3JaMprKYtEGGvF/kNxEy9u+4Jl9SW?=
+ =?us-ascii?Q?S9hrWiuqSEFjPngM+s5yMcA+0U/vmKdhsmgL3W08OeXnMut8i2QDZwaHlnsk?=
+ =?us-ascii?Q?/pHM2MMWlBvNgyUKlj/JBNoi0YuZqmrjj9NNKtGV5FHmF1nZbpxwIavn/AI6?=
+ =?us-ascii?Q?LN1dT59Vvg08DcJVoA1wh/239uODBDfwN5mbofdQ2VYXeYTxVJFL7ANugHkC?=
+ =?us-ascii?Q?qWwpO5Z6ZgQB22CLnryyR6KYiw859rjPh1HjE71c31l9479eoR60EMud4IGQ?=
+ =?us-ascii?Q?X9EkXMBL1wU9OIDyeI0IAagzFTuPWPj22sOH?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(376014)(52116014)(1800799024)(38350700014); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?FbB47Ox5R+4OBigjI2SN+/jcu3WyQf0toKSIdtOs8A8X2lLOn9Yg1xgX46DA?=
- =?us-ascii?Q?TEGBCrhNnCuyVnj3tIqgW9V7ilL3mIs2frkRS8wLS0+Qg1e+eW1y3uAA1AEj?=
- =?us-ascii?Q?2diM+4GLoo6uU4nuWsgFCD3kugqzdxqKVf0mb9r8+pHqSNHSX38rkrXCUK/g?=
- =?us-ascii?Q?3hvzUQOWD7Cchjmlt43IECDHjOHCJL4g2Q4KSJ/rjUmszp5A6TZH4LZKxyvS?=
- =?us-ascii?Q?LMtboLlbmUk5OyIVX/l57NKKr0lprJCD+MRdVqqyAUA4hnixniBcLKFeaQJ5?=
- =?us-ascii?Q?AJdhnWKOyV88p10vB5H0CjnlnFADlMjAlMEkvcVXLtOFMS2ZCMsHmHtE4RYb?=
- =?us-ascii?Q?dm6qWNFVRx2vomqIDrEO2TutllbdKXTwmRgMSIjfbEvx0u6nNlZV9MUFjrGL?=
- =?us-ascii?Q?TDzG2RmTyDP1A89nja8khw+V3Cu0EDEWuaHhRMW/6odjaQKRR4UXxZ2Zlb+6?=
- =?us-ascii?Q?sP52vdJHzbWp5Egfx7rk9ZZRvh5hdt9yFA7KiglNL+QDE3R5WmD2klheilEk?=
- =?us-ascii?Q?8lxG1NTn/W11JIHunExlZ1F0ILuOgoCfGTOuttNCisu56rm5DjQLFiuFhu0m?=
- =?us-ascii?Q?OodmxHh+pu60FisFVTc7xP+3RvTPPRZoxiBAOeRTGG+qM9uMUjivVw9Vbih7?=
- =?us-ascii?Q?j8TKG4x/E5sCpWgmi3VI7nWKh5mutvsR7UNuETba9nRz9XbGMtHc0486DZGv?=
- =?us-ascii?Q?t4HZhNHEhNIvI9ZOLA7ejjNpsWOJZuzUPJ3UUEVy/5gBm0hCb9RDb/oHoqCa?=
- =?us-ascii?Q?jdaG+8g4OrZTMPQmmtdgqRAtJC8q8pPaCTrShlqMYTT+8PoPpq/2TqQCEsI1?=
- =?us-ascii?Q?q69LtrojpVTaaOc/3rmKpr5tzBO0otbdpD8+D67SrFMyy8j5j9x8LntHuxt5?=
- =?us-ascii?Q?1jHo+XNVL1xCptP1wH49Aie+cpTOU0Ecum+MOIn4kJgJZgq+nhjp3Ql52fVj?=
- =?us-ascii?Q?dm0dZaeHDAJ/6JmGj1Lbz0/dklKQ7MY9WFJsIguN3afzVUdWSDJLPsMG/DFO?=
- =?us-ascii?Q?0ukZIVUpAYrGcLA96Olzjcf2h27bn4sb+rdGJLKxD7wujAnNvM1LhiWQt9QX?=
- =?us-ascii?Q?LUb20FvKPRlDAdlGNYujbV0g8y6F4L5Vn+gaqDOcQeAqNcOr/FPV+my1h6Gg?=
- =?us-ascii?Q?CjYfszhFHAseGW/ohM/lWR7/ogzgB+Nv4JA9JZB5Hz8Iu61A4kJ6YyPMmmVT?=
- =?us-ascii?Q?yV5yAo4oIc03yz29LX/vaDAAxVDk7hw5uqZyFQqfIAJgF2urEbavtKg9nYKg?=
- =?us-ascii?Q?FGB6EHefOb8KK/z3xP1L+mMdcmXW+MppOakuA9nMYg2a3gImSouG3FR07qoM?=
- =?us-ascii?Q?fVJjjbmYBLr7sQamxSg4/0tuyE8/OxmCyW780tbYb0h6t4Baqjnm7miuLino?=
- =?us-ascii?Q?X7PYnssnLe76XOiVWCAAeJU70zQAW+/oWFtBUojOrMEd2+AYJmcDrClgfBjv?=
- =?us-ascii?Q?rQ42PYO7r5QIm6WaCGjT1o79VPps6oZunzbdJUKCc8PUjszPuL4rOXt8UQQ9?=
- =?us-ascii?Q?LPPn5X+xdj4URK4F/RhFURGMj0wOq3EnvXYBM49eVHU/PaTM6sTF2IYw2Whi?=
- =?us-ascii?Q?rBoHidsNxilmqU/0uxsufjZk9+nmTn9hovxiFrKl86xscOWrr7jb/CpUcuho?=
- =?us-ascii?Q?EQ=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?tykS/NtHMLboyaaasXVsgJCh8HNncIKXs/5mlr5fEB3LzynWV+4m4OylfWX8?=
+ =?us-ascii?Q?ZfPOeiQmVphRD/PVeaR8XQwFkfzs8ipIjoItruSjQBNY/f1vjiNxMsnNInSH?=
+ =?us-ascii?Q?Q2JWnz2DjzzqBiB4hcVwQHL4+rry0D3PzRag3QSi52UOQpQKBU/Pi9SDaOTn?=
+ =?us-ascii?Q?vo24FLzTVXzwgiIc4/Q+DkFmR6EkbTyJtn83XkHhcX8ireMHXtMHqm6QH4Xv?=
+ =?us-ascii?Q?oZecbyoBEkjkg5Y363LjghAv+3Vod2qni1A9dC1jL5MvG1fMPp1EScADY5Yh?=
+ =?us-ascii?Q?kl7dNJ5hPBZhICQwlQ6DuAnX2y0JzBJKdS2We5IYeZAbstKt8z6SbW8d4MUt?=
+ =?us-ascii?Q?QLgSdXYzVw8KrRNDNkbt/L8b90aJ2lVqdr2a0KaR2uCl6uI0wIuneyO173uu?=
+ =?us-ascii?Q?nFnmShLbnJ/b354sutvwo5kv+uFA55eYp/mwj5I1bg/Cq+xcSF7VxNx61Vnv?=
+ =?us-ascii?Q?BzkErM/xK50X8A9LTEjTwcxUU+RO7Kec1W3/uPOJUcgZzQm3VRAnIB85y67C?=
+ =?us-ascii?Q?dB3P7aJuwMKzIhvI55rQodLND/pneV3yC6P4u7AnmTmHsusSl5GkuIAWNb92?=
+ =?us-ascii?Q?H71NnI/wLD8bMKwEGsDaBBDcgef0y/YC8AjQclN5o5agqTWm84tRfyQVE0mL?=
+ =?us-ascii?Q?8MvpVZKLNlDmYyGmPims5BQzciVBSMynRwUL3gD07HwTCvCjUhSZhS/tmX9+?=
+ =?us-ascii?Q?GDqYkHGBcVqtGUjclbYufwFXEE4u974x/Tp4zf74xf6UIUIubnqx/XQfJ286?=
+ =?us-ascii?Q?PoQ3RK0MnYzrRNyjq1HtQX7OCfoskvVM1lFDFxAgWfyAB+NmwTf3h4TtOm2L?=
+ =?us-ascii?Q?WtI8DchV5n6BgiqWiLz2zjdWhXiPq80HWAnRXbN461jrS7NVYG54zx5aMK5B?=
+ =?us-ascii?Q?QSpOEbyxgCqbmFYJMDCaEOcGhuIamNCONAAqEv+uNxw7/1IjaCD3UDmE/Aam?=
+ =?us-ascii?Q?/71nl2/c7HHt4fveALf/6OJyxfdZYSvId3ohXUalKDzVpppyHM6v8Ox5hDeW?=
+ =?us-ascii?Q?MuHUFncI0iH/s5uehc7USsyi5oLMp5X8HMuzfcGlIpd8OZTmAq2BHq2quPU2?=
+ =?us-ascii?Q?BSndhXb6bRxI28c+c/mq470RRTtmYSen/cflbdye//sG61PKdqOp8NprrWc8?=
+ =?us-ascii?Q?Y2awmbE1LWo4dN3RoNl67C7e9c/YwlKJSE60IxRAJu8hGg26fCOHmVQ1oVFf?=
+ =?us-ascii?Q?aURZaXjaf7p6MiRGPlJ124CNiIlJ5Zm463QdspYwKy5L41TmzJIteWrdJJ5Y?=
+ =?us-ascii?Q?kDljWR5BcWJM6ziPJNq5V3pwO/re86Tn7J0/S67600clrWziitZAkweQ+Ohh?=
+ =?us-ascii?Q?Fse3TUMR+YkKG+LFibnTL5ygg63tgJIrkP17kn0ufNSw1UmJdo7AnM6HI2sj?=
+ =?us-ascii?Q?lDjjkFBXlusF+byzQe1JSpnPqCHm5Be0WibZLCTDN7jHWAr7MhgG2ZviLvec?=
+ =?us-ascii?Q?uaAXgEodzZinkTyby9Db7RnUYFiqgsYn08KtuurWf8GWAiMwVv8JcwmnpEVK?=
+ =?us-ascii?Q?H4CqUVSKbw1figiyeu4pi3Qdwb+RzxvYTQff177dgz6RmBXgZrMdGwcqbP6k?=
+ =?us-ascii?Q?XBQBVnxc1G3HZhl7rVoYmv5XGvRm6pt2eyY9IAaCuoJBCfy3w5rpm/liXBQX?=
+ =?us-ascii?Q?gQ=3D=3D?=
 X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 329061d7-1a5d-4fb5-0769-08de3322f37f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0bd8a6f1-e4e1-4d26-d54e-08de3322f26b
 X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Dec 2025 10:50:34.1961 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Dec 2025 10:50:32.4693 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: u3dEgUntaHbOh3Ak26QSKlUQVOGX41ZJJUkJ5opCRphG950UeTibK/jl9W401nbVG2H7Hefkv0qAQjKCglB7urWdL14qVgWA1i7RDwzndVw=
+X-MS-Exchange-CrossTenant-UserPrincipalName: f68gWMm2PNo8fbqf/g/zIxmpqx1YZl4/O500aIF/jKhpAqJ22/2vSJ833y4ed7UYG9zPgzv/QiCVhiASv8F0BFuv0lDTHHI8Fa352WvUjIQ=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB7718
 Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
  envelope-from=andrey.drobyshev@virtuozzo.com;
@@ -165,393 +165,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 772f86839f ("scripts/qemu-gdb: Support coroutine dumps in
-coredumps") introduced coroutine traces in coredumps using raw stack
-unwinding.  While this works, this approach does not allow to view the
-function arguments in the corresponding stack frames.
+The 'qemu mtree' command fails with "OverflowError: int too big to
+convert" when memory regions have 128-bit addresses.
 
-As an alternative, we can obtain saved registers from the coroutine's
-jmpbuf, patch them into the coredump's struct elf_prstatus in place, and
-execute another gdb subprocess to get backtrace from the patched temporary
-coredump.
+Fix by changing conversion base from 16 to 0 (automatic detection based
+on string prefix).  This works more reliably in GDB's embedded
+Python.
 
-While providing more detailed info, this alternative approach, however, is
-more invasive as it might potentially corrupt the coredump file. We do take
-precautions by saving the original registers values into a separate binary
-blob /path/to/coredump.ptregs, so that it can be restores in the next
-GDB session.  Still, instead of making it a new deault, let's keep raw unwind
-the default behaviour, but add the '--detailed' option for 'qemu bt' and
-'qemu coroutine' command which would enforce the new behaviour.
-
-That's how this looks:
-
-  (gdb) qemu coroutine 0x7fda9335a508
-  #0  0x5602bdb41c26 in qemu_coroutine_switch<+214> () at ../util/coroutine-ucontext.c:321
-  #1  0x5602bdb3e8fe in qemu_aio_coroutine_enter<+493> () at ../util/qemu-coroutine.c:293
-  #2  0x5602bdb3c4eb in co_schedule_bh_cb<+538> () at ../util/async.c:547
-  #3  0x5602bdb3b518 in aio_bh_call<+119> () at ../util/async.c:172
-  #4  0x5602bdb3b79a in aio_bh_poll<+457> () at ../util/async.c:219
-  #5  0x5602bdb10f22 in aio_poll<+1201> () at ../util/aio-posix.c:719
-  #6  0x5602bd8fb1ac in iothread_run<+123> () at ../iothread.c:63
-  #7  0x5602bdb18a24 in qemu_thread_start<+355> () at ../util/qemu-thread-posix.c:393
-
-  (gdb) qemu coroutine 0x7fda9335a508 --detailed
-  patching core file /tmp/tmpq4hmk2qc
-  found "CORE" at 0x10c48
-  assume pt_regs at 0x10cbc
-  write r15 at 0x10cbc
-  write r14 at 0x10cc4
-  write r13 at 0x10ccc
-  write r12 at 0x10cd4
-  write rbp at 0x10cdc
-  write rbx at 0x10ce4
-  write rip at 0x10d3c
-  write rsp at 0x10d54
-
-  #0  0x00005602bdb41c26 in qemu_coroutine_switch (from_=0x7fda9335a508, to_=0x7fda8400c280, action=COROUTINE_ENTER) at ../util/coroutine-ucontext.c:321
-  #1  0x00005602bdb3e8fe in qemu_aio_coroutine_enter (ctx=0x5602bf7147c0, co=0x7fda8400c280) at ../util/qemu-coroutine.c:293
-  #2  0x00005602bdb3c4eb in co_schedule_bh_cb (opaque=0x5602bf7147c0) at ../util/async.c:547
-  #3  0x00005602bdb3b518 in aio_bh_call (bh=0x5602bf714a40) at ../util/async.c:172
-  #4  0x00005602bdb3b79a in aio_bh_poll (ctx=0x5602bf7147c0) at ../util/async.c:219
-  #5  0x00005602bdb10f22 in aio_poll (ctx=0x5602bf7147c0, blocking=true) at ../util/aio-posix.c:719
-  #6  0x00005602bd8fb1ac in iothread_run (opaque=0x5602bf42b100) at ../iothread.c:63
-  #7  0x00005602bdb18a24 in qemu_thread_start (args=0x5602bf7164a0) at ../util/qemu-thread-posix.c:393
-  #8  0x00007fda9e89f7f2 in start_thread (arg=<optimized out>) at pthread_create.c:443
-  #9  0x00007fda9e83f450 in clone3 () at ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
-
-CC: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-CC: Peter Xu <peterx@redhat.com>
-Originally-by: Vladimir Sementsov-Ogievskiy <vsementsov@virtuozzo.com>
 Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- scripts/qemugdb/coroutine.py | 257 +++++++++++++++++++++++++++++++++--
- 1 file changed, 242 insertions(+), 15 deletions(-)
+ scripts/qemugdb/mtree.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/qemugdb/coroutine.py b/scripts/qemugdb/coroutine.py
-index e98fc48a4b..29f57ae84e 100644
---- a/scripts/qemugdb/coroutine.py
-+++ b/scripts/qemugdb/coroutine.py
-@@ -9,10 +9,119 @@
- # This work is licensed under the terms of the GNU GPL, version 2
- # or later.  See the COPYING file in the top-level directory.
+diff --git a/scripts/qemugdb/mtree.py b/scripts/qemugdb/mtree.py
+index 8fe42c3c12..77603c04b1 100644
+--- a/scripts/qemugdb/mtree.py
++++ b/scripts/qemugdb/mtree.py
+@@ -25,7 +25,7 @@ def int128(p):
+     if p.type.code == gdb.TYPE_CODE_STRUCT:
+         return int(p['lo']) + (int(p['hi']) << 64)
+     else:
+-        return int(("%s" % p), 16)
++        return int(("%s" % p), 0)
  
-+import atexit
- import gdb
-+import os
-+import pty
-+import re
-+import struct
-+import textwrap
-+
-+from collections import OrderedDict
-+from copy import deepcopy
- 
- VOID_PTR = gdb.lookup_type('void').pointer()
- 
-+# Registers in the same order they're present in ELF coredump file.
-+# See asm/ptrace.h
-+PT_REGS = ['r15', 'r14', 'r13', 'r12', 'rbp', 'rbx', 'r11', 'r10', 'r9',
-+           'r8', 'rax', 'rcx', 'rdx', 'rsi', 'rdi', 'orig_rax', 'rip', 'cs',
-+           'eflags', 'rsp', 'ss']
-+
-+coredump = None
-+
-+
-+class Coredump:
-+    _ptregs_suff = '.ptregs'
-+
-+    def __init__(self, coredump, executable):
-+        atexit.register(self._cleanup)
-+
-+        self.coredump = coredump
-+        self.executable = executable
-+        self._ptregs_blob = coredump + self._ptregs_suff
-+        self._dirty = False
-+
-+        with open(coredump, 'rb') as f:
-+            while f.read(4) != b'CORE':
-+                pass
-+            gdb.write(f'core file {coredump}: found "CORE" at 0x{f.tell():x}\n')
-+
-+            # Looking for struct elf_prstatus and pr_reg field in it (an array
-+            # of general purpose registers).  See sys/procfs.h.
-+
-+            # lseek(f.fileno(), 4, SEEK_CUR): go to elf_prstatus
-+            f.seek(4, 1)
-+
-+            # lseek(f.fileno(), 112, SEEK_CUR):
-+            # offsetof(struct elf_prstatus, pr_reg)
-+            f.seek(112, 1)
-+
-+            self._ptregs_offset = f.tell()
-+
-+            # If binary blob with the name /path/to/coredump + '.ptregs'
-+            # exists, that means proper cleanup didn't happen during previous
-+            # GDB session with the same coredump, and registers in the dump
-+            # itself might've remained patched.  Thus we restore original
-+            # registers values from this blob
-+            if os.path.exists(self._ptregs_blob):
-+                with open(self._ptregs_blob, 'rb') as b:
-+                    orig_ptregs_bytes = b.read()
-+                self._dirty = True
-+            else:
-+                orig_ptregs_bytes = f.read(len(PT_REGS) * 8)
-+
-+            values = struct.unpack(f"={len(PT_REGS)}q", orig_ptregs_bytes)
-+            self._orig_ptregs = OrderedDict(zip(PT_REGS, values))
-+
-+            if not os.path.exists(self._ptregs_blob):
-+                gdb.write(f'saving original pt_regs in {self._ptregs_blob}\n')
-+                with open(self._ptregs_blob, 'wb') as b:
-+                    b.write(orig_ptregs_bytes)
-+
-+        gdb.write('\n')
-+
-+    def patch_regs(self, regs):
-+        # Set dirty flag early on to make sure regs are restored upon cleanup
-+        self._dirty = True
-+
-+        gdb.write(f'patching core file {self.coredump}\n')
-+        patched_ptregs = deepcopy(self._orig_ptregs)
-+        int_regs = {k: int(v) for k, v in regs.items()}
-+        patched_ptregs.update(int_regs)
-+
-+        with open(self.coredump, 'ab') as f:
-+            gdb.write(f'assume pt_regs at 0x{self._ptregs_offset:x}\n')
-+            f.seek(self._ptregs_offset, 0)
-+            gdb.write('writing regs:\n')
-+            for reg in self._orig_ptregs.keys():
-+                if reg in int_regs:
-+                    gdb.write(f"  {reg}: {int_regs[reg]:#16x}\n")
-+            f.write(struct.pack(f"={len(PT_REGS)}q", *patched_ptregs.values()))
-+
-+        gdb.write('\n')
-+
-+    def restore_regs(self):
-+        if not self._dirty:
-+            return
-+
-+        gdb.write(f'\nrestoring original regs in core file {self.coredump}\n')
-+        with open(self.coredump, 'ab') as f:
-+            gdb.write(f'assume pt_regs at 0x{self._ptregs_offset:x}\n')
-+            f.seek(self._ptregs_offset, 0)
-+            f.write(struct.pack(f"={len(PT_REGS)}q",
-+                                *self._orig_ptregs.values()))
-+
-+        self._dirty = False
-+        gdb.write('\n')
-+
-+    def _cleanup(self):
-+        if os.path.exists(self._ptregs_blob):
-+            self.restore_regs()
-+            gdb.write(f'\nremoving saved pt_regs file {self._ptregs_blob}\n')
-+            os.unlink(self._ptregs_blob)
-+
-+
- def pthread_self():
-     '''Fetch the base address of TLS.'''
-     return gdb.parse_and_eval("$fs_base")
-@@ -77,6 +186,55 @@ def symbol_lookup(addr):
- 
-     return f"{func_str} at {path}:{line}"
- 
-+def run_with_pty(cmd):
-+    # Create a PTY pair
-+    master_fd, slave_fd = pty.openpty()
-+
-+    pid = os.fork()
-+    if pid == 0:  # Child
-+        os.close(master_fd)
-+        # Attach stdin/stdout/stderr to the PTY slave side
-+        os.dup2(slave_fd, 0)
-+        os.dup2(slave_fd, 1)
-+        os.dup2(slave_fd, 2)
-+        os.close(slave_fd)
-+        os.execvp("gdb", cmd) # Runs gdb and doesn't return
-+
-+    # Parent
-+    os.close(slave_fd)
-+
-+    output = bytearray()
-+    try:
-+        while True:
-+            data = os.read(master_fd, 65536)
-+            if not data:
-+                break
-+            output.extend(data)
-+    except OSError: # in case subprocess exits and we get EBADF on read()
-+        pass
-+    finally:
-+        try:
-+            os.close(master_fd)
-+        except OSError: # in case we get EBADF on close()
-+            pass
-+
-+    # Wait for child to finish (reap zombie)
-+    os.waitpid(pid, 0)
-+
-+    return output.decode('utf-8')
-+
-+def dump_backtrace_patched(regs):
-+    cmd = ['gdb', '-batch',
-+           '-ex', 'set debuginfod enabled off',
-+           '-ex', 'set complaints 0',
-+           '-ex', 'set style enabled on',
-+           '-ex', 'python print("----split----")',
-+           '-ex', 'bt', coredump.executable, coredump.coredump]
-+
-+    coredump.patch_regs(regs)
-+    out = run_with_pty(cmd).split('----split----')[1]
-+    gdb.write(out)
-+
- def dump_backtrace(regs):
-     '''
-     Backtrace dump with raw registers, mimic GDB command 'bt'.
-@@ -120,7 +278,7 @@ def dump_backtrace_live(regs):
- 
-     selected_frame.select()
- 
--def bt_jmpbuf(jmpbuf):
-+def bt_jmpbuf(jmpbuf, detailed=False):
-     '''Backtrace a jmpbuf'''
-     regs = get_jmpbuf_regs(jmpbuf)
-     try:
-@@ -128,8 +286,12 @@ def bt_jmpbuf(jmpbuf):
-         # but only works with live sessions.
-         dump_backtrace_live(regs)
-     except:
--        # If above doesn't work, fallback to poor man's unwind
--        dump_backtrace(regs)
-+        if detailed:
-+            # Obtain detailed trace by patching regs in copied coredump
-+            dump_backtrace_patched(regs)
-+        else:
-+            # If above doesn't work, fallback to poor man's unwind
-+            dump_backtrace(regs)
- 
- def co_cast(co):
-     return co.cast(gdb.lookup_type('CoroutineUContext').pointer())
-@@ -138,28 +300,90 @@ def coroutine_to_jmpbuf(co):
-     coroutine_pointer = co_cast(co)
-     return coroutine_pointer['env']['__jmpbuf']
- 
-+def init_coredump():
-+    global coredump
-+
-+    files = gdb.execute('info files', False, True).split('\n')
-+
-+    if not 'core dump' in files[1]:
-+        return False
-+
-+    core_path = re.search("`(.*)'", files[2]).group(1)
-+    exec_path = re.match('^Symbols from "(.*)".$', files[0]).group(1)
-+
-+    if coredump is None:
-+        coredump = Coredump(core_path, exec_path)
-+
-+    return True
- 
- class CoroutineCommand(gdb.Command):
--    '''Display coroutine backtrace'''
-+    __doc__ = textwrap.dedent("""\
-+        Display coroutine backtrace
-+
-+        Usage: qemu coroutine COROPTR [--detailed]
-+        Show backtrace for a coroutine specified by COROPTR
-+
-+          --detailed       obtain detailed trace by copying coredump, patching
-+                           regs in it, and runing gdb subprocess to get
-+                           backtrace from the patched coredump
-+        """)
-+
-     def __init__(self):
-         gdb.Command.__init__(self, 'qemu coroutine', gdb.COMMAND_DATA,
-                              gdb.COMPLETE_NONE)
- 
-+    def _usage(self):
-+        gdb.write('usage: qemu coroutine <coroutine-pointer> [--detailed]\n')
-+        return
-+
-     def invoke(self, arg, from_tty):
-         argv = gdb.string_to_argv(arg)
--        if len(argv) != 1:
--            gdb.write('usage: qemu coroutine <coroutine-pointer>\n')
-+        argc = len(argv)
-+        if argc == 0 or argc > 2 or (argc == 2 and argv[1] != '--detailed'):
-+            return self._usage()
-+        detailed = True if argc == 2 else False
-+
-+        is_coredump = init_coredump()
-+        if detailed and not is_coredump:
-+            gdb.write('--detailed is only valid when debugging core dumps\n')
-             return
- 
--        bt_jmpbuf(coroutine_to_jmpbuf(gdb.parse_and_eval(argv[0])))
-+        try:
-+            bt_jmpbuf(coroutine_to_jmpbuf(gdb.parse_and_eval(argv[0])),
-+                      detailed=detailed)
-+        finally:
-+            coredump.restore_regs()
- 
- class CoroutineBt(gdb.Command):
--    '''Display backtrace including coroutine switches'''
-+    __doc__ = textwrap.dedent("""\
-+        Display backtrace including coroutine switches
-+
-+        Usage: qemu bt [--detailed]
-+
-+          --detailed       obtain detailed trace by copying coredump, patching
-+                           regs in it, and runing gdb subprocess to get
-+                           backtrace from the patched coredump
-+        """)
-+
-     def __init__(self):
-         gdb.Command.__init__(self, 'qemu bt', gdb.COMMAND_STACK,
-                              gdb.COMPLETE_NONE)
- 
-+    def _usage(self):
-+        gdb.write('usage: qemu bt [--detailed]\n')
-+        return
-+
-     def invoke(self, arg, from_tty):
-+        argv = gdb.string_to_argv(arg)
-+        argc = len(argv)
-+        if argc > 1 or (argc == 1 and argv[0] != '--detailed'):
-+            return self._usage()
-+        detailed = True if argc == 1 else False
-+
-+        is_coredump = init_coredump()
-+        if detailed and not is_coredump:
-+            gdb.write('--detailed is only valid when debugging core dumps\n')
-+            return
- 
-         gdb.execute("bt")
- 
-@@ -173,13 +397,16 @@ def invoke(self, arg, from_tty):
-         if co_ptr == False:
-             return
- 
--        while True:
--            co = co_cast(co_ptr)
--            co_ptr = co["base"]["caller"]
--            if co_ptr == 0:
--                break
--            gdb.write("Coroutine at " + str(co_ptr) + ":\n")
--            bt_jmpbuf(coroutine_to_jmpbuf(co_ptr))
-+        try:
-+            while True:
-+                co = co_cast(co_ptr)
-+                co_ptr = co["base"]["caller"]
-+                if co_ptr == 0:
-+                    break
-+                gdb.write("\nCoroutine at " + str(co_ptr) + ":\n")
-+                bt_jmpbuf(coroutine_to_jmpbuf(co_ptr), detailed=detailed)
-+        finally:
-+            coredump.restore_regs()
- 
- class CoroutineSPFunction(gdb.Function):
-     def __init__(self):
+ class MtreeCommand(gdb.Command):
+     '''Display the memory tree hierarchy'''
 -- 
 2.43.5
 
