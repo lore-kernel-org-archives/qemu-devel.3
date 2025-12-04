@@ -4,69 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DA7D1CDBF
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 02:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F5AD1CDBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 02:01:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQyeQ-0000jC-93; Wed, 03 Dec 2025 21:00:58 -0500
+	id 1vQyep-0000rG-H9; Wed, 03 Dec 2025 21:01:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1vQyeN-0000iR-0G
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 21:00:55 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1vQyeK-0001dW-7t
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 21:00:54 -0500
-Received: from loongson.cn (unknown [10.20.42.126])
- by gateway (Coremail) with SMTP id _____8AxztJG6zBp1esqAA--.25841S3;
- Thu, 04 Dec 2025 10:00:38 +0800 (CST)
-Received: from [10.20.42.126] (unknown [10.20.42.126])
- by front1 (Coremail) with SMTP id qMiowJCxdORE6zBpzDtFAQ--.54547S3;
- Thu, 04 Dec 2025 10:00:38 +0800 (CST)
-Subject: Re: [PATCH 3/3] target/loongarch: Add host CPU model in kvm mode
-To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20251106084043.2453749-1-maobibo@loongson.cn>
- <20251106084043.2453749-4-maobibo@loongson.cn>
-From: lixianglai <lixianglai@loongson.cn>
-Message-ID: <5dc53523-af38-d9da-a089-d341b098fdeb@loongson.cn>
-Date: Thu, 4 Dec 2025 09:57:12 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vQyeh-0000km-7g; Wed, 03 Dec 2025 21:01:16 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vQyec-0002Jy-RJ; Wed, 03 Dec 2025 21:01:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=orFCOcjalNPM6YdLq+ud4NwpphC3DsEhRiCD/tlSYBw=; b=ZFyIYWBHo51sQ8r2cu+ZAAxP2O
+ WC6/JrLLwUNeVAQzxT+fqh+lnglkKn88+9Qbyzzd1C7s+P5f24HhsI0CX2wDaOA9+N/Pbbh6h2wig
+ sOhTtqDRFXqJsRQGeH2YeFWLbt2wUM5Jz54e1ovXXv1HaT004obNokb8dxtICpFEOdcel5kFdVQ/k
+ t9CT8WeKLETW2PRO/dcZbhVP1zUVQK+bGvsCEyTmwedVCQuydVkwC+TqCiu+PQz4uwzyXFqwgXthl
+ rnDod9lnEHOClPAhP/BmSbFJDF+1x5Cd2yf0WtlbDp4MBDpay7gLLW8Z0oXnpp6Y9NQU4XfcOXYc/
+ 4/Z4pHhYPkdsJHVf0JzLOo0wttkNOGVIE67DwC204w/rNX7q53Is4WYEqITe9iJceYoGfSakQCUSi
+ 1QkQxpXNxtGvXK1vFa6Z7inVEYlN7KDRXUh87ARPkg68Xd6yNW0CxACXgicEX9ZFAhOkd72ua4oUo
+ wilorfOqDGQvQvh3ITd5C6QBuOlvuhdOhie9mIqmhUu1MzkPROSGcet+ow9eSt2CLp3ohVQvk2TUx
+ nsUbKQL3AjoccB036AOwO/5bXqC8NKf8Q8hJE/NrTCdfEdpU2R65bi05llyNIFZALsKm54IWYNxzR
+ BYd23dIXEx6gw1jvCMD+LkeyCoIE/o2nBvVjwMFZo=;
+Received: from [2a02:8012:2f01:0:4dd9:a8dd:82fe:37f5]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vQyc7-0008pP-6h; Thu, 04 Dec 2025 01:58:35 +0000
+Message-ID: <c03820b8-7745-4b8e-8e69-a37c872257f8@ilande.co.uk>
+Date: Thu, 4 Dec 2025 02:01:00 +0000
 MIME-Version: 1.0
-In-Reply-To: <20251106084043.2453749-4-maobibo@loongson.cn>
-Content-Type: text/plain; charset=gbk; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla Thunderbird
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20251203060942.57851-1-philmd@linaro.org>
+ <20251203060942.57851-9-philmd@linaro.org> <aTBccn2LIv7puGzR@intel.com>
+ <05f92a77-7587-4441-a252-01e4705a6892@linaro.org>
 Content-Language: en-US
-X-CM-TRANSID: qMiowJCxdORE6zBpzDtFAQ--.54547S3
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWryDuw1fZF43AF4fCF47KFX_yoW5WFykpF
- WYvw13KrW2qFZrC34fJa4Ygr98Zr4xWw42va4ft3s5AF4DZr17Wa18KrZrZF4fK348XF1I
- 9F4FkanI9FsrtacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.398,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <05f92a77-7587-4441-a252-01e4705a6892@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4dd9:a8dd:82fe:37f5
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH-for-11.0 v6 08/13] hw/sparc64/sun4u: Use
+ fw_cfg_init_io_nodma()
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,136 +108,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Bibo Mao:
-> Host CPU model is basically the same with max CPU model, except Product
-> ID and CPU model name. With host CPU model, Product ID comes from
-> cpucfg0 and CPU model comes from /proc/cpuinfo.
->
-> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-> ---
->   target/loongarch/cpu.c | 94 ++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 94 insertions(+)
->
-> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-> index 8b8723a343..c7f52adeb9 100644
-> --- a/target/loongarch/cpu.c
-> +++ b/target/loongarch/cpu.c
-> @@ -429,6 +429,97 @@ static void loongarch_max_initfn(Object *obj)
->       }
->   }
->   
-> +#if defined(CONFIG_KVM)
-> +static int read_cpuinfo(const char *field, char *value, int len)
-> +{
-> +    FILE *f;
-> +    int ret = -1;
-> +    int field_len = strlen(field);
-> +    char line[512];
-> +
-> +    f = fopen("/proc/cpuinfo", "r");
-> +    if (!f) {
-> +        return -1;
-> +    }
-> +
-> +    do {
-> +        if (!fgets(line, sizeof(line), f)) {
-> +            break;
-> +        }
-> +        if (!strncmp(line, field, field_len)) {
-> +            strncpy(value, line, len);
-> +            ret = 0;
-> +            break;
-> +        }
-> +    } while (*line);
-> +
-> +    fclose(f);
-> +
-> +    return ret;
-> +}
-> +
-> +static uint64_t get_host_cpu_model(void)
-> +{
-> +    char line[512];
-> +    char *ns;
-> +    static uint64_t cpuid;
-> +
-> +    if (cpuid) {
-> +        return cpuid;
-> +    }
-> +
-> +    if (read_cpuinfo("Model Name", line, sizeof(line))) {
-> +        return 0;
-> +    }
-> +
-> +    ns = strchr(line, ':');
-> +    if (!ns) {
-> +        return 0;
-> +    }
-> +
-> +    ns = strstr(ns, "Loongson-");
-> +    if (!ns) {
-> +        return 0;
-> +    }
-> +
-> +    ns += strlen("Loongson-");
-> +    memccpy((void *)&cpuid, ns, 0, 8);
-> +    return cpuid;
-> +}
-> +
-> +static uint32_t get_host_cpucfg(int number)
-> +{
-> +    unsigned int data = 0;
-> +
-> +#ifdef __loongarch__
-> +    asm volatile("cpucfg %[val], %[reg]"
-> +                 : [val] "=r" (data)
-> +                 : [reg] "r" (number)
-> +                 : "memory");
-> +#endif
-> +
-> +    return data;
-> +}
-> +
-> +static void loongarch_host_initfn(Object *obj)
-> +{
-> +    uint32_t data;
-> +    uint64_t cpuid;
-> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-> +
-> +    loongarch_max_initfn(obj);
-> +    data = get_host_cpucfg(0);
-> +    if (data) {
-> +        cpu->env.cpucfg[0] = data;
-> +    }
-> +
+On 03/12/2025 17:14, Philippe Mathieu-Daudé wrote:
 
-Does the feature bit on cpucfg[2] also need to be consistent with the 
-host feature bit?
-Otherwise, some features might be lost.
+> On 3/12/25 16:51, Zhao Liu wrote:
+>> Hi Philippe,
+>>
+>>> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
+>>> index 82c3e7c855b..6dc9f64b74d 100644
+>>> --- a/hw/sparc64/sun4u.c
+>>> +++ b/hw/sparc64/sun4u.c
+>>> @@ -683,14 +683,7 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
+>>>                              graphic_width, graphic_height, graphic_depth,
+>>>                              (uint8_t *)&macaddr);
+>>> -    dev = qdev_new(TYPE_FW_CFG_IO);
+>>> -    qdev_prop_set_bit(dev, "dma_enabled", false);
+>>> -    object_property_add_child(OBJECT(ebus), TYPE_FW_CFG, OBJECT(dev));
+>>
+>> There's another difference: fw_cfg_init_io_nodma() uses `machine` as the
+>> parent and here sun4uv uses `ebus`.
+> 
+> Ah yeah I wanted to comment it but forgot :facepalm:
+> 
+>>
+>> I think maybe one reason to use `ebus` is because...
+>>
+>>> -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>> -    memory_region_add_subregion(pci_address_space_io(ebus), BIOS_CFG_IOPORT,
+>>                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+>> ... because the parent region is managed by ebus.
+>>
+>> Perhaps we should add another argument: Object *parent?
+> 
+> I thought about it but don't think so, all instances but this one use
+> the machine container.
+> 
+> I'll improve the description.
 
-Thanks!
-Xianglai.
+The reason that the fw_cfg device lives under ebus on sun4u is because the ebus 
+device is effectively a PCI-ISA bridge, and the fw_cfg port is mapped into I/O 
+address space along with other ISA devices. I'm not sure that setting the parent to 
+the machine is the right thing to do here.
 
 
-> +    cpuid = get_host_cpu_model();
-> +    if (cpuid) {
-> +        cpu->env.cpu_id = cpuid;
-> +    }
-> +}
-> +#endif
-> +
->   static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->   {
->       uint8_t tlb_ps;
-> @@ -780,6 +871,9 @@ static const TypeInfo loongarch_cpu_type_infos[] = {
->       DEFINE_LOONGARCH_CPU_TYPE(64, "la464", loongarch_la464_initfn),
->       DEFINE_LOONGARCH_CPU_TYPE(32, "la132", loongarch_la132_initfn),
->       DEFINE_LOONGARCH_CPU_TYPE(64, "max", loongarch_max_initfn),
-> +#if defined(CONFIG_KVM)
-> +    DEFINE_LOONGARCH_CPU_TYPE(64, "host", loongarch_host_initfn),
-> +#endif
->   };
->   
->   DEFINE_TYPES(loongarch_cpu_type_infos)
+ATB,
+
+Mark.
 
 
