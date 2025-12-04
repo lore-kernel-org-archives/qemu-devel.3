@@ -4,64 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2150D2A521
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 19:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 009EAD29FB2
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 20:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRFQV-0004fG-Tw; Thu, 04 Dec 2025 14:55:43 -0500
+	id 1vRFZf-0008CJ-BT; Thu, 04 Dec 2025 15:05:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRFQT-0004f3-S9
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 14:55:41 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ id 1vRFZc-0008Bv-Op
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 15:05:09 -0500
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRFQR-0000pG-JP
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 14:55:41 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4869380900;
- Thu, 04 Dec 2025 22:55:35 +0300 (MSK)
+ id 1vRFZa-0003WW-2E
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 15:05:08 -0500
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id DD5E8C0212;
+ Thu, 04 Dec 2025 23:05:00 +0300 (MSK)
 Received: from [IPV6:2a02:6bf:8080:83c::1:2e] (unknown
  [2a02:6bf:8080:83c::1:2e])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id Ytrhmc0FxOs0-sr1KdAUq; Thu, 04 Dec 2025 22:55:34 +0300
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id x4shDU0F9eA0-d2qZXRoV; Thu, 04 Dec 2025 23:05:00 +0300
+Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1764878134;
- bh=rVzKkU8mq+twYDp6MTw6s4XOkYg9I7vF0BBn2bEjeGo=;
+ s=default; t=1764878700;
+ bh=0AtLu+QanFFOlQ1J6SxeTobPB6xSK3M6FA58PsswQAc=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=fc4cHFbPy29pqte8+VABkWNl5c3z8RRkGEFPuKrb8Cd4Y+uDActZ/pFhzKPZrZmQa
- gfbqqngHkQhwrTJeTqYafIV37SlbGI5AvDpSrXg0i6SF9vm+RHHDAiY7KA7VnWH42/
- omjg8/CpXWKDJ5BjabzWbliqJWwK04Oxod4DJXKA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ b=RKU25vtsB3P9/GBPV3va2LSHOnLqug6TCxL1OgHjXP06DqAegMmeL6aNs+DaHAytH
+ XjXflKrPFtHfQ5Uv4s0gMCuBO10b0AYaUpNPjtoK51HSSIFqzbhhFLCp5m2GHkXbQC
+ InnHBw1KPi0l4TA9IWxwjH3rt2oWUKtx3SGd1wgk=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <d986f0ac-a0ae-44f6-b7a5-e002b7d3226e@yandex-team.ru>
-Date: Thu, 4 Dec 2025 22:55:33 +0300
+Message-ID: <a8dcf37b-f7c1-486b-bc7d-5877c4d9ccfe@yandex-team.ru>
+Date: Thu, 4 Dec 2025 23:04:59 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/3] vhost-user-blk: support inflight migration
-To: Peter Xu <peterx@redhat.com>
-Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
- Raphael Norwitz <raphael@enfabrica.net>, "Michael S. Tsirkin"
- <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20251110103937.1944486-1-dtalexundeer@yandex-team.ru>
- <cf0f69b9-4b2b-4c09-a32b-ad86bbe04f6d@yandex-team.ru>
- <aRztnfZFl-OcbVYI@x1.local>
+Subject: Re: [PATCH v9 0/7] net/tap: simple refactoring
+To: jasowang@redhat.com
+Cc: qemu-devel@nongnu.org, leiyang@redhat.com, davydov-max@yandex-team.ru,
+ yc-core@yandex-team.ru
+References: <20251030164023.710048-1-vsementsov@yandex-team.ru>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <aRztnfZFl-OcbVYI@x1.local>
+In-Reply-To: <20251030164023.710048-1-vsementsov@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -72,7 +66,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -84,191 +77,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.11.25 01:05, Peter Xu wrote:
-> On Tue, Nov 18, 2025 at 11:24:12PM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> Add Daniel
->>
->> On 10.11.25 13:39, Alexandr Moshkov wrote:
->>> v3:
->>> - use pre_load_errp instead of pre_load in vhost.c
->>> - change vhost-user-blk property to
->>>     "skip-get-vring-base-inflight-migration"
->>> - refactor vhost-user-blk.c, by moving vhost_user_blk_inflight_needed() higher
->>>
->>> v2:
->>> - rewrite migration using VMSD instead of qemufile API
->>> - add vhost-user-blk parameter instead of migration capability
->>>
->>> I don't know if VMSD was used cleanly in migration implementation, so
->>> feel free for comments.
->>>
->>> Based on Vladimir's work:
->>> [PATCH v2 00/25] vhost-user-blk: live-backend local migration
->>>     which was based on:
->>>       - [PATCH v4 0/7] chardev: postpone connect
->>>         (which in turn is based on [PATCH 0/2] remove deprecated 'reconnect' options)
->>>       - [PATCH v3 00/23] vhost refactoring and fixes
->>>       - [PATCH v8 14/19] migration: introduce .pre_incoming() vmsd handler
->>>
->>
->> Hi!
->>
->> On my series about backend-transfer migration, the final consensus (or at least,
->> I hope that it's a consensus:) is that using device properties to control migration
->> channel content is wrong. And we should instead use migration parameters.
->>
->> (discussion here: https://lore.kernel.org/qemu-devel/29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru/ )
->>
->> So the API for backend-transfer features is a migration parameter
->>
->>      backend-transfer = [ list of QOM paths of devices, for which we want to enable backend-transfer ]
->>
->> and user don't have to change device properties in runtime to setup the following migration.
->>
->> So I assume, similar practice should be applied here: don't use device
->> properties to control migration.
->>
->> So, should it be a parameter like
->>
->>      migrate-inflight-region = [ list of QOM paths of vhost-user devices ]
->>
->> ?
+ping
+
+(now as 11.0 material)
+
+On 30.10.25 19:40, Vladimir Sementsov-Ogievskiy wrote:
+> Hi all!
 > 
-> I have concern that if we start doing this more, migration qapi/ will be
-> completely messed up.
+> These are some refactoring patches, extracted from
 > 
-> Imagine a world where there'll be tons of lists like:
+> [PATCH v8 00/19] virtio-net: live-TAP local migration
 > 
->    migrate-dev1-some-feature-1 = [list of devices (almost only dev1 typed)]
->    migrate-dev2-some-feature-2 = [list of devices (almost only dev2 typed)]
->    migrate-dev3-some-feature-3 = [list of devices (almost only dev3 typed)]
->    ...
-
-
-Yes, hard to argue against it.
-
-I still hope, Daniel will share his opinion..
-
- From our side, we are OK with any interface, which is accepted)
-
-
-Let me summarize in short the variants I see:
-
-===
-
-1. lists
-
-Add migrations parameters for such features:
-
-migrate-inflight-region = [ list of QOM paths of vhost-user devices ]
-backend-transfer = [ list of QOM paths of devices, which backend should be migrated ]
-
-This way, we just need to set the same sets for source and target QEMU before migration,
-and it have no relation to machine types.
-
-PROS: Like any other migration-capability, setup what (and how) should migrate, no
-relation to device properties and MT.
-
-CONS: Logically, that's the same as add a device property, but instead we implement
-lists of devices, and create extra QOM_PATH-links.
-
-===
-
-2. device parameters
-
-Before migration we should loop through devices and call corresponding
-qom-set commands, like
-
-qom-set {path: QOM_PATH, property: "backend-transfer", "value": true}
-qom-set {path: QOM_PATH, property: "migrate-inflight-region", "value": true}
-
-And of course, we should care to set same values for corresponding devices on source
-and target.
-
-In this case, we also _can_ rely on machine types for defaults.
-
-Note, that "migrate-inflight-region" may become the default in the 11.0 MT.
-But backend-transfer can't be a default, as this way we'll break remote migration.
-
-PROS: No lists, native properties
-
-CONS: These properties does not define any portion of device state, internal or
-visible to guest. It's not a property of device, but it's and option for migration
-of that device.
-
-===
-
-2.1 = [2] assisted by one boolean migration-parameter
-
-Still, if we want make backend-transfer "a kind of" default, we'll need one boolean
-migration parameter "it-is-local-migration", and modify logic to
-
-really_do_backend_transfer = it-is-local-migration and device.backend-transfer
-really_do_migrate_inflight_region = not it-is-local-migration and device.migrate-inflight-region
-
-PROS: starting from some MT, we'll have good defaults, so that user don't have
-to enable/disable the option per device for every migration.
-
-CONS: a precedent of the behavior driven by combination of device property and
-corresponding migration parameter (or we have something similar?)
-
-===
-
-4. mixed
-
-Keep [2] for this series, and [1] for backend-transfer.
-
-PROS: list for backend-transfer remains "the only exclusion" instead of "the practice",
-so we will not have tons of such lists :)
-
-CONS: inconstant solutions for similar things
-
-===
-
-5. implement "per device" migration parameters
-
-They may be set by additional QMP command qmp-migrate-set-device-parameters, which
-will take additional qom-path parameter.
-
-Or, we may add one list of structures like
-
-[{
-    qom_path: ...
-    parameters: ..
-}, ...]
-
-into common migration parameters.
-
-PROS: keep new features as a property of migration, but avoid several lists of QOM paths
-CONS: ?
-
-Hmm, we also may select devices not only by qom_path, but by type, for example, to enable
-feature for all virtio-net devices. Hmm, and this type may be also used as discriminator
-for parameters, which may be a QAPI union type..
-
-===
-
-
-Thoughts?
-
+> These patches are good in general, even not considered as
+> preparation to the feature. I hope, they may be queued
+> in advance, to simplify further work on the rest of
+> the series.
 > 
-> That doesn't look reasonable at all.  If some feature is likely only
-> supported in one device, that should not appear in migration.json but only
-> in the specific device.
+> The (reworked) rest of the series is coming soon and will
+> be based on this one.
 > 
-> I don't think I'm fully convinced we can't enable some form of machine type
-> properties (with QDEV or not) on backends we should stick with something
-> like that.  I can have some closer look this week, but.. even if not, I
-> still think migration shouldn't care about some specific behavior of a
-> specific device.
+> v9: Mostly unchanged, so keep r-bs. Still, drop t-bs, as there
+> were still some conflicts due to commits reordering.
 > 
-> If we really want to have some way to probe device features, maybe we
-> should also think about a generic interface (rather than "one new list
-> every time").  We also have some recent discussions on a proper interface
-> to query TAP backend features like USO*.  Maybe they share some of the
-> goals here.
+> Vladimir Sementsov-Ogievskiy (7):
+>    net/tap: net_init_tap_one(): drop extra error propagation
+>    net/tap: net_init_tap_one(): move parameter checking earlier
+>    net/tap: pass NULL to net_init_tap_one() in cases when scripts are
+>      NULL
+>    net/tap: rework scripts handling
+>    net/tap: setup exit notifier only when needed
+>    net/tap: tap_set_sndbuf(): add return value
+>    net/tap: rework tap_set_sndbuf()
 > 
-What do you mean by probing device features? Isn't it qom-get command?
+>   net/tap-bsd.c     |  3 +-
+>   net/tap-linux.c   | 19 +++-------
+>   net/tap-solaris.c |  3 +-
+>   net/tap-stub.c    |  3 +-
+>   net/tap.c         | 94 +++++++++++++++++++++++++----------------------
+>   net/tap_int.h     |  3 +-
+>   6 files changed, 62 insertions(+), 63 deletions(-)
+> 
+
 
 -- 
 Best regards,
