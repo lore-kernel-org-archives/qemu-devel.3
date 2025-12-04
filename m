@@ -4,72 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA74D1F9DE
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 12:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A3F8D20683
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 13:06:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR8r2-0001EE-RK; Thu, 04 Dec 2025 07:54:40 -0500
+	id 1vR91f-0007IL-71; Thu, 04 Dec 2025 08:05:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vR8qz-0001Dk-Si
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 07:54:38 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1vR91e-0007I0-83
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 08:05:38 -0500
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vR8qy-0005QP-7m
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 07:54:37 -0500
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A632480771;
- Thu, 04 Dec 2025 15:54:32 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:856::1:37] (unknown
- [2a02:6bf:8080:856::1:37])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id Usk7oU0FGGk0-Lxmk8ZD4; Thu, 04 Dec 2025 15:54:32 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1764852872;
- bh=SQLFTgNY3nvdZqGOj4Rf5Vt6rBTVJmSg2nJ+I4Kkdpg=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=tAYPaSmFPxNrzl1hZYZ5d2bVAxPbiRcE8AsPZDAdX8n21xonK66Ulx5+Vgnl1B5Op
- 4jbgPC8xXkhocdZFqhRRmlM/5UbQbeUQoQrXzEdF0UAZFzp/9fzScTavuMExncDITM
- fsAOhi5IJKht4Y80EEeXQzCRTQL8QTxZ8Gr9zMOM=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <3a19b10d-0f49-4b22-9a67-0d4fcbb16e04@yandex-team.ru>
-Date: Thu, 4 Dec 2025 15:54:29 +0300
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1vR91Y-0007Mw-6y
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 08:05:37 -0500
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id CFCD44826E
+ for <qemu-devel@nongnu.org>; Thu,  4 Dec 2025 13:05:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1764853529;
+ bh=sHllbkj0WNKFluR8NQf75d0l2a4Ju2o4l9pxhmxqAEE=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=diyGGSOPBiLdFf0APZQpAg6IjynFZABvtPzm17ei+VdVfEiroLzep7tzorRL/8ROv
+ nt5MnH500KOUL9i+jTk8VQQlQbCbWFoybK/Ih4D1T6HWtIU7bhaxOTy+hWWxyj9MRc
+ mjTclkaY+7+k0xfXW+a6yL6wL0VSloFD+SSQtc51ivGcEthOBYGFPmgfW8U0uff72G
+ SnFOei4NIwZL/5pb+0vGqTQGT1SAYCzCK0OZQQs4zqFzUsAj573j5jnM0/ZjgG73M/
+ lLWEWxU7j543HbsM8Euz6/LqjtPdMYYbK05UyTGfsAqdjLZN36F2yIQjrz5Z6LrOAc
+ c1bQ3MisXS/sQ==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id C5C117F813
+ for <qemu-devel@nongnu.org>; Thu,  4 Dec 2025 13:05:29 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] error-report: move real_time_iso8601() to header
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Cc: marcandre.lureau@redhat.com, pbonzini@redhat.com, eblake@redhat.com,
- berrange@redhat.com, yc-core@yandex-team.ru, d-tatianin@yandex-team.ru,
- qemu-devel@nongnu.org
-References: <20251128200536.207344-1-vsementsov@yandex-team.ru>
- <20251128200536.207344-3-vsementsov@yandex-team.ru>
- <87h5u7odkh.fsf@pond.sub.org>
- <69a68b6b-0bd6-4295-930f-bd9486c732f4@yandex-team.ru>
- <87zf7yll7g.fsf@pond.sub.org>
- <bc6babb4-9cc0-46dc-af77-d182575b72a9@linaro.org>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <bc6babb4-9cc0-46dc-af77-d182575b72a9@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 04 Dec 2025 12:58:39 -0000
+From: Heinrich Schuchardt <2133804@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Confirmed; importance=High; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Low; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=High; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
+ assignee=None; 
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: paelzer xypron
+X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
+X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
+References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
+Message-Id: <176485311998.1736559.16529703582591936248.malone@juju-98d295-prod-launchpad-3>
+Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="379e22b8475e3402088a4cdb4a6e7936a4d28414";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: 2a14f7bbcf80bb1ac6d76de37d9e5bafd20cbdda
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,75 +97,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.12.25 11:30, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> On 4/12/25 09:12, Markus Armbruster wrote:
->> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>
->>> On 03.12.25 17:16, Markus Armbruster wrote:
->>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
->>>>
->>>>> To be reused in the following commit.
->>>>>
->>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
->>>>> ---
->>>>>    include/qemu/error-report.h | 6 ++++++
->>>>>    util/error-report.c         | 7 -------
->>>>>    2 files changed, 6 insertions(+), 7 deletions(-)
->>>>>
->>>>> diff --git a/include/qemu/error-report.h b/include/qemu/error-report.h
->>>>> index 3ae2357fda..412b705898 100644
->>>>> --- a/include/qemu/error-report.h
->>>>> +++ b/include/qemu/error-report.h
->>>>> @@ -74,4 +74,10 @@ extern bool message_with_timestamp;
->>>>>    extern bool error_with_guestname;
->>>>>    extern const char *error_guest_name;
->>>>> +static inline char *real_time_iso8601(void)
->>>>> +{
->>>>> +    g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
->>>>> +    return g_date_time_format_iso8601(dt);
->>>>> +}
->>>>> +
->>>>>    #endif
->>>>
->>>> Reasons for inline?  Because the function is so small?
->>>
->>> Yes, seems, just this.
->>
->> I'd prefer not to.
->>
->> Actually, I'd be tempted to just duplicate the two calls and call it a
->> day.  Up to you.
-> 
-> We now prefer to let the toolchain LTO do its clever job.
-> Better avoid duplication. To enforce this style, lets expose
-> the declaration with a @docstring, and keep the definition in util/.
-> My 2 cents.
-> 
+Unfortunately the series was sent without an In-Reply-To header. The
+other patches can be found with at
 
-OK
+https://lore.kernel.org/qemu-
+devel/?q=3DLuca+Bonissi+%3Cqemu%40bonslack.org%3E
 
->>
->>>>> diff --git a/util/error-report.c b/util/error-report.c
->>>>> index 1b17c11de1..20618640e8 100644
->>>>> --- a/util/error-report.c
->>>>> +++ b/util/error-report.c
->>>>> @@ -169,13 +169,6 @@ static void print_loc(void)
->>>>>        }
->>>>>    }
->>>>> -static char *
->>>>> -real_time_iso8601(void)
->>>>> -{
->>>>> -    g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
->>>>> -    return g_date_time_format_iso8601(dt);
->>>>> -}
+These extra patches seem to be needed for target architectures like PPC
+and MIPS that don't use generic/termbits.h. S390X should be good as it
+uses generic/termbits.h.
 
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133804
 
--- 
-Best regards,
-Vladimir
+Title:
+  QEMU does not emulate IOCTL TCGETS2
+
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Confirmed
+Status in qemu source package in Jammy:
+  Confirmed
+Status in qemu source package in Noble:
+  Confirmed
+Status in qemu source package in Plucky:
+  Confirmed
+Status in qemu source package in Questing:
+  Confirmed
+Status in qemu source package in Resolute:
+  Confirmed
+
+Bug description:
+  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
+  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
+  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
+  arm64, ...).
+
+  This leads to failures in containers for foreign architectures. E.g. no c=
+onsole prompt is displayed.=20
+  A detailed analysis is contained in LP #2133188.
+
+  A proper implementation of the missing IOCTLs will include:
+
+  Functions:
+
+  in linux-user/syscall.c:
+  host_to_target_termios2()
+  target_to_host_termios2()
+  print_termios2()
+
+  Definitions:
+
+  in linux-user/syscall.c
+  #define termios2 host_termios2
+
+  in linux-user/syscall_types.h
+  STRUCT_SPECIAL(termios2)
+
+  in linux-user/ioctls.h:
+  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+
+  in linux-user/user-internals.h:
+  void print_termios2(void *arg);
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
+
 
