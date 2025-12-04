@@ -4,64 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BEC9D1CDC1
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 03:00:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46BA2D1CDC1
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 03:01:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQzZi-0006aq-OI; Wed, 03 Dec 2025 22:00:10 -0500
+	id 1vQzay-0007TK-Qh; Wed, 03 Dec 2025 22:01:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@openatom.club>)
- id 1vQzZh-0006Zu-48
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:00:09 -0500
-Received: from sg-1-18.ptr.blmpb.com ([118.26.132.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu@openatom.club>)
- id 1vQzZc-0005U1-An
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:00:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=openatom-club.20200927.dkim.feishu.cn; t=1764817192;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=/eOfff8m1Bd0DAhvZvHE2jR3QGjvN5IX6hQR0UmLTOU=;
- b=YSBl6zAb5Z4N7GJBMvnH9SNKQBi1VUA2bq8bnmn/l7b0RLUYjXMEnTmU+3hEq416otMmMC
- yJlF77H6XkhBg9l1bJyme80DPj5BYEZoCzf5C0IGUOuYqz8eBcau2wkcU4SwHPRYLXyXI4
- 80YuUL+vb45ErHZK2dsTVQ/IZrCS6MdsOvdq2uguV1BVbeXTNNjH8W5j4OU2E6oAlErzHv
- qKsN/VeueJOdxLBzY21GqyW43blLKpqhWJNAmBBFkVu/TKTIr6OX/U4FMEORXSsM9NfUOH
- g4LIB8ySWILqSlYGkX7eAFoGfUjAvsO/FMWRW1szEe57UxMRX9Vt7FV3cU69rQ==
-Content-Type: text/plain; charset=UTF-8
-Received: from [10.13.14.160] ([218.81.29.112]) by smtp.feishu.cn with ESMTPS;
- Thu, 04 Dec 2025 10:59:49 +0800
-X-Lms-Return-Path: <lba+26930f926+2989eb+nongnu.org+chao.liu@openatom.club>
-Content-Transfer-Encoding: 7bit
-To: "Conor Dooley" <conor@kernel.org>, "Chao Liu" <chao.liu@zevorn.cn>
-Date: Thu, 4 Dec 2025 10:59:47 +0800
-User-Agent: Mozilla Thunderbird
-Cc: <richard.henderson@linaro.org>, <paolo.savini@embecosm.com>, 
- <npiggin@gmail.com>, <ebiggers@kernel.org>, <dbarboza@ventanamicro.com>, 
- <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>, 
- <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, 
- <qemu-devel@nongnu.org>, <hust-os-kernel-patches@googlegroups.com>
-From: "Chao Liu" <chao.liu@openatom.club>
-References: <cover.1764493931.git.chao.liu@zevorn.cn>
- <c27edc69ea6642f645d5e194bd5d4cd71e812841.1764493931.git.chao.liu@zevorn.cn>
- <20251203-squiggle-gentile-f27af704359e@spud>
- <20251203-huskiness-manhandle-6925834ee8f0@spud>
-X-Original-From: Chao Liu <chao.liu@openatom.club>
-In-Reply-To: <20251203-huskiness-manhandle-6925834ee8f0@spud>
-Subject: Re: [PATCH v1 1/5] target/riscv: add thead-c908 cpu support
-Message-Id: <20499d8c-cc75-4354-9eee-4d2e7023bd4c@openatom.club>
-Mime-Version: 1.0
-Received-SPF: pass client-ip=118.26.132.18;
- envelope-from=chao.liu@openatom.club; helo=sg-1-18.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vQzaw-0007SM-5d
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:01:26 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1vQzat-0006Db-Ag
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:01:25 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxRNBx+TBp5O4qAA--.26177S3;
+ Thu, 04 Dec 2025 11:01:05 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxbMFu+TBpPUBFAQ--.62790S3;
+ Thu, 04 Dec 2025 11:01:04 +0800 (CST)
+Subject: Re: [PATCH 3/3] target/loongarch: Add host CPU model in kvm mode
+To: lixianglai <lixianglai@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20251106084043.2453749-1-maobibo@loongson.cn>
+ <20251106084043.2453749-4-maobibo@loongson.cn>
+ <5dc53523-af38-d9da-a089-d341b098fdeb@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <edadf032-db5c-e844-8313-f970bbc35b9f@loongson.cn>
+Date: Thu, 4 Dec 2025 10:58:34 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
+MIME-Version: 1.0
+In-Reply-To: <5dc53523-af38-d9da-a089-d341b098fdeb@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJDxbMFu+TBpPUBFAQ--.62790S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxWryDuF4fJFW3Wr43JFyruFX_yoWrAryDpr
+ 1kArW5GrWUGrn3Jw15try5XF98Zr18Gw1qqF1IqF1UAFsrAr1jgF4UWrZFgr1UJw48JF17
+ Ar1UXrsxuFsrJ3cCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.398,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,82 +83,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/2025 1:13 AM, Conor Dooley wrote:
-> On Wed, Dec 03, 2025 at 05:12:37PM +0000, Conor Dooley wrote:
->> On Sun, Nov 30, 2025 at 05:21:06PM +0800, Chao Liu wrote:
->>> The C908 processor is based on the RV64GCB[V] instruction
->>> set, compatible to RVA22 Profile and implements the XIE
->>> (XuanTie Instruction Extension) technology.
->>>
->>> Signed-off-by: Chao Liu <chao.liu@zevorn.cn>
->>> Suggested-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
->>> ---
->>>  target/riscv/cpu-qom.h |   2 +
->>>  target/riscv/cpu.c     |  43 +++++
->>>  target/riscv/th_csr.c  | 380 ++++++++++++++++++++++++++++++++++++++++-
->>>  3 files changed, 424 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
->>> index 75f4e43408..1ddb5a6a6c 100644
->>> --- a/target/riscv/cpu-qom.h
->>> +++ b/target/riscv/cpu-qom.h
->>> @@ -52,6 +52,8 @@
->>>  #define TYPE_RISCV_CPU_SIFIVE_U34       RISCV_CPU_TYPE_NAME("sifive-u34")
->>>  #define TYPE_RISCV_CPU_SIFIVE_U54       RISCV_CPU_TYPE_NAME("sifive-u54")
->>>  #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906")
->>> +#define TYPE_RISCV_CPU_THEAD_C908       RISCV_CPU_TYPE_NAME("thead-c908")
->>> +#define TYPE_RISCV_CPU_THEAD_C908V      RISCV_CPU_TYPE_NAME("thead-c908v")
->>>  #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
->>>  #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
->>>  #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
->>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->>> index d055ddf462..202ff130ee 100644
->>> --- a/target/riscv/cpu.c
->>> +++ b/target/riscv/cpu.c
->>> @@ -3091,6 +3091,49 @@ static const TypeInfo riscv_cpu_type_infos[] = {
->>>  #endif
->>>      ),
->>>  
->>> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908, TYPE_RISCV_VENDOR_CPU,
->>> +        .misa_mxl_max = MXL_RV64,
->>> +        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
->>> +        .priv_spec = PRIV_VERSION_1_12_0,
->>> +
->>> +        /* ISA extensions */
->>> +        .cfg.ext_xtheadba = true,
->>> +        .cfg.ext_xtheadbb = true,
->>> +        .cfg.ext_xtheadbs = true,
->>> +        .cfg.ext_xtheadcmo = true,
->>> +        .cfg.ext_xtheadcondmov = true,
->>> +        .cfg.ext_xtheadmac = true,
->>> +        .cfg.ext_xtheadmemidx = true,
->>> +        .cfg.ext_xtheadmempair = true,
->>> +        .cfg.ext_xtheadsync = true,
->>> +        .cfg.ext_zba = true,
->>> +        .cfg.ext_zbb = true,
->>> +        .cfg.ext_zbc = true,
->>> +        .cfg.ext_zbs = true,
->>> +        .cfg.ext_zkt = true,
->>> +        .cfg.ext_zbkc = true,
->>> +        .cfg.ext_zicsr = true,
->>> +        .cfg.ext_zifencei = true,
->>> +        .cfg.ext_zihintpause = true,
->>> +        .cfg.ext_zicbom = true,
->>> +        .cfg.ext_zicboz = true,
->>> +        .cfg.ext_zfh = true,
->>> +        .cfg.ext_xtheadfmv = true,
->>> +        .cfg.ext_xtheadfmemidx = true,
->>> +        .cfg.pmp = true,
->>
->> I think Svpbmt is missing here, both it and the T-Head MAEE stuff are
->> supported on the k230. What I will end up merging into mainline for the
-> 
-> Whoops, should have specified that I meant the mainline linux kernel.
-> 
-You're right, I will enable the Svpbmt extension in PATCH v2.
 
-Thanks,
-Chao
->> k230 uses Svpbmt instead of MAEE.
+
+On 2025/12/4 上午9:57, lixianglai wrote:
+> Hi Bibo Mao:
+>> Host CPU model is basically the same with max CPU model, except Product
+>> ID and CPU model name. With host CPU model, Product ID comes from
+>> cpucfg0 and CPU model comes from /proc/cpuinfo.
+>>
+>> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> ---
+>>   target/loongarch/cpu.c | 94 ++++++++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 94 insertions(+)
+>>
+>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+>> index 8b8723a343..c7f52adeb9 100644
+>> --- a/target/loongarch/cpu.c
+>> +++ b/target/loongarch/cpu.c
+>> @@ -429,6 +429,97 @@ static void loongarch_max_initfn(Object *obj)
+>>       }
+>>   }
+>> +#if defined(CONFIG_KVM)
+>> +static int read_cpuinfo(const char *field, char *value, int len)
+>> +{
+>> +    FILE *f;
+>> +    int ret = -1;
+>> +    int field_len = strlen(field);
+>> +    char line[512];
+>> +
+>> +    f = fopen("/proc/cpuinfo", "r");
+>> +    if (!f) {
+>> +        return -1;
+>> +    }
+>> +
+>> +    do {
+>> +        if (!fgets(line, sizeof(line), f)) {
+>> +            break;
+>> +        }
+>> +        if (!strncmp(line, field, field_len)) {
+>> +            strncpy(value, line, len);
+>> +            ret = 0;
+>> +            break;
+>> +        }
+>> +    } while (*line);
+>> +
+>> +    fclose(f);
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +static uint64_t get_host_cpu_model(void)
+>> +{
+>> +    char line[512];
+>> +    char *ns;
+>> +    static uint64_t cpuid;
+>> +
+>> +    if (cpuid) {
+>> +        return cpuid;
+>> +    }
+>> +
+>> +    if (read_cpuinfo("Model Name", line, sizeof(line))) {
+>> +        return 0;
+>> +    }
+>> +
+>> +    ns = strchr(line, ':');
+>> +    if (!ns) {
+>> +        return 0;
+>> +    }
+>> +
+>> +    ns = strstr(ns, "Loongson-");
+>> +    if (!ns) {
+>> +        return 0;
+>> +    }
+>> +
+>> +    ns += strlen("Loongson-");
+>> +    memccpy((void *)&cpuid, ns, 0, 8);
+>> +    return cpuid;
+>> +}
+>> +
+>> +static uint32_t get_host_cpucfg(int number)
+>> +{
+>> +    unsigned int data = 0;
+>> +
+>> +#ifdef __loongarch__
+>> +    asm volatile("cpucfg %[val], %[reg]"
+>> +                 : [val] "=r" (data)
+>> +                 : [reg] "r" (number)
+>> +                 : "memory");
+>> +#endif
+>> +
+>> +    return data;
+>> +}
+>> +
+>> +static void loongarch_host_initfn(Object *obj)
+>> +{
+>> +    uint32_t data;
+>> +    uint64_t cpuid;
+>> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+>> +
+>> +    loongarch_max_initfn(obj);
+>> +    data = get_host_cpucfg(0);
+>> +    if (data) {
+>> +        cpu->env.cpucfg[0] = data;
+>> +    }
+>> +
 > 
+> Does the feature bit on cpucfg[2] also need to be consistent with the 
+> host feature bit?
+> Otherwise, some features might be lost.
+well, will check the detailed bits with CPUCFG2 in next version.
+
+   bit10 LVZ will be disabled since nested KVM is not supported
+   bit18-20/bit24 deeps on whether it is supported on KVM host and QEMU
+   bit25-30 atomic instruction should be the same with host, it is 
+irrelative with KVM.
+
+Regards
+Bibo Mao
+> 
+> Thanks!
+> Xianglai.
+> 
+> 
+>> +    cpuid = get_host_cpu_model();
+>> +    if (cpuid) {
+>> +        cpu->env.cpu_id = cpuid;
+>> +    }
+>> +}
+>> +#endif
+>> +
+>>   static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>>   {
+>>       uint8_t tlb_ps;
+>> @@ -780,6 +871,9 @@ static const TypeInfo loongarch_cpu_type_infos[] = {
+>>       DEFINE_LOONGARCH_CPU_TYPE(64, "la464", loongarch_la464_initfn),
+>>       DEFINE_LOONGARCH_CPU_TYPE(32, "la132", loongarch_la132_initfn),
+>>       DEFINE_LOONGARCH_CPU_TYPE(64, "max", loongarch_max_initfn),
+>> +#if defined(CONFIG_KVM)
+>> +    DEFINE_LOONGARCH_CPU_TYPE(64, "host", loongarch_host_initfn),
+>> +#endif
+>>   };
+>>   DEFINE_TYPES(loongarch_cpu_type_infos)
+
 
