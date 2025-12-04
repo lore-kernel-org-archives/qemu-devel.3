@@ -4,111 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9DB3D1CDB9
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 01:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DA7D1CDBF
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 02:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQyAx-0001xf-Cf; Wed, 03 Dec 2025 20:30:31 -0500
+	id 1vQyeQ-0000jC-93; Wed, 03 Dec 2025 21:00:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vQyAu-0001xB-RG
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 20:30:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vQyAs-0006Xv-Tk
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 20:30:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764811825;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jKI2JRdqW86MiDwE76sILApaXpcT4o+8q1KOG6/+JhQ=;
- b=L5qvLQR28bdpjX7UW/ILO/5ys+4Oue55+NL7b2Ht6mKrR4GZRsklpVcoZ044ZSHtabyuLj
- Oi8yO93TNfutMDG92Npc6ylYCzrw3lQTUuxsg6aGaz0NfpKNxyTV7GHw7nWQTtobKIESnu
- bnqJCV8S4Zb+NIGn/b1SonBXJGNLGh8=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-D1ppdVbuNsWhErCZbIEgFw-1; Wed, 03 Dec 2025 20:30:22 -0500
-X-MC-Unique: D1ppdVbuNsWhErCZbIEgFw-1
-X-Mimecast-MFC-AGG-ID: D1ppdVbuNsWhErCZbIEgFw_1764811821
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-787e31befddso6211387b3.0
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 17:30:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764811821; x=1765416621; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jKI2JRdqW86MiDwE76sILApaXpcT4o+8q1KOG6/+JhQ=;
- b=ahv7aupusfFAmspWmyMfpfnJPMIP4JMvlvAGC93Ii9YMmF8j1+alHcyPcCw/4eAIDB
- IV4hrn+e2Urrc5RPxUj2bGVI9RSF2tBH4hjVaiY+Omlj5MI/tnwKkRdrWKWgPs4amhqR
- sJVJW7rFWs8eWz/ZN10jezZxTwIsg3Ch8Y5SCzWDfQ2E3zOWgRdttX1Btpr7ZtNtTKgK
- o1rup4UFqAYajXxon65GUYdyOXI55fpD1Yicfceh66nORPAQUSAkqCWmh+cLw6pQOS5i
- lOw9LAw6NmEdMllxRcYH2vRnxp7KHmtLDQRIK8sqAfdpos2DjquwUBYtchsTlprdDuIq
- 3eEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764811821; x=1765416621;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jKI2JRdqW86MiDwE76sILApaXpcT4o+8q1KOG6/+JhQ=;
- b=FdAnt9QLPGJj+Dp31hjQUUGfeHVyXn8e2XYY8ahMhyrl809ViT69KubnvzExQmaj8q
- D4m0iHrrjHFHsezXuHelt/v6UD6ACwq/xjSTsq5dqSLdZDQbQ+P6cMxP+RVgoScAH895
- GkS3QeTr1HdDhgxKv34j8HulbR33KC6Du/H2Wk+lEDvMRCQ/1UUOoR5g0v1o5pETGrPy
- 6A8juCD5iWhg/+hsOXRhKj7kbFMnYmq+p9JyhBvR8IzkKbqjQ23YpF3vvhxwCQT5ZLxi
- 85xKY8nguBkW8vUWn640TkGulGubZ/6VtkNd6KOXb060MejQI15s1bX9QzqIfWtJrNCi
- WhTQ==
-X-Gm-Message-State: AOJu0YwMlKWYULeBbPliZBfzYwoufEaTARC6umVnrmUCJ6uR/2jzl61g
- JqHNVkiF5ZImXgQL/gTaerfu45u+uMQamH6QAB3AP90Izmf8VmH2ElEzfymS7T5znPyXHOE0biN
- nUPv3nJkiOUp36L41Tkq4H3EGHSR4g9X3IKLjzpvpWa0tzhsFku3ur38kRvxnoNrFNqNJsBUESv
- 6oPoWyeypBJyVZ76Qr5v3eZbJM5DkoOgM=
-X-Gm-Gg: ASbGncvGG1cFD9nfqS6aoIYTdgzidjNOgZnxgH0ykLuI3ik1bkHmqEZLDusQaOIQREv
- 8801030Uh4Yr13t7Fyjp9Zv0CSjY4rlz4PFLFbAf5r5qFIKkz96112I7dzv01ljn3x9TIUYVFS6
- mi2QQEZUqYhWTeAK459HLnuBfZxqLM/j/+5cPA7ak40du/tq/i1DHVh/3mS3uYwnYlaJ0DgX8w6
- FRWhmRaYO4zvSDPV5oYVSRyLA==
-X-Received: by 2002:a05:690c:f82:b0:788:65:6dd4 with SMTP id
- 00721157ae682-78c0c030816mr37044137b3.22.1764811821461; 
- Wed, 03 Dec 2025 17:30:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF/rrtr1X3FLwUvvb833/PP30KCCrpqNOySEkcMuVt2x348sUbYR3GAY7Xx88891e3TjlulGUmrAwY9MtbBa2w=
-X-Received: by 2002:a05:690c:f82:b0:788:65:6dd4 with SMTP id
- 00721157ae682-78c0c030816mr37044007b3.22.1764811821130; Wed, 03 Dec 2025
- 17:30:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1vQyeN-0000iR-0G
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 21:00:55 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1vQyeK-0001dW-7t
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 21:00:54 -0500
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8AxztJG6zBp1esqAA--.25841S3;
+ Thu, 04 Dec 2025 10:00:38 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowJCxdORE6zBpzDtFAQ--.54547S3;
+ Thu, 04 Dec 2025 10:00:38 +0800 (CST)
+Subject: Re: [PATCH 3/3] target/loongarch: Add host CPU model in kvm mode
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20251106084043.2453749-1-maobibo@loongson.cn>
+ <20251106084043.2453749-4-maobibo@loongson.cn>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <5dc53523-af38-d9da-a089-d341b098fdeb@loongson.cn>
+Date: Thu, 4 Dec 2025 09:57:12 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20251125040045.461148-1-jsnow@redhat.com>
- <20251125040045.461148-11-jsnow@redhat.com>
- <fada9d5d-a2f7-4ebb-92ed-3f3a8627316f@redhat.com>
-In-Reply-To: <fada9d5d-a2f7-4ebb-92ed-3f3a8627316f@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 3 Dec 2025 20:30:10 -0500
-X-Gm-Features: AWmQ_bnaehe0m60SAGGmjaWrbZdNtum5e_ohoZvjroz2TvkgRdv0IsmffCLQiUw
-Message-ID: <CAFn=p-axAi5zewtfkDFxEpNADs-RH3Jbuoj0sGu7oBkgKLrN0A@mail.gmail.com>
-Subject: Re: [PATCH v2 10/16] tests: conditionally run "make check-venv"
- during build phase
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Markus Armbruster <armbru@redhat.com>, Hanna Reitz <hreitz@redhat.com>, 
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Cleber Rosa <crosa@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+In-Reply-To: <20251106084043.2453749-4-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJCxdORE6zBpzDtFAQ--.54547S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoWxWryDuw1fZF43AF4fCF47KFX_yoW5WFykpF
+ WYvw13KrW2qFZrC34fJa4Ygr98Zr4xWw42va4ft3s5AF4DZr17Wa18KrZrZF4fK348XF1I
+ 9F4FkanI9FsrtacCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -32
+X-Spam_score: -3.3
+X-Spam_bar: ---
+X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.398,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,74 +82,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Nov 26, 2025 at 3:16=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
-e:
+Hi Bibo Mao:
+> Host CPU model is basically the same with max CPU model, except Product
+> ID and CPU model name. With host CPU model, Product ID comes from
+> cpucfg0 and CPU model comes from /proc/cpuinfo.
 >
-> On 25/11/2025 05.00, John Snow wrote:
-> > Some tests need test dependencies, some tests don't. Instead of running
-> > "make check" manually, use a CI variable for the template that allows u=
-s
-> > to front-load the testing dependencies without needing to incur another
-> > re-configure command.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >   .gitlab-ci.d/buildtest-template.yml | 4 ++++
-> >   1 file changed, 4 insertions(+)
-> >
-> > diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildte=
-st-template.yml
-> > index d866cb12bb1..cfa123d3a10 100644
-> > --- a/.gitlab-ci.d/buildtest-template.yml
-> > +++ b/.gitlab-ci.d/buildtest-template.yml
-> > @@ -32,6 +32,10 @@
-> >         then
-> >           pyvenv/bin/meson configure . -Dbackend_max_links=3D"$LD_JOBS"=
- ;
-> >         fi || exit 1;
-> > +    - if test -n "$SETUP_CHECK_VENV";
-> > +      then
-> > +        make check-venv;
-> > +      fi;
-> I'm not sure, but I think this is likely not quite working as you intende=
-d
-> it. The above code hunk is added to native_build_job_template, i.e. it's
-> executed for the build-* jobs, but in the next patch, you only set the
-> environment variable on the crash-test-* jobs. I don't think that the
-> environment variables propagate backward from a later job to an earlier o=
-ne.
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   target/loongarch/cpu.c | 94 ++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 94 insertions(+)
 >
-> Looking at the output of another build job, e.g. build-system-alpine:
->
->   https://gitlab.com/thuth/qemu/-/jobs/12211712932#L2156
->
-> ... it looks like pygdbmi is now also always installed there, i.e. someth=
-ing
-> else triggers "check-venv" on all build jobs now, and that's why you were
-> able to drop the "check-venv" in the crash-test-* jobs in the next patch
-> now. No clue what's causing this now, but IMHO it should be fine if we ju=
-st
-> unconditionally do "check-venv" in all build jobs anyway (we also need th=
-e
-> venv in a bunch of other test jobs anyway), so I'd rather do the "make
-> check-venv" in this patch unconditionally here, and drop the next patch t=
-hat
-> sets SETUP_CHECK_VENV in the crash-test jobs. WDYT?
->
->   Thomas
->
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 8b8723a343..c7f52adeb9 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -429,6 +429,97 @@ static void loongarch_max_initfn(Object *obj)
+>       }
+>   }
+>   
+> +#if defined(CONFIG_KVM)
+> +static int read_cpuinfo(const char *field, char *value, int len)
+> +{
+> +    FILE *f;
+> +    int ret = -1;
+> +    int field_len = strlen(field);
+> +    char line[512];
+> +
+> +    f = fopen("/proc/cpuinfo", "r");
+> +    if (!f) {
+> +        return -1;
+> +    }
+> +
+> +    do {
+> +        if (!fgets(line, sizeof(line), f)) {
+> +            break;
+> +        }
+> +        if (!strncmp(line, field, field_len)) {
+> +            strncpy(value, line, len);
+> +            ret = 0;
+> +            break;
+> +        }
+> +    } while (*line);
+> +
+> +    fclose(f);
+> +
+> +    return ret;
+> +}
+> +
+> +static uint64_t get_host_cpu_model(void)
+> +{
+> +    char line[512];
+> +    char *ns;
+> +    static uint64_t cpuid;
+> +
+> +    if (cpuid) {
+> +        return cpuid;
+> +    }
+> +
+> +    if (read_cpuinfo("Model Name", line, sizeof(line))) {
+> +        return 0;
+> +    }
+> +
+> +    ns = strchr(line, ':');
+> +    if (!ns) {
+> +        return 0;
+> +    }
+> +
+> +    ns = strstr(ns, "Loongson-");
+> +    if (!ns) {
+> +        return 0;
+> +    }
+> +
+> +    ns += strlen("Loongson-");
+> +    memccpy((void *)&cpuid, ns, 0, 8);
+> +    return cpuid;
+> +}
+> +
+> +static uint32_t get_host_cpucfg(int number)
+> +{
+> +    unsigned int data = 0;
+> +
+> +#ifdef __loongarch__
+> +    asm volatile("cpucfg %[val], %[reg]"
+> +                 : [val] "=r" (data)
+> +                 : [reg] "r" (number)
+> +                 : "memory");
+> +#endif
+> +
+> +    return data;
+> +}
+> +
+> +static void loongarch_host_initfn(Object *obj)
+> +{
+> +    uint32_t data;
+> +    uint64_t cpuid;
+> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+> +
+> +    loongarch_max_initfn(obj);
+> +    data = get_host_cpucfg(0);
+> +    if (data) {
+> +        cpu->env.cpucfg[0] = data;
+> +    }
+> +
 
-Yeah, it wasn't working. Oops, and good catch.
+Does the feature bit on cpucfg[2] also need to be consistent with the 
+host feature bit?
+Otherwise, some features might be lost.
 
-I moved "make check-venv" into the build-system-debian/fedora phases
-instead and that works like I expect.
+Thanks!
+Xianglai.
 
-However, the pygdbmi bit is still confusing. Apparently both of the
-new ensuregroup targets get installed with "make check-build", even
-though they aren't used for building anything. I'm trying to sift
-through the make system interplay to figure out why it's part of that
-target...
 
---js
+> +    cpuid = get_host_cpu_model();
+> +    if (cpuid) {
+> +        cpu->env.cpu_id = cpuid;
+> +    }
+> +}
+> +#endif
+> +
+>   static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>   {
+>       uint8_t tlb_ps;
+> @@ -780,6 +871,9 @@ static const TypeInfo loongarch_cpu_type_infos[] = {
+>       DEFINE_LOONGARCH_CPU_TYPE(64, "la464", loongarch_la464_initfn),
+>       DEFINE_LOONGARCH_CPU_TYPE(32, "la132", loongarch_la132_initfn),
+>       DEFINE_LOONGARCH_CPU_TYPE(64, "max", loongarch_max_initfn),
+> +#if defined(CONFIG_KVM)
+> +    DEFINE_LOONGARCH_CPU_TYPE(64, "host", loongarch_host_initfn),
+> +#endif
+>   };
+>   
+>   DEFINE_TYPES(loongarch_cpu_type_infos)
 
 
