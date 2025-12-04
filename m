@@ -4,143 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B11D1D892
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 09:25:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77703D1D892
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 09:26:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR5Zg-0003O5-5K; Thu, 04 Dec 2025 04:24:32 -0500
+	id 1vR5bC-0005wH-9q; Thu, 04 Dec 2025 04:26:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vR5Ze-0003KD-Bt; Thu, 04 Dec 2025 04:24:30 -0500
-Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vR5bA-0005vs-3Z
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 04:26:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1vR5Zc-0004nN-T8; Thu, 04 Dec 2025 04:24:30 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QNTLrZDY+TMm/Nsy3nAUFU5njmAwWobzFsQZzyl5IU89nn2iBdYk+WTnIUVwMrg/zdebRu+lmhXjWCM6OlOrAzf0AyurFcbH1KoUJyYQirtzWu8trpadYTrNni8RdRV7koxaP6AwPFkM5Mpn3CiOvFpjhVCUKIDdmu4PkuPV4YYgNekxgcma6DcBXwALImJEVyf3iJHjN0Bj+y8FVXiJsrGp2NRzFqeQJNVR+qogtNWb5i9eDS9nqDMkfMcP3SrzU7R/HRarllLYeheA45COxHsSXwqx/eHVbJKJ3YxOLlBYdWrKQBpcpPxmzeOie2++GP+weDbEnN5hpmhpfJighg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UwhQpELUaCe/68J830KtnZE/KdzhYLDxu365wBhoSFs=;
- b=E/Gdz0Ua9riJmhpvjq/Vcg1/OY7k6gvkgKoSHAoYvfPiebPv9P+kVeVLaeoz1JMi/T6xw8h4BbOY7dhKPz9xhrlsXLNd6THKQj+II0p/KGrYa6SBzjnbFLxJ3oMblpXTlfdV7K3nId+Y/Jo5Rq6WRqp3a1C7dSBkkqmAUYEIQuouFxvOipYlmFHXk8NpKyyMVCRr/ePRCiWZ2e6dqpwPMjCClKlNvxOY0KOU0OU0VHwOgPH7nJFEHqICzonp+PdP49WCrMKyFctAuq/OrFiWEQPjGD9rrC2HvHgbiwHX4b1+UMvu7r8whvP2LJFt3xvoSUhBwbOyCkTY8EuT/67RzQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UwhQpELUaCe/68J830KtnZE/KdzhYLDxu365wBhoSFs=;
- b=AwhJnUb6JWlHXOpn6RLsy2VrwktmNze+p8Kqm+Bkg3cc1PWdfhwSx1e2Tj5h45Id4jYPlmoQ7g9ms6hmNnpKEqm17xuxGV6QbZjPPQN6KLG9ItJdg3ZKtCn+zubegctVlw/Gvv5qwFD1dkAJL3+oPgdqeWt0GULuyBpw3K1oGRviS4VUYZz2kA+RUzPpJGPPjVxyxMACXAw9GzMPEf92xHhcv+35egTD/eF53XTczC5bo/E5WKCVCQhY/qaCPCRMJc9wqcfp7YX6T1PhAmtKJ7QlYnGPONkAx4bjlXIt22J56hzviaCgMmi8WrZyg5V1cxXp6Mqwn3yKyaty8gbSTg==
-Received: from BN8PR04CA0047.namprd04.prod.outlook.com (2603:10b6:408:d4::21)
- by CH3PR12MB9172.namprd12.prod.outlook.com (2603:10b6:610:198::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.9; Thu, 4 Dec
- 2025 09:24:21 +0000
-Received: from BN1PEPF00004686.namprd03.prod.outlook.com
- (2603:10b6:408:d4:cafe::ad) by BN8PR04CA0047.outlook.office365.com
- (2603:10b6:408:d4::21) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9388.9 via Frontend Transport; Thu, 4
- Dec 2025 09:24:13 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BN1PEPF00004686.mail.protection.outlook.com (10.167.243.91) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9388.8 via Frontend Transport; Thu, 4 Dec 2025 09:24:19 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 4 Dec
- 2025 01:23:31 -0800
-Received: from NV-2Y5XW94.nvidia.com (10.126.230.35) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 4 Dec
- 2025 01:23:28 -0800
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
- <nicolinc@nvidia.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
-Subject: [PATCH v2 3/4] hw/arm/smmuv3: Introduce a helper function for event
- propagation
-Date: Thu, 4 Dec 2025 09:22:40 +0000
-Message-ID: <20251204092245.5157-4-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251204092245.5157-1-skolothumtho@nvidia.com>
-References: <20251204092245.5157-1-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vR5b8-0006mG-Ge
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 04:26:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764840361;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=jCZ6WboA9UsLy0y9O5DsJPro6lbWYhRRzq8S4B7GDGQ=;
+ b=XSjGRsGasiljga7M+rU6oe+MolfPoub3eZivviNdbKXM12pxHmvpMgP3ZIselyh+yK63Fc
+ H8xFGAjeGZCm4c1tBxzcjfwpQZHuFZYw+JmZZRw3GpW0XkPdrpF/u6N0wNne7G+GqdM9LL
+ wHulaLTmVaLgVil7bHW4vMwJqNt5vV4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-258-0O5Bg8nlMra84CyV0PMM3Q-1; Thu, 04 Dec 2025 04:25:49 -0500
+X-MC-Unique: 0O5Bg8nlMra84CyV0PMM3Q-1
+X-Mimecast-MFC-AGG-ID: 0O5Bg8nlMra84CyV0PMM3Q_1764840348
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-42b478551a6so355025f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 01:25:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764840348; x=1765445148; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=jCZ6WboA9UsLy0y9O5DsJPro6lbWYhRRzq8S4B7GDGQ=;
+ b=I4HFL1Yp1rXvash8CuicKnQTadVyd7LBKrC86/McGr8sSqv84EJx5OEupU/LhuFHZQ
+ NdE9KeslmP8NHIenOnLp8V+I1BLaeR2Fc/WjesDqaZmy+XcmjumBgbTXO5aTaOCBdmA3
+ xnsYZ7rP4HVHsyokRajAjwaxol8FHSgUlXS9rZJq01++57JSSCt24DkgUeCsx8mYvlYe
+ 4LiTOZ7Mog1xmkTbvMqdw/6Ir+1JlPNXpBphcJ7TZOQo56DowS1G8FtxPRDigxm4WHnc
+ 85TbLBX4FhKdV76BLRZmdM73GUeneR6tdYUVkG8GED8/jSjARgkL7frs/q8NaYXPLBxr
+ cXBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764840348; x=1765445148;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jCZ6WboA9UsLy0y9O5DsJPro6lbWYhRRzq8S4B7GDGQ=;
+ b=RzvIEqrK/JZGs5folC6F5shhUGTyHFBm7UqyQwuhgsfpyEkKAvfvPrSsujhOlFMrky
+ VTwV/BOsCWmitY4IiQTzt9Bua5vm6GIdXmaGVQ+U5I1lBYfvg9bagVv8vuaexWy+YwVZ
+ sKVD0hyhTEqtb8/IEsYs/PTjaaxqGuEUqSAAyc6sdAv/bSZo936cxVzaZVGw2UJ4CFlk
+ 90NF2fDFRElyHlhrEdKyPpLJZyoC8P+66y60tYD68lEt+MPXjq0edULQBpwotfK8zRhS
+ r06ThR3mp1G3/sitoS7kfMqGwiBLc+HM5urvfJjxXTticrnY5bxIR5gtfmdl3dPYE7sV
+ 8Bgw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUET83DE/7jZROhSIe/kAvoOO9BVV//RzMJo3wQBI89NB/UKZXx3bB0pyMmlOcn+mzkWAKTh4ivqd8m@nongnu.org
+X-Gm-Message-State: AOJu0YyojLZR6vaI3sDmviAYjpEGes9RJQIBFFr8nxTiRU+65rWG/6aE
+ D8eIuKFuzVwPxuoPG6gsU1SctXUyhQ54boXU/dZsl3urJnDs9uBtcezW9HX4WePK8Wd2iA4Sqxf
+ 2yFzJ5JpvU6MNv0AkpM4kksTwL63+cr2GH/OWJSB9HoJFdDm/9zIf4hOR
+X-Gm-Gg: ASbGncu20dgHkgGKvU57Szc4uEjdw3v8E2hOZZILuJf6zBg1UTSBOaXjox/elzLmzcZ
+ D4wul87RRdI4eaR+uDaBPx9q7nTdgqtToKHn7fogUByYWHcgLr7CBV45UoqF5DmEdUt7Shsyf2s
+ tXBGPvpzDUIooxjvuN7zyDIiKhBnaeScjH3wxLOFIsdYfGvQpyubNF2ljMgwpnondrRp+a4bLRm
+ Pw1+HYUW1gK14unJtqD0NsES5YMdGipeSVRMOMlWFPR0EOyFehSHONTD51O33mNwnBPZwL/8J+M
+ D9czoUtI57GC6xDza6Six1wTMX2y9D8cXVO2kcrtXaHtNrj+nXXsC/Wgyjax73TtvDxlr2PAVtp
+ H/UFXD0ugchk65O4B+6d6sqH/kRPXiiaNaozQ3dr//IgMP9HieNpUrXwdH1CE8YZf2siy5C+3Y5
+ wWGVn+9ykzKN+wHrw=
+X-Received: by 2002:a05:6000:2484:b0:42b:3e20:f1b3 with SMTP id
+ ffacd0b85a97d-42f73173f46mr6063499f8f.9.1764840347812; 
+ Thu, 04 Dec 2025 01:25:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG7qdi3Qqo0V0aByWFEl71ReUj4psU4+prKoECGOsqS2HFZnHJ6Bzo3ZIlQv+rUUMkbEyxuGw==
+X-Received: by 2002:a05:6000:2484:b0:42b:3e20:f1b3 with SMTP id
+ ffacd0b85a97d-42f73173f46mr6063472f8f.9.1764840347427; 
+ Thu, 04 Dec 2025 01:25:47 -0800 (PST)
+Received: from [192.168.10.81] ([176.206.119.13])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-42f7d222506sm2450700f8f.28.2025.12.04.01.25.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Dec 2025 01:25:46 -0800 (PST)
+Message-ID: <19f01d31-01f5-458e-873b-4859e2f8b3d9@redhat.com>
+Date: Thu, 4 Dec 2025 10:25:44 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] block: reduce files included by block/aio.h
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, kwolf@redhat.omc
+References: <20251203185133.2458207-1-pbonzini@redhat.com>
+ <20251203185133.2458207-4-pbonzini@redhat.com>
+ <bbbf42c5-98c6-4f24-929b-7bbb2853f5c9@linaro.org>
+Content-Language: en-US
+From: Paolo Bonzini <pbonzini@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <bbbf42c5-98c6-4f24-929b-7bbb2853f5c9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.230.35]
-X-ClientProxiedBy: rnnvmail203.nvidia.com (10.129.68.9) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00004686:EE_|CH3PR12MB9172:EE_
-X-MS-Office365-Filtering-Correlation-Id: 48680cef-d69b-43b5-6740-08de3316e849
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|36860700013|376014|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?UE2YxApXFmCD6lOCoeSP03rkQa+vCm9JjJUqkkumD8hBkzBAEt1AqjvqlCCo?=
- =?us-ascii?Q?jjwOdd4si8dglDms4Jh8BtixhvSMfHPCa2cdQScThhZCWZ+TVa44C50JsQI9?=
- =?us-ascii?Q?ItrIqVKgSGKq58b4m1XgeSUEM0zjsZj3NG+dQ145/L8gZ5iSHjarsY6NQB2M?=
- =?us-ascii?Q?/wqmIYdIeHfHTiaLhWIcI3G+Ixb4S0eAxDAb85F/NWC26kX+6RRKCHMJwukH?=
- =?us-ascii?Q?aC9RLDZSkZZaYG5tQeOA22bY+rIehYwZNKwC74zTU4WCeQzHYbIUXJYi22PV?=
- =?us-ascii?Q?wxftYNXysqrNvLFXr90hZkXGhkA/fX842oE9mRdCIJPJouj4MZTO2gZWKtEK?=
- =?us-ascii?Q?a+MeHxfwUAw9e5qYRayn0d6iYdN3QOOeVWvE8jCPUOiqYOohcgoUKOWWnzFT?=
- =?us-ascii?Q?3gYd4TzzKUwldtLy9xSV4UU5YoX1RTVBBjnTtp561pyT6whXMZt4Of/HceCs?=
- =?us-ascii?Q?bVTnlZJOgynZq2gf4O85vp1dawVtM3MnJvDTyTsD7v8HacapkARKWXXg8bK2?=
- =?us-ascii?Q?0wWa0NU0xTLGkGQTIC2BzMYh7VEBtSRAA5lsUwEK8SPiYsTEvoYTft4NSBAq?=
- =?us-ascii?Q?rlGaK3pEtIuLS7u2yfJUBtEuIrTlv40IqXecwXWXkm4CLRYG3LhMhH1yXHcB?=
- =?us-ascii?Q?0YzRCvhlpTAxNUgQEIk5AaDegoKJc1HKcfPy9g63uL1r2n6LzT0Rocyd7oBs?=
- =?us-ascii?Q?xGWsjR85/Ta5blzp2JmBL99KfUwCzSEFx6ca70P3i2tMZQcC9RPGrLna/2Qf?=
- =?us-ascii?Q?Ajn0LL28Pxhcb1SfSBiyhfkk8c8TMHsShYBeco2L+YonDc6e922hcfc7iM3f?=
- =?us-ascii?Q?0t72vav0ssZs6mkzkStmpTgKqjxaLJBkDbQYyCHV5RhlEiVqg0Ax30WX6z9R?=
- =?us-ascii?Q?+N4oVsEforzBPAC0Sotl1MY38OOEhLq1+pPTQ7msGTWrcxj9SgBjr1jKt4uF?=
- =?us-ascii?Q?mcfGtpqUT7+0svEykr0Rlo/NviD2wxKcVEHlsHaPb2dDpOs5DwcB01TtCZjv?=
- =?us-ascii?Q?k6k6S0AkENh0b+pKJpK+ae8YPNFTMrEDXx/M9luzuxJk8+I/ioMVXIIrutJ2?=
- =?us-ascii?Q?Vxllt2EVnASGigvuj5t9iwsHwcNGSY332zQaC2wrtxGsqRBY56CxWDJITwq9?=
- =?us-ascii?Q?erEqHQBuSHIfVAN5O+vcjdzm0lp7z+2Spqys6LSYCCv0HQLOBqeCClum9aG8?=
- =?us-ascii?Q?5ZFb+8XVMdbezfnnk5rR54RyoiZwN3HhFJSzBrHAlQrQnHOHAEHbf/beHmGe?=
- =?us-ascii?Q?xd5lvHT8CjNU2GrZ32GRoDRs0Yho9dlQMWC4oGqKLE6bD6CuZm7HvF0GSoP/?=
- =?us-ascii?Q?s96DWkJiWDnuAScqhF3pF/6CnM577rxSyE4bV0DrVX2RpOq2AKwVWMY5jBA6?=
- =?us-ascii?Q?iEoDr77XH6kZ/5qJFZqLyCE9F9YqrbynClXTfH4PqKxPLwvzxePzurDTj7ct?=
- =?us-ascii?Q?1IHv9TuyiDrmJV2kBlbAweFbeB07bpAGG9yZ3dWpwqjdVUmADLeEx03iq9jw?=
- =?us-ascii?Q?ZMYzxsu1ydSkx+1FLuJqMFMWLPKzXLeuFbT7T4wZgweNcBoNPZT25v5SSMYO?=
- =?us-ascii?Q?QYrxHoZqLTwB4eQtUlw=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(36860700013)(376014)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Dec 2025 09:24:19.9822 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 48680cef-d69b-43b5-6740-08de3316e849
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004686.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9172
-Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
- envelope-from=skolothumtho@nvidia.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,94 +164,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Factor out the code that propagates event records to the guest into a
-helper function. The accelerated SMMUv3 path can use this to propagate
-host events in a subsequent patch.
+On 12/4/25 09:35, Philippe Mathieu-Daudé wrote:
+> On 3/12/25 19:51, Paolo Bonzini wrote:
+>> Avoid including all of qdev everywhere (the hw/core/qdev.h header in fact
+>> brings in a lot more headers too), instead declare a couple structs for
+>> which only a pointer type is needed.
+>>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>   include/block/aio.h                |  7 +++----
+>>   include/block/block-copy.h         |  1 +
+>>   include/block/block-global-state.h |  1 +
+>>   include/block/block-io.h           |  1 +
+>>   include/block/dirty-bitmap.h       |  1 +
+>>   include/hw/core/qdev.h             |  6 +-----
+>>   include/qemu/job.h                 |  1 +
+>>   include/qemu/main-loop.h           |  2 +-
+>>   include/qemu/mem-reentrancy.h      | 10 ++++++++++
+>>   net/net.c                          |  1 +
+>>   util/async.c                       |  1 +
+>>   11 files changed, 22 insertions(+), 10 deletions(-)
+>>   create mode 100644 include/qemu/mem-reentrancy.h
+>>
+>> diff --git a/include/block/aio.h b/include/block/aio.h
+>> index 59c56d695ee..8cca2360d1a 100644
+>> --- a/include/block/aio.h
+>> +++ b/include/block/aio.h
+>> @@ -23,9 +23,8 @@
+>>   #include "qemu/lockcnt.h"
+>>   #include "qemu/thread.h"
+>>   #include "qemu/timer.h"
+>> -#include "block/graph-lock.h"
+>> -#include "hw/core/qdev.h"
+>> +struct MemReentrancyGuard;
+>>   typedef struct AioHandler AioHandler;
+>>   typedef QLIST_HEAD(, AioHandler) AioHandlerList;
+>> @@ -211,7 +210,7 @@ struct AioContext {
+>>        * of nodes and edges from block graph while some
+>>        * other thread is traversing it.
+>>        */
+>> -    BdrvGraphRWlock *bdrv_graph;
+>> +    struct BdrvGraphRWlock *bdrv_graph;
+>>       /* The list of registered AIO handlers.  Protected by ctx- 
+>> >list_lock. */
+>>       AioHandlerList aio_handlers;
+>> @@ -393,7 +392,7 @@ void aio_bh_schedule_oneshot_full(AioContext *ctx, 
+>> QEMUBHFunc *cb, void *opaque,
+>>    * device-reentrancy issues
+>>    */
+>>   QEMUBH *aio_bh_new_full(AioContext *ctx, QEMUBHFunc *cb, void *opaque,
+>> -                        const char *name, MemReentrancyGuard 
+>> *reentrancy_guard);
+>> +                        const char *name, struct MemReentrancyGuard 
+>> *reentrancy_guard);
+> 
+> I suppose these changes were before you move the declarations to their
+> own "qemu/mem-reentrancy.h" header?
 
-Since this helper may be called from outside the SMMUv3 core, take the
-mutex before accessing the Event Queue.
+Yes, but also qemu/mem-reentrancy.h is not included here.
 
-No functional change intended.
-
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
----
- hw/arm/smmuv3-internal.h |  4 ++++
- hw/arm/smmuv3.c          | 21 +++++++++++++++------
- hw/arm/trace-events      |  2 +-
- 3 files changed, 20 insertions(+), 7 deletions(-)
-
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index e45aad27f7..ad7f5e6640 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -525,7 +525,11 @@ typedef struct SMMUEventInfo {
-             (x)->word[6] = (uint32_t)(addr & 0xffffffff); \
-     } while (0)
- 
-+#define EVT_GET_TYPE(x)  extract32((x)->word[0], 0, 8)
-+#define EVT_GET_SID(x)   ((x)->word[1])
-+
- void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *event);
-+void smmuv3_propagate_event(SMMUv3State *s, Evt *evt);
- 
- /* Configuration Data */
- 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index ac60ca0ce7..9b7b85fb49 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -168,10 +168,23 @@ static MemTxResult smmuv3_write_eventq(SMMUv3State *s, Evt *evt)
-     return MEMTX_OK;
- }
- 
-+void smmuv3_propagate_event(SMMUv3State *s, Evt *evt)
-+{
-+    MemTxResult r;
-+
-+    trace_smmuv3_propagate_event(smmu_event_string(EVT_GET_TYPE(evt)),
-+                                 EVT_GET_SID(evt));
-+    qemu_mutex_lock(&s->mutex);
-+    r = smmuv3_write_eventq(s, evt);
-+    if (r != MEMTX_OK) {
-+        smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_EVENTQ_ABT_ERR_MASK);
-+    }
-+    qemu_mutex_unlock(&s->mutex);
-+}
-+
- void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
- {
-     Evt evt = {};
--    MemTxResult r;
- 
-     if (!smmuv3_eventq_enabled(s)) {
-         return;
-@@ -251,11 +264,7 @@ void smmuv3_record_event(SMMUv3State *s, SMMUEventInfo *info)
-         g_assert_not_reached();
-     }
- 
--    trace_smmuv3_record_event(smmu_event_string(info->type), info->sid);
--    r = smmuv3_write_eventq(s, &evt);
--    if (r != MEMTX_OK) {
--        smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_EVENTQ_ABT_ERR_MASK);
--    }
-+    smmuv3_propagate_event(s, &evt);
-     info->recorded = true;
- }
- 
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index 8135c0c734..3457536fb0 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -40,7 +40,7 @@ smmuv3_cmdq_opcode(const char *opcode) "<--- %s"
- smmuv3_cmdq_consume_out(uint32_t prod, uint32_t cons, uint8_t prod_wrap, uint8_t cons_wrap) "prod:%d, cons:%d, prod_wrap:%d, cons_wrap:%d "
- smmuv3_cmdq_consume_error(const char *cmd_name, uint8_t cmd_error) "Error on %s command execution: %d"
- smmuv3_write_mmio(uint64_t addr, uint64_t val, unsigned size, uint32_t r) "addr: 0x%"PRIx64" val:0x%"PRIx64" size: 0x%x(%d)"
--smmuv3_record_event(const char *type, uint32_t sid) "%s sid=0x%x"
-+smmuv3_propagate_event(const char *type, uint32_t sid) "%s sid=0x%x"
- smmuv3_find_ste(uint16_t sid, uint32_t features, uint16_t sid_split) "sid=0x%x features:0x%x, sid_split:0x%x"
- smmuv3_find_ste_2lvl(uint64_t strtab_base, uint64_t l1ptr, int l1_ste_offset, uint64_t l2ptr, int l2_ste_offset, int max_l2_ste) "strtab_base:0x%"PRIx64" l1ptr:0x%"PRIx64" l1_off:0x%x, l2ptr:0x%"PRIx64" l2_off:0x%x max_l2_ste:%d"
- smmuv3_get_ste(uint64_t addr) "STE addr: 0x%"PRIx64
--- 
-2.43.0
+Paolo
 
 
