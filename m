@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9CBD1D883
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ACCBD1D87E
 	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 07:40:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR3vt-0001cn-4Z; Thu, 04 Dec 2025 02:39:21 -0500
+	id 1vR3vy-0001df-Oa; Thu, 04 Dec 2025 02:39:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1vR3vr-0001cf-Mt
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 02:39:19 -0500
+ id 1vR3vw-0001dB-VG
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 02:39:25 -0500
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1vR3vn-0006PV-OB
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 02:39:19 -0500
+ id 1vR3vu-0006PV-On
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 02:39:24 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=J1ySp4vwOV29qmFpOqRzA4x6rpKPr5xoLRleCbwwQQs70rzKuCrPB+1us2XvqgnTIAK+78RJBMzybqInKdb7OQebJqzShJe7STC6Jkc9NCcr7xWu73ozpg2Wnkqy3ypDfHcTkGanCP3AdnH58EOOohgesSK+QFQ83jovCWiz/9/tbd3tSw46Csw2Hvtg67iTipp14Ncybp3i/DVcu56fbDl5XgYU2+Caih/vjHxoEs8Mhov/wi0z9WvIK7+P9vVnD2Dl7JZytAEkZ0ouMxxCSO64BVn8IB6MNew0E39p1HrY7msvTwGY3/rEYoOvOAS/FY+FOBQ19ThJr18WnRrEig==
+ b=I98k4AyFhuSIRQ9VYPtzjFl7yr7wgtrd0rR/UY4s8FJdZODwN0Knn/FboLJieO+E3t9Dm9MYKUG6lhSakomEmMSygOYGfhr+bS6JfPcnwPyFIsxh1/Culkw6NDBQvOTEL2z00XoQMPTSU8XA4t6HT4otOS2RNc+n7rqbW/MX0glvy3JEyXf064CF5d58i/Fjg9OBUdkHBaFQOy9QoPLegbYf5Ct6DVtooMzm2AOgD6IkYrpxT5RvrjsZhW6dBQ70EIFNsBNCeu5S50cwZKKSkOVz88WdtXiAH1tTh3ovI5CERr2c2mVA8u8DW7Ks46++DVL76M40xrj+1pYyS2ZF5w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=sHM3abx0GUKkgAghNpRvSM4D1AM1Zyl/mlP+oP92cw0=;
- b=Ti7dWgCSG8gIGb63lM7Zw7lYXmd4jmtGO+fCB5wGNmeZqM3FmEByguhpANpy3w1/52gDB28IabXVWlX96AIlWTlow9cG8DFntpXUUHH4BoMH4ngpfoErO7AdnFdQI4uesllKByqHo/Ky0DgCSjgpbuWwRxkLo2kZyrfKf6MQwPXeU0/AJQ9Yp6N29evZ5gpthTe4rykp2Vc0DjnZWXJA9z8VxARl9whQeaBdequkWpr5f/nDLccO26BWh7ElQ9DwR4ZQ2agGgtbWjzPGVFCS1KG6Uz5AlzeazyoMJTGbJqXcJIeY3Rm9LTXhsB1WuCqRC9Mi4L+jBKJUG4T/v5Ou1Q==
+ bh=eqD0zEESEZbstAr1iErFfnNpBnex1zU7B/z2ccP54RQ=;
+ b=DllCtLPr9RnwqLKwMhjJ0An6lkP8b6WYuuJja23q40mvDvuaCGLN9ooYLr/YdzkrNWIDjPrfH5A4mxPXWeXInwLWmX8dOZTG8OIjfH8kIPu4bEEfQGVQJiwt1S2JM9YzcpuE8FRIJFhbola8ovzvqN1pHDWNXdt1k/MGdSkoXMBnUCjWPDhJp8QmE7LhjPHzt9YVMtPBIITavgAsUWE49fN9MXi9djPNcPlFJxoUwbfjqckLOyHTPZLA7mzL/QsfgdGv/F39bkhZ4l13x96o0bqcEPP/Or/PrEfugV71v01vUbDgBQZHJ/yNBm1LyPiGpiGqcr+xzjokS9sZFn+W+g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
  header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=sHM3abx0GUKkgAghNpRvSM4D1AM1Zyl/mlP+oP92cw0=;
- b=DbCmFDlNeiwsn/YCjkJAc54/C65XNRUFnAuTPy0slNhr15T1WQ5EflLniIbK5QQgt7Z53ADAAGau9xoACeItuT4vTCOhWhBfRsONOGDWVAw2rvQRsOo8MsEuvk7yLoFR3y9Maa7Zgjc9v+gyDoUfTC6TsCOjp7WuCerbuq2XNWo3EZDzxFpD5HE8YINQsh7CTq8s5hzg1rrYGtErKjqouUySlANU0xbZkhwjuESlGe5KWKxaeZOJLOJoWnRK538cKCkGXmCbMfePNKM7WRkSH6CRgaZKkSBso0nzYNVHStfSq/c1nVkFaA9tlYmz9qHQORYJVCf+CSZEWmJIP1/Qgw==
+ bh=eqD0zEESEZbstAr1iErFfnNpBnex1zU7B/z2ccP54RQ=;
+ b=QA0rfOHl2ITreV8lO+v4govEqhcharltjr0ZnmlDsOfzjjusDlOphnljEWlbPm5o9TdTQ2WeQhZYCSN923/vynbEEWqar4LQYlTGLErkcloSLV78akw6YXgZ8TUoBzJyhKJejeDyTIOJxn4vGRq67S1h3A4GJtVlZHKWDAEwqE687gOQRQDDrO9tF3OlfRGGRpolrFAvqLVBVULYZUNjI0jZ/j2UKlLU4t84vZ/wtfLCK8ekOU0AjYpx4Yu9dWt9KJCplcOiSVxdyg/8bmd98S5/iXFFaissifpRGDH7zzVTUVXnrIhy6vRLFmUMpWkyIozO1CWSjGqznDZXp1yutg==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=jaguarmicro.com;
 Received: from PUZPR06MB4713.apcprd06.prod.outlook.com (2603:1096:301:b4::10)
  by KU2PPFDF24F4212.apcprd06.prod.outlook.com (2603:1096:d18::4b0)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.9; Thu, 4 Dec
- 2025 07:38:37 +0000
+ 2025 07:38:46 +0000
 Received: from PUZPR06MB4713.apcprd06.prod.outlook.com
  ([fe80::1b36:28b0:4e5:de66]) by PUZPR06MB4713.apcprd06.prod.outlook.com
  ([fe80::1b36:28b0:4e5:de66%6]) with mapi id 15.20.9366.012; Thu, 4 Dec 2025
- 07:38:37 +0000
+ 07:38:46 +0000
 From: Wafer Xie <wafer@jaguarmicro.com>
 To: mst@redhat.com, eperezma@redhat.com, jasowang@redhat.com,
  qemu-devel@nongnu.org
 Cc: leiyang@redhat.com, sgarzare@redhat.com, angus.chen@jaguarmicro.com,
  wafer@jaguarmicro.com
-Subject: [PATCH 1/4] vhost: add data structure of virtio indirect descriptors
- in SVQ
-Date: Thu,  4 Dec 2025 15:37:47 +0800
-Message-Id: <20251204073750.8953-2-wafer@jaguarmicro.com>
+Subject: [PATCH 2/4] vdpa: implement the interfaces alloc/free for indirect
+ desc
+Date: Thu,  4 Dec 2025 15:37:48 +0800
+Message-Id: <20251204073750.8953-3-wafer@jaguarmicro.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251204073750.8953-1-wafer@jaguarmicro.com>
 References: <20251204073750.8953-1-wafer@jaguarmicro.com>
@@ -67,78 +67,78 @@ X-ClientProxiedBy: TPYP295CA0035.TWNP295.PROD.OUTLOOK.COM (2603:1096:7d0:7::7)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PUZPR06MB4713:EE_|KU2PPFDF24F4212:EE_
-X-MS-Office365-Filtering-Correlation-Id: aa83afcc-b387-41f4-39cf-08de33082306
+X-MS-Office365-Filtering-Correlation-Id: b025b369-40ab-4d76-5986-08de3308283e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|376014|52116014|366016|1800799024|38350700014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?4DnLNHBjWiLTiC7fG//d7tzZUwtUu5MzgACkyDRtk0wsoD04u3V5iekkSdbq?=
- =?us-ascii?Q?pBBzkEz4OtizTNRJxT/10hLnr7Ss4cM0+Okgtn3Xl7PYCiczzM4EJZLt8uVF?=
- =?us-ascii?Q?C+iW7UPswZmQg8p9v1lYhYw6sQ0yv37BDE3x8JbrpK65ly32ga0UwpUZGSk3?=
- =?us-ascii?Q?W1Szb9RogKCZqgr0N7goDl0Tco4QWS3/3gUQwu/SZtaziR/MnSOcO65JgOju?=
- =?us-ascii?Q?RmhPdEWWoVfkgN/OLEPiuJ69LGf1Y8bVfDgEEznxMODVZX+8+2qgbc8B3bbm?=
- =?us-ascii?Q?9j9sCJCXVp3rDkMlKxAgVennPBRzjWP4SQ4TVvbdLg7fYsQog4HZg2KXkECL?=
- =?us-ascii?Q?0neZuMYVosZo3/LOzddTxB/fg2qcFkBRtDbTXzYENKnYjWH+GUYqybYWmGw9?=
- =?us-ascii?Q?dF4DJZreCjh7q3IGjRhPlVWs6t9HpxM6DMjVCmperjmCb3+KSUMglDwN+xZk?=
- =?us-ascii?Q?Y1hwKY8rMFq1SluH9QVo2u4K5g4mPL9V863hhANCXrsTBz+Ob1lJPudEkBCg?=
- =?us-ascii?Q?0Apwh6fC1kj+g3oM7Lvc5AstKgsnQ46Ip/aV7oMQoSDUVU/a+uD5B9uITLlv?=
- =?us-ascii?Q?RR/Wl1x+ACiP2L96zhnPeacvTxXfF1k2hb43cPLNuYivzoFlZiykVG3SaOZN?=
- =?us-ascii?Q?Oa3A4JjUJLMwWY1boc701ytgnM3sruhPwuRouH5RyKYcDXUlc8uvtwTT0fDD?=
- =?us-ascii?Q?z9H6ddhgvOdJylEH6FNYwb/gLuajH0AL2lgk2M4/y6M1DipEHKq98qymPbtj?=
- =?us-ascii?Q?5cw7OJIz0vDDRyZp+4LxuPqNRtyrthzfbM1ffKkqRMTsqfYgXmHMoFqdLjgs?=
- =?us-ascii?Q?CoHnWBjtF0WWYxMRhlx22plrzbQAw29ODy7hD4vhEadKS2P83zygQ6CJpsfi?=
- =?us-ascii?Q?2BQpLT1EfoHm3tJayZRq6PXZR1Qr89nmlJOPfEfF0KvjZDM+qcJ/Dhj5UaS5?=
- =?us-ascii?Q?0zyyhhUWC++aTiD96VqAHdYwi3lUpAEJb23+A132d46UUJx6W/JLkDcVDth6?=
- =?us-ascii?Q?Aa1ocY5D3xXufTw80XB0/dRO6/okosCen0YYj7IKOLSj6SB0ZMGT9hO5Op+D?=
- =?us-ascii?Q?ats+Kr5Spl7ff5YOwsfn9hCCUQQgSeyBHO2jqxtuXw7JiCrmq7k7tJpq4fcG?=
- =?us-ascii?Q?fT10KLOu+NGxd6HlfpIl84NQadhRIHedn+rrm5GtMPww2S/wkWAjVycHhbCv?=
- =?us-ascii?Q?8UvSNZ9gISvEYZG5gYKAskWeM5DJgF2RaPFaVkGR1NCabIR+jQwf9/+Sw9Ti?=
- =?us-ascii?Q?EZ54MsUG9Kn7D+ONWb+FVvhK8oJGJAPPp2rWdslLyeaLihj0jCU+SBbFqblt?=
- =?us-ascii?Q?MfK0w9uBmcEDGPY8bGpyTRhdZBgB+ptGGj5m7fgAyVO1ciPyR7xVSZ3+4adH?=
- =?us-ascii?Q?CmSigbrT2Q9VK1OM9e0Bp/E5EMy2/QAcABGbop3+Qn1twY2I8spMBoSo0Nbx?=
- =?us-ascii?Q?bc7InEdn9eA89+KwHjMFfYrOUtuL8oDbLLkfqekF2wHorNAuDuNScnX6ieEc?=
- =?us-ascii?Q?ri/18fH5MpzrNs185MgTS2fUJOCl4f/iEi39?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?nd9K5ciS0Ums8TU27I0WEk/DltsbE9IMpvYMXaGV8gUZ4IjBBsfdTCN1bk0h?=
+ =?us-ascii?Q?NIlLZxH3RYXT9L825ZsQtsoxbFseyoSqbnrn1+UCHoTJGZ9pBOVQReHA14nd?=
+ =?us-ascii?Q?2QVy21HPBuOBBk+nIGEQEz2sAF4upDEEGfG+vDUw+LNAYcQqQGodM2fpq2he?=
+ =?us-ascii?Q?YmycPUs/9m3Eoopd6jiKyTQrQ/6kMyTH6H1IQsm9N0YGGyy4UPx6iQ0dWCPG?=
+ =?us-ascii?Q?yqyK45wEDUDck7dt746ZJDIsWMnDDA0aK5c1qSMAn44JMQpxh3lsoVJeeIea?=
+ =?us-ascii?Q?c1szmBG1GLs/q4y89972W2qs2G7PtbIA3fyQsBOkKnzigfEGJJUneOaY3hvD?=
+ =?us-ascii?Q?ZnyqFDMcsn8ekUnd/6Hu3gxz+WUFXVzxJSLb9mt67XiYxCLznsbDqc/Ta4BF?=
+ =?us-ascii?Q?dT3rwv9EJyrs997aKlI2PSZ5mJ8qRycSHz35ekpOxmy1nE2V+QDXVn4mL64O?=
+ =?us-ascii?Q?HxMBlRqTBpnnIKWQpWCxEDOGWAPbF7rLwpekP88cVBQOIRM3K9GpNXvGcTJq?=
+ =?us-ascii?Q?zIgBLlw/aqn8jBOttKEB7hGgRl/39/ff9NDKMZFz7zc9/q4bKzRMxkNJm6Tl?=
+ =?us-ascii?Q?ype5lxLZGRkjPpUQ8BrHRp/k3Hwen13jeyvD9w67AVX1/j9yqJgvUd4gapEl?=
+ =?us-ascii?Q?cDqMF98fR7Msnbh2hkn0Dloe7pnoL2xihjbkhuKWdpvDnikBVXkzyudzbEza?=
+ =?us-ascii?Q?jGZC9OHeI1XhHs85txbNiiRCkY/p5To8t1c8p9Xmx9sLL8ji9NEm5oJxSQ4n?=
+ =?us-ascii?Q?vIio5fpP2RA0csw+B8k5JMaz/b4fIn7PH23/AWTEsSW2HjR3wGEWzMisvN1S?=
+ =?us-ascii?Q?/2Wc9LNzHonFse2LAxcIhho5TX0JQfmmDL5ZoLj1zP/4Ci0f9/A9xuiyoLsW?=
+ =?us-ascii?Q?rxcqTDnI7g96oGcb4ImLsUrWXTNmSI0o62G9/0tbntB12aJpLJwoi0g0Wko3?=
+ =?us-ascii?Q?B8k7U+vVo3SOp9+9cGybgikjgKcb6tf90lvtUU6tP1BnK5czT+Xc6j+EzraN?=
+ =?us-ascii?Q?kyZW1p26VHW6jA/3ksnwb4mfQARmIadtuOV8yBZvrNjGR/MunLYk+0Sjo4TX?=
+ =?us-ascii?Q?vBsbhLpzeRMUdrV7DIgTI2SeylSlmn37qnGAK8hWdzFJrDWVzNVU+GZuQLWw?=
+ =?us-ascii?Q?ZSF+b1XtTT2TBj7gnFOUlVK02q6BtvtWJKS2fpTl8Hzs0MN+nWarzMxENWao?=
+ =?us-ascii?Q?MwRDkV/ZG8iu0xk/ttBpT2DQ0xdnTdhHlzMu5q8PdVNZ+PsvfUe1dJMZjSTP?=
+ =?us-ascii?Q?imm1X0+VdDd0XftB4k8pkObPc91T42bjWf+nRgrV+aLN2MlKsTqRLPipJqrE?=
+ =?us-ascii?Q?wVaZf87YW3niftTEZ8EfG6AawFDIu0U5uMhr6/hq7w3na19tRiqkYh3p2iZ5?=
+ =?us-ascii?Q?7Ujiyh8+Y7LwIxMpO3xbccuvPAw/mhEnOX4R1YwX98zVEikL7BUCXGSjsEdR?=
+ =?us-ascii?Q?d94WBC2acOSHu2W5pZ0eTFC1d5Wd05/SJMn/WeAqnuKyNw9qgH2lQcNFJ+Ah?=
+ =?us-ascii?Q?rYhZcFvh+B7QB1/mubkGkxCpmUqWTWT03Pwq?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PUZPR06MB4713.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(52116014)(366016)(1800799024)(38350700014); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?D+hvIh8H4d50vrp4033MBZkAWPrYJKFHQBMuYOXMLY9VRA/cvXBaOuxZj4WD?=
- =?us-ascii?Q?8ekTbjJH5jJqelWCbi6CYgBbBMHBuLKG+jT5YLaSuAXySjPndE0R5RXxvLrw?=
- =?us-ascii?Q?EWOQOHRGtCKEAV+HCkXx2iQrH7qEO9enTCBIK5brimmesPE5NBXrz1m02XZj?=
- =?us-ascii?Q?RLA0RdQUijy9LRflKBP9tb+8HaqYlpCZiDGnDMSv6Zn+QAQ+40nBcLfDd1Z5?=
- =?us-ascii?Q?FmU9U40fNHnDUJCr1Y5IfJwvaayn+Rqk1I4xPIYRWEpcwVBHigiVo8U7GBCN?=
- =?us-ascii?Q?hAHRuyb01iqTtIXdxIzwUW7o6N41kjsgCWo8rZGc2pD5VOeahTCMIqHWrO9F?=
- =?us-ascii?Q?DLds533I0QsQs5Vww0+i29sUv1Cx0RN4m6VmTy6u6bJm2Lwxjb8OzgqeJPWe?=
- =?us-ascii?Q?ZlYZGQEx8rszI6Vt6YlsXzROMhYwFNDOwFss1PURvL4ERg3q6lgTld2rgv/O?=
- =?us-ascii?Q?QXdQ33StrQkkDyzmWgjWcuW5Vo5GVdO24z1D9TH3g5y232BoxG+vqtXXdu09?=
- =?us-ascii?Q?nGx47AXg6XhHr6ysrO5EyBNBtYKiWX8786y4gnoq7RdwsXfXZqWBmHVKX8iZ?=
- =?us-ascii?Q?zCRPTttaWyGkEQcejS4LRswFN1mRlO78iWcODB52N2jS30emy3LSiHcLAo9n?=
- =?us-ascii?Q?6xE6HcI7y7bAmVpcIj5Ilm6z7spKt5wGfNbh/T7YQGvwzXbjoAJid79qKZV7?=
- =?us-ascii?Q?wWrDVrNePGqurulleaeOn5CJHRAse1N79XHiBNmG9aU9OSmRGuY3gG8lTHnR?=
- =?us-ascii?Q?jazM4vykA1uhvVLzAdCUFq17QyZKa7cxaDjf34/k3jn0CaSGuLuaEv7sfWnO?=
- =?us-ascii?Q?1bBoeNn0qUf8FX1cchjZ9txARh1AJ7YkiJBJiAjYmTlXa6Egy7W+0IyYfrzu?=
- =?us-ascii?Q?XyBo3Wxi1Orcm/JInlNDhTfuG4ezuVfRI6hSvBkBw+DySTKpG2BcRu8w8J54?=
- =?us-ascii?Q?92kQDw3Ydrr4XUJn8YKjfACWBOcWA+VyRpAV1EXLG+8Fzkhj3CGyAeZIJG80?=
- =?us-ascii?Q?q5makuywwE+1tYhc5dKvhOtn00M8Lch15owdVfjGHuslMZyqTCLrgoO+9IHI?=
- =?us-ascii?Q?mEoJHuq6Y46Su1PiApD5ITp5uLJi3ZIv86q0Y33cgFPLladSkZxsm0Vs1nlX?=
- =?us-ascii?Q?r7zh5Ni7wG0SaSOfLzeOw8AJEflV83zBCBOTHPcVkvy60z/5p6k5BDnKd9k4?=
- =?us-ascii?Q?46s/npjOVpOoUzMbS8kV2HTDrRUB2BS1vE7Ue0wW/NlOAtyx6Iurq3EUxyrD?=
- =?us-ascii?Q?oibXqJsOOyGJpAvWuRJ7Py347Ad0XSpTUwwOThA4emvnJO756i2nlgfXgeAW?=
- =?us-ascii?Q?Ps8ubpylmwYKdszIwyWWZfUGor5gZuyFoQQSaIP0DkRmpLzPuUb9tVrdt/h7?=
- =?us-ascii?Q?qvcJv4bwkwpRsiOtNA726dVL9X5kRGeTVJjYNDUV5TrQ3L6U/FcJ1VY51WKu?=
- =?us-ascii?Q?OS8XEogHCf6slOvlFpXRXKJWGFyazSnHqDzey68z6RY5iuE7Xb56iUih9bFm?=
- =?us-ascii?Q?BRFUginKJL4F/ifZ3fX/lI+3gm6opJvkYM+nxXkCbCrSM+/zU8uTxhZ9yiI0?=
- =?us-ascii?Q?pswgFWJWUl91Eili3uUA7Lrz99ztpHq+ho2MR760?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?+6JKaAs+mMcoPTNkKU+ICZ3LqnPmcTW57+s3tOY9wRQCRwYWEwhYYTkVT9HF?=
+ =?us-ascii?Q?S1YnzQov6l+pYqPa7dZ0IZaosxgMe1I7XMM3doLUNv+GIWd/oRXJhhtrQUSW?=
+ =?us-ascii?Q?85fYoM1yATi358w4Mftgd7dCMHBSuqgpbLDAXl4HxcfqxPOWAhKPT73jQja5?=
+ =?us-ascii?Q?olWZXz5O3v1lpAJk6Ycc03qPyp4WC2IrH09kmWlopGhnflrVMY8MnhBSapXk?=
+ =?us-ascii?Q?4oA/ULKxx+NwYqKVtblyCJ0yiJlETYvhY/AQihsB88M7bDeSNrFBO6OKx6nd?=
+ =?us-ascii?Q?MV7+KJ5bcIvRpxR7Hb+i2bHiflQoNP/6LUowDi5FeSbPVymdNPaIOLOw2g/j?=
+ =?us-ascii?Q?QRGkDAJCrz0GNFNoADEJNP2wwAfnw72Pm/Pf7cfReIaGyYkhrmi8VFLZ9VPy?=
+ =?us-ascii?Q?uE2EhobKbqaTM6nh1nPH2asGdPJyhOjEqYnMKHF1kHY1Ksz/sgcjY5pwPJTd?=
+ =?us-ascii?Q?N9yyNQpFQWtEZCYnSml1FPzxx8YgA7XfUEmETrcjITT2K0A9A+ed/d3wx24V?=
+ =?us-ascii?Q?m0fAikwKFXWiqBNfWfdb4FwkvpbyfSpedSvp+k+3VA1PfNLVeYE7W61LteuG?=
+ =?us-ascii?Q?dCy9PVe4IF22WDG5GURcHbFOtd9JcBu3PQydhcsjDUEwjdAc4EeQ5Zl9wmbW?=
+ =?us-ascii?Q?fboPxnBDZEmraFtFP2Ywh8q65dRJZFdkQXqNsfDid6bGWBPy0vTuJLMedQDH?=
+ =?us-ascii?Q?+fxniEDBPECP5zN+xHcvcYkhlwEeV9hpnXSTKI7aY4AtoAhxWg5LWP194sF9?=
+ =?us-ascii?Q?hbDPp1t7axB3mnrUOxQtmd4eOfLdERTsSIHd8G48yaCiLulVZ+C8D6adSYt3?=
+ =?us-ascii?Q?qHKucO5XKrhxAymwGHwwSoW3HXCu5iNf1Up+TnZYF8ZLEgtQlROjkaaHfsM5?=
+ =?us-ascii?Q?N8iaK9vk0VgGZhsQtRklOLcbrCW4QCWF0W7g8mhwZDU6+iweUKrstygpnx1V?=
+ =?us-ascii?Q?fYLgOtdK3UPLaXg0AMNvvPNbSeEO97lscUavHm1qs4fOv43kJ/0HPYUkTGbC?=
+ =?us-ascii?Q?iwaQSTovfXHqCof7QsjkAnhyBJf7kKj4I/LwSMLf+hy/yszx1EKW0mWBXogc?=
+ =?us-ascii?Q?kw2w8SJwUPhCpHDd686hz6/W5vzLyA3aqiOe1qnB5ydcPgGWFY3e8/Ol7uaM?=
+ =?us-ascii?Q?Ki2/88A5+JQwX7DZKVQ+njomRrfq4iSeseFTIV4ISv23QHwzw84tnsXvgw1t?=
+ =?us-ascii?Q?kTC/mj3Uk+3CDlNzfWoF7aFaTUdNAwHAZ0IkOlnO1NCZD8R0SgjDKTrE023x?=
+ =?us-ascii?Q?i96A/E4GFTcbjgA2nZWXkjKZciGdYcpDL2tK7qYP406fw6m5x8UNmVecjatP?=
+ =?us-ascii?Q?QUpNrvhVQHzOfkQ/3xR+m6UyaHYO9durwAzRVVU0AvTfGCh3Ys5UfmvWce/y?=
+ =?us-ascii?Q?yo70bq9jbokiT/oDcGN/IRsdtM9rmhGxnC8DvwIASkiMLykjPleFXlYRniZE?=
+ =?us-ascii?Q?mm4HWfKihcEaFW+bJE2IYNSUn9EpPRC0rd6gxB1Nte7LkkysjtmSFk9v711M?=
+ =?us-ascii?Q?+2HPcZPH/RUSuIqUGdKy/kRQfGuOOd1aUXG5CPi8mqEhCRkzHsIIpgoxC4FQ?=
+ =?us-ascii?Q?R0yxo8NdDfkUhVWidshM762NJbqPjQ5LiKqwSxWJ?=
 X-OriginatorOrg: jaguarmicro.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: aa83afcc-b387-41f4-39cf-08de33082306
+X-MS-Exchange-CrossTenant-Network-Message-Id: b025b369-40ab-4d76-5986-08de3308283e
 X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4713.apcprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Dec 2025 07:38:37.5300 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Dec 2025 07:38:46.4217 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rsPlUp+UATu7GtPY4s061fzWwIiseX8UDni2WHLRU22GtyiWwHe9/fyJyW/n6EYNKFUEmKIhCeVujnm8h7Gh6A==
+X-MS-Exchange-CrossTenant-UserPrincipalName: d4cHXeUInVtpmc5HW9McIVWhVhwGvvtUNwirSor35yOp4byqAiYBO9mIlaaGK/nQLKV4pgMsWvOtYD7/jhpvSg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: KU2PPFDF24F4212
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=wafer@jaguarmicro.com;
@@ -164,32 +164,272 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Store the virtio indirect descriptor in the SVQDescState structure
+Dynamic Allocation/Free indirect descriptor.
 
 Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
 ---
- hw/virtio/vhost-shadow-virtqueue.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/virtio/vhost-shadow-virtqueue.c |   5 +-
+ hw/virtio/vhost-shadow-virtqueue.h |  49 ++++++++++-
+ hw/virtio/vhost-vdpa.c             | 130 ++++++++++++++++++++++++++++-
+ 3 files changed, 180 insertions(+), 4 deletions(-)
 
+diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+index 2481d49345..ecc3245138 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.c
++++ b/hw/virtio/vhost-shadow-virtqueue.c
+@@ -756,15 +756,18 @@ void vhost_svq_stop(VhostShadowVirtqueue *svq)
+  *
+  * @ops: SVQ owner callbacks
+  * @ops_opaque: ops opaque pointer
++ * @indirect_ops: Indirect descriptor operations
+  */
+ VhostShadowVirtqueue *vhost_svq_new(const VhostShadowVirtqueueOps *ops,
+-                                    void *ops_opaque)
++                                    void *ops_opaque,
++                                    SVQIndirectOps *indirect_ops)
+ {
+     VhostShadowVirtqueue *svq = g_new0(VhostShadowVirtqueue, 1);
+ 
+     event_notifier_init_fd(&svq->svq_kick, VHOST_FILE_UNBIND);
+     svq->ops = ops;
+     svq->ops_opaque = ops_opaque;
++    svq->indirect_ops = indirect_ops;
+     return svq;
+ }
+ 
 diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-virtqueue.h
-index 9c273739d6..2b36df4dd5 100644
+index 2b36df4dd5..c5d654eae8 100644
 --- a/hw/virtio/vhost-shadow-virtqueue.h
 +++ b/hw/virtio/vhost-shadow-virtqueue.h
-@@ -23,6 +23,14 @@ typedef struct SVQDescState {
-      * guest's
-      */
-     unsigned int ndescs;
-+
-+    /*
-+     * Indirect descriptor table for this descriptor chain.
-+     * NULL if not using indirect descriptors.
-+     */
-+    vring_desc_t *indirect_desc;
-+    hwaddr indirect_iova;
-+    size_t indirect_size;
- } SVQDescState;
+@@ -54,6 +54,49 @@ typedef struct VhostShadowVirtqueueOps {
+     VirtQueueAvailCallback avail_handler;
+ } VhostShadowVirtqueueOps;
  
- typedef struct VhostShadowVirtqueue VhostShadowVirtqueue;
++/**
++ * Callback to allocate indirect descriptor table.
++ *
++ * @svq: Shadow virtqueue
++ * @num: Number of descriptors
++ * @desc: Output pointer to allocated descriptor table
++ * @iova: Output IOVA of the allocated table
++ * @size: Output size of the allocated region
++ * @opaque: Opaque data (vhost_vdpa pointer)
++ *
++ * Returns true on success, false on failure.
++ */
++typedef bool (*SVQIndirectDescAlloc)(VhostShadowVirtqueue *svq,
++                                     size_t num,
++                                     vring_desc_t **desc,
++                                     hwaddr *iova,
++                                     size_t *size,
++                                     void *opaque);
++
++/**
++ * Callback to free indirect descriptor table.
++ *
++ * @svq: Shadow virtqueue
++ * @desc: Descriptor table to free
++ * @iova: IOVA of the table
++ * @size: Size of the allocated region
++ * @opaque: Opaque data (vhost_vdpa pointer)
++ */
++typedef void (*SVQIndirectDescFree)(VhostShadowVirtqueue *svq,
++                                    vring_desc_t *desc,
++                                    hwaddr iova,
++                                    size_t size,
++                                    void *opaque);
++
++/**
++ * Indirect descriptor operations and context
++ */
++typedef struct SVQIndirectOps {
++    SVQIndirectDescAlloc alloc;
++    SVQIndirectDescFree free;
++    void *opaque;  /* Pointer to struct vhost_vdpa */
++} SVQIndirectOps;
++
+ /* Shadow virtqueue to relay notifications */
+ typedef struct VhostShadowVirtqueue {
+     /* Shadow vring */
+@@ -104,6 +147,9 @@ typedef struct VhostShadowVirtqueue {
+     /* Caller callbacks opaque */
+     void *ops_opaque;
+ 
++    /* Indirect descriptor operations */
++    SVQIndirectOps *indirect_ops;
++
+     /* Next head to expose to the device */
+     uint16_t shadow_avail_idx;
+ 
+@@ -143,7 +189,8 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
+ void vhost_svq_stop(VhostShadowVirtqueue *svq);
+ 
+ VhostShadowVirtqueue *vhost_svq_new(const VhostShadowVirtqueueOps *ops,
+-                                    void *ops_opaque);
++                                    void *ops_opaque,
++                                    SVQIndirectOps *indirect_ops);
+ 
+ void vhost_svq_free(gpointer vq);
+ G_DEFINE_AUTOPTR_CLEANUP_FUNC(VhostShadowVirtqueue, vhost_svq_free);
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 7061b6e1a3..1719993f52 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -584,15 +584,130 @@ static int vhost_vdpa_get_dev_features(struct vhost_dev *dev,
+     return ret;
+ }
+ 
++/**
++ * Allocate indirect descriptor table for SVQ
++ *
++ * @svq: Shadow virtqueue
++ * @num: Number of descriptors needed
++ * @desc: Output pointer to the allocated table
++ * @iova: Output IOVA for the table
++ * @size: Output size of the allocated region
++ * @opaque: Opaque pointer (vhost_vdpa instance)
++ *
++ * Returns true on success, false on failure.
++ */
++static bool vhost_vdpa_svq_indirect_desc_alloc(VhostShadowVirtqueue *svq,
++                                                size_t num,
++                                                vring_desc_t **desc,
++                                                hwaddr *iova,
++                                                size_t *size,
++                                                void *opaque)
++{
++    struct vhost_vdpa *v = opaque;
++    size_t desc_size = sizeof(vring_desc_t) * num;
++    size_t alloc_size = ROUND_UP(desc_size, qemu_real_host_page_size());
++    DMAMap needle = {
++        .size = alloc_size - 1,
++        .perm = IOMMU_RO,
++    };
++    vring_desc_t *indirect_desc;
++    int r;
++
++    indirect_desc = mmap(NULL, alloc_size, PROT_READ | PROT_WRITE,
++                         MAP_SHARED | MAP_ANONYMOUS, -1, 0);
++    if (indirect_desc == MAP_FAILED) {
++        error_report("Cannot allocate indirect descriptor table");
++        return false;
++    }
++
++    r = vhost_iova_tree_map_alloc(v->shared->iova_tree, &needle,
++                                  (hwaddr)(uintptr_t)indirect_desc);
++    if (unlikely(r != IOVA_OK)) {
++        error_report("Cannot allocate iova for indirect descriptors (%d)", r);
++        goto err_iova_alloc;
++    }
++
++    r = vhost_vdpa_dma_map(v->shared, v->address_space_id, needle.iova,
++                           alloc_size, indirect_desc, true);
++    if (unlikely(r != 0)) {
++        error_report("Cannot map indirect descriptors to device: %s (%d)",
++                     g_strerror(-r), -r);
++        goto err_dma_map;
++    }
++
++    *desc = indirect_desc;
++    *iova = needle.iova;
++    *size = alloc_size;
++    return true;
++
++err_dma_map:
++    vhost_iova_tree_remove(v->shared->iova_tree, needle);
++err_iova_alloc:
++    munmap(indirect_desc, alloc_size);
++    return false;
++}
++
++/**
++ * Free indirect descriptor table for SVQ
++ *
++ * @svq: Shadow virtqueue
++ * @desc: Descriptor table to free
++ * @iova: IOVA of the table
++ * @size: Size of the allocated region
++ * @opaque: Opaque pointer (vhost_vdpa instance)
++ */
++static void vhost_vdpa_svq_indirect_desc_free(VhostShadowVirtqueue *svq,
++                                               vring_desc_t *desc,
++                                               hwaddr iova,
++                                               size_t size,
++                                               void *opaque)
++{
++    struct vhost_vdpa *v = opaque;
++    const DMAMap needle = {
++        .translated_addr = (hwaddr)(uintptr_t)desc,
++    };
++    const DMAMap *result;
++    int r;
++
++    /* Find the mapping in the IOVA tree by HVA */
++    result = vhost_iova_tree_find_iova(v->shared->iova_tree, &needle);
++    if (unlikely(!result)) {
++        error_report("Cannot find indirect descriptor mapping to unmap: "
++                     "iova=0x%" HWADDR_PRIx " hva=0x%" HWADDR_PRIx " size=%zu",
++                     iova, needle.translated_addr, size);
++        return;
++    }
++
++    r = vhost_vdpa_dma_unmap(v->shared, v->address_space_id, result->iova,
++                             size);
++    if (unlikely(r != 0)) {
++        error_report("Cannot unmap indirect descriptors: "
++                     "iova=0x%" HWADDR_PRIx " size=%zu: %s (%d)",
++                     result->iova, size, g_strerror(-r), -r);
++    }
++
++    vhost_iova_tree_remove(v->shared->iova_tree, *result);
++
++    munmap(desc, size);
++}
++
+ static void vhost_vdpa_init_svq(struct vhost_dev *hdev, struct vhost_vdpa *v)
+ {
+     g_autoptr(GPtrArray) shadow_vqs = NULL;
++    SVQIndirectOps *indirect_ops;
++
++    /* Create indirect descriptor ops */
++    indirect_ops = g_new0(SVQIndirectOps, 1);
++    indirect_ops->alloc = vhost_vdpa_svq_indirect_desc_alloc;
++    indirect_ops->free = vhost_vdpa_svq_indirect_desc_free;
++    indirect_ops->opaque = v;
+ 
+     shadow_vqs = g_ptr_array_new_full(hdev->nvqs, vhost_svq_free);
+     for (unsigned n = 0; n < hdev->nvqs; ++n) {
+         VhostShadowVirtqueue *svq;
+ 
+-        svq = vhost_svq_new(v->shadow_vq_ops, v->shadow_vq_ops_opaque);
++        svq = vhost_svq_new(v->shadow_vq_ops, v->shadow_vq_ops_opaque,
++                            indirect_ops);
+         g_ptr_array_add(shadow_vqs, svq);
+     }
+ 
+@@ -789,10 +904,21 @@ static void vhost_vdpa_svq_cleanup(struct vhost_dev *dev)
+ {
+     struct vhost_vdpa *v = dev->opaque;
+     size_t idx;
++    SVQIndirectOps *indirect_ops = NULL;
+ 
+     for (idx = 0; idx < v->shadow_vqs->len; ++idx) {
+-        vhost_svq_stop(g_ptr_array_index(v->shadow_vqs, idx));
++        VhostShadowVirtqueue *svq = g_ptr_array_index(v->shadow_vqs, idx);
++
++        /* Save indirect_ops pointer from first SVQ (all share the same one) */
++        if (idx == 0 && svq->indirect_ops) {
++            indirect_ops = svq->indirect_ops;
++        }
++
++        vhost_svq_stop(svq);
+     }
++
++    g_free(indirect_ops);
++
+     g_ptr_array_free(v->shadow_vqs, true);
+ }
+ 
 -- 
 2.34.1
 
