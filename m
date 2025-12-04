@@ -4,92 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1412CD2A54D
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 21:34:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB3F7D2A54D
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 21:36:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRGxI-0007KG-89; Thu, 04 Dec 2025 16:33:40 -0500
+	id 1vRGzp-0008Bq-8c; Thu, 04 Dec 2025 16:36:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRGxD-0007JJ-UY
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 16:33:36 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRGxC-0007SD-0n
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 16:33:35 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-42e33956e76so768187f8f.3
- for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 13:33:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764884010; x=1765488810; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YAaSfAWPfzHh3b8jSGr3t+ylz4TQOJlnP20KX6YUxAM=;
- b=mXjfHm+1MGyriTOj1MdA3xyrAr/iejDHnAWNTMJ9ke9nR5G0vL3e44qwZsF0GHCWJc
- Tg5d4HTvicD+QyGXN8FdRmPBRs0eHQKDC+8GC1K4giw+ZkERlJs7YG5W7msx51SJuJsZ
- eQkheQshIYIOd5WTaFZJfj0H2bx6pky1jZwHmrm4eN/vEyMijMYuF0B3lyJyvPkwNyI1
- hmUA5xRDAIiwtwI7DwTTXDMkfI+7lM+dwJrZOYMer+p0CaB4Isp1KCNHCyfghs2o9bIG
- CjHZLx2eqElNJQrys0ZrAczTrq22rJeULkzIHa3iFGATcE5MorD0u8NmhYLSHXtFkwB2
- j/Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764884010; x=1765488810;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YAaSfAWPfzHh3b8jSGr3t+ylz4TQOJlnP20KX6YUxAM=;
- b=pz/6ot78JaqyEESNUUhkL/UaBmK+lYAqB9NmFprL155limybUOBa+RMbwRtq8wF9i5
- DvrB1dBMGCM4NTSH4//U9y+8S4hLEAiuzxTFu3FDgYuDvWh1TZrAdhPLaBTyXsLvoQIP
- rjhGO9O6wN+Cx4tRN6ghRYLpQUOKKKeVoEJLVI+kt/HU65FfLtIsQV5/nn908DSvvxJ0
- XnIkS63bRer6Iud8RSMdbjfOc7hCYBr95Rene9GJnhDL6XZRzkO1L311DToYFqn2S4/r
- U5VFmr3Mj1ebAIaB+OAnwneRzqmuI9IhGhgqTiuipJt8Neb88PaBzYvqVuNownYJdpRb
- Pugw==
-X-Gm-Message-State: AOJu0YzsRjw4SaOTYP3XM4uvHJ6BX6Pl9P173vr/nTLr8ZH0QOqozymd
- SNEtTlCjHPKmG7JVWodIInCcfwcSOQn2/ILlGxyJdS6S7LZAnWzKnaRAocfofSSDcNw=
-X-Gm-Gg: ASbGncsQKnO2T4+sfkxZtQyFJy3p808U/0tp0uTccpFgiYBAd/WR3BRxA6QIcMa9kZE
- Gg/hDMJitEabFWfY7HeXxLAqibCdI+39+1vbcG/iDPXlhkyJ+uqcJskV5qWH3qhrdr5r304kzKh
- MhlG/m0vz7AJOWfY4QvXB4NmosR5ohH/ZIKWqw82d+m+4PNc0fJgS5sZxAqm6X9+1EPYZjJ3ZOq
- 6SexTtxRq2Ypxh/itacp+SssR0yFf9TqZwmOuzvqS8mEPjvQgJIdC0fHnmg0yhLTWnij8Hitwry
- XB+H8mFmNAxKtighZKjn5xBKfp+iG48R5PRp06QxHdZzV7WJJrsEloB19u86mK+AwlHVmKRvsMF
- KnWDKr3OHt6JNdvIadi55xl7KFaJkv45t+EY+zIIpvUB6zr/7Hce3l2Egh9fGQCnuIR8PG8U2O1
- n4cOW5GMn7Itw=
-X-Google-Smtp-Source: AGHT+IH1umH0oCTkHIGIHfaBfeQup2WZn1YpykBVp79uhT97/GZEZwkwPYo5QK6ChaBnium+voKFVg==
-X-Received: by 2002:a05:6000:611:b0:429:d1a8:3fa2 with SMTP id
- ffacd0b85a97d-42f731c553fmr8107989f8f.48.1764884010313; 
- Thu, 04 Dec 2025 13:33:30 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7cbe8f85sm5282854f8f.5.2025.12.04.13.33.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Dec 2025 13:33:29 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B951B5F7E9;
- Thu, 04 Dec 2025 21:33:28 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Jim MacArthur <jim.macarthur@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/dma/omap_dma.c: Use 64 bit maths for
- omap_dma_transfer_setup
-In-Reply-To: <20251204193311.1281133-1-jim.macarthur@linaro.org> (Jim
- MacArthur's message of "Thu, 4 Dec 2025 19:33:11 +0000")
-References: <20251204193311.1281133-1-jim.macarthur@linaro.org>
-User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Thu, 04 Dec 2025 21:33:28 +0000
-Message-ID: <87qztarkyf.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vRGzk-0008BA-P0
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 16:36:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vRGzj-0008Gd-0u
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 16:36:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764884169;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cWok/lfrbEvXg2wZaOcBRH/TnBra1n5BhfFH7kros6Q=;
+ b=Zlcoo0WcuLwi9ND/XHkH4uVIdwuA1sTP6dgfuGbWijQ4jkdXg7JW1h841U8clh3bCI0OQd
+ XtOoajiCGYbh1zdeXGU1E5/nUzO1vKF9YwSpuVyWzHhRFkVw7imS6KqERnjjGTkL7eVUBC
+ hzx4uHtAvP6gkzMcgJ7DRLdzrmZ3hJY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-KgFA27wnNCifdWUL24xD2w-1; Thu,
+ 04 Dec 2025 16:36:06 -0500
+X-MC-Unique: KgFA27wnNCifdWUL24xD2w-1
+X-Mimecast-MFC-AGG-ID: KgFA27wnNCifdWUL24xD2w_1764884165
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 390401956052; Thu,  4 Dec 2025 21:36:05 +0000 (UTC)
+Received: from localhost (unknown [10.2.17.22])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EB7B819560B4; Thu,  4 Dec 2025 21:36:03 +0000 (UTC)
+Date: Thu, 4 Dec 2025 16:36:02 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-devel@nongnu.org, mst@redhat.com, akihiko.odaki@daynix.com,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH] virtio: Fix crash when sriov-pf is set for
+ non-PCI-Express device
+Message-ID: <20251204213602.GA1259496@fedora>
+References: <20251204172657.174391-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="4sED2GAmKfDTipmW"
+Content-Disposition: inline
+In-Reply-To: <20251204172657.174391-1-kwolf@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,113 +87,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jim MacArthur <jim.macarthur@linaro.org> writes:
 
-> If both frame and element count are 65535, which appears valid from my
-> reading of the OMAP5912 documentation, then some of the calculations
-> will overflow the 32-bit signed integer range and produce a negative
-> min_elems value.
->
-> Raised by #3204 (https://gitlab.com/qemu-project/qemu/-/issues/3204).
->
+--4sED2GAmKfDTipmW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-nit:
-
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3204
-
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+On Thu, Dec 04, 2025 at 06:26:57PM +0100, Kevin Wolf wrote:
+> Setting the sriov-pf property on devices that aren't PCI Express causes
+> an assertion failure:
+>=20
+>     $ qemu-system-x86_64 \
+>         -blockdev null-co,node-name=3Dnull \
+>         -blockdev null-co,node-name=3Dnull2 \
+>         -device virtio-blk,drive=3Dnull,id=3Dpf \
+>         -device virtio-blk,sriov-pf=3Dpf,drive=3Dnull2
+>     qemu-system-x86_64: ../hw/pci/pcie.c:1062: void pcie_add_capability(P=
+CIDevice *, uint16_t, uint8_t, uint16_t, uint16_t): Assertion `offset >=3D =
+PCI_CONFIG_SPACE_SIZE' failed.
+>=20
+> This is because proxy->last_pcie_cap_offset is only initialised to a
+> non-zero value in virtio_pci_realize() if it's a PCI Express device, and
+> then virtio_pci_device_plugged() still tries to use it.
+>=20
+> To fix this, just skip the SR-IOV code for !pci_is_express(). Then the
+> next thing pci_qdev_realize() does is call pcie_sriov_register_device(),
+> which returns the appropriate error.
+>=20
+> Cc: qemu-stable@nongnu.org
+> Fixes: d0c280d3fac6 ('pcie_sriov: Make a PCI device with user-created VF =
+ARI-capable')
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 > ---
->  hw/dma/omap_dma.c | 32 +++++++++++++++++++++-----------
->  1 file changed, 21 insertions(+), 11 deletions(-)
->
-> diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
-> index 101f91f4a3..93e6503ff9 100644
-> --- a/hw/dma/omap_dma.c
-> +++ b/hw/dma/omap_dma.c
-> @@ -504,9 +504,19 @@ static void omap_dma_transfer_setup(struct soc_dma_c=
-h_s *dma)
->      struct omap_dma_channel_s *ch =3D dma->opaque;
->      struct omap_dma_s *s =3D dma->dma->opaque;
->      int frames, min_elems, elements[__omap_dma_intr_last];
-> +    uint64_t frames64, frame64, elements64, element64;
->=20=20
->      a =3D &ch->active_set;
->=20=20
-> +    /*
-> +     * We do maths with the frame and element fields which exceeds
-> +     * a signed 32-bit integer, so convert all these to 64 bit for futur=
-e use.
-> +     */
-> +    frames64 =3D a->frames;
-> +    frame64 =3D a->frame;
-> +    elements64 =3D a->elements;
-> +    element64 =3D a->element;
-> +
->      src_p =3D &s->mpu->port[ch->port[0]];
->      dest_p =3D &s->mpu->port[ch->port[1]];
->      if ((!ch->constant_fill && !src_p->addr_valid(s->mpu, a->src)) ||
-> @@ -527,7 +537,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch=
-_s *dma)
->      /* Check all the conditions that terminate the transfer starting
->       * with those that can occur the soonest.  */
->  #define INTR_CHECK(cond, id, nelements) \
-> -    if (cond) {         \
-> +    if (cond && nelements <=3D INT_MAX) {         \
->          elements[id] =3D nelements;   \
->          if (elements[id] < min_elems)   \
->              min_elems =3D elements[id];   \
-> @@ -547,24 +557,24 @@ static void omap_dma_transfer_setup(struct soc_dma_=
-ch_s *dma)
->       * See also the TODO in omap_dma_channel_load.  */
->      INTR_CHECK(
->                      (ch->interrupts & LAST_FRAME_INTR) &&
-> -                    ((a->frame < a->frames - 1) || !a->element),
-> +                    ((frame64 < frames64 - 1) || !element64),
->                      omap_dma_intr_last_frame,
-> -                    (a->frames - a->frame - 2) * a->elements +
-> -                    (a->elements - a->element + 1))
-> +                    (frames64 - frame64 - 2) * elements64 +
-> +                    (elements64 - element64 + 1))
->      INTR_CHECK(
->                      ch->interrupts & HALF_FRAME_INTR,
->                      omap_dma_intr_half_frame,
-> -                    (a->elements >> 1) +
-> -                    (a->element >=3D (a->elements >> 1) ? a->elements : =
-0) -
-> -                    a->element)
-> +                    (elements64 >> 1) +
-> +                    (element64 >=3D (elements64 >> 1) ? elements64 : 0) -
-> +                    element64)
->      INTR_CHECK(
->                      ch->sync && ch->fs && (ch->interrupts & END_FRAME_IN=
-TR),
->                      omap_dma_intr_frame,
-> -                    a->elements - a->element)
-> +                    elements64 - element64)
->      INTR_CHECK(
->                      ch->sync && ch->fs && !ch->bs,
->                      omap_dma_intr_frame_sync,
-> -                    a->elements - a->element)
-> +                    elements64 - element64)
->=20=20
->      /* Packets */
->      INTR_CHECK(
-> @@ -581,8 +591,8 @@ static void omap_dma_transfer_setup(struct soc_dma_ch=
-_s *dma)
->      INTR_CHECK(
->                      1,
->                      omap_dma_intr_block,
-> -                    (a->frames - a->frame - 1) * a->elements +
-> -                    (a->elements - a->element))
-> +                    (frames64 - frame64 - 1) * elements64 +
-> +                    (elements64 - element64))
->=20=20
->      dma->bytes =3D min_elems * ch->data_type;
+>  hw/virtio/virtio-pci.c | 20 +++++++++++---------
+>  1 file changed, 11 insertions(+), 9 deletions(-)
 
-Can we also add a qtest for the device that checks for this (and can be
-expanded for other unit tests later)?
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+--4sED2GAmKfDTipmW
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmkx/sIACgkQnKSrs4Gr
+c8h+ggf/Rrj3ztca9d//W409galiAASHwkgKFvh03B4pjgS3TAA6dkcZPn9Ra4yb
+MRpEl2InU27FVh1/sXB0iIHE3+hAvFIDBxuGQdJqSDDIQiaLbTawzaY5W3epSjAH
+Gu/gQV3/ywFGQ9ZyaipKmmsWNsp9Kt19Ce9+62z6T4rYOFNyzjsJgtnU3ZNXvVkM
+AxSw9T/AGhwfYzBhxE7QtuKZMtxa+bKeXxMs+vBDPlf5rBn8RG6LjqLn0TwH2U4F
+0Ivo9Ij8ndMu4rRkpbZFCjfWISpgV8vpuvXkXDlUjp44TnKHwGh2t62P2Dd81KVj
+IYZAYQ/AcgY+qLlcZJLjiojh5BXjtQ==
+=/78L
+-----END PGP SIGNATURE-----
+
+--4sED2GAmKfDTipmW--
+
 
