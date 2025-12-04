@@ -4,68 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14BAD1CDC2
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 03:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E04D1CDCE
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 04:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQzgk-0001b8-V5; Wed, 03 Dec 2025 22:07:27 -0500
+	id 1vR0Y4-0001gK-1C; Wed, 03 Dec 2025 23:02:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vQzgg-0001an-Ku
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:07:22 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from
+ <bounce.skibgr3w7icnsr1=in564u920ics=7fh4l9b00jn3ae@em483429.getutm.app>)
+ id 1vR0Y0-0001g3-Qy
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 23:02:28 -0500
+Received: from a4i956.smtp2go.com ([158.120.83.188])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vQzgb-00017X-08
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:07:21 -0500
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5B436V6X059145
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 4 Dec 2025 12:07:04 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=2E98TME7/rrLRRFciN2V8YfyAoGDDq1HrvHKi8ttB7c=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1764817624; v=1;
- b=v1NcpkiwyM7a4Jji6fx6cJ7DVogASbrFoXAYKLsAA90z20p9UkTMEgMjDGwHDidu
- kcv/3lrouroJVg4BOIWEy1GfCXh775+E6GJYq0L03eTX2G02rLzfmDFJIfyyJixp
- OcAJKbM0LFTtIJDb/fYldcXRhHHhs2N5pX1yvGKdd45VXcIU18f61Yfcki+YZCri
- 766R42X+0LsyygLRsBrTBsamOpZDO6xXs4swMXr2DHCmA9BpfrqtarQApFIyuCc3
- 3eYwGy/MMUXbQSRVNLxqcadHFMzll1ATC6DI27p65oTcn6vgIPF/Z+PinXYBAI1l
- kyDlbPvVgiTOIxKVNHE0Bw==
-Message-ID: <7ffdd7cc-fd55-4f4f-b28b-eca45702c8d2@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 4 Dec 2025 12:06:31 +0900
+ (Exim 4.90_1) (envelope-from
+ <bounce.skibgr3w7icnsr1=in564u920ics=7fh4l9b00jn3ae@em483429.getutm.app>)
+ id 1vR0Xz-00029o-3I
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 23:02:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=getutm.app;
+ i=@getutm.app; q=dns/txt; s=s483429; t=1764820933; h=from : subject :
+ to : message-id : date;
+ bh=duzKVUK9MvRcI+AHe76rdCJwGO8qQSnR6pS0bto5B90=;
+ b=AQPMPkJzFi52qBiqCGMUckLogw3rswK3vnw1mj/9lc1U5jmbfF+nUuB5NyF+TPrjXsQx+
+ MGJhzfqhAYfIXioSupQg7W2ESJ4SKAQophZX87z5gUwUmGhe1cBM+rYBIpA/kuGy/0oWq4A
+ 7BIarwc6PKMS27BfSAPHx3LcsYtftYhHB6X2bAivlqOplionYFheTY/yyy32NL7kJdNNEdT
+ V9XzXwrq6wJBadR7TnjOFMuMcx6rOQ6st3QY7E74ea3V58ZDZ2JfFIhqwSHznMsI7/HA3FJ
+ MZsXX7b3GY2P3urgfA9bRdjQ7+TkonDh5JYhpHnDn7XpLDIO1+HbfGwse/ww==
+Received: from [10.159.238.187] (helo=mail-ej1-f47.google.com)
+ by smtpcorp.com with esmtpsa
+ (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128)
+ (Exim 4.98.1-S2G) (envelope-from <j@getutm.app>)
+ id 1vR0Xi-4o5NDgrniin-fswC for qemu-devel@nongnu.org;
+ Thu, 04 Dec 2025 04:02:10 +0000
+Received: by mail-ej1-f47.google.com with SMTP id
+ a640c23a62f3a-b73545723ebso71604666b.1
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 20:02:10 -0800 (PST)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTSLb9chb9IdEmW9zJmvS0ohCGH9F/HGUs/he7ZWqQ04GFF+u1z8TyB7yNC0gvEEQw0ZrW35NsUmXF@nongnu.org
+X-Gm-Message-State: AOJu0YwZKHPEPUmdrkyafViHTvl2a5DnFQJZe2h/bgYxcunlCMoVgVtm
+ kQweQWGhP8uC09jgeCN5qtGnjvimmp3Da8QbovqCJAD57+j+3jIikx1iuCrZF7QrI++VXJsmv/o
+ A0ECLg+7f7BDwvRAd07gyJ9WkkfEEhGQ=
+X-Google-Smtp-Source: AGHT+IE+Gk0v2+0sGLN7ySB01nsduwB9XDzXkAInXtJODsUhqBK5iLB9l/KunP7Kf1VpU5Bku2sUrNjGRgSIfzk4o9E=
+X-Received: by 2002:a17:906:7953:b0:b72:56ad:c9c0 with SMTP id
+ a640c23a62f3a-b79dbe8e6f8mr454837866b.17.1764820929484; Wed, 03 Dec 2025
+ 20:02:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 5/7] virtio-gpu-virgl: support scanout of Metal
- textures
-To: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
 References: <20251203040754.94487-1-j@getutm.app>
- <20251203040754.94487-6-j@getutm.app>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251203040754.94487-6-j@getutm.app>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ <20251203040754.94487-3-j@getutm.app>
+ <b5e61b9f-3afb-42c4-a185-eaf659a4c11c@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <b5e61b9f-3afb-42c4-a185-eaf659a4c11c@rsg.ci.i.u-tokyo.ac.jp>
+From: Joelle van Dyne <j@getutm.app>
+Date: Wed, 3 Dec 2025 20:01:58 -0800
+X-Gmail-Original-Message-ID: <CA+E+eSBGE7ZkhPngyurL1s-D6NXnFJLU7Yyq8nZtRu8ou+mB0g@mail.gmail.com>
+X-Gm-Features: AWmQ_bmqSWbG7k3kfym7jTREL827hPqU_aloWtyPzIKJWecSSzf8m5tME617ljc
+Message-ID: <CA+E+eSBGE7ZkhPngyurL1s-D6NXnFJLU7Yyq8nZtRu8ou+mB0g@mail.gmail.com>
+Subject: Re: [PATCH RFC 2/7] virtio-gpu-virgl: check page alignment of blob
+ mapping
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please forward a copy of this message, including all headers,
+ to <abuse-report@smtp2go.com>
+Feedback-ID: 483429m:483429abrvJvs:483429sH5VttTvlL
+X-smtpcorp-track: CKERFuRDSl3X.uzRq8VZEAPEa.wy2ZfA0Uegx
+Received-SPF: pass client-ip=158.120.83.188;
+ envelope-from=bounce.skibgr3w7icnsr1=in564u920ics=7fh4l9b00jn3ae@em483429.getutm.app;
+ helo=a4i956.smtp2go.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,123 +97,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/12/03 13:07, Joelle van Dyne wrote:
-> When supported, virglrenderer will return a MTLTexture handle that can be
-> directly used for scanout.
-> 
-> Signed-off-by: Joelle van Dyne <j@getutm.app>
-> ---
->   meson.build                   |  4 ++++
->   include/ui/console.h          |  2 ++
->   hw/display/virtio-gpu-virgl.c | 12 +++++++++++-
->   hw/display/virtio-gpu.c       |  2 ++
->   4 files changed, 19 insertions(+), 1 deletion(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index d9293294d8..05bad66376 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -832,6 +832,7 @@ version_res = []
->   coref = []
->   iokit = []
->   pvg = not_found
-> +metal = not_found
->   emulator_link_args = []
->   midl = not_found
->   widl = not_found
-> @@ -859,6 +860,7 @@ elif host_os == 'darwin'
->     host_dsosuf = '.dylib'
->     pvg = dependency('appleframeworks', modules: ['ParavirtualizedGraphics', 'Metal'],
->                      required: get_option('pvg'))
-> +  metal = dependency('appleframeworks', modules: 'Metal', required: false)
->   elif host_os == 'sunos'
->     socket = [cc.find_library('socket'),
->               cc.find_library('nsl'),
-> @@ -2591,6 +2593,7 @@ if xen.found()
->       ('0' + xen_version[2]).substring(-2)
->     config_host_data.set('CONFIG_XEN_CTRL_INTERFACE_VERSION', xen_ctrl_version)
->   endif
-> +config_host_data.set('CONFIG_METAL', metal.found())
->   config_host_data.set('QEMU_VERSION', '"@0@"'.format(meson.project_version()))
->   config_host_data.set('QEMU_VERSION_MAJOR', meson.project_version().split('.')[0])
->   config_host_data.set('QEMU_VERSION_MINOR', meson.project_version().split('.')[1])
-> @@ -4874,6 +4877,7 @@ summary(summary_info, bool_yn: true, section: 'Crypto')
->   summary_info = {}
->   if host_os == 'darwin'
->     summary_info += {'Cocoa support':           cocoa}
-> +  summary_info += {'Metal support':           metal}
->   endif
->   summary_info += {'D-Bus display':     dbus_display}
->   summary_info += {'SDL support':       sdl}
-> diff --git a/include/ui/console.h b/include/ui/console.h
-> index 25e45295d4..a45b524c57 100644
-> --- a/include/ui/console.h
-> +++ b/include/ui/console.h
-> @@ -134,12 +134,14 @@ struct QemuConsoleClass {
->   typedef enum ScanoutTextureNativeType {
->       SCANOUT_TEXTURE_NATIVE_TYPE_NONE,
->       SCANOUT_TEXTURE_NATIVE_TYPE_D3D,
-> +    SCANOUT_TEXTURE_NATIVE_TYPE_METAL,
->   } ScanoutTextureNativeType;
->   
->   typedef struct ScanoutTextureNative {
->       ScanoutTextureNativeType type;
->       union {
->           void *d3d_tex2d;
-> +        void *metal_texture;
->       } u;
->   } ScanoutTextureNative;
->   
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index 36c670f988..e091eb0c76 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -452,6 +452,13 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
->   #if VIRGL_RENDERER_RESOURCE_INFO_EXT_VERSION >= SUPPORTED_VIRGL_INFO_EXT_VERSION
->           if (ext.version >= VIRGL_RENDERER_RESOURCE_INFO_EXT_VERSION) {
->               switch (ext.native_type) {
-> +#ifdef CONFIG_METAL
-> +            case VIRGL_NATIVE_HANDLE_METAL_TEXTURE: {
-> +                native.type = SCANOUT_TEXTURE_NATIVE_TYPE_METAL;
-> +                native.u.metal_texture = ext.native_handle;
-> +                break;
-> +            }
-> +#endif
->               case VIRGL_NATIVE_HANDLE_NONE:
->               case VIRGL_NATIVE_HANDLE_D3D_TEX2D: {
->                   /* already handled above */
-> @@ -1198,7 +1205,10 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
->       }
->   #if VIRGL_VERSION_MAJOR >= 1
->       if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
-> -        flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
-> +        flags |= VIRGL_RENDERER_VENUS;
-> +#ifndef CONFIG_METAL /* Metal does not support render server */
-> +        flags |= VIRGL_RENDERER_RENDER_SERVER;
-> +#endif
->       }
->   #endif
->   
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 43e88a4daf..9cf2c15a43 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -1485,12 +1485,14 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
->       VirtIOGPU *g = VIRTIO_GPU(qdev);
->   
->       if (virtio_gpu_blob_enabled(g->parent_obj.conf)) {
-> +#ifndef CONFIG_METAL
->           if (!virtio_gpu_rutabaga_enabled(g->parent_obj.conf) &&
->               !virtio_gpu_virgl_enabled(g->parent_obj.conf) &&
->               !virtio_gpu_have_udmabuf()) {
->               error_setg(errp, "need rutabaga or udmabuf for blob resources");
->               return;
->           }
-> +#endif
+The problem specifically with how Mesa uses it is that
+virtgpu_ioctl_map calls the IOCTL DRM_IOCTL_VIRTGPU_MAP which performs
+the VIRTIO_GPU_CMD_RESOURCE_MAP_BLOB with an unaligned offset.
+virtio_gpu_virgl_map_resource_blob does not error and hv_vm_map
+returns silently without doing any maps. Once that makes it to Mesa,
+it will try to mmap() and then use the region with vector instructions
+that are not supported by HVF because HVF does not emulate
+instructions when ISV=3D0 (this was a topic of discussion many times for
+other features like TPM emulation).
 
-This check should be kept enabled. Blob resources cannot be created if 
-none of Rutabaga, virgl or udmabuf is enabled.
-
-Regards,
-Akihiko Odaki
+On Wed, Dec 3, 2025 at 6:56=E2=80=AFPM Akihiko Odaki
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>
+> On 2025/12/03 13:07, Joelle van Dyne wrote:
+> > Currently if a mapping is not page aligned, it will sliently fail and t=
+he
+> > guest, assuming it is mapped, will attempt to access the memory and fai=
+l.
+> > This is particularly an issue on macOS when the host page size is 16KiB=
+ and
+> > the guest page size is 4KiB.
+>
+> It should work. If I understand correctly, tcg doesn't care the host
+> page size. hvf will not call hv_vm_map() for misaligned regions and that
+> causes Data Abort, but it is handled by QEMU to perform memory access. I
+> think it needs more debugging.
+>
+> Regards,
+> Akihiko Odaki
+>
+> >
+> > Signed-off-by: Joelle van Dyne <j@getutm.app>
+> > ---
+> >   hw/display/virtio-gpu-virgl.c | 14 ++++++++++++++
+> >   1 file changed, 14 insertions(+)
+> >
+> > diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virg=
+l.c
+> > index 20c856c04e..adf02ac22b 100644
+> > --- a/hw/display/virtio-gpu-virgl.c
+> > +++ b/hw/display/virtio-gpu-virgl.c
+> > @@ -116,6 +116,20 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+> >           return ret;
+> >       }
+> >
+> > +    if (!QEMU_IS_ALIGNED((uintptr_t)data, qemu_real_host_page_size()))=
+ {
+> > +        virgl_renderer_resource_unmap(res->base.resource_id);
+> > +        qemu_log_mask(LOG_GUEST_ERROR, "%s: address %p is not aligned =
+to page size\n",
+> > +                      __func__, data);
+> > +        return -ENOMEM;
+> > +    }
+> > +
+> > +    if (!QEMU_IS_ALIGNED(size, qemu_real_host_page_size())) {
+> > +        virgl_renderer_resource_unmap(res->base.resource_id);
+> > +        qemu_log_mask(LOG_GUEST_ERROR, "%s: size 0x%llx is not aligned=
+ to page size\n",
+> > +                      __func__, size);
+> > +        return -ENOMEM;
+> > +    }
+> > +
+> >       vmr =3D g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
+> >       vmr->g =3D g;
+> >
+>
 
