@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1F33D216A4
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 15:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 629B5D216A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 15:45:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRBU9-0006ZM-DH; Thu, 04 Dec 2025 10:43:13 -0500
+	id 1vRBU6-0006Wj-QO; Thu, 04 Dec 2025 10:43:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRBTp-0006Sc-GS
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:55 -0500
+ id 1vRBTm-0006R4-5R
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:51 -0500
 Received: from forwardcorp1b.mail.yandex.net
  ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRBTl-0007FX-OC
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:51 -0500
+ id 1vRBTh-0007EN-N2
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:49 -0500
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 73C74808F7;
- Thu, 04 Dec 2025 18:42:48 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 5C45A808F4;
+ Thu, 04 Dec 2025 18:42:41 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:83c::1:2e])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id agnhnW0F9Gk0-Hl3eNnOX; Thu, 04 Dec 2025 18:42:47 +0300
+ ESMTPSA id agnhnW0F9Gk0-2IvD2ZcT; Thu, 04 Dec 2025 18:42:40 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1764862967;
- bh=CL6qFPwQoeSNpg/HvJgiM8hNjV5gKvEi8vUGkDkQQc4=;
+ s=default; t=1764862960;
+ bh=k3nCOEkugjeC6pwxl057AFZW4QSTNf7QWKrx6dRh1mQ=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=o0la7uB38TwSlSud/9rbF8lfTZMqyUXqpWi+3GiL3+L+euosVoagDbwVj6EJGb73M
- uItfjV3ZHixXeIa+CqClDOt0qON8w8TohiauF8+mBcpfWBGrMi9JH8qdkck2+FSMyh
- KlWy+3TVx54gSUV+o0Kz0SiQkshYEuLUUoA9mXGA=
+ b=szYYkvu7du91852y+TZOqyHOQjOwU0oE4xnvn64eqxePtyMtT1tgx0k2HjNuVFMVm
+ 3pQk12QOXF5Dw0Cl2VbfwC5a8E8vSzNuiHZvi6geBBo1QqsUHuWbMmsedAxDwZPCg8
+ DNlMRV++zw09Kz3J0a/bSijJF2EyYwinI7m3ZjGk=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: marcandre.lureau@redhat.com
 Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- d-tatianin@yandex-team.ru
-Subject: [PATCH v2 09/10] chardev: rework filename handling
-Date: Thu,  4 Dec 2025 18:42:33 +0300
-Message-ID: <20251204154235.149575-10-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru, Samuel Thibault <samuel.thibault@ens-lyon.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v2 03/10] chardev: ChardevClass: consistent naming for handlers
+Date: Thu,  4 Dec 2025 18:42:27 +0300
+Message-ID: <20251204154235.149575-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251204154235.149575-1-vsementsov@yandex-team.ru>
 References: <20251204154235.149575-1-vsementsov@yandex-team.ru>
@@ -74,188 +77,535 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have the following flaws with it:
-
-1. Layring violation by modifying generic state directly in backends
-
-2. Tricky generic logic: we should check, did backend set the
-generic state field, and fill it when not.
-
-Let's fix them all by making filename a private field with getter
-and setter. And move the "default logic" into getter.
+Most handlers have name prefixed with "chr_". That's a good practice
+which helps to grep them. Convert the rest: .parse, .open,
+get/set_msgfds.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- chardev/char-pty.c     |  4 +++-
- chardev/char-socket.c  | 17 ++++++++---------
- chardev/char.c         |  8 ++------
- hw/misc/ivshmem-pci.c  |  4 ++--
- include/chardev/char.h | 21 ++++++++++++++++++++-
- 5 files changed, 35 insertions(+), 19 deletions(-)
+ chardev/baum.c                                      | 2 +-
+ chardev/char-console.c                              | 2 +-
+ chardev/char-fe.c                                   | 8 ++++----
+ chardev/char-file.c                                 | 4 ++--
+ chardev/char-hub.c                                  | 4 ++--
+ chardev/char-mux.c                                  | 4 ++--
+ chardev/char-null.c                                 | 2 +-
+ chardev/char-parallel.c                             | 4 ++--
+ chardev/char-pipe.c                                 | 4 ++--
+ chardev/char-pty.c                                  | 4 ++--
+ chardev/char-ringbuf.c                              | 4 ++--
+ chardev/char-serial.c                               | 4 ++--
+ chardev/char-socket.c                               | 8 ++++----
+ chardev/char-stdio.c                                | 4 ++--
+ chardev/char-udp.c                                  | 4 ++--
+ chardev/char-win-stdio.c                            | 2 +-
+ chardev/char.c                                      | 8 ++++----
+ chardev/msmouse.c                                   | 2 +-
+ chardev/spice.c                                     | 8 ++++----
+ chardev/wctablet.c                                  | 2 +-
+ gdbstub/system.c                                    | 2 +-
+ include/chardev/char.h                              | 8 ++++----
+ scripts/codeconverter/codeconverter/test_regexps.py | 2 +-
+ ui/console-vc.c                                     | 4 ++--
+ ui/dbus-chardev.c                                   | 8 ++++----
+ ui/dbus.c                                           | 4 ++--
+ ui/gtk.c                                            | 2 +-
+ ui/spice-app.c                                      | 6 +++---
+ ui/vdagent.c                                        | 4 ++--
+ 29 files changed, 62 insertions(+), 62 deletions(-)
 
+diff --git a/chardev/baum.c b/chardev/baum.c
+index ad68321504..6b81c97d10 100644
+--- a/chardev/baum.c
++++ b/chardev/baum.c
+@@ -676,7 +676,7 @@ static void char_braille_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->open = baum_chr_open;
++    cc->chr_open = baum_chr_open;
+     cc->chr_write = baum_chr_write;
+     cc->chr_accept_input = baum_chr_accept_input;
+ }
+diff --git a/chardev/char-console.c b/chardev/char-console.c
+index 7e1bf642eb..9a2e012d53 100644
+--- a/chardev/char-console.c
++++ b/chardev/char-console.c
+@@ -38,7 +38,7 @@ static void char_console_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->open = qemu_chr_open_win_con;
++    cc->chr_open = qemu_chr_open_win_con;
+ }
+ 
+ static const TypeInfo char_console_type_info = {
+diff --git a/chardev/char-fe.c b/chardev/char-fe.c
+index 34b83fc1c4..a44f267373 100644
+--- a/chardev/char-fe.c
++++ b/chardev/char-fe.c
+@@ -130,8 +130,8 @@ int qemu_chr_fe_get_msgfds(CharFrontend *c, int *fds, int len)
+         return -1;
+     }
+ 
+-    return CHARDEV_GET_CLASS(s)->get_msgfds ?
+-        CHARDEV_GET_CLASS(s)->get_msgfds(s, fds, len) : -1;
++    return CHARDEV_GET_CLASS(s)->chr_get_msgfds ?
++        CHARDEV_GET_CLASS(s)->chr_get_msgfds(s, fds, len) : -1;
+ }
+ 
+ int qemu_chr_fe_set_msgfds(CharFrontend *c, int *fds, int num)
+@@ -142,8 +142,8 @@ int qemu_chr_fe_set_msgfds(CharFrontend *c, int *fds, int num)
+         return -1;
+     }
+ 
+-    return CHARDEV_GET_CLASS(s)->set_msgfds ?
+-        CHARDEV_GET_CLASS(s)->set_msgfds(s, fds, num) : -1;
++    return CHARDEV_GET_CLASS(s)->chr_set_msgfds ?
++        CHARDEV_GET_CLASS(s)->chr_set_msgfds(s, fds, num) : -1;
+ }
+ 
+ void qemu_chr_fe_accept_input(CharFrontend *c)
+diff --git a/chardev/char-file.c b/chardev/char-file.c
+index 1f7adf592f..1e293e7054 100644
+--- a/chardev/char-file.c
++++ b/chardev/char-file.c
+@@ -133,8 +133,8 @@ static void char_file_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse = qemu_chr_parse_file_out;
+-    cc->open = qmp_chardev_open_file;
++    cc->chr_parse = qemu_chr_parse_file_out;
++    cc->chr_open = qmp_chardev_open_file;
+ }
+ 
+ static const TypeInfo char_file_type_info = {
+diff --git a/chardev/char-hub.c b/chardev/char-hub.c
+index d0967c2233..082baa84ab 100644
+--- a/chardev/char-hub.c
++++ b/chardev/char-hub.c
+@@ -276,8 +276,8 @@ static void char_hub_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse = qemu_chr_parse_hub;
+-    cc->open = qemu_chr_open_hub;
++    cc->chr_parse = qemu_chr_parse_hub;
++    cc->chr_open = qemu_chr_open_hub;
+     cc->chr_write = hub_chr_write;
+     cc->chr_add_watch = hub_chr_add_watch;
+     /* We handle events from backends only */
+diff --git a/chardev/char-mux.c b/chardev/char-mux.c
+index db9e89f441..c82c2da56d 100644
+--- a/chardev/char-mux.c
++++ b/chardev/char-mux.c
+@@ -451,8 +451,8 @@ static void char_mux_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse = qemu_chr_parse_mux;
+-    cc->open = qemu_chr_open_mux;
++    cc->chr_parse = qemu_chr_parse_mux;
++    cc->chr_open = qemu_chr_open_mux;
+     cc->chr_write = mux_chr_write;
+     cc->chr_accept_input = mux_chr_accept_input;
+     cc->chr_add_watch = mux_chr_add_watch;
+diff --git a/chardev/char-null.c b/chardev/char-null.c
+index 89cb85da79..674603b380 100644
+--- a/chardev/char-null.c
++++ b/chardev/char-null.c
+@@ -38,7 +38,7 @@ static void char_null_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->open = null_chr_open;
++    cc->chr_open = null_chr_open;
+ }
+ 
+ static const TypeInfo char_null_type_info = {
+diff --git a/chardev/char-parallel.c b/chardev/char-parallel.c
+index 62a44b2f96..a0839b784b 100644
+--- a/chardev/char-parallel.c
++++ b/chardev/char-parallel.c
+@@ -274,8 +274,8 @@ static void char_parallel_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse = qemu_chr_parse_parallel;
+-    cc->open = qmp_chardev_open_parallel;
++    cc->chr_parse = qemu_chr_parse_parallel;
++    cc->chr_open = qmp_chardev_open_parallel;
+     cc->chr_ioctl = pp_ioctl;
+ }
+ 
+diff --git a/chardev/char-pipe.c b/chardev/char-pipe.c
+index e9f3bb8290..a2cd322efe 100644
+--- a/chardev/char-pipe.c
++++ b/chardev/char-pipe.c
+@@ -182,8 +182,8 @@ static void char_pipe_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse = qemu_chr_parse_pipe;
+-    cc->open = qemu_chr_open_pipe;
++    cc->chr_parse = qemu_chr_parse_pipe;
++    cc->chr_open = qemu_chr_open_pipe;
+ }
+ 
+ static const TypeInfo char_pipe_type_info = {
 diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-index 047aade09e..f4294679be 100644
+index 652b0bd9e7..1a15082b02 100644
 --- a/chardev/char-pty.c
 +++ b/chardev/char-pty.c
-@@ -336,6 +336,7 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-     int master_fd, slave_fd;
-     char *name;
-     char *path = backend->u.pty.data->path;
-+    g_autofree char *filename = NULL;
+@@ -394,8 +394,8 @@ static void char_pty_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
  
-     s = PTY_CHARDEV(chr);
+-    cc->parse = char_pty_parse;
+-    cc->open = char_pty_open;
++    cc->chr_parse = char_pty_parse;
++    cc->chr_open = char_pty_open;
+     cc->chr_write = char_pty_chr_write;
+     cc->chr_update_read_handler = pty_chr_update_read_handler;
+     cc->chr_add_watch = pty_chr_add_watch;
+diff --git a/chardev/char-ringbuf.c b/chardev/char-ringbuf.c
+index 98aadb6acf..6d5ba667bb 100644
+--- a/chardev/char-ringbuf.c
++++ b/chardev/char-ringbuf.c
+@@ -227,8 +227,8 @@ static void char_ringbuf_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
  
-@@ -351,7 +352,8 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         return false;
-     }
+-    cc->parse = qemu_chr_parse_ringbuf;
+-    cc->open = qemu_chr_open_ringbuf;
++    cc->chr_parse = qemu_chr_parse_ringbuf;
++    cc->chr_open = qemu_chr_open_ringbuf;
+     cc->chr_write = ringbuf_chr_write;
+ }
  
--    chr->filename = g_strdup_printf("pty:%s", s->pty_name);
-+    filename = g_strdup_printf("pty:%s", s->pty_name);
-+    qemu_chr_set_filename(chr, filename);
-     qemu_printf("char device redirected to %s (label %s)\n",
-                 s->pty_name, chr->label);
+diff --git a/chardev/char-serial.c b/chardev/char-serial.c
+index 4c6ca713eb..97ed7adf73 100644
+--- a/chardev/char-serial.c
++++ b/chardev/char-serial.c
+@@ -305,8 +305,8 @@ static void char_serial_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
  
+-    cc->parse = qemu_chr_parse_serial;
+-    cc->open = qmp_chardev_open_serial;
++    cc->chr_parse = qemu_chr_parse_serial;
++    cc->chr_open = qmp_chardev_open_serial;
+ #ifndef _WIN32
+     cc->chr_ioctl = tty_serial_ioctl;
+ #endif
 diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index 31c9acd164..9387760009 100644
+index 26d2f11202..12916af7ff 100644
 --- a/chardev/char-socket.c
 +++ b/chardev/char-socket.c
-@@ -384,8 +384,7 @@ static void tcp_chr_free_connection(Chardev *chr)
-     s->sioc = NULL;
-     object_unref(OBJECT(s->ioc));
-     s->ioc = NULL;
--    g_free(chr->filename);
--    chr->filename = NULL;
-+    qemu_chr_set_filename(chr, NULL);
-     tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
+@@ -1576,14 +1576,14 @@ static void char_socket_class_init(ObjectClass *oc, const void *data)
+ 
+     cc->supports_yank = true;
+ 
+-    cc->parse = qemu_chr_parse_socket;
+-    cc->open = qmp_chardev_open_socket;
++    cc->chr_parse = qemu_chr_parse_socket;
++    cc->chr_open = qmp_chardev_open_socket;
+     cc->chr_wait_connected = tcp_chr_wait_connected;
+     cc->chr_write = tcp_chr_write;
+     cc->chr_sync_read = tcp_chr_sync_read;
+     cc->chr_disconnect = tcp_chr_disconnect;
+-    cc->get_msgfds = tcp_get_msgfds;
+-    cc->set_msgfds = tcp_set_msgfds;
++    cc->chr_get_msgfds = tcp_get_msgfds;
++    cc->chr_set_msgfds = tcp_set_msgfds;
+     cc->chr_add_client = tcp_chr_add_client;
+     cc->chr_add_watch = tcp_chr_add_watch;
+     cc->chr_update_read_handler = tcp_chr_update_read_handler;
+diff --git a/chardev/char-stdio.c b/chardev/char-stdio.c
+index 2568164a10..b7e9af1388 100644
+--- a/chardev/char-stdio.c
++++ b/chardev/char-stdio.c
+@@ -142,9 +142,9 @@ static void char_stdio_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse = qemu_chr_parse_stdio;
++    cc->chr_parse = qemu_chr_parse_stdio;
+ #ifndef _WIN32
+-    cc->open = qemu_chr_open_stdio;
++    cc->chr_open = qemu_chr_open_stdio;
+     cc->chr_set_echo = qemu_chr_set_echo_stdio;
+ #endif
  }
- 
-@@ -443,11 +442,11 @@ static void update_disconnected_filename(SocketChardev *s)
+diff --git a/chardev/char-udp.c b/chardev/char-udp.c
+index 572fab0ad1..a6f496ac7b 100644
+--- a/chardev/char-udp.c
++++ b/chardev/char-udp.c
+@@ -223,8 +223,8 @@ static void char_udp_class_init(ObjectClass *oc, const void *data)
  {
-     Chardev *chr = CHARDEV(s);
+     ChardevClass *cc = CHARDEV_CLASS(oc);
  
--    g_free(chr->filename);
-     if (s->addr) {
--        chr->filename = qemu_chr_socket_address(s, "disconnected:");
-+        g_autofree char *filename = qemu_chr_socket_address(s, "disconnected:");
-+        qemu_chr_set_filename(chr, filename);
-     } else {
--        chr->filename = g_strdup("disconnected:socket");
-+        qemu_chr_set_filename(chr, "disconnected:socket");
-     }
+-    cc->parse = qemu_chr_parse_udp;
+-    cc->open = qmp_chardev_open_udp;
++    cc->chr_parse = qemu_chr_parse_udp;
++    cc->chr_open = qmp_chardev_open_udp;
+     cc->chr_write = udp_chr_write;
+     cc->chr_update_read_handler = udp_chr_update_read_handler;
  }
- 
-@@ -638,9 +637,9 @@ static void tcp_chr_connect(void *opaque)
+diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
+index fb802a00b1..26e67aef1c 100644
+--- a/chardev/char-win-stdio.c
++++ b/chardev/char-win-stdio.c
+@@ -260,7 +260,7 @@ static void char_win_stdio_class_init(ObjectClass *oc, const void *data)
  {
-     Chardev *chr = CHARDEV(opaque);
-     SocketChardev *s = SOCKET_CHARDEV(opaque);
-+    g_autofree char *filename = qemu_chr_compute_filename(s);
+     ChardevClass *cc = CHARDEV_CLASS(oc);
  
--    g_free(chr->filename);
--    chr->filename = qemu_chr_compute_filename(s);
-+    qemu_chr_set_filename(chr, filename);
- 
-     tcp_chr_change_state(s, TCP_CHARDEV_STATE_CONNECTED);
-     update_ioc_handlers(s);
-@@ -1000,8 +999,8 @@ static void tcp_chr_accept_server_sync(Chardev *chr)
- {
-     SocketChardev *s = SOCKET_CHARDEV(chr);
-     QIOChannelSocket *sioc;
--    info_report("QEMU waiting for connection on: %s",
--                chr->filename);
-+    g_autofree char *filename = qemu_chr_get_filename(chr);
-+    info_report("QEMU waiting for connection on: %s", filename);
-     tcp_chr_change_state(s, TCP_CHARDEV_STATE_CONNECTING);
-     sioc = qio_net_listener_wait_client(s->listener);
-     tcp_chr_set_client_ioc_name(chr, sioc);
+-    cc->open = qemu_chr_open_stdio;
++    cc->chr_open = qemu_chr_open_stdio;
+     cc->chr_write = win_stdio_write;
+     cc->chr_set_echo = qemu_chr_set_echo_win_stdio;
+ }
 diff --git a/chardev/char.c b/chardev/char.c
-index 0dc792b88f..bdd907f015 100644
+index 3e432195a5..df37d1df16 100644
 --- a/chardev/char.c
 +++ b/chardev/char.c
-@@ -309,7 +309,7 @@ static void char_finalize(Object *obj)
-     if (chr->fe) {
-         chr->fe->chr = NULL;
-     }
--    g_free(chr->filename);
-+    qemu_chr_set_filename(chr, NULL);
-     g_free(chr->label);
-     if (chr->logfd != -1) {
-         close(chr->logfd);
-@@ -796,7 +796,7 @@ static int qmp_query_chardev_foreach(Object *obj, void *data)
-     ChardevInfo *value = g_malloc0(sizeof(*value));
- 
-     value->label = g_strdup(chr->label);
--    value->filename = g_strdup(chr->filename);
-+    value->filename = qemu_chr_get_filename(chr);
-     value->frontend_open = chr->fe && chr->fe->fe_is_open;
- 
-     QAPI_LIST_PREPEND(*list, value);
-@@ -1025,10 +1025,6 @@ static Chardev *chardev_new(const char *id, const char *typename,
-         return NULL;
+@@ -267,8 +267,8 @@ static void qemu_char_open(Chardev *chr, ChardevBackend *backend,
+         }
      }
  
--    if (!chr->filename) {
--        chr->filename = g_strdup(typename + 8);
--    }
--
-     return chr;
+-    if (cc->open) {
+-        cc->open(chr, backend, be_opened, errp);
++    if (cc->chr_open) {
++        cc->chr_open(chr, backend, be_opened, errp);
+     }
  }
  
-diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
-index 636d0b83de..2c7b987241 100644
---- a/hw/misc/ivshmem-pci.c
-+++ b/hw/misc/ivshmem-pci.c
-@@ -873,10 +873,10 @@ static void ivshmem_common_realize(PCIDevice *dev, Error **errp)
-         host_memory_backend_set_mapped(s->hostmem, true);
-     } else {
-         Chardev *chr = qemu_chr_fe_get_driver(&s->server_chr);
-+        char *filename = qemu_chr_get_filename(chr);
-         assert(chr);
+@@ -604,8 +604,8 @@ ChardevBackend *qemu_chr_parse_opts(QemuOpts *opts, Error **errp)
+     backend = g_new0(ChardevBackend, 1);
+     backend->type = CHARDEV_BACKEND_KIND_NULL;
  
--        IVSHMEM_DPRINTF("using shared memory server (socket = %s)\n",
--                        chr->filename);
-+        IVSHMEM_DPRINTF("using shared memory server (socket = %s)\n", filename);
+-    if (cc->parse) {
+-        cc->parse(opts, backend, &local_err);
++    if (cc->chr_parse) {
++        cc->chr_parse(opts, backend, &local_err);
+         if (local_err) {
+             error_propagate(errp, local_err);
+             qapi_free_ChardevBackend(backend);
+diff --git a/chardev/msmouse.c b/chardev/msmouse.c
+index 1a55755d39..8405016489 100644
+--- a/chardev/msmouse.c
++++ b/chardev/msmouse.c
+@@ -271,7 +271,7 @@ static void char_msmouse_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
  
-         /* we allocate enough space for 16 peers and grow as needed */
-         resize_peers(s, 16);
+-    cc->open = msmouse_chr_open;
++    cc->chr_open = msmouse_chr_open;
+     cc->chr_write = msmouse_chr_write;
+     cc->chr_accept_input = msmouse_chr_accept_input;
+     cc->chr_ioctl = msmouse_ioctl;
+diff --git a/chardev/spice.c b/chardev/spice.c
+index 39b79d60fb..61caa6d0ef 100644
+--- a/chardev/spice.c
++++ b/chardev/spice.c
+@@ -364,8 +364,8 @@ static void char_spicevmc_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse = qemu_chr_parse_spice_vmc;
+-    cc->open = qemu_chr_open_spice_vmc;
++    cc->chr_parse = qemu_chr_parse_spice_vmc;
++    cc->chr_open = qemu_chr_open_spice_vmc;
+     cc->chr_set_fe_open = spice_vmc_set_fe_open;
+ }
+ 
+@@ -380,8 +380,8 @@ static void char_spiceport_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse = qemu_chr_parse_spice_port;
+-    cc->open = qemu_chr_open_spice_port;
++    cc->chr_parse = qemu_chr_parse_spice_port;
++    cc->chr_open = qemu_chr_open_spice_port;
+     cc->chr_set_fe_open = spice_port_set_fe_open;
+ }
+ 
+diff --git a/chardev/wctablet.c b/chardev/wctablet.c
+index 0dc6ef08f5..8285a56e7b 100644
+--- a/chardev/wctablet.c
++++ b/chardev/wctablet.c
+@@ -346,7 +346,7 @@ static void wctablet_chr_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->open = wctablet_chr_open;
++    cc->chr_open = wctablet_chr_open;
+     cc->chr_write = wctablet_chr_write;
+     cc->chr_ioctl = wctablet_chr_ioctl;
+     cc->chr_accept_input = wctablet_chr_accept_input;
+diff --git a/gdbstub/system.c b/gdbstub/system.c
+index e2220c1ae4..fe2afeb107 100644
+--- a/gdbstub/system.c
++++ b/gdbstub/system.c
+@@ -244,7 +244,7 @@ static void char_gdb_class_init(ObjectClass *oc, const void *data)
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+     cc->internal = true;
+-    cc->open = gdb_monitor_open;
++    cc->chr_open = gdb_monitor_open;
+     cc->chr_write = gdb_monitor_write;
+ }
+ 
 diff --git a/include/chardev/char.h b/include/chardev/char.h
-index d36e50b99e..ffeb4a4e3b 100644
+index b65e9981c1..2baf2a8a1a 100644
 --- a/include/chardev/char.h
 +++ b/include/chardev/char.h
-@@ -62,7 +62,7 @@ struct Chardev {
-     QemuMutex chr_write_lock;
-     CharFrontend *fe;
-     char *label;
--    char *filename;
-+    char *_filename;
-     int logfd;
-     int be_open;
-     /* used to coordinate the chardev-change special-case: */
-@@ -72,6 +72,25 @@ struct Chardev {
-     DECLARE_BITMAP(features, QEMU_CHAR_FEATURE_LAST);
- };
+@@ -257,10 +257,10 @@ struct ChardevClass {
+     bool supports_yank;
  
-+static inline char *qemu_chr_get_filename(Chardev *chr)
-+{
-+    const char *typename;
-+
-+    if (chr->_filename) {
-+        return g_strdup(chr->_filename);
-+    }
-+
-+    typename = object_get_typename(OBJECT(chr));
-+    assert(g_str_has_prefix(typename, "chardev-"));
-+    return g_strdup(typename + 8);
-+}
-+
-+static inline void qemu_chr_set_filename(Chardev *chr, const char *filename)
-+{
-+    g_free(chr->_filename);
-+    chr->_filename = g_strdup(filename);
-+}
-+
- /**
-  * qemu_chr_new_from_opts:
-  * @opts: see qemu-config.c for a list of valid options
+     /* parse command line options and populate QAPI @backend */
+-    void (*parse)(QemuOpts *opts, ChardevBackend *backend, Error **errp);
++    void (*chr_parse)(QemuOpts *opts, ChardevBackend *backend, Error **errp);
+ 
+     /* called after construction, open/starts the backend */
+-    void (*open)(Chardev *chr, ChardevBackend *backend,
++    void (*chr_open)(Chardev *chr, ChardevBackend *backend,
+                  bool *be_opened, Error **errp);
+ 
+     /* write buf to the backend */
+@@ -282,10 +282,10 @@ struct ChardevClass {
+     int (*chr_ioctl)(Chardev *s, int cmd, void *arg);
+ 
+     /* get ancillary-received fds during last read */
+-    int (*get_msgfds)(Chardev *s, int* fds, int num);
++    int (*chr_get_msgfds)(Chardev *s, int* fds, int num);
+ 
+     /* set ancillary fds to be sent with next write */
+-    int (*set_msgfds)(Chardev *s, int *fds, int num);
++    int (*chr_set_msgfds)(Chardev *s, int *fds, int num);
+ 
+     /* accept the given fd */
+     int (*chr_add_client)(Chardev *chr, int fd);
+diff --git a/scripts/codeconverter/codeconverter/test_regexps.py b/scripts/codeconverter/codeconverter/test_regexps.py
+index b00e9ef15b..d3a5cc3ad3 100644
+--- a/scripts/codeconverter/codeconverter/test_regexps.py
++++ b/scripts/codeconverter/codeconverter/test_regexps.py
+@@ -57,7 +57,7 @@ def fullmatch(regexp, s):
+ 
+     print(RE_TYPEINFO_START)
+     assert re.search(RE_TYPEINFO_START, r'''
+-    cc->open = qmp_chardev_open_file;
++    cc->chr_open = qmp_chardev_open_file;
+ }
+ 
+ static const TypeInfo char_file_type_info = {
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index 830842064d..931068d43a 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -1185,8 +1185,8 @@ static void char_vc_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse = vc_chr_parse;
+-    cc->open = vc_chr_open;
++    cc->chr_parse = vc_chr_parse;
++    cc->chr_open = vc_chr_open;
+     cc->chr_write = vc_chr_write;
+     cc->chr_accept_input = vc_chr_accept_input;
+     cc->chr_set_echo = vc_chr_set_echo;
+diff --git a/ui/dbus-chardev.c b/ui/dbus-chardev.c
+index d05dddaf81..f6c426e220 100644
+--- a/ui/dbus-chardev.c
++++ b/ui/dbus-chardev.c
+@@ -205,12 +205,12 @@ dbus_chr_open(Chardev *chr, ChardevBackend *backend,
+     opts = qemu_opts_create(qemu_find_opts("chardev"), NULL, 0, &error_abort);
+     qemu_opt_set(opts, "server", "on", &error_abort);
+     qemu_opt_set(opts, "wait", "off", &error_abort);
+-    CHARDEV_CLASS(object_class_by_name(TYPE_CHARDEV_SOCKET))->parse(
++    CHARDEV_CLASS(object_class_by_name(TYPE_CHARDEV_SOCKET))->chr_parse(
+         opts, be, errp);
+     if (*errp) {
+         return;
+     }
+-    CHARDEV_CLASS(object_class_by_name(TYPE_CHARDEV_SOCKET))->open(
++    CHARDEV_CLASS(object_class_by_name(TYPE_CHARDEV_SOCKET))->chr_open(
+         chr, be, be_opened, errp);
+ }
+ 
+@@ -274,8 +274,8 @@ char_dbus_class_init(ObjectClass *oc, const void *data)
+     DBusChardevClass *klass = DBUS_CHARDEV_CLASS(oc);
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse = dbus_chr_parse;
+-    cc->open = dbus_chr_open;
++    cc->chr_parse = dbus_chr_parse;
++    cc->chr_open = dbus_chr_open;
+     cc->chr_set_fe_open = dbus_chr_set_fe_open;
+     cc->chr_set_echo = dbus_chr_set_echo;
+     klass->parent_chr_be_event = cc->chr_be_event;
+diff --git a/ui/dbus.c b/ui/dbus.c
+index d2dff33258..31f6eb1189 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -451,8 +451,8 @@ dbus_vc_class_init(ObjectClass *oc, const void *data)
+     DBusVCClass *klass = DBUS_VC_CLASS(oc);
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    klass->parent_parse = cc->parse;
+-    cc->parse = dbus_vc_parse;
++    klass->parent_parse = cc->chr_parse;
++    cc->chr_parse = dbus_vc_parse;
+ }
+ 
+ static const TypeInfo dbus_vc_type_info = {
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 48571bedbf..7aa97907ed 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -1985,7 +1985,7 @@ static void char_gd_vc_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->open = gd_vc_open;
++    cc->chr_open = gd_vc_open;
+     cc->chr_write = gd_vc_chr_write;
+     cc->chr_accept_input = gd_vc_chr_accept_input;
+     cc->chr_set_echo = gd_vc_chr_set_echo;
+diff --git a/ui/spice-app.c b/ui/spice-app.c
+index 24f78f305c..ea0b62a22b 100644
+--- a/ui/spice-app.c
++++ b/ui/spice-app.c
+@@ -106,10 +106,10 @@ static void char_vc_class_init(ObjectClass *oc, const void *data)
+     VCChardevClass *vc = CHARDEV_VC_CLASS(oc);
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    vc->parent_open = cc->open;
++    vc->parent_open = cc->chr_open;
+ 
+-    cc->parse = vc_chr_parse;
+-    cc->open = vc_chr_open;
++    cc->chr_parse = vc_chr_parse;
++    cc->chr_open = vc_chr_open;
+     cc->chr_set_echo = vc_chr_set_echo;
+ }
+ 
+diff --git a/ui/vdagent.c b/ui/vdagent.c
+index 660686c9c0..9972a9c476 100644
+--- a/ui/vdagent.c
++++ b/ui/vdagent.c
+@@ -924,8 +924,8 @@ static void vdagent_chr_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+ 
+-    cc->parse            = vdagent_chr_parse;
+-    cc->open             = vdagent_chr_open;
++    cc->chr_parse        = vdagent_chr_parse;
++    cc->chr_open         = vdagent_chr_open;
+     cc->chr_write        = vdagent_chr_write;
+     cc->chr_set_fe_open  = vdagent_chr_set_fe_open;
+     cc->chr_accept_input = vdagent_chr_accept_input;
 -- 
 2.48.1
 
