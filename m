@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B69D216A6
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 15:43:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B2CFD216A5
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 15:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRBTx-0006TJ-09; Thu, 04 Dec 2025 10:43:01 -0500
+	id 1vRBU4-0006VR-G1; Thu, 04 Dec 2025 10:43:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRBTi-0006Q1-0R
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:49 -0500
+ id 1vRBTp-0006SZ-F3
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:55 -0500
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRBTf-0007E0-SG
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:45 -0500
+ id 1vRBTl-0007FR-IL
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:51 -0500
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id E63C8808EF;
- Thu, 04 Dec 2025 18:42:39 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A88EC808EF;
+ Thu, 04 Dec 2025 18:42:47 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:83c::1:2e])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id agnhnW0F9Gk0-RcEBHlgU; Thu, 04 Dec 2025 18:42:39 +0300
+ ESMTPSA id agnhnW0F9Gk0-wEtPrrgZ; Thu, 04 Dec 2025 18:42:47 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1764862959;
- bh=0bVYM7rWhtCrQE5xXJ+dC/t0pw9aBDSSht1E51ZPaCg=;
+ s=default; t=1764862967;
+ bh=LUCSxr52Pv2huLa0fLn9hz38EO3fAzK11cfvmV1Zx1o=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=hcw5LcRpIAMaRKtgxcxQzQfeT3YeKg5uI5A2KxrRuYAZIlib96D8/qpe/hu/Kkrvr
- Meqzp7WCJ9U0LfWlPQ1J9oXg5mhY1QwyJP2eaqFkiGuZqO+dFx34CqihTGrOshsJJ8
- Du8z9dyzQrhNMwdLxXjSIrTDN4SV/RVkhOIsL7AQ=
+ b=AFkc0JgxxZckYW90nKZz08Sle+cta5AXcoXHfOAWQhV0HZ68K+ZNdc9KSGkLWH7gT
+ 37HMMYa/7cE8fi4SH1aWfd8sKrdL5g6xHCmlCFcEkVSjh8wBnbDfvONAmC3jn/kNZq
+ zQYugDtgd79rWKG7U35DS/fCYJ3RnwV8AaB7wGig=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: marcandre.lureau@redhat.com
 Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- d-tatianin@yandex-team.ru
-Subject: [PATCH v2 02/10] ui/spice: drop SPICE_HAS_ATTACHED_WORKER macro
-Date: Thu,  4 Dec 2025 18:42:26 +0300
-Message-ID: <20251204154235.149575-3-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru, Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org (open list:X86 Xen CPUs)
+Subject: [PATCH v2 08/10] chardev: introduce .chr_get_pty_name() handler
+Date: Thu,  4 Dec 2025 18:42:32 +0300
+Message-ID: <20251204154235.149575-9-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251204154235.149575-1-vsementsov@yandex-team.ru>
 References: <20251204154235.149575-1-vsementsov@yandex-team.ru>
@@ -74,93 +77,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since previous commit it is always 1. Let's just drop it.
+Currently we do two wrong things:
+
+1. Abuse s->filename to get pty_name from it
+
+2. Violate layering with help of CHARDEV_IS_PTY()
+
+Let's get rid of both, and introduce correct way to get pty name in
+generic code, if available.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 ---
- hw/display/qxl.c        | 12 ------------
- include/ui/qemu-spice.h |  2 --
- ui/spice-display.c      | 11 -----------
- 3 files changed, 25 deletions(-)
+ chardev/char-pty.c     |  7 +++++++
+ chardev/char.c         | 19 +++++++++++++------
+ hw/char/xen_console.c  |  7 ++++---
+ include/chardev/char.h |  7 +++++--
+ 4 files changed, 29 insertions(+), 11 deletions(-)
 
-diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-index 0fa8a3204d..a06395fb8a 100644
---- a/hw/display/qxl.c
-+++ b/hw/display/qxl.c
-@@ -530,13 +530,6 @@ static void interface_attached_worker(QXLInstance *sin)
-     trace_qxl_interface_attach_worker(qxl->id);
+diff --git a/chardev/char-pty.c b/chardev/char-pty.c
+index a582aa7bc7..047aade09e 100644
+--- a/chardev/char-pty.c
++++ b/chardev/char-pty.c
+@@ -387,6 +387,12 @@ static void pty_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
+     pty->path = g_strdup(path);
  }
  
--#if !(SPICE_HAS_ATTACHED_WORKER)
--static void interface_attach_worker(QXLInstance *sin, QXLWorker *qxl_worker)
--{
--    interface_attached_worker(sin);
--}
--#endif
--
- static void interface_set_compression_level(QXLInstance *sin, int level)
++static char *pty_chr_get_pty_name(Chardev *chr)
++{
++    PtyChardev *s = PTY_CHARDEV(chr);
++    return g_strdup(s->pty_name);
++}
++
+ static void char_pty_class_init(ObjectClass *oc, const void *data)
  {
-     PCIQXLDevice *qxl = container_of(sin, PCIQXLDevice, ssd.qxl);
-@@ -1131,12 +1124,7 @@ static const QXLInterface qxl_interface = {
-     .base.major_version      = SPICE_INTERFACE_QXL_MAJOR,
-     .base.minor_version      = SPICE_INTERFACE_QXL_MINOR,
- 
--#if SPICE_HAS_ATTACHED_WORKER
-     .attached_worker         = interface_attached_worker,
--#else
--    .attache_worker          = interface_attach_worker,
--#endif
--
-     .set_compression_level   = interface_set_compression_level,
-     .get_init_info           = interface_get_init_info,
- 
-diff --git a/include/ui/qemu-spice.h b/include/ui/qemu-spice.h
-index 8e5e6b2a74..111a09ceca 100644
---- a/include/ui/qemu-spice.h
-+++ b/include/ui/qemu-spice.h
-@@ -34,8 +34,6 @@ int qemu_spice_add_display_interface(QXLInstance *qxlin, QemuConsole *con);
- int qemu_spice_migrate_info(const char *hostname, int port, int tls_port,
-                             const char *subject);
- 
--#define SPICE_HAS_ATTACHED_WORKER 1
--
- #else  /* CONFIG_SPICE */
- 
- #include "qemu/error-report.h"
-diff --git a/ui/spice-display.c b/ui/spice-display.c
-index f2304bb0ce..28399f8a81 100644
---- a/ui/spice-display.c
-+++ b/ui/spice-display.c
-@@ -507,17 +507,10 @@ void qemu_spice_display_refresh(SimpleSpiceDisplay *ssd)
- 
- /* spice display interface callbacks */
- 
--#if SPICE_HAS_ATTACHED_WORKER
- static void interface_attached_worker(QXLInstance *sin)
- {
-     /* nothing to do */
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+@@ -396,6 +402,7 @@ static void char_pty_class_init(ObjectClass *oc, const void *data)
+     cc->chr_write = pty_chr_write;
+     cc->chr_update_read_handler = pty_chr_update_read_handler;
+     cc->chr_add_watch = pty_chr_add_watch;
++    cc->chr_get_pty_name = pty_chr_get_pty_name;
  }
--#else
--static void interface_attach_worker(QXLInstance *sin, QXLWorker *qxl_worker)
--{
--    /* nothing to do */
--}
--#endif
  
- static void interface_set_compression_level(QXLInstance *sin, int level)
+ static const TypeInfo char_pty_type_info = {
+diff --git a/chardev/char.c b/chardev/char.c
+index 44bfed3627..0dc792b88f 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -1090,9 +1090,7 @@ ChardevReturn *qmp_chardev_add(const char *id, ChardevBackend *backend,
+     }
+ 
+     ret = g_new0(ChardevReturn, 1);
+-    if (CHARDEV_IS_PTY(chr)) {
+-        ret->pty = g_strdup(chr->filename + 4);
+-    }
++    ret->pty = qemu_chr_get_pty_name(chr);
+ 
+     return ret;
+ 
+@@ -1101,6 +1099,17 @@ err:
+     return NULL;
+ }
+ 
++char *qemu_chr_get_pty_name(Chardev *chr)
++{
++    ChardevClass *cc = CHARDEV_GET_CLASS(chr);
++
++    if (cc->chr_get_pty_name) {
++        return cc->chr_get_pty_name(chr);
++    }
++
++    return NULL;
++}
++
+ ChardevReturn *qmp_chardev_change(const char *id, ChardevBackend *backend,
+                                   Error **errp)
  {
-@@ -707,11 +700,7 @@ static const QXLInterface dpy_interface = {
-     .base.major_version      = SPICE_INTERFACE_QXL_MAJOR,
-     .base.minor_version      = SPICE_INTERFACE_QXL_MINOR,
+@@ -1192,9 +1201,7 @@ ChardevReturn *qmp_chardev_change(const char *id, ChardevBackend *backend,
+     object_unref(OBJECT(chr_new));
  
--#if SPICE_HAS_ATTACHED_WORKER
-     .attached_worker         = interface_attached_worker,
--#else
--    .attache_worker          = interface_attach_worker,
--#endif
-     .set_compression_level   = interface_set_compression_level,
-     .get_init_info           = interface_get_init_info,
+     ret = g_new0(ChardevReturn, 1);
+-    if (CHARDEV_IS_PTY(chr_new)) {
+-        ret->pty = g_strdup(chr_new->filename + 4);
+-    }
++    ret->pty = qemu_chr_get_pty_name(chr_new);
  
+     return ret;
+ }
+diff --git a/hw/char/xen_console.c b/hw/char/xen_console.c
+index a639fb0b11..7502de46e4 100644
+--- a/hw/char/xen_console.c
++++ b/hw/char/xen_console.c
+@@ -418,6 +418,7 @@ static void xen_console_realize(XenDevice *xendev, Error **errp)
+     XenConsole *con = XEN_CONSOLE_DEVICE(xendev);
+     Chardev *cs = qemu_chr_fe_get_driver(&con->chr);
+     unsigned int u;
++    g_autofree char *pty_name = NULL;
+ 
+     if (!cs) {
+         error_setg(errp, "no backing character device");
+@@ -450,9 +451,9 @@ static void xen_console_realize(XenDevice *xendev, Error **errp)
+ 
+     trace_xen_console_realize(con->dev, object_get_typename(OBJECT(cs)));
+ 
+-    if (CHARDEV_IS_PTY(cs)) {
+-        /* Strip the leading 'pty:' */
+-        xen_device_frontend_printf(xendev, "tty", "%s", cs->filename + 4);
++    pty_name = qemu_chr_get_pty_name(cs);
++    if (pty_name) {
++        xen_device_frontend_printf(xendev, "tty", "%s", pty_name);
+     }
+ 
+     /* No normal PV driver initialization for the primary console under Xen */
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index 23a227dca9..d36e50b99e 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -247,8 +247,6 @@ OBJECT_DECLARE_TYPE(Chardev, ChardevClass, CHARDEV)
+ 
+ #define CHARDEV_IS_RINGBUF(chr) \
+     object_dynamic_cast(OBJECT(chr), TYPE_CHARDEV_RINGBUF)
+-#define CHARDEV_IS_PTY(chr) \
+-    object_dynamic_cast(OBJECT(chr), TYPE_CHARDEV_PTY)
+ 
+ struct ChardevClass {
+     ObjectClass parent_class;
+@@ -306,6 +304,9 @@ struct ChardevClass {
+ 
+     /* handle various events */
+     void (*chr_be_event)(Chardev *s, QEMUChrEvent event);
++
++    /* return PTY name if available */
++    char *(*chr_get_pty_name)(Chardev *s);
+ };
+ 
+ Chardev *qemu_chardev_new(const char *id, const char *typename,
+@@ -320,4 +321,6 @@ GSource *qemu_chr_timeout_add_ms(Chardev *chr, guint ms,
+ void suspend_mux_open(void);
+ void resume_mux_open(void);
+ 
++char *qemu_chr_get_pty_name(Chardev *chr);
++
+ #endif
 -- 
 2.48.1
 
