@@ -4,70 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46BA2D1CDC1
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 03:01:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 032F4D1CDC2
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 03:04:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQzay-0007TK-Qh; Wed, 03 Dec 2025 22:01:28 -0500
+	id 1vQzdI-0008LO-K0; Wed, 03 Dec 2025 22:03:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1vQzaw-0007SM-5d
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:01:26 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1vQzat-0006Db-Ag
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:01:25 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8AxRNBx+TBp5O4qAA--.26177S3;
- Thu, 04 Dec 2025 11:01:05 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJDxbMFu+TBpPUBFAQ--.62790S3;
- Thu, 04 Dec 2025 11:01:04 +0800 (CST)
-Subject: Re: [PATCH 3/3] target/loongarch: Add host CPU model in kvm mode
-To: lixianglai <lixianglai@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
-References: <20251106084043.2453749-1-maobibo@loongson.cn>
- <20251106084043.2453749-4-maobibo@loongson.cn>
- <5dc53523-af38-d9da-a089-d341b098fdeb@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <edadf032-db5c-e844-8313-f970bbc35b9f@loongson.cn>
-Date: Thu, 4 Dec 2025 10:58:34 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <5dc53523-af38-d9da-a089-d341b098fdeb@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxbMFu+TBpPUBFAQ--.62790S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxWryDuF4fJFW3Wr43JFyruFX_yoWrAryDpr
- 1kArW5GrWUGrn3Jw15try5XF98Zr18Gw1qqF1IqF1UAFsrAr1jgF4UWrZFgr1UJw48JF17
- Ar1UXrsxuFsrJ3cCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.398,
+ (Exim 4.90_1) (envelope-from <chao.liu@openatom.club>)
+ id 1vQzdG-0008Ka-Jv
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:03:50 -0500
+Received: from sg-1-19.ptr.blmpb.com ([118.26.132.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu@openatom.club>)
+ id 1vQzdD-00089j-TT
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:03:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=openatom-club.20200927.dkim.feishu.cn; t=1764817417;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=/d2cITZ3pJqOyNOHqwT3yT1xNB5DNJUJc6I3ln8peiA=;
+ b=YrV2wSDDguc+DZVRI52fnWwZlYElE9WwzmmHoLOBCQck66SpPgerZQ4QjPEvDtpWgc9m+p
+ gELP5zbeWNiPs3jK4eh610hZZfhgHDdzTqAgNldjaxWdUFs460tp9onVXNS7W8ErQlI02p
+ 3nljb3UqRXOng2/fX1FxgNDomN6E81u+5QxXzBlscq7AZMBMXm2qJbFghIAaIz9lPUg4Uz
+ dtk8Xuf1lB0iceVDVek1G1RNMwKXcsZI6nhZ/C+pkq12AqJqRciVxGxOcaRGcHEu9ZSwM4
+ rOFwGemgOpaBO+TYlEWHGe6mW4GYnFAyAL1eCZ/69LEPgnAY686EkzztRnoPdg==
+Date: Thu, 4 Dec 2025 11:03:33 +0800
+Message-Id: <b1123953-c106-4cb8-8f80-f5b31cf4a98a@openatom.club>
+References: <cover.1764493931.git.chao.liu@zevorn.cn>
+ <a303c6a1f48e7ba076bb62d78084d0008ae39526.1764493931.git.chao.liu@zevorn.cn>
+ <6163ffd5-b0ff-4993-9db2-36492702487c@ventanamicro.com>
+Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, 
+ <hust-os-kernel-patches@googlegroups.com>
+X-Original-From: Chao Liu <chao.liu@openatom.club>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+To: "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>, 
+ "Chao Liu" <chao.liu@zevorn.cn>, <richard.henderson@linaro.org>, 
+ <paolo.savini@embecosm.com>, <npiggin@gmail.com>, <ebiggers@kernel.org>, 
+ <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>, 
+ <zhiwei_liu@linux.alibaba.com>
+From: "Chao Liu" <chao.liu@openatom.club>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 5/5] docs/system/riscv: add documentation for k230
+ machine
+Mime-Version: 1.0
+X-Lms-Return-Path: <lba+26930fa07+deea36+nongnu.org+chao.liu@openatom.club>
+Received: from [10.13.14.160] ([218.81.29.112]) by smtp.feishu.cn with ESMTPS;
+ Thu, 04 Dec 2025 11:03:34 +0800
+In-Reply-To: <6163ffd5-b0ff-4993-9db2-36492702487c@ventanamicro.com>
+Received-SPF: pass client-ip=118.26.132.19;
+ envelope-from=chao.liu@openatom.club; helo=sg-1-19.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,146 +78,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12/4/2025 1:19 AM, Daniel Henrique Barboza wrote:
+> Hi,
+>=20
+> This patch won't build in my env:
+>=20
+> [3031/3032] Generating docs/QEMU manual with a custom command
+> FAILED: docs/docs.stamp
+> /usr/bin/env CONFDIR=3Detc/qemu /home/danielhb/work/qemu/build/pyvenv/bin=
+/sphinx-
+> build -q -W -Dkerneldoc_werror=3D1 -j auto -Dversion=3D10.1.92 -Drelease=
+=3D -
+> Ddepfile=3Ddocs/docs.d -Ddepfile_stamp=3Ddocs/docs.stamp -b html -d /home=
+/danielhb/
+> work/qemu/build/docs/manual.p /home/danielhb/work/qemu/docs /home/danielh=
+b/work/
+> qemu/build/docs/manual
+> /home/danielhb/work/qemu/docs/system/riscv/k230.rst: WARNING: document is=
+n't
+> included in any toctree
+> ninja: build stopped: subcommand failed.
+>=20
+>=20
+>=20
+> This diff fixes it:
+>=20
+>=20
+> $ git diff
+> diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
+> index 89b2cb732c..2103ff6173 100644
+> --- a/docs/system/target-riscv.rst
+> +++ b/docs/system/target-riscv.rst
+> @@ -66,6 +66,7 @@ undocumented; you can get a complete list by running
+> =C2=A0.. toctree::
+> =C2=A0=C2=A0=C2=A0 :maxdepth: 1
+> =C2=A0
+> +=C2=A0=C2=A0 riscv/k230
+> =C2=A0=C2=A0=C2=A0 riscv/microblaze-v-generic
+> =C2=A0=C2=A0=C2=A0 riscv/microchip-icicle-kit
+> =C2=A0=C2=A0=C2=A0 riscv/shakti-c
+>=20
+Nice :)
 
+Thanks, Daniel, for fixing this issue. I will apply this bugfix in PATCH v2=
+.
 
-On 2025/12/4 上午9:57, lixianglai wrote:
-> Hi Bibo Mao:
->> Host CPU model is basically the same with max CPU model, except Product
->> ID and CPU model name. With host CPU model, Product ID comes from
->> cpucfg0 and CPU model comes from /proc/cpuinfo.
+Chao
+>=20
+>=20
+> Thanks,
+>=20
+> Daniel
+>=20
+>=20
+> On 11/30/25 6:21 AM, Chao Liu wrote:
+>> Add documentation for k230 virt reference platform.
 >>
->> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+>> Signed-off-by: Chao Liu <chao.liu@zevorn.cn>
 >> ---
->>   target/loongarch/cpu.c | 94 ++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 94 insertions(+)
+>> =C2=A0 docs/system/riscv/k230.rst | 48 +++++++++++++++++++++++++++++++++=
++++++
+>> =C2=A0 1 file changed, 48 insertions(+)
+>> =C2=A0 create mode 100644 docs/system/riscv/k230.rst
 >>
->> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->> index 8b8723a343..c7f52adeb9 100644
->> --- a/target/loongarch/cpu.c
->> +++ b/target/loongarch/cpu.c
->> @@ -429,6 +429,97 @@ static void loongarch_max_initfn(Object *obj)
->>       }
->>   }
->> +#if defined(CONFIG_KVM)
->> +static int read_cpuinfo(const char *field, char *value, int len)
->> +{
->> +    FILE *f;
->> +    int ret = -1;
->> +    int field_len = strlen(field);
->> +    char line[512];
+>> diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
+>> new file mode 100644
+>> index 0000000000..3e6ca295df
+>> --- /dev/null
+>> +++ b/docs/system/riscv/k230.rst
+>> @@ -0,0 +1,48 @@
+>> +Kendryte K230 virt reference platform (``k230``)
+>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D
+>> +The ``k230`` machine is compatible with with Kendryte K230 SDK.
 >> +
->> +    f = fopen("/proc/cpuinfo", "r");
->> +    if (!f) {
->> +        return -1;
->> +    }
+>> +The K230 is a chip from the AIoT SoC series made by Kendryte =C2=AE =E2=
+=80=94 a part of
+>> +Canaan Inc. It uses a brand-new multi-heterogeneous unit accelerated co=
+mputing
+>> +structure.
 >> +
->> +    do {
->> +        if (!fgets(line, sizeof(line), f)) {
->> +            break;
->> +        }
->> +        if (!strncmp(line, field, field_len)) {
->> +            strncpy(value, line, len);
->> +            ret = 0;
->> +            break;
->> +        }
->> +    } while (*line);
+>> +This chip has 2 RISC-V computing cores and a new-generation KPU (Knowle=
+dge
+>> +Process Unit) smart computing unit.
 >> +
->> +    fclose(f);
+>> +It has multi-precision AI computing ability, works with many common AI =
+computing
+>> +frameworks, and for some typical networks, its usage rate is over 70%. =
+Besides,
+>> +the K230 chip supports many peripheral connections and has several spec=
+ial
+>> +hardware acceleration units (like 2D and 2.5D accelerators). It can spe=
+ed up
+>> +different tasks (such as image processing, video processing, audio proc=
+essing
+>> +and AI computing). It also has many good features: low delay, high perf=
+ormance,
+>> +low power use and fast start-up.
 >> +
->> +    return ret;
->> +}
+>> +For more information, see <https://www.kendryte.com/en/proDetail/230>
 >> +
->> +static uint64_t get_host_cpu_model(void)
->> +{
->> +    char line[512];
->> +    char *ns;
->> +    static uint64_t cpuid;
+>> +Supported devices
+>> +-----------------
+>> +The ``k230`` machine supports the following devices:
 >> +
->> +    if (cpuid) {
->> +        return cpuid;
->> +    }
+>> +* 1 c908 cores
+>> +* Core Local Interruptor (CLINT)
+>> +* Incoming MSI Controller (IMSIC)
+>> +* 2 K230 Watchdog Timer
+>> +* 4 UART
 >> +
->> +    if (read_cpuinfo("Model Name", line, sizeof(line))) {
->> +        return 0;
->> +    }
+>> +Boot options
+>> +------------
+>> +The ``k230`` machine can start using the standard ``-bios``
+>> +functionality for loading the boot image. You need to compile and link
+>> +the firmware, kernel, and Device Tree (FDT) into a single binary file w=
+ith
+>> +K230 SDK(k230_canmv_defconfig), such as ``uboot``.
 >> +
->> +    ns = strchr(line, ':');
->> +    if (!ns) {
->> +        return 0;
->> +    }
+>> +Running
+>> +-------
+>> +Below is an example command line for running the ``k230``
+>> +machine:
 >> +
->> +    ns = strstr(ns, "Loongson-");
->> +    if (!ns) {
->> +        return 0;
->> +    }
+>> +.. code-block:: bash
 >> +
->> +    ns += strlen("Loongson-");
->> +    memccpy((void *)&cpuid, ns, 0, 8);
->> +    return cpuid;
->> +}
->> +
->> +static uint32_t get_host_cpucfg(int number)
->> +{
->> +    unsigned int data = 0;
->> +
->> +#ifdef __loongarch__
->> +    asm volatile("cpucfg %[val], %[reg]"
->> +                 : [val] "=r" (data)
->> +                 : [reg] "r" (number)
->> +                 : "memory");
->> +#endif
->> +
->> +    return data;
->> +}
->> +
->> +static void loongarch_host_initfn(Object *obj)
->> +{
->> +    uint32_t data;
->> +    uint64_t cpuid;
->> +    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
->> +
->> +    loongarch_max_initfn(obj);
->> +    data = get_host_cpucfg(0);
->> +    if (data) {
->> +        cpu->env.cpucfg[0] = data;
->> +    }
->> +
-> 
-> Does the feature bit on cpucfg[2] also need to be consistent with the 
-> host feature bit?
-> Otherwise, some features might be lost.
-well, will check the detailed bits with CPUCFG2 in next version.
-
-   bit10 LVZ will be disabled since nested KVM is not supported
-   bit18-20/bit24 deeps on whether it is supported on KVM host and QEMU
-   bit25-30 atomic instruction should be the same with host, it is 
-irrelative with KVM.
-
-Regards
-Bibo Mao
-> 
-> Thanks!
-> Xianglai.
-> 
-> 
->> +    cpuid = get_host_cpu_model();
->> +    if (cpuid) {
->> +        cpu->env.cpu_id = cpuid;
->> +    }
->> +}
->> +#endif
->> +
->>   static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
->>   {
->>       uint8_t tlb_ps;
->> @@ -780,6 +871,9 @@ static const TypeInfo loongarch_cpu_type_infos[] = {
->>       DEFINE_LOONGARCH_CPU_TYPE(64, "la464", loongarch_la464_initfn),
->>       DEFINE_LOONGARCH_CPU_TYPE(32, "la132", loongarch_la132_initfn),
->>       DEFINE_LOONGARCH_CPU_TYPE(64, "max", loongarch_max_initfn),
->> +#if defined(CONFIG_KVM)
->> +    DEFINE_LOONGARCH_CPU_TYPE(64, "host", loongarch_host_initfn),
->> +#endif
->>   };
->>   DEFINE_TYPES(loongarch_cpu_type_infos)
-
+>> +=C2=A0=C2=A0 $ qemu-system-riscv64 -machine k230 \
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -bios k230_sdk/output/k230_canmv_defconf=
+ig/little/uboot/u-boot \
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -nographic
+>
 
