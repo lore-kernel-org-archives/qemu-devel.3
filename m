@@ -4,65 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 032F4D1CDC2
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 03:04:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F14BAD1CDC2
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 03:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQzdI-0008LO-K0; Wed, 03 Dec 2025 22:03:52 -0500
+	id 1vQzgk-0001b8-V5; Wed, 03 Dec 2025 22:07:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@openatom.club>)
- id 1vQzdG-0008Ka-Jv
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:03:50 -0500
-Received: from sg-1-19.ptr.blmpb.com ([118.26.132.19])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu@openatom.club>)
- id 1vQzdD-00089j-TT
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:03:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=openatom-club.20200927.dkim.feishu.cn; t=1764817417;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=/d2cITZ3pJqOyNOHqwT3yT1xNB5DNJUJc6I3ln8peiA=;
- b=YrV2wSDDguc+DZVRI52fnWwZlYElE9WwzmmHoLOBCQck66SpPgerZQ4QjPEvDtpWgc9m+p
- gELP5zbeWNiPs3jK4eh610hZZfhgHDdzTqAgNldjaxWdUFs460tp9onVXNS7W8ErQlI02p
- 3nljb3UqRXOng2/fX1FxgNDomN6E81u+5QxXzBlscq7AZMBMXm2qJbFghIAaIz9lPUg4Uz
- dtk8Xuf1lB0iceVDVek1G1RNMwKXcsZI6nhZ/C+pkq12AqJqRciVxGxOcaRGcHEu9ZSwM4
- rOFwGemgOpaBO+TYlEWHGe6mW4GYnFAyAL1eCZ/69LEPgnAY686EkzztRnoPdg==
-Date: Thu, 4 Dec 2025 11:03:33 +0800
-Message-Id: <b1123953-c106-4cb8-8f80-f5b31cf4a98a@openatom.club>
-References: <cover.1764493931.git.chao.liu@zevorn.cn>
- <a303c6a1f48e7ba076bb62d78084d0008ae39526.1764493931.git.chao.liu@zevorn.cn>
- <6163ffd5-b0ff-4993-9db2-36492702487c@ventanamicro.com>
-Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, 
- <hust-os-kernel-patches@googlegroups.com>
-X-Original-From: Chao Liu <chao.liu@openatom.club>
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-To: "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>, 
- "Chao Liu" <chao.liu@zevorn.cn>, <richard.henderson@linaro.org>, 
- <paolo.savini@embecosm.com>, <npiggin@gmail.com>, <ebiggers@kernel.org>, 
- <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>, 
- <zhiwei_liu@linux.alibaba.com>
-From: "Chao Liu" <chao.liu@openatom.club>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vQzgg-0001an-Ku
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:07:22 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vQzgb-00017X-08
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:07:21 -0500
+Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5B436V6X059145
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 4 Dec 2025 12:07:04 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=2E98TME7/rrLRRFciN2V8YfyAoGDDq1HrvHKi8ttB7c=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1764817624; v=1;
+ b=v1NcpkiwyM7a4Jji6fx6cJ7DVogASbrFoXAYKLsAA90z20p9UkTMEgMjDGwHDidu
+ kcv/3lrouroJVg4BOIWEy1GfCXh775+E6GJYq0L03eTX2G02rLzfmDFJIfyyJixp
+ OcAJKbM0LFTtIJDb/fYldcXRhHHhs2N5pX1yvGKdd45VXcIU18f61Yfcki+YZCri
+ 766R42X+0LsyygLRsBrTBsamOpZDO6xXs4swMXr2DHCmA9BpfrqtarQApFIyuCc3
+ 3eYwGy/MMUXbQSRVNLxqcadHFMzll1ATC6DI27p65oTcn6vgIPF/Z+PinXYBAI1l
+ kyDlbPvVgiTOIxKVNHE0Bw==
+Message-ID: <7ffdd7cc-fd55-4f4f-b28b-eca45702c8d2@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 4 Dec 2025 12:06:31 +0900
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 5/5] docs/system/riscv: add documentation for k230
- machine
-Mime-Version: 1.0
-X-Lms-Return-Path: <lba+26930fa07+deea36+nongnu.org+chao.liu@openatom.club>
-Received: from [10.13.14.160] ([218.81.29.112]) by smtp.feishu.cn with ESMTPS;
- Thu, 04 Dec 2025 11:03:34 +0800
-In-Reply-To: <6163ffd5-b0ff-4993-9db2-36492702487c@ventanamicro.com>
-Received-SPF: pass client-ip=118.26.132.19;
- envelope-from=chao.liu@openatom.club; helo=sg-1-19.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Subject: Re: [PATCH RFC 5/7] virtio-gpu-virgl: support scanout of Metal
+ textures
+To: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20251203040754.94487-1-j@getutm.app>
+ <20251203040754.94487-6-j@getutm.app>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20251203040754.94487-6-j@getutm.app>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, MSGID_FROM_MTA_HEADER=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,136 +81,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/2025 1:19 AM, Daniel Henrique Barboza wrote:
-> Hi,
->=20
-> This patch won't build in my env:
->=20
-> [3031/3032] Generating docs/QEMU manual with a custom command
-> FAILED: docs/docs.stamp
-> /usr/bin/env CONFDIR=3Detc/qemu /home/danielhb/work/qemu/build/pyvenv/bin=
-/sphinx-
-> build -q -W -Dkerneldoc_werror=3D1 -j auto -Dversion=3D10.1.92 -Drelease=
-=3D -
-> Ddepfile=3Ddocs/docs.d -Ddepfile_stamp=3Ddocs/docs.stamp -b html -d /home=
-/danielhb/
-> work/qemu/build/docs/manual.p /home/danielhb/work/qemu/docs /home/danielh=
-b/work/
-> qemu/build/docs/manual
-> /home/danielhb/work/qemu/docs/system/riscv/k230.rst: WARNING: document is=
-n't
-> included in any toctree
-> ninja: build stopped: subcommand failed.
->=20
->=20
->=20
-> This diff fixes it:
->=20
->=20
-> $ git diff
-> diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
-> index 89b2cb732c..2103ff6173 100644
-> --- a/docs/system/target-riscv.rst
-> +++ b/docs/system/target-riscv.rst
-> @@ -66,6 +66,7 @@ undocumented; you can get a complete list by running
-> =C2=A0.. toctree::
-> =C2=A0=C2=A0=C2=A0 :maxdepth: 1
-> =C2=A0
-> +=C2=A0=C2=A0 riscv/k230
-> =C2=A0=C2=A0=C2=A0 riscv/microblaze-v-generic
-> =C2=A0=C2=A0=C2=A0 riscv/microchip-icicle-kit
-> =C2=A0=C2=A0=C2=A0 riscv/shakti-c
->=20
-Nice :)
+On 2025/12/03 13:07, Joelle van Dyne wrote:
+> When supported, virglrenderer will return a MTLTexture handle that can be
+> directly used for scanout.
+> 
+> Signed-off-by: Joelle van Dyne <j@getutm.app>
+> ---
+>   meson.build                   |  4 ++++
+>   include/ui/console.h          |  2 ++
+>   hw/display/virtio-gpu-virgl.c | 12 +++++++++++-
+>   hw/display/virtio-gpu.c       |  2 ++
+>   4 files changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index d9293294d8..05bad66376 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -832,6 +832,7 @@ version_res = []
+>   coref = []
+>   iokit = []
+>   pvg = not_found
+> +metal = not_found
+>   emulator_link_args = []
+>   midl = not_found
+>   widl = not_found
+> @@ -859,6 +860,7 @@ elif host_os == 'darwin'
+>     host_dsosuf = '.dylib'
+>     pvg = dependency('appleframeworks', modules: ['ParavirtualizedGraphics', 'Metal'],
+>                      required: get_option('pvg'))
+> +  metal = dependency('appleframeworks', modules: 'Metal', required: false)
+>   elif host_os == 'sunos'
+>     socket = [cc.find_library('socket'),
+>               cc.find_library('nsl'),
+> @@ -2591,6 +2593,7 @@ if xen.found()
+>       ('0' + xen_version[2]).substring(-2)
+>     config_host_data.set('CONFIG_XEN_CTRL_INTERFACE_VERSION', xen_ctrl_version)
+>   endif
+> +config_host_data.set('CONFIG_METAL', metal.found())
+>   config_host_data.set('QEMU_VERSION', '"@0@"'.format(meson.project_version()))
+>   config_host_data.set('QEMU_VERSION_MAJOR', meson.project_version().split('.')[0])
+>   config_host_data.set('QEMU_VERSION_MINOR', meson.project_version().split('.')[1])
+> @@ -4874,6 +4877,7 @@ summary(summary_info, bool_yn: true, section: 'Crypto')
+>   summary_info = {}
+>   if host_os == 'darwin'
+>     summary_info += {'Cocoa support':           cocoa}
+> +  summary_info += {'Metal support':           metal}
+>   endif
+>   summary_info += {'D-Bus display':     dbus_display}
+>   summary_info += {'SDL support':       sdl}
+> diff --git a/include/ui/console.h b/include/ui/console.h
+> index 25e45295d4..a45b524c57 100644
+> --- a/include/ui/console.h
+> +++ b/include/ui/console.h
+> @@ -134,12 +134,14 @@ struct QemuConsoleClass {
+>   typedef enum ScanoutTextureNativeType {
+>       SCANOUT_TEXTURE_NATIVE_TYPE_NONE,
+>       SCANOUT_TEXTURE_NATIVE_TYPE_D3D,
+> +    SCANOUT_TEXTURE_NATIVE_TYPE_METAL,
+>   } ScanoutTextureNativeType;
+>   
+>   typedef struct ScanoutTextureNative {
+>       ScanoutTextureNativeType type;
+>       union {
+>           void *d3d_tex2d;
+> +        void *metal_texture;
+>       } u;
+>   } ScanoutTextureNative;
+>   
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 36c670f988..e091eb0c76 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -452,6 +452,13 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+>   #if VIRGL_RENDERER_RESOURCE_INFO_EXT_VERSION >= SUPPORTED_VIRGL_INFO_EXT_VERSION
+>           if (ext.version >= VIRGL_RENDERER_RESOURCE_INFO_EXT_VERSION) {
+>               switch (ext.native_type) {
+> +#ifdef CONFIG_METAL
+> +            case VIRGL_NATIVE_HANDLE_METAL_TEXTURE: {
+> +                native.type = SCANOUT_TEXTURE_NATIVE_TYPE_METAL;
+> +                native.u.metal_texture = ext.native_handle;
+> +                break;
+> +            }
+> +#endif
+>               case VIRGL_NATIVE_HANDLE_NONE:
+>               case VIRGL_NATIVE_HANDLE_D3D_TEX2D: {
+>                   /* already handled above */
+> @@ -1198,7 +1205,10 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+>       }
+>   #if VIRGL_VERSION_MAJOR >= 1
+>       if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
+> -        flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
+> +        flags |= VIRGL_RENDERER_VENUS;
+> +#ifndef CONFIG_METAL /* Metal does not support render server */
+> +        flags |= VIRGL_RENDERER_RENDER_SERVER;
+> +#endif
+>       }
+>   #endif
+>   
+> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+> index 43e88a4daf..9cf2c15a43 100644
+> --- a/hw/display/virtio-gpu.c
+> +++ b/hw/display/virtio-gpu.c
+> @@ -1485,12 +1485,14 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+>       VirtIOGPU *g = VIRTIO_GPU(qdev);
+>   
+>       if (virtio_gpu_blob_enabled(g->parent_obj.conf)) {
+> +#ifndef CONFIG_METAL
+>           if (!virtio_gpu_rutabaga_enabled(g->parent_obj.conf) &&
+>               !virtio_gpu_virgl_enabled(g->parent_obj.conf) &&
+>               !virtio_gpu_have_udmabuf()) {
+>               error_setg(errp, "need rutabaga or udmabuf for blob resources");
+>               return;
+>           }
+> +#endif
 
-Thanks, Daniel, for fixing this issue. I will apply this bugfix in PATCH v2=
-.
+This check should be kept enabled. Blob resources cannot be created if 
+none of Rutabaga, virgl or udmabuf is enabled.
 
-Chao
->=20
->=20
-> Thanks,
->=20
-> Daniel
->=20
->=20
-> On 11/30/25 6:21 AM, Chao Liu wrote:
->> Add documentation for k230 virt reference platform.
->>
->> Signed-off-by: Chao Liu <chao.liu@zevorn.cn>
->> ---
->> =C2=A0 docs/system/riscv/k230.rst | 48 +++++++++++++++++++++++++++++++++=
-+++++
->> =C2=A0 1 file changed, 48 insertions(+)
->> =C2=A0 create mode 100644 docs/system/riscv/k230.rst
->>
->> diff --git a/docs/system/riscv/k230.rst b/docs/system/riscv/k230.rst
->> new file mode 100644
->> index 0000000000..3e6ca295df
->> --- /dev/null
->> +++ b/docs/system/riscv/k230.rst
->> @@ -0,0 +1,48 @@
->> +Kendryte K230 virt reference platform (``k230``)
->> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D
->> +The ``k230`` machine is compatible with with Kendryte K230 SDK.
->> +
->> +The K230 is a chip from the AIoT SoC series made by Kendryte =C2=AE =E2=
-=80=94 a part of
->> +Canaan Inc. It uses a brand-new multi-heterogeneous unit accelerated co=
-mputing
->> +structure.
->> +
->> +This chip has 2 RISC-V computing cores and a new-generation KPU (Knowle=
-dge
->> +Process Unit) smart computing unit.
->> +
->> +It has multi-precision AI computing ability, works with many common AI =
-computing
->> +frameworks, and for some typical networks, its usage rate is over 70%. =
-Besides,
->> +the K230 chip supports many peripheral connections and has several spec=
-ial
->> +hardware acceleration units (like 2D and 2.5D accelerators). It can spe=
-ed up
->> +different tasks (such as image processing, video processing, audio proc=
-essing
->> +and AI computing). It also has many good features: low delay, high perf=
-ormance,
->> +low power use and fast start-up.
->> +
->> +For more information, see <https://www.kendryte.com/en/proDetail/230>
->> +
->> +Supported devices
->> +-----------------
->> +The ``k230`` machine supports the following devices:
->> +
->> +* 1 c908 cores
->> +* Core Local Interruptor (CLINT)
->> +* Incoming MSI Controller (IMSIC)
->> +* 2 K230 Watchdog Timer
->> +* 4 UART
->> +
->> +Boot options
->> +------------
->> +The ``k230`` machine can start using the standard ``-bios``
->> +functionality for loading the boot image. You need to compile and link
->> +the firmware, kernel, and Device Tree (FDT) into a single binary file w=
-ith
->> +K230 SDK(k230_canmv_defconfig), such as ``uboot``.
->> +
->> +Running
->> +-------
->> +Below is an example command line for running the ``k230``
->> +machine:
->> +
->> +.. code-block:: bash
->> +
->> +=C2=A0=C2=A0 $ qemu-system-riscv64 -machine k230 \
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -bios k230_sdk/output/k230_canmv_defconf=
-ig/little/uboot/u-boot \
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 -nographic
->
+Regards,
+Akihiko Odaki
 
