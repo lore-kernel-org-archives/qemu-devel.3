@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00342D1D899
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 08:36:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B5ED1D899
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 08:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR4pD-0004ST-Ew; Thu, 04 Dec 2025 03:36:31 -0500
+	id 1vR4q8-0005cu-6V; Thu, 04 Dec 2025 03:37:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vR4p9-0004OE-Ps
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:36:28 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vR4q2-0005bV-GK
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:37:22 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vR4p5-0005oC-FJ
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:36:26 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4779a637712so4334625e9.1
- for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 00:36:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vR4q0-0005wL-AQ
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:37:21 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4779a637712so4344125e9.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 00:37:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764837380; x=1765442180; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764837438; x=1765442238; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9qbaNuUJoxnLp5UuJm1FetAdlBppY0buDxjeYV7iD0I=;
- b=WfovtJcPJal8Qu6Pgm3868uELhV9rve61opFnEoZVAvlkdjUpRIF/QP1aNNy6G2eJR
- JbLEUtPjkLyj1GgdPTeUpmlN6yN5ASSZgXEitfehFvVQt/H4lAoY89V6r23oWYWknFSL
- FQ5EGa9BR9iBU7JqSgpLf9o71ou+IAlHhyuKCAxlCN/1lPAzfJnLhV6qu0bcKStzjxWa
- tOt1PMNWd+hpOWuBjXFtTgKZJmOqQWZX5PeWx3AwBTfacplhMmkxv+Vne/sjIdRYSoN2
- ahSaiVGE3nPaZQ7B6h3FmhM0JIwbSlbSWZNWJs5LM0jXejWyYqbQYj71yr3XswySAVMb
- l8iw==
+ bh=s5lNgTvSaX55b4fwG0OR9WPFzHK7w7xAKUX+HuoFvzg=;
+ b=T9u7WT+KPJpaUiL0X6sY9FUnsEX+phQnMPXNNi23mCf2KdLjgkYJ0axuFkm/siiMPe
+ yhpeTe/cUWGkAMEbRMMarrPOw+mkIkOj93j+8C11lLeNpA9C9gcJRSIrFmoM1JBO56wU
+ Iy2bEc/j+duX+WP7Vvl+JfkFYXy+N/7UHAPdnnDJjiza3/3VIKXFJ/Ao5qK3dp9Xi/Zc
+ GqXtKRDv7dmq/7rExFo206bq5GiczKhZsN0HnHYWBYCfrz3McCOhDjIFBKMNmHhAWYAo
+ xq/Be2q+RT7yeAZb8+YCE8cYCkSlSbSRPMNxSrYpjGN/EVkg8aoilD0tHbUZLpoevqfd
+ dzsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764837380; x=1765442180;
+ d=1e100.net; s=20230601; t=1764837438; x=1765442238;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=9qbaNuUJoxnLp5UuJm1FetAdlBppY0buDxjeYV7iD0I=;
- b=rDvTKAZ4w110QH6OPsBnGUpeVm2Gmw5bx3zi3w1JFcaq5alr+l3UEk2bQ743v+qKBO
- XmDD9G6i7kqq5Y5FwHnZTKzPH1l26ZQjHgH5JvqiUoGer/XxsvJ1G/AheMRIC7KCwXQ0
- PYUgh4IHJJj3tXl6jEOh0bZeEnucPBYsqetTqOyhLpGQxyERYCz4sjqAKiwrpY647IKv
- hFcLxVu4qdr37XYtwjJmu9QVlKtW3TpAwaOv62Vs+JsS9NzuCuhlaOf8Fq7l5116O4B1
- ezzRRs9QqRwypII3bx97IHG8X+tJ5+ofvvjvzfdPmQW5/vfee6jBxU06xL/2dxjr43xq
- K1qA==
+ bh=s5lNgTvSaX55b4fwG0OR9WPFzHK7w7xAKUX+HuoFvzg=;
+ b=MTavnDqANQoAJmS29BFvVGAJinG8+8yoy7ezMB7mPZuJqbzzdvXOOJKeGJp5ZVkLFc
+ UfxLnyFLJYbyfWbfkY+fFcplqfM0knWq5k1L/LiT8ww8BNmySohBvMiPKvv0rEinm99p
+ adOqOnARgwN1bhpHNxNeJ4BKMdnEW52AaCzLIomz4MQj2UcWiyRr0+Vqvuivb5K+WDte
+ v4yh9C19pqJeX+2hYo989sN9PKTknLpV6G2WRQh67W94Tc+FB+5VXp07EAGEI1M9OFYc
+ vsfpxrDNUqsuss4jP/Cw923762K2lf/IznU/oDjGV6CBvuyVTvIIrcroDh8Vc+47aFiw
+ qFKQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEZaC0kgnSupquwGjC38lDiEDHL3Z8jxviRvFou0EVheD2SQM9gsy7FOIZN92ta08rtqYEr+qPNHEQ@nongnu.org
-X-Gm-Message-State: AOJu0YyKKI7Hb4dVHSfBCOyqLcN2jFfa1EpRi8f50o+XG54P4Fv8u91k
- xMpTiM8IKRyacrJJGpUCTjPYEV/n+ntknz/jftZ0n+UROvSGVetPXNoFaXOlXWxgFtw=
-X-Gm-Gg: ASbGncvJCen/Ba1lFDTmCKtOJP2/aNxCbnz0tUChB8NbUpMlZf0dy0uuFCtiSqgUNq7
- Gpl5epuD8LbJBbmf+gqYSSed0cNx6AMe2XpeqGsd71Dv0J6LeY1pab5d7z2FwCp87jSSY01bQAR
- 3+LB4quZ0VhPxq762Rn48CgoBO1b+2LWl9vd/wA+Qe44yAHelJJOWeMZ5T6+z8DZJr3eM+iPijS
- yB+kDKkfZa/2sIlm1+qQrQir8uEMgHb5W18LjPbkolPBBNjQSa5SmCiS8ln+j7dQqO9sgM0r3Qn
- 3vaIbg4p03lwNlwIFAD4qoeKd+ZtIIOO85LH+vXzzNJjo25CgV4TKcIDN/iQge1LkJI+PtDvS5G
- 7lIpLCpFP0MeH9qXQ1iz62lapwc3AvqBHg9dTD2byT5GpFxgaBpNdM+PZIdfGFexA1VbOPKzoPf
- ECvZrTMRwOF/0LIp8BETGND+VPG8QKEa6gc/SumT9DJBlUEsFV2iYZgQ==
-X-Google-Smtp-Source: AGHT+IE01N4AmrPgLANR2KQurNwLqi0gHGvH8Gl+ovcKyE6fFmV53e/9TE66APLHAUHAUle4QoCvcw==
-X-Received: by 2002:a05:600c:a49:b0:475:da1a:53f9 with SMTP id
- 5b1f17b1804b1-4792aef4202mr46318865e9.14.1764837379501; 
- Thu, 04 Dec 2025 00:36:19 -0800 (PST)
+ AJvYcCVphToFiFcSzFL6p4MGSlDJqJ4pmOocqhSFC4YHWTFH7AJ1mC/vW5imDsfkrS1pHT7KowpvS+IGWaBi@nongnu.org
+X-Gm-Message-State: AOJu0YzekaPyBuVVRfAIP84GjsEe8/lGa8sjYmkAVPPN6gUZC0zdKpVm
+ EWVojhFSM340JVien8bq+M4l3+nV1I6T1IuMgxUuN4ghMXE/Xgp7bm4MeW+trpSZUF4=
+X-Gm-Gg: ASbGnctpWqPI2v3J2/i+JlnjspOEJlUmqph1JCZMydRXar//ffbeZzHkW3aKpiMS7kQ
+ PKXQUBwox4jyJY7FOCHgqVoR9CSSviAlwB6wrVhgh8hYGOAy5XAzMZaRy1Sur0zJqilmwDEeQ/3
+ qOncwDugse0hHh3JnmlXNM1o8g6nrROJ98eVvQMnlAC6BJ/q639BR2kEV+Q3nqUutp0TnzHQY6Y
+ 31WK9LUpl02mO9vMqGpUI3X6OsN2S5MmWtbr73HxL49O6x3OziQps9enG3V4LgrD7UVodT55BJN
+ W3iz+xsC+EC30nhKP6U047rjy1stLLgFV2BzbyHxRJjAqLtp1APFmi7yVZrRNg1hPtwtycjv4Kc
+ XQlZbGK5wWpS0/l1kMI9MIV84WjYYMjWa5HLxcjVLwY2OJ2WVz0GsotztU3mlH7UoxEWitfwKZt
+ gPG18bFTxoIsBZ4KZsyIESEpOpV7emArCT7vD83lEbqUPSO1eWlKm2hQ==
+X-Google-Smtp-Source: AGHT+IGbsyJHqOIb6+thOIV+nV3ULRFxpugZ+WugehYp3Il5dKUtnwLirgj8aO1XKniPQ8EzbL0kQA==
+X-Received: by 2002:a05:6000:1889:b0:42b:40df:2337 with SMTP id
+ ffacd0b85a97d-42f731f6f63mr4880645f8f.50.1764837438038; 
+ Thu, 04 Dec 2025 00:37:18 -0800 (PST)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47930f286f4sm18433505e9.0.2025.12.04.00.36.18
+ ffacd0b85a97d-42f7d331af5sm1824833f8f.31.2025.12.04.00.37.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Dec 2025 00:36:19 -0800 (PST)
-Message-ID: <754c984d-9082-49eb-8538-23e746d6a126@linaro.org>
-Date: Thu, 4 Dec 2025 09:36:18 +0100
+ Thu, 04 Dec 2025 00:37:17 -0800 (PST)
+Message-ID: <e0b91a24-70e7-4cf4-b2bb-30b9b3401714@linaro.org>
+Date: Thu, 4 Dec 2025 09:37:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] block: rename block/aio-wait.h to qemu/aio-wait.h
+Subject: Re: [PATCH 1/1] scripts: fix broken error path in modinfo-collect.py
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, kwolf@redhat.omc
-References: <20251203185133.2458207-1-pbonzini@redhat.com>
- <20251203185133.2458207-6-pbonzini@redhat.com>
+To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>
+References: <20251203220138.159656-1-den@openvz.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251203185133.2458207-6-pbonzini@redhat.com>
+In-Reply-To: <20251203220138.159656-1-den@openvz.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +103,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/25 19:51, Paolo Bonzini wrote:
-> AIO_WAIT_WHILE is used even outside the block layer; move the header file
-> out of block/ just like the implementation is in util/.
+On 3/12/25 23:01, Denis V. Lunev via wrote:
+> sys.stderr.print is dropped long ago and should not be used. Official
+> replacement is sys.stderr.write
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> The problem has been found debugging building on some fancy platform
+> derived from Debian.
+> 
+> Signed-off-by: Denis V. Lunev <den@openvz.org>
+> CC: John Snow <jsnow@redhat.com>
+> CC: Cleber Rosa <crosa@redhat.com>
 > ---
->   MAINTAINERS                        | 2 +-
->   include/block/block-io.h           | 2 +-
->   include/{block => qemu}/aio-wait.h | 0
->   block/io.c                         | 2 +-
->   blockjob.c                         | 2 +-
->   io/channel.c                       | 2 +-
->   job.c                              | 2 +-
->   net/colo-compare.c                 | 2 +-
->   net/filter-mirror.c                | 2 +-
->   util/aio-wait.c                    | 2 +-
->   util/vhost-user-server.c           | 2 +-
->   hw/display/apple-gfx-mmio.m        | 2 +-
->   hw/display/apple-gfx.m             | 2 +-
->   13 files changed, 12 insertions(+), 12 deletions(-)
->   rename include/{block => qemu}/aio-wait.h (100%)
+>   scripts/modinfo-collect.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/scripts/modinfo-collect.py b/scripts/modinfo-collect.py
+> index 6ebaea989d..db78b16c1f 100644
+> --- a/scripts/modinfo-collect.py
+> +++ b/scripts/modinfo-collect.py
+> @@ -41,7 +41,7 @@ def main(args):
+>       for obj in args:
+>           entry = compile_commands.get(obj, None)
+>           if not entry:
+> -            sys.stderr.print('modinfo: Could not find object file', obj)
+> +            sys.stderr.write(f'modinfo: Could not find object file {obj}')
+
+Missing trailing '\n'? Otherwise,
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+>               sys.exit(1)
+>           src = entry['file']
+>           if not src.endswith('.c'):
 
 
