@@ -4,91 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 048E0D1D892
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 08:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884C9D1D899
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 08:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR4ul-0007rV-Oh; Thu, 04 Dec 2025 03:42:16 -0500
+	id 1vR4vS-00086U-Bw; Thu, 04 Dec 2025 03:42:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vR4uh-0007r6-Ec
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:42:12 -0500
+ id 1vR4vQ-00081A-KH
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:42:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vR4uf-0006zd-85
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:42:11 -0500
+ id 1vR4vP-00075d-8T
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:42:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764837727;
+ s=mimecast20190719; t=1764837774;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ebSFv4cpPYIrnEX2hQbyZFOuOEtnALedvonMr0JAueI=;
- b=aqK62+2SmB53HRFepthjZl1u4QmmSlC8M5Ttao5qMYwkGOp4SqKo5LlsHOxGiLXAJlGRaJ
- iXTdXyIxaYro65/lxK/KhCrEME1D0WMhXPpEAucELhi/jquxf8WAOzBy6Hc/CSfebsr2ID
- JWCo5eFXyAMx2JrrFd5x60MBEnUn1Ek=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EsGvHs1YS80jgVqbEAm8V4e3iVfaYSj/AVium/TnLZs=;
+ b=AMnzRO/s73rdZZAJMoRwptUotj7/8YQKdZrDnFf/AalZJwuVigMgqKF7Wut/yeTDKZv9uA
+ IcgvxJ35Ka4rPpwo1oraR8tIwrp/9AwLDUtvUZw1KnB77NtDSDj7lQ94USnppBM5leIKQ8
+ i5qtT+S/C7Drwcip5p9m90XOs6DIg9o=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-671-eRsiz6dWMpCQ2F-CJmScrA-1; Thu, 04 Dec 2025 03:42:05 -0500
-X-MC-Unique: eRsiz6dWMpCQ2F-CJmScrA-1
-X-Mimecast-MFC-AGG-ID: eRsiz6dWMpCQ2F-CJmScrA_1764837725
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-78933e02c1bso16227237b3.0
- for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 00:42:05 -0800 (PST)
+ us-mta-417-NaG0wa3oOKmgf6_qFxoxFw-1; Thu, 04 Dec 2025 03:42:52 -0500
+X-MC-Unique: NaG0wa3oOKmgf6_qFxoxFw-1
+X-Mimecast-MFC-AGG-ID: NaG0wa3oOKmgf6_qFxoxFw_1764837772
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-787cf398a53so7927977b3.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 00:42:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764837725; x=1765442525; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764837772; x=1765442572; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ebSFv4cpPYIrnEX2hQbyZFOuOEtnALedvonMr0JAueI=;
- b=ZOR3X5nvzTQj/zn46oBWa2k9oUu7U+v3YQqUjuClH7oglyKdhvmDF3/0L8rzWg8e2E
- zAbrFyjtHcUZOvo1ri0u0c3rkIsWEE1tJ0j9zdp4YU8UwHFOXL020utufXq2i8856/Yh
- cH/EWvZ0bq76y0ZO+y6WForbsd+bYq7YwcSbu2Nj4+Bum6PFjxB+3Ykug9Tfn5nUWzpa
- xumnQDzcRCkLAN4DnW4ofl0CDqtajhz66/cUei5hcEOaGjS4I9ajXx95acCbngW3lshR
- eMs1boK3RVbkSjM4Bvo+wFInvm0ZR1Xw00AOm2uU1Jh9FjLKQSvi6DDf5EO5hNX2roFn
- ruMg==
+ bh=EsGvHs1YS80jgVqbEAm8V4e3iVfaYSj/AVium/TnLZs=;
+ b=RE55XunUKsDNxJCUnC9yjUj5SrRdgMg7nUhyKLTjVq9uHpBGX1oqvYk4clZ06bh0Ow
+ u1lavuveBnEolZw8sXdQRZgqL5n1UdwQ1lGGr7MEx78rngPg0pMhs+4j9/zJaaOK609y
+ 90hEUn4E9ZVOqUZ+dGh1PGN4XCxWJ65NwpYMcu1ueLh3suNauN11MBAsNLm1mZPK2QZt
+ FoqLJZk1y9yOq+wDlPVkJwodjbfDO66E/cd6vCzEo1rPfUBEa9ntQV+XIexJIyIWCEVb
+ MuK2FdG7n0XuEVYzWzlV7VJJ7uHZYhZ0BcCFJ+xzexkKedoPz/wP1NUz/1YHsy1Wv5Fu
+ hA1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764837725; x=1765442525;
+ d=1e100.net; s=20230601; t=1764837772; x=1765442572;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ebSFv4cpPYIrnEX2hQbyZFOuOEtnALedvonMr0JAueI=;
- b=i/aCwSb8QffGRVc/y2RD+/NoRFqohCfWVN/7iwoQVCnIuJkrkesvP36oa/q7Lrwn7d
- JOt5dm2UVoUZhKqvnnIVS7krPksrSSzKsNJN8lnLn1xyJkc+BrFmW/ceZP4rp72mvd+A
- p3BD0u3iNtz7x2uUm3UMSqIBV94JRu2PMNIgrvY57BNTto5+54yVAjp8X5Of/eWOIvFc
- BJZiqPjhRL/pcUAmtb7SwYnbzqKxowhbAjbN5wlxplB0koeg9Ov7lDVPh3uF8O/MWrqm
- JSWAnKHbIDYNPNT3SM4eCEOlmPXhfJxbEImiMWgBmCd1dY0Z/QUjKmz3isfFTWPYe0Pd
- Lg8w==
+ bh=EsGvHs1YS80jgVqbEAm8V4e3iVfaYSj/AVium/TnLZs=;
+ b=m+DlS9L8HzrTKAVZZivOgwo9mJf11W4I7Rb3ZK4kZOsJ9OYMzSWBvQiT5zZT//XI1q
+ 3glXGCH6rKlY1ksg8mLfBmNCVAU2r5ykFeqYWBpC0edwjmZ9cViXjTBXlT6+4l3xgEeZ
+ +cIIMGMcPWww1TWIJNM7TBNP2Fgf0Dk26GHsFUPm+kck1R3AhTsrcB3aYEy5PhLiGIXI
+ TvDKN1wa07dDYBKqn59Wxga/n6yYInTnVxtdMZXyE8ebyRyjEN0QM3ESJbBMrJfZJA5+
+ dntPCvjB0ofBdbTN1FjWnvp0bfwdkVnqcqybN/JqWnLTBRwSsfu27wd9B1BWPflwxYcF
+ toXw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVU43OoibdestPpk80S+ZJQa+OyIGePbm0aJaqZyh+yZg66Gbz7HDn4otsmzkjiR3mVlj364P74mfHq@nongnu.org
-X-Gm-Message-State: AOJu0Yxvd8o3ZHCWy4JEDgVhHVbhWP+l+rVdikG/xx1t+mOcnU/OgIUc
- 4xoN9dp5s2qENGHsq7BEiHGt2ZA8VH8XAoXbYe10qp2sFTWMoyTvt0O5svDeycNEAtiTFL71l+S
- f/RVX6dejBgyZd3/xKLrld6yh8y2RzW5+RQg5W2f+bLvupGbeTz7asEVYAapuRX7JcswWOz55s8
- HcQPf/SPsI7abVo4Cm7sz1NOPtJ47GmdU=
-X-Gm-Gg: ASbGncuQanR+dzX5/2s1Yz3SDdnauebdcCSzKazct6WtBPXC50Z899qlbFDKz6DCDne
- i9/kF0GbfPTFo1pNQXaasY7fLsm/OegFLh40H1IkwxupyoVfKKRljYfcKwavCEpSYr0iRGXs0kh
- CePYf5hQGz9I1/6TZce4zn0w3wypQuclpaVvmKCVJu25ncKOMQRDYrjKbVK2ZX3fNI284=
-X-Received: by 2002:a05:690c:3345:b0:787:e738:54ed with SMTP id
- 00721157ae682-78c17266206mr16491967b3.30.1764837724959; 
- Thu, 04 Dec 2025 00:42:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH+bxnFpQq9+9J1ukvBeHvjHtFHLp90fdi08ibUs21R0PCIXS1niGvFP8+Y1EMIm1S7llpCZhQDqBbbSCiaj/o=
-X-Received: by 2002:a05:690c:3345:b0:787:e738:54ed with SMTP id
- 00721157ae682-78c17266206mr16491857b3.30.1764837724563; Thu, 04 Dec 2025
- 00:42:04 -0800 (PST)
+ AJvYcCX1Vwj0n+U/S5x5DGXu6cH5H3ux/YrPfFQwmM25voZGJmfhsDTp7Dnckc73Dfjzh1Mui/8l3C1SBpIT@nongnu.org
+X-Gm-Message-State: AOJu0YxTVTWN8OTHPMydsngiep55BAbJEKHdlUyu0x1NxVsv/uVcf8qf
+ VvzHCaC8nclbrude8nh/C1BltJ18Y5JiQ3kKzXXZU5JJ8rBw7gnKTLUe0nTK4HlhNAqxrVT4C21
+ CLoMHdTcpyJW+oONaNZOtHJO0dL2/lKXtIrGDunpJS/1OcOfKjButLaUOx2CudZZkDIJPsidfRg
+ mJAXrGQIjPVaxzlXuzgFbowBZ5xeyBVC4=
+X-Gm-Gg: ASbGncsUQ5khjBp+mDyBM880Kf+VGVYNqOBXsJW2O9pIWi+0M1jfJIHKAAcGGGjT5yk
+ H3WLlHI+33hP9HVj8maoCLrXkQcSwiZBmUuNenlYv65DeS1zmZzY6z/E1mPlrEYl34xFS6SpC4h
+ UjL1pGz9LrlPsTv2hCTnktsNLYl2VwkHcB7GyKCK/1+edCX0vyKAOT2siK+ET9qSgnb0s=
+X-Received: by 2002:a05:690c:6e03:b0:788:17c5:4459 with SMTP id
+ 00721157ae682-78c0c1b3612mr44488547b3.58.1764837771973; 
+ Thu, 04 Dec 2025 00:42:51 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFENZdkDWOUZuFj1PaguxziutlHkZioYE90PO+4n9c28DrCuMPpblQiBaja+q2MJ8PUuDvumXOL298SU4Rqa6I=
+X-Received: by 2002:a05:690c:6e03:b0:788:17c5:4459 with SMTP id
+ 00721157ae682-78c0c1b3612mr44488367b3.58.1764837771670; Thu, 04 Dec 2025
+ 00:42:51 -0800 (PST)
 MIME-Version: 1.0
-References: <20251204073750.8953-1-wafer@jaguarmicro.com>
- <20251204073750.8953-3-wafer@jaguarmicro.com>
-In-Reply-To: <20251204073750.8953-3-wafer@jaguarmicro.com>
+References: <20251204074416.9350-1-wafer@jaguarmicro.com>
+In-Reply-To: <20251204074416.9350-1-wafer@jaguarmicro.com>
 From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 4 Dec 2025 09:41:28 +0100
-X-Gm-Features: AWmQ_bmwNY4ca4VP4_kY-zhtd0tsD1suc2uoM-caWiLLDefXJhcRIZ_KGC6COak
-Message-ID: <CAJaqyWcZ0kO=VED5Gwyco+JfML4X_k_m28=j3AyVoFUcaz-+4Q@mail.gmail.com>
-Subject: Re: [PATCH 2/4] vdpa: implement the interfaces alloc/free for
- indirect desc
+Date: Thu, 4 Dec 2025 09:42:15 +0100
+X-Gm-Features: AWmQ_bnBbnWE0sgSzUOeIJzflTmxOITWa6mUqwTH7NYWvf7VOZ6rRDpwx4ZnCZI
+Message-ID: <CAJaqyWfWOzZ9VHj8tro24QfAmOUw0GACCxxAyczpt+Qpqb-i6w@mail.gmail.com>
+Subject: Re: [PATCH 4/4] vhost: supported the virtio indirect desc of used ring
 To: Wafer Xie <wafer@jaguarmicro.com>
 Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
  leiyang@redhat.com, sgarzare@redhat.com, angus.chen@jaguarmicro.com
@@ -119,307 +117,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 4, 2025 at 8:39=E2=80=AFAM Wafer Xie <wafer@jaguarmicro.com> wr=
+On Thu, Dec 4, 2025 at 8:45=E2=80=AFAM Wafer Xie <wafer@jaguarmicro.com> wr=
 ote:
 >
-> Dynamic Allocation/Free indirect descriptor.
+> Retrieve the used ring buffers in the indirect descriptor area
+> of split shadow virtqueues.
 >
+
+This needs to be squashed with the previous patch. Otherwise, we are
+allocating & mapping on each indirect descriptor but not freeing &
+unmapping.
+
 > Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
 > ---
->  hw/virtio/vhost-shadow-virtqueue.c |   5 +-
->  hw/virtio/vhost-shadow-virtqueue.h |  49 ++++++++++-
->  hw/virtio/vhost-vdpa.c             | 130 ++++++++++++++++++++++++++++-
->  3 files changed, 180 insertions(+), 4 deletions(-)
+>  hw/virtio/vhost-shadow-virtqueue.c | 36 ++++++++++++++++++++++++++----
+>  1 file changed, 32 insertions(+), 4 deletions(-)
 >
 > diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-=
 virtqueue.c
-> index 2481d49345..ecc3245138 100644
+> index 94ad5c3a57..0ffb884196 100644
 > --- a/hw/virtio/vhost-shadow-virtqueue.c
 > +++ b/hw/virtio/vhost-shadow-virtqueue.c
-> @@ -756,15 +756,18 @@ void vhost_svq_stop(VhostShadowVirtqueue *svq)
->   *
->   * @ops: SVQ owner callbacks
->   * @ops_opaque: ops opaque pointer
-> + * @indirect_ops: Indirect descriptor operations
->   */
->  VhostShadowVirtqueue *vhost_svq_new(const VhostShadowVirtqueueOps *ops,
-> -                                    void *ops_opaque)
-> +                                    void *ops_opaque,
-> +                                    SVQIndirectOps *indirect_ops)
->  {
->      VhostShadowVirtqueue *svq =3D g_new0(VhostShadowVirtqueue, 1);
->
->      event_notifier_init_fd(&svq->svq_kick, VHOST_FILE_UNBIND);
->      svq->ops =3D ops;
->      svq->ops_opaque =3D ops_opaque;
-> +    svq->indirect_ops =3D indirect_ops;
->      return svq;
->  }
->
-> diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-=
-virtqueue.h
-> index 2b36df4dd5..c5d654eae8 100644
-> --- a/hw/virtio/vhost-shadow-virtqueue.h
-> +++ b/hw/virtio/vhost-shadow-virtqueue.h
-> @@ -54,6 +54,49 @@ typedef struct VhostShadowVirtqueueOps {
->      VirtQueueAvailCallback avail_handler;
->  } VhostShadowVirtqueueOps;
->
-> +/**
-> + * Callback to allocate indirect descriptor table.
-> + *
-> + * @svq: Shadow virtqueue
-> + * @num: Number of descriptors
-> + * @desc: Output pointer to allocated descriptor table
-> + * @iova: Output IOVA of the allocated table
-> + * @size: Output size of the allocated region
-> + * @opaque: Opaque data (vhost_vdpa pointer)
-> + *
-> + * Returns true on success, false on failure.
-> + */
-> +typedef bool (*SVQIndirectDescAlloc)(VhostShadowVirtqueue *svq,
-> +                                     size_t num,
-> +                                     vring_desc_t **desc,
-> +                                     hwaddr *iova,
-> +                                     size_t *size,
-> +                                     void *opaque);
-> +
-> +/**
-> + * Callback to free indirect descriptor table.
-> + *
-> + * @svq: Shadow virtqueue
-> + * @desc: Descriptor table to free
-> + * @iova: IOVA of the table
-> + * @size: Size of the allocated region
-> + * @opaque: Opaque data (vhost_vdpa pointer)
-> + */
-> +typedef void (*SVQIndirectDescFree)(VhostShadowVirtqueue *svq,
-> +                                    vring_desc_t *desc,
-> +                                    hwaddr iova,
-> +                                    size_t size,
-> +                                    void *opaque);
-> +
-> +/**
-> + * Indirect descriptor operations and context
-> + */
-> +typedef struct SVQIndirectOps {
-> +    SVQIndirectDescAlloc alloc;
-> +    SVQIndirectDescFree free;
-> +    void *opaque;  /* Pointer to struct vhost_vdpa */
-> +} SVQIndirectOps;
-> +
->  /* Shadow virtqueue to relay notifications */
->  typedef struct VhostShadowVirtqueue {
->      /* Shadow vring */
-> @@ -104,6 +147,9 @@ typedef struct VhostShadowVirtqueue {
->      /* Caller callbacks opaque */
->      void *ops_opaque;
->
-> +    /* Indirect descriptor operations */
-> +    SVQIndirectOps *indirect_ops;
-> +
->      /* Next head to expose to the device */
->      uint16_t shadow_avail_idx;
->
-> @@ -143,7 +189,8 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtI=
-ODevice *vdev,
->  void vhost_svq_stop(VhostShadowVirtqueue *svq);
->
->  VhostShadowVirtqueue *vhost_svq_new(const VhostShadowVirtqueueOps *ops,
-> -                                    void *ops_opaque);
-> +                                    void *ops_opaque,
-> +                                    SVQIndirectOps *indirect_ops);
->
->  void vhost_svq_free(gpointer vq);
->  G_DEFINE_AUTOPTR_CLEANUP_FUNC(VhostShadowVirtqueue, vhost_svq_free);
-> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-> index 7061b6e1a3..1719993f52 100644
-> --- a/hw/virtio/vhost-vdpa.c
-> +++ b/hw/virtio/vhost-vdpa.c
-> @@ -584,15 +584,130 @@ static int vhost_vdpa_get_dev_features(struct vhos=
-t_dev *dev,
->      return ret;
->  }
->
-> +/**
-> + * Allocate indirect descriptor table for SVQ
-> + *
-> + * @svq: Shadow virtqueue
-> + * @num: Number of descriptors needed
-> + * @desc: Output pointer to the allocated table
-> + * @iova: Output IOVA for the table
-> + * @size: Output size of the allocated region
-> + * @opaque: Opaque pointer (vhost_vdpa instance)
-> + *
-> + * Returns true on success, false on failure.
-> + */
-> +static bool vhost_vdpa_svq_indirect_desc_alloc(VhostShadowVirtqueue *svq=
-,
-> +                                                size_t num,
-> +                                                vring_desc_t **desc,
-> +                                                hwaddr *iova,
-> +                                                size_t *size,
-> +                                                void *opaque)
-> +{
-> +    struct vhost_vdpa *v =3D opaque;
-> +    size_t desc_size =3D sizeof(vring_desc_t) * num;
-> +    size_t alloc_size =3D ROUND_UP(desc_size, qemu_real_host_page_size()=
-);
-> +    DMAMap needle =3D {
-> +        .size =3D alloc_size - 1,
-> +        .perm =3D IOMMU_RO,
-> +    };
-> +    vring_desc_t *indirect_desc;
-> +    int r;
-> +
-> +    indirect_desc =3D mmap(NULL, alloc_size, PROT_READ | PROT_WRITE,
-> +                         MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-> +    if (indirect_desc =3D=3D MAP_FAILED) {
-> +        error_report("Cannot allocate indirect descriptor table");
-> +        return false;
-> +    }
-> +
-> +    r =3D vhost_iova_tree_map_alloc(v->shared->iova_tree, &needle,
-> +                                  (hwaddr)(uintptr_t)indirect_desc);
-> +    if (unlikely(r !=3D IOVA_OK)) {
-> +        error_report("Cannot allocate iova for indirect descriptors (%d)=
-", r);
-> +        goto err_iova_alloc;
-> +    }
-> +
-> +    r =3D vhost_vdpa_dma_map(v->shared, v->address_space_id, needle.iova=
-,
-> +                           alloc_size, indirect_desc, true);
-
-Thanks for moving this forward! But the map and unmap operations could
-be heavy in vDPA. My idea was to use a static allocated buffer for the
-indirect table first, but then we need to agree on the right size of
-it etc.
-
-Can you profile the impact of it vs converting them to chained? If we
-find we can improve the performance then it would be a great addition.
-
-> +    if (unlikely(r !=3D 0)) {
-> +        error_report("Cannot map indirect descriptors to device: %s (%d)=
-",
-> +                     g_strerror(-r), -r);
-> +        goto err_dma_map;
-> +    }
-> +
-> +    *desc =3D indirect_desc;
-> +    *iova =3D needle.iova;
-> +    *size =3D alloc_size;
-> +    return true;
-> +
-> +err_dma_map:
-> +    vhost_iova_tree_remove(v->shared->iova_tree, needle);
-> +err_iova_alloc:
-> +    munmap(indirect_desc, alloc_size);
-> +    return false;
-> +}
-> +
-> +/**
-> + * Free indirect descriptor table for SVQ
-> + *
-> + * @svq: Shadow virtqueue
-> + * @desc: Descriptor table to free
-> + * @iova: IOVA of the table
-> + * @size: Size of the allocated region
-> + * @opaque: Opaque pointer (vhost_vdpa instance)
-> + */
-> +static void vhost_vdpa_svq_indirect_desc_free(VhostShadowVirtqueue *svq,
-> +                                               vring_desc_t *desc,
-> +                                               hwaddr iova,
-> +                                               size_t size,
-> +                                               void *opaque)
-> +{
-> +    struct vhost_vdpa *v =3D opaque;
-> +    const DMAMap needle =3D {
-> +        .translated_addr =3D (hwaddr)(uintptr_t)desc,
-> +    };
-> +    const DMAMap *result;
-> +    int r;
-> +
-> +    /* Find the mapping in the IOVA tree by HVA */
-> +    result =3D vhost_iova_tree_find_iova(v->shared->iova_tree, &needle);
-> +    if (unlikely(!result)) {
-> +        error_report("Cannot find indirect descriptor mapping to unmap: =
-"
-> +                     "iova=3D0x%" HWADDR_PRIx " hva=3D0x%" HWADDR_PRIx "=
- size=3D%zu",
-> +                     iova, needle.translated_addr, size);
-> +        return;
-> +    }
-> +
-> +    r =3D vhost_vdpa_dma_unmap(v->shared, v->address_space_id, result->i=
-ova,
-> +                             size);
-> +    if (unlikely(r !=3D 0)) {
-> +        error_report("Cannot unmap indirect descriptors: "
-> +                     "iova=3D0x%" HWADDR_PRIx " size=3D%zu: %s (%d)",
-> +                     result->iova, size, g_strerror(-r), -r);
-> +    }
-> +
-> +    vhost_iova_tree_remove(v->shared->iova_tree, *result);
-> +
-> +    munmap(desc, size);
-> +}
-> +
->  static void vhost_vdpa_init_svq(struct vhost_dev *hdev, struct vhost_vdp=
-a *v)
->  {
->      g_autoptr(GPtrArray) shadow_vqs =3D NULL;
-> +    SVQIndirectOps *indirect_ops;
-> +
-> +    /* Create indirect descriptor ops */
-> +    indirect_ops =3D g_new0(SVQIndirectOps, 1);
-> +    indirect_ops->alloc =3D vhost_vdpa_svq_indirect_desc_alloc;
-> +    indirect_ops->free =3D vhost_vdpa_svq_indirect_desc_free;
-> +    indirect_ops->opaque =3D v;
->
->      shadow_vqs =3D g_ptr_array_new_full(hdev->nvqs, vhost_svq_free);
->      for (unsigned n =3D 0; n < hdev->nvqs; ++n) {
->          VhostShadowVirtqueue *svq;
->
-> -        svq =3D vhost_svq_new(v->shadow_vq_ops, v->shadow_vq_ops_opaque)=
-;
-> +        svq =3D vhost_svq_new(v->shadow_vq_ops, v->shadow_vq_ops_opaque,
-> +                            indirect_ops);
->          g_ptr_array_add(shadow_vqs, svq);
+> @@ -636,12 +636,40 @@ static VirtQueueElement *vhost_svq_get_buf(VhostSha=
+dowVirtqueue *svq,
+>          return NULL;
 >      }
 >
-> @@ -789,10 +904,21 @@ static void vhost_vdpa_svq_cleanup(struct vhost_dev=
- *dev)
->  {
->      struct vhost_vdpa *v =3D dev->opaque;
->      size_t idx;
-> +    SVQIndirectOps *indirect_ops =3D NULL;
->
->      for (idx =3D 0; idx < v->shadow_vqs->len; ++idx) {
-> -        vhost_svq_stop(g_ptr_array_index(v->shadow_vqs, idx));
-> +        VhostShadowVirtqueue *svq =3D g_ptr_array_index(v->shadow_vqs, i=
-dx);
+> +    bool used_indirect =3D (svq->desc_state[used_elem.id].indirect_desc =
+!=3D NULL);
 > +
-> +        /* Save indirect_ops pointer from first SVQ (all share the same =
-one) */
-
-Why not put it in shared them?
-
-But I don't really get why they are callbacks. What's the issue with
-if (indirect) { call to indirect functions } ?
-
-> +        if (idx =3D=3D 0 && svq->indirect_ops) {
-> +            indirect_ops =3D svq->indirect_ops;
+> +    /* Free indirect descriptor table if it was used */
+> +    if (used_indirect) {
+> +        if (svq->indirect_ops && svq->indirect_ops->free) {
+> +            svq->indirect_ops->free(svq,
+> +                                    svq->desc_state[used_elem.id].indire=
+ct_desc,
+> +                                    svq->desc_state[used_elem.id].indire=
+ct_iova,
+> +                                    svq->desc_state[used_elem.id].indire=
+ct_size,
+> +                                    svq->indirect_ops->opaque);
 > +        }
+> +        svq->desc_state[used_elem.id].indirect_desc =3D NULL;
+> +        svq->desc_state[used_elem.id].indirect_iova =3D 0;
+> +        svq->desc_state[used_elem.id].indirect_size =3D 0;
+> +    }
 > +
-> +        vhost_svq_stop(svq);
->      }
+>      num =3D svq->desc_state[used_elem.id].ndescs;
+>      svq->desc_state[used_elem.id].ndescs =3D 0;
+> -    last_used_chain =3D vhost_svq_last_desc_of_chain(svq, num, used_elem=
+.id);
+> -    svq->desc_next[last_used_chain] =3D svq->free_head;
+> -    svq->free_head =3D used_elem.id;
+> -    svq->num_free +=3D num;
 > +
-> +    g_free(indirect_ops);
-> +
->      g_ptr_array_free(v->shadow_vqs, true);
->  }
+> +    /*
+> +     * If using indirect descriptors, only 1 main descriptor is used.
+> +     * To maintain consistency with `add split`,
+> +     * we used 'num' as free descriptors.
+> +     */
+> +    if (used_indirect) {
+> +        svq->desc_next[used_elem.id] =3D svq->free_head;
+> +        svq->free_head =3D used_elem.id;
+> +        svq->num_free +=3D num;
+> +    } else {
+> +        last_used_chain =3D vhost_svq_last_desc_of_chain(svq, num, used_=
+elem.id);
+> +        svq->desc_next[last_used_chain] =3D svq->free_head;
+> +        svq->free_head =3D used_elem.id;
+> +        svq->num_free +=3D num;
+> +    }
 >
+>      *len =3D used_elem.len;
+>      return g_steal_pointer(&svq->desc_state[used_elem.id].elem);
 > --
 > 2.34.1
 >
