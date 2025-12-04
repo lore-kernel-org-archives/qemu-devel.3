@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF8C0D1CDC2
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 02:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BEC9D1CDC1
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 03:00:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQzWS-0004so-Q4; Wed, 03 Dec 2025 21:56:49 -0500
+	id 1vQzZi-0006aq-OI; Wed, 03 Dec 2025 22:00:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vQzWQ-0004rw-Nh
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 21:56:46 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vQzWO-0004Zk-0P
- for qemu-devel@nongnu.org; Wed, 03 Dec 2025 21:56:46 -0500
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5B42tbB2054742
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 4 Dec 2025 11:56:30 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=9NMoV4F9PIC2apKmQEtJdMlXWak7T2T7ZMLSFrml6Oc=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1764816990; v=1;
- b=KY/Cm6+zFUf5rtuyZJeMs9xvo3F0lRWpgrzhJ6+oECcmhgf6HvaWpTQPx1IMxcpp
- XH6jNcTvlY2tMRV1XMQIzPO8MNvL8qoinDZ083fc8lIZeSVIHYcC7UHguLZ/Ek+K
- nqYb00sghRDEV5chzaW9bkLatp5KvbW/6LknBk2QHaAjZk3GzbwyhX49q1V2NAp+
- rSEgwoogzNsAwXOKawx1YWZcb7yHVqY2QHOarzBDGFsHO2fM1KeVjwgUKglOqxcb
- cLGqWPl4uYtNOous2o+aelhCebuR4KlvUhVjyR/W3h/s/O+QSLbxXas355TrJAAN
- p7tQudVeDYTG3FiXz3IU3g==
-Message-ID: <b5e61b9f-3afb-42c4-a185-eaf659a4c11c@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 4 Dec 2025 11:55:37 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 2/7] virtio-gpu-virgl: check page alignment of blob
- mapping
-To: Joelle van Dyne <j@getutm.app>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20251203040754.94487-1-j@getutm.app>
- <20251203040754.94487-3-j@getutm.app>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251203040754.94487-3-j@getutm.app>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <chao.liu@openatom.club>)
+ id 1vQzZh-0006Zu-48
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:00:09 -0500
+Received: from sg-1-18.ptr.blmpb.com ([118.26.132.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu@openatom.club>)
+ id 1vQzZc-0005U1-An
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 22:00:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=openatom-club.20200927.dkim.feishu.cn; t=1764817192;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=/eOfff8m1Bd0DAhvZvHE2jR3QGjvN5IX6hQR0UmLTOU=;
+ b=YSBl6zAb5Z4N7GJBMvnH9SNKQBi1VUA2bq8bnmn/l7b0RLUYjXMEnTmU+3hEq416otMmMC
+ yJlF77H6XkhBg9l1bJyme80DPj5BYEZoCzf5C0IGUOuYqz8eBcau2wkcU4SwHPRYLXyXI4
+ 80YuUL+vb45ErHZK2dsTVQ/IZrCS6MdsOvdq2uguV1BVbeXTNNjH8W5j4OU2E6oAlErzHv
+ qKsN/VeueJOdxLBzY21GqyW43blLKpqhWJNAmBBFkVu/TKTIr6OX/U4FMEORXSsM9NfUOH
+ g4LIB8ySWILqSlYGkX7eAFoGfUjAvsO/FMWRW1szEe57UxMRX9Vt7FV3cU69rQ==
+Content-Type: text/plain; charset=UTF-8
+Received: from [10.13.14.160] ([218.81.29.112]) by smtp.feishu.cn with ESMTPS;
+ Thu, 04 Dec 2025 10:59:49 +0800
+X-Lms-Return-Path: <lba+26930f926+2989eb+nongnu.org+chao.liu@openatom.club>
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+To: "Conor Dooley" <conor@kernel.org>, "Chao Liu" <chao.liu@zevorn.cn>
+Date: Thu, 4 Dec 2025 10:59:47 +0800
+User-Agent: Mozilla Thunderbird
+Cc: <richard.henderson@linaro.org>, <paolo.savini@embecosm.com>, 
+ <npiggin@gmail.com>, <ebiggers@kernel.org>, <dbarboza@ventanamicro.com>, 
+ <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>, 
+ <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, 
+ <qemu-devel@nongnu.org>, <hust-os-kernel-patches@googlegroups.com>
+From: "Chao Liu" <chao.liu@openatom.club>
+References: <cover.1764493931.git.chao.liu@zevorn.cn>
+ <c27edc69ea6642f645d5e194bd5d4cd71e812841.1764493931.git.chao.liu@zevorn.cn>
+ <20251203-squiggle-gentile-f27af704359e@spud>
+ <20251203-huskiness-manhandle-6925834ee8f0@spud>
+X-Original-From: Chao Liu <chao.liu@openatom.club>
+In-Reply-To: <20251203-huskiness-manhandle-6925834ee8f0@spud>
+Subject: Re: [PATCH v1 1/5] target/riscv: add thead-c908 cpu support
+Message-Id: <20499d8c-cc75-4354-9eee-4d2e7023bd4c@openatom.club>
+Mime-Version: 1.0
+Received-SPF: pass client-ip=118.26.132.18;
+ envelope-from=chao.liu@openatom.club; helo=sg-1-18.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,50 +77,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/12/03 13:07, Joelle van Dyne wrote:
-> Currently if a mapping is not page aligned, it will sliently fail and the
-> guest, assuming it is mapped, will attempt to access the memory and fail.
-> This is particularly an issue on macOS when the host page size is 16KiB and
-> the guest page size is 4KiB.
-
-It should work. If I understand correctly, tcg doesn't care the host 
-page size. hvf will not call hv_vm_map() for misaligned regions and that 
-causes Data Abort, but it is handled by QEMU to perform memory access. I 
-think it needs more debugging.
-
-Regards,
-Akihiko Odaki
-
+On 12/4/2025 1:13 AM, Conor Dooley wrote:
+> On Wed, Dec 03, 2025 at 05:12:37PM +0000, Conor Dooley wrote:
+>> On Sun, Nov 30, 2025 at 05:21:06PM +0800, Chao Liu wrote:
+>>> The C908 processor is based on the RV64GCB[V] instruction
+>>> set, compatible to RVA22 Profile and implements the XIE
+>>> (XuanTie Instruction Extension) technology.
+>>>
+>>> Signed-off-by: Chao Liu <chao.liu@zevorn.cn>
+>>> Suggested-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+>>> ---
+>>>  target/riscv/cpu-qom.h |   2 +
+>>>  target/riscv/cpu.c     |  43 +++++
+>>>  target/riscv/th_csr.c  | 380 ++++++++++++++++++++++++++++++++++++++++-
+>>>  3 files changed, 424 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+>>> index 75f4e43408..1ddb5a6a6c 100644
+>>> --- a/target/riscv/cpu-qom.h
+>>> +++ b/target/riscv/cpu-qom.h
+>>> @@ -52,6 +52,8 @@
+>>>  #define TYPE_RISCV_CPU_SIFIVE_U34       RISCV_CPU_TYPE_NAME("sifive-u34")
+>>>  #define TYPE_RISCV_CPU_SIFIVE_U54       RISCV_CPU_TYPE_NAME("sifive-u54")
+>>>  #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906")
+>>> +#define TYPE_RISCV_CPU_THEAD_C908       RISCV_CPU_TYPE_NAME("thead-c908")
+>>> +#define TYPE_RISCV_CPU_THEAD_C908V      RISCV_CPU_TYPE_NAME("thead-c908v")
+>>>  #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
+>>>  #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
+>>>  #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
+>>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>>> index d055ddf462..202ff130ee 100644
+>>> --- a/target/riscv/cpu.c
+>>> +++ b/target/riscv/cpu.c
+>>> @@ -3091,6 +3091,49 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>>>  #endif
+>>>      ),
+>>>  
+>>> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908, TYPE_RISCV_VENDOR_CPU,
+>>> +        .misa_mxl_max = MXL_RV64,
+>>> +        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
+>>> +        .priv_spec = PRIV_VERSION_1_12_0,
+>>> +
+>>> +        /* ISA extensions */
+>>> +        .cfg.ext_xtheadba = true,
+>>> +        .cfg.ext_xtheadbb = true,
+>>> +        .cfg.ext_xtheadbs = true,
+>>> +        .cfg.ext_xtheadcmo = true,
+>>> +        .cfg.ext_xtheadcondmov = true,
+>>> +        .cfg.ext_xtheadmac = true,
+>>> +        .cfg.ext_xtheadmemidx = true,
+>>> +        .cfg.ext_xtheadmempair = true,
+>>> +        .cfg.ext_xtheadsync = true,
+>>> +        .cfg.ext_zba = true,
+>>> +        .cfg.ext_zbb = true,
+>>> +        .cfg.ext_zbc = true,
+>>> +        .cfg.ext_zbs = true,
+>>> +        .cfg.ext_zkt = true,
+>>> +        .cfg.ext_zbkc = true,
+>>> +        .cfg.ext_zicsr = true,
+>>> +        .cfg.ext_zifencei = true,
+>>> +        .cfg.ext_zihintpause = true,
+>>> +        .cfg.ext_zicbom = true,
+>>> +        .cfg.ext_zicboz = true,
+>>> +        .cfg.ext_zfh = true,
+>>> +        .cfg.ext_xtheadfmv = true,
+>>> +        .cfg.ext_xtheadfmemidx = true,
+>>> +        .cfg.pmp = true,
+>>
+>> I think Svpbmt is missing here, both it and the T-Head MAEE stuff are
+>> supported on the k230. What I will end up merging into mainline for the
 > 
-> Signed-off-by: Joelle van Dyne <j@getutm.app>
-> ---
->   hw/display/virtio-gpu-virgl.c | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
+> Whoops, should have specified that I meant the mainline linux kernel.
 > 
-> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-> index 20c856c04e..adf02ac22b 100644
-> --- a/hw/display/virtio-gpu-virgl.c
-> +++ b/hw/display/virtio-gpu-virgl.c
-> @@ -116,6 +116,20 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
->           return ret;
->       }
->   
-> +    if (!QEMU_IS_ALIGNED((uintptr_t)data, qemu_real_host_page_size())) {
-> +        virgl_renderer_resource_unmap(res->base.resource_id);
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: address %p is not aligned to page size\n",
-> +                      __func__, data);
-> +        return -ENOMEM;
-> +    }
-> +
-> +    if (!QEMU_IS_ALIGNED(size, qemu_real_host_page_size())) {
-> +        virgl_renderer_resource_unmap(res->base.resource_id);
-> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: size 0x%llx is not aligned to page size\n",
-> +                      __func__, size);
-> +        return -ENOMEM;
-> +    }
-> +
->       vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
->       vmr->g = g;
->   
+You're right, I will enable the Svpbmt extension in PATCH v2.
 
+Thanks,
+Chao
+>> k230 uses Svpbmt instead of MAEE.
+> 
 
