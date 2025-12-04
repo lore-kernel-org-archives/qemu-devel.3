@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2618FD1D89F
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 09:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82035D1F9A1
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 09:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR5ka-0001Xe-7H; Thu, 04 Dec 2025 04:35:48 -0500
+	id 1vR5kO-0001Ks-Bm; Thu, 04 Dec 2025 04:35:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vR5k3-00019W-1c
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 04:35:15 -0500
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1vR5jz-000187-Tt
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 04:35:13 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vR5jy-0003Nk-FW
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 04:35:12 -0500
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-647a44f6dcaso866083a12.3
- for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 01:35:08 -0800 (PST)
+ id 1vR5jv-0003Mm-JK
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 04:35:10 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-640a0812658so1211833a12.0
+ for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 01:35:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1764840907; x=1765445707; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=k2Eh0GOKOaei3jLJLhPOl4V4bK4+Eil0n0H9DTtEdt4=;
- b=NoyaK38g7NijisNn5NaWqYhx83V7QFdCkCBGJf9Ar0IpZO1e6rBOMG9p46MoLbU9LR
- Spezd/D5Obmaa6RPiCbDREm81RTkLxHttp6pD/1EqGqBlW2o2HtroVzkiNBGndc6d22i
- DH2qK5iMZ9eShEcg2j6secaS79aAwmoSBHgsbXjBThSsGLsmUvdmeZCHu8/YjMibVh/X
- yXYO5tj5h5aD9AimU7+BeSpBOdPIQ5PhjclWtMwswZOG+WIk+HefYUFIag24MgtkDaCq
- DyZ5hU/ubC/UfVTbDQEep6F7I8dpcEDiBhkIb/BRAXoJoMbTofgEqVJbcur++jRhQGie
- ln3g==
+ d=gmail.com; s=20230601; t=1764840904; x=1765445704; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=EqXB20e2lB1n4B/l+2XeP0j/2vhshqy0w7MeGRh9Fl8=;
+ b=TyIi2G8VJxOPSCjGGxyI5K4EoGOWy1KMevji/IfSWCVA5t+EnnrMQlkQW3lp+60NVA
+ XdynBm17U/YIY0MKb96UKcdHyoXrW+DXmFUx/9ABYBIewEKvb1p0mfXTp0pwqYRPLoPt
+ b/cbn6wt4DK2a+OX6Q7lT+Dzt+W/Unt5hG2afqgjoYCT8A06YVu3e7xEbVSfCzsGRUTf
+ GkD+3JeGn516BQW2u4ndkyl1GQRriNWX+CWk8qySGvC0YvvL5zdrICp+mAVo1DmjVo9d
+ 6c3S8R9FCgluaRVi5n+C0e/RR6YpOQrH7rXMXx8oOK+BMJuLEKK5AkqmvnmS1bSHPeC9
+ VEhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764840907; x=1765445707;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=k2Eh0GOKOaei3jLJLhPOl4V4bK4+Eil0n0H9DTtEdt4=;
- b=YiAMO8t55k56OMzg8PNSnTZOT6RhHmrvP6npVddWFNN4WSJhHMXiWqvtwyAcBiwEfw
- FgL8k5tsMBT+0OhxcTEvmuW1s8q7tjrTpBjK1AK6eiV45RjFNPQOWyatZPzbg5i9Vjf1
- GWDZYEXxtoV0o5KACQOg7zP1g+eRzvMYWsrwH0aiOT/DeFGOppzArtPpS6aNud+MIh8S
- uHPdK4BQwhIpMlGGjbqLFdYrn8fuqxbkb+L8SGtxh17xUvfOLkpJlpS4fPBkzEyp3awn
- biLxk8AKgH2uwJhh+bETfOyx05bHH48cR8V2pYXYVapzE1r0OXBFZf6yIgANy1BUIGTw
- y7ww==
-X-Gm-Message-State: AOJu0YyUy0l3o27LtzZZjunfzJVXr3abqgHkzkBDpzCUWEq5qpoRX1hS
- N8pQdXW7ib78rOhHQ/bu51rS2qu9F/zeRURZ+u7+j2hCJggv4Qo+JJRUVJGjLOCV
-X-Gm-Gg: ASbGncsAYBeLXwLKZD9WgEn7NhhH+Fdggjk9V6aZu8QALO82hLoiIUuHksaHvzu4NhS
- +tw7SrmIUSe3RRW1F0Uxn0zYoubMRguU/KSs7/LUQKN/GHi12ZtRHtbJ/jkDcNYW+HNGrIXO80e
- GmubNbU4u7CzMEh0MAgByNdxWn7Hi3tBxcq1Z/T9EciB1h3IHImsfLZ6J5NkQeF9xRp7tdf5JLy
- gkyb9lBFopnAOqqnZK22l1xm7ZEUp+ercd71NKU+tbgjLYGJAUAvYELpO87xjC5O/q8ZAQjQJo0
- 7HTHiOJBPFjWFXl686MpOEUxLg89f+LyU5JN8e+mchr/L0iEP7UfUpCPnY1q+KeyinJtmpq7GCX
- ZbLqm3HHxISf6Ws6E5U3lvFATpjzgVpvrRvyg2ckIwD2YkjPwDw9ucK4COroSknHLI+4JbJZA5t
- D5x1OhP4+gYxdegMeeMYIVIqQTY/lsc/zss067dVSrlA==
-X-Google-Smtp-Source: AGHT+IF13y7SN0Xslm4FgKr1E+BJcTBCa78t0jTJJ/ykK0Utu/E8iv3jeeP98vM7SkBC4ef8CkFPvQ==
-X-Received: by 2002:a05:6402:2351:b0:645:c99e:5e50 with SMTP id
- 4fb4d7f45d1cf-6479c4e710emr5278854a12.16.1764840906809; 
- Thu, 04 Dec 2025 01:35:06 -0800 (PST)
+ d=1e100.net; s=20230601; t=1764840904; x=1765445704;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EqXB20e2lB1n4B/l+2XeP0j/2vhshqy0w7MeGRh9Fl8=;
+ b=LUh1JJJ+kdyznHqvLPwFDvaNJ5jqmW4yvNegVfnU36935/axNAxwTafRYexxuC3z3q
+ IsxyNCIJU/3rPMXOvcvOXxrho/KSuvFzYb+ow4gRZQ7a/ApKRDCojgqsiv0s6LIU3ShP
+ Y4CFYT2KvN/L8a5yMXoRZey1F+fSnxr7eaLAIXEwUjdC8Jl4Jk0L65GTgQhX8OBWE6Nh
+ +KeMRK/qrRTHTe4J3NgfZ3UDEW5DvMQtAepWylsQT+hJRJBjb88+l/MoUrJS8ha4odhc
+ 5guCpBoVX+v+nYaDJvwZ8+iVX7QuAMzvEPZMAL3PusbKlMt0tSZ56NkCGkL9OhUb8sW2
+ /KMg==
+X-Gm-Message-State: AOJu0YypnOS+E9Imj8L9tIO+F9wKvPZ0YfuS6Ud7mjj1kRrgrEC3XHgn
+ BQvtEcsLaKSTAMrXWyi/oGP80OYov/GXSwBpbPz4kK5rxGYA5M1mSpeOOp0k4Gay
+X-Gm-Gg: ASbGncuUBkqwNgnclkL4DAdwypbY9rtE2pytIvV6dijBRjDu3c2wzQvSu99cuFmZ6iV
+ IHqmUseMTJ76mvie44VZUlw0Qv/8fNWQCoz6VAOFIwSuWz4K6piCh0lZlzpD1p0GoF3vZRmL1Ez
+ sE6mGzvAOtHJ+EGcVTs6F9gOUWek0ap3Yix7OexPKLSBIPgCoBge6l0geclmDBEb2i4d8u3flh+
+ d2aqpPKD0SrO2/jtt7AAYrQuF75SZhHO/YP/x6QAGNuNtpNc5eIlBF2ohNxBIrwdEZueTgFmL/W
+ lmrVr5V5EOqDYmHPrQwutMIyt5KzWtQx9JULm1YSrDmyd39IVDgWxuF45Xz/Aadv3/q4fOXAEpT
+ 8ZFGjq8d8W2/oEFNh5NRpraUNMCjFK7OoevJXae56fwLyFIQObKQJ1rDBSaSDiHLrt6kNejYRmv
+ 57tlZt/O174JQKY/A7CycuFqEYSBsoTbw=
+X-Google-Smtp-Source: AGHT+IFXJPAsiSg1t3VMpgzmtqC9Z6hzPe6Xl1uRYNo6+QzxfVHcLvJKMImj2WZNoeWpUgq1SATHXQ==
+X-Received: by 2002:a05:6402:2790:b0:647:6ec9:8d8b with SMTP id
+ 4fb4d7f45d1cf-647abe05e9fmr2019788a12.34.1764840903658; 
+ Thu, 04 Dec 2025 01:35:03 -0800 (PST)
 Received: from PC-DA2D10.beckhoff.com ([195.226.174.194])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-647b2edf72asm856573a12.11.2025.12.04.01.35.06
+ 4fb4d7f45d1cf-647b2edf72asm856573a12.11.2025.12.04.01.35.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Dec 2025 01:35:06 -0800 (PST)
+ Thu, 04 Dec 2025 01:35:03 -0800 (PST)
 From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
@@ -74,20 +73,16 @@ Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  qemu-block@nongnu.org,
  =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
  Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
- YannickV <Y.Vossen@beckhoff.com>,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-Subject: [PATCH v5 03/15] hw/dma/zynq-devcfg: Handle bitstream loading via DMA
- to 0xffffffff
-Date: Thu,  4 Dec 2025 10:34:50 +0100
-Message-ID: <20251204093502.50582-4-corvin.koehne@gmail.com>
+ =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>
+Subject: [PATCH v5 00/15] hw/arm: add Beckhoff CX7200 board
+Date: Thu,  4 Dec 2025 10:34:47 +0100
+Message-ID: <20251204093502.50582-1-corvin.koehne@gmail.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251204093502.50582-1-corvin.koehne@gmail.com>
-References: <20251204093502.50582-1-corvin.koehne@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=corvin.koehne@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,49 +105,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
+From: Corvin Köhne <c.koehne@beckhoff.com>
 
-A DMA transfer to destination address `0xffffffff` should trigger a
-bitstream load via the PCAP interface. Currently, this case is not
-intercepted, causing loaders to enter an infinite loop when polling
-the status register.
+Hi,
 
-This commit adds a check for `0xffffffff` as the destination address.
-If detected, the relevant status register bits (`DMA_DONE`,
-`DMA_P_DONE`, and `PCFG_DONE`) are set to indicate a successful
-bitstream load. If the address is different, the DMA transfer proceeds
-as usual. A successful load is indicated but nothing is actually
-done. Guests relying on FPGA functions are still known to fail.
+Beckhoff has build a board, called CX7200, based on the Xilinx Zynq A9
+platform. This commit series adds the Beckhoff CX7200 as new board variant to
+QEMU.
 
-This feature is required for the integration of the Beckhoff
-CX7200 model.
+The emulation is able to successfully boot an CX7200 image. The image includes
+some self tests executed on every boot. Only the cache self test fails due to
+QEMU emulating the cache as always being coherent. The self tests include f.e.:
 
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- hw/dma/xlnx-zynq-devcfg.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+* Network
+* Flash
+* CCAT DMA + EEPROM [1]
+* TwinCAT (Beckhoff's automation control software [2])
 
-diff --git a/hw/dma/xlnx-zynq-devcfg.c b/hw/dma/xlnx-zynq-devcfg.c
-index 8141d46033..2430d70bf7 100644
---- a/hw/dma/xlnx-zynq-devcfg.c
-+++ b/hw/dma/xlnx-zynq-devcfg.c
-@@ -247,7 +247,14 @@ static uint64_t r_lock_pre_write(RegisterInfo *reg, uint64_t val)
- static void r_dma_dst_len_post_write(RegisterInfo *reg, uint64_t val)
- {
-     XlnxZynqDevcfg *s = XLNX_ZYNQ_DEVCFG(reg->opaque);
--
-+    if ((s->regs[R_DMA_DST_ADDR]) == 0xffffffff) {
-+        DB_PRINT("bitstream loading detected\n");
-+        s->regs[R_INT_STS] |= R_INT_STS_DMA_DONE_MASK |
-+                                R_INT_STS_DMA_P_DONE_MASK |
-+                                R_INT_STS_PCFG_DONE_MASK;
-+        xlnx_zynq_devcfg_update_ixr(s);
-+        return;
-+    }
-     s->dma_cmd_fifo[s->dma_cmd_fifo_num] = (XlnxZynqDevcfgDMACmd) {
-             .src_addr = s->regs[R_DMA_SRC_ADDR] & ~0x3UL,
-             .dest_addr = s->regs[R_DMA_DST_ADDR] & ~0x3UL,
+[1] https://github.com/beckhoff/ccat
+[2] https://www.beckhoff.com/en-us/products/automation/
+
+YannickV (15):
+  hw/timer: Make frequency configurable
+  hw/timer: Make PERIPHCLK divider configurable
+  hw/dma/zynq-devcfg: Handle bitstream loading via DMA to 0xffffffff
+  hw/arm/zynq-devcfg: Prevent unintended unlock during initialization
+  hw/dma/zynq: Ensure PCFG_DONE bit remains set to indicate PL is in
+    user mode
+  hw/dma/zynq-devcfg: Simulate dummy PL reset
+  hw/dma/zynq-devcfg: Indicate power-up status of PL
+  hw/misc: Add dummy ZYNQ DDR controller
+  hw/misc/zynq_slcr: Add logic for DCI configuration
+  hw/misc: Add Beckhoff CCAT device
+  hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
+  hw/arm/xilinx_zynq: Split xilinx_zynq into header and implementation
+    files
+  hw/arm/xilinx_zynq: Add flash-type property
+  hw/arm: Add new machine based on xilinx-zynq-a9 for Beckhoff CX7200
+  docs/system/arm: Add support for Beckhoff CX7200
+
+ docs/system/arm/beckhoff-cx7200.rst |  57 ++++
+ docs/system/target-arm.rst          |   1 +
+ hw/arm/Kconfig                      |   7 +
+ hw/arm/beckhoff_CX7200.c            | 104 +++++++
+ hw/arm/meson.build                  |   1 +
+ hw/arm/xilinx_zynq.c                |  54 ++--
+ hw/block/m25p80.c                   |   3 +-
+ hw/dma/xlnx-zynq-devcfg.c           |  27 +-
+ hw/misc/Kconfig                     |   6 +
+ hw/misc/beckhoff_ccat.c             | 339 +++++++++++++++++++++++
+ hw/misc/meson.build                 |   2 +
+ hw/misc/xlnx-zynq-ddrc.c            | 413 ++++++++++++++++++++++++++++
+ hw/misc/zynq_slcr.c                 |  31 +++
+ hw/timer/a9gtimer.c                 |  26 +-
+ hw/timer/arm_mptimer.c              |  32 ++-
+ include/hw/arm/xilinx_zynq.h        |  37 +++
+ include/hw/misc/xlnx-zynq-ddrc.h    | 148 ++++++++++
+ include/hw/timer/a9gtimer.h         |   2 +
+ include/hw/timer/arm_mptimer.h      |   4 +
+ 19 files changed, 1263 insertions(+), 31 deletions(-)
+ create mode 100644 docs/system/arm/beckhoff-cx7200.rst
+ create mode 100644 hw/arm/beckhoff_CX7200.c
+ create mode 100644 hw/misc/beckhoff_ccat.c
+ create mode 100644 hw/misc/xlnx-zynq-ddrc.c
+ create mode 100644 include/hw/arm/xilinx_zynq.h
+ create mode 100644 include/hw/misc/xlnx-zynq-ddrc.h
+
 -- 
 2.47.3
 
