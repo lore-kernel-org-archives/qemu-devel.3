@@ -4,95 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F5AD1CDBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 02:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13912D1CDB9
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 02:18:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vQyep-0000rG-H9; Wed, 03 Dec 2025 21:01:23 -0500
+	id 1vQyu7-0004dA-4B; Wed, 03 Dec 2025 21:17:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vQyeh-0000km-7g; Wed, 03 Dec 2025 21:01:16 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vQytx-0004bi-Ei
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 21:17:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vQyec-0002Jy-RJ; Wed, 03 Dec 2025 21:01:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=orFCOcjalNPM6YdLq+ud4NwpphC3DsEhRiCD/tlSYBw=; b=ZFyIYWBHo51sQ8r2cu+ZAAxP2O
- WC6/JrLLwUNeVAQzxT+fqh+lnglkKn88+9Qbyzzd1C7s+P5f24HhsI0CX2wDaOA9+N/Pbbh6h2wig
- sOhTtqDRFXqJsRQGeH2YeFWLbt2wUM5Jz54e1ovXXv1HaT004obNokb8dxtICpFEOdcel5kFdVQ/k
- t9CT8WeKLETW2PRO/dcZbhVP1zUVQK+bGvsCEyTmwedVCQuydVkwC+TqCiu+PQz4uwzyXFqwgXthl
- rnDod9lnEHOClPAhP/BmSbFJDF+1x5Cd2yf0WtlbDp4MBDpay7gLLW8Z0oXnpp6Y9NQU4XfcOXYc/
- 4/Z4pHhYPkdsJHVf0JzLOo0wttkNOGVIE67DwC204w/rNX7q53Is4WYEqITe9iJceYoGfSakQCUSi
- 1QkQxpXNxtGvXK1vFa6Z7inVEYlN7KDRXUh87ARPkg68Xd6yNW0CxACXgicEX9ZFAhOkd72ua4oUo
- wilorfOqDGQvQvh3ITd5C6QBuOlvuhdOhie9mIqmhUu1MzkPROSGcet+ow9eSt2CLp3ohVQvk2TUx
- nsUbKQL3AjoccB036AOwO/5bXqC8NKf8Q8hJE/NrTCdfEdpU2R65bi05llyNIFZALsKm54IWYNxzR
- BYd23dIXEx6gw1jvCMD+LkeyCoIE/o2nBvVjwMFZo=;
-Received: from [2a02:8012:2f01:0:4dd9:a8dd:82fe:37f5]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vQyc7-0008pP-6h; Thu, 04 Dec 2025 01:58:35 +0000
-Message-ID: <c03820b8-7745-4b8e-8e69-a37c872257f8@ilande.co.uk>
-Date: Thu, 4 Dec 2025 02:01:00 +0000
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vQytu-0006Ur-Fh
+ for qemu-devel@nongnu.org; Wed, 03 Dec 2025 21:17:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764814616;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zLT6q4nDLq8QkE9rC9QYBbZwwguZJcYR87+y25eQilA=;
+ b=Ig4Vcu3ddGEIR/7cFraRNy7u7HlNbkM5dFPw3dkZ8wQvX5NUWPTSuuwcNkczTrIZ5q84Hg
+ n3r4sbyaOZyLctLWbfOAQdT7F0pJx70u1mvpI6a0g2LJ8ws9GoJCvKXfTwoc0Q/Fsv+vui
+ oFK8bwW/UE0QWhDUV1b3RTyuDHDbD5A=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-313-sOJJe93BPOK16ZsHBJIqAQ-1; Wed, 03 Dec 2025 21:16:54 -0500
+X-MC-Unique: sOJJe93BPOK16ZsHBJIqAQ-1
+X-Mimecast-MFC-AGG-ID: sOJJe93BPOK16ZsHBJIqAQ_1764814613
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-340d3b1baafso559746a91.3
+ for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 18:16:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1764814613; x=1765419413; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zLT6q4nDLq8QkE9rC9QYBbZwwguZJcYR87+y25eQilA=;
+ b=MK+3wm5iQPn2Lj4UPkl8LJ7fT95SZqtpi4CQ9tRK+7ZU/zwV5CqBYHkEqMyH+Gtftr
+ ANCAxE8IgXeoIHM/jiGCV85hthOw8dcm4yCelHFrF1SZcDW6ORp61kNKI1/LjJ1MyevV
+ cd84A0t0IFWhclctLMaVvbvpTb0dr9D9I0eS6C+eG4A5wennDw4cSQXRMVMcqQdChuf2
+ G77QcsIFiFFoOibHyH4s+thwq8mFPvc0MdQYHi7kNs1ZBm2hhoZbjhJyXFA3QuhADD9D
+ L+FLqWmEXiaAQHvbfRf+6dl2bZm6yEgBo0k050+uztGZf9VO2xrqFQlRs3cNTtJSLxo3
+ fZbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764814613; x=1765419413;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zLT6q4nDLq8QkE9rC9QYBbZwwguZJcYR87+y25eQilA=;
+ b=QPY4ihTMjyeNVUo0D7xU/ciC2AUTNPUY6wM5dj3CzNSw08RLWvz6SczY96An8M1lxc
+ e0rUwCf3aDWFWEI8gTyxTKLT8+8uWn3at0k+RzaqZdbnrvIp9zbsWNB9yxjvWMqhGpqy
+ 9Jip48R8dwFI/aCfUbjFWoLe+VWefQj2CYe1e0kCRzlBs1naD0iIVpv7y5mDFNZZaITG
+ bsMhABt6u3Fmj8Fz1fsCVX2xBxMXaKjRsdVbCuoNBDO7I5vB5IrMGVMTuMoY6u2eD5Ic
+ F6xvzLR69uXk5Kl4djulJHoDgqBEZexzX00SBsElrMjhsj65053ZmF8thDHjMGAFGCgx
+ mT6A==
+X-Gm-Message-State: AOJu0YwhktrLevwwRr/BMuII9ixm/Up5HTX8aQki5OPr1jdzY3KEYZ7e
+ ZpxnZNDYCaJshty512YfdaqDFkb/E+2k1BoKhv/+heoIZjY4Rc6qtZiqb3jUz43H5rZUmTpdU4o
+ gQn6IejNrfaeF7pXh9V/kJu8Om/7JnMzHZIvr5vBsDxqIlND0NcJMKhkbpPcgvzWvpGvXWgente
+ jQslP9PXc/oNyyvt/Awr+6PeYciBk5M1o=
+X-Gm-Gg: ASbGncsvinDgY2F+hnmhUN6bNz8jVroRwHkhjh/wfbwJ5xvjqtxjZ2KgPTiKSmbf3dU
+ XMaNP6J37ogp6VgIM+CYd3bzf4DM0e9qsQFXxSUsJ2qzDXcncM1CNS1ca1owYETGkVEjo95aLn+
+ FW2B5L+rHNyqS5tRmMa/Fc+c3uQl58gSC2gejFRwVOQ/7ckaBf241aO2X4y0ksL39rEXg=
+X-Received: by 2002:a17:90b:5403:b0:340:2a59:45c6 with SMTP id
+ 98e67ed59e1d1-349126df0e5mr4705228a91.4.1764814613351; 
+ Wed, 03 Dec 2025 18:16:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGzTRvYKPP6FpBlPSvWSG2wvpEJ0j+vzvQYhj1+KZ3RS5MlKr6Q9eg046zn51xgVu2bLqyaJc1MYng2qbHeYtw=
+X-Received: by 2002:a17:90b:5403:b0:340:2a59:45c6 with SMTP id
+ 98e67ed59e1d1-349126df0e5mr4705206a91.4.1764814612972; Wed, 03 Dec 2025
+ 18:16:52 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>
-References: <20251203060942.57851-1-philmd@linaro.org>
- <20251203060942.57851-9-philmd@linaro.org> <aTBccn2LIv7puGzR@intel.com>
- <05f92a77-7587-4441-a252-01e4705a6892@linaro.org>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <05f92a77-7587-4441-a252-01e4705a6892@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:4dd9:a8dd:82fe:37f5
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH-for-11.0 v6 08/13] hw/sparc64/sun4u: Use
- fw_cfg_init_io_nodma()
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+References: <20251201125149.2151026-1-eperezma@redhat.com>
+In-Reply-To: <20251201125149.2151026-1-eperezma@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Thu, 4 Dec 2025 10:16:39 +0800
+X-Gm-Features: AWmQ_bmxPq7iCKcLD9tkDW3-FxECTj2SFOoXJKnK9l7MxRJGrG0SgiuoUPaIheY
+Message-ID: <CACGkMEvvr4jVqtj93ktOXB5xLDzaoCYvgChcxTwLfdArFFadBQ@mail.gmail.com>
+Subject: Re: [PATCH] vhost: accept indirect descriptors in shadow virtqueue
+To: =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,50 +115,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/12/2025 17:14, Philippe Mathieu-Daudé wrote:
+On Mon, Dec 1, 2025 at 8:51=E2=80=AFPM Eugenio P=C3=A9rez <eperezma@redhat.=
+com> wrote:
+>
+> The device is not able to generate indirect descriptors by itself, only
+> the driver can do it.  And SVQ is already able to handle them by reusing
+> VirtQueue struct.
+>
+> Shadow VirtQueue just transform the indirect descriptors to chained
+> buffers.  This way we don't need to map a new buffer for the indirect
+> table and handle its exhaustion etc.  As they are only used in control
+> plane and HW devices don't like indirect, we should not see significant
+> downsides with these.
+>
+> Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> --
+>
 
-> On 3/12/25 16:51, Zhao Liu wrote:
->> Hi Philippe,
->>
->>> diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
->>> index 82c3e7c855b..6dc9f64b74d 100644
->>> --- a/hw/sparc64/sun4u.c
->>> +++ b/hw/sparc64/sun4u.c
->>> @@ -683,14 +683,7 @@ static void sun4uv_init(MemoryRegion *address_space_mem,
->>>                              graphic_width, graphic_height, graphic_depth,
->>>                              (uint8_t *)&macaddr);
->>> -    dev = qdev_new(TYPE_FW_CFG_IO);
->>> -    qdev_prop_set_bit(dev, "dma_enabled", false);
->>> -    object_property_add_child(OBJECT(ebus), TYPE_FW_CFG, OBJECT(dev));
->>
->> There's another difference: fw_cfg_init_io_nodma() uses `machine` as the
->> parent and here sun4uv uses `ebus`.
-> 
-> Ah yeah I wanted to comment it but forgot :facepalm:
-> 
->>
->> I think maybe one reason to use `ebus` is because...
->>
->>> -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>> -    memory_region_add_subregion(pci_address_space_io(ebus), BIOS_CFG_IOPORT,
->>                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^
->> ... because the parent region is managed by ebus.
->>
->> Perhaps we should add another argument: Object *parent?
-> 
-> I thought about it but don't think so, all instances but this one use
-> the machine container.
-> 
-> I'll improve the description.
+Acked-by: Jason Wang <jasowang@redhat.com>
 
-The reason that the fw_cfg device lives under ebus on sun4u is because the ebus 
-device is effectively a PCI-ISA bridge, and the fw_cfg port is mapped into I/O 
-address space along with other ISA devices. I'm not sure that setting the parent to 
-the machine is the right thing to do here.
-
-
-ATB,
-
-Mark.
+Thanks
 
 
