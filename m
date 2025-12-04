@@ -4,105 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F261D29FBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 19:46:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 239DAD2A521
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 19:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRFGy-0005G6-HM; Thu, 04 Dec 2025 14:45:52 -0500
+	id 1vRFKB-0006wL-8h; Thu, 04 Dec 2025 14:49:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter@pjd.dev>)
- id 1vRFGw-0005Er-Dt; Thu, 04 Dec 2025 14:45:50 -0500
-Received: from fout-b1-smtp.messagingengine.com ([202.12.124.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter@pjd.dev>)
- id 1vRFGu-00073s-4E; Thu, 04 Dec 2025 14:45:49 -0500
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfout.stl.internal (Postfix) with ESMTP id E4AB11D00166;
- Thu,  4 Dec 2025 14:45:44 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-05.internal (MEProxy); Thu, 04 Dec 2025 14:45:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjd.dev; h=cc:cc
- :content-transfer-encoding:content-type:content-type:date:date
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1764877544;
- x=1764963944; bh=qhIgUhDQcDTlfo1MknYhbh+kpXzL/E993d8Sf0Girwg=; b=
- aR24EWaVM4vu6IAU4jPmohqXNMS5CRjfP4vhx+wb0bdQomk4J+td/sAVIsd5scp2
- 5pYDwMMPapuDytXmhMebhOwZH44lrlAp0k/HWi5iksgEpxGkdCgFpv83GDS5fs0c
- wX3c41mo5iTZ2FlmE9OYWRM9ISUi3943hMW2h5ZmLJGruDwYBqXqBT7ouUfolP43
- m+e48nFHSVhD5UNVqXmaw1xY4z2EaTnils0ymeHHRTDXjEPaCXvOQPIt1J9emTRu
- ERLCt1+YLEdTNy6bWWknMCr9iFlCHDgmERlgiTHNmZo1QAfPZMtprnIu2Yat9Ieu
- MnodyliH1bizKaLMgO7PhQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764877544; x=
- 1764963944; bh=qhIgUhDQcDTlfo1MknYhbh+kpXzL/E993d8Sf0Girwg=; b=n
- wbpHm05CdVBeGII53I4Wcv/IH8PBX84bB41SOnTkpSK3nItkG2/E5QOXpZexWtdC
- yfQFMIgSPZV1WdoRd61cgwdG+90K6ok5QGyWifkWPx23SQMv2/iLymyojdyu2uQ+
- 9PnWAHW3sVMK5DtIvh6EazsGpidS0Dd3bAxvGmFFdG1Bm9vcS5FKPsLdE6swBSP7
- jqllBLlSC2SG4/HZ3vkHLFpZ5RGhDUHxC/RuzDuu6uydvsHoTCN0gSGrXnc3ogsH
- aK4pw4+x09PfRdD10LP80nOfw66wvAVG7vHEJBncM0te/JVpJX0DacbDG+Ywmssy
- 1tAIblEEnhY+ICWAaek0A==
-X-ME-Sender: <xms:5-QxabEmEkE6bVr9ax_jLpn0eVMyvyV3PnYNy1-GIl2dhoJV6msenA>
- <xme:5-QxaWkFIo-DrwyrpP2YXq0qYHlLXlsgwTqBIkL7bsnUtpjVq00w1TNxr5UcksIn_
- QMKXAfwHmEsvJv54vmdOPLJB9YT-o5i-ebbw2YstYXfGIqgqzfnDww>
-X-ME-Received: <xmr:5-QxaWfncoSRMhkWQ7Ks0gCVgw_W6vuAI7OZu_qA5mgw8wOcb5-KYoHHQ9Y1K6NSIR85A5Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeigeehucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
- lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
- eptgfghfggufffkfhfvegjvffosehtqhhmtdhhtdejnecuhfhrohhmpefrvghtvghrucff
- vghlvghvohhrhigrshcuoehpvghtvghrsehpjhgurdguvghvqeenucggtffrrghtthgvrh
- hnpeeuiedtvdejgfegfffgudetvddtueffueejffejgeelveeutddtveehfffhfeetieen
- ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpvghtvg
- hrsehpjhgurdguvghvpdhnsggprhgtphhtthhopeduuddpmhhouggvpehsmhhtphhouhht
- pdhrtghpthhtohepshhtvghvvghnpghlvggvsegrshhpvggvughtvggthhdrtghomhdprh
- gtphhtthhopegtlhhgsehrvgguhhgrthdrtghomhdprhgtphhtthhopehpvghtvghrrdhm
- rgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopegrnhgurhgvfiestghoug
- gvtghonhhsthhruhgtthdrtghomhdrrghupdhrtghpthhtohepqhgvmhhuqdgrrhhmsehn
- ohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurd
- horhhgpdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthho
- pehjohgvlhesjhhmshdrihgurdgruhdprhgtphhtthhopehlvggvthhrohihsehgmhgrih
- hlrdgtohhm
-X-ME-Proxy: <xmx:5-QxacHjqzxXH5AKWR-HKlqA6NzfLQ-vLnfaxygEGDs8F16TrVRr3g>
- <xmx:5-QxaUh6hmcl7ki43r6zE8c-2hxI3hpiEsL-q7WRW0YXvoe6EAFztA>
- <xmx:5-QxaY0rsM3polrB9rycbR3GWfR2D6OxQhXgxc-uV0YO4IxSehQFtw>
- <xmx:5-QxaXdycA9VWUjIBgptgHbgbAJl43i4l_j73T2c4K-R_Pc48PbUOg>
- <xmx:6OQxaV4TdcyApleFZxXWgmrnTpIjnWV-HIjTn2VIXO6TDAYMSWNzeXGw>
-Feedback-ID: i9e814621:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Dec 2025 14:45:43 -0500 (EST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Peter Delevoryas <peter@pjd.dev>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] aspeed: Deprecate the fby35 machine
-Date: Thu, 4 Dec 2025 11:45:31 -0800
-Message-Id: <2B4B594F-DFB1-4BD1-8FF3-8F74EB2EC52A@pjd.dev>
-References: <8f8fb825-891a-4c06-9676-4aa232cd4642@kaod.org>
-Cc: =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Maydell Peter <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8f8fb825-891a-4c06-9676-4aa232cd4642@kaod.org>
-To: =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-X-Mailer: iPhone Mail (23B85)
-Received-SPF: pass client-ip=202.12.124.144; envelope-from=peter@pjd.dev;
- helo=fout-b1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vRFK9-0006vS-Uu
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 14:49:09 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vRFK7-0007Ks-Na
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 14:49:09 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-477563e28a3so10628215e9.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 11:49:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764877746; x=1765482546; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1DGGN972COszVw0XgwjUe95FT8j0aUdcqd6miQIJWy4=;
+ b=Tg6Y57zSqIVuaQSyRDpmqUlRc9U9F2GC8jxoceipJgQm1cgfBfaHns4CKrfPuu+kws
+ Do/GxUz047v4HbTt48RaSbxSS5awrC/nRkVhmoH8pWGNBmqRyGVzz4DWTCaVV00Ry76t
+ GtqvMtWbIKpM0PRj+PG79lRJNmOy8ikgGrFifX/9PGqw1rli/jmKEBnxO/6rWQ7lR1hI
+ vLTjwq+01jCDaXAmTmT1ltSciHzsKC4q5WFOlzFe12gEUbTuR/fy+OBV2SpEZXV40LXI
+ apasJJdcNTd+eltxyLd0rvsHbyHs1fzvObJBj8MiF644ndd+3qmiqB80tKkdofq6Cnx7
+ f6Yw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764877746; x=1765482546;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1DGGN972COszVw0XgwjUe95FT8j0aUdcqd6miQIJWy4=;
+ b=C4SwUbz9+kJMGGIAL4T8PGcBLjQ8LVDlpFyvQiiUie8v/PSNj47Jm91JG1xVt0CwpA
+ 1O5SMssIsheLosJr1QPe04yiQdd/RhWbh/AG2NamqKt81stvv28A0gzJn+Gpi+SNgEdg
+ tW4JfhsMrrAYQNAbVvOX9/H7aLfh20g324kJgn7RpxRbEs12LCt348E/kDqsrZU0VN3T
+ ibaFyXbo9IzWYrAP0OSpo+dmXkFulrjtzHmg0Z5xDwpMY8WUoo4xjPTF/3UrmCm9o+8Z
+ EWvBpKqOkcNUVh2wpQFFnMzYpIq4+FVf2zO5pBfN8yIwzRtXlfvYnebQPxrdSVci/kkd
+ h79w==
+X-Gm-Message-State: AOJu0YyQMCsc22c8ilf459qFtr28whuR9qgPlJGeJuv36tPTY66DJiFK
+ epZ/MRnEXlse9P5OXi6UU42knz2wJNL4sBNfbtMrfFiBmFyjvxgdWozHNz4o5Zt69dU=
+X-Gm-Gg: ASbGncuN9x1ysNqMkcidNJbeqoSyu7QJZIcprgbGroEiyg7by3hNGHoGXhHAkwc7bfL
+ hpNtetlWH/jRzQqRKFkY1n8HmtOb2Mqoysy0azRksND9rmPQnf1IqCEA/vZN13/PWocrQKtNAL3
+ CiKIX/aZwgtrSOWAPIu1pNRVF2PVqajTGtuHzshB1emFR+2d3sPswfQH136gt6I6E+W+RBefTKF
+ FcTvwDprrTP8/yKfIXFrExEkYnN80aJPkYP0UvGH/y/qOdyCzPDKyu0v2vZE6FKB/IU+h+p+uLt
+ U9vl98h889i4Y4Ku7Cha0sfdGRWHi8544YPjtunk2HVV7RX4fQwaPy2cO8Sjd+gh/vylb/elqO3
+ 7bMOfApVoOy65uw7BTnxEkYTNXlVQF1k2Z+BOG5vtX0ypYdUy2rZso8ZMTRp/CvfyYvSZYIei2M
+ 1ocOdHMVzKD64=
+X-Google-Smtp-Source: AGHT+IFurzqHPekD+t4qf+2sW7hU2drF4k8ieyoKPzyxMEU3eNqA8rhmYcE8dfftpa1ZnK1aWosa7w==
+X-Received: by 2002:a05:600c:220c:b0:477:a53c:8ca1 with SMTP id
+ 5b1f17b1804b1-4792eb72df2mr34162845e9.14.1764877746192; 
+ Thu, 04 Dec 2025 11:49:06 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42f7d222491sm4976216f8f.22.2025.12.04.11.49.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Dec 2025 11:49:03 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E993D5F861;
+ Thu, 04 Dec 2025 19:49:02 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v2 03/11] tests/tcg: honour the available QEMU binaries when
+ running check-tcg
+Date: Thu,  4 Dec 2025 19:48:54 +0000
+Message-ID: <20251204194902.1340008-4-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251204194902.1340008-1-alex.bennee@linaro.org>
+References: <20251204194902.1340008-1-alex.bennee@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,42 +111,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Currently configure can identify all the targets that have
+cross-compilers available from the supplied target-list. By default
+this is the default_target_list which is all possible targets we can
+build.
 
+At the same time the target list passed to meson is filtered down
+depending on various factors including not building 64 bit targets on
+32 bit hosts. As a result make check-tcg will erroneously attempt to
+run tests for which we haven't built a QEMU.
 
-> On Dec 2, 2025, at 11:42=E2=80=AFPM, C=C3=A9dric Le Goater <clg@kaod.org> w=
-rote:
->=20
-> =EF=BB=BFHello,
->=20
->> On 11/26/25 11:24, C=C3=A9dric Le Goater wrote:
->> There are no functional tests for the 'fby35' machine which makes
->> harder to determine when something becomes deprecated or unused.
->> The 'fby35' machine was originally added as an example of a multi-SoC
->> system, with the expectation the models would evolve over time in an
->> heterogeneous system. This hasn't happened and no public firmware is
->> available to boot it. It can be replaced by the 'ast2700fc', another
->> multi-SoC machine based on the newer AST2700 SoCs which are excepted
->> to receive better support in the future.
->> Cc: Peter Delevoryas <peter@pjd.dev>
->> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
->=20
->=20
-> No objections ? If not, I will queue the deprecation for QEMU 10.2.
-> Since deprecation is tolerated in the -rc phase.
+Solve this by filtering the final list of TCG_TEST_TARGETS based on
+what actually was configured by meson. Rename the variable that
+configure spits out to TCG_TESTS_WITH_COMPILERS for clarity and to
+avoid larger churn in the Makefile.
 
-Oh hey, sorry I missed the original email, yeah no objections! Totally fair.=
- :) We=E2=80=99re not using this internally either, we=E2=80=99ve mostly end=
-ed up pursuing multi-process solutions. Even though I think single-process s=
-tuff is interesting, getting multi master i2c to work between socs in the sa=
-me process can be tricky.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ configure              | 6 +++---
+ tests/Makefile.include | 9 +++++++++
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-Thanks,
-Peter
-
->=20
-> Thanks,
->=20
-> C.
->=20
+diff --git a/configure b/configure
+index a2f66f7ff9c..82cace1bc95 100755
+--- a/configure
++++ b/configure
+@@ -1801,7 +1801,7 @@ if test "$plugins" = "yes" ; then
+ fi
+ echo "PYTHON=$python" >> tests/tcg/$config_host_mak
+ 
+-tcg_tests_targets=
++tcg_tests_with_compilers=
+ for target in $target_list; do
+   arch=${target%%-*}
+ 
+@@ -1852,12 +1852,12 @@ for target in $target_list; do
+       fi
+ 
+       echo "run-tcg-tests-$target: $qemu\$(EXESUF)" >> Makefile.prereqs
+-      tcg_tests_targets="$tcg_tests_targets $target"
++      tcg_tests_with_compilers="$tcg_tests_with_compilers $target"
+   fi
+ done
+ 
+ if test "$tcg" = "enabled"; then
+-    echo "TCG_TESTS_TARGETS=$tcg_tests_targets" >> $config_host_mak
++    echo "TCG_TESTS_WITH_COMPILERS=$tcg_tests_with_compilers" >> $config_host_mak
+ fi
+ 
+ if test "$skip_meson" = no; then
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index d4dfbf3716d..7728098981d 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -37,6 +37,15 @@ export SRC_PATH
+ 
+ SPEED = quick
+ 
++
++# TCG_TESTS_WITH_COMPILERS represents the test targets we have cross compiler
++# support for, CONFIGURED_TEST_TARGETS it what meson has finally
++# configured having rejected stuff we can't build.
++CONFIGURED_TCG_TARGETS=$(patsubst %-config-target.h, %, $(wildcard *-config-target.h))
++
++# This is the intersection of what tests we can build and is configured
++TCG_TESTS_TARGETS=$(filter $(CONFIGURED_TCG_TARGETS), $(TCG_TESTS_WITH_COMPILERS))
++
+ # Per guest TCG tests
+ BUILD_TCG_TARGET_RULES=$(patsubst %,build-tcg-tests-%, $(TCG_TESTS_TARGETS))
+ CLEAN_TCG_TARGET_RULES=$(patsubst %,clean-tcg-tests-%, $(TCG_TESTS_TARGETS))
+-- 
+2.47.3
 
 
