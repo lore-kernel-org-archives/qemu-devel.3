@@ -4,104 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884C9D1D899
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 08:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D86AD1D892
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 08:47:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR4vS-00086U-Bw; Thu, 04 Dec 2025 03:42:58 -0500
+	id 1vR4zI-0001Vu-9E; Thu, 04 Dec 2025 03:46:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vR4vQ-00081A-KH
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:42:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vR4vP-00075d-8T
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:42:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764837774;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EsGvHs1YS80jgVqbEAm8V4e3iVfaYSj/AVium/TnLZs=;
- b=AMnzRO/s73rdZZAJMoRwptUotj7/8YQKdZrDnFf/AalZJwuVigMgqKF7Wut/yeTDKZv9uA
- IcgvxJ35Ka4rPpwo1oraR8tIwrp/9AwLDUtvUZw1KnB77NtDSDj7lQ94USnppBM5leIKQ8
- i5qtT+S/C7Drwcip5p9m90XOs6DIg9o=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-417-NaG0wa3oOKmgf6_qFxoxFw-1; Thu, 04 Dec 2025 03:42:52 -0500
-X-MC-Unique: NaG0wa3oOKmgf6_qFxoxFw-1
-X-Mimecast-MFC-AGG-ID: NaG0wa3oOKmgf6_qFxoxFw_1764837772
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-787cf398a53so7927977b3.3
- for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 00:42:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vR4z8-0001Uq-FK
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:46:47 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vR4z6-0007ta-4e
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:46:46 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-47795f6f5c0so4210695e9.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 00:46:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764837772; x=1765442572; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EsGvHs1YS80jgVqbEAm8V4e3iVfaYSj/AVium/TnLZs=;
- b=RE55XunUKsDNxJCUnC9yjUj5SrRdgMg7nUhyKLTjVq9uHpBGX1oqvYk4clZ06bh0Ow
- u1lavuveBnEolZw8sXdQRZgqL5n1UdwQ1lGGr7MEx78rngPg0pMhs+4j9/zJaaOK609y
- 90hEUn4E9ZVOqUZ+dGh1PGN4XCxWJ65NwpYMcu1ueLh3suNauN11MBAsNLm1mZPK2QZt
- FoqLJZk1y9yOq+wDlPVkJwodjbfDO66E/cd6vCzEo1rPfUBEa9ntQV+XIexJIyIWCEVb
- MuK2FdG7n0XuEVYzWzlV7VJJ7uHZYhZ0BcCFJ+xzexkKedoPz/wP1NUz/1YHsy1Wv5Fu
- hA1A==
+ d=linaro.org; s=google; t=1764838001; x=1765442801; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=byC/O7uvQ3QfQ+BYrKViM2qHfaZmZPPE131X2B71AS4=;
+ b=ZIyj3IB4TPHG/oTxtKE0LRXtMncw+vA7ZOceJKD2i/05MNNe7TX2WLAd12xGBuGBis
+ bvbyy0upuqXHMJG3Ci0uLkNpSVj82Ual5BtzJu1dIuCdMmfxgTnKUKi4HGmIhfx293rl
+ QSjT3SSeft2EJwLvulcfsXpSV8dMrXgt4L1ben4i8lROoZ3phw5bF0QR37/NNBE0DXeS
+ 8+GHzWMk+bH70Frd9gseEknDjgYH3UFxU/fvk2n9nl9dCIRysyHafeXGm2vLtCtW+rZ+
+ HSAdS5Mo+wFaoL2qwqy5bHW4UOAaAZivQbT9A2AydDUF2C6kZPJwqoSyLaeAH8SkHWrg
+ 4czA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764837772; x=1765442572;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=EsGvHs1YS80jgVqbEAm8V4e3iVfaYSj/AVium/TnLZs=;
- b=m+DlS9L8HzrTKAVZZivOgwo9mJf11W4I7Rb3ZK4kZOsJ9OYMzSWBvQiT5zZT//XI1q
- 3glXGCH6rKlY1ksg8mLfBmNCVAU2r5ykFeqYWBpC0edwjmZ9cViXjTBXlT6+4l3xgEeZ
- +cIIMGMcPWww1TWIJNM7TBNP2Fgf0Dk26GHsFUPm+kck1R3AhTsrcB3aYEy5PhLiGIXI
- TvDKN1wa07dDYBKqn59Wxga/n6yYInTnVxtdMZXyE8ebyRyjEN0QM3ESJbBMrJfZJA5+
- dntPCvjB0ofBdbTN1FjWnvp0bfwdkVnqcqybN/JqWnLTBRwSsfu27wd9B1BWPflwxYcF
- toXw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX1Vwj0n+U/S5x5DGXu6cH5H3ux/YrPfFQwmM25voZGJmfhsDTp7Dnckc73Dfjzh1Mui/8l3C1SBpIT@nongnu.org
-X-Gm-Message-State: AOJu0YxTVTWN8OTHPMydsngiep55BAbJEKHdlUyu0x1NxVsv/uVcf8qf
- VvzHCaC8nclbrude8nh/C1BltJ18Y5JiQ3kKzXXZU5JJ8rBw7gnKTLUe0nTK4HlhNAqxrVT4C21
- CLoMHdTcpyJW+oONaNZOtHJO0dL2/lKXtIrGDunpJS/1OcOfKjButLaUOx2CudZZkDIJPsidfRg
- mJAXrGQIjPVaxzlXuzgFbowBZ5xeyBVC4=
-X-Gm-Gg: ASbGncsUQ5khjBp+mDyBM880Kf+VGVYNqOBXsJW2O9pIWi+0M1jfJIHKAAcGGGjT5yk
- H3WLlHI+33hP9HVj8maoCLrXkQcSwiZBmUuNenlYv65DeS1zmZzY6z/E1mPlrEYl34xFS6SpC4h
- UjL1pGz9LrlPsTv2hCTnktsNLYl2VwkHcB7GyKCK/1+edCX0vyKAOT2siK+ET9qSgnb0s=
-X-Received: by 2002:a05:690c:6e03:b0:788:17c5:4459 with SMTP id
- 00721157ae682-78c0c1b3612mr44488547b3.58.1764837771973; 
- Thu, 04 Dec 2025 00:42:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFENZdkDWOUZuFj1PaguxziutlHkZioYE90PO+4n9c28DrCuMPpblQiBaja+q2MJ8PUuDvumXOL298SU4Rqa6I=
-X-Received: by 2002:a05:690c:6e03:b0:788:17c5:4459 with SMTP id
- 00721157ae682-78c0c1b3612mr44488367b3.58.1764837771670; Thu, 04 Dec 2025
- 00:42:51 -0800 (PST)
+ d=1e100.net; s=20230601; t=1764838001; x=1765442801;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=byC/O7uvQ3QfQ+BYrKViM2qHfaZmZPPE131X2B71AS4=;
+ b=NfZLzA7tb6INjSW6rzOu0Yk2IfluwjAPOwahK/31+A/Sih0GOFIwKoG3AZKu0ZkVsb
+ ArRvGWd72028CnIcXo+c0mgInYN+QUeFKktYdxaluwV+aO/uZVnJCLPH5bP0gay0pEb1
+ geSNsEcVVh5jHnQuZDwxxpNIH9y4TT0eSBP1BHv24sXk24nDt6qmdOpVbn6H2J2YKn+X
+ rXUUWxedI8qWHHsMY6xHbGFyhikSFfpSxAft81CncO3F7g3WvDJVGQONlijVZ4jdpWFB
+ rXqtWJCx23ooWt8uysO9TiIQFdylu+OMh8wgNn7j2LSgCX1ENtnx1nUKDIng+N+NU+wU
+ OStw==
+X-Gm-Message-State: AOJu0YzFpzOQ/tkWrEMQU0mzKTZDQ0GdP9ORPmi5esvUkHKFyGzjZfRo
+ PuF04fV8HBQWS/GUhQRjW0rJb6LDcJVXMPAgQAR6yAg6MqhVdxy1Xx/7nvc52AzkBu4=
+X-Gm-Gg: ASbGncu13tMjaMeaSyQIqHxttiUZGNP+RQ9IWrIli1gCd/O4T9tmDBOBaEYW/1LUUGj
+ ke1ziJvzsZ71jfxh35/RRu1rgx1PgX51uAuwNTg4pwTyUu6OZx1gbklGuYoTDb+tjIbIMqbAKWd
+ rJ0QmouA303Ati/9nFpXQWJ872Ose934Bf5yUj2hpXk+1N+2rx3H1UHsyj39cNicVkwaAw5AiL9
+ CvdFADsKV79OU/cuE8nSRvOjhCr5y7FTztvqPZTKXhj061lcjq07S1ZgkgUZ6xrBG3r0V4iYCO9
+ QwcedX3fB5+5sPO2UT6uPxSHsqcoYSEdjHpJMP35Amz7Rc31kymtBlFXMrtU/zEbtEfJhNwBGrf
+ 6YBYYsuzSd/u6Zf3l+xWxv/WUVFL5+HX6CbuwY3zzobNjWKXl7Elg6A68rvu5vR7AAAOA/dSzbs
+ P3FzB2DyvPncYyWWMerbE4ffNIdoKXY31EX2uW5bTicRfR2AC7lE9DIw==
+X-Google-Smtp-Source: AGHT+IEaRn5nhvLV+puId7fa/atVZmEQPs0KIab2tcOhVRPOR48xBvjSBbpfJ/m7gKn+Wp8iIgdjkw==
+X-Received: by 2002:a5d:5f93:0:b0:42b:3ab7:b8b8 with SMTP id
+ ffacd0b85a97d-42f731870f9mr5547891f8f.25.1764838001220; 
+ Thu, 04 Dec 2025 00:46:41 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42f7d330b20sm1826044f8f.29.2025.12.04.00.46.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 04 Dec 2025 00:46:40 -0800 (PST)
+Message-ID: <6ea77767-5442-4868-b9e6-8633a15c5c9b@linaro.org>
+Date: Thu, 4 Dec 2025 09:46:39 +0100
 MIME-Version: 1.0
-References: <20251204074416.9350-1-wafer@jaguarmicro.com>
-In-Reply-To: <20251204074416.9350-1-wafer@jaguarmicro.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 4 Dec 2025 09:42:15 +0100
-X-Gm-Features: AWmQ_bnBbnWE0sgSzUOeIJzflTmxOITWa6mUqwTH7NYWvf7VOZ6rRDpwx4ZnCZI
-Message-ID: <CAJaqyWfWOzZ9VHj8tro24QfAmOUw0GACCxxAyczpt+Qpqb-i6w@mail.gmail.com>
-Subject: Re: [PATCH 4/4] vhost: supported the virtio indirect desc of used ring
-To: Wafer Xie <wafer@jaguarmicro.com>
-Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
- leiyang@redhat.com, sgarzare@redhat.com, angus.chen@jaguarmicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] Clean up end-of-instruction processing
+Content-Language: en-US
+To: Taylor Simpson <ltaylorsimpson@gmail.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, matheus.bernardino@oss.qualcomm.com,
+ sid.manning@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ richard.henderson@linaro.org, ale@rev.ng, anjo@rev.ng
+References: <20251114230013.158098-1-ltaylorsimpson@gmail.com>
+ <d3323b18-5822-431e-aad6-cbe4470d1a2d@linaro.org>
+ <CAEqNhNYCUwK6UDXKSONA67yfmLPaSt14gtgrK26AfAQqyBopTg@mail.gmail.com>
+ <CAATN3Nps8qxYPBHxM6NfP6qt+NSNHzhiC_C-tuK796rQG+qbAQ@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAATN3Nps8qxYPBHxM6NfP6qt+NSNHzhiC_C-tuK796rQG+qbAQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,81 +107,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 4, 2025 at 8:45=E2=80=AFAM Wafer Xie <wafer@jaguarmicro.com> wr=
-ote:
->
-> Retrieve the used ring buffers in the indirect descriptor area
-> of split shadow virtqueues.
->
+On 17/11/25 19:35, Taylor Simpson wrote:
+> 
+> They are based on this one
+> commit bc831f37398b51dfe65d99a67bcff9352f84a9d2 (origin/staging, origin/ 
+> master, origin/HEAD)
+> Merge: 76929d6117 7dbe2d7df0
+> Author: Richard Henderson <richard.henderson@linaro.org 
+> <mailto:richard.henderson@linaro.org>>
+> Date:   Tue Oct 28 11:48:05 2025 +0100
+> 
+> They also apply cleanly to Brian's hex-next-express branch.
+> 
+> What error are you getting on your end?
 
-This needs to be squashed with the previous patch. Otherwise, we are
-allocating & mapping on each indirect descriptor but not freeing &
-unmapping.
+Maybe I did something wrong and was based I don't remember where =)
 
-> Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
-> ---
->  hw/virtio/vhost-shadow-virtqueue.c | 36 ++++++++++++++++++++++++++----
->  1 file changed, 32 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-=
-virtqueue.c
-> index 94ad5c3a57..0ffb884196 100644
-> --- a/hw/virtio/vhost-shadow-virtqueue.c
-> +++ b/hw/virtio/vhost-shadow-virtqueue.c
-> @@ -636,12 +636,40 @@ static VirtQueueElement *vhost_svq_get_buf(VhostSha=
-dowVirtqueue *svq,
->          return NULL;
->      }
->
-> +    bool used_indirect =3D (svq->desc_state[used_elem.id].indirect_desc =
-!=3D NULL);
-> +
-> +    /* Free indirect descriptor table if it was used */
-> +    if (used_indirect) {
-> +        if (svq->indirect_ops && svq->indirect_ops->free) {
-> +            svq->indirect_ops->free(svq,
-> +                                    svq->desc_state[used_elem.id].indire=
-ct_desc,
-> +                                    svq->desc_state[used_elem.id].indire=
-ct_iova,
-> +                                    svq->desc_state[used_elem.id].indire=
-ct_size,
-> +                                    svq->indirect_ops->opaque);
-> +        }
-> +        svq->desc_state[used_elem.id].indirect_desc =3D NULL;
-> +        svq->desc_state[used_elem.id].indirect_iova =3D 0;
-> +        svq->desc_state[used_elem.id].indirect_size =3D 0;
-> +    }
-> +
->      num =3D svq->desc_state[used_elem.id].ndescs;
->      svq->desc_state[used_elem.id].ndescs =3D 0;
-> -    last_used_chain =3D vhost_svq_last_desc_of_chain(svq, num, used_elem=
-.id);
-> -    svq->desc_next[last_used_chain] =3D svq->free_head;
-> -    svq->free_head =3D used_elem.id;
-> -    svq->num_free +=3D num;
-> +
-> +    /*
-> +     * If using indirect descriptors, only 1 main descriptor is used.
-> +     * To maintain consistency with `add split`,
-> +     * we used 'num' as free descriptors.
-> +     */
-> +    if (used_indirect) {
-> +        svq->desc_next[used_elem.id] =3D svq->free_head;
-> +        svq->free_head =3D used_elem.id;
-> +        svq->num_free +=3D num;
-> +    } else {
-> +        last_used_chain =3D vhost_svq_last_desc_of_chain(svq, num, used_=
-elem.id);
-> +        svq->desc_next[last_used_chain] =3D svq->free_head;
-> +        svq->free_head =3D used_elem.id;
-> +        svq->num_free +=3D num;
-> +    }
->
->      *len =3D used_elem.len;
->      return g_steal_pointer(&svq->desc_state[used_elem.id].elem);
-> --
-> 2.34.1
->
+No more issue, sorry for the noise!
+
+> 
+> Thanks,
+> Taylor
+> 
+> 
+> On Mon, Nov 17, 2025 at 10:08 AM Brian Cain <brian.cain@oss.qualcomm.com 
+> <mailto:brian.cain@oss.qualcomm.com>> wrote:
+> 
+>     Maybe they're based on the other commits on my tree which are queued
+>     for inclusion after 10.2? https://github.com/quic/qemu/commits/hex-
+>     next-express/ <https://github.com/quic/qemu/commits/hex-next-express/>
+> 
 
 
