@@ -4,82 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E60AD1D893
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 08:09:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61FD9D1D893
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 08:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR4P9-0002eI-CH; Thu, 04 Dec 2025 03:09:35 -0500
+	id 1vR4S0-0003rN-MY; Thu, 04 Dec 2025 03:12:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vR4Oz-0002dX-04
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:09:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vR4Rz-0003rB-43
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:12:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vR4Ox-0001QD-B3
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:09:24 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vR4Rx-0002oG-JD
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:12:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764835760;
+ s=mimecast20190719; t=1764835948;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=SIsDAdxlIFW2gKqkUMRnW0ZBuC2UzuSj2oJytvSOukE=;
- b=FJpLcf2C/w4ymA4/Z2c95nMM6K3fFprymbtKLwIgMYwCLn/D+jmbVqZVR2Jem/ebuuiiEw
- KUxW8SXYl8sinp6lUI//gX4DwvU39Hu+3zgTvMDPEEdJJ3d6S3m1QCQTCTyd5kfZ8LfsQK
- lckxqiW7hyMX9DZ6OyWcJ+rtscLKGwg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=42WQRcYeqPiStTpaBb8rmWxj1RoC8VP0VgOnEfM3szA=;
+ b=gGiNLqWfZUo44NggjP+2haWvgFbeZZYUdd6hT7+DtLMW9hOx5ZExZWRwo0q9KyY62NGXax
+ tcuIIbAoM8VXl/I48m4SwsmrFCt3tLT8sQ5mNZiZK3L00i7JKDRbZI+RZfsltp8s9q4Iyd
+ N8/9DzxYsZeTWhmSEKrF1JaeOU0huwE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-bGS90BlfM72WsmxNpfP-_w-1; Thu,
- 04 Dec 2025 03:09:17 -0500
-X-MC-Unique: bGS90BlfM72WsmxNpfP-_w-1
-X-Mimecast-MFC-AGG-ID: bGS90BlfM72WsmxNpfP-_w_1764835755
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-178-HlCPnvXnORK9pMHVVN2nBg-1; Thu,
+ 04 Dec 2025 03:12:25 -0500
+X-MC-Unique: HlCPnvXnORK9pMHVVN2nBg-1
+X-Mimecast-MFC-AGG-ID: HlCPnvXnORK9pMHVVN2nBg_1764835944
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BD46B180034C; Thu,  4 Dec 2025 08:09:14 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9CD0C195606B; Thu,  4 Dec 2025 08:12:23 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 711CE300F965; Thu,  4 Dec 2025 08:09:13 +0000 (UTC)
+ id 45B73300F965; Thu,  4 Dec 2025 08:12:22 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id B2CF721E6A27; Thu, 04 Dec 2025 09:09:10 +0100 (CET)
+ id 6D5F821E6A27; Thu, 04 Dec 2025 09:12:19 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Ben Chaney <bchaney@akamai.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  "Michael S. Tsirkin" <mst@redhat.com>,  Stefano
- Garzarella <sgarzare@redhat.com>,  Jason Wang <jasowang@redhat.com>,  Alex
- Williamson <alex@shazbot.org>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Eric
- Blake <eblake@redhat.com>,  Stefan Weil <sw@weilnetz.de>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,
- Hamza Khan <hamza.khan@nutanix.com>,  Mark Kanda <mark.kanda@oracle.com>,
- Joshua Hunt <johunt@akamai.com>,  Max Tottenham <mtottenh@akamai.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH v3 6/8] tap: cpr support
-In-Reply-To: <20251203-cpr-tap-v3-6-3c12e0a61f8e@akamai.com> (Ben Chaney's
- message of "Wed, 03 Dec 2025 13:51:23 -0500")
-References: <20251203-cpr-tap-v3-0-3c12e0a61f8e@akamai.com>
- <20251203-cpr-tap-v3-6-3c12e0a61f8e@akamai.com>
-Date: Thu, 04 Dec 2025 09:09:10 +0100
-Message-ID: <874iq6mzx5.fsf@pond.sub.org>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Markus Armbruster <armbru@redhat.com>,  marcandre.lureau@redhat.com,
+ pbonzini@redhat.com,  eblake@redhat.com,  berrange@redhat.com,
+ yc-core@yandex-team.ru,  d-tatianin@yandex-team.ru, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/3] error-report: move real_time_iso8601() to header
+In-Reply-To: <69a68b6b-0bd6-4295-930f-bd9486c732f4@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Wed, 3 Dec 2025 18:05:25 +0300")
+References: <20251128200536.207344-1-vsementsov@yandex-team.ru>
+ <20251128200536.207344-3-vsementsov@yandex-team.ru>
+ <87h5u7odkh.fsf@pond.sub.org>
+ <69a68b6b-0bd6-4295-930f-bd9486c732f4@yandex-team.ru>
+Date: Thu, 04 Dec 2025 09:12:19 +0100
+Message-ID: <87zf7yll7g.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,162 +90,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ben Chaney <bchaney@akamai.com> writes:
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> From: Steve Sistare <steven.sistare@oracle.com>
+> On 03.12.25 17:16, Markus Armbruster wrote:
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>> 
+>>> To be reused in the following commit.
+>>>
+>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>> ---
+>>>   include/qemu/error-report.h | 6 ++++++
+>>>   util/error-report.c         | 7 -------
+>>>   2 files changed, 6 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/include/qemu/error-report.h b/include/qemu/error-report.h
+>>> index 3ae2357fda..412b705898 100644
+>>> --- a/include/qemu/error-report.h
+>>> +++ b/include/qemu/error-report.h
+>>> @@ -74,4 +74,10 @@ extern bool message_with_timestamp;
+>>>   extern bool error_with_guestname;
+>>>   extern const char *error_guest_name;
+>>>   
+>>> +static inline char *real_time_iso8601(void)
+>>> +{
+>>> +    g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+>>> +    return g_date_time_format_iso8601(dt);
+>>> +}
+>>> +
+>>>   #endif
+>> 
+>> Reasons for inline?  Because the function is so small?
 >
-> Provide the cpr=on option to preserve TAP and vhost descriptors during
-> cpr-transfer, so the management layer does not need to create a new
-> device for the target.
->
-> Save all tap fd's in canonical order, leveraging the index argument of
-> cpr_save_fd.  For the i'th queue, the tap device fd is saved at index 2*i,
-> and the vhostfd (if any) at index 2*i+1.
->
-> tap and vhost fd's are passed by name to the monitor when a NIC is hot
-> plugged, but the name is not known to qemu after cpr.  Allow the manager
-> to pass -1 for the fd "name" in the new qemu args to indicate that QEMU
-> should search for a saved value.  Example:
->
->   -netdev tap,id=hostnet2,fds=-1:-1,vhostfds=-1:-1,cpr=on
+> Yes, seems, just this.
 
-Hmm.  See below.
+I'd prefer not to.
 
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> Signed-off-by: Ben Chaney <bchaney@akamai.com>
+Actually, I'd be tempted to just duplicate the two calls and call it a
+day.  Up to you.
 
-[...]
-
-> diff --git a/qapi/net.json b/qapi/net.json
-> index 118bd34965..264213b5d9 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -355,6 +355,8 @@
-   ##
-   # @NetdevTapOptions:
-   #
-   # Used to configure a host TAP network interface backend.
-   #
-   # @ifname: interface name
-   #
-   # @fd: file descriptor of an already opened tap
-   #
-   # @fds: multiple file descriptors of already opened multiqueue capable
-   #     tap
-
-Not this patch's fault: the interface is misguided, and its
-documentation inadequate.
-
-@fds is a string of file descriptor names or numbers separated by ':'.
-Not documented.  I found out by reading the code.
-
-This violates QAPI design principle "no string parsing".  It should be
-an array of strings.
-
-Aside: get_fds() should use g_strsplit().
-
-Your patch extends the syntax to "file descriptor names or numbers or
-"-1" separated by ":".  This is problematic.
-
-Before the patch, a file descriptor name or number is interpreted as a
-file descriptor number if it starts with a digit.  "-1" doesn't, so it's
-interpreted as a file descriptor name.  Yes, "-1" works as file
-descriptor name.  I just verified that
-
-    {"execute": "getfd", "arguments": {"fdname": "-1"}}
-
-works by changing 'fdname': 'fdname' to 'fdname': '-1' in
-tests/qtest/libqtest.c, and running tests/qtest/dbus-display-test with
-QTEST_LOG=/dev/stdout.  The test passes using file descriptor name "-1".
-
-Aside: not restricting the syntax of identifiers to something sensible
-like "begin with a letter, and contain only ASCII letters, digits, and
-hyphen" is a mistake we've make again and again.
-
-Your patch changes the interpretation of "-1" from "file descriptor
-name" to "saved file descriptor".
-
-If it does so regardless of the value of @cpr, then this is an
-incompatible change.
-
-We normally require such changes to go through the deprecation process.
-We waive that when we're *confident* not doing so will not inconvenience
-any users.  Are we here?
-
-If it does so only when @cpr is true, the semantics of "-1" depends on
-@cpr.  Yuck!
-
-We can accept "yuck!" when the alternatives are no better.  Have we
-considered any?
-
-Regardless, we clearly need to document syntax and semantics of @fds.
-Please fix the doc string before this patch, then have this patch update
-it.
-
-   #
-   # @script: script to initialize the interface
-   #
-   # @downscript: script to shut down the interface
-   #
-   # @br: bridge name (since 2.8)
-   #
-   # @helper: command to execute to configure bridge
-   #
-   # @sndbuf: send buffer limit.  Understands [TGMKkb] suffixes.
-   #
-   # @vnet_hdr: enable the IFF_VNET_HDR flag on the tap interface
-   #
-   # @vhost: enable vhost-net network accelerator
-   #
-   # @vhostfd: file descriptor of an already opened vhost net device
-   #
-   # @vhostfds: file descriptors of multiple already opened vhost net
-   #     devices
-
-Likewise.
-
-   #
-   # @vhostforce: vhost on for non-MSIX virtio guests
-   #
-   # @queues: number of queues to be created for multiqueue capable tap
-   #
->  # @poll-us: maximum number of microseconds that could be spent on busy
->  #     polling for tap (since 2.7)
->  #
-> +# @cpr: preserve fds and vhostfds during cpr-transfer.
-
-The commit message explains things in a lot more detail.  Users may not
-need to know all that detail.  But this feels too terse.
-
-Please don't abbreviate "file descriptors" to "fds" in documentation
-prose.
-
-> +#
->  # Since: 1.2
->  ##
->  { 'struct': 'NetdevTapOptions',
-> @@ -373,7 +375,8 @@
-     'data': {
-       '*ifname':     'str',
-       '*fd':         'str',
-       '*fds':        'str',
-       '*script':     'str',
-       '*downscript': 'str',
-       '*br':         'str',
-       '*helper':     'str',
-       '*sndbuf':     'size',
-       '*vnet_hdr':   'bool',
-       '*vhost':      'bool',
-       '*vhostfd':    'str',
->      '*vhostfds':   'str',
->      '*vhostforce': 'bool',
->      '*queues':     'uint32',
-> -    '*poll-us':    'uint32'} }
-> +    '*poll-us':    'uint32',
-> +    '*cpr':        'bool'} }
->  
->  ##
->  # @NetdevSocketOptions:
+>>> diff --git a/util/error-report.c b/util/error-report.c
+>>> index 1b17c11de1..20618640e8 100644
+>>> --- a/util/error-report.c
+>>> +++ b/util/error-report.c
+>>> @@ -169,13 +169,6 @@ static void print_loc(void)
+>>>       }
+>>>   }
+>>>   
+>>> -static char *
+>>> -real_time_iso8601(void)
+>>> -{
+>>> -    g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
+>>> -    return g_date_time_format_iso8601(dt);
+>>> -}
+>>> -
+>>>   /*
+>>>    * Print a message to current monitor if we have one, else to stderr.
+>>>    * @report_type is the type of message: error, warning or informational.
+>> 
 
 
