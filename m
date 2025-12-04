@@ -4,95 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F90ED1D89E
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 09:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3345D1D89F
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 09:53:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR5kg-0001id-0S; Thu, 04 Dec 2025 04:35:54 -0500
+	id 1vR60a-0007x6-Ll; Thu, 04 Dec 2025 04:52:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vR5k9-0001C7-8C
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 04:35:21 -0500
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corvin.koehne@gmail.com>)
- id 1vR5k6-0003S4-Q6
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 04:35:20 -0500
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-64320b9bb4bso1448102a12.0
- for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 01:35:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1764840916; x=1765445716; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1IEAaSPzmzz5B3AM/apm91VbHSHgHQnwVHyZGTcUVH8=;
- b=OlPHENvKc0U09m5wD+TkZ+B9JdMfH7KSYzIhLa49u9UJPwO0i/yp/hhhpb8lESupHI
- qHtRoAThwwW5YQn2CzQ2J7nXQIzuQMrWSQchKjEgHA98Cc1NwyaBehThLzda8S9JZ1mp
- ixvMimXKPfUzXu2yGZFjqARP4Oit0YvuxrW+N2XlJRLmwjPbgYdfllQdXIKmzaBXsmy0
- 56V/mn0fIRRbR87/pJ9skz0TLwL0SxPuuwJSFquikL1msRMmTtNOaBPc+Or5P6UQgYlx
- 6wg0uPlHk61hh5NSGXB34k8o7GhZ/9hsXGhJsqokTGCimDPJRMmda8A/LjqH8qjMW9x2
- Nx8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764840916; x=1765445716;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1IEAaSPzmzz5B3AM/apm91VbHSHgHQnwVHyZGTcUVH8=;
- b=Ighuao1Vlk1S+kWP+jmiUgkWTB8tIBd0zeVe3YdVpK21JsRBuXfDh6yxu5uAM96sQ5
- IC6Ptl0EdPh7sZVmmiFPKQhwUtazKa+2LuzepaEi7n7f6ENxKAt7Y9/rtBv92vscZeNp
- lDS7gkzQsiF3/c5r45S5mRatcLcAf1Yplk4FOBkupbxL1RmrXfqIrsj65cUgywSXbtZa
- CYhbiTDCOY85VuHD/z2vdtRgN2gC4hRCagwyzcioJU8OwQCoLfryUZxeuGXZXll+6ZQv
- GuK5GW5wNYA45q5x8F2bNSFSk3dlEsZxwNiCSEjjNKZ0YJ7bTtPQo090AkQ2K1HUPOUB
- D70Q==
-X-Gm-Message-State: AOJu0YzI4Z2/lI1RdWwZ8EFjyMZef4/SqzvqhFf3wIscjAOsMWleedgT
- 5UqtJfDt5GxuMEv9IfM8Y2dIuw2U8gwYfNB+g3ISjlI6HWGTvMcvJQZwCyOp6sdr
-X-Gm-Gg: ASbGncvmqPnaepuimKO3otR6Wi4xhcOV/JK1lllxBdrB0I7o25Br+IsPm1bRUCGFJ8q
- S0hUs0PEiLV+IFogrCGeGHSxGYoNs/0uA1hWTe8Bll5RTi0/xD4VHoa/fd7QcdNCIpmNkJbp8O5
- RNIO6CgFm4J748YJKScyAjFxa5Jr7GkU4eiZyGAfRQsWSFYPv2vu6PSTLkRGvCX818VE9+jA74U
- ODaI9SoEuQcgrvlzSwE2tlUVHnCLroh9jsZYw/UqEhwfFT2po4UNTxufJvQRc/AhRWR+ZMEaden
- 8S2c9G7LWBpjC8HNZe5d1tNeptmtcaS7FIbmE/gg/uUMgKixVTiThgPcGtt9rKgYdrAnQPFBXL1
- fFc69zpraIyGdUOmKlDfjcsaMN74G7IhqKlFpCIQfcHZ6/EeXRmftgfiY75nh18ggu6VpMAw2AR
- McoCpIf+2XsbZa9C8DpnzyMIrrgHbSdCbi6uEe/swvHQ==
-X-Google-Smtp-Source: AGHT+IGvV+sCGJwOTFpGpCKdSMYu4U7c5oQUZ4Ip2HqD6FJoA3/JuJo/SVgHxJKIEhPAkKuNBJvIvw==
-X-Received: by 2002:a05:6402:1ec5:b0:647:7bfb:6ce4 with SMTP id
- 4fb4d7f45d1cf-647a69e6aa4mr2398833a12.1.1764840915995; 
- Thu, 04 Dec 2025 01:35:15 -0800 (PST)
-Received: from PC-DA2D10.beckhoff.com ([195.226.174.194])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-647b2edf72asm856573a12.11.2025.12.04.01.35.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 04 Dec 2025 01:35:15 -0800 (PST)
-From: =?UTF-8?q?Corvin=20K=C3=B6hne?= <corvin.koehne@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
- Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?q?Yannick=20Vo=C3=9Fen?= <y.vossen@beckhoff.com>,
- YannickV <Y.Vossen@beckhoff.com>
-Subject: [PATCH v5 11/15] hw/block/m25p80: Add HAS_SR_TB flag for is25lp016d
-Date: Thu,  4 Dec 2025 10:34:58 +0100
-Message-ID: <20251204093502.50582-12-corvin.koehne@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251204093502.50582-1-corvin.koehne@gmail.com>
-References: <20251204093502.50582-1-corvin.koehne@gmail.com>
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1vR60T-0007wU-41; Thu, 04 Dec 2025 04:52:13 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rathc@linux.ibm.com>)
+ id 1vR60R-0006ur-D3; Thu, 04 Dec 2025 04:52:12 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5B411Cc1020119;
+ Thu, 4 Dec 2025 09:52:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zmxF3/
+ DP1IQrzzwdBMIgMxlVlzfhSXqo+7j42U4/G00=; b=r4/Vt3GKB6fRiO9HjtmYyq
+ KtWANXfZxiydeNwg+jSkE9cKc6wMwEHsHHOnhoNossHg8hiWoZyglgjrmdKUr0lX
+ ZFMA1lTvkiJpaP0cTwrdHOuWJ+mYbEcKc7X9ZOSC2gkcYtn/ZPoJubUR9LIikmup
+ 6LKUkteXdT0lhwtH8/Ucdgr5lk1ItG4CcQp37e4Xrmy12HTkmjvLOHdntWvJZW9Y
+ myaAuImF+GfHvL6Dp3xpeidZ4lZXjyCfbqm+rivYJ6OzU2lNWPC5mVZkqHdHieaV
+ /yCfjSmf0lVj2oBa5R8PKwS4lSWu941yuawbKgZGr00tINA/QEeEgzqfjNYxY3tg
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aqp8q785u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 04 Dec 2025 09:52:08 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5B49o2qD012391;
+ Thu, 4 Dec 2025 09:52:08 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4aqp8q785s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 04 Dec 2025 09:52:08 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B48Tjmr003857;
+ Thu, 4 Dec 2025 09:52:07 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ardcjxu0q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 04 Dec 2025 09:52:07 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5B49q6oZ25887476
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 4 Dec 2025 09:52:06 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 65A3658053;
+ Thu,  4 Dec 2025 09:52:06 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8488658061;
+ Thu,  4 Dec 2025 09:52:03 +0000 (GMT)
+Received: from [9.79.201.141] (unknown [9.79.201.141])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu,  4 Dec 2025 09:52:03 +0000 (GMT)
+Message-ID: <23721641-d08d-4e1c-8fc2-8c0f16f82b1f@linux.ibm.com>
+Date: Thu, 4 Dec 2025 15:22:00 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=corvin.koehne@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/ppc/kvm : Use macro names instead of hardcoded
+ constants as return values
+To: Gautam Menghani <gautam@linux.ibm.com>, npiggin@gmail.com,
+ harshpb@linux.ibm.com, pbonzini@redhat.com, sjitindarsingh@gmail.com
+Cc: qemu-ppc@nongnu.org, kvm@vger.kernel.org, qemu-devel@nongnu.org
+References: <20251202124654.11481-1-gautam@linux.ibm.com>
+Content-Language: en-US
+From: Chinmay Rath <rathc@linux.ibm.com>
+In-Reply-To: <20251202124654.11481-1-gautam@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMTI5MDAwMCBTYWx0ZWRfX3Zo8A80o9QD8
+ xLUoYpetH8x6kPGBPbCXJ1faFKZ1C7KFgmCdCH5e09P/S4EVKt8W8QxB3fb61FdoNz9AMVvw3OL
+ JfVqzMNfnkljSXZJ7b1SO7Qe1OY39UvjBEPjLfc/y9/2FSgGDFFvKu+5AoGcAhofz6gUx9k4p6S
+ H7PSyGNlT/qa2A42v4QpX11LwY+6w7hVbvImjhHc+L7bfbqvRTdL2D2HCtBY+JpzV38zy3TeMtv
+ WWHcesfDOJSdpHkT252rdbJpcXuygJmFgIJFPzlCt2lZXKgv2hS0Rqf/p6l1/hfZ1HPJ7Qq+iD2
+ n73QYXCcMDXYp7OwEimdBsaBtacu3dKheYidsXkHDBdEGdFFOuc3DHpXzi7U/NKw+OwFYLDK1ny
+ kT7+9YxfpmUBtHjehhyrIA1g7Q9CWw==
+X-Authority-Analysis: v=2.4 cv=dIerWeZb c=1 sm=1 tr=0 ts=693159c8 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=uOFx0X2q0oB2CtcaZQEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: P444gTh1akQPUw3NrLTQa33jLUo5XqGb
+X-Proofpoint-GUID: oyPRJJMIJ8COq1WCb2W0JNhBtluK8aVj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-04_02,2025-12-03_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 spamscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
+ definitions=main-2511290000
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rathc@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,32 +128,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: YannickV <Y.Vossen@beckhoff.com>
 
-The is25lp016d has 4 Block Write Protect Bits. BP3 specifies
-whether the upper or lower range should be protected. Therefore,
-we add the HAS_SR_TB flag to the is25lp016d flags.
-
-Signed-off-by: YannickV <Y.Vossen@beckhoff.com>
----
- hw/block/m25p80.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
-index a5336d92ff..1df223ee81 100644
---- a/hw/block/m25p80.c
-+++ b/hw/block/m25p80.c
-@@ -217,7 +217,8 @@ static const FlashPartInfo known_devices[] = {
-     /* ISSI */
-     { INFO("is25lq040b",  0x9d4013,      0,  64 << 10,   8, ER_4K) },
-     { INFO("is25lp080d",  0x9d6014,      0,  64 << 10,  16, ER_4K) },
--    { INFO("is25lp016d",  0x9d6015,      0,  64 << 10,  32, ER_4K) },
-+    { INFO("is25lp016d",  0x9d6015,      0,  64 << 10,  32,
-+           ER_4K | HAS_SR_TB) },
-     { INFO("is25lp032",   0x9d6016,      0,  64 << 10,  64, ER_4K) },
-     { INFO("is25lp064",   0x9d6017,      0,  64 << 10, 128, ER_4K) },
-     { INFO("is25lp128",   0x9d6018,      0,  64 << 10, 256, ER_4K) },
--- 
-2.47.3
-
+On 12/2/25 18:16, Gautam Menghani wrote:
+> In the parse_* functions used to parse the return values of
+> KVM_PPC_GET_CPU_CHAR ioctl, the return values are hardcoded as numbers.
+> Use the macro names for better readability. No functional change
+> intended.
+>
+> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+> ---
+Reviewed-by: Chinmay Rath <rathc@linux.ibm.com>
+>   target/ppc/kvm.c | 18 +++++++++---------
+>   1 file changed, 9 insertions(+), 9 deletions(-)
+>
+> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+> index 43124bf1c7..464240d911 100644
+> --- a/target/ppc/kvm.c
+> +++ b/target/ppc/kvm.c
+> @@ -2450,26 +2450,26 @@ static int parse_cap_ppc_safe_cache(struct kvm_ppc_cpu_char c)
+>       bool l1d_thread_priv_req = !kvmppc_power8_host();
+>   
+>       if (~c.behaviour & c.behaviour_mask & H_CPU_BEHAV_L1D_FLUSH_PR) {
+> -        return 2;
+> +        return SPAPR_CAP_FIXED;
+>       } else if ((!l1d_thread_priv_req ||
+>                   c.character & c.character_mask & H_CPU_CHAR_L1D_THREAD_PRIV) &&
+>                  (c.character & c.character_mask
+>                   & (H_CPU_CHAR_L1D_FLUSH_ORI30 | H_CPU_CHAR_L1D_FLUSH_TRIG2))) {
+> -        return 1;
+> +        return SPAPR_CAP_WORKAROUND;
+>       }
+>   
+> -    return 0;
+> +    return SPAPR_CAP_BROKEN;
+>   }
+>   
+>   static int parse_cap_ppc_safe_bounds_check(struct kvm_ppc_cpu_char c)
+>   {
+>       if (~c.behaviour & c.behaviour_mask & H_CPU_BEHAV_BNDS_CHK_SPEC_BAR) {
+> -        return 2;
+> +        return SPAPR_CAP_FIXED;
+>       } else if (c.character & c.character_mask & H_CPU_CHAR_SPEC_BAR_ORI31) {
+> -        return 1;
+> +        return SPAPR_CAP_WORKAROUND;
+>       }
+>   
+> -    return 0;
+> +    return SPAPR_CAP_BROKEN;
+>   }
+>   
+>   static int parse_cap_ppc_safe_indirect_branch(struct kvm_ppc_cpu_char c)
+> @@ -2486,15 +2486,15 @@ static int parse_cap_ppc_safe_indirect_branch(struct kvm_ppc_cpu_char c)
+>           return SPAPR_CAP_FIXED_IBS;
+>       }
+>   
+> -    return 0;
+> +    return SPAPR_CAP_BROKEN;
+>   }
+>   
+>   static int parse_cap_ppc_count_cache_flush_assist(struct kvm_ppc_cpu_char c)
+>   {
+>       if (c.character & c.character_mask & H_CPU_CHAR_BCCTR_FLUSH_ASSIST) {
+> -        return 1;
+> +        return SPAPR_CAP_WORKAROUND;
+>       }
+> -    return 0;
+> +    return SPAPR_CAP_BROKEN;
+>   }
+>   
+>   bool kvmppc_has_cap_xive(void)
 
