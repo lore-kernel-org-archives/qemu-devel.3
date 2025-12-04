@@ -4,153 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1911DD1D878
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 07:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9CBD1D883
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 07:40:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR3of-00085n-ET; Thu, 04 Dec 2025 02:31:53 -0500
+	id 1vR3vt-0001cn-4Z; Thu, 04 Dec 2025 02:39:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vR3oe-00085U-2s
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 02:31:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
+ id 1vR3vr-0001cf-Mt
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 02:39:19 -0500
+Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vR3ob-0004SH-Kt
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 02:31:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764833507;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Hi9W0rurMVdzFU9OfWhlolapU9csrGPjQr/FG89qgig=;
- b=WJS37ikY3pMy9gbgC5QEazTHVhDSqfKefMN+WvsMDPFqQUspMdlirX6nXA1XI3+YjrBJBl
- AhDtoV/vddEJy6OqtKAfGfv0cecMnraXihwUsaqn0Khils0b5ZpFHPxrKmX8ZRPNa839/T
- yhYT3zOlNSuv/Rfq0C5RRwV+/MmPdX0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-e_kpU2CTNDi4UqHL9fs6mA-1; Thu, 04 Dec 2025 02:31:46 -0500
-X-MC-Unique: e_kpU2CTNDi4UqHL9fs6mA-1
-X-Mimecast-MFC-AGG-ID: e_kpU2CTNDi4UqHL9fs6mA_1764833503
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477bf8c1413so3377195e9.1
- for <qemu-devel@nongnu.org>; Wed, 03 Dec 2025 23:31:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764833503; x=1765438303; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Hi9W0rurMVdzFU9OfWhlolapU9csrGPjQr/FG89qgig=;
- b=bmChxuw+fCMS8hLk4OIo6SLltcsjQzirVSVhIthRmUcg1v/3+7a4rw3kp4kzGuTGmk
- 0vzt/vpHAX0nFF8qyCqNjGmlXNmGiN9lLAHMbEEhP5pQVot0VBkodwUVekHt1St5AxzV
- rtQPNCp5KKWD70oY3jftnKrk1gVqrsOATperyYa+iT/sy9cPi3h5dTgnp8ulb9CN5zN9
- TpyqtXCo37Ip4oCTZccbrTdsK2suJ7vYea1T2AHDspLzsNMJ0ouuHkgI4MQZ1Kd6S7O4
- uODUxi98e91QwSWVfffxaDedsmhcRunfvytveY4XdDlpKznM42rPZtCPcdVt0dMbf0Cp
- NMiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764833503; x=1765438303;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hi9W0rurMVdzFU9OfWhlolapU9csrGPjQr/FG89qgig=;
- b=nm2niuhGHNx0HFv9Chn9jj+q4KRDgHznL/ef7sdrMfSbI3BIEm0it7D3kyu8jV12hX
- JKc2J6+yojfa1XATllBb9BR39mFKNgd6GJKaZyUUA6Z1++SA7mutNllhnq3SPWH6ssXP
- AXdvvH+XQyWVZYZC3Ta/X4m3CWGS40MvTkxIi8VLM2iJXKvEqseTgv0gumVI6WPPYqkk
- mv+FbUJLwftje6aa5+ESD9Lbq57Dhi2olywQpBsfxTxSGljRn/YDGjXzSomEfVm5/hle
- LTEny8Lsybs48coG6Setw1bRdQK41M0JokDLYdFzJGdYOkToXOzzki6EJJXLs03+YBjd
- m8Kw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWayvddA3s9nsGjryBYjVECLpIgIKu8Iy3FAffmU1khm6godyiGX+1F85X4qmtdBlFPi94NFjr2L4gE@nongnu.org
-X-Gm-Message-State: AOJu0YytrYcdoV3/FKbIBFNC4iUvhHWSskLCVFV1dpV4YkqGDlTAluWF
- afWvoZ/HB/K8/XYeUzgrCcfY47DTTESDYNU+eMvWGXiBBHgDuMzmHCin1tK4i9xneDRO9TSJQ/Z
- bUSqdUFEDfzXp1Y6GiJYs6CRNEAeAS8nhZb8MtbG79GMbtK4kagQ6FWlr
-X-Gm-Gg: ASbGncu38xKcxdx8y5j2ZjP2pDk4ONi/Vl0hf77c9n8Qgx1zVX3neW4sJXky0+v5tXV
- xinRQxkh/nvfMeD84+qeE962iRqxZ5WD19EaudEhKbswt6MvT/GSKoUVCrAdwQDJ0EtAL9ryTDV
- hOZuxARbFSL0GukwEZm5N9iyhUdcKDYaaSWqAS7jIUDfEVKdG+XVUSLyk3nlyc5/gr5uCGhtzVx
- Fu7N4CWAY8tPtUqyNAIEOVg6ansYglINH8H/r6rf82ubM/PTtCxkuwuLc3z0WELlrnUJgKjzS+U
- vyNIUkp83hByA+13kY1dCwjy4ahetSRhe90SQFAJQnQQBNGbpwTCpPaqx6b4cHylvrJZHZQlQZk
- V7tx5eWY=
-X-Received: by 2002:a05:600c:1c81:b0:477:7af8:c88b with SMTP id
- 5b1f17b1804b1-4792aeea8b2mr55920595e9.11.1764833503322; 
- Wed, 03 Dec 2025 23:31:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHrjY+i48ABe1Ru9bPhid4NG1m9bnQXMmkCUhyv5diUFSOdntf74QgRU+HM5oO4PKc1cAasLw==
-X-Received: by 2002:a05:600c:1c81:b0:477:7af8:c88b with SMTP id
- 5b1f17b1804b1-4792aeea8b2mr55920285e9.11.1764833502905; 
- Wed, 03 Dec 2025 23:31:42 -0800 (PST)
-Received: from [192.168.0.5] ([47.64.112.197])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4792afd3b31sm46709435e9.0.2025.12.03.23.31.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 03 Dec 2025 23:31:42 -0800 (PST)
-Message-ID: <f38c264d-d020-42fa-8ca0-a92420fcb133@redhat.com>
-Date: Thu, 4 Dec 2025 08:31:41 +0100
+ (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
+ id 1vR3vn-0006PV-OB
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 02:39:19 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=J1ySp4vwOV29qmFpOqRzA4x6rpKPr5xoLRleCbwwQQs70rzKuCrPB+1us2XvqgnTIAK+78RJBMzybqInKdb7OQebJqzShJe7STC6Jkc9NCcr7xWu73ozpg2Wnkqy3ypDfHcTkGanCP3AdnH58EOOohgesSK+QFQ83jovCWiz/9/tbd3tSw46Csw2Hvtg67iTipp14Ncybp3i/DVcu56fbDl5XgYU2+Caih/vjHxoEs8Mhov/wi0z9WvIK7+P9vVnD2Dl7JZytAEkZ0ouMxxCSO64BVn8IB6MNew0E39p1HrY7msvTwGY3/rEYoOvOAS/FY+FOBQ19ThJr18WnRrEig==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=sHM3abx0GUKkgAghNpRvSM4D1AM1Zyl/mlP+oP92cw0=;
+ b=Ti7dWgCSG8gIGb63lM7Zw7lYXmd4jmtGO+fCB5wGNmeZqM3FmEByguhpANpy3w1/52gDB28IabXVWlX96AIlWTlow9cG8DFntpXUUHH4BoMH4ngpfoErO7AdnFdQI4uesllKByqHo/Ky0DgCSjgpbuWwRxkLo2kZyrfKf6MQwPXeU0/AJQ9Yp6N29evZ5gpthTe4rykp2Vc0DjnZWXJA9z8VxARl9whQeaBdequkWpr5f/nDLccO26BWh7ElQ9DwR4ZQ2agGgtbWjzPGVFCS1KG6Uz5AlzeazyoMJTGbJqXcJIeY3Rm9LTXhsB1WuCqRC9Mi4L+jBKJUG4T/v5Ou1Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
+ header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=sHM3abx0GUKkgAghNpRvSM4D1AM1Zyl/mlP+oP92cw0=;
+ b=DbCmFDlNeiwsn/YCjkJAc54/C65XNRUFnAuTPy0slNhr15T1WQ5EflLniIbK5QQgt7Z53ADAAGau9xoACeItuT4vTCOhWhBfRsONOGDWVAw2rvQRsOo8MsEuvk7yLoFR3y9Maa7Zgjc9v+gyDoUfTC6TsCOjp7WuCerbuq2XNWo3EZDzxFpD5HE8YINQsh7CTq8s5hzg1rrYGtErKjqouUySlANU0xbZkhwjuESlGe5KWKxaeZOJLOJoWnRK538cKCkGXmCbMfePNKM7WRkSH6CRgaZKkSBso0nzYNVHStfSq/c1nVkFaA9tlYmz9qHQORYJVCf+CSZEWmJIP1/Qgw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=jaguarmicro.com;
+Received: from PUZPR06MB4713.apcprd06.prod.outlook.com (2603:1096:301:b4::10)
+ by KU2PPFDF24F4212.apcprd06.prod.outlook.com (2603:1096:d18::4b0)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.9; Thu, 4 Dec
+ 2025 07:38:37 +0000
+Received: from PUZPR06MB4713.apcprd06.prod.outlook.com
+ ([fe80::1b36:28b0:4e5:de66]) by PUZPR06MB4713.apcprd06.prod.outlook.com
+ ([fe80::1b36:28b0:4e5:de66%6]) with mapi id 15.20.9366.012; Thu, 4 Dec 2025
+ 07:38:37 +0000
+From: Wafer Xie <wafer@jaguarmicro.com>
+To: mst@redhat.com, eperezma@redhat.com, jasowang@redhat.com,
+ qemu-devel@nongnu.org
+Cc: leiyang@redhat.com, sgarzare@redhat.com, angus.chen@jaguarmicro.com,
+ wafer@jaguarmicro.com
+Subject: [PATCH 1/4] vhost: add data structure of virtio indirect descriptors
+ in SVQ
+Date: Thu,  4 Dec 2025 15:37:47 +0800
+Message-Id: <20251204073750.8953-2-wafer@jaguarmicro.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20251204073750.8953-1-wafer@jaguarmicro.com>
+References: <20251204073750.8953-1-wafer@jaguarmicro.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TPYP295CA0035.TWNP295.PROD.OUTLOOK.COM (2603:1096:7d0:7::7)
+ To PUZPR06MB4713.apcprd06.prod.outlook.com
+ (2603:1096:301:b4::10)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qemu-options.hx: Document -M as -machine alias
-To: dave@treblig.org, qemu-trivial@nongnu.org, mjt@tls.msk.ru,
- laurent@vivier.eu, pbonzini@redhat.com
-Cc: jak@jak-linux.org, qemu-devel@nongnu.org
-References: <20251203131511.153460-1-dave@treblig.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251203131511.153460-1-dave@treblig.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PUZPR06MB4713:EE_|KU2PPFDF24F4212:EE_
+X-MS-Office365-Filtering-Correlation-Id: aa83afcc-b387-41f4-39cf-08de33082306
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|52116014|366016|1800799024|38350700014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?4DnLNHBjWiLTiC7fG//d7tzZUwtUu5MzgACkyDRtk0wsoD04u3V5iekkSdbq?=
+ =?us-ascii?Q?pBBzkEz4OtizTNRJxT/10hLnr7Ss4cM0+Okgtn3Xl7PYCiczzM4EJZLt8uVF?=
+ =?us-ascii?Q?C+iW7UPswZmQg8p9v1lYhYw6sQ0yv37BDE3x8JbrpK65ly32ga0UwpUZGSk3?=
+ =?us-ascii?Q?W1Szb9RogKCZqgr0N7goDl0Tco4QWS3/3gUQwu/SZtaziR/MnSOcO65JgOju?=
+ =?us-ascii?Q?RmhPdEWWoVfkgN/OLEPiuJ69LGf1Y8bVfDgEEznxMODVZX+8+2qgbc8B3bbm?=
+ =?us-ascii?Q?9j9sCJCXVp3rDkMlKxAgVennPBRzjWP4SQ4TVvbdLg7fYsQog4HZg2KXkECL?=
+ =?us-ascii?Q?0neZuMYVosZo3/LOzddTxB/fg2qcFkBRtDbTXzYENKnYjWH+GUYqybYWmGw9?=
+ =?us-ascii?Q?dF4DJZreCjh7q3IGjRhPlVWs6t9HpxM6DMjVCmperjmCb3+KSUMglDwN+xZk?=
+ =?us-ascii?Q?Y1hwKY8rMFq1SluH9QVo2u4K5g4mPL9V863hhANCXrsTBz+Ob1lJPudEkBCg?=
+ =?us-ascii?Q?0Apwh6fC1kj+g3oM7Lvc5AstKgsnQ46Ip/aV7oMQoSDUVU/a+uD5B9uITLlv?=
+ =?us-ascii?Q?RR/Wl1x+ACiP2L96zhnPeacvTxXfF1k2hb43cPLNuYivzoFlZiykVG3SaOZN?=
+ =?us-ascii?Q?Oa3A4JjUJLMwWY1boc701ytgnM3sruhPwuRouH5RyKYcDXUlc8uvtwTT0fDD?=
+ =?us-ascii?Q?z9H6ddhgvOdJylEH6FNYwb/gLuajH0AL2lgk2M4/y6M1DipEHKq98qymPbtj?=
+ =?us-ascii?Q?5cw7OJIz0vDDRyZp+4LxuPqNRtyrthzfbM1ffKkqRMTsqfYgXmHMoFqdLjgs?=
+ =?us-ascii?Q?CoHnWBjtF0WWYxMRhlx22plrzbQAw29ODy7hD4vhEadKS2P83zygQ6CJpsfi?=
+ =?us-ascii?Q?2BQpLT1EfoHm3tJayZRq6PXZR1Qr89nmlJOPfEfF0KvjZDM+qcJ/Dhj5UaS5?=
+ =?us-ascii?Q?0zyyhhUWC++aTiD96VqAHdYwi3lUpAEJb23+A132d46UUJx6W/JLkDcVDth6?=
+ =?us-ascii?Q?Aa1ocY5D3xXufTw80XB0/dRO6/okosCen0YYj7IKOLSj6SB0ZMGT9hO5Op+D?=
+ =?us-ascii?Q?ats+Kr5Spl7ff5YOwsfn9hCCUQQgSeyBHO2jqxtuXw7JiCrmq7k7tJpq4fcG?=
+ =?us-ascii?Q?fT10KLOu+NGxd6HlfpIl84NQadhRIHedn+rrm5GtMPww2S/wkWAjVycHhbCv?=
+ =?us-ascii?Q?8UvSNZ9gISvEYZG5gYKAskWeM5DJgF2RaPFaVkGR1NCabIR+jQwf9/+Sw9Ti?=
+ =?us-ascii?Q?EZ54MsUG9Kn7D+ONWb+FVvhK8oJGJAPPp2rWdslLyeaLihj0jCU+SBbFqblt?=
+ =?us-ascii?Q?MfK0w9uBmcEDGPY8bGpyTRhdZBgB+ptGGj5m7fgAyVO1ciPyR7xVSZ3+4adH?=
+ =?us-ascii?Q?CmSigbrT2Q9VK1OM9e0Bp/E5EMy2/QAcABGbop3+Qn1twY2I8spMBoSo0Nbx?=
+ =?us-ascii?Q?bc7InEdn9eA89+KwHjMFfYrOUtuL8oDbLLkfqekF2wHorNAuDuNScnX6ieEc?=
+ =?us-ascii?Q?ri/18fH5MpzrNs185MgTS2fUJOCl4f/iEi39?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PUZPR06MB4713.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(52116014)(366016)(1800799024)(38350700014); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?D+hvIh8H4d50vrp4033MBZkAWPrYJKFHQBMuYOXMLY9VRA/cvXBaOuxZj4WD?=
+ =?us-ascii?Q?8ekTbjJH5jJqelWCbi6CYgBbBMHBuLKG+jT5YLaSuAXySjPndE0R5RXxvLrw?=
+ =?us-ascii?Q?EWOQOHRGtCKEAV+HCkXx2iQrH7qEO9enTCBIK5brimmesPE5NBXrz1m02XZj?=
+ =?us-ascii?Q?RLA0RdQUijy9LRflKBP9tb+8HaqYlpCZiDGnDMSv6Zn+QAQ+40nBcLfDd1Z5?=
+ =?us-ascii?Q?FmU9U40fNHnDUJCr1Y5IfJwvaayn+Rqk1I4xPIYRWEpcwVBHigiVo8U7GBCN?=
+ =?us-ascii?Q?hAHRuyb01iqTtIXdxIzwUW7o6N41kjsgCWo8rZGc2pD5VOeahTCMIqHWrO9F?=
+ =?us-ascii?Q?DLds533I0QsQs5Vww0+i29sUv1Cx0RN4m6VmTy6u6bJm2Lwxjb8OzgqeJPWe?=
+ =?us-ascii?Q?ZlYZGQEx8rszI6Vt6YlsXzROMhYwFNDOwFss1PURvL4ERg3q6lgTld2rgv/O?=
+ =?us-ascii?Q?QXdQ33StrQkkDyzmWgjWcuW5Vo5GVdO24z1D9TH3g5y232BoxG+vqtXXdu09?=
+ =?us-ascii?Q?nGx47AXg6XhHr6ysrO5EyBNBtYKiWX8786y4gnoq7RdwsXfXZqWBmHVKX8iZ?=
+ =?us-ascii?Q?zCRPTttaWyGkEQcejS4LRswFN1mRlO78iWcODB52N2jS30emy3LSiHcLAo9n?=
+ =?us-ascii?Q?6xE6HcI7y7bAmVpcIj5Ilm6z7spKt5wGfNbh/T7YQGvwzXbjoAJid79qKZV7?=
+ =?us-ascii?Q?wWrDVrNePGqurulleaeOn5CJHRAse1N79XHiBNmG9aU9OSmRGuY3gG8lTHnR?=
+ =?us-ascii?Q?jazM4vykA1uhvVLzAdCUFq17QyZKa7cxaDjf34/k3jn0CaSGuLuaEv7sfWnO?=
+ =?us-ascii?Q?1bBoeNn0qUf8FX1cchjZ9txARh1AJ7YkiJBJiAjYmTlXa6Egy7W+0IyYfrzu?=
+ =?us-ascii?Q?XyBo3Wxi1Orcm/JInlNDhTfuG4ezuVfRI6hSvBkBw+DySTKpG2BcRu8w8J54?=
+ =?us-ascii?Q?92kQDw3Ydrr4XUJn8YKjfACWBOcWA+VyRpAV1EXLG+8Fzkhj3CGyAeZIJG80?=
+ =?us-ascii?Q?q5makuywwE+1tYhc5dKvhOtn00M8Lch15owdVfjGHuslMZyqTCLrgoO+9IHI?=
+ =?us-ascii?Q?mEoJHuq6Y46Su1PiApD5ITp5uLJi3ZIv86q0Y33cgFPLladSkZxsm0Vs1nlX?=
+ =?us-ascii?Q?r7zh5Ni7wG0SaSOfLzeOw8AJEflV83zBCBOTHPcVkvy60z/5p6k5BDnKd9k4?=
+ =?us-ascii?Q?46s/npjOVpOoUzMbS8kV2HTDrRUB2BS1vE7Ue0wW/NlOAtyx6Iurq3EUxyrD?=
+ =?us-ascii?Q?oibXqJsOOyGJpAvWuRJ7Py347Ad0XSpTUwwOThA4emvnJO756i2nlgfXgeAW?=
+ =?us-ascii?Q?Ps8ubpylmwYKdszIwyWWZfUGor5gZuyFoQQSaIP0DkRmpLzPuUb9tVrdt/h7?=
+ =?us-ascii?Q?qvcJv4bwkwpRsiOtNA726dVL9X5kRGeTVJjYNDUV5TrQ3L6U/FcJ1VY51WKu?=
+ =?us-ascii?Q?OS8XEogHCf6slOvlFpXRXKJWGFyazSnHqDzey68z6RY5iuE7Xb56iUih9bFm?=
+ =?us-ascii?Q?BRFUginKJL4F/ifZ3fX/lI+3gm6opJvkYM+nxXkCbCrSM+/zU8uTxhZ9yiI0?=
+ =?us-ascii?Q?pswgFWJWUl91Eili3uUA7Lrz99ztpHq+ho2MR760?=
+X-OriginatorOrg: jaguarmicro.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa83afcc-b387-41f4-39cf-08de33082306
+X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4713.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Dec 2025 07:38:37.5300 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: rsPlUp+UATu7GtPY4s061fzWwIiseX8UDni2WHLRU22GtyiWwHe9/fyJyW/n6EYNKFUEmKIhCeVujnm8h7Gh6A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KU2PPFDF24F4212
+Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+ envelope-from=wafer@jaguarmicro.com;
+ helo=TYPPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,58 +164,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/12/2025 14.15, dave@treblig.org wrote:
-> From: "Dr. David Alan Gilbert" <dave@treblig.org>
-> 
-> -M is used heavily in documentation and scripts, but isn't actually
-> documented anywhere.
-> Document it as equivalent to -machine.
-> 
-> Reported-by: Julian Andres Klode <jak@jak-linux.org>
-> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
-> ---
->   qemu-options.hx | 12 +++++++-----
->   1 file changed, 7 insertions(+), 5 deletions(-)
-> 
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index fca2b7bc74..ec92723f10 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -44,6 +44,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->   #endif
->       "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
->       "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
-> +    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n"
->       "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
->       QEMU_ARCH_ALL)
->   SRST
-> @@ -179,6 +180,9 @@ SRST
->   
->               -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
->   
-> +    ``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
-> +        Define an SGX EPC section.
-> +
->       ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
->           Define cache properties for SMP system.
->   
-> @@ -208,12 +212,10 @@ SRST
->   ERST
->   
->   DEF("M", HAS_ARG, QEMU_OPTION_M,
-> -    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n",
-> -    QEMU_ARCH_ALL)
-> -
-> +    "-M              as -machine\n", QEMU_ARCH_ALL)
->   SRST
-> -``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
-> -    Define an SGX EPC section.
-> +``-M``
-> +    as -machine.
->   ERST
->   
->   DEF("cpu", HAS_ARG, QEMU_OPTION_cpu,
+Store the virtio indirect descriptor in the SVQDescState structure
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
+---
+ hw/virtio/vhost-shadow-virtqueue.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-virtqueue.h
+index 9c273739d6..2b36df4dd5 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.h
++++ b/hw/virtio/vhost-shadow-virtqueue.h
+@@ -23,6 +23,14 @@ typedef struct SVQDescState {
+      * guest's
+      */
+     unsigned int ndescs;
++
++    /*
++     * Indirect descriptor table for this descriptor chain.
++     * NULL if not using indirect descriptors.
++     */
++    vring_desc_t *indirect_desc;
++    hwaddr indirect_iova;
++    size_t indirect_size;
+ } SVQDescState;
+ 
+ typedef struct VhostShadowVirtqueue VhostShadowVirtqueue;
+-- 
+2.34.1
 
 
