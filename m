@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF999D216A5
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 15:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 243BDD216A4
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 15:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRBTx-0006Tv-2S; Thu, 04 Dec 2025 10:43:02 -0500
+	id 1vRBU8-0006YB-Qk; Thu, 04 Dec 2025 10:43:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRBTm-0006R8-AG
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:51 -0500
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1vRBTq-0006Sj-KH
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:55 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRBTj-0007F4-IX
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:50 -0500
+ id 1vRBTn-0007Fd-CE
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 10:42:54 -0500
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id E067680771;
- Thu, 04 Dec 2025 18:42:45 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 23A67808F1;
+ Thu, 04 Dec 2025 18:42:49 +0300 (MSK)
 Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:83c::1:2e])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id agnhnW0F9Gk0-M5vImUFU; Thu, 04 Dec 2025 18:42:45 +0300
+ ESMTPSA id agnhnW0F9Gk0-OvAP4G0n; Thu, 04 Dec 2025 18:42:48 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1764862965;
- bh=QEF7AKFuJmnyk85mUPCxeEPGdXymBb7vQLej3LTUu5A=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=w9ad2q8Dd5M/yYj48/xg5HRqapMUSbYho0Z7WVPm5pVv1k0PLyFv2QPdi9dZccOMT
- ddF4dOENVd6mHzuk7Mvjzm03NpMCn6GCRwYNYdHKts9CgVYi+LZDHBKsTVqzFk+ecz
- rfX1zPwFkFrn0MRRpZwkX/fX7gERb2gqx0dr0TxQ=
+ s=default; t=1764862968;
+ bh=UqYZB+gcAm7m4lFoOx1hkX6Uvxqb1CZng0virje0KxM=;
+ h=Cc:Message-ID:References:Date:In-Reply-To:Subject:To:From;
+ b=ArjBfe8sykeJ9RylzLcyB3F0C5pqTtMKEJpl4RASkoN8VMllTufwLdoSMgzPzGSI2
+ 3SBWBpp5CZfTWr/o0u5ISgOJDxTVVL/Tz+r/a31/icX1qXpkgrebKxB4g8JpaUWSc+
+ 61YGWrFg2fvFWjBMXyCN/8DwvMM0DpU146C5hOxU=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: marcandre.lureau@redhat.com
 Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, vsementsov@yandex-team.ru,
- d-tatianin@yandex-team.ru
-Subject: [PATCH v2 07/10] chardev/char-pty: store pty_name into PtyChardev
- state
-Date: Thu,  4 Dec 2025 18:42:31 +0300
-Message-ID: <20251204154235.149575-8-vsementsov@yandex-team.ru>
+ d-tatianin@yandex-team.ru,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 10/10] chardev/char: qemu_char_open(): add return value
+Date: Thu,  4 Dec 2025 18:42:34 +0300
+Message-ID: <20251204154235.149575-11-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251204154235.149575-1-vsementsov@yandex-team.ru>
 References: <20251204154235.149575-1-vsementsov@yandex-team.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.136;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,85 +76,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We'll use it in following commit.
-
-Note the bonus: stop use blind strcpy().
+Accordingly with recommendations in include/qapi/error.h accompany
+errp by boolean return value and get rid of error propagation.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- chardev/char-pty.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ chardev/char.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/chardev/char-pty.c b/chardev/char-pty.c
-index 9e26e97baf..a582aa7bc7 100644
---- a/chardev/char-pty.c
-+++ b/chardev/char-pty.c
-@@ -43,6 +43,7 @@ struct PtyChardev {
-     int connected;
-     GSource *timer_src;
-     char *path;
-+    char *pty_name;
- };
- typedef struct PtyChardev PtyChardev;
- 
-@@ -303,7 +304,7 @@ static void cfmakeraw (struct termios *termios_p)
- #endif
- 
- /* like openpty() but also makes it raw; return master fd */
--static int qemu_openpty_raw(int *aslave, char *pty_name)
-+static int qemu_openpty_raw(int *aslave, char **pty_name)
- {
-     int amaster;
-     struct termios tty;
-@@ -324,9 +325,7 @@ static int qemu_openpty_raw(int *aslave, char *pty_name)
-     cfmakeraw(&tty);
-     tcsetattr(*aslave, TCSAFLUSH, &tty);
- 
--    if (pty_name) {
--        strcpy(pty_name, q_ptsname(amaster));
--    }
-+    *pty_name = g_strdup(q_ptsname(amaster));
- 
-     return amaster;
+diff --git a/chardev/char.c b/chardev/char.c
+index bdd907f015..e2ec4e15cc 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -246,7 +246,7 @@ int qemu_chr_add_client(Chardev *s, int fd)
+         CHARDEV_GET_CLASS(s)->chr_add_client(s, fd) : -1;
  }
-@@ -335,11 +334,12 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     PtyChardev *s;
-     int master_fd, slave_fd;
--    char pty_name[PATH_MAX];
-     char *name;
-     char *path = backend->u.pty.data->path;
  
--    master_fd = qemu_openpty_raw(&slave_fd, pty_name);
-+    s = PTY_CHARDEV(chr);
-+
-+    master_fd = qemu_openpty_raw(&slave_fd, &s->pty_name);
-     if (master_fd < 0) {
-         error_setg_errno(errp, errno, "Failed to create PTY");
-         return false;
-@@ -351,11 +351,10 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         return false;
+-static void qemu_char_open(Chardev *chr, ChardevBackend *backend, Error **errp)
++static bool qemu_char_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+ {
+     ChardevClass *cc = CHARDEV_GET_CLASS(chr);
+     /* Any ChardevCommon member would work */
+@@ -262,13 +262,15 @@ static void qemu_char_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+         }
+         chr->logfd = qemu_create(common->logfile, flags, 0666, errp);
+         if (chr->logfd < 0) {
+-            return;
++            return false;
+         }
      }
  
--    chr->filename = g_strdup_printf("pty:%s", pty_name);
-+    chr->filename = g_strdup_printf("pty:%s", s->pty_name);
-     qemu_printf("char device redirected to %s (label %s)\n",
--                pty_name, chr->label);
-+                s->pty_name, chr->label);
+-    if (cc->chr_open) {
+-        cc->chr_open(chr, backend, errp);
++    if (!cc->chr_open) {
++        return true;
+     }
++
++    return cc->chr_open(chr, backend, errp);
+ }
  
--    s = PTY_CHARDEV(chr);
-     s->ioc = QIO_CHANNEL(qio_channel_file_new_fd(master_fd));
-     name = g_strdup_printf("chardev-pty-%s", chr->label);
-     qio_channel_set_name(s->ioc, name);
-@@ -364,7 +363,7 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+ static void char_init(Object *obj)
+@@ -1007,7 +1009,6 @@ static Chardev *chardev_new(const char *id, const char *typename,
+ {
+     Object *obj;
+     Chardev *chr = NULL;
+-    Error *local_err = NULL;
  
-     /* create symbolic link */
-     if (path) {
--        int res = symlink(pty_name, path);
-+        int res = symlink(s->pty_name, path);
+     assert(g_str_has_prefix(typename, "chardev-"));
+     assert(id);
+@@ -1018,9 +1019,7 @@ static Chardev *chardev_new(const char *id, const char *typename,
+     chr->label = g_strdup(id);
+     chr->gcontext = gcontext;
  
-         if (res != 0) {
-             error_setg_errno(errp, errno, "Failed to create PTY symlink");
+-    qemu_char_open(chr, backend, &local_err);
+-    if (local_err) {
+-        error_propagate(errp, local_err);
++    if (!qemu_char_open(chr, backend, errp)) {
+         object_unref(obj);
+         return NULL;
+     }
 -- 
 2.48.1
 
