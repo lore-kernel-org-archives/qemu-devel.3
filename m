@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21844D1D892
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 08:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00342D1D899
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 08:36:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vR4ok-00041q-RT; Thu, 04 Dec 2025 03:36:02 -0500
+	id 1vR4pD-0004ST-Ew; Thu, 04 Dec 2025 03:36:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vR4og-0003ut-NA
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:36:01 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vR4p9-0004OE-Ps
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:36:28 -0500
 Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vR4oe-0005lT-Tc
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:35:58 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vR4p5-0005oC-FJ
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 03:36:26 -0500
 Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4779d47be12so5851255e9.2
- for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 00:35:56 -0800 (PST)
+ 5b1f17b1804b1-4779a637712so4334625e9.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 00:36:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764837355; x=1765442155; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764837380; x=1765442180; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hkgbVZHn6iJRkRIe9EULExstxnB4Rbm6N2KP0S57IfI=;
- b=ogLwX2MqXWD4YduehzIU0L0bygDHXGWDl6QfTnEH8ahtn4B/AejKHRrjDLAZDrKdTz
- ScK2WtBjuCucwx09DjF4xA2IZQUXnioclJyHTO5cmuw6UBvxtV+/b9VBvDtZNck+fZ5a
- YxnHUsPyN6bFlSOw78eWS2rPRfTMAnDum1uPRHtfTiIFxnKZj+dAfETlsfWQNG7Jy2hq
- I7Tdkj2gq5G/0Z3v+eIn4QOnP/0xYsxnZvid10vAF6105/CAeSb+9HW8gTookf2NxzUK
- WMS6ohYWJwrDVC2cX7Bb5lJGp3h8Up6gK0SHbV/lHlzYhZCp4sTxAWjryN2el3FcN1bQ
- YDgA==
+ bh=9qbaNuUJoxnLp5UuJm1FetAdlBppY0buDxjeYV7iD0I=;
+ b=WfovtJcPJal8Qu6Pgm3868uELhV9rve61opFnEoZVAvlkdjUpRIF/QP1aNNy6G2eJR
+ JbLEUtPjkLyj1GgdPTeUpmlN6yN5ASSZgXEitfehFvVQt/H4lAoY89V6r23oWYWknFSL
+ FQ5EGa9BR9iBU7JqSgpLf9o71ou+IAlHhyuKCAxlCN/1lPAzfJnLhV6qu0bcKStzjxWa
+ tOt1PMNWd+hpOWuBjXFtTgKZJmOqQWZX5PeWx3AwBTfacplhMmkxv+Vne/sjIdRYSoN2
+ ahSaiVGE3nPaZQ7B6h3FmhM0JIwbSlbSWZNWJs5LM0jXejWyYqbQYj71yr3XswySAVMb
+ l8iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764837355; x=1765442155;
+ d=1e100.net; s=20230601; t=1764837380; x=1765442180;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=hkgbVZHn6iJRkRIe9EULExstxnB4Rbm6N2KP0S57IfI=;
- b=roINHA1fw1yFsUWHCpRlvakPMkw/EdxJwGu1ueMWZff4crHA4i1h4RiSHd1oOg91R1
- 4Kd5I/u+bcppNnGpSnAEvx/2FZcsXwPqt9xEq8qs8nb0KyObYV7DzM5e9YPHVMTeDTUx
- JaAuVxbDRHXxlPbx1BDulCMYep+cpgJdQCu7rhA0pOPHkaSP55jBXZM0Tx2CCv+6fCJG
- LwR2UAdlee9GSrLK/tceLkHxUK74W0vBbwWp5F3lBPL1XUSBJ/FS7UI4LlkSOsZb4bZn
- +eoBWbVtZ5rTfKQWbm2JjWc7keEh+ESlcoH4O6hT2ZvOzLNE2xk02dBiFhuHjXC/Ni2y
- B7qQ==
+ bh=9qbaNuUJoxnLp5UuJm1FetAdlBppY0buDxjeYV7iD0I=;
+ b=rDvTKAZ4w110QH6OPsBnGUpeVm2Gmw5bx3zi3w1JFcaq5alr+l3UEk2bQ743v+qKBO
+ XmDD9G6i7kqq5Y5FwHnZTKzPH1l26ZQjHgH5JvqiUoGer/XxsvJ1G/AheMRIC7KCwXQ0
+ PYUgh4IHJJj3tXl6jEOh0bZeEnucPBYsqetTqOyhLpGQxyERYCz4sjqAKiwrpY647IKv
+ hFcLxVu4qdr37XYtwjJmu9QVlKtW3TpAwaOv62Vs+JsS9NzuCuhlaOf8Fq7l5116O4B1
+ ezzRRs9QqRwypII3bx97IHG8X+tJ5+ofvvjvzfdPmQW5/vfee6jBxU06xL/2dxjr43xq
+ K1qA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXP6OM3M+VKpxjAyRZMIDt8g4hU5QAXMBmtExETR+pn0oCpO+Fqh4LdHeBggyQiPLG5ObouKzZIeMCV@nongnu.org
-X-Gm-Message-State: AOJu0YxIZ2x6fsdieusYVaTQS3VnJw6hODhbT+mVzoCG8wxItKHHydgf
- UAUDxQzRLlTSxT8nwQ8wqMbqYcIv27DfDBlk6mGC5nytP4Ts4ihjRXsJ8h4dp66y238=
-X-Gm-Gg: ASbGncu0XwaDgjap2LdHLkic/mLPpWaeLYwL1mHFpkD4A6b+h4IqL/8lxbwouAlzYOh
- jgtP+Nlipk+DQSmYsN1vfZYwbKsIF3ED6DFbWo5gl/V0IEQpkwKW/m959r49YjUOyyuumWDsP8K
- HrzY1pizdQL7QvpsGRYmkhV13N6d2QOpbogtJiFvtWFoz9LpLrxEy2eE5nrEDt6k4bvW9w4MITz
- CNbTcxni5OrUuc5Br/tsAseMnradr4zg/ZymyUxIYakiOLLHXRY2FwzeSm72V0YsOMOw5akEe0j
- U0a/jWR91sEdIVogJzWik8Hbs5CMSGexukC/MD5xRvZvmE5xWW625JS03z5BX63s8G7xtrS61d4
- qQq7xxzIK+0G6LaHVGPKZItodZPBUk4wC6WqkWy1eVKIBAYga6tSTzVw4H+z9nof9D1WoKH/Ol9
- ssxmg9GoIoHhQ7TtJXVFXxjbzKo6xdDYCXah1aItK+zfuyHdKcVsIRvA==
-X-Google-Smtp-Source: AGHT+IHIyNuL2yl8iMY1pJn/ReBnqvb8mXV1f1f0UZTa967ZK10Hljg2+u+mizKYTcKUKwK4Ey6ROQ==
-X-Received: by 2002:a05:6000:220e:b0:42b:2e65:655f with SMTP id
- ffacd0b85a97d-42f7317da33mr4991222f8f.19.1764837355248; 
- Thu, 04 Dec 2025 00:35:55 -0800 (PST)
+ AJvYcCUEZaC0kgnSupquwGjC38lDiEDHL3Z8jxviRvFou0EVheD2SQM9gsy7FOIZN92ta08rtqYEr+qPNHEQ@nongnu.org
+X-Gm-Message-State: AOJu0YyKKI7Hb4dVHSfBCOyqLcN2jFfa1EpRi8f50o+XG54P4Fv8u91k
+ xMpTiM8IKRyacrJJGpUCTjPYEV/n+ntknz/jftZ0n+UROvSGVetPXNoFaXOlXWxgFtw=
+X-Gm-Gg: ASbGncvJCen/Ba1lFDTmCKtOJP2/aNxCbnz0tUChB8NbUpMlZf0dy0uuFCtiSqgUNq7
+ Gpl5epuD8LbJBbmf+gqYSSed0cNx6AMe2XpeqGsd71Dv0J6LeY1pab5d7z2FwCp87jSSY01bQAR
+ 3+LB4quZ0VhPxq762Rn48CgoBO1b+2LWl9vd/wA+Qe44yAHelJJOWeMZ5T6+z8DZJr3eM+iPijS
+ yB+kDKkfZa/2sIlm1+qQrQir8uEMgHb5W18LjPbkolPBBNjQSa5SmCiS8ln+j7dQqO9sgM0r3Qn
+ 3vaIbg4p03lwNlwIFAD4qoeKd+ZtIIOO85LH+vXzzNJjo25CgV4TKcIDN/iQge1LkJI+PtDvS5G
+ 7lIpLCpFP0MeH9qXQ1iz62lapwc3AvqBHg9dTD2byT5GpFxgaBpNdM+PZIdfGFexA1VbOPKzoPf
+ ECvZrTMRwOF/0LIp8BETGND+VPG8QKEa6gc/SumT9DJBlUEsFV2iYZgQ==
+X-Google-Smtp-Source: AGHT+IE01N4AmrPgLANR2KQurNwLqi0gHGvH8Gl+ovcKyE6fFmV53e/9TE66APLHAUHAUle4QoCvcw==
+X-Received: by 2002:a05:600c:a49:b0:475:da1a:53f9 with SMTP id
+ 5b1f17b1804b1-4792aef4202mr46318865e9.14.1764837379501; 
+ Thu, 04 Dec 2025 00:36:19 -0800 (PST)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7d331df0sm1944282f8f.36.2025.12.04.00.35.54
+ 5b1f17b1804b1-47930f286f4sm18433505e9.0.2025.12.04.00.36.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Dec 2025 00:35:54 -0800 (PST)
-Message-ID: <1290719a-43af-4ff1-9f84-0668047ec513@linaro.org>
-Date: Thu, 4 Dec 2025 09:35:53 +0100
+ Thu, 04 Dec 2025 00:36:19 -0800 (PST)
+Message-ID: <754c984d-9082-49eb-8538-23e746d6a126@linaro.org>
+Date: Thu, 4 Dec 2025 09:36:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] block: rename block/aio.h to qemu/aio.h
+Subject: Re: [PATCH 5/5] block: rename block/aio-wait.h to qemu/aio-wait.h
 Content-Language: en-US
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, kwolf@redhat.omc
 References: <20251203185133.2458207-1-pbonzini@redhat.com>
- <20251203185133.2458207-5-pbonzini@redhat.com>
+ <20251203185133.2458207-6-pbonzini@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251203185133.2458207-5-pbonzini@redhat.com>
+In-Reply-To: <20251203185133.2458207-6-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
@@ -105,57 +105,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/12/25 19:51, Paolo Bonzini wrote:
-> AioContexts are used as a generic event loop even outside the block
-> layer; move the header file out of block/ just like the implementation
-> is in util/.
+> AIO_WAIT_WHILE is used even outside the block layer; move the header file
+> out of block/ just like the implementation is in util/.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   MAINTAINERS                       | 2 +-
->   docs/devel/multiple-iothreads.rst | 4 ++--
->   include/block/aio-wait.h          | 2 +-
->   include/block/raw-aio.h           | 2 +-
->   include/block/thread-pool.h       | 2 +-
->   include/hw/scsi/scsi.h            | 2 +-
->   include/hw/virtio/virtio.h        | 2 +-
->   include/io/channel.h              | 2 +-
->   include/{block => qemu}/aio.h     | 0
->   include/qemu/job.h                | 2 +-
->   include/qemu/main-loop.h          | 2 +-
->   include/qemu/throttle.h           | 2 +-
->   include/scsi/pr-manager.h         | 2 +-
->   include/system/event-loop-base.h  | 2 +-
->   include/system/iothread.h         | 2 +-
->   include/system/replay.h           | 2 +-
->   tests/unit/iothread.h             | 2 +-
->   util/aio-posix.h                  | 2 +-
->   block/aio_task.c                  | 2 +-
->   block/export/fuse.c               | 2 +-
->   block/io_uring.c                  | 2 +-
->   block/linux-aio.c                 | 2 +-
->   block/win32-aio.c                 | 2 +-
->   iothread.c                        | 2 +-
->   qapi/qmp-dispatch.c               | 2 +-
->   replay/replay-events.c            | 2 +-
->   scsi/pr-manager.c                 | 2 +-
->   stubs/linux-aio.c                 | 2 +-
->   stubs/replay-tools.c              | 2 +-
->   tests/unit/iothread.c             | 2 +-
->   tests/unit/test-aio-multithread.c | 2 +-
->   tests/unit/test-aio.c             | 2 +-
->   tests/unit/test-nested-aio-poll.c | 2 +-
->   tests/unit/test-thread-pool.c     | 2 +-
->   tests/unit/test-throttle.c        | 2 +-
->   util/async.c                      | 2 +-
->   util/main-loop.c                  | 2 +-
->   util/qemu-co-timeout.c            | 2 +-
->   util/qemu-coroutine-lock.c        | 2 +-
->   util/qemu-coroutine-sleep.c       | 2 +-
->   util/qemu-coroutine.c             | 2 +-
->   util/throttle.c                   | 2 +-
->   scripts/analyze-inclusions        | 2 +-
->   43 files changed, 43 insertions(+), 43 deletions(-)
->   rename include/{block => qemu}/aio.h (100%)
+>   MAINTAINERS                        | 2 +-
+>   include/block/block-io.h           | 2 +-
+>   include/{block => qemu}/aio-wait.h | 0
+>   block/io.c                         | 2 +-
+>   blockjob.c                         | 2 +-
+>   io/channel.c                       | 2 +-
+>   job.c                              | 2 +-
+>   net/colo-compare.c                 | 2 +-
+>   net/filter-mirror.c                | 2 +-
+>   util/aio-wait.c                    | 2 +-
+>   util/vhost-user-server.c           | 2 +-
+>   hw/display/apple-gfx-mmio.m        | 2 +-
+>   hw/display/apple-gfx.m             | 2 +-
+>   13 files changed, 12 insertions(+), 12 deletions(-)
+>   rename include/{block => qemu}/aio-wait.h (100%)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
