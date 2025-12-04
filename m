@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BD2D29FBE
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 19:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 675C9D29FBE
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 19:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRFKH-00070j-D8; Thu, 04 Dec 2025 14:49:17 -0500
+	id 1vRFKH-00070l-GM; Thu, 04 Dec 2025 14:49:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRFKE-0006zP-Ud
+ id 1vRFKE-0006z0-25
  for qemu-devel@nongnu.org; Thu, 04 Dec 2025 14:49:14 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRFKD-0007NC-40
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 14:49:14 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-477a219dbcaso14551495e9.3
+ id 1vRFKC-0007Ms-Ea
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 14:49:13 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-42e2d52c24dso764215f8f.1
  for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 11:49:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1764877751; x=1765482551; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ATqSGwuBrxD0u6XQm/ZM2RowzefB/jG7EGwLrbJNsjM=;
- b=EcneuD6jlfjRZN9TQf7duAYYSDNVwb/NamlFBEXJdgGs4IZDafHWE9B5pcSrpe9KCj
- lMNwJ+gtUBiFHqAfTJ9mGgT5/Fw9yDLaNpbCcDXitMbB9ZqKtwmka7XuLZCyqoEva4bG
- L+9x3LHy9i4I6iFbLoVzIXDeAE/HYqd3rOeiGqo/t8RfwWEezFxg87nvZpnxPm3r5wEH
- g9rXnJAdFX+r1HvBM7B0TNpgj9GP3tveRRJTiUL+RIhEmaU4lJpNUv9KZPN4+ZOpQo0d
- fvxDD+DFsjFhe8mhqf8LGXAlMwKCbUgt5j9GIo4uMo0O89qtzSixbxBXzy/F0IvrJzYr
- cAQA==
+ bh=E+iwo/nPHTmxK9I3PRQoHiQNNiLgoGcuCC7oYGWSe3A=;
+ b=n3kXcV/KXUp5NTFZ3aT1pOFpH1EjRuYiWeJeM6UWw2ZBse3HhuqY8XIWvEF9p6/io6
+ /wZx144C6xDG1NtNz2wibI/v0TREaC8H9c2SqDEGPMIQLv9A01dvxwR7UW/jMQnAXfDt
+ pzmtqN920SG1E2rMQTOEURL/6pMCs0MSqlqW9Ote7dk8EXb2zHCtXkcRgJLxshRewTiS
+ jZeKBkdzrPyM9Bzy5jkNanBkQ/7wDxErtGFzmJitWCSeY8q7M5aQQJHzLEAUfiV8QzGO
+ tM/OUr1ynxA/V/GX+JAtjskYFa8q//axIzkDpCoJ8Agww+DjpIcceIk4LIjP08cII/VN
+ 1aPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1764877751; x=1765482551;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ATqSGwuBrxD0u6XQm/ZM2RowzefB/jG7EGwLrbJNsjM=;
- b=TtpRAKLBC41K5G5U0B8SsHG4lXOIHp5eADzPdA/Bk3vT7JDumv13obuJDV5AuYybd0
- EGbPhavzpMOcUAd4k4AYVIqiKcXCMEV+g1+UsWHkspW1h3OHZfS1/mKSgUvGyCJ07Sap
- MXCWgeAFX24Yk8aK4hfd8QP0KhYeFXVY9hAf0ynwml17bzEWua7AcE1qFpiVvdKc1Bbh
- LmyanV5LU8WwrndvKOHXrR1Tx72Rln11DsYHeuNjMeK0gQTGJQVXXXzs1xIlGNqocIu8
- VCRnOV5QvP7IN8HKD2fWhZJjd5nx9XVsG7kYM9rlKcgP7SmB/t04TvJbkcJDk95cfj2g
- qqWQ==
-X-Gm-Message-State: AOJu0YwSV/pkP0YzIkTf2AV6ikbO1VfuBmw91Ybo7DqbbN7kX3RnbKS1
- poudiopQkkzs/wx2CeoIHxmbycXE4F+0YVZ4QMafYnbiwdbcKDIg/EaAxj9JnpolwZpIaHQI35y
- zZwjl
-X-Gm-Gg: ASbGncuoBgNiEelCluwF2K34VHx7a7CN7QtZZeF1TOIGeHQbzhRq3AOxE/oCiALGASy
- kDc3/1z2x7OlcqByjSsXfxvmrCsdqDh8LlylRwJQ3BNe8EQViH3NNZmP8ZD1TmDgP5LlA7y1F4v
- sF143mMwYyC706faUMZCRNJTim8102CWgbFuN2VDlzlhFmD8OW8bOqqrAbc1g6p/dwEORxyt3vF
- F4m3bZGkAx94+1gHUwUzrUexIW+Vt471iZXMS7IAGSg+oglRY/tfXz7zKfPhlqDJG81QfYYo/ZU
- iTjsmLZrAShw0esd/VT7qDLzhmI7FO18fstno4HnPenu3egTlNqcO83SbyAVUsRXuzNncfv9NCC
- EcFtBa7qnTXd3LwkY8rNMd+T6pZk5XV0iv5iMssqjT9Lho6XXuwlZvtX0mACIU6MyN0XSOrypAA
- G7qDOwM7Yzm4shgI29ijvxGA==
-X-Google-Smtp-Source: AGHT+IHVFWyRnT2MuS9Fztiv/ZdGkH6yRsuiZwr57AfpH3iIuYdyfsbTGF6k1samAcnmy3LLpRysOg==
-X-Received: by 2002:a05:600c:4f90:b0:477:5af7:6fa with SMTP id
- 5b1f17b1804b1-4792af43aa3mr70283635e9.32.1764877751449; 
- Thu, 04 Dec 2025 11:49:11 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4792b157783sm50573445e9.5.2025.12.04.11.49.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=E+iwo/nPHTmxK9I3PRQoHiQNNiLgoGcuCC7oYGWSe3A=;
+ b=XVVLZzHKs113qJVraRuzP4bmojL9NcDwjmZjc2xw1wWVXDBYKQRJfJQQLlUTgrTLQX
+ 87bSccPMRYOXKIHMPfLuOUqANMCZztvPRhmQ2Aje9/xC7kDvqEHODauGT6s9Okql/5Qj
+ kKBTeGN7hnMrIoxZKCZ5oEwJPoMGR8kOFttYtuBqYFX6rDEHQGtrEGYY7BWVASA6VMLB
+ Bp13Ls7PWQvIWvsaoudvytQwG5XSXmGQS15YvuyzREB3U/Y4aRL4J//XpU6MBHt22m94
+ apm37V4RaXm1vJHSdZ+WbBQBg6eYWz6yFWtCN6dTxDF6ZEIuHffBK9rxTP43B/9SzsLe
+ Am/w==
+X-Gm-Message-State: AOJu0YzSKUE3Q5TGT5erBO+3dxi6sSEvovv9B4kmUGGeUHSuo3qBh5lE
+ AaVblN9m97TViYEyqdR7E+7h9G882neHSn1FQ/1M7yL6YKeP6DcFZr20lBYc8BO++As=
+X-Gm-Gg: ASbGncvMpQeVhPsUbGNWxTYQjSYAYAiTogrhaVHvBXrS1zWlun98nyMzL3EU2NUkywN
+ Qj4jAxSIuiaUd6p/dQDkmBgp/V2JPl1hl+BtYHDUyuW6spmdv4DOVphWRfqwgk1upkY25NGj87q
+ eSrL4Cru6WA9+Ls55rD/sq2KDRZy9sLo4xlooiGVkdDvk9pYjAjMHupaXptQXGJ0NxCqCIcmdqu
+ 1CKJ1W51ktj5HYSssupwhokCfY/WxJx3hQmQ/dxi3tMAZD3c9SFH385wHvgFXvvqBhGDq0z5Els
+ DxcUA98masInE1h7H0fYUHz9NeCkSMKxwwyWlKz1+HHoDb1OQd9BTDkyi+4nLJWT+VrsO8dC3oD
+ nO9v9LDqXTwhJrwe88B5I0bAadvcO0MZF46innGTsNhC1YFRrZJb3xPlk3bYeqXN+4GhgfAw9Sq
+ OQ+HJpzHYFvs8=
+X-Google-Smtp-Source: AGHT+IHVEsnFebcomrBcn32mewOOY1uDa56vKZm4GW63UMQiIXO3IYe/rKvpOgX+y5UhfBHbrp05Ug==
+X-Received: by 2002:a05:6000:288d:b0:429:ed90:91dd with SMTP id
+ ffacd0b85a97d-42f7318fba9mr7610577f8f.6.1764877750688; 
  Thu, 04 Dec 2025 11:49:10 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42f7d222478sm4796121f8f.20.2025.12.04.11.49.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Dec 2025 11:49:06 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AC8275F910;
+ by draig.lan (Postfix) with ESMTP id 7ECA95F90A;
  Thu, 04 Dec 2025 19:49:03 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -78,19 +77,19 @@ Cc: Alexandre Iooss <erdnaxe@crans.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Julian Ganz <neither@nut.email>
-Subject: [PATCH v2 11/11] plugins/core: allow reading of registers during
- discon events
-Date: Thu,  4 Dec 2025 19:49:02 +0000
-Message-ID: <20251204194902.1340008-12-alex.bennee@linaro.org>
+ Alano Song <AlanoSong@163.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>
+Subject: [PATCH v2 09/11] docs/devel: Correct typo
+Date: Thu,  4 Dec 2025 19:49:00 +0000
+Message-ID: <20251204194902.1340008-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251204194902.1340008-1-alex.bennee@linaro.org>
 References: <20251204194902.1340008-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,39 +112,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have protections that prevent callbacks that didn't declare
-themselves as wanting to access registers. However for discontinuities
-the system state is fully rectified so they should always be able to
-read the register values.
+From: Alano Song <AlanoSong@163.com>
 
-a1688bc86ce (plugins: add hooks for new discontinuity related callbacks)
+Correct typo in atomics.rst
+
+Signed-off-by: Alano Song <AlanoSong@163.com>
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+[AJB: fixed author entry]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Julian Ganz <neither@nut.email>
 ---
- plugins/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ docs/devel/atomics.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/plugins/core.c b/plugins/core.c
-index 8f8bc7219c2..b4b783008f7 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -119,6 +119,7 @@ static void plugin_vcpu_cb__discon(CPUState *cpu,
-     struct qemu_plugin_cb *cb, *next;
-     uint64_t to = cpu->cc->get_pc(cpu);
- 
-+    qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-     if (cpu->cpu_index < plugin.num_vcpus) {
-         /* iterate safely; plugins might uninstall themselves at any time */
-         QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
-@@ -127,6 +128,7 @@ static void plugin_vcpu_cb__discon(CPUState *cpu,
-             func(cb->ctx->id, cpu->cpu_index, type, from, to);
-         }
-     }
-+    qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
- }
- 
- /*
+diff --git a/docs/devel/atomics.rst b/docs/devel/atomics.rst
+index 95c7b77c01e..ea4ede4b8c4 100644
+--- a/docs/devel/atomics.rst
++++ b/docs/devel/atomics.rst
+@@ -266,7 +266,7 @@ Splitting a loop can also be useful to reduce the number of barriers:
+     |   n = 0;                                 |     smp_mb_release();            |
+     |   for (i = 0; i < 10; i++) {             |     for (i = 0; i < 10; i++)     |
+     |     qatomic_store_release(&a[i], false); |       qatomic_set(&a[i], false); |
+-    |     smp_mb();                            |     smb_mb();                    |
++    |     smp_mb();                            |     smp_mb();                    |
+     |     n += qatomic_read(&b[i]);            |     n = 0;                       |
+     |   }                                      |     for (i = 0; i < 10; i++)     |
+     |                                          |       n += qatomic_read(&b[i]);  |
+@@ -283,7 +283,7 @@ as well) ``smp_wmb()``:
+     |                                          |     smp_mb_release();            |
+     |   for (i = 0; i < 10; i++) {             |     for (i = 0; i < 10; i++)     |
+     |     qatomic_store_release(&a[i], false); |       qatomic_set(&a[i], false); |
+-    |     qatomic_store_release(&b[i], false); |     smb_wmb();                   |
++    |     qatomic_store_release(&b[i], false); |     smp_wmb();                   |
+     |   }                                      |     for (i = 0; i < 10; i++)     |
+     |                                          |       qatomic_set(&b[i], false); |
+     +------------------------------------------+----------------------------------+
 -- 
 2.47.3
 
