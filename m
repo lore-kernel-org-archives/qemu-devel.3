@@ -4,66 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED857D2A52F
-	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 20:28:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E64CED2A520
+	for <qemu-devel@archiver.kernel.org>; Thu,  4 Dec 2025 20:31:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRFuq-0006gJ-Fn; Thu, 04 Dec 2025 15:27:04 -0500
+	id 1vRFyZ-0000kC-3d; Thu, 04 Dec 2025 15:30:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRFuo-0006fa-8w
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 15:27:02 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRFum-0003FS-B4
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 15:27:02 -0500
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id AD94F80879;
- Thu, 04 Dec 2025 23:26:57 +0300 (MSK)
-Received: from vsementsov-lin.. (unknown [2a02:6bf:8080:83c::1:2e])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id sQswCW0FbOs0-W5fLwnUV; Thu, 04 Dec 2025 23:26:57 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1764880017;
- bh=mOZQQM83Os2QIRroZDeVQZFDUiml4r76Fkwg884qylI=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=K4XxF4IodVacyYe2tkHB9E4EcIOilWryC/9OKCD1CAjgXnOd+byYLKeJUdDmLNxuF
- z1wMyj+CE3Z/kvSmtaZu+zE4g77w5py9jV/WV2ZbaZHMqVZqDgvaccIZVUlgJhePnQ
- Eqcpt+c2UgDh386BYtQK2BDWTrq4pIXHueVGzCBQ=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-To: marcandre.lureau@redhat.com
-Cc: pbonzini@redhat.com, armbru@redhat.com, eblake@redhat.com,
- berrange@redhat.com, vsementsov@yandex-team.ru, yc-core@yandex-team.ru,
- d-tatianin@yandex-team.ru, qemu-devel@nongnu.org, philmd@linaro.org
-Subject: [PATCH v2 2/3] error-report: make real_time_iso8601() public
-Date: Thu,  4 Dec 2025 23:26:47 +0300
-Message-ID: <20251204202653.597319-3-vsementsov@yandex-team.ru>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20251204202653.597319-1-vsementsov@yandex-team.ru>
-References: <20251204202653.597319-1-vsementsov@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vRFyX-0000jQ-B3
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 15:30:53 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vRFyV-0004dc-9O
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 15:30:53 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6c56so12060965e9.1
+ for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 12:30:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764880249; x=1765485049; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3BqwSOzW1wtwIWsV9h67dzQ80+RnxXRVz74+RBt7IdY=;
+ b=ao53uJxIZ5EXBKFpcyllfoi2/vUi7GZwJucn0bGnLB1MJ45hWTIYkZRIzERr0gMSuX
+ 1gCvlAj/ppN4LPBp58LyYFNVLVQJHb5uaaq5L6C1/PWMBAzPuy/V0cl7uHDKLLSK1oY3
+ D6y9KOTaPmjbaeueGvXwfd1Ln0DH51fWGKdocCd/BkERoNcFcg91V6THShoVicsDJBN6
+ tNJB5lVsmWuINDbheKIwyb9+rSTZWC9aOGnc+JDRj8+ZzrhUQSZ90oGsPt2r1JzTYGXu
+ JGWB/YzzRMJLAPIvzX/ZZPFPXLQdWDoEGHWc4nwQqxSr8QbVRisxDGIpEjMZ4kNR+U4J
+ sRIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764880249; x=1765485049;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3BqwSOzW1wtwIWsV9h67dzQ80+RnxXRVz74+RBt7IdY=;
+ b=Dt9lVNI+5JeD5AhvAfNG1WQoQAM6azZ+pJMFsrCGJuj+JYhZzA0a+iD/l04/j5qgoA
+ jCk+srNHMOwvsacTI2qiDBE3djv2HaZS8efi7+eMX7spfalaZARIgOXlGUHc76IlNxNh
+ DhwEvdsyojzq/1q8oIx8qxs4T0vXsU0N7ijvFxrmDEFmDkli+iyriTyJZpfOg1vFVaWS
+ bNCVocqZowrghxv9M+3p4XJD0T54nzG0Pp8oBN/sGN6ebxeFO2ND9mo1mVbOtNlKHK7Z
+ IZzhr7IX6BiSNLgXHEr8jvuSj8wYrcobhdpPEmJg00CxfrEA4qJfEZCEvyio2KKgboL9
+ T5fA==
+X-Gm-Message-State: AOJu0YyXqmeiC1Ps/T2WP/vq9TdvpondjeMmvUzWrDGAPO2nJ2NxItL3
+ MSD10a/HV94dAwvhTzXtXAsF4UtqJ/PmaNkRtO8afbyrM5QcmiGQA3XYE9XS8WVlNMc=
+X-Gm-Gg: ASbGncu8j7zGuzBjYNApS582AGTrdbSrbAPNwQVof8tEyGvMQHTx2h0dcZHh42SPbSt
+ dZ35AJr4/eAAsTVcAAZVQEns1jaCGsUxU4gyItv3PP3+rd6to8MpkLl6NTSUDHc3ffYvKHO++su
+ PQ1MbN0XILRZGMnLketxkXsbYNWDf/kx5vT/DjIhW10eyEXURwQ5wUihbNEwcd6606xSiBnOJvL
+ uWYPWNy2m2WeWXwdDMZ5ILZ7QXWyjdq75JVSWkaE18muGV+CelSqAD7lPK6gx+6tPSgbxCaKcaS
+ i7CfEa0AcXfVshf9ohmTa7KSBTrYtU4/RJJWxYZpFiA4A7s0nm9ytkdtLXnoZoLEpmlcd+hHCsy
+ U2duiZQLU6908AGkVUMUl3GJT8ZYXA7rJG5QKfz+M5kDATKpm62vzJYA0rDoT1znYP1FQUNhw8n
+ yacg8LxxWbJAo=
+X-Google-Smtp-Source: AGHT+IHXoEibkOrAjxxeMOd9PWIvyqsmYClUs3crg7XW64xGtrubNjrROS285RE5GsxCyAhdRGCEOQ==
+X-Received: by 2002:a05:600c:c494:b0:477:a36f:1a57 with SMTP id
+ 5b1f17b1804b1-4792f244c93mr38919935e9.3.1764880249502; 
+ Thu, 04 Dec 2025 12:30:49 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47930c747b8sm48983665e9.9.2025.12.04.12.30.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 04 Dec 2025 12:30:48 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 045165F7E9;
+ Thu, 04 Dec 2025 20:30:48 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Jessica Clarke <jrtc27@jrtc27.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:ARM TCG CPUs)
+Subject: [PATCH v2] target/arm: handle unaligned PC during tlb probe
+Date: Thu,  4 Dec 2025 20:30:38 +0000
+Message-ID: <20251204203039.1377662-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -75,44 +103,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To be reused in the following commit.
+PC alignment faults have priority over instruction aborts and we have
+code to deal with this in the translation front-ends. However during
+tb_lookup we can see a potentially faulting probe which doesn't get a
+MemOp set. If the page isn't available this results in
+EC_INSNABORT (0x20) instead of EC_PCALIGNMENT (0x22).
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+As there is no easy way to set the appropriate MemOp in the
+instruction fetch probe path lets just detect it in
+arm_cpu_tlb_fill_align() and set memop appropriately.
+
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3233
+Tested-by: Jessica Clarke <jrtc27@jrtc27.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+
 ---
- include/qemu/error-report.h | 6 ++++++
- util/error-report.c         | 3 +--
- 2 files changed, 7 insertions(+), 2 deletions(-)
+v2
+  - don't mess with MemOp for alignment check
+  - expand arm_deliver_fault to pick up alignment issues
+---
+ target/arm/tcg/tlb_helper.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/include/qemu/error-report.h b/include/qemu/error-report.h
-index 3ae2357fda..bcd542a118 100644
---- a/include/qemu/error-report.h
-+++ b/include/qemu/error-report.h
-@@ -74,4 +74,10 @@ extern bool message_with_timestamp;
- extern bool error_with_guestname;
- extern const char *error_guest_name;
+diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
+index f1983a5732e..5c689d3b69f 100644
+--- a/target/arm/tcg/tlb_helper.c
++++ b/target/arm/tcg/tlb_helper.c
+@@ -250,7 +250,11 @@ void arm_deliver_fault(ARMCPU *cpu, vaddr addr,
+     fsr = compute_fsr_fsc(env, fi, target_el, mmu_idx, &fsc);
  
-+/*
-+ * Returns current datetime in ISO 8601 format.
-+ * Caller is responsible to g_free() the returned string.
-+ */
-+char *real_time_iso8601(void);
-+
- #endif
-diff --git a/util/error-report.c b/util/error-report.c
-index 1b17c11de1..d6b7448183 100644
---- a/util/error-report.c
-+++ b/util/error-report.c
-@@ -169,8 +169,7 @@ static void print_loc(void)
+     if (access_type == MMU_INST_FETCH) {
+-        syn = syn_insn_abort(same_el, fi->ea, fi->s1ptw, fsc);
++        if (fi->type == ARMFault_Alignment) {
++            syn = syn_pcalignment();
++        } else {
++            syn = syn_insn_abort(same_el, fi->ea, fi->s1ptw, fsc);
++        }
+         exc = EXCP_PREFETCH_ABORT;
+     } else {
+         bool gcs = regime_is_gcs(core_to_arm_mmu_idx(env, mmu_idx));
+@@ -346,11 +350,18 @@ bool arm_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
      }
- }
  
--static char *
--real_time_iso8601(void)
-+char *real_time_iso8601(void)
- {
-     g_autoptr(GDateTime) dt = g_date_time_new_now_utc();
-     return g_date_time_format_iso8601(dt);
+     /*
+-     * Per R_XCHFJ, alignment fault not due to memory type has
+-     * highest precedence.  Otherwise, walk the page table and
+-     * and collect the page description.
++     * PC alignment faults should be dealt with at translation time
++     * but we also need to catch them while being probed.
++     *
++     * Then per R_XCHFJ, alignment fault not due to memory type take
++     * precedence. Otherwise, walk the page table and and collect the
++     * page description.
++     *
+      */
+-    if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
++    if (access_type == MMU_INST_FETCH && !cpu->env.thumb &&
++        (address & 3)) {
++        fi->type = ARMFault_Alignment;
++    } else if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
+         fi->type = ARMFault_Alignment;
+     } else if (!get_phys_addr(&cpu->env, address, access_type, memop,
+                               core_to_arm_mmu_idx(&cpu->env, mmu_idx),
 -- 
-2.48.1
+2.47.3
 
 
