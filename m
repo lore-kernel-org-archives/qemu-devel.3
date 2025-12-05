@@ -4,52 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 839BAD339B9
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 18:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13420D37496
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 20:03:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRamJ-0003Hn-OW; Fri, 05 Dec 2025 13:43:39 -0500
+	id 1vRc0a-00032G-RA; Fri, 05 Dec 2025 15:02:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1vRamH-0003Gu-GE
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 13:43:37 -0500
-Received: from mail-a.sr.ht ([46.23.81.152])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1vRamF-0002TP-01
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 13:43:37 -0500
-DKIM-Signature: a=rsa-sha256; bh=lKcU4S4dX52gx3GTm/ddyMmDfJyf2aThLjJei3Ka8gc=; 
- c=simple/simple; d=git.sr.ht;
- h=From:Date:Subject:Reply-to:In-Reply-To:To; 
- q=dns/txt; s=20240113; t=1764960213; v=1;
- b=F9O8D0VFuT8ziwYkHHRanItYCNLVd7LBo41oga5ApwEDofO2cZaePuX5AXW+yckoy5l8DlK9
- KM0c5NY+fqlkVSy68iHodj7y1j4YUlM2Btt3fKW2HNV+ZQcbYsV0IBQBg5DKXJsxylnnJmREJHo
- 4IvbY3ZPsN+A9WaSlSQPfDMpkMa2fCVjKqRlczWzDcxhrLVSs6Wa2nnH1Yg+JBo/1Ydd3MZdKDT
- nuktFQIjYySzuLzdXdozHvKd2iMERbA0IoRYm3AX2drEA4Ghv3n1vp4iC/q0MlbM/LJA1q2EIbi
- 2i/t6e1DVHi3WlG2vM5h9aIXrDd6iww2p2G3NK7cJ4PIQ==
-Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 8B811243E3
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 18:43:33 +0000 (UTC)
-From: ~katharine_chui <katharine_chui@git.sr.ht>
-Date: Fri, 05 Dec 2025 19:04:06 +0100
-Subject: [PATCH qemu 1/1] hw/input/virtio-input-hid: remove mouse buttons on
- virtio-multitouch-pci
-Message-ID: <176496021331.28461.6801034554708153621-1@git.sr.ht>
-X-Mailer: git.sr.ht
-In-Reply-To: <176496021331.28461.6801034554708153621-0@git.sr.ht>
-To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vRc0S-0002zR-BG
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 15:02:21 -0500
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vRc0Q-0003aw-4L
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 15:02:20 -0500
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-7c6d3676455so1238024a34.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 12:02:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1764964934; x=1765569734; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GI3vGAx0xMr6zMmXIPU8cIHON1TcYa/RfgyPJ8EMn+w=;
+ b=E9exaKvoRuHJmgX3Uz0sky2yNrksA8IvnPEh+kRYqt4BLYfQheEHnyp9eXjbs+Jp2X
+ L30bCHsQAQ7JSLaB9ecRYz//fZOA1FgaqMZqGZ7jdHsSUpDWzx/OUaNu8EuwvhNmh8+u
+ jn8Wz/p/TlsQZeXf2Ua0MBkVXXnOUu5isWRmVQxA0QWtSKftPOCsHvsllifdVyxUV1Th
+ hDF8twZnHbaUPDB1AQnRe89bMxrzygGeYxE9MJ8f0uTCHvFmeoeq0x87SELms49JMWWZ
+ e0VR5ij/Ia0ekmHkQysSQMODH3KuAbzRxi7219xPv3DwRo0THMwRFSRadXRucNjQnfjX
+ Iluw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1764964934; x=1765569734;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GI3vGAx0xMr6zMmXIPU8cIHON1TcYa/RfgyPJ8EMn+w=;
+ b=Pt2uWHiREwR3XlmfC6Dv7roLdsPj6olFekAyUfkHOgFj0DLElvt06TrmqTRF3z1jIj
+ z4VbOU3ATjrucNGlEE7d7mFcU6g8G+/0DUr1PAb6+sQKVgf0L+9lxRsS784QM2IgwbiL
+ GYMWtV4Pj8t24yb+Yh9JMufPYDHSRCTuWPHWjMGlsjxZ5z0c+XYtUTdylKY7gbc1xRYw
+ gjpU4RuKFOwzXtpVtkd7WbM47OFmqAxKvl2WxA4hmDvTsAXV2TUqk+AFizvMLRbKwXQk
+ RwZCH/cxWjCc76SrjttVjR5ThYtSBdpYVuM0N+z/xN2F2NZAWUEYhh0lwWH03UWyg0lg
+ kquw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUACVqL7psIpUqWIHx17NlXc7uhAiXhJI8F1SR0C5Ve+88U0v2TykZJvVrGJWs5qiKel+Og6pv89c9s@nongnu.org
+X-Gm-Message-State: AOJu0YwwJEgNluFinzTjUzGFNic77z7rdUT3wQGBJoDY19dfQ//X2C9m
+ n6efRD5IM5WheSplXi4o8Z7p22YfjRJw+5P0q+sUcflumat/eRJNZSQHW5q/OIyskrU=
+X-Gm-Gg: ASbGnctK0g38PSmXDzaWaWrfPrgwhS/dmT5lBGOId1DGbg9xt0AyUpugEJxEzOYaIEw
+ Cp1YqJ7sq5A8KHTJwflLjkERAXbaaS9bB4mHIvU+4Kt40amqqs+JUX0VUacOtMtlpjJpUGUoXgM
+ k5/nywowGY46XIYe+t2uC7D0YZKJcm9/GORDt3/C2pai4JhqoCId3AswzmIG5+6baIwStRaGdzA
+ 5epLuyx1P52Z1GhPKtF9FZuiZY4da+fVC+vG2V7sDoIFSqRo0w5MxlfkcDiGa0zDNLlU5EbGzmd
+ H8IzKnNPC/K0RIVc435raJUNGUw3gHHQQ6N4qXH9012DpF1Y3VAw8yd4BrZfKTuntHnTvj8xmK0
+ cq0OpkCxXfSXsNZwk/AEYjeiN4+OijZHJvDKWZlgRxta4jb/DjLQcPJ8jDMCaJPdwIwNv2DuhsA
+ f4oiPL8WhjCTUNZngzMLq75Oc055Y94gRHwcGlCM9gidzOsRzS7/dzAAVtA4f+fQ/Z
+X-Google-Smtp-Source: AGHT+IEO2HiBtzlWxHWgDwWaAHDMh4VW6Rgf7ZtMlJ9MSPP0Pxkk0nSfz4c4zsuywoMirN8gcBkOVg==
+X-Received: by 2002:a05:6830:440f:b0:745:a41d:22c8 with SMTP id
+ 46e09a7af769-7c97078bd54mr162048a34.1.1764964934041; 
+ Fri, 05 Dec 2025 12:02:14 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7c95a93f050sm4778872a34.12.2025.12.05.12.02.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 05 Dec 2025 12:02:13 -0800 (PST)
+Message-ID: <3d088159-6477-479b-ad75-d307a01be807@linaro.org>
+Date: Fri, 5 Dec 2025 14:02:11 -0600
 MIME-Version: 1.0
-Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
- helo=mail-a.sr.ht
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-11.0 v3 07/22] target/m68k: Use big-endian variant of
+ cpu_ld/st_data*()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20251126202200.23100-1-philmd@linaro.org>
+ <20251126202200.23100-8-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251126202200.23100-8-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -62,47 +106,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: ~katharine_chui <kwchuiaa@connect.ust.hk>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Katharine Chui <katharine.chui@gmail.com>
+On 11/26/25 14:21, Philippe Mathieu-Daudé wrote:
+> We only build the M68k target using big endianness order,
+> therefore the cpu_ld/st_data*() definitions expand to the
+> big endian declarations. Use the explicit big-endian variants.
+> 
+> Mechanical change running:
+> 
+>    $ tgt=m68k; \
+>      end=be; \
+>      for op in data mmuidx_ra; do \
+>        for ac in uw sw l q; do \
+>          sed -i -e "s/cpu_ld${ac}_${op}/cpu_ld${ac}_${end}_${op}/" \
+>                    $(git grep -l cpu_ target/${tgt}/); \
+>        done;
+>        for ac in w l q; do \
+>          sed -i -e "s/cpu_st${ac}_${op}/cpu_st${ac}_${end}_${op}/" \
+>                    $(git grep -l cpu_ target/${tgt}/); \
+>        done;
+>      done
+> 
+> Then adapting indentation in do_stack_frame() to pass checkpatch.pl.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+>   target/m68k/fpu_helper.c | 12 +++---
+>   target/m68k/op_helper.c  | 91 ++++++++++++++++++++--------------------
+>   2 files changed, 52 insertions(+), 51 deletions(-)
 
-Having mouse buttons on the multitouch devices causes ui mouse
-button events to get routed to the multitouch device, despite
-having better options such as a single point tablet or a mouse.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-This change fixes Android guests behavior when having both a mouse
-and a multitouch device present.
-
-Signed-off-by: Katharine Chui katharine.chui@gmail.com
----
- hw/input/virtio-input-hid.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
-
-diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
-index d986c3c16e3..5fe91fe498c 100644
---- a/hw/input/virtio-input-hid.c
-+++ b/hw/input/virtio-input-hid.c
-@@ -540,7 +540,7 @@ static const TypeInfo virtio_tablet_info = {
- 
- static const QemuInputHandler virtio_multitouch_handler = {
-     .name  = VIRTIO_ID_NAME_MULTITOUCH,
--    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_MTT,
-+    .mask  = INPUT_EVENT_MASK_MTT,
-     .event = virtio_input_handle_event,
-     .sync  = virtio_input_handle_sync,
- };
-@@ -603,9 +603,6 @@ static void virtio_multitouch_init(Object *obj)
- 
-     vhid->handler = &virtio_multitouch_handler;
-     virtio_input_init_config(vinput, virtio_multitouch_config);
--    virtio_input_extend_config(vinput, keymap_button,
--                               ARRAY_SIZE(keymap_button),
--                               VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
-     virtio_input_extend_config(vinput, abs_props,
-                                ARRAY_SIZE(abs_props),
-                                VIRTIO_INPUT_CFG_PROP_BITS, 0);
--- 
-2.49.1
+r~
 
