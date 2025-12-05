@@ -4,62 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F0FD2F7D8
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 10:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F24D2F7DA
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 10:55:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRTBU-0008OH-N7; Fri, 05 Dec 2025 05:37:08 -0500
+	id 1vRTSM-0003JN-Uh; Fri, 05 Dec 2025 05:54:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vRTBS-0008NY-8a; Fri, 05 Dec 2025 05:37:06 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ id 1vRTSK-0003JB-E0; Fri, 05 Dec 2025 05:54:32 -0500
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vRTBO-0003Vs-EJ; Fri, 05 Dec 2025 05:37:06 -0500
+ id 1vRTSH-0006Li-SD; Fri, 05 Dec 2025 05:54:32 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDHtVzAtTJpbWE6AQ--.25252S2;
- Fri, 05 Dec 2025 18:36:48 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwDX31PguTJpV3E6AQ--.62741S2;
+ Fri, 05 Dec 2025 18:54:24 +0800 (CST)
 Received: from [10.31.62.13] (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCn_eqytTJpU8QJAA--.4346S2;
- Fri, 05 Dec 2025 18:36:43 +0800 (CST)
-Message-ID: <ab0edbd5-9556-424a-83ab-452801d617a8@phytium.com.cn>
-Date: Fri, 5 Dec 2025 18:36:34 +0800
+ by mail (Coremail) with SMTP id AQAAfwAXce7XuTJp_cUJAA--.24747S2;
+ Fri, 05 Dec 2025 18:54:18 +0800 (CST)
+Message-ID: <525bfc6f-041e-4fa5-8f11-c37a9fbcecba@phytium.com.cn>
+Date: Fri, 5 Dec 2025 18:54:15 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v3 18/21] hw/arm/smmuv3: Harden security checks in MMIO
- handlers
-To: eric.auger@redhat.com, Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [RFC v3 19/21] hw/arm/smmuv3: Use iommu_index to represent the
+ security context
+To: eric.auger@redhat.com, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>
+ Mostafa Saleh <smostafa@google.com>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>
 References: <20251012150701.4127034-1-tangtao1634@phytium.com.cn>
- <20251012151437.4130770-1-tangtao1634@phytium.com.cn>
- <04533911-e6f5-42d6-9813-85e97ce13d38@redhat.com>
+ <20251012151501.4131026-1-tangtao1634@phytium.com.cn>
+ <dbc4d33e-3477-4f39-a745-4fdc0866fc08@linaro.org>
+ <5bde6664-c830-44dd-9513-700980a43ade@phytium.com.cn>
+ <75d10ffd-eafe-4daa-b763-6e1f3e90c766@linaro.org>
+ <b5300243-01c0-4764-b2d1-5ed8ae70e499@phytium.com.cn>
+ <8b1c2587-dd5c-481f-9509-a60b853208d2@redhat.com>
 From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <04533911-e6f5-42d6-9813-85e97ce13d38@redhat.com>
+In-Reply-To: <8b1c2587-dd5c-481f-9509-a60b853208d2@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCn_eqytTJpU8QJAA--.4346S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAPBWkx6ywEzQAAsd
+X-CM-TRANSID: AQAAfwAXce7XuTJp_cUJAA--.24747S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAPBWkx6ywFAQAAsQ
 Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxKFy7Kr1UJr47JryrXFyUGFg_yoWxJr1xpr
- 4DK3W5Gr4DKF17XF4Sqw4kCFyrCrZ2grW7C393K3yUZa45Cr95JF40k34Y93ZrGr1UZa1x
- AF1FvrWfur1YyrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxtrWxKFy5CF1Duw43tryUAwb_yoWftFWUpF
+ W8GFWUKrZ8JF1rAr1Iq3WUZrW3tryxJw13Xr1rKF1UAr4qyrn2qr48Xr1Y9r1DXr48AF1j
+ vw1UJFW7ur15ArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -79,168 +85,235 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Eric,
 
-On 2025/12/4 22:59, Eric Auger wrote:
+On 2025/12/4 23:05, Eric Auger wrote:
 >
-> On 10/12/25 5:14 PM, Tao Tang wrote:
->> This patch hardens the security validation within the main MMIO
->> dispatcher functions (smmu_read_mmio and smmu_write_mmio).
+> On 10/20/25 10:44 AM, Tao Tang wrote:
+>> Hi Pierrick,
 >>
->> First, accesses to the secure register space are now correctly gated by
->> whether the SECURE_IMPL feature is enabled in the model. This prevents
->> guest software from accessing the secure programming interface when it is
->> disabled, though some registers are exempt from this check as per the
->> architecture.
+>> On 2025/10/16 15:04, Pierrick Bouvier wrote:
+>>> On 10/15/25 11:37 PM, Tao Tang wrote:
+>>>> Hi Pierrick:
+>>>>
+>>>> On 2025/10/15 08:02, Pierrick Bouvier wrote:
+>>>>> Hi Tao,
+>>>>>
+>>>>> On 10/12/25 8:15 AM, Tao Tang wrote:
+>>>>>> The Arm SMMUv3 architecture uses a SEC_SID (Secure StreamID) to
+>>>>>> select
+>>>>>> the programming interface. To support future extensions like RME,
+>>>>>> which
+>>>>>> defines four security states (Non-secure, Secure, Realm, and
+>>>>>> Root), the
+>>>>>> QEMU model must cleanly separate these contexts for all operations.
+>>>>>>
+>>>>>> This commit leverages the generic iommu_index to represent this
+>>>>>> security context. The core IOMMU layer now uses the SMMU's
+>>>>>> .attrs_to_index
+>>>>>> callback to map a transaction's ARMSecuritySpace attribute to the
+>>>>>> corresponding iommu_index.
+>>>>>>
+>>>>>> This index is then passed down to smmuv3_translate and used
+>>>>>> throughout
+>>>>>> the model to select the correct register bank and processing
+>>>>>> logic. This
+>>>>>> makes the iommu_index the clear QEMU equivalent of the architectural
+>>>>>> SEC_SID, cleanly separating the contexts for all subsequent lookups.
+>>>>>>
+>>>>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>>>>> ---
+>>>>>>     hw/arm/smmuv3.c | 36 +++++++++++++++++++++++++++++++++++-
+>>>>>>     1 file changed, 35 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>>>>>> index c9c742c80b..b44859540f 100644
+>>>>>> --- a/hw/arm/smmuv3.c
+>>>>>> +++ b/hw/arm/smmuv3.c
+>>>>>> @@ -1080,6 +1080,38 @@ static void smmuv3_fixup_event(SMMUEventInfo
+>>>>>> *event, hwaddr iova)
+>>>>>>         }
+>>>>>>     }
+>>>>>>     +static SMMUSecSID smmuv3_attrs_to_sec_sid(MemTxAttrs attrs)
+>>>>>> +{
+>>>>>> +    switch (attrs.space) {
+>>>>>> +    case ARMSS_Secure:
+>>>>>> +        return SMMU_SEC_SID_S;
+>>>>>> +    case ARMSS_NonSecure:
+>>>>>> +    default:
+>>>>>> +        return SMMU_SEC_SID_NS;
+>>>>>> +    }
+>>>>>> +}
+>>>>>> +
+>>>>>> +/*
+>>>>>> + * ARM IOMMU index mapping (implements SEC_SID from ARM SMMU):
+>>>>>> + * iommu_idx = 0: Non-secure transactions
+>>>>>> + * iommu_idx = 1: Secure transactions
+>>>>>> + *
+>>>>>> + * The iommu_idx parameter effectively implements the SEC_SID
+>>>>>> + * (Security Stream ID) attribute from the ARM SMMU architecture
+>>>>>> specification,
+>>>>>> + * which allows the SMMU to differentiate between different security
+>>>>>> state
+>>>>>> + * transactions at the hardware level.
+>>>>>> + */
+>>>>>> +static int smmuv3_attrs_to_index(IOMMUMemoryRegion *iommu,
+>>>>>> MemTxAttrs attrs)
+>>>>>> +{
+>>>>>> +    return (int)smmuv3_attrs_to_sec_sid(attrs);
+>>>>>> +}
+>>>>>> +
+>>>>>> +static int smmuv3_num_indexes(IOMMUMemoryRegion *iommu)
+>>>>>> +{
+>>>>>> +    /* Support 2 IOMMU indexes for now: NS/S */
+>>>>>> +    return SMMU_SEC_SID_NUM;
+>>>>>> +}
+>>>>>> +
+>>>>>>     /* Entry point to SMMU, does everything. */
+>>>>>>     static IOMMUTLBEntry smmuv3_translate(IOMMUMemoryRegion *mr,
+>>>>>> hwaddr
+>>>>>> addr,
+>>>>>>                                           IOMMUAccessFlags flag, int
+>>>>>> iommu_idx)
+>>>>>> @@ -1087,7 +1119,7 @@ static IOMMUTLBEntry
+>>>>>> smmuv3_translate(IOMMUMemoryRegion *mr, hwaddr addr,
+>>>>>>         SMMUDevice *sdev = container_of(mr, SMMUDevice, iommu);
+>>>>>>         SMMUv3State *s = sdev->smmu;
+>>>>>>         uint32_t sid = smmu_get_sid(sdev);
+>>>>>> -    SMMUSecSID sec_sid = SMMU_SEC_SID_NS;
+>>>>>> +    SMMUSecSID sec_sid = iommu_idx;
+>>>>>>         SMMUv3RegBank *bank = smmuv3_bank(s, sec_sid);
+>>>>>>         SMMUEventInfo event = {.type = SMMU_EVT_NONE,
+>>>>>>                                .sid = sid,
+>>>>>> @@ -2540,6 +2572,8 @@ static void
+>>>>>> smmuv3_iommu_memory_region_class_init(ObjectClass *klass,
+>>>>>>           imrc->translate = smmuv3_translate;
+>>>>>>         imrc->notify_flag_changed = smmuv3_notify_flag_changed;
+>>>>>> +    imrc->attrs_to_index = smmuv3_attrs_to_index;
+>>>>>> +    imrc->num_indexes = smmuv3_num_indexes;
+>>>>>>     }
+>>>>>>       static const TypeInfo smmuv3_type_info = {
+>>>>> I noticed that this commit breaks boot of a simple Linux kernel. It
+>>>>> was already the case with v2, and it seems there is a deeper issue.
+>>>>>
+>>>>> Virtio drive initialization hangs up with:
+>>>>> [    9.421906] virtio_blk virtio2: [vda] 20971520 512-byte logical
+>>>>> blocks (10.7 GB/10.0 GiB)
+>>>>> smmuv3_translate_disable smmuv3-iommu-memory-region-24-3 sid=0x18
+>>>>> bypass (smmu disabled) iova:0xfffff040 is_write=1
+>>>>>
+>>>>> You can reproduce that with any kernel/rootfs, but if you want a
+>>>>> simple recipe (you need podman and qemu-user-static):
+>>>>> $ git clone https://github.com/pbo-linaro/qemu-linux-stack
+>>>>> $ cd qemu-linux-stack
+>>>>> $ ./build_kernel.sh
+>>>>> $ ./build_rootfs.sh
+>>>>> $ /path/to/qemu-system-aarch64 \
+>>>>> -nographic -M virt,iommu=smmuv3 -cpu max -kernel out/Image.gz \
+>>>>> -append "root=/dev/vda rw" out/host.ext4 -trace 'smmuv3*'
+>>>>>
+>>>>> Looking more closely,
+>>>>> we reach SMMU_TRANS_DISABLE, because iommu_idx associated is 1.
+>>>>> This values comes from smmuv3_attrs_to_sec_sid, by reading
+>>>>> attrs.space, which is ArmSS_Secure.
+>>>>>
+>>>>> The problem is that it's impossible to have anything Secure given that
+>>>>> all the code above runs in NonSecure world.
+>>>>> After investigation, the original value read from attrs.space has not
+>>>>> been set anywhere, and is just the default zero-initialized value
+>>>>> coming from pci_msi_trigger. It happens that it defaults to SEC_SID_S,
+>>>>> which probably matches your use case with hafnium, but it's an happy
+>>>>> accident.
+>>>>>
+>>>>> Looking at the SMMU spec, I understand that SEC_SID is configured for
+>>>>> each stream, and can change dynamically.
+>>>>> On the opposite, a StreamID is fixed and derived from PCI bus and slot
+>>>>> for a given device.
+>>>>>
+>>>>> Thus, I think we are missing some logic here.
+>>>>> I'm still trying to understand where the SEC_SID should come from
+>>>>> initially.
+>>>>> "The association between a device and the Security state of the
+>>>>> programming interface is a system-defined property."
+>>>>> Does it mean we should be able to set a QEMU property for any device?
+>>>>>
+>>>>> Does anyone familiar with this has some idea?
+>>>>>
+>>>>> As well, we should check the SEC_SID found based on
+>>>>> SMMU_S_IDR1.SECURE_IMPL.
+>>>>> 3.10.1 StreamID Security state (SEC_SID)
+>>>>> If SMMU_S_IDR1.SECURE_IMPL == 0, then incoming transactions have a
+>>>>> StreamID, and either:
+>>>>> • A SEC_SID identifier with a value of 0.
+>>>>> • No SEC_SID identifer, and SEC_SID is implicitly treated as 0.
+>>>>> If SMMU_S_IDR1.SECURE_IMPL == 1, incoming transactions have a
+>>>>> StreamID, and a SEC_SID identifier.
+>>>>>
+>>>>> Regards,
+>>>>> Pierrick
+>>>> Thank you very much for your detailed review and in-depth analysis, and
+>>>> for pointing out this critical issue that breaks the Linux boot.
+>>>>
+>>>>
+>>>> To be transparent, my initial approach was indeed tailored to my
+>>>> specific test case, where I was effectively hardcoding the device's
+>>>> StreamID to represent it's a so-called Secure device in my self
+>>>> testing.
+>>>> This clearly isn't a general solution.
+>>>>
+>>> It's definitely not a bad approach, and it's a good way to exercise
+>>> the secure path. It would have been caught by some of QEMU functional
+>>> tests anyway, so it's not a big deal.
+>>>
+>>> A solution would be to define the secure attribute as a property of
+>>> the PCI device, and query that to identify sec_sid accordingly.
+>>> As you'll see in 3.10.1 StreamID Security state (SEC_SID), "Whether a
+>>> stream is under Secure control or not is a different property to the
+>>> target PA space of a transaction.", so we definitely should *not* do
+>>> any funky stuff depending on which address is accessed.
 >>
->> Second, the check for the input stream's security is made more robust.
->> It now validates not only the legacy MemTxAttrs.secure bit, but also
->> the .space field. This brings the SMMU's handling of security spaces
->> into full alignment with the PE.
+>> Thank you for the encouraging and very constructive feedback.
 >>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   hw/arm/smmuv3.c | 64 +++++++++++++++++++++++++++++++++++++++++++++++++
->>   1 file changed, 64 insertions(+)
 >>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 4ac7a2f3c7..c9c742c80b 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -1458,6 +1458,12 @@ static bool smmu_eventq_irq_cfg_writable(SMMUv3State *s, SMMUSecSID sec_sid)
->>       return smmu_irq_ctl_evtq_irqen_disabled(s, sec_sid);
->>   }
->>   
->> +/* Check if the SMMU hardware itself implements secure state features */
->> +static inline bool smmu_hw_secure_implemented(SMMUv3State *s)
->> +{
->> +    return FIELD_EX32(s->bank[SMMU_SEC_SID_S].idr[1], S_IDR1, SECURE_IMPL);
->> +}
->> +
->>   static int smmuv3_cmdq_consume(SMMUv3State *s, SMMUSecSID sec_sid)
->>   {
->>       SMMUState *bs = ARM_SMMU(s);
->> @@ -1712,6 +1718,55 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, SMMUSecSID sec_sid)
->>       return 0;
->>   }
->>   
->> +/*
->> + * Check if a register is exempt from the secure implementation check.
->> + *
->> + * The SMMU architecture specifies that certain secure registers, such as
->> + * the secure Event Queue IRQ configuration registers, must be accessible
->> + * even if the full secure hardware is not implemented. This function
->> + * identifies those registers.
->> + *
->> + * Returns true if the register is exempt, false otherwise.
->> + */
->> +static bool is_secure_impl_exempt_reg(hwaddr offset)
->> +{
->> +    switch (offset) {
->> +    case A_S_EVENTQ_IRQ_CFG0:
->> +    case A_S_EVENTQ_IRQ_CFG1:
->> +    case A_S_EVENTQ_IRQ_CFG2:
->> +        return true;
->> +    default:
->> +        return false;
->> +    }
->> +}
->> +
->> +/* Helper function for Secure register access validation */
-> I think we shall improve the doc commennt for the function. I understand
-> @offset is a secure register offset and the function returns whether the
-> access to the secure register is possible. This requires a) the access
-> to be secure and in general secure state support exccet for few regs?
->> +static bool smmu_check_secure_access(SMMUv3State *s, MemTxAttrs attrs,
->> +                                     hwaddr offset, bool is_read)
->> +{   /* Check if the access is secure */
->> +    if (!(attrs.space == ARMSS_Secure ||
->> +          attrs.secure == 1)) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +            "%s: Non-secure %s attempt at offset 0x%" PRIx64 " (%s)\n",
->> +            __func__, is_read ? "read" : "write", offset,
->> +            is_read ? "RAZ" : "WI");
->> +        return false;
->> +    }
->> +
->> +    /*
->> +     * Check if the secure state is implemented. Some registers are exempted
->> +     * from this check.
->> +     */
->> +    if (!is_secure_impl_exempt_reg(offset) && !smmu_hw_secure_implemented(s)) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +            "%s: Secure %s attempt at offset 0x%" PRIx64 ". But Secure state "
->> +            "is not implemented (RES0)\n",
->> +            __func__, is_read ? "read" : "write", offset);
->> +        return false;
->> +    }
->> +    return true;
->> +}
->> +
->>   static MemTxResult smmu_writell(SMMUv3State *s, hwaddr offset,
->>                                   uint64_t data, MemTxAttrs attrs,
->>                                   SMMUSecSID reg_sec_sid)
->> @@ -2058,6 +2113,10 @@ static MemTxResult smmu_write_mmio(void *opaque, hwaddr offset, uint64_t data,
->>        * statement to handle those specific security states.
->>        */
->>       if (offset >= SMMU_SECURE_REG_START) {
->> +        if (!smmu_check_secure_access(s, attrs, offset, false)) {
->> +            trace_smmuv3_write_mmio(offset, data, size, MEMTX_OK);
->> +            return MEMTX_OK;
-> so the access to @offset is not permitted and we return MEMTX_OK? I am
-> confused
->> +        }
->>           reg_sec_sid = SMMU_SEC_SID_S;
->>       }
->>   
->> @@ -2248,6 +2307,11 @@ static MemTxResult smmu_read_mmio(void *opaque, hwaddr offset, uint64_t *data,
->>       offset &= ~0x10000;
->>       SMMUSecSID reg_sec_sid = SMMU_SEC_SID_NS;
->>       if (offset >= SMMU_SECURE_REG_START) {
->> +        if (!smmu_check_secure_access(s, attrs, offset, true)) {
->> +            *data = 0;
->> +            trace_smmuv3_read_mmio(offset, *data, size, MEMTX_OK);
->> +            return MEMTX_OK;
-> same here?
->> +        }
->>           reg_sec_sid = SMMU_SEC_SID_S;
->>       }
->>   
+>> Your proposed solution—to define the security attribute as a property
+>> on the PCIDevice—is the perfect way forward to resolve Secure device
+>> issue. Perhaps we can implement this functionality in V4 as shown in
+>> the following code snippet?
+>>
+>> 1)  define sec_sid in include/hw/pci/pci_device.h:
+>>
+>> struct PCIDevice {
+>>      DeviceState qdev;
+>> ......
+>>      /* Add SEC_SID property for SMMU security context */
+>>      uint8_t sec_sid;  /* 0 = Non-secure, 1 = Secure*/
+>> ......
+>>
+>> }
+>>
+>>
+>> 2) then add sec-sid field in the Property of PCI in hw/pci/pci.c:
+>>
+>> static const Property pci_props[] = {
+>> ......
+>>      /* SEC_SID property: 0=NS, 1=S */
+>>      DEFINE_PROP_UINT8("sec-sid", PCIDevice, sec_sid, 0),
+>>
+>> ......
+>>
+>> };
+> As this impacts the PCIe subsystem, I would encourage to submit that
+> change in a separate pre-requisite series. This needs to be reviewed by
+> Michael and other PCIe specialists.
+>
 > Thanks
 >
 > Eric
 
 
-Thanks for the review and for calling out the confusion around this helper.
+OK. I'll split this feature into another patch. Thanks for the guidance!
 
 
-The function `smmu_check_secure_access` and `return MEMTX_OK` statement 
-after smmu_check_secure_access returned false is trying to follow the 
-SECURE_IMPL rules from the architecture spec:
-
-ARM IHI 0070 G.b , 6.2 Register overview
-
-- When SMMU_S_IDR1.SECURE_IMPL == 1, SMMU_S_* registers are RAZ/WI to 
-Non-secure access. See section 3.11 Reset, Enable and initialization 
-regarding Non-secure access to SMMU_S_INIT. All other registers are 
-accessible to both Secure and Non-secure accesses.
-- When SMMU_S_IDR1.SECURE_IMPL == 0, SMMU_S_* registers are RES0.
-
-
-So the MEMTX_OK in the MMIO handlers is deliberate: we are acknowledging 
-the bus transaction while applying the architectural RAZ/WI/RES0 
-semantics at the register level, rather than modelling a bus abort. Also 
-there was another discussion about this issue [1]  in V1 series.
-
-[1] 
-  https://lore.kernel.org/qemu-devel/a5154459-a632-42b0-b599-d5dff85b5dd2@phytium.com.cn/
-
-
-I'll add these needed details and parameters introduction as comment 
-in `smmu_check_secure_access` and `return MEMTX_OK`. How do you think 
-about it?
-
-
-Thanks again for the feedback,
-
+Best regards,
 Tao
+
 
 
