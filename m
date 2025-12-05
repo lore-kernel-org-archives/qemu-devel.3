@@ -4,55 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBEA9D2E008
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 05:41:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B279D2E008
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 06:02:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vROX6-0008K6-Ds; Fri, 05 Dec 2025 00:39:08 -0500
+	id 1vROsg-0001N2-1k; Fri, 05 Dec 2025 01:01:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vROWs-0008Hr-2W
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 00:38:55 -0500
-Received: from inva021.nxp.com ([92.121.34.21])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vROsd-0001Lx-3J
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:01:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vROWi-0005L2-4m
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 00:38:48 -0500
-Received: from inva021.nxp.com (localhost [127.0.0.1])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 279E82012B6;
- Fri,  5 Dec 2025 06:38:25 +0100 (CET)
-Received: from aprdc01srsp001v.ap-rdc01.nxp.com
- (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id F1409201609;
- Fri,  5 Dec 2025 06:38:24 +0100 (CET)
-Received: from lsv031015.swis.in-blr01.nxp.com
- (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 6A1A2180008F;
- Fri,  5 Dec 2025 13:38:24 +0800 (+08)
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vROsb-0001AM-I5
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:01:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764914480;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VGkNaCzhCw3v4jH8/dB2OVsQaRN2+wwCTCMpToS1J0c=;
+ b=VwwpvSdUcL3EdVfmZY/F++/EN6tEc7JR5Kpm0pfUrN2qYO7o6ZJ/n/JviluZN2qMXLaBb8
+ aLkOEdEmjBdVZVYOAgpzYBPfWpndy54dU/8/FsWToiPwHurF7pNLaahHKyvi/lsWVs+KtV
+ f6Z287waD7l/UOKOjNillxPLwOu7bDg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-WSOa7I1MPUSRho6r8q-HdQ-1; Fri,
+ 05 Dec 2025 01:01:16 -0500
+X-MC-Unique: WSOa7I1MPUSRho6r8q-HdQ-1
+X-Mimecast-MFC-AGG-ID: WSOa7I1MPUSRho6r8q-HdQ_1764914475
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0D34D180121E; Fri,  5 Dec 2025 06:01:15 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.55])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8B6D63000701; Fri,  5 Dec 2025 06:01:11 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>
-Subject: [PATCHv4 11/15] hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
-Date: Fri,  5 Dec 2025 11:08:15 +0530
-Message-Id: <20251205053819.2021772-12-gaurav.sharma_7@nxp.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251205053819.2021772-1-gaurav.sharma_7@nxp.com>
-References: <20251205053819.2021772-1-gaurav.sharma_7@nxp.com>
+Cc: Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ed Maste <emaste@freebsd.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 02/15] python/mkvenv: bump 'qemu.qmp' dependency for
+ testdeps
+Date: Fri,  5 Dec 2025 01:00:44 -0500
+Message-ID: <20251205060058.1503170-3-jsnow@redhat.com>
+In-Reply-To: <20251205060058.1503170-1-jsnow@redhat.com>
+References: <20251205060058.1503170-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.21;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva021.nxp.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,136 +92,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It enables emulation of WDT in iMX8MM
-Added WDT IRQ lines
+First up, use the newest v0.0.5 instead of the older v0.0.3.
 
-Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Secondly, the use of a period in the key name does not behave as
+expected when installing and checking for dependencies, so quote this
+string instead.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 ---
- docs/system/arm/imx8mm-evk.rst |  1 +
- hw/arm/Kconfig                 |  1 +
- hw/arm/fsl-imx8mm.c            | 28 ++++++++++++++++++++++++++++
- include/hw/arm/fsl-imx8mm.h    |  7 +++++++
- 4 files changed, 37 insertions(+)
+ pythondeps.toml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/system/arm/imx8mm-evk.rst b/docs/system/arm/imx8mm-evk.rst
-index fb74950e28..b7034ff472 100644
---- a/docs/system/arm/imx8mm-evk.rst
-+++ b/docs/system/arm/imx8mm-evk.rst
-@@ -17,6 +17,7 @@ The ``imx8mm-evk`` machine implements the following devices:
-  * 5 GPIO Controllers
-  * 6 I2C Controllers
-  * 3 SPI Controllers
-+ * 3 Watchdogs
-  * Secure Non-Volatile Storage (SNVS) including an RTC
-  * Clock Tree
+diff --git a/pythondeps.toml b/pythondeps.toml
+index 98e99e79005..1657953ff65 100644
+--- a/pythondeps.toml
++++ b/pythondeps.toml
+@@ -32,5 +32,5 @@ sphinx = { accepted = ">=3.4.3", installed = "6.2.1", canary = "sphinx-build" }
+ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.2.2" }
  
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 43f27735ad..b757557ac7 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -638,6 +638,7 @@ config FSL_IMX8MM
-     select SDHCI
-     select PCI_EXPRESS_DESIGNWARE
-     select PCI_EXPRESS_FSL_IMX8M_PHY
-+    select WDT_IMX2
- 
- config FSL_IMX8MM_EVK
-     bool
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 6b5b769733..16599cc58f 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -200,6 +200,11 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
-     }
- 
-+    for (i = 0; i < FSL_IMX8MM_NUM_WDTS; i++) {
-+        g_autofree char *name = g_strdup_printf("wdt%d", i);
-+        object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
-+    }
-+
-     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
-     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
-                             TYPE_FSL_IMX8M_PCIE_PHY);
-@@ -486,6 +491,28 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-     sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
-                     fsl_imx8mm_memmap[FSL_IMX8MM_SNVS_HP].addr);
- 
-+    /* Watchdogs */
-+    for (i = 0; i < FSL_IMX8MM_NUM_WDTS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } wdog_table[FSL_IMX8MM_NUM_WDTS] = {
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG1].addr, FSL_IMX8MM_WDOG1_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG2].addr, FSL_IMX8MM_WDOG2_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG3].addr, FSL_IMX8MM_WDOG3_IRQ },
-+        };
-+
-+        object_property_set_bool(OBJECT(&s->wdt[i]), "pretimeout-support",
-+                                 true, &error_abort);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[i]), 0, wdog_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[i]), 0,
-+                           qdev_get_gpio_in(gicdev, wdog_table[i].irq));
-+    }
-+
-     /* PCIe */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie), errp)) {
-         return;
-@@ -526,6 +553,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MM_SNVS_HP:
-         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
-         case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
-+        case FSL_IMX8MM_WDOG1 ... FSL_IMX8MM_WDOG3:
-             /* device implemented and treated above */
-             break;
- 
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 33fbfb72da..70292a2a9b 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -22,6 +22,7 @@
- #include "hw/pci-host/fsl_imx8m_phy.h"
- #include "hw/sd/sdhci.h"
- #include "hw/ssi/imx_spi.h"
-+#include "hw/watchdog/wdt_imx2.h"
- #include "qom/object.h"
- #include "qemu/units.h"
- 
-@@ -39,6 +40,7 @@ enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_IRQS         = 128,
-     FSL_IMX8MM_NUM_UARTS        = 4,
-     FSL_IMX8MM_NUM_USDHCS       = 3,
-+    FSL_IMX8MM_NUM_WDTS         = 3,
- };
- 
- struct FslImx8mmState {
-@@ -54,6 +56,7 @@ struct FslImx8mmState {
-     IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
-     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
-     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
-+    IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
-     DesignwarePCIEHost pcie;
-     FslImx8mPciePhyState   pcie_phy;
- };
-@@ -199,6 +202,10 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_GPIO5_LOW_IRQ  = 72,
-     FSL_IMX8MM_GPIO5_HIGH_IRQ = 73,
- 
-+    FSL_IMX8MM_WDOG1_IRQ    = 78,
-+    FSL_IMX8MM_WDOG2_IRQ    = 79,
-+    FSL_IMX8MM_WDOG3_IRQ    = 10,
-+
-     FSL_IMX8MM_PCI_INTA_IRQ = 122,
-     FSL_IMX8MM_PCI_INTB_IRQ = 123,
-     FSL_IMX8MM_PCI_INTC_IRQ = 124,
+ [testdeps]
+-qemu.qmp = { accepted = ">=0.0.3", installed = "0.0.3" }
++"qemu.qmp" = { accepted = ">=0.0.5", installed = "0.0.5" }
+ pygdbmi = { accepted = ">=0.11.0.0", installed = "0.11.0.0" }
 -- 
-2.34.1
+2.51.1
 
 
