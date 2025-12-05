@@ -4,100 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11AB9D2F7EE
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 12:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4361FD2F7E7
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 13:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRVEf-0000It-Dr; Fri, 05 Dec 2025 07:48:33 -0500
+	id 1vRVR3-0002Mx-W0; Fri, 05 Dec 2025 08:01:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRVEc-0000I6-Mz
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 07:48:31 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRVEb-0008Gn-38
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 07:48:30 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4779cb0a33fso26679885e9.0
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 04:48:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764938907; x=1765543707; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lpuVh6DG9qvoJ0274flsNCi6sGerVBh2AYKO8Kbw9zU=;
- b=f+a0bh4/+r/20101xNSmFu+6LwgO7f3+mQLBab5r67T/fsqPdG6lifXpSrbInPF5Yx
- zCMV87GKyOA0y+MwxHAW2rDqHHrVbSY4AO5g55GyorYaQwLcTc6osvRX21P1kYwOy0BC
- tYUQnjIlh5nPvhch0LVIbLUlB2YMxSo7nN05k7JcLfUp9S6xeqySkpz2QU3PSpSvha4g
- KCwM8lQtlFG3EOGbTZEsPPpGsFtYbzRfH2jZIhtv5vvrCcbiG2kAy+2+reAXS82tTDUE
- U7UPOq7WGl0zHhYsgvaSThFvlZQ1/pG2rqJnfUbUDDcsxLKxWpNxY9Fqt8HOUNUm/gyR
- MKDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764938907; x=1765543707;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lpuVh6DG9qvoJ0274flsNCi6sGerVBh2AYKO8Kbw9zU=;
- b=iuzIwp9uCrYNfN4L+0Kr8/1bN7toKzRIbA7qGSRecOn2ZfuGKmI/FIDioRV9FG8lt7
- 6Bh681g8Gs0xF6W0yezsgMYtlBNkWbsP3crfDU/KvllloHZoMX3hwkMCT+HvXXhzZ2bN
- GArskO8oYCLGO9uyCNQxRzOi9sng3z8TXQcUVByUr+GrIwrnY/OQBX7gJOYz9ln9fmJ7
- u038nh66Q1uJYTpboVq7fmE5pP2FkzTRrFgvKFdYAHsqv1lI3kauJUDMeCIVcD0xZ1DY
- 0+sa827eGZcmrGNoNMzcwcR+RJoStjaqkOsbTSR/uX8r/94vTkdHAb4NJozI4o0VB9TF
- ml6Q==
-X-Gm-Message-State: AOJu0Yyshs5HPt6P6+/j+8XDqYIwCHsr523MhIadYEUwKp3jd8NaUGeM
- O5Od36/uEKiMn/NiDg1vKAjjw7EhUutM9sOawKI89nHejObRipMhrhStxwQKwfEhRWM=
-X-Gm-Gg: ASbGncv2UJ2H1mUDl87xrfL3UttXS2tcjUvPlY3wOTUbI/z9lGDiCTdYmXdqntfdmz+
- gwRkqh38YC64A0C3XHPPEu7p0Sibr3fmXlRcKrxi1L8+GcmtLl5krqC6q5vTSBcgJeCKGoexDT0
- CP43eZFrzdOaBSlcXDF80HCs4/9S2HEsv2g5kGg2a2lxBHNE98iwi5fhK1w7oefEQHlN5dXNuAE
- l/Lv2SeaT7hehHTP4AETSQaJuQ5B1JYpMLncizwUX+CFxJ2euwDgeT3W6Mo0H374ZaY0BEByYuZ
- w2Jfzi+pRRF5frFx1hRczb+i9I8wJJDOSeDFdHKyimUEUS93mIrohM+gtAjETlhtIPHfiGGX1KZ
- yM+DVwFie6GZKjVGuaAqOW6lROOdMFgzOWY2+VKhuzt9KTUR1GzYTGjnZ5EcEZbBn2O5UNfzhKz
- EAok3C8RzAkUM=
-X-Google-Smtp-Source: AGHT+IEv99LC8F9/+jU9bybOxDkL/vVwWgU7AB0pQOQTaULGjtEyfp5BI98abejrNQIakonCK0GIHw==
-X-Received: by 2002:a05:600c:a0b:b0:471:13fa:1b84 with SMTP id
- 5b1f17b1804b1-4792aeeb501mr116614965e9.12.1764938906993; 
- Fri, 05 Dec 2025 04:48:26 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47930920b6dsm94124215e9.1.2025.12.05.04.48.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Dec 2025 04:48:26 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 88FE95F7F6;
- Fri, 05 Dec 2025 12:48:25 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,  Alexandre Iooss <erdnaxe@crans.org>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Markus Armbruster
- <armbru@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,  Qemu-block <qemu-block@nongnu.org>,
- Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH v2 05/11] tests/lcitool: add nettle to the minimal deps
-In-Reply-To: <f077e5e1-53b7-42d8-b457-90fdf775c71b@redhat.com> (Thomas Huth's
- message of "Fri, 5 Dec 2025 07:37:13 +0100")
-References: <20251204194902.1340008-1-alex.bennee@linaro.org>
- <20251204194902.1340008-6-alex.bennee@linaro.org>
- <f077e5e1-53b7-42d8-b457-90fdf775c71b@redhat.com>
-User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Fri, 05 Dec 2025 12:48:25 +0000
-Message-ID: <87a4zxrt5y.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vRVQI-0002Em-L2
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 08:00:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vRVQC-0004Y5-Jz
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 08:00:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764939626;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=lxku6T/oohlVvZfVHLJAee1FSVq1nv+dC7aANtRugmo=;
+ b=b36Ee1X+5zOh2ISPPxMNZ04wbmn0iLJjfPt2QiAFasKkz7+0ibSIDSaSIcyxU72ujitkQR
+ gjy5ViGNQjzBYe+oNq4I51oTcCXlEHGfdxiTCcJoEOT2soD6Hi4y9kRbvJJNTDfDIhZ3q+
+ nam88fwFiOnQ6sEiRjAaSoRUE+WUopM=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-AP3ah9qgM3SJEsfIwLVCOg-1; Fri,
+ 05 Dec 2025 08:00:20 -0500
+X-MC-Unique: AP3ah9qgM3SJEsfIwLVCOg-1
+X-Mimecast-MFC-AGG-ID: AP3ah9qgM3SJEsfIwLVCOg_1764939619
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BE101800451; Fri,  5 Dec 2025 13:00:19 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.22.15])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3C7E5180028C; Fri,  5 Dec 2025 13:00:15 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Hanna Reitz <hreitz@redhat.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH] tests/qemu-iotests: Check for a functional "secret" object
+ before using it
+Date: Fri,  5 Dec 2025 14:00:14 +0100
+Message-ID: <20251205130014.693799-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,53 +82,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+From: Thomas Huth <thuth@redhat.com>
 
-> On 04/12/2025 20.48, Alex Benn=C3=A9e wrote:
->> Technically we don't need a crypto library to do the base build but
->> I couldn't see an easy way to skip iotests which would otherwise fail.
->> Besides libnettle is a fairly small library even if its not the
->> fastest crypto implementation.
->
-> I think we added checks to some of the iotests in the past already to
-> skip if the crypto stuff is not available? So I think it might be
-> better to fix the related iotests instead.
->
-> Which test is failing for you?
+QEMU iotests 049, 134 and 158 are currently failing if you compiled
+QEMU without the crypto libraries. Thus make sure that the "secret"
+object is really usable and skip the tests otherwise.
 
-I did have 049 qcow failing and two others but I can't remember exactly
-which combo it was. The error messages where all about missing crypto
-functions stopping the run.
+Reported-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/qemu-iotests/049       |  2 ++
+ tests/qemu-iotests/134       |  1 +
+ tests/qemu-iotests/158       |  1 +
+ tests/qemu-iotests/common.rc | 14 ++++++++++++++
+ 4 files changed, 18 insertions(+)
 
-Where are the crypto library tests done? I couldn't find them.
+diff --git a/tests/qemu-iotests/049 b/tests/qemu-iotests/049
+index ed12fa49d7f..a1b922060db 100755
+--- a/tests/qemu-iotests/049
++++ b/tests/qemu-iotests/049
+@@ -39,6 +39,8 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
+ 
+ _supported_fmt qcow2
+ _supported_proto file
++_require_secret
++
+ 
+ filter_test_dir()
+ {
+diff --git a/tests/qemu-iotests/134 b/tests/qemu-iotests/134
+index b2c3c03f08b..cc1e35eb161 100755
+--- a/tests/qemu-iotests/134
++++ b/tests/qemu-iotests/134
+@@ -39,6 +39,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
+ 
+ _supported_fmt qcow qcow2
+ _supported_proto file
++_require_secret
+ 
+ 
+ size=128M
+diff --git a/tests/qemu-iotests/158 b/tests/qemu-iotests/158
+index 3a9ad7eed03..8fc4e986532 100755
+--- a/tests/qemu-iotests/158
++++ b/tests/qemu-iotests/158
+@@ -39,6 +39,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
+ 
+ _supported_fmt qcow qcow2
+ _supported_proto file
++_require_secret
+ 
+ 
+ size=128M
+diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
+index e977cb4eb61..10d83d8361b 100644
+--- a/tests/qemu-iotests/common.rc
++++ b/tests/qemu-iotests/common.rc
+@@ -1053,6 +1053,20 @@ _require_one_device_of()
+     _notrun "$* not available"
+ }
+ 
++_require_secret()
++{
++    if [ -e "$TEST_IMG" ]; then
++        echo "unwilling to overwrite existing file"
++        exit 1
++    fi
++    if $QEMU_IMG create -f $IMGFMT --object secret,id=sec0,data=123 \
++                 -o encryption=on,encrypt.key-secret=sec0 "$TEST_IMG" 1M 2>&1 \
++                 | grep "Unsupported cipher" ; then
++        _notrun "missing cipher support"
++    fi
++    rm -f "$TEST_IMG"
++}
++
+ _qcow2_dump_header()
+ {
+     if [[ "$1" == "--no-filter-compression" ]]; then
+-- 
+2.52.0
 
-But I'm happy to drop this patch until we find out:
-
-  https://gitlab.com/stsquad/qemu/-/pipelines/2197896632
-
->
->  Thomas
->
->
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>   tests/lcitool/projects/qemu-minimal.yml | 1 +
->>   1 file changed, 1 insertion(+)
->> diff --git a/tests/lcitool/projects/qemu-minimal.yml
->> b/tests/lcitool/projects/qemu-minimal.yml
->> index 2a1ac51d402..eebdc23e682 100644
->> --- a/tests/lcitool/projects/qemu-minimal.yml
->> +++ b/tests/lcitool/projects/qemu-minimal.yml
->> @@ -18,6 +18,7 @@ packages:
->>    - libffi
->>    - make
->>    - meson
->> + - nettle
->>    - ninja
->>    - pixman
->>    - pkg-config
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
