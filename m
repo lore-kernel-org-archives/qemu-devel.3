@@ -4,106 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8F0D33980
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 15:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73722D33980
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 15:18:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRXXs-000854-0A; Fri, 05 Dec 2025 10:16:34 -0500
+	id 1vRXZx-0000b5-GP; Fri, 05 Dec 2025 10:18:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vRXXO-00083R-Fd
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 10:16:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1vRXZw-0000ar-9J
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 10:18:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1vRXXG-00028d-Hz
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 10:16:00 -0500
+ id 1vRXZq-0002iI-Ka
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 10:18:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764947753;
+ s=mimecast20190719; t=1764947913;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=7ddKD+7RRIYhmjPp666Wp8VLE6ejs/yURuy4G9+v58A=;
- b=Y19HEAiD09Dxqu/1tu7Wwn5/wP7g2r3vDxl/1ViqbdeSzdVxVI+mdhDEkZnYmwo42NqdXy
- EESi26d8q5UatfrLUuXlqwdcsw+Gty5mzwQJrO5eueciRO5jp0f0tw9v7ICSa5ryadm1R8
- 9Kmak6wjM9QrXz+byNN0ScKZHfXcCvA=
+ bh=iDLYF5jHNMRRC9xOhhI+oTS2Xc7+Q3dWZXrNVUibJiU=;
+ b=XUQFUA71icCD1YK8IE0xdaCM1OwUYhn7stG/Xts/XjqpxwIUjjZj9JBQsE+rYleNF5zFW+
+ nAiIa0W3d26CoLOi9jUCZ0X7veefuFb8Fa8yeH1paC3qPl74lcEYmW22jY9Dz5DEoIplmd
+ Gxn7M8LTCkr/8EkVH6gH2TNVSHl6zyg=
 Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
  [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-312-0gDjP_psP-KYAj6lO83deg-1; Fri, 05 Dec 2025 10:15:49 -0500
-X-MC-Unique: 0gDjP_psP-KYAj6lO83deg-1
-X-Mimecast-MFC-AGG-ID: 0gDjP_psP-KYAj6lO83deg_1764947748
+ us-mta-203-j2-LDm2PMrOO2vZ2OADT0Q-1; Fri, 05 Dec 2025 10:18:31 -0500
+X-MC-Unique: j2-LDm2PMrOO2vZ2OADT0Q-1
+X-Mimecast-MFC-AGG-ID: j2-LDm2PMrOO2vZ2OADT0Q_1764947911
 Received: by mail-pj1-f72.google.com with SMTP id
- 98e67ed59e1d1-3437b43eec4so3333838a91.3
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 07:15:48 -0800 (PST)
+ 98e67ed59e1d1-340bc4ef67fso2531861a91.3
+ for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 07:18:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764947748; x=1765552548; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764947910; x=1765552710; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=7ddKD+7RRIYhmjPp666Wp8VLE6ejs/yURuy4G9+v58A=;
- b=azOurLyDvQoFN7x4B3frc392YbfIqXcDePVVj5bvIKKwDwG5JPsuiYG1nf8agwxjHJ
- iTAcwoTcBQU4Ix0yUKA3XV/MqDKX2EJw6AaBNLxQyYW3zX8THY75oUaLRA9Mp0hNIGCY
- fRI4qcOw0Bg4Q0VmlgmNlUR6/47zAHp8IR05lVVILEhvo3eNgraas5MPFZ6fuCLZaYvP
- gAqs7ozUggEfANQMJIWa2kj9v56eWFMWiC+W6oKSMRKAl3WEYfp7fJrt0OPiMWn5n9Pd
- LK2+quiRBjQkj8x8AqSDGSCK/At88A8ELPLSd9lkDUX1Uu9dqUWxTc97epE70LHNANij
- DK2Q==
+ bh=iDLYF5jHNMRRC9xOhhI+oTS2Xc7+Q3dWZXrNVUibJiU=;
+ b=ovRhrBNBx1CuBY2KK9moyi3oyHIcbEfOs6IJV7joAifczJv+n/fF7qG2KDl+pO6zWu
+ U/tRt9veNq8B5B95ml2pABopuLZUyJ1qpIz7AqAeY+Kigx2gHvJQm+6/IiYEkC3CraYa
+ 9hcoCIfg0xLnA7KvmkfH1N9NI4c8Xq+D5D4E8M3jLmJb/t3v+deGbEUGQM3cJp4Td0Oe
+ 3WQ2lqZ+ODXjFliFw0CR5Qnb6dQzutzaJizPc7qIQO7jY6WL/oZBLYcJ4kJw91na2kEb
+ RO1cpueki4Uj3mtp8mKjKiugO0+CdlA1uGtqzf2IXZffZDAjO9f5hhqnaRgcMPyowlOo
+ JzsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764947748; x=1765552548;
+ d=1e100.net; s=20230601; t=1764947910; x=1765552710;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7ddKD+7RRIYhmjPp666Wp8VLE6ejs/yURuy4G9+v58A=;
- b=CNgGFvu1ltMhrUDdAYQc4KTQ4GG3jA4frtxGTbm+f/9rpw75gH3EhOXhz2MM078/6S
- y2GLYzduCI4ATX1rsOIW60CrTgaoAPberUl3LbTHbowaDQj5ZSThHyuyz6ZqrugoB4jM
- uUGYgEwtAz+5dSHvURIILp18VfI+3cIy/oIxhDFfVSLY3Vhu7n5tSxT9AEXCLG7cjWRJ
- Hrw+3zJgFWiZQ1jBxi/OOdAMDue13xAEhXFpCR4xRVlDB+5t0dEqmi87kPMjBzMMkB8O
- qHLWwIK1x9/pcgl7qvW4LnmWI3vmNkPVPSo9iR+HKIhhs8kxWb3zCk1iwofRKVIvHoWz
- YMeg==
+ bh=iDLYF5jHNMRRC9xOhhI+oTS2Xc7+Q3dWZXrNVUibJiU=;
+ b=oM+P9uPn5Rd5BKM6do887USPfyVy13v3gYsFsqAEr0PqFbMuf/SRGAWWq8AaFj8FY8
+ WYrU2hxNyWJ5VbABJhVQ5tyL1YpLuLRfKRjoHqqPHrOq/mR5ZIibfw8pVWEnFweRa2K4
+ TaXDsguX++i9QDJLwabYmWvbADLHTBvig94Brlz6cax4+x4qYqhtr/o9s1b0+p+UzquI
+ wp0jH1RIBrhvcUF1tCrEHbI1Nc/HPPe52Dy3K8wYr4AXFNcPAS5wZSxIThNaI2Ph8xpW
+ lWr2WiGKoYzQfzwX3yn1j94TnqDVH7Tl+c7rYeHngc+ytY0+WVwTwxqydaQhfwvpzLeY
+ CqVw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUaaNVxnIdxf51FUjP/RE63SOzsyy/c/gX0uTDSi/++9f0gsAN3roJj4uaT58rtW+fLKrEQ1ktQkqR8@nongnu.org
-X-Gm-Message-State: AOJu0Yy1XckBEhTYF2Jw96LyfVtAjT3sZrJqgNdLZ/dCWu7bji5y0/Fq
- gb3bcKvMPFA1QQfJ5BTM/0GJot1jIzrCrPuQtzULwZVpQkzGGjyREK4AYjVjPAVn3eAdugEf1uW
- PkL1RqfiPITYDuoLHi/+qi3Wyi7oZS3dkTC97qJNUmCglu2Tp3uKiBkSY84anoVTLb68yRnj5KC
- mfgINPvjvugXOBrbhVWXcnuua/7sUFcKs=
-X-Gm-Gg: ASbGnctA+TegdGS/pShgsR6KDFMZG2Ptjm1EMXJ2nwpmv6vASd9iq0CbeFATFaqoJzi
- drY26GKRQBorDvvmfCxndPpZYUqstDv/zpH8aTJw+50VAdpbJ+tCoWQTrD7GN8vXbsLUNVln2dk
- rFv7lJoHZK7SQQkau08eJR/SnzzI+pFNflaik5yQUos5smM01l+qE9/h1T7PxVUEfwsq7CdFpui
- q1ld5vJ5RXwAojOR+7l/XesiA==
-X-Received: by 2002:a17:90b:564d:b0:343:6a79:6c75 with SMTP id
- 98e67ed59e1d1-349126f345emr12174069a91.29.1764947747258; 
- Fri, 05 Dec 2025 07:15:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IERHImM4+gMYCDNMmRgeywVfBjiR6hybTO3rF3UCLuwvR7sHL8Vl3riV5kNbPefAcCbTHHePJr0BfzEgbIRb5M=
-X-Received: by 2002:a17:90b:564d:b0:343:6a79:6c75 with SMTP id
- 98e67ed59e1d1-349126f345emr12174011a91.29.1764947746582; Fri, 05 Dec 2025
- 07:15:46 -0800 (PST)
+ AJvYcCVvrbwC3MQDZyYlzK+mkPDIZhR1Bqz0jABt9AVRNL8o9MzW+1MOZGsE1A2um8u543oJS8kPq9nWsTPy@nongnu.org
+X-Gm-Message-State: AOJu0YyAu3vcpcteub5+lqxuJ31AwhUBVokVgcYgvdvAMqpOuxGFPrxs
+ 7kOdT86nMWbAvtOBw5fawSHI/aOz7GmVy0ieiPQ4ja062spFLytoIZbxbjvhy7XkyZP1PCF5kQX
+ i0BBVusJU8MYTiwpqZD0EjGanWPNtmpy8NtK58zv1YfPJux7JuLPRolrZ1jhEBmMujktoToMBQS
+ OOj4d6X5kmWqyX4SeZybzwogAuwyXmlm8hNMgH2oTCCw==
+X-Gm-Gg: ASbGncvphZLaShH/9tAAynQFHlRnEggFMO9uAwQAUOYIELAInnxMZylen+/OxShbJ0Y
+ 2doBG4s9oS8GwEWcjwZ4eaIHc5hB4X5L0lf2A5LSKoJEIYS1cni4Rhm5jEL84WCVSNUniyPL+iE
+ UFHIJwLKvLox+tjJQys1GIcI/BSaBxmud4tbRBnoYjLufPGb7UjunJ6UUUFId5PIM0hprIqWuci
+ 6LGtxYRFVOUCNTgGOr6xrefMQ==
+X-Received: by 2002:a17:90b:3a8b:b0:341:134:a962 with SMTP id
+ 98e67ed59e1d1-34947f1b93cmr7145863a91.28.1764947910111; 
+ Fri, 05 Dec 2025 07:18:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHuCgpbxosMCsl6BmQtBEO/538MaLYi232sdki596sJUjeWMTtFt+djh7KkuN9opG61hVGO939txQdWbo11fKk=
+X-Received: by 2002:a17:90b:3a8b:b0:341:134:a962 with SMTP id
+ 98e67ed59e1d1-34947f1b93cmr7145809a91.28.1764947909370; Fri, 05 Dec 2025
+ 07:18:29 -0800 (PST)
 MIME-Version: 1.0
 References: <20251204154235.149575-1-vsementsov@yandex-team.ru>
  <20251204154235.149575-7-vsementsov@yandex-team.ru>
 In-Reply-To: <20251204154235.149575-7-vsementsov@yandex-team.ru>
 From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 5 Dec 2025 19:15:34 +0400
-X-Gm-Features: AWmQ_bnJ4HQCJwDQ0U0QYE4bgad9b_RXUo-vATQXxRt4CbQOh1IhIyNSUtf7I4E
-Message-ID: <CAMxuvazt9fOq+96uf8kZPPf7znOdEnh3UZgwTdQ+hCK9T8h_mg@mail.gmail.com>
+Date: Fri, 5 Dec 2025 19:18:17 +0400
+X-Gm-Features: AWmQ_bn25BKLlUDrSpFEtW4plaEpBOR6HDRDuy-6HyecotcChMr2xrz4IjQ3YsY
+Message-ID: <CAMxuvaz-9r8kd50mFKSTpak3RYG7ODQnRuTwf2UMO9HweFuOxg@mail.gmail.com>
 Subject: Re: [PATCH v2 06/10] chardev: .chr_open(): add boolean return value
 To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, d-tatianin@yandex-team.ru, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Samuel Thibault <samuel.thibault@ens-lyon.org>,
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000007b8aad064535ebad"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+Content-Type: multipart/alternative; boundary="0000000000002f750d064535f506"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,9 +118,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000007b8aad064535ebad
+--0000000000002f750d064535f506
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+
+Hi
 
 On Thu, Dec 4, 2025 at 7:42=E2=80=AFPM Vladimir Sementsov-Ogievskiy <
 vsementsov@yandex-team.ru> wrote:
@@ -131,11 +132,6 @@ vsementsov@yandex-team.ru> wrote:
 >
 > Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-
 > ---
 >  chardev/baum.c           |  5 +++--
 >  chardev/char-console.c   |  1 +
@@ -1114,6 +1110,12 @@ d
 >
 > -    cc->chr_open =3D gd_vc_chr_open;
 > +    cc->chr_open =3D char_gtk_init;
+>
+
+Bad rename, and missing corrected return type (I'll fix on commit if no
+more changes)
+
+
 >      cc->chr_write =3D gd_vc_chr_write;
 >      cc->chr_accept_input =3D gd_vc_chr_accept_input;
 >      cc->chr_set_echo =3D gd_vc_chr_set_echo;
@@ -1227,27 +1229,23 @@ d
 >
 >
 
---0000000000007b8aad064535ebad
+--0000000000002f750d064535f506
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Dec 4, =
-2025 at 7:42=E2=80=AFPM Vladimir Sementsov-Ogievskiy &lt;<a href=3D"mailto:=
-vsementsov@yandex-team.ru">vsementsov@yandex-team.ru</a>&gt; wrote:<br></di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex">Add boolean return valu=
-e to follow common recommendations for functions<br>
+<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
+il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Dec 4, 20=
+25 at 7:42=E2=80=AFPM Vladimir Sementsov-Ogievskiy &lt;<a href=3D"mailto:vs=
+ementsov@yandex-team.ru">vsementsov@yandex-team.ru</a>&gt; wrote:<br></div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left:1px solid rgb(204,204,204);padding-left:1ex">Add boolean return value =
+to follow common recommendations for functions<br>
 with errrp in include/qapi/error.h<br>
 <br>
 Signed-off-by: Vladimir Sementsov-Ogievskiy &lt;<a href=3D"mailto:vsementso=
 v@yandex-team.ru" target=3D"_blank">vsementsov@yandex-team.ru</a>&gt;<br>
 Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linar=
-o.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br></blockquote><div><br=
-></div><div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marca=
-ndre.lureau@redhat.com">marcandre.lureau@redhat.com</a>&gt;</div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+o.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
 ---<br>
 =C2=A0chardev/baum.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 5 +++-=
 -<br>
@@ -2320,7 +2318,11 @@ br>
 =C2=A0 =C2=A0 =C2=A0ChardevClass *cc =3D CHARDEV_CLASS(oc);<br>
 <br>
 -=C2=A0 =C2=A0 cc-&gt;chr_open =3D gd_vc_chr_open;<br>
-+=C2=A0 =C2=A0 cc-&gt;chr_open =3D char_gtk_init;<br>
++=C2=A0 =C2=A0 cc-&gt;chr_open =3D char_gtk_init;<br></blockquote><div><br>=
+</div><div>Bad rename, and missing corrected return type (I&#39;ll fix on c=
+ommit if no more changes)</div><div>=C2=A0</div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">
 =C2=A0 =C2=A0 =C2=A0cc-&gt;chr_write =3D gd_vc_chr_write;<br>
 =C2=A0 =C2=A0 =C2=A0cc-&gt;chr_accept_input =3D gd_vc_chr_accept_input;<br>
 =C2=A0 =C2=A0 =C2=A0cc-&gt;chr_set_echo =3D gd_vc_chr_set_echo;<br>
@@ -2442,6 +2444,6 @@ ndian hosts&quot;);<br>
 <br>
 </blockquote></div></div>
 
---0000000000007b8aad064535ebad--
+--0000000000002f750d064535f506--
 
 
