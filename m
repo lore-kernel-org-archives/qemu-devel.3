@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B8AD2F7CC
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 09:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04763D2F7D1
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 10:05:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRSTo-0000cS-AN; Fri, 05 Dec 2025 04:52:00 -0500
+	id 1vRSgC-0003lG-OY; Fri, 05 Dec 2025 05:04:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vRSTm-0000bd-Bq; Fri, 05 Dec 2025 04:51:58 -0500
-Received: from mgamail.intel.com ([192.198.163.16])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vRSgB-0003l7-6x
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 05:04:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vRSTk-00075l-2Y; Fri, 05 Dec 2025 04:51:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1764928316; x=1796464316;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=bCGZ6DQdtonXrOU1TaCOp0E2igJF926Ay2psHyCh7Wc=;
- b=Tk/9S0DJkT1solhCNnPqljeo12JTOO2d41oslskC8wG29Jx69TH/twGI
- f3w7Aa3oaA/EFl3FFkNYbuviur9SKf6r2M0vtjwc+pZmgvf4XFEOjvsEB
- DfSZgYP7YqfX7mlQAnBxNX4zTOp/pug+Nc0siC6KJAM4ZsoywiVhejOIy
- 5ICYTAblbRgopewHrZncsRnGJ9oA1GFO+sU5T312cOZhZAuZpY2UcrunT
- ryaoUv8U0owJIbHGGaL2aoh9yf5ghFcKfMDKMHMQSFYvztHeAYy2nplUi
- Yla175y33nimuz2r60tOWkpgjjiDLo+7l5ri4ZHZoZ+RvYUqASVBxkGaw A==;
-X-CSE-ConnectionGUID: 84/nPccMQ26M0wlkKyZaMw==
-X-CSE-MsgGUID: LRtBAZG9Sy6Evj4vll0dgA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11632"; a="54508155"
-X-IronPort-AV: E=Sophos;i="6.20,251,1758610800"; d="scan'208";a="54508155"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
- by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Dec 2025 01:51:52 -0800
-X-CSE-ConnectionGUID: mVVhOGC8RyarA7KT5shZeA==
-X-CSE-MsgGUID: kukjKAaBT++4UZaKrDFkxg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,251,1758610800"; d="scan'208";a="194325199"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa006.jf.intel.com with ESMTP; 05 Dec 2025 01:51:51 -0800
-Date: Fri, 5 Dec 2025 18:16:34 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vRSg9-0002XJ-Tp
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 05:04:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1764929085;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QYDlm1SphlMuMIM3Wj/rljQQu8Q+Z0qgflSfIEvCuBk=;
+ b=JJFlovefWJURhBLUawytBVtbyPmVDJ9QDISakcrZxaSDRorG91Nnt81iK2D3gD8ocoERf+
+ Vh5thhOlEbvD5n0MwVYTlaoRp6P0Mp8mkfjGNENx3FO49S6REQ/zr8ijZODXJ24rqRogYZ
+ TPV78zYVGgk6uLzQyUqoflGrsRfHp84=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-531-VJ7VEswOMPqdbPkoapJANQ-1; Fri,
+ 05 Dec 2025 05:04:40 -0500
+X-MC-Unique: VJ7VEswOMPqdbPkoapJANQ-1
+X-Mimecast-MFC-AGG-ID: VJ7VEswOMPqdbPkoapJANQ_1764929079
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5218C1956052; Fri,  5 Dec 2025 10:04:39 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0A0E0180035A; Fri,  5 Dec 2025 10:04:39 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4EE1921E6A27; Fri, 05 Dec 2025 11:04:36 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, armbru@redhat.com,
- marcandre.lureau@redhat.com
-Subject: Re: [PATCH 07/14] rust: add Deserializer (from_qobject)
- implementation for QObject
-Message-ID: <aTKxAl9eCMnGcyi0@intel.com>
-References: <20251001075005.1041833-1-pbonzini@redhat.com>
- <20251001080051.1043944-8-pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, qemu-rust@nongnu.org
+Subject: Re: [PATCH 11/19] rust/qobject: add from/to JSON bindings for QObject
+In-Reply-To: <20251010151006.791038-12-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Fri, 10 Oct 2025 17:09:56 +0200")
+References: <20251010151006.791038-1-pbonzini@redhat.com>
+ <20251010151006.791038-12-pbonzini@redhat.com>
+Date: Fri, 05 Dec 2025 11:04:36 +0100
+Message-ID: <875xal5jnv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251001080051.1043944-8-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,62 +87,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Oct 01, 2025 at 10:00:44AM +0200, Paolo Bonzini wrote:
-> Date: Wed,  1 Oct 2025 10:00:44 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 07/14] rust: add Deserializer (from_qobject) implementation
->  for QObject
-> X-Mailer: git-send-email 2.51.0
-> 
-> This allows creating any serializable data structure from QObject.
-> 
-> Co-authored-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Paolo Bonzini <pbonzini@redhat.com> writes:
+
+> These are used by tests.  However it could even be an idea to use
+> serde_json + transcoding and get rid of the C version...
+
+Tell me more!
+
+> Co-authored-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  docs/devel/rust.rst                   |   1 +
->  rust/util/meson.build                 |   1 +
->  rust/util/src/qobject/deserializer.rs | 373 ++++++++++++++++++++++++++
->  rust/util/src/qobject/error.rs        |   8 +-
->  rust/util/src/qobject/mod.rs          |   2 +
->  5 files changed, 384 insertions(+), 1 deletion(-)
->  create mode 100644 rust/util/src/qobject/deserializer.rs
-
-...
-
-> diff --git a/rust/util/src/qobject/deserializer.rs b/rust/util/src/qobject/deserializer.rs
-> new file mode 100644
-> index 00000000000..a2fe417e72a
-> --- /dev/null
-> +++ b/rust/util/src/qobject/deserializer.rs
-> @@ -0,0 +1,373 @@
-> +//! `QObject` deserializer
-> +//!
-> +//! This module implements a [`Deserializer`](serde::de::Deserializer) that
-> +//! produces `QObject`s, allowing them to be turned into deserializable data
-       ^^^^^^^^
-Only a nit,
-
-This "produces" word puzzled me for a while. I think it should be
-"consumes".
-
-Then the logic of 4 things did in this series should be the following?
-
-            serializer          serialize
-Rust struct ----------> QObject ---------> JSON
-            <----------         <---------
-	    deserializer        deserialize
-
-Maybe we could have the similar documentation/decription in mod.rs or
-somewhere to provide a high-level overview :).
-
-> +//! structures (such as primitive data types, or structs that implement
-> +//! `Deserialize`).
+>  rust/util/wrapper.h          |  1 +
+>  rust/util/src/qobject/mod.rs | 17 +++++++++++++++++
+>  2 files changed, 18 insertions(+)
+>
+> diff --git a/rust/util/wrapper.h b/rust/util/wrapper.h
+> index 0907dd59142..c88820a5e5b 100644
+> --- a/rust/util/wrapper.h
+> +++ b/rust/util/wrapper.h
+> @@ -37,3 +37,4 @@ typedef enum memory_order {
+>  #include "qobject/qobject.h"
+>  #include "qobject/qlist.h"
+>  #include "qobject/qdict.h"
+> +#include "qobject/qjson.h"
+> diff --git a/rust/util/src/qobject/mod.rs b/rust/util/src/qobject/mod.rs
+> index e896aba5f3a..292a3c9c238 100644
+> --- a/rust/util/src/qobject/mod.rs
+> +++ b/rust/util/src/qobject/mod.rs
+> @@ -23,6 +23,7 @@
+>  use common::assert_field_type;
+>  pub use deserializer::from_qobject;
+>  pub use error::{Error, Result};
+> +use foreign::prelude::*;
+>  pub use serializer::to_qobject;
+>=20=20
+>  use crate::bindings;
+> @@ -111,6 +112,22 @@ fn refcnt(&self) -> &AtomicUsize {
+>          let qobj =3D self.0.get();
+>          unsafe { AtomicUsize::from_ptr(addr_of_mut!((*qobj).base.refcnt)=
+) }
+>      }
 > +
-
-The implementation itself looks good,
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
+> +    pub fn to_json(&self) -> String {
+> +        let qobj =3D self.0.get();
+> +        unsafe {
+> +            let json =3D bindings::qobject_to_json(qobj);
+> +            glib_sys::g_string_free(json, glib_sys::GFALSE).into_native()
+> +        }
+> +    }
+> +
+> +    pub fn from_json(json: &str) -> std::result::Result<Self, crate::Err=
+or> {
+> +        let c_json =3D std::ffi::CString::new(json)?;
+> +        unsafe {
+> +            crate::Error::with_errp(|errp| bindings::qobject_from_json(c=
+_json.as_ptr(), errp))
+> +                .map(|qobj| QObject::from_raw(qobj))
+> +        }
+> +    }
+>  }
+>=20=20
+>  impl From<()> for QObject {
 
 
