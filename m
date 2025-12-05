@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ECBAD33994
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 16:42:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81CAAD33992
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 16:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRYsD-0005W2-0s; Fri, 05 Dec 2025 11:41:37 -0500
+	id 1vRYsF-0005YC-Fg; Fri, 05 Dec 2025 11:41:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRYs9-0005UJ-PI
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:41:33 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1vRYsA-0005Ur-SK
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:41:34 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRYs7-0005jp-VL
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:41:33 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-477ba2c1ca2so29664225e9.2
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 08:41:31 -0800 (PST)
+ id 1vRYs8-0005jy-Gf
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:41:34 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4779d47be12so21323125e9.2
+ for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 08:41:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1764952890; x=1765557690; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0zGaWdP6bu+uZrFtqustVUWUW1vb2Tudl4LtLpMgFZA=;
- b=b90FwYBKdJTqwzkQeZNIAsK91wykGuAxvljiJD+BxL1jdE/5LhQNqIC3p06gZdD+jZ
- 4YJko3HsxVFRl5lWc/9R/oKF6S5+v0qiOeRyQXAWOE2RElY1KkoDkp0ZdP5SNvFMWgP6
- CTWf1xtry84qGnOPguhyEM65Ld9E4fl6siyCKpBtXgM4qA3lKrh4LN37D5+W03QGqU4L
- Mvao633AszN0kUyiIDpxCnoVBOYr/gJlGX/5ya0Yu8FOpERPdb5iKNKCFKI+8fDbYMix
- jVfEI9jGRiN45tX6MnRbkzqvosnfSym/pLlyH6ovChTaGkBYdEeC+xh91nlKdQAGylR4
- fg+Q==
+ bh=Q5nQL9AFafWp2zKlwaP3Dhs/6EXPtxqPJhY4Z+u/Jbg=;
+ b=VdqbdQjFKl4W1oPjN1Ta3GDd/LFQeytEp+tA7Sp0dnGFSrSfVTorWbO6iQZveYimo4
+ 4dEdov0AowbTJrG2Q5bznPcUOa+h/S1GMTQ2vfPXkeO9fCclmBCEkiyNt91kYpHX8e+6
+ SsPykOymd6xiMQ1dV2KEJyhM2MKNlawmNt51kp8cROhq2ZZ1tJYrImakhjWPx7f9ZmFe
+ QmNOlyO7VVQVKPNMwVnUxhaaslXrDoJDImOD5YBTKhBDw4cz8LsW+z1/vC/wWekkVpXF
+ TZCbuJkyHu4N1B6nX/0XFO0N1ECiAsLhEMoVzZk3nS9Po2lSuh6hzYFvhUuhIKttSU2a
+ f6Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1764952890; x=1765557690;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=0zGaWdP6bu+uZrFtqustVUWUW1vb2Tudl4LtLpMgFZA=;
- b=bif7lffuZOQ6UWShJFLXzy8Xs4PeGW2RSyjLFPkiC9wSEdGLI64CzCm50OpUeisDLI
- bdqW1lijlMc/gbH952EQuHN9BYa6ecrsdekFXxmWx93c32ZMdpVnzQhzgW1xGz3cO1Ol
- HZavCnmfq5TRNPw3pq8frTdVCvzYhNvy6ACHK5nY2/OqWSEFvovn/V8LXLb3OhLwjJTs
- 0TheouRPHQ5jXJcMAh/lVVEyUD/ZV7/k0Wd1g5a9AiKHGLuJ2axiAJx/yZCN42oiuqHO
- wlvssDaruzvHbyXX8Z2zif/VqrpsfbP/tNEZxIQfIiKeVEx6pO0VdS4fgCDbHOE7xiAy
- QAUQ==
-X-Gm-Message-State: AOJu0YzEK3YBkiKARruVSx+76zyBpTH9aif7EIJysIMkr5b6foLhAfpo
- 4g2JTOurNuH27Uj549GLAa1K+Dn6/0sQ27vKrHQ3OnOgldwXUq4FhAdouSCm3rjmZK2kyycaj9G
- Zm4Mz
-X-Gm-Gg: ASbGnctrisITsprDTVBGMyRhQwWeaf53x+91JGXfQIk5eci/WhgfnX7tEfF09eGwzdq
- jUOKNKKSxMpZ5ERpt7oJA+sBS6zNzaqEbgwXdI+3m/K9zto9QldFY9/SunTzpP1khe/Rv6W5Mi6
- 5j6+KLePjHQGUKNOacYXZhhIokko/RJ4a39041a+vYr5U3F3NsnOuYFvag4ezWjvjvpgwC+fbW4
- wiSlCkc5u/qHf1vV/mAGgM5QGw6JFq2+s+b0ckseDTVbOT1cM2wk4kdq2E5zzR1I2tksX/qNXCw
- z0hrBarkPfUQwAOcjwh2u1SrFNkiFGQ31HSgqPdkfgdVjZTo38jJ13pGP2Qozx9ghXFSJg1arFi
- JEbclt9c40dVW2kvERQDILgphPC20HUQ30tjZii5vjwkjltU7L8zdHJA6Y3PgYib24ILzHv1mw+
- ItxW9ZyGW2UcG7Vn0qVGbJFQ==
-X-Google-Smtp-Source: AGHT+IHagn4U0cHIL7+f222868MfltvgxqBpqQCLm71bISCx5COqb5KLsqzSaHOLgBbO2kXUIXWCpg==
-X-Received: by 2002:a05:600c:154c:b0:477:1af2:f40a with SMTP id
- 5b1f17b1804b1-4792f28b98amr75580415e9.17.1764952889767; 
- Fri, 05 Dec 2025 08:41:29 -0800 (PST)
+ bh=Q5nQL9AFafWp2zKlwaP3Dhs/6EXPtxqPJhY4Z+u/Jbg=;
+ b=oBkXnr2lKYJkcT95zca79ZYKeVvP8XMCmdyEfnE0FZPpQgwuXva4uvWQM4j34LP7z3
+ R8i0wbgNOaOIEo4haVkmIXi7vKgrhWX1WtUbXSGqTOk5tO4DKKBQo4u9Yviw2VlUadmK
+ THh0EaKsX5AaNj+ck94ZvoQe3mD/Kab0o1Fm5EBajrflsBc5KU2grD6PJevg3wWGY193
+ +yFcdLhjU1nrcBrS0cjFN+SQDWu9HBOnwykHNMPuEptNrbUWMbaDdLseMnFrPpyNr5bd
+ UwAKV+DrjHcJ0Da7tYgSjkkdLAnX1Wv7IfCjLUQrhjI3QuQXGF3bPzLvHSQ+CyXoPRvP
+ XdrA==
+X-Gm-Message-State: AOJu0Yw4IhENAavBnA4s59cZMgeknYtC5wy/oBKAID5XY0CxOYi9zaY9
+ LfhgHx6TfnNb62V7qaJ+Dws8+6+gT9oWuvymLz6myDN+1Am1cklfxHR6o5DoKDkrSHc=
+X-Gm-Gg: ASbGnct8xMP4cspVp/aNnB+EO1pK50M9C5ZpJNCBVIQvEb4pavhaQP3MQTPBVM0e4qB
+ I/h/2wAKKZOzhDCmcHR3YW8utwl8vZmq1nX3m7I6JiC9ZCBiCsGdgX6G1OaKAZKOOIGK1NI5DFE
+ PrYwOPiw2iyzTowpjXd6+Qrbk3cVJqITYunQVLZuKRiVF9p9oEwF1G43R54g1rFiS4rXUsOyC58
+ NXpqFUl9a68LdjnuWmC2gZbJ42MGd/i7GgKXAc44kXF7KyRTQMhxx08Kxd275R49gW3puvBF2Ql
+ bMwcrGpfdifGiGkl3amfHwx9GjM31HWCOdqNOf6r+bC9LDYLJtBPzmOZVShZy2CLz+Ks/QQNvhb
+ 45lHt0WtsFCHwDMxZUrHmEIf2605yWbBOUT094Y2JqVanE9sLZmHbbKg8cXY25biCqhGlBm3bkg
+ OsJW7SEYgBV+w=
+X-Google-Smtp-Source: AGHT+IE9EF8MtNRvtsAj3f/ckcb/ln++PoUDvrXYb+Y3W0MD0zLpQHZQk00ifYwuRrw95J7EzClwHw==
+X-Received: by 2002:a05:600c:198a:b0:477:63b5:7148 with SMTP id
+ 5b1f17b1804b1-4792aedfda1mr95145815e9.6.1764952890426; 
+ Fri, 05 Dec 2025 08:41:30 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-479311e707asm88197635e9.10.2025.12.05.08.41.26
+ 5b1f17b1804b1-47930cb6a96sm89962285e9.15.2025.12.05.08.41.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Dec 2025 08:41:26 -0800 (PST)
+ Fri, 05 Dec 2025 08:41:29 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 16AA55F833;
+ by draig.lan (Postfix) with ESMTP id BA8455F909;
  Fri, 05 Dec 2025 16:41:26 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Thomas Huth <thuth@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/14] gitlab: drop --disable-pie from aarch64-all-linux-static
- build
-Date: Fri,  5 Dec 2025 16:41:12 +0000
-Message-ID: <20251205164125.2122504-2-alex.bennee@linaro.org>
+Subject: [PULL 08/14] tests/docker: drop --disable-[tools|system] from
+ all-test-cross
+Date: Fri,  5 Dec 2025 16:41:19 +0000
+Message-ID: <20251205164125.2122504-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251205164125.2122504-1-alex.bennee@linaro.org>
 References: <20251205164125.2122504-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,30 +106,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since we have upgraded to 24.04 with its new libc we no longer need
-this workaround.
+We use this container to build system images in CI which do not honour
+QEMU_CONFIGURE_OPTS. Drop the --disables from the container so
+developers don not need to jump through hoops trying to replicate that
+on their workstations.
 
-Link: https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1987438
-Suggested-by: Michael Tokarev <mjt@tls.msk.ru>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20251204194902.1340008-2-alex.bennee@linaro.org>
+Message-ID: <20251204194902.1340008-8-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-index 98d99193457..b4c0faab15d 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-24.04-aarch64.yml
-@@ -41,9 +41,7 @@
- ubuntu-24.04-aarch64-all-linux-static:
-   extends: .ubuntu_aarch64_template
-   variables:
--    # Disable -static-pie due to build error with system libc:
--    # https://bugs.launchpad.net/ubuntu/+source/glibc/+bug/1987438
--    CONFIGURE_ARGS: --enable-debug --static --disable-system --disable-pie
-+    CONFIGURE_ARGS: --enable-debug --static --disable-system
-     MAKE_CHECK_ARGS: check-tcg
+diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
+index 079942a1c56..1823233438a 100644
+--- a/tests/docker/dockerfiles/debian-all-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+@@ -89,7 +89,7 @@ DEBIAN_FRONTEND=noninteractive eatmydata \
+ apt install -y --no-install-recommends \
+ ${AVAILABLE_COMPILERS} && \
+ dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt
+-ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
++ENV QEMU_CONFIGURE_OPTS --disable-docs
+ ENV DEF_TARGET_LIST aarch64-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sparc64-linux-user
+ # As a final step configure the user (if env is defined)
+ ARG USER
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index c5e936112c6..9df607a55f8 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -197,7 +197,7 @@ debian_all_test_cross_compilers = [
+     "apt install -y --no-install-recommends \\\n",
+     "${AVAILABLE_COMPILERS} && \\\n",
+     "dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt\n",
+-    "ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools\n",
++    "ENV QEMU_CONFIGURE_OPTS --disable-docs\n",
+     "ENV DEF_TARGET_LIST aarch64-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sparc64-linux-user\n",
+ ]
  
- ubuntu-24.04-aarch64-all:
 -- 
 2.47.3
 
