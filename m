@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB11D33992
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 16:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 101CFD33994
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 16:42:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRYsE-0005WY-8f; Fri, 05 Dec 2025 11:41:38 -0500
+	id 1vRYsG-0005Z6-BD; Fri, 05 Dec 2025 11:41:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRYsA-0005Us-U8
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:41:35 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1vRYsD-0005W9-4v
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:41:37 -0500
+Received: from mail-wr1-x441.google.com ([2a00:1450:4864:20::441])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRYs9-0005k9-8d
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:41:34 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-47789cd2083so15014675e9.2
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 08:41:32 -0800 (PST)
+ id 1vRYsA-0005ke-CY
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:41:36 -0500
+Received: by mail-wr1-x441.google.com with SMTP id
+ ffacd0b85a97d-42e2b80ab25so1110895f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 08:41:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764952891; x=1765557691; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764952892; x=1765557692; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UgC1n9c0p0XafiXg1Pp+WyNc7po/v/NB3rG48EO9ToA=;
- b=d2UTO4pwyxPqpSpQjPukX84jshrnaEFTibtakqdkFQknqaCf2U6xW6lq7OZ4vObaCO
- gXbMMIDXYHZ2Ecur38Ny6KXEWDw9ZPjqk28JBmYcP8GXUHgjQAPW+x19XjKbe90BxwgZ
- E5sqf/dQLvVl8ljYaKK1rtu5gd8Nc+0qfNK9UK9wNRlA4JnDYrde3ryuMO9AzZlzdDqk
- SzWoolnAiuPTKtXlBcQg5p/A54RrfXcu420ddJUj958On/cOsxJ/XWt+FltjZRV/Oiz2
- ScHa6XRdwOJoEoaXPuQ9HPkplSfAPNVrEQoXV6OEG4pAZlJQ2l/HAoS/PyhP3TXyGM/9
- bERw==
+ bh=YarOSuHwlCtL0h3mYhnGaMVQ42yoLN6kE3eXgms9puo=;
+ b=UH8nAm2Wh3e+FkFVJVRSPtq6xQ9BAUWrNzgXzW9a2LmbWY4lCZATdll3RK4jEvlQSu
+ 9jnc2ujrqGuojIIub0MgbYedkZ1VTup5NsevHOSgqOM49Um2Om/04w2HYVXkzVAVbw5g
+ wo7jdBjqtc3eYe+58ZCuXml2ZR6Jb1vCYk81EBQsqpZMQ238syukDYdTbO0bQU3mtEy9
+ U9HM0S+wbLxRkoiQd0zB7UOS1NYVeY2N5a1pKebClIEB3bPfFMpaf0gDsDlQ54n/vwhC
+ YBhXycC0lRu2mwpLc+ZIDGTAF9LEE/5BOJA1As8etbtsT84AR63c/4KOXKYWMDHh0vzi
+ iszA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764952891; x=1765557691;
+ d=1e100.net; s=20230601; t=1764952892; x=1765557692;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UgC1n9c0p0XafiXg1Pp+WyNc7po/v/NB3rG48EO9ToA=;
- b=PBDsN0Rj6S1ZZQ99KcBDXlng1Hwl3ct9moB42x+cKwBHFsnoQ2+XVH4WCKxYO1tgYp
- B9mwpmFcdc5hZkLmOND8vKRHCgolNkGTX9IiCmPGOql2jj2/WeGV+QNR6mLEpci1o3h6
- K17llPojlnAIVBpfXa0WEt57oilndw1wvw1LXIaYrPFwDZc03qd4SpyTPOPKFe6qS1sE
- no+yZv1wTFVFl1i/NL0dr3LW5x2dmV4jAaE+k0GW9r1jmXyxP1yFORPJLoWKt2ul5jwe
- Kqk3/3rmcT8+9hj8fOdwvxijbm96tDFE0bl4S6SfWIyJDii53QNjOKr62tJv0MGAfHpv
- LceQ==
-X-Gm-Message-State: AOJu0YwiaOU3ihpgMbaLh4x5OLSrUX64kiGGuMFGzuvRb8TgSsFfpsOx
- Giu0KwA3Dt/AsSE375WXmY6LpIHbjVOcY25OQq/C60ykfhAVoHiQo0PYkDVG/ieQOd0=
-X-Gm-Gg: ASbGncudjUlddlSm6oq7ymd8VCj/7niLrnSoUUnGl3Z9cih666y25R9LjQ8pH92ldny
- EHLE7obh1BXfdv1dTJQ8rHIxnvQUFjlBWUm/nG+N/dThGSGdrazf7DPkwTG9zJjqRuoPYp27KH9
- o1PqZYZ4F5rGoLiAi1pcHEDS/Eid5MTh48hkVLKHzEhSZP6maZkj92dpWX/U1mQuDpNTGV1evCw
- e3jtA6vmmPVrpDyVT8o195ymyvDY4cINC/W+8HCRurCnA2LpeBaGF7Bsibpy2K6ofWji92d9eZ2
- dm5bibKdwPeXCZ7OuuBVyeuj1uMjac/BVS8Bc204wWVPWsXnY8ARv+HH5BQI6RJHR9vHwefMrZC
- /TadEIWPQm96B6YSshgAz+V8kvB729VSkk8/sFSwKSijjjC38lIv12ws3HEJkr4OTjRzPEqkf0f
- WzAsSbcJChvuSWCMoXOXx6Ow==
-X-Google-Smtp-Source: AGHT+IEKTCzqo1lcqGCt4z544PMM16ygqm+IsOpO7xWFbx86AYITyhEWBBr7XgxyPG+If0uxpUczgg==
-X-Received: by 2002:a05:600c:4755:b0:477:63a4:88fe with SMTP id
- 5b1f17b1804b1-4792aed9b2emr111134245e9.2.1764952891041; 
- Fri, 05 Dec 2025 08:41:31 -0800 (PST)
+ bh=YarOSuHwlCtL0h3mYhnGaMVQ42yoLN6kE3eXgms9puo=;
+ b=jiZ70srFcNBsZTyaayB2mF50jzGLhnfoZTF6KJ5h/Nej3olTDlLE7kUnkjxJQgZdhh
+ B2TFA4/kPvthe8+ARkdwz7ULGYegqeMEH1QF4ROdw6ZhB7ijFEOongT0tgIDr2pHSC+e
+ 3FnDCcoAfOdDUNhrxjjEFZRgepkWhrfGtsI2EgvZa/N74yPPJmFdjaDqzsMhFKyxK/Ex
+ 732ojf8u6cxoGDLQGgufTVwTes0D3pmtx1kKg78gQifhk2ei0UBOOPP6VxLP2aUf24mg
+ jSZCMBp1Xtri6V3YMV8IWYgNwu7qh7nqhU1mCC4QG6z+8d4j9qrembMNzBtqt4cMizWR
+ iizQ==
+X-Gm-Message-State: AOJu0YzEAb/+H9MF0/zOKKQPhkJNHynGzDWVOPJ+vkUxurEVPg249Cao
+ LHCUoOJXsLCcvCQJ7GjtNRDzbFEy2IMeKSpfzgzZlQfuozKiyOMufu6nMmrhy1idhvA=
+X-Gm-Gg: ASbGncv35v2xhGnHmzvAP37HvGimA2slPnaZ/E0rQZkgC5yDjCIj3ff7fJM7Hv52UA3
+ MdfDpgXEsx6qVGB16RUPq4+dvCRGjYh6CSAId4qns/U1TZwN1ItnTI85oen0M2FRSh8o3EKztt5
+ PdT9QxB3CKIp5lFBGbbfgo10bBwem5j3HfgPdT1Z50Kjxb78gQMhCnyaCTLMosRXy8zEfRiCkhc
+ c47aYCMzkjRuhF8OYfnGeCAQQJwijg7yMYdebKfjkJGuotUVi+Epaj0vD8fuZSEp4cKzQ9wUDQx
+ oKtPCsVHnWSEuo6V42O2Y7fQhVMeXylEKyxXlCqfM4RuNB0WDXMmXfhfDAgEQc8Kn+IozgxVNBI
+ Pxd3QjRIWcMurJf3sBDqysmwfdHRcVNqkrSkQzXJ7rW+K4tfkhhxMfL5hs+dCFnp1gOUjxfEij3
+ ZIu/Ir2fWtf9I=
+X-Google-Smtp-Source: AGHT+IHZKApi53Jp9Extf4bhXWtYJDbrb2MPUMKznfFqMmI+Cs6AYq/EchyVAAA+v4qoTPdUkSI9SQ==
+X-Received: by 2002:a05:6000:18a6:b0:429:c4bb:fbd6 with SMTP id
+ ffacd0b85a97d-42f731a4e4fmr11266710f8f.31.1764952892231; 
+ Fri, 05 Dec 2025 08:41:32 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7cbfee71sm9475442f8f.15.2025.12.05.08.41.27
+ ffacd0b85a97d-42f7cbfee66sm9502374f8f.11.2025.12.05.08.41.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 05 Dec 2025 08:41:29 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 71CCD5F87C;
+ by draig.lan (Postfix) with ESMTP id A20365F8FE;
  Fri, 05 Dec 2025 16:41:26 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org (open list:Block layer core)
-Subject: [PULL 05/14] tests/qemu-iotests: Check for a functional "secret"
- object before using it
-Date: Fri,  5 Dec 2025 16:41:16 +0000
-Message-ID: <20251205164125.2122504-6-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 07/14] tests/docker: transition debian-all-test-cross to lcitool
+Date: Fri,  5 Dec 2025 16:41:18 +0000
+Message-ID: <20251205164125.2122504-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251205164125.2122504-1-alex.bennee@linaro.org>
 References: <20251205164125.2122504-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::441;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x441.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,79 +105,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+While we are at it bump up to debian-13. As we use this container in
+the CI runs this also has the benefit of ensuring our qemu-minimal
+dependencies project really has just what we need to build a basic
+QEMU.
 
-QEMU iotests 049, 134 and 158 are currently failing if you compiled
-QEMU without the crypto libraries. Thus make sure that the "secret"
-object is really usable and skip the tests otherwise.
+We add a few extra packages so we can build with clang as well as what
+we need to probe for the available cross-compilers in the image.
 
-Reported-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20251205130014.693799-1-thuth@redhat.com>
+Message-ID: <20251204194902.1340008-7-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/tests/qemu-iotests/049 b/tests/qemu-iotests/049
-index ed12fa49d7f..a1b922060db 100755
---- a/tests/qemu-iotests/049
-+++ b/tests/qemu-iotests/049
-@@ -39,6 +39,8 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
+diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
+index 420a4e33e60..079942a1c56 100644
+--- a/tests/docker/dockerfiles/debian-all-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+@@ -1,77 +1,97 @@
++# THIS FILE WAS AUTO-GENERATED
+ #
+-# Docker all cross-compiler target (tests only)
++#  $ lcitool dockerfile --layers all debian-13 qemu-minimal
+ #
+-# While the normal cross builds take care to setup proper multiarch
+-# build environments which can cross build QEMU this just installs the
+-# basic compilers for as many targets as possible. We shall use this
+-# to build and run linux-user tests on GitLab
+-#
+-FROM docker.io/library/debian:12-slim
++# https://gitlab.com/libvirt/libvirt-ci
  
- _supported_fmt qcow2
- _supported_proto file
-+_require_secret
+-# Duplicate deb line as deb-src
+-RUN sed -in "s/Types: deb/Types: deb deb-src/g" /etc/apt/sources.list.d/debian.sources
++FROM docker.io/library/debian:13-slim
+ 
+ RUN export DEBIAN_FRONTEND=noninteractive && \
+     apt-get update && \
+     apt-get install -y eatmydata && \
+     eatmydata apt-get dist-upgrade -y && \
+-    apt build-dep -yy --arch-only qemu
++    eatmydata apt-get install --no-install-recommends -y \
++                      bash \
++                      bc \
++                      bison \
++                      bzip2 \
++                      ca-certificates \
++                      ccache \
++                      findutils \
++                      flex \
++                      gcc \
++                      git \
++                      libc6-dev \
++                      libfdt-dev \
++                      libffi-dev \
++                      libglib2.0-dev \
++                      libpixman-1-dev \
++                      locales \
++                      make \
++                      ninja-build \
++                      pkgconf \
++                      python3 \
++                      python3-pip \
++                      python3-setuptools \
++                      python3-venv \
++                      python3-wheel \
++                      sed \
++                      tar && \
++    eatmydata apt-get autoremove -y && \
++    eatmydata apt-get autoclean -y && \
++    sed -Ei 's,^# (en_US\.UTF-8 .*)$,\1,' /etc/locale.gen && \
++    dpkg-reconfigure locales && \
++    rm -f /usr/lib*/python3*/EXTERNALLY-MANAGED && \
++    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt && \
++    mkdir -p /usr/libexec/ccache-wrappers && \
++    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/cc && \
++    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
+ 
+-# Add extra build tools and as many cross compilers as we can for testing
+-RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+-        apt install -y --no-install-recommends \
+-        bison \
+-        ccache \
+-        clang  \
+-        dpkg-dev \
+-        flex \
+-        gcc \
+-        git \
+-        libclang-rt-dev \
+-        ninja-build \
+-        python3-pip \
+-        python3-setuptools \
+-        python3-tomli \
+-        python3-venv \
+-        python3-wheel
++RUN /usr/bin/pip3 install meson==1.8.1
+ 
+-# All the generally available compilers
++ENV CCACHE_WRAPPERSDIR="/usr/libexec/ccache-wrappers"
++ENV LANG="en_US.UTF-8"
++ENV MAKE="/usr/bin/make"
++ENV NINJA="/usr/bin/ninja"
++ENV PYTHON="/usr/bin/python3"
++# extras for cross and alternate toolchains
++RUN DEBIAN_FRONTEND=noninteractive eatmydata \
++  apt install -y --no-install-recommends \
++  clang\
++  dpkg-dev\
++  libclang-rt-dev
+ ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
+-        libc6-dev-arm64-cross \
+-        gcc-arm-linux-gnueabihf \
+-        libc6-dev-armhf-cross \
+-        gcc-mips-linux-gnu \
+-        libc6-dev-mips-cross \
+-        gcc-mips64-linux-gnuabi64 \
+-        libc6-dev-mips64-cross \
+-        gcc-mips64el-linux-gnuabi64 \
+-        libc6-dev-mips64el-cross \
+-        gcc-mipsel-linux-gnu \
+-        libc6-dev-mipsel-cross \
+-        gcc-powerpc64le-linux-gnu \
+-        libc6-dev-ppc64el-cross \
+-        gcc-riscv64-linux-gnu \
+-        libc6-dev-riscv64-cross \
+-        gcc-s390x-linux-gnu \
+-        libc6-dev-s390x-cross
+-
++  libc6-dev-arm64-cross \
++  gcc-arm-linux-gnueabihf \
++  libc6-dev-armhf-cross \
++  gcc-mips-linux-gnu \
++  libc6-dev-mips-cross \
++  gcc-mips64-linux-gnuabi64 \
++  libc6-dev-mips64-cross \
++  gcc-mips64el-linux-gnuabi64 \
++  libc6-dev-mips64el-cross \
++  gcc-mipsel-linux-gnu \
++  libc6-dev-mipsel-cross \
++  gcc-powerpc64le-linux-gnu \
++  libc6-dev-ppc64el-cross \
++  gcc-riscv64-linux-gnu \
++  libc6-dev-riscv64-cross \
++  gcc-s390x-linux-gnu \
++  libc6-dev-s390x-cross
+ RUN if dpkg-architecture -e amd64; then \
+   export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross"; \
+   export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross"; \
+   export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross"; \
+   export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross"; \
+   export AVAILABLE_COMPILERS="${AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross"; \
+-  fi && \
+-  DEBIAN_FRONTEND=noninteractive eatmydata \
+-        apt install -y --no-install-recommends \
+-        ${AVAILABLE_COMPILERS} && \
+-        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+-
+-
++fi && \
++DEBIAN_FRONTEND=noninteractive eatmydata \
++apt install -y --no-install-recommends \
++${AVAILABLE_COMPILERS} && \
++dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt
+ ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
+ ENV DEF_TARGET_LIST aarch64-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sparc64-linux-user
+ # As a final step configure the user (if env is defined)
+-ENV MAKE /usr/bin/make
+ ARG USER
+ ARG UID
+ RUN if [ "${USER}" ]; then \
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 3a31fcfee9c..c5e936112c6 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -161,6 +161,46 @@ ubuntu2204_rust_extras = [
+     'RUN cargo install bindgen-cli\n',
+ ]
+ 
++debian_all_test_cross_compilers = [
++    "# extras for cross and alternate toolchains\n",
++    "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
++    "  apt install -y --no-install-recommends \\\n",
++    "  clang\\\n",
++    "  dpkg-dev\\\n",
++    "  libclang-rt-dev\n",
++    "ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \\\n",
++    "  libc6-dev-arm64-cross \\\n",
++    "  gcc-arm-linux-gnueabihf \\\n",
++    "  libc6-dev-armhf-cross \\\n",
++    "  gcc-mips-linux-gnu \\\n",
++    "  libc6-dev-mips-cross \\\n",
++    "  gcc-mips64-linux-gnuabi64 \\\n",
++    "  libc6-dev-mips64-cross \\\n",
++    "  gcc-mips64el-linux-gnuabi64 \\\n",
++    "  libc6-dev-mips64el-cross \\\n",
++    "  gcc-mipsel-linux-gnu \\\n",
++    "  libc6-dev-mipsel-cross \\\n",
++    "  gcc-powerpc64le-linux-gnu \\\n",
++    "  libc6-dev-ppc64el-cross \\\n",
++    "  gcc-riscv64-linux-gnu \\\n",
++    "  libc6-dev-riscv64-cross \\\n",
++    "  gcc-s390x-linux-gnu \\\n",
++    "  libc6-dev-s390x-cross\n",
++    "RUN if dpkg-architecture -e amd64; then \\\n",
++    "  export AVAILABLE_COMPILERS=\"${AVAILABLE_COMPILERS} gcc-hppa-linux-gnu libc6-dev-hppa-cross\"; \\\n",
++    "  export AVAILABLE_COMPILERS=\"${AVAILABLE_COMPILERS} gcc-m68k-linux-gnu libc6-dev-m68k-cross\"; \\\n",
++    "  export AVAILABLE_COMPILERS=\"${AVAILABLE_COMPILERS} gcc-powerpc-linux-gnu libc6-dev-powerpc-cross\"; \\\n",
++    "  export AVAILABLE_COMPILERS=\"${AVAILABLE_COMPILERS} gcc-powerpc64-linux-gnu libc6-dev-ppc64-cross\"; \\\n",
++    "  export AVAILABLE_COMPILERS=\"${AVAILABLE_COMPILERS} gcc-sparc64-linux-gnu libc6-dev-sparc64-cross\"; \\\n",
++    "fi && \\\n",
++    "DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
++    "apt install -y --no-install-recommends \\\n",
++    "${AVAILABLE_COMPILERS} && \\\n",
++    "dpkg-query --showformat '${Package}_${Version}_${Architecture}' --show > /packages.txt\n",
++    "ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools\n",
++    "ENV DEF_TARGET_LIST aarch64-linux-user,arm-linux-user,hppa-linux-user,i386-linux-user,m68k-linux-user,mips-linux-user,mips64-linux-user,mips64el-linux-user,mipsel-linux-user,ppc-linux-user,ppc64-linux-user,ppc64le-linux-user,riscv64-linux-user,s390x-linux-user,sparc64-linux-user\n",
++]
 +
+ def cross_build(prefix, targets):
+     conf = "ENV QEMU_CONFIGURE_OPTS=--cross-prefix=%s\n" % (prefix)
+     targets = "ENV DEF_TARGET_LIST=%s\n" % (targets)
+@@ -256,6 +296,15 @@ try:
+                         # https://github.com/mesonbuild/meson/pull/14991
+                         enable_rust=False)
  
- filter_test_dir()
- {
-diff --git a/tests/qemu-iotests/134 b/tests/qemu-iotests/134
-index b2c3c03f08b..cc1e35eb161 100755
---- a/tests/qemu-iotests/134
-+++ b/tests/qemu-iotests/134
-@@ -39,6 +39,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- 
- _supported_fmt qcow qcow2
- _supported_proto file
-+_require_secret
- 
- 
- size=128M
-diff --git a/tests/qemu-iotests/158 b/tests/qemu-iotests/158
-index 3a9ad7eed03..8fc4e986532 100755
---- a/tests/qemu-iotests/158
-+++ b/tests/qemu-iotests/158
-@@ -39,6 +39,7 @@ trap "_cleanup; exit \$status" 0 1 2 3 15
- 
- _supported_fmt qcow qcow2
- _supported_proto file
-+_require_secret
- 
- 
- size=128M
-diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-index e977cb4eb61..10d83d8361b 100644
---- a/tests/qemu-iotests/common.rc
-+++ b/tests/qemu-iotests/common.rc
-@@ -1053,6 +1053,20 @@ _require_one_device_of()
-     _notrun "$* not available"
- }
- 
-+_require_secret()
-+{
-+    if [ -e "$TEST_IMG" ]; then
-+        echo "unwilling to overwrite existing file"
-+        exit 1
-+    fi
-+    if $QEMU_IMG create -f $IMGFMT --object secret,id=sec0,data=123 \
-+                 -o encryption=on,encrypt.key-secret=sec0 "$TEST_IMG" 1M 2>&1 \
-+                 | grep "Unsupported cipher" ; then
-+        _notrun "missing cipher support"
-+    fi
-+    rm -f "$TEST_IMG"
-+}
++    # We also generate some docker files with minimal dependencies and
++    # as many cross-compilers as Debian will package for building TCG
++    # tests.
 +
- _qcow2_dump_header()
- {
-     if [[ "$1" == "--no-filter-compression" ]]; then
++    generate_dockerfile("debian-all-test-cross", "debian-13",
++                        project="qemu-minimal",
++                        enable_rust=False,
++                        trailer="".join(debian_all_test_cross_compilers))
++
+     #
+     # Cirrus packages lists for GitLab
+     #
 -- 
 2.47.3
 
