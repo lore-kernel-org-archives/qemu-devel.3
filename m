@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24FF9D32D96
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 15:19:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343D4D33980
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 15:20:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRXav-00011h-7v; Fri, 05 Dec 2025 10:19:41 -0500
+	id 1vRXbC-0001eK-8X; Fri, 05 Dec 2025 10:19:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRXab-0000wv-NQ
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 10:19:23 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1vRXbA-0001dD-Ia
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 10:19:56 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRXaY-0002nf-Ve
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 10:19:20 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-47774d3536dso21849895e9.0
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 07:19:18 -0800 (PST)
+ id 1vRXb9-0002tc-2I
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 10:19:56 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-42e2e5da5fcso1470617f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 07:19:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764947957; x=1765552757; darn=nongnu.org;
+ d=linaro.org; s=google; t=1764947993; x=1765552793; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pqKjTbWjcxZgKeHqWJxvfn7jvGBAh8pXS5IS9GM/Ulw=;
- b=iWOK5qLkPk5i//9nGjyuqbrhcow9raViFt0dueow9xry5Mkk+5qp5AP4/gYk2ijchS
- j3FOJcQ575aMUsRl/7BVVaqS5Gop/115rtAlC6LOlDrPdZ68RJrCbRw8Wmcsbj3f3AuV
- PSdwPLPEgpnPZ5CCig94GwCxioZ1/pi1YsZJOf0MTVvCzJt8OVY/eQ1DWLMZDmCntcZ+
- XM5AOPkXfVf5OHa0jnp4htWgpP05ty/EP+srNCeKK1fzTFdOzG5NNrnsJVYi+O2VGNFX
- fYwNc0wOv0LdD11fv9TnDyQpmYsqLh0ZfhK3UeysZ86zA8jCiFlwxjHmRle9LdY/02vX
- Lb/A==
+ bh=CI9UVXr56IN5uu9EFIFK5/excuI1xzH8tleWMraUFLU=;
+ b=lcRlpORiiL5WQMndSXNQFm7as3//uuDd4n6pDt3QMGNwxO/agDJn0F/WHZOavbY6WX
+ BumWiZhW/vEdLN9kW+yL8TIu6EuOqbVZME0Bi0kES6ddTxayIFVmaei6/ZXu3AagqOeF
+ lgE8UJtbTCRzDWX+4R17BTfIeEUqvBZ+wR0eLP7WO0elWJxqJDPdYTdMWeo4yZwCQa1L
+ BHxuWH4IvygbP8oPg6/kNzRkGVraOq7oL780zM/s8nujxma90Jm8ipndtOnRPs019mD6
+ isGv9vcj27nOt2jWHBXzORp2N7awdl+ly2ZKcOM6jdj5MeUGeUU+MrGA4qBnZlONTSsd
+ 936w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764947957; x=1765552757;
+ d=1e100.net; s=20230601; t=1764947994; x=1765552794;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pqKjTbWjcxZgKeHqWJxvfn7jvGBAh8pXS5IS9GM/Ulw=;
- b=lpJ4ndkaBjhT0AqG7lpccT4TVDbWYlV9mPgDHIEp3qUfSKABoETSMeppr79jWm7qlO
- IVkg4guplPc+BArsGsF+8bV36GlfxyDYUvXd3G/2niCeL9r/A++5H0qY/D2WYi0qmXaF
- zUHtXloN5OCZ8HfLfCnX1X1ekEeBWsvwZmXKjbM35SJ5FFD3TWTOoxkBR1Gt2p+zHpyq
- fVHPPJxf82bbjazGg8sNZfu5KV1C+WQN/ZP1K6I8LIqYpSrnksVT9Ur0+i3HlWMfD7mw
- ajg0a+aGOKCuKX4jWnWK78RD+xm4fAl+PQU/SeElBBMflX1OhbO158Fdcc9nBqYThQVQ
- Rsgg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUJBddPBWWrXeRFMEEApzEvVvKv2Wxf3lfMqRToD4uXyA2C3Liq5Fp5Ox9rp0SReEPqD1c8wCcp5pyv@nongnu.org
-X-Gm-Message-State: AOJu0YzMqFhsl2s/E3GTJnDTQ2HXIeevM9l3TnqbplQeCQy/C4wURGjZ
- mXKYE7PEItJdNeyKhHknShw4ZViAn/nt7e/3TwbBem/xRtcH/NbfuZScx+zCstcD0Ls=
-X-Gm-Gg: ASbGnctpdJB0St9Ne8hxKB4am4Aq3thXmxAxhoAVG4Rpz/Ps1fpLOGf/6EZ2xf8t/1P
- 8AjFAbRdU4cD8QZt4WgSWnLpFWW0nJrGcgEvA8vkiIxTEMEDuUyk40maoVIJ8GkGwwHmuyh3fdZ
- k+ItXQHEwMgakEkJBwR1CyqpER+Rpr62RSUdC3oinTW9uNjh3bO3l4zJ3vEWSxh0zT5dqqQNDwV
- mGMlNVS3fRkrULw9nOhbm0wIEuOBr8SksX4Y5uCY+Y4ipaQZFWoKET650B9lBFkVLuFT/ob+xKf
- qIGhCKSsazandI3/audITKpj3qXCnf5pGeQGOoOuSX7lDAdELe8phixc3KRakjSesBt6h4aey+Y
- vClWXWuREEesVEzmy5Ox5aGXI+DFihGFnQMVhKNYXaPmrHiNYsvTuZLhzBtZKC/Dimd1J6gU6dr
- G1+xkP/9oTx6sZ0FyqCo6xRg==
-X-Google-Smtp-Source: AGHT+IGbh5nMGdxvi3hlugWCViWFUfqVJ3JHspuMEvWqOFqkdy2s8KUOmL3kEoI/d3/2fvDvHR8MmA==
-X-Received: by 2002:a05:600c:2f97:b0:477:9a61:fd06 with SMTP id
- 5b1f17b1804b1-4792eb1a02emr56026355e9.8.1764947957417; 
- Fri, 05 Dec 2025 07:19:17 -0800 (PST)
+ bh=CI9UVXr56IN5uu9EFIFK5/excuI1xzH8tleWMraUFLU=;
+ b=rTjkIz41jdzozy1GJD8nY0z8JshrXYXruClpuWHsQ+6DbIf95zMypS0NAMSwp6nZK6
+ 5Jryjz+FCUhkIHYJv3OO+AsaZkDqmbRhdjA0iO9zCADpILZU+XtvsyUXjS/kf6pLs8Dt
+ hkIXpvD4BabzUtlX/j6BzSwEGDU+6EyXK8oNHe2zDI8lk22BE0mmrgEGLktXpN0yFSgt
+ txVCtO6FiDijXH/L50xAYPJ3krvLj29T82wS8E94LbxSKe/WOvfyfzSDX8hyuQkA6+e2
+ /MapuVOhpfXrff1RLW2JI6V+DMbtqPEwRvavncEb6XCiTeQ/gB+q46FqSed1FW2lHjbN
+ +VTg==
+X-Gm-Message-State: AOJu0YwcJOi/2ZldgYDoQVBL5h5t8noz7OIRvcrMlEsOFwEol42vxG64
+ Tyy2Oq9nDgj8ye3DQSMrTqexMYP3BXganvRUW5G0bB3VMHU+t/Vy68tyvjXnhCjZMnLkNjf1rpP
+ P9WHH
+X-Gm-Gg: ASbGncsRPg+MGAS1bLcbQJ8qJipvC9BQNjJZaU8UCNqq5TLas+cgw+C/kpg9uSmk71R
+ j+ykSaLSpRKotAety+fHoUIgRz3sD7mV/NksvvAohiNFSvdKnZXIwURsm9iXJ96IH9gGYDr0WOQ
+ 6tl+NxOYWLM+Dn+m7a4D0uCIOz7v69+bqhVUFCHAjuwNpfK3VoGZQYQv39G9oVxEaN7WNX1hbt0
+ NYFDvrVWN+r+/YH1p5LSwt/GWPgJ3qjHRprc2XuimtH8MDKXdV8MlUzHLFB5A+S+3mBWHdvrcsW
+ FECkch7a2uHZdeGLFFhENXWjOixEl6u5huow81Nqe3h1hIbGrqDgYSKPTlbvF+WoPBZp4FqDWFz
+ wqys/cg97yCaNbBIjfKfdjJHnPElXOi/CQ8oRpTLs+aod28PocqatLsyC5QiskoLgg07L1k5YXa
+ i3C5DWMl30dm4=
+X-Google-Smtp-Source: AGHT+IGajw2AG7VCRdWAztdwRe4VbU5QIusNwFLrS9CKF4Y1gQVqATEpmA3em5sa6GIZKbJnaGDe9A==
+X-Received: by 2002:adf:fe08:0:b0:42f:8816:6e55 with SMTP id
+ ffacd0b85a97d-42f88166e96mr401270f8f.63.1764947993596; 
+ Fri, 05 Dec 2025 07:19:53 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-479310a6d9dsm87943635e9.2.2025.12.05.07.19.16
+ ffacd0b85a97d-42f7ca4f219sm8944048f8f.0.2025.12.05.07.19.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Dec 2025 07:19:16 -0800 (PST)
+ Fri, 05 Dec 2025 07:19:53 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 297A85F7F6;
- Fri, 05 Dec 2025 15:19:16 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 5D3315F7F6;
+ Fri, 05 Dec 2025 15:19:52 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-block@nongnu.org,  Kevin Wolf <kwolf@redhat.com>,  Hanna Reitz
- <hreitz@redhat.com>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] tests/qemu-iotests: Check for a functional "secret"
- object before using it
-In-Reply-To: <20251205130014.693799-1-thuth@redhat.com> (Thomas Huth's message
- of "Fri, 5 Dec 2025 14:00:14 +0100")
-References: <20251205130014.693799-1-thuth@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  qemu-stable@nongnu.org
+Subject: Re: [PATCH for 10.2?] gitlab-ci.d/cirrus: Update the FreeBSD job to
+ v14.3
+In-Reply-To: <20251204205025.2423326-1-mjt@tls.msk.ru> (Michael Tokarev's
+ message of "Thu, 4 Dec 2025 23:50:23 +0300")
+References: <20251204205025.2423326-1-mjt@tls.msk.ru>
 User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Fri, 05 Dec 2025 15:19:16 +0000
-Message-ID: <87y0nhq7m3.fsf@draig.linaro.org>
+Date: Fri, 05 Dec 2025 15:19:52 +0000
+Message-ID: <87sedpq7l3.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,16 +108,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Michael Tokarev <mjt@tls.msk.ru> writes:
 
-> From: Thomas Huth <thuth@redhat.com>
+> The FreeBSD 14.2 job fails since the image disappeared
+> from the cloud.  We already bumped FreeBSD image to 14.3
+> in tests/vm in c8958b7eb4 (part of v10.1.0).
 >
-> QEMU iotests 049, 134 and 158 are currently failing if you compiled
-> QEMU without the crypto libraries. Thus make sure that the "secret"
-> object is really usable and skip the tests otherwise.
->
-> Reported-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
 Queued to pr/051225-10.2-final-fixes-1, thanks.
 
