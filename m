@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 680BDD339B9
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 18:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 839BAD339B9
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 18:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRamJ-0003HI-1z; Fri, 05 Dec 2025 13:43:39 -0500
+	id 1vRamJ-0003Hn-OW; Fri, 05 Dec 2025 13:43:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1vRamH-0003Gn-89
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1vRamH-0003Gu-GE
  for qemu-devel@nongnu.org; Fri, 05 Dec 2025 13:43:37 -0500
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1vRamF-0002TD-07
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 13:43:36 -0500
-DKIM-Signature: a=rsa-sha256; bh=kAde7XxRCHgMXMxz+/cY/usdYPR6Tnh5CaGvxuN3Kqc=; 
- c=simple/simple; d=git.sr.ht; h=From:Date:Subject:Reply-to:To;
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1vRamF-0002TP-01
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 13:43:37 -0500
+DKIM-Signature: a=rsa-sha256; bh=lKcU4S4dX52gx3GTm/ddyMmDfJyf2aThLjJei3Ka8gc=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:In-Reply-To:To; 
  q=dns/txt; s=20240113; t=1764960213; v=1;
- b=UQLGOzBcCPThkHVZJMvth0qvapQVGIt4rYU8k15hT21R5ZBQYnjkx8DcwtsEX8Egzlo8aEwN
- xGv2MaC6rlTW96Tax8ZDkvyvfzdQYiC7sDlmHLOh4pnFN/D9F3btb6C29OxHmERLVIUpfTfpw+z
- zryedamiYscOCLLILEeazRLp5wPIKtSECGf0HVCPgaTl63RgC+fwpSYT7VlyA/G5uqD7u50ewjn
- pr7T5hqfSY4PEA35pYFtfMfje6tmvUv4874hGQnLJX4uj3+KDceuVJwyKC5ETaDauK4AXC/wlN2
- 0D3BYQnGjEl95woHNOB7LL3oY7L2zAgtwKef4BBlW0gIA==
+ b=F9O8D0VFuT8ziwYkHHRanItYCNLVd7LBo41oga5ApwEDofO2cZaePuX5AXW+yckoy5l8DlK9
+ KM0c5NY+fqlkVSy68iHodj7y1j4YUlM2Btt3fKW2HNV+ZQcbYsV0IBQBg5DKXJsxylnnJmREJHo
+ 4IvbY3ZPsN+A9WaSlSQPfDMpkMa2fCVjKqRlczWzDcxhrLVSs6Wa2nnH1Yg+JBo/1Ydd3MZdKDT
+ nuktFQIjYySzuLzdXdozHvKd2iMERbA0IoRYm3AX2drEA4Ghv3n1vp4iC/q0MlbM/LJA1q2EIbi
+ 2i/t6e1DVHi3WlG2vM5h9aIXrDd6iww2p2G3NK7cJ4PIQ==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id 55B46243C6
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 8B811243E3
  for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 18:43:33 +0000 (UTC)
 From: ~katharine_chui <katharine_chui@git.sr.ht>
-Date: Fri, 05 Dec 2025 18:43:33 +0000
-Subject: [PATCH qemu 0/1] hw/input/virtio-input-hid: remove mouse buttons on
+Date: Fri, 05 Dec 2025 19:04:06 +0100
+Subject: [PATCH qemu 1/1] hw/input/virtio-input-hid: remove mouse buttons on
  virtio-multitouch-pci
-MIME-Version: 1.0
-Message-ID: <176496021331.28461.6801034554708153621-0@git.sr.ht>
+Message-ID: <176496021331.28461.6801034554708153621-1@git.sr.ht>
 X-Mailer: git.sr.ht
+In-Reply-To: <176496021331.28461.6801034554708153621-0@git.sr.ht>
 To: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
 Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
  helo=mail-a.sr.ht
 X-Spam_score_int: -16
@@ -64,20 +66,43 @@ Reply-To: ~katharine_chui <kwchuiaa@connect.ust.hk>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having mouse buttons on the multitouch devices causes ui mouse button
-events to get routed to the multitouch device, despite having better
-options such as a single point tablet or a mouse.
+From: Katharine Chui <katharine.chui@gmail.com>
 
-This change fixes Android guests behavior when having both a mouse and a
-multitouch device present.
+Having mouse buttons on the multitouch devices causes ui mouse
+button events to get routed to the multitouch device, despite
+having better options such as a single point tablet or a mouse.
 
-Katharine Chui (1):
-  hw/input/virtio-input-hid: remove mouse buttons on
-    virtio-multitouch-pci
+This change fixes Android guests behavior when having both a mouse
+and a multitouch device present.
 
+Signed-off-by: Katharine Chui katharine.chui@gmail.com
+---
  hw/input/virtio-input-hid.c | 5 +----
  1 file changed, 1 insertion(+), 4 deletions(-)
 
+diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
+index d986c3c16e3..5fe91fe498c 100644
+--- a/hw/input/virtio-input-hid.c
++++ b/hw/input/virtio-input-hid.c
+@@ -540,7 +540,7 @@ static const TypeInfo virtio_tablet_info = {
+ 
+ static const QemuInputHandler virtio_multitouch_handler = {
+     .name  = VIRTIO_ID_NAME_MULTITOUCH,
+-    .mask  = INPUT_EVENT_MASK_BTN | INPUT_EVENT_MASK_MTT,
++    .mask  = INPUT_EVENT_MASK_MTT,
+     .event = virtio_input_handle_event,
+     .sync  = virtio_input_handle_sync,
+ };
+@@ -603,9 +603,6 @@ static void virtio_multitouch_init(Object *obj)
+ 
+     vhid->handler = &virtio_multitouch_handler;
+     virtio_input_init_config(vinput, virtio_multitouch_config);
+-    virtio_input_extend_config(vinput, keymap_button,
+-                               ARRAY_SIZE(keymap_button),
+-                               VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
+     virtio_input_extend_config(vinput, abs_props,
+                                ARRAY_SIZE(abs_props),
+                                VIRTIO_INPUT_CFG_PROP_BITS, 0);
 -- 
 2.49.1
 
