@@ -4,93 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B1BD2F7C9
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 09:29:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6457CD2F7C9
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 09:30:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRS7d-0001l7-K7; Fri, 05 Dec 2025 04:29:05 -0500
+	id 1vRS8u-0002Vh-9Q; Fri, 05 Dec 2025 04:30:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRS7b-0001kP-PR
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 04:29:03 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vRS7Z-00030w-JC
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 04:29:03 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47795f6f5c0so12762425e9.1
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 01:29:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764926940; x=1765531740; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6hxszPxzWI6GhMQ2yDnvupq9aExmicIE3wvtwVlr4P0=;
- b=Ea7w3b8rczt8k92vO6KzirNHX2mv8w+Rensb7QK0aayqI3LpofEunJO8u8+qeM39nG
- k2YqMXMcDXmZhqPNNTgwHdy75hhRZSHYobhl0xeC7ilmwFqLpYgc1haeGml/voZ0gODY
- R7vaDzQJM4zWnMx1oN6BJmghcl/9sc+Fj9oMWu+Tnl7B19/PunorbCawW6h+g553WmVd
- 677IvvQBUtg9dDwJlc1dKn/X2pp7TfgthAOn+pCdZbW2p7x6HfyUQqwTDHp2jo71zsis
- h8WOI+yfhmw1wj8bnVAH3M9RlbYzNyE/snHHM/eKiB6oiSj9lrMLZ66vEqCw1KTxPaTD
- 8zCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764926940; x=1765531740;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6hxszPxzWI6GhMQ2yDnvupq9aExmicIE3wvtwVlr4P0=;
- b=q80eUsrFD50QfzX7H3UgAqFywB/nKInHbxQ91pTWjZaez3rIH3K30a4mirm6f0h/Xg
- /zasFdyOlgWF53UYHIgJHp4Vd7jspL7JlZ38NS8S5p4akoJBsl91aiXRIU3ryYO2j89s
- 39R/BTVpWZN5myPHrngxA33aT4hZTtU+eRu97xof1idNER4f7W2HQ/hz2HBA59YBE4B5
- dCAH0DO7/rVcB5WZMTF0W6SUxQNvTK82MiukH73uHIKDtqNkgG58gnprd4OBKsb4VSDI
- M/MeqO8LX4oW9ii5u3zvXkvmhm5Gagf7yE4ByNzcm/7tSNTQXf/Fl35ECjoCYYVrSIoD
- WKnw==
-X-Gm-Message-State: AOJu0YxTTMJNbSbTItL7hwYDUmFUm1M8H0Kw0ICzfZfVGBwwWV17GnuD
- Ftog4Ltue9CmvKMQTKaQIAKF7litVqQxIVhFQKx9szz1ZF+XzuQLnVxL8h4fQBPbJgE=
-X-Gm-Gg: ASbGncuElXPDU6NRCKg9rkSYAZhXbM93mczQISwOZVIB/bdoWKfnieoqyDCvJVx1wsb
- g8j32ZeQJ2pwWSC/ImSnbWjcH0s9T4MHjzHyQsHvTQp+boo021y9J3iXFoMlK6KIAV01vtyYtCJ
- 2nU48z3dI9WuPZ4Gg1SyAK/S0leu1UZ8BqAz3Sv13COgkdb/ONGI+GG+DzbpTl7XqkTHBnETheg
- Ctmkhdfskh68DTmdZwLixXQ5UEZLLuwYrfpzSNihmMCd6l9f6jW08mm2rzqXJvT46HZ/V7inkzG
- 6MTF2qF9z34zcEXq6gEk+7kJSwOjLLzm9S7HKXCPJoYlHmWSwHK0stHjFZnqoZEeIIQUeErMBYw
- 8fMMsRMzb6MRjhXRDT/tfZWWNtBkK5dSgtcM+VE0dMYHpkkrAo9/A3JpfH1uL2fyDUrXaWlKkgM
- An/EjAN/ISWps=
-X-Google-Smtp-Source: AGHT+IHb2nDaZpuuLDYCMB8OgQpIPOzH5qjYQF7e2GQA2BixkyYhPNPbNmnuv3AfMNLL8WRXKKlc6g==
-X-Received: by 2002:a05:600c:1c9e:b0:477:9c73:2680 with SMTP id
- 5b1f17b1804b1-4792af4047cmr95729225e9.23.1764926939817; 
- Fri, 05 Dec 2025 01:28:59 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7cbe8fe8sm7670787f8f.2.2025.12.05.01.28.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Dec 2025 01:28:59 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4305F5F7F6;
- Fri, 05 Dec 2025 09:28:58 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Jessica Clarke <jrtc27@jrtc27.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,  "open
- list:ARM TCG CPUs" <qemu-arm@nongnu.org>
-Subject: Re: [PATCH v3] target/arm: handle unaligned PC during tlb probe
-In-Reply-To: <aTI1VZHxicpycoLj@Jessicas-MacBook-Pro> (Jessica Clarke's message
- of "Fri, 5 Dec 2025 01:28:53 +0000")
-References: <20251204203540.1381896-1-alex.bennee@linaro.org>
- <aTI1VZHxicpycoLj@Jessicas-MacBook-Pro>
-User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Fri, 05 Dec 2025 09:28:58 +0000
-Message-ID: <87fr9ps2ed.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vRS8q-0002UZ-Da; Fri, 05 Dec 2025 04:30:20 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vRS8o-0003NP-Iv; Fri, 05 Dec 2025 04:30:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1764927018; x=1796463018;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=bXhnoCKrPvnz5fpUNMS3NxozDccefiop93z/URA4KqA=;
+ b=Eg+Kfjpy9ryDzrGvPUDtperteeQoaTr+hrWfdEYEBgRqbI1ro/5mugUV
+ 6ZEpzbyTzqbshyzD9bAt6LSP1qVF8bauxsFqBOUYR05czXqFGUbqCTlVN
+ 2xow8Y1v9ncmphRypo4iRHvW/4SK4F+EQHrT002aGgNRsl4cAwpoE7oWX
+ yz30X0CmaZmI5sLA7iMPVIfBFq2USHHhokYAzkIQoJ0Pj1HmCLq+ZMe0s
+ ZUWN3EF+itCmk2ZD2e/Gt9ZShrILzh9gFCR69oq/m130WEVRwJy2P2OMm
+ WoStq+k1V2F7RLw5hlwn+1AyspupMl4rKEjNEb6HgNPvwOz6IRwkU1ziM g==;
+X-CSE-ConnectionGUID: 37Kz9vHmT/2jWsqMoHKSjg==
+X-CSE-MsgGUID: YezY33jfSjCMlD25S+rD4g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11632"; a="69552903"
+X-IronPort-AV: E=Sophos;i="6.20,251,1758610800"; d="scan'208";a="69552903"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Dec 2025 01:30:15 -0800
+X-CSE-ConnectionGUID: ZxWR96hDT/CN28uhSGt6WA==
+X-CSE-MsgGUID: 7JyG4rO5RYmCpr4+q6fDgQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,251,1758610800"; d="scan'208";a="195281968"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 05 Dec 2025 01:30:14 -0800
+Date: Fri, 5 Dec 2025 17:54:57 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, armbru@redhat.com,
+ marcandre.lureau@redhat.com
+Subject: Re: [PATCH 06/14] rust: add Deserialize implementation for QObject
+Message-ID: <aTKr8RD3pdHwqk7q@intel.com>
+References: <20251001075005.1041833-1-pbonzini@redhat.com>
+ <20251001080051.1043944-7-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251001080051.1043944-7-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,36 +83,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jessica Clarke <jrtc27@jrtc27.com> writes:
+On Wed, Oct 01, 2025 at 10:00:43AM +0200, Paolo Bonzini wrote:
+> Date: Wed,  1 Oct 2025 10:00:43 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 06/14] rust: add Deserialize implementation for QObject
+> X-Mailer: git-send-email 2.51.0
+> 
+> This allows QObject to be created from any serializable format, for
+> example JSON via serde_json.
+> 
+> This is not too useful, since QObjects are produced by
+> C code or by serializing structs, but it can be used for testing
+> and it is part of the full implementation of a serde format.
+> 
+> Co-authored-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/util/meson.build                |   1 +
+>  rust/util/src/qobject/deserialize.rs | 134 +++++++++++++++++++++++++++
+>  rust/util/src/qobject/mod.rs         |   1 +
+>  3 files changed, 136 insertions(+)
+>  create mode 100644 rust/util/src/qobject/deserialize.rs
 
-> On Thu, Dec 04, 2025 at 08:35:40PM +0000, Alex Benn=C3=A9e wrote:
->> PC alignment faults have priority over instruction aborts and we have
->> code to deal with this in the translation front-ends. However during
->> tb_lookup we can see a potentially faulting probe which doesn't get a
->> MemOp set. If the page isn't available this results in
->> EC_INSNABORT (0x20) instead of EC_PCALIGNMENT (0x22).
->>=20
->> As there is no easy way to set the appropriate MemOp in the
->> instruction fetch probe path lets just detect it in
->> arm_cpu_tlb_fill_align() ahead of the main alignment check. We also
->> teach arm_deliver_fault to deliver the right syndrome for
->> MMU_INST_FETCH alignment issues.
->>=20
->> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3233
->> Tested-by: Jessica Clarke <jrtc27@jrtc27.com>
->
-> v3 is different enough from the tested RFC that maybe this shouldn't
-> have been carried forwards, but I've now tested this v3 and it does
-> indeed still fix the issue in my testing.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-I did re-test myself and figured it was only adding to the robustness
-but thanks for re-confirming its working for you.
-
->
-> Thanks,
-> Jessica
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
