@@ -4,86 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 614D7D2E009
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 06:47:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD70D2E00E
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 07:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRPam-0002ZG-Ff; Fri, 05 Dec 2025 01:47:00 -0500
+	id 1vRQ0m-0000fN-5Y; Fri, 05 Dec 2025 02:13:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vRPaj-0002Ys-KI
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:46:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vRQ0Z-0000bA-F6; Fri, 05 Dec 2025 02:13:42 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vRPah-0004VL-KN
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:46:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764917213;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+9TIULzHZ+/aPStUjHpAud9RvJt46Xfv6HIwan4IJmU=;
- b=UmYxmtAF8UcTHc/eKECdwaqlfBSb0kMk7jHDmCXdiu4C7rFM3z/HWrLvXwaWUrR105i24c
- YJhztqo9l6MSNnaKV+36ZZT/LjtcWZCFKqaYBkP+182OpbkQYRmUR0JBLvRUfkeS2aB+Ob
- mxAFAAs4EZVDelKJpHPK2hhAEo3QjTU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-FIgp6_MpMMeVsInsRsWxdw-1; Fri,
- 05 Dec 2025 01:46:50 -0500
-X-MC-Unique: FIgp6_MpMMeVsInsRsWxdw-1
-X-Mimecast-MFC-AGG-ID: FIgp6_MpMMeVsInsRsWxdw_1764917208
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 08AE518002ED; Fri,  5 Dec 2025 06:46:48 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EDB741800577; Fri,  5 Dec 2025 06:46:46 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 44AAE21E6A27; Fri, 05 Dec 2025 07:46:44 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Jason Wang <jasowang@redhat.com>
-Cc: Ben Chaney <bchaney@akamai.com>,  qemu-devel@nongnu.org,  Peter Xu
- <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  "Michael S.
- Tsirkin" <mst@redhat.com>,  Stefano Garzarella <sgarzare@redhat.com>,
- Alex Williamson <alex@shazbot.org>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>,  Stefan Weil <sw@weilnetz.de>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,
- Hamza Khan <hamza.khan@nutanix.com>,  Mark Kanda <mark.kanda@oracle.com>,
- Joshua Hunt <johunt@akamai.com>,  Max Tottenham <mtottenh@akamai.com>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [PATCH v3 6/8] tap: cpr support
-In-Reply-To: <CACGkMEs0cNNYewaEnMVVWr8ng4kRJGotqwk5O1z1fs4BTnzPhQ@mail.gmail.com>
- (Jason Wang's message of "Fri, 5 Dec 2025 08:51:43 +0800")
-References: <20251203-cpr-tap-v3-0-3c12e0a61f8e@akamai.com>
- <20251203-cpr-tap-v3-6-3c12e0a61f8e@akamai.com>
- <874iq6mzx5.fsf@pond.sub.org>
- <CACGkMEs0cNNYewaEnMVVWr8ng4kRJGotqwk5O1z1fs4BTnzPhQ@mail.gmail.com>
-Date: Fri, 05 Dec 2025 07:46:44 +0100
-Message-ID: <877bv11l4b.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vRQ0X-0004iC-AG; Fri, 05 Dec 2025 02:13:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1764918817; x=1796454817;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=w3Buc0Ps7o9i/SjFHREmo0voDOT2uY6Lid8xV3QUcqk=;
+ b=StgiC5J4jvnQ9lyiCqztjaoZefBWFs9+rQtTk8fUVLwI0JiNir/TopyR
+ xVpt6kI8lCeUaJHL+T6X0Udc1JKq/a5+wDcgyNCt4GhfBhLHnm7KKWLt4
+ TSfNU3NhqtrGJZWd4X3GIxRcyNRzQH6lAwPvLuFVu7t5MAs79EIcdBl5T
+ MPWs5Ukf0TY4ldVkK8kuIEggM7yAbhfmQibXzg+Y4FR+104JT5bWq+3CF
+ xuneUdz0xRhLrSwUmB8oKvS/Sludb0ltWqcHofv07TSu6A8DXSpa6yKWW
+ VRXWpjNbmPaQUc7Gf5iBJhmx9Ihk8KUYhhOeJE8nu6vnYYJl9i9YjE/vl A==;
+X-CSE-ConnectionGUID: 7Jvu16G2S3+c1EXfljocew==
+X-CSE-MsgGUID: cCO1Yh+ZTfuaWZRgr+rWGQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11632"; a="70569583"
+X-IronPort-AV: E=Sophos;i="6.20,251,1758610800"; d="scan'208";a="70569583"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Dec 2025 23:13:34 -0800
+X-CSE-ConnectionGUID: qwVBAMkDSra50/dDv7oETg==
+X-CSE-MsgGUID: rmkcl3IJQT6WBXcUfk/7+g==
+X-ExtLoop1: 1
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa003.fm.intel.com with ESMTP; 04 Dec 2025 23:13:32 -0800
+Date: Fri, 5 Dec 2025 15:38:16 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, armbru@redhat.com,
+ marcandre.lureau@redhat.com
+Subject: Re: [PATCH 04/14] rust: add Serialize implementation for QObject
+Message-ID: <aTKL6FaZ9bNfWETG@intel.com>
+References: <20251001075005.1041833-1-pbonzini@redhat.com>
+ <20251001080051.1043944-5-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251001080051.1043944-5-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,76 +82,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jason Wang <jasowang@redhat.com> writes:
+On Wed, Oct 01, 2025 at 10:00:41AM +0200, Paolo Bonzini wrote:
+> Date: Wed,  1 Oct 2025 10:00:41 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 04/14] rust: add Serialize implementation for QObject
+> X-Mailer: git-send-email 2.51.0
+> 
+> This allows QObject to be converted to other formats, for example
+> JSON via serde_json.
+> 
+> This is not too useful, since QObjects are consumed by
+> C code or deserialized into structs, but it can be used for testing
+> and it is part of the full implementation of a serde format.
+> 
+> Co-authored-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/Cargo.lock                    |  1 +
+>  rust/util/Cargo.toml               |  1 +
+>  rust/util/meson.build              |  3 +-
+>  rust/util/src/qobject/mod.rs       |  4 +-
+>  rust/util/src/qobject/serialize.rs | 59 ++++++++++++++++++++++++++++++
+>  5 files changed, 65 insertions(+), 3 deletions(-)
+>  create mode 100644 rust/util/src/qobject/serialize.rs
 
-> Hi Markus,
->
-> On Thu, Dec 4, 2025 at 4:09=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
-om> wrote:
->>
->> Ben Chaney <bchaney@akamai.com> writes:
->>
->> > From: Steve Sistare <steven.sistare@oracle.com>
->> >
->> > Provide the cpr=3Don option to preserve TAP and vhost descriptors duri=
-ng
->> > cpr-transfer, so the management layer does not need to create a new
->> > device for the target.
->> >
->> > Save all tap fd's in canonical order, leveraging the index argument of
->> > cpr_save_fd.  For the i'th queue, the tap device fd is saved at index =
-2*i,
->> > and the vhostfd (if any) at index 2*i+1.
->> >
->> > tap and vhost fd's are passed by name to the monitor when a NIC is hot
->> > plugged, but the name is not known to qemu after cpr.  Allow the manag=
-er
->> > to pass -1 for the fd "name" in the new qemu args to indicate that QEMU
->> > should search for a saved value.  Example:
->> >
->> >   -netdev tap,id=3Dhostnet2,fds=3D-1:-1,vhostfds=3D-1:-1,cpr=3Don
->>
->> Hmm.  See below.
->>
->> >
->> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->> > Signed-off-by: Ben Chaney <bchaney@akamai.com>
->>
->> [...]
->>
->> > diff --git a/qapi/net.json b/qapi/net.json
->> > index 118bd34965..264213b5d9 100644
->> > --- a/qapi/net.json
->> > +++ b/qapi/net.json
->> > @@ -355,6 +355,8 @@
->>    ##
->>    # @NetdevTapOptions:
->>    #
->>    # Used to configure a host TAP network interface backend.
->>    #
->>    # @ifname: interface name
->>    #
->>    # @fd: file descriptor of an already opened tap
->>    #
->>    # @fds: multiple file descriptors of already opened multiqueue capable
->>    #     tap
->>
->> Not this patch's fault: the interface is misguided, and its
->> documentation inadequate.
->>
->> @fds is a string of file descriptor names or numbers separated by ':'.
->> Not documented.  I found out by reading the code.
->>
->> This violates QAPI design principle "no string parsing".  It should be
->> an array of strings.
->>
->
-> I agree with your concern. Just a note that this "fds" was introduced
-> before QAPI if I am not wrong.
+...
 
-It's from 2013 (commit 264986e2c8f).  QAPI was still young then
-(netdev_add had been QAPIfied less than a year ago), we had much to
-learn, and interface review barely happened.  All understandable, and no
-reason to throw shade on anyone involved :)
+> +impl Serialize for QObject {
+> +    #[inline]
+> +    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+> +    where
+> +        S: ::serde::Serializer,
+> +    {
+> +        match_qobject! { (self) =>
+> +            () => serializer.serialize_unit(),
+> +            bool(b) => serializer.serialize_bool(b),
+> +            i64(i) => serializer.serialize_i64(i),
+> +            u64(u) => serializer.serialize_u64(u),
+> +            f64(f) => serializer.serialize_f64(f),
+> +            CStr(cstr) => cstr.to_str().map_or_else(
+> +                |_| Err(ser::Error::custom("invalid UTF-8 in QString")),
+> +                |s| serializer.serialize_str(s),
+> +            ),
+> +            QList(l) => {
+> +                let mut node_ptr = unsafe { l.head.tqh_first };
+> +                let mut state = serializer.serialize_seq(None)?;
+> +                while !node_ptr.is_null() {
+> +                    let node = unsafe { &*node_ptr };
+> +                    let elem = unsafe { ManuallyDrop::new(QObject::from_raw(addr_of!(*node.value))) };
+> +                    state.serialize_element(&*elem)?;
+
+QObject here is always valid so it's not necessary to concern about it
+is destroied by C side, and so that it's not necessary to use
+cloned_from_raw here.
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
