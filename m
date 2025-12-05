@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4919BD2CE1C
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 05:40:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBEA9D2E008
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 05:41:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vROXE-0008N8-VH; Fri, 05 Dec 2025 00:39:18 -0500
+	id 1vROX6-0008K6-Ds; Fri, 05 Dec 2025 00:39:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vROWe-0008Fx-0r
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 00:38:44 -0500
-Received: from inva020.nxp.com ([92.121.34.13])
+ id 1vROWs-0008Hr-2W
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 00:38:55 -0500
+Received: from inva021.nxp.com ([92.121.34.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1vROWS-0005IX-L9
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 00:38:30 -0500
-Received: from inva020.nxp.com (localhost [127.0.0.1])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 78F8B1A187C;
- Fri,  5 Dec 2025 06:38:22 +0100 (CET)
+ id 1vROWi-0005L2-4m
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 00:38:48 -0500
+Received: from inva021.nxp.com (localhost [127.0.0.1])
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 279E82012B6;
+ Fri,  5 Dec 2025 06:38:25 +0100 (CET)
 Received: from aprdc01srsp001v.ap-rdc01.nxp.com
  (aprdc01srsp001v.ap-rdc01.nxp.com [165.114.16.16])
- by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 42CDE1A1858;
- Fri,  5 Dec 2025 06:38:22 +0100 (CET)
+ by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id F1409201609;
+ Fri,  5 Dec 2025 06:38:24 +0100 (CET)
 Received: from lsv031015.swis.in-blr01.nxp.com
  (lsv031015.swis.in-blr01.nxp.com [10.12.177.77])
- by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 091981800083;
- Fri,  5 Dec 2025 13:38:20 +0800 (+08)
+ by aprdc01srsp001v.ap-rdc01.nxp.com (Postfix) with ESMTP id 6A1A2180008F;
+ Fri,  5 Dec 2025 13:38:24 +0800 (+08)
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, peter.maydell@linaro.org,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: [PATCHv4 02/15] hw/misc/imx8mp_analog: Add property to analog device
-Date: Fri,  5 Dec 2025 11:08:06 +0530
-Message-Id: <20251205053819.2021772-3-gaurav.sharma_7@nxp.com>
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>
+Subject: [PATCHv4 11/15] hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
+Date: Fri,  5 Dec 2025 11:08:15 +0530
+Message-Id: <20251205053819.2021772-12-gaurav.sharma_7@nxp.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251205053819.2021772-1-gaurav.sharma_7@nxp.com>
 References: <20251205053819.2021772-1-gaurav.sharma_7@nxp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Virus-Scanned: ClamAV using ClamSMTP
-Received-SPF: pass client-ip=92.121.34.13;
- envelope-from=gaurav.sharma_7@nxp.com; helo=inva020.nxp.com
+Received-SPF: pass client-ip=92.121.34.21;
+ envelope-from=gaurav.sharma_7@nxp.com; helo=inva021.nxp.com
 X-Spam_score_int: -41
 X-Spam_score: -4.2
 X-Spam_bar: ----
@@ -67,79 +68,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add configurable properties for register reset values that differ
-between i.MX 8M variants (Plus, Mini, etc.). This allows the same
-device implementation to be shared across multiple SoCs.
+It enables emulation of WDT in iMX8MM
+Added WDT IRQ lines
 
-Properties added:
-- arm-pll-fdiv-ctl0-reset: ARM PLL divider control reset value
-
-Default value is set to match i.MX 8MP reset value (0x000FA031).
-This can be overridden in the variant like iMX8MM with its own
-reset value.
-
+Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 ---
- hw/misc/imx8mp_analog.c         | 12 +++++++++++-
- include/hw/misc/imx8mp_analog.h |  3 +++
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ docs/system/arm/imx8mm-evk.rst |  1 +
+ hw/arm/Kconfig                 |  1 +
+ hw/arm/fsl-imx8mm.c            | 28 ++++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h    |  7 +++++++
+ 4 files changed, 37 insertions(+)
 
-diff --git a/hw/misc/imx8mp_analog.c b/hw/misc/imx8mp_analog.c
-index 23ffae84f8..7c904d77f4 100644
---- a/hw/misc/imx8mp_analog.c
-+++ b/hw/misc/imx8mp_analog.c
-@@ -12,6 +12,7 @@
- #include "qemu/log.h"
+diff --git a/docs/system/arm/imx8mm-evk.rst b/docs/system/arm/imx8mm-evk.rst
+index fb74950e28..b7034ff472 100644
+--- a/docs/system/arm/imx8mm-evk.rst
++++ b/docs/system/arm/imx8mm-evk.rst
+@@ -17,6 +17,7 @@ The ``imx8mm-evk`` machine implements the following devices:
+  * 5 GPIO Controllers
+  * 6 I2C Controllers
+  * 3 SPI Controllers
++ * 3 Watchdogs
+  * Secure Non-Volatile Storage (SNVS) including an RTC
+  * Clock Tree
  
- #include "hw/misc/imx8mp_analog.h"
-+#include "hw/qdev-properties.h"
- #include "migration/vmstate.h"
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 43f27735ad..b757557ac7 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -638,6 +638,7 @@ config FSL_IMX8MM
+     select SDHCI
+     select PCI_EXPRESS_DESIGNWARE
+     select PCI_EXPRESS_FSL_IMX8M_PHY
++    select WDT_IMX2
  
- #define ANALOG_PLL_LOCK BIT(31)
-@@ -51,7 +52,10 @@ static void imx8mp_analog_reset(DeviceState *dev)
-     s->analog[ANALOG_VPU_PLL_LOCKD_CTRL] = 0x0010003f;
-     s->analog[ANALOG_VPU_PLL_MNIT_CTRL] = 0x00280081;
-     s->analog[ANALOG_ARM_PLL_GEN_CTRL] = 0x00000810;
--    s->analog[ANALOG_ARM_PLL_FDIV_CTL0] = 0x000fa031;
+ config FSL_IMX8MM_EVK
+     bool
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index 6b5b769733..16599cc58f 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -200,6 +200,11 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
+     }
+ 
++    for (i = 0; i < FSL_IMX8MM_NUM_WDTS; i++) {
++        g_autofree char *name = g_strdup_printf("wdt%d", i);
++        object_initialize_child(obj, name, &s->wdt[i], TYPE_IMX2_WDT);
++    }
 +
-+    /* Use property value instead of hardcoded */
-+    s->analog[ANALOG_ARM_PLL_FDIV_CTL0] = s->arm_pll_fdiv_ctl0_reset;
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
+     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
+                             TYPE_FSL_IMX8M_PCIE_PHY);
+@@ -486,6 +491,28 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     sysbus_mmio_map(SYS_BUS_DEVICE(&s->snvs), 0,
+                     fsl_imx8mm_memmap[FSL_IMX8MM_SNVS_HP].addr);
+ 
++    /* Watchdogs */
++    for (i = 0; i < FSL_IMX8MM_NUM_WDTS; i++) {
++        static const struct {
++            hwaddr addr;
++            unsigned int irq;
++        } wdog_table[FSL_IMX8MM_NUM_WDTS] = {
++            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG1].addr, FSL_IMX8MM_WDOG1_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG2].addr, FSL_IMX8MM_WDOG2_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_WDOG3].addr, FSL_IMX8MM_WDOG3_IRQ },
++        };
 +
-     s->analog[ANALOG_ARM_PLL_LOCKD_CTRL] = 0x0010003f;
-     s->analog[ANALOG_ARM_PLL_MNIT_CTRL] = 0x00280081;
-     s->analog[ANALOG_SYS_PLL1_GEN_CTRL] = 0x0aaaa810;
-@@ -138,11 +142,17 @@ static const VMStateDescription imx8mp_analog_vmstate = {
-     },
++        object_property_set_bool(OBJECT(&s->wdt[i]), "pretimeout-support",
++                                 true, &error_abort);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
++            return;
++        }
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[i]), 0, wdog_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[i]), 0,
++                           qdev_get_gpio_in(gicdev, wdog_table[i].irq));
++    }
++
+     /* PCIe */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->pcie), errp)) {
+         return;
+@@ -526,6 +553,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_SNVS_HP:
+         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
+         case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
++        case FSL_IMX8MM_WDOG1 ... FSL_IMX8MM_WDOG3:
+             /* device implemented and treated above */
+             break;
+ 
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index 33fbfb72da..70292a2a9b 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -22,6 +22,7 @@
+ #include "hw/pci-host/fsl_imx8m_phy.h"
+ #include "hw/sd/sdhci.h"
+ #include "hw/ssi/imx_spi.h"
++#include "hw/watchdog/wdt_imx2.h"
+ #include "qom/object.h"
+ #include "qemu/units.h"
+ 
+@@ -39,6 +40,7 @@ enum FslImx8mmConfiguration {
+     FSL_IMX8MM_NUM_IRQS         = 128,
+     FSL_IMX8MM_NUM_UARTS        = 4,
+     FSL_IMX8MM_NUM_USDHCS       = 3,
++    FSL_IMX8MM_NUM_WDTS         = 3,
  };
  
-+static const Property imx8mp_analog_properties[] = {
-+    DEFINE_PROP_UINT32("arm-pll-fdiv-ctl0-reset", IMX8MPAnalogState,
-+                       arm_pll_fdiv_ctl0_reset, 0x000fa031), /* imx8mp default */
-+};
-+
- static void imx8mp_analog_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     device_class_set_legacy_reset(dc, imx8mp_analog_reset);
-+    device_class_set_props(dc, imx8mp_analog_properties);
-     dc->vmsd  = &imx8mp_analog_vmstate;
-     dc->desc  = "i.MX 8M Plus Analog Module";
- }
-diff --git a/include/hw/misc/imx8mp_analog.h b/include/hw/misc/imx8mp_analog.h
-index 955f03215a..b313820392 100644
---- a/include/hw/misc/imx8mp_analog.h
-+++ b/include/hw/misc/imx8mp_analog.h
-@@ -76,6 +76,9 @@ struct IMX8MPAnalogState {
-     } mmio;
- 
-     uint32_t analog[ANALOG_MAX];
-+
-+    /* Property for variant-specific reset values */
-+    uint32_t arm_pll_fdiv_ctl0_reset;
+ struct FslImx8mmState {
+@@ -54,6 +56,7 @@ struct FslImx8mmState {
+     IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
+     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
++    IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
  };
+@@ -199,6 +202,10 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_GPIO5_LOW_IRQ  = 72,
+     FSL_IMX8MM_GPIO5_HIGH_IRQ = 73,
  
- #endif /* IMX8MP_ANALOG_H */
++    FSL_IMX8MM_WDOG1_IRQ    = 78,
++    FSL_IMX8MM_WDOG2_IRQ    = 79,
++    FSL_IMX8MM_WDOG3_IRQ    = 10,
++
+     FSL_IMX8MM_PCI_INTA_IRQ = 122,
+     FSL_IMX8MM_PCI_INTB_IRQ = 123,
+     FSL_IMX8MM_PCI_INTC_IRQ = 124,
 -- 
 2.34.1
 
