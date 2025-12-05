@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EEE7D2CE1A
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 04:10:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EFD1D2CE1C
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 04:10:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRN8U-0004jm-41; Thu, 04 Dec 2025 23:09:39 -0500
+	id 1vRN9Z-0005EW-La; Thu, 04 Dec 2025 23:10:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vRN8O-0004j4-EK
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 23:09:32 -0500
+ id 1vRN9T-0005AY-Li
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 23:10:39 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vRN8L-0006fS-Pe
- for qemu-devel@nongnu.org; Thu, 04 Dec 2025 23:09:32 -0500
+ id 1vRN9R-0006y6-MO
+ for qemu-devel@nongnu.org; Thu, 04 Dec 2025 23:10:39 -0500
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5B548sSF031610
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5B54A769032178
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 5 Dec 2025 13:08:55 +0900 (JST)
+ Fri, 5 Dec 2025 13:10:14 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=aQ+Sn/fA22RiV+QkvUkpimlDNeo/k8qcfKPw94C7GB4=; 
+DKIM-Signature: a=rsa-sha256; bh=b+aANOQJ/T6yoX7nTB3YePqP04hLyKWFZv1r9aLjunI=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1764907735; v=1;
- b=UZhnBmvMNgnLJ5RnbAd+fc23mZvgJTucNQJ8Jo2jv9/iPX5hno5ns0CK/QBZZBlV
- 3BTUjKA1FK4KRCP2BxYpO85a2s83/403/Y4cziodTSxZYXNqiQ0lLPs/dUpKJ1UZ
- vFZeonPtFPijOJi8BqMA5Zs1iePakfvTz9S+SSPgBMlKazUtniCyaxg78k9XFykh
- 1LOt/NQe4kG4jCnUiQOyvR+gAvABYut1XdDOAe6eXJmprLEHvmMEj0NVAFZtddNg
- pY/GLRGQx1LlTkowOsK70SQjBswedHQFNZmkunKihs3NTQCcZgK8D8R85svUXT6M
- dRC3Ovj3jqL/RC2MnImZFg==
-Message-ID: <ee99e19b-0ab5-48b6-b12d-aa0bb5fe1420@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 5 Dec 2025 13:08:53 +0900
+ s=rs20250326; t=1764907814; v=1;
+ b=Er3XrvMQVfKmxEsvygrlpcqVDUauR+lDuBgqH7PaejzpS2ru3H8d9x7EHO1CGmpv
+ HwQe5DwwakpK4CXm1b03VQyh1rb8FR+AjbFZozTjO9CwISLZr4EBrR4Ysm+f9R4v
+ ueT/PeYRXUli/5U6N35cwc1zl63m9Qias3snRalfu3K4rWfwiIfPgGUxhiEDSNxa
+ 9UikL2UmT/V6NfR7WQb6noB23CGhN7cDcSiXcAQMLuviVqzmkNhaHRGByIOtyZR9
+ Jrib8vcUg8h6IzMR9+0+SkBPuof77pOMAjF4PuudscrXjvGwHvgy8wvhhh+SHpIg
+ w/TaDAwJ+HubU5LZjhhhPw==
+Message-ID: <88a72e90-35b5-459d-af08-a70173429546@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 5 Dec 2025 13:10:07 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v4 4/7] virtio-gpu: Make
- virtio_gpu_virgl_unmap_resource_blob() return -1 on error
+Subject: Re: [RFC PATCH v6 3/4] virtio-gpu: Destroy virgl resources on
+ virtio-gpu reset
 To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Huang Rui <ray.huang@amd.com>,
+ Huang Rui <ray.huang@amd.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
  Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Yiwei Zhang <zzyiwei@gmail.com>,
- Sergio Lopez Pascual <slp@redhat.com>,
- Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
+ Sergio Lopez Pascual <slp@redhat.com>
+Cc: Gert Wollny <gert.wollny@collabora.com>, qemu-devel@nongnu.org,
  Gurchetan Singh <gurchetansingh@chromium.org>, Alyssa Ross <hi@alyssa.is>,
  =?UTF-8?Q?Roger_Pau_Monn=C3=A9?= <roger.pau@citrix.com>,
  Alex Deucher <alexander.deucher@amd.com>,
@@ -62,15 +62,13 @@ Cc: Huang Rui <ray.huang@amd.com>,
  Honglei Huang <honglei1.huang@amd.com>,
  Julia Zhang <julia.zhang@amd.com>, Chen Jiqian <Jiqian.Chen@amd.com>,
  Rob Clark <robdclark@gmail.com>, Robert Beckett <bob.beckett@collabora.com>
-References: <20251125023517.177714-1-dmitry.osipenko@collabora.com>
- <20251125023517.177714-5-dmitry.osipenko@collabora.com>
- <87qztm71qe.fsf@draig.linaro.org>
- <4f9d28c9-fae4-405c-80bc-c3bd8e21acbd@collabora.com>
+References: <20251201233447.2218728-1-dmitry.osipenko@collabora.com>
+ <20251201233447.2218728-4-dmitry.osipenko@collabora.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <4f9d28c9-fae4-405c-80bc-c3bd8e21acbd@collabora.com>
+In-Reply-To: <20251201233447.2218728-4-dmitry.osipenko@collabora.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -95,36 +93,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/11/26 0:49, Dmitry Osipenko wrote:
-> On 11/25/25 15:09, Alex Bennée wrote:
->> Dmitry Osipenko <dmitry.osipenko@collabora.com> writes:
->>
->>> Make virtio_gpu_virgl_unmap_resource_blob() return -1 for more consistency
->>> of error propagation style in the code, adhering to QEMU's devel/style
->>> recommendations and preparing code for further code changes utilizing this
->>> function.
->> I'm not so sure of that. If the function is a pass/fail then we tend to
->> prefer using bools in newer code. If you need richer internal error
->> reporting then start using your errno defines. If this is user visible
->> (i.e. during configuration) then we can make more of Error* and friends.
+On 2025/12/02 8:34, Dmitry Osipenko wrote:
+> Properly destroy virgl resources on virtio-gpu reset to not leak resources
+> on a hot reboot of a VM.
 > 
-> The current code is a mix of all variants. Will be good to stick with one.
+> Suggested-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+>   hw/display/virtio-gpu-gl.c     |  6 ++-
+>   hw/display/virtio-gpu-virgl.c  | 84 +++++++++++++++++++++++++---------
+>   include/hw/virtio/virtio-gpu.h |  5 +-
+>   3 files changed, 72 insertions(+), 23 deletions(-)
 > 
-> Akihiko, what are your thoughts on the best option for the errors
-> handling? Would you also prefer bools?
+> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+> index b640900fc6f1..bf3fd75e9e6b 100644
+> --- a/hw/display/virtio-gpu-gl.c
+> +++ b/hw/display/virtio-gpu-gl.c
+> @@ -72,7 +72,10 @@ static void virtio_gpu_gl_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+>   
+>       switch (gl->renderer_state) {
+>       case RS_RESET:
+> -        virtio_gpu_virgl_reset(g);
+> +        if (virtio_gpu_virgl_reset(g)) {
+> +            gl->renderer_state = RS_INIT_FAILED;
 
-Sorry, I missed this.
+The state should stay RS_RESET so that the suspended work will be 
+resumed later.
 
-I'm for bools. It allows compilers to enforce having either of two 
-values, whose semantics is defined in include/qapi/error.h "true on 
-success / false on failure"; it says functions should also have "Error 
-**errp" but I think the semantics of bool can be applied for those 
-without the parameter.
+> +            return;
+> +        }
+>           /* fallthrough */
+>       case RS_START:
+>           if (virtio_gpu_virgl_init(g)) {
+> @@ -201,6 +204,7 @@ static void virtio_gpu_gl_class_init(ObjectClass *klass, const void *data)
+>       vgc->process_cmd = virtio_gpu_virgl_process_cmd;
+>       vgc->update_cursor_data = virtio_gpu_gl_update_cursor_data;
+>   
+> +    vgc->resource_destroy = virtio_gpu_virgl_resource_destroy;
+>       vdc->realize = virtio_gpu_gl_device_realize;
+>       vdc->unrealize = virtio_gpu_gl_device_unrealize;
+>       vdc->reset = virtio_gpu_gl_reset;
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 6a2aac0b6e5c..2fc5c746396c 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -304,14 +304,46 @@ static void virgl_cmd_create_resource_3d(VirtIOGPU *g,
+>       virgl_renderer_resource_create(&args, NULL, 0);
+>   }
+>   
+> +static int
+> +virtio_gpu_virgl_resource_unref(VirtIOGPU *g,
+> +                                struct virtio_gpu_virgl_resource *res,
+> +                                bool *cmd_suspended)
 
-If you are still not sure or there are disagreements, I think it is 
-better to ask Markus Armbruster, who maintains the error reporting 
-facility shared for the whole codebase.
+"cmd_suspended" is now a bit confusing name because it is triggered with 
+device reset which is not a command in the virtio terminology. 
+"suspended" will work and is a bit shorter too.
 
-Regards,
-Akihiko Odaki
+> +{
+> +    struct iovec *res_iovs = NULL;
+> +    int num_iovs = 0;
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +    int ret;
+> +
+> +    ret = virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended);
+> +    if (ret) {
+> +        return ret;
+> +    }
+> +    if (*cmd_suspended) {
+> +        return 0;
+> +    }
+> +#endif
+> +
+> +    virgl_renderer_resource_detach_iov(res->base.resource_id,
+> +                                       &res_iovs,
+> +                                       &num_iovs);
+> +    if (res_iovs != NULL && num_iovs != 0) {
+> +        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+> +    }
+> +    virgl_renderer_resource_unref(res->base.resource_id);
+> +
+> +    QTAILQ_REMOVE(&g->reslist, &res->base, next);
+> +
+> +    g_free(res);
+> +
+> +    return 0;
+> +}
+> +
+>   static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>                                        struct virtio_gpu_ctrl_command *cmd,
+>                                        bool *cmd_suspended)
+>   {
+>       struct virtio_gpu_resource_unref unref;
+>       struct virtio_gpu_virgl_resource *res;
+> -    struct iovec *res_iovs = NULL;
+> -    int num_iovs = 0;
+>   
+>       VIRTIO_GPU_FILL_CMD(unref);
+>       trace_virtio_gpu_cmd_res_unref(unref.resource_id);
+> @@ -324,27 +356,21 @@ static void virgl_cmd_resource_unref(VirtIOGPU *g,
+>           return;
+>       }
+>   
+> -#if VIRGL_VERSION_MAJOR >= 1
+> -    if (virtio_gpu_virgl_unmap_resource_blob(g, res, cmd_suspended)) {
+> -        cmd->error = VIRTIO_GPU_RESP_ERR_UNSPEC;
+> -        return;
+> -    }
+> -    if (*cmd_suspended) {
+> -        return;
+> -    }
+> -#endif
+> +    virtio_gpu_virgl_resource_unref(g, res, cmd_suspended);
+> +}
+>   
+> -    virgl_renderer_resource_detach_iov(unref.resource_id,
+> -                                       &res_iovs,
+> -                                       &num_iovs);
+> -    if (res_iovs != NULL && num_iovs != 0) {
+> -        virtio_gpu_cleanup_mapping_iov(g, res_iovs, num_iovs);
+> -    }
+> -    virgl_renderer_resource_unref(unref.resource_id);
+> +void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+> +                                       struct virtio_gpu_simple_resource *base,
+> +                                       Error **errp)
+> +{
+> +    struct virtio_gpu_virgl_resource *res;
+> +    bool suspended = false;
+>   
+> -    QTAILQ_REMOVE(&g->reslist, &res->base, next);
+> +    res = container_of(base, struct virtio_gpu_virgl_resource, base);
+>   
+> -    g_free(res);
+> +    if (virtio_gpu_virgl_resource_unref(g, res, &suspended)) {
+> +        error_setg(errp, "failed to destroy virgl resource");
+> +    }
+>   }
+>   
+>   static void virgl_cmd_context_create(VirtIOGPU *g,
+> @@ -1273,11 +1299,27 @@ void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g)
+>       }
+>   }
+>   
+> -void virtio_gpu_virgl_reset(VirtIOGPU *g)
+> +int virtio_gpu_virgl_reset(VirtIOGPU *g)
+>   {
+> +    struct virtio_gpu_simple_resource *res, *tmp;
+> +
+> +    /*
+> +     * Virgl blob resource unmapping can be suspended and
+> +     * deferred on unref, ensure that destruction is completed.
+> +     */
+> +    QTAILQ_FOREACH_SAFE(res, &g->reslist, next, tmp) {
+> +        virtio_gpu_virgl_resource_destroy(g, res, NULL);
+> +    }
+> +
+> +    if (!QTAILQ_EMPTY(&g->reslist)) {
+> +        return -EBUSY;
+> +    }
+> +
+>       virgl_renderer_reset();
+>   
+>       virtio_gpu_virgl_reset_async_fences(g);
+> +
+> +    return 0;
+>   }
+>   
+>   int virtio_gpu_virgl_init(VirtIOGPU *g)
+> diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+> index 718332284305..9e1473d1bb66 100644
+> --- a/include/hw/virtio/virtio-gpu.h
+> +++ b/include/hw/virtio/virtio-gpu.h
+> @@ -389,9 +389,12 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>                                     struct virtio_gpu_ctrl_command *cmd);
+>   void virtio_gpu_virgl_fence_poll(VirtIOGPU *g);
+>   void virtio_gpu_virgl_reset_scanout(VirtIOGPU *g);
+> -void virtio_gpu_virgl_reset(VirtIOGPU *g);
+> +int virtio_gpu_virgl_reset(VirtIOGPU *g);
+>   int virtio_gpu_virgl_init(VirtIOGPU *g);
+>   GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g);
+>   void virtio_gpu_virgl_reset_async_fences(VirtIOGPU *g);
+> +void virtio_gpu_virgl_resource_destroy(VirtIOGPU *g,
+> +                                       struct virtio_gpu_simple_resource *res,
+> +                                       Error **errp);
+>   
+>   #endif
+
 
