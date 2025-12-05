@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 850E6D33987
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 15:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01168D33981
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 16:11:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRYBR-0006K2-Bd; Fri, 05 Dec 2025 10:57:25 -0500
+	id 1vRYOd-0001UF-VA; Fri, 05 Dec 2025 11:11:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vRYBP-0006Jl-BO
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 10:57:23 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vRYOa-0001Tl-CY
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:11:01 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vRYBN-0003c3-JV
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 10:57:23 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4775ae77516so27252525e9.1
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 07:57:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vRYOY-00063M-IQ
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:10:59 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-47778b23f64so14788325e9.0
+ for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 08:10:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764950237; x=1765555037; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1764951056; x=1765555856; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=k1iI5+11v7PhEDhAuHyFXuNiy+jpDj0wIcIAyZ0T0hQ=;
- b=xJ+sL1/T1p1YHXMdunVSU1h0H/Rt8Cgv+Wxp91bY/hIJZ501fvGYnu2qubZhxP0C/T
- sE900q3WML279NamVn9o9yH1ZkfYYBCIZ2fkcj8S/Zh8ePhLAx5yAbhfYx2MXgRIBbvP
- /0CrqdcZzLAxYGRa8BbRv21tj+0T+ntBPs9a5XRiruWqGU2lDHV3GPLw8M9s7XrBG4T+
- Uu62oq/0WKBA82J/vpz8BvN4ZWtoORRJgd0OjylbZKodvnkxgsYIb00s3bmcEMtzI/7T
- 6SkTGfUwiYzkwdrnNuJoA6YppbzRcvyVuNZbqbXSoQPq6BLZEixmrQoHwJU94OERBOQg
- 4IQA==
+ bh=8iYWBpmG/1Qx33bkhw5SfusWJ16+6KqQZp3nHbtzhDk=;
+ b=PTTKe8SO7qltMp7RO5a9z6Ld4RKq5bfdLd2kfqOVmtAVOmnbnXdNpqbzyU4iaBEC+K
+ 2ssb8DyzSMn7vq1PzMivXccbjsJ4zfcXIWizb0Vts312iaM5b/O0qyn7EQS3rgJy9YOl
+ l+U1lK65H2REa0bi0W1abNPloC2S7vdY6QHluCxdUkOEQjmUhQW22AIq8puxaV+P59L1
+ iPAGx5WOW/FoZrA7ppTGJcajhqzMhZL2+5NFIGfEiIRJkVjAGcrP/oVHWli64c3TkJku
+ iMa3tG4nUJxaB3ZdXGBF36V/41A+pCuPi0PjinyiW5r2JvVrZjfa9HDiq7MrCyUw5mi1
+ zDjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764950237; x=1765555037;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1764951056; x=1765555856;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=k1iI5+11v7PhEDhAuHyFXuNiy+jpDj0wIcIAyZ0T0hQ=;
- b=WND/HJeFt/hGQ8WtMNv1OZo949On8V+S/VlfK9k5L4HRMKXygl3X7c7ZMJbs6AhGUF
- XXxZSghOiVxlkU94Xeqv/UB68yDG4GZcL18O/i/A2Gp3TX1+QNC4mrQ6rKN+z7BLyr26
- xFJemYXxRgChEl+zV5dIXIYpWg8pIkxMogzXAD4nQGLOk1zHqdWjH4uHRQsEl4mU9ahz
- gHxReoBGkg2/lYa8BF2Th14b4BNpm11PruAh4QqTpTo7PCGmLUi0H+EhQDyx/zdmdzFa
- xVPj5Nz8dDvfIVsERW4aIY6b/EhnNUemYanA5u2fcwt1y6rcud7BuNM4nPu2yveaJMdh
- o1cQ==
-X-Gm-Message-State: AOJu0YwqZrYAneexe4SaZ9ehETEGrGnDVfGqDoHE4N2pYpsZ4Ay6XMXG
- xfLKvy2LopsU2GuOOPdX4vM4oUzyuFifFcNpcYbAzTT98Sa+eE+rDdu5kEalrgMJ3cs=
-X-Gm-Gg: ASbGnctouVJ6HZEW+idtU3r3wwgMCCBT6SYz6Tx/RyGjFowPRPi1Hzz0eqwo9wniUOQ
- oXYSj9CnekkYBn7Ool/2IUiXrNV9pk2jI0w+b5EzFm42qDlfM2Um0KCt4QHOAbAX+8nYR6B7O4J
- wUbuVOMitSjpyKsJIA8xSSrxEQitrVmjV+XqZM24icB49SALCEyBfzx5dRxlJ2byI3r0XuE6vNb
- ajzDNd9QyHWjqjpYTszZqGlFUEY7J9piTNU7pLDbxA/W4lfkdASLmXEurfbx1EKE85frC0N7VOY
- AwkybeDcTJdoSAdePzX06jYr7yQlRhEYlnY84mZ/u8NZTlsUzdzCtBIu5x8akGJAAsN5nk9x0WN
- x3JXsKRgN209IeuL2QBmsXWJbBv1QIxgaSD/5e8TrQ1qTk/8Hvn8Ishac3hUkv4ce140uac2aGG
- 7wuHDv9qutDpD3KakRgt4OievitblgrEUKlsAxnzrvzmWCvlwRgBqrNUapo39WH6Q=
-X-Google-Smtp-Source: AGHT+IHh2Y/yx0eTpxhqLxdbtr9B4NrwocZ8oBKcuKU3JNk+45mLi2KGZX0Px4svZNNcj0lg5ebOyg==
-X-Received: by 2002:a05:600c:45d5:b0:45d:f83b:96aa with SMTP id
- 5b1f17b1804b1-4792aee03aamr107531815e9.7.1764950237427; 
- Fri, 05 Dec 2025 07:57:17 -0800 (PST)
-Received: from [10.143.236.213] (14.red-88-28-21.dynamicip.rima-tde.net.
- [88.28.21.14]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-479311e707asm86467345e9.10.2025.12.05.07.57.15
+ bh=8iYWBpmG/1Qx33bkhw5SfusWJ16+6KqQZp3nHbtzhDk=;
+ b=AMbzXjEGpeVNtMA+b+5qfzULdKVe5Lxssqdj78Rf/Khc8K+oYu6+KYRvp3vI3eCgZn
+ 3Sw/V7h9bv5XSdi3fwzWNzIWxg+mNMIPIqaxW4uHO1gAl9rrkHBp4dC4QEMStWW5EEZG
+ RgygZ86QYrQowsa0L5Efdan3S2xAXQD8wZFNBIgyegBm3rL/6hELw5AWiChcBScKdx6x
+ qdm8Vo7LN7QuFBXUakoRTqw8Oehn0zN1RMRDCMgawH6aj5H4utawcSUHW8LK1cxAbpzi
+ 8zs6nx1hDODjEbVSPR1tniF2ieckM/PjJBOytOZPcBsBxJa4SDWvfY5q+5WUzVUT5EbF
+ mSmg==
+X-Gm-Message-State: AOJu0Yy8iPNRucmXzTBZRb2aYdcTZBczZ3KBcX8ugVf37XFplpAmEjrs
+ 2WBWiv0KuH32qCLGKf+uSRuSlnLPSFWKpyCzqS0hciqyixUQuAA7uLOsQ/heAHV06lk=
+X-Gm-Gg: ASbGncv/wGnondOG/x/1JdanKGG/mL8g3ISmzbTLNrRkD2zQFFeHfZoHSTroowUDeIu
+ vK48FroMfGk2tZgQ9gndqEhyFp4Hp+Dsu5YiZ2z2GmBqw3iwYsgMQqnsLizmGAwjaRUM536N42j
+ B2YE4BBpYbNxkX7I5G7sroVnAuHfqREtckCK/br6/E5wk/lxG2G5ugmtj2xYIssCigSFBxdbmf5
+ 6tX6hvgECsLJPVh/BBngBXAFJCx/272bZNzAFI8qDs6+tiosVOcKeJaojeZ8Rf48fknK3Bk0ewv
+ nkp0EdM6RjWNu5Ctn3lodbDxGpYqg+IvLcz+e67UUozXpI0oIfn1Zs1fPJJnoG/2Y6uMGfZhs/n
+ XMfjU5M8v/4xuIHHA5Sl6Oy7yO44OQLIEMXCPmGNASAB7THKiNa1KrqKSJsfqnTmo2ownA38OBn
+ jObvKJHCJoQ48vjLwzgirNdY1af3fOmLW4ijHrmhG+NPfq3l5LP+Qr
+X-Google-Smtp-Source: AGHT+IGCnX5pWUq+ZTamslR6BmXiAWJ4zOMhk58mrOjit2ejkxj+c8KCXFsfQS3FE3AfJzlvIJrUsw==
+X-Received: by 2002:a05:600c:5254:b0:475:dcbb:7903 with SMTP id
+ 5b1f17b1804b1-4792aee37famr95102035e9.9.1764951055752; 
+ Fri, 05 Dec 2025 08:10:55 -0800 (PST)
+Received: from ?IPV6:2a10:d582:31e:0:901:1329:d82a:8818?
+ ([2a10:d582:31e:0:901:1329:d82a:8818])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-479311e7142sm91797405e9.11.2025.12.05.08.10.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Dec 2025 07:57:16 -0800 (PST)
-Message-ID: <a605c0b2-8122-424c-a917-7d6ad8371c34@linaro.org>
-Date: Fri, 5 Dec 2025 16:57:12 +0100
+ Fri, 05 Dec 2025 08:10:55 -0800 (PST)
+Message-ID: <364a1c91-c7a0-41b1-8ae9-902b3158914c@linaro.org>
+Date: Fri, 5 Dec 2025 16:10:54 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] hw/dma/omap_dma.c: Use 64 bit maths for
  omap_dma_transfer_setup
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jim MacArthur <jim.macarthur@linaro.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org
 References: <20251204193311.1281133-1-jim.macarthur@linaro.org>
  <87qztarkyf.fsf@draig.linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87qztarkyf.fsf@draig.linaro.org>
+ <a605c0b2-8122-424c-a917-7d6ad8371c34@linaro.org>
+Content-Language: en-US
+From: Jim MacArthur <jim.macarthur@linaro.org>
+In-Reply-To: <a605c0b2-8122-424c-a917-7d6ad8371c34@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,111 +108,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/12/25 22:33, Alex Bennée wrote:
-> Jim MacArthur <jim.macarthur@linaro.org> writes:
-> 
->> If both frame and element count are 65535, which appears valid from my
->> reading of the OMAP5912 documentation, then some of the calculations
->> will overflow the 32-bit signed integer range and produce a negative
->> min_elems value.
->>
->> Raised by #3204 (https://gitlab.com/qemu-project/qemu/-/issues/3204).
->>
-> 
-> nit:
-> 
-> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3204
 
-Format is:
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3204
-Fixes: afbb5194d43 ("Handle on-chip DMA controllers in one place")
-
-> 
->> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
->> ---
->>   hw/dma/omap_dma.c | 32 +++++++++++++++++++++-----------
->>   1 file changed, 21 insertions(+), 11 deletions(-)
+On 12/5/25 15:57, Philippe Mathieu-Daudé wrote:
+> On 4/12/25 22:33, Alex Bennée wrote:
+>> Jim MacArthur <jim.macarthur@linaro.org> writes:
 >>
->> diff --git a/hw/dma/omap_dma.c b/hw/dma/omap_dma.c
->> index 101f91f4a3..93e6503ff9 100644
->> --- a/hw/dma/omap_dma.c
->> +++ b/hw/dma/omap_dma.c
->> @@ -504,9 +504,19 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
->>       struct omap_dma_channel_s *ch = dma->opaque;
->>       struct omap_dma_s *s = dma->dma->opaque;
->>       int frames, min_elems, elements[__omap_dma_intr_last];
->> +    uint64_t frames64, frame64, elements64, element64;
->>   
->>       a = &ch->active_set;
->>   
->> +    /*
->> +     * We do maths with the frame and element fields which exceeds
->> +     * a signed 32-bit integer, so convert all these to 64 bit for future use.
->> +     */
->> +    frames64 = a->frames;
->> +    frame64 = a->frame;
->> +    elements64 = a->elements;
->> +    element64 = a->element;
->> +
->>       src_p = &s->mpu->port[ch->port[0]];
->>       dest_p = &s->mpu->port[ch->port[1]];
->>       if ((!ch->constant_fill && !src_p->addr_valid(s->mpu, a->src)) ||
->> @@ -527,7 +537,7 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
->>       /* Check all the conditions that terminate the transfer starting
->>        * with those that can occur the soonest.  */
->>   #define INTR_CHECK(cond, id, nelements) \
->> -    if (cond) {         \
->> +    if (cond && nelements <= INT_MAX) {         \
->>           elements[id] = nelements;   \
->>           if (elements[id] < min_elems)   \
->>               min_elems = elements[id];   \
->> @@ -547,24 +557,24 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
->>        * See also the TODO in omap_dma_channel_load.  */
->>       INTR_CHECK(
->>                       (ch->interrupts & LAST_FRAME_INTR) &&
->> -                    ((a->frame < a->frames - 1) || !a->element),
->> +                    ((frame64 < frames64 - 1) || !element64),
->>                       omap_dma_intr_last_frame,
->> -                    (a->frames - a->frame - 2) * a->elements +
->> -                    (a->elements - a->element + 1))
->> +                    (frames64 - frame64 - 2) * elements64 +
->> +                    (elements64 - element64 + 1))
->>       INTR_CHECK(
->>                       ch->interrupts & HALF_FRAME_INTR,
->>                       omap_dma_intr_half_frame,
->> -                    (a->elements >> 1) +
->> -                    (a->element >= (a->elements >> 1) ? a->elements : 0) -
->> -                    a->element)
->> +                    (elements64 >> 1) +
->> +                    (element64 >= (elements64 >> 1) ? elements64 : 0) -
->> +                    element64)
->>       INTR_CHECK(
->>                       ch->sync && ch->fs && (ch->interrupts & END_FRAME_INTR),
->>                       omap_dma_intr_frame,
->> -                    a->elements - a->element)
->> +                    elements64 - element64)
->>       INTR_CHECK(
->>                       ch->sync && ch->fs && !ch->bs,
->>                       omap_dma_intr_frame_sync,
->> -                    a->elements - a->element)
->> +                    elements64 - element64)
->>   
->>       /* Packets */
->>       INTR_CHECK(
->> @@ -581,8 +591,8 @@ static void omap_dma_transfer_setup(struct soc_dma_ch_s *dma)
->>       INTR_CHECK(
->>                       1,
->>                       omap_dma_intr_block,
->> -                    (a->frames - a->frame - 1) * a->elements +
->> -                    (a->elements - a->element))
->> +                    (frames64 - frame64 - 1) * elements64 +
->> +                    (elements64 - element64))
->>   
->>       dma->bytes = min_elems * ch->data_type;
-> 
-> Can we also add a qtest for the device that checks for this (and can be
-> expanded for other unit tests later)?
-> 
+>>> If both frame and element count are 65535, which appears valid from my
+>>> reading of the OMAP5912 documentation, then some of the calculations
+>>> will overflow the 32-bit signed integer range and produce a negative
+>>> min_elems value.
+>>>
+>>> Raised by #3204 (https://gitlab.com/qemu-project/qemu/-/issues/3204).
+>>>
+>>
+>> nit:
+>>
+>> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3204
+>
+> Format is:
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3204
+> Fixes: afbb5194d43 ("Handle on-chip DMA controllers in one place")
+>
+I'm unclear on whether this actually resolves or fixes the issue, so I 
+just said 'Raised by'. The bug only includes a test case, not a text 
+description of the problem. The test case will give a different error if 
+this patch is applied, but still doesn't pass. I've mentioned this on 
+the bug page.
+
+Jim
 
 
