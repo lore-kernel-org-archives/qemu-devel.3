@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E998DD2E009
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 06:02:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C5AAD2CDE3
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 06:02:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vROsY-0001K1-A4; Fri, 05 Dec 2025 01:01:18 -0500
+	id 1vROtf-0002AV-OZ; Fri, 05 Dec 2025 01:02:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vROsW-0001JH-Jt
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:01:16 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vROtR-00021I-JM
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:02:14 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vROsV-00019D-5m
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:01:16 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vROtL-0001Hh-Lj
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:02:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764914473;
+ s=mimecast20190719; t=1764914526;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8oOxBzFG1R1q3lg+u3bkJYmqSVGkTDsy886DCF8dgTI=;
- b=RMwwv2ZRP3FaF5LBGtDl1QopURWrLA+yPjdstqanRAYXNvBQmMB+3zVJjExrzaxxeL2FV1
- W1xABkr6ulzqgSHkCTlC/y8Am1Kasms5gswdAwnkdzGpnB7zBRYmoxF1OU64WVhJ28ypxG
- DbdKMSM0/h9y0PzicQoNUpQTsHE6YOM=
+ bh=SR+dS7JGdSA+BleLYWGptPIJjDuckEObPGKnk3rtHkA=;
+ b=aJlP/GJvwuCUT0dMhB0XXaeiX1hBzVE0+l5YmIbOLCFVhI6jR3Kz9cPgoiQl34f/CvkGfl
+ nz0zK2l3EPrPS39AlMJiIbv50O+n5ZttHq3FjJtNfwf/SfjtfUEUcOCM9wCPemrTzYOgJJ
+ YJ+S6B6BL0EzRYrs3nXjjdxj9hF0pu0=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-RjocinlYMUyOytDGPTYguQ-1; Fri,
- 05 Dec 2025 01:01:12 -0500
-X-MC-Unique: RjocinlYMUyOytDGPTYguQ-1
-X-Mimecast-MFC-AGG-ID: RjocinlYMUyOytDGPTYguQ_1764914471
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-118-ENkVifhFN9CDcYbz0gOByQ-1; Fri,
+ 05 Dec 2025 01:02:05 -0500
+X-MC-Unique: ENkVifhFN9CDcYbz0gOByQ-1
+X-Mimecast-MFC-AGG-ID: ENkVifhFN9CDcYbz0gOByQ_1764914524
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F16C41956046; Fri,  5 Dec 2025 06:01:10 +0000 (UTC)
+ id E56E11956068; Fri,  5 Dec 2025 06:02:03 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.55])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B6D963011A86; Fri,  5 Dec 2025 06:01:06 +0000 (UTC)
+ id 2EA6A3000701; Fri,  5 Dec 2025 06:01:58 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>,
@@ -58,10 +58,10 @@ Cc: Cleber Rosa <crosa@redhat.com>,
  Ed Maste <emaste@freebsd.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 01/15] python/mkvenv: create timestamp file for each group
- "ensured"
-Date: Fri,  5 Dec 2025 01:00:43 -0500
-Message-ID: <20251205060058.1503170-2-jsnow@redhat.com>
+Subject: [PATCH v3 11/15] meson,
+ mkvenv: make iotests depend on checktests group
+Date: Fri,  5 Dec 2025 01:00:53 -0500
+Message-ID: <20251205060058.1503170-12-jsnow@redhat.com>
 In-Reply-To: <20251205060058.1503170-1-jsnow@redhat.com>
 References: <20251205060058.1503170-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -93,32 +93,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Each group ensured by the mkvenv script will create an empty timestamp
-file named {groupname}.group which can be used to conditionally trigger
-dependency installation from various scripts and build machinery.
-
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/scripts/mkvenv.py | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tests/qemu-iotests/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index a064709e6ce..a22e3ee3394 100644
---- a/python/scripts/mkvenv.py
-+++ b/python/scripts/mkvenv.py
-@@ -838,6 +838,12 @@ def ensure_group(
-             raise Ouch(result[0])
-         raise SystemExit(f"\n{result[0]}\n\n")
- 
-+    if inside_a_venv():
-+        for group in groups:
-+            path = Path(sys.prefix).joinpath(f"{group}.group")
-+            with open(path, "w", encoding="UTF8"):
-+                pass
-+
- 
- def post_venv_setup() -> None:
-     """
+diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
+index d7bae71ced6..86a3541c0ae 100644
+--- a/tests/qemu-iotests/meson.build
++++ b/tests/qemu-iotests/meson.build
+@@ -57,7 +57,7 @@ foreach format, speed: qemu_iotests_formats
+       test('io-' + format + '-' + item,
+            python,
+            args: args,
+-           depends: qemu_iotests_binaries,
++           depends: qemu_iotests_binaries + pyvenv_checktests_group,
+            env: qemu_iotests_env,
+            protocol: 'tap',
+            timeout: 180,
 -- 
 2.51.1
 
