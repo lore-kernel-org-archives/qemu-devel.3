@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C744ED33992
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 16:37:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77629D33995
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 16:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRYne-0003RA-Po; Fri, 05 Dec 2025 11:36:58 -0500
+	id 1vRYs9-0005U9-Pd; Fri, 05 Dec 2025 11:41:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vRYnO-0003Pq-JX
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:36:40 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vRYs8-0005TA-7v
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:41:32 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vRYnM-0004w1-65
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:36:38 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-42e2e167067so1142566f8f.2
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 08:36:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vRYs6-0005jR-Dw
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 11:41:31 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-42e2e671521so1528989f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 08:41:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764952593; x=1765557393; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nNrVVxuqLD2ZH0lRFR99zmMqv11cti3eofwvXq+Pltg=;
- b=iwZdv4E1/jJIcSKHiD2rMPQLcElZ6NDL5EuxjDkzZt8WdVdoKEVTguOsV5RYC/iIbW
- dC/TtfbDQPK+wNOOduXy9yI8pXVDm5lTGPxf6U7azscIOj+2bU8L/GdBXtveFhou210M
- GjVxsjIcZtQ5971cfhF5MZ6xH377yqA5Cy+deTLcAfEif7HSxb+NaMXuBZmNUb/8VPFd
- lhAtyE+tfRhUcTGN/jDlQqAM3q+kiO+NsiwX0ma2ZhqeYRBzgtuY9Ty7Sf5FYwLP2Kx4
- AW7kvpFwsilBNckYDBSTpjBOcDZotF0qLSfQDGVpGvP3GgxuoM08Nq4csCXoKEoBKRYC
- WJ2Q==
+ d=linaro.org; s=google; t=1764952889; x=1765557689; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yQLx+6d6Ez6DsIvWmne01CEnlhyk4EppoX8NoUOZaGM=;
+ b=zzzhzrspZBaUOEL7UEGWz2NUWaqQLhj16KlD7dfVh8JAPwvmmHCxg5VtIGPKiAJ+se
+ fFch/dZzoKqOvoJOUrrXGWnrkou7wYXy9g4tdK8e9NUETt2hZ9rPU/5XlsZ0o4shw2+r
+ hucmHBqVg2pEyJlDcc2fChTyw6Ajv/UUjfeg3dayIZIvpG58Y/2DpDrwbi6TL3R36Ueu
+ yIR4jeCSeg2cTji7GWpVq4+y7OvBlBG06ihLrhohSOHzyHD4yfIYOBI0zTT3Lkhx7yce
+ 3IkOnSVWjOKSZCZE/XC1V1DHtXc8P2eSdAeg7dbVff+vkcGlpXbx8Ok5Fb07ppzLOJJT
+ l06A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764952593; x=1765557393;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nNrVVxuqLD2ZH0lRFR99zmMqv11cti3eofwvXq+Pltg=;
- b=o6cXzAy+Zsmx2y5cgVTQHJP3k4fD5yid3s/claeqqrQmbToMb10WER8seRnsMc6xPk
- Tvd6bufPXDQRk1birI6rWsWVp1KkiUPfDkBNxKKWZpjWWvJk9ZHrFUo/7JMfamjxwgDw
- joFiehCfnaeKMA7kfiS3IYrfxftsVamQ50z1oI+rH1sI4vumqQSFv1kvfPD8Ri7DJ4wI
- iMdewE6yKiSaxTGoKgAHfLI/uiP3OXTdvLAEPgIgZB1eJNz8Kawjze7o98FJq9ebgmdz
- fTfZbRt4H28ZIqa6PDkJQzGDw2gd9+ztZzB6XEqiIzFVsgawmAxgpjGr1CWeg12EsSvA
- EAxg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWCcy94cIt4UY5b+wTe0gxEU/SvnP164ekEqGY7LPNwpRx3RvCOumCceJcP17GeGl/WchOHAa5mSEYT@nongnu.org
-X-Gm-Message-State: AOJu0YzdYFmQCBfhKr0Sx95q+LLOkF0VZP+eM2MB6K9hAjZc6utknN9s
- GBnHgahApIwUQT2lonix0I7e1ganR+Dx3NdzRliVyL5IPDJy/kYmZNvM5+NdVDyl/Nw=
-X-Gm-Gg: ASbGncuXHl6UUeO8dw0B4NJkONERXYYdAA97zm9ARMjz1YX393HRC79xjKvaDHkTveY
- Xmu1TRC1xDip+QVb3ffusL3kwuEbUzAsryiC0LwMojbmpzui8HoLJx9HMg+DntlGQv04dy27dnB
- KKIgXXOxtZ+wFyBB8LPOANamDx36Nuf7dqnN3imqDyoJzR1WO4wVcvaNGiFejjHfW1XK/zn5Hu6
- f/+9dSEkL+Z+2uwRbVpe8NIHhnXkpwekKlrcULkG1/RqjTtqSlIn1TVa0+jr71WIQPmeoaCXint
- 3QjhyDcVdHSS9SKJU0/cYkSEEFlY/DDQ/RQgwQeOHvMWe/gW3zEb0wd/gPXSCu+ulDy9omcb+Er
- ik4wDYAGRgWznhQbjRuCynRCN/g8TsEwgqRX9zGoqFKDeF+yqfGX4re1au4dqIfWr1uUK0+lhm4
- Y9GaEWD5nTtNYR1QzoR1RVytf/DwXJn8h+ojZWXKQn3LVt5qNrjUDpqQ==
-X-Google-Smtp-Source: AGHT+IE6XY2f5yaIA4IfMsn0jgYcJpCzUvOso+NEwCpSfCozUr5I8FcmfskQwsOU4jHfBtAaGaC61w==
-X-Received: by 2002:a5d:5f47:0:b0:42b:2c53:3aba with SMTP id
- ffacd0b85a97d-42f73174420mr11701767f8f.10.1764952592913; 
- Fri, 05 Dec 2025 08:36:32 -0800 (PST)
-Received: from ?IPV6:2a10:d582:31e:0:901:1329:d82a:8818?
- ([2a10:d582:31e:0:901:1329:d82a:8818])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7d222478sm9481624f8f.20.2025.12.05.08.36.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Dec 2025 08:36:32 -0800 (PST)
-Message-ID: <e51b8d31-9f13-488f-9021-cdcf3f662e6b@linaro.org>
-Date: Fri, 5 Dec 2025 16:36:31 +0000
+ d=1e100.net; s=20230601; t=1764952889; x=1765557689;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=yQLx+6d6Ez6DsIvWmne01CEnlhyk4EppoX8NoUOZaGM=;
+ b=VVzX3Q4jqj8dKuG1RBVp5D66EYpzODwmFw+xbM/hfaw99bMrzZEhVazR3MII5IWwft
+ g2xcjVsFgoqbfCVb591QTrQ8cm2a6Iqy1ZW9UkADF2P7ngawUS5T2GItcU3u7+WwC4FK
+ kOnYQN0XICin2ONOOJc/N5wp9Z2fiuLhhVZlyfwsHrTFoOuS0Ns5VF+hZOZk2IPIDJ+/
+ qVSBpx7F5YQqdEA7K9lVZ6IT6SHLYghTIoMF3HSXAFVBJZqqfCgHfJcd5100x/ktkOfn
+ ApT8qDGIsEtFJaG/3qo36cOmPBXt/SUp85hEOp3PAKqeilE0NL1wOK1Tfv+9VOMmAgTb
+ Za8Q==
+X-Gm-Message-State: AOJu0YzYgtPBll060FttP3HBgdrHrTOePrLWVH95Huu6Pecolv+L2e6x
+ o5/R0+433llCWdYYyIvxGzHlFvMNpKw3MgZ3d8uKnXVrXnwX/Z+TgV7dP3Vyue/NXuM=
+X-Gm-Gg: ASbGnctZNt/6aZJ/X4RFWahezYtG6A8tZ8wDL7Kg8aOXrYAJpNq2j3KblElC61k9N56
+ nnMZqFeUQ9vcnIOzL8YCnLXKcVJS9Mhqnz3SKhnmZFz+ymoUmjWQViPG8rDnNwK1AfbZ+c2bT+P
+ 2zofa9vOtzvobMMJoqVUHKG7kO1orbpeR+/H4W6BsoFTWtUCBhPTY5BZJjarJuyDFu8hUCyixV7
+ c9cccfHa7Ykx2dhzM+Ohvck4KPcUi/HXJhap5h0JFvflhTcuARF2bQn5KF7cEjH8WgqHaGvwcms
+ 8t/9mknPJs4rGeHcVwPMqNd3B8RiAeuY7fsCIPqRjnrbO8nqhfrrB7Wc3IEhP4QLPlVJ4audnZh
+ 0QFJCruXCxYg96Zk9z5jigvSyPveRi2b1OkqpqM5HOgu2hV17VQ0nwUUhtZ13sCKTa2QTCcBXEz
+ kovvzIer7tvmc=
+X-Google-Smtp-Source: AGHT+IEfELTYmQxf01Zxqee+JZZIK1xmmHzaYsOBFzGvBRLyY1gKEJ5j8gvI3Y+c6GrLEEAV7cUybg==
+X-Received: by 2002:a5d:588e:0:b0:42b:3220:941e with SMTP id
+ ffacd0b85a97d-42f79800e4fmr7657135f8f.19.1764952888625; 
+ Fri, 05 Dec 2025 08:41:28 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42f7cbe9065sm9601141f8f.8.2025.12.05.08.41.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 05 Dec 2025 08:41:27 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 56DBE5F874;
+ Fri, 05 Dec 2025 16:41:26 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+Subject: [PULL 04/14] tests/tcg: honour the available QEMU binaries when
+ running check-tcg
+Date: Fri,  5 Dec 2025 16:41:15 +0000
+Message-ID: <20251205164125.2122504-5-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251205164125.2122504-1-alex.bennee@linaro.org>
+References: <20251205164125.2122504-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/dma/omap_dma.c: Use 64 bit maths for
- omap_dma_transfer_setup
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
-References: <20251204193311.1281133-1-jim.macarthur@linaro.org>
- <87qztarkyf.fsf@draig.linaro.org>
- <a605c0b2-8122-424c-a917-7d6ad8371c34@linaro.org>
- <364a1c91-c7a0-41b1-8ae9-902b3158914c@linaro.org>
- <CAFEAcA8rj4oFV57QSiMmtz4WF8zRu04O6nF0auZv8m4tLiATyg@mail.gmail.com>
-Content-Language: en-US
-From: Jim MacArthur <jim.macarthur@linaro.org>
-In-Reply-To: <CAFEAcA8rj4oFV57QSiMmtz4WF8zRu04O6nF0auZv8m4tLiATyg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,48 +105,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/25 16:20, Peter Maydell wrote:
-> On Fri, 5 Dec 2025 at 16:11, Jim MacArthur <jim.macarthur@linaro.org> wrote:
->>
->> On 12/5/25 15:57, Philippe Mathieu-Daudé wrote:
->>> On 4/12/25 22:33, Alex Bennée wrote:
->>>> Jim MacArthur <jim.macarthur@linaro.org> writes:
->>>>
->>>>> If both frame and element count are 65535, which appears valid from my
->>>>> reading of the OMAP5912 documentation, then some of the calculations
->>>>> will overflow the 32-bit signed integer range and produce a negative
->>>>> min_elems value.
->>>>>
->>>>> Raised by #3204 (https://gitlab.com/qemu-project/qemu/-/issues/3204).
->>>>>
->>>> nit:
->>>>
->>>> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3204
->>> Format is:
->>>
->>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3204
->>> Fixes: afbb5194d43 ("Handle on-chip DMA controllers in one place")
->>>
->> I'm unclear on whether this actually resolves or fixes the issue, so I
->> just said 'Raised by'. The bug only includes a test case, not a text
->> description of the problem. The test case will give a different error if
->> this patch is applied, but still doesn't pass. I've mentioned this on
->> the bug page.
-> Generally for this kind of fuzzer-generated bug report, the
-> bug is "it is possible to make QEMU assert/crash/etc". They
-> don't come with textual analysis of why exactly we ended up
-> crashing, because the crash was auto-generated. So the
-> "what actually happened here" is one of the things you have
-> to figure out as part of fixing the bug.
+Currently configure can identify all the targets that have
+cross-compilers available from the supplied target-list. By default
+this is the default_target_list which is all possible targets we can
+build.
 
-By that criterion, this patch doesn't fix the bug as it will still throw 
-a different address sanitizer error. The test case identified at least 
-two problems, one of which is fixed by this patch (when I address your 
-comments about u64/u32 math) and the other which I haven't figured out 
-how to address yet. I can leave this without the Resolves: tag, or add 
-an extra issue to Gitlab with the specific problem, or we can leave it 
-until we have a patch for the other problems.
+At the same time the target list passed to meson is filtered down
+depending on various factors including not building 64 bit targets on
+32 bit hosts. As a result make check-tcg will erroneously attempt to
+run tests for which we haven't built a QEMU.
 
-Jim
+Solve this by filtering the final list of TCG_TEST_TARGETS based on
+what actually was configured by meson. Rename the variable that
+configure spits out to TCG_TESTS_WITH_COMPILERS for clarity and to
+avoid larger churn in the Makefile.
+
+Message-ID: <20251204194902.1340008-4-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+
+diff --git a/configure b/configure
+index a2f66f7ff9c..82cace1bc95 100755
+--- a/configure
++++ b/configure
+@@ -1801,7 +1801,7 @@ if test "$plugins" = "yes" ; then
+ fi
+ echo "PYTHON=$python" >> tests/tcg/$config_host_mak
+ 
+-tcg_tests_targets=
++tcg_tests_with_compilers=
+ for target in $target_list; do
+   arch=${target%%-*}
+ 
+@@ -1852,12 +1852,12 @@ for target in $target_list; do
+       fi
+ 
+       echo "run-tcg-tests-$target: $qemu\$(EXESUF)" >> Makefile.prereqs
+-      tcg_tests_targets="$tcg_tests_targets $target"
++      tcg_tests_with_compilers="$tcg_tests_with_compilers $target"
+   fi
+ done
+ 
+ if test "$tcg" = "enabled"; then
+-    echo "TCG_TESTS_TARGETS=$tcg_tests_targets" >> $config_host_mak
++    echo "TCG_TESTS_WITH_COMPILERS=$tcg_tests_with_compilers" >> $config_host_mak
+ fi
+ 
+ if test "$skip_meson" = no; then
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index d4dfbf3716d..7728098981d 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -37,6 +37,15 @@ export SRC_PATH
+ 
+ SPEED = quick
+ 
++
++# TCG_TESTS_WITH_COMPILERS represents the test targets we have cross compiler
++# support for, CONFIGURED_TEST_TARGETS it what meson has finally
++# configured having rejected stuff we can't build.
++CONFIGURED_TCG_TARGETS=$(patsubst %-config-target.h, %, $(wildcard *-config-target.h))
++
++# This is the intersection of what tests we can build and is configured
++TCG_TESTS_TARGETS=$(filter $(CONFIGURED_TCG_TARGETS), $(TCG_TESTS_WITH_COMPILERS))
++
+ # Per guest TCG tests
+ BUILD_TCG_TARGET_RULES=$(patsubst %,build-tcg-tests-%, $(TCG_TESTS_TARGETS))
+ CLEAN_TCG_TARGET_RULES=$(patsubst %,clean-tcg-tests-%, $(TCG_TESTS_TARGETS))
+-- 
+2.47.3
 
 
