@@ -4,91 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B3D6D374A3
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 21:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E45AD374AE
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 22:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRdEI-0001T0-Tt; Fri, 05 Dec 2025 16:20:42 -0500
+	id 1vReR2-0005GD-Mb; Fri, 05 Dec 2025 17:37:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vRdEG-0001SJ-Di
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 16:20:40 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <Luqmaan.Irshad@amd.com>)
+ id 1vRax2-0005AB-9X
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 13:54:44 -0500
+Received: from mail-eastusazon11012032.outbound.protection.outlook.com
+ ([52.101.53.32] helo=BL0PR03CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vRdEE-0002kV-Ir
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 16:20:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=eosK1Px9rBrsEGmygvM2ZTdW+TshzamoYBFzIrac3hU=; b=0a8rYBrynYALYbMcbJb2QHlFAM
- QqB+7L6U+PpIPepox2f+V/N8lHYZ/GtjQB1xzQZqhE86StVL7wXbCYASv2Aw/sbdTrpn5Jq1gxlct
- j/S3BMCWh6MhGIwbq6khQdYK4tOlkoVOiHTIx3eTsdlb0okONZtm6Ap4qtKReyAQKCPOtqjnVtmc8
- yWXlDd6fVP9dGarp6eU9ozeUTd9jZlolOtG9rr+HKU5qS9we3l48wTgX2esXGpR41Tvfmjo8DPY55
- cn+qN89ylTv8ux3NZuWHnVkksvpavZND47xng3ST2fTuLQlSkoCxRoHTXsjYYr9ly1G3ioCTx3+z5
- fCMVtzLiex7lMLyd0+eLUlbxIYX5dPYdr5PpyDIpqipxrwSZpJdUezrw8q8D2o4jDCCONNnBy38FC
- DwjLpGh8R8wVwT+mBrtgpBVSCnztKpjoqLD9x1s34pMKRbXB1Yn/kwK+mT2XdQtwYiBlog/JCaURb
- qYQAspFQnV9arIlibWFc8SgaUoiUw7o5oHPH9MkLHcklhD9q8Jkb2AXsxXjnbRxwwbj1cNDf/BypY
- GtpTq/Qd0RwzY4Vpyryr6IJxSQqO4Ucvlu9AdKUGXBawaOTQI9bnN2Tshja5Uei027HEpnox9pM8S
- 8ijQt9DARpi+4jK+chwaP5wJ0709vi+dXxxn7U2Es=;
-Received: from [2a02:8012:2f01:0:c841:1a2:1f49:5881]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1vRdBm-0004dr-4G; Fri, 05 Dec 2025 21:18:06 +0000
-Message-ID: <ab79a32b-24b3-418e-a2c5-6427cf174d35@ilande.co.uk>
-Date: Fri, 5 Dec 2025 21:20:30 +0000
+ (Exim 4.90_1) (envelope-from <Luqmaan.Irshad@amd.com>)
+ id 1vRax0-00061Q-AQ
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 13:54:44 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=or0afTMiJJEyUTCMEnKv4PRl1WVkX8R59dZX1XDAK1iFPkrlzgKlogL5TnaPlIa3mVZxj4S9ReRWJ2bZfxsdiVvOwnIyK1iCjdlgmkueuStWzEs6doBhhEdTO/tpfTxCdQmsmPgnOKSVD7Ur5LG9VRQKkyp2SyCoeWSxgBNXbTmJz4SRfWmIyyJwaDMPieIMequqyfQJ8lqaP57LchYPsOxUVVZYb19vDYj64zQ6CTaXcYi0lNX9jOL2gLxTXCa4o65mXxUmS1ZFdSZ+rD1TBYwrgTB2mgeI3fxit0pCw8Tm5r0oRnmevk7pAAHApljysXotkgqohIq2NBpbw8T4fQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oiMfZZXtegjX3KMZjq26ugN++BLtImNow2BgB7D8UHs=;
+ b=e9VvR3rnLNB9Pk3gNO5S6x3gT4DvMhxeuQE6MgZH8EYr2CtY/QoT8VtRyZanotdTxCi+mywO44/A7NYNgIf4btyu6pKDt7PWEDxyMf6b3R2EQmcPeWx1PDwecQepq7EcXxp2CpjSUi6YxDW1JMdZLIi9e5+yQEUEIzykA9iYb6FFHS7o58i9JlK1a8YKClCz6/XWbpeIDcM3wDKITDHb9AFUIwDukrHcjP3WMcoXybISKHJ1APVlLVVdv40EfnUQzPot+bdBHfc43M/57MWUI21Jwg96evWKZBLh4lrFqM3PyYDEN0hiEbf3h2+myt7HjMohkwMpR7EZLJkAMTVgZg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oiMfZZXtegjX3KMZjq26ugN++BLtImNow2BgB7D8UHs=;
+ b=rDQx9/VGyAn9cN5fDC1KCJhte3mYK+0jQBmtegqyggYjiTRSN91Yz87AHkDd8Jww9s2mo/37/jubulmCYSpcjSszUrabH84hCALuFMkwxFgz77KVgwOcCqR0PU1VDCVUJec56Se6IHKXz3hZM+UILI50r8uqFTrI+wJE9CXD7HQ=
+Received: from DM6PR11CA0064.namprd11.prod.outlook.com (2603:10b6:5:14c::41)
+ by IA0PR12MB8303.namprd12.prod.outlook.com (2603:10b6:208:3de::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.12; Fri, 5 Dec
+ 2025 18:49:35 +0000
+Received: from DS3PEPF000099DD.namprd04.prod.outlook.com
+ (2603:10b6:5:14c:cafe::bc) by DM6PR11CA0064.outlook.office365.com
+ (2603:10b6:5:14c::41) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9388.9 via Frontend Transport; Fri, 5
+ Dec 2025 18:49:35 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ DS3PEPF000099DD.mail.protection.outlook.com (10.167.17.199) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9412.4 via Frontend Transport; Fri, 5 Dec 2025 18:49:34 +0000
+Received: from luirshad-ubuntu-laptop.phub.net.cable.rogers.com
+ (10.180.168.240) by satlexmb07.amd.com (10.181.42.216) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.17; Fri, 5 Dec 2025 12:49:31 -0600
+From: Luqmaan Irshad <luirshad@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: <mst@redhat.com>, <alex.bennee@linaro.org>,
+ <odaki@rsg.ci.i.u-tokyo.ac.jp>, <dmitry.osipenko@collabora.com>,
+ <pierre-eric.pelloux-prayer@amd.com>, <luckmaan21@gmail.com>, Luqmaan Irshad
+ <luirshad@amd.com>
+Subject: [PATCH] virtio-gpu: create drm fd based on specified render node path
+Date: Fri, 5 Dec 2025 13:49:06 -0500
+Message-ID: <20251205184906.110927-1-luirshad@amd.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Matt Jacobson <mhjacobson@me.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>
-References: <20251203064336.79847-1-mhjacobson@me.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <20251203064336.79847-1-mhjacobson@me.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:c841:1a2:1f49:5881
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 0/1] hw/m68k: add working floppy controller for q800
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PEPF000099DD:EE_|IA0PR12MB8303:EE_
+X-MS-Office365-Filtering-Correlation-Id: c3deb754-d789-4502-647c-08de342f08af
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|36860700013|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?rZWSTwGR5umQ2TZ4rpQvvuwu4dPKd8DV+BIIWy/2TyL052jIRac3LmY6VZzK?=
+ =?us-ascii?Q?JfylfPjz5bXf8Hss5XfGrqd+oXonaFtC2J1vJiXsF0ww+3yiO2Gj9P34sulr?=
+ =?us-ascii?Q?2Uk+y5x4ly1EjxFT0dga8FwdJ5S3RLkGC/GaD4/vRMQ4MvpoBRS3ZfIWMsut?=
+ =?us-ascii?Q?wtdIkAwn0ln3HMfqW682AspzPMtD5dQ/tpjsoHXsS3qO4hh3yXZfp6CeaFOa?=
+ =?us-ascii?Q?VEi+7I/nYv3SThzYZ9JiuDGE/nVKH4/o+lMK2+RiiPpgbZaNv64cdE74xL3V?=
+ =?us-ascii?Q?0xYXoj74h+ftPSHKwxMl2ox+j8YjZuCs+3VI9Ml2R1TpqAQ+Ug3kEqiZgzmz?=
+ =?us-ascii?Q?lARqUtKmBxKPXsMjmfPabcWA44M2VTOPL2Q+Mg/QF29id+3tLFPUjDzih+rO?=
+ =?us-ascii?Q?247g4f6El9HtCseX04sWasCCYMPEIqdEl1TKus6NXlRKLcuNTpH5f9jpaDpG?=
+ =?us-ascii?Q?T0YZZaZQXr0Kdd1SjgErUNjEeV5QMEdaSjs+kqoO78WzR2N4oEXdAksW7PLi?=
+ =?us-ascii?Q?D0cicWnoNRlLwYx/1NSkcxPpXpd6g8xct2LLp08CtvE7EJHdeoTtOxnElPjd?=
+ =?us-ascii?Q?A5DuohPSwRlTOLTx+k5bF3JRprXwCLCCC3VWvW8V9syCsobm21IvZa2kVB2K?=
+ =?us-ascii?Q?gUxIEdKjOYI0l2yu/GH32hAX13H4z82OWitf79TdAyJDoML8iM53WOFb4GT6?=
+ =?us-ascii?Q?u0GGl+bpicByK3u7NVsP7QnwMLdSCGoBNXgidl773CgqfNY2ufBgQln8duoS?=
+ =?us-ascii?Q?WfL8GUPtZ/63cSAmFF46CER+uGuB8KC4y1Pvr51YmxdMAA5oigQJlCXV3vyV?=
+ =?us-ascii?Q?YKO/kN+kqeVAdrNmSExdTgTw1JHLp7f5dM5v1Je9sAddRtAyKlZuh9yg0czL?=
+ =?us-ascii?Q?0rX/M0lbbFw08Qg4S3OFGweAwjZXGvz4QFePitH1+M2B5fyJnJMf031O3S+D?=
+ =?us-ascii?Q?j93AVwGoOwNuXWQz/Evm9Zr3C8ir8ccOwXtIWtHH7xNEDSO3gAE1QA1/Afci?=
+ =?us-ascii?Q?NqcaxpfZHJ2YC8FG/ENxjQugJALTmFGKwgk/HEok3NCBgcJKsX0/X9uCTn5Y?=
+ =?us-ascii?Q?SVM8C8bAEQWj4WIJXlSdmRQZrpFjLej/3dXvnbBE7vGudKal/JziKVcRnzT6?=
+ =?us-ascii?Q?zLCQ47DzZ/KbRHsuTEdnCoo6WVFyrCUKtLIA5VtM4oggj8JzhZ5i+PWVCbmX?=
+ =?us-ascii?Q?lYqUonn8JtF6JLlCztk0wSpFHpDV8Txgy4n09XusaXS2Cn9Rab+uPJDcajmg?=
+ =?us-ascii?Q?rO8w/cbAsZSoGplNUdvaGr+2v0Mw9OAed3Sz/UoBdqitSE4I8E+9umG553pU?=
+ =?us-ascii?Q?WgQpXlG8LWre7kSIaf4dTE5/SDCZeMH49Um+qF/JcaVVokBYqE084GbrNu/8?=
+ =?us-ascii?Q?ORU2JVnOFrjg3a8NdETnjsw7DeQastSkoEkLO1uHa6G6TZFahdG3HqiMeeYw?=
+ =?us-ascii?Q?s9XQXeAO5ajkGzVhJYpPZVxNwv5vbCIRHcSM286YrVOtw5NAfOUNrTCPyyH9?=
+ =?us-ascii?Q?8dVUV+LN5KfjHqMrd8S6d68VvABqCqB4KR1X8KnonrVHcrxScEJBIZEahCft?=
+ =?us-ascii?Q?NgK1XkrnbqdFH+t0AZM=3D?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Dec 2025 18:49:34.6596 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c3deb754-d789-4502-647c-08de342f08af
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099DD.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8303
+Received-SPF: permerror client-ip=52.101.53.32;
+ envelope-from=Luqmaan.Irshad@amd.com;
+ helo=BL0PR03CU003.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 05 Dec 2025 17:37:55 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,91 +152,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/12/2025 06:43, Matt Jacobson wrote:
+Added a special callback function called virtio_get_drm_fd to create
+a render node based on the path specified by the user via QEMU command
+line.  This function is called during the virglrenderer callback sequence
+where we specify the get_drm_fd function pointer to call back our
+new function, allowing us to pass the fd of our created render node.
 
-> [Please notify me of any process errors -- this is my first contribution to
-> QEMU.  Thanks.]
-> 
-> Implement the SWIM2 floppy controller for the q800 machine.
-> (For details, see: <https://archive.org/details/SWIMDesignDocs/SWIM2%20ERS/>.)
-> 
-> Reading and writing work, and booting from a system disk works.
-> Tested with the Quadra 800 ROM and System 7.
-> 
-> Future areas of work here could include:
-> 
-> * Allowing for disk formatting/duplication to work
-> * Fleshing out the SWIM1 and hooking it up to the emulated drive
-> * Implementing the IWM for earlier machines (this could share code with SWIM1)
-> 
-> Matt Jacobson (1):
->    hw/m68k: add working floppy controller for q800
-> 
->   hw/block/meson.build               |   2 +-
->   hw/block/sony_superdrive.c         | 940 +++++++++++++++++++++++++++++
->   hw/block/swim2.c                   | 657 ++++++++++++++++++++
->   hw/block/trace-events              |  17 +
->   hw/m68k/q800.c                     |   4 +-
->   include/hw/block/sony_superdrive.h |  55 ++
->   include/hw/block/swim2.h           |  66 ++
->   include/hw/m68k/q800.h             |   4 +-
->   8 files changed, 1740 insertions(+), 5 deletions(-)
->   create mode 100644 hw/block/sony_superdrive.c
->   create mode 100644 hw/block/swim2.c
->   create mode 100644 include/hw/block/sony_superdrive.h
->   create mode 100644 include/hw/block/swim2.h
+Based-on: 20251116125641.2255794-1-dmitry.osipenko@collabora.com
 
-Thanks for the contribution! I've applied this patch and managed to get it to compile 
-successfully, but I'm struggling to find a suitable disk image that works. Can you 
-point me towards both a GCR and an MFM image I can use for testing? I think this 
-might be because the images I use here are simply HFS(+) images.
+Signed-off-by: Luqmaan Irshad <luirshad@amd.com>
+---
+ hw/display/virtio-gpu-gl.c     |  4 ++++
+ hw/display/virtio-gpu-virgl.c  | 17 ++++++++++++++++-
+ include/hw/virtio/virtio-gpu.h |  1 +
+ 3 files changed, 21 insertions(+), 1 deletion(-)
 
-Some initial thoughts from looking over the code:
-
-- The basic implementation looks fairly good from what I can see, but I can see a 
-number of places that don't match our code style guidelines. You can do a basic style 
-check running "./scripts/checkpatch.pl HEAD~1..HEAD" from a git checkout with your 
-patch applied which will pick up the majority of issues.
-
-- Having everything in one patch makes it harder to review: I think it would make 
-sense to introduce the SONY drive in one patch, the updated SWIM2 controller in 
-another, and then a final patch to update the q800 machine to switch over the SWIM2. 
-And maybe even an extra patch to remove the existing SWIM1 stub? The stub was added 
-with just enough implemented to allow Linux to boot.
-
-- Have you tested with an A/UX 3.0.1 boot floppy? A number of people are interested 
-to run AUX 3.0.1 as per 
-https://www.emaculation.com/doku.php/m68k-qemu-on-windows#running_qemu-system-m68k_with_a_ux_3x_guests_in_windows 
-and it would be good to be able to use the real floppy image here.
-
-- QEMU already has a fairly good Fifo8 implementation: is it possible to use that or 
-Fifo32 instead of reinventing it here?
-
-- It's worth updating the cover letter to include an example command line. I had to 
-go digging into the patch to discover that I needed to add something like "-drive 
-file=/tmp/Install.img,if=none,id=floppy" to attempt a floppy boot. Configuring 
-internal devices can be fiddly: I'm wondering if there is existing precedent in the 
-way PC floppy drives work that we can use to keep things consistent?
-
-- When booting a test Linux image I got stuck in a boot loop, both with and without a 
-floppy inserted in the drive:
-
-swim2_mmio_read addr=0x1e00 size=1 reg=7 [HANDSHAKE] value=0x8 mode=0xca setup=0x28 
-phase=0x74 fifo=0
-swim2_mmio_read addr=0x1e00 size=1 reg=7 [HANDSHAKE] value=0x8 mode=0xca setup=0x28 
-phase=0x74 fifo=0
-...
-...
-
-Since the Linux maintainers make use of QEMU for testing, I think we need to get this 
-working. Laurent - do you know if the 68K Mac kernel driver works on real hardware?
-
-I appreciate the time and effort that has gone into creating this patch, and I'm 
-really looking forward to getting it to a point where it can be merged :)
-
-
-ATB,
-
-Mark.
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index b640900fc6..c0587929e4 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -161,6 +161,10 @@ static const Property virtio_gpu_gl_properties[] = {
+                     VIRTIO_GPU_FLAG_VENUS_ENABLED, false),
+     DEFINE_PROP_BIT("drm_native_context", VirtIOGPU, parent_obj.conf.flags,
+                     VIRTIO_GPU_FLAG_DRM_ENABLED, false),
++#if VIRGL_RENDERER_CALLBACKS_VERSION >= 2s
++    DEFINE_PROP_STRING("drm_render_node", VirtIOGPU,
++                       parent_obj.drm_render_node),
++#endif
+ };
+ 
+ static void virtio_gpu_gl_device_unrealize(DeviceState *qdev)
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 6ad3b46066..c271194260 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -1016,6 +1016,15 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+     }
+ }
+ 
++#if VIRGL_RENDERER_CALLBACKS_VERSION >= 2
++static int virtio_get_drm_fd(void *opaque)
++{
++    VirtIOGPU *g = opaque;
++    int fd = open(g->parent_obj.drm_render_node, O_RDWR);
++    return fd;
++}
++#endif
++
+ static void virgl_write_fence(void *opaque, uint32_t fence)
+ {
+     VirtIOGPU *g = opaque;
+@@ -1300,7 +1309,13 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+     }
+     if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
+         flags |= VIRGL_RENDERER_DRM;
+-
++#if VIRGL_RENDERER_CALLBACKS_VERSION >= 2
++        if (g->parent_obj.drm_render_node) {
++            if (virtio_gpu_3d_cbs.version < 2)
++                virtio_gpu_3d_cbs.version = 2;
++            virtio_gpu_3d_cbs.get_drm_fd = virtio_get_drm_fd;
++        }
++#endif
+         if (!(flags & VIRGL_RENDERER_ASYNC_FENCE_CB)) {
+             /*
+              * Virglrenderer skips enabling DRM context support without
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index a4963508a4..aba8343848 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -152,6 +152,7 @@ struct VirtIOGPUBase {
+     struct virtio_gpu_base_conf conf;
+     struct virtio_gpu_config virtio_config;
+     const GraphicHwOps *hw_ops;
++    char *drm_render_node;
+ 
+     int renderer_blocked;
+     int enable;
+-- 
+2.43.0
 
 
