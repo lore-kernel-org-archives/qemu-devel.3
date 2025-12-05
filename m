@@ -4,59 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF00D374A1
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 21:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B3D6D374A3
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 21:21:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRcxW-0006GF-CF; Fri, 05 Dec 2025 16:03:22 -0500
+	id 1vRdEI-0001T0-Tt; Fri, 05 Dec 2025 16:20:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRcxT-0006El-8c
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 16:03:19 -0500
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vRdEG-0001SJ-Di
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 16:20:40 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1vRcxQ-0006Wh-JF
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 16:03:19 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id D404E8076C;
- Sat, 06 Dec 2025 00:03:09 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:87c::1:2a] (unknown
- [2a02:6bf:8080:87c::1:2a])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 83uwDv0F00U0-H6esWKC7; Sat, 06 Dec 2025 00:03:09 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1764968589;
- bh=S2WN79KD3N2DJqpIMl5FviIxgRNGgOfMwqTd0ZruTBw=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=MJEfHZoIr2uKyGqVc+ths01mdAzBYglfhtuIHl7uIfNbRHin74bK/UFEp5qmU1oKk
- YmTPka3Z0nlHh6kdHmiyRmSo4mtSDFMskhoujKaGXyVY1Wb3upEYsoVC5KMhlyXqT2
- nz8imUIRyWruFsxV5VTCN70sfCu21TNqsqF+bm4M=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <3d215410-5ddf-4b0c-b30f-decff7fae2a8@yandex-team.ru>
-Date: Sat, 6 Dec 2025 00:03:08 +0300
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vRdEE-0002kV-Ir
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 16:20:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=eosK1Px9rBrsEGmygvM2ZTdW+TshzamoYBFzIrac3hU=; b=0a8rYBrynYALYbMcbJb2QHlFAM
+ QqB+7L6U+PpIPepox2f+V/N8lHYZ/GtjQB1xzQZqhE86StVL7wXbCYASv2Aw/sbdTrpn5Jq1gxlct
+ j/S3BMCWh6MhGIwbq6khQdYK4tOlkoVOiHTIx3eTsdlb0okONZtm6Ap4qtKReyAQKCPOtqjnVtmc8
+ yWXlDd6fVP9dGarp6eU9ozeUTd9jZlolOtG9rr+HKU5qS9we3l48wTgX2esXGpR41Tvfmjo8DPY55
+ cn+qN89ylTv8ux3NZuWHnVkksvpavZND47xng3ST2fTuLQlSkoCxRoHTXsjYYr9ly1G3ioCTx3+z5
+ fCMVtzLiex7lMLyd0+eLUlbxIYX5dPYdr5PpyDIpqipxrwSZpJdUezrw8q8D2o4jDCCONNnBy38FC
+ DwjLpGh8R8wVwT+mBrtgpBVSCnztKpjoqLD9x1s34pMKRbXB1Yn/kwK+mT2XdQtwYiBlog/JCaURb
+ qYQAspFQnV9arIlibWFc8SgaUoiUw7o5oHPH9MkLHcklhD9q8Jkb2AXsxXjnbRxwwbj1cNDf/BypY
+ GtpTq/Qd0RwzY4Vpyryr6IJxSQqO4Ucvlu9AdKUGXBawaOTQI9bnN2Tshja5Uei027HEpnox9pM8S
+ 8ijQt9DARpi+4jK+chwaP5wJ0709vi+dXxxn7U2Es=;
+Received: from [2a02:8012:2f01:0:c841:1a2:1f49:5881]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vRdBm-0004dr-4G; Fri, 05 Dec 2025 21:18:06 +0000
+Message-ID: <ab79a32b-24b3-418e-a2c5-6427cf174d35@ilande.co.uk>
+Date: Fri, 5 Dec 2025 21:20:30 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/10] chardev: rework filename handling
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, d-tatianin@yandex-team.ru
-References: <20251204154235.149575-1-vsementsov@yandex-team.ru>
- <20251204154235.149575-10-vsementsov@yandex-team.ru>
- <CAMxuvaw5MfXrSiqY3taObYn9cTAg6teJ5RYAjj+c6i3qip3Euw@mail.gmail.com>
+To: Matt Jacobson <mhjacobson@me.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>
+References: <20251203064336.79847-1-mhjacobson@me.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <CAMxuvaw5MfXrSiqY3taObYn9cTAg6teJ5RYAjj+c6i3qip3Euw@mail.gmail.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20251203064336.79847-1-mhjacobson@me.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:c841:1a2:1f49:5881
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH 0/1] hw/m68k: add working floppy controller for q800
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -78,243 +103,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05.12.25 18:33, Marc-André Lureau wrote:
-> Hi
+On 03/12/2025 06:43, Matt Jacobson wrote:
+
+> [Please notify me of any process errors -- this is my first contribution to
+> QEMU.  Thanks.]
 > 
-> On Thu, Dec 4, 2025 at 7:42 PM Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>> wrote:
+> Implement the SWIM2 floppy controller for the q800 machine.
+> (For details, see: <https://archive.org/details/SWIMDesignDocs/SWIM2%20ERS/>.)
 > 
->     We have the following flaws with it:
+> Reading and writing work, and booting from a system disk works.
+> Tested with the Quadra 800 ROM and System 7.
 > 
->     1. Layring violation by modifying generic state directly in backends
+> Future areas of work here could include:
 > 
+> * Allowing for disk formatting/duplication to work
+> * Fleshing out the SWIM1 and hooking it up to the emulated drive
+> * Implementing the IWM for earlier machines (this could share code with SWIM1)
 > 
-> Well, it's a parent field that can be modified, I am not sure it qualifies as such
+> Matt Jacobson (1):
+>    hw/m68k: add working floppy controller for q800
 > 
->     2. Tricky generic logic: we should check, did backend set the
->     generic state field, and fill it when not.
-> 
->     Let's fix them all by making filename a private field with getter
->     and setter. And move the "default logic" into getter.
-> 
-> 
-> The tradeoff is that your implementation will do more allocation/free, but I don't think we care much here.
-> 
-> I am not sure we gain much overall.
+>   hw/block/meson.build               |   2 +-
+>   hw/block/sony_superdrive.c         | 940 +++++++++++++++++++++++++++++
+>   hw/block/swim2.c                   | 657 ++++++++++++++++++++
+>   hw/block/trace-events              |  17 +
+>   hw/m68k/q800.c                     |   4 +-
+>   include/hw/block/sony_superdrive.h |  55 ++
+>   include/hw/block/swim2.h           |  66 ++
+>   include/hw/m68k/q800.h             |   4 +-
+>   8 files changed, 1740 insertions(+), 5 deletions(-)
+>   create mode 100644 hw/block/sony_superdrive.c
+>   create mode 100644 hw/block/swim2.c
+>   create mode 100644 include/hw/block/sony_superdrive.h
+>   create mode 100644 include/hw/block/swim2.h
+
+Thanks for the contribution! I've applied this patch and managed to get it to compile 
+successfully, but I'm struggling to find a suitable disk image that works. Can you 
+point me towards both a GCR and an MFM image I can use for testing? I think this 
+might be because the images I use here are simply HFS(+) images.
+
+Some initial thoughts from looking over the code:
+
+- The basic implementation looks fairly good from what I can see, but I can see a 
+number of places that don't match our code style guidelines. You can do a basic style 
+check running "./scripts/checkpatch.pl HEAD~1..HEAD" from a git checkout with your 
+patch applied which will pick up the majority of issues.
+
+- Having everything in one patch makes it harder to review: I think it would make 
+sense to introduce the SONY drive in one patch, the updated SWIM2 controller in 
+another, and then a final patch to update the q800 machine to switch over the SWIM2. 
+And maybe even an extra patch to remove the existing SWIM1 stub? The stub was added 
+with just enough implemented to allow Linux to boot.
+
+- Have you tested with an A/UX 3.0.1 boot floppy? A number of people are interested 
+to run AUX 3.0.1 as per 
+https://www.emaculation.com/doku.php/m68k-qemu-on-windows#running_qemu-system-m68k_with_a_ux_3x_guests_in_windows 
+and it would be good to be able to use the real floppy image here.
+
+- QEMU already has a fairly good Fifo8 implementation: is it possible to use that or 
+Fifo32 instead of reinventing it here?
+
+- It's worth updating the cover letter to include an example command line. I had to 
+go digging into the patch to discover that I needed to add something like "-drive 
+file=/tmp/Install.img,if=none,id=floppy" to attempt a floppy boot. Configuring 
+internal devices can be fiddly: I'm wondering if there is existing precedent in the 
+way PC floppy drives work that we can use to keep things consistent?
+
+- When booting a test Linux image I got stuck in a boot loop, both with and without a 
+floppy inserted in the drive:
+
+swim2_mmio_read addr=0x1e00 size=1 reg=7 [HANDSHAKE] value=0x8 mode=0xca setup=0x28 
+phase=0x74 fifo=0
+swim2_mmio_read addr=0x1e00 size=1 reg=7 [HANDSHAKE] value=0x8 mode=0xca setup=0x28 
+phase=0x74 fifo=0
+...
+...
+
+Since the Linux maintainers make use of QEMU for testing, I think we need to get this 
+working. Laurent - do you know if the 68K Mac kernel driver works on real hardware?
+
+I appreciate the time and effort that has gone into creating this patch, and I'm 
+really looking forward to getting it to a point where it can be merged :)
 
 
-My actual goal is to "open the doors" for further movement of qemu_char_open() call
-to the later point (I came to this idea instead of trying to split .open() into
-.open() and .init())..
+ATB,
 
-So I should do something with the logic in chardev_new(), done after qemu_char_open()
-call. Alternative is to put it into qemu_char_open(). But I decided, that being here,
-it's better to generalize it somehow.
+Mark.
 
-Agree, that setter/getter for filename seems a bit cumbersome here.
-
-Hmm. I think, I have a clearer idea:
-
-add .chr_get_filename() handler and drop the .filename field and qemu_chr_set_filename()
-function.
-
-So, qemu_chr_get_filename() will realize the default logic or call .chr_get_filename() if
-it exist.
-
-We'll need implementations only for char-socket and char-pty.
-
-
-> 
->     Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>> 
-> 
->     ---
->       chardev/char-pty.c     |  4 +++-
->       chardev/char-socket.c  | 17 ++++++++---------
->       chardev/char.c         |  8 ++------
->       hw/misc/ivshmem-pci.c  |  4 ++--
->       include/chardev/char.h | 21 ++++++++++++++++++++-
->       5 files changed, 35 insertions(+), 19 deletions(-)
-> 
->     diff --git a/chardev/char-pty.c b/chardev/char-pty.c
->     index 047aade09e..f4294679be 100644
->     --- a/chardev/char-pty.c
->     +++ b/chardev/char-pty.c
->     @@ -336,6 +336,7 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
->           int master_fd, slave_fd;
->           char *name;
->           char *path = backend->u.pty.data->path;
->     +    g_autofree char *filename = NULL;
-> 
->           s = PTY_CHARDEV(chr);
-> 
->     @@ -351,7 +352,8 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
->               return false;
->           }
-> 
->     -    chr->filename = g_strdup_printf("pty:%s", s->pty_name);
->     +    filename = g_strdup_printf("pty:%s", s->pty_name);
->     +    qemu_chr_set_filename(chr, filename);
->           qemu_printf("char device redirected to %s (label %s)\n",
->                       s->pty_name, chr->label);
-> 
->     diff --git a/chardev/char-socket.c b/chardev/char-socket.c
->     index 31c9acd164..9387760009 100644
->     --- a/chardev/char-socket.c
->     +++ b/chardev/char-socket.c
->     @@ -384,8 +384,7 @@ static void tcp_chr_free_connection(Chardev *chr)
->           s->sioc = NULL;
->           object_unref(OBJECT(s->ioc));
->           s->ioc = NULL;
->     -    g_free(chr->filename);
->     -    chr->filename = NULL;
->     +    qemu_chr_set_filename(chr, NULL);
->           tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
->       }
-> 
->     @@ -443,11 +442,11 @@ static void update_disconnected_filename(SocketChardev *s)
->       {
->           Chardev *chr = CHARDEV(s);
-> 
->     -    g_free(chr->filename);
->           if (s->addr) {
->     -        chr->filename = qemu_chr_socket_address(s, "disconnected:");
->     +        g_autofree char *filename = qemu_chr_socket_address(s, "disconnected:");
->     +        qemu_chr_set_filename(chr, filename);
->           } else {
->     -        chr->filename = g_strdup("disconnected:socket");
->     +        qemu_chr_set_filename(chr, "disconnected:socket");
->           }
->       }
-> 
->     @@ -638,9 +637,9 @@ static void tcp_chr_connect(void *opaque)
->       {
->           Chardev *chr = CHARDEV(opaque);
->           SocketChardev *s = SOCKET_CHARDEV(opaque);
->     +    g_autofree char *filename = qemu_chr_compute_filename(s);
-> 
->     -    g_free(chr->filename);
->     -    chr->filename = qemu_chr_compute_filename(s);
->     +    qemu_chr_set_filename(chr, filename);
-> 
->           tcp_chr_change_state(s, TCP_CHARDEV_STATE_CONNECTED);
->           update_ioc_handlers(s);
->     @@ -1000,8 +999,8 @@ static void tcp_chr_accept_server_sync(Chardev *chr)
->       {
->           SocketChardev *s = SOCKET_CHARDEV(chr);
->           QIOChannelSocket *sioc;
->     -    info_report("QEMU waiting for connection on: %s",
->     -                chr->filename);
->     +    g_autofree char *filename = qemu_chr_get_filename(chr);
->     +    info_report("QEMU waiting for connection on: %s", filename);
->           tcp_chr_change_state(s, TCP_CHARDEV_STATE_CONNECTING);
->           sioc = qio_net_listener_wait_client(s->listener);
->           tcp_chr_set_client_ioc_name(chr, sioc);
->     diff --git a/chardev/char.c b/chardev/char.c
->     index 0dc792b88f..bdd907f015 100644
->     --- a/chardev/char.c
->     +++ b/chardev/char.c
->     @@ -309,7 +309,7 @@ static void char_finalize(Object *obj)
->           if (chr->fe) {
->               chr->fe->chr = NULL;
->           }
->     -    g_free(chr->filename);
->     +    qemu_chr_set_filename(chr, NULL);
->           g_free(chr->label);
->           if (chr->logfd != -1) {
->               close(chr->logfd);
->     @@ -796,7 +796,7 @@ static int qmp_query_chardev_foreach(Object *obj, void *data)
->           ChardevInfo *value = g_malloc0(sizeof(*value));
-> 
->           value->label = g_strdup(chr->label);
->     -    value->filename = g_strdup(chr->filename);
->     +    value->filename = qemu_chr_get_filename(chr);
->           value->frontend_open = chr->fe && chr->fe->fe_is_open;
-> 
->           QAPI_LIST_PREPEND(*list, value);
->     @@ -1025,10 +1025,6 @@ static Chardev *chardev_new(const char *id, const char *typename,
->               return NULL;
->           }
-> 
->     -    if (!chr->filename) {
->     -        chr->filename = g_strdup(typename + 8);
->     -    }
->     -
->           return chr;
->       }
-> 
->     diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
->     index 636d0b83de..2c7b987241 100644
->     --- a/hw/misc/ivshmem-pci.c
->     +++ b/hw/misc/ivshmem-pci.c
->     @@ -873,10 +873,10 @@ static void ivshmem_common_realize(PCIDevice *dev, Error **errp)
->               host_memory_backend_set_mapped(s->hostmem, true);
->           } else {
->               Chardev *chr = qemu_chr_fe_get_driver(&s->server_chr);
->     +        char *filename = qemu_chr_get_filename(chr);
-> 
-> 
-> Should be auto-free, since returned allocated
-> 
->               assert(chr);
-> 
->     -        IVSHMEM_DPRINTF("using shared memory server (socket = %s)\n",
->     -                        chr->filename);
->     +        IVSHMEM_DPRINTF("using shared memory server (socket = %s)\n", filename);
-> 
->               /* we allocate enough space for 16 peers and grow as needed */
->               resize_peers(s, 16);
->     diff --git a/include/chardev/char.h b/include/chardev/char.h
->     index d36e50b99e..ffeb4a4e3b 100644
->     --- a/include/chardev/char.h
->     +++ b/include/chardev/char.h
->     @@ -62,7 +62,7 @@ struct Chardev {
->           QemuMutex chr_write_lock;
->           CharFrontend *fe;
->           char *label;
->     -    char *filename;
->     +    char *_filename;
-> 
-> 
-> Why rename the field? we don't have a  convention to have "private" fields with _ prefix afaik.
-> 
->           int logfd;
->           int be_open;
->           /* used to coordinate the chardev-change special-case: */
->     @@ -72,6 +72,25 @@ struct Chardev {
->           DECLARE_BITMAP(features, QEMU_CHAR_FEATURE_LAST);
->       };
-> 
->     +static inline char *qemu_chr_get_filename(Chardev *chr)
-> 
-> 
-> Let's avoid code in headers.
-> 
->     +{
->     +    const char *typename;
->     +
->     +    if (chr->_filename) {
->     +        return g_strdup(chr->_filename);
->     +    }
->     +
->     +    typename = object_get_typename(OBJECT(chr));
->     +    assert(g_str_has_prefix(typename, "chardev-"));
->     +    return g_strdup(typename + 8);
->     +}
->     +
->     +static inline void qemu_chr_set_filename(Chardev *chr, const char *filename)
->     +{
->     +    g_free(chr->_filename);
->     +    chr->_filename = g_strdup(filename);
->     +}
->     +
->       /**
->        * qemu_chr_new_from_opts:
->        * @opts: see qemu-config.c for a list of valid options
->     -- 
->     2.48.1
-> 
-
-
--- 
-Best regards,
-Vladimir
 
