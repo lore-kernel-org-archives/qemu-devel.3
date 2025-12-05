@@ -4,90 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B7B4D32D63
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6614DD32D60
 	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 14:27:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRWlh-0003ve-67; Fri, 05 Dec 2025 09:26:45 -0500
+	id 1vRWlg-0003v0-OD; Fri, 05 Dec 2025 09:26:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sholz8530@gmail.com>)
- id 1vRTU5-00042k-TW
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 05:56:21 -0500
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sholz8530@gmail.com>)
- id 1vRTU4-0007o2-HZ
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 05:56:21 -0500
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b736d883ac4so335691166b.2
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 02:56:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1764932178; x=1765536978; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=cwraOVn55NoeKBLaepSIkiLFyMSjVTl94hKTzSj4IRU=;
- b=ld+ewap8IjNOaIUg9ud6dARfMElDJNM6QR1VB/HRiIbGw3QgQED4R/og7mHE46ZbbK
- GYh5iWeiiupnL3XlAhlCyqevwvn1h712X2GUQFV7EiyQawpUjannOidAUfE8qrG/l1Xe
- C+N9fTCqbJhxCeUagH18pBwWYxNez6JpZBPN5hcraUEt89foubJtat4tGy85ojvSEf2T
- dR8MJZjq/1psXdUWyUi/CDZaUIvn2gWI6HWPjuWSXuWVO/wOse2VUzW1l7G7dj2CP4f2
- MIUQABkcvwaoCVs4ZQlsnS3TkZ8WNwJ1SuMee2bT4nFmYPPw+Hqtug5tCM8BehJr98EV
- W6Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764932178; x=1765536978;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cwraOVn55NoeKBLaepSIkiLFyMSjVTl94hKTzSj4IRU=;
- b=Y+MpBZXRCcZT7VN2di7GsdQcICtfOQnpDHNzO5fUF/n1I+rpBEtyP9NtKlqYqMnnqY
- hM7qlIoXPZaMLAmpVglbfozFtXNet7L7WEHZXqXrpxA6R6uKBUQZ8vfp70ftcyipxaJW
- 2ycoWXqiVqzx3xypCDERVySjfH3JGnQY/LgzGfPol6lqN0FigBEdN4s7AJbXiXwU6u7L
- ReV4vn3LtL/7Zdx913F3wpqHA9xbwsqmF4JrSFNQKmlUG8pM9OQpKIy7ZyFRCvAwPChq
- 1NR1bbuKCg0VMGmu6x6oY5lV3HFSy3ZfMKkeKcZzfrHK+EqTQYPeqyF0KEdp5oj/Tej+
- mZ7A==
-X-Gm-Message-State: AOJu0YyzThyKA0GMp39F7FrB4XFpLzlpyONc9MQcGrXYL6Qg89RdXRUP
- eU5PP78hjioRiB7hQONy9DGRQFEOWtxgWgjsC+t/d5l5gjzoB/xmsDF+f/MiUpTA
-X-Gm-Gg: ASbGncuXFtB34/yLL+GOMY1nZRxh800CwWPvARLax7UeB4y4X0hbywnwW1IYWzBc1Mw
- 2JZDw3Pb46vW8VjDDsPZ20mJbugLHRyK8/WLox2PdlI3f7lWTO4VSgMAFhr6OObNgsEhkomZ/7r
- QBaD7z/sT9+IZ+41rcRD3y3NfyqIcRZfTu84IPiOgp9rAQ+gNarJ7j/aVDYT/xlMZM9IiVkKkvX
- fPZio/0D4SECtXusccm2ZRB/kBCavbpRSUb9Np2uCpCltMyJaOHL0ooECYVye98lvwVdXayLz8g
- 83zxnNzCFissXge9hjwrva8Kzy/hHYEMhud6W0tkIPggr3aezWNsThqMLoWHUiOrx39r6HOIVl0
- DhC3LbEF+cTcskVAjnty8/CKJd7dyjKtflHmgOi0zmMESarkQpbtlYDo7aGz0J/ez1EcSHKETso
- C5cRFipGRvZzkTmLg=
-X-Google-Smtp-Source: AGHT+IEqCqRZseJDI6nzVS/ydCi6GspEh2Ulm7EaOrJI3m5g0Zvfu5jb6QWB7hsRcrBoLkCsTUZJ6g==
-X-Received: by 2002:a17:907:2da8:b0:b71:29f7:47dd with SMTP id
- a640c23a62f3a-b79dc734de4mr978723266b.46.1764932178064; 
- Fri, 05 Dec 2025 02:56:18 -0800 (PST)
-Received: from spc.fritz.box ([2001:a62:621:2d01:31aa:7bce:7c8c:aedf])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b79fe78c9ebsm211243866b.5.2025.12.05.02.56.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 05 Dec 2025 02:56:17 -0800 (PST)
-From: =?UTF-8?q?S=C3=B6nke=20Holz?= <sholz8530@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?S=C3=B6nke=20Holz?= <sholz8530@gmail.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] contrib/plugins/uftrace_symbols.py: unbreak
- --no-prefix-symbols
-Date: Fri,  5 Dec 2025 11:56:14 +0100
-Message-ID: <20251205105614.13673-1-sholz8530@gmail.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <kuramitsu@ksl.ci.kyutech.ac.jp>)
+ id 1vRRKY-0007EM-83
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 03:38:23 -0500
+Received: from ns.ksl.ci.kyutech.ac.jp ([131.206.203.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kuramitsu@ksl.ci.kyutech.ac.jp>)
+ id 1vRRKV-0005MU-CW
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 03:38:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=ksl.ci.kyutech.ac.jp;
+ s=default; t=1764923890;
+ bh=lwj06oigZ47pDB1SVSZbSIgyjSSJjHy8qs4I0eJadZ0=;
+ h=Date:To:From:Subject:From;
+ b=gSmuh4zJic+NIMih6xLy8gup7fFfCCPf8eLijivJxanJn0AntQw/fQKSI+V/NohW7
+ TJGV+3qfwTH/A1DJqAQ+5UCmcjGCk4AYfIY3t+QWiy8nqVXVD0+WEwWFKJyLhV+7As
+ VrjXQ3dvQqq6gjB94G+eDekuB7ThNURO92qA1Sm2Ay6cm5gkuICA6lmRW4q8mLuL82
+ D9GxoGl5xZd8kQCsph5rAlCsJ16rJgIvISnUrhp1GpzEy36eCBfMwYh9XegKj/jom5
+ Zrj1hwx6YNCxHFsmG7do3HDPeh8sPGMuJ0y74lCImBNhYvMJkmUi7M/EHnOj+Qb1MT
+ qTHXeitVk7qSw==
+Received: from [192.168.0.85] (unknown [192.168.0.85])
+ by ns.ksl.ci.kyutech.ac.jp (Postfix) with ESMTPSA id B45173C037D
+ for <qemu-devel@nongnu.org>; Fri,  5 Dec 2025 17:38:10 +0900 (JST)
+Message-ID: <3d73bcbc-d3f0-4271-9f99-d53fb5a85db6@ksl.ci.kyutech.ac.jp>
+Date: Fri, 5 Dec 2025 17:38:10 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+From: Shusaku KURAMITSU <kuramitsu@ksl.ci.kyutech.ac.jp>
+Subject: tcg: Requesting clarification on return value of prepare_host_addr
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=sholz8530@gmail.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=131.206.203.254;
+ envelope-from=kuramitsu@ksl.ci.kyutech.ac.jp; helo=ns.ksl.ci.kyutech.ac.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Fri, 05 Dec 2025 09:26:41 -0500
@@ -105,28 +68,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since 8a545a336d, `name` is unbound if --no-prefix-symbols is passed,
-causing this script to break when that option is set.
+Hello,
 
-Signed-off-by: Sönke Holz <sholz8530@gmail.com>
----
- contrib/plugins/uftrace_symbols.py | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
-index 45fb79c7a5..21704541a6 100755
---- a/contrib/plugins/uftrace_symbols.py
-+++ b/contrib/plugins/uftrace_symbols.py
-@@ -98,6 +98,8 @@ def generate_symbol_file(self, prefix_symbols):
-                 size = f'{s.size:{addrx}}'
-                 if prefix_symbols:
-                     name = f'{binary_name}:{s.name}'
-+                else:
-+                    name = s.name
-                 print(addr, size, 'T', name, file=sym_file)
- 
-     def generate_debug_file(self):
--- 
-2.52.0
+I've noticed a possible discrepancy between the comment and the behavior
+
+of i386's prepare_host_addr (located at tcg/i386/tcg-target.c.inc, line 
+2157-2260):
+
+
+```
+
+/*
+  * For softmmu, perform the TLB load and compare.
+  * For useronly, perform any required alignment tests.
+  * In both cases, return a TCGLabelQemuLdst structure if the slow path
+  * is required and fill in @h with the host address for the fast path.
+  */
+static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+                                            TCGReg addr, MemOpIdx oi, 
+bool is_ld)
+{
+     TCGLabelQemuLdst *ldst = NULL;
+
+...
+     if (tcg_use_softmmu) {
+
+...
+
+         ldst = new_ldst_label(s);
+         ldst->is_ld = is_ld;
+         ldst->oi = oi;
+         ldst->addr_reg = addr;
+
+...
+
+     } else if (a_mask) {
+...
+     }
+
+     return ldst;
+}
+
+```
+
+
+The code appears to always assign (in case of softmmu) a label to `ldst` 
+and return it,
+
+contrary to what the comment suggests (that, "in both cases [of softmmu 
+and useronly],
+
+return a TCGLabelQemuLdst structure *if the slow path is required*".)
+
+As I understand it, there is no way to determine, at this point, which 
+of the two paths to use;
+
+the generated machine code (see L2233-2237), not the C code here, 
+performs the TLB comparison.
+
+
+I am currently building a modified version of QEMU for my undergraduate 
+project, and this is
+
+one of the most complicated code paths I've had to deal with.
+
+I hope this is the right place to ask these kinds of questions, and if 
+not, please let me know.
+
+
+Thanks,
+
+
+Shusaku KURAMITSU
+
+Dept. of Computer Science and Networks
+
+School of Computer Science and Systems Engineering
+
+Kyushu Institute of Technology, Japan
+
 
 
