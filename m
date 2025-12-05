@@ -4,98 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F5AD2E009
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 06:13:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3798D2CE1C
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 06:15:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRP40-00036p-DR; Fri, 05 Dec 2025 01:13:08 -0500
+	id 1vRP6A-0003kd-PA; Fri, 05 Dec 2025 01:15:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vRP3z-00036h-1y
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:13:07 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vRP5x-0003jt-S7
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:15:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vRP3x-0006UA-OI
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:13:06 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vRP5n-0006so-8X
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 01:15:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1764915184;
+ s=mimecast20190719; t=1764915291;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=y/ioC6v0fitr+9bI0+I28I1WU7k34dOzlA4FfhqAZHY=;
- b=X8C53/Z1CPJSWivHBTgw3rYL6EYyBJYsTyJ7lLddde/Lzby9hNDvNMiKKxGyp7azxf8Or8
- wePfpYVVnkS1mAuuvbS9nojKXx7sWXLmh4b4wSDGsZ/LgDuWdwJ8DtjsVozMrkreq1Hq3R
- a84bT95MnSKH3Mrvwm7efHE7fAIiyks=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SQFMcZEfBQdCdtH7i2x7TKByBR2ykjhaDlkkR3lPvbw=;
+ b=PV6o6GEcg5JI8EnNOUJjyXJ6LOyPMUbzB4fxPJPQ3gdivt/omJSPZeVJjFgJMsKkbs3Tc2
+ VENFwH58h3XD0ngLVHgZmWDxnOr35SVWi37dfO0XL59yk67uN6+x+JOaeVOUKmn51s0I7q
+ P9atECjSPk/ilvUCUxzrV07OKqt/1ww=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-422-ooyHxl67P5eMuo_a3UQbEg-1; Fri, 05 Dec 2025 01:13:03 -0500
-X-MC-Unique: ooyHxl67P5eMuo_a3UQbEg-1
-X-Mimecast-MFC-AGG-ID: ooyHxl67P5eMuo_a3UQbEg_1764915182
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-477a0ddd1d4so8720585e9.0
- for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 22:13:03 -0800 (PST)
+ us-mta-610-WkG4hOY5MpKse-qye0VHpA-1; Fri, 05 Dec 2025 01:14:50 -0500
+X-MC-Unique: WkG4hOY5MpKse-qye0VHpA-1
+X-Mimecast-MFC-AGG-ID: WkG4hOY5MpKse-qye0VHpA_1764915289
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-42e2d105358so1085164f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 04 Dec 2025 22:14:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1764915182; x=1765519982; darn=nongnu.org;
+ d=redhat.com; s=google; t=1764915289; x=1765520089; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=y/ioC6v0fitr+9bI0+I28I1WU7k34dOzlA4FfhqAZHY=;
- b=M9eO768yACWnaRbwazoUO6JA/J1ZWulfC+9gIUonlTv3WaAm9W+vwjfaIqh/Ms2RqV
- +miTC4JtM4AAZnhhLN/hNsiSb5JBaxWnE3Bf43f74p5Opp/41T8/Hwxwyvb1aJXDlZLx
- QunLR8HnV1lXAMWyMX79iVcZSOvMZNC9LOGE8sq6QE9yl0Ch3ZOI+5Mn49UTPX3iMqPH
- t8fyURnXi+Im7odJQ7ibp4jq5HPcRNDzZY6q4nRmIFqlwxBUYKtOvDK57U9raO/J4KxB
- Wc/s8chpLlzstFTtzl3GRgSU88FnTeJgoY5UhE1YF+MPpE/wW2/s0hG/pVSNBgOa0yEk
- wfRg==
+ bh=SQFMcZEfBQdCdtH7i2x7TKByBR2ykjhaDlkkR3lPvbw=;
+ b=A1SAzKzc/Y2PTD0Ed0a75lktSk2phUOoj0PoBT2WlNI1eHJ4iLlqUMljfIpoegUtJJ
+ OkUXwlT8Q+AIR8PEeySda55NfE7VZelmQNYaaFRL5p5SkvyZOm5CLfQsX0UC4YiCbLxR
+ zGzd3myQzSEYFbiLcqSt9LqMlEvl5m9QHacL6Di7nRvp4yr37vFuO1dGlFm5mj/DM+zt
+ EcBjt9zzG2Fi9WR4eDPiHAg3yMbDGBFMJf07O7w0gIYj9zcPqvLKNeaFv1EDK31Qfs31
+ FSQsySoB6tWW3cTXC1V6/PNwstPLdh1P9XJgXpoFKL1YPIju9H1LgMsBecKwe9tLUeu9
+ Zpwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764915182; x=1765519982;
+ d=1e100.net; s=20230601; t=1764915289; x=1765520089;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y/ioC6v0fitr+9bI0+I28I1WU7k34dOzlA4FfhqAZHY=;
- b=R6c5THjitVY2Q/65ypwHUJsGoYXubH6c+SUvw9LtSkP7iLYA8HfB8mDWQcC3+MIqpf
- MUVcnkkzgnGo64sOD21A+k8hN9YAkx8KKeGjYMGIGy4zD+MuT1+fuFF58XYjgOv9efqU
- 3Rs2TF/H8bkY7HjPxFFC+eqjs0aAZZsM9jBs2zlrP9y27JBojzObkFbNGxh5L/UlvG6Y
- LfdZFz8hX8Qirj4teJVnp1fIqlU1zfGUpv6IkXxmRJMNwKPeMmXM6okWQMoKsUW3Wwif
- FmXj0VfNuEsDDHav74jEjLZf4xbb5C/QjXMgRvPrXn6loXvKAMLvEpCPGR+ZdbZpkfkq
- fGgA==
+ bh=SQFMcZEfBQdCdtH7i2x7TKByBR2ykjhaDlkkR3lPvbw=;
+ b=lrq7jEohM+eP2COb1mxM/9oRFsfPP+FJPErZapW51L4IwYBvqzsvy46kUhpP/0KZal
+ /xIG4J7xBz7Zrg77XJ+sfC9ON/M5SSUQtqmTaJI2k7wqYzo8HbkCtPgFHk86PwBOLwK0
+ cXTMY2fB2QYO3HGUHWf0b0oTzDSgoOHV3/5Xb+JNvBQZe3pRzs1hjeiToP7ESqVoeyxl
+ NzTVhRP4/pkSCNFl/fjU0vbTgLITm5B4VZ+EG1qbQ+gdXCjvzgqOVhwvYq3CsMlYf9IL
+ YVTY+3ttbZuo21DUeMmOVvAw2hvDOXF156P813LYRtMJVFBN2r5S6RONAKQnDI7nyYkC
+ O1nw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWNZE68MSTmujMQiyFdxBHDynMFoV66+nPxBFhCwDKZ/1vNo+a1BS4po06wOmw5U23NFTL5ZKtyu8Jy@nongnu.org
-X-Gm-Message-State: AOJu0YzDrAoOtArbe0j2e8iifX6Yf6kOdlZVCj4wcj99GsEA8mnUl+fK
- IHYmsobFk+gnCDjR8EBUHLrWAiEJIh3WkdcCtjBLcizPp3fkZxH8SfYwuMUMGVqf8Phy6/H+DMh
- SVaN+cCliiidyFjYqLD15f6ZaSR3NkwicbG8zcUjZ7ntvNoGAVo++AUeG
-X-Gm-Gg: ASbGncvqpcuJIDdE34pV31i1evfn/gLD9w5bR6WkiDxQIfG1+sEDqE800ldoK5HZYO4
- DyUjMn93BxxndlOsSfNu9EVZLXYmIqQFn1TtvnuGpMPkdscrLNFVRGk29fzVVKc8JdsK59YCTEW
- tVt8uBBttdztOJOm3hSK8MQaeZfoZsTBb+o8jkiBmr4mbwdqd6DqOU/vfdix+GtlR7KBE4rItBF
- xdUnFl7BCe5jRXPn4IIYGV7DPcKra/sguTXgNjGETDoVbk8AgmRxT6W0CLUcy1lZ7c5hBy3YwGo
- NH3tXe/CnFzzqhQttLPdFRj05EW7QDq8IGckPVE2LNB2aUy+z8qLRK8cP8oOK/zSntIOk2Bq60m
- B7Hi+hHM=
-X-Received: by 2002:a05:600c:5491:b0:45d:5c71:769a with SMTP id
- 5b1f17b1804b1-4792af3e01bmr81422645e9.26.1764915182022; 
- Thu, 04 Dec 2025 22:13:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH7NwW53FlXsElpwSx3N38/Th3fvbJNRAP0gNdZBMUjpeX1uTdGZPlfCM5cTY4HY+MhQhofvA==
-X-Received: by 2002:a05:600c:5491:b0:45d:5c71:769a with SMTP id
- 5b1f17b1804b1-4792af3e01bmr81422395e9.26.1764915181609; 
- Thu, 04 Dec 2025 22:13:01 -0800 (PST)
+ AJvYcCULuZNTGoUXZ9+vr+8tQm7NczyvCIYFRg+GMQlgJ0FXkcu8XgcmieZQnznyI/0hQ5XonVvymgC2aCQR@nongnu.org
+X-Gm-Message-State: AOJu0Ywhu8VdfdaCnsLk4E2nkCYcEpn5cJdvbqC4g6YO7GYw5VAwt0UD
+ 800qjmw2nsOze1WpWheKjbrmAFpO51Uk2bhNqVzoizapTQ31DOw9drMzncAH+Eehd57iDV+tvel
+ hwpC1fHB6Zuau9JStTy45iOId8vNqqyAHSmlISlSE5YiT99eDfvSGoKIR
+X-Gm-Gg: ASbGncssyTpwC0AN33tJXYq8lyOrWld3PNYFv1BsCz7FQ+gqQcyuQtH1LNfZ3PK7OUQ
+ KlR/aCoVvPW7SxW54RcA9D/I1m4s6OQZpfvfCupEPE8VNSM95x8aeZab0+Mv0KYWKkMCec11MXy
+ y0jARSHMRzH1AzjgxJ+bJAcJH7FPoqUCpabFNxNmhVsr5NtJf9UD0YK5FbMFSXBbsH/tDNl9qOG
+ ow5jdEsCczxwl4MS5Pet3Ye59VIxfIvnZdR1tUGbpaUuRiKHar02Gvz91Gc8YDKNs2ckgVuw1wg
+ ZiKZWHv5khXtdz5xVNHp9KWr3QCjlirO5gvJ21LY6MEWHWImYppdBmb+v5yNFbm9ZFSUgTxJ/u5
+ ZCAeZdmA=
+X-Received: by 2002:a05:6000:2403:b0:42b:40df:2336 with SMTP id
+ ffacd0b85a97d-42f731c2b88mr9090951f8f.39.1764915289138; 
+ Thu, 04 Dec 2025 22:14:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IECs0WkrPLWRs2Ag3mGUZJGxE+C3heMG00m5AFYxibiqeB+c1V65NlwNePa2vve4UecgVg2iw==
+X-Received: by 2002:a05:6000:2403:b0:42b:40df:2336 with SMTP id
+ ffacd0b85a97d-42f731c2b88mr9090930f8f.39.1764915288697; 
+ Thu, 04 Dec 2025 22:14:48 -0800 (PST)
 Received: from [192.168.0.5] ([47.64.112.197])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-479310b693csm63828745e9.4.2025.12.04.22.13.00
+ ffacd0b85a97d-42f7d2226c5sm6982167f8f.23.2025.12.04.22.14.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 04 Dec 2025 22:13:00 -0800 (PST)
-Message-ID: <c1866333-5ee6-4a52-a0db-87a4dcf40ef1@redhat.com>
-Date: Fri, 5 Dec 2025 07:12:59 +0100
+ Thu, 04 Dec 2025 22:14:48 -0800 (PST)
+Message-ID: <e1bc8e50-e429-4c18-9b48-caa12df5eadb@redhat.com>
+Date: Fri, 5 Dec 2025 07:14:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for 10.2?] gitlab-ci.d/cirrus: Update the FreeBSD job to
- v14.3
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Subject: Re: [PATCH v2 04/11] tests/lcitool: add bzip2 to the minimal
+ dependency list
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>
-References: <20251204205025.2423326-1-mjt@tls.msk.ru>
+ Markus Armbruster <armbru@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20251204194902.1340008-1-alex.bennee@linaro.org>
+ <20251204194902.1340008-5-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -140,9 +146,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20251204205025.2423326-1-mjt@tls.msk.ru>
+In-Reply-To: <20251204194902.1340008-5-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -168,30 +174,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/12/2025 21.50, Michael Tokarev wrote:
-> The FreeBSD 14.2 job fails since the image disappeared
-> from the cloud.  We already bumped FreeBSD image to 14.3
-> in tests/vm in c8958b7eb4 (part of v10.1.0).
-> 
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-> ---
->   .gitlab-ci.d/cirrus.yml | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-> index 75b611418e..a8faaf8d08 100644
-> --- a/.gitlab-ci.d/cirrus.yml
-> +++ b/.gitlab-ci.d/cirrus.yml
-> @@ -37,7 +37,7 @@ x64-freebsd-14-build:
->       NAME: freebsd-14
->       CIRRUS_VM_INSTANCE_TYPE: freebsd_instance
->       CIRRUS_VM_IMAGE_SELECTOR: image_family
-> -    CIRRUS_VM_IMAGE_NAME: freebsd-14-2
-> +    CIRRUS_VM_IMAGE_NAME: freebsd-14-3
->       CIRRUS_VM_CPUS: 8
->       CIRRUS_VM_RAM: 8G
->       UPDATE_COMMAND: pkg update; pkg upgrade -y
+On 04/12/2025 20.48, Alex Bennée wrote:
+> You cannot build any softmmu targets without it
 
+I'd assume it's only the targets that use a bzipped edk2 image?
+
+  by default unless you
+> build with --disable-install-blobs.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/lcitool/projects/qemu-minimal.yml | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/tests/lcitool/projects/qemu-minimal.yml b/tests/lcitool/projects/qemu-minimal.yml
+> index 6bc232a1c3e..2a1ac51d402 100644
+> --- a/tests/lcitool/projects/qemu-minimal.yml
+> +++ b/tests/lcitool/projects/qemu-minimal.yml
+> @@ -4,6 +4,7 @@ packages:
+>    - bash
+>    - bc
+>    - bison
+> + - bzip2
+>    - ccache
+>    - findutils
+>    - flex
+
+Anyway:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
