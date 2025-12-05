@@ -4,92 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E64D374A1
-	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 20:56:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF00D374A1
+	for <qemu-devel@archiver.kernel.org>; Fri,  5 Dec 2025 21:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRcpX-0003x9-33; Fri, 05 Dec 2025 15:55:07 -0500
+	id 1vRcxW-0006GF-CF; Fri, 05 Dec 2025 16:03:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vRcpR-0003wQ-2r
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 15:55:04 -0500
-Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vRcpO-0005Ph-T7
- for qemu-devel@nongnu.org; Fri, 05 Dec 2025 15:55:00 -0500
-Received: by mail-oa1-x32.google.com with SMTP id
- 586e51a60fabf-3f13043e2fdso999519fac.1
- for <qemu-devel@nongnu.org>; Fri, 05 Dec 2025 12:54:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1764968097; x=1765572897; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=feD3rNZOfVpbNZylBVnBLNXKS+B3PzlitU3gZGLcwZ0=;
- b=v/fBqxyQVy/M8FSPqWc/0NG/OzTcr/v1HHjMswnckURyVlFKxwf6U6W4vDU4W7N4r1
- p2/lhODgv+JucJv6IyjvkkY90tAWmFWjvQdcRcL83pgoQZsnNNZ5YlUTnQU3tdttcMAB
- RvURciu4KdFILen9wzRopFXBy/R1cfhyb5ptVu81O+ENvB+mDfz0AOPT/UG1Gp67tCvc
- G7z4cxy9DJpzww95wlMbIkQ1UeaeuQbgiDC5Llc6C6yL8yqBdew40PO62iq+fb2qG51K
- C4y5ap+gDmGcfDE1QecvJ7jd63s8tphQtsBLv2LiAju+hRaS53JqkESrP6qymMIZWhri
- F0uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1764968097; x=1765572897;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=feD3rNZOfVpbNZylBVnBLNXKS+B3PzlitU3gZGLcwZ0=;
- b=r1MQn+G1opPG6K8frSws66dnfGitodmFKF/Ly5pbUidyMLfEvKdu2Kdokeo7B3Ecp3
- Ry+WCUIO0Zgm2LSxxaAarCUAT17Ngjaj8UuhQWSdqy6a23tkqzOzgQA0QlWcvao+G0ww
- osWiymqfR/WnbBrpP+gUMC6rIvPeq/pEH5iXeASBDacjy1OxGdr4T14RUvb6QxVx960z
- auDHCE/BHY+rl9IJC+ElA8pLAgIcmI+AnRrpJ99W0bDoY8aF+HCOhEpqqIUwbBjgOXQe
- eVS0nC5snAVchiHfenp6E/s9Zofz9LN5eFngLYiPf6DEh2Li+k1Djv8QXLUmUSNkJPdN
- P0Hw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiGRLu7K+JcMkTrqj4Ti0us3OVeuGfi1F2uVcVy6TPeF7KmIDHJsAeetHYpvaz7SmmRsoNUUmDpYRI@nongnu.org
-X-Gm-Message-State: AOJu0YxpuE0tK+xk8ViSZ+YoEaib+YmM691m0vVj9yM6/9YHbR+eHvR2
- /BudhsCzCxtzAjceJ9qK8tmdZL/D9vrbfc40U3QhxCQqCVpfLrGBbnsY5nlAave7j30=
-X-Gm-Gg: ASbGnctCqmdjWjHaGmUHugyNFZiNh56OrwquKuApu1CrTtJkBpmzS3OBY/rxy0wHLId
- oAE6UTRVsZb1l2jn+HVNyj/MLOr95Z2wfdCHq8QmPnObFGgdhOTKup536uheNsuiUhmW23si6Nj
- qZmGKXHSTpHFPYaKgMtpZmMry/T2ojpVND2cQQ/n/SsoqsfOedUKs+a92oToJEg0TYwdAB3Sf25
- QHp2Je7/vz0rtoEQ6WwSiDWjB0JYkq/Y8o5IRGaALHCtma58lfb+5CdsVxSq68vLTpcf+B5IWmj
- o6JzNPE6HJ3FFU7YonyTgCgYlIEAiqr2eIv/kdoDijc+YGY6TY3v6ehIhZ4CZHNJl0yWoP/sdLK
- y8ffe/ZwqL1Y9TFiTa3sVpfRnoNs2167jFhFsXMbZssTnr8rfdxOvzcpDCS7WdpvJtwLpcUZ9ep
- ta59VONlhf+phHFm2CBkFcBl/52jVkvJMfhWOPX29EE5sdjlCvGanvwk/7fe1J7FmI
-X-Google-Smtp-Source: AGHT+IG+ggC2S/WTz2H8N2RZv+47IOtKjN3MobWt6UIYS9emqDMpMrSHjExk1E3hiz1gZ25Y9VMz0Q==
-X-Received: by 2002:a05:6870:40c4:b0:3e8:8e57:a7ac with SMTP id
- 586e51a60fabf-3f54415a618mr132573fac.55.1764968097237; 
- Fri, 05 Dec 2025 12:54:57 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3f50b584778sm4024025fac.16.2025.12.05.12.54.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 05 Dec 2025 12:54:56 -0800 (PST)
-Message-ID: <6c30a89a-1f11-4ae3-b424-ff4944a665bc@linaro.org>
-Date: Fri, 5 Dec 2025 14:54:55 -0600
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vRcxT-0006El-8c
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 16:03:19 -0500
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vRcxQ-0006Wh-JF
+ for qemu-devel@nongnu.org; Fri, 05 Dec 2025 16:03:19 -0500
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id D404E8076C;
+ Sat, 06 Dec 2025 00:03:09 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:87c::1:2a] (unknown
+ [2a02:6bf:8080:87c::1:2a])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id 83uwDv0F00U0-H6esWKC7; Sat, 06 Dec 2025 00:03:09 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1764968589;
+ bh=S2WN79KD3N2DJqpIMl5FviIxgRNGgOfMwqTd0ZruTBw=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=MJEfHZoIr2uKyGqVc+ths01mdAzBYglfhtuIHl7uIfNbRHin74bK/UFEp5qmU1oKk
+ YmTPka3Z0nlHh6kdHmiyRmSo4mtSDFMskhoujKaGXyVY1Wb3upEYsoVC5KMhlyXqT2
+ nz8imUIRyWruFsxV5VTCN70sfCu21TNqsqF+bm4M=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <3d215410-5ddf-4b0c-b30f-decff7fae2a8@yandex-team.ru>
+Date: Sat, 6 Dec 2025 00:03:08 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/14] Final fixes for 10.2 (gitlab, testing, docker, docs, 
- plugins)
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20251205164125.2122504-1-alex.bennee@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v2 09/10] chardev: rework filename handling
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, d-tatianin@yandex-team.ru
+References: <20251204154235.149575-1-vsementsov@yandex-team.ru>
+ <20251204154235.149575-10-vsementsov@yandex-team.ru>
+ <CAMxuvaw5MfXrSiqY3taObYn9cTAg6teJ5RYAjj+c6i3qip3Euw@mail.gmail.com>
 Content-Language: en-US
-In-Reply-To: <20251205164125.2122504-1-alex.bennee@linaro.org>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <CAMxuvaw5MfXrSiqY3taObYn9cTAg6teJ5RYAjj+c6i3qip3Euw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::32;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x32.google.com
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,36 +78,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/25 10:41, Alex Bennée wrote:
-> The following changes since commit 864814f71b4cbb2e65bc83a502e63b3cbdd43b0f:
+On 05.12.25 18:33, Marc-André Lureau wrote:
+> Hi
 > 
->    Merge tag 'for-upstream' ofhttps://repo.or.cz/qemu/kevin into staging (2025-12-04 13:37:46 -0600)
+> On Thu, Dec 4, 2025 at 7:42 PM Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>> wrote:
 > 
-> are available in the Git repository at:
+>     We have the following flaws with it:
 > 
->    https://gitlab.com/stsquad/qemu.git tags/pull-10.2-final-fixes-051225-2
+>     1. Layring violation by modifying generic state directly in backends
 > 
-> for you to fetch changes up to 704db3e250f5c646b3f51bfc7975b66b0f47d767:
 > 
->    aspeed: Deprecate the fby35 machine (2025-12-05 15:37:18 +0000)
+> Well, it's a parent field that can be modified, I am not sure it qualifies as such
 > 
-> ----------------------------------------------------------------
-> Final fixes for 10.2 (gitlab, testing, docker, docs, plugins)
+>     2. Tricky generic logic: we should check, did backend set the
+>     generic state field, and fill it when not.
 > 
->   - drop out of date --disable-pie workaround for aarch64 custom job
->   - remove explicit pxe-test from build with no libslirp
->   - update the FreeBSD test image
->   - don't try and run check-tcg tests we haven't built qemu for
->   - skip iotests which need crypto if we haven't got support
->   - transition debian-all-test-cross to lcitool
->   - update build env documentation to refer to lcitool
->   - update MAINTAINERS entry for custom runners
->   - ensure discon plugins can read registers
->   - fix a bug on uftrace symbol helper script
->   - deprecate the fby35 machine
+>     Let's fix them all by making filename a private field with getter
+>     and setter. And move the "default logic" into getter.
+> 
+> 
+> The tradeoff is that your implementation will do more allocation/free, but I don't think we care much here.
+> 
+> I am not sure we gain much overall.
 
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+My actual goal is to "open the doors" for further movement of qemu_char_open() call
+to the later point (I came to this idea instead of trying to split .open() into
+.open() and .init())..
 
-r~
+So I should do something with the logic in chardev_new(), done after qemu_char_open()
+call. Alternative is to put it into qemu_char_open(). But I decided, that being here,
+it's better to generalize it somehow.
+
+Agree, that setter/getter for filename seems a bit cumbersome here.
+
+Hmm. I think, I have a clearer idea:
+
+add .chr_get_filename() handler and drop the .filename field and qemu_chr_set_filename()
+function.
+
+So, qemu_chr_get_filename() will realize the default logic or call .chr_get_filename() if
+it exist.
+
+We'll need implementations only for char-socket and char-pty.
+
+
+> 
+>     Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>> 
+> 
+>     ---
+>       chardev/char-pty.c     |  4 +++-
+>       chardev/char-socket.c  | 17 ++++++++---------
+>       chardev/char.c         |  8 ++------
+>       hw/misc/ivshmem-pci.c  |  4 ++--
+>       include/chardev/char.h | 21 ++++++++++++++++++++-
+>       5 files changed, 35 insertions(+), 19 deletions(-)
+> 
+>     diff --git a/chardev/char-pty.c b/chardev/char-pty.c
+>     index 047aade09e..f4294679be 100644
+>     --- a/chardev/char-pty.c
+>     +++ b/chardev/char-pty.c
+>     @@ -336,6 +336,7 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+>           int master_fd, slave_fd;
+>           char *name;
+>           char *path = backend->u.pty.data->path;
+>     +    g_autofree char *filename = NULL;
+> 
+>           s = PTY_CHARDEV(chr);
+> 
+>     @@ -351,7 +352,8 @@ static bool pty_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+>               return false;
+>           }
+> 
+>     -    chr->filename = g_strdup_printf("pty:%s", s->pty_name);
+>     +    filename = g_strdup_printf("pty:%s", s->pty_name);
+>     +    qemu_chr_set_filename(chr, filename);
+>           qemu_printf("char device redirected to %s (label %s)\n",
+>                       s->pty_name, chr->label);
+> 
+>     diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+>     index 31c9acd164..9387760009 100644
+>     --- a/chardev/char-socket.c
+>     +++ b/chardev/char-socket.c
+>     @@ -384,8 +384,7 @@ static void tcp_chr_free_connection(Chardev *chr)
+>           s->sioc = NULL;
+>           object_unref(OBJECT(s->ioc));
+>           s->ioc = NULL;
+>     -    g_free(chr->filename);
+>     -    chr->filename = NULL;
+>     +    qemu_chr_set_filename(chr, NULL);
+>           tcp_chr_change_state(s, TCP_CHARDEV_STATE_DISCONNECTED);
+>       }
+> 
+>     @@ -443,11 +442,11 @@ static void update_disconnected_filename(SocketChardev *s)
+>       {
+>           Chardev *chr = CHARDEV(s);
+> 
+>     -    g_free(chr->filename);
+>           if (s->addr) {
+>     -        chr->filename = qemu_chr_socket_address(s, "disconnected:");
+>     +        g_autofree char *filename = qemu_chr_socket_address(s, "disconnected:");
+>     +        qemu_chr_set_filename(chr, filename);
+>           } else {
+>     -        chr->filename = g_strdup("disconnected:socket");
+>     +        qemu_chr_set_filename(chr, "disconnected:socket");
+>           }
+>       }
+> 
+>     @@ -638,9 +637,9 @@ static void tcp_chr_connect(void *opaque)
+>       {
+>           Chardev *chr = CHARDEV(opaque);
+>           SocketChardev *s = SOCKET_CHARDEV(opaque);
+>     +    g_autofree char *filename = qemu_chr_compute_filename(s);
+> 
+>     -    g_free(chr->filename);
+>     -    chr->filename = qemu_chr_compute_filename(s);
+>     +    qemu_chr_set_filename(chr, filename);
+> 
+>           tcp_chr_change_state(s, TCP_CHARDEV_STATE_CONNECTED);
+>           update_ioc_handlers(s);
+>     @@ -1000,8 +999,8 @@ static void tcp_chr_accept_server_sync(Chardev *chr)
+>       {
+>           SocketChardev *s = SOCKET_CHARDEV(chr);
+>           QIOChannelSocket *sioc;
+>     -    info_report("QEMU waiting for connection on: %s",
+>     -                chr->filename);
+>     +    g_autofree char *filename = qemu_chr_get_filename(chr);
+>     +    info_report("QEMU waiting for connection on: %s", filename);
+>           tcp_chr_change_state(s, TCP_CHARDEV_STATE_CONNECTING);
+>           sioc = qio_net_listener_wait_client(s->listener);
+>           tcp_chr_set_client_ioc_name(chr, sioc);
+>     diff --git a/chardev/char.c b/chardev/char.c
+>     index 0dc792b88f..bdd907f015 100644
+>     --- a/chardev/char.c
+>     +++ b/chardev/char.c
+>     @@ -309,7 +309,7 @@ static void char_finalize(Object *obj)
+>           if (chr->fe) {
+>               chr->fe->chr = NULL;
+>           }
+>     -    g_free(chr->filename);
+>     +    qemu_chr_set_filename(chr, NULL);
+>           g_free(chr->label);
+>           if (chr->logfd != -1) {
+>               close(chr->logfd);
+>     @@ -796,7 +796,7 @@ static int qmp_query_chardev_foreach(Object *obj, void *data)
+>           ChardevInfo *value = g_malloc0(sizeof(*value));
+> 
+>           value->label = g_strdup(chr->label);
+>     -    value->filename = g_strdup(chr->filename);
+>     +    value->filename = qemu_chr_get_filename(chr);
+>           value->frontend_open = chr->fe && chr->fe->fe_is_open;
+> 
+>           QAPI_LIST_PREPEND(*list, value);
+>     @@ -1025,10 +1025,6 @@ static Chardev *chardev_new(const char *id, const char *typename,
+>               return NULL;
+>           }
+> 
+>     -    if (!chr->filename) {
+>     -        chr->filename = g_strdup(typename + 8);
+>     -    }
+>     -
+>           return chr;
+>       }
+> 
+>     diff --git a/hw/misc/ivshmem-pci.c b/hw/misc/ivshmem-pci.c
+>     index 636d0b83de..2c7b987241 100644
+>     --- a/hw/misc/ivshmem-pci.c
+>     +++ b/hw/misc/ivshmem-pci.c
+>     @@ -873,10 +873,10 @@ static void ivshmem_common_realize(PCIDevice *dev, Error **errp)
+>               host_memory_backend_set_mapped(s->hostmem, true);
+>           } else {
+>               Chardev *chr = qemu_chr_fe_get_driver(&s->server_chr);
+>     +        char *filename = qemu_chr_get_filename(chr);
+> 
+> 
+> Should be auto-free, since returned allocated
+> 
+>               assert(chr);
+> 
+>     -        IVSHMEM_DPRINTF("using shared memory server (socket = %s)\n",
+>     -                        chr->filename);
+>     +        IVSHMEM_DPRINTF("using shared memory server (socket = %s)\n", filename);
+> 
+>               /* we allocate enough space for 16 peers and grow as needed */
+>               resize_peers(s, 16);
+>     diff --git a/include/chardev/char.h b/include/chardev/char.h
+>     index d36e50b99e..ffeb4a4e3b 100644
+>     --- a/include/chardev/char.h
+>     +++ b/include/chardev/char.h
+>     @@ -62,7 +62,7 @@ struct Chardev {
+>           QemuMutex chr_write_lock;
+>           CharFrontend *fe;
+>           char *label;
+>     -    char *filename;
+>     +    char *_filename;
+> 
+> 
+> Why rename the field? we don't have a  convention to have "private" fields with _ prefix afaik.
+> 
+>           int logfd;
+>           int be_open;
+>           /* used to coordinate the chardev-change special-case: */
+>     @@ -72,6 +72,25 @@ struct Chardev {
+>           DECLARE_BITMAP(features, QEMU_CHAR_FEATURE_LAST);
+>       };
+> 
+>     +static inline char *qemu_chr_get_filename(Chardev *chr)
+> 
+> 
+> Let's avoid code in headers.
+> 
+>     +{
+>     +    const char *typename;
+>     +
+>     +    if (chr->_filename) {
+>     +        return g_strdup(chr->_filename);
+>     +    }
+>     +
+>     +    typename = object_get_typename(OBJECT(chr));
+>     +    assert(g_str_has_prefix(typename, "chardev-"));
+>     +    return g_strdup(typename + 8);
+>     +}
+>     +
+>     +static inline void qemu_chr_set_filename(Chardev *chr, const char *filename)
+>     +{
+>     +    g_free(chr->_filename);
+>     +    chr->_filename = g_strdup(filename);
+>     +}
+>     +
+>       /**
+>        * qemu_chr_new_from_opts:
+>        * @opts: see qemu-config.c for a list of valid options
+>     -- 
+>     2.48.1
+> 
+
+
+-- 
+Best regards,
+Vladimir
 
