@@ -4,44 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 698DED3B7D8
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 18:26:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 378C3D3B7E0
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 18:40:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRwyX-0001mu-FN; Sat, 06 Dec 2025 13:25:45 -0500
+	id 1vRxCE-0005wr-2S; Sat, 06 Dec 2025 13:39:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.qemu@xen0n.name>) id 1vRwyM-0001lj-Hz
- for qemu-devel@nongnu.org; Sat, 06 Dec 2025 13:25:34 -0500
+ (Exim 4.90_1) (envelope-from <i.qemu@xen0n.name>) id 1vRxCB-0005wZ-C7
+ for qemu-devel@nongnu.org; Sat, 06 Dec 2025 13:39:51 -0500
 Received: from mail.xen0n.name ([115.28.160.31] helo=mailbox.box.xen0n.name)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.qemu@xen0n.name>) id 1vRwyI-0007aI-P4
- for qemu-devel@nongnu.org; Sat, 06 Dec 2025 13:25:34 -0500
+ (Exim 4.90_1) (envelope-from <i.qemu@xen0n.name>) id 1vRxC6-0003TG-OO
+ for qemu-devel@nongnu.org; Sat, 06 Dec 2025 13:39:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xen0n.name; s=mail;
- t=1765045488; bh=6GCm88dXNYy/3rkdxxT04Pk/3f0lZZt+faUI8M7IJZw=;
- h=From:To:Cc:Subject:Date:From;
- b=ZGpMA1ISzGxDmOFPXs4dHoAO/0mApfKwTgMgg0JQsSPbKaC50lbT/yZwQQLf7BXj+
- 8rK0nGGiM6dol9Hk/9urD+acMvW8JWxffM4kAEi8n9RQe/E/3wEzZMGN41HQ6Ds7QW
- ag7wSbyW+z0IULX3Yz40Mdq5iJF1xBy1I1c+JZ6Q=
-Received: from ld50.lan (unknown [IPv6:240e:b8f:939d:bb00::8c0])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ t=1765046373; bh=pMRCgNHwqhT0LeJo22YEdxqttlNq0bny2cHcITE3YYU=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=M0vLLdNQxuLhRwET9KM4s/GhVyb6JBEFzwyEZk2zr8llZdz77ed0p6OOzlfoJLHhm
+ 6pygjYo0B4+6e7PDOYfn3ZR+S/AbFa88Aht+nfjqXBMubHsf6xJeuGscyZIboZjFQ1
+ DGVtPXCcqCik+taJc6FbaCUjc8Nna4LR/wuKY7uE=
+Received: from [IPV6:240e:b8f:939d:bb00::8c0] (unknown
+ [IPv6:240e:b8f:939d:bb00::8c0])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mailbox.box.xen0n.name (Postfix) with ESMTPSA id 886FF60110;
- Sun,  7 Dec 2025 02:24:47 +0800 (CST)
-From: WANG Xuerui <i.qemu@xen0n.name>
-To: qemu-devel@nongnu.org
-Cc: WANG Xuerui <git@xen0n.name>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- xtex <xtex@aosc.io>
-Subject: [PATCH] tcg/loongarch64: Support every TCGCond for cmp_vec ops
-Date: Sun,  7 Dec 2025 02:24:45 +0800
-Message-ID: <20251206182445.3656223-1-i.qemu@xen0n.name>
-X-Mailer: git-send-email 2.52.0
+ by mailbox.box.xen0n.name (Postfix) with ESMTPSA id ABF0760150;
+ Sun,  7 Dec 2025 02:39:33 +0800 (CST)
+Message-ID: <da02f3b5-3b5c-45fe-91db-545e73df8a0f@xen0n.name>
+Date: Sun, 7 Dec 2025 02:39:33 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/7] Add LoongArch v1.1 instructions
+To: gaosong <gaosong@loongson.cn>, Jiajie Chen <c@jia.je>,
+ qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, git@xen0n.name,
+ bibo mao <maobibo@loongson.cn>
+References: <20251119122822.1513788-1-c@jia.je>
+ <613a7dfa-c3f4-092b-3938-dc41f6fd3812@loongson.cn>
+Content-Language: en-US
+From: WANG Xuerui <i.qemu@xen0n.name>
+In-Reply-To: <613a7dfa-c3f4-092b-3938-dc41f6fd3812@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=115.28.160.31; envelope-from=i.qemu@xen0n.name;
  helo=mailbox.box.xen0n.name
@@ -67,179 +71,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: WANG Xuerui <git@xen0n.name>
+Hi,
 
-Support for TCGCond's in loongarch64 cmp_vec codegen is not uniform: NE
-is not supported at all and will trip over assertions, and legalization
-(currently just operand-swapping) is not done for reg-imm comparisons.
-Since the TCG middle-end will not legalize the comparison conditions for
-us, we have to do it ourselves like other targets.
+On 11/26/25 11:50, gaosong wrote:
+> [snip]
+> I run this test with qemu on x86  and loongarch machine.
+> but the results is not same.
+> on x86
+> gaosong@fedora:/home1/gaosong/work/clean/qemu$ ./build/qemu-loongarch64 
+> -cpu max test
+>   frecip: 0.333333
+> frecipe: 0.333333
+> frsqrt: 0.577350
+> frsqrte: 0.577350
+> SC.Q passed
+> 
+> on Loongson-3C6000/D
+> [root@localhost gs]# ./test
+> frecip: 0.333333
+> frecipe: 0.333332
+> frsqrt: 0.577350
+> frsqrte: 0.577345
+> test: test.c:49: test_sc_q: Assertion `res == 0' failed.
+> Aborted (core dumped)
+> 
+> 1. The results from frecipe/frsqrte differ from those on the physical 
+> machine. Is this due to precision issues?
+>     Should we align with the physical precision? Or can we disregard 
+> this discrepancy?
 
-Because EQ/LT/LTU/LE/LEU are natively supported, we only have to keep
-the current operand swapping treatment for GT/GTU/GE/GEU but ensure it
-is done for both reg-reg and reg-imm cases, and use a bitwise NOT to
-help legalize NE.
+The problem is that Loongson never published the exact algorithm used in 
+LA664 micro-architecture regarding frecipe/frsqrte. Of course it's plain 
+impossible to match hardware behavior without the info. I remember 
+trying the famous fast inverse square root algorithm in Quake III but 
+the results didn't match frsqrte behavior, and I didn't investigate further.
 
-While at it, lift the cmp_vec handling to own function to make it easier
-for readers.
+I just googled again and found [1] though, where someone has figured out 
+the operations of x86 RSQRTSS; I don't have time to test it against 
+LoongArch myself, unfortunately, but anyone interested can have a try...
 
-Fixes: d8b6fa593d2d ("tcg/loongarch64: Lower cmp_vec to vseq/vsle/vslt")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3237
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reported-by: xtex <xtex@aosc.io>
-Signed-off-by: WANG Xuerui <git@xen0n.name>
----
- tcg/loongarch64/tcg-target.c.inc | 119 +++++++++++++++++++------------
- 1 file changed, 75 insertions(+), 44 deletions(-)
-
-diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
-index 10c69211ac5..1a243a57beb 100644
---- a/tcg/loongarch64/tcg-target.c.inc
-+++ b/tcg/loongarch64/tcg-target.c.inc
-@@ -2179,15 +2179,38 @@ static void tcg_out_addsub_vec(TCGContext *s, bool lasx, unsigned vece,
-     tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
- }
- 
--static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
--                           unsigned vecl, unsigned vece,
--                           const TCGArg args[TCG_MAX_OP_ARGS],
--                           const int const_args[TCG_MAX_OP_ARGS])
-+static void tcg_out_cmp_vec(TCGContext *s, bool lasx, unsigned vece,
-+                            TCGArg a0, TCGArg a1, TCGArg a2,
-+                            bool a2_is_const, TCGCond cond)
- {
--    TCGType type = vecl + TCG_TYPE_V64;
--    bool lasx = type == TCG_TYPE_V256;
--    TCGArg a0, a1, a2, a3;
-     LoongArchInsn insn;
-+    bool need_invert = false;
-+
-+    switch (cond) {
-+    case TCG_COND_EQ:
-+    case TCG_COND_LE:
-+    case TCG_COND_LEU:
-+    case TCG_COND_LT:
-+    case TCG_COND_LTU:
-+        /* These are directly expressible. */
-+        break;
-+    case TCG_COND_NE:
-+        need_invert = true;
-+        cond = TCG_COND_EQ;
-+        break;
-+    case TCG_COND_GE:
-+    case TCG_COND_GEU:
-+    case TCG_COND_GT:
-+    case TCG_COND_GTU:
-+        {
-+            TCGArg t;
-+            t = a1, a1 = a2, a2 = t;
-+            cond = tcg_swap_cond(cond);
-+            break;
-+        }
-+    default:
-+        g_assert_not_reached();
-+    }
- 
-     static const LoongArchInsn cmp_vec_insn[16][2][4] = {
-         [TCG_COND_EQ] = {
-@@ -2233,6 +2256,49 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-             { OPC_XVSLTI_BU, OPC_XVSLTI_HU, OPC_XVSLTI_WU, OPC_XVSLTI_DU },
-         }
-     };
-+
-+    if (a2_is_const) {
-+        /*
-+         * cmp_vec dest, src, value
-+         * Try vseqi/vslei/vslti
-+         */
-+        int64_t value = sextract64(a2, 0, 8 << vece);
-+
-+        insn = cmp_vec_imm_insn[cond][lasx][vece];
-+        switch (cond) {
-+        case TCG_COND_EQ:
-+        case TCG_COND_LE:
-+        case TCG_COND_LT:
-+            tcg_out32(s, encode_vdvjsk5_insn(insn, a0, a1, value));
-+            break;
-+        case TCG_COND_LEU:
-+        case TCG_COND_LTU:
-+            tcg_out32(s, encode_vdvjuk5_insn(insn, a0, a1, value));
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    } else {
-+        insn = cmp_vec_insn[cond][lasx][vece];
-+        tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
-+    }
-+
-+    if (need_invert) {
-+        insn = lasx ? OPC_XVNOR_V : OPC_VNOR_V;
-+        tcg_out32(s, encode_vdvjvk_insn(insn, a0, a0, a0));
-+    }
-+}
-+
-+static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-+                           unsigned vecl, unsigned vece,
-+                           const TCGArg args[TCG_MAX_OP_ARGS],
-+                           const int const_args[TCG_MAX_OP_ARGS])
-+{
-+    TCGType type = vecl + TCG_TYPE_V64;
-+    bool lasx = type == TCG_TYPE_V256;
-+    TCGArg a0, a1, a2, a3;
-+    LoongArchInsn insn;
-+
-     static const LoongArchInsn neg_vec_insn[2][4] = {
-         { OPC_VNEG_B, OPC_VNEG_H, OPC_VNEG_W, OPC_VNEG_D },
-         { OPC_XVNEG_B, OPC_XVNEG_H, OPC_XVNEG_W, OPC_XVNEG_D },
-@@ -2347,43 +2413,8 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
-         insn = lasx ? OPC_XVNOR_V : OPC_VNOR_V;
-         goto vdvjvk;
-     case INDEX_op_cmp_vec:
--        {
--            TCGCond cond = args[3];
--
--            if (const_args[2]) {
--                /*
--                 * cmp_vec dest, src, value
--                 * Try vseqi/vslei/vslti
--                 */
--                int64_t value = sextract64(a2, 0, 8 << vece);
--                switch (cond) {
--                case TCG_COND_EQ:
--                case TCG_COND_LE:
--                case TCG_COND_LT:
--                    insn = cmp_vec_imm_insn[cond][lasx][vece];
--                    tcg_out32(s, encode_vdvjsk5_insn(insn, a0, a1, value));
--                    break;
--                case TCG_COND_LEU:
--                case TCG_COND_LTU:
--                    insn = cmp_vec_imm_insn[cond][lasx][vece];
--                    tcg_out32(s, encode_vdvjuk5_insn(insn, a0, a1, value));
--                    break;
--                default:
--                    g_assert_not_reached();
--                }
--                break;
--            }
--
--            insn = cmp_vec_insn[cond][lasx][vece];
--            if (insn == 0) {
--                TCGArg t;
--                t = a1, a1 = a2, a2 = t;
--                cond = tcg_swap_cond(cond);
--                insn = cmp_vec_insn[cond][lasx][vece];
--                tcg_debug_assert(insn != 0);
--            }
--        }
--        goto vdvjvk;
-+        tcg_out_cmp_vec(s, lasx, vece, a0, a1, a2, const_args[2], a3);
-+        break;
-     case INDEX_op_add_vec:
-         tcg_out_addsub_vec(s, lasx, vece, a0, a1, a2, const_args[2], true);
-         break;
--- 
-2.52.0
-
+[1]: 
+https://stackoverflow.com/questions/58614226/is-there-a-c-function-that-returns-exactly-the-value-of-the-built-in-cpu-opera
 
