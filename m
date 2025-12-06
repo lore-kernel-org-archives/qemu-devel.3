@@ -4,106 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D04D3ABC1
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 00:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD41D12692
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 04:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRgLh-00048w-Vw; Fri, 05 Dec 2025 19:40:34 -0500
+	id 1vRkJv-0000ET-QU; Fri, 05 Dec 2025 23:55:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter@pjd.dev>)
- id 1vRgLd-00047w-M2; Fri, 05 Dec 2025 19:40:30 -0500
-Received: from fout-b3-smtp.messagingengine.com ([202.12.124.146])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter@pjd.dev>)
- id 1vRgLc-0000bM-3S; Fri, 05 Dec 2025 19:40:29 -0500
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.stl.internal (Postfix) with ESMTP id C3AE91D0011A;
- Fri,  5 Dec 2025 19:40:24 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Fri, 05 Dec 2025 19:40:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjd.dev; h=cc:cc
- :content-transfer-encoding:content-type:content-type:date:date
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm2; t=1764981624;
- x=1765068024; bh=0Mhf038//AHQsdp3Av1SWmjEBY894UvN1RnTfEP5E/s=; b=
- QlO39se2Mr199uJwi0a6SgBr8AZ9VypCX8E5xt70PXsD2NfkaZ2DTYZnpuguiVWX
- yHrn2dr1d0W7S6MYXD8fBIDRRFkFSIkCbQGjRZsgv/PIle0zAlOTsKkb65+RnbVJ
- CPLwpKl077E40nhFIqq5MfyyQwV4QfC1o75JX66rn8N1BKOYMDw8WXAmPzqY6Z5I
- IG4cdOZRsIZO2tLLfh+s3lQz0KjgYyIVHsZnqKMZTzY/45CL6vNNGTqpWcDjzZHG
- mNynvuBx6yX077UfKcGTn0FTX8w8JHZmeBhVD8whpfKyATv3c6cVgyA8TMVep+M5
- cjQ//6OAQoEmqr9m3Lj3BQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764981624; x=
- 1765068024; bh=0Mhf038//AHQsdp3Av1SWmjEBY894UvN1RnTfEP5E/s=; b=J
- I/j3arhRTXN2aGiVr2Bx9eOyUDpLCzYjuaZTfqrutDMZZ0weLtJksfooLEDXf4HJ
- EjMZMlWJjPFVgY2/UeLG3TDQHCQ8HqPtAFspL+YG/Ft0ixr2d08zl3GL6hRJ2sAt
- baIP37EXxWukGWCnx3+N+hWszAlWFrTjUOFyUEYhs+OyNASzy0hpT/bQAK+70H5D
- 0OvjZwFvGgGvngIsDQVJTz34Vo/nCZ6CwVfhb7masy0uAksWzIEQN+zp5amaZTXR
- qd3qUG670gMt1Dg57zGlPCe2XNbJ5xIK3POiw06pVd7zz0p5L6VVb4LutQ3dilDs
- mYUq1dmsjRf2Tkx3CX91w==
-X-ME-Sender: <xms:d3szacaCHANfoDUwLnL-ZsEyX-XKvkVGtrufrQs5TGo0Wpb8AW1WTA>
- <xme:d3szaVoYopWK7u9B85hziK6BU3CGTQ0gPvwGPUjsBcCFVKNSKKtngnBL6gujS5Y2F
- ZqmoHE5kRyhulUXg6gj0nmp0QIjK-vfxuGQaSt1qsiTYJmHQLHLGmo>
-X-ME-Received: <xmr:d3szaQR-K85pvDZgfd46vy-tzQQw4Bi7rAlKMY6X9cmYgn1xkATZTQp4ozn5wzDhc3k1X38>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdelieejucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
- lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
- eptgfghfggufffkfhfvegjvffosehtqhhmtdhhtdejnecuhfhrohhmpefrvghtvghrucff
- vghlvghvohhrhigrshcuoehpvghtvghrsehpjhgurdguvghvqeenucggtffrrghtthgvrh
- hnpeeuiedtvdejgfegfffgudetvddtueffueejffejgeelveeutddtveehfffhfeetieen
- ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpvghtvg
- hrsehpjhgurdguvghvpdhnsggprhgtphhtthhopeduuddpmhhouggvpehsmhhtphhouhht
- pdhrtghpthhtohepshhtvghvvghnpghlvggvsegrshhpvggvughtvggthhdrtghomhdprh
- gtphhtthhopegtlhhgsehrvgguhhgrthdrtghomhdprhgtphhtthhopehpvghtvghrrdhm
- rgihuggvlhhlsehlihhnrghrohdrohhrghdprhgtphhtthhopegrnhgurhgvfiestghoug
- gvtghonhhsthhruhgtthdrtghomhdrrghupdhrtghpthhtohepqhgvmhhuqdgrrhhmsehn
- ohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurd
- horhhgpdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthho
- pehjohgvlhesjhhmshdrihgurdgruhdprhgtphhtthhopehlvggvthhrohihsehgmhgrih
- hlrdgtohhm
-X-ME-Proxy: <xmx:d3szaZoSUXaKozdEhTGtimn6foOi_Ep30Nn10vBoEOb2lzxnRnNyow>
- <xmx:d3szaa1i_rjujVhrkvAiEdgpwC4Ey9-z60ADOV0r6WB4PcfzwWxS7g>
- <xmx:d3szaY7cpAujl2Nz4_q8fOhlhu13N-NwqXUOP2C4KFnAODyDH9U7Xg>
- <xmx:d3szaeS1klLvIfrXdmoyIQfJAumYXYiGE0rZzO01VQcb1oklB4IVpg>
- <xmx:eHszaRfnLEaGlfCm1FuPg70elG_mZdN7QE26bq-DYUFQIqqNbnhBolzM>
-Feedback-ID: i9e814621:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 5 Dec 2025 19:40:23 -0500 (EST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Peter Delevoryas <peter@pjd.dev>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] aspeed: Deprecate the fby35 machine
-Date: Fri, 5 Dec 2025 16:40:11 -0800
-Message-Id: <FCC487BB-4A87-4235-BAAF-A6577D6C4658@pjd.dev>
-References: <f0cb1f8e-bccd-4360-911a-f74560a350a8@kaod.org>
-Cc: =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Maydell Peter <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f0cb1f8e-bccd-4360-911a-f74560a350a8@kaod.org>
-To: =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-X-Mailer: iPhone Mail (23B85)
-Received-SPF: pass client-ip=202.12.124.146; envelope-from=peter@pjd.dev;
- helo=fout-b3-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vRkJt-0000Di-Bj; Fri, 05 Dec 2025 23:54:57 -0500
+Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vRkJq-0001Ak-GN; Fri, 05 Dec 2025 23:54:57 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBXRVwWtzNptrA+AQ--.25554S2;
+ Sat, 06 Dec 2025 12:54:46 +0800 (CST)
+Received: from [192.168.31.152] (unknown [113.246.235.80])
+ by mail (Coremail) with SMTP id AQAAfwA3kO0UtzNptfAJAA--.19593S2;
+ Sat, 06 Dec 2025 12:54:44 +0800 (CST)
+Message-ID: <e5d2f62d-07d5-4f02-a84c-0f51ab53268c@phytium.com.cn>
+Date: Sat, 6 Dec 2025 12:54:41 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC RESEND v5 4/4] tests/qtest: Add SMMUv3 bare-metal test using
+ iommu-testdev
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+References: <20251126154547.1300748-1-tangtao1634@phytium.com.cn>
+ <20251126154547.1300748-5-tangtao1634@phytium.com.cn>
+ <5d37349b-fbc4-4964-a3e8-d937a64ae232@linaro.org>
+ <7370070a-c569-4b77-bd1e-6fc749ba9c90@phytium.com.cn>
+ <8f5d0074-3fb9-4d44-99b7-e79b5dda9039@linaro.org>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <8f5d0074-3fb9-4d44-99b7-e79b5dda9039@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwA3kO0UtzNptfAJAA--.19593S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAPBWkx6ywGXwAGsL
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW3tFWfWF4DKFWfGw18GrWxWFg_yoWkAFWUpF
+ 1kGFWUtFW5Jr1rJr12gw1UJF9ayrnrJ3WUXr18XF15Jr4qyr12qr1jqryqgrykJr48XF1U
+ Zw10qFnxur13JFJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=209.97.181.73;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,51 +85,297 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+On 2025/12/6 01:06, Pierrick Bouvier wrote:
+> On 12/5/25 6:19 AM, Tao Tang wrote:
+>> Hi Pierrick,
+>>
+>> On 2025/12/5 02:42, Pierrick Bouvier wrote:
+>>> On 11/26/25 7:45 AM, Tao Tang wrote:
+>>>> Add a qtest suite that validates ARM SMMUv3 translation without guest
+>>>> firmware or OS. The tests leverage iommu-testdev to trigger DMA
+>>>> operations and the qos-smmuv3 library to configure IOMMU translation
+>>>> structures.
+>>>>
+>>>> This test suite targets the virt machine and covers:
+>>>> - Stage 1 only translation (VA -> PA via CD page tables)
+>>>> - Stage 2 only translation (IPA -> PA via STE S2 tables)
+>>>> - Nested translation (VA -> IPA -> PA, Stage 1 + Stage 2)
+>>>> - Design to extended to support multiple security spaces
+>>>>       (Non-Secure, Secure, Root, Realm)
+>>>>
+>>>> Each test case follows this sequence:
+>>>> 1. Initialize SMMUv3 with appropriate command/event queues
+>>>> 2. Build translation tables (STE/CD/PTE) for the target scenario
+>>>> 3. Configure iommu-testdev with IOVA and DMA attributes via MMIO
+>>>> 4. Trigger DMA and validate successful translation
+>>>> 5. Verify data integrity through a deterministic write-read pattern
+>>>>
+>>>> This bare-metal approach provides deterministic IOMMU testing with
+>>>> minimal dependencies, making failures directly attributable to the 
+>>>> SMMU
+>>>> translation path.
+>>>>
+>>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>>> ---
+>>>>    tests/qtest/iommu-smmuv3-test.c | 114 
+>>>> ++++++++++++++++++++++++++++++++
+>>>>    tests/qtest/meson.build         |   1 +
+>>>>    2 files changed, 115 insertions(+)
+>>>>    create mode 100644 tests/qtest/iommu-smmuv3-test.c
+>>>>
+>>>> diff --git a/tests/qtest/iommu-smmuv3-test.c
+>>>> b/tests/qtest/iommu-smmuv3-test.c
+>>>> new file mode 100644
+>>>> index 0000000000..af438ecce0
+>>>> --- /dev/null
+>>>> +++ b/tests/qtest/iommu-smmuv3-test.c
+>>>> @@ -0,0 +1,114 @@
+>>>> +/*
+>>>> + * QTest for SMMUv3 with iommu-testdev
+>>>> + *
+>>>> + * This QTest file is used to test the SMMUv3 with iommu-testdev so
+>>>> that we can
+>>>> + * test SMMUv3 without any guest kernel or firmware.
+>>>> + *
+>>>> + * Copyright (c) 2025 Phytium Technology
+>>>> + *
+>>>> + * Author:
+>>>> + *  Tao Tang <tangtao1634@phytium.com.cn>
+>>>> + *
+>>>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>>>> + */
+>>>> +
+>>>> +#include "qemu/osdep.h"
+>>>> +#include "libqtest.h"
+>>>> +#include "libqos/pci.h"
+>>>> +#include "libqos/generic-pcihost.h"
+>>>> +#include "hw/pci/pci_regs.h"
+>>>> +#include "hw/misc/iommu-testdev.h"
+>>>> +#include "libqos/qos-smmuv3.h"
+>>>> +
+>>>> +#define DMA_LEN           4
+>>>> +
+>>>> +/* Test configurations for different SMMU modes and spaces */
+>>>> +static const QSMMUTestConfig base_test_configs[] = {
+>>>> +    {
+>>>> +        .trans_mode = QSMMU_TM_S1_ONLY,
+>>>> +        .sec_sid = QSMMU_SEC_SID_NONSECURE,
+>>>> +        .dma_iova = QSMMU_IOVA_OR_IPA,
+>>>> +        .dma_len = DMA_LEN,
+>>>> +        .expected_result = 0
+>>>> +    },
+>>>> +    {
+>>>> +        .trans_mode = QSMMU_TM_S2_ONLY,
+>>>> +        .sec_sid = QSMMU_SEC_SID_NONSECURE,
+>>>> +        .dma_iova = QSMMU_IOVA_OR_IPA,
+>>>> +        .dma_len = DMA_LEN,
+>>>> +        .expected_result = 0
+>>>> +    },
+>>>> +    {
+>>>> +        .trans_mode = QSMMU_TM_NESTED,
+>>>> +        .sec_sid = QSMMU_SEC_SID_NONSECURE,
+>>>> +        .dma_iova = QSMMU_IOVA_OR_IPA,
+>>>> +        .dma_len = DMA_LEN,
+>>>> +        .expected_result = 0
+>>>> +    }
+>>>> +};
+>>>> +
+>>>> +static QPCIDevice *setup_qtest_pci_device(QTestState *qts,
+>>>> QGenericPCIBus *gbus,
+>>>> +                                          QPCIBar *bar)
+>>>> +{
+>>>> +    uint16_t vid, did;
+>>>> +    QPCIDevice *dev = NULL;
+>>>> +
+>>>> +    qpci_init_generic(gbus, qts, NULL, false);
+>>>> +
+>>>> +    /* Find device by vendor/device ID to avoid slot surprises. */
+>>>> +    for (int s = 0; s < 32 && !dev; s++) {
+>>>> +        for (int fn = 0; fn < 8 && !dev; fn++) {
+>>>> +            QPCIDevice *cand = qpci_device_find(&gbus->bus,
+>>>> QPCI_DEVFN(s, fn));
+>>>> +            if (!cand) {
+>>>> +                continue;
+>>>> +            }
+>>>> +            vid = qpci_config_readw(cand, PCI_VENDOR_ID);
+>>>> +            did = qpci_config_readw(cand, PCI_DEVICE_ID);
+>>>> +            if (vid == IOMMU_TESTDEV_VENDOR_ID &&
+>>>> +                did == IOMMU_TESTDEV_DEVICE_ID) {
+>>>> +                dev = cand;
+>>>> +                g_test_message("Found iommu-testdev! devfn: 0x%x",
+>>>> cand->devfn);
+>>>> +            } else {
+>>>> +                g_free(cand);
+>>>> +            }
+>>>> +        }
+>>>> +    }
+>>>> +    g_assert(dev);
+>>>> +
+>>>> +    qpci_device_enable(dev);
+>>>> +    *bar = qpci_iomap(dev, 0, NULL);
+>>>> +    g_assert_false(bar->is_io);
+>>>> +
+>>>> +    return dev;
+>>>> +}
+>>>> +
+>>>> +static void test_smmuv3_translation(void)
+>>>> +{
+>>>> +    QTestState *qts;
+>>>> +    QGenericPCIBus gbus;
+>>>> +    QPCIDevice *dev;
+>>>> +    QPCIBar bar;
+>>>> +
+>>>> +    /* Initialize QEMU environment for SMMU testing */
+>>>> +    qts = qtest_init("-machine
+>>>> virt,acpi=off,gic-version=3,iommu=smmuv3 "
+>>>> +                     "-smp 1 -m 512 -cpu max -net none "
+>>>> +                     "-device iommu-testdev");
+>>>> +
+>>>> +    /* Setup and configure PCI device */
+>>>> +    dev = setup_qtest_pci_device(qts, &gbus, &bar);
+>>>> +    g_assert(dev);
+>>>> +
+>>>> +    /* Run the enhanced translation tests */
+>>>> +    g_test_message("### Starting SMMUv3 translation tests...###");
+>>>> +    qsmmu_translation_batch(base_test_configs,
+>>>> ARRAY_SIZE(base_test_configs),
+>>>> +                            qts, dev, bar, VIRT_SMMU_BASE);
+>>>> +    g_test_message("### SMMUv3 translation tests completed
+>>>> successfully! ###");
+>>>> +    qtest_quit(qts);
+>>>> +}
+>>>> +
+>>>> +int main(int argc, char **argv)
+>>>> +{
+>>>> +    g_test_init(&argc, &argv, NULL);
+>>>> +    qtest_add_func("/iommu-testdev/translation",
+>>>> test_smmuv3_translation);
+>>>
+>>> Just a simple organization remark, maybe it would be better to have
+>>> separate tests for each translation setup. It's easier to review in
+>>> case a failure is found.
+>>> test_smmuv3_translation could be modified to add a QSMMUTestConfig
+>>> parameter, and new entry points could be used to define the three 
+>>> setup.
+>>> What do you think?
+>>>
+>>>> +    return g_test_run();
+>>>> +}
+>>>> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+>>>> index 669d07c06b..e2d2e68092 100644
+>>>> --- a/tests/qtest/meson.build
+>>>> +++ b/tests/qtest/meson.build
+>>>> @@ -263,6 +263,7 @@ qtests_aarch64 = \
+>>>>       config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ?
+>>>> ['tpm-tis-i2c-test'] : []) + \
+>>>>      (config_all_devices.has_key('CONFIG_ASPEED_SOC') ?
+>>>> qtests_aspeed64 : []) + \
+>>>>      (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx :
+>>>> []) + \
+>>>> +  (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') ?
+>>>> ['iommu-smmuv3-test'] : []) + \
+>>>>      qtests_cxl + \
+>>>>      ['arm-cpu-features',
+>>>>       'numa-test',
+>>>
+>>> I ran this qtest, and checked with a coverage enabled build that it
+>>> was triggering associated code in smmuv3 implementation.
+>>>
+>>> Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>
+>>> For a first version that's great. Later, we might want to generate
+>>> faults as well, to see that SMMU is correctly reporting an error on
+>>> incorrect transactions.
+>>>
+>>> I don't mind having a complex qos-smmuv3.c with gory details, since we
+>>> have a clear test here, that is easy to understand and modify.
+>>>
+>>> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>
+>>
+>> Thanks a lot for the review, the test, and the suggestion.
+>>
+>>
+>> To be honest, when I wrote the initial version I didn’t really think
+>> about splitting the tests per mode. I was instead worrying about how to
+>> correctly call `qsmmu_cleanup_translation` after each translation mode
+>> to flush all SMMU caches so that the next mode wouldn’t be affected by
+>> leftover state. Your suggestion of separate test functions actually
+>> makes this a lot cleaner: each test starts from a fresh QEMU/SMMU state,
+>> and I don’t need to overthink the cleanup between different modes.
+>>
+>
+> I agree with you. The last thing we want is to debug a transient state 
+> that was not correctly reset. As well, we can remove all the cleanup 
+> code.
+>
+>>
+>> I'll refactor test_smmuv3_translation code a bit, but leave everything
+>> else the same. The refactoring code will be like:
+>>
+>>
+>> static void test_smmuv3_ns_s1_only(void)
+>> {
+>>       run_smmuv3_translation(&base_test_configs[0]);
+>> }
+>>
+>> static void test_smmuv3_ns_s2_only(void)
+>> {
+>>       run_smmuv3_translation(&base_test_configs[1]);
+>> }
+>>
+>> static void test_smmuv3_ns_nested(void)
+>> {
+>>       run_smmuv3_translation(&base_test_configs[2]);
+>> }
+>
+> At this point, you can probably put the config directly in each 
+> function, having a global array (base_test_configs) does not bring any 
+> specific value.
+>
+>>
+>> int main(int argc, char **argv)
+>> {
+>>       g_test_init(&argc, &argv, NULL);
+>>       qtest_add_func("/iommu-testdev/translation/ns-s1-only",
+>>                      test_smmuv3_ns_s1_only);
+>>       qtest_add_func("/iommu-testdev/translation/ns-s2-only",
+>>                      test_smmuv3_ns_s2_only);
+>>       qtest_add_func("/iommu-testdev/translation/ns-nested",
+>>                      test_smmuv3_ns_nested);
+>>       return g_test_run();
+>> }
+>>
+>
+> Looks great like this.
+>
+>>
+>> Thanks again for running the coverage build and for the hint about
+>> adding fault-oriented tests; I’ll look into extending qos-smmuv3 in that
+>> direction as a follow-up.
+>>
+>
+> You're welcome. To be honest, that's the only way to prove we 
+> correctly exercise the code. As the setup is quite complicated and 
+> needs specific SMMU magic, observe coverage is the simplest way to 
+> make sure it exercise what we want.
+> As well, coverage can be used in the future to check which part of the 
+> smmu implementation is not covered by unit tests, so it will be easy 
+> to enhance them.
+>
+> Overall, the direction you took with this is good and it will be a 
+> useful addition for SMMU related work. 
 
-> On Dec 5, 2025, at 12:43=E2=80=AFAM, C=C3=A9dric Le Goater <clg@kaod.org> w=
-rote:
->=20
-> =EF=BB=BFOn 12/4/25 20:45, Peter Delevoryas wrote:
->>>> On Dec 2, 2025, at 11:42=E2=80=AFPM, C=C3=A9dric Le Goater <clg@kaod.or=
-g> wrote:
->>>=20
->>> =EF=BB=BFHello,
->>>=20
->>>> On 11/26/25 11:24, C=C3=A9dric Le Goater wrote:
->>>> There are no functional tests for the 'fby35' machine which makes
->>>> harder to determine when something becomes deprecated or unused.
->>>> The 'fby35' machine was originally added as an example of a multi-SoC
->>>> system, with the expectation the models would evolve over time in an
->>>> heterogeneous system. This hasn't happened and no public firmware is
->>>> available to boot it. It can be replaced by the 'ast2700fc', another
->>>> multi-SoC machine based on the newer AST2700 SoCs which are excepted
->>>> to receive better support in the future.
->>>> Cc: Peter Delevoryas <peter@pjd.dev>
->>>> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
->>>=20
->>>=20
->>> No objections ? If not, I will queue the deprecation for QEMU 10.2.
->>> Since deprecation is tolerated in the -rc phase.
->> Oh hey, sorry I missed the original email, yeah no objections! Totally fa=
-ir. :) We=E2=80=99re not using this internally either, we=E2=80=99ve mostly e=
-nded up pursuing multi-process solutions.
->=20
-> Could we have your Acked-by then ?
 
-Oh sure, ehh:
+Hi Pierrick,
 
-Acked-by: Peter Delevoryas <peter@pjd.dev>
 
->=20
->> Even though I think single-process stuff is interesting, getting multi ma=
-ster i2c to work between socs in the same process can be tricky.
->=20
-> Yeah. This is still WIP. Making good progres though.
->=20
-> Thanks,
->=20
-> C.
->=20
->=20
+Good point about the configs. I’ll drop the global `base_test_configs[]` 
+array and the leftover cleanup code, as you suggested.
+
+Thanks again for the guidance and for confirming the overall direction.
+
+Best regards,
+Tao
 
 
