@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D36D374BD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF160D3ABF5
 	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 05:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRlJg-0004Fo-Lu; Sat, 06 Dec 2025 00:58:48 -0500
+	id 1vRlJq-0004JT-T0; Sat, 06 Dec 2025 00:58:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vRlJX-0004Ba-Da; Sat, 06 Dec 2025 00:58:40 -0500
+ id 1vRlJe-0004FB-K5; Sat, 06 Dec 2025 00:58:48 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vRlJW-0005Yq-1x; Sat, 06 Dec 2025 00:58:39 -0500
+ id 1vRlJc-0005aI-LQ; Sat, 06 Dec 2025 00:58:46 -0500
 Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5B60Oxhw027421;
- Sat, 6 Dec 2025 05:58:37 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5B60PALe027633;
+ Sat, 6 Dec 2025 05:58:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=wLctdVdz23RHi6EBM
- uEsjZPOv8PROCGZwAcs6GsBiBo=; b=mKH4fFSalPD38/9byyedRWhLRBVjCv178
- n49sV+8q52a4sr3os87ijBAQPKAEVtBfxtMoeW24bo3/P8BnZNW7uhr47A27eZy/
- e+jMEW5Z4qEDVyOIeJEqRFq0TvWMniL9dLni0RbFu5OWyrbUMhMYf8Tt+yb7YUeq
- NJKI5CnftjzvXXFrhiQDdEM8XnjmoPd7Q8EkUxHtOOoWBsp5KGWIBeb9oWUE95Cb
- rZ8HJ73EtCEpmiRg6BQBCvo9u//mffQ/lsIU5uZmeh9SKPYzj8HPvZnCpaC2D8wS
- ysMOTIVbkUPSV/gxPlqKR4pJxSx51GhivHXJ31zrCV4fU3qqG9/Hg==
+ :mime-version:references:subject:to; s=pp1; bh=VueZTIY2Ugd2O6URX
+ Xd0/Ttdg8i3mKIQCFXlU+Qcp7o=; b=SwN51I5OhEnP4wI4weu5Qatx37rY4BD4H
+ t79r1USju2BSe1B/PCWJNDoFOOeMPZfuoPHbZ+S/KFifWA483abRlmBFz9cDQ3g0
+ T7yNjhC0QALToAsv2iB6geksjMnJuTXr1OOcNe+KabXm8RWeWL+Hvv3Q/WWiwlzl
+ Hmk+YOnCN2HHKGkrIkNjcIIzRrdp75ffvo0NM9Tsd96cHwAscCMf9xRjVoryAR9V
+ m5V7ApaWpWt4yJA/Rmr8S9uI+xy317ypi4qAf39MJJy0h92gDptSNb+nwjAzLDgl
+ /I2EHfHDJbPuGDEmdOnU6bzBf8gjQiavvJedyn+L68EUmRS/jIRDg==
 Received: from ppma12.dal12v.mail.ibm.com
  (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4av9wv8r28-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4av9wv8r2a-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 06 Dec 2025 05:58:36 +0000 (GMT)
+ Sat, 06 Dec 2025 05:58:42 +0000 (GMT)
 Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B619EL8024045;
- Sat, 6 Dec 2025 05:58:36 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4arb5t152a-1
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B60sNwx024102;
+ Sat, 6 Dec 2025 05:58:41 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4arb5t152j-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 06 Dec 2025 05:58:35 +0000
+ Sat, 06 Dec 2025 05:58:41 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5B65wWeF61407520
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5B65wcfe47514074
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 6 Dec 2025 05:58:32 GMT
+ Sat, 6 Dec 2025 05:58:38 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2C82320043;
- Sat,  6 Dec 2025 05:58:32 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 22C0F20040;
+ Sat,  6 Dec 2025 05:58:38 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D200E20040;
- Sat,  6 Dec 2025 05:58:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B940B20043;
+ Sat,  6 Dec 2025 05:58:35 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.31.93]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sat,  6 Dec 2025 05:58:29 +0000 (GMT)
+ Sat,  6 Dec 2025 05:58:35 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
  Sourabh Jain <sourabhjain@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v2 6/9] pnv/mpipl: Set thread entry size to be allocated by
- firmware
-Date: Sat,  6 Dec 2025 11:26:45 +0530
-Message-ID: <20251206055648.1908734-7-adityag@linux.ibm.com>
+Subject: [PATCH v2 8/9] pnv/mpipl: Enable MPIPL support
+Date: Sat,  6 Dec 2025 11:26:47 +0530
+Message-ID: <20251206055648.1908734-9-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251206055648.1908734-1-adityag@linux.ibm.com>
 References: <20251206055648.1908734-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: CLoV9n_qqLOzfu_IE6BxJJz5uglsFKyr
-X-Proofpoint-ORIG-GUID: CLoV9n_qqLOzfu_IE6BxJJz5uglsFKyr
-X-Authority-Analysis: v=2.4 cv=AdS83nXG c=1 sm=1 tr=0 ts=6933c60c cx=c_pps
+X-Proofpoint-GUID: fS367mCaadfYQEJ24MXdMU1qVTeK7CCK
+X-Proofpoint-ORIG-GUID: fS367mCaadfYQEJ24MXdMU1qVTeK7CCK
+X-Authority-Analysis: v=2.4 cv=AdS83nXG c=1 sm=1 tr=0 ts=6933c612 cx=c_pps
  a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=x2nWBmqi6rLqIJY0GGYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAwMCBTYWx0ZWRfX6lNZa20VrzXu
- xmoysbwgM0QU59qi0XzSgtZC+P3LxIgqKtqNzGh0tnE3i3wATuQmkHZXdz8T1O6/lllYMRD2RQW
- Sx5CmQoypVsv3JnKHt9KCSqLMbRIQ8PrvLngZAX8lbZrZXQyxT0DzOSfngtGDr7WPXTUbWtGcOG
- 5+hOK5mzBesaT7jJxbLYZOu9u0gtykeq3n1s7yY+x6mzTEKSSTKtmHP2ggHweCmq/C2vZzl1ZVQ
- PPNb5DHTxpBk+Gvw6FajolMc5tqcg2gt4nhqZTi0xKOeHSau1PsGpATYCfzjVbDqS/9zphkhvFS
- MAMppQnfOM7muGRbx3HPmDSdsLxzJINezY4Wjixj2MLvEwU9+Hu+FuSkLxkS01dl6PdBFhVJtod
- 3RfOPpR0SoudxUhkpetcSmx0jvc3lA==
+ a=dCvegdiEg4V6ml2xVIcA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAwMCBTYWx0ZWRfX8XfLabzYTbf3
+ ZwlKkYdLpT9OpDkAzwM9cCyb04ermOBeY4kH9oidyz6x3tsfA7IBTnQUPLFSERTXS2Ncq6fiycP
+ TNRK3DUM5dwq+0uX/JCvwUIWmR4gyM7wBiLnZTbYQ51Ch7tgrFOgRgTcewxMxVl+je/SLvyqN0W
+ jQiEjUhJv3hd8jhnVZQIJoot9+rA/YfDFw+GsuqlNDaiir77nZrwy0vznGqA/wQd3CGOeVqPqpz
+ Fw93/8WteXIznFSFK72nlqKqz81yBFLAwl+ESlutzbLU66g8tCRTvEH0h/24ipYvSYs5XlJSuxd
+ WqbZ7gUK+5sHYwxEl3n0xrJ3h4853JlEAWX8lw4Albk4Xedfh427+JZXY8kl6VfPYDd0ThUY+K0
+ 2Orbj2YYISpsylK0f3iNxhC1qUQncg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-06_01,2025-12-04_04,2025-10-01_01
@@ -118,50 +117,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the "Thread Register State Entry Size" that is required by firmware
-(OPAL), to know size of memory to allocate to capture CPU state, in the
-event of a crash
+With all MPIPL support in place, export a "dump" node in device tree,
+signifying that PowerNV QEMU platform supports MPIPL
 
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- hw/ppc/pnv.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ hw/ppc/pnv.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
 diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 895132da91bd..643558f374e9 100644
+index 7c36f3a00e90..8a62b0ee1074 100644
 --- a/hw/ppc/pnv.c
 +++ b/hw/ppc/pnv.c
-@@ -780,6 +780,30 @@ static void pnv_reset(MachineState *machine, ResetType type)
-         _FDT((fdt_pack(fdt)));
-     }
+@@ -54,6 +54,7 @@
+ #include "hw/ppc/pnv_chip.h"
+ #include "hw/ppc/pnv_xscom.h"
+ #include "hw/ppc/pnv_pnor.h"
++#include "hw/ppc/pnv_mpipl.h"
  
-+    if (!pnv->mpipl_state.is_next_boot_mpipl) {
-+        /*
-+         * Set the "Thread Register State Entry Size", so that firmware can
-+         * allocate enough memory to capture CPU state in the event of a
-+         * crash
-+         */
+ #include "hw/isa/isa.h"
+ #include "hw/char/serial-isa.h"
+@@ -671,6 +672,39 @@ static void pnv_dt_power_mgt(PnvMachineState *pnv, void *fdt)
+     _FDT(fdt_setprop_cell(fdt, off, "ibm,enabled-stop-levels", 0xc0000000));
+ }
+ 
++static void pnv_dt_mpipl_dump(PnvMachineState *pnv, void *fdt)
++{
++    int off;
 +
-+        MpiplProcDumpArea proc_area;
-+
-+        proc_area.version = PROC_DUMP_AREA_VERSION_P9;
-+        proc_area.thread_size = cpu_to_be32(sizeof(MpiplPreservedCPUState));
-+
-+        /* These are to be allocated & assigned by the firmware */
-+        proc_area.alloc_addr = 0;
-+        proc_area.alloc_size = 0;
-+
-+        /* These get assigned after crash, when QEMU preserves the registers */
-+        proc_area.dest_addr = 0;
-+        proc_area.act_size = 0;
-+
-+        cpu_physical_memory_write(PROC_DUMP_AREA_OFF, &proc_area,
-+                sizeof(proc_area));
++    /*
++     * Add "dump" node so kernel knows MPIPL (aka fadump) is supported
++     *
++     * Note: This is only needed to be done since we are passing device tree to
++     * opal
++     *
++     * In case HDAT is supported in future, then opal can add these nodes by
++     * itself based on system attribute having MPIPL_SUPPORTED bit set
++     */
++    off = fdt_add_subnode(fdt, 0, "ibm,opal");
++    if (off == -FDT_ERR_EXISTS) {
++        off = fdt_path_offset(fdt, "/ibm,opal");
 +    }
 +
-     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
++    _FDT(off);
++    off = fdt_add_subnode(fdt, off, "dump");
++    _FDT(off);
++    _FDT((fdt_setprop_string(fdt, off, "compatible", "ibm,opal-dump")));
++
++    /* Add kernel and initrd as fw-load-area */
++    uint64_t fw_load_area[4] = {
++        cpu_to_be64(KERNEL_LOAD_ADDR), cpu_to_be64(KERNEL_MAX_SIZE),
++        cpu_to_be64(INITRD_LOAD_ADDR), cpu_to_be64(INITRD_MAX_SIZE)
++    };
++
++    _FDT((fdt_setprop(fdt, off, "fw-load-area",
++                    fw_load_area, sizeof(fw_load_area))));
++}
++
+ static void *pnv_dt_create(MachineState *machine)
+ {
+     PnvMachineClass *pmc = PNV_MACHINE_GET_CLASS(machine);
+@@ -733,6 +767,9 @@ static void *pnv_dt_create(MachineState *machine)
+         pmc->dt_power_mgt(pnv, fdt);
+     }
  
-     /* Update machine->fdt with latest fdt */
++    /* Advertise support for MPIPL */
++    pnv_dt_mpipl_dump(pnv, fdt);
++
+     return fdt;
+ }
+ 
 -- 
 2.52.0
 
