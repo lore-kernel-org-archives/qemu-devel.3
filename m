@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A392D3ABF5
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 05:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A2F9D374BD
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 05:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRlJY-0004C5-Iw; Sat, 06 Dec 2025 00:58:40 -0500
+	id 1vRlJp-0004In-MJ; Sat, 06 Dec 2025 00:58:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vRlJT-00048x-0E; Sat, 06 Dec 2025 00:58:35 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vRlJV-0004AE-4z; Sat, 06 Dec 2025 00:58:38 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vRlJQ-0005XS-4m; Sat, 06 Dec 2025 00:58:34 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5B62wvh9005296;
- Sat, 6 Dec 2025 05:58:29 GMT
+ id 1vRlJT-0005YH-DK; Sat, 06 Dec 2025 00:58:36 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5B61X8pD014920;
+ Sat, 6 Dec 2025 05:58:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=6cPgRN+TlNQStUUWI
- 2YeGjGMdaMcQjty9cbw/P60u3w=; b=k8xoFIIeWpQxqKRCMRRAvPo0L3PQwo4us
- Rq91T5Yby6RPk4QMJPy/FoCzoAOM3Nj37B9qEQRTiS2FyvqyN/0Tt+NZPKTI1aUO
- LJuKiK05GvlVSS4NgGUc0Cx0IOMj3tY8uy91hIC7XfDsF63CfdNBB0G+PUuJKC0x
- WTY7ktSD9JA/1F5/ov9fyFWETgLLSCaZqC1YBkB2IwoA80dRurwjq49o4Et5fKib
- wJQ06EsSGuNMQq9P5rHAUHdp8fb+UE05OCdZKE1hry0dMQmsAo58S70JpGV6LhT6
- 1BQK6WP5GL9ErXnTenrB+TNy9SB8b4a4JRM+5wNRTF6iyWfVeJLmg==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4avc610evk-1
+ :mime-version:references:subject:to; s=pp1; bh=3bnyjvNVAadL6Npin
+ zBFObLYXXrrBh/m/1IjZafJhp8=; b=kWrDYKSJGSxruf7Ywtq7EyavXCynea2GB
+ 4VvTvdx3WkKS80V3H5uA5gHvo6JRjZmZYvJ78N4cgtoCg5dK/q9MrhLdnxB1AJMF
+ bEFSBnxRPYuKhGG3Y/nxG2kJg1FOeXciCCw1Z/vLsklDXCishaurYZ1g7dDKK1hw
+ 75z2kZBgzODj3SL1XJ7ZVJT5AXQbxQ6tWXtD5IEsTfwmyhU2C8kj8t4Fn+mYI3rj
+ ozFqdN+UKJRp2Tde7SRTVR/h25/VBiKbAqkPrlHE9Ybb13BW9php76vEOD6EeLko
+ zt1+8gzRunEuPUeQsQ+JfREi//NFVSfRfOUeS1pphDLuzglxpzM+Q==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4avawurk72-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 06 Dec 2025 05:58:29 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B61xZ7S010333;
- Sat, 6 Dec 2025 05:58:28 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4arcnkrygv-1
+ Sat, 06 Dec 2025 05:58:33 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B630n4t003834;
+ Sat, 6 Dec 2025 05:58:33 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ardck8tb4-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 06 Dec 2025 05:58:28 +0000
+ Sat, 06 Dec 2025 05:58:33 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5B65wO9a30867780
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5B65wTIi44826928
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 6 Dec 2025 05:58:24 GMT
+ Sat, 6 Dec 2025 05:58:29 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0A55720040;
- Sat,  6 Dec 2025 05:58:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 61F8F20043;
+ Sat,  6 Dec 2025 05:58:29 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1D3752004B;
- Sat,  6 Dec 2025 05:58:22 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0F86B20040;
+ Sat,  6 Dec 2025 05:58:27 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.31.93]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sat,  6 Dec 2025 05:58:21 +0000 (GMT)
+ Sat,  6 Dec 2025 05:58:26 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
  Sourabh Jain <sourabhjain@linux.ibm.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v2 3/9] hw/ppc: Handle stash command in PowerNV SBE
-Date: Sat,  6 Dec 2025 11:26:42 +0530
-Message-ID: <20251206055648.1908734-4-adityag@linux.ibm.com>
+Subject: [PATCH v2 5/9] pnv/mpipl: Preserve CPU registers after crash
+Date: Sat,  6 Dec 2025 11:26:44 +0530
+Message-ID: <20251206055648.1908734-6-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251206055648.1908734-1-adityag@linux.ibm.com>
 References: <20251206055648.1908734-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAyMCBTYWx0ZWRfX3/q4s0svO7Qa
- AlhUDbwq/CwcyIqZKzW90thKq5yjSM3lhnv/v24VCklbFDl0wT1ud7iB8HZ2wucKRB4V4aJEs18
- +ClNgPuRHwNbitJg8OjUEBwo4OfttGKR6XBgzYF/bqRWSz+6RV5xjSQUmriX7PGS9g1V9Z3LQz0
- rtfgYNZpKUKTjWNc5fIF0qYQSX7CzLtQW1cw/FytJ5MMiFbkc0vFP8JbgjaVAr6VGquMUQNzhcm
- 78tTEQygvZDIG5ztMTwvIf+dKL2Vit9jzzh5PrkePstFhPUQeE/uq5Pgn3sJzVr6EiV3wWsLU8g
- +RP63zYZtiuXN68IqRROarG9cJxofMXpjbS1aNO8eDrS169MU1KT2feCgRuyL9yxmvOb16VlxTr
- fDJzHH8/94Jx3g3/jPown0uRwyVR+Q==
-X-Proofpoint-GUID: eO8qQ9pLJfrJoyDDQt-6533rLv6DEJHL
-X-Proofpoint-ORIG-GUID: eO8qQ9pLJfrJoyDDQt-6533rLv6DEJHL
-X-Authority-Analysis: v=2.4 cv=O/U0fR9W c=1 sm=1 tr=0 ts=6933c605 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8
- a=rjUXpLR2p4wDE8UIozkA:9
+X-Proofpoint-GUID: cRbts86dwOOE7cKo0kNv6EcFZzAwdyxU
+X-Proofpoint-ORIG-GUID: cRbts86dwOOE7cKo0kNv6EcFZzAwdyxU
+X-Authority-Analysis: v=2.4 cv=aY9sXBot c=1 sm=1 tr=0 ts=6933c60a cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=R8Osvl7jfSHEaf5PJVYA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAwNyBTYWx0ZWRfXzK1+SopYFd6W
+ fuCHwitOpEmpgOwVXesVciUJSdnHw+2iMljwBhBBpXBegb7fIeNbamzUFPxdAQ3RKV86Ppdp9Gc
+ GszmHuaeEUd1qVzWAQEIYosrqU9/5iDzGmwTgolhRl4gUGC+HQlm3ZutYsDX+4xVGdiiHlCa16w
+ 4I5mcyqxy1hN02P3MNRPNRnZNSoWc36zvm6V+o1wCQfYonS9igWBaekOcir6YpzJf1Da6x+7U0d
+ 24hFJDlardDON/TkcgKtBcxljqR/ePpHfsxWHHKMGUAb9TyN4t6CfH/Bh4eRLF8g2ai0JZdasmI
+ YBbSanEMz5aB/M4FDXwsZAk4Oh3JKkS0qSm/M29RN3W3tAtiZl328dLmZ/5a2JXuih5mThfvxah
+ DodxJzUGE/YP6F0RHkK9oCGbhraQpw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-06_01,2025-12-04_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015 phishscore=0
- suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 priorityscore=1501
+ suspectscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 bulkscore=0
+ adultscore=0 impostorscore=0 malwarescore=0 priorityscore=1501 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512060020
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512060007
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -117,102 +117,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Earlier since the SBE_CMD_STASH_MPIPL_CONFIG command was not handled, so
-skiboot used to not get any response from SBE:
+Kernel expects the platform to provide CPU registers after pausing
+execution of the CPUs.
 
-    [  106.350742821,3] SBE: Message timeout [chip id = 0], cmd = d7, subcmd = 7
-    [  106.352067746,3] SBE: Failed to send stash MPIPL config [chip id = 0x0, rc = 254]
-
-Fix this by handling the command in PowerNV SBE, and sending a response so
-skiboot knows SBE has handled the STASH command
-
-The stashed skiboot base is later used to access the relocated MDST/MDDT
-tables when MPIPL is implemented.
-
-The purpose of stashing relocated base address is explained in following
-skiboot commit:
-
-    author Vasant Hegde <hegdevasant@linux.vnet.ibm.com> Fri Jul 12 16:47:51 2019 +0530
-    committer Oliver O'Halloran <oohall@gmail.com> Thu Aug 15 17:53:39 2019 +1000
-
-    SBE: Send OPAL relocated base address to SBE
-
-      OPAL relocates itself during boot. During memory preserving IPL hostboot needs
-      to access relocated OPAL base address to get MDST, MDDT tables. Hence send
-      relocated base address to SBE via 'stash MPIPL config' chip-op. During next
-      IPL SBE will send stashed data to hostboot... so that hostboot can access
-      these data.
+Currently only exporting the registers, used by Linux, for generating
+the /proc/vmcore
 
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- hw/ppc/pnv_sbe.c           | 27 +++++++++++++++++++++++++++
- include/hw/ppc/pnv_mpipl.h |  3 +++
- 2 files changed, 30 insertions(+)
+ hw/ppc/pnv_mpipl.c         | 102 +++++++++++++++++++++++++++++++++++++
+ include/hw/ppc/pnv_mpipl.h |  62 ++++++++++++++++++++++
+ 2 files changed, 164 insertions(+)
 
-diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
-index d004b7d5c225..af888126e758 100644
---- a/hw/ppc/pnv_sbe.c
-+++ b/hw/ppc/pnv_sbe.c
-@@ -233,6 +233,7 @@ static void sbe_timer(void *opaque)
+diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
+index a4f7113a44fd..8b41938c2e87 100644
+--- a/hw/ppc/pnv_mpipl.c
++++ b/hw/ppc/pnv_mpipl.c
+@@ -8,6 +8,8 @@
+ #include "qemu/log.h"
+ #include "qemu/units.h"
+ #include "system/address-spaces.h"
++#include "system/cpus.h"
++#include "system/hw_accel.h"
+ #include "system/runstate.h"
+ #include "hw/ppc/pnv.h"
+ #include "hw/ppc/pnv_mpipl.h"
+@@ -17,6 +19,8 @@
+     (pnv->mpipl_state.skiboot_base + MDST_TABLE_OFF)
+ #define MDDT_TABLE_RELOCATED                            \
+     (pnv->mpipl_state.skiboot_base + MDDT_TABLE_OFF)
++#define PROC_DUMP_RELOCATED                             \
++    (pnv->mpipl_state.skiboot_base + PROC_DUMP_AREA_OFF)
  
- static void do_sbe_msg(PnvSBE *sbe)
+ /*
+  * Preserve the memory regions as pointed by MDST table
+@@ -164,9 +168,107 @@ static bool pnv_mpipl_preserve_mem(PnvMachineState *pnv)
+     return true;
+ }
+ 
++static void do_store_cpu_regs(CPUState *cpu, MpiplPreservedCPUState *state)
++{
++    CPUPPCState *env = cpu_env(cpu);
++    MpiplRegDataHdr *regs_hdr = &state->hdr;
++    MpiplRegEntry *reg_entries = state->reg_entries;
++    MpiplRegEntry *curr_reg_entry;
++    uint32_t num_saved_regs = 0;
++
++    cpu_synchronize_state(cpu);
++
++    regs_hdr->pir = cpu_to_be32(env->spr[SPR_PIR]);
++
++    /* QEMU CPUs are not in Power Saving Mode */
++    regs_hdr->core_state = 0xff;
++
++    regs_hdr->off_regentries = 0;
++    regs_hdr->num_regentries = cpu_to_be32(NUM_REGS_PER_CPU);
++
++    regs_hdr->alloc_size = cpu_to_be32(sizeof(MpiplRegEntry));
++    regs_hdr->act_size   = cpu_to_be32(sizeof(MpiplRegEntry));
++
++#define REG_TYPE_GPR  0x1
++#define REG_TYPE_SPR  0x2
++#define REG_TYPE_TIMA 0x3
++
++/*
++ * ID numbers used by f/w while populating certain registers
++ *
++ * Copied these defines from the linux kernel
++ */
++#define REG_ID_NIP          0x7D0
++#define REG_ID_MSR          0x7D1
++#define REG_ID_CCR          0x7D2
++
++    curr_reg_entry = reg_entries;
++
++#define REG_ENTRY(type, num, val)                          \
++    do {                                               \
++        curr_reg_entry->reg_type = cpu_to_be32(type);  \
++        curr_reg_entry->reg_num  = cpu_to_be32(num);   \
++        curr_reg_entry->reg_val  = cpu_to_be64(val);   \
++        ++curr_reg_entry;                              \
++        ++num_saved_regs;                            \
++    } while (0)
++
++    /* Save the GPRs */
++    for (int gpr_id = 0; gpr_id < 32; ++gpr_id) {
++        REG_ENTRY(REG_TYPE_GPR, gpr_id, env->gpr[gpr_id]);
++    }
++
++    REG_ENTRY(REG_TYPE_SPR, REG_ID_NIP, env->nip);
++    REG_ENTRY(REG_TYPE_SPR, REG_ID_MSR, env->msr);
++
++    /*
++     * Ensure the number of registers saved match the number of
++     * registers per cpu
++     *
++     * This will help catch an error if in future a new register entry
++     * is added/removed while not modifying NUM_PER_CPU_REGS
++     */
++    assert(num_saved_regs == NUM_REGS_PER_CPU);
++}
++
++static void pnv_mpipl_preserve_cpu_state(PnvMachineState *pnv)
++{
++    MachineState *machine = MACHINE(pnv);
++    uint32_t num_cpus = machine->smp.cpus;
++    MpiplPreservedCPUState *state;
++    CPUState *cpu;
++
++    if (pnv->mpipl_state.cpu_states) {
++        /*
++         * CPU States might have been allocated from some past crash, free the
++         * memory to preven memory leak
++         */
++        g_free(pnv->mpipl_state.cpu_states);
++        pnv->mpipl_state.num_cpu_states = 0;
++    }
++
++    pnv->mpipl_state.cpu_states = g_malloc_n(num_cpus,
++            sizeof(MpiplPreservedCPUState));
++    pnv->mpipl_state.num_cpu_states = num_cpus;
++
++    state = pnv->mpipl_state.cpu_states;
++
++    /* Preserve the Processor Dump Area */
++    cpu_physical_memory_read(PROC_DUMP_RELOCATED, &pnv->mpipl_state.proc_area,
++            sizeof(MpiplProcDumpArea));
++
++    CPU_FOREACH(cpu) {
++        do_store_cpu_regs(cpu, state);
++        ++state;
++    }
++}
++
+ void do_mpipl_preserve(PnvMachineState *pnv)
  {
-+    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-     struct sbe_msg msg;
-     uint16_t cmd, ctrl_flags, seq_id;
-     int i;
-@@ -265,6 +266,32 @@ static void do_sbe_msg(PnvSBE *sbe)
-             timer_del(sbe->timer);
-         }
-         break;
-+    case SBE_CMD_STASH_MPIPL_CONFIG:
-+        /* key = sbe->mbox[1] */
-+        switch (sbe->mbox[1]) {
-+        case SBE_STASH_KEY_SKIBOOT_BASE:
-+            pnv->mpipl_state.skiboot_base = sbe->mbox[2];
-+            qemu_log_mask(LOG_UNIMP,
-+                "Stashing skiboot base: 0x%" HWADDR_PRIx "\n",
-+                pnv->mpipl_state.skiboot_base);
++    pause_all_vcpus();
 +
-+            /*
-+             * Set the response register.
-+             *
-+             * Currently setting the same sequence number in
-+             * response as we got in the request.
-+             */
-+            sbe->mbox[4] = sbe->mbox[0];    /* sequence number */
-+            pnv_sbe_set_host_doorbell(sbe,
-+                    sbe->host_doorbell | SBE_HOST_RESPONSE_WAITING);
-+
-+            break;
-+        default:
-+            qemu_log_mask(LOG_UNIMP,
-+                "SBE: CMD_STASH_MPIPL_CONFIG: Unimplemented key: 0x" TARGET_FMT_lx "\n",
-+                sbe->mbox[1]);
-+        }
-+        break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "SBE Unimplemented command: 0x%x\n", cmd);
-     }
+     pnv_mpipl_preserve_mem(pnv);
++    pnv_mpipl_preserve_cpu_state(pnv);
+ 
+     /* Mark next boot as Memory-preserving boot */
+     pnv->mpipl_state.is_next_boot_mpipl = true;
 diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
-index c544984dc76d..60d6ede48209 100644
+index ec173ba8268e..d85970bba039 100644
 --- a/include/hw/ppc/pnv_mpipl.h
 +++ b/include/hw/ppc/pnv_mpipl.h
-@@ -8,11 +8,14 @@
- #define PNV_MPIPL_H
- 
- #include "qemu/osdep.h"
-+#include "exec/hwaddr.h"
- 
+@@ -16,6 +16,12 @@ typedef struct MdstTableEntry MdstTableEntry;
+ typedef struct MdrtTableEntry MdrtTableEntry;
  typedef struct MpiplPreservedState MpiplPreservedState;
  
++typedef struct MpiplRegDataHdr MpiplRegDataHdr;
++typedef struct MpiplRegEntry MpiplRegEntry;
++typedef struct MpiplProcDumpArea MpiplProcDumpArea;
++typedef struct MpiplPreservedState MpiplPreservedState;
++typedef struct MpiplPreservedCPUState MpiplPreservedCPUState;
++
+ /* Following offsets are copied from skiboot source code */
+ /* Use 768 bytes for SPIRAH */
+ #define SPIRAH_OFF      0x00010000
+@@ -46,6 +52,8 @@ typedef struct MpiplPreservedState MpiplPreservedState;
+ 
+ #define __packed             __attribute__((packed))
+ 
++#define NUM_REGS_PER_CPU 34 /*(32 GPRs, NIP, MSR)*/
++
+ /*
+  * Memory Dump Source Table (MDST)
+  *
+@@ -92,6 +100,55 @@ static_assert(MDST_MAX_ENTRIES == MDDT_MAX_ENTRIES,
+ static_assert(MDRT_MAX_ENTRIES >= MDST_MAX_ENTRIES,
+         "MDRT should support atleast having number of entries as in MDST");
+ 
++/*
++ * Processor Dump Area
++ *
++ * This contains the information needed for having processor
++ * state captured during a platform dump.
++ *
++ * As mentioned in HDAT, following the P9 specific format
++ */
++struct MpiplProcDumpArea {
++    uint32_t  thread_size;    /* Size of each thread register entry */
++#define PROC_DUMP_AREA_VERSION_P9    0x1    /* P9 format */
++    uint8_t version;
++    uint8_t reserved[11];
++    uint64_t  alloc_addr;    /* Destination memory to place register data */
++    uint32_t  reserved2;
++    uint32_t  alloc_size;    /* Allocated size */
++    uint64_t  dest_addr;     /* Destination address */
++    uint32_t  reserved3;
++    uint32_t  act_size;      /* Actual data size */
++} __packed;
++
++/*
++ * "Architected Register Data" in the HDAT spec
++ *
++ * Acts as a header to the register entries for a particular thread
++ */
++struct MpiplRegDataHdr {
++    uint32_t pir;         /* PIR of thread */
++    uint8_t  core_state;  /* Stop state of the overall core */
++    uint8_t  reserved[3];
++    uint32_t off_regentries;  /* Offset to Register Entries Array */
++    uint32_t num_regentries;  /* Number of Register Entries in Array */
++    uint32_t alloc_size;  /* Allocated size for each Register Entry */
++    uint32_t act_size;    /* Actual size for each Register Entry */
++} __packed;
++
++struct MpiplRegEntry {
++    uint32_t reg_type;
++    uint32_t reg_num;
++    uint64_t reg_val;
++} __packed;
++
++struct MpiplPreservedCPUState {
++    MpiplRegDataHdr hdr;
++
++    /* Length of 'reg_entries' is hdr.num_regentries */
++    MpiplRegEntry  reg_entries[NUM_REGS_PER_CPU];
++};
++
  /* Preserved state to be saved in PnvMachineState */
  struct MpiplPreservedState {
-+    /* skiboot_base will be valid only after OPAL sends relocated base to SBE */
-+    hwaddr     skiboot_base;
-     bool       is_next_boot_mpipl;
+     /* skiboot_base will be valid only after OPAL sends relocated base to SBE */
+@@ -100,6 +157,11 @@ struct MpiplPreservedState {
+ 
+     MdrtTableEntry *mdrt_table;
+     uint32_t num_mdrt_entries;
++
++    MpiplProcDumpArea proc_area;
++
++    MpiplPreservedCPUState *cpu_states;
++    uint32_t num_cpu_states;
  };
  
+ #endif
 -- 
 2.52.0
 
