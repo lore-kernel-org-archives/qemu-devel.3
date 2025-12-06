@@ -4,91 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DEDDD339BC
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 17:12:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 698DED3B7D8
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 18:26:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRvoY-0001Y4-GG; Sat, 06 Dec 2025 12:11:22 -0500
+	id 1vRwyX-0001mu-FN; Sat, 06 Dec 2025 13:25:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
- id 1vRvoN-0001Qn-1r
- for qemu-devel@nongnu.org; Sat, 06 Dec 2025 12:11:14 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <language.lawyer@gmail.com>)
- id 1vRvoK-0000t2-TV
- for qemu-devel@nongnu.org; Sat, 06 Dec 2025 12:11:10 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-b79e7112398so538822266b.3
- for <qemu-devel@nongnu.org>; Sat, 06 Dec 2025 09:11:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1765041062; x=1765645862; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WSVRXgFvdlTozpbgIPQVXY+4I3NghqWBB5ikd9iGo3Y=;
- b=APCrK9yza0wP45bdlOUevJ0gf+KHDYilITDfNNyhYWJl1pVVQ6ck28l5xHYjZ1xmme
- qduCT7Cw5sVnFb8gURgJc+htE02ENnSpNxhwPrEwqlFazqBDAgYyW80m3JyldkSYew/Z
- 3lMQuQpXnKsIyGlX1xtfqYlGYiPyGDGk0ZHFNhTKjT0bf+v0NYf3c4aqSMuQkZqxDQ+P
- GdIEDAn4Gb2DB1QHwySYQD8+o3G1mE5brb01G3qfO9zPi7/DUEzIFMoO9zNcpNCv5hTo
- S7dsHCumwvrY5le1mc9tn9UXDCHsQo6CLNm83WhGqiCE/p+ZqGUisiGxZ3dhGSTj6el+
- unQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765041062; x=1765645862;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WSVRXgFvdlTozpbgIPQVXY+4I3NghqWBB5ikd9iGo3Y=;
- b=ZksfLW+x189UhGj5hbrl1NHgCTYXOXxoLeZpzszkf7FKu/rJgzj6n7fWxHzEFuI/3K
- QhJO0qVmWMkWwyZZ9ZLTBWOcA4KsO0mx6yqQgN3nkNYibXQOZlLqK+gm+gqlP8wDu/Qo
- QtLMpaNcLUwaMOC73+YAHwRlyiORAYDBBvEEXCUmJCz+PHbmXXNOaY6coK7cjryUZWLb
- 2fGoes6drUg3j7qjfmE+3QLJqPPeYQkFPmFdWjkb7qdKzXXsY425YH5jerRzMQfcLcI8
- KcSd7DHQXeIjVGqpDFU92TEv17sOPCIYpnzTGrGoFfLrI0cO37XyuiK0QYoJP09bkLPq
- Me+Q==
-X-Gm-Message-State: AOJu0YwdMqJ0qdbD7AghvOKgnGNK8mcwVX8RZqLW3MEdgdzq18T9gCQB
- 6fM0nsW4mpqr7wyeJUPoHMIDKebreuUYqLro8af3uXyDysrBVejW4vgIFaJmOg==
-X-Gm-Gg: ASbGncvhzDJgfSF7Xlr8VmCqcQpxnDQVggyMr/dbU0gUmIkc0W9VA1t2y87b/EeF5xv
- l4VeRqr8KjbI5l0E3sH8s4kuoKevpiFbJaOblgSucT49ApY25K+zDJCKzvb/flVr6sAtd6MGmyf
- 1Yozmhj4AJ1PDu5SiNpWoENln9ZMbRy664fb0ye2M08RZIGkp+1aYC3Up/Fckoi5+ZdgqV7emVR
- 4ztIEhVN6RiZrslxn9EiliEjQVEex1NnxauYYyPltcRR/t5FVwcGKxmWoXSWFxXdTzUhernlB1R
- zr1qViykTKl25pzODvlrHF3ScqtDYo28EveFSZB1T66b7i62OH+UvaPbfvvPwYiKiPw6pyNm2OI
- 6jlfB07BRycnpto0M31v4+3aawNbbT9XYg6KqkSTkTYp41U0s50QyzYjZIAhe1hrHLpTkugjGMd
- v0ujeiynQAysCk8Xb8EWQS4grWA0w4xjEJ
-X-Google-Smtp-Source: AGHT+IGQ/P6ZqAlQjmQ/3YzOEYJp5UBYi53AGbNpBC89+4UVtoHXytD/CddDtjOcE9bzUPQ3+/Yh2A==
-X-Received: by 2002:a17:907:1b0d:b0:b73:1634:6d71 with SMTP id
- a640c23a62f3a-b7a2435ce1fmr282286766b.26.1765041061889; 
- Sat, 06 Dec 2025 09:11:01 -0800 (PST)
-Received: from [192.168.88.252] ([82.215.83.93])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b79f4457a42sm672762566b.14.2025.12.06.09.11.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 06 Dec 2025 09:11:01 -0800 (PST)
-Message-ID: <c2d79567-6b6c-4222-b1df-550db57ad626@gmail.com>
-Date: Sat, 6 Dec 2025 22:10:58 +0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] virtfs: 9p: local: add default uid and gid options
+ (Exim 4.90_1) (envelope-from <i.qemu@xen0n.name>) id 1vRwyM-0001lj-Hz
+ for qemu-devel@nongnu.org; Sat, 06 Dec 2025 13:25:34 -0500
+Received: from mail.xen0n.name ([115.28.160.31] helo=mailbox.box.xen0n.name)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <i.qemu@xen0n.name>) id 1vRwyI-0007aI-P4
+ for qemu-devel@nongnu.org; Sat, 06 Dec 2025 13:25:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xen0n.name; s=mail;
+ t=1765045488; bh=6GCm88dXNYy/3rkdxxT04Pk/3f0lZZt+faUI8M7IJZw=;
+ h=From:To:Cc:Subject:Date:From;
+ b=ZGpMA1ISzGxDmOFPXs4dHoAO/0mApfKwTgMgg0JQsSPbKaC50lbT/yZwQQLf7BXj+
+ 8rK0nGGiM6dol9Hk/9urD+acMvW8JWxffM4kAEi8n9RQe/E/3wEzZMGN41HQ6Ds7QW
+ ag7wSbyW+z0IULX3Yz40Mdq5iJF1xBy1I1c+JZ6Q=
+Received: from ld50.lan (unknown [IPv6:240e:b8f:939d:bb00::8c0])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mailbox.box.xen0n.name (Postfix) with ESMTPSA id 886FF60110;
+ Sun,  7 Dec 2025 02:24:47 +0800 (CST)
+From: WANG Xuerui <i.qemu@xen0n.name>
 To: qemu-devel@nongnu.org
-Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>
-References: <fe7665bc-5ff6-4f78-82b7-1bea853583e3@gmail.com>
- <5030911.GXAFRqVoOG@weasel>
-Content-Language: en-US
-From: Andrey Erokhin <language.lawyer@gmail.com>
-In-Reply-To: <5030911.GXAFRqVoOG@weasel>
+Cc: WANG Xuerui <git@xen0n.name>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ xtex <xtex@aosc.io>
+Subject: [PATCH] tcg/loongarch64: Support every TCGCond for cmp_vec ops
+Date: Sun,  7 Dec 2025 02:24:45 +0800
+Message-ID: <20251206182445.3656223-1-i.qemu@xen0n.name>
+X-Mailer: git-send-email 2.52.0
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=language.lawyer@gmail.com; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=115.28.160.31; envelope-from=i.qemu@xen0n.name;
+ helo=mailbox.box.xen0n.name
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,27 +67,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/12/2025 15:33, Christian Schoenebeck wrote:
-> On Monday, 1 December 2025 19:00:53 CET Andrey Erokhin wrote:
->> I was trying to boot from a directory tree owned by an ordinary user,
->> and some daemons weren't happy about non-root ownership of some files
->>
->> Example use:
->> -virtfs local,path=rootfs,mount_tag=root,security_model=mapped,uid=0,gid=0
->>
->> Works with any security_model
-> 
-> First I thought do we really want to open that rabbit hole and add permission management to the CLI options? However I get why this might be useful for  mapped[-*] security models.
-> But for passthrough it is not of any use, is it?
+From: WANG Xuerui <git@xen0n.name>
 
-Prolly none, just a side effect of how it's implemented.
-Can either make it an error when used with passthrough, or ignore them (use default -1 value) when copying options to 9p fs context (with or without a warning)
+Support for TCGCond's in loongarch64 cmp_vec codegen is not uniform: NE
+is not supported at all and will trip over assertions, and legalization
+(currently just operand-swapping) is not done for reg-imm comparisons.
+Since the TCG middle-end will not legalize the comparison conditions for
+us, we have to do it ourselves like other targets.
+
+Because EQ/LT/LTU/LE/LEU are natively supported, we only have to keep
+the current operand swapping treatment for GT/GTU/GE/GEU but ensure it
+is done for both reg-reg and reg-imm cases, and use a bitwise NOT to
+help legalize NE.
+
+While at it, lift the cmp_vec handling to own function to make it easier
+for readers.
+
+Fixes: d8b6fa593d2d ("tcg/loongarch64: Lower cmp_vec to vseq/vsle/vslt")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3237
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reported-by: xtex <xtex@aosc.io>
+Signed-off-by: WANG Xuerui <git@xen0n.name>
+---
+ tcg/loongarch64/tcg-target.c.inc | 119 +++++++++++++++++++------------
+ 1 file changed, 75 insertions(+), 44 deletions(-)
+
+diff --git a/tcg/loongarch64/tcg-target.c.inc b/tcg/loongarch64/tcg-target.c.inc
+index 10c69211ac5..1a243a57beb 100644
+--- a/tcg/loongarch64/tcg-target.c.inc
++++ b/tcg/loongarch64/tcg-target.c.inc
+@@ -2179,15 +2179,38 @@ static void tcg_out_addsub_vec(TCGContext *s, bool lasx, unsigned vece,
+     tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
+ }
  
-> Also while it is very handy to have a short option name like "uid" and "gid", for the sake of long term progression and clarity an option name like "default-uid" would be more appropriate.
+-static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+-                           unsigned vecl, unsigned vece,
+-                           const TCGArg args[TCG_MAX_OP_ARGS],
+-                           const int const_args[TCG_MAX_OP_ARGS])
++static void tcg_out_cmp_vec(TCGContext *s, bool lasx, unsigned vece,
++                            TCGArg a0, TCGArg a1, TCGArg a2,
++                            bool a2_is_const, TCGCond cond)
+ {
+-    TCGType type = vecl + TCG_TYPE_V64;
+-    bool lasx = type == TCG_TYPE_V256;
+-    TCGArg a0, a1, a2, a3;
+     LoongArchInsn insn;
++    bool need_invert = false;
++
++    switch (cond) {
++    case TCG_COND_EQ:
++    case TCG_COND_LE:
++    case TCG_COND_LEU:
++    case TCG_COND_LT:
++    case TCG_COND_LTU:
++        /* These are directly expressible. */
++        break;
++    case TCG_COND_NE:
++        need_invert = true;
++        cond = TCG_COND_EQ;
++        break;
++    case TCG_COND_GE:
++    case TCG_COND_GEU:
++    case TCG_COND_GT:
++    case TCG_COND_GTU:
++        {
++            TCGArg t;
++            t = a1, a1 = a2, a2 = t;
++            cond = tcg_swap_cond(cond);
++            break;
++        }
++    default:
++        g_assert_not_reached();
++    }
+ 
+     static const LoongArchInsn cmp_vec_insn[16][2][4] = {
+         [TCG_COND_EQ] = {
+@@ -2233,6 +2256,49 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+             { OPC_XVSLTI_BU, OPC_XVSLTI_HU, OPC_XVSLTI_WU, OPC_XVSLTI_DU },
+         }
+     };
++
++    if (a2_is_const) {
++        /*
++         * cmp_vec dest, src, value
++         * Try vseqi/vslei/vslti
++         */
++        int64_t value = sextract64(a2, 0, 8 << vece);
++
++        insn = cmp_vec_imm_insn[cond][lasx][vece];
++        switch (cond) {
++        case TCG_COND_EQ:
++        case TCG_COND_LE:
++        case TCG_COND_LT:
++            tcg_out32(s, encode_vdvjsk5_insn(insn, a0, a1, value));
++            break;
++        case TCG_COND_LEU:
++        case TCG_COND_LTU:
++            tcg_out32(s, encode_vdvjuk5_insn(insn, a0, a1, value));
++            break;
++        default:
++            g_assert_not_reached();
++        }
++    } else {
++        insn = cmp_vec_insn[cond][lasx][vece];
++        tcg_out32(s, encode_vdvjvk_insn(insn, a0, a1, a2));
++    }
++
++    if (need_invert) {
++        insn = lasx ? OPC_XVNOR_V : OPC_VNOR_V;
++        tcg_out32(s, encode_vdvjvk_insn(insn, a0, a0, a0));
++    }
++}
++
++static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
++                           unsigned vecl, unsigned vece,
++                           const TCGArg args[TCG_MAX_OP_ARGS],
++                           const int const_args[TCG_MAX_OP_ARGS])
++{
++    TCGType type = vecl + TCG_TYPE_V64;
++    bool lasx = type == TCG_TYPE_V256;
++    TCGArg a0, a1, a2, a3;
++    LoongArchInsn insn;
++
+     static const LoongArchInsn neg_vec_insn[2][4] = {
+         { OPC_VNEG_B, OPC_VNEG_H, OPC_VNEG_W, OPC_VNEG_D },
+         { OPC_XVNEG_B, OPC_XVNEG_H, OPC_XVNEG_W, OPC_XVNEG_D },
+@@ -2347,43 +2413,8 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+         insn = lasx ? OPC_XVNOR_V : OPC_VNOR_V;
+         goto vdvjvk;
+     case INDEX_op_cmp_vec:
+-        {
+-            TCGCond cond = args[3];
+-
+-            if (const_args[2]) {
+-                /*
+-                 * cmp_vec dest, src, value
+-                 * Try vseqi/vslei/vslti
+-                 */
+-                int64_t value = sextract64(a2, 0, 8 << vece);
+-                switch (cond) {
+-                case TCG_COND_EQ:
+-                case TCG_COND_LE:
+-                case TCG_COND_LT:
+-                    insn = cmp_vec_imm_insn[cond][lasx][vece];
+-                    tcg_out32(s, encode_vdvjsk5_insn(insn, a0, a1, value));
+-                    break;
+-                case TCG_COND_LEU:
+-                case TCG_COND_LTU:
+-                    insn = cmp_vec_imm_insn[cond][lasx][vece];
+-                    tcg_out32(s, encode_vdvjuk5_insn(insn, a0, a1, value));
+-                    break;
+-                default:
+-                    g_assert_not_reached();
+-                }
+-                break;
+-            }
+-
+-            insn = cmp_vec_insn[cond][lasx][vece];
+-            if (insn == 0) {
+-                TCGArg t;
+-                t = a1, a1 = a2, a2 = t;
+-                cond = tcg_swap_cond(cond);
+-                insn = cmp_vec_insn[cond][lasx][vece];
+-                tcg_debug_assert(insn != 0);
+-            }
+-        }
+-        goto vdvjvk;
++        tcg_out_cmp_vec(s, lasx, vece, a0, a1, a2, const_args[2], a3);
++        break;
+     case INDEX_op_add_vec:
+         tcg_out_addsub_vec(s, lasx, vece, a0, a1, a2, const_args[2], true);
+         break;
+-- 
+2.52.0
 
-Or rather default_uid, to match other options style? But uid/gid also kinda match fmode/dmode :\
-
-> The patch is also missing the required documentation changes for these new options BTW.
-
-Haven’t added them yet, wasn’t sure there would be interest in this feature
 
