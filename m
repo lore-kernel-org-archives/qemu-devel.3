@@ -4,70 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC48D3ABF5
-	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 05:28:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46A14D374BD
+	for <qemu-devel@archiver.kernel.org>; Sat,  6 Dec 2025 05:59:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vRkpb-0007gA-M2; Sat, 06 Dec 2025 00:27:43 -0500
+	id 1vRlJO-00045L-Qr; Sat, 06 Dec 2025 00:58:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vRkpT-0007fl-Eo; Sat, 06 Dec 2025 00:27:35 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vRkpQ-0002sm-N0; Sat, 06 Dec 2025 00:27:35 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAX1V29vjNps8s+AQ--.23422S2;
- Sat, 06 Dec 2025 13:27:25 +0800 (CST)
-Received: from [192.168.31.152] (unknown [113.246.235.80])
- by mail (Coremail) with SMTP id AQAAfwAHXuuyvjNpbPEJAA--.4645S2;
- Sat, 06 Dec 2025 13:27:21 +0800 (CST)
-Message-ID: <41c33694-008e-4ee1-bbe2-1498e9b6c9c7@phytium.com.cn>
-Date: Sat, 6 Dec 2025 13:27:11 +0800
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vRlJK-00043c-PP; Sat, 06 Dec 2025 00:58:26 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vRlJJ-0005Ww-5U; Sat, 06 Dec 2025 00:58:26 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5B62uLKN010164;
+ Sat, 6 Dec 2025 05:58:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=WXAbInoT68uGejwRc
+ twGK6rViOYGNcdONtCfPHF5hx8=; b=NU+Cl2wxXZHztCSm+sSkEWQHZBvzLVSyC
+ PE/1VAts9F73moA7n3t0RcMYWME+X0Sz8aDtncL9DfRT8Kz3lpxkOoVwGJ8z07UQ
+ fz1Vrvi42wxxTqmbcM3y5/SFOeBsZJOgPP0OvcTttndwpl9qnD+ODSJym0Y1fni2
+ xsA+SrVEPxSM+sd2jkh/xjSXSlFSElL/rr7bmB4fx1qXHK5mm26CieaqY3v8mShv
+ OVzlKWgC+vcH/ZhFwAqUk8JdBUKjq7uOdbA6cmPcpgOpfnRhrIKsTPjn987i+6EI
+ i3e9BNc3om2wcbrg/vZCFDohsT326wDo4LS9EtJy32DZp/HPMHsAQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4avc530e6r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 06 Dec 2025 05:58:23 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B62t0tj003867;
+ Sat, 6 Dec 2025 05:58:22 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ardck8taq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 06 Dec 2025 05:58:22 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5B65wJuH57082258
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 6 Dec 2025 05:58:19 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 131F520043;
+ Sat,  6 Dec 2025 05:58:19 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD40420040;
+ Sat,  6 Dec 2025 05:58:16 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.31.93]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Sat,  6 Dec 2025 05:58:16 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: <qemu-devel@nongnu.org>
+Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PATCH v2 1/9] hw/ppc: Move SBE host doorbell function to top of file
+Date: Sat,  6 Dec 2025 11:26:40 +0530
+Message-ID: <20251206055648.1908734-2-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251206055648.1908734-1-adityag@linux.ibm.com>
+References: <20251206055648.1908734-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC RESEND v5 3/4] tests/qtest/libqos: Add SMMUv3 helper library
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-References: <20251126154547.1300748-1-tangtao1634@phytium.com.cn>
- <20251126154547.1300748-4-tangtao1634@phytium.com.cn>
- <9b2c0429-a8bb-4df4-ad95-492f463cf29f@linaro.org>
- <b184c907-e073-43d0-87b9-cf8c6c23dbed@phytium.com.cn>
- <a361b46f-2173-4c98-a5d3-6b4d2ac004af@linaro.org>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <a361b46f-2173-4c98-a5d3-6b4d2ac004af@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwAHXuuyvjNpbPEJAA--.4645S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAPBWkx6ywGXwAHsK
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3XFW3AFWfGF17Zr1kKF1DGFg_yoW3ur4fpF
- ykJFW5trWUJr1rJr12gw1UJryayr4xJw1UXr10gFn8Jr4qyr12gr1jqryq9F1xJr48XF1j
- vw1jgrnxZr15ArJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAyMCBTYWx0ZWRfX1MVWpgbLN3q7
+ UAqlUM9bfdjkYoZgDD3nvbO9gLEMl5LU9NhRiudlj0WrOUi/h6CGejpKHIX4r95atOMD/JiMbZX
+ kStnxJ/dPSN7mzpZVfAOgotkXwYix8GKlzsD/s/eSzbku9tLHhWYf9MATjVw2HEmhCc9DRglkl/
+ 8Ne2yKidPJdIML3wILpZB4mHsCp0i2f56+3QWybqMYVP4iERPaDFpYDHLOVQsesu/6kuurSGjch
+ dhChRDCXgM2Le2mpxqzYDkjoZ2rlUSI98hxotuLc4RUfhuRmCkAFbBXM6cwt8GNt2PmJIIGQarA
+ evyK6xWWkx/b9WxnxiFs+PtCN1zl3LRs3BYECJXqFUQzh/1QcIGi+SqmBM8MqVA2V6p3B11DB+k
+ XDitNNvnBfPCx4VJbcBP8mMA3WvyxA==
+X-Authority-Analysis: v=2.4 cv=S/DUAYsP c=1 sm=1 tr=0 ts=6933c5ff cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=Cz7AoQ69vTHEakZR_RYA:9
+X-Proofpoint-ORIG-GUID: 2OkVG0BBIofgT17B29lmCdQRqO9aClX_
+X-Proofpoint-GUID: 2OkVG0BBIofgT17B29lmCdQRqO9aClX_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-06_01,2025-12-04_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512060020
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,207 +117,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Moved 'pnv_sbe_set_host_doorbell' as-it-is to above
+'pnv_sbe_power9_xscom_ctrl_write'.
 
-On 2025/12/6 01:19, Pierrick Bouvier wrote:
-> On 12/5/25 7:03 AM, Tao Tang wrote:
->> Hi Pierrick,
->>
->> On 2025/12/5 07:53, Pierrick Bouvier wrote:
->>> On 11/26/25 7:45 AM, Tao Tang wrote:
->>>> Introduce qos-smmuv3, a reusable library for SMMUv3-related qtest
->>>> operations. This module encapsulates common tasks like:
->>>>
->>>> - SMMUv3 initialization (enabling, configuring command/event queues)
->>>> - Stream Table Entry (STE) and Context Descriptor (CD) setup
->>>> - Multi-level page table construction (L0-L3 for 4KB granules)
->>>> - Support for Stage 1, Stage 2, and nested translation modes
->>>> - Could be easily extended to support multi-space testing 
->>>> infrastructure
->>>>       (Non-Secure, Secure, Root, Realm)
->>>>
->>>> The library provides high-level abstractions that allow test code to
->>>> focus on IOMMU behavior validation rather than low-level register
->>>> manipulation and page table encoding. Key features include:
->>>>
->>>> - Automatic memory allocation for translation structures with proper
->>>>       alignment
->>>> - Helper functions to build valid STEs/CDs for different translation
->>>>       scenarios
->>>> - Page table walkers that handle address offset calculations per
->>>>       security space
->>>> - Command queue management for SMMU configuration commands
->>>>
->>>> This infrastructure is designed to be used by iommu-testdev-based 
->>>> tests
->>>> and future SMMUv3 test suites, reducing code duplication and improving
->>>> test maintainability.
->>>>
->>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->>>> ---
->>>>    tests/qtest/libqos/meson.build  |   3 +
->>>>    tests/qtest/libqos/qos-smmuv3.c | 731 
->>>> ++++++++++++++++++++++++++++++++
->>>>    tests/qtest/libqos/qos-smmuv3.h | 267 ++++++++++++
->>>>    3 files changed, 1001 insertions(+)
->>>>    create mode 100644 tests/qtest/libqos/qos-smmuv3.c
->>>>    create mode 100644 tests/qtest/libqos/qos-smmuv3.h
->>>>
->>>
->>> ...
->>>
->>>> +
->>>> +void qsmmu_single_translation(QSMMUTestContext *ctx)
->>>> +{
->>>> +    uint32_t config_result;
->>>> +    uint32_t dma_result;
->>>> +    bool test_passed;
->>>> +
->>>> +    /* Configure SMMU translation */
->>>> +    config_result = qsmmu_setup_and_enable_translation(ctx);
->>>> +    if (config_result != 0) {
->>>> +        g_test_message("Configuration failed: mode=%u status=0x%x",
->>>> +                       ctx->config.trans_mode, config_result);
->>>> +        return;
->>>
->>> Is that expected to silently return if we can't configure translation?
->>
->>
->> No, it is not intended to silently return on a failed configuration.
->> Maybe an assertion is a better choice:
->>
->>
->> config_result = qsmmu_setup_and_enable_translation(ctx);
->>
->> g_assert_cmpuint(config_result, ==, 0);
->>
->
-> Looks good. We should rely on exit code first, and then on verbose log 
-> to find what is the problem.
->
->>>
->>>> +    }
->>>> +
->>>> +    /* Trigger DMA operation */
->>>> +    dma_result = qsmmu_trigger_dma(ctx);
->>>> +    if (dma_result != 0) {
->>>> +        g_test_message("DMA failed: mode=%u result=0x%x",
->>>> +                       ctx->config.trans_mode, dma_result);
->>>> +    } else {
->>>> +        g_test_message("-> DMA succeeded: mode=%u",
->>>> ctx->config.trans_mode);
->>>> +    }
->>>> +
->>>> +    /* Validate test result */
->>>> +    test_passed = qsmmu_validate_test_result(ctx);
->>>> +    g_assert_true(test_passed);
->>>> +
->>>> +    /* Clean up translation state to prepare for the next test */
->>>> +    qsmmu_cleanup_translation(ctx);
->>>> +}
->>>> +
->>>> +void qsmmu_translation_batch(const QSMMUTestConfig *configs, size_t
->>>> count,
->>>> +                             QTestState *qts, QPCIDevice *dev,
->>>> +                             QPCIBar bar, uint64_t smmu_base)
->>>> +{
->>>> +    for (int i = 0; i < count; i++) {
->>>> +        /* Initialize test memory */
->>>> +        qtest_memset(qts, configs[i].dma_iova, 0x00,
->>>> configs[i].dma_len);
->>>> +        /* Execute each test configuration */
->>>> +        QSMMUTestContext ctx = {
->>>> +            .qts = qts,
->>>> +            .dev = dev,
->>>> +            .bar = bar,
->>>> +            .smmu_base = smmu_base,
->>>> +            .config = configs[i],
->>>> +            .trans_status = 0,
->>>> +            .dma_result = 0,
->>>> +            .sid = dev->devfn,
->>>> +            .tx_space = qsmmu_sec_sid_to_space(configs[i].sec_sid),
->>>> +        };
->>>> +
->>>> +        qsmmu_single_translation(&ctx);
->>>> +        g_test_message("--> Test %d completed: mode=%u sec_sid=%u "
->>>> +                       "status=0x%x result=0x%x", i,
->>>> configs[i].trans_mode,
->>>> +                       configs[i].sec_sid, ctx.trans_status,
->>>> ctx.dma_result);
->>>> +    }
->>>> +}
->>>
->>> What is the reason for batching operations?
->>> We are not in a performance critical scenario for running this test,
->>> so it's probably better to have distinct calls to single_translation.
->>
->>
->> As described in the previous thread [1] , I plan to split the tests so
->> that each translation mode is exercised by its own qtest. With that
->> split in place, there is no real need for a qsmmu_translation_batch()
->> helper anymore, so I refactor it into a qsmmu_run_translation_case
->> function and drop the inside for-loop.
->>
->
-> All good, indeed removes the need for translation_batch.
->
->>
->> [1]
->> https://lore.kernel.org/qemu-devel/7370070a-c569-4b77-bd1e-6fc749ba9c90@phytium.com.cn/ 
->>
->>
->>>
->>> ...
->>>
->>> For the rest of the patch, which is quite consequent, congrats. It's
->>> hard to review all the setup phase here, but knowing it works with the
->>> current smmuv3 implementation, that's a good proof that it's working
->>> as expected.
->>
->>
->> Yes, setting up all this infrastructure did take some time, especially
->> getting the nested mode page tables right (and Secure state-related
->> configuration which is still in my local repo).
->>
->
-> Feel free to start with the current version, and then you'll add 
-> secure state related changes as part of your other series.
->
->> I really appreciate that you ran the tests yourself and even checked
->> with a coverage-enabled build to confirm that it exercises the smmuv3
->> implementation. Thanks again for the thorough review.
->>
->
-> In case someone else wants to reproduce:
-> $ export CFLAGS="--coverage"
-> $ ./configure --target-list=aarch64-softmmu
-> $ ninja -C build
-> $ QTEST_QEMU_BINARY=./build/qemu-system-aarch64 \
->   ./build/tests/qtest/iommu-smmuv3-test
-> $ rm -rf build/coverage_html
-> $ mkdir build/coverage_html
-> $ gcovr \
->       --gcov-ignore-parse-errors suspicious_hits.warn \
->       --gcov-ignore-parse-errors negative_hits.warn \
->       --merge-mode-functions=separate \
->       --html-details build/coverage_html/index.html \
->       --filter 'hw/arm/smmu*'
-> $ echo file://$(pwd)/build/coverage_html/index.html
-> # open this in browser by clicking on your terminal
->
-> If useful for you, you can attach those instructions in your next 
-> cover letter, so people can easily reproduce.
->
+This is done since in a future patch, S0 interrupt implementation uses
+'pnv_sbe_set_host_doorbell', hence the host doorbell function needs to
+be declared/defined before 'pnv_sbe_power9_xscom_ctrl_write' where we
+implement the S0 interrupt.
 
-Hi Pierrick,
+No functional change.
 
-Got it, I’ll keep this series focused on the current non-secure smmuv3 
-implementation, and the coverage instructions you shared are very 
-helpful — I’ll add them to the next cover letter so that other reviewers 
-can easily reproduce the results.
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ hw/ppc/pnv_sbe.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-Thanks again for all the detailed review and guidance.
-
-Best regards,
-Tao
+diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+index 34dc013d47bb..b9b28c5deaef 100644
+--- a/hw/ppc/pnv_sbe.c
++++ b/hw/ppc/pnv_sbe.c
+@@ -80,6 +80,15 @@
+ #define SBE_CONTROL_REG_S0              PPC_BIT(14)
+ #define SBE_CONTROL_REG_S1              PPC_BIT(15)
+ 
++static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
++{
++    val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
++    sbe->host_doorbell = val;
++
++    trace_pnv_sbe_reg_set_host_doorbell(val);
++    qemu_set_irq(sbe->psi_irq, !!val);
++}
++
+ struct sbe_msg {
+     uint64_t reg[4];
+ };
+@@ -125,15 +134,6 @@ static const MemoryRegionOps pnv_sbe_power9_xscom_ctrl_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
+ 
+-static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
+-{
+-    val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
+-    sbe->host_doorbell = val;
+-
+-    trace_pnv_sbe_reg_set_host_doorbell(val);
+-    qemu_set_irq(sbe->psi_irq, !!val);
+-}
+-
+ /* SBE Target Type */
+ #define SBE_TARGET_TYPE_PROC            0x00
+ #define SBE_TARGET_TYPE_EX              0x01
+-- 
+2.52.0
 
 
