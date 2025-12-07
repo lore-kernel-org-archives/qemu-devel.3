@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BD9ED2CE17
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Dec 2025 04:34:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CB7D1CDC6
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Dec 2025 04:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vS6TN-0001cd-U6; Sat, 06 Dec 2025 23:34:13 -0500
+	id 1vS6TJ-0001bq-MH; Sat, 06 Dec 2025 23:34:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenmiao.ku@gmail.com>)
- id 1vS5XI-0002wK-2e
- for qemu-devel@nongnu.org; Sat, 06 Dec 2025 22:34:12 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1vS5XE-0002ud-3z
+ for qemu-devel@nongnu.org; Sat, 06 Dec 2025 22:34:08 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chenmiao.ku@gmail.com>)
- id 1vS5XD-0002VU-S9
- for qemu-devel@nongnu.org; Sat, 06 Dec 2025 22:34:10 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7baf61be569so3891635b3a.3
- for <qemu-devel@nongnu.org>; Sat, 06 Dec 2025 19:34:07 -0800 (PST)
+ id 1vS5X3-0002UA-G5
+ for qemu-devel@nongnu.org; Sat, 06 Dec 2025 22:34:01 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7bf0ad0cb87so3872815b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 06 Dec 2025 19:33:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1765078446; x=1765683246; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1765078434; x=1765683234; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZxHzwdNs0hmfF7X9ON6zGAVj61NHy2UgBo4Qhmy9qRg=;
- b=Xktd5gAVgq8tvF7aEBf4s783dstXV1e1WDayGZRaEYxCxyRrMKCut7w6BToK4nSd6n
- Q/Hn1HhMTTXBydTQI8Eg5h3p1A6wSqSOSXxDn5WBvUBfmmtTVfGX28xDCaQxOB0QwK7t
- +RcunEeWhDm3HKrWltaMH9EyzzLMdIE5Kf4w3duJxc/UcpJnqem8nZ0xC1FNfzDZY/xp
- x+apGb4l0UhXlyiUVbOQqXrL2ztuXFr+YSGyt9F/rGcTEEH55vD1N1XOwAuC9zvSPYYO
- FJ2GPnzapqPIjnePPXE4KYzVV2nCKA+C3dw/kc4cEtP6EC6setmhBVjrSFjaDRgGLczZ
- 0LEw==
+ bh=bSwW4pf421IMnpAOpJLVJ0KcWmgP1/il42L6E6pTLTg=;
+ b=lfk/kXqyt2qp1s0BYp+e2MqVmcSAWKWAhoujvaPgkECJ3UmGkr08VxqOP124OInYn4
+ NSLid2pNyOgQxfpymzjv+GinyPtPuVN48ypAgcIS+U6ZJVjvindIlO98u1EejLQu6YB/
+ DkLWidBjZ/P2WlQTmr5RDcvRCXIIvkpi68z8Ky4nirnqIpFK9VlNSQybDF7arPLP1ZrH
+ Ei8VN5nDDuevsSIWL5QKCfIeZvPD9wo6tRTpZ72t5G6vcUFui5z6e9qmpOwJoNMM7mBo
+ 1Xya132/Qbh5FEAt1YCR0y3WmD142add+7huTRvSqGkWDLilwfM5IG4bUXFV7Duy3xUv
+ EXPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765078446; x=1765683246;
+ d=1e100.net; s=20230601; t=1765078434; x=1765683234;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZxHzwdNs0hmfF7X9ON6zGAVj61NHy2UgBo4Qhmy9qRg=;
- b=YwaLgIIl6Vhv4+8hPwbiX6h48FG82mFqtjLNd41OKLvGFg1Z8lt2lbJcUsrnDRATVQ
- hNZpgsb1hxb25497VT/Fl7HmO2PSp/Uyy8W9LeRYYDpc4UWCBdnZaHJ7kF4Y9II2gxO8
- AHb0s7szFs4Px1tbupqTS8eRxfp+ptyqC7U9UZ5VyFPrzBPEIhQyPjXv32mBdqhhbRbA
- pRhN2iKQHs//nGIJEbUD5ihJdoqEjWKdm73ng6RlZYt4xiv7wL8XlID1UKeKY0KoZ578
- XgnJHX0NrJ0ypN2Tb+Vzv0W4Miq5s41N0A22Ujg+Us0MjaEfjasitbGeiIRRpoqw+rx0
- 0u8w==
+ bh=bSwW4pf421IMnpAOpJLVJ0KcWmgP1/il42L6E6pTLTg=;
+ b=w2WeCShcl/1QTm271Chle9qoH5On6DCx+Kc3KnB94VwyEMMiV3cQd7ylj7e1HBZdBw
+ YspPDSh1+5hzUM0jWhj5iHwSTVl9YNdOnlAospeKNANC/vrBnoKQyGEjc/3jVKOM3gwR
+ w8GCm0X5lvvOvdlZY9XNuRiKEKC8ybXgJgPrGgGxXBoDBkm956tayJMB4grGglRBGOZi
+ IE/P+UTCW9etHa8guos1DuD33Do/y6nSUyLWm4XkakjmT3wnfYIMEfKeM6pbU3Er5Q0D
+ fT3yBUEXG3a4YDEAZAM0kmGDJnOC0NNsm/FeOnI+rPotIZl8gvtJBGeNioIxtR/A5ri4
+ HJxQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWXZtxQUR3RVHk12JIsSK092DyG8Q/k2K7IpV8WMZrNs9ompXSCEp/ULGeSz7Ym1oErjpKLdygojOZA@nongnu.org
-X-Gm-Message-State: AOJu0YxBOnwkLMR93zs+CkfXMjvJiGEKYJrXjjZ8ZOBvl4xQX8GRfJOI
- dRD2YsfEekXnbGfhpnz8FAj+CjVwKpyLRRk1jjI/JP7f5LifwV0nDrI2
-X-Gm-Gg: ASbGnctlrx526uymf4fAZXr+yEL1LhCLdHfwFfFyNLT4uvDuqiyViIO9YBuv4SWKBRT
- LEz9vDTVxl4c7gxLMX3fEitVruDV79RB+8sdeyyxK667deExaw0dglWRVtBGJFcTt81G0RxlY11
- rj+r8vhO4BnDRlwnsFtEbTzVnZCvrW4c1hrsnkFRbIVRpPahfb19rGXXIFlbTKRod4XoGoQPBxb
- 5OcV0nPDpDDUlPpPjR9tQvk+B6yowDpu96aJQP3eg20+axYYo82FQk20jpPNGdM4c/2QvXI87fU
- BHyAJG5ZeSUtl2u83Hu5MHzkiV+4aaTW2UzlCQ4XeKg//BJv7qbWHx/jcpsmwLtdMQd/BL8pQ0O
- XIcIMpNM7D7nUUZsY9zN/0DkE8V3k3Bk+WpyBr85woHAuBDOpjoNooqopEFhBzilYZvFLb9VmPC
- KzzfcgkwSxeKryhq8kwClNFDcFSfBdgNx/AsYUCFdPVvs4Nw==
-X-Google-Smtp-Source: AGHT+IEGdl4AcEdp6fnOnIkDHPCApJLwV+uvX1qwxP+tEwBPi7CwhIzyGaCMlazySnHdJturiTzAXQ==
-X-Received: by 2002:a05:6a21:998b:b0:35d:7f7:4aac with SMTP id
- adf61e73a8af0-36617ed7cc7mr3771999637.47.1765078446332; 
- Sat, 06 Dec 2025 19:34:06 -0800 (PST)
+ AJvYcCVQ7Ga93Pvqrpvwudw0mDoE8mCRMVPnQ1IuscIT8fJDTBvAikwqHhe4pxwb9W7M1CGSwrIbis06vAbG@nongnu.org
+X-Gm-Message-State: AOJu0Yxt6WJL60LxBuq+7EVvcvq9tWIgcFzzjLI5RQ1FKhhYt34wLlNr
+ SGK7kUASoHP2bo7b0o8mIa0bvp59wzivMSd25EEGSymX0E5rTZusKbjj
+X-Gm-Gg: ASbGncsGvGUeooKUkfNFRokVp14zjoQ47lBvlWL6my5ziihRJzBnMUHgQ8XICiIDtEg
+ i1iO1/X7Xfsl5qisouAuPH/TrQZhx0Uq/y7BGcGkTzYDVUMyUG1/QwYdnymWTre4dRxnxm8vf+D
+ GwqXiy8VvwUMF0rfrkW7kCC6o4Rcj8Yq+Eh4/9FUPNo8f8e0xKmwpycrKpNHHHxZ1SNdqUVqH2o
+ 0Z78O0yBf5PCekncGM1/YhNTEcUZXsZlg/XpP/P3bmFo4gDjBLnTlsC0a/wNIolfoiTHGlDq0FL
+ YwfAiUtrgCpFc+R+lguh3eKoWPR9RyQf3Kqr1vRL6bXdeDw1VYXJyB4KI7nRRmD2z9duWDlxczb
+ s7cLiDT+sn3WhzoUVNHoiWtJZybJZ8yNDxl6H5imdZX8CY1GI2ZCU14yRB0fJWY3DfQNgbJqsfA
+ YfDVOe+Dy3e4K849mtacQFt2Sjaa4B0oj5em455IEaJq8YaVK+e+4xxXNX
+X-Google-Smtp-Source: AGHT+IHpR8p/qL9farnjOh8NgbA99bpbxfluk9KjHutTIiDbXkCzieunD6uKWtl0YXYZKJ4dl6FHGg==
+X-Received: by 2002:a05:6a21:4ed7:20b0:366:14ac:e1de with SMTP id
+ adf61e73a8af0-3661802629amr2693628637.68.1765078433718; 
+ Sat, 06 Dec 2025 19:33:53 -0800 (PST)
 Received: from nyaos.localdomain ([166.0.199.48])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-bf6a1caeea7sm8496390a12.24.2025.12.06.19.34.00
+ 41be03b00d2f7-bf6a1caeea7sm8496390a12.24.2025.12.06.19.33.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 06 Dec 2025 19:34:05 -0800 (PST)
+ Sat, 06 Dec 2025 19:33:53 -0800 (PST)
 From: ChenMiao <chenmiao.ku@gmail.com>
 To: zhao1.liu@intel.com, pbonzini@redhat.com, manos.pitsidianakis@linaro.org,
  richard.henderson@linaro.org, philmd@linaro.org
 Cc: chao.liu@openatom.club , dzm91@openatom.club , qemu-rust@nongnu.org,
  qemu-devel@nongnu.org, hust-os-kernel-patches@googlegroups.com,
  chenmiao <chenmiao@openatom.club>
-Subject: [PATCH v3 4/4] rust/hw/gpio: Add the the first gpio device pcf8574
-Date: Sun,  7 Dec 2025 03:33:31 +0000
-Message-ID: <2d5800af31f4d8f4b33aadef49f0e6999067bd16.1765077679.git.chenmiao@openatom.club>
+Subject: [PATCH v3 2/4] rust/hw/core: Add rust bindings/funcs for i2c bus
+Date: Sun,  7 Dec 2025 03:33:29 +0000
+Message-ID: <48bfe2bd3b11f09bd501622370ca64bdb1f68afb.1765077679.git.chenmiao@openatom.club>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1765077679.git.chenmiao@openatom.club>
 References: <cover.1765077679.git.chenmiao@openatom.club>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=chenmiao.ku@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=chenmiao.ku@gmail.com; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,7 +92,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sat, 06 Dec 2025 23:34:11 -0500
+X-Mailman-Approved-At: Sat, 06 Dec 2025 23:34:06 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,415 +109,374 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: chenmiao <chenmiao@openatom.club>
 
-After implementing the I2CBus and I2CSlave, we proceeded to implement a basic
-GPIO device — the PCF8574 — which depends on I2CSlave.
+We have implemented the I2CBus and I2CSlave infrastructure in Rust by referring
+to the SysBus device model.
 
-This patch must depend on the below link to compile normally:
+Initially, we assumed that the I2CBus was at the same hierarchical level as the
+PL011 device. Therefore, we followed the implementation paradigm of the PL011
+device as a reference. However, in the end, we discovered that the I2CBus is
+actually at the same level as the SysBus. As a result, we adopted the binding
+implementation paradigm used for SysBus devices. With this adjustment, we
+successfully compiled the code locally.
 
-https://lists.nongnu.org/archive/html/qemu-devel/2025-10/msg07356.html
+During the implementation process, we found that the current two paradigms in
+Rust — bindings and impl — are extremely complex and lack comprehensive
+documentation. There is no clear explanation as to why Bus and Device models
+need to be implemented using different approaches. Furthermore, the
+implementation of Bus and Device following these paradigms still has many
+limitations. At present, at least vmstate is not easily supported.
 
-At present, I have summarized the general workflow for device modeling in Rust
-as follows:
-
-1. Modify the configuration under hw/deviceto distinguish between C and Rust
-   versions.
-2. Create a device crate under rust/hw.
-3. Add (or copy) the necessary wrappers, build.rs, and bindings.
-4. Begin the device modeling process.
-5. Construct the corresponding structures in Rust that mirror those in C,
-   especially for “members that may change”.
-6. Referencing the C implementation, define initialization functions and
-   establish parent-class relationships for the Rust structure.
-7. Set up ObjectImpl, DeviceImpl, and ResettablePhasesImpl.
-8. Configure vmstate.
-9. Implement other functional methods.
-
+Signed-off-by: Chao Liu <chao.liu@openatom.club>
 Signed-off-by: Chen Miao <chenmiao@openatom.club>
 ---
- hw/gpio/Kconfig                  |   5 +
- hw/gpio/meson.build              |   2 +-
- rust/Cargo.lock                  |  18 +++-
- rust/Cargo.toml                  |   1 +
- rust/hw/Kconfig                  |   1 +
- rust/hw/gpio/Kconfig             |   2 +
- rust/hw/gpio/meson.build         |   1 +
- rust/hw/gpio/pcf8574/Cargo.toml  |  28 +++++
- rust/hw/gpio/pcf8574/meson.build |  37 +++++++
- rust/hw/gpio/pcf8574/src/lib.rs  | 178 +++++++++++++++++++++++++++++++
- rust/hw/meson.build              |   1 +
- 11 files changed, 272 insertions(+), 2 deletions(-)
- create mode 100644 rust/hw/gpio/Kconfig
- create mode 100644 rust/hw/gpio/meson.build
- create mode 100644 rust/hw/gpio/pcf8574/Cargo.toml
- create mode 100644 rust/hw/gpio/pcf8574/meson.build
- create mode 100644 rust/hw/gpio/pcf8574/src/lib.rs
+ rust/hw/core/meson.build |   1 +
+ rust/hw/core/src/i2c.rs  | 303 +++++++++++++++++++++++++++++++++++++++
+ rust/hw/core/src/lib.rs  |   3 +
+ rust/hw/core/wrapper.h   |   1 +
+ 4 files changed, 308 insertions(+)
+ create mode 100644 rust/hw/core/src/i2c.rs
 
-diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
-index a209294c20..1be534aaf6 100644
---- a/hw/gpio/Kconfig
-+++ b/hw/gpio/Kconfig
-@@ -27,6 +27,11 @@ config PCA9554
- config PCF8574
-     bool
-     depends on I2C
-+    select PCF8574_C if !HAVE_RUST
-+    select X_PCF8574_RUST if HAVE_RUST
-+
-+config PCF8574_C
-+    bool
- 
- config ZAURUS_SCOOP
-     bool
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 74840619c0..9e4b1a8fd7 100644
---- a/hw/gpio/meson.build
-+++ b/hw/gpio/meson.build
-@@ -17,4 +17,4 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
- system_ss.add(when: 'CONFIG_STM32L4X5_SOC', if_true: files('stm32l4x5_gpio.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_gpio.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
--system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
-+system_ss.add(when: 'CONFIG_PCF8574_C', if_true: files('pcf8574.c'))
-diff --git a/rust/Cargo.lock b/rust/Cargo.lock
-index 0c1df625df..2db2f70e8a 100644
---- a/rust/Cargo.lock
-+++ b/rust/Cargo.lock
-@@ -1,6 +1,6 @@
- # This file is automatically @generated by Cargo.
- # It is not intended for manual editing.
--version = 3
-+version = 4
- 
- [[package]]
- name = "anyhow"
-@@ -204,6 +204,22 @@ dependencies = [
-  "util",
- ]
- 
-+[[package]]
-+name = "pcf8574"
-+version = "0.1.0"
-+dependencies = [
-+ "bits",
-+ "bql",
-+ "common",
-+ "glib-sys",
-+ "hwcore",
-+ "migration",
-+ "qom",
-+ "system",
-+ "trace",
-+ "util",
-+]
-+
- [[package]]
- name = "pkg-config"
- version = "0.3.32"
-diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-index 783e626802..6a17eefe49 100644
---- a/rust/Cargo.toml
-+++ b/rust/Cargo.toml
-@@ -10,6 +10,7 @@ members = [
-     "system",
-     "hw/core",
-     "hw/char/pl011",
-+    "hw/gpio/pcf8574",
-     "hw/timer/hpet",
-     "trace",
-     "util",
-diff --git a/rust/hw/Kconfig b/rust/hw/Kconfig
-index 36f92ec028..ba1297ca2d 100644
---- a/rust/hw/Kconfig
-+++ b/rust/hw/Kconfig
-@@ -1,3 +1,4 @@
- # devices Kconfig
- source char/Kconfig
-+source gpio/Kconfig
- source timer/Kconfig
-diff --git a/rust/hw/gpio/Kconfig b/rust/hw/gpio/Kconfig
+diff --git a/rust/hw/core/meson.build b/rust/hw/core/meson.build
+index efcda50fef..1a27c1cff7 100644
+--- a/rust/hw/core/meson.build
++++ b/rust/hw/core/meson.build
+@@ -52,6 +52,7 @@ _hwcore_rs = static_library(
+       'src/bindings.rs',
+       'src/bus.rs',
+       'src/irq.rs',
++      'src/i2c.rs',
+       'src/qdev.rs',
+       'src/sysbus.rs',
+     ],
+diff --git a/rust/hw/core/src/i2c.rs b/rust/hw/core/src/i2c.rs
 new file mode 100644
-index 0000000000..c47aa76f14
+index 0000000000..85ec34357a
 --- /dev/null
-+++ b/rust/hw/gpio/Kconfig
-@@ -0,0 +1,2 @@
-+config X_PCF8574_RUST
-+    bool
-diff --git a/rust/hw/gpio/meson.build b/rust/hw/gpio/meson.build
-new file mode 100644
-index 0000000000..908991ad13
---- /dev/null
-+++ b/rust/hw/gpio/meson.build
-@@ -0,0 +1 @@
-+subdir('pcf8574')
-diff --git a/rust/hw/gpio/pcf8574/Cargo.toml b/rust/hw/gpio/pcf8574/Cargo.toml
-new file mode 100644
-index 0000000000..a3bd82f93d
---- /dev/null
-+++ b/rust/hw/gpio/pcf8574/Cargo.toml
-@@ -0,0 +1,28 @@
-+[package]
-+name = "pcf8574"
-+version = "0.1.0"
-+authors = ["Chen Miao <chenmiao@openatom.club>"]
-+description = "pcf8574 device model for QEMU"
-+resolver = "2"
-+publish = false
-+
-+edition.workspace = true
-+homepage.workspace = true
-+license.workspace = true
-+repository.workspace = true
-+rust-version.workspace = true
-+
-+[dependencies]
-+glib-sys.workspace = true
-+bits = { path = "../../../bits" }
-+common = { path = "../../../common" }
-+util = { path = "../../../util" }
-+bql = { path = "../../../bql" }
-+migration = { path = "../../../migration" }
-+qom = { path = "../../../qom" }
-+system = { path = "../../../system" }
-+hwcore = { path = "../../../hw/core" }
-+trace = { path = "../../../trace" }
-+
-+[lints]
-+workspace = true
-diff --git a/rust/hw/gpio/pcf8574/meson.build b/rust/hw/gpio/pcf8574/meson.build
-new file mode 100644
-index 0000000000..f0b7f9e687
---- /dev/null
-+++ b/rust/hw/gpio/pcf8574/meson.build
-@@ -0,0 +1,37 @@
-+# TODO: Remove this comment when the clang/libclang mismatch issue is solved.
-+#
-+# Rust bindings generation with `bindgen` might fail in some cases where the
-+# detected `libclang` does not match the expected `clang` version/target. In
-+# this case you must pass the path to `clang` and `libclang` to your build
-+# command invocation using the environment variables CLANG_PATH and
-+# LIBCLANG_PATH
-+_libpcf8574_rs = static_library(
-+  'pcf8574',
-+  structured_sources(
-+    [
-+      'src/lib.rs',
-+    ],
-+  ),
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  rust_abi: 'rust',
-+  dependencies: [
-+    bilge_rs,
-+    bilge_impl_rs,
-+    bits_rs,
-+    common_rs,
-+    glib_sys_rs,
-+    util_rs,
-+    migration_rs,
-+    bql_rs,
-+    qom_rs,
-+    chardev_rs,
-+    system_rs,
-+    hwcore_rs,
-+    trace_rs
-+  ],
-+)
-+
-+rust_devices_ss.add(when: 'CONFIG_X_PCF8574_RUST', if_true: [declare_dependency(
-+  link_whole: [_libpcf8574_rs],
-+  variables: {'crate': 'pcf8574'},
-+)])
-diff --git a/rust/hw/gpio/pcf8574/src/lib.rs b/rust/hw/gpio/pcf8574/src/lib.rs
-new file mode 100644
-index 0000000000..4bec081876
---- /dev/null
-+++ b/rust/hw/gpio/pcf8574/src/lib.rs
-@@ -0,0 +1,178 @@
++++ b/rust/hw/core/src/i2c.rs
+@@ -0,0 +1,303 @@
 +// Copyright 2025 HUST OpenAtom Open Source Club.
++// Author(s): Chao Liu <chao.liu@openatom.club>
 +// Author(s): Chen Miao <chenmiao@openatom.club>
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +
-+use std::slice::from_ref;
++//! Bindings to access `i2c` functionality from Rust.
 +
-+use bql::BqlRefCell;
-+use common::bitops::IntegerExt;
-+use hwcore::{
-+    DeviceClass, DeviceImpl, DeviceMethods, DeviceState, I2CResult, I2CSlave, I2CSlaveImpl,
-+    InterruptSource, ResetType, ResettablePhasesImpl,
++use std::{ffi::CStr, ptr::NonNull};
++
++pub use crate::bindings::I2CSlaveClass;
++use common::{self, Opaque};
++use migration::impl_vmstate_c_struct;
++use qom::{prelude::*, Owned};
++
++use crate::{
++    bindings,
++    bus::{BusClass, BusState},
++    qdev::{DeviceImpl, DeviceState},
 +};
-+use migration::{
-+    self, impl_vmstate_struct, vmstate_fields, vmstate_of, VMStateDescription,
-+    VMStateDescriptionBuilder,
-+};
-+use qom::{qom_isa, IsA, Object, ObjectImpl, ObjectType, ParentField};
 +
-+pub const TYPE_PCF8574: &::std::ffi::CStr = c"pcf8574";
-+const PORTS_COUNT: usize = 8;
++/// A safe wrapper around [`bindings::I2CBus`].
++#[repr(transparent)]
++#[derive(Debug, common::Wrapper)]
++pub struct I2CBus(Opaque<bindings::I2CBus>);
 +
-+#[repr(C)]
-+#[derive(Clone, Copy, Debug, Default)]
-+pub struct PCF8574Inner {
-+    pub lastrq: u8,
-+    pub input: u8,
-+    pub output: u8,
++unsafe impl Send for I2CBus {}
++unsafe impl Sync for I2CBus {}
++
++unsafe impl ObjectType for I2CBus {
++    type Class = BusClass;
++    const TYPE_NAME: &'static CStr =
++        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_I2C_BUS) };
 +}
 +
-+impl PCF8574Inner {
-+    pub fn line_state(&self) -> u8 {
-+        self.input & self.output
-+    }
++qom_isa!(I2CBus: BusState, Object);
 +
-+    pub fn set_output(&mut self, data: u8) -> (u8, u8) {
-+        let prev = self.line_state();
-+        self.output = data;
-+        let actual = self.line_state();
-+        (prev, actual)
-+    }
-+
-+    pub fn set_input(&mut self, start: u32, value: u8) -> bool {
-+        self.input = self.input.deposit(start, 1, value);
-+        self.has_state_changed()
-+    }
-+
-+    pub fn receive(&mut self) -> (bool, u8) {
-+        let state_changed = self.has_state_changed();
-+        if state_changed {
-+            self.lastrq = self.line_state();
++/// Trait for methods of [`I2CBus`] and its subclasses.
++pub trait I2CBusMethods: ObjectDeref
++where
++    Self::Target: IsA<I2CBus>,
++{
++    /// # Safety
++    ///
++    /// Initialize an I2C bus
++    fn init_bus(&self, parent: &DeviceState, name: &str) -> Owned<I2CBus> {
++        assert!(bql::is_locked());
++        unsafe {
++            let bus = bindings::i2c_init_bus(parent.as_mut_ptr(), name.as_ptr().cast());
++            let bus: &I2CBus = I2CBus::from_raw(bus);
++            Owned::from(bus)
 +        }
-+        (state_changed, self.lastrq)
 +    }
 +
-+    pub fn has_state_changed(&self) -> bool {
-+        self.line_state() != self.lastrq
-+    }
-+}
-+
-+#[repr(C)]
-+#[derive(qom::Object, hwcore::Device)]
-+pub struct PCF8574State {
-+    pub parent_obj: ParentField<I2CSlave>,
-+    pub inner: BqlRefCell<PCF8574Inner>,
-+    pub handler: [InterruptSource; PORTS_COUNT],
-+    pub intrq: InterruptSource,
-+}
-+
-+// static_assert!(size_of::<PCF8574State>() <= size_of::<crate::bindings::PCF8574State>());
-+
-+qom_isa!(PCF8574State: I2CSlave, DeviceState, Object);
-+
-+#[allow(dead_code)]
-+trait PCF8574Impl: I2CSlaveImpl + IsA<PCF8574State> {}
-+
-+unsafe impl ObjectType for PCF8574State {
-+    type Class = DeviceClass;
-+    const TYPE_NAME: &'static std::ffi::CStr = crate::TYPE_PCF8574;
-+}
-+
-+impl PCF8574Impl for PCF8574State {}
-+
-+impl ObjectImpl for PCF8574State {
-+    type ParentType = I2CSlave;
-+    const CLASS_INIT: fn(&mut Self::Class) = Self::Class::class_init::<Self>;
-+}
-+
-+impl DeviceImpl for PCF8574State {
-+    const VMSTATE: Option<migration::VMStateDescription<Self>> = Some(VMSTATE_PCF8574);
-+    const REALIZE: Option<fn(&Self) -> util::Result<()>> = Some(Self::realize);
-+}
-+
-+impl ResettablePhasesImpl for PCF8574State {
-+    const HOLD: Option<fn(&Self, ResetType)> = Some(Self::reset_hold);
-+}
-+
-+impl I2CSlaveImpl for PCF8574State {
-+    const SEND: Option<fn(&Self, data: u8) -> I2CResult> = Some(Self::send);
-+    const RECV: Option<fn(&Self) -> u8> = Some(Self::recv);
-+}
-+
-+impl PCF8574State {
-+    fn send(&self, data: u8) -> I2CResult {
-+        let (prev, actual) = self.inner.borrow_mut().set_output(data);
-+
-+        let mut diff = actual ^ prev;
-+        while diff != 0 {
-+            let line = diff.trailing_zeros() as u8;
-+            if let Some(handler) = self.handler.get(line as usize) {
-+                handler.set((actual >> line) & 1 == 1);
-+            }
-+            diff &= !(1 << line);
-+        }
-+
-+        self.intrq.set(actual == self.inner.borrow().lastrq);
-+
-+        I2CResult::ACK
++    /// # Safety
++    ///
++    /// Start a transfer on an I2C bus
++    fn start_transfer(&self, address: u8, is_recv: bool) -> i32 {
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_start_transfer(self.upcast().as_mut_ptr(), address, is_recv) }
 +    }
 +
++    /// # Safety
++    ///
++    /// Start a receive transfer on an I2C bus
++    fn start_recv(&self, address: u8) -> i32 {
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_start_recv(self.upcast().as_mut_ptr(), address) }
++    }
++
++    /// # Safety
++    ///
++    /// Start a send transfer on an I2C bus
++    fn start_send(&self, address: u8) -> i32 {
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_start_send(self.upcast().as_mut_ptr(), address) }
++    }
++
++    /// # Safety
++    ///
++    /// End a transfer on an I2C bus
++    fn end_transfer(&self) {
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_end_transfer(self.upcast().as_mut_ptr()) }
++    }
++
++    /// # Safety
++    ///
++    /// Send NACK on an I2C bus
++    fn nack(&self) {
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_nack(self.upcast().as_mut_ptr()) }
++    }
++
++    /// # Safety
++    ///
++    /// Send ACK on an I2C bus
++    fn ack(&self) {
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_ack(self.upcast().as_mut_ptr()) }
++    }
++
++    /// # Safety
++    ///
++    /// Send data on an I2C bus
++    fn send(&self, data: u8) -> i32 {
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_send(self.upcast().as_mut_ptr(), data) }
++    }
++
++    /// # Safety
++    ///
++    /// Receive data from an I2C bus
 +    fn recv(&self) -> u8 {
-+        let (has_changed, actual) = self.inner.borrow_mut().receive();
-+        if has_changed {
-+            self.intrq.raise();
-+        }
-+
-+        actual
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_recv(self.upcast().as_mut_ptr()) }
 +    }
 +
-+    fn realize(&self) -> util::Result<()> {
-+        self.init_gpio_in(self.handler_size(), PCF8574State::gpio_set);
-+        self.init_gpio_out(from_ref(&self.handler[0]));
-+        self.init_gpio_out_named(from_ref(&self.intrq), "nINT", 1);
-+        Ok(())
++    /// # Safety
++    ///
++    /// Check if the I2C bus is busy.
++    ///
++    /// Returns `true` if the bus is busy, `false` otherwise.
++    fn is_busy(&self) -> bool {
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_bus_busy(self.upcast().as_mut_ptr()) != 0 }
 +    }
 +
-+    fn gpio_set(&self, line: u32, level: u32) {
-+        assert!(line < self.handler_size());
-+
-+        if self
-+            .inner
-+            .borrow_mut()
-+            .set_input(line, u8::from(level != 0))
-+        {
-+            self.intrq.raise();
-+        }
++    /// # Safety
++    ///
++    /// Schedule pending master on an I2C bus
++    fn schedule_pending_master(&self) {
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_schedule_pending_master(self.upcast().as_mut_ptr()) }
 +    }
 +
-+    fn handler_size(&self) -> u32 {
-+        self.handler.len() as u32
++    /// Sets the I2C bus master.
++    ///
++    /// # Safety
++    ///
++    /// This function is unsafe because:
++    /// - `bh` must be a valid pointer to a `QEMUBH`.
++    /// - The caller must ensure that `self` is in a valid state.
++    /// - The caller must guarantee no data races occur during execution.
++    ///
++    /// TODO ("`i2c_bus_master` missing until QEMUBH is wrapped")
++    unsafe fn set_master(&self, bh: *mut bindings::QEMUBH) {
++        assert!(bql::is_locked());
++        unsafe { bindings::i2c_bus_master(self.upcast().as_mut_ptr(), bh) }
 +    }
-+
-+    fn reset_hold(&self, _type: ResetType) {}
 +}
 +
-+impl_vmstate_struct!(
-+    PCF8574Inner,
-+    VMStateDescriptionBuilder::<PCF8574Inner>::new()
-+        .name(c"pcf8574/inner")
-+        .version_id(0)
-+        .minimum_version_id(0)
-+        .fields(vmstate_fields! {
-+            vmstate_of!(PCF8574Inner, lastrq),
-+            vmstate_of!(PCF8574Inner, input),
-+            vmstate_of!(PCF8574Inner, output),
-+        })
-+        .build()
-+);
++impl<R: ObjectDeref> I2CBusMethods for R where R::Target: IsA<I2CBus> {}
 +
-+pub const VMSTATE_PCF8574: VMStateDescription<PCF8574State> =
-+    VMStateDescriptionBuilder::<PCF8574State>::new()
-+        .name(c"pcf8574")
-+        .version_id(0)
-+        .minimum_version_id(0)
-+        .fields(vmstate_fields! {
-+            vmstate_of!(PCF8574State, parent_obj),
-+            vmstate_of!(PCF8574State, inner),
-+        })
-+        .build();
-diff --git a/rust/hw/meson.build b/rust/hw/meson.build
-index 9749d4adfc..d6b273170e 100644
---- a/rust/hw/meson.build
-+++ b/rust/hw/meson.build
-@@ -1,2 +1,3 @@
- subdir('char')
-+subdir('gpio')
- subdir('timer')
++/// A safe wrapper around [`bindings::I2CSlave`].
++#[repr(transparent)]
++#[derive(Debug, common::Wrapper)]
++pub struct I2CSlave(Opaque<bindings::I2CSlave>);
++
++unsafe impl Send for I2CSlave {}
++unsafe impl Sync for I2CSlave {}
++
++unsafe impl ObjectType for I2CSlave {
++    type Class = I2CSlaveClass;
++    const TYPE_NAME: &'static CStr =
++        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_I2C_SLAVE) };
++}
++
++qom_isa!(I2CSlave: DeviceState, Object);
++
++impl_vmstate_c_struct!(I2CSlave, bindings::vmstate_i2c_slave);
++
++#[derive(common::TryInto)]
++#[repr(u64)]
++#[allow(non_camel_case_types)]
++pub enum I2CResult {
++    ACK = 0,
++    NACK = 1,
++}
++
++// TODO: add virtual methods
++pub trait I2CSlaveImpl: DeviceImpl + IsA<I2CSlave> {
++    /// Master to slave. Returns non-zero for a NAK, 0 for success.
++    const SEND: Option<fn(&Self, data: u8) -> I2CResult> = None;
++
++    /// Slave to master. This cannot fail, the device should always return something here.
++    const RECV: Option<fn(&Self) -> u8> = None;
++
++    /// Notify the slave of a bus state change. For start event,
++    /// returns non-zero to NAK an operation. For other events the
++    /// return code is not used and should be zero.
++    const EVENT: Option<fn(&Self, event: I2CEvent) -> I2CEvent> = None;
++
++    /// Check if this device matches the address provided. Returns bool of
++    /// true if it matches (or broadcast), and updates the device list, false
++    /// otherwise.
++    ///
++    /// If broadcast is true, match should add the device and return true.
++    #[allow(clippy::type_complexity)]
++    const MATCH_AND_ADD: Option<
++        fn(&Self, address: u8, broadcast: bool, current_devs: *mut bindings::I2CNodeList) -> bool,
++    > = None;
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer that
++/// can be downcasted to type `T`. We also expect the device is
++/// readable/writeable from one thread at any time.
++unsafe extern "C" fn rust_i2c_slave_send_fn<T: I2CSlaveImpl>(
++    obj: *mut bindings::I2CSlave,
++    data: u8,
++) -> std::os::raw::c_int {
++    let state = NonNull::new(obj).unwrap().cast::<T>();
++    T::SEND.unwrap()(unsafe { state.as_ref() }, data).into_bits() as std::os::raw::c_int
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer that
++/// can be downcasted to type `T`. We also expect the device is
++/// readable/writeable from one thread at any time.
++unsafe extern "C" fn rust_i2c_slave_recv_fn<T: I2CSlaveImpl>(obj: *mut bindings::I2CSlave) -> u8 {
++    let state = NonNull::new(obj).unwrap().cast::<T>();
++    T::RECV.unwrap()(unsafe { state.as_ref() })
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer that
++/// can be downcasted to type `T`. We also expect the device is
++/// readable/writeable from one thread at any time.
++unsafe extern "C" fn rust_i2c_slave_event_fn<T: I2CSlaveImpl>(
++    obj: *mut bindings::I2CSlave,
++    event: bindings::i2c_event,
++) -> std::os::raw::c_int {
++    let state = NonNull::new(obj).unwrap().cast::<T>();
++    T::EVENT.unwrap()(unsafe { state.as_ref() }, I2CEvent::from_bits(event)).into_bits()
++        as std::os::raw::c_int
++}
++
++/// # Safety
++///
++/// We expect the FFI user of this function to pass a valid pointer that
++/// can be downcasted to type `T`. We also expect the device is
++/// readable/writeable from one thread at any time.
++unsafe extern "C" fn rust_i2c_slave_match_and_add_fn<T: I2CSlaveImpl>(
++    obj: *mut bindings::I2CSlave,
++    address: u8,
++    broadcast: bool,
++    current_devs: *mut bindings::I2CNodeList,
++) -> bool {
++    let state = NonNull::new(obj).unwrap().cast::<T>();
++    T::MATCH_AND_ADD.unwrap()(unsafe { state.as_ref() }, address, broadcast, current_devs)
++}
++
++impl I2CSlaveClass {
++    /// Fill in the virtual methods of `I2CSlaveClass` based on the
++    /// definitions in the `I2CSlaveImpl` trait.
++    pub fn class_init<T: I2CSlaveImpl>(&mut self) {
++        if <T as I2CSlaveImpl>::SEND.is_some() {
++            self.send = Some(rust_i2c_slave_send_fn::<T>);
++        }
++        if <T as I2CSlaveImpl>::RECV.is_some() {
++            self.recv = Some(rust_i2c_slave_recv_fn::<T>);
++        }
++        if <T as I2CSlaveImpl>::EVENT.is_some() {
++            self.event = Some(rust_i2c_slave_event_fn::<T>);
++        }
++        if <T as I2CSlaveImpl>::MATCH_AND_ADD.is_some() {
++            self.match_and_add = Some(rust_i2c_slave_match_and_add_fn::<T>);
++        }
++        self.parent_class.class_init::<T>();
++    }
++}
++
++/// Trait for methods of [`I2CSlave`] and its subclasses.
++pub trait I2CSlaveMethods: ObjectDeref
++where
++    Self::Target: IsA<I2CSlave>,
++{
++    /// Get the I2C bus address of a slave device
++    fn get_address(&self) -> u8 {
++        assert!(bql::is_locked());
++        // SAFETY: the BQL ensures that no one else writes to the I2CSlave structure,
++        // and the I2CSlave must be initialized to get an IsA<I2CSlave>.
++        let slave = unsafe { *self.upcast().as_ptr() };
++        slave.address
++    }
++}
++
++impl<R: ObjectDeref> I2CSlaveMethods for R where R::Target: IsA<I2CSlave> {}
++
++/// Enum representing I2C events
++#[derive(common::TryInto)]
++#[repr(u32)]
++#[allow(non_camel_case_types)]
++pub enum I2CEvent {
++    START_RECV = bindings::I2C_START_RECV,
++    START_SEND = bindings::I2C_START_SEND,
++    START_SEND_ASYNC = bindings::I2C_START_SEND_ASYNC,
++    FINISH = bindings::I2C_FINISH,
++    NACK = bindings::I2C_NACK,
++}
+diff --git a/rust/hw/core/src/lib.rs b/rust/hw/core/src/lib.rs
+index 10cc516664..3f3aecb258 100644
+--- a/rust/hw/core/src/lib.rs
++++ b/rust/hw/core/src/lib.rs
+@@ -16,3 +16,6 @@
+ 
+ mod bus;
+ pub use bus::*;
++
++mod i2c;
++pub use i2c::*;
+diff --git a/rust/hw/core/wrapper.h b/rust/hw/core/wrapper.h
+index 3bdbd1249e..399be594da 100644
+--- a/rust/hw/core/wrapper.h
++++ b/rust/hw/core/wrapper.h
+@@ -30,3 +30,4 @@ typedef enum memory_order {
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
+ #include "hw/irq.h"
++#include "hw/i2c/i2c.h"
 -- 
 2.43.0
 
