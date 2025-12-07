@@ -4,49 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08289D2CE17
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Dec 2025 03:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CADFD1CDC6
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Dec 2025 04:34:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vS5Vv-0002TQ-PZ; Sat, 06 Dec 2025 22:32:47 -0500
+	id 1vS6TG-0001bW-K9; Sat, 06 Dec 2025 23:34:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
- id 1vS5Vu-0002Ss-4W; Sat, 06 Dec 2025 22:32:46 -0500
-Received: from out28-69.mail.aliyun.com ([115.124.28.69])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
- id 1vS5Vr-0001xc-RM; Sat, 06 Dec 2025 22:32:45 -0500
-Received: from 192.168.71.26(mailfrom:chao.liu@zevorn.cn
- fp:SMTPD_---.feaYEaU_1765078344 cluster:ay29) by smtp.aliyun-inc.com;
- Sun, 07 Dec 2025 11:32:25 +0800
-Message-ID: <63697707-289f-4eec-a377-ea84f91f3869@zevorn.cn>
-Date: Sun, 7 Dec 2025 11:32:22 +0800
+ (Exim 4.90_1) (envelope-from <chenmiao.ku@gmail.com>)
+ id 1vS5X5-0002r5-Ot
+ for qemu-devel@nongnu.org; Sat, 06 Dec 2025 22:34:00 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chenmiao.ku@gmail.com>)
+ id 1vS5X3-0002Tb-EE
+ for qemu-devel@nongnu.org; Sat, 06 Dec 2025 22:33:59 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7b86e0d9615so5905211b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 06 Dec 2025 19:33:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1765078422; x=1765683222; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sVSIaBHHB4I/cKA4IxMpB61FxEaOsUyCl0g7ZJyx4/Y=;
+ b=cTBVWrA1WPKRSFCc47C2dXM4yrLxY6bS5oJQsearisa8qce5IChFgIdcmGo6SR1YSB
+ HApObMH8cgWQgwVHYroTkOb/8n8IUcTtD63hLHEdydIsW0243SszTyWhLUwQRvNg5PQE
+ n61T8GcVsNtQUdlQDIxzqGjagyyyg7Oa1OnaH8IkhxG3mPowkZrcXbvgJ8hJQg/RaYGB
+ 7+oS/kzD4793wxFGEKH3TP5Ys99i6RYO/7U2/3NmUxXybbgMpWuMaRrihvVb2H6B6eVb
+ TxR905ITfjSkpuh1DOGH3JsE9BNkUnYMQr52i7cry7AYkwFTXrf5fmma0IPfUhnuzvol
+ DYEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765078422; x=1765683222;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sVSIaBHHB4I/cKA4IxMpB61FxEaOsUyCl0g7ZJyx4/Y=;
+ b=ptpd8F4C3N+aVFl0h4RAbTxFnlk5RTOAk6XlHLf04qXsgbMWSIz5dyszxVlEaRA1xe
+ +L5/O8QLVH/Glp0MCv1/LyGJKyqXzZtUjFG4sE2LYLAo35quQ07VuCLmFOyrF8fGypyh
+ m5Lm7XRwfMvrh8tqloKwA1PENxV+c0UEoIh49auZ4YZtZeSTifXJCAz+1JOydA/Vig/V
+ Vj84WJn7lGZn5mOykY5oFKAMawYOg3mr/Ok+ndiQ4Op6jO7gvK/RrNoS7wLq5C+6B4Af
+ 79BB9/KSr8CDkJYoDAWAefjvikTJbTOerWZxWkDkzl70zJhvdohBzUf1HPQufmbpWidL
+ yBEg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWmhVHRWdPf7N5zTeym6ntH6ACiKOk2PXKHHyD7yLsqcBIekdeXFdVO5wmFdgVp5+hDmh4epGDMoBpc@nongnu.org
+X-Gm-Message-State: AOJu0YwlvMXJU0HWg6vNgG/VlGpbsxLrCruQWRYmdC/rDr4unX94+6kp
+ AsaEFfaKpYIDECMzJOcwsfOrGCDoM40U2u5lAmE9uzzi15+CgsUSSc55EQTrx5jLM6i6DA==
+X-Gm-Gg: ASbGnctdKk2NySMgSHbaiDDz7QgLpKk9kXHRo+31ntoG8hjlj5KcoEFJjoZONBsHt+I
+ Um1JnmhDabu+UQquaJuNzbepIYigOxcfKNiLAKZEmoJOJXdh/s+9uhFE32Fx6fbNMSz8AabBbUj
+ c1UdV4rH1Y1Ei45g+Ku3IaLzXVAYavv+FJFJJqrn0w3BrzCPYPLkt9+EoxZ1uBjFSMtpM4MRcmn
+ d3eu5zBVECKuKRM4utD/lwzGMsNyxFeNzx2x6Lg+C65nXf1TdxYdEb2pXrIZweWY5lww5mIeGkv
+ sbTROEFY5jquT3XdI21u60KlAXLeKLLL3MtqI0aVy8rCtwf17reHJCVXB/qIcSTbizX5OGUugUI
+ uXonCujziELIx9O3TaQkwb2rVdiZTD5L9aGPP/BftsrINqOEypDDEagtzQf/wigD0sMdAiupZrv
+ CqhSOYeAD1WBJN/NyjSWPKd2wI80Di/Ew7SN1kf8nW7Yqr+Q==
+X-Google-Smtp-Source: AGHT+IEGLGrbbVIQ+SP5A8d2M+t/bFTx23pF2qTCzw3x6GZOQL59th29qzBTmk5Yd9wZOanbyZVxow==
+X-Received: by 2002:a05:6a20:4310:b0:35e:8b76:c94a with SMTP id
+ adf61e73a8af0-36617ef423dmr3722713637.45.1765078422050; 
+ Sat, 06 Dec 2025 19:33:42 -0800 (PST)
+Received: from nyaos.localdomain ([166.0.199.48])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-bf6a1caeea7sm8496390a12.24.2025.12.06.19.33.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 06 Dec 2025 19:33:41 -0800 (PST)
+From: ChenMiao <chenmiao.ku@gmail.com>
+To: zhao1.liu@intel.com, pbonzini@redhat.com, manos.pitsidianakis@linaro.org,
+ richard.henderson@linaro.org, philmd@linaro.org
+Cc: chao.liu@openatom.club , dzm91@openatom.club , qemu-rust@nongnu.org,
+ qemu-devel@nongnu.org, hust-os-kernel-patches@googlegroups.com,
+ Chen Miao <chenmiao@openatom.club>
+Subject: [PATCH v3 0/4] rust/hw: Add the I2C and the first GPIO device
+Date: Sun,  7 Dec 2025 03:33:27 +0000
+Message-ID: <cover.1765077679.git.chenmiao@openatom.club>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: chao.liu@zevorn.cn
-Cc: alistair.francis@wdc.com, dbarboza@ventanamicro.com, ebiggers@kernel.org, 
- liwei1518@gmail.com, npiggin@gmail.com, palmer@dabbelt.com,
- paolo.savini@embecosm.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-References: <cover.1758006834.git.chao.liu@zevorn.cn>
-Subject: Re: [PATCH v9 0/2] Generate strided vector loads/stores with tcg nodes
-From: Chao Liu <chao.liu@zevorn.cn>
-In-Reply-To: <cover.1758006834.git.chao.liu@zevorn.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.28.69; envelope-from=chao.liu@zevorn.cn;
- helo=out28-69.mail.aliyun.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=chenmiao.ku@gmail.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 06 Dec 2025 23:34:04 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,75 +104,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Sep 2025 17:21:36 +0800, Chao Liu wrote:
->Hi all,
->
->Thanks Richard for the review. In patch v9:
->
->- Simplify the implementation of gen_check_vext_elem_mask():
->  remove the `mask` argument, compute the mask directly inside the function,
->  and eliminate redundant code.
->
->- Limit the bit width to 8 bits when loading the mask from memory.
->
->- Remove the `vreg` argument in gen_ldst_vreg().
->
->History of changes:
->
->patch v8:
->- Use the right TCGv type for each variable — for example, make mask_elem
->  type TCGv_i64.
->- Use tcg_gen_trunc_i64_ptr() to change TCGv types — don't use C-style
->  casting.
->- Use TCG_COND_TSTNE, not TCG_COND_NE in tcg_gen_brcond_i64() to represent:
->  if (vext_elem_mask(v0, i) != 0)
->  https://lore.kernel.org/qemu-devel/cover.1757690407.git.chao.liu@zevorn.cn/
->
->patch v7:
->- Standardize the subject line of patch 1 and remove the trailing period.
->- Split into sub-functions to improve the patch's code readability and
->  facilitate review.
->- Use more faster TCG ops, use tcg_gen_andi_tl() instead of tcg_gen_rem_tl().
->- Add a tested-by signature for patch 2, as Eric has already tested it.
->  https://lore.kernel.org/qemu-devel/cover.1756975571.git.chao.liu@zevorn.cn/
->
->patch v6:
->- If a strided vector memory access instruction has non-zero vstart, 
->  check it through vlse/vsse helpers function.
->- Adjust the tcg test Makefile.
->  https://lore.kernel.org/qemu-devel/cover.1756906528.git.chao.liu@zevorn.cn/
->
->Patch v5:
->- Removed the redundant call to mark_vs_dirty(s) within the
->  gen_ldst_stride_main_loop() function.
->  https://lore.kernel.org/qemu-riscv/cover.1755609029.git.chao.liu@zevorn.cn/
->
->Patch v4:
->- Use ctz32() replace to for-loop
->  https://lore.kernel.org/qemu-devel/cover.1755333616.git.chao.liu@yeah.net/
->
->Patch v3:
->- Fix the get_log2() function:
->  https://lore.kernel.org/qemu-riscv/cover.1755287531.git.chao.liu@yeah.net/T/#t
->- Add test for vlsseg8e32 instruction.
->- Rebase on top of the latest master.
->
->Patch v2:
->- Split the TCG node emulation of the complex strided load/store operation into
->  two separate functions to simplify the implementation:
->  https://lore.kernel.org/qemu-riscv/20250312155547.289642-1-paolo.savini@embecosm.com/
->
->Patch v1:
->- Paolo submitted the initial version of the patch.
->  https://lore.kernel.org/qemu-devel/20250211182056.412867-1-paolo.savini@embecosm.com/
->
+From: Chen Miao <chenmiao@openatom.club>
 
-Ping.
+We have implemented I2C and the first GPIO device in Rust for QEMU.
+Additionally, in the respective patches, we have shared our insights and
+experiences regarding the use of Rust for device modeling within QEMU.
 
-Does anyone have any further comments or revisions on this set of patches?
-I have been using them in the production environment for a long time, and so far,
-they have been working reliably.
+1. The first patch implements the BusState for the I2CBus infrastructure.
+2. The second patch implements the I2CBus and I2CSlave infrastructure, along
+   with a discussion of the challenges encountered during the implementation.
+3. The third patch provides a set of necessary helper functions for the PCF8574
+   GPIO device.
+4. The fourth patch implements the PCF8574 GPIO device, along with a discussion
+   of the issues and considerations addressed during the implementation.
 
-Thanks,
-Chao
+Signed-off-by: Chen Miao <chenmiao@openatom.club>
+Signed-off-by: Chao Liu <chao.liu@openatom.club>
+
+---
+
+Due to issues with the email service provider, the previous PATCH series was not
+properly displayed as a thread. Subsequently, the resent emails were
+accidentally merged into a single thread, making the review process difficult.
+Therefore, resending it and hope to receive review.
+
+chenmiao (4):
+  rust/hw/core: Add the BusState of rust version
+  rust/hw/core: Add rust bindings/funcs for i2c bus
+  rust/hw/core: Provide some interfaces for the GPIO device
+  rust/hw/gpio: Add the the first gpio device pcf8574
+
+ hw/gpio/Kconfig                  |   5 +
+ hw/gpio/meson.build              |   2 +-
+ rust/Cargo.lock                  |  18 +-
+ rust/Cargo.toml                  |   1 +
+ rust/hw/Kconfig                  |   1 +
+ rust/hw/core/meson.build         |   2 +
+ rust/hw/core/src/bus.rs          |  44 +++++
+ rust/hw/core/src/i2c.rs          | 303 +++++++++++++++++++++++++++++++
+ rust/hw/core/src/lib.rs          |   6 +
+ rust/hw/core/src/qdev.rs         |  17 +-
+ rust/hw/core/wrapper.h           |   1 +
+ rust/hw/gpio/Kconfig             |   2 +
+ rust/hw/gpio/meson.build         |   1 +
+ rust/hw/gpio/pcf8574/Cargo.toml  |  28 +++
+ rust/hw/gpio/pcf8574/meson.build |  37 ++++
+ rust/hw/gpio/pcf8574/src/lib.rs  | 178 ++++++++++++++++++
+ rust/hw/meson.build              |   1 +
+ 17 files changed, 642 insertions(+), 5 deletions(-)
+ create mode 100644 rust/hw/core/src/bus.rs
+ create mode 100644 rust/hw/core/src/i2c.rs
+ create mode 100644 rust/hw/gpio/Kconfig
+ create mode 100644 rust/hw/gpio/meson.build
+ create mode 100644 rust/hw/gpio/pcf8574/Cargo.toml
+ create mode 100644 rust/hw/gpio/pcf8574/meson.build
+ create mode 100644 rust/hw/gpio/pcf8574/src/lib.rs
+
+-- 
+2.43.0
+
 
