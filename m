@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A143D2CE17
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Dec 2025 15:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA249D1CDC6
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Dec 2025 17:02:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSGx8-0002YK-Qv; Sun, 07 Dec 2025 10:45:39 -0500
+	id 1vSI80-00068p-EO; Sun, 07 Dec 2025 12:00:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vSGx6-0002Y5-HX
- for qemu-devel@nongnu.org; Sun, 07 Dec 2025 10:45:36 -0500
+ id 1vSI7r-00066m-Ii
+ for qemu-devel@nongnu.org; Sun, 07 Dec 2025 12:00:48 -0500
 Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vSGx4-0003uf-8X
- for qemu-devel@nongnu.org; Sun, 07 Dec 2025 10:45:36 -0500
+ id 1vSI7p-0003fc-D7
+ for qemu-devel@nongnu.org; Sun, 07 Dec 2025 12:00:47 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 9C8C7435B7
- for <qemu-devel@nongnu.org>; Sun,  7 Dec 2025 15:45:29 +0000 (UTC)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id E8F7F435B2
+ for <qemu-devel@nongnu.org>; Sun,  7 Dec 2025 17:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1765122329;
- bh=gCk0Tz0yB15/JI+rRzzbuijrpAGYQuzBYG0h2ObPJW4=;
+ s=20210803; t=1765126842;
+ bh=ERPhpq8Iy3jYlBUERB8cQG+RaG3OFh0ekrF7zWgXUuk=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=v3h0PWOgO/CwMbhDIHNIxLuTbTyUp24/qoUb/EiCFI5oLJc8+CLdp7032OTtlsSKO
- aopo4e2BE97Xq5HbG2EtQL/jL4+dCiNF5DkOKY1lP/X+CIDAqkNt8Kw4VVHRvb3Ae7
- 5RvfeYRZqKNU8dgacsKCGihbOEeiLdOObgnXb6Ixn31zSpAu14zU96Ph5Kp08Vltqx
- 7p0YP9478+YYFqnLGh9vpyK8nCTLb0nllU/9axMKbhOmX5CCd8L1Zs/Teykw/KPv55
- +yL59KkuR8hJj43gw1XYZfHLFJtoaLVs46PYeFNzy54lfnZ7Pkk9By+EURtZambBkm
- vpDj9TO5Ka63g==
+ b=RMdO5i/1DTh3g07WWFW+soZHvPucmeDD1wGDqPPhGFBbvK+x8MYMmeiCqPk7ACY0N
+ /YMZy8EyMSooivsMcoD+q2LhIVuE69wd3jIQFJkMWTgHyfETKWFuzcBslS7ilOd0xD
+ kJdGizfPfV2Y1hGuMmvgCAG6vuPt/jPj/XVtVeYDnVw+1K5TA/mrGUP8hOptGfgGva
+ i4UAvD0Pw6YOfU2TDDtTiKEIqFqUbGWWVKCASzksZ6aoKOrpo4kFOCzhS65/9tvu0U
+ KciRHTAcEocK6HGmnQZpDyRpPnCcHC6SJt3vz1PtFbD3ofFLTtJOFA0PvoMjHzWu1+
+ cnXM5jdEF9Rww==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 71F2C7EEB6
- for <qemu-devel@nongnu.org>; Sun,  7 Dec 2025 15:45:29 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id BE4DC7EE79
+ for <qemu-devel@nongnu.org>; Sun,  7 Dec 2025 17:00:42 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Sun, 07 Dec 2025 15:36:48 -0000
+Date: Sun, 07 Dec 2025 16:51:17 -0000
 From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
@@ -58,7 +58,7 @@ X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
 X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
 X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
 References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <176512180840.412072.5277031361277514454.malone@juju-98d295-prod-launchpad-4>
+Message-Id: <176512627764.4047758.11776121228212539059.malone@juju-98d295-prod-launchpad-2>
 Subject: [Bug 2133188] Re: Illegal instruction in memset under qemu-user for
  riscv64
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -67,7 +67,7 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="379e22b8475e3402088a4cdb4a6e7936a4d28414";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: fcdf27bca437281b11faf7e4e9ca459093ceec99
+X-Launchpad-Hash: c4f182328bd1dc2063627015d2fcb2c619e7d043
 Received-SPF: pass client-ip=185.125.188.250;
  envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
 X-Spam_score_int: -42
@@ -92,33 +92,11 @@ Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I have now been logging with -d exec.
-The error seems always to occur after __vdso_rt_sigreturn
+setup_sigcontext() only saves integer and floating point registers and
+misses out on vector registers and vector state CSRs.
 
-Trace 0: 0x7856cd9ff840 [003411ef/00007856cc13d868/020ea078/00000000]=C2=B7
-Trace 0: 0x7856ccf63640 [003411ef/00007856cc0ebc72/020ea078/00000000]=C2=B7
-Trace 0: 0x7856ccf63a80 [003411ef/00007856cc0ebc62/020ea078/00000000]=C2=B7
-Trace 0: 0x7856ccf63b80 [003411ef/00007856cc0ebc7e/020ea078/00000000]=C2=B7
-Trace 0: 0x7856cda00300 [003411ef/00007856d4e37a4c/020ea078/00000000]=C2=B7
-Trace 0: 0x7856cda007c0 [003411ef/00007856d5dc46cc/020ea078/00000000] __vds=
-o_rt_sigreturn
-riscv_tr_init_disas_context: pc: 0x00007856cc10095a, ctx->sew set to 0=20
-vext_check_store: pc: 0x00007856cc10095a
-eew =3D 3, s->sew =3D 0, s->lmul =3D 0
-emul =3D 3 : emul >=3D -3 && emul <=3D 3 =3D 1=20
-require_align(vd =3D 1, emul =3D 3) =3D 0=20
-require_nf(vd =3D 1, nf =3D 1, emul =3D 3) =3D 1=20
-----------------
-IN:=C2=B7
-0x7856cc10095a:  0207f0a7          vse64.v                 v1,(a5)
-
-OUT: [size=3D64]
-  -- guest addr 0x00007856cc10095a + tb prologue=20
-0x7856ce1bc400:=C2=B7=C2=B7
-OBJD-H: 8b5df085db0f8c29000000c645f401c78570130000a7f00702488d1d3a45f4fd
-OBJD-H: 48899d30120000be02000000488bfde86cad7207488d0508ffffffe9d83bc4fe
-
-Trace 0: 0x7856ce1bc400 [003411ef/00007856cc10095a/020ea078/00000000]=C2=B7
+Emulation of the aarch64 architecture saves vector registers in function
+target_setup_fpsimd_record() when processing signals.
 
 --=20
 You received this bug notification because you are a member of qemu-
