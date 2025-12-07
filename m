@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7135D2CE17
-	for <qemu-devel@archiver.kernel.org>; Sun,  7 Dec 2025 11:35:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A143D2CE17
+	for <qemu-devel@archiver.kernel.org>; Sun,  7 Dec 2025 15:46:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSD2O-0003XO-UO; Sun, 07 Dec 2025 06:34:49 -0500
+	id 1vSGx8-0002YK-Qv; Sun, 07 Dec 2025 10:45:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vSD2H-0003X8-6z
- for qemu-devel@nongnu.org; Sun, 07 Dec 2025 06:34:42 -0500
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1vSD2E-0008AH-Tv
- for qemu-devel@nongnu.org; Sun, 07 Dec 2025 06:34:40 -0500
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-343684a06b2so3689037a91.1
- for <qemu-devel@nongnu.org>; Sun, 07 Dec 2025 03:34:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1765107277; x=1765712077;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TdxHWrHPx7xiKEpiH6mMADi3aQNM4zvph163W5D1YJw=;
- b=ju/TD9GidAOZlbqiexL0aHXaR9mBDIi1wZfyXJ4axuozhTDT+NgObO9mC6tHGZQuAU
- PaSuhk1Bt6/NG3nR7sPOGXaxmvO8aTg3i9AHqnrgJvb8JGLc4+XNv9yiCI97/zMgmoyN
- HsKDeLuJacLI/iUPU8AEGAF9j5WurYR9ujnj5304PPNr7RXoGGg12GA4TvubQB1kc5nr
- s2rHQNt3+GU1tidqpVzb1yCsplhJb6EYhRmnPVQAXz1FAS4RnuKXMEZNhx4ru4S7CRw6
- Y4VRgNoFzCte05zYsU9YCZo6wwiSYq2SJmzz3Hn54sf92ZD6RsuMDQIepe77gVdVL1Ly
- JNiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765107277; x=1765712077;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TdxHWrHPx7xiKEpiH6mMADi3aQNM4zvph163W5D1YJw=;
- b=TpYGNj3AwFQ4bGnNVksxx/4bT+ICC6HiHXqRq/WLoBoeQh6SctLanHqKCHHS1yIkqD
- govjX/ZUkpiBTlrh3RcE6f2hu/3HHJVIaLTBRhLQjR0PHh8T2LT9/qiAt+3sWt4noQbY
- 4Hbftk+1DWIBLlLa/qr5Wq327IC1en/bBkRiO/n0T3UydK2Ao6HccBhUeEZng7o/lqyz
- A69URFCmFxfXkcKLBT6U6b3xfvdXe061YYH37QFEjHFop5Ycra7+wjzi7PFAonZGc0ru
- 03UvbuO462uqY6Gq1NtHWuUgEA3UggPhRkEAx6aW5vRqdCC0KhX1mkVxG0gscUUWfeNX
- 3wVQ==
-X-Gm-Message-State: AOJu0YwkqYfGKeR18BCgQLNSLSxesTVDXb3swm1qJO5vwlzz/s0VPqij
- aF18ndidysjPsdHmKW1DrYVzAS48QQ4aaSRJ1upEM59/pEeeF+SnGtHP5dzlUGDaZqd3eDeWldr
- GJcCahq4rZ7/tg3yTm5g9GumGdN9l62FiIBwENSvzCw==
-X-Gm-Gg: ASbGncvBHDwh8vjyrtoPM0ysrFZ2ysKj9PcA8Fsy+hi+IwqjhndClV3/3rzynsHfJjH
- 07tfKrTqH1+Lrb3Slv/R7vMCSO92CJEsEULUKbIfQWyEVptTGTZ+yNKqI3a1rTgHFhtFXcHIU/N
- RYh8x5WvSgXLYyKURx+Lx+9U8ScAA1aJwiAGxQ9D6VoceASlwYZpMk/5xhrcTMUK/dni6A+NcZ3
- pqq5O0xuB2+JrImBCxgnGI+5PNUdnsUAHMUWmoSc85TnMfGroNHyKb9OW1YY1bB7Lnqd0b4qOzq
- Hqz9Qse+LSSCPR6Z89wSxSZiy1SUS6ejvaZY
-X-Google-Smtp-Source: AGHT+IGVTM92GXtAjMUvOPRgjlQBEAdpWrPwMbBJByl/6hsr5pSkaTEbwQ3suHweD7FiP8fl8kMyPdm0nOnqHODa8rA=
-X-Received: by 2002:a17:90b:3910:b0:343:688e:3252 with SMTP id
- 98e67ed59e1d1-349a25190a0mr4166723a91.12.1765107276676; Sun, 07 Dec 2025
- 03:34:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1vSGx6-0002Y5-HX
+ for qemu-devel@nongnu.org; Sun, 07 Dec 2025 10:45:36 -0500
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1vSGx4-0003uf-8X
+ for qemu-devel@nongnu.org; Sun, 07 Dec 2025 10:45:36 -0500
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 9C8C7435B7
+ for <qemu-devel@nongnu.org>; Sun,  7 Dec 2025 15:45:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1765122329;
+ bh=gCk0Tz0yB15/JI+rRzzbuijrpAGYQuzBYG0h2ObPJW4=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=v3h0PWOgO/CwMbhDIHNIxLuTbTyUp24/qoUb/EiCFI5oLJc8+CLdp7032OTtlsSKO
+ aopo4e2BE97Xq5HbG2EtQL/jL4+dCiNF5DkOKY1lP/X+CIDAqkNt8Kw4VVHRvb3Ae7
+ 5RvfeYRZqKNU8dgacsKCGihbOEeiLdOObgnXb6Ixn31zSpAu14zU96Ph5Kp08Vltqx
+ 7p0YP9478+YYFqnLGh9vpyK8nCTLb0nllU/9axMKbhOmX5CCd8L1Zs/Teykw/KPv55
+ +yL59KkuR8hJj43gw1XYZfHLFJtoaLVs46PYeFNzy54lfnZ7Pkk9By+EURtZambBkm
+ vpDj9TO5Ka63g==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 71F2C7EEB6
+ for <qemu-devel@nongnu.org>; Sun,  7 Dec 2025 15:45:29 +0000 (UTC)
 MIME-Version: 1.0
-References: <fe7665bc-5ff6-4f78-82b7-1bea853583e3@gmail.com>
- <5030911.GXAFRqVoOG@weasel> <c2d79567-6b6c-4222-b1df-550db57ad626@gmail.com>
-In-Reply-To: <c2d79567-6b6c-4222-b1df-550db57ad626@gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Sun, 7 Dec 2025 04:34:24 -0700
-X-Gm-Features: AQt7F2oJkMuNZEmZMqoQbURv6HZR98VoS6diJUisON-NATtZo09fAWMikZZq7Vg
-Message-ID: <CANCZdfrkPrr-KQF800UVsQov8LpZte9x2ryRao7GGUyuxFwGeA@mail.gmail.com>
-Subject: Re: [RFC PATCH] virtfs: 9p: local: add default uid and gid options
-To: Andrey Erokhin <language.lawyer@gmail.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>
-Content-Type: multipart/alternative; boundary="00000000000037911106455b10f2"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1031;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Sun, 07 Dec 2025 15:36:48 -0000
+From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ status=Confirmed; importance=Medium;
+ assignee=heinrich.schuchardt@canonical.com; 
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
+X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
+X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
+References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
+Message-Id: <176512180840.412072.5277031361277514454.malone@juju-98d295-prod-launchpad-4>
+Subject: [Bug 2133188] Re: Illegal instruction in memset under qemu-user for
+ riscv64
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="379e22b8475e3402088a4cdb4a6e7936a4d28414";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: fcdf27bca437281b11faf7e4e9ca459093ceec99
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -90,122 +88,172 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000037911106455b10f2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I have now been logging with -d exec.
+The error seems always to occur after __vdso_rt_sigreturn
 
-On Sat, Dec 6, 2025, 10:12=E2=80=AFAM Andrey Erokhin <language.lawyer@gmail=
-.com>
-wrote:
+Trace 0: 0x7856cd9ff840 [003411ef/00007856cc13d868/020ea078/00000000]=C2=B7
+Trace 0: 0x7856ccf63640 [003411ef/00007856cc0ebc72/020ea078/00000000]=C2=B7
+Trace 0: 0x7856ccf63a80 [003411ef/00007856cc0ebc62/020ea078/00000000]=C2=B7
+Trace 0: 0x7856ccf63b80 [003411ef/00007856cc0ebc7e/020ea078/00000000]=C2=B7
+Trace 0: 0x7856cda00300 [003411ef/00007856d4e37a4c/020ea078/00000000]=C2=B7
+Trace 0: 0x7856cda007c0 [003411ef/00007856d5dc46cc/020ea078/00000000] __vds=
+o_rt_sigreturn
+riscv_tr_init_disas_context: pc: 0x00007856cc10095a, ctx->sew set to 0=20
+vext_check_store: pc: 0x00007856cc10095a
+eew =3D 3, s->sew =3D 0, s->lmul =3D 0
+emul =3D 3 : emul >=3D -3 && emul <=3D 3 =3D 1=20
+require_align(vd =3D 1, emul =3D 3) =3D 0=20
+require_nf(vd =3D 1, nf =3D 1, emul =3D 3) =3D 1=20
+----------------
+IN:=C2=B7
+0x7856cc10095a:  0207f0a7          vse64.v                 v1,(a5)
 
-> On 03/12/2025 15:33, Christian Schoenebeck wrote:
-> > On Monday, 1 December 2025 19:00:53 CET Andrey Erokhin wrote:
-> >> I was trying to boot from a directory tree owned by an ordinary user,
-> >> and some daemons weren't happy about non-root ownership of some files
-> >>
-> >> Example use:
-> >> -virtfs
-> local,path=3Drootfs,mount_tag=3Droot,security_model=3Dmapped,uid=3D0,gid=
-=3D0
-> >>
-> >> Works with any security_model
-> >
-> > First I thought do we really want to open that rabbit hole and add
-> permission management to the CLI options? However I get why this might be
-> useful for  mapped[-*] security models.
-> > But for passthrough it is not of any use, is it?
->
-> Prolly none, just a side effect of how it's implemented.
-> Can either make it an error when used with passthrough, or ignore them
-> (use default -1 value) when copying options to 9p fs context (with or
-> without a warning)
->
-> > Also while it is very handy to have a short option name like "uid" and
-> "gid", for the sake of long term progression and clarity an option name
-> like "default-uid" would be more appropriate.
->
-> Or rather default_uid, to match other options style? But uid/gid also
-> kinda match fmode/dmode :\
->
+OUT: [size=3D64]
+  -- guest addr 0x00007856cc10095a + tb prologue=20
+0x7856ce1bc400:=C2=B7=C2=B7
+OBJD-H: 8b5df085db0f8c29000000c645f401c78570130000a7f00702488d1d3a45f4fd
+OBJD-H: 48899d30120000be02000000488bfde86cad7207488d0508ffffffe9d83bc4fe
 
-FreeBSD has a mode where you can build the image where the files in the
-filesystem are owned by the user with random permission bits, but the
-actual owners / modes are in an mtree formatted file. The nopriv imagers
-combine the two when making images. It would be nice to have p9 do a
-simular mapping for the guest so I can boot test these images more directly
-w/o the copyout to the "bootable image". The set the uid feature would
-help, true, but leaves me wanting more.
+Trace 0: 0x7856ce1bc400 [003411ef/00007856cc10095a/020ea078/00000000]=C2=B7
 
-Warner
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133188
 
-> The patch is also missing the required documentation changes for these
-> new options BTW.
->
-> Haven=E2=80=99t added them yet, wasn=E2=80=99t sure there would be intere=
-st in this feature
->
->
+Title:
+  Illegal instruction in memset under qemu-user for riscv64
 
---00000000000037911106455b10f2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Confirmed
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Dec 6, 2025, 10:12=E2=80=
-=AFAM Andrey Erokhin &lt;<a href=3D"mailto:language.lawyer@gmail.com">langu=
-age.lawyer@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"=
->On 03/12/2025 15:33, Christian Schoenebeck wrote:<br>
-&gt; On Monday, 1 December 2025 19:00:53 CET Andrey Erokhin wrote:<br>
-&gt;&gt; I was trying to boot from a directory tree owned by an ordinary us=
-er,<br>
-&gt;&gt; and some daemons weren&#39;t happy about non-root ownership of som=
-e files<br>
-&gt;&gt;<br>
-&gt;&gt; Example use:<br>
-&gt;&gt; -virtfs local,path=3Drootfs,mount_tag=3Droot,security_model=3Dmapp=
-ed,uid=3D0,gid=3D0<br>
-&gt;&gt;<br>
-&gt;&gt; Works with any security_model<br>
-&gt; <br>
-&gt; First I thought do we really want to open that rabbit hole and add per=
-mission management to the CLI options? However I get why this might be usef=
-ul for=C2=A0 mapped[-*] security models.<br>
-&gt; But for passthrough it is not of any use, is it?<br>
-<br>
-Prolly none, just a side effect of how it&#39;s implemented.<br>
-Can either make it an error when used with passthrough, or ignore them (use=
- default -1 value) when copying options to 9p fs context (with or without a=
- warning)<br>
-<br>
-&gt; Also while it is very handy to have a short option name like &quot;uid=
-&quot; and &quot;gid&quot;, for the sake of long term progression and clari=
-ty an option name like &quot;default-uid&quot; would be more appropriate.<b=
-r>
-<br>
-Or rather default_uid, to match other options style? But uid/gid also kinda=
- match fmode/dmode :\<br></blockquote></div></div><div dir=3D"auto"><br></d=
-iv><div dir=3D"auto">FreeBSD has a mode where you can build the image where=
- the files in the filesystem are owned by the user with random permission b=
-its, but the actual owners / modes are in an mtree formatted file. The nopr=
-iv imagers combine the two when making images. It would be nice to have p9 =
-do a simular mapping for the guest so I can boot test these images more dir=
-ectly w/o the copyout to the &quot;bootable image&quot;. The set the uid fe=
-ature would help, true, but leaves me wanting more.</div><div dir=3D"auto">=
-<br></div><div dir=3D"auto">Warner</div><div dir=3D"auto"><br></div><div di=
-r=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pa=
-dding-left:1ex">
-&gt; The patch is also missing the required documentation changes for these=
- new options BTW.<br>
-<br>
-Haven=E2=80=99t added them yet, wasn=E2=80=99t sure there would be interest=
- in this feature<br>
-<br>
-</blockquote></div></div></div>
+Bug description:
+  # Title
+  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
+et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
 
---00000000000037911106455b10f2--
+  ## Summary
+  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
+ 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
+gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
+ (core dumped)" or "died with signal 4". The illegal instruction is observe=
+d inside glibc's memset implementation at an instruction that uses RISC-V v=
+ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
+e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
+nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
+lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
+code generation / state corruption), not a cmake bug.
+
+  ## Affects
+  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
+untu3)
+  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
+qemu-user static interpreter
+
+  ## Environment / Context
+  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
+  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
+  - Container image: ubuntu:26.04 for riscv64
+  - qemu package used:
+    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
+b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
+-user_10.0.6+ds-0+deb13u2).=20
+    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
+ost and registered via /proc/sys/fs/binfmt_misc/register
+  - CMake version used inside container (bootstrap/build may use system-pro=
+vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
+ggers crash)
+  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
+eral consecutive successes or failures)
+  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
+t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
+QEMU_STRACE also makes it much harder to reproduce.
+   =20
+
+  ## Full reproduction steps
+  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
+ry:
+     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
+uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
+     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
+-5ubuntu3_amd64
+     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
+in/qemu-riscv64-static
+
+  2. Register qemu-riscv64 with binfmt_misc:
+     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
+     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
+00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
+\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
+ >/proc/sys/fs/binfmt_misc/register
+
+  3. Start riscv64 ubuntu container:
+     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
+4 bash
+     docker exec -it ubuntu26 bash -i
+
+  4. Inside container:
+     apt update
+     apt install -y build-essential cmake
+
+  5. Reproducer 1:
+     cmake --system-information
+     -> Often fails with:
+        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
+        Illegal instruction (core dumped)
+
+  6. Reproducer 2 (minimal C project):
+     Create test_cmake/CMakeLists.txt:
+     cmake_minimum_required(VERSION 3.10)
+     project(HelloCMake C)
+     add_executable(hello main.c)
+
+     Create test_cmake/main.c:
+     #include <stdio.h>
+     int main() {
+         printf("Hello, CMake!\n");
+         return 0;
+     }
+
+     cd test_cmake
+     cmake .
+     -> Crash with:
+        -- Detecting C compiler ABI info
+        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
+
+  7. Reproducer 3 (rebuild cmake from source inside container):
+     apt source cmake
+     cd cmake
+     apt-get build-dep .
+     dpkg-buildpackage -us -uc -b
+     -> Bootstrapping error:
+        Illegal instruction (core dumped)
+        Error when bootstrapping CMake:
+        Problem while running initial CMake
+
+  8. Observed crash location (from gdb/QEMU_STRACE when available):
+     - Illegal instruction is in memset@@GLIBC_2.27+0x52
+     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
+bit elements)
+
+
+  ## Workarounds
+  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
+ using vectorized memset.
+  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
+=E2=80=94 both make the failure much less likely.
+
+  Note: The same workload does not reproduce the crash when run under
+  qemu-system (full-system emulation). The issue appears specific to
+  qemu-user
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
+
 
