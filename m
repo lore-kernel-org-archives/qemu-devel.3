@@ -4,94 +4,245 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96E4CD3B7E2
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 18:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 837CAD3B7E2
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 19:33:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSftm-0001vP-V1; Mon, 08 Dec 2025 13:23:50 -0500
+	id 1vSgye-0000FI-1t; Mon, 08 Dec 2025 14:32:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1vSfte-0001uY-Lu
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 13:23:45 -0500
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
- id 1vSfta-0000wt-I7
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 13:23:39 -0500
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-4ee147baf7bso23631cf.1
- for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 10:23:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1765218217; x=1765823017; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TngJjU+rt7LBYIuK3H9H1XJl8vNMRUXrNRon1o4ZPf0=;
- b=haw4qDPudvd+NR2PXBrj1QzObZhgphPebt0j7iB+ZDV0yyTsMWQobdhfWtFaDWwaNr
- fOtYqM7KS1i8bSGFjhl0Jwr/ejwb1cT5Mf0nM6v4kM9MzWNkSl5gS7/46BGJsSApQgcS
- jm8EPbV9VDDSae3RJscm3kIiEQ6wk3+5AkHWHWACcJk77xjdC6ge8T8C83igm+20EVpX
- EOid2NBoTMmRrXHiWHZsOqFkGs08CA0fsOd2hOpT7lXXi2V2uMCMJDNq7mWFtPLwSj1j
- opPXz5Tx7xqqV6NusBJAa/T0tnTPSAzZEApeWErjCGOH7BZu+a96YqLXkRMrFr6wft7g
- lm0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765218217; x=1765823017;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=TngJjU+rt7LBYIuK3H9H1XJl8vNMRUXrNRon1o4ZPf0=;
- b=D1k+3/UmQMhQ/mHMoCRgFtIqdU4BptdQD8XJbWSbbmCCEn4bFNk4S+8NEpIlaNU/vW
- WD4ZQ+xu1B1PHMX/QIR8XT9nMLKszXCpFq0gf62gH0sulZH1qT+Ea7mqTzD3yhByxTdh
- eU5Q/i7Y7/LVjb+EEEm4WP9vA856aF/PwiBCPTEgf+KuJgCOJEeSkMqWGEDEpiy+dM5p
- rVvleGDc8ptxachGjjiCrR23+uYLvbyANk0ap3Dj0szWWEynFmxmutlk2DICizeu/0Zp
- nQNj/M83sK7QswLE7MGnhmyGPZfqcKkRervkQMDmohTFeJYqkJ/P8vxvGTwglOuYNXQ9
- zcmQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWOOsbdXFGsBKkGoTwokcXMbOeEmo0utB9b0Laez+K9kBn9C+Kv8pecU2uLT1d01o7BWgJQi5xD1Bn9@nongnu.org
-X-Gm-Message-State: AOJu0YzNcw6TlJ9JD/dtDK6xU2L324Y1Lfwf23N9eGdvOjkhCAtedJVE
- YvuTtUF6xeMgYeAxv5Yh1JR5kAOcr4vKpqHJIgUAI5vpdAU6KjE61akABShFEIT/420YsqWDl1Z
- L4NAfnl46BnrhZSrU/Wn4O/CzXS2nY+NVWuxkpyXa
-X-Gm-Gg: ASbGncuzqTcAeRwBSHEe/YPvVWWEFGQmddyxFjw3ms5hqHL0LuwX31BBwl+pl5q4B5G
- NDc/DPEAqbSpJ9jEKDN6E3uqOCM5UkabQrCCIG85LMQjs5xmZ5qBqduYnem59dYEHNaNlZEA0k5
- J1vFbFeBBdLu1j5TTlaO7oYfFbwPQq0hupqQgMvIP4qJTgOel3dGA1XclRFlt6TcTlJeIGaUJwB
- e7ijQqX4rig+pLkybAdjwdbNoaWUCiRTKlpR0de9c1wnJwTlRiHTn7VivEZleW2335INknMt6HH
- PTOdUuTBUm6nJjbg/7VxPD383g==
-X-Google-Smtp-Source: AGHT+IH54b2qrX68YSATD+uXfy5i8QnamiIezcCRhQUNsa68hnFIDvnlPTqdUCptR5GVdmk6Umka0pRIFpGLEi7NuJg=
-X-Received: by 2002:ac8:5fc3:0:b0:4b2:ecb6:e6dd with SMTP id
- d75a77b69052e-4f1a509ad75mr230411cf.1.1765218217047; Mon, 08 Dec 2025
- 10:23:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1vSgya-0000DR-DH
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 14:32:52 -0500
+Received: from mx0b-00190b01.pphosted.com ([67.231.157.127])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bchaney@akamai.com>)
+ id 1vSgyY-00081o-A9
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 14:32:51 -0500
+Received: from pps.filterd (m0409410.ppops.net [127.0.0.1])
+ by m0409410.ppops.net-00190b01. (8.18.1.11/8.18.1.11) with ESMTP id
+ 5B8JF1Ut3528585; Mon, 8 Dec 2025 19:32:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=akamai.com; h=cc
+ :content-id:content-transfer-encoding:content-type:date:from
+ :in-reply-to:message-id:mime-version:references:subject:to; s=
+ jan2016.eng; bh=LWG5GA5D0nN7+SiEseunLvmpyV3JHDvoyAjb85imYM0=; b=
+ Svq2BUUEHflb/z58GzeJ7EB7HNIutO14bH1qCMa/EM3/vLqROx/SfN0L+6w7oCDE
+ 77iFWhIsclClz6Dr02IT8m9TiFsi7ouhY2KOqbkUjCA+3Gd6+R6N8WabjaAnmq2D
+ S3cXgc5Oa7CroNOJzBp68wz2Ohdo5EpTeuZKVc/pNsxYbQdMsJV8BI5vdkabG9qQ
+ ziE2rkmJJAw8nzgpX3N4cQr7dmLkW5fycJHzlXhSkesBBHLoHHd/k6X5eDkTgeUB
+ dM3BC+Pmup/cbbBx6c6NSrGbij37egWWxkbzhO+9w/m1A7L0qVrIKWhOensGtqyQ
+ 3hC9pA4mmpImBoswvcPshg==
+Received: from prod-mail-ppoint7
+ (a72-247-45-33.deploy.static.akamaitechnologies.com [72.247.45.33] (may be
+ forged))
+ by m0409410.ppops.net-00190b01. (PPS) with ESMTPS id 4aw09dqe6a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Dec 2025 19:32:47 +0000 (GMT)
+Received: from pps.filterd (prod-mail-ppoint7.akamai.com [127.0.0.1])
+ by prod-mail-ppoint7.akamai.com (8.18.1.2/8.18.1.2) with ESMTP id
+ 5B8IJ79t027449; Mon, 8 Dec 2025 14:32:46 -0500
+Received: from email.msg.corp.akamai.com ([172.27.50.221])
+ by prod-mail-ppoint7.akamai.com (PPS) with ESMTPS id 4avgq11pau-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 08 Dec 2025 14:32:46 -0500
+Received: from ustx2ex-dag4mb1.msg.corp.akamai.com (172.27.50.200) by
+ ustx2ex-dag5mb4.msg.corp.akamai.com (172.27.50.221) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Mon, 8 Dec 2025 11:32:46 -0800
+Received: from ustx2ex-exedge4.msg.corp.akamai.com (172.27.50.215) by
+ ustx2ex-dag4mb1.msg.corp.akamai.com (172.27.50.200) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27; Mon, 8 Dec 2025 13:32:46 -0600
+Received: from PH0PR07CU006.outbound.protection.outlook.com (72.247.45.132) by
+ ustx2ex-exedge4.msg.corp.akamai.com (172.27.50.215) with Microsoft
+ SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.27 via Frontend Transport; Mon, 8 Dec 2025 11:32:46 -0800
+Received: from SA0PR17MB4299.namprd17.prod.outlook.com (2603:10b6:806:e2::12)
+ by MN6PR17MB6851.namprd17.prod.outlook.com (2603:10b6:208:46e::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.4; Mon, 8 Dec
+ 2025 19:32:42 +0000
+Received: from SA0PR17MB4299.namprd17.prod.outlook.com
+ ([fe80::2d2f:3703:1db2:1d95]) by SA0PR17MB4299.namprd17.prod.outlook.com
+ ([fe80::2d2f:3703:1db2:1d95%5]) with mapi id 15.20.9388.009; Mon, 8 Dec 2025
+ 19:32:42 +0000
+From: "Chaney, Ben" <bchaney@akamai.com>
+To: Peter Xu <peterx@redhat.com>
+CC: "berrange@redhat.com" <berrange@redhat.com>, "farosas@suse.de"
+ <farosas@suse.de>, "armbru@redhat.com" <armbru@redhat.com>,
+ "mark.kanda@oracle.com" <mark.kanda@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "Hunt, Joshua" <johunt@akamai.com>,
+ "Tottenham, Max" <mtottenh@akamai.com>, "Hudson, Nick" <nhudson@akamai.com>
+Subject: Re: [PATCH] migration: cpr socket permissions fix
+Thread-Topic: [PATCH] migration: cpr socket permissions fix
+Thread-Index: AQHcWk+Ww41l0upbvEuzSutbKZyWdrT9TVYAgBRdCACAAZRjgIAEq6SA
+Date: Mon, 8 Dec 2025 19:32:41 +0000
+Message-ID: <85437E51-DEC6-4B79-8E5E-93B5D64D4CB2@akamai.com>
+References: <20251120185733.141912-1-bchaney@akamai.com>
+ <aSCOVNMJ-NK_9PuH@x1.local> <3DD5C44B-B1D5-4E5D-95F5-45DA855DDD39@akamai.com>
+ <aTL2j7PB4--w68ir@x1.local>
+In-Reply-To: <aTL2j7PB4--w68ir@x1.local>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA0PR17MB4299:EE_|MN6PR17MB6851:EE_
+x-ms-office365-filtering-correlation-id: fb62b810-111f-439e-f924-08de36908e0e
+x-ld-processed: 514876bd-5965-4b40-b0c8-e336cf72c743,ExtAddr
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|10070799003|376014|38070700021; 
+x-microsoft-antispam-message-info: =?utf-8?B?U0JzWnFrZ0RVT3VwS2dvVUpZRHk4ZWh6b1ArcUg4K29wcHlXSFJ3SmlzVm1J?=
+ =?utf-8?B?Qmh0NmJrbktQS3F3MnJEazdWY1YzQzRseStFaFB0QWZ0RXRzUzl2Q25RQ2FJ?=
+ =?utf-8?B?czMrMlpWSUQ1SVRONyt4clN1bUtoUlRjb2laT2l5a3hFblFVMWMza1NmK291?=
+ =?utf-8?B?dm5HTzVwclYxU0FhSTZkck94VktMV2FoMERvYzVhSllyQXhkL1AyckcvSGd2?=
+ =?utf-8?B?YlBOK2YzMXA1N25FNURlek85N3Y2cjJ5SHJQT0Nsd0pyNWYyaGZqVVE5TGZJ?=
+ =?utf-8?B?ZXJrZTJ3QmVjN1M1Vkwrdmp3RkFqTnMxVk1lRXJ4ZXpDQmJCVHlvQVFoQWlq?=
+ =?utf-8?B?RXVQWC80cWQ0bmFXamJSTDM5NmZDZUgra24xUUZ4dmE3VlNVQ1lpeTN0dVlT?=
+ =?utf-8?B?VElmSEZuN1pxVFlVc0huL0YwTVF4eGR2WitQRjZiSnBTdDUxZ3M4SWkzaUJF?=
+ =?utf-8?B?Y1pkVkRaYmVNbHhPb1FNbS84OUw3Vy9rcG1OS0prbkt1cEVGYzMzQXM2SmNP?=
+ =?utf-8?B?SFhraEUyVGxXQjJzZ1F2akxOUzJUemUrL0xZb1YvazFHOUtpYmROK1FhK05s?=
+ =?utf-8?B?cjU2NGh3azgrb0EweHgwZEdzcGZzd0VnRjQwWmJwUnMwWE9wQ1FoYWtvSWQz?=
+ =?utf-8?B?OTJXakNaeDJ0S0RSSEhqTkFMVXh1NU5Wb1pJTlNPZWlsZTFGalZseUZhVThx?=
+ =?utf-8?B?WmJXWm9iMktadk1IcEZtS3JxZ3dJa2JDMVAzSmhOL09NNnhGWitTdEpKd3Qv?=
+ =?utf-8?B?T2k2bWxqZGE2MWRkbk15KzdHNm1FZWVNenc1SEFicDNkbVVKUVFSRWtFbW1m?=
+ =?utf-8?B?b25TTFgxWlBBR2F6bVZrVCtEZ2lwSkdXc0xoUHJpMUdjSmJOU3llNFRZV2Zq?=
+ =?utf-8?B?c1RMVnlkS1hGczBPS0ZjaDZUQ0tMRjdoTXhPM0JpRmRjUzBCWTB2N3RFMlpz?=
+ =?utf-8?B?L2FzUjBhYzZFU3RlMU95anVKWXlyV0MrNXRLK3FmNmRaWDBIVUZtQ255S0xH?=
+ =?utf-8?B?eVBkakhFcEU1OTUxaUU5T3hCRC9IcjJMU2JYMk1BTURyZHNHbTV4NkNkc0xs?=
+ =?utf-8?B?K0tUaGJkYTAvVDRqM280eWYvbFBTcERISCtUWjd4bUtjd0kvelNiWWpuMm1X?=
+ =?utf-8?B?ZHdHVnBhcCt2U25ITTFRRWhrOUhNb0hYbTh1NGdnczk3TEdldnBHVUtvM1ZH?=
+ =?utf-8?B?Y0lweWZaNzJnSDJtRXRQZEZPVTZsVDFtcjh2Q0dkbklla3N6RU5jTUpydXlC?=
+ =?utf-8?B?VE9TRk5FSkFTTDYwOFVsR1pTSjNHVEpKT1hYOG9oNTJkb2taVGQyRG41ZmFq?=
+ =?utf-8?B?TWxxd2U1NXVxRVBIMnV6cGxQSzAzMStJL3NvTUQ5UWorWTBqMERxYzhRUEVl?=
+ =?utf-8?B?SGVVaHRVT3pKeGYvdUJJLzBWMUtFQVFtSVFocVdVcjhhQlcyeGZjZXVOUFJv?=
+ =?utf-8?B?SHpNRkI0L2xhWjZmOFc2SGRVcjlYU2EzajhXeURwbEhpS0pYWnFwZVNHT1Vk?=
+ =?utf-8?B?OGNKQTBBZzhVU2dvSm15eDE2U2hqZm1SdlhTSHhBTmpZeGoxTXUzOWZGMWZ6?=
+ =?utf-8?B?YjVyWU5GKzdHSWwvdTVFeTF1Q3hJOEZkblJxR0xNemlvQ3lrR1lwTHFpRW4y?=
+ =?utf-8?B?M0ZEaXdxQ1l3WU5yOG9FOS84Y3N4UGlaMjJYSXU2SmRCQ3Z5TjFDRCt2eXJM?=
+ =?utf-8?B?YjFYc0tmZzBMYStiZ1VNdTc0azB2VDNibmd4NytLSTlEY2RRcFNUSnJEYWlr?=
+ =?utf-8?B?Ui9Tdy9SR3M0a1IvSkl0TmFPL0dUVzd5L0dXZEdjeVVKWlNMWXduOTJHQmtL?=
+ =?utf-8?B?V0psbnowTm1TZng3cUpiTUpwYVlxbWxPcllyT09XK08vczJIYTBOZWdyZFlO?=
+ =?utf-8?B?NEpianpScFlhOFJDQi9NZUxkR2c5UTFlc205V3cycFVjU1dMeWpUTWJlWmE5?=
+ =?utf-8?B?RTk5ZHN2cGdRbEJYRzBRaDIzMldUbUR3Mk1NSGxORGRBa3NjWDk1VVdjRS9N?=
+ =?utf-8?B?ajZ5aDlRaTd2VzEwV0ZlSEdScXlrV0VreSsrQ1VmMXdvVFlZUWNNWFNHMjlY?=
+ =?utf-8?Q?N7sgIv?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA0PR17MB4299.namprd17.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(10070799003)(376014)(38070700021); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?R1dqWkhlVjVkNUJETDcyTUtLSFdwcjYxT0ovWU5VMUFTK0xseW5OL2VMSDE3?=
+ =?utf-8?B?OEVBbmJPY2Zzc2dSUTR0azExbXRkWjR6bWw5a2d5YktuOEVRdEdtQXcwUmUx?=
+ =?utf-8?B?TG4zQ2tQL1NBNnJ0UVNiQU5rdTlWbzd2dEV4MWpmamVwNlFVT0xRQyswWDZv?=
+ =?utf-8?B?SWxaTHVMMmF5TkFjV1JOVXFaSG5EN2dCb1h2bnFKQUorblJkWVNXR0hrMDZt?=
+ =?utf-8?B?SjdXRVN2QkJ2WGFDSWM0UDdKRFhLc1lLTGJJRFFSN3lmR0ZwYkw1alJuelRT?=
+ =?utf-8?B?ZTFyYkNpM3VMSVVOcVVtT0xxZTJoSzZ0LzYybk0wSWxQaUlKbGlzc1JGTXRj?=
+ =?utf-8?B?U0RnbjE5KzRUZ3NCQnVGM1NVdENtSmVxeW9VMW03UXBPWS9GTG5vbmtoTHRa?=
+ =?utf-8?B?QkNsS2JSUG9RNGhaQmxyNHZERC9VTmtZbFE4aHo0TGdkck5oZURPdURVMWxX?=
+ =?utf-8?B?VE9WeTY4OTJ2aTBpYWEraUpmNTBFUVQ3TDg2OVpVaFcvMGpyRk42VnNxd3c2?=
+ =?utf-8?B?ckZxcnBoajIya2FJcStZSFAwMDFOUGgrR3kvcTFsRVJyTGdLVUIrNUc4bGti?=
+ =?utf-8?B?RmtvbkNyTXV1dWpqZUxZSllFK0E1SXdzWTlYbFpCRW5yeHJUM1M0Rnp6cWxx?=
+ =?utf-8?B?STk3SnlPVHcwK1lIcGwrVFZWcFZNOFNlM2ZNNVRUZFhJZjZWUUE3ODVLTklm?=
+ =?utf-8?B?WVErY0Z3VVlrR1FSY2p5Nk1qTm1oT1ByMHFFMS9vQ2NUWWNSMnVzUW91eEkx?=
+ =?utf-8?B?dzN3S2k2MVk1YTArQjlWUHQvTHJSZ2JxaWI1NDUwMzdIWVZUZ0pxN3c3MFJs?=
+ =?utf-8?B?R3R3WGVoMTRwTkt1Q3doMjZ3MWdiZnNEZWxHWVBmMUdWOTgweVN1VFBmamNU?=
+ =?utf-8?B?TVFxUkgxQnQ3dUo3dDQ1cldoRFh0ck42Z21MWEpMT29PQzRteTM1d2hsYnhY?=
+ =?utf-8?B?QldWLzRKNUsyT1JrUm5pT0JEbW02WXMyZmpDOStpbXVDSlhnVTlBU1pkbHEy?=
+ =?utf-8?B?T3FodzNoUFFDdDNBcDJFWTRJOHluaU5zZXRPV0NQSlc2ZEZDWFdKY2Zqc1NO?=
+ =?utf-8?B?ZjRNSlE2SkNtQnE4bzMxcWpYcDQ1b29VU2VNWXBWMDBHRTV1Q1JuaVZRcENC?=
+ =?utf-8?B?NkZmWVcyUDFPRHk2eHBCR2x1Y0NoUzJzVzlBNlBPK1ZjTWVZc1hBdGhvRFpT?=
+ =?utf-8?B?Rmd4ZnFESjcxWnVOS2FnV3QwbElyYVIwbm5hQjdHa1k4eHl6em54RFd5bXpw?=
+ =?utf-8?B?ei82Z25DUnc2SWl5MHpva3BMVUxQWDI0d3lQSXJoTUlEOTQ3NXA5M0tmZzE4?=
+ =?utf-8?B?aHQydDZzQmx3V0wwNEVLeUVyYnJMZEt1T3A1ejN1aFdocmYzeXZ6cGZURk1X?=
+ =?utf-8?B?aEhQZ2I5WFQ5YW9iZVBhVWJxR3I0YTdlYVRNQk95NVlRWmd6QVc4N3lXZEov?=
+ =?utf-8?B?ZWFpQUpQTnF0WlZRclBOZ05tUmpDQzQvbkcweUdjT25pbVd3UUZVSmF6NU5t?=
+ =?utf-8?B?dDRNbEc0dFBiVWpCb0RzaTB2SGVGenlEOG1IUEdvN3RhUXBKZ2Y1NWkra0x0?=
+ =?utf-8?B?S3Nya2E2b1krTzZMRDd6aDdTU2xYMHd0dlpVZGd1dTAreDhLNlZDREpad2ho?=
+ =?utf-8?B?UEF6Rk8vK2J1eHJqSWtLK3NoWmExcUVtMjlybHdzcGFDc0EvTGFYaUFPR0FU?=
+ =?utf-8?B?R2l6Z3Q4a2NFUHBKd1pUOWNVdTRrNXE1amhZalhRZllHTW5DUzlqRVp2dy94?=
+ =?utf-8?B?b091ZUlIMExTaUl6K3VHRnVDNW1aVDEra2tNZERma0REeXVMZ0VsdXZuSys3?=
+ =?utf-8?B?RzlYU2ZIK0tvTEFCNmE4eUNUU0l5Q2RYckx4L0NGOHFNL3hQRmxUQXl1T0tv?=
+ =?utf-8?B?SkxIekxVUlFmYmJZT2M1b2lrVWRvYXkwYWU3aS9KcmlwY3NFY0RPVEVuR0RJ?=
+ =?utf-8?B?aTcrYkV6T1diRkJteFNtSlRyWFZ6ZjNoQTYvTHpkVW1oQ08xL0lXYmFiaVVo?=
+ =?utf-8?B?NlV2MG5ZTVd2WVZITHhYUW5hRnQzSVFqcW5BYUZXSU5oWEpHWUJHN0FvZDQ3?=
+ =?utf-8?B?aHVPdkl3bnVjS01LczZLU3hwb3RQQnFZVlFHTTRpbHV4bHlQcERVTWtGeDRh?=
+ =?utf-8?B?QVFIMTJLUFJSUTc3cEh5VHJ0ZHJ3bXpjNzN1SDRzZVpqejhYRTVGRHljdGRi?=
+ =?utf-8?Q?+0SNst7/U3MaKG4b+hdXJFmHptMvXOxEf/Y+MaV5y/Es?=
+arc-seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wXsTaKHfCdAgy6QYvMI5ZQrBT4RrwMylM/Bdl2osV6DAS/LLRn5sjDuGEmpTtUQHGjXvrJiMD/+LbpcOwQonM5H7h79TI9k+Ha1C9EC77rqal2dPBx2MWJFnKKuqFV40bCNjkFzehoT+rl3ITJ6nXQOME5a3PCTBf3rjx5MPSiNQ/q9A78Onyy7RSD6Zxhp2wVU6m4dIuUuUNnLAmUDKLoNPpb5LA9jPeNgVOoyIcZQ71u10ZHU2mBwQAAL46nsaGvgpWkyJkz9Ju1GP1ArDDolKU/1cPRN9Wc8oiPVWXxaksiWtkXNhCHHChe4iN2WDtMmW+/lI39I3kMfuahysUQ==
+arc-message-signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NyLNNOZ6r0blsncF9oiSs3VhuCvEkFx8AC2n1p7AXOk=;
+ b=AvVouJvqCJh+2Pmv25vQMmlh07zYVYS9uAzwqIsVeyXMSm+ARaYUwqRwrSRsg3lXBYKHj8snviR8OzS4VoveFpttTAQzgAS58k0IPxxXOl2sC0NNwPPhHVx1LgbC5uo6S1lMrFcLKyhFhzAeMF2cJZUEqbaBxSlY+q4qCYxxwW5k43TQ1kpeFVnVjRXatwP+ibS6+mU/1QnPE4CFF7XzRaQa3ZWRoZrpjDi1oCrFK33cXdCsidtlt7Qb6qhfIK2MDxIVVw2Eq6zq6t3kF38pGyBkk9CLmjhRo5wXBG6ipy/jD+WkjXWo/olwDd2gGa3sRxZFBgxZJ99EQoROo83DSw==
+arc-authentication-results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=akamai.com; dmarc=pass action=none header.from=akamai.com;
+ dkim=pass header.d=akamai.com; arc=none
+dkim-signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=akamai365.onmicrosoft.com; s=selector1-akamai365-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NyLNNOZ6r0blsncF9oiSs3VhuCvEkFx8AC2n1p7AXOk=;
+ b=gRswiPX7sYNiCrkcUAi6d8fla4x/njYFlDqbstyGTclQF5QtBItGCCxT4z4LuBmw2S02FunRzbhkXemRuy9P5bV6e5K1ozv1HVg2j5arLn6jmoNnQMYD3MD9Ud/2ogSHVIF7SxbnljfisGB9G5cN5r8elLeoKv8l7CKVE/ij5bo=
+x-ms-exchange-crosstenant-authas: Internal
+x-ms-exchange-crosstenant-authsource: SA0PR17MB4299.namprd17.prod.outlook.com
+x-ms-exchange-crosstenant-network-message-id: fb62b810-111f-439e-f924-08de36908e0e
+x-ms-exchange-crosstenant-originalarrivaltime: 08 Dec 2025 19:32:41.9136 (UTC)
+x-ms-exchange-crosstenant-fromentityheader: Hosted
+x-ms-exchange-crosstenant-id: 514876bd-5965-4b40-b0c8-e336cf72c743
+x-ms-exchange-crosstenant-mailboxtype: HOSTED
+x-ms-exchange-crosstenant-userprincipalname: UaQIYh30PCMfWu+fJ6cqw6ekRH5uSk+/9yi2aadgb4RwtJNyHDO9Tx0SqUxWJBn+qduFGysCanvFGAQitdq4aw==
+x-ms-exchange-transport-crosstenantheadersstamped: MN6PR17MB6851
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <8FF32C61B56D124E8EA230651566415B@namprd17.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
- <20251208074436.1871180-19-kane_chen@aspeedtech.com>
-In-Reply-To: <20251208074436.1871180-19-kane_chen@aspeedtech.com>
-From: Nabih Estefan <nabihestefan@google.com>
-Date: Mon, 8 Dec 2025 10:23:25 -0800
-X-Gm-Features: AQt7F2oaqeVTvKjHoWFWc8s3G3YKtd7naTesNOkVq8wD0DukT3bpvtd7RP63ZV4
-Message-ID: <CA+QoejU-hpaBce7KoOA0PXBz+DVT1-ZvoyY=mgDPnZLbdZwdHQ@mail.gmail.com>
-Subject: Re: [PATCH v3 18/18] hw/arm/aspeed: Model AST1700 I3C block as
- unimplemented device
-To: Kane Chen <kane_chen@aspeedtech.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- troy_lee@aspeedtech.com, Joe Komlodi <komlodi@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=nabihestefan@google.com; helo=mail-qt1-x82f.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-OriginatorOrg: akamai.com
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-06_02,2025-12-04_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ suspectscore=0
+ phishscore=0 malwarescore=0 spamscore=0 bulkscore=0 mlxscore=0
+ mlxlogscore=850 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2510240000 definitions=main-2512080166
+X-Proofpoint-ORIG-GUID: 8tMzEFib6N6_yKCtVzKNcDb1uBBhn3yv
+X-Authority-Analysis: v=2.4 cv=e84LiKp/ c=1 sm=1 tr=0 ts=693727df cx=c_pps
+ a=3lD5tZmBJQAvN++OlPJl4w==:117 a=3lD5tZmBJQAvN++OlPJl4w==:17
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=wP3pNCr1ah4A:10 a=g1y_e2JewP0A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=20KFwNOVAAAA:8 a=q3_VMtobxgQ33NqRd-8A:9 a=lqcHg5cX4UMA:10 a=QEXdDO2ut3YA:10
+ a=M91JV_wKSCcA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA4MDE2NSBTYWx0ZWRfX9AXxfVXmKaY9
+ BMlpeW4d9hbSLVEg78r7D5tlVlcYntRmFWlaH/zzN7es3Mb1kYkuq9a4eUrlR1eqA+KIBYOgF2Y
+ aRy4tr2pXELT5MJeBPwFAANcHuMc2suzj/2/o9OqvfKyuXF5NZ8Hq8udkysFNnnJ4uY4FelqIXe
+ PEpOCpAsv0aSDdvQDY/Y1g1m62Rv0P5J+pKskNHL5WLyg91mCAd4DcI2H2JTyMZlqA0lfbsbUyo
+ T3mvwcku8LLNQeMhU17d/U8a9y+hCtMgPD01DoYke/NTfO+1ISPSNoj9DmOWo6Y2Woy1KZYewPS
+ ha4BW5IONVmMOhPSboiL+82XdrwpTCPLZFP/cOp3CJjBKrZzjCKbtuNrDsNH1SdkMtm5bHqXUwl
+ Pr/AhZ83jF2uPPNzyNtjksQe37JXkw==
+X-Proofpoint-GUID: 8tMzEFib6N6_yKCtVzKNcDb1uBBhn3yv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-06_02,2025-12-04_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ spamscore=0 malwarescore=0 priorityscore=1501 clxscore=1015 bulkscore=0
+ lowpriorityscore=0 suspectscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512080165
+Received-SPF: pass client-ip=67.231.157.127; envelope-from=bchaney@akamai.com;
+ helo=mx0b-00190b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,190 +258,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Dec 7, 2025 at 11:47=E2=80=AFPM Kane Chen via <qemu-devel@nongnu.or=
-g> wrote:
->
-> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
->
-> AST1700 exposes more I3C buses than the current dummy I3C model
-> provides. When Linux probes the I3C devices on AST1700 this mismatch
-> can trigger a kernel panic. Model the I3C block as an unimplemented
-> device to make the missing functionality explicit and avoid unexpected
-> side effects.
->
-> This wires up the I3C interrupt lines for the IO expanders and adds the
-> corresponding device entries for the AST1700 model.
->
-> No functional I3C emulation is provided yet; this only prevents crashes a=
-nd
-> documents the missing piece.
-
-Would you be able to help review Joe Komlodi's I3C support patchset
-(link below)?
-I think it probably fills in this gap.
-
-(We don't need to block this submission on that landing though)
-
-https://lists.gnu.org/archive/html/qemu-arm/2025-06/msg00403.html
->
-> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> ---
->  include/hw/arm/aspeed_ast1700.h |  3 +++
->  include/hw/arm/aspeed_soc.h     |  2 ++
->  hw/arm/aspeed_ast1700.c         | 17 +++++++++++++++++
->  hw/arm/aspeed_ast27x0.c         | 18 ++++++++++++++++--
->  4 files changed, 38 insertions(+), 2 deletions(-)
->
-> diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1=
-700.h
-> index 490f2a3b05..874b4d63fe 100644
-> --- a/include/hw/arm/aspeed_ast1700.h
-> +++ b/include/hw/arm/aspeed_ast1700.h
-> @@ -19,6 +19,7 @@
->  #include "hw/ssi/aspeed_smc.h"
->  #include "hw/watchdog/wdt_aspeed.h"
->  #include "hw/char/serial-mm.h"
-> +#include "hw/misc/unimp.h"
->
->  #define AST1700_SGPIO_NUM            2
->  #define AST1700_WDT_NUM              9
-> @@ -45,6 +46,8 @@ struct AspeedAST1700SoCState {
->      AspeedI2CState i2c;
->      AspeedPWMState pwm;
->      AspeedWDTState wdt[AST1700_WDT_NUM];
-> +
-> +    UnimplementedDeviceState i3c;
->  };
->
->  #endif /* ASPEED_AST1700_H */
-> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
-> index 602ce3924d..4207887d0f 100644
-> --- a/include/hw/arm/aspeed_soc.h
-> +++ b/include/hw/arm/aspeed_soc.h
-> @@ -294,6 +294,8 @@ enum {
->      ASPEED_DEV_IOEXP1_I2C,
->      ASPEED_DEV_IOEXP0_INTCIO,
->      ASPEED_DEV_IOEXP1_INTCIO,
-> +    ASPEED_DEV_IOEXP0_I3C,
-> +    ASPEED_DEV_IOEXP1_I3C,
->  };
->
->  const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
-> diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
-> index e027ae02ad..67ff278241 100644
-> --- a/hw/arm/aspeed_ast1700.c
-> +++ b/hw/arm/aspeed_ast1700.c
-> @@ -15,6 +15,7 @@
->
->  #define AST2700_SOC_LTPI_SIZE        0x01000000
->  #define AST1700_SOC_SRAM_SIZE        0x00040000
-> +#define AST1700_SOC_I3C_SIZE         0x00010000
->
->  enum {
->      ASPEED_AST1700_DEV_SPI0,
-> @@ -26,6 +27,7 @@ enum {
->      ASPEED_AST1700_DEV_SGPIOM0,
->      ASPEED_AST1700_DEV_SGPIOM1,
->      ASPEED_AST1700_DEV_I2C,
-> +    ASPEED_AST1700_DEV_I3C,
->      ASPEED_AST1700_DEV_UART12,
->      ASPEED_AST1700_DEV_LTPI_CTRL,
->      ASPEED_AST1700_DEV_WDT,
-> @@ -42,6 +44,7 @@ static const hwaddr aspeed_ast1700_io_memmap[] =3D {
->      [ASPEED_AST1700_DEV_SGPIOM0]   =3D  0x00C0C000,
->      [ASPEED_AST1700_DEV_SGPIOM1]   =3D  0x00C0D000,
->      [ASPEED_AST1700_DEV_I2C]       =3D  0x00C0F000,
-> +    [ASPEED_AST1700_DEV_I3C]       =3D  0x00C20000,
->      [ASPEED_AST1700_DEV_UART12]    =3D  0x00C33B00,
->      [ASPEED_AST1700_DEV_LTPI_CTRL] =3D  0x00C34000,
->      [ASPEED_AST1700_DEV_WDT]       =3D  0x00C37000,
-> @@ -171,6 +174,15 @@ static void aspeed_ast1700_realize(DeviceState *dev,=
- Error **errp)
->                          wdt_offset,
->                          sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->wdt[i]=
-), 0));
->      }
-> +
-> +    /* I3C */
-> +    qdev_prop_set_string(DEVICE(&s->i3c), "name", "ioexp-i3c");
-> +    qdev_prop_set_uint64(DEVICE(&s->i3c), "size", AST1700_SOC_I3C_SIZE);
-> +    sysbus_realize(SYS_BUS_DEVICE(&s->i3c), errp);
-> +    memory_region_add_subregion_overlap(&s->iomem,
-> +                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_I3C]=
-,
-> +                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i3c), =
-0),
-> +                        -1000);
->  }
->
->  static void aspeed_ast1700_instance_init(Object *obj)
-> @@ -219,6 +231,11 @@ static void aspeed_ast1700_instance_init(Object *obj=
-)
->          object_initialize_child(obj, "ioexp-wdt[*]",
->                                  &s->wdt[i], "aspeed.wdt-ast2700");
->      }
-> +
-> +    /* I3C */
-> +    object_initialize_child(obj, "ioexp-i3c[*]", &s->i3c,
-> +                            TYPE_UNIMPLEMENTED_DEVICE);
-> +
->      return;
->  }
->
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 7433d365a3..5604a5b8e4 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -206,7 +206,9 @@ static const int aspeed_soc_ast2700a1_irqmap[] =3D {
->      [ASPEED_DEV_PECI]      =3D 197,
->      [ASPEED_DEV_SDHCI]     =3D 197,
->      [ASPEED_DEV_IOEXP0_I2C] =3D 198,
-> +    [ASPEED_DEV_IOEXP0_I3C] =3D 199,
->      [ASPEED_DEV_IOEXP1_I2C] =3D 200,
-> +    [ASPEED_DEV_IOEXP1_I3C] =3D 201,
->  };
->
->  /* GICINT 128 */
-> @@ -275,12 +277,24 @@ static const int ast2700_gic198_intcmap[] =3D {
->      [ASPEED_DEV_IOEXP0_I2C]       =3D 0, /* 0 - 15 */
->  };
->
-> +/* Primary AST1700 Interrupts */
-> +/* A1: GINTC 199 */
-> +static const int ast2700_gic199_intcmap[] =3D {
-> +    [ASPEED_DEV_IOEXP0_I3C]       =3D 0, /* 0 - 15 */
-> +};
-> +
->  /* Secondary AST1700 Interrupts */
->  /* A1: GINTC 200 */
->  static const int ast2700_gic200_intcmap[] =3D {
->      [ASPEED_DEV_IOEXP1_I2C]       =3D 0, /* 0 - 15 */
->  };
->
-> +/* Secondary AST1700 Interrupts */
-> +/* A1: GINTC 201 */
-> +static const int ast2700_gic201_intcmap[] =3D {
-> +    [ASPEED_DEV_IOEXP1_I3C]       =3D 0, /* 0 - 15 */
-> +};
-> +
->  /* GICINT 128 ~ 136 */
->  /* GICINT 192 ~ 201 */
->  struct gic_intc_irq_info {
-> @@ -298,9 +312,9 @@ static const struct gic_intc_irq_info ast2700_gic_int=
-cmap[] =3D {
->      {196, 1, 4, ast2700_gic132_gic196_intcmap},
->      {197, 1, 5, ast2700_gic133_gic197_intcmap},
->      {198, 2, 0, ast2700_gic198_intcmap},
-> -    {199, 1, 7, NULL},
-> +    {199, 2, 1, ast2700_gic199_intcmap},
->      {200, 3, 0, ast2700_gic200_intcmap},
-> -    {201, 1, 9, NULL},
-> +    {201, 3, 1, ast2700_gic201_intcmap},
->      {128, 0, 1, ast2700_gic128_gic192_intcmap},
->      {129, 0, 2, NULL},
->      {130, 0, 3, ast2700_gic130_gic194_intcmap},
-> --
-> 2.43.0
->
->
+DQrvu79PbiAxMi81LzI1LCAxMDoxMyBBTSwgIlBldGVyIFh1IiA8cGV0ZXJ4QHJlZGhhdC5jb20g
+PG1haWx0bzpwZXRlcnhAcmVkaGF0LmNvbT4+IHdyb3RlOg0KDQoNCj4gTWF5YmUgeW91IGNhbiBz
+dGljayB3aXRoIC1pbmNvbWluZyBkZWZlciwgdGhlbiBpdCdsbCBiZSBhZnRlciBzdGVwIFszXSwN
+Cj4gd2hpY2ggd2lsbCBpbmhlcml0IHRoZSBtb2RpZmllZCB1aWQsIGFuZCBtZ210IGRvZXNuJ3Qg
+bmVlZCB0byBib3RoZXINCj4gbW9uaXRvcmluZy4NCg0KSSB0cmllZCB0aGlzIGFwcHJvYWNoLCBi
+dXQgSXQgZG9lc24ndCBsb29rIGxpa2UgaXQgaXMgcG9zc2libGUgdG8gY3JlYXRlIHRoZQ0KY3By
+c29ja2V0IGxhdGVyIHdpdGggLWluY29taW5nIGRlZmVyLg0KDQoNCg0KDQoNCg==
 
