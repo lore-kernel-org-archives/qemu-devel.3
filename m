@@ -4,61 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00984D3B7EA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 00:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21743D3B7E2
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 01:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSlzu-0002ME-JS; Mon, 08 Dec 2025 19:54:34 -0500
+	id 1vSmLr-0000YU-Tg; Mon, 08 Dec 2025 20:17:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1vSlzs-0002LW-G5
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 19:54:32 -0500
-Received: from out-186.mta0.migadu.com ([2001:41d0:1004:224b::ba])
+ (Exim 4.90_1) (envelope-from <erickra@cs.utexas.edu>)
+ id 1vSkCQ-0003uM-4U
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 17:59:22 -0500
+Received: from newman.cs.utexas.edu ([128.83.139.110])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1vSlzp-0001oh-J2
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 19:54:32 -0500
-Message-ID: <0c2f64fa-a635-4593-8631-12a40af4a79b@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1765241666;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5+X08zZVuu9xwIY2BZW1KSVandt935dGEKHaAn+7km4=;
- b=G937yI1S8co2hEc7VyQfgFDGo4cp5TX776y429+I4Wp178opFfFrjdkXW25QXhwetFFWoW
- gTQae+79rlfM7Dl1wOdQd6m98rIAovmKx4g+9wA4/Ht8c7DUhn1rO8MxhWUPOs8INOphSP
- TQ7at5BbdFnYVIJrHsX6TjakCnOa7RQ=
-Date: Tue, 9 Dec 2025 08:54:19 +0800
+ (Exim 4.90_1) (envelope-from <erickra@cs.utexas.edu>)
+ id 1vSkCO-0003E1-4p
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 17:59:21 -0500
+X-AuthUser: erickra@cs.utexas.edu
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs.utexas.edu;
+ s=default; t=1765234753;
+ bh=RM01Kv7BoWbA+js1ttiKbz24jSMxTvmkQ4atM1+m2K4=;
+ h=From:To:Cc:Subject:Date:From;
+ b=mExZAHnpeW3on4qRmW0uKt62QMbHVJdGXLYGJAR82fDologQgm6WH4H2EWLfBm269
+ 3Q8R7ArRPPnI8fTfhQYiDlrF2L+krgm8WpWdm+ZRuEGz5MHXAllR/8Lz/yuq5byxRa
+ IYprZZCcuForhyu8+MnJcuTvtFIvi16NfDHJ3hG0=
+Received: from DESKTOP-312SSTN.public.utexas.edu
+ (wireless-10-147-52-59.public.utexas.edu [10.147.52.59])
+ (authenticated bits=0)
+ by newman.cs.utexas.edu (8.14.4/8.14.4/Debian-4.1ubuntu1.1) with ESMTP id
+ 5B8Mwn48039094
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 8 Dec 2025 16:59:11 -0600
+From: Eric K <erickra@cs.utexas.edu>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Eric K <erickra@cs.utexas.edu>
+Subject: [PATCH] char-udp: Fix initial backend open status
+Date: Mon,  8 Dec 2025 16:58:49 -0600
+Message-ID: <20251208225849.705554-1-erickra@cs.utexas.edu>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Subject: Re: [PATCH 2/2] target/arm: ensure PSCI register updates are flushed
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Alexander Graf <agraf@csgraf.de>
-References: <20251205151115.2035930-1-alex.bennee@linaro.org>
- <20251205151115.2035930-3-alex.bennee@linaro.org>
- <ff000682-b14d-4152-88b3-cb2761b60bc1@linux.dev>
- <87zf7shped.fsf@draig.linaro.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Zenghui Yu <zenghui.yu@linux.dev>
-In-Reply-To: <87zf7shped.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:1004:224b::ba;
- envelope-from=zenghui.yu@linux.dev; helo=out-186.mta0.migadu.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.3.9
+ (newman.cs.utexas.edu [128.83.139.110]); Mon, 08 Dec 2025 16:59:12 -0600 (CST)
+X-Virus-Scanned: clamav-milter 0.103.8 at newman
+X-Virus-Status: Clean
+Received-SPF: pass client-ip=128.83.139.110;
+ envelope-from=erickra@cs.utexas.edu; helo=newman.cs.utexas.edu
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 08 Dec 2025 20:17:14 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,53 +75,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/12/9 01:08, Alex Bennée wrote:
-> Zenghui Yu <zenghui.yu@linux.dev> writes:
-> 
-> > Hi Alex,
-> >
-> > On 2025/12/5 23:11, Alex Bennée wrote:
-> > > When we handle a host call we report state back to the caller via
-> > > registers. Set vcpu_dirty to indicate QEMU is currently the reference
-> > > and hoist the flush_cpu_state() and make the call unconditional.
-> > >
-> > > Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3228
-> > > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> >
-> > This fixes the guest boot issue.
-> >
-> > However I notice that some (all?) HMP commands (e.g., "info registers")
-> > don't return and result in guest hang. Haven't dig further though.
-> 
-> Does this fix it:
-> 
-> --8<---------------cut here---------------start------------->8---
-> target/arm: make HV_EXIT_REASON_CANCELED leave main loop
-> 
-> Without this we can spin tightly in the main HVF dispatch loop and
-> never release the lock long enough.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> 1 file changed, 1 insertion(+)
->  target/arm/hvf/hvf.c | 1 +
-> 
-> modified    target/arm/hvf/hvf.c
-> @@ -2020,6 +2020,7 @@ static int hvf_handle_vmexit(CPUState *cpu, hv_vcpu_exit_t *exit)
->          break;
->      case HV_EXIT_REASON_CANCELED:
->          /* we got kicked, no exit to process */
-> +        ret = -1;
->          break;
->      default:
->          g_assert_not_reached();
-> --8<---------------cut here---------------end--------------->8---
+This patch removes the `*be_opened = false` override for the UDP chardev
+backend. Since UDP is connectionless it never sends a `CHR_EVENT_OPENED`
+so it is never marked open. This causes some frontends (e.g. virtio-serial)
+to never perform any operations on the socket.
 
-Yes it works. Please feel free to add
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2993
+Signed-off-by: Eric K <erickra@cs.utexas.edu>
+---
+ chardev/char-udp.c     | 2 --
+ tests/unit/test-char.c | 2 ++
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Tested-by: Zenghui Yu <zenghui.yu@linux.dev>
+diff --git a/chardev/char-udp.c b/chardev/char-udp.c
+index 572fab0ad1..1025f577a0 100644
+--- a/chardev/char-udp.c
++++ b/chardev/char-udp.c
+@@ -215,8 +215,6 @@ static void qmp_chardev_open_udp(Chardev *chr,
+     g_free(name);
+ 
+     s->ioc = QIO_CHANNEL(sioc);
+-    /* be isn't opened until we get a connection */
+-    *be_opened = false;
+ }
+ 
+ static void char_udp_class_init(ObjectClass *oc, const void *data)
+diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
+index 8a98e42cad..2869c4e09d 100644
+--- a/tests/unit/test-char.c
++++ b/tests/unit/test-char.c
+@@ -1012,6 +1012,8 @@ static void char_udp_test_internal(Chardev *reuse_chr, int sock)
+         qemu_chr_fe_init(fe, chr, &error_abort);
+     }
+ 
++    g_assert(chr->be_open);
++
+     d.chr = chr;
+     qemu_chr_fe_set_handlers(fe, socket_can_read_hello, socket_read_hello,
+                              NULL, NULL, &d, NULL, true);
+-- 
+2.52.0
 
-on it and patch #2. Thanks for the fixes!
-
-Zenghui
 
