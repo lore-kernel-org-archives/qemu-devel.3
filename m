@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 510BDD3ABEF
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 07:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB90D3ABEF
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 07:46:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSVvT-0006mJ-3A; Mon, 08 Dec 2025 02:44:55 -0500
+	id 1vSVwT-0007FK-PL; Mon, 08 Dec 2025 02:46:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vSVvR-0006lX-8I; Mon, 08 Dec 2025 02:44:53 -0500
+ id 1vSVvm-00071L-QS; Mon, 08 Dec 2025 02:45:14 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vSVvP-0008LH-8u; Mon, 08 Dec 2025 02:44:52 -0500
+ id 1vSVvk-0008LH-5F; Mon, 08 Dec 2025 02:45:13 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 8 Dec
- 2025 15:44:37 +0800
+ 2025 15:44:40 +0800
 Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 8 Dec 2025 15:44:37 +0800
+ Transport; Mon, 8 Dec 2025 15:44:40 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
@@ -32,9 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 01/18] hw/misc: Add LTPI controller
-Date: Mon, 8 Dec 2025 15:44:13 +0800
-Message-ID: <20251208074436.1871180-2-kane_chen@aspeedtech.com>
+Subject: [PATCH v3 08/18] hw/arm/aspeed: Attach UART device to AST1700 model
+Date: Mon, 8 Dec 2025 15:44:20 +0800
+Message-ID: <20251208074436.1871180-9-kane_chen@aspeedtech.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
 References: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
@@ -68,282 +68,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 
-LTPI (LVDS Tunneling Protocol & Interface) is defined in the OCP DC-SCM
-2.0 specification:
-https://www.opencompute.org/documents/ocp-dc-scm-2-0-ltpi-ver-1-0-pdf
-
-LTPI is a protocol and physical interface for tunneling various low-speed
-signals between the HPM and SCM. As shown in Figure 2, the AST27x0 (left)
-integrates two LTPI controllers, allowing it to connect to up to two
-extended boards.
-
-This commit introduces a simple device model for the ASPEED LTPI
-controller in QEMU.
-
-The model includes basic MMIO read/write operations and sets default
-register values during reset to emulate a link-up state.
-
-Implements register space with read/write callbacks.
+Connect the UART controller to the AST1700 model by mapping its MMIO
+region.
 
 Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 ---
- include/hw/misc/aspeed_ltpi.h |  32 ++++++
- hw/misc/aspeed_ltpi.c         | 194 ++++++++++++++++++++++++++++++++++
- hw/misc/meson.build           |   1 +
- 3 files changed, 227 insertions(+)
- create mode 100644 include/hw/misc/aspeed_ltpi.h
- create mode 100644 hw/misc/aspeed_ltpi.c
+ include/hw/arm/aspeed_ast1700.h |  2 ++
+ hw/arm/aspeed_ast1700.c         | 18 ++++++++++++++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/include/hw/misc/aspeed_ltpi.h b/include/hw/misc/aspeed_ltpi.h
-new file mode 100644
-index 0000000000..cb1a9f4bd8
---- /dev/null
-+++ b/include/hw/misc/aspeed_ltpi.h
-@@ -0,0 +1,32 @@
-+/*
-+ * ASPEED LTPI Controller
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef ASPEED_LTPI_H
-+#define ASPEED_LTPI_H
-+
-+#include "hw/sysbus.h"
-+
-+#define TYPE_ASPEED_LTPI "aspeed.ltpi-ctrl"
-+OBJECT_DECLARE_SIMPLE_TYPE(AspeedLTPIState, ASPEED_LTPI)
-+
-+#define ASPEED_LTPI_CTRL_SIZE   0x200
-+#define ASPEED_LTPI_PHY_SIZE    0x100
-+#define ASPEED_LTPI_TOP_SIZE    0x100
-+
-+struct AspeedLTPIState {
-+    SysBusDevice parent;
-+    MemoryRegion mmio;
-+    MemoryRegion mmio_ctrl;
-+    MemoryRegion mmio_phy;
-+    MemoryRegion mmio_top;
-+
-+    uint32_t ctrl_regs[ASPEED_LTPI_CTRL_SIZE >> 2];
-+    uint32_t phy_regs[ASPEED_LTPI_PHY_SIZE >> 2];
-+    uint32_t top_regs[ASPEED_LTPI_TOP_SIZE >> 2];
-+};
-+
-+#endif /* ASPEED_LTPI_H */
-diff --git a/hw/misc/aspeed_ltpi.c b/hw/misc/aspeed_ltpi.c
-new file mode 100644
-index 0000000000..a94ed804a3
---- /dev/null
-+++ b/hw/misc/aspeed_ltpi.c
-@@ -0,0 +1,194 @@
-+/*
-+ * ASPEED LTPI Controller
-+ *
-+ * Copyright (C) 2025 ASPEED Technology Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "migration/vmstate.h"
-+#include "hw/misc/aspeed_ltpi.h"
-+
-+#define ASPEED_LTPI_TOTAL_SIZE  0x900
-+#define ASPEED_LTPI_CTRL_BASE   0x000
-+#define ASPEED_LTPI_PHY_BASE    0x200
-+#define ASPEED_LTPI_TOP_BASE    0x800
-+
-+#define LTPI_CTRL_LINK_MNG 0x42
-+#define LTPI_PHY_MODE 0x0
-+
-+static uint64_t aspeed_ltpi_top_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    return s->top_regs[idx];
-+}
-+
-+static void aspeed_ltpi_top_write(void *opaque, hwaddr offset,
-+                              uint64_t val, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    switch (offset) {
-+    default:
-+        s->top_regs[idx] = (uint32_t)val;
-+        break;
+diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1700.h
+index b9ee4952d0..a0d6b3ae44 100644
+--- a/include/hw/arm/aspeed_ast1700.h
++++ b/include/hw/arm/aspeed_ast1700.h
+@@ -10,6 +10,7 @@
+ 
+ #include "hw/sysbus.h"
+ #include "hw/misc/aspeed_ltpi.h"
++#include "hw/char/serial-mm.h"
+ 
+ #define TYPE_ASPEED_AST1700 "aspeed.ast1700"
+ 
+@@ -21,6 +22,7 @@ struct AspeedAST1700SoCState {
+     MemoryRegion iomem;
+ 
+     AspeedLTPIState ltpi;
++    SerialMM uart;
+ };
+ 
+ #endif /* ASPEED_AST1700_H */
+diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
+index 5255bd0daa..f88052ec8a 100644
+--- a/hw/arm/aspeed_ast1700.c
++++ b/hw/arm/aspeed_ast1700.c
+@@ -10,15 +10,18 @@
+ #include "hw/boards.h"
+ #include "hw/qdev-core.h"
+ #include "qom/object.h"
++#include "hw/qdev-properties.h"
+ #include "hw/arm/aspeed_ast1700.h"
+ 
+ #define AST2700_SOC_LTPI_SIZE        0x01000000
+ 
+ enum {
++    ASPEED_AST1700_DEV_UART12,
+     ASPEED_AST1700_DEV_LTPI_CTRL,
+ };
+ 
+ static const hwaddr aspeed_ast1700_io_memmap[] = {
++    [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
+     [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
+ };
+ 
+@@ -32,6 +35,17 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+                        AST2700_SOC_LTPI_SIZE);
+     sysbus_init_mmio(sbd, &s->iomem);
+ 
++    /* UART */
++    qdev_prop_set_uint8(DEVICE(&s->uart), "regshift", 2);
++    qdev_prop_set_uint32(DEVICE(&s->uart), "baudbase", 38400);
++    qdev_prop_set_uint8(DEVICE(&s->uart), "endianness", DEVICE_LITTLE_ENDIAN);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart), errp)) {
++        return;
 +    }
-+}
++    memory_region_add_subregion(&s->iomem,
++                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_UART12],
++                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->uart), 0));
 +
-+static const MemoryRegionOps aspeed_ltpi_top_ops = {
-+    .read = aspeed_ltpi_top_read,
-+    .write = aspeed_ltpi_top_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
+     /* LTPI controller */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->ltpi), errp)) {
+         return;
+@@ -45,6 +59,10 @@ static void aspeed_ast1700_instance_init(Object *obj)
+ {
+     AspeedAST1700SoCState *s = ASPEED_AST1700(obj);
+ 
++    /* UART */
++    object_initialize_child(obj, "uart[*]", &s->uart,
++                            TYPE_SERIAL_MM);
 +
-+static uint64_t aspeed_ltpi_phy_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    return s->phy_regs[idx];
-+}
-+
-+static void aspeed_ltpi_phy_write(void *opaque, hwaddr offset,
-+                              uint64_t val, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    switch (offset) {
-+    default:
-+        s->phy_regs[idx] = (uint32_t)val;
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_ltpi_phy_ops = {
-+    .read = aspeed_ltpi_phy_read,
-+    .write = aspeed_ltpi_phy_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static uint64_t aspeed_ltpi_ctrl_read(void *opaque,
-+                                      hwaddr offset, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    return s->ctrl_regs[idx];
-+}
-+
-+static void aspeed_ltpi_ctrl_write(void *opaque, hwaddr offset,
-+                              uint64_t val, unsigned size)
-+{
-+    AspeedLTPIState *s = opaque;
-+    uint32_t idx = offset >> 2;
-+
-+    switch (offset) {
-+    default:
-+        s->ctrl_regs[idx] = (uint32_t)val;
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_ltpi_ctrl_ops = {
-+    .read = aspeed_ltpi_ctrl_read,
-+    .write = aspeed_ltpi_ctrl_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 4,
-+    },
-+};
-+
-+static void aspeed_ltpi_reset(DeviceState *dev)
-+{
-+    AspeedLTPIState *s = ASPEED_LTPI(dev);
-+
-+    memset(s->ctrl_regs, 0, sizeof(s->ctrl_regs));
-+    memset(s->phy_regs, 0, sizeof(s->phy_regs));
-+    memset(s->top_regs, 0, sizeof(s->top_regs));
-+    /* set default values */
-+    s->ctrl_regs[LTPI_CTRL_LINK_MNG] = 0x11900007;
-+    s->phy_regs[LTPI_PHY_MODE] = 0x2;
-+}
-+
-+
-+static const VMStateDescription vmstate_aspeed_ltpi = {
-+    .name = TYPE_ASPEED_LTPI,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_UINT32_ARRAY(ctrl_regs, AspeedLTPIState,
-+                             ASPEED_LTPI_CTRL_SIZE >> 2),
-+        VMSTATE_UINT32_ARRAY(phy_regs, AspeedLTPIState,
-+                             ASPEED_LTPI_PHY_SIZE >> 2),
-+        VMSTATE_UINT32_ARRAY(top_regs, AspeedLTPIState,
-+                             ASPEED_LTPI_TOP_SIZE >> 2),
-+
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void aspeed_ltpi_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedLTPIState *s = ASPEED_LTPI(dev);
-+
-+    memory_region_init(&s->mmio, OBJECT(s), TYPE_ASPEED_LTPI,
-+                       ASPEED_LTPI_TOTAL_SIZE);
-+
-+    memory_region_init_io(&s->mmio_ctrl, OBJECT(s),
-+                          &aspeed_ltpi_ctrl_ops, s,
-+                          "aspeed-ltpi-ctrl", ASPEED_LTPI_CTRL_SIZE);
-+
-+    memory_region_init_io(&s->mmio_phy, OBJECT(s),
-+                          &aspeed_ltpi_phy_ops, s,
-+                          "aspeed-ltpi-phy", ASPEED_LTPI_PHY_SIZE);
-+
-+    memory_region_init_io(&s->mmio_top, OBJECT(s),
-+                          &aspeed_ltpi_top_ops, s,
-+                          "aspeed-ltpi-top", ASPEED_LTPI_TOP_SIZE);
-+
-+    memory_region_add_subregion(&s->mmio,
-+                                ASPEED_LTPI_CTRL_BASE, &s->mmio_ctrl);
-+    memory_region_add_subregion(&s->mmio,
-+                                ASPEED_LTPI_PHY_BASE, &s->mmio_phy);
-+    memory_region_add_subregion(&s->mmio,
-+                                ASPEED_LTPI_TOP_BASE, &s->mmio_top);
-+
-+    sysbus_init_mmio(SYS_BUS_DEVICE(s), &s->mmio);
-+}
-+
-+static void aspeed_ltpi_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    dc->realize = aspeed_ltpi_realize;
-+    dc->vmsd = &vmstate_aspeed_ltpi;
-+    device_class_set_legacy_reset(dc, aspeed_ltpi_reset);
-+}
-+
-+static const TypeInfo aspeed_ltpi_info = {
-+    .name          = TYPE_ASPEED_LTPI,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AspeedLTPIState),
-+    .class_init    = aspeed_ltpi_class_init,
-+};
-+
-+static void aspeed_ltpi_register_types(void)
-+{
-+    type_register_static(&aspeed_ltpi_info);
-+}
-+
-+type_init(aspeed_ltpi_register_types);
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index b1d8d8e5d2..45b16e7797 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -136,6 +136,7 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
-   'aspeed_hace.c',
-   'aspeed_i3c.c',
-   'aspeed_lpc.c',
-+  'aspeed_ltpi.c',
-   'aspeed_scu.c',
-   'aspeed_sbc.c',
-   'aspeed_sdmc.c',
+     /* LTPI controller */
+     object_initialize_child(obj, "ltpi-ctrl",
+                             &s->ltpi, TYPE_ASPEED_LTPI);
 -- 
 2.43.0
 
