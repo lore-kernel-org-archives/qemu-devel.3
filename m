@@ -4,100 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41871D3B7E2
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 13:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE41D3B7E7
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 13:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSbTG-0001Vn-3h; Mon, 08 Dec 2025 08:40:10 -0500
+	id 1vSbe3-0003uS-Sb; Mon, 08 Dec 2025 08:51:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1vSbTD-0001VX-Ct
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 08:40:07 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <schwab@suse.de>) id 1vSbTA-0005VI-Lt
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 08:40:07 -0500
-Received: from hawking.nue2.suse.org (unknown
- [IPv6:2a07:de40:a101:3:92b1:1cff:fe69:ddc])
- by smtp-out2.suse.de (Postfix) with ESMTP id 231DD5BF32;
- Mon,  8 Dec 2025 13:40:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765201200; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=iyOKmRDwi3q/5TiVoHTxTdgNt2oeoLAuQ6m5bu+mQLc=;
- b=nwmyJII2XjVDH4vUrj+hkhwTS/aZY4rJwp67wmdQ0JCC/BLj/BYpoI3OkrYEd8jb19NBXc
- auHxdByG6KhFJAIBiE4c2C/+rAifO/47d+OGZ5ot8JgowB5EoqRZ8oHDIfNwGI4xdGfoVy
- yW4odkq0eZMDQmqSEAfDkDla8fNDe4U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765201200;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=iyOKmRDwi3q/5TiVoHTxTdgNt2oeoLAuQ6m5bu+mQLc=;
- b=Pbflqql7b5CKJSBHNba7/egbezzTbF6PzmSVk/VzRS2Tkr7J88L0F+DwviKCI0pXniPOxX
- rVQnid44oKLVneCA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=nwmyJII2;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Pbflqql7
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765201200; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=iyOKmRDwi3q/5TiVoHTxTdgNt2oeoLAuQ6m5bu+mQLc=;
- b=nwmyJII2XjVDH4vUrj+hkhwTS/aZY4rJwp67wmdQ0JCC/BLj/BYpoI3OkrYEd8jb19NBXc
- auHxdByG6KhFJAIBiE4c2C/+rAifO/47d+OGZ5ot8JgowB5EoqRZ8oHDIfNwGI4xdGfoVy
- yW4odkq0eZMDQmqSEAfDkDla8fNDe4U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765201200;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type;
- bh=iyOKmRDwi3q/5TiVoHTxTdgNt2oeoLAuQ6m5bu+mQLc=;
- b=Pbflqql7b5CKJSBHNba7/egbezzTbF6PzmSVk/VzRS2Tkr7J88L0F+DwviKCI0pXniPOxX
- rVQnid44oKLVneCA==
-Received: by hawking.nue2.suse.org (Postfix, from userid 17005)
- id 0A3FD4A055A; Mon,  8 Dec 2025 14:40:00 +0100 (CET)
-From: Andreas Schwab <schwab@suse.de>
-To: Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH] linux-user: update statx emulation
-CC: qemu-devel@nongnu.org
-Date: Mon, 08 Dec 2025 14:40:00 +0100
-Message-ID: <mvmwm2xum6n.fsf@suse.de>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vSbe2-0003qv-2f
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 08:51:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vSbe0-0000ZQ-FZ
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 08:51:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765201875;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7snRi4k6OL50UuXEsAz1w2MO1BL+GPtsicaFpNiI3xo=;
+ b=IVQlpTaBJImzYNdAcoIDSLH6MRM2sTsUdsgBKBVPy3LpdbzFauXzt+zmQ/GLlWNjmqvm2e
+ Mk8fr6xK/fEjZs8G7ToIgGAvEcMgZBzhyUrNX8BIYDsrcOCBoO6NYjtMCJivQwFaXebNEi
+ YeL2DN614jS9s3fRGDVvw36T0njWShU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-U1s6szEFNcivNt7eV_JTbw-1; Mon,
+ 08 Dec 2025 08:51:12 -0500
+X-MC-Unique: U1s6szEFNcivNt7eV_JTbw-1
+X-Mimecast-MFC-AGG-ID: U1s6szEFNcivNt7eV_JTbw_1765201870
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7062B18002ED; Mon,  8 Dec 2025 13:51:10 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.22.8])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 06C73180035A; Mon,  8 Dec 2025 13:51:03 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] migration: Fix a possible crash when halting a guest during
+ migration
+Date: Mon,  8 Dec 2025 14:51:01 +0100
+Message-ID: <20251208135101.271417-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [15.29 / 50.00]; SPAM_FLAG(5.00)[];
- NEURAL_SPAM_LONG(3.50)[1.000]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_SPAM_SHORT(3.00)[1.000];
- HFILTER_HOSTNAME_UNKNOWN(2.50)[]; RDNS_NONE(2.00)[];
- ONCE_RECEIVED(1.20)[];
- HFILTER_HELO_IP_A(1.00)[hawking.nue2.suse.org];
- HFILTER_HELO_NORES_A_OR_MX(0.30)[hawking.nue2.suse.org];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_NO_TLS_LAST(0.10)[]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[];
- DIRECT_TO_MX(0.00)[Gnus/5.13 (Gnus v5.13)];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:dkim,suse.de:email];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MID_RHS_MATCH_FROM(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_COUNT_ONE(0.00)[1];
- SPAMHAUS_XBL(0.00)[2a07:de40:a101:3:92b1:1cff:fe69:ddc:from];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email]
-X-Spamd-Bar: +++++++++++++++
-X-Rspamd-Queue-Id: 231DD5BF32
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: add header
-X-Spam: Yes
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=schwab@suse.de; helo=smtp-out2.suse.de
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,49 +85,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
----
- linux-user/syscall.c      | 3 +++
- linux-user/syscall_defs.h | 6 +++++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+From: Thomas Huth <thuth@redhat.com>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index e379ddb1b7..248c5b5f7c 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8049,6 +8049,9 @@ static inline abi_long host_to_target_statx(struct target_statx *host_stx,
-     __put_user(host_stx->stx_rdev_minor, &target_stx->stx_rdev_minor);
-     __put_user(host_stx->stx_dev_major, &target_stx->stx_dev_major);
-     __put_user(host_stx->stx_dev_minor, &target_stx->stx_dev_minor);
-+    __put_user(host_stx->stx_mnt_id, &target_stx->stx_mnt_id);
-+    __put_user(host_stx->stx_dio_mem_align, &target_stx->stx_dio_mem_align);
-+    __put_user(host_stx->stx_dio_offset_align, &target_stx->stx_dio_offset_align);
+When shutting down a guest that is currently in progress of being
+migrated, there is a chance that QEMU might crash during bdrv_delete().
+The backtrace looks like this:
+
+ Thread 74 "mig/src/main" received signal SIGSEGV, Segmentation fault.
+
+ [Switching to Thread 0x3f7de7fc8c0 (LWP 2161436)]
+ 0x000002aa00664012 in bdrv_delete (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:5560
+ 5560	        QTAILQ_REMOVE(&graph_bdrv_states, bs, node_list);
+ (gdb) bt
+ #0  0x000002aa00664012 in bdrv_delete (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:5560
+ #1  bdrv_unref (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:7170
+ Backtrace stopped: Cannot access memory at address 0x3f7de7f83e0
+
+The problem is apparently that the migration thread is still active
+(migration_shutdown() only asks it to stop the current migration, but
+does not wait for it to finish), while the main thread continues to
+bdrv_close_all() that will destroy all block drivers. So the two threads
+are racing here for the destruction of the migration-related block drivers.
+
+I was able to bisect the problem and the race has apparently been introduced
+by commit c2a189976e211c9ff782 ("migration/block-active: Remove global active
+flag"), so reverting it might be an option as well, but waiting for the
+migration thread to finish before continuing with the further clean-ups
+during shutdown seems less intrusive.
+
+Note: I used the Claude AI assistant for analyzing the crash, and it
+came up with the idea of waiting for the migration thread to finish
+in migration_shutdown() before proceeding with the further clean-up,
+but the patch itself has been 100% written by myself.
+
+Fixes: c2a189976e ("migration/block-active: Remove global active flag")
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ migration/migration.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
+
+diff --git a/migration/migration.c b/migration/migration.c
+index b316ee01ab2..6f4bb6d8438 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -380,6 +380,16 @@ void migration_bh_schedule(QEMUBHFunc *cb, void *opaque)
+     qemu_bh_schedule(bh);
+ }
  
-     unlock_user_struct(target_stx, target_addr, 1);
++static void migration_thread_join(MigrationState *s)
++{
++    if (s && s->migration_thread_running) {
++        bql_unlock();
++        qemu_thread_join(&s->thread);
++        s->migration_thread_running = false;
++        bql_lock();
++    }
++}
++
+ void migration_shutdown(void)
+ {
+     /*
+@@ -393,6 +403,13 @@ void migration_shutdown(void)
+      * stop the migration using this structure
+      */
+     migration_cancel();
++    /*
++     * Wait for migration thread to finish to prevent a possible race where
++     * the migration thread is still running and accessing host block drivers
++     * while the main cleanup proceeds to remove them in bdrv_close_all()
++     * later.
++     */
++    migration_thread_join(migrate_get_current());
+     object_unref(OBJECT(current_migration));
  
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index cd9ff709b8..6ae6e1fa13 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2734,7 +2734,11 @@ struct target_statx {
-     abi_uint stx_dev_major; /* ID of device containing file [uncond] */
-     abi_uint stx_dev_minor;
-     /* 0x90 */
--    abi_ullong __spare2[14]; /* Spare space for future expansion */
-+    abi_ullong stx_mnt_id;
-+    abi_uint stx_dio_mem_align;
-+    abi_uint stx_dio_offset_align;
-+    /* 0xa0 */
-+    abi_ullong __spare2[12]; /* Spare space for future expansion */
-     /* 0x100 */
- };
+     /*
+@@ -1499,12 +1516,7 @@ static void migration_cleanup(MigrationState *s)
  
+     close_return_path_on_source(s);
+ 
+-    if (s->migration_thread_running) {
+-        bql_unlock();
+-        qemu_thread_join(&s->thread);
+-        s->migration_thread_running = false;
+-        bql_lock();
+-    }
++    migration_thread_join(s);
+ 
+     WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
+         /*
 -- 
 2.52.0
 
-
--- 
-Andreas Schwab, SUSE Labs, schwab@suse.de
-GPG Key fingerprint = 0196 BAD8 1CE9 1970 F4BE  1748 E4D4 88E3 0EEA B9D7
-"And now for something completely different."
 
