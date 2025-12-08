@@ -4,109 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89285D3B7EA
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 17:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F43D3B7E2
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 18:22:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSf9l-0000Yw-Bk; Mon, 08 Dec 2025 12:36:17 -0500
+	id 1vSfrl-0001LZ-EM; Mon, 08 Dec 2025 13:21:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vSf9i-0000YY-Ro
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 12:36:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vSf9h-0000FW-5K
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 12:36:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765215372;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rKnl8T6+eLdjS1EJKvQaKjVfpMlQErCfv8LJX9RyCRg=;
- b=J1unpKr9eEdDTrYBnHJmXXz6a/oHzEyUTUjDGZgNdIXLZKASCytuNzdt2mUx3xw8acYKN0
- loA4gRsanHHp1KTQy5/g0E6mzGKqycuxEhwCaxf+twXdqpY1amVxgkwVLlptt0sWYwNDSF
- JLmGLgwnVHrvzQ7UKxDoUjeBXD4ybIo=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-z1wq0QTaN8iqMkUigLJ0VQ-1; Mon, 08 Dec 2025 12:36:05 -0500
-X-MC-Unique: z1wq0QTaN8iqMkUigLJ0VQ-1
-X-Mimecast-MFC-AGG-ID: z1wq0QTaN8iqMkUigLJ0VQ_1765215365
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8b259f0da04so1006600385a.0
- for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 09:36:05 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765215365; x=1765820165;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1vSfrj-0001L2-CZ
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 13:21:43 -0500
+Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1vSfrh-0000gk-NA
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 13:21:43 -0500
+Received: by mail-qt1-x831.google.com with SMTP id
+ d75a77b69052e-4ee147baf7bso22551cf.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 10:21:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1765218099; x=1765822899; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rKnl8T6+eLdjS1EJKvQaKjVfpMlQErCfv8LJX9RyCRg=;
- b=T5uXp5zVQZ3WS3vCUIOmhboJc9HmJixlcZRqzGKASkz0aT51gFAubcVnkbcbJh6OdV
- QH48pN+U+FBXnLkdyDQV/+Gvx1KUR6i8ff7yQ03vrb22IsB9ZSSTRC2KdPjM/KlRlsCu
- cVgPOPhM86Z9g+6Fft8h//wFmnPNGxUfW4j9dVbY6t1H03rYBT7D5tpP9nZ2PlMq5Mq1
- zddu1nDrerR0igCrIwbqPTFTOfQ5QHYhX4Yk22tF9li8o2kU/0TQKVP9E3zK4LgojnKh
- wkCEAWMvGDO2hKgYGFM9Ei4JN0EfjUIUAdRdoqPuFag7xgP+OZPhXenBwoLmD8cFH82e
- 2Irg==
+ bh=GegoaMD4IBYBNAojeiyyUljTu2SnAHNz/bqQ2Tbdcf4=;
+ b=EA8e4llnYZQe5kD7JXNV9RKwiPxX/jX5de4weJB0wqxKrYrDCmHUlcKpws3ZWdVjRI
+ 4pAmkI/jN0Eakryx3k37QdpHjbCMjUWgjwJ+RQC6yGvT1iO5wq5ZATh6V3RRRo2/pyEF
+ 7YnpqBzvtiZcqsPDnQGPIrjmGbl7HRg4lPSWg5JmVsZVLxN61BNQnmZRPRVcpPZ01ILl
+ SzPNaizzrM7kg7aEsN7Ucb2xWMZ7t/JmTgc1iM3d1vp0nyawif9Z8OKZqtdF5ER9xVQC
+ Uuikf8AlbiMLfDwV5Hq6xKBCGxY/ihmGTyYRPs2qur0AZKOO+X0ByNpQCo/palx0G9ZQ
+ XPNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765218099; x=1765822899;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GegoaMD4IBYBNAojeiyyUljTu2SnAHNz/bqQ2Tbdcf4=;
+ b=IItcyUho8bWbZwhzruiShxF+TBVSb1OsGpTbOyt86Wt3szlrSYK2mIfw79XuZHcGl3
+ qd1lRlRDXGlTKWNg0evxjK/1vPOIjhSXuGNycP8mfoWrkTcpjdsK1l8Dir+S940tSgd9
+ YGUOXKDHs3WcThPftqjbeRm45Yt+lqDa2VqNsJ2z3AqWEf6z/OTIKGLsrDzulgYGpQCa
+ 7TSiiCmJeyQokTzRwovGfPZWFJ92IU1xZ5yENZ1StDbcRe3F1X7U0GWSYYMW1ovXDK7P
+ q+87r2W+QiG9rWWhwH0hmDZP96l8T3PC3LMxALbM62erLnoLsNEhvorV1PICNXL+jAAW
+ +B6w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2i4KFPFzsaTNFdtryeSPmEA256SnYczAtARwPCMNxp92RZ7+8ZvE7Iv+bXi7s3WQ7lrB/Bfw+S11d@nongnu.org
-X-Gm-Message-State: AOJu0YwBzUXA+FCQB1tZmmjbgfjJ3IbqBoCTaBIZaZkEXEimuk0aJ5Dx
- q+2/cwdqWFhHfCT4+ZXJW/zaraTrh10YEsxWwsesVj1mR+hMY7WuHeZCmpSLRbTWG+sdxMWV5kP
- 9rmNHn9GXoxXvmV3tQ5xhrphURQ/RlpC4VbPfB7eLp1SENHLdWSMezvJ/
-X-Gm-Gg: ASbGncum76Lb8qDFtCPTdjaw1+QbF2GSDFoT+MLclYunyUkyU2WegrXbk+HHHdnryWJ
- +tQDwFnTaCIaWfmG+9mTYmZnYB00J1Z09l5ULSIlh+4AuzlQNPyDDMJ9Dz8609UWKxpAp33nka7
- 274F2jcTgVH8rxjXhakGfsoLrBpbqrKlXnsZrXG7fz8oINxnDN/sB86lBSrENltZf2H+0s6Fcpj
- lqpyS78+61EwsYRnvTsNggc8tT38xCfG6i5V+yufBUhm23beapzHg3d0fziCkjKsmhDqYzhzuTB
- xS4aetx1wjP6+xcUvQzI1kSdndriRnKy7RkewT80EG+2DVyR0l1PK0hnvQO9A0bwhoApJKfslbT
- 3dxhXMz0ELeeqOKPM8f1ip+eeOYII0ZIEEL2E3V1D3qJ/dqMnQ07lxf3O0g==
-X-Received: by 2002:a05:620a:690e:b0:8b2:5d6e:48b5 with SMTP id
- af79cd13be357-8b6a253542emr1081470785a.30.1765215364804; 
- Mon, 08 Dec 2025 09:36:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFG/wZP2yS+c/cnezBbNeu1AvF9ArRr5L/X5cF1eZO1gs6Q8EpniZ4HAgEWyWDHQFXfDlqDzg==
-X-Received: by 2002:a05:620a:690e:b0:8b2:5d6e:48b5 with SMTP id
- af79cd13be357-8b6a253542emr1081466985a.30.1765215364290; 
- Mon, 08 Dec 2025 09:36:04 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b627a798desm1083136485a.33.2025.12.08.09.36.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Dec 2025 09:36:03 -0800 (PST)
-Message-ID: <60d244b6-d29a-4056-b671-604bdb06fcf7@redhat.com>
-Date: Mon, 8 Dec 2025 18:36:00 +0100
+ AJvYcCV3dsf48VwqOOU8qy4d5MUKzW9xDd0EnL2X34WIcGXRHrB+ZDNGBJRG6EuhVVetKZI63KSWaZgTE50K@nongnu.org
+X-Gm-Message-State: AOJu0YxLvGYhe+t5CBxowlkwZ6FcnKSk/OUDtuQTJWIAbjfI6EWoC7MW
+ s1OQ5/DV0O+43TCy+mGsUUO2o8JOzwXsJJ+AwK0Um+vMIWrgSdc1W3HcO7SS5+ohG+EpdxwofcQ
+ Wheb1PHroe0b8L0qBDmRxH3bAw1qjp0qTibl/WtTC
+X-Gm-Gg: ASbGncviDs1C7d0KCmtkUGC5pl71vPSwRNK9saY6PQrAahsdZRshPuVE2z+m89X/7tP
+ 2r86gxOJ4h6LXq4NKSmGiyLMAlGUlGeWn6eyXMobxdqK994dNMNCC4HkzX4zy2LtWFihF/L96pJ
+ J1Wp0inXvPz+3MirYIeTwnDEw3kF0XPCj8aEhDz2k5W+tWkJpWWu1Ffu7OpFtFjCI6B6grPP30M
+ 0jc0oFH6q251P9CEeek3vP09pazAnvxStKNbuuOhlb+6+tgtgKiWU7sSx6zJnt64YZtA+XUfuXx
+ QEhekiNqkf2cpSTeD+vOhJT8Ew==
+X-Google-Smtp-Source: AGHT+IF0d6Grur514sbwezzzvoHr3zDGB1sIe8vg3mNqeZJigmwuRQ/HvmsJI3sYYXQ2BQDq3VCiN5NIAZZ6fKii8PY=
+X-Received: by 2002:a05:622a:8c0b:b0:4f0:2e33:81aa with SMTP id
+ d75a77b69052e-4f1a50cebe6mr129061cf.11.1765218098803; Mon, 08 Dec 2025
+ 10:21:38 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 28/33] hw/arm/smmuv3-accel: Add support for ATS
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- kjaju@nvidia.com
-References: <20251120132213.56581-1-skolothumtho@nvidia.com>
- <20251120132213.56581-29-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251120132213.56581-29-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
+ <20251208074436.1871180-18-kane_chen@aspeedtech.com>
+In-Reply-To: <20251208074436.1871180-18-kane_chen@aspeedtech.com>
+From: Nabih Estefan <nabihestefan@google.com>
+Date: Mon, 8 Dec 2025 10:21:27 -0800
+X-Gm-Features: AQt7F2qF_pgj6RrViDlozXX_E7WkTMzPcE5whutxjgby_SkfLGxzznkl3wXsC7Q
+Message-ID: <CA+QoejXUfmJfuWSPndkuF=Dqu7QBJF7ACgH90Wmfshr4+3pDoA@mail.gmail.com>
+Subject: Re: [PATCH v3 17/18] hw/arm/aspeed: Attach SGPIOM device to AST1700
+ model
+To: Kane Chen <kane_chen@aspeedtech.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, 
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ troy_lee@aspeedtech.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
+ envelope-from=nabihestefan@google.com; helo=mail-qt1-x831.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,177 +104,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
-
-On 11/20/25 2:22 PM, Shameer Kolothum wrote:
-> QEMU SMMUv3 does not enable ATS (Address Translation Services) by default.
-> When accelerated mode is enabled and the host SMMUv3 supports ATS, it can
-> be useful to report ATS capability to the guest so it can take advantage
-> of it if the device also supports ATS.
-device = assigned device
+On Sun, Dec 7, 2025 at 11:48=E2=80=AFPM Kane Chen via <qemu-devel@nongnu.or=
+g> wrote:
 >
-> Note: ATS support cannot be reliably detected from the host SMMUv3 IDR
-> registers alone, as firmware ACPI IORT tables may override them. The
-> user must therefore ensure the support before enabling it.
+> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 >
-> The ATS support enabled here is only relevant for vfio-pci endpoints,
-> as SMMUv3 accelerated mode does not support emulated endpoint devices.
-> QEMU’s SMMUv3 implementation still lacks support for handling ATS
-> translation requests, which would be required for emulated endpoints.
+> Connect the SGPIOM device to AST1700 model.
 >
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
 > ---
->  hw/arm/smmuv3-accel.c    |  3 +++
->  hw/arm/smmuv3.c          | 21 ++++++++++++++++++++-
->  hw/arm/virt-acpi-build.c | 10 ++++++++--
->  include/hw/arm/smmuv3.h  |  1 +
->  4 files changed, 32 insertions(+), 3 deletions(-)
+>  include/hw/arm/aspeed_ast1700.h |  3 +++
+>  hw/arm/aspeed_ast1700.c         | 20 ++++++++++++++++++++
+>  2 files changed, 23 insertions(+)
 >
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index b6429c8b42..73c7ce586a 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -647,6 +647,9 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
->  
->      /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled it */
->      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
-> +
-> +    /* QEMU SMMUv3 has no ATS. Advertise ATS if opt-on by property */
-opt-in?
-> +    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, s->ats);
->  }
->  
->  /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 296afbe503..ad476146f6 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1498,13 +1498,24 @@ static int smmuv3_cmdq_consume(SMMUv3State *s, Error **errp)
->               */
->              smmuv3_range_inval(bs, &cmd, SMMU_STAGE_2);
->              break;
-> +        case SMMU_CMD_ATC_INV:
-> +            SMMUDevice *sdev = smmu_find_sdev(bs, CMD_SID(&cmd));
-> +
-> +            if (!sdev) {
-> +                break;
-> +            }
-> +
-> +            if (!smmuv3_accel_issue_inv_cmd(s, &cmd, sdev, errp)) {
-> +                cmd_error = SMMU_CERROR_ILL;
-> +                break;
-> +            }
-> +            break;
-with the compilation issue fixed,
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1=
+700.h
+> index 7292719dc2..490f2a3b05 100644
+> --- a/include/hw/arm/aspeed_ast1700.h
+> +++ b/include/hw/arm/aspeed_ast1700.h
+> @@ -12,6 +12,7 @@
+>  #include "hw/misc/aspeed_scu.h"
+>  #include "hw/adc/aspeed_adc.h"
+>  #include "hw/gpio/aspeed_gpio.h"
+> +#include "hw/gpio/aspeed_sgpio.h"
 
-Eric
+As far as I can tell this depends on Yubin Zou's SGPIO series (link below)?
+Does that mean the series looks good? Can you reply to the series
+itself if it is?
 
->          case SMMU_CMD_TLBI_EL3_ALL:
->          case SMMU_CMD_TLBI_EL3_VA:
->          case SMMU_CMD_TLBI_EL2_ALL:
->          case SMMU_CMD_TLBI_EL2_ASID:
->          case SMMU_CMD_TLBI_EL2_VA:
->          case SMMU_CMD_TLBI_EL2_VAA:
-> -        case SMMU_CMD_ATC_INV:
->          case SMMU_CMD_PRI_RESP:
->          case SMMU_CMD_RESUME:
->          case SMMU_CMD_STALL_TERM:
-> @@ -1930,6 +1941,10 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->              error_setg(errp, "ril can only be disabled if accel=on");
->              return false;
->          }
-> +        if (s->ats) {
-> +            error_setg(errp, "ats can only be enabled if accel=on");
-> +            return false;
+ https://lore.kernel.org//qemu-devel/20251106-aspeed-sgpio-v1-0-b026093716f=
+a@google.com
+>  #include "hw/i2c/aspeed_i2c.h"
+>  #include "hw/misc/aspeed_ltpi.h"
+>  #include "hw/misc/aspeed_pwm.h"
+> @@ -19,6 +20,7 @@
+>  #include "hw/watchdog/wdt_aspeed.h"
+>  #include "hw/char/serial-mm.h"
+>
+> +#define AST1700_SGPIO_NUM            2
+>  #define AST1700_WDT_NUM              9
+>
+>  #define TYPE_ASPEED_AST1700 "aspeed.ast1700"
+> @@ -39,6 +41,7 @@ struct AspeedAST1700SoCState {
+>      AspeedADCState adc;
+>      AspeedSCUState scu;
+>      AspeedGPIOState gpio;
+> +    AspeedSGPIOState sgpiom[AST1700_SGPIO_NUM];
+>      AspeedI2CState i2c;
+>      AspeedPWMState pwm;
+>      AspeedWDTState wdt[AST1700_WDT_NUM];
+> diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
+> index c9d7a97a80..e027ae02ad 100644
+> --- a/hw/arm/aspeed_ast1700.c
+> +++ b/hw/arm/aspeed_ast1700.c
+> @@ -23,6 +23,8 @@ enum {
+>      ASPEED_AST1700_DEV_ADC,
+>      ASPEED_AST1700_DEV_SCU,
+>      ASPEED_AST1700_DEV_GPIO,
+> +    ASPEED_AST1700_DEV_SGPIOM0,
+> +    ASPEED_AST1700_DEV_SGPIOM1,
+>      ASPEED_AST1700_DEV_I2C,
+>      ASPEED_AST1700_DEV_UART12,
+>      ASPEED_AST1700_DEV_LTPI_CTRL,
+> @@ -37,6 +39,8 @@ static const hwaddr aspeed_ast1700_io_memmap[] =3D {
+>      [ASPEED_AST1700_DEV_ADC]       =3D  0x00C00000,
+>      [ASPEED_AST1700_DEV_SCU]       =3D  0x00C02000,
+>      [ASPEED_AST1700_DEV_GPIO]      =3D  0x00C0B000,
+> +    [ASPEED_AST1700_DEV_SGPIOM0]   =3D  0x00C0C000,
+> +    [ASPEED_AST1700_DEV_SGPIOM1]   =3D  0x00C0D000,
+>      [ASPEED_AST1700_DEV_I2C]       =3D  0x00C0F000,
+>      [ASPEED_AST1700_DEV_UART12]    =3D  0x00C33B00,
+>      [ASPEED_AST1700_DEV_LTPI_CTRL] =3D  0x00C34000,
+> @@ -142,6 +146,16 @@ static void aspeed_ast1700_realize(DeviceState *dev,=
+ Error **errp)
+>                          aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_LTPI=
+_CTRL],
+>                          sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->ltpi),=
+ 0));
+>
+> +    /* SGPIOM */
+> +    for (int i =3D 0; i < AST1700_SGPIO_NUM; i++) {
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->sgpiom[i]), errp)) {
+> +            return;
 > +        }
->          return true;
->      }
->      return true;
-> @@ -2057,6 +2072,7 @@ static const Property smmuv3_properties[] = {
->      DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
->      /* RIL can be turned off for accel cases */
->      DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
-> +    DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
->  };
->  
->  static void smmuv3_instance_init(Object *obj)
-> @@ -2084,6 +2100,9 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
->          "configured in nested mode for vfio-pci dev assignment");
->      object_class_property_set_description(klass, "ril",
->          "Disable range invalidation support (for accel=on)");
-> +    object_class_property_set_description(klass, "ats",
-> +        "Enable/disable ATS support (for accel=on). Please ensure host "
-> +        "platform has ATS support before enabling this");
->  }
->  
->  static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index fd78c39317..1e3779991e 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -346,6 +346,7 @@ typedef struct AcpiIortSMMUv3Dev {
->      /* Offset of the SMMUv3 IORT Node relative to the start of the IORT */
->      size_t offset;
->      bool accel;
-> +    bool ats;
->  } AcpiIortSMMUv3Dev;
->  
->  /*
-> @@ -401,6 +402,7 @@ static int iort_smmuv3_devices(Object *obj, void *opaque)
->  
->      bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
->      sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
-> +    sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
->      pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
->      sbdev = SYS_BUS_DEVICE(obj);
->      sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
-> @@ -544,6 +546,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      int i, nb_nodes, rc_mapping_count;
->      AcpiIortSMMUv3Dev *sdev;
->      size_t node_size;
-> +    bool ats_needed = false;
->      int num_smmus = 0;
->      uint32_t id = 0;
->      int rc_smmu_idmaps_len = 0;
-> @@ -579,6 +582,9 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          /* Calculate RMR nodes required. One per SMMUv3 with accelerated mode */
->          for (i = 0; i < num_smmus; i++) {
->              sdev = &g_array_index(smmuv3_devs, AcpiIortSMMUv3Dev, i);
-> +            if (sdev->ats) {
-> +                ats_needed = true;
-> +            }
->              if (sdev->accel) {
->                  nb_nodes++;
->              }
-> @@ -678,8 +684,8 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      build_append_int_noprefix(table_data, 0, 2); /* Reserved */
->      /* Table 15 Memory Access Flags */
->      build_append_int_noprefix(table_data, 0x3 /* CCA = CPM = DACS = 1 */, 1);
-> -
-> -    build_append_int_noprefix(table_data, 0, 4); /* ATS Attribute */
-> +    /* ATS Attribute */
-> +    build_append_int_noprefix(table_data, ats_needed, 4);
->      /* MCFG pci_segment */
->      build_append_int_noprefix(table_data, 0, 4); /* PCI Segment number */
->  
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index 533a2182e8..242d6429ed 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -70,6 +70,7 @@ struct SMMUv3State {
->      uint64_t msi_gpa;
->      Error *migration_blocker;
->      bool ril;
-> +    bool ats;
->  };
->  
->  typedef enum {
-
+> +        memory_region_add_subregion(&s->iomem,
+> +                    aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SGPIOM0 =
++ i],
+> +                    sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->sgpiom[i])=
+, 0));
+> +    }
+> +
+>      /* WDT */
+>      for (int i =3D 0; i < AST1700_WDT_NUM; i++) {
+>          AspeedWDTClass *awc =3D ASPEED_WDT_GET_CLASS(&s->wdt[i]);
+> @@ -194,6 +208,12 @@ static void aspeed_ast1700_instance_init(Object *obj=
+)
+>      object_initialize_child(obj, "ltpi-ctrl",
+>                              &s->ltpi, TYPE_ASPEED_LTPI);
+>
+> +    /* SGPIOM */
+> +    for (int i =3D 0; i < AST1700_SGPIO_NUM; i++) {
+> +        object_initialize_child(obj, "ioexp-sgpiom[*]", &s->sgpiom[i],
+> +                                "aspeed.sgpio-ast2700");
+> +    }
+> +
+>      /* WDT */
+>      for (int i =3D 0; i < AST1700_WDT_NUM; i++) {
+>          object_initialize_child(obj, "ioexp-wdt[*]",
+> --
+> 2.43.0
+>
+>
 
