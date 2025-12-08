@@ -4,79 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B085BD3B7DD
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 09:19:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8426BD3ABEF
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 09:20:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSXOQ-0003sZ-VD; Mon, 08 Dec 2025 04:18:54 -0500
+	id 1vSXPn-0004yP-5Y; Mon, 08 Dec 2025 04:20:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vSXOO-0003mE-Tu
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:18:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vSXON-0001Zm-5e
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:18:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765185530;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3pWrVWxMfSqJleTJDYMwU/Gf3ZV+HDuLQ2JSWAR7AO4=;
- b=WvwuB4RF0jIaNs/zpmJQW65jSGonXL4fVAkBjrgJxKXRXsJql73MgW9vWsXn41KtMhB8qX
- j/GLVlQ6qn1KLGnfPK7hReqsw2UMTtJLooyIw9Hd5MY3noQiPrsDiM7DJC0iwM985ONOxl
- 3Wb0M74yaW9nE6Uei+p5QzxVHk1Eyqg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-biMblahGMdW1esIZJefHSA-1; Mon,
- 08 Dec 2025 04:18:46 -0500
-X-MC-Unique: biMblahGMdW1esIZJefHSA-1
-X-Mimecast-MFC-AGG-ID: biMblahGMdW1esIZJefHSA_1765185525
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 70FCF1801213; Mon,  8 Dec 2025 09:18:45 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.99])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5BBE519560B0; Mon,  8 Dec 2025 09:18:43 +0000 (UTC)
-Date: Mon, 8 Dec 2025 09:18:39 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Hanna Reitz <hreitz@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] tests/qemu-iotests: Check for a functional "secret"
- object before using it
-Message-ID: <aTaX7_xJyHCnjHlg@redhat.com>
-References: <20251205130014.693799-1-thuth@redhat.com>
- <aTMUQXOjJO0EiK8b@redhat.com>
- <6333f8d4-3feb-43c7-8d11-98a7c3cbe0c4@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vSXPl-0004x5-1z
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:20:17 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vSXPj-0002N8-I4
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:20:16 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-42e2e445dbbso1945100f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 01:20:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1765185613; x=1765790413; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=UTTQruUmtSBB1oMJgveq5Zof2loh3iqKqsuP1mnpAHg=;
+ b=eWiyIbKNaYCPRY12RvrG3m9mEVKybPV52PEATtoSwlhCYNP35Qlwnfu0ZvnsfFHK4H
+ wfUBqGcAUH7P/yIqONogpBdG1NJGIzLQK0WHT1Q5Rkr3/peyblO3k5kSGhcBCiEPcJSm
+ Ydmv23ODVelFkir+0LUJo8JOJSj19K5RpKvjNiCyLffdBT+/uf64Zg2nEZ1GZCucuPEa
+ GguXaNGUXZmVz8Ln2Tj/WsEGhhJTQgI4ogzL+9TYOSK5ylgp4Yk5i0bvmpkkQGdyEjgL
+ tREWFDCpaBLDaW7vON9Z4mCd8YEHyAAJzmPdZ15gZs477Cdlk/RdUGCHwkB5nctV1Amd
+ CHGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765185613; x=1765790413;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=UTTQruUmtSBB1oMJgveq5Zof2loh3iqKqsuP1mnpAHg=;
+ b=VO2KSG1LPoxgVGOS6BWSxS3baDrGUaXhj8dlogqVRSG7EhxcQLE7vcXLx/9Nk5dn33
+ k6UH1sYpWdV/dmCQ8qs2ZapbM3SYeS8KsyyR/tvgSr7kFEM+7m+2juSU+BoHuM5l1ZFI
+ 3Ku3EROV+wgHVoTorklLZqkw4BcIFhYQYyJQUFUb1UdiHZemtKKI+U2suS054ZOMD6x7
+ iYLUl9gNgMD0qwBmFC4tJje1pDabBoVMz+yBZ1OnR+HvgbhgfpQZV583lWyd0rxIY7EG
+ joXoID9yuS/c1fCuGYyQ3cETM2b23tiJypeijx2aBL1CQj8ML9+wBTzYFZzWD8+W8E1J
+ ZPuQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUEtQ0NCLGhVPGwfIl6LJke0KqvI4lcM42C2F4bRMeP8kM+25AHyzuL1pfon24bSTF//U4jP9aklNmO@nongnu.org
+X-Gm-Message-State: AOJu0YwFtORg21Qks5O8y97tExJRsy9Ib2glKmWJU0wIHpdT9NgWC/Zl
+ c6ZCEO15ki+nYhYm9dIH/ABh3rOuqjdDFPVICNrzvk4rjlSpEzmFO8b4pWWbL7hc18Y=
+X-Gm-Gg: ASbGncuKTnm8JRfmegsCdV0Hah2674Doz2IsQ7sYOLwQQ02VNFlotw8ALq+KuxPNqTG
+ WpvjsRMYN4NJ3yy7iY4Q4V7xAKyJjNAweoFEAhHcc1VOkwgukX6xmWThBhYtNUKrIFknO91NenH
+ T71WZ/ZbNGxybsCVjGnq4yu8s/uZAwMtFM9eDmYNNTy8xUb9fsy88I5MOF7t2WWl/6T8hTOdGVk
+ VuSjfhcZgyy3Qz3T+N+pfzh5tzjRyM+L0smvO972PHS91sTYTVyc19WoDRcXTHLZX0YObn16GS5
+ uDhGiu5S0uBIgBFudK7P5GDJtzIoZmqjBiwppBbmqH6ol2MDfJU1NwzjN2ZU3ilbbrex2GDNQ3q
+ rv6eCAPfj0LZxeIXFVjR/orDs+z98SZ1i6xT1QHZCL6xCY6s+moaZ0I0ykVZE16xBrxoNnjJBBF
+ Spe0WMpZDXMQfijd3Ye13JBupj4HCc716z7k2YCt7onYghrKe3PUd+kw==
+X-Google-Smtp-Source: AGHT+IEyaI/YJjiDORwvZTTCXEoQFMozjMr/rXj/V3HNTQSkEhQrkabkslIZbOoPZrjHX944FxoM0w==
+X-Received: by 2002:a05:6000:2910:b0:42b:394a:9de with SMTP id
+ ffacd0b85a97d-42f89f6b24fmr7375063f8f.49.1765185612790; 
+ Mon, 08 Dec 2025 01:20:12 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42f7ca4f219sm23220189f8f.0.2025.12.08.01.20.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 08 Dec 2025 01:20:12 -0800 (PST)
+Message-ID: <092bdaeb-e43f-42e7-a4b9-028a1f2b5e97@linaro.org>
+Date: Mon, 8 Dec 2025 10:20:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 10/11] MAINTAINERS: update the custom runner entries
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Alexandre Iooss <erdnaxe@crans.org>, Markus Armbruster
+ <armbru@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+References: <20251204194902.1340008-1-alex.bennee@linaro.org>
+ <20251204194902.1340008-11-alex.bennee@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251204194902.1340008-11-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <6333f8d4-3feb-43c7-8d11-98a7c3cbe0c4@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,72 +106,22 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 08, 2025 at 09:15:38AM +0100, Thomas Huth wrote:
-> On 05/12/2025 18.20, Kevin Wolf wrote:
-> > Am 05.12.2025 um 14:00 hat Thomas Huth geschrieben:
-> > > From: Thomas Huth <thuth@redhat.com>
-> > > 
-> > > QEMU iotests 049, 134 and 158 are currently failing if you compiled
-> > > QEMU without the crypto libraries. Thus make sure that the "secret"
-> > > object is really usable and skip the tests otherwise.
-> > > 
-> > > Reported-by: Alex Bennée <alex.bennee@linaro.org>
-> > > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > 
-> > > diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
-> > > index e977cb4eb61..10d83d8361b 100644
-> > > --- a/tests/qemu-iotests/common.rc
-> > > +++ b/tests/qemu-iotests/common.rc
-> > > @@ -1053,6 +1053,20 @@ _require_one_device_of()
-> > >       _notrun "$* not available"
-> > >   }
-> > > +_require_secret()
-> > > +{
-> > > +    if [ -e "$TEST_IMG" ]; then
-> > > +        echo "unwilling to overwrite existing file"
-> > > +        exit 1
-> > > +    fi
-> > > +    if $QEMU_IMG create -f $IMGFMT --object secret,id=sec0,data=123 \
-> > > +                 -o encryption=on,encrypt.key-secret=sec0 "$TEST_IMG" 1M 2>&1 \
-> > > +                 | grep "Unsupported cipher" ; then
-> > > +        _notrun "missing cipher support"
-> > > +    fi
-> > 
-> > What is the thing that you're checking here? If it's really the secret,
-> > then just running 'qemu-io --object secret,data=123,id=sec0 -c ""' would
-> > be enough. If it's not the secret, but encryption support, then the
-> > function is a misnomer.
+On 4/12/25 20:49, Alex Bennée wrote:
+> Fix a number of issues:
 > 
-> The "qemu-io" statement seems to work fine in that case, so you're right,
-> it's apparently not the "secret" object, but rather the "encryption" part
-> that is failing.
+>    - update the ubuntu references to 24.0
+>    - add the s390x and ppc64le yml files
+>    - replace Works on Arm with Linaro
+>    - Also mention IBM (s390x) and OSUL (ppc64le) as HW hosts
 > 
-> So shall I rename it to "_require_encryption" ?
->
-> > _require_working_luks() looks pretty similar, though it requires
-> > specifically a working luks driver. Could something be unified? (The
-> > answer might be no, but it would be good to explicitly say it.)
-> 
-> While it looks a little bit similar, at least for me it still looks too
-> distinct for unification - or is "-o key-secret=sec0" doing exactly the same
-> as "-o encryption=on,encrypt.key-secret=sec0" ? ... I lack the deeper
-> understanding of the parameters here to judge on that topic.
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   MAINTAINERS | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
 
-Specifically these three tests are all relying on QCow2 traditional
-built-in AES encryption which pre-dated LUKS. Just name it for what
-it tests:
-
-  _require_qcow2_aes
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
