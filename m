@@ -4,115 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A51A5D3B7DE
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 11:03:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E8F7D3B7E8
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 11:11:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSZ1H-0005MF-5l; Mon, 08 Dec 2025 06:03:07 -0500
+	id 1vSZ8I-0007W3-JO; Mon, 08 Dec 2025 06:10:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1vSZ0T-0005J6-90
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 06:02:18 -0500
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
+ id 1vSZ8F-0007VJ-6n; Mon, 08 Dec 2025 06:10:19 -0500
+Received: from mout.kundenserver.de ([212.227.126.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1vSZ0R-0005C8-0I
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 06:02:17 -0500
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id D73D13F16D
- for <qemu-devel@nongnu.org>; Mon,  8 Dec 2025 11:02:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20251003; t=1765191731;
- bh=6nj3p6U0XgKhDCwvbyDyhEyVj/FaNw1yK9wIgLeKEtk=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
- In-Reply-To:Content-Type;
- b=kPH0g6Of/tmFM9VrVsUPNIJ94zFHbUgk+YUGPquZz6Vb5rdR4Jws63ZwOrY/y1SYV
- +w0vKbr+wgsF88yui/b321zo5haUXV6Tmakt/jYVMHSEyBo5MbVBQ79hAFUdEAFPHL
- 0iSBO3v+6k8TjVuD+cindDm6yhim3NRFZYjwagWnSW62RitP72W/U1kMJnxBP8tgUv
- ltCcn9g5LIafoYds2yXM6udVM1oueFLmE7/sOxEJw3RmjckwIzaVPH3BKShmTYEr9E
- Pp93i/WqYxBiKzbIiWfT4IF62sRFk/2ffapTkfRUYGtQbB7GL2nuypC1fJjfLHpoC+
- nwTGnpZhJUxmkqLedASSurIs2qJPISdPXbEa8H3vnojakCLnNL0Ryvp0xFcYp6PHBV
- //iYbmB3u2dTPkhRXb8ppq46IQwDd/opz5kDLkUn5rq/bHjlrdaaE5SfJAj6w0Nufx
- 0ljFyJCwtaTkX2J2iszlx7B+JF2R+FhGsX4E0AUN8ubnrIhITYB+tmC8IgptQsseMH
- 32uNeTDAd35MRpVVeCmS7+6cETwYz42W+SPm9aBT4TUHv+q87DEomgmqCWsXOXoY+I
- v4pVi4qAPtQy5TUT50sHxvreRrJ5yCzDTEx0tanWWfbeYHZ9+GmpuPJx1jYLgP/Fbr
- gf7BeV2UcFTCKdSO0cIs91+k=
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-b7a29e6f9a0so159143966b.1
- for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 03:02:11 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765191731; x=1765796531;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6nj3p6U0XgKhDCwvbyDyhEyVj/FaNw1yK9wIgLeKEtk=;
- b=RHxAU+N2WqaarfesTVR8yxmw9KRRENq6Y9lrdatxDGhU49V7RVZedwnlsxruT0PSX5
- UUUWZHaAhO/Pzf+MB1fwbUnnWPqMe2KfbpIk7tgP8sXhYmHUA0vCBqfdpFn9KV+SOhIl
- 90fgEWxJ5YdZBrgpQ+ypP0Pgg/tI55SGFr8SDak+fB7Ke4WU2EiG8k/XiWnpmP2S1FlO
- MTTchOq8gY3p2I5q1Va8Jgcl6KNbDx/74XZ9145O7kV4rmxyOtNbIvrm+zDD0eqONA2e
- nsgEDlMqSoOp0o5DTucP+5lRrMN4R0Kb/DCxUWXnwZyRIC0bStMoql6V9BCge8xLx0za
- XRtg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4+tDQH1IkmmRol2EnLPR4mvaK/VJEoyh67lVc+BAEZyoSz5bJKi00+EUbM0+cUy0pkiWSXVXOAc2M@nongnu.org
-X-Gm-Message-State: AOJu0YwSufQWwuyyMBgVj+9zJAA44V6wPUHgJkPYue1I0JTN3N5qe9Bt
- cNmzeSrqlSec6bMuiux81dMovZ2sjTTqPbjjAoQt0WYMpvJo+//cTFTj+CpdcqARrz3X0VgRqb5
- bUCE5YhAAK1vEg5tQPv4ACuplseDyyQ2i4AoHkceq8iD7P9bjwYfIyjaVY7pb5tit5d1/78b3
-X-Gm-Gg: ASbGncuJcDVlRUq/B7EkxtzwIHamWPuljY7BD9TQAO+T9OzKIOhXhpnqwEKColGsNcC
- tKeBHiAkvUewNPGWSibyCHge+T/W2dpcmcH8b6hp6OjCUUb1km74J5MUwxs1xqagxpR0RAF6R9Y
- RLyfP97aAWby+Q6vw6G5rN6bGC5F+49WSTrQr6bteo4/tKo94zu6XkqOmHrTGIKTYLBquPc/9I8
- rzH9lOVWMevd/N2ig8bsAZ6dgdJFGIROxTxkSLUVGrb7TZFLax2yMaHC0rdNoQnQl5Yt2ybX3cZ
- DaCdtxh7/HFHwHxfR/zUZ+UmtdyBvK3sZT1iU4ZqxZj6hDfyny/xDuDw1DZmuqUiqVvFUQKn+sT
- hLmBuOXDUsJKeCO87ZEIZjk405dJB7iESHMMbddbh9CGwM69yO6eqYlSG04NomvY58ROKpJ58LO
- w6/fthJlY=
-X-Received: by 2002:a17:906:478d:b0:b79:c1d7:6f40 with SMTP id
- a640c23a62f3a-b7a242bfe0amr745981366b.14.1765191731393; 
- Mon, 08 Dec 2025 03:02:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGdWgzkBu7qevDeb4zbhR71dcQUCpVSs2u6aZ25PhC2ixVAC7RhYRq91GnZYJBtk/p8WrMkQA==
-X-Received: by 2002:a17:906:478d:b0:b79:c1d7:6f40 with SMTP id
- a640c23a62f3a-b7a242bfe0amr745977966b.14.1765191730879; 
- Mon, 08 Dec 2025 03:02:10 -0800 (PST)
-Received: from [192.168.103.125]
- (ip-005-147-080-091.um06.pools.vodafone-ip.de. [5.147.80.91])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b79f445936dsm1086465766b.9.2025.12.08.03.02.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Dec 2025 03:02:10 -0800 (PST)
-Message-ID: <4b87cc8f-c3b3-4115-9fa6-a07a0d92710e@canonical.com>
-Date: Mon, 8 Dec 2025 12:02:08 +0100
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
+ id 1vSZ8C-0006ni-VX; Mon, 08 Dec 2025 06:10:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
+ s=s1-ionos; t=1765192205; x=1765797005; i=laurent@vivier.eu;
+ bh=3ZYk1PxAi4ZGCsg0hoODXKyqMgaOOWn/kDu1Z0dqpMs=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
+ Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+ cc:content-transfer-encoding:content-type:date:from:message-id:
+ mime-version:reply-to:subject:to;
+ b=oaU6rwg9jk830cVedZTrqTbrBD+i4J6kPNlio65oTrSssoP9EvCAsBlOcvjTklIl
+ g3mIxGcUHp4NKMs1zLjD7+HMAJPURpf9KIyDj8AnMIMtHedGcnKz4v3EvIhvJPy1K
+ DgNaUsyru0cUW+i/j2g4eiIFTPzibhXkPPbXRURC4oTGXFExOKVTmyhfzqNwnIleh
+ Me5QdPU2eDXzl/mshJbQINMoNMUw/yCwW1NSVxZu+6dRpyqr32SMbIVqlNNuYDKYj
+ 0e+65hS1TydbiQf8WXZy8IYk9A5KhTi3Lv9C/BfgjIe7m1ELVKscXMtmBHtSdy0Em
+ Koofg7S2x+8Y4ZyOIQ==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
+ (mreue011 [213.165.67.103]) with ESMTPSA (Nemesis) id
+ 1Mnq8Y-1vq23b12iI-00lhCc; Mon, 08 Dec 2025 12:10:05 +0100
+Message-ID: <a961c501-d6e6-4567-8e35-9ddaf6356dcd@vivier.eu>
+Date: Mon, 8 Dec 2025 12:10:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] linux-user/riscv: add vector state to signal
- context
-To: Laurent Vivier <laurent@vivier.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?B?5p2O5Lyf5pm6KOS8n+aZuik=?= <weizhi.li@spacemit.com>
-References: <20250903081417.338515-1-npiggin@gmail.com>
-Content-Language: en-US
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <20250903081417.338515-1-npiggin@gmail.com>
+From: Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH] tests/qemu-iotests: Fix check for existing file in
+ _require_disk_usage()
+To: Thomas Huth <thuth@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, Fiona Ebner <f.ebner@proxmox.com>,
+ qemu-trivial@nongnu.org
+References: <20251208075320.35682-1-thuth@redhat.com>
+Content-Language: fr
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <20251208075320.35682-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:jKhlqREaYzyZHqa0X2CAM621Bc2E1zAfHJC0TUo4NZBYGz8Z7lF
+ La+KuOXUjmxee6NJypn2XIXBz02sAVwLYvLz81UXKDS5EYSka35f/RQuYeIqIR6KiyjI/ih
+ e39bADefTjajJT264NpQZ1t7CGP7bF+ZSnESyFi4X/wnG8j7Z5wsbLFOcjQAhYcZqPs7HY5
+ JEqUVQRpJR2Z3WNRiNbPg==
+UI-OutboundReport: notjunk:1;M01:P0:QT3zAtWEoco=;ro1MyN6RwF7OFoa8ZjLf7vI6+oq
+ PeoQx/pKaKg2C7YcdVYHC8NLTRyVsH/gHmzebBXFJZB8wAzBd+X1kV0h2QUWeAfb+OoFack40
+ KdPTxKDpqRAdfdc3kA18yt5cu0PY1nSHG+/r7xXsGbGlcHXkgC8taTINpyJfDACw1XKuHV0HN
+ rVfW5nK6ncmUxsqJCs6aGO3xVjfChTYKaZpIihXxIW97SpMrWuZm7XuKoQr+EFzWVOlhxmraL
+ Np8ki7/5UeYqBeBfnHtO63h5Zvi3gwxhgmlrIVpC4KBpQKBJiSuSa+IYhHZLipKNFpkkh2Esi
+ OZfIpYg+jIiO9j9FBX3R6JW9YYdwbI7zfpi0V38EXpOuByuRFy6PmCakT/taKGEnaJ/ggRv0Y
+ kyFjKeJEeH+myHosqxWTPSLB3c/rS1X+o+bg2aAREfks9M+k8Sr9otv5G4wD9xYPf8qjXFQqi
+ BAz0n1KnugGm0uyHq2BiLzaZpegbvCuMx6CAkA3qX7n5RaQBPpUrs+DG45EJcQOHJmTuUtml4
+ XMq3mzJPHmu1TVwVIRPpLl0oHOpeqIVSsggGfOWIt3/JYwHvld1sbQkO7PXwFrhPyMaTPcXpH
+ sNZ/Asiqb+zu/458ihTW0jGZ6LKX+61+NrhQpmxbMlsDFNBDu4o2EFWnNsvT2A5iO5hblXNTp
+ KprzLZNipYbn0YjIk/gOvXn5CtN9QOdm4N3PYzpi8hZDHhl6S35I3R2Feo9EY5iAIRK2MiMsX
+ aJlD8Dy5BZkVVNIppIRN7v62LFWafb3k0R2/QrU86o/cHHd8w0mQ5aiS3MXbatL2/PxGdhsbr
+ IzZaypz7jeGwMWapgD7uQTZ7iT5XMufQm6VMcJCbWxoXfV3fXzrLBLvL2Ssra3U2BW5u/Rm08
+ QeZFbAvt38860JRYimwa5egKj+8QFsoR2VJDsmU9QoWlfivTjC1WFVtVwKrgML8xYmv03dISh
+ ENYptdZIsTMjfgYZv2erIP+LmdfkaBpvD0zhPFvNTSHEGP9tpr49tzeS7d1pDKvkpanz5D4ud
+ pNHTwGSli8WGrnJ1QOSGl556OHEok1YWBzwIKueXV2L+sJqKl8YblC40QkHCAsnCvuXr72YqS
+ QK2LdOIonByHW3/5KjHn1EREMXsWzDfxDa/qutf7836dI9hmg9pl9INWIV0SYyvSb3nratDyA
+ i/VFhkovUyP1WFLPqGSP1pEHShcaq1VlsRkywG18YWnoKPjNYMcjPJacWMKtlBQAQmlypCy0z
+ IZTo36ZsgnQ2BZzwhBtz7wcG5z0Hh4NQ6FGWXEBk22Ky+41+VcZqjE3A02inSIyNTjyUCFXdE
+ KJvLvn7NPgffD0mm+LES42CsDAicjF5Fl7Ev+7xVJor4dBxi9neiOa14ygbp2lUNkGwUBkP3o
+ YhUyteS4qJspzaPBkYyXK6J7D2YmIDWULu5W5LC7qQMdpMDJ5+CL3cJwiHf4LU7/DS7Okfhd+
+ aWX9VjqJLrLacQ+1EjjpTJYoG5qmCCXxhGFqCtXo4nuxm3pU9jHhkQrGUcfeBqHV6xYcdTezm
+ fpzXjgu503zxPNsp1SI5emQwd/8omuxCssPWIqBLFhdEetlpPv438qzwm+A4qRDGAvaqqsZOj
+ fthBDSv+W9P3RIetHYDTEUk8BKaFopo5hZhJmiE65KQN8j9c+94jzGfU1/+8GqPYukbgIeFG0
+ r6lPngzihAobMwM7Hlxpm0xEmbHGwL9+v+fl8eHBle7f9hMDsUzbAZHcoeN5EO+3quzcs2mro
+ tsLUDfS+/SkQTtWOgeIS3qTKNYDc5gDuNQq8CTVCmdSYbC6y99QrbqNg=
+Received-SPF: pass client-ip=212.227.126.130; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,53 +149,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/25 10:14, Nicholas Piggin wrote:
-> Changes in v2:
-> - Fix 32-bit compile
-> - Moved sizeof_rt_sigframe change to its correct patch (patch 2 is the
->    one that extends the size of rt_sigframe, patch 3 is adding new
->    extended state to the frame which is added dynamically).
-> 
-> This series adds vector state to the linux-user signal handler,
-> and adds a basic signal handling test case. As a sanity check, I
-> also verified the signal handling test works in the same way when
-> run under a real Linux kernel.
-> 
-> The signal handler test has some gross header hacks in it to make
-> it work for me (debian arm64->riscv64 cross compile environment),
-> I would not be surprised if it breaks in other environments, any
-> ideas or breakages let me know. May just have to define the types
-> by hand for now if it becomes intractable.
-> 
-> I couldn't find much in the way of previous discussion or work on
-> this, forgive me if I've missed it.
-> 
-> Thanks,
-> Nick
-> 
-> Nicholas Piggin (4):
->    tests/tcg/riscv64: Add a user signal handling test
->    linux-user/riscv: Add extended state to sigcontext
->    linux-user/riscv: Add vector state to signal context
->    tests/tcg/riscv64: Add vector state to signal test
-> 
->   linux-user/riscv/signal.c                | 197 ++++++++-
->   linux-user/riscv/vdso-asmoffset.h        |   4 +-
->   tests/tcg/riscv64/Makefile.target        |   5 +
->   tests/tcg/riscv64/test-signal-handling.c | 507 +++++++++++++++++++++++
->   4 files changed, 700 insertions(+), 13 deletions(-)
->   create mode 100644 tests/tcg/riscv64/test-signal-handling.c
-> 
+On Mon,  8 Dec 2025 08:53:20 +0100 Thomas Huth <thuth@redhat.com> wrote:
+> From: Thomas Huth <thuth@redhat.com>
+>
+> Looks like the "$" has been forgotten here to get the contents of
+> the FILENAME variable.
+>
+> Fixes: c49dda7254d ("iotests: Filter out ZFS in several tests")
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  tests/qemu-iotests/common.rc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/tests/qemu-iotests/common.rc b/tests/qemu-iotests/common.rc
+> index 10d83d8361b..c0f8f0f8dfa 100644
+> --- a/tests/qemu-iotests/common.rc
+> +++ b/tests/qemu-iotests/common.rc
+> @@ -1008,7 +1008,7 @@ _require_disk_usage()
+>      else
+>          FILENAME=3D"$TEST_IMG_FILE"
+>      fi
+> -    if [ -e "FILENAME" ]; then
+> +    if [ -e "$FILENAME" ]; then
+>          echo "unwilling to overwrite existing file"
+>          exit 1
+>      fi
+> --=20
+> 2.52.0
 
-This patch series resolves the issue reported in
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 
-https://gitlab.com/qemu-project/qemu/-/issues/3224
-https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2133188
-
-Programs in foreign architecture RISC-V containers using RVA23 crash due 
-to not restoring the vector state after handling signals.
-
-It would be great if this series could be reviewed soon.
-
-Tested-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Thanks!
 
