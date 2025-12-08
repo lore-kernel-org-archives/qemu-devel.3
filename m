@@ -4,79 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE4D4D3B7F3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA248D3B7F2
 	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 14:21:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSc6a-0003ah-TR; Mon, 08 Dec 2025 09:20:50 -0500
+	id 1vSc6c-0003bK-QL; Mon, 08 Dec 2025 09:20:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <weizhi.li@linux.spacemit.com>)
- id 1vSZnh-0002gH-2v; Mon, 08 Dec 2025 06:53:10 -0500
-Received: from smtpbgsg1.qq.com ([54.254.200.92])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <weizhi.li@linux.spacemit.com>)
- id 1vSZnb-0007Yo-6y; Mon, 08 Dec 2025 06:53:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.spacemit.com;
- s=mxsw2412; t=1765194755;
- bh=BhI3RNQ2Y+SzZZkgI/7u4UYKsOvFlB0vJxcJn+/o0yo=;
- h=From:To:Subject:Date:Message-Id:MIME-Version;
- b=msYthhvXWmZLx4BwBgynH7JSn+xvygX8VPstg3stZLL3Az6ftKhfOOYaqg5YG12OV
- jZtjfHLVXWgQBtfRhBxs8oJm7WaKhwqpe+YhHLgS7cJDZJAjEZ0WhfetlNdc/fWmJj
- tT2BwTlK/9ZTOha7xkiY3UJbJYIVN18bt8H8PmlE=
-X-QQ-mid: zesmtpsz1t1765194747t42c78f87
-X-QQ-Originating-IP: Apr2DuTZvpBvLqbQ4qzv6njTQgMdFbrQ0CCMyilzSGg=
-Received: from host1.dc.com ( [120.237.158.181])
- by bizesmtp.qq.com (ESMTP) with 
- id ; Mon, 08 Dec 2025 19:52:25 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 6037169953519126958
-From: "weizhi.li" <weizhi.li@linux.spacemit.com>
-To: npiggin@gmail.com
-Cc: alistair.francis@wdc.com, dbarboza@ventanamicro.com, laurent@vivier.eu,
- liwei1518@gmail.com, palmer@dabbelt.com, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, zhiwei_liu@linux.alibaba.com,
- heinrich.schuchardt@canonical.com, Weizhi Li <weizhi.li@spacemit.com>
-Subject: Re: [PATCH v2 0/4] linux-user/riscv: add vector state to signal
- context
-Date: Mon,  8 Dec 2025 19:50:16 +0800
-Message-Id: <20251208115014.2933813-1-weizhi.li@linux.spacemit.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250903081417.338515-1-npiggin@gmail.com>
-References: <20250903081417.338515-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <dmitry.guryanov@gmail.com>)
+ id 1vSX2E-0006eS-VJ
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 03:55:58 -0500
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dmitry.guryanov@gmail.com>)
+ id 1vSX2D-0006SA-22
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 03:55:58 -0500
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-37a3340391cso29916411fa.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 00:55:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1765184154; x=1765788954; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xYpdNK9V9NdphAkLyhPH0d+dGDBCogdp0MSQ37nPW0M=;
+ b=Mww5xYf9LMvHjwB3Zfs36TZ2VBzkLIxaEH2eMq4cph98mK2zV0wlrc45sON1YFmqbu
+ 9lry2kGvdhtp0nXXQ8OUBw4fiqg8vZbSnjHBPc80/qC5d1OPnRukS9RtCDvhf/kp+im5
+ +9XFwCn+lU41uC15ce/l3eolqU4bLWURNK1xZgeRL8R1HQNdG2+3EvrQqgi5LEaIR3tU
+ t2pzw0EweDwPflcdvoW9qMTeX4loPnIOiioAEBgh1Egdl8cGWlDmXGP2nrfViLmioakR
+ Gkea++QZ1oCOMaex76u9KB+/I0cyDg2dszo170RrobY22QYhNZJZQSGdBZKivLOMhEXN
+ 7ELg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765184154; x=1765788954;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xYpdNK9V9NdphAkLyhPH0d+dGDBCogdp0MSQ37nPW0M=;
+ b=u6YeSSHALwi2XQiiRmryRPgO75aAPpULQXgAAEo/Z7Cf3tOkjiQQpQrvHM2CkjmL8X
+ VSsZQvFpSuqIW/tpylte8ttpPsuBf1t0dDv3A3UVFcgCU0mUYlCNogVouyrl0xpesSWt
+ xqVo/iun8jy6WzZiiyc8wtfyzb/SOX4yTKHqhTt/NzytrVj55TBWA79iAT/pdnKHYj4l
+ qZn9IC3JgxFoZ6s4+jtkL/zqYKnf212fPm8fMwZUxZtw3BtPdEuMtLzGOujeS04lrqSc
+ TWIcYo1NcRIxV9LJN9g1df1zcYks+npWqS3firUoSxMg2c2MleJd8Wgijeka/Kj60UQV
+ T+FA==
+X-Gm-Message-State: AOJu0YzVuzrUmH7Ez7U5O2vHSLXgrRIbqGYrKnc6Qrs/MKhujZESP/Ly
+ XhuV3RAvB2TD1tssccxChjHsE11YvYKrd10foX1EuhxsfcK0G/Uw0IMS
+X-Gm-Gg: ASbGncuQspJ6xT8Jg03dBnlhKC1Rx0d6UYvha8FMlnQ1vWdf7x83b2b1iuEfii+v+3A
+ 5ZvUpVTBC6G4UNrLhHRp/TlZmW89UVGc1TdA7oqlpgacm0TXNH33Dt2Ua1bqbl8BCtwSLteV4oh
+ UXh/y90YnMzRIy+3qXQef6qb4YjkdLPE+GbuGwnCOjtMdzWlCjFMEwW9nNQCYWtgv7jP9+9/6uR
+ 0AJ1MhF7poV2JTk+3ojnv6rOc8ubJcGg1rJtJBmbUggYyZpLvGSkLSzSnmBupqWT6mYj8fT3dcZ
+ SJ0p58jqu4mjP6bI/ljGXPNkhxjAyix9qzS5yAI8S289DybQkbkbY5g5ot8uFZFoFotnLuXdpmC
+ ++qpLeqEeF7fu7Dbzb4nHQMLm3xUu4ONcOz/UdHUJPAXCzgdxcDzFqBiH42EIbUrBCK9jcagGBq
+ Um2P5v4mmJxOusUrQ4Ukcw
+X-Google-Smtp-Source: AGHT+IG4BLaPztMSKK02eYq++M8ot9QiM72qr8rQRlADAb5ebN8Sl5pVxDvRbnlNE07paSDD7V6tUQ==
+X-Received: by 2002:a05:651c:212a:b0:37b:9b58:dd04 with SMTP id
+ 38308e7fff4ca-37ed1f9e022mr19491991fa.7.1765184153462; 
+ Mon, 08 Dec 2025 00:55:53 -0800 (PST)
+Received: from fedora.vk.team ([5.181.62.126])
+ by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-597d7c1e39asm3989094e87.50.2025.12.08.00.55.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Dec 2025 00:55:53 -0800 (PST)
+From: Dmitry Guryanov <dmitry.guryanov@gmail.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Alberto Garcia <berto@igalia.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Dmitry Guryanov <dmitry.guryanov@gmail.com>
+Subject: [PATCH resend] block/throttle-groups: fix deadlock with iolimits and
+ muliple iothreads
+Date: Mon,  8 Dec 2025 11:55:28 +0300
+Message-ID: <20251208085528.890098-1-dmitry.guryanov@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:linux.spacemit.com:qybglogicsvrsz:qybglogicsvrsz3b-0
-X-QQ-XMAILINFO: N0zPMTspoMafUShgy4yeZZAlnVCqZVi7VNvhvyHy5X1N9C5xGaCgd0Zi
- t8iVbRxt+dKWa1ap+NDvSXYqHIfh/yGod6r1Bv9oZ8sIoefAfmHjipVlmd7xCSc1LWyVmMs
- puZuoqGy8BSR/f8S0zfqGX24ycmb9/8jqc4MQWD0Jej11te2G1dK8I3g7l89hwil+mZ5aaq
- 8F3iFQ7Jb0Q0MyzEByZDhgRKRMYAZcQAYphEGh/dPTg/LNgiJ9veHXkzKU8kxwwdkzKNQyE
- NLUJRrI11LG9WaZ8vNOwBsyXeMPfJpsQN71OW/xzUfbR31UjSvBk2+aqQBzv89T7dFjtzAM
- YXIoGadhx2aWCuvddlajEWiMKA91I5z7skvWfO6FIwppMFFy0A8FtkYm21HFEenlpt4CSab
- eRTaHYsQGeCDaHP+GEKbDqeomYK17aQ47FcO2SZDpgFu0WnsZvnCaKxl2brnFxwKGaNelrE
- 0I3Zy9aWOeFcI8b5T1u5sl9q3K1Gegc6GJiz7WqwdkfvpZ9R/AFWfdP1fcB4MIPfsQzCHl8
- sJkjxSXuciYicFS9ri/wt06/tAHQYjYLx53hWAE7buoGm5fscRzMJLxJ9c1DV/2oFdRoqXA
- Bct9rH/3BFlpY6FZodslLhYeQALveXU9jEKCQAfZONDZdE0ttxJX4IrlmEAIT4d5GlA+WWI
- XmObjJWrXDT3f6dJkODogXVbZE8618nJDj40QUETLZMehBjVq+MZZqqXLYUSfbgzbvtj7oR
- pO+f/3d2nR7U8ZdhJE2crrLHIzqHl5CgVZ77yb617sKMVArW9It5OlAHnYrKQVQrUe5Rnqk
- KtKsUxOYD847oX3xggHhfFNiuXOIan4lPZGZD2skfILXYrnB0wn0D3uLWuY7gHrX9uteOni
- 4nshI5X0p4zP6eZOMz1hb4m2R7r2Efk7dV0+4WYZ6d0IXgYR/NEgIqq6YhIVA5GxYW+KzQX
- FxJgMu8rzpFKqLAmFNAVKtQkefmmTPggA1u0hkvFvcy6Pbw==
-X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
-X-QQ-RECHKSPAM: 0
-Received-SPF: none client-ip=54.254.200.92;
- envelope-from=weizhi.li@linux.spacemit.com; helo=smtpbgsg1.qq.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=dmitry.guryanov@gmail.com; helo=mail-lj1-x22f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Mon, 08 Dec 2025 09:20:46 -0500
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,16 +101,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series resolves the issue I reported at:
+Details: https://gitlab.com/qemu-project/qemu/-/issues/3144
 
-https://gitlab.com/qemu-project/qemu/-/issues/3224
-https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2133188
+The function schedule_next_request is called with tg->lock held and
+it may call throttle_group_co_restart_queue, which takes
+tgm->throttled_reqs_lock, qemu_co_mutex_lock may leave current
+coroutine if other iothread has taken the lock. If the next
+coroutine will call throttle_group_co_io_limits_intercept - it
+will try to take the mutex tg->lock which will never be released.
 
-Programs in foreign architecture RISC-V containers using RVA23 crash due
-to not restoring the vector state after handling signals.
+Here is the backtrace of the iothread:
+Thread 30 (Thread 0x7f8aad1fd6c0 (LWP 24240) "IO iothread2"):
+ #0  futex_wait (futex_word=0x5611adb7d828, expected=2, private=0) at ../sysdeps/nptl/futex-internal.h:146
+ #1  __GI___lll_lock_wait (futex=futex@entry=0x5611adb7d828, private=0) at lowlevellock.c:49
+ #2  0x00007f8ab5a97501 in lll_mutex_lock_optimized (mutex=0x5611adb7d828) at pthread_mutex_lock.c:48
+ #3  ___pthread_mutex_lock (mutex=0x5611adb7d828) at pthread_mutex_lock.c:93
+ #4  0x00005611823f5482 in qemu_mutex_lock_impl (mutex=0x5611adb7d828, file=0x56118289daca "../block/throttle-groups.c", line=372) at ../util/qemu-thread-posix.c:94
+ #5  0x00005611822b0b39 in throttle_group_co_io_limits_intercept (tgm=0x5611af1bb4d8, bytes=4096, direction=THROTTLE_READ) at ../block/throttle-groups.c:372
+ #6  0x00005611822473b1 in blk_co_do_preadv_part (blk=0x5611af1bb490, offset=15972311040, bytes=4096, qiov=0x7f8aa4000f98, qiov_offset=0, flags=BDRV_REQ_REGISTERED_BUF) at ../block/block-backend.c:1354
+ #7  0x0000561182247fa0 in blk_aio_read_entry (opaque=0x7f8aa4005910) at ../block/block-backend.c:1619
+ #8  0x000056118241952e in coroutine_trampoline (i0=-1543497424, i1=32650) at ../util/coroutine-ucontext.c:175
+ #9  0x00007f8ab5a56f70 in ?? () at ../sysdeps/unix/sysv/linux/x86_64/__start_context.S:66 from target:/lib64/libc.so.6
+ #10 0x00007f8aad1ef190 in ?? ()
+ #11 0x0000000000000000 in ?? ()
 
-It would be great if this series could be reviewed soon.
+The lock is taken in line 386:
+(gdb) p tg.lock
+$1 = {lock = {__data = {__lock = 2, __count = 0, __owner = 24240, __nusers = 1, __kind = 0, __spins = 0, __elision = 0, __list = {__prev = 0x0, __next = 0x0}},
+    __size = "\002\000\000\000\000\000\000\000\260^\000\000\001", '\000' <repeats 26 times>, __align = 2}, file = 0x56118289daca "../block/throttle-groups.c",
+  line = 386, initialized = true}
 
-Tested-by: Weizhi Li <weizhi.li@spacemit.com>
+The solution is to use tg->lock to protect both ThreadGroup fields and
+ThrottleGroupMember.throttled_reqs. It doesn't seem to be possible
+to use separate locks because we need to first manipulate ThrottleGroup
+fields, then schedule next coroutine using throttled_reqs and after than
+update token field from ThrottleGroup depending on the throttled_reqs
+state.
+
+Signed-off-by: Dmitry Guryanov <dmitry.guryanov@gmail.com>
+---
+ block/throttle-groups.c         | 21 ++++++---------------
+ include/block/throttle-groups.h |  1 -
+ 2 files changed, 6 insertions(+), 16 deletions(-)
+
+diff --git a/block/throttle-groups.c b/block/throttle-groups.c
+index 66fdce9a90..bb01e52516 100644
+--- a/block/throttle-groups.c
++++ b/block/throttle-groups.c
+@@ -295,19 +295,15 @@ static bool throttle_group_schedule_timer(ThrottleGroupMember *tgm,
+ /* Start the next pending I/O request for a ThrottleGroupMember. Return whether
+  * any request was actually pending.
+  *
++ * This assumes that tg->lock is held.
++ *
+  * @tgm:       the current ThrottleGroupMember
+  * @direction: the ThrottleDirection
+  */
+ static bool coroutine_fn throttle_group_co_restart_queue(ThrottleGroupMember *tgm,
+                                                          ThrottleDirection direction)
+ {
+-    bool ret;
+-
+-    qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
+-    ret = qemu_co_queue_next(&tgm->throttled_reqs[direction]);
+-    qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
+-
+-    return ret;
++    return qemu_co_queue_next(&tgm->throttled_reqs[direction]);;
+ }
+ 
+ /* Look for the next pending I/O request and schedule it.
+@@ -378,12 +374,8 @@ void coroutine_fn throttle_group_co_io_limits_intercept(ThrottleGroupMember *tgm
+     /* Wait if there's a timer set or queued requests of this type */
+     if (must_wait || tgm->pending_reqs[direction]) {
+         tgm->pending_reqs[direction]++;
+-        qemu_mutex_unlock(&tg->lock);
+-        qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
+         qemu_co_queue_wait(&tgm->throttled_reqs[direction],
+-                           &tgm->throttled_reqs_lock);
+-        qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
+-        qemu_mutex_lock(&tg->lock);
++                           &tg->lock);
+         tgm->pending_reqs[direction]--;
+     }
+ 
+@@ -410,15 +402,15 @@ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
+     ThrottleDirection direction = data->direction;
+     bool empty_queue;
+ 
++    qemu_mutex_lock(&tg->lock);
+     empty_queue = !throttle_group_co_restart_queue(tgm, direction);
+ 
+     /* If the request queue was empty then we have to take care of
+      * scheduling the next one */
+     if (empty_queue) {
+-        qemu_mutex_lock(&tg->lock);
+         schedule_next_request(tgm, direction);
+-        qemu_mutex_unlock(&tg->lock);
+     }
++    qemu_mutex_unlock(&tg->lock);
+ 
+     g_free(data);
+ 
+@@ -569,7 +561,6 @@ void throttle_group_register_tgm(ThrottleGroupMember *tgm,
+                          read_timer_cb,
+                          write_timer_cb,
+                          tgm);
+-    qemu_co_mutex_init(&tgm->throttled_reqs_lock);
+ }
+ 
+ /* Unregister a ThrottleGroupMember from its group, removing it from the list,
+diff --git a/include/block/throttle-groups.h b/include/block/throttle-groups.h
+index 2355e8d9de..374c7c0215 100644
+--- a/include/block/throttle-groups.h
++++ b/include/block/throttle-groups.h
+@@ -36,7 +36,6 @@
+ typedef struct ThrottleGroupMember {
+     AioContext   *aio_context;
+     /* throttled_reqs_lock protects the CoQueues for throttled requests.  */
+-    CoMutex      throttled_reqs_lock;
+     CoQueue      throttled_reqs[THROTTLE_MAX];
+ 
+     /* Nonzero if the I/O limits are currently being ignored; generally
+-- 
+2.51.1
 
 
