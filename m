@@ -4,97 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27FA9D3ABEF
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 09:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC833D3B7DD
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 09:38:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSXQb-0005Tb-1f; Mon, 08 Dec 2025 04:21:09 -0500
+	id 1vSXgT-0000Fe-Hm; Mon, 08 Dec 2025 04:37:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vSXQZ-0005TL-Ql
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:21:07 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vSXQY-0002rs-9o
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:21:07 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4779adb38d3so38844425e9.2
- for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 01:21:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765185665; x=1765790465; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7NAIU9C4BHs7hMQ6EQVXABrX7NHbV/vrmmg/GkIcue0=;
- b=XCc/k+XTskq/JosnuWRm5dp/FQW7qKXBRJRJ+K054EsDmCOK5y5hvkyqnkXBJureuT
- DzqnGVvY1KyAY1n5SQZlZinEEGA/hM/Js57NCKvyECP2LsZF7VjPqJNzRL9SzvHT4rAa
- Y3KqYB76Gmc9qyyr6JxwebMNHH7Ve8yNF0bMkgoNm92C221y1LJP5XuO57fOmSZfm6d7
- yDKpk2L4Q6oqniwWOsUPV/9VdOingAifdU78b1M1rCAANW1zXcwGWICeTgVq9shzkCPg
- X4WepjLKxrwstVj8NMDwLyr5WFU/FlapJ2v3C5Zk5PaLHkhR9ABH7tADov7hpkQlg9tI
- dP1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765185665; x=1765790465;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7NAIU9C4BHs7hMQ6EQVXABrX7NHbV/vrmmg/GkIcue0=;
- b=KwlsSyqmtfWL4lfIjmyPn5jCBTq1pGlgE659gVsm54viykBwRztnUexcdkVLj0x6E1
- ny0BsHGNtuKtuYfvQnsppS0R3c9sBW6kyAotOODotv5WfK4tgS0Cg83ap81B/zn7yWz+
- 6KcAHmhvYVZ7JEStWss2XiaaYo4EplAmkq5cuVGCYQ7szT3DSQfmm3Dv0ggfmtxM3Vc8
- WrSd4nxr+T0zTWGpiOmpGY7aWcsmvgDyufBhWJ3t8OPe2bqXAmoHMO3+cgZW74X2e0QC
- H+aYAuA9ye7oWY/28qq9PVOHT1+H281rUYLOXzm8REq7WYGJJqATSc0Vbx7ZuOoh406h
- F9cg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiRTF6hWw5rf+KjOhxpRyyN207UHDMhGbyK6o6YcPy4NrNOVi7ZGT3g+yE+9Lv4hz0j2JiS3O1zKkj@nongnu.org
-X-Gm-Message-State: AOJu0YwGu/x/I93KzN15Kh2NjjR7nu4wKW7a8JNTXbesqaGeD+7U7HGm
- FklQCGlAx71dXIUaLJ4nRPEiKT3RtCr3WGvHCDgOCvGFtqOP3WajX7AofhVKpxqVPL8=
-X-Gm-Gg: ASbGnctUVuxdgNruK++NDngDo+ot7ykyeAYr6YQKupqWa4B/c/E5LuKuKAxQhr1NgZ5
- +APMx6HgCqgaP/OjPR+deyO5IewAE2GjIPisn9oyAW3IfztraNFxEYNu2Xvu7mKsoflORUKhgU5
- Vq6Jvbs1X91NKHSDgOUPAb7u1gZ78eszb9+IiRaHJQ1WM7X1FjsX1qGZN5G9TwoWsK/BebdgJmh
- w6LeR/Fm52E74bg0A5089DbbFDwzptE/CGDut+r/i0CiMlHwTIlBT66Ql15xycWPozFIkjPY6A6
- Z+YJHPLjHq3JekJhtAC+9D/S1ydXaNl5YtWXgWWDL4dm1UzynbfsHYtfPTuNHTyewSGsNLwQpH0
- Lj0UjVIUBvPhflSSNcxM+RPeM+fdYehEMlohoMC0lHi3aZ68eW/1x5o93sssHA7gITmq9bmyeAz
- ubpDEmizO3OuCQ/eiGUuc6OlCACeKLrOIaMHWk6xhHmD6o/yCc8SJJrh/okneaO98S
-X-Google-Smtp-Source: AGHT+IF6LOiF1xxt7B7hcM69auQdTFgyceX0KmqCYnDTpJX84pnPI0lWMsz7uqi3TUE4aRpmBHJ3ZQ==
-X-Received: by 2002:a05:600c:528d:b0:46e:53cb:9e7f with SMTP id
- 5b1f17b1804b1-47939e27a9fmr69219465e9.18.1765185664822; 
- Mon, 08 Dec 2025 01:21:04 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4793092ba4fsm233874475e9.4.2025.12.08.01.21.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Dec 2025 01:21:04 -0800 (PST)
-Message-ID: <fa437f12-a844-4aeb-b9e4-2e494bd50c08@linaro.org>
-Date: Mon, 8 Dec 2025 10:21:03 +0100
+ (Exim 4.90_1) (envelope-from <kuramitsu@ksl.ci.kyutech.ac.jp>)
+ id 1vSXgR-0000Ew-K0
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:37:31 -0500
+Received: from ns.ksl.ci.kyutech.ac.jp ([131.206.203.254])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kuramitsu@ksl.ci.kyutech.ac.jp>)
+ id 1vSXgP-0005QL-7I
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:37:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=ksl.ci.kyutech.ac.jp;
+ s=default; t=1765186640;
+ bh=bjj62e8e/spufriawCR1s/qMAGjv/cDJZCugCAozaJ8=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=OkaUy9S3xoJcANaz89QhiQU5Djg5XbjkWkZSGM2FfeUMHog+xK43LzdkS7tEV9LKd
+ 82d0u4Mh3h8pNPf43tN/88CvnQIuI0XG6VbYym6uiYVib2pf7jNvjQ4VMhzs3ssnGD
+ Fa4l0u/A/erR0LdW0mHjV4hOP/lMP2bFP6rubrCWu1yH0jHrLXnejSRLyVvUsb9a7x
+ 5fhCPBwwYw3HwbAPtbaUrcliYxXbRn94gJ1kq3RoBqZxzT31j2Cg8X8BgNMfcMQsGd
+ aN6EEiGaXJd97b3Rqlg/9m/Z4HX4sFQXIEiJhBwj/epZs+NCZBg43r+kIWmARSWQU4
+ OARfWDq8RIMFw==
+Received: from [192.168.0.85] (unknown [192.168.0.85])
+ by ns.ksl.ci.kyutech.ac.jp (Postfix) with ESMTPSA id DEEC23C0442;
+ Mon,  8 Dec 2025 18:37:20 +0900 (JST)
+Message-ID: <ca445bdd-297e-4e8d-9b44-06c1b44378e4@ksl.ci.kyutech.ac.jp>
+Date: Mon, 8 Dec 2025 18:37:20 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/11] docs/devel: Correct typo
+Subject: Re: tcg: Requesting clarification on return value of prepare_host_addr
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <3d73bcbc-d3f0-4271-9f99-d53fb5a85db6@ksl.ci.kyutech.ac.jp>
+ <CAFEAcA_XNdUDFLojnqYdsBqh2jZyg45ds9wJjiS9ujhPnX2z9Q@mail.gmail.com>
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Alexandre Iooss <erdnaxe@crans.org>, Markus Armbruster
- <armbru@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Alano Song <AlanoSong@163.com>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>
-References: <20251204194902.1340008-1-alex.bennee@linaro.org>
- <20251204194902.1340008-10-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251204194902.1340008-10-alex.bennee@linaro.org>
+From: Shusaku KURAMITSU <kuramitsu@ksl.ci.kyutech.ac.jp>
+In-Reply-To: <CAFEAcA_XNdUDFLojnqYdsBqh2jZyg45ds9wJjiS9ujhPnX2z9Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=131.206.203.254;
+ envelope-from=kuramitsu@ksl.ci.kyutech.ac.jp; helo=ns.ksl.ci.kyutech.ac.jp
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,20 +71,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/12/25 20:49, Alex Bennée wrote:
-> From: Alano Song <AlanoSong@163.com>
-> 
-> Correct typo in atomics.rst
-> 
-> Signed-off-by: Alano Song <AlanoSong@163.com>
-> Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> [AJB: fixed author entry]
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   docs/devel/atomics.rst | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 2025/12/05 23:44, Peter Maydell wrote:
+> On Fri, 5 Dec 2025 at 14:27, Shusaku KURAMITSU
+> <kuramitsu@ksl.ci.kyutech.ac.jp> wrote:
+>> I've noticed a possible discrepancy between the comment and the behavior
+>>
+>> of i386's prepare_host_addr (located at tcg/i386/tcg-target.c.inc, line
+>> 2157-2260):
+>>
+>>
+>> ```
+>>
+>> /*
+>>    * For softmmu, perform the TLB load and compare.
+>>    * For useronly, perform any required alignment tests.
+>>    * In both cases, return a TCGLabelQemuLdst structure if the slow path
+>>    * is required and fill in @h with the host address for the fast path.
+>>    */
+>> static TCGLabelQemuLdst *prepare_host_addr(TCGContext *s, HostAddress *h,
+>>                                              TCGReg addr, MemOpIdx oi,
+>> bool is_ld)
+>> {
+>>       TCGLabelQemuLdst *ldst = NULL;
+>>
+>> ...
+>>       if (tcg_use_softmmu) {
+>>
+>> ...
+>>
+>>           ldst = new_ldst_label(s);
+>>           ldst->is_ld = is_ld;
+>>           ldst->oi = oi;
+>>           ldst->addr_reg = addr;
+>>
+>> ...
+>>
+>>       } else if (a_mask) {
+>> ...
+>>       }
+>>
+>>       return ldst;
+>> }
+>>
+>> ```
+>>
+>>
+>> The code appears to always assign (in case of softmmu) a label to `ldst`
+>> and return it,
+> No; if tcg_use_softmmu is false and a_mask is zero then
+> we will not take either the if() or the else if() block,
+> and ldst will still be NULL when we return it.
+>
+> This is because:
+>   * softmmu always requires a slowpath (because we might
+>     look the guest address up in the TLB but not find it)
+>   * linux-user mode needs a slowpath only if we need to
+>     enforce alignment and atomicity checks for this
+>     memory access (because linux-user always has "guest
+>     address == host address + some constant", so most
+>     simple loads and stores cannot fail or be complicated)
+>
+> If we don't have to do either, then we don't need the slowpath.
+>
+>> As I understand it, there is no way to determine, at this point, which
+>> of the two paths to use;
+>>
+>> the generated machine code (see L2233-2237), not the C code here,
+>> performs the TLB comparison.
+> That's right. We are generating the code in this function
+> to do everything except the final "load/store from the host
+> address" part. If we're using softmmu that includes all the
+> code to look the guest address up in the TLB.
+>
+> I think the way to understand this function is to look at
+> the functions that call it, like tgen_qemu_ld(). They do:
+>
+>   * call prepare_host_addr()
+>   * call a function to generate a plain host load or store
+>
+> If the prepare_host_addr() code wants to do an out of
+> line slow-path, then the code we emit looks like:
+>    - do stuff to figure out if we can fast path this
+>    - conditional jump to out-of-line label for slow path
+>    - fast path handling; at the end of this we have the
+>      host address for the memory access
+>    - host load or store generated by tgen_qemu_ld etc
+>    - and then fall through into code for the next guest insn
+>
+> At the end of the TB we will arrange to emit the
+> out-of-line label and the slow path code.
+>
+> thanks
+> -- PMM
+
+Thanks for the reply! Perhaps the confusion is from what "requiring 
+slowpath"
+
+means. Does that mean requiring emitting slowpath (which I suspect is 
+what's happening
+
+here), or requiring jumping to slowpath (i.e. never using fastpath), on 
+softmmu?
+
+
+Shusaku KURAMITSU
+
+Kyushu Institute of Technology, Japan
 
 
