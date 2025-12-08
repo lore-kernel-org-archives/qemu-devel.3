@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D543D3B7EA
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 21:35:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 313DED3B7E2
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 21:35:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSir5-0007Km-FY; Mon, 08 Dec 2025 16:33:15 -0500
+	id 1vSire-0007ie-6h; Mon, 08 Dec 2025 16:33:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vSir2-0007IX-Tw; Mon, 08 Dec 2025 16:33:12 -0500
+ id 1vSirW-0007dv-Mc; Mon, 08 Dec 2025 16:33:42 -0500
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1vSir0-0000eo-K2; Mon, 08 Dec 2025 16:33:12 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5B8LDkcR015153;
- Mon, 8 Dec 2025 21:33:08 GMT
+ id 1vSirU-0000mE-KC; Mon, 08 Dec 2025 16:33:42 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5B8Cmnn2022275;
+ Mon, 8 Dec 2025 21:33:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=D4t9IOncsJcFtOw1j
- Z0eLvTtQxf7amG7D3wO/lbV3qU=; b=EhOuCpNJdL99t8PeK202EM0eOctnP8I1N
- BOt4g89UaOiVITtfdBDoOFTOJxNZWea5D/h1CQ8drIMfm7aC7H01lLLfK1sdctyM
- mKwNyZiL9e7ldPHxlhgNeKm/fQamaAC9Qsjbj56PE2Qjqvrqx1TfsNXvabMPGBNK
- 0CZmvsiTXTwVveTD+47avUqjJQtpp7FYwNU2LV0jZ9goiehGIX3thUWF3uAbmy93
- QbWcDgY6di3nSpAXBql/SYiFMVveiar8sY3O+bJS7mIcqhtr1mqEvOClUFRBa5Hm
- 6IMgLLa9ZiNcusrbT6PPWI55KDfuyxheQWpO9EMnurEwhBDdDMjQQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4avc619v6n-1
+ :mime-version:references:subject:to; s=pp1; bh=c6aDpv9jGAGanmV4g
+ 6+hrSmhZLsJmay/DNzjc8cQ9OM=; b=sMTDXuJbAR5YvmkY7qH734b2JlAEpNhZ4
+ /f0A9WZqR2wxltp4D4ZXP1WRhZ1mIrJF9jmt2kkwVkqcizCtJ302DRnFiiS/0cz/
+ L9ygcQKJHFDk6KaiG2ARdRF6NAtqduuUKE1Bi6oP5cyLxHElPXkdl7iCa9+lLuS7
+ Vd6YwAGB29brOf2I+08qIbXVYSgwbTwIBUngzMy3e40SxX0zQ7FIJSogEb2fGOn/
+ n+hqG8g5VyRxbXN4BgGt4CZ6l33B+93VMyhJsJPRZBc4YaV+n6OAIaKcfo2c5126
+ 1nn/fiki1zkNXAG890tETCI0dKjc9wPwnakEkHKcy2K9INyuOvrqg==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4avc0jsup6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Dec 2025 21:33:08 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B8I0wkr028123;
- Mon, 8 Dec 2025 21:33:06 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4avy6xqvwt-1
+ Mon, 08 Dec 2025 21:33:38 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5B8ITc6Z012432;
+ Mon, 8 Dec 2025 21:33:37 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4aw0ajqnpk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 08 Dec 2025 21:33:06 +0000
+ Mon, 08 Dec 2025 21:33:37 +0000
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5B8LX5wV197302
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5B8LXK3129229766
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 8 Dec 2025 21:33:05 GMT
+ Mon, 8 Dec 2025 21:33:20 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5831F58059;
- Mon,  8 Dec 2025 21:33:05 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AD55758059;
+ Mon,  8 Dec 2025 21:33:35 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A29CC58058;
- Mon,  8 Dec 2025 21:33:03 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 02EBA5805B;
+ Mon,  8 Dec 2025 21:33:34 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.66.246])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  8 Dec 2025 21:33:03 +0000 (GMT)
+ Mon,  8 Dec 2025 21:33:33 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
  david@redhat.com, jrossi@linux.ibm.com, qemu-s390x@nongnu.org,
@@ -65,37 +65,37 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, pasic@linux.ibm.com,
  borntraeger@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
  armbru@redhat.com, zycai@linux.ibm.com, alifm@linux.ibm.com
-Subject: [PATCH v7 08/29] crypto/x509-utils: Add helper functions for DIAG 320
- subcode 2
-Date: Mon,  8 Dec 2025 16:32:25 -0500
-Message-ID: <20251208213247.702569-9-zycai@linux.ibm.com>
+Subject: [PATCH v7 24/29] pc-bios/s390-ccw: Handle true secure IPL mode
+Date: Mon,  8 Dec 2025 16:32:41 -0500
+Message-ID: <20251208213247.702569-25-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251208213247.702569-1-zycai@linux.ibm.com>
 References: <20251208213247.702569-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAyMCBTYWx0ZWRfX97o+ZjjblaTt
- WPnUMQJnYFllGMzqLTUUyXLzDfGIOmldJCzpKNV0vJ37XdMGGIfRfqTsS5iMIO6gAGPA0GAwUs6
- VQz8usvA28u837jCQAu2K8LZgia7Qbz1nnTZEcvbnocYfpqBEAad26S4eLnMZ06bWZfo08R2ITD
- u5kHHntWjb8UttPUU+OOiqijG3wkDtnKtFjSXt+tPLdFbkHkcpXsCzGIeGcg5sy+5AvOkZuNqNI
- ir/9yQ7f4hY5vDhlvW2hfquhIsx37wpx30jlRsdDcrWSRp/Pvhgs3wTrPpcxHQbyBhaehW0G5r9
- ilDuc8V3xhIk3BrZ47PmKtjsBlg8EG1A0y2ij5ZG0GKBO1hXejSNl1jiod6vyWfR0E5P0nhUW5i
- i65poFaJsKBwUrTe+lT89YPYyl6qxw==
-X-Proofpoint-GUID: NKnUmyE1X6GOr4EES58NDQqN78xBWDEq
-X-Proofpoint-ORIG-GUID: NKnUmyE1X6GOr4EES58NDQqN78xBWDEq
-X-Authority-Analysis: v=2.4 cv=O/U0fR9W c=1 sm=1 tr=0 ts=69374414 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=Cf8FJbrl c=1 sm=1 tr=0 ts=69374432 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=FrWqK8lHM1FzpY_CdjIA:9
+ a=YZg3iBzERQu5FGnwKEMA:9
+X-Proofpoint-ORIG-GUID: Ai1vGU38YFrVl_7AGk76EiXBiB_xdk3U
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAxNiBTYWx0ZWRfXxS28BrEjRDGV
+ uCS01QZn9o1MeBp6LrYZiGaRQJpwR20jHHFkKSaW4lMIfQbAe1uNVYku5I6nB4XGzsftuQzwcRq
+ QdHSgNeNx+y1f5crOIcdUjrohUvhyruNy/vZ+rwz7PeOpXRQ1wOlabl8+/yXmQIPQ0qE7AgE/+8
+ eKU28IHYidV8ObaJwRpgpjajAxZeiEe/UkeY7QZMLQJ+rGNHjy8Rzm6DaSXsp9F1fvNnwRXfs90
+ p7OiIeXWEgTrtN1NFbLf804Cacd/ZDcsXQoSSTvdG6zLEvrqc4eFy34om1QOuKkdhggIhvODXeC
+ ksg4vW3/15J8XbkpiwGTpUq1LfPNfy5cXUULeHYX2OgE9F0D5g7Xo0BmdggDqt0cAbwSBKpc5lV
+ AXdgY63QGsAArtf0/NTK76+Pw9cvGQ==
+X-Proofpoint-GUID: Ai1vGU38YFrVl_7AGk76EiXBiB_xdk3U
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-06_02,2025-12-04_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1011 phishscore=0
- suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512060020
+ phishscore=0 bulkscore=0 malwarescore=0 clxscore=1015 adultscore=0
+ lowpriorityscore=0 impostorscore=0 priorityscore=1501 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
+ definitions=main-2512060016
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -121,382 +121,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce new helper functions to extract certificate metadata:
+When secure boot is enabled (-secure-boot on) and certificate(s) are
+provided, the boot operates in True Secure IPL mode.
 
-qcrypto_x509_check_cert_times() - validates the certificate's validity period against the current time
-qcrypto_x509_get_pk_algorithm() - returns the public key algorithm used in the certificate
-qcrypto_x509_get_cert_key_id() - extracts the key ID from the certificate
-qcrypto_x509_is_ecc_curve_p521() - determines the ECC public key algorithm uses P-521 curve
+Any verification error during True Secure IPL mode will cause the
+entire boot process to terminate.
 
-These functions provide support for metadata extraction and validity checking
-for X.509 certificates.
+Secure IPL in audit mode requires at least one certificate provided in
+the key store along with necessary facilities. If secure boot is enabled
+but no certificate is provided, the boot process will also terminate, as
+this is not a valid secure boot configuration.
+
+Note: True Secure IPL mode is implemented for the SCSI scheme of
+virtio-blk/virtio-scsi devices.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 ---
- crypto/x509-utils.c         | 248 ++++++++++++++++++++++++++++++++++++
- include/crypto/x509-utils.h |  73 +++++++++++
- 2 files changed, 321 insertions(+)
+ docs/system/s390x/secure-ipl.rst | 13 +++++++++++++
+ pc-bios/s390-ccw/bootmap.c       | 19 ++++++++++++++++---
+ pc-bios/s390-ccw/main.c          |  7 ++++++-
+ pc-bios/s390-ccw/s390-ccw.h      |  2 ++
+ pc-bios/s390-ccw/secure-ipl.c    |  4 ++++
+ pc-bios/s390-ccw/secure-ipl.h    |  3 +++
+ 6 files changed, 44 insertions(+), 4 deletions(-)
 
-diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-index 2696d48155..f91fa56563 100644
---- a/crypto/x509-utils.c
-+++ b/crypto/x509-utils.c
-@@ -27,6 +27,25 @@ static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
-     [QCRYPTO_HASH_ALGO_RIPEMD160] = GNUTLS_DIG_RMD160,
- };
+diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+index 675724d324..a03e59ae14 100644
+--- a/docs/system/s390x/secure-ipl.rst
++++ b/docs/system/s390x/secure-ipl.rst
+@@ -64,3 +64,16 @@ Configuration:
+ .. code-block:: shell
  
-+static const int gnutls_to_qcrypto_pk_alg_map[] = {
-+    [GNUTLS_PK_RSA] = QCRYPTO_PK_ALGO_RSA,
-+    [GNUTLS_PK_DSA] = QCRYPTO_PK_ALGO_DSA,
-+    [GNUTLS_PK_ECDSA] = QCRYPTO_PK_ALGO_ECDSA,
-+    [GNUTLS_PK_RSA_OAEP] = QCRYPTO_PK_ALGO_RSA_OAEP,
-+    [GNUTLS_PK_EDDSA_ED25519] = QCRYPTO_PK_ALGO_ED25519,
-+    [GNUTLS_PK_EDDSA_ED448] = QCRYPTO_PK_ALGO_ED448,
-+};
+     qemu-system-s390x -machine s390-ccw-virtio,boot-certs.0.path=/.../qemu/certs,boot-certs.1.path=/another/path/cert.pem ...
 +
-+static const int qcrypto_to_gnutls_keyid_flags_map[] = {
-+    [QCRYPTO_HASH_ALGO_MD5] = -1,
-+    [QCRYPTO_HASH_ALGO_SHA1] = GNUTLS_KEYID_USE_SHA1,
-+    [QCRYPTO_HASH_ALGO_SHA224] = -1,
-+    [QCRYPTO_HASH_ALGO_SHA256] = GNUTLS_KEYID_USE_SHA256,
-+    [QCRYPTO_HASH_ALGO_SHA384] = -1,
-+    [QCRYPTO_HASH_ALGO_SHA512] = GNUTLS_KEYID_USE_SHA512,
-+    [QCRYPTO_HASH_ALGO_RIPEMD160] = -1,
-+};
++Secure Mode
++-----------
 +
- int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-                                       QCryptoHashAlgo alg,
-                                       uint8_t *result,
-@@ -121,6 +140,207 @@ cleanup:
-     return ret;
- }
++When both certificates are provided and ``secure-boot=on`` option is set,
++a secure boot is performed with error reporting enabled. The boot process aborts
++if any error occurs.
++
++Configuration:
++
++.. code-block:: shell
++
++    qemu-system-s390x -machine s390-ccw-virtio,secure-boot=on,boot-certs.0.path=/.../qemu/certs,boot-certs.1.path=/another/path/cert.pem ...
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 342772860b..cc9a8cec6a 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -738,6 +738,9 @@ static int zipl_run(ScsiBlockPtr *pte)
+     entry = (ComponentEntry *)(&header[1]);
  
-+int qcrypto_x509_check_cert_times(uint8_t *cert, size_t size, Error **errp)
-+{
-+    int rc;
-+    int ret = -1;
-+    gnutls_x509_crt_t crt;
-+    gnutls_datum_t datum = {.data = cert, .size = size};
-+    time_t now = time(0);
-+    time_t exp_time;
-+    time_t act_time;
-+
-+    if (now == ((time_t)-1)) {
-+        error_setg_errno(errp, errno, "Cannot get current time");
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_init(&crt);
-+    if (rc < 0) {
-+        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    exp_time = gnutls_x509_crt_get_expiration_time(crt);
-+    if (exp_time == ((time_t)-1)) {
-+        error_setg(errp, "Failed to get certificate expiration time");
-+        goto cleanup;
-+    }
-+    if (exp_time < now) {
-+        error_setg(errp, "The certificate has expired");
-+        goto cleanup;
-+    }
-+
-+    act_time = gnutls_x509_crt_get_activation_time(crt);
-+    if (act_time == ((time_t)-1)) {
-+        error_setg(errp, "Failed to get certificate activation time");
-+        goto cleanup;
-+    }
-+    if (act_time > now) {
-+        error_setg(errp, "The certificate is not yet active");
-+        goto cleanup;
-+    }
-+
-+    ret = 0;
-+
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    return ret;
-+}
-+
-+int qcrypto_x509_get_pk_algorithm(uint8_t *cert, size_t size, Error **errp)
-+{
-+    int rc;
-+    int ret = -1;
-+    unsigned int bits;
-+    gnutls_x509_crt_t crt;
-+    gnutls_datum_t datum = {.data = cert, .size = size};
-+
-+    rc = gnutls_x509_crt_init(&crt);
-+    if (rc < 0) {
-+        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    rc = gnutls_x509_crt_get_pk_algorithm(crt, &bits);
-+    if (rc >= G_N_ELEMENTS(gnutls_to_qcrypto_pk_alg_map) || rc < 0) {
-+        error_setg(errp, "Unknown public key algorithm %d", rc);
-+        goto cleanup;
-+    }
-+
-+    ret = gnutls_to_qcrypto_pk_alg_map[rc];
-+
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    return ret;
-+}
-+
-+int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
-+                                 QCryptoHashAlgo hash_alg,
-+                                 uint8_t **result,
-+                                 size_t *resultlen,
-+                                 Error **errp)
-+{
-+    int rc;
-+    int ret = -1;
-+    gnutls_x509_crt_t crt;
-+    gnutls_datum_t datum = {.data = cert, .size = size};
-+
-+    if (hash_alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
-+        error_setg(errp, "Unknown hash algorithm %d", hash_alg);
-+        return ret;
-+    }
-+
-+    if (hash_alg >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map) ||
-+        qcrypto_to_gnutls_keyid_flags_map[hash_alg] == -1) {
-+        error_setg(errp, "Unsupported key id flag %d", hash_alg);
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_init(&crt);
-+    if (rc < 0) {
-+        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    *resultlen = gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[hash_alg]);
-+    if (*resultlen == 0) {
-+        error_setg(errp, "Failed to get hash algorithn length: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    *result = g_malloc0(*resultlen);
-+    if (gnutls_x509_crt_get_key_id(crt,
-+                                   qcrypto_to_gnutls_keyid_flags_map[hash_alg],
-+                                   *result, resultlen) != 0) {
-+        error_setg(errp, "Failed to get key ID from certificate");
-+        g_clear_pointer(result, g_free);
-+        goto cleanup;
-+    }
-+
-+    ret = 0;
-+
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    return ret;
-+}
-+
-+static int qcrypto_x509_get_ecc_curve(uint8_t *cert, size_t size, Error **errp)
-+{
-+    int rc;
-+    int ret = -1;
-+    gnutls_x509_crt_t crt;
-+    gnutls_datum_t datum = {.data = cert, .size = size};
-+    gnutls_ecc_curve_t curve_id;
-+    gnutls_datum_t x = {.data = NULL, .size = 0};
-+    gnutls_datum_t y = {.data = NULL, .size = 0};
-+
-+    rc = gnutls_x509_crt_init(&crt);
-+    if (rc < 0) {
-+        error_setg(errp, "Failed to initialize certificate: %s", gnutls_strerror(rc));
-+        return ret;
-+    }
-+
-+    rc = gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to import certificate: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    rc = gnutls_x509_crt_get_pk_ecc_raw(crt, &curve_id, &x, &y);
-+    if (rc != 0) {
-+        error_setg(errp, "Failed to get ECC public key curve: %s", gnutls_strerror(rc));
-+        goto cleanup;
-+    }
-+
-+    ret = curve_id;
-+
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    gnutls_free(x.data);
-+    gnutls_free(y.data);
-+    return ret;
-+}
-+
-+int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp)
-+{
-+    int curve_id;
-+
-+    curve_id = qcrypto_x509_get_ecc_curve(cert, size, errp);
-+    if (curve_id == -1) {
+     switch (boot_mode) {
++    case ZIPL_BOOT_MODE_INVALID:
 +        return -1;
++    case ZIPL_BOOT_MODE_SECURE:
+     case ZIPL_BOOT_MODE_SECURE_AUDIT:
+         rc = zipl_run_secure(&entry, tmp_sec);
+         if (rc) {
+@@ -1121,9 +1124,16 @@ ZiplBootMode zipl_mode(uint8_t hdr_flags)
+ {
+     bool sipl_set = hdr_flags & DIAG308_IPIB_FLAGS_SIPL;
+     bool iplir_set = hdr_flags & DIAG308_IPIB_FLAGS_IPLIR;
++    VCStorageSizeBlock *vcssb;
+ 
+     if (!sipl_set && iplir_set) {
+         return ZIPL_BOOT_MODE_SECURE_AUDIT;
++    } else if (sipl_set && iplir_set) {
++        vcssb = zipl_secure_get_vcssb();
++        if (vcssb == NULL || vcssb->length == VCSSB_NO_VC) {
++            return ZIPL_BOOT_MODE_INVALID;
++        }
++        return ZIPL_BOOT_MODE_SECURE;
+     }
+ 
+     return ZIPL_BOOT_MODE_NORMAL;
+@@ -1134,7 +1144,8 @@ void zipl_load(void)
+     VDev *vdev = virtio_get_device();
+ 
+     if (vdev->is_cdrom) {
+-        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
++        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
++            boot_mode == ZIPL_BOOT_MODE_SECURE) {
+             panic("Secure boot from ISO image is not supported!");
+         }
+         ipl_iso_el_torito();
+@@ -1143,7 +1154,8 @@ void zipl_load(void)
+     }
+ 
+     if (virtio_get_device_type() == VIRTIO_ID_NET) {
+-        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
++        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
++            boot_mode == ZIPL_BOOT_MODE_SECURE) {
+             panic("Virtio net boot device does not support secure boot!");
+         }
+         netmain();
+@@ -1156,7 +1168,8 @@ void zipl_load(void)
+         return;
+     }
+ 
+-    if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
++    if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
++        boot_mode == ZIPL_BOOT_MODE_SECURE) {
+         panic("ECKD boot device does not support secure boot!");
+     }
+ 
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 8aabce115f..5cea9d3ac7 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -277,10 +277,15 @@ static void ipl_boot_device(void)
+         boot_mode = zipl_mode(iplb->hdr_flags);
+     }
+ 
++    if (boot_mode == ZIPL_BOOT_MODE_INVALID) {
++        panic("Need at least one certificate for secure boot!");
 +    }
 +
-+    if (curve_id == GNUTLS_ECC_CURVE_INVALID) {
-+        error_setg(errp, "Invalid ECC curve");
-+        return -1;
-+    }
-+
-+    if (curve_id == GNUTLS_ECC_CURVE_SECP521R1) {
-+        return 1;
-+    }
-+
-+    return 0;
-+}
-+
- #else /* ! CONFIG_GNUTLS */
+     switch (cutype) {
+     case CU_TYPE_DASD_3990:
+     case CU_TYPE_DASD_2107:
+-        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT) {
++        if (boot_mode == ZIPL_BOOT_MODE_SECURE_AUDIT ||
++            boot_mode == ZIPL_BOOT_MODE_SECURE) {
+             panic("Passthrough (vfio) CCW device does not support secure boot!");
+         }
  
- int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-@@ -142,4 +362,32 @@ int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
-     return -1;
- }
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index 6d51d07c90..389cc8ea7c 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -83,9 +83,11 @@ int virtio_read(unsigned long sector, void *load_addr);
+ void zipl_load(void);
  
-+int qcrypto_x509_check_cert_times(uint8_t *cert, size_t size, Error **errp)
-+{
-+    error_setg(errp, "GNUTLS is required to get certificate times");
-+    return -1;
-+}
-+
-+int qcrypto_x509_get_pk_algorithm(uint8_t *cert, size_t size, Error **errp)
-+{
-+    error_setg(errp, "GNUTLS is required to get public key algorithm");
-+    return -1;
-+}
-+
-+int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
-+                                 QCryptoHashAlgo hash_alg,
-+                                 uint8_t **result,
-+                                 size_t *resultlen,
-+                                 Error **errp)
-+{
-+    error_setg(errp, "GNUTLS is required to get key ID");
-+    return -1;
-+}
-+
-+int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp)
-+{
-+    error_setg(errp, "GNUTLS is required to determine ecc curve");
-+    return -1;
-+}
-+
- #endif /* ! CONFIG_GNUTLS */
-diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
-index 91ae79fb03..f65be67a2c 100644
---- a/include/crypto/x509-utils.h
-+++ b/include/crypto/x509-utils.h
-@@ -13,6 +13,15 @@
+ typedef enum ZiplBootMode {
++    ZIPL_BOOT_MODE_INVALID = -1,
+     ZIPL_BOOT_MODE_UNSPECIFIED = 0,
+     ZIPL_BOOT_MODE_NORMAL = 1,
+     ZIPL_BOOT_MODE_SECURE_AUDIT = 2,
++    ZIPL_BOOT_MODE_SECURE = 3,
+ } ZiplBootMode;
  
- #include "crypto/hash.h"
+ extern ZiplBootMode boot_mode;
+diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
+index 8733254cfb..bfe021fffe 100644
+--- a/pc-bios/s390-ccw/secure-ipl.c
++++ b/pc-bios/s390-ccw/secure-ipl.c
+@@ -296,6 +296,10 @@ static bool check_sclab_presence(uint8_t *sclab_magic,
+         comps->device_entries[comp_index].cei |= S390_IPL_COMPONENT_CEI_INVALID_SCLAB;
  
-+typedef enum {
-+    QCRYPTO_PK_ALGO_RSA,
-+    QCRYPTO_PK_ALGO_DSA,
-+    QCRYPTO_PK_ALGO_ECDSA,
-+    QCRYPTO_PK_ALGO_RSA_OAEP,
-+    QCRYPTO_PK_ALGO_ED25519,
-+    QCRYPTO_PK_ALGO_ED448,
-+} QCryptoPkAlgo;
+         /* a missing SCLAB will not be reported in audit mode */
++        if (boot_mode == ZIPL_BOOT_MODE_SECURE) {
++            zipl_secure_handle("Magic does not matched. SCLAB does not exist");
++        }
 +
- int qcrypto_get_x509_cert_fingerprint(uint8_t *cert, size_t size,
-                                       QCryptoHashAlgo hash,
-                                       uint8_t *result,
-@@ -40,4 +49,68 @@ int qcrypto_x509_convert_cert_der(uint8_t *cert, size_t size,
-                                   size_t *resultlen,
-                                   Error **errp);
+         return false;
+     }
  
-+/**
-+ * qcrypto_x509_check_cert_times
-+ * @cert: pointer to the raw certificate data
-+ * @size: size of the certificate
-+ * @errp: error pointer
-+ *
-+ * Check whether the activation and expiration times of @cert
-+ * are valid at the current time.
-+ *
-+ * Returns: 0 if the certificate times are valid,
-+ *         -1 on error.
-+ */
-+int qcrypto_x509_check_cert_times(uint8_t *cert, size_t size, Error **errp);
-+
-+/**
-+ * qcrypto_x509_get_pk_algorithm
-+ * @cert: pointer to the raw certificate data
-+ * @size: size of the certificate
-+ * @errp: error pointer
-+ *
-+ * Determine the public key algorithm of the @cert.
-+ *
-+ * Returns: a value from the QCryptoPkAlgo enum on success,
-+ *          -1 on error.
-+ */
-+int qcrypto_x509_get_pk_algorithm(uint8_t *cert, size_t size, Error **errp);
-+
-+/**
-+ * qcrypto_x509_get_cert_key_id
-+ * @cert: pointer to the raw certificate data
-+ * @size: size of the certificate
-+ * @hash_alg: the hash algorithm flag
-+ * @result: output location for the allocated buffer for key ID
-+ *          (the function allocates memory which must be freed by the caller)
-+ * @resultlen: pointer to the size of the buffer
-+ *             (will be updated with the actual size of key id)
-+ * @errp: error pointer
-+ *
-+ * Retrieve the key ID from the @cert based on the specified @flag.
-+ *
-+ * Returns: 0 if key ID was successfully stored in @result,
-+ *         -1 on error.
-+ */
-+int qcrypto_x509_get_cert_key_id(uint8_t *cert, size_t size,
-+                                 QCryptoHashAlgo hash_alg,
-+                                 uint8_t **result,
-+                                 size_t *resultlen,
-+                                 Error **errp);
-+
-+/**
-+ * qcrypto_x509_check_ecc_curve_p521
-+ * @cert: pointer to the raw certificate data
-+ * @size: size of the certificate
-+ * @errp: error pointer
-+ *
-+ * Determine whether the ECC public key in the given certificate uses the P-521
-+ * curve.
-+ *
-+ * Returns: 0 if ECC public key does not use P521 curve.
-+ *          1 if ECC public key uses P521 curve.
-+ *         -1 on error.
-+ */
-+int qcrypto_x509_check_ecc_curve_p521(uint8_t *cert, size_t size, Error **errp);
-+
- #endif
+diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
+index 6ff4f0382c..587a87a27c 100644
+--- a/pc-bios/s390-ccw/secure-ipl.h
++++ b/pc-bios/s390-ccw/secure-ipl.h
+@@ -58,6 +58,9 @@ static inline void zipl_secure_handle(const char *message)
+     case ZIPL_BOOT_MODE_SECURE_AUDIT:
+         IPL_check(false, message);
+         break;
++    case ZIPL_BOOT_MODE_SECURE:
++        panic(message);
++        break;
+     default:
+         break;
+     }
 -- 
 2.51.1
 
