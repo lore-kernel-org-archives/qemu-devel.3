@@ -4,72 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE41D3B7E7
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 13:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 128A4D3B7E2
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 13:55:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSbe3-0003uS-Sb; Mon, 08 Dec 2025 08:51:19 -0500
+	id 1vSbhV-0004yt-Hk; Mon, 08 Dec 2025 08:54:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vSbe2-0003qv-2f
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 08:51:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vSbe0-0000ZQ-FZ
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 08:51:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765201875;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=7snRi4k6OL50UuXEsAz1w2MO1BL+GPtsicaFpNiI3xo=;
- b=IVQlpTaBJImzYNdAcoIDSLH6MRM2sTsUdsgBKBVPy3LpdbzFauXzt+zmQ/GLlWNjmqvm2e
- Mk8fr6xK/fEjZs8G7ToIgGAvEcMgZBzhyUrNX8BIYDsrcOCBoO6NYjtMCJivQwFaXebNEi
- YeL2DN614jS9s3fRGDVvw36T0njWShU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-U1s6szEFNcivNt7eV_JTbw-1; Mon,
- 08 Dec 2025 08:51:12 -0500
-X-MC-Unique: U1s6szEFNcivNt7eV_JTbw-1
-X-Mimecast-MFC-AGG-ID: U1s6szEFNcivNt7eV_JTbw_1765201870
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7062B18002ED; Mon,  8 Dec 2025 13:51:10 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.22.8])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 06C73180035A; Mon,  8 Dec 2025 13:51:03 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH] migration: Fix a possible crash when halting a guest during
- migration
-Date: Mon,  8 Dec 2025 14:51:01 +0100
-Message-ID: <20251208135101.271417-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vSbhT-0004y5-E6
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 08:54:51 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vSbhR-0000q2-Mg
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 08:54:51 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-42b38de7940so2307749f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 05:54:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1765202085; x=1765806885; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ghfy1jzjJy3z8b9j0cjjW5BUXrmkCH6bR5lmrcAjsYg=;
+ b=RSo4nQQidW7WWKK7iHHOkhAG4B71LkcEzF4MY6lCpfIdexEVgoKuZwvu6RHZVm4wxK
+ ZYuH24hhJTV2HQctpOfEqUUrvTQFtzBAoEJSGlA/CYyJoZj80ZBDnxz9zGogEw/qM8ON
+ eRIViyBBjuChJ9fPJ1FDizb46BlgTfk3H9T327jstaYrpNBcZ14rLeqRsppgmCpG/C77
+ 55xUVJS8lmm3W0JHy0Wp0/nU4uWXopmWG3EYIIaiqUYKpYW0FL3F+WzLun6R9bMXEVrL
+ ZF3N+lXknfTKav4ZpyZ2yYb2ayos8vhoW+RlnmqUi1uhpFGIoxMpeVVJhhC94rfFoM8f
+ RRzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765202085; x=1765806885;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ghfy1jzjJy3z8b9j0cjjW5BUXrmkCH6bR5lmrcAjsYg=;
+ b=asxJhrOfuXeYEsNliLzgqB74jBUDhU/Wt5E5iZFRGnLKEQlgYT+Kr7d/e/JY6ErW1l
+ 9tbJpOMewIiROf2phs7vGynRArbiCWoE9CvOnQOvfLCgcUWy3UG4pcNKt83ntGBvCJjI
+ mZpzyRnHCi/1u1RRjoA/EcjkgcQO1tvT0PTAsF/AChZysj8nizF+2QINA5IR90q+T7pF
+ hQ1IPJgfTpTV/0mUnTq+uokeeSLfiWglXy1TdSfaul17RRCT2eDKyVuMXutMl/Trrej5
+ oTvx9FtyszlVL0LyhJ2dyqRcO56sibfnsc/GfhP+nXtyXyQGNqE+DqVUq6mdYgqa3j6X
+ pmCQ==
+X-Gm-Message-State: AOJu0Yxs3+ws7znRX+XdHtTAG/JTOFcEdcuEiu28kh3bwp1WBfms+KKK
+ BySGGhZOyy+dhw1CzOlyfHd4XvW7GY6+e0ChFqAnM6b2mkHo0cFh2NRfkS+t3y4CV7A=
+X-Gm-Gg: ASbGncshkZbbiJZQSDbZcQQY7sLJtANQr/JAT9NpGLTLBtWZeanAD9mulkNphYX0+Ix
+ yDH+07NTCZsOYWLXxOdZYP3Y6O+PbtBwnIToRvra+BzpzzSnuNQ73bb3mLFa2fOUdkaWuRTVycJ
+ DU2+w2KVgbLEP2Mq00qbszrPQNSbnPtcLbxtTZuWTBJE2PsUALBAw0WAMIv6mQTpOknPGSeCdZk
+ 9F0uLcDxzYoyZQ/EEIL76E8/OHOUNHDiMm7/a0/rzXRWep+vzayYMirtM3hv7wqHXgXDnh8NCEZ
+ 8C3L+DLMtCIkYu5vCnJiWPL2/m8dnTK0I1ikCYmCHwDMnI7F7x/6X/5H+7yQQlWKXCbs1Cy2G1O
+ 11kNvqtRWUMdcDMdGGl7JUdRHGY5wVvBH1cQmJkTSKk1fyRqIgSGDTih+HiQS+uwOnr8sBToSJw
+ d2YQJ+B+E7f0Lc6+V5xXT28Q==
+X-Google-Smtp-Source: AGHT+IGiE0qL2djRtWfV7tWonR89014NAL6t99S6TT1i18xkba66UEd8MOwFvt2CvHo9xqOdng07qw==
+X-Received: by 2002:a05:6000:4010:b0:429:c14f:5f7d with SMTP id
+ ffacd0b85a97d-42f89f47859mr9316359f8f.29.1765202084581; 
+ Mon, 08 Dec 2025 05:54:44 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42f7d222478sm25275662f8f.20.2025.12.08.05.54.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Dec 2025 05:54:43 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DD3125F831;
+ Mon, 08 Dec 2025 13:54:42 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Karolina Stolarek <karolina.stolarek@oracle.com>
+Cc: qemu-devel@nongnu.org,  "Michael S . Tsirkin" <mst@redhat.com>,  Stefano
+ Garzarella <sgarzare@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>,  Mike Christie <michael.christie@oracle.com>
+Subject: Re: [PATCH 1/2] virtio-scsi: Make max_target value configurable
+In-Reply-To: <dcb4ca40497dd88f27b345c708402885abdad776.1763999544.git.karolina.stolarek@oracle.com>
+ (Karolina Stolarek's message of "Tue, 25 Nov 2025 11:01:50 +0000")
+References: <cover.1763999544.git.karolina.stolarek@oracle.com>
+ <dcb4ca40497dd88f27b345c708402885abdad776.1763999544.git.karolina.stolarek@oracle.com>
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Mon, 08 Dec 2025 13:54:42 +0000
+Message-ID: <87h5u1hye5.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,95 +107,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Karolina Stolarek <karolina.stolarek@oracle.com> writes:
 
-When shutting down a guest that is currently in progress of being
-migrated, there is a chance that QEMU might crash during bdrv_delete().
-The backtrace looks like this:
+> In virtiscsi_probe(), virtio-scsi enumerates all possible
+> targets, up to VIRTIO_SCSI_MAX_TARGET, to see which of them
+> are available. This means that during that scan, the initiator
+> queues up INQUIRY commands to the targets that do not exist.
+> Such inquires fail, returning a BAD_TARGET response.
+>
+> Currently, there is no way to limit the number of possible
+> targets or to finish the scan earlier. Add "max_target"
+> option for virtio-scsi and vhost-scsi devices to provide
+> a hint on the number of targets available for scanning.
+>
+> Signed-off-by: Karolina Stolarek <karolina.stolarek@oracle.com>
+> ---
+>  hw/scsi/vhost-scsi.c            |  2 ++
+>  hw/scsi/virtio-scsi.c           | 42 +++++++++++++++++++--------------
+>  include/hw/virtio/virtio-scsi.h |  1 +
+>  3 files changed, 27 insertions(+), 18 deletions(-)
+>
+> diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
+> index cdf405b0f8..1a4860a72f 100644
+> --- a/hw/scsi/vhost-scsi.c
+> +++ b/hw/scsi/vhost-scsi.c
+> @@ -353,6 +353,8 @@ static const Property vhost_scsi_properties[] =3D {
+>                         128),
+>      DEFINE_PROP_BOOL("seg_max_adjust", VirtIOSCSICommon, conf.seg_max_ad=
+just,
+>                        true),
+> +    DEFINE_PROP_UINT16("max_target", VirtIOSCSICommon, conf.max_target,
+> +                        VIRTIO_SCSI_MAX_TARGET),
+>      DEFINE_PROP_UINT32("max_sectors", VirtIOSCSICommon, conf.max_sectors,
+>                         0xFFFF),
+>      DEFINE_PROP_UINT32("cmd_per_lun", VirtIOSCSICommon, conf.cmd_per_lun=
+, 128),
+> diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
+> index 93e87c459c..091f68090e 100644
+> --- a/hw/scsi/virtio-scsi.c
+> +++ b/hw/scsi/virtio-scsi.c
+> @@ -971,7 +971,7 @@ static void virtio_scsi_get_config(VirtIODevice *vdev,
+>      virtio_stl_p(vdev, &scsiconf->sense_size, s->sense_size);
+>      virtio_stl_p(vdev, &scsiconf->cdb_size, s->cdb_size);
+>      virtio_stw_p(vdev, &scsiconf->max_channel, VIRTIO_SCSI_MAX_CHANNEL);
+> -    virtio_stw_p(vdev, &scsiconf->max_target, VIRTIO_SCSI_MAX_TARGET);
+> +    virtio_stw_p(vdev, &scsiconf->max_target, s->conf.max_target);
+>      virtio_stl_p(vdev, &scsiconf->max_lun, VIRTIO_SCSI_MAX_LUN);
+>  }
+>=20=20
+> @@ -1260,23 +1260,26 @@ static void virtio_scsi_drained_end(SCSIBus *bus)
+>      }
+>  }
+>=20=20
+> -static struct SCSIBusInfo virtio_scsi_scsi_info =3D {
+> -    .tcq =3D true,
+> -    .max_channel =3D VIRTIO_SCSI_MAX_CHANNEL,
+> -    .max_target =3D VIRTIO_SCSI_MAX_TARGET,
+> -    .max_lun =3D VIRTIO_SCSI_MAX_LUN,
 
- Thread 74 "mig/src/main" received signal SIGSEGV, Segmentation fault.
+See bellow.
 
- [Switching to Thread 0x3f7de7fc8c0 (LWP 2161436)]
- 0x000002aa00664012 in bdrv_delete (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:5560
- 5560	        QTAILQ_REMOVE(&graph_bdrv_states, bs, node_list);
- (gdb) bt
- #0  0x000002aa00664012 in bdrv_delete (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:5560
- #1  bdrv_unref (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:7170
- Backtrace stopped: Cannot access memory at address 0x3f7de7f83e0
+> -
+> -    .complete =3D virtio_scsi_command_complete,
+> -    .fail =3D virtio_scsi_command_failed,
+> -    .cancel =3D virtio_scsi_request_cancelled,
+> -    .change =3D virtio_scsi_change,
+> -    .parse_cdb =3D virtio_scsi_parse_cdb,
+> -    .get_sg_list =3D virtio_scsi_get_sg_list,
+> -    .save_request =3D virtio_scsi_save_request,
+> -    .load_request =3D virtio_scsi_load_request,
+> -    .drained_begin =3D virtio_scsi_drained_begin,
+> -    .drained_end =3D virtio_scsi_drained_end,
+> -};
+> +static struct SCSIBusInfo virtio_scsi_scsi_info;
+> +
 
-The problem is apparently that the migration thread is still active
-(migration_shutdown() only asks it to stop the current migration, but
-does not wait for it to finish), while the main thread continues to
-bdrv_close_all() that will destroy all block drivers. So the two threads
-are racing here for the destruction of the migration-related block drivers.
+We can't have a static structure here otherwise all the VirtIO scsi
+devices will share the same configuration.
 
-I was able to bisect the problem and the race has apparently been introduced
-by commit c2a189976e211c9ff782 ("migration/block-active: Remove global active
-flag"), so reverting it might be an option as well, but waiting for the
-migration thread to finish before continuing with the further clean-ups
-during shutdown seems less intrusive.
+> +static void virtio_scsi_init_scsi_info(struct VirtIOSCSIConf *conf)
+> +{
+> +    virtio_scsi_scsi_info.tcq =3D true;
+> +    virtio_scsi_scsi_info.max_channel =3D VIRTIO_SCSI_MAX_CHANNEL;
+> +    virtio_scsi_scsi_info.max_lun =3D VIRTIO_SCSI_MAX_LUN;
+> +    virtio_scsi_scsi_info.max_target =3D conf->max_target;
 
-Note: I used the Claude AI assistant for analyzing the crash, and it
-came up with the idea of waiting for the migration thread to finish
-in migration_shutdown() before proceeding with the further clean-up,
-but the patch itself has been 100% written by myself.
+I think we need to allocate a dynamic configuration block for this
+stuff. Although given we have ops and config mixed in this structure I
+suspect the cleaner option is to re-factor SCSIBusInfo into
+SCSIBusConfig and SCSIBusOps so you can keep the static around. But this
+would touch quite a bit of code.
 
-Fixes: c2a189976e ("migration/block-active: Remove global active flag")
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- migration/migration.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+> +
+> +    virtio_scsi_scsi_info.complete =3D virtio_scsi_command_complete;
+> +    virtio_scsi_scsi_info.fail =3D virtio_scsi_command_failed;
+> +    virtio_scsi_scsi_info.cancel =3D virtio_scsi_request_cancelled;
+> +    virtio_scsi_scsi_info.change =3D virtio_scsi_change;
+> +    virtio_scsi_scsi_info.parse_cdb =3D virtio_scsi_parse_cdb;
+> +    virtio_scsi_scsi_info.get_sg_list =3D virtio_scsi_get_sg_list;
+> +    virtio_scsi_scsi_info.save_request =3D virtio_scsi_save_request;
+> +    virtio_scsi_scsi_info.load_request =3D virtio_scsi_load_request;
+> +    virtio_scsi_scsi_info.drained_begin =3D virtio_scsi_drained_begin;
+> +    virtio_scsi_scsi_info.drained_end =3D virtio_scsi_drained_end;
+> +}
+>=20=20
+>  void virtio_scsi_common_realize(DeviceState *dev,
+>                                  VirtIOHandleOutput ctrl,
+> @@ -1289,6 +1292,7 @@ void virtio_scsi_common_realize(DeviceState *dev,
+>      int i;
+>=20=20
+>      virtio_init(vdev, VIRTIO_ID_SCSI, sizeof(VirtIOSCSIConfig));
+> +    virtio_scsi_init_scsi_info(&s->conf);
+>=20=20
+>      if (s->conf.num_queues =3D=3D VIRTIO_SCSI_AUTO_NUM_QUEUES) {
+>          s->conf.num_queues =3D 1;
+> @@ -1379,6 +1383,8 @@ static const Property virtio_scsi_properties[] =3D {
+>                                           parent_obj.conf.virtqueue_size,=
+ 256),
+>      DEFINE_PROP_BOOL("seg_max_adjust", VirtIOSCSI,
+>                        parent_obj.conf.seg_max_adjust, true),
+> +    DEFINE_PROP_UINT16("max_target", VirtIOSCSICommon, conf.max_target,
+> +                        VIRTIO_SCSI_MAX_TARGET),
+>      DEFINE_PROP_UINT32("max_sectors", VirtIOSCSI, parent_obj.conf.max_se=
+ctors,
+>                                                    0xFFFF),
+>      DEFINE_PROP_UINT32("cmd_per_lun", VirtIOSCSI, parent_obj.conf.cmd_pe=
+r_lun,
+> diff --git a/include/hw/virtio/virtio-scsi.h b/include/hw/virtio/virtio-s=
+csi.h
+> index b6028bb5cd..3998b241f6 100644
+> --- a/include/hw/virtio/virtio-scsi.h
+> +++ b/include/hw/virtio/virtio-scsi.h
+> @@ -54,6 +54,7 @@ struct VirtIOSCSIConf {
+>      uint32_t virtqueue_size;
+>      bool worker_per_virtqueue;
+>      bool seg_max_adjust;
+> +    uint16_t max_target;
+>      uint32_t max_sectors;
+>      uint32_t cmd_per_lun;
+>      char *vhostfd;
 
-diff --git a/migration/migration.c b/migration/migration.c
-index b316ee01ab2..6f4bb6d8438 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -380,6 +380,16 @@ void migration_bh_schedule(QEMUBHFunc *cb, void *opaque)
-     qemu_bh_schedule(bh);
- }
- 
-+static void migration_thread_join(MigrationState *s)
-+{
-+    if (s && s->migration_thread_running) {
-+        bql_unlock();
-+        qemu_thread_join(&s->thread);
-+        s->migration_thread_running = false;
-+        bql_lock();
-+    }
-+}
-+
- void migration_shutdown(void)
- {
-     /*
-@@ -393,6 +403,13 @@ void migration_shutdown(void)
-      * stop the migration using this structure
-      */
-     migration_cancel();
-+    /*
-+     * Wait for migration thread to finish to prevent a possible race where
-+     * the migration thread is still running and accessing host block drivers
-+     * while the main cleanup proceeds to remove them in bdrv_close_all()
-+     * later.
-+     */
-+    migration_thread_join(migrate_get_current());
-     object_unref(OBJECT(current_migration));
- 
-     /*
-@@ -1499,12 +1516,7 @@ static void migration_cleanup(MigrationState *s)
- 
-     close_return_path_on_source(s);
- 
--    if (s->migration_thread_running) {
--        bql_unlock();
--        qemu_thread_join(&s->thread);
--        s->migration_thread_running = false;
--        bql_lock();
--    }
-+    migration_thread_join(s);
- 
-     WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
-         /*
--- 
-2.52.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
