@@ -4,53 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E289D3ABEF
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 07:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28C56D3B7DD
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 07:41:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSVJh-0003w3-RT; Mon, 08 Dec 2025 02:05:54 -0500
+	id 1vSVrR-0005yN-4L; Mon, 08 Dec 2025 02:40:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vSVJS-0003v7-6i
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 02:05:38 -0500
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ id 1vSVrP-0005y4-4J
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 02:40:43 -0500
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vSVJM-0001ZB-J2
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 02:05:37 -0500
+ id 1vSVrM-0007wf-93
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 02:40:42 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 77CFC44A41
- for <qemu-devel@nongnu.org>; Mon,  8 Dec 2025 07:05:31 +0000 (UTC)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 3149A43801
+ for <qemu-devel@nongnu.org>; Mon,  8 Dec 2025 07:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1765177531;
- bh=MFzqtuVKJaysS8g2I3Eq8BrZ2vRjyLfCLCDXUGz7lvs=;
+ s=20210803; t=1765179638;
+ bh=4BCjG56s3Wbwc00nwpccx65aifmaJ8/tqP9ydtEvvOQ=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=SavOlCgOxeGmVwpb/7gOREEKZEtXJldI2eWUWCxxEKpWqkRbZu1FTHbYi/mhU3PZL
- imEwDpffg5kC24uZc9BtSYZSy4m5Hx4cy3ywDrBKKe0RPDCO5vUi7f/LkhaI0P5eqZ
- FN0UeVl4Vs4OHPc5yl8kCF5gcuEoY+GL0To1mYdc1v67bLPgUjb+8OnS2SkIwbYHbT
- v+aUNNPx3c44ZPYIcaPXlJbdkL/FcrwHwl+/BtclEIuhUyf9z/rDl8Cd+OFoS5hVDL
- gg9XbsTT5SHZBjAkjALOZNiAH0T9Tia1hwb7+qqLmo1D4NegD0MPlIsT8Ih3MbNy0k
- hzX3NSL+aca1A==
+ b=it7NPDlAHeF8bRm3Gf04/gPNeGWdLURSxt7cQpGcX/WzLd3k1tjeMxxJ3+n10hc2L
+ NQ9r9rHfCTNFJRc77cGhPGFrswqfuqdAXeXjZKrYE54+AAYHJfifWtbotUaQxp9cHX
+ +KAZLBJfVWCETS8cbSutPyiIZ32rcugb9Il0PPBu7vOLeIFZmHhLPc5iwcBdkHLo/1
+ gRD0K+cXY3V1BAQIJsk/n5hYbouGIWN6U/7sepr4+Y/bbw17fExQo7uf1M5sqaqM55
+ D2F9ZWT2bIZtOC9a/z1v7Ofe09BVoH6qRVLC4cUWSloO8+hXQ/NBSUXfEJWcNOACt4
+ KaDckJPFUhHIA==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 5AF277F4D3
- for <qemu-devel@nongnu.org>; Mon,  8 Dec 2025 07:05:31 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 1A6C07F4D2
+ for <qemu-devel@nongnu.org>; Mon,  8 Dec 2025 07:40:38 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Mon, 08 Dec 2025 07:00:13 -0000
+Date: Mon, 08 Dec 2025 07:27:49 -0000
 From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
 X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
 X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- status=Confirmed; importance=Medium;
- assignee=heinrich.schuchardt@canonical.com; 
+ milestone=ubuntu-26.04; status=Confirmed; importance=High; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
+ assignee=None; 
 X-Launchpad-Bug-Information-Type: Public
 X-Launchpad-Bug-Private: no
 X-Launchpad-Bug-Security-Vulnerability: no
@@ -58,7 +66,7 @@ X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
 X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
 X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
 References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <176517721314.882352.5046387682617800090.malone@juju-98d295-prod-launchpad-7>
+Message-Id: <176517887075.930811.13320377958497268683.launchpad@juju-98d295-prod-launchpad-7>
 Subject: [Bug 2133188] Re: Illegal instruction in memset under qemu-user for
  riscv64
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -67,9 +75,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="379e22b8475e3402088a4cdb4a6e7936a4d28414";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: 30e12dbac4d2b8cccf0f5db6f2a472d588b0fb45
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Launchpad-Hash: 6a7bdbff6da13bc2a479c0525f0fc1207f3a4bc2
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -92,9 +100,27 @@ Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The patch series is also available at
-https://lore.kernel.org/qemu-riscv/20250903081417.338515-1-npiggin@gmail.co=
-m/
+** Changed in: qemu (Ubuntu)
+    Milestone: None =3D> ubuntu-26.04
+
+** Changed in: qemu (Ubuntu)
+     Assignee: Heinrich Schuchardt (xypron) =3D> (unassigned)
+
+** Changed in: qemu (Ubuntu)
+   Importance: Medium =3D> High
+
+** Also affects: qemu (Ubuntu Questing)
+   Importance: Undecided
+       Status: New
+
+** Also affects: qemu (Ubuntu Resolute)
+   Importance: High
+       Status: Confirmed
+
+** Summary changed:
+
+- Illegal instruction in memset under qemu-user for riscv64
++ [SRU] RISC-V vector state not restored by signal handler
 
 --=20
 You received this bug notification because you are a member of qemu-
@@ -102,11 +128,19 @@ devel-ml, which is subscribed to QEMU.
 https://bugs.launchpad.net/bugs/2133188
 
 Title:
-  Illegal instruction in memset under qemu-user for riscv64
+  [SRU] RISC-V vector state not restored by signal handler
 
 Status in QEMU:
   New
 Status in qemu package in Ubuntu:
+  Confirmed
+Status in qemu source package in Noble:
+  New
+Status in qemu source package in Plucky:
+  New
+Status in qemu source package in Questing:
+  New
+Status in qemu source package in Resolute:
   Confirmed
 
 Bug description:
