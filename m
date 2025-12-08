@@ -4,55 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BFAD3ABEF
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 07:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D3ED3ABEF
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 07:48:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSVyN-0001PR-NT; Mon, 08 Dec 2025 02:47:57 -0500
+	id 1vSVxf-0007xa-7m; Mon, 08 Dec 2025 02:47:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vSVwf-0007Pm-9i; Mon, 08 Dec 2025 02:46:17 -0500
-Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1vSVw6-00078O-Mv
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 02:45:38 -0500
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vSVwd-0000Ml-1L; Mon, 08 Dec 2025 02:46:09 -0500
-Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 8 Dec
- 2025 15:44:43 +0800
-Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
- (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
- Transport; Mon, 8 Dec 2025 15:44:43 +0800
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: <troy_lee@aspeedtech.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>
-Subject: [PATCH v3 16/18] hw/arm/aspeed: Attach PWM device to AST1700 model
-Date: Mon, 8 Dec 2025 15:44:28 +0800
-Message-ID: <20251208074436.1871180-17-kane_chen@aspeedtech.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
-References: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1vSVw4-0000FK-5Z
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 02:45:34 -0500
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id A277844A46
+ for <qemu-devel@nongnu.org>; Mon,  8 Dec 2025 07:45:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1765179930;
+ bh=WPYB2MYirTgpk2V0nmLRXevxuqv7mrZvtGSa+7P2TuQ=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=IO2M+hRVdh+T1qIFSlBbTOsv1WI4Y26hepwH6nVeUB7Ct7j9ullYR9nKoqcMWUaMt
+ QRcYIVy934u8Ini1YbFkp18Db82hVqNghPkSISKWi+2pPpDuXdXSY0cLXl1eL7hUNT
+ GSPV06xjYRhzYcTJvGxcaxdqWioSsMJbNJfXJ1nD6OJQeQ+jaa6xdKL372lltjdoOc
+ BqLo2Z4k9StgHiYKjuG0FKbMp9HpikPwpZqksqtV91oKc6n2ffQ81iS3HsNlLz0V9p
+ ifAlZNzNH0D9XB9uC70HP9dXm5dTKXs7zRE9pD+ebiFQ8GbAzlVIoS6EpTTHb5M2Bq
+ Q6SEhNS7JugAA==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 909207F4D2
+ for <qemu-devel@nongnu.org>; Mon,  8 Dec 2025 07:45:30 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: pass client-ip=211.20.114.72;
- envelope-from=kane_chen@aspeedtech.com; helo=TWMBX01.aspeed.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 08 Dec 2025 07:39:49 -0000
+From: Heinrich Schuchardt <2133188@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Confirmed; importance=High; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=New; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Confirmed; importance=High;
+ assignee=None; 
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: janitor qianqiu-2020 xypron
+X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
+X-Launchpad-Bug-Modifier: Heinrich Schuchardt (xypron)
+References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
+Message-Id: <176517959012.1752730.15906238545441001806.launchpad@juju-98d295-prod-launchpad-3>
+Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
+ handler
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="379e22b8475e3402088a4cdb4a6e7936a4d28414";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: fa06924fe2e7c54b637461d9edbc924bc9aa8733
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_FAIL=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -61,87 +96,160 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Kane Chen <kane_chen@aspeedtech.com>
-From:  Kane Chen via <qemu-devel@nongnu.org>
+Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+** Also affects: qemu (Ubuntu Plucky)
+   Importance: Undecided
+       Status: New
 
-Connect the PWM device to AST1700 model.
+** Also affects: qemu (Ubuntu Noble)
+   Importance: Undecided
+       Status: New
 
-Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
----
- include/hw/arm/aspeed_ast1700.h |  2 ++
- hw/arm/aspeed_ast1700.c         | 13 +++++++++++++
- 2 files changed, 15 insertions(+)
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133188
 
-diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1700.h
-index f43c0c5475..7292719dc2 100644
---- a/include/hw/arm/aspeed_ast1700.h
-+++ b/include/hw/arm/aspeed_ast1700.h
-@@ -14,6 +14,7 @@
- #include "hw/gpio/aspeed_gpio.h"
- #include "hw/i2c/aspeed_i2c.h"
- #include "hw/misc/aspeed_ltpi.h"
-+#include "hw/misc/aspeed_pwm.h"
- #include "hw/ssi/aspeed_smc.h"
- #include "hw/watchdog/wdt_aspeed.h"
- #include "hw/char/serial-mm.h"
-@@ -39,6 +40,7 @@ struct AspeedAST1700SoCState {
-     AspeedSCUState scu;
-     AspeedGPIOState gpio;
-     AspeedI2CState i2c;
-+    AspeedPWMState pwm;
-     AspeedWDTState wdt[AST1700_WDT_NUM];
- };
- 
-diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
-index 289c65749a..c9d7a97a80 100644
---- a/hw/arm/aspeed_ast1700.c
-+++ b/hw/arm/aspeed_ast1700.c
-@@ -18,6 +18,7 @@
- 
- enum {
-     ASPEED_AST1700_DEV_SPI0,
-+    ASPEED_AST1700_DEV_PWM,
-     ASPEED_AST1700_DEV_SRAM,
-     ASPEED_AST1700_DEV_ADC,
-     ASPEED_AST1700_DEV_SCU,
-@@ -31,6 +32,7 @@ enum {
- 
- static const hwaddr aspeed_ast1700_io_memmap[] = {
-     [ASPEED_AST1700_DEV_SPI0]      =  0x00030000,
-+    [ASPEED_AST1700_DEV_PWM]       =  0x000C0000,
-     [ASPEED_AST1700_DEV_SRAM]      =  0x00BC0000,
-     [ASPEED_AST1700_DEV_ADC]       =  0x00C00000,
-     [ASPEED_AST1700_DEV_SCU]       =  0x00C02000,
-@@ -124,6 +126,14 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
-                         aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_I2C],
-                         sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->i2c), 0));
- 
-+    /* PWM */
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->pwm), errp)) {
-+        return;
-+    }
-+    memory_region_add_subregion(&s->iomem,
-+                        aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_PWM],
-+                        sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->pwm), 0));
-+
-     /* LTPI controller */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->ltpi), errp)) {
-         return;
-@@ -177,6 +187,9 @@ static void aspeed_ast1700_instance_init(Object *obj)
-     object_initialize_child(obj, "ioexp-i2c[*]", &s->i2c,
-                             "aspeed.i2c-ast2700");
- 
-+    /* PWM */
-+    object_initialize_child(obj, "pwm", &s->pwm, TYPE_ASPEED_PWM);
-+
-     /* LTPI controller */
-     object_initialize_child(obj, "ltpi-ctrl",
-                             &s->ltpi, TYPE_ASPEED_LTPI);
--- 
-2.43.0
+Title:
+  [SRU] RISC-V vector state not restored by signal handler
+
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Confirmed
+Status in qemu source package in Noble:
+  New
+Status in qemu source package in Plucky:
+  New
+Status in qemu source package in Questing:
+  New
+Status in qemu source package in Resolute:
+  Confirmed
+
+Bug description:
+  # Title
+  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
+et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
+
+  ## Summary
+  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
+ 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
+gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
+ (core dumped)" or "died with signal 4". The illegal instruction is observe=
+d inside glibc's memset implementation at an instruction that uses RISC-V v=
+ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
+e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
+nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
+lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
+code generation / state corruption), not a cmake bug.
+
+  ## Affects
+  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
+untu3)
+  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
+qemu-user static interpreter
+
+  ## Environment / Context
+  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
+  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
+  - Container image: ubuntu:26.04 for riscv64
+  - qemu package used:
+    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
+b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
+-user_10.0.6+ds-0+deb13u2).=20
+    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
+ost and registered via /proc/sys/fs/binfmt_misc/register
+  - CMake version used inside container (bootstrap/build may use system-pro=
+vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
+ggers crash)
+  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
+eral consecutive successes or failures)
+  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
+t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
+QEMU_STRACE also makes it much harder to reproduce.
+   =20
+
+  ## Full reproduction steps
+  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
+ry:
+     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
+uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
+     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
+-5ubuntu3_amd64
+     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
+in/qemu-riscv64-static
+
+  2. Register qemu-riscv64 with binfmt_misc:
+     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
+     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
+00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
+\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
+ >/proc/sys/fs/binfmt_misc/register
+
+  3. Start riscv64 ubuntu container:
+     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
+4 bash
+     docker exec -it ubuntu26 bash -i
+
+  4. Inside container:
+     apt update
+     apt install -y build-essential cmake
+
+  5. Reproducer 1:
+     cmake --system-information
+     -> Often fails with:
+        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
+        Illegal instruction (core dumped)
+
+  6. Reproducer 2 (minimal C project):
+     Create test_cmake/CMakeLists.txt:
+     cmake_minimum_required(VERSION 3.10)
+     project(HelloCMake C)
+     add_executable(hello main.c)
+
+     Create test_cmake/main.c:
+     #include <stdio.h>
+     int main() {
+         printf("Hello, CMake!\n");
+         return 0;
+     }
+
+     cd test_cmake
+     cmake .
+     -> Crash with:
+        -- Detecting C compiler ABI info
+        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
+
+  7. Reproducer 3 (rebuild cmake from source inside container):
+     apt source cmake
+     cd cmake
+     apt-get build-dep .
+     dpkg-buildpackage -us -uc -b
+     -> Bootstrapping error:
+        Illegal instruction (core dumped)
+        Error when bootstrapping CMake:
+        Problem while running initial CMake
+
+  8. Observed crash location (from gdb/QEMU_STRACE when available):
+     - Illegal instruction is in memset@@GLIBC_2.27+0x52
+     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
+bit elements)
+
+
+  ## Workarounds
+  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
+ using vectorized memset.
+  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
+=E2=80=94 both make the failure much less likely.
+
+  Note: The same workload does not reproduce the crash when run under
+  qemu-system (full-system emulation). The issue appears specific to
+  qemu-user
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
 
 
