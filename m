@@ -4,91 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 706C4D3B7DD
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 09:18:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07BE9D3B7DD
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 09:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSXO8-0003GU-1K; Mon, 08 Dec 2025 04:18:36 -0500
+	id 1vSXNy-0003C4-JN; Mon, 08 Dec 2025 04:18:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vSXNy-0003CI-CL
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:18:26 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vSXNv-0001Wa-1h
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:18:25 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-477563e28a3so30112615e9.1
- for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 01:18:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765185501; x=1765790301; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gGN16SaJ6iKKNztXVD04CZUnSkArFa90W3CiCxRW8tc=;
- b=TulRPakqqcRhEmJeshotFJ7If/t1mNQabsDXc4+//lI41LAJUW/BrVOc5SGe2aVzar
- 7oTOzHr55xOJ1kqaIcMNdxKBdX2nkgaXEKF997OYzHxc5bH8tXYEoNIYXST+/xqOYLvl
- yC5YmdOE5WJOBw+sz9FpIL7GKs6MlZi7zdhLXINVve9cQLu7a3NqO9rvCDO6JWmXH6yo
- yjdjaIocTevYBWdmjDl9oegEcLCDlmYBOoqDByPm2buIZvptjt85tSgMEZ9I2lRhVyJj
- jE4WwTGTjc8SVUUM9omxXKZaTQ2k0D/VqOmBBjVeugg7P5cM1oRkgWGggjDLKfL/sdSc
- vrBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765185501; x=1765790301;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gGN16SaJ6iKKNztXVD04CZUnSkArFa90W3CiCxRW8tc=;
- b=JFKs0udj09FgNLaFTGNBh4m8xdGzCEUOa6wDMQrGo2zWpib+KdcLoFpYFuJBvxbMkx
- nAalYaM/y117AbOqTuSsv7bN/XSyjINhbme28iMF3wVcAerTJAQyPiWaHTs0kyWp+che
- KmCrE0ihveGjQ5pw1uPij8SF/+BCdc8kcWC7Kct8fuazEaO2CqGtsrL4C3MUPjnsisut
- rmARmnecmJr8NT3JRmMZ/WPZK+vW6Ld3CPeDekz5g7IyzH36cteOSn2w1Bsg208ddVrC
- nbV/bWsdtl+9qYA0zOpq9DSnGmenQJTNOyF9hy52UgsFPMZdyRh0aIBjR3A4iOtfbxOQ
- K1KA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWJqI1z4Rrsmv9ewlj1dfTBGvpcCJ3pdGCYObwXs2wecxn8jaGDh6jJwlDTAKkwAoCS1n9pM347w1lC@nongnu.org
-X-Gm-Message-State: AOJu0YzMbYlZqeQsuFnXTXikynj32AR5dA+K3whGQ/NMqQqmXcRsG4lx
- 27GzmP8uJwlAsE8oQ0Nt+UOoagEahMvOPfTbS/slvmfsnyWzpeuK1WszKyC5hj5E2bM=
-X-Gm-Gg: ASbGnctxo1M9HmL5jEs4K7NMxTJXWpTCRckUwrSeo17e49jWbVTwl88sKR66zf+IUrw
- /MTZjRfcsc/YCExPAYFaaQGaMFNL+HQ2XpspT+mluLTKiBm7KjoSfMxnAVmiAcrVXF4I8dQE+S9
- afAsd6+3JVG/Mr91G5XSJ2wazWCEwYj/9VCYq5K7CJmMqq0bZmTQiWVhYCh3pUmCd4orrmuz6PY
- yhLfyG9wBpZnnlFUh+QdO0o/hPLBx160siFl8bKrTnV+SkwPLbollblN7esZs9k8e48rdZpSAoy
- ar14iqFFPni8SH7LK7v9AcztHBm0WBnapYNQunXn8FQagTGiVJIaKza2NFRu8BibqT32A1oxBbV
- LC4Qg8vRFIPOvF/PMrepVEPKD36O1BZFE/uqnCSsTOz2RTyKT8j5WlXSnl6QrPIBgYGL+gNa0er
- oOPz/9lE3grYYFFzLz96J/jTGllxiMHjNsAvswhR5yqCrLmWrb+MzCAg==
-X-Google-Smtp-Source: AGHT+IEHykP9RngkoHTlOCIpm9+P2N9BrgJ4+zNgEOIbILOpLB6webMfTLCvUEEfatB5bp9pc/U+KA==
-X-Received: by 2002:a05:600c:220c:b0:477:a53c:8ca1 with SMTP id
- 5b1f17b1804b1-4792eb72df2mr113249245e9.14.1765185500833; 
- Mon, 08 Dec 2025 01:18:20 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7d222491sm25626230f8f.22.2025.12.08.01.18.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Dec 2025 01:18:20 -0800 (PST)
-Message-ID: <48d9d1c6-7eb3-4484-9277-e9b3f36b26f2@linaro.org>
-Date: Mon, 8 Dec 2025 10:18:19 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vSXNj-0002vJ-PL
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:18:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vSXNh-0001VN-9u
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 04:18:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765185488;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mpX8aO9f3s7HbUS05qZCDHuQ3lDCVKbYenQlHxGnjMw=;
+ b=fN6uq0pexzuTiCk+7Vf0WYNUQMBkI+m+C28WauM0lP4n3DOCtzvh8kz/FuOpCYP615V+j3
+ AdK+tdXKlLDFiTdjMSjRLXiMlNghMSsqZL129bYTPs+yLeG3OZBuyX9/tbiQ8bu+Zb6S9E
+ xap+k/nIEkyAzrmZTX9SJ7OkICi4lbM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-r4fLaGgCP7-zBv-Va9NH8A-1; Mon,
+ 08 Dec 2025 04:18:02 -0500
+X-MC-Unique: r4fLaGgCP7-zBv-Va9NH8A-1
+X-Mimecast-MFC-AGG-ID: r4fLaGgCP7-zBv-Va9NH8A_1765185482
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C73C71955F27; Mon,  8 Dec 2025 09:18:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F27CA18005BD; Mon,  8 Dec 2025 09:18:00 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 33EAD21E6A27; Mon, 08 Dec 2025 10:17:52 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  "open list:Rust-related patc..."
+ <qemu-rust@nongnu.org>
+Subject: Re: [PATCH 11/19] rust/qobject: add from/to JSON bindings for QObject
+In-Reply-To: <CABgObfYJiBZC6jx9wQGCubC8J6Gu0Hn9q+Zo_Dm1J8PcRJDNNw@mail.gmail.com>
+ (Paolo Bonzini's message of "Mon, 8 Dec 2025 08:00:00 +0100")
+References: <20251010151006.791038-1-pbonzini@redhat.com>
+ <20251010151006.791038-12-pbonzini@redhat.com>
+ <875xal5jnv.fsf@pond.sub.org>
+ <21a2d5fb-0181-4ce8-8bea-a214c8eac2d7@redhat.com>
+ <87cy4t3yzc.fsf@pond.sub.org>
+ <CABgObfYJiBZC6jx9wQGCubC8J6Gu0Hn9q+Zo_Dm1J8PcRJDNNw@mail.gmail.com>
+Date: Mon, 08 Dec 2025 10:17:52 +0100
+Message-ID: <87bjk9fi2n.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/6] tcg: Zero extend 32-bit addresses for TCI
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20251205162007.26405-1-richard.henderson@linaro.org>
- <20251205162007.26405-2-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251205162007.26405-2-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,21 +92,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/12/25 17:20, Richard Henderson wrote:
-> For native code generation, zero-extending 32-bit addresses for
-> the slow path helpers happens in tcg_out_{ld,st}_helper_args,
-> but there isn't really a slow path for TCI, so that didn't happen.
-> 
-> Make the extension for TCI explicit in the opcode stream,
-> much like we already do for plugins and atomic helpers.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 24e46e6c9d9 ("accel/tcg: Widen tcg-ldst.h addresses to uint64_t")
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/tcg-op-ldst.c | 72 +++++++++++++++++++++++++++++++++++++++--------
->   1 file changed, 61 insertions(+), 11 deletions(-)
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Il ven 5 dic 2025, 13:16 Markus Armbruster <armbru@redhat.com> ha scritto:
+>
+>> > Note however that there is no support for push parsing, therefore this
+>> > would not replace the balanced-parentheses machinery in
+>> > qobject/json-streamer.c, and therefore QMP would still need a minimal
+>> > lexer.
+>>
+>> That push parser...  I never liked it.  First, it's half-assed: it's a
+>> push lexer wed to a pull parser with parenthesis counting.  Second, why
+>> complicated & half-assed when you can do simple & quarter-assed instead?
+>> We could've required "exactly one complete JSON value per line", or some
+>> expression separator such as an empty line.
+>
+> Hmm not sure I agree, actually I think I disagree. It seems simpler but it
+> is also different.
+
+Management applications would be just fine with the different interface.
+
+Human users would be better off.  As is, a missing right parenthesis is
+met with silence.  You can then input whatever you want, and get more
+silence until you somehow close the last parenthesis.  Quite confusing
+unless you already know.
+
+> Push parsing is not rocket science. It would be easy to write a proper one,
+> it's just that there is no real reason other than cleanliness.
+
+Me not liking what we have, when what we have works, is no reason to
+rewrite it.
+
+Even the lousy usability for humans doesn't justify a rewrite.
+
+>> > Grr... I just remembered about interpolation :/ so no, we still need a
+>> > parser for libqmp.c.
+>>
+>> Right.
+>>
+>> Interpolation lets us build QObjects from literal templates with
+>> variable scalars or QObjects interpolated.  More concise and much easier
+>> to read than the equivalend nest of constructor calls.  Drawback: chains
+>> us to our own, bespoke JSON parser.
+>
+> And also, for similar reasons of practicality, single quotes (which IIRC
+> also became valid QMP, and that's less excusable).
+
+Single quotes should've been restricted to internal use, just like
+interpolation.
+
+> But while it's a pity, we still get a lot from serde, namely making the
+> automatic generation of visitor code for structs someone else's problem.
+>
+>> Out of curiosity: how would we do better than "nest of constructor
+>> calls" in Rust?
+>
+> You'd do that with a quoting macro, i.e.
+>
+> qobject!({"command": cmd})
+>
+> where the macro compiles to the nest of constructor calls, like
+> QObject::from_iter([(c"command", to_qobject(cmd))]).
+
+Thanks!
 
 
