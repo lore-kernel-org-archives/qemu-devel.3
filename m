@@ -4,79 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5B73D3B7F2
-	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 14:46:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22DA9D3B7F2
+	for <qemu-devel@archiver.kernel.org>; Mon,  8 Dec 2025 15:06:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vScV6-0003Az-HR; Mon, 08 Dec 2025 09:46:08 -0500
+	id 1vScnp-0006l0-75; Mon, 08 Dec 2025 10:05:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vScUi-00039m-MM
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 09:45:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vScUf-0004J1-7P
- for qemu-devel@nongnu.org; Mon, 08 Dec 2025 09:45:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765205138;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=O50U8iM+qcb8sHqdttyE6lkRZWdW7jm/5U28sSqx+08=;
- b=HrCXo6Q3wSY4ITpLyM46eLm1cTfx0gwbVT+mbIk8TO1t7UcmbQ6cZgP3hIoBA4nrNt8UOr
- YgN08loaVnmLRFvZ7sA7ineNzrhmfHPZy2S6xey9y3WVHE835jWfQuK9ptVfL3jqgA2MvC
- I5wRD4GtS5f2JGhG48W+DR5/vhZJblw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-12-3F4HQ-JONNeSnSA3udRz-g-1; Mon,
- 08 Dec 2025 09:45:29 -0500
-X-MC-Unique: 3F4HQ-JONNeSnSA3udRz-g-1
-X-Mimecast-MFC-AGG-ID: 3F4HQ-JONNeSnSA3udRz-g_1765205128
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BED5A1956064; Mon,  8 Dec 2025 14:45:27 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.112])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B1E9E1955F22; Mon,  8 Dec 2025 14:45:26 +0000 (UTC)
-Date: Mon, 8 Dec 2025 09:45:25 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] migration: Fix a possible crash when halting a guest
- during migration
-Message-ID: <20251208144525.GA1341938@fedora>
-References: <20251208135101.271417-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vScnn-0006kn-1i
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 10:05:27 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vScnk-0007yG-Cb
+ for qemu-devel@nongnu.org; Mon, 08 Dec 2025 10:05:26 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-477563e28a3so32813445e9.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 07:05:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1765206322; x=1765811122; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8M3ROv/5s7FMxpG3DgZmvgt3n04NIgkKXbrt9I27YGM=;
+ b=D+wvKLaE21588TjlYKSP7wvzYKMe9F0CF25seBDjMuC0G1WEozPHL2ABIHJna3NZa/
+ gFssoBM+rUIY6XpYbI/4MrWhDand/0OmbiyhicisVzJa5T301Qioi72yJp4d76JbjpXF
+ xm08mB1DZDEY309Dx1YYceVtty11Oa+2T5qTN/ChuM3yytlilrG1gsVkuahTr34oW05m
+ gsAlDe9uZ2PC5o4s2GCQirXEK6HVtmZ8vfMMbCUzvT8sscn9FIJRkol4FWVYAh3q/9Po
+ 2CiIlmWcsWuMo+kVOiO5LRVBvBM9RLOq/NngM+J+CXKSbmVlhUTU95hpzgD0zrAJzDNx
+ kcqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765206322; x=1765811122;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8M3ROv/5s7FMxpG3DgZmvgt3n04NIgkKXbrt9I27YGM=;
+ b=RbcvgCA4e1cXmYh5aCISM5nVyDKKnbeUAQIf7tWuJwRtyp8rYrB/E4KnUc3O1sC6jJ
+ k9tbGbD9COCrwdoMXeG64VwCLVSPWzLcEPdYdEH9NWuh9+PpnatudoseoAM0olvuqRMm
+ AMCKwWmu9TEquResGOVj9+iR/yv+MEOPZnnl9R6yNL9+GzfYQ+JtNKVTe9E8eKa2DWwd
+ zOMofOe3MACQNPeqy1wKOcUOoyrS993NHh9lL1eOGu81Negvig2sAnbqv5HgZVZPdsOo
+ hn+TFBybCER4BDSdByTbMs9KCMUyerlR14dMg4IRYWAHothCWiEr+C6ujgFtfxzh+8KK
+ OXRQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWiykqW3X8wJWdeNIxSodeWBRjBj6Kg8JJx72XR369WIatpOTzmFQEhZvln2gOJFWsSfTBMi9GJlK7f@nongnu.org
+X-Gm-Message-State: AOJu0YzoZuZ94QRZjK33CxOLf6KTIFGfNHNcXSrJFWnzvzoefRncHEVA
+ BRfTdpupOpgnkJQk6WSeS9NtUjpw7oMg/X/vLwB5br7jGtnYHub0m3pGO1Kmth7k/iQ=
+X-Gm-Gg: ASbGncuMr1zUsSi94nq9vkLGqc6Zi7r5xRbvHK+7TK7797cZMI9B8fNHg/WUot+j8n3
+ VfXlk2hfeGguGdExFoG3uq/2kktO1pVO/vURqunMVkKN7CKkLDKW9Acz9ysFoOLA1tix4AVXuFt
+ 0hgO7PH2Jx0bLKN6HgItUkQqrQ1hcz49kl0Xxaj7gcqUOl9lryNqo01rj05WdoVFgtLIWUyeNIE
+ 4jRsdENbUGFpt7R4EyYLZ9jDUL495gk4Gg09TcxG5EJs3zFP749sYSbe2rMVKPDnHH8MnJGz2zd
+ CXIzEBmShNdIyCTrMY1UzSA8c44aDrtWG0cRudQ1EzwJ6YMmb3M0Cx2yhTPlqEiYDlal8nyL3nr
+ zDNWrb5Xn2ORBZ8PD/EP7T0ha6R/J/dAe56bufoNada1fclP6Gpp3z6QSnCNjv0q2pBZRD0Luoj
+ FJ1jO9WHCWUHY=
+X-Google-Smtp-Source: AGHT+IHBoZ7ECjZCkxc8D0a74IiW+9EcgGXKFlFqiVWtf2YN8Vctcu4KR33M8P430c4noXYrTdAsEw==
+X-Received: by 2002:a05:600c:a08:b0:471:5c0:94fc with SMTP id
+ 5b1f17b1804b1-47939dfa053mr103293515e9.6.1765206322415; 
+ Mon, 08 Dec 2025 07:05:22 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-479310ca502sm255089185e9.7.2025.12.08.07.05.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 08 Dec 2025 07:05:22 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 523E15F831;
+ Mon, 08 Dec 2025 15:05:20 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>, Alistair Francis
+ <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
+ Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
+ Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ cw@f00f.org, demiobenour@gmail.com, dhedde@kalrayinc.com, Eric Blake
+ <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
+ Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
+ <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
+ iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka
+ <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
+ <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
+ <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@gmail.com>, Max Chou <max.chou@sifive.com>, Mark Burton
+ <mburton@qti.qualcomm.com>, mdean@redhat.com, "Ho, Nelson"
+ <nelson.ho@windriver.com>, Paul Walmsley <paul.walmsley@sifive.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, QEMU Developers
+ <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
+ <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
+ <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, wei.w.wang@intel.com, z.huo@139.com, LIU Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Subject: KVM/QEMU community call (9/12/2025) agenda items?
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Mon, 08 Dec 2025 15:05:20 +0000
+Message-ID: <87bjk9hv4f.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="PJ0diViTV7/fg9jQ"
-Content-Disposition: inline
-In-Reply-To: <20251208135101.271417-1-thuth@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x343.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,135 +129,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---PJ0diViTV7/fg9jQ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Mon, Dec 08, 2025 at 02:51:01PM +0100, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
->=20
-> When shutting down a guest that is currently in progress of being
-> migrated, there is a chance that QEMU might crash during bdrv_delete().
-> The backtrace looks like this:
->=20
->  Thread 74 "mig/src/main" received signal SIGSEGV, Segmentation fault.
->=20
->  [Switching to Thread 0x3f7de7fc8c0 (LWP 2161436)]
->  0x000002aa00664012 in bdrv_delete (bs=3D0x2aa00f875c0) at ../../devel/qe=
-mu/block.c:5560
->  5560	        QTAILQ_REMOVE(&graph_bdrv_states, bs, node_list);
->  (gdb) bt
->  #0  0x000002aa00664012 in bdrv_delete (bs=3D0x2aa00f875c0) at ../../deve=
-l/qemu/block.c:5560
->  #1  bdrv_unref (bs=3D0x2aa00f875c0) at ../../devel/qemu/block.c:7170
->  Backtrace stopped: Cannot access memory at address 0x3f7de7f83e0
->=20
-> The problem is apparently that the migration thread is still active
-> (migration_shutdown() only asks it to stop the current migration, but
-> does not wait for it to finish), while the main thread continues to
-> bdrv_close_all() that will destroy all block drivers. So the two threads
-> are racing here for the destruction of the migration-related block driver=
-s.
->=20
-> I was able to bisect the problem and the race has apparently been introdu=
-ced
-> by commit c2a189976e211c9ff782 ("migration/block-active: Remove global ac=
-tive
-> flag"), so reverting it might be an option as well, but waiting for the
-> migration thread to finish before continuing with the further clean-ups
-> during shutdown seems less intrusive.
->=20
-> Note: I used the Claude AI assistant for analyzing the crash, and it
-> came up with the idea of waiting for the migration thread to finish
-> in migration_shutdown() before proceeding with the further clean-up,
-> but the patch itself has been 100% written by myself.
+The KVM/QEMU community call is at:
 
-It sounds like the migration thread does not hold block graph refcounts
-and assumes the BlockDriverStates it uses have a long enough lifetime.
+https://meet.jit.si/kvmcallmeeting
+@
+09/12/2025 13:00 UTC
 
-I don't know the migration code well enough to say whether joining in
-migration_shutdown() is okay. Another option would be expicitly holding
-the necessary refcounts in the migration thread.
+Are there any agenda items for the sync-up?
 
->=20
-> Fixes: c2a189976e ("migration/block-active: Remove global active flag")
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  migration/migration.c | 24 ++++++++++++++++++------
->  1 file changed, 18 insertions(+), 6 deletions(-)
->=20
-> diff --git a/migration/migration.c b/migration/migration.c
-> index b316ee01ab2..6f4bb6d8438 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -380,6 +380,16 @@ void migration_bh_schedule(QEMUBHFunc *cb, void *opa=
-que)
->      qemu_bh_schedule(bh);
->  }
-> =20
-> +static void migration_thread_join(MigrationState *s)
-> +{
-> +    if (s && s->migration_thread_running) {
-> +        bql_unlock();
-> +        qemu_thread_join(&s->thread);
-> +        s->migration_thread_running =3D false;
-> +        bql_lock();
-> +    }
-> +}
-> +
->  void migration_shutdown(void)
->  {
->      /*
-> @@ -393,6 +403,13 @@ void migration_shutdown(void)
->       * stop the migration using this structure
->       */
->      migration_cancel();
-> +    /*
-> +     * Wait for migration thread to finish to prevent a possible race wh=
-ere
-> +     * the migration thread is still running and accessing host block dr=
-ivers
-> +     * while the main cleanup proceeds to remove them in bdrv_close_all()
-> +     * later.
-> +     */
-> +    migration_thread_join(migrate_get_current());
->      object_unref(OBJECT(current_migration));
-> =20
->      /*
-> @@ -1499,12 +1516,7 @@ static void migration_cleanup(MigrationState *s)
-> =20
->      close_return_path_on_source(s);
-> =20
-> -    if (s->migration_thread_running) {
-> -        bql_unlock();
-> -        qemu_thread_join(&s->thread);
-> -        s->migration_thread_running =3D false;
-> -        bql_lock();
-> -    }
-> +    migration_thread_join(s);
-> =20
->      WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
->          /*
-> --=20
-> 2.52.0
->=20
-
---PJ0diViTV7/fg9jQ
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmk25IUACgkQnKSrs4Gr
-c8i/jgf/WcM/etzwqFyWY40niIUsb/V8bhitXWYw/cMJS7KFYQviku6Q5B2A904L
-L4FGhj2L/lXRfkJySVG8m7a21qrUCHeUQNVGggmTs9/ejiquVecZKTKrvc1I9Ajm
-ecU0UBKhP4bxg+g0s7v5qiEcQHHHpr7T0NpYS0aNy6dm33EepZzeynbdXNFLcjZW
-8UwA6Emc9qaCapgJDbi6HhC2w15ta05ZAsdbK/Kx0UjZ+L78893HV0mo+0dOy8de
-JVRadi2sH/Qzy44OE4JAgT4A+YCPiE5ByA8aGv21WJttwnl5rrPJbSUO5xfnpUDu
-XB/ley+vGrcwT9YnmhhfUucAClWLWA==
-=gwJ3
------END PGP SIGNATURE-----
-
---PJ0diViTV7/fg9jQ--
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
