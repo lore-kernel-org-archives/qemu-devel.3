@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB56D3B7EA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E982D3B7ED
 	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 13:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSy9y-0000EJ-QI; Tue, 09 Dec 2025 08:53:46 -0500
+	id 1vSy9y-0000Ax-Pf; Tue, 09 Dec 2025 08:53:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vSy9X-00007i-F9
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vSy9Y-00008H-T1
  for qemu-devel@nongnu.org; Tue, 09 Dec 2025 08:53:21 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vSy9U-0002cN-B7
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 08:53:17 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vSy9X-0002cY-3t
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 08:53:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=gSuMeTJCMlZsr1IIXsHN+X4CV1w2t/kQ/RlHUS2pMfI=; b=BHgz2k+LNpV8P8W
- 8oXV1X+rbg77x9ovFDmKkAo0UJrZkZ8ZlvbiWgPJI+flYBuxeRAqJm+AMI/1MOEqjueXfMrM7Ueeu
- 281yPx2xEpJ1FLq3eLd2vBXXflTgtyvlcfJTr3m3yiC/yNp807LJKbV+00xjvkgdfWlK6kkhmDxc/
- e8=;
-Date: Tue, 09 Dec 2025 14:56:04 +0100
-Subject: [PATCH 3/7] target/i386: Drop physical address range checks
+ List-Help; bh=HcWMXvSmeIdUFWVSFmOjfUE4O2I5xiUpgz8v30Mi418=; b=L0NKfUHrkTMCARD
+ SK4OpTkByKX7hRV9/cXiaMcQv9Yi7KxDBBhtSzTbdSmjEUODdvdM92Gx+vdYl/GNh1aHddxaO+IOM
+ rmNhyJVjlSGJALGMLYsvNI37JB/gNxW/7p0skeIxYM6exuF8gwVUxqTNaysowHFj1g8etEHoMiXWC
+ SI=;
+Date: Tue, 09 Dec 2025 14:56:06 +0100
+Subject: [PATCH 5/7] hw/loongarch: Use loongarch_palen_mask()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251209-phys_addr-v1-3-c387f3e72d77@rev.ng>
+Message-Id: <20251209-phys_addr-v1-5-c387f3e72d77@rev.ng>
 References: <20251209-phys_addr-v1-0-c387f3e72d77@rev.ng>
 In-Reply-To: <20251209-phys_addr-v1-0-c387f3e72d77@rev.ng>
 To: qemu-devel@nongnu.org
@@ -65,64 +65,152 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since TARGET_PHYS_ADDR_SPACE_BITS is now fixed to 64 bits for all
-targets we can remove range checks on cpu->phys_bits and
-TCG_PHYS_ADDR_BITS.
+Replaces remaining uses of TARGET_PHYS_ADDR_SPACE_BITS with
+runtime calls to loongarch_palen_mask() to fetch the physical
+address mask from the cpucfg PALEN field.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/i386/tcg/helper-tcg.h | 2 --
- target/i386/cpu.c            | 9 +++------
- target/i386/kvm/kvm.c        | 3 +--
- 3 files changed, 4 insertions(+), 10 deletions(-)
+ include/hw/loongarch/boot.h |  3 ++-
+ hw/loongarch/boot.c         | 28 ++++++++++++++++------------
+ hw/loongarch/virt.c         |  5 ++++-
+ 3 files changed, 22 insertions(+), 14 deletions(-)
 
-diff --git a/target/i386/tcg/helper-tcg.h b/target/i386/tcg/helper-tcg.h
-index e41cbda407..f4b2ff740d 100644
---- a/target/i386/tcg/helper-tcg.h
-+++ b/target/i386/tcg/helper-tcg.h
-@@ -31,8 +31,6 @@
- # define TCG_PHYS_ADDR_BITS 36
- #endif
+diff --git a/include/hw/loongarch/boot.h b/include/hw/loongarch/boot.h
+index 9819f7fbe3..4984322f75 100644
+--- a/include/hw/loongarch/boot.h
++++ b/include/hw/loongarch/boot.h
+@@ -113,6 +113,7 @@ struct memmap_entry {
+     uint32_t reserved;
+ };
  
--QEMU_BUILD_BUG_ON(TCG_PHYS_ADDR_BITS > TARGET_PHYS_ADDR_SPACE_BITS);
--
- /**
-  * x86_cpu_do_interrupt:
-  * @cpu: vCPU the interrupt is to be handled by.
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 6417775786..0eeceed7cd 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -9435,12 +9435,9 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-      * accel-specific code in cpu_exec_realizefn.
-      */
-     if (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) {
--        if (cpu->phys_bits &&
--            (cpu->phys_bits > TARGET_PHYS_ADDR_SPACE_BITS ||
--            cpu->phys_bits < 32)) {
--            error_setg(errp, "phys-bits should be between 32 and %u "
--                             " (but is %u)",
--                             TARGET_PHYS_ADDR_SPACE_BITS, cpu->phys_bits);
-+        if (cpu->phys_bits && cpu->phys_bits < 32) {
-+            error_setg(errp, "phys-bits should be at least 32"
-+                             " (but is %u)", cpu->phys_bits);
-             return;
-         }
-         /*
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 60c7981138..edfff01d64 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -4681,8 +4681,7 @@ static int kvm_get_msrs(X86CPU *cpu)
-      */
+-void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info);
++void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
++                           uint64_t phys_addr_mask);
  
-     if (cpu->fill_mtrr_mask) {
--        QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 52);
--        assert(cpu->phys_bits <= TARGET_PHYS_ADDR_SPACE_BITS);
-+        assert(cpu->phys_bits <= 52);
-         mtrr_top_bits = MAKE_64BIT_MASK(cpu->phys_bits, 52 - cpu->phys_bits);
+ #endif /* HW_LOONGARCH_BOOT_H */
+diff --git a/hw/loongarch/boot.c b/hw/loongarch/boot.c
+index 8857a04998..d18aa575ba 100644
+--- a/hw/loongarch/boot.c
++++ b/hw/loongarch/boot.c
+@@ -217,10 +217,12 @@ static void init_cmdline(struct loongarch_boot_info *info, void *p, void *start)
+ 
+ static uint64_t cpu_loongarch_virt_to_phys(void *opaque, uint64_t addr)
+ {
+-    return addr & MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS);
++    uint64_t *phys_addr_mask = opaque;
++    return addr & *phys_addr_mask;
+ }
+ 
+ static int64_t load_loongarch_linux_image(const char *filename,
++                                          uint64_t phys_addr_mask,
+                                           uint64_t *kernel_entry,
+                                           uint64_t *kernel_low,
+                                           uint64_t *kernel_high)
+@@ -251,10 +253,8 @@ static int64_t load_loongarch_linux_image(const char *filename,
+     }
+ 
+     /* Early kernel versions may have those fields in virtual address */
+-    *kernel_entry = extract64(le64_to_cpu(hdr->kernel_entry),
+-                              0, TARGET_PHYS_ADDR_SPACE_BITS);
+-    *kernel_low = extract64(le64_to_cpu(hdr->load_offset),
+-                            0, TARGET_PHYS_ADDR_SPACE_BITS);
++    *kernel_entry = le64_to_cpu(hdr->kernel_entry) & phys_addr_mask;
++    *kernel_low = le64_to_cpu(hdr->load_offset) & phys_addr_mask;
+     *kernel_high = *kernel_low + size;
+ 
+     rom_add_blob_fixed(filename, buffer, size, *kernel_low);
+@@ -303,19 +303,21 @@ static ram_addr_t alloc_initrd_memory(struct loongarch_boot_info *info,
+     exit(1);
+ }
+ 
+-static int64_t load_kernel_info(struct loongarch_boot_info *info)
++static int64_t load_kernel_info(struct loongarch_boot_info *info,
++                                uint64_t phys_addr_mask)
+ {
+     uint64_t kernel_entry, kernel_low, kernel_high, initrd_offset = 0;
+     ssize_t kernel_size;
+ 
+     kernel_size = load_elf(info->kernel_filename, NULL,
+-                           cpu_loongarch_virt_to_phys, NULL,
++                           cpu_loongarch_virt_to_phys, &phys_addr_mask,
+                            &kernel_entry, &kernel_low,
+                            &kernel_high, NULL, ELFDATA2LSB,
+                            EM_LOONGARCH, 1, 0);
+-    kernel_entry = cpu_loongarch_virt_to_phys(NULL, kernel_entry);
++    kernel_entry = cpu_loongarch_virt_to_phys(&phys_addr_mask, kernel_entry);
+     if (kernel_size < 0) {
+         kernel_size = load_loongarch_linux_image(info->kernel_filename,
++                                                 phys_addr_mask,
+                                                  &kernel_entry, &kernel_low,
+                                                  &kernel_high);
+     }
+@@ -395,14 +397,15 @@ static void init_boot_rom(MachineState *ms,
+ }
+ 
+ static void loongarch_direct_kernel_boot(MachineState *ms,
+-                                         struct loongarch_boot_info *info)
++                                         struct loongarch_boot_info *info,
++                                         uint64_t phys_addr_mask)
+ {
+     void *p, *bp;
+     int64_t kernel_addr = VIRT_FLASH0_BASE;
+     uint64_t *data;
+ 
+     if (info->kernel_filename) {
+-        kernel_addr = load_kernel_info(info);
++        kernel_addr = load_kernel_info(info, phys_addr_mask);
      } else {
-         mtrr_top_bits = 0;
+         if (!qtest_enabled()) {
+             warn_report("No kernel provided, booting from flash drive.");
+@@ -429,7 +432,8 @@ static void loongarch_direct_kernel_boot(MachineState *ms,
+     g_free(bp);
+ }
+ 
+-void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
++void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info,
++                           uint64_t phys_addr_mask)
+ {
+     LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
+ 
+@@ -440,6 +444,6 @@ void loongarch_load_kernel(MachineState *ms, struct loongarch_boot_info *info)
+     if (lvms->bios_loaded) {
+         loongarch_firmware_boot(lvms, info);
+     } else {
+-        loongarch_direct_kernel_boot(ms, info);
++        loongarch_direct_kernel_boot(ms, info, phys_addr_mask);
+     }
+ }
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index 49434ad182..e3e61903b0 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -33,6 +33,7 @@
+ #include "hw/misc/unimp.h"
+ #include "hw/loongarch/fw_cfg.h"
+ #include "target/loongarch/cpu.h"
++#include "target/loongarch/cpu-mmu.h"
+ #include "hw/firmware/smbios.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/acpi/generic_event_device.h"
+@@ -785,6 +786,7 @@ static void virt_init(MachineState *machine)
+     hwaddr base, size, ram_size = machine->ram_size;
+     MachineClass *mc = MACHINE_GET_CLASS(machine);
+     Object *cpuobj;
++    uint64_t phys_addr_mask = 0;
+ 
+     if (!cpu_model) {
+         cpu_model = LOONGARCH_CPU_TYPE_NAME("la464");
+@@ -872,7 +874,8 @@ static void virt_init(MachineState *machine)
+     qemu_register_powerdown_notifier(&lvms->powerdown_notifier);
+ 
+     lvms->bootinfo.ram_size = ram_size;
+-    loongarch_load_kernel(machine, &lvms->bootinfo);
++    phys_addr_mask = loongarch_palen_mask(&LOONGARCH_CPU(first_cpu)->env);
++    loongarch_load_kernel(machine, &lvms->bootinfo, phys_addr_mask);
+ }
+ 
+ static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
 
 -- 
 2.51.0
