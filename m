@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA03D3B98A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 19:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B01AD3B992
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 19:37:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT3R7-0000tL-RI; Tue, 09 Dec 2025 14:31:49 -0500
+	id 1vT3WS-0002BX-5z; Tue, 09 Dec 2025 14:37:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vT3Qe-0000pG-Jy
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 14:31:23 -0500
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3WO-0002B0-SW
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 14:37:18 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vT3Qd-0000Uv-0G
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 14:31:20 -0500
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-6430834244aso4958926d50.2
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 11:31:18 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3WN-0002Wb-1e
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 14:37:16 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-47a8195e515so6272205e9.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 11:37:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765308677; x=1765913477; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ql0sjCPPDpabR0CJEtisz6XpjiPg9u5mtglBgwE6+oo=;
- b=xnejsaXqAHuNu6f8JjWybjDszyVZkfbP+ilf1CzKM1H1GJJaSERZHOUjAytrohrniJ
- /JIlsRWpL0cH2PNaxG8ECmizgvWLEtoDeG3mvTdftbt6FSZe+Stu/Q9HXcaYPtnK15qF
- YJEOfpK2yPXj1GJQf1YQmyYWFrA/hp+g1B4y8HPcxkE+eONwn642R38PZF7jx+B2eXew
- rKy+t2PGP+tzlNLV87SI5VoGW2Eyyeafj6GftymLpCxbf3ZHkiw8v2mT5TcsEukp0P2V
- VnCG2wb6yB0fJbDNYgPrqjaYpoZheKzNr4/+NDxKpNngSHoCx5L7n4w87RmtF91fTExS
- JjNQ==
+ d=linaro.org; s=google; t=1765309033; x=1765913833; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=axZH327WMSTcP/2VZHx0m+uCUX4M/Wv5dwHts3NrVvE=;
+ b=rtX+/q4o97h/RTKEy+qk/HEPqDTBy90N56cRyKmQyMNmf83HVjae9PxKzjbgU7rkzX
+ lx81VLP9nb4Twcln5iz4cGn70Qmz0jOTBO48GOqJVPRnUYKHwS/R86LLDi3Jx6BJ08i3
+ gWqzaplCIn7MwksKI0iHdgJm+Qzvg0EPRjHO2FOKjHSvfGiJ2zzJzIrSMjmyTiOq4D9F
+ ZVTgRvUmjRzrArvvwBB7woFlAiuo2qmFsRYNiGX87io0Ui1T41V7seiXXJHAWozBRU0w
+ BW+qRqU/eYG9qKzfN7TRr5wG/ELEG8eGuXlAg3dVaZxRn71g/woyJ5x2OZNv21+yc+nM
+ XiXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765308677; x=1765913477;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1765309033; x=1765913833;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ql0sjCPPDpabR0CJEtisz6XpjiPg9u5mtglBgwE6+oo=;
- b=TZCmoyseWuh5qouXmD2fSWeO5vWCG0TUutwBw/9TCG5jG7SjrocLgSP8AHr1OGjD3D
- YUb0NMTKaC44Nb4pPPTxDl7ZWnjJ1PBUbWtqg/Lr3f3Y9AQ+HGSzPrZRO/YU2UXqTfRB
- VbuLam7fJDIt+312DaaY1g8zTUcec8Rzo3csf7hD+RS5L52dUW4BnFEj9lFhJvR9Kaf+
- WG5jWdKSANw1W9YBqNIfBTrr1UBW+XfmfgtcaKZl9CzNSLl8U7CEmqmVZeo2zJVGzVYx
- Wlm2ITzCORdKtge0HzxMR8SA7blpYtqRsn8hcY3vB9Ur3ZfupVLIS/80TWT21ThsWPx4
- u0Hw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtodnxgzdPbjISkHHetlgmMug/d0t42rg+/ocO3XGrVSIZ+mb2PR09QDFjmXljrJwJVBHpPB0Vw7wO@nongnu.org
-X-Gm-Message-State: AOJu0YwiWVHx+ZeBmWu5r9Nl5TcAnmyLGl4hoPbMDdXeKo988ethiTEz
- RBFRXe/BaZDIkmPMZK0Kxhp1DQztJNKw1q5ux0a2KP+b14ncdas6JprYI4vkL6CzzPxrox9nswg
- FJ1co4Js=
-X-Gm-Gg: AY/fxX5jIkSLfklY1Xujxrfy7REW/+pmOKgRoWc6ibZY4XXMIkptsuA/Yswv9mdyk6I
- 70LrAFcqX/jxqttAPYFxC6WD9bj1OVfoSY3boBlhYcTkCcAkOYoDgUGuBs7DV4mEHIGZ3ByfBLM
- kN1M9Qwx3hHM4cQAgVKO9FwA0MsjOYu0qt7z96dUi0cy0deCc9SCLbF/ktPoSOdwmA3Yrwnxn4A
- hXEsHFo2TCiooJyqnHSnNhCnZNj/Oi11n8TdNRjjHR6jP6l6KQC17YSu/wv50M0bVSZvKBzPB4H
- CH1ALDGV4oUEa5rKmwu/5wnK41wiPUceDqmRzzdI/KUf2jgHFG54YlSffFdMeS5Oum+xZCm/b7+
- tkErokyjnWEDgKDF70mWRjDm74UFGWkXtOoqaQvQbiF1rF1CxPBMe1v7NnHYou0kGSjYxGuKTvr
- q4NYZGhNRLyNbS7FPiuLHoz+UBJNECEWbcVbDYOh99Ky8cYVwABG0=
-X-Google-Smtp-Source: AGHT+IELptWmqkqrZ7QePYgeNk7KVMRDizDztcQCy6dMFZmfBezWwiJKvldJtCyHUhwcsz1H0af+DQ==
-X-Received: by 2002:a05:690e:1283:b0:63f:b366:98d5 with SMTP id
- 956f58d0204a3-6446e911126mr43565d50.9.1765308677342; 
- Tue, 09 Dec 2025 11:31:17 -0800 (PST)
-Received: from [10.152.62.227] ([172.58.182.152])
- by smtp.gmail.com with ESMTPSA id
- 00721157ae682-78c1b4ae638sm63076857b3.4.2025.12.09.11.31.15
+ bh=axZH327WMSTcP/2VZHx0m+uCUX4M/Wv5dwHts3NrVvE=;
+ b=tpZLy8SFYWWKZ2IkqmO7bP8/4c/pgKHPFcR0xweRzi2GghUuUEOhDFfBPPz+0mgMvK
+ dDfOePM3wyPA9wpfHnNHY+WrrM6r/90Tz3oiuDkJmCrnNbLgLLq+EQLuoCleCb00ztyi
+ 6dyGyqhOe6RMo4nDRPLtDocvisftqYmcUhMaGfBTJiIl+TIay07S0m7+eXJg5qQ5nTxr
+ cgnoTBfqzIf3TJwB+wTpv5VVR+xrmKCYD6UKPvbgdZ6gQCrxzdtLCEkxC2Jn1Jvi8NSr
+ TWVzkoDCvaLefVnpDDa6sgi6sOsIIT69EL9+eySN40n8mASJQk1ku0RbX9NxuCdkXoo2
+ i6uw==
+X-Gm-Message-State: AOJu0Yx6pAnL7a7Ua09/Ka6qsgPZc6OfO+g1cBDGPA90Erq3fDuonHZv
+ twe4N0n0kuttK9LrbOkXLm6oaBXrrIPQFqc9mMmZLiMZB1Pnvjgx7UcQOuf68bluNjKkVz8nQoq
+ O7nXi5Mg=
+X-Gm-Gg: ASbGncs0uVrKElnsGhE9vQFqO62kLICeE+NvaRVhaN7GZpkYxogoSBW1/TbT50PW1RS
+ jZ3Kk1H0KBGsv4PctkdaEVnkn23MER0Fo2FgsDrdFXhbrBagLpss98YE9ATQNVzjLNeBThwBVD/
+ db+gOBFN1tsUQbN5zD6vj3/+lMsr+JqXq/fmnQEs5gih7C41udf4Hod3hiyZbo02G7pxWJTcvs0
+ nqHztagd/cswk67Xf0hI7tlO2OW3sYtgZJe+WR1dzHv6x1W0iDb+CtBGGJg4+7T4jdcGIMWNFVv
+ fFjD1acrAq9Z5RQkeZaXgFeNzwRYY1JsmOCGaEYmON+/LZ/2e+DY+uIZcXmqzzx+ozrDpYiLN/u
+ 0iKHTKa4aAf44lyjGhmADRmELEAqsP3Oc94znDinUHFVXosdqfS4e/LWbwXIFsXzzp5TPnO5xZ3
+ 7ErimJxXBxq7qT9qHD14ysY46nAtPGtfPuWZiSgnnT4/OvpTSTFw0sEWSiWkiuDrzT
+X-Google-Smtp-Source: AGHT+IFUt+JamcXhys7Va+4fsZlspu/lYTAC3YGfuuFefc0iRI3I0ikFsm+lKhNYTyNBU3gSGDOCqA==
+X-Received: by 2002:a05:600c:a01:b0:477:63a4:88fe with SMTP id
+ 5b1f17b1804b1-47939df379amr119192575e9.2.1765309032645; 
+ Tue, 09 Dec 2025 11:37:12 -0800 (PST)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47a7d9b5c73sm25624165e9.6.2025.12.09.11.37.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Dec 2025 11:31:17 -0800 (PST)
-Message-ID: <ce025501-d19a-4e05-93bd-de5c75a84ecd@linaro.org>
-Date: Tue, 9 Dec 2025 13:31:06 -0600
+ Tue, 09 Dec 2025 11:37:12 -0800 (PST)
+Message-ID: <59d0c2a3-d2c5-481f-96b8-494e6301593c@linaro.org>
+Date: Tue, 9 Dec 2025 20:37:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL for 10.2 0/4] a few Arm HVF and TCG bug fixes
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20251209162829.1328559-1-alex.bennee@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH-for-10.2 v2] osdep: Undefine FSCALE definition to fix
+ Solaris builds
 Content-Language: en-US
-In-Reply-To: <20251209162829.1328559-1-alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20251203120315.62889-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251203120315.62889-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=richard.henderson@linaro.org; helo=mail-yx1-xb130.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,40 +104,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/9/25 10:28, Alex Bennée wrote:
-> The following changes since commit 2257f52a97f28ce3be4366817ea8817ad866562b:
+On 3/12/25 13:03, Philippe Mathieu-Daudé wrote:
+> Solaris defines FSCALE in <sys/param.h>:
 > 
->    Merge tag 'pull-10.2-final-fixes-051225-2' of https://gitlab.com/stsquad/qemu into staging (2025-12-05 12:38:37 -0600)
+>    301 /*
+>    302  * Scale factor for scaled integers used to count
+>    303  * %cpu time and load averages.
+>    304  */
+>    305 #define FSHIFT  8               /* bits to right of fixed binary point */
+>    306 #define FSCALE  (1<<FSHIFT)
 > 
-> are available in the Git repository at:
+> When emulating the SVE FSCALE instruction, we defines the same name
+> in decodetree format in target/arm/tcg/sve.decode:
 > 
->    https://gitlab.com/stsquad/qemu.git tags/pull-10.2-more-final-fixes-091225-1
+>    1129:FSCALE          01100101 .. 00 1001 100 ... ..... .....    @rdn_pg_rm
 > 
-> for you to fetch changes up to dd77ef99aa0280c467fe8442b4238122899ae6cf:
+> This leads to a definition clash:
 > 
->    target/arm: handle unaligned PC during tlb probe (2025-12-09 16:21:56 +0000)
+>    In file included from ../target/arm/tcg/translate-sve.c:21:
+>    ../target/arm/tcg/translate.h:875:17: error: pasting "trans_" and "(" does not give a valid preprocessing token
+>      875 |     static bool trans_##NAME(DisasContext *s, arg_##NAME *a) \
+>          |                 ^~~~~~
+>    ../target/arm/tcg/translate-sve.c:4205:5: note: in expansion of macro 'TRANS_FEAT'
+>     4205 |     TRANS_FEAT(NAME, FEAT, gen_gvec_fpst_arg_zpzz, name##_zpzz_fns[a->esz], a)
+>          |     ^~~~~~~~~~
+>    ../target/arm/tcg/translate-sve.c:4249:1: note: in expansion of macro 'DO_ZPZZ_FP'
+>     4249 | DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>          | ^~~~~~~~~~
+>    ../target/arm/tcg/translate-sve.c:4249:12: error: expected declaration specifiers or '...' before numeric constant
+>     4249 | DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>          |            ^~~~~~
+>    ../target/arm/tcg/translate.h:875:25: note: in definition of macro 'TRANS_FEAT'
+>      875 |     static bool trans_##NAME(DisasContext *s, arg_##NAME *a) \
+>          |                         ^~~~
+>    ../target/arm/tcg/translate-sve.c:4249:1: note: in expansion of macro 'DO_ZPZZ_FP'
+>     4249 | DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>          | ^~~~~~~~~~
+>    ../target/arm/tcg/translate.h:875:47: error: pasting "arg_" and "(" does not give a valid preprocessing token
+>      875 |     static bool trans_##NAME(DisasContext *s, arg_##NAME *a) \
+>          |                                               ^~~~
+>    ../target/arm/tcg/translate-sve.c:4205:5: note: in expansion of macro 'TRANS_FEAT'
+>     4205 |     TRANS_FEAT(NAME, FEAT, gen_gvec_fpst_arg_zpzz, name##_zpzz_fns[a->esz], a)
+>          |     ^~~~~~~~~~
+>    ../target/arm/tcg/translate-sve.c:4249:1: note: in expansion of macro 'DO_ZPZZ_FP'
+>     4249 | DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>          | ^~~~~~~~~~
+>    In file included from ../target/arm/tcg/translate-sve.c:100:
+>    libqemu-aarch64-softmmu.a.p/decode-sve.c.inc:1227:13: warning: 'trans_FSCALE' used but never defined
+>     1227 | static bool trans_FSCALE(DisasContext *ctx, arg_FSCALE *a);
+>          |             ^~~~~~~~~~~~
+>    ../target/arm/tcg/translate-sve.c:4249:30: warning: 'sve_fscalbn_zpzz_fns' defined but not used [-Wunused-const-variable=]
+>     4249 | DO_ZPZZ_FP(FSCALE, aa64_sve, sve_fscalbn)
+>          |                              ^~~~~~~~~~~
+>    ../target/arm/tcg/translate-sve.c:4201:42: note: in definition of macro 'DO_ZPZZ_FP'
+>     4201 |     static gen_helper_gvec_4_ptr * const name##_zpzz_fns[4] = { \
+>          |                                          ^~~~
 > 
-> ----------------------------------------------------------------
-> a few Arm HVF and TCG bug fixes:
+> As a kludge, undefine it globally in <qemu/osdep.h>.
 > 
->    - don't re-use TCG only PSCI code in HVF
->    - fix deadlock in HVF when shutting down (#3228)
->    - fix corruption of register state from PSCI (#3228)
->    - properly prioritise PC alignment faults (#3233)
-> 
-> ----------------------------------------------------------------
-> Alex Bennée (4):
->        Revert "target/arm: Re-use arm_is_psci_call() in HVF"
->        target/arm: ensure PSCI register updates are flushed
->        target/arm: make HV_EXIT_REASON_CANCELED leave hvf_arch_vcpu_exec
->        target/arm: handle unaligned PC during tlb probe
-> 
->   target/arm/hvf/hvf.c        | 11 ++++++++---
->   target/arm/tcg/tlb_helper.c | 21 ++++++++++++++++-----
->   2 files changed, 24 insertions(+), 8 deletions(-)
-> 
+> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/qemu/osdep.h | 6 ++++++
+>   1 file changed, 6 insertions(+)
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+Per IRC:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-r~
 
