@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2596D3B992
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 20:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 885E6D3B992
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 20:06:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT3xx-0000op-54; Tue, 09 Dec 2025 15:05:45 -0500
+	id 1vT3yU-000151-Fb; Tue, 09 Dec 2025 15:06:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3xu-0000oT-VW
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:05:42 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3yR-00013D-E4
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:06:15 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3xt-0001H3-43
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:05:42 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-42e2d5e119fso2560324f8f.2
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 12:05:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3yP-0001JL-Tq
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:06:15 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-42b47f662a0so97715f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 12:06:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765310739; x=1765915539; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=xezfzl7F4cXOA+1euehvlBoACOHQVgv+Trponi1peWU=;
- b=olh4HQXmsxMmqZRJyTXnmapsGTeF8/EHtAM+F50gNqzDxnvdI/4HV0vVTR8wy6ye5O
- YuLJpzma12W1fqnvjv9AofKCocN5m0jxviswuQ1g6/EUNngPwgLm7ZtzVh+85dbjX0Pk
- LktH+Cbpvaqxc/+K2vFl74bKam+hQl4oLAE/++PW/rb6JDi2KihqARnqGwHPqatWMPP3
- GbHkKVLlPYylvlYWhhTZLguo4gwQqki6QiEhhahDMKHFu3D7LrlWepbYkllGP5Q08kTB
- 4cxJdO49n4uEFMlrrmdFEfkXO9kgmfRCG9kCdci4qfNHcZiWDr32Ie3RimY2gOYaI5NJ
- OxqQ==
+ d=linaro.org; s=google; t=1765310772; x=1765915572; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=c+XhViGePU7FVlwUFzwVc9jH+z21suBf3LC87dmzJlc=;
+ b=w13Tu4tK8PuWEcRVtwPhkaFJEM8ikWbt6hSg+E6zPY75DIV4TSzlPx7HE7NbxWVYH3
+ c8rjnqVzrdLT8SifGiMaA69hH7SlVxWds0J3Byrk4H6FYOO8nObYhfjr49/6/Aq2ycci
+ eZCEWp+qLHWJAZJhKnaXxoT302GVp2vIYNOrRu5SU5T6ED9NTh8Xjw51moViNp9UOOxK
+ /nP/HJrkCj2QvgIWp5rGQFQ6CDY915PlAI8irL6I8b8a1aMI79Isfb0x+XzZ/jZ7sR65
+ KOa6VJ/5A6/eVFZNFNxKyi1IOOzC8OGSOgHcoS/Hyb4NDN1XrCPCjBHiPqLlnOqFLiLv
+ Ly9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765310739; x=1765915539;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xezfzl7F4cXOA+1euehvlBoACOHQVgv+Trponi1peWU=;
- b=R4nE16zKXfdR6yApg+Dj3YRLxylyvUSuuI9CCAViYy4mDTNMDZwiUK4pz54R3D5LnP
- 3nxcXprcpTEbqFOAkSv+j89nTVKqtbkyvOj1Ga9tA1UROQVNVALoFt4J1hrAGYXAsNBx
- wqyM27PDYxfQ/HjkKAJF1Dfrun5vJ47d7NfRwnrthL6ZTjgFIVV2d+HpVXH8H/orXrxX
- JO3//S2HCNQis0t6ZQWpXYdO6pXdSDoeuVSapXi6eR4S4SsYmnZJcZaUm2Q8jkOKufk1
- XjWASfT/YfImJu9T2n2++9RCvxYbonxenOei5dv/K54VmIm+mmJJ/a/wvPn0Coip+OvO
- jLRA==
-X-Gm-Message-State: AOJu0Yy1eWfTOCvyzF6ek04pHywo24G6W9+ML1ZRJH2yfjJxrxQ9ohKz
- AZVPEYMB60wI+iJfMWs0P9O4HGfmEugBTipKvAblxhBYdTkpZ3JbsWUWzag1msFwT5Ht4lg5r2S
- 4lvPi0pE=
-X-Gm-Gg: AY/fxX7zvGxSBt2rA5547a45u61JxYcV2U+1YMa5mPdL4iG4EF4tHrUSbsYm0gCOqrH
- 9OZ0uljLIXmSVmYEVH0eaCp2SNuKUya9gV4MMVfqgJoNAHZZG4Bo3b1QMM54xUZlRnuNrZ6wvvI
- FJIxvqW+tHA/1H5nWsArPUFSaM5yUE+XDVGqC+bIqm1jwV987mBJZAbZTW/vBR8XKUEy5YsdkcQ
- 6rSMT5H2ua/mJ1oA46jWsLDht8mKRpbZxa4QqkiI5G6bFtWXjZ+gBw7/zn1o+GmWSXr7eojDlcd
- HIGXzu36hBdvNM6rsAjCNEXgM2eUVC8L5isVKRX4t3s2YyiAaoZ2EkWQK3fu9rnhGynI9dsEVsi
- M3U8NMuVYY9cKj/QwaEV3J39v9d8QQdIvHVWZkQbHj9OGu5wfC6Kl71dXgCfNmHrcX84NVLNbmr
- zrTunDlM/1PnzP6T7YajROdu/x17Q8ITA0BARZc2+vp3SA3pvF7+fSAgRBB7D3
-X-Google-Smtp-Source: AGHT+IGh6S/Q+Eelt76oE4AkIIFrZR78t4m4/tfK30DrPK9gHVlGDSMc6e7H1dhCCgw23Dl9wUWPOA==
-X-Received: by 2002:a5d:6584:0:b0:42b:2f79:755e with SMTP id
- ffacd0b85a97d-42f89f09f0dmr10202946f8f.3.1765310738680; 
- Tue, 09 Dec 2025 12:05:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1765310772; x=1765915572;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=c+XhViGePU7FVlwUFzwVc9jH+z21suBf3LC87dmzJlc=;
+ b=JWoAhtVWc2iwM55AO3/dA5W1VO6FaM6/RFC6OTL53kJD/15sgP4jVVZn6RZFLF9yNr
+ mADB5TjRTXcvrDVD2GKq+KpIl8r7XR5Vr2bC5OmeKEOMwYayYtKbfg/JISWSmVG5hFbm
+ kJQ0mZBfBOku6r54sZU2k5YJDEnHhqBKqEuLwUQe76Fy/MEgJ2ZACJBXikgAb7G3EmcJ
+ p7sDzxzjjBpiUZvK/Hc6rciHu9uqa++VJ09juNxsKM+XDsoGAjTgSf84BSo8P79VZfxy
+ gUzW2L43VyUPrLOHQyqlfw+hQm+fmFhByhhHEpz3MPoibvKL46JN1pP7OlYEZKpNDtfs
+ /6Qw==
+X-Gm-Message-State: AOJu0YzM72KbWu0fn+2JhcKV6ILwemGPWUnkJEna0n35HhgPYQLr0P0C
+ 2nqPcn8FbHVIJthkeT9U9X5AYWVuTy9vdIPQV10H+EufqXPUmacNdcnFeEvu0ISH0gHRNLB47M0
+ J7320cek=
+X-Gm-Gg: AY/fxX62d5l6TQ0/F1A3OuVD+AI5vGQrhechLgW4luoe5YWxU3tKvK8WrVvBMVPBQKz
+ hzht88JEa7r+ju3VsyniEo9w+wKp6oXhlGlwUSrl/VNvyzIUhjvI0CHWSbTHSo0pChBCZhNXLDl
+ ATdBQaEb4ZzBAH1jYwA0uZu2Psc1Nnjqw8RLrGYt+vVKJqmkZ8gugnOdgXEZX4ZpCkBEe1yJAzC
+ dMqTV4ghRAhTFjtMkmA6rw1CJsln5/QQge6VPHmSGgghUBM9nUVl8eLcVEO31XPj6h5C1MRFCNM
+ 02ew/Fzw7FxWK5Ec2eHxep1YcY9hYdLiOvYPPMcXvySNvYz1Lm8NpmhHJncPLHnEzJ5Hlg+n1wF
+ yDWXnvynKINdAbJk6QMAF6rTb76/17vZXktdOqUB0/Nzt4R8Tx/vfej+oFz4HQX3phoniI9G7Z7
+ ynSXyEZwHdsHNG9ND/xsoLipOZk8F+yd/rp6ZgdA/LG1LbNeD6tbYxqEFWCQ5ADRm51Md52ws=
+X-Google-Smtp-Source: AGHT+IF68cz2tJEYTPejxUXhpefjvTppK7MvtvwBwc64fE9WIGCZu9QmP31Ud0GJDrQgsbohPimqFw==
+X-Received: by 2002:a05:6000:1a86:b0:429:d253:8619 with SMTP id
+ ffacd0b85a97d-42fa071b78fmr3645039f8f.5.1765310771909; 
+ Tue, 09 Dec 2025 12:06:11 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7cbe90f0sm33702165f8f.9.2025.12.09.12.05.37
+ ffacd0b85a97d-42f7d222506sm35630666f8f.28.2025.12.09.12.06.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Dec 2025 12:05:38 -0800 (PST)
+ Tue, 09 Dec 2025 12:06:11 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/10] Misc HW patches for 2025-12-09
-Date: Tue,  9 Dec 2025 21:05:27 +0100
-Message-ID: <20251209200537.84097-1-philmd@linaro.org>
+Subject: [PULL 05/10] migration: Fix order of function arguments
+Date: Tue,  9 Dec 2025 21:05:32 +0100
+Message-ID: <20251209200537.84097-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251209200537.84097-1-philmd@linaro.org>
+References: <20251209200537.84097-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,64 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 2257f52a97f28ce3be4366817ea8817ad866562b:
+From: Stefan Weil <sw@weilnetz.de>
 
-  Merge tag 'pull-10.2-final-fixes-051225-2' of https://gitlab.com/stsquad/qemu into staging (2025-12-05 12:38:37 -0600)
+This fixes a compiler error when higher warning levels are enabled:
 
-are available in the Git repository at:
+../migration/postcopy-ram.c: In function ‘postcopy_temp_pages_setup’:
+../migration/postcopy-ram.c:1483:50: error: ‘g_malloc0_n’ sizes specified with ‘sizeof’ in the earlier argument and not in the later argument [-Werror=calloc-transposed-args]
+ 1483 |     mis->postcopy_tmp_pages = g_malloc0_n(sizeof(PostcopyTmpPage), channels);
+      |                                                  ^~~~~~~~~~~~~~~
+../migration/postcopy-ram.c:1483:50: note: earlier argument should specify number of elements, later size of each element
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20251209
+Avoid also a related int/unsigned mismatch by fixing the type of
+two local variables.
 
-for you to fetch changes up to efd6b3d1768d04d5491b62ad7385f623fb12f627:
+Signed-off-by: Stefan Weil <sw@weilnetz.de>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251209125049.764095-1-sw@weilnetz.de>
+[PMD: Replace g_malloc0_n() by g_new0()]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20251209195010.83219-1-philmd@linaro.org>
+---
+ migration/postcopy-ram.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-  Revert "hw/net/virtio-net: make VirtIONet.vlans an array instead of a pointer" (2025-12-09 21:00:15 +0100)
-
-----------------------------------------------------------------
-Misc HW / migration / typo fixes
-----------------------------------------------------------------
-
-Alano Song (1):
-  hw/9pfs: Correct typo
-
-Cédric Le Goater (1):
-  Fix const qualifier build errors with recent glibc
-
-Denis V. Lunev (1):
-  scripts: fix broken error path in modinfo-collect.py
-
-Hanna Czenczek (1):
-  vhost: Always initialize cached vring data
-
-Philippe Mathieu-Daudé (3):
-  osdep: Undefine FSCALE definition to fix Solaris builds
-  Revert "migration/vmstate: remove VMSTATE_BUFFER_POINTER_UNSAFE macro"
-  Revert "hw/net/virtio-net: make VirtIONet.vlans an array instead of a
-    pointer"
-
-Stefan Weil (3):
-  migration: Fix order of function arguments
-  hw/pci: Fix typo in documentation
-  scripts/nsis.py: Tell makensis that WoA is 64 bit
-
- include/hw/pci/pci.h           |  2 +-
- include/hw/virtio/virtio-net.h |  2 +-
- include/migration/vmstate.h    |  9 ++++++++
- include/qemu/osdep.h           |  6 ++++++
- backends/tpm/tpm_passthrough.c |  2 +-
- block/vmdk.c                   |  2 +-
- block/vvfat.c                  |  2 +-
- gdbstub/gdbstub.c              |  2 +-
- hw/9pfs/xen-9p-backend.c       |  2 +-
- hw/net/virtio-net.c            |  9 ++++----
- hw/virtio/vhost.c              | 38 ++++++++++++++++++++--------------
- migration/postcopy-ram.c       |  5 +++--
- qga/commands-linux.c           |  7 ++++---
- ui/ui-hmp-cmds.c               |  2 +-
- util/log.c                     |  2 +-
- scripts/modinfo-collect.py     |  2 +-
- scripts/nsis.py                |  2 +-
- 17 files changed, 61 insertions(+), 35 deletions(-)
-
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 7c9fe61041f..715ef021a91 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -1467,7 +1467,8 @@ retry:
+ static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
+ {
+     PostcopyTmpPage *tmp_page;
+-    int err, i, channels;
++    int err;
++    unsigned i, channels;
+     void *temp_page;
+ 
+     if (migrate_postcopy_preempt()) {
+@@ -1479,7 +1480,7 @@ static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
+     }
+ 
+     channels = mis->postcopy_channels;
+-    mis->postcopy_tmp_pages = g_malloc0_n(sizeof(PostcopyTmpPage), channels);
++    mis->postcopy_tmp_pages = g_new0(PostcopyTmpPage, channels);
+ 
+     for (i = 0; i < channels; i++) {
+         tmp_page = &mis->postcopy_tmp_pages[i];
 -- 
 2.51.0
 
