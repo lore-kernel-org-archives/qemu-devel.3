@@ -4,101 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45EB1D3B7EA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 09:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81321D3B7EA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 10:03:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSuOB-0002lk-To; Tue, 09 Dec 2025 04:52:11 -0500
+	id 1vSuYy-0004w9-3I; Tue, 09 Dec 2025 05:03:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vSuO9-0002lM-JI
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 04:52:09 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vSuYw-0004un-9O
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 05:03:18 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vSuO7-0000ti-G7
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 04:52:09 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vSuYu-0004Ks-Eq
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 05:03:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765273925;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1765274595;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FMOm/8gHRD8IZN8UblCC2X59Td222VnJrV4m5M6iU28=;
- b=SOhXjnbLO4lGZaSGnLtYj0ErJrufWsW9N7ukVxpliRvetDz9dQBOIBkvgNytorRLQA2Kjo
- DiMFI1xSyZQKihF1Zxy3vY/92GWNbkp7bc02TIxLxKiXYXgpCPkDYkgv8eMt/+xVmGmRUI
- lnDq/3nGI4YgY/e08LrmErayFwSzxbA=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-144-vP4Z1d2KOzKuRsyhkkebrw-1; Tue, 09 Dec 2025 04:52:03 -0500
-X-MC-Unique: vP4Z1d2KOzKuRsyhkkebrw-1
-X-Mimecast-MFC-AGG-ID: vP4Z1d2KOzKuRsyhkkebrw_1765273923
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8b245c49d0cso705704285a.3
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 01:52:03 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765273922; x=1765878722;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FMOm/8gHRD8IZN8UblCC2X59Td222VnJrV4m5M6iU28=;
- b=UjPRBNFNqWlcmFCgsLEvWg++mcqDpduNg+vwJHGY59uD9iOnoQdpv2sV2uP4pkKidQ
- zKRSY3F8Kt7YzaSLJAdN1NFo+vAlqez48Xdxqaz83YVYH7QhbrHPqUwtqZ9V1AlXauWs
- yCHhCBP6QaiEsEmkfgQxjWI3VPVlknZaVIJ4al/NP7mcfoA9VCUcy0zd5JuAMG9/GXwD
- M48HncgtTMsyFgIglHtcWHg1ldLWwRpmFW0/LO1bh5NiG/BENrA4f7gyL0luB88upE2S
- sFZ+xdLVQbSwdFM6pkR/ssRdYM5wlHQfLyEDeXuDBEgQpF8Far6rJ9Nhk8nDLMXU8db5
- /X9g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvdUtCkJH+uKmea4I8gvQ0NCL8M4nSD0sWqmcyrxVMAfytsiwRMRoulHQ4Er5RrP/Zrm4hx3DxE3Pl@nongnu.org
-X-Gm-Message-State: AOJu0YyxhMCzZSCjUfkL2KrAgOd6DbA5imILDzfVpqUZC9sqvdHFE3g6
- q+8IerdF0KmPUP40Tc9GTZYE6De5k/m3/aMKylkWfgRl9+bUMa53W7m5jNK9WeRUPMBYy6k2AHv
- HgtujmaHvl6Tnm2BFJfy530e+FBEMAKH6fK7W0+cQqzzWD7lpqDSOdUsxno/4Uus/
-X-Gm-Gg: ASbGncvQcYqVS0MKtsiJDeqxf+wGQrR9/EUkOrVYan+2cLcwDVG0bzofcez0isTftv+
- OeRy/mOC4POKnA0fKVtV+FcCHgQWqVxhB7W+UUVwQx5q3A+8gCid2O0CivcJnHClpL9ZNX1eQ1L
- kzXO6YNzEF7ijWbuxAOqbtSPoMT3fKKfjZh9iDFbYhUMbUEqoemiZ9VIvOyxkoYOosmf549Yj9W
- Ni0VgCwG27JiBMuXvC0fhBT+emPqIIv8C/ijHz2x5Rxw7qeTVSwI48Td/s6jhyxxke+iEa61gQJ
- 1XyacQpzIdgNMc1rQXOAZQBBE98EXJXmkKGDagQvoFlTrm7QEzlvFmVFsZkkQKRsdyNY+mQy698
- rA0BQsqdejoy6RGiO2h59+eO3aNNrwv27iiymt/D+VoLvbf4C23hu1VkZpg==
-X-Received: by 2002:a05:6214:e45:b0:880:480c:6054 with SMTP id
- 6a1803df08f44-8883dae5a3amr140038646d6.19.1765273922464; 
- Tue, 09 Dec 2025 01:52:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHRHWDGAG22ACgpv5Od67zNINTP3pD/RM19h0J49n22gkEXHkm2L3Zqs7vzirTQ0dwmBDsZZg==
-X-Received: by 2002:a05:6214:e45:b0:880:480c:6054 with SMTP id
- 6a1803df08f44-8883dae5a3amr140038476d6.19.1765273921911; 
- Tue, 09 Dec 2025 01:52:01 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-88827f4dcd3sm128468716d6.19.2025.12.09.01.51.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Dec 2025 01:51:59 -0800 (PST)
-Message-ID: <7dc608a7-b36b-4250-befd-d26115b54e26@redhat.com>
-Date: Tue, 9 Dec 2025 10:51:55 +0100
+ bh=8Aj4vBCiD8PsKyCpBrI1xDOY6Czu2z2tPYE49xVb+aY=;
+ b=X7HlFYN80a+tuOhXwRpX7moj0Kd+FYvYytUsRiXRl4JImOdBOcnrwuDyjqIZiVU9rxRCaR
+ FwffacHTLiDPHXqPfsk9fNw+Dip6xXnaBgUeYYJPOIMoIEV0VSPFIRyGvqBsFkwkea2Jnp
+ SfuB3VPtQHjbLNlXXBfISJ3/WDwcf1I=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-z6-9FA5XOoSMhaXSmA46tw-1; Tue,
+ 09 Dec 2025 05:03:13 -0500
+X-MC-Unique: z6-9FA5XOoSMhaXSmA46tw-1
+X-Mimecast-MFC-AGG-ID: z6-9FA5XOoSMhaXSmA46tw_1765274592
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85F27195606E; Tue,  9 Dec 2025 10:03:12 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D7B4E19560AD; Tue,  9 Dec 2025 10:03:11 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3B0A021E6A27; Tue, 09 Dec 2025 11:03:09 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, qemu-rust@nongnu.org
+Subject: Re: [PATCH 14/19] scripts/qapi: generate high-level Rust bindings
+In-Reply-To: <20251010151006.791038-15-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Fri, 10 Oct 2025 17:09:59 +0200")
+References: <20251010151006.791038-1-pbonzini@redhat.com>
+ <20251010151006.791038-15-pbonzini@redhat.com>
+Date: Tue, 09 Dec 2025 11:03:09 +0100
+Message-ID: <87v7ig3rc2.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 32/33] vfio: Synthesize vPASID capability to VM
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, wangzhou1@hisilicon.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, yi.l.liu@intel.com,
- kjaju@nvidia.com
-References: <20251120132213.56581-1-skolothumtho@nvidia.com>
- <20251120132213.56581-33-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251120132213.56581-33-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,7 +71,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,135 +84,212 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
-On 11/20/25 2:22 PM, Shameer Kolothum wrote:
-> From: Yi Liu <yi.l.liu@intel.com>
->
-> If user wants to expose PASID capability in vIOMMU, then VFIO would also
-> need to report the PASID cap for this device if the underlying hardware
-> supports it as well.
->
-> As a start, this chooses to put the vPASID cap in the last 8 bytes of the
-> vconfig space. This is a choice in the good hope of no conflict with any
-> existing cap or hidden registers. For the devices that has hidden registers,
-> user should figure out a proper offset for the vPASID cap. This may require
-> an option for user to config it. Here we leave it as a future extension.
-> There are more discussions on the mechanism of finding the proper offset.
->
-> https://lore.kernel.org/kvm/BN9PR11MB5276318969A212AD0649C7BE8CBE2@BN9PR11MB5276.namprd11.prod.outlook.com/
->
-> Since we add a check to ensure the vIOMMU supports PASID, only devices
-> under those vIOMMUs can synthesize the vPASID capability. This gives
-> users control over which devices expose vPASID.
->
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/vfio/pci.c      | 38 ++++++++++++++++++++++++++++++++++++++
->  include/hw/iommu.h |  1 +
->  2 files changed, 39 insertions(+)
->
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 8b8bc5a421..e11e39d667 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -24,6 +24,7 @@
->  #include <sys/ioctl.h>
->  
->  #include "hw/hw.h"
-> +#include "hw/iommu.h"
->  #include "hw/pci/msi.h"
->  #include "hw/pci/msix.h"
->  #include "hw/pci/pci_bridge.h"
-> @@ -2500,7 +2501,12 @@ static int vfio_setup_rebar_ecap(VFIOPCIDevice *vdev, uint16_t pos)
->  
->  static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->  {
-> +    HostIOMMUDevice *hiod = vdev->vbasedev.hiod;
-> +    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
->      PCIDevice *pdev = PCI_DEVICE(vdev);
-> +    uint64_t max_pasid_log2 = 0;
-> +    bool pasid_cap_added = false;
-> +    uint64_t hw_caps;
->      uint32_t header;
->      uint16_t cap_id, next, size;
->      uint8_t cap_ver;
-> @@ -2578,12 +2584,44 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->                  pcie_add_capability(pdev, cap_id, cap_ver, next, size);
->              }
->              break;
-> +        /*
-> +         * VFIO kernel does not expose the PASID CAP today. We may synthesize
-> +         * one later through IOMMUFD APIs. If VFIO ever starts exposing it,
-> +         * record its presence here so we do not create a duplicate CAP.
-> +         */
-> +        case PCI_EXT_CAP_ID_PASID:
-> +             pasid_cap_added = true;
-> +             /* fallthrough */
->          default:
->              pcie_add_capability(pdev, cap_id, cap_ver, next, size);
->          }
->  
->      }
->  
-> +#ifdef CONFIG_IOMMUFD
-> +    /* Try to retrieve PASID CAP through IOMMUFD APIs */
-> +    if (!pasid_cap_added && hiodc && hiodc->get_cap) {
-> +        hiodc->get_cap(hiod, HOST_IOMMU_DEVICE_CAP_GENERIC_HW, &hw_caps, NULL);
-> +        hiodc->get_cap(hiod, HOST_IOMMU_DEVICE_CAP_MAX_PASID_LOG2,
-> +                       &max_pasid_log2, NULL);
-> +    }
-> +
-> +    /*
-> +     * If supported, adds the PASID capability in the end of the PCIe config
-> +     * space. TODO: Add option for enabling pasid at a safe offset.
-> +     */
-> +    if (max_pasid_log2 && (pci_device_get_viommu_flags(pdev) &
-> +                           VIOMMU_FLAG_PASID_SUPPORTED)) {
-> +        bool exec_perm = (hw_caps & IOMMU_HW_CAP_PCI_PASID_EXEC);
-> +        bool priv_mod = (hw_caps & IOMMU_HW_CAP_PCI_PASID_PRIV);
-> +
-> +        pcie_pasid_init(pdev, PCIE_CONFIG_SPACE_SIZE - PCI_EXT_CAP_PASID_SIZEOF,
-> +                        max_pasid_log2, exec_perm, priv_mod);
-> +        /* PASID capability is fully emulated by QEMU */
-> +        memset(vdev->emulated_config_bits + pdev->exp.pasid_cap, 0xff, 8);
-> +    }
-> +#endif
-> +
->      /* Cleanup chain head ID if necessary */
->      if (pci_get_word(pdev->config + PCI_CONFIG_SPACE_SIZE) == 0xFFFF) {
->          pci_set_word(pdev->config + PCI_CONFIG_SPACE_SIZE, 0);
-> diff --git a/include/hw/iommu.h b/include/hw/iommu.h
-> index 9b8bb94fc2..9635770bee 100644
-> --- a/include/hw/iommu.h
-> +++ b/include/hw/iommu.h
-> @@ -20,6 +20,7 @@
->  enum viommu_flags {
->      /* vIOMMU needs nesting parent HWPT to create nested HWPT */
->      VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
-> +    VIOMMU_FLAG_PASID_SUPPORTED = BIT_ULL(1),
->  };
->  
->  #endif /* HW_IOMMU_H */
-Besides the fact the offset is arbitrarily chosen so that this is the
-last cap of the vconfig space, the code looks good to me.
-So
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-Just wondering whether we couldn't add some generic pcie code that
-parses the extended cap linked list to check the offset range is not
-used by another cap before allowing the insertion at a given offset?
-This wouldn't prevent a subsequent addition from failing but at least we
-would know if there is some collision.this could be added later on though.
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Generate high-level native Rust declarations for the QAPI types.
+>
+> - char* is mapped to String, scalars to there corresponding Rust types
+>
+> - enums are simply aliased from FFI
+>
+> - has_foo/foo members are mapped to Option<T>
+>
+> - lists are represented as Vec<T>
+>
+> - structures have Rust versions, with To/From FFI conversions
+>
+> - alternate are represented as Rust enum
+>
+> - unions are represented in a similar way as in C: a struct S with a "u"
+>   member (since S may have extra 'base' fields). However, the discriminant
+>   isn't a member of S, since Rust enum already include it.
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Link: https://lore.kernel.org/r/20210907121943.3498701-21-marcandre.lurea=
+u@redhat.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Thanks
+I like to look at the generated code before I look at the code
+generator.  My go-to schema for a first look is example-schema.json from
+docs/devel/qapi-code-gen.rst:
 
-Eric
+    { 'struct': 'UserDefOne',
+      'data': { 'integer': 'int', '*string': 'str', '*flag': 'bool' } }
+
+    { 'command': 'my-command',
+      'data': { 'arg1': ['UserDefOne'] },
+      'returns': 'UserDefOne' }
+
+    { 'event': 'MY_EVENT' }
+
+Generated example-qapi-types.rs:
+
+    // @generated by qapi-gen, DO NOT EDIT
+
+    #![allow(unexpected_cfgs)]
+    #![allow(non_camel_case_types)]
+    #![allow(clippy::empty_structs_with_brackets)]
+    #![allow(clippy::large_enum_variant)]
+    #![allow(clippy::pub_underscore_fields)]
+
+    // Because QAPI structs can contain float, for simplicity we never
+    // derive Eq.  Clippy however would complain for those structs
+    // that *could* be Eq too.
+    #![allow(clippy::derive_partial_eq_without_eq)]
+
+    use util::qobject::QObject;
+
+
+    #[repr(u32)]
+    #[derive(Copy, Clone, Debug, PartialEq, common::TryInto)]
+    pub enum QType {
+
+        NONE,
+
+        QNULL,
+
+        QNUM,
+
+        QSTRING,
+
+        QDICT,
+
+        QLIST,
+
+        QBOOL,
+
+        _MAX,
+    }
+
+
+    impl Default for QType {
+        #[inline]
+        fn default() -> QType {
+            Self::NONE
+        }
+    }
+
+
+    #[derive(Clone, Debug, PartialEq)]
+    pub struct UserDefOne {
+
+        pub integer: i64,
+
+        pub string: Option<String>,
+
+        pub flag: Option<bool>,
+    }
+
+Questions / observations:
+
+* Why is util::qobject::QObject needed?
+
+* NONE is an error value, not a valid QType.  Having such error values
+  in enums isn't unusual in C.  What about idiomatic Rust?  Even if it's
+  unusual there, we may elect to do it anyway, just to keep generated
+  Rust closer to C.  But it should be a conscious decision, not a blind
+  port from C to Rust.
+
+* "Default for QType" is NONE.  In C, it's zero bytes, which boils down
+  to QTYPE_NONE.
+
+* QTYPE__MAX is a bit of a headache in C.  It's not a valid enum value.
+  We make it one only because we need to know the largest valid enum
+  value, e.g. to size arrays, and the easiest way to get that value is
+  adding an invalid one to the enum.  Same for all the other generated
+  enums.  Could we avoid it in Rust?
+
+* Blank lines before the values of enum QType and the members of struct
+  UserDefOne contain spaces.  PATCH 16 will remove the spaces.
+
+* Definitions are separated by two blank lines.  PATCH 16 will collapse
+  them into one.
+
+Compare to example-qapi-types.h:
+
+    /* AUTOMATICALLY GENERATED by qapi-gen.py DO NOT MODIFY */
+
+    /*
+     * Schema-defined QAPI types
+     *
+     * Copyright IBM, Corp. 2011
+     * Copyright (c) 2013-2018 Red Hat Inc.
+     *
+     * This work is licensed under the terms of the GNU LGPL, version 2.1 o=
+r later.
+     * See the COPYING.LIB file in the top-level directory.
+     */
+
+    #ifndef EXAMPLE_QAPI_TYPES_H
+    #define EXAMPLE_QAPI_TYPES_H
+
+    #include "qapi/qapi-builtin-types.h"
+
+    typedef struct UserDefOne UserDefOne;
+
+    typedef struct UserDefOneList UserDefOneList;
+
+    typedef struct q_obj_my_command_arg q_obj_my_command_arg;
+
+    struct UserDefOne {
+        int64_t integer;
+        char *string;
+        bool has_flag;
+        bool flag;
+    };
+
+    void qapi_free_UserDefOne(UserDefOne *obj);
+    G_DEFINE_AUTOPTR_CLEANUP_FUNC(UserDefOne, qapi_free_UserDefOne)
+
+    struct UserDefOneList {
+        UserDefOneList *next;
+        UserDefOne *value;
+    };
+
+    void qapi_free_UserDefOneList(UserDefOneList *obj);
+    G_DEFINE_AUTOPTR_CLEANUP_FUNC(UserDefOneList, qapi_free_UserDefOneList)
+
+    struct q_obj_my_command_arg {
+        UserDefOneList *arg1;
+    };
+
+    #endif /* EXAMPLE_QAPI_TYPES_H */
+
+Observations:
+
+* C has a file comment of the form
+
+    /*
+     * One-line description of the file's purpose
+     *
+     * Copyright lines
+     *
+     * License blurb
+     */
+
+  I think Rust could use such a comment, too.
+
+* C has built-in types like QType in qapi-builtin-types.h, generated
+  only with -b.  This is a somewhat crude way to let code generated for
+  multiple schemas coexist: pass -b for exactly one of them.  If we
+  generated code for built-in types unconditionally into qapi-types.h,
+  the C compiler would choke on duplicate definitions.  Why is this not
+  a problem with Rust?
+
+* The Rust version doesn't have deallocation boilerplate.  Deallocation
+  just works there, I guess.
+
+* The Rust version doesn't have the List type.  Lists just work there, I
+  guess.
+
+* The Rust version doesn't have the implicit type q_obj_my_command_arg,
+  which is the arguments of my-command as a struct type.  C needs it for
+  marshaling / unmarshaling with visitors.  Rust doesn't, because we use
+  serde.  Correct?
 
 
