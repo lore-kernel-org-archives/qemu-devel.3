@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B891D3B7EA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 15:42:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED187D3B7FF
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:02:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSzqU-0005rp-AO; Tue, 09 Dec 2025 10:41:46 -0500
+	id 1vT09g-0003aG-Nn; Tue, 09 Dec 2025 11:01:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vSzqS-0005rW-An
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 10:41:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vSzqQ-0000Pu-BQ
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 10:41:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765294900;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=H08K7J+Ft9/SSx5jXTnAnft68qNXp7m6gbveGHd+To0=;
- b=C+ZBom+ZYhISJjPbzYag3sUmM+0c+WOWnfRmPY4ZLxB8+tM5zo4yLMmlZeczeRW26D4afK
- t/P2Z6Y9DrvD//jppc+EGGgZqSiW1Dd6dKvI+shLdeEfo+XSn6RrXcGpCGkQH4PnFHoNpH
- L37V5F2fohcPRIsqdZUYAUMC8p16V3E=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-dxMXv9pZPK2H5A_a0QyA6w-1; Tue,
- 09 Dec 2025 10:41:34 -0500
-X-MC-Unique: dxMXv9pZPK2H5A_a0QyA6w-1
-X-Mimecast-MFC-AGG-ID: dxMXv9pZPK2H5A_a0QyA6w_1765294893
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 600C4195609F; Tue,  9 Dec 2025 15:41:33 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AF19F1800451; Tue,  9 Dec 2025 15:41:30 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1vT09c-0003Za-4E
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:01:32 -0500
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1vT09a-0003q1-Le
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:01:31 -0500
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-7e1651ae0d5so4431295b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 08:01:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1765296086; x=1765900886; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rivaeWgzfjbN0/XP4iJvdVQO9NW74la6gLp7r9Zqauo=;
+ b=H9/gfDI8K8plTNkF1IiKA4jQIIinbVwuL4qPUhwfjCI4N+2pb5u5vdklK5eBK/4ZeG
+ WaDYacKYn/jqqTED2EXBGbjLkx1iWX3v1sWAmq7MgnWG57zw65TmbTnv7NHs3b+bjpre
+ 95z/QdIjz4RLmjnYY1vnH0QMAlVcrAIeicctcJ5mvRYXrClnfjpuVoClYbpIlao1S8aY
+ tV8l0ZARKPdAIokmSpfGKgFrDP2xYKQR9nYpXgctIIrrPpD3p8dpSN7qQVeEF6+Drl/O
+ c8/MNDPOOCc5oKDU2xIVCIvv67BMkOHQj3aapjxuvVvx9Pp9+dWbpojh47cA+kRnA873
+ Mxhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765296086; x=1765900886;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rivaeWgzfjbN0/XP4iJvdVQO9NW74la6gLp7r9Zqauo=;
+ b=dooE98nUK09hf0VcJ3JZM4bbBHjxaf7DhQmKmJP8KDt9xdn6+8ZZkBBT98oQW5PPmP
+ D6X21gnApFd+S/45emqKaX6dVoa7DEZ+8uH12mf6JD4ds3tPnGRn4Ecr5E/YEw0Xu9ub
+ qOXzjNTbLIicIOWApsWzX4CW6BBG+1/4sdPB47FIs1uMCjN0Vlh1ir8rb5W3WHJhrHyV
+ Hn+Uw4/8FvQJU38cxYflYlaT1TddX2w08l3kiJIUgf7Ik37QaBYYlw9tZlXdSUJ2PPLQ
+ vGrz8skc6cEO5MIOEjuzY6WMieyUZyjFuKUkuQmaLGEkqI11UA76Ya3ojPHBhXS8/AWj
+ Knxg==
+X-Gm-Message-State: AOJu0YzGdl4vG7tb1f6WwgrJIneMMmsFtX7Wa+88OUT/mtd85PEhlE7C
+ JWRxFF2adnyTMlGoAuX4gpgNCUcsgA3dcvCcjxA7KsCPB3gHupaBG/6tqUaQsNmRGNC29ZUsCBl
+ ITAC6bI5ZMuiwsRBlVNtYDs4PXLdWn/7R+zTHB5QJ/l6veJC/1tVqj0L40f5JF/TNybIys22lSb
+ HL6kDnj7GkJSdRSJXFfL/nv1VMonqtXqHEEviyRGmIUBw=
+X-Gm-Gg: ASbGncs6Is9ENBsS74DbqRkEP2zj95ah170Gk52GyWW1ODzPr37yCq/EGOU/ix4jmrl
+ nBbUEYdFPj05j24mDqdbEea0B64lyD1VSjg8ovIjSPlDm7qT5bG/w/faH4givFH7ioeibb7NijX
+ K+q9T+nIzLH0KBIS0pQxrFqOBvm6gFF2D2wqe7Y4ZfTvM1uINHZIMGGglg9CGFQDidD9r/xg0Fe
+ OR4LPBFi2Yy3hzLVnkw3WpjBheHN5Eu3hutKWpeg1MKXTWRwbTxoYeCqFOn7JnXleF3OWDDusbV
+ feLv9MB/fHHMN4dBEtw/VsFKO+2Isc/KwgezoNfkSH+POoDWah7wVxihWfNydrM2vIBq1u5W7M3
+ AgyeB/22y2vi9wggsKx/PttzKArpkEdCpaWIrtJI9siuEdKynZ4gTqrVMyUmfEcN33nUANNA9i9
+ 2bc1nmJ2/TsJg9tbLannwWhR5r+akuWEPuvwym8Q==
+X-Google-Smtp-Source: AGHT+IHsnMbY5uLNjPDdb/Xd4nRn1fbOf79ejhHFm3R6+aJ7SOdbL3SZgB/Q9jcp5sGuYqe1cNq/tA==
+X-Received: by 2002:a05:6a00:3d53:b0:7e8:4587:e8c4 with SMTP id
+ d2e1a72fcca58-7e8c46983b1mr8838989b3a.55.1765296085566; 
+ Tue, 09 Dec 2025 08:01:25 -0800 (PST)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7e29ff6c68csm16475242b3a.19.2025.12.09.08.01.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Dec 2025 08:01:25 -0800 (PST)
+From: frank.chang@sifive.com
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2] log: Fix result of strstr to 'const char *'
-Date: Tue,  9 Dec 2025 16:41:27 +0100
-Message-ID: <20251209154128.661390-1-clg@redhat.com>
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-riscv@nongnu.org (open list:SiFive Machines),
+ Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH 0/4] Fix SiFive UART spurious IRQ issue and misc updates
+Date: Wed, 10 Dec 2025 00:01:13 +0800
+Message-ID: <20251209160117.1239596-1-frank.chang@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=frank.chang@sifive.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,45 +104,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Assigning the result of strstr() to a 'char *' is unsafe since
-strstr() returns a pointer into the original string which is a
-read-only 'const char *' string.
+From: Frank Chang <frank.chang@sifive.com>
 
-A recent change in glibc 2.42.9000  :
+This patch series fixes the spurious IRQ issue in the SiFive UART on Linux
+introduced after commit [1], which changed character transmission from
+synchronous to asynchronous.
 
-   https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+Currently, the txwm interrupt pending status is only updated when the
+asynchronous transmit handler runs. This can cause the txwm interrupt
+state to become unsynchronized between the SiFive UART and the interrupt
+controller.
 
-breaks compiles, complaining the result of strstr() is not a
-'const char *' :
+This issue has been observed on resource-constrained systems, where
+Linux reports spurious IRQ errors. In these cases, the asynchronous
+transmit handler is unable to drain the TX FIFO quickly enough to update
+the txwm pending status before software reads the IP register, which
+derives the txwm pending state directly from the actual number of
+characters in the TX FIFO.
 
-../util/log.c:208:24: error: initialization discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
-  208 |         char *pidstr = strstr(filename, "%");
-      |                        ^~~~~~
+The remaining patches contain miscellaneous updates, including
+implementing txctrl.txen and rxctrl.rxen, update IRQ when rxctrl is
+written and remove the unused ip variable.
 
-Fix that.
+[1] 53c1557b230986ab6320a58e1b2c26216ecd86d5
 
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20251209150346.650473-1-clg@redhat.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- util/log.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Frank Chang (4):
+  hw/char: sifive_uart: Implement txctrl.txen and rxctrl.rxen
+  hw/char: sifive_uart: Sync txwm interrupt pending status after TX FIFO
+    enqueue
+  hw/char: sifive_uart: Update IRQ when rxctrl is written
+  hw/char: sifive_uart: Remove ip variable
 
-diff --git a/util/log.c b/util/log.c
-index 41f78ce86b2522b8b7072c8b76d8e18603142db6..c44d66b5ce78338cf1b2cd26b7503cb94d4570cb 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -203,7 +203,7 @@ static ValidFilenameTemplateResult
- valid_filename_template(const char *filename, bool per_thread, Error **errp)
- {
-     if (filename) {
--        char *pidstr = strstr(filename, "%");
-+        const char *pidstr = strstr(filename, "%");
- 
-         if (pidstr) {
-             /* We only accept one %d, no other format strings */
--- 
-2.52.0
+ hw/char/sifive_uart.c         | 46 ++++++++++++++++++++++++++++-------
+ include/hw/char/sifive_uart.h |  3 ++-
+ 2 files changed, 39 insertions(+), 10 deletions(-)
+
+--
+2.43.0
 
 
