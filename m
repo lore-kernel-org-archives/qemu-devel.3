@@ -4,114 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB86CD3B981
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2E2AD3B7F8
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT0bq-0008WO-DR; Tue, 09 Dec 2025 11:30:42 -0500
+	id 1vT0ef-0004va-53; Tue, 09 Dec 2025 11:33:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vT0aa-0006Ii-4H
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:29:27 -0500
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vT0eU-0004u8-SK
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:33:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vT0aX-00028O-Pq
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:29:23 -0500
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1vT0eS-0004fO-PU
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:33:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765297761;
+ s=mimecast20190719; t=1765298001;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XNWCsudpDn8DQvfONwxl/IRDmiiY9UgHCPTpZhM5kqI=;
- b=RBS8sEgg+avRvK+RMX9i0rBsNlfaxY3B9Dj+QJOFRiA44X+e6djN5pMZr7+iEGUftVVs8q
- DaADwCLIlUvVMSqa808KOz99XdhHwLgOa2NV2+w4mMiPUWw6UgITKaO5RjB0m6h9jqqqWG
- +TqECQO7TIZ+Q8LD93q72xk667BTwqY=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-90-VQc_3rGIM_27XP4M3epLSA-1; Tue, 09 Dec 2025 11:29:19 -0500
-X-MC-Unique: VQc_3rGIM_27XP4M3epLSA-1
-X-Mimecast-MFC-AGG-ID: VQc_3rGIM_27XP4M3epLSA_1765297759
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4ee1b7293e7so187091531cf.0
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 08:29:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765297759; x=1765902559; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XNWCsudpDn8DQvfONwxl/IRDmiiY9UgHCPTpZhM5kqI=;
- b=eLzJ+AkqzFOcLUgIR9hHsKrgDkeLzORlrKQ6bcbCtHJPDzRxuP5bNWUmE2D3P69zUL
- RKg8z9VoJR1v74q6cede2GjwYACTA2+eMgOhtpPyWBX9h1ehSXtlgP6vKA6/SQf1wX9o
- R/Tgw0pcix88+psXAvKvjmfdK4Ul5JoAX4v7kpUdio5kkYr+PLzNmFzgi9oyqmWZGwNV
- yYzbqsXMj5u8JR++vNs+DjRPzzlQLz2kIgdGMChaH2XBIm6aezIrU64TiAsx9nUJPsFn
- kuXerbexvnKPfrkWtBfiqQAUI8g8BdnXmQWBbVGuVy63ZQsVlA4gMCB7NIp66Y5+YRyl
- cDhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765297759; x=1765902559;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XNWCsudpDn8DQvfONwxl/IRDmiiY9UgHCPTpZhM5kqI=;
- b=B/8s+EduHMdRR7+ztnz5IJIWSG9mqiq69iuDpsl6j/yw9yDeI6vunNRZidYCEuIpA+
- Wnhd9AyR/1OREku6zzWZBPyT+BxoBOGTrEk9IyTT5menbWViTQOFAQwP6LzTHw8nbrM8
- C3FMC+uUNsI1XNPqhyQtdp/z8fI76EdRI+scwXFkIJTBrr9kuxPGiTzrhWRGZ7pHvuCZ
- ql6oh28Z4hru2RYh6sJltjOqjrKVzJQ1zecvTkkCA4tBAC240FLHWfp6RxlHAuKFbzLH
- x2S0qijwiVPdd5SUL7uSHGS0EkwOlXeGMJIVo2KytmxFGFXMfMq644QwTk1S9Ki1xhPt
- ZiFA==
-X-Gm-Message-State: AOJu0YzgAmR1Ud+MsHqmJ00/wfJT41NaPW1RDUAqI+FzgMLLDrQJvEvG
- mvlNiC83AeZw+hCfKkO9ROGxELfoBvA/5LJpOEKzmHzNAIW9Nr5sNBLsh3kkFCC7rMOxkCWaDdG
- 04K9SpUC29i+fOP7DTyCqzOwUrd7vjmh44hkNHsxKFlBXZDeicIk6txxj4jy6puVlM6d8hSzspt
- RewHTqXcdhYQ5Fb5UfmtPdj9j5Ekjz3uMDrZZk8A==
-X-Gm-Gg: ASbGnctroAj7OPLRXNlltPkzpnphNcmzhrynBhrTKD11NhHEqaMts5Hig+LqglB6xrM
- CHwtLkBmpRQiyI8sPT//P7KyBt/61BjfO++Q+FG/kWXFywMNTHmMJmvzlMtKOuREMm7kKd0cg11
- vXwGW0OctUAEh4mY9OrvDCdx4hZkgmQ/eyjqX7tv7y1ffFPUCA8Pt8fm9b+LZG/uSV66NxYS+8l
- vBswHhVc6qspN0ekunT1owk6WwQ+jKjb/9tJPF9zipgKv/b/87PS2AVDsTZprZRMjUiQ7VmPEBY
- yJ92INFe98vbB7rwkYAZMBnBpD2XgZ9Zrnxbp9cnCvr93f7fz12M7WIJ9BumOkGQ6gFScFJOOpE
- un3Y=
-X-Received: by 2002:a05:622a:4c05:b0:4ee:1625:f783 with SMTP id
- d75a77b69052e-4f03fd9b08amr189080491cf.21.1765297758900; 
- Tue, 09 Dec 2025 08:29:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHBdPSDuC0vCxsc7QJAX1EVzz5tFJxDcqgwLRLVgeNAzR4QiJAjVcnDZSAQO3M+BsfVcgnRSQ==
-X-Received: by 2002:a05:622a:4c05:b0:4ee:1625:f783 with SMTP id
- d75a77b69052e-4f03fd9b08amr189079561cf.21.1765297758366; 
- Tue, 09 Dec 2025 08:29:18 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-88827f334d8sm131110256d6.10.2025.12.09.08.29.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Dec 2025 08:29:17 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, peterx@redhat.com,
- Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Subject: [PATCH RFC 10/10] migration: Inherit from TYPE_OBJECT_COMPAT
-Date: Tue,  9 Dec 2025 11:28:57 -0500
-Message-ID: <20251209162857.857593-11-peterx@redhat.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20251209162857.857593-1-peterx@redhat.com>
-References: <20251209162857.857593-1-peterx@redhat.com>
+ bh=/gHPLyyftNYxAv0qCCFjZSv1kC2VinNXBS5MKVKtZ1o=;
+ b=ehAjilatlJxXaARyPuhTn5ZPujQQH1j5ROEAx5OgH4rTsXl59rJnaNd6Ix9j6sUbHa13c3
+ X10PQ/QTVb++5FODElTEWk/2fe4hNqAX9ExJUcgVy/FXlKNb87eMAQreWsjDhhBRcG44Sg
+ i75CbMAoPpU0nkapGIMGaf9MCnvaFaI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-Ck3foxl2OpKZC2Xjromkgw-1; Tue,
+ 09 Dec 2025 11:33:18 -0500
+X-MC-Unique: Ck3foxl2OpKZC2Xjromkgw-1
+X-Mimecast-MFC-AGG-ID: Ck3foxl2OpKZC2Xjromkgw_1765297997
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 059B11800378; Tue,  9 Dec 2025 16:33:17 +0000 (UTC)
+Received: from localhost (dhcp-192-223.str.redhat.com [10.33.192.223])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3114D30001BE; Tue,  9 Dec 2025 16:33:15 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, sebott@redhat.com
+Cc: maz@kernel.org
+Subject: Re: [PATCH 3/3] target/arm/cpu-sysregs.h.inc: Update with automatic
+ generation
+In-Reply-To: <20251208163751.611186-4-eric.auger@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20251208163751.611186-1-eric.auger@redhat.com>
+ <20251208163751.611186-4-eric.auger@redhat.com>
+User-Agent: Notmuch/0.39 (https://notmuchmail.org)
+Date: Tue, 09 Dec 2025 17:33:13 +0100
+Message-ID: <875xafr4xi.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -136,84 +90,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While doing that, we still want to keep the Property list that migration
-object used to use.  Apply them directly to ObjectClass instead of setting
-them with a DeviceClass.
+On Mon, Dec 08 2025, Eric Auger <eric.auger@redhat.com> wrote:
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/migration.h |  2 +-
- migration/migration.c | 31 ++++++++++++++++---------------
- 2 files changed, 17 insertions(+), 16 deletions(-)
+> Generated definitions with scripts/update-aarch64-sysreg-code.py
+> based on "AARCHMRS containing the JSON files for Arm A-profile
+> architecture (2025-09)" Registers.json file.
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> ---
+>  target/arm/cpu-sysregs.h.inc | 16 +++++++++++++++-
+>  1 file changed, 15 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+> index 3c892c4f30..9bb27297b5 100644
+> --- a/target/arm/cpu-sysregs.h.inc
+> +++ b/target/arm/cpu-sysregs.h.inc
+> @@ -1,17 +1,27 @@
+> -/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +/* SPDX-License-Identifier: BSD-3-Clause */
+> +
+> +/* This file is autogenerated by scripts/update-aarch64-sysreg-code.py */
+> +
+> +DEF(AIDR_EL1, 3, 1, 0, 0, 7)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 213b33fe6e..20a76664df 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -273,7 +273,7 @@ struct MigrationClass {
- 
- struct MigrationState {
-     /*< private >*/
--    DeviceState parent_obj;
-+    Object parent_obj;
- 
-     /*< public >*/
-     QemuThread thread;
-diff --git a/migration/migration.c b/migration/migration.c
-index b316ee01ab..913c005bcb 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -4136,11 +4136,9 @@ fail:
- 
- static void migration_class_init(ObjectClass *klass, const void *data)
- {
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    dc->user_creatable = false;
--    device_class_set_props_n(dc, migration_properties,
--                             migration_properties_count);
-+    for (int i = 0; i < migration_properties_count; i++) {
-+        object_class_add_property(klass, &migration_properties[i]);
-+    }
- }
- 
- static void migration_instance_finalize(Object *obj)
-@@ -4198,21 +4196,24 @@ static bool migration_object_check(MigrationState *ms, Error **errp)
-     return migrate_caps_check(old_caps, ms->capabilities, errp);
- }
- 
--static const TypeInfo migration_type = {
--    .name = TYPE_MIGRATION,
-+static void migration_instance_post_init(Object *obj)
-+{
-     /*
--     * NOTE: TYPE_MIGRATION is not really a device, as the object is
--     * not created using qdev_new(), it is not attached to the qdev
--     * device tree, and it is never realized.
--     *
--     * TODO: Make this TYPE_OBJECT once QOM provides something like
--     * TYPE_DEVICE's "-global" properties.
-+     * Note: ordered so that the user's global properties take
-+     * precedence over compat properties.  Compat-properties will be
-+     * applied first in the parent class (TYPE_OBJECT_COMPAT).
-      */
--    .parent = TYPE_DEVICE,
-+    object_apply_globals(obj);
-+}
-+
-+static const TypeInfo migration_type = {
-+    .name = TYPE_MIGRATION,
-+    .parent = TYPE_OBJECT_COMPAT,
-     .class_init = migration_class_init,
--    .class_size = sizeof(MigrationClass),
-+    .class_size = sizeof(ObjectClass),
-     .instance_size = sizeof(MigrationState),
-     .instance_init = migration_instance_init,
-+    .instance_post_init = migration_instance_post_init,
-     .instance_finalize = migration_instance_finalize,
- };
- 
--- 
-2.50.1
+AIDR_EL1 (and MIDR_EL1/REVIDR_EL1) are used by the
+(hopefully-soon-respun) writable id register series, so it's good that
+they do not need to be added by hand anymore :)
+
+>  DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
+>  DEF(CTR_EL0, 3, 3, 0, 0, 1)
+> +DEF(DCZID_EL0, 3, 3, 0, 0, 7)
+
+Also see
+https://lore.kernel.org/qemu-devel/20251127170657.3335112-1-cohuck@redhat.com/T/#u
+
+> +DEF(GMID_EL1, 3, 1, 0, 0, 4)
+>  DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
+>  DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
+>  DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
+>  DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
+> +DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
+> +DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
+>  DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
+>  DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
+>  DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
+> +DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
+>  DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
+>  DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
+>  DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
+>  DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
+> +DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
+>  DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
+>  DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
+>  DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
+> @@ -36,6 +46,10 @@ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
+>  DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
+>  DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
+>  DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+> +DEF(MIDR_EL1, 3, 0, 0, 0, 0)
+> +DEF(MPIDR_EL1, 3, 0, 0, 0, 5)
+
+I'm wondering if we need to add some handling for MPIDR_EL1.
+
+>  DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
+>  DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
+>  DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
+> +DEF(REVIDR_EL1, 3, 0, 0, 0, 6)
+> +DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
+
+SMIDR_EL1 is const 0 in tcg, and KVM currently does not support SME. So
+I guess we should init the idreg to 0 for now?
 
 
