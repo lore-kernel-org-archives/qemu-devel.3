@@ -4,93 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C1AD3B7F3
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 20:07:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94B2DD3B7F3
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 20:08:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT3zT-0003bU-Qw; Tue, 09 Dec 2025 15:07:19 -0500
+	id 1vT3yM-0000wf-91; Tue, 09 Dec 2025 15:06:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3zR-0003VJ-Rd
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:07:17 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3yH-0000uM-Kk
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:06:06 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3zP-0001PQ-MP
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:07:17 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4777771ed1aso50571475e9.2
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 12:07:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3yC-0001IP-Up
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:06:05 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-42e2e52cc04so2199374f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 12:06:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765310834; x=1765915634; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VLbY6+YjBVJO4YeroQUa9sCygXP6wh/abFzZZm99xIc=;
- b=ygvpb7H7GocIkPD+BerttXdzOXdmmXhcB15UtxaDvXK5F0GXMGWIxk9KYNOuA7KSwe
- +exLc9lQ/CBMofECB+vqmsn9vLziKs4G9MDUXMRny7HlvxNtvK3lEHHn1PfDht1S8KuK
- N7EBE97pkEqrWW1kFv6y8Q+NYupwIw6lbwgyLabASQ1fqjtEH4SupoW9w5CXMH8p/kUa
- 8Lj96hrByZF47W3eZeLgDtiFiJSxBnPOdOQRs40DJbQH5JHbvHhTq3waZeF8bb0iiuBj
- 4jwlNGa1K5H1FNXSfCQ4DK+MJS7zFmZvROmHqpLApkNhYXoggSrFRydYj6aKj3Z/BBRN
- BxgA==
+ d=linaro.org; s=google; t=1765310759; x=1765915559; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=nV8HsfTtIPwCBLUDWBKBG2A2y3njTaM32r0hbYhDIlk=;
+ b=Ti6VwvMXohOaTe8DqlJzMmH5gPy41t1QDeLBsBgSkn5FAaYbG0WZiu8RksKO1qmLIe
+ M0LlbQGvaDUd6NxVK44uwGO4BJ0kSU0gjyRaDQ1gSlOpIZP+RXbSyeUJ6Y5uJ6yEbAly
+ DKI9z69WqJEzjvFts7Tw3K/FdoghIfIyaS+a1elyFs3rAOFRlGB0zXk7sEzeaFrUFa/Z
+ IuOp/dVvQdTar8/y4HIv1rcEG+PS8d1MbzVcp9ub1pddlHtjqtaeDBq33oB0wroanezS
+ DONmGQhg7sT66tRIUh+1K6HUGmTc7i7fiy10Id8GSVm2qNt5/Nw3zP8q+zwGHRkJc9vA
+ sAuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765310834; x=1765915634;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VLbY6+YjBVJO4YeroQUa9sCygXP6wh/abFzZZm99xIc=;
- b=mO0nEfH+hcXfNQ+3brG5zOgopq0eEbAg/z2f/SBUFjC4bE8Eh215YMyiEVYAImbNtL
- FYYxcD40UyLAZZLf6MoEoJCSC+2KFf0GMD1nnT+cD5/XTE2NwjkHbiJU1E+/sAcob7yS
- EfkL1MMSYd2ArY5Xf3Vjc5V8J1oThy3FOuouWlqCRqcikphZOF2SDmhWTYxAVUNcNLe1
- hjo4hvQR2NsPL9+hk8YlZfiQLRioqXgAp+Ba4CYdsxdWJMPD62HFNdUEdYsOwNjiL0Lf
- rwDON/ko6n26Eov2bBdel26SHnhHzcPgSwgt2fieGOxXlFXADk9W1yXYIU0GxjcL0SVY
- im+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUDiz9NDTQ4sFbTrxfQtTO6ihicGJY9i0VRWGxPXG0P8zQBYVCdYWM6lH2bzTt+KBmD/Su0TGpdS+Hk@nongnu.org
-X-Gm-Message-State: AOJu0Yzd+iSP8doo5aOvq2CRTgRzYEt3qbbaHzCYupg++ZzaGajv6zvN
- 1Uqb5ZxgFlpTsc6jd3FfOaAYl8PgSsByesFYDyA+0prgtpbk7vjLvf9aR6orKo+R6NEvmFzCifh
- 3Nt9iChw=
-X-Gm-Gg: ASbGncuIofqNa9gUNJv3w1NLDCvcbzgkf2gVQVV/Ru1n/zZD2HrPjP0FHWyY+CyWnJX
- Dx/GyQo5xLJXJLx75xCE0IFPBjFjTGOcmjGZ1bZ4UiX7JkRKXjdepzaMkY2/Pfh5r72WC9Q/PnR
- A/ZgmoQbuNJ7KY+6VbTVV8xfBaw87NJPYfsf8+XwFEdBRqsV0y7XJjt/FWdwBwYXnh6qMUU+x7I
- hPu+mSLQ1rVOXVm3JiGn5T/0F6RqJnFYytE6sIfn5FqMqQlO8xm10A4+7+ZbIEwepv+yfkoGAUr
- 7b3lnMWwgb8tf0wQyHieW+yuBPE/AoV79tpHY8X8Gq9IIamTtkgq5f3FbVGDr7wOjjSw6eLuPeE
- msYTz3qT6E8vtX8P3lsEFt3PElm7EovVHgS96epjJGKo+I2NAj0CLGRXwIEEIxLejugOdogD+xe
- 0LrWrRi9A+KC8q89yrQ8cn+bj7AJVpcYNoNtgRDVJN5/zfQyiG3LCc5Q==
-X-Google-Smtp-Source: AGHT+IFuTa+2odf823au2Lar6gV0qyDcH4Tvtc9yYlGiMSVQswLYs3Xs03OypzExAv8piNhT/FskPw==
-X-Received: by 2002:a05:600c:a68a:b0:479:2f95:5179 with SMTP id
- 5b1f17b1804b1-47a8379de88mr647965e9.15.1765310834170; 
- Tue, 09 Dec 2025 12:07:14 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1765310759; x=1765915559;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=nV8HsfTtIPwCBLUDWBKBG2A2y3njTaM32r0hbYhDIlk=;
+ b=V6AftGirizoztfiTj0cYLNWM+7mOelBb6dwssugb9shaz8a/y38YruXjgo/PaUdprP
+ 9dw7gAHn4NECF8w/sMULPMrSL0Y/qpVZOz2KkQyyDhIcpZVb76Y2ZVIeYhwo4IbmzFQG
+ JWfQ9MhgautznsmrpMV98RgGPKIFS1Flkqgwb0efG3c5l2QsxeU+0XaCV8PsO7AjLWYj
+ dvyRqmoq3MXnMeEp5Yd6dHpC+HHc4JTk2itrNpnFZUG++CUsdmM5sKwS2BP12Wx/hQiD
+ 1ThMY0UgTHTylkW42esfJ9MuI3fZ9vqL24Biqy1eLc7RX50jLLTkJQnS7OiP68Gkxzt7
+ C34A==
+X-Gm-Message-State: AOJu0YzsHsFmx1eqw7/9v8LyDc6Sgg/HBREfPo93/ODNTruXu99mPisx
+ cfR5GQhJZmL/OL96yuNXSDtj5h4OkGl71d1LDPzsy0hQ5O03SmMVHha/H8Jctu6EUsmpyXflVGM
+ WyC9BzeQ=
+X-Gm-Gg: AY/fxX6JxRbKgswyPfA9M0BLRmOEmX/nxiaM9Kw2S7LO78d3z0LHGS9X4HxAPGUgSFn
+ Dymn3+RDa9lNs1rbqQTmdbTnzkuYI6RC1H+nFemOWGrgjeGHNuFWgGPerTw3qyuYpEO9jtGZQFx
+ 8gT9uSlhMRaZyRKDYzCizsiP3nbSd/Wu9Xl7ipERLdUSyXAKnKrMuwKpi1shZI+Yo8t2NJ8sWg6
+ uYZJl7UclmJqK6Vaphz6uIqbqTtyY19SqU/NeklCAaj5ilEqCO3BU8XruXk52zPlhDSCO2XYp2A
+ 2vHH82BkuHizAsTtediKqyVL+lcVwaxRG9rfKFqmgBWso3vBuQI/o6T9vSGBiUKMYBcDz+ez5Ad
+ 3ai2VPbKoyGJo6vWW+95VQlbn15JUD6BNJelFrenNGZIcxmfLCYMWmN4YT5JRWZK0S9sggOROvD
+ 1uZ+/T5O9QhvTa9PTwYwKkhacdrp42YoWDcrAE097RO2SzxqSNkV5OsxD7Eaod
+X-Google-Smtp-Source: AGHT+IH2cw0I7SJ8QFCAtnolhyyiDtxvuDawq/k5wAma/6zi8x9yhItqbLibLU6a+hfr+0eSl4HBbg==
+X-Received: by 2002:a05:6000:2508:b0:42b:2ac7:7942 with SMTP id
+ ffacd0b85a97d-42f89f0fafcmr13391482f8f.5.1765310758675; 
+ Tue, 09 Dec 2025 12:05:58 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a838126f5sm917215e9.14.2025.12.09.12.07.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Dec 2025 12:07:13 -0800 (PST)
-Message-ID: <d0f06e40-27e1-43a6-9fed-3c1d0eaa16ad@linaro.org>
-Date: Tue, 9 Dec 2025 21:07:12 +0100
+ ffacd0b85a97d-42f7cbff320sm33805663f8f.18.2025.12.09.12.05.57
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 09 Dec 2025 12:05:58 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 03/10] scripts: fix broken error path in modinfo-collect.py
+Date: Tue,  9 Dec 2025 21:05:30 +0100
+Message-ID: <20251209200537.84097-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251209200537.84097-1-philmd@linaro.org>
+References: <20251209200537.84097-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] Fix const qualifier build errors with recent glibc
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20251209174328.698774-1-clg@redhat.com>
- <788f9e4d-86c1-4830-8eda-dd70d8fec7c4@linaro.org>
-In-Reply-To: <788f9e4d-86c1-4830-8eda-dd70d8fec7c4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,35 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/12/25 20:17, Philippe Mathieu-Daudé wrote:
-> On 9/12/25 18:43, Cédric Le Goater wrote:
->> A recent change in glibc 2.42.9000 [1] changes the return type of
->> strstr() and other string functions to be 'const char *' when the
->> input is a 'const char *'.
->>
->> This breaks the build in various files with errors such as :
->>
->>    error: initialization discards 'const' qualifier from pointer 
->> target type [-Werror=discarded-qualifiers]
->>      208 |         char *pidstr = strstr(filename, "%");
->>          |                        ^~~~~~
->>
->> Fix this by changing the type of the variables that store the result
->> of these functions to 'const char *'.
->>
->> [1] https://sourceware.org/git/? 
->> p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
->>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>
->>   Most changes are straight forward apart from vubr_parse_host_port.
-> 
-> Better keep the vubr_parse_host_port() change in a distinct patch (the
-> change isn't really what this commit describes).
-> 
-> For the others:
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Queued without the vubr_parse_host_port() change, thanks.
+sys.stderr.print is dropped long ago and should not be used. Official
+replacement is sys.stderr.write
+
+The problem has been found debugging building on some fancy platform
+derived from Debian.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: John Snow <jsnow@redhat.com>
+CC: Cleber Rosa <crosa@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251203220138.159656-1-den@openvz.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ scripts/modinfo-collect.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/modinfo-collect.py b/scripts/modinfo-collect.py
+index 6ebaea989db..db78b16c1f5 100644
+--- a/scripts/modinfo-collect.py
++++ b/scripts/modinfo-collect.py
+@@ -41,7 +41,7 @@ def main(args):
+     for obj in args:
+         entry = compile_commands.get(obj, None)
+         if not entry:
+-            sys.stderr.print('modinfo: Could not find object file', obj)
++            sys.stderr.write(f'modinfo: Could not find object file {obj}')
+             sys.exit(1)
+         src = entry['file']
+         if not src.endswith('.c'):
+-- 
+2.51.0
+
 
