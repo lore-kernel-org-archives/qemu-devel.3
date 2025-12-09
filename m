@@ -4,105 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69942D3B985
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A362ED3B981
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 17:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT0w2-0008VR-Q2; Tue, 09 Dec 2025 11:51:35 -0500
+	id 1vT16n-0002rr-PZ; Tue, 09 Dec 2025 12:02:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vT0vg-0008OM-5d
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:51:15 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vT15C-0002AD-M4
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 12:01:28 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vT0vc-0000AH-Iw
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:51:11 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vT159-0002Pl-Cx
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 12:01:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765299066;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VCQWajjHh1een5vE+8vsAKhYgNdQSKY1bd8kYotKcvo=;
- b=BgiG44v6RAYVr20k4Mq+T1TnFtCNG5Etehd/Lx5J57aHlb31vLdZt35YcR8L2l3vhhWjj3
- EiWsyZKGNKR7QwcxkD6rg34GCkVxKm/v8XgkCKt3ntDIj4alJlo+AckyHRXO3VeQxF4Pqe
- 6RKE09i/oCaaCibqu6cvDnbevYsYvIw=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-113-DLzxzFZzORWmEyxclP1enw-1; Tue, 09 Dec 2025 11:51:05 -0500
-X-MC-Unique: DLzxzFZzORWmEyxclP1enw-1
-X-Mimecast-MFC-AGG-ID: DLzxzFZzORWmEyxclP1enw_1765299065
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8b1d8f56e24so1264238585a.2
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 08:51:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765299065; x=1765903865; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=VCQWajjHh1een5vE+8vsAKhYgNdQSKY1bd8kYotKcvo=;
- b=YjBp96I0QKSHdDVaPE3lcI7Rx0RbRil1yKVEpcrhJNOatNnNZuYL+DJJCr3QOHMBof
- GPOMtXnf1elAZnlCe7ydoxE19aZvSTH0RK19yv6FYGbqGTlcQFHWxRQLedeSN4bIx1FF
- /NCcOHfXTcE/xbnwwLLdGLUHVb/Xkl5Tca6EmYLRLGEig0V4dlui88PFYOd7BjE2JMuU
- ZIXKant8zjrp2RI3AKnXNG2yTIjjiMNZXPxkRKWtPOMn2uXcCl5IsMaEi/fplKQcYReO
- RF16NZQjU7esNKQdXp7QuyKstpZs2vWA55HI/O1JduFNdoBw7P3dumSTTmdkMeRtT97m
- 2k1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765299065; x=1765903865;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VCQWajjHh1een5vE+8vsAKhYgNdQSKY1bd8kYotKcvo=;
- b=FJ+qJ/QdVbBfD46qqEdGgnK9NsYJD628plhbJ2uwgN+h1ETsCUIcHyINVDpz0nidEu
- X9AkPTFh3krn9lyuHHwvQU0F6/8c9v6huQ1UApyYlJNDEBgqdHYSAvSoTZ3Y1dKQ7On+
- d109+Sq7wbbRGKWM67B3wBaBO0LE74P5OHNGpk6MK2X4PTZ8l+Tpe8HWWOsE+LExXQa5
- NEYygpae1ZO6B9xGt9vHq/WJSVSt4JJsVDzBfI1qSV/A8n35dfjtdmyb1rCm+TYma9W6
- wfPjjReZvmPdR0qSWRGhFYJ8eUfFi5HmSlfEYJSlH6PZaJ4H09oUyTSnggJagOfZK2xx
- qy/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPrBPB3KrPMB6O5d2ZKtsaq+Bm2gc914/9LFISEgmuAQWkt281EDCw+ZzXLKJB3su7C3mfJGcvFFpE@nongnu.org
-X-Gm-Message-State: AOJu0Yx+xFyLiuFPXo0KJvgLKwM3tG1ddMb42q0+lX/3BH5txn67Pnrk
- klD2Etk/lNsNYFrTYPE3h2twuF+Ix9PKEunBtwHzeehqMTFQYEcCId9mHwe0fEmvWcOduKXJ6ij
- ldT9zMGGCKnukPZvKw2PZBNBj8EJqsSk9ZG7gPchNJxQgChY+7NHdhnW+
-X-Gm-Gg: ASbGncvx2p/TwImWnqojLNYRhFlTMNr7kshX2P4VYpdsqbS3Q7PZU+x20CNHiCheqS2
- Hl28uBRxC0qAekKnHXgyBNSS2UrUjoCc4s5tqxAw8ShGV1qK3f08THXzI8LxLPPHUXVJ83uwQFe
- CfTao2zTyiRBSuVkB8jurB8FNerkM8nKRvMHU2xcm8u3JXgX7MPwEu1CQwn303l70A0Sc3xrRh0
- 9wTWtydMPLqSUgQrMk+K3xBPbbx7NFZtqtTDF4yP7lhah1SoZ0PNo/cB1t9iJRVVrNxCrA/w+xl
- mPAkmFjlfoeOOKxBewTowEqwF0A6icVufgWXq5HKUY4ovg3MDnjppforIXic4FmUQFT9RNyEKsL
- I52o=
-X-Received: by 2002:a05:620a:1a96:b0:84f:110c:b6e8 with SMTP id
- af79cd13be357-8b6a23e30c4mr1761639985a.68.1765299064452; 
- Tue, 09 Dec 2025 08:51:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF1T9Qw8YK7Vw9OJhXvnMGsu1CKAVZfqSxcIGIfq0XD69NTfZ/7uV8lkmR3TaCCKZW5x71cKQ==
-X-Received: by 2002:a05:620a:1a96:b0:84f:110c:b6e8 with SMTP id
- af79cd13be357-8b6a23e30c4mr1761632985a.68.1765299063871; 
- Tue, 09 Dec 2025 08:51:03 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b627a9fd23sm1331967185a.46.2025.12.09.08.51.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Dec 2025 08:51:03 -0800 (PST)
-Date: Tue, 9 Dec 2025 11:51:02 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
- Raphael Norwitz <raphael@enfabrica.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH v3 0/3] vhost-user-blk: support inflight migration
-Message-ID: <aThTdgwsNexV9KAp@x1.local>
-References: <20251110103937.1944486-1-dtalexundeer@yandex-team.ru>
- <cf0f69b9-4b2b-4c09-a32b-ad86bbe04f6d@yandex-team.ru>
- <aRztnfZFl-OcbVYI@x1.local>
- <d986f0ac-a0ae-44f6-b7a5-e002b7d3226e@yandex-team.ru>
+ s=mimecast20190719; t=1765299657;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=T9MJclz9Vj2TI+we83PPn2yfD3VX101pKwU4rc8p/h0=;
+ b=M8rEdswd2arLJkXJttJZapIVY11z3EzgsublYpKxBsz7oKqOZo4G5AV47FPpDV2MwOgRxU
+ CKDaaaonzAKzk2ml2M26V+Bkt1Hjet68LWO9m/9pk3YOm6A1eUPOC4LMAT1kg4cTJNl5ZO
+ 68aKDCwp+JJiGieIuo4acZVIDqZ00NY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-8u-EGiTSNFGAaMXuU_G09w-1; Tue,
+ 09 Dec 2025 12:00:53 -0500
+X-MC-Unique: 8u-EGiTSNFGAaMXuU_G09w-1
+X-Mimecast-MFC-AGG-ID: 8u-EGiTSNFGAaMXuU_G09w_1765299652
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EEE971800743; Tue,  9 Dec 2025 17:00:51 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.79])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B9FDF19560AD; Tue,  9 Dec 2025 17:00:47 +0000 (UTC)
+Date: Tue, 9 Dec 2025 17:00:44 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Li-Wen Hsu <lwhsu@freebsd.org>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Markus Armbruster <armbru@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ed Maste <emaste@freebsd.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 00/15] python: drop qemu.qmp from qemu.git tree
+Message-ID: <aThVvP5vwfjVa-ka@redhat.com>
+References: <20251205060058.1503170-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <d986f0ac-a0ae-44f6-b7a5-e002b7d3226e@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20251205060058.1503170-1-jsnow@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -111,7 +76,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,230 +89,129 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 04, 2025 at 10:55:33PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> On 19.11.25 01:05, Peter Xu wrote:
-> > On Tue, Nov 18, 2025 at 11:24:12PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > > Add Daniel
-> > > 
-> > > On 10.11.25 13:39, Alexandr Moshkov wrote:
-> > > > v3:
-> > > > - use pre_load_errp instead of pre_load in vhost.c
-> > > > - change vhost-user-blk property to
-> > > >     "skip-get-vring-base-inflight-migration"
-> > > > - refactor vhost-user-blk.c, by moving vhost_user_blk_inflight_needed() higher
-> > > > 
-> > > > v2:
-> > > > - rewrite migration using VMSD instead of qemufile API
-> > > > - add vhost-user-blk parameter instead of migration capability
-> > > > 
-> > > > I don't know if VMSD was used cleanly in migration implementation, so
-> > > > feel free for comments.
-> > > > 
-> > > > Based on Vladimir's work:
-> > > > [PATCH v2 00/25] vhost-user-blk: live-backend local migration
-> > > >     which was based on:
-> > > >       - [PATCH v4 0/7] chardev: postpone connect
-> > > >         (which in turn is based on [PATCH 0/2] remove deprecated 'reconnect' options)
-> > > >       - [PATCH v3 00/23] vhost refactoring and fixes
-> > > >       - [PATCH v8 14/19] migration: introduce .pre_incoming() vmsd handler
-> > > > 
-> > > 
-> > > Hi!
-> > > 
-> > > On my series about backend-transfer migration, the final consensus (or at least,
-> > > I hope that it's a consensus:) is that using device properties to control migration
-> > > channel content is wrong. And we should instead use migration parameters.
-> > > 
-> > > (discussion here: https://lore.kernel.org/qemu-devel/29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru/ )
-> > > 
-> > > So the API for backend-transfer features is a migration parameter
-> > > 
-> > >      backend-transfer = [ list of QOM paths of devices, for which we want to enable backend-transfer ]
-> > > 
-> > > and user don't have to change device properties in runtime to setup the following migration.
-> > > 
-> > > So I assume, similar practice should be applied here: don't use device
-> > > properties to control migration.
-> > > 
-> > > So, should it be a parameter like
-> > > 
-> > >      migrate-inflight-region = [ list of QOM paths of vhost-user devices ]
-> > > 
-> > > ?
-> > 
-> > I have concern that if we start doing this more, migration qapi/ will be
-> > completely messed up.
-> > 
-> > Imagine a world where there'll be tons of lists like:
-> > 
-> >    migrate-dev1-some-feature-1 = [list of devices (almost only dev1 typed)]
-> >    migrate-dev2-some-feature-2 = [list of devices (almost only dev2 typed)]
-> >    migrate-dev3-some-feature-3 = [list of devices (almost only dev3 typed)]
-> >    ...
+On Fri, Dec 05, 2025 at 01:00:42AM -0500, John Snow wrote:
+> Hello!
 > 
+> This series drops the in-tree version of our python-qemu-qmp package
+> ("qemu.qmp") in favor of the version hosted on PyPI, whose repository is
+> located at https://gitlab.com/qemu-project/python-qemu-qmp.
 > 
-> Yes, hard to argue against it.
+> GitLab CI: https://gitlab.com/jsnow/qemu/-/pipelines/2197613036
+>        (FreeBSD isn't my fault...!)
 > 
-> I still hope, Daniel will share his opinion..
+> The major effects of this patch series are:
 > 
-> From our side, we are OK with any interface, which is accepted)
-> 
-> 
-> Let me summarize in short the variants I see:
-> 
-> ===
-> 
-> 1. lists
-> 
-> Add migrations parameters for such features:
-> 
-> migrate-inflight-region = [ list of QOM paths of vhost-user devices ]
-> backend-transfer = [ list of QOM paths of devices, which backend should be migrated ]
-> 
-> This way, we just need to set the same sets for source and target QEMU before migration,
-> and it have no relation to machine types.
-> 
-> PROS: Like any other migration-capability, setup what (and how) should migrate, no
-> relation to device properties and MT.
-> 
-> CONS: Logically, that's the same as add a device property, but instead we implement
-> lists of devices, and create extra QOM_PATH-links.
-> 
-> ===
-> 
-> 2. device parameters
-> 
-> Before migration we should loop through devices and call corresponding
-> qom-set commands, like
-> 
-> qom-set {path: QOM_PATH, property: "backend-transfer", "value": true}
-> qom-set {path: QOM_PATH, property: "migrate-inflight-region", "value": true}
-> 
-> And of course, we should care to set same values for corresponding devices on source
-> and target.
-> 
-> In this case, we also _can_ rely on machine types for defaults.
-> 
-> Note, that "migrate-inflight-region" may become the default in the 11.0 MT.
-> But backend-transfer can't be a default, as this way we'll break remote migration.
-> 
-> PROS: No lists, native properties
-> 
-> CONS: These properties does not define any portion of device state, internal or
-> visible to guest. It's not a property of device, but it's and option for migration
-> of that device.
-> 
-> ===
-> 
-> 2.1 = [2] assisted by one boolean migration-parameter
-> 
-> Still, if we want make backend-transfer "a kind of" default, we'll need one boolean
-> migration parameter "it-is-local-migration", and modify logic to
-> 
-> really_do_backend_transfer = it-is-local-migration and device.backend-transfer
-> really_do_migrate_inflight_region = not it-is-local-migration and device.migrate-inflight-region
-> 
-> PROS: starting from some MT, we'll have good defaults, so that user don't have
-> to enable/disable the option per device for every migration.
-> 
-> CONS: a precedent of the behavior driven by combination of device property and
-> corresponding migration parameter (or we have something similar?)
-> 
-> ===
-> 
-> 4. mixed
-> 
-> Keep [2] for this series, and [1] for backend-transfer.
-> 
-> PROS: list for backend-transfer remains "the only exclusion" instead of "the practice",
-> so we will not have tons of such lists :)
-> 
-> CONS: inconstant solutions for similar things
-> 
-> ===
-> 
-> 5. implement "per device" migration parameters
-> 
-> They may be set by additional QMP command qmp-migrate-set-device-parameters, which
-> will take additional qom-path parameter.
-> 
-> Or, we may add one list of structures like
-> 
-> [{
->    qom_path: ...
->    parameters: ..
-> }, ...]
-> 
-> into common migration parameters.
-> 
-> PROS: keep new features as a property of migration, but avoid several lists of QOM paths
-> CONS: ?
-> 
-> Hmm, we also may select devices not only by qom_path, but by type, for example, to enable
-> feature for all virtio-net devices. Hmm, and this type may be also used as discriminator
-> for parameters, which may be a QAPI union type..
-> 
-> ===
-> 
-> 
-> Thoughts?
+> 1. qemu.qmp will be installed from PyPI or vendored packages instead of
+>    being utilized directly from the qemu.git tree.
 
-Sorry to respond late, I kept getting other things interrupting me when I
-wanted to look at this..
+This is not getting installed in enough scenarios IMHO.
 
-I just sent a series here, allowing TYPE_OBJECT of any kind to be able to
-work with machine compat properties:
+My current workflow is commonly
 
-https://lore.kernel.org/r/20251209162857.857593-1-peterx@redhat.com
+  $ ./configure --target-list=x86_64-softmmu
+  $ make
+  $ ./scripts/qmp/qmp-shell-wrap 
+   /var/home/berrange/src/virt/qemu/build
+  Traceback (most recent call last):
+    File "/var/home/berrange/src/virt/qemu/scripts/qmp/qmp-shell-wrap", line 7, in <module>
+      from qemu.qmp import qmp_shell
+  ModuleNotFoundError: No module named 'qemu.qmp'
 
-I still want to see if we can stick with compat properties in general
-whenever it's about defining guest ABI.
+Even if I add in a call to 'source build/pyvenv/bin/activate'
+after 'make', I'm still missing the qemu.qmp python module.
 
-What you proposed should work, but that'll involve a 2nd way of probing
-"what is the guest ABI" by providing a new QMP query command and then set
-them after mgmt queries both QEMUs then set the subset of both.  It will be
-finer granule but as I discussed previously, I think it's re-inventing the
-wheels, and it may cause mgmt over-bloated on caring too many trivial
-details of per-device specific details.
+AFAICT, qemu.qmp only gets installed in the venv if you run
+'make check', and IMHO that should not be expected for the
+above usage scenario.
 
-Please have a look to see the feasibility.  As mentioned in the cover
-letter, that will need further work to e.g. QOMify TAP first at least for
-your series.  But I don't yet see it as a blocker?  After QOMified, it can
-inherit directly the OBJECT_COMPAT then TAP can add compat properties.
+Likewise I can no longer run any of the test programs directly
+without first having run 'make check'. eg what I would currently
+do is:
 
-I wonder if vhost-usr-blk can already use compat properties.
+   $ ./configure --target-list=x86_64-softmmu
+   $ make
+   $ cd build/tests/qemu-iotests
+   $ ./check 300
 
-Thanks,
+I don't generally run 'make check' as frequently as I
+'configure && make' as it adds alot of time which is
+not needed usually.
 
+In general I find it tedious having to remember to run
+'source build/pyvenv/bin/activate' in every terminal
+window where I might want to run a QEMU script that relies
+on python. It is also fairly undesirable too, as I use the
+same terminal window for various purposes, that activating
+the QEMU venv can interfere with non-QEMU python usage.
+
+I would find it helpful if we provided a "run" script in the
+root dir of the build directory that contained the following
+
+  $ cat build/run
+  #!/bin/sh
+
+  set -e
+
+  HERE=$(realpath $(dirname $0))
+  source $HERE/pyvenv/bin/activate
+  exec "$@"
+
+Which would be used as a wrapper to execute scripts with the
+right environment. That would let us keep the simpler workflow,
+and avoid polluting the global terminal environment with the
+qemu venv.
+
+eg to be used as
+
+   $ ./configure --target-list=x86_64-softmmu
+   $ make
+   $ cd build/tests/qemu-iotests
+   $ ../../run ./check 300
+
+or
+
+  $ ./configure --target-list=x86_64-softmmu
+  $ make
+  $ ./build/run ./scripts/qmp/qmp-shell-wrap 
+
+
+
+> 2. There are no new python dependencies checked or installed during
+>    configure.  All test dependencies are installed post-hoc on an
+>    as-needed basis.
+> 3. "make check-venv" is no longer required to be run manually before any
+>    test that is integrated with meson; this includes "make check" and
+>    "make check-functional".
+> 4. "make check-venv" no longer installs functional test dependencies: it
+>    installs only the core suite of python test dependencies.
+> 5. "make check-venv" is now required as a pre-requisite for running
+>    device-crash-test and manually executed iotests.
+> 6. Unfortunately, python3-wheel and python3-setuptools are now required
+>    on the host system if tests are to be executed and >= Python 3.13 is
+>    used.
+> 7. An awful lot of deleted lines of code, and a lot fewer headaches
+>    managing two nearly-identical copies of this source code. O:-)
 > 
-> > 
-> > That doesn't look reasonable at all.  If some feature is likely only
-> > supported in one device, that should not appear in migration.json but only
-> > in the specific device.
-> > 
-> > I don't think I'm fully convinced we can't enable some form of machine type
-> > properties (with QDEV or not) on backends we should stick with something
-> > like that.  I can have some closer look this week, but.. even if not, I
-> > still think migration shouldn't care about some specific behavior of a
-> > specific device.
-> > 
-> > If we really want to have some way to probe device features, maybe we
-> > should also think about a generic interface (rather than "one new list
-> > every time").  We also have some recent discussions on a proper interface
-> > to query TAP backend features like USO*.  Maybe they share some of the
-> > goals here.
-> > 
-> What do you mean by probing device features? Isn't it qom-get command?
+> Patches 1-5 are build system focused; they set up new pythondeps.toml,
+> mkvenv, and meson systems in preparation for relying on an external
+> qemu.qmp library, but does not yet make the switch.
 > 
-> -- 
-> Best regards,
-> Vladimir
+> Patches 6-9 are testing and CI focused; they add necessary preparation
+> steps to keep tests running happily once the in-tree qemu.qmp library is
+> removed.
 > 
+> Patches 10-15 are build system focused again; they implement the actual
+> switchover to the external qemu.qmp library.
 
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
