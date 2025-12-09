@@ -4,108 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95C22D3B98A
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 17:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D84FDD3B98A
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 17:44:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT1R9-0000ns-B2; Tue, 09 Dec 2025 12:23:43 -0500
+	id 1vT1kY-0004sg-3P; Tue, 09 Dec 2025 12:43:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vT1R5-0000nC-NK
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 12:23:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vT1kW-0004sO-CZ
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 12:43:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vT1R3-00081o-59
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 12:23:39 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vT1kU-0004ow-Hh
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 12:43:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765301015;
+ s=mimecast20190719; t=1765302220;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6Wp0AwRkxKH3A3vPTl96wotJx2FsuyIkafeGlAIA314=;
- b=Edy68pH94Sy6ed+qM41US5VFhlYXviHEphH+66ggB+Tww43Jps7ba6mda0H5sG5DejA5y+
- +7hFnf+hsOSYH8pXawSrYwLdjeWe3cO9BVnUMicpgdsNvmJxmg6vYMb0n1WwYDgKRVi0iQ
- RIp0UYGnNPqvC4K70MufTRgm8MrIU0U=
-Received: from mail-yx1-f70.google.com (mail-yx1-f70.google.com
- [74.125.224.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-fkSv5wDsPRyK1iZuCGiZKQ-1; Tue, 09 Dec 2025 12:23:33 -0500
-X-MC-Unique: fkSv5wDsPRyK1iZuCGiZKQ-1
-X-Mimecast-MFC-AGG-ID: fkSv5wDsPRyK1iZuCGiZKQ_1765301013
-Received: by mail-yx1-f70.google.com with SMTP id
- 956f58d0204a3-6445421eed0so3997404d50.3
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 09:23:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765301013; x=1765905813; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=6Wp0AwRkxKH3A3vPTl96wotJx2FsuyIkafeGlAIA314=;
- b=UNkAvwljpSjAouiJ1A8K+MPwU/BX3e4d4DcfsORIr87eEtWXbXnLk4d8lisfypnKVb
- wu7fzXENIYHMeovrFpzimjwZoLnTseVm9/V4S0Php0Yi0j4uUnE12BKjB7XWAajo7dUK
- Ta1axaAS+rcrPwXxlCqeqIo4S/os9T65aZEuf3/uKh5v4qyj3o8VZHCegGLiGsdFxsOb
- ejeTLKGb1Xbujc+dKjjHhR0mjXOOUKm6Vt/ST9TB8iJXcBNuGeiQk8b9BI6wiOg0I3A8
- TVGboYvoh7+9tHtfclShT8NtFG6br8O2Jhd3l6mzUbeJT/80DPUyKXea9TJAWU2qKPIh
- o+vQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765301013; x=1765905813;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6Wp0AwRkxKH3A3vPTl96wotJx2FsuyIkafeGlAIA314=;
- b=bKU0z3xqnvWoz3ECwW26+/eqMq2UWDlfo6rZLVZ9lC7waOoCKjvKOZYuXYjmUOQi89
- M4pfz7ru8FTWiRJ7ReKI3s/e3+OxPt3bRS/5DowMB+DM82ZD5YBZFT65EwC4XC+XLh+f
- 57U0aGkoO8nPoCxZS6CxF7gdEbToEZsPFOSbxOYp9H08ihQE8YF9cgB3ylz9JodEeLag
- oKP5urlIFjl5BONg5n/j6EPe8ID/81ymgXmx+Qy55z49fdFXTtwzt50HguAOrqxzwIwQ
- NCjW5mkRZTBGpo+hnnPCUW5czK/nH1h9bhmCRUCBJ7t5DyzwcjK4P3RbrS5ghR0HmyFI
- 3zhw==
-X-Gm-Message-State: AOJu0Yy9+fL/hi3GP+/5rkuVWQyJNBJ494+c2aAIQeSFignPFIMK7Mep
- RsA3jKocgwH+/DaJp2qa3Vq1ehKcMx49fmt/RCDuH3C03gw3QFPB4LZ1s44dITtJ98kPEboLmFN
- A14xyV3B3VfnWGTUQeuTgN9D//7lsGAgLakLBxmG3+5lBWfCToWuoBN7NOjKeJ6PfAvMvhT20yz
- 2/5w5OL1CMWJaThaHKgzsYjzIDFHtE9o8=
-X-Gm-Gg: AY/fxX4NWHp0Xx/tRrKrfqWhTqGKwct0CLCobCqQAf27UzZwjLHBRgFknk/q62wZRm8
- AKBCUvspNcbHtknciY8yLpmI29nhIR32DkjdidW3KW4wZrKFcsTpAkL0C7kCbjduJuGdek21Xhk
- US/rFqPyYPNFkRV81lKbjUyIoAdH41kLj4kkZmwrMWVVbkiuFsx/y1PGz5nHZVqz22jwhutl29h
- rpzED1+zT6OkkUGuFnaZUgs/A==
-X-Received: by 2002:a05:690e:138e:b0:644:51a4:4f1a with SMTP id
- 956f58d0204a3-64451a45c3emr9409682d50.46.1765301012809; 
- Tue, 09 Dec 2025 09:23:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEh6Hk5BqtEYNOlYc4CUM2yviEwCCBn5yUrDOCgEJQCDCNdObBE8dDH8oJ8NOmltXrB8e4zgajHvtbbkJX2TsQ=
-X-Received: by 2002:a05:690e:138e:b0:644:51a4:4f1a with SMTP id
- 956f58d0204a3-64451a45c3emr9409654d50.46.1765301012346; Tue, 09 Dec 2025
- 09:23:32 -0800 (PST)
-MIME-Version: 1.0
-References: <20251205060058.1503170-1-jsnow@redhat.com>
- <aThVvP5vwfjVa-ka@redhat.com>
-In-Reply-To: <aThVvP5vwfjVa-ka@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 9 Dec 2025 12:23:21 -0500
-X-Gm-Features: AQt7F2rCz-Cr6iQalf3yL4ixh_sHWy7mZnEYuMxS7cSurVrME0AWDYqIYa5NiK8
-Message-ID: <CAFn=p-aw1+BDuB1znFBdq_Z+V_qiuO-Vh69UZsS7LZKWZpPTuw@mail.gmail.com>
-Subject: Re: [PATCH v3 00/15] python: drop qemu.qmp from qemu.git tree
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Cleber Rosa <crosa@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>, 
- Kevin Wolf <kwolf@redhat.com>, Qemu-block <qemu-block@nongnu.org>, 
- Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>, 
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ht8Hrb0K7b3OXqLoq/zycCaul1imXwo7ft/STeI7H3g=;
+ b=FSyhQsVwEffwiwNdtILZNxrHhVfYoqis54i6onkR+VV1FA5XLJwevC/CVJyJlZDWSbkb9K
+ 25T3ZCiH4SGdnL8DfjuDzj+RWfdXNeN+0u39cP69mkDQabk4KZxqGyQ2JdoeEk8r5jON0E
+ th72d/LJqpKB2tBKKg0GJoEEE2Urqw8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-578-1Vpan_moM4KxzEqIzcR9DA-1; Tue,
+ 09 Dec 2025 12:43:37 -0500
+X-MC-Unique: 1Vpan_moM4KxzEqIzcR9DA-1
+X-Mimecast-MFC-AGG-ID: 1Vpan_moM4KxzEqIzcR9DA_1765302216
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 52B7D1956050; Tue,  9 Dec 2025 17:43:35 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.45.224.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 309D130001A8; Tue,  9 Dec 2025 17:43:29 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Ed Maste <emaste@freebsd.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000c349e70645882b14"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3] Fix const qualifier build errors with recent glibc
+Date: Tue,  9 Dec 2025 18:43:28 +0100
+Message-ID: <20251209174328.698774-1-clg@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
-X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,386 +90,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c349e70645882b14
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+A recent change in glibc 2.42.9000 [1] changes the return type of
+strstr() and other string functions to be 'const char *' when the
+input is a 'const char *'.
 
-On Tue, Dec 9, 2025, 12:00=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@red=
-hat.com>
-wrote:
+This breaks the build in various files with errors such as :
 
-> On Fri, Dec 05, 2025 at 01:00:42AM -0500, John Snow wrote:
-> > Hello!
-> >
-> > This series drops the in-tree version of our python-qemu-qmp package
-> > ("qemu.qmp") in favor of the version hosted on PyPI, whose repository i=
-s
-> > located at https://gitlab.com/qemu-project/python-qemu-qmp.
-> >
-> > GitLab CI: https://gitlab.com/jsnow/qemu/-/pipelines/2197613036
-> >        (FreeBSD isn't my fault...!)
-> >
-> > The major effects of this patch series are:
-> >
-> > 1. qemu.qmp will be installed from PyPI or vendored packages instead of
-> >    being utilized directly from the qemu.git tree.
->
-> This is not getting installed in enough scenarios IMHO.
->
+  error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
+    208 |         char *pidstr = strstr(filename, "%");
+        |                        ^~~~~~
 
-It's hard to trigger an install when you don't use the build system,
-though... If you bypass make/meson/ninja entirely I'm not really sure what
-I can do to bootstrap the test deps.
+Fix this by changing the type of the variables that store the result
+of these functions to 'const char *'.
 
+[1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
 
-> My current workflow is commonly
->
->   $ ./configure --target-list=3Dx86_64-softmmu
->   $ make
->   $ ./scripts/qmp/qmp-shell-wrap
->    /var/home/berrange/src/virt/qemu/build
->   Traceback (most recent call last):
->     File "/var/home/berrange/src/virt/qemu/scripts/qmp/qmp-shell-wrap",
-> line 7, in <module>
->       from qemu.qmp import qmp_shell
->   ModuleNotFoundError: No module named 'qemu.qmp'
->
-> Even if I add in a call to 'source build/pyvenv/bin/activate'
-> after 'make', I'm still missing the qemu.qmp python module.
->
-> AFAICT, qemu.qmp only gets installed in the venv if you run
-> 'make check', and IMHO that should not be expected for the
-> above usage scenario.
->
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
 
-"make check-venv", to do just the minimum setup. You don't have to run
-check.
+ Most changes are straight forward apart from vubr_parse_host_port.
+ Please check.
 
-We could always add a flag to configure to front-load the testing
-environment and scripts, but I thought it was best to avoid adding new
-dependencies by default.
+ Thanks,
 
-Like --with-python-tests or something? Then you'd always have it like you
-do with meson and sphinx (with --enable-docs)
+ C.
 
+ backends/tpm/tpm_passthrough.c | 2 +-
+ block/vmdk.c                   | 2 +-
+ block/vvfat.c                  | 2 +-
+ gdbstub/gdbstub.c              | 2 +-
+ qga/commands-linux.c           | 7 ++++---
+ tests/vhost-user-bridge.c      | 2 +-
+ ui/ui-hmp-cmds.c               | 2 +-
+ util/log.c                     | 2 +-
+ 8 files changed, 11 insertions(+), 10 deletions(-)
 
-> Likewise I can no longer run any of the test programs directly
-> without first having run 'make check'. eg what I would currently
-> do is:
->
->    $ ./configure --target-list=3Dx86_64-softmmu
->    $ make
->    $ cd build/tests/qemu-iotests
->    $ ./check 300
->
-> I don't generally run 'make check' as frequently as I
-> 'configure && make' as it adds alot of time which is
-> not needed usually.
->
-> In general I find it tedious having to remember to run
-> 'source build/pyvenv/bin/activate' in every terminal
-> window where I might want to run a QEMU script that relies
-> on python. It is also fairly undesirable too, as I use the
-> same terminal window for various purposes, that activating
-> the QEMU venv can interfere with non-QEMU python usage.
->
-
-You can run one-offs with build/pyvenv/bin/python3 without activating the
-environment,
-
-but you're right that this does require an environment setup step (make
-check-venv)
-
-
-> I would find it helpful if we provided a "run" script in the
-> root dir of the build directory that contained the following
->
->   $ cat build/run
->   #!/bin/sh
->
->   set -e
->
->   HERE=3D$(realpath $(dirname $0))
->   source $HERE/pyvenv/bin/activate
->   exec "$@"
->
-> Which would be used as a wrapper to execute scripts with the
-> right environment. That would let us keep the simpler workflow,
-> and avoid polluting the global terminal environment with the
-> qemu venv.
->
-> eg to be used as
->
->    $ ./configure --target-list=3Dx86_64-softmmu
->    $ make
->    $ cd build/tests/qemu-iotests
->    $ ../../run ./check 300
->
-> or
->
->   $ ./configure --target-list=3Dx86_64-softmmu
->   $ make
->   $ ./build/run ./scripts/qmp/qmp-shell-wrap
-
-
-Shouldn't be too hard to add, honestly. Maybe adding in a "meson compile
-pyvenv/pyvenv_tests_group" line at the start to trigger the dep
-installation if it hasn't occurred already?
-
-Or maybe just directly invoking mkvenv ensuregroup to avoid ninja
-re-configuring things while you develop.
-
-Something like that.
-
-
-
->
->
->
-> > 2. There are no new python dependencies checked or installed during
-> >    configure.  All test dependencies are installed post-hoc on an
-> >    as-needed basis.
-> > 3. "make check-venv" is no longer required to be run manually before an=
-y
-> >    test that is integrated with meson; this includes "make check" and
-> >    "make check-functional".
-> > 4. "make check-venv" no longer installs functional test dependencies: i=
-t
-> >    installs only the core suite of python test dependencies.
-> > 5. "make check-venv" is now required as a pre-requisite for running
-> >    device-crash-test and manually executed iotests.
-> > 6. Unfortunately, python3-wheel and python3-setuptools are now required
-> >    on the host system if tests are to be executed and >=3D Python 3.13 =
-is
-> >    used.
-> > 7. An awful lot of deleted lines of code, and a lot fewer headaches
-> >    managing two nearly-identical copies of this source code. O:-)
-> >
-> > Patches 1-5 are build system focused; they set up new pythondeps.toml,
-> > mkvenv, and meson systems in preparation for relying on an external
-> > qemu.qmp library, but does not yet make the switch.
-> >
-> > Patches 6-9 are testing and CI focused; they add necessary preparation
-> > steps to keep tests running happily once the in-tree qemu.qmp library i=
-s
-> > removed.
-> >
-> > Patches 10-15 are build system focused again; they implement the actual
-> > switchover to the external qemu.qmp library.
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
-
---000000000000c349e70645882b14
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Dec 9, 2025, 12:00=E2=80=
-=AFPM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">be=
-rrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On=
- Fri, Dec 05, 2025 at 01:00:42AM -0500, John Snow wrote:<br>
-&gt; Hello!<br>
-&gt; <br>
-&gt; This series drops the in-tree version of our python-qemu-qmp package<b=
-r>
-&gt; (&quot;qemu.qmp&quot;) in favor of the version hosted on PyPI, whose r=
-epository is<br>
-&gt; located at <a href=3D"https://gitlab.com/qemu-project/python-qemu-qmp"=
- rel=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-pr=
-oject/python-qemu-qmp</a>.<br>
-&gt; <br>
-&gt; GitLab CI: <a href=3D"https://gitlab.com/jsnow/qemu/-/pipelines/219761=
-3036" rel=3D"noreferrer noreferrer" target=3D"_blank">https://gitlab.com/js=
-now/qemu/-/pipelines/2197613036</a><br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 (FreeBSD isn&#39;t my fault...!)<br>
-&gt; <br>
-&gt; The major effects of this patch series are:<br>
-&gt; <br>
-&gt; 1. qemu.qmp will be installed from PyPI or vendored packages instead o=
-f<br>
-&gt;=C2=A0 =C2=A0 being utilized directly from the qemu.git tree.<br>
-<br>
-This is not getting installed in enough scenarios IMHO.<br></blockquote></d=
-iv></div><div dir=3D"auto"><br></div><div dir=3D"auto">It&#39;s hard to tri=
-gger an install when you don&#39;t use the build system, though... If you b=
-ypass make/meson/ninja entirely I&#39;m not really sure what I can do to bo=
-otstrap the test deps.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><=
-div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_=
-quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1=
-ex">
-<br>
-My current workflow is commonly<br>
-<br>
-=C2=A0 $ ./configure --target-list=3Dx86_64-softmmu<br>
-=C2=A0 $ make<br>
-=C2=A0 $ ./scripts/qmp/qmp-shell-wrap <br>
-=C2=A0 =C2=A0/var/home/berrange/src/virt/qemu/build<br>
-=C2=A0 Traceback (most recent call last):<br>
-=C2=A0 =C2=A0 File &quot;/var/home/berrange/src/virt/qemu/scripts/qmp/qmp-s=
-hell-wrap&quot;, line 7, in &lt;module&gt;<br>
-=C2=A0 =C2=A0 =C2=A0 from qemu.qmp import qmp_shell<br>
-=C2=A0 ModuleNotFoundError: No module named &#39;qemu.qmp&#39;<br>
-<br>
-Even if I add in a call to &#39;source build/pyvenv/bin/activate&#39;<br>
-after &#39;make&#39;, I&#39;m still missing the qemu.qmp python module.<br>
-<br>
-AFAICT, qemu.qmp only gets installed in the venv if you run<br>
-&#39;make check&#39;, and IMHO that should not be expected for the<br>
-above usage scenario.<br></blockquote></div></div><div dir=3D"auto"><br></d=
-iv><div dir=3D"auto">&quot;make check-venv&quot;, to do just the minimum se=
-tup. You don&#39;t have to run check.</div><div dir=3D"auto"><br></div><div=
- dir=3D"auto">We could always add a flag to configure to front-load the tes=
-ting environment and scripts, but I thought it was best to avoid adding new=
- dependencies by default.</div><div dir=3D"auto"><br></div><div dir=3D"auto=
-">Like --with-python-tests or something? Then you&#39;d always have it like=
- you do with meson and sphinx (with --enable-docs)</div><div dir=3D"auto"><=
-br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"=
-><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1=
-px #ccc solid;padding-left:1ex">
-<br>
-Likewise I can no longer run any of the test programs directly<br>
-without first having run &#39;make check&#39;. eg what I would currently<br=
->
-do is:<br>
-<br>
-=C2=A0 =C2=A0$ ./configure --target-list=3Dx86_64-softmmu<br>
-=C2=A0 =C2=A0$ make<br>
-=C2=A0 =C2=A0$ cd build/tests/qemu-iotests<br>
-=C2=A0 =C2=A0$ ./check 300<br>
-<br>
-I don&#39;t generally run &#39;make check&#39; as frequently as I<br>
-&#39;configure &amp;&amp; make&#39; as it adds alot of time which is<br>
-not needed usually.<br>
-<br>
-In general I find it tedious having to remember to run<br>
-&#39;source build/pyvenv/bin/activate&#39; in every terminal<br>
-window where I might want to run a QEMU script that relies<br>
-on python. It is also fairly undesirable too, as I use the<br>
-same terminal window for various purposes, that activating<br>
-the QEMU venv can interfere with non-QEMU python usage.<br></blockquote></d=
-iv></div><div dir=3D"auto"><br></div><div dir=3D"auto">You can run one-offs=
- with build/pyvenv/bin/python3 without activating the environment,</div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto">but you&#39;re right that this d=
-oes require an environment setup step (make check-venv)</div><div dir=3D"au=
-to"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_conta=
-iner"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-l=
-eft:1px #ccc solid;padding-left:1ex">
-<br>
-I would find it helpful if we provided a &quot;run&quot; script in the<br>
-root dir of the build directory that contained the following<br>
-<br>
-=C2=A0 $ cat build/run<br>
-=C2=A0 #!/bin/sh<br>
-<br>
-=C2=A0 set -e<br>
-<br>
-=C2=A0 HERE=3D$(realpath $(dirname $0))<br>
-=C2=A0 source $HERE/pyvenv/bin/activate<br>
-=C2=A0 exec &quot;$@&quot;<br>
-<br>
-Which would be used as a wrapper to execute scripts with the<br>
-right environment. That would let us keep the simpler workflow,<br>
-and avoid polluting the global terminal environment with the<br>
-qemu venv.<br>
-<br>
-eg to be used as<br>
-<br>
-=C2=A0 =C2=A0$ ./configure --target-list=3Dx86_64-softmmu<br>
-=C2=A0 =C2=A0$ make<br>
-=C2=A0 =C2=A0$ cd build/tests/qemu-iotests<br>
-=C2=A0 =C2=A0$ ../../run ./check 300<br>
-<br>
-or<br>
-<br>
-=C2=A0 $ ./configure --target-list=3Dx86_64-softmmu<br>
-=C2=A0 $ make<br>
-=C2=A0 $ ./build/run ./scripts/qmp/qmp-shell-wrap</blockquote></div></div><=
-div dir=3D"auto"><br></div><div dir=3D"auto">Shouldn&#39;t be too hard to a=
-dd, honestly. Maybe adding in a &quot;meson compile pyvenv/pyvenv_tests_gro=
-up&quot; line at the start to trigger the dep installation if it hasn&#39;t=
- occurred already?</div><div dir=3D"auto"><br></div><div dir=3D"auto">Or ma=
-ybe just directly invoking mkvenv ensuregroup to avoid ninja re-configuring=
- things while you develop.</div><div dir=3D"auto"><br></div><div dir=3D"aut=
-o">Something like that.</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
-<br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container=
-"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:=
-1px #ccc solid;padding-left:1ex"> <br>
-<br>
-<br>
-<br>
-&gt; 2. There are no new python dependencies checked or installed during<br=
->
-&gt;=C2=A0 =C2=A0 configure.=C2=A0 All test dependencies are installed post=
--hoc on an<br>
-&gt;=C2=A0 =C2=A0 as-needed basis.<br>
-&gt; 3. &quot;make check-venv&quot; is no longer required to be run manuall=
-y before any<br>
-&gt;=C2=A0 =C2=A0 test that is integrated with meson; this includes &quot;m=
-ake check&quot; and<br>
-&gt;=C2=A0 =C2=A0 &quot;make check-functional&quot;.<br>
-&gt; 4. &quot;make check-venv&quot; no longer installs functional test depe=
-ndencies: it<br>
-&gt;=C2=A0 =C2=A0 installs only the core suite of python test dependencies.=
-<br>
-&gt; 5. &quot;make check-venv&quot; is now required as a pre-requisite for =
-running<br>
-&gt;=C2=A0 =C2=A0 device-crash-test and manually executed iotests.<br>
-&gt; 6. Unfortunately, python3-wheel and python3-setuptools are now require=
-d<br>
-&gt;=C2=A0 =C2=A0 on the host system if tests are to be executed and &gt;=
-=3D Python 3.13 is<br>
-&gt;=C2=A0 =C2=A0 used.<br>
-&gt; 7. An awful lot of deleted lines of code, and a lot fewer headaches<br=
->
-&gt;=C2=A0 =C2=A0 managing two nearly-identical copies of this source code.=
- O:-)<br>
-&gt; <br>
-&gt; Patches 1-5 are build system focused; they set up new pythondeps.toml,=
-<br>
-&gt; mkvenv, and meson systems in preparation for relying on an external<br=
->
-&gt; qemu.qmp library, but does not yet make the switch.<br>
-&gt; <br>
-&gt; Patches 6-9 are testing and CI focused; they add necessary preparation=
-<br>
-&gt; steps to keep tests running happily once the in-tree qemu.qmp library =
-is<br>
-&gt; removed.<br>
-&gt; <br>
-&gt; Patches 10-15 are build system focused again; they implement the actua=
-l<br>
-&gt; switchover to the external qemu.qmp library.<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer noreferrer" target=3D=
-"_blank">https://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a h=
-ref=3D"https://www.flickr.com/photos/dberrange" rel=3D"noreferrer noreferre=
-r" target=3D"_blank">https://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer noreferrer" target=3D"=
-_blank">https://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com=
-" rel=3D"noreferrer noreferrer" target=3D"_blank">https://fstop138.berrange=
-.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer noreferrer" tar=
-get=3D"_blank">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0=
- <a href=3D"https://www.instagram.com/dberrange" rel=3D"noreferrer noreferr=
-er" target=3D"_blank">https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000c349e70645882b14--
+diff --git a/backends/tpm/tpm_passthrough.c b/backends/tpm/tpm_passthrough.c
+index b7c7074c2aa3b0d7c1ed70cbcdb83b78fbd7dce8..a9f35ab7d606c79e148620b1a3e6b1d2bde63b7f 100644
+--- a/backends/tpm/tpm_passthrough.c
++++ b/backends/tpm/tpm_passthrough.c
+@@ -211,7 +211,7 @@ static size_t tpm_passthrough_get_buffer_size(TPMBackend *tb)
+ static int tpm_passthrough_open_sysfs_cancel(TPMPassthruState *tpm_pt)
+ {
+     int fd = -1;
+-    char *dev;
++    const char *dev;
+     char path[PATH_MAX];
+ 
+     if (tpm_pt->options->cancel_path) {
+diff --git a/block/vmdk.c b/block/vmdk.c
+index 3b35b63cb5982364f40192eeb2c8585a0265ee40..89e89cd10e3594ad5be044b819ef4b875614e60a 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -1089,7 +1089,7 @@ vmdk_open_vmdk4(BlockDriverState *bs, BdrvChild *file, int flags,
+ static int vmdk_parse_description(const char *desc, const char *opt_name,
+         char *buf, int buf_size)
+ {
+-    char *opt_pos, *opt_end;
++    const char *opt_pos, *opt_end;
+     const char *end = desc + strlen(desc);
+ 
+     opt_pos = strstr(desc, opt_name);
+diff --git a/block/vvfat.c b/block/vvfat.c
+index 814796d9185f14183194e0421b8c3ef052c81543..e334b9febb16056b3549558666e20bfddc3a22d6 100644
+--- a/block/vvfat.c
++++ b/block/vvfat.c
+@@ -1826,7 +1826,7 @@ cluster_was_modified(BDRVVVFATState *s, uint32_t cluster_num)
+ 
+ static const char* get_basename(const char* path)
+ {
+-    char* basename = strrchr(path, '/');
++    const char *basename = strrchr(path, '/');
+     if (basename == NULL)
+         return path;
+     else
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index dd5fb5667ccd3bd4a303fb3f1b442f230cb44ffb..5b2fc06e58dffeabc9ef3b949d95b583c197e5fd 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -362,7 +362,7 @@ static const char *get_feature_xml(const char *p, const char **newp,
+      * qXfer:features:read:ANNEX:OFFSET,LENGTH'
+      *                     ^p    ^newp
+      */
+-    char *term = strchr(p, ':');
++    const char *term = strchr(p, ':');
+     *newp = term + 1;
+     len = term - p;
+ 
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 4a09ddc760cc794be52e0d28fb6e3574d3827442..c639a60a9415c46abe5a2c8ca46dff5669cfdc43 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -403,7 +403,8 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
+     int i, offset, nhosts = 0, pcilen;
+     GuestPCIAddress *pciaddr = disk->pci_controller;
+     bool has_ata = false, has_host = false, has_tgt = false;
+-    char *p, *driver = NULL;
++    const char *p;
++    char *driver = NULL;
+     bool ret = false;
+ 
+     p = strstr(syspath, "/devices/pci");
+@@ -543,7 +544,7 @@ static bool build_guest_fsinfo_for_nonpci_virtio(char const *syspath,
+                                                  Error **errp)
+ {
+     unsigned int tgt[3];
+-    char *p;
++    const char *p;
+ 
+     if (!strstr(syspath, "/virtio") || !strstr(syspath, "/block")) {
+         g_debug("Unsupported virtio device '%s'", syspath);
+@@ -575,7 +576,7 @@ static bool build_guest_fsinfo_for_ccw_dev(char const *syspath,
+                                            Error **errp)
+ {
+     unsigned int cssid, ssid, subchno, devno;
+-    char *p;
++    const char *p;
+ 
+     p = strstr(syspath, "/devices/css");
+     if (!p || sscanf(p + 12, "%*x/%x.%x.%x/%*x.%*x.%x/",
+diff --git a/tests/vhost-user-bridge.c b/tests/vhost-user-bridge.c
+index a5c711b1de8e9c164dd1614f4329b8e3c05d0402..019424c2be8df8c8b5c8b6670574bb74cc7ba927 100644
+--- a/tests/vhost-user-bridge.c
++++ b/tests/vhost-user-bridge.c
+@@ -744,7 +744,7 @@ vubr_run(VubrDev *dev)
+ }
+ 
+ static int
+-vubr_parse_host_port(const char **host, const char **port, const char *buf)
++vubr_parse_host_port(const char **host, const char **port, char *buf)
+ {
+     char *p = strchr(buf, ':');
+ 
+diff --git a/ui/ui-hmp-cmds.c b/ui/ui-hmp-cmds.c
+index 980a8bbc518c72d000873d63d06dff9ab7b41395..6c93d452c9c43fe72561f036ebc41ab080a83285 100644
+--- a/ui/ui-hmp-cmds.c
++++ b/ui/ui-hmp-cmds.c
+@@ -418,7 +418,7 @@ err_out:
+ void sendkey_completion(ReadLineState *rs, int nb_args, const char *str)
+ {
+     int i;
+-    char *sep;
++    const char *sep;
+     size_t len;
+ 
+     if (nb_args != 2) {
+diff --git a/util/log.c b/util/log.c
+index 41f78ce86b2522b8b7072c8b76d8e18603142db6..c44d66b5ce78338cf1b2cd26b7503cb94d4570cb 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -203,7 +203,7 @@ static ValidFilenameTemplateResult
+ valid_filename_template(const char *filename, bool per_thread, Error **errp)
+ {
+     if (filename) {
+-        char *pidstr = strstr(filename, "%");
++        const char *pidstr = strstr(filename, "%");
+ 
+         if (pidstr) {
+             /* We only accept one %d, no other format strings */
+-- 
+2.52.0
 
 
