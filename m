@@ -4,100 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C97FD3B983
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:36:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8FCCD3B983
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT0gp-0005qs-2K; Tue, 09 Dec 2025 11:35:51 -0500
+	id 1vT0jv-0006rn-3n; Tue, 09 Dec 2025 11:39:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vT0gk-0005q5-Tq
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:35:49 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vT0jt-0006rK-Om
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:39:01 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vT0gh-0005An-4v
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:35:46 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vT0js-0005a9-6D
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:39:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765298136;
+ s=mimecast20190719; t=1765298338;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=k7eRU99cMBLny45pOLuPBCMNj131GW8dS303AFmB+nA=;
- b=WR3V2bIBoC38utUnO0B/QMKYm9A8Jin/d84WEyCd7m2XSuZxa2xiPBl8kZaYiJgpEJTeU8
- qspFbZjjVY+U359QC3CekS5kaZ/MHqBlW4JQsF9NZXHGZ8v8qwqRFEAnGVFORMyPNIGKxK
- xFstQYYvxLQwWer7UviOfjwOs3ocGsE=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=wX4nK9oEPmvI1o3tmJUbsj2CRS3n5oVh67jnrcb3TP4=;
+ b=X1upm3UROG+VnQmYmPhFbFUeAcFx6AAOh1dgvOoKTpuXc5RGKUAcnZunMRHNYYqssgAjRt
+ 1LYqfBcQNi6LNE9oGUgFEJFyGghvHGoSEWcMDwlwbWTNbRYxQRM2kmHt7FtytuzfUAAXRL
+ Xob8rz8r8ECFDLHM34KCWOBqPd30JRI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-201-qT5mSYWBOTee-RFYxPee3Q-1; Tue, 09 Dec 2025 11:35:34 -0500
-X-MC-Unique: qT5mSYWBOTee-RFYxPee3Q-1
-X-Mimecast-MFC-AGG-ID: qT5mSYWBOTee-RFYxPee3Q_1765298128
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-78c38354edcso41620597b3.1
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 08:35:29 -0800 (PST)
+ us-mta-483-OGGALlVfPMetXHz0YDsTUA-1; Tue, 09 Dec 2025 11:38:57 -0500
+X-MC-Unique: OGGALlVfPMetXHz0YDsTUA-1
+X-Mimecast-MFC-AGG-ID: OGGALlVfPMetXHz0YDsTUA_1765298336
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4779da35d27so59100685e9.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 08:38:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765298128; x=1765902928; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=k7eRU99cMBLny45pOLuPBCMNj131GW8dS303AFmB+nA=;
- b=fmRLffq1gzZM85HsoyDdQNFAwtvpuimHfDWMIoVZhdhA9FFcXkGxti1cvgb7JTiuPj
- WPOTnT5dmu0jX42FAF+x0FUAwrNrgpDOxHL0S+391eaAvRFRizJE2xelhaen0Uiz8Y0X
- y8C7iWdXY4z09JIc3U0CHxgql5+ztlT5pI1PgphU6bbDgeJl+yAogac2jb2t9uOaW5Ve
- jPHyyPDB7khhCGazUhxFMouSw6fvnFkBI1Thmq0CmGff6ckyIMbK8mNXtNml7JXpTPHp
- KoYzIeKRXh10CNKMVARwjhEAx3mWbaGVrNcWd59dgbpNmEEah2yhkjPpPY1SLYPaVn45
- 1/mw==
+ d=redhat.com; s=google; t=1765298335; x=1765903135; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=wX4nK9oEPmvI1o3tmJUbsj2CRS3n5oVh67jnrcb3TP4=;
+ b=Ay4+RnMZe28mp1dnaOX3ilan4BC8O4lNimvxQUa/Z9Y4Ckw6cepQWzaapskmUIx/sh
+ Hy0WTePO8kuH4q0Ihaxt5J6xHRFMRDAbrMBSK96/yGlE6yLWxKRsQOnNGnpk8AslmG6V
+ DOz8uJ8TMcigUxUZ7rh1S5UMOqLfAaVhr7jK7+ZHdpWgwbz+f3qNNXc5tlQ/Hq2O/8aC
+ 6XIE+CllEF7mRrida0q8DnrLW+AfMJQpwtR5uB8ktjj1Boj+YK+2CJIpn/iG/xGsq6df
+ iI0/7y3QASx3XQJENH8ZnC83len96dfPQcV13KiAoQovqCCPIWSZLxgyD8MTHnwuPEx0
+ sTPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765298128; x=1765902928;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=k7eRU99cMBLny45pOLuPBCMNj131GW8dS303AFmB+nA=;
- b=VLebHaid2U/obsz6PxeMkUcK3XVKDAzTzoonR16Gtc9Vlz9UJhlHwKOigirfe52Q+X
- jNvmbVJCfcEzkwBpITtdYdoDtO16WyUj3l2h2DCbPPOmdPLJ15lGU/asbrYLYkd4/cIc
- xxPtOgPlEJgjHHcH4JEDCXxRtNYhhiJwmWTG9yJt9pZvoGmZMHLQfwlUPuIiQCiK4mi7
- f6QvypZRfx6es2LllnQYzEyr+n9N1su5IzWDfznxENYUqKhRvwMBwVWa8jwEJ5upgi0T
- vb8DV94TH0jzDliEB66UbtpZUrLS/vP86kNX2S/ymnjtJOwzF/hxcPjv6jCHEKUHSY1l
- Hf2Q==
-X-Gm-Message-State: AOJu0Yzl/MGC0R8stwFK14B879UwyrF8a8cI9rHvhe0+MMo6F8WiFzM9
- 4j4fwjOzBT2N31VomOCLfLQQG3lf5y7VHLESZBu0CJaY88LrFpV17eNdD7Ut11sNQPydDdFaKiS
- OVhPeVC9CIhzsq+9g0OlC7a4br9MWWFiJhchEnABw3IA+GyDr9a7OkZxSjZ/SvPj53aEkHwqmn6
- T4UXj4XXf26bjFTZHYJnG+0A/c9xGS24NDtL27+RBExg==
-X-Gm-Gg: AY/fxX58JqOriSfjkPc98WtC1oU4riGXIVltCsVFE1pf3DAvD6IVG1Kwbp566NF1vzu
- Pyr55iLLyBsJZQmErYehxjn4mU8RrAnKUpyP6cvIswCeAcbl8TGXQGV6oMNP3xwJyKK85gIn3Wk
- flUJtdZCmQbZH/wjXW9218Jf69gnGGI7jBVZTUsE3MLsm1t943LVSCEcFk7GHfwUJqZFvJnX/nS
- wk6Zg/fIMDivt2EG87CU8Jcuw==
-X-Received: by 2002:a05:690e:1b65:b0:642:84a:7bdc with SMTP id
- 956f58d0204a3-6444e7f3658mr8208136d50.83.1765298127594; 
- Tue, 09 Dec 2025 08:35:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFDnZQFrtMugmOCUbAjUbfb+qT31UDx7ud+Rwuti4Didj9EKorI3o3dyxnb/pzonxZV5al+5bAq4CdOQWqK+YM=
-X-Received: by 2002:a05:690e:1b65:b0:642:84a:7bdc with SMTP id
- 956f58d0204a3-6444e7f3658mr8208118d50.83.1765298127210; Tue, 09 Dec 2025
- 08:35:27 -0800 (PST)
+ d=1e100.net; s=20230601; t=1765298335; x=1765903135;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wX4nK9oEPmvI1o3tmJUbsj2CRS3n5oVh67jnrcb3TP4=;
+ b=rCz+JhU5EkHzSllukpMQrQR61261eRu+ZguvCr+3bzusDFXGQxwuiyCGjte2u2QZ5o
+ nF3gni2qJZ68L8YWCyZKtaYwI7vxihlKo8YMKw1ASeh0D1KpNTYoeplzsyzCiqcXAnrB
+ NoEEF8eLrMYYtBfD6HfK/U7digbA8MGEVB8FYmlKh91kH07HDgcFhHqZMKZ/nFSHCY4k
+ SoqmeZDBKJnR4JFVZ9TqMYDhD7f5XQSCLUvWMfPeLreVjuF0Asj29b5zqHIdK418O72k
+ Ew94Xm2TyvptHM2MgWjRwXimq2BFSBiTG0XqFfAtD/kQciwRmkf8CCCxTv56c4SSUeHz
+ QbCg==
+X-Gm-Message-State: AOJu0YwcIpY5R/cjbOgZAUC9DwcDSi92RtIQ8gF0clvPCWnVPzRj8rBN
+ 9n6ocP814ndqzKIfFJA8uSpnRnQ69AdSYM2h4XI7Tm5M2qJJXz1jm5LVmto6H8b5urNv1+85lja
+ entYYeQ9U6yY2IBTTHcfPpswvDJwYb7sKVSTcmpOlnkIggeKFLwiHfHoPoVbBYDf1e/ME5jP0Ge
+ yyvkMuZuyu4nncrwv8bfRO2OkcjhYNYgVaxg==
+X-Gm-Gg: ASbGncsIWfMgW+gx+2nRmW7xGTnI+Fz+9O46zMVIz1vHq6Y+V9k0V+4fZNxrJCjzyWs
+ 82rARjX9W/cAZ8M+5Kf7qram6HIDS5yGVvv1Ym97okCamBBR9LtVUNJqT69Aj2VMARCHsyqJZ4e
+ o1SxXXaULxeqRqrDz5M81TgcmxakhWEjdwqAakn3tq6NlTNYtFTvcjwYrFjPj3c7yQUPkYgbPXe
+ BspTa5Ik/NXTQPC0djXqbE9KbYpZh3yW8p97qZML5d9HnXKqfLucSlRXjGg+yt/TUhZ2mmnMQCK
+ dlEZ7B8Arc0EnublH5H/S3S7T5pjv8ohE33ppn5+t0FL1IZbcJtd/w7JJ+RWpi8e3XKJywQExfa
+ bUtjjkVTKBmGI3YmIhzIGpfhp9sQfatficKC7UKx/o0IFsNup
+X-Received: by 2002:a05:600c:354c:b0:479:3a87:2092 with SMTP id
+ 5b1f17b1804b1-4793a8720d4mr108586885e9.36.1765298335558; 
+ Tue, 09 Dec 2025 08:38:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG72s/+wTKomZYbDwJ2qz7wwRxHkJfkY71uBg9iO/ODturRlzOhfzXh6DJm3Ng4DZ/zbcM5RQ==
+X-Received: by 2002:a05:600c:354c:b0:479:3a87:2092 with SMTP id
+ 5b1f17b1804b1-4793a8720d4mr108586515e9.36.1765298334925; 
+ Tue, 09 Dec 2025 08:38:54 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47a7d6fa121sm45508325e9.5.2025.12.09.08.38.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Dec 2025 08:38:54 -0800 (PST)
+Message-ID: <3b34f492-874a-4ec6-b973-38f72c09a3f4@redhat.com>
+Date: Tue, 9 Dec 2025 17:38:53 +0100
 MIME-Version: 1.0
-References: <20251205060058.1503170-1-jsnow@redhat.com>
-In-Reply-To: <20251205060058.1503170-1-jsnow@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 9 Dec 2025 11:35:16 -0500
-X-Gm-Features: AQt7F2ox1CVFGaUKZdjxLUPJNRog-MGpzcC7PatRghKeD2coC7zKPA7eCOcWAS0
-Message-ID: <CAFn=p-YCnEk0T-mDZ5TfMDPfBonLbWzkFSyh_JW0Cz7ykZH4VA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/15] python: drop qemu.qmp from qemu.git tree
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Kevin Wolf <kwolf@redhat.com>, 
- qemu-block@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- Markus Armbruster <armbru@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Ed Maste <emaste@freebsd.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] log: Fix result of strstr to 'const char *'
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Peter Maydell <peter.maydell@linaro.org>
+References: <20251209154128.661390-1-clg@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20251209154128.661390-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -106,7 +154,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,186 +170,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-First of all: Ping!
+On 12/9/25 16:41, Cédric Le Goater wrote:
+> Assigning the result of strstr() to a 'char *' is unsafe since
+> strstr() returns a pointer into the original string which is a
+> read-only 'const char *' string.
+> 
+> A recent change in glibc 2.42.9000  :
+> 
+>     https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+> 
+> breaks compiles, complaining the result of strstr() is not a
+> 'const char *' :
+> 
+> ../util/log.c:208:24: error: initialization discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+>    208 |         char *pidstr = strstr(filename, "%");
+>        |                        ^~~~~~
 
-Please-Review: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-Please-Review: Paolo Bonzini <pbonzini@redhat.com>
-Please-Review: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+There is much more to fix ... :/
 
-It would be nice to get this series staged right as the tree opens so
-that I can address any build issues it creates in a timely manner
-during the next window.
+../backends/tpm/tpm_passthrough.c: In function ‘tpm_passthrough_open_sysfs_cancel’:
+../backends/tpm/tpm_passthrough.c:226:9: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   226 |     dev = strrchr(tpm_pt->tpm_dev, '/');
+--
+../tests/vhost-user-bridge.c: In function ‘vubr_parse_host_port’:
+../tests/vhost-user-bridge.c:749:15: error: initialization discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   749 |     char *p = strchr(buf, ':');
+--
+../ui/ui-hmp-cmds.c: In function ‘sendkey_completion’:
+../ui/ui-hmp-cmds.c:427:9: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   427 |     sep = strrchr(str, '-');
+--
+../monitor/hmp.c: In function ‘key_get_info’:
+../monitor/hmp.c:589:7: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   589 |     p = strchr(type, ':');
+--
+../qga/commands-linux.c: In function ‘build_guest_fsinfo_for_pci_dev’:
+../qga/commands-linux.c:409:7: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   409 |     p = strstr(syspath, "/devices/pci");
+       |       ^
+../qga/commands-linux.c:440:7: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   440 |     p = strstr(syspath, "/target");
+       |       ^
+../qga/commands-linux.c:446:7: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   446 |     p = strstr(syspath, "/ata");
+       |       ^
+../qga/commands-linux.c:451:11: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   451 |         p = strstr(syspath, "/host");
+--
+../qga/commands-linux.c: In function ‘build_guest_fsinfo_for_nonpci_virtio’:
+../qga/commands-linux.c:553:7: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   553 |     p = strstr(syspath, "/target");
+--
+../qga/commands-linux.c: In function ‘build_guest_fsinfo_for_ccw_dev’:
+../qga/commands-linux.c:580:7: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   580 |     p = strstr(syspath, "/devices/css");
+--
+../gdbstub/gdbstub.c: In function ‘get_feature_xml’:
+../gdbstub/gdbstub.c:365:18: error: initialization discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+   365 |     char *term = strchr(p, ':');
+--
+../block/vmdk.c: In function ‘vmdk_parse_description’:
+../block/vmdk.c:1095:13: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+  1095 |     opt_pos = strstr(desc, opt_name);
+--
+../block/vvfat.c: In function ‘get_basename’:
+../block/vvfat.c:1829:22: error: initialization discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+  1829 |     char* basename = strrchr(path, '/');
 
-Second, [below, in-line] ...
 
-On Fri, Dec 5, 2025 at 1:01=E2=80=AFAM John Snow <jsnow@redhat.com> wrote:
->
-> Hello!
->
-> This series drops the in-tree version of our python-qemu-qmp package
-> ("qemu.qmp") in favor of the version hosted on PyPI, whose repository is
-> located at https://gitlab.com/qemu-project/python-qemu-qmp.
->
-> GitLab CI: https://gitlab.com/jsnow/qemu/-/pipelines/2197613036
->        (FreeBSD isn't my fault...!)
->
-> The major effects of this patch series are:
->
-> 1. qemu.qmp will be installed from PyPI or vendored packages instead of
->    being utilized directly from the qemu.git tree.
-> 2. There are no new python dependencies checked or installed during
->    configure.  All test dependencies are installed post-hoc on an
->    as-needed basis.
-> 3. "make check-venv" is no longer required to be run manually before any
->    test that is integrated with meson; this includes "make check" and
->    "make check-functional".
-> 4. "make check-venv" no longer installs functional test dependencies: it
->    installs only the core suite of python test dependencies.
-> 5. "make check-venv" is now required as a pre-requisite for running
->    device-crash-test and manually executed iotests.
-> 6. Unfortunately, python3-wheel and python3-setuptools are now required
->    on the host system if tests are to be executed and >=3D Python 3.13 is
->    used.
-> 7. An awful lot of deleted lines of code, and a lot fewer headaches
->    managing two nearly-identical copies of this source code. O:-)
->
-> Patches 1-5 are build system focused; they set up new pythondeps.toml,
-> mkvenv, and meson systems in preparation for relying on an external
-> qemu.qmp library, but does not yet make the switch.
->
-> Patches 6-9 are testing and CI focused; they add necessary preparation
-> steps to keep tests running happily once the in-tree qemu.qmp library is
-> removed.
->
-> Patches 10-15 are build system focused again; they implement the actual
-> switchover to the external qemu.qmp library.
->
-> v3:
->
->  - Fixed FreeBSD vm test
->  - Fixed Cirrus macOS test (Needed setuptools as a dep, "file:///" had
->    one too many forward slashes, which works fine for older
->    pip/setuptools, but was incompatibly fixed recently.)
->  - Fixed an issue that prevented installing the local python packages in
->    an offline, isolated build environment (need --no-isolated-build and
->    pip environment variable flags)
->  - Added the python3-wheel and python3-setuptools build dependencies to
->    lcitool, owing to the above issues
->  - Ensured that the $download flag (for PyPI access) from configure is
->    carried over into pytest/meson.build invocations.  This defaults to
->    "enabled", so test dependencies should not have any issue being
->    fetched on most developer workstations and build environments.
->  - Fixed several bugs in the mkvenv.py local package installation mechani=
-sm.
->  - Flags and workarounds added for installing local packages offline now
->    apply *only* to local package installations, and not "normal"
->    depspecs.
->  - Reordered patches into more logical "phases" for easier review (I
->    hope...?)
->
-> Known issues: "make check-build" still installs all of the test
-> dependencies to the pyvenv. I'm not sure if this is desired or not, but
-> I ran into problems preventing it from doing this without breaking a ton
-> of CI tests. I'll continue to investigate this, but wanted to send this
-> v3 out.
-
-I sussed it out. I *can* remove the pyvenv targets from "check-build",
-and the reason CI tests fail when I do this is because the build
-templates use NINJA=3D":", so running "make check" suppresses the meson
-dependencies. It can be rectified by setting eight of the twelve total
-occurrences of "make check-build" in our CI files to also run "make
-check-venv".
-
-It's not clear if we want this or not. It depends on what
-"check-build" semantically means. On the one hand, it doesn't do any
-prefetch for the functional tests, so you could make the argument that
-environment setup is similar. On the other hand, I think it's used
-almost exclusively by and for the CI test suite, in which case it
-running the environment setup is likely a pretty helpful/useful thing.
-It's something Thomas pointed out, but I don't feel like I have a
-strong opinion on it currently.
-
---js
-
->
-> v2:
->
->  - move "make check-venv" earlier in GitLab CI/CD pipeline, to avoid
->    re-running configure
->  - Fix functional tests not using PyPI to fetch pygdbmi package
->  - Remove pre-requisites which are now merged
->
-> --js
->
-> John Snow (15):
->   python/mkvenv: create timestamp file for each group "ensured"
->   python/mkvenv: bump 'qemu.qmp' dependency for testdeps
->   python/mkvenv: add 'checktests' and 'functests' dependency groups
->   python/mkvenv: add mechanism to install local package(s)
->   meson, mkvenv: add checktests and functests custom targets
->   tests: Use configured python to run GitLab iotests
->   tests: run "make check-venv" before running iotests
->   tests: ensure "make check-venv" is run for crash tests
->   tests/lcitool: add python3 wheel and setuptools deps for qemu
->   python: add vendored qemu.qmp package
->   meson, mkvenv: make iotests depend on checktests group
->   meson, mkvenv: make functional tests depend on functests group
->   meson, mkvenv: add qemu.git/python/qemu package to pythondeps.toml
->   tests: replace old "check-venv" target with meson target
->   python: delete qemu.qmp
->
->  meson.build                                   |    1 +
->  .gitlab-ci.d/buildtest.yml                    |   11 +-
->  .gitlab-ci.d/cirrus/freebsd-14.vars           |    2 +-
->  .gitlab-ci.d/cirrus/macos-14.vars             |    2 +-
->  python/qemu/qmp/__init__.py                   |   60 -
->  python/qemu/qmp/error.py                      |   53 -
->  python/qemu/qmp/events.py                     |  751 -----------
->  python/qemu/qmp/legacy.py                     |  339 -----
->  python/qemu/qmp/message.py                    |  217 ----
->  python/qemu/qmp/models.py                     |  146 ---
->  python/qemu/qmp/protocol.py                   | 1101 -----------------
->  python/qemu/qmp/py.typed                      |    0
->  python/qemu/qmp/qmp_client.py                 |  732 -----------
->  python/qemu/qmp/qmp_shell.py                  |  689 -----------
->  python/qemu/qmp/qmp_tui.py                    |  665 ----------
->  python/qemu/qmp/util.py                       |  150 ---
->  python/qemu/utils/qom_fuse.py                 |    1 -
->  python/scripts/mkvenv.py                      |   44 +-
->  python/scripts/vendor.py                      |    2 +
->  python/setup.cfg                              |   31 +-
->  python/tests/minreqs.txt                      |    8 +-
->  python/tests/protocol.py                      |  596 ---------
->  python/wheels/qemu_qmp-0.0.5-py3-none-any.whl |  Bin 0 -> 72263 bytes
->  pythondeps.toml                               |   13 +-
->  pyvenv/meson.build                            |   40 +
->  tests/Makefile.include                        |   25 +-
->  tests/docker/dockerfiles/alpine.docker        |    2 +
->  tests/docker/dockerfiles/centos9.docker       |    2 +
->  tests/functional/meson.build                  |    7 +-
->  tests/lcitool/projects/qemu.yml               |    2 +
->  tests/qemu-iotests/meson.build                |    2 +-
->  tests/vm/generated/freebsd.json               |    2 +
->  32 files changed, 126 insertions(+), 5570 deletions(-)
->  delete mode 100644 python/qemu/qmp/__init__.py
->  delete mode 100644 python/qemu/qmp/error.py
->  delete mode 100644 python/qemu/qmp/events.py
->  delete mode 100644 python/qemu/qmp/legacy.py
->  delete mode 100644 python/qemu/qmp/message.py
->  delete mode 100644 python/qemu/qmp/models.py
->  delete mode 100644 python/qemu/qmp/protocol.py
->  delete mode 100644 python/qemu/qmp/py.typed
->  delete mode 100644 python/qemu/qmp/qmp_client.py
->  delete mode 100644 python/qemu/qmp/qmp_shell.py
->  delete mode 100644 python/qemu/qmp/qmp_tui.py
->  delete mode 100644 python/qemu/qmp/util.py
->  delete mode 100644 python/tests/protocol.py
->  create mode 100644 python/wheels/qemu_qmp-0.0.5-py3-none-any.whl
->  create mode 100644 pyvenv/meson.build
->
-> --
-> 2.51.1
->
->
 
 
