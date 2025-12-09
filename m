@@ -4,93 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE5C2D3B7F3
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 20:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19775D3B996
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 21:01:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT4eD-0004ci-Az; Tue, 09 Dec 2025 15:49:25 -0500
+	id 1vT4p8-0006Di-BN; Tue, 09 Dec 2025 16:00:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vT4eA-0004cG-Ky
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:49:22 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
+ id 1vT4ow-0006D6-Mf; Tue, 09 Dec 2025 16:00:30 -0500
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vT4e9-00034t-8E
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:49:22 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-42e2b80ab25so2501139f8f.1
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 12:49:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765313359; x=1765918159; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+RbwJ37V3UMttIjGuPcbd1lBCkRUL+wM1bmmqBNoJL0=;
- b=DXsj5Kf/+5lKn+8kKvZmY1CgMwgwJlRyXlDGMoiSE8njkHELp/K+DK5qTP1BZ6+5+k
- DkPeAZI55h6IN/8eP/JD0cTe/pEszJSRsIwK75EFlrIaEUwzbyDIEpFndmdvcatestYO
- Gu0cmPcRTu6XOKAojO5SBpq0uAn9bpdERjBuce6//MghnkKwjnMXEswBiLIB2QtAUEQZ
- da28BChInK1RqkKQPNHZBD6iF78q9Gb2UzPkAo0itXb0Wh2ExpQZRJXL8JssFEhIiQvT
- 5CBuEEkvPdqfdcpxT6Wy8AAEb4TEY/sLj67Cj5cU0irD5cnBd+sp+et1WPePxGMXHPgl
- NtnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765313359; x=1765918159;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+RbwJ37V3UMttIjGuPcbd1lBCkRUL+wM1bmmqBNoJL0=;
- b=gmZGmZPrqoU6T6YK+75eiukcwV3jkRRAJnnag2bNQ8lQxsnEyaTr88wnVUHGYqluX8
- k9Vj266VYKABZ3YfhHBdtF3MUostrdnEpP059IM5h6ohR4LA+Mrfm1NiBN4c/d7PAiGR
- dnCJVSinSajyCH7UFU6PyuOaMy2A9ERvJrKfP9hXJ7j5PgofRjrNlyvCwBI2UkUeYrYg
- t25KEkqOefE9cZLHTOZL+XedeURn5iXut8olxxlcE+MK5e40WKslL4ZE9djA0HDdpDcw
- phb/EcCcIUIX8K/j6DD/m2Ua86eFmZEahZweiqGzwHlSTJgcHdZ5vBmh4jbyRyOAIjId
- ly+g==
-X-Gm-Message-State: AOJu0YzD+yJhZOKcmBgzc2LB9ylmIxkPBVXfv8VG47WeXx7Qfd/jvh1y
- YFcbj7kCoJeLioqGglhUIV2URJQrh+SjTwU02d4/TcnJKVKb4KqFw9h5n2OyUojmjpQ=
-X-Gm-Gg: AY/fxX6EIJQcYF8OsxNiKr18tusOhearOWEwQp2OiZ7OUINM0ttOKwjlSi7Zqgd3yw2
- zhnKhJnx+gqOcXC6YeufffNT+iaRVBHmf/wR2YDCABgdJOoU/Wl4ggqfkdZP7ee5akJ56wWxh01
- MTQBezuDtCfH1I5UKUiT9UEzGIK9h0koF1flH6dSFbBKSxPViMWb4bQB53rFS2SNt/pTeWkW6Kl
- uvd96lXUrDRf/3h/fEImJ6SO4BS4o7qHhgMa8YDf9bs4312vFTEMUOOVv+l3yqqIna9JULL9KpT
- ++VVpX119TltmU8y2DGVgBpuIcmU1gDCESlQUgkLMclkmLYqlp/4K9ymO8rpUQOPF58wzlRnJRY
- LNONfGHsKxPkPqOfaNWXLCoboxz4f6e5Kg4Nsrr1IMtf7ii/kPW0IqxuFa2m8qWtymZ4J8cb6su
- 0ODCccma1YAfa72I/bKh7XIw==
-X-Google-Smtp-Source: AGHT+IG2jA7G3mCSIOme+uaGW6fDKNwSb9PW+PVNiBsb4w5qAOJsLgG6nEhI9xuVWpeXCf3M806+Jg==
-X-Received: by 2002:a05:6000:2c11:b0:42b:3ab7:b8b8 with SMTP id
- ffacd0b85a97d-42fa39d2f5emr96548f8f.25.1765313359458; 
- Tue, 09 Dec 2025 12:49:19 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7d222506sm35873243f8f.28.2025.12.09.12.49.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Dec 2025 12:49:18 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 28BEB5F818;
- Tue, 09 Dec 2025 20:49:18 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,  Gustavo Romero <gustavo.romero@linaro.org>
-Subject: Re: [RFC PATCH-for-10.2? v2] tests/tcg: Skip syscall catchpoint
- test if pipe2() syscall not available
-In-Reply-To: <20251203143755.65535-1-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 3 Dec 2025 15:37:55
- +0100")
-References: <20251203143755.65535-1-philmd@linaro.org>
-User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Tue, 09 Dec 2025 20:49:18 +0000
-Message-ID: <87y0nbv0s1.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
+ id 1vT4ou-00058f-MY; Tue, 09 Dec 2025 16:00:30 -0500
+Received: from qemu.weilnetz.de (qemu.weilnetz.de [188.68.58.204])
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTP id D4A0CDA0755;
+ Tue, 09 Dec 2025 22:00:22 +0100 (CET)
+Authentication-Results: mail.v2201612906741603.powersrv.de; dkim=none;
+ dmarc=fail reason="No valid SPF, No valid DKIM" header.from=weilnetz.de
+ (policy=none); 
+ spf=softfail (mail.v2201612906741603.powersrv.de: 188.68.58.204 is neither
+ permitted nor denied by domain of stefan@weilnetz.de)
+ smtp.mailfrom=stefan@weilnetz.de
+Received: by qemu.weilnetz.de (Postfix, from userid 1000)
+ id ED117460023; Tue, 09 Dec 2025 22:00:17 +0100 (CET)
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
+ Stefan Weil <sw@weilnetz.de>
+Subject: [PATCH-for-10.2 v2] migration: Replace g_malloc0_n by g_new0 (fixes
+ compiler warning)
+Date: Tue,  9 Dec 2025 22:00:17 +0100
+Message-ID: <20251209210017.768535-1-sw@weilnetz.de>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Server: v2201612906741603
+X-Rspamd-Queue-Id: D4A0CDA0755
+X-Spamd-Bar: ++
+X-Spamd-Result: default: False [2.10 / 12.00]; VIOLATED_DIRECT_SPF(3.50)[];
+ BAYES_HAM(-3.00)[99.99%]; MID_CONTAINS_FROM(1.00)[];
+ FORGED_SENDER(0.30)[sw@weilnetz.de,stefan@weilnetz.de];
+ ONCE_RECEIVED(0.20)[];
+ DMARC_POLICY_SOFTFAIL(0.10)[weilnetz.de : No valid SPF, No valid
+ DKIM,quarantine,sampled_out]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_NO_TLS_LAST(0.10)[];
+ ASN(0.00)[asn:197540, ipnet:188.68.56.0/22, country:DE];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_ONE(0.00)[1];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; R_DKIM_NA(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[8];
+ FROM_NEQ_ENVFROM(0.00)[sw@weilnetz.de,stefan@weilnetz.de];
+ R_SPF_SOFTFAIL(0.00)[~all:c];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[qemu.weilnetz.de:rdns,qemu.weilnetz.de:helo]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=stefan@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,19 +83,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+This fixes a compiler error when higher warning levels are enabled:
 
-> Avoid the following errors testing i386 and ppc64:
->
->   $ make check-tcg
+../migration/postcopy-ram.c: In function ‘postcopy_temp_pages_setup’:
+../migration/postcopy-ram.c:1483:50: error: ‘g_malloc0_n’ sizes specified with ‘sizeof’ in the earlier argument and not in the later argument [-Werror=calloc-transposed-args]
+ 1483 |     mis->postcopy_tmp_pages = g_malloc0_n(sizeof(PostcopyTmpPage), channels);
+      |                                                  ^~~~~~~~~~~~~~~
+../migration/postcopy-ram.c:1483:50: note: earlier argument should specify number of elements, later size of each element
+
+Avoid also a related int/unsigned mismatch by fixing the type of
+two local variables.
+
+Signed-off-by: Stefan Weil <sw@weilnetz.de>
+---
+
+v2: Replace g_malloc0_n by g_new0.
+
+Thanks for all comments and reviews.
+
+Stefan
 
 
-what are you running on that this fails?
+ migration/postcopy-ram.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 3f98dcb6fd..8bef0192aa 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -1467,7 +1467,8 @@ retry:
+ static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
+ {
+     PostcopyTmpPage *tmp_page;
+-    int err, i, channels;
++    int err;
++    unsigned i, channels;
+     void *temp_page;
+ 
+     if (migrate_postcopy_preempt()) {
+@@ -1479,7 +1480,7 @@ static int postcopy_temp_pages_setup(MigrationIncomingState *mis)
+     }
+ 
+     channels = mis->postcopy_channels;
+-    mis->postcopy_tmp_pages = g_malloc0_n(sizeof(PostcopyTmpPage), channels);
++    mis->postcopy_tmp_pages = g_new0(PostcopyTmpPage, channels);
+ 
+     for (i = 0; i < channels; i++) {
+         tmp_page = &mis->postcopy_tmp_pages[i];
+-- 
+2.47.3
+
 
