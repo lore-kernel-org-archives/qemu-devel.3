@@ -4,120 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01588D3B980
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B98D3B7F8
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT0NE-000169-5g; Tue, 09 Dec 2025 11:15:36 -0500
+	id 1vT0QV-0002KK-5A; Tue, 09 Dec 2025 11:19:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vT0N2-00013L-OT
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:15:26 -0500
-Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vT0N0-0007Xt-HZ
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:15:24 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.54.180])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4dQkTg1J0fz5w1J;
- Tue,  9 Dec 2025 16:15:19 +0000 (UTC)
-Received: from kaod.org (37.59.142.111) by DAG8EX2.mxp5.local (172.16.2.72)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Tue, 9 Dec
- 2025 17:15:18 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-111S0052033c54e-d333-455f-bd97-a2033c44769a,
- 913B1D19E2E265D49699B36B6A33E6F0AA87D788) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <5453c8c8-f923-4d46-9b32-d6962b9eccde@kaod.org>
-Date: Tue, 9 Dec 2025 17:15:17 +0100
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vT0QC-0002JX-5W
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:18:40 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vT0QA-000887-EW
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:18:39 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-477770019e4so62250945e9.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 08:18:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1765297117; x=1765901917; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6H0gDhXCAZT7mqiN1PaLRxYNOzxfaHzV84BDnYDJz6Y=;
+ b=aw6NPr8dTuEBb0zSQYUSmYaCs2TzNaxkF3tnLAmlxC52mb3tQjCchkd1CYL28AX5dV
+ c8F07epfE0F5HW8W3TuiBSTuFWLKUlwFq2pmnsfyA3tLsys3T6AGc6EyMYO5ti8zEA86
+ OhsR8S3ujmIxzkNYBEP3qBbIc0uzYJKlGp47bIdYpzRc8x/LISQm0oqJelmPh9gKvEOK
+ jqcf47LV522Ux6btTU2ZTRsukSpJmT29tUYC/pZjGf0Hsy3oAXzX6BbTdMpI3kAm073g
+ qPLV9luJitl8buAwfvrMBRPvBU5N1Qr0d57BEH710HSEwd+EERxozVtX/ktfVjMS93MQ
+ YvZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765297117; x=1765901917;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=6H0gDhXCAZT7mqiN1PaLRxYNOzxfaHzV84BDnYDJz6Y=;
+ b=YdA/JVh8agEx/JH5yWmmARoSfGrDT8/tR+SVInPOIyOk2MxhrRu7Vo/OXKeG/ZGkOX
+ fsq4JHfw0OSjZQkvvqcHsWSIffREMDmpR18f0FnqnKF5zAHBu/DsmS844h1hMfeW0v2w
+ 0ThkaJ8Jjz0EbvJVF7/7LEHBUPF14sgI3TG3Uk4MmZrlwMDQFYTaUe+M13VpzQS/Wbhp
+ iT90geR383Bk12dgPV/s7WnlfFX8q3BYPIa1qPghHfNx/7Yn8yZAphoPkAuTxEFwFj/q
+ wbigNWmp0OZzHl3NmZMWYuLxVxKhi/6CzkLgrLm6bZDYjDAstpqRIyIshpwoYmcY83z2
+ uDUw==
+X-Gm-Message-State: AOJu0YxDz6/rzLw2cY/Fs3PAtDU+uaXZOPR0+8gGHxQLmN+XztxWFoIp
+ gRW78O7OdsqO+0H6LKxxGd6Kgjg8CUO9SqLtZBSrxoHMX58wumyttQf4httJ32i9VTY=
+X-Gm-Gg: AY/fxX53LS3XiWNZlT2zHDt9BxB0j+D825K9SchDV/qplt9LS0Qj2VdwhK25CQTJ5cS
+ 67y+ADRlPTAAr5/K1yS5lgZJYion9/9bYTBo+dp10VEggizmHErHQpB+bPvq5z47bqrWt26kSmA
+ A0rzsubf2qowGPHjfC20x+yNcbCIcfm2XVRT8dSIAebUyAEl+68g4jTSU3PDM4seX3H6fzAzMUf
+ HbQ9nK30jEs7jdkMjVxhZbJLcW7tBe+G4IIiA+StjsVwfqWXj9j3FdsGsZm44tcaz9cx6pq3uL5
+ XiuCvQauKh650Jq6/pk5MsZdARfBvYULQCNKroD5aHf+VukZm3L73sB6sRfP3eg2WrDFFBeqxDP
+ vVoJYRscfhVOPnBFbiZEpQldOtxOEEnGCNRqHTUJMUPtA5c7qviphNuth/wnrwsmz9d5m3ej8pA
+ miiCgI2cL8GWA=
+X-Google-Smtp-Source: AGHT+IFrV1WOTUSYpYaiqjN8G/lrmiyMmcm0uzW9KedfMLbdpGpUvD/LA9aaixRMwPbTZTamL5SECw==
+X-Received: by 2002:a05:6000:40da:b0:42b:3907:a38b with SMTP id
+ ffacd0b85a97d-42f89f53ad8mr13222875f8f.44.1765297116760; 
+ Tue, 09 Dec 2025 08:18:36 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42f7cbe8f85sm33364817f8f.5.2025.12.09.08.18.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 09 Dec 2025 08:18:35 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 31F6F5F818;
+ Tue, 09 Dec 2025 16:18:34 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Alex Bradbury <asb@igalia.com>
+Cc: qemu-devel@nongnu.org,  erdnaxe@crans.org,  ma.mandourr@gmail.com,
+ pierrick.bouvier@linaro.org
+Subject: Re: [PATCH v2 0/5] contrib/plugins/hotblocks: Minor bug fixes and
+ add limit argument
+In-Reply-To: <6955a4f0a032b68a2b9fb1d1b6a7b620@igalia.com> (Alex Bradbury's
+ message of "Tue, 09 Dec 2025 07:10:12 +0000")
+References: <cover.1764716538.git.asb@igalia.com>
+ <6955a4f0a032b68a2b9fb1d1b6a7b620@igalia.com>
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Tue, 09 Dec 2025 16:18:34 +0000
+Message-ID: <874ipzwrvp.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/6] hw/arm/aspeed_ast27x0: Wire SGPIO controller to
- AST2700 SoC
-To: Yubin Zou <yubinz@google.com>, <qemu-devel@nongnu.org>
-CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
- <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent
- Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Kane-Chen-AS <kane_chen@aspeedtech.com>, Nabih Estefan
- <nabihestefan@google.com>, <qemu-arm@nongnu.org>
-References: <20251209-aspeed-sgpio-v2-0-976e5f5790c2@google.com>
- <20251209-aspeed-sgpio-v2-5-976e5f5790c2@google.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20251209-aspeed-sgpio-v2-5-976e5f5790c2@google.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.111]
-X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG8EX2.mxp5.local
- (172.16.2.72)
-X-Ovh-Tracer-GUID: 0e1ef497-9897-45e1-9735-93707e4e3887
-X-Ovh-Tracer-Id: 5410793478821219134
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEzraO8sZVZrKBWf2P8+FZv+Sm9va4Xk2cnYOUkElsmfiPwMnIdvlUThoymgWogo0+wcqPve4aUo+LeH/GfOUiyEaUUElWmpiamSg1xWYIV5ThknytojrKFcg/6rLYN1Ri395nkFfov3zm76rWVU/G08+DCil3Xc2Ea5QXyGM7SL/c4BAhtWa+uwqZgpSQyyUpYOSJ9HLxv0UUQTpPChNYZuHk4d+IeN1aY+K0n2NkkoNMdvtQBgqgQ0SLXMwPhn86XWZ1rk/ZP/AtpCp3RQOc5JXbGAw76YiMhRUhnisYutuVe+JWQCeGVRkVYg2KHZVLUXk9bHT/6XjVOCdoJ68CBdA5xX059vdjwP82rjiKbiNHv8wcllx5dEbkE0rxfvzw+VXG1xL4OYlIQBNhOt3a+JWzIDNzGQocrw1opv08o06hz3tljH8O3pbb1hGWSNY9RVEL9vlON9ivyRGavOaV7silw5H6/S8o2jJnS25E3nvGuTFYqnhcK8YntyLT3s6/mQgP/Mc5zVrza7g0bBeWNIt4wrbT94cgwog7RZC20Gd/woRxM/tqZnyhU2aZ2LmdZtY80ypg3Id6oYbVL7HirUVJGgejQPx7SkcQhxsdiBCQ+vAeZAX++UE4bUZvjEIHncWn1VIslVuZYQb/jJmbK83o/9DgogdRsgclGKzkjZA
-DKIM-Signature: a=rsa-sha256; bh=D9bYEsONgClFyZ1GOcHseMgw9Z4I2U8CaMF3dnOAJzk=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1765296919; v=1;
- b=O84F1BN3W20iTrtwIqAo2g1G92DKa0SyQTB6s+2piEF2Te3KsQk3dynpJoxvQpgvp2q9GNjS
- 6YPs7qLmUQIlyvmBJ2r1jToVQqVxhY3Z+hzKQx8PTj0OHlesurK8cGkypZMGnLHrMuS11VEvMpZ
- NfrzyiWoq4Gxbiy1EWmo2KYU+9bDL7sC7zk1Atb+bzWlBSDg9rApd6apMj/qMOohSTHCjbTls97
- visT01hlGV5pKhB/rIVa+FLLMabsOLtSqcXnHlCilCEXeQhFlHeM7C2NHlPa5E6z2eshpgmG2U7
- DvSexAUjxi2MCPbSZuxFZn7ddF9mfLazwTPslptUayUkw==
-Received-SPF: pass client-ip=46.105.54.81; envelope-from=clg@kaod.org;
- helo=smtpout3.mo529.mail-out.ovh.net
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,54 +107,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/9/25 01:01, Yubin Zou wrote:
-> This commit integrates the Aspeed SGPIO controller into the AST2700
-> 
-> Signed-off-by: Yubin Zou <yubinz@google.com>
-> ---
->   hw/arm/aspeed_ast27x0.c | 16 ++++++++++++++++
->   1 file changed, 16 insertions(+)
-> 
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index e5f04bd16e80696e41005d9062a6df6d060b8088..787accadbecae376d0c747d054ec6372785375b1 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -519,6 +519,11 @@ static void aspeed_soc_ast2700_init(Object *obj)
->       snprintf(typename, sizeof(typename), "aspeed.gpio-%s", socname);
->       object_initialize_child(obj, "gpio", &s->gpio, typename);
->   
-> +    snprintf(typename, sizeof(typename), "aspeed.sgpio-%s", socname);
-> +    for (i = 0; i < sc->sgpio_num; i++) {
-> +        object_initialize_child(obj, "sgpio[*]", &s->sgpiom[i], typename);
-> +    }
-> +
->       object_initialize_child(obj, "rtc", &s->rtc, TYPE_ASPEED_RTC);
->   
->       snprintf(typename, sizeof(typename), "aspeed.sdhci-%s", socname);
-> @@ -973,6 +978,17 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
->       sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio), 0,
->                          aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_GPIO));
->   
-> +    /* SGPIO */
-> +    for (i = 0; i < sc->sgpio_num; i++) {
-> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->sgpiom[i]), errp)) {
-> +            return;
-> +        }
-> +        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(&s->sgpiom[i]), 0,
-> +                        sc->memmap[ASPEED_DEV_SGPIOM0 + i]);
-> +        sysbus_connect_irq(SYS_BUS_DEVICE(&s->sgpiom[i]), 0,
-> +                        aspeed_soc_ast2700_get_irq(s, ASPEED_DEV_SGPIOM0 + i));
-> +    }
-> +
->       /* RTC */
->       if (!sysbus_realize(SYS_BUS_DEVICE(&s->rtc), errp)) {
->           return;
-> 
+Alex Bradbury <asb@igalia.com> writes:
 
+> On 2025-12-02 23:05, Alex Bradbury wrote:
+>> This is a resend of my previous patchset which unfortunately seems not t=
+o have
+>> been applied (see
+>> <https://lore.kernel.org/qemu-devel/cover.1753857212.git.asb@igalia.com/=
+).
+>> I've rebased on current HEAD, checked it works as expected, and added
+>> Reviewed-by tags to the patches, which all received review.
+>>=20
+>> Repeating the summary from last time:
+>>=20
+>> This series contains one minor feature addition and a series of small
+>> bugfixes/improvements. The addition that motivates the submission is to =
+add a
+>> limit argument for the hotblocks plugin, allowing you to control how many
+>> blocks are printed rather than being hardcoded to the 20 most executed.
+>> Setting limit=3D0 and dumping information about all executed blocks is
+>> incredibly helpful for an analysis script I have downstream.
+>>=20
+>> This is my first contribution to QEMU. I've attempted to follow all of t=
+he
+>> guidance in the "Submitting a Patch" guide, but apologies if I missed
+>> anything.
+>>=20
+>> Alex Bradbury (5):
+>>   contrib/plugins/hotblocks: Correctly free sorted counts list
+>>   contrib/plugins/hotblocks: Fix off by one error in iteration of sorted
+>>     blocks
+>>   contrib/plugins/hotblocks: Print uint64_t with PRIu64 rather than
+>>     PRId64
+>>   docs/about/emulation: Add documentation for hotblocks plugin arguments
+>>   contrib/plugins/hotblocks: Allow limit to be set as a command line
+>>     argument
+>>=20
+>>  contrib/plugins/hotblocks.c | 20 ++++++++++++++------
+>>  docs/about/emulation.rst    | 12 ++++++++++++
+>>  2 files changed, 26 insertions(+), 6 deletions(-)
+>
+> Sending a ping as per the guidance at
+> <https://www.qemu.org/docs/master/devel/submitting-a-patch.html#if-your-p=
+atch-seems-to-have-been-ignored>,
+> and also linking to the patch on lore.kernel.org as that page suggests
+> <https://lore.kernel.org/qemu-devel/cover.1764716538.git.asb@igalia.com/>
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Sorry I missed this in v1. As we are getting very close to 10.2 getting
+out of the door I'll punt this until the tree re-opens. I have it on my
+backlog now.
 
-Thanks,
+If you want I can also cc qemu-stable if you think its worth having the
+cleanups in 10.2.1
 
-C.
+>
+> Thanks.
+>
+> Alex
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
