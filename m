@@ -4,134 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE9ACD3B7EA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 13:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC0ED3B7EA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 13:41:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSxif-0000eA-0q; Tue, 09 Dec 2025 08:25:33 -0500
+	id 1vSxx1-0006Um-Mg; Tue, 09 Dec 2025 08:40:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1vSxie-0000dx-02; Tue, 09 Dec 2025 08:25:32 -0500
-Received: from mout.kundenserver.de ([217.72.192.73])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vSxx0-0006UO-DM
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 08:40:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <laurent@vivier.eu>)
- id 1vSxib-0004e5-Rf; Tue, 09 Dec 2025 08:25:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
- s=s1-ionos; t=1765286708; x=1765891508; i=laurent@vivier.eu;
- bh=yHnwzxbKlGx0GXOjLNaYpIY9URjBWpMGxPSeSy1oIWQ=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=0o14E4FW2cMIzJsDOq9AJC2D/BUFBUk2JScsvlPqkZ28QVfUHabjqO4sbiNYlVIa
- oWLGdmzMEdlWA15aAwD0bxFZ1eTYpH5rsJuk7wsSX3kMASQG4/j5DJgKTnatlepxY
- Ipv68AE8AKqfPcfw9FbbaAZw8GeDCptJU6L0fX3g/rqBli1X6V1aEUnTuFjH5UAHZ
- AsWsstIpD3IX6Bs1Zdu61Uj/LuWGQ2ZqWTRExMH8eUa11STK5D8TtJBeO25qtLIge
- yxYf7VDS+A/jFvpeF/a+vkY+/17ym1GoxGxcN2hhA1u2jpLUEXSxaJtjHeXNMf9J8
- 0AcVQhN6zVVy9UETiw==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
- (mreue109 [213.165.67.119]) with ESMTPSA (Nemesis) id
- 1N5G1T-1wCVg90hXx-010EeW; Tue, 09 Dec 2025 14:25:08 +0100
-Message-ID: <f8c3e5e9-18e4-4b57-976a-3abf0af99c62@vivier.eu>
-Date: Tue, 9 Dec 2025 14:25:07 +0100
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vSxwy-0007pv-0v
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 08:40:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765287618;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jp8dQ4ZxweQUSaRVnb7FA1Q6RudEKmH/1SM3P4DYELc=;
+ b=i9etML8ocOnZZwppnC8vyucTl6iXyQlQhTy5ISEbR9sOrkJfOQRgKSzzNEA2d1wdN66IFc
+ 5AgSAWPktdVAa5Fr8s15CQpkZbPdqdMNbSLnW+CTgrjM2ILLZBRWWsxvyoBRLwMZ8aRPe1
+ tSXoGc4jDa/8vgZaAr4SwH2SuVg0DqQ=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-592-NOYZHu2nOCa_wfGlKU2OVw-1; Tue, 09 Dec 2025 08:40:16 -0500
+X-MC-Unique: NOYZHu2nOCa_wfGlKU2OVw-1
+X-Mimecast-MFC-AGG-ID: NOYZHu2nOCa_wfGlKU2OVw_1765287615
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-29557f43d56so70616555ad.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 05:40:16 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765287615; x=1765892415;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jp8dQ4ZxweQUSaRVnb7FA1Q6RudEKmH/1SM3P4DYELc=;
+ b=sNj0bUnQB9QRPHvsQOK0eGfs8Woz1sxX7A9pcMBdCScEcrJrPIKaF917CIdEBw9njO
+ ebr/s4FSaLvhJpQ2fAt3PgLKkYa9/7K4djfn7jHg0Cf9iNf4iNUXwrWEkDaQXCuR1/r/
+ 1QIQr+aXiJXJyfhx47jVDPT2Y1KtbjekjbZDmi72SK/be27gY9b6UgeQBdBCxuVacCKV
+ qwHOLTeCqlAUQ+CUt5q4h8vxmGe/Mr42YtsIy1tXuxepAuzRWThl8dWzkQ09OYqTcSW3
+ huQPqdcnPqt/7DazG47WfalY7ktpyeh9koDtgbT8NJoSYN4EFEtHplc1RjwpkZKdZ1/l
+ B6cA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTCjTbryJtT3Wj69s8R8WTbmsE1YP/jyCyhHyaplxY1d2w+h/+A1jlRnB2wg9Ef6Ib850APWqF/7G8@nongnu.org
+X-Gm-Message-State: AOJu0Yx3wxO0b8hvVRQ782duBv+UemADduAqTcSvrUWPhUkVZPiB3LWm
+ Uo2xRWWNKn8TtNCo7B3JaAuYGcOpneDNfco49RyJZte42tpTKym5tuqZ7EJy5e4hFkSH7KWQKOA
+ QAJfWuH71vRDV/cJqCkimLlquy3i9sKvQ+5Cl2+uCiOiJcvYjRX0giS+p
+X-Gm-Gg: AY/fxX5x0ufJRjrRGuytuYClEaQvdiqv7MXCuIISn8pMTVqLmJPX1fidNZ0U8lHUxRE
+ 8iW3vtECkXhmrdEUgC9A/5qYr0CIaD3cHMpIUfGhvQNAZKDkg4FHOWYy8qM/ziPyTgRaD7vFuxB
+ ul+UMM49wlzo9GIA6vMq8dhokxD69pIIe+6JsfpvBuTXSxtAb6htO2uWaEv5q7jd09U191LTx7v
+ woaUJTpY9ogO9VnGDFfC9/aaHAg+9GPak7PSesfZUOYSgjuwXJ0+c4lwVNH87dqWiD6Hl3oNE/p
+ f4AwxHZ+mRBMlDvQ1wWPZIixqoTueBnAP5EG0/vsWhB+aPUOQQtj42unzKLbCjDenCw7MjWwsDW
+ 2ALqv4FPi1kstt0nM8e1cuGKKArhCdaANet4U/CvRJjXaYU274O9V599/jg==
+X-Received: by 2002:a17:902:ef46:b0:298:45b1:89a1 with SMTP id
+ d9443c01a7336-29df579ea75mr96259895ad.12.1765287615369; 
+ Tue, 09 Dec 2025 05:40:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHgovf6JbaRgcrdyOawZLPYYG15lLHvkEnkaflGB5cVzB6qDj8nH8K0/5G3ygyVTA/DSBK1pA==
+X-Received: by 2002:a17:902:ef46:b0:298:45b1:89a1 with SMTP id
+ d9443c01a7336-29df579ea75mr96259575ad.12.1765287614876; 
+ Tue, 09 Dec 2025 05:40:14 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-29daeae6ae0sm156163035ad.93.2025.12.09.05.40.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Dec 2025 05:40:14 -0800 (PST)
+Message-ID: <3a23f4b5-ff63-4b63-8dd3-f0bdd250c2ac@redhat.com>
+Date: Tue, 9 Dec 2025 14:40:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2] Fix typo in documentation
-To: Stefan Weil <sw@weilnetz.de>, "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-References: <20251209125759.764296-1-sw@weilnetz.de>
-Content-Language: fr
-From: Laurent Vivier <laurent@vivier.eu>
-Autocrypt: addr=laurent@vivier.eu; keydata=
- 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
-In-Reply-To: <20251209125759.764296-1-sw@weilnetz.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:qze/zKPLUajLAxTCCWpyfglmGySvq27jK6sJGEUxhJaIA5/wSRm
- i7jvt3XOZwmoVuXShIRplSGKReI0Nk12tqIw2zKzHoXBFOM/VBvJjApFczuVqN93vb2IM4d
- n2PJyK2bp65Zpdg/xMZ9BkpHeyDzFGfDgTwWDfZGYpsIvCNBZAYXzzcY81kbBJmSLmYcGDY
- kkDcPdki/W/CMwBpuWDQw==
-UI-OutboundReport: notjunk:1;M01:P0:gAnJU17/IOc=;tel3w+RygfFDaXqCzIh0eYJFy+N
- x9gEw5AWpTuO3tu3sufncBBeRvFAdLyRre7+yNZ9Mr3wYGZCGufTX2xXZ2/QvNsd2FnkmpkY6
- XbWd1kvmAWtnL6rwQEpxuxk78k6LOYDtRGlCuG6HueR0DnuYKDmggMQ6DnsiWk1fMXPWdtk4U
- PZyoxX60wjwI/fmaPsUAy1KYM95WW4YKMeabHqYI2c38UmyvoPzvtbS6QfNjpIG+S680DOfJN
- iqBT6mwyjQhUiA6awWAjPB7Zm7EuBRx9T97QNLtsD34lI1BVrl43ZSi/RlTokGIeZ8eNts5cQ
- 9gymmriSiCVxIQrd5f3k7rnl//mT/cY12jM+zc/4KmzNlORxMGsRLx3C3GL8lmwhM9sWs3Yec
- VfK+EYowbgmw8Wvovk2FOXNpYqUu0gBOE0sAZjhr5Uj2puD22fuf0wsktwMqypIAqLJO4VVU3
- E0pkd5B6Z2QlkjhWql8EKlNrrwDCz4fYxpyco5NaEKmh0kSCgnqRvHnMSH6rbB53DI8OXunRa
- mpYsAIlRUC/4yeTBWr+M3Ylx5lybG4+dAk+Hvzpt5D/c/ozBeUoAPFD14O7WLW69rOKF16XPM
- j3xPkq+KjYOxdb3taAU/rgxBnENtLGK28EHukZ8rLrsXKyi4+KSMdw0EQAFSBHjGJ2MlWIT1m
- zz61PmoeEKv+sW1OyOsf9WLyp8fiHY7UjpTsIWYH7OSYxWxEDO9hE0ccfk586lGJo8LrGC2DC
- SC87JNGoowZi7Qldl6Lp+m6BIQnqL6FwzT5QIWkwt2Ir7iLYQTeg2pfr0zJ6ohmF42lvtdEHy
- MJZshISnFOV2+fxVF5dEepQyaIJ8Sey5HYbPaPZk+6vQr7ES1Q0SyJJyXqEHuZ57IqsWjv5oa
- vxgx8P+ERO9l5AaEcyo5h4Djy3AxsbWqtFBj3Fd9JZWJwnnsTI/Oy22Ah8dEczD/Ls1iAj+wb
- xpt5uVIF4orgZYSQ+2XvGiO2sOhKwCMLqpWLvZPM8MFZ9i2kwZueaNs7Zg5UCtL8KsT1XfWgS
- SFwIJ9GO9/FAQOU/6p47r0NpGeBVIUSwCz20UjBdLLzHR3g1jH948tajXWyRHHjP0+B7gfSiU
- 2rujJx4D9GWb7r/EbxPpOrTPqQZ5qZpCeMri/zWci8H04VKd92Z6shKa5xix8sz6Gn13e6BOs
- CHgc7PIzYM/unybtu3z9UAYf+Ouox5pZxOHn8xhGfbTHi//7GK7077ewfHzdUpvCGeyzYJHAT
- tSLbsDAns2fYBirEGdxYlq4A1U96jZYEWcLByF9dYmK2qHNe+1SZnFVHiOmg2dVHnV7qbVOPe
- ZOezCGTPa+ChL2d/JjtzKmo8nX5tiVIzLSgN4HDoT/p/affgHUH7PUpwqkk+Qzh8MziHAHtHr
- +Jc8RPfv2BC/RKRw4EPEpw/QUNjwaajCzBoPcLzKg0ssurDAg+Bd83r0l8Q5SEbEIpdD0fZOO
- eupEtlxcBC8dNk26ANocvTlrp0CrLCeA604eBBib4WOpr8Oi20Y8m9mUeiOcfrKcqGdWxxB+7
- nBzeTz4WSyFCwLI1lXiJmWUO6skpW/NrJ2oJTiLycOAnODqW3BzOfEmjvl+gGzz9oPKsO1dp2
- Abl2Nhma3//WBywv1QsA9sEqzj0V54U6RUizolS94vXlo4vYLBJL7LcYq2kqkxvO+jxgrZ8/l
- X5W8LrC0h8JlyL4qvIO0kMJdQ4aktM+5AhaKhRftzSrq1xEzCegudfRlElI22yhobDkLtFhiy
- qNgAa4piT+HqVVYtXFXAolSN1a2qscdxTAIb2XIUaqm3hqiGhzpWcPUE=
-Received-SPF: pass client-ip=217.72.192.73; envelope-from=laurent@vivier.eu;
- helo=mout.kundenserver.de
+Subject: Re: [PATCH 1/3] scripts: introduce
+ scripts/update-aarch64-sysreg-code.py
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, cohuck@redhat.com,
+ sebott@redhat.com
+Cc: maz@kernel.org
+References: <20251208163751.611186-1-eric.auger@redhat.com>
+ <20251208163751.611186-2-eric.auger@redhat.com>
+ <796814e9-62c2-44d2-bd8c-39e36f17f635@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <796814e9-62c2-44d2-bd8c-39e36f17f635@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,29 +118,236 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Le 09/12/2025 =C3=A0 13:57, Stefan Weil via a =C3=A9crit=C2=A0:
-> Signed-off-by: Stefan Weil <sw@weilnetz.de>
-> ---
->   include/hw/pci/pci.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index 6bccb25ac2..b72e484500 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -751,7 +751,7 @@ int pci_iommu_register_iotlb_notifier(PCIDevice *dev=
-, uint32_t pasid,
->  =20
->   /**
->    * pci_iommu_unregister_iotlb_notifier: unregister a notifier that has=
- been
-> - * registerd with pci_iommu_register_iotlb_notifier.
-> + * registered with pci_iommu_register_iotlb_notifier.
->    *
->    * Returns 0 on success, or a negative errno otherwise.
->    *
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Hi Philippe,
+
+On 12/9/25 1:30 PM, Philippe Mathieu-Daudé wrote:
+> On 8/12/25 17:37, Eric Auger wrote:
+>> Introduce a script that takes as input the Registers.json file
+>> delivered in the AARCHMRS Features Model downloadable from the
+>> Arm Developer A-Profile Architecture Exploration Tools page:
+>> https://developer.arm.com/Architectures/A-Profile%20Architecture#Downloads
+>>
+>> and outputs the list of ID regs in target/arm/cpu-sysregs.h.inc
+>> under the form of DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>).
+>
+> Great idea!
+>
+>>
+>> We only care about IDregs with opcodes satisfying:
+>> op0 = 3, op1 within [0, 3], crn = 0, crm within [0, 7], op2 within
+>> [0, 7]
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>
+>> ---
+>>
+>> This was tested with
+>> https://developer.arm.com/-/cdn-downloads/permalink/Exploration-Tools-OS-Machine-Readable-Data/AARCHMRS_BSD/AARCHMRS_OPENSOURCE_A_profile_FAT-2025-09_ASL0.tar.gz
+>>
+>> Discussion about undesired generated regs can be found in
+>> https://lore.kernel.org/all/CAFEAcA9OXi4v+hdBMamQv85HYp2EqxOA5=nfsdZ5E3nf8RP_pw@mail.gmail.com/
+>>
+>> ---
+>>   scripts/update-aarch64-sysreg-code.py | 133 ++++++++++++++++++++++++++
+>>   1 file changed, 133 insertions(+)
+>>   create mode 100755 scripts/update-aarch64-sysreg-code.py
+>>
+>> diff --git a/scripts/update-aarch64-sysreg-code.py
+>> b/scripts/update-aarch64-sysreg-code.py
+>> new file mode 100755
+>> index 0000000000..c7b31035d1
+>> --- /dev/null
+>> +++ b/scripts/update-aarch64-sysreg-code.py
+>> @@ -0,0 +1,133 @@
+>> +#!/usr/bin/env python3
+>> +
+>> +# This script takes as input the Registers.json file delivered in
+>> +# the AARCHMRS Features Model downloadable from the Arm Developer
+>> +# A-Profile Architecture Exploration Tools page:
+>> +#
+>> https://developer.arm.com/Architectures/A-Profile%20Architecture#Downloads
+>> +# and outputs the list of ID regs in target/arm/cpu-sysregs.h.inc
+>> +# under the form of DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>)
+>> +#
+>> +# Copyright (C) 2025 Red Hat, Inc.
+>> +#
+>> +# Authors: Eric Auger <eric.auger@redhat.com>
+>> +#
+>> +# SPDX-License-Identifier: GPL-2.0-or-later
+>> +
+>> +
+>> +import json
+>> +import os
+>> +import sys
+>> +
+>
+> [*]
+>
+>> +# returns the int value of a given @opcode for a reg @encoding
+>> +def get_opcode(encoding, opcode):
+>> +    fvalue = encoding.get(opcode)
+>> +    if fvalue:
+>> +        value = fvalue.get('value')
+>> +        if isinstance(value, str):
+>> +            value = value.strip("'")
+>> +            value = int(value,2)
+>> +            return value
+>> +    return -1
+>> +
+>> +def extract_idregs_from_registers_json(filename):
+>> +    """
+>> +    Load a Registers.json file and extract all ID registers, decode
+>> their
+>> +    opcode and dump the information in target/arm/cpu-sysregs.h.inc
+>> +
+>> +    Args:
+>> +        filename (str): The path to the Registers.json
+>> +    returns:
+>> +        idregs: list of ID regs and their encoding
+>> +    """
+>> +    if not os.path.exists(filename):
+>> +        print(f"Error: {filename} could not be found!")
+>> +        return {}
+>> +
+>> +    try:
+>> +        with open(filename, 'r') as f:
+>> +            register_data = json.load(f)
+>> +
+>> +    except json.JSONDecodeError:
+>> +        print(f"Could not decode json from '{filename}'!")
+>> +        return {}
+>> +    except Exception as e:
+>> +        print(f"Unexpected error while reading {filename}: {e}")
+>> +        return {}
+>> +
+>> +    registers = [r for r in register_data if isinstance(r, dict) and \
+>> +                r.get('_type') == 'Register']
+>> +
+>> +    idregs = {}
+>> +
+>> +    # Some regs have op code values like 000x, 001x. Anyway we don't
+>> need
+>> +    # them. Besides some regs are undesired in the generated file
+>> such as
+>> +    # CCSIDR_EL1 and CCSIDR2_EL1 which are arrays of regs. Also exclude
+>> +    # VMPIDR_EL2 and VPIDR_EL2 which are outside of the IDreg scope we
+>> +    # are interested in and are tricky to decode as their system
+>> accessor
+>> +    # refer to MPIDR_EL1/MIDR_EL1 respectively
+>> +
+>> +    skiplist = ['ALLINT', 'PM', 'S1_', 'S3_', 'SVCR', \
+>> +                'CCSIDR_EL1', 'CCSIDR2_EL1', 'VMPIDR_EL2', 'VPIDR_EL2']
+>
+> Since we might have to update this array, I'd move it (and the big
+> comment preceding) in [*].
+>
+>> +
+>> +    for register in registers:
+>> +        reg_name = register.get('name')
+>> +
+>> +        is_skipped = any(term in (reg_name or "").upper() for term
+>> in skiplist)
+>> +
+>> +        if reg_name and not is_skipped:
+>> +            accessors = register.get('accessors', [])
+>> +
+>> +            for accessor in accessors:
+>> +                type = accessor.get('_type')
+>> +                if type in ['Accessors.SystemAccessor']:
+>> +                    encoding_list = accessor.get('encoding')
+>> +
+>> +                    if isinstance(encoding_list, list) and
+>> encoding_list and \
+>> +                       isinstance(encoding_list[0], dict):
+>> +                        encoding_wrapper = encoding_list[0]
+>> +                        encoding_source =
+>> encoding_wrapper.get('encodings', \
+>> +                                                              
+>> encoding_wrapper)
+>> +
+>> +                        if isinstance(encoding_source, dict):
+>> +                                op0 = get_opcode(encoding_source,
+>> 'op0')
+>> +                                op1 = get_opcode(encoding_source,
+>> 'op1')
+>> +                                op2 = get_opcode(encoding_source,
+>> 'op2')
+>> +                                crn = get_opcode(encoding_source,
+>> 'CRn')
+>> +                                crm = get_opcode(encoding_source,
+>> 'CRm')
+>> +                                encoding_str=f"{op0} {op1} {crn}
+>> {crm} {op2}"
+>> +
+>> +                # ID regs are assumed within this scope
+>> +                if op0 == 3 and (op1 == 0 or op1 == 1 or op1 == 3)
+>> and \
+>> +                   crn == 0 and (crm >= 0 and crm <= 7) and (op2 >=
+>> 0 and op2 <= 7):
+>> +                    idregs[reg_name] = encoding_str
+>> +
+>> +    return idregs
+>> +
+>> +if __name__ == "__main__":
+>> +    # Single arg expectedr: the path to the Registers.json file
+>
+> Typo "expectedr".
+>
+>> +    if len(sys.argv) < 2:
+>> +        print("Usage: scripts/update-aarch64-sysreg-code.py
+>> <path_to_registers_json>")
+>> +        sys.exit(1)
+>> +    else:
+>> +        json_file_path = sys.argv[1]
+>> +
+>> +    extracted_registers =
+>> extract_idregs_from_registers_json(json_file_path)
+>> +
+>> +    if extracted_registers:
+>> +        output_list = extracted_registers.items()
+>> +
+>> +        # Sort by register name
+>> +        sorted_output = sorted(output_list, key=lambda item: item[0])
+>> +
+>> +        # format lines as DEF(<name>, <op0>, <op1>, <crn>, <crm>,
+>> <op2>)
+>> +        final_output = ""
+>> +        for reg_name, encoding in sorted_output:
+>> +            reformatted_encoding = encoding.replace(" ", ", ")
+>> +            final_output += f"DEF({reg_name},
+>> {reformatted_encoding})\n"
+>> +
+>> +        with open("target/arm/cpu-sysregs.h.inc", 'w') as f:
+>> +            f.write("/* SPDX-License-Identifier: BSD-3-Clause */\n\n")
+>> +            f.write("/* This file is autogenerated by ")
+>> +            f.write("scripts/update-aarch64-sysreg-code.py */\n\n")
+>> +            f.write(final_output)
+>> +        print(f"updated target/arm/cpu-sysregs.h.inc")
+>
+> Fixed string (no formating) so no need for f- prefix.
+>
+> Patch LGTM but it should have some unit test. 
+
+thank you for the review.
+
+Not sure what you mean by unit test? One solution could be to diff the
+result with former bash/awk I used to generation previously [1] but i
+guess it would be awkward to upstream the awk script we did not want in
+the first place. Otherwise we could check some random opcodes but it
+wouldn't mean the others are correct. To me the best way to validate the
+python script is to do [1] once but do not upstream that. Reviewing the
+new generated files against the previous content [3/3] is the best way
+to test the result. I mean using auto generation does not prevent from
+reviewing the generated stuff, especially because the generation is
+triggered manually as scripts/update_linux_headers.sh and should not
+happen very frequenty.
+
+Thoughts?
+
+Eric  
+
 
