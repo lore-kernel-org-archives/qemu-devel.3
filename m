@@ -4,95 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F36D3B7F8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DB9AD3B981
 	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:29:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT0Zu-000654-4g; Tue, 09 Dec 2025 11:28:42 -0500
+	id 1vT0ae-0006I8-6D; Tue, 09 Dec 2025 11:29:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vT0Zp-00063E-1t
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:28:37 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vT0Zm-0001qY-30
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:28:36 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so47744955e9.3
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 08:28:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vT0aO-0006Bb-G6
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:29:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vT0aM-0001wR-AV
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:29:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765297742;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=ZIZVD+EjJyVwQDfKOliaUgK1JCG0KzBRk/iCy52TEgo=;
+ b=fwfzpFmZxyVfrdEmhvec0oqrg/4YScMfxm3wSDHhLhBKE57LpnkK3O2USolBhzjZgCTyEL
+ ekH2m9/Q7HxfwCN4f67k1j8/rlqkGLmlFOqULp0SwbzGPOwmtIofgVwE2HBQMMuxPLHI17
+ S3aL3iyRJTjXPxOI/XlHH8iWDY2VJok=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-499-EeIWAQT8OKet-lbhcMM9Cw-1; Tue, 09 Dec 2025 11:29:01 -0500
+X-MC-Unique: EeIWAQT8OKet-lbhcMM9Cw-1
+X-Mimecast-MFC-AGG-ID: EeIWAQT8OKet-lbhcMM9Cw_1765297741
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-88233d526baso171669766d6.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 08:29:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765297712; x=1765902512; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9MkWeudNaF1+ueMET4K1nVx1b7yn/EBnoozPVJySp7c=;
- b=tiZgDmw0rOTOtUAOLgnMP6bFvSpAEN5DQ6grxa5DC09x3/mdgxwGShiwyJ6OOQp7VH
- X5Hb3IAZbe2kjd4YAwPMTOrc2Ht8ssFHGfpbv5ThqNSI1LmQ4+puMbFrIe1JxeSEJlf6
- 1wmw9PpVjl5P9AxtKisHTh3DhlCdzr2FUqdBZ7hKWsQzQ+5J3jdRq9rNOchqzFIHfYiL
- kb4uH1MuafBFULTMmOMsAUZOAUwvCKBg31fYxbvmUeLUXetZiykcAIgWbjzUctnIkH+2
- KfQN140x0mrbYHUcwFZBURObMfN5WlnxI4r2MVUVg9KXa5pUUKV9gsQWf0mj6u/+qqFj
- 1rlQ==
+ d=redhat.com; s=google; t=1765297741; x=1765902541; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZIZVD+EjJyVwQDfKOliaUgK1JCG0KzBRk/iCy52TEgo=;
+ b=Y0B7brGRC29Qsz3mDzG7tHvS48VBt0AoIHKUgzYgAPDwk0plroz+7ODLnTXepMFQR+
+ UAM4NQH4K0/9h2PfPyLcaoorZ5DjdAnVK5DTwUodXZBT33Kr/Y1+Yt15waE2zYJJ1KIp
+ sQEbs+u1kmloCJQz4hGbVD2ZzSDG87eSDMnrrXvwsivIOwrRDbMdcZPRpXjOusNU0KPu
+ +tGqxx2yDBWv9MgS/TT3Q+zwASZv6lFzGRyqseGQbbUhl0q9Ov8QjkOOshrlIwJ+/r6m
+ wLh2WCBVv8N8Z7y8Oc3EJmYx2cEHYLAmxfryeSnCzOFfXFLEl06a+8Sk1awjocY18jB3
+ TGUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765297712; x=1765902512;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9MkWeudNaF1+ueMET4K1nVx1b7yn/EBnoozPVJySp7c=;
- b=YdY4v2zXSa5v4la0cugtYiR9rbAQbr0e4HzQJ+3l33mTEv0r5MqsnR+lhwbUtec9vv
- uPa4iQLz2sBCgpFfrlqDIQZcK4ymu1srVaW8rgEmyxLwL5ZducgwMXukjjSCkfrXtWCG
- yL4GwZeumZikWtrDDHsC3zIKGv2n5cAa/jBHbK2YRiUrWniJ6EVUKN8xbYUWOws5mK4e
- tIwkdpeQBIU280NHK5WdgWMjTLYXWihCdTxm0eoc0TgYVJ44ACuVaNPTMD1EphOhOZ1L
- mmrnvVsn9nhvGLxYxp97qNnKryQnQzJ7JImu4u80WoUCy70WQV95qOZAKt626P2Vvhsi
- 0mNw==
-X-Gm-Message-State: AOJu0Ywm8TCGK+44jTm3sN1Kt6rmysloQ5r9ymS8VFM9a7pGhayT30QC
- SzBWMKBf4SQk9X+l7OtwjRJHPQRLObObO87cpHnRg35kn423Bc9Q20WubUMY+1gYHJU=
-X-Gm-Gg: ASbGncv3OnmucjIbjTn3vwXPQL6ig3yixD+by3+P9ePcx/5ZpC/ok5kZ6ZnttgdMGLi
- 4i8P5oudHbR6R+Ff1uoLdTRK2cRJBrZk2BRU/rAa5YCTTACRAT4lCIENwVTCs+8CQcUrCzlOCdo
- 5UIc/kXF2AwdS+xkV6PbdtxsThwMmpKacktFKuXuXTNAnaNzE/kynXXQDidY8zxLSsM7JAOsdv4
- wzjP4Jb0VChioAc2X6UuivNDsQM//1pVPYkLyWJcUlOBjLyqXwLUp1ApWekQpO5oAJJ2MZCsYId
- 0FgJMYAyaNdp/cNn8En1shchOeHLBGqTLlJKV88OLfZ//sV6Y7gHiAd2XaUEw1dXNirybRqPRS5
- rYHB6w/8pvO4+AlaZs9JWh0j2zZ2QWE44dBIkmuybnqrSQd287gk+FKKxmdMsO92022K4e/OOqC
- mt/AjU3oNlnIk=
-X-Google-Smtp-Source: AGHT+IGxj5qL4dAdq8gjsJooMyKaQa8qm0BY/qriP3S63OtC4Pz5SBwI8PRpXAYGaa5Z6m4qd1IeaQ==
-X-Received: by 2002:a05:600c:a48:b0:479:2a0b:180d with SMTP id
- 5b1f17b1804b1-47939dff030mr106092415e9.11.1765297711973; 
- Tue, 09 Dec 2025 08:28:31 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7cbe90fdsm31011912f8f.3.2025.12.09.08.28.30
+ d=1e100.net; s=20230601; t=1765297741; x=1765902541;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZIZVD+EjJyVwQDfKOliaUgK1JCG0KzBRk/iCy52TEgo=;
+ b=fL/SNX92fkIcvREkOwJAsRbOQjaXR0jnAoerWXyZ5kY81r1XMeRjTfcUjy+I7rPclm
+ bBQAIMIG3v6RJsZuMsShtzsJ8OePpsZCqSxSe2aCQ757kbjME4aSaVQinTu4G2pEucv+
+ C3viT+viZ1yQ32NBy8tILSNmxTkyiOITQ7Sox9qQOX6aIcBr5/tKpL9wSn2XHEGpBjYD
+ 0zmuWmigprpnwWo4b1s0BFaBBs64CfTX412nKtdA/YGcbZrSeJbBEYn4VkSC4SMDsslb
+ 97Fbyn+WNGE/n6wHynXP7fUrEVr84YY6MjyUG2Qb6sI9nMAIby1oOFWnOiXMXzfnEbnd
+ o6GA==
+X-Gm-Message-State: AOJu0YxVO6PQKeEZOVO8eifRVm0uzLEvBxJEyM29YvZe2BRqAk2zzbCP
+ sMQmBafTXhLcTFhDvsp0Cr4XXmTRSsedCyeNHbvycdBjLPR6PwK4rx+yqKZlB31RoXw7mCoMkrT
+ wAycpDXILQSiyDvKQKu1Uc+NxCgXSLPfIG3iVO9lMyK54oZUK9jF6jOn62DK9LgHIKkNuY0+sGG
+ 00Uzae2tiXIcLuS2xb75ALMg5mfL3ttS9kg9imxw==
+X-Gm-Gg: AY/fxX5gTdHi70OyW6hYwOeNWjPOhP/6AfU+w2VVnlszj43ohAsXb1o1SkbYxIYU78H
+ NrXCZ2ZSlR6OLhDASIMnibwiWjzgsoaNZH+L8VlNuh3MHRSvsGh+2g8Z/crhp96U6KVDG+ktoOI
+ z0pPTW3Uqyu26sve6GR8y1W+BlVDP3z/4/Ngg9yoq9zD5VBFfM9en0387v9O8N8o4RSyYGwONlL
+ rWLrb4XBnsqOSDnziwgRFkl91LOogtcKoFVsqg+3013O7/uTm4ttXCCQOQL1deT/ISXqBMz+Wcf
+ aQ2u0Zj9O8ISBHxQuHVWIc+O1/jrECRz/YIFRzy27lJFB4vJWgbA0dykE/9iua12+UbEfV7emfT
+ w+9Y=
+X-Received: by 2002:a05:6214:c4f:b0:880:4790:e61b with SMTP id
+ 6a1803df08f44-8883db618f9mr198962646d6.26.1765297740524; 
+ Tue, 09 Dec 2025 08:29:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFfS82XVLrH09a2OXfPJuL7K1lmO7BQ+WBF5FCc/9snispIqrY0KcGYdDbFDKIE5SkPaBw+qA==
+X-Received: by 2002:a05:6214:c4f:b0:880:4790:e61b with SMTP id
+ 6a1803df08f44-8883db618f9mr198961716d6.26.1765297739811; 
+ Tue, 09 Dec 2025 08:28:59 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-88827f334d8sm131110256d6.10.2025.12.09.08.28.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Dec 2025 08:28:30 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DD1405F87A;
- Tue, 09 Dec 2025 16:28:29 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Tue, 09 Dec 2025 08:28:59 -0800 (PST)
+From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Christian Stussak <christian.stussak@imaginary.org>,
- Alexander Graf <agraf@csgraf.de>, Mads Ynddal <mads@ynddal.dk>,
+Cc: "Dr . David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PULL 1/4] Revert "target/arm: Re-use arm_is_psci_call() in HVF"
-Date: Tue,  9 Dec 2025 16:28:26 +0000
-Message-ID: <20251209162829.1328559-2-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251209162829.1328559-1-alex.bennee@linaro.org>
-References: <20251209162829.1328559-1-alex.bennee@linaro.org>
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, peterx@redhat.com,
+ Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
+Date: Tue,  9 Dec 2025 11:28:47 -0500
+Message-ID: <20251209162857.857593-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,39 +133,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This breaks a pure HVF (--disable-tcg) build because the fallback stub
-will always report false.
+[This is an RFC series, as being marked out.  It is trying to collect
+ opinions.  It's not for merging yet]
 
-This reverts commit 4695daacc068cd0aa9a91c0063c4f2a9ec9b7ba1.
+Background
+==========
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Christian Stussak <christian.stussak@imaginary.org>
-Message-ID: <20251209092459.1058313-2-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+It all starts with machine compat properties..
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index de1e8fb8a05..70d34063df8 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1935,7 +1935,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-         break;
-     case EC_AA64_HVC:
-         cpu_synchronize_state(cpu);
--        if (arm_is_psci_call(arm_cpu, EXCP_HVC)) {
-+        if (arm_cpu->psci_conduit == QEMU_PSCI_CONDUIT_HVC) {
-             /* Do NOT advance $pc for HVC */
-             if (!hvf_handle_psci_call(cpu)) {
-                 trace_hvf_unknown_hvc(env->pc, env->xregs[0]);
-@@ -1949,7 +1949,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-         break;
-     case EC_AA64_SMC:
-         cpu_synchronize_state(cpu);
--        if (arm_is_psci_call(arm_cpu, EXCP_SMC)) {
-+        if (arm_cpu->psci_conduit == QEMU_PSCI_CONDUIT_SMC) {
-             /* Secure Monitor Call exception, we need to advance $pc */
-             advance_pc = true;
- 
+Machine compat properties are the major weapon we use currently in QEMU to
+define a proper guest ABI, so that whenever we migration a VM instance from
+whatever QEMU version1 to another QEMU version2, as long as the machine
+type is the same, logically the ABI is guaranteed, and migration should
+succeed.  If it didn't, it's a bug.
+
+These compat properties are only attached to qdev for now.  It almost
+worked.
+
+Said that, it's also not true - we already have non-qdev users of such, by
+explicitly code it up to apply the compat fields.  Please refer to the
+first patch commit message for details (meanwhile latter patches will
+convert them into a generic model).
+
+Obviously, we have demands to leverage machine compat properties even
+outside of qdev.  It can be a network backend, it can be an object (for
+example, memory backends), it can be a migration object, and more.
+
+This series tries to introduce a common root class OBJECT_COMPAT for it.  I
+didn't abuse OBJECT because I know there're too many OBJECTs that do not
+need compat properties at all.  With this design, we can also opt-in piece
+by piece on the new root class, only when needed.
+
+Class OBJECT_COMPAT
+===================
+
+This is almost OBJECT class, except that it'll also apply machine compat
+properties from anywhere.  One can refer to patch 1.
+
+Note that currently I didn't further identify the three possible source of
+object_compat_props[3] (accel, machine compat property, legacy globals).  I
+don't think it's a huge issue so far because non-qdev objects will not
+collapse with names in accel / legacy globals, due to the fact that object
+names cannot dup acorss QEMU binary.  So I kept the changeset as minimum as
+possible.  Feel free to shoot if there's concerns I overlooked.
+
+This part is done in patch 1-6.  This is the part I felt slightly more
+confident with.  Meanwhile, these will be the dependency if we want to
+e.g. allow TAP network backends to take compat properties like a virtio-net
+frontend (but likely we'll need to QOMify TAP first).  That's something for
+the future even if applicable.
+
+Export Property from QDEV
+=========================
+
+I also have patch 7-10 below for one step further beyond OBJECT_COMPAT.
+Feel free to take it even as a seperate small series to review.
+
+So far the first part will be the focus, but I still want to collect
+opinions here on this second part.  This is about exporting Property for
+non-qdev uses.  Currently, migration is the only user.
+
+In short, Property is something qdev uses internally to ultimately
+represents ObjectClass's properties hash table.  It's pretty handy to
+e.g. avoid definining accessors for object properties, setting default
+values, etc.  Then they'll be converted to Object properties at some point.
+
+Migration object currently defines all the global fields in Property and
+can use "-global migration.XXX" to allow global overrides, with almost one
+line for each property, which is efficient.
+
+This 2nd step will allow migration object to inherit from OBJECT_COMPAT too
+with almost only a few lines of changes, and keep the functionality as-is.
+
+Two other options we have:
+
+  (1) Keep migration object to be a qdev, it's still fine, even if it
+      sounds hackish.. if we want to keep "-global" working as before
+
+  (2) Inherit OBJECT_COMPAT without supporting "-global" anymore.
+
+Any comments welcomed, especially on the first half (1-6), thanks.
+
+Peter Xu (10):
+  qom: Introduce object-compat
+  qdev: Inherit from TYPE_OBJECT_COMPAT
+  hostmem: Inherit from TYPE_OBJECT_COMPAT
+  accel: Inherit from TYPE_OBJECT_COMPAT
+  confidential guest support: Inherit from TYPE_OBJECT_COMPAT
+  qom: Unexport object_apply_compat_props()
+  qdev: Pave way for exporting Property to be used in non-qdev
+  qdev: Introduce helper object_apply_globals()
+  qdev: Refactor and rename of qdev_class_add_property()
+  migration: Inherit from TYPE_OBJECT_COMPAT
+
+ include/hw/qdev-properties.h          | 11 ++++++++
+ include/qom/object.h                  |  2 +-
+ migration/migration.h                 |  2 +-
+ accel/accel-common.c                  |  2 +-
+ backends/confidential-guest-support.c |  2 +-
+ backends/hostmem.c                    |  8 +-----
+ hw/core/qdev-properties.c             | 37 +++++++++++++++++++++------
+ hw/core/qdev.c                        |  6 ++---
+ migration/migration.c                 | 31 +++++++++++-----------
+ qom/object.c                          | 16 +++++++++++-
+ system/vl.c                           |  1 -
+ target/i386/sev.c                     |  1 -
+ 12 files changed, 79 insertions(+), 40 deletions(-)
+
 -- 
-2.47.3
+2.50.1
 
 
