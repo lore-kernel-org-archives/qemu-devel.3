@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92756D3B7EA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 08:49:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCF70D3B7EA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 08:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vStOr-0005SG-PU; Tue, 09 Dec 2025 03:48:49 -0500
+	id 1vStQB-0006Ow-IL; Tue, 09 Dec 2025 03:50:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vStOq-0005S8-8x
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 03:48:48 -0500
-Received: from 4.mo552.mail-out.ovh.net ([178.33.43.201])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vStQ7-0006OV-RZ
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 03:50:08 -0500
+Received: from 6.mo552.mail-out.ovh.net ([188.165.49.222])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vStOo-0001uq-Hb
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 03:48:48 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.110.0.171])
- by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dQXYY3WXtz5yQq;
- Tue,  9 Dec 2025 08:48:01 +0000 (UTC)
-Received: from kaod.org (37.59.142.106) by DAG8EX2.mxp5.local (172.16.2.72)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vStQ4-00027h-Rd
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 03:50:06 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.37.30])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dQXb960DZz62rc;
+ Tue,  9 Dec 2025 08:49:25 +0000 (UTC)
+Received: from kaod.org (37.59.142.99) by DAG8EX2.mxp5.local (172.16.2.72)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Tue, 9 Dec
- 2025 09:47:43 +0100
+ 2025 09:49:05 +0100
 Authentication-Results: garm.ovh; auth=pass
- (GARM-106R0068e3c4547-7d82-4ad5-a6a7-b72aba9b06b0,
+ (GARM-99G003da5cfa43-2430-43e2-89c3-b7e09e364397,
  913B1D19E2E265D49699B36B6A33E6F0AA87D788) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <3457d42b-8d04-4a83-8e4a-4df9a00550ff@kaod.org>
-Date: Tue, 9 Dec 2025 09:47:43 +0100
+Message-ID: <1891c6bf-9dfd-429b-9fdd-130233a01d96@kaod.org>
+Date: Tue, 9 Dec 2025 09:49:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/18] hw/arm/aspeed: Integrate interrupt controller
- for AST1700
-To: Kane Chen <kane_chen@aspeedtech.com>, Nabih Estefan
- <nabihestefan@google.com>
+Subject: Re: [PATCH v3 17/18] hw/arm/aspeed: Attach SGPIOM device to AST1700
+ model
+To: Nabih Estefan <nabihestefan@google.com>, Kane Chen
+ <kane_chen@aspeedtech.com>
 CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
  <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
  <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
  Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>, Troy Lee
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
  <troy_lee@aspeedtech.com>
 References: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
- <20251208074436.1871180-7-kane_chen@aspeedtech.com>
- <CA+QoejWMRckxE=GQZ3T0HsjBmv8Ejjax23RATM5bE6UgQZKmog@mail.gmail.com>
- <SI6PR06MB763168690AA63E13BB37EF56F7A3A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+ <20251208074436.1871180-18-kane_chen@aspeedtech.com>
+ <CA+QoejXUfmJfuWSPndkuF=Dqu7QBJF7ACgH90Wmfshr4+3pDoA@mail.gmail.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -91,27 +90,27 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <SI6PR06MB763168690AA63E13BB37EF56F7A3A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+In-Reply-To: <CA+QoejXUfmJfuWSPndkuF=Dqu7QBJF7ACgH90Wmfshr4+3pDoA@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.106]
-X-ClientProxiedBy: DAG9EX1.mxp5.local (172.16.2.81) To DAG8EX2.mxp5.local
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.99]
+X-ClientProxiedBy: DAG1EX2.mxp5.local (172.16.2.2) To DAG8EX2.mxp5.local
  (172.16.2.72)
-X-Ovh-Tracer-GUID: 32d0ebf7-d5ba-4122-8b05-1aef89d1a280
-X-Ovh-Tracer-Id: 16298527052403280885
+X-Ovh-Tracer-GUID: dd3ea019-50cf-4250-824e-dd8173c95934
+X-Ovh-Tracer-Id: 16321326527863688181
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF/eppFH7IzujARqlMkLoB+8MP1hYv02nVYM+INDRtcMc43rqf0SV5YXhJKzqioaoSBsPXswKgbqkqh9k6LjJARn28K9diM/p350KyE4BYKT/9+CrZ3BsrffpbTwq0VmmeKI8Vg99CZQvL30WM0jU7BmbOLUbwdjEOmSQ0Eg4xntH1OZlDgKRrAXeLLF4tcnCAzqsyXUqFZGy4T7uJaWaZrXuGoKJqJKZKcdT7uFO+PPAMUftlIdbkufkdIxMfzjAaUTQEu4ssnqjAHm/BSF1oYATjOOk7KcLlX5uyCrYJcEdgq8K1bu2z4cSh8Xy9SqT4itVOYa5669+1hoTOsjW8dgwNKAt1sCkUe+rshdOpdjBT112ShFfH6w6gc2rpi/CVDOyzYQ8iQ3Vq5YB1p4mDnz15CWKnIBxXy7+hdXOOb+OwyNN2KhEqRh2Z3UYbPxQVZco/bg+ofYXeHTsDpfrDnn355x41oHczGfSzH8GdWEZ1jccN2jefoGFhJrD6h7rsXKhyVMJ45DMZfarzjYFA3i2I/kSkCgEtT3pHZEzMj5OrkB7Ff3wVRsqdXDIa4kOAMIb6oW7j0na/caF7y4qvRtaAIqkeSDpy8scT/ttX0yjKGC9fwfcIBGzdCOO//pRyg+KpCPv/P8q9N+mZPC+XPHzCouvR/ES4W2Hj3idZqVQ
-DKIM-Signature: a=rsa-sha256; bh=m7h63Vfkbsa0ciJt32eJ/ZNE89YtQ2b+nNVlhR2ysw4=; 
+X-VR-SPAMCAUSE: dmFkZTGPdOzXh3hu3M+r+bxFL2cQyV8pSOGPHAtzuOuwvORaRojDRRlwhWuWkPbc4gQPAkMUHv2BT+jHZD+UvCAFAQ7ZjZB1xhfb7FUp8wU3uOQ0U/zSnCVOVtOAa6YR5W/GVLR3WwWrryCvH58jXpoj7vXn2Bj8rioFIur6S74Lfps5u3ueOiQl1w1YyVEXJjf1RbMQ7IuI57jdgDVYOlYVYBAmssf+PBJgXGS+ahYWyYB/DETOMrymD01TFN4OBKBI1NJa+DaXkth/65GYbxKVB4pEGhn1VwW7rCK2IbMnJgMEX22MJjEEbqaeDSa7dizk3MlLN+hIwcJvTFB96/WO+evya0opFjgLUNEZuHTMR2atuxYMUURH8xaSDWw6ybv/VnfWK9xFKhWa5LxUC4lJ+77OsJ7lOeoSoqCuNSTU2ov7xbdRS9Kiy7B18JxgJbUiPt5uKgPZqThIFRix0CqxjLqfY+PkFariAF9kyAnXiTudYjebn8B6I4JDFfS+mzxps1ewnYDg2rfcPL9hPFDPybOrxbaWud8QrrMcqMNl10Uxhtm6xQaQ6K1/mMnzpgMtx5iQjaYoSK/sNiNAZcJIt7Hiwr+CbEmHWgaQVDLWRKVp/+jau3mc4Nga3SZash9ryPXq4GJ3HUF51cuKmZTebxuA3TSjgn0g2+1gktzkhLx5MQ
+DKIM-Signature: a=rsa-sha256; bh=mkEnxJR2CZAzn1z038kAmW3k26uqESjk7idDxFcFpRs=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1765270090; v=1;
- b=fllwxl+5MhspA8iS4QIKdS0QfnYIBo7BrV8rJc/Aoz8u4WLy71zbvADtUYctPPCUf8wdJmPy
- KpQdetjrFH2Mq6u3rj1X55bfQ2UlDzu0AtN0HDpP02Ha3DY/jwEQz1fxhHJAnjZZmU/GDXCkEUb
- l3nxP9HpwfEdzkJl4rJKRv1+Z/opJDg92BVg+SwYHN47NI1MTAmd0FiD3oyLSIjEpiNlJveMMkS
- 1KTcc9BN5y0Ps93fHZsDxJTnQ5v4zTLF6qyf3Dl5MSbWpPB4TskiXIlxqK/UnMx339d7w5roVPf
- YLnf9w/BQdv8YHAxGXs15BXvBQ50NudzPDpzNdeRcIyow==
-Received-SPF: pass client-ip=178.33.43.201; envelope-from=clg@kaod.org;
- helo=4.mo552.mail-out.ovh.net
+ t=1765270178; v=1;
+ b=lsbRqvGX0MOqvMzK3wdTuvfllmbGtNdZK3FGsq/+33B0MM1mUNh71N+fJBOK+rbbUTNHeKoV
+ AWBQ5sR3EngJzGhkXdafv1ZeqoIHBa6MLEiyHcijNT4dXEQsRDtyU191exc/k7G8Sxit72HBcUN
+ vF9svXz0Oi55Q6rg0RqAvoc0cm0oP+EAfjRHSGeCBGo45bTleF5tcH1egk634MQleezugfN1H21
+ VsG5OeEvzVLBJljLowz1tPmMfO17rQzXbDTlkm6qPecsjETCFsueB/fP+52drZT0p8cJkdJC3+3
+ WC/g2NzgUHtmSRqXPn7ycG+DSUf+Tu1QCVsfHH4xhE19w==
+Received-SPF: pass client-ip=188.165.49.222; envelope-from=clg@kaod.org;
+ helo=6.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,7 +118,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,30 +134,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->>>           }
->>>           sysbus_mmio_map(SYS_BUS_DEVICE(&s->ioexp[i]), 0,
->>>                           sc->memmap[ASPEED_DEV_LTPI_IO0 + i]);
->>> +
->>> +        icio = ASPEED_INTC_GET_CLASS(&a->intc[2 + i]);
+On 12/8/25 19:21, Nabih Estefan wrote:
+> On Sun, Dec 7, 2025 at 11:48 PM Kane Chen via <qemu-devel@nongnu.org> wrote:
 >>
->> I'm seeing this fail qtest locally:
->> runtime error: index 3 out of bounds for type 'AspeedINTCState[2]'
->> (aka 'struct AspeedINTCState[2]')
->> Presumably, it's because even though we use `ASPEED_INTC_NUM` to declare
->> soc->intc, it's only declaring 2 of them. Should we declare more controllers in
->> intc?
+>> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
 >>
->> Thanks,
->> Nabih
+>> Connect the SGPIOM device to AST1700 model.
+>>
+>> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+>> ---
+>>   include/hw/arm/aspeed_ast1700.h |  3 +++
+>>   hw/arm/aspeed_ast1700.c         | 20 ++++++++++++++++++++
+>>   2 files changed, 23 insertions(+)
+>>
+>> diff --git a/include/hw/arm/aspeed_ast1700.h b/include/hw/arm/aspeed_ast1700.h
+>> index 7292719dc2..490f2a3b05 100644
+>> --- a/include/hw/arm/aspeed_ast1700.h
+>> +++ b/include/hw/arm/aspeed_ast1700.h
+>> @@ -12,6 +12,7 @@
+>>   #include "hw/misc/aspeed_scu.h"
+>>   #include "hw/adc/aspeed_adc.h"
+>>   #include "hw/gpio/aspeed_gpio.h"
+>> +#include "hw/gpio/aspeed_sgpio.h"
 > 
-> The correct code segment should be:
->      icio = ASPEED_INTC_GET_CLASS(&a->intcioexp[i]);
+> As far as I can tell this depends on Yubin Zou's SGPIO series (link below)?
+> Does that mean the series looks good? Can you reply to the series
+> itself if it is?
 > 
-> Thank you for pointing this out. I will update the fix in the next patch.
-Compiling with clang also detects the problem. I merged your fix in
-my branch and the rest seems fine. Please wait a bit before resending.
+>   https://lore.kernel.org//qemu-devel/20251106-aspeed-sgpio-v1-0-b026093716fa@google.com
+
+
+Nabih, Kane, Jamin,
+
+Could you please help review Yubin's series ?
 
 Thanks,
 
 C.
+
+
+>>   #include "hw/i2c/aspeed_i2c.h"
+>>   #include "hw/misc/aspeed_ltpi.h"
+>>   #include "hw/misc/aspeed_pwm.h"
+>> @@ -19,6 +20,7 @@
+>>   #include "hw/watchdog/wdt_aspeed.h"
+>>   #include "hw/char/serial-mm.h"
+>>
+>> +#define AST1700_SGPIO_NUM            2
+>>   #define AST1700_WDT_NUM              9
+>>
+>>   #define TYPE_ASPEED_AST1700 "aspeed.ast1700"
+>> @@ -39,6 +41,7 @@ struct AspeedAST1700SoCState {
+>>       AspeedADCState adc;
+>>       AspeedSCUState scu;
+>>       AspeedGPIOState gpio;
+>> +    AspeedSGPIOState sgpiom[AST1700_SGPIO_NUM];
+>>       AspeedI2CState i2c;
+>>       AspeedPWMState pwm;
+>>       AspeedWDTState wdt[AST1700_WDT_NUM];
+>> diff --git a/hw/arm/aspeed_ast1700.c b/hw/arm/aspeed_ast1700.c
+>> index c9d7a97a80..e027ae02ad 100644
+>> --- a/hw/arm/aspeed_ast1700.c
+>> +++ b/hw/arm/aspeed_ast1700.c
+>> @@ -23,6 +23,8 @@ enum {
+>>       ASPEED_AST1700_DEV_ADC,
+>>       ASPEED_AST1700_DEV_SCU,
+>>       ASPEED_AST1700_DEV_GPIO,
+>> +    ASPEED_AST1700_DEV_SGPIOM0,
+>> +    ASPEED_AST1700_DEV_SGPIOM1,
+>>       ASPEED_AST1700_DEV_I2C,
+>>       ASPEED_AST1700_DEV_UART12,
+>>       ASPEED_AST1700_DEV_LTPI_CTRL,
+>> @@ -37,6 +39,8 @@ static const hwaddr aspeed_ast1700_io_memmap[] = {
+>>       [ASPEED_AST1700_DEV_ADC]       =  0x00C00000,
+>>       [ASPEED_AST1700_DEV_SCU]       =  0x00C02000,
+>>       [ASPEED_AST1700_DEV_GPIO]      =  0x00C0B000,
+>> +    [ASPEED_AST1700_DEV_SGPIOM0]   =  0x00C0C000,
+>> +    [ASPEED_AST1700_DEV_SGPIOM1]   =  0x00C0D000,
+>>       [ASPEED_AST1700_DEV_I2C]       =  0x00C0F000,
+>>       [ASPEED_AST1700_DEV_UART12]    =  0x00C33B00,
+>>       [ASPEED_AST1700_DEV_LTPI_CTRL] =  0x00C34000,
+>> @@ -142,6 +146,16 @@ static void aspeed_ast1700_realize(DeviceState *dev, Error **errp)
+>>                           aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_LTPI_CTRL],
+>>                           sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->ltpi), 0));
+>>
+>> +    /* SGPIOM */
+>> +    for (int i = 0; i < AST1700_SGPIO_NUM; i++) {
+>> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->sgpiom[i]), errp)) {
+>> +            return;
+>> +        }
+>> +        memory_region_add_subregion(&s->iomem,
+>> +                    aspeed_ast1700_io_memmap[ASPEED_AST1700_DEV_SGPIOM0 + i],
+>> +                    sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->sgpiom[i]), 0));
+>> +    }
+>> +
+>>       /* WDT */
+>>       for (int i = 0; i < AST1700_WDT_NUM; i++) {
+>>           AspeedWDTClass *awc = ASPEED_WDT_GET_CLASS(&s->wdt[i]);
+>> @@ -194,6 +208,12 @@ static void aspeed_ast1700_instance_init(Object *obj)
+>>       object_initialize_child(obj, "ltpi-ctrl",
+>>                               &s->ltpi, TYPE_ASPEED_LTPI);
+>>
+>> +    /* SGPIOM */
+>> +    for (int i = 0; i < AST1700_SGPIO_NUM; i++) {
+>> +        object_initialize_child(obj, "ioexp-sgpiom[*]", &s->sgpiom[i],
+>> +                                "aspeed.sgpio-ast2700");
+>> +    }
+>> +
+>>       /* WDT */
+>>       for (int i = 0; i < AST1700_WDT_NUM; i++) {
+>>           object_initialize_child(obj, "ioexp-wdt[*]",
+>> --
+>> 2.43.0
+>>
+>>
+
 
