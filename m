@@ -4,83 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD2F5D3B7EA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 15:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5DECD1CDC6
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 15:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSzJL-0004b1-6D; Tue, 09 Dec 2025 10:07:31 -0500
+	id 1vSzMX-0005eP-Ar; Tue, 09 Dec 2025 10:10:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vSzJG-0004aF-Sw
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 10:07:27 -0500
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vSzJA-0004fH-Qc
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 10:07:24 -0500
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-787c9f90eccso56507617b3.3
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 07:07:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765292838; x=1765897638; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/MAa12+YAKfOdRNkkdVjiVUhECOX7C/drD2Yci6N+mU=;
- b=NF6nZKOOs+ebat14M2BPjVgiezAx1+gs3rxAu9A0xRTDcP58jacC2v8O2VlqjjyXDh
- onWAht1XYFPYUlRfplFAC7lSKS1IcGRFM7RYQ7vV3GEihyqFurYFL+DyvgyFAJ2aJkvT
- mcs5CxOuTMz+txelXnG0cW0T/bDTI+r5sLvIWCNvS9RSJQWd/FmUtm+S2s+6Tvp1iZVt
- IMlzDpyDI22WS5IHoNuw0qhPNJvoaTMuMI0l5NnratWmOGgzsA68Qlcx5atokXh60P4d
- +OTJUT4s9x/AIfTIxRPJACN41JYAtmdCeqUnj6bOGSsbOC54i8ixPK7ZD697oSBvqkVY
- lK3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765292838; x=1765897638;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/MAa12+YAKfOdRNkkdVjiVUhECOX7C/drD2Yci6N+mU=;
- b=Gl+OZE298zRd/4qByNTOkhOsjdRs3D6eaj5d1UwzmB0CbY6k56UznKgy+jy9C7Vqb3
- 3vtYsd0c/DUxzJ6XpgP0NOWVgs49ItCRv+Aqao5+EszABZBmq4Lu0JnIwQdVwn3Plrzf
- AsxYm66howf6s2vyICLhJ+DMtvd4YAMrS9l0QxsOrKOnB8LANFtsOK1jYkXCJJbP02YN
- slmSdbOYAQBOwkqYehIGsTZEQ2K3/1fA0zK02KzrCFQeckyrJruYaFc9vBobxDoZFZcv
- SFxlrYcrrUzkXnXvmLwxeC2HfzX2SEdxp18UQgWAGt80Ez1/a2c4zCAjtZR3zm2OjtUB
- owaw==
-X-Gm-Message-State: AOJu0Ywh7dVHezcTvdCyZ0oYjPc1Qle6l3Z14wewBROZQ5m1Y2dNfXSF
- rTs2fWU5A7JSWHMl3l1d62Cf88OmtDhTgW7+ElIip7m6JL28Q19bOdaRPyr8myZ5u11/7Xqh1Ov
- 15eTLOFSCJLfmcdd7tSOv+A2caYMHikMLF4PY/St2aA==
-X-Gm-Gg: AY/fxX547f/cA8t4cDfuaoqI1PcmBBwT14lrCX5ApOFV4b2mhRohR2KZgXGGwSdpMRW
- vlWtcxhSu5/fK2DDJCiS9NjmnZwitaaNwq+fKEdHECPyQl4blJoEZSxHQ9mT4AuuFw/Q0Qwsz+M
- dqY1StuIwzhAfiFsOL/G17DQ2CdjhBVagDpClSrQznhUbEEAt+gGW4L+h2pdlR8QhzkEghQL+Vj
- IRC5RTF7Hcs56Gmip2V4/Im5vLGB7D/kHEWTXm8bwES774jfsu5nehu1MXJ9dwulEPpuBjs
-X-Google-Smtp-Source: AGHT+IHH/KzmTJU0vmFEAjY+YWQuUkIk5epBNSQYe9tUlexeDS4JQ2Qm2olnqHhxXc5bi052Yds7dwIO/y83Q5mEMvA=
-X-Received: by 2002:a53:d056:0:10b0:63e:2b26:a8ad with SMTP id
- 956f58d0204a3-6444e7b618dmr8417620d50.38.1765292835789; Tue, 09 Dec 2025
- 07:07:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vSzMM-0005dG-07
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 10:10:41 -0500
+Received: from mout.kundenserver.de ([212.227.17.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <laurent@vivier.eu>) id 1vSzMK-0005HW-5U
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 10:10:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivier.eu;
+ s=s1-ionos; t=1765293034; x=1765897834; i=laurent@vivier.eu;
+ bh=cqQOYOxCscWjbDWwEL4MyoeLurpmeTEsYMWnA1PWuOk=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
+ Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+ cc:content-transfer-encoding:content-type:date:from:message-id:
+ mime-version:reply-to:subject:to;
+ b=JCJZswuxd7RreGrFB11+rEBSCDDFrtA6+s2/mkeT21KLcARuoB5uBpwIolW7NX4w
+ 26fgEU7hDMFyBU8YIrpLeY3xM1ycRCpBFLXFh+LfsoOy6G7kY6351jerXKozC3Qx7
+ r6Qect124tB6OTjx7WzTDEe3637T+dRN9yWik2DV/tZGcl8NlMJfhf1jt7enOW3AL
+ l4SWnIkceKfTGmER+9okM+zQ0HlE3kyPwDMB57UnJL3BoXQALHq5+yKj4wkQo6wgo
+ Q22MprZQNZGut4oF16ebNuLmDytbOWo7XS3ldgbfNTWfTv1qIHmwndOgFK6THxkhi
+ 6fSzswSlP2cilTSVfQ==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.100.1] ([82.64.211.94]) by mrelayeu.kundenserver.de
+ (mreue106 [213.165.67.119]) with ESMTPSA (Nemesis) id
+ 1MA844-1vIUh13Qeg-00CLbf; Tue, 09 Dec 2025 16:10:33 +0100
+Message-ID: <e8b4738b-cc55-4441-a72a-3f022f5b96ef@vivier.eu>
+Date: Tue, 9 Dec 2025 16:10:33 +0100
 MIME-Version: 1.0
-References: <20251209150346.650473-1-clg@redhat.com>
-In-Reply-To: <20251209150346.650473-1-clg@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 9 Dec 2025 15:07:04 +0000
-X-Gm-Features: AQt7F2pBMlNAD0O-GKn3SnSt84zU_L8M9gOPXjjf4gDZhH6u9frVbQvhN0BHALE
-Message-ID: <CAFEAcA_q9LJAWu5wL4AosoHJqVLpnU6PDmJPj4U3Zfy1jh1F7w@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+From: Laurent Vivier <laurent@vivier.eu>
 Subject: Re: [PATCH] log: Fix result of strstr to 'const char *'
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <20251209150346.650473-1-clg@redhat.com>
+Content-Language: fr
+Autocrypt: addr=laurent@vivier.eu; keydata=
+ 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
+In-Reply-To: <20251209150346.650473-1-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1132.google.com
+X-Provags-ID: V03:K1:8HP/WcqcjlD1kUHkFLrLnxSxpv0cTBwHcJuCG8zf9KnopYw9xtj
+ oIs7ZiHyAtXUC2IvT2GB/4OLpSPaWkBAsPkHh22WLtNqhny6s1gZwcQPpU5DDfyiq5GVetY
+ Ssh7mF1/ThHZ9tKvRmrrteTbtpDhoGM5nqLMCkn/zobDv9HXkq3zaq/cV9MToZffJ0UpSCP
+ DxjhPWtWA+9IUej9QxxDg==
+UI-OutboundReport: notjunk:1;M01:P0:dkeRAVV0IXg=;I6AvKEHhOL9mO6utJRiZ0V8Z+6L
+ l66WnVnD05JOUTEEVXu60gYDz9e4GIfD694r4gITJxM0UQAvESTOWUFXM9fTu6OBwmb8N3c8R
+ lG6R5Aa5KOeHIck5nGL/S4n0Vd1b0DZaY1kiDGuZtmqDUF2ZoLCBZuECGBKm/duItL37HWvo7
+ /pBcFQwWeoiE87wV++Mo78ENjAyhCWIx/X179U6TtVSqlpnGUmZk9VqDVRipNr1N13wqIMkX9
+ qeBp3ui3lo5Gah+2Z3YsVJBsgoXGA/xG89m707KRe0wX8B7cTNXTxlzOjmVALITCS1SbCAlEU
+ vXd3Z+7rCFxF4mYhOc6TyStqT7GWv2riEyTxK1rFRNKQmafdus3B/P+Wtgw+0GFc9B0clz6Gh
+ iDyz69NLImyFQfPRDqlddId0POE4UagRRzaZNoXdg54iZpBKkWKEyVgE2WoOp3LVe9nk+rIa+
+ N8mytz0WE2nhcsaTkvAw8bYEJpA3si6PgIi9Vo3cICrJAGt/YLl5cP47a36aOrPM2M/fVvgVV
+ z1wTL7QY/AhnG0pr6DkSLX4q6KTXUDL7FEHQseoSEfHZK1fKOUfX9oQawNg1MP819WMvP014Z
+ fiv7SGcEJCmhuGlu0HjLdz+vHAcm+j27YgokdsG5W2E1ed7MD3Gl5fhbThE/JI2pfJrW5pw9k
+ QuVFJiPfGFViRAODAU5FIdJnlugkOcxjiD20uBUmTwR0C56gZpH5vxu0Ve8yYlqmY1mF+qKDp
+ yZuox+6UepsSyHhDtkzw2jE9PaFc6C/1cxo52QNZhBZxnSRSZ3FFKSuoBUa8Oic0CUhq8FxBG
+ 8oS3dX+8FMptERHd5PgKIUB0WvML8xsiLAWi5XBz8ZB8QQtrFlhrjtIakJSyca6AIkpR/RNqf
+ aYVVaFpM/YPTllGLCRfJwXROzUSmkW0Ah36ffV5CHftCcAwzQ+gSd/5iHuVYq1WcZRuSCPIXq
+ bFQrx16wrzvvkafYH6ee9Z5+EIxTc48yPWEBJgQQJIrDp3zi61QHpDB4nUHIcV78GgeF4OFi+
+ CnQfcuOCuaV4JxbfJygvzOwSgQKjHrnNCrJxEBmK2UW3C0CMg/W63T/Eo1tIL73iFKufiKpHy
+ dUOfQ1vSKzHO0v9PIuEIk6dGN1gfW7jmAHqHCa8d5iHeFURiYQUo3EnrT1oRn9R03ntDgb6++
+ 4yP6Al0uCa8643pzoyVXKVxRyNIISfTb4DW9luIJ0HknFzQr/838G6GPH7DvDsJy8jetxaaMC
+ eA1GzMM2z/FqF4AIZt6/n6n3NzdycBCvpGE55LHu6phuuB1O5uoAfvT8MVzVSshz+WmBcyJwr
+ XDBcn2YONLT5hxXVMXWRy/rEk8ZVJ1KL5wr2Zg3pTcnqmeOkTv+acxvHOne6T6HaimX8pCWKL
+ DIf5sdoL68EWKQGrGZgT3KOKKUCGqpU9yQZkZKQmVnIIzv4sx+LjT1TjDzkoibck/mrY1vH+Y
+ D2gCGeHl2WKOlIOGpsveIkU3d+/oqZg5Xk3qzYbtOW3ZnUZsyxmLuW/i0SGS0Bm/LzSQjmume
+ FmReEHTazpvxcKgsEpNCnBfuy5gaYVGYTvnMXZJe1D19zArdIbgMdbtl5Bdtpsqy57NzePifg
+ K/l1f4vR1eZMwEVCudCcTZLKhKkaMmvCTIjnViZuWxonfQLqtDM5qevKDTXwTulVLkux4Kqyq
+ lnTFlkXRSZNLxTbRpRGVm1YpsLCnvYj9RzA7OlQVeLU1JQ2x1/A5MPD/NTV6TnWBcMj0WmnFB
+ hXAvEk+mmSIK3NlTHGDow/pUSwYSYjd+1qEaeN/8LscM9AD7Mr6x+PM+Ql3b9iFzlsj/HnfRM
+ SBqL
+Received-SPF: pass client-ip=212.227.17.13; envelope-from=laurent@vivier.eu;
+ helo=mout.kundenserver.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,49 +148,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Dec 2025 at 15:04, C=C3=A9dric Le Goater <clg@redhat.com> wrote:
->
+On 12/9/25 16:03, C=C3=A9dric Le Goater wrote:
 > Assigning the result of strstr() to a 'char *' is unsafe since
 > strstr() returns a pointer into the original string which is a
-> read-only 'const char *' string. Newer compilers
-
-Which ones? Or does this depend on how the libc headers have
-marked up the strstr() prototype?
-
-> now complain when the
+> read-only 'const char *' string. Newer compilers now complain when the
 > result of strstr() is not a 'const char *' :
->
-> ../util/log.c:208:24: error: initialization discards =E2=80=98const=E2=80=
-=99 qualifier from pointer target type [-Werror=3Ddiscarded-qualifiers]
+>=20
+> ../util/log.c:208:24: error: initialization discards 'const' qualifier f=
+rom pointer target type [-Werror=3Ddiscarded-qualifiers]
 >   208 |         char *pidstr =3D strstr(filename, "%");
 >       |                        ^~~~~~
->
+>=20
 > Fix that.
->
+>=20
 > Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
 > ---
 >  util/log.c | 2 +-
 >  1 file changed, 1 insertion(+), 1 deletion(-)
->
+>=20
 > diff --git a/util/log.c b/util/log.c
-> index 41f78ce86b2522b8b7072c8b76d8e18603142db6..c44d66b5ce78338cf1b2cd26b=
-7503cb94d4570cb 100644
+> index 41f78ce86b2522b8b7072c8b76d8e18603142db6..c44d66b5ce78338cf1b2cd26=
+b7503cb94d4570cb 100644
 > --- a/util/log.c
 > +++ b/util/log.c
 > @@ -203,7 +203,7 @@ static ValidFilenameTemplateResult
->  valid_filename_template(const char *filename, bool per_thread, Error **e=
-rrp)
+>  valid_filename_template(const char *filename, bool per_thread, Error **=
+errp)
 >  {
 >      if (filename) {
 > -        char *pidstr =3D strstr(filename, "%");
 > +        const char *pidstr =3D strstr(filename, "%");
->
+> =20
 >          if (pidstr) {
 >              /* We only accept one %d, no other format strings */
-> --
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 
