@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1F86D3B996
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 20:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66B5ED3B7F3
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 20:06:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT3yA-0000r0-It; Tue, 09 Dec 2025 15:05:58 -0500
+	id 1vT3yq-0001tM-TV; Tue, 09 Dec 2025 15:06:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3y7-0000qi-GC
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:05:55 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3ym-0001Xa-Nu
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:06:37 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3y6-0001Hk-1n
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:05:55 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4779cb0a33fso80284935e9.0
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 12:05:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3yk-0001KV-LO
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:06:36 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-42e2ce8681eso4140445f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 12:06:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765310752; x=1765915552; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765310793; x=1765915593; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2HB3vg2EkQ9yT72tK5H3rWvhcfCnwT+b44I6/a1Vbyo=;
- b=fg6yAhiTBqJ8y75iiMJex2HCXBasvqNQRWWmqk5+JIvYzyRPjsDxuXCBV/tDyXkbrV
- n7/uCb6Cf1p3AKM1UaPsXNt4EzcCLTkS/lAXimi6EgzA2WCZxOkLYbTCnp795bEmit7O
- aPkkqXb+GmNdZGofvaAVuo8QBSnyDvnnm2Z8N+EJ3GHr4phnconNfl7NrOjq7h+U04ls
- ehjc2g5GDkmtKvdFMV0bX89zupiR7dQ3oDDsHqpzopMFmvrv6Am8sdls107Gtz9cxaMN
- whAL05FIZKuT+eQ3xOAGCpHU4sOenhPryh6WSvgPZXZbxZI8F+cudD8mci3pC7tI/Ibt
- 5MRA==
+ :reply-to; bh=ed40xnu/OysTcrDHnWWD1d+2jw+gGT2aWZVPYLkNz/4=;
+ b=qTAp7y8MjHE/3nHcR7Wm3H2K6eZEWIokdEnHPl7YJkZ2pZCVEV0/0s8mYiq7ynOaP3
+ xHh2I75NqqzLrn9WjhzWPiY1yxlqx5qKeM6cM7j/swby97y7x8Bu41dWrUuw7KGVUjg1
+ 1i8oKeddx7w4XgE40eiUVXYOEAkSEju3k3ryoPzUm3uInRbtCO1S3sC7euSrd3TPW4sY
+ qjpJxywetTBcevIvu31mzpWOOm/qfvTR3lTnyQhSKNTeTZecL3V6ZLLpZx9WM1fNaXw3
+ hvdrlU5xy4xhwBpkmghiH9ceGnzXfp20svwZPTgAFn5XXuRkcOpvbgbWuvSmeKgK1b/X
+ 6Kfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765310752; x=1765915552;
+ d=1e100.net; s=20230601; t=1765310793; x=1765915593;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2HB3vg2EkQ9yT72tK5H3rWvhcfCnwT+b44I6/a1Vbyo=;
- b=QEjwD6HD5hstdrxy1LmnndXzDUj0FRdMt2LWN8f17uGJeHv0AHcbniu3ekf/8GvZGP
- 3xHNO32lKoRHeTF17zUWHJYjooWSnkKBm+Izq5ubihdxS1bSEnX7g/fCmv9NsDC5+9eX
- dL39lTe4ERW1QEganSOswxlJDZIKgKtVWFJkNBzUWPA4/iM8ENeIHy2E+RKq1fkbTeJK
- JlkrxG4LHYlFyrAZozeQSUw8bZ+sLzreAB1RfXIJ2zv5o9OXMIXJIml33WAHt16wyTq9
- 86ZRurcvw14lR5JnHapHnogQGb5BO/818nz6tKJfm8jKsI2jpXGgA1PZDbdsCOZDXVxS
- 4Ssg==
-X-Gm-Message-State: AOJu0YwkcUS8hfO3PyzLBh9FWgnuEKfP0S3BqZNTOi8JsGL1Bd+t1ztz
- /U6PIL0vylT/KU7tRRJBC/6O0/WW4W6amYYl5aKNlKtocjFsfZfPCEjpi0w5XMUbB0/KdbHOpe4
- mvmnqKk4=
-X-Gm-Gg: ASbGncufS/a5E4RZgGp2EA8nvEj2M+76hOk03SQE2SvfD3zwH6YQqnE8yAzB2pA6MBB
- Q41jXVLCWtsUwN9tkE8r6mulGptl1aHq0HLriZ+if7/UUc5OWo2Vd56HzbwkSgahplXdiyTQi92
- Nca7/ytZ69n9npsnoMrkvwdV8XZG6GMWXQG9qTiXADPQOkgDRjJo1nXGqb+nFfgI+N4aMzTYwx7
- uLi5CCGYoCzZHx61JERcAN97kR4LkVFtLCxFtlh/X853tfx9eqACzpSuyAozovSpEHzSm734Pgg
- YCmDL582jTkGK51R3+DmA/W1Z4a1sdSw5It5+ed3HlXxUYV5a7fNj3gzXW+exivrmRSQLTPBvAL
- Y2B1xerbvLSswNm0oz2VeWZ+LMRQH0723zgan4nGqngT6SGqPxBSxoBUAFRZp2UnvocpoN/gKJI
- wGgmT2CW15fBxNxdfJ5X43V56YDt4KBlq7Q4rqTwY6k4nktvJsyULGsXrnVpOA
-X-Google-Smtp-Source: AGHT+IEa6Iw5zchbaYwHB3IBTlt38CXAVaJIpbUXld5Wl842kKXvQK8l2M9aASaA5vL2wfAMLZXBOg==
-X-Received: by 2002:a05:600c:a48:b0:477:7cac:508d with SMTP id
- 5b1f17b1804b1-47a83814829mr697825e9.16.1765310752026; 
- Tue, 09 Dec 2025 12:05:52 -0800 (PST)
+ bh=ed40xnu/OysTcrDHnWWD1d+2jw+gGT2aWZVPYLkNz/4=;
+ b=w36Xzx62Hw+QMABUPbQdD1bXSmI1eC1tCHrP+tjYACn5rK0Lbtr+dIdQglB5lNwQvn
+ OgNoZJMMg3FrnY0Trs0760l7EnqRypxdEnGuoCLk6Yn8WfUgy6V7pVAEkmh4fhY5qmk2
+ fdT8qKsjN2r0rVM6R0YAaL3D6oG+UAsAQY69RPlalC+b92qb5vjI6ncoJXMthOc5lbhm
+ xhlZcneIZPFu2vWoFvGnb2E98tLMS1N2PX/ja73DiVBPFZvf+uFZx3uU/RA3UKgebp7b
+ NM9eKYaxSjYO89qj4bxWkg42Nob7IwR34kscKPDGqgdKJjwjY0DdPo6TuICdtyQV1+n1
+ aacA==
+X-Gm-Message-State: AOJu0Yx33Fq3i6SDgC5nx1zVupkmDWPyBAYFXbjSQMPk/Mparr7rjGCV
+ HDKz73NTUvOwwCkeGdD9LGf9UgdbdGuKf7ne9FjoXp4jOepeyLoc0a05cVWMtgPAgc9sPV9KG9P
+ OMAb+wow=
+X-Gm-Gg: AY/fxX5yOSbRNuJ6H96tJy9rc0ohvaasfvkakJaMBZuQIy6MiBQnM4xvpJfDtRt4JAw
+ uSLHvdjV5uGm5cQja94qK8i7iA4PbWa7/3CcK/moP2NCBYPFJC5N/f3iBr4wbw5ypAINnLuz36W
+ 9NTrF/h/kLBVtqMYqgBUvYnpfaXo0sZdgg6r277af8x91eOLGPiHM+uKUK3AFzOxdVYd9iZEHeS
+ TDwgtUNZmjIMrlGxYolGBd3frylosD18nQAKgoAjqsn5XFwQRCt+LMC+r9W3YqmyZgYU+z4cHAT
+ a1vrSlnqABZ2BsohW2PaKRmINt4yrNFdecrIh7KK7cE9jqH0wP8lbAqDQWV5FQI6Xt7zxP+t+pf
+ WMlm4gststozKdCA2wAaAEUmUmffav9nlar5yDIIjbL73eNLKg1fq2MvnpVfDaPC9ck76lIucz9
+ QvploKRO9AKm5r6EL8vWJlaTLpfmDQsgEzIi8Bm72Px7DiBYuCZQTSpRH3yWYztVIz5CT0Gk8=
+X-Google-Smtp-Source: AGHT+IF4Vw0VQfZGYl/x0KeII0dzR5+MlpJqu4csL7uKbwZewmpHtOmFONmk2WyMhvPhBHk6bYHQmQ==
+X-Received: by 2002:a05:6000:2302:b0:42b:52c4:663a with SMTP id
+ ffacd0b85a97d-42f89f0af94mr14494971f8f.11.1765310792628; 
+ Tue, 09 Dec 2025 12:06:32 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7cbe9032sm31371921f8f.1.2025.12.09.12.05.51
+ ffacd0b85a97d-42f7cbff352sm34087145f8f.17.2025.12.09.12.06.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Dec 2025 12:05:51 -0800 (PST)
+ Tue, 09 Dec 2025 12:06:32 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/10] hw/9pfs: Correct typo
-Date: Tue,  9 Dec 2025 21:05:29 +0100
-Message-ID: <20251209200537.84097-3-philmd@linaro.org>
+Subject: [PULL 08/10] Fix const qualifier build errors with recent glibc
+Date: Tue,  9 Dec 2025 21:05:35 +0100
+Message-ID: <20251209200537.84097-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209200537.84097-1-philmd@linaro.org>
 References: <20251209200537.84097-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,32 +99,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alano Song <AlanoSong@163.com>
+From: Cédric Le Goater <clg@redhat.com>
 
-Correct comment typo in xen_9pfs_bh()
+A recent change in glibc 2.42.9000 [1] changes the return type of
+strstr() and other string functions to be 'const char *' when the
+input is a 'const char *'.
 
-Signed-off-by: Alano Song <AlanoSong@163.com>
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20251202132132.17636-1-AlanoSong@163.com>
+This breaks the build in various files with errors such as :
+
+  error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
+    208 |         char *pidstr = strstr(filename, "%");
+        |                        ^~~~~~
+
+Fix this by changing the type of the variables that store the result
+of these functions to 'const char *'.
+
+[1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20251209174328.698774-1-clg@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/9pfs/xen-9p-backend.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ backends/tpm/tpm_passthrough.c | 2 +-
+ block/vmdk.c                   | 2 +-
+ block/vvfat.c                  | 2 +-
+ gdbstub/gdbstub.c              | 2 +-
+ qga/commands-linux.c           | 7 ++++---
+ ui/ui-hmp-cmds.c               | 2 +-
+ util/log.c                     | 2 +-
+ 7 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/hw/9pfs/xen-9p-backend.c b/hw/9pfs/xen-9p-backend.c
-index 79359d911a7..ca0fff5fa9b 100644
---- a/hw/9pfs/xen-9p-backend.c
-+++ b/hw/9pfs/xen-9p-backend.c
-@@ -310,7 +310,7 @@ static void xen_9pfs_bh(void *opaque)
+diff --git a/backends/tpm/tpm_passthrough.c b/backends/tpm/tpm_passthrough.c
+index b7c7074c2aa..a9f35ab7d60 100644
+--- a/backends/tpm/tpm_passthrough.c
++++ b/backends/tpm/tpm_passthrough.c
+@@ -211,7 +211,7 @@ static size_t tpm_passthrough_get_buffer_size(TPMBackend *tb)
+ static int tpm_passthrough_open_sysfs_cancel(TPMPassthruState *tpm_pt)
+ {
+     int fd = -1;
+-    char *dev;
++    const char *dev;
+     char path[PATH_MAX];
  
- again:
-     wait = ring->co != NULL && qemu_coroutine_entered(ring->co);
--    /* paired with the smb_wmb barriers in xen_9pfs_init_in_iov_from_pdu */
-+    /* paired with the smp_wmb barriers in xen_9pfs_init_in_iov_from_pdu */
-     smp_rmb();
-     if (wait) {
-         cpu_relax();
+     if (tpm_pt->options->cancel_path) {
+diff --git a/block/vmdk.c b/block/vmdk.c
+index 3b35b63cb59..89e89cd10e3 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -1089,7 +1089,7 @@ vmdk_open_vmdk4(BlockDriverState *bs, BdrvChild *file, int flags,
+ static int vmdk_parse_description(const char *desc, const char *opt_name,
+         char *buf, int buf_size)
+ {
+-    char *opt_pos, *opt_end;
++    const char *opt_pos, *opt_end;
+     const char *end = desc + strlen(desc);
+ 
+     opt_pos = strstr(desc, opt_name);
+diff --git a/block/vvfat.c b/block/vvfat.c
+index 814796d9185..e334b9febb1 100644
+--- a/block/vvfat.c
++++ b/block/vvfat.c
+@@ -1826,7 +1826,7 @@ cluster_was_modified(BDRVVVFATState *s, uint32_t cluster_num)
+ 
+ static const char* get_basename(const char* path)
+ {
+-    char* basename = strrchr(path, '/');
++    const char *basename = strrchr(path, '/');
+     if (basename == NULL)
+         return path;
+     else
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index dd5fb5667cc..5b2fc06e58d 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -362,7 +362,7 @@ static const char *get_feature_xml(const char *p, const char **newp,
+      * qXfer:features:read:ANNEX:OFFSET,LENGTH'
+      *                     ^p    ^newp
+      */
+-    char *term = strchr(p, ':');
++    const char *term = strchr(p, ':');
+     *newp = term + 1;
+     len = term - p;
+ 
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 4a09ddc760c..c639a60a941 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -403,7 +403,8 @@ static bool build_guest_fsinfo_for_pci_dev(char const *syspath,
+     int i, offset, nhosts = 0, pcilen;
+     GuestPCIAddress *pciaddr = disk->pci_controller;
+     bool has_ata = false, has_host = false, has_tgt = false;
+-    char *p, *driver = NULL;
++    const char *p;
++    char *driver = NULL;
+     bool ret = false;
+ 
+     p = strstr(syspath, "/devices/pci");
+@@ -543,7 +544,7 @@ static bool build_guest_fsinfo_for_nonpci_virtio(char const *syspath,
+                                                  Error **errp)
+ {
+     unsigned int tgt[3];
+-    char *p;
++    const char *p;
+ 
+     if (!strstr(syspath, "/virtio") || !strstr(syspath, "/block")) {
+         g_debug("Unsupported virtio device '%s'", syspath);
+@@ -575,7 +576,7 @@ static bool build_guest_fsinfo_for_ccw_dev(char const *syspath,
+                                            Error **errp)
+ {
+     unsigned int cssid, ssid, subchno, devno;
+-    char *p;
++    const char *p;
+ 
+     p = strstr(syspath, "/devices/css");
+     if (!p || sscanf(p + 12, "%*x/%x.%x.%x/%*x.%*x.%x/",
+diff --git a/ui/ui-hmp-cmds.c b/ui/ui-hmp-cmds.c
+index 980a8bbc518..6c93d452c9c 100644
+--- a/ui/ui-hmp-cmds.c
++++ b/ui/ui-hmp-cmds.c
+@@ -418,7 +418,7 @@ err_out:
+ void sendkey_completion(ReadLineState *rs, int nb_args, const char *str)
+ {
+     int i;
+-    char *sep;
++    const char *sep;
+     size_t len;
+ 
+     if (nb_args != 2) {
+diff --git a/util/log.c b/util/log.c
+index 41f78ce86b2..c44d66b5ce7 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -203,7 +203,7 @@ static ValidFilenameTemplateResult
+ valid_filename_template(const char *filename, bool per_thread, Error **errp)
+ {
+     if (filename) {
+-        char *pidstr = strstr(filename, "%");
++        const char *pidstr = strstr(filename, "%");
+ 
+         if (pidstr) {
+             /* We only accept one %d, no other format strings */
 -- 
 2.51.0
 
