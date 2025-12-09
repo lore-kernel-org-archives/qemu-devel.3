@@ -4,90 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17851D3C918
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 14:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57D99D3C91A
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 15:06:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTLWa-0007Gn-Bl; Wed, 10 Dec 2025 09:50:40 -0500
+	id 1vTLl7-0003dz-Kr; Wed, 10 Dec 2025 10:05:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vTLWG-0007DV-8R
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:50:22 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <liu.jaloo@gmail.com>)
+ id 1vTAFV-0005i3-Mv
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 21:48:17 -0500
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1vTLWD-0003Cg-9k
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:50:19 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4779d47be12so62324665e9.2
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 06:50:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <liu.jaloo@gmail.com>)
+ id 1vTAFU-0007la-3o
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 21:48:17 -0500
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-29555415c5fso72745265ad.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 18:48:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765378214; x=1765983014; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=39pxJpy6ZHXUTQRTHCJ6qo/oQbW8XDTa4280QEI5Oos=;
- b=bH0sRNpi4/dFgwoeBb/09+S0r6lRdCAZXtOOAiLGZy2qtitDwk5aCb2MQAEU+z+8by
- Rr8WgaJbbZ5Jfg89f8p8uXHTt0VkKhR4aZMohJvEdfjhJVEVbKger/XFbPafbf+IqEog
- j6Z0wqS2D74YeLEeC+FKRDYfQATa3F0gVvcg2j9Q3/gMRVXxG+psMz37wMYTS3fxONJN
- xs01+g2PWtAUcQdgXs6wOpgR0r811l3GvuyikLaFJNRmJEAbNYM0iiJ2lS7mSa39VOUM
- oRxv0SYdbxktU0QQpsxQqqy6mHtAi3wcHYCV3/E5u6tQ2MmNgH8d9DESwJMYsFpymcW8
- Ipyw==
+ d=gmail.com; s=20230601; t=1765334894; x=1765939694; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=hMplGQ8TAlq5d2JpG55V/7VLf5BIxQHExdh5XTme4sg=;
+ b=IxGNfPEfqoiG72UaqZ6YVhsDkL1fcbToU7lIc3bQhBTKusxS1N7RbpwQcJ9km0+XSa
+ cA/BS11uByv9+1D9hcjYh1N57mG2k9emBxKuOuTJAYqOzGJQX8CkVLpGGWoxAra4UQ/n
+ uwJmmn4cF5tp58N3ugQ2jcNAipCaK/DEOJgRmsybtyfT3I/BZb+YXHQ/yg/bVCP6q7GQ
+ 6EwDjo6eglEOI4h1k9pcc4fSQMZy8OsW4Iz0pP17oQUHsZYOgJv/0hYulbB2KBk2YjZi
+ fLDFv4U5fUWPZjQ+zP+PliT7aGVWhPf9a1BxGLAYrLLibqwIJ1OloUABRtewnOSfJEx6
+ rx5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765378214; x=1765983014;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=39pxJpy6ZHXUTQRTHCJ6qo/oQbW8XDTa4280QEI5Oos=;
- b=c2g7XofS98EcjLkpI700fbtECqfBDOMKj2vybxr/gpStfyR11WK86N3ovY8+pAxKXe
- fQNZzeo/vnXLhxkmQPh0o5xqkiZRK6FD9Fth6OmMCJoGz0eZuHUFaXNAvIak2UO6oQaJ
- HJq2yVHTv0D3GJ6mrqttCC/QCVKQ397OLmgMacT5IwCUPqOALQKMQPL51lxhDGe9KLot
- OBmgC8+Eb3RgpCRnbHri+hhd250/Jb7s+qqmiLvmaoQD55dTdEsFmKmyG0J6tk6iabGP
- vlka/4FfgrB4zlR8MBtiL5tc7WpsENP5KfH9j/nm2FV9th1CmoDcr7S6wsC/zfozBNCV
- Nqtw==
-X-Gm-Message-State: AOJu0Yxy7+PZoAcHGMBP6vUZOOgIpaTpllSgL2rlvgg8dKY9INg0cM1h
- 8RHZxnO/WNVdWDvK8R35t6c+nagYOHslHTnFFX4TnC5+KmOx0NXodRvcARkfJvuXHLIX4DPZ7n5
- 8JyKK+ZU=
-X-Gm-Gg: ASbGncuBbi/YJOHN2KfDItPmbBRX9dk45Q3PucUOX3YyTUmR83zwwG9dH8uVNDvPu8C
- o72pghy8YNKbRvL/DIOTkjuThfzmh9B6WBQ9b0hmLZmgD/uBRK3UOnjctCCKpUBdhxVFXf/8xfZ
- XD9Sc+e9TU5VAbX1N7yKlXzjr1FHuR/LXfZASeyrT2FQgioY0xAHB7WuD+T5IMTMWCWf5Tk34S4
- Rr/YwiIPrqtnQWN2kNKtdLle9A0N+JNnv83u8U1oK5wboG1LUP0Aw2W2+CW6cEY/XTUsChAQntc
- CvM+1tRVl0A/flmywX/xVYv+eZNt2umQiyDL8CmBwnUq6tzZsVPA5AWVd+kOdrqvcohKCCjJR2k
- 85+5XXkYii13SeglFEVW20iGnGYx3Y38Tuj0HScZ7C885tu2JuBOplh7Zzo283sDfYLiwPFKlG4
- 38WOYsKg0VXCDUMQ==
-X-Google-Smtp-Source: AGHT+IH1enndv9zaNa8DYGZLVMXo+kLktjfddPsd9ZzDJZv+o5870wJYadATzR1+RgYf84uKt6jzPQ==
-X-Received: by 2002:a05:600c:a49:b0:477:7bca:8b2b with SMTP id
- 5b1f17b1804b1-47a83814836mr28753665e9.15.1765378213933; 
- Wed, 10 Dec 2025 06:50:13 -0800 (PST)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:62e8:705f:f7a:c7b0])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a82d7f778sm56595235e9.11.2025.12.10.06.50.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Dec 2025 06:50:13 -0800 (PST)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Wed, 10 Dec 2025 14:50:13 +0000
-Subject: [PATCH v6 3/4] target/arm/tcg/cpu64.c: Enable ASID2 for cpu_max
+ d=1e100.net; s=20230601; t=1765334894; x=1765939694;
+ h=to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hMplGQ8TAlq5d2JpG55V/7VLf5BIxQHExdh5XTme4sg=;
+ b=rc3cvqBsmwvLjdh8BHjLVYxoAorr5sxoatD1CdR8BAYLVvqxny/CAoxgGMmH2finqw
+ +ZXooFDJaNmaN3mQX/Tw66H7Rr3OnO068JUfs0gT9xZkT3xjyCEouLGVu/PXuTpZX8Ou
+ dlrcy295MbtMyQHh5tTu8dOX4Mx7apPCdhjj21ax+dSrh9fbgRvEcSGQv7ijT2BUwxsA
+ PC9O9COZL+NyIIImEq9W2CTv+wEYLxPc4vE9gY/kob4acYIxA+kXRmdr6iAtTM6+w2Bg
+ PwlxHQu25L1EQ12jPIWLk2JhizuMAPeFbRvRBtg8xCJ8qWPunJN+YJkPhz2ZXI35/nCt
+ qYbg==
+X-Gm-Message-State: AOJu0YzgFhciuTaYGB65t/LEOsGqtdyuNwyI2QrGq0HS3BDBqAiUuhWd
+ xRUiIPOuSJSKYVfwOJeXY5KHgfSTGlKbC+OsYy7A+gbQSxubm1TAHowgkY6DKCf6dd7iF8Kf5By
+ d0rJegGVW95MIHMJ7yDVcRIVCAMGzAu6FzCmYnKuatEg=
+X-Gm-Gg: ASbGnctrmaEHcHPGyi9ICayKdrdKP+wDBkC35be97kPwwL5+DVtRH1HCp1VAY5aUzrO
+ LUCSdJvfVw6sMc+0zgRjbAd2OuzBXJVnaTxo1Ydm+dm4SNJc1fHzFv5uI0lEBPEiJ8R2ZhAlur5
+ GGvhzF9UoGO/5c4vpoNQRN+7Prx5xHE28OCL8eh5nNKrQWtZZuCY6/Xczu+pxEoJ/vOvPqB1Lsd
+ 6aXHKHwjO0Dbs8sHpWvP/GYQuM/fJ5hmv47kr1RtWfYk8o1l2KPabM05v2xRWI0zirb6fu0DhNe
+ VhY585rrmE8kTAy+FaXwRWh4/to=
+X-Google-Smtp-Source: AGHT+IG6ZPLayUKo5SkMUhWASW8MGuC0pp5TqStWWtebBSedAoUQiWL4hRaJarOxnssIf7kDsJ0a2SXWVO36pcA6ziU=
+X-Received: by 2002:a05:6a20:918f:b0:366:14ac:e1d7 with SMTP id
+ adf61e73a8af0-366e31b504cmr842104637.61.1765334893654; Tue, 09 Dec 2025
+ 18:48:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251210-jmac-asid2-v6-3-d3b3acab98c7@linaro.org>
-References: <20251210-jmac-asid2-v6-0-d3b3acab98c7@linaro.org>
-In-Reply-To: <20251210-jmac-asid2-v6-0-d3b3acab98c7@linaro.org>
+From: Liu Jaloo <liu.jaloo@gmail.com>
+Date: Wed, 10 Dec 2025 02:48:03 +0800
+X-Gm-Features: AQt7F2qIcotGGyEluxsW9kUWilYLp3rskbaHV0ckDPUI_YwOM6tGCp1iPVQZths
+Message-ID: <CAOYM0N3YdrkhOXrpxE6rzk5DbLOF0GzEVaThAHxnHfQYLk+pzQ@mail.gmail.com>
+Subject: make pxerom report error
 To: qemu-devel@nongnu.org
-Cc: Jim MacArthur <jim.macarthur@linaro.org>, 
- Gustavo Romero <gustavo.romero@linaro.org>
-X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/alternative; boundary="0000000000003ef4430645900f5f"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=liu.jaloo@gmail.com; helo=mail-pl1-x631.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 10 Dec 2025 10:05:38 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,44 +90,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-docs/system/arm/emulation.rst: Add ASID2
+--0000000000003ef4430645900f5f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
----
- docs/system/arm/emulation.rst | 1 +
- target/arm/tcg/cpu64.c        | 4 ++++
- 2 files changed, 5 insertions(+)
+$ cd qemu
+$ git submodule update --init roms/ipxe
+$ cd roms
+$ make pxerom
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 31a5878a8f..3f30ea5a30 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -24,6 +24,7 @@ the following architecture extensions:
- - FEAT_AIE (Memory Attribute Index Enhancement)
- - FEAT_Armv9_Crypto (Armv9 Cryptographic Extension)
- - FEAT_ASID16 (16 bit ASID)
-+- FEAT_ASID2 (Concurrent use of two ASIDs)
- - FEAT_ATS1A (Address Translation operations that ignore stage 1 permissions)
- - FEAT_BBM at level 2 (Translation table break-before-make levels)
- - FEAT_BF16 (AArch64 BFloat16 instructions)
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 6871956382..ef4c0c8d73 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1334,6 +1334,10 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64MMFR3, AIE, 1);      /* FEAT_AIE */
-     SET_IDREG(isar, ID_AA64MMFR3, t);
- 
-+    t = GET_IDREG(isar, ID_AA64MMFR4);
-+    t = FIELD_DP64(t, ID_AA64MMFR4, ASID2, 1);    /* FEAT_ASID2 */
-+    SET_IDREG(isar, ID_AA64MMFR4, t);
-+
-     t = GET_IDREG(isar, ID_AA64ZFR0);
-     t = FIELD_DP64(t, ID_AA64ZFR0, SVEVER, 2);    /* FEAT_SVE2p1 */
-     t = FIELD_DP64(t, ID_AA64ZFR0, AES, 2);       /* FEAT_SVE_PMULL128 */
+report error like this:
 
--- 
-2.43.0
 
+> In file included from tests/bigint_test.c:38:
+> tests/bigint_test.c: In function =E2=80=98bigint_test_exec=E2=80=99:
+> tests/bigint_test.c:232:14: error: =E2=80=98result_raw=E2=80=99 may be us=
+ed uninitialized
+> [-Werror=3Dmaybe-uninitialized]
+>   232 |         ok ( memcmp ( result_raw, expected_raw,
+>       \
+>       |
+>  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>   233 |                       sizeof ( result_raw ) ) =3D=3D 0 );
+>       \
+>       |                       ~~~~~~~~~~~~~~~~~~~~~~~
+> include/ipxe/test.h:45:19: note: in definition of macro =E2=80=98okx=E2=
+=80=99
+>    45 |         test_ok ( success, file, line, #success )
+>       |                   ^~~~~~~
+> tests/bigint_test.c:232:9: note: in expansion of macro =E2=80=98ok=E2=80=
+=99
+>   232 |         ok ( memcmp ( result_raw, expected_raw,
+>       \
+>       |         ^~
+> tests/bigint_test.c:565:9: note: in expansion of macro =E2=80=98bigint_ad=
+d_ok=E2=80=99
+>   565 |         bigint_add_ok ( BIGINT ( 0x8a ),
+>       |         ^~~~~~~~~~~~~
+> In file included from tests/bigint_test.c:36:
+> include/string.h:32:19: note: by argument 1 of type =E2=80=98const void *=
+=E2=80=99 to
+> =E2=80=98memcmp=E2=80=99 declared here
+>    32 | extern int __pure memcmp ( const void *first, const void *second,
+>       |                   ^~~~~~
+> tests/bigint_test.c:213:17: note: =E2=80=98result_raw=E2=80=99 declared h=
+ere
+>   213 |         uint8_t result_raw[ sizeof ( expected_raw ) ];
+>      \
+>       |                 ^~~~~~~~~~
+> tests/bigint_test.c:565:9: note: in expansion of macro =E2=80=98bigint_ad=
+d_ok=E2=80=99
+>   565 |         bigint_add_ok ( BIGINT ( 0x8a ),
+>       |         ^~~~~~~~~~~~~
+> cc1: all warnings being treated as errors
+> make[1]: *** [Makefile.housekeeping:943: bin/bigint_test.o] Error 1
+> make[1]: Leaving directory '/home/jaloo/slackware/qemu/qemu/roms/ipxe/src=
+'
+> make: *** [Makefile:126: build-pxe-roms] Error 2
+
+--0000000000003ef4430645900f5f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>$ cd qemu</div><div>$ git submodule update --init rom=
+s/ipxe<br>$ cd roms<br>$ make pxerom</div><div><br></div><div>report error =
+like this:</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D=
+"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
+ft:1ex">In file included from tests/bigint_test.c:38:<br>tests/bigint_test.=
+c: In function =E2=80=98bigint_test_exec=E2=80=99:<br>tests/bigint_test.c:2=
+32:14: error: =E2=80=98result_raw=E2=80=99 may be used uninitialized [-Werr=
+or=3Dmaybe-uninitialized]<br>=C2=A0 232 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 ok ( =
+memcmp ( result_raw, expected_raw, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>=C2=A0 =C2=A0 =C2=A0 | =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>=C2=A0 233 | =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sizeof ( result_raw ) =
+) =3D=3D 0 ); =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 \<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~~~~~~~~~~~~~~~~~~~~~~<br>include/ipxe/=
+test.h:45:19: note: in definition of macro =E2=80=98okx=E2=80=99<br>=C2=A0 =
+=C2=A045 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 test_ok ( success, file, line, #succ=
+ess )<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 ^~~~~~~<br>tests/bigint_test.c:232:9: note: in expansi=
+on of macro =E2=80=98ok=E2=80=99<br>=C2=A0 232 | =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 ok ( memcmp ( result_raw, expected_raw, =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>=C2=A0 =C2=A0 =C2=
+=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~<br>tests/bigint_test.c:565:9: note: in=
+ expansion of macro =E2=80=98bigint_add_ok=E2=80=99<br>=C2=A0 565 | =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 bigint_add_ok ( BIGINT ( 0x8a ),<br>=C2=A0 =C2=A0 =C2=
+=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~~~~~~~~~~<br>In file included from te=
+sts/bigint_test.c:36:<br>include/string.h:32:19: note: by argument 1 of typ=
+e =E2=80=98const void *=E2=80=99 to =E2=80=98memcmp=E2=80=99 declared here<=
+br>=C2=A0 =C2=A032 | extern int __pure memcmp ( const void *first, const vo=
+id *second,<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~~~<br>tests/bigint_test.c:213:17: note: =E2=
+=80=98result_raw=E2=80=99 declared here<br>=C2=A0 213 | =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 uint8_t result_raw[ sizeof ( expected_raw ) ]; =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0\<br>=C2=A0 =C2=A0 =C2=A0 | =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~~~~~~~<br>tests=
+/bigint_test.c:565:9: note: in expansion of macro =E2=80=98bigint_add_ok=E2=
+=80=99<br>=C2=A0 565 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 bigint_add_ok ( BIGINT (=
+ 0x8a ),<br>=C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~~~~~~~~~=
+~<br>cc1: all warnings being treated as errors<br>make[1]: *** [Makefile.ho=
+usekeeping:943: bin/bigint_test.o] Error 1<br>make[1]: Leaving directory &#=
+39;/home/jaloo/slackware/qemu/qemu/roms/ipxe/src&#39;<br>make: *** [Makefil=
+e:126: build-pxe-roms] Error 2</blockquote></div>
+
+--0000000000003ef4430645900f5f--
 
