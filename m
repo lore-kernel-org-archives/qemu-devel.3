@@ -4,107 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9962AD3B7FF
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:09:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEF4BD3B981
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 16:15:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT0H5-0007mJ-R4; Tue, 09 Dec 2025 11:09:17 -0500
+	id 1vT0Mv-000120-Kc; Tue, 09 Dec 2025 11:15:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vT0Gn-0007lY-QK
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:08:58 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vT0Mu-00011e-F8
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:15:16 -0500
+Received: from 8.mo552.mail-out.ovh.net ([46.105.37.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vT0Gm-0006Lq-1N
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:08:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765296535;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1g41inXIlucCSAeLOyhD8KeeGH7HWy6ghOsq6rMsvVw=;
- b=TD/YqrAlMA+2kH5gzkY+K6nnZXLuRyI0sPfkZ9oY0QNDnh9x5DYSEx4cyUFtiPohM3euVz
- 1Jy2dHWUyVnRfnldylzcKWC59zZfpnB4qw7FK3dWqhJXGQb6kCHAkbk6FrZiAvj7lOiX8/
- p+fcORmIIG7UYLTOcdRf3gsXGedLU6o=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-oq4PCM07M6qPAak23yrgNw-1; Tue, 09 Dec 2025 11:08:51 -0500
-X-MC-Unique: oq4PCM07M6qPAak23yrgNw-1
-X-Mimecast-MFC-AGG-ID: oq4PCM07M6qPAak23yrgNw_1765296531
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8b2ea3d12fcso1265256185a.0
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 08:08:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765296531; x=1765901331;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1g41inXIlucCSAeLOyhD8KeeGH7HWy6ghOsq6rMsvVw=;
- b=qLgmpZcKhGZadFkGKOjEShfYDBLGON3F6hgoS3V8x6FD3wEUfjqsbqMhiyW5O0ANCW
- KadVM0SJd0fQzNHa0bMqneiqVIaMvD+QSSuhS/WWhHvzG8tqGljj+QGa8Q4I17HDUI0E
- p8ppCpVbniZmpVnNpyAC9hUiK8YtNVuP5RFXn7AAp3tTcBJRrL1QUpskPRNqNbq47e7H
- kYQKDjnJ8O9NdLPz6hWdOvBzXV7vJ9wv6hBZfxqzzxMh6ZjObInLNFbhBNppmF0n7L71
- QFzyZmsNQBfcmKoIh3xIREphi87bQigxtWxzybY9NgAOPxjR6UxpfRK6QXTq/xf8E3yu
- U3ZQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUr9MRk236uhanP0h/cAfWc0lmphHLpcbCTcUhxDo6AFQxvzZHg1WZPb+ubXyuHvFb3UO7d6eX/HMbX@nongnu.org
-X-Gm-Message-State: AOJu0YwJU2N48k7ZliVU+pD8ztagykX3/CInKo2dfYEwD9I9iYs6Zl81
- UptrBHlW8CX7+EX5MiYFInnnX9mdU/VRMv9yacrofZLH/+Y6pxizpthlqTIWMZseTH3AVTJ7Fpw
- pT/gLfJ5bGS68Oy3Ha4U0D9SomxXJ9zu+EG7LKGUnZ/DpGvEYCfIUDP1Z
-X-Gm-Gg: ASbGncvaEI9zwFB+x2veFbqZ8KSk40xOJ73boaxINufHeFEpeQPUxwmEnrG9qqmuLmp
- eOQeNfUsheYNsWXdGXwFSba4p3DLT++hz7z5A5i1ncaJI/NNr7oCm+uVpbb4RpZGljbcfQzqTVO
- cOF1ITK3OMUlmEqoDP4NYgkYD8TRrCxDBTMK5OXwr0JV/b9moOKj2fCQ7s2zDTZBQ2D4cN1avQ8
- BS00pyp/2gftn5rwnoRtE2qd/7fB8yDPi0Ol01z8UpDTcjRmS210xGbz0LLtaRMasg+ARI8Jv77
- Js5x+Zatg0p7/I7uqaUrw/APnGmjY2WxsZUvvodCtp8OmthkDGo5NLXDpih0Zmd8qlhiIgnbkME
- +udk2UMLtpir2GGezppeQY/WK4SM+jxcEkk4og6faM0Jv5qm7mhvqo/xGlA==
-X-Received: by 2002:a05:620a:1a9d:b0:89f:db05:1643 with SMTP id
- af79cd13be357-8b6a23f8a7cmr1686748485a.89.1765296531257; 
- Tue, 09 Dec 2025 08:08:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFBc6C9M//PYF3Nlh/NFirwmz1Fjva8biSu4TTTkEQ4JFpmzzbulftdlcArHJEaaMDyEk9DYw==
-X-Received: by 2002:a05:620a:1a9d:b0:89f:db05:1643 with SMTP id
- af79cd13be357-8b6a23f8a7cmr1686743185a.89.1765296530787; 
- Tue, 09 Dec 2025 08:08:50 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8b627a8824csm1320061185a.39.2025.12.09.08.08.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Dec 2025 08:08:50 -0800 (PST)
-Message-ID: <8a2675a8-4ab6-4775-86d9-e1e15ff0f50b@redhat.com>
-Date: Tue, 9 Dec 2025 17:08:40 +0100
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vT0Mr-0007VA-KF
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 11:15:16 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.109.254.250])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dQkTQ6c7sz5yc1;
+ Tue,  9 Dec 2025 16:15:06 +0000 (UTC)
+Received: from kaod.org (37.59.142.109) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Tue, 9 Dec
+ 2025 17:15:05 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-109S00310aea4e4-a608-4656-bbb4-c462ec044590,
+ 913B1D19E2E265D49699B36B6A33E6F0AA87D788) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <9a5fe690-92f7-4745-995d-01c93cefeef9@kaod.org>
+Date: Tue, 9 Dec 2025 17:15:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] hw/arm/smmuv3-accel: Allocate vEVENTQ for
- accelerated SMMUv3 devices
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, nathanc@nvidia.com,
- mochs@nvidia.com, jgg@nvidia.com, jonathan.cameron@huawei.com,
- zhangfei.gao@linaro.org, zhenzhong.duan@intel.com, kjaju@nvidia.com
-References: <20251204092245.5157-1-skolothumtho@nvidia.com>
- <20251204092245.5157-3-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251204092245.5157-3-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v2 4/6] hw/arm/aspeed_soc: Update Aspeed SoC to support
+ two SGPIO controllers
+To: Yubin Zou <yubinz@google.com>, <qemu-devel@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>, Laurent
+ Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Kane-Chen-AS <kane_chen@aspeedtech.com>, Nabih Estefan
+ <nabihestefan@google.com>, <qemu-arm@nongnu.org>
+References: <20251209-aspeed-sgpio-v2-0-976e5f5790c2@google.com>
+ <20251209-aspeed-sgpio-v2-4-976e5f5790c2@google.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20251209-aspeed-sgpio-v2-4-976e5f5790c2@google.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Originating-IP: [37.59.142.109]
+X-ClientProxiedBy: DAG4EX1.mxp5.local (172.16.2.31) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: 69a87645-1901-4012-bdba-d7476b68769b
+X-Ovh-Tracer-Id: 5407134303060462398
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTGAftZX6bcPL4SdPjHFTEep9w2tikCRPTmCURqZN5v7wxypUU4Ja94v7xggxJmBe3q8KHRhxhNbRJTBDPGXPNVEH9ygbLAqPq4VIpf/OXheVB8KOoqr3Uct96q83dmPuUDL70uIKf9Ui7GwMcdzRKNP6YuK12VVCN9VQbiJtdGvicdrNc77mFRS0rTpop9bgAFWLfbBlAvbiKlK0y7XgxzGT6MMcq0UywNlgX6RKLDOUc17ynUvCpEjkE2/wg4tr3oQJppTPcygJ/kyN1t6fgyk3IDRrUKn3wPnezFO4yn5vuYBHOcWYH3q6PLPV9GuV8/cO+sD1NcyMtGktiOATqhNWOQK1gxep9igDixSkpGHNH2lPoQmVCP26VitxVhy0/k7ELnoGrMVNiwL1p95NEz9UxCl5oy8L34FSRY1wfm+XVndV4k74ISEro4YHLnTa61Aij1J3SKCxYhcxSamsQLkcSYP3VZ9ujJlnjUS+iESiHgS7zHp6z26x6ai6fnEzpZDpa+JFuGauPkuvBoVUcy06URSFyA2IYOr4sESnqN2OjH4o0RtoafxEE+B/SFsj7+7uirrQXGiDA1V3j9Fmt2QcnCF/51Mb6nc9aRXWmDYcqjgjVQpyn2Dk7R20y/+K88pM2ng3hBYd9OIZnW70/MAotzZ/KVJxoFGGQzksLuKAw
+DKIM-Signature: a=rsa-sha256; bh=z6pJTSRplVAVGj0HdZusgU1Ys5KcKKt8y0RyGGzrjIw=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1765296909; v=1;
+ b=LV5Votpo1edui2nu5DkgTd9v5quB+NbLaI83yfoAIINhykKeQByps55IwDtBszsq9y3s8gh4
+ 4nQLfP9Ayp2CTbUWLkHYtr3XnGh/OgtkWvqCZt+/wlPAK63hpqi+9YQSuiAuScituU01NUyw0ZQ
+ uYm2yTeJ1iWiI4W2N06yIE/FZ/Ezq/HZoZj3Uxa0zEd8dkNc9WzTW1CGJnXmgESMVi0LcyDcWij
+ ROJGG92xhWshGD0RpTgjhngAF46wym4yAnj7jMPsYNYJo4y5tl0YS7npevLFAxgYdgdwYuReGU1
+ n/BvdjuZwGFbELwSM/nCRquwpXYCegD4T6GzyuSU2ERtg==
+Received-SPF: pass client-ip=46.105.37.156; envelope-from=clg@kaod.org;
+ helo=8.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,198 +130,180 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12/9/25 01:01, Yubin Zou wrote:
+> This commit updates the Aspeed SoC model to support two SGPIO
+> controllers, reflecting the hardware capabilities of the AST2700
+> 
+> The memory map and interrupt map are updated to include entries for
+> two SGPIO controllers (SGPIOM0 and SGPIOM1). This change is a
+> prerequisite for the full implementation of the SGPIO device model.
+> 
+> Signed-off-by: Yubin Zou <yubinz@google.com>
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
 
 
-On 12/4/25 10:22 AM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> When the guest enables the Event Queue and a vIOMMU is present, allocate a
-> vEVENTQ object so that host-side events related to the vIOMMU can be
-> received and propagated back to the guest.
->
-> For cold-plugged devices using SMMUv3 acceleration, the vIOMMU is created
-> before the guest boots. In this case, the vEVENTQ is allocated when the
-> guest writes to SMMU_CR0 and sets EVENTQEN = 1.
->
-> If no cold-plugged device exists at boot (i.e. no vIOMMU initially), the
-> vEVENTQ is allocated when a vIOMMU is created, i.e. during the first
-> device hot-plug.
->
-> Event read and propagation will be added in a later patch.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > ---
->  hw/arm/smmuv3-accel.c | 62 ++++++++++++++++++++++++++++++++++++++++++-
->  hw/arm/smmuv3-accel.h |  6 +++++
->  hw/arm/smmuv3.c       |  4 +++
->  3 files changed, 71 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index dc0f61e841..74f0be3731 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -378,6 +378,58 @@ bool smmuv3_accel_issue_inv_cmd(SMMUv3State *bs, void *cmd, SMMUDevice *sdev,
->                     sizeof(Cmd), &entry_num, cmd, errp);
->  }
->  
-> +static void smmuv3_accel_free_veventq(SMMUv3AccelState *accel)
-> +{
-> +    IOMMUFDVeventq *veventq = accel->veventq;
-> +
-> +    if (!veventq) {
-> +        return;
-> +    }
-> +    iommufd_backend_free_id(accel->viommu.iommufd, veventq->veventq_id);
-> +    g_free(veventq);
-> +    accel->veventq = NULL;
-> +}
-> +
-> +bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
-> +{
-> +    SMMUv3AccelState *accel = s->s_accel;
-> +    IOMMUFDVeventq *veventq;
-> +    uint32_t veventq_id;
-> +    uint32_t veventq_fd;
-> +
-> +    if (!accel) {
-> +        return true;
-> +    }
-> +
-> +    if (accel->veventq) {
-> +        return true;
-> +    }
-> +
-> +    /*
-> +     * Check whether the Guest has enabled the Event Queue. The queue enabled
-> +     * means EVENTQ_BASE has been programmed with a valid base address and size.
-> +     * If it’s not yet configured, return and retry later.
-The comment does not match the code nor the spec:
-
-static inline bool smmuv3_eventq_enabled(SMMUv3State *s) 
-{
-    return FIELD_EX32(s->cr[0], CR0, EVENTQEN);
-}
-
-and in 7.2.1
-
-Events are delivered into an Event queue if the queue is “writable”. The
-Event queue is writable when all of the following are true: • The queue
-is enabled, through SMMU_(*_)CR0.EVENTQEN for the Security state of the
-queue. • The queue is not full (see section 7.4 Event queue overflow
-regarding overflow). • No unacknowledged GERROR.EVENTQ_ABT_ERR condition
-exists for the queue
-
-
-> +     */
-> +    if (!smmuv3_eventq_enabled(s)) {
-> +        return true;
-> +    }
-> +
-> +    if (!iommufd_backend_alloc_veventq(accel->viommu.iommufd,
-> +                                       accel->viommu.viommu_id,
-> +                                       IOMMU_VEVENTQ_TYPE_ARM_SMMUV3,
-> +                                       1 << s->eventq.log2size, &veventq_id,
-> +                                       &veventq_fd, errp)) {
-> +        return false;
-> +    }
-> +
-> +    veventq = g_new(IOMMUFDVeventq, 1);
-> +    veventq->veventq_id = veventq_id;
-> +    veventq->veventq_fd = veventq_fd;
-> +    veventq->viommu = &accel->viommu;
-> +    accel->veventq = veventq;
-> +    return true;
-> +}
-> +
->  static bool
->  smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->                            Error **errp)
-> @@ -421,14 +473,21 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->          goto free_abort_hwpt;
->      }
->  
-> +    /* Allocate a vEVENTQ if guest has enabled event queue */
-> +    if (!smmuv3_accel_alloc_veventq(s, errp)) {
-> +        goto free_bypass_hwpt;
-> +    }
-Then why don't we do it always upon the SMMU_(*_)CR0.EVENTQEN write?
-same question for the deallocation?
-> +
->      /* Attach a HWPT based on SMMUv3 GBPA.ABORT value */
->      hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
->      if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
-> -        goto free_bypass_hwpt;
-> +        goto free_veventq;
->      }
->      s->s_accel = accel;
->      return true;
->  
-> +free_veventq:
-> +    smmuv3_accel_free_veventq(accel);
->  free_bypass_hwpt:
->      iommufd_backend_free_id(idev->iommufd, accel->bypass_hwpt_id);
->  free_abort_hwpt:
-> @@ -537,6 +596,7 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
->      trace_smmuv3_accel_unset_iommu_device(devfn, idev->devid);
->  
->      if (QLIST_EMPTY(&accel->device_list)) {
-> +        smmuv3_accel_free_veventq(accel);
->          iommufd_backend_free_id(accel->viommu.iommufd, accel->bypass_hwpt_id);
->          iommufd_backend_free_id(accel->viommu.iommufd, accel->abort_hwpt_id);
->          iommufd_backend_free_id(accel->viommu.iommufd, accel->viommu.viommu_id);
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index 2f2904d86b..7b0f585769 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -20,6 +20,7 @@
->   */
->  typedef struct SMMUv3AccelState {
->      IOMMUFDViommu viommu;
-> +    IOMMUFDVeventq *veventq;
->      uint32_t bypass_hwpt_id;
->      uint32_t abort_hwpt_id;
->      QLIST_HEAD(, SMMUv3AccelDevice) device_list;
-> @@ -48,6 +49,7 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp);
->  bool smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
->                                  Error **errp);
->  void smmuv3_accel_idr_override(SMMUv3State *s);
-> +bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp);
->  void smmuv3_accel_reset(SMMUv3State *s);
->  #else
->  static inline void smmuv3_accel_init(SMMUv3State *s)
-> @@ -78,6 +80,10 @@ smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
->  static inline void smmuv3_accel_idr_override(SMMUv3State *s)
->  {
->  }
-> +bool smmuv3_accel_alloc_veventq(SMMUv3State *s, Error **errp)
-> +{
-> +    return true;
-> +}
->  static inline void smmuv3_accel_reset(SMMUv3State *s)
->  {
->  }
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 763f069a35..ac60ca0ce7 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1602,6 +1602,10 @@ static MemTxResult smmu_writel(SMMUv3State *s, hwaddr offset,
->          s->cr0ack = data & ~SMMU_CR0_RESERVED;
->          /* in case the command queue has been enabled */
->          smmuv3_cmdq_consume(s, &local_err);
-> +        /* Allocate vEVENTQ if guest enables EventQ and vIOMMU is ready */
-> +        if (local_err == NULL) {
-> +            smmuv3_accel_alloc_veventq(s, &local_err);
-> +        }
->          break;
->      case A_CR1:
->          s->cr[1] = data;
-Thanks
-
-Eric
+>   hw/arm/aspeed_ast10x0.c     |  6 +++---
+>   hw/arm/aspeed_ast27x0.c     | 10 ++++++++++
+>   include/hw/arm/aspeed_soc.h |  8 ++++++--
+>   3 files changed, 19 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+> index 7f49c13391be0b923e317409a0fccfa741f5e658..c141cc080422579ca6b6965369d84dfbe416247b 100644
+> --- a/hw/arm/aspeed_ast10x0.c
+> +++ b/hw/arm/aspeed_ast10x0.c
+> @@ -36,7 +36,7 @@ static const hwaddr aspeed_soc_ast1030_memmap[] = {
+>       [ASPEED_DEV_ESPI]      = 0x7E6EE000,
+>       [ASPEED_DEV_SBC]       = 0x7E6F2000,
+>       [ASPEED_DEV_GPIO]      = 0x7E780000,
+> -    [ASPEED_DEV_SGPIOM]    = 0x7E780500,
+> +    [ASPEED_DEV_SGPIOM0]   = 0x7E780500,
+>       [ASPEED_DEV_TIMER1]    = 0x7E782000,
+>       [ASPEED_DEV_UART1]     = 0x7E783000,
+>       [ASPEED_DEV_UART2]     = 0x7E78D000,
+> @@ -94,7 +94,7 @@ static const int aspeed_soc_ast1030_irqmap[] = {
+>       [ASPEED_DEV_I2C]       = 110, /* 110 ~ 123 */
+>       [ASPEED_DEV_KCS]       = 138, /* 138 -> 142 */
+>       [ASPEED_DEV_UDC]       = 9,
+> -    [ASPEED_DEV_SGPIOM]    = 51,
+> +    [ASPEED_DEV_SGPIOM0]   = 51,
+>       [ASPEED_DEV_JTAG0]     = 27,
+>       [ASPEED_DEV_JTAG1]     = 53,
+>   };
+> @@ -427,7 +427,7 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
+>                                     sc->memmap[ASPEED_DEV_UDC], 0x1000);
+>       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->sgpiom),
+>                                     "aspeed.sgpiom",
+> -                                  sc->memmap[ASPEED_DEV_SGPIOM], 0x100);
+> +                                  sc->memmap[ASPEED_DEV_SGPIOM0], 0x100);
+>   
+>       aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->jtag[0]),
+>                                     "aspeed.jtag",
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index c484bcd4e22fb49faf9c16992ae2cdfd6cd82da4..e5f04bd16e80696e41005d9062a6df6d060b8088 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -69,6 +69,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+>       [ASPEED_DEV_ADC]       =  0x14C00000,
+>       [ASPEED_DEV_SCUIO]     =  0x14C02000,
+>       [ASPEED_DEV_GPIO]      =  0x14C0B000,
+> +    [ASPEED_DEV_SGPIOM0]   =  0x14C0C000,
+> +    [ASPEED_DEV_SGPIOM1]   =  0x14C0D000,
+>       [ASPEED_DEV_I2C]       =  0x14C0F000,
+>       [ASPEED_DEV_INTCIO]    =  0x14C18000,
+>       [ASPEED_DEV_PCIE_PHY2] =  0x14C1C000,
+> @@ -122,6 +124,8 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
+>       [ASPEED_DEV_KCS]       = 128,
+>       [ASPEED_DEV_ADC]       = 130,
+>       [ASPEED_DEV_GPIO]      = 130,
+> +    [ASPEED_DEV_SGPIOM0]   = 130,
+> +    [ASPEED_DEV_SGPIOM1]   = 130,
+>       [ASPEED_DEV_I2C]       = 130,
+>       [ASPEED_DEV_FMC]       = 131,
+>       [ASPEED_DEV_WDT]       = 131,
+> @@ -173,6 +177,8 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
+>       [ASPEED_DEV_I2C]       = 194,
+>       [ASPEED_DEV_ADC]       = 194,
+>       [ASPEED_DEV_GPIO]      = 194,
+> +    [ASPEED_DEV_SGPIOM0]   = 194,
+> +    [ASPEED_DEV_SGPIOM1]   = 194,
+>       [ASPEED_DEV_FMC]       = 195,
+>       [ASPEED_DEV_WDT]       = 195,
+>       [ASPEED_DEV_PWM]       = 195,
+> @@ -214,6 +220,8 @@ static const int ast2700_gic130_gic194_intcmap[] = {
+>       [ASPEED_DEV_I2C]        = 0,
+>       [ASPEED_DEV_ADC]        = 16,
+>       [ASPEED_DEV_GPIO]       = 18,
+> +    [ASPEED_DEV_SGPIOM0]    = 21,
+> +    [ASPEED_DEV_SGPIOM1]    = 24,
+>   };
+>   
+>   /* GICINT 131 */
+> @@ -1061,6 +1069,7 @@ static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, const void *data)
+>       sc->sram_size    = 0x20000;
+>       sc->pcie_num     = 0;
+>       sc->spis_num     = 3;
+> +    sc->sgpio_num    = 2;
+>       sc->ehcis_num    = 2;
+>       sc->wdts_num     = 8;
+>       sc->macs_num     = 1;
+> @@ -1089,6 +1098,7 @@ static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, const void *data)
+>       sc->sram_size    = 0x20000;
+>       sc->pcie_num     = 3;
+>       sc->spis_num     = 3;
+> +    sc->sgpio_num    = 2;
+>       sc->ehcis_num    = 4;
+>       sc->wdts_num     = 8;
+>       sc->macs_num     = 3;
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index 4b8e599f1a53bfb2e4d3196d5495cd316f799354..18ff961a38508c5df83b46e187f732d736443f20 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -32,6 +32,7 @@
+>   #include "hw/net/ftgmac100.h"
+>   #include "target/arm/cpu.h"
+>   #include "hw/gpio/aspeed_gpio.h"
+> +#include "hw/gpio/aspeed_sgpio.h"
+>   #include "hw/sd/aspeed_sdhci.h"
+>   #include "hw/usb/hcd-ehci.h"
+>   #include "qom/object.h"
+> @@ -46,6 +47,7 @@
+>   #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+>   
+>   #define ASPEED_SPIS_NUM  3
+> +#define ASPEED_SGPIO_NUM 2
+>   #define ASPEED_EHCIS_NUM 4
+>   #define ASPEED_WDTS_NUM  8
+>   #define ASPEED_CPUS_NUM  4
+> @@ -89,6 +91,7 @@ struct AspeedSoCState {
+>       AspeedMiiState mii[ASPEED_MACS_NUM];
+>       AspeedGPIOState gpio;
+>       AspeedGPIOState gpio_1_8v;
+> +    AspeedSGPIOState sgpiom[ASPEED_SGPIO_NUM];
+>       AspeedSDHCIState sdhci;
+>       AspeedSDHCIState emmc;
+>       AspeedLPCState lpc;
+> @@ -106,7 +109,6 @@ struct AspeedSoCState {
+>       UnimplementedDeviceState pwm;
+>       UnimplementedDeviceState espi;
+>       UnimplementedDeviceState udc;
+> -    UnimplementedDeviceState sgpiom;
+>       UnimplementedDeviceState ltpi;
+>       UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+>       AspeedAPB2OPBState fsi[2];
+> @@ -166,6 +168,7 @@ struct AspeedSoCClass {
+>       uint64_t secsram_size;
+>       int pcie_num;
+>       int spis_num;
+> +    int sgpio_num;
+>       int ehcis_num;
+>       int wdts_num;
+>       int macs_num;
+> @@ -221,6 +224,8 @@ enum {
+>       ASPEED_DEV_SDHCI,
+>       ASPEED_DEV_GPIO,
+>       ASPEED_DEV_GPIO_1_8V,
+> +    ASPEED_DEV_SGPIOM0,
+> +    ASPEED_DEV_SGPIOM1,
+>       ASPEED_DEV_RTC,
+>       ASPEED_DEV_TIMER1,
+>       ASPEED_DEV_TIMER2,
+> @@ -263,7 +268,6 @@ enum {
+>       ASPEED_DEV_I3C,
+>       ASPEED_DEV_ESPI,
+>       ASPEED_DEV_UDC,
+> -    ASPEED_DEV_SGPIOM,
+>       ASPEED_DEV_JTAG0,
+>       ASPEED_DEV_JTAG1,
+>       ASPEED_DEV_FSI1,
+> 
 
 
