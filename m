@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39EEED3B992
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 19:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2596D3B992
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 20:06:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT3oP-0007bv-GR; Tue, 09 Dec 2025 14:55:53 -0500
+	id 1vT3xx-0000op-54; Tue, 09 Dec 2025 15:05:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3oM-0007bW-8m
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 14:55:51 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3xu-0000oT-VW
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:05:42 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3oK-0007w0-Ra
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 14:55:50 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4779cb0a33fso80163015e9.0
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 11:55:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3xt-0001H3-43
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:05:42 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-42e2d5e119fso2560324f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 12:05:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765310147; x=1765914947; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oUGnjAUJ/WV/a+xeQ14MUp20pR8u8DiKhHojg63JL38=;
- b=fT0Ydsrkuth819C6ePnYbEMmuf6eSSYGuKN2LVwOZOSj5XP4jhvByZBeyUANuSukuG
- s36j7CVJBdS/1UCUWBJyJb6zqTekyMZ0QAskwFgDwSXG/Dc8UhYK2F8AO7XuvnE/W9HQ
- mBcRIJlc+vY/DwM2c1MA4bRqNqEXbO7FVDgyUWs/C/ft1hf6Kfa6wD4z7C/70LYJiOqJ
- +kiwmunop5JgWT+oa/f7OKxHMFsB62VBgFdCN2uaOORATJ7NZgnHoOuflqH9fHcnkc/D
- E6orBOeQsqDBNYVTQSsylhe2JWo4dWPBr+vr6q1QjmD6Ni7BUndy7Lg6DBFkuEPZdMLK
- ZCiQ==
+ d=linaro.org; s=google; t=1765310739; x=1765915539; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xezfzl7F4cXOA+1euehvlBoACOHQVgv+Trponi1peWU=;
+ b=olh4HQXmsxMmqZRJyTXnmapsGTeF8/EHtAM+F50gNqzDxnvdI/4HV0vVTR8wy6ye5O
+ YuLJpzma12W1fqnvjv9AofKCocN5m0jxviswuQ1g6/EUNngPwgLm7ZtzVh+85dbjX0Pk
+ LktH+Cbpvaqxc/+K2vFl74bKam+hQl4oLAE/++PW/rb6JDi2KihqARnqGwHPqatWMPP3
+ GbHkKVLlPYylvlYWhhTZLguo4gwQqki6QiEhhahDMKHFu3D7LrlWepbYkllGP5Q08kTB
+ 4cxJdO49n4uEFMlrrmdFEfkXO9kgmfRCG9kCdci4qfNHcZiWDr32Ie3RimY2gOYaI5NJ
+ OxqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765310147; x=1765914947;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1765310739; x=1765915539;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=oUGnjAUJ/WV/a+xeQ14MUp20pR8u8DiKhHojg63JL38=;
- b=nA1Wa5nP0Nd0/DUdhMy5Nx7Cjz+zuBXOuHfRJ8gMyo4nfp3dfXV8iX6IhrW199Vtn3
- rFX4kgTSDUzQ6EVUgrsVwcVbFTEe85TquTpAExlu0G+oV2ZKpltfalPoia1ew9xVbTYT
- 0Odrv2ceTJ04t5VXi+2YWZMyYojbPhRHRL5RK66IRoaGPf3ZabULz850c6PfN5677s5l
- 2g+PmmSBDAIlmY04OAWjgk7J/fJsLzAMgkKH3fDGROBhHUMsglR8P+UP5DZgCm/49n95
- LPpJqqXr1tMjT+h1D6ZYaYLiJSolBjVdGcBtO0iWHPDbNkZae0OXcyO+xHH9z6Jz3tqa
- 8avg==
-X-Gm-Message-State: AOJu0Yyipebl6hL6pNhmUNHNZeUdz8/rCqEmFsGEk+dEpEDjkWmqa/H/
- AmA4kLHWA0uzgtFHtxjDyVlVrXeHE0u5uEB0bpdraEzEGZubKV51XRf4QnXPsvdpLjc=
-X-Gm-Gg: ASbGncuyJH1nPPbE6UO98DgSSK8kUU3/ef4kj0nt/NDAY6enFbJqhH+9z6sgRQKPpZ+
- zMfsRl0EJ++uzR9L3DpiIljzf5uPRjnhygMAlSq2wbfDVE0W9oZ4bi4Ma85dewqmtCr/HHsYXpz
- WuTFMzU80VgDlwYOUB0DM4vYXCd0DMCKkcy8w/dmYx9UzmlhpxngAwAMLPklJ6oJ4p40zTJWmNV
- lQYwVPojI4XvqzP+sq3zJHMRkTzQQRDqcaOA9RDOgLCtXQt2usB6RCCssePuBS02y8V7/3GUYc4
- eMopXm4K6f2TEVQi0QCvlbZM+onhkyQLaiLQUxEWq0PuDz2pENw9odvJuBPZhkMG/UrHLu2KgDB
- EcgZ0bYU20Jb+XsCaINOcDp7zflKGijrJXNjsyZQs6K5f5XScW5l+lJOE7Les5uPCpyGs5Slpxm
- E98jp5nkWQoeWBfzTuBNCB9Q17usv67vlDIFEMQEPKOjoOQrldZmaE+A==
-X-Google-Smtp-Source: AGHT+IEHYZv5vsS+JRYPTmBGYIcZInTf3285aVr4SUTxawpHjzyebWn5xCwVd9nlfnZFYIALQpkVow==
-X-Received: by 2002:a05:600c:5286:b0:477:5af7:6fa with SMTP id
- 5b1f17b1804b1-47a838586abmr133995e9.32.1765310147021; 
- Tue, 09 Dec 2025 11:55:47 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ bh=xezfzl7F4cXOA+1euehvlBoACOHQVgv+Trponi1peWU=;
+ b=R4nE16zKXfdR6yApg+Dj3YRLxylyvUSuuI9CCAViYy4mDTNMDZwiUK4pz54R3D5LnP
+ 3nxcXprcpTEbqFOAkSv+j89nTVKqtbkyvOj1Ga9tA1UROQVNVALoFt4J1hrAGYXAsNBx
+ wqyM27PDYxfQ/HjkKAJF1Dfrun5vJ47d7NfRwnrthL6ZTjgFIVV2d+HpVXH8H/orXrxX
+ JO3//S2HCNQis0t6ZQWpXYdO6pXdSDoeuVSapXi6eR4S4SsYmnZJcZaUm2Q8jkOKufk1
+ XjWASfT/YfImJu9T2n2++9RCvxYbonxenOei5dv/K54VmIm+mmJJ/a/wvPn0Coip+OvO
+ jLRA==
+X-Gm-Message-State: AOJu0Yy1eWfTOCvyzF6ek04pHywo24G6W9+ML1ZRJH2yfjJxrxQ9ohKz
+ AZVPEYMB60wI+iJfMWs0P9O4HGfmEugBTipKvAblxhBYdTkpZ3JbsWUWzag1msFwT5Ht4lg5r2S
+ 4lvPi0pE=
+X-Gm-Gg: AY/fxX7zvGxSBt2rA5547a45u61JxYcV2U+1YMa5mPdL4iG4EF4tHrUSbsYm0gCOqrH
+ 9OZ0uljLIXmSVmYEVH0eaCp2SNuKUya9gV4MMVfqgJoNAHZZG4Bo3b1QMM54xUZlRnuNrZ6wvvI
+ FJIxvqW+tHA/1H5nWsArPUFSaM5yUE+XDVGqC+bIqm1jwV987mBJZAbZTW/vBR8XKUEy5YsdkcQ
+ 6rSMT5H2ua/mJ1oA46jWsLDht8mKRpbZxa4QqkiI5G6bFtWXjZ+gBw7/zn1o+GmWSXr7eojDlcd
+ HIGXzu36hBdvNM6rsAjCNEXgM2eUVC8L5isVKRX4t3s2YyiAaoZ2EkWQK3fu9rnhGynI9dsEVsi
+ M3U8NMuVYY9cKj/QwaEV3J39v9d8QQdIvHVWZkQbHj9OGu5wfC6Kl71dXgCfNmHrcX84NVLNbmr
+ zrTunDlM/1PnzP6T7YajROdu/x17Q8ITA0BARZc2+vp3SA3pvF7+fSAgRBB7D3
+X-Google-Smtp-Source: AGHT+IGh6S/Q+Eelt76oE4AkIIFrZR78t4m4/tfK30DrPK9gHVlGDSMc6e7H1dhCCgw23Dl9wUWPOA==
+X-Received: by 2002:a5d:6584:0:b0:42b:2f79:755e with SMTP id
+ ffacd0b85a97d-42f89f09f0dmr10202946f8f.3.1765310738680; 
+ Tue, 09 Dec 2025 12:05:38 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7d222491sm34837348f8f.22.2025.12.09.11.55.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Dec 2025 11:55:46 -0800 (PST)
-Message-ID: <8b809984-c3e8-4bc8-84ca-92b3d674db92@linaro.org>
-Date: Tue, 9 Dec 2025 20:55:45 +0100
+ ffacd0b85a97d-42f7cbe90f0sm33702165f8f.9.2025.12.09.12.05.37
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 09 Dec 2025 12:05:38 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/10] Misc HW patches for 2025-12-09
+Date: Tue,  9 Dec 2025 21:05:27 +0100
+Message-ID: <20251209200537.84097-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] migration: Fix order of function arguments
-Content-Language: en-US
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Stefan Weil <sw@weilnetz.de>, Laurent Vivier <laurent@vivier.eu>
-References: <20251209195010.83219-1-philmd@linaro.org>
- <aTh-TUbyMRCfkbS5@x1.local>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aTh-TUbyMRCfkbS5@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,29 +97,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/12/25 20:53, Peter Xu wrote:
-> On Tue, Dec 09, 2025 at 08:50:10PM +0100, Philippe Mathieu-Daudé wrote:
->> From: Stefan Weil <sw@weilnetz.de>
->>
->> This fixes a compiler error when higher warning levels are enabled:
->>
->> ../migration/postcopy-ram.c: In function ‘postcopy_temp_pages_setup’:
->> ../migration/postcopy-ram.c:1483:50: error: ‘g_malloc0_n’ sizes specified with ‘sizeof’ in the earlier argument and not in the later argument [-Werror=calloc-transposed-args]
->>   1483 |     mis->postcopy_tmp_pages = g_malloc0_n(sizeof(PostcopyTmpPage), channels);
->>        |                                                  ^~~~~~~~~~~~~~~
->> ../migration/postcopy-ram.c:1483:50: note: earlier argument should specify number of elements, later size of each element
->>
->> Avoid also a related int/unsigned mismatch by fixing the type of
->> two local variables.
->>
->> Signed-off-by: Stefan Weil <sw@weilnetz.de>
->> Reviewed-by: Laurent Vivier <laurent@vivier.eu>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> [PMD: Replace g_malloc0_n() by g_new0()]
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> Acked-by: Peter Xu <peterx@redhat.com>
+The following changes since commit 2257f52a97f28ce3be4366817ea8817ad866562b:
 
-Queued, thanks :)
+  Merge tag 'pull-10.2-final-fixes-051225-2' of https://gitlab.com/stsquad/qemu into staging (2025-12-05 12:38:37 -0600)
+
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/hw-misc-20251209
+
+for you to fetch changes up to efd6b3d1768d04d5491b62ad7385f623fb12f627:
+
+  Revert "hw/net/virtio-net: make VirtIONet.vlans an array instead of a pointer" (2025-12-09 21:00:15 +0100)
+
+----------------------------------------------------------------
+Misc HW / migration / typo fixes
+----------------------------------------------------------------
+
+Alano Song (1):
+  hw/9pfs: Correct typo
+
+Cédric Le Goater (1):
+  Fix const qualifier build errors with recent glibc
+
+Denis V. Lunev (1):
+  scripts: fix broken error path in modinfo-collect.py
+
+Hanna Czenczek (1):
+  vhost: Always initialize cached vring data
+
+Philippe Mathieu-Daudé (3):
+  osdep: Undefine FSCALE definition to fix Solaris builds
+  Revert "migration/vmstate: remove VMSTATE_BUFFER_POINTER_UNSAFE macro"
+  Revert "hw/net/virtio-net: make VirtIONet.vlans an array instead of a
+    pointer"
+
+Stefan Weil (3):
+  migration: Fix order of function arguments
+  hw/pci: Fix typo in documentation
+  scripts/nsis.py: Tell makensis that WoA is 64 bit
+
+ include/hw/pci/pci.h           |  2 +-
+ include/hw/virtio/virtio-net.h |  2 +-
+ include/migration/vmstate.h    |  9 ++++++++
+ include/qemu/osdep.h           |  6 ++++++
+ backends/tpm/tpm_passthrough.c |  2 +-
+ block/vmdk.c                   |  2 +-
+ block/vvfat.c                  |  2 +-
+ gdbstub/gdbstub.c              |  2 +-
+ hw/9pfs/xen-9p-backend.c       |  2 +-
+ hw/net/virtio-net.c            |  9 ++++----
+ hw/virtio/vhost.c              | 38 ++++++++++++++++++++--------------
+ migration/postcopy-ram.c       |  5 +++--
+ qga/commands-linux.c           |  7 ++++---
+ ui/ui-hmp-cmds.c               |  2 +-
+ util/log.c                     |  2 +-
+ scripts/modinfo-collect.py     |  2 +-
+ scripts/nsis.py                |  2 +-
+ 17 files changed, 61 insertions(+), 35 deletions(-)
+
+-- 
+2.51.0
 
 
