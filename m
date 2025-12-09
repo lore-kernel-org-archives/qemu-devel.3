@@ -4,119 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB141D3B994
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 21:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718F0D3B99E
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 22:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT55N-0003G7-KC; Tue, 09 Dec 2025 16:17:29 -0500
+	id 1vT6Pa-0003Bx-5i; Tue, 09 Dec 2025 17:42:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1vT55J-0003FM-PI
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 16:17:25 -0500
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vT6PY-0003Bg-O6
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 17:42:24 -0500
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1vT55H-00007I-0k
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 16:17:25 -0500
-Received: from [192.168.178.140] (p5b151e44.dip0.t-ipconnect.de [91.21.30.68])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 36C45DA0755;
- Tue, 09 Dec 2025 22:17:20 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
- t=1765315040;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=aUykk/oattxnDODFYJoJ5fnfJK5yknV82Qdfc2h2Vfo=;
- b=iMn3s3P5USdnQmuU7Wo1xJtmD/hmGKUwrSNJgZmCs44w9+Ty/0ZjiirekagDngnCn8M9f5
- /a5NYIkvkT2edV+8/sg9rZem2jG7M/i52NzmpsXeW2zszzKuSpcqzk/zkOvkWlbYE8coLr
- Sh9SoGGR+ZnPGi4Nbry+4h5vyP+cZyA=
-Authentication-Results: ORIGINATING;
- auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
-Message-ID: <5dc8532d-cec9-437a-83e2-b92b0ae38bbd@weilnetz.de>
-Date: Tue, 9 Dec 2025 22:17:19 +0100
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vT6PX-0007vB-1y
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 17:42:24 -0500
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-7c77ed036c3so216077a34.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 14:42:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1765320141; x=1765924941; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+AyZo4JaNoHslfVnSaXQlL4UcQtpZDbIKq9lZLs8gO8=;
+ b=ITuMVCxtqjhFOKZ8sNmG5rCD4OkBL4fwNUr723MlaHbv6C+6K95O/SSH+gqIs4TrDD
+ Knlovh+2RrffN3gW/slgAixVVHdwGVDKhiFDuxw2QkVYEHHOTeiJWdGlO2qirOwxvdaT
+ LHar9hQ9p2uimU2MeIE9wEZjKkarmefvE1y9iNPSvi9XHiaEdspg6tuHy+upfo5D//cy
+ GNtYaku0lDTrjVePascvTYcsP39mPxUqszawJ+oMhYlrXPCht+z73zjdXFkdZCeCfaqh
+ 8UCPUDtXioEWEKcN7ellGx9zciVd1hRngcjZ2qZyIdU4Zc2SOvnUb17Z/xX25cMUpsb1
+ URKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765320141; x=1765924941;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+AyZo4JaNoHslfVnSaXQlL4UcQtpZDbIKq9lZLs8gO8=;
+ b=EPr98mZd8xibyPbQQLgponaT4yP3Fgd6nMgNCfqI7wF/Woj2/5HIYSPYKIPBRCb7X0
+ QOSujTGwxrNXzHOGojXeBYwoI33RxGD7pfh9piYeK2OjlFi/FL96xFEimgFiDflYKwbE
+ 9wKNp6J4W3X6DRN1FTl+JepiUjIJ3OehpHnbeS2YvRB580CDEESRqgEtPvvB45/GyLlQ
+ hJ54huZJKKCMdqsiFBGBjHvUE4WdUR2dbs8H8f9vfaUymURT7cNY4qy3htP8I+wImTyd
+ Sn/ILWU8N09tEoF+P21y0uGKjdwFeshtZB7TExhVG1MofoAsNjGpJVyQvsIAh7XC/Lt8
+ cdJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV0EUIPw0F6VmZv5DMAY3BjpR1D1gaWUUtroRw04SZBvNTXUMyvuwpR78c3wN9BgOjsDkFE4ycvtrC7@nongnu.org
+X-Gm-Message-State: AOJu0Yx+CsXsEsNozn2mRfGw3npsztPHVp06ZZDQvUEwmpsS/+oZ62Yw
+ IkCyi7J9h2sqm7L+rZNNOmVxkC8I5TaOxvTSGBopA1vm1qiBg03m9RSqLLWAVQRdxhs=
+X-Gm-Gg: ASbGncsfImHGqdH5BDWtDmAmxwGsk308Y6kPQ/YsKrx93xVyiLteppznRDLBD2SKsAP
+ +ZgI9QNsDvvRYgfsTT2OTnI6tHDaAs3+3Ul986amQYbcZJJ6NydsZnJ0SGByMP0MmhugmauMdTD
+ yiHk8TLsdSxP8wyEPL4g4jNkHiSkV8+lMoEgtsBYmd2x7eLzUCUk3mRyfTvKXRGiuYdXpilQ6ba
+ 8nG05LfttItnHULQO+KUx/qZdnIgQRbxt5QKgV9vhr9YY8/Xk8mRzhkZgG8LwNgTzR8BxIp+bcZ
+ 436B8cAjBRPOQZfBKnucIJWhijfNmK11KV3G0N95YJ7BaNm+dglI81k6A/lTuH7pT2TxYlWrKVX
+ 9eGXMVnLGWJrbtejpju3ysnYA3887F3Xub8MNzTzDQqKwe/3jNfsko6RMV+MXXe6gQc+GKoeDKR
+ PYKAIjkFI/5bBL67PeM49U+W29q/RjhsU5+m7kVNXLmIX6iznCcGM=
+X-Google-Smtp-Source: AGHT+IEL5T7/fXziOKOSWCa1LAz3tJ76taKamNUSsDZXUpxXNooqzPzfkGyn1tl9UDeHlpD1Qli6kQ==
+X-Received: by 2002:a05:6820:1628:b0:659:9a49:8ed7 with SMTP id
+ 006d021491bc7-65b2b09ebd0mr212769eaf.11.1765320141220; 
+ Tue, 09 Dec 2025 14:42:21 -0800 (PST)
+Received: from [10.152.62.227] ([172.58.182.152])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-6597ec25ed1sm8791316eaf.1.2025.12.09.14.42.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Dec 2025 14:42:20 -0800 (PST)
+Message-ID: <3adbbf9b-e13e-471f-8ffb-d1cfcced0d8d@linaro.org>
+Date: Tue, 9 Dec 2025 16:42:15 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2] Fix order of function arguments
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+Subject: Re: [PULL 00/10] Misc HW patches for 2025-12-09
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-References: <20251209125049.764095-1-sw@weilnetz.de>
- <96877ee7-21b4-4a33-bbe4-33cd1304c177@linaro.org>
- <aTgflpl0DUMQRTXT@redhat.com>
-Autocrypt: addr=sw@weilnetz.de; keydata=
- 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
-In-Reply-To: <aTgflpl0DUMQRTXT@redhat.com>
+References: <20251209200537.84097-1-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251209200537.84097-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: v2201612906741603
-X-Rspamd-Queue-Id: 36C45DA0755
-X-Spamd-Bar: ---
-X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[99.99%];
- MIME_GOOD(-0.10)[text/plain]; FROM_HAS_DN(0.00)[];
- ASN(0.00)[asn:3320, ipnet:91.0.0.0/10, country:DE];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
- RCVD_COUNT_ZERO(0.00)[0]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1];
- RCPT_COUNT_FIVE(0.00)[5]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[weilnetz.de:mid,
- p5b151e44.dip0.t-ipconnect.de:rdns]
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,29 +102,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 09.12.25 um 14:09 schrieb Daniel P. Berrangé:
+On 12/9/25 14:05, Philippe Mathieu-Daudé wrote:
+> The following changes since commit 2257f52a97f28ce3be4366817ea8817ad866562b:
+> 
+>    Merge tag 'pull-10.2-final-fixes-051225-2' ofhttps://gitlab.com/stsquad/qemu into staging (2025-12-05 12:38:37 -0600)
+> 
+> are available in the Git repository at:
+> 
+>    https://github.com/philmd/qemu.git tags/hw-misc-20251209
+> 
+> for you to fetch changes up to efd6b3d1768d04d5491b62ad7385f623fb12f627:
+> 
+>    Revert "hw/net/virtio-net: make VirtIONet.vlans an array instead of a pointer" (2025-12-09 21:00:15 +0100)
+> 
+> ----------------------------------------------------------------
+> Misc HW / migration / typo fixes
 
-> g_malloc0_n should be used only in scenarios where you do NOT have a type
-> you can pass to g_new0. For example in the audio code
->
->    cap->buf = g_malloc0_n(hw->mix_buf.size, hw->info.bytes_per_frame);
->
-> any calls to g_malloc0_n which use sizeof(some-type) in an arg are
-> code style laws IMHO and should be changed to g_new0.
->
-> Or to put it another way.  g_new0 must always be used/preferred except
-> in the handful of cases where it isn't possible.
 
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
 
-There is another use of g_malloc0_n which might be replaced by g_new0 at 
-least in hw/9pfs/9p.c.
-
-Regards,
-Stefan
-
+r~
 
