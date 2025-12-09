@@ -4,92 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0914DD3B7EA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 09:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 791A3D1CDC6
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 09:40:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vStxy-0006kB-6E; Tue, 09 Dec 2025 04:25:06 -0500
+	id 1vSuBa-0004DR-Fo; Tue, 09 Dec 2025 04:39:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vStxw-0006jb-Kd
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 04:25:04 -0500
-Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vStxu-0002HN-SP
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 04:25:04 -0500
-Received: by mail-wm1-x342.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so43791055e9.3
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 01:25:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765272301; x=1765877101; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=D32U9cx+cTFgXu76SMf/O5vqmn3V0bDLwJQvk6aC9NQ=;
- b=RreA443tCYB5aB6CwdjVcKTJKc7E9kUnRJNhgoLDob17/UXlwS6AdGGLQ+TkQwPf65
- hLvhXe1c75vR30R37gSvPmM9v4e7rYwri4++2EnSchqg4zLs1SVNTQ4gvstr3xjty2Pi
- Sl8s8OqNC7hw3pukbY384gwv8gDTw8fGioGA9cHThXyOTKm3+v8i2B7fnz7CX2oC1pzZ
- YezOmTkCut09fHDcs0J3x/QByd0UkaFB5CNLPA9tb58VX8ENyzVpRGE9oX1CTbWxbjXi
- jL/PRd6VZu/sg6m6f1A6uVL4gkjQdiUjYKD8o1b5ktqnFiNdfREDAzbMrrD2U1iO65I4
- mhtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765272301; x=1765877101;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=D32U9cx+cTFgXu76SMf/O5vqmn3V0bDLwJQvk6aC9NQ=;
- b=Q4x3MPxZjmRfSKlXhf6BThZfRi8Y97oNXjtuW0wPs7qlvfvk4vxiArlgwaSH6+siN7
- t+bQn+MXaLj/dEkOOq5l2R+cJgKQZJLeg9ZyC2wmn80vsqhta+PdE9iflzk07WQEcY3H
- RzaCAYTjy7brO5OApXDNyz5BfeHbx4QVyi392bkP5mIT/b1bifhESY7U5RyPaSURgyz7
- rxOEDgFxZ9PhMkzFOxky8juX6BKBWE++4UeicT2yy8lfjON1Jg4yy94g67UbjHl57fvP
- BIu7TML98qFokezUdI1NrcIO02CFnOnLZ7EYnBcMxr+rFw7IzKDdujYUZGdUM4yNurBq
- /Oaw==
-X-Gm-Message-State: AOJu0YzeSMyUjo1ZMR0jgRg5usue3cV1FeQ6ssC8SqXa385tpPThpWDo
- vMvSOXyLlZ7S7ZupLG2syWFDav7oBedzOLX+26lhLHWfgAB2qIZZICu/Ch0b/bag1eA=
-X-Gm-Gg: ASbGncuYW4mWpejXPg6yGeUH/OAz7vzZVBaj/B0QWZo2hujRXYagb44is/LyWhj4xO+
- aUsxFIoHEMZkFuCFgcbhDCXEGvET5vmn1whQEMLSI3QghQX/Whd1AsPbmU8Sp2kULuMMIYwS7Ld
- LT5J2QQ1RfvONoiwSxZd5yNl7COJtj2Fv04Lt5dpPwc7PgTn2MVmxZfOpqIc40ImoRnZfWpRSTT
- qTbQuy/PX1UY8yoWPDex4JiyzFy9dI4BXgFdfq0EoPlpYV1NrD6YGwG9dTiqrBnz2cBTjsgu+uG
- zEvp5yLyGNAnen5G0bDTaEAX0FTgACQWTYbMuzxfrYAAPlDjP6z6QSyitmYfY2rS2VdMX48k1tU
- fDnDXTJPWTb2MqsLr2us5gSx+g4JU5zJprKayhV8czUSTtq8NWNAwUSCbeBemwIaOCsEZ6/6DCG
- gQavIV0ep6LcA=
-X-Google-Smtp-Source: AGHT+IGakU9p5jhlouHTot85tqzwsJzhkEblpwepO6Jpag6s+Rayam5b/FLx5WaYeV0IqSaV+lNGjw==
-X-Received: by 2002:a05:600c:458e:b0:477:73e9:dc17 with SMTP id
- 5b1f17b1804b1-47939e5dad4mr116714185e9.35.1765272301329; 
- Tue, 09 Dec 2025 01:25:01 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a7da1dff5sm11913265e9.15.2025.12.09.01.25.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 09 Dec 2025 01:25:00 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A3E035F87D;
- Tue, 09 Dec 2025 09:24:59 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mads Ynddal <mads@ynddal.dk>, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Christian Stussak <christian.stussak@imaginary.org>
-Subject: [PATCH 2/4] target/arm: ensure PSCI register updates are flushed
-Date: Tue,  9 Dec 2025 09:24:57 +0000
-Message-ID: <20251209092459.1058313-3-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251209092459.1058313-1-alex.bennee@linaro.org>
-References: <20251209092459.1058313-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1vSuBY-0004BW-FE
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 04:39:08 -0500
+Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1vSuBV-0006YW-FK
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 04:39:08 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bTBH1MoV2bF8puG/Ll2LACJMWVponU88WR3rSidmu5B8z2+9KSX8m+kh9Y3Nb8NtTJpoyPS9/5A0oFEjlmytZFh/X2h9AlVkjnucVi2kRl40qyAFj7X4+TwncO90nNTSGU9ukWv2QtENp7d6czaynAWypLuGxAblK9XbT93hVCL6tyUFK10iFEY9pnXatWHtF7Dgfm/ymJpidfe3q/XiiqnKu+gwUxa1hV0ZXNDb64QrxEYIoTEKiyPUROBHpXijeHSPSO5kx4afJYEK313J61A/2iYNXCwioHokfeXPBF4v082e0Gdib4Z8dPslrIjkW61AU+UgWDpuh8IFXFTRJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yjrC2Z1SVQsTtHagesFnDyrjX4BFUbH6wzfnIteDrHQ=;
+ b=MoZxeocV7yMh/R10v3sMLsXPWaROfIEkyXhBnJM8bQ1KnwRQ67QSNuh6w1XHDqa95euhruXBiJ5+cA/RE3j1gpQIo2c2/EehM6PnbPQjXP+hxvvxIF9GmotBiy3vm8+9Fr5Fou+cM6GkkoIcKsIiHLmHXXdYWLXHZEgMnE6t5OrxxGk3yHqmxorS7E80JlX7UGK5Bwmyh8QW9ctw5INN/vg8V2wOpfj0OY1JZCzNnO7ml7K7VsCS3pTaOC1MxPI42Jr5OZjxiwKFv1E6CiHJ53MfwbRYVxQDKWmuf3t9WNnnlZ9jw2qxkjUEOy2yuqT/Mr7L66vmcynlasSGIi2v+g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yjrC2Z1SVQsTtHagesFnDyrjX4BFUbH6wzfnIteDrHQ=;
+ b=uy6t/Ei2dXbc4xHeZMenMgFqHax45eAF01fR4nGk/31H70obgperBCx73Eu22J7d/ybmfI7vqDEqw7Q3PU5qWEEaOTfi3nBK8F1l8ePub9DQyLo+B4033nk/lXFhmXlDLKA9CgksTBJjAE4KqWr61nD8wffdkJn/6yNKbw4DW64=
+Received: from PH8P221CA0022.NAMP221.PROD.OUTLOOK.COM (2603:10b6:510:2d8::7)
+ by SJ5PPF4C62B9E70.namprd12.prod.outlook.com (2603:10b6:a0f:fc02::991) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Tue, 9 Dec
+ 2025 09:38:58 +0000
+Received: from SN1PEPF0002BA4F.namprd03.prod.outlook.com
+ (2603:10b6:510:2d8:cafe::d3) by PH8P221CA0022.outlook.office365.com
+ (2603:10b6:510:2d8::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9412.6 via Frontend Transport; Tue, 9
+ Dec 2025 09:38:58 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SN1PEPF0002BA4F.mail.protection.outlook.com (10.167.242.72) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9388.8 via Frontend Transport; Tue, 9 Dec 2025 09:38:58 +0000
+Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 9 Dec
+ 2025 03:38:56 -0600
+From: fanhuang <FangSheng.Huang@amd.com>
+To: <qemu-devel@nongnu.org>, <david@redhat.com>, <imammedo@redhat.com>,
+ <jonathan.cameron@huawei.com>
+CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, <FangSheng.Huang@amd.com>
+Subject: [PATCH v4 0/1] numa: add 'spm' option for Specific Purpose Memory
+Date: Tue, 9 Dec 2025 17:38:40 +0800
+Message-ID: <20251209093841.2250527-1-FangSheng.Huang@amd.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::342;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x342.google.com
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN1PEPF0002BA4F:EE_|SJ5PPF4C62B9E70:EE_
+X-MS-Office365-Filtering-Correlation-Id: 261b9426-7fc6-4274-7b5a-08de3706c741
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|36860700013|1800799024|43062017; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?gann1gDN+T5HahoDcWCuGz4bZe/0p2RPAHcxqssJDS2DXYNf+BxFKV6E9EQE?=
+ =?us-ascii?Q?p89j9Vg2SKlbboH8yx/VElrnosoepbBQebPaffHb/RwoY0zJZp6Yjm+3KjA2?=
+ =?us-ascii?Q?pnBKLooygE6UCHvuvyn2maXSAWi5j64LZ0IMcWBlHPAReoTxhROkIlPDF8Yd?=
+ =?us-ascii?Q?E460A1BzRAfq3o2cUowvwMXQcZZA6qdeLiUsleU/H2Sm7xtlc5ydPSePF4Jq?=
+ =?us-ascii?Q?0P+MeSSn0mbCxWcpC/3awgwE3v9Qcam5XuToPVWYCB8cKp7gQ7jWf/bXg9Ui?=
+ =?us-ascii?Q?fl7u8kTlHmqls5jqV/lME8AZsCbi3YMGp2HhbNeCtPcDUYA3JspEWM3spUOW?=
+ =?us-ascii?Q?DLdbiyEhG1P/y08RyxS4Yd/6BwpI6/QtuyPZYtzu3+9SrQoHOUENqf7f505L?=
+ =?us-ascii?Q?xFIiF3TOyCyb2FHlrv+bfNhcgREZWJK+FHOBqyCzEwMGE02zyBaTUrukX2ZQ?=
+ =?us-ascii?Q?4whWM9vWUmwOnJaOWJ5quGcVqOuIHiI8VkHDxc7L2qku7xw7BjrVXJNTfcMR?=
+ =?us-ascii?Q?6IeCYtu941l0XJO+0NU5Y3HMphgt7Lc1yBtHt0mpFyEdNkq1rt0f+4BcBHYs?=
+ =?us-ascii?Q?iQlNztmi9w+IyeV4qSdRApIJZtGYHrWnm13h1ZZcU5/KGZzO2Bq065T7lVxY?=
+ =?us-ascii?Q?ZDf4Ukybe8t7Hz1DafIq1Ijot45qOWOoPQX22p5zOmX0PlQUq41jHPNFPdSb?=
+ =?us-ascii?Q?r3gCEZaJKdjW3S1gXKcHK0idL1fcufN4+IHkSHIwSRTOorwXy7bawxcTf/MP?=
+ =?us-ascii?Q?2tDKV9nkyGcxIINLkTtA3UbOr7wNk9AxU4baHi7jCSw9cpHsEYxXB05ti7Tb?=
+ =?us-ascii?Q?LEo6mxX1J9GVy1APYwgmAoVATCJikQUl86l7IyIgUgwDcPIC7NGtsWhj2NKT?=
+ =?us-ascii?Q?2nl0YBxf8ei4vycxPUrqEwlexeDUNrqUhMEuCnSBeET9tYvfabg9ntIjylxM?=
+ =?us-ascii?Q?o8FrtsOwkBUYmrxkQ7vI5TOwu+4aQt5PrNYhmRvr/OxG9XWQXh5j0E5T04E1?=
+ =?us-ascii?Q?xj9ShAGKimi2IcMSdX8zJAaYJc8N2hOYt9okWET9Nst88gt4PbB0MXet/7/M?=
+ =?us-ascii?Q?pEgqvodkt2UMV6vZgX4c8LCSq9kPCmRlUFeFhii+OQzTaQdPL7RVDa4afYqZ?=
+ =?us-ascii?Q?OsmuN3Yj1A2rZU15dsZfZw8DYK+MihMF7PxtNHpYt4NzeKSB19y72Yb1DaS3?=
+ =?us-ascii?Q?bu9j3DUWTJCPBwHtb0QMEFhpn6D81uDScGl5Xgww9sPEO8e9wLq6Q+W/mAfC?=
+ =?us-ascii?Q?AVkzhWWQ2qvZCmYaZnOQDWU9T24MguioumTLAVpq4NMEkWTeQ1igja/Nsi23?=
+ =?us-ascii?Q?35c4l6OrsVWo6i4z9O6CH7+W3P6fZbepQ+VvkLG3GHIQ75UtLO5sFZODspQG?=
+ =?us-ascii?Q?FdOoLqcHLGVjKCZ60QBt5M2RqQBlioXxubh2SNtGUSElC4eNhSYa1jf33bWq?=
+ =?us-ascii?Q?Pz41E0hIjwOKwI5L1w1ts6Hw9pxYAa9k1gS0hLnSAl+ftMPKCDy0hvkcAu3w?=
+ =?us-ascii?Q?GuX+yg3DGx4G06zQJe6YEa8AiIZfInB8yQfSI0LDLls1hDOci5gUB2vKyCKE?=
+ =?us-ascii?Q?Nqc/D3GSHijmFjckk92hkUebfCdcLzLZbovuB8/A?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(36860700013)(1800799024)(43062017);
+ DIR:OUT; SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Dec 2025 09:38:58.4827 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 261b9426-7fc6-4274-7b5a-08de3706c741
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SN1PEPF0002BA4F.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF4C62B9E70
+Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,56 +148,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we handle a host call we report state back to the caller via
-registers. Set vcpu_dirty to indicate QEMU is currently the reference
-and hoist the flush_cpu_state() and make the call unconditional.
+Hi all,
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3228
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Christian Stussak <christian.stussak@imaginary.org>
+This is v4 of the SPM (Specific Purpose Memory) patch. Thank you Jonathan
+for the detailed review.
 
----
-v2
-  - Fixes->Resolves
----
- target/arm/hvf/hvf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Changes in v4 (addressing Jonathan's feedback):
+- Added architecture check: spm=on now reports error on non-x86 machines
+- Simplified return logic in e820_update_entry_type() (return true/false directly)
+- Changed 4GB boundary spanning from warn_report to error_report + exit
+- Updated QAPI documentation to be architecture-agnostic (removed E820 reference)
+- Removed unnecessary comments
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 70d34063df8..8e2940217a6 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1942,6 +1942,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-                 /* SMCCC 1.3 section 5.2 says every unknown SMCCC call returns -1 */
-                 env->xregs[0] = -1;
-             }
-+            cpu->vcpu_dirty = true;
-         } else {
-             trace_hvf_unknown_hvc(env->pc, env->xregs[0]);
-             hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
-@@ -1958,6 +1959,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-                 /* SMCCC 1.3 section 5.2 says every unknown SMCCC call returns -1 */
-                 env->xregs[0] = -1;
-             }
-+            cpu->vcpu_dirty = true;
-         } else {
-             trace_hvf_unknown_smc(env->xregs[0]);
-             hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
-@@ -1980,10 +1982,12 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-         error_report("0x%llx: unhandled exception ec=0x%x", env->pc, ec);
-     }
- 
-+    /* flush any changed cpu state back to HVF */
-+    flush_cpu_state(cpu);
-+
-     if (advance_pc) {
-         uint64_t pc;
- 
--        flush_cpu_state(cpu);
- 
-         r = hv_vcpu_get_reg(cpu->accel->fd, HV_REG_PC, &pc);
-         assert_hvf_ok(r);
+Use case:
+This feature allows passing EFI_MEMORY_SP (Specific Purpose Memory) from
+host to guest VM, useful for memory reserved for specific PCI devices
+(e.g., GPU memory via VFIO-PCI). The SPM memory appears as soft reserved
+to the guest and is managed by device drivers rather than the OS memory
+allocator.
+
+Example usage:
+  -object memory-backend-ram,size=8G,id=m0
+  -object memory-backend-file,size=8G,id=m1,mem-path=/dev/dax0.0
+  -numa node,nodeid=0,memdev=m0
+  -numa node,nodeid=1,memdev=m1,spm=on
+
+Please review. Thanks!
+
+Best regards,
+Jerry Huang
+
 -- 
-2.47.3
+2.34.1
 
 
