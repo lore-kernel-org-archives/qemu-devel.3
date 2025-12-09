@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09631D3B7EA
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 09:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C51D1CDC6
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 09:26:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSty0-0006mU-0r; Tue, 09 Dec 2025 04:25:08 -0500
+	id 1vSty1-0006nz-Ud; Tue, 09 Dec 2025 04:25:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vStxy-0006k5-3K
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 04:25:06 -0500
-Received: from mail-wr1-x442.google.com ([2a00:1450:4864:20::442])
+ id 1vStxz-0006lF-4k
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 04:25:07 -0500
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vStxv-0002Hi-Fm
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 04:25:05 -0500
-Received: by mail-wr1-x442.google.com with SMTP id
- ffacd0b85a97d-42e2e08b27eso2283885f8f.1
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 01:25:03 -0800 (PST)
+ id 1vStxx-0002PJ-3p
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 04:25:06 -0500
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-477b5e0323bso32854945e9.0
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 01:25:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765272302; x=1765877102; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765272303; x=1765877103; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7RMZHxSEFh1H+EN4/zwFqnLve2WFyXWk67mVJ0UVQEQ=;
- b=RK8JXedGjqVuus8qdHmD7nTUQjiwBXqPj5BvME7mBAmt6Lg5G8y6fcWAkBBkF8Gv+3
- deOwxkU5mpI2aslOeDEh0foGeqc4MamiKhYGs0P0PiohqLbh2LX5XlkFj0TO3wwT7PDJ
- a4kPPTmQN9/ymPPIwXOiREHxezrasrwZDDf8/C5uz+BID7azONM+Ai/JxLYfLYQaiqU6
- j7egNlXdSHt9xc3BMIwWoDap8y+VUKprlh+qQ7ZMg68WnoIIaHIR1AbF8viDiMqrornY
- TqvFqMoTm4z2ZSxYnXNG8On0GgGiT/nnCTXabCInneBCpheXE9ppicrGt08SgIK7PTt5
- 1wcw==
+ bh=IZJsc/7zy+r+NN+k7x6+P6QM2USPYl25ybm2MMGme1Y=;
+ b=qLQnjK/xn+NeB8CjsmxC66tkvrKYrLMOBC6xyuBj7U6y6sWwnP4pgRlg2eqM6CJCcU
+ l+WlZbjU+cZyRM4qRqt3epxFAdY8h01xBsRHTPyth5XLIoM4lzxXgoyvDa5BR6Ky4RB8
+ DB918aNgTkqvIYJj+tQJ7RMU5DCtstiEyMuPWVP5zVZCQ+ZhOcJl1f5w4GQwd6xhayps
+ DoatKAM9T+to2ffoc8HwYXNjUwzM5hvjGVGrJp534enm5zcBGF8BboXujk5nXARN4H+l
+ MrhKnWWTsK1fFGsVvwF315aoCCnwMx9eBnXeZAyex1nGNXBkZYKXim3ax0dMagJ709Ct
+ 6aMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765272302; x=1765877102;
+ d=1e100.net; s=20230601; t=1765272303; x=1765877103;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=7RMZHxSEFh1H+EN4/zwFqnLve2WFyXWk67mVJ0UVQEQ=;
- b=tUPqMVmnNXLUTmv0z7RDAXt+rSlw2Z01jeVHLbydF5a8OGC1utt3IZ7PPD8RGH3bWj
- lT1180qVqoTc02rze8XjwhvjzTCPKV+5ampjA6YpwJOvJSes+zQSrNYPn8zGbnECQx4N
- 0l2bSrLnOmJTiqJ/dqVEFbthqG7OEGf+8wMsXjB0SlYTMCRDCYUMwKYRm5mMcCOtTmc0
- 3gdY7yi7d4yVyILuaEZG9O3sU83dbRZWjj6S+oE9w2LHuQiYq3qSUoRdmZOLKNZOW4bO
- UhHraP1S8HQvDcm8h65DJmMseUCIex+fGfPTLuL6sp18gEOqiqQEygMkeRzhpsPsDzF/
- KKTA==
-X-Gm-Message-State: AOJu0YypehAeN+xvpWmbWfX/ytXedtfKRMAs83F9pOWvy4Xi9+VJLUMF
- s3HWU0CugfemY/TtUsD+MIYi9Xfc39LJT/SgMN82xu64cJ//llQFVtzZQyw+MASS6nw=
-X-Gm-Gg: ASbGncuWYn+dwhn3xHbHjj+13x2j2EKOgQkIZSG/Yu0jxPcNk5f0nj6//QXul+QBw7S
- 6MBl46NbZsZ/402YuAckwButrE/7RYkCZ2BKnkm20mMENBsV7XHIPJSckB3AJPJPxWEIfg4zblj
- Iz1wgvTgcUPfvO45v0NEoZMJRhMZnzoKcxDXGamPaZSZBNIhBHSQfmYM+S9XxiyINpUe1grJYKm
- IXM6R47mYA1DfD9L/ecMA7/YsqQTkAeCDSQjM06Lke1sgm/vA4jD5nPEPvffAYREGbtNQ/g7wNW
- oNG2LgxIw35rHBHOR4IJjFE6i9ikgC8fDBi34uYwmp9V7Y0Q3o6/WYNhsot+1nKZMFEiTaYbCcE
- HQ2xYy3LO/Gt+dF9JHIx2m+w9HCgtVF8U37ytS27JysVIHiwnDwUsBoJulpSNV90FObsFPpQxd/
- QWyIwM2TBbx58=
-X-Google-Smtp-Source: AGHT+IG7Y9B2K+FlMc1KuDQmJ2LGmOiz/9npsbYAthUvLaA+C4MSJePu0Ze9MziNaXgCNNTPgeDDSg==
-X-Received: by 2002:a05:6000:613:b0:429:dde3:659d with SMTP id
- ffacd0b85a97d-42f89f563femr10728348f8f.47.1765272301857; 
- Tue, 09 Dec 2025 01:25:01 -0800 (PST)
+ bh=IZJsc/7zy+r+NN+k7x6+P6QM2USPYl25ybm2MMGme1Y=;
+ b=EkLr/ODLIxocA+LBEtBKAGssfuXyIlvcoUayudi8qbMpDG5P9Hm0XL6njU14qzq0ye
+ /30cCgsbGUHDnjacFtZYsVi04FWTc+HjXd4Y9vAZ5JfT6o0EuSCUDbAPhCesYJ0Ibanr
+ aKJxHbIwQ3ooYcNyNnj0kWQkdofJ+IaMOZUPw611NATdW2KYCZpA4fjYOmj2EtNI/G6+
+ F7CbmnGHClB+DP++vFR1P9LK0RTicy9Xl2FQ6G+NcVh54PGw4FbQXMaNADncQAT8Hydr
+ SHsivkv4YqS4nIrEmP9rKsB5vetMSoAUwoW2pep1L+/iT5f09nPwwQ0yVxeayvgX5x22
+ DWQQ==
+X-Gm-Message-State: AOJu0Yx17pe3IxkO2ggMJCeFErSZZfL7xsNnHUjuk/+Ohi/bLfq/TDef
+ V+fMeBzoC7pPOSS8eFNRxEUNBJODnAIF3Ix56k2z4eddMaKBMryUjJNGN5CUFQDWAgc=
+X-Gm-Gg: ASbGncvN0XTkueT3ShPyPhLNeeFxzHdfs+kklfOkX3GWoHC29Z0AOcIgJhK2lMXy73y
+ R7mCFEKoV7xD4OenBWimGVn3gXVZqJI8X7z+DQH8njk07mhBZPVPkSiDJ7DbArIRESwDWxL0vEh
+ /CLhSLNh5v8lmjD4YmHbyuXDpTO1xxx8+evbaJqOT3Bueh2ZC/EBbvvfBpEs/l+LRqhn0Q0cK1Z
+ sTbybUaSS7Y+UVhIlUq8RCFrgMUJHLOz8lzRXMIYpWj1DK+mRnNKnDPkVqneAhdIJ/X2FC3k6to
+ zPccJ3IniN5PcnhotXG1zitvKhUCTa+hmGm0GHqgHwmLyFiXY2hmvx/bdFUAidbKlDusp2hmVE7
+ EK/acMnL0CnhEkrdXk2M+xXsPrEEpRLX7KjNIDq3N9F3XblGnOlRmnB7Wy0mjEZU4xSvKopo60y
+ xZz0DYbgH0rL8=
+X-Google-Smtp-Source: AGHT+IGzACwnbivZERwEL46t6zyXatTk00Oosxpt0+Dy0ORY3ehssEp7POa43K5jNVNibgBocnlR6g==
+X-Received: by 2002:a5d:528b:0:b0:42b:3383:bcf4 with SMTP id
+ ffacd0b85a97d-42fa071b8b6mr837358f8f.1.1765272303437; 
+ Tue, 09 Dec 2025 01:25:03 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7d353f8bsm30858331f8f.43.2025.12.09.01.25.00
+ ffacd0b85a97d-42f7d2226e7sm31598901f8f.27.2025.12.09.01.25.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 09 Dec 2025 01:25:00 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CFFA95F898;
+ by draig.lan (Postfix) with ESMTP id B88EC5F892;
  Tue, 09 Dec 2025 09:24:59 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mads Ynddal <mads@ynddal.dk>, Alexander Graf <agraf@csgraf.de>,
  qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Jessica Clarke <jrtc27@jrtc27.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 4/4] target/arm: handle unaligned PC during tlb probe
-Date: Tue,  9 Dec 2025 09:24:59 +0000
-Message-ID: <20251209092459.1058313-5-alex.bennee@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 3/4] target/arm: make HV_EXIT_REASON_CANCELED leave
+ hvf_arch_vcpu_exec
+Date: Tue,  9 Dec 2025 09:24:58 +0000
+Message-ID: <20251209092459.1058313-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251209092459.1058313-1-alex.bennee@linaro.org>
 References: <20251209092459.1058313-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::442;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x442.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x343.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,71 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PC alignment faults have priority over instruction aborts and we have
-code to deal with this in the translation front-ends. However during
-tb_lookup we can see a potentially faulting probe which doesn't get a
-MemOp set. If the page isn't available this results in
-EC_INSNABORT (0x20) instead of EC_PCALIGNMENT (0x22).
+Without this we can spin tightly in the main HVF dispatch loop and
+never release the lock long enough. As a result the HMP never gets to
+run and shutting down the system deadlocks.
 
-As there is no easy way to set the appropriate MemOp in the
-instruction fetch probe path lets just detect it in
-arm_cpu_tlb_fill_align() ahead of the main alignment check. We also
-teach arm_deliver_fault to deliver the right syndrome for
-MMU_INST_FETCH alignment issues.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3233
-Tested-by: Jessica Clarke <jrtc27@jrtc27.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20251204203540.1381896-1-alex.bennee@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3228
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 ---
 v2
-  - Fixes -> Resolves
+  - expanded commit summary and contents
+  - added Resolves link
 ---
- target/arm/tcg/tlb_helper.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ target/arm/hvf/hvf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
-index f1983a5732e..5c689d3b69f 100644
---- a/target/arm/tcg/tlb_helper.c
-+++ b/target/arm/tcg/tlb_helper.c
-@@ -250,7 +250,11 @@ void arm_deliver_fault(ARMCPU *cpu, vaddr addr,
-     fsr = compute_fsr_fsc(env, fi, target_el, mmu_idx, &fsc);
- 
-     if (access_type == MMU_INST_FETCH) {
--        syn = syn_insn_abort(same_el, fi->ea, fi->s1ptw, fsc);
-+        if (fi->type == ARMFault_Alignment) {
-+            syn = syn_pcalignment();
-+        } else {
-+            syn = syn_insn_abort(same_el, fi->ea, fi->s1ptw, fsc);
-+        }
-         exc = EXCP_PREFETCH_ABORT;
-     } else {
-         bool gcs = regime_is_gcs(core_to_arm_mmu_idx(env, mmu_idx));
-@@ -346,11 +350,18 @@ bool arm_cpu_tlb_fill_align(CPUState *cs, CPUTLBEntryFull *out, vaddr address,
-     }
- 
-     /*
--     * Per R_XCHFJ, alignment fault not due to memory type has
--     * highest precedence.  Otherwise, walk the page table and
--     * and collect the page description.
-+     * PC alignment faults should be dealt with at translation time
-+     * but we also need to catch them while being probed.
-+     *
-+     * Then per R_XCHFJ, alignment fault not due to memory type take
-+     * precedence. Otherwise, walk the page table and and collect the
-+     * page description.
-+     *
-      */
--    if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
-+    if (access_type == MMU_INST_FETCH && !cpu->env.thumb &&
-+        (address & 3)) {
-+        fi->type = ARMFault_Alignment;
-+    } else if (address & ((1 << memop_alignment_bits(memop)) - 1)) {
-         fi->type = ARMFault_Alignment;
-     } else if (!get_phys_addr(&cpu->env, address, access_type, memop,
-                               core_to_arm_mmu_idx(&cpu->env, mmu_idx),
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 8e2940217a6..8288b605299 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2020,6 +2020,7 @@ static int hvf_handle_vmexit(CPUState *cpu, hv_vcpu_exit_t *exit)
+         break;
+     case HV_EXIT_REASON_CANCELED:
+         /* we got kicked, no exit to process */
++        ret = -1;
+         break;
+     default:
+         g_assert_not_reached();
 -- 
 2.47.3
 
