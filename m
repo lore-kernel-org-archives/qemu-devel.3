@@ -4,55 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B39AD1CDC6
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 12:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4857DD1CDC6
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 12:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSwna-00008Z-CC; Tue, 09 Dec 2025 07:26:34 -0500
+	id 1vSwpp-0000pz-FR; Tue, 09 Dec 2025 07:28:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vSwnW-00005e-1S; Tue, 09 Dec 2025 07:26:30 -0500
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vSwpe-0000pZ-Ro
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 07:28:44 -0500
+Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vSwnS-0005nD-JB; Tue, 09 Dec 2025 07:26:28 -0500
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id CB6D65969FE;
- Tue, 09 Dec 2025 13:26:20 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id wmYCmwM314ZU; Tue,  9 Dec 2025 13:26:18 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id BF95E5969F6; Tue, 09 Dec 2025 13:26:18 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id BDBF25969F7;
- Tue, 09 Dec 2025 13:26:18 +0100 (CET)
-Date: Tue, 9 Dec 2025 13:26:18 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Cl=E9ment_Chigot?= <chigot@adacore.com>
-cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com, 
- hreitz@redhat.com, eblake@redhat.com, armbru@redhat.com
-Subject: Re: [PATCH v3 1/5] vvfat: introduce partitioned option
-In-Reply-To: <CAJ307EgA88-FOPvh0vZFpfOgzgX3GoPmvFPucb1WXAZKGgf0jQ@mail.gmail.com>
-Message-ID: <22357c3e-aa8c-ea5d-ec50-1ee1dfa6fd50@eik.bme.hu>
-References: <20251127142417.710094-1-chigot@adacore.com>
- <20251127142417.710094-2-chigot@adacore.com>
- <baddb955-8a71-3f36-c5ce-c54ff15fdf8f@eik.bme.hu>
- <CAJ307EgA88-FOPvh0vZFpfOgzgX3GoPmvFPucb1WXAZKGgf0jQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vSwpc-00060O-Kq
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 07:28:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
+ s=dkim; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date
+ :Subject:Cc:To:From:Sender:Reply-To:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
+ List-Help; bh=eWMokKsPZGcz6PiGyfwed1EXepx7o1F37MpM0Ih0uFs=; b=E3wdFcFowwJ4OVT
+ vUcu76fHKbsdlOXks7lCljfRtnbG14tugyekQjfUY6ibn1XPDmf71EY+QCqwVmKGxkyX+F4EuKig0
+ t9cgniZ+41+TQq4y6erxt9xg1TPRFIf7jFTKPsZWe5Uvu4mASCINbvO/5vLDJtKOvplAEG3YJEiDO
+ Fo=;
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, alistair.francis@wdc.com, palmer@dabbelt.com,
+ Anton Johansson <anjo@rev.ng>
+Subject: [PATCH] hw/riscv: Treat kernel_start_addr as vaddr
+Date: Tue,  9 Dec 2025 13:31:35 +0100
+Message-ID: <20251209123135.22534-1-anjo@rev.ng>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1528514626-1765283178=:66635"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
+ helo=rev.ng
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,132 +58,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Anton Johansson <anjo@rev.ng>
+From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Changes kernel_start_addr from target_ulong to vaddr. Logically, the
+argument represents the virtual address at which to load the kernel image,
+which as a fallback gets treated as a hwaddr if elf/uimage loading fails.
 
---3866299591-1528514626-1765283178=:66635
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+(Note: callers of riscv_load_kernel() currently pass in a hwaddr as
+kernel_start_addr, so I'm not 100% if hwaddr or vaddr is right here.
+Please correct me if I'm wrong.)
 
-On Tue, 9 Dec 2025, Clément Chigot wrote:
-> On Thu, Nov 27, 2025 at 3:40 PM BALATON Zoltan <balaton@eik.bme.hu> 
-wrote:
->>
->> On Thu, 27 Nov 2025, Clément Chigot wrote:
->>> This option tells whether the volume should be partitioned or not. Its
->>> default varies: true for hard disks and false for floppy. Its prime
->>> effect is to prevent a master boot record (MBR) to be initialized.
->>>
->>> This is useful as some operating system (QNX, Rtems) don't
->>> recognized FAT mounted disks (especially SD cards) if a MBR is present.
->>>
->>> Signed-off-by: Clément Chigot <chigot@adacore.com>
->>> ---
->>> block/vvfat.c        | 19 ++++++++++++++++---
->>> qapi/block-core.json | 10 +++++++---
->>> 2 files changed, 23 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/block/vvfat.c b/block/vvfat.c
->>> index 814796d918..dd0b3689c1 100644
->>> --- a/block/vvfat.c
->>> +++ b/block/vvfat.c
->>> @@ -306,7 +306,8 @@ typedef struct BDRVVVFATState {
->>>     array_t fat,directory,mapping;
->>>     char volume_label[11];
->>>
->>> -    uint32_t offset_to_bootsector; /* 0 for floppy, 0x3f for disk */
->>> +    /* 0x3f for partitioned disk, 0x0 otherwise */
->>> +    uint32_t offset_to_bootsector;
->>>
->>>     unsigned int cluster_size;
->>>     unsigned int sectors_per_cluster;
->>> @@ -1082,6 +1083,11 @@ static QemuOptsList runtime_opts = {
->>>             .type = QEMU_OPT_BOOL,
->>>             .help = "Make the image writable",
->>>         },
->>> +        {
->>> +            .name = "partitioned",
->>> +            .type = QEMU_OPT_BOOL,
->>> +            .help = "Do not add a Master Boot Record on this disk",
->>
->> Maybe should say "Add MBR to disk" and not "Do not add" as that's what
->> true means now.
->>
->>> +        },
->>>         { /* end of list */ }
->>>     },
->>> };
->>> @@ -1138,7 +1144,7 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
->>> {
->>>     BDRVVVFATState *s = bs->opaque;
->>>     int cyls, heads, secs;
->>> -    bool floppy;
->>> +    bool floppy, partitioned;
->>>     const char *dirname, *label;
->>>     QemuOpts *opts;
->>>     int ret;
->>> @@ -1165,6 +1171,9 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
->>>     s->fat_type = qemu_opt_get_number(opts, "fat-type", 0);
->>>     floppy = qemu_opt_get_bool(opts, "floppy", false);
->>>
->>> +    /* Hard disk are partitioned by default; floppy aren't.  */
->>
->> Singular plural mismatch. Either disks/floppies are/aren't or is/isn't
->> when singular.
->>
->>> +    partitioned = qemu_opt_get_bool(opts, "partitioned", floppy ? false : true);
->>> +
->>>     memset(s->volume_label, ' ', sizeof(s->volume_label));
->>>     label = qemu_opt_get(opts, "label");
->>>     if (label) {
->>> @@ -1196,7 +1205,6 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
->>>         if (!s->fat_type) {
->>>             s->fat_type = 16;
->>>         }
->>> -        s->offset_to_bootsector = 0x3f;
->>>         cyls = s->fat_type == 12 ? 64 : 1024;
->>>         heads = 16;
->>>         secs = 63;
->>> @@ -1215,6 +1223,10 @@ static int vvfat_open(BlockDriverState *bs, QDict *options, int flags,
->>>         goto fail;
->>>     }
->>>
->>> +    /* Reserver space for MBR */
->>> +    if (partitioned) {
->>> +        s->offset_to_bootsector = 0x3f;
->>> +    }
->>>
->>>     s->bs = bs;
->>>
->>> @@ -3246,6 +3258,7 @@ static const char *const vvfat_strong_runtime_opts[] = {
->>>     "floppy",
->>>     "label",
->>>     "rw",
->>> +    "partitioned",
->>
->> Does this also needs to be parsed in vvfat_parse_filename like other
->> options seem to be?
->
-> It used to be the case, but I've removed that possibility in v3. This
-> "vvfat_parse_filename" looks like a "hack" to ease setting vvfat
-> options when instantiating such blocks through the format=raw.
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+---
+ include/hw/riscv/boot.h | 2 +-
+ hw/riscv/boot.c         | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-If those aren't deprecated then I'd call it convenience than a hack.
+diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+index 51b0e13bd3..d872fe5e98 100644
+--- a/include/hw/riscv/boot.h
++++ b/include/hw/riscv/boot.h
+@@ -57,7 +57,7 @@ hwaddr riscv_load_firmware(const char *firmware_filename,
+                            symbol_fn_t sym_cb);
+ void riscv_load_kernel(MachineState *machine,
+                        RISCVBootInfo *info,
+-                       target_ulong kernel_start_addr,
++                       vaddr kernel_start_addr,
+                        bool load_initrd,
+                        symbol_fn_t sym_cb);
+ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 75f34287ff..02a2bb2f87 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -228,7 +228,7 @@ static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info)
+ 
+ void riscv_load_kernel(MachineState *machine,
+                        RISCVBootInfo *info,
+-                       target_ulong kernel_start_addr,
++                       vaddr kernel_start_addr,
+                        bool load_initrd,
+                        symbol_fn_t sym_cb)
+ {
+-- 
+2.51.0
 
-> However, options can still be passed using "file." prefix. For
-> example, "format=raw,file.partitioned=false" will create an
-> unpartitioned vvfat block.
-> Overall, I think avoiding new options in the filename is a better
-> cleaner approach.
-
-If options are possible to pass that way then omitting for some creates 
-inconsistency so better be consistent unless we remove other options too. 
-But I'd let the maintainer decide on this.
-
-Regards,
-BALATON Zoltan
---3866299591-1528514626-1765283178=:66635--
 
