@@ -4,75 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CCA3D1CDC6
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 08:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92756D3B7EA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 08:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vStON-0005PD-Pq; Tue, 09 Dec 2025 03:48:19 -0500
+	id 1vStOr-0005SG-PU; Tue, 09 Dec 2025 03:48:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vStOM-0005P0-Ni
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 03:48:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vStOq-0005S8-8x
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 03:48:48 -0500
+Received: from 4.mo552.mail-out.ovh.net ([178.33.43.201])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vStOL-0001tI-3d
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 03:48:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765270096;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=J3dL4k8vukFIKC3WSkmAfd0VNAoCvum86wDoLZICg8A=;
- b=W9cqzVsCLaRM9U9/kOgjM0asMv5NhKgHX99K482wvlCN16l36iJ5i5utU4iC/kyMAct99a
- E6P0GNC7bGicnkoHSPYoBnBxCBFqYl7wM2yQB/hpBmJv5z+i9/sDApoHurqtsRnILNqMHs
- MM8Y2F8D9akL0Jm9PpVK47KSA8mowvY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-412-cnbXKI6_NwmIwSQk9jXaDg-1; Tue,
- 09 Dec 2025 03:48:09 -0500
-X-MC-Unique: cnbXKI6_NwmIwSQk9jXaDg-1
-X-Mimecast-MFC-AGG-ID: cnbXKI6_NwmIwSQk9jXaDg_1765270088
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 50EAD195608E; Tue,  9 Dec 2025 08:48:08 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E88DC19560AD; Tue,  9 Dec 2025 08:48:07 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7941221E6A27; Tue, 09 Dec 2025 09:48:05 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  armbru@redhat.com,  marcandre.lureau@redhat.com,
- qemu-rust@nongnu.org
-Subject: Re: [PATCH 16/19] scripts/qapi: strip trailing whitespaces
-In-Reply-To: <20251010151006.791038-17-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Fri, 10 Oct 2025 17:10:01 +0200")
-References: <20251010151006.791038-1-pbonzini@redhat.com>
- <20251010151006.791038-17-pbonzini@redhat.com>
-Date: Tue, 09 Dec 2025 09:48:05 +0100
-Message-ID: <87jyyw59dm.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1vStOo-0001uq-Hb
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 03:48:48 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.110.0.171])
+ by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 4dQXYY3WXtz5yQq;
+ Tue,  9 Dec 2025 08:48:01 +0000 (UTC)
+Received: from kaod.org (37.59.142.106) by DAG8EX2.mxp5.local (172.16.2.72)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.61; Tue, 9 Dec
+ 2025 09:47:43 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-106R0068e3c4547-7d82-4ad5-a6a7-b72aba9b06b0,
+ 913B1D19E2E265D49699B36B6A33E6F0AA87D788) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <3457d42b-8d04-4a83-8e4a-4df9a00550ff@kaod.org>
+Date: Tue, 9 Dec 2025 09:47:43 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/18] hw/arm/aspeed: Integrate interrupt controller
+ for AST1700
+To: Kane Chen <kane_chen@aspeedtech.com>, Nabih Estefan
+ <nabihestefan@google.com>
+CC: Peter Maydell <peter.maydell@linaro.org>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>, Troy Lee
+ <troy_lee@aspeedtech.com>
+References: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
+ <20251208074436.1871180-7-kane_chen@aspeedtech.com>
+ <CA+QoejWMRckxE=GQZ3T0HsjBmv8Ejjax23RATM5bE6UgQZKmog@mail.gmail.com>
+ <SI6PR06MB763168690AA63E13BB37EF56F7A3A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <SI6PR06MB763168690AA63E13BB37EF56F7A3A@SI6PR06MB7631.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.106]
+X-ClientProxiedBy: DAG9EX1.mxp5.local (172.16.2.81) To DAG8EX2.mxp5.local
+ (172.16.2.72)
+X-Ovh-Tracer-GUID: 32d0ebf7-d5ba-4122-8b05-1aef89d1a280
+X-Ovh-Tracer-Id: 16298527052403280885
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTF/eppFH7IzujARqlMkLoB+8MP1hYv02nVYM+INDRtcMc43rqf0SV5YXhJKzqioaoSBsPXswKgbqkqh9k6LjJARn28K9diM/p350KyE4BYKT/9+CrZ3BsrffpbTwq0VmmeKI8Vg99CZQvL30WM0jU7BmbOLUbwdjEOmSQ0Eg4xntH1OZlDgKRrAXeLLF4tcnCAzqsyXUqFZGy4T7uJaWaZrXuGoKJqJKZKcdT7uFO+PPAMUftlIdbkufkdIxMfzjAaUTQEu4ssnqjAHm/BSF1oYATjOOk7KcLlX5uyCrYJcEdgq8K1bu2z4cSh8Xy9SqT4itVOYa5669+1hoTOsjW8dgwNKAt1sCkUe+rshdOpdjBT112ShFfH6w6gc2rpi/CVDOyzYQ8iQ3Vq5YB1p4mDnz15CWKnIBxXy7+hdXOOb+OwyNN2KhEqRh2Z3UYbPxQVZco/bg+ofYXeHTsDpfrDnn355x41oHczGfSzH8GdWEZ1jccN2jefoGFhJrD6h7rsXKhyVMJ45DMZfarzjYFA3i2I/kSkCgEtT3pHZEzMj5OrkB7Ff3wVRsqdXDIa4kOAMIb6oW7j0na/caF7y4qvRtaAIqkeSDpy8scT/ttX0yjKGC9fwfcIBGzdCOO//pRyg+KpCPv/P8q9N+mZPC+XPHzCouvR/ES4W2Hj3idZqVQ
+DKIM-Signature: a=rsa-sha256; bh=m7h63Vfkbsa0ciJt32eJ/ZNE89YtQ2b+nNVlhR2ysw4=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1765270090; v=1;
+ b=fllwxl+5MhspA8iS4QIKdS0QfnYIBo7BrV8rJc/Aoz8u4WLy71zbvADtUYctPPCUf8wdJmPy
+ KpQdetjrFH2Mq6u3rj1X55bfQ2UlDzu0AtN0HDpP02Ha3DY/jwEQz1fxhHJAnjZZmU/GDXCkEUb
+ l3nxP9HpwfEdzkJl4rJKRv1+Z/opJDg92BVg+SwYHN47NI1MTAmd0FiD3oyLSIjEpiNlJveMMkS
+ 1KTcc9BN5y0Ps93fHZsDxJTnQ5v4zTLF6qyf3Dl5MSbWpPB4TskiXIlxqK/UnMx339d7w5roVPf
+ YLnf9w/BQdv8YHAxGXs15BXvBQ50NudzPDpzNdeRcIyow==
+Received-SPF: pass client-ip=178.33.43.201; envelope-from=clg@kaod.org;
+ helo=4.mo552.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,52 +135,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+>>>           }
+>>>           sysbus_mmio_map(SYS_BUS_DEVICE(&s->ioexp[i]), 0,
+>>>                           sc->memmap[ASPEED_DEV_LTPI_IO0 + i]);
+>>> +
+>>> +        icio = ASPEED_INTC_GET_CLASS(&a->intc[2 + i]);
+>>
+>> I'm seeing this fail qtest locally:
+>> runtime error: index 3 out of bounds for type 'AspeedINTCState[2]'
+>> (aka 'struct AspeedINTCState[2]')
+>> Presumably, it's because even though we use `ASPEED_INTC_NUM` to declare
+>> soc->intc, it's only declaring 2 of them. Should we declare more controllers in
+>> intc?
+>>
+>> Thanks,
+>> Nabih
+> 
+> The correct code segment should be:
+>      icio = ASPEED_INTC_GET_CLASS(&a->intcioexp[i]);
+> 
+> Thank you for pointing this out. I will update the fix in the next patch.
+Compiling with clang also detects the problem. I merged your fix in
+my branch and the rest seems fine. Please wait a bit before resending.
 
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> This help workaround a rustfmt issue.
+Thanks,
 
-Which one?  Pointer suffices.
-
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Link: https://lore.kernel.org/r/20210907121943.3498701-16-marcandre.lurea=
-u@redhat.com
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  scripts/qapi/gen.py | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
-> index 0c9b8db3b02..c9721545ea7 100644
-> --- a/scripts/qapi/gen.py
-> +++ b/scripts/qapi/gen.py
-> @@ -58,7 +58,11 @@ def add(self, text: str) -> None:
->          self._body +=3D text
->=20=20
->      def get_content(self) -> str:
-> -        return self._top() + self._preamble + self._body + self._bottom()
-> +        content =3D self._top() + self._preamble + self._body + self._bo=
-ttom()
-> +        # delete trailing white-spaces (working around
-> +        # https://github.com/rust-lang/rustfmt/issues/4248)
-> +        content =3D re.sub(r'\s+$', '\n', content, 0, re.M)
-> +        return content
->=20=20
->      def _top(self) -> str:
->          # pylint: disable=3Dno-self-use
-
-This doesn't just delete trailing whitespace, it also collapses multiple
-blank lines into one: \s matches newlines.
-
-We lose the ability to generate multiple blank lines for all generators
-based on QAPIGen: C (.c and .h), trace events, Rust.  Hmm.
-
-Is collapsing blank lines necessary for working around the rustfmt
-issue?
-
-The generators other than the Rust generator do not emit trailing
-whitespace.  Would that be practical for the Rust generator, too?
-
+C.
 
