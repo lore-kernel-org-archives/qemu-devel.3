@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAA70D1CDC6
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 07:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 268F7D3B7EA
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 07:11:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vSrrk-0005UH-Mx; Tue, 09 Dec 2025 02:10:32 -0500
+	id 1vSrsq-0006Nl-Cz; Tue, 09 Dec 2025 02:11:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vSrri-0005U0-Kq
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 02:10:30 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vSrsT-00065M-2C
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 02:11:22 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vSrrh-0002Av-3A
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 02:10:30 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-42e2d02a3c9so3532747f8f.3
- for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 23:10:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vSrsR-0002qE-HX
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 02:11:16 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-47798ded6fcso39234875e9.1
+ for <qemu-devel@nongnu.org>; Mon, 08 Dec 2025 23:11:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765264227; x=1765869027; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765264272; x=1765869072; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qdD0GmzB51L5As2+RAWX9UlylQDRtHU42ql/6lpbA9c=;
- b=PZMunt5e3UDZhNajS2gB0JJcinnGpfLVuAKt8SVPqFk92ySFK7xov2BGExhICMInFy
- MBPaf0TH1M131PZ6IuHomxMK5WRJ6TjMoJsA6km2YXJvyFtkHaedk6tUHILce30j3PZc
- MnZCcSb0rxQPqYrYybPVqDu4kAu7sK01lOdnFmmRqeUjXJsGkBp8ibZ9QZnq7sauyEPb
- 8lnv0RRAXsOkym356WdYDIMawN/y9W4Zjm79MVhEbo8qCeu6QfyMYYePK4GNqU8s8+qW
- PCJkVKJyRfakc20WvfmGNfBvVBvxqLXt3+Df612pEh1VO/nAa2Ahp/2vtOG57s+MRKL0
- j5mA==
+ bh=ga4ajJPzcJ+zzds3qHHuanskpvSQ8dhYi5pekiD4Is0=;
+ b=gcsbx0uSMdvugM7U8CB46ywHevfWtx51cKH527bzVQVxvsG1TzpJIYYA3Re34ikwKL
+ 7ISa3s7hmISagpGS47iiiBX/67BmDdPdYT4jtZZpOL6LNF4KSbc8ru6yPV0WtkDhqO8p
+ LByKMa+qcjz0YYN5hLuxJo3X2HdrOkQH7/Q/a/V06YeB9ZH6sv9e/kp2rRJxevgn+B2R
+ mN3Z6KQmTkpaGQrIG0CeuS1sixxkEldftZ3Gv1+b/mdjuE2pyCNCaun+W7973mJKR1O3
+ XiL9g8wm7Wb/Zawcos/pUX8Cbu905cpyO1NvfxaWpnA47wShdoQKiTuCh8zwQW3L21B7
+ 6ZfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765264227; x=1765869027;
+ d=1e100.net; s=20230601; t=1765264272; x=1765869072;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qdD0GmzB51L5As2+RAWX9UlylQDRtHU42ql/6lpbA9c=;
- b=ok5mDjVzmFyOALRVFcSpjFeKmEAeoBzS0dHRUcNC0Z0Osoyc3FTwRrqxExKVP59yDM
- qTBPehMjNpE7TbqJsRDPQXyLVQI6Ujvf5JM95LezLxMj6jEmW+D9FttFUdE49RUyHLa6
- 8K2I52OhKltlGU0A6QU2b+43d9na7OvBA8h1Ss4Ww4i5PHh02eYOn+Nwk++DXgmgGs1a
- rTBVdmYZ4B6hJHf55IoqxmH1tQX+buU7N+6qxP5JioeIVAr7+pckWaECf9wmRuw6pA2t
- 2Ia8mj8yezMxSs7GMhe+1Tom6+I+dBD6dEUVVP31bfn/dPCvN2Vn02DNl2VzIuxzGLub
- 7aog==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVOxceBFghP8u7nrOXMJR++AA7lD7/pw0O4Azqw7HDoLM6KgwTWGCEH60x2OL+pIj99lMm9WsnNMH0g@nongnu.org
-X-Gm-Message-State: AOJu0YwjD3vbLgPP+86BfweHJEtrSl6yQQPmkYjvPZm3eSl8IaEfpHPr
- MTlNItsCa1Iso3YXRGzBR0Z0TVmFKhmSOhBhllkHHWMGTuamv6SSqwoBhAIyTvGLk44=
-X-Gm-Gg: ASbGncvmxfJcKC0ruE3lrixF6k214MyB3LC16KJ499XJKvbuV7HPBNnF8WZ+TGXOo91
- 5pKxWQvZJbUWBmyUkLVUstP2gupxVtbY/7Ny8WNKf2k6R18KZxO6UseVISzSgpQTquR6U3nrFde
- 701EQXyuVqIh+j/tae+beoui6D+kS2R9oi244wqWlZbeFoKpBTprHVeri/yMzZpXGlzAkk0CdsS
- stdh7Bpa/mVWNGF3d5XAbdtk+++oW18/TpDwmoLEaZRj/GxTc7YC1R+VPDdRkHC9suNxeFdpq0U
- s5xgC1noYxJ+uwzvBstJSHjbQRT9MZmfUcDKNTsi8NzC+ERxWV+LTpH4LciwXZVg3+C+i1ILhsJ
- WXq4Gl42CQpoj9q6uq8pWfeX8Lky3n9yAs2UW+/3cKqvJh72VzAJ0Rc7qSEcgXlvVdictMDld5L
- 8Hp1iTL174YVGZtMhvqPy1FVeBJmKmlxf1GTaD8X77pYK0ocKP1LrCXg==
-X-Google-Smtp-Source: AGHT+IHTp8oFoHRynAp4fP3dX1k5lgngPnoIhHWMn6H+/M0QgKDL81iLtio40BhLGBpyi53/5i7muw==
-X-Received: by 2002:a05:6000:290f:b0:427:914:7468 with SMTP id
- ffacd0b85a97d-42f89f0d854mr10904852f8f.15.1765264227118; 
- Mon, 08 Dec 2025 23:10:27 -0800 (PST)
+ bh=ga4ajJPzcJ+zzds3qHHuanskpvSQ8dhYi5pekiD4Is0=;
+ b=V3KRhcgZAn0h7mrKoXR7GjudDSOlKD5VoAcD7bQ7liq07ubBNgkPLAtjJggNxVzwl8
+ tGDOfCy6RvZEn4pBRcXjCthAhJfx7meCu/LTbaSPOQuBtKX2VyRzXaXV723nXiON3Qhi
+ oPoTAVIPD9/IqgEd+g/NIwuSi1JqUwpua316Cj3PR5IcJPNKQfxYAG4D1wZcleP+Ix+V
+ UvPO47g0vg5M0lZLS7lHXq1ELElk9rNbb6NuIDowaHgNCdziLAc6+yLYZoZmdvyrFPsS
+ 6TribLW9fsJGAo2T7ZwaT5w354DY54Tmguzx9GRaMi+4Zmigc9ebh71ss+aWdR3SKipm
+ pUvQ==
+X-Gm-Message-State: AOJu0YyLU2hK6hmSEWQAfe+NsbpbwnK7Ni3qMUZJeZiapTMGDRbwfsGu
+ 5nv2PcScN/ogmwvZrvMOMP7crhrcKNFxipLUk7JA2o3y2hKYgCLQucBrCJW/Xo38ry0=
+X-Gm-Gg: ASbGncsBjWrBJDaE7RfBxEGASk7fXTxhnm4Mym6babGh8FjKdKA+oVWNcy0hRGiUYDd
+ 1L7Qy1NBg8BRASLrf6dCuCIHiMSWU2joXETW8C37lWQXBYC4yRq/tNeZl9SE4JEcPiKbzVF7QSL
+ du6UMCTduqGBOF25lYJJyRcT5QTBFPqYGfyZK3p61nU52C63RIVuSyR/yj8G3g0+x7nmJMizMSg
+ 8fhxGUZUC3rcJbzZNzzNrhu1tQxNv4fpohbAugyJGLb1SfRxyETI9hKX7ZotaigV+7auK19gfKy
+ TCrd7HPjfOC1YAYPhxxs8/b+frbQFElKoil8MbZWWpKKoNDb0Cpk0nGMbZxdW+P6v3AEyj1EIyp
+ R/YgSpTZlgTBRzgijikNM7KDS83NoyIzD/wRiP3m+YyqiNg570cy61cMdqQ+/5PuTtVUIALRsfm
+ 7yxnCBTzHEuIGpdgyQiT1TKFyzqv+24oKHUOD2+mpAQ0ptJGpuDNSdsw==
+X-Google-Smtp-Source: AGHT+IFoEVjiAJnrbvYg/Nl/dg/F3h/QIDdxNmC+mo39ioiPd6z8p9JtUGoSMI9EhiLwk8YUH2o53g==
+X-Received: by 2002:a05:6000:2211:b0:42f:8816:a507 with SMTP id
+ ffacd0b85a97d-42f89f639fbmr10522044f8f.60.1765264272250; 
+ Mon, 08 Dec 2025 23:11:12 -0800 (PST)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7cbfee50sm29754957f8f.14.2025.12.08.23.10.26
+ ffacd0b85a97d-42f7cbe9065sm29888851f8f.8.2025.12.08.23.11.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 08 Dec 2025 23:10:26 -0800 (PST)
-Message-ID: <c644d007-263a-4963-9e52-c532b9c4e902@linaro.org>
-Date: Tue, 9 Dec 2025 08:10:25 +0100
+ Mon, 08 Dec 2025 23:11:11 -0800 (PST)
+Message-ID: <dd541a44-4d84-40e8-b8e3-82951039036b@linaro.org>
+Date: Tue, 9 Dec 2025 08:11:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2] vhost: Always initialize cached vring data
+Subject: Re: [PATCH] tests/qemu-iotests: Fix check for existing file in
+ _require_disk_usage()
 Content-Language: en-US
-To: Hanna Czenczek <hreitz@redhat.com>, qemu-devel@nongnu.org
-Cc: Stefano Garzarella <sgarzare@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>
-References: <20251208113008.153249-1-hreitz@redhat.com>
+To: Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, qemu-trivial@nongnu.org
+References: <20251208075320.35682-1-thuth@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251208113008.153249-1-hreitz@redhat.com>
+In-Reply-To: <20251208075320.35682-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,28 +104,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/25 12:30, Hanna Czenczek wrote:
-> vhost_virtqueue_start() can exit early if the descriptor ring address is
-> 0, assuming the virtqueue isn’t ready to start.
+On 8/12/25 08:53, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> In this case, all cached vring information (size, physical address,
-> pointer) is left as-is.  This is OK at first startup, when that info is
-> still initialized to 0, but after a reset, it will retain old (outdated)
-> information.
+> Looks like the "$" has been forgotten here to get the contents of
+> the FILENAME variable.
 > 
-> vhost_virtqueue_start() must make sure these values are (re-)set
-> properly before exiting.
-> 
-> (When using an IOMMU, these outdated values can stall the device:
-> vhost_dev_start() deliberately produces an IOMMU miss event for each
-> used vring.  If used_phys contains an outdated value, the resulting
-> lookup may fail, forcing the device to be stopped.)
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> Fixes: c49dda7254d ("iotests: Filter out ZFS in several tests")
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   hw/virtio/vhost.c | 38 +++++++++++++++++++++++---------------
->   1 file changed, 23 insertions(+), 15 deletions(-)
+>   tests/qemu-iotests/common.rc | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
