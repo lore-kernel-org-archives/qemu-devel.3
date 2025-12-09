@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94B2DD3B7F3
-	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 20:08:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6A87D3B997
+	for <qemu-devel@archiver.kernel.org>; Tue,  9 Dec 2025 20:08:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT3yM-0000wf-91; Tue, 09 Dec 2025 15:06:10 -0500
+	id 1vT3yP-000136-57; Tue, 09 Dec 2025 15:06:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3yH-0000uM-Kk
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:06:06 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3yL-0000wj-R6
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:06:10 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3yC-0001IP-Up
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:06:05 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-42e2e52cc04so2199374f8f.0
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 12:06:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vT3yK-0001Ix-5K
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 15:06:09 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-477b198f4bcso52820015e9.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 12:06:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765310759; x=1765915559; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765310765; x=1765915565; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nV8HsfTtIPwCBLUDWBKBG2A2y3njTaM32r0hbYhDIlk=;
- b=Ti6VwvMXohOaTe8DqlJzMmH5gPy41t1QDeLBsBgSkn5FAaYbG0WZiu8RksKO1qmLIe
- M0LlbQGvaDUd6NxVK44uwGO4BJ0kSU0gjyRaDQ1gSlOpIZP+RXbSyeUJ6Y5uJ6yEbAly
- DKI9z69WqJEzjvFts7Tw3K/FdoghIfIyaS+a1elyFs3rAOFRlGB0zXk7sEzeaFrUFa/Z
- IuOp/dVvQdTar8/y4HIv1rcEG+PS8d1MbzVcp9ub1pddlHtjqtaeDBq33oB0wroanezS
- DONmGQhg7sT66tRIUh+1K6HUGmTc7i7fiy10Id8GSVm2qNt5/Nw3zP8q+zwGHRkJc9vA
- sAuQ==
+ :reply-to; bh=2TsH1QuOfILL0JbSzIZnX8n/oioAmO7Rffye27/Lbio=;
+ b=wBAtmHHOEVkFmSK5i8dduhuRx6ujtDU8xUvIC9mkLV+AMWrRAIX7cqUVBtbPRQnroy
+ vTJDrMvKU9MGTpeBmEi9OzRdqzWx/C1vlLcudTR69GwC2IhVFeV2GwanJ/OMsVzz1UJ4
+ DDAfXkOICSpWdUZwQaZrQ5TqERnlrRxB5vrpAHnzJR4X0L4uP/LFriSjTesraeJlqIA1
+ 0oK/qzE8HvYMZnKxLKsUwTV+ZuCixcGBOOrOQgMyUBqAXTDZGRoZljdLOX4bco1wMB0v
+ QohpGkbwDlRNgi2gt3/wsF+SR5A02ds5BlHgRl7YVklfIxX/ArnxN2F6ea4sRVtLWDfz
+ jlRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765310759; x=1765915559;
+ d=1e100.net; s=20230601; t=1765310765; x=1765915565;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=nV8HsfTtIPwCBLUDWBKBG2A2y3njTaM32r0hbYhDIlk=;
- b=V6AftGirizoztfiTj0cYLNWM+7mOelBb6dwssugb9shaz8a/y38YruXjgo/PaUdprP
- 9dw7gAHn4NECF8w/sMULPMrSL0Y/qpVZOz2KkQyyDhIcpZVb76Y2ZVIeYhwo4IbmzFQG
- JWfQ9MhgautznsmrpMV98RgGPKIFS1Flkqgwb0efG3c5l2QsxeU+0XaCV8PsO7AjLWYj
- dvyRqmoq3MXnMeEp5Yd6dHpC+HHc4JTk2itrNpnFZUG++CUsdmM5sKwS2BP12Wx/hQiD
- 1ThMY0UgTHTylkW42esfJ9MuI3fZ9vqL24Biqy1eLc7RX50jLLTkJQnS7OiP68Gkxzt7
- C34A==
-X-Gm-Message-State: AOJu0YzsHsFmx1eqw7/9v8LyDc6Sgg/HBREfPo93/ODNTruXu99mPisx
- cfR5GQhJZmL/OL96yuNXSDtj5h4OkGl71d1LDPzsy0hQ5O03SmMVHha/H8Jctu6EUsmpyXflVGM
- WyC9BzeQ=
-X-Gm-Gg: AY/fxX6JxRbKgswyPfA9M0BLRmOEmX/nxiaM9Kw2S7LO78d3z0LHGS9X4HxAPGUgSFn
- Dymn3+RDa9lNs1rbqQTmdbTnzkuYI6RC1H+nFemOWGrgjeGHNuFWgGPerTw3qyuYpEO9jtGZQFx
- 8gT9uSlhMRaZyRKDYzCizsiP3nbSd/Wu9Xl7ipERLdUSyXAKnKrMuwKpi1shZI+Yo8t2NJ8sWg6
- uYZJl7UclmJqK6Vaphz6uIqbqTtyY19SqU/NeklCAaj5ilEqCO3BU8XruXk52zPlhDSCO2XYp2A
- 2vHH82BkuHizAsTtediKqyVL+lcVwaxRG9rfKFqmgBWso3vBuQI/o6T9vSGBiUKMYBcDz+ez5Ad
- 3ai2VPbKoyGJo6vWW+95VQlbn15JUD6BNJelFrenNGZIcxmfLCYMWmN4YT5JRWZK0S9sggOROvD
- 1uZ+/T5O9QhvTa9PTwYwKkhacdrp42YoWDcrAE097RO2SzxqSNkV5OsxD7Eaod
-X-Google-Smtp-Source: AGHT+IH2cw0I7SJ8QFCAtnolhyyiDtxvuDawq/k5wAma/6zi8x9yhItqbLibLU6a+hfr+0eSl4HBbg==
-X-Received: by 2002:a05:6000:2508:b0:42b:2ac7:7942 with SMTP id
- ffacd0b85a97d-42f89f0fafcmr13391482f8f.5.1765310758675; 
- Tue, 09 Dec 2025 12:05:58 -0800 (PST)
+ bh=2TsH1QuOfILL0JbSzIZnX8n/oioAmO7Rffye27/Lbio=;
+ b=jsCBR+h6ESv2emR/VV71l2ILKv0EFk4geYaaUdxsz5mJf/qdHLrMbVzBnrttZcUhDI
+ l/+8hIHeZIONiKpNEZpxH7Uls9Q3JuCj6cpVNe/j6moFxmJ9oIjEYHegMIUEYf4HzsJ9
+ 1qfk6pBa5wOo3bGcg0iJUSxVh/pi7Vfz3zmE4zF6QYEiYBvBvAF5juAOeEk7yAZKbU+E
+ Eyacd+gumVWVhyaIKxyFcERXUdCzIs9pkc4a/VEVXDLVFZz6SulHy3/FyjSLjYJOTAjb
+ ZaOEl+aDVMBGA/4Vy0Gd9Xeb0TVL9W2l2f9MRlZ5guNq27Bp1Qdcfl/t6mj/FlTchIWE
+ gcdQ==
+X-Gm-Message-State: AOJu0YzQ+eqNIKp7aLTdPs5BqGDn2hzeqvvPdFStPM8vkiMXT8VNmsmc
+ DPjB+q/OpzFSPrkZoqwhy2H+YrjD1Xy00B7JCxe42p11VTVsJ1XXnEpKW/+jXwPZLil2i6tmsLt
+ qFQrs82Q=
+X-Gm-Gg: ASbGnctSFuqA56vYNo6OTeh+TLV2QsEhrCXXuVDJ/16UMJ9fPfKY9mk2KbEVr2LDQSG
+ KpavFZns4kEGqB6vaQgAlOAE3qlGBizVYyhRpdIzMGnwJNc/Tf8eGgdmP1vvYvU2ayFxqrC/UOI
+ 2KmassJaDBAJcnxJGBvmYAyeD/DeKEm8mnq52J1GiQlE2yzj0uuq+S2SQhF3VnHol92UpOOUqFk
+ V8geQpJT8mbza08Ma1xnXh+UHyikSrgydaSCi7G0slUCswiiT29n2MsSbGQp9edc6bC3ILTjQ2t
+ MHEZSMFqB6+4SawgAATxF3uoG/rgE8CNI8p7f0Y0BkEeUcTpH8hpDsdLcXbmsiNzPzbnryAjQja
+ bYL1oqy5rTIuqLpBw/mbLJrgBrbjqfs1gTrH4AGEVXj0Cw/HqkeKeIYP+P5O7mOLm+5DWbnVEvX
+ d4Eg22ICHfnuGNBa4qr7QUqT7ffX3konWVN3nHzJUxdZLwFFYyeAa3/kMj4/LP
+X-Google-Smtp-Source: AGHT+IFqxVth0wnzVr6cP3Ln91muyD60oO13YIgzEwHN5xCcbtD90JjCM8YWvRvNdn1b8nltbVnIhA==
+X-Received: by 2002:a05:600c:3496:b0:477:333a:f71f with SMTP id
+ 5b1f17b1804b1-47a83790c18mr968935e9.17.1765310765285; 
+ Tue, 09 Dec 2025 12:06:05 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7cbff320sm33805663f8f.18.2025.12.09.12.05.57
+ 5b1f17b1804b1-47a82d7efdbsm7210075e9.9.2025.12.09.12.06.04
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 09 Dec 2025 12:05:58 -0800 (PST)
+ Tue, 09 Dec 2025 12:06:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/10] scripts: fix broken error path in modinfo-collect.py
-Date: Tue,  9 Dec 2025 21:05:30 +0100
-Message-ID: <20251209200537.84097-4-philmd@linaro.org>
+Subject: [PULL 04/10] vhost: Always initialize cached vring data
+Date: Tue,  9 Dec 2025 21:05:31 +0100
+Message-ID: <20251209200537.84097-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209200537.84097-1-philmd@linaro.org>
 References: <20251209200537.84097-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,37 +99,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-sys.stderr.print is dropped long ago and should not be used. Official
-replacement is sys.stderr.write
+vhost_virtqueue_start() can exit early if the descriptor ring address is
+0, assuming the virtqueue isn’t ready to start.
 
-The problem has been found debugging building on some fancy platform
-derived from Debian.
+In this case, all cached vring information (size, physical address,
+pointer) is left as-is.  This is OK at first startup, when that info is
+still initialized to 0, but after a reset, it will retain old (outdated)
+information.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: John Snow <jsnow@redhat.com>
-CC: Cleber Rosa <crosa@redhat.com>
+vhost_virtqueue_start() must make sure these values are (re-)set
+properly before exiting.
+
+(When using an IOMMU, these outdated values can stall the device:
+vhost_dev_start() deliberately produces an IOMMU miss event for each
+used vring.  If used_phys contains an outdated value, the resulting
+lookup may fail, forcing the device to be stopped.)
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20251203220138.159656-1-den@openvz.org>
+Message-ID: <20251208113008.153249-1-hreitz@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- scripts/modinfo-collect.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/virtio/vhost.c | 38 +++++++++++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 15 deletions(-)
 
-diff --git a/scripts/modinfo-collect.py b/scripts/modinfo-collect.py
-index 6ebaea989db..db78b16c1f5 100644
---- a/scripts/modinfo-collect.py
-+++ b/scripts/modinfo-collect.py
-@@ -41,7 +41,7 @@ def main(args):
-     for obj in args:
-         entry = compile_commands.get(obj, None)
-         if not entry:
--            sys.stderr.print('modinfo: Could not find object file', obj)
-+            sys.stderr.write(f'modinfo: Could not find object file {obj}')
-             sys.exit(1)
-         src = entry['file']
-         if not src.endswith('.c'):
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 266a11514a1..e654ea468a0 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1261,7 +1261,7 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusState *vbus = VIRTIO_BUS(qbus);
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(vbus);
+-    hwaddr s, l, a;
++    hwaddr l;
+     int r;
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_file file = {
+@@ -1272,8 +1272,17 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     };
+     struct VirtQueue *vvq = virtio_get_queue(vdev, idx);
+ 
+-    a = virtio_queue_get_desc_addr(vdev, idx);
+-    if (a == 0) {
++    vq->desc_size = virtio_queue_get_desc_size(vdev, idx);
++    vq->desc_phys = virtio_queue_get_desc_addr(vdev, idx);
++    vq->desc = NULL;
++    vq->avail_size = virtio_queue_get_avail_size(vdev, idx);
++    vq->avail_phys = virtio_queue_get_avail_addr(vdev, idx);
++    vq->avail = NULL;
++    vq->used_size = virtio_queue_get_used_size(vdev, idx);
++    vq->used_phys = virtio_queue_get_used_addr(vdev, idx);
++    vq->used = NULL;
++
++    if (vq->desc_phys == 0) {
+         /* Queue might not be ready for start */
+         return 0;
+     }
+@@ -1301,24 +1310,23 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+         }
+     }
+ 
+-    vq->desc_size = s = l = virtio_queue_get_desc_size(vdev, idx);
+-    vq->desc_phys = a;
+-    vq->desc = vhost_memory_map(dev, a, &l, false);
+-    if (!vq->desc || l != s) {
++    l = vq->desc_size;
++    vq->desc = vhost_memory_map(dev, vq->desc_phys, &l, false);
++    if (!vq->desc || l != vq->desc_size) {
+         r = -ENOMEM;
+         goto fail_alloc_desc;
+     }
+-    vq->avail_size = s = l = virtio_queue_get_avail_size(vdev, idx);
+-    vq->avail_phys = a = virtio_queue_get_avail_addr(vdev, idx);
+-    vq->avail = vhost_memory_map(dev, a, &l, false);
+-    if (!vq->avail || l != s) {
++
++    l = vq->avail_size;
++    vq->avail = vhost_memory_map(dev, vq->avail_phys, &l, false);
++    if (!vq->avail || l != vq->avail_size) {
+         r = -ENOMEM;
+         goto fail_alloc_avail;
+     }
+-    vq->used_size = s = l = virtio_queue_get_used_size(vdev, idx);
+-    vq->used_phys = a = virtio_queue_get_used_addr(vdev, idx);
+-    vq->used = vhost_memory_map(dev, a, &l, true);
+-    if (!vq->used || l != s) {
++
++    l = vq->used_size;
++    vq->used = vhost_memory_map(dev, vq->used_phys, &l, true);
++    if (!vq->used || l != vq->used_size) {
+         r = -ENOMEM;
+         goto fail_alloc_used;
+     }
 -- 
 2.51.0
 
