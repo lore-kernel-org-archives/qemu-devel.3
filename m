@@ -4,93 +4,193 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A27D3B9A9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 05:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B8E0D2CE17
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 05:24:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTCfM-0000Kk-KF; Wed, 10 Dec 2025 00:23:08 -0500
+	id 1vTCg5-0000hY-7x; Wed, 10 Dec 2025 00:23:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTCfH-0000K9-4o
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 00:23:03 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTCfF-0006wA-0a
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 00:23:02 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-47798ded6fcso48442745e9.1
- for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 21:23:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765344180; x=1765948980; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=cbK1eY/a7f7r/FXqZuD20S0rpfAjPQMM0B2HxoXfDoU=;
- b=DeCCu6MH1lbsYgophvoFPOQYN8KoEuFrKN72STfG8j+hcdPk/2AMTEQ6u9OvLG6jTj
- p5qj8Nm7C1joNK4bJxL4223XeFmBgln16gk/yCWXfuVzAdjl53MG9wQeV7iOIRfwb4Zn
- LO+LEOZ/czQ5lE6DpbuxvTsof7zbHXiEXpJE7v1CoOKyM63aWQBifZ/Y1gUKdFx3dM3M
- 7FLxIOZL4iQQyYgbYTfqoYRQCUgDSigeb0S1iSnXyx4/Lu3ClXPkxZjsdyj6B/3BEDOZ
- t/bLp4xhyXWy9c9qHQWE2YR30L/nEeaxuoMQurXEtKSJUGA45OswhaW+3GMo9Kc78mQr
- VS4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765344180; x=1765948980;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=cbK1eY/a7f7r/FXqZuD20S0rpfAjPQMM0B2HxoXfDoU=;
- b=TqfN64CUCP09C6/R4I9VJ1ewx6PyyrXrkLgVDq5IqubJgU8SNohGXcKy9X9j8FkXO8
- wdqipLm0lcy4+iW4VrRf98XBZpN6jKdTKBm9EKHgjlgWrFC5bDso54dqTuCGN1bVA7os
- vrplgiIEtrFietwmM12Z7HPsnx66JrPw1MS6ME6c3GYlC47qk4VlJRldF/6KJwyRhjwl
- or8ZqdR7w7MKTQCEH0sPpcGyx9SuYISNB7U6U7WHubH7XXDWiXUUAyS77f4TVTYiiNcU
- jKssKkJFVrLCRm1Nqy3x3ozxBRHwp5vl2tnN1wj68tCsgACJb6TsAR2s35gFgl/4eDYE
- +wBg==
-X-Gm-Message-State: AOJu0YxeleXvkJtuHTKK1mZCJRQIhRc+R/gzTzZIQ/3alfpBdQRMHzLJ
- DnGK/TWBSlJjNLFuW5cniEAJ7uejaG3uVFFp70s57SWT6LXNxyPPmHI8O5KyD6vFB90=
-X-Gm-Gg: AY/fxX7JS/0mHmvCNBVOsjq9O7nttjyGCzJLFwpGWTdXEKzUDeEs4Z91KtZPlLh/t1c
- KfYCrsoVMbI8Pi4Y1X3D+zkLYoeItkdyn4xpwQIrqzpf5Q2XBbq/S0AoDLbpG03dE3gS/gaofdr
- 91PZZnU6lpUChgAZ36xB3Y+X+540V+0Ym7Z39UWyg0541LTiDqkrLKeHiznpOyeThwABzBPm+/3
- MPRIfeO+taDk79C97fi0jcq9aQJHCTr68oqJkYBv8SO4aRkVG4H60g5MZBSIgCWFADRfgJNLQm3
- DUuIQOF+tZ1CcuHlzlU++KE0twDNc3+CW6SwXjspJWIRbjZjqTIBD+8X7dwaE1FLcsPcjpNoqIW
- Az39YqQ+rfA5AiM2qqmG1R1Ka/fjtSxF9b+/H7f/kayawe8YVj4ufJR4rGU0KyEA9dbI1AWcweZ
- TNQtlzvG8HgpHkmvmXkoczGFexPzWSe9/Z91O6/x+Rdvk7019iwRzJun4AN/byZ8w0
-X-Google-Smtp-Source: AGHT+IGvlBbkSNNMjJdfPLw5g25nIlpkWcuiSpW71RQr64N4FfA6QDHg5ho+Js9Y4kZ/qcES7VwxEw==
-X-Received: by 2002:a05:6000:4007:b0:42b:47da:c313 with SMTP id
- ffacd0b85a97d-42fa39d9328mr871266f8f.3.1765344179594; 
- Tue, 09 Dec 2025 21:22:59 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7d330b20sm34410629f8f.29.2025.12.09.21.22.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 09 Dec 2025 21:22:59 -0800 (PST)
-Message-ID: <36365615-9e43-4ce5-a1ba-e495eacb1f24@linaro.org>
-Date: Wed, 10 Dec 2025 06:22:58 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 3/3] hw/openrisc: Add the OpenRISC virtual machine
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1vTCfs-0000cp-6r
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 00:23:41 -0500
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
+ id 1vTCfp-0006z3-M8
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 00:23:39 -0500
+Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 5B9L2JoB945755; Tue, 9 Dec 2025 21:23:30 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-id:content-transfer-encoding:content-type:date:from
+ :in-reply-to:message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=zAr5sSG5gQVtoioZaWgxGvXRkH4HC3OY17Yw+XQ9H
+ lQ=; b=OR+NtRy27UhyBZmCMuFXgd8V1v+KeWzc5wPErubHYWWArpzYtVzms9vZg
+ UkXHAbpAf8fNU90SnusJJkiTpN+J5iq+ZBY67/tVPONUl2JFllgKbfLmFVAr+NmY
+ b27DLKT36iHE9047tUfYd3nXpH/TAUReLQ7tUkRo2YTvbwSfmFabRJ8XQ6UUse47
+ /gCsglNcMnXr6+5ziFOw1zEzOWJb2xdHZtjwzLdgyfVCPFY0mN9fr4OHdkMqbgNO
+ Zc2FdoiwTNfwPOdbsghcHPJvJoWb7OmAu+uiAa6zgbmEDlGH1XSo/G9jzKGVxT0j
+ ktFsxJUg+JQTFXZ2ndcn/k05xvbcg==
+Received: from cy3pr05cu001.outbound.protection.outlook.com
+ (mail-westcentralusazon11023076.outbound.protection.outlook.com
+ [40.93.201.76])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4axub5udj1-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Tue, 09 Dec 2025 21:23:30 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Jzmb8ZTfx2838WEBAKDHkHbpCE81TRzwliRp1kv9zVlU1WyvbudwYaX963VPFuraerqZ0a8VWxmmRh3VIrynRplooTQK3XgcTDJO42q2Mb9aVU+PLL8fWwa7amIu7GxGKNCtteoN7u2C69ARLOaUBMJ4Hsl3Ue6MiObQc5xdnVyUf78Cd5o6A39IUS0oSLzyXg0j+pJ/x0BiShkAoRz0TB2s/fC0kx7QABxaOIyTi+QD1a2apDgWuneSnSkKzqlPMEJa0sMYL4VO5KYbsXyuKFUacRL0/iea0wxomZcGE+FyK9KUdWQMthiAYhsaPII4qRIgk6iuSVVOaMBpYxo+6w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zAr5sSG5gQVtoioZaWgxGvXRkH4HC3OY17Yw+XQ9HlQ=;
+ b=hfnCAXjQ+CUiDdwofC2eQZVBYD1uneejU+TEuQm+NZXek+EKK7I55JZ5kJ9edzntlwMFc/j5F2t9R2gRmkLWA6Y2Rhs77XUCs+/WtcwoBEk6SaghZLAfNEajrKMwO8ESN13DsCktZLGtk0I8AjmueSMAgMHYrlEqkA+roJGSgkMebDn7xsT/MH2cvst6AdC9OqjnPQQTssya+gc5XpSxgVPJj26wW+WlHBCy6kiSq3JqzX7gEbrXLSZfFT7UV6N1OL5P807ovD+HQsygvX4yv77QSVMljkGDwUjTUUkTyN/kPBWPm3Tlq+Ij/mm7ET8aQnQow9g1RiDHu7VFu3q1RA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zAr5sSG5gQVtoioZaWgxGvXRkH4HC3OY17Yw+XQ9HlQ=;
+ b=oZoi5hTFzaSiX6CDSzACgPuKPdolciG2PvY+b1JCpzJGOfiC/ktkDXDb9hcKTGhFWTVWVRIsUeiyLRztUhUTqriQA3FD4+2BcdEEYtfWXV7YuHoW2yKfVgRVRv4DGx2/iwoaQP1JBKKel3RbAmDg8E7TepDWUft6rQ+rjRIVOy+9DR4/f8KyXvuJzR05e0CiUfX1+0VrpxIkobDaTqQ+1rcmHgylU+lQMw6hszof7rtmCFEctcZpNwDCTJ4csToo20UuW2gUIkD4V1KBY06T34wleeezu68NJPCFn26LDBBD57Qksrm2kw2ZtUvYHz49NceqFikV5HnmkKn7GXL3ug==
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
+ by CH3PR02MB10533.namprd02.prod.outlook.com (2603:10b6:610:204::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.14; Wed, 10 Dec
+ 2025 05:23:25 +0000
+Received: from SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::27c4:c948:370:572b]) by SA2PR02MB7564.namprd02.prod.outlook.com
+ ([fe80::27c4:c948:370:572b%4]) with mapi id 15.20.9412.005; Wed, 10 Dec 2025
+ 05:23:25 +0000
+From: Khushit Shah <khushit.shah@nutanix.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+CC: Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Sean Christopherson <seanjc@google.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
+Thread-Topic: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
+Thread-Index: AQHcXrhurlricMg9iE6/H6LGVi6DLrUEthqAgBW2oIA=
+Date: Wed, 10 Dec 2025 05:23:25 +0000
+Message-ID: <C1DC0AAE-AE34-42E1-A15C-E03D1EE4D770@nutanix.com>
+References: <20251126093742.2110483-1-khushit.shah@nutanix.com>
+ <F09B2DC7-6825-48B4-94A9-741260832167@nutanix.com>
+In-Reply-To: <F09B2DC7-6825-48B4-94A9-741260832167@nutanix.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- Joel Stanley <joel@jms.id.au>, Stafford Horne <shorne@gmail.com>
-Cc: QEMU Development <qemu-devel@nongnu.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Openrisc <openrisc@lists.librecores.org>
-References: <20220527172731.1742837-1-shorne@gmail.com>
- <20220527172731.1742837-4-shorne@gmail.com>
- <CACPK8XexaTREY3Y-jp8urTAE+UmQWgygFx1MAss9KcJw5tGMtw@mail.gmail.com>
- <8c34270f-9fdc-3e94-0984-29d9a5e5542f@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8c34270f-9fdc-3e94-0984-29d9a5e5542f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|CH3PR02MB10533:EE_
+x-ms-office365-filtering-correlation-id: d9f596a8-f464-4d6d-cdd2-08de37ac3e77
+x-proofpoint-crosstenant: true
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|10070799003|1800799024|38070700021; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?eL2HUNrKmFz+DMeiu8wf5YpMRyVDBmyEcITkTfyQKsJ0wSP8LrzlvGLUxVbb?=
+ =?us-ascii?Q?Nxu3G1/sAmYiTVgSvRHuU6xbIW3W61Jo679BDETw0ETLXjyuLN5xWU8IRKbL?=
+ =?us-ascii?Q?zyIR9F7BQFHMAPoDA3DmgExhg+UDAgn8sihBBaizKKtMFnPJBIkg8XYZrxHd?=
+ =?us-ascii?Q?7cYtxmS8V/V/IDEjaa1lUT1IQBEY0ZwGT8t+ceP3vshC34KcpKKb8h1MVZKR?=
+ =?us-ascii?Q?iKrZ/6ZgkjFX5vNQPSzcZ8MTaTewE4aL/L4ErX3EsoUliMu7vctguiZxZQ+9?=
+ =?us-ascii?Q?/xiONiKGSqlsxOl3KWs0oEcGct/Yp6fUaofxzn0PFtCsa/+IfE9VEJYi3Dne?=
+ =?us-ascii?Q?GUTWP8pSyqRKGzINauQ+mJ7ie2IHMbpdAm66hZnH+bQaLQgZfM93AzVwEUFX?=
+ =?us-ascii?Q?etkoDJ3vw1TfduK5WuzY1DDpCbcvhu/FQuBxnc/0As4Nar0crL3SY/m++Hcm?=
+ =?us-ascii?Q?TIh4bbKtRIdc68qmnqeRY549SSnn9cjsV+MjZX0HSRUPrR6Tr1c8c7S9x65/?=
+ =?us-ascii?Q?Kvbul7m+LVwyBdW4+OErvhXO7aXTxoLrcdfQbKZIk7vkkJ1B5MNJ0C4/MBcE?=
+ =?us-ascii?Q?wHoXl7mrPAAkwlM5Okvnv1Ioe/IUtcKU7bdYKVcEEtQfmGjHAXDCJg9GIxId?=
+ =?us-ascii?Q?+KT4IHB9zMlbA6b0vc9bS5FT+uh9VnFdEyyP2WafJQCFKO1NCIww1W+rWSVu?=
+ =?us-ascii?Q?Z8Lk3RNhJdyq3p834abr/3aRJO/mKvgfkzsRCBnJ7KMVulskL+UT8oohmLow?=
+ =?us-ascii?Q?uUlkpgVPSdG32ycSUjh1MyMjvsc9Y/xjVT1kJhNH4LNL5/MFhd2OvGvKtw0c?=
+ =?us-ascii?Q?upEDdZvNmTDna56M7P50W7Bpl19/8LILJgPf2g5DpX4N/nlxtyKwZdbrJ9ls?=
+ =?us-ascii?Q?HclmArN58t4cCXN3ekO4hJWqzNBmwsM+2vgHJk8QoDp92IXfCuY2eQw5FLbv?=
+ =?us-ascii?Q?TFclry4EqgQtI3NyT9822/dtwtOXxIx2XBf1xOYdqFv7PSdK5stVsSXtlGPJ?=
+ =?us-ascii?Q?S5tpvmTWEeUMlFsqBKpzuKf84v6nerecIWfkeVJIwqC3GgyqQIYaPVScvRRU?=
+ =?us-ascii?Q?uPPW5+/3es2T/9fDc/pI4SfHOZ6JHuoCzM6IyRUV20PaPtNBYLlC//VHVNX1?=
+ =?us-ascii?Q?wFwhs4snD2UY0SmHtnEbNK1n1e8BH4RcRkb0Lge/8kjyj6R7jYYe5U6R8HQq?=
+ =?us-ascii?Q?2HUGwaPnJ8MvtaYTKQ6q/oCetZrRWVlWbIYIsW/uSgQ0854tAnw5yI7KlWcA?=
+ =?us-ascii?Q?KGUd6duv8+w3wnj6oedpVujB6fDtjT8W71Nz0lqlkSYGLMw4NZQiq+OfMNqC?=
+ =?us-ascii?Q?vZ8TpceeQL5N6OOzCe+z8CrusgeHHgbUS0QDBCV6NF4jVZF4KrmuuBI+Wvxv?=
+ =?us-ascii?Q?gjAghPB18W5pLjVsr/2CraTuoSCJeZkd5UPJeOX63ZbnObT6wXScibDkLele?=
+ =?us-ascii?Q?1KPN+Ui8neuxSDj/Cs9+SUFIvH0d585dGk4kKFBxPTqJd3zx4VwNulqnDz3D?=
+ =?us-ascii?Q?hNw/hFXNxBmClQ6Lq/gzpTLK1CWEgUI+FHlh?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(10070799003)(1800799024)(38070700021); DIR:OUT;
+ SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?XCqSeNtRn/LEYQIbxd3jcs6+SFIUqGSjtw2aJfY/xARzhdwB0+RGPaIBT2se?=
+ =?us-ascii?Q?pMuuQL/RqxfTmbcQHQHIhtfPo4BufwiGklJFb2bPJCwQA475suaPWxgs726l?=
+ =?us-ascii?Q?bH2/lk4LHjh89+vz0xQKwjvQjP3Ej97r5I8pXicqPv9L7kyO/QBXRx4p+xN8?=
+ =?us-ascii?Q?oUF2d7pgz8Q3a2SIrn/aSva1oYUnfYsYjjfI20kJpNwg0pHdWt6daL5j+ryw?=
+ =?us-ascii?Q?d9ZDrtFZXMFY0SjwkL19TM5VTiUNureV30gKGJHc+4wmUs0fjqHPEbtgNmJg?=
+ =?us-ascii?Q?3kiu0FC7N0YdtkgjjV6dPaKZ18rKqY8wEQ9DJK9vq1hoMu8eeaglBG4ptNHH?=
+ =?us-ascii?Q?miMngAlRYsIOQWllT5HnXg//L9w81KbEkj+FAFaREVmfCIs2gCj+fyGfnXUx?=
+ =?us-ascii?Q?ab8YxzI1T7I2TPd5lkTyqp1PyDpVYjeSBTOJ6fLRUsNV8O7d/sgimzFFjvB0?=
+ =?us-ascii?Q?iTjwwLNS5QFxc/IA3rUHzAGzUwVRKJO13tHZ2OJc+nknepzJBfKuxkwOxSDA?=
+ =?us-ascii?Q?qtXRiKLznC2QeIg6ZLj9jQntXoVZksVpRWa2xnuqFGnsOtOy6Y4sOgQXCKSa?=
+ =?us-ascii?Q?cfWd0juZZaZIq/1BHE0rt1p4sgQtDEg7gGU3XOjFoeYwPU/2CUVjZoVIAcbb?=
+ =?us-ascii?Q?w029iBBahBi/UT5ws2ZGLG/tLMP1a1sMXMyRqlvI8V+sOAkGD5Tza1IhXWjL?=
+ =?us-ascii?Q?0+yKA4l4laWAAvxxyLy/VICy+K2vO7mt0rbnnRHMtGMkofrOJXpwDXsxdp9u?=
+ =?us-ascii?Q?kuJhJD8Ce30uQ5toLn2f2Gh+46LkXoYQlAdJPulBw4w6bNOjFt840I+j/3qg?=
+ =?us-ascii?Q?eD8dva7jlbGXVUfpweC1raWCJ63jONruPXT+1KHa30vpGHxQfFaGtcdg7iXX?=
+ =?us-ascii?Q?TCez/RlkC+aWmRDAS3KQcZRFnqswC+FR3BFaV2Z21Li0J8hKuw9Sz0wy30f5?=
+ =?us-ascii?Q?9rsg9nqIJIbKbVoOCGMkNWcZeObL2kPPSaOxS/mNl5w9pXtTMpWHbGxQ6+Jf?=
+ =?us-ascii?Q?D5fpxYxov/3GHCP+Mz+Qg0NuUbbXYStGDHm/Q/C+CaXXir25FzrNe4WHZM3z?=
+ =?us-ascii?Q?1jSdBYqePcbxdf1gTITKl3369WxE6Ug3qxAcWsLCE5y5KPl/f7OMtMQ5wyzd?=
+ =?us-ascii?Q?Y0p+9d68sXDeae+VhYVxEoHzW4eibIMNFm3eSVqu803B7pBiJl5cFPdlXkgi?=
+ =?us-ascii?Q?Kn/dG8+7WB5SLqWLbqJtsjwOZDuwhViEwI+5N2LPjTUAaIDBUNn3b5dde47M?=
+ =?us-ascii?Q?oh8PNkLKMdp+Lo+6vb47O2IIzz+W2G2UieOf3Shexgx2VhdQeyRXZIyrU9Fk?=
+ =?us-ascii?Q?h1Qg7cJPT1O1AtF41A7er5094K/Er4aGMCm6QGA8/QN9pF2pV225zMiL7qif?=
+ =?us-ascii?Q?449Vn9KIQpmUXmw/z1TKwbfAOZkGzHd3/K+PMK0KzohtFmlb7dz9IFcQ+AN+?=
+ =?us-ascii?Q?9doO4T+Gmt+BmnzC8X1Xv5VF4o9tmGEpx/+ofLtAywgC2bzI75A2jQiRZcc6?=
+ =?us-ascii?Q?08nAFXMFOwQqxTC43ikC4ySgHGl19vDWTJ6RIqgyd3iYYL3Y8XrdMCxZl0Bi?=
+ =?us-ascii?Q?+yAYCD6iQiS/SRbHPPi6kWLz8RYn0J5n4pqYV5TextnZ3iHLGlicaOwPKyIL?=
+ =?us-ascii?Q?m3BHDgsrRnxgLv3/vW/Xt/5abNwT0GZVQoRAuS+/Vnj44PbOdpCalcNlytZp?=
+ =?us-ascii?Q?uJCspw=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <DDFA208F36E1A24091B734F871B50593@namprd02.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d9f596a8-f464-4d6d-cdd2-08de37ac3e77
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Dec 2025 05:23:25.4865 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: E0YmHrGX/Eg/N0A9wAHI9BDQ34dYKBXpbpExTfR61rSY6bl0ENBLbAaAZKdKDtIv9FC/C+UUPm4Di48yCCzRYVOR11WZjgvFwSES4Mrcuh0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR02MB10533
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEwMDA0NCBTYWx0ZWRfX6Qh6ncNpADhh
+ fR15z+/BAtSWwiVSzlcO58AWCAjYHUjnaju3U8IxOBFEl58eKylDKvqUKWSTKX2zMMe2jotppU0
+ lHKRH3qd48hBZtwZxvwKfIRP80D86Y3NoPO5qAJ/b/mlqw2JLjIGqGCpwQN8FpgFO3OchbwelbU
+ NjysS8zKEu5prKjy1bQTENQIxr6BsGG7jqGXLWpemLGgr0yNctKvySyoRZl2qbSvLcopg+SZ625
+ SK9XWnzRf+QrMyXNCWGV/N4JlErdgYS0dzFDIRjq2dKgLsemx7C0OTX/yxwqWVL1ulhLyfkm54y
+ SuvPnT35n6guHMnGCDhDJ8C9MymhgG40YPk+80HMeIr3I67n9mkEAOnbMdfU80t7yZDy7xR5iNK
+ t3wTunpvmgt/+CETFMyapCcc8KG3tA==
+X-Proofpoint-ORIG-GUID: 5T-OhNaSyNEv-GHVSeyb4NNJXfah-NA-
+X-Authority-Analysis: v=2.4 cv=cLrtc1eN c=1 sm=1 tr=0 ts=693903d2 cx=c_pps
+ a=TLRaRVVo73tAgr2tZ40rpQ==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=wP3pNCr1ah4A:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=kqp_hg9UcqLHr2iSWvkA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: 5T-OhNaSyNEv-GHVSeyb4NNJXfah-NA-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-09_05,2025-12-09_03,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=khushit.shah@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,80 +207,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/6/22 17:49, Richard Henderson wrote:
-> On 6/2/22 04:42, Joel Stanley wrote:
->> Hi Stafford,
->>
->> On Fri, 27 May 2022 at 17:27, Stafford Horne <shorne@gmail.com> wrote:
->>>
->>> This patch add the OpenRISC virtual machine 'virt' for OpenRISC.  This
->>> platform allows for a convenient CI platform for toolchain, software
->>> ports and the OpenRISC linux kernel port.
->>>
->>> Much of this has been sourced from the m68k and riscv virt platforms.
->>
->> It's a good idea! I did some playing around with your patch today.
->>
->> I'd suggest adding something to docs/system/target-openrsic.rst,
->> including an example command lines.
->>
->>>
->>> The platform provides:
->>>   - OpenRISC SMP with up to 8 cpus
->>
->> You have this:
->>
->> #define VIRT_CPUS_MAX 4
->>
->> I tried booting with -smp 4 and it locked up when starting userspace
->> (or I stopped getting serial output?):
->>
->> [    0.060000] smp: Brought up 1 node, 4 CPUs
->> ...
->> [    0.960000] Run /init as init process
->>
->> Running with -smp 2 and 3 worked. It does make booting much much slower.
-> 
-> target/openrisc/cpu.h is missing
-> 
-> #define TCG_GUEST_DEFAULT_MO      (0)
-> 
-> 
-> to tell the JIT about the weakly ordered guest memory model, and to 
-> enable MTTCG by default.
-> 
->> I enabled the options:
->>
->> CONFIG_RTC_CLASS=y
->> # CONFIG_RTC_SYSTOHC is not set
->> # CONFIG_RTC_NVMEM is not set
->> CONFIG_RTC_DRV_GOLDFISH=y
->>
->> But it didn't work. It seems the goldfish rtc model doesn't handle a
->> big endian guest running on my little endian host.
->>
->> Doing this fixes it:
->>
->> -    .endianness = DEVICE_NATIVE_ENDIAN,
->> +    .endianness = DEVICE_HOST_ENDIAN,
->>
->> [    0.190000] goldfish_rtc 96005000.rtc: registered as rtc0
->> [    0.190000] goldfish_rtc 96005000.rtc: setting system clock to
->> 2022-06-02T11:16:04 UTC (1654168564)
->>
->> But literally no other model in the tree does this, so I suspect it's
->> not the right fix.
-> 
-> Correct.  The model might require
-> 
->      .endianness = DEVICE_LITTLE_ENDIAN,
-> 
-> if that is the actual specification, or it may simply require fixes to 
-> handle a big-endian guest.
-> 
-> All that said, if we're going to make up a new virt platform, it should 
-> use PCI not virtio.  See the recent discussion about RISC-V virtual 
-> machines, where they made exactly this mistake several years ago.
+Subject: Re: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
 
-Unfortunately this precious remark was missed :(
+Hi,
+
+I wanted to follow up on this patch to see if there are any review comments
+or feedback. I'm planning to prepare a v2 that addresses the following:
+
+1. Move the SEOIB configuration code from x86-common.c to KVM-specific code
+   (kvm_arch_init()).
+
+2. Refactor as per the changes on the KVM side of the patch.
+
+Before proceeding with v2, I have a design question regarding the scope of
+the fix:
+
+Currently, the patch sets the SEOIB state for all machine types on new powe=
+r-ons
+based on the IOAPIC version. This means that any new VM powered on with a
+patched QEMU will get the proper SEOIB behavior.
+
+However, I'm wondering if we should instead:
+- Define a new machine property (i.e, "seoib-policy") that defines the SEOI=
+B=20
+  behavior.
+- Only enable the new SEOIB behavior in the latest machine type version
+  (10.2?), keeping older machine types in QUIRKED mode.
+
+The question is: should new power-ons of *all* machine types set the SEOIB
+state automatically, or should we scope this fix to the latest machine type
+versions only via a machine property?
+
+I'd appreciate your thoughts on this design decision before I finalise v2.
+
+Regards,
+Khushit=
 
