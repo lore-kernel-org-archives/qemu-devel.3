@@ -4,130 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C223FD3C907
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 14:02:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD87D3C90B
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 14:03:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTKlM-00051G-On; Wed, 10 Dec 2025 09:01:52 -0500
+	id 1vTKme-0005Wh-2V; Wed, 10 Dec 2025 09:03:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vTKku-0004yW-0M
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:01:26 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vTKm1-0005Qu-Uu
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:02:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vTKkr-0006iA-V8
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:01:23 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vTKlz-0006sO-K3
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:02:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765375280;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1765375350;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j6O14IgCI996JZsx0l90XqR/9ZXCFZHWkgAIKqs9gec=;
- b=PlsiKOULTdyX6/7GeHXgMiiAlRWNHoeL8LNoxa4gBYbMgsDYSEwnNHW/bJl7yr4Izf9jrq
- YMbxsCwgdcRAxa7YalFIGW9vuD7w1CRjstCUx8Etm7vkyc5q3HWKy/6+umtZWFHthpcREy
- zSQFjEJ53jaFXccW7KU7r4DifM7nnlk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8kMw6s0g7enS5iey+cogxYbNuww0Ag0WTuE50PrtPmM=;
+ b=Zm4NTSOjV76CTZbOliBMGwVXdFdjh4iJ650Fxq6PE6os6/Q4pY6cBWvfP6n0APlIsXMEv1
+ 7MzPWGXw4tw5sWbYHCSIUL6wqCuvVxv5sfPKWsq/rfx7sEsPh6ANWCEqb6NsCnEZRbGmv5
+ rN5GV6nngUQFkQ34iIWSRDBg/4zhrp4=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-P1TATcuDPHK5_a4mUQGAnw-1; Wed, 10 Dec 2025 09:01:19 -0500
-X-MC-Unique: P1TATcuDPHK5_a4mUQGAnw-1
-X-Mimecast-MFC-AGG-ID: P1TATcuDPHK5_a4mUQGAnw_1765375278
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47775585257so44704185e9.1
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 06:01:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765375278; x=1765980078; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=j6O14IgCI996JZsx0l90XqR/9ZXCFZHWkgAIKqs9gec=;
- b=rMN9nsOCJJGk4fY1tpQ0jbCbrznyiYwyVvhnNJ8X9mhIB7/dkMWqP8EIm9Ezej1FJn
- E6b0+VfS6bAgHdFf/+VVQRmFB/80Zzr0uZw56NgnHgdyIfP1lN2SOHQ1/OvSUC9q8n2G
- 1FlcLagO3HCCS27tSeg299qzPRCRbx2y9eIOR45ToS/I+huH+McVU9yCpEcu5iiwGGrB
- uHHNwfD9VcZx8Cu6oblKaF4dYmioy45LbRGmeHPQOfPLTmriZeYwbYHTWWSIkz8tPyCP
- wlNZWGoviL05jrhhbFJCZXsuAha34IamqARTw8MWzW3SGnpCfTpqQhcCMpZUE/Ti1iu8
- oMtQ==
+ us-mta-687-OmWXMzsWP0yD5zBJHH_QoQ-1; Wed, 10 Dec 2025 09:02:29 -0500
+X-MC-Unique: OmWXMzsWP0yD5zBJHH_QoQ-1
+X-Mimecast-MFC-AGG-ID: OmWXMzsWP0yD5zBJHH_QoQ_1765375348
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-7c7957d978aso7752534b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 06:02:28 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765375278; x=1765980078;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=j6O14IgCI996JZsx0l90XqR/9ZXCFZHWkgAIKqs9gec=;
- b=uXoiVWz3elxSyDD9E0QE1m19S0/TwWFti9bDU9GoLYgWVJSv3POTQCu4RXOxqltgcq
- aedFqUKv12QJYQry41+1hd3wqFZcLSn1lwWu/Ig2wouVTny9S0bt8ghiOgo6sp5NtRxt
- rEpCmxiJVS+SExrKFTOcq+pCGRQ2bi+2mxcorNIL8i0g4l0hXn/GIKP1Twv41xN0kgZv
- mj/Ug4Qp6XCoME9JVawQhzbSNRDdrA/H46MMMWW8oyfIltnMfCpM2amScUIDRNrvKsVU
- JLd2qhELgS2l0bgG4p3itLVEP76bd7KAVlKQSZZhiI7MtKeImch3dj8Fuv49oSAk+Yqi
- mJrQ==
+ d=1e100.net; s=20230601; t=1765375348; x=1765980148;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8kMw6s0g7enS5iey+cogxYbNuww0Ag0WTuE50PrtPmM=;
+ b=oQaoeFxd95Z+pWsYOl07vbCGYLL0Xv3srD+bm09o0nsK8EGdXQQQs5n2E3kMA7sqA/
+ NjJCuml7ZhhEjxYiljEtTHv9nYZZOcQdZHF5FI1y/EO0VzTG18DtXJ5RyDPkp1BK8+kL
+ h4Nt/7cJT/KEhoKFRpGk7IB57eYKp7WcDZhKOiQo6JeLoN3AmCerOFhtjISyVLIHDwIP
+ wWvN+LXVajqbXQ3JFuLvAz8hxPUN/JptGRUp+7wYBm76nMWbR+Sew7Y5Oq5YlhVdn+q1
+ 6dyh0b7WBbwHUCYKOpGezewq/SGhiVjghhDcowgX7sWn6tgcHRFIdEMPGWRVqIfFFVeU
+ 7uFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXqC3KGdF1HuEuz7Zi/4QTFnLdb/UnPpsBIbzOmZWsFBpnA+hhfIlnupuS0291NOrrlFJasSa57jezT@nongnu.org
-X-Gm-Message-State: AOJu0Yy4xyQPcqfkWOPdsiUUjbWg/v0gPbB5k3ltZKLlaf1nvxCkNWp6
- U78OTVFg1/kRipo+uH0+NjZz5HvEw5CfGvmGBour0rJT5cDwm74OggLJgIBBm3vcDgpZmuQT8tW
- b9XE69AdZuN2/AE/orzBo6lFnzoe28S8dRT5CKroZy0mbnh7Bepf13wJ3
-X-Gm-Gg: ASbGncvG79XErsqgSJ/1Ludi1IXGvvuXwDXBzn1bRDTj9EBlTWrQ8j9D+DfhM+2gJ1l
- 1NZ25wdkyHfZoPNiRDiu7jyF1o6D9b+FF+CT9JihbGB0+4KU+XQCs8Tn0Qahj22CUCyXVU630U0
- OvQIY02FJ43aCxR0qMKUnA0Oplxe0CouHemwcW9fbEudpiDujYxgNgyiBDIJ/4oohYblvJ0MlqC
- IFtI5Ss02SoyLdB+4qBVsn6bhCLqlSBczbeIbC22iEwN/o4Pi2FaoNao0K66VFGfXen08cRHvXJ
- zGOvnMFhfLy3FUgcSf4RJaYdzy8+O7jJAI2yYm3zHVjSoftOXEm89sbDc+hycS+TETkJMw==
-X-Received: by 2002:a05:600c:3113:b0:477:7768:8da4 with SMTP id
- 5b1f17b1804b1-47a856249c2mr13338545e9.7.1765375278089; 
- Wed, 10 Dec 2025 06:01:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFj/M79GqEHYM3DvJC6z3KKGc/jcvumRsPxQHknr/rdPhfB8kOLZa6+TISA54HNeWcCceufRw==
-X-Received: by 2002:a05:600c:3113:b0:477:7768:8da4 with SMTP id
- 5b1f17b1804b1-47a856249c2mr13337925e9.7.1765375277520; 
- Wed, 10 Dec 2025 06:01:17 -0800 (PST)
-Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a7d9bec74sm44288345e9.8.2025.12.10.06.01.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Dec 2025 06:01:16 -0800 (PST)
-Date: Wed, 10 Dec 2025 15:01:15 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas
- Huth <thuth@redhat.com>, qemu-devel@nongnu.org, devel@lists.libvirt.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org, Richard
- Henderson <richard.henderson@linaro.org>, Sergio Lopez <slp@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Laurent Vivier <lvivier@redhat.com>, Jiaxun
- Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>, Eduardo
- Habkost <eduardo@habkost.net>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, Weiwei Li <liwei1518@gmail.com>, Amit Shah
- <amit@kernel.org>, Xiaoyao Li <xiaoyao.li@intel.com>, Yanan Wang
- <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>, Palmer Dabbelt
- <palmer@dabbelt.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>, Ani Sinha <anisinha@redhat.com>, Fabiano Rosas
- <farosas@suse.de>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>, Huacai
- Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>, Mark
- Cave-Ayland <mark.caveayland@nutanix.com>, BALATON Zoltan
- <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>, Jiri Denemark
- <jdenemar@redhat.com>
-Subject: Re: [PATCH v5 01/28] hw/i386/pc: Remove deprecated pc-q35-2.6 and
- pc-i440fx-2.6 machines
-Message-ID: <20251210150115.5f9dc169@imammedo>
-In-Reply-To: <20251202162835.3227894-2-zhao1.liu@intel.com>
-References: <20251202162835.3227894-1-zhao1.liu@intel.com>
- <20251202162835.3227894-2-zhao1.liu@intel.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+ AJvYcCWnbr8HS7449mljWESIvF+KRA9pKjyjnXyWsfnOI5vWibGCDbp8vMdDqunThlXDfIiNJOkk6H/fLMLK@nongnu.org
+X-Gm-Message-State: AOJu0YyGYSQUhEPq1YDO2QIY0yyiLOT7l2gngcEaUGWhuJq+wf5f18vi
+ HR9sT5pb1JOFIRbqAFvnzjBPL5414PU55Gpx01nHj+wYwvCvpt3BzS1McX0IUOzDEdJsZMTfh3c
+ pepFlIKjrXU3JE2rwRxQAOzqWp9G4A95MPj7hooGe2FUK1yBQfKmV83i+
+X-Gm-Gg: AY/fxX64bhjdPF39q/uZUxDfcJYNXrs5Um2CvjV/tthGQZ4elGGNN1O3nPiyD+ufJ5E
+ Hqf/rkw81gVD4zaojfN46UCeguLLQNpAp9rmHf/xibRURutFn/yqsxsU6RQiF6kRWhaM2f+RF25
+ OEo56Y8noqEAh4qTb+b4PRWGclAV9hBZJ12slRgsx4d2UiTQqcU38FX6NAFU7SZK/wLqhYQuNC3
+ 6cQHlwZJASVivSSQe//qT4tPtQhX+4cSyIdfDw3nXjDFhk3VGJcL1zfVR7onJa0LWbgZzSKtjfd
+ z9YKipn9DP30ntcsW6DH9OCRXY6wahxRErdL5VHIah3mu59cCxMKUzzAvbq/2v/riMgAAlyWlpp
+ Fl+Uo2iHenRG7r0rUrcILFhPjreq0UgCUChqhPcTbUimVbAIo5De4WIMZEA==
+X-Received: by 2002:a05:6a00:3c85:b0:7e8:4471:8e2 with SMTP id
+ d2e1a72fcca58-7f22f9047b3mr2316848b3a.67.1765375347405; 
+ Wed, 10 Dec 2025 06:02:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEXpej2FgXVTis88uC9E0mZQ5vAMwWELTqS+Fec50hYb2ONw/5cWgz0DnED8syf4fgUoBDQuw==
+X-Received: by 2002:a05:6a00:3c85:b0:7e8:4471:8e2 with SMTP id
+ d2e1a72fcca58-7f22f9047b3mr2316697b3a.67.1765375345333; 
+ Wed, 10 Dec 2025 06:02:25 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7e2adc5bf17sm19114411b3a.38.2025.12.10.06.02.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 10 Dec 2025 06:02:24 -0800 (PST)
+Message-ID: <4a1d4bb2-2ee7-4405-a192-53af38e5e3fd@redhat.com>
+Date: Wed, 10 Dec 2025 15:02:15 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 11/23] intel_iommu_accel: Stick to system MR for
+ IOMMUFD backed host device when x-flts=on
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, mst@redhat.com, jasowang@redhat.com,
+ peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com
+References: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
+ <20251117093729.1121324-12-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20251117093729.1121324-12-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -142,80 +118,155 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  3 Dec 2025 00:28:08 +0800
-Zhao Liu <zhao1.liu@intel.com> wrote:
 
-> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->=20
-> These machines has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") they can now be removed.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+On 11/17/25 10:37 AM, Zhenzhong Duan wrote:
+> When guest enables scalable mode and setup first stage page table, we don't
+> want to use IOMMU MR but rather continue using the system MR for IOMMUFD
+> backed host device.
+>
+> Then default HWPT in VFIO contains GPA->HPA mappings which could be reused
+> as nesting parent HWPT to construct nested HWPT in vIOMMU.
+>
+> Move vtd_as_key into intel_iommu_internal.h as it's also used by accel code.
+>
+> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
+same here
+
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
 > ---
->  hw/i386/pc_piix.c | 14 --------------
->  hw/i386/pc_q35.c  | 14 --------------
->  2 files changed, 28 deletions(-)
->=20
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index 7b3611e973cd..4628d491d5b5 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -733,20 +733,6 @@ static void pc_i440fx_machine_2_7_options(MachineCla=
-ss *m)
-> =20
->  DEFINE_I440FX_MACHINE(2, 7);
-> =20
-> -static void pc_i440fx_machine_2_6_options(MachineClass *m)
-> -{
-> -    X86MachineClass *x86mc =3D X86_MACHINE_CLASS(m);
-> -    PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
-> -
-> -    pc_i440fx_machine_2_7_options(m);
-> -    pcmc->legacy_cpu_hotplug =3D true;
-> -    x86mc->fwcfg_dma_enabled =3D false;
-> -    compat_props_add(m->compat_props, hw_compat_2_6, hw_compat_2_6_len);
-> -    compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
-> -}
-> -
-> -DEFINE_I440FX_MACHINE(2, 6);
-> -
->  #ifdef CONFIG_XEN
->  static void xenfv_machine_4_2_options(MachineClass *m)
->  {
-> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> index 6015e639d7bc..0ae19eb9f1e4 100644
-> --- a/hw/i386/pc_q35.c
-> +++ b/hw/i386/pc_q35.c
-> @@ -681,17 +681,3 @@ static void pc_q35_machine_2_7_options(MachineClass =
-*m)
+>  hw/i386/intel_iommu_accel.h    |  6 ++++++
+>  hw/i386/intel_iommu_internal.h | 11 +++++++++++
+>  hw/i386/intel_iommu.c          | 28 +++++++++++++++-------------
+>  hw/i386/intel_iommu_accel.c    | 18 ++++++++++++++++++
+>  4 files changed, 50 insertions(+), 13 deletions(-)
+>
+> diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
+> index 7ebf137a1a..dbe6ee6982 100644
+> --- a/hw/i386/intel_iommu_accel.h
+> +++ b/hw/i386/intel_iommu_accel.h
+> @@ -15,6 +15,7 @@
+>  #ifdef CONFIG_VTD_ACCEL
+>  bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+>                            Error **errp);
+> +VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as);
+>  #else
+>  static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
+>                                          VTDHostIOMMUDevice *vtd_hiod,
+> @@ -24,5 +25,10 @@ static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
+>                 "host IOMMU is incompatible with guest first stage translation");
+>      return false;
 >  }
-> =20
->  DEFINE_Q35_MACHINE(2, 7);
+> +
+> +static inline VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
+> +{
+> +    return NULL;
+> +}
+>  #endif
+>  #endif
+> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+> index 02522f64e0..d8dad18304 100644
+> --- a/hw/i386/intel_iommu_internal.h
+> +++ b/hw/i386/intel_iommu_internal.h
+> @@ -685,4 +685,15 @@ typedef struct VTDHostIOMMUDevice {
+>      uint8_t devfn;
+>      HostIOMMUDevice *hiod;
+>  } VTDHostIOMMUDevice;
+> +
+> +/*
+> + * PCI bus number (or SID) is not reliable since the device is usaully
+> + * initialized before guest can configure the PCI bridge
+> + * (SECONDARY_BUS_NUMBER).
+> + */
+> +struct vtd_as_key {
+> +    PCIBus *bus;
+> +    uint8_t devfn;
+> +    uint32_t pasid;
+> +};
+>  #endif
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index 4ebf56a74f..29e0281af8 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -56,17 +56,6 @@
+>  #define VTD_PE_GET_SS_LEVEL(pe) \
+>      (2 + (((pe)->val[0] >> 2) & VTD_SM_PASID_ENTRY_AW))
+>  
+> -/*
+> - * PCI bus number (or SID) is not reliable since the device is usaully
+> - * initialized before guest can configure the PCI bridge
+> - * (SECONDARY_BUS_NUMBER).
+> - */
+> -struct vtd_as_key {
+> -    PCIBus *bus;
+> -    uint8_t devfn;
+> -    uint32_t pasid;
+> -};
 > -
-> -static void pc_q35_machine_2_6_options(MachineClass *m)
-> -{
-> -    X86MachineClass *x86mc =3D X86_MACHINE_CLASS(m);
-> -    PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
-> -
-> -    pc_q35_machine_2_7_options(m);
-> -    pcmc->legacy_cpu_hotplug =3D true;
-> -    x86mc->fwcfg_dma_enabled =3D false;
-> -    compat_props_add(m->compat_props, hw_compat_2_6, hw_compat_2_6_len);
-> -    compat_props_add(m->compat_props, pc_compat_2_6, pc_compat_2_6_len);
-> -}
-> -
-> -DEFINE_Q35_MACHINE(2, 6);
+>  /* bus/devfn is PCI device's real BDF not the aliased one */
+>  struct vtd_hiod_key {
+>      PCIBus *bus;
+> @@ -1731,12 +1720,25 @@ static bool vtd_as_pt_enabled(VTDAddressSpace *as)
+>  /* Return whether the device is using IOMMU translation. */
+>  static bool vtd_switch_address_space(VTDAddressSpace *as)
+>  {
+> +    IntelIOMMUState *s;
+>      bool use_iommu, pt;
+>  
+>      assert(as);
+>  
+> -    use_iommu = as->iommu_state->dmar_enabled && !vtd_as_pt_enabled(as);
+> -    pt = as->iommu_state->dmar_enabled && vtd_as_pt_enabled(as);
+> +    s = as->iommu_state;
+> +    use_iommu = s->dmar_enabled && !vtd_as_pt_enabled(as);
+> +    pt = s->dmar_enabled && vtd_as_pt_enabled(as);
+> +
+> +    /*
+> +     * When guest enables scalable mode and sets up first stage page table,
+> +     * we stick to system MR for IOMMUFD backed host device. Then its
+> +     * default hwpt contains GPA->HPA mappings which is used directly if
+> +     * PGTT=PT and used as nesting parent if PGTT=FST. Otherwise fall back
+> +     * to original processing.
+> +     */
+> +    if (s->root_scalable && s->fsts && vtd_find_hiod_iommufd(as)) {
+> +        use_iommu = false;
+> +    }
+>  
+>      trace_vtd_switch_address_space(pci_bus_num(as->bus),
+>                                     VTD_PCI_SLOT(as->devfn),
+> diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+> index ead6c42879..ebfc503d64 100644
+> --- a/hw/i386/intel_iommu_accel.c
+> +++ b/hw/i386/intel_iommu_accel.c
+> @@ -50,3 +50,21 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+>                 "host IOMMU is incompatible with guest first stage translation");
+>      return false;
+>  }
+> +
+> +VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
+> +{
+> +    IntelIOMMUState *s = as->iommu_state;
+> +    struct vtd_as_key key = {
+> +        .bus = as->bus,
+> +        .devfn = as->devfn,
+> +    };
+> +    VTDHostIOMMUDevice *vtd_hiod = g_hash_table_lookup(s->vtd_host_iommu_dev,
+> +                                                       &key);
+> +
+> +    if (vtd_hiod && vtd_hiod->hiod &&
+> +        object_dynamic_cast(OBJECT(vtd_hiod->hiod),
+> +                            TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+> +        return vtd_hiod;
+> +    }
+> +    return NULL;
+> +}
 
 
