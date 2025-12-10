@@ -4,36 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AD19D3B9A9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 10:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 621DFD2CE17
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 10:35:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTHLY-0001Th-NO; Wed, 10 Dec 2025 05:23:01 -0500
+	id 1vTHXP-0004i7-3F; Wed, 10 Dec 2025 05:35:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vTHLX-0001TK-02; Wed, 10 Dec 2025 05:22:59 -0500
+ id 1vTHXL-0004fb-Vx; Wed, 10 Dec 2025 05:35:12 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vTHLV-0002k7-C4; Wed, 10 Dec 2025 05:22:58 -0500
+ id 1vTHXK-0006xJ-2h; Wed, 10 Dec 2025 05:35:11 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 943F01730D6;
- Wed, 10 Dec 2025 13:22:46 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CC5CE173107;
+ Wed, 10 Dec 2025 13:34:57 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 00454330D7F;
- Wed, 10 Dec 2025 13:22:52 +0300 (MSK)
-Message-ID: <2466732b-b001-490f-a4c0-dd8cf97e6951@tls.msk.ru>
-Date: Wed, 10 Dec 2025 13:22:52 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 26E9F330D98;
+ Wed, 10 Dec 2025 13:35:04 +0300 (MSK)
+Message-ID: <31843643-a22d-4634-9eb7-868376e57635@tls.msk.ru>
+Date: Wed, 10 Dec 2025 13:35:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-10.2] scripts/nsis.py: Tell makensis that WoA is 64 bit
-To: Stefan Weil <sw@weilnetz.de>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20251209130212.764443-1-sw@weilnetz.de>
+Subject: Re: [PATCH v3] Fix const qualifier build errors with recent glibc
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-stable <qemu-stable@nongnu.org>,
+ Thomas Huth <thuth@redhat.com>
+References: <20251209174328.698774-1-clg@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -79,9 +87,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20251209130212.764443-1-sw@weilnetz.de>
+In-Reply-To: <20251209174328.698774-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -105,27 +113,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/9/25 16:02, Stefan Weil via wrote:
-> This fixes some settings like the default installation path
-> for the QEMU installation on Windows on ARM (WoA).
+On 12/9/25 20:43, Cédric Le Goater wrote:
+> A recent change in glibc 2.42.9000 [1] changes the return type of
+> strstr() and other string functions to be 'const char *' when the
+> input is a 'const char *'.
+> 
+> This breaks the build in various files with errors such as :
+> 
+>    error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
+>      208 |         char *pidstr = strstr(filename, "%");
+>          |                        ^~~~~~
+> 
+> Fix this by changing the type of the variables that store the result
+> of these functions to 'const char *'.
+> 
+> [1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
 
-I'm picking this up for qemu-stable.  Please let me know
-if I shouldn't.
+I'm picking this up for qemu-stable (10.0 & 10.1 series)
+(together with 83f6dceb8f5c "qga: Fix ubsan warning").
+Please let me know if I shouldn't.
 
 Thanks,
 
 /mjt
-
-> --- a/scripts/nsis.py
-> +++ b/scripts/nsis.py
-> @@ -114,7 +114,7 @@ def main():
->               "-DSRCDIR=" + args.srcdir,
->               "-DBINDIR=" + destdir + prefix,
->           ]
-> -        if args.cpu == "x86_64":
-> +        if args.cpu == "aarch64" or args.cpu == "x86_64":
->               makensis += ["-DW64"]
->           makensis += ["-DDLLDIR=" + dlldir]
->   
-
 
