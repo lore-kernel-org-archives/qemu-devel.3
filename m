@@ -4,73 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BC01D3C91A
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 14:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 321F9D3C91A
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 14:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTLWc-0007Ip-UF; Wed, 10 Dec 2025 09:50:43 -0500
+	id 1vTLWa-0007HN-Iz; Wed, 10 Dec 2025 09:50:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vTLWD-0007DO-BJ
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vTLWG-0007DX-8z
  for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:50:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vTLW9-0003CJ-Pt
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:50:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765378211;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VloBJ6nNIJ/u+vJJM5GLcChSzr76vTrdVTPXNM/9iqw=;
- b=Dskh0l65hfwgijAUV+F/J4RVLwtT/xKDw2wKkQDtcaUTTz/4CIFh8kLd+OxJK6uK7++pRX
- sRA5/bLS2kt5baQ6y4crd+EtyOl5b4fut6Vdhgqzz1y8t/WqWNL9S0CoZ2Hja3rivgY2JT
- K9hjN41dPeWgJfW+oQXa2P9cg6RSv3o=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-gF420JAJNjKHiCiso7M-ww-1; Wed,
- 10 Dec 2025 09:50:09 -0500
-X-MC-Unique: gF420JAJNjKHiCiso7M-ww-1
-X-Mimecast-MFC-AGG-ID: gF420JAJNjKHiCiso7M-ww_1765378208
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A4F019560BC; Wed, 10 Dec 2025 14:50:08 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 050D230001A5; Wed, 10 Dec 2025 14:50:07 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 77D0721E6A27; Wed, 10 Dec 2025 15:50:05 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, qemu-rust@nongnu.org
-Subject: Re: [PATCH 00/19] rust: QObject and QAPI bindings
-In-Reply-To: <525d2198-5d6f-43a0-88cd-78eae0042d27@redhat.com> (Paolo
- Bonzini's message of "Wed, 10 Dec 2025 15:12:35 +0100")
-References: <20251010151006.791038-1-pbonzini@redhat.com>
- <87tsy52ftl.fsf@pond.sub.org> <87zf7s5h3k.fsf@pond.sub.org>
- <525d2198-5d6f-43a0-88cd-78eae0042d27@redhat.com>
-Date: Wed, 10 Dec 2025 15:50:05 +0100
-Message-ID: <878qfa8k82.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1vTLWD-0003Cr-3D
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:50:20 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-477b198f4bcso59973075e9.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 06:50:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1765378214; x=1765983014; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=7aOWTRiqUHiXIPgTQ0LjDGl3N7exU0erok9Ml327P8A=;
+ b=w+CXp/dhrF7LaEb8Kq8Y+5xAbmEdwkv+ZXgRLb66DCCLV+hxtOw4dJ3g783L020lWA
+ 6cNBhlncDBcqADrcY9PEiDZGveocRYkswpXxPHZFOj09R/SQlFK1iIiUbDTfGSJD4n3T
+ 9ckc+fggZgTyj/cvPkjlFBagOSqAptH4WjK1IJ1TRlLQ4LF5hEeXu2LI+/dIm2ENvn1T
+ ZaVwGWEKX4wse1EeMzWA8pfbcYavp/+QDUDdVDI4aQlqhindKVAjcZbWmpup+EIZlMYu
+ sFonEdPmYNrCLDz/n2z2Kfm04djYfu1/CPAGA9+6SiLFSFxn68KKPInC/S47pNRM7yab
+ dfRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765378214; x=1765983014;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=7aOWTRiqUHiXIPgTQ0LjDGl3N7exU0erok9Ml327P8A=;
+ b=OCbQO/W6bque+P2dWxL/n4TIs/bKoaDsv7CAHNjQMJ+yOcvhuBvXlOajyQ2wnKGM6N
+ Tpo21CtqI1/3Y6tj/+6okrQk7IlWIXy9+nYGTbLDYdHDSkJwktthpnEeZ+PJHMAW+ldh
+ WtX6Wa6lZjE5fjptoO1ZewwZ7sjXfVsB4/OqTAC9gjUv7Z38X2SwJmzsfZzGPcT9taMa
+ B1aof0hbYbmmyXq8TRCvLZw+Ay1+n0Dy9jImqcjjH3gR2zV3q9f2YbDyApGwFs8wxQTl
+ a9YDsEoDwmsyqRvrxsODlOLOFuXJnnqdhgQUaWTEvBKv53KLcXmTrWMaxA21HOqXMfXR
+ vKMg==
+X-Gm-Message-State: AOJu0Yzt6cujtiudt6yoj0AZ+K8WFWWA7dHbA/hM3hheY30eBv2jY8Ws
+ 7tYmvjcKXcpc+HF7DFYxVsKnyNgGWDxAGBsDtgZL6nWWwqgu/KCovTDU5hyuWplLMc4=
+X-Gm-Gg: ASbGncvun705lpgC/bXXZhofP75xXeyho7o7zNgsIBNkBv2qDLptcdDyLx6bs7DxdxQ
+ 17XfVFagN4GWDbVbeJte8VNgp7FAe6LEd1zpndd7vv//VXZwJ99WN4q7zxd1nI56YipjInM5TJh
+ GhNKFQI7Oglos0ayYig2ym2PhamEsMbR9i6leXZmR/objw8CyPijTsSy70w4rlPa3yLe1ZttdpZ
+ 9AWf2+c8RJPl1hBeG82lfGMVgb57K2GLnG64AtHFVV32ciQWzKB0Nafq7FLs6c9rIGxJW6JkAr9
+ 8rtMWjmfqCb6czrqdfJHzt1MYwWUhcMBjhufQw54r72LgK0/4LiVyVekYcsKSIVRqF0pFzvpnof
+ 8uhg53vFML1N0CSMLImgUwMmjBkwJ3OyocuaMIsui5Xwu+PtaU1XHvUkVK6TBNgXo9H51i2hHMm
+ 8wOKQZ3SneKk9RSQ==
+X-Google-Smtp-Source: AGHT+IGdOYsE+ov9xNHgL/iU5//0vXomMkv2q6fga5S2Nx5xdVUZgFoskCaEj3lrkGjh1V++ha3glA==
+X-Received: by 2002:a05:600c:444f:b0:477:7a78:3016 with SMTP id
+ 5b1f17b1804b1-47a8374ce6bmr27835065e9.8.1765378214313; 
+ Wed, 10 Dec 2025 06:50:14 -0800 (PST)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:62e8:705f:f7a:c7b0])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47a82d7f778sm56595235e9.11.2025.12.10.06.50.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Dec 2025 06:50:14 -0800 (PST)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Date: Wed, 10 Dec 2025 14:50:14 +0000
+Subject: [PATCH v6 4/4] tests: Add test for ASID2 and write/read of feature
+ bits
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20251210-jmac-asid2-v6-4-d3b3acab98c7@linaro.org>
+References: <20251210-jmac-asid2-v6-0-d3b3acab98c7@linaro.org>
+In-Reply-To: <20251210-jmac-asid2-v6-0-d3b3acab98c7@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Jim MacArthur <jim.macarthur@linaro.org>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,63 +102,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+Test for presence of ASID2; if it is, check FNG1, FNG0, and A2 are
+writable, and read value shows the update. If not present, check these
+read as RES0.
 
-> On 12/9/25 07:01, Markus Armbruster wrote:
->> Markus Armbruster <armbru@redhat.com> writes:
->> 
->>> I applied, ran make, and it didn't create qapi-types.rs and
->>> test-qapi-types.rs for me.  What am I missing?
->> 
->> Looks like I have to run with -B qapi.backend.QAPIRsBackend.
->> 
->> -B is meant for out-of-tree backends.  Commit dde279925c9 explains:
->> 
->>      qapi: pluggable backend code generators
->>      
->>      The 'qapi.backend.QAPIBackend' class defines an API contract for code
->>      generators. The current generator is put into a new class
->>      'qapi.backend.QAPICBackend' and made to be the default impl.
->>      
->>      A custom generator can be requested using the '-k' arg which takes a
->>      fully qualified python class name
->>      
->>         qapi-gen.py -B the.python.module.QAPIMyBackend
->>      
->>      This allows out of tree code to use the QAPI generator infrastructure
->>      to create new language bindings for QAPI schemas. This has the caveat
->>      that the QAPI generator APIs are not guaranteed stable, so consumers
->>      of this feature may have to update their code to be compatible with
->>      future QEMU releases.
->> 
->> Using it for the in-tree Rust backend is fine for a prototype.
->> Mentioning it in a commit message or the cover letter would've saved me
->> some digging.
->
-> Well, it wasn't intentional - right now it does this:
->
-> test_qapi_rs_files = custom_target('QAPI Rust',
->    output: 'test-qapi-types.rs',
->    input: [ files(meson.project_source_root() + 
-> '/tests/qapi-schema/qapi-schema-test.json') ],
->    command: [ qapi_gen, '-o', meson.current_build_dir(), '-b', 
-> '@INPUT0@', '-B', 'qapi.backend.QAPIRsBackend', '-p', 'test-' ],
->    depend_files: [ qapi_inputs, qapi_gen_depends ])
->
-> so "make rust/tests/test-qapi-types.rs" will work, and so will "make" if 
-> you have --enable-rust.
->
-> Let us know what you'd prefer and we'll switch.  Alternatively, 
-> retconning -B's meaning so that it applies to Rust will work too. :)
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+ tests/tcg/aarch64/system/asid2.c | 76 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
 
-Any particular reason *not* to generate Rust unconditionally along with
-C?
+diff --git a/tests/tcg/aarch64/system/asid2.c b/tests/tcg/aarch64/system/asid2.c
+new file mode 100644
+index 0000000000..7d5466af34
+--- /dev/null
++++ b/tests/tcg/aarch64/system/asid2.c
+@@ -0,0 +1,76 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ *
++ * ASID2 Feature presence and enabled TCR2_EL1 bits test
++ *
++ * Copyright (c) 2025 Linaro Ltd
++ *
++ */
++
++#include <stdint.h>
++#include <minilib.h>
++
++#define ID_AA64MMFR3_EL1 "S3_0_C0_C7_3"
++#define ID_AA64MMFR4_EL1 "S3_0_C0_C7_4"
++#define TCR2_EL1 "S3_0_C2_C0_3"
++
++int main()
++{
++    /*
++     * Test for presence of ASID2 and three feature bits enabled by it:
++     * https://developer.arm.com/documentation/109697/2025_09/Feature-descriptions/The-Armv9-5-architecture-extension
++     * Bits added are FNG1, FNG0, and A2. These should be RES0 if A2 is
++     * not enabled and read as the written value if A2 is enabled.
++     */
++
++    uint64_t out;
++    uint64_t idreg3;
++    uint64_t idreg4;
++    int tcr2_present;
++    int asid2_present;
++
++    /* Mask is FNG1, FNG0, and A2 */
++    const uint64_t feature_mask = (1ULL << 18 | 1ULL << 17 | 1ULL << 16);
++    const uint64_t in = feature_mask;
++
++    asm("mrs %[idreg3], " ID_AA64MMFR3_EL1 "\n\t"
++        : [idreg3] "=r" (idreg3));
++
++    tcr2_present = ((idreg3 & 0xF) != 0);
++
++    if (!tcr2_present) {
++        ml_printf("TCR2 is not present, cannot perform test");
++        return 0;
++    }
++
++    asm("mrs %[idreg4], " ID_AA64MMFR4_EL1 "\n\t"
++        : [idreg4] "=r" (idreg4));
++
++    asid2_present = ((idreg4 & 0xF00) != 0);
++
++    asm("msr " TCR2_EL1 ", %[x0]\n\t"
++        "mrs %[x1], " TCR2_EL1 "\n\t"
++        : [x1] "=r" (out)
++        : [x0] "r" (in));
++
++    if (asid2_present) {
++        if ((out & feature_mask) == in) {
++            ml_printf("OK\n");
++            return 0;
++        } else {
++            ml_printf("FAIL: ASID2 present, but read value %lx != "
++                      "written value %lx\n",
++                      out & feature_mask, in);
++            return 1;
++        }
++    } else {
++        if (out == 0) {
++            ml_printf("TCR2_EL1 reads as RES0 as expected\n");
++            return 0;
++        } else {
++            ml_printf("FAIL: ASID2, missing but read value %lx != 0\n",
++                      out & feature_mask, in);
++            return 1;
++        }
++    }
++}
 
-To do it, stick gen_rs_types() into QAPICodeBackend.generate().  Then
-the build runs qapi-gen at most once[*].
-
-
-
-[*] Lie.  Sphinx runs the *frontend* another time.
+-- 
+2.43.0
 
 
