@@ -4,96 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA8FD3C546
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 13:17:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86614D3C54C
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 13:17:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTK4G-0004pX-6x; Wed, 10 Dec 2025 08:17:22 -0500
+	id 1vTK47-0004mu-VN; Wed, 10 Dec 2025 08:17:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vTK49-0004nB-Ia
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 08:17:13 -0500
+ id 1vTK40-0004ln-PJ
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 08:17:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vTK47-00033N-Oz
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 08:17:12 -0500
+ id 1vTK3w-0002xJ-P0
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 08:17:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765372630;
+ s=mimecast20190719; t=1765372618;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hSg+oVCV3IdL9Yy96Y2wTbbdhygKLBdpYIrlT47bwzc=;
- b=ST1H0XfH1sVeZCaZ9t6S5zKwDd5/HoBpb7s3DqYnFi1RYi6LEiCgBxC8tjPV2wDqlXBwTu
- lEABV7QUvowYriJWfk6yEhutOHWME5zY8T+cqO+DC4WRPmnlrtsY7ePrMDLYDTgLlLCrbp
- qeAd1W9iVKVGqIjmlfCE0Js/J1Lhwf0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=84+6hgUmdVgnIW9T/FlHkEEt7uKdnj2vJAVLACVcr50=;
+ b=SnB3AR0/oSMgxszwMV8fXBgmMaF+bcqVi3HFs4RUk6pc35pJWmcMUH9H5DNMiwwABL9NPe
+ s+WhbrHa/IGnibBxbm4T6M39tWIDohR87WcCEPR+/xkY74IM/tPpVUO6pYMAya+3KIL7O5
+ dQY0RqUmJ7sEIQS5F4N299kwLnnvYx8=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-RoS05mViMUSKph6H-VaGDw-1; Wed, 10 Dec 2025 08:17:09 -0500
-X-MC-Unique: RoS05mViMUSKph6H-VaGDw-1
-X-Mimecast-MFC-AGG-ID: RoS05mViMUSKph6H-VaGDw_1765372628
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4779da35d27so66310935e9.3
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 05:17:08 -0800 (PST)
+ us-mta-507-iPKgmKaCPxWscrwgbTt7dQ-1; Wed, 10 Dec 2025 08:16:57 -0500
+X-MC-Unique: iPKgmKaCPxWscrwgbTt7dQ-1
+X-Mimecast-MFC-AGG-ID: iPKgmKaCPxWscrwgbTt7dQ_1765372616
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-42b487cda00so3965401f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 05:16:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765372627; x=1765977427; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hSg+oVCV3IdL9Yy96Y2wTbbdhygKLBdpYIrlT47bwzc=;
- b=oZ6YRbBQDF6ntzIdCLHxp9Dt3RmwGeKlE8+2T90oczpKP/l5sUfRnqU0utk4Dg2xV6
- vYAYQjKFY2rNZ+Ql4Hevf50ivh4vGl7G6Nr9B7ivQZoq/ywG+Q8f82hCkSGZepFWD6i1
- G5S3UzvmUIv93iMM63VP45b87m0XRDQBWB9V+39fGbekfZxBgwRjjGb+oe0jmklW0M4x
- NDLyd/58JZcEdi0uMnHg1Asmsot+5gHSEA/xhGSs0u774FuLfFwCVwhGNUowi7SdHytn
- vvp7VXVNcGkbFsI31BvGiMGu1s0sW0dlTazrkChyfKa21Wy2bEEuimXoY3yOXmH68Mj0
- 5SyQ==
+ d=redhat.com; s=google; t=1765372615; x=1765977415; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=84+6hgUmdVgnIW9T/FlHkEEt7uKdnj2vJAVLACVcr50=;
+ b=LTBhAxnl6ljQjYhSwDx+nVMm3cHjcVW/nfm4zwWgwxMxgtJYAKajZmt3CeKpf1tWL7
+ TgHpwfcoWggZzh+Hyx/VoznuxnWfRrjhWp56iMnJZQdT5WvgsPFs+jR6ctG8btoQMM44
+ F+s3MWMXhj9AHMPqnWcBOLSljRMgpJ8mN4jYLTP7yQRJUEYVjmIh3Vx7eWjisAhdiQVk
+ bmIypZNG3pT493+8LMlp9YEFQrMwVs30GLHweVdUPgj43sMxCrUQPyyfJcjNglTUVMln
+ fOvFNMZvwAY0105BUFOpcHwo3nFhVgzGBGSAGrX8MszEIbgAwyUBV/Z02ODewmsnSyFh
+ g33Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765372627; x=1765977427;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=hSg+oVCV3IdL9Yy96Y2wTbbdhygKLBdpYIrlT47bwzc=;
- b=dIUHiYZIyFkkH3xdOHEMFMQjXzWLsvZ13k2sWL0mETKfAo4glO7bKNHVI+0trDngEt
- HXpU6QTrJeH0LDRQ2KFOAf2UBITUsmx6F+/rD9Ex21ZzJuiI2cTsjuJWntHBVdd+nFPx
- sjVIRgxXiqt6hZquVgA5cX4yMqo8fJV35zZkbv9LISkxLPtCyYXt/Cxk8uLOUtwagSb6
- FYldF0KVV3BnyVwIIYVH9rNRUqxmW7nFtEBmYqH/TT9gdfTx4unGz29S1xn0qR6Ra/B3
- ouFqLi1UOS/hEZ56ZBF7oy//PWoJWgFLYImQFNv/EqSxeijxwiEQZwZrZKp5jYuK17aV
- QO7g==
-X-Gm-Message-State: AOJu0YwQiDTT58AYrrzO1dKtChjGnWl7J7O1dAlAgFiGY4BLJapp76w7
- KWZhnNLHXvG6Rm0sK8BtnW7kyx+CuCvH7uAudmbgmaTiYPHxiUelop87Y3Xb3WyM3RCMMTWivEp
- GexUvvG+9h+AaHc526opBs3GO+/HgZoV6bEFzbGBGLtNPiFAWEr+6S/KsvYw0wCLN/XIzoYUhw+
- N+Fy/yvUjDoTikQ84Nldk4N17zHjtZBtripUPxGuzR
-X-Gm-Gg: ASbGncsHhQqZW2z8Xw/z6lBDMnNnAwykwF7DAEUvcrogLsqsF90IofBWOn9p6fXz1/C
- Yqwi3AlJUtqpyfcc9V+IMIzDzCslkNKCzbW6C0/cg45p2lHjFSRHEyvhXwnmnVSzu+mnXYhz3Z4
- +aAlkeu7wU6PR8gjFSqBPZkpQKnfAaISBTtVgQI+CbqF+LSn3CSRxl7g0a6okkrxMQpDk/2jQ31
- FUqvGI9qMEm95sP4dE3Nkun2bTz2qOtuj8is79rL21lOETEPQN2mhJuWo6cudY3Z8Q7ZnDCDnrY
- MmJelAkinKqDr1rgfwxzvLLdtjX/w7p0Snqxjots0fXen5rUfD1HzXFYBGN5VUINrluZjPnP+/9
- 5m5MkZC/6kHJAMQKQQEdGVYali89Q3wIQpI+RtPIu1+qwADD6F1sFmGwMC0IpyfTaOi3vKBckD5
- ov65uxeTFJr3DplXU=
-X-Received: by 2002:a05:600c:4f84:b0:477:7a53:f493 with SMTP id
- 5b1f17b1804b1-47a8384334emr22469045e9.23.1765372627397; 
- Wed, 10 Dec 2025 05:17:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE6CL8hKQP8sIHl1dR31fcuE+BwKGjkeoe8gRBLjlPYBwzNZBfjYuk47Ofwa14pinYQVAGwsg==
-X-Received: by 2002:a05:600c:4f84:b0:477:7a53:f493 with SMTP id
- 5b1f17b1804b1-47a8384334emr22468635e9.23.1765372626928; 
- Wed, 10 Dec 2025 05:17:06 -0800 (PST)
+ d=1e100.net; s=20230601; t=1765372615; x=1765977415;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=84+6hgUmdVgnIW9T/FlHkEEt7uKdnj2vJAVLACVcr50=;
+ b=F3z6e3MmUiW7vsec6mXh2eY+Xy0nHmQBLHVBdUiRpigmuna9k+5Dd1NqQ+PVEB6kD3
+ FRUBQPIUIl39P14/BJ1srlZU6nKpF1SWMWKpYDBzc4I+ORtYSG+uIf8ymizsmat8tYhR
+ oYsqWQ3Hbdkh0GWhdNPyFqzUNCsMrkdpN5xoKpB2DEg1G88iYMegi10n88cwCJbi6173
+ mSX5rQ7Uoe3+ZbaEZuVx/thK02+nJbfcGhZgVtaAeDRKiXsKBmWspIOERmn3iTkImGR2
+ e+TFG+tojBfUmAcC0qBcW0W5aZsWuMCzUG4ISyR23FvrVoLXp6ZWO77hXXlcZEHDvJQb
+ hnJQ==
+X-Gm-Message-State: AOJu0Yy5OHfcU677snpg3vb68DvbMNAw/hJKhvBR5USykORnqprmeRko
+ VCPi8aII4Xson/Rqu91ARd9s2q9UKeSQWYe5Fr+FSgTeIwxYFHvqXm12uZUeo//zQoThgUGaX4X
+ glu9QVCezdxRofM549hLW3OVbpP3pN6c7HwZRrk9yjfsWh8pkPOFFsgq7hlp7Igi0H0NASEI4Ky
+ t3hsgVXum3BgQA4cIlbxrgHG2uzDKEICdaBz3MRxFu
+X-Gm-Gg: AY/fxX7Ph+HyYkEU+HM2HRKUIkJECEG8NhBTrW4z5stwGz3FfZFpe1zoGKjb2wtXASp
+ IPUaT4HrbcWSN1KtrfiHk6YGLf47A9upwninecOVmy+/i31k0jKV6tfBVcE3BzsIUXKs1jaOw1t
+ fGP80qqGfG0KYsgFb//GVyBLcSVPwlRVXKUOeNOCQV4uiSp5wj3m2DWtQwOj4WUAooU9pyRSUYC
+ 3nZ8+IwAmiqZNUOToK46tJ1TVz36mPZKsGqsCZAVHc2P6D/9Cz8PFb/GsL0mkCne4QjG8wx8qzF
+ 1x+3SvUoBaKRwAw1zcXmFQv17n/3N+uwily5UPAtljcMkjoIaHvhMV95MprGYBIFTOJ3nlwjxEH
+ haC9n4qwesXVX+u2TJ3oRidUE47uwxmjBCzmS4TqMkOFucNPcMmjNkes8GdIJuX3nz8toMW/B9z
+ B0vWj72859eVSB66w=
+X-Received: by 2002:a05:6000:2489:b0:42b:3062:c647 with SMTP id
+ ffacd0b85a97d-42fa39d2f43mr2445703f8f.21.1765372615389; 
+ Wed, 10 Dec 2025 05:16:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG3zZO6ZKvu5+VnzXb5No5wbU2QojuG1ZdUMxHpYZn+fTca2F4IOQisC7IrWmhJx9gNq+Px6Q==
+X-Received: by 2002:a05:6000:2489:b0:42b:3062:c647 with SMTP id
+ ffacd0b85a97d-42fa39d2f43mr2445671f8f.21.1765372614842; 
+ Wed, 10 Dec 2025 05:16:54 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a82d7f778sm52576995e9.11.2025.12.10.05.17.05
+ ffacd0b85a97d-42f7ca4f219sm35842451f8f.0.2025.12.10.05.16.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Dec 2025 05:17:06 -0800 (PST)
+ Wed, 10 Dec 2025 05:16:54 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 06/18] target/i386/tcg: remove do_decode_0F
-Date: Wed, 10 Dec 2025 14:16:41 +0100
-Message-ID: <20251210131653.852163-7-pbonzini@redhat.com>
+Subject: [PATCH 00/18] First round of target/i386/tcg patches for QEMU 11.0
+Date: Wed, 10 Dec 2025 14:16:35 +0100
+Message-ID: <20251210131653.852163-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251210131653.852163-1-pbonzini@redhat.com>
-References: <20251210131653.852163-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
@@ -121,35 +118,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is not needed anymore since all prefixes are handled by the
-new decoder.
+This notably includes the last patches from the original set that implemented
+the new decoder (cleaning up a bit the x87 decoder), more removal of temporaries,
+and more size reduction for CC computation helpers.  On top of that there are a
+few simplifications, fies and optimizations.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/tcg/decode-new.c.inc | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+The diffstat is large but most of it is moving code around.
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index 213dbb9637c..ea8e26f7f98 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1430,15 +1430,10 @@ static const X86OpEntry opcodes_0F[256] = {
-     [0xff] = X86_OP_ENTRYr(UD,     nop,v),                        /* UD0 */
- };
- 
--static void do_decode_0F(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
--{
--    *entry = opcodes_0F[*b];
--}
--
- static void decode_0F(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
- {
-     *b = x86_ldub_code(env, s);
--    do_decode_0F(s, env, entry, b);
-+    *entry = opcodes_0F[*b];
- }
- 
- static void decode_63(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+Paolo
+
+Paolo Bonzini (18):
+  target/i386/tcg: fix check for invalid VSIB instruction
+  target/i386/tcg: ignore V3 in 32-bit mode
+  target/i386/tcg: update cc_op after PUSHF
+  target/i386/tcg: mark more instructions that are invalid in 64-bit mode
+  target/i386/tcg: do not compute all flags for SAHF
+  target/i386/tcg: remove do_decode_0F
+  target/i386/tcg: move and expand misplaced comment
+  target/i386/tcg: simplify effective address calculation
+  target/i386/tcg: unnest switch statements in disas_insn_x87
+  target/i386/tcg: move fcom/fcomp differentiation to gen_helper_fp_arith_ST0_FT0
+  target/i386/tcg: reuse gen_helper_fp_arith_ST0_FT0 for fcom STn and fcomp STn
+  target/i386/tcg: reuse gen_helper_fp_arith_ST0_FT0 for undocumented fcom/fcomp variants
+  target/i386/tcg: unify more pop/no-pop x87 instructions
+  target/i386/tcg: kill tmp1_i64
+  target/i386/tcg: kill tmp2_i32
+  target/i386/tcg: commonize code to compute SF/ZF/PF
+  target/i386/tcg: add a CCOp for SBB x,x
+  target/i386/tcg: move fetch code out of translate.c
+
+ target/i386/cpu.h                        |  17 +-
+ target/i386/tcg/decode-new.h             |   3 +
+ target/i386/tcg/cc_helper_template.h.inc | 112 +--
+ target/i386/cpu-dump.c                   |   2 +
+ target/i386/tcg/cc_helper.c              | 280 +++++---
+ target/i386/tcg/translate.c              | 824 ++++++++---------------
+ target/i386/tcg/decode-new.c.inc         | 328 ++++++++-
+ target/i386/tcg/emit.c.inc               | 109 ++-
+ 8 files changed, 845 insertions(+), 830 deletions(-)
+
 -- 
 2.52.0
 
