@@ -4,108 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD87D3C90B
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 14:03:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0EDD3C907
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 14:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTKme-0005Wh-2V; Wed, 10 Dec 2025 09:03:12 -0500
+	id 1vTKnU-0006P1-Q8; Wed, 10 Dec 2025 09:04:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vTKm1-0005Qu-Uu
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:02:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vTKn9-0006HM-CD
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:03:43 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vTKlz-0006sO-K3
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:02:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765375350;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8kMw6s0g7enS5iey+cogxYbNuww0Ag0WTuE50PrtPmM=;
- b=Zm4NTSOjV76CTZbOliBMGwVXdFdjh4iJ650Fxq6PE6os6/Q4pY6cBWvfP6n0APlIsXMEv1
- 7MzPWGXw4tw5sWbYHCSIUL6wqCuvVxv5sfPKWsq/rfx7sEsPh6ANWCEqb6NsCnEZRbGmv5
- rN5GV6nngUQFkQ34iIWSRDBg/4zhrp4=
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
- [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-OmWXMzsWP0yD5zBJHH_QoQ-1; Wed, 10 Dec 2025 09:02:29 -0500
-X-MC-Unique: OmWXMzsWP0yD5zBJHH_QoQ-1
-X-Mimecast-MFC-AGG-ID: OmWXMzsWP0yD5zBJHH_QoQ_1765375348
-Received: by mail-pf1-f200.google.com with SMTP id
- d2e1a72fcca58-7c7957d978aso7752534b3a.1
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 06:02:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765375348; x=1765980148;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8kMw6s0g7enS5iey+cogxYbNuww0Ag0WTuE50PrtPmM=;
- b=oQaoeFxd95Z+pWsYOl07vbCGYLL0Xv3srD+bm09o0nsK8EGdXQQQs5n2E3kMA7sqA/
- NjJCuml7ZhhEjxYiljEtTHv9nYZZOcQdZHF5FI1y/EO0VzTG18DtXJ5RyDPkp1BK8+kL
- h4Nt/7cJT/KEhoKFRpGk7IB57eYKp7WcDZhKOiQo6JeLoN3AmCerOFhtjISyVLIHDwIP
- wWvN+LXVajqbXQ3JFuLvAz8hxPUN/JptGRUp+7wYBm76nMWbR+Sew7Y5Oq5YlhVdn+q1
- 6dyh0b7WBbwHUCYKOpGezewq/SGhiVjghhDcowgX7sWn6tgcHRFIdEMPGWRVqIfFFVeU
- 7uFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWnbr8HS7449mljWESIvF+KRA9pKjyjnXyWsfnOI5vWibGCDbp8vMdDqunThlXDfIiNJOkk6H/fLMLK@nongnu.org
-X-Gm-Message-State: AOJu0YyGYSQUhEPq1YDO2QIY0yyiLOT7l2gngcEaUGWhuJq+wf5f18vi
- HR9sT5pb1JOFIRbqAFvnzjBPL5414PU55Gpx01nHj+wYwvCvpt3BzS1McX0IUOzDEdJsZMTfh3c
- pepFlIKjrXU3JE2rwRxQAOzqWp9G4A95MPj7hooGe2FUK1yBQfKmV83i+
-X-Gm-Gg: AY/fxX64bhjdPF39q/uZUxDfcJYNXrs5Um2CvjV/tthGQZ4elGGNN1O3nPiyD+ufJ5E
- Hqf/rkw81gVD4zaojfN46UCeguLLQNpAp9rmHf/xibRURutFn/yqsxsU6RQiF6kRWhaM2f+RF25
- OEo56Y8noqEAh4qTb+b4PRWGclAV9hBZJ12slRgsx4d2UiTQqcU38FX6NAFU7SZK/wLqhYQuNC3
- 6cQHlwZJASVivSSQe//qT4tPtQhX+4cSyIdfDw3nXjDFhk3VGJcL1zfVR7onJa0LWbgZzSKtjfd
- z9YKipn9DP30ntcsW6DH9OCRXY6wahxRErdL5VHIah3mu59cCxMKUzzAvbq/2v/riMgAAlyWlpp
- Fl+Uo2iHenRG7r0rUrcILFhPjreq0UgCUChqhPcTbUimVbAIo5De4WIMZEA==
-X-Received: by 2002:a05:6a00:3c85:b0:7e8:4471:8e2 with SMTP id
- d2e1a72fcca58-7f22f9047b3mr2316848b3a.67.1765375347405; 
- Wed, 10 Dec 2025 06:02:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEXpej2FgXVTis88uC9E0mZQ5vAMwWELTqS+Fec50hYb2ONw/5cWgz0DnED8syf4fgUoBDQuw==
-X-Received: by 2002:a05:6a00:3c85:b0:7e8:4471:8e2 with SMTP id
- d2e1a72fcca58-7f22f9047b3mr2316697b3a.67.1765375345333; 
- Wed, 10 Dec 2025 06:02:25 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7e2adc5bf17sm19114411b3a.38.2025.12.10.06.02.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Dec 2025 06:02:24 -0800 (PST)
-Message-ID: <4a1d4bb2-2ee7-4405-a192-53af38e5e3fd@redhat.com>
-Date: Wed, 10 Dec 2025 15:02:15 +0100
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vTKn6-0007Bd-GR
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:03:43 -0500
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BAE2tFO028937
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 10 Dec 2025 23:03:11 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=3A4DXdHJmBvqgM829j34cLao+73V+LMP/BCNEzrosy4=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:From:Subject:To;
+ s=rs20250326; t=1765375391; v=1;
+ b=cSKJwypyaP+UsC9aUt4SmfEpD2mgpJoOua1wIAoRuSS0QY3Ss9dWSLUCg0DoFDnV
+ IFI0LWSAlA0QLWkAsFEaeTyYdM0DnrE94t3qFUvd5vDDahiLRy/p4FL02yO0bZvR
+ nl1lhDJY7Z86yYRg9GOyTqZH1U7kV0Kb/Tz6zGWEiHE9UB1AOXxQvZv83EVclJgO
+ 7a/Fw/+LLF9aIFDAa0pWKw5KnKn8OSTHsPGYpFigAzPg12Wn3uBvghi7KJKAkDua
+ sK9fc/tPHoEVi67hle0Vc08rC/1vxE3ad8opEBRMd6ZyXK7gK+mz/WvEkzDRL5r8
+ 6GfQjCfBa/EJsbA932W3SQ==
+Message-ID: <7cb7db13-4039-4b34-bfc7-79defe425059@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 10 Dec 2025 23:03:06 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 11/23] intel_iommu_accel: Stick to system MR for
- IOMMUFD backed host device when x-flts=on
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [RFC 03/24] audio/dbus: make "dbus" the default backend when
+ using -display dbus
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
+ Alexandre Ratchov <alex@caoua.org>, dirty.ice.hu@gmail.com,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
+ <20251201112309.4163921-4-marcandre.lureau@redhat.com>
 Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, mst@redhat.com, jasowang@redhat.com,
- peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com
-References: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
- <20251117093729.1121324-12-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20251117093729.1121324-12-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20251201112309.4163921-4-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,155 +76,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/17/25 10:37 AM, Zhenzhong Duan wrote:
-> When guest enables scalable mode and setup first stage page table, we don't
-> want to use IOMMU MR but rather continue using the system MR for IOMMUFD
-> backed host device.
->
-> Then default HWPT in VFIO contains GPA->HPA mappings which could be reused
-> as nesting parent HWPT to construct nested HWPT in vIOMMU.
->
-> Move vtd_as_key into intel_iommu_internal.h as it's also used by accel code.
->
-> Suggested-by: Yi Liu <yi.l.liu@intel.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-
-same here
-
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
+On 2025/12/01 20:22, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Set "using_dbus_display" during early_dbus_init(), so that we can try to
+> create the "dbus" audio backend by default from audio_prio_list.
+> 
+> This makes dbus audio work by default when using an audio device,
+> without having to setup and wire up the -audiodev manually.
+> 
+> The added FIXME is addressed in the following commits.
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  hw/i386/intel_iommu_accel.h    |  6 ++++++
->  hw/i386/intel_iommu_internal.h | 11 +++++++++++
->  hw/i386/intel_iommu.c          | 28 +++++++++++++++-------------
->  hw/i386/intel_iommu_accel.c    | 18 ++++++++++++++++++
->  4 files changed, 50 insertions(+), 13 deletions(-)
->
-> diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-> index 7ebf137a1a..dbe6ee6982 100644
-> --- a/hw/i386/intel_iommu_accel.h
-> +++ b/hw/i386/intel_iommu_accel.h
-> @@ -15,6 +15,7 @@
->  #ifdef CONFIG_VTD_ACCEL
->  bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
->                            Error **errp);
-> +VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as);
->  #else
->  static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
->                                          VTDHostIOMMUDevice *vtd_hiod,
-> @@ -24,5 +25,10 @@ static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
->                 "host IOMMU is incompatible with guest first stage translation");
->      return false;
->  }
+>   audio/audio.c     |  3 +++
+>   audio/dbusaudio.c |  8 +++++++-
+>   ui/dbus.c         | 17 +++++++++++++----
+>   3 files changed, 23 insertions(+), 5 deletions(-)
+> 
+> diff --git a/audio/audio.c b/audio/audio.c
+> index 86e674410a..0f992a775c 100644
+> --- a/audio/audio.c
+> +++ b/audio/audio.c
+> @@ -57,6 +57,9 @@
+>       that we generate the list.
+>   */
+>   const char *audio_prio_list[] = {
+> +#ifdef CONFIG_GIO
+> +    "dbus",
+> +#endif
+>       "spice",
+>       CONFIG_AUDIO_DRIVERS
+>       "none",
+> diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+> index d729a810aa..1fe7c4ed64 100644
+> --- a/audio/dbusaudio.c
+> +++ b/audio/dbusaudio.c
+> @@ -32,6 +32,7 @@
+>   #endif
+>   
+>   #include "ui/dbus.h"
+> +#include "ui/dbus-display.h"
+>   #include "ui/dbus-display1.h"
+>   
+>   #define AUDIO_CAP "dbus"
+> @@ -408,8 +409,13 @@ dbus_enable_in(HWVoiceIn *hw, bool enable)
+>   static void *
+>   dbus_audio_init(Audiodev *dev, Error **errp)
+>   {
+> -    DBusAudio *da = g_new0(DBusAudio, 1);
+> +    DBusAudio *da;
+>   
+> +    if (!qemu_using_dbus_display(errp)) {
+> +        return NULL;
+> +    }
 > +
-> +static inline VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
-> +{
-> +    return NULL;
-> +}
->  #endif
->  #endif
-> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-> index 02522f64e0..d8dad18304 100644
-> --- a/hw/i386/intel_iommu_internal.h
-> +++ b/hw/i386/intel_iommu_internal.h
-> @@ -685,4 +685,15 @@ typedef struct VTDHostIOMMUDevice {
->      uint8_t devfn;
->      HostIOMMUDevice *hiod;
->  } VTDHostIOMMUDevice;
+> +    da = g_new0(DBusAudio, 1);
+>       da->dev = dev;
+>       da->out_listeners = g_hash_table_new_full(g_str_hash, g_str_equal,
+>                                                   g_free, g_object_unref);
+> diff --git a/ui/dbus.c b/ui/dbus.c
+> index d2dff33258..45fb3c1aa3 100644
+> --- a/ui/dbus.c
+> +++ b/ui/dbus.c
+> @@ -35,6 +35,7 @@
+>   #include "ui/egl-context.h"
+>   #endif
+>   #include "qemu/audio.h"
+> +#include "audio/audio_int.h" /* FIXME: use QOM dynamic cast instead of drv->name */
+>   #include "qapi/error.h"
+>   #include "trace.h"
+>   
+> @@ -218,12 +219,20 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
+>           return;
+>       }
+>   
+> +    AudioBackend *audio_be = audio_get_default_audio_be(NULL);
+
+Here is a mixed declaration disallowed by docs/devel/style.rst
+
+Regards,
+Akihiko Odaki
+
+> +    if (audio_be && !g_str_equal(audio_be->drv->name, "dbus")) {
+> +        audio_be = NULL;
+> +    }
+>       if (dd->audiodev && *dd->audiodev) {
+> -        AudioBackend *audio_be = audio_be_by_name(dd->audiodev, errp);
+> -        if (!audio_be || !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
+> +        audio_be = audio_be_by_name(dd->audiodev, errp);
+> +        if (!audio_be) {
+>               return;
+>           }
+>       }
+> +    if (audio_be && !audio_be_set_dbus_server(audio_be, dd->server, dd->p2p, errp)) {
+> +        return;
+> +    }
 > +
-> +/*
-> + * PCI bus number (or SID) is not reliable since the device is usaully
-> + * initialized before guest can configure the PCI bridge
-> + * (SECONDARY_BUS_NUMBER).
-> + */
-> +struct vtd_as_key {
-> +    PCIBus *bus;
-> +    uint8_t devfn;
-> +    uint32_t pasid;
-> +};
->  #endif
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 4ebf56a74f..29e0281af8 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -56,17 +56,6 @@
->  #define VTD_PE_GET_SS_LEVEL(pe) \
->      (2 + (((pe)->val[0] >> 2) & VTD_SM_PASID_ENTRY_AW))
->  
-> -/*
-> - * PCI bus number (or SID) is not reliable since the device is usaully
-> - * initialized before guest can configure the PCI bridge
-> - * (SECONDARY_BUS_NUMBER).
-> - */
-> -struct vtd_as_key {
-> -    PCIBus *bus;
-> -    uint8_t devfn;
-> -    uint32_t pasid;
-> -};
+>   
+>       consoles = g_array_new(FALSE, FALSE, sizeof(guint32));
+>       for (idx = 0;; idx++) {
+> @@ -475,6 +484,8 @@ early_dbus_init(DisplayOptions *opts)
+>   #endif
+>       }
+>   
+> +    using_dbus_display = 1;
+> +
+>       type_register_static(&dbus_vc_type_info);
+>   }
+>   
+> @@ -488,8 +499,6 @@ dbus_init(DisplayState *ds, DisplayOptions *opts)
+>           exit(1);
+>       }
+>   
+> -    using_dbus_display = 1;
 > -
->  /* bus/devfn is PCI device's real BDF not the aliased one */
->  struct vtd_hiod_key {
->      PCIBus *bus;
-> @@ -1731,12 +1720,25 @@ static bool vtd_as_pt_enabled(VTDAddressSpace *as)
->  /* Return whether the device is using IOMMU translation. */
->  static bool vtd_switch_address_space(VTDAddressSpace *as)
->  {
-> +    IntelIOMMUState *s;
->      bool use_iommu, pt;
->  
->      assert(as);
->  
-> -    use_iommu = as->iommu_state->dmar_enabled && !vtd_as_pt_enabled(as);
-> -    pt = as->iommu_state->dmar_enabled && vtd_as_pt_enabled(as);
-> +    s = as->iommu_state;
-> +    use_iommu = s->dmar_enabled && !vtd_as_pt_enabled(as);
-> +    pt = s->dmar_enabled && vtd_as_pt_enabled(as);
-> +
-> +    /*
-> +     * When guest enables scalable mode and sets up first stage page table,
-> +     * we stick to system MR for IOMMUFD backed host device. Then its
-> +     * default hwpt contains GPA->HPA mappings which is used directly if
-> +     * PGTT=PT and used as nesting parent if PGTT=FST. Otherwise fall back
-> +     * to original processing.
-> +     */
-> +    if (s->root_scalable && s->fsts && vtd_find_hiod_iommufd(as)) {
-> +        use_iommu = false;
-> +    }
->  
->      trace_vtd_switch_address_space(pci_bus_num(as->bus),
->                                     VTD_PCI_SLOT(as->devfn),
-> diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-> index ead6c42879..ebfc503d64 100644
-> --- a/hw/i386/intel_iommu_accel.c
-> +++ b/hw/i386/intel_iommu_accel.c
-> @@ -50,3 +50,21 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
->                 "host IOMMU is incompatible with guest first stage translation");
->      return false;
->  }
-> +
-> +VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
-> +{
-> +    IntelIOMMUState *s = as->iommu_state;
-> +    struct vtd_as_key key = {
-> +        .bus = as->bus,
-> +        .devfn = as->devfn,
-> +    };
-> +    VTDHostIOMMUDevice *vtd_hiod = g_hash_table_lookup(s->vtd_host_iommu_dev,
-> +                                                       &key);
-> +
-> +    if (vtd_hiod && vtd_hiod->hiod &&
-> +        object_dynamic_cast(OBJECT(vtd_hiod->hiod),
-> +                            TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
-> +        return vtd_hiod;
-> +    }
-> +    return NULL;
-> +}
+>       object_new_with_props(TYPE_DBUS_DISPLAY,
+>                             object_get_objects_root(),
+>                             "dbus-display", &error_fatal,
 
 
