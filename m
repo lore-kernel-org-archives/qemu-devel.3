@@ -4,94 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B53D2CE17
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 11:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78E50D3C52C
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 11:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTHvY-0002jt-BO; Wed, 10 Dec 2025 06:00:12 -0500
+	id 1vTIMM-0007Z3-NE; Wed, 10 Dec 2025 06:27:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vTHvW-0002j0-OJ
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 06:00:10 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vTHvR-0003DG-F0
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 06:00:09 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-47775fb6cb4so56657395e9.0
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 03:00:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765364403; x=1765969203; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MbvqQiM0Hg7JnJkifPKiEMRMTMpM7V85GonokBLipjg=;
- b=FbkiSHIEpx5T5/XF+Tc1iNfd7tBdsaXniP3pPTxYJz8bnM1o6Ey5cpl2D6Z+/XID/b
- h3P2H17YWG6b6H7SKvqX+WNtVrNb99eKwqWkYej5D5DTttDgdCdqZkjivPbHx2x4p3zu
- KMkIblb+KTaQKUApb4zQhtZ6iIZUxo0l/MhHHtSUxkkEudH1e7xchDRpQVA9Pwb8D+0H
- RRM5hgJ/jHLFVxt7ckeUAWtyF1nOwYrF/pSqnvc70HdS0fuGwDnYkeZlkCEiuTyySN6g
- xuGG4bYEOQyTdiZpAr29xuSFFtB7346eAz2KQSQHDbXaG72D8uIZKHy9bRxJvHkiATAb
- AmYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765364403; x=1765969203;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MbvqQiM0Hg7JnJkifPKiEMRMTMpM7V85GonokBLipjg=;
- b=H86VRN6or1dtopogah84sgJUGSMTMmuWkvtzJw5012MT1fJ+t2tfI/z20fZ4didP8D
- RfoiizZ6O6UiGdakzGQZ6hv+RxQV/Ny5wED1n9zIvsCUI8frFnrpjOr8qKQmGqGC4nOJ
- H4W8cSUa1aiBLoRH51vudbKwZs6++4wkt/UI3u3EB4edS1GzUVq5RI5LZdklx/xXhJ98
- /+H2MxmWLPkC9m1h0H1O7dpmTYurip7I8n1uwRjG/h37oXqp5yHKgYgGnkKxjYWO1mDB
- sFI3mGJpuDwyZvDpw2O7UG4lgCNPISFUQ33w18xaDpx1MyQrCrGGDgTrPGAYMbp+zNHt
- 4Wlg==
-X-Gm-Message-State: AOJu0YwEeCfsPzIB0LWmaP4LMfT/FEXJ/JwgZbheKOVC6gYY5jmwjd++
- X8YE/mHrlErKv6pBTXIKw3HUqyd3CyLyvs0wNzg6ARVCqgRlyGfRT6iDBRS/swFp+GI=
-X-Gm-Gg: ASbGncvSzPtR4jNZJQ/PzV9PSIYGx58kHwuC86HnbR0d6faxKsBSL5uKNTS812n74zW
- 1L8p+oQNn2+AEl0831YHYzLBuvA799MqMdIZT2wZbvedJ/fRwrJCdDqIKnnPveMEcveFf4CrJdM
- 2VbaWdhBN0LgzIUYMsIS7SegXCE0ksAEmpkDaKYhAu1lhMml7vM7vVrCElRcIKme+asFxkfXDDf
- cyt7iuCtnjeou7SMjKby/B5SeXw/UPKEnps90Vrp8iqpgEPG6I1AOSFZwlmSEdqkO0A/W2qWTfq
- +09d1fvi9PM2/gPr/wQ8rUyqhYKQj4EEwalfYJinZH8AnmsafnX6eS8i0nx4lPNdk5Z2l2sUSrn
- OmCvxM/1u5SH2aAvvGNcP6CnbjZ3eh5bjm6Zdm/bil6NAV0qqgJGqXWFMkrlucnIVDs0d4w9I1c
- LDkYIZLTpdmyw=
-X-Google-Smtp-Source: AGHT+IEIsBYCzOr9ZBGe2j0sEmRavUte89zb2fWI3Exm/V2V++m7yWnf5MptmP5gL2L12n1UP9Fb7Q==
-X-Received: by 2002:a05:600c:8183:b0:477:7b16:5f9f with SMTP id
- 5b1f17b1804b1-47a83848368mr17774345e9.31.1765364403412; 
- Wed, 10 Dec 2025 03:00:03 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a82d414basm36783385e9.10.2025.12.10.03.00.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Dec 2025 03:00:02 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1D6E45F814;
- Wed, 10 Dec 2025 11:00:02 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org,  Jessica Clarke <jrtc27@jrtc27.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  "open list:ARM TCG CPUs"
- <qemu-arm@nongnu.org>,  qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PATCH v3] target/arm: handle unaligned PC during tlb probe
-In-Reply-To: <836d2623-6b79-4303-a34b-12e72c674822@tls.msk.ru> (Michael
- Tokarev's message of "Wed, 10 Dec 2025 13:14:42 +0300")
-References: <20251204203540.1381896-1-alex.bennee@linaro.org>
- <836d2623-6b79-4303-a34b-12e72c674822@tls.msk.ru>
-User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Wed, 10 Dec 2025 11:00:02 +0000
-Message-ID: <87sedivbyl.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vTIMK-0007Yq-UJ
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 06:27:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vTIMI-0002G8-UH
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 06:27:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765366068;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zTXtHokjUtzRDl7h2vACNMlylh5NxAXs+riS/Ctozfc=;
+ b=VbKhWM3B7EI7Gt/x3vGY5wffIvQSZOekh7kLOMHcfx0oE26eetYE3VbjEQmdF+YRGUdk3t
+ j4O9LPRsBHBRasPQIoyixF3bXUiDMTr1n2+W2FmkLpmQqjiRNtUL86Zt/JGVH14iaVRJek
+ NXrFXTQu61QyR5I06deY72GqlOJxN08=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-195-bkfxG7FQPneoKT-ork-3pQ-1; Wed,
+ 10 Dec 2025 06:27:44 -0500
+X-MC-Unique: bkfxG7FQPneoKT-ork-3pQ-1
+X-Mimecast-MFC-AGG-ID: bkfxG7FQPneoKT-ork-3pQ_1765366062
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF7FA1955F3E; Wed, 10 Dec 2025 11:27:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.167])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 133C419560AD; Wed, 10 Dec 2025 11:27:32 +0000 (UTC)
+Date: Wed, 10 Dec 2025 12:27:30 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
+Message-ID: <aTlZIlgB20OpdSEl@redhat.com>
+References: <20251209162857.857593-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251209162857.857593-1-peterx@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,37 +98,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Tokarev <mjt@tls.msk.ru> writes:
+Am 09.12.2025 um 17:28 hat Peter Xu geschrieben:
+> [This is an RFC series, as being marked out.  It is trying to collect
+>  opinions.  It's not for merging yet]
+> 
+> Background
+> ==========
+> 
+> It all starts with machine compat properties..
+> 
+> Machine compat properties are the major weapon we use currently in QEMU to
+> define a proper guest ABI, so that whenever we migration a VM instance from
+> whatever QEMU version1 to another QEMU version2, as long as the machine
+> type is the same, logically the ABI is guaranteed, and migration should
+> succeed.  If it didn't, it's a bug.
+> 
+> These compat properties are only attached to qdev for now.  It almost
+> worked.
+> 
+> Said that, it's also not true - we already have non-qdev users of such, by
+> explicitly code it up to apply the compat fields.  Please refer to the
+> first patch commit message for details (meanwhile latter patches will
+> convert them into a generic model).
+> 
+> Obviously, we have demands to leverage machine compat properties even
+> outside of qdev.  It can be a network backend, it can be an object (for
+> example, memory backends), it can be a migration object, and more.
 
-> On 12/4/25 23:35, Alex Benn=C3=A9e wrote:
->> PC alignment faults have priority over instruction aborts and we have
->> code to deal with this in the translation front-ends. However during
->> tb_lookup we can see a potentially faulting probe which doesn't get a
->> MemOp set. If the page isn't available this results in
->> EC_INSNABORT (0x20) instead of EC_PCALIGNMENT (0x22).
->> As there is no easy way to set the appropriate MemOp in the
->> instruction fetch probe path lets just detect it in
->> arm_cpu_tlb_fill_align() ahead of the main alignment check. We also
->> teach arm_deliver_fault to deliver the right syndrome for
->> MMU_INST_FETCH alignment issues.
->> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3233
->> Tested-by: Jessica Clarke <jrtc27@jrtc27.com>
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
-> This feels like a qemu-stable material (for all active stable
-> branches).
+This doesn't feel obvious to me at all. A machine type defines what
+hardware the guest sees. Guest hardware is essentially qdev.
 
-By all means - its pretty self-contained.
+I don't see any reasons why a backend should be interested in what guest
+hardware looks like, that would seem like a bad layering violation. Many
+backends can even exist without a guest at all, and are also used in
+tools like qemu-storage-daemon. Having a machine type in a tool that
+doesn't run a guest doesn't make any sense.
 
->
-> I'm picking it up for 10.0.x and 10.1.x.  Please let me know
-> if I shouldn't.
->
-> Thanks,
->
-> /mjt
+So if we do introduce some mechanism to provide different defaults for
+compatibility with older versions, it has to be separate from machine
+types.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Maybe it would make most sense to address this on the QAPI level then
+and finally fully QAPIfy the command line. Adding defaults to the QAPI
+schema is something that has come up again and again, so maybe we could
+introduce that and do it in a versioned way from the start.
+
+Kevin
+
 
