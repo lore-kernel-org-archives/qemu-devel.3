@@ -4,194 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B8E0D2CE17
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 05:24:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BDCAD3B9A9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 06:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTCg5-0000hY-7x; Wed, 10 Dec 2025 00:23:53 -0500
+	id 1vTDIX-0007E2-Tn; Wed, 10 Dec 2025 01:03:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1vTCfs-0000cp-6r
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 00:23:41 -0500
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTDIV-0007DN-Sg
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 01:03:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <khushit.shah@nutanix.com>)
- id 1vTCfp-0006z3-M8
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 00:23:39 -0500
-Received: from pps.filterd (m0127840.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 5B9L2JoB945755; Tue, 9 Dec 2025 21:23:30 -0800
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-id:content-transfer-encoding:content-type:date:from
- :in-reply-to:message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=zAr5sSG5gQVtoioZaWgxGvXRkH4HC3OY17Yw+XQ9H
- lQ=; b=OR+NtRy27UhyBZmCMuFXgd8V1v+KeWzc5wPErubHYWWArpzYtVzms9vZg
- UkXHAbpAf8fNU90SnusJJkiTpN+J5iq+ZBY67/tVPONUl2JFllgKbfLmFVAr+NmY
- b27DLKT36iHE9047tUfYd3nXpH/TAUReLQ7tUkRo2YTvbwSfmFabRJ8XQ6UUse47
- /gCsglNcMnXr6+5ziFOw1zEzOWJb2xdHZtjwzLdgyfVCPFY0mN9fr4OHdkMqbgNO
- Zc2FdoiwTNfwPOdbsghcHPJvJoWb7OmAu+uiAa6zgbmEDlGH1XSo/G9jzKGVxT0j
- ktFsxJUg+JQTFXZ2ndcn/k05xvbcg==
-Received: from cy3pr05cu001.outbound.protection.outlook.com
- (mail-westcentralusazon11023076.outbound.protection.outlook.com
- [40.93.201.76])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4axub5udj1-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 09 Dec 2025 21:23:30 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Jzmb8ZTfx2838WEBAKDHkHbpCE81TRzwliRp1kv9zVlU1WyvbudwYaX963VPFuraerqZ0a8VWxmmRh3VIrynRplooTQK3XgcTDJO42q2Mb9aVU+PLL8fWwa7amIu7GxGKNCtteoN7u2C69ARLOaUBMJ4Hsl3Ue6MiObQc5xdnVyUf78Cd5o6A39IUS0oSLzyXg0j+pJ/x0BiShkAoRz0TB2s/fC0kx7QABxaOIyTi+QD1a2apDgWuneSnSkKzqlPMEJa0sMYL4VO5KYbsXyuKFUacRL0/iea0wxomZcGE+FyK9KUdWQMthiAYhsaPII4qRIgk6iuSVVOaMBpYxo+6w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zAr5sSG5gQVtoioZaWgxGvXRkH4HC3OY17Yw+XQ9HlQ=;
- b=hfnCAXjQ+CUiDdwofC2eQZVBYD1uneejU+TEuQm+NZXek+EKK7I55JZ5kJ9edzntlwMFc/j5F2t9R2gRmkLWA6Y2Rhs77XUCs+/WtcwoBEk6SaghZLAfNEajrKMwO8ESN13DsCktZLGtk0I8AjmueSMAgMHYrlEqkA+roJGSgkMebDn7xsT/MH2cvst6AdC9OqjnPQQTssya+gc5XpSxgVPJj26wW+WlHBCy6kiSq3JqzX7gEbrXLSZfFT7UV6N1OL5P807ovD+HQsygvX4yv77QSVMljkGDwUjTUUkTyN/kPBWPm3Tlq+Ij/mm7ET8aQnQow9g1RiDHu7VFu3q1RA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zAr5sSG5gQVtoioZaWgxGvXRkH4HC3OY17Yw+XQ9HlQ=;
- b=oZoi5hTFzaSiX6CDSzACgPuKPdolciG2PvY+b1JCpzJGOfiC/ktkDXDb9hcKTGhFWTVWVRIsUeiyLRztUhUTqriQA3FD4+2BcdEEYtfWXV7YuHoW2yKfVgRVRv4DGx2/iwoaQP1JBKKel3RbAmDg8E7TepDWUft6rQ+rjRIVOy+9DR4/f8KyXvuJzR05e0CiUfX1+0VrpxIkobDaTqQ+1rcmHgylU+lQMw6hszof7rtmCFEctcZpNwDCTJ4csToo20UuW2gUIkD4V1KBY06T34wleeezu68NJPCFn26LDBBD57Qksrm2kw2ZtUvYHz49NceqFikV5HnmkKn7GXL3ug==
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com (2603:10b6:806:146::23)
- by CH3PR02MB10533.namprd02.prod.outlook.com (2603:10b6:610:204::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.14; Wed, 10 Dec
- 2025 05:23:25 +0000
-Received: from SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::27c4:c948:370:572b]) by SA2PR02MB7564.namprd02.prod.outlook.com
- ([fe80::27c4:c948:370:572b%4]) with mapi id 15.20.9412.005; Wed, 10 Dec 2025
- 05:23:25 +0000
-From: Khushit Shah <khushit.shah@nutanix.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-CC: Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
- <mst@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Sean Christopherson <seanjc@google.com>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
-Thread-Topic: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
-Thread-Index: AQHcXrhurlricMg9iE6/H6LGVi6DLrUEthqAgBW2oIA=
-Date: Wed, 10 Dec 2025 05:23:25 +0000
-Message-ID: <C1DC0AAE-AE34-42E1-A15C-E03D1EE4D770@nutanix.com>
-References: <20251126093742.2110483-1-khushit.shah@nutanix.com>
- <F09B2DC7-6825-48B4-94A9-741260832167@nutanix.com>
-In-Reply-To: <F09B2DC7-6825-48B4-94A9-741260832167@nutanix.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SA2PR02MB7564:EE_|CH3PR02MB10533:EE_
-x-ms-office365-filtering-correlation-id: d9f596a8-f464-4d6d-cdd2-08de37ac3e77
-x-proofpoint-crosstenant: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|366016|10070799003|1800799024|38070700021; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?eL2HUNrKmFz+DMeiu8wf5YpMRyVDBmyEcITkTfyQKsJ0wSP8LrzlvGLUxVbb?=
- =?us-ascii?Q?Nxu3G1/sAmYiTVgSvRHuU6xbIW3W61Jo679BDETw0ETLXjyuLN5xWU8IRKbL?=
- =?us-ascii?Q?zyIR9F7BQFHMAPoDA3DmgExhg+UDAgn8sihBBaizKKtMFnPJBIkg8XYZrxHd?=
- =?us-ascii?Q?7cYtxmS8V/V/IDEjaa1lUT1IQBEY0ZwGT8t+ceP3vshC34KcpKKb8h1MVZKR?=
- =?us-ascii?Q?iKrZ/6ZgkjFX5vNQPSzcZ8MTaTewE4aL/L4ErX3EsoUliMu7vctguiZxZQ+9?=
- =?us-ascii?Q?/xiONiKGSqlsxOl3KWs0oEcGct/Yp6fUaofxzn0PFtCsa/+IfE9VEJYi3Dne?=
- =?us-ascii?Q?GUTWP8pSyqRKGzINauQ+mJ7ie2IHMbpdAm66hZnH+bQaLQgZfM93AzVwEUFX?=
- =?us-ascii?Q?etkoDJ3vw1TfduK5WuzY1DDpCbcvhu/FQuBxnc/0As4Nar0crL3SY/m++Hcm?=
- =?us-ascii?Q?TIh4bbKtRIdc68qmnqeRY549SSnn9cjsV+MjZX0HSRUPrR6Tr1c8c7S9x65/?=
- =?us-ascii?Q?Kvbul7m+LVwyBdW4+OErvhXO7aXTxoLrcdfQbKZIk7vkkJ1B5MNJ0C4/MBcE?=
- =?us-ascii?Q?wHoXl7mrPAAkwlM5Okvnv1Ioe/IUtcKU7bdYKVcEEtQfmGjHAXDCJg9GIxId?=
- =?us-ascii?Q?+KT4IHB9zMlbA6b0vc9bS5FT+uh9VnFdEyyP2WafJQCFKO1NCIww1W+rWSVu?=
- =?us-ascii?Q?Z8Lk3RNhJdyq3p834abr/3aRJO/mKvgfkzsRCBnJ7KMVulskL+UT8oohmLow?=
- =?us-ascii?Q?uUlkpgVPSdG32ycSUjh1MyMjvsc9Y/xjVT1kJhNH4LNL5/MFhd2OvGvKtw0c?=
- =?us-ascii?Q?upEDdZvNmTDna56M7P50W7Bpl19/8LILJgPf2g5DpX4N/nlxtyKwZdbrJ9ls?=
- =?us-ascii?Q?HclmArN58t4cCXN3ekO4hJWqzNBmwsM+2vgHJk8QoDp92IXfCuY2eQw5FLbv?=
- =?us-ascii?Q?TFclry4EqgQtI3NyT9822/dtwtOXxIx2XBf1xOYdqFv7PSdK5stVsSXtlGPJ?=
- =?us-ascii?Q?S5tpvmTWEeUMlFsqBKpzuKf84v6nerecIWfkeVJIwqC3GgyqQIYaPVScvRRU?=
- =?us-ascii?Q?uPPW5+/3es2T/9fDc/pI4SfHOZ6JHuoCzM6IyRUV20PaPtNBYLlC//VHVNX1?=
- =?us-ascii?Q?wFwhs4snD2UY0SmHtnEbNK1n1e8BH4RcRkb0Lge/8kjyj6R7jYYe5U6R8HQq?=
- =?us-ascii?Q?2HUGwaPnJ8MvtaYTKQ6q/oCetZrRWVlWbIYIsW/uSgQ0854tAnw5yI7KlWcA?=
- =?us-ascii?Q?KGUd6duv8+w3wnj6oedpVujB6fDtjT8W71Nz0lqlkSYGLMw4NZQiq+OfMNqC?=
- =?us-ascii?Q?vZ8TpceeQL5N6OOzCe+z8CrusgeHHgbUS0QDBCV6NF4jVZF4KrmuuBI+Wvxv?=
- =?us-ascii?Q?gjAghPB18W5pLjVsr/2CraTuoSCJeZkd5UPJeOX63ZbnObT6wXScibDkLele?=
- =?us-ascii?Q?1KPN+Ui8neuxSDj/Cs9+SUFIvH0d585dGk4kKFBxPTqJd3zx4VwNulqnDz3D?=
- =?us-ascii?Q?hNw/hFXNxBmClQ6Lq/gzpTLK1CWEgUI+FHlh?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA2PR02MB7564.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(10070799003)(1800799024)(38070700021); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?XCqSeNtRn/LEYQIbxd3jcs6+SFIUqGSjtw2aJfY/xARzhdwB0+RGPaIBT2se?=
- =?us-ascii?Q?pMuuQL/RqxfTmbcQHQHIhtfPo4BufwiGklJFb2bPJCwQA475suaPWxgs726l?=
- =?us-ascii?Q?bH2/lk4LHjh89+vz0xQKwjvQjP3Ej97r5I8pXicqPv9L7kyO/QBXRx4p+xN8?=
- =?us-ascii?Q?oUF2d7pgz8Q3a2SIrn/aSva1oYUnfYsYjjfI20kJpNwg0pHdWt6daL5j+ryw?=
- =?us-ascii?Q?d9ZDrtFZXMFY0SjwkL19TM5VTiUNureV30gKGJHc+4wmUs0fjqHPEbtgNmJg?=
- =?us-ascii?Q?3kiu0FC7N0YdtkgjjV6dPaKZ18rKqY8wEQ9DJK9vq1hoMu8eeaglBG4ptNHH?=
- =?us-ascii?Q?miMngAlRYsIOQWllT5HnXg//L9w81KbEkj+FAFaREVmfCIs2gCj+fyGfnXUx?=
- =?us-ascii?Q?ab8YxzI1T7I2TPd5lkTyqp1PyDpVYjeSBTOJ6fLRUsNV8O7d/sgimzFFjvB0?=
- =?us-ascii?Q?iTjwwLNS5QFxc/IA3rUHzAGzUwVRKJO13tHZ2OJc+nknepzJBfKuxkwOxSDA?=
- =?us-ascii?Q?qtXRiKLznC2QeIg6ZLj9jQntXoVZksVpRWa2xnuqFGnsOtOy6Y4sOgQXCKSa?=
- =?us-ascii?Q?cfWd0juZZaZIq/1BHE0rt1p4sgQtDEg7gGU3XOjFoeYwPU/2CUVjZoVIAcbb?=
- =?us-ascii?Q?w029iBBahBi/UT5ws2ZGLG/tLMP1a1sMXMyRqlvI8V+sOAkGD5Tza1IhXWjL?=
- =?us-ascii?Q?0+yKA4l4laWAAvxxyLy/VICy+K2vO7mt0rbnnRHMtGMkofrOJXpwDXsxdp9u?=
- =?us-ascii?Q?kuJhJD8Ce30uQ5toLn2f2Gh+46LkXoYQlAdJPulBw4w6bNOjFt840I+j/3qg?=
- =?us-ascii?Q?eD8dva7jlbGXVUfpweC1raWCJ63jONruPXT+1KHa30vpGHxQfFaGtcdg7iXX?=
- =?us-ascii?Q?TCez/RlkC+aWmRDAS3KQcZRFnqswC+FR3BFaV2Z21Li0J8hKuw9Sz0wy30f5?=
- =?us-ascii?Q?9rsg9nqIJIbKbVoOCGMkNWcZeObL2kPPSaOxS/mNl5w9pXtTMpWHbGxQ6+Jf?=
- =?us-ascii?Q?D5fpxYxov/3GHCP+Mz+Qg0NuUbbXYStGDHm/Q/C+CaXXir25FzrNe4WHZM3z?=
- =?us-ascii?Q?1jSdBYqePcbxdf1gTITKl3369WxE6Ug3qxAcWsLCE5y5KPl/f7OMtMQ5wyzd?=
- =?us-ascii?Q?Y0p+9d68sXDeae+VhYVxEoHzW4eibIMNFm3eSVqu803B7pBiJl5cFPdlXkgi?=
- =?us-ascii?Q?Kn/dG8+7WB5SLqWLbqJtsjwOZDuwhViEwI+5N2LPjTUAaIDBUNn3b5dde47M?=
- =?us-ascii?Q?oh8PNkLKMdp+Lo+6vb47O2IIzz+W2G2UieOf3Shexgx2VhdQeyRXZIyrU9Fk?=
- =?us-ascii?Q?h1Qg7cJPT1O1AtF41A7er5094K/Er4aGMCm6QGA8/QN9pF2pV225zMiL7qif?=
- =?us-ascii?Q?449Vn9KIQpmUXmw/z1TKwbfAOZkGzHd3/K+PMK0KzohtFmlb7dz9IFcQ+AN+?=
- =?us-ascii?Q?9doO4T+Gmt+BmnzC8X1Xv5VF4o9tmGEpx/+ofLtAywgC2bzI75A2jQiRZcc6?=
- =?us-ascii?Q?08nAFXMFOwQqxTC43ikC4ySgHGl19vDWTJ6RIqgyd3iYYL3Y8XrdMCxZl0Bi?=
- =?us-ascii?Q?+yAYCD6iQiS/SRbHPPi6kWLz8RYn0J5n4pqYV5TextnZ3iHLGlicaOwPKyIL?=
- =?us-ascii?Q?m3BHDgsrRnxgLv3/vW/Xt/5abNwT0GZVQoRAuS+/Vnj44PbOdpCalcNlytZp?=
- =?us-ascii?Q?uJCspw=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <DDFA208F36E1A24091B734F871B50593@namprd02.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTDIU-0007Yr-6f
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 01:03:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765346611;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ccCGCvKtVokVSkyz9606XMeOuGT+lxxM6NzxhGfhnnc=;
+ b=LvUp+aU3Axz6afzTBi0F210BYhtESAew9rB9aXfydsWD+24ZDiYjxjXJlhISusvsWD3HQB
+ iLeeMAfjHi2d3jvef0fSzxHu+aWmCADbjwJxIAkzy1WKj97RdLbhOTHbocI+YIc2e2pKAV
+ u8+lAwpaJWszrBYzIOCiaOg6lwaQSGA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-31-3I9-Jo36NJiwZtkwqSkfbQ-1; Wed, 10 Dec 2025 01:03:29 -0500
+X-MC-Unique: 3I9-Jo36NJiwZtkwqSkfbQ-1
+X-Mimecast-MFC-AGG-ID: 3I9-Jo36NJiwZtkwqSkfbQ_1765346609
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-42f9ed47dd8so647537f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 22:03:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1765346609; x=1765951409; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=ccCGCvKtVokVSkyz9606XMeOuGT+lxxM6NzxhGfhnnc=;
+ b=j7GHGGBHRZAnGByUika0xsHo3IF7IlDYkN5aRPZT3hAXeefE9GExVO0RFhm6viwXPC
+ md0Gt4+aGIc5J379z7B80HRvCj9O3uFPigcRJO3CWTMQxVOuJpuUpRFVujWAJKocD54l
+ FYbRRyF9x5oSkQLK+L60Go1xiZa+UookN+3TdhJ03H2ezVR2LKZyzzIPVLGpbkMWSw6u
+ hR4Fm6CXI8C6eVReWxWjoLo6cBgrqH936Zsb5OYPIqfdLTSGpzcfif7Qy0QrmWrrnCkx
+ 0VSHDL3pQYsHbIwsz28NRlHq25dc7w0ZaaRPEpwM4Vbv0mWfx5pkrU9JfyjjnBA6kXrM
+ zLkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765346609; x=1765951409;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ccCGCvKtVokVSkyz9606XMeOuGT+lxxM6NzxhGfhnnc=;
+ b=lx3ZsdcaP9h/G8FQnYUb8idEbLLZTdjzsdErJDTI5g5CmhmrGFfFsrR3IYmFsaevrL
+ Xw/IQqIriUDRix6XLVldBsz74dlZ+j5tEHlwZYAnkrQEBCp1sgjR1GsDFiK7i/H9BZgu
+ i1IxEHCekHyHcR140ilgeoYCyv8W8FDAi5czQ3M5GL1nvqpA7sQmQggCtBjwaTkraBMv
+ Widr7lkIYgBw/EcRyOVfe1gDc91gJwMoGGyXpIBTT8IqgcMsDNcA2VXFABfT0TmotGab
+ naqdRy0shMeNMNJqV9z/AZN58wsQ6T5LwLRBnnartlGuyFTynxXZ4lDW+xMFLaamxHAR
+ /3Cg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+HqiKnqZe6VGVbZoZmxZxkVfGLliCzxQ6lmhPgy0+Ad4+wpR1Aul2pDLm4cZNcfNieKaFf4KQqUFo@nongnu.org
+X-Gm-Message-State: AOJu0YyQZB86FCRhWFlXGXlfBxhzqg1lbxi9voAT7a2Rz9MWqgE/QbRs
+ 0sidoQQy3ciS9blzOL9Tn2Bt+ScxpjCcpjAiaHnjyP2n+njLf+ypOjz3qSh3HdHf4z2tKk+HTxK
+ h/v/lJW1s4Q+cjz3gWZdM1D6mgA21SERh/rzLs8gN/5mJBuSF4klS2ZZq
+X-Gm-Gg: AY/fxX4Letgv+Q+LJHORdowzu/p2I1AQwHTzWT6Jj/U6ZaW4LFK2hcUoEipOScUeOGz
+ fNlhKBI5jF2yjabXbGf2Euaw1vo5OPdrvrigf9eygU075tSzIEb/7Qys/vBssatRGQfd6j7vRkp
+ wdTUgComRdlRMfgSnCz69ika4BEs1RriW+6quumPcqr5xv/Clh9cGDDSaheoSmgBovPL2QPYWh1
+ aEPWn0y5E3u2iSnVOtizELEnZ5EIQeAgVmAE3MyhYYkQik21nbBBNwQEQTLOrWa1djdmn4/gsqZ
+ j49qNE+jvAEizprdio8coc5r32BXf3oNAGV6Rmfo2O2bfA8rMY7WCzL0T8Mw4Tfe5EYIi/fzn2N
+ SrvcKqlxA0UHk1GFmAWtOL6rdFUVAd/AECKwMZq+ATTVvqgOD
+X-Received: by 2002:a05:6000:2dc2:b0:42b:3ab7:b8a3 with SMTP id
+ ffacd0b85a97d-42fa3adb80dmr980585f8f.27.1765346608697; 
+ Tue, 09 Dec 2025 22:03:28 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQIGya/i9XYSachnxctoBJhmiK6xwcp4CgCfeLDe8+997ghuiPT1s+84tmbxRbGSkkB8B+FQ==
+X-Received: by 2002:a05:6000:2dc2:b0:42b:3ab7:b8a3 with SMTP id
+ ffacd0b85a97d-42fa3adb80dmr980545f8f.27.1765346608232; 
+ Tue, 09 Dec 2025 22:03:28 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42f7d3319ccsm34711930f8f.34.2025.12.09.22.03.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 09 Dec 2025 22:03:27 -0800 (PST)
+Message-ID: <f9b0ccce-df77-444e-b131-d796936d5078@redhat.com>
+Date: Wed, 10 Dec 2025 07:03:26 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SA2PR02MB7564.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d9f596a8-f464-4d6d-cdd2-08de37ac3e77
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Dec 2025 05:23:25.4865 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: E0YmHrGX/Eg/N0A9wAHI9BDQ34dYKBXpbpExTfR61rSY6bl0ENBLbAaAZKdKDtIv9FC/C+UUPm4Di48yCCzRYVOR11WZjgvFwSES4Mrcuh0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR02MB10533
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEwMDA0NCBTYWx0ZWRfX6Qh6ncNpADhh
- fR15z+/BAtSWwiVSzlcO58AWCAjYHUjnaju3U8IxOBFEl58eKylDKvqUKWSTKX2zMMe2jotppU0
- lHKRH3qd48hBZtwZxvwKfIRP80D86Y3NoPO5qAJ/b/mlqw2JLjIGqGCpwQN8FpgFO3OchbwelbU
- NjysS8zKEu5prKjy1bQTENQIxr6BsGG7jqGXLWpemLGgr0yNctKvySyoRZl2qbSvLcopg+SZ625
- SK9XWnzRf+QrMyXNCWGV/N4JlErdgYS0dzFDIRjq2dKgLsemx7C0OTX/yxwqWVL1ulhLyfkm54y
- SuvPnT35n6guHMnGCDhDJ8C9MymhgG40YPk+80HMeIr3I67n9mkEAOnbMdfU80t7yZDy7xR5iNK
- t3wTunpvmgt/+CETFMyapCcc8KG3tA==
-X-Proofpoint-ORIG-GUID: 5T-OhNaSyNEv-GHVSeyb4NNJXfah-NA-
-X-Authority-Analysis: v=2.4 cv=cLrtc1eN c=1 sm=1 tr=0 ts=693903d2 cx=c_pps
- a=TLRaRVVo73tAgr2tZ40rpQ==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=wP3pNCr1ah4A:10 a=0kUYKlekyDsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=kqp_hg9UcqLHr2iSWvkA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: 5T-OhNaSyNEv-GHVSeyb4NNJXfah-NA-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-09_05,2025-12-09_03,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=khushit.shah@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] Fix const qualifier build errors with recent glibc
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>
+References: <20251209174328.698774-1-clg@redhat.com>
+ <788f9e4d-86c1-4830-8eda-dd70d8fec7c4@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <788f9e4d-86c1-4830-8eda-dd70d8fec7c4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -207,39 +177,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Subject: Re: [PATCH] target/i386/kvm: Configure proper KVM SEOIB behavior
+On 12/9/25 20:17, Philippe Mathieu-Daudé wrote:
+> On 9/12/25 18:43, Cédric Le Goater wrote:
+>> A recent change in glibc 2.42.9000 [1] changes the return type of
+>> strstr() and other string functions to be 'const char *' when the
+>> input is a 'const char *'.
+>>
+>> This breaks the build in various files with errors such as :
+>>
+>>    error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
+>>      208 |         char *pidstr = strstr(filename, "%");
+>>          |                        ^~~~~~
+>>
+>> Fix this by changing the type of the variables that store the result
+>> of these functions to 'const char *'.
+>>
+>> [1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+>>
+>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>> ---
+>>
+>>   Most changes are straight forward apart from vubr_parse_host_port.
+> 
+> Better keep the vubr_parse_host_port() change in a distinct patch (the
+> change isn't really what this commit describes).
 
-Hi,
+A rewrite is preferable anyhow.
 
-I wanted to follow up on this patch to see if there are any review comments
-or feedback. I'm planning to prepare a v2 that addresses the following:
+> For the others:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-1. Move the SEOIB configuration code from x86-common.c to KVM-specific code
-   (kvm_arch_init()).
+Thanks,
 
-2. Refactor as per the changes on the KVM side of the patch.
+C.
+  
+>>   Please check.
+>>
+>>   Thanks,
+>>
+>>   C.
+>>
+>>   backends/tpm/tpm_passthrough.c | 2 +-
+>>   block/vmdk.c                   | 2 +-
+>>   block/vvfat.c                  | 2 +-
+>>   gdbstub/gdbstub.c              | 2 +-
+>>   qga/commands-linux.c           | 7 ++++---
+>>   tests/vhost-user-bridge.c      | 2 +-
+>>   ui/ui-hmp-cmds.c               | 2 +-
+>>   util/log.c                     | 2 +-
+>>   8 files changed, 11 insertions(+), 10 deletions(-)
+> 
 
-Before proceeding with v2, I have a design question regarding the scope of
-the fix:
-
-Currently, the patch sets the SEOIB state for all machine types on new powe=
-r-ons
-based on the IOAPIC version. This means that any new VM powered on with a
-patched QEMU will get the proper SEOIB behavior.
-
-However, I'm wondering if we should instead:
-- Define a new machine property (i.e, "seoib-policy") that defines the SEOI=
-B=20
-  behavior.
-- Only enable the new SEOIB behavior in the latest machine type version
-  (10.2?), keeping older machine types in QUIRKED mode.
-
-The question is: should new power-ons of *all* machine types set the SEOIB
-state automatically, or should we scope this fix to the latest machine type
-versions only via a machine property?
-
-I'd appreciate your thoughts on this design decision before I finalise v2.
-
-Regards,
-Khushit=
 
