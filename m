@@ -4,197 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FC1FD3E77D
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 22:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 595C0D3E780
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 23:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTSOt-0003rp-Id; Wed, 10 Dec 2025 17:11:11 -0500
+	id 1vTTB7-0006Df-SJ; Wed, 10 Dec 2025 18:01:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bschubert@ddn.com>)
- id 1vTSOp-0003lf-95; Wed, 10 Dec 2025 17:11:07 -0500
-Received: from outbound-ip191b.ess.barracuda.com ([209.222.82.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bschubert@ddn.com>)
- id 1vTSOk-00013T-U2; Wed, 10 Dec 2025 17:11:07 -0500
-Received: from SN4PR0501CU005.outbound.protection.outlook.com
- (mail-southcentralusazon11021084.outbound.protection.outlook.com
- [40.93.194.84]) by mx-outbound20-251.us-east-2b.ess.aws.cudaops.com
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 10 Dec 2025 22:10:53 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WQeVLs/M0UxSQA7Ls6kIP2t/JGcmwo7H5Cm7KGTkfR7QWrtX7GnbjRnWfVKkD/rXEh0PsPHeZF3Nn+Wd4PTj7gHCnBwlEsWbxO88CMd2vtwoVC9Jc9rTbAAQxyQMd2mqFLlgRLKV8N1MtNTry/j4oVw2wb6jSCQjADe+Lw+z0DPyOG6lhizsNPdPNS0hynElnI+Rk/urxmMzHUJ0WCeqqtC/uFF125QEkxAgXWS1nsjrgCbBrAOL67PvMmQpi38Y/hGaDozOJ34pwVZYDd8mM2XZwsqHbWPxLwt0MzkNCjmCaa6rlaAa+FXqAKq8WqspqBjD0ZEgaNFULo4flhZ5Ow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yHpa1HhqdYTLqpQ9QJXJdurRMQ55DT3j6onswGQr4C8=;
- b=MBhSGAA9L1h7YMWRFagLKaC3nL8uCuguT1zMWnhfGnkxHsDZgNr4HY9WlOJ+7dn3yQgl3QUMjZVaLm9G43eIXOP/cIV9ydWzM/+f9BVehwjpC5P9WvqJG5fce2lFyXykR97JvE+zTm4a9g3uARblqISHutchQyFv+yU9yxDdL10OjkgW5EBQ1argzYU8Q+V5TzlzHFp2T2TYO1ihipfKsmoul52j/LxiI6UxbLzetPoNeniq06wF52RyPZFtXqzQgrD4rTBjr9J5Sx/rFPZDVzkcNstF2w6X/Hn2ZNP4MCV851zMC9ewYSY+w5jRQh/k0/ExvSuPVsEHF4DXlRhvmA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=ddn.com; dmarc=pass action=none header.from=ddn.com; dkim=pass
- header.d=ddn.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ddn.com; s=selector2; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yHpa1HhqdYTLqpQ9QJXJdurRMQ55DT3j6onswGQr4C8=;
- b=NxBj5UkDy7lxpXJC9k23blQCXVDGQEtMLOpvsEBMe/mbQN77DRAVWaXpvLxOcUf6xPKc5IcUnB9aEATfWGkkcsd9BOHjW8WZO/7lEo/D3LPwHhiudncQysXryNMoDFGSv+eUjUbj+0LJYbol4X/6XPqd+N/4a/ivLewxAOCizMA=
-Received: from CH2PR19MB3864.namprd19.prod.outlook.com (2603:10b6:610:93::21)
- by SN7PR19MB6972.namprd19.prod.outlook.com (2603:10b6:806:2a7::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.7; Wed, 10 Dec
- 2025 22:10:51 +0000
-Received: from CH2PR19MB3864.namprd19.prod.outlook.com
- ([fe80::abe1:8b29:6aaa:8f03]) by CH2PR19MB3864.namprd19.prod.outlook.com
- ([fe80::abe1:8b29:6aaa:8f03%5]) with mapi id 15.20.9412.005; Wed, 10 Dec 2025
- 22:10:51 +0000
-From: Bernd Schubert <bschubert@ddn.com>
-To: Brian Song <hibriansong@gmail.com>, "qemu-block@nongnu.org"
- <qemu-block@nongnu.org>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "armbru@redhat.com"
- <armbru@redhat.com>, "fam@euphon.net" <fam@euphon.net>, "hreitz@redhat.com"
- <hreitz@redhat.com>, "kwolf@redhat.com" <kwolf@redhat.com>,
- "stefanha@redhat.com" <stefanha@redhat.com>
-Subject: Re: [PATCH RFC 1/1] block/export: FUSE-over-io_uring Support for QEMU
- FUSE Exports
-Thread-Topic: [PATCH RFC 1/1] block/export: FUSE-over-io_uring Support for
- QEMU FUSE Exports
-Thread-Index: AQHb9oDe2/mwNJp7TkWecWngdBHPObUcVq0A
-Date: Wed, 10 Dec 2025 22:10:50 +0000
-Message-ID: <6ef9f104-3a04-4065-8e57-40dc3ace98cd@ddn.com>
-References: <20250716183824.216257-1-hibriansong@gmail.com>
- <20250716183824.216257-2-hibriansong@gmail.com>
-In-Reply-To: <20250716183824.216257-2-hibriansong@gmail.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla Thunderbird
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=ddn.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH2PR19MB3864:EE_|SN7PR19MB6972:EE_
-x-ms-office365-filtering-correlation-id: de46fc42-970c-4a4c-e3b5-08de3838fac3
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|10070799003|19092799006|1800799024|366016|38070700021; 
-x-microsoft-antispam-message-info: =?utf-8?B?cERXSytVRFB5ZUIzaGptTmRLVGhkaDIyaElWTjBpNG1KV1lBbEV0dmFvTTFT?=
- =?utf-8?B?eC9OSU5ZRWhVdTZPS3RUd1RjSkw0QjVMUk5TTCt4SWFkMXViMnNVUkl6THdo?=
- =?utf-8?B?c1VUK0g1SlA5dzQ4R2lKY1pKV0VHQzdzZ1lYL1U3Sm1kQmhVenNvTWFET0dE?=
- =?utf-8?B?TnpmWVVseDNCUHFFdHJmS21HNkx5R0JmUW5ZQlUrVUtjanlwQVFwS3QwaE5z?=
- =?utf-8?B?bk05bERaUlAxckJBQWZIVytXcTlRMWJyZXFqMW9iYWw0MGRGVjJYNDBvOWpT?=
- =?utf-8?B?ZUE0S21NYnloQXIxajVMcXRHRHRjV0N0WGFudVo0bTR1WG5pd0Y3ZS85aFU2?=
- =?utf-8?B?dzNydWtaWGhnc3J0SkhLdjI0K3praUZQMHVLa0IzcDMrOWs2b3VnZDFrVUNh?=
- =?utf-8?B?NStrdFBvUUV0Qk9LUDloa0g2N3M1ak4vRHd5VE1PSUI3bVYwTTQvOThmdG03?=
- =?utf-8?B?eGlvZWVzaGx4YnlqeXltMEFmMnkwMStMOVZmRW0vWDNtc2d0M1dSVmdJTmpM?=
- =?utf-8?B?eDkyL1JGelZZR09icXFGNHlyNEJxa2ZoSEQyTFBja0ljZXUzcnVsOHIzTzJu?=
- =?utf-8?B?NUxqQVRrOVVoRXpVWlRpa2dPQ1lYaVdqT016bkRoZ3hid3NnMTBzU210Z3Bv?=
- =?utf-8?B?eUh6ZFpKYmxncFVzUDREcTRHRVlKRWdUTlE1ZnRpYmpDbjQxQ05aZjhCYW5I?=
- =?utf-8?B?N1VJd0pNNlBtSXFyL0hqcHQxa0lYRVJISGJsbjRDS2NjK0QrVjdYaCs1Y1Vi?=
- =?utf-8?B?cGZES3lGR21mYzVxcy80K29uaXhlK3RXMFREcVdnUG42c1NFWnhFYm9DaWNh?=
- =?utf-8?B?ZzlZWUVpVGc4amEzTXl2aEd5dVhWdHNmWjFrZ0xseWxvQ3doNnd4OUhXOHlF?=
- =?utf-8?B?QVVFZDBxakVFdVFNYUZ4dXJlcEhLaW5wdVUrdDZTL1pRWXRXMWU1Tk1TL1J4?=
- =?utf-8?B?Y0xVUVdPUWlraEtGMWhReEFCcWp1YWwybUJJaHZnVWxkMGFUdlBXaCtlT1E2?=
- =?utf-8?B?WFFIY3c2d1g1T3pzbERscjVWUmF4VDFXTHc2aTFYOGtiTHhpVEVlVHZCRjdW?=
- =?utf-8?B?MmZ6enNORTN5UjFtd3VybTkvN3dCSmhWZmZPdmJwSEc1WkxIUnFtdE1KYk5M?=
- =?utf-8?B?RVZ3NGZLWFo2VHlwaVJ1c3Y0WkQxN0JSSjROaEJMb2FsYXhkczdzYmVOSEtO?=
- =?utf-8?B?S1I5dXpudlliR3pCRld3YlJHQVJ4R3NlSzFVaDdGN2lLQmVUaWJuajBuRU1L?=
- =?utf-8?B?MmhnUjkxZGtibmxwMTdHQUpiNkoyZjlwQ1VPN3V1akFNUC9CQjcyQlF2VTJq?=
- =?utf-8?B?SHZwSEZlTmtoOGEvakYxby8vSzg4dm1JY01oWlF3VTFLdXdsUGlMQnB6cW8x?=
- =?utf-8?B?Smc1RythN3RGaEdBTTRwMjhmcTN6OHlKUHFLQlRQNUp2S1YrUUFCMlVVRzBa?=
- =?utf-8?B?bldZTkFMWGVpZDVWWmFpRWVQUERjYnJQVzhHTHU3MFA3SnhkQVhjT1VMUzMw?=
- =?utf-8?B?MGIwWmE5M2RQMWdqUDE2cUg5QklGcWdUbTJ2VnB6UmlvOGdXSGlHMGhHaXBP?=
- =?utf-8?B?WEFQaHIzd25nMU1JTTNwcWtRVWxmb3JpUzNCdjZSM1VZU0hxemh3UEtNdFht?=
- =?utf-8?B?QlNiMG9sOWpCTEpIWTBnSURjdE4ycUxZOFpDbmFQdnVlakFjZG5uSlMwWWpo?=
- =?utf-8?B?R0VwTFZLWFB5bzEvc203ZWN0QlNYQnIwSFo0WWExTE1yemJrcnV4UTBSeGV4?=
- =?utf-8?B?NWYzTGJrNE1YWVA2RzZxTFF5N0FpWE9DWTQ2Vlp4T3BSMU5OREEyOVVEMGZW?=
- =?utf-8?B?QkdYR1NFVUJwT2pYM3VMOTFEUlNuckh5MXQ0TkZWQmlyUEZCbCt3VmRPYXlP?=
- =?utf-8?B?TmtxZTJ5TUFqQ0cxRHpBVmxtLzBJb0ZTbzNKZHYvZU5CWnpuRlEvTDdOMmdv?=
- =?utf-8?B?UnFKeFJxQThOTjdXSmxqTXZLNzBmWTVMN2ZXL2Ywc0dZWXVzMENOUC9qaS9E?=
- =?utf-8?B?OC9XYWlQZ2VBPT0=?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR19MB3864.namprd19.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(10070799003)(19092799006)(1800799024)(366016)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?aGRDcGlOY0RBNWpyMUt6Wml1R2Z0bDkwTE9BRVY2VXF2Y0R5REkwV0lmc3dW?=
- =?utf-8?B?NFRkKzh1NDV3SG14WFFxajJES2VIQ2NKaFVJQXg3bnlaRm5GbHdvRVRHQmgv?=
- =?utf-8?B?VG9Ic2FpLzZMTTdGc0JkNHZZSllTbkYrZFVyc01LYlRvaWpSNkFTVXdoa0NE?=
- =?utf-8?B?VDlEOFRzRFpXekJqTGsxTGRKaFVtWWhTb0hxMUhkaC85Ykc2MkRwWkp3UEY0?=
- =?utf-8?B?MTRlMWxtZnQ0aVBpQm52VStwQk5uUmc3VFhkU09wYStGSGViV1FlaURwcVJH?=
- =?utf-8?B?UnVwZTlHZmZ4NnRpQW43TktOUS9jb1oyUURIREVpVHBLakpmYTN0a3g0VjA1?=
- =?utf-8?B?RkpNdG41ZjVQdk1HTzRqYlNkQWFzZGlnaytXRDVTQ2ViSXJoY0tmdVpQekY5?=
- =?utf-8?B?YmtlVkFncitORHlQMmUzbmRaN3R0b2xHL2dQcDc5RnVmdzAxdGZZSVhTMTkv?=
- =?utf-8?B?QXlyMlB5cDZBV3Zjckd4R3J2OVRWNExFb08rRnhlRG1GaHB1aTA1QXcvOUsr?=
- =?utf-8?B?c1dtZExmaWNMang5SmoxWGdTVUlkV1ZvT01idENpWHRJZFZGRTRvYjJOSVMr?=
- =?utf-8?B?OGhuOU12VWQvcFVtQkdPUlJWU3VQS09lUTdyKy9kUTJJM1VPaHRoVzlvbmFn?=
- =?utf-8?B?VXh4NkhDckFUNmpqVWR5S1Bkbzk0R1pXb0NKLzNHdkNYQmVUbm9TT3VlRWpW?=
- =?utf-8?B?Z3VzTFlKMHBUY1hGVHNCMDFodEZvZ3ptNllhcjBFcDNnZW04cENRVzFaalY3?=
- =?utf-8?B?Z2RadERTVUt2TkNRVlNSNVFsbnpzWEl5Qi9ONnNHRmRrQlZvMElhZ1JqYU5H?=
- =?utf-8?B?WFc0T2hscklpSW8rQ3htZHpBR2ZTazY5YXlmWkRJbU4xVUpzdVBicmlvUUtk?=
- =?utf-8?B?RkIxL2ZpMFYyeXM0SU1QdXcrektQWGxEcEdENVRhSE5tY0IyRW11bmVYcWFt?=
- =?utf-8?B?RVNLOWxYRWd1dFY3WnE0MDd3bUtzTkdlQWcxbmFacmZKaEdoa1diU016RnpS?=
- =?utf-8?B?N0ZPaG5MZTZKOHJDVzV0N3dRbkttbExlRHdLa3JsTzIxQytSNzVicGVvSlQr?=
- =?utf-8?B?aFdFUktkclJ1aWVIQ3RuTkVWVUcraVVvTDlzbVFLdHJ2NDlmcnFDSGFXTlpj?=
- =?utf-8?B?dVlWc2JlNXMyOEwxWUZKcVFyTEFWejFtb2RrMmd5TU1NT0RZOTFIWUVIdDda?=
- =?utf-8?B?ZXB5WFVCTUJCVW5aWUhFMnFEelZBY3RyZGdYMWR2VWdIVTlpbUJ4eUwwd2Vt?=
- =?utf-8?B?aW1uQ0t4cWdEMyszajhncmNBdTN0T3UvQ2ZJOEFkaE1LblFLMmZnWjZvRnJm?=
- =?utf-8?B?NVZsaFNRRUowUFI4dm9kV1BrK3pPenFmMC9MTjFvRStsSmJoLzRwNFlCZ0VB?=
- =?utf-8?B?Wk80c2MrZmhEbmFjZFZVZmZtRGpyakJuK0diV1NoWHo1dUg4YldrN0E5SDNG?=
- =?utf-8?B?SUhtZ2gwRUM2UTZ5Wjd5TFozTkdLZUNtaDl1Zk9Namp5TkFCY2hKbmxqcmpC?=
- =?utf-8?B?NHpRSWpuKzMxa053MS9nRTJkdk4rR0NiK1RiMWs2T3BCN0xTbytxY09uaDNL?=
- =?utf-8?B?ckJteGJkaHhVblBibjNyRC9yMk5EcDlWd1pXSGZEbUgrYytVbzdwWG9FNzZr?=
- =?utf-8?B?ays5ZGNRSE9lcXdqN3dXR0lpbU1VN3hPbXNRY1N0MC9OaytqZzJaZ3VjcGNj?=
- =?utf-8?B?NkVwM0hjNEFTRzY1VjJmUjg0YlpUY3YxT0tIcjhLcU00SGF3YlRQbXFUckt0?=
- =?utf-8?B?TW4zakFYZks2T2k1NFpGQXhMUHN6d0ZzOUszQlpKZzcvOFhDNWZlbDFIRVFR?=
- =?utf-8?B?Q2xraW5hTGZVek4vK0FuWG1SbVhmZFYrVHVRN3oxRDlmWElscCtvVldxWDEr?=
- =?utf-8?B?Q3V5YTBHM1l4OGI3ZldYMkpyL0ZSU1Zpa0JwNHoyWjFpNi9KcWs0NzR3bUhO?=
- =?utf-8?B?SjZpdmVUcmlsOCs5eWx6ZnVUYUhVcllmTDZhUHphalJvZ2lBeEo5L3EvdWtj?=
- =?utf-8?B?Y2tudHRyUUFNVlhiTE9wVkFadUxWd2tKU20zRFoxN0hXbENXa2RtL3hNKzJN?=
- =?utf-8?B?SysxU2VVZjhHTXBoNmZWbFJ3dGxWNlBpaklNQU5LY2F2bUxINHpITGVhaktC?=
- =?utf-8?B?MkJDWnB2cHVsZGhZVDdqVnFtNVJ2NDZERmMweklhTDh5dHdQQVd1eW1OQjJY?=
- =?utf-8?Q?2nAyg7qmKVEJYjklE7cXmCo=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <0EE031298EE1624C80D5DB7EECBEB40C@namprd19.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1vTTB6-0006Cz-5F
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 18:01:00 -0500
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1vTTB4-0006Wx-GP
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 18:00:59 -0500
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-4edb8d6e98aso206231cf.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 15:00:58 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1765407657; cv=none;
+ d=google.com; s=arc-20240605;
+ b=JJfxF9IUMCp+ykfp1m3Ngycmt4eOjfWocpIQZX9++CczPg+DoUUXwVNEU/vu3umTxz
+ yCTwCIEYPxzAQNWp/IDboROciLeMeyWhEwtqcHjcFUQQ7qhIAWXkG41T1UYixVsKcARP
+ fP9/ohaxK4cjWw7PQ3pJ2JlYyje7TFnpv9UjcSxAPjM6dNV7oL0pD1fgfYyPkZZY6crY
+ m/IMQPqGAlbqf8bgY8YRcBqJ1uEXNEEsXo3gLgtQB6xCxmJudbul3qn/xFpkB+iBQUsw
+ qc8Oqk2RBhNO7v7Iam5YLqsztIggcdTQd48PNtt8EAyp5U++nKaS3FF7gU0IRm16B3B3
+ IdHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Hm0IOTG2G5675/h26bvJU6kW4LaWvamaY/sywK1kIGQ=;
+ fh=i39rQfXxW83XsxmnZ6h4+yf1Ky8zS52VoSU+dKqlwio=;
+ b=VW3NfeYOAnso7naK8ecsVCutuOV3FlytQ7Z/UTb1MSTLSF1T+pRFUWv8QY+kb1YksH
+ NFA/dezyYxWz+9ftJc978HKNjub5F3q3iAlqD0i7/HUVKWa1OLisU4jBvn97ren9qSqj
+ zZlFj8oZyNc1OTvnE/NjhdzXF5iMkBkdx1k+hXjRjyI4Lp06GArb4xUqBrow4FzjuMxB
+ ysBnsyVV2ZRZWIplDKNp65oh/11U0JYh0e6z7mN+Hcts1qpOBJbbIk3epqNQ8f1OjO8v
+ Bgy9nJ9fG0BcLUGtWCcpyGSZwTICAUrtYPG4oFm8sgVXcc0mTtr4BmSJ7TRKHcbN9MhI
+ cinw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1765407657; x=1766012457; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hm0IOTG2G5675/h26bvJU6kW4LaWvamaY/sywK1kIGQ=;
+ b=a5mqwCw0hjI9noyUi37TEbx2yMkdlurAeXJmcY4CGbsz9N9CaM6ZuMPOFogIlDslbi
+ dH51FI1kuKR1lkUH5zwP1Z/Ujbpnd4R8HnlQxyIuigCuQxCGpLdgPiyE43l4FJqDp+WW
+ /KLnWEHs5Dyo8qC9taJyutk23uUm65BFtfoeuDx9umxp4p53rOjuDSsLenudAVZzx+/b
+ iiKLgja5lMpPRvJhsaXhQgzEWWuhYSw1kbRHBW5hC6oIO20S8OaYyv0aQo2csr9aHrec
+ HqTLzZ8NlPKEHni4gMpIChg5QoSLv/vBtabrW7mp2PQwLpRFwzfTGWgIbakKE7zM4nFz
+ sh0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765407657; x=1766012457;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Hm0IOTG2G5675/h26bvJU6kW4LaWvamaY/sywK1kIGQ=;
+ b=IoInKFZMFmuazz6yVuXjIi53jUW8OAcwOdXH6xQOJMkD9vtj3Lf2cJhRatH3/yxOYw
+ yw/hdmThGio6K1Mz/ufDu1/Cd5obifLdYhoXGUfLWBHbjzGju/R7PPF+B21zKxHZloNb
+ GFl9h6dF9nWe2pkC3BIcTN14SV11kmFLu20c0CqA9vlE4CXy2TLzLRfLvhG5gyI8Sgzh
+ EshQFTv4IGOrDNTOHcpugax9q2AJucrC42BILRhMxx95Nztw2mU+oIeqzhab357FZn6A
+ JKHM01FBxDnFsXCq8o7uFG7+fnWaPqJH5WfMpUFBdBzT0nad/niyJq6PPITfGWmKCkej
+ Mb+Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWJ6iYlcDRa5IJSa/zFofc1icMS1z/pXDqHT4nTSNx0vdhta1yzxCUG9ULu6tbytka51TayMgUNeMak@nongnu.org
+X-Gm-Message-State: AOJu0Yx/61L4vlB+SCUZk/qtULvXxRATx6bWNDWr8q4ObiDyrz5t8PRM
+ khUHerIKxM0kovDjhL0yzRlk5XphVEWWr+0znrez7GzNBFQKdJa2KRBdYs5KYYX4ApwpsCwurRi
+ 4LmFCGGXVqnjI3WcxgBqOy9rBx///F4hfvFigKFE3
+X-Gm-Gg: ASbGncsznLhAG9xW1WoqjOMxvtfH+eFfqds1VpxXyHE6tB++OCJ4BaWXvf+ACjMYyDN
+ JpfUnlx1I/lK79wHJBkFjXqNqSv9u8eEjmXHjpgH5cQ2lCaWhf5IKOkO1MLULy6vSYwa2h4D977
+ 6+/lx0rKrOuTQ8Pj8DAvpQYLPqQ8AfKIHHW4ekaG68L9AQ82IllAi/ppsd+FkLTc6oJ6KRfdwDD
+ icilgBeyIUN0d4BiEy105NzxRFt9dnOHfPk3gg31ooNaBx77SZqB0C3VbghYJFkx0bp3+HAQ9Gu
+ wwBF/w2ZSzMPC2i0Ux1kjcTqlkfl
+X-Google-Smtp-Source: AGHT+IEA7fWY7sNmSowmp8WZRO2yQuVguk6w54vs+u5TrvXYcWxnH7rEweMGjLtCrhhOza8w4a12c7Di2q3PBgEjjOw=
+X-Received: by 2002:a05:622a:341:b0:4ed:a65c:88d0 with SMTP id
+ d75a77b69052e-4f1bd86ad85mr4074121cf.6.1765407657054; Wed, 10 Dec 2025
+ 15:00:57 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: AmSIHUaNdzJLEzDWpozoDd6JFyoXd8M+LGnDBrkY49Qhclk6X4VIOMavmJICMx4/fGoea5f907Z7UdbwkEJE8ngJQVv0CKGPFFSSJc1G3BLubR6GboGLj7gcVtrsFnPkPkInveWGzJ87lmCGOD8Hwo8gWW+T5ODxuYS32RyRDp/enefztpdL1xwxU/EMIdh7EYh3OyLgqBmwlYXNRIRe3T2doRUBFSDUYcQJghDUm+RxWXK/+kEJaNRkt2a4U+vfkxME3QpuizsqvSN0SFfsM9nQp3H95DEh2uAF7SMaebNI34JQOWRxTtEXFCYhSg6WkTenPey761rpVF5bHjnNwynCm3ZVcd5n/T/APahW2ZfLU8K3bLxc1vueCKpYkV5e2Yliun0XPN9XKXm34s30RDVismyMKhfzqofwSAqRRa+Ty0doZR9DVDoiH/qYANxPFvzETR4ZYkOaQcvGj1IyBcUd3WOApZMn1gyRIn8z/DbxH9j3KQyQLRYqf+cqd3TJuetGwr+qpBfK1y5BR8VS6DB75LaU0JafuhZ9Hi8/2abYhHkiWw3wQ0pjt4C2D3A9YvcQlmFmqQsjEkT5EdDSsLotWArlaq+5Ex/j6Z7zIJnKjTcmhE6Zomv5Mclz2Ht58pSs8dbwBwUwXwR+VYOjQg==
-X-OriginatorOrg: ddn.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR19MB3864.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: de46fc42-970c-4a4c-e3b5-08de3838fac3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Dec 2025 22:10:50.9236 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 753b6e26-6fd3-43e6-8248-3f1735d59bb4
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 4OxuPxlShk+tAA+1OUcHZ4HkhOQ63KpHrWz5LaYGXYQcHdh/rHdjPhJ12Efm0wY+p08gVDJaKDqcyq/LdcCl0w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR19MB6972
-X-BESS-ID: 1765404653-105371-7674-14301-1
-X-BESS-VER: 2019.1_20251209.1901
-X-BESS-Apparent-Source-IP: 40.93.194.84
-X-BESS-Parts: H4sIAAAAAAACA4uuVkqtKFGyUioBkjpK+cVKVoYGphZAVgZQ0NjAzDgtLdnQNN
- nYwtDYzMIiJS3J1MLQwDzR0DjJxNxAqTYWANa6lWFBAAAA
-X-BESS-Outbound-Spam-Score: 0.00
-X-BESS-Outbound-Spam-Report: Code version 3.2,
- rules version 3.2.2.269571 [from 
- cloudscan13-190.us-east-2a.ess.aws.cudaops.com]
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------
- 0.00 BSF_BESS_OUTBOUND      META: BESS Outbound 
-X-BESS-Outbound-Spam-Status: SCORE=0.00 using account:ESS124931 scores of
- KILL_LEVEL=7.0 tests=BSF_BESS_OUTBOUND
-X-BESS-BRTS-Status: 1
-Received-SPF: pass client-ip=209.222.82.124; envelope-from=bschubert@ddn.com;
- helo=outbound-ip191b.ess.barracuda.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20251208074436.1871180-1-kane_chen@aspeedtech.com>
+ <20251208074436.1871180-3-kane_chen@aspeedtech.com>
+In-Reply-To: <20251208074436.1871180-3-kane_chen@aspeedtech.com>
+From: Nabih Estefan <nabihestefan@google.com>
+Date: Wed, 10 Dec 2025 15:00:44 -0800
+X-Gm-Features: AQt7F2ooJiX1we7OOLgJttgVpvA4KZOkNsGMqhVLiqcO5DEfyVxEYnPkhm_1S9o
+Message-ID: <CA+QoejW+YugMO=uCJJzPt3tSdk63+HpYPXmh=s9JKtPXHdB=dw@mail.gmail.com>
+Subject: Re: [PATCH v3 02/18] hw/arm/aspeed: Attach LTPI controller to AST27X0
+ platform
+To: Kane Chen <kane_chen@aspeedtech.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, 
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ troy_lee@aspeedtech.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=nabihestefan@google.com; helo=mail-qt1-x82e.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -210,24 +128,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQnJpYW4gZXQgYWwsDQoNCj4gK3N0YXRpYyB2b2lkIGZ1c2VfdXJpbmdfY3FlX2hhbmRsZXIo
-Q3FlSGFuZGxlciAqY3FlX2hhbmRsZXIpDQo+ICt7DQo+ICsgICAgRnVzZVJpbmdFbnQgKmVudCA9
-IGNvbnRhaW5lcl9vZihjcWVfaGFuZGxlciwgRnVzZVJpbmdFbnQsIGZ1c2VfY3FlX2hhbmRsZXIp
-Ow0KPiArICAgIEZ1c2VRdWV1ZSAqcSA9IGVudC0+cTsNCj4gKyAgICBDb3JvdXRpbmUgKmNvOw0K
-PiArICAgIEZ1c2VFeHBvcnQgKmV4cCA9IGVudC0+cS0+ZXhwOw0KPiArDQo+ICsgICAgaW50IGVy
-ciA9IGNxZV9oYW5kbGVyLT5jcWUucmVzOw0KPiArICAgIGlmIChlcnIgIT0gMCkgew0KPiArICAg
-ICAgICAvKiBUT0RPIGVuZF9jb25uIHN1cHBvcnQgKi8NCj4gKw0KPiArICAgICAgICAvKiAtRU5P
-VENPTk4gaXMgb2sgb24gdW1vdW50ICAqLw0KPiArICAgICAgICBpZiAoZXJyICE9IC1FSU5UUiAm
-JiBlcnIgIT0gLUVPUE5PVFNVUFAgJiYNCj4gKyAgICAgICAgICAgIGVyciAhPSAtRUFHQUlOICYm
-IGVyciAhPSAtRU5PVENPTk4pIHsNCj4gKyAgICAgICAgICAgIGZ1c2VfZXhwb3J0X2hhbHQoZXhw
-KTsNCg0KDQp3aGF0IGFjdHVhbGx5IGhhcHBlbmVkIHRvIHRoZXNlIHBhdGNoZXM/IEkgZG9uJ3Qg
-c2VlIGl0IG1lcmdlZCBpbiB0aGUgDQpxZW11IHJlcG8/IFRoZXJlIGlzIGFuIGlzc3VlIGhlcmUu
-IEkga25vdyB3ZSBoYWQgZGlzY3Vzc2VkIC1FQUdBSU4gYW5kIA0KLUVJTlRSLiBBY3R1YWxseSB0
-aGlzIG5lZWRzIHRvIGJlIHNwZWNpYWxseSBoYW5kbGVkLCBhdCBsZWFzdA0KRlVTRV9JT19VUklO
-R19DTURfUkVHSVNURVIsIGJlY2F1c2UgaXQgY2FuIGFycml2ZSBiZWZvcmUgRlVTRV9JTklUDQpp
-cyBwcm9jZXNzZWQgYW5kIHRoZW4ga2VybmVsIHdpbGwgcmV0dXJuIC1FQUdBSU4uDQoNCmh0dHBz
-Oi8vZ2l0aHViLmNvbS9saWJmdXNlL2xpYmZ1c2UvcHVsbC8xMzg3L2NvbW1pdHMvMzRmM2RlYzk3
-Y2NlNTA4NjQyNjc5Y2IxYjg3NGU5OWVkMzZkODE1OA0KDQpJIG5lZWQgdG8gc3BsaXQgdGhpcyB1
-cCBpdCBhbHNvIGluY2x1ZGVzIHNvbWUgb3RoZXIgcmVmYWN0b3JpbmcuDQoNCg0KVGhhbmtzLA0K
-QmVybmQNCg==
+On Sun, Dec 7, 2025 at 11:48=E2=80=AFPM Kane Chen via <qemu-devel@nongnu.or=
+g> wrote:
+>
+> From: Kane-Chen-AS <kane_chen@aspeedtech.com>
+>
+> Connect the LTPI controller device (representing the AST1700 I/O
+> expander) to the AST27X0 SoC model. This patch sets up the memory
+> mapping and device registration according to the AST2700 SoC design,
+> where the LTPI controller is exposed at fixed MMIO regions.
+>
+> This change only handles device instantiation and integration,
+> without implementing the controller's internal logic.
+>
+> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> ---
+>  include/hw/arm/aspeed_soc.h |  5 +++++
+>  hw/arm/aspeed_ast27x0.c     | 21 +++++++++++++++++++++
+>  2 files changed, 26 insertions(+)
+>
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index 18ff961a38..bca10c387b 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -43,6 +43,7 @@
+>  #include "hw/fsi/aspeed_apb2opb.h"
+>  #include "hw/char/serial-mm.h"
+>  #include "hw/intc/arm_gicv3.h"
+> +#include "hw/misc/aspeed_ltpi.h"
+>
+>  #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+>
+> @@ -55,6 +56,7 @@
+>  #define ASPEED_UARTS_NUM 13
+>  #define ASPEED_JTAG_NUM  2
+>  #define ASPEED_PCIE_NUM  3
+> +#define ASPEED_IOEXP_NUM 2
+>
+>  struct AspeedSoCState {
+>      DeviceState parent;
+> @@ -112,6 +114,7 @@ struct AspeedSoCState {
+>      UnimplementedDeviceState ltpi;
+>      UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+>      AspeedAPB2OPBState fsi[2];
+> +    AspeedLTPIState ltpi_ctrl[ASPEED_IOEXP_NUM];
+>  };
+>
+>  #define TYPE_ASPEED_SOC "aspeed-soc"
+> @@ -279,6 +282,8 @@ enum {
+>      ASPEED_GIC_REDIST,
+>      ASPEED_DEV_IPC0,
+>      ASPEED_DEV_IPC1,
+> +    ASPEED_DEV_LTPI_CTRL1,
+> +    ASPEED_DEV_LTPI_CTRL2,
+>  };
+>
+>  const char *aspeed_soc_cpu_type(const char * const *valid_cpu_types);
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index 70be3871bb..341b53189b 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -88,6 +88,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] =3D {
+>      [ASPEED_DEV_UART10]    =3D  0x14C33900,
+>      [ASPEED_DEV_UART11]    =3D  0x14C33A00,
+>      [ASPEED_DEV_UART12]    =3D  0x14C33B00,
+> +    [ASPEED_DEV_LTPI_CTRL1] =3D  0x14C34000,
+> +    [ASPEED_DEV_LTPI_CTRL2] =3D  0x14C35000,
+>      [ASPEED_DEV_WDT]       =3D  0x14C37000,
+>      [ASPEED_DEV_LTPI]      =3D  0x30000000,
+>      [ASPEED_DEV_PCIE_MMIO0] =3D 0x60000000,
+> @@ -556,6 +558,11 @@ static void aspeed_soc_ast2700_init(Object *obj)
+>          object_property_set_int(OBJECT(&s->pcie[i]), "id", i, &error_abo=
+rt);
+>      }
+>
+> +    for (i =3D 0; i < ASPEED_IOEXP_NUM; i++) {
+> +        object_initialize_child(obj, "ltpi-ctrl[*]",
+> +                                &s->ltpi_ctrl[i], TYPE_ASPEED_LTPI);
+> +    }
+> +
+>      object_initialize_child(obj, "dpmcu", &s->dpmcu,
+>                              TYPE_UNIMPLEMENTED_DEVICE);
+>      object_initialize_child(obj, "ltpi", &s->ltpi,
+> @@ -1047,6 +1054,20 @@ static void aspeed_soc_ast2700_realize(DeviceState=
+ *dev, Error **errp)
+>          return;
+>      }
+>
+> +    /* LTPI controller */
+> +    for (i =3D 0; i < ASPEED_IOEXP_NUM; i++) {
+> +        AspeedLTPIState *ltpi_ctrl;
+> +        hwaddr ltpi_base;
+> +
+> +        ltpi_ctrl =3D ASPEED_LTPI(&s->ltpi_ctrl[i]);
+> +        ltpi_base =3D sc->memmap[ASPEED_DEV_LTPI_CTRL1 + i];
+> +
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(ltpi_ctrl), errp)) {
+> +            return;
+> +        }
+> +        aspeed_mmio_map(s->memory, SYS_BUS_DEVICE(ltpi_ctrl), 0, ltpi_ba=
+se);
+> +    }
+> +
+>      aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->dpmcu),
+>                                    "aspeed.dpmcu",
+>                                    sc->memmap[ASPEED_DEV_DPMCU],
+> --
+> 2.43.0
+>
+>
 
