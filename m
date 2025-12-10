@@ -4,105 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E572ED3B9AB
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 20:57:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2793D3E780
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 22:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTRDM-0004iY-Hb; Wed, 10 Dec 2025 15:55:12 -0500
+	id 1vTSFZ-0001KH-1M; Wed, 10 Dec 2025 17:01:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vTRDH-0004eS-S5; Wed, 10 Dec 2025 15:55:08 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTSFK-0001JA-73
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 17:01:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vTRDG-0000gr-2g; Wed, 10 Dec 2025 15:55:07 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BAK0EZl026189;
- Wed, 10 Dec 2025 20:55:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=uSAqjqF+gJMVXccwz
- x+qNkuenaAbjiZEfc2myGVcWjE=; b=iVnPxq2YnnyhD/5gcdYw7BLZHJ2obFy+f
- BbmyItB2oDWgzXpKbQT+YRBU2+9roCKlPr7IZpE7hMpNZ2f7gx6HKY+SL2eos+Gp
- jblFS7hL9hngg0n6RMZVkmEg5KqlvAVSlA+HSutu2q0dmfUq+VoLkWENNi7pEgwK
- DXxpclQotDcki09HXJBg7Lf2BscptcH1adPatdc474A04eeG4mKydBoAnQ/mVPO6
- zcnYWwGY1Z90P3s/Aeuy7SBo0gExaxcVppxvWieIGakFZCGuqNs9Q73tiWya3mIt
- XNKNI+cbRC8uudaetZWMJuL72apT4SQkIABnFlMdh4svHRA8bul3Q==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4avc0k4hxa-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 10 Dec 2025 20:55:03 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BAJTlRH028141;
- Wed, 10 Dec 2025 20:55:02 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4avy6y2wkw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 10 Dec 2025 20:55:02 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5BAKt0Gb34079390
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 10 Dec 2025 20:55:01 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D80EB5805D;
- Wed, 10 Dec 2025 20:55:00 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2E94258052;
- Wed, 10 Dec 2025 20:55:00 +0000 (GMT)
-Received: from t15.ibmuc.com (unknown [9.61.53.32])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 10 Dec 2025 20:55:00 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com,
- mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH 05/10] pc-bios/s390-ccw: Introduce CLP Architecture
-Date: Wed, 10 Dec 2025 15:54:44 -0500
-Message-ID: <20251210205449.2783111-6-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20251210205449.2783111-1-jrossi@linux.ibm.com>
-References: <20251210205449.2783111-1-jrossi@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTSFI-00082x-3o
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 17:01:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765404073;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=VC7OkS7qV1sz+wUZCpZwSpEzZiat+Z0fjtlkf2kDxDQ=;
+ b=VCBlE0Rpff5Sp+39GBNCSnwMODtAJZPAqnD6KzoV8OhLSDGjE/sPflqpkUl47A3O6BdqNB
+ HTlsHwBJI1UL6PSUVVuHt1QNqCYBwq/ZO5mUNi/dickORhT+BFGuOSFN8rcovbVWQ3rtWh
+ /T22TSj7dG8tB3RxEtskDjmehS2OKGs=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-596-ArDOt9rxPbGfYkB4NmFAXA-1; Wed, 10 Dec 2025 17:01:10 -0500
+X-MC-Unique: ArDOt9rxPbGfYkB4NmFAXA-1
+X-Mimecast-MFC-AGG-ID: ArDOt9rxPbGfYkB4NmFAXA_1765404070
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8885a6666b1so8121006d6.2
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 14:01:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1765404070; x=1766008870; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=VC7OkS7qV1sz+wUZCpZwSpEzZiat+Z0fjtlkf2kDxDQ=;
+ b=WwFR72ne/T+HW+NtO0GK5iS1YY7Eauf2fdjfl8Ba5QDA7B1o8qS77ap0veLLMECM+x
+ D2LSo/r5ZuvV8iZJwOo8UNZsc/yJgkv9hORTLewQkdA5+hZEtE5MvsByGrc34qGzp+Sn
+ Ykk4qnV+hOPIwS5D1dQr7Bfd8Akjbkt77CI3OuXifswEpGyOfjH/53vYdJTMpYFPnhxg
+ Au8dzkdMDJawXNOAiuhH2jPI+WMPz3LmYldNz8chKvC3BTBsZV+WNUTv5LrIreCt7RQV
+ 6Mun2tfP1UwIgBF5ZCSgkGKp5wOVFP69Nt+WkmT87wI1H1XWUF7JyIqSESGk+wSHRRMa
+ L2Fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765404070; x=1766008870;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=VC7OkS7qV1sz+wUZCpZwSpEzZiat+Z0fjtlkf2kDxDQ=;
+ b=hIoFt7NbAJZLJyuoRhdmhu9CcrrBaduQUtgXn/VJyogsPHotherM+fDa+eJNOofJUS
+ 5w+SRYCaaVH8xmdBtKkn1gxm62SgcX7eId8d/vlkNv5BGA1nlK2F0yriPJe6FeX3c9KJ
+ m5IYQHH2ANthubuLJgCR+3hYPXCrnK3II44GQ54EKgy9UXiatqdeM3wuNKjkLoJHBSJF
+ Ax4af1p/jApJ87UEa0MPiM4uzFfFbmvMaTunsVbcf9droTG6h07IIVl8eaH2dmi9IzRC
+ +xlOSThZLqUbtinbVTc5pjS3HEtUXGxCzw+a4PO++2In9pkRyedo6CNdXLv0dqDm73DS
+ V31A==
+X-Gm-Message-State: AOJu0YzNs+Fg6+gTyDVNNuCdBZ3zFTjNTOQcRVlgnhqa8U0aGHMvLwfH
+ igyYoDwniiQsX8W9dvgZypEb0E0nwP2HkIkecxtK+afjdgzhWxW7YljybqOYR5IbO/nXCscLqkM
+ NijU/SWvnjutIUd0d3sTc6oolboWV+psqTgffEJef3VL/KGWdj1wyf8kL
+X-Gm-Gg: AY/fxX5Q864xvgW2Vg50Yz3C5qXqquewGUGTVjlmJMtefFnS+Ai11jcxNepfPXzZXuz
+ oatAdw/z8ik4tSr6Y7BY7DipwrKWFV6g263N5FVLMiOu85cjfMF/o0dDVwbUfDXKbWObOKNSxxR
+ XnXf0mHfVjpK47c6jAkkAYksJeIN32cNnsGUgTEM3bn2LODb7DZo6rLiYR0Z6rbCdOUKHFZd4Rq
+ uR+GZZSAiq/ZV07OjBOJFR0+EBiCS9tamix8MVVanVp9sLjqTcRDhVmLru9twqgF2HpOlEfLh7a
+ pQ6AQjDJ93QlJ98XxX8fAZmfnkTuwbZBVEniIJ+zaxmpQIN7Rf7JJbNuLz27IdkQjMVw1PRWO2i
+ Hk14=
+X-Received: by 2002:a05:6214:212f:b0:880:4aec:c4ed with SMTP id
+ 6a1803df08f44-88863a2156emr70620646d6.6.1765404069510; 
+ Wed, 10 Dec 2025 14:01:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFsD90Sb5nwiD+zhRn/eC6ArkQ1/neUtS5wBr8DfbILSCnHRxk8WGU5ZHuJGKggNumrA5yFxw==
+X-Received: by 2002:a05:6214:212f:b0:880:4aec:c4ed with SMTP id
+ 6a1803df08f44-88863a2156emr70619626d6.6.1765404068911; 
+ Wed, 10 Dec 2025 14:01:08 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8886ef30441sm7633176d6.56.2025.12.10.14.01.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 10 Dec 2025 14:01:08 -0800 (PST)
+Date: Wed, 10 Dec 2025 17:01:07 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Li Zhijian <lizhijian@fujitsu.com>,
+ Hailiang Zhang <zhanghailiang@xfusion.com>, Kevin Wolf <kwolf@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Zhang Chen <zhangckid@gmail.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Prasad Pandit <ppandit@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Yury Kotov <yury-kotov@yandex-team.ru>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 07/13] migration: Pass in bql_held information from
+ qemu_loadvm_state()
+Message-ID: <aTnto4Eb3IM_V9d5@x1.local>
+References: <20251022192612.2737648-1-peterx@redhat.com>
+ <20251022192612.2737648-8-peterx@redhat.com>
+ <40c2af51-c6ec-45eb-8139-9dafc36396e6@yandex-team.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Cf8FJbrl c=1 sm=1 tr=0 ts=6939de27 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
- a=B6FfjjnMrpp8agTJrekA:9
-X-Proofpoint-ORIG-GUID: 8QvwgJ7Nyeq3Xmqm5jPbJg9egvsZtNlq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAxNiBTYWx0ZWRfX91Dotx28xnR6
- rLxM2p9VFwv/JiSRf7XZzUOMpxjuqG8AMG//iS5sTS/kFBXqVSGejv2Dhys4GHhVcZDjwHyK/n4
- lY3A8OeIED+yyhHbo4ntpoiOKg2F7ARn0CL3uky3Uwu8F1AHQKHvr3ERrkuwmxHLnQq9io2oyLc
- NXFiXjr8Q7olt53NpK5BJA0KrPspo2wKTpYfFpPyc/79PNW+9uEDSK2DV0Se6WRZ15M2Bph6UPB
- Ynf1JaY2e/jFndZU0uAcuTxw2mVfPMFjlvI+joo1eVfDvaWrg94fWXiTOyLZ1q+fJGUZiuUalIX
- TiO+8TCorArlgllhsjaqiOZxFBQ80G+uCRzRgqUTb3FFBmFmbqdtPsVPz81bNQtoxCtHLoLsYxQ
- 8Qi2wJQZk1r/DZX+c/3wWECK1R3+Xg==
-X-Proofpoint-GUID: 8QvwgJ7Nyeq3Xmqm5jPbJg9egvsZtNlq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-10_03,2025-12-09_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 malwarescore=0 clxscore=1015 adultscore=0
- lowpriorityscore=0 impostorscore=0 priorityscore=1501 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
- definitions=main-2512060016
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <40c2af51-c6ec-45eb-8139-9dafc36396e6@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,167 +124,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+On Tue, Oct 28, 2025 at 05:22:51PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 22.10.25 22:26, Peter Xu wrote:
+> > Teach qemu_loadvm_state() and some of the internal functions to know
+> > whether we're holding BQL or not.
+> 
+> Actually, this commit does more: not only pass the bql_held information,
+> but also by introduce some WITH_BQL_HELD() sections.
+> 
+> IMHO it could be split:
+> 
+> 1. only add bql_held parameters, which are used only to passthorough to
+> called functions. That's just to simplify further commits. Make the
+> information available. At this commit, we only need to check, that
+> passed information is correct (is it really held, may be add some
+> comments/assertions to make it obvious)
+> 
+> 2. one or more commits, which prepares different functions to be called
+> in thread: support bql_held=false by introducing WITH_BQL_HELD() sections.
+> In such commit, we should lookthorgh the whole function and check that it
+> actually prepared to be called from thread.
+> 
+> 
+> Hmm, or without [1.], there may be several commits to prepare different
+> functions. Or maybe, even one commit as it is, but change commit subject
+> and message somehow, to reflect all the changes..
 
-Call Logical Processor (CLP) Architecture is used for managing PCI functions on
-s390x. Define and include the structures and routines needed to interact with
-PCI devices during IPL.
+I prefer the last one you said.
 
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
----
- pc-bios/s390-ccw/clp.h    | 24 ++++++++++
- pc-bios/s390-ccw/clp.c    | 96 +++++++++++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/Makefile |  2 +-
- 3 files changed, 121 insertions(+), 1 deletion(-)
- create mode 100644 pc-bios/s390-ccw/clp.h
- create mode 100644 pc-bios/s390-ccw/clp.c
+This patch is indeed not easy to review, and it'll be the core of this
+whole work (it'll be even more obvious if without the complexity due to
+COLO and RDMA's coroutines.. that was separate from BQL status, hence
+addressed in the next patch).
 
-diff --git a/pc-bios/s390-ccw/clp.h b/pc-bios/s390-ccw/clp.h
-new file mode 100644
-index 0000000000..1ac2f8c177
---- /dev/null
-+++ b/pc-bios/s390-ccw/clp.h
-@@ -0,0 +1,24 @@
-+/*
-+ * Call Logical Processor (CLP) architecture definitions
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef CLP_H
-+#define CLP_H
-+
-+#ifndef QEMU_PACKED
-+#define QEMU_PACKED __attribute__((packed))
-+#endif
-+
-+#include <stdint.h>
-+#include <s390-pci-clp.h>
-+
-+int clp_pci(void *data);
-+int find_pci_function(uint32_t fid, ClpFhListEntry *entry);
-+int enable_pci_function(uint32_t *fhandle);
-+
-+#endif
-diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
-new file mode 100644
-index 0000000000..6dc72c685c
---- /dev/null
-+++ b/pc-bios/s390-ccw/clp.c
-@@ -0,0 +1,96 @@
-+/*
-+ * Call Logical Processor (CLP) architecture
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "clp.h"
-+#include <stdio.h>
-+#include <string.h>
-+
-+int clp_pci(void *data)
-+{
-+    struct { uint8_t _[2048]; } *req = data;
-+    int cc = 3;
-+
-+    asm volatile (
-+        "     .insn   rrf,0xb9a00000,0,%[req],0,2\n"
-+        "     ipm     %[cc]\n"
-+        "     srl     %[cc],28\n"
-+        : [cc] "+d" (cc), "+m" (*req)
-+        : [req] "a" (req)
-+        : "cc");
-+    return cc;
-+}
-+
-+/*
-+ * Get the PCI function entry for a given function ID
-+ * Return 0 on success, 1 if the FID is not found, or a negative RC on error
-+ */
-+int find_pci_function(uint32_t fid, ClpFhListEntry *entry)
-+{
-+    int count = 0;
-+    int limit = PCI_MAX_FUNCTIONS;
-+    ClpReqRspListPci rrb;
-+
-+    rrb.request.hdr.len = 32;
-+    rrb.request.hdr.cmd = 0x02;
-+    rrb.request.resume_token = 0;
-+    rrb.response.hdr.len = sizeof(ClpRspListPci);
-+
-+    do {
-+        if (clp_pci(&rrb) || (rrb.response.hdr.rsp != 0x0010)) {
-+            puts("Failed to list PCI functions");
-+            return -1;
-+        }
-+
-+        /* Resume token set when max enteries are returned */
-+        if (rrb.response.resume_token) {
-+            count = CLP_FH_LIST_NR_ENTRIES;
-+            rrb.request.resume_token = rrb.response.resume_token;
-+        } else {
-+            count = (rrb.response.hdr.len - 32) / sizeof(ClpFhListEntry);
-+        }
-+
-+        limit -= count;
-+
-+        for (int i = 0; i < count; i++) {
-+            if (rrb.response.fh_list[i].fid == fid) {
-+                memcpy(entry, &rrb.response.fh_list[i], sizeof(ClpFhListEntry));
-+                return 0;
-+            }
-+        }
-+
-+    } while (rrb.request.resume_token && limit);
-+
-+    puts("No function entry found for FID!");
-+
-+    return 1;
-+}
-+
-+/*
-+ * Enable the PCI function associated with a given handle
-+ * Return 0 on success or a negative RC on error
-+ */
-+int enable_pci_function(uint32_t *fhandle)
-+{
-+    ClpReqRspSetPci rrb;
-+
-+    rrb.request.hdr.len = 32;
-+    rrb.request.hdr.cmd = 0x05;
-+    rrb.request.fh = *fhandle;
-+    rrb.request.oc = 0;
-+    rrb.request.ndas = 1;
-+    rrb.response.hdr.len = 32;
-+
-+    if (clp_pci(&rrb) || (rrb.response.hdr.rsp != 0x0010)) {
-+        puts("Failed to enable PCI function");
-+        return -1;
-+    }
-+
-+    *fhandle = rrb.response.fh;
-+    return 0;
-+}
-diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-index 259cff09db..9c29548f84 100644
---- a/pc-bios/s390-ccw/Makefile
-+++ b/pc-bios/s390-ccw/Makefile
-@@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
- 
- OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
- 	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
--	  virtio-ccw.o
-+	  virtio-ccw.o clp.o
- 
- SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
- 
+So the big question is, for the loadvm process, what must run with BQL
+held, what must run with BQL released, and the rest will be "it's ok to run
+with BQL, but optional".
+
+Those things, no matter when drafting as a patch, or review, should better
+happen in one patch, IMHO, otherwise it's unclear how each patch can be
+reviewed if something was missed, when details scattered into multiple
+patches.
+
+I updated the commit message with below:
+
+  migration: Pass in bql_held information from qemu_loadvm_state()
+  
+  Teach qemu_loadvm_state() and some of the internal functions to know
+  whether we're holding BQL or not.
+  
+  Notes for some callers that are not obvious on BQL status:
+  
+    - process_incoming_migration_co() always invokes qemu_loadvm_state() with
+      BQL held, which is the core loadvm coroutine.  The coroutine was
+      explicitly entered from migration_incoming_process() which used to run
+      in the main thread.
+  
+    - postcopy_listen_thread() always invokes qemu_loadvm_state() without
+      BQL, which receives postcopy pages while VM is already started and
+      running on destination (or to be started very soon).
+  
+    - qemu_load_device_state() / qmp_xen_load_devices_state() /
+      load_snapshot() all are invoked with BQL held.
+  
+  The rest takes bql_held from upper layers.
+  
+  To reviewers: even if this is not functional change yet, it'll be the major
+  core functional change after we switch to threadified loadvm soon.  Please
+  treat it as one to add explicit code to mark out which part of incoming
+  live migration would need to be executed always with the BQL, or would need
+  to be run always without BQL.
+
+Would it look better?
+
+> 
+> > 
+> > So far, all the callers still always pass in TRUE, hence no functional
+> > change expected.  But it may change in the near future.
+> > 
+> > To reviewers: even if this is not functional change yet, it'll be the major
+> > core functional change after we switch to threadified loadvm soon.  Please
+> > Treat it as one to add explicit code to mark out which part of incoming
+> > live migration would need to be executed always with the BQL, or would need
+> > to be run always without BQL.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> 
+> [..]
+> 
+> > diff --git a/migration/colo.c b/migration/colo.c
+> > index db783f6fa7..4fd586951a 100644
+> > --- a/migration/colo.c
+> > +++ b/migration/colo.c
+> > @@ -686,7 +686,7 @@ static void colo_incoming_process_checkpoint(MigrationIncomingState *mis,
+> >       bql_lock();
+> >       cpu_synchronize_all_states();
+> > -    ret = qemu_loadvm_state_main(mis->from_src_file, mis, errp);
+> > +    ret = qemu_loadvm_state_main(mis->from_src_file, mis, true, errp);
+> 
+> That one is obvious..
+> 
+> >       bql_unlock();
+> >       if (ret < 0) {
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 4ed2a2e881..38a584afae 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -878,7 +878,7 @@ process_incoming_migration_co(void *opaque)
+> >                         MIGRATION_STATUS_ACTIVE);
+> >       mis->loadvm_co = qemu_coroutine_self();
+> > -    ret = qemu_loadvm_state(mis->from_src_file, &local_err);
+> > +    ret = qemu_loadvm_state(mis->from_src_file, true, &local_err);
+> 
+> Here, why are we sure? Are coroutines triggered by QMP command always run under BQL?
+
+Yes.  QMP handlers must run with BQL, except oob commands.
+
+> 
+> Maybe, worth an assertion.
+
+Sure I can add it.  I'll then switch that to assert(!bql) in the next patch
+when it becomes a thread.
+
+> 
+> >       mis->loadvm_co = NULL;
+> >       trace_vmstate_downtime_checkpoint("dst-precopy-loadvm-completed");
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index 232cae090b..44aadc2f51 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -154,11 +154,12 @@ static void qemu_loadvm_thread_pool_destroy(MigrationIncomingState *mis)
+> >   }
+> >   static bool qemu_loadvm_thread_pool_wait(MigrationState *s,
+> > -                                         MigrationIncomingState *mis)
+> > +                                         MigrationIncomingState *mis,
+> > +                                         bool bql_held)
+> >   {
+> > -    bql_unlock(); /* Let load threads do work requiring BQL */
+> > -    thread_pool_wait(mis->load_threads);
+> > -    bql_lock();
+> > +    WITH_BQL_RELEASED(bql_held) {
+> > +        thread_pool_wait(mis->load_threads);
+> > +    }
+> >       return !migrate_has_error(s);
+> 
+> The function is now prepared to be called from thread, as migrate_has_error() has own mutex.
+> 
+> >   }
+> > @@ -2117,7 +2118,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
+> >       qemu_file_set_blocking(f, true, &error_fatal);
+> >       /* TODO: sanity check that only postcopiable data will be loaded here */
+> > -    load_res = qemu_loadvm_state_main(f, mis, &local_err);
+> > +    load_res = qemu_loadvm_state_main(f, mis, true, &local_err);
+> 
+> Is it correct? I see, a bit later, postcopy_ram_listen_thread() does
+> 
+>     bql_lock();
+>     migration_incoming_state_destroy();
+>     bql_unlock();
+> 
+> so, I assume, that before this, when we call qemu_loadvm_state_main(), BQL is not actually locked?
+
+Thanks for the careful review, this line was wrong, and it was reverted to
+the right change in the next patch.. hence after the whole patchset applied
+it'll be correct.
+
+I guess it might be a fixup I applied to the wrong patch.  I'll move that
+change here.  It should be false here indeed.
+
+> 
+> >       /*
+> >        * This is tricky, but, mis->from_src_file can change after it
+> > @@ -2420,7 +2421,8 @@ static void loadvm_postcopy_handle_resume(MigrationIncomingState *mis)
+> >    * Returns: Negative values on error
+> >    *
+> >    */
+> > -static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis, Error **errp)
+> > +static int loadvm_handle_cmd_packaged(MigrationIncomingState *mis,
+> > +                                      bool bql_held, Error **errp)
+> >   {
+> >       int ret;
+> 
+> [..]
+> 
+> -- 
+> Best regards,
+> Vladimir
+> 
+
 -- 
-2.49.0
+Peter Xu
 
 
