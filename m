@@ -4,90 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95CB3D3C922
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 15:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA44D3C920
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 15:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTMA2-0003rT-AI; Wed, 10 Dec 2025 10:31:26 -0500
+	id 1vTMCC-0004dE-7g; Wed, 10 Dec 2025 10:33:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTM9o-0003nW-EN
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 10:31:17 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTM9m-0005sa-U7
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 10:31:12 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-47775fb6c56so60436765e9.1
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 07:31:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765380668; x=1765985468; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1Sc4AtS9u6yBKHE4TK7m4sGx5R+wbjyp/npRUrN/cwQ=;
- b=Vn3R4AI+i7uGPBp0Qh8XrLL1MRruSMIt9iVuCPBHgWO13D/27iXcUUWrXkdO+orDwR
- QIQ7UgSuANn7G1ALfPG491mpzZZU3yC1FtzsxxTKYA4O2TSfdqVYKKmawERnnopbZ1qY
- uvaOPq+xqGmwYh4dXC0YD0O3zNvaccxD5WDasXJYyhAkZunivYmAaT/8VPVKp7s8yV7H
- gUehlvpKOjqCLsPWXooUz9UntrPEL277qHk4D2rISxCUQHVJkSp7lbRALAjfeY50b9ax
- zxAu/YU6DODj7Rb3YHEjKvXBpktVRLywXSAby6b5AI4Gn3hKxQmkg+3atqwrc8ZEWH8I
- 2DMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765380668; x=1765985468;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1Sc4AtS9u6yBKHE4TK7m4sGx5R+wbjyp/npRUrN/cwQ=;
- b=jmXJ0NwbZmcrp/JQXJkPESbzIoWUKukKsU7CQdWw5hWQfGuTLTMltagHt9K7UtQjSN
- khBq7ZlZpPL2U2kEX8XJquL8WHlHyPDDuU/eVYDaeePPSetBUAAQUeAyKlejCP8bbwAD
- x4QOTXXtL8Wqz3MI6Roz/+vBP0evmEVPqWGh6OHmc20vTBh2gm8S08TGO00vW5MGG06U
- D6nJBRwo5GPHNZlipI1+Sjl+BbStp/Hq/YLFBfDn2TaDF2m2N8yYSHLyZp6HJHWbWN7r
- YwxsOvXYBXjTcp0aTmxNOkCBdR2lPfCASakWtscQbAcO6BJiIt3yLQGEFaMT7J+UFNL7
- avjA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBqzHkOPM1y1bDhRWYzMkjNGfZ9np54gr2qNEETHdZSrxNFckSj9QXWdhMbeD2jNPsiU+EOjUj/2wl@nongnu.org
-X-Gm-Message-State: AOJu0YzOAijA2XwTu9/xwhLuIEwuG9HzcKoJOOc9cQzQZeXiFjPRzWvR
- CAXuwxaF3A8WZOtG8b9rfucEqnPJ+JpOy+GceIzOUNe+RWithONuMkaXZzWTqToOwBk=
-X-Gm-Gg: ASbGncsJ0yqSUiCglyrVeXpnVQptzj8jklg3KyPLAFrregsyU6jOdQki2j92k/smLio
- qC0/yThApCmlZhkLCiUEAgG1CAak4YqUj0TF4Wkxc9OWJSvLEBkvxO4NeaeUSE6TH+++mjRjcHX
- UyzgpkVL6Dn+bKQKyVfae2lyHZPQZNn8SWFwOyWcJK/sbEZa2clAD99CCjgwJkX6ayUqXLWse2M
- Dk9t+zhM42T3GQli+oLecuKurTjsu22oYRm9jqJjns89s4BrdSMbcmvwnjw9FEDMDygLudOtUPY
- DMKMBiae4RoIpwih8muREsdtD8PteKsJwPXs++LYAO/lVd9D7FbDYdiTX+m1betKrtBA+eujCnZ
- 8tYpRw0f3bRNtdRb3pnLOa7b0sJrpdkr1Ew3t5muDh3O3+pNp73z1aCKL2QodsSPR5mZQyN3kae
- aG/QPUNq34+ZASPL5fpWcODVUdzKwNLk3MGQab+DfHeXq41/dxXgi5nQ==
-X-Google-Smtp-Source: AGHT+IGT/5m7yxG541oMru0SryansrE8LIQajPD/mc0m2FI45JXbW7NySxxOQsY6J1/utEYOf+DYuA==
-X-Received: by 2002:a05:600c:1e8c:b0:477:a977:b8c2 with SMTP id
- 5b1f17b1804b1-47a83752c85mr23678655e9.13.1765380667914; 
- Wed, 10 Dec 2025 07:31:07 -0800 (PST)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a7d3a75a3sm44231165e9.6.2025.12.10.07.31.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Dec 2025 07:31:07 -0800 (PST)
-Message-ID: <72945e3a-8616-4f61-b12a-a4cafa320a4a@linaro.org>
-Date: Wed, 10 Dec 2025 16:31:06 +0100
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vTMCA-0004cc-GN
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 10:33:38 -0500
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vTMC6-00067R-U0
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 10:33:38 -0500
+Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id BAC7680863;
+ Wed, 10 Dec 2025 18:33:30 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:887::1:d] (unknown [2a02:6bf:8080:887::1:d])
+ by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id TXQJlZ0FV0U0-mxbXl07n; Wed, 10 Dec 2025 18:33:30 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1765380810;
+ bh=vZH5i64bE4PMTS0OPbWp/aXV5iRP8RFINrr7ZJOIYDs=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=BpAOjONPEHZHEE4MIEU9ANGoVDt0uM9pt0MRNWFE21b5+3VwAubh5ho/+8KOAMS+o
+ KAzbEgwovMRa7/f1DG9xKHMmTxZ4eWtvPnJpD7sosLaxLftBYDl+PVGVAOkpvQZV0x
+ dcwVOUiNBZcnCzznSnsUQl2n4Ilpt207I0u3FsKg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <5fbc6906-0116-4fbc-bcdd-1bb63b3e6f05@yandex-team.ru>
+Date: Wed, 10 Dec 2025 18:33:29 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/riscv: Treat kernel_start_addr as vaddr
+Subject: Re: [PATCH v3 0/3] vhost-user-blk: support inflight migration
+To: Peter Xu <peterx@redhat.com>
+Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
+ Raphael Norwitz <raphael@enfabrica.net>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20251110103937.1944486-1-dtalexundeer@yandex-team.ru>
+ <cf0f69b9-4b2b-4c09-a32b-ad86bbe04f6d@yandex-team.ru>
+ <aRztnfZFl-OcbVYI@x1.local>
+ <d986f0ac-a0ae-44f6-b7a5-e002b7d3226e@yandex-team.ru>
+ <aThTdgwsNexV9KAp@x1.local>
+ <a8bff5ea-e1c3-4d4c-9ef7-93fa530bff0d@yandex-team.ru>
+ <aTmP28XK0X1rvJRv@x1.local>
 Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, palmer@dabbelt.com
-References: <20251210132130.14465-1-anjo@rev.ng>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251210132130.14465-1-anjo@rev.ng>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aTmP28XK0X1rvJRv@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,28 +87,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/25 14:21, Anton Johansson wrote:
-> Changes kernel_start_addr from target_ulong to vaddr. Logically, the
-> argument represents a virtual address at which to load the kernel image,
-> which gets treated as a hwaddr as a fallback if elf and uimage loading
-> fails.
+On 10.12.25 18:20, Peter Xu wrote:
+> On Wed, Dec 10, 2025 at 02:41:20PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> Yes, it can. And regardless of the way we chose: qdev properties or qapi,
+>> I don't think we need a property for backend itself. We need a property
+>> (or migration capability) for vhost-user-blk itself, saying that its
+>> backend should be migrated.
 > 
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> The problem is then we need to introduce the new property to all frontends
+> that would support the backend?  If it's a backend property, it can be one
+> property for the backend that all the frontends can consume.
 > 
-> ---
-> v2: Updated callers of riscv_load_kernel() to use vaddr, changed return
->      type of riscv_calc_kernel_start_addr().
-> 
-> ---
->   include/hw/riscv/boot.h    | 6 +++---
->   hw/riscv/boot.c            | 6 +++---
->   hw/riscv/microchip_pfsoc.c | 3 ++-
->   hw/riscv/sifive_u.c        | 3 ++-
->   hw/riscv/spike.c           | 2 +-
->   hw/riscv/virt.c            | 3 ++-
->   6 files changed, 13 insertions(+), 10 deletions(-)
 
-LGTM, thanks!
+Hmm, agree, that's right.. So, we may not touch frontend at all, and only
+setup backend to be migrated. And this remains transparent for frontend side.
+
+>>
+>> It's a lot simpler to migrate backend inside of frontend state. If we
+>> migrate backend in separate, we can't control the order of backend/frontend
+>> stats, and will have to implement some late point in state load process,
+>> where both are already loaded and we can do our post-load logic.
+> 
+> Would MigrationPriority help when defining the VMSD?
+> 
+
+Didn't know about it. Most probably it may help, we just setup so that backends
+migrate before frontends.
+
+
+-- 
+Best regards,
+Vladimir
 
