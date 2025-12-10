@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B99B2D3C545
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 13:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B6A4D3C545
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 13:21:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTK4E-0004o8-FX; Wed, 10 Dec 2025 08:17:18 -0500
+	id 1vTK8M-0004BH-Eg; Wed, 10 Dec 2025 08:21:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vTK46-0004mp-17
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 08:17:11 -0500
+ id 1vTK8J-000483-KR
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 08:21:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vTK43-0002zf-OF
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 08:17:09 -0500
+ id 1vTK8H-0004Zx-JJ
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 08:21:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765372627;
+ s=mimecast20190719; t=1765372888;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ByNPD+9j8EtkYKgJbFGTPkBTs1AUYDB++Ljp5NI1P9g=;
- b=IGQ/JouqRuOr5FdKTukkr5xufKjcl42ok1T/2HXLOsmj9jzQSWGndGCR1Ps0RVmlj7jm6C
- 1+fWNs1HEGxmBL4JewC8M5rb4VXf96JX88cDlz1JEJ97ZsAIM07QjUVzpVvZLy6cpsuGbN
- OMvrP0D/4zKyCWNmb87c8r9AANE94gc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+HYm/UyYSx/CQl46QHlKqzDUpapeLZeztYDRM6CSpoc=;
+ b=Rhw7Vp715YO+sHsW2C05iQ3wBpVSi1Y975Xb4QYL0N4Qz6BJKVINdGGYgV2uTSbUpeT140
+ hIaroNrNFUeDnEa6IXX8g1nGjkGl6k0XpGBL1JA3Q3Qz45vf9xXqkVW9JJ2SbXhlE3qmwm
+ 2zBGqdAzmW4xP2jzW8rsmGAVSs18Rqw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-KQhFq4ECPmWH5iiVc6l-RA-1; Wed, 10 Dec 2025 08:17:05 -0500
-X-MC-Unique: KQhFq4ECPmWH5iiVc6l-RA-1
-X-Mimecast-MFC-AGG-ID: KQhFq4ECPmWH5iiVc6l-RA_1765372624
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-42e2e5ef669so5233650f8f.0
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 05:17:05 -0800 (PST)
+ us-mta-251-koTLtDL1OmOTOwhrr3wEuA-1; Wed, 10 Dec 2025 08:17:12 -0500
+X-MC-Unique: koTLtDL1OmOTOwhrr3wEuA-1
+X-Mimecast-MFC-AGG-ID: koTLtDL1OmOTOwhrr3wEuA_1765372632
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-47788165c97so41915665e9.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 05:17:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765372624; x=1765977424; darn=nongnu.org;
+ d=redhat.com; s=google; t=1765372631; x=1765977431; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ByNPD+9j8EtkYKgJbFGTPkBTs1AUYDB++Ljp5NI1P9g=;
- b=bxT/gFDlYRVihcI6yhXfTvJJtX1IBSf4TP4+PeMqN5Q5Ox/tVnPdRMTBObHSVO0Yt9
- 8KPRwXiCibcG84PgSA4bhVZ/+3MOVMNfB6ZZnxgP3fdLib8M53dVqe2meaDZwkdBC+0g
- Sb4/PpmI9hisjMo+n8foUISvTKGVnGXkHpliTFM6SkoBoTemUw2H16U69aze/SlM1Owi
- 77Y3bRbS/kOLn1jlQowk/uCMu4sGMueS4Fuspg832AGFR6ALQeHbjqccIUICuSW3kImi
- zurg/dxa3P29u2bINpR8lVbW30F7tPxKdh6Lp2+GSfhN1ahHq+twrilJ2lvwnlciVCh8
- /Jyw==
+ :reply-to; bh=+HYm/UyYSx/CQl46QHlKqzDUpapeLZeztYDRM6CSpoc=;
+ b=GSEzHDs1FFdJKe7eei1Z64qyO2rn2UlDC0BH23uA9hMG9uGSLfFX7p5DDKOISQEKxE
+ P+Yj6ObMx80YP0Viq9NPoPQq0ajW/zEQLe2vZLwSvCUJYP+kWc0VUR6fTlfEPDPjFUk5
+ nFmX8m4Vnmj5j2qbmky5S7Jx+hyYOjWbslBHsmlbrZxtXnYnDSNOxDKh58hb7zJUJHVA
+ ICWA4N2zCc85X6nlGIsoznI6ZJDTEQ/oi2IOpKTwaTyZM6m0knshLcrMmMiWn34rS6VQ
+ rkQEkQfmpFEq8S1jQl1Y7wDP2XBPG+PS7gM1fchDGbu46TpL+poyQbvBl+uh4BD4Ay9I
+ 2iDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765372624; x=1765977424;
+ d=1e100.net; s=20230601; t=1765372631; x=1765977431;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ByNPD+9j8EtkYKgJbFGTPkBTs1AUYDB++Ljp5NI1P9g=;
- b=V2axlfQO5pC7mInDg5CLLY8P7fkmzV39B6QbYoKS8Z9i/hs987Bm5dowmve9gXIGMj
- 23DbecQ189i9XOJTFKf+0+WvZz1lOnUUaZ14/TQmEXmHNa1BQwBKITepwHDEaxONElzP
- urc73zt0gcO2vvCnSIL/gmfbWHUt4H97Vf+7EzSSjZ4VqQQJ9YP03ujDl5ob6RdO87pf
- /slFfyUqIJbp9V976tt7O0fJ+Vq9yEJLOrZ7JwLuLufrz7p73mCiYZNPsRe6F6leDceA
- WsnvIAOrjBlH7kzIYfvYc2QKSKCQjjZqEMGne8AyCgo3Uzc0qOfRLLpvA48vqwdcjGPH
- RL+w==
-X-Gm-Message-State: AOJu0YxoXFKa7OfacAJYRPhI5UJtnHn40+OzVLjfBCgxIyn1bo6dauP+
- SXcqRyyRqmeyIpUXd1pzMOwOXO4zsUJBTu1iySkkvV5uH8+GRSX+GbWHcPhPWWtKXjWxVqYSL4b
- n5ndS6jTPYXRJfznItsAVDw0CSVvnd8ErQQZQ6BxsfD0L5pRNTwT+QjHy8FsBd2dP919ilytOXk
- DmYLcL8RhYbSbv+3KLuuCHtdop4sIsESchgRCYBJFg
-X-Gm-Gg: AY/fxX4hf9CWVpncdY69xzejUtPAp1rQFmxJb+kaY/CJN6Vu5Cc8/8XzRkDmjOTZNgI
- vOfQcKgeTKKjbEWAunIfHlSE9sfFQMBMlqgsR0euUJoUac+LWGZhPbbenpmCo3d+qCxDJSHq2LS
- MsBJtX5GE5Aqq0DWcV/CR4stuH4qPbwNYVSd/vusxrXJZ1YafrLklManoVPqhci8XxWcAFMNpLJ
- 0Nev6ijROIDtPNyIIFu0WZqIQ2SMgLID1qIuYLxN7adPho6gweWNG6IW0Rm1luhacYQ87ni/6Ba
- qESlOHuoVoXxb+yJ2WPIDaBN9ccG0XnaTwvye3iP/2yPa3Ejm/vC1xG+optlV2v7zyi/ydPO8PH
- m/9e4Rb2L5jA5wiWE/lpyYfctRJAIwRsj0P0pS8jr4W5rDOQSl2MGK1+AY3y+JRwgVdXVNlFsXD
- hZzYyH1/13KfvwWz8=
-X-Received: by 2002:a05:6000:2dca:b0:42b:4185:e58a with SMTP id
- ffacd0b85a97d-42fa39d4044mr2615606f8f.14.1765372623973; 
- Wed, 10 Dec 2025 05:17:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHqkq4qRnapYcG4KqtU1jTToBQBEI21E5d/KPNZz6F6Lt3jTN7THSbi779k3ayfq1RsZdTF9Q==
-X-Received: by 2002:a05:6000:2dca:b0:42b:4185:e58a with SMTP id
- ffacd0b85a97d-42fa39d4044mr2615577f8f.14.1765372623496; 
- Wed, 10 Dec 2025 05:17:03 -0800 (PST)
+ bh=+HYm/UyYSx/CQl46QHlKqzDUpapeLZeztYDRM6CSpoc=;
+ b=Tfi5WTTTGmK6FaIi5YlQ56P8X51ko5LpxPcPSm5+di9JTaKHEpuu1C9iLPByK5M/xw
+ wy/qc04UN/KmfEMknpAMVdMNx5XANmY9BLu3KvXbzfDVt/CfIsiuwYT6gnVhcUMdOML8
+ FHRefxjtdR+ay9K5OuoQBHNXdmjzvJLrAa4GYiboUpYFtT9yqgBgTVxUvnvQvAZGXlHG
+ zyI8AgBfRBuwYSg7k44BbUhbuBN8hZcazGp+GPRgCJZ36p7NoD8hURxDfxNyeZi/PDEN
+ eF3BwtEXbUgrqoCdpBypI8bBcQ9h1z2FtKtg5SZ+VkP8J79u3bDUmIrPd5kSQrf3VMba
+ QqTQ==
+X-Gm-Message-State: AOJu0YxIZ9q7IJAgBjoR5QVN1P9dftiRxFH2lemadh/UYqfwLk1fbsNv
+ gKl0feUPeKjL8OwutwXfVUxgv+DjbU/SYkq/aFIMBZk1XaAfuxKBGJu1os0g1gbQxFozs4t2S2m
+ 5bo1zkHP95h7cAEfScbZjr43EkIVHy5p1FvK+/v8aS6AlHWnwqyuVlTcroNoIqt26T2fkY/uHjP
+ wj/jX686w6a80yxyNXQczAJZHNzw/HN4QKcXqXTGtf
+X-Gm-Gg: ASbGnctFmfwhuzqDe3p3CCsdti4qCp+R+qfRRSB4PxZN7T6yBIMw2YI3VoKlPa9+U1f
+ P0mp2vJxsKX1F2t+sWuaCm8TRKmujdgVpvMLmdgbp6HFV4+Wmgo4ijRIvZMyZ6mT4PDF7H7JVfO
+ RQbnTsl9nwi4J9Y6V4Yc//yVWV7vi3RIj2c/dXXUBJiNZmf/t1CaDTVVXiJW74vCRnOfPuulm+T
+ R+esMWRwd6hOySlLgwi3Lm/+LUlfrTBHwWiCbl8q91REBvirx59QWuqyrzn/198dZhAHhB2WzzN
+ +9wTJBV7uRcFxyA1wvip4k2CP2vN3HhWQIQluW8GBrXMobGNPZkZYYYOZqdFV9Tz+acU8r46+jP
+ Wyh+hJ06/ptwu33Zh+CLYMe2jPRh5gGNKrFQCF5XjWzwVOZXpFPMCaDmJ9kVvVn9+T5k2CNWvur
+ fu5xT/00gbL/GmAss=
+X-Received: by 2002:a05:600c:a68a:b0:479:2f95:5179 with SMTP id
+ 5b1f17b1804b1-47a8379de88mr17317225e9.15.1765372630764; 
+ Wed, 10 Dec 2025 05:17:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IECfoV19pI8VZotoIRMGee1WJEiJi37fRZcJ1vZTY/jSNodvnCLhkRHHEkZNk+29BDNAIzGaw==
+X-Received: by 2002:a05:600c:a68a:b0:479:2f95:5179 with SMTP id
+ 5b1f17b1804b1-47a8379de88mr17316965e9.15.1765372630230; 
+ Wed, 10 Dec 2025 05:17:10 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42f7d222506sm40271879f8f.28.2025.12.10.05.17.02
+ 5b1f17b1804b1-47a82d15f3csm46539085e9.1.2025.12.10.05.17.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Dec 2025 05:17:02 -0800 (PST)
+ Wed, 10 Dec 2025 05:17:09 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 04/18] target/i386/tcg: mark more instructions that are
- invalid in 64-bit mode
-Date: Wed, 10 Dec 2025 14:16:39 +0100
-Message-ID: <20251210131653.852163-5-pbonzini@redhat.com>
+Subject: [PATCH 08/18] target/i386/tcg: simplify effective address calculation
+Date: Wed, 10 Dec 2025 14:16:43 +0100
+Message-ID: <20251210131653.852163-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210131653.852163-1-pbonzini@redhat.com>
 References: <20251210131653.852163-1-pbonzini@redhat.com>
@@ -122,37 +121,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Split gen_lea_v_seg_dest into three simple phases (extend from
+16 bits, add, final extend), with optimization for known-zero bases
+to avoid back-to-back extensions.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/i386/tcg/translate.c | 64 ++++++++++++-------------------------
+ 1 file changed, 20 insertions(+), 44 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index c9b4d5ffa32..213dbb9637c 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -1698,9 +1698,9 @@ static const X86OpEntry opcodes_root[256] = {
-     [0xD1] = X86_OP_GROUP1(group2, E,v),
-     [0xD2] = X86_OP_GROUP2(group2, E,b, 1,b), /* CL */
-     [0xD3] = X86_OP_GROUP2(group2, E,v, 1,b), /* CL */
--    [0xD4] = X86_OP_ENTRY2(AAM, 0,w, I,b),
--    [0xD5] = X86_OP_ENTRY2(AAD, 0,w, I,b),
--    [0xD6] = X86_OP_ENTRYw(SALC, 0,b),
-+    [0xD4] = X86_OP_ENTRY2(AAM, 0,w, I,b, chk(i64)),
-+    [0xD5] = X86_OP_ENTRY2(AAD, 0,w, I,b, chk(i64)),
-+    [0xD6] = X86_OP_ENTRYw(SALC, 0,b, chk(i64)),
-     [0xD7] = X86_OP_ENTRY1(XLAT, 0,b, zextT0), /* AL read/written */
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 0cb87d02012..2ab3c2ac663 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -627,54 +627,30 @@ static TCGv eip_cur_tl(DisasContext *s)
+ static void gen_lea_v_seg_dest(DisasContext *s, MemOp aflag, TCGv dest, TCGv a0,
+                                int def_seg, int ovr_seg)
+ {
+-    switch (aflag) {
+-#ifdef TARGET_X86_64
+-    case MO_64:
+-        if (ovr_seg < 0) {
+-            tcg_gen_mov_tl(dest, a0);
+-            return;
++    int easize;
++    bool has_base;
++
++    if (ovr_seg < 0) {
++        ovr_seg = def_seg;
++    }
++
++    has_base = ovr_seg >= 0 && (ADDSEG(s) || ovr_seg >= R_FS);
++    easize = CODE64(s) ? MO_64 : MO_32;
++
++    if (has_base) {
++        if (aflag < easize) {
++            /* Truncate before summing base.  */
++            tcg_gen_ext_tl(dest, a0, aflag);
++            a0 = dest;
+         }
+-        break;
+-#endif
+-    case MO_32:
+-        /* 32 bit address */
+-        if (ovr_seg < 0 && ADDSEG(s)) {
+-            ovr_seg = def_seg;
+-        }
+-        if (ovr_seg < 0) {
+-            tcg_gen_ext32u_tl(dest, a0);
+-            return;
+-        }
+-        break;
+-    case MO_16:
+-        /* 16 bit address */
+-        tcg_gen_ext16u_tl(dest, a0);
++        tcg_gen_add_tl(dest, a0, cpu_seg_base[ovr_seg]);
+         a0 = dest;
+-        if (ovr_seg < 0) {
+-            if (ADDSEG(s)) {
+-                ovr_seg = def_seg;
+-            } else {
+-                return;
+-            }
+-        }
+-        break;
+-    default:
+-        g_assert_not_reached();
++    } else {
++        /* Possibly one extension, but that's it.  */
++        easize = aflag;
+     }
  
-     [0xE0] = X86_OP_ENTRYr(LOOPNE, J,b), /* implicit: CX with aflag size */
-@@ -1834,7 +1834,7 @@ static const X86OpEntry opcodes_root[256] = {
-     [0xCB] = X86_OP_ENTRY0(RETF),
-     [0xCC] = X86_OP_ENTRY0(INT3),
-     [0xCD] = X86_OP_ENTRYr(INT, I,b,  chk(vm86_iopl)),
--    [0xCE] = X86_OP_ENTRY0(INTO),
-+    [0xCE] = X86_OP_ENTRY0(INTO, chk(i64)),
-     [0xCF] = X86_OP_ENTRY0(IRET,      chk(vm86_iopl) svm(IRET)),
+-    if (ovr_seg >= 0) {
+-        TCGv seg = cpu_seg_base[ovr_seg];
+-
+-        if (aflag == MO_64) {
+-            tcg_gen_add_tl(dest, a0, seg);
+-        } else if (CODE64(s)) {
+-            tcg_gen_ext32u_tl(dest, a0);
+-            tcg_gen_add_tl(dest, dest, seg);
+-        } else {
+-            tcg_gen_add_tl(dest, a0, seg);
+-            tcg_gen_ext32u_tl(dest, dest);
+-        }
+-    }
++    tcg_gen_ext_tl(dest, a0, easize);
+ }
  
-     /*
+ static void gen_lea_v_seg(DisasContext *s, TCGv a0,
 -- 
 2.52.0
 
