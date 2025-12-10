@@ -4,147 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F08D3C90D
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 14:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 097C6D3C913
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 14:19:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTKvw-0000X5-Dc; Wed, 10 Dec 2025 09:12:48 -0500
+	id 1vTL1n-0001ix-PP; Wed, 10 Dec 2025 09:18:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vTKvu-0000Wh-0E
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:12:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vTKvq-0001A2-3R
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:12:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765375960;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bD7VQpcxs+TbhrRDYM1QFHTonaft9S0aXPWes5+S7Xg=;
- b=f353kzkxNFyYHdRrmqNXtmG1ehFTqSXEil5w9hpX7AL+UoP15hNnm3Dc9C8/JH1QCFvgf4
- FlvYes2iQ//hRZ+dG9kEsEmeHvUrrRFt5qwXt/eeO3GDGEJNOclnvTiOPim3ys+XcB0RwB
- c3+HLc5oFtSMcgs5MTSTc4bfiIBV2E0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-527-FkcTBLrHN3eOYFAehAx_Aw-1; Wed, 10 Dec 2025 09:12:39 -0500
-X-MC-Unique: FkcTBLrHN3eOYFAehAx_Aw-1
-X-Mimecast-MFC-AGG-ID: FkcTBLrHN3eOYFAehAx_Aw_1765375958
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47777158a85so82140305e9.3
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 06:12:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765375957; x=1765980757; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=bD7VQpcxs+TbhrRDYM1QFHTonaft9S0aXPWes5+S7Xg=;
- b=Qp1iLFnMKvOZ5BFij0g1rVUNnqrx6L2QvebMfotZ14lOr8+OAIULDsIje5CQbvP8H+
- dxBNrLIqhbvZpakJzF+JrVvVhx3zseUD7aDsRicd3x8rIeDdbUovSSKHsdPow61LWq9F
- qWHlOWpdB7HbPv/Ak9i0u+tH/AOgXN0YfLlpcjuD4x6bc4g26aMwsx7PGudJnzcWO5CW
- qRxmZb1cpiMf5ywaYa8U351xBfmKy8o52/vAm/sFNkLRNTV9GXlzTkteBUrVi0aqQh9V
- D330aKm5VzS1p8trUK68lD54CtV2BpmjxMCe6ExIaqKfN1fdIfRQMfWVvzyDVWswrlIr
- RDSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765375957; x=1765980757;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bD7VQpcxs+TbhrRDYM1QFHTonaft9S0aXPWes5+S7Xg=;
- b=S5ox9jPANMG4snpyep26AswDAP6dLITkJBJoBnJjFJyAJCfoeG3oqcJ6d3ykKQ3fLk
- SWERKu3AK7Exu01x7hynSiewdqK+8T7OQeDR4yLvm00XZgCLXVo2gRcvyUJfVND+jyWY
- jTpH2EinhUmIMh5Tcbh/fI9V9+hbySNa7/G5aDO7graglzFpaQIAAQJa+kphAfr7YJ59
- iRzX1P2t6R1bE1zhvPArJTvmGqeK4m/oq1EZtzrjdbskQKfAdmASNYubvZKTPH0hDG5C
- ELd4SwPs5XZCaVsMBZUKTMRtV5DusZv/TcxD+RJ3H27OIhupYqmqkru7sJxPVbxaWpH+
- dGOA==
-X-Gm-Message-State: AOJu0YybNYAhSV03gnpY8lei6gCy6SXkiVcJcgoiztt0UlbUcH7YN95E
- H4P63g/F30lLPxRRppOTFx3S9nA7WB7pAWmxGhXUGIe9JcV7iKoOKsQ8NvGmyiS3MjpzfoT4sir
- w0fYsmlZ8hq13kF4+f5rb+5ish1+6JJ2QwoMY3a9uNNItun0uvCrVFbPoYzTs6iDp
-X-Gm-Gg: ASbGncsb9wsXM5UQ7d1nFJisLSp23PXGZWu21MxQtQz0mZ+3MDIMW5SUBkpnplv7e8A
- 99YhI4dgJCf5vAT0mVARkdIlHsJI0cemiu3CSxBKmGuyMVfFfQVb99tI28elQRsrTbNUW6zI+1V
- Ex87pPx/M/pWvA0lBK1qHQzB2NtKYDHJmDa03pXEnr1DVSKRX+vkFSV8nHq3KcYyU/zi4e4TsE0
- XfS6x1tCDsEka4e8n8/5aTLX+CqIYFfLUKaNE4UTOajeqh/TPzsjirSjZQt4QXcq7DnkuGEbfFS
- G9n+lolpzAvidg4Czt1nOwsYiLd+dbCz7W6F/dNOjvG9NpCACIeg0mY5H5BWHYaEQ1poKFoboyj
- Qif9gnpqBmBY8fn0nxqysKUStGypat0cth34L8pXdBePdLIQ9c+He2xXPpUZX1B/Egs+ok3xZtJ
- VkkdFR5zy9XEXzPWs=
-X-Received: by 2002:a05:600c:5254:b0:46e:37fe:f0e6 with SMTP id
- 5b1f17b1804b1-47a8379c0fbmr27781515e9.30.1765375957474; 
- Wed, 10 Dec 2025 06:12:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHhiVwTChDd/3XDYLxr+06OGfpaN/2udr1vtiMW39shQvpLPhuHFYoR62rkwb0oFfxPP7jr6Q==
-X-Received: by 2002:a05:600c:5254:b0:46e:37fe:f0e6 with SMTP id
- 5b1f17b1804b1-47a8379c0fbmr27781255e9.30.1765375957044; 
- Wed, 10 Dec 2025 06:12:37 -0800 (PST)
-Received: from [192.168.10.81] ([151.95.145.106])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-47a7d35713asm43967835e9.1.2025.12.10.06.12.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Dec 2025 06:12:36 -0800 (PST)
-Message-ID: <525d2198-5d6f-43a0-88cd-78eae0042d27@redhat.com>
-Date: Wed, 10 Dec 2025 15:12:35 +0100
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1vTL1j-0001iI-J7
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:18:48 -0500
+Received: from sg-1-104.ptr.blmpb.com ([118.26.132.104])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1vTL1e-0005Dn-Sr
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 09:18:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1765376305; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=TruzgoQpxx6aE/73p6qnLdRCuY820h9ksChL9p20tFg=;
+ b=TQj6MymAdVqGQr8l6A6vVs5SpcEtzX9dmOW/UWjEa6GCgpyaE9r9x2BrJBf9Npwe/5u3Hw
+ ozwdsG6N0QNvS0NajyfNwSQkBBFL1d3XzTeCrsjvDLh/Y1EPzCREXfLfvK32pNH+SIZTbM
+ V8rGZvQO8kJManF23BMmBPC0Q4clPNzVq8wFaDZs/IXxrj9ZR1EmAlzJicRs+hnfk+aQt1
+ 7Z0aV64Uu8YmDAoW9GRNIkiBJJpF9rbj+YTAm4POFHucBH/Y7wy4Brk6p4r+plXSPON3eT
+ WRBXVE9KOFlXDeAUopDNydGYDhN+2HWNEzbCZ+qxu6W2Um9w3MIQSDLPf1nnHQ==
+Date: Wed, 10 Dec 2025 22:18:21 +0800
+In-Reply-To: <aTiQK-a-ZcANCFbk@x1.local>
+Content-Transfer-Encoding: quoted-printable
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/19] rust: QObject and QAPI bindings
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, qemu-rust@nongnu.org
-References: <20251010151006.791038-1-pbonzini@redhat.com>
- <87tsy52ftl.fsf@pond.sub.org> <87zf7s5h3k.fsf@pond.sub.org>
-Content-Language: en-US
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <87zf7s5h3k.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Cc: <qemu-devel@nongnu.org>, <mst@redhat.com>, <sgarzare@redhat.com>, 
+ <richard.henderson@linaro.org>, <pbonzini@redhat.com>, 
+ <david@kernel.org>, <philmd@linaro.org>, <farosas@suse.de>
+Message-Id: <58c1e3f7-be13-4a2e-a1e6-0a8295d83345@bytedance.com>
+X-Lms-Return-Path: <lba+26939812f+3f855a+nongnu.org+xuchuangxclwt@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+References: <20251208120952.37563-1-xuchuangxclwt@bytedance.com>
+ <20251208120952.37563-3-xuchuangxclwt@bytedance.com>
+ <aTiQK-a-ZcANCFbk@x1.local>
+X-Original-From: Chuang Xu <xuchuangxclwt@bytedance.com>
+To: "Peter Xu" <peterx@redhat.com>
+From: "Chuang Xu" <xuchuangxclwt@bytedance.com>
+Subject: Re: [RFC v1 2/2] migration: merge fragmented clear_dirty ioctls
+Mime-Version: 1.0
+Received-SPF: pass client-ip=118.26.132.104;
+ envelope-from=xuchuangxclwt@bytedance.com; helo=sg-1-104.ptr.blmpb.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,53 +73,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/9/25 07:01, Markus Armbruster wrote:
-> Markus Armbruster <armbru@redhat.com> writes:
-> 
->> I applied, ran make, and it didn't create qapi-types.rs and
->> test-qapi-types.rs for me.  What am I missing?
-> 
-> Looks like I have to run with -B qapi.backend.QAPIRsBackend.
-> 
-> -B is meant for out-of-tree backends.  Commit dde279925c9 explains:
-> 
->      qapi: pluggable backend code generators
->      
->      The 'qapi.backend.QAPIBackend' class defines an API contract for code
->      generators. The current generator is put into a new class
->      'qapi.backend.QAPICBackend' and made to be the default impl.
->      
->      A custom generator can be requested using the '-k' arg which takes a
->      fully qualified python class name
->      
->         qapi-gen.py -B the.python.module.QAPIMyBackend
->      
->      This allows out of tree code to use the QAPI generator infrastructure
->      to create new language bindings for QAPI schemas. This has the caveat
->      that the QAPI generator APIs are not guaranteed stable, so consumers
->      of this feature may have to update their code to be compatible with
->      future QEMU releases.
-> 
-> Using it for the in-tree Rust backend is fine for a prototype.
-> Mentioning it in a commit message or the cover letter would've saved me
-> some digging.
+Hi, Peter
 
-Well, it wasn't intentional - right now it does this:
+On 10/12/2025 05:10, Peter Xu wrote:
+> On Mon, Dec 08, 2025 at 08:09:52PM +0800, Chuang Xu wrote:
+>> From: xuchuangxclwt <xuchuangxclwt@bytedance.com>
+>>
+>> When the addresses processed are not aligned, a large number of
+>> clear_dirty ioctl occur (e.g. a 16MB misaligned memory can generate
+>> 4096 clear_dirty ioctls), which increases the time required for
+>> bitmap_sync and makes it more difficult for dirty pages to converge.
+>>
+>> Attempt to merge those fragmented clear_dirty ioctls.
+> (besides separate perf results I requested as in the cover letter reply..=
+)
+>
+> Could you add something into the commit log explaining at least one examp=
+le
+> that you observe?  E.g. what is the VM setup, how many ramblocks are the
+> ones not aligned?
+>
+> Have you considered setting rb->clear_bmap when it's available?  It'll
+> postpone the remote clear even further until page sent.  Logically it
+> should be more efficient, but it may depend on the size of unaligned
+> ramblocks that you're hitting indeed, as clear_bmap isn't PAGE_SIZE based
+> but it can be much bigger.  Some discussion around this would be nice on
+> how you chose the current solution.
+>
 
-test_qapi_rs_files = custom_target('QAPI Rust',
-   output: 'test-qapi-types.rs',
-   input: [ files(meson.project_source_root() + 
-'/tests/qapi-schema/qapi-schema-test.json') ],
-   command: [ qapi_gen, '-o', meson.current_build_dir(), '-b', 
-'@INPUT0@', '-B', 'qapi.backend.QAPIRsBackend', '-p', 'test-' ],
-   depend_files: [ qapi_inputs, qapi_gen_depends ])
+On my Intel(R) Xeon(R) 6986P-C(previous tests were based on Cascade Lake),
+I add some logs. Here are some examples of unaligned memory I observed:
+size 1966080: system.flash0
+size 131072: /rom@etc/acpi/tables, isa-bios, system.flash1, pc.rom
+size 65536: cirrus_vga.rom
 
-so "make rust/tests/test-qapi-types.rs" will work, and so will "make" if 
-you have --enable-rust.
+Taking system.flash0 as an example, judging from its size, this should=20
+be the OVMF I'm using.
+This memory segment will trigger clear_dirty in both memory_listener=20
+"kvm-memory" and
+memory_listener "kvm-smram" simultaneously, ultimately resulting in a=20
+total of 960 kvm_ioctl calls.
+If a larger OVMF is used, this number will obviously worsen.
 
-Let us know what you'd prefer and we'll switch.  Alternatively, 
-retconning -B's meaning so that it applies to Rust will work too. :)
+On the machine I tested, clear=C2=A0system.flash0=C2=A0took a total of 49ms=
+,
+and clear all unaligned memory took a total of 61ms.
 
-Paolo
+Regarding why the current solution was chosen, because I'm not sure if=20
+there were any
+special considerations in the initial design of clear_dirty_log for not=20
+applying unaligned memory paths.
+Therefore, I chose to keep most of the logic the same as the existing one,
+only extracting and merging the actual clear_dirty operations.
 
+Thanks.
 
