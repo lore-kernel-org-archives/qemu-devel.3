@@ -4,108 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7106BD3B9A9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 10:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6782BD3B9A9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 10:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTHlx-0007PT-Tg; Wed, 10 Dec 2025 05:50:17 -0500
+	id 1vTHmk-0007ZU-GI; Wed, 10 Dec 2025 05:51:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTHlw-0007PC-4O
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 05:50:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTHmh-0007YP-PQ
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 05:51:04 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTHlt-0000nB-VG
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 05:50:15 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTHmf-000168-MU
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 05:51:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765363811;
+ s=mimecast20190719; t=1765363860;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=cm5e9L8jfs0+zznrXUClQm8sh0FjWpkzMH4cJLDJqRI=;
- b=VzXL5UhDrIVaSRRIpW42OkSboVFUoOTH/+KKS1ghsEzmmaOmgOxlBQPE6eCPTLyehwGRU5
- 0b8MweqRTInFS65+Q8nXxdZYpysu5tz5vsTYe2G001GD0/vwIphNolNx1MTQDDWpKnePj9
- xehlBYBv1regCbdqJtiEt4AJGOYaLSk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aoHiCtfW6rhKisfUPMhhja77pg/afoNuvCcZQ3I2JCE=;
+ b=Hiwlt6rVUoxJ3WDu9ZLJe9FCa9RxaeOesKLXh8bh0uqKGdaW7SdHtinTUZQPTvi1EFmxFZ
+ eYOE6wj3HRqfcSAKka5W/CczoP32InAQpqS6EsAQl2jljfzvZPsLMpKL1CJCoLecY6/FdM
+ U8J8If71jJr0T4duwhrBcRKlbTXiA+I=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-503-2-qSqkWtOB-SFfM046I4hQ-1; Wed, 10 Dec 2025 05:50:10 -0500
-X-MC-Unique: 2-qSqkWtOB-SFfM046I4hQ-1
-X-Mimecast-MFC-AGG-ID: 2-qSqkWtOB-SFfM046I4hQ_1765363809
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4779b432aecso41333735e9.0
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 02:50:09 -0800 (PST)
+ us-mta-672-idmyb9JiNUqyX3A5LDJ3xw-1; Wed, 10 Dec 2025 05:50:59 -0500
+X-MC-Unique: idmyb9JiNUqyX3A5LDJ3xw-1
+X-Mimecast-MFC-AGG-ID: idmyb9JiNUqyX3A5LDJ3xw_1765363858
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4779edba8f3so42487015e9.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 02:50:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765363809; x=1765968609; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=cm5e9L8jfs0+zznrXUClQm8sh0FjWpkzMH4cJLDJqRI=;
- b=fw6f+e9sEEeyPMjupVkz3RxnxjqtKVYg9+dUhO6BThi00jamnA94oWQcOEPi3/y5mW
- qMoC7a7nyPHN4Jv/uDMuXU1jNF1CrLxHpInDjWon5Xw8xDz1Oxtlvu1bVPODN8YAkOV3
- 4Abx3UIS9MMIHP3vnhTRbPnPZqjURv0JCKFs/DOudcCuARWwjX6yZYwfa71S4CSkAiOS
- PbXQupZD93zbGbivTomt5W+coUXHnTVyILkz/CPyEEEX1el37Jt1irJzTB0erUB1weRj
- yqrydPcT0C+5mNoIRfMXqu1C4WwHcVPlHuKOHJhI5V8XHG8AZNQh67DrQFEa/bfBkVnG
- 9twg==
+ d=redhat.com; s=google; t=1765363858; x=1765968658; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:cc
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=aoHiCtfW6rhKisfUPMhhja77pg/afoNuvCcZQ3I2JCE=;
+ b=OtcsfMHng8FeoPkNbR/CdbHJ4v4MXQSaGDqQCvlmhVyTnEW/bkhs9zZjG19H0/MVPA
+ scxaM0n4tkz/+Y5H/4Az2YsRmj5o/lq/pspgr6SXFVSoIoMkNv1k8yqlpeUhoERJHvNg
+ CmSBfFzKqmKIHotpJSwH2eeCzNM1Aj6ecITWywL9v2NJJAcczG0xEwDVTirtV6M8/BYU
+ CeapLxr7CNcIfjCMVtOiw1GBW230LWG5WvGzfsUVu6eTFmDqM2QbU5X5zDTMr3J4Vlhc
+ X9+nl/Ex3RIO1+9Socz2KXlyX9gIybFEQcJ9y41NoMMANvyo1mLEG2bQQmT1YX4A/mVE
+ 6I+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765363809; x=1765968609;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1765363858; x=1765968658;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:cc
+ :content-language:references:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cm5e9L8jfs0+zznrXUClQm8sh0FjWpkzMH4cJLDJqRI=;
- b=jG5tWz1ZGtVbiihyx9N1K2iKeO7vS6yncP38ONNpdFNHSGabcW3vybMiGP9y8ctQo+
- T71BHFYX7IRjbpAu7euw+h84YE1qiEYHSkPPfk9kuPDEbpVul2hP4viepNlYuTELFsd0
- vWrxD2c2/Dl9sJ28UCrOKqT0f16f8VSdSgNA1NBmrn9zEuS0Q9NMFiMT+gX6GWFXufpu
- iQltP7NCGtBccK5BaiQeN9wktiqS+opcufTxJJH1WcRvMudIekjdK6ttROW4vHrQ1mlZ
- 7k+4GbubN/ZSyYaDlwsU2uuQ5HVeyZFVP4U5jPjDuna2hxteJeXnw6HMW2iGxY/6oHBz
- 8uXQ==
+ bh=aoHiCtfW6rhKisfUPMhhja77pg/afoNuvCcZQ3I2JCE=;
+ b=eyfeX1w9g8sf8N7n/7es/B7EP1qV+6URD2Et8Nmw9BYkzAXGsj+NSYmXA2C6e9BZ/h
+ Pyuoacp/ykV/DCJa462HbDDM5eGXBn7SmMD3tDkirTVppIyXj/49v31s7vLisxrWhvsl
+ pWku6dWDqvW/C3MXGxmoRuadtiKAMeTcC22ggCa1lUIYM2tF9oqg55RUDRDph/mONrO7
+ QkQS29GjFrYVM3PjAI7Utix18flcFwf0S+h1tpfyL6w3kyr71TpFehUEQ/+OFNcd0gY9
+ wT2VA8+YoTgjrLA5FYUhlTBcWy8cXSGQ3n1Buk7gtGkFCHSeotgp9GfiOZXYD7+UPBlF
+ 65oA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQ30zlTQA2R72p1uDoTJ8jjA3n7yzykn5GnYy16Vwet4drzvcHwTS7qo1/VcUv+tIQ6HDf7i/REbBR@nongnu.org
-X-Gm-Message-State: AOJu0YzxV6RlOkK2HecfKCkVrXXTl0VRkdxgqX0RJl3a50mjd/1Cd2BW
- aopU2c1k5M5c/4lyMVWBhWxqQf5dUjQyy+8GOb9kq7qDIWgX5jopyNK6fwUXl8aULmcbvMgdUl5
- vY7A0oLjfuuMgoJX07+uXPSgPGVTjUspIIqu/8o2lldDZijvvQtTme1XI
-X-Gm-Gg: ASbGncvv7X+Y+vbi7NYvQ+PWXeSYEbXN42yBLcHZ9WC1TYcpQ8EXv3IV0Xr7syE4ABP
- LOvfzOwufmhHEahQjYRmCVaPmMXh2CtCCWLcnie11jf38yMX2RAdsHqjvDzWnT4urzdZirmW8Go
- nrIkxID03xcZC4svryvNmnaGH1oDBmysAztej6/YWfRTRA3Eg4VCbLh4Kl0fVeBiMlCj7UOdb1u
- ozNXyNfg+Ilje/VXG3gSXDfK3LFYe6sVo9zrjBKF7pK/Ivkh0XMIxln/NIPdYIhMj5U7R5XXCr6
- UO2HnufYwTEZiz9WIU7MySiUWhE9NbM3aRrwhyFo+1UiutqjQizf3e3lNBE42ZDJYYR2JtZJA/b
- oe+knvtMnsVgQKQ1qngVYxDcyHppAIgCCps5friKXwGVx9+0q
-X-Received: by 2002:a05:600c:b8a:b0:477:8b2e:aa7d with SMTP id
- 5b1f17b1804b1-47a83847b05mr19716535e9.30.1765363808726; 
- Wed, 10 Dec 2025 02:50:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEZ50h6jSlpMQayX0MKulpBP8USZPpzggP3LoFid9fMF7tIZcdd9s+pgg95u0qCcYtNiBaAmw==
-X-Received: by 2002:a05:600c:b8a:b0:477:8b2e:aa7d with SMTP id
- 5b1f17b1804b1-47a83847b05mr19716225e9.30.1765363808232; 
- Wed, 10 Dec 2025 02:50:08 -0800 (PST)
+ AJvYcCW8C5PnrzeWUyr0FeUcKno3FZij6tQWshg2DygHF8qa/SPyxP0hmXs10ayBuVNRun7naNolp759Gitz@nongnu.org
+X-Gm-Message-State: AOJu0YzsLnkbilP0+xEg1qz6Bxct46omHMDgBO6tvaAZ4KLfnlbUebUz
+ bpwOUUKHdcHCHnWjyFvitt6PvddjuX9+qhGTpn4JGrkjs/ijUBi5VOXSEjNx9vaXduWcJglLn7Q
+ G0e4Gjn/nlH+OuWX558A3NZcyMSOCvSZQggDID7yfIU90WuXLvKOTtdla
+X-Gm-Gg: ASbGncujNqxPV9uKVJJjmkaCytdrB2ZRcyy4mnICloPJBBnMHEaDI4UjFFKjnd8QiIm
+ gEjdFJCMQeW5lxo8+Z6xzhfn+wctDfA/lIKEM6TosPy21vIX0KA0a2eJ01o/TmobJgNxhniWcml
+ yHgHUPUgibofysYmTbDHO30S9kAh/Fjx9YEOUvteHt3tgNbKZtBlZSEVw+j4+6bQyCk5Fc/JoXd
+ e1ua1iVpQ86B2b+Ppwdza9lONVDUOw1JyXYLuqPvXPxFuGratP6ScN5Qtp7UCIu47AMYejiZneW
+ aUgs5MVRNRNX40ydxPNAxq4syv393iqjnIVlOLaqb2L+nxO9iwWfyb5x+s9dzD2MPW8IxyY1mXT
+ CMIbvHS9bRxmULzsttA0Wu5C/wfkG4bCGcjwSyXdT8VFdP756
+X-Received: by 2002:a05:600c:3111:b0:477:9f34:17b8 with SMTP id
+ 5b1f17b1804b1-47a8374ce60mr19233525e9.1.1765363858213; 
+ Wed, 10 Dec 2025 02:50:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGUfP3PLk/Ks/7zf3IrZ9j/1r5lxcPTiS7d8pgHwL0Z7HCUXGwpZw7ZcLB0vIBGtOhc3lufgQ==
+X-Received: by 2002:a05:600c:3111:b0:477:9f34:17b8 with SMTP id
+ 5b1f17b1804b1-47a8374ce60mr19233335e9.1.1765363857793; 
+ Wed, 10 Dec 2025 02:50:57 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a82d4a995sm38343175e9.13.2025.12.10.02.50.07
+ 5b1f17b1804b1-47a7da4885esm36809645e9.20.2025.12.10.02.50.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Dec 2025 02:50:07 -0800 (PST)
-Message-ID: <d57fe2bb-7e54-4c6c-beab-303eae81001c@redhat.com>
-Date: Wed, 10 Dec 2025 11:50:06 +0100
+ Wed, 10 Dec 2025 02:50:56 -0800 (PST)
+Message-ID: <0fc6d169-918e-4065-a112-9a07d9af1365@redhat.com>
+Date: Wed, 10 Dec 2025 11:50:54 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] Fix const qualifier build errors with recent glibc
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Fam Zheng <fam@euphon.net>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-stable <qemu-stable@nongnu.org>,
- Thomas Huth <thuth@redhat.com>
-References: <20251209174328.698774-1-clg@redhat.com>
- <31843643-a22d-4634-9eb7-868376e57635@tls.msk.ru>
+Subject: Re: [PATCH] MAINTAINERS: Update reviewers for CPR
+To: Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
+ qemu-devel@nongnu.org
+References: <20251209183412.3903519-1-bchaney@akamai.com>
+ <b6caf9a7-f0b4-41ef-8841-d8aca5c97607@oracle.com>
 Content-Language: en-US, fr
+Cc: 'Peter Xu' <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
@@ -150,19 +141,19 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <31843643-a22d-4634-9eb7-868376e57635@tls.msk.ru>
+In-Reply-To: <b6caf9a7-f0b4-41ef-8841-d8aca5c97607@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,41 +169,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/10/25 11:35, Michael Tokarev wrote:
-> On 12/9/25 20:43, Cédric Le Goater wrote:
->> A recent change in glibc 2.42.9000 [1] changes the return type of
->> strstr() and other string functions to be 'const char *' when the
->> input is a 'const char *'.
++Peter, + Fabiano,
+
+On 12/9/25 20:02, Mark Kanda wrote:
+> On 12/9/25 12:34 PM, Ben Chaney wrote:
+>> Signed-off-by: Ben Chaney<bchaney@akamai.com>
+>> ---
+>>   MAINTAINERS | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
 >>
->> This breaks the build in various files with errors such as :
->>
->>    error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
->>      208 |         char *pidstr = strstr(filename, "%");
->>          |                        ^~~~~~
->>
->> Fix this by changing the type of the variables that store the result
->> of these functions to 'const char *'.
->>
->> [1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 63e9ba521b..812c86fab3 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -3116,8 +3116,8 @@ T: githttps://gitlab.com/jsnow/qemu.git jobs
+>>   T: githttps://gitlab.com/vsementsov/qemu.git block
+>>   
+>>   CheckPoint and Restart (CPR)
+>> -R: Peter Xu<peterx@redhat.com>
+>> -R: Fabiano Rosas<farosas@suse.de>
 > 
-> I'm picking this up for qemu-stable (10.0 & 10.1 series)
-> (together with 83f6dceb8f5c "qga: Fix ubsan warning").
-> Please let me know if I shouldn't.
-
-This is a partial fix for the recent glibc update. We need at least
-two other patches. One rewriting vubr_parse_host_port() as Peter
-proposed and another for :
-
-../hw/i386/x86-common.c:827:11: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
-   827 |     vmode = strstr(kernel_cmdline, "vga=");
-
-which is missing in v3.
-
-Anyhow, there is no harm in taking this first part. Future backports
-should be simple enough.
-
-Thanks,
-
-C.
+> IMO, Peter and Fabiano should continue to be Reviewers.
+> 
+> Thanks/regards,
+> -Mark
+> 
+>> +R: Mark Kanda<mark.kanda@oracle.com>
+>> +R: Ben Chaney<bchaney@akamai.com>
+>>   S: Supported
+>>   F: hw/vfio/cpr*
+>>   F: include/hw/vfio/vfio-cpr.h
+> 
 
 
