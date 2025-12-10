@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC03FD3C52A
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 11:53:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3314D3C52A
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 12:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTIk6-0003WR-HW; Wed, 10 Dec 2025 06:52:26 -0500
+	id 1vTJEf-0000kw-4q; Wed, 10 Dec 2025 07:24:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vTIk4-0003W5-Uw
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 06:52:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1vTJEd-0000kB-16; Wed, 10 Dec 2025 07:23:59 -0500
+Received: from sender4-pp-f112.zoho.com ([136.143.188.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vTIk2-0006fo-Se
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 06:52:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765367541;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Vhtzy8GXNP6pd8FFKdH9r/DiZLahJTr3mXXz/Yg9nlc=;
- b=f0eCl6N+QgLph9DsR08ECcNL2Ly1Zjbq6bv1Td6DYmcyca06KRv6F158fLrEdzeC6lEorP
- NyeyDQQ1/lf1pMssjJCddcmL0cyXqVky6kDQ02QsiwpAazvbIVe2E5wIR0XJConi9mHtx7
- 8WkdQIl+9/89TFq+KQShq6jCdxDXoRs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-X0ZMWIjtNqa08D3EEGA5BA-1; Wed,
- 10 Dec 2025 06:52:17 -0500
-X-MC-Unique: X0ZMWIjtNqa08D3EEGA5BA-1
-X-Mimecast-MFC-AGG-ID: X0ZMWIjtNqa08D3EEGA5BA_1765367536
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6EF791956095; Wed, 10 Dec 2025 11:52:15 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.162])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CD801956095; Wed, 10 Dec 2025 11:52:07 +0000 (UTC)
-Date: Wed, 10 Dec 2025 11:52:04 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
-Message-ID: <aTle5C2pN8ZslZX7@redhat.com>
-References: <20251209162857.857593-1-peterx@redhat.com>
- <aTlZIlgB20OpdSEl@redhat.com>
+ (Exim 4.90_1) (envelope-from <me@linux.beauty>)
+ id 1vTJEa-0006i1-PX; Wed, 10 Dec 2025 07:23:58 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1765369403; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=ijK0EYbZU37DSBvOr50FocAn2gLqXawHh/VQBlppkELeTLoV8/XsmTkes8Cpay0khD1EqdnbR8U2VsHwwdaRG6SUsytNUzWjBNGEq3FJPxzzAo2Fa7ibCfvVFXUTF6Nc36z4tnNDsDIt7zjGmAxaKKuf8nU/D8nQrdki7xawijI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1765369403;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=D4pKZdMAW/ce9ypcaQO9FVmMVJxyMbabTAdF1w7w88A=; 
+ b=ILpoYhkBbOOLIMFHIICbjgGYWWWphAZ2D6zUvVvzAZEREcYpHuj5x3jmR9o0LZlhuMByBybOo4m4ajytn2b4OKYEJMVHvEgYnFetPK/uFLo7O61In6zGqOHxmUHFaUKM3N+7j3RPgFlD8Nwekb3+j0aM9giNDDH2RJZa2xxiSGo=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=linux.beauty;
+ spf=pass  smtp.mailfrom=me@linux.beauty;
+ dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765369403; 
+ s=zmail; d=linux.beauty; i=me@linux.beauty;
+ h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+ bh=D4pKZdMAW/ce9ypcaQO9FVmMVJxyMbabTAdF1w7w88A=;
+ b=HoN+V3QhtpzFfs2lhoi7dUw8RpQAx2W+qP2i8h+693auLXaI/73m3l8XPZAEU0qn
+ Q+X13HAuIiSXRPQGVXtUbmGGS9g41Gbv9iBZQRamQsQQAeq5e8ut+EXtjhSJXCSos/A
+ jI4loTvhPRzw2NV3DneGpw9I7IHxwyrQN4EnYpNw=
+Received: from mail.zoho.com by mx.zohomail.com
+ with SMTP id 1765369401383449.51363982527596;
+ Wed, 10 Dec 2025 04:23:21 -0800 (PST)
+Date: Wed, 10 Dec 2025 20:23:21 +0800
+From: Li Chen <me@linux.beauty>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: "Peter Maydell" <peter.maydell@linaro.org>,
+ "Shannon Zhao" <shannon.zhaosl@gmail.com>,
+ "Igor Mammedov" <imammedo@redhat.com>, "Ani Sinha" <anisinha@redhat.com>,
+ "Eduardo Habkost" <eduardo@habkost.net>,
+ "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
+ "Yanan Wang" <wangyanan55@huawei.com>,
+ "Zhao Liu" <zhao1.liu@intel.com>, "Song Gao" <gaosong@loongson.cn>,
+ "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
+ "Sunil V L" <sunilvl@ventanamicro.com>,
+ "Palmer Dabbelt" <palmer@dabbelt.com>,
+ "Alistair Francis" <alistair.francis@wdc.com>,
+ "Weiwei Li" <liwei1518@gmail.com>, "qemu-arm" <qemu-arm@nongnu.org>,
+ "qemu-devel" <qemu-devel@nongnu.org>, "qemu-riscv" <qemu-riscv@nongnu.org>
+Message-ID: <19b0837500d.2713ffb3821327.2786629512090065997@linux.beauty>
+In-Reply-To: <1995f320053.73c58bde124269.3373604835167896043@linux.beauty>
+References: <20250528105404.457729-1-me@linux.beauty>
+ <20250528105404.457729-5-me@linux.beauty>
+ <20250714144303-mutt-send-email-mst@kernel.org>
+ <1981309e2fa.31709fd32611761.5900055972026140740@linux.beauty>
+ <20250716074207-mutt-send-email-mst@kernel.org>
+ <198131a686b.18fb34702623779.7633947002456257034@linux.beauty>
+ <1995f320053.73c58bde124269.3373604835167896043@linux.beauty>
+Subject: Re: [PATCH REPOST v4 4/4] acpi/virt: suppress UART device & SPCR
+ when guest has no serial hardware
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aTlZIlgB20OpdSEl@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Received-SPF: pass client-ip=136.143.188.112; envelope-from=me@linux.beauty;
+ helo=sender4-pp-f112.zoho.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,89 +96,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 10, 2025 at 12:27:30PM +0100, Kevin Wolf wrote:
-> Am 09.12.2025 um 17:28 hat Peter Xu geschrieben:
-> > [This is an RFC series, as being marked out.  It is trying to collect
-> >  opinions.  It's not for merging yet]
-> > 
-> > Background
-> > ==========
-> > 
-> > It all starts with machine compat properties..
-> > 
-> > Machine compat properties are the major weapon we use currently in QEMU to
-> > define a proper guest ABI, so that whenever we migration a VM instance from
-> > whatever QEMU version1 to another QEMU version2, as long as the machine
-> > type is the same, logically the ABI is guaranteed, and migration should
-> > succeed.  If it didn't, it's a bug.
-> > 
-> > These compat properties are only attached to qdev for now.  It almost
-> > worked.
-> > 
-> > Said that, it's also not true - we already have non-qdev users of such, by
-> > explicitly code it up to apply the compat fields.  Please refer to the
-> > first patch commit message for details (meanwhile latter patches will
-> > convert them into a generic model).
-> > 
-> > Obviously, we have demands to leverage machine compat properties even
-> > outside of qdev.  It can be a network backend, it can be an object (for
-> > example, memory backends), it can be a migration object, and more.
-> 
-> This doesn't feel obvious to me at all. A machine type defines what
-> hardware the guest sees. Guest hardware is essentially qdev.
-> 
-> I don't see any reasons why a backend should be interested in what guest
-> hardware looks like, that would seem like a bad layering violation. Many
-> backends can even exist without a guest at all, and are also used in
-> tools like qemu-storage-daemon. Having a machine type in a tool that
-> doesn't run a guest doesn't make any sense.
+Hi Michael,
 
-The sev-guest compat property for 'legacy-vm-type' is an interesting
-example.
+ ---- On Fri, 19 Sep 2025 07:38:56 +0800  Li Chen <me@linux.beauty> wrote -=
+--=20
+ > Hi Michael,
+ >=20
+ >  ---- On Wed, 16 Jul 2025 19:59:14 +0800  Li Chen <me@linux.beauty> wrot=
+e ---=20
+ >  > Hi Michael,
+ >  >=20
+ >  >  ---- On Wed, 16 Jul 2025 19:42:42 +0800  Michael S. Tsirkin <mst@red=
+hat.com> wrote ---=20
+ >  >  > On Wed, Jul 16, 2025 at 07:41:11PM +0800, Li Chen wrote:
+ >  >  > > Hi Michael,
+ >  >  > >=20
+ >  >  > > Thanks for your kind review! All issues below have been fixed in=
+ v5:
+ >  >  > > https://lore.kernel.org/qemu-devel/20250716111959.404917-5-me@li=
+nux.beauty/T/#m696cee9a95646add1b74b866c3d6761aa4c5c762
+ >  >  >=20
+ >  >  > Past soft freeze now: I tagged this but pls remind me after the re=
+lease
+ >  >  > to help make sure it's not lost.
+ > =20
+ > Gentle reminder: This patch is still missing from the latest master bran=
+ch, but can apply without
+ > any conflict. Can it be included in 10.2?
+ >=20
+ > Regards,
+ > Li.
+ >=20
+ >=20
 
-This property ultimately controls which of two different kernel ioctls
-for KVM are used for initializing the SEV guest. It can casue guest
-VM measurement changes, but none the less this is not really a guest
-ABI knob, it is a host kernel compatibility knob.  You need a newer
-host kernel version if this is set to 'off'.
+Sorry for bothering again. But I'm still unable to find this patch in the l=
+atest master branch, though it applies without conflicts now.=20
 
-So by associating this legacy-vm-type type with the machine type,
-we don't affect the guest hardware, but we *do* impact the ability
-to use that machine type depedning on what kernel version you have.
+Could it be merged now?
 
-IOW, QEMU machine types version 9.1 or later are no longer runnable
-on many old kernels.
-
-Over the years we've had a good number of occassions where we want
-defaults changes, or worse, where we auto-negotiate features, which
-depend on host kernel version.
-
-I've suggested in the past that IMHO we're missing a concept of a
-"versioned platform", to complement the "versioned machine" concept.
-
-That would let mgmt apps decide what platform compatibility level
-they required, independantly of choosing machine types, and so avoid
-creating runability constraints on machine types.
-
-> So if we do introduce some mechanism to provide different defaults for
-> compatibility with older versions, it has to be separate from machine
-> types.
-> 
-> Maybe it would make most sense to address this on the QAPI level then
-> and finally fully QAPIfy the command line. Adding defaults to the QAPI
-> schema is something that has come up again and again, so maybe we could
-> introduce that and do it in a versioned way from the start.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Regards,
+Li=E2=80=8B
 
 
