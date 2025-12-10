@@ -4,38 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DA12D3B9A9
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 10:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AD19D3B9A9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 10:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTHDn-0007sZ-Pw; Wed, 10 Dec 2025 05:15:00 -0500
+	id 1vTHLY-0001Th-NO; Wed, 10 Dec 2025 05:23:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vTHDl-0007sB-Ha; Wed, 10 Dec 2025 05:14:57 -0500
+ id 1vTHLX-0001TK-02; Wed, 10 Dec 2025 05:22:59 -0500
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1vTHDj-0000vG-Dv; Wed, 10 Dec 2025 05:14:57 -0500
+ id 1vTHLV-0002k7-C4; Wed, 10 Dec 2025 05:22:58 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7F5B71730B6;
- Wed, 10 Dec 2025 13:14:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 943F01730D6;
+ Wed, 10 Dec 2025 13:22:46 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E0969330D73;
- Wed, 10 Dec 2025 13:14:42 +0300 (MSK)
-Message-ID: <836d2623-6b79-4303-a34b-12e72c674822@tls.msk.ru>
-Date: Wed, 10 Dec 2025 13:14:42 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 00454330D7F;
+ Wed, 10 Dec 2025 13:22:52 +0300 (MSK)
+Message-ID: <2466732b-b001-490f-a4c0-dd8cf97e6951@tls.msk.ru>
+Date: Wed, 10 Dec 2025 13:22:52 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/arm: handle unaligned PC during tlb probe
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Jessica Clarke <jrtc27@jrtc27.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>,
+Subject: Re: [PATCH-for-10.2] scripts/nsis.py: Tell makensis that WoA is 64 bit
+To: Stefan Weil <sw@weilnetz.de>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20251204203540.1381896-1-alex.bennee@linaro.org>
+References: <20251209130212.764443-1-sw@weilnetz.de>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -81,9 +79,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20251204203540.1381896-1-alex.bennee@linaro.org>
+In-Reply-To: <20251209130212.764443-1-sw@weilnetz.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -18
@@ -107,30 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/25 23:35, Alex Bennée wrote:
-> PC alignment faults have priority over instruction aborts and we have
-> code to deal with this in the translation front-ends. However during
-> tb_lookup we can see a potentially faulting probe which doesn't get a
-> MemOp set. If the page isn't available this results in
-> EC_INSNABORT (0x20) instead of EC_PCALIGNMENT (0x22).
-> 
-> As there is no easy way to set the appropriate MemOp in the
-> instruction fetch probe path lets just detect it in
-> arm_cpu_tlb_fill_align() ahead of the main alignment check. We also
-> teach arm_deliver_fault to deliver the right syndrome for
-> MMU_INST_FETCH alignment issues.
-> 
-> Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3233
-> Tested-by: Jessica Clarke <jrtc27@jrtc27.com>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+On 12/9/25 16:02, Stefan Weil via wrote:
+> This fixes some settings like the default installation path
+> for the QEMU installation on Windows on ARM (WoA).
 
-This feels like a qemu-stable material (for all active stable
-branches).
-
-I'm picking it up for 10.0.x and 10.1.x.  Please let me know
+I'm picking this up for qemu-stable.  Please let me know
 if I shouldn't.
 
 Thanks,
 
 /mjt
+
+> --- a/scripts/nsis.py
+> +++ b/scripts/nsis.py
+> @@ -114,7 +114,7 @@ def main():
+>               "-DSRCDIR=" + args.srcdir,
+>               "-DBINDIR=" + destdir + prefix,
+>           ]
+> -        if args.cpu == "x86_64":
+> +        if args.cpu == "aarch64" or args.cpu == "x86_64":
+>               makensis += ["-DW64"]
+>           makensis += ["-DDLLDIR=" + dlldir]
+>   
+
 
