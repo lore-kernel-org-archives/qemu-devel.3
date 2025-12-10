@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C989AD3E784
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9856D3E783
 	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 23:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTTcu-000484-Fl; Wed, 10 Dec 2025 18:29:44 -0500
+	id 1vTTcy-00049Q-OW; Wed, 10 Dec 2025 18:29:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3YAI6aQYKCp0VR8FKWDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--yubinz.bounces.google.com>)
- id 1vTTcr-000462-IG
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 18:29:41 -0500
-Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
+ <3ZAI6aQYKCqEZVCJOaHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--yubinz.bounces.google.com>)
+ id 1vTTcw-00048E-E4
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 18:29:46 -0500
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3YAI6aQYKCp0VR8FKWDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--yubinz.bounces.google.com>)
- id 1vTTcp-0005hD-Iz
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 18:29:41 -0500
-Received: by mail-pg1-x549.google.com with SMTP id
- 41be03b00d2f7-c0bead25feeso294509a12.0
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 15:29:37 -0800 (PST)
+ <3ZAI6aQYKCqEZVCJOaHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--yubinz.bounces.google.com>)
+ id 1vTTct-0005ie-SC
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 18:29:45 -0500
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-c0bead25feeso294560a12.0
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 15:29:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1765409376; x=1766014176; darn=nongnu.org;
+ d=google.com; s=20230601; t=1765409381; x=1766014181; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=ZyvCNr9C3UGTFli2plhPAot4Fd96bBiVyI7hXjBJHEU=;
- b=Wn6LhA8zl42s0UjtM034M07TYtys1gRN00Y1l1JnZuYZ7R/+E3YLVzRlefu3h8H9/8
- +E5bXL30dIk0cxUTd4kzPwfee5CqsPsVycO24E1Nn/f7ZsyqeFVLHbu3IbYxWftDz3Gm
- 6jeZB2OKpRo1Trlyqn9heVD4IMOxErzJ6M5waFvxgNytHEmFdSG31D+0iXBgla0PQNOL
- KTR8emCgh6zn3fI9hMve7nq5/W63IDWL+LUmUNuOyUhKpEfdB4EdLuqTOa+HGWV/h6t0
- Hzzu3vjflr0W8x5lGJPlu6UlWQr5SgnnZcpHDa5ADGbApEyoSNEYVGfRYudHvLMZ7XG9
- F4Cg==
+ bh=rHDieZbLHiYnj98/qORFPZurA2OWE7iBD9cPzEH+Dlw=;
+ b=qW0eUJ/9U2Cng7fshZzExROpVD+VWyS0+i6ZA1S8QgDuWfOZ253UYS2Fn3xUQsa/Al
+ YbYA/7rZU3p1CvVPIKopadHkqHYwp9kO+f2tS3w3DfA0Y5krahdc0VNcCEhjU4zh7+tg
+ eHQTg2Gp3om2LQg05tack3HYlbZMYyNXhDge6M2ENiGrW9Aj1bOxHgKOjDJ9fCCS/Yax
+ prZL9E6ftB0saXyd8lEGyC6KL5RNkrDrOXjd+dDEkQmCJckisHa/ZvXoQWeIMpQsJRJ+
+ e7EUSazN+i2zTbMYIbEuxFYJA/BXgZtcpN0q1y8o8xwfX85KTc/bDO7wZxDhrUjHE3fL
+ Y2LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765409376; x=1766014176;
+ d=1e100.net; s=20230601; t=1765409381; x=1766014181;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZyvCNr9C3UGTFli2plhPAot4Fd96bBiVyI7hXjBJHEU=;
- b=KEJIGe8rcE8AJWg9+/MeO4Vkf24z7TjIUWC/gZsv9xtFLQNwEfG4fjZx7jcm3BNMe2
- BCSwyeQkSQPQIeMtR9/oruKANN0t8ydvY+Ix9iWbaOO8IxbQnTNq2a6yITT+3+7xJ1IK
- 58Dd6h1eafOfeCk8ivvmNhiVTfvj2oVkIT2XFVidsjWn+hJt+hFS/u8KzdRpf0SWI7aM
- x/YvoOIdL/FTbj64dTFjpvzPZ45ha9ey2K56rvSRTuNdDGd8qlxpo7DPN6vk03c6X3ig
- g0lIBjYRsfQ9wCKefP9P/qGJhFLaV5jpiXwPp4wgsEkbG1xahpv06SuqAtYiCAPlJYGQ
- Wg1A==
-X-Gm-Message-State: AOJu0YwjOw+r6lpnFteDK3pcTLsUaQBP/soiR261ZOshOOCBjpzPujyi
- bz7OsEde8y+fpbchfv/zn0MUlOiNuapWRhdH2B82QYLyCPIuAJi0mO7A1YBWJ4NmLGh+qIWM+nf
- sfUBLdoM4W9aCXJuVacZfDiDo6YWdNpEEYOmY2z3ifGkHjWsDyXoZu7wiVskC2ziVFoo7ssHXAV
- Oo+gaq1nfTTUwO9VijBYLvtfE6fQ8YOWpae2c=
-X-Google-Smtp-Source: AGHT+IHH1HO8ZTedPI5SCflCTgNCjanxooAyRmN2R8zPvFeLAmEOHdG46JrOggCoQQy0y9s/KKp9Ocep/24=
-X-Received: from dyz15.prod.google.com ([2002:a05:693c:408f:b0:2a2:4eb1:3771])
+ bh=rHDieZbLHiYnj98/qORFPZurA2OWE7iBD9cPzEH+Dlw=;
+ b=oJS9SAlSQ1m5JRTSdJICLxwcDii0/Otzzr5197SAuFiBVW0SwS8L0+38NBq806IcEG
+ 6wglUr07rts053iGacyh3Lh6qvoaE6S4rshSY1r4n43uuJ/ueCW6iTaz3g3nmj8sgF9A
+ 2sW41WtS3G8ulOWqGi1UMj6DYwcrZQtzTD8jP6y3ASNVqjV9kC+yK0ffvWVGsjA+WMY1
+ AmZCvS8Xp+7Szx2GadEccEgYCU6rf7vbq8VuLG24zLG6rTWBMpD9c0gEFLWGZQvx8BwC
+ QXPVdHUSGW6X1Ld4FAD/zewAeHqU76q72BHCWzEcpFr25420S865hqDhkY4xyycBTw8U
+ 5UnQ==
+X-Gm-Message-State: AOJu0Yyw28FmZHFHq0EO8OPSCAbjexxgMWEB2ImOpamtPPdiCYb6i1kx
+ ccX/074BM55GdxOMyMmAR0N6HWAuvj5depA5y0TUe4OfHF3DoL+iQ5s0JXn6UDf/O4sqYJ5bHz5
+ SvjQmj+BqCdZQ0UooKeQK7qljfNJZv4IJVCad+F+vyD+zj2HzUtINlNPNATA/YdbhSF4vPQIUCK
+ S29sU+BEnjD0d2Z1lvi9XINbCSUsCr8G+RTlA=
+X-Google-Smtp-Source: AGHT+IEL/IhlkELZonhzWn2r5xauTVadk1P/NM39jdyUjVUzYRXP0WE0ZVT9aDwGbQW9DU0mSpyy+Cyme94=
+X-Received: from dlbcq18.prod.google.com
+ ([2002:a05:7022:2492:b0:11d:cf4c:62ab])
  (user=yubinz job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:7300:ac83:b0:2a4:3593:4684
- with SMTP id 5a478bee46e88-2ac0569c99emr4353436eec.32.1765409376176; Wed, 10
- Dec 2025 15:29:36 -0800 (PST)
-Date: Wed, 10 Dec 2025 23:29:12 +0000
+ 2002:a05:7022:78f:b0:119:e55a:9c06
+ with SMTP id a92af1059eb24-11f296d74cbmr3308649c88.34.1765409380954; Wed, 10
+ Dec 2025 15:29:40 -0800 (PST)
+Date: Wed, 10 Dec 2025 23:29:15 +0000
 In-Reply-To: <20251210-aspeed-sgpio-v3-0-eb8b0cf3dd51@google.com>
 Mime-Version: 1.0
 References: <20251210-aspeed-sgpio-v3-0-eb8b0cf3dd51@google.com>
 X-Mailer: b4 0.14.2
-Message-ID: <20251210-aspeed-sgpio-v3-1-eb8b0cf3dd51@google.com>
-Subject: [PATCH v3 1/6] hw/gpio/aspeed_sgpio: Add basic device model for
- Aspeed SGPIO
+Message-ID: <20251210-aspeed-sgpio-v3-4-eb8b0cf3dd51@google.com>
+Subject: [PATCH v3 4/6] hw/arm/aspeed_soc: Update Aspeed SoC to support two
+ SGPIO controllers
 From: Yubin Zou <yubinz@google.com>
 To: qemu-devel@nongnu.org
 Cc: "=?utf-8?q?C=C3=A9dric_Le_Goater?=" <clg@kaod.org>,
@@ -78,9 +79,9 @@ Cc: "=?utf-8?q?C=C3=A9dric_Le_Goater?=" <clg@kaod.org>,
  Nabih Estefan <nabihestefan@google.com>, qemu-arm@nongnu.org, 
  Yubin Zou <yubinz@google.com>
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
- envelope-from=3YAI6aQYKCp0VR8FKWDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--yubinz.bounces.google.com;
- helo=mail-pg1-x549.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3ZAI6aQYKCqEZVCJOaHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--yubinz.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -103,260 +104,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This initial implementation includes the basic device structure,
-memory-mapped register definitions, and read/write handlers for the
-SGPIO control registers.
+This commit updates the Aspeed SoC model to support two SGPIO
+controllers, reflecting the hardware capabilities of the AST2700
+
+The memory map and interrupt map are updated to include entries for
+two SGPIO controllers (SGPIOM0 and SGPIOM1). This change is a
+prerequisite for the full implementation of the SGPIO device model.
 
 Signed-off-by: Yubin Zou <yubinz@google.com>
 ---
- include/hw/gpio/aspeed_sgpio.h |  66 ++++++++++++++++++
- hw/gpio/aspeed_sgpio.c         | 154 +++++++++++++++++++++++++++++++++++++++++
- hw/gpio/meson.build            |   1 +
- 3 files changed, 221 insertions(+)
+ include/hw/arm/aspeed_soc.h |  8 ++++++--
+ hw/arm/aspeed_ast10x0.c     |  6 +++---
+ hw/arm/aspeed_ast27x0.c     | 10 ++++++++++
+ 3 files changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/gpio/aspeed_sgpio.h b/include/hw/gpio/aspeed_sgpio.h
-new file mode 100644
-index 0000000000000000000000000000000000000000..ffdc54a112da8962a7bc5773d524f1d86eb85d39
---- /dev/null
-+++ b/include/hw/gpio/aspeed_sgpio.h
-@@ -0,0 +1,66 @@
-+/*
-+ * ASPEED Serial GPIO Controller
-+ *
-+ * Copyright 2025 Google LLC.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef ASPEED_SGPIO_H
-+#define ASPEED_SGPIO_H
-+
-+#include "hw/sysbus.h"
-+#include "qom/object.h"
-+#include "hw/registerfields.h"
-+
-+#define TYPE_ASPEED_SGPIO "aspeed.sgpio"
-+OBJECT_DECLARE_TYPE(AspeedSGPIOState, AspeedSGPIOClass, ASPEED_SGPIO)
-+
-+#define ASPEED_SGPIO_MAX_PIN_PAIR 256
-+#define ASPEED_SGPIO_MAX_INT 8
-+
-+/* AST2700 SGPIO Register Address Offsets */
-+REG32(SGPIO_INT_STATUS_0, 0x40)
-+REG32(SGPIO_INT_STATUS_1, 0x44)
-+REG32(SGPIO_INT_STATUS_2, 0x48)
-+REG32(SGPIO_INT_STATUS_3, 0x4C)
-+REG32(SGPIO_INT_STATUS_4, 0x50)
-+REG32(SGPIO_INT_STATUS_5, 0x54)
-+REG32(SGPIO_INT_STATUS_6, 0x58)
-+REG32(SGPIO_INT_STATUS_7, 0x5C)
-+/* AST2700 SGPIO_0 - SGPIO_255 Control Register */
-+REG32(SGPIO_0_CONTROL, 0x80)
-+    SHARED_FIELD(SGPIO_SERIAL_OUT_VAL, 0, 1)
-+    SHARED_FIELD(SGPIO_PARALLEL_OUT_VAL, 1, 1)
-+    SHARED_FIELD(SGPIO_INT_EN, 2, 1)
-+    SHARED_FIELD(SGPIO_INT_TYPE, 3, 3)
-+    SHARED_FIELD(SGPIO_RESET_POLARITY, 6, 1)
-+    SHARED_FIELD(SGPIO_RESERVED_1, 7, 2)
-+    SHARED_FIELD(SGPIO_INPUT_MASK, 9, 1)
-+    SHARED_FIELD(SGPIO_PARALLEL_EN, 10, 1)
-+    SHARED_FIELD(SGPIO_PARALLEL_IN_MODE, 11, 1)
-+    SHARED_FIELD(SGPIO_INT_STATUS, 12, 1)
-+    SHARED_FIELD(SGPIO_SERIAL_IN_VAL, 13, 1)
-+    SHARED_FIELD(SGPIO_PARALLEL_IN_VAL, 14, 1)
-+    SHARED_FIELD(SGPIO_RESERVED_2, 15, 12)
-+    SHARED_FIELD(SGPIO_WRITE_PROTECT, 31, 1)
-+REG32(SGPIO_255_CONTROL, 0x47C)
-+
-+struct AspeedSGPIOClass {
-+    SysBusDevice parent_obj;
-+    uint32_t nr_sgpio_pin_pairs;
-+    uint64_t mem_size;
-+    const MemoryRegionOps *reg_ops;
-+};
-+
-+struct AspeedSGPIOState {
-+  /* <private> */
-+  SysBusDevice parent;
-+
-+  /*< public >*/
-+  MemoryRegion iomem;
-+  qemu_irq irq;
-+  uint32_t ctrl_regs[ASPEED_SGPIO_MAX_PIN_PAIR];
-+  uint32_t int_regs[ASPEED_SGPIO_MAX_INT];
-+};
-+
-+#endif /* ASPEED_SGPIO_H */
-diff --git a/hw/gpio/aspeed_sgpio.c b/hw/gpio/aspeed_sgpio.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..8676fa7ced134f1f62dc9e30b42c5fe6db3de268
---- /dev/null
-+++ b/hw/gpio/aspeed_sgpio.c
-@@ -0,0 +1,154 @@
-+/*
-+ * ASPEED Serial GPIO Controller
-+ *
-+ * Copyright 2025 Google LLC.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/host-utils.h"
-+#include "qemu/log.h"
-+#include "qemu/error-report.h"
-+#include "qapi/error.h"
-+#include "qapi/visitor.h"
-+#include "hw/qdev-properties.h"
+diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+index 4b8e599f1a53bfb2e4d3196d5495cd316f799354..18ff961a38508c5df83b46e187f732d736443f20 100644
+--- a/include/hw/arm/aspeed_soc.h
++++ b/include/hw/arm/aspeed_soc.h
+@@ -32,6 +32,7 @@
+ #include "hw/net/ftgmac100.h"
+ #include "target/arm/cpu.h"
+ #include "hw/gpio/aspeed_gpio.h"
 +#include "hw/gpio/aspeed_sgpio.h"
-+
-+static uint64_t aspeed_sgpio_2700_read_int_status_reg(AspeedSGPIOState *s,
-+                                uint32_t reg)
-+{
-+    return 0;
-+}
-+
-+static uint64_t aspeed_sgpio_2700_read_control_reg(AspeedSGPIOState *s,
-+                                uint32_t reg)
-+{
-+    AspeedSGPIOClass *agc = ASPEED_SGPIO_GET_CLASS(s);
-+    uint32_t idx = reg - R_SGPIO_0_CONTROL;
-+    if (idx >= agc->nr_sgpio_pin_pairs) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: pin index: %d, out of bounds\n",
-+                      __func__, idx);
-+        return 0;
-+    }
-+    return s->ctrl_regs[idx];
-+}
-+
-+static void aspeed_sgpio_2700_write_control_reg(AspeedSGPIOState *s,
-+                                uint32_t reg, uint64_t data)
-+{
-+    AspeedSGPIOClass *agc = ASPEED_SGPIO_GET_CLASS(s);
-+    uint32_t idx = reg - R_SGPIO_0_CONTROL;
-+    if (idx >= agc->nr_sgpio_pin_pairs) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: pin index: %d, out of bounds\n",
-+                      __func__, idx);
-+        return;
-+    }
-+    s->ctrl_regs[idx] = data;
-+}
-+
-+static uint64_t aspeed_sgpio_2700_read(void *opaque, hwaddr offset,
-+                                uint32_t size)
-+{
-+    AspeedSGPIOState *s = ASPEED_SGPIO(opaque);
-+    uint64_t value = 0;
-+    uint64_t reg;
-+
-+    reg = offset >> 2;
-+
-+    switch (reg) {
-+    case R_SGPIO_INT_STATUS_0 ... R_SGPIO_INT_STATUS_7:
-+        aspeed_sgpio_2700_read_int_status_reg(s, reg);
-+        break;
-+    case R_SGPIO_0_CONTROL ... R_SGPIO_255_CONTROL:
-+        value = aspeed_sgpio_2700_read_control_reg(s, reg);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: no getter for offset 0x%"
-+                      PRIx64"\n", __func__, offset);
-+        return 0;
-+    }
-+
-+    return value;
-+}
-+
-+static void aspeed_sgpio_2700_write(void *opaque, hwaddr offset, uint64_t data,
-+                                uint32_t size)
-+{
-+    AspeedSGPIOState *s = ASPEED_SGPIO(opaque);
-+    uint64_t reg;
-+
-+    reg = offset >> 2;
-+
-+    switch (reg) {
-+    case R_SGPIO_0_CONTROL ... R_SGPIO_255_CONTROL:
-+        aspeed_sgpio_2700_write_control_reg(s, reg, data);
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: no setter for offset 0x%"
-+                      PRIx64"\n", __func__, offset);
-+        return;
-+    }
-+}
-+
-+static const MemoryRegionOps aspeed_gpio_2700_ops = {
-+  .read       = aspeed_sgpio_2700_read,
-+  .write      = aspeed_sgpio_2700_write,
-+  .endianness = DEVICE_LITTLE_ENDIAN,
-+  .valid.min_access_size = 4,
-+  .valid.max_access_size = 4,
-+};
-+
-+static void aspeed_sgpio_realize(DeviceState *dev, Error **errp)
-+{
-+    AspeedSGPIOState *s = ASPEED_SGPIO(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    AspeedSGPIOClass *agc = ASPEED_SGPIO_GET_CLASS(s);
-+
-+    /* Interrupt parent line */
-+    sysbus_init_irq(sbd, &s->irq);
-+
-+    memory_region_init_io(&s->iomem, OBJECT(s), agc->reg_ops, s,
-+                          TYPE_ASPEED_SGPIO, agc->mem_size);
-+
-+    sysbus_init_mmio(sbd, &s->iomem);
-+}
-+
-+static void aspeed_sgpio_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = aspeed_sgpio_realize;
-+    dc->desc = "Aspeed SGPIO Controller";
-+}
-+
-+static void aspeed_sgpio_2700_class_init(ObjectClass *klass, const void *data)
-+{
-+    AspeedSGPIOClass *agc = ASPEED_SGPIO_CLASS(klass);
-+    agc->nr_sgpio_pin_pairs = 256;
-+    agc->mem_size = 0x1000;
-+    agc->reg_ops = &aspeed_gpio_2700_ops;
-+}
-+
-+static const TypeInfo aspeed_sgpio_info = {
-+    .name           = TYPE_ASPEED_SGPIO,
-+    .parent         = TYPE_SYS_BUS_DEVICE,
-+    .instance_size  = sizeof(AspeedSGPIOState),
-+    .class_size     = sizeof(AspeedSGPIOClass),
-+    .class_init     = aspeed_sgpio_class_init,
-+    .abstract       = true,
-+};
-+
-+static const TypeInfo aspeed_sgpio_ast2700_info = {
-+  .name           = TYPE_ASPEED_SGPIO "-ast2700",
-+  .parent         = TYPE_ASPEED_SGPIO,
-+  .class_init     = aspeed_sgpio_2700_class_init,
-+};
-+
-+static void aspeed_sgpio_register_types(void)
-+{
-+    type_register_static(&aspeed_sgpio_info);
-+    type_register_static(&aspeed_sgpio_ast2700_info);
-+}
-+
-+type_init(aspeed_sgpio_register_types);
-diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
-index 74840619c01bf4d9a02c058c434c3ec9d2a55bee..6a67ee958faace69ffd3fe08e8ade31ced0faf7e 100644
---- a/hw/gpio/meson.build
-+++ b/hw/gpio/meson.build
-@@ -16,5 +16,6 @@ system_ss.add(when: 'CONFIG_RASPI', if_true: files(
- ))
- system_ss.add(when: 'CONFIG_STM32L4X5_SOC', if_true: files('stm32l4x5_gpio.c'))
- system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_gpio.c'))
-+system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sgpio.c'))
- system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
- system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
+ #include "hw/sd/aspeed_sdhci.h"
+ #include "hw/usb/hcd-ehci.h"
+ #include "qom/object.h"
+@@ -46,6 +47,7 @@
+ #define VBOOTROM_FILE_NAME  "ast27x0_bootrom.bin"
+ 
+ #define ASPEED_SPIS_NUM  3
++#define ASPEED_SGPIO_NUM 2
+ #define ASPEED_EHCIS_NUM 4
+ #define ASPEED_WDTS_NUM  8
+ #define ASPEED_CPUS_NUM  4
+@@ -89,6 +91,7 @@ struct AspeedSoCState {
+     AspeedMiiState mii[ASPEED_MACS_NUM];
+     AspeedGPIOState gpio;
+     AspeedGPIOState gpio_1_8v;
++    AspeedSGPIOState sgpiom[ASPEED_SGPIO_NUM];
+     AspeedSDHCIState sdhci;
+     AspeedSDHCIState emmc;
+     AspeedLPCState lpc;
+@@ -106,7 +109,6 @@ struct AspeedSoCState {
+     UnimplementedDeviceState pwm;
+     UnimplementedDeviceState espi;
+     UnimplementedDeviceState udc;
+-    UnimplementedDeviceState sgpiom;
+     UnimplementedDeviceState ltpi;
+     UnimplementedDeviceState jtag[ASPEED_JTAG_NUM];
+     AspeedAPB2OPBState fsi[2];
+@@ -166,6 +168,7 @@ struct AspeedSoCClass {
+     uint64_t secsram_size;
+     int pcie_num;
+     int spis_num;
++    int sgpio_num;
+     int ehcis_num;
+     int wdts_num;
+     int macs_num;
+@@ -221,6 +224,8 @@ enum {
+     ASPEED_DEV_SDHCI,
+     ASPEED_DEV_GPIO,
+     ASPEED_DEV_GPIO_1_8V,
++    ASPEED_DEV_SGPIOM0,
++    ASPEED_DEV_SGPIOM1,
+     ASPEED_DEV_RTC,
+     ASPEED_DEV_TIMER1,
+     ASPEED_DEV_TIMER2,
+@@ -263,7 +268,6 @@ enum {
+     ASPEED_DEV_I3C,
+     ASPEED_DEV_ESPI,
+     ASPEED_DEV_UDC,
+-    ASPEED_DEV_SGPIOM,
+     ASPEED_DEV_JTAG0,
+     ASPEED_DEV_JTAG1,
+     ASPEED_DEV_FSI1,
+diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+index 7f49c13391be0b923e317409a0fccfa741f5e658..c141cc080422579ca6b6965369d84dfbe416247b 100644
+--- a/hw/arm/aspeed_ast10x0.c
++++ b/hw/arm/aspeed_ast10x0.c
+@@ -36,7 +36,7 @@ static const hwaddr aspeed_soc_ast1030_memmap[] = {
+     [ASPEED_DEV_ESPI]      = 0x7E6EE000,
+     [ASPEED_DEV_SBC]       = 0x7E6F2000,
+     [ASPEED_DEV_GPIO]      = 0x7E780000,
+-    [ASPEED_DEV_SGPIOM]    = 0x7E780500,
++    [ASPEED_DEV_SGPIOM0]   = 0x7E780500,
+     [ASPEED_DEV_TIMER1]    = 0x7E782000,
+     [ASPEED_DEV_UART1]     = 0x7E783000,
+     [ASPEED_DEV_UART2]     = 0x7E78D000,
+@@ -94,7 +94,7 @@ static const int aspeed_soc_ast1030_irqmap[] = {
+     [ASPEED_DEV_I2C]       = 110, /* 110 ~ 123 */
+     [ASPEED_DEV_KCS]       = 138, /* 138 -> 142 */
+     [ASPEED_DEV_UDC]       = 9,
+-    [ASPEED_DEV_SGPIOM]    = 51,
++    [ASPEED_DEV_SGPIOM0]   = 51,
+     [ASPEED_DEV_JTAG0]     = 27,
+     [ASPEED_DEV_JTAG1]     = 53,
+ };
+@@ -427,7 +427,7 @@ static void aspeed_soc_ast1030_realize(DeviceState *dev_soc, Error **errp)
+                                   sc->memmap[ASPEED_DEV_UDC], 0x1000);
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->sgpiom),
+                                   "aspeed.sgpiom",
+-                                  sc->memmap[ASPEED_DEV_SGPIOM], 0x100);
++                                  sc->memmap[ASPEED_DEV_SGPIOM0], 0x100);
+ 
+     aspeed_mmio_map_unimplemented(s->memory, SYS_BUS_DEVICE(&s->jtag[0]),
+                                   "aspeed.jtag",
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index c484bcd4e22fb49faf9c16992ae2cdfd6cd82da4..e5f04bd16e80696e41005d9062a6df6d060b8088 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -69,6 +69,8 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_ADC]       =  0x14C00000,
+     [ASPEED_DEV_SCUIO]     =  0x14C02000,
+     [ASPEED_DEV_GPIO]      =  0x14C0B000,
++    [ASPEED_DEV_SGPIOM0]   =  0x14C0C000,
++    [ASPEED_DEV_SGPIOM1]   =  0x14C0D000,
+     [ASPEED_DEV_I2C]       =  0x14C0F000,
+     [ASPEED_DEV_INTCIO]    =  0x14C18000,
+     [ASPEED_DEV_PCIE_PHY2] =  0x14C1C000,
+@@ -122,6 +124,8 @@ static const int aspeed_soc_ast2700a0_irqmap[] = {
+     [ASPEED_DEV_KCS]       = 128,
+     [ASPEED_DEV_ADC]       = 130,
+     [ASPEED_DEV_GPIO]      = 130,
++    [ASPEED_DEV_SGPIOM0]   = 130,
++    [ASPEED_DEV_SGPIOM1]   = 130,
+     [ASPEED_DEV_I2C]       = 130,
+     [ASPEED_DEV_FMC]       = 131,
+     [ASPEED_DEV_WDT]       = 131,
+@@ -173,6 +177,8 @@ static const int aspeed_soc_ast2700a1_irqmap[] = {
+     [ASPEED_DEV_I2C]       = 194,
+     [ASPEED_DEV_ADC]       = 194,
+     [ASPEED_DEV_GPIO]      = 194,
++    [ASPEED_DEV_SGPIOM0]   = 194,
++    [ASPEED_DEV_SGPIOM1]   = 194,
+     [ASPEED_DEV_FMC]       = 195,
+     [ASPEED_DEV_WDT]       = 195,
+     [ASPEED_DEV_PWM]       = 195,
+@@ -214,6 +220,8 @@ static const int ast2700_gic130_gic194_intcmap[] = {
+     [ASPEED_DEV_I2C]        = 0,
+     [ASPEED_DEV_ADC]        = 16,
+     [ASPEED_DEV_GPIO]       = 18,
++    [ASPEED_DEV_SGPIOM0]    = 21,
++    [ASPEED_DEV_SGPIOM1]    = 24,
+ };
+ 
+ /* GICINT 131 */
+@@ -1061,6 +1069,7 @@ static void aspeed_soc_ast2700a0_class_init(ObjectClass *oc, const void *data)
+     sc->sram_size    = 0x20000;
+     sc->pcie_num     = 0;
+     sc->spis_num     = 3;
++    sc->sgpio_num    = 2;
+     sc->ehcis_num    = 2;
+     sc->wdts_num     = 8;
+     sc->macs_num     = 1;
+@@ -1089,6 +1098,7 @@ static void aspeed_soc_ast2700a1_class_init(ObjectClass *oc, const void *data)
+     sc->sram_size    = 0x20000;
+     sc->pcie_num     = 3;
+     sc->spis_num     = 3;
++    sc->sgpio_num    = 2;
+     sc->ehcis_num    = 4;
+     sc->wdts_num     = 8;
+     sc->macs_num     = 3;
 
 -- 
 2.52.0.239.gd5f0c6e74e-goog
