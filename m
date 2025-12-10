@@ -4,85 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78E50D3C52C
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 11:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2244CD3C52C
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 11:42:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTIMM-0007Z3-NE; Wed, 10 Dec 2025 06:27:54 -0500
+	id 1vTIZi-0002JI-Ps; Wed, 10 Dec 2025 06:41:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vTIMK-0007Yq-UJ
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 06:27:52 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vTIZZ-0002IX-BA
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 06:41:34 -0500
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vTIMI-0002G8-UH
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 06:27:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765366068;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=zTXtHokjUtzRDl7h2vACNMlylh5NxAXs+riS/Ctozfc=;
- b=VbKhWM3B7EI7Gt/x3vGY5wffIvQSZOekh7kLOMHcfx0oE26eetYE3VbjEQmdF+YRGUdk3t
- j4O9LPRsBHBRasPQIoyixF3bXUiDMTr1n2+W2FmkLpmQqjiRNtUL86Zt/JGVH14iaVRJek
- NXrFXTQu61QyR5I06deY72GqlOJxN08=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-195-bkfxG7FQPneoKT-ork-3pQ-1; Wed,
- 10 Dec 2025 06:27:44 -0500
-X-MC-Unique: bkfxG7FQPneoKT-ork-3pQ-1
-X-Mimecast-MFC-AGG-ID: bkfxG7FQPneoKT-ork-3pQ_1765366062
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF7FA1955F3E; Wed, 10 Dec 2025 11:27:41 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.167])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 133C419560AD; Wed, 10 Dec 2025 11:27:32 +0000 (UTC)
-Date: Wed, 10 Dec 2025 12:27:30 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
-Message-ID: <aTlZIlgB20OpdSEl@redhat.com>
-References: <20251209162857.857593-1-peterx@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vTIZU-0004dx-U7
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 06:41:31 -0500
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 66B158089E;
+ Wed, 10 Dec 2025 14:41:22 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:887::1:d] (unknown [2a02:6bf:8080:887::1:d])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id KfMLba0FLOs0-amlHfRbu; Wed, 10 Dec 2025 14:41:21 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1765366881;
+ bh=mlim2hZN3rILrudsReZWSTKjRaB+F6464aEazr9jbtY=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=1zhXscfzTAh4JRFrsY+iY+MZ1Oi0iTVnRWL5TSN+8txxJHL4xn3Kb7HngjopQGfzq
+ vMJNihbX6eFwibUCa1ava9mHUFTtMv4XptKugQtYN9aJ1SZGj9Z/e87AMFhVlva+K8
+ cJ/gwX5csieRo3ADpb9BfRYq7vHmgiDQfWiCLIXw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <a8bff5ea-e1c3-4d4c-9ef7-93fa530bff0d@yandex-team.ru>
+Date: Wed, 10 Dec 2025 14:41:20 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251209162857.857593-1-peterx@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_SBL_CSS=3.335,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/3] vhost-user-blk: support inflight migration
+To: Peter Xu <peterx@redhat.com>
+Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
+ Raphael Norwitz <raphael@enfabrica.net>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20251110103937.1944486-1-dtalexundeer@yandex-team.ru>
+ <cf0f69b9-4b2b-4c09-a32b-ad86bbe04f6d@yandex-team.ru>
+ <aRztnfZFl-OcbVYI@x1.local>
+ <d986f0ac-a0ae-44f6-b7a5-e002b7d3226e@yandex-team.ru>
+ <aThTdgwsNexV9KAp@x1.local>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <aThTdgwsNexV9KAp@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,51 +85,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 09.12.2025 um 17:28 hat Peter Xu geschrieben:
-> [This is an RFC series, as being marked out.  It is trying to collect
->  opinions.  It's not for merging yet]
+On 09.12.25 19:51, Peter Xu wrote:
+> On Thu, Dec 04, 2025 at 10:55:33PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>> On 19.11.25 01:05, Peter Xu wrote:
+>>> On Tue, Nov 18, 2025 at 11:24:12PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+>>>> Add Daniel
+>>>>
+>>>> On 10.11.25 13:39, Alexandr Moshkov wrote:
+>>>>> v3:
+>>>>> - use pre_load_errp instead of pre_load in vhost.c
+>>>>> - change vhost-user-blk property to
+>>>>>      "skip-get-vring-base-inflight-migration"
+>>>>> - refactor vhost-user-blk.c, by moving vhost_user_blk_inflight_needed() higher
+>>>>>
+>>>>> v2:
+>>>>> - rewrite migration using VMSD instead of qemufile API
+>>>>> - add vhost-user-blk parameter instead of migration capability
+>>>>>
+>>>>> I don't know if VMSD was used cleanly in migration implementation, so
+>>>>> feel free for comments.
+>>>>>
+>>>>> Based on Vladimir's work:
+>>>>> [PATCH v2 00/25] vhost-user-blk: live-backend local migration
+>>>>>      which was based on:
+>>>>>        - [PATCH v4 0/7] chardev: postpone connect
+>>>>>          (which in turn is based on [PATCH 0/2] remove deprecated 'reconnect' options)
+>>>>>        - [PATCH v3 00/23] vhost refactoring and fixes
+>>>>>        - [PATCH v8 14/19] migration: introduce .pre_incoming() vmsd handler
+>>>>>
+>>>>
+>>>> Hi!
+>>>>
+>>>> On my series about backend-transfer migration, the final consensus (or at least,
+>>>> I hope that it's a consensus:) is that using device properties to control migration
+>>>> channel content is wrong. And we should instead use migration parameters.
+>>>>
+>>>> (discussion here: https://lore.kernel.org/qemu-devel/29aa1d66-9fa7-4e44-b0e3-2ca26e77accf@yandex-team.ru/ )
+>>>>
+>>>> So the API for backend-transfer features is a migration parameter
+>>>>
+>>>>       backend-transfer = [ list of QOM paths of devices, for which we want to enable backend-transfer ]
+>>>>
+>>>> and user don't have to change device properties in runtime to setup the following migration.
+>>>>
+>>>> So I assume, similar practice should be applied here: don't use device
+>>>> properties to control migration.
+>>>>
+>>>> So, should it be a parameter like
+>>>>
+>>>>       migrate-inflight-region = [ list of QOM paths of vhost-user devices ]
+>>>>
+>>>> ?
+>>>
+>>> I have concern that if we start doing this more, migration qapi/ will be
+>>> completely messed up.
+>>>
+>>> Imagine a world where there'll be tons of lists like:
+>>>
+>>>     migrate-dev1-some-feature-1 = [list of devices (almost only dev1 typed)]
+>>>     migrate-dev2-some-feature-2 = [list of devices (almost only dev2 typed)]
+>>>     migrate-dev3-some-feature-3 = [list of devices (almost only dev3 typed)]
+>>>     ...
+>>
+>>
+>> Yes, hard to argue against it.
+>>
+>> I still hope, Daniel will share his opinion..
+>>
+>>  From our side, we are OK with any interface, which is accepted)
+>>
+>>
+>> Let me summarize in short the variants I see:
+>>
+>> ===
+>>
+>> 1. lists
+>>
+>> Add migrations parameters for such features:
+>>
+>> migrate-inflight-region = [ list of QOM paths of vhost-user devices ]
+>> backend-transfer = [ list of QOM paths of devices, which backend should be migrated ]
+>>
+>> This way, we just need to set the same sets for source and target QEMU before migration,
+>> and it have no relation to machine types.
+>>
+>> PROS: Like any other migration-capability, setup what (and how) should migrate, no
+>> relation to device properties and MT.
+>>
+>> CONS: Logically, that's the same as add a device property, but instead we implement
+>> lists of devices, and create extra QOM_PATH-links.
+>>
+>> ===
+>>
+>> 2. device parameters
+>>
+>> Before migration we should loop through devices and call corresponding
+>> qom-set commands, like
+>>
+>> qom-set {path: QOM_PATH, property: "backend-transfer", "value": true}
+>> qom-set {path: QOM_PATH, property: "migrate-inflight-region", "value": true}
+>>
+>> And of course, we should care to set same values for corresponding devices on source
+>> and target.
+>>
+>> In this case, we also _can_ rely on machine types for defaults.
+>>
+>> Note, that "migrate-inflight-region" may become the default in the 11.0 MT.
+>> But backend-transfer can't be a default, as this way we'll break remote migration.
+>>
+>> PROS: No lists, native properties
+>>
+>> CONS: These properties does not define any portion of device state, internal or
+>> visible to guest. It's not a property of device, but it's and option for migration
+>> of that device.
+>>
+>> ===
+>>
+>> 2.1 = [2] assisted by one boolean migration-parameter
+>>
+>> Still, if we want make backend-transfer "a kind of" default, we'll need one boolean
+>> migration parameter "it-is-local-migration", and modify logic to
+>>
+>> really_do_backend_transfer = it-is-local-migration and device.backend-transfer
+>> really_do_migrate_inflight_region = not it-is-local-migration and device.migrate-inflight-region
+>>
+>> PROS: starting from some MT, we'll have good defaults, so that user don't have
+>> to enable/disable the option per device for every migration.
+>>
+>> CONS: a precedent of the behavior driven by combination of device property and
+>> corresponding migration parameter (or we have something similar?)
+>>
+>> ===
+>>
+>> 4. mixed
+>>
+>> Keep [2] for this series, and [1] for backend-transfer.
+>>
+>> PROS: list for backend-transfer remains "the only exclusion" instead of "the practice",
+>> so we will not have tons of such lists :)
+>>
+>> CONS: inconstant solutions for similar things
+>>
+>> ===
+>>
+>> 5. implement "per device" migration parameters
+>>
+>> They may be set by additional QMP command qmp-migrate-set-device-parameters, which
+>> will take additional qom-path parameter.
+>>
+>> Or, we may add one list of structures like
+>>
+>> [{
+>>     qom_path: ...
+>>     parameters: ..
+>> }, ...]
+>>
+>> into common migration parameters.
+>>
+>> PROS: keep new features as a property of migration, but avoid several lists of QOM paths
+>> CONS: ?
+>>
+>> Hmm, we also may select devices not only by qom_path, but by type, for example, to enable
+>> feature for all virtio-net devices. Hmm, and this type may be also used as discriminator
+>> for parameters, which may be a QAPI union type..
+>>
+>> ===
+>>
+>>
+>> Thoughts?
 > 
-> Background
-> ==========
+> Sorry to respond late, I kept getting other things interrupting me when I
+> wanted to look at this..
 > 
-> It all starts with machine compat properties..
+> I just sent a series here, allowing TYPE_OBJECT of any kind to be able to
+> work with machine compat properties:
 > 
-> Machine compat properties are the major weapon we use currently in QEMU to
-> define a proper guest ABI, so that whenever we migration a VM instance from
-> whatever QEMU version1 to another QEMU version2, as long as the machine
-> type is the same, logically the ABI is guaranteed, and migration should
-> succeed.  If it didn't, it's a bug.
+> https://lore.kernel.org/r/20251209162857.857593-1-peterx@redhat.com
 > 
-> These compat properties are only attached to qdev for now.  It almost
-> worked.
+> I still want to see if we can stick with compat properties in general
+> whenever it's about defining guest ABI.
 > 
-> Said that, it's also not true - we already have non-qdev users of such, by
-> explicitly code it up to apply the compat fields.  Please refer to the
-> first patch commit message for details (meanwhile latter patches will
-> convert them into a generic model).
+> What you proposed should work, but that'll involve a 2nd way of probing
+> "what is the guest ABI" by providing a new QMP query command and then set
+> them after mgmt queries both QEMUs then set the subset of both.  It will be
+> finer granule but as I discussed previously, I think it's re-inventing the
+> wheels, and it may cause mgmt over-bloated on caring too many trivial
+> details of per-device specific details.
 > 
-> Obviously, we have demands to leverage machine compat properties even
-> outside of qdev.  It can be a network backend, it can be an object (for
-> example, memory backends), it can be a migration object, and more.
+> Please have a look to see the feasibility.  As mentioned in the cover
+> letter, that will need further work to e.g. QOMify TAP first at least for
+> your series.  But I don't yet see it as a blocker?  After QOMified, it can
+> inherit directly the OBJECT_COMPAT then TAP can add compat properties.
+> 
+> I wonder if vhost-usr-blk can already use compat properties.
+> 
 
-This doesn't feel obvious to me at all. A machine type defines what
-hardware the guest sees. Guest hardware is essentially qdev.
+Yes, it can. And regardless of the way we chose: qdev properties or qapi,
+I don't think we need a property for backend itself. We need a property
+(or migration capability) for vhost-user-blk itself, saying that its
+backend should be migrated.
 
-I don't see any reasons why a backend should be interested in what guest
-hardware looks like, that would seem like a bad layering violation. Many
-backends can even exist without a guest at all, and are also used in
-tools like qemu-storage-daemon. Having a machine type in a tool that
-doesn't run a guest doesn't make any sense.
+It's a lot simpler to migrate backend inside of frontend state. If we
+migrate backend in separate, we can't control the order of backend/frontend
+stats, and will have to implement some late point in state load process,
+where both are already loaded and we can do our post-load logic.
 
-So if we do introduce some mechanism to provide different defaults for
-compatibility with older versions, it has to be separate from machine
-types.
+> 
+>>
+>>>
+>>> That doesn't look reasonable at all.  If some feature is likely only
+>>> supported in one device, that should not appear in migration.json but only
+>>> in the specific device.
+>>>
+>>> I don't think I'm fully convinced we can't enable some form of machine type
+>>> properties (with QDEV or not) on backends we should stick with something
+>>> like that.  I can have some closer look this week, but.. even if not, I
+>>> still think migration shouldn't care about some specific behavior of a
+>>> specific device.
+>>>
+>>> If we really want to have some way to probe device features, maybe we
+>>> should also think about a generic interface (rather than "one new list
+>>> every time").  We also have some recent discussions on a proper interface
+>>> to query TAP backend features like USO*.  Maybe they share some of the
+>>> goals here.
+>>>
+>> What do you mean by probing device features? Isn't it qom-get command?
+>>
+>> -- 
+>> Best regards,
+>> Vladimir
+>>
+> 
 
-Maybe it would make most sense to address this on the QAPI level then
-and finally fully QAPIfy the command line. Adding defaults to the QAPI
-schema is something that has come up again and again, so maybe we could
-introduce that and do it in a versioned way from the start.
 
-Kevin
-
+-- 
+Best regards,
+Vladimir
 
