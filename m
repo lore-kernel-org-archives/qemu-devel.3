@@ -4,143 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBB73D3B9AD
-	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 00:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92F75D3B9B9
+	for <qemu-devel@archiver.kernel.org>; Wed, 10 Dec 2025 01:21:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vT8Qo-0005Io-FO; Tue, 09 Dec 2025 19:51:50 -0500
+	id 1vT8ss-0000bq-3t; Tue, 09 Dec 2025 20:20:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1vT8Qm-0005IO-Q6
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 19:51:48 -0500
-Received: from mail-westus2azon11012050.outbound.protection.outlook.com
- ([52.101.48.50] helo=MW6PR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1vT8Qk-0003kz-5y
- for qemu-devel@nongnu.org; Tue, 09 Dec 2025 19:51:48 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ldOBhY/3VwdVbpK60S13WdwhcVELc1sCJGEK4ScWALTbFePxFmncAD7x85offLhS951QNCsL0N6ztgEbRNfxFTA23rHnN0QbkfVyR3I7MBgEfjMLBjAoTrzxsN+7qHhsYurWR3CYgLumiefk15rdYPKozkF+05nsP7BHqrVYDoLCvmUToaTGhyKDNnY0R6yay/cZ+OGRJrAJlQf/pv/0QJHeuBJ2VNyBme1uMDjf299C0cHCoXiVi8/TA/VNnvHVVUJTgeCyk32SjkfxZLkmBwrOZO6VaRb4iQ2GxUbkdkO0aglSPNCqXTdod+sUJNpfp0KRfdiYoTGpL+ME3PYpcA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lf/ZWO8u4BNCKW8o/OBo/HSLiOuV7pRxJAnFUJMzg/Y=;
- b=AnjuK1iqLa1AHsUa3xCg2znN7rO+WsrgMcn5DxeKuYdlZn6av1B4HBGFDji24CoLzg8zyKxZCcYDbXzWbN3OnFOEeq9YEca0hCRlUQGKrYW4odYp7fGiwgQBUlTsEzEStCcodm1J0H1xTFqh+Ox9VTabD+jnG+uRKY0GsNqXwGQx8CENXGqIcCsA5vfsJipQ2X7Flxv1ipAL0mFaSACzlUa1h/wDAJ4T3jOEoaLpkFuYfyQRSBPXGyfLCr2euJmR7+eFxHVJt+lxvbLT00afwRKW+rz7Pv6BybI2WU+EuoNRQjxDvsWabPjKreIcfd+RgzROZ9LJScVRM2OVqzoMVw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lf/ZWO8u4BNCKW8o/OBo/HSLiOuV7pRxJAnFUJMzg/Y=;
- b=MPRATsBr5UfbpsE3Y4/s6miIS32WrHLb29aAq0+naLHtx6Wlw7kmnzX0b+9GTcalvOgOb6jXcNDGpPbI8l8r71kpqX/G3jVC1khGqgnCCvGET47yWo9xHUkWmUzIgv0Qum0wK3C5PVpu7LA3djKHNIbYlUN7fk9GJJs+OSv+7ME=
-Received: from SJ0P220CA0030.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:41b::6)
- by BN7PPF02710D35B.namprd12.prod.outlook.com (2603:10b6:40f:fc02::6c4) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.12; Wed, 10 Dec
- 2025 00:46:39 +0000
-Received: from MWH0EPF000A6732.namprd04.prod.outlook.com
- (2603:10b6:a03:41b:cafe::d1) by SJ0P220CA0030.outlook.office365.com
- (2603:10b6:a03:41b::6) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9412.7 via Frontend Transport; Wed,
- 10 Dec 2025 00:46:38 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MWH0EPF000A6732.mail.protection.outlook.com (10.167.249.24) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9412.4 via Frontend Transport; Wed, 10 Dec 2025 00:46:37 +0000
-Received: from localhost (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 9 Dec
- 2025 18:46:35 -0600
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
+ id 1vT8sn-0000at-5U
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 20:20:45 -0500
+Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <salil.mehta@opnsrc.net>)
+ id 1vT8sk-0001KX-7O
+ for qemu-devel@nongnu.org; Tue, 09 Dec 2025 20:20:44 -0500
+Received: by mail-oi1-x234.google.com with SMTP id
+ 5614622812f47-4557f0e5ed2so263011b6e.1
+ for <qemu-devel@nongnu.org>; Tue, 09 Dec 2025 17:20:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=opnsrc.net; s=google; t=1765329638; x=1765934438; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q8oBGK1KdOABAnFfsP0qsJhYB/JHMqk9uhAK0zmDX3Y=;
+ b=FG+ifRwSUYu5M9kTPlujRVvTdmq8jn/e8rUo/wh3PPN0pDjItFoX4hsWg9DD9QeLog
+ IhtLPCb9h98y86A3IMLkBwGXfv7YgI/83EHcVX0rRkT/vwNwJj0OQhzIh649crAwKeLr
+ zQjOAy2yhcfNxFJeqmP7bIEGtV+YiK+YizwqNKpS0oVYoaqyMBhUtGqwtAVjwH8DNdsq
+ QvTQq5Pm6iT41qNqnpAcYvjTT6GN8U2wxTWbpgvVu4VMXmJoLvcBcB1R/b/pFZF1NnXg
+ O9QAtaZVcuqoKXuqGA3Mk7OWP4m9pkSv4dYgddCkQTr/xnOTajmaIVFm6HxF5z2gM0bF
+ x3fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765329638; x=1765934438;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=q8oBGK1KdOABAnFfsP0qsJhYB/JHMqk9uhAK0zmDX3Y=;
+ b=Zu0lYfDlRRSp68iAxoK8aPKsAl35FMKsV8/btAPpnsnvSQXoptGj+DNM5YDlVusbN3
+ BrWBwXqUrr4o38UOo8YFfDzrwMcG+oy0EuZmAgM7zWeBVoxAlPiv3uxt3afzk07roAzA
+ TGAWJM2A1ztRMPK8/X9DwbF6yAjyyhD/0tCWjgO5UopzVgk7TsSJuYM5CzUDLUGMZCxX
+ fTCRiwC0nsurg1zWeYKYfilfTiP3msQHz7ekF3KfJCR+5uwKPWVkhHeTiVERSOQQ17Aw
+ Z+2ce8NEh6Jz+tDOFTomfwxKeAaca8haYu/99tBYkdIWXaxHwrKY2fkrZ3O1tBK9NSdA
+ P7WQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVjzmb+5JrSwUV9JHqlozC8Tm24SNbixt/WpUxDOq4n+xWabL5QFf+nl1ynpC0lDsGt+X587y6OHpmJ@nongnu.org
+X-Gm-Message-State: AOJu0Yzh8oG0TbWCJv2oOk3XM1GToyqE+YZt1OVaQRxoFxd3+c4f5tzz
+ D8yTssa0gN//M3mcz0MdAWlxvUzpnv+6WeybXR628L6TCppbSCn6IC6etCfp1kuwRq+Zu8gkj4L
+ q9PMjiU6argKthF8HlnO5CoPwehPOEUrk7NtxDilExg==
+X-Gm-Gg: ASbGncsbie0ttdh9LES9HA/ThwtDTji1SVs+7jLXCPQplTY4UnU6+fq5JQIDPL87zFg
+ +MxSrZIFVWvZmg4NnCoGPadtuADmC+UTaWSqSa6e1RZWL0S17UBL+no+8c2g+8avje+cI0JxaBY
+ 9JUaYYlnyour3Xw5ZwbyugK9U+ra/0sqHNMJFdBZ1OuX6VyhrnNqxzeEtF5JSYfpLw5GFor4E7h
+ HlIFrPSEp6MI+Lx/hJiT86OrWyNjs/0tX+2sigNEO0oBiOxjJ35o+SbiTsH5+2qOgs1Q7QE
+X-Google-Smtp-Source: AGHT+IGprwzZta7P7pKbJtIa3Uhf87gr8aG7fSZQjW/0BCKR6CsZZHpkrGaCCr5JyUwK6sm35ork/AWTp2m10ajLRrI=
+X-Received: by 2002:a05:6808:1583:b0:450:5db3:71cb with SMTP id
+ 5614622812f47-4557a1a9e68mr1671612b6e.17.1765329638470; Tue, 09 Dec 2025
+ 17:20:38 -0800 (PST)
 MIME-Version: 1.0
+References: <CAJ7pxeY8dpK53ePE6YcXqHpmxD9B7e9tY49ij6HzgU450OgYLA@mail.gmail.com>
+ <20251209022028-mutt-send-email-mst@kernel.org> <aTfpQO14axEvcOIT@redhat.com>
+In-Reply-To: <aTfpQO14axEvcOIT@redhat.com>
+From: Salil Mehta <salil.mehta@opnsrc.net>
+Date: Wed, 10 Dec 2025 01:20:26 +0000
+X-Gm-Features: AQt7F2p1WutS6vK_FF6c8HApUzC9uKYC--xNUIcrn3ZAt7QrqCPHorE6F9hjKx8
+Message-ID: <CAJ7pxeYbd+yq9VXob2zTShBd5Ph598kmjLJTsKdKzFikCbVLLA@mail.gmail.com>
+Subject: Re: FWD: [ATTENTION] Mails on qemu mailing list are disapapearing
+ making communication unreliable
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Vishnu Pajjuri OS <vishnu@os.amperecomputing.com>, 
+ Vishnu Pajjuri <vishnu@amperemail.onmicrosoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: [ANNOUNCE] QEMU 10.2.0-rc3 is now available
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Richard Henderson <richard.henderson@linaro.org>
-Date: Tue, 9 Dec 2025 18:46:16 -0600
-Message-ID: <176532757628.3229411.16186291240831122508@amd.com>
-User-Agent: alot/0.9
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000A6732:EE_|BN7PPF02710D35B:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8860b073-c16c-45a9-f57e-08de378593a2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|1800799024|36860700013|13003099007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?K0s2V1k0UEVscW1rMm4vdUw1a1JDZjFZMllVbWR2eGE0VWh1UFZ6azcxR2gx?=
- =?utf-8?B?b1NicDhxK1RnS3JSTEovdDQwMGI0M2FSb2FkdVlZVER6c2JkNVBqRStZSzJN?=
- =?utf-8?B?d01QQ0c2cjZLWURHYmNrWUpNNnZicUFqZUdsUzNxZlNKNk9GTnYrVnlPVFly?=
- =?utf-8?B?a21DQ0RWelQrWnYraVlHK0JBREpmaHhBZHR4NWJEaXg1TWJDM1RrSFA1MG9n?=
- =?utf-8?B?ckRuL0dJTlRtK0pKSE9md0pta3VudVpWN2Y5NjI4cG9aS2ZGVzVjY3ZxY3By?=
- =?utf-8?B?cmlYdWdKR1loNE9LWFc4VzI5RUxveTV4ZlJXTE5PM0JaZnB2akxoVXNMNmlI?=
- =?utf-8?B?ci9kSmU5N2JaeVpSd1dpb2M0eThqc2RXcGRiZWNqWFBXRHplUWw0NlhydmZO?=
- =?utf-8?B?WHBWNWlsYlVSR2FNZ2VnTUVBM2NwZHNwRlNzekp4bVZMc3psL1UxSVBjbmNT?=
- =?utf-8?B?TXBIdjVjL0JieTU2YXNSbU1zQnBpZFZDeGFpL0Rza3N6WGVSd0NqSTdZME1O?=
- =?utf-8?B?ZmYzamJQR21uaklVSHd1U0tHZitOckNLNVpzL0NCVVNqd2VEdzRHeFFHSmQ2?=
- =?utf-8?B?VGpHSHMzWFQ5K2NBaVBVa3c3bTRhajIvbTFQc2F0STJFR1dkY0craFI2VmZm?=
- =?utf-8?B?RHZVcEQ5bGRwTk9lbW51dDZQQkdIRUo1SUpUNmREbmVBU1lXWFkwK0lQaml2?=
- =?utf-8?B?NVdXYWdBM2JpSnRiVTVtdjdMZnZCUHJWTTZsdDJiNktGdGdxdlNQMmVBcTcz?=
- =?utf-8?B?Vlo5b2YrN0dHS3pqUjhOSWRTWUZ4clJMbURSN3YwSkdtdGN2Nk1qUENXRTNR?=
- =?utf-8?B?dHIzd1BwdmZPWHg5Y2p4QlcyTFpZQStMZXpuNFZRa2pVUkhaV3FQMWVqaDNX?=
- =?utf-8?B?U1BpaUdQb2VuVHE0WEUrUTBhMCtWYTU2TzlpbDdmbTdUaTRUV1FVcHI0NXJM?=
- =?utf-8?B?RUNDUDJKQ0FsODBzandJdndWSy9HK0Y5dmx2Yy9KRWUxNG5BcW5hb0s4Unhj?=
- =?utf-8?B?MEZFTWpaaURVTHhhY0E0ejJ3TmdtOW4zdnkyZGpleFphcTFCc1g3ak45OUFR?=
- =?utf-8?B?K3BBYXp1WnZuRCsxSXMzQnVYMmtUUUpNRHV6NjN6Z0ZocWtoVE8yYjQvNjRh?=
- =?utf-8?B?bU55NWVKalY3clh6c3Bmb3FRdWtFZjB2TTRwS21oYXNGQ0ZHWW5QZU0rMGZ0?=
- =?utf-8?B?bnErbWpWaXVSWHBHbFhHT2o1dTJ6WW5IWlZUV0IzTGhvWE40dkxYWHNRVXEz?=
- =?utf-8?B?ZndNK3pCdDJPWjZzUWpCc24xR1U1V2dWU09kNlpNYW9Lb2w3R0crSzNiekY4?=
- =?utf-8?B?Qm1SQUxWb0I5NUd1M2RWT2JObXlzU0RYL2JXWGl3a09KMWZBWlVGcy9DTmJh?=
- =?utf-8?B?VzF6VXphR05KVlFzQXBzSUppemhuallXMzBEeVpPSk9YQ3JFeDhpMms5NnFw?=
- =?utf-8?B?L2t3WVpEaW11ZFpRa2FhbEZWOGJnN2lPNTd0NGw5cTQ3RDZxejJTa2EvR213?=
- =?utf-8?B?OTV3S0gyRlByMEkrWjA1NUgrUFNOait3UnVnR1N3MFcrald5UEVOOHVESWJ1?=
- =?utf-8?B?S1d4eURaeGw1d3ozc3BGYjVCZS9TWG8xT3Y2L1NHZzRRWktCWXZuOG5jcU5s?=
- =?utf-8?B?anF6MEowWDBYZzRFUUhjUWdUOVBCK25DUW80Q0FFQzRGUVAvSjFsbjlLQVM4?=
- =?utf-8?B?VklGVVJSRWorNlN4MnJhRVhJandkOFRsNkxNMG8xRlZ5dHd0ZkIvSk5wejc5?=
- =?utf-8?B?RnM2MHR1akhJeG1jRm16MndyaFJ1Nmtmdk12bjZDam5oVWZTUHovc0dHampW?=
- =?utf-8?B?K3FqcFhkd3plNkxyeGE0RU1pczR1ZXFDWmZqN0dLT056eWpKL3Rod2JWTmVa?=
- =?utf-8?B?ZWpqZnljR1hEcjhZYmtENkNXb0p6S3FPbDFzdTNyWjJoaWdCYkVjak04NHVY?=
- =?utf-8?B?dEhtNi9VdHp5M0xZNWZpV2xrOGFnNGRFR1RMb3ZsZ1BrVUxJM3U5V0RxL2xL?=
- =?utf-8?B?SDhTNmFQQ2FvcFJ2NENma0NmbDNkU01PMzVGakpJcGErd01WNlZmTWlGT0xO?=
- =?utf-8?Q?/mzSke?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(1800799024)(36860700013)(13003099007);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Dec 2025 00:46:37.8939 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8860b073-c16c-45a9-f57e-08de378593a2
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6732.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPF02710D35B
-Received-SPF: permerror client-ip=52.101.48.50;
- envelope-from=Michael.Roth@amd.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
+ envelope-from=salil.mehta@opnsrc.net; helo=mail-oi1-x234.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SUBJ_ATTENTION=0.499 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,100 +101,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+Hi Daniel & Michael,
 
-On behalf of the QEMU Team, I'd like to announce the availability of the
-fourth release candidate for the QEMU 10.2 release. This release is meant
-for testing purposes and should not be used in a production environment.
+Many thanks for replying.
 
-  http://download.qemu.org/qemu-10.2.0-rc3.tar.xz
-  http://download.qemu.org/qemu-10.2.0-rc3.tar.xz.sig
+On Tue, Dec 9, 2025 at 9:18=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
+>
+> On Tue, Dec 09, 2025 at 02:24:44AM -0500, Michael S. Tsirkin wrote:
+> > Hi guys,
+> > who has ability to contact the list admins? Can help Salil?
+>
+> I'm not a list admin, but I have some observations below
+>
+> > ----- Forwarded message from Salil Mehta <salil.mehta@opnsrc.net> -----
+> >
+> > From: Salil Mehta <salil.mehta@opnsrc.net>
+> > Date: Tue, 9 Dec 2025 00:44:04 +0000
+> > To: "Michael S. Tsirkin" <mst@redhat.com>
+> > Subject: [ATTENTION] Mails on qemu mailing list are disapapearing makin=
+g communication unreliable
+> > Message-ID: <CAJ7pxeY8dpK53ePE6YcXqHpmxD9B7e9tY49ij6HzgU450OgYLA@mail.g=
+mail.com>
+> >
+> > Hi Michael,
+> >
+> > I hope you are doing well.
+> >
+> > I=E2=80=99ve noticed that some emails are going missing from the qemu-d=
+evel mailing
+> > list. This has now happened multiple times, both with emails I have sen=
+t from my
+> > official address and with emails from other contributors.
+> >
+> > Over the past three months, I have consistently observed emails disappe=
+aring
+> > from the qemu-devel archives, which makes the mailing list communicatio=
+n highly
+> > unreliable.
+>
+> I can see patches arriving in my INBOX via qemu-devel from salil.mehta@op=
+nsrc.net
+> but no patches from salil.mehta@huawei.com
+>
+> I do see some (non-patch) emails from salil.mehta@huawei.com, but the
+> mailing list is re-writing this From address for DMARC countermeasures
+>
+>  Salil Mehta via <qemu-devel@nongnu.org>
+>
+>
+> Recapping mail delivery policies, DMARC requires a pass for *either*
+> SPF or DKIM checks.
+>
+> SPF checks will always fail for mails forwarded via any mailing list.
+>
+> DKIM checks should still succeed *provided* the mailing list does not
+> modify the message content, or certain headers. QEMU mailing list
+> behaves in this respect generally, and applies countermeasures when
+> appropriate.
+>
+> I see no  DKIM records huawei.com, but I do see SPF records.
 
-You can help improve the quality of the QEMU 10.2 release by testing this
-release and reporting bugs using our GitLab issue tracker:
 
-  https://gitlab.com/qemu-project/qemu/-/milestones/17
+Thanks for identifying this.
 
-The release plan, as well a documented known issues for release
-candidates, are available at:
+When you say there are no DKIM records for huawei.com, do you mean
+that my @huawei.com mails do not contain any DKIM-Signature header,
+or that a DKIM-Signature is present but cannot be validated against
+a published key?
 
-  http://wiki.qemu.org/Planning/10.2
+If there are SPF/DKIM/DMARC logs on the list side, would it be
+possible to see whether DKIM validation is failing for my messages?
 
-Please add entries to the ChangeLog for the 10.2 release below:
 
-  http://wiki.qemu.org/ChangeLog/10.2
+>
+> This guarantees DMARC fail for any @huawei.com sender using any mailing
+> list, however, the @huawei.com DMARC policy is only set to 'quarantine'.
 
-Thank you to everyone involved!
+Agreed. I will check with the IT department here about the DKIM
+headers and whether the public key is being published correctly.
 
-Changes since rc2:
 
-9c23f2a7b0: Update version for v10.2.0-rc3 release (Richard Henderson)
-efd6b3d176: Revert "hw/net/virtio-net: make VirtIONet.vlans an array instea=
-d of a pointer" (Philippe Mathieu-Daud=C3=A9)
-0d42e48c73: Revert "migration/vmstate: remove VMSTATE_BUFFER_POINTER_UNSAFE=
- macro" (Philippe Mathieu-Daud=C3=A9)
-326e620fc0: Fix const qualifier build errors with recent glibc (C=C3=A9dric=
- Le Goater)
-e742b7bdc2: scripts/nsis.py: Tell makensis that WoA is 64 bit (Stefan Weil)
-4fdff25625: hw/pci: Fix typo in documentation (Stefan Weil)
-0bc6fa2446: migration: Fix order of function arguments (Stefan Weil)
-46228925ed: vhost: Always initialize cached vring data (Hanna Czenczek)
-8062bfd517: scripts: fix broken error path in modinfo-collect.py (Denis V. =
-Lunev)
-93332c90bf: hw/9pfs: Correct typo (Alano Song)
-df3b304605: osdep: Undefine FSCALE definition to fix Solaris builds (Philip=
-pe Mathieu-Daud=C3=A9)
-dd77ef99aa: target/arm: handle unaligned PC during tlb probe (Alex Benn=C3=
-=A9e)
-d100193724: target/arm: make HV_EXIT_REASON_CANCELED leave hvf_arch_vcpu_ex=
-ec (Alex Benn=C3=A9e)
-2a425aae0b: target/arm: ensure PSCI register updates are flushed (Alex Benn=
-=C3=A9e)
-c22e943ea1: Revert "target/arm: Re-use arm_is_psci_call() in HVF" (Alex Ben=
-n=C3=A9e)
-704db3e250: aspeed: Deprecate the fby35 machine (C=C3=A9dric Le Goater)
-fa2580f574: contrib/plugins/uftrace_symbols.py: unbreak --no-prefix-symbols=
- (S=C3=B6nke Holz)
-81c5a3f867: plugins/core: allow reading of registers during discon events (=
-Alex Benn=C3=A9e)
-ee6a482e9c: MAINTAINERS: update the custom runner entries (Alex Benn=C3=A9e)
-23a5e2584e: docs/devel: Correct typo (Alano Song)
-6f365f185a: docs/devel: update build environment setup documentation (Alex =
-Benn=C3=A9e)
-0b50ff0c0a: tests/docker: drop --disable-[tools|system] from all-test-cross=
- (Alex Benn=C3=A9e)
-2addcefd69: tests/docker: transition debian-all-test-cross to lcitool (Alex=
- Benn=C3=A9e)
-7cffc86162: tests/lcitool: add bzip2 to the minimal dependency list (Alex B=
-enn=C3=A9e)
-a55d610bac: tests/qemu-iotests: Check for a functional "secret" object befo=
-re using it (Thomas Huth)
-7242e51517: tests/tcg: honour the available QEMU binaries when running chec=
-k-tcg (Alex Benn=C3=A9e)
-7e71b8e7f2: gitlab-ci.d/cirrus: Update the FreeBSD job to v14.3 (Michael To=
-karev)
-56a4ba5f88: gitlab: drop explicit pxe-test from the build-tci job (Alex Ben=
-n=C3=A9e)
-ca49625616: gitlab: drop --disable-pie from aarch64-all-linux-static build =
-(Alex Benn=C3=A9e)
-ff633bc5d5: include/aarch64/host: Fix atomic16_fetch_{and,or} (Richard Hend=
-erson)
-6833615bfd: include/generic/host: Fix atomic128-cas.h.inc for Int128 struct=
-ure (Richard Henderson)
-8c00f56fca: tcg/tci: Disable -Wundef FFI_GO_CLOSURES warning (Richard Hende=
-rson)
-93fa829344: tcg: Remove duplicate test from plugin_gen_mem_callbacks (Richa=
-rd Henderson)
-92cf74baf4: tcg/tci: Introduce INDEX_op_tci_qemu_{ld,st}_rrr (Richard Hende=
-rson)
-41706d3e72: tcg: Zero extend 32-bit addresses for TCI (Richard Henderson)
-2c3165a1a6: file-posix: Handle suspended dm-multipath better for SG_IO (Kev=
-in Wolf)
-23c586abf2: vfio-user: recycle msg on failure (John Levon)
-0df8baec95: vfio-user: simplify vfio_user_recv_one() (John Levon)
-7b884e2a27: vfio-user: refactor out header handling (John Levon)
-356c7b1752: vfio-user: clarify partial message handling (John Levon)
-a8731f691d: vfio-user: simplify vfio_user_process() (John Levon)
-1f3b34e403: docs/interop/vfio-user: update protocol specification (John Lev=
-on)
+>
+> That should not block delivery to list subscribers, merely suggest
+> that MTAs put the mails in the Spam/Junk folder *if* DMARC fails.
+>
+> mailam is cautious and thus applying DMARC countermeasures to huawei.com
+> addresses due to he missing DKIM records, in order to reduce the chance
+> that the mails end up in Spam/Junk folders for list subscribers.
+>
+>
+> This does not explain why messages might never appear in the list to
+> begin with though.
+
+Agreed.
+
+>
+> It is notable, however, that messages from salil.mehta@huawei.com
+> do arrive if they are non-patch mails. Presumably those are via a
+> normal email client
+
+This is not always true.
+
+
+>
+> I wonder how Salil is sending patches ? Some tool like git send-email
+> or git-publish ?
+
+Mails disappear or not appear in the mailing list even when I reply
+via outlook and the same happens when I sometimes use git-send-mail.
+
+check these:
+https://lore.kernel.org/qemu-devel/20251001010127.3092631-1-salil.mehta@opn=
+src.net/
+
+AND
+
+https://lore.kernel.org/qemu-devel/CAJ7pxea721f4EwqpDdcztgRoN-rsB2tqthf-_Kb=
++mmsRkK1GyQ@mail.gmail.com/
+
+I'm replying to this broken link which existed but disappeared later.
+ [not found] <20250930224037.224833-1-salil.mehta@huawei.com>
+
+
+>
+> If so I then wonder if the tool is NOT correctly configured to use an
+> official huawei.com outbound SMTP relay ?
+>
+> While you can have git send-email deliver directly to lists.nongnu.org,
+> the huawei.com SPF policy will almost certainly result in the mails
+> getting either rejected or dropped, *UNLESS* they are relayed via one
+> of the officially designated huawei.com SMTP relays.
+
+This configuration is correct. With this configuration, no mail will be sen=
+t
+outside Huawei. There are other addresses as well in the TO/CC list.
+I'll rule out this aspect.
+
+
+> > For example, the attached .eml file is a message from Vishnu (Ampere) w=
+hich
+> > was sent to the list but later disappeared. This is starting to raise s=
+erious
+> > concerns about the reliability of the mailing list, and the broken comm=
+unication
+> > is creating confusion for everyone involved.
+>
+>
+> In terms of mails from Vishnu, I see nothing in my INBOX from Vishnu.
+>
+> The mail quoted below has a From address of vishnu@amperemail.onmicrosoft=
+.com,
+> while people seem to sending to/cc for vishnu@os.amperecomputing.com
+>
+> Is that From address correct ? It seems like the latter is more likely to=
+ be
+> the canonical address for Ampere accounts.
+
+It must be the correct one because I attached the .eml for the received mai=
+l.
+And I really don't have a clue how this address is different from  the
+other i.e.
+@os.amperecomputing.com
+
+[+] Adding Vishnu to CC, maybe he can share more details and share his
+.eml file.
+
+
+>
+> If not, perhaps that is triggering some rule that discards the mails when
+> sending is amperemail.onmicrosoft.com
+
+Could be. Do we have access to the logs to verify the reason?
+
+
+Best regards
+Salil.
+
+> > From: Vishnu Pajjuri <vishnu@amperemail.onmicrosoft.com>
+> > Date: Mon, 27 Oct 2025 13:58:59 +0530
+> > To: Igor Mammedov <imammedo@redhat.com>, salil.mehta@opnsrc.net
+> > Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, mst@redhat.com,
+> >  salil.mehta@huawei.com, maz@kernel.org, jean-philippe@linaro.org,
+> >  jonathan.cameron@huawei.com, lpieralisi@kernel.org,
+> >  peter.maydell@linaro.org, richard.henderson@linaro.org, armbru@redhat.=
+com,
+> >  andrew.jones@linux.dev, david@redhat.com, philmd@linaro.org,
+> >  eric.auger@redhat.com, will@kernel.org, ardb@kernel.org,
+> >  oliver.upton@linux.dev, pbonzini@redhat.com, gshan@redhat.com,
+> >  rafael@kernel.org, borntraeger@linux.ibm.com, alex.bennee@linaro.org,
+> >  gustavo.romero@linaro.org, npiggin@gmail.com, harshpb@linux.ibm.com,
+> >  linux@armlinux.org.uk, darren@os.amperecomputing.com,
+> >  ilkka@os.amperecomputing.com, vishnu@os.amperecomputing.com,
+> >  gankulkarni@os.amperecomputing.com, karl.heubaum@oracle.com,
+> >  miguel.luis@oracle.com, zhukeqian1@huawei.com, wangxiongfeng2@huawei.c=
+om,
+> >  wangyanan55@huawei.com, wangzhou1@hisilicon.com, linuxarm@huawei.com,
+> >  jiakernel2@gmail.com, maobibo@loongson.cn, lixianglai@loongson.cn,
+> >  shahuang@redhat.com, zhao1.liu@intel.com
+> > Subject: Re: [PATCH RFC V6 00/24] Support of Virtual CPU Hotplug-like F=
+eature
+> >  for ARMv8+ Arch
+> > Message-ID: <c2462372-f797-47f3-a96e-4872f9cedde5@amperemail.onmicrosof=
+t.com>
+> > In-Reply-To: <20251006160027.20067fe4@fedora>
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
 
