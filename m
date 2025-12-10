@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B7EED3E783
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 00:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 429CCD3B9AB
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 00:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTU9m-0004qL-Mw; Wed, 10 Dec 2025 19:03:42 -0500
+	id 1vTUsr-0003Qc-Fu; Wed, 10 Dec 2025 19:50:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1vTU9k-0004q2-7X; Wed, 10 Dec 2025 19:03:40 -0500
-Received: from sender4-op-o12.zoho.com ([136.143.188.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1vTU9i-0006ST-Dc; Wed, 10 Dec 2025 19:03:39 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1765411387; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=b3lUoOFNRBzpuI+/qj010GMMaDMQ0oPk4pHNandeWMEO9VxE43aKK9BRuIZM29hQ8riIJjUlXuBRCdSlihhRYACJQJl4jyX7ZDgDdgjZhKvxP4Pen3S2V99cUIlrc8+YNAwCa1l+EG82aKIfusmnLobtB3Qceq3yU6b4ooQiCtc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1765411387;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=3zEjGOSn6g0n5qhXLIsKrGwfQAijgDoXpyq/W91ZZ1c=; 
- b=QM5rpHkgw7XrJFsMLIo3yDlb7K3L2UB8NealqNSef4x4Lmbcplc/qqggqFzjuW3kIoRCvLZWwqPZrfrMqGrvy2DZ2hxQgyzQbeT748a2e4AyB6iExCZNmXXbzVPhwHrlSjjdBfNSJ4pZ/KsNOMnj96kqkjoF8lDzEytWnUnLoUA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=linux.beauty;
- spf=pass  smtp.mailfrom=me@linux.beauty;
- dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765411387; 
- s=zmail; d=linux.beauty; i=me@linux.beauty;
- h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=3zEjGOSn6g0n5qhXLIsKrGwfQAijgDoXpyq/W91ZZ1c=;
- b=arMkrj+aitwMAc4r4aucjQm+TAOt4/e6AhKWkY4qeGjyiQo9Nl3H9iKhv5rDeBZa
- Amlscom2gXVx34dc+rIQ6k3cGaP3TjpM6tif9OxyncnjxHU1ZzvMEw0oApKRAJopCFS
- DkDOc2pqU7/54HYYjSyS1wxYaHtpckCzEXWPGmlE=
-Received: from mail.zoho.com by mx.zohomail.com
- with SMTP id 1765411385875998.4473620910953;
- Wed, 10 Dec 2025 16:03:05 -0800 (PST)
-Date: Thu, 11 Dec 2025 08:03:05 +0800
-From: Li Chen <me@linux.beauty>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: "Peter Maydell" <peter.maydell@linaro.org>,
- "Shannon Zhao" <shannon.zhaosl@gmail.com>,
- "Igor Mammedov" <imammedo@redhat.com>, "Ani Sinha" <anisinha@redhat.com>,
- "Eduardo Habkost" <eduardo@habkost.net>,
- "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
- "Yanan Wang" <wangyanan55@huawei.com>,
- "Zhao Liu" <zhao1.liu@intel.com>, "Song Gao" <gaosong@loongson.cn>,
- "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
- "Sunil V L" <sunilvl@ventanamicro.com>,
- "Palmer Dabbelt" <palmer@dabbelt.com>,
- "Alistair Francis" <alistair.francis@wdc.com>,
- "Weiwei Li" <liwei1518@gmail.com>, "qemu-arm" <qemu-arm@nongnu.org>,
- "qemu-devel" <qemu-devel@nongnu.org>, "qemu-riscv" <qemu-riscv@nongnu.org>
-Message-ID: <19b0ab7f203.43fecb3b140213.6490567972995015069@linux.beauty>
-In-Reply-To: <20251210075237-mutt-send-email-mst@kernel.org>
-References: <20250528105404.457729-1-me@linux.beauty>
- <20250528105404.457729-5-me@linux.beauty>
- <20250714144303-mutt-send-email-mst@kernel.org>
- <1981309e2fa.31709fd32611761.5900055972026140740@linux.beauty>
- <20250716074207-mutt-send-email-mst@kernel.org>
- <198131a686b.18fb34702623779.7633947002456257034@linux.beauty>
- <1995f320053.73c58bde124269.3373604835167896043@linux.beauty>
- <19b0837500d.2713ffb3821327.2786629512090065997@linux.beauty>
- <20251210075237-mutt-send-email-mst@kernel.org>
-Subject: Re: [PATCH REPOST v4 4/4] acpi/virt: suppress UART device & SPCR
- when guest has no serial hardware
+ (Exim 4.90_1) (envelope-from <liu.jaloo@gmail.com>)
+ id 1vTUsp-0003QN-8C
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 19:50:15 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <liu.jaloo@gmail.com>)
+ id 1vTUsn-0002sd-L0
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 19:50:15 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-3436d6bdce8so480868a91.3
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 16:50:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1765414212; x=1766019012; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Irbe/DQi/c6MSeXWBLxOf9NA3As39yeQLXlJ65EgBjo=;
+ b=FIV2GTdmP0iKEKNRcQRw8+7bDO8w1nIBBeMtLLKk3YzJfiZvJlppA97sHFjLD1SSli
+ rmRxNhUiVjCDTO4Q64U/iY4AVL6ElBYiJ/DbyraVJph+sdjhibMr5E3SffaFdJNJSbYV
+ uXVK/51WJTWXxAZM18waDTnzH+tNSVvD0iAwHKyls3DH+qqDDS0+sCWg7zwVgPeLAeBO
+ CTHAYvxkKOITVaZd8S/6WWSX2iI4jSNv4JkLZdhAI1zq+Q7JL3dWw1kLKqaaq6kBgYHZ
+ HMVy/QYBMGQP5+FmgthDn2mHGnXCQOfJ0TeJHOTNRZ9vIkFN3HZTerRaulRnDOq+GXTq
+ fnsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765414212; x=1766019012;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Irbe/DQi/c6MSeXWBLxOf9NA3As39yeQLXlJ65EgBjo=;
+ b=VBZc26ijSQAVuqQgq7uJXe4BkJ5hQiLUx30ibSwoH/frMoRxtbvruK5XlJhGsCn6W4
+ S+q9FJn0uBTNnnMzpO6McESFMd4kIA7rxsgLg9b7BfE6Rmw5q350USAa0u/t/dpIDkm+
+ SnqnMz45zRHCQMaVvv4PgruFhm4OlhgB007Db8UmNtVnaXwPfCAIH54Z0Lwf2jmfXEuT
+ wIWY4lnmZxg0m2rUvy7IQGyBupOUrUS7TP5ZruAqA0mvogbn/p50kxQx/yxYuKDqFm8E
+ 8i41M5EvSAVVUQCd6lMZXUJREw1l+taAB/75Rv4xE6/B7ouGBSxY9eZDVITmt7p/NnKa
+ US0A==
+X-Gm-Message-State: AOJu0YxshbUWEzWtRUETqSEkfJ7R7N/2ELEOQ9TKgh8dAqQg945izJLS
+ B5yr4RRM8xoMrbBudDr8tZWxS3vZTLeY4w1ey032IWzyIc+QKupEzzJvwiQgUi3ih1Ai4GFr8wV
+ pjMYNAGiW3A+u/WLdrybVL7e1RmjZEw==
+X-Gm-Gg: AY/fxX5TOKMt01SF2kJdMSiwFL8yV07E6QKkiwuOr3wURaUG7O7fVnVytLqQViUpsal
+ 63UgUZ3eYWNxy1iJiPoPCvl/Dt+4Gicu4q2IvpFaKGrG1dTJFLmelAHmOMsugtRbvvkWXFRrsJ7
+ +bNVDfU8xbqwdXzNaAVcyeQy68Lo+r4J466SPt/0PBnXVhvHi4rOevxq8RX1Z5fFMwrd5J3HMrL
+ sR3twVY5gIHqiaNmpzBEcpFD0n5RHsLsxEOtv5T9faeyiHqR8RWpW8XQHkOUl2LZEgHd/CjR8EO
+ Pqy41YZN2Uu43OQK+omVkxO79DeG
+X-Google-Smtp-Source: AGHT+IH/x1qpmKuWRxfjBQtZzsmj3IC9ep2kIOCXgy2xzGQK3kMBsZmuh2sPuXEQNT7YdTgCBgyNYW9mynjm4X5BAdI=
+X-Received: by 2002:a17:90b:584b:b0:33e:1acc:1799 with SMTP id
+ 98e67ed59e1d1-34a728a1b73mr3777313a91.14.1765414211671; Wed, 10 Dec 2025
+ 16:50:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-Received-SPF: pass client-ip=136.143.188.12; envelope-from=me@linux.beauty;
- helo=sender4-op-o12.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CAOYM0N3YdrkhOXrpxE6rzk5DbLOF0GzEVaThAHxnHfQYLk+pzQ@mail.gmail.com>
+ <03e5d5b2-2f3f-451e-93af-439348469967@redhat.com>
+In-Reply-To: <03e5d5b2-2f3f-451e-93af-439348469967@redhat.com>
+From: Liu Jaloo <liu.jaloo@gmail.com>
+Date: Thu, 11 Dec 2025 00:50:01 +0800
+X-Gm-Features: AQt7F2owEZOoXLK-pDLpBAr3ZXj0s84wfpEZ1HLzhF3Gi-3mZUOt4jW2_TYCN9Q
+Message-ID: <CAOYM0N3Kth=KfZtZLet7+3AYvzQg6V+w4dLWgLYT7OuNTvMsDg@mail.gmail.com>
+Subject: Re: make pxerom report error
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f7dc8a0645a286b5"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=liu.jaloo@gmail.com; helo=mail-pj1-x102f.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,64 +94,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tsirkin,
+--000000000000f7dc8a0645a286b5
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
- ---- On Wed, 10 Dec 2025 20:53:01 +0800  Michael S. Tsirkin <mst@redhat.co=
-m> wrote ---=20
- > On Wed, Dec 10, 2025 at 08:23:21PM +0800, Li Chen wrote:
- > > Hi Michael,
- > >=20
- > >  ---- On Fri, 19 Sep 2025 07:38:56 +0800  Li Chen <me@linux.beauty> wr=
-ote ---=20
- > >  > Hi Michael,
- > >  >=20
- > >  >  ---- On Wed, 16 Jul 2025 19:59:14 +0800  Li Chen <me@linux.beauty>=
- wrote ---=20
- > >  >  > Hi Michael,
- > >  >  >=20
- > >  >  >  ---- On Wed, 16 Jul 2025 19:42:42 +0800  Michael S. Tsirkin <ms=
-t@redhat.com> wrote ---=20
- > >  >  >  > On Wed, Jul 16, 2025 at 07:41:11PM +0800, Li Chen wrote:
- > >  >  >  > > Hi Michael,
- > >  >  >  > >=20
- > >  >  >  > > Thanks for your kind review! All issues below have been fix=
-ed in v5:
- > >  >  >  > > https://lore.kernel.org/qemu-devel/20250716111959.404917-5-=
-me@linux.beauty/T/#m696cee9a95646add1b74b866c3d6761aa4c5c762
- > >  >  >  >=20
- > >  >  >  > Past soft freeze now: I tagged this but pls remind me after t=
-he release
- > >  >  >  > to help make sure it's not lost.
- > >  > =20
- > >  > Gentle reminder: This patch is still missing from the latest master=
- branch, but can apply without
- > >  > any conflict. Can it be included in 10.2?
- > >  >=20
- > >  > Regards,
- > >  > Li.
- > >  >=20
- > >  >=20
- > >=20
- > > Sorry for bothering again. But I'm still unable to find this patch in =
-the latest master branch, though it applies without conflicts now.=20
- > >=20
- > > Could it be merged now?
- > >=20
- > > Regards,
- > > Li=E2=80=8B
- >=20
- > you still need to update loongarch, I think. otherwise these tests will
- > fail.
+Thanks for your reply.
 
-Yes, it seems that tap stdout is polluted by serial stdio.
+$ cd roms/ipxe
+$ git checkout master
 
-I'll address the stdout pollution from -serial stdio by redirecting serial =
-output to /dev/null using -serial null in the next version.=20
-This will still create the serial device but prevent it from writing to the=
- console.
+It works well now.
 
-Regards,
+Maybe it's time to update the default ID of the ipxe submodule
 
-Li=E2=80=8B
+On Thu, Dec 11, 2025 at 2:46=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
+e:
 
+> On 09/12/2025 19.48, Liu Jaloo wrote:
+> > $ cd qemu
+> > $ git submodule update --init roms/ipxe
+> > $ cd roms
+> > $ make pxerom
+> >
+> > report error like this:
+> >
+> >     In file included from tests/bigint_test.c:38:
+> >     tests/bigint_test.c: In function =E2=80=98bigint_test_exec=E2=80=99=
+:
+> >     tests/bigint_test.c:232:14: error: =E2=80=98result_raw=E2=80=99 may=
+ be used
+> >     uninitialized [-Werror=3Dmaybe-uninitialized]
+> >        232 |         ok ( memcmp ( result_raw, expected_raw,
+>
+> >              \
+> >            |
+>
+>   Hi!
+>
+> QEMU is just a user of the ipxe code, so if you want to get this fixed, I
+> think you have to report it to the ipxe project, see
+> https://ipxe.org/contact
+>
+>   HTH,
+>    Thomas
+>
+>
+
+--000000000000f7dc8a0645a286b5
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Thanks for your reply.=C2=A0</div><div><br></div><div=
+>$ cd=C2=A0roms/ipxe</div><div>$ git checkout master</div><div><br></div><d=
+iv>It works well now.=C2=A0</div><div><br></div><div>Maybe it&#39;s time to=
+ update the default ID of the ipxe submodule</div></div><br><div class=3D"g=
+mail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On =
+Thu, Dec 11, 2025 at 2:46=E2=80=AFAM Thomas Huth &lt;<a href=3D"mailto:thut=
+h@redhat.com">thuth@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D=
+"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
+04,204,204);padding-left:1ex">On 09/12/2025 19.48, Liu Jaloo wrote:<br>
+&gt; $ cd qemu<br>
+&gt; $ git submodule update --init roms/ipxe<br>
+&gt; $ cd roms<br>
+&gt; $ make pxerom<br>
+&gt; <br>
+&gt; report error like this:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0In file included from tests/bigint_test.c:38:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0tests/bigint_test.c: In function =E2=80=98bigint_te=
+st_exec=E2=80=99:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0tests/bigint_test.c:232:14: error: =E2=80=98result_=
+raw=E2=80=99 may be used<br>
+&gt;=C2=A0 =C2=A0 =C2=A0uninitialized [-Werror=3Dmaybe-uninitialized]<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 232 | =C2=A0 =C2=A0 =C2=A0 =C2=A0 ok ( memc=
+mp ( result_raw, expected_raw,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 <br>
+<br>
+=C2=A0 Hi!<br>
+<br>
+QEMU is just a user of the ipxe code, so if you want to get this fixed, I <=
+br>
+think you have to report it to the ipxe project, see <a href=3D"https://ipx=
+e.org/contact" rel=3D"noreferrer" target=3D"_blank">https://ipxe.org/contac=
+t</a><br>
+<br>
+=C2=A0 HTH,<br>
+=C2=A0 =C2=A0Thomas<br>
+<br>
+</blockquote></div>
+
+--000000000000f7dc8a0645a286b5--
 
