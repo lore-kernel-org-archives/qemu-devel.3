@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88312D41C24
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 18:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7279D41D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 18:02:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTkz1-0000eJ-0p; Thu, 11 Dec 2025 13:01:43 -0500
+	id 1vTkyz-0000dx-St; Thu, 11 Dec 2025 13:01:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vTkyz-0000dO-6I
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 13:01:41 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1vTkyv-0000cL-VH
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 13:01:40 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vTkyw-000607-1k
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 13:01:39 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4779adb38d3so3919235e9.2
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 10:01:37 -0800 (PST)
+ id 1vTkyu-0005zr-Eb
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 13:01:37 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4779cc419b2so4803825e9.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 10:01:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765476096; x=1766080896; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765476094; x=1766080894; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+y4zgoD+f0fN2QJ3KEy8mPHZuzX+JykDpAucVMG5uT4=;
- b=z5cMY8nEZntFyiZX/U+ZN1TUcVLvmdRweuWpIlAKYFKDzx452EKsr/jcy7Ak/AzIXE
- 0KWskxujoTBu3zKjLDxp612YjtjmTtDmkl0DVZhSJwgbV5KAecInpehv0tFz4trJ1Ex7
- IVN7VyZz31NWzZE5Q6A8GDGr2QrMDTzpa8dtbM9109sgczzAMgX5rhI3oAqxb7VwjqPF
- hYblx690y0jc+9aN9NlTfVLpgYFl+9BOUvCaFUB5w9x3K5q6hkDiSwX6YvI2ZoSZJxXX
- VvUG/Frp7T5yCW5nNQirXyeoTAdur+uNN3diCpPBfTXDL+MDKVjx5xchPA2WSPqSuukx
- 48jg==
+ bh=cWQolvt16cWTZUVbyb/ELIWzQoLluK0PM6lqjSDIQio=;
+ b=KVBbZ6dvgoYnZ66thjN6Ks8Mu5fIEgxypjBzlFB4SQ1MzFecjVFSXhQATJtPnxrVE6
+ m+1l9yIcmR3QtnASlPPaJXTQn3qub7l4f0l5/8Z4KXkQGUUZpuTxeCo1dyZUkfdbMbZh
+ pbztibhaVEPaBQ+Jjjre+2ltIyIUox76CtOPXu86MKy9p2TMSVy1ZLH6cbPdDY7skh4E
+ c3iVLsYSV+DwtvFbgBKTGWg9cbaKJvussRGFNFhz2No326vLk2h3/+2+gVWY8vR2qvru
+ qFqlpgXfKNssPJx9NJlbhV71QGpl7wdf3RgrIbgSlpL1azpKNl1BCmzzOqO0EmFVSIwz
+ uYiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765476096; x=1766080896;
+ d=1e100.net; s=20230601; t=1765476094; x=1766080894;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+y4zgoD+f0fN2QJ3KEy8mPHZuzX+JykDpAucVMG5uT4=;
- b=cn7sbTH/wMrHdYiKP1EJzCGrER7A1w72xKt1ErDYxNl9HOeGsf62zCta59PEL8tSZM
- yFeCLfUw/OGLcpXMEcYk9P7xD38vDoKchJe2Jj47H939m563Wl7+hBDMKnq/azsqsV8/
- JPYYCVmChAPid8Tw1B0NQxLivLH+HOlzpRCUTtENfsg6zRsbYNCd9/IVWkHJMzTKiwP2
- jyIHaNUUr7VnV19EX42xTFtAARMgac6d1u4tELASrQhRddZeEzSJZDDus9tgfvZkzJ8d
- 9hoxRvqVbE8BgwW6/s9VKLqhrzZCLMUbJUinind3GmU0MUnqakOt57K7k/RDGOAESNNL
- +wVQ==
-X-Gm-Message-State: AOJu0YyE+r//PxagVKUs8HhAiPuloG5ipYkZKYHm6CRQsADGyb8AXljk
- 0Fdgzge/4c0hwHHuwwDDz/TDzjLvOHX6MNJ7tLt6WRlvEHW1mPLRF3Xq5ZVRWr6AONI=
-X-Gm-Gg: AY/fxX4obCbtjA9w0b2B0QPxvsX37FNJvtJJ3IkCRDWUcD2SMqrJ6T86B6RnOe3MVsO
- ec7reitT3uIFsppcXLyhboqlSEaQXmmkYcuDAVxsK9Xp9Bp51kAfCN3+HKyCMvfww9UYdf5DvNp
- Sb23L8wAZ609J6AJM1RpWBZTl/b//k1tKkljjAaLgHhgPIO1Yps698nzNVWWiJ1zAmZZxtn/3Cq
- sXrkM8yMF2xsROy5X+qNS1YkhFlEHgtEaZ7AZny6Q5xn9LCVUVo3ZfaxzPGq4KYB3WD30BWOt/e
- 2+8kxSl3Hr3Qg/ERwvGWXCIzstLagxXnK/Q4Eh+EVeN/9tP+V4mkGbqTXZgTuMrTwRXrMjZQQTi
- cX+st4U5oqdLMj1zohBcFW9wxTgmJNx0J2/+FEWdUOQvTVTnhEB/tPd8TAEbPEhM/9J6LfMUE6S
- Mr9UkcqcaSFcM=
-X-Google-Smtp-Source: AGHT+IFId4bZZeZ1h79bDzQ61jLcGMeqhkkS+WyOENeIoltQe5dm8T2cTtmw0/KNkqKLBkZy7c0Egw==
-X-Received: by 2002:a05:600c:3b88:b0:46f:d682:3c3d with SMTP id
- 5b1f17b1804b1-47a8aef793dmr31249715e9.13.1765476096292; 
- Thu, 11 Dec 2025 10:01:36 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a89ef88d6sm18559145e9.8.2025.12.11.10.01.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=cWQolvt16cWTZUVbyb/ELIWzQoLluK0PM6lqjSDIQio=;
+ b=VDOpxPiQXTD6WpQPsc3wlO17FsF1pdgAuA+UvHD2hU0tbQIOjLS2aOfsntBZFZBLPu
+ BkcwSm1Z3R5oZAx9gZrDWud7aZfePrUeuTeJV9POO1XRQg8f6mH1yqoKPrMbf8hpMhbf
+ lCzsDh0wp3OrIm7Lfr10CeEruKuBgcq6yiiLQTLZ1/JriU3FBybwFfZLpw6PN2idUTP+
+ FqNQwEtX54V/KhDC36QueY3BeIDpVizobxiwRU+XpsXOZ+RdaSjxYOoDHUAbO2xk+q7d
+ vcSIsMDyAZn2MlUJ15Pv9yQZU2Ldw2n01Fep9nH6isViG8rQ7kalkTqoFcxp/eSYkTcw
+ 4x+w==
+X-Gm-Message-State: AOJu0Yyn6k9YRbVv/Z2AOsXIvQ8KC28/m8KpS/aO/lCGI90hLRd0Eaqa
+ kLTAS315PjC8k44qXQVf91GN6sTvwoKBQXOqX+XWnp9uTNwq5Bw/aQUpigZ4uw4fsDo=
+X-Gm-Gg: AY/fxX540+LK9lRhUez625k0tSiX9g7bgwFbaRWhncu0SRLgS7/CyWx2lNDUIaDwV0p
+ swjV7qBfoy5od9dqh1SlVFbwKg6qd7l80jmIn9hn5Q8KS6blNpN4i1e5oQ88ZtIU+5dhFHn8bXi
+ 5hFgLrHxaAY/CH32sapqm+sqNiMYO4r6sP9pV0W2k+sXUi6YNd585YoTzxSFvrD5gWz/NfOI/Gt
+ eZRNAbq7cvMDHnHlJTPjevDwCUW5TAN4r2R5IHSymRepu3W8j9dWGLvSxGuHSjj+8e0y8r5Ojec
+ MX22cNLUTK2vRWO5+cV800CYElYCOpADn0TRbegf2h6mAYwB0ELB3AhQkvYI+MlKe1thto1NC+b
+ vx5l5444kxIvfPb8YtiB2jF+5bvXUiy49aHHGRC79Z+US2emD4PbUrSbr1e71TqVwbn8E+oaVgs
+ O105TWwQqLewama8LqY7vntg==
+X-Google-Smtp-Source: AGHT+IHwJ+i4OYZzT+YvN8YtMYtwn/SB5NPWYvtbE+Eg/70C4vzBzDaLSYFIf5T3mFlQ58HI+UMEtg==
+X-Received: by 2002:a05:600c:3f0f:b0:477:a978:3a7b with SMTP id
+ 5b1f17b1804b1-47a8384333fmr68800735e9.22.1765476094429; 
  Thu, 11 Dec 2025 10:01:34 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47a89dac074sm45577045e9.8.2025.12.11.10.01.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Dec 2025 10:01:33 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EBFD45F898;
+ by draig.lan (Postfix) with ESMTP id C07F95F87D;
  Thu, 11 Dec 2025 18:01:32 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -73,17 +73,17 @@ Cc: Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH 4/9] scripts/get_maintainer.py: minimal argument parsing
-Date: Thu, 11 Dec 2025 18:01:27 +0000
-Message-ID: <20251211180132.3186564-5-alex.bennee@linaro.org>
+Subject: [RFC PATCH 2/9] MAINTAINERS: fix libvirt entry
+Date: Thu, 11 Dec 2025 18:01:25 +0000
+Message-ID: <20251211180132.3186564-3-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20251211180132.3186564-1-alex.bennee@linaro.org>
 References: <20251211180132.3186564-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,62 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We have a particular tag for lists so lets use it.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- scripts/get_maintainer.py | 44 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
- create mode 100755 scripts/get_maintainer.py
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/get_maintainer.py b/scripts/get_maintainer.py
-new file mode 100755
-index 00000000000..2b8fc7ae9ee
---- /dev/null
-+++ b/scripts/get_maintainer.py
-@@ -0,0 +1,44 @@
-+#!/usr/bin/env python
-+#
-+# get_maintainer.py: Print selected MAINTAINERS information
-+#
-+# usage: scripts/get_maintainer.py [OPTIONS] <patch>
-+#        scripts/get_maintainer.py [OPTIONS] -f <file>
-+#
-+# (c) 2025, Alex Bennée <alex.bennee@linaro.org>
-+#           based on get_maintainers.pl
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from argparse import ArgumentParser, ArgumentTypeError
-+from os import path
-+from pathlib import Path
-+
-+
-+def valid_file_path(arg):
-+    """
-+    Checks if arg exists and is a regular file or raises ArgumentTypeError.
-+    """
-+    if not path.exists(arg):
-+        raise ArgumentTypeError(f"File '{arg}' does not exist.")
-+    if not path.isfile(arg):
-+        raise ArgumentTypeError(f"Path '{arg}' is not a regular file.")
-+    return Path(path.abspath(arg))
-+
-+
-+def main():
-+    parser = ArgumentParser(description='Extract maintainer information. ')
-+
-+    # We can either specify patches or an individual file
-+    group = parser.add_mutually_exclusive_group()
-+    group.add_argument('patch', nargs='*', type=valid_file_path,
-+                       help='path to patch file')
-+    group.add_argument('-f', '--file', type=valid_file_path,
-+                       help='path to source file')
-+
-+    args = parser.parse_args()
-+
-+
-+
-+if __name__ == '__main__':
-+    main()
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 05b644cfc9b..a3fdc4ca911 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4466,7 +4466,7 @@ F: gitdm.config
+ F: contrib/gitdm/*
+ 
+ Incompatible changes
+-R: devel@lists.libvirt.org
++L: devel@lists.libvirt.org
+ F: docs/about/deprecated.rst
+ 
+ Build System
 -- 
 2.47.3
 
