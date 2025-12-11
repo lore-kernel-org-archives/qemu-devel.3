@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6959BD41C20
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 10:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03128D41C1F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 10:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTeJo-0007EP-MZ; Thu, 11 Dec 2025 05:54:44 -0500
+	id 1vTeJd-0007B4-9c; Thu, 11 Dec 2025 05:54:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vTeJf-0007Bf-Id
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 05:54:35 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vTeJb-0007AF-Ux
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 05:54:31 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vTeJd-0005XC-Sa
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 05:54:34 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vTeJZ-0005WX-ME
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 05:54:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765450473;
+ s=mimecast20190719; t=1765450467;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jllFb4lPPs3aua/s4mbXOmB0JJq73rvZH4XwtxYwvAY=;
- b=EixUP+XMLl2XKL5Yh95t3ebuxjtALL2mu38NKx3okOzlvc7OyrvGi4lecZCRwjoNhl1yCv
- K0+GZBqIrXC2H6dRO808+EwcJKIrDI8YWUFK9+9AGFrEAGnpY9gh7itnyjStPS5UuKo3hE
- guHk30thuB6IP3n3SZ1HWD8ehqmjxVY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=0y1grwpoA0+nEr5YXdr7c7I9+H7VqtMhVFS456ToAXw=;
+ b=LaASiDKoLIkw5mHOF/Kzs+QxXSFBvAt36S6FSZfOJhnfkAT0c57k2KBnBBjHZS45ZyVRcN
+ 6+GjGxM/1bJufW05fHtN74yVQvz1CJ0OxE57snmfez7dgBmHhEnN/vrJZadtHUEAHuTLsE
+ xlCU7OMpbRS2RLLNixPXtoynld8gXRY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-SOMOQ7xSPwiYAGrBu4P2WA-1; Thu,
- 11 Dec 2025 05:54:29 -0500
-X-MC-Unique: SOMOQ7xSPwiYAGrBu4P2WA-1
-X-Mimecast-MFC-AGG-ID: SOMOQ7xSPwiYAGrBu4P2WA_1765450468
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-49-aXRwuQIRN3iTPgg-IrJA0w-1; Thu,
+ 11 Dec 2025 05:54:24 -0500
+X-MC-Unique: aXRwuQIRN3iTPgg-IrJA0w-1
+X-Mimecast-MFC-AGG-ID: aXRwuQIRN3iTPgg-IrJA0w_1765450463
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B69B4195609F; Thu, 11 Dec 2025 10:54:28 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CD9471956071; Thu, 11 Dec 2025 10:54:22 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.156])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CA5E1180045B; Thu, 11 Dec 2025 10:54:27 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1ED73180057E; Thu, 11 Dec 2025 10:54:22 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 2F3A41800DD4; Thu, 11 Dec 2025 11:54:20 +0100 (CET)
+ id E620918007A4; Thu, 11 Dec 2025 11:54:19 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>,
@@ -56,15 +56,14 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Oliver Steffen <osteffen@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>, Luigi Leonardi <leonardi@redhat.com>
-Subject: [PATCH v2 4/5] igvm: add trace points for igvm file loading and
- processing
-Date: Thu, 11 Dec 2025 11:54:18 +0100
-Message-ID: <20251211105419.3573449-5-kraxel@redhat.com>
+Subject: [PATCH v2 1/5] igvm: reorganize headers
+Date: Thu, 11 Dec 2025 11:54:15 +0100
+Message-ID: <20251211105419.3573449-2-kraxel@redhat.com>
 In-Reply-To: <20251211105419.3573449-1-kraxel@redhat.com>
 References: <20251211105419.3573449-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -90,54 +89,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
----
- backends/igvm.c       | 5 +++++
- backends/trace-events | 2 ++
- 2 files changed, 7 insertions(+)
+Add a new igvm-internal.h header file.  Structs and declarations which
+depend on the igvm library header go into that file.
 
+Also declare IgvmCfg in typedefs.h, so the type can be used without
+including igvm header files.
+
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ include/qemu/typedefs.h        |  1 +
+ include/system/igvm-cfg.h      | 12 +-----------
+ include/system/igvm-internal.h | 26 ++++++++++++++++++++++++++
+ include/system/igvm.h          |  2 +-
+ backends/igvm-cfg.c            |  4 +++-
+ backends/igvm.c                |  2 ++
+ 6 files changed, 34 insertions(+), 13 deletions(-)
+ create mode 100644 include/system/igvm-internal.h
+
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 4a94af9665a5..416a8c9acead 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -55,6 +55,7 @@ typedef struct FWCfgState FWCfgState;
+ typedef struct HostMemoryBackend HostMemoryBackend;
+ typedef struct I2CBus I2CBus;
+ typedef struct I2SCodec I2SCodec;
++typedef struct IgvmCfg IgvmCfg;
+ typedef struct IOMMUMemoryRegion IOMMUMemoryRegion;
+ typedef struct ISABus ISABus;
+ typedef struct ISADevice ISADevice;
+diff --git a/include/system/igvm-cfg.h b/include/system/igvm-cfg.h
+index 944f23a814dd..6c07f3084082 100644
+--- a/include/system/igvm-cfg.h
++++ b/include/system/igvm-cfg.h
+@@ -12,19 +12,9 @@
+ #ifndef QEMU_IGVM_CFG_H
+ #define QEMU_IGVM_CFG_H
+ 
++#include "qemu/typedefs.h"
+ #include "qom/object.h"
+ 
+-typedef struct IgvmCfg {
+-    ObjectClass parent_class;
+-
+-    /*
+-     * filename: Filename that specifies a file that contains the configuration
+-     *           of the guest in Independent Guest Virtual Machine (IGVM)
+-     *           format.
+-     */
+-    char *filename;
+-} IgvmCfg;
+-
+ typedef struct IgvmCfgClass {
+     ObjectClass parent_class;
+ 
+diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
+new file mode 100644
+index 000000000000..475a29bbf3d7
+--- /dev/null
++++ b/include/system/igvm-internal.h
+@@ -0,0 +1,26 @@
++/*
++ * QEMU IGVM private data structures
++ *
++ * Everything which depends on igvm library headers goes here.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_IGVM_INTERNAL_H
++#define QEMU_IGVM_INTERNAL_H
++
++#include "qemu/typedefs.h"
++#include "qom/object.h"
++
++struct IgvmCfg {
++    ObjectClass parent_class;
++
++    /*
++     * filename: Filename that specifies a file that contains the configuration
++     *           of the guest in Independent Guest Virtual Machine (IGVM)
++     *           format.
++     */
++    char *filename;
++};
++
++#endif
+diff --git a/include/system/igvm.h b/include/system/igvm.h
+index 48ce20604259..8355e54e95fc 100644
+--- a/include/system/igvm.h
++++ b/include/system/igvm.h
+@@ -12,8 +12,8 @@
+ #ifndef BACKENDS_IGVM_H
+ #define BACKENDS_IGVM_H
+ 
++#include "qemu/typedefs.h"
+ #include "system/confidential-guest-support.h"
+-#include "system/igvm-cfg.h"
+ #include "qapi/error.h"
+ 
+ int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
+diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+index d00acf351249..001c4dc93346 100644
+--- a/backends/igvm-cfg.c
++++ b/backends/igvm-cfg.c
+@@ -11,8 +11,10 @@
+ 
+ #include "qemu/osdep.h"
+ 
+-#include "system/igvm-cfg.h"
+ #include "system/igvm.h"
++#include "system/igvm-cfg.h"
++#include "system/igvm-internal.h"
++#include "system/reset.h"
+ #include "qom/object_interfaces.h"
+ 
+ static char *get_igvm(Object *obj, Error **errp)
 diff --git a/backends/igvm.c b/backends/igvm.c
-index a01e01a12a60..4cf7b572347c 100644
+index 905bd8d98994..fbb8300b6d01 100644
 --- a/backends/igvm.c
 +++ b/backends/igvm.c
-@@ -20,6 +20,8 @@
+@@ -14,6 +14,8 @@
+ #include "qapi/error.h"
+ #include "qemu/target-info-qapi.h"
+ #include "system/igvm.h"
++#include "system/igvm-cfg.h"
++#include "system/igvm-internal.h"
+ #include "system/memory.h"
  #include "system/address-spaces.h"
  #include "hw/core/cpu.h"
- 
-+#include "trace.h"
-+
- #include <igvm/igvm.h>
- #include <igvm/igvm_defs.h>
- 
-@@ -886,6 +888,8 @@ IgvmHandle qigvm_file_init(char *filename, Error **errp)
-         error_setg(errp, "Unable to parse IGVM file %s: %d", filename, igvm);
-         return -1;
-     }
-+
-+    trace_igvm_file_loaded(filename, igvm);
-     return igvm;
- }
- 
-@@ -903,6 +907,7 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-         return -1;
-     }
-     ctx.file = cfg->file;
-+    trace_igvm_process_file(cfg->file, onlyVpContext);
- 
-     /*
-      * The ConfidentialGuestSupport object is optional and allows a confidential
-diff --git a/backends/trace-events b/backends/trace-events
-index 45ac46dc2454..7a00e9bf6c16 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -26,3 +26,5 @@ iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, u
- igvm_reset_enter(int type) "type=%u"
- igvm_reset_hold(int type) "type=%u"
- igvm_reset_exit(int type) "type=%u"
-+igvm_file_loaded(const char *fn, int32_t handle) "fn=%s, handle=0x%x"
-+igvm_process_file(int32_t handle, bool context_only) "handle=0x%x context-only=%d"
 -- 
 2.52.0
 
