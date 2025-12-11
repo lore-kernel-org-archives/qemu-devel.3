@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2C8D3E78F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 791B7D3E793
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:45:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTZTO-0001Xm-GA; Thu, 11 Dec 2025 00:44:18 -0500
+	id 1vTZUR-0005BC-Cc; Thu, 11 Dec 2025 00:45:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTZTM-0001Pf-RS
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:16 -0500
+ id 1vTZU7-0004k6-3o
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:45:03 -0500
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTZTK-0001ci-WB
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:16 -0500
+ id 1vTZU5-0001ci-BS
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:45:02 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765431855; x=1796967855;
+ t=1765431901; x=1796967901;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=MoFwaE7HCu9hCP09pscNetCaYn3cG1uOpKDAv/wkIAM=;
- b=YC77eOqTB4pEHMYk6TJ1PsTA8My/Gz4gYfFvpK9CznI7a11qADPBCklu
- MtHEo8vXsxa7WGuyg6eMn6IRrab9wK00NWNL46OV29xZQ/bBXBvam+BSd
- lu73Mtzy1suIVeI4pE2u8+OcO8bpEQzJwrIWoQ/LhfKPTqC/QuTnPkQj2
- VpP+xMsbcv182pO9oTA+BfsZT9oYnEUf8qWyNZBwDszOXTifeqJkI0glD
- SfZqEatJHvnMjQ7JEOmE4DMs8gZxmP7Yvcq2v23YFE8HimUJgbb3GgrwE
- 4wmcKJvrEE1BhIswli6mLUw1mi2mN8IB3Jj8rXhGuWnVVj61bMm+QpAj3 Q==;
-X-CSE-ConnectionGUID: qfFx4TlOTdWYX2DF7eljMw==
-X-CSE-MsgGUID: ue/u0YZ4RteHnGOnXYZQTA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="66409920"
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="66409920"
+ bh=0uF8jj575zYxVcWmkztmsgjmlH5SFSks+bBKxFEAv3A=;
+ b=NEsXGvmc/A+DgMj0wOX5tLuU3Vab32ONrPp5oFZ/KkgZjTcxsTcFW5x5
+ e16wma0Xr96RW4zhCxplrguzQNqVW9zKDUm6muspKJA6CcjRnDiGW57zi
+ PHSRaeaXBiYotTL0MdfnUZbjbJNYveYOpFp6tZ0soEPXGoLhL+1EmaS0+
+ 9nJlW7hg9SutW0xwnIQ/RjRUayNkqPb3Xox/cqv8UFy/X065lzpsqw1sx
+ 9DfKxjtVh+v1FlUL4eozmrdKeCRA0kutcWkFFlgFPL5EQwF9HnfyUxvjV
+ RZobycvXhTH3MvNtxYa30wJZVRhGGjx8RCKM3Tyu3TEtvxTCf0e9Soa78 A==;
+X-CSE-ConnectionGUID: d8MCDKTgRxKS8YiKLyU1pw==
+X-CSE-MsgGUID: +F877dGCTS+PJkVTcf/2oQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="66410017"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="66410017"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2025 21:44:14 -0800
-X-CSE-ConnectionGUID: SviPlzvqQHKVfZiY+MWIxA==
-X-CSE-MsgGUID: tDQ4DGX+RY2hBQ0RgCnhHw==
+ 10 Dec 2025 21:44:48 -0800
+X-CSE-ConnectionGUID: R+WptcuRQoWiK19k3FqoBQ==
+X-CSE-MsgGUID: LYgSZ0qYRROV8ROnrBh0cQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="227366140"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="227366269"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 10 Dec 2025 21:44:08 -0800
+ by orviesa002.jf.intel.com with ESMTP; 10 Dec 2025 21:44:44 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
@@ -53,9 +53,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
  Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
  Farrah Chen <farrah.chen@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 13/22] i386/cpu: Save/restore SSP0 MSR for FRED
-Date: Thu, 11 Dec 2025 14:07:52 +0800
-Message-Id: <20251211060801.3600039-14-zhao1.liu@intel.com>
+Subject: [PATCH v5 22/22] i386/tdx: Add CET SHSTK/IBT into the supported CPUID
+ by XFAM
+Date: Thu, 11 Dec 2025 14:08:01 +0800
+Message-Id: <20251211060801.3600039-23-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251211060801.3600039-1-zhao1.liu@intel.com>
 References: <20251211060801.3600039-1-zhao1.liu@intel.com>
@@ -86,91 +87,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Xin Li (Intel)" <xin@zytor.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
 
-Both FRED and CET shadow stack define the MSR MSR_IA32_PL0_SSP (aka
-MSR_IA32_FRED_SSP0 in FRED spec).
+So that it can be configured in TD guest.
 
-MSR_IA32_PL0_SSP is a FRED SSP MSR, so that if a processor doesn't
-support CET shadow stack, FRED transitions won't use MSR_IA32_PL0_SSP,
-but this MSR would still be accessible using MSR-access instructions
-(e.g., RDMSR, WRMSR).
-
-Therefore, save/restore SSP0 MSR for FRED.
+And considerring CET_U and CET_S bits are always same in supported
+XFAM reported by TDX module, i.e., either 00 or 11. So, only need to
+choose one of them.
 
 Tested-by: Farrah Chen <farrah.chen@intel.com>
-Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changes Since v3:
- - New commit.
+ - Refine the commit message.
 ---
- target/i386/cpu.h     |  6 ++++++
- target/i386/kvm/kvm.c | 13 +++++++++++++
- 2 files changed, 19 insertions(+)
+ target/i386/kvm/tdx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index a1ff2ceb0c38..84e5cf0ab0c1 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -554,6 +554,9 @@ typedef enum X86Seg {
- #define MSR_IA32_FRED_SSP3              0x000001d3       /* Stack level 3 shadow stack pointer in ring 0 */
- #define MSR_IA32_FRED_CONFIG            0x000001d4       /* FRED Entrypoint and interrupt stack level */
- 
-+/* FRED and CET MSR */
-+#define MSR_IA32_PL0_SSP                0x000006a4       /* ring-0 shadow stack pointer (aka MSR_IA32_FRED_SSP0 for FRED) */
-+
- #define MSR_IA32_BNDCFGS                0x00000d90
- #define MSR_IA32_XSS                    0x00000da0
- #define MSR_IA32_UMWAIT_CONTROL         0xe1
-@@ -1970,6 +1973,9 @@ typedef struct CPUArchState {
-     uint64_t fred_config;
- #endif
- 
-+    /* MSR used for both FRED and CET (SHSTK) */
-+    uint64_t pl0_ssp;
-+
-     uint64_t tsc_adjust;
-     uint64_t tsc_deadline;
-     uint64_t tsc_aux;
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 60c798113823..00fead0827ed 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -4008,6 +4008,11 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP2, env->fred_ssp2);
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP3, env->fred_ssp3);
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_CONFIG, env->fred_config);
-+            /*
-+             * Aka MSR_IA32_FRED_SSP0. This MSR is accessible even if
-+             * CET shadow stack is not supported.
-+             */
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, env->pl0_ssp);
-         }
-     }
- #endif
-@@ -4495,6 +4500,11 @@ static int kvm_get_msrs(X86CPU *cpu)
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP2, 0);
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP3, 0);
-             kvm_msr_entry_add(cpu, MSR_IA32_FRED_CONFIG, 0);
-+            /*
-+             * Aka MSR_IA32_FRED_SSP0. This MSR is accessible even if
-+             * CET shadow stack is not supported.
-+             */
-+            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, 0);
-         }
-     }
- #endif
-@@ -4746,6 +4756,9 @@ static int kvm_get_msrs(X86CPU *cpu)
-         case MSR_IA32_FRED_CONFIG:
-             env->fred_config = msrs[i].data;
-             break;
-+        case MSR_IA32_PL0_SSP: /* aka MSR_IA32_FRED_SSP0 */
-+            env->pl0_ssp = msrs[i].data;
-+            break;
- #endif
-         case MSR_IA32_TSC:
-             env->tsc = msrs[i].data;
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index a3444623657f..01619857685b 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -526,6 +526,8 @@ TdxXFAMDep tdx_xfam_deps[] = {
+     { XSTATE_OPMASK_BIT,    { FEAT_7_0_EDX, CPUID_7_0_EDX_AVX512_FP16 } },
+     { XSTATE_PT_BIT,        { FEAT_7_0_EBX, CPUID_7_0_EBX_INTEL_PT } },
+     { XSTATE_PKRU_BIT,      { FEAT_7_0_ECX, CPUID_7_0_ECX_PKU } },
++    { XSTATE_CET_U_BIT,     { FEAT_7_0_ECX, CPUID_7_0_ECX_CET_SHSTK } },
++    { XSTATE_CET_U_BIT,     { FEAT_7_0_EDX, CPUID_7_0_EDX_CET_IBT } },
+     { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_BF16 } },
+     { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_TILE } },
+     { XSTATE_XTILE_CFG_BIT, { FEAT_7_0_EDX, CPUID_7_0_EDX_AMX_INT8 } },
 -- 
 2.34.1
 
