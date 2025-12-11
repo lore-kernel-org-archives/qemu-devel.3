@@ -4,94 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E7F2D41D61
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:05:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 960E2D41D64
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:05:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTjAA-0000RM-S4; Thu, 11 Dec 2025 11:05:06 -0500
+	id 1vTjAT-0001Ln-5V; Thu, 11 Dec 2025 11:05:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTj9d-0000Em-35
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:04:33 -0500
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTj9Z-000593-PG
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:04:31 -0500
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-7c77fc7c11bso227994a34.1
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:04:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTjAR-0001Gs-0M
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:05:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTjAO-0005f4-Dq
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:05:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765469119;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/xZHP6jvOA6pHJbmgu03YLTceq1gh2DaRrR/YyCbfKU=;
+ b=C1YjfhW7YL84ipuYgCo3Y2PbcOxl2Ds7S2UlxqaGjuNaNVq1wa49ABvAYrur0gRmskDCAw
+ y8NQRHt1PFtNw+7RbkzNvlDPiSfLPQQ+FiKKMiYxoafpV4+k5YkmVBQvdb/zP7twUmk7yZ
+ dAoK8wKzZUE+k/TiYJH/21A2o67pyW8=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-575-svj59us0Mku0K0aQZDX32w-1; Thu, 11 Dec 2025 11:05:15 -0500
+X-MC-Unique: svj59us0Mku0K0aQZDX32w-1
+X-Mimecast-MFC-AGG-ID: svj59us0Mku0K0aQZDX32w_1765469115
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4ee21a0d326so3535201cf.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:05:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765469068; x=1766073868; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BmitcQb1V5rb54cGQXvsCZVm1Y1YGXc8fFkzyOmKBUI=;
- b=iNOeD4aSE30c7AaCfyGZ+QOrb7ldpagnC9XYfaSrp4ZwVYytjjYuEQwrJvITfCOSIF
- cNeV9fUvqx5wrKdFbqGixBy6e5usoBJrIwWp8WkDBL6dO/9oxmDFO6i6q5go7s85Nb+o
- pBra4u71OgU2uj8BXFnZkZdb8gvlGQ4Nmb6ajGTzSq2I5wA74ki8B/1HB2TP3WV0Ag92
- Uue8g4rrF7mwlP9v/NK9tPBWrvoC685r01SWrUqKGjc8WtUMk86CkaM6BQ+D/cVK+wo2
- kRDvr16Tip0bC7JjWBEHOPSvu/3sHGx1LoF7GTLxelDE/o/lomRd1eudGceLiLtON3SN
- FdZg==
+ d=redhat.com; s=google; t=1765469115; x=1766073915; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=/xZHP6jvOA6pHJbmgu03YLTceq1gh2DaRrR/YyCbfKU=;
+ b=m6Lm9z5IxwS3e8CnwyPbnP2qdVUTVcf4jlYr5KyJi7s1FphQ4+7H394oFxc1b1W/Ok
+ pazTVD5/bwkPsrEiu/sAobTnnrXhdD5MNpeP6B0mkj/2Aall2vU/XjCt1PkaoAMKwnrB
+ XEo2aUe/zSMPoSNcIuFerGTQrGZ9rtlTPT8kOSFaeYdbXjXqKzQ8GaOJLtn8w4lv3Lej
+ nvmNLBWtt0QL9mk/X9394MI+vqHvnLVoP9e5dAnvOfHFr2tz1ilML9hJDwgujrSg2yYY
+ MH1R0KkpyQe5sGEQdUXEoqrv1f4rOJfhNYbGueV+suTqCuSHglPos24i3jtiIiDSSFrq
+ TRiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765469068; x=1766073868;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BmitcQb1V5rb54cGQXvsCZVm1Y1YGXc8fFkzyOmKBUI=;
- b=eLbfOm2/xSZ1C75ayj+I3JDmVm9ly8+LhiECqK6ualxIWrB5GAtIeYEgQF+RgeQ6Td
- dI7RnXbQSgdVpYg1sKyFxtSZrpsCRjurm75DZI+PT703TvB3PSsfaIItYsU9WhLWszIh
- Nerqx5SBam8rI8YE6T5C6kz7Z5g6wLZK4JEqoJw+1dXRBOxFirYxj4OJ/GZsh/4BT8SO
- uWpri+K/bKzR1ZYG5rDVuO9uCIB03s8QS8HixcZ1aLYl0ac51vIOep5+6jaMx2wePiHZ
- djKfXRwnMniaspjN55chwKrQyZ+GNine5RJA50GLc76TpjXhDmDV/AGITg4d8mGni6tJ
- A7Hw==
+ d=1e100.net; s=20230601; t=1765469115; x=1766073915;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/xZHP6jvOA6pHJbmgu03YLTceq1gh2DaRrR/YyCbfKU=;
+ b=XAsZJP6Zpfw5k9k9T5z3KWNbz3nxMt8Zg/euiSD+CTAehyO7a7WA6F5EwHk/2cFJeb
+ P1z1lh1/VvTAbiRjuT/uHhNSCEzxqFCM5qHHKziQvQec5WLD1TdgN8cvndcwV8mzOieq
+ QNqQWwOdhG7zjBjRphqD63AzqKsM++5kSaeBNVRnPDw0aWkmDKwM/+BmXl0aRA38CHHZ
+ l3DCsAVHLSe9oquyh5mmAuFuS8ao4H6MaoRIpdSmLYpsYa3KYJFFUT/eFPa8WOE+eY+j
+ YhGaRRdyI9x3SRzP4+iXp5LOjrFgr3alRhBeOSEC3AObFdFDEKS8+zbj+P4aUU5LII9C
+ R5UA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/UX+hFGdsR6zVR+fS/voegXjDvZoBhbyTUNWcYfqx4/wFk5sgryw5wK68aS5mmQZWQCcxyNvPz67A@nongnu.org
-X-Gm-Message-State: AOJu0YzU3WlHXznW0t5I9FR+NAapKcS3HRyeGNO5LGfmXzEifsyGiL0l
- A0az790JOkeCeKcGhDY13XP7Q0xv1tS1l6MP7/7yCE7jHGBoRDmF3gwf8BxnuD/ad0bfDtwmhvg
- W37nK/fQ=
-X-Gm-Gg: AY/fxX4v60gopsxqofxGClE0H3Bb7+d9tbQM12ClJUBx0cDAy41PtQGwu2tLjJRsXoV
- T8D6llg3hU60Lek8H8JOzDSfP1JwCeznOHPYcC+ORWshpx+k13KVvQikYpvk0zxTz3al1nEp8DB
- GfB/OEEhUnn5Wnz94TqLp9slcU4eSx5ejIYqV8ga3kPgkyoxG8y913XiOxACyIyZLiKiYXEjX5h
- MACxzBq0vpQTGtJkKwDgMW71tnnLBLazbKTEiV3GF173Wb9CIXKZ3GMQLDaBvhdLRWthMg6zsSM
- eKlHOjeF2bdaLRx03JG3FW+SVc4MdUvHqyWNsRpQUQar8Hjgxcxb8riX32AieQTmAQYHMhu6Cu4
- zl5ECCYX3fsoMRmBZTITYKeZE1Ra5p0EVXYtrVazYdR0gu3kS54sXxrjIjFVhu4TkjVEcj1FTmb
- +KmsCPsCExn7hBdXSSchbtQkYUDhJIf9LoteKSkLbA0IBqLQ4W9aBot0Z1n8Rn79akc7YsACu4A
- hI=
-X-Google-Smtp-Source: AGHT+IHYrljbkga2vbK7oZg4d2RzhMxPxaEfwmVI6uK3q7CiVCqxKN14CjjlqfnoglSXb5gBGF7blA==
-X-Received: by 2002:a05:6830:43a1:b0:7c7:6626:b599 with SMTP id
- 46e09a7af769-7cadcdff87fmr1408056a34.1.1765469066807; 
- Thu, 11 Dec 2025 08:04:26 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7cadb2fc086sm1650858a34.18.2025.12.11.08.04.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 08:04:26 -0800 (PST)
-Message-ID: <58e15332-6eed-474b-b440-bc8cf4bf79d9@linaro.org>
-Date: Thu, 11 Dec 2025 10:04:24 -0600
+ AJvYcCU796KE8iJwTppKf7wVCBoISw2miwUJySnxDg4DU4bCFPoYC6k/1i3XSDDWlcCN6mZmKG+YYoFfrHVt@nongnu.org
+X-Gm-Message-State: AOJu0YwdxOROaxy7d//7xiM/om51SWB3M1Zi7chx03EkgC98ACg699t9
+ +ab6di6gsWzDW+3RQauhx3m0I0p6NMSqW7Ez/9cBcIByvHmzh5sBecF4JEvfyERV1nyS+X/5whm
+ agzcISh9gjSRina6ta0iMA7xoyxO4D4NGh9PybnchHSq5gJGY4q97oXzh
+X-Gm-Gg: AY/fxX4rvjlxF4g4UmJHxSz5ntI0Pf4TX/pYo2Fl+w0tTwrHtD8VdeKDLnwogl2HoTT
+ y3fDfLPlI4NaXYMqkxypc7QSfoKK/rhKhS9oIrooEdTw3B+LiX9rEXCyFJMePBdlsrECVOqYo9+
+ QMMM27mbOxB+pTLcTVMj2DX88P5Fl6Bv5euRmg7iSDCWtOG8TwXXnMH8GlI+ilSAgv+QRGZN+Ab
+ sfts0tN9feaIJJYtM/zGIg20mYYUrXzK5IdDcQePbwT/Asn1bgx/k4iJkEq+BqT5mE3pCedIldA
+ Ej600Nx48gz7goqHaLF9d5GL0tFKjALlUyiK44ymhKhXSAt66teWgcwsb1kP1qVj6yAKCnHVV67
+ r6aY=
+X-Received: by 2002:ac8:580a:0:b0:4ee:1676:faa6 with SMTP id
+ d75a77b69052e-4f1b1a69b7cmr93635961cf.20.1765469114729; 
+ Thu, 11 Dec 2025 08:05:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEntdBTiaJSMo3Lgp3WVB9FwNe2ASc/72wMM0KtuyQIayQ8O7OzD8p4OamfqgL4J8TECPclnA==
+X-Received: by 2002:ac8:580a:0:b0:4ee:1676:faa6 with SMTP id
+ d75a77b69052e-4f1b1a69b7cmr93634971cf.20.1765469113889; 
+ Thu, 11 Dec 2025 08:05:13 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4f1bd58d63esm19378831cf.3.2025.12.11.08.05.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Dec 2025 08:05:13 -0800 (PST)
+Date: Thu, 11 Dec 2025 11:05:11 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-devel@nongnu.org,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
+Message-ID: <aTrrt1OODz2ELU0X@x1.local>
+References: <20251209162857.857593-1-peterx@redhat.com>
+ <aTlZIlgB20OpdSEl@redhat.com> <aTle5C2pN8ZslZX7@redhat.com>
+ <aTmdJ5H67mk8qmSC@x1.local> <aTqTcM9zsGpW-F45@redhat.com>
+ <aTrenNP7Vq4XO2DP@x1.local> <aTricLooEPFJqZhe@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/18] target/i386/tcg: move and expand misplaced comment
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20251210131653.852163-1-pbonzini@redhat.com>
- <20251210131653.852163-8-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251210131653.852163-8-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x335.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aTricLooEPFJqZhe@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,23 +140,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/10/25 07:16, Paolo Bonzini wrote:
-> @@ -2222,6 +2217,10 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
->   {
->       X86OpEntry *e = &decode->e;
->   
-> +    /*
-> +     * Each step decodes part of the opcode and place the last not-fully-decoded
+On Thu, Dec 11, 2025 at 03:26:13PM +0000, Daniel P. Berrangé wrote:
+> On Thu, Dec 11, 2025 at 10:09:16AM -0500, Peter Xu wrote:
+> > On Thu, Dec 11, 2025 at 09:48:32AM +0000, Daniel P. Berrangé wrote:
+> > > The appealing thing about machine types is that it is an opaque
+> > > collection of properties. The mgmt app does not need to know about
+> > > any of the properties being set, it can just let the machine type
+> > > do its magic.
+> > > 
+> > > Probing values for individual features which are supported on a host
+> > > means mgmt apps need to be made aware of all the properties that are
+> > > affected, and keep track of them for the life of the VM. This is a
+> > > significantly higher burden for the mgmt app to deal with that the
+> > > opaque collection machine types define, especially because apps won't
+> > > know ahead of time which objects/properties might need this facility
+> > > in future.
+> > 
+> > Yes, exactly.
+> > 
+> > IMHO we may still need "probing" of host features at some point, but we do
+> > have two completely different way to stable the guest ABI:
+> > 
+> >   (a) Machine types (like now)
+> >   (b) "probing" + "QMP set()s"
+> > 
+> > Here "QMP set()s" can be QMP updating a property of an object, or something
+> > like what Vladimir proposed in the other virtio-net/tap series, via a
+> > separate new QMP command.
+> > 
+> > Solution (b) has a major benefit of high flexibility - we do not need
+> > machine type versioning anymore (hence, we still need "q35", but not
+> > "q35-X.Y" etc.), because any QEMU can likely migrate to almost any QEMU:
+> > mgmt will probe both sides and apply mini subset for both sides, no matter
+> > how old it was.
+> > 
+> > To pay that off, mgmt needs to know every single trivial detail of QEMU
+> > change on every single device to make migration work.  When new things
+> > introduced to QEMU, it must be OFF, then mgmt turns it on until probing
+> > both sides have it.
+> > 
+> > That makes solution (b) less appealing.
+> > 
+> > The other thing is, since we stick with solution (a) for all these years,
+> > IMHO we should either stick with it, or if we really think (b) is better we
+> > should gradually obsolete (a) and use (b) all over.  I just don't see it
+> > coming, though.. as (a) is still working almost perfect - it enables
+> > feature slower only until a new machine type used (normally means a VM cold
+> > reboot), but it hides too many trivial details mgmt doesn't need to care,
+> > hence much less work needed.
+> > 
+> > IMHO we should be careful on making both (a)+(b) available (again, for (b)
+> > the probing is still fine, it's about offloading things to mgmt to set()
+> > via QMPs).  If so, it likely implies we didn't think all things through.
+> 
+> I don't believe that probing could ever be a placement for (a). Determining
+> what you want to use is not a decision that can be made in isolation of
+> the current host. You need to know the capabilities of hosts that you
+> intend to be able to migrate to.
+> 
+> Machine type versions facilitate this as an admin can express the
+> compatibility constraint in terms of this high level opaque definition,
+> and not have to understand 100's of properties and their supportability
+> across many hosts.
+> 
+> The same applies to non-guest host compatibility settings. I might be
+> runing on a RHEL-9.6 host, but I want to have compatibility with any
+> RHEL-9.2 host or newer. I can't probe QEMU on the 9.6 host to determine
+> what is acceptable for 9.2. We need to be able to express that cross
+> host compatibility as an admin, without having to list a huge set of
+> individual properties.
 
-places
+Yes, maybe I didn't explain myself clearly, I believe we share the view.
 
-> +     * byte in decode->b.  If the modrm byte is read, it is placed in s->modrm.
-> +     */
->       decode_func(s, env, e, &decode->b);
->       while (e->is_decode) {
->           e->is_decode = false;
+My point was we shouldn't introduce special QMP commands to do set()s just
+to work similiarly as what machine versioning / compat properties do.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I hope we will start to have something like query-platform soon.  Jason and
+Michael have some discussion here, which should be discussing similar
+concept:
 
-r~
+https://lore.kernel.org/all/CACGkMEtdxWJygVbcuvER5yj13R0JL_bxPSAg0eYyiBeh=SyRXg@mail.gmail.com/
+
+Maybe USO can be a start point for us doing this, allowing mgmt to probe
+host features.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
