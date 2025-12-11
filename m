@@ -4,94 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE1FD41D57
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8175D41D55
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTiP9-0001Ax-MW; Thu, 11 Dec 2025 10:16:35 -0500
+	id 1vTiRI-0002jz-Kp; Thu, 11 Dec 2025 10:18:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTiOv-0000xl-1p
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:16:21 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTiRF-0002jL-LX
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:18:42 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTiOs-0002UH-EO
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:16:16 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47774d3536dso2366325e9.0
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:16:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTiRE-0002go-7u
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:18:41 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-42e2d02a3c9so146917f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:18:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765466173; x=1766070973; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1765466318; x=1766071118; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wYfoLmiosUhDWjsaKlOfIamPKI0njxPzpav86ZyNrZ8=;
- b=vkSN1i9QKJv9MeNdaQAevELCjdHIfeb1TdK6ZRBGJoFiJb+mMTVl6UM33OwqBiEgcV
- JhOkF/Qm42P47axKyV1OQdxS3BWSIMP9vH0wgcbwEMra0XpWWSPVMHe4RRDCZEEUV2Kl
- zPZ//BThcc7MafsYLKPpNeixYdSREdOL5pLNcQqJ2kH39suMOV0cUYo+Tvvd0jVs7lce
- S4kuevSVd8CE5i3JFhqLX5husQD0hz5UXuoF/7ept8bB6LjRgK6WErpwHqyXOEPS29++
- 8FYqv+C77S4fqGG77poF0cb64fi2eIp9NX59G6Rcf7zRaFyr8dT2F2Zz6TIfdt268i3V
- izjw==
+ bh=fhJ8e5w38AnuD06lyPkirTR1wBtOPe7ryXgBk91XOrg=;
+ b=EKsuUIjTUY+ywzkGbhJT1CXbd+L635Hkjl5yFPuIyNTJvlLtIRp+9Fky3q2ev5fei0
+ Xk127VrJId8ZIN38ighCnATusIqoZSL4r2ZzS9treSnDRlB4qckc9Ipy24OtI1ReqXuR
+ 54ftgzi6HGvJdHb981ZiX15rrQeqBMj8xeQuQ9pQxNEI3Eqt9GoYICmZDPJ3NpC4zied
+ 6+7hhwFS/C4jxRyek6Pfe5puBqWBDXHr77kdK6OJ0yf0E6D5sVfhoSiad2IDLe2gUF4h
+ U0cHlw9NQhgefAtvGE2wjt3Q0tqOK74c99v/JeZcEWwbdLNZqc+jmCFzQlrfIYdyO18B
+ ycYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765466173; x=1766070973;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20230601; t=1765466318; x=1766071118;
+ h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=wYfoLmiosUhDWjsaKlOfIamPKI0njxPzpav86ZyNrZ8=;
- b=LC3YtDZL2MJarB8Av8p0d60vWXBl9nGnENsnlG4lh/mpE9sg+OX944uwLTEnbppTmT
- q1OQRZieR8yh8Y9Jms7kwvvw4ucBsgAfru0Hk33KygVKjFKByBQBZCVPw+xe+VovDZIl
- Vekz8ToCQnmQV7b1pce+bg/K/gI/0RRkgeJax6cEaOXbx/R88MbhoOHrV/oz48kQ1by3
- 6zlBb1VCbs3UbNm2oafccVO6CYLAAfi1YctmNeHj5uAu8lHVlpD0IyH4Idaowk2DZMdr
- FxjjBR8wxeQ/liY/SpK8wi4gtZPIdUA3arv2oCuL14Pib4XL20C2+KTg3dt46KvnEnU/
- TJug==
+ bh=fhJ8e5w38AnuD06lyPkirTR1wBtOPe7ryXgBk91XOrg=;
+ b=kZuKsSjlmhsuocqhm9rF3K9Nijbs1MvVHqJoFgL88yWCDMVmwvyt0GHj76cp/oph63
+ /msd1kRI0rc3fHH2sLI83sak2UYoOpXEnERHtwmhCoP++hGc8xeVbOrQo5HLSsmmfaV4
+ v9PlR1vCBmNf/3ulDMNIrc1xQ43ddDCdJsbK8wsSSnhiUjPUdKDFww7JLf1w/diNT+NW
+ AnhyZCB/XFdzGdrjhLBjzq8UJYBjShZQf1EaWP0x4Fylb9sSss5WCXWSyRgxFWAIoToR
+ tKp+xtJgzE2Kp7RgadQwlg/QEArvoJdU7WTCx6MLbhY5f0wt7YdXYrUI+lcuZ9XIJP7g
+ Cm8g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVW/p4bUwE8XBN64OHDlVk2yfFQyZGfa7C2pmVhzIa81x/dPOHSGMNkqL5bL1CV1PxU5rJMGWzXLceP@nongnu.org
-X-Gm-Message-State: AOJu0YxMsLUhfif/j4w1OcxylZLLZHCGfYibKL02ih88AAUci1UAGE+6
- KE9rz/MfCF88V41gXVOtVG2xq9meWS9pTgCeH5zsOLfG9pArkK0CFA56VZ2d/QFRKGI=
-X-Gm-Gg: AY/fxX4yr6lxrVECjEN9yn24G9v8zutvLl7p+PrJufL3/IeuJDzzs8+cFJJkvMj7nuJ
- w4Lfpaw0/REUbGWQarWrQ7b8snkfEhKyb/cWdNl8qfJjrI/Py+gAzBXmcRdCl+rBlHHS+ZUzrWq
- UVE9uaGg2vjgksb6hraV0YxBH1WWqBqlCY6mvYw048hdlNPMuqaXdfNd33284pnlJRtrhj1U9ol
- e/j06+hKTK3kTwz2jI2T074T5WXvS+L8iNPjMhaNG+Oc85Qfsn+J2pOZEZgveaDbD4+VdJ7MTSA
- tKGTq3ml9HQF390T29xBJVJmEcXVm0MyvXIS+/cgAMhnmxL3NMzYDrbqy/s0q/hEicRtk7tOF1C
- RJt7/GLTMClkgk4mslJJ8Q/duL02lzQAHnd33qG/4M7DPwmjE4Xbp/1Rmary9KBNs6J3y+n0nnI
- +yO1kCsS72OGAkOjC4hskVuem5+VbkdVuNNOr4woIl+BiMxEl8ijgk0g==
-X-Google-Smtp-Source: AGHT+IG33lH+FRexnu7FPofP3vQUkxiDxMFtXmCwkv5IYtq1cv1z4vIWAP5H1GekUgKExuEVKANAEA==
-X-Received: by 2002:a05:600c:3b24:b0:477:a289:d854 with SMTP id
- 5b1f17b1804b1-47a8bd020d8mr19192165e9.5.1765466172653; 
- Thu, 11 Dec 2025 07:16:12 -0800 (PST)
+ AJvYcCURP8QC1CoFkfPFBfHVmWFUP3w38pLxA34z6wOrGNhKcvNJF5Be5Pph4vyA5uqbO5CvrSWhdx7iIg+5@nongnu.org
+X-Gm-Message-State: AOJu0YxZeb6tTqvq9ybbxOonR867m+yUGYrwOTn9SXHEf3n9AuRetIsc
+ wW75Jwt13m+l1MOmDwyjQ3JGr8FPrfuiwoV3d9ACiMIb+XNsne/4Kb2dyacE5Zo4Vuxiga0+X/2
+ kMSm834w=
+X-Gm-Gg: AY/fxX6YvMTsdkj3Cla6ZQbeC1S9vC+kmj2+akHPeUN/bAvaDx2s++aPnPAcpF6iydv
+ MEg/SajH0D9nVkdXsV5HcxY4QLprAijqSSv4RJUuzJ6YvilaC45FWii2jXoNGEetKmBikiTt0q0
+ BsrynUQuvOnCer7AFOIiSd58AKtSCNWtctdKOphunNO0pKKhwiwOKA6htTwG8s+M8Xchy2mI6d3
+ 5TRyXTUfhuA+HaP394TsoCVhNXFDUMNVleSan/uHQkNXRXppWUz8geEunT3Kss1pTfomFB1+o2A
+ VbJY0TUnn2oroDKu2ntDB8Pd83v3gqbnoAuVG6en3g2Y0wuTjW6kw0JXtEpXjV60Du0iAMSJBQ6
+ 2j9dUco+qHFVJ5iNWwIdM/JuTAlqZH5AdxBYgBfF8Zl/Fv6fAfY8q2U6V4//YjnHnOcaerLotwD
+ BVKm6iU4CdCYFtwexq/qnTtqeTcl37UYf1Pu8h5GnhhUR06zbjMX3vvQ==
+X-Google-Smtp-Source: AGHT+IFW8yyD50rMHB7LcSjVEW8hc/jNmcurEwCqp36H9qyLibKDc3koEEgE+zhy/rcTSsMTkyquLQ==
+X-Received: by 2002:a05:6000:2c02:b0:42b:3a84:1ee1 with SMTP id
+ ffacd0b85a97d-42fa39d1d17mr6918326f8f.18.1765466318167; 
+ Thu, 11 Dec 2025 07:18:38 -0800 (PST)
 Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a89d04393sm41331815e9.0.2025.12.11.07.16.11
+ ffacd0b85a97d-42fa8b85feasm6591879f8f.27.2025.12.11.07.18.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 07:16:11 -0800 (PST)
-Message-ID: <d18e36d7-0863-4ba5-a50d-73a05b33d8cc@linaro.org>
-Date: Thu, 11 Dec 2025 16:16:10 +0100
+ Thu, 11 Dec 2025 07:18:37 -0800 (PST)
+Message-ID: <49968449-5363-42d8-b9ca-e77da8c81986@linaro.org>
+Date: Thu, 11 Dec 2025 16:18:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] i386: Fix const qualifier build errors with recent
- glibc
+Subject: Re: [PATCH for-11.0 0/7] hw/arm/omap: Remove omap_badwidth_* functions
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20251210181306.926334-1-clg@redhat.com>
- <20251210181306.926334-2-clg@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20251210183700.3446237-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251210181306.926334-2-clg@redhat.com>
+In-Reply-To: <20251210183700.3446237-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,25 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/25 19:13, Cédric Le Goater wrote:
-> A recent change in glibc 2.42.9000 [1] changes the return type of
-> strstr() and other string functions to be 'const char *' when the
-> input is a 'const char *'. This breaks the build in :
-> 
->    ../hw/i386/x86-common.c:827:11: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
->    827 |     vmode = strstr(kernel_cmdline, "vga=");
->        |           ^
-> 
-> Fix this by changing the type of the variables that store the result
-> of these functions to 'const char *'.
-> 
-> [1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/i386/x86-common.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+On 10/12/25 19:36, Peter Maydell wrote:
 
+> Peter Maydell (7):
+>    hw/sd/omap_mmc: Remove omap_badwidth_* calls
+>    hw/i2c/omap_i2c: Remove omap_badwidth_* calls
+>    hw/gpio/omap_gpio: Remove omap_badwidth_* calls
+>    hw/dma/omap_dma: Remove omap_badwidth_* calls
+>    hw/arm/omap1: Remove omap_badwidth_read* calls
+>    hw/arm/omap1: Remove omap_badwidth_write* calls
+>    hw/arm/omap1: Remove omap_badwidth_* implementations
+> 
+>   include/hw/arm/omap.h |  10 ---
+>   hw/arm/omap1.c        | 203 +++++++++++++++++++++---------------------
+>   hw/dma/omap_dma.c     |   7 +-
+>   hw/gpio/omap_gpio.c   |   7 +-
+>   hw/i2c/omap_i2c.c     |   7 +-
+>   hw/sd/omap_mmc.c      |   7 +-
+>   6 files changed, 122 insertions(+), 119 deletions(-)
+
+Series:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
