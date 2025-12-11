@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 566FBD3E793
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B2F2D3E793
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTZTD-0000n2-SO; Thu, 11 Dec 2025 00:44:07 -0500
+	id 1vTZTF-0000r5-AD; Thu, 11 Dec 2025 00:44:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTZTB-0000j9-Vt
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:06 -0500
+ id 1vTZTE-0000nJ-4E
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:08 -0500
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTZTA-0001bl-8w
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:05 -0500
+ id 1vTZTC-0001c0-2f
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765431844; x=1796967844;
+ t=1765431846; x=1796967846;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=DZ3sfvrb+qc8GsNdFeIp7NVIUjHrM1Kf/7Vu9/XqA3o=;
- b=NoU0M0NXQt112mno62ojSJwj6qLi+/RQGhzZsZcW1d1I6GK7r12NHzIM
- fvzWAO5XkiZRwseP8OGX5QmTENxcFdPX1VaQXrkaUhmDm+otsZ0EITSW4
- XpJFIO4VM/uJhNlVSSZoKseYdALt6YWaYfCBvgxSNOlv8i+YTVv4ZC6LH
- Cpx8DUToEuYqb1BqaBjRG6U/rxfJWKhpo0R31zuVEqK/sBqWsdVnyijFV
- z1UuQNstWhB/8HpTf/v2ogoqkkjfYFQa+HclHw1KfZ1lmRySZH/Ud8BpY
- mpMdEkbeMuGdCZfT/qKI93KqtZtbNHSnZ9ByiUQ4GXTzG9AtzlcuvpeBK Q==;
-X-CSE-ConnectionGUID: vPtfC1O8R+q1WSXW/6APMQ==
-X-CSE-MsgGUID: LTO+qNK1TuifJs93dH7Oww==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="66409903"
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="66409903"
+ bh=ei4jy82TLUyU3gpgqSjMGkn3ky3SGOs5VuaVHpOYPJ4=;
+ b=azYqEno0w/D6L7bXGE9R4lb0CVvSFBgEG8lhad/N5ONbCgtV1ipW/0/6
+ 52WKBkzwAOZmiL2yQSia7FkIbzdgBE3wVzYtDHKZ60RftQeQs5tmj14Rc
+ 9S4QzYGov17hl4jDdN7hOfEnhXE7v9YtTYWnDX8QpJy+idqRHNz7ih2HB
+ PsApKr90i8ayZkb0zvtzqAnqmFzFZ56YL5ZupU7eyATL6ETvN+Inv7CZf
+ S8ynwMyoGsgu/zfYqFsebwqpW6LYOGUVQZ4PTbpp8HoeIzWHciRXnRjRd
+ KrSygBjQ9K6VQwTKu3H31izt2WU9Peu5aHf3PjTqSsB+NRNu8l59IUSDF Q==;
+X-CSE-ConnectionGUID: ZjG6Lfk3TU6RVV4fGhvgtQ==
+X-CSE-MsgGUID: GL8ql4GDT26WAvb+xA2Emg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="66409909"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="66409909"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2025 21:44:03 -0800
-X-CSE-ConnectionGUID: QoC2Q5C0S7m/fEn5mdfr1g==
-X-CSE-MsgGUID: FcG2oCBHSzGtD+rfLRUnwg==
+ 10 Dec 2025 21:44:04 -0800
+X-CSE-ConnectionGUID: 8+jLiWf2TQGhwHoZq1oL4Q==
+X-CSE-MsgGUID: 6XziEBl/SISQy6TNmNeizQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="227366094"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="227366122"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 10 Dec 2025 21:43:55 -0800
+ by orviesa002.jf.intel.com with ESMTP; 10 Dec 2025 21:44:00 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
@@ -52,10 +52,11 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
  Babu Moger <babu.moger@amd.com>, Mathias Krause <minipli@grsecurity.net>,
  Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
- Farrah Chen <farrah.chen@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 10/22] i386/cpu: Add missing migratable xsave features
-Date: Thu, 11 Dec 2025 14:07:49 +0800
-Message-Id: <20251211060801.3600039-11-zhao1.liu@intel.com>
+ Farrah Chen <farrah.chen@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Yang Weijiang <weijiang.yang@intel.com>
+Subject: [PATCH v5 11/22] i386/cpu: Enable xsave support for CET states
+Date: Thu, 11 Dec 2025 14:07:50 +0800
+Message-Id: <20251211060801.3600039-12-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251211060801.3600039-1-zhao1.liu@intel.com>
 References: <20251211060801.3600039-1-zhao1.liu@intel.com>
@@ -86,69 +87,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Xtile-cfg & xtile-data are both user xstates. Their xstates are cached
-in X86CPUState, and there's a related vmsd "vmstate_amx_xtile", so that
-it's safe to mark them as migratable.
+From: Yang Weijiang <weijiang.yang@intel.com>
 
-Arch lbr xstate is a supervisor xstate, and it is save & load by saving
-& loading related arch lbr MSRs, which are cached in X86CPUState, and
-there's a related vmsd "vmstate_arch_lbr". So it should be migratable.
+Add CET_U/S bits in xstate area and report support in xstate
+feature mask.
+MSR_XSS[bit 11] corresponds to CET user mode states.
+MSR_XSS[bit 12] corresponds to CET supervisor mode states.
 
-PT is still unmigratable since KVM disabled it and there's no vmsd and
-no other emulation/simulation support.
-
-Note, though the migratable_flags get fixed,
-x86_cpu_enable_xsave_components() still overrides supported xstates
-bitmaps regardless the masking of migratable_flags. This is another
-issue, and would be fixed in follow-up refactoring.
+CET Shadow Stack(SHSTK) and Indirect Branch Tracking(IBT) features
+are enumerated via CPUID.(EAX=07H,ECX=0H):ECX[7] and EDX[20]
+respectively, two features share the same state bits in XSS, so
+if either of the features is enabled, set CET_U and CET_S bits
+together.
 
 Tested-by: Farrah Chen <farrah.chen@intel.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Yang Weijiang <weijiang.yang@intel.com>
+Co-developed-by: Chao Gao <chao.gao@intel.com>
+Signed-off-by: Chao Gao <chao.gao@intel.com>
+Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes Since v3:
- - Mark XSTATE_ARCH_LBR_MASK as migratable in FEAT_XSAVE_XSS_LO.
- - Add TODO comment.
+Changes Since v2:
+ - Rename XSavesCETU/XSavesCETS to XSaveCETU/XSaveCETS.
+ - Refine the comments.
+ - Drop ".offset = 0" and its comment.
+ - Re-describe xstate dependencies via features array.
+ - Drop "cet-u" & "cet-s" enumeration from FEAT_XSAVE_XSS_LO's
+   feat_name array sicne currently xsave doesn't use named features.
 ---
- target/i386/cpu.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ target/i386/cpu.c | 14 ++++++++++++++
+ target/i386/cpu.h | 26 +++++++++++++++++++++++++-
+ 2 files changed, 39 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 859cb889a37c..d2a89c03caec 100644
+index d2a89c03caec..4d29e784061c 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -1484,6 +1484,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             .ecx = 1,
-             .reg = R_ECX,
+@@ -2078,6 +2078,20 @@ ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
+             { FEAT_7_0_ECX,         CPUID_7_0_ECX_PKU },
          },
-+        .migratable_flags = XSTATE_ARCH_LBR_MASK,
      },
-     [FEAT_XSAVE_XSS_HI] = {
-         .type = CPUID_FEATURE_WORD,
-@@ -1522,7 +1523,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-         .migratable_flags = XSTATE_FP_MASK | XSTATE_SSE_MASK |
-             XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
-             XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK | XSTATE_Hi16_ZMM_MASK |
--            XSTATE_PKRU_MASK,
-+            XSTATE_PKRU_MASK | XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK,
-     },
-     [FEAT_XSAVE_XCR0_HI] = {
-         .type = CPUID_FEATURE_WORD,
-@@ -2154,8 +2155,13 @@ static uint64_t x86_cpu_get_migratable_flags(X86CPU *cpu, FeatureWord w)
-     for (i = 0; i < 64; i++) {
-         uint64_t f = 1ULL << i;
++    [XSTATE_CET_U_BIT] = {
++        .size = sizeof(XSaveCETU),
++        .features = {
++            { FEAT_7_0_ECX,         CPUID_7_0_ECX_CET_SHSTK },
++            { FEAT_7_0_EDX,         CPUID_7_0_EDX_CET_IBT },
++        },
++    },
++    [XSTATE_CET_S_BIT] = {
++        .size = sizeof(XSaveCETS),
++        .features = {
++            { FEAT_7_0_ECX,         CPUID_7_0_ECX_CET_SHSTK },
++            { FEAT_7_0_EDX,         CPUID_7_0_EDX_CET_IBT },
++        },
++    },
+     [XSTATE_ARCH_LBR_BIT] = {
+         .size = sizeof(XSaveArchLBR),
+         .features = {
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 3d74afc5a8e7..bc3296a3c6f0 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -589,6 +589,8 @@ typedef enum X86Seg {
+ #define XSTATE_Hi16_ZMM_BIT             7
+ #define XSTATE_PT_BIT                   8
+ #define XSTATE_PKRU_BIT                 9
++#define XSTATE_CET_U_BIT                11
++#define XSTATE_CET_S_BIT                12
+ #define XSTATE_ARCH_LBR_BIT             15
+ #define XSTATE_XTILE_CFG_BIT            17
+ #define XSTATE_XTILE_DATA_BIT           18
+@@ -603,6 +605,8 @@ typedef enum X86Seg {
+ #define XSTATE_Hi16_ZMM_MASK            (1ULL << XSTATE_Hi16_ZMM_BIT)
+ #define XSTATE_PT_MASK                  (1ULL << XSTATE_PT_BIT)
+ #define XSTATE_PKRU_MASK                (1ULL << XSTATE_PKRU_BIT)
++#define XSTATE_CET_U_MASK               (1ULL << XSTATE_CET_U_BIT)
++#define XSTATE_CET_S_MASK               (1ULL << XSTATE_CET_S_BIT)
+ #define XSTATE_ARCH_LBR_MASK            (1ULL << XSTATE_ARCH_LBR_BIT)
+ #define XSTATE_XTILE_CFG_MASK           (1ULL << XSTATE_XTILE_CFG_BIT)
+ #define XSTATE_XTILE_DATA_MASK          (1ULL << XSTATE_XTILE_DATA_BIT)
+@@ -625,7 +629,8 @@ typedef enum X86Seg {
+                                  XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK)
  
--        /* If the feature name is known, it is implicitly considered migratable,
--         * unless it is explicitly set in unmigratable_flags */
-+        /*
-+         * If the feature name is known, it is implicitly considered migratable,
-+         * unless it is explicitly set in unmigratable_flags.
-+         *
-+         * TODO: Make the behavior of x86_cpu_enable_xsave_components() align
-+         * with migratable_flags masking.
-+         */
-         if ((wi->migratable_flags & f) ||
-             (wi->feat_names[i] && !(wi->unmigratable_flags & f))) {
-             r |= f;
+ /* CPUID feature bits available in XSS */
+-#define CPUID_XSTATE_XSS_MASK    (XSTATE_ARCH_LBR_MASK)
++#define CPUID_XSTATE_XSS_MASK   (XSTATE_ARCH_LBR_MASK | XSTATE_CET_U_MASK | \
++                                 XSTATE_CET_S_MASK)
+ 
+ #define CPUID_XSTATE_MASK       (CPUID_XSTATE_XCR0_MASK | CPUID_XSTATE_XSS_MASK)
+ 
+@@ -904,6 +909,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_0_ECX_WAITPKG           (1U << 5)
+ /* Additional AVX-512 Vector Byte Manipulation Instruction */
+ #define CPUID_7_0_ECX_AVX512_VBMI2      (1U << 6)
++/* Control-flow enforcement technology: shadow stack */
++#define CPUID_7_0_ECX_CET_SHSTK         (1U << 7)
+ /* Galois Field New Instructions */
+ #define CPUID_7_0_ECX_GFNI              (1U << 8)
+ /* Vector AES Instructions */
+@@ -951,6 +958,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_0_EDX_TSX_LDTRK         (1U << 16)
+ /* Architectural LBRs */
+ #define CPUID_7_0_EDX_ARCH_LBR          (1U << 19)
++/* Control-flow enforcement technology: indirect branch tracking */
++#define CPUID_7_0_EDX_CET_IBT           (1U << 20)
+ /* AMX_BF16 instruction */
+ #define CPUID_7_0_EDX_AMX_BF16          (1U << 22)
+ /* AVX512_FP16 instruction */
+@@ -1737,6 +1746,19 @@ typedef struct XSavePKRU {
+     uint32_t padding;
+ } XSavePKRU;
+ 
++/* Ext. save area 11: CET_U state */
++typedef struct XSaveCETU {
++    uint64_t u_cet;
++    uint64_t pl3_ssp;
++} XSaveCETU;
++
++/* Ext. save area 12: CET_S state */
++typedef struct XSaveCETS {
++    uint64_t pl0_ssp;
++    uint64_t pl1_ssp;
++    uint64_t pl2_ssp;
++} XSaveCETS;
++
+ /* Ext. save area 15: Arch LBR state */
+ typedef struct XSaveArchLBR {
+     uint64_t lbr_ctl;
+@@ -1764,6 +1786,8 @@ QEMU_BUILD_BUG_ON(sizeof(XSaveOpmask) != 0x40);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveZMM_Hi256) != 0x200);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveHi16_ZMM) != 0x400);
+ QEMU_BUILD_BUG_ON(sizeof(XSavePKRU) != 0x8);
++QEMU_BUILD_BUG_ON(sizeof(XSaveCETU) != 0x10);
++QEMU_BUILD_BUG_ON(sizeof(XSaveCETS) != 0x18);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveArchLBR) != 0x328);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveXTILECFG) != 0x40);
+ QEMU_BUILD_BUG_ON(sizeof(XSaveXTILEDATA) != 0x2000);
 -- 
 2.34.1
 
