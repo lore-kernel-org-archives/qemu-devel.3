@@ -4,84 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A60CD41C09
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 09:49:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F5ED41C14
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 10:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTdI6-0008WR-Rh; Thu, 11 Dec 2025 04:48:54 -0500
+	id 1vTdds-0003iK-LK; Thu, 11 Dec 2025 05:11:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vTdI5-0008WI-Jx
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 04:48:53 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vTddq-0003hb-Tr
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 05:11:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vTdI3-0007A4-43
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 04:48:53 -0500
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1vTddn-000393-UY
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 05:11:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765446529;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1765447877;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cMgXW69WnfeZ0yRIze2LSBUQ0JYmeH+uQZhkZU/1Fv0=;
- b=e9Whb61Wp6O+30xGqDu6sPMSgY/obHvZrrz99gbch79bZSmOv52CEwbdFfIwK2JhQ1exVV
- Dcvn37y4/ITpto2Y2axEDVex4n7DE9Gf0MYaUhIhEPvhKqcV5itdLpRXyo+nS8oMBnl3Dw
- Am6O7lB+1j1hJp9PNskmGaM0JW0tQEs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-271-55WFxFi-M5itfX9gHRcI0g-1; Thu,
- 11 Dec 2025 04:48:45 -0500
-X-MC-Unique: 55WFxFi-M5itfX9gHRcI0g-1
-X-Mimecast-MFC-AGG-ID: 55WFxFi-M5itfX9gHRcI0g_1765446524
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 206E2180060D; Thu, 11 Dec 2025 09:48:43 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.60])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7205F1953984; Thu, 11 Dec 2025 09:48:35 +0000 (UTC)
-Date: Thu, 11 Dec 2025 09:48:32 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-devel@nongnu.org,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
-Message-ID: <aTqTcM9zsGpW-F45@redhat.com>
-References: <20251209162857.857593-1-peterx@redhat.com>
- <aTlZIlgB20OpdSEl@redhat.com> <aTle5C2pN8ZslZX7@redhat.com>
- <aTmdJ5H67mk8qmSC@x1.local>
+ bh=Nmgh047vTXzbL2NzUqcQqn0ZNP7gmgaU+Yt4vREzk4M=;
+ b=DU38et2IzPe8u2Ay7Pl9oepDQrBFJpaxC9J5EHeaZoK+TboY5zJ3rf0oEqw9KBzv+pJ3mv
+ IeoNEMyvtcRAo9V7N0PyRGD8huzlhDNZWRO2z8ielgrwOMzBrMjswCp+2pqcIt7TcHVop6
+ zJxfr2SElvnPuB/Ult3kbKFWcQh367o=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-655-963SyqCwOIagIntmCgQ7Jg-1; Thu, 11 Dec 2025 05:11:16 -0500
+X-MC-Unique: 963SyqCwOIagIntmCgQ7Jg-1
+X-Mimecast-MFC-AGG-ID: 963SyqCwOIagIntmCgQ7Jg_1765447875
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-649729effd7so776815a12.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 02:11:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1765447875; x=1766052675; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Nmgh047vTXzbL2NzUqcQqn0ZNP7gmgaU+Yt4vREzk4M=;
+ b=IvjPnn4AN4/6q6/Xb2eclL7wtlux2lok1pc7tLEl0TYrnvR5FhV8wjnme527ySMRuq
+ E+EGtCSWsxpwsIhMP8PEfhGQGau4NzLYACW8lLlGJw7WEOo+R4GEkbNia1Ht1IwUal84
+ BR6cp1mBpa+ZebI4Qj2J6TdHlG3DxGlF5+br/UGY0OGfTAHC5aA0kuf1C6BCrnnMdn2I
+ 3l/Uydh3nGzbhyTQ8rCUrjasAAogfGu9bSxzs02OuI3ju86aJ2C1AhPnGHroaPbOcymd
+ ajKQO0s4x28YSC/9ma5Eq3LGCF+J6HgtOxAT3PQvx+p9DiWM2SfDP/SY4p635teVRHON
+ VQhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765447875; x=1766052675;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Nmgh047vTXzbL2NzUqcQqn0ZNP7gmgaU+Yt4vREzk4M=;
+ b=B6jW8etomsSsqhDOotfcMT13jdJOF+NL8LIiuyyNOX4VnAoJBwGNf4+U8TzPBVcaM9
+ 9xwvI9l67Iwz05DxqY5X783MNCuwftbGireG5MF82/G2xXmTacWcIGYH9mnQqWBTaek4
+ Ta2mgFH/IlFYpj7SiG0fDRkA5f26nnq0mUv6Ht/D1bJhXyhmrSDCIAsZXDGH0kx1f3nk
+ tsAzY5+YvTfxdf1Vn+MzgtBWjbux7UKUeBqjGkomPgkaoRv/HlJ6nxWbDNccInO2Bcun
+ 2mYo76ojDMZ0D2V6wWPACSOc2hP/zG2EEXZubSehrT2YEJvLK4rYGKOaUEZC0mqiSrII
+ d+vw==
+X-Gm-Message-State: AOJu0YwyzUltxfhieHGiNRo0JSia6BOU9RLQhIW78F6BqicqSWVfbmf7
+ RJUYb7Kt4ag2tTkZVNyvo2JXmYXL3sXhdLATJ4rpULo8Z/+E7BhyTp93wv3HAQuvjUo0s/HdVa9
+ dtuuRYWx0ziFhjjJxSmbFA5WzyK7zGD44QerBuy+ikHnlnNzz8tHtG5ec
+X-Gm-Gg: AY/fxX7yALqgaIPSK53te1+1SFjg8WD1RUllshSk4xQW28yMSel0imuaZXtdMgPgQah
+ 2c2wjCde+hXGVxl9O1SLLbnDSfLPEOTgvErneRKJO9Cjzp4Gn1qyoluRhGQm/0eFdyMAdU6ha1I
+ 9wBxXuqe+9K5g/zbsHJ3lwAoEDV0pmRz77M/xrQ24O6+LwUKHTnwEqhLs+6NI0px/ftIy3yGOQO
+ bwZDfaTuwRrfNbyBHDicMDgsiwkpbY1vvH6iWNuLqVAFBJT1BKFaCAlAUT34vczKvehyCXyjMCv
+ x5kjBO44u32Xl1XRbuIw84hf+RaYyYvnu6yqRKFHhi5YC1UuY982WkzfsOLLyB467et0yYg6igx
+ HTPxEtcLDXaF419moyy9yyBU8c+BlSNakx4A0JQhYkel82IbQJU8x7/PQssUk5A==
+X-Received: by 2002:a05:6402:3806:b0:640:cc76:ae35 with SMTP id
+ 4fb4d7f45d1cf-6496cc16e8dmr4273816a12.21.1765447875200; 
+ Thu, 11 Dec 2025 02:11:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEL9F2BGjWMptuXWE8ym5gN2gmqMqswdja2gDOQYxkXSnuOw6kLl/3ko+o6V7ALLN+WLcMTvQ==
+X-Received: by 2002:a05:6402:3806:b0:640:cc76:ae35 with SMTP id
+ 4fb4d7f45d1cf-6496cc16e8dmr4273786a12.21.1765447874682; 
+ Thu, 11 Dec 2025 02:11:14 -0800 (PST)
+Received: from sgarzare-redhat (host-87-12-139-91.business.telecomitalia.it.
+ [87.12.139.91]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6498210de23sm2068573a12.28.2025.12.11.02.11.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Dec 2025 02:11:13 -0800 (PST)
+Date: Thu, 11 Dec 2025 11:11:08 +0100
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Oliver Steffen <osteffen@redhat.com>
+Cc: qemu-devel@nongnu.org, Joerg Roedel <joerg.roedel@amd.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ kvm@vger.kernel.org, Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Ani Sinha <anisinha@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Luigi Leonardi <leonardi@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>
+Subject: Re: [PATCH 3/3] igvm: Fill MADT IGVM parameter field
+Message-ID: <qlgmkqwjoupf63drmvrfv3qslp3wvrvphgiafnuluayfjtlj3m@vkecklsigqju>
+References: <20251211081517.1546957-1-osteffen@redhat.com>
+ <20251211081517.1546957-4-osteffen@redhat.com>
+ <26ptyaovy6mlbvuzri4v2ea3xhyvdc5elqsau34upvswarrbop@bhtzvxpb5aad>
+ <CA+bRGFqnT=Es1GE6w4U2edaJXpDaSV1bhZ89vcaP5TDfFU8a+Q@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aTmdJ5H67mk8qmSC@x1.local>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <CA+bRGFqnT=Es1GE6w4U2edaJXpDaSV1bhZ89vcaP5TDfFU8a+Q@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -103,106 +129,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 10, 2025 at 11:17:43AM -0500, Peter Xu wrote:
-> Maybe I emphasized too much on "guest ABI" in the cover letter, so it can
-> be confusing when not reading into the details of the patchset (I did
-> mention all the existing users in patch 1, then converted all existing
-> users in patch 2-5).
-> 
-> Besides SEV, I can also quickly go over the rest ones if that wasn't clear
-> we're already using this feature.. in a open-coded way.  Maybe that'll make
-> it slightly easier to grasp for reviewers.
-> 
-> The current use case for hostmem (2nd example) on compat properties, see:
-> 
->     commit fa0cb34d2210cc749b9a70db99bb41c56ad20831
->     Author: Marc-André Lureau <marcandre.lureau@redhat.com>
->     Date:   Wed Sep 12 16:18:00 2018 +0400
-> 
->     hostmem: use object id for memory region name with >= 4.0
-> 
-> So that's not strictly "guest ABI", but the goal was to persist the name of
-> MRs so that migration is not broken.  It's not strictly "guest ABI" but
-> more like "guest ABI for migration" - even if the guest OS cannot see the
-> names of MRs, migration can see (via ramblocks).  So it can be more than
-> the guest HWs.
+On Thu, Dec 11, 2025 at 10:24:35AM +0100, Oliver Steffen wrote:
+>On Thu, Dec 11, 2025 at 9:46 AM Stefano Garzarella <sgarzare@redhat.com> wrote:
+>> On Thu, Dec 11, 2025 at 09:15:17AM +0100, Oliver Steffen wrote:
 
-I'm more amenable to this example being in scope of machine types. The
-most important use case for machine types, by a mile, is to ensure that
-live migration works between 2 QEMUs. Having a stable guest ABI does
-have other use cases like ensuring Windows doesn't trigger license
-(re-)activation, but live migration is the important one. It is
-unfortunate that the object id leaked into the migration stream but
-this was a reasonable (hack) workaround to address it.
+[...]
 
-
-> 3rd example in accel:
-> 
->     commit fe174132478b4e7b0086f2305a511fd94c9aca8b
->     Author: Paolo Bonzini <pbonzini@redhat.com>
->     Date:   Wed Nov 13 15:16:44 2019 +0100
-> 
->     tcg: add "-accel tcg,tb-size" and deprecate "-tb-size"
-> 
-> That was trying to keep some old behavior for accel cmdlines.  It's not
-> even a migration ABI, but cmdline ABI.
+>> >diff --git a/target/i386/sev.c b/target/i386/sev.c
+>> >index fd2dada013..ffeb9f52a2 100644
+>> >--- a/target/i386/sev.c
+>> >+++ b/target/i386/sev.c
+>> >@@ -1892,7 +1892,7 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+>> >          */
+>> >         if (x86machine->igvm) {
+>> >             if (IGVM_CFG_GET_CLASS(x86machine->igvm)
+>> >-                    ->process(x86machine->igvm, machine->cgs, true, errp) ==
+>> >+                    ->process(x86machine->igvm, machine->cgs, true, NULL, errp) ==
+>>
+>> Why here we don't need to pass it?
 >
-> Hence OBJECT_COMPAT might be useful whenever we want to persist some ABI.
-> It can be machine compat properties, it can be something else that has
-> nothing to do with machine types.  The accel example used a separate entry
-> in object_compat_props[] (index 0) for the same purpose, out of three:
+>Here we only read the IGVM to figure out the initial vcpu configuration
+>(the `onlyVpContext` parameter is true) to initialize kvm,
+>The actual IGVM processing is done later.
 
-Ok, yes, this compat props usage that's independent of machine
-type is fine.
+okay, I see, thanks!
 
-> 
-> /*
->  * Global property defaults
->  * Slot 0: accelerator's global property defaults
->  * Slot 1: machine's global property defaults
->  * Slot 2: global properties from legacy command line option
->  * Each is a GPtrArray of GlobalProperty.
->  * Applied in order, later entries override earlier ones.
->  */
-> static GPtrArray *object_compat_props[3];
+>Should I mention in the comment above why madt is NULL here ?
 
-> > I've suggested in the past that IMHO we're missing a concept of a
-> > "versioned platform", to complement the "versioned machine" concept.
-> > 
-> > That would let mgmt apps decide what platform compatibility level
-> > they required, independantly of choosing machine types, and so avoid
-> > creating runability constraints on machine types.
-> 
-> Yes, I agree some kind of "versioned platform" would be nice.  In practise,
-> I wonder if it needs to be versioned at all, or something like a
-> query-platform QMP API that will return the capabilities of the host in
-> QEMU's view.  Maybe versioning isn't needed here.
-> 
-> Taking USO* feature for virtio-net as example, it should report what kind
-> of USO* features are supported on this host.
+Yes, please :-)
 
-The appealing thing about machine types is that it is an opaque
-collection of properties. The mgmt app does not need to know about
-any of the properties being set, it can just let the machine type
-do its magic.
-
-Probing values for individual features which are supported on a host
-means mgmt apps need to be made aware of all the properties that are
-affected, and keep track of them for the life of the VM. This is a
-significantly higher burden for the mgmt app to deal with that the
-opaque collection machine types define, especially because apps won't
-know ahead of time which objects/properties might need this facility
-in future.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Stefano
 
 
