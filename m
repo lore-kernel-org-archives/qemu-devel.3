@@ -4,69 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7D69D3E79A
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 07:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF9F8D3E79D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 07:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTb5d-0002pX-2R; Thu, 11 Dec 2025 02:27:53 -0500
+	id 1vTbGH-0005X7-9T; Thu, 11 Dec 2025 02:38:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vTb5a-0002pF-Mp; Thu, 11 Dec 2025 02:27:50 -0500
-Received: from zg8tmja5ljk3lje4ms43mwaa.icoremail.net ([209.97.181.73])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vTb5X-00079r-LR; Thu, 11 Dec 2025 02:27:50 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwAXHZlecjppECFSAw--.337S2;
- Thu, 11 Dec 2025 15:27:26 +0800 (CST)
-Received: from [10.31.62.13] (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwCX7epYcjppfSoLAA--.6702S2;
- Thu, 11 Dec 2025 15:27:20 +0800 (CST)
-Message-ID: <85e5dc36-8cdf-4ee9-b482-882dc7a31aca@phytium.com.cn>
-Date: Thu, 11 Dec 2025 15:27:19 +0800
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vTbGE-0005WY-NI; Thu, 11 Dec 2025 02:38:50 -0500
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vTbGD-0001x2-9U; Thu, 11 Dec 2025 02:38:50 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MwVHBx5x5yXk/sDTcEgkLvisKchucJKHWyzpL+8ac7pNgLLOCTU0ch/S4gcMB4X2Giado+rYFEXzj5J5mmAo5V2rGCffwENdgbY1b5nPFurmhImAH8URxtbmM2RsRhZwg1rZiWD5byeWxEhuTDh6EziR/0f97VpFI/0Jl2koKyljrLwDXwlmAzEiuv++Dk4RVQEsp3xAWEqBF/aa//gJjEv68f3ZknqQR2/hU05fWnR6ZLtn1ApTkPs78Q98prLxoc+B27LJogi2C/qUXyd/2xLlsYGFgyzQGGWRIR5lftTWfk5iAPoNWdwieuIZXUifAcBs0iNcGERlpOmqi0++3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=gEjiLWyvA45rUJeJ9csf+MM2H4G7Y9sPUMjQJSUxv0c=;
+ b=Qp/v1F+TBQuw43TxfE3gdO39wJVjpiqF9RCPsmbdLH1cCbJfspBsVhDNqIirHCnlW/SSYYWwkeHEDJZEDArRNOoKkvdRViXEbacHRRVDlx/xtv0CJeSItAa3PaprKi8m4t84gpPa+S6R1rvAN0e4iVMokE5b7IY6XWizlFqoudf+9JOqZoW+fr81ii1wZiOxqYEFAeQcsZPBigiIsVAN884u8SGeX4wvqZflH4h9IrK9s9MkHg2MmzL1BE6ZkpLPizSphgV8Np2rhWLeY51KZ4r394cPN1zc3KJwkw1C95U64H0BGK66fNaxlvnuTvpRf4miHL32a4o1H0HZ2YQToA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gEjiLWyvA45rUJeJ9csf+MM2H4G7Y9sPUMjQJSUxv0c=;
+ b=kWYw+dhWFCvR2RmIK05tsuyMyxXy6xwsLlgcIwIoERtPbF/SJVnqqognajKi+ckHg91KDfxEuJAouAA1FvFWPsKQL+uOf257U4BrRFqtI4xWpEHw6fRrd5qMwrnkw7cgQwB3Uo4kIXccIixG2BCJ0MiyoPTHcTL+Iwq2r4XEQTpqHQu9xLpYqApmQ5axZK87gRrSpWgMxbovCbZHAFPeXZu5dh3VA7w2mPCNFAJ+xZaZsWBG6qe0/KyI/e7l5kqsn0jiR5jJZ+fRbzTFNUXbviKPnzz5kzCelWx53U1WtGeWsAAqJ3C2YBpvWHVBEOzRkn3nu+jBC/tKa88jZArxmg==
+Received: from MW4PR03CA0321.namprd03.prod.outlook.com (2603:10b6:303:dd::26)
+ by DM4PR12MB8500.namprd12.prod.outlook.com (2603:10b6:8:190::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.9; Thu, 11 Dec
+ 2025 07:38:40 +0000
+Received: from SJ5PEPF00000205.namprd05.prod.outlook.com
+ (2603:10b6:303:dd:cafe::c3) by MW4PR03CA0321.outlook.office365.com
+ (2603:10b6:303:dd::26) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9388.14 via Frontend Transport; Thu,
+ 11 Dec 2025 07:38:26 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ SJ5PEPF00000205.mail.protection.outlook.com (10.167.244.38) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9412.4 via Frontend Transport; Thu, 11 Dec 2025 07:38:40 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 10 Dec
+ 2025 23:38:24 -0800
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 10 Dec
+ 2025 23:38:24 -0800
+Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.129.68.6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Wed, 10 Dec 2025 23:38:22 -0800
+Date: Wed, 10 Dec 2025 23:38:19 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <jgg@nvidia.com>, <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
+ <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>
+Subject: Re: [PATCH v2 3/4] hw/arm/smmuv3: Introduce a helper function for
+ event propagation
+Message-ID: <aTp061rnZfKziOZy@nvidia.com>
+References: <20251204092245.5157-1-skolothumtho@nvidia.com>
+ <20251204092245.5157-4-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC RESEND v5 2/4] hw/misc: Introduce iommu-testdev for
- bare-metal IOMMU testing
-To: eric.auger@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-References: <20251126154547.1300748-1-tangtao1634@phytium.com.cn>
- <20251126154547.1300748-3-tangtao1634@phytium.com.cn>
- <829b3e14-92e8-4d22-bb02-c6e7322d9856@redhat.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <829b3e14-92e8-4d22-bb02-c6e7322d9856@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwCX7epYcjppfSoLAA--.6702S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWk4gq0InAAGso
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3GryrCFWrWrWDuw4UuryfZwb_yoWftFy8pF
- 98GaySkF48JF1xCw1Sqw48CFy3GFsYy3WUCr1rKw1Fgr9Iyry8Jr1jk340k3srJrW8Z3Wx
- Zw40qFyUuw45ZrJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=209.97.181.73;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmja5ljk3lje4ms43mwaa.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20251204092245.5157-4-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF00000205:EE_|DM4PR12MB8500:EE_
+X-MS-Office365-Filtering-Correlation-Id: 87bafe75-e254-4124-d608-08de38884dbc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700013|376014|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?F9izr/CwvfOmTNTqUDprIuR7jBADIzzykbYPZAT8OZCsQo2z6e/1RA8Cy8yk?=
+ =?us-ascii?Q?vWf77F09rS/UO+GqFuMEDfEIAnuUL/ogZ3h+inKstpLxTEq/QsrYKa8RVPbY?=
+ =?us-ascii?Q?lucWbzCoreWmq2u2Df/nD/ycJ/FKmDNL0vs2rP1gKsY+LBoUf8emTOVVgECN?=
+ =?us-ascii?Q?XnpkmuLiwSgSSvMtANr1tSL5sA4jaqflku40ZOvqijJpgRLiIZ5uPPz1CatD?=
+ =?us-ascii?Q?0RHkizOzRjDkKZOY9Y1VyLtu0TpK6JrCMpZTv89FJVEd1lN13zN3VckWYMQr?=
+ =?us-ascii?Q?9DTBGkv2Q8G0VkKD8kpPQOgNCMBO7gNVvx5GQageO5KIdq8jCPN64+g0n5Es?=
+ =?us-ascii?Q?TrS1bc1vHibo5yn0O11ybcL2VjMnk/rJWDt7eqHC7ijvm5ZBc8V4JPumBMCv?=
+ =?us-ascii?Q?t2mtqk12Xu/irCWMbGj4nc89c/VudZcaAnHtWwD6uf6Zk56sqEYTlLa53cgT?=
+ =?us-ascii?Q?eB4/QIZsyKR3IGaOdNNJH1SO/lkqHKu94s3k8j6iJN+2VQf7dqQyTGrWHpeH?=
+ =?us-ascii?Q?2K76+HWh4koe9F5diomdgoTUv1ClX9k1DUEV6XZcGHeK0pYRdMI+re97LNAE?=
+ =?us-ascii?Q?iDlmhoS1anuhmdOrOshSssimbfYgTlmVPTJF+SxOSfJ/lR8KTjjoJVhfcZRa?=
+ =?us-ascii?Q?DPJEK4tpD9+VHHvn+r44wnMxWJjZKj7zEK5Nab/01/JsaaKLuU1gn5Qj0pa2?=
+ =?us-ascii?Q?HYHLIhrd6hy+u0E0jZiD5C0fE/mXojPQ3GqB0IstX3R5BBtgYBDySB/tMAVs?=
+ =?us-ascii?Q?cnsAgpNL8r6pzJGuby09PunUYGWUK6VMulJgf0xp2LqXsnQx0osrTBdTCvNG?=
+ =?us-ascii?Q?B2qh7n6WTMtdtd3kMFz+4fTgEuhdUwy/n9Qg7E8xQL3Psdg7Xq9iv/ZQfdyd?=
+ =?us-ascii?Q?SAFCrwGc6RcCxpo3Fe9tacUQ3vdgw9Ldu+kZFml6BdpIsnTXOhSxutbt81Kq?=
+ =?us-ascii?Q?sIXVUjPf0e1e61wrXE2vzAwxeG9ZwGGuOfh81ZsMZ1i3VXWP0ophO3Ph/PXY?=
+ =?us-ascii?Q?K8VDPaz6a4IObmdf/d62GO1kO417oGHvgxFX7O2MFTnu+eMLSnWM6aNsoWCy?=
+ =?us-ascii?Q?w6k1mZeg7vE00HS/k95MTpTw1FqTgDM/sIegDSso3iNTbxk0BO57NH0TWSb1?=
+ =?us-ascii?Q?6krw4JEe430GQZdZCuQ6wvkfAExg/hASmw/Wz302nyoovLxVf0UDVNwDgayj?=
+ =?us-ascii?Q?SRUXi3OEyGbY1a5qnh7nbQsKmTlbBTcyrSqeczkche1TsqCvUijDPXCsibSc?=
+ =?us-ascii?Q?v9cvGM8IWW2nbd6Jnwqu0lV2BULNcOCkGbbjH8J+WEi04l5588nEC30Va+P9?=
+ =?us-ascii?Q?RfF3RBZ08pu1Ev5UNmtDZ3tkXqdSpk7X0O1iDZ9789nkcJ9k3W1/tffC6M4T?=
+ =?us-ascii?Q?ggIqi3QvdAxMR7gS3GxpNPKZnMo3DcB+Y2cRXnJ6C/aIUBDwe7XawNJ4o427?=
+ =?us-ascii?Q?OBLzjWQxWmZl+C+GxRm7swWhw3PRbmTqiuno7NmsLngf+PKvWVWLh0W5o4po?=
+ =?us-ascii?Q?U5vpwV/zCaOyP9dMT8MKkBhnO4sP9mbSekK6AyuNQU/xShygVuaZWBPnQQkU?=
+ =?us-ascii?Q?0P3BKHUYfcJ/DYiyqQE=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700013)(376014)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2025 07:38:40.2683 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 87bafe75-e254-4124-d608-08de38884dbc
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF00000205.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB8500
+Received-SPF: softfail client-ip=2a01:111:f403:c100::f;
+ envelope-from=nicolinc@nvidia.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,272 +159,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On Thu, Dec 04, 2025 at 09:22:40AM +0000, Shameer Kolothum wrote:
+> Factor out the code that propagates event records to the guest into a
+> helper function. The accelerated SMMUv3 path can use this to propagate
+> host events in a subsequent patch.
+> 
+> Since this helper may be called from outside the SMMUv3 core, take the
+> mutex before accessing the Event Queue.
 
-On 2025/12/11 02:35, Eric Auger wrote:
->
-> On 11/26/25 4:45 PM, Tao Tang wrote:
->> Add a minimal PCI test device designed to exercise IOMMU translation
->> (such as ARM SMMUv3) without requiring guest firmware or OS. The device
->> provides MMIO registers to configure and trigger DMA operations with
->> controllable attributes (security state, address space), enabling
->> deterministic IOMMU testing.
->>
->> Key features:
->> - Bare-metal IOMMU testing via simple MMIO interface
->> - Configurable DMA attributes for security states and address spaces
->> - Write-then-read verification pattern with automatic result checking
->>
->> The device performs a deterministic DMA test pattern: write a known
->> value (0x88888888) to a configured IOVA, read it back, and verify data
->> integrity. Results are reported through a dedicated result register,
->> eliminating the need for complex interrupt handling or driver
->> infrastructure in tests.
->>
->> This is purely a test device and not intended for production use or
->> machine realism. It complements existing test infrastructure like
->> pci-testdev but focuses specifically on IOMMU translation path
->> validation.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   docs/specs/index.rst            |   1 +
->>   docs/specs/iommu-testdev.rst    | 109 +++++++++++++
->>   hw/misc/Kconfig                 |   5 +
->>   hw/misc/iommu-testdev.c         | 278 ++++++++++++++++++++++++++++++++
->>   hw/misc/meson.build             |   1 +
->>   hw/misc/trace-events            |  10 ++
->>   include/hw/misc/iommu-testdev.h |  70 ++++++++
->>   7 files changed, 474 insertions(+)
->>   create mode 100644 docs/specs/iommu-testdev.rst
->>   create mode 100644 hw/misc/iommu-testdev.c
->>   create mode 100644 include/hw/misc/iommu-testdev.h
->>
->> diff --git a/docs/specs/index.rst b/docs/specs/index.rst
->> index f19d73c9f6..1fc7fae6bb 100644
->> --- a/docs/specs/index.rst
->> +++ b/docs/specs/index.rst
->> @@ -39,3 +39,4 @@ guest hardware that is specific to QEMU.
->>      riscv-iommu
->>      riscv-aia
->>      aspeed-intc
->> +   iommu-testdev
->> \ No newline at end of file
->> diff --git a/docs/specs/iommu-testdev.rst b/docs/specs/iommu-testdev.rst
->> new file mode 100644
->> index 0000000000..fdc7f2ee89
->> --- /dev/null
->> +++ b/docs/specs/iommu-testdev.rst
->> @@ -0,0 +1,109 @@
->> +iommu-testdev — IOMMU test device for bare-metal testing
->> +=========================================================
->> +
->> +Overview
->> +--------
->> +``iommu-testdev`` is a minimal, test-only PCI device designed to exercise
->> +IOMMU translation (such as ARM SMMUv3) without requiring firmware or a guest
->> +OS. Tests can populate IOMMU translation tables with known values and trigger
->> +DMA operations that flow through the IOMMU translation path. It is **not** a
->> +faithful PCIe endpoint and must be considered a QEMU-internal test vehicle.
->> +
->> +Key Features
->> +------------
->> +* **Bare-metal IOMMU testing**: No guest kernel or firmware required
->> +* **Configurable DMA attributes**: Supports address space  configuration via
-> double space
+I wonder if it'd be better to use a different mutex so eventq and
+cmdq wouldn't be mutually exclusive?
 
+Otherwise,
 
-Thanks for catching it.
-
->> +  MMIO registers
->> +* **Deterministic verification**: Write-then-read DMA pattern with automatic
->> +  result checking
->> +
->> +Status
->> +------
->> +* Location: ``hw/misc/iommu-testdev.c``
->> +* Header: ``include/hw/misc/iommu-testdev.h``
->> +* Build guard: ``CONFIG_IOMMU_TESTDEV``
->> +
->> +Device Interface
->> +----------------
->> +The device exposes a single PCI BAR0 with MMIO registers:
-> all those regs are 32b?
-
-
-Yes. All registers are 32-bit, little-endian, and only support 4-byte 
-accesses, as enforced by the MemoryRegionOps valid range. I’ll make this 
-explicit in  the docs and in the register table to avoid any ambiguity.
-
->> +
->> +* ``ITD_REG_DMA_TRIGGERING`` (0x00): Reading triggers DMA execution
->> +* ``ITD_REG_DMA_GVA_LO`` (0x04): IOVA/GVA bits [31:0]
->> +* ``ITD_REG_DMA_GVA_HI`` (0x08): IOVA/GVA bits [63:32]
->> +* ``ITD_REG_DMA_LEN`` (0x0C): DMA transfer length
->> +* ``ITD_REG_DMA_RESULT`` (0x10): DMA operation result (0=success)
->> +* ``ITD_REG_DMA_DBELL`` (0x14): Write 1 to arm DMA
-> can you elaborate on this DMA_DBELL? It is not crystal clear to me.
-
-
-The idea is to model a tiny, explicit DMA state machine instead of 
-having a single MMIO operation that implicitly does “configure + start + 
-complete”.
-
-In this model:
-
-   * DMA_DBELL is just an “arm / doorbell” register.
-   * DMA_TRIGGERING is the “consume / execute” action.
-   * DMA_RESULT exposes the state/outcome.
-
-This split is mainly for timing control and debuggability: qtests can 
-easily exercise and assert distinct paths (NOT_ARMED, BAD_LEN, TX/RD 
-failures, mismatch) instead of having all side effects hidden behind a 
-single write.
-
-
-If you feel this is overkill for a qtest-only device, I'm open to 
-simplifying the interface (e.g. "write a register and immediately 
-execute DMA").
-
->> +* ``ITD_REG_DMA_ATTRS`` (0x18): DMA attributes
->> +
->> +  - bit[0]: secure (1=Secure, 0=Non-Secure)
->> +  - bits[2:1]: address space (0=Non-Secure, 1=Secure, 2=Root, 3=Realm)
-> I would simply remove Root and Realm for now. Are those bits part of
->
-> ITD_REG_DMA_ATTR?
-
-
-Yes I just shadowed the MemTxAttrs. I'll remove the unused Root/Realm 
-definition.
-
->
->> +    Only these MemTxAttrs fields (``secure`` and ``space``) are consumed today;
->> +    other bits are reserved but can be wired up easily if future tests need
->> +    to pass extra attributes.
->> +
->> +Translation Setup Workflow
->> +--------------------------
->> +``iommu-testdev`` never builds SMMU/AMD-Vi/RISC-V IOMMU structures on its own.
->> +Architecture-specific construction lives entirely in qtest/libqos helpers.
->> +Those helpers populate guest memory with page tables/architecture-specific
->> +structures and program the emulated IOMMU registers directly. See the
->> +``qsmmu_setup_and_enable_translation()`` function in
->> +``tests/qtest/libqos/qos-smmuv3.c`` for an example of how SMMUv3 translation
->> +is set up for this device.
->> +
->> +DMA Operation Flow
->> +------------------
->> +1. Test programs IOMMU translation tables
->> +2. Test configures DMA address (GVA_LO/HI), length, and attributes
->> +3. Test writes 1 to DMA_DBELL to arm the operation
->> +4. Test reads DMA_TRIGGERING to execute DMA
-> why do we need 3 and 4?
-
-
-As previously described.
-
->> +5. Test polls DMA_RESULT:
->> +
->> +   - 0x00000000: Success
->> +   - 0xFFFFFFFE: Busy (still in progress)
->> +   - 0xDEAD000X: Various error codes
->> +
->> +The device performs a write-then-read sequence using a known pattern
->> +(0x88888888) and verifies data integrity automatically.
->> +
->> +Running the qtest
->> +-----------------
->> +The SMMUv3 test suite uses this device and covers multiple translation modes::
->> +
->> +    cd build-debug
->> +    QTEST_QEMU_BINARY=./qemu-system-aarch64 \\
->> +        ./tests/qtest/iommu-smmuv3-test --tap -k
->> +
->> +This test suite exercises:
->> +
->> +* Stage 1 only translation
->> +* Stage 2 only translation
->> +* Nested (Stage 1 + Stage 2) translation
->> +* Multiple security spaces (Non-Secure, Secure, Root, Realm)
-> ditto
-
-
-I'll remove it.
-
->> +
->> +Instantiation
->> +-------------
->> +The device is not wired into any board by default. Tests instantiate it
->> +via QEMU command line::
->> +
->> +    -device iommu-testdev
->> +
->> +For ARM platforms with SMMUv3::
->> +
->> +    -M virt,iommu=smmuv3 -device iommu-testdev
-> does it work -device arm-smmuv3 multi instantiation too?
-
-
-No. It only supports machine-wide SMMU (`iommu=smmuv3`) as SMMU base 
-address is hardcoded with 0x9050000 in tests/qtest/libqos/qos-smmuv3.h. 
-Should we support user-creatable SMMUv3 in this testdev?
-
->> +
->> +The device will be placed behind the IOMMU automatically.
->> +
->> +Limitations
->> +-----------
->> +* No realistic PCIe enumeration, MSI/MSI-X, or interrupt handling
->> +* No ATS/PRI support
->> +* No actual device functionality beyond DMA test pattern
->> +* Test-only; not suitable for production or machine realism
->> +* Address space support (Secure/Root/Realm) is architecture-dependent
->> +
->> +See also
->> +--------
->> +* ``tests/qtest/iommu-smmuv3-test.c`` — SMMUv3 test suite
->> +* ``tests/qtest/libqos/qos-smmuv3.{c,h}`` — SMMUv3 test library
->> +* SMMUv3 emulation: ``hw/arm/smmu*``
->> diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
->> index fccd735c24..b5f6fdbd9c 100644
->> --- a/hw/misc/Kconfig
->> +++ b/hw/misc/Kconfig
->> @@ -25,6 +25,11 @@ config PCI_TESTDEV
->>       default y if TEST_DEVICES
->>       depends on PCI
->>   
->> +config IOMMU_TESTDEV
->> +    bool
->> +    default y if TEST_DEVICES
->> +    depends on PCI
->> +
->>   config EDU
->>       bool
->>       default y if TEST_DEVICES
->> diff --git a/hw/misc/iommu-testdev.c b/hw/misc/iommu-testdev.c
->> new file mode 100644
->> index 0000000000..3182ccea4d
->> --- /dev/null
->> +++ b/hw/misc/iommu-testdev.c
->> @@ -0,0 +1,278 @@
->> +/*
->> + * A test device for IOMMU
->> + *
->> + * This test device is a minimal IOMMU-aware device used to test the IOMMU.
-> how is it IOMMU aware? Isn't it "simply" a kinda PCIe DMA device
->
-> it behaves as other PCIe devices with s->dma_as = pci_device_iommu_address_space(pdev);
-> no?
-
-
-Sorry for the confusing wording. The device is not really "IOMMU-aware": 
-it is just a PCI DMA engine, and the tests are responsible 
-for programming the emulated IOMMU and wiring the device behind it, not 
-the iommu-testdev itself.
-
-
-Thanks again for the review,
-Tao
-
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
