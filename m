@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23891D41C1F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 11:16:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1509FD41C21
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 11:18:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTeee-0006X5-39; Thu, 11 Dec 2025 06:16:16 -0500
+	id 1vTegd-0007Qw-Ml; Thu, 11 Dec 2025 06:18:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vTeeb-0006U1-Bv
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:16:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vTegb-0007O0-Go
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:18:17 -0500
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vTeeY-00036H-I2
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:16:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765451768;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=PGjKevl2KNgfC8tVMV5G7TSSLfkSd+O3wEhDxq6nPVM=;
- b=ejIAMV2xGKx9qasi1gfyFnRo/wDrnqz0NRgahswVdfmFYJBthEKgV2jAso0sWRuSoD1dVh
- cy+5T98slLAc3rNO2gZ3zISffdJnCjWUlJZhYIu3oG88DQbBXDBqaCEFhPEfeKCoHxoinI
- Sm0vvg+e6Ldbbe3sJKVlQ6VeLdJc7mY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-252-QTT-Q78QM-mQL3ppn45-qQ-1; Thu,
- 11 Dec 2025 06:16:05 -0500
-X-MC-Unique: QTT-Q78QM-mQL3ppn45-qQ-1
-X-Mimecast-MFC-AGG-ID: QTT-Q78QM-mQL3ppn45-qQ_1765451763
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1778C1956058; Thu, 11 Dec 2025 11:16:03 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.156])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 003FD1953984; Thu, 11 Dec 2025 11:16:01 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id A65161800608; Thu, 11 Dec 2025 12:15:59 +0100 (CET)
-Date: Thu, 11 Dec 2025 12:15:59 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Oliver Steffen <osteffen@redhat.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Joerg Roedel <joerg.roedel@amd.com>, kvm@vger.kernel.org,
- Zhao Liu <zhao1.liu@intel.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Marcelo Tosatti <mtosatti@redhat.com>, 
- Luigi Leonardi <leonardi@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH v2 3/3] igvm: Fill MADT IGVM parameter field
-Message-ID: <h4256m67shwdq4aouxpqadb2zozhq2f5dfeo74c5jnet5f26kz@a3av5xjfyfow>
-References: <20251211103136.1578463-1-osteffen@redhat.com>
- <20251211103136.1578463-4-osteffen@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vTegY-0003Hl-TU
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:18:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1765451895; x=1796987895;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=/PavwmTPXgf2RFgfCgkbjsWUgrq8AQllM7S/czmU9N0=;
+ b=n8cBTnCz0v/eqhxv09I/m1+pGhyC3MRs0B/jktfWvXJG1qGwjpjXzRtc
+ 0Rm13Gj0BbwOIyplvVoVvfq7l1K9GdSxRJwPc+EiVW8LxQ+fbh7FSPDYS
+ wSzO44a364iqFITVIGo6iNEGyZnqaPV67sWB0FRKg8THhFjByQhuXx3zJ
+ QBSC/QO+XVxVIlK0RTFVzCSfuUuTKousORrBa5hJHRd/27s2TJcF4UZ6P
+ qkLIZ8DHNzIiNDhI3uKoBG1+FRRySKVedL3FYCn/OwKhfsSuxB6/18LK2
+ Glf826nH6wjyL4wzatO8VD5sGvi9HQrKrg/160RivYsVDAC4gKWIhn5RM A==;
+X-CSE-ConnectionGUID: LLrRCT89Q8m7D788sJM8TA==
+X-CSE-MsgGUID: 74/HNoJ8RvShYQD+Ep6WkA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="78135212"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="78135212"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2025 03:18:12 -0800
+X-CSE-ConnectionGUID: n7oOztxsS0C0JqrUfAh9tQ==
+X-CSE-MsgGUID: yNbwLSB4TqaHeCzHM6soxQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="196384546"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 11 Dec 2025 03:18:10 -0800
+Date: Thu, 11 Dec 2025 19:42:56 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ "Chang S . Bae" <chang.seok.bae@intel.com>,
+ Zide Chen <zide.chen@intel.com>, Xudong Hao <xudong.hao@intel.com>
+Subject: Re: [PATCH v2 0/9] i386/cpu: Support APX for KVM
+Message-ID: <aTquQJkiwKmuqCG2@intel.com>
+References: <20251211070942.3612547-1-zhao1.liu@intel.com>
+ <16e0fc49-0cdf-4e54-b692-5f58e18c747b@redhat.com>
+ <aTqMBtkOxx6mZhn+@intel.com>
+ <df96afb2-f99c-48ae-81be-ccadf0fc3496@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251211103136.1578463-4-osteffen@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <df96afb2-f99c-48ae-81be-ccadf0fc3496@redhat.com>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,55 +90,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
+> No problem, I have done a quick pass with "sed" on the patches and reapplied
+> them.  I do ask you to respin the Diamond Rapids series though, on top of
+> the for-upstream tag of https://gitlab.com/bonzini/qemu (currently going
+> through CI).
+> 
+> Applied for 11.0!
 
-> +static int qigvm_initialization_madt(QIgvm *ctx,
-> +                                     const uint8_t *header_data, Error **errp)
-> +{
-> +    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
-> +    QIgvmParameterData *param_entry;
-> +
-> +    if (ctx->madt == NULL) {
-> +        return 0;
-> +    }
-> +
-> +    /* Find the parameter area that should hold the device tree */
+Thank you!
 
-cut+paste error in the comment.
+BTW, could you please have a look at this clean up on outdated SPR
+comments:
 
-> +    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
-> +    {
-> +        if (param_entry->index == param->parameter_area_index) {
+https://lore.kernel.org/qemu-devel/20251118080837.837505-1-zhao1.liu@intel.com/
 
-Hmm, that is a pattern repeated a number of times already in the igvm
-code.  Should we factor that out into a helper function?
+I feel it's better to clear SPR comments before DMR touches AMX.
 
->  static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
->  {
->      int32_t header_count;
-> @@ -892,7 +925,7 @@ IgvmHandle qigvm_file_init(char *filename, Error **errp)
->  }
->  
->  int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-> -                       bool onlyVpContext, Error **errp)
-> +                       bool onlyVpContext, GArray *madt, Error **errp)
-
-I'd like to see less parameters for this function, not more.
-
-I think sensible options here are:
-
-  (a) store the madt pointer in IgvmCfg, or
-  (b) pass MachineState instead of ConfidentialGuestSupport, so
-      we can use the MachineState here to generate the madt.
-
-Luigi, any opinion?  I think device tree support will need access to
-MachineState too, and I think both madt and dt should take the same
-approach here.
-
-Long-term I'd like to also get rid of the onlyVpContext parameter.
-That cleanup is something for another patch series though.
-
-take care,
-  Gerd
+Thanks,
+Zhao
 
 
