@@ -4,163 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAA41D41C3A
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 14:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87D2BD41C3E
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 14:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vThH8-0004xG-Uq; Thu, 11 Dec 2025 09:04:10 -0500
+	id 1vThT9-0000Ol-1h; Thu, 11 Dec 2025 09:16:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vThGo-0004v1-9j
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 09:04:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vThGm-0007WF-HO
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 09:03:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765461825;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9vOkGnaYpVNEHhXjDFo3oHEtOXfp+I4qohL2mPbwIPw=;
- b=FlxzRubXw0eQ9MbKYbsaKOq5ooSN9egQebYbThBkMVUmBDPgouMdXmX1IIBy/PgY/8FBNA
- 0qMqZV38NLKiecCo+Nwc0VKIWMUVlpZsHzm99GkiLQqlmxTqGYNNuFPiH5YwqJhLp0cMmO
- 4bEpZ+J5KT1sKvSWyq3gvGX5OwDKdPk=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-_bQwvr8nOZyRRSIx_gNisw-1; Thu, 11 Dec 2025 09:03:42 -0500
-X-MC-Unique: _bQwvr8nOZyRRSIx_gNisw-1
-X-Mimecast-MFC-AGG-ID: _bQwvr8nOZyRRSIx_gNisw_1765461821
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-42b2b642287so72550f8f.2
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 06:03:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <aaronlo0929@gmail.com>)
+ id 1vTccU-0005q3-Ay
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 04:05:54 -0500
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <aaronlo0929@gmail.com>)
+ id 1vTccS-0005o6-GU
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 04:05:54 -0500
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-4557b865e60so424044b6e.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 01:05:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765461821; x=1766066621; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=9vOkGnaYpVNEHhXjDFo3oHEtOXfp+I4qohL2mPbwIPw=;
- b=e6ggMmtyB2//yxcs4qcwHV8BPEfvDU+NuxPfe4yXgj7POpNa6HbcK8X21LlEwabaeA
- DMLahguaiSYpbdlFDNDbHc+a+vNq3DifyoEUR4/9zXWZf+9nb5+QYW7qVL5V9ObKVBA6
- VyKk3HjwRhnTrnq8tS+P2Yxj/QRkqiI/c8OLwDLHAh5vl8e9a+UUxZ4qSKNd/Rl4/TUl
- YLVuSjjAP1WWsmAKRSCgXgNCMPkllgof1xB5/r9gj/P1gcgDfupqALIo85tmTbuiyPzz
- oTOaXec6ObOt3p6KKN1XG1mJQ8eNvuiK+vkGHTnUC8rxas4ATK5PDxXn/ANxecXD66GG
- iTKQ==
+ d=gmail.com; s=20230601; t=1765443951; x=1766048751; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=aC0QiZKr/3DLPytD5Vsp0YSN+Shd7hwrvtulRp6ZC7g=;
+ b=Y+Y0Nin8ngx58vri0gcgHleDrOysX79nu4QQSLxylG7XIwmIttTxyv+ORq4slnguVB
+ 74FBoxO+jZQLBIcwfACuOH8brCjCI+NMS2mcPMt5mSZjR1Tk1bwLNizZbnqhpD8fX6Zy
+ PIJU6a7ygx/8oqMAA0GPis6r5AJB2aSCznNdv8xlROBU4eKFtlAUxEgrlgtVwL8XWVNQ
+ knYVtPI4TVLM4H+hbqZ1M8Uh+qTb1BZVGdKcyK1F/JbDJPyx2rgGyUpEXgh3HnbzUxlG
+ CPj4pXzp5eor3BpUedBVYWFIemPjXjjtGrrwfkTuLaQDUSM4jKSrEHPjWm2hTcaSyXEd
+ U2Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765461821; x=1766066621;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1765443951; x=1766048751;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9vOkGnaYpVNEHhXjDFo3oHEtOXfp+I4qohL2mPbwIPw=;
- b=tCr2p0EKEz9l7262dTyzHe2oJHEDVtR/TIQa/MjYAlTZISXKuw+tX5eQ8hinGtruLm
- 9G00fTOIQhS18YRt/k407hanWrW137wgQLqXCBK9cRlnij1JDZ556Yz5TLxWPgToSfJF
- 7GAfDT/VWH9l/ngnPUGNq8rU6qQq2frdwFeAUYcEBPl8WDZ3UO8tMFiI/o+Sakmqipn7
- XI/T7BA6a3Uv8SWV+RxmrFao5oW2LB6PRzYVAxse7nBQ99iNuy6Y5ikityGgjH+j+H9s
- gUlJhjtoVBhcGoYUyPcg8KOcZFlldKgvxptAwIzAQbLGqkrF012wx6aK/HnLRZD4q433
- iGuA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoHfGTLGO4lkQ4CN3nCHT/Pwx32NIEL1MhNE8DWkBaw3YR+qeyJn7vE6rk6dWG0P5aF9lDH9bh1y9x@nongnu.org
-X-Gm-Message-State: AOJu0YxbGCi03zgGR7ZO1eS9CJJzcgIegsppUy79DXve48R3ZWRtWfW/
- u5cs6IbpokX/fQvOesflOwq/h0oiilBj7krlprtdNDifcuNhIdFtqgz8TrEdbXT6uZhUXI6frUm
- saozuGVct8CoH5Q7lJSXGduDQexyk5s0qoyVM4yOmp+6zqz1Sqooh+GwS
-X-Gm-Gg: AY/fxX53NDIVyHSNwDGg5uOyAHIwDoLrbkfrOTepFffbls0WvGjaqtfKygr2ssSg7S7
- D54HxHuk0Vm+FPkdh1bb0RIiv0YxtSB4TCDK/42ID1jAxlBy2Mw3KQHezOxE3nef+qu4yXAIUk1
- oohdDGzCfpzr9VoIG+R98hkW7j5Fyy3ZxalrQDYj3jsKZa9RPbTtg3zKDfwhO5MG+v4eC8mdSRg
- LYavgEkeoXF0IiAAqzUGNKXXQL0llW01ZkY7zFlocTBWHf6dad3WgDLrHCBR+J01L69OcOkVIqM
- UX3XM2zF7b5a2WTyjmZ2w7FKm2xZ2dAXmbBnQaMGsDbCV38l4U2dr61HOZ3/MP6LgPqB9kVwJuO
- Z+KrYPZMt2bxSBYRS1ljC+blBkilGB8xchbXsKtTcYPyQGYKL
-X-Received: by 2002:a5d:64e6:0:b0:42b:4185:e590 with SMTP id
- ffacd0b85a97d-42fa3b1f307mr7351521f8f.58.1765461821079; 
- Thu, 11 Dec 2025 06:03:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGFpJoQNGwpkJ3NNwCHgNFo4+RgwZcYgYWsMxcu0d6Yk6cCUP2MenpUZxluya0KxMXj68WXKw==
-X-Received: by 2002:a5d:64e6:0:b0:42b:4185:e590 with SMTP id
- ffacd0b85a97d-42fa3b1f307mr7351413f8f.58.1765461819826; 
- Thu, 11 Dec 2025 06:03:39 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ bh=aC0QiZKr/3DLPytD5Vsp0YSN+Shd7hwrvtulRp6ZC7g=;
+ b=gkmlG1/kgiAfVsf0eg2/lT1W+KFjvgR8Ey7IXrmU8DxvxwArJxDOZ5dMya5z7uWUyj
+ kKSlGhFpHkRQ1oBiQyYef4StMP+poNyMVLZROrBaxz26HjIoK3cAeH000HsXX45PaKp5
+ Qmrb58HC0hD21iYn9oIXb/F3cJ1TTBa1fP9Ue2ViS33Z2UXrSEuhyPvCQDD1FP2VPtSL
+ bhW4aa/3Jvro9TWLbAqlev2uLRWscz/ogqONxVwJecTITftV3tx8nDzCYU1uWk2HyHCm
+ W/2bRW21wwG5OXpK9TlNv2M8hIqDCZCj/31nDw1cNxWaZ6lFn9/XH9fDkPzAfq9EL6+j
+ IVdQ==
+X-Gm-Message-State: AOJu0YzKfiSpRgHptLUNKScjW4lQI5egnZqOEQNRaOD4qD9JugfIdepG
+ mO0oRdOyT95S0ghau6q2YIKON4NVuzpiJRdq7WMZqRYjb8Ggjxc2iYE1
+X-Gm-Gg: ASbGncsiaKZiaX4ayE3+LU8JvqNuf6P/KqV7s7hb7fdcMDE2i1Q4nnc1gm7EVk25fRp
+ 7IEEUPZlcscvd7VwXzDtdVcJ+kL6jSrhHYXUZp/fCvk7txwRq8vw4+jp8QGfjR+5nveI20GVo5u
+ DKX/mZHpzhL3TYhK9Ytkmw9Oa8a5sTIru+1C0jyOCxf0jSHMgZxcuOmUDaSt6OHOenChpKnOADb
+ VtIbb1BLAPLQVqTOLjLbNSfYurN+uYBMReP6v9kr1xNaG3KfxWumPTzOv7DNIR8BN0T+WjIQaky
+ A2eoX5Qzi2h25Z4fwyNCS7K7kp9gAhDM8PTbJ5DtJP0MAT3t0T/BrhvP9K1wxOKenzdNyvVmKU9
+ ljG/ZG1q9GEsH5cQEMyj2IkQsdT+CHg8nAGaEFA7dOv0IiwdJw6QjrjBbCDy1D2ni5TKCATUYqW
+ +WRlavsPIKI6wNEl3xJDwtCyHbCfsZ+8tN
+X-Google-Smtp-Source: AGHT+IHB/b7LaZBKC5FO1HwvvHgHTr1Zqj7Gshvi/2mtEtRdifon0CHGV9XVt7IpZ3YUOp/70Hew9g==
+X-Received: by 2002:a05:6808:2189:b0:44f:e3d2:59e3 with SMTP id
+ 5614622812f47-455866f5ea9mr2998679b6e.32.1765443950748; 
+ Thu, 11 Dec 2025 01:05:50 -0800 (PST)
+Received: from DESKTOP-M2KV102.localdomain ([66.112.242.31])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42fa8b85ff5sm6433267f8f.24.2025.12.11.06.03.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 06:03:38 -0800 (PST)
-Message-ID: <52dc1984-da99-47bc-87f4-cc29cbe6b749@redhat.com>
-Date: Thu, 11 Dec 2025 15:03:37 +0100
+ 586e51a60fabf-3f5d5156631sm1285671fac.19.2025.12.11.01.05.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Dec 2025 01:05:50 -0800 (PST)
+From: Aaron Lo <aaronlo0929@gmail.com>
+Date: Thu, 11 Dec 2025 03:05:49 -0600
+Subject: [PATCH] virtio-balloon: only create statsq when
+ VIRTIO_BALLOON_F_STATS_VQ exists
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 17/33] hw/arm/smmuv3: Add support for providing a
- direct MSI doorbell GPA
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, peter.maydell@linaro.org, jgg@nvidia.com,
- nicolinc@nvidia.com, ddutile@redhat.com, berrange@redhat.com,
- nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com,
- wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
- zhenzhong.duan@intel.com, yi.l.liu@intel.com, kjaju@nvidia.com
-References: <20251120132213.56581-1-skolothumtho@nvidia.com>
- <20251120132213.56581-18-skolothumtho@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251120132213.56581-18-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251211-balloon-check-stats-feature-v1-1-ae8951957b80@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAGyJOmkC/x3MQQqDMBAF0KvIrDtgUqzSq5QupulXh0pSMlEE8
+ e4NXb7NO8iQFUb35qCMTU1TrHCXhsIscQLru5p86zvnneOXLEtKkcOM8GErUoxHSFkzuIfcugH
+ tdQigOnwzRt3/++N5nj9ZtL9FbQAAAA==
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
+ David Hildenbrand <david@kernel.org>, qemu-trivial@nongnu.org, 
+ Aaron Lo <aaronlo0929@gmail.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1765443949; l=1841;
+ i=aaronlo0929@gmail.com; s=20251211; h=from:subject:message-id;
+ bh=zbYfKIjnxCYX9hf677K+YYy9OUX21TXa8Xc2wOm3EEY=;
+ b=Zh5q2llRkh4wrmuwNmVvf6In6FbRSzr7LsAzJLevx9rntkM2MuNb6bDMq+n7nzVDfGY/nTgeg
+ CFrbMUr8CpID5SFKWIoacfnKVIuofwwl0w0rlEF3s1HtYtOSpD10Gc/
+X-Developer-Key: i=aaronlo0929@gmail.com; a=ed25519;
+ pk=8NbKHVJf2P8RqSXZ1l7w/K5TBnYs2yM+kTVDpAi9TP8=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=aaronlo0929@gmail.com; helo=mail-oi1-x230.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 11 Dec 2025 09:16:08 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -175,140 +113,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/20/25 14:21, Shameer Kolothum wrote:
-> Accelerated SMMUv3 instances rely on the physical SMMUv3 for nested
-> translation (Guest Stage-1, Host Stage-2). In this mode the guest’s
-> Stage-1 tables are programmed directly into hardware, and QEMU should
-> not attempt to walk them for translation since doing so is not reliably
-> safe. For vfio-pci endpoints behind such a vSMMU, the only translation
-> QEMU is responsible for is the MSI doorbell used during KVM MSI setup.
-> 
-> Add a device property to carry the MSI doorbell GPA from the virt
-> machine, and expose it through a new get_msi_direct_gpa PCIIOMMUOp.
-> kvm_arch_fixup_msi_route() can then use this GPA directly instead of
-> attempting a software walk of guest translation tables.
-> 
-> This enables correct MSI routing with accelerated SMMUv3 while avoiding
-> unsafe accesses to page tables.
-> 
-> For meaningful use of vfio-pci devices with accelerated SMMUv3, both KVM
-> and a kernel irqchip are required. Enforce this requirement when accel=on
-> is selected.
+The VirtIO specification (section 5.5.2) states that the stats queue
+is only present if the VIRTIO_BALLOON_F_STATS_VQ feature is
+negotiated. QEMU currently creates the statsq unconditionally.
 
-There are multiple changes in one patch. I suggest splitting.
+This patch guards statsq creation so it occurs only when the
+feature bit is enabled.
 
-> 
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->   hw/arm/smmuv3-accel.c   | 10 ++++++++++
->   hw/arm/smmuv3.c         |  2 ++
->   hw/arm/virt.c           | 22 ++++++++++++++++++++++
->   include/hw/arm/smmuv3.h |  1 +
->   4 files changed, 35 insertions(+)
-> 
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 65b577f49a..8f7c0cda05 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -392,6 +392,15 @@ static void smmuv3_accel_unset_iommu_device(PCIBus *bus, void *opaque,
->       }
->   }
->   
-> +static uint64_t smmuv3_accel_get_msi_gpa(PCIBus *bus, void *opaque, int devfn)
-> +{
-> +    SMMUState *bs = opaque;
-> +    SMMUv3State *s = ARM_SMMUV3(bs);
-> +
-> +    g_assert(s->msi_gpa);
-> +    return s->msi_gpa;
-> +}
-> +
->   /*
->    * Only allow PCIe bridges, pxb-pcie roots, and GPEX roots so vfio-pci
->    * endpoints can sit downstream. Accelerated SMMUv3 requires a vfio-pci
-> @@ -496,6 +505,7 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
->       .get_viommu_flags = smmuv3_accel_get_viommu_flags,
->       .set_iommu_device = smmuv3_accel_set_iommu_device,
->       .unset_iommu_device = smmuv3_accel_unset_iommu_device,
-> +    .get_msi_direct_gpa = smmuv3_accel_get_msi_gpa,
->   };
->   
->   /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 42c60b1ec8..f02e3ee46c 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1998,6 +1998,8 @@ static const Property smmuv3_properties[] = {
->        * Defaults to stage 1
->        */
->       DEFINE_PROP_STRING("stage", SMMUv3State, stage),
-> +    /* GPA of MSI doorbell, for SMMUv3 accel use. */
-> +    DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
->   };
->   
->   static void smmuv3_instance_init(Object *obj)
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 25fb2bab56..ea3231543a 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -3052,6 +3052,14 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->               /* The new SMMUv3 device is specific to the PCI bus */
->               object_property_set_bool(OBJECT(dev), "smmu_per_bus", true, NULL);
->           }
-> +        if (object_property_find(OBJECT(dev), "accel") &&
-> +            object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
-> +            if (!kvm_enabled() || !kvm_irqchip_in_kernel()) {
-> +                error_setg(errp, "SMMUv3 accel=on requires KVM with "
-> +                           "kernel-irqchip=on support");
-> +                    return;
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3188
 
-Couldn't these checks be done in the "smmuv3-accel" model realize
-handler instead ?
+Signed-off-by: Aaron Lo <aaronlo0929@gmail.com>
+---
+ hw/virtio/virtio-balloon.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-  
-> +            }
-> +        }
->       }
->   }
->   
-> @@ -3088,6 +3096,20 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
->               }
->   
->               create_smmuv3_dev_dtb(vms, dev, bus);
-> +            if (object_property_find(OBJECT(dev), "accel") &&
-> +                object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
-> +                hwaddr db_start;
-> +
-> +                if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
-> +                    /* GITS_TRANSLATER page + offset */
-> +                    db_start = base_memmap[VIRT_GIC_ITS].base + 0x10000 + 0x40;
-> +                } else {
-> +                    /* MSI_SETSPI_NS page + offset */
-> +                    db_start = base_memmap[VIRT_GIC_V2M].base + 0x40;
-> +                }
-> +                object_property_set_uint(OBJECT(dev), "msi-gpa", db_start,
-> +                                         &error_abort);
+diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+index 02cdd807d7..f5d4d5f60c 100644
+--- a/hw/virtio/virtio-balloon.c
++++ b/hw/virtio/virtio-balloon.c
+@@ -892,7 +892,10 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
+ 
+     s->ivq = virtio_add_queue(vdev, 128, virtio_balloon_handle_output);
+     s->dvq = virtio_add_queue(vdev, 128, virtio_balloon_handle_output);
+-    s->svq = virtio_add_queue(vdev, 128, virtio_balloon_receive_stats);
++
++    if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_STATS_VQ)) {
++        s->svq = virtio_add_queue(vdev, 128, virtio_balloon_receive_stats);
++    }
+ 
+     if (virtio_has_feature(s->host_features, VIRTIO_BALLOON_F_FREE_PAGE_HINT)) {
+         s->free_page_vq = virtio_add_queue(vdev, VIRTQUEUE_MAX_SIZE,
+@@ -932,7 +935,9 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
+ 
+     virtio_delete_queue(s->ivq);
+     virtio_delete_queue(s->dvq);
+-    virtio_delete_queue(s->svq);
++    if (s->svq) {
++        virtio_delete_queue(s->svq);
++    }
+     if (s->free_page_vq) {
+         virtio_delete_queue(s->free_page_vq);
+     }
 
-IIRC, this plug handler is called after the device realize handler
-and setting properties after realize is strongly discouraged.
+---
+base-commit: 9c23f2a7b0b45277693a14074b1aaa827eecdb92
+change-id: 20251211-balloon-check-stats-feature-7ea658e038ce
 
-C.
-
-> +            }
->           }
->       }
->   
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index e54ece2d38..5616a8a2be 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -67,6 +67,7 @@ struct SMMUv3State {
->       /* SMMU has HW accelerator support for nested S1 + s2 */
->       bool accel;
->       struct SMMUv3AccelState *s_accel;
-> +    uint64_t msi_gpa;
->   };
->   
->   typedef enum {
+Best regards,
+-- 
+Aaron Lo <aaronlo0929@gmail.com>
 
 
