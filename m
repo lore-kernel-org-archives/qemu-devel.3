@@ -4,88 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4347D41C14
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 10:26:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3381AD41C1A
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 10:28:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTds7-0007RX-91; Thu, 11 Dec 2025 05:26:07 -0500
+	id 1vTduL-0008Kv-OX; Thu, 11 Dec 2025 05:28:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1vTds3-0007QG-PP; Thu, 11 Dec 2025 05:26:03 -0500
-Received: from sender4-op-o12.zoho.com ([136.143.188.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1vTds1-00062t-Mg; Thu, 11 Dec 2025 05:26:03 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1765448732; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=fbXrSZtTlEAH3PzgYgJ36PbqjkoAwcgQzJ82p6TvEYmO8ikA634IAi0o99J57Og0ZPjF85sXliw9QddZgTm+Pes0lmDhQeNsutgXV5mIZ23wwgPr8lq4q69SIKmGsFaTlECwep+NnyNiuFnzcf4zM5y8i8sVwb7OfmAUatbGfVE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1765448732;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=DZJZJZqJpKYSoeB/fSJExhf/+xXPr96sKY8ZeXG1xgI=; 
- b=C7hk7O/4LyGGD91gnvAF3AoDQoojIxKxGaHIy8toWITIVneJR7k88063hELMoUH4lHJmykMJffmZhJQJVDuiax/PoFurG10sAKeiI5KzNkTZbjDx7w8k5KHkoajFMhrivB/rkbSL5lpzeOCEAnmHTG8fROuqxHO1gg7y+TU/bhE=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=linux.beauty;
- spf=pass  smtp.mailfrom=me@linux.beauty;
- dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765448732; 
- s=zmail; d=linux.beauty; i=me@linux.beauty;
- h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=DZJZJZqJpKYSoeB/fSJExhf/+xXPr96sKY8ZeXG1xgI=;
- b=GfALw4LQ9dFD1lotx+DrQcuhnhHOoGkemI+0nDEhS/G8uOcNl/lfDHBQzoEdjvft
- Aq2NXMBc60+W6ESB5fEFBHr++TTD/DyhjalMSzD8uNIZC2CMHYQ4orLFY8x65piubcD
- CAqw6YLu6pKaSe5TMDG0rd65krkKwdyC5rhBF6xw=
-Received: from mail.zoho.com by mx.zohomail.com
- with SMTP id 1765448729097945.3561874895004;
- Thu, 11 Dec 2025 02:25:29 -0800 (PST)
-Date: Thu, 11 Dec 2025 18:25:29 +0800
-From: Li Chen <me@linux.beauty>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: "Peter Maydell" <peter.maydell@linaro.org>,
- "Shannon Zhao" <shannon.zhaosl@gmail.com>,
- "Igor Mammedov" <imammedo@redhat.com>, "Ani Sinha" <anisinha@redhat.com>,
- "Eduardo Habkost" <eduardo@habkost.net>,
- "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
- "Yanan Wang" <wangyanan55@huawei.com>,
- "Zhao Liu" <zhao1.liu@intel.com>, "Song Gao" <gaosong@loongson.cn>,
- "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
- "Sunil V L" <sunilvl@ventanamicro.com>,
- "Palmer Dabbelt" <palmer@dabbelt.com>,
- "Alistair Francis" <alistair.francis@wdc.com>,
- "Weiwei Li" <liwei1518@gmail.com>, "qemu-arm" <qemu-arm@nongnu.org>,
- "qemu-devel" <qemu-devel@nongnu.org>, "qemu-riscv" <qemu-riscv@nongnu.org>
-Message-ID: <19b0cf1c1dd.3e0ec837386469.8764466025780095235@linux.beauty>
-In-Reply-To: <20251211024304-mutt-send-email-mst@kernel.org>
-References: <20250528105404.457729-1-me@linux.beauty>
- <20250528105404.457729-5-me@linux.beauty>
- <20250714144303-mutt-send-email-mst@kernel.org>
- <1981309e2fa.31709fd32611761.5900055972026140740@linux.beauty>
- <20250716074207-mutt-send-email-mst@kernel.org>
- <198131a686b.18fb34702623779.7633947002456257034@linux.beauty>
- <1995f320053.73c58bde124269.3373604835167896043@linux.beauty>
- <19b0837500d.2713ffb3821327.2786629512090065997@linux.beauty>
- <20251210075237-mutt-send-email-mst@kernel.org>
- <19b0ab7f203.43fecb3b140213.6490567972995015069@linux.beauty>
- <20251211024304-mutt-send-email-mst@kernel.org>
-Subject: Re: [PATCH REPOST v4 4/4] acpi/virt: suppress UART device & SPCR
- when guest has no serial hardware
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vTduJ-0008KA-J3; Thu, 11 Dec 2025 05:28:23 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vTduE-0006gs-Jv; Thu, 11 Dec 2025 05:28:23 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwD31yS7nDppucNcAQ--.37344S2;
+ Thu, 11 Dec 2025 18:28:11 +0800 (CST)
+Received: from phytium.com.cn (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwDHH+20nDpp4jILAA--.6467S3;
+ Thu, 11 Dec 2025 18:28:05 +0800 (CST)
+From: Tao Tang <tangtao1634@phytium.com.cn>
+To: "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Eric Auger <eric.auger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>, Tao Tang <tangtao1634@phytium.com.cn>
+Subject: [RFC 0/1] hw/pci: Add sec-sid property to PCIDevice
+Date: Thu, 11 Dec 2025 18:27:28 +0800
+Message-Id: <20251211102729.227376-1-tangtao1634@phytium.com.cn>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-Received-SPF: pass client-ip=136.143.188.12; envelope-from=me@linux.beauty;
- helo=sender4-op-o12.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwDHH+20nDpp4jILAA--.6467S3
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQABBWk51DEEVgADsh
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxCw4UZF4xGF1fCryUAr17Awb_yoWrZr1DpF
+ W3Aa4jyr4DGFy8Cw4xua18CayjgFZ3A34UGrn5K3W7AFs8ZwnYgFWjkr4jg3yUWr1ru3Wj
+ qrWj9ry8Xw1qy3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,87 +75,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+Hi all,
 
- ---- On Thu, 11 Dec 2025 15:43:45 +0800  Michael S. Tsirkin <mst@redhat.co=
-m> wrote ---=20
- > On Thu, Dec 11, 2025 at 08:03:05AM +0800, Li Chen wrote:
- > > Hi Tsirkin,
- > >=20
- > >  ---- On Wed, 10 Dec 2025 20:53:01 +0800  Michael S. Tsirkin <mst@redh=
-at.com> wrote ---=20
- > >  > On Wed, Dec 10, 2025 at 08:23:21PM +0800, Li Chen wrote:
- > >  > > Hi Michael,
- > >  > >=20
- > >  > >  ---- On Fri, 19 Sep 2025 07:38:56 +0800  Li Chen <me@linux.beaut=
-y> wrote ---=20
- > >  > >  > Hi Michael,
- > >  > >  >=20
- > >  > >  >  ---- On Wed, 16 Jul 2025 19:59:14 +0800  Li Chen <me@linux.be=
-auty> wrote ---=20
- > >  > >  >  > Hi Michael,
- > >  > >  >  >=20
- > >  > >  >  >  ---- On Wed, 16 Jul 2025 19:42:42 +0800  Michael S. Tsirki=
-n <mst@redhat.com> wrote ---=20
- > >  > >  >  >  > On Wed, Jul 16, 2025 at 07:41:11PM +0800, Li Chen wrote:
- > >  > >  >  >  > > Hi Michael,
- > >  > >  >  >  > >=20
- > >  > >  >  >  > > Thanks for your kind review! All issues below have bee=
-n fixed in v5:
- > >  > >  >  >  > > https://lore.kernel.org/qemu-devel/20250716111959.4049=
-17-5-me@linux.beauty/T/#m696cee9a95646add1b74b866c3d6761aa4c5c762
- > >  > >  >  >  >=20
- > >  > >  >  >  > Past soft freeze now: I tagged this but pls remind me af=
-ter the release
- > >  > >  >  >  > to help make sure it's not lost.
- > >  > >  > =20
- > >  > >  > Gentle reminder: This patch is still missing from the latest m=
-aster branch, but can apply without
- > >  > >  > any conflict. Can it be included in 10.2?
- > >  > >  >=20
- > >  > >  > Regards,
- > >  > >  > Li.
- > >  > >  >=20
- > >  > >  >=20
- > >  > >=20
- > >  > > Sorry for bothering again. But I'm still unable to find this patc=
-h in the latest master branch, though it applies without conflicts now.=20
- > >  > >=20
- > >  > > Could it be merged now?
- > >  > >=20
- > >  > > Regards,
- > >  > > Li=E2=80=8B
- > >  >=20
- > >  > you still need to update loongarch, I think. otherwise these tests =
-will
- > >  > fail.
- > >=20
- > > Yes, it seems that tap stdout is polluted by serial stdio.
- > >=20
- > > I'll address the stdout pollution from -serial stdio by redirecting se=
-rial output to /dev/null using -serial null in the next version.=20
- > > This will still create the serial device but prevent it from writing t=
-o the console.
- > >=20
- > > Regards,
- > >=20
- > > Li=E2=80=8B
- >=20
- > I don't know about that, what I meant is that loongaarch also has SPCR
- > so it's expected tables have to be updated.
+this short series adds a small but important hook to PCIDevice: a
+system-defined StreamID Security State (SEC_SID) field and QOM property,
+intended to be used by the Arm SMMUv3 model.
 
-My apologies, I misunderstood your previous comment. I just found I already=
- added LoongArch support in v5 [1] months ago. I've now fixed the tap=20
-parsing error and submitted v6 of the patch [2]. And now all tests can pass=
-.
+One point I want to stress up front: I am fully aware that PCI/PCIe
+has no architectural notion of Secure vs Non-secure. The PCIe
+specification does not define a "security state" for PCIe functions, and
+this patch is **not** trying to introduce such a concept or to model a
+"Secure PCIe device" in the PCIe sense.
 
-[1]: https://patchew.org/QEMU/20250716111959.404917-1-me@linux.beauty/20250=
-716111959.404917-5-me@linux.beauty/
-[2]: https://lore.kernel.org/qemu-devel/20251211102025.873506-1-me@linux.be=
-auty/T/#u
+Instead, this change is driven purely by the Arm SMMU architecture.
 
-Regards,
+In SMMUv3, when a device issues a DMA request, the request carries the
+device's SEC_SID attribute to the SMMU. The SMMU then uses SEC_SID to
+determine how to interpret the security state of that transaction:
 
-Li=E2=80=8B
+  * If SEC_SID=Secure, the SMMU examines additional signals to decide
+    whether this particular request is a Secure stream or a Non-secure
+    stream.
+  * If SEC_SID=Non-secure, the SMMU always treats the request as a
+    Non-secure stream, regardless of any other signals.
+
+In other words, SEC_SID=Non-secure restricts a device to Non-secure
+streams only, while SEC_SID=Secure allows the SMMU to consider both
+possibilities on a per-transaction basis.
+
+The SMMU specification explicitly states that the association between
+a device and its SEC_SID is a *system-defined property*. As Arm
+experts have clarified during the Secure SMMU review process [1], if a
+device is capable of issuing requests with SEC_SID=Secure, the system
+typically applies a static marker to that device—this is precisely why
+this patch proposes a static SEC_SID property for PCIe devices.
+
+[1] https://lore.kernel.org/qemu-devel/4870b7df-4cb3-457e-9a18-87f3558adf09@linaro.org/
+
+From QEMU's point of view, the platform needs a place to store this
+attribute for each PCI function. The Secure SMMU series already
+plumbs SEC_SID through the SMMUv3 internals. What is missing on the
+PCI side is a simple way for the board to attach this system-defined
+SEC_SID to a PCI function. This is exactly what this patch provides.
+
+Concretely, the patch adds:
+
+  * a `uint8_t sec_sid` field to `struct PCIDevice`; and
+  * a `"sec-sid"` QOM property in `hw/pci/pci.c`.
+
+The semantics are:
+
+  * `sec_sid` is **not** a PCIe architectural attribute and is **not**
+    visible to the guest as part of PCIe configuration space.
+  * It is a system-defined attribute carried with each DMA request
+    from the device to the SMMU, controlling how the SMMU interprets
+    the security state of transactions:
+      - SEC_SID=0 (Non-secure): all requests are treated as
+        Non-secure streams
+      - SEC_SID=1 (Secure): the SMMU examines per-transaction signals
+        to determine Secure vs Non-secure
+  * This is a static property set at device initialization, not a
+    per-transaction field modified by software.
+  * The default is 0, so existing machines and devices are unchanged
+    unless they explicitly set `"sec-sid"`.
+
+The idea is that board code (or test setups) can configure the SEC_SID
+for specific devices, thereby controlling whether the SMMU will always
+treat their transactions as Non-secure (SEC_SID=0) or whether it will
+examine additional signals to distinguish Secure vs Non-secure streams
+(SEC_SID=1). The PCIe protocol itself remains untouched: we are not
+reinterpreting any PCIe capability or config bit as a security state,
+and we are not changing how PCIe transactions are generated or routed.
+
+Looking ahead to Arm RME-DA / TDISP modelling, the expectation is that
+Realm vs Non-secure device assignment will be driven by the TDISP/DTI
+protocol, in line with Arm’s guidance that DTI-ATS covers Non-secure and
+Realm streams and that PCIe StreamIDs must not be used to grant Secure
+privileges. In that context, we do not plan to represent Realm or
+"Secure PCIe endpoints" via this static field; `"sec-sid"` remains an
+Arm SMMU integration hook rather than a PCIe security model.
+
+Feedback is very welcome on whether PCIDevice is the right place to host
+this SMMU-oriented, system-defined SEC_SID, and whether the separation
+between "PCIe has no security state" and "SMMU needs a security identity
+for its clients" is clear enough.
+
+Tao Tang (1):
+  hw/pci: Add sec-sid property to PCIDevice
+
+ hw/pci/pci.c                | 7 +++++++
+ include/hw/pci/pci_device.h | 3 +++
+ 2 files changed, 10 insertions(+)
+
+-- 
+2.34.1
 
 
