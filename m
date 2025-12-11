@@ -4,104 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE5BAD41C20
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 11:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9A1AD41C26
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 11:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTeuk-0002CE-PR; Thu, 11 Dec 2025 06:32:54 -0500
+	id 1vTf22-0003Rg-0I; Thu, 11 Dec 2025 06:40:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vTeui-000296-F6
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:32:52 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vTf1u-0003Qa-Tk
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:40:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vTeug-0005vl-U5
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:32:52 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vTf1s-0000NA-N9
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:40:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765452770;
+ s=mimecast20190719; t=1765453215;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+qIzzMtKhvUi+N/IpkHz+D2b0E//K21mnD2V+1kwQmE=;
- b=H/PTslcAbojPMC4dJEx7DR7O+rHtha2SsGgQdX/+G1nrTFme0kAcFilDYrDPjuI65TlvuY
- ashi81uHrN0w6qxwdNRso3+wweW3BKodhvTGZejw867kuwXYmsqydJYpnmIEJ8DXlvkTa5
- Ny16jTsi1VWyKIThOLJnZw2ppMxBxZs=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rnkncwa8jTXSkU5zEmaeKdAaLHjWbaPFnbxrlXu/ODE=;
+ b=AWt07ew43KkMVsRyfhJuy+WENypATJgbxS/v2UqhxWXjbB1RP463NZ1YTAUNWnN9sdCvQt
+ CtgBZoelvkRDgsQZM8zxhuYqMghsDqD90Xotwgw+jQFGHDA03RwWTVet1dip+ni4SjwCTR
+ hmet+xSRG50hiCTV9lY9Ux6F0ZgEzdY=
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
+ [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-197-887M4pBTMO20A4Oa5w7x5g-1; Thu, 11 Dec 2025 06:32:48 -0500
-X-MC-Unique: 887M4pBTMO20A4Oa5w7x5g-1
-X-Mimecast-MFC-AGG-ID: 887M4pBTMO20A4Oa5w7x5g_1765452767
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4775f51ce36so5675295e9.1
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 03:32:48 -0800 (PST)
+ us-mta-677-GU6bWa2nOR2EUPlp5DLXqA-1; Thu, 11 Dec 2025 06:40:13 -0500
+X-MC-Unique: GU6bWa2nOR2EUPlp5DLXqA-1
+X-Mimecast-MFC-AGG-ID: GU6bWa2nOR2EUPlp5DLXqA_1765453213
+Received: by mail-pf1-f199.google.com with SMTP id
+ d2e1a72fcca58-7b9c91b814cso2072994b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 03:40:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765452767; x=1766057567; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=+qIzzMtKhvUi+N/IpkHz+D2b0E//K21mnD2V+1kwQmE=;
- b=awJSjSgvM/M1TTNscqFcM2PyKcBCqE/IfA8VH8TjlxBTEjaokegcaBrVKbpNsAuQf3
- XEoBVQa0WxZewi9HteJQwYIkBUJwfGZiBKFge4UYAzmUEt0Nb2jvRUqR4hzIy1OGfdJ7
- AY6EWPpEPImPdQ+sW1fyuKDP0EPxrHBL0BfmY83AftwFdYBpMkCA7hZPAOfk+uA2Bq9Y
- 5CdAJCphnh9lHGLGAcwszZEturQ8/8ix5yBsUUGirUqnFY1kXJ0msfIA+q3anXnMWYE+
- RigOpPVOj50kbAu1pnIAPPCx7z7jVoD41ZvlYn1/sl1S1wGu3Cj3MFaHxHFQPEM3Cn0D
- ncwQ==
+ d=redhat.com; s=google; t=1765453213; x=1766058013; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rnkncwa8jTXSkU5zEmaeKdAaLHjWbaPFnbxrlXu/ODE=;
+ b=akhnUUW1SaWc5lvH1WK8grdrTXh1GMbJroUX1HpXD+jcDamNKS2P5VJ8d1qgXWrEDK
+ xI+4WrknUrMgLGBmZe2nsbtIxE232bqclrYG/WAjn0b/QuKIXWFIXOdD979R6P5YevNe
+ iTw639EoPyQst2UcFGT5P58loJWtPSoNoLkUtrZROKnQLZeWXrRgiXcbALl4ClPEqYxd
+ EPsdjuJFvVOd7C/dqqW4I5K72FltIOeahP1Fi1cOMlZZywxqQ2mtpmamKZr+yvcgdf0L
+ KCS/ajZBzZFAWmPyyf7bhj1ZBEB0aPG9uRo+jyxKMryjEeioS2bUrQen7VW2KLtpKv0w
+ RAuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765452767; x=1766057567;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+qIzzMtKhvUi+N/IpkHz+D2b0E//K21mnD2V+1kwQmE=;
- b=H8QWLN7tqrKsNViEwYSGpGAfkrk0cMnTVCxR/brmIBlAio1G9+pu7cvcwEwzG6zlWF
- tF2TCHAob33zgCyocU4JaEeYDZsnuvwp2U65xF72yZXBc4V6KeNVBYu3+oqDo9J+1poT
- vFmgRHWPnSbpZ3PLhTAHAUMov6kb53dG9FdSbqwxPR7wSeyPTyw9ktduZiHW6eG2apBL
- X3rIY9QJJuU33S759uTypuzusatAoPdXYeoMLYqILYq0sL/kgW44WD04wrwVLS17MeJx
- 34sOx3AtFV6ix7cv4nSuC9ji4Pe2R+ChcTS/7XV53+B8G15QOavKe9FHRKKGaadabRJW
- vaeA==
-X-Gm-Message-State: AOJu0YyNsaCTVvrG292WHbkkN0KmG5uDm7yKpJN2W3EPK522g012sFkb
- 29Bt3fhGqoSyQo2CvGr68mCyyqj1sh489NlQ97LW871wmVvsu58ojpVfk0E1S1z/uqP3eRMBO7n
- rM9lnuCsF/g18WQcO/QBLlR53vsbVVn6Uj54rJ+9EZQb9S2kwKJn3Wx6S
-X-Gm-Gg: AY/fxX42C0K7llP9NCR5F7dKr+5o36Rz6vKZ8Zecc/g+c/ueTpFJQiYh0pDWQhvHjLM
- 1t+tbOf2X6jO+qDlf0Ni25gAxQVcRV8XXaTEeO8Iwznp/+rF27Ph6dqS7RdhR1vPY2Wqt49SkVq
- WSHze+D8mA7e1aE3iX8TRtHv558e4cUdUXyvwqNGXKOULPf2QXtx8Tux3yL5gCMfRX5Ki7XwKkP
- eRiwJAV6hVcDh5knEbHjT4qdRewLhG21KUngRrqMZJVcBIzTmC5gkbX1cTknj+hp7hbNdKRDz/F
- LaaLu9Nt+vdgIeFZdWj80Jk+DKFhdqt0aotFyoZB5DQYcyiNy2kT5FquDMmpJKSTqdD8sSyVIzL
- 5dkF61vcnSrB+pdE=
-X-Received: by 2002:a05:600c:a0a:b0:479:1a0a:ebbe with SMTP id
- 5b1f17b1804b1-47a8375ab54mr58982505e9.14.1765452767451; 
- Thu, 11 Dec 2025 03:32:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEWxswVvBo6Yc+elGKuvHQk1GdYR7vZX2DqpQjW/Y1IfhiIluOqLNtrWKYFYGGX3rHtSej5RA==
-X-Received: by 2002:a05:600c:a0a:b0:479:1a0a:ebbe with SMTP id
- 5b1f17b1804b1-47a8375ab54mr58982065e9.14.1765452766969; 
- Thu, 11 Dec 2025 03:32:46 -0800 (PST)
-Received: from leonardi-redhat ([151.29.156.207])
+ d=1e100.net; s=20230601; t=1765453213; x=1766058013;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rnkncwa8jTXSkU5zEmaeKdAaLHjWbaPFnbxrlXu/ODE=;
+ b=oqA1E0pOI2omq5TWfG6AgO1wJH1P70cNN+ntO32Sx3pwMwLldxK3K8hfS37X37adVc
+ ok5Xqo/1lUZCDAw1+tJkUHGuLMiSgoV76jSk7bDdQPB5oriHMQKJNpMIpa/2RpxeAb3L
+ SBuSdzJEXwoP5QXswuJPmIehkGio7mvROLVt4hDGc7IWho5D1/ByfnlezMp+UWVG/oTg
+ iC+7LdwQ+wcDMOs+43YCLwS1w+5JVviHEt46BQ8FJpstkbK43WfyOc0BVQ93K53KqYjV
+ lJMA1h9W3qkUJ0DcuGSz4KzV9OPQ1QtYpb5w9UL7SL9ujvXOsUqxV2ou3neUoN3nKyFw
+ jg1w==
+X-Gm-Message-State: AOJu0YzrrfnKuNQuOt/d0gabmlljEL250nnWdrsWjoxTeFpk2mLfo7zp
+ /D/VyPiMgtdkDJ7+pqRq3iTiUynSuKxZ30QE6E7NcjGGxoNmCWegdJTS1OQzMoRUMq7LFv8BXY6
+ nH0Uk0oNiBhloesTT7U59GBzxIc6wVqSc0MTdzzLJYZ64WmaoKoYGbMzh
+X-Gm-Gg: AY/fxX7Llpuf1UbrPOTSP5O+Z9Xbi1HLLYQoMyvZb3F+emaFzDZN7ukpuHwIP1oc9Ny
+ znbBN9/kd1A67RAhLWLJ/4xpzYPv/GnKufIWT0vMd+LZzfptLfW0fJ2VQH7MG1hc6e5NKFGhrEt
+ mYYj+vwfYt7kgkuZM65u6a6Tsj8vU3H67Ful9F5KvhI27QmqSkCwJ9ERxZUFlZGe/6+VXOvgi6n
+ nKOndS2vVQ7nwNXQVdFmR9wnc/+jbFbt6KT/7eJ/AKMinRN33h6UEB9QNy/qRwOm4VL5PfuX4/n
+ OuRko1PPLtRiNP93iGpqtuuw/JMrnOcAKUINzFZujXvg5bMJhSdfmB3XqQXE+XGd3jnjPJuBfVb
+ SD0x0QyfHfvuXcj2PIKILc/0Bmd1d9PS2jMfKeGppbVXL6vKma+vH2Kk=
+X-Received: by 2002:a05:6a00:2e90:b0:7e8:450c:61a1 with SMTP id
+ d2e1a72fcca58-7f22ea71947mr5488918b3a.56.1765453212757; 
+ Thu, 11 Dec 2025 03:40:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHb3LlcI5ZTI/WNDVeuuXiCPyISAB8g6eCdqO/WuMn0TcpRCuJPOhYmVac5g2ll0P58O2SxxQ==
+X-Received: by 2002:a05:6a00:2e90:b0:7e8:450c:61a1 with SMTP id
+ d2e1a72fcca58-7f22ea71947mr5488898b3a.56.1765453212356; 
+ Thu, 11 Dec 2025 03:40:12 -0800 (PST)
+Received: from smtpclient.apple ([110.225.4.23])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a89ef4904sm11798525e9.3.2025.12.11.03.32.45
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Dec 2025 03:32:46 -0800 (PST)
-Date: Thu, 11 Dec 2025 12:32:43 +0100
-From: Luigi Leonardi <leonardi@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
+ d2e1a72fcca58-7f4c27771b3sm2330911b3a.27.2025.12.11.03.40.08
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 11 Dec 2025 03:40:11 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.3\))
+Subject: Re: [PATCH v2 3/5] igvm: move file load to complete callback
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20251211105419.3573449-4-kraxel@redhat.com>
+Date: Thu, 11 Dec 2025 17:09:56 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Oliver Steffen <osteffen@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v2 4/5] igvm: add trace points for igvm file loading and
- processing
-Message-ID: <rwetrddx3pexiegspxphdvlccjr376mq62bgeywpygqfugxcu6@i5juydrpgomg>
+ Michael Tsirkin <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Oliver Steffen <osteffen@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, Luigi Leonardi <leonardi@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <15A0701C-9973-473F-8804-812CF6B5F909@redhat.com>
 References: <20251211105419.3573449-1-kraxel@redhat.com>
- <20251211105419.3573449-5-kraxel@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20251211105419.3573449-5-kraxel@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=leonardi@redhat.com;
+ <20251211105419.3573449-4-kraxel@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+X-Mailer: Apple Mail (2.3826.700.81.1.3)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -126,58 +128,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 11, 2025 at 11:54:18AM +0100, Gerd Hoffmann wrote:
->Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
->Reviewed-by: Ani Sinha <anisinha@redhat.com>
->Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
->---
-> backends/igvm.c       | 5 +++++
-> backends/trace-events | 2 ++
-> 2 files changed, 7 insertions(+)
->
->diff --git a/backends/igvm.c b/backends/igvm.c
->index a01e01a12a60..4cf7b572347c 100644
->--- a/backends/igvm.c
->+++ b/backends/igvm.c
->@@ -20,6 +20,8 @@
-> #include "system/address-spaces.h"
-> #include "hw/core/cpu.h"
->
->+#include "trace.h"
->+
-> #include <igvm/igvm.h>
-> #include <igvm/igvm_defs.h>
->
->@@ -886,6 +888,8 @@ IgvmHandle qigvm_file_init(char *filename, Error **errp)
->         error_setg(errp, "Unable to parse IGVM file %s: %d", filename, igvm);
->         return -1;
->     }
->+
->+    trace_igvm_file_loaded(filename, igvm);
->     return igvm;
-> }
->
->@@ -903,6 +907,7 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
->         return -1;
->     }
->     ctx.file = cfg->file;
->+    trace_igvm_process_file(cfg->file, onlyVpContext);
->
->     /*
->      * The ConfidentialGuestSupport object is optional and allows a confidential
->diff --git a/backends/trace-events b/backends/trace-events
->index 45ac46dc2454..7a00e9bf6c16 100644
->--- a/backends/trace-events
->+++ b/backends/trace-events
->@@ -26,3 +26,5 @@ iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, u
-> igvm_reset_enter(int type) "type=%u"
-> igvm_reset_hold(int type) "type=%u"
-> igvm_reset_exit(int type) "type=%u"
->+igvm_file_loaded(const char *fn, int32_t handle) "fn=%s, handle=0x%x"
->+igvm_process_file(int32_t handle, bool context_only) "handle=0x%x context-only=%d"
->-- 2.52.0
->
 
-Reviewed-by: Luigi Leonardi <leonardi@redhat.com>
+
+> On 11 Dec 2025, at 4:24=E2=80=AFPM, Gerd Hoffmann <kraxel@redhat.com> =
+wrote:
+>=20
+> Add UserCreatableClass->complete callback function for igvm-cfg =
+object.
+>=20
+> Move file loading and parsing of the igvm file from the process =
+function
+> to the new complete() callback function.  Keep the igvm file loaded
+> after processing, release it in finalize() instead, so we parse it =
+only
+> once.
+
+LGTM.
+
+>=20
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+
+> ---
+> include/system/igvm-internal.h |  5 +++++
+> backends/igvm-cfg.c            | 18 ++++++++++++++++++
+> backends/igvm.c                |  9 ++++-----
+> 3 files changed, 27 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/include/system/igvm-internal.h =
+b/include/system/igvm-internal.h
+> index e0452080b127..d378d682b0fb 100644
+> --- a/include/system/igvm-internal.h
+> +++ b/include/system/igvm-internal.h
+> @@ -12,6 +12,8 @@
+> #include "qemu/typedefs.h"
+> #include "qom/object.h"
+>=20
+> +#include <igvm/igvm.h>
+> +
+> struct IgvmCfg {
+>     ObjectClass parent_class;
+>=20
+> @@ -21,7 +23,10 @@ struct IgvmCfg {
+>      *           format.
+>      */
+>     char *filename;
+> +    IgvmHandle file;
+>     ResettableState reset_state;
+> };
+>=20
+> +IgvmHandle qigvm_file_init(char *filename, Error **errp);
+> +
+> #endif
+> diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+> index e0df3eaa8efd..4014062e0f22 100644
+> --- a/backends/igvm-cfg.c
+> +++ b/backends/igvm-cfg.c
+> @@ -53,6 +53,13 @@ static void igvm_reset_exit(Object *obj, ResetType =
+type)
+>     trace_igvm_reset_exit(type);
+> }
+>=20
+> +static void igvm_complete(UserCreatable *uc, Error **errp)
+> +{
+> +    IgvmCfg *igvm =3D IGVM_CFG(uc);
+> +
+> +    igvm->file =3D qigvm_file_init(igvm->filename, errp);
+> +}
+> +
+> OBJECT_DEFINE_TYPE_WITH_INTERFACES(IgvmCfg, igvm_cfg, IGVM_CFG, =
+OBJECT,
+>                                    { TYPE_USER_CREATABLE },
+>                                    { TYPE_RESETTABLE_INTERFACE },
+> @@ -62,6 +69,7 @@ static void igvm_cfg_class_init(ObjectClass *oc, =
+const void *data)
+> {
+>     IgvmCfgClass *igvmc =3D IGVM_CFG_CLASS(oc);
+>     ResettableClass *rc =3D RESETTABLE_CLASS(oc);
+> +    UserCreatableClass *uc =3D USER_CREATABLE_CLASS(oc);
+>=20
+>     object_class_property_add_str(oc, "file", get_igvm, set_igvm);
+>     object_class_property_set_description(oc, "file",
+> @@ -73,14 +81,24 @@ static void igvm_cfg_class_init(ObjectClass *oc, =
+const void *data)
+>     rc->phases.enter =3D igvm_reset_enter;
+>     rc->phases.hold =3D igvm_reset_hold;
+>     rc->phases.exit =3D igvm_reset_exit;
+> +
+> +    uc->complete =3D igvm_complete;
+> }
+>=20
+> static void igvm_cfg_init(Object *obj)
+> {
+> +    IgvmCfg *igvm =3D IGVM_CFG(obj);
+> +
+> +    igvm->file =3D -1;
+>     qemu_register_resettable(obj);
+> }
+>=20
+> static void igvm_cfg_finalize(Object *obj)
+> {
+> +    IgvmCfg *igvm =3D IGVM_CFG(obj);
+> +
+>     qemu_unregister_resettable(obj);
+> +    if (igvm->file >=3D 0) {
+> +        igvm_free(igvm->file);
+> +    }
+> }
+> diff --git a/backends/igvm.c b/backends/igvm.c
+> index fbb8300b6d01..a01e01a12a60 100644
+> --- a/backends/igvm.c
+> +++ b/backends/igvm.c
+> @@ -869,7 +869,7 @@ static int qigvm_handle_policy(QIgvm *ctx, Error =
+**errp)
+>     return 0;
+> }
+>=20
+> -static IgvmHandle qigvm_file_init(char *filename, Error **errp)
+> +IgvmHandle qigvm_file_init(char *filename, Error **errp)
+> {
+>     IgvmHandle igvm;
+>     g_autofree uint8_t *buf =3D NULL;
+> @@ -898,10 +898,11 @@ int qigvm_process_file(IgvmCfg *cfg, =
+ConfidentialGuestSupport *cgs,
+>     QIgvm ctx;
+>=20
+>     memset(&ctx, 0, sizeof(ctx));
+> -    ctx.file =3D qigvm_file_init(cfg->filename, errp);
+> -    if (ctx.file < 0) {
+> +    if (cfg->file < 0) {
+> +        error_setg(errp, "No IGVM file loaded.");
+>         return -1;
+>     }
+> +    ctx.file =3D cfg->file;
+>=20
+>     /*
+>      * The ConfidentialGuestSupport object is optional and allows a =
+confidential
+> @@ -992,7 +993,5 @@ cleanup_parameters:
+>     g_free(ctx.id_auth);
+>=20
+> cleanup:
+> -    igvm_free(ctx.file);
+> -
+>     return retval;
+> }
+> --=20
+> 2.52.0
+>=20
 
 
