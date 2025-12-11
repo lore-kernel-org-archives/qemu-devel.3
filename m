@@ -4,158 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D4B8D3E79C
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 07:55:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72109D3E79D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 08:06:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTbWO-00051w-3z; Thu, 11 Dec 2025 02:55:32 -0500
+	id 1vTbgW-00077N-DR; Thu, 11 Dec 2025 03:06:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTbWM-00051N-3n
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 02:55:30 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTbWK-0006Bb-Ix
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 02:55:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765439727;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rajnSTw5kEnrq1eByjiOXIBPQe8kyawfNbti4aS+f1c=;
- b=fmc7aUVmCYnwTTi1FuG4GkBqxLwHCZmdsPnd46cbhcPyJk3gU3nlcyBPDF4NTUNDe3VaqU
- eJCKlyfE1jPIZdKTqcDpsqtYfsZMna3YjgrEshF9XdPeiCxJd4rqJ2/gnDmZ8+SVlyLrlo
- 8QEOIM4k4+2KupK/8H19Z0484jlJe2U=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-404-aYY6PUUjP12YjX_Kds00Ag-1; Thu, 11 Dec 2025 02:55:25 -0500
-X-MC-Unique: aYY6PUUjP12YjX_Kds00Ag-1
-X-Mimecast-MFC-AGG-ID: aYY6PUUjP12YjX_Kds00Ag_1765439725
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4792bd2c290so5659555e9.1
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 23:55:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1vTbgV-00077E-BN
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 03:05:59 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1vTbgT-0008Ij-S0
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 03:05:59 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-47795f6f5c0so3520415e9.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 00:05:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765439723; x=1766044523; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=rajnSTw5kEnrq1eByjiOXIBPQe8kyawfNbti4aS+f1c=;
- b=jAyDlh04Pccx8JuQv1Ns10Dp/jvhq2EygkvmxMmu58AWWsgEZEcWlWZg4vKofEwPyf
- 63P8uOyA2zQiqSv7Dduu9ObjLuEdngKhonERmTCiOAA9MaaX95WaiddTg1ZXQoPRvz/g
- WrU2wf2beJUTMwPmkal3NEQ8EonaOQA/WefM9H+MvsA1DHokDoToM0qq4I5ainFgx0Mm
- tP8KXBpYCtpAtDI+LgDqWm5PeMwGxRHgXOI7DHuNQBZQygfVIFM8Amun3GDqYOsPVBvW
- t+cKMSPvbZQToVYKgTLLaZBbzaNrTqDeQqTZnJ7URrbTxSZ7eICOYs6UIJCmKKQiOfNV
- SQoA==
+ d=gmail.com; s=20230601; t=1765440356; x=1766045156; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=B8m6sfT8Y34wE7X1bn90nJA3HwQEycqThNxoee8UPp0=;
+ b=l6XWkNd4xYQfFg8g+zA1OdgQdsqzysv5/TUWzRKCvj82ZaBgwz//9r2X0lBrZW3uOJ
+ bO7i3Sh1cqg0sJpHZk/HMi/s1BzjaMuY7FvfLL/YLrmOKkdlp9Bo6Bhxv4UPrZYwvyty
+ 9BwmFB2K4tcMoUAORflUK6M592Iag91mS4XEFfrQmS0+/XT46lni2KULrIIH99s2qf16
+ 5hHeGKL7mYA9snuILkLxrbHzH91nqnV6Qz9tvt5vhNOsAqzaex8WMVIByzVdtUAz+WQh
+ cgbeUOvERb32srK/oFzW2wugg0T99ZiYu4A2Kheqig/BLbnCsKZH92jDVJE7Rho3dyXM
+ Ti1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765439723; x=1766044523;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rajnSTw5kEnrq1eByjiOXIBPQe8kyawfNbti4aS+f1c=;
- b=Ou1YFaIkmg7k31B3FfO4qtYTTe07FMtA6oim/Nj7N3Mqm+jg2prRL1adVW4naEuxQb
- CWl67aAD+H4gVip44N9SPpIsyKA3mElWePQ97JjPKd+AQV19ayAkCS6njvWwG/blCCas
- V2FB3cVpK+D3weKXCir7X8HMTC+tQEo59/OYFrgq4sb0eRIZy7sG4rFozOXabi/E2ATj
- ipsvgrqqV2OK1soz5pkLJpHsxaQ8mH078KMjToV+t7RSS6UrG8iAPHZuxzT402afphsv
- IKHIaNdm3i734oqWmeKPuLLbu5NspXznboXzV48JZ42p9X6U/WziYU8Kd2f7aCxUeeC3
- LoPg==
-X-Gm-Message-State: AOJu0Yz09lrz99f2Sx+BKpb2xwNjZqMHEhZ3TAaT7I3oLPyIyUnTyfwN
- aYEtCArEDntH2mRG5zGbokZFTOqZWXAJkwJ6aPB/YMtiyBJmXJo4DUatZBMLw39crKORQQB8dyC
- Fh7M/CHD/C9/kWQrHylLUxs1cYXeyUoUUEkkrqKd9Dd+d0ZSHhbpGarh+OIJS8fdY53AjM6LIGJ
- qYS4eiX6gd4GNeRvCfttdndLBxz1LawUU5cw==
-X-Gm-Gg: AY/fxX7gnbRYhsEY7d9HSXK1R1YMW0s2/9oJ8UA8F/FnLPk6dil5Ld2BuS0qelSindE
- obDRJZ/zA7MoagpgehqKrSZQwngf4qroflEMPJE284Af1fzEXqOF/mtCgudydpKdA3FDJ8Dgo++
- gp4GT9Pf6a5SiAuXPzb45dUYbSVfuMrgjwvJIIPULTrtATgeaYop87e+fs+guw9KnTLkE3jpFpb
- TK06QqyqlKGf4JLszYTbj6XpxiIaHlgozwjK1Xu5eyvE/07FsQjJqQY40Bg8TosJ0d5M4leuBxC
- 8GDDZUnus+y2dKivZyHHBf5tU70b2q9uLkKRMDox4As1Ep+9t2xeCNM9m0/8KLJyc/ZsbPmknEG
- ssbLZFLLgIhb84AYVEhevcmIIG9hrRuYIhSIzP7wE2wKEwdes
-X-Received: by 2002:a05:600c:8183:b0:477:9c73:267f with SMTP id
- 5b1f17b1804b1-47a83864325mr53417355e9.33.1765439723331; 
- Wed, 10 Dec 2025 23:55:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFeY63eJfjkFNO0h8sr7ILJ0CaZGWsqYdW8ehv1pOLAcSm0/rOdafFuyTk4Z7xL22pH1rUH4A==
-X-Received: by 2002:a05:600c:8183:b0:477:9c73:267f with SMTP id
- 5b1f17b1804b1-47a83864325mr53416995e9.33.1765439722874; 
- Wed, 10 Dec 2025 23:55:22 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ d=1e100.net; s=20230601; t=1765440356; x=1766045156;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=B8m6sfT8Y34wE7X1bn90nJA3HwQEycqThNxoee8UPp0=;
+ b=Zvro8zT4JM1liD4qIB92LXwuXKYho0CGy9N7yG2xZX32NVSksa+C6drAZwzRsnc7Nu
+ d7P66LzmfrWCu7CqCXlU0AA9szuiJmz3l3tyiiA2j0kPSv8GQit4ZYBOyHUsYoiAlY5I
+ Wc8aAdzLjlw7Nd3rhPMLEr1ImSS7Q72BR67qkQ6f+j3EWpKeJ4wbzygyuORSWD0u0UgZ
+ Fu8oCSRj9+JTzl2RDXnCro+F4sAW+XYgFShMLBFtRBHd2N0+aHpJFm8JAM+Tp9c1yx2Q
+ Q4fdcTccieZtd9AVgfs4dntma2FCGdxxPL46y5vkOTu1IZbT4RiqfZWb7/2heGj2e+Z4
+ Hh1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU79uE/zBq9eTmXaDdIPW4oMPJONI53xd3e6bUEb3BIiDhTCjxQXxC07s/O8kITNNuhiFi1ybfj68yZ@nongnu.org
+X-Gm-Message-State: AOJu0Yxc1zoSt3S34qKyD9PST+gx394D/x/2WUD8KZdKNPcAtLmtmU+r
+ zDnvbhgZ/9D4gVtlKAOb/G81r79TZbAOdiC2x5DW4VDVmiOS85OWX21n
+X-Gm-Gg: AY/fxX7ELYv5l4iFp76LuAPmnanLWJHpXlzHfFLINxu1yp8EiwYUkPlQGtMgAS+usV6
+ 39hOPHdfA8nYaF12CNRFW7rl/6EK4Z1Edt1wI2OqDA4aX2pg63m2rjAaKhOuEg0xWSMgks3JsPd
+ RwYlXfzKNcNhq8kDJK7SVXlv+Z0Mc9VyF0eCQicYf2ZYNE23MH1OkLWVAHaeZLT23bbadyg5zbZ
+ pyuATK5qQyD4s/WqcHNC9VNyrzQHApmeeGz4dres3MIxC5oQmmAlmAxI+t8iaugLQNII2Q2uOzh
+ mEGU9ifpNcA/yLjPVQxbekBNE1lyu6PsjFG3TpKHqOrpsykCWOlgrNMkwDFMT/pWFJEfDIFKUIT
+ lQyE+5MKcqnkuBmHTDAngubDROEZigPDrKnUUrME+zrxskwxsGF8pDQD6fujvNtGQ2uT+jO+4BA
+ U4jJv91nPTlsdBjtCwpg4+0ZrgbVu5Mh0hzToAsUqEo8TmQyiQzm/FW//2ssDjWLoD
+X-Google-Smtp-Source: AGHT+IHtyvpYdjGeaj4eP9WAy8IKtpydyzT5+91nSXnqhNLLKcXigLTCzFBDhmRhS5AbqDwJVdqk2w==
+X-Received: by 2002:a05:6000:1889:b0:429:bc68:6c95 with SMTP id
+ ffacd0b85a97d-42fa3b060eamr5180523f8f.47.1765440355334; 
+ Thu, 11 Dec 2025 00:05:55 -0800 (PST)
+Received: from localhost
+ (brnt-04-b2-v4wan-170138-cust2432.vm7.cable.virginm.net. [94.175.9.129])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a89f3902csm21222235e9.7.2025.12.10.23.55.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 10 Dec 2025 23:55:22 -0800 (PST)
-Message-ID: <39b211f4-4640-4463-a827-cf8633791eec@redhat.com>
-Date: Thu, 11 Dec 2025 08:55:21 +0100
+ ffacd0b85a97d-42fa8a66b97sm4235640f8f.7.2025.12.11.00.05.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Dec 2025 00:05:54 -0800 (PST)
+Date: Thu, 11 Dec 2025 08:05:53 +0000
+From: Stafford Horne <shorne@gmail.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, QEMU Development <qemu-devel@nongnu.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Openrisc <openrisc@lists.librecores.org>
+Subject: Re: [RFC PATCH 3/3] hw/openrisc: Add the OpenRISC virtual machine
+Message-ID: <aTp7YW43nxdqDOAT@antec>
+References: <20220527172731.1742837-1-shorne@gmail.com>
+ <20220527172731.1742837-4-shorne@gmail.com>
+ <CACPK8XexaTREY3Y-jp8urTAE+UmQWgygFx1MAss9KcJw5tGMtw@mail.gmail.com>
+ <8c34270f-9fdc-3e94-0984-29d9a5e5542f@linaro.org>
+ <36365615-9e43-4ce5-a1ba-e495eacb1f24@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] tests/vhost-user-bridge.c: Fix const qualifier build
- errors with recent glibc
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
-References: <20251210181306.926334-1-clg@redhat.com>
- <20251210181306.926334-3-clg@redhat.com>
- <be8600fa-81cd-4c30-8fd1-c0049be4c9ab@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <be8600fa-81cd-4c30-8fd1-c0049be4c9ab@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <36365615-9e43-4ce5-a1ba-e495eacb1f24@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=shorne@gmail.com; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,42 +109,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/10/25 19:14, CÃ©dric Le Goater wrote:
-> On 12/10/25 19:13, CÃ©dric Le Goater wrote:
->> A recent change in glibc 2.42.9000 [1] changes the return type of
->> strstr() and other string functions to be 'const char *' when the
->> input is a 'const char *'. This breaks the build in :
->>
->> ../tests/vhost-user-bridge.c: In function â€˜vubr_parse_host_portâ€™:
->> ../tests/vhost-user-bridge.c:749:15: error: initialization discards â€˜constâ€™ qualifier from pointer target type [-Werror=discarded-qualifiers]
->> Â Â  749 |Â Â Â Â  char *p = strchr(buf, ':');
->> Â Â Â Â Â Â  |Â Â Â Â Â Â Â Â Â Â Â Â Â Â  ^~~~~~
->>
->> Fix this by using the glib g_strsplit() routine instead of strdup().
->>
->> [1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
->>
->> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->> Signed-off-by: CÃ©dric Le Goater <clg@redhat.com>
->> ---
->> Â  tests/vhost-user-bridge.c | 10 ++++------
->> Â  1 file changed, 4 insertions(+), 6 deletions(-)
+On Wed, Dec 10, 2025 at 06:22:58AM +0100, Philippe Mathieu-Daudé wrote:
+> On 2/6/22 17:49, Richard Henderson wrote:
+> > On 6/2/22 04:42, Joel Stanley wrote:
+> > > Hi Stafford,
+> > > 
+> > > On Fri, 27 May 2022 at 17:27, Stafford Horne <shorne@gmail.com> wrote:
+> > > > 
+> > > > This patch add the OpenRISC virtual machine 'virt' for OpenRISC.  This
+> > > > platform allows for a convenient CI platform for toolchain, software
+> > > > ports and the OpenRISC linux kernel port.
+> > > > 
+> > > > Much of this has been sourced from the m68k and riscv virt platforms.
+> > > 
+> > > It's a good idea! I did some playing around with your patch today.
+> > > 
+> > > I'd suggest adding something to docs/system/target-openrsic.rst,
+> > > including an example command lines.
+> > > 
+> > > > 
+> > > > The platform provides:
+> > > >   - OpenRISC SMP with up to 8 cpus
+> > > 
+> > > You have this:
+> > > 
+> > > #define VIRT_CPUS_MAX 4
+> > > 
+> > > I tried booting with -smp 4 and it locked up when starting userspace
+> > > (or I stopped getting serial output?):
+> > > 
+> > > [    0.060000] smp: Brought up 1 node, 4 CPUs
+> > > ...
+> > > [    0.960000] Run /init as init process
+> > > 
+> > > Running with -smp 2 and 3 worked. It does make booting much much slower.
+> > 
+> > target/openrisc/cpu.h is missing
+> > 
+> > #define TCG_GUEST_DEFAULT_MO      (0)
+> > 
+> > 
+> > to tell the JIT about the weakly ordered guest memory model, and to
+> > enable MTTCG by default.
+> > 
+> > > I enabled the options:
+> > > 
+> > > CONFIG_RTC_CLASS=y
+> > > # CONFIG_RTC_SYSTOHC is not set
+> > > # CONFIG_RTC_NVMEM is not set
+> > > CONFIG_RTC_DRV_GOLDFISH=y
+> > > 
+> > > But it didn't work. It seems the goldfish rtc model doesn't handle a
+> > > big endian guest running on my little endian host.
+> > > 
+> > > Doing this fixes it:
+> > > 
+> > > -    .endianness = DEVICE_NATIVE_ENDIAN,
+> > > +    .endianness = DEVICE_HOST_ENDIAN,
+> > > 
+> > > [    0.190000] goldfish_rtc 96005000.rtc: registered as rtc0
+> > > [    0.190000] goldfish_rtc 96005000.rtc: setting system clock to
+> > > 2022-06-02T11:16:04 UTC (1654168564)
+> > > 
+> > > But literally no other model in the tree does this, so I suspect it's
+> > > not the right fix.
+> > 
+> > Correct.  The model might require
+> > 
+> >      .endianness = DEVICE_LITTLE_ENDIAN,
+> > 
+> > if that is the actual specification, or it may simply require fixes to
+> > handle a big-endian guest.
+> > 
+> > All that said, if we're going to make up a new virt platform, it should
+> > use PCI not virtio.  See the recent discussion about RISC-V virtual
+> > machines, where they made exactly this mistake several years ago.
 > 
-> I should have added 'Not Tested' !
+> Unfortunately this precious remark was missed :(
 
-It seems to be going well:
+Which part of it?  I think I took this comment into consideration and switched
+OpenRISC virt from virtio to PCI.  But regarding endianness I did what I could.
 
-
-$ build/tests/vhost-user-bridge -l 127.0.0.1:1234 -r 127.0.0.1:4321
-ud socket: /tmp/vubr.sock (server)
-local:     127.0.0.1:1234
-remote:    127.0.0.1:4321
-Waiting for connections on UNIX socket /tmp/vubr.sock ...
-Added sock 3 for watching. max_sock: 3
-Added sock 4 for watching. max_sock: 4
-Waiting for data from udp backend on 127.0.0.1:1234...
-
-
-C.
-
+-Stafford
 
