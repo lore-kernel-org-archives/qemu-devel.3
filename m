@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C635D3E793
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F95CD3E78F
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:46:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTZTy-0004Qn-Ri; Thu, 11 Dec 2025 00:44:55 -0500
+	id 1vTZTR-0001lU-Gp; Thu, 11 Dec 2025 00:44:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTZTv-00047Y-1L
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:51 -0500
+ id 1vTZTQ-0001gH-L6
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:20 -0500
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTZTs-0001ci-BM
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:50 -0500
+ id 1vTZTO-0001ci-JL
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765431888; x=1796967888;
+ t=1765431859; x=1796967859;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=brSRWQQoU+/m4EjgoQyL/jMEqcgttetYwa4KBBkORE0=;
- b=DeL6e/OVbApqAXrPzHeybAaZPTqdBGgbCtzdjxcsWgDOdUFe3ALbgeew
- 9fUFkDvCIp90RGgSyEK/a1HaUWrmGdrQmH6jVhjTzUU4xMMcPT0ZeVCzu
- 5OdC/pHrvRGFa8VvYKrfki6Vqnt4F3CHXRw1qOCXqqhVeaqoqy4EgmvdY
- SkkBuAJml5jOgn2PiOIed4piqu3L/+Uf97UkZao1EcumCllFUArSXBoih
- MhoZieGg1bZwyEC18n3fIXs824zxJSWM/nHBr2zr3NPigmbboMfO72TaK
- rVlxHu3B8tLDLy3wLS1/RBJ/PHTO96Ydnio/geXjBa+HLJSmD1fjI54ua w==;
-X-CSE-ConnectionGUID: Q0BFhHXkSpW54NcmwTtYYw==
-X-CSE-MsgGUID: U+0pQXuJR+CBsmmt97lWog==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="66409984"
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="66409984"
+ bh=sBpe2qGYGh44L7Eww11sVA8mfktkl9T4AxGNbJqJsBY=;
+ b=Z6IWhPQK4zBWlxhsBAFcG/of7JwpxydHvVRip55PlGLrNU/xGW72+kGs
+ yzk2F4nCOx9cYKDRUcJtKXo1f9rGn3X5NucDZhYgTtCy+wC29oMsEZuqG
+ qLbPisfe824XoCrNF+EeiJbM4x//KklO+O6WEHzmvRh1e3zLdo/qQFesq
+ urMqgEyGy/sHUllVJ1ljrqWrlMq0ruKwc1FUrlnhRP3DvkCV2G5D0rles
+ V3/axk0wA3FoXwxeWTYRy/IAzF+wNb5D/GumHjN23FR+gt3BFgIBXlqAR
+ 233EFYliNObhAx98n/aJa65i/Cehabb8bLAH2Qoluc4UYO+0skhPVCRil w==;
+X-CSE-ConnectionGUID: VTToXWP4SoSQFwgOfY6D+g==
+X-CSE-MsgGUID: dKda5JmETtKmp9NcXEAOvQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="66409931"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="66409931"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2025 21:44:37 -0800
-X-CSE-ConnectionGUID: XcAvGjRBRhCJVz03oE7SDA==
-X-CSE-MsgGUID: LhDvip1NRY6zuYtSzH8OEw==
+ 10 Dec 2025 21:44:18 -0800
+X-CSE-ConnectionGUID: JXba38jmSKaDSEbZkeS9aQ==
+X-CSE-MsgGUID: d10Ru7jKQViwJMMUSinCOg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="227366237"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="227366157"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 10 Dec 2025 21:44:33 -0800
+ by orviesa002.jf.intel.com with ESMTP; 10 Dec 2025 21:44:13 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
@@ -54,10 +54,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
  Farrah Chen <farrah.chen@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
  Yang Weijiang <weijiang.yang@intel.com>
-Subject: [PATCH v5 19/22] i386/cpu: Advertise CET related flags in feature
- words
-Date: Thu, 11 Dec 2025 14:07:58 +0800
-Message-Id: <20251211060801.3600039-20-zhao1.liu@intel.com>
+Subject: [PATCH v5 14/22] i386/kvm: Add save/restore support for CET MSRs
+Date: Thu, 11 Dec 2025 14:07:53 +0800
+Message-Id: <20251211060801.3600039-15-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251211060801.3600039-1-zhao1.liu@intel.com>
 References: <20251211060801.3600039-1-zhao1.liu@intel.com>
@@ -90,93 +89,241 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Yang Weijiang <weijiang.yang@intel.com>
 
-Add SHSTK and IBT flags in feature words with entry/exit
-control flags.
+CET (architectural) MSRs include:
+MSR_IA32_U_CET - user mode CET control bits.
+MSR_IA32_S_CET - supervisor mode CET control bits.
+MSR_IA32_PL{0,1,2,3}_SSP - linear addresses of SSPs for user/kernel modes.
+MSR_IA32_INT_SSP_TAB - linear address of interrupt SSP table
 
-CET SHSTK and IBT feature are enumerated via CPUID(EAX=7,ECX=0)
-ECX[bit 7] and EDX[bit 20]. CET states load/restore at vmentry/
-vmexit are controlled by VMX_ENTRY_CTLS[bit 20] and VMX_EXIT_CTLS[bit 28].
-Enable these flags so that KVM can enumerate the features properly.
+Since FRED also needs to save/restore MSR_IA32_PL0_SSP, to avoid duplicate
+operations, make FRED only save/restore MSR_IA32_PL0_SSP when CET-SHSTK
+is not enumerated.
+
+And considerring MSR_IA32_SSP_TBL_ADDR is only presented on 64 bit
+processor, wrap it with TARGET_X86_64 macro.
+
+For other MSRs, add save/restore support directly.
 
 Tested-by: Farrah Chen <farrah.chen@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Suggested-by: Xin Li (Intel) <xin@zytor.com>
 Signed-off-by: Yang Weijiang <weijiang.yang@intel.com>
 Co-developed-by: Chao Gao <chao.gao@intel.com>
 Signed-off-by: Chao Gao <chao.gao@intel.com>
 Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes Since v2:
- - Rename "shstk"/"ibt" to "cet-ss"/"cet-ibt" to match feature names
-   in SDM & APM.
- - Rename "vmx-exit-save-cet-ctl"/"vmx-entry-load-cet-ctl" to
-   "vmx-exit-save-cet"/"vmx-entry-load-cet".
- - Define the feature mask macro for easier double check.
----
- target/i386/cpu.c | 8 ++++----
- target/i386/cpu.h | 2 ++
- 2 files changed, 6 insertions(+), 4 deletions(-)
+Changes Since v3:
+ - Make FRED only save/restore MSR_IA32_PL0_SSP when CET-SHSTK isn't
+   enumerated.
+ - Wrap MSR_IA32_INT_SSP_TAB with TARGET_X86_64 since it's a
+   x86_64-specific MSR.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 848e3ccbb8e3..a65fd4111c31 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1221,7 +1221,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-         .type = CPUID_FEATURE_WORD,
-         .feat_names = {
-             NULL, "avx512vbmi", "umip", "pku",
--            NULL /* ospke */, "waitpkg", "avx512vbmi2", NULL,
-+            NULL /* ospke */, "waitpkg", "avx512vbmi2", "cet-ss",
-             "gfni", "vaes", "vpclmulqdq", "avx512vnni",
-             "avx512bitalg", NULL, "avx512-vpopcntdq", NULL,
-             "la57", NULL, NULL, NULL,
-@@ -1244,7 +1244,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             "avx512-vp2intersect", NULL, "md-clear", NULL,
-             NULL, NULL, "serialize", NULL,
-             "tsx-ldtrk", NULL, NULL /* pconfig */, "arch-lbr",
--            NULL, NULL, "amx-bf16", "avx512-fp16",
-+            "cet-ibt", NULL, "amx-bf16", "avx512-fp16",
-             "amx-tile", "amx-int8", "spec-ctrl", "stibp",
-             "flush-l1d", "arch-capabilities", "core-capability", "ssbd",
-         },
-@@ -1666,7 +1666,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             "vmx-exit-save-efer", "vmx-exit-load-efer",
-                 "vmx-exit-save-preemption-timer", "vmx-exit-clear-bndcfgs",
-             NULL, "vmx-exit-clear-rtit-ctl", NULL, NULL,
--            NULL, "vmx-exit-load-pkrs", NULL, "vmx-exit-secondary-ctls",
-+            "vmx-exit-save-cet", "vmx-exit-load-pkrs", NULL, "vmx-exit-secondary-ctls",
-         },
-         .msr = {
-             .index = MSR_IA32_VMX_TRUE_EXIT_CTLS,
-@@ -1681,7 +1681,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             NULL, "vmx-entry-ia32e-mode", NULL, NULL,
-             NULL, "vmx-entry-load-perf-global-ctrl", "vmx-entry-load-pat", "vmx-entry-load-efer",
-             "vmx-entry-load-bndcfgs", NULL, "vmx-entry-load-rtit-ctl", NULL,
--            NULL, NULL, "vmx-entry-load-pkrs", "vmx-entry-load-fred",
-+            "vmx-entry-load-cet", NULL, "vmx-entry-load-pkrs", "vmx-entry-load-fred",
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-         },
+Changes Since v2:
+ - Rename MSR_IA32_SSP_TBL_ADDR to MSR_IA32_INT_SSP_TAB.
+ - Rename X86CPUState.ssp_table_addr to X86CPUState.int_ssp_table.
+ - Drop X86CPUStete.guest_ssp since it is not used in current commit.
+ - Do not check CET-S & CET-U xtates when get/set MSTs since CET
+   is XSAVE-managed feature but is not XSAVE-enabled.
+---
+ target/i386/cpu.h     | 26 ++++++++++---
+ target/i386/kvm/kvm.c | 91 ++++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 98 insertions(+), 19 deletions(-)
+
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 458775daaa3e..33350602edd3 100644
+index 84e5cf0ab0c1..37cc218bf3a5 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -1370,6 +1370,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define VMX_VM_EXIT_CLEAR_BNDCFGS                   0x00800000
- #define VMX_VM_EXIT_PT_CONCEAL_PIP                  0x01000000
- #define VMX_VM_EXIT_CLEAR_IA32_RTIT_CTL             0x02000000
-+#define VMX_VM_EXIT_SAVE_CET                        0x10000000
- #define VMX_VM_EXIT_LOAD_IA32_PKRS                  0x20000000
- #define VMX_VM_EXIT_ACTIVATE_SECONDARY_CONTROLS     0x80000000
+@@ -543,7 +543,7 @@ typedef enum X86Seg {
+ #define MSR_IA32_XFD                    0x000001c4
+ #define MSR_IA32_XFD_ERR                0x000001c5
  
-@@ -1383,6 +1384,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define VMX_VM_ENTRY_LOAD_BNDCFGS                   0x00010000
- #define VMX_VM_ENTRY_PT_CONCEAL_PIP                 0x00020000
- #define VMX_VM_ENTRY_LOAD_IA32_RTIT_CTL             0x00040000
-+#define VMX_VM_ENTRY_LOAD_CET                       0x00100000
- #define VMX_VM_ENTRY_LOAD_IA32_PKRS                 0x00400000
+-/* FRED MSRs */
++/* FRED MSRs (MSR_IA32_FRED_SSP0 is defined as MSR_IA32_PL0_SSP in CET MSRs) */
+ #define MSR_IA32_FRED_RSP0              0x000001cc       /* Stack level 0 regular stack pointer */
+ #define MSR_IA32_FRED_RSP1              0x000001cd       /* Stack level 1 regular stack pointer */
+ #define MSR_IA32_FRED_RSP2              0x000001ce       /* Stack level 2 regular stack pointer */
+@@ -554,9 +554,6 @@ typedef enum X86Seg {
+ #define MSR_IA32_FRED_SSP3              0x000001d3       /* Stack level 3 shadow stack pointer in ring 0 */
+ #define MSR_IA32_FRED_CONFIG            0x000001d4       /* FRED Entrypoint and interrupt stack level */
  
- /* Supported Hyper-V Enlightenments */
+-/* FRED and CET MSR */
+-#define MSR_IA32_PL0_SSP                0x000006a4       /* ring-0 shadow stack pointer (aka MSR_IA32_FRED_SSP0 for FRED) */
+-
+ #define MSR_IA32_BNDCFGS                0x00000d90
+ #define MSR_IA32_XSS                    0x00000da0
+ #define MSR_IA32_UMWAIT_CONTROL         0xe1
+@@ -583,6 +580,15 @@ typedef enum X86Seg {
+ #define MSR_APIC_START                  0x00000800
+ #define MSR_APIC_END                    0x000008ff
+ 
++/* CET MSRs */
++#define MSR_IA32_U_CET                  0x000006a0       /* user mode cet */
++#define MSR_IA32_S_CET                  0x000006a2       /* kernel mode cet */
++#define MSR_IA32_PL0_SSP                0x000006a4       /* ring-0 shadow stack pointer */
++#define MSR_IA32_PL1_SSP                0x000006a5       /* ring-1 shadow stack pointer */
++#define MSR_IA32_PL2_SSP                0x000006a6       /* ring-2 shadow stack pointer */
++#define MSR_IA32_PL3_SSP                0x000006a7       /* ring-3 shadow stack pointer */
++#define MSR_IA32_INT_SSP_TAB            0x000006a8       /* exception shadow stack table */
++
+ #define XSTATE_FP_BIT                   0
+ #define XSTATE_SSE_BIT                  1
+ #define XSTATE_YMM_BIT                  2
+@@ -1973,8 +1979,16 @@ typedef struct CPUArchState {
+     uint64_t fred_config;
+ #endif
+ 
+-    /* MSR used for both FRED and CET (SHSTK) */
+-    uint64_t pl0_ssp;
++    /* CET MSRs */
++    uint64_t u_cet;
++    uint64_t s_cet;
++    uint64_t pl0_ssp; /* also used for FRED */
++    uint64_t pl1_ssp;
++    uint64_t pl2_ssp;
++    uint64_t pl3_ssp;
++#ifdef TARGET_X86_64
++    uint64_t int_ssp_table;
++#endif
+ 
+     uint64_t tsc_adjust;
+     uint64_t tsc_deadline;
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 00fead0827ed..4eb58ca19d79 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -4008,11 +4008,14 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP2, env->fred_ssp2);
+             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP3, env->fred_ssp3);
+             kvm_msr_entry_add(cpu, MSR_IA32_FRED_CONFIG, env->fred_config);
+-            /*
+-             * Aka MSR_IA32_FRED_SSP0. This MSR is accessible even if
+-             * CET shadow stack is not supported.
+-             */
+-            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, env->pl0_ssp);
++
++            if (!(env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK)) {
++                /*
++                 * Aka MSR_IA32_FRED_SSP0. This MSR is accessible even if
++                 * CET shadow stack is not supported.
++                 */
++                kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, env->pl0_ssp);
++            }
+         }
+     }
+ #endif
+@@ -4266,6 +4269,26 @@ static int kvm_put_msrs(X86CPU *cpu, KvmPutState level)
+         }
+     }
+ 
++    if (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK ||
++        env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_CET_IBT) {
++        kvm_msr_entry_add(cpu, MSR_IA32_U_CET, env->u_cet);
++        kvm_msr_entry_add(cpu, MSR_IA32_S_CET, env->s_cet);
++
++        if (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK) {
++            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, env->pl0_ssp);
++            kvm_msr_entry_add(cpu, MSR_IA32_PL1_SSP, env->pl1_ssp);
++            kvm_msr_entry_add(cpu, MSR_IA32_PL2_SSP, env->pl2_ssp);
++            kvm_msr_entry_add(cpu, MSR_IA32_PL3_SSP, env->pl3_ssp);
++
++#ifdef TARGET_X86_64
++            if (lm_capable_kernel) {
++                kvm_msr_entry_add(cpu, MSR_IA32_INT_SSP_TAB,
++                                  env->int_ssp_table);
++            }
++#endif
++        }
++    }
++
+     return kvm_buf_set_msrs(cpu);
+ }
+ 
+@@ -4500,11 +4523,14 @@ static int kvm_get_msrs(X86CPU *cpu)
+             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP2, 0);
+             kvm_msr_entry_add(cpu, MSR_IA32_FRED_SSP3, 0);
+             kvm_msr_entry_add(cpu, MSR_IA32_FRED_CONFIG, 0);
+-            /*
+-             * Aka MSR_IA32_FRED_SSP0. This MSR is accessible even if
+-             * CET shadow stack is not supported.
+-             */
+-            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, 0);
++
++            if (!(env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK)) {
++                /*
++                 * Aka MSR_IA32_FRED_SSP0. This MSR is accessible even if
++                 * CET shadow stack is not supported.
++                 */
++                kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, 0);
++            }
+         }
+     }
+ #endif
+@@ -4662,6 +4688,25 @@ static int kvm_get_msrs(X86CPU *cpu)
+         }
+     }
+ 
++    if (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_CET_SHSTK ||
++        env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_CET_IBT) {
++        kvm_msr_entry_add(cpu, MSR_IA32_U_CET, 0);
++        kvm_msr_entry_add(cpu, MSR_IA32_S_CET, 0);
++
++        if (env->features[FEAT_7_0_EDX] & CPUID_7_0_ECX_CET_SHSTK) {
++            kvm_msr_entry_add(cpu, MSR_IA32_PL0_SSP, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_PL1_SSP, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_PL2_SSP, 0);
++            kvm_msr_entry_add(cpu, MSR_IA32_PL3_SSP, 0);
++
++#ifdef TARGET_X86_64
++            if (lm_capable_kernel) {
++                kvm_msr_entry_add(cpu, MSR_IA32_INT_SSP_TAB, 0);
++            }
++#endif
++        }
++    }
++
+     ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MSRS, cpu->kvm_msr_buf);
+     if (ret < 0) {
+         return ret;
+@@ -4756,9 +4801,6 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_IA32_FRED_CONFIG:
+             env->fred_config = msrs[i].data;
+             break;
+-        case MSR_IA32_PL0_SSP: /* aka MSR_IA32_FRED_SSP0 */
+-            env->pl0_ssp = msrs[i].data;
+-            break;
+ #endif
+         case MSR_IA32_TSC:
+             env->tsc = msrs[i].data;
+@@ -5012,6 +5054,29 @@ static int kvm_get_msrs(X86CPU *cpu)
+         case MSR_ARCH_LBR_INFO_0 ... MSR_ARCH_LBR_INFO_0 + 31:
+             env->lbr_records[index - MSR_ARCH_LBR_INFO_0].info = msrs[i].data;
+             break;
++        case MSR_IA32_U_CET:
++            env->u_cet = msrs[i].data;
++            break;
++        case MSR_IA32_S_CET:
++            env->s_cet = msrs[i].data;
++            break;
++        case MSR_IA32_PL0_SSP: /* aka MSR_IA32_FRED_SSP0 */
++            env->pl0_ssp = msrs[i].data;
++            break;
++        case MSR_IA32_PL1_SSP:
++            env->pl1_ssp = msrs[i].data;
++            break;
++        case MSR_IA32_PL2_SSP:
++            env->pl2_ssp = msrs[i].data;
++            break;
++        case MSR_IA32_PL3_SSP:
++            env->pl3_ssp = msrs[i].data;
++            break;
++#ifdef TARGET_X86_64
++        case MSR_IA32_INT_SSP_TAB:
++            env->int_ssp_table = msrs[i].data;
++            break;
++#endif
+         case MSR_K7_HWCR:
+             env->msr_hwcr = msrs[i].data;
+             break;
 -- 
 2.34.1
 
