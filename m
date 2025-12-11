@@ -4,176 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E89D3E78F
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:23:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D18D3E793
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTZ8j-0001Kv-40; Thu, 11 Dec 2025 00:22:57 -0500
+	id 1vTZ9Q-0001PQ-OU; Thu, 11 Dec 2025 00:23:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vTZ8g-0001KM-LS; Thu, 11 Dec 2025 00:22:54 -0500
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vTZ9N-0001P8-FA
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:23:37 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vTZ8d-0003jP-Ik; Thu, 11 Dec 2025 00:22:54 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UBtrhOeknceVKcQNeWe3MebMvNf57ec4+1EXE0DTxKCrYCz7TQorWAMw6IItTk3N52qYdTE5yD+c2Lj9YRv+mpJzlggLkxviijULjgl6NuKo/OO7LtLwCn5TbnyXA6yfwNhvHudgTMM9IU/sOQ/NBbEmhc/nCtXv+5fiknYa+EC632MD5KOpqrXVKsSolBViZ54U19c4JNYTGGp0GmwyfcaLtFcQ8I2ikwi3yvr/eInpZG/8seQ2SgdeYwBLHhMAyXzd7ER+GX0YyEBH+HjYLrdsqXm1yGqkHv0H/ImmHXOuZ8sjghrTy4slRdcbq5SKjdEML+wR46jt95zaC1gf4A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jvCYLQlvMmK/O95ek0oUj9ItbzhwGyNPLkKgg8PefKw=;
- b=EVK46DBy5zB/29R4Tn63FTcxRpCzk86sbOUTM97UCw+0yfGskxs2MgfJAgcLzxZdwcOywTTbB4h5ibS9VbeN/DRySaCcmCim728MMWJhB+MDgJhHXgTuaSdomY6OjUjL9lcUithfv4/lDwWC/vFHmEYcsDapC3CrdAoacglYpvIlA1BRMq4b7sme3imrUfbki4jruZRhezSXCbUrmQf6UaaMJs8mMyFNSHKAPmb0oQ8g3zLRXOTMnV2xrzUCAbscq1/+td3wneQ7WB1l01p2kQXYgorpjlhzSJIpwJCV3bWbYRkxIq2/neRccpwEyVzm3/fWPH44DKHkYJsg5qGcFw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jvCYLQlvMmK/O95ek0oUj9ItbzhwGyNPLkKgg8PefKw=;
- b=g0O3ht925fz9NlM/tqY3pZ9M6Z3LZXJrPIWFtgFRajiJB/cmf9vbEuFp50qy0aqQpqUo5lGX/McVeB3IL1WkVL+vTIwovSiFUVIrRKJi8vd49QyMVhasuJqbDzpr4pkEVEemMKWQp9OJJcOtIwFTS1dHEAGltgUron/gU+pcCgpBvDYHF7q3IYXpMk2xWjPHjZhZuyO9ggO3DUB2fQ45B3Rjq8PCBEqc9GY9ExpF7hETiUSZviZ0d8CMJu2Nq0pERqoQEtdrt1ugd0orkTmoK1DrZUPuz+O0rkoDVZmvZBgP/pBWctlA1YeZsQCnm2z62wbs2WJkrikNGQpPRt4ZVQ==
-Received: from SI6PR06MB7631.apcprd06.prod.outlook.com (2603:1096:4:239::11)
- by SI6PR06MB7147.apcprd06.prod.outlook.com (2603:1096:4:24c::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.7; Thu, 11 Dec
- 2025 05:22:11 +0000
-Received: from SI6PR06MB7631.apcprd06.prod.outlook.com
- ([fe80::602a:6372:fff6:feca]) by SI6PR06MB7631.apcprd06.prod.outlook.com
- ([fe80::602a:6372:fff6:feca%6]) with mapi id 15.20.9412.005; Thu, 11 Dec 2025
- 05:22:11 +0000
-From: Kane Chen <kane_chen@aspeedtech.com>
-To: Yubin Zou <yubinz@google.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Fabiano Rosas
- <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Nabih Estefan <nabihestefan@google.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-Subject: RE: [PATCH v3 2/6] hw/gpio/aspeed_sgpio: Add QOM property accessors
- for SGPIO pins
-Thread-Topic: [PATCH v3 2/6] hw/gpio/aspeed_sgpio: Add QOM property accessors
- for SGPIO pins
-Thread-Index: AQHcaizcVIH+fuHMS0G4KM9+DJc9p7UbtWBA
-Date: Thu, 11 Dec 2025 05:22:11 +0000
-Message-ID: <SI6PR06MB76310D340EFCC0D96D4170D7F7A1A@SI6PR06MB7631.apcprd06.prod.outlook.com>
-References: <20251210-aspeed-sgpio-v3-0-eb8b0cf3dd51@google.com>
- <20251210-aspeed-sgpio-v3-2-eb8b0cf3dd51@google.com>
-In-Reply-To: <20251210-aspeed-sgpio-v3-2-eb8b0cf3dd51@google.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI6PR06MB7631:EE_|SI6PR06MB7147:EE_
-x-ms-office365-filtering-correlation-id: 12d3753f-9d94-403d-7a63-08de38753c8c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|7416014|38070700021; 
-x-microsoft-antispam-message-info: =?utf-8?B?QnB0c1p6OUxjWlFBU2JhbCt1Z0hGelVlZUs0YVBaSUg1eW5SRDd0bk0rcENq?=
- =?utf-8?B?TTNuTzV5RDZEamNoYUZSM1gyVElaWGFOTTNPREwzY21WWm1WVDRxVjlQZTJJ?=
- =?utf-8?B?cWJPUjZaQU1OYWxxZ0UyQlVyRVNvWk8zc0wxeUJWOFJQdjhBUnBqaGlyclJs?=
- =?utf-8?B?SmhTZzUwNWtWazdTMEVnVTdmM1Qxdmk2ekREVnZhcmlKcjQxZ2xIL2EyS0Zn?=
- =?utf-8?B?YXV4VW9uVExpaEpva2FPYmxkYVV1ODNWT1pZd0l5cGh4Zk9ISmNPM2tzYUlH?=
- =?utf-8?B?eEt5R2VjSC9yUG1SSFE5eUt1VXJlM0lPT0hWcTVHZzdrM2c4bDlNNWM4WnRZ?=
- =?utf-8?B?Vm9WNWRIZnR0anBDMk8ydVhvZGVjalFPYTlJYTBnWCtDOGJCVXp1bWVwQ1lD?=
- =?utf-8?B?ek1pRjZwRFdrMnZXbXloSGk3UTJSdDZWcXh4M1BwanZFS2dSRkV2SGVCSzJ0?=
- =?utf-8?B?ck90OSt4YVdlOTBPKzBWdlUxRVVKZXd1c2F3dGlLaUFvcUI0aGc3ZWF5aHdD?=
- =?utf-8?B?TVBUWkJXTFNLZ2J3OTBZTlBvWGJLTzhSRTVQY0tnWVBTTXdRdkY1UjM5UEtS?=
- =?utf-8?B?L0Z6ZVJ3VzZ4K0tpZHZzcHZPNXdnQzQwY2hDS3lRdjJnYWkvZGwyd0NjUlZO?=
- =?utf-8?B?ZWVQaUxVTGgwSmJjQW9qUmx4V3FkdE41Skc4M012MCtEaFdIK0NDN2xpNlJh?=
- =?utf-8?B?TzNkc0xPaFVBemJVWmZDL1Z5UzV5V2FOSFFJSG5uMnpwSXZVcGVRUGMvV2hj?=
- =?utf-8?B?b1hRd2xSWHVyV0duQ3F0Kzk0akp6ZStmY2xRUW93OEV2SVVnYXBCTm9VaDVz?=
- =?utf-8?B?NG5EV0FxVmt1YzVZSUhLZkpwM0d2VWVHR0tRVHppdFMyWkJRRVJQMVd1MUFr?=
- =?utf-8?B?YjlDZGlwdmZDYjB3clFNay8vVk4yREhrZDFmekxIU2YrYkNyejlsRkFMLzRp?=
- =?utf-8?B?eWpVakNiZ1hkRmp6TUV0UjQ0WjIzTFo2ZmljbFF2dCtoVXJiUmlueEF1Z1E4?=
- =?utf-8?B?L1htVENHbElGcW5yNnNIV2tlNFpPd1cvc3VCU2dxczlUYlQzT05HUmg0UWtj?=
- =?utf-8?B?ZWdhR2Vud0NQcUFIaUovRHZpdDVSSE5wUW1pc09ITFIwblNiRTRiWldRR21R?=
- =?utf-8?B?eXNCd2MrTXl5cTl6TWs1RVZkOCtEMGpPTUdkQmo1TERQM25aM2svTEhpYmhP?=
- =?utf-8?B?NVVWRHFBSUpFL1VPU21QWkFhdmY4bmNrL2JpZWlMSm5vVkdVYU9WSTVKS1d4?=
- =?utf-8?B?djZ2UWlPK1Nmc1cxVm93SHNjREN2YVIwQyt2NngyWGh4M21lQ0MxYjFWVFYr?=
- =?utf-8?B?a2pYSG1RMHZXdzBoY0JOQ0c3MWpDTmdUdmlVM3ZabkwyVlhMYWY2RGNCbUxE?=
- =?utf-8?B?WlhuNE9iU3U2TnUwMnc4M1RmbG9PWE8zck1nUnAxeW1kU3B2VitublZZdXFh?=
- =?utf-8?B?Njd4YnhCdENJdlFCRTZ4MXVXT25rOGpJYnJlOFFxV1hEZTRqSHp4K1lEODBE?=
- =?utf-8?B?d0tJOE5oUTBFTFJ6RUI3V01wK21HT2swMDJHWWJsZURVK0xBOFZHUTQ0cFI4?=
- =?utf-8?B?b1NGemxOSElPZDJ3b0JHd0ZhNlR0YUtpMDhqdUtRajhNOStpUVpQQW1iVDR5?=
- =?utf-8?B?N0NaZnZDOEZUN25JWjRPLzkxQjN3QkxsS0szWi9NT2tOME5xNTBCMkk4K05I?=
- =?utf-8?B?aUxFN2c4NG9tUE5JM1AwMjg0UEpSUWtpQW5HQUordEE2QUxrLzN5SzYxTm9n?=
- =?utf-8?B?OUo0blduVktDM1pVMHJ4QTVqblNMWnZ4cHQ2VHcvRTJEMUw0UjBhWWRBVEh5?=
- =?utf-8?B?VlRqbHNVMko0RjcwZGQ1RTBmVUM1YXR0WHhGSlA3M3A4cHU1MnJieVVNOXpT?=
- =?utf-8?B?TDIrRFFpYVZnZTBvUGE3R0k0dm5hWCtIRjd5MlZPdmVza08xSkR4dDBqN0VK?=
- =?utf-8?B?RnF5QWVFREx4ZTNTeDkvUTFwMml3YUg0OHdKLzVidUhHcHpZS2hGc05icHhj?=
- =?utf-8?B?Qko3Sm92bytVWE5rWDlLYjJOMitySlk3OFhwV3h5TTNQQVI4aytYSSt5elQ3?=
- =?utf-8?Q?u/sj3U?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI6PR06MB7631.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UDlITmVLb1NGa0FUSVpxZTBmSkJnaWdpOU9Cd1d3aVBKNHZuZUpOMDFuRG5U?=
- =?utf-8?B?UzR2WXF0TUxQbzJaSld6Ynp3Z3RwVktMaVVBZHdMUTVzU3UwUFlZS3NuQ1Mx?=
- =?utf-8?B?bGtNYnRkMmVmMTgwV25zTDJjRDdSUUY5ZzdaNUtvSTJnZE1GSzgvZGxKcVd5?=
- =?utf-8?B?TSs1bmdmSmp6bG5nbFpvUFVScWJ1R2ZzYTB6MU1LZCtQcTVrMlloY1VTQjVQ?=
- =?utf-8?B?d2hDVkk2TjU5SzNmSkIwcVlWY2tMVi9HakVyTWZ0WDZCRlhXRHNLM0ZTdjJ6?=
- =?utf-8?B?dER2cmJneUlCTTNpYko4Ty9OMkVXQ3k0VFV6c2x1d2JFbkhnR0F2NmFtY1BM?=
- =?utf-8?B?KzVlSk5uL0FxT3QxL3N6dWl1K3FMWG84aFN3dkQzejVzSHQvY0Y5a1RqWk50?=
- =?utf-8?B?OWg3LzdrME9kOEtyZDYyNWNYWm45WkhmdGZ5RW40K2FEVCtsOXdQUUdyWVdD?=
- =?utf-8?B?a2EwZ1kybmk0TEgzWTNCUm44Tm01NjVHVDNZTFBzaFNBQlJKVkt3Z24rVStF?=
- =?utf-8?B?ZkRJQnEwQzNZdGxoNmZZYk9tczZRd3FaL3o5Q1U4ZEUvVzFjVXo2M1hYdU9T?=
- =?utf-8?B?eTMvejBPcnlINEYxYUk0cHJxckJ2M3F6SjJGWFp2ajdaSTNsdUQ1aXNoRXIw?=
- =?utf-8?B?WlZmNGNIYmNvUWsxeDJIWHdaWDExS2RKQVpEVTM4U3BJTS9LL3VvS2JOMFRD?=
- =?utf-8?B?eWxFMlE1K0sveTRVK0pRMjlDd0ZsVnhpZkV1aEprdGUwVXdYbUh4NEJzQW1E?=
- =?utf-8?B?RGhFN2l4dmoya0R3bmxmdHZtak5KZGxmTmY5dlhQWE1rbkViSTFkZzNLbURj?=
- =?utf-8?B?Z0k3TllvK0tlSXU3WCtFeGRtbWtiK3JTeTRhdHJPNVhNOHJ2alFVaWZJSjh2?=
- =?utf-8?B?VmJoUGw0bkJiQ3RWdnJ5OGF5ek1Ic05MWEJFcU53V1kxV01KbEV2ZTFobHAv?=
- =?utf-8?B?WmdDVzh4dXZIbVJBSDlhYWdtVHR3RllWc2UvdjVSWEZVVmNmSktjWVEyUUcx?=
- =?utf-8?B?QmtSSFIvNXBnTXoyR3MrdDNHSGRpT3Y0amJqZ0dvbk5QYmc0VW5rZXhRL1lL?=
- =?utf-8?B?S2xWYjgvTnRIT3NTNUQ2RTlQZkV0YnBoMUhXaFcvdHg1VEJhWHhxVCtad1lv?=
- =?utf-8?B?QndvYldzLy82TU5xMGJjVnpCRFNNcEh2V2d2clZxQWhBeVRqR0JrM3ExYnBG?=
- =?utf-8?B?dExWM29TMTViMWJod3NNWXk5VzZyYWJVck5NbElhMlZnYjl1QzQrd1hoeWFl?=
- =?utf-8?B?QzZHM3FVemJ5Q2o2Q3FSRG1xcVNHdmk3OTk3bFc3c09XZWdNMDBrVXNraFda?=
- =?utf-8?B?aVhCS25Ic0RDYlljaEh2VjlZSWxtUjBFS2xmQkVrVFVDdmY0WXBUY096THRR?=
- =?utf-8?B?c2NoT2ZnNU1BRFZpdUJMMlV4WHd2U2J5RG5YVThGcWlTNks2NXUwVi9DNjYv?=
- =?utf-8?B?Q21IbXNGYUV0bDd4dXlyWmdvK3lFRDlySDQzVGZuZHcxM3k5T01ub2haQ0tv?=
- =?utf-8?B?S2pxUGRURk5TTmgvdEN1SGlmdk13c2R6Ny9pMjcycE16WlIwdkxhQTZVcDdD?=
- =?utf-8?B?VUV0elkrc1F1UEdNSkNRbkxSMWs5VEZMTEo1MUVnaFZQVzhMcDl4dGFSeTg1?=
- =?utf-8?B?VCtEajdBNlN2UTdaa25LNmJ3emRXbUE5aFVoUXFkSllLT0JYOGIreG90d1lK?=
- =?utf-8?B?dTRVMnNIMHQxRGZVdXhUOVBoZmhEcFlmWDhHTFM4cjJFZHBYYnMxS0s2NkJM?=
- =?utf-8?B?aWR1OVlxNWh1SEU2S3dlbmpHZXJDMjVoNEltZG1JczhqbHMyU2Y2MTFrdzRz?=
- =?utf-8?B?Ym80aUwzSjlQdWRZSnUvd21SbHBaV3RYTlpxSmdxWDhxaEMxbUxRNzFBOEU0?=
- =?utf-8?B?NlJ4REQ0aExzVFRQNkVoeXNRSG9aT0R2M0xVa3VISDdWMkhuMFlWUlZoUlR0?=
- =?utf-8?B?Skw2RkdVcEdxU2hiekZvYTVDQS93MDhYNTdyUCtqQkJYd2ZWQldDT3ZlOFFS?=
- =?utf-8?B?TjV6YWN1UC95ajcrVEc0Z053TDJXdXAzOVMvWTEyY3BReC9DdG8zWHNVcWx5?=
- =?utf-8?B?QlNZQ0IxTGwwZ3dpTEo5VDFNd2syM2RrcWRGRnJRVVF4Z29DUUxhTktzaTJp?=
- =?utf-8?Q?Vdru0XIAud7Vy+Ze/adLdT86D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vTZ9H-00047o-Us
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:23:36 -0500
+Received: from [10.200.7.128] (fs98a57d9c.tkyc007.ap.nuro.jp [152.165.125.156])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BB5MfK8051624
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 11 Dec 2025 14:23:01 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=fsE7AsSCQBnYEoFMHLIm1GW98XgNIjkz/qUramgJ0sA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:From:Subject:To;
+ s=rs20250326; t=1765430581; v=1;
+ b=ETny4AMJl4yXW2EOXVrgrJS+jA8FAZHCOfx25srSBKeGwssZ9SZV/C87OMb3KKuM
+ XOrcFJWmYtRE7lEjH3nBvmXrD2x0QktrvCnuUNkiTpg3tqfNizIjBinn9ezpa+Hh
+ ZodM7uMzWj7UqBnXWM/gUZ2isL3KNuISt20ZKerQlL96XfQbzKH0R48A2DocGPw8
+ JvcwlilM5Oqx3xFnj3IzcPbxybPKqg8f6hckVQxRQk9oTPqIY1/Pf6Q9iyiO5E55
+ GpNTbVCXk08r/QmRjB+NImuW3hSn4c7lZV01Gy+piWWQtvGfV3SbwSZa6R+pyhhP
+ VFKqdzsvHV/djw6l+aI3Gw==
+Message-ID: <36e64a28-576e-491c-b391-513d9e668ddb@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 11 Dec 2025 14:22:41 +0900
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7631.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 12d3753f-9d94-403d-7a63-08de38753c8c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Dec 2025 05:22:11.0780 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: XcST18/yTya+fjlCJMH8qEvCP2ntOlLTgs4QqFTTchitrH5zjLKbotX52w10N6fJZ78afeg/HjYhGpVjGndwfIeeszjOi2IEKcW/oCzVb+M=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI6PR06MB7147
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=kane_chen@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: Re: [RFC 05/24] audio: introduce AudioDriver
+To: marcandre.lureau@redhat.com, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
+ Alexandre Ratchov <alex@caoua.org>, dirty.ice.hu@gmail.com,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
+References: <20251201112309.4163921-1-marcandre.lureau@redhat.com>
+ <20251201112309.4163921-6-marcandre.lureau@redhat.com>
+Content-Language: en-US
+In-Reply-To: <20251201112309.4163921-6-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -189,88 +78,697 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBZdWJpbiBab3UgPHl1YmluekBn
-b29nbGUuY29tPg0KPiBTZW50OiBUaHVyc2RheSwgRGVjZW1iZXIgMTEsIDIwMjUgNzoyOSBBTQ0K
-PiBUbzogcWVtdS1kZXZlbEBub25nbnUub3JnDQo+IENjOiBDw6lkcmljIExlIEdvYXRlciA8Y2xn
-QGthb2Qub3JnPjsgUGV0ZXIgTWF5ZGVsbA0KPiA8cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnPjsg
-U3RldmVuIExlZSA8c3RldmVuX2xlZUBhc3BlZWR0ZWNoLmNvbT47IFRyb3kNCj4gTGVlIDxsZWV0
-cm95QGdtYWlsLmNvbT47IEphbWluIExpbiA8amFtaW5fbGluQGFzcGVlZHRlY2guY29tPjsgQW5k
-cmV3DQo+IEplZmZlcnkgPGFuZHJld0Bjb2RlY29uc3RydWN0LmNvbS5hdT47IEpvZWwgU3Rhbmxl
-eSA8am9lbEBqbXMuaWQuYXU+Ow0KPiBGYWJpYW5vIFJvc2FzIDxmYXJvc2FzQHN1c2UuZGU+OyBM
-YXVyZW50IFZpdmllciA8bHZpdmllckByZWRoYXQuY29tPjsNCj4gUGFvbG8gQm9uemluaSA8cGJv
-bnppbmlAcmVkaGF0LmNvbT47IEthbmUgQ2hlbg0KPiA8a2FuZV9jaGVuQGFzcGVlZHRlY2guY29t
-PjsgTmFiaWggRXN0ZWZhbiA8bmFiaWhlc3RlZmFuQGdvb2dsZS5jb20+Ow0KPiBxZW11LWFybUBu
-b25nbnUub3JnOyBZdWJpbiBab3UgPHl1YmluekBnb29nbGUuY29tPg0KPiBTdWJqZWN0OiBbUEFU
-Q0ggdjMgMi82XSBody9ncGlvL2FzcGVlZF9zZ3BpbzogQWRkIFFPTSBwcm9wZXJ0eSBhY2Nlc3Nv
-cnMNCj4gZm9yIFNHUElPIHBpbnMNCj4gDQo+IFRoZSBgYXNwZWVkX3NncGlvX2dldF9waW5gIGFu
-ZCBgYXNwZWVkX3NncGlvX3NldF9waW5gIGZ1bmN0aW9ucyBhcmUNCj4gaW1wbGVtZW50ZWQgdG8g
-Z2V0IGFuZCBzZXQgdGhlIGxldmVsIG9mIGluZGl2aWR1YWwgU0dQSU8gcGlucy4gVGhlc2UgYXJl
-IHRoZW4NCj4gZXhwb3NlZCBhcyBib29sZWFuIHByb3BlcnRpZXMgb24gdGhlIFNHUElPIGRldmlj
-ZSBvYmplY3QuDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBZdWJpbiBab3UgPHl1YmluekBnb29nbGUu
-Y29tPg0KPiAtLS0NCj4gIGh3L2dwaW8vYXNwZWVkX3NncGlvLmMgfCA3OA0KPiArKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0KPiAgMSBmaWxlIGNoYW5n
-ZWQsIDc4IGluc2VydGlvbnMoKykNCj4gDQo+IGRpZmYgLS1naXQgYS9ody9ncGlvL2FzcGVlZF9z
-Z3Bpby5jIGIvaHcvZ3Bpby9hc3BlZWRfc2dwaW8uYyBpbmRleA0KPiA4Njc2ZmE3Y2VkMTM0ZjFm
-NjJkYzllMzBiNDJjNWZlNmRiM2RlMjY4Li4yN2M0MDZkNTA0MmY0MjNiOTE0ZDUzZGUNCj4gMDAw
-YjcyN2NiNzI0MmRjOSAxMDA2NDQNCj4gLS0tIGEvaHcvZ3Bpby9hc3BlZWRfc2dwaW8uYw0KPiAr
-KysgYi9ody9ncGlvL2FzcGVlZF9zZ3Bpby5jDQo+IEBAIC05MSw2ICs5MSw3MyBAQCBzdGF0aWMg
-dm9pZCBhc3BlZWRfc2dwaW9fMjcwMF93cml0ZSh2b2lkICpvcGFxdWUsDQo+IGh3YWRkciBvZmZz
-ZXQsIHVpbnQ2NF90IGRhdGEsDQo+ICAgICAgfQ0KPiAgfQ0KPiANCj4gK3N0YXRpYyBib29sIGFz
-cGVlZF9zZ3Bpb19nZXRfcGluX2xldmVsKEFzcGVlZFNHUElPU3RhdGUgKnMsIGludCBwaW4pIHsN
-Cj4gKyAgICB1aW50MzJfdCB2YWx1ZSA9IHMtPmN0cmxfcmVnc1twaW4gPj4gMV07DQo+ICsgICAg
-Ym9vbCBpc19pbnB1dCA9ICEocGluICUgMik7DQo+ICsgICAgdWludDMyX3QgYml0X21hc2sgPSAw
-Ow0KPiArDQo+ICsgICAgaWYgKGlzX2lucHV0KSB7DQo+ICsgICAgICAgIGJpdF9tYXNrID0gU0dQ
-SU9fU0VSSUFMX0lOX1ZBTF9NQVNLOw0KPiArICAgIH0gZWxzZSB7DQo+ICsgICAgICAgIGJpdF9t
-YXNrID0gU0dQSU9fU0VSSUFMX09VVF9WQUxfTUFTSzsNCj4gKyAgICB9DQo+ICsNCj4gKyAgICBy
-ZXR1cm4gdmFsdWUgJiBiaXRfbWFzazsNCj4gK30NCj4gKw0KPiArc3RhdGljIHZvaWQgYXNwZWVk
-X3NncGlvX3NldF9waW5fbGV2ZWwoQXNwZWVkU0dQSU9TdGF0ZSAqcywgaW50IHBpbiwNCj4gK2Jv
-b2wgbGV2ZWwpIHsNCj4gKyAgICB1aW50MzJfdCB2YWx1ZSA9IHMtPmN0cmxfcmVnc1twaW4gPj4g
-MV07DQo+ICsgICAgYm9vbCBpc19pbnB1dCA9ICEocGluICUgMik7DQo+ICsgICAgdWludDMyX3Qg
-Yml0X21hc2sgPSAwOw0KPiArDQo+ICsgICAgaWYgKGlzX2lucHV0KSB7DQo+ICsgICAgICAgIGJp
-dF9tYXNrID0gU0dQSU9fU0VSSUFMX0lOX1ZBTF9NQVNLOw0KPiArICAgIH0gZWxzZSB7DQo+ICsg
-ICAgICAgIGJpdF9tYXNrID0gU0dQSU9fU0VSSUFMX09VVF9WQUxfTUFTSzsNCj4gKyAgICB9DQo+
-ICsNCj4gKyAgICBpZiAobGV2ZWwpIHsNCj4gKyAgICAgICAgdmFsdWUgfD0gYml0X21hc2s7DQo+
-ICsgICAgfSBlbHNlIHsNCj4gKyAgICAgICAgdmFsdWUgJj0gfmJpdF9tYXNrOw0KPiArICAgIH0N
-Cj4gKyAgICBzLT5jdHJsX3JlZ3NbcGluID4+IDFdID0gdmFsdWU7DQo+ICt9DQo+ICsNCj4gK3N0
-YXRpYyB2b2lkIGFzcGVlZF9zZ3Bpb19nZXRfcGluKE9iamVjdCAqb2JqLCBWaXNpdG9yICp2LCBj
-b25zdCBjaGFyICpuYW1lLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2b2lk
-ICpvcGFxdWUsIEVycm9yICoqZXJycCkgew0KPiArICAgIGJvb2wgbGV2ZWwgPSB0cnVlOw0KPiAr
-ICAgIGludCBwaW4gPSAweGZmZjsNCj4gKyAgICBBc3BlZWRTR1BJT1N0YXRlICpzID0gQVNQRUVE
-X1NHUElPKG9iaik7DQo+ICsNCj4gKyAgICBpZiAoc3NjYW5mKG5hbWUsICJzZ3BpbyUwM2QiLCAm
-cGluKSAhPSAxKSB7DQo+ICsgICAgICAgIGVycm9yX3NldGcoZXJycCwgIiVzOiBlcnJvciByZWFk
-aW5nICVzIiwgX19mdW5jX18sIG5hbWUpOw0KPiArICAgICAgICByZXR1cm47DQo+ICsgICAgfQ0K
-PiArICAgIGxldmVsID0gYXNwZWVkX3NncGlvX2dldF9waW5fbGV2ZWwocywgcGluKTsNCj4gKyAg
-ICB2aXNpdF90eXBlX2Jvb2wodiwgbmFtZSwgJmxldmVsLCBlcnJwKTsgfQ0KPiArDQo+ICtzdGF0
-aWMgdm9pZCBhc3BlZWRfc2dwaW9fc2V0X3BpbihPYmplY3QgKm9iaiwgVmlzaXRvciAqdiwgY29u
-c3QgY2hhciAqbmFtZSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdm9pZCAq
-b3BhcXVlLCBFcnJvciAqKmVycnApIHsNCj4gKyAgICBib29sIGxldmVsOw0KPiArICAgIGludCBw
-aW4gPSAweGZmZjsNCj4gKyAgICBBc3BlZWRTR1BJT1N0YXRlICpzID0gQVNQRUVEX1NHUElPKG9i
-aik7DQo+ICsNCj4gKyAgICBpZiAoIXZpc2l0X3R5cGVfYm9vbCh2LCBuYW1lLCAmbGV2ZWwsIGVy
-cnApKSB7DQo+ICsgICAgICAgIHJldHVybjsNCj4gKyAgICB9DQo+ICsgICAgaWYgKHNzY2FuZihu
-YW1lLCAic2dwaW8lMDNkIiwgJnBpbikgIT0gMSkgew0KPiArICAgICAgICBlcnJvcl9zZXRnKGVy
-cnAsICIlczogZXJyb3IgcmVhZGluZyAlcyIsIF9fZnVuY19fLCBuYW1lKTsNCj4gKyAgICAgICAg
-cmV0dXJuOw0KPiArICAgIH0NCj4gKyAgICBhc3BlZWRfc2dwaW9fc2V0X3Bpbl9sZXZlbChzLCBw
-aW4sIGxldmVsKTsgfQ0KPiArDQo+ICBzdGF0aWMgY29uc3QgTWVtb3J5UmVnaW9uT3BzIGFzcGVl
-ZF9ncGlvXzI3MDBfb3BzID0gew0KPiAgICAucmVhZCAgICAgICA9IGFzcGVlZF9zZ3Bpb18yNzAw
-X3JlYWQsDQo+ICAgIC53cml0ZSAgICAgID0gYXNwZWVkX3NncGlvXzI3MDBfd3JpdGUsDQo+IEBA
-IC0xMTQsNiArMTgxLDE2IEBAIHN0YXRpYyB2b2lkIGFzcGVlZF9zZ3Bpb19yZWFsaXplKERldmlj
-ZVN0YXRlICpkZXYsDQo+IEVycm9yICoqZXJycCkNCj4gICAgICBzeXNidXNfaW5pdF9tbWlvKHNi
-ZCwgJnMtPmlvbWVtKTsNCj4gIH0NCj4gDQo+ICtzdGF0aWMgdm9pZCBhc3BlZWRfc2dwaW9faW5p
-dChPYmplY3QgKm9iaikgew0KPiArICAgIGZvciAoaW50IGkgPSAwOyBpIDwgQVNQRUVEX1NHUElP
-X01BWF9QSU5fUEFJUiAqIDI7IGkrKykgew0KPiArICAgICAgICBjaGFyICpuYW1lID0gZ19zdHJk
-dXBfcHJpbnRmKCJzZ3BpbyUwM2QiLCBpKTsNCj4gKyAgICAgICAgb2JqZWN0X3Byb3BlcnR5X2Fk
-ZChvYmosIG5hbWUsICJib29sIiwgYXNwZWVkX3NncGlvX2dldF9waW4sDQo+ICsgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgYXNwZWVkX3NncGlvX3NldF9waW4sIE5VTEwsIE5VTEwpOw0KPiAr
-ICAgICAgICBnX2F1dG9mcmVlKG5hbWUpOw0KPiArICAgIH0NCj4gK30NCg0KUGxlYXNlIHVzZSAi
-Z19hdXRvZnJlZSBjaGFyICpuYW1lICIuIGdfYXV0b2ZyZWUobmFtZSk7IHdpbGwgY2F1c2UgYSBi
-dWlsZCBmYWlsdXJlLg0KDQo+ICsNCj4gIHN0YXRpYyB2b2lkIGFzcGVlZF9zZ3Bpb19jbGFzc19p
-bml0KE9iamVjdENsYXNzICprbGFzcywgY29uc3Qgdm9pZCAqZGF0YSkgIHsNCj4gICAgICBEZXZp
-Y2VDbGFzcyAqZGMgPSBERVZJQ0VfQ0xBU1Moa2xhc3MpOyBAQCAtMTQzLDYgKzIyMCw3IEBAIHN0
-YXRpYw0KPiBjb25zdCBUeXBlSW5mbyBhc3BlZWRfc2dwaW9fYXN0MjcwMF9pbmZvID0gew0KPiAg
-ICAubmFtZSAgICAgICAgICAgPSBUWVBFX0FTUEVFRF9TR1BJTyAiLWFzdDI3MDAiLA0KPiAgICAu
-cGFyZW50ICAgICAgICAgPSBUWVBFX0FTUEVFRF9TR1BJTywNCj4gICAgLmNsYXNzX2luaXQgICAg
-ID0gYXNwZWVkX3NncGlvXzI3MDBfY2xhc3NfaW5pdCwNCj4gKyAgLmluc3RhbmNlX2luaXQgID0g
-YXNwZWVkX3NncGlvX2luaXQsDQo+ICB9Ow0KPiANCj4gIHN0YXRpYyB2b2lkIGFzcGVlZF9zZ3Bp
-b19yZWdpc3Rlcl90eXBlcyh2b2lkKQ0KPiANCj4gLS0NCj4gMi41Mi4wLjIzOS5nZDVmMGM2ZTc0
-ZS1nb29nDQoNCkJlc3QgUmVnYXJkcywNCkthbmUNCg==
+On 2025/12/01 20:22, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Introduce a sub-class for current "audio_driver" based implementations.
+> Future AudioBackend implementations can do without it.
+> 
+> Next cleanup will actually remove "audio_driver" struct altogether and
+> make the subclass proper QOM objects.
+> 
+> Public APIs still rely on backend being an AudioDriver. They will
+> assert() if not. This will be addressed later to allow other backends.
+
+Thank you for this patch. I agree with the overall direction of 
+subclassing and cleaning up the old audio_driver struct. However, I have 
+a concern about the naming of the new subclass as "AudioDriver".
+
+"Driver" is overloaded with slightly different meanings. Traditionally, 
+"driver" means a software component that connects QEMU to a sound 
+platform (e.g., "wav driver"). Although audio_driver is going to be 
+removed, this is still reflected in the user-facing term AudiodevDriver.
+
+On the other hand, an AudioDriver is an "object" so it contains states 
+and there can be multiple instances.
+
+This overloaded semantics of "driver" leads to a confusion; the new 
+"gstreamer" is an AudiodevDriver for the user interface but, internally, 
+it doesn't inherit AudioDriver.
+
+It also feels strange to refer to multiple instances as several 
+"AudioDrivers" when we instinctively think of a driver as a singular 
+type (i.e., there is only one "wav" driver).
+
+So I think "AudioDriver" should be renamed to characterize its instances 
+instead of static code while differentiating it from GStreamer.
+
+The key difference between the existing implementations (which become 
+the new subclass) and GStreamer is that the existing ones essentially 
+represent ends of an audio stream. GStreamer calls them sinks or 
+sources, but we need one term that represents both.
+
+The idea I came up with is "endpoint" (i.e., "AudioEndpoint"). It is 
+natural to say there are several "AudioEnpoints" to express instances, 
+and it is clearly distinguished from GStreamer that provides a whole 
+graph. You may have a better idea though.
+
+> 
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   audio/audio_int.h      |  25 +++++---
+>   audio/audio_template.h |  18 +++---
+>   include/qemu/audio.h   |  17 +++++-
+>   audio/alsaaudio.c      |   2 +-
+>   audio/audio.c          | 126 +++++++++++++++++++++++++++++++----------
+>   audio/dbusaudio.c      |   8 +--
+>   audio/ossaudio.c       |   4 +-
+>   ui/dbus.c              |   3 +-
+>   8 files changed, 142 insertions(+), 61 deletions(-)
+> 
+> diff --git a/audio/audio_int.h b/audio/audio_int.h
+> index b2b8002477..e1f962875f 100644
+> --- a/audio/audio_int.h
+> +++ b/audio/audio_int.h
+> @@ -61,7 +61,7 @@ struct audio_pcm_info {
+>       int swap_endianness;
+>   };
+>   
+> -typedef struct AudioBackend AudioBackend;
+> +typedef struct AudioDriver AudioDriver;
+
+You don't have to write typedef your own; OBJECT_DECLARE_TYPE() will 
+automatically create them.
+
+Regards,
+Akihiko Odaki
+
+>   typedef struct SWVoiceCap SWVoiceCap;
+>   
+>   typedef struct STSampleBuffer {
+> @@ -70,7 +70,7 @@ typedef struct STSampleBuffer {
+>   } STSampleBuffer;
+>   
+>   typedef struct HWVoiceOut {
+> -    AudioBackend *s;
+> +    AudioDriver *s;
+>       bool enabled;
+>       int poll_mode;
+>       bool pending_disable;
+> @@ -91,7 +91,7 @@ typedef struct HWVoiceOut {
+>   } HWVoiceOut;
+>   
+>   typedef struct HWVoiceIn {
+> -    AudioBackend *s;
+> +    AudioDriver *s;
+>       bool enabled;
+>       int poll_mode;
+>       struct audio_pcm_info info;
+> @@ -112,7 +112,7 @@ typedef struct HWVoiceIn {
+>   } HWVoiceIn;
+>   
+>   struct SWVoiceOut {
+> -    AudioBackend *s;
+> +    AudioDriver *s;
+>       struct audio_pcm_info info;
+>       t_sample *conv;
+>       STSampleBuffer resample_buf;
+> @@ -128,7 +128,7 @@ struct SWVoiceOut {
+>   };
+>   
+>   struct SWVoiceIn {
+> -    AudioBackend *s;
+> +    AudioDriver *s;
+>       bool active;
+>       struct audio_pcm_info info;
+>       void *rate;
+> @@ -241,8 +241,12 @@ struct SWVoiceCap {
+>       QLIST_ENTRY (SWVoiceCap) entries;
+>   };
+>   
+> -typedef struct AudioBackend {
+> -    Object parent;
+> +struct AudioDriverClass {
+> +    AudioBackendClass parent_class;
+> +};
+> +
+> +struct AudioDriver {
+> +    AudioBackend parent_obj;
+>   
+>       struct audio_driver *drv;
+>       Audiodev *dev;
+> @@ -260,7 +264,7 @@ typedef struct AudioBackend {
+>       bool timer_running;
+>       uint64_t timer_last;
+>       VMChangeStateEntry *vmse;
+> -} AudioBackend;
+> +};
+>   
+>   extern const struct mixeng_volume nominal_volume;
+>   
+> @@ -273,7 +277,7 @@ void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len);
+>   
+>   int audio_bug (const char *funcname, int cond);
+>   
+> -void audio_run(AudioBackend *s, const char *msg);
+> +void audio_run(AudioDriver *s, const char *msg);
+>   
+>   const char *audio_application_name(void);
+>   
+> @@ -326,4 +330,7 @@ void audio_create_pdos(Audiodev *dev);
+>   AudiodevPerDirectionOptions *audio_get_pdo_in(Audiodev *dev);
+>   AudiodevPerDirectionOptions *audio_get_pdo_out(Audiodev *dev);
+>   
+> +#define TYPE_AUDIO_DRIVER "audio-driver"
+> +OBJECT_DECLARE_TYPE(AudioDriver, AudioDriverClass, AUDIO_DRIVER)
+> +
+>   #endif /* QEMU_AUDIO_INT_H */
+> diff --git a/audio/audio_template.h b/audio/audio_template.h
+> index 1ab3c47fd7..925a878f6d 100644
+> --- a/audio/audio_template.h
+> +++ b/audio/audio_template.h
+> @@ -36,7 +36,7 @@
+>   #define HWBUF hw->conv_buf
+>   #endif
+>   
+> -static void glue(audio_init_nb_voices_, TYPE)(AudioBackend *s,
+> +static void glue(audio_init_nb_voices_, TYPE)(AudioDriver *s,
+>                                                 struct audio_driver *drv, int min_voices)
+>   {
+>       int max_voices = glue (drv->max_voices_, TYPE);
+> @@ -221,7 +221,7 @@ static void glue (audio_pcm_hw_del_sw_, TYPE) (SW *sw)
+>   static void glue (audio_pcm_hw_gc_, TYPE) (HW **hwp)
+>   {
+>       HW *hw = *hwp;
+> -    AudioBackend *s = hw->s;
+> +    AudioDriver *s = hw->s;
+>   
+>       if (!hw->sw_head.lh_first) {
+>   #ifdef DAC
+> @@ -236,12 +236,12 @@ static void glue (audio_pcm_hw_gc_, TYPE) (HW **hwp)
+>       }
+>   }
+>   
+> -static HW *glue(audio_pcm_hw_find_any_, TYPE)(AudioBackend *s, HW *hw)
+> +static HW *glue(audio_pcm_hw_find_any_, TYPE)(AudioDriver *s, HW *hw)
+>   {
+>       return hw ? hw->entries.le_next : glue (s->hw_head_, TYPE).lh_first;
+>   }
+>   
+> -static HW *glue(audio_pcm_hw_find_any_enabled_, TYPE)(AudioBackend *s, HW *hw)
+> +static HW *glue(audio_pcm_hw_find_any_enabled_, TYPE)(AudioDriver *s, HW *hw)
+>   {
+>       while ((hw = glue(audio_pcm_hw_find_any_, TYPE)(s, hw))) {
+>           if (hw->enabled) {
+> @@ -251,7 +251,7 @@ static HW *glue(audio_pcm_hw_find_any_enabled_, TYPE)(AudioBackend *s, HW *hw)
+>       return NULL;
+>   }
+>   
+> -static HW *glue(audio_pcm_hw_find_specific_, TYPE)(AudioBackend *s, HW *hw,
+> +static HW *glue(audio_pcm_hw_find_specific_, TYPE)(AudioDriver *s, HW *hw,
+>                                                      struct audsettings *as)
+>   {
+>       while ((hw = glue(audio_pcm_hw_find_any_, TYPE)(s, hw))) {
+> @@ -262,7 +262,7 @@ static HW *glue(audio_pcm_hw_find_specific_, TYPE)(AudioBackend *s, HW *hw,
+>       return NULL;
+>   }
+>   
+> -static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioBackend *s,
+> +static HW *glue(audio_pcm_hw_add_new_, TYPE)(AudioDriver *s,
+>                                                struct audsettings *as)
+>   {
+>       HW *hw;
+> @@ -398,7 +398,7 @@ AudiodevPerDirectionOptions *glue(audio_get_pdo_, TYPE)(Audiodev *dev)
+>       abort();
+>   }
+>   
+> -static HW *glue(audio_pcm_hw_add_, TYPE)(AudioBackend *s, struct audsettings *as)
+> +static HW *glue(audio_pcm_hw_add_, TYPE)(AudioDriver *s, struct audsettings *as)
+>   {
+>       HW *hw;
+>       AudiodevPerDirectionOptions *pdo = glue(audio_get_pdo_, TYPE)(s->dev);
+> @@ -424,7 +424,7 @@ static HW *glue(audio_pcm_hw_add_, TYPE)(AudioBackend *s, struct audsettings *as
+>   }
+>   
+>   static SW *glue(audio_pcm_create_voice_pair_, TYPE)(
+> -    AudioBackend *s,
+> +    AudioDriver *s,
+>       const char *sw_name,
+>       struct audsettings *as
+>       )
+> @@ -494,7 +494,7 @@ SW *glue (AUD_open_, TYPE) (
+>       struct audsettings *as
+>       )
+>   {
+> -    AudioBackend *s = be;
+> +    AudioDriver *s = AUDIO_DRIVER(be);
+>       AudiodevPerDirectionOptions *pdo;
+>   
+>       if (audio_bug(__func__, !be || !name || !callback_fn || !as)) {
+> diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+> index 2562710bec..f83f8326ab 100644
+> --- a/include/qemu/audio.h
+> +++ b/include/qemu/audio.h
+> @@ -44,11 +44,21 @@ typedef struct audsettings {
+>   typedef struct SWVoiceOut SWVoiceOut;
+>   typedef struct SWVoiceIn SWVoiceIn;
+>   
+> -struct AudioBackendClass {
+> +typedef struct AudioBackend {
+> +    Object parent_obj;
+> +} AudioBackend;
+> +
+> +typedef struct AudioBackendClass {
+>       ObjectClass parent_class;
+> -};
+>   
+> -typedef struct AudioBackend AudioBackend;
+> +    const char *(*get_id)(AudioBackend *be);
+> +#ifdef CONFIG_GIO
+> +    bool (*set_dbus_server)(AudioBackend *be,
+> +                            GDBusObjectManagerServer *manager,
+> +                            bool p2p,
+> +                            Error **errp);
+> +#endif
+> +} AudioBackendClass;
+>   
+>   typedef struct QEMUAudioTimeStamp {
+>       uint64_t old_ts;
+> @@ -129,6 +139,7 @@ AudioBackend *audio_be_by_name(const char *name, Error **errp);
+>   AudioBackend *audio_get_default_audio_be(Error **errp);
+>   const char *audio_be_get_id(AudioBackend *be);
+>   #ifdef CONFIG_GIO
+> +bool audio_be_can_set_dbus_server(AudioBackend *be);
+>   bool audio_be_set_dbus_server(AudioBackend *be,
+>                                 GDBusObjectManagerServer *server,
+>                                 bool p2p,
+> diff --git a/audio/alsaaudio.c b/audio/alsaaudio.c
+> index 7d7da576dc..278c74c5de 100644
+> --- a/audio/alsaaudio.c
+> +++ b/audio/alsaaudio.c
+> @@ -41,7 +41,7 @@ struct pollhlp {
+>       struct pollfd *pfds;
+>       int count;
+>       int mask;
+> -    AudioBackend *s;
+> +    AudioDriver *s;
+>   };
+>   
+>   typedef struct ALSAVoiceOut {
+> diff --git a/audio/audio.c b/audio/audio.c
+> index 0f992a775c..4a43761528 100644
+> --- a/audio/audio.c
+> +++ b/audio/audio.c
+> @@ -36,6 +36,7 @@
+>   #include "qemu/log.h"
+>   #include "qemu/module.h"
+>   #include "qemu/help_option.h"
+> +#include "qom/object.h"
+>   #include "system/system.h"
+>   #include "system/replay.h"
+>   #include "system/runstate.h"
+> @@ -383,7 +384,7 @@ void audio_pcm_info_clear_buf (struct audio_pcm_info *info, void *buf, int len)
+>   /*
+>    * Capture
+>    */
+> -static CaptureVoiceOut *audio_pcm_capture_find_specific(AudioBackend *s,
+> +static CaptureVoiceOut *audio_pcm_capture_find_specific(AudioDriver *s,
+>                                                           struct audsettings *as)
+>   {
+>       CaptureVoiceOut *cap;
+> @@ -463,7 +464,7 @@ static void audio_detach_capture (HWVoiceOut *hw)
+>   
+>   static int audio_attach_capture (HWVoiceOut *hw)
+>   {
+> -    AudioBackend *s = hw->s;
+> +    AudioDriver *s = hw->s;
+>       CaptureVoiceOut *cap;
+>   
+>       audio_detach_capture (hw);
+> @@ -801,7 +802,7 @@ static void audio_pcm_print_info (const char *cap, struct audio_pcm_info *info)
+>   /*
+>    * Timer
+>    */
+> -static int audio_is_timer_needed(AudioBackend *s)
+> +static int audio_is_timer_needed(AudioDriver *s)
+>   {
+>       HWVoiceIn *hwi = NULL;
+>       HWVoiceOut *hwo = NULL;
+> @@ -819,7 +820,7 @@ static int audio_is_timer_needed(AudioBackend *s)
+>       return 0;
+>   }
+>   
+> -static void audio_reset_timer(AudioBackend *s)
+> +static void audio_reset_timer(AudioDriver *s)
+>   {
+>       if (audio_is_timer_needed(s)) {
+>           timer_mod_anticipate_ns(s->ts,
+> @@ -841,7 +842,7 @@ static void audio_reset_timer(AudioBackend *s)
+>   static void audio_timer (void *opaque)
+>   {
+>       int64_t now, diff;
+> -    AudioBackend *s = opaque;
+> +    AudioDriver *s = opaque;
+>   
+>       now = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+>       diff = now - s->timer_last;
+> @@ -924,7 +925,7 @@ void AUD_set_active_out(SWVoiceOut *sw, bool on)
+>   
+>       hw = sw->hw;
+>       if (sw->active != on) {
+> -        AudioBackend *s = sw->s;
+> +        AudioDriver *s = sw->s;
+>           SWVoiceOut *temp_sw;
+>           SWVoiceCap *sc;
+>   
+> @@ -972,7 +973,7 @@ void AUD_set_active_in(SWVoiceIn *sw, bool on)
+>   
+>       hw = sw->hw;
+>       if (sw->active != on) {
+> -        AudioBackend *s = sw->s;
+> +        AudioDriver *s = sw->s;
+>           SWVoiceIn *temp_sw;
+>   
+>           if (on) {
+> @@ -1140,7 +1141,7 @@ static size_t audio_pcm_hw_run_out(HWVoiceOut *hw, size_t live)
+>       return clipped;
+>   }
+>   
+> -static void audio_run_out(AudioBackend *s)
+> +static void audio_run_out(AudioDriver *s)
+>   {
+>       HWVoiceOut *hw = NULL;
+>       SWVoiceOut *sw;
+> @@ -1294,7 +1295,7 @@ static size_t audio_pcm_hw_run_in(HWVoiceIn *hw, size_t samples)
+>       return conv;
+>   }
+>   
+> -static void audio_run_in(AudioBackend *s)
+> +static void audio_run_in(AudioDriver *s)
+>   {
+>       HWVoiceIn *hw = NULL;
+>   
+> @@ -1342,7 +1343,7 @@ static void audio_run_in(AudioBackend *s)
+>       }
+>   }
+>   
+> -static void audio_run_capture(AudioBackend *s)
+> +static void audio_run_capture(AudioDriver *s)
+>   {
+>       CaptureVoiceOut *cap;
+>   
+> @@ -1389,7 +1390,7 @@ static void audio_run_capture(AudioBackend *s)
+>       }
+>   }
+>   
+> -void audio_run(AudioBackend *s, const char *msg)
+> +void audio_run(AudioDriver *s, const char *msg)
+>   {
+>       audio_run_out(s);
+>       audio_run_in(s);
+> @@ -1562,8 +1563,8 @@ size_t audio_generic_read(HWVoiceIn *hw, void *buf, size_t size)
+>       return total;
+>   }
+>   
+> -static bool audio_driver_init(AudioBackend *s, struct audio_driver *drv,
+> -                              Audiodev *dev, Error **errp)
+> +static bool audio_driver_do_init(AudioDriver *s, struct audio_driver *drv,
+> +                                 Audiodev *dev, Error **errp)
+>   {
+>       s->drv_opaque = drv->init(dev, errp);
+>       if (!s->drv_opaque) {
+> @@ -1595,7 +1596,7 @@ static bool audio_driver_init(AudioBackend *s, struct audio_driver *drv,
+>   static void audio_vm_change_state_handler (void *opaque, bool running,
+>                                              RunState state)
+>   {
+> -    AudioBackend *s = opaque;
+> +    AudioDriver *s = opaque;
+>       HWVoiceOut *hwo = NULL;
+>       HWVoiceIn *hwi = NULL;
+>   
+> @@ -1618,7 +1619,47 @@ static const VMStateDescription vmstate_audio;
+>   
+>   static void audio_be_init(Object *obj)
+>   {
+> -    AudioBackend *s = AUDIO_BACKEND(obj);
+> +}
+> +
+> +static void audio_be_finalize(Object *obj)
+> +{
+> +}
+> +
+> +static const char *audio_driver_get_id(AudioBackend *be)
+> +{
+> +    return AUDIO_DRIVER(be)->dev->id;
+> +}
+> +
+> +#ifdef CONFIG_GIO
+> +static bool audio_driver_set_dbus_server(AudioBackend *be,
+> +                                            GDBusObjectManagerServer *manager,
+> +                                            bool p2p,
+> +                                            Error **errp)
+> +{
+> +    AudioDriver *d = AUDIO_DRIVER(be);
+> +
+> +    if (!d->drv->set_dbus_server) {
+> +        return false;
+> +    }
+> +
+> +    return d->drv->set_dbus_server(be, manager, p2p, errp);
+> +}
+> +
+> +#endif
+> +
+> +static void audio_driver_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    AudioBackendClass *be = AUDIO_BACKEND_CLASS(klass);
+> +
+> +    be->get_id = audio_driver_get_id;
+> +#ifdef CONFIG_GIO
+> +    be->set_dbus_server = audio_driver_set_dbus_server;
+> +#endif
+> +}
+> +
+> +static void audio_driver_init(Object *obj)
+> +{
+> +    AudioDriver *s = AUDIO_DRIVER(obj);
+>   
+>       QLIST_INIT(&s->hw_head_out);
+>       QLIST_INIT(&s->hw_head_in);
+> @@ -1631,9 +1672,9 @@ static void audio_be_init(Object *obj)
+>       vmstate_register_any(NULL, &vmstate_audio, s);
+>   }
+>   
+> -static void audio_be_finalize(Object *obj)
+> +static void audio_driver_finalize(Object *obj)
+>   {
+> -    AudioBackend *s = AUDIO_BACKEND(obj);
+> +    AudioDriver *s = AUDIO_DRIVER(obj);
+>       HWVoiceOut *hwo, *hwon;
+>       HWVoiceIn *hwi, *hwin;
+>   
+> @@ -1749,10 +1790,10 @@ static AudioBackend *audio_init(Audiodev *dev, Error **errp)
+>   {
+>       int done = 0;
+>       const char *drvname;
+> -    AudioBackend *s;
+> +    AudioDriver *s;
+>       struct audio_driver *driver;
+>   
+> -    s = AUDIO_BACKEND(object_new(TYPE_AUDIO_BACKEND));
+> +    s = AUDIO_DRIVER(object_new(TYPE_AUDIO_DRIVER));
+>   
+>       if (dev) {
+>           /* -audiodev option */
+> @@ -1760,7 +1801,7 @@ static AudioBackend *audio_init(Audiodev *dev, Error **errp)
+>           drvname = AudiodevDriver_str(dev->driver);
+>           driver = audio_driver_lookup(drvname);
+>           if (driver) {
+> -            done = audio_driver_init(s, driver, dev, errp);
+> +            done = audio_driver_do_init(s, driver, dev, errp);
+>           } else {
+>               error_setg(errp, "Unknown audio driver `%s'", drvname);
+>           }
+> @@ -1780,7 +1821,7 @@ static AudioBackend *audio_init(Audiodev *dev, Error **errp)
+>               g_free(e);
+>               drvname = AudiodevDriver_str(dev->driver);
+>               driver = audio_driver_lookup(drvname);
+> -            if (audio_driver_init(s, driver, dev, NULL)) {
+> +            if (audio_driver_do_init(s, driver, dev, NULL)) {
+>                   break;
+>               }
+>               qapi_free_Audiodev(dev);
+> @@ -1792,7 +1833,7 @@ static AudioBackend *audio_init(Audiodev *dev, Error **errp)
+>           goto out;
+>       }
+>       object_unref(s);
+> -    return s;
+> +    return AUDIO_BACKEND(s);
+>   
+>   out:
+>       object_unref(s);
+> @@ -1831,17 +1872,19 @@ bool AUD_backend_check(AudioBackend **be, Error **errp)
+>   static struct audio_pcm_ops capture_pcm_ops;
+>   
+>   CaptureVoiceOut *AUD_add_capture(
+> -    AudioBackend *s,
+> +    AudioBackend *be,
+>       struct audsettings *as,
+>       struct audio_capture_ops *ops,
+>       void *cb_opaque
+>       )
+>   {
+> +    AudioDriver *s = AUDIO_DRIVER(be);
+>       CaptureVoiceOut *cap;
+>       struct capture_callback *cb;
+>   
+>       if (!s) {
+> -        error_report("Capturing without setting an audiodev is not supported");
+> +        /* TODO: implement an interface instead (or drop capture support) */
+> +        error_report("Capturing without setting an audiodev driver is not supported");
+>           abort();
+>       }
+>   
+> @@ -2227,27 +2270,36 @@ AudioBackend *audio_be_by_name(const char *name, Error **errp)
+>   }
+>   
+>   #ifdef CONFIG_GIO
+> +bool audio_be_can_set_dbus_server(AudioBackend *be)
+> +{
+> +    /*
+> +     * AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+> +     * return klass->set_dbus_server != NULL;
+> +     */
+> +     return AUDIO_DRIVER(be)->drv->set_dbus_server != NULL;
+> +}
+> +
+>   bool audio_be_set_dbus_server(AudioBackend *be,
+>                                 GDBusObjectManagerServer *server,
+>                                 bool p2p,
+>                                 Error **errp)
+>   {
+> -    assert(be != NULL);
+> +    AudioBackendClass *klass = AUDIO_BACKEND_GET_CLASS(be);
+>   
+> -    if (!be->drv->set_dbus_server) {
+> -        error_setg(errp, "Audiodev '%s' is not compatible with DBus", be->dev->id);
+> +    if (!audio_be_can_set_dbus_server(be)) {
+> +        error_setg(errp, "Audiodev '%s' is not compatible with DBus",
+> +                   audio_be_get_id(be));
+>           return false;
+>       }
+>   
+> -    return be->drv->set_dbus_server(be, server, p2p, errp);
+> +    return klass->set_dbus_server(be, server, p2p, errp);
+>   }
+>   #endif
+>   
+>   const char *audio_be_get_id(AudioBackend *be)
+>   {
+>       if (be) {
+> -        assert(be->dev);
+> -        return be->dev->id;
+> +        return AUDIO_BACKEND_GET_CLASS(be)->get_id(be);
+>       } else {
+>           return "";
+>       }
+> @@ -2322,13 +2374,25 @@ static const TypeInfo audio_be_info = {
+>       .instance_size = sizeof(AudioBackend),
+>       .instance_init = audio_be_init,
+>       .instance_finalize = audio_be_finalize,
+> -    .abstract = false, /* TODO: subclass drivers and make it abstract */
+> +    .abstract = true,
+>       .class_size = sizeof(AudioBackendClass),
+>   };
+>   
+> +static const TypeInfo audio_driver_info = {
+> +    .name = TYPE_AUDIO_DRIVER,
+> +    .parent = TYPE_AUDIO_BACKEND,
+> +    .instance_size = sizeof(AudioDriver),
+> +    .instance_init = audio_driver_init,
+> +    .instance_finalize = audio_driver_finalize,
+> +    .abstract = false,
+> +    .class_size = sizeof(AudioDriverClass),
+> +    .class_init = audio_driver_class_init,
+> +};
+> +
+>   static void register_types(void)
+>   {
+>       type_register_static(&audio_be_info);
+> +    type_register_static(&audio_driver_info);
+>   }
+>   
+>   type_init(register_types);
+> diff --git a/audio/dbusaudio.c b/audio/dbusaudio.c
+> index 1fe7c4ed64..71b2a6c2cf 100644
+> --- a/audio/dbusaudio.c
+> +++ b/audio/dbusaudio.c
+> @@ -464,7 +464,7 @@ listener_in_vanished_cb(GDBusConnection *connection,
+>   }
+>   
+>   static gboolean
+> -dbus_audio_register_listener(AudioBackend *s,
+> +dbus_audio_register_listener(AudioDriver *s,
+>                                GDBusMethodInvocation *invocation,
+>   #ifdef G_OS_UNIX
+>                                GUnixFDList *fd_list,
+> @@ -621,7 +621,7 @@ dbus_audio_register_listener(AudioBackend *s,
+>   }
+>   
+>   static gboolean
+> -dbus_audio_register_out_listener(AudioBackend *s,
+> +dbus_audio_register_out_listener(AudioDriver *s,
+>                                    GDBusMethodInvocation *invocation,
+>   #ifdef G_OS_UNIX
+>                                    GUnixFDList *fd_list,
+> @@ -637,7 +637,7 @@ dbus_audio_register_out_listener(AudioBackend *s,
+>   }
+>   
+>   static gboolean
+> -dbus_audio_register_in_listener(AudioBackend *s,
+> +dbus_audio_register_in_listener(AudioDriver *s,
+>                                   GDBusMethodInvocation *invocation,
+>   #ifdef G_OS_UNIX
+>                                   GUnixFDList *fd_list,
+> @@ -657,7 +657,7 @@ dbus_audio_set_server(AudioBackend *s,
+>                         bool p2p,
+>                         Error **errp)
+>   {
+> -    DBusAudio *da = s->drv_opaque;
+> +    DBusAudio *da = AUDIO_DRIVER(s)->drv_opaque;
+>   
+>       g_assert(da);
+>       g_assert(!da->server);
+> diff --git a/audio/ossaudio.c b/audio/ossaudio.c
+> index c6cad47a01..9576cdba51 100644
+> --- a/audio/ossaudio.c
+> +++ b/audio/ossaudio.c
+> @@ -107,13 +107,13 @@ static void oss_anal_close (int *fdp)
+>   
+>   static void oss_helper_poll_out (void *opaque)
+>   {
+> -    AudioBackend *s = opaque;
+> +    AudioDriver *s = opaque;
+>       audio_run(s, "oss_poll_out");
+>   }
+>   
+>   static void oss_helper_poll_in (void *opaque)
+>   {
+> -    AudioBackend *s = opaque;
+> +    AudioDriver *s = opaque;
+>       audio_run(s, "oss_poll_in");
+>   }
+>   
+> diff --git a/ui/dbus.c b/ui/dbus.c
+> index 45fb3c1aa3..b0caa9b154 100644
+> --- a/ui/dbus.c
+> +++ b/ui/dbus.c
+> @@ -220,7 +220,7 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
+>       }
+>   
+>       AudioBackend *audio_be = audio_get_default_audio_be(NULL);
+> -    if (audio_be && !g_str_equal(audio_be->drv->name, "dbus")) {
+> +    if (audio_be && !audio_be_can_set_dbus_server(audio_be)) {
+>           audio_be = NULL;
+>       }
+>       if (dd->audiodev && *dd->audiodev) {
+> @@ -233,7 +233,6 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
+>           return;
+>       }
+>   
+> -
+>       consoles = g_array_new(FALSE, FALSE, sizeof(guint32));
+>       for (idx = 0;; idx++) {
+>           if (!qemu_console_lookup_by_index(idx)) {
+
 
