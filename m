@@ -4,108 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A95D41D62
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:46:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7483D41D62
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTirC-0001u2-Gh; Thu, 11 Dec 2025 10:45:32 -0500
+	id 1vTita-0002Wu-GW; Thu, 11 Dec 2025 10:47:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTiqz-0001tB-Cy
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:45:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTiqx-0000xS-89
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:45:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765467912;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=U7S25o2+wfdalGdvIeiQvLXZS+wcCFxVmEVROSkKouI=;
- b=iw3irWslgLvIUr2hEUPzH1f0PCDEwii/plPdzpMTxNN/jtkr4cGEl3Hc+X2ym/itlMR5HV
- kNpvasd9CMFZRtWckZtwjYta71F7m0TknJCRmexqRFDoalbE/TqX6VUbTUFcLiZ2f8v27+
- k3PGJnJtm4gFLFrkDJehkm9WgtZWQlE=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-60-LpVBruUQOYG60B40XSm5pQ-1; Thu, 11 Dec 2025 10:45:10 -0500
-X-MC-Unique: LpVBruUQOYG60B40XSm5pQ-1
-X-Mimecast-MFC-AGG-ID: LpVBruUQOYG60B40XSm5pQ_1765467910
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8823c1345c0so3177706d6.2
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:45:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vTitY-0002WS-7x
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:47:56 -0500
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vTitW-00020L-NZ
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:47:55 -0500
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-3f0cbfae787so174975fac.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:47:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765467909; x=1766072709; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=U7S25o2+wfdalGdvIeiQvLXZS+wcCFxVmEVROSkKouI=;
- b=aJSUGZx5AH33gsGuk1n+p9xbBrH7epMhSGtRTpTbOI76U8nsPBV65GLPg/FRGC/dXd
- udfw9stRXfvhD2i/n/5QKZMNEImrD8Y/vWl0Z767fuSvmpI+nUbAceHhMzmG5DofpW0J
- cah86IeYrozMXefUd8BHW8+0k10nEL1OwlqraG4wTqgqUmApv6s55WYhpCwlIekDRmrK
- NMURu6q1XH3n7TKhRFd/qpk1mk9GWm5/eXytrhUA4LjBV4OeRURowD7Gy6W9g52y7S9Z
- ubvcT+Wk4D65ThebKbCzK4aww0L68ejz77fDOmhbRwfuxT1+AFl/2/rjngElSlAPLf2H
- qEEg==
+ d=linaro.org; s=google; t=1765468073; x=1766072873; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=t2juk5Vm4ck9/nk24tUYpq7Odg0a8S/D2qotEA3WIE8=;
+ b=AathLCZBK/XjnSRDIxdnApJmqPnt19CPtsjvBhexMtKA9OhuiV4lSFo74Z85Rc+MrK
+ IlY/ULyNRCwaHrFnWbaX16Z9ALMgReMHZksrrpTTCz6i03PyZ7ZITHYsagshp7Uo2bMD
+ 1UuVVyZu2A/er3RQnXZBTFiQwDKVqocPIwvZvkIG8Lx4a34XGHfUIf+3sLgMq1Ol3qsJ
+ mrEmzaQCiU7IylhRnQMPITqYYaAVDhG5+dlrgo8/NlM+dksONeRspdXYrBmmjavgN8q1
+ Dy4AmmGrytfOcjAIlgAxQQc+ooxcqQJHXLrT8RlgeHCipML5LAg/OC8fNBQsaL7aVsD6
+ +XOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765467909; x=1766072709;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U7S25o2+wfdalGdvIeiQvLXZS+wcCFxVmEVROSkKouI=;
- b=d/lrYLbdX5OkJwBsEwmYsEPJWSvbxa42EB5uYPw0Ki1Q/gM6f6Ff2/gVVA/JgK8pcJ
- KHpN0x6FV0tjedKWmz7vb5ksZdMK/XowMMVOn5cxxlYEH3oG2g2gsOEW5YGIxd/Wap9E
- TTLJZG2SsLnSjW86EGp3UVe8a+H5RnV37DxZutX3ota8K1oSVINSIKirZFTVcBmqGPl1
- E9mz4qYfuurbmuOSkpa+fYDDGrngWUcnTYQmL3xIiAsPPTlo9lpXaLb6+CiF5tsAIt2o
- nLHBHFdHCxKykAF8zybS7Peq+3wT6sBwx0UWUpzHM1hiof3KI5GGt51H9OssQzfrrzWe
- b/Sw==
-X-Gm-Message-State: AOJu0YwBFKwdOi93fByw4aR/Jcb/sjSPwssNnQd7PGoyGwhlEBJ/bUq8
- OKOcXPotlA+Q7kr5hsFuKQWHQwJMGpuxR7aiHwbeT+l56dEu9OUl0h6GZBrK8RshONovDAwspuV
- mr/oeZokbpPYwBWWFMX0BVnRhKdEQxFtbLZ6aQ2/bff4aCGmp4d2y5ivMCfQKHTQ8
-X-Gm-Gg: AY/fxX4+0ylJZvQuKb7Ls/MBJ66NTtryt9TX8Ob9E/pyVsXKLC3XQjaEIGPXQS0sOpk
- qjIXhz05jY03mBCcOq6rA9mdKldSyyxCocj8P6H8KjcqUpWPJtM0vpM29pwymnufmry/RpOqYgh
- QBoPZ/HWxyitnJqM/nLvMma3hOBTg/paGS1veK87giAwKorYngboWMOPdx6wUI/G5osqo0sfrLL
- sogpUMA8HwI0qxD/hLp4E3aU0jaVoHTNCpwdtWoNkYCACdd+FVzV76zWZ3myevy+gJhLliA4HZe
- jTwz9Qv7oWS1CgSiwg5Qsv1Eyn7GkJ5Xxox0tblaTcix++z3xbaq2wyTAojAZPkbeZgNFPumw0G
- bYi0=
-X-Received: by 2002:a05:6214:5191:b0:882:6d1a:eacc with SMTP id
- 6a1803df08f44-88863abfd33mr90571536d6.57.1765467908945; 
- Thu, 11 Dec 2025 07:45:08 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IECdync4+5rotb5SgqXV9I0dZRYlHg0Kdp5lnPa101GsxZgHmqeDXKc2HjUXVlc+qUXdEC0Yw==
-X-Received: by 2002:a05:6214:5191:b0:882:6d1a:eacc with SMTP id
- 6a1803df08f44-88863abfd33mr90571066d6.57.1765467908498; 
- Thu, 11 Dec 2025 07:45:08 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8886ec567dfsm24654876d6.22.2025.12.11.07.45.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Dec 2025 07:45:07 -0800 (PST)
-Date: Thu, 11 Dec 2025 10:45:05 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>,
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2 4/9] memory: Rename memory_region_has_guest_memfd() to
- *_private()
-Message-ID: <aTrnAdHv1k5qFaaB@x1.local>
-References: <20251119172913.577392-1-peterx@redhat.com>
- <20251119172913.577392-5-peterx@redhat.com>
- <08309979-8a73-4e30-a574-2bf23124eac8@intel.com>
+ d=1e100.net; s=20230601; t=1765468073; x=1766072873;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=t2juk5Vm4ck9/nk24tUYpq7Odg0a8S/D2qotEA3WIE8=;
+ b=Hb0n8HG3ytriw1J9a7FYn5q8gs9VaKDSCIKTidw1IjtMUnqXV6l8imWusBDqSAcN56
+ JrehMcElH9ZcPs3WRLrNo8cB7ApCyMY+UUiKv1ccWVcAQTZZTFlRwQETrBo85sXRbC/M
+ MkHs7oBCcZLoCIMLY3fEExGsXRAf8KDop4cr/YhJ/fCONWxQYsMl4yYUru17YDi91cKk
+ GPb2kHRtl+Zi4WVCrKt2pgOLqsDCquLz9ORexkzajjV1dsCMOHTCjPfJJKLpXQgXB+q5
+ z4OWw4jzUV1i4CU13a3p8NAkIY+bkeq3sPN2gEfV514CHhHphkzKNLh9jMI/UrTPv93s
+ FIZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWLVLCTteIo1jYmeAoqPikFbKNt/ouhdfG21uHGdP9CgnDlZMYFwQc4WldrmK68HQCROXtCCKliAlW+@nongnu.org
+X-Gm-Message-State: AOJu0YzQ5tTwLv4tOCR7TBj9d+MvEPWUPgJBCMOfdZkgqBp8VU+3eLMw
+ P5WkQ2DA7AzD6ERiuCDxAV3w5e9N5RfIpTfjwKPlZO5QKqalQbYB4GiYHpAiBf3zQqQ=
+X-Gm-Gg: AY/fxX5I3n8jG7grJh5yuNdjMzDGQw8pGpH+wBYp+nZSjZeuQ0r4Hy9XjYIi7FKk7nc
+ 3yvJwmMjb9ZNZKZvU8ha65cNdI6WqSlUITWUEasgBQZIHlBWujabvwsjwCx+7UzUwELsJWJP4lk
+ jl78t4p2cjmo0HYvHzkynn9Bf2luuqg/YseYaDGBKjwdyKT8guHTz80lgMxQhUBCy32D1eO3IJz
+ SUN0ef7v6S5hRVgqTmyIC41XFuckV4zxpPbbXp93grY13kOWM7YdU5EX917u+y931pXWeqArUDy
+ czSleLki1pqfSKNWyDiXuY75AZ9ggF1Fm2UY3LGKCr8LyGg0k0f2ZBz644KQKBe2Jhl4KkKrhXu
+ H1KtuptNAPPDpYQFMuhwUJuSYfD/egTTocfkMtqjKIC3COJjYZIHApiYD/YpOYyKB4uTXfmn72t
+ ZRilDa6suGDGaYrUzOue3Kz4dI+xhsgRSufOW1XaBS1vPLe45r+cMaxUewcgy2CtAS
+X-Google-Smtp-Source: AGHT+IGom1ftq0semaJNxXuUX5ApyYN7ljgWC0ybFA56AesdUJU1JIahGOYgRS1wuBcCykt0wp/h1g==
+X-Received: by 2002:a05:6870:2246:b0:3ec:4089:f963 with SMTP id
+ 586e51a60fabf-3f5bdc6a255mr4083809fac.44.1765468072816; 
+ Thu, 11 Dec 2025 07:47:52 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-3f5d50f398bsm1768023fac.11.2025.12.11.07.47.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Dec 2025 07:47:52 -0800 (PST)
+Message-ID: <bbca9504-2b47-4aa0-8cc0-be17b3db85d0@linaro.org>
+Date: Thu, 11 Dec 2025 09:47:50 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <08309979-8a73-4e30-a574-2bf23124eac8@intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/18] target/i386/tcg: fix check for invalid VSIB
+ instruction
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20251210131653.852163-1-pbonzini@redhat.com>
+ <20251210131653.852163-2-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251210131653.852163-2-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,48 +107,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 11, 2025 at 03:10:24PM +0800, Xiaoyao Li wrote:
-> On 11/20/2025 1:29 AM, Peter Xu wrote:
-> > Rename the function with "_private" suffix, to show that it returns true
-> > only if it has an internal guest-memfd to back private pages (rather than
-> > in-place guest-memfd).
-
-PS: I forgot to update here, I'll use "fully shared" to replace "in-place".
-
-> > 
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >   include/system/memory.h | 6 +++---
-> >   accel/kvm/kvm-all.c     | 6 +++---
-> >   system/memory.c         | 2 +-
-> >   3 files changed, 7 insertions(+), 7 deletions(-)
-> > 
-> > diff --git a/include/system/memory.h b/include/system/memory.h
-> > index 2c1a5e06b4..4428701a9f 100644
-> > --- a/include/system/memory.h
-> > +++ b/include/system/memory.h
-> > @@ -1823,14 +1823,14 @@ static inline bool memory_region_is_romd(MemoryRegion *mr)
-> >   bool memory_region_is_protected(MemoryRegion *mr);
-> >   /**
-> > - * memory_region_has_guest_memfd: check whether a memory region has guest_memfd
-> > - *     associated
-> > + * memory_region_has_guest_memfd_private: check whether a memory region has
-> > + *     guest_memfd associated
+On 12/10/25 07:16, Paolo Bonzini wrote:
+> VSIB instructions (VEX class 12) must not have an address prefix.
+> Checking s->aflag == MO_16 is not enough because in 64-bit mode
+> the address prefix changes aflag to MO_32.  Add a specific check
+> bit instead.
 > 
-> Nit: maybe change it to "guest_memfd_private associated", and maybe put this
-> patch after patch 5?
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/decode-new.h     |  3 +++
+>   target/i386/tcg/decode-new.c.inc | 27 +++++++++++++--------------
+>   2 files changed, 16 insertions(+), 14 deletions(-)
 
-Agree, though maybe I should do this change in the other ramblock patch
-(and move that one before this)?
+Where do you see this?  I think this is wrong.
 
-> 
-> Otherwise,
-> 
-> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+In particular,
 
-Thanks,
+Table 2-27. Type 12 Class Exception Conditions
+- If address size attribute is 16 bit.
 
--- 
-Peter Xu
+and
 
+2.3.12 Vector SIB (VSIB) Memory Addressing
+In 16-bit protected mode, VSIB memory addressing is permitted if address size attribute is 
+overridden to 32 bits.
+
+Therefore, in 16-bit mode, one *must* use the address prefix.
+
+
+
+r~
 
