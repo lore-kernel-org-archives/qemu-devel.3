@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B0ACD3E794
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5267DD3E782
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:44:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTZSn-0000bm-Pe; Thu, 11 Dec 2025 00:43:43 -0500
+	id 1vTZTj-0003Am-Td; Thu, 11 Dec 2025 00:44:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTZSe-0000Z2-Tx
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:43:32 -0500
+ id 1vTZTh-00031X-S2
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:37 -0500
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTZSd-00019T-9h
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:43:32 -0500
+ id 1vTZTg-0001ci-6X
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765431811; x=1796967811;
+ t=1765431876; x=1796967876;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=enKcO38L6D4368mFk9WuGh+dSr2WFd6BUxl4+hq0Pz4=;
- b=fZjlOb0ULvP6QQDwvE+krmUBzBp10laUEJnBgOHQr2gYXBQvoXlOwiWn
- b4tKTDRAsGTk6TnMy6gWik6E2pc6f7iQvLEymXGUJ9bZNRB5xzrvif/0T
- ipHcSJnjAQzw7uQ6pbT0VPIiDLbpVGncjESeFBCRO70cMbkpizDN4qanI
- RarKX+830cKk6sC5aF9x5yWimW+sbyRetPOol7aJL0VzyPTiO7GG8I4a0
- XxpTDs0H2dnsgIgIpxduSqjYXr0cA6QPz9BtCuYGEn5Nk75zz43lXoVQ9
- 5LND0LT4yHDrEAfobweqUYx0qfKaqd/mZjJftWboe1Nu133V/CyySDR+q Q==;
-X-CSE-ConnectionGUID: EoPYCSLJRG+6irgrz3AEFg==
-X-CSE-MsgGUID: oRXe6Q/FQWubV7D+VNNsNg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="66409813"
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="66409813"
+ bh=H43GacNZ74LpZvq1iBt7jAREOYz4e8zAxG+jaXrh3os=;
+ b=eg2BcUsMfcX/5V53tx8sBrrCdEiVJ/daO8m4OWB2FeyC0AZJoclKsA3K
+ UB4JomgViTzc5t+k6YnwymSd35N1jhc17Pgjl5DSai522AHVkT3aZNBpM
+ 3j1uWhiT/KtcxhQ3ssuf1tYTuPzT/ioB0AMZiydkBWmJ9duakTGVySQ1Y
+ MOnSq13E5y+q5KzpVDHuQhOyo/zRXdqTWJ+ienXRt6nGa78WgHTNM3KSa
+ zfal8TM9KrBMjzfgkg3xCnRCCmoQaMZB18cxOSJyD5PgvKl6LKsHxoxtt
+ HC6bsxYO02z/LIn07/99DxXzYpTZD3cFjmH/bBxMIrXQqnkQ6r1dn9Zy4 Q==;
+X-CSE-ConnectionGUID: xtiq2RGWST6uK34JoggZsw==
+X-CSE-MsgGUID: RsjDjNX2Stm6O3Gi532mWw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="66409947"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="66409947"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2025 21:43:30 -0800
-X-CSE-ConnectionGUID: lrkqon5iRo2SDWa7Pj3FrA==
-X-CSE-MsgGUID: QXPI0j7ORYqGIEJCmadyVQ==
+ 10 Dec 2025 21:44:25 -0800
+X-CSE-ConnectionGUID: Fml8hIaRRhG2ftMfKKQcAQ==
+X-CSE-MsgGUID: XfpiWL36QduylJDRnqf97A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="227365997"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="227366193"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 10 Dec 2025 21:43:26 -0800
+ by orviesa002.jf.intel.com with ESMTP; 10 Dec 2025 21:44:22 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
@@ -53,9 +53,10 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
  Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
  Farrah Chen <farrah.chen@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 02/22] i386/cpu: Clean up arch lbr xsave struct and comment
-Date: Thu, 11 Dec 2025 14:07:41 +0800
-Message-Id: <20251211060801.3600039-3-zhao1.liu@intel.com>
+Subject: [PATCH v5 16/22] i386/cpu: Migrate MSR_IA32_PL0_SSP for FRED and
+ CET-SHSTK
+Date: Thu, 11 Dec 2025 14:07:55 +0800
+Message-Id: <20251211060801.3600039-17-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251211060801.3600039-1-zhao1.liu@intel.com>
 References: <20251211060801.3600039-1-zhao1.liu@intel.com>
@@ -86,77 +87,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Arch LBR state is area 15, not 19. Fix this comment. And considerring
-other areas don't mention user or supervisor state, for consistent
-style, remove "Supervisor mode" from its comment.
+From: "Xin Li (Intel)" <xin@zytor.com>
 
-Moreover, rename XSavesArchLBR to XSaveArchLBR since there's no need to
-emphasize XSAVES in naming; the XSAVE related structure is mainly
-used to represent memory layout.
+Both FRED and CET-SHSTK need MSR_IA32_PL0_SSP, so add the vmstate for
+this MSR.
 
-In addition, arch lbr specifies its offset of xsave component as 0. But
-this cannot help on anything. The offset of ExtSaveArea is initialized
-by accelerators (e.g., hvf_cpu_xsave_init(), kvm_cpu_xsave_init() and
-x86_tcg_cpu_xsave_init()), so explicitly setting the offset doesn't
-work and CPUID 0xD encoding has already ensure supervisor states won't
-have non-zero offsets. Drop the offset initialization and its comment
-from the xsave area of arch lbr.
+When CET-SHSTK is not supported, MSR_IA32_PL0_SSP keeps accessible, but
+its value doesn't take effect. Therefore, treat this vmstate as a
+subsection rather than a fix for the previous FRED vmstate.
 
 Tested-by: Farrah Chen <farrah.chen@intel.com>
-Reviewed-by: Zide Chen <zide.chen@intel.com>
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Xin Li (Intel) <xin@zytor.com>
+Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 3 +--
- target/i386/cpu.h | 8 ++++----
- 2 files changed, 5 insertions(+), 6 deletions(-)
+Changes Since v4:
+ - Check if pl0_ssp is used instead of checking CPUIDs.
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c598f09f3d50..34a4c2410d03 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -2058,8 +2058,7 @@ ExtSaveArea x86_ext_save_areas[XSAVE_STATE_AREA_COUNT] = {
-     },
-     [XSTATE_ARCH_LBR_BIT] = {
-         .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_ARCH_LBR,
--        .offset = 0 /*supervisor mode component, offset = 0 */,
--        .size = sizeof(XSavesArchLBR),
-+        .size = sizeof(XSaveArchLBR),
-     },
-     [XSTATE_XTILE_CFG_BIT] = {
-         .feature = FEAT_7_0_EDX, .bits = CPUID_7_0_EDX_AMX_TILE,
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index cee1f692a1c3..c95b772719ce 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1747,15 +1747,15 @@ typedef struct {
+Changes Since v3:
+ - New commit.
+---
+ target/i386/machine.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index 45b7cea80aa7..bf13f7f0f66e 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -1668,6 +1668,28 @@ static const VMStateDescription vmstate_triple_fault = {
+     }
+ };
  
- #define ARCH_LBR_NR_ENTRIES            32
- 
--/* Ext. save area 19: Supervisor mode Arch LBR state */
--typedef struct XSavesArchLBR {
-+/* Ext. save area 15: Arch LBR state */
-+typedef struct XSaveArchLBR {
-     uint64_t lbr_ctl;
-     uint64_t lbr_depth;
-     uint64_t ler_from;
-     uint64_t ler_to;
-     uint64_t ler_info;
-     LBREntry lbr_records[ARCH_LBR_NR_ENTRIES];
--} XSavesArchLBR;
-+} XSaveArchLBR;
- 
- QEMU_BUILD_BUG_ON(sizeof(XSaveAVX) != 0x100);
- QEMU_BUILD_BUG_ON(sizeof(XSaveBNDREG) != 0x40);
-@@ -1766,7 +1766,7 @@ QEMU_BUILD_BUG_ON(sizeof(XSaveHi16_ZMM) != 0x400);
- QEMU_BUILD_BUG_ON(sizeof(XSavePKRU) != 0x8);
- QEMU_BUILD_BUG_ON(sizeof(XSaveXTILECFG) != 0x40);
- QEMU_BUILD_BUG_ON(sizeof(XSaveXTILEDATA) != 0x2000);
--QEMU_BUILD_BUG_ON(sizeof(XSavesArchLBR) != 0x328);
-+QEMU_BUILD_BUG_ON(sizeof(XSaveArchLBR) != 0x328);
- 
- typedef struct ExtSaveArea {
-     uint32_t feature, bits;
++static bool pl0_ssp_needed(void *opaque)
++{
++    X86CPU *cpu = opaque;
++
++    /*
++     * CPUID_7_1_EAX_FRED and CPUID_7_0_ECX_CET_SHSTK are checked because
++     * if all of these bits are zero and the MSR will not be settable.
++     */
++    return !!(cpu->env.pl0_ssp);
++}
++
++static const VMStateDescription vmstate_pl0_ssp = {
++    .name = "cpu/msr_pl0_ssp",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = pl0_ssp_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(env.pl0_ssp, X86CPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ const VMStateDescription vmstate_x86_cpu = {
+     .name = "cpu",
+     .version_id = 12,
+@@ -1817,6 +1839,7 @@ const VMStateDescription vmstate_x86_cpu = {
+ #endif
+         &vmstate_arch_lbr,
+         &vmstate_triple_fault,
++        &vmstate_pl0_ssp,
+         NULL
+     }
+ };
 -- 
 2.34.1
 
