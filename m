@@ -4,127 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 960E2D41D64
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 311E8D41D65
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTjAT-0001Ln-5V; Thu, 11 Dec 2025 11:05:25 -0500
+	id 1vTjJq-0003Iz-Re; Thu, 11 Dec 2025 11:15:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTjAR-0001Gs-0M
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:05:23 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTjAO-0005f4-Dq
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:05:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765469119;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/xZHP6jvOA6pHJbmgu03YLTceq1gh2DaRrR/YyCbfKU=;
- b=C1YjfhW7YL84ipuYgCo3Y2PbcOxl2Ds7S2UlxqaGjuNaNVq1wa49ABvAYrur0gRmskDCAw
- y8NQRHt1PFtNw+7RbkzNvlDPiSfLPQQ+FiKKMiYxoafpV4+k5YkmVBQvdb/zP7twUmk7yZ
- dAoK8wKzZUE+k/TiYJH/21A2o67pyW8=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-svj59us0Mku0K0aQZDX32w-1; Thu, 11 Dec 2025 11:05:15 -0500
-X-MC-Unique: svj59us0Mku0K0aQZDX32w-1
-X-Mimecast-MFC-AGG-ID: svj59us0Mku0K0aQZDX32w_1765469115
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4ee21a0d326so3535201cf.3
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:05:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vTjJp-0003IE-DE
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:15:05 -0500
+Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vTjJn-0007k3-Tq
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:15:05 -0500
+Received: by mail-oa1-x29.google.com with SMTP id
+ 586e51a60fabf-3f0ec55ce57so137052fac.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:15:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765469115; x=1766073915; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=/xZHP6jvOA6pHJbmgu03YLTceq1gh2DaRrR/YyCbfKU=;
- b=m6Lm9z5IxwS3e8CnwyPbnP2qdVUTVcf4jlYr5KyJi7s1FphQ4+7H394oFxc1b1W/Ok
- pazTVD5/bwkPsrEiu/sAobTnnrXhdD5MNpeP6B0mkj/2Aall2vU/XjCt1PkaoAMKwnrB
- XEo2aUe/zSMPoSNcIuFerGTQrGZ9rtlTPT8kOSFaeYdbXjXqKzQ8GaOJLtn8w4lv3Lej
- nvmNLBWtt0QL9mk/X9394MI+vqHvnLVoP9e5dAnvOfHFr2tz1ilML9hJDwgujrSg2yYY
- MH1R0KkpyQe5sGEQdUXEoqrv1f4rOJfhNYbGueV+suTqCuSHglPos24i3jtiIiDSSFrq
- TRiQ==
+ d=linaro.org; s=google; t=1765469702; x=1766074502; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=lWmx1SuovpB3ZuxFc8qaqvv/wEzaDCkbttm1kioPFy4=;
+ b=whPJN7ZgzQvGJTqIFNLEqWIU9Jwh2Sl2r0EFaA49QlTH6UnGF6C/qRjET2vp6S+CCo
+ UNfMDsgoH0Vijta4b97HzW5iCR1QhV6A5gDBCrlTfjnS54vfWvQ5yM25/5s71f5+frUK
+ DKPH004r3w/6EVis04BVp/OFXHpFuSn/yEcpUJ2UJkn0lq8GoCiQ6B5NumIRibExFARm
+ FHH5UhgNXrKUzlJ0n3I+Zox89+1ZGs4G9zOWW7SPqEv6VGedeUHC20t6kFMSaG0tXhgB
+ Az4TwLvJPh6fF+H40UaNXtTuF7wuCdAgGzbbjaCgdwxZ1Mt6vj2pHXnQE/gOPr33Jscd
+ TWsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765469115; x=1766073915;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/xZHP6jvOA6pHJbmgu03YLTceq1gh2DaRrR/YyCbfKU=;
- b=XAsZJP6Zpfw5k9k9T5z3KWNbz3nxMt8Zg/euiSD+CTAehyO7a7WA6F5EwHk/2cFJeb
- P1z1lh1/VvTAbiRjuT/uHhNSCEzxqFCM5qHHKziQvQec5WLD1TdgN8cvndcwV8mzOieq
- QNqQWwOdhG7zjBjRphqD63AzqKsM++5kSaeBNVRnPDw0aWkmDKwM/+BmXl0aRA38CHHZ
- l3DCsAVHLSe9oquyh5mmAuFuS8ao4H6MaoRIpdSmLYpsYa3KYJFFUT/eFPa8WOE+eY+j
- YhGaRRdyI9x3SRzP4+iXp5LOjrFgr3alRhBeOSEC3AObFdFDEKS8+zbj+P4aUU5LII9C
- R5UA==
+ d=1e100.net; s=20230601; t=1765469702; x=1766074502;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lWmx1SuovpB3ZuxFc8qaqvv/wEzaDCkbttm1kioPFy4=;
+ b=Kp8j7j7Mg4dnBdPnxADMZ58h1aZrXL3dQUBooaNhTfUKlozD6VBdhPBuit2w04uhgT
+ hWrysiOnMCYMQoGXJ9KYz50uojSCp3Gy/IdR4/g/o9KqASt3Bycqf8WqdD5b2eTTLrux
+ dvq+tr6GYqj7hsGQkKUAMltvQNqxaZYZ2K9OD1SiULZ87RkL3JoRj0BMtrUxmv7Qr1vD
+ CeoQVi7+M1OhoOXrQQovLsOD3/+BdciUMJ3CNL0+yYtaSxWpcIb8cPTnC918gqn4UqG1
+ m7sN5suVcSiYZH8yUy8xqFe6XHWLcE/B632lMGEaAOWaLWd0FE+wlpCNTHZy/DyJQb2q
+ hfXg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU796KE8iJwTppKf7wVCBoISw2miwUJySnxDg4DU4bCFPoYC6k/1i3XSDDWlcCN6mZmKG+YYoFfrHVt@nongnu.org
-X-Gm-Message-State: AOJu0YwdxOROaxy7d//7xiM/om51SWB3M1Zi7chx03EkgC98ACg699t9
- +ab6di6gsWzDW+3RQauhx3m0I0p6NMSqW7Ez/9cBcIByvHmzh5sBecF4JEvfyERV1nyS+X/5whm
- agzcISh9gjSRina6ta0iMA7xoyxO4D4NGh9PybnchHSq5gJGY4q97oXzh
-X-Gm-Gg: AY/fxX4rvjlxF4g4UmJHxSz5ntI0Pf4TX/pYo2Fl+w0tTwrHtD8VdeKDLnwogl2HoTT
- y3fDfLPlI4NaXYMqkxypc7QSfoKK/rhKhS9oIrooEdTw3B+LiX9rEXCyFJMePBdlsrECVOqYo9+
- QMMM27mbOxB+pTLcTVMj2DX88P5Fl6Bv5euRmg7iSDCWtOG8TwXXnMH8GlI+ilSAgv+QRGZN+Ab
- sfts0tN9feaIJJYtM/zGIg20mYYUrXzK5IdDcQePbwT/Asn1bgx/k4iJkEq+BqT5mE3pCedIldA
- Ej600Nx48gz7goqHaLF9d5GL0tFKjALlUyiK44ymhKhXSAt66teWgcwsb1kP1qVj6yAKCnHVV67
- r6aY=
-X-Received: by 2002:ac8:580a:0:b0:4ee:1676:faa6 with SMTP id
- d75a77b69052e-4f1b1a69b7cmr93635961cf.20.1765469114729; 
- Thu, 11 Dec 2025 08:05:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEntdBTiaJSMo3Lgp3WVB9FwNe2ASc/72wMM0KtuyQIayQ8O7OzD8p4OamfqgL4J8TECPclnA==
-X-Received: by 2002:ac8:580a:0:b0:4ee:1676:faa6 with SMTP id
- d75a77b69052e-4f1b1a69b7cmr93634971cf.20.1765469113889; 
- Thu, 11 Dec 2025 08:05:13 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4f1bd58d63esm19378831cf.3.2025.12.11.08.05.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Dec 2025 08:05:13 -0800 (PST)
-Date: Thu, 11 Dec 2025 11:05:11 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-devel@nongnu.org,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
-Message-ID: <aTrrt1OODz2ELU0X@x1.local>
-References: <20251209162857.857593-1-peterx@redhat.com>
- <aTlZIlgB20OpdSEl@redhat.com> <aTle5C2pN8ZslZX7@redhat.com>
- <aTmdJ5H67mk8qmSC@x1.local> <aTqTcM9zsGpW-F45@redhat.com>
- <aTrenNP7Vq4XO2DP@x1.local> <aTricLooEPFJqZhe@redhat.com>
+ AJvYcCVsfnXTVrAkQQyV+T2yEBcBL0oj7x+qskZ7aeg7hE6ck3j7QgfWVtPyRuo4NgDIIhUfgoI4PTn2kte4@nongnu.org
+X-Gm-Message-State: AOJu0Ywgi7xVYYXPX6nHW7bujS/X81DnIkJQqESKKxj2a8Abap0Qtb1J
+ goWMbN7P3J2x6uvZPtkKzEfFOQXykfs6bOdj5V7MeWkXh7fr0srINj/3MkDNDlVruXY=
+X-Gm-Gg: AY/fxX4lwAogtXRscN5ILgER2aUKx8tcDy8ZOjp25lmDV8ZUVsguAlXH9O+f6Rj89ah
+ 9OemVwXE+RTlDfjjR549pwErEJXVA0cKu0w8rxfKoN3T3v6GdE0XjWPmKo0v5vcfzI/QqXoAENn
+ Y4zqLe9HqO2ao2Wi4+0aA0S6mrr9EpTXYwiqnDTJQHqPl0T0HxCG7IZ0jgXDhSF+bZeygDFbzeY
+ kskEgaHVW2RPtuZ9G36p2ENXbthKbtURjDlEghJCg4Y0OQNghrvRoGmDmyFwsS3D/utjeHr4Zjc
+ OY7fh7jRf9k+LzQhDNG044b4ZsY9VShQEDdnSEb/U+JUOp2T4LVR9rZyOnBKZ/QK49jdGl6l7FA
+ /vRDY9lzedvzygOpVZCmVC2/CgxOA9Rd2FNbtKcbSl8yC8JD1ANMymN7lAwZlBYALt32kZpf1W/
+ ADmNH7C77Ywe7ep1oq0PSmH0gvgNX4nCEPQr0ikX/vWAWDSY25bWoKBnt6CV5Tz8UT
+X-Google-Smtp-Source: AGHT+IHl97s9+QIJUKsXY9lep1wWiyvgbfHcsrkKDIOj56kZDmGqfhqTG+I3gHLZRi4kIA86heVnsQ==
+X-Received: by 2002:a05:6870:d69c:b0:3ec:4f31:42a with SMTP id
+ 586e51a60fabf-3f5bdbcbba2mr3622610fac.7.1765469702325; 
+ Thu, 11 Dec 2025 08:15:02 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-3f5d4e12e4fsm1946137fac.2.2025.12.11.08.15.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 11 Dec 2025 08:15:02 -0800 (PST)
+Message-ID: <9b0836f8-6937-427e-b6d2-efe83dd23597@linaro.org>
+Date: Thu, 11 Dec 2025 10:15:00 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aTricLooEPFJqZhe@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/18] target/i386/tcg: simplify effective address
+ calculation
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+References: <20251210131653.852163-1-pbonzini@redhat.com>
+ <20251210131653.852163-9-pbonzini@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251210131653.852163-9-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::29;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,93 +106,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 11, 2025 at 03:26:13PM +0000, Daniel P. Berrangé wrote:
-> On Thu, Dec 11, 2025 at 10:09:16AM -0500, Peter Xu wrote:
-> > On Thu, Dec 11, 2025 at 09:48:32AM +0000, Daniel P. Berrangé wrote:
-> > > The appealing thing about machine types is that it is an opaque
-> > > collection of properties. The mgmt app does not need to know about
-> > > any of the properties being set, it can just let the machine type
-> > > do its magic.
-> > > 
-> > > Probing values for individual features which are supported on a host
-> > > means mgmt apps need to be made aware of all the properties that are
-> > > affected, and keep track of them for the life of the VM. This is a
-> > > significantly higher burden for the mgmt app to deal with that the
-> > > opaque collection machine types define, especially because apps won't
-> > > know ahead of time which objects/properties might need this facility
-> > > in future.
-> > 
-> > Yes, exactly.
-> > 
-> > IMHO we may still need "probing" of host features at some point, but we do
-> > have two completely different way to stable the guest ABI:
-> > 
-> >   (a) Machine types (like now)
-> >   (b) "probing" + "QMP set()s"
-> > 
-> > Here "QMP set()s" can be QMP updating a property of an object, or something
-> > like what Vladimir proposed in the other virtio-net/tap series, via a
-> > separate new QMP command.
-> > 
-> > Solution (b) has a major benefit of high flexibility - we do not need
-> > machine type versioning anymore (hence, we still need "q35", but not
-> > "q35-X.Y" etc.), because any QEMU can likely migrate to almost any QEMU:
-> > mgmt will probe both sides and apply mini subset for both sides, no matter
-> > how old it was.
-> > 
-> > To pay that off, mgmt needs to know every single trivial detail of QEMU
-> > change on every single device to make migration work.  When new things
-> > introduced to QEMU, it must be OFF, then mgmt turns it on until probing
-> > both sides have it.
-> > 
-> > That makes solution (b) less appealing.
-> > 
-> > The other thing is, since we stick with solution (a) for all these years,
-> > IMHO we should either stick with it, or if we really think (b) is better we
-> > should gradually obsolete (a) and use (b) all over.  I just don't see it
-> > coming, though.. as (a) is still working almost perfect - it enables
-> > feature slower only until a new machine type used (normally means a VM cold
-> > reboot), but it hides too many trivial details mgmt doesn't need to care,
-> > hence much less work needed.
-> > 
-> > IMHO we should be careful on making both (a)+(b) available (again, for (b)
-> > the probing is still fine, it's about offloading things to mgmt to set()
-> > via QMPs).  If so, it likely implies we didn't think all things through.
+On 12/10/25 07:16, Paolo Bonzini wrote:
+> Split gen_lea_v_seg_dest into three simple phases (extend from
+> 16 bits, add, final extend), with optimization for known-zero bases
+> to avoid back-to-back extensions.
 > 
-> I don't believe that probing could ever be a placement for (a). Determining
-> what you want to use is not a decision that can be made in isolation of
-> the current host. You need to know the capabilities of hosts that you
-> intend to be able to migrate to.
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   target/i386/tcg/translate.c | 64 ++++++++++++-------------------------
+>   1 file changed, 20 insertions(+), 44 deletions(-)
 > 
-> Machine type versions facilitate this as an admin can express the
-> compatibility constraint in terms of this high level opaque definition,
-> and not have to understand 100's of properties and their supportability
-> across many hosts.
-> 
-> The same applies to non-guest host compatibility settings. I might be
-> runing on a RHEL-9.6 host, but I want to have compatibility with any
-> RHEL-9.2 host or newer. I can't probe QEMU on the 9.6 host to determine
-> what is acceptable for 9.2. We need to be able to express that cross
-> host compatibility as an admin, without having to list a huge set of
-> individual properties.
+> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> index 0cb87d02012..2ab3c2ac663 100644
+> --- a/target/i386/tcg/translate.c
+> +++ b/target/i386/tcg/translate.c
+> @@ -627,54 +627,30 @@ static TCGv eip_cur_tl(DisasContext *s)
+>   static void gen_lea_v_seg_dest(DisasContext *s, MemOp aflag, TCGv dest, TCGv a0,
+>                                  int def_seg, int ovr_seg)
+>   {
+> -    switch (aflag) {
+> -#ifdef TARGET_X86_64
+> -    case MO_64:
+> -        if (ovr_seg < 0) {
+> -            tcg_gen_mov_tl(dest, a0);
+> -            return;
+> +    int easize;
+> +    bool has_base;
+> +
+> +    if (ovr_seg < 0) {
+> +        ovr_seg = def_seg;
+> +    }
+> +
+> +    has_base = ovr_seg >= 0 && (ADDSEG(s) || ovr_seg >= R_FS);
 
-Yes, maybe I didn't explain myself clearly, I believe we share the view.
+I guess def_seg is -1 for LEA, so ovr_seg can still be -1.
+I wonder if it would be clearer to avoid this duplication of segment earlier in decode?
 
-My point was we shouldn't introduce special QMP commands to do set()s just
-to work similiarly as what machine versioning / compat properties do.
+Anyway, for here, maybe clearer as
 
-I hope we will start to have something like query-platform soon.  Jason and
-Michael have some discussion here, which should be discussing similar
-concept:
+     has_base = ovr_seg >= R_FS || (ovr_seg >= 0 && ADDSEG(s));
 
-https://lore.kernel.org/all/CACGkMEtdxWJygVbcuvER5yj13R0JL_bxPSAg0eYyiBeh=SyRXg@mail.gmail.com/
+even though the end result is the same.
 
-Maybe USO can be a start point for us doing this, allowing mgmt to probe
-host features.
+Nice cleanup.
 
-Thanks,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
--- 
-Peter Xu
 
+r~
 
