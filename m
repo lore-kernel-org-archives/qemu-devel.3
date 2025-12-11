@@ -4,77 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1509FD41C21
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 11:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5905CD41C23
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 11:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTegd-0007Qw-Ml; Thu, 11 Dec 2025 06:18:19 -0500
+	id 1vTepT-0000uM-FV; Thu, 11 Dec 2025 06:27:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTegb-0007O0-Go
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:18:17 -0500
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vTepR-0000tk-CR
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:27:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTegY-0003Hl-TU
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:18:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765451895; x=1796987895;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=/PavwmTPXgf2RFgfCgkbjsWUgrq8AQllM7S/czmU9N0=;
- b=n8cBTnCz0v/eqhxv09I/m1+pGhyC3MRs0B/jktfWvXJG1qGwjpjXzRtc
- 0Rm13Gj0BbwOIyplvVoVvfq7l1K9GdSxRJwPc+EiVW8LxQ+fbh7FSPDYS
- wSzO44a364iqFITVIGo6iNEGyZnqaPV67sWB0FRKg8THhFjByQhuXx3zJ
- QBSC/QO+XVxVIlK0RTFVzCSfuUuTKousORrBa5hJHRd/27s2TJcF4UZ6P
- qkLIZ8DHNzIiNDhI3uKoBG1+FRRySKVedL3FYCn/OwKhfsSuxB6/18LK2
- Glf826nH6wjyL4wzatO8VD5sGvi9HQrKrg/160RivYsVDAC4gKWIhn5RM A==;
-X-CSE-ConnectionGUID: LLrRCT89Q8m7D788sJM8TA==
-X-CSE-MsgGUID: 74/HNoJ8RvShYQD+Ep6WkA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="78135212"
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="78135212"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2025 03:18:12 -0800
-X-CSE-ConnectionGUID: n7oOztxsS0C0JqrUfAh9tQ==
-X-CSE-MsgGUID: yNbwLSB4TqaHeCzHM6soxQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="196384546"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 11 Dec 2025 03:18:10 -0800
-Date: Thu, 11 Dec 2025 19:42:56 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- "Chang S . Bae" <chang.seok.bae@intel.com>,
- Zide Chen <zide.chen@intel.com>, Xudong Hao <xudong.hao@intel.com>
-Subject: Re: [PATCH v2 0/9] i386/cpu: Support APX for KVM
-Message-ID: <aTquQJkiwKmuqCG2@intel.com>
-References: <20251211070942.3612547-1-zhao1.liu@intel.com>
- <16e0fc49-0cdf-4e54-b692-5f58e18c747b@redhat.com>
- <aTqMBtkOxx6mZhn+@intel.com>
- <df96afb2-f99c-48ae-81be-ccadf0fc3496@redhat.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1vTepP-0004lx-O0
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 06:27:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765452441;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=gBrU8wLRGJaohOWvQpXhP62E5v2WuU7czb0k825infYqI2yynmt6Z8/xsNUsb4ZbsbH2B6
+ LRfZNPVuCrFrsnxHdcufthbC2grXRTf6Y4cf5uYwtVH3ieGm2S+Whyh6AFDAezXxcQ/+z2
+ fP5d5dYG0AUdI6Ora7/X00DrQCZhlMI=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-653-RxpHDhdFOvmKx3l3sdQWQw-1; Thu, 11 Dec 2025 06:27:20 -0500
+X-MC-Unique: RxpHDhdFOvmKx3l3sdQWQw-1
+X-Mimecast-MFC-AGG-ID: RxpHDhdFOvmKx3l3sdQWQw_1765452439
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-477c49f273fso6364945e9.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 03:27:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1765452438; x=1766057238; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=tHHJbstYB5pxj+AlcpwuN8UAcQXNS0iwgLQOL2SOk6pw5YK24rtiFikgoLUaj/FLow
+ C/Dtt5Ec/WH5yTQnoERW+2JxJAVsDlTo7J/m8VjdkIpte8ItXVsvxCkheXWzeYarkoAZ
+ Ve5VHecjQZl1rf7sJeyXhVOrXRxKJJXOfSsO9BvJnO6NC/JYurUGYZMKUIRhdGaDXEeo
+ m3Ob1QH4b4lw2xAkoiE7DU8AMDRT02eoq+d4pJaY0D14GLGdMXtJZhDFdBstnddaCQNG
+ WHU79Q4i1QQTAGLDdgN/hLdBzPRaWyex1pinqmQF+VWBEyDho3f3yKI4PEH0UaR/A693
+ 5r/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765452438; x=1766057238;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=doqjwHtxE2xCDRBkWXgAVc6AUaAkdB+4F/J4iFhfrpwoZrbquP0OnkubF67iKPSLxA
+ it9N4SUL2j70AA1YjaMbXg9A6e003sIAkxdPVzl49QsYi2HDCrKYFlmyKVMUzuHkq3wr
+ 2eDLTxC/vqfwiDumbjjXL9/ZtOAvZQ2wjUAll2fhXzRwoDPW6WgAQpxuFSb9LwnHkgLo
+ wmrzEc6Jn+Ou17t+aylyOXGM9Bi6xl62vKVEJpmGlvMQBhoxrgx1kNaVyMhq0Kvj+UKb
+ zNqThiN8wiECjeNKujh/ryPn61bl3cpydfrJ6kVS1Q7KQsZd9t3X6G9kzrQOEq0obO09
+ EWGQ==
+X-Gm-Message-State: AOJu0YyCB6MnWRDCldeMa4t4vcv4ioazhOs1e6rEnykR/ufJT+TdVLq+
+ 0c6VZTz5afrlqDjgCffapFzgOpKLPTQdJ/A0Hzpw680ibr26f/l1yKwsZaNDqf/EUxAwX7ABEZc
+ ysxgptwvAhEG54UECdrokbqEMIUKsp3RzTjx95bNEpwOJTxMIJYIgclH6pj7108DY
+X-Gm-Gg: AY/fxX4ZRqAAw56BCWbmMR+VdfAdz35YiG4mwJ9TNWSgnNvjmHDFiZINVz+yTbtff5n
+ Gs7mNk8anJ3sGO41mjbsJTi+Rpp/pNp0nWeGjMUE6dMgueWrFkLF/At3L/4hrAOcY/J7yPDSDzw
+ VknvMFbLUtGE+WGmGWQIEHRnTjbIychuYNtXm+D4ImAWjzzn4cSZyA8OT5q3GXg8mmo+gPj/LVk
+ pZcqTrzB3fqkMR/YLvq2syhG7akq31A/tcdKL0ubUvSWXpGqpaSU3/j6YXRnZrXPHBWsC+cremH
+ /kW1cWdpxtM9xL8kG2ASQHJ9fT9PMDIUFjhiFHdlIBOuw6sg6vODcV7H7pUcsLnT3ZZzBG3e2L5
+ R+ACKjbLiEVGx2tjlwf7JRBayb4kBLvXaNZfHkW4RsJ3u1IftTef7UAkfIi5xEq6XLsMRAwSl5e
+ WfRYcpqpPIwHa97tw=
+X-Received: by 2002:a05:600c:46d2:b0:477:b642:9dc6 with SMTP id
+ 5b1f17b1804b1-47a838643d0mr52550335e9.34.1765452438140; 
+ Thu, 11 Dec 2025 03:27:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFd2qsDberuCLqBu8bmVBFHSIEONCx+C2w1AFr4UNeSmAyFmJ0VJWKPLYf9kefq2FUU0sI/9Q==
+X-Received: by 2002:a05:600c:46d2:b0:477:b642:9dc6 with SMTP id
+ 5b1f17b1804b1-47a838643d0mr52550115e9.34.1765452437748; 
+ Thu, 11 Dec 2025 03:27:17 -0800 (PST)
+Received: from [192.168.10.48] ([151.95.145.106])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47a89dab141sm29868735e9.7.2025.12.11.03.27.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Dec 2025 03:27:17 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/2] i386/cpu: Correct comments for CPUID 0x1D and 0x1E
+Date: Thu, 11 Dec 2025 12:27:15 +0100
+Message-ID: <20251211112715.1133562-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251118080837.837505-1-zhao1.liu@intel.com>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <df96afb2-f99c-48ae-81be-ccadf0fc3496@redhat.com>
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,23 +121,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> No problem, I have done a quick pass with "sed" on the patches and reapplied
-> them.  I do ask you to respin the Diamond Rapids series though, on top of
-> the for-upstream tag of https://gitlab.com/bonzini/qemu (currently going
-> through CI).
-> 
-> Applied for 11.0!
+Queued, thanks.
 
-Thank you!
-
-BTW, could you please have a look at this clean up on outdated SPR
-comments:
-
-https://lore.kernel.org/qemu-devel/20251118080837.837505-1-zhao1.liu@intel.com/
-
-I feel it's better to clear SPR comments before DMR touches AMX.
-
-Thanks,
-Zhao
+Paolo
 
 
