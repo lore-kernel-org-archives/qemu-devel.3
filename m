@@ -4,146 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9271D41C14
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 09:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A60CD41C09
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 09:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTdCR-0007gf-3Z; Thu, 11 Dec 2025 04:43:03 -0500
+	id 1vTdI6-0008WR-Rh; Thu, 11 Dec 2025 04:48:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vTdCP-0007gV-TQ
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 04:43:01 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vTdI5-0008WI-Jx
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 04:48:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vTdCO-0005fY-7Q
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 04:43:01 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vTdI3-0007A4-43
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 04:48:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765446179;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1765446529;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5/6uA/3wOUHJdk91kbUDLu249x2jP1J/9xVRDtTz+9M=;
- b=amazfd874iZldPdMhGv7pH84+5AFUldWdbU1y1dRWvqvx7tpZhaIrqKzqGhCMcV/3jRHX+
- c5QNy48sIJ3KUqB8QH+MYPdf7iQUEJ0AUZohFicyjsvRweD6oWdLjsxFPMHNx+QsAX6zOR
- K7ZGiPAjWPYjAhUAQZEQ8j2RAdkUrxw=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-385-I94xRJBcNbWOYtILqb4CFg-1; Thu, 11 Dec 2025 04:42:57 -0500
-X-MC-Unique: I94xRJBcNbWOYtILqb4CFg-1
-X-Mimecast-MFC-AGG-ID: I94xRJBcNbWOYtILqb4CFg_1765446176
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-6416581521eso928983a12.2
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 01:42:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765446176; x=1766050976; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=5/6uA/3wOUHJdk91kbUDLu249x2jP1J/9xVRDtTz+9M=;
- b=YzFDqy38FqxQcDEvFKOljCU6yjVTSCBfLL6Y251AD6ED8BWRzlpgZlOXQd+Uqas1Kn
- sLTwcPviyyFz5GgrKlvi3Wh4yIin0sjHGbxeuOFpw/ZRGKFJmXWgVoN5R5PUMpQHe+mh
- usBs7CzWOJMYzbF4jP7Fvrrqag5ARp/VKMk01gny/QxRYpZzYU5iS8JMytv7kmZUHGdt
- r4ObwTUBTAVdK6gjpoovLaZu2qGGMUkrZuS/5K6IoEcWswjwfBgSN64INHyNpR9QEWeI
- iuzBcKIJdkkyWMXlLcospY6e7iHXO20k3J4XHAwmzo01QVeKhjhJ7qiypeg4iMhXn9yK
- dmMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765446176; x=1766050976;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5/6uA/3wOUHJdk91kbUDLu249x2jP1J/9xVRDtTz+9M=;
- b=hm4ChurSDM1ciJst+3xUtiU7Ht/llrnWe+RgFniagX45IwOBIcjh8A0fu16KmYYopf
- uLfXPn9WdfcWHJrvVk+wC/Kdwxh/TAhcDUjEoFVvm2NsVZsdeMUdjuwF1cvCABxgT1S/
- yFerxPMdelboO0pjgMfGOF3k1f3otkyH4Kb6jJbWrREcZNhE8KdatnWBjX/I4RwBfn0S
- yPHhqp0aHZU4ijYmJTa/ZgbWmK4SpDWzg7YYxkyBRdHBv3ftFOr3ygYK7Hm3nM5Sf6Rn
- /fw+g5VBTNe3vZgxIw4ahkTEceSxiZ5RcRJpgdWF0Aq4RV54hk8Vf43ekAh/F7GNEXkR
- tbOA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX3+tzXT6TU/ZaC1uvC4r35SUjzGoS0zENOEUWP9eNxUTTb2vwcp/Gs0K4d3VHW2e4K68psK0Luj/cr@nongnu.org
-X-Gm-Message-State: AOJu0YyoCP5FtjobfIhPnQoZueJZHPKlm+SwZcQ+ZGVo5LVFIacZVNQU
- pz7KFMaToG/2b/kBp4Q01kSJiB4tIlF74HLXsyYT6dV7v8CjuKu/5Pz1aIWBNXNSiEwfFlyZTBl
- oKY07KoPZrx5moVPUUyTBCX4ycHesxZzCA5DaIeU7jiqDpa+xKgjsXFyR
-X-Gm-Gg: AY/fxX5c1JDoFvcoxTtr/Uv/HxttSkLJLsqFy1kkKRBRcOIjar2KW6qCRsDdpbNQzy5
- mQakVte8aeF0V3RaVFONoX1U88rUeqeVXVBdIV2UGtcnwa5OhKsjKO12BuXd4t5NkRe+tJtbFQE
- CmJMIxs+Z/qOnyXftxrPbnPWTZhuU93EXyc0DH1d8LIlRuFTSxU1gIZ1+9kIs/ROklEL4hoo29I
- EsAsSwChd3+FWBgeoPkqZY+fyl4AJQXdoXqFE6BGYL6CVX0zNyEZijcqQiGVvnG6QQp2i6VTV8V
- EJSy9Fp/SwWA9ChTAow/BFcpYM+hqE6VNgVb0Jv7IImHcLeJT1gD5jaC9fiwcmURkXrTUunsfDa
- TG9Rk3GHec+1bXHI5xbKYDr4Gj3Nm4sVb0SZu1dTV9as9zX/jZbMFR+qzaJ2vYQk93pFYZ3K65N
- PnbSZArxkE/iR/R80=
-X-Received: by 2002:a05:6402:234e:b0:640:f1ea:8d1b with SMTP id
- 4fb4d7f45d1cf-6496cbc43eamr5203524a12.16.1765446176301; 
- Thu, 11 Dec 2025 01:42:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFkqB0lOqTTY//ENdRxS0fIqXz+u8gEeyxDFPsZWUiU+o3HppiGYVaD75VpZdrK94jlixVxSA==
-X-Received: by 2002:a05:6402:234e:b0:640:f1ea:8d1b with SMTP id
- 4fb4d7f45d1cf-6496cbc43eamr5203506a12.16.1765446175919; 
- Thu, 11 Dec 2025 01:42:55 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.145.106])
- by smtp.googlemail.com with ESMTPSA id
- 4fb4d7f45d1cf-649820516desm1993624a12.14.2025.12.11.01.42.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 01:42:55 -0800 (PST)
-Message-ID: <df96afb2-f99c-48ae-81be-ccadf0fc3496@redhat.com>
-Date: Thu, 11 Dec 2025 10:42:52 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=cMgXW69WnfeZ0yRIze2LSBUQ0JYmeH+uQZhkZU/1Fv0=;
+ b=e9Whb61Wp6O+30xGqDu6sPMSgY/obHvZrrz99gbch79bZSmOv52CEwbdFfIwK2JhQ1exVV
+ Dcvn37y4/ITpto2Y2axEDVex4n7DE9Gf0MYaUhIhEPvhKqcV5itdLpRXyo+nS8oMBnl3Dw
+ Am6O7lB+1j1hJp9PNskmGaM0JW0tQEs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-271-55WFxFi-M5itfX9gHRcI0g-1; Thu,
+ 11 Dec 2025 04:48:45 -0500
+X-MC-Unique: 55WFxFi-M5itfX9gHRcI0g-1
+X-Mimecast-MFC-AGG-ID: 55WFxFi-M5itfX9gHRcI0g_1765446524
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 206E2180060D; Thu, 11 Dec 2025 09:48:43 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.60])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7205F1953984; Thu, 11 Dec 2025 09:48:35 +0000 (UTC)
+Date: Thu, 11 Dec 2025 09:48:32 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-devel@nongnu.org,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
+Message-ID: <aTqTcM9zsGpW-F45@redhat.com>
+References: <20251209162857.857593-1-peterx@redhat.com>
+ <aTlZIlgB20OpdSEl@redhat.com> <aTle5C2pN8ZslZX7@redhat.com>
+ <aTmdJ5H67mk8qmSC@x1.local>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/9] i386/cpu: Support APX for KVM
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- "Chang S . Bae" <chang.seok.bae@intel.com>, Zide Chen <zide.chen@intel.com>,
- Xudong Hao <xudong.hao@intel.com>
-References: <20251211070942.3612547-1-zhao1.liu@intel.com>
- <16e0fc49-0cdf-4e54-b692-5f58e18c747b@redhat.com>
- <aTqMBtkOxx6mZhn+@intel.com>
-Content-Language: en-US
-From: Paolo Bonzini <pbonzini@redhat.com>
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <aTqMBtkOxx6mZhn+@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aTmdJ5H67mk8qmSC@x1.local>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -165,38 +103,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/25 10:16, Zhao Liu wrote:
-> On Thu, Dec 11, 2025 at 09:08:33AM +0100, Paolo Bonzini wrote:
->> Great, thanks!  Just one question, should the CPUID feature be "apx" or
->> "apxf" (and therefore CPUID_7_1_EDX_APXF)?  I can fix that myself of course.
+On Wed, Dec 10, 2025 at 11:17:43AM -0500, Peter Xu wrote:
+> Maybe I emphasized too much on "guest ABI" in the cover letter, so it can
+> be confusing when not reading into the details of the patchset (I did
+> mention all the existing users in patch 1, then converted all existing
+> users in patch 2-5).
 > 
-> Good point! I didn't realize this.
+> Besides SEV, I can also quickly go over the rest ones if that wasn't clear
+> we're already using this feature.. in a open-coded way.  Maybe that'll make
+> it slightly easier to grasp for reviewers.
 > 
-> 1) Per APX spec:
+> The current use case for hostmem (2nd example) on compat properties, see:
 > 
-> (APX adds) CPUID Enumeration for APX_F (APX Foundation).
+>     commit fa0cb34d2210cc749b9a70db99bb41c56ad20831
+>     Author: Marc-André Lureau <marcandre.lureau@redhat.com>
+>     Date:   Wed Sep 12 16:18:00 2018 +0400
 > 
-> 2) And gcc also use apx_f:
+>     hostmem: use object id for memory region name with >= 4.0
 > 
-> https://codebrowser.dev/gcc/gcc/config/i386/cpuid.h.html#_M/bit_APX_F
-> 
-> 3) ...and we already have "avx512f".
-> 
-> So you're right, I should use "apxf" and CPUID_7_1_EDX_APXF.
-> 
-> Since APX CPUID appears in several patches, I can respin a new version
-> quickly.
+> So that's not strictly "guest ABI", but the goal was to persist the name of
+> MRs so that migration is not broken.  It's not strictly "guest ABI" but
+> more like "guest ABI for migration" - even if the guest OS cannot see the
+> names of MRs, migration can see (via ramblocks).  So it can be more than
+> the guest HWs.
 
-No problem, I have done a quick pass with "sed" on the patches and 
-reapplied them.  I do ask you to respin the Diamond Rapids series 
-though, on top of the for-upstream tag of 
-https://gitlab.com/bonzini/qemu (currently going through CI).
+I'm more amenable to this example being in scope of machine types. The
+most important use case for machine types, by a mile, is to ensure that
+live migration works between 2 QEMUs. Having a stable guest ABI does
+have other use cases like ensuring Windows doesn't trigger license
+(re-)activation, but live migration is the important one. It is
+unfortunate that the object id leaked into the migration stream but
+this was a reasonable (hack) workaround to address it.
 
-Applied for 11.0!
 
-Paolo
+> 3rd example in accel:
+> 
+>     commit fe174132478b4e7b0086f2305a511fd94c9aca8b
+>     Author: Paolo Bonzini <pbonzini@redhat.com>
+>     Date:   Wed Nov 13 15:16:44 2019 +0100
+> 
+>     tcg: add "-accel tcg,tb-size" and deprecate "-tb-size"
+> 
+> That was trying to keep some old behavior for accel cmdlines.  It's not
+> even a migration ABI, but cmdline ABI.
+>
+> Hence OBJECT_COMPAT might be useful whenever we want to persist some ABI.
+> It can be machine compat properties, it can be something else that has
+> nothing to do with machine types.  The accel example used a separate entry
+> in object_compat_props[] (index 0) for the same purpose, out of three:
+
+Ok, yes, this compat props usage that's independent of machine
+type is fine.
+
+> 
+> /*
+>  * Global property defaults
+>  * Slot 0: accelerator's global property defaults
+>  * Slot 1: machine's global property defaults
+>  * Slot 2: global properties from legacy command line option
+>  * Each is a GPtrArray of GlobalProperty.
+>  * Applied in order, later entries override earlier ones.
+>  */
+> static GPtrArray *object_compat_props[3];
+
+> > I've suggested in the past that IMHO we're missing a concept of a
+> > "versioned platform", to complement the "versioned machine" concept.
+> > 
+> > That would let mgmt apps decide what platform compatibility level
+> > they required, independantly of choosing machine types, and so avoid
+> > creating runability constraints on machine types.
+> 
+> Yes, I agree some kind of "versioned platform" would be nice.  In practise,
+> I wonder if it needs to be versioned at all, or something like a
+> query-platform QMP API that will return the capabilities of the host in
+> QEMU's view.  Maybe versioning isn't needed here.
+> 
+> Taking USO* feature for virtio-net as example, it should report what kind
+> of USO* features are supported on this host.
+
+The appealing thing about machine types is that it is an opaque
+collection of properties. The mgmt app does not need to know about
+any of the properties being set, it can just let the machine type
+do its magic.
+
+Probing values for individual features which are supported on a host
+means mgmt apps need to be made aware of all the properties that are
+affected, and keep track of them for the life of the VM. This is a
+significantly higher burden for the mgmt app to deal with that the
+opaque collection machine types define, especially because apps won't
+know ahead of time which objects/properties might need this facility
+in future.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
