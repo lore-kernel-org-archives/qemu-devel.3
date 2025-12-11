@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7483D41D62
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64E94D41D64
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTita-0002Wu-GW; Thu, 11 Dec 2025 10:47:58 -0500
+	id 1vTixo-0003Z8-R9; Thu, 11 Dec 2025 10:52:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTitY-0002WS-7x
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:47:56 -0500
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ id 1vTixj-0003YF-9M
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:52:15 -0500
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTitW-00020L-NZ
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:47:55 -0500
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-3f0cbfae787so174975fac.3
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:47:54 -0800 (PST)
+ id 1vTixg-00030k-Rb
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:52:15 -0500
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-7c76f65feb5so216468a34.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:52:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765468073; x=1766072873; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765468331; x=1766073131; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=t2juk5Vm4ck9/nk24tUYpq7Odg0a8S/D2qotEA3WIE8=;
- b=AathLCZBK/XjnSRDIxdnApJmqPnt19CPtsjvBhexMtKA9OhuiV4lSFo74Z85Rc+MrK
- IlY/ULyNRCwaHrFnWbaX16Z9ALMgReMHZksrrpTTCz6i03PyZ7ZITHYsagshp7Uo2bMD
- 1UuVVyZu2A/er3RQnXZBTFiQwDKVqocPIwvZvkIG8Lx4a34XGHfUIf+3sLgMq1Ol3qsJ
- mrEmzaQCiU7IylhRnQMPITqYYaAVDhG5+dlrgo8/NlM+dksONeRspdXYrBmmjavgN8q1
- Dy4AmmGrytfOcjAIlgAxQQc+ooxcqQJHXLrT8RlgeHCipML5LAg/OC8fNBQsaL7aVsD6
- +XOA==
+ bh=10fjV400Xl3ahtk5TwH4vP215yHmfg8Alost9+eq5Ro=;
+ b=ACTpTcCFb5sPgGw3y4eL3Uq3vgPQyMWDwhIRzCcRzPQ8+jWf7ir45HzBvHskes9Aml
+ 1LfC0mPVXK2N9q9c87R+g8VBWDAhG3AicWY90ft0dvvAQsr+kvmgIjNCzVLPLhl7LKdZ
+ vF8K/TZE6D96AcV2vZFKm+4A4GKwhi93KxNQmJKscd+D9uz3Au4vadVP1fDPBNnt2bKL
+ Gqbfene0tHU0Gn10LxDlRBBP65D0vC/p1GZptsPkc/gg4fSJclqvhmSf5/R98JnJGlne
+ VYH5qxX79YGQSTHGoutVOuD/8VKqG0VmEKpeCm+qjea2+LxFAwoNMKzhcmuvxT2WOETm
+ M+sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765468073; x=1766072873;
+ d=1e100.net; s=20230601; t=1765468331; x=1766073131;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=t2juk5Vm4ck9/nk24tUYpq7Odg0a8S/D2qotEA3WIE8=;
- b=Hb0n8HG3ytriw1J9a7FYn5q8gs9VaKDSCIKTidw1IjtMUnqXV6l8imWusBDqSAcN56
- JrehMcElH9ZcPs3WRLrNo8cB7ApCyMY+UUiKv1ccWVcAQTZZTFlRwQETrBo85sXRbC/M
- MkHs7oBCcZLoCIMLY3fEExGsXRAf8KDop4cr/YhJ/fCONWxQYsMl4yYUru17YDi91cKk
- GPb2kHRtl+Zi4WVCrKt2pgOLqsDCquLz9ORexkzajjV1dsCMOHTCjPfJJKLpXQgXB+q5
- z4OWw4jzUV1i4CU13a3p8NAkIY+bkeq3sPN2gEfV514CHhHphkzKNLh9jMI/UrTPv93s
- FIZQ==
+ bh=10fjV400Xl3ahtk5TwH4vP215yHmfg8Alost9+eq5Ro=;
+ b=jTgMIouD4aRL8iMjAdyzVAPeiB3/g/7X6MMCJvm3H5KKnBU3hOQONz1A8TjNag2ohv
+ l4uV02rJjMNdE8lhGaIhVR5UMcxhzvNlJdT2qdhTnprAxyPEIBqMDPDByZDvMRy8GlOI
+ NsSHEl6szKLzo50KjqfHG7OsSdhRawEQePZTkM0fxUKOh6vHVbNJIemI1cbKfOt1nfPu
+ 3HGnGn7FaH0iH3KxQ5N6WLsu69XA3NOSBJ9IifMe4+qh6MdYRdvJcWI4m0Z7LvpI7oXc
+ +k1trTZxM6oQP+RT3O/RZILScC+ojXpC5DAFywTCgh4c2ERcEayouoRxig4uL5uy9hRO
+ szNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLVLCTteIo1jYmeAoqPikFbKNt/ouhdfG21uHGdP9CgnDlZMYFwQc4WldrmK68HQCROXtCCKliAlW+@nongnu.org
-X-Gm-Message-State: AOJu0YzQ5tTwLv4tOCR7TBj9d+MvEPWUPgJBCMOfdZkgqBp8VU+3eLMw
- P5WkQ2DA7AzD6ERiuCDxAV3w5e9N5RfIpTfjwKPlZO5QKqalQbYB4GiYHpAiBf3zQqQ=
-X-Gm-Gg: AY/fxX5I3n8jG7grJh5yuNdjMzDGQw8pGpH+wBYp+nZSjZeuQ0r4Hy9XjYIi7FKk7nc
- 3yvJwmMjb9ZNZKZvU8ha65cNdI6WqSlUITWUEasgBQZIHlBWujabvwsjwCx+7UzUwELsJWJP4lk
- jl78t4p2cjmo0HYvHzkynn9Bf2luuqg/YseYaDGBKjwdyKT8guHTz80lgMxQhUBCy32D1eO3IJz
- SUN0ef7v6S5hRVgqTmyIC41XFuckV4zxpPbbXp93grY13kOWM7YdU5EX917u+y931pXWeqArUDy
- czSleLki1pqfSKNWyDiXuY75AZ9ggF1Fm2UY3LGKCr8LyGg0k0f2ZBz644KQKBe2Jhl4KkKrhXu
- H1KtuptNAPPDpYQFMuhwUJuSYfD/egTTocfkMtqjKIC3COJjYZIHApiYD/YpOYyKB4uTXfmn72t
- ZRilDa6suGDGaYrUzOue3Kz4dI+xhsgRSufOW1XaBS1vPLe45r+cMaxUewcgy2CtAS
-X-Google-Smtp-Source: AGHT+IGom1ftq0semaJNxXuUX5ApyYN7ljgWC0ybFA56AesdUJU1JIahGOYgRS1wuBcCykt0wp/h1g==
-X-Received: by 2002:a05:6870:2246:b0:3ec:4089:f963 with SMTP id
- 586e51a60fabf-3f5bdc6a255mr4083809fac.44.1765468072816; 
- Thu, 11 Dec 2025 07:47:52 -0800 (PST)
+ AJvYcCUDeaYObsPfGrpo4Wmvu30P0OQJKPOqS6ElyYadKNHrzpTgsEG0oZ+GGSPkMH4k0oeYgV0u9oaRq6QP@nongnu.org
+X-Gm-Message-State: AOJu0YybsvmYtNzfADxk0g2xkYcLxuhD7WfDzBIya2Kqs6i5XypI03x3
+ R7boVe3+btGL1nAXje52t0+u/6FMHvvstotxx5bgAbxBCjufBokm89fL6RaTxmozqo0=
+X-Gm-Gg: AY/fxX7HoWlglVlbnA/z8yA1GGEoP/6KtOx2YXHrEzoCLKbVN12zuUTE67O/uqq1OaI
+ OPwN6L0VPSOwktY7tBXRd4ssmFEu6rn3OzDwMsMJLODhU/88q4iwI4+4dwiuKa30XYk5XyZmR8e
+ +YRqNPSVJw13EX74A1LZhuze50MIIlqyBMBMDwORXvqhSnry6CVtvI3Dfq78fM6/m5u7q3eRIRa
+ 1INDb6q+WusgT/L1ICEoQH88vtF1H84iL54WYtRlCCtAvU7o1Ko3n7cx90TalvWvH59drRSSZik
+ SZ2rdSwHMAx8zry6zv+yf3PnpEouA2FoAqo141zeBKTSr3TJ4/VpttTl6H77ZkWadvB6fcS3ncs
+ Zdbd76hZMu92MZ8neIhLWwpR3j9bBs/ObZKDN+mcWRYSqaFjHrkcaVAJDummzIZ+ADbdzDxDziu
+ HV5zd78VV4lzK/VKlqTrJ+dlTpX02Epi+jenLUoBvEp+lwA/uU00UgpUyyQLyKZPQDjHnY9+J8Y
+ 4M=
+X-Google-Smtp-Source: AGHT+IGZdFr2PDbjUbb6qfqpRkv9R7UXmglCrwI2tWqfj3braUZ9Jw/f8EaBZPsA/9mMW7hPEiPS+A==
+X-Received: by 2002:a05:6830:f82:b0:7c7:5f09:878d with SMTP id
+ 46e09a7af769-7cacebb97c7mr4531025a34.12.1765468331211; 
+ Thu, 11 Dec 2025 07:52:11 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3f5d50f398bsm1768023fac.11.2025.12.11.07.47.52
+ 46e09a7af769-7cadb200661sm1659552a34.8.2025.12.11.07.52.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 07:47:52 -0800 (PST)
-Message-ID: <bbca9504-2b47-4aa0-8cc0-be17b3db85d0@linaro.org>
-Date: Thu, 11 Dec 2025 09:47:50 -0600
+ Thu, 11 Dec 2025 07:52:10 -0800 (PST)
+Message-ID: <803f0bee-24e2-4308-af01-04bb44b94184@linaro.org>
+Date: Thu, 11 Dec 2025 09:52:08 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/18] target/i386/tcg: fix check for invalid VSIB
- instruction
+Subject: Re: [PATCH 02/18] target/i386/tcg: ignore V3 in 32-bit mode
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org
 References: <20251210131653.852163-1-pbonzini@redhat.com>
- <20251210131653.852163-2-pbonzini@redhat.com>
+ <20251210131653.852163-3-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251210131653.852163-2-pbonzini@redhat.com>
+In-Reply-To: <20251210131653.852163-3-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,34 +108,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/10/25 07:16, Paolo Bonzini wrote:
-> VSIB instructions (VEX class 12) must not have an address prefix.
-> Checking s->aflag == MO_16 is not enough because in 64-bit mode
-> the address prefix changes aflag to MO_32.  Add a specific check
-> bit instead.
+>  From the manual: "In 64-bit mode all 4 bits may be used. [...]
+> In 32-bit and 16-bit modes bit 6 must be 1 (if bit 6 is not 1, the
+> 2-byte VEX version will generate LDS instruction and the 3-byte VEX
+> version will ignore this bit)."
 > 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Cc:qemu-stable@nongnu.org
+> Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   target/i386/tcg/decode-new.h     |  3 +++
->   target/i386/tcg/decode-new.c.inc | 27 +++++++++++++--------------
->   2 files changed, 16 insertions(+), 14 deletions(-)
+>   target/i386/tcg/decode-new.c.inc | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Where do you see this?  I think this is wrong.
-
-In particular,
-
-Table 2-27. Type 12 Class Exception Conditions
-- If address size attribute is 16 bit.
-
-and
-
-2.3.12 Vector SIB (VSIB) Memory Addressing
-In 16-bit protected mode, VSIB memory addressing is permitted if address size attribute is 
-overridden to 32 bits.
-
-Therefore, in 16-bit mode, one *must* use the address prefix.
-
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
