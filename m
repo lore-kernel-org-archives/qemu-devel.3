@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DD0D41D67
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:25:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DC1CD41D65
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTjTY-0005tL-AK; Thu, 11 Dec 2025 11:25:08 -0500
+	id 1vTjUn-0006mc-9G; Thu, 11 Dec 2025 11:26:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTjTS-0005nb-TQ
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:25:04 -0500
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
+ id 1vTjUj-0006j1-Jg
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:26:21 -0500
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTjTR-0001G9-58
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:25:02 -0500
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-7c7613db390so162452a34.2
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:25:00 -0800 (PST)
+ id 1vTjUi-0001zc-4H
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:26:21 -0500
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-3e7f68df436so180717fac.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:26:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765470300; x=1766075100; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765470379; x=1766075179; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nV2VtpWWa8VeTaTesTbiIhHAtYaDZ6xWXQU5KQ9yejk=;
- b=NFz3VwgLf0nfHfcpDiQuRSxS1euChy/jH4xo8fLYgO6qkj0ZUxS8AzcansJAsUiOAC
- 2FP4hhi/IbDIrYIJ6AruqYDrs3J0ECB1pWhkuR2tx0ul2Ubj493a40f5Uq7MsefoEenl
- JDsOV0eslpjvYevLxbDF4ugh9czOtP5O9X/fq7uFTdhiYIETO5NbmKsibzIWpIyd9UDD
- 7iTI2gQgfNNh+nC5TIOBrCz2uDDMe9r3elcPOjMbh11Y6aRPtS9j9Dp4CzrrE8ABqNPU
- 4/NZXDP+b1ifsU9+YNS0734c43dJd+TX5v5VKPSEYMt7upHwV5eSrYVFbxdTaGGZfhcX
- nevQ==
+ bh=qIQTuMJnwCiKm2I5n2TD2oV90OBaOyfG5eqJT20HyOI=;
+ b=b/+YUZOCsYqFtbsfQkaBeuP1dconJlz4ybx44zWpuV26amKYjpnnmntaW+pGPowrEH
+ sbLF6q5TzODN4+w+s8IADeF3jEm5prvwnnk66C1TErQ/TVgu+6MNlb5fGHXtpb6Ws4Yy
+ SacKRuJostI8V3h8RQBL843cnILJ0uzdZpqeKKCMR1XEcvwov6lGpjNK6fIAeet1Tnrt
+ n0xmqj7B/YRhU034xynYYpErK/nZh4gun6/572cxHPRdsrdXhuBdv+8T0nOBq3U/CX/7
+ TDNiBd+8Vl2YJeLrwVzgoBS5YPjneXQuqzdTsXdbulRfJ9IG+Q36aXjB8PM/VMvHra9C
+ /nsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765470300; x=1766075100;
+ d=1e100.net; s=20230601; t=1765470379; x=1766075179;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nV2VtpWWa8VeTaTesTbiIhHAtYaDZ6xWXQU5KQ9yejk=;
- b=rs5qMBXKYhh+SPIdo6ZMAzOQyFYR2gQKL7y17Zu1ds23ZZHExZBHC3SN0llunjX/ic
- TbhLqpU94sbW9xPsIE5XtIoLxOcZGF1DjNrAKw2AZuOTrIe4tQBKBnK35YN1x37lNwHU
- 54Mx6ZSv2Ml+neRx0r1AStFEjE54OWxHVMEUQw3WqHgNr08Kut+qs+PxRNqcpZXJxGdW
- J4WLeWMQeZWiCdnaNk87/JitUh/R/f/nsJAp4u590D+Xx1fcvicsR7i1N/OVzqxwKh18
- nAnc8RCxkCWbz+TO/DCbW5WM55eTytNj+Z8nw+vuxw0ZulrVi5AmasXULvFtHhHPsDtv
- 8CoQ==
+ bh=qIQTuMJnwCiKm2I5n2TD2oV90OBaOyfG5eqJT20HyOI=;
+ b=eqgYwyvKJB9cqvt5cC+bAwzQBrM4iORpB5iAXgyaOsNOLVGmv3XQDkJxbDnf/39vDV
+ VCcBz0RiMzjPnJx7Mcm0Rb0ezhyijUI3wTbIl/5dSV5RaOzmIr51aqmjI0NwHZETskpz
+ y1Cf2wUDGL9obk5GjcQiQSj+F2ZgbLmhjV97bSsfDffQlXycBo7cCQbzxquqM5ChuAd+
+ uTFzJ36uCxptw7wDfhxdkL7PLje6/b4pm4ssLntAOMA/56qEZW+tMfRUmmiSnFGcJ67A
+ zatyEVAs2d9BHzMDHcyLMebS8CzSVGbjG6lmJ3So1kZYXUdgh2pcc2Fk0mveh7D5feh1
+ 53PQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXHCa1wD073vVnfZfkj23HZMvSXDNT4gLsDVPj4XVoaLfE86gJLXGxYOxNaazTI6m3M07q5SFBhvriU@nongnu.org
-X-Gm-Message-State: AOJu0YwHNP5bZWtCO9h0bEr8LMy8E4mksKHDoRAQpNvkVN0tgsKtl0Ev
- vLGbG12U24PcB+PvX/MxC5sR53PwGzm/07wxlFeLKeR+caxIMAROtG5p4j26yq8mumU=
-X-Gm-Gg: AY/fxX6KiNXnBpmk31iJNlsRSsqHPu9mss5IfhueGeOpYfzAOS97scGutslO1jpo1VZ
- f1XSquY8/unFcmMe2cUH99WdiQUnollx1H1bU5eaZllm7yZKB0+UPuQx2Yh66ff1DpWV4PfTAjT
- oYVISJZcFfdkfv0hctLYNzs4Wc/7k9AVOI6n4toOD0aq6W2SEPCCUgwfVBqbNpcSQiOGh9gYQMN
- Y52jIpwNYto7mL7GD5d09FQJaW3zG9B9f1DGX7JElZn7IuzNQd0kYX7qCfKT5CLm1h064tJdOBA
- XhVSZ3tgpZcLHYklj1MMLsHKwIthOBz9CMeF8jb6JHaF2XnOjNI8fi5MoSwJ0YiyVDRl9D0x+wX
- ylhx8otXUvhVAdnRwZ/8TBZ2g1FtcB+iF34C9CFfmjzIZXwflZZOudG2kUXWGY9AcQekzXD9e8N
- 13sBoYTKcquoNdw1I4nmorBsDWXmwoT1jVkuaVG8lX3pqSwRW2DNv0pXHS0m5Qaz6T
-X-Google-Smtp-Source: AGHT+IEoomivtGtTENL2L4DohWX19tmEYxrjcXtZxWAThU1jAsYHAGMQpxDcF9adLX+qgReGxnu+ZQ==
-X-Received: by 2002:a05:6830:2406:b0:7c7:2cdb:ff4b with SMTP id
- 46e09a7af769-7cacec35756mr3596514a34.20.1765470299778; 
- Thu, 11 Dec 2025 08:24:59 -0800 (PST)
+ AJvYcCXVwOl5cpwAMILi+eU8+vJGJuQmkTLGOItSEuF+hkf8wyY/ls9iblIDtS4UZeFqVsIrOTLSbdcbjQO6@nongnu.org
+X-Gm-Message-State: AOJu0YxHA0uhCRtdP9a1VrTM6lN7fonooBAzqdwvNISk+yV5ZqHHZ1iJ
+ LG8wB67cVUiGGWklbzhKry5yqbYva80TsECzzFC6MT+xfA2agpcRfvXk2O9wjq7LQGI=
+X-Gm-Gg: AY/fxX6N9iNOssbknu1BG3Y+VpKc5wMd0CVIKHyNTAPdI1QHujQDZHrak0RKf624JUC
+ 2croBM1jcfVsJi2d/rO4ZoeTSZIxnTtd7m0NsnYWJzHbgnpuw5Nw58AAXTPEhcy81ZxfTXTemCm
+ CmWr6rsrbRHnNNT7Zubg8tZzK8CeI3alAV5idCGG2dObEeYvhngbH5QUukEyZwWZz/bcuAZkKZT
+ ywyl3EHfvhCCMKhoSYa/WLrDzCaJ9XHJpgOS+8jr8TAUAuB1LF2dD8U7IlGW9/RlB+aSVmFZ633
+ cx2PdIwvybNE9pnKxUAWQjMvAfRIkSX3OlGS2bOi6l/ylOPrU9HJolqDMSgWsxbaVhpz0kwXOQb
+ JfDbC7j/gtevnpRTGKutdd/fvIdX7OzQEWbi4hG2K6IxIkW5RQMSiDC5WamyHymuDc4PDBdxNue
+ CX8dZi8gR+Un0zoNjCTiLd9r86y3nLiRJctadEjJGhqG77DdLU4q2V54oExHSisvaa
+X-Google-Smtp-Source: AGHT+IFxpGcvh31eRM1ebEu4SChLCi/st0e3J5QHKiBfTeClw/t5r4Lr7V/bNB0uuQxejar8uKKBvw==
+X-Received: by 2002:a05:6871:3a81:b0:3d3:1fc3:c0c6 with SMTP id
+ 586e51a60fabf-3f5df9cd139mr1294872fac.1.1765470378621; 
+ Thu, 11 Dec 2025 08:26:18 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7cadb1d0e44sm1816054a34.4.2025.12.11.08.24.59
+ 586e51a60fabf-3f5d51a0c8csm1994015fac.20.2025.12.11.08.26.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 08:24:59 -0800 (PST)
-Message-ID: <efaeeaf6-953d-454c-8e33-5eb3c912e198@linaro.org>
-Date: Thu, 11 Dec 2025 10:24:57 -0600
+ Thu, 11 Dec 2025 08:26:18 -0800 (PST)
+Message-ID: <8bd16de8-19e7-421b-af97-4a3028b4746a@linaro.org>
+Date: Thu, 11 Dec 2025 10:26:16 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/18] target/i386/tcg: reuse gen_helper_fp_arith_ST0_FT0
- for fcom STn and fcomp STn
+Subject: Re: [PATCH 12/18] target/i386/tcg: reuse gen_helper_fp_arith_ST0_FT0
+ for undocumented fcom/fcomp variants
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20251210131653.852163-1-pbonzini@redhat.com>
- <20251210131653.852163-12-pbonzini@redhat.com>
+ <20251210131653.852163-13-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251210131653.852163-12-pbonzini@redhat.com>
+In-Reply-To: <20251210131653.852163-13-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32e.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,43 +107,52 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/10/25 07:16, Paolo Bonzini wrote:
-> Treat specially the undocumented ops, instead of treating specially the
-> two d8/0 opcodes that have undocumented variants: just call
-> gen_helper_fp_arith_ST0_FT0 for all opcodes in the d8/0 encoding.
+> For 0x32 hack the op to be fcomp; for the others there isn't even anything special
+> to do.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   target/i386/tcg/translate.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-> index 3c55b62bdec..8f50071a4f4 100644
-> --- a/target/i386/tcg/translate.c
-> +++ b/target/i386/tcg/translate.c
-> @@ -2777,7 +2777,7 @@ static void gen_x87(DisasContext *s, X86DecodedInsn *decode)
->                   break;
->               }
->               break;
-> -        case 0x00: case 0x01: case 0x04 ... 0x07: /* fxxx st, sti */
-> +        case 0x00 ... 0x07: /* fxxx st, sti */
->               gen_helper_fmov_FT0_STN(tcg_env,
->                                       tcg_constant_i32(opreg));
->               gen_helper_fp_arith_ST0_FT0(op & 7);
-> @@ -2790,12 +2790,10 @@ static void gen_x87(DisasContext *s, X86DecodedInsn *decode)
->                   gen_helper_fpop(tcg_env);
->               }
->               break;
-> -        case 0x02: /* fcom */
->           case 0x22: /* fcom2, undocumented op */
->               gen_helper_fmov_FT0_STN(tcg_env, tcg_constant_i32(opreg));
->               gen_helper_fcom_ST0_FT0(tcg_env);
->               break;
-> -        case 0x03: /* fcomp */
->           case 0x23: /* fcomp3, undocumented op */
->           case 0x32: /* fcomp5, undocumented op */
->               gen_helper_fmov_FT0_STN(tcg_env, tcg_constant_i32(opreg));
+>   target/i386/tcg/translate.c | 15 +++++----------
+>   1 file changed, 5 insertions(+), 10 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
+> 
+> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+> index 8f50071a4f4..f47bb5de8b3 100644
+> --- a/target/i386/tcg/translate.c
+> +++ b/target/i386/tcg/translate.c
+> @@ -2777,7 +2777,12 @@ static void gen_x87(DisasContext *s, X86DecodedInsn *decode)
+>                   break;
+>               }
+>               break;
+> +        case 0x32: /* fcomp5, undocumented op */
+> +            /* map to fcomp; op & 7 == 2 would not pop  */
+> +            op = 0x03;
+> +            /* fallthrough */
+>           case 0x00 ... 0x07: /* fxxx st, sti */
+> +        case 0x22 ... 0x23: /* fcom2 and fcomp3, undocumented ops */
+>               gen_helper_fmov_FT0_STN(tcg_env,
+>                                       tcg_constant_i32(opreg));
+>               gen_helper_fp_arith_ST0_FT0(op & 7);
+> @@ -2790,16 +2795,6 @@ static void gen_x87(DisasContext *s, X86DecodedInsn *decode)
+>                   gen_helper_fpop(tcg_env);
+>               }
+>               break;
+> -        case 0x22: /* fcom2, undocumented op */
+> -            gen_helper_fmov_FT0_STN(tcg_env, tcg_constant_i32(opreg));
+> -            gen_helper_fcom_ST0_FT0(tcg_env);
+> -            break;
+> -        case 0x23: /* fcomp3, undocumented op */
+> -        case 0x32: /* fcomp5, undocumented op */
+> -            gen_helper_fmov_FT0_STN(tcg_env, tcg_constant_i32(opreg));
+> -            gen_helper_fcom_ST0_FT0(tcg_env);
+> -            gen_helper_fpop(tcg_env);
+> -            break;
+>           case 0x15: /* da/5 */
+>               switch (rm) {
+>               case 1: /* fucompp */
+
 
