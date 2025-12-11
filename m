@@ -4,101 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9975D43341
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 20:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BE55D43341
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 20:16:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTn3j-0007e6-3H; Thu, 11 Dec 2025 15:14:43 -0500
+	id 1vTn5D-0008TT-I1; Thu, 11 Dec 2025 15:16:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTn3h-0007dr-Pa
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 15:14:41 -0500
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ (Exim 4.90_1) (envelope-from <aaronlo0929@gmail.com>)
+ id 1vTn5B-0008SO-R2
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 15:16:13 -0500
+Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTn3f-0003HT-Hn
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 15:14:41 -0500
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-45392215f74so214686b6e.3
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 12:14:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <aaronlo0929@gmail.com>)
+ id 1vTn58-0003cU-L9
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 15:16:13 -0500
+Received: by mail-yw1-x1135.google.com with SMTP id
+ 00721157ae682-78c33d0df85so7968317b3.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 12:16:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765484078; x=1766088878; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=djnnN+lo9jVZTsCiq/WT5+NslmQPdM28M2M2xxwwe34=;
- b=LbFno7mzFaadAfS7ZHyzqBqz+yQpJNjE7j41eEasWIGx7RmKZBzemzs5mBt8m/U0m9
- qsA1cqevFOYmQb/4CE80ufjVT0zy3mj3JdFuiK31QaKfDmqfNEIIj24dSn4//qfPYuYH
- 7B9BTfaKFCH7sprw61pCh24RBuGfg/BwDqjJYiue/xJs5gz4PT7woLgUFqYjSfIg6ImN
- ILEg1ZuNKxFXoM+tEQlH+Zo6lh0TvTIfq8TyQAIx69JEyZzmCDCQCSgOR8aQOqCfVWyb
- CtyC/m3jXYLJQUTm4VOo0lRYkMR2rIcIYRz4/rR6T6WEJRmr0YT77Rudql0hPkbG/Dhg
- XIeg==
+ d=gmail.com; s=20230601; t=1765484169; x=1766088969; darn=nongnu.org;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=l8sNp1FbO22fEu4IpnSJlPcqXCSY+sOrWvZTo75PDcs=;
+ b=eCUNxQYPmnfUbuZ3ma00X74tjCYkcqFMrY9YGLssI8ISFa6fRv+jEPsS9UOuyFsjC9
+ 4uKxeu6xS4K3hyfWpxwl9FZKqyPABzwrNiOPkvDwpQoEH/kMemwI/Z5vXvA88H2olVbm
+ youYeOgYjzDQQSbT67ftt7lrOmVomWE6N5+tLSVv8F9UuGWbM+SlpRrG47CbtrA0+o54
+ aLPYSmoVwarRTcddY2gG/871EA0mPImSz7Go3TzM/GrKkuNuiw9udVhVVU0jy7PYq61I
+ lY77kk58vTcuAk0USGfviqbbWfHzg90mye3gBYdioBcYjod8KCodEqlUP/5HfYrAwID8
+ yjiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765484078; x=1766088878;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1765484169; x=1766088969;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=djnnN+lo9jVZTsCiq/WT5+NslmQPdM28M2M2xxwwe34=;
- b=tr6z1FDyBFPdruQY2rUgqlm9Vo4IpWaZ9o9VTsYeexzBFkmS55TaTzhdc5HkHRTg9q
- S3M/3OhmnW1TJ/Gfk3KEBifVQmXKDrplrnIrNMdcqD9teDALc4Bv8wFiQGTNSa417i+Y
- 5nDof0JHcl/J5cVTLoVlyahFYuge/65eXhIH836XdQyAjTJ+lq8xurAyIRnX2VrIqngL
- zE+Nx75oMTnvsWJcGzL6/Xfzu1IVMLoo7psYzfxTlAJ65RHjWpK3kgGEZ6JQa7ws9rym
- 7vM8OQOH2GJRkLGYQovfhhFLLcAiRFbqwQ6y416IsVql9zn/5Sw4Hiwh/z9iD3/3wmNm
- u6eQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV/FCWQqF9bijiTdSrlsV2egAUs/daabR3lKiZGgOFAmDDzlBDnTcnXgIBNyJOOterMcyYnWycOJ9Wl@nongnu.org
-X-Gm-Message-State: AOJu0YykZYaIk8W9q0byHqYF8WanryovpsxomoG6Q6hRL9YG/JPiEq8Q
- UoHIL3KFAD0UnG/rZXjxVqG5NIoYBXbZD4cNUdz5UDznsLLhMjwwUo/H/aY8Us+yZ5M=
-X-Gm-Gg: AY/fxX4E4mGxmqXtC8PCvtZYMPlg1jNe2SyvIKHGY5GuhrYeCe66NPw0snOSeJkLjFt
- IN00EaSLxkQWJ1xTTGbwpIYb7qiBCaroRdUNf8LIq58shpuBeFH/xHIBWZuXhQhaIIe7rxsVXKC
- y09hL5nWQhf2+1uKkBl67mLdjhx3NNFCMEkCvX+L6TZRJ+x0o8b4H/m/kLtOQnNKqM7nTZTqMRx
- TeYu06wwlcyjeWGQWxPXMrOBa8BItfDXmWlnvhj+JgcBAgqyZ5CQoiJVHmMO22jR8E/WQ7V+0yd
- wuO0RcbkMUw98rEqBj8Sp8O3KSZHcfMroQa/NQW8u7NQuCCq7S86rZfQXdQJ57XVtALGvgl8HOb
- SxewPOjgfwHMglMjlnKTkeBPXuMvB0ktef8hcSTwqb26ufeMXIevHPDirpiSbgtKdc8018fa5A9
- QOjRs06SXei3GqddNo1Sc6w0AE4J0UEQq1i14juBtPeuAMTEk3nfyo2bGfckW5jt8f
-X-Google-Smtp-Source: AGHT+IEp1VKJRIJInbHKktIiZelOl8YNjJMsm0/nLha6VEaF+Ge1Rqqw464IeKIoyPCPGjdQrjAHzA==
-X-Received: by 2002:a05:6808:5285:b0:450:bef1:f4d7 with SMTP id
- 5614622812f47-455864d9623mr2897558b6e.43.1765484077873; 
- Thu, 11 Dec 2025 12:14:37 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3f5d4a09900sm2404733fac.0.2025.12.11.12.14.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 12:14:37 -0800 (PST)
-Message-ID: <de93ce41-6797-4b0e-95cd-ffeaf16b5c89@linaro.org>
-Date: Thu, 11 Dec 2025 14:14:35 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Record AS in full tlb
-To: Mark Burton <mburton@qti.qualcomm.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Matheus Bernardino <mathbern@qti.qualcomm.com>,
- Sid Manning <sidneym@quicinc.com>, Brian Cain <bcain@quicinc.com>,
- QEMU Developers <qemu-devel@nongnu.org>
-References: <A5D46F85-9B92-477C-B964-1DCE2A1CCF19@qti.qualcomm.com>
- <0d3b4338-2c31-4e42-8a8e-319f3ad4029f@linaro.org>
- <2A86D9C4-7EA7-4275-943F-D75801B5539C@qti.qualcomm.com>
- <081b44f3-48aa-4af3-a0d1-c8e5915d95e3@linaro.org>
- <1400AC45-E6F1-4031-A95E-3F51B79D71DA@qti.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <1400AC45-E6F1-4031-A95E-3F51B79D71DA@qti.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ bh=l8sNp1FbO22fEu4IpnSJlPcqXCSY+sOrWvZTo75PDcs=;
+ b=uV2vfqirh10OZp99CjPCbODAMeHLF62u0Yd+V5m7kIwB0UncTAhO3lPJ4NqFVkOCy2
+ iw6w7B4pLpMVN4PtiCY4JCgMtFJyP5829sFEEyEBLFWwuNg5HYaMaYPxKGQ/MRjKA22d
+ Ey78P+IaIDOjtFPJKj6nN00OnOdyTKljXBO3bD7aeFU9vEy1Dx6hrnnpY1MArfqe86Md
+ j7E4Z1fUbbw3djCb0U1/6cJmgXHMiYwJi7GvOFoA0geFk/wJVpy9H30L/MZnj1vNKPqg
+ kbBkTqTGNhVzjsaw6gk++KM39c4hAT0sKjvrkF34jAo1ttKSDYYp096pp4FaYjl1JbMD
+ sAyg==
+X-Gm-Message-State: AOJu0YzDAfrVS6NUPiariwuyZfSKW70MprpcY9vZQRvEu+Svsmno4nxb
+ YKXck4Q7Hc4+TFhgYzIpSgvT/ZaTZtJdK/BVTMsDrX9pleWSmb13mgJm
+X-Gm-Gg: AY/fxX6hBZw7L4TRHP0Ltmv5B7a7i0rfEG8rdM5bzcJf4v5HbEqlyo8Kq9rc+gCL40z
+ IKrIJEg6KoEyuIwH7rWydvX+7LC7R5xMdc+ep8eSHo771UhK9oMfLLfNZLwjvTRMWOP8+/J8X2J
+ LVtxGo366Y9aLpMxYoh4PFliNuji6uKZJbbo5+m9srn+BVDndotRInqSWOkwZyPLtCHUNM+i1Br
+ 6zmnXrKcxF7powz2M2+e1S/3pKrnHh/1Dt5EPlmtkKykJTnCfULnv3xchkjti/vbc50O55E9RQQ
+ z/mof0PcV8KHi1tQutMqaQ3pGWUxiJHZD18DD1MRICcPkkltlEapWLDYbjdO5u9DWVVIzw7XUaT
+ XUtgXQd91Zrbz0zgeiiPadW29LPBuXB7VxHwn/1tlWoA4qjrH/z3bSZBXruC/6kB9vRADbqCyIR
+ pCPirlkQN1n3AUeHshkSeSnvraKpUxIvmoSA==
+X-Google-Smtp-Source: AGHT+IGq0Hgngas8XXauSHnS5b7HI7q3N9zpDPjzvCYBiAhn7BL+U4c9+ARj7m/1Ob3XxC57MgWtWQ==
+X-Received: by 2002:a05:690e:13ca:b0:63f:b18a:7812 with SMTP id
+ 956f58d0204a3-6446e957639mr5716193d50.40.1765484169460; 
+ Thu, 11 Dec 2025 12:16:09 -0800 (PST)
+Received: from smtpclient.apple ([66.112.242.31])
+ by smtp.gmail.com with ESMTPSA id
+ 956f58d0204a3-64477db607esm1550834d50.18.2025.12.11.12.16.08
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 11 Dec 2025 12:16:09 -0800 (PST)
+From: Aaron Lo <aaronlo0929@gmail.com>
+Message-Id: <E383EEBC-073E-4C5B-B793-E9ADD17EFBD2@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_304AF4BB-51FF-4C08-8D0E-738206348A5D"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.100.1.1.5\))
+Subject: Re: [PATCH] virtio-balloon: only create statsq when
+ VIRTIO_BALLOON_F_STATS_VQ exists
+Date: Thu, 11 Dec 2025 14:15:58 -0600
+In-Reply-To: <aTrTsbhiyKjspttD@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>, qemu-trivial@nongnu.org
+To: =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>
+References: <20251211-balloon-check-stats-feature-v1-1-ae8951957b80@gmail.com>
+ <aTrTsbhiyKjspttD@redhat.com>
+X-Mailer: Apple Mail (2.3864.100.1.1.5)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
+ envelope-from=aaronlo0929@gmail.com; helo=mail-yw1-x1135.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,28 +104,362 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/25 13:49, Mark Burton wrote:
-> I am absolutely prepared to believe I’m handling the IOMMU incorrectly
-> 
-> The setup I’m using is CPU->SMMU(TBU)->AddressSpace (totally unconnected from the CPU).
-> 
-> What I see in the code is that the IOMMU is permitted to return an address space - that address space, in the cases I have, is totally unrelated to the CPU concerned. The CPU knows (till now), nothing about that address space. The address space being returned from the IOMMU translate doesn’t seem to be used - so I’m not overly surprised that we end up in the wrong place. Perhaps what you’re saying is that somehow we should be ‘registering’ this address space with (any?) CPU that could potentially get to it...
-> 
-> What I see is that io_prepare calls down and gets the target_as from the IOMMU translate cb, but it only returns MemroyRegionSection, not the target_as, and then e.g. int_st_mmio_leN seems to use cpu->as and index’s from that …..  I don’t see what I can be missing?
 
-You're right that there's a disconnect.
+--Apple-Mail=_304AF4BB-51FF-4C08-8D0E-738206348A5D
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-There's an initial translation in address_space_translate_for_iotlb() which records a 
-MemoryRegionSection.  Later, during execution, iotlb_to_section starts over from the cpu 
-address space and tries to find the same MemoryRegionSection, but translation is not involved.
+Hi Daniel and Michael,
 
-I suspect we need to revisit CPUTLBEntryFull.xlat_section, "indexing" of 
-MemoryRegionSection, etc.
+Thanks for the quick feedback.
 
-I've had in the back of my mind a reorg of the entire physical memory subsystem, with an 
-eye toward eliminating TARGET_PAGE_SIZE entirely.  The indexing nonsense would must needs 
-change in that scenario.  All very hand wavey at this point...
+Given the migration concerns and issues with the spec itself, I think =
+it=E2=80=99ll be best to drop the code changes for now.
+
+Thanks again for the guidance,
+Aaron
+
+> On Dec 11, 2025, at 8:22=E2=80=AFAM, Daniel P. Berrang=C3=A9 =
+<berrange@redhat.com> wrote:
+>=20
+> On Thu, Dec 11, 2025 at 03:05:49AM -0600, Aaron Lo wrote:
+>> The VirtIO specification (section 5.5.2) states that the stats queue
+>> is only present if the VIRTIO_BALLOON_F_STATS_VQ feature is
+>> negotiated. QEMU currently creates the statsq unconditionally.
+>>=20
+>> This patch guards statsq creation so it occurs only when the
+>> feature bit is enabled.
+>>=20
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3188
+>>=20
+>> Signed-off-by: Aaron Lo <aaronlo0929@gmail.com>
+>> ---
+>> hw/virtio/virtio-balloon.c | 9 +++++++--
+>> 1 file changed, 7 insertions(+), 2 deletions(-)
+>>=20
+>> diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
+>> index 02cdd807d7..f5d4d5f60c 100644
+>> --- a/hw/virtio/virtio-balloon.c
+>> +++ b/hw/virtio/virtio-balloon.c
+>> @@ -892,7 +892,10 @@ static void =
+virtio_balloon_device_realize(DeviceState *dev, Error **errp)
+>>=20
+>>     s->ivq =3D virtio_add_queue(vdev, 128, =
+virtio_balloon_handle_output);
+>>     s->dvq =3D virtio_add_queue(vdev, 128, =
+virtio_balloon_handle_output);
+>> -    s->svq =3D virtio_add_queue(vdev, 128, =
+virtio_balloon_receive_stats);
+>> +
+>> +    if (virtio_has_feature(s->host_features, =
+VIRTIO_BALLOON_F_STATS_VQ)) {
+>> +        s->svq =3D virtio_add_queue(vdev, 128, =
+virtio_balloon_receive_stats);
+>> +    }
+>=20
+> This seems like a change that is liable to break live migration
+> state compatibility, as IIUC the queues are encoded in the state ?
+>=20
+>>=20
+>>     if (virtio_has_feature(s->host_features, =
+VIRTIO_BALLOON_F_FREE_PAGE_HINT)) {
+>>         s->free_page_vq =3D virtio_add_queue(vdev, =
+VIRTQUEUE_MAX_SIZE,
+>> @@ -932,7 +935,9 @@ static void =
+virtio_balloon_device_unrealize(DeviceState *dev)
+>>=20
+>>     virtio_delete_queue(s->ivq);
+>>     virtio_delete_queue(s->dvq);
+>> -    virtio_delete_queue(s->svq);
+>> +    if (s->svq) {
+>> +        virtio_delete_queue(s->svq);
+>> +    }
+>>     if (s->free_page_vq) {
+>>         virtio_delete_queue(s->free_page_vq);
+>>     }
+>>=20
+>> ---
+>> base-commit: 9c23f2a7b0b45277693a14074b1aaa827eecdb92
+>> change-id: 20251211-balloon-check-stats-feature-7ea658e038ce
+>>=20
+>> Best regards,
+>> --=20
+>> Aaron Lo <aaronlo0929@gmail.com>
+>>=20
+>>=20
+>=20
+> With regards,
+> Daniel
+> --=20
+> |: https://berrange.com <https://berrange.com/>      -o-    =
+https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org <https://libvirt.org/>         -o-            =
+https://fstop138.berrange.com <https://fstop138.berrange.com/> :|
+> |: https://entangle-photo.org <https://entangle-photo.org/>    -o-    =
+https://www.instagram.com/dberrange :|
 
 
-r~
+--Apple-Mail=_304AF4BB-51FF-4C08-8D0E-738206348A5D
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dutf-8"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;">Hi Daniel and =
+Michael,<div><br></div><div>Thanks for the quick =
+feedback.</div><div><br></div><div>Given the migration concerns and =
+issues with the spec itself, I think it=E2=80=99ll be best to drop the =
+code changes for now.</div><div><br></div><div>Thanks again for the =
+guidance,</div><div>Aaron<br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On Dec 11, 2025, at 8:22=E2=80=AFAM, Daniel P. =
+Berrang=C3=A9 &lt;berrange@redhat.com&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">On Thu, Dec 11, 2025 at 03:05:49AM -0600, =
+Aaron Lo wrote:</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><blockquote type=3D"cite" style=3D"font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;">The VirtIO specification (section 5.5.2) states =
+that the stats queue<br>is only present if the VIRTIO_BALLOON_F_STATS_VQ =
+feature is<br>negotiated. QEMU currently creates the statsq =
+unconditionally.<br><br>This patch guards statsq creation so it occurs =
+only when the<br>feature bit is enabled.<br><br>Resolves: =
+https://gitlab.com/qemu-project/qemu/-/issues/3188<br><br>Signed-off-by: =
+Aaron Lo =
+&lt;aaronlo0929@gmail.com&gt;<br>---<br>hw/virtio/virtio-balloon.c | 9 =
++++++++--<br>1 file changed, 7 insertions(+), 2 deletions(-)<br><br>diff =
+--git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c<br>index =
+02cdd807d7..f5d4d5f60c 100644<br>--- a/hw/virtio/virtio-balloon.c<br>+++ =
+b/hw/virtio/virtio-balloon.c<br>@@ -892,7 +892,10 @@ static void =
+virtio_balloon_device_realize(DeviceState *dev, Error =
+**errp)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;s-&gt;ivq =3D =
+virtio_add_queue(vdev, 128, =
+virtio_balloon_handle_output);<br>&nbsp;&nbsp;&nbsp;&nbsp;s-&gt;dvq =3D =
+virtio_add_queue(vdev, 128, virtio_balloon_handle_output);<br>- =
+&nbsp;&nbsp;&nbsp;s-&gt;svq =3D virtio_add_queue(vdev, 128, =
+virtio_balloon_receive_stats);<br>+<br>+ &nbsp;&nbsp;&nbsp;if =
+(virtio_has_feature(s-&gt;host_features, VIRTIO_BALLOON_F_STATS_VQ)) =
+{<br>+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s-&gt;svq =3D =
+virtio_add_queue(vdev, 128, virtio_balloon_receive_stats);<br>+ =
+&nbsp;&nbsp;&nbsp;}<br></blockquote><br style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;">This =
+seems like a change that is liable to break live migration</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">state compatibility, as IIUC the queues are =
+encoded in the state ?</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><blockquote type=3D"cite" style=3D"font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><br>&nbsp;&nbsp;&nbsp;&nbsp;if =
+(virtio_has_feature(s-&gt;host_features, =
+VIRTIO_BALLOON_F_FREE_PAGE_HINT)) =
+{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s-&gt;free_page_vq =
+=3D virtio_add_queue(vdev, VIRTQUEUE_MAX_SIZE,<br>@@ -932,7 +935,9 @@ =
+static void virtio_balloon_device_unrealize(DeviceState =
+*dev)<br><br>&nbsp;&nbsp;&nbsp;&nbsp;virtio_delete_queue(s-&gt;ivq);<br>&n=
+bsp;&nbsp;&nbsp;&nbsp;virtio_delete_queue(s-&gt;dvq);<br>- =
+&nbsp;&nbsp;&nbsp;virtio_delete_queue(s-&gt;svq);<br>+ =
+&nbsp;&nbsp;&nbsp;if (s-&gt;svq) {<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtio_delete_queue(s-&gt;svq);<=
+br>+ &nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;if =
+(s-&gt;free_page_vq) =
+{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;virtio_delete_queue(s=
+-&gt;free_page_vq);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br><br>---<br>base-commit=
+: 9c23f2a7b0b45277693a14074b1aaa827eecdb92<br>change-id: =
+20251211-balloon-check-stats-feature-7ea658e038ce<br><br>Best =
+regards,<br>--<span class=3D"Apple-converted-space">&nbsp;</span><br>Aaron=
+ Lo &lt;aaronlo0929@gmail.com&gt;<br><br><br></blockquote><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">With regards,</span><br style=3D"caret-color:=
+ rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline =
+!important;">Daniel</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none;"><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;">--<span =
+class=3D"Apple-converted-space">&nbsp;</span></span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">|:<span =
+class=3D"Apple-converted-space">&nbsp;</span></span><a =
+href=3D"https://berrange.com/" style=3D"font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: auto; word-spacing: 0px; -webkit-text-stroke-width: =
+0px;">https://berrange.com</a><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;"><span =
+class=3D"Apple-converted-space">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;-o- &nbsp;&nbsp;&nbsp;</span><a =
+href=3D"https://www.flickr.com/photos/dberrange" style=3D"font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: =
+0px;">https://www.flickr.com/photos/dberrange</a><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;"><span =
+class=3D"Apple-converted-space">&nbsp;</span>:|</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">|:<span =
+class=3D"Apple-converted-space">&nbsp;</span></span><a =
+href=3D"https://libvirt.org/" style=3D"font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: auto; word-spacing: 0px; -webkit-text-stroke-width: =
+0px;">https://libvirt.org</a><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;"><span =
+class=3D"Apple-converted-space">&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;-o- =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><=
+a href=3D"https://fstop138.berrange.com/" style=3D"font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: auto; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: =
+0px;">https://fstop138.berrange.com</a><span style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;"><span =
+class=3D"Apple-converted-space">&nbsp;</span>:|</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">|:<span =
+class=3D"Apple-converted-space">&nbsp;</span></span><a =
+href=3D"https://entangle-photo.org/" style=3D"font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: auto; text-align: =
+start; text-indent: 0px; text-transform: none; white-space: normal; =
+widows: auto; word-spacing: 0px; -webkit-text-stroke-width: =
+0px;">https://entangle-photo.org</a><span style=3D"caret-color: rgb(0, =
+0, 0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;"><span =
+class=3D"Apple-converted-space">&nbsp;</span>&nbsp;&nbsp;&nbsp;-o- =
+&nbsp;&nbsp;&nbsp;</span><a href=3D"https://www.instagram.com/dberrange" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: auto; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: auto; word-spacing: 0px; =
+-webkit-text-stroke-width: =
+0px;">https://www.instagram.com/dberrange</a><span style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;"><span =
+class=3D"Apple-converted-space">&nbsp;</span>:|</span></div></blockquote><=
+/div><br></div></body></html>=
+
+--Apple-Mail=_304AF4BB-51FF-4C08-8D0E-738206348A5D--
 
