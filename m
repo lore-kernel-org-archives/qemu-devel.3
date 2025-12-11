@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E94D41D64
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E7F2D41D61
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTj92-0008Kh-Ei; Thu, 11 Dec 2025 11:03:56 -0500
+	id 1vTjAA-0000RM-S4; Thu, 11 Dec 2025 11:05:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTj8z-0008KA-Pt
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:03:54 -0500
-Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
+ id 1vTj9d-0000Em-35
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:04:33 -0500
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTj8x-00050E-Cl
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:03:52 -0500
-Received: by mail-oo1-xc35.google.com with SMTP id
- 006d021491bc7-6597a87048bso140632eaf.1
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:03:50 -0800 (PST)
+ id 1vTj9Z-000593-PG
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:04:31 -0500
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-7c77fc7c11bso227994a34.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:04:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765469029; x=1766073829; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765469068; x=1766073868; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VOEw0SPuMX7u+ebJdVidvZKd2M1VwatiKiU5rs5tHBQ=;
- b=Sr/hGYF8IyL8O3koVGGlhPLJcyMSizOA6wQER/NZ8qfdcf9RkYkP7/ETzZaSXUtckf
- UWyjzyawXLEBy8N1DSPzHEY75qPuhHb5blFrvRYMbj6ihMge6zOXKfUSUesPWOgnOKfB
- WbJG81vwLYW4kosVZNF//nZhzpeEgSUNmFJFBDqeWJ9WoNJdc9JQx8TbpZt02Ay+jwrR
- M0hjZBCr53sWR2lGdqXH7LvqF1BnD9/lc48zmO+uyLxAIM0TXm5Tzs0TDgioO+IZ+hEP
- JoEUNJH71lXacLjRbiLhsqZw0vOdKzYCyaWlEG1HCv2JJaMvcsefRrvUCAQrBw/T7KBP
- m6Tw==
+ bh=BmitcQb1V5rb54cGQXvsCZVm1Y1YGXc8fFkzyOmKBUI=;
+ b=iNOeD4aSE30c7AaCfyGZ+QOrb7ldpagnC9XYfaSrp4ZwVYytjjYuEQwrJvITfCOSIF
+ cNeV9fUvqx5wrKdFbqGixBy6e5usoBJrIwWp8WkDBL6dO/9oxmDFO6i6q5go7s85Nb+o
+ pBra4u71OgU2uj8BXFnZkZdb8gvlGQ4Nmb6ajGTzSq2I5wA74ki8B/1HB2TP3WV0Ag92
+ Uue8g4rrF7mwlP9v/NK9tPBWrvoC685r01SWrUqKGjc8WtUMk86CkaM6BQ+D/cVK+wo2
+ kRDvr16Tip0bC7JjWBEHOPSvu/3sHGx1LoF7GTLxelDE/o/lomRd1eudGceLiLtON3SN
+ FdZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765469029; x=1766073829;
+ d=1e100.net; s=20230601; t=1765469068; x=1766073868;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=VOEw0SPuMX7u+ebJdVidvZKd2M1VwatiKiU5rs5tHBQ=;
- b=opw7ejlYeGC5gINyi5BZFKFll7Dy9j4U8rd6koXwLfd6YISzdwIIQFASjXu/MHM+CD
- PA0BvR8ccTKWSYa3SzfwWCHlwT4Ls69XEL27zcy4Ca5oEDaLpGZAwmoYVj7kbWusv1W2
- TIPQDSZjU+wQCBwfaZ60bP2zMGYB4fiPzpKObgGY83Co+dXpYwQ7SieYvrkhFAovNFE6
- /VXm598pYxJw95VRXVFIJUGzAWMaTg8TC+n5agnuBiqXDFWW5kjtNoOL0Oz41T/tjD3k
- iATy2mJ71KXOqgCUIOD+82ScfJ0UvnkF334NsV+lRHZfrmUliC7a8MolFr/Lnwdhf495
- VARA==
+ bh=BmitcQb1V5rb54cGQXvsCZVm1Y1YGXc8fFkzyOmKBUI=;
+ b=eLbfOm2/xSZ1C75ayj+I3JDmVm9ly8+LhiECqK6ualxIWrB5GAtIeYEgQF+RgeQ6Td
+ dI7RnXbQSgdVpYg1sKyFxtSZrpsCRjurm75DZI+PT703TvB3PSsfaIItYsU9WhLWszIh
+ Nerqx5SBam8rI8YE6T5C6kz7Z5g6wLZK4JEqoJw+1dXRBOxFirYxj4OJ/GZsh/4BT8SO
+ uWpri+K/bKzR1ZYG5rDVuO9uCIB03s8QS8HixcZ1aLYl0ac51vIOep5+6jaMx2wePiHZ
+ djKfXRwnMniaspjN55chwKrQyZ+GNine5RJA50GLc76TpjXhDmDV/AGITg4d8mGni6tJ
+ A7Hw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWR1I8jTEsC3OUaa8yv7XvoacQxv0YWVl32HE1Yj33or3mPeRhjecxDYb9SqIDakyviYvjlOhhfh4jq@nongnu.org
-X-Gm-Message-State: AOJu0YwFZ4kflmrxAa4Ubf4kWcQ0DFwviWOR8p0rU2nUetBnFX6fW4AO
- FJkJxfkSV9k+y31KjFBHdYimUedz0XJaQzpcn5lquwjxTj7R8lQ7evL0UcY8lS0EY99BXsmEArr
- pIFWJOBI=
-X-Gm-Gg: AY/fxX7vWToNWDpkH44rO1MdYZ3PTnymdZYgUG+K/jTza5+dejfx2jPfO0C0xEzt/aR
- xt9U9Na/xKu/LAdSxockhRLvJxbZYI1GO4gvxtOPvqdSx7uTF7rlN/2jTckegpx9V6cPeSo31ER
- mW7Zkw+/i/Eyh3Zh4GfE4/WMOqz3uzGga2PaOoTcKr67egSr1NId15OKIpwm0dlxbcnLBwOKCKr
- YpBHJxnoPoTCB9n+tk1by9Kl5HLQgFGiy5rPALU7ldzG6Pb7OCBdjy9414oUU7stjLQAc2RoTkn
- NiLtGIC0MRLOF/P8w9ZZjsvcH6ZsvjxvCQhaF5SSHklfAH4a5WVq0WrYyg66wuyH0dwfhZgxuRY
- pFWI6OSewOWCJRNx5LMfI9IIgsUbM53WByQ8YQ5kqC5VL3l+32xxHh01VmQ4SBAavNRSZeVQpjU
- zW594Myt+sbuyjYd6Lo3D6GMr2AZ0VTwrJ3OYxkJMERnWBoH0i2BhYznljQz+5EWsa
-X-Google-Smtp-Source: AGHT+IEpTE7HFJ0SvLmwIptDl+7Iqc0Z/qFtvCXMN4FD0fGvgsmgo/7oqWADNyynfKsue5TLQ3ALjA==
-X-Received: by 2002:a05:6820:a01:b0:659:9a49:8ed4 with SMTP id
- 006d021491bc7-65b381e275dmr1039902eaf.8.1765469028897; 
- Thu, 11 Dec 2025 08:03:48 -0800 (PST)
+ AJvYcCV/UX+hFGdsR6zVR+fS/voegXjDvZoBhbyTUNWcYfqx4/wFk5sgryw5wK68aS5mmQZWQCcxyNvPz67A@nongnu.org
+X-Gm-Message-State: AOJu0YzU3WlHXznW0t5I9FR+NAapKcS3HRyeGNO5LGfmXzEifsyGiL0l
+ A0az790JOkeCeKcGhDY13XP7Q0xv1tS1l6MP7/7yCE7jHGBoRDmF3gwf8BxnuD/ad0bfDtwmhvg
+ W37nK/fQ=
+X-Gm-Gg: AY/fxX4v60gopsxqofxGClE0H3Bb7+d9tbQM12ClJUBx0cDAy41PtQGwu2tLjJRsXoV
+ T8D6llg3hU60Lek8H8JOzDSfP1JwCeznOHPYcC+ORWshpx+k13KVvQikYpvk0zxTz3al1nEp8DB
+ GfB/OEEhUnn5Wnz94TqLp9slcU4eSx5ejIYqV8ga3kPgkyoxG8y913XiOxACyIyZLiKiYXEjX5h
+ MACxzBq0vpQTGtJkKwDgMW71tnnLBLazbKTEiV3GF173Wb9CIXKZ3GMQLDaBvhdLRWthMg6zsSM
+ eKlHOjeF2bdaLRx03JG3FW+SVc4MdUvHqyWNsRpQUQar8Hjgxcxb8riX32AieQTmAQYHMhu6Cu4
+ zl5ECCYX3fsoMRmBZTITYKeZE1Ra5p0EVXYtrVazYdR0gu3kS54sXxrjIjFVhu4TkjVEcj1FTmb
+ +KmsCPsCExn7hBdXSSchbtQkYUDhJIf9LoteKSkLbA0IBqLQ4W9aBot0Z1n8Rn79akc7YsACu4A
+ hI=
+X-Google-Smtp-Source: AGHT+IHYrljbkga2vbK7oZg4d2RzhMxPxaEfwmVI6uK3q7CiVCqxKN14CjjlqfnoglSXb5gBGF7blA==
+X-Received: by 2002:a05:6830:43a1:b0:7c7:6626:b599 with SMTP id
+ 46e09a7af769-7cadcdff87fmr1408056a34.1.1765469066807; 
+ Thu, 11 Dec 2025 08:04:26 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-65b35f2b589sm1316356eaf.1.2025.12.11.08.03.48
+ 46e09a7af769-7cadb2fc086sm1650858a34.18.2025.12.11.08.04.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 08:03:48 -0800 (PST)
-Message-ID: <3cad0d59-91b3-4276-a544-7d34737ce88e@linaro.org>
-Date: Thu, 11 Dec 2025 10:03:46 -0600
+ Thu, 11 Dec 2025 08:04:26 -0800 (PST)
+Message-ID: <58e15332-6eed-474b-b440-bc8cf4bf79d9@linaro.org>
+Date: Thu, 11 Dec 2025 10:04:24 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/18] target/i386/tcg: remove do_decode_0F
+Subject: Re: [PATCH 07/18] target/i386/tcg: move and expand misplaced comment
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20251210131653.852163-1-pbonzini@redhat.com>
- <20251210131653.852163-7-pbonzini@redhat.com>
+ <20251210131653.852163-8-pbonzini@redhat.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251210131653.852163-7-pbonzini@redhat.com>
+In-Reply-To: <20251210131653.852163-8-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c35;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc35.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,35 +108,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/10/25 07:16, Paolo Bonzini wrote:
-> It is not needed anymore since all prefixes are handled by the
-> new decoder.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/tcg/decode-new.c.inc | 7 +------
->   1 file changed, 1 insertion(+), 6 deletions(-)
-> 
-> diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-> index 213dbb9637c..ea8e26f7f98 100644
-> --- a/target/i386/tcg/decode-new.c.inc
-> +++ b/target/i386/tcg/decode-new.c.inc
-> @@ -1430,15 +1430,10 @@ static const X86OpEntry opcodes_0F[256] = {
->       [0xff] = X86_OP_ENTRYr(UD,     nop,v),                        /* UD0 */
->   };
->   
-> -static void do_decode_0F(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
-> -{
-> -    *entry = opcodes_0F[*b];
-> -}
-> -
->   static void decode_0F(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+> @@ -2222,6 +2217,10 @@ static bool decode_insn(DisasContext *s, CPUX86State *env, X86DecodeFunc decode_
 >   {
->       *b = x86_ldub_code(env, s);
-> -    do_decode_0F(s, env, entry, b);
-> +    *entry = opcodes_0F[*b];
->   }
+>       X86OpEntry *e = &decode->e;
 >   
->   static void decode_63(DisasContext *s, CPUX86State *env, X86OpEntry *entry, uint8_t *b)
+> +    /*
+> +     * Each step decodes part of the opcode and place the last not-fully-decoded
+
+places
+
+> +     * byte in decode->b.  If the modrm byte is read, it is placed in s->modrm.
+> +     */
+>       decode_func(s, env, e, &decode->b);
+>       while (e->is_decode) {
+>           e->is_decode = false;
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
