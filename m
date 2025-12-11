@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD35AD3E799
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 06:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF08AD3E797
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 06:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTaQx-0001qa-JN; Thu, 11 Dec 2025 01:45:51 -0500
+	id 1vTaR2-0001zb-Jo; Thu, 11 Dec 2025 01:45:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTaQP-0001iM-FI
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 01:45:18 -0500
+ id 1vTaQr-0001nl-5R
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 01:45:47 -0500
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTaQN-00065P-DS
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 01:45:16 -0500
+ id 1vTaQm-0006HZ-EU
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 01:45:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765435516; x=1796971516;
+ t=1765435541; x=1796971541;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=3LMmQ+qXdaBeNuD7ppu1lZ8wt0GZHeCMjJGChKX52uI=;
- b=F18NIbO+L1wEhto45UVXp+R0oJ+Cy4WnpExW2D+BrsFHwdLraVg3d/Ra
- /J2Iwibui4kD5NlduxSnejffcbpKZRZrp6UUPv0FuVg/OrnI0FctqEm9A
- RwWBOKVf3cHCgg4Ti/EB+jAb3Vw84q8GuuALhgAgg2N0I0jDz/3CPuPrC
- y8uGeFSCB+tB79/4mh/jUg8ZSH95WdQLyoMPyn42qN74MdudbtR0QzhgZ
- dPc8NvmbQoKmMXsjOY/Tgnnu5yfDM/2qK69Gtzck32Xn/Xro4+6fSetgJ
- qNInVVBfYBrLULEUeMqQf2joTxCgnr1t4XezdBgHPwkrPqilYtsM0CW1Q w==;
-X-CSE-ConnectionGUID: DxOYtmHJShuvG8A8F4Yvog==
-X-CSE-MsgGUID: SzC+5bJRSjG39N6cXJl+Gg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="67584429"
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="67584429"
+ bh=ray+Oqw/uM8jcX8Iet4O0MoIkdoAsGFxvsVvR05hagQ=;
+ b=Apk9x9J3elZb046Yl4emcMt6WZiOQ6OQuttZhEevCcOO2VLIzRFq8oHe
+ haX9vJPDnV9if5OgLLMyaRW4ydTHvPpfWg99L7Z8QufTHgFrkNn6UKGgE
+ pi663D1PRQNi50DuETWRj2Y6+zIBGEJ8tIGo9MA6bdB278ODuenMVLLfq
+ kqIgTrR0gmIVP+CX+srW0V2ReQCCwCDK9OWoacdKF49OAI4GhxgYGXUDy
+ n9CmCvv0NzNMnxeSqwjB2/YfHE4VYGw/zMwAAoY/xBYRnQw5fA8jfQPV4
+ 1FrADXxSK9MCrUyTjqeLnfhq+7BZLXy6kpvORQ1NwHqtHpGXkQjijr7ym Q==;
+X-CSE-ConnectionGUID: sZtPupspRqSB7er+kIaF1w==
+X-CSE-MsgGUID: H3JkXRwWRBWejZGcfIyTEw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="67584507"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="67584507"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2025 22:45:15 -0800
-X-CSE-ConnectionGUID: JzHfmoiFT3GsHnb+rR5rnQ==
-X-CSE-MsgGUID: ih5q40xQRais0FNChce/QQ==
+ 10 Dec 2025 22:45:39 -0800
+X-CSE-ConnectionGUID: Qr86eNZ8Q5aDJS9ERNWV1g==
+X-CSE-MsgGUID: BD9pkxitRqSC7SDQztwDCg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="196494942"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="196495042"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 10 Dec 2025 22:45:12 -0800
+ by orviesa009.jf.intel.com with ESMTP; 10 Dec 2025 22:45:35 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -54,10 +54,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  "Chang S . Bae" <chang.seok.bae@intel.com>,
  Zide Chen <zide.chen@intel.com>, Xudong Hao <xudong.hao@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 2/9] i386/machine: Use VMSTATE_UINTTL_SUB_ARRAY for vmstate
- of CPUX86State.regs
-Date: Thu, 11 Dec 2025 15:09:35 +0800
-Message-Id: <20251211070942.3612547-3-zhao1.liu@intel.com>
+Subject: [PATCH v2 9/9] i386/cpu: Mark APX xstate as migratable
+Date: Thu, 11 Dec 2025 15:09:42 +0800
+Message-Id: <20251211070942.3612547-10-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251211070942.3612547-1-zhao1.liu@intel.com>
 References: <20251211070942.3612547-1-zhao1.liu@intel.com>
@@ -88,58 +87,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before expanding the number of elements in the CPUX86State.regs array,
-first use VMSTATE_UINTTL_SUB_ARRAY for the regs' vmstate to avoid the
-type_check_array failure.
+APX xstate is user xstate. The related registers are cached in
+X86CPUState. And there's a vmsd "vmstate_apx" to migrate these
+registers.
 
-VMSTATE_UINTTL_SUB_ARRAY will also be used for subsequently added elements
-in regs array.
+Thus, it's safe to mark it as migratable.
 
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes since v1:
- * New patch.
----
- include/migration/cpu.h | 4 ++++
- target/i386/machine.c   | 2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ target/i386/cpu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/migration/cpu.h b/include/migration/cpu.h
-index ca7cc0479e79..1335abe22301 100644
---- a/include/migration/cpu.h
-+++ b/include/migration/cpu.h
-@@ -21,6 +21,8 @@
-     VMSTATE_UINT64_V(_f, _s, _v)
- #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
-     VMSTATE_UINT64_ARRAY_V(_f, _s, _n, _v)
-+#define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
-+    VMSTATE_UINT64_SUB_ARRAY(_f, _s, _start, _num)
- #define VMSTATE_UINTTL_2DARRAY_V(_f, _s, _n1, _n2, _v)                \
-     VMSTATE_UINT64_2DARRAY_V(_f, _s, _n1, _n2, _v)
- #define VMSTATE_UINTTL_TEST(_f, _s, _t)                               \
-@@ -40,6 +42,8 @@
-     VMSTATE_UINT32_V(_f, _s, _v)
- #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
-     VMSTATE_UINT32_ARRAY_V(_f, _s, _n, _v)
-+#define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
-+    VMSTATE_UINT32_SUB_ARRAY(_f, _s, _start, _num)
- #define VMSTATE_UINTTL_2DARRAY_V(_f, _s, _n1, _n2, _v)                \
-     VMSTATE_UINT32_2DARRAY_V(_f, _s, _n1, _n2, _v)
- #define VMSTATE_UINTTL_TEST(_f, _s, _t)                               \
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index 57a968c30db3..0882dc3eb09e 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -1748,7 +1748,7 @@ const VMStateDescription vmstate_x86_cpu = {
-     .pre_save = cpu_pre_save,
-     .post_load = cpu_post_load,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL_ARRAY(env.regs, X86CPU, CPU_NB_REGS),
-+        VMSTATE_UINTTL_SUB_ARRAY(env.regs, X86CPU, 0, CPU_NB_REGS),
-         VMSTATE_UINTTL(env.eip, X86CPU),
-         VMSTATE_UINTTL(env.eflags, X86CPU),
-         VMSTATE_UINT32(env.hflags, X86CPU),
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 9cc553a86442..f703b1478d71 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1544,7 +1544,8 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         .migratable_flags = XSTATE_FP_MASK | XSTATE_SSE_MASK |
+             XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
+             XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK | XSTATE_Hi16_ZMM_MASK |
+-            XSTATE_PKRU_MASK | XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK,
++            XSTATE_PKRU_MASK | XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK |
++            XSTATE_APX_MASK,
+     },
+     [FEAT_XSAVE_XCR0_HI] = {
+         .type = CPUID_FEATURE_WORD,
 -- 
 2.34.1
 
