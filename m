@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37CDFD3E788
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 02:57:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F82D3E78A
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 02:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTWqy-0000gL-Sd; Wed, 10 Dec 2025 21:56:28 -0500
+	id 1vTWr8-0000iF-9L; Wed, 10 Dec 2025 21:56:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1vTWqw-0000fN-IN
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 21:56:26 -0500
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1vTWr6-0000ha-Ot
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 21:56:36 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
- id 1vTWqv-0005E9-5A
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 21:56:26 -0500
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-343f52d15efso530543a91.3
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 18:56:24 -0800 (PST)
+ id 1vTWr5-0005KB-6j
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 21:56:36 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-34381ec9197so410758a91.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 18:56:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1765421784; x=1766026584; darn=nongnu.org;
+ d=sifive.com; s=google; t=1765421794; x=1766026594; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EXnex4JwlAFkgPgcPuA0yCUiwy94oRkZ+YJBQ3Q9138=;
- b=ShDqqBvODE7OWg+uxciOqy2k5ij4j6Nea6XcdFQdcawNxfhpy72x4iwcjaCqAo/ICM
- xHVmF2ltkvhjxYWDvURNwXakw5KGbHtvneCX0sWvV8x5fpFE7eK07dznSx5lJtEPRRtb
- PjRKN+48c0X9EjdkMwMCFvIg3v8qpsJjvMCu9j+05kMuI4/tgZ+tZGUAiNpnuVBqYTVj
- 0loE1ryiRbZi+tfkqUR/Mu76M5OoRRylL9Vn5CG87BDJN2CkZGLfHnDvCmPjbB3BXt/l
- eHLDdn3SPFk+GaBACmQzkkyzaP3GRNFOUi8PrJXpNH25QNr+K+y/M2Rg+LhOrwGk1RZz
- 3daQ==
+ bh=qFPa43ZKBK0jE8M4900tFDQHM1I1hGL7lW+BtayTHNM=;
+ b=UA8bqKZreG7DLqkxHKxBsbZX5CUupIlI0Po5Su944CZkvJWmHDL/tlS8oGnT2PFdto
+ 0zS55mHGSFazgJKJ2QnA9s912bjp6uO4D5FCqCQS//99smNIiZXEAGR0NSSYM/XOY039
+ SiQEMFi15S+oRrRTWJb3Zq66Ng7FZNEnd5qtBtJvj3qZrONObIxaJSnIAhdO1rUe4t1P
+ KDoAIxSpC4yysXjaL40xJvV/bUxJWtHJBIfN8Ws++0JyKOblCoxnztHndPdJ47t117nN
+ q4m9QhPNPBe5Vq0IZE1mqC5V7lddvx4VnuxCovv20ap0O8Tr2+pEPxugCEE6QnelAuH0
+ w4uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765421784; x=1766026584;
+ d=1e100.net; s=20230601; t=1765421794; x=1766026594;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=EXnex4JwlAFkgPgcPuA0yCUiwy94oRkZ+YJBQ3Q9138=;
- b=c7d0+7WS8REItbjoaFd0dim6XZ4sPYQJxb93674GkZcQkT+/Ux8DTKVBvSxpVVONQs
- ejZWMJFFjH/O77xJv5slDkemKZESPYf2TnczDEEl4JAb6ZotMYPYNpiUaOuBdbl3GJcg
- bmuiqb4mIajakKzbY9SWAGyP5n2oFCPaI6hvBXfqB4BWvnwXKSWSbxJS0cWb7SQvbxyW
- QtIijJ4a1PDjb7pzHqt6/svAisYBeRxQJfYQ1Xwq7QGeHRJR3un99iugY2tnbWyNpkA4
- +Y61oziq2KNhFPOfstqKK45yYYIF5jI909SafO1t/m9QhPjX2OoyiCSiyNkpHpATrZla
- 6o7w==
-X-Gm-Message-State: AOJu0YztrHJ7GgQbYSd+UXcARPBWwp1rOe0tbEz9Arhk4T+9enxYqumy
- Hf/j6BQ7Z69wX+03wsQqBWRaSvhTLgfhUpuFpuyCNZrC+Ss9gkSVuMFQdfNjkTWb4aDPC90zHo4
- hizcmBMx2xEeFMtQsu37zk7fiT3FmC6ae5jQXd/o4aQ0jV6uatRYvoNIFdS/Y9jJ0rHgKvTVz6D
- QhyA7m3iQyQ23VfLlXRe0Ti+y7wi/gzZWlkUCf8SI5
-X-Gm-Gg: AY/fxX6fLwnGAeO40CI7gkdF8P5um/BXsS9neiiy+02R9KA3IGSQwxxXhLbC6FjMQxQ
- eSXJjV0mG91ezElE8qNpaBB1Lhh1xPQ3oszNIB4f7SLN+cBvF/EdZQcuwRuePG18rjatlqT+ceQ
- tS5u0HB42EuSrCKEGUrTHzTx0Ntyz6KDuuE6ttCCVJwDTrqE6486w7q0ZINfDa2KJ5hQJ7sDaaL
- gI56zdIpCnKJ/oJr5CO93fzy0L72m6gQah2zEOvqwivYi89jbQTpwGmrnSz+41JqnfgbecTMfu2
- DdA6z1pn23A5ajYWLDdeHpkRiACAyi3xf0NEdVgh3mEf9RwVyXuGJ1OqIs+1yiuO1xBD87DYiw5
- b9Z5PxASkByIIvsqUN/n6G7sy+lmYkT42c7o5zB9IYzpa5t9d8CNVHZ92eFm3rGAx+zTHPTvjbm
- 4vyadjTB9NZxykNVYusgNPpFHXXqzJMIVxzKNx0fm/2ZjMXHhQzg==
-X-Google-Smtp-Source: AGHT+IEvVrFUMv+QlPMr2PMUuIN0LFAFn61taXzj/m3Lz610IbLKrE7V1ZkSiuAWmtnhlJd/b7vorg==
-X-Received: by 2002:a17:90b:1d82:b0:343:edb0:1012 with SMTP id
- 98e67ed59e1d1-34a7287480bmr4362416a91.21.1765421783503; 
- Wed, 10 Dec 2025 18:56:23 -0800 (PST)
+ bh=qFPa43ZKBK0jE8M4900tFDQHM1I1hGL7lW+BtayTHNM=;
+ b=CThv6DD1SQ0FRC2REOyEYN5BkMSQeRnuIMm9mPCmjxDjME6MlXiSmI4jZ4gIGXMMM7
+ dU31uIriPOE26EWKX/AZV8xEddMLN2znMBST9Kbg3K7cM1tqDP2lA2/NoinR+jSMmzrt
+ yG4CnBMFZ5atM1hOPCWsusa8+pbjSchTKq/vAJzlqNDMsGGvhH7VKTIawZgYDgamFy4r
+ 1paZkt8T8a2Hn6KHdR8Cg0LyqDl5ttALEERwh06vwXQWmKLvV4d9OG7PhJkw+oEbF36m
+ BnXPQea7qQdDzY34/2DLVLepyoHuK4GUD91HoOmjM1OKt9yH3tRKUhT2Fc7rnw8R+/DE
+ pG5w==
+X-Gm-Message-State: AOJu0Yxt+jT7QTqdeotxAB3Ej/ycUxH9XDBumIpkO9GPuu9TXvC4PyQv
+ vsD3ftogvoKWt4r/M3b/twJcV3NSNemT6UwCxCHRftMHlFvEKlRFJqK/5aquqrljeCtCVRqtAMJ
+ VRZ/luKqCkkKoPJgJiK9lYPUslQPsAS0e/peXSTKlf7whUQqgqB4PmGTuOzes9r3cfVKQW9tgEw
+ 1hbBB4BHnA1eMKjL0Pv//2ptrQm0WU5tBlK+HeMGJv
+X-Gm-Gg: AY/fxX5nQVuvLYYym5J4FQhIOB3Tr6LGCH/2u912HuchncF0s1Th104EQH01SB6SSMt
+ H74XeJrEweRKx40H6/1MkkaH1p57uwo+lsLbIV14NCFQ9hYmO62L3ZhC7NGMOtM9QtuUd64Zx+A
+ QFK0kjmEuF5Ky08clhOSsLnOH0SS0WIri4sdCHVhp3t6UX7xIqpUDV9B+XEQLUHu+g/fn3+/78G
+ ZcbMuSqLFFqoCL/Ya4+bSGhFGmgt14ocky+H98QltLFA/N50Si4F7r8HLT9R4k/4NYPHUmfKd0u
+ x9UyMdBv2NlBfA1u5i3u2NQHF8uN6uvTeiu173HEVjHiYzlu4zJZocdpq0eIRuvyCblNIGGfvoj
+ waAhnlC+wOTkOsMKjwXNrg6lDV7MnaeaOqfe1iJDuJE+oypWXRjH8EODTeu5PA5Dv1XB/zyZZyX
+ WGCnJAbNwej+K/J0mQfrfx9XshZjFG4LZvE2Oo7eTp+UxSZXM9BA==
+X-Google-Smtp-Source: AGHT+IE29SNJ8mua6A019W4ewlKiI0GCnbrkI/x4Ttye7vvNHtSaNgNFdNwo/7G+LEJLk/Nit6bvvg==
+X-Received: by 2002:a17:90b:4b85:b0:336:b60f:3936 with SMTP id
+ 98e67ed59e1d1-34a7284d089mr4709841a91.12.1765421793461; 
+ Wed, 10 Dec 2025 18:56:33 -0800 (PST)
 Received: from jchang-1875.internal.sifive.com ([136.226.240.181])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34a926de17dsm70870a91.6.2025.12.10.18.56.21
+ 98e67ed59e1d1-34a926de17dsm70870a91.6.2025.12.10.18.56.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 10 Dec 2025 18:56:23 -0800 (PST)
+ Wed, 10 Dec 2025 18:56:33 -0800 (PST)
 From: Jay Chang <jay.chang@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -76,16 +76,17 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Jay Chang <jay.chang@sifive.com>, Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH 1/2] hw/riscv: Don't insert DDT cache in Bare mode
-Date: Thu, 11 Dec 2025 10:56:10 +0800
-Message-ID: <20251211025611.99038-2-jay.chang@sifive.com>
+Subject: [PATCH 2/2] hw/riscv: Refactor riscv_iommu_ctx_put() for Bare mode
+ handling
+Date: Thu, 11 Dec 2025 10:56:11 +0800
+Message-ID: <20251211025611.99038-3-jay.chang@sifive.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20251211025611.99038-1-jay.chang@sifive.com>
 References: <20251211025611.99038-1-jay.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=jay.chang@sifive.com; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=jay.chang@sifive.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,51 +109,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In Bare mode the IOMMU does not perform DDT look-ups, therefore
-caching DDT entries is unnecessary.
+Align SPEC: Bare mode contexts are not cached, so they require
+direct memory deallocation via g_free instead of hash table cleanup.
 
 Signed-off-by: Jay Chang <jay.chang@sifive.com>
 Reviewed-by: Frank Chang <frank.chang@sifive.com>
 ---
- hw/riscv/riscv-iommu.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ hw/riscv/riscv-iommu.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 69852f4f13..79eee2e85e 100644
+index 79eee2e85e..fca5763858 100644
 --- a/hw/riscv/riscv-iommu.c
 +++ b/hw/riscv/riscv-iommu.c
-@@ -1312,16 +1312,23 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
+@@ -1344,7 +1344,16 @@ static RISCVIOMMUContext *riscv_iommu_ctx(RISCVIOMMUState *s,
  
-     int fault = riscv_iommu_ctx_fetch(s, ctx);
-     if (!fault) {
--        if (g_hash_table_size(ctx_cache) >= LIMIT_CACHE_CTX) {
-+        if (mode != RISCV_IOMMU_DDTP_MODE_BARE) {
-+            if (g_hash_table_size(ctx_cache) >= LIMIT_CACHE_CTX) {
-+                g_hash_table_unref(ctx_cache);
-+                ctx_cache = g_hash_table_new_full(riscv_iommu_ctx_hash,
-+                                                  riscv_iommu_ctx_equal,
-+                                                  g_free, NULL);
-+                g_hash_table_ref(ctx_cache);
-+                g_hash_table_unref(qatomic_xchg(&s->ctx_cache, ctx_cache));
-+            }
+ static void riscv_iommu_ctx_put(RISCVIOMMUState *s, void *ref)
+ {
+-    if (ref) {
++    unsigned mode = get_field(s->ddtp, RISCV_IOMMU_DDTP_MODE);
 +
-+            g_hash_table_add(ctx_cache, ctx);
-+            *ref = ctx_cache;
-+        } else {
-             g_hash_table_unref(ctx_cache);
--            ctx_cache = g_hash_table_new_full(riscv_iommu_ctx_hash,
--                                              riscv_iommu_ctx_equal,
--                                              g_free, NULL);
--            g_hash_table_ref(ctx_cache);
--            g_hash_table_unref(qatomic_xchg(&s->ctx_cache, ctx_cache));
-+            /* Remember ctx so it can be freed */
-+            *ref = ctx;
-         }
--        g_hash_table_add(ctx_cache, ctx);
--        *ref = ctx_cache;
-         return ctx;
++    if (!ref) {
++        return;
++    }
++
++    /* ref is pointing to ctx in Bare mode. Bare mode ctx is not cached */
++    if (mode == RISCV_IOMMU_DDTP_MODE_BARE) {
++        g_free(ref);
++    } else {
+         g_hash_table_unref((GHashTable *)ref);
      }
- 
+ }
 -- 
 2.48.1
 
