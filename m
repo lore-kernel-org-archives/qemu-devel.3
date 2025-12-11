@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A278ED41C35
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 13:31:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F250D41C36
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 13:36:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTgkv-0003sX-Fj; Thu, 11 Dec 2025 08:30:54 -0500
+	id 1vTgpb-0005vA-6W; Thu, 11 Dec 2025 08:35:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vTgkf-0003pT-9L
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 08:30:37 -0500
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ id 1vTgpR-0005uA-QG
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 08:35:34 -0500
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1vTgkc-0001yW-P8
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 08:30:37 -0500
+ id 1vTgpP-0003Ar-Da
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 08:35:33 -0500
 Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id C29E946C38
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 13:30:32 +0000 (UTC)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 8AD6045298
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 13:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1765459832;
- bh=9pqDT0mmCwNUIqfBU1ZQjLPct0zG8T7ufKHWZTnE6c4=;
+ s=20210803; t=1765460129;
+ bh=cOZJMHBSxUzjCLPNOXKdXB0nmsKXkHcHZPdYpXuVSkI=;
  h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
  Message-Id:Subject;
- b=T8qqiVVAmZtHLvEnohlKmmhX5OcXAlxQqaT7HsmGHAWKKH4/wlOpt8cu/nCsnxwqy
- CdJ8vBTgmp5iUaSG6FZOQsGE+JLZkNaP7DIsagu1X/avhzf1vSOxhs2E/G64kUX2ln
- 9M0WqC1m/eOJfTgjSG0EokDEUwrGQ/vDn8JPgOGxt2JxDad21jxiMZoykXdfP/UIgu
- Q6Et+cDX1A0sXE1ye/ABoYbvFyjE6+ncW6fK7YSTEoDPN+5FBsJLEuQoylPSvBXArR
- sllsjN5t5ITt8QJrNCliz5G716jmOjWdU4CRbV230VeLrxc3Io7p5bvDo8q6KVDZjz
- mgdJQCpK6W2cg==
+ b=gSeEDs6DtSXwhYS2ubVd4DulQkGARZjirFkRd52jgWEoWQY4RjGVD8igwfkjcGDZm
+ gxgyU5SXQoQDJoAauDSnkKwiLgWx/ucLUBZnPryrWEWmGqxqb2dmVSzpTUC4mm7PC3
+ 3YO91IF3ld3iVc+UEo3+GvNeWMSgMyWT+eVg1YINrfeqvcFMXyIdkrpzxX5Ke7h/LC
+ AMpKkEV9murDX97l0+1WL8y/3BgXQsW70qnD80xbvGHHD998ylCxsqF5HZyjwc2iOO
+ h0lTC7+/hb4avYoWTBudyGYz1k791Ib7LtYNoj1DSddBr55UZuBKVBAs3A4nfD8RcQ
+ XFkzS5n7Qc1pg==
 Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 9C5E17E6CF
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 13:30:32 +0000 (UTC)
+ by scripts.lp.internal (Postfix) with ESMTP id 71C7D7E68D
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 13:35:29 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Date: Thu, 11 Dec 2025 13:25:11 -0000
-From: Launchpad Bug Tracker <2123828@bugs.launchpad.net>
+Date: Thu, 11 Dec 2025 13:27:21 -0000
+From: Andreas Hasenack <2123828@bugs.launchpad.net>
 To: qemu-devel@nongnu.org
 X-Launchpad-Notification-Type: bug
 X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
@@ -91,9 +91,9 @@ X-Launchpad-Bug-Security-Vulnerability: no
 X-Launchpad-Bug-Commenters: ahasenack enr0n hectorcao janitor paelzer schopin
  slyon ubuntu-sru-bot vhaudiquet xypron
 X-Launchpad-Bug-Reporter: =?utf-8?q?Lukas_M=C3=A4rdian_=28slyon=29?=
-X-Launchpad-Bug-Modifier: Launchpad Janitor (janitor)
+X-Launchpad-Bug-Modifier: Andreas Hasenack (ahasenack)
 References: <175793222278.1250191.6568998309826575823.malonedeb@juju-98d295-prod-launchpad-2>
-Message-Id: <176545951366.3151513.5292584576562553621.launchpad@scripts-bzrsyncd.lp.internal>
+Message-Id: <176545964183.1164249.15004371298712376987.malone@juju-98d295-prod-launchpad-2>
 Subject: [Bug 2123828] Re: [SRU] RISC-V: incorrect emulation of load and store
  on big-endian systems
 X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
@@ -102,9 +102,9 @@ Precedence: bulk
 X-Generated-By: Launchpad (canonical.com);
  Revision="379e22b8475e3402088a4cdb4a6e7936a4d28414";
  Instance="launchpad-scripts"
-X-Launchpad-Hash: 31481a76b56e3510e927d42bb065ff70e5e6bc69
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Launchpad-Hash: cae07b4008e9660105ea51b9c25d3ecd98917dce
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
 X-Spam_score_int: -42
 X-Spam_score: -4.3
 X-Spam_bar: ----
@@ -127,9 +127,21 @@ Reply-To: Bug 2123828 <2123828@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-** Merge proposal linked:
-   https://code.launchpad.net/~hectorcao/ubuntu/+source/qemu/+git/qemu/+mer=
-ge/497342
+> Note: The Questing SRU was built against ceph/19.2.3-0ubuntu1 and
+should be released together.
+
+There was a new ceph sru[1] after qemu was uploaded, version
+19.2.3-0ubuntu1.25.10.1. The sru pending report doesn't flag that as a
+dependency, but is this a problem?
+
+Let's check what version of rbd the qemu-block-extra package in questing
+proposed is depending on...
+
+librbd1 (>=3D 19.2.3-0ubuntu1)
+
+Ok, so looks fine.
+
+1. https://launchpad.net/ubuntu/+source/ceph/19.2.3-0ubuntu1.25.10.1
 
 --=20
 You received this bug notification because you are a member of qemu-
