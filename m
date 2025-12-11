@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35CD4D3E786
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 08:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18618D41C08
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 08:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTcPI-00029y-K3; Thu, 11 Dec 2025 03:52:16 -0500
+	id 1vTcRD-0002lW-09; Thu, 11 Dec 2025 03:54:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTcPG-00029k-QH
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 03:52:14 -0500
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTcPE-0000LF-BW
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 03:52:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765443132; x=1796979132;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=47CtsqOCElRhQmwQBHGB+RMzeDpuMiMvxyN/PDZE120=;
- b=S7BbGU/Eq0DlaILL8ejW35MXCAoJ9y+D5hef774iRy0b+FTGaUb7gsk8
- hyHatviKagWTpMLu3tkW7KhsztFY9h+8lU92igGyeh75gpeCYeKPEPixP
- memg23Dln3nI/464K9LEiALFD6zxfchk+7nNXbLhrKLdxLpGrGV4Qv2EQ
- oySMXP/cQeDCa7b9Tw4puoVORgGa6ZOh8TSiYp0Wk0PzxE0egm+/BTnLh
- NUakTC1LWJ7tSihD6hwc7tsYq+143Obw42dsfmIGI14hp/n7Nz4oIpMNT
- 5j7Jp8ODTs/R/uwluvahXY/L/WtSOA24k3tZYriLbMvhHXBwe7Cc1tegD w==;
-X-CSE-ConnectionGUID: vYE1Yg6mTN2/tiucU8q/EA==
-X-CSE-MsgGUID: GzjU0fF+TsCambwboKv9gQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="78040209"
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="78040209"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2025 00:52:10 -0800
-X-CSE-ConnectionGUID: /V9HF3OLSmCSmmHQwhc3Qg==
-X-CSE-MsgGUID: X3anHFyqQiSYQddwcOI5iw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="196757073"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 11 Dec 2025 00:52:07 -0800
-Date: Thu, 11 Dec 2025 17:16:54 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- "Chang S . Bae" <chang.seok.bae@intel.com>,
- Zide Chen <zide.chen@intel.com>, Xudong Hao <xudong.hao@intel.com>
-Subject: Re: [PATCH v2 0/9] i386/cpu: Support APX for KVM
-Message-ID: <aTqMBtkOxx6mZhn+@intel.com>
-References: <20251211070942.3612547-1-zhao1.liu@intel.com>
- <16e0fc49-0cdf-4e54-b692-5f58e18c747b@redhat.com>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vTcRA-0002lH-5f; Thu, 11 Dec 2025 03:54:12 -0500
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vTcR7-0000qF-Bl; Thu, 11 Dec 2025 03:54:11 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwD31ySqhjpp_iFcAQ--.37074S2;
+ Thu, 11 Dec 2025 16:54:02 +0800 (CST)
+Received: from [10.31.62.13] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwCH3+yfhjppoi0LAA--.21537S2;
+ Thu, 11 Dec 2025 16:53:58 +0800 (CST)
+Message-ID: <82e4571c-8511-44da-bc30-a8f0055a660f@phytium.com.cn>
+Date: Thu, 11 Dec 2025 16:53:50 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <16e0fc49-0cdf-4e54-b692-5f58e18c747b@redhat.com>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC RESEND v5 3/4] tests/qtest/libqos: Add SMMUv3 helper library
+To: eric.auger@redhat.com, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+References: <20251126154547.1300748-1-tangtao1634@phytium.com.cn>
+ <20251126154547.1300748-4-tangtao1634@phytium.com.cn>
+ <9b2c0429-a8bb-4df4-ad95-492f463cf29f@linaro.org>
+ <b184c907-e073-43d0-87b9-cf8c6c23dbed@phytium.com.cn>
+ <a361b46f-2173-4c98-a5d3-6b4d2ac004af@linaro.org>
+ <41c33694-008e-4ee1-bbe2-1498e9b6c9c7@phytium.com.cn>
+ <5af3335d-632b-432a-80d8-80ca4d20d06a@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <5af3335d-632b-432a-80d8-80ca4d20d06a@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: AQAAfwCH3+yfhjppoi0LAA--.21537S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQABBWk51DEDpAAAsX
+Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoW3WFWDWw15uFyDtr4rJFW8WFg_yoWfZrWxpF
+ y8JFW5trWUJr1rJr1UKw1UJryayr4xJw1UXr18WFn8Jr4qyr12gr1jqryq9r18Jr48Xr1j
+ vw1jgr13Zr15ArJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,53 +85,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 11, 2025 at 09:08:33AM +0100, Paolo Bonzini wrote:
-> Date: Thu, 11 Dec 2025 09:08:33 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH v2 0/9] i386/cpu: Support APX for KVM
-> 
-> On 12/11/25 08:09, Zhao Liu wrote:
-> > Hi,
-> > 
-> > This series adds APX (Advanced Performance Extensions) support in QEMU
-> > to enable APX in Guest based on KVM (RFC v1 [1]).
-> > 
-> > This series is based on CET v5:
-> > 
-> > https://lore.kernel.org/qemu-devel/20251211060801.3600039-1-zhao1.liu@intel.com/
-> > 
-> > And you can also find the code here:
-> > 
-> > https://gitlab.com/zhao.liu/qemu/-/commits/i386-all-for-dmr-v2.1-12-10-2025
-> > 
-> > Compared with v1 [2], v2 adds:
-> >   * HMP support ("print" & "info registers").
-> >   * gdbstub support.
-> > 
-> > Thanks for your review!
-> 
-> Great, thanks!  Just one question, should the CPUID feature be "apx" or
-> "apxf" (and therefore CPUID_7_1_EDX_APXF)?  I can fix that myself of course.
 
-Good point! I didn't realize this.
+On 2025/12/11 02:40, Eric Auger wrote:
+> Hi Tao,
+>
+> On 12/6/25 6:27 AM, Tao Tang wrote:
+>> On 2025/12/6 01:19, Pierrick Bouvier wrote:
+>>> On 12/5/25 7:03 AM, Tao Tang wrote:
+>>>> Hi Pierrick,
+>>>>
+>>>> On 2025/12/5 07:53, Pierrick Bouvier wrote:
+>>>>> On 11/26/25 7:45 AM, Tao Tang wrote:
+>>>>>> Introduce qos-smmuv3, a reusable library for SMMUv3-related qtest
+>>>>>> operations. This module encapsulates common tasks like:
+>>>>>>
+>>>>>> - SMMUv3 initialization (enabling, configuring command/event queues)
+>>>>>> - Stream Table Entry (STE) and Context Descriptor (CD) setup
+>>>>>> - Multi-level page table construction (L0-L3 for 4KB granules)
+>>>>>> - Support for Stage 1, Stage 2, and nested translation modes
+>>>>>> - Could be easily extended to support multi-space testing
+>>>>>> infrastructure
+>>>>>>        (Non-Secure, Secure, Root, Realm)
+>>>>>>
+>>>>>> The library provides high-level abstractions that allow test code to
+>>>>>> focus on IOMMU behavior validation rather than low-level register
+>>>>>> manipulation and page table encoding. Key features include:
+>>>>>>
+>>>>>> - Automatic memory allocation for translation structures with proper
+>>>>>>        alignment
+>>>>>> - Helper functions to build valid STEs/CDs for different translation
+>>>>>>        scenarios
+>>>>>> - Page table walkers that handle address offset calculations per
+>>>>>>        security space
+>>>>>> - Command queue management for SMMU configuration commands
+>>>>>>
+>>>>>> This infrastructure is designed to be used by iommu-testdev-based
+>>>>>> tests
+>>>>>> and future SMMUv3 test suites, reducing code duplication and
+>>>>>> improving
+>>>>>> test maintainability.
+>>>>>>
+>>>>>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>>>>>> ---
+>>>>>>     tests/qtest/libqos/meson.build  |   3 +
+>>>>>>     tests/qtest/libqos/qos-smmuv3.c | 731
+>>>>>> ++++++++++++++++++++++++++++++++
+>>>>>>     tests/qtest/libqos/qos-smmuv3.h | 267 ++++++++++++
+>>>>>>     3 files changed, 1001 insertions(+)
+>>>>>>     create mode 100644 tests/qtest/libqos/qos-smmuv3.c
+>>>>>>     create mode 100644 tests/qtest/libqos/qos-smmuv3.h
+>>>>>>
+>>>>> ...
+>>>>>
+>>>>>> +
+>>>>>> +void qsmmu_single_translation(QSMMUTestContext *ctx)
+>>>>>> +{
+>>>>>> +    uint32_t config_result;
+>>>>>> +    uint32_t dma_result;
+>>>>>> +    bool test_passed;
+>>>>>> +
+>>>>>> +    /* Configure SMMU translation */
+>>>>>> +    config_result = qsmmu_setup_and_enable_translation(ctx);
+>>>>>> +    if (config_result != 0) {
+>>>>>> +        g_test_message("Configuration failed: mode=%u status=0x%x",
+>>>>>> +                       ctx->config.trans_mode, config_result);
+>>>>>> +        return;
+>>>>> Is that expected to silently return if we can't configure translation?
+>>>>
+>>>> No, it is not intended to silently return on a failed configuration.
+>>>> Maybe an assertion is a better choice:
+>>>>
+>>>>
+>>>> config_result = qsmmu_setup_and_enable_translation(ctx);
+>>>>
+>>>> g_assert_cmpuint(config_result, ==, 0);
+>>>>
+>>> Looks good. We should rely on exit code first, and then on verbose
+>>> log to find what is the problem.
+>>>
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    /* Trigger DMA operation */
+>>>>>> +    dma_result = qsmmu_trigger_dma(ctx);
+>>>>>> +    if (dma_result != 0) {
+>>>>>> +        g_test_message("DMA failed: mode=%u result=0x%x",
+>>>>>> +                       ctx->config.trans_mode, dma_result);
+>>>>>> +    } else {
+>>>>>> +        g_test_message("-> DMA succeeded: mode=%u",
+>>>>>> ctx->config.trans_mode);
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    /* Validate test result */
+>>>>>> +    test_passed = qsmmu_validate_test_result(ctx);
+>>>>>> +    g_assert_true(test_passed);
+>>>>>> +
+>>>>>> +    /* Clean up translation state to prepare for the next test */
+>>>>>> +    qsmmu_cleanup_translation(ctx);
+>>>>>> +}
+>>>>>> +
+>>>>>> +void qsmmu_translation_batch(const QSMMUTestConfig *configs, size_t
+>>>>>> count,
+>>>>>> +                             QTestState *qts, QPCIDevice *dev,
+>>>>>> +                             QPCIBar bar, uint64_t smmu_base)
+>>>>>> +{
+>>>>>> +    for (int i = 0; i < count; i++) {
+>>>>>> +        /* Initialize test memory */
+>>>>>> +        qtest_memset(qts, configs[i].dma_iova, 0x00,
+>>>>>> configs[i].dma_len);
+>>>>>> +        /* Execute each test configuration */
+>>>>>> +        QSMMUTestContext ctx = {
+>>>>>> +            .qts = qts,
+>>>>>> +            .dev = dev,
+>>>>>> +            .bar = bar,
+>>>>>> +            .smmu_base = smmu_base,
+>>>>>> +            .config = configs[i],
+>>>>>> +            .trans_status = 0,
+>>>>>> +            .dma_result = 0,
+>>>>>> +            .sid = dev->devfn,
+>>>>>> +            .tx_space = qsmmu_sec_sid_to_space(configs[i].sec_sid),
+>>>>>> +        };
+>>>>>> +
+>>>>>> +        qsmmu_single_translation(&ctx);
+>>>>>> +        g_test_message("--> Test %d completed: mode=%u sec_sid=%u "
+>>>>>> +                       "status=0x%x result=0x%x", i,
+>>>>>> configs[i].trans_mode,
+>>>>>> +                       configs[i].sec_sid, ctx.trans_status,
+>>>>>> ctx.dma_result);
+>>>>>> +    }
+>>>>>> +}
+>>>>> What is the reason for batching operations?
+>>>>> We are not in a performance critical scenario for running this test,
+>>>>> so it's probably better to have distinct calls to single_translation.
+>>>>
+>>>> As described in the previous thread [1] , I plan to split the tests so
+>>>> that each translation mode is exercised by its own qtest. With that
+>>>> split in place, there is no real need for a qsmmu_translation_batch()
+>>>> helper anymore, so I refactor it into a qsmmu_run_translation_case
+>>>> function and drop the inside for-loop.
+>>>>
+>>> All good, indeed removes the need for translation_batch.
+>>>
+>>>> [1]
+>>>> https://lore.kernel.org/qemu-devel/7370070a-c569-4b77-bd1e-6fc749ba9c90@phytium.com.cn/
+>>>>
+>>>>
+>>>>> ...
+>>>>>
+>>>>> For the rest of the patch, which is quite consequent, congrats. It's
+>>>>> hard to review all the setup phase here, but knowing it works with the
+>>>>> current smmuv3 implementation, that's a good proof that it's working
+>>>>> as expected.
+>>>>
+>>>> Yes, setting up all this infrastructure did take some time, especially
+>>>> getting the nested mode page tables right (and Secure state-related
+>>>> configuration which is still in my local repo).
+>>>>
+>>> Feel free to start with the current version, and then you'll add
+>>> secure state related changes as part of your other series.
+>>>
+>>>> I really appreciate that you ran the tests yourself and even checked
+>>>> with a coverage-enabled build to confirm that it exercises the smmuv3
+>>>> implementation. Thanks again for the thorough review.
+>>>>
+>>> In case someone else wants to reproduce:
+>>> $ export CFLAGS="--coverage"
+>>> $ ./configure --target-list=aarch64-softmmu
+>>> $ ninja -C build
+>>> $ QTEST_QEMU_BINARY=./build/qemu-system-aarch64 \
+>>>    ./build/tests/qtest/iommu-smmuv3-test
+>>> $ rm -rf build/coverage_html
+>>> $ mkdir build/coverage_html
+>>> $ gcovr \
+>>>        --gcov-ignore-parse-errors suspicious_hits.warn \
+>>>        --gcov-ignore-parse-errors negative_hits.warn \
+>>>        --merge-mode-functions=separate \
+>>>        --html-details build/coverage_html/index.html \
+>>>        --filter 'hw/arm/smmu*'
+>>> $ echo file://$(pwd)/build/coverage_html/index.html
+>>> # open this in browser by clicking on your terminal
+>>>
+>>> If useful for you, you can attach those instructions in your next
+>>> cover letter, so people can easily reproduce.
+> are you ready to maintain that code (esp the lib)? You shall add an
+> entry in the MAINTAINERS file for those new files I guess.
+>
+> Eric
 
-1) Per APX spec:
 
-(APX adds) CPUID Enumeration for APX_F (APX Foundation).
+Yes, I'm ready to maintain this code, especially the new libqos helper. 
+Just to make sure I understood you correctly: were you thinking about
+something along the lines of the following?
 
-2) And gcc also use apx_f:
 
-https://codebrowser.dev/gcc/gcc/config/i386/cpuid.h.html#_M/bit_APX_F
+qtest
 
-3) ...and we already have "avx512f".
+.....
 
-So you're right, I should use "apxf" and CPUID_7_1_EDX_APXF.
+.....
 
-Since APX CPUID appears in several patches, I can respin a new version
-quickly.
+QTest SMMUv3 helpers
+M: Eric Auger <eric.auger@redhat.com>
+M: Tao Tang <tangtao1634@phytium.com.cn>
+L: qemu-arm@nongnu.org
+S: Maintained
+F: hw/misc/iommu-testdev.c
+F: include/hw/misc/iommu-testdev.h
+F: tests/qtest/libqos/qos-smmuv3.h
+F: tests/qtest/iommu-smmuv3-test.c
+F: tests/qtest/libqos/qos-smmuv3.c
 
-Thanks,
-Zhao
+Device Fuzzing
 
+.....
+
+.....
+
+
+
+Alternatively, we could also keep iommu-testdev under your existing 
+SMMUv3 section and add a smaller "SMMUv3 qtest helpers" section with 
+only the qtest/libqos files and myself as maintainer.
+
+I'm happy to go with whichever layout you prefer.
+
+Best regards,
+Tao
 
 
