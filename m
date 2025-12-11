@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D12E0D41D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 18:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0012AD41D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 18:02:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTkz2-0000ek-RN; Thu, 11 Dec 2025 13:01:44 -0500
+	id 1vTkz3-0000fF-Ar; Thu, 11 Dec 2025 13:01:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vTkyz-0000dN-5m
+ id 1vTkyz-0000dM-6I
  for qemu-devel@nongnu.org; Thu, 11 Dec 2025 13:01:41 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vTkyw-00060B-Ay
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 13:01:39 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-47774d3536dso4185345e9.0
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 10:01:37 -0800 (PST)
+ id 1vTkyu-0005zy-MV
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 13:01:38 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-42b47f662a0so254936f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 10:01:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765476097; x=1766080897; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=L5/LEDQ2J4PNTA0UX9lXA+cIuf5h+pN8+iwPIJao3NM=;
- b=dyGmq6e+SWyqEm+Ekd+Oad0U9DioN2t5n6jxpkEBFgpgDT0FzvgCFbgq7B1ZX9CzP/
- tIYL7luSc+YusB83PdMYxzHth/wDqEiYs4RXJFUsNcbNkhPl0rb9bBly4L0rApEMG5eI
- /irWs4wbTkhJsfQocGvxXG6XwSlZ/T4QDSbCk3iDgGGWx3zGkvzZ5qRCBc44LI5pj5fK
- eLSkFL0fBx121kcYD4E7gE3Rmck3V1bwTCfPffeRmmyqG3PMg7DHtanWbVsEFKmY133z
- bi3VKZIod7NJWIkDDjbzugBkx6ciYRK6MXFyX9jMVAVBZwIrwJIeOBMYLbkblfVhP1yW
- hsoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765476097; x=1766080897;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1765476095; x=1766080895; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=L5/LEDQ2J4PNTA0UX9lXA+cIuf5h+pN8+iwPIJao3NM=;
- b=osDSYYFOvwfVUMFw9P8e3rI8Wj9D4qW8TlF+i9k3/eFz/tQffLI5cGaTKuJdf46puo
- XkQPVwfY/Lq6JZS/GQFaY0rPCgOx85Mrgtwwd43kglWD33x3/Hqxrob/diYvnyltMRju
- y8r4rNXh1ceX36r/L5EXc50h3ewCHDONAdHQUto3ory9eTad/eFYuuYL5oyr6g94LUpe
- WQXEi04eOAF5wXJMpxbwNu+uEbLX1SV+ZhJjer4AY+yxiJSpKjEpqeXcznawDXSE/IrU
- lAlPoxXFoya1MulM1pNJ+Wljg+2Fm94gN6BSYdize7iDFlJy4LtnlL6Rq/FuCpPvVDcV
- lB4g==
-X-Gm-Message-State: AOJu0YycWf4uoKV/1hmcOP4ViDm1CtWnaHFuduZoXxmWt/jrdFN+vBnx
- BPTHXA101P4p5zbR9O70zDYjAPl9NkqeNA2Bn6AQQ4EZ66oNXn98r7WK5Vgwl7hYqSM=
-X-Gm-Gg: AY/fxX7R29dJ9XMfoRI6294LQxplyuYm0qm2eEVqsIJoQXd76CMmULrLQehzGxBxJNU
- nnsGnXuUpQ2mLaBYuFJM5bHwo6S87RH3rouNrFiixfPVooW52YwZaFNvQc15XrB9OKRBVi+9J/J
- Y6dO7lVD5Z6Mki43VmZgIGmOknSaUy7dySEnIRiQgqOQsiGEN+xsgo9c2JfTrlZN+f5TngOsVuy
- 0197Nv0WsOEwePVs86VsLmERYn/T1jT7l9WFM7I/ZAWDyyMgqXVOFWCLjfMFhtAVlFnCZJvkfpm
- tzKYqinFCrgV5022P07Rb1+QstQmNldzv/m1VfdXFeNrw6NJEmAmCpslou+pNjEgZOPZQj8lIES
- Wj5BV/IVr0fDk18/DUlm2xMG5KKH7pAoDWDR+jWDIAWJllOBfoWy7+yZs8/0jjGYK1l8JtJD1Uk
- vDx9kSNW/rZoLEPrCn806KQg==
-X-Google-Smtp-Source: AGHT+IG+weZzcvJ4FnEmy75b3MPqFmsU673Z9xM8DEucTzBce+TnkkH1sFIMiR4mmeGOcN2WSBNBgA==
-X-Received: by 2002:a05:600c:45d2:b0:479:255f:8805 with SMTP id
- 5b1f17b1804b1-47a89f8547fmr32859545e9.4.1765476096725; 
- Thu, 11 Dec 2025 10:01:36 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a89d04393sm48241545e9.0.2025.12.11.10.01.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ bh=zqtmNswMbkYyEU+NhJq72TVMbc6kD4yPFILIwQaGzrE=;
+ b=gN6nwbrUHSULI6cfeRhrGby1w5S7SYDEHhaTjgbNVQGCmMDpzzClbYUhLlI8bGl61f
+ cKCzc8ZiGqrQ33vnB6hl5As846FIDVDqBFCgrH2j2QUdxbB4sSfuN0N7pzYsbnLdhnaJ
+ G3rUFgn7Elm4QAmEK/8Wb4iYRgPiPL1jVAlKVryDdQB76RCjGQbo0ooWvZbyz2vdnEKX
+ V88HTpxDUsCe2OlM2pWBPBmZqa16Aqf43jCWUy5r4H1yT4IMJhoKfl06rInDBzHH/4PU
+ vy1g8FIyLDx2V0zisO0XFuF8hNncvZT01lqZMbbYggITFWyFM3zS93H34k+ZZ+6reAb2
+ UuiQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765476095; x=1766080895;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=zqtmNswMbkYyEU+NhJq72TVMbc6kD4yPFILIwQaGzrE=;
+ b=FVDGYRtpxXU7IjfXfnDFKwXLjIFArxAPOt1+//Lk9RkB4zLTA5V6ATwU+HzulGDBGb
+ 9ZA258yZFIvx6gx+PzBpYiWKqsugGmbJ/hCAgh9zyLohp96rf58TTyVZXcgaJ4wnPYfx
+ yZRHjD1aGRKkv4eV2kq/VUj3/5W1oQ/8iGw4D+uaKTBoJAdcI9dKOJqxvXm67fPpQ5YL
+ y4aX+OYC7+Q3kOk7qnmQO8ZnkvitB7kUkPiP68KhldJ12jao/E2A5pcdOKume/ofxJvt
+ CyJYNXBe3DMTunUoth+dPhEslifwV+RAbKuy9NBSRmtbMUjaoTzadIY1xztSETWAQnHp
+ ue2g==
+X-Gm-Message-State: AOJu0YwllFOdz6VCqXIrmI8pIacwxK4EXzmrVak1Vqmc8zIW0pdbyl82
+ 3+SWJAkTDZ+vyn1RQ5SsCcTRUcpcj4v+68WKZZs/zYJckiOVN9LQmVAm20vDXaYCWXA=
+X-Gm-Gg: AY/fxX7xFxCmsCvDoxalipHkc5lF6uybO9pIma1hPEXR2Ryf3xZqRqWBo7YZkuhJy92
+ yzqDv8yarIcEGUcMbc1lJ585/CNdAs5vh5baDd8ngYIHG7TUyfrVFElZ60mlcHEOIS2VxowaV2D
+ NIaJu0KScHR4Sbc49rTZHGK4g2p0yyV+6kTLCLl1se5M7hbtx/aOyImDxR6P4MPWPVINCgl0bAu
+ cEyt1/7o9Ma30uG/x9kh7e5mgV0SPLioVmYgY8gJFNpVC+i7v6DUw46G4Z30j7U1F1E+Ofjt1sz
+ LnN9kFl2rNrIoG3rYzoXrfiqDZ1GL4UFYO8Q6O5H9eFMkGcc1DnfL6z6jMia5Zyf+SVOqeTbaha
+ UxzW/f+3tzXMnE0TUjFrIyMe2enYiZbMuYwEVGRcporVGdheJJWjpNIui6vKfJuUJivjkmrixX4
+ XJB5HpDMt3FsU=
+X-Google-Smtp-Source: AGHT+IFmb61jMTBPRLp0mm/VGiASOfskbtXklrhUS30Py39UYj786+iLBTtuHPoaWHlZpylwSiqouw==
+X-Received: by 2002:a05:6000:208a:b0:42b:2db2:159f with SMTP id
+ ffacd0b85a97d-42fab242bdamr3777340f8f.12.1765476095065; 
  Thu, 11 Dec 2025 10:01:35 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42fa8b8a950sm7857530f8f.32.2025.12.11.10.01.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Dec 2025 10:01:33 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9733A5F83C;
+ by draig.lan (Postfix) with ESMTP id D75535F892;
  Thu, 11 Dec 2025 18:01:32 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -72,15 +73,17 @@ Cc: Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH 0/9] for 11.0 conversion* of get_maintainers.pl to python
-Date: Thu, 11 Dec 2025 18:01:23 +0000
-Message-ID: <20251211180132.3186564-1-alex.bennee@linaro.org>
+Subject: [RFC PATCH 3/9] MAINTAINERS: regularise the status fields
+Date: Thu, 11 Dec 2025 18:01:26 +0000
+Message-ID: <20251211180132.3186564-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251211180132.3186564-1-alex.bennee@linaro.org>
+References: <20251211180132.3186564-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,52 +106,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-*incomplete
+Orphaned isn't a state, Orphan is. Likewise all the other "Odd Fixes"
+are capitalised so fix the ones that are not.
 
-I wanted to look at adding gitlab tags to MAINTAINERS and baulked
-slightly at figuring out what I would need to change in the perl
-script to cleanly handle it.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ MAINTAINERS | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-While we imported the perl script from the kernel I'm fairly sure we
-don't use half the features it has and as us grey beards age out less
-people will be willing to tweak it. Consider this a proof-of-concept
-for discussion about if it is worth perusing this path.
-
-It only supports the two main forms:
-
-  ./scripts/get_maintainer.py -f path/to/file
-  ./scripts/get_maintainer.py path/to/patch1 path/to/patch2 ...
-
-But who needs more?
-
-Future improvements could include some more detailed analysis in
-conjugation with the repo to analysis:
-
-  - missing areas of coverage
-  - maintainer stats
-
-Who knows maybe the kernel guys will want to import our script one day
-;-)
-
-Alex.
-
-Alex Bennée (9):
-  MAINTAINERS: fix missing names
-  MAINTAINERS: fix libvirt entry
-  MAINTAINERS: regularise the status fields
-  scripts/get_maintainer.py: minimal argument parsing
-  scripts/get_maintainer.py: resolve the source path
-  scripts/get_maintainer.py: initial parsing of MAINTAINERS
-  scripts/get_maintainer.py: add support for -f
-  scripts/get_maintainer.py: add support reading patch files
-  gitlab: add a check-maintainers task
-
- MAINTAINERS                    |  10 +-
- .gitlab-ci.d/static_checks.yml |   9 +
- scripts/get_maintainer.py      | 356 +++++++++++++++++++++++++++++++++
- 3 files changed, 370 insertions(+), 5 deletions(-)
- create mode 100755 scripts/get_maintainer.py
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a3fdc4ca911..4488364c14e 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2662,7 +2662,7 @@ F: hw/i2c/i2c_mux_pca954x.c
+ F: include/hw/i2c/i2c_mux_pca954x.h
+ 
+ pcf8574
+-S: Orphaned
++S: Orphan
+ F: hw/gpio/pcf8574.c
+ F: include/gpio/pcf8574.h
+ 
+@@ -2884,7 +2884,7 @@ S390 3270 device
+ M: Halil Pasic <pasic@linux.ibm.com>
+ M: Christian Borntraeger <borntraeger@linux.ibm.com>
+ R: Collin Walling <walling@linux.ibm.com>
+-S: Odd fixes
++S: Odd Fixes
+ F: include/hw/s390x/3270-ccw.h
+ F: hw/char/terminal3270.c
+ F: hw/s390x/3270-ccw.c
+@@ -3795,7 +3795,7 @@ F: tests/unit/test-uuid.c
+ 
+ Yank feature
+ M: Lukas Straub <lukasstraub2@web.de>
+-S: Odd fixes
++S: Odd Fixes
+ F: util/yank.c
+ F: migration/yank_functions*
+ F: tests/unit/test-yank.c
 -- 
 2.47.3
 
