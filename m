@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A3FD41D50
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE1FD41D57
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:16:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTiPF-0001EX-C5; Thu, 11 Dec 2025 10:16:38 -0500
+	id 1vTiP9-0001Ax-MW; Thu, 11 Dec 2025 10:16:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTiOr-0000wV-4G
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:16:18 -0500
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTiOv-0000xl-1p
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:16:21 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTiOp-0002Tv-HE
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:16:12 -0500
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-7c75fc222c3so110716a34.0
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:16:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTiOs-0002UH-EO
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:16:16 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-47774d3536dso2366325e9.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:16:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765466170; x=1766070970; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1765466173; x=1766070973; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BT/8dCuDOI878dHLm1mn0WEOHvavhruJtyOKrOz/p34=;
- b=d4Olh2SOGhwmyLyphIFxqwEp0iF2gp4bU9ug7iGG5Ex7SYxuCTuQc7mrbwPl/OwgoL
- Z0ZhVVOpIRNyVzgSFDAsBMZmXEWgjM2zm61rP0rfRneRxHFhxIFE+xL/UNiVe1D3w1cN
- RO2aUFjMatOSpgDkRUJGPoH0PXZx4oc4hyPrTyw6VF6OvuJPBW34JqTePQuFguE+CNU+
- 3puJ9yU5WQvZUwpwQeEtEHho4lcdUfTuKnf5SuqP1bSpMBYoqmietB90L0Mw3hoBD9l2
- mXmZzF0vAEV3Wj9V7/Sm4vrmnGTW43wbv4BjBMLQ4P8LL6CP8Gwe8gbx99Jsc7RdwYzW
- xwjg==
+ bh=wYfoLmiosUhDWjsaKlOfIamPKI0njxPzpav86ZyNrZ8=;
+ b=vkSN1i9QKJv9MeNdaQAevELCjdHIfeb1TdK6ZRBGJoFiJb+mMTVl6UM33OwqBiEgcV
+ JhOkF/Qm42P47axKyV1OQdxS3BWSIMP9vH0wgcbwEMra0XpWWSPVMHe4RRDCZEEUV2Kl
+ zPZ//BThcc7MafsYLKPpNeixYdSREdOL5pLNcQqJ2kH39suMOV0cUYo+Tvvd0jVs7lce
+ S4kuevSVd8CE5i3JFhqLX5husQD0hz5UXuoF/7ept8bB6LjRgK6WErpwHqyXOEPS29++
+ 8FYqv+C77S4fqGG77poF0cb64fi2eIp9NX59G6Rcf7zRaFyr8dT2F2Zz6TIfdt268i3V
+ izjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765466170; x=1766070970;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1765466173; x=1766070973;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=BT/8dCuDOI878dHLm1mn0WEOHvavhruJtyOKrOz/p34=;
- b=iyMGS4c0etruOTEbFS4DhoYZIJaWfuhdcEP0Do4411b0L1XGZkjQXMvd4z3LXkm7qT
- vH5Fa2DyXv/IrthauwOTVDm5Xw8Hs4NjWzL7QrLiyDHdansBZSLOyd26YRy4jRjXf85H
- JdWe3yMN3+1cAhXLZbDvUx31E0KFYT/EUUocOh2eg8ap+/ocT4bXCwnqYc7A8DAIG0RW
- 9Mb2w1GeYXU3qO4+y6LTZQM6SZg1BfmAfCMwS97lF9zpyyrspuft7UOWOFqrp5I0IYoV
- Ew5Z00whNsA4BnQ8ohe1p2HL6lVoufeVRY0S/WZPycyLN/IbDCpTSQYPbL/CqYUwuUZG
- Ua2A==
+ bh=wYfoLmiosUhDWjsaKlOfIamPKI0njxPzpav86ZyNrZ8=;
+ b=LC3YtDZL2MJarB8Av8p0d60vWXBl9nGnENsnlG4lh/mpE9sg+OX944uwLTEnbppTmT
+ q1OQRZieR8yh8Y9Jms7kwvvw4ucBsgAfru0Hk33KygVKjFKByBQBZCVPw+xe+VovDZIl
+ Vekz8ToCQnmQV7b1pce+bg/K/gI/0RRkgeJax6cEaOXbx/R88MbhoOHrV/oz48kQ1by3
+ 6zlBb1VCbs3UbNm2oafccVO6CYLAAfi1YctmNeHj5uAu8lHVlpD0IyH4Idaowk2DZMdr
+ FxjjBR8wxeQ/liY/SpK8wi4gtZPIdUA3arv2oCuL14Pib4XL20C2+KTg3dt46KvnEnU/
+ TJug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtGXshy/YkuWJip2c1C7qV3MlKITiZ/R+9AqurMFBRaRkFcJwHKyWI74XNT5oztg/Fv/SL72RsJa7o@nongnu.org
-X-Gm-Message-State: AOJu0YwetgQr0s3wk19WrEnMoB0oOl2cy7bBgcrKvevSsuyZBMjJUrsU
- P5ERQFNxRkVT8PyYzRG7dyVuGpZTlrLTxrRcdVvUnH1Yr3mRn3ai7wp7P3mPz7z778I=
-X-Gm-Gg: AY/fxX5OmoG+FUQ6G9lfRQkdjGf/3Lkh2/p5IxNsI2BioEG034uT1BJAV6bjyQH0Dhc
- sUWlxbKdKyaZPxiy0qLPeK8zRTIohN4WP5SRSwt+dI8vGqzNwLv29+fY6DxgIXPhbugI6MI/h1y
- NilnKtAkA7A5l0ORMt5U3SlnieuAvzMhhjpWOs+eVvIrP6gqV1jPJqrHq7VZ6tNoW9g0ddfXU2w
- Macd1Fug8FG5sPMa1wDx0ROytIYUbStXgMfUCXjK0j7y03hbfaM/f1JP/brU67ZYUT42o7L22t0
- /4lme/l7hOzGFf1hoMOJ+r4fU6iWVGwaRlOhbnSGijnMlb6I0aNlT72Teozgm7dclUDyQVFuEPZ
- eNUUZKeppmkPO9K2KNVlEgbuykJLHz3/LBwVj5Ncq0yKM3sQNSox32Uhc4oTzI8t1CWEJAdrDit
- fmcxiGtRMVxsVj/fbbTZo1u1khGRa4qCiu2aLdq+jNR0+5IG1V4N6uXU2dtDuouYm0
-X-Google-Smtp-Source: AGHT+IEU7VvkrNIK2pvDmXMVj73XD/2hVBGdwL1loHSEfVaILG1PfPLOIbMf1QhGehh4xP1U/aATcQ==
-X-Received: by 2002:a05:6830:2685:b0:7c7:5f8c:71a3 with SMTP id
- 46e09a7af769-7cacebbaa89mr3717158a34.2.1765466169953; 
- Thu, 11 Dec 2025 07:16:09 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7cadb325df5sm1560689a34.24.2025.12.11.07.16.09
+ AJvYcCVW/p4bUwE8XBN64OHDlVk2yfFQyZGfa7C2pmVhzIa81x/dPOHSGMNkqL5bL1CV1PxU5rJMGWzXLceP@nongnu.org
+X-Gm-Message-State: AOJu0YxMsLUhfif/j4w1OcxylZLLZHCGfYibKL02ih88AAUci1UAGE+6
+ KE9rz/MfCF88V41gXVOtVG2xq9meWS9pTgCeH5zsOLfG9pArkK0CFA56VZ2d/QFRKGI=
+X-Gm-Gg: AY/fxX4yr6lxrVECjEN9yn24G9v8zutvLl7p+PrJufL3/IeuJDzzs8+cFJJkvMj7nuJ
+ w4Lfpaw0/REUbGWQarWrQ7b8snkfEhKyb/cWdNl8qfJjrI/Py+gAzBXmcRdCl+rBlHHS+ZUzrWq
+ UVE9uaGg2vjgksb6hraV0YxBH1WWqBqlCY6mvYw048hdlNPMuqaXdfNd33284pnlJRtrhj1U9ol
+ e/j06+hKTK3kTwz2jI2T074T5WXvS+L8iNPjMhaNG+Oc85Qfsn+J2pOZEZgveaDbD4+VdJ7MTSA
+ tKGTq3ml9HQF390T29xBJVJmEcXVm0MyvXIS+/cgAMhnmxL3NMzYDrbqy/s0q/hEicRtk7tOF1C
+ RJt7/GLTMClkgk4mslJJ8Q/duL02lzQAHnd33qG/4M7DPwmjE4Xbp/1Rmary9KBNs6J3y+n0nnI
+ +yO1kCsS72OGAkOjC4hskVuem5+VbkdVuNNOr4woIl+BiMxEl8ijgk0g==
+X-Google-Smtp-Source: AGHT+IG33lH+FRexnu7FPofP3vQUkxiDxMFtXmCwkv5IYtq1cv1z4vIWAP5H1GekUgKExuEVKANAEA==
+X-Received: by 2002:a05:600c:3b24:b0:477:a289:d854 with SMTP id
+ 5b1f17b1804b1-47a8bd020d8mr19192165e9.5.1765466172653; 
+ Thu, 11 Dec 2025 07:16:12 -0800 (PST)
+Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47a89d04393sm41331815e9.0.2025.12.11.07.16.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 07:16:09 -0800 (PST)
-Message-ID: <14cfddac-5284-4fc4-8fe2-19249d52240c@linaro.org>
-Date: Thu, 11 Dec 2025 09:16:07 -0600
+ Thu, 11 Dec 2025 07:16:11 -0800 (PST)
+Message-ID: <d18e36d7-0863-4ba5-a50d-73a05b33d8cc@linaro.org>
+Date: Thu, 11 Dec 2025 16:16:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] target/hppa: Define PA[20|1X] physical address space
- size
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20251209-phys_addr-v1-0-c387f3e72d77@rev.ng>
- <20251209-phys_addr-v1-2-c387f3e72d77@rev.ng>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 1/2] i386: Fix const qualifier build errors with recent
+ glibc
 Content-Language: en-US
-In-Reply-To: <20251209-phys_addr-v1-2-c387f3e72d77@rev.ng>
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20251210181306.926334-1-clg@redhat.com>
+ <20251210181306.926334-2-clg@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20251210181306.926334-2-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,22 +107,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/9/25 07:56, Anton Johansson wrote:
-> When converting virtual to physical addresses,
-> TARGET_PHYS_ADDR_SPACE_BITS is used under PA-RISC 2.0, and an explicit
-> cast to uint32_t is used under PA-RISC 1.X.  Replace the former with a
-> more specific macro limited to mem_helper.c, and make the latter
-> conversion explicit by defining the size of the physical address space
-> for PA-RISC 1.X.
+On 10/12/25 19:13, Cédric Le Goater wrote:
+> A recent change in glibc 2.42.9000 [1] changes the return type of
+> strstr() and other string functions to be 'const char *' when the
+> input is a 'const char *'. This breaks the build in :
 > 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
+>    ../hw/i386/x86-common.c:827:11: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+>    827 |     vmode = strstr(kernel_cmdline, "vga=");
+>        |           ^
+> 
+> Fix this by changing the type of the variables that store the result
+> of these functions to 'const char *'.
+> 
+> [1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+> 
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   target/hppa/mem_helper.c | 23 ++++++++++++++++++-----
->   1 file changed, 18 insertions(+), 5 deletions(-)
+>   hw/i386/x86-common.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
