@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E733D41D55
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12998D41D50
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:15:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTiKY-0007wV-SB; Thu, 11 Dec 2025 10:11:47 -0500
+	id 1vTiNZ-0000Qj-GU; Thu, 11 Dec 2025 10:14:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTiKW-0007wL-5T
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:11:45 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTiNK-0000Pe-1M
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:14:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTiKT-0001PB-Sp
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:11:43 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTiNC-00022b-K7
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:14:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765465900;
+ s=mimecast20190719; t=1765466069;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=M3V4QAmkd7VEkayvwfxT+kMt7tbZOOAmLQsPiOpJV6w=;
- b=i7Sb+22X79ln1/lsBLByeGCtpACiVnZmQ/HvtXf3IAIIn1xVxg6yCUPDEj1GEWh3CSonEn
- z/sjY6cRT2TrSSL31VJ8WLOChY5gVb4VdPxf/DXhbLR1PDi6UjfF5UISbz9NFTkK1k935I
- 0YLQqpz06bI9G6FxTOGrN4t1ENGfq2U=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PgOtxE9nqPCjCi27I0jXQn3we88rBCDFHkgrancRUJM=;
+ b=QJ3e1t55dhEJTRJ9+mA/HuMmiEBwTgdhno4iKU8tFfR0Qwx7aOp5ZYy9LXPk++n/70akIp
+ +q4U1pHuHk3Eiv5RsO0Glcm/5y3A0hWQzJpl4YN2pSFjU+LucK4NCBHnmJwHtBaFJsqSRo
+ +rHVcHof2d+U4ZSHFn+0Vlq+ZPok3Yo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-470-VR_kKfhdOKegjnPWO10ftg-1; Thu, 11 Dec 2025 10:11:38 -0500
-X-MC-Unique: VR_kKfhdOKegjnPWO10ftg-1
-X-Mimecast-MFC-AGG-ID: VR_kKfhdOKegjnPWO10ftg_1765465897
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-477cabba65dso1297475e9.2
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:11:37 -0800 (PST)
+ us-mta-568-uhSi9mx_MbGjLiMgE9U4Tg-1; Thu, 11 Dec 2025 10:14:28 -0500
+X-MC-Unique: uhSi9mx_MbGjLiMgE9U4Tg-1
+X-Mimecast-MFC-AGG-ID: uhSi9mx_MbGjLiMgE9U4Tg_1765466067
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-477771366cbso1607695e9.0
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:14:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765465897; x=1766070697; darn=nongnu.org;
+ d=redhat.com; s=google; t=1765466067; x=1766070867; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=M3V4QAmkd7VEkayvwfxT+kMt7tbZOOAmLQsPiOpJV6w=;
- b=iU2yHyOjtjI5njCG9NGVXH3zWpQNdP4uucy3BIuqsLFj1XjQwS8qKV/VBUz5R2H4Uj
- KNhbaqyQa0ViRTSE3Ek6Ln8i20hfIHX4uinsz/xx7lMcxWHENlVrwguTr3HAG6qMwEn9
- crlcn9uvQKAKEmLIZVFrYjDj4/dNMJxlxtrX9jRl66ZaWrhLMD0V6kThoyZrZCAD1BSx
- jId1IgkJ+NIABjzgbnC1RuHjyS4RQdp8vcMO4CkWg7+bNskqqFLXTPiq0q/F4qu2kZae
- nYfNXDpXgqtTtwbTUwx1o0QdYyPq7vtbgdcK0sbPtjUny5jeohP96aL2Kj40myhDn+GI
- eJ9g==
+ bh=PgOtxE9nqPCjCi27I0jXQn3we88rBCDFHkgrancRUJM=;
+ b=KKhAK92dXob+5jPm/8eb6utZy+r355VodTo4sRbhAnviDY2Xbp37LAoYqXWQchI7+O
+ e9lO79cwbgdtsgAustSAexkZ7h0H+bK6DliGp4evWFKuyWQL/ktawDTS7jhQK+9Pi4/G
+ 82aWHT7cuEfY6uCUZJum7XH/SsbYoS1JudPsHtCI09IfLDgmrS5tPKliMmh7MZewB1WO
+ zcoioT5jIdlhn4mrwOWV2WItr9bvk8f032XISCNiPwyHiGsUZi6OdkeJQ1SC+KDiLdG6
+ SuDhJGPtmkqHOgjLNGpx5/7RXooP8V5s0RYGIGF0Toy1yEdQXbZI/PmIGrMorhSzZamH
+ np4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765465897; x=1766070697;
+ d=1e100.net; s=20230601; t=1765466067; x=1766070867;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=M3V4QAmkd7VEkayvwfxT+kMt7tbZOOAmLQsPiOpJV6w=;
- b=v9ZShBMXNtlUxLdrRMzn11aa5PB8O+b6MK8x/dqTGVbDUe0ixyt8fjAVdi12qRH7Ot
- 3AiwKkt5mYNxNwmJ6GbMtM/yLZLpHbwWBVM2Ix4uiMfFXsWCvvA7c8wHag8SoDepNnwn
- ZfbcQjhtw9mGjmlJQsTqO584+ZaShXnA7ToCpCt5Mjjv8sXu6TSUkTEDsGpkqENm3R3p
- 8daD1tywPaF+6z4sXdXaa+e1Ypl5Yon/QM+DejfEpcZo7iXv9Ccu62/1e5L5Jl871MK5
- lhAwuBaCcWrCzAu7s027QPNUFcG9BD3vbKnj0/HC0CRIRwV1fIogq9kHX6MFMFQxGVAu
- T93g==
+ bh=PgOtxE9nqPCjCi27I0jXQn3we88rBCDFHkgrancRUJM=;
+ b=t7SjqGtukmUDL8dmJZphU0wrWJtBCA1TlW/GtEPeZBnRyxHD2AQNzdoLuK5NCZLCfL
+ mLyrWYeKCwL1NV9qLn110r81PRBfcBHh0d2Zb/Jr/vCsv6HMg4phxOTyUSnzU4TTzRLe
+ sTinAJlmHO4bOv1KMvPbNHf2XNfGIyyFZpORjldek0jrpa3TasD5Tw6cWuz92vpJrxi1
+ KkZ5K5aK+P9MLekjwELQOQP7pXgvDrEH/Y4j+hV+jTN4EJzZZOsgpT5LgGd+ksUEg1Rx
+ vK7rMKixiduhDmN9JSsLFzseuRqCtvxP1q5TFgwsIYtNataMI8tYRDR/8tijYEycTrJQ
+ Yvog==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhfMAaNQJ+1HiHa3yoKV3/5utXhRrWoJuwUnpz5mA3gRH4DkcShPRS4+LEnOQWEZ6kgHVd7AxK/quj@nongnu.org
-X-Gm-Message-State: AOJu0Yz96rxEdQNBz2WxYMInvLzp1huRWj3YRgWnv690zn5kaVmovWC4
- WZPJDd77ypnRYaYnVa7hsWnNkYpDFh+TLcVNH+euQ1TOgIMVZowuC84A1pXJauM+qi5l0ySn4tc
- Y9MpphByxkTzZRYBC+N+X8GLYZzCoPbOyRxYQvoILEoetMtX7eVkpzbe3
-X-Gm-Gg: AY/fxX6VOQdMq/F6lvTQkQ34eWSnGw5j010tG/PuyzhfRRvMwMoIUtGa9yFByFyYsMq
- i+6Q/6PvicwYQxGmV3LLv5D3sB1AxFgfO1lySybrmfkLBmqTjP5PSZR6bAtahfDmuw12aX58JBE
- 6baZ4LDOgoYHa2iVUEt1Ldtp64D/S1N2Ve9HLDIDM2/nEi4S+1T1IkdLeMoD83G+AUov/NacnVa
- kbJlXDSZ1fS7y2HSsgQpPWLQZZZBEABNxSW1qOsacvzvfTYuqOD6cIv0aqr0blokCmw/uoqgQpV
- RraYMTP6eC01+l9I6hD4qB/JSql51IafPCLgDKxBgzhIvAAl9ouw/8xYeTBYuCFxfMBC/xW4iCP
- w4IkfrbTv3MVA4W3NA1dFt9zptKVBklMCi9GC96ItibFMrmsR
-X-Received: by 2002:a05:600c:3541:b0:477:632c:5b91 with SMTP id
- 5b1f17b1804b1-47a8375a183mr82279825e9.16.1765465896677; 
- Thu, 11 Dec 2025 07:11:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGzunEGXRQKLPXzkg8Hvm6mswQYn3vv5lKgTwUugTZ5hqUbIV3i5v14NAhF+yD/vv0NQkhfdw==
-X-Received: by 2002:a05:600c:3541:b0:477:632c:5b91 with SMTP id
- 5b1f17b1804b1-47a8375a183mr82279215e9.16.1765465896155; 
- Thu, 11 Dec 2025 07:11:36 -0800 (PST)
+ AJvYcCU21pakZBFEp/HUlysC8ZS6Zuwoc7cCbBlS5Z3ImLlBc5Q8C3C/VFqTdw3prjzP2zt4jqQNqvxWDnzw@nongnu.org
+X-Gm-Message-State: AOJu0Yz/GYROkM3SC0x19wtwoNDfggJlH1UHKOxIIZAjGZBbyaipNxvr
+ utL/yO5y1+zkb27TRTyFPglqOtc0mJf9f7PxsvspLI+lcOv88O3G38YUg7N341CufNuGq/4uwZF
+ 3ZlJoccKj1arYyCXlKDC6T+od7JtCjWC5gyKexGJd/oVFmObrptA0258B
+X-Gm-Gg: AY/fxX6Ou9mCTZfybOvKqiaZtmJkwLNJ11qXM9MSuk1H2JrpxKiaC7HLkOh1+YjFSVH
+ hP1namnJRol3Ojj8+m4hutG9eWmrSfrvZsvUn78JIJo1yetnCs+XiHZyRbZ0x3NYiaQjhhxntx5
+ 9gxUBGzvq5PXqOdgcCPktDnw0l1cXYcOapw84IXJ03sfpaES/lejGT4ZF6Y6NmuAk3MqVVCBVpA
+ GiTFplm/M0c4yzWBqp7Koc4/LVCqseq7yeu5ZhU2J0btFN8Z5g/1FeHtzeXlqUAkuRbVMv9Gi7J
+ 3Hh2Lwe5RgPwiN4VEZr7IWyn1eCNIVoRNGzuypOueN8T1h6U1llpSe2f/weMxBw4dwj3KkHhLUq
+ n4oFlwSBFLZ9XZcuA+Ob3uyM0O/9LtxvBK0aXXONETGzAupy8
+X-Received: by 2002:a05:600c:1e88:b0:477:9cdb:e337 with SMTP id
+ 5b1f17b1804b1-47a8374cf08mr53560345e9.7.1765466066642; 
+ Thu, 11 Dec 2025 07:14:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGksB8/PEJNh0N9xrtRNfYAwNYELy9HhUrwvAvpzlf9pwxJ2fSglCyQ4BAyDv082euBRFdshg==
+X-Received: by 2002:a05:600c:1e88:b0:477:9cdb:e337 with SMTP id
+ 5b1f17b1804b1-47a8374cf08mr53560085e9.7.1765466066153; 
+ Thu, 11 Dec 2025 07:14:26 -0800 (PST)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a89ed3986sm15998675e9.5.2025.12.11.07.11.35
+ 5b1f17b1804b1-47a89f1eb60sm15735305e9.20.2025.12.11.07.14.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 07:11:35 -0800 (PST)
-Message-ID: <9a54ba3b-1a14-4240-80a7-715e20b99dac@redhat.com>
-Date: Thu, 11 Dec 2025 16:11:34 +0100
+ Thu, 11 Dec 2025 07:14:25 -0800 (PST)
+Message-ID: <ab3b406b-749d-4259-82bb-f34b084a9769@redhat.com>
+Date: Thu, 11 Dec 2025 16:14:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 26/33] hw/arm/smmuv3: Add accel property for SMMUv3
- device
+Subject: Re: [PATCH v6 27/33] hw/arm/smmuv3-accel: Add a property to specify
+ RIL support
 To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 Cc: eric.auger@redhat.com, peter.maydell@linaro.org, jgg@nvidia.com,
@@ -101,7 +101,7 @@ Cc: eric.auger@redhat.com, peter.maydell@linaro.org, jgg@nvidia.com,
  jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
  zhenzhong.duan@intel.com, yi.l.liu@intel.com, kjaju@nvidia.com
 References: <20251120132213.56581-1-skolothumtho@nvidia.com>
- <20251120132213.56581-27-skolothumtho@nvidia.com>
+ <20251120132213.56581-28-skolothumtho@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -147,7 +147,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251120132213.56581-27-skolothumtho@nvidia.com>
+In-Reply-To: <20251120132213.56581-28-skolothumtho@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -176,176 +176,142 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/20/25 14:22, Shameer Kolothum wrote:
-> Introduce an “accel” property to enable accelerator mode.
+> Currently QEMU SMMUv3 has RIL support by default. But if accelerated mode
+> is enabled, RIL has to be compatible with host SMMUv3 support.
 > 
-> Live migration is currently unsupported when accelerator mode is enabled,
-> so a migration blocker is added.
+> Add a property so that the user can specify this.
 > 
-> Because this mode relies on IORT RMR for MSI support, accelerator mode is
-> not supported for device tree boot.
-> 
-> Also, in the accelerated SMMUv3 case, the host SMMUv3 is configured in nested
-> mode (S1 + S2), and the guest owns the Stage-1 page table. Therefore, we
-> expose only Stage-1 to the guest to ensure it uses the correct page table
-> format.
-> 
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
 > Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
 > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > ---
->   hw/arm/smmuv3.c          | 26 ++++++++++++++++++++++++++
->   hw/arm/virt-acpi-build.c |  4 +---
->   hw/arm/virt.c            | 15 +++++++++++----
->   include/hw/arm/smmuv3.h  |  1 +
->   4 files changed, 39 insertions(+), 7 deletions(-)
+>   hw/arm/smmuv3-accel.c   | 14 ++++++++++++--
+>   hw/arm/smmuv3-accel.h   |  4 ++++
+>   hw/arm/smmuv3.c         | 12 ++++++++++++
+>   include/hw/arm/smmuv3.h |  1 +
+>   4 files changed, 29 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index dba5abc8d3..8352dd5757 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -20,6 +20,7 @@
->   #include "qemu/bitops.h"
->   #include "hw/irq.h"
->   #include "hw/sysbus.h"
-> +#include "migration/blocker.h"
->   #include "migration/vmstate.h"
->   #include "hw/qdev-properties.h"
->   #include "hw/qdev-core.h"
-> @@ -1915,6 +1916,17 @@ static void smmu_reset_exit(Object *obj, ResetType type)
->       smmuv3_accel_reset(s);
->   }
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index aae7840c40..b6429c8b42 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -62,8 +62,8 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+>           return false;
+>       }
 >   
-> +static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+> -    /* QEMU SMMUv3 supports Range Invalidation by default */
+> -    if (FIELD_EX32(info->idr[3], IDR3, RIL) !=
+> +    /* User can disable QEMU SMMUv3 Range Invalidation support */
+> +    if (FIELD_EX32(info->idr[3], IDR3, RIL) >
+>                   FIELD_EX32(s->idr[3], IDR3, RIL)) {
+>           error_setg(errp, "Host SMMUv3 doesn't support Range Invalidation");
+>           return false;
+> @@ -639,6 +639,16 @@ static const PCIIOMMUOps smmuv3_accel_ops = {
+>       .get_msi_direct_gpa = smmuv3_accel_get_msi_gpa,
+>   };
+>   
+> +void smmuv3_accel_idr_override(SMMUv3State *s)
 > +{
-> +#ifndef CONFIG_ARM_SMMUV3_ACCEL
-> +    if (s->accel) {
-> +        error_setg(errp, "accel=on support not compiled in");
-> +        return false;
-> +    }
-> +#endif
-> +    return true;
-> +}
-> +
->   static void smmu_realize(DeviceState *d, Error **errp)
->   {
->       SMMUState *sys = ARM_SMMU(d);
-> @@ -1923,8 +1935,17 @@ static void smmu_realize(DeviceState *d, Error **errp)
->       SysBusDevice *dev = SYS_BUS_DEVICE(d);
->       Error *local_err = NULL;
->   
-> +    if (!smmu_validate_property(s, errp)) {
+> +    if (!s->accel) {
 > +        return;
 > +    }
 
-You should really consider adding a new QOM model for the "accel" mode.
+Those :
 
->       if (s->accel) {
->           smmuv3_accel_init(s);
-> +        error_setg(&s->migration_blocker, "Migration not supported with SMMUv3 "
-> +                   "accelerator mode enabled");
-> +        if (migrate_add_blocker(&s->migration_blocker, errp) < 0) {
-> +            return;
-> +        }
+    if (s->accel)
 
-I would add the migration blocker in a separate patch.
+in the code reveal a modeling issue.
 
-
->       }
->   
->       c->parent_realize(d, &local_err);
-> @@ -2023,6 +2044,7 @@ static const Property smmuv3_properties[] = {
->        * Defaults to stage 1
->        */
->       DEFINE_PROP_STRING("stage", SMMUv3State, stage),
-> +    DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
->       /* GPA of MSI doorbell, for SMMUv3 accel use. */
->       DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
->   };
-> @@ -2046,6 +2068,10 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
->       device_class_set_props(dc, smmuv3_properties);
->       dc->hotpluggable = false;
->       dc->user_creatable = true;
 > +
-> +    object_class_property_set_description(klass, "accel",
-> +        "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be "
-> +        "configured in nested mode for vfio-pci dev assignment");
+> +    /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled it */
+> +    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
+> +}
+> +
+>   /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding HWPT */
+>   bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
+>   {
+> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> index 7186817264..2f2904d86b 100644
+> --- a/hw/arm/smmuv3-accel.h
+> +++ b/hw/arm/smmuv3-accel.h
+> @@ -47,6 +47,7 @@ bool smmuv3_accel_install_ste_range(SMMUv3State *s, SMMUSIDRange *range,
+>   bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp);
+>   bool smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
+>                                   Error **errp);
+> +void smmuv3_accel_idr_override(SMMUv3State *s);
+>   void smmuv3_accel_reset(SMMUv3State *s);
+>   #else
+>   static inline void smmuv3_accel_init(SMMUv3State *s)
+> @@ -74,6 +75,9 @@ smmuv3_accel_issue_inv_cmd(SMMUv3State *s, void *cmd, SMMUDevice *sdev,
+>   {
+>       return true;
+>   }
+> +static inline void smmuv3_accel_idr_override(SMMUv3State *s)
+> +{
+> +}
+>   static inline void smmuv3_accel_reset(SMMUv3State *s)
+>   {
+>   }
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 8352dd5757..296afbe503 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -305,6 +305,7 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
+>       s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN16K, 1);
+>       s->idr[5] = FIELD_DP32(s->idr[5], IDR5, GRAN64K, 1);
+>       s->aidr = 0x1;
+> +    smmuv3_accel_idr_override(s);
 >   }
 >   
->   static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 7a7b2e62c1..fd78c39317 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -400,9 +400,7 @@ static int iort_smmuv3_devices(Object *obj, void *opaque)
+>   static void smmuv3_reset(SMMUv3State *s)
+> @@ -1924,6 +1925,13 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+>           return false;
 >       }
+>   #endif
+> +    if (!s->accel) {
+> +        if (!s->ril) {
+> +            error_setg(errp, "ril can only be disabled if accel=on");
+> +            return false;
+> +        }
+> +        return true;
+> +    }
+>       return true;
+>   }
 >   
->       bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
-> -    if (object_property_find(obj, "accel")) {
-> -        sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
-> -    }
-> +    sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
->       pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
->       sbdev = SYS_BUS_DEVICE(obj);
->       sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 8503879c3d..51b15aef37 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -3052,13 +3052,21 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
->               /* The new SMMUv3 device is specific to the PCI bus */
->               object_property_set_bool(OBJECT(dev), "smmu_per_bus", true, NULL);
->           }
-> -        if (object_property_find(OBJECT(dev), "accel") &&
-> -            object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
-> +        if (object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
-> +            char *stage;
-> +
->               if (!kvm_enabled() || !kvm_irqchip_in_kernel()) {
->                   error_setg(errp, "SMMUv3 accel=on requires KVM with "
->                              "kernel-irqchip=on support");
->                       return;
->               }
-> +            stage = object_property_get_str(OBJECT(dev), "stage", &error_fatal);
-> +            /* If no stage specified, SMMUv3 will default to stage 1 */
-> +            if (*stage && strcmp("1", stage)) {
+> @@ -2047,6 +2055,8 @@ static const Property smmuv3_properties[] = {
+>       DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
+>       /* GPA of MSI doorbell, for SMMUv3 accel use. */
+>       DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
+> +    /* RIL can be turned off for accel cases */
+> +    DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
 
-It would be less "ugly" to check SMMUStage enum values instead
-of using string compare :/
-
-> +                error_setg(errp, "Only stage1 is supported for SMMUV3 with "
-> +                           "accel=on");
-
-Can't this condition be checked in the realize handler instead ?
+yep. Adding a QOM model would clarify a lot of things.
 
 C.
 
 
-> +                return;
-> +            }
->           }
->       }
+>   };
+>   
+>   static void smmuv3_instance_init(Object *obj)
+> @@ -2072,6 +2082,8 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+>       object_class_property_set_description(klass, "accel",
+>           "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be "
+>           "configured in nested mode for vfio-pci dev assignment");
+> +    object_class_property_set_description(klass, "ril",
+> +        "Disable range invalidation support (for accel=on)");
 >   }
-> @@ -3096,8 +3104,7 @@ static void virt_machine_device_plug_cb(HotplugHandler *hotplug_dev,
->               }
 >   
->               create_smmuv3_dev_dtb(vms, dev, bus);
-> -            if (object_property_find(OBJECT(dev), "accel") &&
-> -                object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
-> +            if (object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
->                   hwaddr db_start;
->   
->                   if (vms->msi_controller == VIRT_MSI_CTRL_ITS) {
+>   static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
 > diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index 5616a8a2be..9c39acd5ca 100644
+> index 9c39acd5ca..533a2182e8 100644
 > --- a/include/hw/arm/smmuv3.h
 > +++ b/include/hw/arm/smmuv3.h
-> @@ -68,6 +68,7 @@ struct SMMUv3State {
->       bool accel;
+> @@ -69,6 +69,7 @@ struct SMMUv3State {
 >       struct SMMUv3AccelState *s_accel;
 >       uint64_t msi_gpa;
-> +    Error *migration_blocker;
+>       Error *migration_blocker;
+> +    bool ril;
 >   };
 >   
 >   typedef enum {
