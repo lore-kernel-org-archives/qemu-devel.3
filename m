@@ -4,168 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C1D2D41D64
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 425A8D41D69
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:35:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTjY5-0000Rn-4R; Thu, 11 Dec 2025 11:29:49 -0500
+	id 1vTjdi-0001qo-Q1; Thu, 11 Dec 2025 11:35:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTjY2-0000PU-KC
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:29:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Luqmaan.Irshad@amd.com>)
+ id 1vTjdh-0001ov-5N
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:35:37 -0500
+Received: from mail-northcentralusazon11013051.outbound.protection.outlook.com
+ ([40.107.201.51] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vTjXz-0002la-Rq
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:29:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765470583;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fgRaE3Xf992Qlq61leuvg1J5w2Ls1v5f4ErSftPW58c=;
- b=VMfjf/OCU+VMlwMrE/A7AOm3poTwM5KkJFeWczeY4zjyeaXGNOHE6iUNutKE8dd8L47kme
- rtmw+shOaQDnCdgYRW+nK4YeX6+qb9FUCqSGwelU/S3UMWcIq7ImzZjB1FvJiHhtwL1LpO
- +uvX62TQKSOnBpHplfaejGXJPtZOfGA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-9-byB7VUMCu8JfjbJ0DBCQ-1; Thu, 11 Dec 2025 11:29:41 -0500
-X-MC-Unique: 9-byB7VUMCu8JfjbJ0DBCQ-1
-X-Mimecast-MFC-AGG-ID: 9-byB7VUMCu8JfjbJ0DBCQ_1765470580
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-42e2d6d13d1so151540f8f.2
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:29:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765470580; x=1766075380; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=fgRaE3Xf992Qlq61leuvg1J5w2Ls1v5f4ErSftPW58c=;
- b=QiustEaBCS2qhePpTCOWShOAR7yWUNw/k41vLRplLCEV2s2kuDt2Ve7se+Ims0z7s4
- 7nclWAhrLxtXMSfNXfhs7lqPVc/nBHmZMsLmB9ToQUcrP3ElJ4BXWSbAmagNHbuQ1N7o
- v3xpSJf1hSnbst/LR1TyD/wtWb74vufrN9CDQxRKanwQFeHILSY298uCMU8Rbrq2/jpw
- 6Ecj/x8Xg6xf6cUJYx4SHVDZsGGXMOP/gw55QUucdxWvNYZ6IheTuUPJSV3TvUBHcxfV
- IJozKxo7ujVVSLdteaWgabOlNnSZTLB9XfRXvh5R/8j+Rjk5C9Y3Nkh1AspQai4xhL2h
- QMmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765470580; x=1766075380;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fgRaE3Xf992Qlq61leuvg1J5w2Ls1v5f4ErSftPW58c=;
- b=igaSiaqWN7TwuG8aEG/LspqR5K/boq9LfaH+FBAPj2PvB0iCsSAmlTPX6HLzH0IYWZ
- 4tLFA/gFJ7MrPFq8ZGUYlevSZ3TJuFEJ3SS7LlJtdaqMj8V29ktAltAYE7w8oTYa8hiC
- BjtKY32UF6FlRl364O8XEBc8VU8Tukx9b2/+/W7nvOJf7tEEQXJtH9xtziVxElRwcvNU
- Oxzw9MivgO4+XgIbLj8OCI57QNDlVzyhazvBxKQFAMXrV3iHWjlJGQDdPhtnzd/GQ0NC
- dWEqJpk7kvjXRFk5Ctg3TNBOWurgmQGA33AEQ5QgHZ/UTkdly4jIqoIRhlojrUFaKwrE
- Fryg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgVBb762VozP+DAk0JxniXzVCEb92yYj+Y5gzE1NKCb8ABHPLqQGIxuPE89EZ1UQ9ggTfXynYcH/zQ@nongnu.org
-X-Gm-Message-State: AOJu0Yxe9MYHX03CPRPqYCNahCJbpkyOriktiRAIPcNL4XRrm4mwYGTO
- O7zaiSbxWwR3qXjnQk+WYINEXmS25v9KwJvy3DzCiUenR1yYg52ZotkJl03l9aOes5pmQeb3oIw
- LaaIhX+6N4g24v3HrScFILweLJFiidNbtUZxeu9n6/vIzrQILk7NuNflr
-X-Gm-Gg: AY/fxX4C/1O99ER00/yA/q0IXa9ZhoISJjeH6RFaOQJUULqdG1f1vErLiCNkl5QnQqb
- p4+rsUrZIiaFAQpv2+3GisBlVu0guNSv5eqDu+2B9hESfNU2ffrrXSf68tZ2W6bhJXjWcUj4wKh
- iEcgO0iYtQ28xp19t3ZhgqRWurfLiFOeTgkF9KKZ+h1OhSL6uGesYMC+tsaU0QPx9/L1BSYQ2Ys
- zBxY2BNTj8a+hPBeAteNj4aeKEm2UTO1Uuhv8WGimOvzC9TxCezoiIkGWtKHYgUFtIDbrVsGR3+
- ixZMbvZkZzMmmyqJRhc3dIP6Bb+w02xMxnmv/Go9TcTSHi/0V1lTZMUSAeRpMvZ91AlsJYQkSMi
- Z4MLyZ5P0VK21137x0v+19ZzFveVXgaAdv2IgGOCzB2OpauwI
-X-Received: by 2002:a05:6000:2905:b0:426:d5ac:8660 with SMTP id
- ffacd0b85a97d-42fa3b1ef5bmr6858226f8f.58.1765470580100; 
- Thu, 11 Dec 2025 08:29:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEQajvy+M0BsjCRN5gTdZ7eWkEvdV0JyfpqwPq517U3BViauilVCY4TKSWfATyClOjOXcHigg==
-X-Received: by 2002:a05:6000:2905:b0:426:d5ac:8660 with SMTP id
- ffacd0b85a97d-42fa3b1ef5bmr6858197f8f.58.1765470579540; 
- Thu, 11 Dec 2025 08:29:39 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42fa8b9b259sm6444144f8f.41.2025.12.11.08.29.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 08:29:39 -0800 (PST)
-Message-ID: <ab8ac8e1-b371-410d-88da-21e93a5985b0@redhat.com>
-Date: Thu, 11 Dec 2025 17:29:37 +0100
+ (Exim 4.90_1) (envelope-from <Luqmaan.Irshad@amd.com>)
+ id 1vTjdf-0003dt-1I
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:35:36 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=v6rQteCyMrF1fkaw0n8DYHQMpKFvBX/LJmgVbJuzIgijgv2BAJije2fjjwt58rFCfEmfeX0htk5mjL9y2JxdI30Av4Ww6B5KgPzbIZ32KJz0qXegRfPwWie4q/ss0JZe4FoeOwPoHNEDMOx6xkGckPprNRTdoIS1jD3yUSpNFPDQVxOH/No0R0fs3PnxINHRKg6iRNtbWk02szBU3RhWw/Zv0RVX8YT3tCzTTx8pCxKdFqF8X1/ibWJ+OM8tyFsa3KdITkP8tskfFkx8F/EwLngYQChuOo28xQbjIV/EUNvcvsnXyXdQI0lz9WZZCzKA2A/iCRvb9kszCrDWvvIZRg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+gvdxrxmNEbWdqMIx1xV8FPyUPQWudjgjFW6CGlCNCE=;
+ b=M1On4np4/kvent/EYdAzNLr5R8OCtNTBnwKfEc4CG7Gfehbt5l1PRz5yK8XbZHC1+A29oygrCtBSFirlrMPKKzSaxZlpj7Cse9TWMERbH5qLgCtYLpqDSL1X+iEBGW0d5EBlQhWOxCuhJwr9ql5AQIQ9xxY6n7sPPfSQmv+JO0mnReNDwVPb+MeGyEeIjbsy0s669aiw76G9DwAomq5pmhRn0LsCXCsU0rOZ9MiCC8vPhRCX0c7JeQ+pMj8ZHA1+eryV2oZYmVglRitARPdj6MDjLGIbJqwXD+3S3kdX1jiaxk/9gkbWTwIqlqxrz5dhQGs/AHqvd38PEiPSTjFZsw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+gvdxrxmNEbWdqMIx1xV8FPyUPQWudjgjFW6CGlCNCE=;
+ b=P8rbIzXx/8WKJcUwvyIIWNRt0cIGjWO5hPkkXD5ReWOdsLIJ4RcJ1zeNYNw2pYXAE6OqMo2q4cRk5eA78ktXLJ79c7NxTUYFygQjgo6/W0LKgAdwfq3DQKWcIvAt+QwObmng9g4ZQJStsgA1XcCb9Hn/5XrWaYXxU7xSD2mx1o0=
+Received: from BL4PR12MB9484.namprd12.prod.outlook.com (2603:10b6:208:58e::15)
+ by DS7PR12MB9502.namprd12.prod.outlook.com (2603:10b6:8:250::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.9; Thu, 11 Dec
+ 2025 16:30:20 +0000
+Received: from BL4PR12MB9484.namprd12.prod.outlook.com
+ ([fe80::b6c:4947:b978:9010]) by BL4PR12MB9484.namprd12.prod.outlook.com
+ ([fe80::b6c:4947:b978:9010%5]) with mapi id 15.20.9412.005; Thu, 11 Dec 2025
+ 16:30:18 +0000
+From: "Irshad, Luqmaan" <Luqmaan.Irshad@amd.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "mst@redhat.com" <mst@redhat.com>, "alex.bennee@linaro.org"
+ <alex.bennee@linaro.org>, "Pelloux-Prayer, Pierre-Eric"
+ <Pierre-eric.Pelloux-prayer@amd.com>, "luckmaan21@gmail.com"
+ <luckmaan21@gmail.com>
+Subject: Re: [PATCH] virtio-gpu: create drm fd based on specified render node
+ path
+Thread-Topic: [PATCH] virtio-gpu: create drm fd based on specified render node
+ path
+Thread-Index: AQHcZhfofsc+PaQVgkmybu/4b1LjnLUW7PiAgAWY9wCAACIHVQ==
+Date: Thu, 11 Dec 2025 16:30:18 +0000
+Message-ID: <BL4PR12MB94840D89E2584BA81151D5189DA1A@BL4PR12MB9484.namprd12.prod.outlook.com>
+References: <20251205184906.110927-1-luirshad@amd.com>
+ <06bd2abd-e554-4ec8-8ffb-256d33af95c0@collabora.com>
+ <56728682-8ab9-498e-acc5-c31ba83642fc@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <56728682-8ab9-498e-acc5-c31ba83642fc@rsg.ci.i.u-tokyo.ac.jp>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_Enabled=True;
+ MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_SiteId=3dd8961f-e488-4e60-8e11-a82d994e183d;
+ MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_SetDate=2025-12-11T16:20:32.6361380Z;
+ MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_Name=AMD
+ Internal Distribution
+ Only; MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_ContentBits=3;
+ MSIP_Label_dce362fe-1558-4fb5-9f64-8a6240d76441_Method=Standard
+x-ms-reactions: allow
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL4PR12MB9484:EE_|DS7PR12MB9502:EE_
+x-ms-office365-filtering-correlation-id: 522450ef-a946-4990-ba46-08de38d29246
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|366016|7053199007|38070700021|13003099007|8096899003;
+x-microsoft-antispam-message-info: =?us-ascii?Q?4JBXRnTbrpPg+PpcsKUU8r6T7prZLGTjXYXlA2hWtVDBZX8fP0WHfVAR+yFp?=
+ =?us-ascii?Q?bBZptnXWpdSPFrPvf7teDkLYkOXJyzz8QTS0xZNk4657JM62h+jQMV68TDdy?=
+ =?us-ascii?Q?6t3vHy7pNms5Ofyn2V+bAAcb78I8/R3OE4xKB4YbQDx7p9saxSU9DlV/6g/l?=
+ =?us-ascii?Q?4RipCsR2t+rG6KfWgzevXG5/odmQHEO4SFXwiTbqlIPEn4HwG7N5h6riIojG?=
+ =?us-ascii?Q?xDKNwvwglacuvVCr8QDkpXvLYzf2PRTZ+k/e5V6uq62C1UFc01q1jjBQusr9?=
+ =?us-ascii?Q?0Qq0sd5sEiB2CEsgrXI23+EypJsHgq5T2o3OelEtrHQ9owhn/3SxpT+S+EFc?=
+ =?us-ascii?Q?4DK4f0cB9fdf/oOzdvqGQfqRjFW9WuOwryKOMiDXV19qEahZQ/d0XEaqGt8X?=
+ =?us-ascii?Q?QvUKfbSmYTGxJi6+34ATwslP0hxRbOOUZpsmOaFyz+aLiyXuLI2hv+VR5yyo?=
+ =?us-ascii?Q?YQr3mRC45jOuz63a1grAtJ4rd+0wt16ifO1Pdbpg8L96BhC+pH6lA74q0DjH?=
+ =?us-ascii?Q?9De4WyUf29Z/6PjFZ7QfQYF6I5CIpwjMPL8CY7Z2eAq/pCNMnufkEjBOkoae?=
+ =?us-ascii?Q?AOkSY3xCismsgYZmITjeCXn/XoI4PV+oO4FloUVxSHXz8v+tYr2MXH5j1FBt?=
+ =?us-ascii?Q?GD1sN0rsdyxe9O1LtdprAUF4zVaJnENgvtNi/HvDU5c1FTpcMshXXUzavFbH?=
+ =?us-ascii?Q?N16H/qm5slI06hdDs3LNz29na2IEt2KqKdYcjYpO18Ba8kkbama2SVFrvk4o?=
+ =?us-ascii?Q?ulsaFr3/p1THKRhyBuxmMobY50U1kih1wITfU6PvcSue74i3uLmuwp907E0m?=
+ =?us-ascii?Q?tVuE6NWN2ynIf2rsUYz2T6vNCwg8VahgCZqWvcPmSXDEQ4kRVBUxlTF43cGl?=
+ =?us-ascii?Q?9qDOHmDF6DNFM+2mtpoldIXXxRUkkhvd2xT0hLqRlY2tYMR4ROSDPEO0Qa1I?=
+ =?us-ascii?Q?j/vKu6ilyK6GZImV3LPKK0GfII17UIIV5QiHmwERa95N08Dw+Ms8jjCqTDWD?=
+ =?us-ascii?Q?/9RzjFAjV1ZEOixo6je5UeqvgE9zifkUDZSP5mSkHvLB2YPpkEUWhR+gyVJ6?=
+ =?us-ascii?Q?nANxEf2uSnLpVLCaMG/TSSnDv0IepFksJnN3bGg42VpjTvhqz3wF+cdFuhGK?=
+ =?us-ascii?Q?f1zhpSLey56zYSuci82AF3YZ3TLMDAtREIUIgZ0fwxheUxNrcTsEIBMQLQ0u?=
+ =?us-ascii?Q?Nw4ivUMIrS1qr4e1IFADEPM083IlJozsv28laPsAccAca+BhGLfzMVfx/i8u?=
+ =?us-ascii?Q?e3DPe3zAL1e/h5VbskerFvzUJyJfB/02FFSRZGE5Yaifz16eSKbpkCF980St?=
+ =?us-ascii?Q?Ed2ePD8+srhcl7mCY6o1iGKbzIaA34Gmh/hKKfblKEUeAFJ5NtgSJ0bgWkvK?=
+ =?us-ascii?Q?Dp9Ms1emNMzO8awUgCVl5xozJ0rjsoYlwd4lrbWu4iZ2S+UBtksW5TwEJGyL?=
+ =?us-ascii?Q?VYGijt3iHzK/UiijqpH1KYvt4igAzRNUEGy1GOGIWtOCab1kTGyMsg=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL4PR12MB9484.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(7053199007)(38070700021)(13003099007)(8096899003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?DaVQwyaDGOBizgM2rqhLbWASpPaoVRxy2ybGhvRnqM4GEpDTA8y3rnLYsM45?=
+ =?us-ascii?Q?ZCZLEwXKdMfVuPG0VjDNvlqzszgQIP2Q8bldSQLJDWW91uFPGzZfouP1WNKz?=
+ =?us-ascii?Q?uv/5loRg1fS//3w77dFreWYDw9PfO9HsdMMw9BspXGe+3N8ilf+D/O2SCPsf?=
+ =?us-ascii?Q?mjyoRC84F687W90EQLPv5qtU4Q4ZxJ1egOtIxcNcDg+dmvZKvXJurdawcFq0?=
+ =?us-ascii?Q?HFUk3a0Nad+yHsI+nG5oXRv3OVMTyi0pyuTigmIcgyCuW0dOKQErU0U8V1j8?=
+ =?us-ascii?Q?kLWflBItyeRiQ904VVzp7ALNl5A4oG7/YOxc6O70vOfwuKW6wjW42PNdHt84?=
+ =?us-ascii?Q?9dqaM19TuAmT0LyFmoHt1XpHW6jtyilxHcYFwO3xg0E06GNjh5c3O7fufWzZ?=
+ =?us-ascii?Q?sETX4rdnLmQxAcrSQ+yphWZ8+vh1WwNrBOiOQSRyrVDGTy8mhpMQkIBK86Fb?=
+ =?us-ascii?Q?YJCATNO3cMxx5trvqkyOp7C8Jolu0ODQnXf0O/5hSRB1wrya7HWloQ3a1WHJ?=
+ =?us-ascii?Q?DT4JjtOBabkabULevvYpRWOcy3w7Fyf1KQf68BJk8MhrvpDX56cd7nibtnLG?=
+ =?us-ascii?Q?wziVzvUCBoP53nx57NyXEQWoy5UdezCOn5pKsFFaEkLFMktzrMT0/TJuvEW0?=
+ =?us-ascii?Q?mM6ThKJfQ/HO59Lw1X9922tGjNP5bOQjJ/AoV68rdx8a2b2dVNIoA3OMGYka?=
+ =?us-ascii?Q?w8FM6TOW8z201kqE3PHm898hIONNUcEJU+An/AcgF8JgEY4JXZe03ayiOJXK?=
+ =?us-ascii?Q?bfEO9iap39b7injIztLiRRfxtDe9d52o58qoPNXT4WPc1+OH0maZyyxC11mw?=
+ =?us-ascii?Q?JF99+uEJUOB4EAD3aDBtuO//I9uY5sFje/AwwCLvVlVUOIstGi4cffxUfR8U?=
+ =?us-ascii?Q?9PHGvv3Zetz1Lw0hPNApqf7UgjT4fgkwxfHbTQ6SLEBu4YTbSVJJQ/a1rBNL?=
+ =?us-ascii?Q?sVYH0RweToGoSentUW8GEkikwwNn5bx2Pe4Dapswm7/h9WJD6JN2YBrBzfzh?=
+ =?us-ascii?Q?MSNzQDp+9QaRyBPLpdM/5gYvtc0TMMWxXeEEY1tYamyu0LNFTEwAU1fkwlxa?=
+ =?us-ascii?Q?qv80pNCGZybS+Gm0rnIKe3JA63Oj/yPnPQmNh77jlyZFFVn93j/cHGUpqea2?=
+ =?us-ascii?Q?ch8n6JRbWPGyaSoLaA7lRuoXQLgFqxL3Za/3uddRo2oqdoDKIh/34PPt8U54?=
+ =?us-ascii?Q?xwnKQV8iTjL+3hfbcZ9QKzP3I3NrO4Fbb4d0KkU0Xl2ncui+j9rNzFHLa1jh?=
+ =?us-ascii?Q?QAeDVzdYnxH8cjDGZDobmFnkpT3d2Ci3+yqrq3LkgvoU+PG5k28pcKL06jgI?=
+ =?us-ascii?Q?R1qdp/Fewmx6i1VQVQvZuR9yC5alojHo1bn2/znKj8fVftn7hZjdg59J8cap?=
+ =?us-ascii?Q?M2G88towffgNeCyBr9DO9gTNNBYba6INrVKTrk/B4AKDt5d13KIjRvwHnsH3?=
+ =?us-ascii?Q?0Cl/jiXo3efwbqnn0hG5WpWdoKrDdg6/WJTDWCxVz5H1VSDudSieR1OMeuOq?=
+ =?us-ascii?Q?tCUg4u80TaggwamFzRm/XYflmQIt92I3YT9RXRy7OeUXD4NiWWRZ8RvLt25L?=
+ =?us-ascii?Q?Tx3nYzTiovc1gwlYq7lsHjr8pUSz+7mULqxL2CZ0?=
+Content-Type: multipart/alternative;
+ boundary="_000_BL4PR12MB94840D89E2584BA81151D5189DA1ABL4PR12MB9484namp_"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: "Dr . David Alan Gilbert" <dave@treblig.org>,
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>
-References: <20251209162857.857593-1-peterx@redhat.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251209162857.857593-1-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL4PR12MB9484.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 522450ef-a946-4990-ba46-08de38d29246
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Dec 2025 16:30:18.0480 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: +To+yFjt661WEaOCFQiNg+5NMucJaUNrKlNS4xISC1kG/BnXxNk1s8YUPOtV71Ly2HGGcef2oQ0YlB7rGdGjbg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB9502
+Received-SPF: permerror client-ip=40.107.201.51;
+ envelope-from=Luqmaan.Irshad@amd.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -183,132 +180,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/9/25 17:28, Peter Xu wrote:
-> [This is an RFC series, as being marked out.  It is trying to collect
->   opinions.  It's not for merging yet]
-> 
-> Background
-> ==========
-> 
-> It all starts with machine compat properties..
-> 
-> Machine compat properties are the major weapon we use currently in QEMU to
-> define a proper guest ABI, so that whenever we migration a VM instance from
-> whatever QEMU version1 to another QEMU version2, as long as the machine
-> type is the same, logically the ABI is guaranteed, and migration should
-> succeed.  If it didn't, it's a bug.
+--_000_BL4PR12MB94840D89E2584BA81151D5189DA1ABL4PR12MB9484namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-On the PPC pseries machines, we had to introduce a capability concept
-and infrastructure on top of the machine versions to handle cases where
-the features advertised to the guest (also visible to the OS) could
-differ from one host to another and generate migration errors. See :
+[AMD Official Use Only - AMD Internal Distribution Only]
 
-   hw/ppc/spapr_caps.c
+Hello Akihiko,
 
-These capabilities can be tweaked on the command line to adjust source
-and target host support. It's mostly related to CPU and MM features.
-Initially these difference were related to CPU bugs IIRC and different
-FW levels on the host.
+I just had a brief conversation with Pierre-Eric, and I believe the use cas=
+e is slightly different than the one described.  For virgl, selecting using=
+ DRI_PRIME only would suffice because QEMU and VirGL (both using OpenGL), b=
+oth rely on the driver to pickup the GPU.
 
-Is your proposal doing something similar ? Is my understanding correct ?
+For Native context however (this case) there is no GL driver use from virgl=
+renderer side, which is why we inform virglrenderer using the callback func=
+tions instead.
 
-Thanks,
+Sincerely,
 
-C.
+Luq
 
-> 
-> These compat properties are only attached to qdev for now.  It almost
-> worked.
-> 
-> Said that, it's also not true - we already have non-qdev users of such, by
-> explicitly code it up to apply the compat fields.  Please refer to the
-> first patch commit message for details (meanwhile latter patches will
-> convert them into a generic model).
-> 
-> Obviously, we have demands to leverage machine compat properties even
-> outside of qdev.  It can be a network backend, it can be an object (for
-> example, memory backends), it can be a migration object, and more.
-> 
-> This series tries to introduce a common root class OBJECT_COMPAT for it.  I
-> didn't abuse OBJECT because I know there're too many OBJECTs that do not
-> need compat properties at all.  With this design, we can also opt-in piece
-> by piece on the new root class, only when needed.
-> 
-> Class OBJECT_COMPAT
-> ===================
-> 
-> This is almost OBJECT class, except that it'll also apply machine compat
-> properties from anywhere.  One can refer to patch 1.
-> 
-> Note that currently I didn't further identify the three possible source of
-> object_compat_props[3] (accel, machine compat property, legacy globals).  I
-> don't think it's a huge issue so far because non-qdev objects will not
-> collapse with names in accel / legacy globals, due to the fact that object
-> names cannot dup acorss QEMU binary.  So I kept the changeset as minimum as
-> possible.  Feel free to shoot if there's concerns I overlooked.
-> 
-> This part is done in patch 1-6.  This is the part I felt slightly more
-> confident with.  Meanwhile, these will be the dependency if we want to
-> e.g. allow TAP network backends to take compat properties like a virtio-net
-> frontend (but likely we'll need to QOMify TAP first).  That's something for
-> the future even if applicable.
-> 
-> Export Property from QDEV
-> =========================
-> 
-> I also have patch 7-10 below for one step further beyond OBJECT_COMPAT.
-> Feel free to take it even as a seperate small series to review.
-> 
-> So far the first part will be the focus, but I still want to collect
-> opinions here on this second part.  This is about exporting Property for
-> non-qdev uses.  Currently, migration is the only user.
-> 
-> In short, Property is something qdev uses internally to ultimately
-> represents ObjectClass's properties hash table.  It's pretty handy to
-> e.g. avoid definining accessors for object properties, setting default
-> values, etc.  Then they'll be converted to Object properties at some point.
-> 
-> Migration object currently defines all the global fields in Property and
-> can use "-global migration.XXX" to allow global overrides, with almost one
-> line for each property, which is efficient.
-> 
-> This 2nd step will allow migration object to inherit from OBJECT_COMPAT too
-> with almost only a few lines of changes, and keep the functionality as-is.
-> 
-> Two other options we have:
-> 
->    (1) Keep migration object to be a qdev, it's still fine, even if it
->        sounds hackish.. if we want to keep "-global" working as before
-> 
->    (2) Inherit OBJECT_COMPAT without supporting "-global" anymore.
-> 
-> Any comments welcomed, especially on the first half (1-6), thanks.
-> 
-> Peter Xu (10):
->    qom: Introduce object-compat
->    qdev: Inherit from TYPE_OBJECT_COMPAT
->    hostmem: Inherit from TYPE_OBJECT_COMPAT
->    accel: Inherit from TYPE_OBJECT_COMPAT
->    confidential guest support: Inherit from TYPE_OBJECT_COMPAT
->    qom: Unexport object_apply_compat_props()
->    qdev: Pave way for exporting Property to be used in non-qdev
->    qdev: Introduce helper object_apply_globals()
->    qdev: Refactor and rename of qdev_class_add_property()
->    migration: Inherit from TYPE_OBJECT_COMPAT
-> 
->   include/hw/qdev-properties.h          | 11 ++++++++
->   include/qom/object.h                  |  2 +-
->   migration/migration.h                 |  2 +-
->   accel/accel-common.c                  |  2 +-
->   backends/confidential-guest-support.c |  2 +-
->   backends/hostmem.c                    |  8 +-----
->   hw/core/qdev-properties.c             | 37 +++++++++++++++++++++------
->   hw/core/qdev.c                        |  6 ++---
->   migration/migration.c                 | 31 +++++++++++-----------
->   qom/object.c                          | 16 +++++++++++-
->   system/vl.c                           |  1 -
->   target/i386/sev.c                     |  1 -
->   12 files changed, 79 insertions(+), 40 deletions(-)
-> 
+________________________________
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Sent: Thursday, December 11, 2025 9:19:22 a.m.
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>; Irshad, Luqmaan <Luqma=
+an.Irshad@amd.com>; qemu-devel@nongnu.org <qemu-devel@nongnu.org>
+Cc: mst@redhat.com <mst@redhat.com>; alex.bennee@linaro.org <alex.bennee@li=
+naro.org>; Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.com>=
+; luckmaan21@gmail.com <luckmaan21@gmail.com>
+Subject: Re: [PATCH] virtio-gpu: create drm fd based on specified render no=
+de path
 
+On 2025/12/08 9:49, Dmitry Osipenko wrote:
+> Hi,
+>
+> On 12/5/25 21:49, Luqmaan Irshad wrote:
+>> Added a special callback function called virtio_get_drm_fd to create
+>> a render node based on the path specified by the user via QEMU command
+>> line.  This function is called during the virglrenderer callback sequenc=
+e
+>> where we specify the get_drm_fd function pointer to call back our
+>> new function, allowing us to pass the fd of our created render node.
+
+I guess what you need can be achieved by specifying a render node for
+the display. Headless displays (egl-headless and dbus) has the
+rendernode property for this. For the other displays, Mesa should choose
+an appropriate render node, and it can be overridden with the DRI_PRIME
+environment variable:
+https://docs.mesa3d.org/envvars.html#envvar-DRI_PRIME
+
+>>
+>> Based-on: 20251116125641.2255794-1-dmitry.osipenko@collabora.com
+>>
+>> Signed-off-by: Luqmaan Irshad <luirshad@amd.com>
+>> ---
+>>   hw/display/virtio-gpu-gl.c     |  4 ++++
+>>   hw/display/virtio-gpu-virgl.c  | 17 ++++++++++++++++-
+>>   include/hw/virtio/virtio-gpu.h |  1 +
+>>   3 files changed, 21 insertions(+), 1 deletion(-)
+>
+> Do you think it could be possible and worthwhile to make QEMU's EGL
+> display to use same GPU as virgl automatically? I.e. we tell QEMU/EGL
+> which GPU to use and then virgl will use same DRM device that backs EGL.
+
+As far as I understand, it is already ensured that virgl uses the EGL
+display QEMU uses, and I think that what you want. Opening a different
+render node and passing the node to virglrenderer breaks it.
+
+Regards,
+Akihiko Odaki
+
+
+--_000_BL4PR12MB94840D89E2584BA81151D5189DA1ABL4PR12MB9484namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+</head>
+<body>
+<p style=3D"font-family:Calibri;font-size:10pt;color:#0000FF;margin:5pt;fon=
+t-style:normal;font-weight:normal;text-decoration:none;" align=3D"Left">
+[AMD Official Use Only - AMD Internal Distribution Only]<br>
+</p>
+<br>
+<div>
+<div dir=3D"auto" style=3D"font-family: Aptos, Aptos_MSFontService, -apple-=
+system, Roboto, Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(3=
+3, 33, 33);">
+Hello Akihiko,</div>
+<div dir=3D"auto" style=3D"font-family: Aptos, Aptos_MSFontService, -apple-=
+system, Roboto, Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(3=
+3, 33, 33);">
+<br>
+</div>
+<div dir=3D"auto" style=3D"font-family: Aptos, Aptos_MSFontService, -apple-=
+system, Roboto, Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(3=
+3, 33, 33);">
+I just had a brief conversation with Pierre-Eric, and I believe the use cas=
+e is slightly different than the one described.&nbsp; For virgl, selecting =
+using DRI_PRIME only would suffice because QEMU and VirGL (both using OpenG=
+L), both rely on the driver to pickup
+ the GPU.</div>
+<div dir=3D"auto" style=3D"font-family: Aptos, Aptos_MSFontService, -apple-=
+system, Roboto, Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(3=
+3, 33, 33);">
+<br>
+</div>
+<div dir=3D"auto" style=3D"font-family: Aptos, Aptos_MSFontService, -apple-=
+system, Roboto, Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(3=
+3, 33, 33);">
+For Native context however (this case) there is no GL driver use from virgl=
+renderer side, which is why we inform virglrenderer using the callback func=
+tions instead.</div>
+<div dir=3D"auto" style=3D"font-family: Aptos, Aptos_MSFontService, -apple-=
+system, Roboto, Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(3=
+3, 33, 33);">
+<br>
+</div>
+<div dir=3D"auto" style=3D"font-family: Aptos, Aptos_MSFontService, -apple-=
+system, Roboto, Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(3=
+3, 33, 33);">
+Sincerely,</div>
+<div dir=3D"auto" style=3D"font-family: Aptos, Aptos_MSFontService, -apple-=
+system, Roboto, Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(3=
+3, 33, 33);">
+<br>
+</div>
+<div dir=3D"auto" style=3D"font-family: Aptos, Aptos_MSFontService, -apple-=
+system, Roboto, Arial, Helvetica, sans-serif; font-size: 12pt; color: rgb(3=
+3, 33, 33);">
+Luq</div>
+<div dir=3D"auto" id=3D"mail-editor-reference-message-container"><br>
+<hr style=3D"display: inline-block; width: 98%;">
+<div id=3D"divRplyFwdMsg" style=3D"font-size: 11pt;" dir=3D"auto"><b>From:<=
+/b>&nbsp;Akihiko Odaki &lt;odaki@rsg.ci.i.u-tokyo.ac.jp&gt;<br>
+<b>Sent:</b>&nbsp;Thursday, December 11, 2025 9:19:22 a.m.<br>
+<b>To:</b>&nbsp;Dmitry Osipenko &lt;dmitry.osipenko@collabora.com&gt;; Irsh=
+ad, Luqmaan &lt;Luqmaan.Irshad@amd.com&gt;; qemu-devel@nongnu.org &lt;qemu-=
+devel@nongnu.org&gt;<br>
+<b>Cc:</b>&nbsp;mst@redhat.com &lt;mst@redhat.com&gt;; alex.bennee@linaro.o=
+rg &lt;alex.bennee@linaro.org&gt;; Pelloux-Prayer, Pierre-Eric &lt;Pierre-e=
+ric.Pelloux-prayer@amd.com&gt;; luckmaan21@gmail.com &lt;luckmaan21@gmail.c=
+om&gt;<br>
+<b>Subject:</b>&nbsp;Re: [PATCH] virtio-gpu: create drm fd based on specifi=
+ed render node path<br>
+</div>
+<br>
+<meta name=3D"Generator" content=3D"Microsoft Exchange Server">
+<div dir=3D"auto" class=3D"PlainText" style=3D"font-size: 11pt;">On 2025/12=
+/08 9:49, Dmitry Osipenko wrote:<br>
+&gt; Hi,<br>
+&gt;<br>
+&gt; On 12/5/25 21:49, Luqmaan Irshad wrote:<br>
+&gt;&gt; Added a special callback function called virtio_get_drm_fd to crea=
+te<br>
+&gt;&gt; a render node based on the path specified by the user via QEMU com=
+mand<br>
+&gt;&gt; line.&nbsp; This function is called during the virglrenderer callb=
+ack sequence<br>
+&gt;&gt; where we specify the get_drm_fd function pointer to call back our<=
+br>
+&gt;&gt; new function, allowing us to pass the fd of our created render nod=
+e.<br>
+<br>
+I guess what you need can be achieved by specifying a render node for<br>
+the display. Headless displays (egl-headless and dbus) has the<br>
+rendernode property for this. For the other displays, Mesa should choose<br=
+>
+an appropriate render node, and it can be overridden with the DRI_PRIME<br>
+environment variable:<br>
+<a href=3D"https://docs.mesa3d.org/envvars.html#envvar-DRI_PRIME">https://d=
+ocs.mesa3d.org/envvars.html#envvar-DRI_PRIME</a><br>
+<br>
+&gt;&gt;<br>
+&gt;&gt; Based-on: 20251116125641.2255794-1-dmitry.osipenko@collabora.com<b=
+r>
+&gt;&gt;<br>
+&gt;&gt; Signed-off-by: Luqmaan Irshad &lt;luirshad@amd.com&gt;<br>
+&gt;&gt; ---<br>
+&gt;&gt;&nbsp;&nbsp; hw/display/virtio-gpu-gl.c&nbsp;&nbsp;&nbsp;&nbsp; |&n=
+bsp; 4 ++++<br>
+&gt;&gt;&nbsp;&nbsp; hw/display/virtio-gpu-virgl.c&nbsp; | 17 +++++++++++++=
++++-<br>
+&gt;&gt;&nbsp;&nbsp; include/hw/virtio/virtio-gpu.h |&nbsp; 1 +<br>
+&gt;&gt;&nbsp;&nbsp; 3 files changed, 21 insertions(+), 1 deletion(-)<br>
+&gt;<br>
+&gt; Do you think it could be possible and worthwhile to make QEMU's EGL<br=
+>
+&gt; display to use same GPU as virgl automatically? I.e. we tell QEMU/EGL<=
+br>
+&gt; which GPU to use and then virgl will use same DRM device that backs EG=
+L.<br>
+<br>
+As far as I understand, it is already ensured that virgl uses the EGL<br>
+display QEMU uses, and I think that what you want. Opening a different<br>
+render node and passing the node to virglrenderer breaks it.<br>
+<br>
+Regards,<br>
+Akihiko Odaki<br>
+</div>
+<br>
+</div>
+</div>
+</body>
+</html>
+
+--_000_BL4PR12MB94840D89E2584BA81151D5189DA1ABL4PR12MB9484namp_--
 
