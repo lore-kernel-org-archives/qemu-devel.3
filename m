@@ -4,100 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBAE2D3E783
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 02:34:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF39D3E78A
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 02:57:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTWVB-0005Ow-BO; Wed, 10 Dec 2025 21:33:57 -0500
+	id 1vTWqs-0000d5-C4; Wed, 10 Dec 2025 21:56:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vTWV8-0005Og-Px
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 21:33:55 -0500
-Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vTWV7-0008WO-Bs
- for qemu-devel@nongnu.org; Wed, 10 Dec 2025 21:33:54 -0500
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfout.phl.internal (Postfix) with ESMTP id C3EB6EC0579;
- Wed, 10 Dec 2025 21:33:49 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Wed, 10 Dec 2025 21:33:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1765420429; x=1765506829; bh=yE3+Lin4w5tWHByjjvRIvs02gGLrx+GT
- 53OovcMawIo=; b=xwyn+g6txUNt0DGiTe4fciGz4549VCIYlCPqYkIekWYIwpHJ
- OEYttivLx5DqwC1f0Bp1HO45MaHt5TwW99G35TOzIu+rk/W/O19DYosNnTGCWmv6
- TP9GLWr4wdotFDdH7TdDfzf+cJw86k6cVmS1isV3xCinK1FPAAlRGd/Va3zJb2K3
- 9OjUtn9L6qu9zAzxWvWdGr5Vm2zd6Zoa9Nm7LwK5UDX0iGUFwqbrehBn/9gbf3pB
- BU+Y3sLF4oJp3NklSOGVyAvPhqClWaB0x8kJPhTVPeAJt0D/tH6VYqM13lCc4WQV
- d18aKJVeOfD8ajGXBkJ7KeSHQL8UEFlevA7rTQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1765420429; x=
- 1765506829; bh=yE3+Lin4w5tWHByjjvRIvs02gGLrx+GT53OovcMawIo=; b=a
- Ok3TQrkH0RcNVjJeeAjaonKkwFm42PkakQf+A9Xx2znOe0hkXbMld0tMilmfCq0y
- TIcKimWQJNVnH1KSg88gZ2TxhX2v1QUdrot42Kh+/ca6Fm6YUBJwHFZlEAQiTSKY
- smUvMO/w/FsdVNZQFRtV56uCN+sLX7e84j3+8gtxRBqL4Va5i0G1/sgpk3L5VMJz
- OBBCUaAESXlFGoaqaftEYLPjF8nCmlX8Ct5xpCc25m8UV4BlVrdtNmA0WMa33KGZ
- +UTUo6QX2TN+gxncDG2VRKfcCxCCI6Ueq3aAaHKeUbPxGkr/QJoh2vy8XqoQD9nb
- 2rDnLnkBfiCFoMOZKdjWw==
-X-ME-Sender: <xms:jS06aaeR8ydmx2KgEGYlv1lS-hIDXBdJV2EOP7GeN50O9FwfMuOPig>
- <xme:jS06aboFV6EJWsnYn0lI85T4q7Tt5eYD8P-D5OsLMLeksz2DCbKLE9lSqJyFoZyEW
- w7cqvGxLca3G9k1cbLao3e4unrb27CPqbepKkV0h8w3KJYPnEqL4w>
-X-ME-Received: <xmr:jS06aY6UKKm0PWDJzVg-BY9e3jx1e8jad7QsqV05-uGWY26Gd00xLNmmVicF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvgeduvdcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecufghrlhcuvffnffculdejtddmnecujfgurhepggfgtgffkf
- evuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedfvehhrgguucflrggslhhonhhs
- khhifdcuoegthhgrugesjhgrsghlohhnshhkihdrgiihiieqnecuggftrfgrthhtvghrnh
- ephfefudffkeffheduffetledvkeetvdejhedtheektefhhedvgefhheethfffkeegnecu
- vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghhrgguse
- hjrggslhhonhhskhhirdighiiipdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhp
- ohhuthdprhgtphhtthhopegsrghlrghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtth
- hopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoheptghhrggu
- sehjrggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:jS06aRpYcXtBqcbM-3XXypj5q6jj9HTvrtUIB7JIDYKMlAT-qg8b9g>
- <xmx:jS06aahaw5ISuJpnUV4MUtNEsZLdEexHy7I8BbTmCsYZgTd5C9HUsQ>
- <xmx:jS06abIKEk7k6qk_DIg5uxl6_wqKy5_-iu6mltdPzkpjHCysLsnJ0Q>
- <xmx:jS06aaCDNRl70BjxtG_6xI5eEOurEGSEmzzNxjKKOX9pjttV0nt3dg>
- <xmx:jS06aaV0U7HJ0ZjhxutxfuW61SPsHJbyOFZJWbj44pJEHEMQ2sSoJpjx>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Dec 2025 21:33:48 -0500 (EST)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 62e36222;
- Thu, 11 Dec 2025 02:33:46 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 10 Dec 2025 21:33:46 -0500
-Message-Id: <DEV1B7KO3P1T.1WB3D1SLTKAD4@jablonski.xyz>
-Cc: <balaton@eik.bme.hu>
-Subject: Re: [PATCH v3 00/11] ati-vga: Implement HOST_DATA transfers to
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "Chad Jablonski" <chad@jablonski.xyz>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.21.0
-References: <20251118154812.57861-1-chad@jablonski.xyz>
-In-Reply-To: <20251118154812.57861-1-chad@jablonski.xyz>
-Received-SPF: pass client-ip=103.168.172.149; envelope-from=chad@jablonski.xyz;
- helo=fout-a6-smtp.messagingengine.com
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1vTWqq-0000aH-L0
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 21:56:20 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jay.chang@sifive.com>)
+ id 1vTWqp-0005Ad-9r
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 21:56:20 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-343ff854297so662306a91.1
+ for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 18:56:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1765421777; x=1766026577; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=11A3yeaklOY7mKV6ItYwPBCa1g1fu+lM9TmhAd24ieI=;
+ b=P7rCmsfjh3BO7dzi/QDPU6GJLKtf9SFragFbTQCYzoE+auOw+na1lptJkejCi4zF9w
+ qqIq8uZj1Up2+sMwkO6MhMqivPoX3K0zyTOowzoW5ZqP1GjG8NF0IHOj8HkQvh32th2j
+ 7Alf93yuXydLT2O9eipUbYmvacczijXi0kR7YBcFktcX1JYLSv+wKSHtkGYlY3KOLVds
+ gg4YV2KrqOAco8cZ1wI4/IhMMRVqYkJPfqGRX0qS/S0Wf5VCGlvTjoZydhmeiPfH5abI
+ Ns7GeiuET0T1z/Bw4mh2CeMI59eGq/DnZv3N55sz+/DXLE1n6tp8E2sUsdElqdeTJe0c
+ 6WuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765421777; x=1766026577;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=11A3yeaklOY7mKV6ItYwPBCa1g1fu+lM9TmhAd24ieI=;
+ b=s9R+M8H43KvwAx1gePrLDIRLsZK4yqO1TQEUjWoNEP4OmhwdXB7KvAZU4Qy/n4IZRg
+ tZ0oAUm+bYzUPdvP4KeL8PV4UTRdnLvh+x6n3zuoOzEaXfVTwN36G2BNiN2PwXah0DE0
+ aI6UfiIgYMS49pN5tAbxHNvpHryARKFEmh0Wg/fzHQ2WbUeMgCfKCjU+lset48tepc/D
+ rssCyuh+BU3S0BipVEtlgvNNktnov8pImU3pKIXwUz394z5Hj8pJ/9kxQf9DWWAGT8i7
+ TcrSwVz1aGha2f9mhiF6g8KClthOtfKFZtgfCaAC/w4KkqX/v02xbwmaUmVCgnzKJcoB
+ 9qBw==
+X-Gm-Message-State: AOJu0Yxl6MafZkEr60qooqRq0u35TS3P6+K1+1Z1gBKz/C1GUF4yRmz7
+ h/QirHETlaCqAHwsaQka214yMockali8swy8wp6vnaxmwi4THP61qdGj2LrvnvHVtpmLiTZwy/Z
+ 0mxqUFBQKVq5lPOhySOTHK0pllpV5HdbvvlCpSYYzZhD7Shkymu/+TmmYMnA/jI+OegE/SOvsKO
+ UNJOzRLf/UryPFv00NYekrER2Z4uP9Hv5Hs63ejv4r
+X-Gm-Gg: AY/fxX6RcNYbAQLS014DVPAVicQQiC0EvDkQ1O4E4I3Q/viC5GSkDah5x1yOQD6SC81
+ U6H6iKW8mS4jyRv9bvru2nQJh6AGZBATlNscwNhmEx+kITn+lKmnj+wB4bcS6X6Grc1K8JQfW1e
+ y4Z6ev9A5HvcIwU4PwcVjDSEVDwk1ZO2j/GTkc8D0e4kl0xjTOjC463K41qFajjjpuehRH4kR70
+ sBiklmLoTKBxCQ4NmQal4Qs7nz5jjAZofKRsr+kRFDL1Bvgc39DrHkvR1O1qzG7s0Hy/t+0fgGc
+ cE7ocm8KmpdBs1uGT6+2nf+DwOXaNHA/Z8F7WSp2CW38492cmxJU36y/tNdpWPlsfkusb9ekn0/
+ nqD5zehLYw1lGH53R5NGlI7FkkhhsT5rn2EgPGqtVLrIFI12TwnBBjOQeX0vq1pgGwuVIqOPg8p
+ wu7Tfj5l6nYP44DrwL6T3/YhuVyGw+bpnEmPZwFWA1ffj9YSlXjw==
+X-Google-Smtp-Source: AGHT+IFe2QHF1d2a2fq7OHFK12zbdTCFduXMMJ58/klvLvCTDQqJma7/p32mvegR2jcb0HBpVMinUQ==
+X-Received: by 2002:a17:90b:50cf:b0:32b:623d:ee91 with SMTP id
+ 98e67ed59e1d1-34a72917938mr4102368a91.27.1765421777145; 
+ Wed, 10 Dec 2025 18:56:17 -0800 (PST)
+Received: from jchang-1875.internal.sifive.com ([136.226.240.181])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-34a926de17dsm70870a91.6.2025.12.10.18.56.15
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 10 Dec 2025 18:56:16 -0800 (PST)
+From: Jay Chang <jay.chang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jay Chang <jay.chang@sifive.com>
+Subject: [PATCH 0/2] Don't insert DDT cache in Bare mode 
+Date: Thu, 11 Dec 2025 10:56:09 +0800
+Message-ID: <20251211025611.99038-1-jay.chang@sifive.com>
+X-Mailer: git-send-email 2.48.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=jay.chang@sifive.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_SUSPICIOUS_NTLD=0.5, PDS_OTHER_BAD_TLD=2, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,8 +104,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hey BALATON, just a friendly ping on the v3 HOST_DATA series. If there's
-something I can take a look at as far as hardware validation or anything
-else let me know! In the meantime I've been getting familiar with CCE and
-poking at the microcode a bit.
+When IOMMU is in Bare mode, DDT (Device Directory Table) lookup is not
+performed. This series fixes two issues:
+
+1. Avoid inserting unnecessary DDT cache entries in Bare mode
+2. Properly free Bare mode contexts to prevent memory leaks
+
+Jay Chang (2):
+  hw/riscv: Don't insert DDT cache in Bare mode
+  hw/riscv: Refactor riscv_iommu_ctx_put() for Bare mode handling
+
+ hw/riscv/riscv-iommu.c | 34 +++++++++++++++++++++++++---------
+ 1 file changed, 25 insertions(+), 9 deletions(-)
+
+-- 
+2.48.1
+
 
