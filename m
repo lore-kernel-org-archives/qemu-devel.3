@@ -4,93 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 311E8D41D65
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:15:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90D3CD41D66
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 16:16:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTjJq-0003Iz-Re; Thu, 11 Dec 2025 11:15:06 -0500
+	id 1vTjKS-0003M9-6h; Thu, 11 Dec 2025 11:15:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTjJp-0003IE-DE
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:15:05 -0500
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vTjJn-0007k3-Tq
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:15:05 -0500
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-3f0ec55ce57so137052fac.2
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:15:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTjKJ-0003LW-4E
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:15:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTjKH-0007xx-7i
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 11:15:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765469731;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OQ5pVZ6PfIRAN9O6i28Gb8fyK3YyoXo0nVZkQXQyzuE=;
+ b=Qmg+KkJSqn5P5RgqMUKbi4sV/+NDzxiyKHCKDSa7ndVBgtT6cw7DYACJnlfFyQRyZGf64R
+ TBSxIDWv33ckRP+TuWNgc5DG8rbAwJrvN/WhgpOhGrYOJuXo/+PlP7l/n8dXdmRhB4rJpb
+ 3rM7AySnJRYujmC36GBL9UmZraRw1Uk=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-222-XB31zk9CO82jI5-LtVuL0w-1; Thu, 11 Dec 2025 11:15:30 -0500
+X-MC-Unique: XB31zk9CO82jI5-LtVuL0w-1
+X-Mimecast-MFC-AGG-ID: XB31zk9CO82jI5-LtVuL0w_1765469730
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-8b5c811d951so53535285a.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 08:15:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765469702; x=1766074502; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lWmx1SuovpB3ZuxFc8qaqvv/wEzaDCkbttm1kioPFy4=;
- b=whPJN7ZgzQvGJTqIFNLEqWIU9Jwh2Sl2r0EFaA49QlTH6UnGF6C/qRjET2vp6S+CCo
- UNfMDsgoH0Vijta4b97HzW5iCR1QhV6A5gDBCrlTfjnS54vfWvQ5yM25/5s71f5+frUK
- DKPH004r3w/6EVis04BVp/OFXHpFuSn/yEcpUJ2UJkn0lq8GoCiQ6B5NumIRibExFARm
- FHH5UhgNXrKUzlJ0n3I+Zox89+1ZGs4G9zOWW7SPqEv6VGedeUHC20t6kFMSaG0tXhgB
- Az4TwLvJPh6fF+H40UaNXtTuF7wuCdAgGzbbjaCgdwxZ1Mt6vj2pHXnQE/gOPr33Jscd
- TWsA==
+ d=redhat.com; s=google; t=1765469730; x=1766074530; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=OQ5pVZ6PfIRAN9O6i28Gb8fyK3YyoXo0nVZkQXQyzuE=;
+ b=VNRtFaEF6pF5Z9PFtJjPegbCeXMCugabbiCYZPZSAVmw0HWbhU108Ql9orHDwZgAdx
+ Yuedc49+N8kxXNoIcX2LSrsOAPY5Z3Us3GmJDmpz9M7gEipQ3KHGp5xLmSGabwAkb0du
+ pCANX/ni9RD206hyi0ooAkegvT3RaCxPyA5f/kTsQ4QEYZhNJyGpTm1lRzg0N5lRpYDS
+ lB7hFSfrw2ajGe8y2ztQ8F0vciUP882HTL/lx8mwWdCBReKFEmcnW95VeKmPE9uLOT2b
+ iu997JL9AhT/gV4O23i3okSy9xKg4P/PXbQFqcFVQLGK/sBMYCYAEo0yYEAjSLY90tzR
+ WzSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765469702; x=1766074502;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lWmx1SuovpB3ZuxFc8qaqvv/wEzaDCkbttm1kioPFy4=;
- b=Kp8j7j7Mg4dnBdPnxADMZ58h1aZrXL3dQUBooaNhTfUKlozD6VBdhPBuit2w04uhgT
- hWrysiOnMCYMQoGXJ9KYz50uojSCp3Gy/IdR4/g/o9KqASt3Bycqf8WqdD5b2eTTLrux
- dvq+tr6GYqj7hsGQkKUAMltvQNqxaZYZ2K9OD1SiULZ87RkL3JoRj0BMtrUxmv7Qr1vD
- CeoQVi7+M1OhoOXrQQovLsOD3/+BdciUMJ3CNL0+yYtaSxWpcIb8cPTnC918gqn4UqG1
- m7sN5suVcSiYZH8yUy8xqFe6XHWLcE/B632lMGEaAOWaLWd0FE+wlpCNTHZy/DyJQb2q
- hfXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsfnXTVrAkQQyV+T2yEBcBL0oj7x+qskZ7aeg7hE6ck3j7QgfWVtPyRuo4NgDIIhUfgoI4PTn2kte4@nongnu.org
-X-Gm-Message-State: AOJu0Ywgi7xVYYXPX6nHW7bujS/X81DnIkJQqESKKxj2a8Abap0Qtb1J
- goWMbN7P3J2x6uvZPtkKzEfFOQXykfs6bOdj5V7MeWkXh7fr0srINj/3MkDNDlVruXY=
-X-Gm-Gg: AY/fxX4lwAogtXRscN5ILgER2aUKx8tcDy8ZOjp25lmDV8ZUVsguAlXH9O+f6Rj89ah
- 9OemVwXE+RTlDfjjR549pwErEJXVA0cKu0w8rxfKoN3T3v6GdE0XjWPmKo0v5vcfzI/QqXoAENn
- Y4zqLe9HqO2ao2Wi4+0aA0S6mrr9EpTXYwiqnDTJQHqPl0T0HxCG7IZ0jgXDhSF+bZeygDFbzeY
- kskEgaHVW2RPtuZ9G36p2ENXbthKbtURjDlEghJCg4Y0OQNghrvRoGmDmyFwsS3D/utjeHr4Zjc
- OY7fh7jRf9k+LzQhDNG044b4ZsY9VShQEDdnSEb/U+JUOp2T4LVR9rZyOnBKZ/QK49jdGl6l7FA
- /vRDY9lzedvzygOpVZCmVC2/CgxOA9Rd2FNbtKcbSl8yC8JD1ANMymN7lAwZlBYALt32kZpf1W/
- ADmNH7C77Ywe7ep1oq0PSmH0gvgNX4nCEPQr0ikX/vWAWDSY25bWoKBnt6CV5Tz8UT
-X-Google-Smtp-Source: AGHT+IHl97s9+QIJUKsXY9lep1wWiyvgbfHcsrkKDIOj56kZDmGqfhqTG+I3gHLZRi4kIA86heVnsQ==
-X-Received: by 2002:a05:6870:d69c:b0:3ec:4f31:42a with SMTP id
- 586e51a60fabf-3f5bdbcbba2mr3622610fac.7.1765469702325; 
- Thu, 11 Dec 2025 08:15:02 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3f5d4e12e4fsm1946137fac.2.2025.12.11.08.15.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 08:15:02 -0800 (PST)
-Message-ID: <9b0836f8-6937-427e-b6d2-efe83dd23597@linaro.org>
-Date: Thu, 11 Dec 2025 10:15:00 -0600
+ d=1e100.net; s=20230601; t=1765469730; x=1766074530;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OQ5pVZ6PfIRAN9O6i28Gb8fyK3YyoXo0nVZkQXQyzuE=;
+ b=Dya2LHrZubaErgvI5yBJ4XDz3jSP7Jyk96zCEe71Liy2WxhJYLuAcrIURoUqUgRKuv
+ BDU6NcLDpKIapZp215gKT92BNiiW3F5mWq0Fhe8b8Mjf/oUBSWjBYLOyYdqjgkKtLtHX
+ H/Fshcc6aZMNU37TUc3qMb9TvNG4+uztWDGtNuWtImSwL01BSYh0VcTFpX4mEZAeyYsg
+ DmjYQW9U4MdDUEaRv7KG8o++x0e8aYPZ5+SlzSdhmVu5EeKhSjHcY06ALrBf19c9bAZA
+ /TawDbHhoFXzYsYfzx0MUtt8p4QdfdzrzAOMH9wBEdd5CdGR5j36Ok7Rn5qNw6G2Xi+9
+ eL/A==
+X-Gm-Message-State: AOJu0YyVk35pdma7GG6YrRuXzJO3JCH01iTl/LAJSwGShqSfae23SDH2
+ +Uk3qm1qIohTHwNDUTjav/qcjSFs5Ogn7lWzXSoVEvfOItNdKHmlHNOtvFz5l5XBmHEDUzmvCMR
+ KhIE/qy+7CBeZgVt60x2UZ7H7gay9V9q6KTfJHP+rP1w/1+19DZR7ZI3Y
+X-Gm-Gg: AY/fxX7bEOvdZ6os23W6iWOz2VwaYo8JSHgxxAV2qrPm+foMqUOKKgH+72ianP9nKcr
+ HQZodLeWLvdkfg+KM3ti2GmXWfxs1kmDd/bnN0Erb7we6Tw630kMo6MHKdUr3OYe67lPHVd/Vc2
+ QuEh8kIF0cx6d/iJbt5BS7ag0nJoUrJT9f5rX9YlcqG0JoFPDg1YapmZpBD7Tz/kouFr+Zfc+a1
+ 6NMcxJPQnN9FJDH34k+JJsrV38QzJOv9gGRuR1B6bRB8Da+TQfHHti58Iln/mKEhrkdV4Q4pZlA
+ e0GJYFD/Jgcue3AHhanV4eMvbZz4JUC+PAiF97uEKrMzNj2dU4zWxT14lpniEVii966oaNgBG9o
+ aOJ4=
+X-Received: by 2002:a05:620a:179e:b0:8b9:d2cc:cded with SMTP id
+ af79cd13be357-8ba3a349df1mr1045832885a.52.1765469729544; 
+ Thu, 11 Dec 2025 08:15:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF1tVctTF9ox62K8IdA4ld782fckgclJLy/jRCx9JiB6nPfItp3Y6CmgpiP2MhzIVzhbAYFqA==
+X-Received: by 2002:a05:620a:179e:b0:8b9:d2cc:cded with SMTP id
+ af79cd13be357-8ba3a349df1mr1045823685a.52.1765469728843; 
+ Thu, 11 Dec 2025 08:15:28 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8bab5787d5fsm248101785a.24.2025.12.11.08.15.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Dec 2025 08:15:28 -0800 (PST)
+Date: Thu, 11 Dec 2025 11:15:27 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>,
+ Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2 6/9] hostmem: Rename guest_memfd to guest_memfd_private
+Message-ID: <aTruHymUNQKcPzPu@x1.local>
+References: <20251119172913.577392-1-peterx@redhat.com>
+ <20251119172913.577392-7-peterx@redhat.com>
+ <4305e09e-60e1-4ba1-b8ac-d4e562cc5455@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/18] target/i386/tcg: simplify effective address
- calculation
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20251210131653.852163-1-pbonzini@redhat.com>
- <20251210131653.852163-9-pbonzini@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251210131653.852163-9-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x29.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4305e09e-60e1-4ba1-b8ac-d4e562cc5455@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,52 +120,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/10/25 07:16, Paolo Bonzini wrote:
-> Split gen_lea_v_seg_dest into three simple phases (extend from
-> 16 bits, add, final extend), with optimization for known-zero bases
-> to avoid back-to-back extensions.
+On Thu, Dec 11, 2025 at 03:16:52PM +0800, Xiaoyao Li wrote:
+> On 11/20/2025 1:29 AM, Peter Xu wrote:
+> > Rename the HostMemoryBackend.guest_memfd field to reflect what it really
+> > means, on whether it needs guest_memfd to back its private portion of
+> > mapping.  This will help on clearance when we introduce in-place
+> > guest_memfd for hostmem.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
 > 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/tcg/translate.c | 64 ++++++++++++-------------------------
->   1 file changed, 20 insertions(+), 44 deletions(-)
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 > 
-> diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-> index 0cb87d02012..2ab3c2ac663 100644
-> --- a/target/i386/tcg/translate.c
-> +++ b/target/i386/tcg/translate.c
-> @@ -627,54 +627,30 @@ static TCGv eip_cur_tl(DisasContext *s)
->   static void gen_lea_v_seg_dest(DisasContext *s, MemOp aflag, TCGv dest, TCGv a0,
->                                  int def_seg, int ovr_seg)
->   {
-> -    switch (aflag) {
-> -#ifdef TARGET_X86_64
-> -    case MO_64:
-> -        if (ovr_seg < 0) {
-> -            tcg_gen_mov_tl(dest, a0);
-> -            return;
-> +    int easize;
-> +    bool has_base;
-> +
-> +    if (ovr_seg < 0) {
-> +        ovr_seg = def_seg;
-> +    }
-> +
-> +    has_base = ovr_seg >= 0 && (ADDSEG(s) || ovr_seg >= R_FS);
+> <...>
+> 
+> > diff --git a/backends/hostmem.c b/backends/hostmem.c
+> > index 35734d6f4d..70450733db 100644
+> > --- a/backends/hostmem.c
+> > +++ b/backends/hostmem.c
+> > @@ -288,7 +288,7 @@ static void host_memory_backend_init(Object *obj)
+> >       /* TODO: convert access to globals to compat properties */
+> >       backend->merge = machine_mem_merge(machine);
+> >       backend->dump = machine_dump_guest_core(machine);
+> > -    backend->guest_memfd = machine_require_guest_memfd(machine);
+> > +    backend->guest_memfd_private = machine_require_guest_memfd(machine);
+> 
+> btw, how about a separate patch to rename
+> 
+> machine_require_guest_memfd() to machine_require_guest_memfd_private()?
+> 
+> and another patch to rename memory_region_init_ram_guest_memfd()?
 
-I guess def_seg is -1 for LEA, so ovr_seg can still be -1.
-I wonder if it would be clearer to avoid this duplication of segment earlier in decode?
+Sounds all reasonable, will do.
 
-Anyway, for here, maybe clearer as
+Thanks,
 
-     has_base = ovr_seg >= R_FS || (ovr_seg >= 0 && ADDSEG(s));
+-- 
+Peter Xu
 
-even though the end result is the same.
-
-Nice cleanup.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
 
