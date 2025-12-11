@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9094DD3E799
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 06:46:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ADD3D3E799
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 06:46:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTaQy-0001uY-M6; Thu, 11 Dec 2025 01:45:52 -0500
+	id 1vTaR1-0001wt-Ti; Thu, 11 Dec 2025 01:45:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTaQZ-0001kb-Gs
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 01:45:39 -0500
+ id 1vTaQT-0001jI-Fh
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 01:45:22 -0500
 Received: from mgamail.intel.com ([198.175.65.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTaQX-00067P-TC
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 01:45:27 -0500
+ id 1vTaQR-00067P-QO
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 01:45:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765435527; x=1796971527;
+ t=1765435520; x=1796971520;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=CFa6/whO2jUKzVYTeIsLH5faSzFY4R8NNpzl+PRAX4Y=;
- b=a91xrcE4IZSwYY3DByU0DD1XLgKsaJSWiTSPFhrTFpapBXDa/lcKfn3R
- T6zCDBdRq7Oo/yjGaJDiPSIJVttPoCQ9UOHSnqZoSOQk5xYyXcqO40M7M
- 1WuX+J4ulaIME8pnufn56KsVOhhm/VXxIhzF8WUsdFQSOnvIEzO+cHWex
- Pu//XyxZTgxsC6x6NLZ0yuYYcrCUCPcNBH/svr2kbPG2WkcoiYFlq5z6Z
- zHQa+Ml5mXdZ5tcyLU0uENDTgJWh5Pjk3o85A/JfCeCa1qoU+LSn99eGU
- /q0RBi5UBUnnhyvc7ALatfhIxbdjm/5NcnR/h7O4mDuQsm/fW+bGFGBey g==;
-X-CSE-ConnectionGUID: mDoJryzfT8eH/cnneO3I1w==
-X-CSE-MsgGUID: ultxyI1ZQGeG3+BfhEQAgw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="67584459"
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="67584459"
+ bh=QcNeiWPBJTnDHD4bocxcHnPK2Herab7VuYPe0hXd1Ec=;
+ b=QpM+wsZ46pN9c3X+cvn3jP6pGSnVXyMG8fJJGu370QOi8gZsj6OxdIFu
+ /QpwM9rph2pkOukG0w1upLUZdRFTEYsMIBtBQuH74wHtpSIUAT82kyoJT
+ c8u2WkJgR4q9Za2f2ibGGxZtfrjAbWGUfm/jIlGqVBllhxDG73ZqNgBwN
+ pWYkYRxesEX32CbqcHndPIJ1eyGkxFp/lfgkWXVaN+V8cjV/tLgXosyux
+ guCG4FWbgL1MWDnHvWptzftXHaP7IE/ib/T5753sVgoMBzfZb7dJmPMpz
+ KTgiSTyhTwrKeiqNoqrk2KiXzVdqgPGZ7PNAb0HkKxqG6SvnrBlxEsGri A==;
+X-CSE-ConnectionGUID: MnHF+OCQT6iFGsIE1+qWlg==
+X-CSE-MsgGUID: oHaH4iC7SKGUx+ids2Qzaw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="67584435"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="67584435"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2025 22:45:26 -0800
-X-CSE-ConnectionGUID: 4sJvJOJHQF2hRNS+dBsaMw==
-X-CSE-MsgGUID: xBF87zguSUaD29drkk+LXw==
+ 10 Dec 2025 22:45:19 -0800
+X-CSE-ConnectionGUID: ZxeGGYAaRgWHAdhTim1vjw==
+X-CSE-MsgGUID: sqYc29jNS3GluWcNGbyJzw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="196494997"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="196494962"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa009.jf.intel.com with ESMTP; 10 Dec 2025 22:45:22 -0800
+ by orviesa009.jf.intel.com with ESMTP; 10 Dec 2025 22:45:15 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -54,10 +54,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  "Chang S . Bae" <chang.seok.bae@intel.com>,
  Zide Chen <zide.chen@intel.com>, Xudong Hao <xudong.hao@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 5/9] i386/cpu-dump: Dump entended GPRs for APX supported
- guest
-Date: Thu, 11 Dec 2025 15:09:38 +0800
-Message-Id: <20251211070942.3612547-6-zhao1.liu@intel.com>
+Subject: [PATCH v2 3/9] i386/cpu: Cache EGPRs in CPUX86State
+Date: Thu, 11 Dec 2025 15:09:36 +0800
+Message-Id: <20251211070942.3612547-4-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251211070942.3612547-1-zhao1.liu@intel.com>
 References: <20251211070942.3612547-1-zhao1.liu@intel.com>
@@ -88,66 +87,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dump EGPRs when guest supports APX.
+From: Zide Chen <zide.chen@intel.com>
 
-Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Expend general registers array "regs" of CPUX86State to cache entended
+GPRs.
+
 Tested-by: Xudong Hao <xudong.hao@intel.com>
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
 Changes since v1:
- * New patch.
+ * Extend "regs" array instead of a new array.
 ---
- target/i386/cpu-dump.c | 30 +++++++++++++++++++++++++++---
- 1 file changed, 27 insertions(+), 3 deletions(-)
+ target/i386/cpu.h          |  7 +++++--
+ target/i386/xsave_helper.c | 16 ++++++++++++++++
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/cpu-dump.c b/target/i386/cpu-dump.c
-index 67bf31e0caaf..b51076f87115 100644
---- a/target/i386/cpu-dump.c
-+++ b/target/i386/cpu-dump.c
-@@ -354,8 +354,7 @@ void x86_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-         qemu_fprintf(f, "RAX=%016" PRIx64 " RBX=%016" PRIx64 " RCX=%016" PRIx64 " RDX=%016" PRIx64 "\n"
-                      "RSI=%016" PRIx64 " RDI=%016" PRIx64 " RBP=%016" PRIx64 " RSP=%016" PRIx64 "\n"
-                      "R8 =%016" PRIx64 " R9 =%016" PRIx64 " R10=%016" PRIx64 " R11=%016" PRIx64 "\n"
--                     "R12=%016" PRIx64 " R13=%016" PRIx64 " R14=%016" PRIx64 " R15=%016" PRIx64 "\n"
--                     "RIP=%016" PRIx64 " RFL=%08x [%c%c%c%c%c%c%c] CPL=%d II=%d A20=%d SMM=%d HLT=%d\n",
-+                     "R12=%016" PRIx64 " R13=%016" PRIx64 " R14=%016" PRIx64 " R15=%016" PRIx64 "\n",
-                      env->regs[R_EAX],
-                      env->regs[R_EBX],
-                      env->regs[R_ECX],
-@@ -371,7 +370,32 @@ void x86_cpu_dump_state(CPUState *cs, FILE *f, int flags)
-                      env->regs[12],
-                      env->regs[13],
-                      env->regs[14],
--                     env->regs[15],
-+                     env->regs[15]);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 932982bd5dd6..9bf5d0b41efe 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1664,12 +1664,15 @@ typedef struct {
+     uint64_t mask;
+ } MTRRVar;
+ 
++#define CPU_NB_EREGS64 32
+ #define CPU_NB_REGS64 16
+ #define CPU_NB_REGS32 8
+ 
+ #ifdef TARGET_X86_64
++#define CPU_NB_EREGS CPU_NB_EREGS64
+ #define CPU_NB_REGS CPU_NB_REGS64
+ #else
++#define CPU_NB_EREGS CPU_NB_REGS32
+ #define CPU_NB_REGS CPU_NB_REGS32
+ #endif
+ 
+@@ -1901,7 +1904,7 @@ typedef struct CPUCaches {
+ 
+ typedef struct CPUArchState {
+     /* standard registers */
+-    target_ulong regs[CPU_NB_REGS];
++    target_ulong regs[CPU_NB_EREGS];
+     target_ulong eip;
+     target_ulong eflags; /* eflags register. During CPU emulation, CC
+                         flags and DF are set to zero because they are
+@@ -1958,7 +1961,7 @@ typedef struct CPUArchState {
+     float_status mmx_status; /* for 3DNow! float ops */
+     float_status sse_status;
+     uint32_t mxcsr;
+-    ZMMReg xmm_regs[CPU_NB_REGS == 8 ? 8 : 32] QEMU_ALIGNED(16);
++    ZMMReg xmm_regs[CPU_NB_EREGS] QEMU_ALIGNED(16);
+     ZMMReg xmm_t0 QEMU_ALIGNED(16);
+     MMXReg mmx_t0;
+ 
+diff --git a/target/i386/xsave_helper.c b/target/i386/xsave_helper.c
+index 996e9f3bfef5..bab22587320d 100644
+--- a/target/i386/xsave_helper.c
++++ b/target/i386/xsave_helper.c
+@@ -140,6 +140,14 @@ void x86_cpu_xsave_all_areas(X86CPU *cpu, void *buf, uint32_t buflen)
+ 
+         memcpy(tiledata, &env->xtiledata, sizeof(env->xtiledata));
+     }
 +
-+        if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_APX) {
-+            qemu_fprintf(f, "R16=%016" PRIx64 " R17=%016" PRIx64 " R18=%016" PRIx64 " R19=%016" PRIx64 "\n"
-+                         "R20=%016" PRIx64 " R21=%016" PRIx64 " R22=%016" PRIx64 " R23=%016" PRIx64 "\n"
-+                         "R24=%016" PRIx64 " R25=%016" PRIx64 " R26=%016" PRIx64 " R27=%016" PRIx64 "\n"
-+                         "R28=%016" PRIx64 " R29=%016" PRIx64 " R30=%016" PRIx64 " R31=%016" PRIx64 "\n",
-+                         env->regs[16],
-+                         env->regs[17],
-+                         env->regs[18],
-+                         env->regs[19],
-+                         env->regs[20],
-+                         env->regs[21],
-+                         env->regs[22],
-+                         env->regs[23],
-+                         env->regs[24],
-+                         env->regs[25],
-+                         env->regs[26],
-+                         env->regs[27],
-+                         env->regs[28],
-+                         env->regs[29],
-+                         env->regs[30],
-+                         env->regs[31]);
-+        }
++    e = &x86_ext_save_areas[XSTATE_APX_BIT];
++    if (e->size && e->offset && buflen) {
++        XSaveAPX *apx = buf + e->offset;
 +
-+        qemu_fprintf(f, "RIP=%016" PRIx64 " RFL=%08x [%c%c%c%c%c%c%c] CPL=%d II=%d A20=%d SMM=%d HLT=%d\n",
-                      env->eip, eflags,
-                      eflags & DF_MASK ? 'D' : '-',
-                      eflags & CC_O ? 'O' : '-',
++        memcpy(apx, &env->regs[CPU_NB_REGS],
++               sizeof(env->regs[CPU_NB_REGS]) * (CPU_NB_EREGS - CPU_NB_REGS));
++    }
+ #endif
+ }
+ 
+@@ -275,5 +283,13 @@ void x86_cpu_xrstor_all_areas(X86CPU *cpu, const void *buf, uint32_t buflen)
+ 
+         memcpy(&env->xtiledata, tiledata, sizeof(env->xtiledata));
+     }
++
++    e = &x86_ext_save_areas[XSTATE_APX_BIT];
++    if (e->size && e->offset) {
++        const XSaveAPX *apx = buf + e->offset;
++
++        memcpy(&env->regs[CPU_NB_REGS], apx,
++               sizeof(env->regs[CPU_NB_REGS]) * (CPU_NB_EREGS - CPU_NB_REGS));
++    }
+ #endif
+ }
 -- 
 2.34.1
 
