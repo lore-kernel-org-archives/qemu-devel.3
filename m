@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA9C5D3E782
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 566FBD3E793
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 05:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTZT1-0000dy-Vi; Thu, 11 Dec 2025 00:43:56 -0500
+	id 1vTZTD-0000n2-SO; Thu, 11 Dec 2025 00:44:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTZSw-0000dU-Iz
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:43:51 -0500
+ id 1vTZTB-0000j9-Vt
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:06 -0500
 Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vTZSu-0001OC-VS
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:43:50 -0500
+ id 1vTZTA-0001bl-8w
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 00:44:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765431829; x=1796967829;
+ t=1765431844; x=1796967844;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=OLmeyBkc275l2fFpoH7p7H8roBE/4ZOOO8W3RLBkAq8=;
- b=YSOir6SAX/fXwzZeXAcmcNgcQju8lM1/vuUKZkf4v6uES+skLHdANG+E
- AF8jOH0ziD63H60U5YOs0zCdVisLVfYfhA3ZJyO+CZPX68+Pp725v+BUZ
- bcVlyP7h9pNrnJ+T2LHf7Plb806NuvD/eokDNEKvcKd2SCYBASJA5KiNy
- kgl9BtnUPPTj8SdDVjI2DDK8OVg/V52XhThuFpqTW+6FkU5SMlZGI6etz
- /R+em0aqE26P+bG6Ypu1c0phJ/5lV5bqeCbicczjle1YxakcQ58egIkcN
- haJmHaFJkjHi2pMdADtFqkTTkNiizd2ZtjqMMinfn2ocesnCBoKiFtz5c A==;
-X-CSE-ConnectionGUID: y88N2/MTRZijTExYgRvVyg==
-X-CSE-MsgGUID: MhIGxJ1cRDChLwPVRxjTAw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="66409869"
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="66409869"
+ bh=DZ3sfvrb+qc8GsNdFeIp7NVIUjHrM1Kf/7Vu9/XqA3o=;
+ b=NoU0M0NXQt112mno62ojSJwj6qLi+/RQGhzZsZcW1d1I6GK7r12NHzIM
+ fvzWAO5XkiZRwseP8OGX5QmTENxcFdPX1VaQXrkaUhmDm+otsZ0EITSW4
+ XpJFIO4VM/uJhNlVSSZoKseYdALt6YWaYfCBvgxSNOlv8i+YTVv4ZC6LH
+ Cpx8DUToEuYqb1BqaBjRG6U/rxfJWKhpo0R31zuVEqK/sBqWsdVnyijFV
+ z1UuQNstWhB/8HpTf/v2ogoqkkjfYFQa+HclHw1KfZ1lmRySZH/Ud8BpY
+ mpMdEkbeMuGdCZfT/qKI93KqtZtbNHSnZ9ByiUQ4GXTzG9AtzlcuvpeBK Q==;
+X-CSE-ConnectionGUID: vPtfC1O8R+q1WSXW/6APMQ==
+X-CSE-MsgGUID: LTO+qNK1TuifJs93dH7Oww==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="66409903"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="66409903"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2025 21:43:48 -0800
-X-CSE-ConnectionGUID: 0mfNbpUGSmKzsAOP+ctacg==
-X-CSE-MsgGUID: vlX8I5qaT2qZyP9vFByNDg==
+ 10 Dec 2025 21:44:03 -0800
+X-CSE-ConnectionGUID: QoC2Q5C0S7m/fEn5mdfr1g==
+X-CSE-MsgGUID: FcG2oCBHSzGtD+rfLRUnwg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="227366054"
+X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="227366094"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 10 Dec 2025 21:43:44 -0800
+ by orviesa002.jf.intel.com with ESMTP; 10 Dec 2025 21:43:55 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
@@ -53,10 +53,9 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Chao Gao <chao.gao@intel.com>,
  Dapeng Mi <dapeng1.mi@intel.com>, Zide Chen <zide.chen@intel.com>,
  Xiaoyao Li <xiaoyao.li@intel.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
  Farrah Chen <farrah.chen@intel.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v5 07/22] i386/cpu: Reorganize dependency check for arch lbr
- state
-Date: Thu, 11 Dec 2025 14:07:46 +0800
-Message-Id: <20251211060801.3600039-8-zhao1.liu@intel.com>
+Subject: [PATCH v5 10/22] i386/cpu: Add missing migratable xsave features
+Date: Thu, 11 Dec 2025 14:07:49 +0800
+Message-Id: <20251211060801.3600039-11-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251211060801.3600039-1-zhao1.liu@intel.com>
 References: <20251211060801.3600039-1-zhao1.liu@intel.com>
@@ -87,95 +86,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The arch lbr state has 2 dependencies:
- * Arch lbr feature bit (CPUID 0x7.0x0:EDX[bit 19]):
+Xtile-cfg & xtile-data are both user xstates. Their xstates are cached
+in X86CPUState, and there's a related vmsd "vmstate_amx_xtile", so that
+it's safe to mark them as migratable.
 
-   This bit also depends on pmu property. Mask it off if pmu is disabled
-   in x86_cpu_expand_features(), so that it is not needed to repeatedly
-   check whether this bit is set as well as pmu is enabled.
+Arch lbr xstate is a supervisor xstate, and it is save & load by saving
+& loading related arch lbr MSRs, which are cached in X86CPUState, and
+there's a related vmsd "vmstate_arch_lbr". So it should be migratable.
 
-   Note this doesn't need compat option, since even KVM hasn't support
-   arch lbr yet.
+PT is still unmigratable since KVM disabled it and there's no vmsd and
+no other emulation/simulation support.
 
-   The supported xstate is constructed based such dependency in
-   cpuid_has_xsave_feature(), so if pmu is disabled and arch lbr bit is
-   masked off, then arch lbr state won't be included in supported
-   xstates.
+Note, though the migratable_flags get fixed,
+x86_cpu_enable_xsave_components() still overrides supported xstates
+bitmaps regardless the masking of migratable_flags. This is another
+issue, and would be fixed in follow-up refactoring.
 
-   Thus it's safe to drop the check on arch lbr bit in CPUID 0xD
-   encoding.
-
- * XSAVES feature bit (CPUID 0xD.0x1.EAX[bit 3]):
-
-   Arch lbr state is a supervisor state, which requires the XSAVES
-   feature support. Enumerate supported supervisor state based on XSAVES
-   feature bit in x86_cpu_enable_xsave_components().
-
-   Then it's safe to drop the check on XSAVES feature support during
-   CPUID 0XD encoding.
-
-Suggested-by: Zide Chen <zide.chen@intel.com>
 Tested-by: Farrah Chen <farrah.chen@intel.com>
-Reviewed-by: Zide Chen <zide.chen@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+Changes Since v3:
+ - Mark XSTATE_ARCH_LBR_MASK as migratable in FEAT_XSAVE_XSS_LO.
+ - Add TODO comment.
+---
+ target/i386/cpu.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index f3bf7f892214..56b4c57969c1 100644
+index 859cb889a37c..d2a89c03caec 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -8179,20 +8179,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             *ebx = xsave_area_size(xstate, true);
-             *ecx = env->features[FEAT_XSAVE_XSS_LO];
-             *edx = env->features[FEAT_XSAVE_XSS_HI];
--            if (kvm_enabled() && cpu->enable_pmu &&
--                (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR) &&
--                (*eax & CPUID_XSAVE_XSAVES)) {
--                *ecx |= XSTATE_ARCH_LBR_MASK;
--            } else {
--                *ecx &= ~XSTATE_ARCH_LBR_MASK;
--            }
--        } else if (count == 0xf && cpu->enable_pmu
--                   && (env->features[FEAT_7_0_EDX] & CPUID_7_0_EDX_ARCH_LBR)) {
--            const ExtSaveArea *esa = &x86_ext_save_areas[count];
--
--            *eax = esa->size;
--            *ebx = esa->offset;
--            *ecx = esa->ecx;
-         } else if (count < ARRAY_SIZE(x86_ext_save_areas)) {
-             const ExtSaveArea *esa = &x86_ext_save_areas[count];
+@@ -1484,6 +1484,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             .ecx = 1,
+             .reg = R_ECX,
+         },
++        .migratable_flags = XSTATE_ARCH_LBR_MASK,
+     },
+     [FEAT_XSAVE_XSS_HI] = {
+         .type = CPUID_FEATURE_WORD,
+@@ -1522,7 +1523,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         .migratable_flags = XSTATE_FP_MASK | XSTATE_SSE_MASK |
+             XSTATE_YMM_MASK | XSTATE_BNDREGS_MASK | XSTATE_BNDCSR_MASK |
+             XSTATE_OPMASK_MASK | XSTATE_ZMM_Hi256_MASK | XSTATE_Hi16_ZMM_MASK |
+-            XSTATE_PKRU_MASK,
++            XSTATE_PKRU_MASK | XSTATE_XTILE_CFG_MASK | XSTATE_XTILE_DATA_MASK,
+     },
+     [FEAT_XSAVE_XCR0_HI] = {
+         .type = CPUID_FEATURE_WORD,
+@@ -2154,8 +2155,13 @@ static uint64_t x86_cpu_get_migratable_flags(X86CPU *cpu, FeatureWord w)
+     for (i = 0; i < 64; i++) {
+         uint64_t f = 1ULL << i;
  
-@@ -8910,6 +8896,12 @@ static void x86_cpu_enable_xsave_components(X86CPU *cpu)
- 
-     mask = 0;
-     for (i = 0; i < ARRAY_SIZE(x86_ext_save_areas); i++) {
-+        /* Skip supervisor states if XSAVES is not supported. */
-+        if (CPUID_XSTATE_XSS_MASK & (1 << i) &&
-+            !(env->features[FEAT_XSAVE] & CPUID_XSAVE_XSAVES)) {
-+            continue;
-+        }
-+
-         const ExtSaveArea *esa = &x86_ext_save_areas[i];
-         if (cpuid_has_xsave_feature(env, esa)) {
-             mask |= (1ULL << i);
-@@ -9027,11 +9019,13 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-         }
-     }
- 
--    if (!cpu->pdcm_on_even_without_pmu) {
-+    if (!cpu->enable_pmu) {
-         /* PDCM is fixed1 bit for TDX */
--        if (!cpu->enable_pmu && !is_tdx_vm()) {
-+        if (!cpu->pdcm_on_even_without_pmu && !is_tdx_vm()) {
-             env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
-         }
-+
-+        env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_LBR;
-     }
- 
-     for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
+-        /* If the feature name is known, it is implicitly considered migratable,
+-         * unless it is explicitly set in unmigratable_flags */
++        /*
++         * If the feature name is known, it is implicitly considered migratable,
++         * unless it is explicitly set in unmigratable_flags.
++         *
++         * TODO: Make the behavior of x86_cpu_enable_xsave_components() align
++         * with migratable_flags masking.
++         */
+         if ((wi->migratable_flags & f) ||
+             (wi->feat_names[i] && !(wi->unmigratable_flags & f))) {
+             r |= f;
 -- 
 2.34.1
 
