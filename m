@@ -4,96 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72109D3E79D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 08:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85831D3E79D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 08:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTbgW-00077N-DR; Thu, 11 Dec 2025 03:06:00 -0500
+	id 1vTbhp-0007jO-6O; Thu, 11 Dec 2025 03:07:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1vTbgV-00077E-BN
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 03:05:59 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1vTbgT-0008Ij-S0
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 03:05:59 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-47795f6f5c0so3520415e9.1
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 00:05:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1765440356; x=1766045156; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=B8m6sfT8Y34wE7X1bn90nJA3HwQEycqThNxoee8UPp0=;
- b=l6XWkNd4xYQfFg8g+zA1OdgQdsqzysv5/TUWzRKCvj82ZaBgwz//9r2X0lBrZW3uOJ
- bO7i3Sh1cqg0sJpHZk/HMi/s1BzjaMuY7FvfLL/YLrmOKkdlp9Bo6Bhxv4UPrZYwvyty
- 9BwmFB2K4tcMoUAORflUK6M592Iag91mS4XEFfrQmS0+/XT46lni2KULrIIH99s2qf16
- 5hHeGKL7mYA9snuILkLxrbHzH91nqnV6Qz9tvt5vhNOsAqzaex8WMVIByzVdtUAz+WQh
- cgbeUOvERb32srK/oFzW2wugg0T99ZiYu4A2Kheqig/BLbnCsKZH92jDVJE7Rho3dyXM
- Ti1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765440356; x=1766045156;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=B8m6sfT8Y34wE7X1bn90nJA3HwQEycqThNxoee8UPp0=;
- b=Zvro8zT4JM1liD4qIB92LXwuXKYho0CGy9N7yG2xZX32NVSksa+C6drAZwzRsnc7Nu
- d7P66LzmfrWCu7CqCXlU0AA9szuiJmz3l3tyiiA2j0kPSv8GQit4ZYBOyHUsYoiAlY5I
- Wc8aAdzLjlw7Nd3rhPMLEr1ImSS7Q72BR67qkQ6f+j3EWpKeJ4wbzygyuORSWD0u0UgZ
- Fu8oCSRj9+JTzl2RDXnCro+F4sAW+XYgFShMLBFtRBHd2N0+aHpJFm8JAM+Tp9c1yx2Q
- Q4fdcTccieZtd9AVgfs4dntma2FCGdxxPL46y5vkOTu1IZbT4RiqfZWb7/2heGj2e+Z4
- Hh1A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU79uE/zBq9eTmXaDdIPW4oMPJONI53xd3e6bUEb3BIiDhTCjxQXxC07s/O8kITNNuhiFi1ybfj68yZ@nongnu.org
-X-Gm-Message-State: AOJu0Yxc1zoSt3S34qKyD9PST+gx394D/x/2WUD8KZdKNPcAtLmtmU+r
- zDnvbhgZ/9D4gVtlKAOb/G81r79TZbAOdiC2x5DW4VDVmiOS85OWX21n
-X-Gm-Gg: AY/fxX7ELYv5l4iFp76LuAPmnanLWJHpXlzHfFLINxu1yp8EiwYUkPlQGtMgAS+usV6
- 39hOPHdfA8nYaF12CNRFW7rl/6EK4Z1Edt1wI2OqDA4aX2pg63m2rjAaKhOuEg0xWSMgks3JsPd
- RwYlXfzKNcNhq8kDJK7SVXlv+Z0Mc9VyF0eCQicYf2ZYNE23MH1OkLWVAHaeZLT23bbadyg5zbZ
- pyuATK5qQyD4s/WqcHNC9VNyrzQHApmeeGz4dres3MIxC5oQmmAlmAxI+t8iaugLQNII2Q2uOzh
- mEGU9ifpNcA/yLjPVQxbekBNE1lyu6PsjFG3TpKHqOrpsykCWOlgrNMkwDFMT/pWFJEfDIFKUIT
- lQyE+5MKcqnkuBmHTDAngubDROEZigPDrKnUUrME+zrxskwxsGF8pDQD6fujvNtGQ2uT+jO+4BA
- U4jJv91nPTlsdBjtCwpg4+0ZrgbVu5Mh0hzToAsUqEo8TmQyiQzm/FW//2ssDjWLoD
-X-Google-Smtp-Source: AGHT+IHtyvpYdjGeaj4eP9WAy8IKtpydyzT5+91nSXnqhNLLKcXigLTCzFBDhmRhS5AbqDwJVdqk2w==
-X-Received: by 2002:a05:6000:1889:b0:429:bc68:6c95 with SMTP id
- ffacd0b85a97d-42fa3b060eamr5180523f8f.47.1765440355334; 
- Thu, 11 Dec 2025 00:05:55 -0800 (PST)
-Received: from localhost
- (brnt-04-b2-v4wan-170138-cust2432.vm7.cable.virginm.net. [94.175.9.129])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42fa8a66b97sm4235640f8f.7.2025.12.11.00.05.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 11 Dec 2025 00:05:54 -0800 (PST)
-Date: Thu, 11 Dec 2025 08:05:53 +0000
-From: Stafford Horne <shorne@gmail.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Joel Stanley <joel@jms.id.au>, QEMU Development <qemu-devel@nongnu.org>,
- "Jason A. Donenfeld" <Jason@zx2c4.com>,
- Openrisc <openrisc@lists.librecores.org>
-Subject: Re: [RFC PATCH 3/3] hw/openrisc: Add the OpenRISC virtual machine
-Message-ID: <aTp7YW43nxdqDOAT@antec>
-References: <20220527172731.1742837-1-shorne@gmail.com>
- <20220527172731.1742837-4-shorne@gmail.com>
- <CACPK8XexaTREY3Y-jp8urTAE+UmQWgygFx1MAss9KcJw5tGMtw@mail.gmail.com>
- <8c34270f-9fdc-3e94-0984-29d9a5e5542f@linaro.org>
- <36365615-9e43-4ce5-a1ba-e495eacb1f24@linaro.org>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vTbhm-0007iw-JB; Thu, 11 Dec 2025 03:07:18 -0500
+Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1vTbhj-0008L0-P8; Thu, 11 Dec 2025 03:07:18 -0500
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwBXXpqjezppzo1SAw--.948S2;
+ Thu, 11 Dec 2025 16:06:59 +0800 (CST)
+Received: from [10.31.62.13] (unknown [218.76.62.144])
+ by mail (Coremail) with SMTP id AQAAfwAngO2dezpp2SsLAA--.21399S2;
+ Thu, 11 Dec 2025 16:06:54 +0800 (CST)
+Message-ID: <e7ccf5cc-0411-4c89-871f-c1087095a1aa@phytium.com.cn>
+Date: Thu, 11 Dec 2025 16:06:52 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC RESEND v5 4/4] tests/qtest: Add SMMUv3 bare-metal test using
+ iommu-testdev
+To: eric.auger@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Chen Baozi <chenbaozi@phytium.com.cn>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jean-Philippe Brucker <jean-philippe@linaro.org>,
+ Mostafa Saleh <smostafa@google.com>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+References: <20251126154547.1300748-1-tangtao1634@phytium.com.cn>
+ <20251126154547.1300748-5-tangtao1634@phytium.com.cn>
+ <629e6b11-069e-45c9-9119-b310db85a82d@redhat.com>
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <629e6b11-069e-45c9-9119-b310db85a82d@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <36365615-9e43-4ce5-a1ba-e495eacb1f24@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=shorne@gmail.com; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: AQAAfwAngO2dezpp2SsLAA--.21399S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAABWk4gq0InAAJsn
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjvJXoWxuFy8Cr43XFWUtr1Utr13Arb_yoW5ZFWfpa
+ y8CayakF4kGr1fJas3Aw4xZF13KrZ3GF1jkr1fKr1Syrn0vry7tF48Kry5KF97JrWkZF18
+ Za10kay5urn0qFJanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+ DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
+ UUUUU
+Received-SPF: pass client-ip=129.150.39.64;
+ envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,86 +81,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 10, 2025 at 06:22:58AM +0100, Philippe Mathieu-DaudÈ wrote:
-> On 2/6/22 17:49, Richard Henderson wrote:
-> > On 6/2/22 04:42, Joel Stanley wrote:
-> > > Hi Stafford,
-> > > 
-> > > On Fri, 27 May 2022 at 17:27, Stafford Horne <shorne@gmail.com> wrote:
-> > > > 
-> > > > This patch add the OpenRISC virtual machine 'virt' for OpenRISC.† This
-> > > > platform allows for a convenient CI platform for toolchain, software
-> > > > ports and the OpenRISC linux kernel port.
-> > > > 
-> > > > Much of this has been sourced from the m68k and riscv virt platforms.
-> > > 
-> > > It's a good idea! I did some playing around with your patch today.
-> > > 
-> > > I'd suggest adding something to docs/system/target-openrsic.rst,
-> > > including an example command lines.
-> > > 
-> > > > 
-> > > > The platform provides:
-> > > > † - OpenRISC SMP with up to 8 cpus
-> > > 
-> > > You have this:
-> > > 
-> > > #define VIRT_CPUS_MAX 4
-> > > 
-> > > I tried booting with -smp 4 and it locked up when starting userspace
-> > > (or I stopped getting serial output?):
-> > > 
-> > > [††† 0.060000] smp: Brought up 1 node, 4 CPUs
-> > > ...
-> > > [††† 0.960000] Run /init as init process
-> > > 
-> > > Running with -smp 2 and 3 worked. It does make booting much much slower.
-> > 
-> > target/openrisc/cpu.h is missing
-> > 
-> > #define TCG_GUEST_DEFAULT_MO††††† (0)
-> > 
-> > 
-> > to tell the JIT about the weakly ordered guest memory model, and to
-> > enable MTTCG by default.
-> > 
-> > > I enabled the options:
-> > > 
-> > > CONFIG_RTC_CLASS=y
-> > > # CONFIG_RTC_SYSTOHC is not set
-> > > # CONFIG_RTC_NVMEM is not set
-> > > CONFIG_RTC_DRV_GOLDFISH=y
-> > > 
-> > > But it didn't work. It seems the goldfish rtc model doesn't handle a
-> > > big endian guest running on my little endian host.
-> > > 
-> > > Doing this fixes it:
-> > > 
-> > > -††† .endianness = DEVICE_NATIVE_ENDIAN,
-> > > +††† .endianness = DEVICE_HOST_ENDIAN,
-> > > 
-> > > [††† 0.190000] goldfish_rtc 96005000.rtc: registered as rtc0
-> > > [††† 0.190000] goldfish_rtc 96005000.rtc: setting system clock to
-> > > 2022-06-02T11:16:04 UTC (1654168564)
-> > > 
-> > > But literally no other model in the tree does this, so I suspect it's
-> > > not the right fix.
-> > 
-> > Correct.† The model might require
-> > 
-> >  ††† .endianness = DEVICE_LITTLE_ENDIAN,
-> > 
-> > if that is the actual specification, or it may simply require fixes to
-> > handle a big-endian guest.
-> > 
-> > All that said, if we're going to make up a new virt platform, it should
-> > use PCI not virtio.† See the recent discussion about RISC-V virtual
-> > machines, where they made exactly this mistake several years ago.
-> 
-> Unfortunately this precious remark was missed :(
+Hi Eric,
 
-Which part of it?  I think I took this comment into consideration and switched
-OpenRISC virt from virtio to PCI.  But regarding endianness I did what I could.
+On 2025/12/11 02:45, Eric Auger wrote:
+>
+> On 11/26/25 4:45 PM, Tao Tang wrote:
+>> Add a qtest suite that validates ARM SMMUv3 translation without guest
+>> firmware or OS. The tests leverage iommu-testdev to trigger DMA
+>> operations and the qos-smmuv3 library to configure IOMMU translation
+>> structures.
+>>
+>> This test suite targets the virt machine and covers:
+>> - Stage 1 only translation (VA -> PA via CD page tables)
+>> - Stage 2 only translation (IPA -> PA via STE S2 tables)
+>> - Nested translation (VA -> IPA -> PA, Stage 1 + Stage 2)
+>> - Design to extended to support multiple security spaces
+>>      (Non-Secure, Secure, Root, Realm)
+>>
+>> Each test case follows this sequence:
+>> 1. Initialize SMMUv3 with appropriate command/event queues
+>> 2. Build translation tables (STE/CD/PTE) for the target scenario
+>> 3. Configure iommu-testdev with IOVA and DMA attributes via MMIO
+>> 4. Trigger DMA and validate successful translation
+>> 5. Verify data integrity through a deterministic write-read pattern
+>>
+>> This bare-metal approach provides deterministic IOMMU testing with
+>> minimal dependencies, making failures directly attributable to the SMMU
+>> translation path.
+>>
+>> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> ---
+>>   tests/qtest/iommu-smmuv3-test.c | 114 ++++++++++++++++++++++++++++++++
+>>   tests/qtest/meson.build         |   1 +
+>>   2 files changed, 115 insertions(+)
+>>   create mode 100644 tests/qtest/iommu-smmuv3-test.c
+>>
+>> diff --git a/tests/qtest/iommu-smmuv3-test.c b/tests/qtest/iommu-smmuv3-test.c
+>> new file mode 100644
+>> index 0000000000..af438ecce0
+>> --- /dev/null
+>> +++ b/tests/qtest/iommu-smmuv3-test.c
+>> @@ -0,0 +1,114 @@
+>> +/*
+>> + * QTest for SMMUv3 with iommu-testdev
+>> + *
+>> + * This QTest file is used to test the SMMUv3 with iommu-testdev so that we can
+>> + * test SMMUv3 without any guest kernel or firmware.
+>> + *
+>> + * Copyright (c) 2025 Phytium Technology
+>> + *
+>> + * Author:
+>> + *  Tao Tang <tangtao1634@phytium.com.cn>
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "libqtest.h"
+>> +#include "libqos/pci.h"
+>> +#include "libqos/generic-pcihost.h"
+>> +#include "hw/pci/pci_regs.h"
+>> +#include "hw/misc/iommu-testdev.h"
+>> +#include "libqos/qos-smmuv3.h"
+>> +
+>> +#define DMA_LEN           4
+>> +
+>> +/* Test configurations for different SMMU modes and spaces */
+>> +static const QSMMUTestConfig base_test_configs[] = {
+>> +    {
+>> +        .trans_mode = QSMMU_TM_S1_ONLY,
+>> +        .sec_sid = QSMMU_SEC_SID_NONSECURE,
+>> +        .dma_iova = QSMMU_IOVA_OR_IPA,
+> what does this mean?¬†QSMMU_IOVA_OR_IPA
+>
+> Eric
 
--Stafford
+
+`QSMMU_IOVA_OR_IPA` was intended to represent the address that is seen 
+as the *input* to the SMMU in the test. In other words:
+
+ ¬† ¬† - for the S1-only and nested cases, this value is used as the IOVA, and
+ ¬† ¬† - for the S2-only case, the same numeric value is used as the IPA.
+
+So conceptually it is ‚Äúthe address fed into the IOMMU‚Äù, and the actual 
+interpretation depends on `trans_mode`.
+
+I agree the name `IOVA_OR_IPA` is confusing and does not make this model 
+very clear.
+
+
+Maybe we could use `QSMMU_DMA_INPUT_ADDR`¬† instead?
+
+
+Thanks for catching this.
+
+Tao
+
+
 
