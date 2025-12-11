@@ -4,129 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C41CD3E79D
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 07:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEB71D3E79C
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 07:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTbLC-0007oR-WB; Thu, 11 Dec 2025 02:43:59 -0500
+	id 1vTbT0-0002sA-RC; Thu, 11 Dec 2025 02:52:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vTbLA-0007n7-UD
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 02:43:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <arbn@yandex-team.com>)
+ id 1vTbSz-0002ry-VN; Thu, 11 Dec 2025 02:52:01 -0500
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1vTbL7-0003If-Pq
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 02:43:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765439032;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=hdHwfIMOSqmJi4voReMm4CLdhu943VbCVD6b1qLqf6w=;
- b=E0cJ8oP+527y0L1OXz4L/hYA+13V5YewWczGQOeDygcJispMZZJyA4uAUEEWd9Dfyks43R
- AfJYDW5/23W1TYyY1qrFfHYKRdzlwUMt9SLM0Xm4SqaiwxVrF3RB6OpP6y2UtsvGwsvkxV
- CzuMCDbFt3kBYnSMA9ePLejQsiVTSFE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-361-biUfzuhTNKSY82wNb_fBxA-1; Thu, 11 Dec 2025 02:43:50 -0500
-X-MC-Unique: biUfzuhTNKSY82wNb_fBxA-1
-X-Mimecast-MFC-AGG-ID: biUfzuhTNKSY82wNb_fBxA_1765439030
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47777158a85so6789855e9.3
- for <qemu-devel@nongnu.org>; Wed, 10 Dec 2025 23:43:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765439030; x=1766043830; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=hdHwfIMOSqmJi4voReMm4CLdhu943VbCVD6b1qLqf6w=;
- b=sJuqoIip51S+307Llz4SshrO10fhpxuuQRFZZoTTI2FaN5O4vgH1+9bFLvmBdA9JLC
- 4w5gqpn5ftL5uJEx7h8jk9EONN9HLLYE6ZBUatA1UPo6td7C+owM1W9zqrCtYXOX/mpK
- hyAC9fvWi8FgjlZsTv+HijvwyFzyfD8ZJoKlcWSmTGZywT31l5wsM9jz1chB2O8NH/p7
- 5vy+2p5GkML/z8xDxivS+b2qZDV/icSVw+lcDwGdx6IE4pflPI2jOkKipjVRBMEn1vBi
- p3DO+hWpCcfbLzRXpAPgRcx17BS8uzQB0RCQP6a/33GqU1DrPqQ4AjjCjV7EZCwvLxUy
- O6Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765439030; x=1766043830;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hdHwfIMOSqmJi4voReMm4CLdhu943VbCVD6b1qLqf6w=;
- b=qkC86tpfrzl3SKfgVcfNTr/LD/88eDqogzjElAthP7sQmq7kgyncUSc4dW52FjYWdp
- bdGmkUfsCsNjTgpWZMhQ8LvzRKqRQqqHBwtZiOKNepR1Ymac2xpIIMSZwS32YjBBbPXL
- hzlomIexAR6wqwxJwpqwPfcigri818H9/aZK3dCi/yjFseauA/xPyQHK49hNMRu4Lffa
- LKNM25s+KSeYPeI3Z2tKTQkej37BPdA285sj72hMQAkwuEhegCPqg1DVZh6Yreq9VQTN
- wuJky7PFQUkUGAfxBQ7D7KBi8CpwiAcEGogyflavMgLv3iNTYf5QKNEWb9E2l4jls7zG
- 0eVA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVUa0czAuf1bC0eI/AAiNfXenu9KmGj2Ory17LWf0rAY1cfnGGkIcQjvEZbb5D9SjPZ46Yy5eAPiuT5@nongnu.org
-X-Gm-Message-State: AOJu0YyO4FlqEgUQPkndzt9khOWM41WkDix2YhtXLDJ+s2/+B5B7epsE
- j3vZF8YpVH9PjjSHyAYHfWnB6V1Pmm8COS7iwDDOK4PS1h7ZneEtVPyiYvEd/W66qnQcITg1/ce
- Ygl+aigyxUKoQFkqwmzP0EDqLEdJsqQ5qcw1yNamjh397smcRwqZRPRWv
-X-Gm-Gg: AY/fxX7ajCDIZSeQmb31qRIpNz/42WOvtKSkt01ztNI+JDDTQK1cvi7sG3dbl/mV12d
- YCaXsjuKn1CCr7delT1bjIptmqP4fOrCZxV+aZ7zeoLfp9M8WsZ5Jh1II9y+FTC1zrUXXJLO8jl
- cojv1Q5XpigLXoIiA+7f9zACPrmxyqURRqiPiSsWhZeonASGFbvqfOfq3e3hklBqlHw+3DMl8jO
- ljAbsv2KQSc6jcSnhzq1/xoxJXKqNeIk+mngg29guaz8VKpE2yYaLHlJWYamAZ+tRND4SnAhoP2
- SUIyDYqWFAeLzslFJUrdgXFICPjYc562quhZg7v5cv70ag1s9ZDNoFONoZfSkm6KyzsU6T4N+jW
- 5IZr5z91+5JnHr92o+rSP+3lG1Hxe4dg=
-X-Received: by 2002:a05:600c:1e88:b0:479:2a3c:f31a with SMTP id
- 5b1f17b1804b1-47a8374dd66mr48442225e9.1.1765439029635; 
- Wed, 10 Dec 2025 23:43:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFSn7+CKyaFRKexfHtYHCS5b5BMpJEKHtn1k2D/fxiPlRSJfU8jhdIXzOpsHVW9HFB77JekLw==
-X-Received: by 2002:a05:600c:1e88:b0:479:2a3c:f31a with SMTP id
- 5b1f17b1804b1-47a8374dd66mr48441925e9.1.1765439029188; 
- Wed, 10 Dec 2025 23:43:49 -0800 (PST)
-Received: from redhat.com (IGLD-80-230-32-59.inter.net.il. [80.230.32.59])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42fa8a70440sm3969094f8f.16.2025.12.10.23.43.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 10 Dec 2025 23:43:48 -0800 (PST)
-Date: Thu, 11 Dec 2025 02:43:45 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Li Chen <me@linux.beauty>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?iso-8859-1?Q?=22Philippe_Mathieu-Daud=E9=22?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-arm <qemu-arm@nongnu.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-riscv <qemu-riscv@nongnu.org>
-Subject: Re: [PATCH REPOST v4 4/4] acpi/virt: suppress UART device & SPCR
- when guest has no serial hardware
-Message-ID: <20251211024304-mutt-send-email-mst@kernel.org>
-References: <20250528105404.457729-1-me@linux.beauty>
- <20250528105404.457729-5-me@linux.beauty>
- <20250714144303-mutt-send-email-mst@kernel.org>
- <1981309e2fa.31709fd32611761.5900055972026140740@linux.beauty>
- <20250716074207-mutt-send-email-mst@kernel.org>
- <198131a686b.18fb34702623779.7633947002456257034@linux.beauty>
- <1995f320053.73c58bde124269.3373604835167896043@linux.beauty>
- <19b0837500d.2713ffb3821327.2786629512090065997@linux.beauty>
- <20251210075237-mutt-send-email-mst@kernel.org>
- <19b0ab7f203.43fecb3b140213.6490567972995015069@linux.beauty>
+ (Exim 4.90_1) (envelope-from <arbn@yandex-team.com>)
+ id 1vTbSw-0004U1-QJ; Thu, 11 Dec 2025 02:52:01 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1a8f:0:640:2fa2:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id D24EC80860;
+ Thu, 11 Dec 2025 10:51:52 +0300 (MSK)
+Received: from [10.211.131.6] (10.211.131.6-vpn.dhcp.yndx.net [10.211.131.6])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (smtpcorp/Yandex) with ESMTPSA id mpJC8n0FQSw0-ksG43CUs; 
+ Thu, 11 Dec 2025 10:51:52 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
+ s=default; t=1765439512;
+ bh=VHPAYO3a+8XtBYBXb5UcXt9ywu1hsUEP/fQA3cSSUm4=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=n+nGTkuzYbvZD8Eg+g/Wl/dRCUae96AsL9+9gpGvE0zZx+F2YDnHJSCG3gwRdWD8X
+ pHBaGRRW9etxnqyr4KTmZ2YSKHlRFEIre8xKpUHEyMCGv5HkNBK8X3UeYASgCvA4Ld
+ dVhjCJf31lyTq4UhE1B11mEzrr2WQxg7+Jdznljc=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.com
+Message-ID: <3f126358-377f-4b4a-9fe5-dd361ba662ee@yandex-team.com>
+Date: Thu, 11 Dec 2025 16:51:44 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] q35: Fix migration of SMRAM state
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-devel@nongnu.org,
+ qemu-stable@nongnu.org
+References: <20251203180851.6390-1-arbn@yandex-team.com>
+ <20251210144055.3351d435@imammedo>
+Content-Language: en-US
+From: Andrey Ryabinin <arbn@yandex-team.com>
+In-Reply-To: <20251210144055.3351d435@imammedo>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <19b0ab7f203.43fecb3b140213.6490567972995015069@linux.beauty>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=arbn@yandex-team.com; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,60 +77,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 11, 2025 at 08:03:05AM +0800, Li Chen wrote:
-> Hi Tsirkin,
-> 
->  ---- On Wed, 10 Dec 2025 20:53:01 +0800  Michael S. Tsirkin <mst@redhat.com> wrote --- 
->  > On Wed, Dec 10, 2025 at 08:23:21PM +0800, Li Chen wrote:
->  > > Hi Michael,
->  > > 
->  > >  ---- On Fri, 19 Sep 2025 07:38:56 +0800  Li Chen <me@linux.beauty> wrote --- 
->  > >  > Hi Michael,
->  > >  > 
->  > >  >  ---- On Wed, 16 Jul 2025 19:59:14 +0800  Li Chen <me@linux.beauty> wrote --- 
->  > >  >  > Hi Michael,
->  > >  >  > 
->  > >  >  >  ---- On Wed, 16 Jul 2025 19:42:42 +0800  Michael S. Tsirkin <mst@redhat.com> wrote --- 
->  > >  >  >  > On Wed, Jul 16, 2025 at 07:41:11PM +0800, Li Chen wrote:
->  > >  >  >  > > Hi Michael,
->  > >  >  >  > > 
->  > >  >  >  > > Thanks for your kind review! All issues below have been fixed in v5:
->  > >  >  >  > > https://lore.kernel.org/qemu-devel/20250716111959.404917-5-me@linux.beauty/T/#m696cee9a95646add1b74b866c3d6761aa4c5c762
->  > >  >  >  > 
->  > >  >  >  > Past soft freeze now: I tagged this but pls remind me after the release
->  > >  >  >  > to help make sure it's not lost.
->  > >  >  
->  > >  > Gentle reminder: This patch is still missing from the latest master branch, but can apply without
->  > >  > any conflict. Can it be included in 10.2?
->  > >  > 
->  > >  > Regards,
->  > >  > Li.
->  > >  > 
->  > >  > 
->  > > 
->  > > Sorry for bothering again. But I'm still unable to find this patch in the latest master branch, though it applies without conflicts now. 
->  > > 
->  > > Could it be merged now?
->  > > 
->  > > Regards,
->  > > Li​
->  > 
->  > you still need to update loongarch, I think. otherwise these tests will
->  > fail.
-> 
-> Yes, it seems that tap stdout is polluted by serial stdio.
-> 
-> I'll address the stdout pollution from -serial stdio by redirecting serial output to /dev/null using -serial null in the next version. 
-> This will still create the serial device but prevent it from writing to the console.
-> 
-> Regards,
-> 
-> Li​
 
-I don't know about that, what I meant is that loongaarch also has SPCR
-so it's expected tables have to be updated.
 
--- 
-MST
+On 12/10/25 10:40 PM, Igor Mammedov wrote:
+> On Wed,  3 Dec 2025 19:08:51 +0100
+> Andrey Ryabinin <arbn@yandex-team.com> wrote:
+> 
+>> mch_update_smbase_smram() essentially uses wmask[MCH_HOST_BRIDGE_F_SMBASE]
+>> to track SMBASE area state. Since 'wmask' state is not migrated is not
+>> migrated, the destination QEMU always sees
+>>  wmask[MCH_HOST_BRIDGE_F_SMBASE] == 0xff
+>>
+>> As a result, when mch_update() calls mch_update_smbase_smram() on the
+>> destination, it resets ->config[MCH_HOST_BRIDGE_F_SMBASE] and disables
+>> the smbase-window memory region—even if it was enabled on the source.
+> 
+> [...]
+> 
+>> +static void mch_smbase_smram_post_load(MCHPCIState *mch)
+>> +{
+>> +    PCIDevice *pd = PCI_DEVICE(mch);
+>> +    uint8_t *reg = pd->config + MCH_HOST_BRIDGE_F_SMBASE;
+>> +
+>> +    if (!mch->has_smram_at_smbase) {
+>> +        return;
+>> +    }
+>> +
+>> +    if (*reg == MCH_HOST_BRIDGE_F_SMBASE_IN_RAM) {
+>> +        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] =
+>> +            MCH_HOST_BRIDGE_F_SMBASE_LCK;
+>> +    } else if (*reg == MCH_HOST_BRIDGE_F_SMBASE_LCK) {
+>> +        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = 0;
+>> +    }
+>> +}
+> You are correctly pointing to the issue about non-migratable wmask controlling
+> config[], it should be other way around.
+> 
+> given reset already sets
+>   wmask[MCH_HOST_BRIDGE_F_SMBASE] && config[MCH_HOST_BRIDGE_F_SMBASE]
+> to default values, we don't need to do the same in mch_update_smbase_smram()
+> so we can just drop it.
+> 
+> Also I wouldn't introduce a dedicated mch_smbase_smram_post_load() though,
+> since mch_post_load() already calls mch_update_smbase_smram() indirectly,
+> I'd rather fix the later.
+> 
+> Would following work for you:
+> 
+> diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+> index a708758d36..7a85a349bd 100644
+> --- a/hw/pci-host/q35.c
+> +++ b/hw/pci-host/q35.c
+> @@ -431,31 +431,25 @@ static void mch_update_smbase_smram(MCHPCIState *mch)
+>          return;
+>      }
+>  
+> -    if (*reg == MCH_HOST_BRIDGE_F_SMBASE_QUERY) {
+> -        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] =
+> -            MCH_HOST_BRIDGE_F_SMBASE_LCK;
+> -        *reg = MCH_HOST_BRIDGE_F_SMBASE_IN_RAM;
+> -        return;
+> -    }
+> -
+>      /*
+> -     * default/reset state, discard written value
+> -     * which will disable SMRAM balackhole at SMBASE
+> +     * reg value can come either from register write/reset/migration
+> +     * source, update wmask to be in sync with it regardless of source
+>       */
+> -    if (pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] == 0xff) {
+> -        *reg = 0x00;
+> +    switch (*reg) {
+> +    case MCH_HOST_BRIDGE_F_SMBASE_QUERY:
+> +        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = MCH_HOST_BRIDGE_F_SMBASE_LCK;
+> +        *reg = MCH_HOST_BRIDGE_F_SMBASE_IN_RAM;
+> +        return;
+> +    case MCH_HOST_BRIDGE_F_SMBASE_LCK:
+> +        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = 0;
+> +        break;
+> +    case MCH_HOST_BRIDGE_F_SMBASE_IN_RAM:
+> +        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] = MCH_HOST_BRIDGE_F_SMBASE_LCK;
+> +        break;
+>      }
+>  
+>      memory_region_transaction_begin();
+> -    if (*reg & MCH_HOST_BRIDGE_F_SMBASE_LCK) {
+> -        /* disable all writes */
+> -        pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] &=
+> -            ~MCH_HOST_BRIDGE_F_SMBASE_LCK;
+> -        *reg = MCH_HOST_BRIDGE_F_SMBASE_LCK;
+> -        lck = true;
+> -    } else {
+> -        lck = false;
+> -    }
+> +    lck = *reg & MCH_HOST_BRIDGE_F_SMBASE_LCK;
+
+
+This change makes strict adherence to the negotiation protocol unnecessary. As a result:
+ - Writes performed before MCH_HOST_BRIDGE_F_SMBASE_QUERY are no longer ignored.
+ - The guest can set MCH_HOST_BRIDGE_F_SMBASE_LCK immediately.
+ - The guest can now set MCH_HOST_BRIDGE_F_SMBASE_IN_RAM, which was previously impossible.
+
+Perhaps this is acceptable — it may simply expose misbehaving guest behavior, I’m not sure,
+I'm no expert here. But it does raise the question of why these restrictions existed
+in the first place.
+
+Also, if we are lifting these restrictions, tests/qtest/q35-test.c will need to be updated.
+
+>      memory_region_set_enabled(&mch->smbase_blackhole, lck);
+>      memory_region_set_enabled(&mch->smbase_window, lck);
+>      memory_region_transaction_commit();
+> 
+>>  static int mch_post_load(void *opaque, int version_id)
+>>  {
+>>      MCHPCIState *mch = opaque;
+>> +
+>> +    mch_smbase_smram_post_load(mch);
+>>      mch_update(mch);
+>>      return 0;
+>>  }
+> 
 
 
