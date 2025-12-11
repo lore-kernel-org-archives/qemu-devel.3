@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FA7AD41D4C
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 14:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F30D41D4D
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 14:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vThs7-0001Kz-GQ; Thu, 11 Dec 2025 09:42:23 -0500
+	id 1vThsZ-0001kY-Ud; Thu, 11 Dec 2025 09:42:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vThs4-0001JQ-PF
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 09:42:22 -0500
-Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
+ id 1vThsY-0001j7-CW
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 09:42:50 -0500
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vThs3-0003Ew-C9
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 09:42:20 -0500
-Received: by mail-oa1-x32.google.com with SMTP id
- 586e51a60fabf-3e898ba2a03so113448fac.0
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 06:42:18 -0800 (PST)
+ id 1vThsW-0003KH-RX
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 09:42:50 -0500
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-4537407477aso82575b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 06:42:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765464137; x=1766068937; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765464167; x=1766068967; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=gKYBNbIw4QqnnyjhIeBT7xpP+NX3m+wO2y9xDygzoZw=;
- b=ShRjs34IMc89ep1Fze7jqqMtrzqPPbIFTK1J3qDWL94K+HQ/NjIuAC3ppNunPDUoj9
- +oFt/aiZllzTPwpPrGzuAquRAJiNBKNg2CUElvMdFWjLpbWNe49ErADGCs3HkD4AS8iQ
- 0yIyXFXV7OXBngw8C++rMN0ZlF6g3z8BdUWHc9Heh/Uz7hG1+O47hDA1SF5ObS0l9Ic2
- +s2iiB5JVRojCE/GZgQ1L3Ee4639g0omthY361mBZ54H8i11aCamzrVR74mld2b9NpcF
- jJCYn88J4NzKrHgPp7JWUjOV0/B67OoOwMjdkRK6QjbWrbqvB1Mmh3x9gp3NaK295Wsj
- jlxw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+cFAEzlgtQY1AT9B2kUty8FIRpyH2TO/dQMsHu7UMpM=;
+ b=aBS2mLn9qGcBdIdoe23RcGiqEgLSD4cRorl2mlNr8ZRRGCfG9FScBHDqXtISa07BlZ
+ Nahst9CRqigL4eL5xJrTjXh3fFIyIcA9EnqD3HyUD9ERJXaxbsXNVqORLaJU7YhZgnpP
+ KvUppQohuphR7nRbfB2teUW+vdcd50gLwqfLdw1M74ftDSmaYrjECjQNRd7+4V3EVT6x
+ lWKWMwG5INB7+q1smtEatkcVDwpv9H8wge4SZzZyOqmNrUbH919IdRlf9BYLoIfq1zwN
+ y92aVtw0OnOMp1RRl614LQjTwKXaVg3n+p9G3wHc4smzy/Jn6FVj1qHaGYeGVOmA2k1z
+ zweA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765464137; x=1766068937;
+ d=1e100.net; s=20230601; t=1765464167; x=1766068967;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gKYBNbIw4QqnnyjhIeBT7xpP+NX3m+wO2y9xDygzoZw=;
- b=SPV8zuV7ZkHshFm/AbuIg1HBqH1ETgSD0feF/o6fhX1UV4mlZ7jm9u8fzypioCS8RN
- 22dmmEW8K4A302blQraNtkLaDrwn5qYQQaHrYO4iDFj50601CR/gPPhpFjQpGmD/50sC
- EzCCI/f8hTaaTkaOBrQHdKXjlqrZAOBHBOZs+pWUath/WoauPiEQuCaPIOl2mHdL895j
- yYh1FBjPVFAVICn73iwCc48KU8UgexeWZj8Y8OViYXjon5DTe8AetxL9o3DDKXkJDTo4
- 7/Z7AX0sNh/YalIhic+CfPQdPIM5VrTDaCW759yvt25YdQiNJVYhSpKqPhtXHpN4nIVv
- KwBA==
+ bh=+cFAEzlgtQY1AT9B2kUty8FIRpyH2TO/dQMsHu7UMpM=;
+ b=t3qCRHLfxoNFhiq4nqJCfYgIOdqR+CrpZ0AMD7k5vbeGGds7/izhG/d9gWjiPdxq0W
+ As7w/vXVO4t7vwkzAlUOA2exiC/SJf8SjP74HEOmSOf1SrnLpzqhC+U0vAFoDl6JroLE
+ py8KWuWISambq2L1+7h/7WyS04clJf8TNLx0wLF4ZLF8bXtEYHOFfPv2dOyN+42KhNZi
+ wLuYh12Yw6htn+VhTQn17rbZ49s9iR7lnOjpdhWCjaibzXZItaM8kDg5W+lnPuPYfKrL
+ yAlG/K+2dmfq7SuC7x0ye12cA8Sp30MkwkVReggylp/M/+Elv6/2MMfiWloi021xbJBK
+ a5Tg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7j6e5mMlre1MPtDdSGdaIUOO0/zhGmie5FBAODCEI1/piLUtuGVUXmgnRm0yv7nZB+SKTfQUkYoiL@nongnu.org
-X-Gm-Message-State: AOJu0YxKIaSfQn8R1CttahRO1s1umjfq89ssOWysll4OV3ndKYePjDSX
- z8uyGw9nh9sJyrZUP90FHttLyUsEMUCWTNR6yBpS+HZKpa8MLPRVQsZxcD+Lbg9dqiY=
-X-Gm-Gg: AY/fxX7wrqB39XRprGDjBOby1rvvTgdfcI3KLD16xWqSx3Maor8Ti+QtOJV5SDRBTw1
- 5exYkPfguQGd2ReuTLD31NXhUVDuyTywWsVxI5ShyI7Qc9ipLp/I/NgXri5Hih6qU9IDU4pkUpG
- EAkoQgQhE0XRdndT8S0PpNCNoOOjiLxNYRVVPwWnx4rkSVssr5IxBpzDSOde8lupoGEvm4nWaX4
- 2qco3a1IXoEJMlcYa51alxEb3P+C/jfO4xLSFYYKr9F2FYbDAuSdObR9e29zylaOpM4fBm40ZRF
- QNR38prLq2f97pOm8P5xM+DUOg3K/qB2YxwCFhn3uWq9jS3hI2voSXMNd/VAv0EukrtoKbzgP1m
- 6KkjEoCRALOaF2HSblgDnc8qS147eN9puwbgDSCT/CWTV8i8StOi+WNPBMptzGL2jD/IJ4HpILb
- Hk87dzKPBVuFho+zR1MD2R75CpKbJZPlhgJm5CVXOun3AmcYMIWNl05F+dDzkxxQjx
-X-Google-Smtp-Source: AGHT+IHxvkpKClCUx8Lz9PtLqRO9PEwRDG2/SrC22bAV+LdkTg+9RNEaRo8deSSfds3T2CtFDH3OXg==
-X-Received: by 2002:a05:6870:8a22:b0:3e8:44ec:3416 with SMTP id
- 586e51a60fabf-3f5bdae5eccmr3916868fac.46.1765464137420; 
- Thu, 11 Dec 2025 06:42:17 -0800 (PST)
+ AJvYcCWVtH3hZgvENccpxR6N9gu+VMtaS24MREkmonIkvMEt2IrDoHk87Gsk5akA2uRkKXuuK6UH4t40SwK2@nongnu.org
+X-Gm-Message-State: AOJu0YyoMpUyekJu4i+9I8MShuBt8PIYGL7ZBPw9JxFhiwE2XXZxBXDo
+ aODkfAipGPayuixr19vCcb7F0M5LhUqnsjtsqIifb+0iLftR/m6KVDJAH78VWBvuHbQ=
+X-Gm-Gg: AY/fxX4J/TmSAV0nKmrPWc6EgkqdR0z+vsGaLyNdu5t9F6QdgxKyWW+4SDiM2ty4FCW
+ s6Bi227Cqa862uEe5c6OSnKQJk2jhk0LoYOeDp5UqvCxhb1ltMkNuXissR4ADk6j9R9lg3pnrrE
+ ruu4aV3aYz9sD5RNVZ1ulxVy8SbYm0ZM6bYucNYjSLg3ZLppklF13uZGMxP8oEsKdoN2DvvWRAD
+ h5bxt3BEXkoFra3MtGahBXukRQEo0b1hbgehbJM6Xi3xVFrBr+zjkEuOzarZYX+h8E39AjCRr5Y
+ NfjsCsI5RRu/nzKqikX+j2h24umWLCKC2q9s7c15xG/9BVwDEyyTFYchP3OOPX4xct6H1s7OUxU
+ 5sGuq8X6+eROk8vngcjL5DEwsa0PbOex7wkK1Wn7H3CKcUCtjEtLPeglqYmoK0TNa83kOc4NuUo
+ qhi12Rw+f4ZSLBcdNlvHhvNYUoBmeNF7ai6P3s6v6qqr2pL6p0dKyo+7NSSpOyXP6O
+X-Google-Smtp-Source: AGHT+IGDmEBAG9H0mSdHNDJhM9cOfGyeeWuM011Jzbn02SStQNzbhUbRMYWYrRhiYqM8Fg1yy9CggA==
+X-Received: by 2002:a05:6808:130f:b0:453:7404:90bf with SMTP id
+ 5614622812f47-455863867a4mr3352472b6e.14.1765464167380; 
+ Thu, 11 Dec 2025 06:42:47 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-3f5d51a0c8csm1822043fac.20.2025.12.11.06.42.16
+ 586e51a60fabf-3f5d4e70030sm1809287fac.6.2025.12.11.06.42.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 06:42:17 -0800 (PST)
-Message-ID: <ff6f7656-ac50-4286-9a84-094721ef4d88@linaro.org>
-Date: Thu, 11 Dec 2025 08:42:15 -0600
+ Thu, 11 Dec 2025 06:42:47 -0800 (PST)
+Message-ID: <33f7f11a-94be-4e49-835f-d414e5903a09@linaro.org>
+Date: Thu, 11 Dec 2025 08:42:45 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/4] target/arm: Allow writes to FNG1, FNG0, A2
+Subject: Re: [PATCH v6 3/4] target/arm/tcg/cpu64.c: Enable ASID2 for cpu_max
 To: Jim MacArthur <jim.macarthur@linaro.org>, qemu-devel@nongnu.org
+Cc: Gustavo Romero <gustavo.romero@linaro.org>
 References: <20251210-jmac-asid2-v6-0-d3b3acab98c7@linaro.org>
- <20251210-jmac-asid2-v6-2-d3b3acab98c7@linaro.org>
+ <20251210-jmac-asid2-v6-3-d3b3acab98c7@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251210-jmac-asid2-v6-2-d3b3acab98c7@linaro.org>
+In-Reply-To: <20251210-jmac-asid2-v6-3-d3b3acab98c7@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::32;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,18 +107,47 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/10/25 08:50, Jim MacArthur wrote:
-> This just allows read/write of three feature bits. ASID is still
-> ignored. Any writes to TTBR0_EL0 and TTBR1_EL0, including changing
-> the ASID, will still cause a complete flush of the TLB.
+> docs/system/arm/emulation.rst: Add ASID2
 > 
-> Signed-off-by: Jim MacArthur<jim.macarthur@linaro.org>
+> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 > ---
->   target/arm/cpu-features.h |  7 +++++++
->   target/arm/helper.c       | 28 ++++++++++++++++++++++------
->   target/arm/internals.h    |  5 +++++
->   3 files changed, 34 insertions(+), 6 deletions(-)
+>   docs/system/arm/emulation.rst | 1 +
+>   target/arm/tcg/cpu64.c        | 4 ++++
+>   2 files changed, 5 insertions(+)
+> 
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
+
+> diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
+> index 31a5878a8f..3f30ea5a30 100644
+> --- a/docs/system/arm/emulation.rst
+> +++ b/docs/system/arm/emulation.rst
+> @@ -24,6 +24,7 @@ the following architecture extensions:
+>   - FEAT_AIE (Memory Attribute Index Enhancement)
+>   - FEAT_Armv9_Crypto (Armv9 Cryptographic Extension)
+>   - FEAT_ASID16 (16 bit ASID)
+> +- FEAT_ASID2 (Concurrent use of two ASIDs)
+>   - FEAT_ATS1A (Address Translation operations that ignore stage 1 permissions)
+>   - FEAT_BBM at level 2 (Translation table break-before-make levels)
+>   - FEAT_BF16 (AArch64 BFloat16 instructions)
+> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+> index 6871956382..ef4c0c8d73 100644
+> --- a/target/arm/tcg/cpu64.c
+> +++ b/target/arm/tcg/cpu64.c
+> @@ -1334,6 +1334,10 @@ void aarch64_max_tcg_initfn(Object *obj)
+>       t = FIELD_DP64(t, ID_AA64MMFR3, AIE, 1);      /* FEAT_AIE */
+>       SET_IDREG(isar, ID_AA64MMFR3, t);
+>   
+> +    t = GET_IDREG(isar, ID_AA64MMFR4);
+> +    t = FIELD_DP64(t, ID_AA64MMFR4, ASID2, 1);    /* FEAT_ASID2 */
+> +    SET_IDREG(isar, ID_AA64MMFR4, t);
+> +
+>       t = GET_IDREG(isar, ID_AA64ZFR0);
+>       t = FIELD_DP64(t, ID_AA64ZFR0, SVEVER, 2);    /* FEAT_SVE2p1 */
+>       t = FIELD_DP64(t, ID_AA64ZFR0, AES, 2);       /* FEAT_SVE_PMULL128 */
+> 
+
 
