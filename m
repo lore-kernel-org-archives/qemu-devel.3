@@ -4,77 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D76ACD41D59
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:29:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8A95D41D62
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 15:46:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTib3-0007Ji-M3; Thu, 11 Dec 2025 10:28:50 -0500
+	id 1vTirC-0001u2-Gh; Thu, 11 Dec 2025 10:45:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vTiaz-0007JB-RO
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:28:45 -0500
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTiqz-0001tB-Cy
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:45:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vTiax-0006dR-66
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:28:45 -0500
-Received: from [192.168.10.110] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BBFSL10011999
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Fri, 12 Dec 2025 00:28:25 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=w/t0LDqQ9Knb1vwIejvnWbL/mUIsRMQi5sAL6bYXuXk=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1765466905; v=1;
- b=Bf9Zosu9F2ZCxbejNhLEa4kpoGZrycpJwp5Nqzw1+Vn6jlEMTpRgl7YFb7GxymJm
- 4MsIPNGuSUPUU1zta3Kk9n84OqJSBmGUeOQZcPR9dygGlrz0PqnXu6cGdsCPEZDB
- cxO2qe4y5eEDfM57vTdxQXGbKOhB/UaDhQQH0InodqnFp85jz0bOirblDMQEqJY9
- eqUrfB+41GcxXyRqgQIHYLG9862VKnIZfiQAkH1K13EVvt5r9AgBCAjZr5wxX8hh
- xQA3puMZL54zdzT8alKOT77brlRc4WJiraWtq+tg2eo1ZEabxWLgqqg/KF7roE2A
- c3DIo7wyEqrY492ArAhdZQ==
-Message-ID: <a3b5e158-adae-4c66-89f9-7f0af26c63da@rsg.ci.i.u-tokyo.ac.jp>
-Date: Fri, 12 Dec 2025 00:28:21 +0900
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vTiqx-0000xS-89
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 10:45:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765467912;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=U7S25o2+wfdalGdvIeiQvLXZS+wcCFxVmEVROSkKouI=;
+ b=iw3irWslgLvIUr2hEUPzH1f0PCDEwii/plPdzpMTxNN/jtkr4cGEl3Hc+X2ym/itlMR5HV
+ kNpvasd9CMFZRtWckZtwjYta71F7m0TknJCRmexqRFDoalbE/TqX6VUbTUFcLiZ2f8v27+
+ k3PGJnJtm4gFLFrkDJehkm9WgtZWQlE=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-60-LpVBruUQOYG60B40XSm5pQ-1; Thu, 11 Dec 2025 10:45:10 -0500
+X-MC-Unique: LpVBruUQOYG60B40XSm5pQ-1
+X-Mimecast-MFC-AGG-ID: LpVBruUQOYG60B40XSm5pQ_1765467910
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8823c1345c0so3177706d6.2
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 07:45:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1765467909; x=1766072709; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=U7S25o2+wfdalGdvIeiQvLXZS+wcCFxVmEVROSkKouI=;
+ b=aJSUGZx5AH33gsGuk1n+p9xbBrH7epMhSGtRTpTbOI76U8nsPBV65GLPg/FRGC/dXd
+ udfw9stRXfvhD2i/n/5QKZMNEImrD8Y/vWl0Z767fuSvmpI+nUbAceHhMzmG5DofpW0J
+ cah86IeYrozMXefUd8BHW8+0k10nEL1OwlqraG4wTqgqUmApv6s55WYhpCwlIekDRmrK
+ NMURu6q1XH3n7TKhRFd/qpk1mk9GWm5/eXytrhUA4LjBV4OeRURowD7Gy6W9g52y7S9Z
+ ubvcT+Wk4D65ThebKbCzK4aww0L68ejz77fDOmhbRwfuxT1+AFl/2/rjngElSlAPLf2H
+ qEEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765467909; x=1766072709;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=U7S25o2+wfdalGdvIeiQvLXZS+wcCFxVmEVROSkKouI=;
+ b=d/lrYLbdX5OkJwBsEwmYsEPJWSvbxa42EB5uYPw0Ki1Q/gM6f6Ff2/gVVA/JgK8pcJ
+ KHpN0x6FV0tjedKWmz7vb5ksZdMK/XowMMVOn5cxxlYEH3oG2g2gsOEW5YGIxd/Wap9E
+ TTLJZG2SsLnSjW86EGp3UVe8a+H5RnV37DxZutX3ota8K1oSVINSIKirZFTVcBmqGPl1
+ E9mz4qYfuurbmuOSkpa+fYDDGrngWUcnTYQmL3xIiAsPPTlo9lpXaLb6+CiF5tsAIt2o
+ nLHBHFdHCxKykAF8zybS7Peq+3wT6sBwx0UWUpzHM1hiof3KI5GGt51H9OssQzfrrzWe
+ b/Sw==
+X-Gm-Message-State: AOJu0YwBFKwdOi93fByw4aR/Jcb/sjSPwssNnQd7PGoyGwhlEBJ/bUq8
+ OKOcXPotlA+Q7kr5hsFuKQWHQwJMGpuxR7aiHwbeT+l56dEu9OUl0h6GZBrK8RshONovDAwspuV
+ mr/oeZokbpPYwBWWFMX0BVnRhKdEQxFtbLZ6aQ2/bff4aCGmp4d2y5ivMCfQKHTQ8
+X-Gm-Gg: AY/fxX4+0ylJZvQuKb7Ls/MBJ66NTtryt9TX8Ob9E/pyVsXKLC3XQjaEIGPXQS0sOpk
+ qjIXhz05jY03mBCcOq6rA9mdKldSyyxCocj8P6H8KjcqUpWPJtM0vpM29pwymnufmry/RpOqYgh
+ QBoPZ/HWxyitnJqM/nLvMma3hOBTg/paGS1veK87giAwKorYngboWMOPdx6wUI/G5osqo0sfrLL
+ sogpUMA8HwI0qxD/hLp4E3aU0jaVoHTNCpwdtWoNkYCACdd+FVzV76zWZ3myevy+gJhLliA4HZe
+ jTwz9Qv7oWS1CgSiwg5Qsv1Eyn7GkJ5Xxox0tblaTcix++z3xbaq2wyTAojAZPkbeZgNFPumw0G
+ bYi0=
+X-Received: by 2002:a05:6214:5191:b0:882:6d1a:eacc with SMTP id
+ 6a1803df08f44-88863abfd33mr90571536d6.57.1765467908945; 
+ Thu, 11 Dec 2025 07:45:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IECdync4+5rotb5SgqXV9I0dZRYlHg0Kdp5lnPa101GsxZgHmqeDXKc2HjUXVlc+qUXdEC0Yw==
+X-Received: by 2002:a05:6214:5191:b0:882:6d1a:eacc with SMTP id
+ 6a1803df08f44-88863abfd33mr90571066d6.57.1765467908498; 
+ Thu, 11 Dec 2025 07:45:08 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8886ec567dfsm24654876d6.22.2025.12.11.07.45.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 11 Dec 2025 07:45:07 -0800 (PST)
+Date: Thu, 11 Dec 2025 10:45:05 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>,
+ Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2 4/9] memory: Rename memory_region_has_guest_memfd() to
+ *_private()
+Message-ID: <aTrnAdHv1k5qFaaB@x1.local>
+References: <20251119172913.577392-1-peterx@redhat.com>
+ <20251119172913.577392-5-peterx@redhat.com>
+ <08309979-8a73-4e30-a574-2bf23124eac8@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>
-References: <20251209162857.857593-1-peterx@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20251209162857.857593-1-peterx@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <08309979-8a73-4e30-a574-2bf23124eac8@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,130 +121,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/12/10 1:28, Peter Xu wrote:
-> [This is an RFC series, as being marked out.  It is trying to collect
->   opinions.  It's not for merging yet]
-> 
-> Background
-> ==========
-> 
-> It all starts with machine compat properties..
-> 
-> Machine compat properties are the major weapon we use currently in QEMU to
-> define a proper guest ABI, so that whenever we migration a VM instance from
-> whatever QEMU version1 to another QEMU version2, as long as the machine
-> type is the same, logically the ABI is guaranteed, and migration should
-> succeed.  If it didn't, it's a bug.
-> 
-> These compat properties are only attached to qdev for now.  It almost
-> worked.
-> 
-> Said that, it's also not true - we already have non-qdev users of such, by
-> explicitly code it up to apply the compat fields.  Please refer to the
-> first patch commit message for details (meanwhile latter patches will
-> convert them into a generic model).
-> 
-> Obviously, we have demands to leverage machine compat properties even
-> outside of qdev.  It can be a network backend, it can be an object (for
-> example, memory backends), it can be a migration object, and more.
-> 
-> This series tries to introduce a common root class OBJECT_COMPAT for it.  I
-> didn't abuse OBJECT because I know there're too many OBJECTs that do not
-> need compat properties at all.  With this design, we can also opt-in piece
-> by piece on the new root class, only when needed.
-> 
-> Class OBJECT_COMPAT
-> ===================
-> 
-> This is almost OBJECT class, except that it'll also apply machine compat
-> properties from anywhere.  One can refer to patch 1.
-> 
-> Note that currently I didn't further identify the three possible source of
-> object_compat_props[3] (accel, machine compat property, legacy globals).  I
-> don't think it's a huge issue so far because non-qdev objects will not
-> collapse with names in accel / legacy globals, due to the fact that object
-> names cannot dup acorss QEMU binary.  So I kept the changeset as minimum as
-> possible.  Feel free to shoot if there's concerns I overlooked.
-> 
-> This part is done in patch 1-6.  This is the part I felt slightly more
-> confident with.  Meanwhile, these will be the dependency if we want to
-> e.g. allow TAP network backends to take compat properties like a virtio-net
-> frontend (but likely we'll need to QOMify TAP first).  That's something for
-> the future even if applicable.
-> 
-> Export Property from QDEV
-> =========================
-> 
-> I also have patch 7-10 below for one step further beyond OBJECT_COMPAT.
-> Feel free to take it even as a seperate small series to review.
-> 
-> So far the first part will be the focus, but I still want to collect
-> opinions here on this second part.  This is about exporting Property for
-> non-qdev uses.  Currently, migration is the only user.
-> 
-> In short, Property is something qdev uses internally to ultimately
-> represents ObjectClass's properties hash table.  It's pretty handy to
-> e.g. avoid definining accessors for object properties, setting default
-> values, etc.  Then they'll be converted to Object properties at some point.
-> 
-> Migration object currently defines all the global fields in Property and
-> can use "-global migration.XXX" to allow global overrides, with almost one
-> line for each property, which is efficient.
-> 
-> This 2nd step will allow migration object to inherit from OBJECT_COMPAT too
-> with almost only a few lines of changes, and keep the functionality as-is.
-> 
-> Two other options we have:
-> 
->    (1) Keep migration object to be a qdev, it's still fine, even if it
->        sounds hackish.. if we want to keep "-global" working as before
-> 
->    (2) Inherit OBJECT_COMPAT without supporting "-global" anymore.
-> 
-> Any comments welcomed, especially on the first half (1-6), thanks.
+On Thu, Dec 11, 2025 at 03:10:24PM +0800, Xiaoyao Li wrote:
+> On 11/20/2025 1:29 AM, Peter Xu wrote:
+> > Rename the function with "_private" suffix, to show that it returns true
+> > only if it has an internal guest-memfd to back private pages (rather than
+> > in-place guest-memfd).
 
-I'm actually less sure if the first half makes sense than the second half.
+PS: I forgot to update here, I'll use "fully shared" to replace "in-place".
 
-Exporting Property from QDEV did make me think it may be polluting the 
-codebase with QDEV-specifics, but its motivation (creating properties 
-without defining accessors) is clear and it meets its requirement.
+> > 
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >   include/system/memory.h | 6 +++---
+> >   accel/kvm/kvm-all.c     | 6 +++---
+> >   system/memory.c         | 2 +-
+> >   3 files changed, 7 insertions(+), 7 deletions(-)
+> > 
+> > diff --git a/include/system/memory.h b/include/system/memory.h
+> > index 2c1a5e06b4..4428701a9f 100644
+> > --- a/include/system/memory.h
+> > +++ b/include/system/memory.h
+> > @@ -1823,14 +1823,14 @@ static inline bool memory_region_is_romd(MemoryRegion *mr)
+> >   bool memory_region_is_protected(MemoryRegion *mr);
+> >   /**
+> > - * memory_region_has_guest_memfd: check whether a memory region has guest_memfd
+> > - *     associated
+> > + * memory_region_has_guest_memfd_private: check whether a memory region has
+> > + *     guest_memfd associated
+> 
+> Nit: maybe change it to "guest_memfd_private associated", and maybe put this
+> patch after patch 5?
 
-The motivation is less concrete for the first half. It says the current 
-code is explicit, but it is a relative term. I'm not sure if specifying 
-TYPE_OBJECT_COMPAT is less explicit (or more implicit) than calling 
-object_apply_compat_props(). Also, having a class for compat props but 
-not for global props makes the decision look arbitrary. It is nice to 
-have some clarification on these.
-
-Regards,
-Akihiko Odaki
+Agree, though maybe I should do this change in the other ramblock patch
+(and move that one before this)?
 
 > 
-> Peter Xu (10):
->    qom: Introduce object-compat
->    qdev: Inherit from TYPE_OBJECT_COMPAT
->    hostmem: Inherit from TYPE_OBJECT_COMPAT
->    accel: Inherit from TYPE_OBJECT_COMPAT
->    confidential guest support: Inherit from TYPE_OBJECT_COMPAT
->    qom: Unexport object_apply_compat_props()
->    qdev: Pave way for exporting Property to be used in non-qdev
->    qdev: Introduce helper object_apply_globals()
->    qdev: Refactor and rename of qdev_class_add_property()
->    migration: Inherit from TYPE_OBJECT_COMPAT
+> Otherwise,
 > 
->   include/hw/qdev-properties.h          | 11 ++++++++
->   include/qom/object.h                  |  2 +-
->   migration/migration.h                 |  2 +-
->   accel/accel-common.c                  |  2 +-
->   backends/confidential-guest-support.c |  2 +-
->   backends/hostmem.c                    |  8 +-----
->   hw/core/qdev-properties.c             | 37 +++++++++++++++++++++------
->   hw/core/qdev.c                        |  6 ++---
->   migration/migration.c                 | 31 +++++++++++-----------
->   qom/object.c                          | 16 +++++++++++-
->   system/vl.c                           |  1 -
->   target/i386/sev.c                     |  1 -
->   12 files changed, 79 insertions(+), 40 deletions(-)
-> 
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
+Thanks,
+
+-- 
+Peter Xu
 
 
