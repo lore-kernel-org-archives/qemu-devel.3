@@ -4,77 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F09CAD3E78B
-	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 03:33:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B689D3E78B
+	for <qemu-devel@archiver.kernel.org>; Thu, 11 Dec 2025 04:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTXPe-000853-90; Wed, 10 Dec 2025 22:32:18 -0500
+	id 1vTXzv-0005WF-Me; Wed, 10 Dec 2025 23:09:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vTXPX-00083P-7P; Wed, 10 Dec 2025 22:32:11 -0500
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vTXzt-0005W4-BA
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 23:09:45 -0500
+Received: from p-west1-cluster3-host3-snip4-6.eps.apple.com ([57.103.66.69]
+ helo=outbound.pv.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vTXPT-0004a4-C9; Wed, 10 Dec 2025 22:32:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765423928; x=1796959928;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=UDdOGxQwwovFx0PVnidZNaPWNNdCzKtTEqbECXf/6VQ=;
- b=W4VY0SBf3dFETCMyLjTsGF8LcZ1J3xiju0MwUgRQT5lgtnnu0TVKbGqS
- kopHH07Ig0etc7C5eM2rLY+I3xD8vrGJM+WTGcjLm0c0P1cA3dSvyx+Ag
- 7iuyhL+BSV1K/t7lmZxaI6ubY786HG13hwrvzX9ZSluR1d5vFEWFKZshh
- E8ll8tlMGe6APUhw+qgl1YMxuXXOWOU0ICwurLC3+itd9r5XfzbXPdqM6
- 86Fz6HFVS0GOzck4c4E76qZ4iePxIeO+/r1m/gIw9Vq0BnZDTC3D1UrXP
- TfO2lCPkXR+Ip8v5mPuK1DYFiV+2yh+hzMv4US+SDsD9NHDYz4MqLw2Ke g==;
-X-CSE-ConnectionGUID: 0roEQLJBSD2a56Ua8Io9bA==
-X-CSE-MsgGUID: uc07dF0FRgmN0vX7O8nIPQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="78515729"
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="78515729"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2025 19:32:03 -0800
-X-CSE-ConnectionGUID: hwYxna3qRbGPJouULLV7QA==
-X-CSE-MsgGUID: t+SsGPxjRD2gipjS8kTBKQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; d="scan'208";a="195950972"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.173])
- ([10.124.240.173])
- by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2025 19:31:59 -0800
-Message-ID: <048e2c5a-8e16-4625-8382-9478a8af5c9a@intel.com>
-Date: Thu, 11 Dec 2025 11:31:55 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qemu-options.hx: Document -M as -machine alias
-To: Peter Maydell <peter.maydell@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-trivial@nongnu.org, mjt@tls.msk.ru, laurent@vivier.eu,
- thuth@redhat.com, pbonzini@redhat.com, jak@jak-linux.org,
- qemu-devel@nongnu.org
-References: <20251203131511.153460-1-dave@treblig.org>
- <87a4zzu230.fsf@draig.linaro.org> <aTBCLbDbpXgkTLHr@gallifrey>
- <CAFEAcA-Uy0UQwGEK+f95BJmDripg1-8vhzPF5qRSY40=duhRUQ@mail.gmail.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <CAFEAcA-Uy0UQwGEK+f95BJmDripg1-8vhzPF5qRSY40=duhRUQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vTXzr-0005YZ-3r
+ for qemu-devel@nongnu.org; Wed, 10 Dec 2025 23:09:45 -0500
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-20-percent-3 (Postfix) with ESMTPS id
+ 7406718000B6; Thu, 11 Dec 2025 04:09:35 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; bh=+9UjHun5UTmn6Gs5sLgq4LJBUv1jInx8rHtqHovLT74=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=arkewZ2TGOdYEduykMfuZ3eKnY8Hzg8TppFe0jzYQQn9qBGJ1ZaljUHvAfi3s7+KQPwC/HnoJ0mtIgYcZcRQonIkinvclEcYCGCiQ8xKQ7ksjCwfPL8cEdfl0hOxdk7BF/mCOsd4HhzpiZWHDUEELoguljTcgBcoX6+CQ2C221fi5vniypSNo1WL0brCD+xovMsT9+Sc8Tli9xWMSvhBe/kNTjXrwiAUUzkqdubARzY6ap0ogOCx3p032YM5Qg+lXxFTEuKDBKHoYvIxaT73STkHBIaVYeYK0nRhMnxIqnrG0ceRSaaJeRbpWHruxfB5zi7sRU5HNEjGYKXHTkOgXg==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.56.9.36])
+ by p00-icloudmta-asmtp-us-west-1a-20-percent-3 (Postfix) with ESMTPSA id
+ A282918000AC; Thu, 11 Dec 2025 04:09:33 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.200.81.1.6\))
+Subject: Re: [PATCH RFC 2/7] virtio-gpu-virgl: check page alignment of blob
+ mapping
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20251203040754.94487-3-j@getutm.app>
+Date: Thu, 11 Dec 2025 05:09:21 +0100
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9E75DEF6-30FB-4136-8CFC-E6154C91058E@unpredictable.fr>
+References: <20251203040754.94487-1-j@getutm.app>
+ <20251203040754.94487-3-j@getutm.app>
+To: Joelle van Dyne <j@getutm.app>
+X-Mailer: Apple Mail (2.3864.200.81.1.6)
+X-Authority-Info: v=2.4 cv=ft3RpV4f c=1 sm=1 tr=0 ts=693a43ff cx=c_apl:c_pps
+ a=azHRBMxVc17uSn+fyuI/eg==:117 a=azHRBMxVc17uSn+fyuI/eg==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=DPrs_iQuYpXKpRMb13MA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: qtNCkB0k-sDjalQAaj9PZGvky8TVwqyf
+X-Proofpoint-ORIG-GUID: qtNCkB0k-sDjalQAaj9PZGvky8TVwqyf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjExMDAyNSBTYWx0ZWRfX3GjVzBhOtBex
+ WloC6dsGH8/OZxbMSQhMGGc25uO/DHhHCmTfcUPzbrMWIDsfo94UU+/hRG+jw77UF5RyprQAzKl
+ mp1J2yA1oDWowt6wChZnoItxiHO3D7xgoor/pXIQ/l3DZ3LtPj69idPJLYDXVLAwojWgWnNcDHU
+ yHSwZIPn8vMtxD1WZovcJ5NOz96mdVGYeuGqzhP4zhSfN1sMUAR4gSDTi4qbM7dCvl7KdRg5c/D
+ FJzAOCycSNAxzXYhtUd88RR7yGCZkK1JcDXSdIfgHTrVEs5S2v3jEUT3DuuK3lQJ/oa46nvLs2Y
+ +e03UGAjAUmp9vdIWw7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-10_03,2025-12-09_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ adultscore=0 spamscore=0 mlxscore=0 bulkscore=0
+ suspectscore=0 phishscore=0
+ clxscore=1030 malwarescore=0 classifier=spam authscore=0 adjust=0 reason=mlx
+ scancount=1 engine=8.22.0-2510240001 definitions=main-2512110025
+X-JNJ: AAAAAAABpDkXUN8FbsLeZo/Cm9180iRLx4MXl1GVZazBtlv45FC2vIXW5GNK27makZnXK/T0nuGJp4S/ckuo00OJdHcdba6vhOMv76MqGdYRWZzP3RczuJyQa7LwCAmqW9WYchumbVU+r+G4zspOG0prO/XBcnJ7hqbQEIXyRY0o0Vj8BIQ4EJvWFGkA/vdBYQF00qGd5nBOeOJpsGnWE0lB1dE7ArjI5fJ0jc6IxIQ/k9sjoGaZJVSMefN/VXnIavel10hIHdwz4Cc2JmOS3jfyeqPv0/USapVH5rx3yvJbko57BNVUb2crp8BiqPtw6tHg/b0MHjmcGBqM5VaD8OZpkd88hY6fQHwDXADOukHnSShUgeW6Zv4o0ySF5ziU/aNE2FSuNtcYze0p4NY4Q15xTDDIcBQTmNDG60KtM25c+oNeuy4ox3zvJ4lDUwgYBAhh2akI320mLVtwz3at7cNbyK1o+f9pCZg9EuQXdUlcCBAiJWhxhLuU4yQqDLcgzKjTSXxk+lCEM4KUBB4f0Ukk5FdWMfLS5183Z+RCrp03LlqfzFBnhc6PdQAP5ysri1vtnFpP24B9F11EwKQ6jprBM3pY7w1xIzc7bP2sgChNdwSx45IHrccQz2amkon0UKU22Xy2lGsSp+VhRAu3+TPViPlCg5qCAvDIW5veyoKO/kDQ6NvO5LhfQWSwTB08ehcW2m6YQUfdFUhaYB7dZXhQud8=
+Received-SPF: pass client-ip=57.103.66.69;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,109 +96,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/2025 12:06 AM, Peter Maydell wrote:
-> On Wed, 3 Dec 2025 at 14:00, Dr. David Alan Gilbert <dave@treblig.org> wrote:
->>
->> * Alex Bennée (alex.bennee@linaro.org) wrote:
->>> dave@treblig.org writes:
->>>
->>>> From: "Dr. David Alan Gilbert" <dave@treblig.org>
->>>>
->>>> -M is used heavily in documentation and scripts, but isn't actually
->>>> documented anywhere.
->>>> Document it as equivalent to -machine.
->>>>
->>>> Reported-by: Julian Andres Klode <jak@jak-linux.org>
->>>> Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
->>>> ---
->>>>   qemu-options.hx | 12 +++++++-----
->>>>   1 file changed, 7 insertions(+), 5 deletions(-)
->>>>
->>>> diff --git a/qemu-options.hx b/qemu-options.hx
->>>> index fca2b7bc74..ec92723f10 100644
->>>> --- a/qemu-options.hx
->>>> +++ b/qemu-options.hx
->>>> @@ -44,6 +44,7 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->>>>   #endif
->>>>       "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
->>>>       "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
->>>> +    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n"
->>>>       "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
->>>>       QEMU_ARCH_ALL)
->>>>   SRST
->>>> @@ -179,6 +180,9 @@ SRST
->>>>
->>>>               -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
->>>>
->>>> +    ``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
->>>> +        Define an SGX EPC section.
->>>> +
->>>
->>> This seems unrelated.
->>>
->>>>       ``smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel``
->>>>           Define cache properties for SMP system.
->>>>
->>>> @@ -208,12 +212,10 @@ SRST
->>>>   ERST
->>>>
->>>>   DEF("M", HAS_ARG, QEMU_OPTION_M,
->>>> -    "                sgx-epc.0.memdev=memid,sgx-epc.0.node=numaid\n",
->>>> -    QEMU_ARCH_ALL)
->>>> -
->>>> +    "-M              as -machine\n", QEMU_ARCH_ALL)
->>>>   SRST
->>>> -``sgx-epc.0.memdev=@var{memid},sgx-epc.0.node=@var{numaid}``
->>>> -    Define an SGX EPC section.
->>>> +``-M``
->>>> +    as -machine.
-> 
-> Surprisingly, this and -h/--help are our only two options where
-> we provide a short synonym. I note that this handling of -M
-> is not consistent with how we document -h/--help, where we
-> print both on a single line:
-> -h or -help     display this help and exit
-> 
-> But it would be trickier to fit that in for -machine and
-> perhaps confusing given the suboptions.
-> 
->>> Did we have a merge conflict at some point that messed things up?
->>
->> It's not clear - it was the only option hanging around in -M and it was
->> already appearing wrong in the man output.
->> I wondered if it was some requirement to have *something* in the -M
->> definition so thought it best to move it at the same time.
-> 
-> It looks like this was incorrectly added under -M by
-> commit dfce81f1b9 ("vl: Add sgx compound properties to expose
-> SGX EPC sections to guest"), which should have put it under
-> -machine like all our other machine suboption documentation.
-> 
-> The result is that the sgx-epc documentation appears OK
-> in --help because the --help output just concatenates
-> everything so it gets tacked on after the -machine help,
-> but it is misrendered in the HTML docs:
-> https://qemu-project.gitlab.io/qemu/system/invocation.html
-> as it appears as if a top level option rather than one
-> indented to indicate that it's a machine sub-option.
-> So this change fixes that bug (and should ideally say so
-> in its commit message).
 
-Yeah, I found this bug before and sent the fix: 
-https://lore.kernel.org/qemu-devel/20250714091953.448226-2-xiaoyao.li@intel.com/
 
-But I was occupied with other stuff then so that had no time to sent out 
-the v2.
+> On 3. Dec 2025, at 05:07, Joelle van Dyne <j@getutm.app> wrote:
+>=20
+> Currently if a mapping is not page aligned, it will sliently fail and =
+the
+> guest, assuming it is mapped, will attempt to access the memory and =
+fail.
+> This is particularly an issue on macOS when the host page size is =
+16KiB and
+> the guest page size is 4KiB.
+>=20
+> Signed-off-by: Joelle van Dyne <j@getutm.app>
+> ---
+> hw/display/virtio-gpu-virgl.c | 14 ++++++++++++++
+> 1 file changed, 14 insertions(+)
+>=20
+> diff --git a/hw/display/virtio-gpu-virgl.c =
+b/hw/display/virtio-gpu-virgl.c
+> index 20c856c04e..adf02ac22b 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -116,6 +116,20 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>         return ret;
+>     }
+>=20
+> +    if (!QEMU_IS_ALIGNED((uintptr_t)data, =
+qemu_real_host_page_size())) {
+> +        virgl_renderer_resource_unmap(res->base.resource_id);
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: address %p is not aligned =
+to page size\n",
+> +                      __func__, data);
+> +        return -ENOMEM;
+> +    }
+> +
+> +    if (!QEMU_IS_ALIGNED(size, qemu_real_host_page_size())) {
+> +        virgl_renderer_resource_unmap(res->base.resource_id);
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: size 0x%llx is not =
+aligned to page size\n",
+> +                      __func__, size);
+> +        return -ENOMEM;
+> +    }
+> +
+>     vmr =3D g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
+>     vmr->g =3D g;
+>=20
+> --=20
+> 2.41.0
+>=20
+>=20
 
-> Before that it simply read
-> -HXCOMM Deprecated by -machine
-> -DEF("M", HAS_ARG, QEMU_OPTION_M, "", QEMU_ARCH_ALL)
-> 
-> (Commit dfce81f1b9 also silently dropped that "deprecated"
-> comment, which it shouldn't really have done.)
-> 
-> thanks
-> -- PMM
-> 
+Hello,
+
+There=E2=80=99s a better way to handle this without guest breakage.
+
+Please use hv_vm_config_set_ipa_granule, it=E2=80=99ll allow to have 4KB =
+granule allocations as the IPA.
+
+Note: This might have some impact on performance so we might to want to =
+enable it only when virtio-gpu is used.
+
+Thank you,
+
+
+
 
 
