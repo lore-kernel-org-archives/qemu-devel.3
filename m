@@ -4,76 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9472D43369
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 03:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4677AD43367
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 03:25:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTtY9-0004a1-JL; Thu, 11 Dec 2025 22:10:33 -0500
+	id 1vTtlq-0007VC-E1; Thu, 11 Dec 2025 22:24:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vTtY8-0004Zn-5R
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 22:10:32 -0500
-Received: from mgamail.intel.com ([198.175.65.9])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vTtll-0007Ue-PM
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 22:24:39 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1vTtY6-0002HK-E2
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 22:10:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765509031; x=1797045031;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=Mocicri8CbMWrbM3/i9mesAEFKq87WkhQwfghecQekI=;
- b=kUb3RD1wDROEc1bk/Q6K7epJ9agon+be1acYkTcW4s7XrvfyrZvqpice
- Pe68+l39UgZ32gp1LdUFMRtUeHaqjvak4N68MDwXxURHWCAx6XW7f33tk
- WUsSZ1bv4rpkJEx8vjGqMJv4u5+ggC700oBLrAiuw3lzOGicDRi1w41Yz
- 2G8bZLr5UPm/322LH8TsyU6gf3h/2/L5CxEzRdJ5c788o5Kdj5XQEKQsB
- 6NuJsnv5a4I1otLYdrvVHCn1C8feuPNFAg1SHO+grYhIiQS4+Z6ToyBeT
- zeLoG8t336oCYkZL0bhM28ggdu2Oh+KDR43rInk7iJ8Jrq4Rovjdcoyxm g==;
-X-CSE-ConnectionGUID: bPbuZAmhRaicUyA/WP+Wbw==
-X-CSE-MsgGUID: HcvNr0bjSc29rJ/hue4UNw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11639"; a="90150769"
-X-IronPort-AV: E=Sophos;i="6.21,141,1763452800"; d="scan'208";a="90150769"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2025 19:10:29 -0800
-X-CSE-ConnectionGUID: +AFvzj/YSpCUu/HZRkLC4A==
-X-CSE-MsgGUID: FhvgMX1mTlOPFtcy6muZ2g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,141,1763452800"; d="scan'208";a="197441386"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.173])
- ([10.124.240.173])
- by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2025 19:10:26 -0800
-Message-ID: <a958f847-78fc-4743-80bb-49aae5f37bcf@intel.com>
-Date: Fri, 12 Dec 2025 11:10:23 +0800
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vTtli-0001wc-Bj
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 22:24:37 -0500
+Received: from [10.200.7.128] (p99249-ipoefx.ipoe.ocn.ne.jp [153.246.134.248])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BC3O1JF023345
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 12 Dec 2025 12:24:05 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=fjQTBQwyfZoKmkfgZgmdaThOu1EiOKUNUzjNv3/L1iA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1765509845; v=1;
+ b=HuvDPvT9PDeVuwkisE1m8Pklaa6+sgz8Hgk2ntGqmcETgaTUQjhcep8v6nSP1WSY
+ 3O0zYEW6+8L3T8ou44rwByqckmQmAlHNU4OpCn1zq/4ZIDlpmJuzUYO8e6p8AMl1
+ S//EmJL4dIn15onAS16pZRmuxu8fgtoJtXWivP/wSagokGNSBHjWsvzER8UwyGb3
+ dg761fcBfHjmDYXmKge2S5PFO4olVTw0Xh9+GQZjiIGtpw6dRCCKGfKUei9J85X4
+ t5elydFAYSVaSfPIN9RyUGqYvlv0R/jmbZtSNz/QrKjfQQIq7Anuf7hGn5HAwdZb
+ xfE8FFUUAFfoBgYzW3bS2g==
+Message-ID: <da19ffdc-b357-4494-aeba-7d1f6aeb8ce3@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 12 Dec 2025 12:24:01 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/9] kvm: Detect guest-memfd flags supported
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand
- <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>, Juraj Marcin <jmarcin@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <20251119172913.577392-1-peterx@redhat.com>
- <20251119172913.577392-3-peterx@redhat.com>
+Subject: Re: [PATCH] virtio-gpu: create drm fd based on specified render node
+ path
+To: "Irshad, Luqmaan" <Luqmaan.Irshad@amd.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Honglei Huang <honghuan@amd.com>
+Cc: "mst@redhat.com" <mst@redhat.com>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
+ "Pelloux-Prayer, Pierre-Eric" <Pierre-eric.Pelloux-prayer@amd.com>,
+ "luckmaan21@gmail.com" <luckmaan21@gmail.com>
+References: <20251205184906.110927-1-luirshad@amd.com>
+ <06bd2abd-e554-4ec8-8ffb-256d33af95c0@collabora.com>
+ <56728682-8ab9-498e-acc5-c31ba83642fc@rsg.ci.i.u-tokyo.ac.jp>
+ <BL4PR12MB94840D89E2584BA81151D5189DA1A@BL4PR12MB9484.namprd12.prod.outlook.com>
 Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20251119172913.577392-3-peterx@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <BL4PR12MB94840D89E2584BA81151D5189DA1A@BL4PR12MB9484.namprd12.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,59 +83,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/20/2025 1:29 AM, Peter Xu wrote:
-> Detect supported guest-memfd flags by the current kernel, and reject
-> creations of guest-memfd using invalid flags.  When the cap isn't
-> available, then no flag is supported.
+On 2025/12/12 1:30, Irshad, Luqmaan wrote:
+> [AMD Official Use Only - AMD Internal Distribution Only]
+
+Your keep sending message with this "Internal Distribution Only" mark. 
+Can you remove it? Perhaps you may ask Honglei Huang, who is also from 
+AMD and work on virtio-gpu/QEMU.
+
 > 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   accel/kvm/kvm-all.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
+> Hello Akihiko,
 > 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 96c194ce54..f477014126 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -108,6 +108,7 @@ static int kvm_sstep_flags;
->   static bool kvm_immediate_exit;
->   static uint64_t kvm_supported_memory_attributes;
->   static bool kvm_guest_memfd_supported;
-> +static uint64_t kvm_guest_memfd_flags_supported;
->   static hwaddr kvm_max_slot_size = ~0;
->   
->   static const KVMCapabilityInfo kvm_required_capabilites[] = {
-> @@ -2787,6 +2788,10 @@ static int kvm_init(AccelState *as, MachineState *ms)
->       kvm_guest_memfd_supported =
->           kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
->           kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
-> +
-> +    ret = kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD_FLAGS);
-> +    kvm_guest_memfd_flags_supported = ret > 0 ? ret : 0;
-> +
->       kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
->   
->       if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
-> @@ -4492,6 +4497,12 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
->           return -1;
->       }
->   
-> +    if (flags & ~kvm_guest_memfd_flags_supported) {
-> +        error_setg(errp, "KVM does not support guest-memfd flag: 0x%"PRIx64,
+> I just had a brief conversation with Pierre-Eric, and I believe the use case is slightly different than the one described.  For virgl, selecting using DRI_PRIME only would suffice because QEMU and VirGL (both using OpenGL), both rely on the driver to pickup the GPU.
 
-I'm thinking if need to add "for current VM" like:
+DRI_PRIME is used for EGL, not OpenGL. EGL is agnostic to rendering APIs 
+so it works for Vulkan too.
 
-	KVM does not support guest-memfd flag: xxx for current VM
+> 
+> For Native context however (this case) there is no GL driver use from virglrenderer side, which is why we inform virglrenderer using the callback functions instead.
 
-because kvm_guest_memfd_flags_supported is got from VM-scope CAP and 
-varies for different VM types.
+Now I understand the problem you are facing; virglrenderer does not 
+respect the EGL display for DRM native context, which is the problem 
+that needs to be fixed; adding another callback function only works 
+around it.
 
-> +                   flags & ~kvm_guest_memfd_flags_supported);
-> +        return -1;
-> +    }
-> +
->       fd = kvm_vm_ioctl(kvm_state, KVM_CREATE_GUEST_MEMFD, &guest_memfd);
->       if (fd < 0) {
->           error_setg_errno(errp, errno, "Error creating KVM guest_memfd");
+Fortunately, there is EXT_device_drm_render_node, an EGL extension that 
+allows virglrenderer to query the underlying render node from the EGL 
+display, which can be used for DRM native context:
+https://registry.khronos.org/EGL/extensions/EXT/EGL_EXT_device_drm_render_node.txt
+
+Consuming the EGL display, you can exploit the render-API-agnostic 
+nature of EGL and ensure DRM native context will work consistently with 
+VirGL and Venus. virglrenderer will be able to use the appropriate 
+render node chosen by Mesa, and if you want to choose a render node by 
+your own, you will be able to use the rendernode property of headless 
+displays or DRI_PRIME for the other displays; no need to set another 
+property for virtio-gpu.
+
+Using EXT_device_drm_render_node on the virglrenderer side may also 
+benefit other VMMs that use virglrenderer.
+
+Regards,
+Akihiko Odaki
+
+> 
+> Sincerely,
+> 
+> Luq
+> 
+> ________________________________
+> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Sent: Thursday, December 11, 2025 9:19:22 a.m.
+> To: Dmitry Osipenko <dmitry.osipenko@collabora.com>; Irshad, Luqmaan <Luqmaan.Irshad@amd.com>; qemu-devel@nongnu.org <qemu-devel@nongnu.org>
+> Cc: mst@redhat.com <mst@redhat.com>; alex.bennee@linaro.org <alex.bennee@linaro.org>; Pelloux-Prayer, Pierre-Eric <Pierre-eric.Pelloux-prayer@amd.com>; luckmaan21@gmail.com <luckmaan21@gmail.com>
+> Subject: Re: [PATCH] virtio-gpu: create drm fd based on specified render node path
+> 
+> On 2025/12/08 9:49, Dmitry Osipenko wrote:
+>> Hi,
+>>
+>> On 12/5/25 21:49, Luqmaan Irshad wrote:
+>>> Added a special callback function called virtio_get_drm_fd to create
+>>> a render node based on the path specified by the user via QEMU command
+>>> line.  This function is called during the virglrenderer callback sequence
+>>> where we specify the get_drm_fd function pointer to call back our
+>>> new function, allowing us to pass the fd of our created render node.
+> 
+> I guess what you need can be achieved by specifying a render node for
+> the display. Headless displays (egl-headless and dbus) has the
+> rendernode property for this. For the other displays, Mesa should choose
+> an appropriate render node, and it can be overridden with the DRI_PRIME
+> environment variable:
+> https://docs.mesa3d.org/envvars.html#envvar-DRI_PRIME
+> 
+>>>
+>>> Based-on: 20251116125641.2255794-1-dmitry.osipenko@collabora.com
+>>>
+>>> Signed-off-by: Luqmaan Irshad <luirshad@amd.com>
+>>> ---
+>>>    hw/display/virtio-gpu-gl.c     |  4 ++++
+>>>    hw/display/virtio-gpu-virgl.c  | 17 ++++++++++++++++-
+>>>    include/hw/virtio/virtio-gpu.h |  1 +
+>>>    3 files changed, 21 insertions(+), 1 deletion(-)
+>>
+>> Do you think it could be possible and worthwhile to make QEMU's EGL
+>> display to use same GPU as virgl automatically? I.e. we tell QEMU/EGL
+>> which GPU to use and then virgl will use same DRM device that backs EGL.
+> 
+> As far as I understand, it is already ensured that virgl uses the EGL
+> display QEMU uses, and I think that what you want. Opening a different
+> render node and passing the node to virglrenderer breaks it.
+> 
+> Regards,
+> Akihiko Odaki
+> 
+> 
 
 
