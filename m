@@ -4,109 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B05E9D49232
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 15:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9894D4922D
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 15:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU4hV-0001yC-E6; Fri, 12 Dec 2025 10:04:57 -0500
+	id 1vU4i9-00031X-IS; Fri, 12 Dec 2025 10:05:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vU4hT-0001xZ-Qz
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:04:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vU4i2-0002Sv-JF
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vU4hS-0005hI-87
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:04:55 -0500
+ id 1vU4hz-00065O-TL
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765551893;
+ s=mimecast20190719; t=1765551925;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tEQtRpZIU+af5B0NJVC06k5FBVfVHxHqEV2FPCkoDHk=;
- b=dn6NPvbVyPEcJHFYPW1z4VDF/kLQeM+waU7RDZGsinNkYwzaVaeFz0ds9V2RRFcbAy5WUq
- RSCzFk4aMp2ONH5VYHhxPiad5Poqfj+Yh6kP0OjI7CHIy7hZ07rbmaOOhLgT4yrj443IlV
- t6vzsi3tgQgvigy3FDK5SfC8OHIqmtk=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=N2VTrzg+qE8VL3OOG3OpyC5OygKIGSBEXRIlgut+Wko=;
+ b=X6WEIAjR1wv9pJfhpq2NCzzmiSMV724G+aRFKxdnM0vhHNZwnjkvPuR/nTWNVuhlPQoSid
+ wfXUBi90Y+fTDRZUARDCaSxLPlm3v8agwwcop9fM2JLIBa60f4OJhdOmu1p1SPNglodX8K
+ LN7X9N13y0lbFOLYQ5A7oiq4PrerPkE=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-Lvfprj8hOeymQPDVhC2skA-1; Fri, 12 Dec 2025 10:04:50 -0500
-X-MC-Unique: Lvfprj8hOeymQPDVhC2skA-1
-X-Mimecast-MFC-AGG-ID: Lvfprj8hOeymQPDVhC2skA_1765551889
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-29f1450189eso10049505ad.1
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 07:04:50 -0800 (PST)
+ us-mta-568-eTn1eFbNPGexi-e_nStv8A-1; Fri, 12 Dec 2025 10:05:24 -0500
+X-MC-Unique: eTn1eFbNPGexi-e_nStv8A-1
+X-Mimecast-MFC-AGG-ID: eTn1eFbNPGexi-e_nStv8A_1765551923
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2a089575ab3so737385ad.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 07:05:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765551889; x=1766156689; darn=nongnu.org;
+ d=redhat.com; s=google; t=1765551923; x=1766156723; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tEQtRpZIU+af5B0NJVC06k5FBVfVHxHqEV2FPCkoDHk=;
- b=dl/zmL5Q8b5ZqKztLiRugYsWD01tAQ7xyonUU22ovCbY1bRHPAJvGWd/ZhjaGdeyFo
- DYovNy/hMYRg04W2eVtOl7/YlMvyBfx5fgDqAHOR+DthyfmN7n7bd05HRVUJG0CYrEzG
- 8nD5VuFJLlP3PyVV6U/RR7yDSiwXK5ftqdeEFbFyqxLfjXbEyj47jfMC3RcphN8CZdAo
- O4eAk109uTPkgURKUb+HdpTebLQcHxS6VDlCSpqyVO0WGeJ/ftx+gQkagcnoCUAOQjPO
- CMuyLeGARop3CKtI8YqO723ocz6S8kDiuKRoHlZb1zFavfPwmnVuC8nE/h1bDgxqBxNK
- Qtew==
+ bh=N2VTrzg+qE8VL3OOG3OpyC5OygKIGSBEXRIlgut+Wko=;
+ b=AApYq6scVuAgaH9EiQa97f5T4c7FDRq7qDBZKbyF28sxnSTtpfaAm/6EcngqqZ/0Jj
+ olp7S6I40QJm4qAWSf6EMSxaPwkY5WwQIiGU5TXSF2Md0/umpFKWmZ0zc2MZ92yw/8x/
+ ZlrKIIRejLuJFlRO8uqsayn8RPXF6Jk4YDO5+0XO0nN07TnKFMP+Hg2nOrMrXCASeBT9
+ aV87jgdeJM30yMjbPbjLzet8MVDlFWiZlt21rhiAEmDWb90OiqBVs8zq4wzvSBxZbGXu
+ 0HpBCOWIrxkHpURxDsnZl3gF94N9Z9eElmD13s4LL5eIYukVJ59wm6MvVXGspNjlks+5
+ O//Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765551889; x=1766156689;
+ d=1e100.net; s=20230601; t=1765551923; x=1766156723;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=tEQtRpZIU+af5B0NJVC06k5FBVfVHxHqEV2FPCkoDHk=;
- b=nV7qiqNmt3X9Y0xEpXPvU7fmH7EmhPIExl78zWhb8KMhPM9JCClSU4Bbgj/osJIrTf
- IJkNp+HoBJV63tz+5hXRTivxfplpj0wgxeytksDnO+FmE63um7jprIsFU08jnNtW33jM
- NXW4VvzohnFhUtBXzHVWEPmXUCI6FimiBBa63D4XPikUmiNrfHT05Td45awCPPCcYQAB
- 6r8M4LZQ9A2LYdXEcaEZH1sPUutDvIfrdH2sCdeFb3J3npId5dYMmqU0bDjaG4SpaD7E
- t4lr68VcFKguGjKKhklNdepyZMCV7HqMbQj5/4EvxzLFHPrET1ZelDAncjSSNgjPbol+
- Yn0w==
+ bh=N2VTrzg+qE8VL3OOG3OpyC5OygKIGSBEXRIlgut+Wko=;
+ b=JPqgcJPV454WhU04p0JY0alHbOxZ9NPfnUM8BJKaRgTz/w4HAX28YPW3AHnMWpurlF
+ GtV+iECKoTivCijtsrvKYTIHa6TvCWTp2XmdD+R0cRzc92iGehmAEolZRqXjhIo+wOQd
+ g8RJHRYh5rYCko5C9XNl9ysfXDf/SRPHaxiSu/Of4/4eGYEqbPpKid2nTTo28Q0xfq4i
+ oRpvBViTf8AJi1ITNT1yRZYuQ7pBRSR2Va6sQxCFooYo5C69dCNZERQLSGJQqikz/Pis
+ ZiVFlH5Lm2xG9gQv20d5OAZzScJ7/YvEbjAxlujfFd5fhsjMgt5Cs7+OvwIWbn2A3Ohb
+ gXkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW2doYy9Mo6+bRXlGSm8S4kd/zcvwkC03oBy85KX4IQ1lOfenXIOuyr64q1RX7zVNvklO6KoZ/Pv55G@nongnu.org
-X-Gm-Message-State: AOJu0Yx6EQtNOpLyp+bcGf7oPBxZbmrH3ib0wl/Egl2apE9Mq91XZ1CX
- KvwWl6MC3K4AyP8nvH7Qx1uIAZAwf8YRPBP+bWgHx2xxJe6W2ZpL9zoPPp/IBIrCXDe0WO1iJkd
- oF81jVQ/482zhXTwZzfP3lIozY1X03xzr7axEGGDzZAi1SyTlIysvggI6
-X-Gm-Gg: AY/fxX6WmmelpDu+xC4xEihvdI4iydtX1izYtfyRWlWQa4JzNJYOSmVfwOLAmw194Hw
- /Lwb/92omyBatq3c14eJjrsFC7z+MGW6YH4FIkqjkJoXSIad1is/Yjb9/p5KqjI2ulJqWAtGpeV
- 6BPTnnEL7TTJfL+xh4ZNaNGqE605QaIc3kKiifXfzFOk4mj0Acrp/6q6Y2T88HdqPCGBYbuNd8q
- mnFMA4+C1yjo3UceGmB+9aDFVlyE7S3FYPjhze0Y70JDPCJ6GO7lYtBDIniwAfQ2UXsHdOKbNBM
- 8LfLlDO3Gylq0a2zasbZwvThiqaEM0AnvzwrEjHjNjSE8OvBacfAVoUgiAGWZDUkoQZpLcWKc/d
- Gjs+2Mnq1sMH3C2bHV/r8E8ffqd2Z2ilxR4wROOYKJmU=
-X-Received: by 2002:a17:903:8cd:b0:29a:4a5:d688 with SMTP id
- d9443c01a7336-29eeebcedb9mr67342415ad.15.1765551889050; 
- Fri, 12 Dec 2025 07:04:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGZBw3cmTdXgss3nJnSVhW4vDvRaSjlwKI3kdKjvhl/302qsw+kjO/S5XkgEuKUu8iYibkyig==
-X-Received: by 2002:a17:903:8cd:b0:29a:4a5:d688 with SMTP id
- d9443c01a7336-29eeebcedb9mr67341775ad.15.1765551888392; 
- Fri, 12 Dec 2025 07:04:48 -0800 (PST)
+ AJvYcCV/wBITUUuTYGMrF4zq66dezI2Og9lTIKcaoIj9+Gvt6hki2uCRbCnusITzF+HvjzTe5fXd79+E/tiY@nongnu.org
+X-Gm-Message-State: AOJu0Yz93r/SpHpFfA+agJyEc0s0OxNc3X0TZYAIwSWOgh27t+ImXtEP
+ rR81WElzpEX/nmlRyJ0NoOIid1B37JmQVnoZM4aGobBdliG5akUbnyaXDdkcbgFGZeH8hcWnaXL
+ rJfsieQ7iD/1svJTilwVIk+Kk31YgQ9UEFKwzNryiL5C0F4lT0bcg33Ot
+X-Gm-Gg: AY/fxX6slLAegrNXLtUYn1UItnx7sXSEXHRASkwd90sP7nvKCLV5FsQ1Ud0narpL3MT
+ eUPGGwkc9ZP80j5akhmSWqv1yfi6ShOVx5AdQQKHRSHtm5Y0GpNaYuKTBPLy81xQXkdJUp3UmFf
+ 3U4Qgs22zjJGbwgoIrFOgISdHL+wnbt7HZNpnhsrSTPl0LeAgKCvC4I9/lju89ARGc5XpoX1DaA
+ d6ZKLv2yKDByII5dz2QtXww6ki9ZkvKlI8zJFXulkG1G67CaEz+3Hcji56+92yVzuKU1BXfDAnE
+ Rcsps5e5AsegEQY5lVmaEwdtVQwXc/dEEoZayAr+aE4Xj0FrD0g4up994vwkk7g+Hqc/ANFlk/K
+ g89EUiFmi8AV+hV+x6DVxe7xS5yNVvuDYIo64bXF9zqI=
+X-Received: by 2002:a17:903:120e:b0:295:24ab:fb06 with SMTP id
+ d9443c01a7336-29f23b7620amr27812205ad.22.1765551922749; 
+ Fri, 12 Dec 2025 07:05:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE/6tfMT8Kl8RrzWhiMsAQY3ed5KCyrUemoiU+97igw8z0Kogz5KW2sb29zObkJjgdkQ5BxpA==
+X-Received: by 2002:a17:903:120e:b0:295:24ab:fb06 with SMTP id
+ d9443c01a7336-29f23b7620amr27811645ad.22.1765551922141; 
+ Fri, 12 Dec 2025 07:05:22 -0800 (PST)
 Received: from rhel9-box.lan ([122.172.173.62])
  by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-29ee9d38ad1sm57046655ad.29.2025.12.12.07.04.46
+ d9443c01a7336-29ee9d38ad1sm57046655ad.29.2025.12.12.07.05.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Dec 2025 07:04:48 -0800 (PST)
+ Fri, 12 Dec 2025 07:05:21 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
 Cc: vkuznets@redhat.com, kraxel@redhat.com, qemu-devel@nongnu.org,
  Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org
-Subject: [PATCH v1 07/28] kvm/i386: implement architecture support for kvm
- file descriptor change
-Date: Fri, 12 Dec 2025 20:33:35 +0530
-Message-ID: <20251212150359.548787-8-anisinha@redhat.com>
+Subject: [PATCH v1 18/28] i386/sev: add support for confidential guest reset
+Date: Fri, 12 Dec 2025 20:33:46 +0530
+Message-ID: <20251212150359.548787-19-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20251212150359.548787-1-anisinha@redhat.com>
 References: <20251212150359.548787-1-anisinha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -124,171 +124,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the kvm file descriptor changes as a part of confidential guest reset,
-some architecture specific setups including SEV/SEV-SNP/TDX specific setups
-needs to be redone. These changes are implemented as a part of the
-kvm_arch_vmfd_change_ops() call which was introduced previously.
+When the KVM VM file descriptor changes as a part of the confidential guest
+reset mechanism, it necessary to create a new confidential guest context and
+re-encrypt the VM memeory. This happens for SEV-ES and SEV-SNP virtual machines
+as a part of SEV_LAUNCH_FINISH, SEV_SNP_LAUNCH_FINISH operations.
+
+A new resettable interface for SEV module has been added. A new reset callback
+for the reset 'exit' state has been implemented to perform the above operations
+when the VM file descriptor has changed during VM reset.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- target/i386/kvm/kvm.c | 132 +++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 119 insertions(+), 13 deletions(-)
+ target/i386/sev.c | 51 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index cdfcb70f40..e971f5f8c4 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3252,9 +3252,126 @@ static int kvm_vm_enable_energy_msrs(KVMState *s)
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 83b9bfb2ae..246a58c752 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -30,8 +30,10 @@
+ #include "system/kvm.h"
+ #include "kvm/kvm_i386.h"
+ #include "sev.h"
++#include "system/cpus.h"
+ #include "system/system.h"
+ #include "system/runstate.h"
++#include "system/reset.h"
+ #include "trace.h"
+ #include "migration/blocker.h"
+ #include "qom/object.h"
+@@ -84,6 +86,10 @@ typedef struct QEMU_PACKED PaddedSevHashTable {
+     uint8_t padding[ROUND_UP(sizeof(SevHashTable), 16) - sizeof(SevHashTable)];
+ } PaddedSevHashTable;
+ 
++static void sev_handle_reset(Object *obj, ResetType type);
++
++SevKernelLoaderContext sev_load_ctx = {};
++
+ QEMU_BUILD_BUG_ON(sizeof(PaddedSevHashTable) % 16 != 0);
+ 
+ #define SEV_INFO_BLOCK_GUID     "00f771de-1a7e-4fcb-890e-68c77e2fb44e"
+@@ -127,6 +133,7 @@ struct SevCommonState {
+     uint8_t build_id;
+     int sev_fd;
+     SevState state;
++    ResettableState reset_state;
+ 
+     QTAILQ_HEAD(, SevLaunchVmsa) launch_vmsa;
+ };
+@@ -2012,6 +2019,37 @@ static int sev_snp_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
      return 0;
  }
  
-+static int xen_init_wrapper(MachineState *ms, KVMState *s);
++/*
++ * handle sev vm reset
++ */
++static void sev_handle_reset(Object *obj, ResetType type)
++{
++    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
++    SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(sev_common);
 +
- int kvm_arch_vmfd_change_ops(MachineState *ms, KVMState *s)
- {
--    abort();
-+    Error *local_err = NULL;
-+    int ret;
-+
-+    /*
-+     * Initialize confidential context, if required
-+     *
-+     * If no memory encryption is requested (ms->cgs == NULL) this is
-+     * a no-op.
-+     *
-+     */
-+    if (ms->cgs) {
-+        ret = confidential_guest_kvm_init(ms->cgs, &local_err);
-+        if (ret < 0) {
-+            error_report_err(local_err);
-+            return ret;
-+        }
++    if (!sev_common) {
++        return;
 +    }
 +
-+    ret = kvm_vm_enable_exception_payload(s);
-+    if (ret < 0) {
-+        return ret;
++    if (!runstate_is_running()) {
++        return;
 +    }
 +
-+    ret = kvm_vm_enable_triple_fault_event(s);
-+    if (ret < 0) {
-+        return ret;
++    sev_add_kernel_loader_hashes(&sev_load_ctx, &error_fatal);
++    if (!sev_check_state(sev_common, SEV_STATE_RUNNING)) {
++        /* this calls sev_snp_launch_finish() etc */
++        klass->launch_finish(sev_common);
 +    }
 +
-+    if (s->xen_version) {
-+        ret = xen_init_wrapper(ms, s);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+    }
-+
-+    ret = kvm_vm_set_identity_map_addr(s, KVM_IDENTITY_BASE);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    ret = kvm_vm_set_tss_addr(s, KVM_IDENTITY_BASE + 0x1000);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+    ret = kvm_vm_set_nr_mmu_pages(s);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE) &&
-+        x86_machine_is_smm_enabled(X86_MACHINE(ms))) {
-+        memory_listener_register(&smram_listener.listener,
-+                                 &smram_address_space);
-+    }
-+
-+    if (enable_cpu_pm) {
-+        ret = kvm_vm_enable_disable_exits(s);
-+        if (ret < 0) {
-+            error_report("kvm: guest stopping CPU not supported: %s",
-+                         strerror(-ret));
-+            return ret;
-+        }
-+    }
-+
-+    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
-+        X86MachineState *x86ms = X86_MACHINE(ms);
-+
-+        if (x86ms->bus_lock_ratelimit > 0) {
-+            ret = kvm_vm_enable_bus_lock_exit(s);
-+            if (ret < 0) {
-+                return ret;
-+            }
-+        }
-+        kvm_set_max_apic_id(x86ms->apic_id_limit);
-+    }
-+
-+    if (kvm_check_extension(s, KVM_CAP_X86_NOTIFY_VMEXIT)) {
-+        ret = kvm_vm_enable_notify_vmexit(s);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+    }
-+
-+    if (kvm_vm_check_extension(s, KVM_CAP_X86_USER_SPACE_MSR)) {
-+        ret = kvm_vm_enable_userspace_msr(s);
-+        if (ret < 0) {
-+            return ret;
-+        }
-+
-+        if (s->msr_energy.enable == true) {
-+            ret = kvm_vm_enable_energy_msrs(s);
-+            if (ret < 0) {
-+                return ret;
-+            }
-+        }
-+    }
-+
-+    return 0;
++    return;
 +}
 +
-+static int xen_init_wrapper(MachineState *ms, KVMState *s)
++static ResettableState *sev_reset_state(Object *obj)
 +{
-+    int ret = 0;
-+#ifdef CONFIG_XEN_EMU
-+    if (!object_dynamic_cast(OBJECT(ms), TYPE_PC_MACHINE)) {
-+        error_report("kvm: Xen support only available in PC machine");
-+        return -ENOTSUP;
-+    }
-+    /* hyperv_enabled() doesn't work yet. */
-+    uint32_t msr = XEN_HYPERCALL_MSR;
-+    ret = kvm_xen_init(s, msr);
-+#else
-+    error_report("kvm: Xen support not enabled in qemu");
-+    return -ENOTSUP;
-+#endif
-+    return ret;
++    SevCommonState *sev_common = SEV_COMMON(obj);
++    return &sev_common->reset_state;
++}
++
+ int
+ sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
+ {
+@@ -2490,6 +2528,8 @@ bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp)
+         return false;
+     }
+ 
++    /* save the context here so that it can be re-used when vm is reset */
++    memcpy(&sev_load_ctx, ctx, sizeof(*ctx));
+     return klass->build_kernel_loader_hashes(sev_common, area, ctx, errp);
  }
  
- int kvm_arch_init(MachineState *ms, KVMState *s)
-@@ -3290,21 +3407,10 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     }
+@@ -2750,8 +2790,16 @@ static void
+ sev_common_class_init(ObjectClass *oc, const void *data)
+ {
+     ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
  
-     if (s->xen_version) {
--#ifdef CONFIG_XEN_EMU
--        if (!object_dynamic_cast(OBJECT(ms), TYPE_PC_MACHINE)) {
--            error_report("kvm: Xen support only available in PC machine");
--            return -ENOTSUP;
--        }
--        /* hyperv_enabled() doesn't work yet. */
--        uint32_t msr = XEN_HYPERCALL_MSR;
--        ret = kvm_xen_init(s, msr);
-+        ret = xen_init_wrapper(ms, s);
-         if (ret < 0) {
-             return ret;
-         }
--#else
--        error_report("kvm: Xen support not enabled in qemu");
--        return -ENOTSUP;
--#endif
-     }
+     klass->kvm_init = sev_common_kvm_init;
++    /*
++     * the exit phase makes sure sev handles reset after all legacy resets
++     * have taken place (in the hold phase) and IGVM has also properly
++     * set up the boot state.
++     */
++    rc->phases.exit = sev_handle_reset;
++    rc->get_state = sev_reset_state;
  
-     ret = kvm_get_supported_msrs(s);
+     object_class_property_add_str(oc, "sev-device",
+                                   sev_common_get_sev_device,
+@@ -2786,6 +2834,8 @@ sev_common_instance_init(Object *obj)
+     cgs->get_mem_map_entry = cgs_get_mem_map_entry;
+     cgs->set_guest_policy = cgs_set_guest_policy;
+ 
++    qemu_register_resettable(OBJECT(sev_common));
++
+     QTAILQ_INIT(&sev_common->launch_vmsa);
+ }
+ 
+@@ -2800,6 +2850,7 @@ static const TypeInfo sev_common_info = {
+     .abstract = true,
+     .interfaces = (const InterfaceInfo[]) {
+         { TYPE_USER_CREATABLE },
++        { TYPE_RESETTABLE_INTERFACE },
+         { }
+     }
+ };
 -- 
 2.42.0
 
