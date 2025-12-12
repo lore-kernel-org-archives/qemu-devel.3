@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E4A2D44166
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 10:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE4CD44166
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 10:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU0VZ-0005nm-Pv; Fri, 12 Dec 2025 05:36:23 -0500
+	id 1vU0jj-000864-25; Fri, 12 Dec 2025 05:50:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vU0VL-0005he-8l
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 05:36:13 -0500
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ id 1vU0jh-00085U-DY
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 05:50:57 -0500
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vU0VJ-0003lk-8n
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 05:36:07 -0500
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-6455a60c11fso40719d50.2
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 02:36:02 -0800 (PST)
+ id 1vU0jf-0007bf-RR
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 05:50:57 -0500
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-787d5555274so10662407b3.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 02:50:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765535762; x=1766140562; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=MVaEqJNoWHJldDXQYgvMqfSKVivAaMUvCAu099xaxUU=;
- b=px1x9aE2IptkSfPNbkzimZQC5WpX3DXJSVu/4OIuTPi8VRKk6895FSn9VtpM8hdsEs
- FsQYoDwlBpw8SrhfIIl+geJbLfRjAe8MM2Xv8pfNKJkHaFuuG2ySs9Qfyx3LkWgWsCu8
- ej70wysyXzJZu1FjeozdLEpsADZiBgV8Wr+pHuEbMPaaV07QEVw72FW235s8Xf+bFO9T
- LECH0pmKHtmsjJKynbl0MZzMlkbxF5XB5JzEy6kUvu3iBu1P/pUDV7b/bBwqjGyuCKJe
- VJqLfnar+IJ7UiClXpiYWA0rQ0zcyj6cHVTIS2lc6xE+THyodqge7wrYnV1B6OCfn4f1
- J4Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765535762; x=1766140562;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1765536654; x=1766141454; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MVaEqJNoWHJldDXQYgvMqfSKVivAaMUvCAu099xaxUU=;
- b=L76TQzvt4W5EJ3Eei4hzb+6K2NQlLdd0H0PdAWCHYaKC43O3GilsKrlPul9r+h28Oe
- xi+qJb/fHWuqOv59bcmHGjopaj2DFV4ca8xsgdEZ+75YSBm3p7plVflTG9wplY462Odd
- m6ypD2aGSalT0iXP3MnNIG1x9wmiBXc+icA3NZfDT9O9j0BC8MMvIKDtEKSbihiFTYB0
- vAMv+S7WFyfKbRwm12JDcKubbq735QPoa/jEV8Z78aIrK3NV9j8QqFHPnVSRZ13gmUg7
- vcVB1vkra0AJEpZzVLmNMCyLRDaIvxzKVM0MC603EtdQl/Pr+6wCVExibyBKwWcRgaqr
- 9Oyw==
-X-Gm-Message-State: AOJu0Yz/Y8dUjY3Whzm2r5VRWj3FzyiFKGGGIbj6oU89jMu0bOfGK6+z
- d3KSzk0RQgSnkryxV4GnobbfUc9O9HVqayfSeYkEx1ZmjonZX0CYeeYDAxSnk1MaNESgxs/Uley
- +1zuyssyycbl8NhkptdWJFaVTfsr/Z6ikUBi6rgmjLQ==
-X-Gm-Gg: AY/fxX5pdJduGPxX/y2AmExN5L3XgnMuEr+inHNNz13oJ2I+pSKkpvEPrqdFkCe0FBl
- ZB0U0H+ZcbCpqHQIp7fsaIx1RI+y2lsut6ZZr0d/4ECQQa11bLYmaYaevB08MS/YtW43HZaMUXB
- 4qNRXxnfPHNyStk15/MGvF8DYhkosVz/UPFa0+B9cC+chtoSngXIDP8GgF4BKwjYf7Hlz3K9ufx
- 0dOyoK2hWBGv7Kdpd+D9jJ5ZW3VjBDaNRPwoIGHBYjlnMK9AODbtuK4EjtrLQs4BTppeNiH
-X-Google-Smtp-Source: AGHT+IE9uPGbAP8yStN0BATMFYew9/wc1eAKy+mHpEcyndobabsrAZPzxZKiFFQLBPbkumGYbSFGDjmbklPgGZ+BGEc=
-X-Received: by 2002:a05:690e:118b:b0:644:4259:9b71 with SMTP id
- 956f58d0204a3-64555664c6dmr804284d50.65.1765535761405; Fri, 12 Dec 2025
- 02:36:01 -0800 (PST)
+ bh=qxws8ka21ttXeCW4oYk8itW09Z7jkXtxCGVc34Etq6w=;
+ b=U9Yddgjdu2vGD26LyOkWNEnBkU/fQQy5zCgBr7i2o8rE1zJkGbGQK8Q8o3wYt/Ly8M
+ uCuheytD/Gy+TjlZrdm41KIWY8MkV5yX8Vq0r3Uch9j+zYrzugZHJWOMQwVhb6EeNkoM
+ ZKdMOXc8OM194yJkfyuDMx6BGbs2UlWXfYvY20oVeseZW2SItU2lSbucTm9fcar2emJH
+ /VdvPg8m65o1Ey6MO+lZ6OAlNmgLuhjevPoIK/T6lIR/an2bKE6DXrHb+iuozc2+0d6/
+ GV4hgsO76QVjXWNA3PCiwxKOXoyLHlE4duZliprSrU6YCD0+pmTtN7Q56NgsamIiaGE0
+ vYdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765536654; x=1766141454;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qxws8ka21ttXeCW4oYk8itW09Z7jkXtxCGVc34Etq6w=;
+ b=AMZSNWahMkEg9UjOPNE6yVpv/FgfFpYPsa+j51YIz+cTp5brnzWKuAcm6w6ON/pRwT
+ 3AOki3jIKk/GrN7IQTGhvlGsQFzdvPs3WOsd2RvXxIsMuXTEd7WCHn09udYWYnAwA0jz
+ d1PWtkpp3MXCZQ45fBqtekperoPv7aiTkJn9aj72jaVvRejk2CY7DTHQ4NjZiaroG9c3
+ uoKiPpcWQciP+m2dNhuOsc9UQcUP0boHg5kn3PE32xKYXrga7yZn1/vxMVa3RfE10sis
+ 8wZ2wtUnPuFP7e8W7eYawy0uZsiGujYayW4Ld4qDJUKvND4Cb0kNX59lrHgP3x8cgFj6
+ Qg4A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWyw8/YImkUl0RyF79/5jXwl+plVcrRMLPNiTfjzXVP92fz54e963O3BddRa42cd9UNmAIiqm+PtWCS@nongnu.org
+X-Gm-Message-State: AOJu0YxZxAMErwi9irE1ntss+jIMLmSOjBiv2C0c9Xol/R9ijpXZGCv1
+ eeiPevMMB+oSdEmULaOyl1D/8JjaEW7aoPQyRlNDBZtUcgURBvv3wYVsgrB2oz7MnKKKET53ZoP
+ xEEh8X7ls/ztnJayvdUHSj9C7RIBol9ZkSnUi2hKbjw==
+X-Gm-Gg: AY/fxX7VYqQS3+Re4he2xTSAk88q0xXkzVmCez/oc50zyDRXnikMD4LXw0E0vBMcvS3
+ xgenUycyeCOySxxsLLdgmXAtDWvdloJziqa3EHbHVRREq3YDxFlpZxcdd5RnDGf158zlN+XYYTH
+ PsHfBTUlw6feqFqQSm8OCYWrCE46axOZIM0+nuOl+xpEXt+LT9R6q/gpHYqu60e2CtiAMAbRplP
+ tmEOZMHbDDtSgt3Mp/JdPqlccClk7bN623tH8RqK4jEJ5MEC65Bv0ElOf1yTmQ/kUaKpJMI
+X-Google-Smtp-Source: AGHT+IH1Hl17F3VP+vn+4468w5RKbCuKd2KO9s7WfFQ8WaQCT/Z2rr2Shp5IwTZIxhIBNYS7/LQGv05k8ZjInsrwkpk=
+X-Received: by 2002:a05:690c:4d41:b0:78c:2db5:c40f with SMTP id
+ 00721157ae682-78e66d4d37fmr12129477b3.7.1765536654477; Fri, 12 Dec 2025
+ 02:50:54 -0800 (PST)
 MIME-Version: 1.0
-References: <20251211234426.2403792-1-pierrick.bouvier@linaro.org>
- <20251211234426.2403792-3-pierrick.bouvier@linaro.org>
-In-Reply-To: <20251211234426.2403792-3-pierrick.bouvier@linaro.org>
+References: <20251211221715.2206662-1-pierrick.bouvier@linaro.org>
+ <87a479e9-21eb-4c4c-8e64-32744eea1f96@linaro.org>
+In-Reply-To: <87a479e9-21eb-4c4c-8e64-32744eea1f96@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 12 Dec 2025 10:35:50 +0000
-X-Gm-Features: AQt7F2p9FH6d43ZMGz76b3xLcfzcGgSD-yEbBD0OnN9vSDk-HxrqSMOE0YDa7BM
-Message-ID: <CAFEAcA-G0QchOw_zXNwUq3KAAKJZggnpeXkt7ePBAUa1SD1P2Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] target/arm/ptw: make granule_protection_check usable
- without a cpu
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Eric Auger <eric.auger@redhat.com>, qemu-arm@nongnu.org, 
- Tao Tang <tangtao1634@phytium.com.cn>
+Date: Fri, 12 Dec 2025 10:50:43 +0000
+X-Gm-Features: AQt7F2qVzsx6GaEHa2U0We30s5xQdtv60XW0t2uskNdTHLjDb1juxI0OM5LC514
+Message-ID: <CAFEAcA9cd+v5GrWK3KPjQ9ZURHbNzx+_SywcBaZdeAxYEk_NBA@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/smmu: add memory regions as property for an SMMU
+ instance
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org, 
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>, tangtao1634@phytium.com.cn, 
+ qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,190 +102,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 11 Dec 2025 at 23:44, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On Fri, 12 Dec 2025 at 06:16, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> By removing cpu details and use a config struct, we can use the
-> same granule_protection_check with other devices, like SMMU.
+> Hi Pierrick,
 >
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
-I'm not 100% sure about this approach, mainly because for SMMU
-so far we have taken the route of having its page table
-walk implementation be completely separate from the one in
-the MMU, even though it's pretty similar: the spec for
-CPU page table walk and the one for SMMU page table walk
-are technically in different documents and don't necessarily
-proceed 100% in sync. Still, the function is a pretty big
-one and our other option would probably end up being
-copy-and-paste, which isn't very attractive.
-
-So my comments below are minor things.
-
-> ---
->  target/arm/cpu.h | 14 ++++++++++++++
->  target/arm/ptw.c | 41 ++++++++++++++++++++++++-----------------
->  2 files changed, 38 insertions(+), 17 deletions(-)
+> On 11/12/25 23:17, Pierrick Bouvier wrote:
+> > This will be used to access non-secure and secure memory. Secure suppor=
+t
+> > and Granule Protection Check (for RME) for SMMU need to access secure
+> > memory.
 >
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index efbef0341da..38cc5823a93 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -1216,6 +1216,20 @@ void arm_v7m_cpu_do_interrupt(CPUState *cpu);
+> Sorry yesterday it was late for me and I forgot to post the similar
+> patch :/
 >
->  hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
->                                           MemTxAttrs *attrs);
-> +
-> +typedef struct ARMGranuleProtectionConfig {
-> +    uint64_t gpccr;
-> +    uint64_t gptbr;
-> +    uint8_t parange;
-> +    bool support_sel2;
-> +    AddressSpace *as_secure;
-> +} ARMGranuleProtectionConfig;
-> +
-> +bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-> +                                  uint64_t paddress,
-> +                                  ARMSecuritySpace pspace,
-> +                                  ARMSecuritySpace ss,
-> +                                  ARMMMUFaultInfo *fi);
-
-Could we have a doc comment for these prototypes, please?
-
->  #endif /* !CONFIG_USER_ONLY */
+> >
+> > As well, it allows to remove usage of global address_space_memory,
+> > allowing different SMMU instances to have a specific view of memory.
+> >
+> > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > ---
+> >   include/hw/arm/smmu-common.h |  4 ++++
+> >   hw/arm/sbsa-ref.c            | 16 ++++++++++++----
+> >   hw/arm/smmu-common.c         | 24 ++++++++++++++++++++++++
+> >   hw/arm/virt.c                | 16 +++++++++++-----
+> >   4 files changed, 51 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.=
+h
+> > index a6bdb67a983..0f08ae080c9 100644
+> > --- a/include/hw/arm/smmu-common.h
+> > +++ b/include/hw/arm/smmu-common.h
+> > @@ -227,6 +227,10 @@ struct SMMUState {
+> >       uint8_t bus_num;
+> >       PCIBus *primary_bus;
+> >       bool smmu_per_bus; /* SMMU is specific to the primary_bus */
+> > +    MemoryRegion *memory;
+> > +    AddressSpace as_memory;
+> > +    MemoryRegion *secure_memory;
+> > +    AddressSpace as_secure_memory;
 >
->  int arm_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
-> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> index 2e6b149b2d1..2b620b03014 100644
-> --- a/target/arm/ptw.c
-> +++ b/target/arm/ptw.c
-> @@ -330,24 +330,23 @@ static bool regime_translation_disabled(CPUARMState *env, ARMMMUIdx mmu_idx,
->      return (regime_sctlr(env, mmu_idx) & SCTLR_M) == 0;
->  }
->
-> -static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
-> -                                     ARMSecuritySpace pspace,
-> -                                     ARMSecuritySpace ss,
-> -                                     ARMMMUFaultInfo *fi)
-> +bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-> +                                  uint64_t paddress,
-> +                                  ARMSecuritySpace pspace,
-> +                                  ARMSecuritySpace ss,
-> +                                  ARMMMUFaultInfo *fi)
->  {
+> Has SMMU concept of "secure memory"?
 
-A comment here noting that we share this function with the SMMU
-would probably help us in avoiding inadvertently introducing
-CPU-specifics in future.
+Yes -- IHI0070G.b section 3.10.2: when SMMU_S_IDR1.SECURE_IMPL=3D1
+"the SMMU can generate transactions to the memory system, to Secure
+PA space (NS=3D0) and Non-secure PA space (NS=3D1)".
 
->      MemTxAttrs attrs = {
->          .secure = true,
->          .space = ARMSS_Root,
->      };
-> -    ARMCPU *cpu = env_archcpu(env);
-> -    uint64_t gpccr = env->cp15.gpccr_el3;
-> +    const uint64_t gpccr = config.gpccr;
->      unsigned pps, pgs, l0gptsz, level = 0;
->      uint64_t tableaddr, pps_mask, align, entry, index;
-> -    AddressSpace *as;
->      MemTxResult result;
->      int gpi;
->
-> -    if (!FIELD_EX64(gpccr, GPCCR, GPC)) {
-> +    if (!FIELD_EX64(config.gpccr, GPCCR, GPC)) {
+When the SMMU has Realm support then further (3.10.3)
+the output PA space can be Realm, and also GPT checks are
+always done to the Root address space.
 
-We just set up the 'gpccr' local so we don't need to change this line,
-I think ?
+So an SMMU with Secure and Realm support can emit transactions
+to any of the 4 address spaces, the same as a CPU with those
+features.
 
-Also, the SMMU's SMMU_ROOT_GPT_BASE_CFG does not have the GPC field
-(it keeps its enable bit elsewhere).
+Separately from that, at the moment the way we model Realm
+and Root is by using the same QEMU MemoryRegion trees we
+have for NS and S and just using MemTxAttrs::space to distinguish,
+because we don't have any need for devices that appear only in
+Realm and not NS, or only in Root and not S. So for CPUs we
+collapse the 4 architectural address spaces down into two QEMU
+ones.
 
->          return true;
->      }
->
-> @@ -362,7 +361,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
->       * physical address size is invalid.
->       */
->      pps = FIELD_EX64(gpccr, GPCCR, PPS);
-> -    if (pps > FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE)) {
-> +    if (pps > config.parange) {
->          goto fault_walk;
->      }
->      pps = pamax_map[pps];
-> @@ -432,7 +431,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
->      }
->
->      /* GPC Priority 4: the base address of GPTBR_EL3 exceeds PPS. */
-> -    tableaddr = env->cp15.gptbr_el3 << 12;
-> +    tableaddr = config.gptbr << 12;
->      if (tableaddr & ~pps_mask) {
->          goto fault_size;
->      }
-> @@ -446,12 +445,10 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
->      align = MAKE_64BIT_MASK(0, align);
->      tableaddr &= ~align;
->
-> -    as = arm_addressspace(env_cpu(env), attrs);
-> -
->      /* Level 0 lookup. */
->      index = extract64(paddress, l0gptsz, pps - l0gptsz);
->      tableaddr += index * 8;
-> -    entry = address_space_ldq_le(as, tableaddr, attrs, &result);
-> +    entry = address_space_ldq_le(config.as_secure, tableaddr, attrs, &result);
+For the SMMU we can presumably follow the CPU there
+(with an equivalent "give me the AddressSpace I should
+use for these MemTxAttrs" function as arm_addressspace()).
 
-as_secure is an odd name for the AS here, because architecturally
-GPT walks are done to the Root physical address space. (This is
-why in the current code we set attrs.space to ARMSS_Root and then
-get the QEMU AddressSpace corresponding to those attrs. It happens
-that at the moment that's the same one we use as Secure, but in
-theory we could have 4 completely separate ones for NS, S, Root
-and Realm.)
+> My understanding is just a
+> different memory to access GPT, so I'd name it "gpt_memory".
 
->      if (result != MEMTX_OK) {
->          goto fault_eabt;
->      }
-> @@ -479,7 +476,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
->      level = 1;
->      index = extract64(paddress, pgs + 4, l0gptsz - pgs - 4);
->      tableaddr += index * 8;
-> -    entry = address_space_ldq_le(as, tableaddr, attrs, &result);
-> +    entry = address_space_ldq_le(config.as_secure, tableaddr, attrs, &result);
->      if (result != MEMTX_OK) {
->          goto fault_eabt;
->      }
-> @@ -513,7 +510,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
->      case 0b1111: /* all access */
->          return true;
->      case 0b1000: /* secure */
-> -        if (!cpu_isar_feature(aa64_sel2, cpu)) {
-> +        if (!config.support_sel2) {
->              goto fault_walk;
->          }
->          /* fall through */
-> @@ -3786,8 +3783,18 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
->                              memop, result, fi)) {
->          return true;
->      }
-> -    if (!granule_protection_check(env, result->f.phys_addr,
-> -                                  result->f.attrs.space, ptw->in_space, fi)) {
-> +
-> +    ARMCPU *cpu = env_archcpu(env);
-> +    struct ARMGranuleProtectionConfig gpc = {
-> +        .gpccr = env->cp15.gpccr_el3,
-> +        .gptbr = env->cp15.gptbr_el3,
-> +        .parange = FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE),
-> +        .support_sel2 = cpu_isar_feature(aa64_sel2, cpu),
-> +        .as_secure = cpu_get_address_space(env_cpu(env), ARMASIdx_S)
-
-Directly coding ARMASIDx_S here is a bit awkward, as noted above.
-
-> +    };
-> +    if (!arm_granule_protection_check(gpc, result->f.phys_addr,
-> +                                      result->f.attrs.space, ptw->in_space,
-> +                                      fi)) {
->          fi->type = ARMFault_GPCFOnOutput;
->          return true;
->      }
+I would prefer that we use the architecturally standard
+terminology here.
 
 thanks
 -- PMM
