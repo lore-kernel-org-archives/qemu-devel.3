@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E4C9D4336B
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 06:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF804D4336B
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 06:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTwsD-0000E6-5K; Fri, 12 Dec 2025 01:43:29 -0500
+	id 1vTwuY-0000yT-Ms; Fri, 12 Dec 2025 01:45:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTws8-0000Ct-0Z
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 01:43:24 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTwuQ-0000y1-Ft
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 01:45:46 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTws6-00038R-G6
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 01:43:23 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-42fb2314eb0so314071f8f.2
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 22:43:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTwuO-0003r7-Lw
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 01:45:46 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-47118259fd8so8954905e9.3
+ for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 22:45:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765521800; x=1766126600; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765521943; x=1766126743; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=L5CStyI7BgsXJJWY8RP4qnl7WkZVTJBFDiiPPtxa1AI=;
- b=vIOloUjoNmb3jjUFhde2v+vBwNvYLbT18Uy5oxbaLAY3ptZm7oQvIreN2G5IJ1Ap9K
- aJPsXiYqI0eqTN/YzzTepLW/XDtPBkWgSIFDGo0kDyxJD3T/bA32JN6ss4L1JLeU7Mg3
- 6j5sjJmn2s8PT8/WW9pkfjcRK3Y6QXAKU0w+BXLFRVKiNcnN+vSdoR3HClydUoFGSZhf
- irXRyOb5db7LxWAaiOqcIYvxfdRzTwvY5oomhiPrxAL8m1WdqcVIXzXnj70Wq0at/iQ2
- 9Hj3c9p8L1QM13LVEsAKpeSo2xiJl0KcXe4N13dnaxcVYkQAF/yAKBD5Uv3pZIZ3Lsrn
- 5vhQ==
+ bh=iQkenrVoYXOppPDscf9+i06O0cer2RWduFbVfCZVRvs=;
+ b=T9+oKVWl3eVF+mBGn2OFM/SjsLX5lNeF5USAS/O9P2xQQcSv749sx+x34+Af/h4ctN
+ 3SrNfAFBREE5h8JOlpND+6bikz+c3nRstP70rxxEF2cyMueTeAUPUKNfnVda7/j6iG6R
+ BnafPO1u907MO47TFjsGCcZ38V5gKgqp9qLA5TqyCPt3TiUwJU0yS8HD+LVCnUMNhP5P
+ 6HZi/Gvtbl5lnyCJx6oaWLM0/Q4xsN9VvdqWdvX7El3r0eEKZkV9sw3maDgv92caWlmu
+ /1SVDpftpfwga7mRHpWSmnoUnMPNHEKBtOiR+xVHVN7/uqJDE6YhPSPIeulYE69+ONG5
+ yjcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765521800; x=1766126600;
+ d=1e100.net; s=20230601; t=1765521943; x=1766126743;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=L5CStyI7BgsXJJWY8RP4qnl7WkZVTJBFDiiPPtxa1AI=;
- b=afZWIPcZQ6qhVqfkdbf1E0oY9HTBAdeakwO0jTGfJCaiGvZNq9phY0bdXeCof9fcw8
- REBBA7KtV0Twy3bmCpGxBnI27m4PpgqJaO7F5+SdDg6bvGCW8rpaIS7mQuDfg8A4i/VN
- 6WlmUsg3Qc2u0gJw3Ug5Tj+UixHbMq17jRIAL8WeWKZawdeEWNcUtUqtV85OMnMjro9a
- MhaZhEGpEPDjfh9kULKeCaRB9MYQ7tIiOXo+Oa2hcigGgYxgF0qlfpokTGk0vs+MRMVn
- m0ja4rsv0Mhk6xiFUAekwMmPMNZldRvjEArT7JCh7tbzEtjBmHtI+5Aa1ltFeYwdNIhv
- 9QQg==
+ bh=iQkenrVoYXOppPDscf9+i06O0cer2RWduFbVfCZVRvs=;
+ b=tSJFsmXyDg5VZIpBfBQTSlS5nafNCM7Qx4w3XYr0n/Htsbu8za8KjZpj8ZfaN42/cn
+ GlPxRyE/Rhu0QvU2gOnCNfRRIM4PfKsNd26uTb3cBK/K144/np1Hd3lGyeGCkXkvI8jt
+ 0uGEiGPpUMN1LIKew0azbwNkD1+fAtuND80WphWv7hq6P0QkIyeUQFwJdj3WyIets2Cp
+ bAaRQZEVPXHT3CBjs1o/2sY4XWNM4A77MslnPYLlkCNU6oVhMexoEFsqwxtM+5/kftqO
+ U2c1wJT3o9A7bs4oijMK88Xt6fRjdmBQKR5Jqx+HQFBpCA2BYUV2eURhlXk6Y6H/K3OG
+ p7Gw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWvRxcp3RWV9exzy4R/yAM8EhesrLQsMN7CeCfRxJX0g+OmMWMBEJE82RDVXPNUajmtB4TDlGoG28vT@nongnu.org
-X-Gm-Message-State: AOJu0YzCMV/Av497Dh5KWkcFSlHhnoHoh13vIGGDy1cDAOvgUBeoiDZH
- ihQnISVZ+6y3sCVTu9L6SI0pQ2EmCDgKH2c55xASVaiXNZ1UNY9yDKWgW/N6ErGSBX9ShIQ+XgQ
- 9wZuGs+0=
-X-Gm-Gg: AY/fxX7n+BMqimwztEDHigbJxDWD0JwdKiZi9iDYhZaSNjfMUyO8Cdwq2164NwJG2rL
- bvzNDPU9jNWAAKywfNgxRnDGS2gKGg0mFZxECAzD+PUBqy72lV0Tgaom31nS8wDHbmAunR7aqjv
- B0p1ohKf/ms2PV0FpX+Je7zacFdBGdhHi6doRkliOSDPb9GR9UpDJAlaRKWCoYquriX1a7TYNxh
- He3YSeltlzGpozbW1sdWjSpNs5kJ3Kh7xj3pZEPhBlKM62aKE8WXvOKOA6mfvw1hj3c2Mv8Ub1f
- M/AZQgjgMCsGAy40uuVVqCr9fm10TtxrYN+GBVRczM37Ij1N948EMTrBP1wae70dftoTzaW+NpM
- 9Zh0BaQ6LFBuHd9rf7BjUqT4hTJtcNYc9DbILWbaZYfcO1q+YKXwj/zYA7i7uHiovkm4BpHWdZM
- vysVHH2KSbQURgHcjWoxsjmo8cMKGVPVZP6i91jc7/yjp/t2Qowl2odQ==
-X-Google-Smtp-Source: AGHT+IG3jMmM94bMrm+l1XaTTFas1YBXBa/VuO5y0occM+mnq3frbdRgFQwISOUE3JurH/Xl8gJYkQ==
-X-Received: by 2002:a05:6000:4312:b0:42b:3b8a:30a3 with SMTP id
- ffacd0b85a97d-42fb44c491dmr899508f8f.4.1765521800382; 
- Thu, 11 Dec 2025 22:43:20 -0800 (PST)
+ AJvYcCVTOEEpaJrCffdmB0nQiLCrGETLZ7pPvHZXUMiFnc7DdrNwRIWsexZVtp+5ufSSLzjbIXhcqm13x80r@nongnu.org
+X-Gm-Message-State: AOJu0Yx8gifAeNfW/7fBi4hDuLFkZQI2KKHRpEd5d8HidhLbQyBUAUMj
+ uNfG6OnYs4j3cF7qiBsYrlrAp0eHE4CgKmZxrw8KplKTakiyJiNJXpTp237mizXbX/8=
+X-Gm-Gg: AY/fxX5wU9lh0RIWyEC/tPfVPhgLvfl8WUXpGESEOtp7wLhzQaDCLLm8BZsZObvKcLV
+ CcbdT+AiamXy53OIHczuimkIg57MlIQ3PyHa81t+fg4yO+anT6LdBHhYC71DebcXRRmwsPyidpM
+ RLYJ2GqmbwgdpRD34oKVXOzZOxYqZ53lFEbCEEMTLi5mLeG1tDSLW7k2/XxjrcKcEJ9AGBRgSRu
+ 7HqFeOTTUWSUIzFioL+cYjUTiu/iosBQ142TnfHjLa6CRkZ5Vr9mwut+PJam5H83SjtA9fvAYoy
+ /t+3OJekusDv9eqxQXEyh1klKaUxVm4mLed9A4GgmR+b5wKjdJCqz4/pbqesrN96nT6TSkYR7+J
+ cxXoAJe5Gklt8D5X+MQ+J7nvM//ZPXxzS7zFedNC1nlLABuk2B4S86bBvr59pa6tytYG1QgE7PE
+ MVZHb7OkZbouS0/KHHT7QMJVQ3dYgp93jFDTiF7c1l3wLP/e0VtCTQa30jikT3Rjzc
+X-Google-Smtp-Source: AGHT+IEKB7wvEa0uvprOW2ZpTAY6o8zCwwEkSL1t4tbKHZ4peVH3SMaTuNzDPh47UXWBWywSUYk6CA==
+X-Received: by 2002:a05:600c:4f86:b0:45d:d97c:236c with SMTP id
+ 5b1f17b1804b1-47a8f9071c6mr8319095e9.21.1765521942667; 
+ Thu, 11 Dec 2025 22:45:42 -0800 (PST)
 Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42fa8a70440sm10326970f8f.16.2025.12.11.22.43.19
+ 5b1f17b1804b1-47a8f38a455sm15975665e9.1.2025.12.11.22.45.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 22:43:19 -0800 (PST)
-Message-ID: <7fe36252-cd83-4eff-90dd-4665471585d2@linaro.org>
-Date: Fri, 12 Dec 2025 07:43:18 +0100
+ Thu, 11 Dec 2025 22:45:42 -0800 (PST)
+Message-ID: <7f479d0e-1370-4574-9966-e373405ddb1f@linaro.org>
+Date: Fri, 12 Dec 2025 07:45:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 3/9] MAINTAINERS: regularise the status fields
+Subject: Re: [RFC PATCH 2/9] MAINTAINERS: fix libvirt entry
 Content-Language: en-US
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
- John Snow <jsnow@redhat.com>
+ John Snow <jsnow@redhat.com>,
+ "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20251211180132.3186564-1-alex.bennee@linaro.org>
- <20251211180132.3186564-4-alex.bennee@linaro.org>
+ <20251211180132.3186564-3-alex.bennee@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251211180132.3186564-4-alex.bennee@linaro.org>
+In-Reply-To: <20251211180132.3186564-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,14 +109,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/12/25 19:01, Alex Bennée wrote:
-> Orphaned isn't a state, Orphan is. Likewise all the other "Odd Fixes"
-> are capitalised so fix the ones that are not.
+> We have a particular tag for lists so lets use it.
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   MAINTAINERS | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>   MAINTAINERS | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 05b644cfc9b..a3fdc4ca911 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4466,7 +4466,7 @@ F: gitdm.config
+>   F: contrib/gitdm/*
+>   
+>   Incompatible changes
+> -R: devel@lists.libvirt.org
+> +L: devel@lists.libvirt.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Maybe keep both? See:
+
+commit b02c9bc35a03c099600693d6909f4566078880b8
+Author: Markus Armbruster <armbru@redhat.com>
+Date:   Mon Jul 16 09:32:26 2018 +0200
+
+     MAINTAINERS: New section "Incompatible changes", copy libvir-list
+
+     Libvirt developers would like to be copied on patches to qemu-doc
+     appendix "Deprecated features".  Do them the favor.
+
+     Signed-off-by: Markus Armbruster <armbru@redhat.com>
+     Message-Id: <20180716073226.21127-3-armbru@redhat.com>
+     Reviewed-by: Thomas Huth <thuth@redhat.com>
+     Reviewed-by: Cornelia Huck <cohuck@redhat.com>
+     Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 20eef3cb61c..666e9368126 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2194,6 +2194,10 @@ M: Daniel P. Berrange <berrange@redhat.com>
+  S: Odd Fixes
+  F: docs/devel/build-system.txt
+
++Incompatible changes
++R: libvir-list@redhat.com
++F: qemu-deprecated.texi
 
 
