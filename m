@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB47D49231
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 14:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35BC5D49230
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 14:18:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU3xg-0003iK-Q2; Fri, 12 Dec 2025 09:17:37 -0500
+	id 1vU3xv-0003jl-NI; Fri, 12 Dec 2025 09:17:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1vU3xf-0003ht-Aj
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:17:35 -0500
+ id 1vU3xt-0003jJ-PD
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:17:49 -0500
 Received: from smtp232.sjtu.edu.cn ([202.120.2.232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1vU3xd-0007t9-26
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:17:35 -0500
+ id 1vU3xr-0007vP-NX
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:17:49 -0500
 Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp232.sjtu.edu.cn (Postfix) with ESMTPS id F2782129734BB;
- Fri, 12 Dec 2025 22:16:49 +0800 (CST)
+ by smtp232.sjtu.edu.cn (Postfix) with ESMTPS id 1A04D1281CEAC;
+ Fri, 12 Dec 2025 22:16:50 +0800 (CST)
 Received: from localhost.localdomain (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id C912E37C934;
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id E656337C958;
  Fri, 12 Dec 2025 22:16:49 +0800 (CST)
 From: Ziyang Zhang <functioner@sjtu.edu.cn>
 To: qemu-devel <qemu-devel@nongnu.org>
@@ -36,9 +36,10 @@ Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
  Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
  Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
  Ziyang Zhang <functioner@sjtu.edu.cn>
-Subject: [PATCH v2 1/2] linux-user: add a plugin API to filter syscalls
-Date: Fri, 12 Dec 2025 22:15:40 +0800
-Message-Id: <20251212141541.1792111-2-functioner@sjtu.edu.cn>
+Subject: [PATCH v2 2/2] tcg tests: add a test to verify the syscall filter
+ plugin API
+Date: Fri, 12 Dec 2025 22:15:41 +0800
+Message-Id: <20251212141541.1792111-3-functioner@sjtu.edu.cn>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251212141541.1792111-1-functioner@sjtu.edu.cn>
 References: <20251212141541.1792111-1-functioner@sjtu.edu.cn>
@@ -67,243 +68,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds a syscall filter API to the TCG plugin API set.
-Plugins can register a filter callback to QEMU to decide whether
-to intercept a syscall, process it and bypass the QEMU syscall
-handler.
+Register a syscall filter callback in tests/tcg/plugins/sycall.c,
+returns a specific value for a magic system call number, and check
+it in tests/tcg/multiarch/test-plugin-syscall-filter.c.
 
 Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
 Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
 ---
- include/qemu/plugin-event.h  |  1 +
- include/qemu/plugin.h        | 31 ++++++++++++++++++++++---------
- include/qemu/qemu-plugin.h   | 24 ++++++++++++++++++++++++
- include/user/syscall-trace.h | 17 +++++++++++++++++
- linux-user/syscall.c         |  7 +++++--
- plugins/api.c                |  7 +++++++
- plugins/core.c               | 36 ++++++++++++++++++++++++++++++++++++
- 7 files changed, 112 insertions(+), 11 deletions(-)
+ tests/tcg/multiarch/Makefile.target           |  4 +++-
+ .../multiarch/test-plugin-syscall-filter.c    | 20 +++++++++++++++++++
+ tests/tcg/plugins/syscall.c                   | 15 ++++++++++++++
+ 3 files changed, 38 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/multiarch/test-plugin-syscall-filter.c
 
-diff --git a/include/qemu/plugin-event.h b/include/qemu/plugin-event.h
-index 1100dae212..7f3c5927f1 100644
---- a/include/qemu/plugin-event.h
-+++ b/include/qemu/plugin-event.h
-@@ -23,6 +23,7 @@ enum qemu_plugin_event {
-     QEMU_PLUGIN_EV_VCPU_INTERRUPT,
-     QEMU_PLUGIN_EV_VCPU_EXCEPTION,
-     QEMU_PLUGIN_EV_VCPU_HOSTCALL,
-+    QEMU_PLUGIN_EV_VCPU_SYSCALL_FILTER,
-     QEMU_PLUGIN_EV_MAX, /* total number of plugin events we support */
- };
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index f5b4d2b813..4005e3a8a9 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -202,8 +202,10 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
+ 	CHECK_PLUGIN_OUTPUT_COMMAND= \
+ 	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
+ 	$(QEMU) $<
++run-plugin-test-plugin-syscall-filter-with-libsyscall.so:
  
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index cea0a68858..4eb8612cb9 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -55,15 +55,16 @@ void qemu_plugin_opt_parse(const char *optstr, QemuPluginList *head);
- int qemu_plugin_load_list(QemuPluginList *head, Error **errp);
+-EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so
++EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so \
++			   			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so
+ endif
  
- union qemu_plugin_cb_sig {
--    qemu_plugin_simple_cb_t          simple;
--    qemu_plugin_udata_cb_t           udata;
--    qemu_plugin_vcpu_simple_cb_t     vcpu_simple;
--    qemu_plugin_vcpu_udata_cb_t      vcpu_udata;
--    qemu_plugin_vcpu_discon_cb_t     vcpu_discon;
--    qemu_plugin_vcpu_tb_trans_cb_t   vcpu_tb_trans;
--    qemu_plugin_vcpu_mem_cb_t        vcpu_mem;
--    qemu_plugin_vcpu_syscall_cb_t    vcpu_syscall;
--    qemu_plugin_vcpu_syscall_ret_cb_t vcpu_syscall_ret;
-+    qemu_plugin_simple_cb_t              simple;
-+    qemu_plugin_udata_cb_t               udata;
-+    qemu_plugin_vcpu_simple_cb_t         vcpu_simple;
-+    qemu_plugin_vcpu_udata_cb_t          vcpu_udata;
-+    qemu_plugin_vcpu_discon_cb_t         vcpu_discon;
-+    qemu_plugin_vcpu_tb_trans_cb_t       vcpu_tb_trans;
-+    qemu_plugin_vcpu_mem_cb_t            vcpu_mem;
-+    qemu_plugin_vcpu_syscall_cb_t        vcpu_syscall;
-+    qemu_plugin_vcpu_syscall_ret_cb_t    vcpu_syscall_ret;
-+    qemu_plugin_vcpu_syscall_filter_cb_t vcpu_syscall_filter;
-     void *generic;
- };
- 
-@@ -169,6 +170,11 @@ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1,
-                          uint64_t a2, uint64_t a3, uint64_t a4, uint64_t a5,
-                          uint64_t a6, uint64_t a7, uint64_t a8);
- void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret);
-+bool
-+qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
-+                                uint64_t a2, uint64_t a3, uint64_t a4,
-+                                uint64_t a5, uint64_t a6, uint64_t a7,
-+                                uint64_t a8, uint64_t *ret);
- 
- void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                              uint64_t value_low,
-@@ -280,6 +286,13 @@ static inline
- void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret)
- { }
- 
-+static inline bool
-+qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
-+                                uint64_t a2, uint64_t a3, uint64_t a4,
-+                                uint64_t a5, uint64_t a6, uint64_t a7,
-+                                uint64_t a8, uint64_t *ret)
-+{ }
-+
- static inline void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                                            uint64_t value_low,
-                                            uint64_t value_high,
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 60de4fdd3f..b70049c80c 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -798,6 +798,25 @@ typedef void
-                                  uint64_t a3, uint64_t a4, uint64_t a5,
-                                  uint64_t a6, uint64_t a7, uint64_t a8);
- 
+ # Update TESTS
+diff --git a/tests/tcg/multiarch/test-plugin-syscall-filter.c b/tests/tcg/multiarch/test-plugin-syscall-filter.c
+new file mode 100644
+index 0000000000..cc694e0a71
+--- /dev/null
++++ b/tests/tcg/multiarch/test-plugin-syscall-filter.c
+@@ -0,0 +1,20 @@
 +/*
-+ * typedef qemu_plugin_vcpu_syscall_filter_cb_t - vCPU syscall filter callback
-+ * function type
-+ * @vcpu_index: the executing vCPU
-+ * @num: the syscall number
-+ * @a1-a8: the syscall arguments
-+ * @ret: the address of the syscall return value, set this if filtered
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * Returns: true if you want to filter this syscall (i.e. stop it being
-+ * handled further), otherwise return false.
++ * This test attempts to execute a magic syscall. The syscall test plugin
++ * should intercept this and returns an expected value.
 + */
-+typedef bool
-+(*qemu_plugin_vcpu_syscall_filter_cb_t)(qemu_plugin_id_t id,
-+                                        unsigned int vcpu_index,
-+                                        int64_t num, uint64_t a1, uint64_t a2,
-+                                        uint64_t a3, uint64_t a4, uint64_t a5,
-+                                        uint64_t a6, uint64_t a7, uint64_t a8,
-+                                        uint64_t *ret);
 +
- QEMU_PLUGIN_API
- void qemu_plugin_register_vcpu_syscall_cb(qemu_plugin_id_t id,
-                                           qemu_plugin_vcpu_syscall_cb_t cb);
-@@ -811,6 +830,11 @@ void
- qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,
-                                          qemu_plugin_vcpu_syscall_ret_cb_t cb);
- 
-+QEMU_PLUGIN_API
-+void
-+qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin_id_t id,
-+                                            qemu_plugin_vcpu_syscall_filter_cb_t cb);
++#include <stdint.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <unistd.h>
 +
- 
- /**
-  * qemu_plugin_insn_disas() - return disassembly string for instruction
-diff --git a/include/user/syscall-trace.h b/include/user/syscall-trace.h
-index 9bd7ca19c8..61cdbd7583 100644
---- a/include/user/syscall-trace.h
-+++ b/include/user/syscall-trace.h
-@@ -39,5 +39,22 @@ static inline void record_syscall_return(CPUState *cpu, int num, abi_long ret)
-     gdb_syscall_return(cpu, num);
- }
- 
-+static bool send_through_syscall_filters(CPUState *cpu, int num,
-+                                         abi_long arg1, abi_long arg2,
-+                                         abi_long arg3, abi_long arg4,
-+                                         abi_long arg5, abi_long arg6,
-+                                         abi_long arg7, abi_long arg8,
-+                                         abi_long *ret)
-+{
-+    uint64_t sysret64 = 0;
-+    bool filtered = qemu_plugin_vcpu_syscall_filter(cpu, num, arg1, arg2,
-+                                                    arg3, arg4, arg5, arg6,
-+                                                    arg7, arg8, &sysret64);
-+    if (filtered) {
-+        *ret = sysret64;
++int main(int argc, char *argv[]) {
++    long ret = syscall(0x66CCFF);
++    if (ret != 0xFFCC66) {
++        perror("ERROR: syscall returned unexpected value!!!");
++        return EXIT_FAILURE;
 +    }
-+    return filtered;
++    return EXIT_SUCCESS;
 +}
-+
- 
- #endif /* SYSCALL_TRACE_H */
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 2060e561a2..9ae3c5bfbd 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -14201,8 +14201,11 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
-         print_syscall(cpu_env, num, arg1, arg2, arg3, arg4, arg5, arg6);
-     }
- 
--    ret = do_syscall1(cpu_env, num, arg1, arg2, arg3, arg4,
--                      arg5, arg6, arg7, arg8);
-+    if (!send_through_syscall_filters(cpu, num, arg1, arg2, arg3, arg4, arg5,
-+                                      arg6, arg7, arg8, &ret)) {
-+        ret = do_syscall1(cpu_env, num, arg1, arg2, arg3, arg4,
-+                          arg5, arg6, arg7, arg8);
-+    }
- 
-     if (unlikely(qemu_loglevel_mask(LOG_STRACE))) {
-         print_syscall_ret(cpu_env, num, ret, arg1, arg2,
-diff --git a/plugins/api.c b/plugins/api.c
-index eac04cc1f6..478d0c8889 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -208,6 +208,13 @@ qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,
-     plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_SYSCALL_RET, cb);
- }
- 
-+void
-+qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin_id_t id,
-+                                            qemu_plugin_vcpu_syscall_filter_cb_t cb)
-+{
-+    plugin_register_cb(id, QEMU_PLUGIN_EV_VCPU_SYSCALL_FILTER, cb);
-+}
-+
- /*
-  * Plugin Queries
-  *
-diff --git a/plugins/core.c b/plugins/core.c
-index b4b783008f..de82d0f5d6 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -564,6 +564,42 @@ void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret)
+\ No newline at end of file
+diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
+index 42801f5c86..1323e18bc0 100644
+--- a/tests/tcg/plugins/syscall.c
++++ b/tests/tcg/plugins/syscall.c
+@@ -170,6 +170,20 @@ static void vcpu_syscall_ret(qemu_plugin_id_t id, unsigned int vcpu_idx,
      }
  }
  
-+/*
-+ * Disable CFI checks.
-+ * The callback function has been loaded from an external library so we do not
-+ * have type information
-+ */
-+QEMU_DISABLE_CFI
-+bool
-+qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
-+                                uint64_t a2, uint64_t a3, uint64_t a4,
-+                                uint64_t a5, uint64_t a6, uint64_t a7,
-+                                uint64_t a8, uint64_t *ret)
++static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_index,
++                                int64_t num, uint64_t a1, uint64_t a2,
++                                uint64_t a3, uint64_t a4, uint64_t a5,
++                                uint64_t a6, uint64_t a7, uint64_t a8,
++                                uint64_t *ret)
 +{
-+    struct qemu_plugin_cb *cb, *next;
-+    enum qemu_plugin_event ev = QEMU_PLUGIN_EV_VCPU_SYSCALL_FILTER;
-+
-+    if (!test_bit(ev, cpu->plugin_state->event_mask)) {
-+        return false;
++    if (num == 0x66CCFF) {
++        *ret = 0xFFCC66;
++        qemu_plugin_outs("syscall 0x66CCFF filtered, ret=0xFFCC66\n");
++        return true;
 +    }
-+
-+    bool filtered = false;
-+    QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
-+        qemu_plugin_vcpu_syscall_filter_cb_t func = cb->f.vcpu_syscall_filter;
-+
-+        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
-+        if (func(cb->ctx->id, cpu->cpu_index, num, a1, a2, a3, a4,
-+                 a5, a6, a7, a8, ret)) {
-+            filtered = true;
-+        }
-+        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
-+
-+        if (filtered)
-+            break;
-+    }
-+    return filtered;
++    return false;
 +}
 +
- void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
+ static void print_entry(gpointer val, gpointer user_data)
  {
-     /* idle and resume cb may be called before init, ignore in this case */
+     SyscallStats *entry = (SyscallStats *) val;
+@@ -255,6 +269,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+ 
+     qemu_plugin_register_vcpu_syscall_cb(id, vcpu_syscall);
+     qemu_plugin_register_vcpu_syscall_ret_cb(id, vcpu_syscall_ret);
++    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter);
+     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+     return 0;
+ }
 -- 
 2.34.1
 
