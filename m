@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF3ED59D78
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 16:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B96EDD59D77
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 16:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU60i-00005L-Us; Fri, 12 Dec 2025 11:28:54 -0500
+	id 1vU63t-00023s-Eg; Fri, 12 Dec 2025 11:32:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vU60O-0008RH-Pr
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:28:33 -0500
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1vU63r-000232-O8
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:32:07 -0500
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vU60N-0004Md-8D
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:28:32 -0500
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7c6d13986f8so1221724a34.0
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 08:28:30 -0800 (PST)
+ id 1vU63q-00083W-8L
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:32:07 -0500
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7cae2330765so903698a34.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 08:32:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765556910; x=1766161710; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765557125; x=1766161925; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zqsXbUH3qSBH0UWzh4RIdcGvwzpd/UQuDJyQMj0wUNI=;
- b=PyerH37DfVLuShiBIHMBQTVikxfyo2OpKuknpFXCBfiPR11m2hMooQ5q+ixY2fPXSY
- SGBxvllVkSo1iqk1l+blU5/ja+mdhN9ARUBHzVcqRM0pfOisQi+M8S8WPqqNuafk8uJz
- tnUYHqexROCvC+5BcqmSuRHwB1O+w/oZ32sN9Iy0ifGDMd/+qmeBfTM+jgzmRJRHCuuM
- dVHq5+wTXvAUqYyJK/ke79lVy0ACa8KSe0BSswKgsekJl4PJKRREuzqWppF7wS4C4xvt
- 0SetvFoY+rVtC1JdKoy3lssGoA0UV08H5xl9V+kzJ6Sj9G/fQ4Yj18hQ1wxrDZdOpo/N
- rvNQ==
+ bh=vl9iVkBfObl5N6PlswhPVnwhktT3W/MAm7tJwr0yy48=;
+ b=dE2sdpuXzRVq18BJ6dbdoA4ukneaZZO8sYHa2qU9iOp3SL8Xr5kxbRKH4jckECQ9Io
+ 6oJXDTz6td7SwY9y9upo/qkPBh51RDItatkbpeWZfPSYhMEm30DBETYBlSA6HBnZ9Q+X
+ 9xGhRohTuDEB8HCzfBl97Kj5ajCEdCO1kB6tT6kG6WN+0/oASV/krGmVPOCT16Uf+lrL
+ VHKZE+h7otGfzZuaeLrF3kh2tw0gEG7RbOSyJWOHOWC6ogJmDpP3mMNetfcEQn4Ceftm
+ BXAUMdxlasFXpLNjWSZ4K/kDFowlajEtrYJOMNxEz/RSz9M00u9Sw5tnTT0KtyIjGlkG
+ 9q4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765556910; x=1766161710;
+ d=1e100.net; s=20230601; t=1765557125; x=1766161925;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zqsXbUH3qSBH0UWzh4RIdcGvwzpd/UQuDJyQMj0wUNI=;
- b=ccdavDKbPpqHAzYPfm2XHagK0aHLpAziwkq8R3bT1u+6ja+mLjN4Nre9PmLHDAHpH0
- Jv39H9B6ZYmd3feY+F4RGo0Lvfwh6kWSxJLtfzeNXkVUihtn5A7IRSq38acT529o5+Lu
- 8Wnyui7+1aS9JYxhVQDczbQVTpPFDqBLIfmWy3D5ZGq0J9Y9IKONFtcJldFH/AaH+0Dm
- iytHr03EsrgVGCXt8GANCuMfeK6YxeKyR0qAe8pmYzpBJvlxpMP4VU7duGWNgivPln7F
- c8VY8SwB1t/tKKWJhE96MffmrKshS19xTZVP6fxJ/omZyjlMRxzdZNRxDWGyv/AbYcNO
- nWGQ==
+ bh=vl9iVkBfObl5N6PlswhPVnwhktT3W/MAm7tJwr0yy48=;
+ b=Irx+oyuUnn6xrpwm1NeTd2JasZnKTZDz/qETXPxLz5zrEPt19SmGh95ctmpBYIo1e9
+ y3HuOvvkdpf0SJjpmWK79YfnBdKE3ZRyS1Q4vuOz6ynWtCpnQLOWc2yRV4GQkd9Kq9qf
+ 6CzYDQtki0ld2LlveJnCHU4gIag3V+LLBnqPy4Lcft2OmGYGRuu22ExmpvNFHNcJPmo1
+ yi1WmIZD93VLBNXz5UeZomfanTHSIoG3fgR3bVMXGpLIyvNvgAwrbpjeox+OFFZgprs/
+ M3wwBUfskihpqjvP9rH8oJKm/fX2JyeSCqYMcVUvfL0yIU6GVrlvmduDeprOigFx3KfH
+ +L/A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUsthgwXF/s+gHx6iW55g6fvfwJGBUpdw2gGqAZpxZ0oYhvbMxwuoXyVOrWK95taVOf8ek1Y6bJHknF@nongnu.org
-X-Gm-Message-State: AOJu0YySmkyk2g4kvUCCU2weyI3+cKwX3h8mu5XGZTLxQmfVsXMhk0OR
- Tu3WYnkVIlE6yk4fCFj8JC8f+xmSrRYdQpExi69vY/QIqW/uZb1OGTW9rx9MCnkoYpc=
-X-Gm-Gg: AY/fxX6T9vxExGQNJsa7IPmWeMJps3k5n/bSZ/Gr50NJDWM9x2LOFiAT5ylbMf9pMhQ
- 8cNaHqnWm0PIytFcn7hJ+9DNuFt7U/i31EsE3JpOjeKxLTBvyX2VRLZw8Jnb8dviLxPNW3Yot5s
- 7pgiamyNhvkhEJeghRSLZosJiHVvQTVMDYdSsIOozI03tiThssetojngi0XEbSv05rLBSBYOFRp
- Z/F/su2/A92fLdKT02x8f4oIth6IV/CqP0WirZnDCx1Y7RnzRE4jyc+NdN4tQNV5iye53u2/vZZ
- hZA/VtCRNuHL2AyuaOSEh1Z4sg3/fgXw+TCPoTzSVuGsW2jc8BfwrU1HpvGq4pgM+1494gN2Q5W
- CXDx/csua8bZTyKjrQnSHk6eDaeIghaATUfuBDSwGVFmozRCGbvnUdTD7NhD+W2KMJDar2fUqLL
- f7MvL9eQaXa5044n4X+9L350xueL15
-X-Google-Smtp-Source: AGHT+IEwBry1c03hgIYf6MzogI1thbkO0bqBRKkArLs/2J53jOAfdaJm9IU+63HwSOxjrN2fFgdXGQ==
-X-Received: by 2002:a9d:7849:0:b0:7c7:5958:baad with SMTP id
- 46e09a7af769-7cadca95097mr2432499a34.0.1765556909811; 
- Fri, 12 Dec 2025 08:28:29 -0800 (PST)
+ AJvYcCWfSBiwmAdUHvMEmc9Fi/3NEPctKOjl5LskyL9XBYxktEq/1cLn2kzxGgIg6oWefze4IvwqE25Q8SI/@nongnu.org
+X-Gm-Message-State: AOJu0YwEt8lwjKfKjolB521dcSnFUji629s8cgkgdyJy2nl3heZLc+FW
+ X91hSGbGnGGZxpZ7Bwo/SDaMYCETMv6BhGV30NeJ7KnbKB51ytjrSUQEtLW2ux95Zaw=
+X-Gm-Gg: AY/fxX714hjAPKd1HR70zzstqGO/CSR8LyXQF9ubsup+t7uSt1mB//ccO7Gcz752h+h
+ XeRPQIURqSe78Stu8/fA5jBfK/j1b7vvNJP5rQX23aCOrZ8dOZRMFT8yTGuSU5mnu7LxqZ4u7WV
+ VQz124o9mQgwMV95Pc1QU5fBLgo5Ds1lpYb7UDPYYJKfoFhCtXhzgZURLbW9fp8YDF3KUyZYBA2
+ 7Bve41/SMRZvos6yjabYLoBFLNPkhn3WCPoLH9PmhCSCBy2f/2NxaYmwdviu2y281qhXg8BUsF0
+ guqZh3SAef5apcCax0/RUcUgAX8q5s9EKpvBerJpMljDmM2yZvyOJtaFlD+fM0D9sSjs186fyhq
+ +TmFYqRp8jDhFRANmGXnFqEJdkcXGMMFBsOuDHrNixIGoejj29VYATs7yvICUTsDeHDE5fTOnJf
+ 2efHon23JGf8b1pxNYRTPaTX4d+8tw
+X-Google-Smtp-Source: AGHT+IGF1n9Weehk0SfB9PGke5xkam/FAYO8eLERGPDv+zdZXwFRUpnneJn/VfmEQoJmOOaYDKMDdQ==
+X-Received: by 2002:a05:6830:2b1f:b0:7c7:e3b:4860 with SMTP id
+ 46e09a7af769-7cae7fbb6bdmr1507984a34.10.1765557124910; 
+ Fri, 12 Dec 2025 08:32:04 -0800 (PST)
 Received: from [10.229.62.227] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7cadb1d0facsm3753989a34.3.2025.12.12.08.28.28
+ 46e09a7af769-7cadb1d1089sm3700515a34.6.2025.12.12.08.32.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Dec 2025 08:28:29 -0800 (PST)
-Message-ID: <2680c481-088b-4366-abc3-7d48d90db0b5@linaro.org>
-Date: Fri, 12 Dec 2025 10:28:26 -0600
+ Fri, 12 Dec 2025 08:32:04 -0800 (PST)
+Message-ID: <b6af39c3-c7c1-4442-a149-7b00bb867f87@linaro.org>
+Date: Fri, 12 Dec 2025 10:32:01 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-11.0 v3 11/22] target/mips: Use big-endian variant of
- cpu_ld/st_data*() for MSA opcode
+Subject: Re: [PATCH-for-11.0 v3 12/22] target/mips: Introduce loadu8() &
+ loads4() helpers
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
  <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>
 References: <20251126202200.23100-1-philmd@linaro.org>
- <20251126202200.23100-12-philmd@linaro.org>
+ <20251126202200.23100-13-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251126202200.23100-12-philmd@linaro.org>
+In-Reply-To: <20251126202200.23100-13-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,54 +111,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/26/25 14:21, Philippe Mathieu-Daudé wrote:
-> MSA vectors are accessed in big endianness.
-> 
-> Per the "MIPS® SIMD Architecture" (MD00926 rev 1.03):
-> 
->    3.1 Registers Layout
-> 
->    MSA vectors are stored in memory starting from the 0th element at
->    the lowest byte address. The byte order of each element follows the
->    big- or little-endian convention of the system configuration.
+> +static target_ulong loads4(CPUMIPSState *env, target_ulong arg,
+> +                           unsigned mem_idx, uintptr_t ra)
+> +{
+> +    return (target_long)(int32_t)cpu_ldl_mmuidx_ra(env, arg, mem_idx, ra);
+> +}
+> +HELPER_LD_ATOMIC(ll, 0x3, loads4)
+>   #ifdef TARGET_MIPS64
+> -HELPER_LD_ATOMIC(lld, ldq, 0x7, (target_ulong))
+> +static target_ulong loadu8(CPUMIPSState *env, target_ulong arg,
+> +                           unsigned mem_idx, uintptr_t ra)
+> +{
+> +    return (target_ulong)cpu_ldq_mmuidx_ra(env, arg, mem_idx, ra);
+> +}
 
-This says "follow the system configuration" ...
+You don't need the casts to target_ulong -- those are implied by the return type.
 
-> 
-> Use the explicit big-endian variants of cpu_ld/st_data*().
-
-... so how do you get "big-endian" from that?
-
-> diff --git a/target/mips/tcg/msa_helper.c b/target/mips/tcg/msa_helper.c
-> index f554b3d10ee..d6ce17abf9a 100644
-> --- a/target/mips/tcg/msa_helper.c
-> +++ b/target/mips/tcg/msa_helper.c
-> @@ -8231,8 +8231,8 @@ void helper_msa_ld_b(CPUMIPSState *env, uint32_t wd,
->       uint64_t d0, d1;
->   
->       /* Load 8 bytes at a time.  Vector element ordering makes this LE.  */
-> -    d0 = cpu_ldq_le_data_ra(env, addr + 0, ra);
-> -    d1 = cpu_ldq_le_data_ra(env, addr + 8, ra);
-> +    d0 = cpu_ldq_be_data_ra(env, addr + 0, ra);
-> +    d1 = cpu_ldq_be_data_ra(env, addr + 8, ra);
->       pwd->d[0] = d0;
->       pwd->d[1] = d1;
-
-This really seems to be exchanging one bug for another.
-And the comment no longer matches.
-
-Also, this would be much better accomplished inline as
-
-     tcg_gen_ld_i128(..., mo_endian(s) | MO_128 | MO_ATOM_<something>);
-
-where <something> will be MO_ATOM_NONE for vector of 1-byte elements, MO_ATOM_IFALIGN_PAIR 
-for 8-byte elements, and MO_ATOM_SUBALIGN for the others (which is slightly stronger than 
-required, but we don't have MO_ATOM_IFALIGN_<N> for all N).
-
-Doing that for the stores as well will allow removal of ...
-
->       ensure_writable_pages(env, addr, mmu_idx, GETPC());
-
-... this hack.
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
