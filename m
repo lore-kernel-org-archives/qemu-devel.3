@@ -4,76 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1554D49230
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 14:38:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 462E3D49235
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 14:57:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU4IA-0000AX-4z; Fri, 12 Dec 2025 09:38:46 -0500
+	id 1vU4Zn-0005xn-VH; Fri, 12 Dec 2025 09:57:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vU4I8-00009h-Cu
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:38:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vU4I6-0004Ki-Oz
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:38:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765550320;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Hnl6f13Ja6GHFavUAdqdMHjv59XCSNTwf9oLUoTe43w=;
- b=ijuwQNA/zK/IMn7GC+QnLs3fe2D+//oXYq3l510vUS2zFoPJxdbZFDX3qTM5Eu4SI7shjB
- TgaYbKPSRClqlCX9E+ZzeOh/PCv8CUnCBkaC57KuZSmxFE+nomyPUsYC/i5XQGPoxtUWDi
- qVlGNp3tvCruyAuKI4HSmXCa2eSNQdI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-4w_sHJeENDGsBY937fMBnQ-1; Fri,
- 12 Dec 2025 09:38:37 -0500
-X-MC-Unique: 4w_sHJeENDGsBY937fMBnQ-1
-X-Mimecast-MFC-AGG-ID: 4w_sHJeENDGsBY937fMBnQ_1765550316
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E86D1801215; Fri, 12 Dec 2025 14:38:36 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A8C1D180035F; Fri, 12 Dec 2025 14:38:35 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 3BF1121E6A27; Fri, 12 Dec 2025 15:38:33 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org,  Cleber Rosa <crosa@redhat.com>,  Thomas Huth
- <thuth@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  John Snow <jsnow@redhat.com>
-Subject: Re: [RFC PATCH 0/9] for 11.0 conversion* of get_maintainers.pl to
- python
-In-Reply-To: <20251211180132.3186564-1-alex.bennee@linaro.org> ("Alex
- =?utf-8?Q?Benn=C3=A9e=22's?= message of "Thu, 11 Dec 2025 18:01:23 +0000")
-References: <20251211180132.3186564-1-alex.bennee@linaro.org>
-Date: Fri, 12 Dec 2025 15:38:33 +0100
-Message-ID: <87bjk322ae.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vU4Zh-0005wx-MJ
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:56:55 -0500
+Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vU4Zb-0002n9-Mv
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:56:52 -0500
+Received: by mail-oa1-x29.google.com with SMTP id
+ 586e51a60fabf-3e7f68df436so948995fac.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 06:56:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1765551404; x=1766156204; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=C84oN1mOsr9iVWmQkyopN5rp6NKdG6qYiLoANha6GYI=;
+ b=ACiNQbv84qUCKtJNv0Wtjwf/d0KTeb1HM4oodkfeRtIS6s2vlNBPuwSKS8MYCFzneB
+ /f/v9iKSXKR5ksVyk4J7ZENSN3tWUjDV+LDNhUXdI3AdUeHdoFKSMDqWAWX+Vn1m85RV
+ fmXSw7BByk5k+qK0oE0qxtizUS0x6Ap0aHDcgCcTcmYHaWsVjmCwRSmvcOu2RhiNZzAY
+ HgDGAWrVXX1Wx01k7Kg7kIaO/aYfW6mQjhgh+d0q411Hp9Zp5K6IGnWnzkBiruI6pbFp
+ 92WZzlEG2LG+r70ZvGcDhkFksU1CewsA7V4PLKlADN0pAEGxaZzQBFZSmVwjBK6293VE
+ qh+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765551404; x=1766156204;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=C84oN1mOsr9iVWmQkyopN5rp6NKdG6qYiLoANha6GYI=;
+ b=FoIAJBQCCH4lnl0jSA4R8U6+gPKJiwNRZ2PKiRSZzqwGrN6F+b1W59ZcEHtqanOiyb
+ UsBenoyXE0lyLksa5pe3jp5KfMLparhaPWkubyTNZ1KcAVr5DTYiinyCdvXRmOUoWCW8
+ NNuCTchat+vlAWlOudZsZRIdAja3/gMKDLTGS1IG/44MPxU/pcoxCoxj3IBmMvx8T301
+ GULY/7XEhlbD2t5ewWlHX2WPJl6BiK3u0bvhu6qtK38+62aBIfKVN8QwbMbUWRE5+srb
+ M1Q7vWsypeNrs9ephgFNP7ILkSQZRV2NmDXoO3V7LT7B0OEzGtpp8ysD6kHq+N7gIKjr
+ qIyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXqidwdChGY9EG6igoEagT88sV1MMgiy9hobMvMcVMw/T7s/eq0Mx6MmRCtB6AcngYtwiYqX7mI/Bsl@nongnu.org
+X-Gm-Message-State: AOJu0YxgIPac1zPzul2I19bQzW+wJqTaM/YtWee7SC/qhNYdNw6lpFoU
+ carOEcyG48lEZQ7lp9qMvMJvy292jr9KmwbgpVy6REE6jPLAX9WusXYaDnARqmpNJHk=
+X-Gm-Gg: AY/fxX56jXNG+qlqDwXyNVhe2CcBDJ4yCJGfwl42NYCS54251aljlrzxqx/qVocgox8
+ uCKbWEcNIVqVZtDE6Xmj00HjDcN13UOdDxH75cne9q5XLFyM1WwOdTKpKRF/lKwpXLZbS3OLGsx
+ hL1XKBQk49lt1Ul4SRYyLYPrgeFhNQUvX76xqjuvxTEQY+MBG5fuozhrWYvgROaSS0AzS+9Tskb
+ /vh4bAUOZ4X1MzE2dLEUQ082rBojwM215sZZC+RjjHE42bX3ueh5QAetA+1gKxLVuOajv1L66qr
+ BTEHjVbLHKvYzSzV1TywTyXwpCAmgRery7DFk9I87tieOmX4qfXg88pmORg6dIBJ9bUwW1lSf2/
+ QyqnbRco4Azwd3lfIJcLBsj4zlX+JQVtehxJT4vMV4Fi4sxBBsrjAG5vafC+z3j9a7fAvL5qFe5
+ cVMvRNBO3dpW2gC2YoffUnpsDncVzBjKkaywybejXyUU2KBxfkmKiJLveqXV55kNuZoIj4Kfn6Z
+ gU=
+X-Google-Smtp-Source: AGHT+IGmDxXtNG6i7M3hedvRmYmDIrAChwVlNiCEPzqpaM9qAcdeV5GZRH7lqxJ/eM6ubYTwDFFWEg==
+X-Received: by 2002:a05:6870:9709:b0:3f5:b761:5234 with SMTP id
+ 586e51a60fabf-3f5dfc8a30amr2871894fac.28.1765551404279; 
+ Fri, 12 Dec 2025 06:56:44 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-3f5fe59c583sm1104777fac.22.2025.12.12.06.56.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Dec 2025 06:56:43 -0800 (PST)
+Message-ID: <a40ca4c4-b34b-4315-8e6e-46812dfd5432@linaro.org>
+Date: Fri, 12 Dec 2025 08:56:41 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] target/arm: Move ARMSecuritySpace to a common header
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Auger <eric.auger@redhat.com>, qemu-arm@nongnu.org,
+ Tao Tang <tangtao1634@phytium.com.cn>
+References: <20251211234426.2403792-1-pierrick.bouvier@linaro.org>
+ <20251211234426.2403792-2-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251211234426.2403792-2-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::29;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,55 +110,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+On 12/11/25 17:44, Pierrick Bouvier wrote:
+> From: Tao Tang <tangtao1634@phytium.com.cn>
+> 
+> The ARMSecuritySpace enum and its related helpers were defined in the
+> target-specific header target/arm/cpu.h. This prevented common,
+> target-agnostic code like the SMMU model from using these definitions
+> without triggering "cpu.h included from common code" errors.
+> 
+> To resolve this, this commit introduces a new, lightweight header,
+> include/hw/arm/arm-security.h, which is safe for inclusion by common
+> code.
+> 
+> The following change was made:
+> 
+> - The ARMSecuritySpace enum and the arm_space_is_secure() and
+> arm_secure_to_space() helpers have been moved from target/arm/cpu.h
+> to the new hw/arm/arm-security.h header.
+> 
+> This refactoring decouples the security state definitions from the core
+> CPU implementation, allowing common hardware models to correctly handle
+> security states without pulling in heavyweight, target-specific headers.
+> 
+> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Link: https://lists.nongnu.org/archive/html/qemu-arm/2025-09/msg01288.html
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   include/hw/arm/arm-security.h | 54 +++++++++++++++++++++++++++++++++++
+>   target/arm/cpu.h              | 25 +---------------
+>   2 files changed, 55 insertions(+), 24 deletions(-)
+>   create mode 100644 include/hw/arm/arm-security.h
+> 
+> diff --git a/include/hw/arm/arm-security.h b/include/hw/arm/arm-security.h
+> new file mode 100644
+> index 00000000000..9664c0f95e9
+> --- /dev/null
+> +++ b/include/hw/arm/arm-security.h
+> @@ -0,0 +1,54 @@
+> +/*
+> + * ARM security space helpers
+> + *
+> + * Provide ARMSecuritySpace and helpers for code that is not tied to CPU.
+> + *
+> + *  Copyright (c) 2003 Fabrice Bellard
+> + *
+> + * This library is free software; you can redistribute it and/or
+> + * modify it under the terms of the GNU Lesser General Public
+> + * License as published by the Free Software Foundation; either
+> + * version 2.1 of the License, or (at your option) any later version.
+> + *
+> + * This library is distributed in the hope that it will be useful,
+> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+> + * Lesser General Public License for more details.
+> + *
+> + * You should have received a copy of the GNU Lesser General Public
+> + * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+> + */
 
-> *incomplete
->
-> I wanted to look at adding gitlab tags to MAINTAINERS and baulked
-> slightly at figuring out what I would need to change in the perl
-> script to cleanly handle it.
->
-> While we imported the perl script from the kernel I'm fairly sure we
-> don't use half the features it has and as us grey beards age out less
-> people will be willing to tweak it. Consider this a proof-of-concept
-> for discussion about if it is worth perusing this path.
->
-> It only supports the two main forms:
->
->   ./scripts/get_maintainer.py -f path/to/file
->   ./scripts/get_maintainer.py path/to/patch1 path/to/patch2 ...
->
-> But who needs more?
+Don't add the boilerplate to new files, just SPDX-License-Identifier.
+This should have tripped a checkpatch error.
 
-I've used options --git --nogit-fallback --git-since and --git-blame.
+> +
+> +#ifndef HW_ARM_ARM_SECURITY_H
+> +#define HW_ARM_ARM_SECURITY_H
+> +
+> +#include <stdbool.h>
 
-> Future improvements could include some more detailed analysis in
-> conjugation with the repo to analysis:
->
->   - missing areas of coverage
+Already included by osdep.h.
 
-I've used
+> +#endif /* HW_ARM_ARM_SECURITY_H */
+> +
+> +
 
-    $ for i in `git-ls-files`; do [ "`scripts/get_maintainer.pl -f --no-git=
--fallback $i | grep -v '^qemu-devel@nongnu\.org'`" ] || echo $i; done >unma=
-intained-files
+Watch the extra newlines.
 
-Last post:
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-    From: Markus Armbruster <armbru@redhat.com>
-    Subject: MAINTAINERS still leaves more files uncovered than I'd like
-    To: qemu-devel@nongnu.org
-    Date: Fri, 29 Sep 2023 13:43:30 +0200
-    Message-ID: <87lecp6w7x.fsf@pond.sub.org>
-    https://lore.kernel.org/qemu-devel/87lecp6w7x.fsf@pond.sub.org/
 
-I think I'll do it again soonish.
-
->   - maintainer stats
->
-> Who knows maybe the kernel guys will want to import our script one day
-> ;-)
->
-> Alex.
-
+r~
 
