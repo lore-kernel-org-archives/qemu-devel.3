@@ -4,158 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EF82D43350
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 03:03:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A47FD43369
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 03:06:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTtQP-0002d0-71; Thu, 11 Dec 2025 22:02:33 -0500
+	id 1vTtTn-0003lE-OF; Thu, 11 Dec 2025 22:06:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vTtQM-0002b3-Mc
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 22:02:30 -0500
-Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vTtTi-0003l2-Gw
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 22:05:59 -0500
+Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vTtQK-00087L-G7
- for qemu-devel@nongnu.org; Thu, 11 Dec 2025 22:02:30 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ilnE5Xc4Y+PbgdG5+dj0nf7PxjNZkzEK5mtKFa34aMgCEh9pBRElzAH4pvrH4JEr1JLi5hS6OVXQoJhOvzsHgokJ5VgtFehIsHG6x9auf67dX1EdfQ3InkBot5JmeR76JeedAENqyjCj5dObtBL3xhR/S1mv3FgSGWUSo8dFnL+am8X7slNdVQTwEvdXu9UE7X5d0X3ZoDtLvZmlq0DTQkc06NLNK+Bsc4lgryzYSD1q6WjC+KITIPKzUWLd8icTK8+THCCBvNfch+TD6QMpl1C0TVIj9V2wmJCGlFlGFBnGFgnx/b5nnD/3BddtpVr2fTq5atghXCgSaJvYRCCGmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ucoV+M+VpgtCiZ10/g6s2WpKQCAEy4WhUNChNaWgm+E=;
- b=LmHonOP//codiVAUT8Irmac2YqqkmrQGK/sayjkJLFadcVbDBl2ThCagLjdxzb5fTLMDhy6hbnPO//7DgJPU5jfY2FoF8PVvcK1uoFqyQViMv+5pscVO/mnsb85p7HqoapqY0t0EwoJFIJCAjN/FqPa4CJez+VXSK9k5Oe5nkDBDtbq5uCt8NvMyJcIJLBqZc0o71Njh/SjhzHNfyvtuGAcUy2mbZ88LlEUFLFIhocZ/q7UuZIXwLUEJdirmFcOCGACkNROPHWJPopQUSaWhGGb/mbnSS1xv7/L7AVpFPi2eQBqWmlHjmgRCmK/+cIVojaDK/mEs5OdgAyRfO0Va+A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ucoV+M+VpgtCiZ10/g6s2WpKQCAEy4WhUNChNaWgm+E=;
- b=ajJ0lCXsIcaAvd9cdjrFx0eGkDIjT2dl8c966PGC0Ebnme2qMtDOHUoG7PwJL15XPu3j+8OY2HL5Bk+5NUHsx/FyICE/vJsqnk/B0eecdUg/RmfDqjNT2TB43rFlOa5G297O9/7c1700lmtLUjO26j0pffWWwybHbO7zVoX3dU758vbSqIY41oBn+g/3VgSv1cNsKP27uYyGTRt/fK/O8bl8Ych/YFP3kMHi3hozQaVWD3iblivx/VzbyUTN52oCUAYWlIf1hiZI3n3DPqjl1pfEiccAsYxwuZ9zumdj9kq2HRxWs/blD9ux7XjYMXZC4QKsFq0USaNzVD93dhnrcw==
-Received: from BY3PR05CA0042.namprd05.prod.outlook.com (2603:10b6:a03:39b::17)
- by CY8PR12MB8265.namprd12.prod.outlook.com (2603:10b6:930:72::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.10; Fri, 12 Dec
- 2025 03:02:21 +0000
-Received: from CO1PEPF000075EF.namprd03.prod.outlook.com
- (2603:10b6:a03:39b:cafe::79) by BY3PR05CA0042.outlook.office365.com
- (2603:10b6:a03:39b::17) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9434.5 via Frontend Transport; Fri,
- 12 Dec 2025 03:02:21 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CO1PEPF000075EF.mail.protection.outlook.com (10.167.249.38) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9388.8 via Frontend Transport; Fri, 12 Dec 2025 03:02:21 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 11 Dec
- 2025 19:02:07 -0800
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Thu, 11 Dec
- 2025 19:02:06 -0800
-Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.129.68.8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Thu, 11 Dec 2025 19:02:03 -0800
-Date: Thu, 11 Dec 2025 19:02:00 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "jgg@nvidia.com"
- <jgg@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "alex@shazbot.org" <alex@shazbot.org>, "clg@redhat.com" <clg@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "skolothumtho@nvidia.com"
- <skolothumtho@nvidia.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, "Yi
- Sun" <yi.y.sun@linux.intel.com>
-Subject: Re: [PATCH v8 13/23] intel_iommu_accel: Bind/unbind guest page table
- to host
-Message-ID: <aTuFqNlluD5fQw4A@nvidia.com>
-References: <20251117093729.1121324-1-zhenzhong.duan@intel.com>
- <20251117093729.1121324-14-zhenzhong.duan@intel.com>
- <52703428-96c5-4b18-b7e8-ccc3c38e2cd2@redhat.com>
- <IA3PR11MB9136F90FE5C93257ABB0772392A1A@IA3PR11MB9136.namprd11.prod.outlook.com>
- <IA3PR11MB913644ED17D8B3698A1CF39992AEA@IA3PR11MB9136.namprd11.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vTtTc-0000lv-M0
+ for qemu-devel@nongnu.org; Thu, 11 Dec 2025 22:05:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1765508753; x=1797044753;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=KlVrxqcN2Ic21PjrgOGw+h2S/28wowkFapC/8E5+XkM=;
+ b=VuFH342nBGfZpoM0tuq3+WWyE/j9aUBzWBaBuiDUjQqLgB/CxmflcjiM
+ zeo5Co2uxH2pjSuv406dufbyTBVERvyZXR5tSBQ/W3TLk239PsXue/pck
+ 2u10DmEDsKkH6Wdm8f+Fu7JgY7RKWvT76cRk3dzHk4QWPYDopzt3ZWsBI
+ 8qeX2pdJj/nwynFhnWjUj38Vf6p2Jd1wFYcEEZG4xvWxLa7/2TmWPkbbf
+ FZjRu1W5ub7Ata/cZTxzEVvqspgROj5Z7IxdwhTDMkpHudfnGwtoibEud
+ 50+NMYKQPllwqMvFija4LWdvqSRJrhzqtTTStAutD5e5l4kpfM0XeqyHH w==;
+X-CSE-ConnectionGUID: 8bmEqoBvT+27rQ5HEQJzJg==
+X-CSE-MsgGUID: UOv1ARhuRbyeBJsClwXosg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11639"; a="90150529"
+X-IronPort-AV: E=Sophos;i="6.21,141,1763452800"; d="scan'208";a="90150529"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2025 19:05:50 -0800
+X-CSE-ConnectionGUID: p/xr2oyPT0uVM6rR3r5L+g==
+X-CSE-MsgGUID: mArN1l6mQgydfVNKgYfJMg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,141,1763452800"; d="scan'208";a="197440740"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.173])
+ ([10.124.240.173])
+ by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2025 19:05:48 -0800
+Message-ID: <b9309d98-381b-4531-925c-a4558be1428a@intel.com>
+Date: Fri, 12 Dec 2025 11:05:44 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <IA3PR11MB913644ED17D8B3698A1CF39992AEA@IA3PR11MB9136.namprd11.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000075EF:EE_|CY8PR12MB8265:EE_
-X-MS-Office365-Filtering-Correlation-Id: 33448158-e077-43f5-cb37-08de392ade52
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|36860700013|1800799024|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?oqpTdLIM+lkdzczbeDDXjF4EyGwUQl0nrMYy473Zb8zNMHMpXFQjiluSWydX?=
- =?us-ascii?Q?pNbau/9jFK/Boi2Y28aque6VY3K0Bzo3eFGwMJ7M41n5zQS9DxxI49QbIrAV?=
- =?us-ascii?Q?8XeYDrrBYqLV0DFIGCQxXhn2GkTEMFCrmh2qjA2noaVRRneBMc83rsqbenX4?=
- =?us-ascii?Q?UPuqOxWinCYgq+N95MfZSjt+BSIONmx0jBgVR+dplmyDHizgdFD9yS4WdbdJ?=
- =?us-ascii?Q?NvaxG5HCIe9Eqd23UKtR/BonG4Q0xt3L+qiIaCNqfLwh2Iw3S+X9eqr0uTNC?=
- =?us-ascii?Q?691aIyyDuJOH1OLpfhD7fFjHv3dlLXHBaRQHM1JPHHq3L/isvaqxS5l3GLvZ?=
- =?us-ascii?Q?rKYkj3rNP0j34OPLNAMSE+/PSoXtk62oHRJe9zgD2lC6e4oSDMjg2Pzk4kQV?=
- =?us-ascii?Q?wmwZctymBNuHVk0uzflrdkHMMkDeP8qspoqmvVwQP2Vdxw7DZHSabYpK5Z3g?=
- =?us-ascii?Q?eMiXc6xH5QU9d3fu23d0IyobP00Bb71GBq0CFREgch8L4Lmc3s5LMvJOmc08?=
- =?us-ascii?Q?fRf8/h0iH7qMpjNCfL2qC5FnVforXjp7qc2yR8qs9YUfLDdtv9zWg1SGWpTy?=
- =?us-ascii?Q?WlAu2VGrcq8+bEFjF6+OMjos8vwM2bL1hbCwERUlK1+Y/r3E3i05AjZzeAoA?=
- =?us-ascii?Q?Uop3YL7bGKGw7gT+l9+YxOynGHGrY/SeqtXbaiI6WvH7wVKIEfP166qgjCOq?=
- =?us-ascii?Q?ZI51KqPacbQZOzjXfLP0DGvVLR7TmTdVCwK8vZDtTGa70s9mt8uC3wOnahmw?=
- =?us-ascii?Q?SbE0/zWMmuJ302FVNJgmQUf5BcrFHVtJvvpW/MHCTWkv9zznMrnS3rW7EInX?=
- =?us-ascii?Q?JjVcwkTU0bcK1Mwa+d0zKlwbXmqlExS39pq1niYEutmix9p/x0DYCAxBvf6G?=
- =?us-ascii?Q?fnOBIVLmZqa22Kc2xNU0qFoAYjFIKUTEryQlOf3hXbqbowZ75LPjTtT9eIch?=
- =?us-ascii?Q?AatdXjx7dnVUPGTm9xtcIE+aU3sj/t8oLGlFXSpQkyNQocsdXIfm0BnV/EBy?=
- =?us-ascii?Q?c0KjaPVCPMLi+OfFg+E2P0dNBxiqBYqOSd46yWo7Fm4kGefCAtWdNSxNSuXo?=
- =?us-ascii?Q?7eYctGHZNheKowmq2Oo1dp7R7mWtnbyoll89ojG280HUCmS1WYjUEf5h2c0I?=
- =?us-ascii?Q?2GH34GPdODsyC0q9z2oMWYiOyxLH8cIJMXyrrbmaDHCJIGttEoieFfBYIsZe?=
- =?us-ascii?Q?bHYI45b1h15tpTDFPrqhTGOIFU1r72+TiqFsSPEMT5LshvgE1PeGwtZsIM3C?=
- =?us-ascii?Q?o7Dc/TS5uq0w1GBPDiVBAEmR0N/DFxqreFe1KeWX8axqsechAnhGxNjesBXk?=
- =?us-ascii?Q?2cEeBg5HyVvpxbJrqbwJPtm1sJHm+s9p0sFLk3J1WIv4pgfMg6Rg+kmv21Uw?=
- =?us-ascii?Q?i0vl30crlCgrOEp7x/Nw/Q7i+TZO1X0d3XHo3plzHERFQbe0aU9A0AIQe9vt?=
- =?us-ascii?Q?X63G2W1tiUBF60UXSoTQWZw2IIylRvgX9daxuyN+y3DtF2mLFgt2VOcHwiHB?=
- =?us-ascii?Q?ZiQJ4vq7pAQYLqoNCOdhZyLdlkHsFSDAmQZY5G26SrQdZa9uL7qMSV7dIlF+?=
- =?us-ascii?Q?F/4QEvXBNxLHh+pEceU=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(36860700013)(1800799024)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Dec 2025 03:02:21.3150 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 33448158-e077-43f5-cb37-08de392ade52
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000075EF.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8265
-Received-SPF: softfail client-ip=2a01:111:f403:c10d::1;
- envelope-from=nicolinc@nvidia.com;
- helo=SN4PR2101CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 7/9] hostmem: Support in-place guest memfd to back a VM
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20251119172913.577392-1-peterx@redhat.com>
+ <20251119172913.577392-8-peterx@redhat.com>
+ <2ee4383c-f21f-448e-ac3f-2b621d687bf2@intel.com> <aTrw6Xtg_GRh1DQO@x1.local>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aTrw6Xtg_GRh1DQO@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -171,74 +90,278 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 12, 2025 at 02:12:09AM +0000, Duan, Zhenzhong wrote:
+On 12/12/2025 12:27 AM, Peter Xu wrote:
+> On Thu, Dec 11, 2025 at 03:41:46PM +0800, Xiaoyao Li wrote:
+>> On 11/20/2025 1:29 AM, Peter Xu wrote:
+>>> Host backends supports guest-memfd now by detecting whether it's a
+>>> confidential VM.  There's no way to choose it yet from the memory level to
+>>> use it in-place.  If we use guest-memfd, it so far always implies we need
+>>> two layers of memory backends, while the guest-memfd only provides the
+>>> private set of pages.
+>>>
+>>> This patch introduces a way so that QEMU can consume guest memfd as the
+>>> only source of memory to back the object (aka, in place), rather than
+>>> having another backend supporting the pages converted to shared.
+>>>
+>>> To use the in-place guest-memfd, one can add a memfd object with:
+>>>
+>>>     -object memory-backend-memfd,guest-memfd=on,share=on
+>>>
+>>> Note that share=on is required with in-place guest_memfd.
+>>>
+>>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>>
+>> overall looks good to me except a few comments below,
+>>
+>> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>
+>>> ---
+>>>    qapi/qom.json            |  6 +++-
+>>>    backends/hostmem-memfd.c | 66 +++++++++++++++++++++++++++++++++++++---
+>>>    2 files changed, 67 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/qapi/qom.json b/qapi/qom.json
+>>> index 6f5c9de0f0..9ebf17bfc7 100644
+>>> --- a/qapi/qom.json
+>>> +++ b/qapi/qom.json
+>>> @@ -763,13 +763,17 @@
+>>>    # @seal: if true, create a sealed-file, which will block further
+>>>    #     resizing of the memory (default: true)
+>>>    #
+>>> +# @guest-memfd: if true, use guest-memfd to back the memory region.
+>>> +#     (default: false, since: 11.0)
+>>> +#
+>>>    # Since: 2.12
+>>>    ##
+>>>    { 'struct': 'MemoryBackendMemfdProperties',
+>>>      'base': 'MemoryBackendProperties',
+>>>      'data': { '*hugetlb': 'bool',
+>>>                '*hugetlbsize': 'size',
+>>> -            '*seal': 'bool' },
+>>> +            '*seal': 'bool',
+>>> +            '*guest-memfd': 'bool' },
+>>>      'if': 'CONFIG_LINUX' }
+>>>    ##
+>>> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+>>> index ea93f034e4..1fa16c1e1d 100644
+>>> --- a/backends/hostmem-memfd.c
+>>> +++ b/backends/hostmem-memfd.c
+>>> @@ -18,6 +18,8 @@
+>>>    #include "qapi/error.h"
+>>>    #include "qom/object.h"
+>>>    #include "migration/cpr.h"
+>>> +#include "system/kvm.h"
+>>> +#include <linux/kvm.h>
+>>>    OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+>>> @@ -28,6 +30,13 @@ struct HostMemoryBackendMemfd {
+>>>        bool hugetlb;
+>>>        uint64_t hugetlbsize;
+>>>        bool seal;
+>>> +    /*
+>>> +     * NOTE: this differs from HostMemoryBackend's guest_memfd_private,
+>>> +     * which represents a internally private guest-memfd that only backs
+>>> +     * private pages.  Instead, this flag marks the memory backend will
+>>> +     * 100% use the guest-memfd pages in-place.
+>>> +     */
+>>> +    bool guest_memfd;
+>>>    };
+>>>    static bool
+>>> @@ -47,10 +56,40 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+>>>            goto have_fd;
+>>>        }
+>>> -    fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+>>> -                           m->hugetlb, m->hugetlbsize, m->seal ?
+>>> -                           F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+>>> -                           errp);
+>>> +    if (m->guest_memfd) {
+>>> +        /* User choose to use in-place guest-memfd to back the VM.. */
+>>> +        if (!backend->share) {
+>>> +            error_setg(errp, "In-place guest-memfd must be used with share=on");
+>>> +            return false;
+>>> +        }
+>>> +
+>>> +        /*
+>>> +         * This is the request to have a guest-memfd to back private pages.
+>>> +         * In-place guest-memfd doesn't work like that.  Disable it for now
+>>
+>> This seems not correct to me. I think in-place guest-memfd can work with
+>> guest_memfd_private. The former serves as shared memory and referenced by
+>> the userspace_addr while the latter serves as private memory referenced by
+>> the fd of guest_memfd.
+>>
+>> While the argument of "disable it for now to make it simple" does make sense
+>> to me.
 > 
+> Oops, I forgot to touch up quite a few places that kept mentioning
+> in-place, sorry.
 > 
-> >-----Original Message-----
-> >>> +static void vtd_destroy_old_fs_hwpt(HostIOMMUDeviceIOMMUFD
-> >*idev,
-> >>> +                                    VTDAddressSpace *vtd_as)
-> >>> +{
-> >>> +    if (!vtd_as->fs_hwpt) {
-> >>> +        return;
-> >>> +    }
-> >>> +    iommufd_backend_free_id(idev->iommufd, vtd_as->fs_hwpt);
-> >>> +    vtd_as->fs_hwpt = 0;
-> >>is it a valid assumption a valid ID cannot be null? Is it documented
-> >>somewhere?
-> >
-> >I didn't find it in uAPI doc, but it's hard coded in kernel:
-> >
-> >xa_init_flags(&ictx->objects, XA_FLAGS_ALLOC1 | XA_FLAGS_ACCOUNT);
-> >
-> >Hi @jasowang@redhat.com, @nicolinc@nvidia.com do you have a guideline
-> >on this?
-> >Could I take zero id reserved?
+> I'll squash this diff into this patch when repost:
 > 
-> Sorry, typo error, I meant to @Jason Gunthorpe
+> diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+> index 1fa16c1e1d..e9e288651e 100644
+> --- a/backends/hostmem-memfd.c
+> +++ b/backends/hostmem-memfd.c
+> @@ -57,16 +57,16 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
+>       }
+>   
+>       if (m->guest_memfd) {
+> -        /* User choose to use in-place guest-memfd to back the VM.. */
+> +        /* User choose to use fully shared guest-memfd to back the VM.. */
+>           if (!backend->share) {
+> -            error_setg(errp, "In-place guest-memfd must be used with share=on");
+> +            error_setg(errp, "Guest-memfd=on must be used with share=on");
 
-It is not documented in uAPI but there is some implication that
-ID=0 is restricted from being an actual object ID:
- 297 /**
- 298  * enum iommufd_option - ioctl(IOMMU_OPTION_RLIMIT_MODE) and
- 299  *                       ioctl(IOMMU_OPTION_HUGE_PAGES)
- 300  * @IOMMU_OPTION_RLIMIT_MODE:
- 301  *    Change how RLIMIT_MEMLOCK accounting works. The caller must have privilege
- 302  *    to invoke this. Value 0 (default) is user based accounting, 1 uses process
- 303  *    based accounting. Global option, object_id must be 0
+lower-case the guest-memfd? since it's the name of the property?
 
-So, I think that it'd be easier for user space to follow, if we
-add a line of statement:
------------------------------------------------------------------
-diff --git a/Documentation/userspace-api/iommufd.rst b/Documentation/userspace-api/iommufd.rst
-index f1c4d21e5c5e..c250a9eafdd5 100644
---- a/Documentation/userspace-api/iommufd.rst
-+++ b/Documentation/userspace-api/iommufd.rst
-@@ -135,6 +135,8 @@ Following IOMMUFD objects are exposed to userspace:
-   HW QUEUE, the VMM must request a pair of mmap info (offset/length) and pass in
-   exactly to an mmap syscall via its offset and length arguments.
- 
-+Each object must be allocated via uAPI and returned with a non-zero ID.
+>               return false;
+>           }
+>   
+>           /*
+>            * This is the request to have a guest-memfd to back private pages.
+> -         * In-place guest-memfd doesn't work like that.  Disable it for now
+> -         * to make it simple, so that each memory backend can only have
+> +         * Fully shared guest-memfd doesn't work like that.  Disable it for
+> +         * now to make it simple, so that each memory backend can only have
+>            * guest-memfd either as private, or fully shared.
+>            */
+>           if (backend->guest_memfd_private) {
+
+After rethinking on it, I think we just remove the check. There is 
+nothing from QEMU side to prevent such usage. It is KVM currently that 
+doesn't support INIT_SHARED guest-memfd for confidential VMs.
+
+If we change to KVM to allow it:
+
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 8bb8830561d4..a658b636a9cf 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -13957,7 +13957,8 @@ bool kvm_arch_no_poll(struct kvm_vcpu *vcpu)
+   */
+  bool kvm_arch_supports_gmem_init_shared(struct kvm *kvm)
+  {
+-       return !kvm_arch_has_private_mem(kvm);
++       return true;
 +
- All user-visible objects are destroyed via the IOMMU_DESTROY uAPI.
- 
- The diagrams below show relationships between user-visible objects and kernel
-diff --git a/drivers/iommu/iommufd/main.c b/drivers/iommu/iommufd/main.c
-index ce775fbbae94..4410f0561034 100644
---- a/drivers/iommu/iommufd/main.c
-+++ b/drivers/iommu/iommufd/main.c
-@@ -311,6 +311,7 @@ static int iommufd_fops_open(struct inode *inode, struct file *filp)
- 	}
- 
- 	init_rwsem(&ictx->ioas_creation_lock);
-+	/* ID=0 is reserved for global use in uAPI */
- 	xa_init_flags(&ictx->objects, XA_FLAGS_ALLOC1 | XA_FLAGS_ACCOUNT);
- 	xa_init(&ictx->groups);
- 	ictx->file = filp;
------------------------------------------------------------------
 
-Jason?
+and remove this check in QEMU, it can actually boot a TDX guest with
+fully-shared guest-memfd back'ed as shared part.
 
-Thanks
-Nicolin
+> I'll also fix the commit message on in-place, now the one to be reposted:
+> 
+>    hostmem: Support fully shared guest memfd to back a VM
+>    
+>    Host backends supports guest-memfd now by detecting whether it's a
+>    confidential VM.  There's no way to choose it yet from the memory level to
+>    use it fully shared.  If we use guest-memfd, it so far always implies we
+>    need two layers of memory backends, while the guest-memfd only provides the
+>    private set of pages.
+>    
+>    This patch introduces a way so that QEMU can consume guest memfd as the
+>    only source of memory to back the object (aka, fully shared), rather than
+>    having another backend supporting the pages converted to shared.
+
+As above, I think what the patch achieves is to enable guest-memfd (with 
+MMAP and INIT_SHARED) to back shared memory. And it is not conflicted 
+with using another guest-memfd to back private memory.
+
+>    To use the fully shared guest-memfd, one can add a memfd object with:
+>    
+>      -object memory-backend-memfd,guest-memfd=on,share=on
+>    
+>    Note that share=on is required with fully shared guest_memfd.
+> 
+> I'll not take your R-b as of now, please check and ack again if you see fit
+> after reading.
+> 
+>>
+>>> +         * to make it simple, so that each memory backend can only have
+>>> +         * guest-memfd either as private, or fully shared.
+>>> +         */
+>>> +        if (backend->guest_memfd_private) {
+>>> +            error_setg(errp, "In-place guest-memfd cannot be used with another "
+>>> +                       "private guest-memfd");
+>>> +            return false;
+>>> +        }
+>>
+>> please add the following check as I commented in v1:
+>>
+>> 	if (!kvm_enabled()) {
+>> 		error_setg(errp, "in-place guest-memfd requires KVM");
+>> 		return false;
+>> 	}
+> 
+> IMHO it's redundant to set here, when kvm not enabled,
+> kvm_create_guest_memfd() should be a stub.
+
+No. The KVM stub is for the case where KVM is disable at compile time.
+
+The kvm_enabled() check here is for the case where users use different 
+accelerators other than KVM, e.g., -accel tcg.
+
+> However indeed I found the stub didn't set an error, so how about add one
+> trivial patch to add a verbal error for it instead?
+> 
+> commit aeeaba6dfc68a1c89af90c12f36cb8fe48faecfd
+> Author: Peter Xu <peterx@redhat.com>
+> Date:   Thu Dec 11 11:19:44 2025 -0500
+> 
+>      kvm/stub: Provide explicit error for kvm_create_guest_memfd()
+>      
+>      So that there will be a verbal string returned when kvm not enabled.
+>      
+>      Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   accel/stubs/kvm-stub.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+> index 73f04eb589..01b1d6285e 100644
+> --- a/accel/stubs/kvm-stub.c
+> +++ b/accel/stubs/kvm-stub.c
+> @@ -123,6 +123,7 @@ bool kvm_hwpoisoned_mem(void)
+>   
+>   int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
+>   {
+> +    error_setg(errp, "KVM is not enabled");
+>       return -ENOSYS;
+>   }
+> 
+> IIUC it'll achieve the same goal with better layering.
+> 
+>>
+>>> +        /* TODO: add huge page support */
+>>> +        fd = kvm_create_guest_memfd(backend->size,
+>>> +                                    GUEST_MEMFD_FLAG_MMAP |
+>>> +                                    GUEST_MEMFD_FLAG_INIT_SHARED,
+>>> +                                    errp);
+>>> +        if (fd < 0) {
+>>> +            return false;
+>>> +        }
+>>
+>> how about just removing the fd check here because ...
+> 
+> We needed it because at least the stub returns -ENOSYS..
+> 
+> I can remove it, but I'll need to change below to "fd<0" check.  That I can
+> do.
+
+yeah, change to "fd < 0" looks better.
+
+> Thanks,
+> 
+>>
+>>> +    } else {
+>>> +        fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
+>>> +                               m->hugetlb, m->hugetlbsize, m->seal ?
+>>> +                               F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
+>>> +                               errp);
+>>> +    }
+>>> +
+>>>        if (fd == -1) {
+>>>            return false;
+>>>        }
+>>
+>> ... the existing check can work for the guest memfd as well.
+>>
 
