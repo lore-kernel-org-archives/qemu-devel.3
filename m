@@ -4,94 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AEDFD49217
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 12:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A25CDD49220
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 12:29:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU1rI-0000uj-LD; Fri, 12 Dec 2025 07:02:52 -0500
+	id 1vU2Fj-00080L-Rp; Fri, 12 Dec 2025 07:28:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vU1rA-0000uF-N2
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 07:02:44 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vU1r8-00073Q-Or
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 07:02:44 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-47775fb6cb4so8987895e9.0
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 04:02:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vU2Fi-0007zb-Md
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 07:28:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vU2Fg-0008SI-FX
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 07:28:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765542482;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NGD6DjWKFhr6c+hpng/cFU4bJ8Nu2AKenLwZqiR8yLQ=;
+ b=geAULHyEbSBD5v6CauGAYiKE8DdXRf884C4jSyF878w9YaFjI3SOxMOpgu49qCv36TT6DK
+ v7BbUkScZXv6eoSAuAW4aeXFnYFOQ/+6GJlYxAHl1DBR+PQdah1XN9SK60ZccO6MYsaKQK
+ tw+P0IzdgtKJnFZeOanlL4oBs7sSHMU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-551-YZQ8CcdAPVWqjdyDwmucow-1; Fri, 12 Dec 2025 07:28:01 -0500
+X-MC-Unique: YZQ8CcdAPVWqjdyDwmucow-1
+X-Mimecast-MFC-AGG-ID: YZQ8CcdAPVWqjdyDwmucow_1765542480
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4788112ec09so7527685e9.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 04:28:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765540961; x=1766145761; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KtbjbGtJ0bAX1CUydxCTuVm5sJW1YSTK8SfA91tBag4=;
- b=rZw6pgaXloxZSwvXDKkHwgRbDfcp7EYU9rZbfHv9yMy9M8e8t5IAh3aB1deM4+ivHu
- 7JEQLJK/gKAFm4Mj93vkydCEDyHZ+dWtyJ/IMLgEA794GKURosiKahVnYPe2fTJ6/jFg
- zIPIFq8bZZArkUgMQQlW5LTFiuP8MY61+gA8qu7rnfOTmF6w1ftS1gP0hvoIindolVp1
- khrD0oN02lbwpnVdFH8TX4UOseq4JA2jXg9g3d6aiu5n9lixUlKBBNz7stLw4jin9Z8F
- msTaWVaNx9FLHJlim1GESK1UPZY8frBHIu0ZBB/1xu5zwmVNjVleP70K0gcPUfulIiP1
- uAOg==
+ d=redhat.com; s=google; t=1765542479; x=1766147279; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NGD6DjWKFhr6c+hpng/cFU4bJ8Nu2AKenLwZqiR8yLQ=;
+ b=X1qcRowRXRXpuQMkxEtWaEchrN0mxT4oQEzS6eNU8iPBC5tzFHQopkPjQDktDh9mvI
+ I060m8bu8VMMVBcWopq5fba3MYn7fDZM3rHEyPuGNUH0sbvadNonsnvlDHcvTVg+uhsA
+ 3R2Dw/vRzPHlgCv6hpDsXgUgxMK33NU7DYtLsNuNjy4CqYo8WhTKzGpLa4+Omugd5rBk
+ rHE5cZ30wdCQlzrLUg4BVjLphspD1/ndjTzTE2Fci6oCb9esA36UqL54/mjaD7ngh0EX
+ 4lXfbEV1PhZjcCNeTZ/2fEtKhKgV362KrscCFKNlnRxVMjaKXBq8KwEGJ6ui0eu3YUrf
+ K9RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765540961; x=1766145761;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KtbjbGtJ0bAX1CUydxCTuVm5sJW1YSTK8SfA91tBag4=;
- b=pZsXYDsYoK0IueVwi4S3GhoQBgxnzn0tATkmqRXTd9XKVnEpl+Uyy92VWOKWCouP4J
- D+wwqOxI2yWyvZuYYxyefyU0oOXuEWSaTf12O0jWD7vbWYo1s17y07A4MsxSUMuP+QIj
- VezrfO3hYuVW61NXCNQYdT71tu6T76bkvy+UkvUQtu/vouWKjeFnT8vI3j4udnDQQOaZ
- HDR7gaEOuYOi6U00vKuivi6pGLql6q0I34IsJW/gO0PnitsiJ0HDBn/LLy6mIgPhN/0V
- D54N9pIl3Dv4644kF+dG1pFGRU3vmZUJJmD1mPXfg07rSiV/h+NEIiWpHn5LBg69KgOC
- Uu9A==
-X-Gm-Message-State: AOJu0YzWAd8915fF91l/1mCdB/ztSS/qf2qDSAG2msxKGuY9IdWUG78e
- WG7vYqsQw+rIkj7phAXMv7YLqbCBd8SSkejoCZ84RSlvhO+GtwasryDp0fgII1mx6AU=
-X-Gm-Gg: AY/fxX7YuW+9XygELcVteqUXBD4Omp5848Grd5On7J/pVl8npye80U1tIHDtArOKfs/
- F4LvccaMo1MQ+owQj/BCFFOwUHvycQebIh7u/U+kLxU61m+osLQpFY1kBQIwzNhsMfoHGD67EIM
- h9tk8pyBTfQUd1s1vATKCUldMWGG4rDDnv59cE3J8oX8GX7iGuQK9nlw/857XF+5oMth5z+zi6y
- yPJ7ZTTmWy/49dlDTlur3tA3UMVun7fPGE0FbI3Km8EyuLih3Yh0sTLgZf9pC/LXhcP4FM+1uiX
- AHA4+q54Z7vcs87wrd3Y+V+m0p8MtLv/HVMM03O/HIkqlHi9l7cX6CbYV6maaVcM8hPVeaIpIVX
- bc/NpusT5Xnl96jbHebkQmkH8xGuQ+QMIVlZTysY6voDUBvOPVATaNkASEuYjT7te4HsmFfpL1K
- UYtBq+XesliiM=
-X-Google-Smtp-Source: AGHT+IGiHMRS9WJPLmKRkiPrWI23/jgsMZxuY13i2wQ1DzjsqbB/LCBvL1J3ZVCrTcim9N+fD7lCyg==
-X-Received: by 2002:a05:600c:34cd:b0:475:daba:d03c with SMTP id
- 5b1f17b1804b1-47a8f8c1d1amr18723065e9.13.1765540961073; 
- Fri, 12 Dec 2025 04:02:41 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42fa8b85d1esm11395147f8f.26.2025.12.12.04.02.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Dec 2025 04:02:40 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7A67E5F82E;
- Fri, 12 Dec 2025 12:02:39 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
- richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com,
- berrange@redhat.com
-Subject: Re: [RFC PATCH v2 0/2] Enable PC diversion via the plugin API
-In-Reply-To: <f06e2059-9d86-4a5c-acff-84cbeabcfb06@epfl.ch> (Florian
- Hofhammer's message of "Wed, 29 Oct 2025 16:57:49 +0100")
-References: <e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b@epfl.ch>
- <f06e2059-9d86-4a5c-acff-84cbeabcfb06@epfl.ch>
-User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Fri, 12 Dec 2025 12:02:39 +0000
-Message-ID: <87ikebucv4.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1765542479; x=1766147279;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NGD6DjWKFhr6c+hpng/cFU4bJ8Nu2AKenLwZqiR8yLQ=;
+ b=D7qHZpVU/yFV3oYWbVrlCSUGDPhjYC7YX4W6nrZ/XSYCMmvGlXloEB6AJe4BkFvNjg
+ ynOtilbnfauPaXBt8+FxG8o1/XN/0ITs/zbNACM+uAwkZTxvyFsRMUwCvT9JqB944a+d
+ KDBJrDRZ7mygwVq2BeDcVr40sN4W4dWMXvcaI3WozV6vagrDDZVHkZzd4j4Syz3VM/8P
+ v4OY+3hH7/6MKbxzzfUs8ke92HK9/ERjoP0uGuoYGpGjp3N0yU/lqDlv/C0x4+jY2Ws7
+ qTJzaeITD1GU72T88ugrFKc9aQYUgyarSWC5amgs/kAbeVJABQJFMmzcND6BitAJsVWq
+ cH9A==
+X-Gm-Message-State: AOJu0Yx3i+uBf9osQU17NFVwGxDXdfchL2WgayY8ltKWFXGSIaw+AqxW
+ nNguCiH/aY7AwLLHwzLRVezJRnye4DJp/TuxrMr1XjdNIZCuW3O6zQexZhI2nvFuR5+EHGkfx21
+ ljorw8aHt1Hum5+5Gu7iX2ozI5kyEl6HZ3Xc/NWTG+5awECLghZoeByTEekDeF1PBm2w=
+X-Gm-Gg: AY/fxX6r+CCdHInGwAY/ahEF5bxHoS7A26hCLfrdV3ctM82t3KD0Y9P2QSzd6ME0r17
+ /We+NhGlvVFtzWZPzLBr5r8xMZ90dRCOgfYTFp0Z7a1yS8zrTd621njNIii1eqR43EZhvIhLzAo
+ hlZVFpozzIaZz0tIhsrXThEw+wvqGds69mhxGX0UDVjzf86s85Hu8jg0uu5u6ilQOKznuBWcFAg
+ FpVWKV0zFQPQxnXreiakD9TglmdgZWrlwXZtM2vBGi5sG0fWsrvNUVx3qJ2VoL7lbVDdC5yVcFE
+ Lld/nXDlsNBvr3vk/jmNvbcpcRxewTsR4K1+APh8V6LCOg66fWt4bkYhbZ2svnq3W01CsnWxvKU
+ kqkPjrcpiBUn1HijsKHxO2CKyZGjI0Q+OfFnvIEoA23E4+E5WUevBYFIr3nFxyy2UwqvzTXmMqf
+ Q/qE0cX1X6K02UbOXuhSkoahDzYFSQer1Bew==
+X-Received: by 2002:a05:600c:6814:b0:479:2a0b:180d with SMTP id
+ 5b1f17b1804b1-47a8f8c47cdmr17199775e9.11.1765542479444; 
+ Fri, 12 Dec 2025 04:27:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHsvPyHVrozhDDqAC0txNECiWYMkCgBsm/R1dXh6bs2NzeEiOHvmPF6ykSza5j/ed3ySuMJSw==
+X-Received: by 2002:a05:600c:6814:b0:479:2a0b:180d with SMTP id
+ 5b1f17b1804b1-47a8f8c47cdmr17199615e9.11.1765542479090; 
+ Fri, 12 Dec 2025 04:27:59 -0800 (PST)
+Received: from ?IPV6:2003:cf:d717:1fba:423c:67:1f5d:bd5f?
+ (p200300cfd7171fba423c00671f5dbd5f.dip0.t-ipconnect.de.
+ [2003:cf:d717:1fba:423c:67:1f5d:bd5f])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-42fa8b8a9b9sm12282766f8f.35.2025.12.12.04.27.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Dec 2025 04:27:58 -0800 (PST)
+Message-ID: <fc0ba727-fa9b-4b5d-98d0-16725533706f@redhat.com>
+Date: Fri, 12 Dec 2025 13:27:56 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-10.2] Revert "nvme: Fix coroutine waking"
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, =?UTF-8?B?THVrw6HFoSBEb2t0b3I=?=
+ <ldoktor@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Fam Zheng <fam@euphon.net>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org
+References: <20251212102522.38232-1-hreitz@redhat.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20251212102522.38232-1-hreitz@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,91 +128,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
-
-> Hi,
+On 12.12.25 11:25, Hanna Czenczek wrote:
+> This reverts commit 0f142cbd919fcb6cea7aa176f7e4939925806dd9.
 >
-> Sorry for necrobumping this thread. I just wanted to follow up on this
-> and ask if there is still interest in this plugin API extension or if it
-> is going to be dropped in favor of the Lorelei patches (which would also
-> fulfill my original use case).
-
-These are the system call filter patches?
-
-I guess that depends on if being able to change PC is only for skipping
-syscalls?
-
+> Lukáš Doktor reported a simple single-threaded nvme test case hanging
+> and bisected it to this commit.  While we are still investigating, it is
+> best to revert the commit for now.
 >
-> Thanks for your time,
-> Florian
->
-> On 06/10/2025 15:21, Florian Hofhammer wrote:
->> Hi,
->>=20
->> As originally discussed in the thread at
->> https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00656.html
->> and later proposed in a patch at
->> https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg02218.html,
->> I am sending an updated version of my patch based on the previous
->> feedback.
->>=20
->> Notable changes to v1:
->> - Added a setjmp() in the syscall handling path to allow redirecting
->>   the PC via cpu_loop_exit() also in syscall callbacks. The previous
->>   version would only work in instruction execution / memory access
->>   callback contexts, as the setjmp() corresponding to the longjmp() in
->>   cpu_loop_exit() was only live in those contexts.
->> - Added a flag to make sure the new API function is only called in
->>   contexts where it makes sense, i.e., during execution of guest code.
->> - Added a test that checks the new functionality by skipping a
->>   non-existent sentinel syscall.
->>=20
->> I made it an RFC patch this time as I am not entirely sure if my
->> setting/handling of the new flag makes sense the way it is. I briefly
->> looked into making the QEMU_PLUGIN_CB_* flags actual flags via a
->> bitfield instead of enum values, but that would have required touching
->> a lot of code all over the place, so I'm not sure this is the way to go.
->>=20
->> Happy to get feedback and your thoughts on the patches!
->>=20
->> Thanks,
->> Florian
->>=20
->>=20
->> Florian Hofhammer (2):
->>   plugins: Add PC diversion API function
->>   tests/tcg: add test for qemu_plugin_set_pc API
->>=20
->>  include/qemu/qemu-plugin.h                    | 15 +++++++
->>  linux-user/aarch64/cpu_loop.c                 |  2 +-
->>  linux-user/alpha/cpu_loop.c                   |  2 +-
->>  linux-user/arm/cpu_loop.c                     |  2 +-
->>  linux-user/hexagon/cpu_loop.c                 |  2 +-
->>  linux-user/hppa/cpu_loop.c                    |  4 ++
->>  linux-user/i386/cpu_loop.c                    |  8 ++--
->>  linux-user/include/special-errno.h            |  8 ++++
->>  linux-user/loongarch64/cpu_loop.c             |  5 ++-
->>  linux-user/m68k/cpu_loop.c                    |  2 +-
->>  linux-user/microblaze/cpu_loop.c              |  2 +-
->>  linux-user/mips/cpu_loop.c                    |  5 ++-
->>  linux-user/openrisc/cpu_loop.c                |  2 +-
->>  linux-user/ppc/cpu_loop.c                     |  6 ++-
->>  linux-user/riscv/cpu_loop.c                   |  2 +-
->>  linux-user/s390x/cpu_loop.c                   |  2 +-
->>  linux-user/sh4/cpu_loop.c                     |  2 +-
->>  linux-user/sparc/cpu_loop.c                   |  4 +-
->>  linux-user/syscall.c                          |  8 ++++
->>  linux-user/xtensa/cpu_loop.c                  |  3 ++
->>  plugins/api.c                                 | 17 +++++++-
->>  plugins/core.c                                | 25 ++++++-----
->>  tests/tcg/multiarch/Makefile.target           | 42 +++++++++++++++++++
->>  .../tcg/multiarch/test-plugin-skip-syscalls.c | 26 ++++++++++++
->>  tests/tcg/plugins/syscall.c                   |  6 +++
->>  25 files changed, 170 insertions(+), 32 deletions(-)
->>  create mode 100644 tests/tcg/multiarch/test-plugin-skip-syscalls.c
->>=20
+> (This breaks multiqueue for nvme, but better to have single-queue
+> working than neither.)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+I’ve tested this on Lukáš’s system, and there is no hang with this 
+revert patch applied.
+
+(For what it’s worth, the hang only seems to appear when writing, which 
+is why I didn’t see it when testing myself.  I can’t really overwrite 
+the only “testing” NVMe SSD I have, so I only tested reads.)
+
+Hanna
+
 
