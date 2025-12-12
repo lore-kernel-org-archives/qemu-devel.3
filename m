@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0451D4417E
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 11:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1083CD4417F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 11:28:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU1HH-0008FT-Di; Fri, 12 Dec 2025 06:25:39 -0500
+	id 1vU1Jh-0000ny-Eg; Fri, 12 Dec 2025 06:28:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vU1HF-0008F0-Km
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 06:25:37 -0500
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1vU1Je-0000nJ-NZ
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 06:28:06 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vU1HE-0003ZR-79
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 06:25:37 -0500
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-6420c08f886so1385625d50.3
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 03:25:35 -0800 (PST)
+ id 1vU1Jd-0004oC-AV
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 06:28:06 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-78c6a53187dso12445747b3.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 03:28:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765538735; x=1766143535; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765538884; x=1766143684; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UxqKg5s8Al0h2fuMJwkiYl9DaPZKPgEyWkG6YU95v3I=;
- b=KtI9wfq8ju+pWlV5q54N7Wi+5igYeBc87L/jrCV6VYOJVRYXq9UI6evylfskVl4lKM
- IlCZChvYuLCDEBo26glVcfnFZnQBLdCrao7KyxIip5eI/5acJqzntdQIt+7Jh31CWFWr
- 2Tq/o/ilZ7fBveECwU6MSp+Hv7QxGLCSfN4u/CU9eGbHyfEgYlIggZBYxjg48a0Vaa2A
- lCfIdPyY08tPHGElxXNkh7LAkmpw1mAlyEptf+6PNd4cvN2MVSyduaUaelK71WePCkxs
- rNGL3NiGDCxE8ZJ0+r2ZjnekT9cj1HcnuPjQrtGdBRSbP1M+fxvPJt2Z96xDZeeH9vpx
- 51Mg==
+ bh=5A9tvtqhF4HMLMh3qrPhM5DGlPTfzYv4OEKX4qNB37U=;
+ b=Eg3HyNvg2nm6zH6Kwp/z62Ax1WUyyRz0fsMWs4K28TztsvsOXnnJSyW5dxOTeSQ+7k
+ WZ0t4zGKJ/L8/85e5bOsGeeq88u7l7vJixoRBwA9aI6TuC85mgySbPCTpiN/l8nVT9yu
+ jrsydJsbwYcCgRM46odIgxoRXie7g76WgQUmiZHZc5wTQXWaThC18bglLvYESk/gpK/L
+ muP3IO7sBKt3sic7AOXpWsKj1o/Lx6hJOFDS8AFQ7+9Ck1v6uevKoIKPeg4lXdwXjGJw
+ 5+rsbwxiei4bihlXr+ovsPmPQBetXm6qWklMXChyTl9A6lbsqrTjYfF4RWKMj6L9Ltzk
+ j24g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765538735; x=1766143535;
+ d=1e100.net; s=20230601; t=1765538884; x=1766143684;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UxqKg5s8Al0h2fuMJwkiYl9DaPZKPgEyWkG6YU95v3I=;
- b=U0DrELemP1Z8p80KueVJg9UFygHmCZlyPLkgtQ5cqr6Cmc0dE13yHiKYDQtgS6MOrg
- ClXmjnJKRv96k3KP/tozfV53Obybq56inPcqHAtXLEhFhXUqFt5Y3o8k2b9hMohRk7w1
- omOnbUhUNhmCglPkhyYHspYaMzED6z9LkoU3ZpIwFrqbuMLBScwELMn0cYXQkIJRH224
- ooRSQfaqMNPWujUeL39rWuA0GAsJEbh7GG0c4sfYyRgrGPcKwlkbcnW43l0p6ZEKopBw
- QdxbBnsEDgvrvw/60QO/wiQBCrHHaHiAsRlA3wld/KbiGC6ZNSFR53yzem5DOwD3BEde
- KnPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVyiNgI05WFgi7d2Qg0pGsz+1rwGfTiqQw1emu1SvgOmuuCtwr+Sy1yfrIvogRTScCLRaBj91WWH0E@nongnu.org
-X-Gm-Message-State: AOJu0Yz9zmVKEEPq+RW/fq8Uy7c7mCC6OpYVf4hJPFfEzNC3OzOroz7G
- hcnh1MMmna1xBCGocEVqGcBi88JR6tjtdKTl6LoipjM3ujy913yRZiGsKs7hrdDTLTNGKPGJu2l
- FF5KqCX+vjLBXCQxsni13Px1eTkZSvPtiqiqzHT3ZBA==
-X-Gm-Gg: AY/fxX76C6l78XHFvBWHUVDpP37yzqWRSDJ31lDO3qN1fChHXPdGyD/VG0F9NMJKKfy
- FMcHXzFldzqw7jzJeZ7ngJcHz8CbCl2Kad6DPvr5c6E/fhY7+zAdgH0bi5l6HO9wwmICHvD5Ihg
- RVQv8oBWSVQi2G0GZ+qeZ86keaRs6rferxUYxwrQs3ivawo4Y/umHHV5O514+aeCeLmMXbhdl5s
- 1zeVIdeNs/TUZMkcAFQnKxEVCwLHG+WKRUaoFbEK1mgtrdr7jL7fkZgLDJl9PECW7uSh3Fy7tHb
- yFUF7UY=
-X-Google-Smtp-Source: AGHT+IH7cbx7kgSyF1N+bhXCiFk4Jet2Ymw60Y9+2A/ty+gvs6SsVq3zmDGxdHlmIGOrIsmB0gU4mJ5ENgaMjrjMkuA=
-X-Received: by 2002:a53:c98b:0:b0:63f:9b89:8893 with SMTP id
- 956f58d0204a3-6455564f1dfmr1191874d50.52.1765538735072; Fri, 12 Dec 2025
- 03:25:35 -0800 (PST)
+ bh=5A9tvtqhF4HMLMh3qrPhM5DGlPTfzYv4OEKX4qNB37U=;
+ b=KcrMJ6zBAopr2rdQXBodK/ETiXDKQm8FMtKTVWGBHgp2UvzmN4Q+dJO6QYjE28KrQx
+ M9nZjwamtQuPKpv1+t5sF6wKvkDPgWSM50S3fYoERAilX5I4SOd0l6q2eKs+4bB6X/YD
+ 4nCyBeLVL37f4WerpHO94NCLPjb+e6jO4Sz6iMHuoCkMXpqOmx2fsRedHRL4v3qs46MG
+ fpGHUlQqqXs1sj+diFxKAtsRkIMzz+KOaQM/n7fxPFkQz4Swldi0QVekILUFE15Xpipf
+ XRP30dAtN32pcZYrj54xOzb/HWsjZLKBeD9ptAJqMvFHnhjHV0eI5RlNZ34aksI3cmfk
+ 0zxQ==
+X-Gm-Message-State: AOJu0YxhiDN22qxeBmMhP/T6c+BxMRPuUrTWJS6SwNVr0RfOaV8eqllW
+ xeGcF42a1gqvD4rkytM/L2PE5SseFeNpjUXcgDZ8jlCz5SAaqYOVvWJJJ/Zg1Eowqrh39vqQ/4A
+ rOmKaSVPOztwio7OU9rLZ4lRYgGEMtRz2gwAFyLTLxzHLDkF1lEzfMME=
+X-Gm-Gg: AY/fxX5CDWeiMef9xvJ3U5ms/l4mIpTqb1vylpfS0dmcLBaZxbJNQwY48hsDN2cicTU
+ QseXj30h0tZY3hDcrauHx5UnKqAe4CF3s1GOct69IVPi291HOuPqUTm+0aZ5/PsKP5iHEjIm9aM
+ jhqyY4K7Ofr3EfLWZT4Ln6edmxnKvViK5hNHppWiRBVqqdS4/M1mASJGqGPMs8zs93r0p/aae1m
+ TRuNRwzMDnJ5pQ9CsieLHWWB0YuO8wgI9YI323KcAkkR9FitDH9x+P2KZT7L3BCytbfQKup
+X-Google-Smtp-Source: AGHT+IFS1i3bl3bNUWn05wGAeBvqDdQGWYb09SAnoaQ9zO5BP7v5OvQORHCSAL7LP3X4BcjmT3NUjoIscv/wrvEJeAg=
+X-Received: by 2002:a05:690c:338a:b0:786:5379:af95 with SMTP id
+ 00721157ae682-78e6694fba5mr15483607b3.3.1765538884241; Fri, 12 Dec 2025
+ 03:28:04 -0800 (PST)
 MIME-Version: 1.0
 References: <20251211180132.3186564-1-alex.bennee@linaro.org>
- <aTvPDXZjfp4_egTa@redhat.com> <87zf7ot170.fsf@draig.linaro.org>
-In-Reply-To: <87zf7ot170.fsf@draig.linaro.org>
+In-Reply-To: <20251211180132.3186564-1-alex.bennee@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 12 Dec 2025 11:25:23 +0000
-X-Gm-Features: AQt7F2o3P_wI9W0nHRsnnWNobQehUbrYnho0Vt4J-eJAI18Hest3x-y8Zt3U9Dg
-Message-ID: <CAFEAcA8X04aDqKO0S1cq-7V=4JbjaRQ4CTQhPh8CRxUKMxHE6g@mail.gmail.com>
+Date: Fri, 12 Dec 2025 11:27:52 +0000
+X-Gm-Features: AQt7F2rydNgvGHhenyEPUW_tSZEZ5-dlklw9zupeuY5_Tm5PuZZ1qpC4zRBgsm4
+Message-ID: <CAFEAcA9bQmRaptjE5xDLoMKUW9aN9VvWmNF1MbrsPZj4yxd6gw@mail.gmail.com>
 Subject: Re: [RFC PATCH 0/9] for 11.0 conversion* of get_maintainers.pl to
  python
 To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
  Thomas Huth <thuth@redhat.com>, 
  =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- John Snow <jsnow@redhat.com>
+ John Snow <jsnow@redhat.com>, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,16 +98,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 12 Dec 2025 at 11:00, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+On Thu, 11 Dec 2025 at 18:02, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
 te:
-> We can certainly add the ability to dig through git but to honest those
-> doing archaeology are probably better off reading the logs. The default
-> it just to match paths to MAINTAINERS which I think is what the main use
-> is. It's not called get_git_blame_info.py ;-)
+>
+> *incomplete
+>
+> I wanted to look at adding gitlab tags to MAINTAINERS and baulked
+> slightly at figuring out what I would need to change in the perl
+> script to cleanly handle it.
+>
+> While we imported the perl script from the kernel I'm fairly sure we
+> don't use half the features it has and as us grey beards age out less
+> people will be willing to tweak it. Consider this a proof-of-concept
+> for discussion about if it is worth perusing this path.
 
-The default of the existing script is to start with
-MAINTAINERS but to fall back to looking at git if
-there's nothing in the MAINTAINERS file.
+I think it would be interesting to know if the upstream
+kernel folks have any plans with get_maintainers -- they
+recently did a big conversion of kernel-doc from perl
+to python, for instance. I've cc'd Mauro who might know
+if anything has been proposed similarly for get_maintainers.
 
 thanks
 -- PMM
