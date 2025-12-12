@@ -4,98 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F412FD4921E
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 19:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 173D7D59D95
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 21:27:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU8Qa-0005kO-Vs; Fri, 12 Dec 2025 14:03:45 -0500
+	id 1vUAew-0006aP-QM; Fri, 12 Dec 2025 16:26:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vU8QX-0005ii-0S
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 14:03:42 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vUAeu-0006ZH-H5
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 16:26:40 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vU8QS-00021a-3p
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 14:03:39 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2a087b2a9c0so4169025ad.0
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 11:03:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765566209; x=1766171009; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Rsxp6xlgt0RPkQg3/SWc27vLJkj2JFC3MNg45WG/sOc=;
- b=BPF5QIquw4+2VSyxYxZzBjMytLTV7RNBr0qgjBl6CuRakHpEUEmQIJHABnYK7T707p
- 62GFzfwwFQb5XwEw7d+iPnWO808hEDBBQQvO3xr97vJD3HVTJShX72nP2PRB8ytetBw3
- CTU7HHB+406F/ipwJyA7IDQY9fUmybz9yqdwqsAO3yPFNvD6Ke6HghXvQDbozR6p4Ivd
- RBEWP3xqH2w0ITcVQ6R3MygIX3F4QZ58uKhRJtkBLqqgr5Qf2frAMKHKB6Gdljy0nbEH
- fS8PUXdrHSgab4HUqJWqAKRTt7Li3qUhNTGvrAIl953tRytbkoP9iuipeMJ8nXHOKKaB
- rfVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765566209; x=1766171009;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Rsxp6xlgt0RPkQg3/SWc27vLJkj2JFC3MNg45WG/sOc=;
- b=MIwMDY/OSIIAeOV7el61swBYC//1fAcMjmJa+pQkkIkYUc5SqiGDFtRid6lJaHvWqz
- ENSKroPb3uOKSmytVbwE2QVFp8curBa+/r+2gYnK7okEy9wPWPfEYvUtrTGH972P6aXJ
- /2eeIK35pYehwlR8Bwpp/GkIdGGJ6TTI1HAKe9mABkFcoOnKbPEvlK4JYFC9LVLJlqOr
- 0WG6MeI6WCZM1aEazDieIa4hY1L/h0LAXAKFlm6PhLIqcT3NNW4ATUHc+DMOy/Zi6DwY
- HgC7jrTD/3sRB/IjdZo3Ugj2E5WZq47is6yXKP/VUPFzFAbY/n3VIfznOQY/Pqmbyfcm
- cNrA==
-X-Gm-Message-State: AOJu0Yw6xIg1wafUxTInMaA2ulz3600Ry6Pqk+bJT8V2JjL3KzWelpnA
- yYWWCL/2b2pGfxioawUQndkoxcwtEZCXq6Ew42sV51/1L2esQ7KdcRjAtIjXMLpwOek=
-X-Gm-Gg: AY/fxX7y2y28x8FNOtHi3juzHqdBz8m+c+GZdiQHF3kt2Zcbj+sppSA2NHFHNLEgVq9
- Q90DoHZQOiC37PmWGNk+811Whvy+8gZDsNKGKGS87X5Wh9M5gJjRZyUSHNIVUGtBaF3PGD9u8pc
- 0nIfCJLwn13NpOi1eUNB+fyVCw+uMJ9m1nJNAb3HvXo3uEyFTBSbBoDgScNDlp+1nEhlCbsuntJ
- cYUMJVD4v54t8ypH9aWHxLuzxUlwUz98ITgdByEbamFSSbjKRVEVyhRonetJACSuibNRnFs4eHp
- ZoVH+7VuiYIqoo5xXkS991ctsNWeL4ECHZZdj2BTRlxKjh1XNfW8djDT5/qhMV1OrHfatHfgaMe
- BbIp/zkIbvDvZXag06w7bqA2E6P3xRek2vtFT0J81UTuEcTKh6g28e6G/PFjFBb5H2UmUruvwnM
- F9oJQN+N3lxh5DeK5nGS86ZoyLlZjaSVKvq9ef4Gb7HI2/FKyoYlw8RIE=
-X-Google-Smtp-Source: AGHT+IHyFYIgxAhhnt40Y0gXri6aldszHBhhhbeMX1h9XoUlvTF7/MCvXbwxXQvuB7apUNFmlh9BvA==
-X-Received: by 2002:a17:902:f68f:b0:29f:2b8a:d3d with SMTP id
- d9443c01a7336-29f2b8a256fmr19017985ad.4.1765566209351; 
- Fri, 12 Dec 2025 11:03:29 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29eea04038dsm61147405ad.76.2025.12.12.11.03.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Dec 2025 11:03:28 -0800 (PST)
-Message-ID: <cbc9fb41-6d66-4265-ac8a-1e10b01d9f83@linaro.org>
-Date: Fri, 12 Dec 2025 11:03:28 -0800
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vUAes-0006a8-GB
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 16:26:40 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id B625E33696;
+ Fri, 12 Dec 2025 21:26:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1765574796; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+0A06cF7I5UP/VBr+lEisLZkWfnv9ku1yUfhdy4TGoI=;
+ b=PWlsX/TZ4Xp3pXFdtfPBLY2R0QeNHVf6slcRce9S+4w/lzCRWiVotAToL3MjjOhIhfwxCC
+ 2mKTRASSlx388m0CODGmt+Nxu6fmbKIBU525eXw0vijHn/nIIXRkOwiHS2LP8qFrr6L73v
+ NA0esnTRzc9QjU0lSXc1vH/+uWgdq3Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1765574796;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+0A06cF7I5UP/VBr+lEisLZkWfnv9ku1yUfhdy4TGoI=;
+ b=rkKzTgGcDgNR0nikxtW+xSzNl3VaHimMdVrzboMHSWiix0k0MAzPck6p3H7klcymbWVmwG
+ 5OnIfYe/8XcgmTDQ==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JFba8xQf;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=FYFC9LsA
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1765574795; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+0A06cF7I5UP/VBr+lEisLZkWfnv9ku1yUfhdy4TGoI=;
+ b=JFba8xQfwRWQLgeTvPGGFfZH7GkZua+ck2+0kH4aSoLf4YhmdzNJxUVfOnMZjpA2hANiHX
+ yZ+idBE2UoSaXQLgWsTvai5WyZcazFUdqjZ+oQ/+XbYU3SMmkJtyOTiegikiUPw1VSYZks
+ p8hGp5rD6bqQIgyjt+GGeSQcMnhe18s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1765574795;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+0A06cF7I5UP/VBr+lEisLZkWfnv9ku1yUfhdy4TGoI=;
+ b=FYFC9LsAKq53PT3TmMfu7eh6tzrJyeBHMLGFRbxT/KM/A1arms5rkRwMnuQ/DPuhAMuoK6
+ S9QASJYWCfU0rQBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 253823EA63;
+ Fri, 12 Dec 2025 21:26:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +XdCNYqIPGknOAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 12 Dec 2025 21:26:34 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, Kevin Wolf
+ <kwolf@redhat.com>, qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Peter
+ Maydell <peter.maydell@linaro.org>, Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Subject: Re: [PATCH] migration: Fix a possible crash when halting a guest
+ during migration
+In-Reply-To: <5b510f3b-796a-45fb-a63f-e87b02dace61@redhat.com>
+References: <20251208135101.271417-1-thuth@redhat.com>
+ <20251208144525.GA1341938@fedora> <87jyyxkna0.fsf@suse.de>
+ <5b510f3b-796a-45fb-a63f-e87b02dace61@redhat.com>
+Date: Fri, 12 Dec 2025 18:26:32 -0300
+Message-ID: <87jyyrv1br.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/arm/ptw: make granule_protection_check usable
- without a cpu
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Auger <eric.auger@redhat.com>, qemu-arm@nongnu.org,
- Tao Tang <tangtao1634@phytium.com.cn>
-References: <20251211234426.2403792-1-pierrick.bouvier@linaro.org>
- <20251211234426.2403792-3-pierrick.bouvier@linaro.org>
- <CAFEAcA-G0QchOw_zXNwUq3KAAKJZggnpeXkt7ePBAUa1SD1P2Q@mail.gmail.com>
- <1c170d41-f291-4c1c-b87e-1dba64231991@linaro.org>
- <CAFEAcA-nqaFdKBTNrEpm9r7g00iN7KNb6XYP5gSr4Z2jJEWt9A@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <CAFEAcA-nqaFdKBTNrEpm9r7g00iN7KNb6XYP5gSr4Z2jJEWt9A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: B625E33696
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
+ ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[12];
+ MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,103 +136,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/25 10:54 AM, Peter Maydell wrote:
-> On Fri, 12 Dec 2025 at 18:09, Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
->>
->> On 12/12/25 2:35 AM, Peter Maydell wrote:
->>> On Thu, 11 Dec 2025 at 23:44, Pierrick Bouvier
->>> <pierrick.bouvier@linaro.org> wrote:
+Thomas Huth <thuth@redhat.com> writes:
+
+> On 08/12/2025 16.26, Fabiano Rosas wrote:
+>> Stefan Hajnoczi <stefanha@redhat.com> writes:
+>>=20
+>>> On Mon, Dec 08, 2025 at 02:51:01PM +0100, Thomas Huth wrote:
+>>>> From: Thomas Huth <thuth@redhat.com>
 >>>>
->>>> By removing cpu details and use a config struct, we can use the
->>>> same granule_protection_check with other devices, like SMMU.
+>>>> When shutting down a guest that is currently in progress of being
+>>>> migrated, there is a chance that QEMU might crash during bdrv_delete().
+>>>> The backtrace looks like this:
 >>>>
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>
->>> I'm not 100% sure about this approach, mainly because for SMMU
->>> so far we have taken the route of having its page table
->>> walk implementation be completely separate from the one in
->>> the MMU, even though it's pretty similar: the spec for
->>> CPU page table walk and the one for SMMU page table walk
->>> are technically in different documents and don't necessarily
->>> proceed 100% in sync. Still, the function is a pretty big
->>> one and our other option would probably end up being
->>> copy-and-paste, which isn't very attractive.
-> 
->> I'm not sure from your paragraph if you are open to it or not, so it
->> would help if you could be more explicit. Maybe giving a review is a way
->> to say yes, but my brain firmware does not have the "indirect
->> communication style" upgrade yet :).
-> 
-> Yes, sorry, I was too vague here. I was trying to say "this feels
-> perhaps a little awkward but overall I agree it's better than our other
-> alternatives so I'm OK with doing it this way" but I didn't put the last
-> part actually down in text.
+>>>>   Thread 74 "mig/src/main" received signal SIGSEGV, Segmentation fault.
+>>>>
+>>>>   [Switching to Thread 0x3f7de7fc8c0 (LWP 2161436)]
+>>>>   0x000002aa00664012 in bdrv_delete (bs=3D0x2aa00f875c0) at ../../deve=
+l/qemu/block.c:5560
+>>>>   5560	        QTAILQ_REMOVE(&graph_bdrv_states, bs, node_list);
+>>>>   (gdb) bt
+>>>>   #0  0x000002aa00664012 in bdrv_delete (bs=3D0x2aa00f875c0) at ../../=
+devel/qemu/block.c:5560
+>>>>   #1  bdrv_unref (bs=3D0x2aa00f875c0) at ../../devel/qemu/block.c:7170
+>>>>   Backtrace stopped: Cannot access memory at address 0x3f7de7f83e0
+>>>>
+>>=20
+>> How does the migration thread reaches here? Is this from
+>> migration_block_inactivate()?
+>
+> Unfortunately, gdb was not very helpful here (claiming that it cannot acc=
+ess=20
+> the memory and stack anymore), so I had to do some printf debugging. This=
+ is=20
+> what seems to happen:
+>
+> Main thread:=C2=A0qemu_cleanup() calls =C2=A0migration_shutdown()=C2=A0--=
+>=20
+> migration_cancel() which signals the migration thread to cancel the migra=
+tion.
+>
+> Migration thread: migration_thread() got kicked out the loop and calls=20
+> migration_iteration_finish(), which tries to get the BQL via bql_lock() b=
+ut=20
+> that is currently held by another thread, so the migration thread is bloc=
+ked=20
+> here.
+>
+> Main thread: qemu_cleanup() advances to bdrv_close_all() that uses=20
+> blockdev_close_all_bdrv_states() to unref all BDS. The BDS with the name=
+=20
+> 'libvirt-1-storage' gets deleted via bdrv_delete() that way.
 >
 
-Sounds good, thanks!
+Has qmp_blockdev_del() ever been called to remove the BDS from the
+monitor_bdrv_states list? Otherwise your debugging seems to indicate
+blockdev_close_all_bdrv_states() is dropping the last reference to bs,
+but it's still accessible from bdrv_next() via
+bdrv_next_monitor_owned().
 
->>> Also, the SMMU's SMMU_ROOT_GPT_BASE_CFG does not have the GPC field
->>> (it keeps its enable bit elsewhere).
->>>
->>
->> Yes, you can see in patch attached to cover letter this was handled by
->> copying this field.
->> That said, I can keep a separate bool if you think it's better and
->> represent better differences between cpu and smmu.
-> 
-> We could alternatively do the "is GPT enabled?" check at the callsites,
-> which then can do it using whatever the enable bit is for them. That
-> also gives you a convenient local scope for the config struct:
-> 
->     if (gpt enabled) {
->         struct ARMGranuleProtectionConfig gpc = {
->             etc;
->        }
->        if (!arm_granule_protection_check(..)) {
->           etc
->       }
->     }
-> 
-> 
-
-It's a good compromise. I was thinking about doing something like this, 
-but since the GPC is clearly in GranuleProtectionCheck the Arm pseudo 
-code, I thought it was better to mimic it.
-That said, I'm with your approach and will proceed with it.
-
->>>> +    entry = address_space_ldq_le(config.as_secure, tableaddr, attrs, &result);
->>>
->>> as_secure is an odd name for the AS here, because architecturally
->>> GPT walks are done to the Root physical address space. (This is
->>> why in the current code we set attrs.space to ARMSS_Root and then
->>> get the QEMU AddressSpace corresponding to those attrs. It happens
->>> that at the moment that's the same one we use as Secure, but in
->>> theory we could have 4 completely separate ones for NS, S, Root
->>> and Realm.)
->>>
->>
->> If I followed original code correctly, the call was equivalent to:
->> cpu_get_address_space(env_cpu(env), ARMASIdx_S),
->> because .secure was set in attrs. See details below.
-> 
-> The behaviour is the same, but the old code is abstracting away
-> "which of the AddressSpaces we have now do we want for an
-> ARMSS_Root access?", where the new code is not. I would
-> prefer it if we can keep the "how does an ARMSS_XYZ which
-> indicates an architectural physical address space map to a QEMU
-> AddressSpace pointer" hidden behind arm_addressspace() somehow.
+> Migration thread: Later, migration_iteration_finish() finally gets the BQ=
+L,=20
+> and calls the migration_block_activate() function in the=20
+> MIGRATION_STATUS_CANCELLING case statement. This calls bdrv_activate_all(=
+).
+> bdrv_activate_all() gets a pointer to that 'libvirt-1-storage' BDS again=
+=20
+> from bdrv_first(), and during the bdrv_next() that BDS gets unref'ed agai=
+n=20
+> which is causing the crash.
+>
+> =3D=3D> Why is bdrv_first() still providing a BDS that have been deleted =
+by=20
+> other threads earlier?
 >
 
-How do we turn that into a concrete implementation?
-
-Two ideas I can see:
-- pass a callback taking attrs in param, and return the matching 
-AddressSpace for it withing granule_protection_check. Clunky IMHO.
-- Duplicate this attr variable out of function with .secure=true, and 
-call arm_addressspace with it, and pass result to granule_protection_check.
-
-> thanks
-> -- PMM
-
+>>> It sounds like the migration thread does not hold block graph refcounts
+>>> and assumes the BlockDriverStates it uses have a long enough lifetime.
+>>>
+>>> I don't know the migration code well enough to say whether joining in
+>>> migration_shutdown() is okay. Another option would be expicitly holding
+>>> the necessary refcounts in the migration thread.
+>>=20
+>> I agree. In principle and also because shuffling the joining around
+>> feels like something that's prone to introduce other bugs.
+>
+> I'm a little bit lost here right now ... Can you suggest a place where we=
+=20
+> would need to increase the refcounts in the migration thread?
+>
+>   Thomas
 
