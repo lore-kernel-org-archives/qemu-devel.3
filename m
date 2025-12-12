@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB70D49232
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 15:07:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7529BD4922D
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 15:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU4hk-000295-E9; Fri, 12 Dec 2025 10:05:12 -0500
+	id 1vU4iC-0003Gy-E5; Fri, 12 Dec 2025 10:05:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vU4hh-000288-0H
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:09 -0500
+ id 1vU4i0-0002JE-Kg
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vU4he-0005v7-K1
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:08 -0500
+ id 1vU4hv-00064e-Ct
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765551905;
+ s=mimecast20190719; t=1765551922;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QEPt+WowIb7JNUH1z2t2M9hX2SLVHr72KxzuR57IAVY=;
- b=Y9nEdc2kjDpiOmK+LNDX9pKO8+Q7hLNl8z4/HexF5v1FqPKYnrTlQqJSAcUqPNXNEJtzOO
- DpFKVOvHLI/QLo8xK3qDK+4CWUcyLZe/bmY1E/OxlNlePZs7aPmEcReFcRO+5+HI63BXX+
- 9BpOZQA7wf9x0JaVbiwrdOxeCkHbMus=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AD5TvnPmaG2p4oioPCNypqz8ubpMGn5del8Os1RElwg=;
+ b=gAV5sMRWKK+6Zl6mA5Pqadxt92q5LWr6vNsHLpXXvJjXcvZfArhbytN9fst3Ttw8e0lInu
+ e4+fJ9SYeVp8pnOnFJ4u5wLd8V+gqK0kp2/Bk2APBOXhvOfAa+K+NHIKDrQvNhwiTBdOMS
+ kjJ/1in07IJ82V7kgwvfMBbrFRIRT98=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-353-Ej1sKfFBNliVaEGjcEklZQ-1; Fri, 12 Dec 2025 10:05:04 -0500
-X-MC-Unique: Ej1sKfFBNliVaEGjcEklZQ-1
-X-Mimecast-MFC-AGG-ID: Ej1sKfFBNliVaEGjcEklZQ_1765551903
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-29f25a008dbso6580815ad.1
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 07:05:04 -0800 (PST)
+ us-mta-303-lw3So-ehO5Kukz2avpCVJA-1; Fri, 12 Dec 2025 10:05:21 -0500
+X-MC-Unique: lw3So-ehO5Kukz2avpCVJA-1
+X-Mimecast-MFC-AGG-ID: lw3So-ehO5Kukz2avpCVJA_1765551920
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-297e1cf9aedso23819865ad.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 07:05:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765551903; x=1766156703; darn=nongnu.org;
+ d=redhat.com; s=google; t=1765551920; x=1766156720; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QEPt+WowIb7JNUH1z2t2M9hX2SLVHr72KxzuR57IAVY=;
- b=VS+wnfQbE1DiQXifXFKAwwlT4PCkMaN80ID12+Wk+mGWGHX5xSEQgBO/H7J/tSK6TX
- bQRFhiKxB91endqz+qg84Cxamap0PA76s5mSypL3Qe74CHIurSc71mHFg2SS+3VUuBdc
- dq5otvwHt4/qRVOmtUqUBT0U/i6nl3SCgF36j/IycX/YTqLwHw9CbqdqOxbZC/PstB2w
- Gt2IjGB5RI5Z3akg5T5LeXBTAEjHGTN+V/h1nERt3sYdLIG08bJkRETuMdWiJEBt3Wx1
- zv2BGuk0BmojPAmg9oea1ZNRwrAA9NZkYUR4VTLxObn1HazMArdiMDxzw4XIE7BqgZIZ
- nRsw==
+ bh=AD5TvnPmaG2p4oioPCNypqz8ubpMGn5del8Os1RElwg=;
+ b=hTguHqd6qToLlck9A9lBA63sGUVAOedLTZhMc4XC3lZyUndDJcw/xXlAGXpV0+z5so
+ qswi+yMkEIRzzgBqUFAviMdwpYANZKxjUwqGP1fhCC/ReqKaOQ8u//L3mLTD/V/Im6FU
+ F5LTEKe0Naof/7yWlpWz01Xdc+NHbUURhVcsaP+RgNwWtzUMUdDkseoYa96F9xzSBBJA
+ 9MxCsFAvI8+8BGg6C094gJ+gs2E4yveTGQIgBWbRAjILWF1ChOtrObBvdpWj8U2KYFUj
+ ITfO+MniLRaTTxD42Gp5ZrLw+EOkDgIzGbpjkdDajOYBV/bxVsymfp9TDaU7Aux7JP1+
+ VtvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765551903; x=1766156703;
+ d=1e100.net; s=20230601; t=1765551920; x=1766156720;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QEPt+WowIb7JNUH1z2t2M9hX2SLVHr72KxzuR57IAVY=;
- b=AMuZVbIZKm6RzMFxoBBuR067r0bnF5Ua95KuxIBG3IpoZ/FGIQNm8uOusv47rTOmRA
- vl4IbH8ej1s1ZSakDOXpBicY/Y7Yh2ieQN3PgtMJw2vsiZ3CmqDWcHNC0Qe+JLZI/1bI
- /sUPL/HiGM1daXIA6BMqyikQVOug8cyyZaxm+si2X5SrmXXEk0Uyp6Qheml0pHlFK7+D
- +2HncTIYm5+UFFSoVbzIoJ7HLW0w9ZqbpOOEbIKvatL8PBDeK332BB7JdfiDdILOj/1y
- NFexhmO/U+g5SId1SAUAiMsFwEJRN+PRc0s9wAs/FbuHnoJtk1axOV0YpdYpkFceKRZo
- GrSw==
+ bh=AD5TvnPmaG2p4oioPCNypqz8ubpMGn5del8Os1RElwg=;
+ b=TMkf9PoPHc2y29aEzC2KlAsW/4fnVkoFK4kmuTRqeUYkLE5HzQJPQWAEBCRm3O/+21
+ OCFHB/8CXbvJqQijpgKB7dyS45V0C+0VrA4i9miS9VjQnBvHG4qbvmQbMP0Qfg+D8csj
+ +eFWHM5xJ5LBsLKj2bbdguyRXwL/oo6NNIOVP+bZzhZyZK0oGu0y2vCbMrTDaXaBTVVP
+ T4oLA0BT/ykTnHUZ9euPW+uI3XX0FHxjprGTH1jRidiQGwWeZQn3zXiBph9oC3Qhn2Hv
+ kybzHBHtmlcBSw0laASPrdBoJ+w+0o5bNUh+Wl8UmGGKrlk9yQ49akv7UTWjkrVLWyD/
+ 10AQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUae6aTXVsLMHeeqtjR3cGDZk9CjuXtu7zLef2RIEcBCAq1scIiJL11YJBGtVJe6y++Rd5kep267kdr@nongnu.org
-X-Gm-Message-State: AOJu0Yxh4T2sKJm6dGJi5QNa1UDRd1t6nyzSicyRBwiHyvz97SLW2kx1
- fMM4RUBP1aQUPLpUyhitga4ZC3udUQpQUdqJuwfIm8Op+tnIv7XIpZsHy6WUSO0phKPhbTaYOau
- H58rQ83CyZU46Pk5+QnvxbcYl5CSWzxlRP1AVBeOBJ/cfXjsTxhD0ySUW
-X-Gm-Gg: AY/fxX7bmOzI9NUNNRRHkHZ1XmflWs3pT1AIvpq1/RO8wjC5HOmNK7A1CAFShpqlx47
- 24pEgCNesVcnX/+IH96oWNwdA1uLu+Y/aLcPKdDrGQrYb7Y4HU3XcBJR6Lxh5dUZOPJ7mN/R+qt
- PVgmtapyEDOmhmZDBIQBQScbUJQKWWbNAgjxinG/I0HXPQ8fdFtMdQiHeHJNyxov1QKtIHijlhT
- ZgkOx7/3lPqZUiBY1gmht5e/DWDY+hGNjDF/trNy2x7bHtFXd1SP0EHllwRc852zTeOtXbGrQXZ
- il2iR1+lVddMlnSzNc7YeUm+8+B8Cl9OasTWASfCGYVsMUl4OhuK8u5lrBBiJkPHSMozYbi7muJ
- fl5+UUh8rKksnTvAPQmT+ZNVyvpaxXTu5MD23+CI8Owg=
-X-Received: by 2002:a17:903:3bad:b0:290:91d2:9304 with SMTP id
- d9443c01a7336-29f23dd3f75mr20990425ad.4.1765551903319; 
- Fri, 12 Dec 2025 07:05:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGFCuDP1WPBimYZnnChi088VUoRgeHW+JpdMIlzKSP9VG3LKJNNtQYHbpwf2LR+NQccXZsDqQ==
-X-Received: by 2002:a17:903:3bad:b0:290:91d2:9304 with SMTP id
- d9443c01a7336-29f23dd3f75mr20990085ad.4.1765551902848; 
- Fri, 12 Dec 2025 07:05:02 -0800 (PST)
+ AJvYcCWoxVZpeGU0itJPreUdaFr8YV/DuuO+aT7LuItUZ2+VQHcxtdmvAj+pmi3Q42J3rnHC7x+3dd3xL2wJ@nongnu.org
+X-Gm-Message-State: AOJu0YwDuTgXH7/pndAL8pcFbgMYcWnMif6Atp+a2FzANUbCRYteJGka
+ XzWtrn63jDx76/CPv/YXzcUjLvmDNkpDyUz67F3DVBckiHxkYBXx1tGnav1ZGkm/iB2ZmZ86ZK2
+ ifrB3vN4aEBkRaKR3qR6h03wVBueZx4sjxE0Ah0J1WDxywTVtIH/oHR1J
+X-Gm-Gg: AY/fxX6cMM9wZtHRA0fNbq94DWZIhESlmtB8dpQLaQd6isXaPs85YWLwDuUutflEdfj
+ CMmTOOOItbRtWTizh9dsCtPa7xZsGj8lfCHeA9+txDe/CEgWiJnqYzkXUwra6hpucSxve8RIdsl
+ NDogu7ldm3qw03Z+bwyKsmI8E8zZsNmZdhkOWSynJ+fXYzHwLQXfi3py1vQWG4j3C41aTomfUwk
+ zcwCB6ayo90KjlARiy4AP1qtt0+0k6W1Q/eNPXZbpi+U/97k+q9flQmqf+3bvhUSqltaDs/h94e
+ 09WczN9cnjI4lezJtn5rD01lgNgW5YUoD8vEYqAziTZPcae6KW4OEdyLSkHKUc9sALjJt3b9RbI
+ c5IJAZgYKpVMXhNg6MoscVxOr75ubawZ/Piw1F3NQKOc=
+X-Received: by 2002:a17:903:37ce:b0:295:195:23b6 with SMTP id
+ d9443c01a7336-29f26eff462mr21754465ad.55.1765551919604; 
+ Fri, 12 Dec 2025 07:05:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFtEEFZPyNKKCDsh5aLQtzNZu0DfrwfLsiOJl4sm0R3t6SN2FzDZ5y63d85tglByziYc9oKwA==
+X-Received: by 2002:a17:903:37ce:b0:295:195:23b6 with SMTP id
+ d9443c01a7336-29f26eff462mr21753995ad.55.1765551919077; 
+ Fri, 12 Dec 2025 07:05:19 -0800 (PST)
 Received: from rhel9-box.lan ([122.172.173.62])
  by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-29ee9d38ad1sm57046655ad.29.2025.12.12.07.05.00
+ d9443c01a7336-29ee9d38ad1sm57046655ad.29.2025.12.12.07.05.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Dec 2025 07:05:02 -0800 (PST)
+ Fri, 12 Dec 2025 07:05:18 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
 Cc: vkuznets@redhat.com, kraxel@redhat.com, qemu-devel@nongnu.org,
  Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org
-Subject: [PATCH v1 12/28] i386/tdx: refactor TDX firmware memory
- initialization code into a new function
-Date: Fri, 12 Dec 2025 20:33:40 +0530
-Message-ID: <20251212150359.548787-13-anisinha@redhat.com>
+Subject: [PATCH v1 17/28] i386/sev: free existing launch update data and
+ kernel hashes data on init
+Date: Fri, 12 Dec 2025 20:33:45 +0530
+Message-ID: <20251212150359.548787-18-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20251212150359.548787-1-anisinha@redhat.com>
 References: <20251212150359.548787-1-anisinha@redhat.com>
@@ -124,111 +125,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A new helper function is introduced that refactors all firmware memory
-initialization code into a separate function. No functional change.
+If there is existing launch update data and kernel hashes data, they need to be
+freed when initialization code is executed. This is important for resettable
+confidential guests where the initialization happens once every reset.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- target/i386/kvm/tdx.c | 73 ++++++++++++++++++++++++-------------------
- 1 file changed, 40 insertions(+), 33 deletions(-)
+ target/i386/sev.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index dbf0fa2c91..bafaf62cdb 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -295,14 +295,51 @@ static void tdx_post_init_vcpus(void)
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 1212acfaa1..83b9bfb2ae 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1791,6 +1791,7 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+     uint32_t host_cbitpos;
+     static bool notifiers_added;
+     struct sev_user_data_status status = {};
++    SevLaunchUpdateData *data, *next_elm;
+     SevCommonState *sev_common = SEV_COMMON(cgs);
+     SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(cgs);
+     X86ConfidentialGuestClass *x86_klass =
+@@ -1798,6 +1799,11 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ 
+     sev_common->state = SEV_STATE_UNINIT;
+ 
++    /* free existing launch update data if any */
++    QTAILQ_FOREACH_SAFE(data, &launch_update, next, next_elm) {
++        g_free(data);
++    }
++
+     host_cpuid(0x8000001F, 0, NULL, &ebx, NULL, NULL);
+     host_cbitpos = ebx & 0x3f;
+ 
+@@ -1989,6 +1995,8 @@ static int sev_snp_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+ {
+     MachineState *ms = MACHINE(qdev_get_machine());
+     X86MachineState *x86ms = X86_MACHINE(ms);
++    SevCommonState *sev_common = SEV_COMMON(cgs);
++    SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(sev_common);
+ 
+     if (x86ms->smm == ON_OFF_AUTO_AUTO) {
+         x86ms->smm = ON_OFF_AUTO_OFF;
+@@ -1997,6 +2005,10 @@ static int sev_snp_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+         return -1;
      }
+ 
++    /* free existing kernel hashes data if any */
++    g_free(sev_snp_guest->kernel_hashes_data);
++    sev_snp_guest->kernel_hashes_data = NULL;
++
+     return 0;
  }
  
--static void tdx_finalize_vm(Notifier *notifier, void *unused)
-+static void tdx_init_fw_mem_region(void)
- {
-     TdxFirmware *tdvf = &tdx_guest->tdvf;
-     TdxFirmwareEntry *entry;
--    RAMBlock *ram_block;
-     Error *local_err = NULL;
-     int r;
- 
-+    for_each_tdx_fw_entry(tdvf, entry) {
-+        struct kvm_tdx_init_mem_region region;
-+        uint32_t flags;
-+
-+        region = (struct kvm_tdx_init_mem_region) {
-+            .source_addr = (uintptr_t)entry->mem_ptr,
-+            .gpa = entry->address,
-+            .nr_pages = entry->size >> 12,
-+        };
-+
-+        flags = entry->attributes & TDVF_SECTION_ATTRIBUTES_MR_EXTEND ?
-+                KVM_TDX_MEASURE_MEMORY_REGION : 0;
-+
-+        do {
-+            error_free(local_err);
-+            local_err = NULL;
-+            r = tdx_vcpu_ioctl(first_cpu, KVM_TDX_INIT_MEM_REGION, flags,
-+                               &region, &local_err);
-+        } while (r == -EAGAIN || r == -EINTR);
-+        if (r < 0) {
-+            error_report_err(local_err);
-+            exit(1);
-+        }
-+
-+        if (entry->type == TDVF_SECTION_TYPE_TD_HOB ||
-+            entry->type == TDVF_SECTION_TYPE_TEMP_MEM) {
-+            qemu_ram_munmap(-1, entry->mem_ptr, entry->size);
-+            entry->mem_ptr = NULL;
-+        }
-+    }
-+}
-+
-+static void tdx_finalize_vm(Notifier *notifier, void *unused)
-+{
-+    TdxFirmware *tdvf = &tdx_guest->tdvf;
-+    TdxFirmwareEntry *entry;
-+    RAMBlock *ram_block;
-+
-     tdx_init_ram_entries();
- 
-     for_each_tdx_fw_entry(tdvf, entry) {
-@@ -339,37 +376,7 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
-     tdvf_hob_create(tdx_guest, tdx_get_hob_entry(tdx_guest));
- 
-     tdx_post_init_vcpus();
--
--    for_each_tdx_fw_entry(tdvf, entry) {
--        struct kvm_tdx_init_mem_region region;
--        uint32_t flags;
--
--        region = (struct kvm_tdx_init_mem_region) {
--            .source_addr = (uintptr_t)entry->mem_ptr,
--            .gpa = entry->address,
--            .nr_pages = entry->size >> 12,
--        };
--
--        flags = entry->attributes & TDVF_SECTION_ATTRIBUTES_MR_EXTEND ?
--                KVM_TDX_MEASURE_MEMORY_REGION : 0;
--
--        do {
--            error_free(local_err);
--            local_err = NULL;
--            r = tdx_vcpu_ioctl(first_cpu, KVM_TDX_INIT_MEM_REGION, flags,
--                               &region, &local_err);
--        } while (r == -EAGAIN || r == -EINTR);
--        if (r < 0) {
--            error_report_err(local_err);
--            exit(1);
--        }
--
--        if (entry->type == TDVF_SECTION_TYPE_TD_HOB ||
--            entry->type == TDVF_SECTION_TYPE_TEMP_MEM) {
--            qemu_ram_munmap(-1, entry->mem_ptr, entry->size);
--            entry->mem_ptr = NULL;
--        }
--    }
-+    tdx_init_fw_mem_region();
- 
-     /*
-      * TDVF image has been copied into private region above via
 -- 
 2.42.0
 
