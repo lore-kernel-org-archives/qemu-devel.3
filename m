@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81797D59D6F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 17:32:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1450DD59D6F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 17:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU6zr-0007mr-4D; Fri, 12 Dec 2025 12:32:04 -0500
+	id 1vU70W-0008G6-E1; Fri, 12 Dec 2025 12:32:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vU6zl-0007lL-Ts
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:31:58 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1vU70V-0008FZ-1Q
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:32:43 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vU6zh-0004vp-Ta
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:31:57 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7bab7c997eeso1749071b3a.0
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 09:31:50 -0800 (PST)
+ id 1vU70S-00052D-EF
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:32:42 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-7e2762ad850so1514796b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 09:32:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765560709; x=1766165509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765560759; x=1766165559; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3ChmcBcWy61eXEeia5+NNGc+MBLcO15QuOD2fOByCE0=;
- b=Z1wht6oLMdBjA+/rNZVEB7Znwf51asDqlqP/detbhIoOdOqN21xnL9PHSKVM+evSCd
- Zc1uK7gSCLwSm416NS2/WM3YfiIihajL+INLHZXwZW2mS1zd9TLKnjqDwb5yUeiAhmWE
- JaVc4N/iABgfG6c3PRLyzMB1I/y0sO+9VFufMUWGaLvCaVl1VRwae3ytaoVo8UMD+T+X
- QSuABp0r+quGKEFJ03I+He2zxy6RWCOAWl/l/IR5oeXeb/lNZpNdHTuePs4XQ3+YfFE4
- AbJSdZBwp3pZ1hnrTEul82+piEpss33JazA6PE27O/lW0vlRV6Uo2fE3M7HOlhu5ENlE
- pQIw==
+ bh=gB5BecI3gnCVhlQyJ77/xZNlKac92qpuR5XsE0e1e/Y=;
+ b=AKTzi79jBv9z32cC6nw6ryvcaKQ95m6qNC1D+QX2ZliIycbymLXNpKl1VUpHb+rrjY
+ FJF/mJqwPDiWKM62v4nR6VDpDh8gSwHozH6G5hI+5k07FxcLSheQy3+P3unLZna64peb
+ 34UKxfn/J0jPiV1SWzoiMP3o4pcKd7pqZJ3tlydG+2znYPcaKAK2kItRxN1N4Qf5I0p8
+ O4xXe4Jr5pGsi/9KRRohpUKgNidUJDp4ANC4PObJgDDe14zn0OZ3UF0BednPwmptHTXh
+ 3HyiPh0oxDPouhDRRur7spK40elTZLce8sOkqB/4L6K7SxK6XWa5TCTwDtWpe13LwiH+
+ Tcag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765560709; x=1766165509;
+ d=1e100.net; s=20230601; t=1765560759; x=1766165559;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3ChmcBcWy61eXEeia5+NNGc+MBLcO15QuOD2fOByCE0=;
- b=Fc/awFBHpMrhk45/qvdERmKpiw9ih7vdkZ4SJUyri++ubVUbPWjTIgIGdBlZ2FcPhk
- PVr7VhGH9qO8U8B+ZsLE/lsvCPLMrXyWcJQi4XRWNigV3NSP654GQywDCo7nw0VuCQAM
- S72SHST5BdXCKFXlzL3JF63CVyp2p2BPnlPdpSJWWqpRRK9qc1PFHLiYyi0y7HSGfTMF
- 5hSigZPmOdo4OdHMYc9PK1SzVsxW8bzCU01hdDmHubyHfJHnzIqAXIuKxnx2HWl65rxz
- X7q1XpbvlVyw3MVyKT+ChR/z3cChlPLxOjW9GkdZhBu50LWCR/67xuouj2/aoTxLxnZJ
- 7wBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUGP39sLGdrowgqkaPrO4cx/k/duWDnyYTkmnibGRm2dwrDKbbiRxQ9zy9DpcXdWydKd6V48BRKa3Hg@nongnu.org
-X-Gm-Message-State: AOJu0YzGPc0+okI6qH68r2CgGrbbqyJuiW5gKrJ3YpqtLp/naonFCbm1
- P+joENMoQ6OvvjJOOsEgF1kKWUwUXbo7NpHbi5IhdTb4bbuTTkUsGKvvFVupytG8gQU=
-X-Gm-Gg: AY/fxX6EnSVGxKernLHh0+awXH/JU/eFNLe2ENT2hM4zhhcv8df8LN8ExGE9I5ujBv+
- qaO1Dly2bq8wktxXM3VjugWm11n2BRvTyxYR7vmGFOVCTpF2jGzRYBwqd/HkSciD6MirQmH0O8m
- lDr7/VIU5h/JjKlwToW0pzxH6NYgmcPopTRGfouebzkY1EYtsZRsTp+vfWqwuJQ7xStFjxxj1f8
- ihc3pox2Q7JCqhUAcOrXibb4sW5doaU7ZWFQ9sp+TPIujQpMf4Ajmzz0UiuVvbjQtGanHvH4iZk
- uUeQlPFKIWHYrG6Lstul1/asSJ8prl/s+07pP5n2M+R45Vc9CrordBLN4MvHXljo/Tvjn/1hSBz
- P/GJLizt7usCn8oIcjjmmQDz0F543cxbG3u/lG+ois9rYJf9+Xk6MKOKS+pql3+nJsmPLF/ibng
- VK72+UJf3R/PF5X8eXIcXhYipqq0pYvjGD/aLBIMDrz4P+UBEvoxLkJ/g=
-X-Google-Smtp-Source: AGHT+IHm4ZxXgX7grhVSHSP8hmo2obCNe0iqU7nqDhpR9cGkuK0U7m8Dz7t0Z9gWybeTjlDdHEdNcA==
-X-Received: by 2002:a05:6a20:914c:b0:366:14ac:8c74 with SMTP id
- adf61e73a8af0-369b05beea2mr2651309637.74.1765560709311; 
- Fri, 12 Dec 2025 09:31:49 -0800 (PST)
+ bh=gB5BecI3gnCVhlQyJ77/xZNlKac92qpuR5XsE0e1e/Y=;
+ b=WVIMRX/MZvxQu3ES9jrXicTAlvWMqcJEUkTDDSEC4fYIJVmk3HbztaN7d/HmTNP/Ch
+ RkFrLb4POZPnC8shVtlQx6ve1b4FypwgX47QnYalnut95cGQEIjTUlIQXaqdTUbUQheh
+ BKCdayZ/XNaHcAthnNEgI1wD0EMosGuTip54T1xI4C8YmDOU9w3tZn6X9Sso+7RsIAyw
+ PIVCgUn2dc+PnxYMeOiCOUPEx95DUmdRBxx6syjSlE7YOzGz/PdhwQBfYgbt0+Su+HIc
+ +jXTctebny82CGHJD/fS9q4j5PXf80uV4vPichEVumsvVjCQQ9v4rFKaWw+v3vEa7Zzj
+ 3vog==
+X-Gm-Message-State: AOJu0YzcHM5Po4gpFbWWBsGoqYlATogUrwZRPcava58FqysmHZfG1Xd2
+ FagZMvEOeD2vfrJSj9D1EZzBLtfr6r0pRM9aqLZrNVdu2ZJGSh/Az7922HvmNtUjTnxaQ5D/zSv
+ JFeEkaGRQfg==
+X-Gm-Gg: AY/fxX5OHGrmrHO/z2QfMZVTlG3YLF/bCXeGNgNCXn7FmJTr9spUVZFBDA9RFrGJqBF
+ E7X6ak1tdKdajBW3Aoy3m6LxHixjzdxEWGfJjfMLGauSbagu3wKF1zW+aEm4Rjsx9lp1PeyjeuX
+ j3cZyn0DtWg2lg6YTY/cTvyYjJB4tixnfcVJh2e5jX6FhUIZbHnRb485lgxtLG2SmBkQ+pE9plm
+ 6hKMOk3GvXVOIJpGL3TYJf/qM4gBj/SuMLqSFktufQ2aD3+0Ap9kXFi5ctOAeUpE+BJCIHRFlYi
+ FuQ5hXFqmvR+aeJHUzYlHi7w7y/XNPwlfNEbNcOkQY9db8Nk9sFlMIsda5wWiMlUZsCQgNRK67q
+ 5HMWISk1uYrd4gQH3BzyO3VW1jT/7H1NelnSFLdTslytORi3GEKjym0i2GMOlHWjzhSIF6Nl5WM
+ T0OaxzFJ7tKDikZPvbBu2mxJXBwBUP0zs20flqKEDdQaa+DK5aN7fW8HvLKcvJn70UGw==
+X-Google-Smtp-Source: AGHT+IEV2N31FySvnPWADkx14+kbMaK+vVKC88FuSyaAplT+MQS2I91+M0e7vFVNCkTv0jeIDYej1A==
+X-Received: by 2002:a05:6a00:94f4:b0:7e8:4433:8fb7 with SMTP id
+ d2e1a72fcca58-7f66a07ce19mr2155508b3a.63.1765560758892; 
+ Fri, 12 Dec 2025 09:32:38 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c0c2c1925bfsm5499380a12.31.2025.12.12.09.31.48
+ d2e1a72fcca58-7f4c4ab52aasm5757420b3a.38.2025.12.12.09.32.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Dec 2025 09:31:48 -0800 (PST)
-Message-ID: <cf9403d5-229c-45b1-bb60-13bcf2d00411@linaro.org>
-Date: Fri, 12 Dec 2025 09:31:48 -0800
+ Fri, 12 Dec 2025 09:32:38 -0800 (PST)
+Message-ID: <43ebfbb8-479c-420a-904e-5aba9532d823@linaro.org>
+Date: Fri, 12 Dec 2025 09:32:38 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm/smmu: add memory regions as property for an SMMU
- instance
+Subject: Re: [PATCH v2 2/2] tcg tests: add a test to verify the syscall filter
+ plugin API
 Content-Language: en-US
-To: Tao Tang <tangtao1634@phytium.com.cn>, qemu-devel@nongnu.org
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ziyang Zhang <functioner@sjtu.edu.cn>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Riku Voipio <riku.voipio@iki.fi>,
+ Laurent Vivier <laurent@vivier.eu>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>
-References: <20251211221715.2206662-1-pierrick.bouvier@linaro.org>
- <ecfa9104-2864-48e0-8d3a-ac4f1540417f@phytium.com.cn>
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20251212141541.1792111-1-functioner@sjtu.edu.cn>
+ <20251212141541.1792111-3-functioner@sjtu.edu.cn>
+ <87ldj7sn9k.fsf@draig.linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <ecfa9104-2864-48e0-8d3a-ac4f1540417f@phytium.com.cn>
+In-Reply-To: <87ldj7sn9k.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,226 +113,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/25 8:45 AM, Tao Tang wrote:
-> Hi Pierrick,
+On 12/12/25 8:00 AM, Alex Bennée wrote:
+> Ziyang Zhang <functioner@sjtu.edu.cn> writes:
 > 
-> On 2025/12/12 06:17, Pierrick Bouvier wrote:
->> This will be used to access non-secure and secure memory. Secure support
->> and Granule Protection Check (for RME) for SMMU need to access secure
->> memory.
+>> Register a syscall filter callback in tests/tcg/plugins/sycall.c,
+>> returns a specific value for a magic system call number, and check
+>> it in tests/tcg/multiarch/test-plugin-syscall-filter.c.
 >>
->> As well, it allows to remove usage of global address_space_memory,
->> allowing different SMMU instances to have a specific view of memory.
-> 
-> 
-> Thanks for the patch.
-> 
-> I have to admit that in my earlier series I didn’t find a clean way to
-> model SMMU’s AddressSpace handling properly, so I ended up using weak
-> globals as a pragmatic workaround. Your approach is much cleaner and
-> fits QEMU’s usual memory model.
-> 
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+>> Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
 >> ---
->>    include/hw/arm/smmu-common.h |  4 ++++
->>    hw/arm/sbsa-ref.c            | 16 ++++++++++++----
->>    hw/arm/smmu-common.c         | 24 ++++++++++++++++++++++++
->>    hw/arm/virt.c                | 16 +++++++++++-----
->>    4 files changed, 51 insertions(+), 9 deletions(-)
+>>   tests/tcg/multiarch/Makefile.target           |  4 +++-
+>>   .../multiarch/test-plugin-syscall-filter.c    | 20 +++++++++++++++++++
+>>   tests/tcg/plugins/syscall.c                   | 15 ++++++++++++++
+>>   3 files changed, 38 insertions(+), 1 deletion(-)
+>>   create mode 100644 tests/tcg/multiarch/test-plugin-syscall-filter.c
 >>
->> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
->> index a6bdb67a983..0f08ae080c9 100644
->> --- a/include/hw/arm/smmu-common.h
->> +++ b/include/hw/arm/smmu-common.h
->> @@ -227,6 +227,10 @@ struct SMMUState {
->>        uint8_t bus_num;
->>        PCIBus *primary_bus;
->>        bool smmu_per_bus; /* SMMU is specific to the primary_bus */
->> +    MemoryRegion *memory;
->> +    AddressSpace as_memory;
->> +    MemoryRegion *secure_memory;
->> +    AddressSpace as_secure_memory;
->>    };
->>    
->>    struct SMMUBaseClass {
->> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
->> index 45d2e3e946d..840b1a216f4 100644
->> --- a/hw/arm/sbsa-ref.c
->> +++ b/hw/arm/sbsa-ref.c
->> @@ -616,7 +616,9 @@ static void create_xhci(const SBSAMachineState *sms)
->>        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(sms->gic, irq));
->>    }
->>    
->> -static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
->> +static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
->> +                        MemoryRegion *sysmem,
->> +                        MemoryRegion *secure_sysmem)
->>    {
->>        hwaddr base = sbsa_ref_memmap[SBSA_SMMU].base;
->>        int irq =  sbsa_ref_irqmap[SBSA_SMMU];
->> @@ -628,6 +630,10 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
->>        object_property_set_str(OBJECT(dev), "stage", "nested", &error_abort);
->>        object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
->>                                 &error_abort);
->> +    object_property_set_link(OBJECT(dev), "memory", OBJECT(sysmem),
->> +                             &error_abort);
->> +    object_property_set_link(OBJECT(dev), "secure-memory", OBJECT(secure_sysmem),
->> +                             &error_abort);
->>        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
->>        for (i = 0; i < NUM_SMMU_IRQS; i++) {
->> @@ -636,7 +642,9 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
->>        }
->>    }
->>    
->> -static void create_pcie(SBSAMachineState *sms)
->> +static void create_pcie(SBSAMachineState *sms,
->> +                        MemoryRegion *sysmem,
->> +                        MemoryRegion *secure_sysmem)
->>    {
->>        hwaddr base_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
->>        hwaddr size_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].size;
->> @@ -692,7 +700,7 @@ static void create_pcie(SBSAMachineState *sms)
->>    
->>        pci_create_simple(pci->bus, -1, "bochs-display");
->>    
->> -    create_smmu(sms, pci->bus);
->> +    create_smmu(sms, pci->bus, sysmem, secure_sysmem);
->>    }
->>    
->>    static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_size)
->> @@ -831,7 +839,7 @@ static void sbsa_ref_init(MachineState *machine)
->>    
->>        create_xhci(sms);
->>    
->> -    create_pcie(sms);
->> +    create_pcie(sms, sysmem, secure_sysmem);
->>    
->>        create_secure_ec(secure_sysmem);
->>    
->> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->> index 66367adc2a4..5fbfe825fd0 100644
->> --- a/hw/arm/smmu-common.c
->> +++ b/hw/arm/smmu-common.c
->> @@ -1171,6 +1171,12 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
->>            return;
->>        }
->>    
->> +    g_assert(s->memory);
->> +    address_space_init(&s->as_memory, s->memory, "memory");
->> +    if (s->secure_memory) {
->> +        address_space_init(&s->as_secure_memory, s->secure_memory, "secure-memory");
+>> diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+>> index f5b4d2b813..4005e3a8a9 100644
+>> --- a/tests/tcg/multiarch/Makefile.target
+>> +++ b/tests/tcg/multiarch/Makefile.target
+>> @@ -202,8 +202,10 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
+>>   	CHECK_PLUGIN_OUTPUT_COMMAND= \
+>>   	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
+>>   	$(QEMU) $<
+>> +run-plugin-test-plugin-syscall-filter-with-libsyscall.so:
+>>   
+>> -EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so
+>> +EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so \
+>> +			   			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so
+>>   endif
+>>   
+>>   # Update TESTS
+>> diff --git a/tests/tcg/multiarch/test-plugin-syscall-filter.c b/tests/tcg/multiarch/test-plugin-syscall-filter.c
+>> new file mode 100644
+>> index 0000000000..cc694e0a71
+>> --- /dev/null
+>> +++ b/tests/tcg/multiarch/test-plugin-syscall-filter.c
+>> @@ -0,0 +1,20 @@
+>> +/*
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + *
+>> + * This test attempts to execute a magic syscall. The syscall test plugin
+>> + * should intercept this and returns an expected value.
+>> + */
+>> +
+>> +#include <stdint.h>
+>> +#include <stdio.h>
+>> +#include <stdlib.h>
+>> +#include <unistd.h>
+>> +
+>> +int main(int argc, char *argv[]) {
+>> +    long ret = syscall(0x66CCFF);
+>> +    if (ret != 0xFFCC66) {
+>> +        perror("ERROR: syscall returned unexpected value!!!");
+>> +        return EXIT_FAILURE;
 >> +    }
->> +
->>        /*
->>         * We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based extra
->>         * root complexes to be associated with SMMU.
->> @@ -1235,10 +1241,28 @@ static void smmu_base_class_init(ObjectClass *klass, const void *data)
->>        rc->phases.exit = smmu_base_reset_exit;
->>    }
->>    
->> +static void smmu_base_instance_init(Object *obj)
+>> +    return EXIT_SUCCESS;
+>> +}
+> 
+>    This breaks some arches:
+> 
+>    (gdb) r
+>    Starting program: /home/alex/lsrc/qemu.git/builds/sanitisers/qemu-arm -plugin tests/tcg/plugins/libsyscall.so -d plugin ./tests/tcg/arm-linux-user/test-plugin-syscall-filter
+>    [New Thread 0x7ffff37ff6c0 (LWP 63692)]
+>    qemu: uncaught target signal 4 (Illegal instruction) - core dumped
+>    syscall no.  calls  errors
+>    45           5      0
+>    338          1      1
+>    256          1      0
+>    191          1      0
+>    398          1      1
+>    125          1      0
+>    384          1      0
+>    332          1      0
+> 
+>    Thread 1 "qemu-arm" received signal SIGILL, Illegal instruction.
+>    Download failed: Invalid argument.  Continuing without source file ./nptl/../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S.
+>    __syscall_cancel_arch () at ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56
+>    warning: 56     ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S: No such file or directory
+>    (gdb) bt
+>    #0  __syscall_cancel_arch () at ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56
+>    #1  0x00007ffff6a51668 in __internal_syscall_cancel (a1=<optimized out>, a2=a2@entry=8, a3=a3@entry=0, a4=a4@entry=0, a5=a5@entry=0, a6=a6@entry=0, nr=130)
+>        at ./nptl/cancellation.c:49
+>    #2  0x00007ffff6a516ad in __syscall_cancel (a1=<optimized out>, a2=a2@entry=8, a3=a3@entry=0, a4=a4@entry=0, a5=a5@entry=0, a6=a6@entry=0, nr=130)
+>        at ./nptl/cancellation.c:75
+>    #3  0x00007ffff6a0207d in __GI___sigsuspend (set=<optimized out>) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
+>    #4  0x0000555555a49b80 in die_with_signal (host_sig=4) at ../../linux-user/signal.c:807
+>    #5  0x0000555555a49ed0 in dump_core_and_abort (env=0x532000004300, target_sig=4) at ../../linux-user/signal.c:847
+>    #6  0x0000555555a4c969 in handle_pending_signal (cpu_env=0x532000004300, sig=4, k=0x5250000029d0) at ../../linux-user/signal.c:1306
+>    #7  0x0000555555a4d0e5 in process_pending_signals (cpu_env=0x532000004300) at ../../linux-user/signal.c:1386
+>    #8  0x0000555555873930 in cpu_loop (env=0x532000004300) at ../../linux-user/arm/cpu_loop.c:479
+>    #9  0x0000555555a3eca7 in main (argc=6, argv=0x7fffffffe588, envp=0x7fffffffe5c0) at ../../linux-user/main.c:1035
+>    (gdb)
+> 
+>> \ No newline at end of file
+>> diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
+>> index 42801f5c86..1323e18bc0 100644
+>> --- a/tests/tcg/plugins/syscall.c
+>> +++ b/tests/tcg/plugins/syscall.c
+>> @@ -170,6 +170,20 @@ static void vcpu_syscall_ret(qemu_plugin_id_t id, unsigned int vcpu_idx,
+>>       }
+>>   }
+>>   
+>> +static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_index,
+>> +                                int64_t num, uint64_t a1, uint64_t a2,
+>> +                                uint64_t a3, uint64_t a4, uint64_t a5,
+>> +                                uint64_t a6, uint64_t a7, uint64_t a8,
+>> +                                uint64_t *ret)
 >> +{
->> +    SMMUState *s = ARM_SMMU(obj);
->> +
->> +    object_property_add_link(obj, "memory",
->> +                             TYPE_MEMORY_REGION,
->> +                             (Object **)&s->memory,
->> +                             qdev_prop_allow_set_link_before_realize,
->> +                             OBJ_PROP_LINK_STRONG);
->> +
->> +    object_property_add_link(obj, "secure-memory",
->> +                             TYPE_MEMORY_REGION,
->> +                             (Object **)&s->secure_memory,
->> +                             qdev_prop_allow_set_link_before_realize,
->> +                             OBJ_PROP_LINK_STRONG);
+>> +    if (num == 0x66CCFF) {
+>> +        *ret = 0xFFCC66;
+>> +        qemu_plugin_outs("syscall 0x66CCFF filtered, ret=0xFFCC66\n");
+>> +        return true;
+>> +    }
+>> +    return false;
 >> +}
 >> +
->>    static const TypeInfo smmu_base_info = {
->>        .name          = TYPE_ARM_SMMU,
->>        .parent        = TYPE_SYS_BUS_DEVICE,
->>        .instance_size = sizeof(SMMUState),
->> +    .instance_init = smmu_base_instance_init,
->>        .class_data    = NULL,
->>        .class_size    = sizeof(SMMUBaseClass),
->>        .class_init    = smmu_base_class_init,
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 5d205eff3a1..d446c3349e9 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -1514,8 +1514,9 @@ static void create_smmuv3_dev_dtb(VirtMachineState *vms,
->>                               0x0, vms->iommu_phandle, 0x0, 0x10000);
->>    }
->>    
->> -static void create_smmu(const VirtMachineState *vms,
->> -                        PCIBus *bus)
->> +static void create_smmu(const VirtMachineState *vms, PCIBus *bus,
->> +                        MemoryRegion *sysmem,
->> +                        MemoryRegion *secure_sysmem)
->>    {
->>        VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->>        int irq =  vms->irqmap[VIRT_SMMU];
->> @@ -1549,6 +1550,10 @@ static void create_smmu(const VirtMachineState *vms,
->>        object_property_set_str(OBJECT(dev), "stage", stage, &error_fatal);
-> 
-> This unchanged line doesn't seem to match the current master branch
-> code. It was actually modified last year by Peter in commit 8a934f1c4a
-> which changed the virt board's default stage. So I failed to apply this
-> patch. Anyway this discrepancy doesn't affect the core functionality of
-> the patch.
+>>   static void print_entry(gpointer val, gpointer user_data)
+>>   {
+>>       SyscallStats *entry = (SyscallStats *) val;
+>> @@ -255,6 +269,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>>   
+>>       qemu_plugin_register_vcpu_syscall_cb(id, vcpu_syscall);
+>>       qemu_plugin_register_vcpu_syscall_ret_cb(id, vcpu_syscall_ret);
+>> +    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter);
+>>       qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>>       return 0;
+>>   }
 > 
 
-Sorry about it, it's a local (and personal) patch I have to override the 
-default stage, so it didn't apply cleanly on upstream/master. I'll fix 
-the conflict in next version.
-
->  
-> Applying: hw/arm/smmu: add memory regions as property for an SMMU instance
-> error: patch failed: hw/arm/virt.c:1549
-> error: hw/arm/virt.c: patch does not apply
-> Patch failed at 0001 hw/arm/smmu: add memory regions as property for an
-> SMMU instance
-> hint: Use 'git am --show-current-patch=diff' to see the failed patch
-> 
-> 
->>        object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
->>                                 &error_abort);
->> +    object_property_set_link(OBJECT(dev), "memory", OBJECT(sysmem),
->> +                             &error_abort);
-> 
-> I noticed when using info mtree: after applying the patch, I see two
-> address-space: memory which may confuse others. Is it necessary to
-> distinguish the names here?
-> 
-> 
-> address-space: cpu-memory-0
-> address-space: gicv3-its-sysmem
-> address-space: memory
-> address-space: memory
->     0000000000000000-ffffffffffffffff (prio 0, i/o): system
->       0000000000000000-0000000003ffffff (prio 0, romd): virt.flash0
->       0000000004000000-0000000007ffffff (prio 0, romd): virt.flash1
->       0000000008000000-000000000800ffff (prio 0, i/o): gicv3_dist
-> 
-
-I thought about naming it smmu-memory, smmu-secure-memory, so your 
-remark tends to confirm it.
-@Peter, which name would be the best for you?
-
-> 
-> For the functionality, based on this patch plus attachment #2 from the
-> earlier thread [1], the NS/S SMMU code path in smmu_get_address_space
-> works fine in my setup.
-> 
-> 
-> [1]
-> https://lore.kernel.org/qemu-devel/db7fde79-85fa-4bd4-83ca-021ed3f09353@linaro.org/
-> 
-> 
-> Thanks,
-> 
-> Tao
-> 
-
+Looks like a simple issue with 32 bits target.
 
