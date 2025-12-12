@@ -4,110 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D5A3D49232
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 15:06:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAC7D49236
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 15:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU4i6-0002ii-SZ; Fri, 12 Dec 2025 10:05:34 -0500
+	id 1vU4hS-0001x3-AS; Fri, 12 Dec 2025 10:04:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vU4i4-0002Wf-6J
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vU4hO-0001uf-QQ
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:04:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vU4i1-00065w-5f
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:31 -0500
+ id 1vU4hN-0005g8-5G
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:04:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765551928;
+ s=mimecast20190719; t=1765551888;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=An7ksy++b8pjEaWmUyibgQbRoj3a44CDnsQt2f4omE0=;
- b=XvIHtSAK2m5X91VogQ0MLSFTUxivRExG2Vz+dTJoC4k3ilOit5Yuum0+24u22yJDrFVBZT
- r9hmaQDS0c1kGrDyGmwajHHYKZRASjZhkgJ3xpzjvcwcs5BFModrnKO9b+eS2VCJcio4ud
- gmt+vpolSNm1oBDU/Jsw2SmAK6eafNg=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1bVGFXFJOeA9joOcTSQUXwNCiI9IN8A2ai1h2FlFtiU=;
+ b=JHLNhaWCsNrD952PkJnszPhsqNffIDYNHxEnWi4htPpS7NFLwvqz2vRRfoRZoyJj5PYhXh
+ 1d0GyXWkFf0j3oZ8B/7i9y2bRrpgWJZoPMLDoGtpuM68nocPzq/YvtHpYnw6clnmklGq/6
+ YGKK2CMYLmLR+o4JfKkN2iBnQIyCmiE=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-193-hTCN029VPEGH7dqKmMJ2SQ-1; Fri, 12 Dec 2025 10:05:27 -0500
-X-MC-Unique: hTCN029VPEGH7dqKmMJ2SQ-1
-X-Mimecast-MFC-AGG-ID: hTCN029VPEGH7dqKmMJ2SQ_1765551926
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c0c65e5f688so519182a12.1
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 07:05:26 -0800 (PST)
+ us-mta-690-nNf4JzEYM-avwRfx-J0Iqw-1; Fri, 12 Dec 2025 10:04:47 -0500
+X-MC-Unique: nNf4JzEYM-avwRfx-J0Iqw-1
+X-Mimecast-MFC-AGG-ID: nNf4JzEYM-avwRfx-J0Iqw_1765551886
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-295952a4dd6so13065555ad.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 07:04:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765551926; x=1766156726; darn=nongnu.org;
+ d=redhat.com; s=google; t=1765551886; x=1766156686; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=An7ksy++b8pjEaWmUyibgQbRoj3a44CDnsQt2f4omE0=;
- b=qTKhQwveBFek5NfYsMjjJA8CVjM38BvPFzeUgugVylqCSAA3xf0btspFgitMqzvBWm
- j7YMyPbkpibglnnJC2mFGCzPavS74tYkoEI8cNcW4bJu3SW4GZsoU1ISdg1Ejf35Dbv/
- 6A20aE5eOuoFUgHmJER0tDC5B8OFS/WRmLzTivMFYJ39oiu+OAKyElzGomlITqJzlvtf
- 4v36ELkzwO26M8dpPzkVYwXSRiUgwJYAD+iFZLGoo6ffIOvyy+Kgtwovjl5J2zqESEpY
- VKicT9n22nHTl4n1SaAaHte4Ul4O6GUxubhkoSWXbMk7qahP4RA7ZaTKGUasvSvhuU+A
- amNg==
+ bh=1bVGFXFJOeA9joOcTSQUXwNCiI9IN8A2ai1h2FlFtiU=;
+ b=XwwRP24RNA9ImLTbWPigboqZTrPghYb5yhb/wYxIVezGNOksp9tWfwzy6x64+kefKP
+ rA6S+2yXQlOUOkw01B1V3vlwH+ylNQELX96Pgxqi0Y4YPbUSNGCDO8zr7XUrF0+khiXn
+ fnvDH7cnpS3K+tqFCTsm7pxqx+junudIZFrKP9Xao61rny5FBM6l8oJ3H+MZ3Kfdj/lr
+ 7WTwohBFoFFXtr+u/CVN01ii54qE+X6F1PHd20H5z5PWXzt6CdltILKftxDekYmev00/
+ kYOQ5nf/KsXk1I5c1r0gTW5w0d5CaJxx8l1s72O4SEKtdx/0XB7j3akVB0XfEAODGDL1
+ iTyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765551926; x=1766156726;
+ d=1e100.net; s=20230601; t=1765551886; x=1766156686;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=An7ksy++b8pjEaWmUyibgQbRoj3a44CDnsQt2f4omE0=;
- b=u4j1BAhw7xtgCeT5euDcliz2qpM2XEtaSrm6YP1recWcCKuO7uqKdDNbByaNlLgaQP
- vS1Qr44DDVDM08asfUaJ0Gr2jX32LSy0OZVCrUyEPMGURQF8NeFr0s25Jv3RUJ1G2/g+
- yBmxwwYHtZt35EQ6AXX1qFKJkg+Qi+xLbExX+mAM8+YbSw+kMYlYJFgrKp4uSBt6qQSF
- UiAYS8u5P19XSFX49/cq3nICgtM1+boOrif49H6rFaROdWi9qHF5wVxQlGEQisEDC3Xc
- /duD1sVQCwRNKfLEavTaJFl0iiNQVmp/y7QXtBl+wMgbii+0YvAxyOAqKk0qt7buanj8
- W7uA==
+ bh=1bVGFXFJOeA9joOcTSQUXwNCiI9IN8A2ai1h2FlFtiU=;
+ b=Iyq4dd2iUb+l00+PmwPhtSCEabaOaFQl5l90whsFiEClMhjdlILhHxD8PAvFUWAkhq
+ xqiOxS75D7qTci1380frdiLmfNDkPKSFBhqP0FD4L8Fvccid9oj2aCMW/B+PoXEkFqD6
+ zdqvJmrIoI9HwzmOR9LkOkXKGRvsXCgCHS2pVEf0lM2HR3wSI4iiXWTTDyVmiFya+Cb+
+ x97y1PNkc4aV9utBo51GD3sggrgTNiDVsbyxawQ3KONrXYxiM7bSXHYaT5FNWGoqpjBz
+ o3NUtN+GVrrbZZNDoiWytmvuawKf09W95RtIspS8QVz8u11dLzlijbtBsxcNG4tlBtcZ
+ 0fSQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJd2Vtojr+Rf9wPwrGNzLugPAk1lheRq32y3XY+FQLaHWtKDEVqmUgHW9WvuX65mAtTYEb8lAdZRT3@nongnu.org
-X-Gm-Message-State: AOJu0YxHFZjhUw94sPg2k9bHlSmCOn79FPElGmW0D4TqUfd0npz38Tk3
- LsqFLTOF2b/2RXa8chwimQN0eaH74ZXDTvPrrgQtaAUgLhvZ8/XGTaGilwEhsRXEv8tFXq6hqFG
- qzEzHF7uo2Y+7hEXJmuK02Gu4xIZXLrr9HStBoMOZGH3prS/wGsL5TAeg
-X-Gm-Gg: AY/fxX4yGK+fd7M0ESw23sc8NiKQRTw77uDD5jyHOS9hi2wt6A+7ustokYVJ09GxgzR
- PhaijdLcSsn0avdp+/6bI/4H9wOYoutqEnMyoCFCDcs0BijHb5ETBppyWTy3u1LZuNbafRB7Nbd
- 5FDN76EJzFKiqNnvz44LlVc7jWsHCgutAT05WsA24lTppdtRAqZ2Ralaq/SnR/oeE2dKf2WxNoq
- B5p1wh/r7e1pALUecsJd4ExS1d0GFG8NvI0qf8YBUdnf+ChsyB/NdUDpHyn6Nn1BjfYtxZ8dfYB
- IR9GlfBce35HUq/cJ7hgSH3yXZhK7nQdxxkTNRGiP+Wfqxjv3Ayc5BFfrb+WlVSiqdtQk4K2ZIg
- E4Mr5pcHLdO4DlgrATLXY0zwOHSAx4uTQMv5tveGKSS4=
-X-Received: by 2002:a17:903:3c6d:b0:298:360:1662 with SMTP id
- d9443c01a7336-29eee9f1ad5mr54292355ad.1.1765551925751; 
- Fri, 12 Dec 2025 07:05:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHoKR/S5A//jCh7WGyYiKpZMMZpKIKyrpZfPWPfiXIIh/IS0nvD0Lt12QdEA3Iftgc084U4/Q==
-X-Received: by 2002:a17:903:3c6d:b0:298:360:1662 with SMTP id
- d9443c01a7336-29eee9f1ad5mr54291715ad.1.1765551925072; 
- Fri, 12 Dec 2025 07:05:25 -0800 (PST)
+ AJvYcCXL5XrahgbJrAl0C1js/WJ+SU22tGRX2SFipacLTZYL7dUcOWaHWPgoggUNNDRE3NauZ+9t9EXb+o86@nongnu.org
+X-Gm-Message-State: AOJu0YzbYC4tMge0gpAmlTHxneP1duJfIiy/i/UBvrJm7L8wW1WGmeCQ
+ agx7vtoG14oNsVOuhayfkV82U8fa7J2TsRuTZ2fAu8trWfLfBuV+uXc4+wpEk9Slm1scJ15ezHU
+ 0OsVpmCruKIbAxWRNpbdWtPvLle1ZS4b/da2ibgCPv7pyFAauhL9BY8zi
+X-Gm-Gg: AY/fxX7VyIgwQ5alIIXx4hbMQpTwmQKgmA7vjS2Nt4bJCUaKSqvQMm5a8rnaxWuLr7k
+ FBWkTmxHL3tTCQkL5U0wzNV4D17NBg3IYfmXN85jQdRDm5yHDuaWQONnO1Q+WoFyca30KKpM/Th
+ GA5KM4UsPzt1BFAksRDRI0wnyQR8kpT9UEMQzCFZ8dOlnMA0K8Khc2cYA4MpsDpCHDpI1xUukxI
+ rjf/j1heOS+L+XafY8u5nOXTIVJRETElAoEg3bpMgXoEbQquMipOQmJXwE65q1b24g8E8bNNNph
+ IrxoiGwFUggDAKhDhzkKSvhexQuH3wwBjaf3y6eEcLhoLEnF1SHbU7Z0UvfUP3s1VJdsRTceWf2
+ riu5Sy1r2ZD7Jz6yO/2QLDfOrlqvSqvlOHMQrN1L5PO0=
+X-Received: by 2002:a17:903:15cf:b0:297:c079:4c32 with SMTP id
+ d9443c01a7336-29eeea0686dmr57884685ad.11.1765551886064; 
+ Fri, 12 Dec 2025 07:04:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHkjpSMTWKqwt1A7tVr9+iysMnzsonOe3OLhAtCzR04vkiSW5RhmALupyANyX+IIjejo60RoQ==
+X-Received: by 2002:a17:903:15cf:b0:297:c079:4c32 with SMTP id
+ d9443c01a7336-29eeea0686dmr57884455ad.11.1765551885605; 
+ Fri, 12 Dec 2025 07:04:45 -0800 (PST)
 Received: from rhel9-box.lan ([122.172.173.62])
  by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-29ee9d38ad1sm57046655ad.29.2025.12.12.07.05.22
+ d9443c01a7336-29ee9d38ad1sm57046655ad.29.2025.12.12.07.04.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Dec 2025 07:05:24 -0800 (PST)
+ Fri, 12 Dec 2025 07:04:45 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Alex Williamson <alex@shazbot.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Cc: vkuznets@redhat.com, kraxel@redhat.com, pbonzini@redhat.com,
- qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>
-Subject: [PATCH v1 19/28] hw/vfio: generate new file fd for pseudo device and
- rebind existing descriptors
-Date: Fri, 12 Dec 2025 20:33:47 +0530
-Message-ID: <20251212150359.548787-20-anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: vkuznets@redhat.com, kraxel@redhat.com, qemu-devel@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org
+Subject: [PATCH v1 06/28] accel/kvm: add a notifier to indicate KVM VM file
+ descriptor has changed
+Date: Fri, 12 Dec 2025 20:33:34 +0530
+Message-ID: <20251212150359.548787-7-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20251212150359.548787-1-anisinha@redhat.com>
 References: <20251212150359.548787-1-anisinha@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -125,147 +124,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Normally the vfio pseudo device file descriptor lives for the life of the VM.
-However, when the kvm VM file descriptor changes, a new file descriptor
-for the pseudo device needs to be generated against the new kvm VM descriptor.
-Other existing vfio descriptors needs to be reattached to the new pseudo device
-descriptor. This change performs the above steps.
+A notifier callback can be used by various subsystems to perform actions when
+KVM file descriptor for a virtual machine changes as a part of confidential
+guest reset process. This change adds this notifier mechanism. Subsequent
+patches will add specific implementations for various notifier callbacks
+corresponding to various subsystems that need to take action when KVM VM file
+descriptor changed.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- hw/vfio/helpers.c | 81 +++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 78 insertions(+), 3 deletions(-)
+ accel/kvm/kvm-all.c    | 30 ++++++++++++++++++++++++++++++
+ accel/stubs/kvm-stub.c |  8 ++++++++
+ include/system/kvm.h   | 21 +++++++++++++++++++++
+ 3 files changed, 59 insertions(+)
 
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 23d13e5db5..ad9e9c9ead 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -109,12 +109,66 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
- #ifdef CONFIG_KVM
- /*
-  * We have a single VFIO pseudo device per KVM VM.  Once created it lives
-- * for the life of the VM.  Closing the file descriptor only drops our
-- * reference to it and the device's reference to kvm.  Therefore once
-- * initialized, this file descriptor is only released on QEMU exit and
-+ * for the life of the VM except when the vm file descriptor changes for
-+ * confidential virtual machines. In that case, the old file descriptor is
-+ * closed and a new file descriptor is recreated.  Closing the file descriptor
-+ * only drops our reference to it and the device's reference to kvm.
-+ * Therefore once initialized, this file descriptor is normally only released
-+ * on QEMU exit (except for confidential VMs as stated above) and
-  * we'll re-use it should another vfio device be attached before then.
-  */
- int vfio_kvm_device_fd = -1;
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index abdf91c0de..679cf04375 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -90,6 +90,7 @@ struct KVMParkedVcpu {
+ };
+ 
+ KVMState *kvm_state;
++VmfdChangeNotifier vmfd_notifier;
+ bool kvm_kernel_irqchip;
+ bool kvm_split_irqchip;
+ bool kvm_async_interrupts_allowed;
+@@ -123,6 +124,9 @@ static const KVMCapabilityInfo kvm_required_capabilites[] = {
+ static NotifierList kvm_irqchip_change_notifiers =
+     NOTIFIER_LIST_INITIALIZER(kvm_irqchip_change_notifiers);
+ 
++static NotifierWithReturnList register_vmfd_changed_notifiers =
++    NOTIFIER_WITH_RETURN_LIST_INITIALIZER(register_vmfd_changed_notifiers);
 +
-+typedef struct KVMVfioFileFd {
-+    int fd;
-+    QLIST_ENTRY(KVMVfioFileFd) node;
-+} KVMVfioFileFd;
-+
-+static QLIST_HEAD(, KVMVfioFileFd) kvm_vfio_file_fds =
-+    QLIST_HEAD_INITIALIZER(kvm_vfio_file_fds);
-+
-+static int kvm_vfio_filefd_rebind(NotifierWithReturn *notifier, void *data,
-+                                  Error **errp);
-+static struct NotifierWithReturn kvm_vfio_vmfd_change_notifier = {
-+    .notify = kvm_vfio_filefd_rebind,
-+};
-+
-+static int kvm_vfio_filefd_rebind(NotifierWithReturn *notifier, void *data,
-+                                  Error **errp)
+ struct KVMResampleFd {
+     int gsi;
+     EventNotifier *resample_event;
+@@ -2173,6 +2177,22 @@ void kvm_irqchip_change_notify(void)
+     notifier_list_notify(&kvm_irqchip_change_notifiers, NULL);
+ }
+ 
++void kvm_vmfd_add_change_notifier(NotifierWithReturn *n)
 +{
-+    KVMVfioFileFd *file_fd;
-+    int ret = 0;
-+    struct kvm_device_attr attr = {
-+        .group = KVM_DEV_VFIO_FILE,
-+        .attr = KVM_DEV_VFIO_FILE_ADD,
-+    };
-+    struct kvm_create_device cd = {
-+        .type = KVM_DEV_TYPE_VFIO,
-+    };
-+
-+    if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
-+        error_setg_errno(errp, errno, "Failed to create KVM VFIO device");
-+        return -errno;
-+    }
-+
-+    if (vfio_kvm_device_fd) {
-+        close(vfio_kvm_device_fd);
-+    }
-+
-+    vfio_kvm_device_fd = cd.fd;
-+
-+    QLIST_FOREACH(file_fd, &kvm_vfio_file_fds, node) {
-+        attr.addr = (uint64_t)(unsigned long)&file_fd->fd;
-+        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
-+            error_setg_errno(errp, errno,
-+                             "Failed to add fd %d to KVM VFIO device",
-+                             file_fd->fd);
-+            ret = -errno;
-+        }
-+    }
-+    return ret;
++    notifier_with_return_list_add(&register_vmfd_changed_notifiers, n);
 +}
 +
- #endif
- 
- void vfio_kvm_device_close(void)
-@@ -136,6 +190,7 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
-         .attr = KVM_DEV_VFIO_FILE_ADD,
-         .addr = (uint64_t)(unsigned long)&fd,
-     };
-+    KVMVfioFileFd *file_fd;
- 
-     if (!kvm_enabled()) {
-         return 0;
-@@ -152,6 +207,11 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
-         }
- 
-         vfio_kvm_device_fd = cd.fd;
-+        /*
-+         * If the vm file descriptor changes, add a notifier so that we can
-+         * re-create the vfio_kvm_device_fd.
-+         */
-+        kvm_vmfd_add_change_notifier(&kvm_vfio_vmfd_change_notifier);
++void kvm_vmfd_remove_change_notifier(NotifierWithReturn *n)
++{
++    notifier_with_return_remove(n);
++}
++
++static int kvm_vmfd_change_notify(Error **errp)
++{
++    return notifier_with_return_list_notify(&register_vmfd_changed_notifiers,
++                                            &vmfd_notifier, errp);
++}
++
+ int kvm_irqchip_get_virq(KVMState *s)
+ {
+     int next_virq;
+@@ -2661,6 +2681,16 @@ static int kvm_reset_vmfd(MachineState *ms)
+         do_kvm_irqchip_create(s);
      }
  
-     if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
-@@ -159,6 +219,11 @@ int vfio_kvm_device_add_fd(int fd, Error **errp)
-                          fd);
-         return -errno;
-     }
-+
-+    file_fd = g_malloc0(sizeof(*file_fd));
-+    file_fd->fd = fd;
-+    QLIST_INSERT_HEAD(&kvm_vfio_file_fds, file_fd, node);
-+
- #endif
-     return 0;
- }
-@@ -171,6 +236,7 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
-         .attr = KVM_DEV_VFIO_FILE_DEL,
-         .addr = (uint64_t)(unsigned long)&fd,
-     };
-+    KVMVfioFileFd *file_fd;
- 
-     if (vfio_kvm_device_fd < 0) {
-         error_setg(errp, "KVM VFIO device isn't created yet");
-@@ -182,6 +248,15 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
-                          "Failed to remove fd %d from KVM VFIO device", fd);
-         return -errno;
-     }
-+
-+    QLIST_FOREACH(file_fd, &kvm_vfio_file_fds, node) {
-+        if (file_fd->fd == fd) {
-+            QLIST_REMOVE(file_fd, node);
-+            g_free(file_fd);
-+            break;
-+        }
++    /*
++     * notify everyone that vmfd has changed.
++     */
++    vmfd_notifier.vmfd = s->vmfd;
++    ret = kvm_vmfd_change_notify(&err);
++    if (ret < 0) {
++        return ret;
 +    }
++    assert(!err);
++
+     /* these can be only called after ram_block_rebind() */
+     memory_listener_register(&kml->listener, &address_space_memory);
+     memory_listener_register(&kvm_io_listener, &address_space_io);
+diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+index 68cd33ba97..a6e8a6e16c 100644
+--- a/accel/stubs/kvm-stub.c
++++ b/accel/stubs/kvm-stub.c
+@@ -79,6 +79,14 @@ void kvm_irqchip_change_notify(void)
+ {
+ }
+ 
++void kvm_vmfd_add_change_notifier(NotifierWithReturn *n)
++{
++}
++
++void kvm_vmfd_remove_change_notifier(NotifierWithReturn *n)
++{
++}
++
+ int kvm_irqchip_add_irqfd_notifier_gsi(KVMState *s, EventNotifier *n,
+                                        EventNotifier *rn, int virq)
+ {
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index ade13dd8cc..6844ebd56d 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -181,6 +181,7 @@ DECLARE_INSTANCE_CHECKER(KVMState, KVM_STATE,
+ 
+ extern KVMState *kvm_state;
+ typedef struct Notifier Notifier;
++typedef struct NotifierWithReturn NotifierWithReturn;
+ 
+ typedef struct KVMRouteChange {
+      KVMState *s;
+@@ -565,4 +566,24 @@ int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size);
+ 
+ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private);
+ 
++/* argument to vmfd change notifier */
++typedef struct VmfdChangeNotifier {
++    int vmfd;
++} VmfdChangeNotifier;
++
++/**
++ * kvm_vmfd_add_change_notifier - register a notifier to get notified when
++ * a KVM vm file descriptor changes as a part of the confidential guest "reset"
++ * process. Various subsystems should use this mechanism to take actions such
++ * as creating new fds against this new vm file descriptor.
++ * @n: notifier with return value.
++ */
++void kvm_vmfd_add_change_notifier(NotifierWithReturn *n);
++/**
++ * kvm_vmfd_remove_change_notifier - de-register a notifer previously
++ * registered with kvm_vmfd_add_change_notifier call.
++ * @n: notifier that was previously registered.
++ */
++void kvm_vmfd_remove_change_notifier(NotifierWithReturn *n);
 +
  #endif
-     return 0;
- }
 -- 
 2.42.0
 
