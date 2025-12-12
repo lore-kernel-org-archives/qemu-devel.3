@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E358D49216
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 12:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AEDFD49217
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 12:03:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU1pZ-0000Gg-CU; Fri, 12 Dec 2025 07:01:05 -0500
+	id 1vU1rI-0000uj-LD; Fri, 12 Dec 2025 07:02:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vU1pU-0000GB-RT
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 07:01:02 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1vU1rA-0000uF-N2
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 07:02:44 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vU1pO-0006TL-KD
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 07:00:57 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-42e2e5da5fcso773573f8f.0
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 04:00:53 -0800 (PST)
+ id 1vU1r8-00073Q-Or
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 07:02:44 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-47775fb6cb4so8987895e9.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 04:02:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765540852; x=1766145652; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765540961; x=1766145761; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8xVQ07WIMAbRsGFKjwfGN6qUZWXk4IPt/t2JtQbcGKc=;
- b=ejXVntldmAsynX6EsOTCpMX8lh4lALXdjZRHazTxjG8cd7f3YpsXplvsvXAuPbMgtz
- Sg+D47Awi6cWnZ7XEDzTyz0cXetrQ4xy5wvKrSxn2GerdZ6ost4Pvg9Q1BbpgGMEHSxw
- CqrPdyGz/b/jWZHKt3XvEmj2q6SeVbKmQy7UsUqParGOlKYUAjiDaxcMI0Cwxa3QrYdb
- XxkCvFJbtxw2qBBKwGCllz8k6wvbm9ZkhP3ZC6pI1wKSPunayPzCZFNA/StToz1Urt0E
- abDcCqVZ9M2o/1jSiD3wamP+BWcfaPqAH9nrDorcAOYwLtzbgJJwLvf+/3Gd9EL2+XVg
- Jx7w==
+ bh=KtbjbGtJ0bAX1CUydxCTuVm5sJW1YSTK8SfA91tBag4=;
+ b=rZw6pgaXloxZSwvXDKkHwgRbDfcp7EYU9rZbfHv9yMy9M8e8t5IAh3aB1deM4+ivHu
+ 7JEQLJK/gKAFm4Mj93vkydCEDyHZ+dWtyJ/IMLgEA794GKURosiKahVnYPe2fTJ6/jFg
+ zIPIFq8bZZArkUgMQQlW5LTFiuP8MY61+gA8qu7rnfOTmF6w1ftS1gP0hvoIindolVp1
+ khrD0oN02lbwpnVdFH8TX4UOseq4JA2jXg9g3d6aiu5n9lixUlKBBNz7stLw4jin9Z8F
+ msTaWVaNx9FLHJlim1GESK1UPZY8frBHIu0ZBB/1xu5zwmVNjVleP70K0gcPUfulIiP1
+ uAOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765540852; x=1766145652;
+ d=1e100.net; s=20230601; t=1765540961; x=1766145761;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8xVQ07WIMAbRsGFKjwfGN6qUZWXk4IPt/t2JtQbcGKc=;
- b=X7FDVC2lkyGNJ4k5yr2lPi3EwaOZJEAVJB4pphYxUCP3vF2/QlLZnLTktz8GX1Zxn1
- bowx0fmAUBYUgSTsxa8u0r9XvZgAvmPZ3LQaRDuNBGbTif/6x4//eQ+jYEinKSMbO6MU
- gTY/c1Nksog5exO30H2XfGR264DGaJybxTf/P01HsgrWxHnURgFI8SXMh0NvUra39Qrs
- QXpu9y8WsZgjRXTr7MvaXzikyo0ALhj8qBkVdz1rnK+dCztjrlw6CXQeBIznHQ/RTqRi
- p9lzQ+t6EFOIYPY2jlXbEPOefcs13/CWcPklVCqbNw5U9BgIoY/FRsVgPAHF5V9xnADP
- 1Eew==
-X-Gm-Message-State: AOJu0Yxj4Z5JZxPMRM+VJhKVPbp7+o8idvOibbqtAUhBG/AK653Epho/
- BwgdDIAR0/PWKQqchlfTQhn0CQVemAFrREaD0QEWHKDfkou/xCA6ZMqzZMmeBBnrLlU=
-X-Gm-Gg: AY/fxX62oKMOTB2aAePA/AJge9RKpzw/p4LLxJ9fdytlKAehdEVDXJZ52wOhetI2jgx
- U9KFh4hmtPpiws1bd/19Y7lrya/KvwXPS3blCiYZURoz7c+XVG+/lHNALuSlof7Gw1bNAyXD/RW
- mm0ph+cj0v3mtL8nkHf5DaAhnGb0Dksjc5hadL2IABzo9Q8G9e2EiFEZ5ZSv4A7/JIukhikikbk
- gYRmUblLzWomsY14QXGiDYBYurEC6qRL81UhPFA6W0JQ69JzgpmsJhTR/x5KfZQkGt4XxulVfv6
- zxVBuJ/ZflfxdZ6pEfkh0fdxTP/11EsvuGybrni72NeDriLrqkjMGH32zRXAH8TD0VRq6xb4qsV
- 17/gtP7XLZP4tSLDlnI8FKUDDaGyhiQIcPO2yAahdz62C7tmjR91NWEpfqqfDVeY1lhnj6P/O/S
- 3zTzxbyUiHHdA=
-X-Google-Smtp-Source: AGHT+IGKXpS/J9mfarA4CSgjs+ixeZmanM3/s7Qvc9bkcu9lpq3yTMXXs3qgNkRIx/GGv4xN+pVLfw==
-X-Received: by 2002:a05:6000:1acb:b0:425:742e:7823 with SMTP id
- ffacd0b85a97d-42fb44a2407mr2165691f8f.12.1765540851739; 
- Fri, 12 Dec 2025 04:00:51 -0800 (PST)
+ bh=KtbjbGtJ0bAX1CUydxCTuVm5sJW1YSTK8SfA91tBag4=;
+ b=pZsXYDsYoK0IueVwi4S3GhoQBgxnzn0tATkmqRXTd9XKVnEpl+Uyy92VWOKWCouP4J
+ D+wwqOxI2yWyvZuYYxyefyU0oOXuEWSaTf12O0jWD7vbWYo1s17y07A4MsxSUMuP+QIj
+ VezrfO3hYuVW61NXCNQYdT71tu6T76bkvy+UkvUQtu/vouWKjeFnT8vI3j4udnDQQOaZ
+ HDR7gaEOuYOi6U00vKuivi6pGLql6q0I34IsJW/gO0PnitsiJ0HDBn/LLy6mIgPhN/0V
+ D54N9pIl3Dv4644kF+dG1pFGRU3vmZUJJmD1mPXfg07rSiV/h+NEIiWpHn5LBg69KgOC
+ Uu9A==
+X-Gm-Message-State: AOJu0YzWAd8915fF91l/1mCdB/ztSS/qf2qDSAG2msxKGuY9IdWUG78e
+ WG7vYqsQw+rIkj7phAXMv7YLqbCBd8SSkejoCZ84RSlvhO+GtwasryDp0fgII1mx6AU=
+X-Gm-Gg: AY/fxX7YuW+9XygELcVteqUXBD4Omp5848Grd5On7J/pVl8npye80U1tIHDtArOKfs/
+ F4LvccaMo1MQ+owQj/BCFFOwUHvycQebIh7u/U+kLxU61m+osLQpFY1kBQIwzNhsMfoHGD67EIM
+ h9tk8pyBTfQUd1s1vATKCUldMWGG4rDDnv59cE3J8oX8GX7iGuQK9nlw/857XF+5oMth5z+zi6y
+ yPJ7ZTTmWy/49dlDTlur3tA3UMVun7fPGE0FbI3Km8EyuLih3Yh0sTLgZf9pC/LXhcP4FM+1uiX
+ AHA4+q54Z7vcs87wrd3Y+V+m0p8MtLv/HVMM03O/HIkqlHi9l7cX6CbYV6maaVcM8hPVeaIpIVX
+ bc/NpusT5Xnl96jbHebkQmkH8xGuQ+QMIVlZTysY6voDUBvOPVATaNkASEuYjT7te4HsmFfpL1K
+ UYtBq+XesliiM=
+X-Google-Smtp-Source: AGHT+IGiHMRS9WJPLmKRkiPrWI23/jgsMZxuY13i2wQ1DzjsqbB/LCBvL1J3ZVCrTcim9N+fD7lCyg==
+X-Received: by 2002:a05:600c:34cd:b0:475:daba:d03c with SMTP id
+ 5b1f17b1804b1-47a8f8c1d1amr18723065e9.13.1765540961073; 
+ Fri, 12 Dec 2025 04:02:41 -0800 (PST)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42fa8b9b750sm11246600f8f.42.2025.12.12.04.00.50
+ ffacd0b85a97d-42fa8b85d1esm11395147f8f.26.2025.12.12.04.02.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Dec 2025 04:00:50 -0800 (PST)
+ Fri, 12 Dec 2025 04:02:40 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C9EBB5F82E;
- Fri, 12 Dec 2025 12:00:49 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 7A67E5F82E;
+ Fri, 12 Dec 2025 12:02:39 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alex Bradbury <asb@igalia.com>
-Cc: qemu-devel@nongnu.org,  erdnaxe@crans.org,  ma.mandourr@gmail.com,
- pierrick.bouvier@linaro.org
-Subject: Re: [PATCH v2 0/5] contrib/plugins/hotblocks: Minor bug fixes and
- add limit argument
-In-Reply-To: <cover.1764716538.git.asb@igalia.com> (Alex Bradbury's message of
- "Tue, 2 Dec 2025 23:05:53 +0000")
-References: <cover.1764716538.git.asb@igalia.com>
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>
+Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
+ richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com,
+ berrange@redhat.com
+Subject: Re: [RFC PATCH v2 0/2] Enable PC diversion via the plugin API
+In-Reply-To: <f06e2059-9d86-4a5c-acff-84cbeabcfb06@epfl.ch> (Florian
+ Hofhammer's message of "Wed, 29 Oct 2025 16:57:49 +0100")
+References: <e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b@epfl.ch>
+ <f06e2059-9d86-4a5c-acff-84cbeabcfb06@epfl.ch>
 User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Fri, 12 Dec 2025 12:00:49 +0000
-Message-ID: <87o6o3ucy6.fsf@draig.linaro.org>
+Date: Fri, 12 Dec 2025 12:02:39 +0000
+Message-ID: <87ikebucv4.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,16 +107,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alex Bradbury <asb@igalia.com> writes:
+Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
 
-> This is a resend of my previous patchset which unfortunately seems not to=
- have
-> been applied (see
-> <https://lore.kernel.org/qemu-devel/cover.1753857212.git.asb@igalia.com/).
-> I've rebased on current HEAD, checked it works as expected, and added
-> Reviewed-by tags to the patches, which all received review.
+> Hi,
+>
+> Sorry for necrobumping this thread. I just wanted to follow up on this
+> and ask if there is still interest in this plugin API extension or if it
+> is going to be dropped in favor of the Lorelei patches (which would also
+> fulfill my original use case).
 
-Queued to plugins/next, thanks.
+These are the system call filter patches?
+
+I guess that depends on if being able to change PC is only for skipping
+syscalls?
+
+>
+> Thanks for your time,
+> Florian
+>
+> On 06/10/2025 15:21, Florian Hofhammer wrote:
+>> Hi,
+>>=20
+>> As originally discussed in the thread at
+>> https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00656.html
+>> and later proposed in a patch at
+>> https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg02218.html,
+>> I am sending an updated version of my patch based on the previous
+>> feedback.
+>>=20
+>> Notable changes to v1:
+>> - Added a setjmp() in the syscall handling path to allow redirecting
+>>   the PC via cpu_loop_exit() also in syscall callbacks. The previous
+>>   version would only work in instruction execution / memory access
+>>   callback contexts, as the setjmp() corresponding to the longjmp() in
+>>   cpu_loop_exit() was only live in those contexts.
+>> - Added a flag to make sure the new API function is only called in
+>>   contexts where it makes sense, i.e., during execution of guest code.
+>> - Added a test that checks the new functionality by skipping a
+>>   non-existent sentinel syscall.
+>>=20
+>> I made it an RFC patch this time as I am not entirely sure if my
+>> setting/handling of the new flag makes sense the way it is. I briefly
+>> looked into making the QEMU_PLUGIN_CB_* flags actual flags via a
+>> bitfield instead of enum values, but that would have required touching
+>> a lot of code all over the place, so I'm not sure this is the way to go.
+>>=20
+>> Happy to get feedback and your thoughts on the patches!
+>>=20
+>> Thanks,
+>> Florian
+>>=20
+>>=20
+>> Florian Hofhammer (2):
+>>   plugins: Add PC diversion API function
+>>   tests/tcg: add test for qemu_plugin_set_pc API
+>>=20
+>>  include/qemu/qemu-plugin.h                    | 15 +++++++
+>>  linux-user/aarch64/cpu_loop.c                 |  2 +-
+>>  linux-user/alpha/cpu_loop.c                   |  2 +-
+>>  linux-user/arm/cpu_loop.c                     |  2 +-
+>>  linux-user/hexagon/cpu_loop.c                 |  2 +-
+>>  linux-user/hppa/cpu_loop.c                    |  4 ++
+>>  linux-user/i386/cpu_loop.c                    |  8 ++--
+>>  linux-user/include/special-errno.h            |  8 ++++
+>>  linux-user/loongarch64/cpu_loop.c             |  5 ++-
+>>  linux-user/m68k/cpu_loop.c                    |  2 +-
+>>  linux-user/microblaze/cpu_loop.c              |  2 +-
+>>  linux-user/mips/cpu_loop.c                    |  5 ++-
+>>  linux-user/openrisc/cpu_loop.c                |  2 +-
+>>  linux-user/ppc/cpu_loop.c                     |  6 ++-
+>>  linux-user/riscv/cpu_loop.c                   |  2 +-
+>>  linux-user/s390x/cpu_loop.c                   |  2 +-
+>>  linux-user/sh4/cpu_loop.c                     |  2 +-
+>>  linux-user/sparc/cpu_loop.c                   |  4 +-
+>>  linux-user/syscall.c                          |  8 ++++
+>>  linux-user/xtensa/cpu_loop.c                  |  3 ++
+>>  plugins/api.c                                 | 17 +++++++-
+>>  plugins/core.c                                | 25 ++++++-----
+>>  tests/tcg/multiarch/Makefile.target           | 42 +++++++++++++++++++
+>>  .../tcg/multiarch/test-plugin-skip-syscalls.c | 26 ++++++++++++
+>>  tests/tcg/plugins/syscall.c                   |  6 +++
+>>  25 files changed, 170 insertions(+), 32 deletions(-)
+>>  create mode 100644 tests/tcg/multiarch/test-plugin-skip-syscalls.c
+>>=20
 
 --=20
 Alex Benn=C3=A9e
