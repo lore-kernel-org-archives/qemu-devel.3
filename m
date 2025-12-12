@@ -4,140 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3985D59D7A
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 17:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED81D59D7B
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 17:55:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU7H6-0006db-VC; Fri, 12 Dec 2025 12:49:52 -0500
+	id 1vU7M2-0007d1-IA; Fri, 12 Dec 2025 12:54:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vU7H5-0006dA-CO
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:49:51 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vU7M0-0007cO-Ss
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:54:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vU7H3-0001IH-To
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:49:51 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vU7Lz-0002eC-44
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:54:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765561789;
+ s=mimecast20190719; t=1765562094;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=zAmHh+eiusTza03tnJTPzM7spfGtnjfNOZrUe/rjfGk=;
- b=cJlCj3EA81YZNbjw9LnAiGCT1DJXBkwPic/uKs2Z5rKY/LEuVu11CJlblLy/+M+9YzwI3G
- dlbD1EgtgFKYOi9jquaIGEbPEOaUkg2DKlBsMvgbDlVoUNrFR5IdLqG0GzmfatsH4KCEx+
- YWuuSpeem1xsCZ3rNCuyAhw9bq+x/0g=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jrhzLRlBRdOEZd181IXwQTXDHBkbNUVxD70Iu2VrgfU=;
+ b=DE0zs7LYnM3m0A7ap6qiP9qKlk27onO+ABZv8rgy4iXuBxTh2tONV09wcm6piM+q4lTfdJ
+ h4DbX7oj0Zc7YlEGe5NCaV7BUSqdFE38ialzpKz7nPz8w33vCT7O9VZ411TNgzrCF2GGYO
+ JsLDKiOf9I5P45UBb8n3qlw6ZBJe4xs=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-IGczmDm0Nx-E_Q2l_43svw-1; Fri, 12 Dec 2025 12:49:47 -0500
-X-MC-Unique: IGczmDm0Nx-E_Q2l_43svw-1
-X-Mimecast-MFC-AGG-ID: IGczmDm0Nx-E_Q2l_43svw_1765561786
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-47918084ac1so16844965e9.2
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 09:49:47 -0800 (PST)
+ us-mta-377-sXwEDTEFOSqvqnGdBDbbMw-1; Fri, 12 Dec 2025 12:54:52 -0500
+X-MC-Unique: sXwEDTEFOSqvqnGdBDbbMw-1
+X-Mimecast-MFC-AGG-ID: sXwEDTEFOSqvqnGdBDbbMw_1765562092
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4ee25cd2da3so25438041cf.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 09:54:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765561786; x=1766166586; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zAmHh+eiusTza03tnJTPzM7spfGtnjfNOZrUe/rjfGk=;
- b=VdjPctlg1pWAmsJT8Fgqm/N1uRJky/ocI5nKYEpFPTJZjTMxlbp/VktzPH5u2xoKjN
- pOuwaD9N0leZqhB/YkUy9rTN2PjP6jb3RqI4tjbjIEdsAMGE/Rh9KFK/pYb6R9kExMII
- zDgfC/G4i0gU1Pb75Hkmw+0O7huNQvm92c0xCR54+TD7uQPI/TGv8RAqNcWWaBHHbREv
- NuB2J0eu+KFo1x7AWW0Hpg3CZ8vKt+udFEgXgstLruhFzVHs+MmfpS+14jRIMnEEik4Z
- 5iWL+Vnx+IRMxbI6bBPtEwlucYcGvczXVW9j9/G+GsxoxxEzA5wWQ5aulczVDvM65Som
- SHFg==
+ d=redhat.com; s=google; t=1765562092; x=1766166892; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=jrhzLRlBRdOEZd181IXwQTXDHBkbNUVxD70Iu2VrgfU=;
+ b=hRaeNZiKm8GaMXBHaymRnnrizBhfu+OgmjrYXP9/jK+mXtdME/L0wEwvEvTiVsoeUL
+ WAxypuRzsZQbFjZLbdi+4ag1BHqxgPgok6HtaqbAqVNZUT5NKImycfBb7JKEK1limnfE
+ grSM8RsCkjHWpZC5tPt9E+PRMA7mLhY0991ZyWJ68dWOwHXlKePGy9JS/Mr6yC0U9wH/
+ 8E30+Sp4arAyUP1rvc2BrT07iWX3x6rV1RF0pqXw6D0Jn+obtxnheJEle/iMWsdh+qnd
+ qNTDC8HGO/bJji+Y6WVL/wB111gXlCxsHrwu1Ym+j6RpQsrUP23cLwHzow1gmXhMUKZt
+ AkAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765561786; x=1766166586;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zAmHh+eiusTza03tnJTPzM7spfGtnjfNOZrUe/rjfGk=;
- b=V9sEw5KyJ2cyyrS035t5lK5gYiKY1aBj0ebk6P5dxML/rDZaI2zkdRjDDo3ueZhXyW
- t8OqnbfMq4ijwh+QtXTJ9KD1qNacHeEXn0kerEEH3LYLSrDHSCi3mOha9T14XKv5Y2TB
- QXgAomFPADb8zG6HnwJu9GWUk8FtNCuARMq1siK4ZEqSBg/VmoIMhB3kr9odBIBA2Uyh
- 2EkX0ls8fTGS0wBcpqH4aPzRx9ofIv2YmTpyf0qdnIEBR5tT3EVAplibvmV35DgRs+84
- jcx0/WSfIAioUItN69bqRGBIs/tuQBMDKjxqAtAg8DoVRUeaP99Th49wMdbblDd0V0RY
- EWeg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4grAFTGLVQ4RoTqnslS1e0z5pUBNcUfEfCPbPLQZoGDxLYlAhsEXc40dqsw5hiK0HWy3oluNmB4yf@nongnu.org
-X-Gm-Message-State: AOJu0YwqVcf/4aBO2ARuv6NQ/vx5kDWdqxJJcTqziCNfwNOYr9NFEVfH
- RXeyeJKC1uvo3nkWHjuonPMk93sFtr3MeWoasNV5DiqZhjnba9jqpyGxVELFLqaBKrIsFkE7fI3
- qJ8Z0srUCFFct50WM57895msGjz9sU5ItNg9J2zSO3WICs/KCZhy9ggZEgFEosl1a
-X-Gm-Gg: AY/fxX6J1eQ/XxHlyLtyoq1RLK9iEsG+pnYcMlqOJbbkYFKwA7jVUO0da2Cg2q1NNa7
- GqND1KOKf8bk2T/yPFSpEC0tBTAtgp/g87Po4ArcaIgqQY0py9Ewz2Exy35NAu/ilDrF8+ZzFsR
- agXqPdJ7vOl3Rq3PwPmR1hNlra6EdCDRiVtiTdgnNIlSLDAXNgWQhpQU8wQWiI8zXFADrm9D7+m
- QzyJpq/XSgXpMSqjOyC97AqRveeTWbuDnO8xUgZo/m5IPQR/jvHsfvRbHKxvySmf3GVNft2CtdA
- Iqr7LNdzrvo3yJWklx4Pm4CMvEQOPpZk21s+NuG+aqTqKqFCZuO9fGW8QysnBk+mvBRmNUIt6dH
- ++7jvYC31qemMn1OnRAkQwh1iFfd5pQ1HRiNFI8hG6fY1DZ5YYnmkPrRKuMAjxXtIcMYPAYXQes
- CCeIC4I5nD/KkZT5M=
-X-Received: by 2002:a05:600c:6290:b0:477:55ce:f3c2 with SMTP id
- 5b1f17b1804b1-47a8f8cdc9dmr30216195e9.14.1765561786029; 
- Fri, 12 Dec 2025 09:49:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFe6e5jCKdlXhY8Hq2tfIl1ke0rzWQMQte2yQoybqQ/+kfZdMiDZLYQCa8RAV9tqXU/YkYH8A==
-X-Received: by 2002:a05:600c:6290:b0:477:55ce:f3c2 with SMTP id
- 5b1f17b1804b1-47a8f8cdc9dmr30216005e9.14.1765561785668; 
- Fri, 12 Dec 2025 09:49:45 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.145.106])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-47a8f8d9d63sm42015625e9.9.2025.12.12.09.49.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Dec 2025 09:49:45 -0800 (PST)
-Message-ID: <69fdfee5-65e5-436f-8e45-6b59fb47f654@redhat.com>
-Date: Fri, 12 Dec 2025 18:49:43 +0100
+ d=1e100.net; s=20230601; t=1765562092; x=1766166892;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jrhzLRlBRdOEZd181IXwQTXDHBkbNUVxD70Iu2VrgfU=;
+ b=G3x7oeQ9409MbvSBzHnGcI6dhJoqxg8FRr75STCsze8BlGWyHTz3wXQqD75GxdvHjW
+ LOpyzTatlauOtrbk/orVUyYNQfxMqwQU8ynfVTjnJET4/2SAcWIFEfpEMPHdct8s9AAw
+ BLv+MWwEb3cFru2j+KtePcjniqDHvsFVYLR3pLEi25dsU8v7bWpHovJE5/TUwCNmzDh2
+ 6VrxA3+18nozUeqVlcewZ/kS7mEJSkYsiceAJuQ6lkLHoJiqdjtgl+vhyKnIONjXNTPL
+ ol0T3bOQUKtqLZsO+pbFascseGpVP8mLvQWt+gp/tkURbQPLoH3kS43cZfO92W96rTIY
+ 91ag==
+X-Gm-Message-State: AOJu0Yz3z8S5bsamitkZVDW73wOT0EYlm7ps6WJVZXzG1DVuEC3wWJyJ
+ wGU5rs1Z1gOnTqupVASu0L4Hw5sArQpLH4iBRCD58fdRfrsyVG5Jt0H0/DVgOkrVw5aA7XrA3mW
+ N2pggqtAXBAXRIq1uigbATEVxYkNXRExZALz9mDjvRnhG/A+BpYBjYolT
+X-Gm-Gg: AY/fxX7NQ+DZvR4H/6m+HCv7ipAZ8EdIl8Z2wnMCa0pXXfkD7J5kjXRSpAgKj5wxJrL
+ 1zILDZ2l4AF07aUhatg5/UR+hv/qm8hjN/OT+KcuQyNR/MI1Bn444WMcSwkfWXzWoW+oeEEIIoq
+ ALndFGodLJRYoU6a/P75bpxLiuMjxRvK5sQwKr9r1zE75S5waPAmkTrmMKS2k7NTbLJw1N4RNA4
+ g/eNr6Mjiokf55pZEITOXA8PRSy3eUeBeFmGvC4MZcRhtEhktRSQT3MSDEge0zOhghUnKczPK2J
+ 1KJ+IVnqPguEyOHKH3kx6Xv9P3G3aJqrXUimZDaB5nD2E84d35G38GIntdOkYE6naj89sNybL/S
+ i+pY=
+X-Received: by 2002:a05:622a:5e11:b0:4ed:df09:a6a6 with SMTP id
+ d75a77b69052e-4f1d04b1dffmr40259891cf.25.1765562092111; 
+ Fri, 12 Dec 2025 09:54:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGn4hy3NV91mCL+QTRAascmkv5UQ+KycvTdQm/8QiIX0+MQ5wmxoO4yBc/biQaYgLPvbEymug==
+X-Received: by 2002:a05:622a:5e11:b0:4ed:df09:a6a6 with SMTP id
+ d75a77b69052e-4f1d04b1dffmr40259441cf.25.1765562091620; 
+ Fri, 12 Dec 2025 09:54:51 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4f1bd5bc349sm47500021cf.11.2025.12.12.09.54.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 12 Dec 2025 09:54:51 -0800 (PST)
+Date: Fri, 12 Dec 2025 12:54:49 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, "Dr . David Alan Gilbert" <dave@treblig.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Juraj Marcin <jmarcin@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH RFC 00/10] QOM: Introduce OBJECT_COMPAT class
+Message-ID: <aTxW6YGvHpKh5QKr@x1.local>
+References: <20251209162857.857593-1-peterx@redhat.com>
+ <a3b5e158-adae-4c66-89f9-7f0af26c63da@rsg.ci.i.u-tokyo.ac.jp>
+ <aTrp9o3d8pAapahL@x1.local>
+ <f900753b-b94f-47cd-8ebb-c82e7bae7b72@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/18] target/i386/tcg: add a CCOp for SBB x,x
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20251210131653.852163-1-pbonzini@redhat.com>
- <20251210131653.852163-18-pbonzini@redhat.com>
- <46a7f05d-c810-4112-a2a7-84c014e4de22@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <46a7f05d-c810-4112-a2a7-84c014e4de22@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f900753b-b94f-47cd-8ebb-c82e7bae7b72@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -162,35 +135,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/25 20:11, Richard Henderson wrote:
-> On 12/10/25 07:16, Paolo Bonzini wrote:
->> This is more efficient both when generating code and when testing
->> flags.
+On Fri, Dec 12, 2025 at 02:38:09PM +0900, Akihiko Odaki wrote:
+> On 2025/12/12 0:57, Peter Xu wrote:
+> > On Fri, Dec 12, 2025 at 12:28:21AM +0900, Akihiko Odaki wrote:
+> > > I'm actually less sure if the first half makes sense than the second half.
+> > > 
+> > > Exporting Property from QDEV did make me think it may be polluting the
+> > > codebase with QDEV-specifics, but its motivation (creating properties
+> > > without defining accessors) is clear and it meets its requirement.
+> > > 
+> > > The motivation is less concrete for the first half. It says the current code
+> > > is explicit, but it is a relative term. I'm not sure if specifying
+> > > TYPE_OBJECT_COMPAT is less explicit (or more implicit) than calling
+> > > object_apply_compat_props(). Also, having a class for compat props but not
+> > > for global props makes the decision look arbitrary. It is nice to have some
+> > > clarification on these.
+> > 
+> > Thanks for the comments, Akihiko.  I can explain.
+> > 
+> > I explicitly only included object_apply_compat_props() in the current
+> > OBJECT_COMPAT class (rather than set_globals()) is almost two-fold:
+> > 
+> >    - Inclusion of qdev_prop_set_globals() makes the 1st half start to depend
+> >      on the 2nd half, that I don't see it strictly necessary.  E.g., one
+> >      immediate motivation of me looking at this problem is Vladimir's series
+> >      on virtio-net/tap [1].
+> > 
+> >      That series should only need patch 1-6 of this series as minimum to
+> >      enable machine compat properties for TAP (after QOMify, if that makes
+> >      sense on its own).
 > 
-> I guess sbb x,x appears quite frequently in x86 setcc computation, and 
-> the testing of the flags is much less important than the straight line 
-> code generation?
+> It is possible to have another type that inherits TYPE_OBJECT_COMPAT and
+> does the second half.
 
-Yes.  And to be honest, in the most common idioms generated for a modern 
-processor the whole computation ends up being dead, so it doesn't really 
-matter to have this vs. CC_OP_SBB or CC_OP_SUB.  For example memcmp uses 
-it for "(x < y) ? -1 : 1":
+There's really not much user.  Especially if you're suggesting to not
+introduce OBJECT_COMPAT, then I'd not consider that for now.
 
-                  subq     %rcx, %rax
-                  sbbl     %eax, %eax
-                  orl      $1, %eax
+> 
+> > 
+> >    - qdev_prop_set_globals() itself has a trivial dependency currently
+> >      against qdev hotpluggable or not:
+> > 
+> >      object_apply_global_props(OBJECT(dev), global_props(),
+> >                                dev->hotplugged ? NULL : &error_fatal);
+> > 
+> >      There's way to decouple that I guess, however I just don't see it
+> >      necessary yet.  The only real user will be migration object, which
+> >      doesn't need to depend on this anyway, as long as Property APIs can be
+> >      exported.
+> 
+> Theoretically, there may also be a call of object_apply_compat_props() that
+> has some dependency on its state in the future, but such a future concern
+> should be treated later; I'll focus on existing callers of
+> object_apply_compat_props() and global_props() in the following discussion
+> too.
+> 
+> > 
+> > Do you think we should keep open-code object_apply_compat_props() instead?
+> 
+> Yes, that's my conclusion so far, but please see below for the explanation:
+> 
+> > 
+> > In reality, that also works for me at least on figuring out the current
+> > problem [1], and if Property API exported I can also open code it for
+> > migration object.  It's just that IMHO it's cleaner we have the light class
+> > to do this (so as to avoid providng post_init() hooks all over the places).
+> 
+> Avoiding providing post_init() hooks is a nice concrete explanation of the
+> goal.
+> 
+> That said, the migration object provides post_init() hooks anyway, so the
+> question will be if avoiding post_init() hooks will simplify the existing
+> callers of object_apply_compat_props().
+> 
+> Looking into the codebase, there are four users of
+> object_apply_compat_props(); hostmem, qdev, accel, and sev. Only hostmem and
+> qdev call object_apply_compat_props() in their post_init() hooks, and qdev
+> needs the hook anyway for the same reason the migration object does.
+> 
+> So there is only one post_init() hook added for object_apply_compat_props():
+> host_memory_backend_post_init(). And even this can be simplified; since
+> object_apply_compat_props() and the hook has the same signature, hostmem can
+> simply do:
+> 
+> .instance_post_init = object_apply_compat_props,
+> 
+> ... and drop host_memory_backend_post_init().
+> 
+> This is much simpler than adding the object-compat type, so probably it's
+> too early to add the type.
 
-and this is also common, for "(x < y) ? VALUE : 0"
+Yes, this looks also good enough for now.
 
-                  subq     %rcx, %rax
-                  sbbq     %rax, %rax     ; could be sbbl :)
-		 andl     $0x1234, %eax
+When looking at this problem, my real goal was not OBJECT_COMPAT, but
+allowing TYPE_OBJECT to opt-in with machine compat properties, then I found
+these users.  I was expecting a new class would help, and maybe that should
+at some point become the standard for backends.  Then device backends can
+do the same as frontend on inheriting machine properties.
 
-In old hand-written assembly it is used more creatively, and having 
-simpler generated code can matter if there are memory operations after 
-the sbb.  I did this just because it's silly to compute both negsetcond 
-and setcond...
+As long as we can reach a consensus providing that feature to TYPE_OBJECT
+one way or another, it'll be good enough.
 
-Paolo
+I'll wait a while to see whether others have further inputs.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
