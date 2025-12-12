@@ -4,96 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F23D4922D
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 14:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1554D49230
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 14:38:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU4H9-0008Kb-Sf; Fri, 12 Dec 2025 09:37:46 -0500
+	id 1vU4IA-0000AX-4z; Fri, 12 Dec 2025 09:38:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vU4Gz-0008Iy-Nl
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:37:37 -0500
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vU4Gy-00045p-02
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:37:33 -0500
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-65745a436f7so721079eaf.3
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 06:37:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765550250; x=1766155050; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hY/5/gksFPVCCySIbsBSCMI6I3xJysofC1hC+RDWNDE=;
- b=VATcAluu7AjGraBJqK8gWVRAHLwCNyGlXjXaDgKJenBPJIwk6vnr0rU96Qyzh3Uzaw
- Y93rNInMXwtX7WhXjrCQejly2NzOiIcl5oUX6lZ2yCif6NG8hpyH/wNTkkWnlx4EDARt
- rjsrSC2Qu2OjvGZJizAytsIcUNqOfse0BCyY/TBmghSvOeSWf1scuQSttd7kdHElvpM2
- 7S6cLP+IA+qiO7YORSq6Gc1vjE147DvA1X0B3RDy8zuJuzJJdGmhpxxfz/1aMsX7146K
- COQ+meSlRLzlaAjNJpjWDI9+TNehz1R1rMaADLOcPcJDp1d2Z0mLrAX1bWQT800e84rg
- II/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765550250; x=1766155050;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hY/5/gksFPVCCySIbsBSCMI6I3xJysofC1hC+RDWNDE=;
- b=c2KFcrXMN9P1T87konLHOYE/hE5hyyPhfRxG1MDlHD+21nABkeCM96eGpCGRSsRGoN
- o4nkNzsWDDiGl6RPi8S6xgZwv3UOwWDs9yQRdAcjnXd4XxMKtupiPnYS58crjwI9uR3S
- QWDixW1OAuPXBo2qYA+eunavFTwZnLae5ce9JJ4eCKXkb/xKuaGP273oCefXQeFKRV8e
- wumMpWhMCbaWTHZWLC+CD2iDGd8mLwjUkKHk2+mYoyPlTCUNFG0eccNFceijaHMgVidL
- Z+S1ATJfzxk83hUYlaRXWbyQkca+LUqjYeEaHkqnM0H+OvBcueKSX28TDWAGFAMkR001
- OJUA==
-X-Gm-Message-State: AOJu0Yz+RtA1y3eqqbh/zFLG/uSdC5LvSTijGhHPVEqZ7o2kd6VxO17K
- 7/XvmQ0LG/e9JvGo6V0i2CUIqVWR4yro0U7Rr7sjEjWrwI/8xp1NnkTYEHyytzkeszU=
-X-Gm-Gg: AY/fxX5+y7ItgZk6A0PtJAeRHhz8xP+j9WWCPTsxBJA2QhrHzYJDV/EBjUuP1e0Ig7r
- VHJ/9AmtNmtRJvGSOxxWhHFwTi+0JMLg+e2vQxrDX/Nh32LEkOHZdsaTGSZYOTh3GpLMLPWU51M
- WBZeAwLsPWTn7aEDlO1swWHhge4lazVzxrrco80Fw7QLY3DAW/oyMqLWGGjuacTe1lTXNMtZ4c0
- pU74uMlAD7SaiwccJWAH67h1CQ45tQQaYscoVAeQfcsidmJF4ugoHc7B+iV1wH8bimEdGNQwISR
- okWtY1jLxhDeT4prGfWyE250kaC7wPcYew9m1UiuOXFwcE7OnDCKvzGL8T3xteGvJlbJM3BoqT6
- n2rSzxkygNg0FJHPznQX2JaL9EfPNxYgGnnOVADn+3Rnfkglv1+ghFPLUX2HVD9aOiJZ6N0EIso
- Xrc41VJK5taBTyfpDCv0xlw6gUlf3jT8NwNONNy0RrlD1Ekogmvg7RXtDTn33TlZ+y
-X-Google-Smtp-Source: AGHT+IEEZfueOcaV8yjb8yLsXVZ3Mr0Rpl4NCHFQOQMMN+sOhtzN35z3YFSFJkNCEt3aOthvGAhHWA==
-X-Received: by 2002:a05:6820:308a:b0:65b:3857:b828 with SMTP id
- 006d021491bc7-65b45763306mr893598eaf.69.1765550250463; 
- Fri, 12 Dec 2025 06:37:30 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-65b3611c395sm2947160eaf.16.2025.12.12.06.37.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Dec 2025 06:37:30 -0800 (PST)
-Message-ID: <0bf7051a-0c72-4fad-97ab-670ac41b2932@linaro.org>
-Date: Fri, 12 Dec 2025 08:37:27 -0600
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vU4I8-00009h-Cu
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:38:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vU4I6-0004Ki-Oz
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 09:38:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765550320;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hnl6f13Ja6GHFavUAdqdMHjv59XCSNTwf9oLUoTe43w=;
+ b=ijuwQNA/zK/IMn7GC+QnLs3fe2D+//oXYq3l510vUS2zFoPJxdbZFDX3qTM5Eu4SI7shjB
+ TgaYbKPSRClqlCX9E+ZzeOh/PCv8CUnCBkaC57KuZSmxFE+nomyPUsYC/i5XQGPoxtUWDi
+ qVlGNp3tvCruyAuKI4HSmXCa2eSNQdI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-4w_sHJeENDGsBY937fMBnQ-1; Fri,
+ 12 Dec 2025 09:38:37 -0500
+X-MC-Unique: 4w_sHJeENDGsBY937fMBnQ-1
+X-Mimecast-MFC-AGG-ID: 4w_sHJeENDGsBY937fMBnQ_1765550316
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1E86D1801215; Fri, 12 Dec 2025 14:38:36 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A8C1D180035F; Fri, 12 Dec 2025 14:38:35 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3BF1121E6A27; Fri, 12 Dec 2025 15:38:33 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,  Cleber Rosa <crosa@redhat.com>,  Thomas Huth
+ <thuth@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  John Snow <jsnow@redhat.com>
+Subject: Re: [RFC PATCH 0/9] for 11.0 conversion* of get_maintainers.pl to
+ python
+In-Reply-To: <20251211180132.3186564-1-alex.bennee@linaro.org> ("Alex
+ =?utf-8?Q?Benn=C3=A9e=22's?= message of "Thu, 11 Dec 2025 18:01:23 +0000")
+References: <20251211180132.3186564-1-alex.bennee@linaro.org>
+Date: Fri, 12 Dec 2025 15:38:33 +0100
+Message-ID: <87bjk322ae.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/18] target/i386/tcg: fix check for invalid VSIB
- instruction
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-stable <qemu-stable@nongnu.org>
-References: <20251210131653.852163-1-pbonzini@redhat.com>
- <20251210131653.852163-2-pbonzini@redhat.com>
- <bbca9504-2b47-4aa0-8cc0-be17b3db85d0@linaro.org>
- <CABgObfb7xNov4tW1m1Yru+-p55zGW_3jsNXyzL68_NjY0XnMtA@mail.gmail.com>
- <755aed45-4ebf-4828-817a-ebe6106ea2ad@linaro.org>
- <CABgObfbrfSytFOKxAdcgeWPSu9BKsVkLuBSDSVsZLB-=LEBbdQ@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CABgObfbrfSytFOKxAdcgeWPSu9BKsVkLuBSDSVsZLB-=LEBbdQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc30.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,33 +89,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/25 20:06, Paolo Bonzini wrote:
-> 
-> 
-> Il gio 11 dic 2025, 23:22 Richard Henderson <richard.henderson@linaro.org 
-> <mailto:richard.henderson@linaro.org>> ha scritto:
-> 
->      > Yes, I was confused by the comment and by QEMU's incorrect decoding logic:
->      >
->      >          if (CODE32(s) && !VM86(s)) {
->      >
->      > which should be changed to
->      >
->      >         if (PE(s) && !VM86(s)) {
-> 
->     I can't find the language for that.  Can you point me at it?
-> 
-> 
-> It's the exception condition tables. They all mention that you get #UD for the VEX prefix 
-> in real or vm86 mode.
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
 
-Ah right, found it.  Thanks.
+> *incomplete
+>
+> I wanted to look at adding gitlab tags to MAINTAINERS and baulked
+> slightly at figuring out what I would need to change in the perl
+> script to cleanly handle it.
+>
+> While we imported the perl script from the kernel I'm fairly sure we
+> don't use half the features it has and as us grey beards age out less
+> people will be willing to tweak it. Consider this a proof-of-concept
+> for discussion about if it is worth perusing this path.
+>
+> It only supports the two main forms:
+>
+>   ./scripts/get_maintainer.py -f path/to/file
+>   ./scripts/get_maintainer.py path/to/patch1 path/to/patch2 ...
+>
+> But who needs more?
 
-> Several BMI instructions also have language like "This instruction is not supported in 
-> real mode and virtual-8086 mode".
+I've used options --git --nogit-fallback --git-since and --git-blame.
 
-Amusingly, some of them dropped the "not" in that sentence -- see ADCX.
+> Future improvements could include some more detailed analysis in
+> conjugation with the repo to analysis:
+>
+>   - missing areas of coverage
 
+I've used
 
-r~
+    $ for i in `git-ls-files`; do [ "`scripts/get_maintainer.pl -f --no-git=
+-fallback $i | grep -v '^qemu-devel@nongnu\.org'`" ] || echo $i; done >unma=
+intained-files
+
+Last post:
+
+    From: Markus Armbruster <armbru@redhat.com>
+    Subject: MAINTAINERS still leaves more files uncovered than I'd like
+    To: qemu-devel@nongnu.org
+    Date: Fri, 29 Sep 2023 13:43:30 +0200
+    Message-ID: <87lecp6w7x.fsf@pond.sub.org>
+    https://lore.kernel.org/qemu-devel/87lecp6w7x.fsf@pond.sub.org/
+
+I think I'll do it again soonish.
+
+>   - maintainer stats
+>
+> Who knows maybe the kernel guys will want to import our script one day
+> ;-)
+>
+> Alex.
+
 
