@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B23D59D77
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 16:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70717D59D79
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 16:44:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU67R-0004H1-J3; Fri, 12 Dec 2025 11:35:49 -0500
+	id 1vU6FO-0006Mb-Nx; Fri, 12 Dec 2025 11:44:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vU67O-0004Fe-Gv
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:35:46 -0500
-Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
+ id 1vU6FN-0006MJ-Gc
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:44:01 -0500
+Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vU67M-0000qG-6j
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:35:46 -0500
-Received: by mail-oi1-x22f.google.com with SMTP id
- 5614622812f47-4557d35bfc0so413161b6e.1
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 08:35:43 -0800 (PST)
+ id 1vU6FM-0004Tq-2s
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:44:01 -0500
+Received: by mail-oa1-x2b.google.com with SMTP id
+ 586e51a60fabf-3e7f68df436so1032141fac.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 08:43:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765557342; x=1766162142; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CRn2cAfq6o9o6ET0g7VVtzytU5FRK1wTb7BO1Yf10x4=;
- b=SDwNEC02w1tyfHfknxCsTqXVBIcv7D0hpyyjeFh/VM4hW1wN362TxSq3f07l9QkBKd
- 1yX03wrJ9hJvNqsUNMYYah5quppSO15/lZDGGHmB6SyxuJLhQkklb2NTJr7w2rXc5XQx
- 9yQywxKr5IzYMgUkdPOZE75/dhm7kQ2dTIKt24Daq7JGCRd8F3JF4+sMEa/ZIS2evjyx
- qgMl0eMQtE/37bCEcT9r8m9KYEer3qnyGl4bu6wFP8dBo0YBCozg+cPHP3Dye05EEqIM
- kSLrKowWjEgc5oNI/xR9gro76ikUFOIeCyL3ZwcPV62KUHGYmtL0XxLFLGB+ZSNAivVT
- L70Q==
+ d=linaro.org; s=google; t=1765557839; x=1766162639; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=JF+1MLSb2rLoFv/0j9h1zh1U1uUTJwVnagOsFBmTXMU=;
+ b=ORfn1JETEJO5BAnlwZzwLD5ZEsinEfPm25akoCVeKbuJQDIQaYzrSTa+CkI2k+XPJJ
+ BJnt4PRRBelU4us70IsNxsvaULzJOnoKOzlhJKLRM4TL8pGb0VJcLq13DhJ8m+KflI7A
+ JlBdBqB7vkWYoyHLvafv9L9i172f8ni6lBXFA5crGXjEFeKdiq0E9UXPyMug9JcsNYUG
+ sfhmUxif/W99I1hHgaAYQGQQX80tvDl8vZzy3qnwy8BEehF0MlHIzQHYEo22fr8YwaG7
+ 2Nq6quQYSrXygjzZKOj4ayvUnXs6OMato4E6NY8Z5IppAaGZ4orf7Qb+XK9hw9ppE8yL
+ 8O9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765557342; x=1766162142;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CRn2cAfq6o9o6ET0g7VVtzytU5FRK1wTb7BO1Yf10x4=;
- b=OwS4p1HzJgu5jNvpZuDFPnrW6uAyA1DMSRB/xxW3cvhJmyNN3dmr4IW1YcS1RCfc5f
- GxWkheMJpNACeC1YNanRNJuLsMnQqlQyUrxU220P1jDg6Y9whQp/NAxWaqjD5VD117m+
- bOuQFrm5IdzchCe3YZG+3/HtCPQK3hoWh4AY/wmrB56DV5vXef8zFb5wwIS4+vtve4+R
- SuW/KFi7lnUUMAnTWMbyFyXglb4qoALVV7LAkuWf6W2NgH7ke4JfgY3hzJJhyOmrPk5M
- TnyGOh3Pzz5mg97zHIJQ1LK1+moBP0Yfi4+XKwUxX2qVFu1YSUGfBc6XL2UsUWR30sF9
- 4P0Q==
+ d=1e100.net; s=20230601; t=1765557839; x=1766162639;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JF+1MLSb2rLoFv/0j9h1zh1U1uUTJwVnagOsFBmTXMU=;
+ b=fVFT8gfzr1H3dJAMQMO5kaRRTXeOlYsBVrgei8kHGsc8AskmEOOcaDW3HJs2lBbRtC
+ mqMtzXTow8xUhCK0TmjMwOznl3OzByskj+YrEpsN4WVfhMjvnBIw507jbTlM3FtXV0Hb
+ GrtiFeatx1qWw8xZ0+FIMMkHb0HxNlEZJL87ILfhIP1p5hkniPAJDmLx5MaO7HLF965p
+ iK/USrDcEGfJcM2bRRLpjCyj0Kux02XXm3Dn3XaaWBOkjx/4tv31kBh/8C4fM7j9uOik
+ Ge7aWDy0HZSa7i6iS091DnJE4ChpCw/uS1BmR0l25UH84w4Z1TZwcz57YwywHXPEPQlk
+ /aHA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVvmeRXGTqTKEteyfwmE3yiLk3Hcf+O8flsN2FvxRQ7/YrS5afva4OiXoAVIiBiGRt62Am/adL+edRE@nongnu.org
-X-Gm-Message-State: AOJu0Yz2Ng847AD8OmZMK8QvdBQgSo/bLbIQtLPXhZ5v90jU6cAXVTrr
- XRDtb2W8mKmRn6OhUrvWr7ELN/hEvcNpwYDT8WGunMPszkqOsuybwiifjqTndp8J4dk=
-X-Gm-Gg: AY/fxX5Q/c347t+DANVWfAyMSmJtRi0YrtbHup+uEkbZ1wbe0eRkVO78Pmp6paoqcvw
- +wpwyR+GfzVP0JQvY7PrvZxz4PFAMFwnrT7bEDKQV0Pj905+fFB1PB2mrkbXRtxPKE/CalhdB2B
- beJVaSyuoq3q/F79ot57KbGa/RMSKlUINoUFV5K5HR6xbaJWepbenehGQ1KjDe0i1NdTlWR84yV
- gN/YJI0Ywf8eVWWpQv6R+IKgkC+AQOmtMYeIDSUhU+iCg2RrGU/6HMrQSbeZgQrB3Ov16kWCMez
- EFhrksZuKOk9XvgdklCFJQajxPz7Mvio78U9Z9DyipqS9LnVkrZtRNdJb91J2Y1uXYSF8oKOsGb
- 3jiZJjmgtNAKu7+8mi2fxwziJoUi03SYlIryR2GZ2Fj7ddV8HegoGhMw3VpYYd0aX9JDLau/RP7
- zpyawiBXI7DZt8IwzmEPB76o2Qe5fb
-X-Google-Smtp-Source: AGHT+IHTDbgujio86A0J+rdgfiJSGgVqw2yFjX8lxYVKHZzz7+hUstC5ziBPnIbRKncVuZDsndi5/A==
-X-Received: by 2002:a05:6808:4f2b:b0:450:be6c:8528 with SMTP id
- 5614622812f47-455ac823bd5mr1384410b6e.2.1765557342280; 
- Fri, 12 Dec 2025 08:35:42 -0800 (PST)
+ AJvYcCWS33kxE+F8wQhVn/XC3WzWGu3YNYFn1w8/E43BZGrhg7wpbNFFnVDsppwkfzdBRWpWbauQofNaezpl@nongnu.org
+X-Gm-Message-State: AOJu0YzCEkAoOdBCUQmHQfC0q8H5bS2znQKfI5E4R7R8LgyU8BLVXCda
+ Y+ySYvFWys95rWRpKu/eHFhQCOM4TiBhJ0/vrcNRCLMM/MVa6pIted3i3LBd1S25q9E=
+X-Gm-Gg: AY/fxX7tqCIHh8TGDBMSdPQxz7gNkr6wtGYY9tLGVmQanEGEqZqFQFkbQnqceeplAVt
+ SkKfKw14MDi8LFmaGVrkhOKYwYNBOF92f0uFpcBJVSMXv3ugjmkN4v7K8e8RBRXTo7KAEI9pz90
+ pDYn3DNP1I+fouMMiJEVm92OWX9xuvuTYOMM7iKUOG5nfmGig162qIH0kJPOdfXGsbOADIN1pIP
+ Xetu3C0XGbVNAPpH8pMRBt+pMlNzRAWqOxXVrz6jJIw/MgTqPunzkCIPnnuMHJ+boiuppgwt+9a
+ UckiZgsbn9J8DkXYK3My7NsgZsr0gerAVFh7c0dVuiXSY6kYqS9GGsPMhXgIVBIc4UXgzj9OuRS
+ 70F7rSsXjrJW18+xb3/0Rm6LDmBa6iZTPlDURVD/DsuQ+VOz7jxpolOLCtJaQXmfb+qay56sUV7
+ iDgtmyHU7urNhLP2pJeJPMAXr1A4jO
+X-Google-Smtp-Source: AGHT+IGjQkHTO3MM0YD/sAtXFwRAp8C2Dz4LBJfu3IVSgRoVKvqjVHRAighW08+oL9FP/MT3C5O+SA==
+X-Received: by 2002:a05:6871:79aa:b0:3e0:bd2c:f459 with SMTP id
+ 586e51a60fabf-3f5f95ba209mr1471128fac.12.1765557838597; 
+ Fri, 12 Dec 2025 08:43:58 -0800 (PST)
 Received: from [10.229.62.227] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-45598b992d6sm2829886b6e.7.2025.12.12.08.35.40
+ 586e51a60fabf-3f5fe287f66sm1282767fac.1.2025.12.12.08.43.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Dec 2025 08:35:41 -0800 (PST)
-Message-ID: <b0ea5035-bbbe-43cf-aa29-8585c2662070@linaro.org>
-Date: Fri, 12 Dec 2025 10:35:38 -0600
+ Fri, 12 Dec 2025 08:43:58 -0800 (PST)
+Message-ID: <ee4ebd4e-b475-4d76-8fd2-8b04c30b183c@linaro.org>
+Date: Fri, 12 Dec 2025 10:43:54 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH-for-11.0 v3 14/22] target/mips: Drop almask argument of
  HELPER_LD_ATOMIC() macro
+From: Richard Henderson <richard.henderson@linaro.org>
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
@@ -81,13 +81,13 @@ Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
  <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>
 References: <20251126202200.23100-1-philmd@linaro.org>
  <20251126202200.23100-15-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+ <b0ea5035-bbbe-43cf-aa29-8585c2662070@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251126202200.23100-15-philmd@linaro.org>
+In-Reply-To: <b0ea5035-bbbe-43cf-aa29-8585c2662070@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,60 +110,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/26/25 14:21, Philippe Mathieu-Daudé wrote:
-> HELPER_LD_ATOMIC() now has a MemOpIdx, from which we
-> can extract the MemOp size. Use it to check the address
-> alignment.
+On 12/12/25 10:35, Richard Henderson wrote:
+> On 11/26/25 14:21, Philippe Mathieu-Daudé wrote:
+>> HELPER_LD_ATOMIC() now has a MemOpIdx, from which we
+>> can extract the MemOp size. Use it to check the address
+>> alignment.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/mips/tcg/ldst_helper.c | 10 ++++++----
+>>   1 file changed, 6 insertions(+), 4 deletions(-)
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/tcg/ldst_helper.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
+> True, but adding MO_ALIGN to the MemOpIdx (and thus to the MemOp) might be more useful, 
+> allowing you to remove this explicit check.
 
-True, but adding MO_ALIGN to the MemOpIdx (and thus to the MemOp) might be more useful, 
-allowing you to remove this explicit check.
+Follow-up: You'd also reorg the function such that
+
+      env->llval = cpu_load(env, arg, oi, GETPC());                             \
+      env->CP0_LLAddr = cpu_mips_translate_address(env, arg, MMU_DATA_LOAD,     \
+                                                   GETPC());                    \
+      env->lladdr = arg;                                                        \
+      return env->llval;                                                        \
+
+so that lladdr and CP0_LLAddr do not get assigned when there is an alignment fault.
+
+Also, the cpu_load will have either faulted, or pulled in the translation to CPUTLB.  You 
+don't need the full PTW of cpu_mips_translate_address.  Using probe_access_full will 
+quickly grab the CPUTLBEntryFull, from which phys_addr is your required value.
 
 
 r~
-
-> 
-> diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
-> index 013cd825dac..bef384575c2 100644
-> --- a/target/mips/tcg/ldst_helper.c
-> +++ b/target/mips/tcg/ldst_helper.c
-> @@ -29,12 +29,14 @@
->   
->   #ifndef CONFIG_USER_ONLY
->   
-> -#define HELPER_LD_ATOMIC(name, almask, cpu_load)                              \
-> +#define HELPER_LD_ATOMIC(name, cpu_load)                                      \
->   target_ulong helper_##name(CPUMIPSState *env, target_ulong arg, int memop_idx)\
->   {                                                                             \
->       MemOpIdx oi = memop_idx;                                                  \
->       unsigned mem_idx = get_mmuidx(oi);                                        \
-> -    if (arg & almask) {                                                       \
-> +    MemOp op = get_memop(oi);                                                 \
-> +    unsigned size = memop_size(op);                                           \
-> +    if (arg & (size - 1)) {                                                   \
->           if (!(env->hflags & MIPS_HFLAG_DM)) {                                 \
->               env->CP0_BadVAddr = arg;                                          \
->           }                                                                     \
-> @@ -52,14 +54,14 @@ static target_ulong loads4(CPUMIPSState *env, target_ulong arg,
->   {
->       return (target_long)(int32_t)cpu_ldl_mmuidx_ra(env, arg, mem_idx, ra);
->   }
-> -HELPER_LD_ATOMIC(ll, 0x3, loads4)
-> +HELPER_LD_ATOMIC(ll, loads4)
->   #ifdef TARGET_MIPS64
->   static target_ulong loadu8(CPUMIPSState *env, target_ulong arg,
->                              unsigned mem_idx, uintptr_t ra)
->   {
->       return (target_ulong)cpu_ldq_mmuidx_ra(env, arg, mem_idx, ra);
->   }
-> -HELPER_LD_ATOMIC(lld, 0x7, loadu8)
-> +HELPER_LD_ATOMIC(lld, loadu8)
->   #endif
->   #undef HELPER_LD_ATOMIC
->   
-
 
