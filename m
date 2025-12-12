@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF27D59D77
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 16:02:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF3ED59D78
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 16:29:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU5Zx-00073R-RN; Fri, 12 Dec 2025 11:01:13 -0500
+	id 1vU60i-00005L-Us; Fri, 12 Dec 2025 11:28:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vU5Zv-00072Y-4i
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:01:11 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vU60O-0008RH-Pr
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:28:33 -0500
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1vU5Zl-0005D9-KI
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:01:07 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-477b5e0323bso6339475e9.0
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 08:01:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vU60N-0004Md-8D
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 11:28:32 -0500
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-7c6d13986f8so1221724a34.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 08:28:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765555258; x=1766160058; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mUVGZsQCAC+5l1p+jDrAr76eaAw5UNU5hbxAfGIhxyI=;
- b=EbW7LtmouS7F0F46vDxNqQv/DMOdid94bPKviSRqPTle7oWMN/gYejt3LZDMvQLKfR
- EBG+r49jYJ7mJu4dLaEJCXjIsPEbCxjdQ9B0izc+KbhihajC6g/36w1qyFFXtGHdZsDO
- Nl0gVHOJK3Z9bOwfu/q0QYyOuiReBoRTAYv6xx29d4Od5bXzw2grsbYaFttsPTaHJS1U
- sXizlCphhCsWUKfkuWuSlbNy+sBJhFHwtdzanxjOcHb8xHIsWRomevd5UraQa05DnSxw
- vO7jXok2LtIKXfXarmj4ghxuizfob6eXLMIr30tNWwaSMIdJGRjUkbeH79fE+PncjlpC
- YRjQ==
+ d=linaro.org; s=google; t=1765556910; x=1766161710; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zqsXbUH3qSBH0UWzh4RIdcGvwzpd/UQuDJyQMj0wUNI=;
+ b=PyerH37DfVLuShiBIHMBQTVikxfyo2OpKuknpFXCBfiPR11m2hMooQ5q+ixY2fPXSY
+ SGBxvllVkSo1iqk1l+blU5/ja+mdhN9ARUBHzVcqRM0pfOisQi+M8S8WPqqNuafk8uJz
+ tnUYHqexROCvC+5BcqmSuRHwB1O+w/oZ32sN9Iy0ifGDMd/+qmeBfTM+jgzmRJRHCuuM
+ dVHq5+wTXvAUqYyJK/ke79lVy0ACa8KSe0BSswKgsekJl4PJKRREuzqWppF7wS4C4xvt
+ 0SetvFoY+rVtC1JdKoy3lssGoA0UV08H5xl9V+kzJ6Sj9G/fQ4Yj18hQ1wxrDZdOpo/N
+ rvNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765555258; x=1766160058;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mUVGZsQCAC+5l1p+jDrAr76eaAw5UNU5hbxAfGIhxyI=;
- b=JGUzJWsrBkuJc1uVN4BK6XcPzTmnxtPAsNQn3JBajGXMhFrowKJVpdIiZcu35RLuOl
- O0JJFjFhoSrPqIRQ8oNHyl0pvNuIsZlzRaQ51eCpauURGhrPNooOA7rs1gVHlyvAyIrB
- k5ry6udNh3IwgzIlAuMDGZeTurs0CHp4ythfHkI2zUW6fRrz61z6UEzD3K3J52JAlzP5
- XjrAG18XATi8aKzPCAUqsJikUjuV9E3XeKfPl5Z/KNjAQBzKni/wG401H2CXTZ7wsM+o
- 9y54isdp3nZNNGsQGwvV9tjLlwZXAMkPHCTy4ef02NS9Qy01mVmRlAgrX4+tTt410X6h
- Sx2g==
-X-Gm-Message-State: AOJu0YzaNESyNJIwPbNklkjIgQ/mWMlYlmAeiJNyV2BQtO1zVR5eOTlO
- rfh71ebUuZrI3WBiPkDEmecQnq6Fgsm0Jl8iMen/3ZF5rveSecq5jQGp7gglHFNFVjM=
-X-Gm-Gg: AY/fxX4ZoWblWKnqhgCxWPoSg9KTsYJ3mKoDjbcUEa8hsdUz3tfwHBVNIzasPOwnUYc
- UbErvqwhIk+DlucgOJVKLGK1x0paOM7nX0aVkUrPTrUJVxyMbrQLQwAZjhjGAyHM5UlBvE26uZ3
- esfnvDDZyDUCByYe+/hngtK5A0TaoVF5jzqkVCHH8/UL7STCEQRIIkWJqZJgtFWYxr4/u0rNho7
- oAxEdiT+yLRZJel8K/0S6tsFIhGSl+cXeWtKtvNXQ3RNLZ1BBQEHLSEEtkfHBPUg5PtNB1+O3v5
- x3oDwXPvaUhlhP8AYHfuQQniLDAVGcVgOvfVXakUXkjaq0d24yQOb9sudysxK4whaZPhgsiHeuf
- nhWXSIJZX+TgtwXjTYcJQpR7DYFLhBWA2ITgv542X4VPUD99AIk8XZalDzDBHD58Kp0HxwabGly
- G8ZZqMxvMxSmA=
-X-Google-Smtp-Source: AGHT+IFKBkWQ7DLS1juk8iMrxAD5cv9eoGTzVhLdwEtRRMXOxfm6B0NPQHJVPRgCi3TtL3Mih6RgLQ==
-X-Received: by 2002:a05:600c:6208:b0:46f:a2ba:581f with SMTP id
- 5b1f17b1804b1-47a8f2c9fa3mr29093235e9.16.1765555258168; 
- Fri, 12 Dec 2025 08:00:58 -0800 (PST)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a8f4f424bsm38294935e9.10.2025.12.12.08.00.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Dec 2025 08:00:57 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BE9595F82E;
- Fri, 12 Dec 2025 16:00:55 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ziyang Zhang <functioner@sjtu.edu.cn>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>,  Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Richard Henderson
- <richard.henderson@linaro.org>,  Zhengwei Qi <qizhwei@sjtu.edu.cn>,  Yun
- Wang <yunwang94@sjtu.edu.cn>,  Mingyuan Xia <xiamy@ultrarisc.com>,
- Kailiang Xu <xukl2019@sjtu.edu.cn>
-Subject: Re: [PATCH v2 2/2] tcg tests: add a test to verify the syscall
- filter plugin API
-In-Reply-To: <20251212141541.1792111-3-functioner@sjtu.edu.cn> (Ziyang Zhang's
- message of "Fri, 12 Dec 2025 22:15:41 +0800")
-References: <20251212141541.1792111-1-functioner@sjtu.edu.cn>
- <20251212141541.1792111-3-functioner@sjtu.edu.cn>
-User-Agent: mu4e 1.12.14-pre3; emacs 30.1
-Date: Fri, 12 Dec 2025 16:00:55 +0000
-Message-ID: <87ldj7sn9k.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1765556910; x=1766161710;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zqsXbUH3qSBH0UWzh4RIdcGvwzpd/UQuDJyQMj0wUNI=;
+ b=ccdavDKbPpqHAzYPfm2XHagK0aHLpAziwkq8R3bT1u+6ja+mLjN4Nre9PmLHDAHpH0
+ Jv39H9B6ZYmd3feY+F4RGo0Lvfwh6kWSxJLtfzeNXkVUihtn5A7IRSq38acT529o5+Lu
+ 8Wnyui7+1aS9JYxhVQDczbQVTpPFDqBLIfmWy3D5ZGq0J9Y9IKONFtcJldFH/AaH+0Dm
+ iytHr03EsrgVGCXt8GANCuMfeK6YxeKyR0qAe8pmYzpBJvlxpMP4VU7duGWNgivPln7F
+ c8VY8SwB1t/tKKWJhE96MffmrKshS19xTZVP6fxJ/omZyjlMRxzdZNRxDWGyv/AbYcNO
+ nWGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUsthgwXF/s+gHx6iW55g6fvfwJGBUpdw2gGqAZpxZ0oYhvbMxwuoXyVOrWK95taVOf8ek1Y6bJHknF@nongnu.org
+X-Gm-Message-State: AOJu0YySmkyk2g4kvUCCU2weyI3+cKwX3h8mu5XGZTLxQmfVsXMhk0OR
+ Tu3WYnkVIlE6yk4fCFj8JC8f+xmSrRYdQpExi69vY/QIqW/uZb1OGTW9rx9MCnkoYpc=
+X-Gm-Gg: AY/fxX6T9vxExGQNJsa7IPmWeMJps3k5n/bSZ/Gr50NJDWM9x2LOFiAT5ylbMf9pMhQ
+ 8cNaHqnWm0PIytFcn7hJ+9DNuFt7U/i31EsE3JpOjeKxLTBvyX2VRLZw8Jnb8dviLxPNW3Yot5s
+ 7pgiamyNhvkhEJeghRSLZosJiHVvQTVMDYdSsIOozI03tiThssetojngi0XEbSv05rLBSBYOFRp
+ Z/F/su2/A92fLdKT02x8f4oIth6IV/CqP0WirZnDCx1Y7RnzRE4jyc+NdN4tQNV5iye53u2/vZZ
+ hZA/VtCRNuHL2AyuaOSEh1Z4sg3/fgXw+TCPoTzSVuGsW2jc8BfwrU1HpvGq4pgM+1494gN2Q5W
+ CXDx/csua8bZTyKjrQnSHk6eDaeIghaATUfuBDSwGVFmozRCGbvnUdTD7NhD+W2KMJDar2fUqLL
+ f7MvL9eQaXa5044n4X+9L350xueL15
+X-Google-Smtp-Source: AGHT+IEwBry1c03hgIYf6MzogI1thbkO0bqBRKkArLs/2J53jOAfdaJm9IU+63HwSOxjrN2fFgdXGQ==
+X-Received: by 2002:a9d:7849:0:b0:7c7:5958:baad with SMTP id
+ 46e09a7af769-7cadca95097mr2432499a34.0.1765556909811; 
+ Fri, 12 Dec 2025 08:28:29 -0800 (PST)
+Received: from [10.229.62.227] ([187.217.227.247])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7cadb1d0facsm3753989a34.3.2025.12.12.08.28.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 12 Dec 2025 08:28:29 -0800 (PST)
+Message-ID: <2680c481-088b-4366-abc3-7d48d90db0b5@linaro.org>
+Date: Fri, 12 Dec 2025 10:28:26 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-11.0 v3 11/22] target/mips: Use big-endian variant of
+ cpu_ld/st_data*() for MSA opcode
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>
+References: <20251126202200.23100-1-philmd@linaro.org>
+ <20251126202200.23100-12-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251126202200.23100-12-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,164 +110,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ziyang Zhang <functioner@sjtu.edu.cn> writes:
+On 11/26/25 14:21, Philippe Mathieu-Daudé wrote:
+> MSA vectors are accessed in big endianness.
+> 
+> Per the "MIPS® SIMD Architecture" (MD00926 rev 1.03):
+> 
+>    3.1 Registers Layout
+> 
+>    MSA vectors are stored in memory starting from the 0th element at
+>    the lowest byte address. The byte order of each element follows the
+>    big- or little-endian convention of the system configuration.
 
-> Register a syscall filter callback in tests/tcg/plugins/sycall.c,
-> returns a specific value for a magic system call number, and check
-> it in tests/tcg/multiarch/test-plugin-syscall-filter.c.
->
-> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
-> Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
-> ---
->  tests/tcg/multiarch/Makefile.target           |  4 +++-
->  .../multiarch/test-plugin-syscall-filter.c    | 20 +++++++++++++++++++
->  tests/tcg/plugins/syscall.c                   | 15 ++++++++++++++
->  3 files changed, 38 insertions(+), 1 deletion(-)
->  create mode 100644 tests/tcg/multiarch/test-plugin-syscall-filter.c
->
-> diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Ma=
-kefile.target
-> index f5b4d2b813..4005e3a8a9 100644
-> --- a/tests/tcg/multiarch/Makefile.target
-> +++ b/tests/tcg/multiarch/Makefile.target
-> @@ -202,8 +202,10 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
->  	CHECK_PLUGIN_OUTPUT_COMMAND=3D \
->  	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
->  	$(QEMU) $<
-> +run-plugin-test-plugin-syscall-filter-with-libsyscall.so:
->=20=20
-> -EXTRA_RUNS_WITH_PLUGIN +=3D run-plugin-test-plugin-mem-access-with-libme=
-m.so
-> +EXTRA_RUNS_WITH_PLUGIN +=3D run-plugin-test-plugin-mem-access-with-libme=
-m.so \
-> +			   			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so
->  endif
->=20=20
->  # Update TESTS
-> diff --git a/tests/tcg/multiarch/test-plugin-syscall-filter.c b/tests/tcg=
-/multiarch/test-plugin-syscall-filter.c
-> new file mode 100644
-> index 0000000000..cc694e0a71
-> --- /dev/null
-> +++ b/tests/tcg/multiarch/test-plugin-syscall-filter.c
-> @@ -0,0 +1,20 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * This test attempts to execute a magic syscall. The syscall test plugin
-> + * should intercept this and returns an expected value.
-> + */
-> +
-> +#include <stdint.h>
-> +#include <stdio.h>
-> +#include <stdlib.h>
-> +#include <unistd.h>
-> +
-> +int main(int argc, char *argv[]) {
-> +    long ret =3D syscall(0x66CCFF);
-> +    if (ret !=3D 0xFFCC66) {
-> +        perror("ERROR: syscall returned unexpected value!!!");
-> +        return EXIT_FAILURE;
-> +    }
-> +    return EXIT_SUCCESS;
-> +}
+This says "follow the system configuration" ...
 
-  This breaks some arches:
+> 
+> Use the explicit big-endian variants of cpu_ld/st_data*().
 
-  (gdb) r
-  Starting program: /home/alex/lsrc/qemu.git/builds/sanitisers/qemu-arm -pl=
-ugin tests/tcg/plugins/libsyscall.so -d plugin ./tests/tcg/arm-linux-user/t=
-est-plugin-syscall-filter
-  [New Thread 0x7ffff37ff6c0 (LWP 63692)]=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-  qemu: uncaught target signal 4 (Illegal instruction) - core dumped
-  syscall no.  calls  errors
-  45           5      0
-  338          1      1
-  256          1      0
-  191          1      0
-  398          1      1
-  125          1      0
-  384          1      0
-  332          1      0
+... so how do you get "big-endian" from that?
 
-  Thread 1 "qemu-arm" received signal SIGILL, Illegal instruction.
-  Download failed: Invalid argument.  Continuing without source file ./nptl=
-/../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S.
-  __syscall_cancel_arch () at ../sysdeps/unix/sysv/linux/x86_64/syscall_can=
-cel.S:56
-  warning: 56     ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S: No su=
-ch file or directory
-  (gdb) bt
-  #0  __syscall_cancel_arch () at ../sysdeps/unix/sysv/linux/x86_64/syscall=
-_cancel.S:56
-  #1  0x00007ffff6a51668 in __internal_syscall_cancel (a1=3D<optimized out>=
-, a2=3Da2@entry=3D8, a3=3Da3@entry=3D0, a4=3Da4@entry=3D0, a5=3Da5@entry=3D=
-0, a6=3Da6@entry=3D0, nr=3D130)
-      at ./nptl/cancellation.c:49
-  #2  0x00007ffff6a516ad in __syscall_cancel (a1=3D<optimized out>, a2=3Da2=
-@entry=3D8, a3=3Da3@entry=3D0, a4=3Da4@entry=3D0, a5=3Da5@entry=3D0, a6=3Da=
-6@entry=3D0, nr=3D130)
-      at ./nptl/cancellation.c:75
-  #3  0x00007ffff6a0207d in __GI___sigsuspend (set=3D<optimized out>) at ..=
-/sysdeps/unix/sysv/linux/sigsuspend.c:26
-  #4  0x0000555555a49b80 in die_with_signal (host_sig=3D4) at ../../linux-u=
-ser/signal.c:807
-  #5  0x0000555555a49ed0 in dump_core_and_abort (env=3D0x532000004300, targ=
-et_sig=3D4) at ../../linux-user/signal.c:847
-  #6  0x0000555555a4c969 in handle_pending_signal (cpu_env=3D0x532000004300=
-, sig=3D4, k=3D0x5250000029d0) at ../../linux-user/signal.c:1306
-  #7  0x0000555555a4d0e5 in process_pending_signals (cpu_env=3D0x5320000043=
-00) at ../../linux-user/signal.c:1386
-  #8  0x0000555555873930 in cpu_loop (env=3D0x532000004300) at ../../linux-=
-user/arm/cpu_loop.c:479
-  #9  0x0000555555a3eca7 in main (argc=3D6, argv=3D0x7fffffffe588, envp=3D0=
-x7fffffffe5c0) at ../../linux-user/main.c:1035
-  (gdb)=20
+> diff --git a/target/mips/tcg/msa_helper.c b/target/mips/tcg/msa_helper.c
+> index f554b3d10ee..d6ce17abf9a 100644
+> --- a/target/mips/tcg/msa_helper.c
+> +++ b/target/mips/tcg/msa_helper.c
+> @@ -8231,8 +8231,8 @@ void helper_msa_ld_b(CPUMIPSState *env, uint32_t wd,
+>       uint64_t d0, d1;
+>   
+>       /* Load 8 bytes at a time.  Vector element ordering makes this LE.  */
+> -    d0 = cpu_ldq_le_data_ra(env, addr + 0, ra);
+> -    d1 = cpu_ldq_le_data_ra(env, addr + 8, ra);
+> +    d0 = cpu_ldq_be_data_ra(env, addr + 0, ra);
+> +    d1 = cpu_ldq_be_data_ra(env, addr + 8, ra);
+>       pwd->d[0] = d0;
+>       pwd->d[1] = d1;
 
-> \ No newline at end of file
-> diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
-> index 42801f5c86..1323e18bc0 100644
-> --- a/tests/tcg/plugins/syscall.c
-> +++ b/tests/tcg/plugins/syscall.c
-> @@ -170,6 +170,20 @@ static void vcpu_syscall_ret(qemu_plugin_id_t id, un=
-signed int vcpu_idx,
->      }
->  }
->=20=20
-> +static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_i=
-ndex,
-> +                                int64_t num, uint64_t a1, uint64_t a2,
-> +                                uint64_t a3, uint64_t a4, uint64_t a5,
-> +                                uint64_t a6, uint64_t a7, uint64_t a8,
-> +                                uint64_t *ret)
-> +{
-> +    if (num =3D=3D 0x66CCFF) {
-> +        *ret =3D 0xFFCC66;
-> +        qemu_plugin_outs("syscall 0x66CCFF filtered, ret=3D0xFFCC66\n");
-> +        return true;
-> +    }
-> +    return false;
-> +}
-> +
->  static void print_entry(gpointer val, gpointer user_data)
->  {
->      SyscallStats *entry =3D (SyscallStats *) val;
-> @@ -255,6 +269,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugi=
-n_id_t id,
->=20=20
->      qemu_plugin_register_vcpu_syscall_cb(id, vcpu_syscall);
->      qemu_plugin_register_vcpu_syscall_ret_cb(id, vcpu_syscall_ret);
-> +    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter);
->      qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
->      return 0;
->  }
+This really seems to be exchanging one bug for another.
+And the comment no longer matches.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Also, this would be much better accomplished inline as
+
+     tcg_gen_ld_i128(..., mo_endian(s) | MO_128 | MO_ATOM_<something>);
+
+where <something> will be MO_ATOM_NONE for vector of 1-byte elements, MO_ATOM_IFALIGN_PAIR 
+for 8-byte elements, and MO_ATOM_SUBALIGN for the others (which is slightly stronger than 
+required, but we don't have MO_ATOM_IFALIGN_<N> for all N).
+
+Doing that for the stores as well will allow removal of ...
+
+>       ensure_writable_pages(env, addr, mmu_idx, GETPC());
+
+... this hack.
+
+
+r~
 
