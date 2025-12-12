@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5269FD4922D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8005BD49236
 	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 15:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU4i3-0002WD-W2; Fri, 12 Dec 2025 10:05:32 -0500
+	id 1vU4i6-0002dn-4I; Fri, 12 Dec 2025 10:05:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vU4hl-0002Dv-KE
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:14 -0500
+ id 1vU4i0-0002JF-Kp
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vU4hj-00062R-Vd
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:13 -0500
+ id 1vU4hv-00064N-BA
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 10:05:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765551911;
+ s=mimecast20190719; t=1765551920;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=moaOxubZcgOMwtmXzfQMaVBqmlmt2o6MG1/+E7uthig=;
- b=YK9zvfmYY5E4hb7YXrZjAzfMYEHrr0y83PngWecn4vid2/il9gBiF6r1nsGdQk9WWgaYOz
- MX5u1WJa0z1WHtdHqqbKt/IYsT3wQI/m7b9bFYkZ6PRPEo4Eb+K5gNvuOX05PI9o6MEAHN
- hlCou588c2m5dWeNxxYaakdYG67yWk8=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=W1D9QAx3RYKk+TBo6axZVKqP/pAZIQxzOmmqfA8IeuY=;
+ b=ZgBs001qoQ9x6yTw4wEv3j3LE5Rq6cPfOkJhgnYvZL4BtKBIFEPE9Xg13hgXxETkAAhTxA
+ cGk7IMjPBC0CuK1kf/wUbI1IGADtV2Vf8FLX4cFle4T0XabJadSKL/XBc5877HsRZwMZUW
+ SqMkp5K+L6aQNxdMj1kGMl3DqC45VpE=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-DvnSD0alMV6PyOhhL2we3A-1; Fri, 12 Dec 2025 10:05:10 -0500
-X-MC-Unique: DvnSD0alMV6PyOhhL2we3A-1
-X-Mimecast-MFC-AGG-ID: DvnSD0alMV6PyOhhL2we3A_1765551909
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-29f177f4d02so18928025ad.2
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 07:05:09 -0800 (PST)
+ us-mta-326-sYbKolKEPW-hhHRXQ4CY3A-1; Fri, 12 Dec 2025 10:05:19 -0500
+X-MC-Unique: sYbKolKEPW-hhHRXQ4CY3A-1
+X-Mimecast-MFC-AGG-ID: sYbKolKEPW-hhHRXQ4CY3A_1765551917
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-295952a4dd6so13072185ad.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 07:05:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765551909; x=1766156709; darn=nongnu.org;
+ d=redhat.com; s=google; t=1765551917; x=1766156717; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=moaOxubZcgOMwtmXzfQMaVBqmlmt2o6MG1/+E7uthig=;
- b=kO4W66qrng7pEfQFhvKaHOElzx99befEcejpFoDbAAu6dRBdIb6K99op27GQ0CJiVv
- EiBzXB588vdILMV15/S2OgkiWFlD8SUddRq3jv2w95N56AUH1uypO7QpywC3TcySZu0D
- H2e0KQuMyLeoqsRq1M8QkeBr/yv3AAQpP7DkSkrOp3kS28AbFzmP4ATLzAwlXKx+Qmq5
- 6TMiulQaPye3TJUSnMdUZG7hTM61O0Qo4mcv8mfgFBurQIt+OS8/NJNMOXs/CSiZUaaG
- lzflgF+zyUm/KqiPdonD+ZA8+3jyxr7fuh9ijOpffr3PKh6oM5DdTITP9SkS0svdt5wG
- IyGQ==
+ bh=W1D9QAx3RYKk+TBo6axZVKqP/pAZIQxzOmmqfA8IeuY=;
+ b=mw+jVJ+/59YZHKLEoE0go91b6fWj8SPPzWrLiHxH5Ft1wrGreKJor/tZ2hwZw02/Fy
+ RcyqYcS9RcHZ3cNqo9SlsJe0amLywWhbMqvA+BlITApiJJDHpl4tNZ7xq2CazSGMZrkd
+ +jfDfUkfNxa8MtOPFXY1a5QRtZpjC72kDx/lh9B2BICZSiDDBXfAB8r9qhcSirc27Uss
+ +02DBF/NjUha3Md99baHt1tjXbQh/G92qVck+CUXAK3J1xCVXjmS/CG68uaheyckAAJ9
+ 1bwRXcc7SFBLc40olYx/64lGFbuxT2lQIVSyqStlh7tM28akNTG+Hk3wAsWc2psFby35
+ FF4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765551909; x=1766156709;
+ d=1e100.net; s=20230601; t=1765551917; x=1766156717;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=moaOxubZcgOMwtmXzfQMaVBqmlmt2o6MG1/+E7uthig=;
- b=GEEoMvNN8iZseyqbkqZEVh2+i3fzCfKBWZXW1A/SRCi6IWjhSx5EJJiPlPTPK3gXDJ
- jUX+edtrwqpenqMJUUFtV5fc2qI8/txl9dVXnwuhGR1xNDxqMyBbjp+PfBKe1NbpZBZK
- 27a7ery/OH6piTnLhF/5WKlmItwr1B4FKUJqLXDtDB1aaTKzbX5wYQjDeZrEUMMfcbSB
- zu3rWp2Fdd+1cQrVMeNkqn9ytmxwfF2IS7ygexGS69+DRiXGUn9eDH/+1qdHwkblqhtu
- cH3hG4q8SrhjvuEGB63oPxMEPLPT9zkH2GjPqbdq8174YTzhs2ZILbpMYWg6JSeAJ0/p
- sPgA==
+ bh=W1D9QAx3RYKk+TBo6axZVKqP/pAZIQxzOmmqfA8IeuY=;
+ b=egSW3hzH31/WflM4qlXcH8BjEBQ02D3gMzTawSJYpw1gy6LGzREKfOSmSwJFN9bXg/
+ L3NNMAlUD5C1osMRQcUW9Xd893J7NMps8drGbj7P+Eov7Ls80T7G3FQFF2lK6X+Jd69g
+ TWbE9eUdNXxF1ZBBQH21eajmbI6GBflZ6uTpy7v4TMjAnugz0TL1/005br8iETwO5Oqc
+ a1ydXN/A4z0zoQdLoNCn0Ec1ZA03thhjfzNggcrTXoXVW+vJ0TVCpUC2dvUHn5801mft
+ gJUxL+YUYSaI+DPkp5W1nrF8nWQzk03VjDb8Sms3ifg/60dYgIfhS8vQQLZzRUQJqQnf
+ LtTQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUax9emD+beih8cK2dhJAhxCjtHcPYPY7PE2pI51Rpz5SXT2wfYwVkei1XYoMs9u98rbHNQLwxAs4es@nongnu.org
-X-Gm-Message-State: AOJu0YzbTf54HwLRLvziNvnLHS3zcUinx+ftMh1mo2LqcSIIMVuS7N4w
- jnrNs0AyfD0uPJgrmi4roWd72dB1rO+eVBI72DU2FDmQqIHcoazMgWEp5X9Pj8xwGEH0ivZArI4
- kpfrZF4dxfPwoWOpJt71nBf4OIsP+Jg3A1Sb5XMNELKc/VhMCJ5/uVxPo
-X-Gm-Gg: AY/fxX43qNtwnyEpsg7TTLSkb96l5AubGO8csJXhn7dfgG5Fx1C85Fi116Ixh3ecBJI
- ev+FRHrDKVCkVNG1jGWr65tdxKCuwwcByAZaD3yZTnp5A39OF6F2kVp7GomNzgeHxmpJgG6XsKh
- tmwBWjLiSKYmFkCkzg4g1lrq2u71QoP4cajhcrKO5sYPRVLjoLrVFqDpMR7442mBbLYHbhg09Hh
- PMJAYfoJPChhvObanczS/7kH5/nx1sj2PD1ktQIujGzRZrOCWtG77do9AcnbGbmgXJtyghmntSL
- 92YL5Y9S4JeGzV+qysNwmpmIxJ3YHlZQ1MfOrhhv4qTnhVUqq7xWGD4UPf+IBhLvwbA08iUdVPR
- hQ8E9/9nqZ4nRSFGMaEW1vmXivhg79Hbm4DDcGh5Bm78=
-X-Received: by 2002:a17:902:ef46:b0:294:f711:baa with SMTP id
- d9443c01a7336-29f23b13d60mr27391345ad.2.1765551909052; 
- Fri, 12 Dec 2025 07:05:09 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHC3l5KfoTIzBOvCIgz4vOJbuTkx8ffSsBoioMNy7dyeW+kG8f/r8DTTvFFJOZadKbmgFTs8Q==
-X-Received: by 2002:a17:902:ef46:b0:294:f711:baa with SMTP id
- d9443c01a7336-29f23b13d60mr27390725ad.2.1765551908487; 
- Fri, 12 Dec 2025 07:05:08 -0800 (PST)
+ AJvYcCX5K+YkM4VIuCE52bBPrLDS34ekQVx/rlPa4fxz8v+xvQ2L/wyUmwkwZt9Z9nI3l+3aPqJUZ5FAyOSw@nongnu.org
+X-Gm-Message-State: AOJu0Yzl6l9EaOX3kUE/+q7XGJtmWjgfuSX/XOgFZdajRgwoKqC2Wzup
+ Mix6o/68PiAiGj0BVDG6agoldY3Az0ub7+YcyshGBA1tGkbvuiQt1B+kqTWkVPsjl7OWCElizbZ
+ yKnQ7BnnlWSV23CqizIE5k9yR5PGxAV690KZgCJbBCxbc7ommecTEk+saKpghHWeH
+X-Gm-Gg: AY/fxX56MJBCSi8EltYsT4Kt53Lri5PbJvPc5mV5MkMqKnVBXv6a+aRT2KDFh2x1UcL
+ jJoPGWa4iL8cboiStoksZWF3M/aF7EwSK2WyUqqbGbdAaz3OcR09hiO9xyf/958QAeyliIrSexv
+ wKr1qJ3sEUj01XkPl0GCcPMIOdtftZXgEe1fjt0nOeTE3RMYD5KIr5VU0pzNp0YrM1TxlcjKVAI
+ b5QfmvBqFDjmmFBYZBAZT6dFGGM8AhuiFdQKTy8Dg5PPkajXQ4G8PZBhVh48OivBw3rC2yWyNiy
+ S6HRxj3k11M23elyReW4/95VO4m5/vqTcA+cCoRriXtZQKpaMdmZAEJoKubWS1PX0KjXLxsuJi0
+ 77E6rjVde6MpBQFMS9sldQcV3fzAv8u/kBRvK1XJ6P/s=
+X-Received: by 2002:a17:902:d50f:b0:267:8b4f:df36 with SMTP id
+ d9443c01a7336-29eeec1e3edmr62250385ad.29.1765551916622; 
+ Fri, 12 Dec 2025 07:05:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IErKXvfIsf0XdT2uZ5tfa/p411BIgMfaEjii4Bb7zfmVemQkpUTySz8wUPcvpT+r2XZ3sY+qQ==
+X-Received: by 2002:a17:902:d50f:b0:267:8b4f:df36 with SMTP id
+ d9443c01a7336-29eeec1e3edmr62248315ad.29.1765551914504; 
+ Fri, 12 Dec 2025 07:05:14 -0800 (PST)
 Received: from rhel9-box.lan ([122.172.173.62])
  by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-29ee9d38ad1sm57046655ad.29.2025.12.12.07.05.06
+ d9443c01a7336-29ee9d38ad1sm57046655ad.29.2025.12.12.07.05.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 12 Dec 2025 07:05:08 -0800 (PST)
+ Fri, 12 Dec 2025 07:05:14 -0800 (PST)
 From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>
 Cc: vkuznets@redhat.com, kraxel@redhat.com, qemu-devel@nongnu.org,
  Ani Sinha <anisinha@redhat.com>, kvm@vger.kernel.org
-Subject: [PATCH v1 14/28] i386/tdx: add a pre-vmfd change notifier to reset
- tdx state
-Date: Fri, 12 Dec 2025 20:33:42 +0530
-Message-ID: <20251212150359.548787-15-anisinha@redhat.com>
+Subject: [PATCH v1 16/28] i386/sev: add notifiers only once
+Date: Fri, 12 Dec 2025 20:33:44 +0530
+Message-ID: <20251212150359.548787-17-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20251212150359.548787-1-anisinha@redhat.com>
 References: <20251212150359.548787-1-anisinha@redhat.com>
@@ -124,60 +124,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During reset, when the VM file descriptor is changed, the TDX state needs to be
-re-initialized. A pre-VMFD notifier callback is implemented to reset the old
-state and free memory before the new state is initialized post VM-fd change.
+The vm state change notifier needs to be added only once and not every time
+upon sev state initialization. This is important when the SEV guest can be
+reset and the initialization needs to happen once per every reset.
 
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- target/i386/kvm/tdx.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ target/i386/sev.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 1903cc2132..b6fac162bd 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -403,6 +403,32 @@ static void tdx_handle_reset(Object *obj, ResetType type)
-     tdx_finalize_vm(NULL, NULL);
- }
- 
-+/* TDX guest reset will require us to reinitialize some of tdx guest state. */
-+static int set_tdx_vm_uninitialized(NotifierWithReturn *notifier,
-+                                    void *data, Error** errp)
-+{
-+    TdxFirmware *fw = &tdx_guest->tdvf;
-+
-+    if (tdx_guest->initialized) {
-+        tdx_guest->initialized = false;
-+    }
-+
-+    g_free(tdx_guest->ram_entries);
-+
-+    /*
-+     * the firmware entries will be parsed again, see
-+     * x86_firmware_configure() -> tdx_parse_tdvf()
-+     */
-+    fw->entries = 0;
-+    g_free(fw->entries);
-+
-+    return 0;
-+}
-+
-+static NotifierWithReturn tdx_vmfd_pre_change_notifier = {
-+    .notify = set_tdx_vm_uninitialized,
-+};
-+
- static Notifier tdx_machine_done_notify = {
-     .notify = tdx_finalize_vm,
- };
-@@ -753,6 +779,7 @@ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- 
-     if (!notifier_added) {
-         qemu_add_machine_init_done_notifier(&tdx_machine_done_notify);
-+        kvm_vmfd_add_pre_change_notifier(&tdx_vmfd_pre_change_notifier);
-         notifier_added = true;
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 9a3f488b24..1212acfaa1 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -1789,6 +1789,7 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+     int ret, fw_error, cmd;
+     uint32_t ebx;
+     uint32_t host_cbitpos;
++    static bool notifiers_added;
+     struct sev_user_data_status status = {};
+     SevCommonState *sev_common = SEV_COMMON(cgs);
+     SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(cgs);
+@@ -1939,8 +1940,11 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+         return -1;
      }
-     tdx_guest = tdx;
+ 
+-    qemu_add_vm_change_state_handler(sev_vm_state_change, sev_common);
+-
++    if (!notifiers_added) {
++        /* add notifiers only once */
++        qemu_add_vm_change_state_handler(sev_vm_state_change, sev_common);
++        notifiers_added = true;
++    }
+     cgs->ready = true;
+ 
+     return 0;
 -- 
 2.42.0
 
