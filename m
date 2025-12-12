@@ -4,95 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF804D4336B
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 06:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2487D4337F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 08:16:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vTwuY-0000yT-Ms; Fri, 12 Dec 2025 01:45:54 -0500
+	id 1vTyJd-0007Uw-9t; Fri, 12 Dec 2025 03:15:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTwuQ-0000y1-Ft
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 01:45:46 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vTwuO-0003r7-Lw
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 01:45:46 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-47118259fd8so8954905e9.3
- for <qemu-devel@nongnu.org>; Thu, 11 Dec 2025 22:45:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765521943; x=1766126743; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iQkenrVoYXOppPDscf9+i06O0cer2RWduFbVfCZVRvs=;
- b=T9+oKVWl3eVF+mBGn2OFM/SjsLX5lNeF5USAS/O9P2xQQcSv749sx+x34+Af/h4ctN
- 3SrNfAFBREE5h8JOlpND+6bikz+c3nRstP70rxxEF2cyMueTeAUPUKNfnVda7/j6iG6R
- BnafPO1u907MO47TFjsGCcZ38V5gKgqp9qLA5TqyCPt3TiUwJU0yS8HD+LVCnUMNhP5P
- 6HZi/Gvtbl5lnyCJx6oaWLM0/Q4xsN9VvdqWdvX7El3r0eEKZkV9sw3maDgv92caWlmu
- /1SVDpftpfwga7mRHpWSmnoUnMPNHEKBtOiR+xVHVN7/uqJDE6YhPSPIeulYE69+ONG5
- yjcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765521943; x=1766126743;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iQkenrVoYXOppPDscf9+i06O0cer2RWduFbVfCZVRvs=;
- b=tSJFsmXyDg5VZIpBfBQTSlS5nafNCM7Qx4w3XYr0n/Htsbu8za8KjZpj8ZfaN42/cn
- GlPxRyE/Rhu0QvU2gOnCNfRRIM4PfKsNd26uTb3cBK/K144/np1Hd3lGyeGCkXkvI8jt
- 0uGEiGPpUMN1LIKew0azbwNkD1+fAtuND80WphWv7hq6P0QkIyeUQFwJdj3WyIets2Cp
- bAaRQZEVPXHT3CBjs1o/2sY4XWNM4A77MslnPYLlkCNU6oVhMexoEFsqwxtM+5/kftqO
- U2c1wJT3o9A7bs4oijMK88Xt6fRjdmBQKR5Jqx+HQFBpCA2BYUV2eURhlXk6Y6H/K3OG
- p7Gw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVTOEEpaJrCffdmB0nQiLCrGETLZ7pPvHZXUMiFnc7DdrNwRIWsexZVtp+5ufSSLzjbIXhcqm13x80r@nongnu.org
-X-Gm-Message-State: AOJu0Yx8gifAeNfW/7fBi4hDuLFkZQI2KKHRpEd5d8HidhLbQyBUAUMj
- uNfG6OnYs4j3cF7qiBsYrlrAp0eHE4CgKmZxrw8KplKTakiyJiNJXpTp237mizXbX/8=
-X-Gm-Gg: AY/fxX5wU9lh0RIWyEC/tPfVPhgLvfl8WUXpGESEOtp7wLhzQaDCLLm8BZsZObvKcLV
- CcbdT+AiamXy53OIHczuimkIg57MlIQ3PyHa81t+fg4yO+anT6LdBHhYC71DebcXRRmwsPyidpM
- RLYJ2GqmbwgdpRD34oKVXOzZOxYqZ53lFEbCEEMTLi5mLeG1tDSLW7k2/XxjrcKcEJ9AGBRgSRu
- 7HqFeOTTUWSUIzFioL+cYjUTiu/iosBQ142TnfHjLa6CRkZ5Vr9mwut+PJam5H83SjtA9fvAYoy
- /t+3OJekusDv9eqxQXEyh1klKaUxVm4mLed9A4GgmR+b5wKjdJCqz4/pbqesrN96nT6TSkYR7+J
- cxXoAJe5Gklt8D5X+MQ+J7nvM//ZPXxzS7zFedNC1nlLABuk2B4S86bBvr59pa6tytYG1QgE7PE
- MVZHb7OkZbouS0/KHHT7QMJVQ3dYgp93jFDTiF7c1l3wLP/e0VtCTQa30jikT3Rjzc
-X-Google-Smtp-Source: AGHT+IEKB7wvEa0uvprOW2ZpTAY6o8zCwwEkSL1t4tbKHZ4peVH3SMaTuNzDPh47UXWBWywSUYk6CA==
-X-Received: by 2002:a05:600c:4f86:b0:45d:d97c:236c with SMTP id
- 5b1f17b1804b1-47a8f9071c6mr8319095e9.21.1765521942667; 
- Thu, 11 Dec 2025 22:45:42 -0800 (PST)
-Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a8f38a455sm15975665e9.1.2025.12.11.22.45.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 11 Dec 2025 22:45:42 -0800 (PST)
-Message-ID: <7f479d0e-1370-4574-9966-e373405ddb1f@linaro.org>
-Date: Fri, 12 Dec 2025 07:45:41 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/9] MAINTAINERS: fix libvirt entry
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>, Thomas Huth <thuth@redhat.com>,
- John Snow <jsnow@redhat.com>,
- "devel@lists.libvirt.org" <devel@lists.libvirt.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vTyJU-0007UR-9c
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 03:15:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1vTyJS-0002NP-EL
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 03:15:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765527340;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZlKBsI4iENKcLDg7B52bhTVdF22tUEXdzYWdOCMb9oE=;
+ b=WJiZfUQjCUKBo/vOs1lKZLACMA8C/sso1o8e6vifNTLd2/BnDFeO/+GZnCliKdysx504Hb
+ xEYM78aUVcybjP7vLDO0SdySskS/0Dx7ZTzYFu0MLtye7guPkEseYybIM5z33ewBQgqlWi
+ ioN/OGq01zCbocObGuO3YWqO3HN3iDc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-KY0nArC1ObutgwjEyxKnHA-1; Fri,
+ 12 Dec 2025 03:15:34 -0500
+X-MC-Unique: KY0nArC1ObutgwjEyxKnHA-1
+X-Mimecast-MFC-AGG-ID: KY0nArC1ObutgwjEyxKnHA_1765527333
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3446B18001D6; Fri, 12 Dec 2025 08:15:33 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.44])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B6F319560B4; Fri, 12 Dec 2025 08:15:31 +0000 (UTC)
+Date: Fri, 12 Dec 2025 08:15:28 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Snow <jsnow@redhat.com>
+Subject: Re: [RFC PATCH 0/9] for 11.0 conversion* of get_maintainers.pl to
+ python
+Message-ID: <aTvPDXZjfp4_egTa@redhat.com>
 References: <20251211180132.3186564-1-alex.bennee@linaro.org>
- <20251211180132.3186564-3-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251211180132.3186564-3-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+In-Reply-To: <20251211180132.3186564-1-alex.bennee@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,55 +88,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/25 19:01, Alex Bennée wrote:
-> We have a particular tag for lists so lets use it.
+On Thu, Dec 11, 2025 at 06:01:23PM +0000, Alex Bennée wrote:
+> *incomplete
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   MAINTAINERS | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> I wanted to look at adding gitlab tags to MAINTAINERS and baulked
+> slightly at figuring out what I would need to change in the perl
+> script to cleanly handle it.
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 05b644cfc9b..a3fdc4ca911 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -4466,7 +4466,7 @@ F: gitdm.config
->   F: contrib/gitdm/*
->   
->   Incompatible changes
-> -R: devel@lists.libvirt.org
-> +L: devel@lists.libvirt.org
+> While we imported the perl script from the kernel I'm fairly sure we
+> don't use half the features it has and as us grey beards age out less
+> people will be willing to tweak it. Consider this a proof-of-concept
+> for discussion about if it is worth perusing this path.
+> 
+> It only supports the two main forms:
+> 
+>   ./scripts/get_maintainer.py -f path/to/file
+>   ./scripts/get_maintainer.py path/to/patch1 path/to/patch2 ...
+> 
+> But who needs more?
 
-Maybe keep both? See:
+the $QEMU/.gitpublish file contains
 
-commit b02c9bc35a03c099600693d6909f4566078880b8
-Author: Markus Armbruster <armbru@redhat.com>
-Date:   Mon Jul 16 09:32:26 2018 +0200
+cccmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback 2>/dev/null
 
-     MAINTAINERS: New section "Incompatible changes", copy libvir-list
+And the .b4-config file contains the same:
 
-     Libvirt developers would like to be copied on patches to qemu-doc
-     appendix "Deprecated features".  Do them the favor.
+send-auto-cc-cmd = scripts/get_maintainer.pl --noroles --norolestats --nogit --nogit-fallback
 
-     Signed-off-by: Markus Armbruster <armbru@redhat.com>
-     Message-Id: <20180716073226.21127-3-armbru@redhat.com>
-     Reviewed-by: Thomas Huth <thuth@redhat.com>
-     Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-     Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 20eef3cb61c..666e9368126 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2194,6 +2194,10 @@ M: Daniel P. Berrange <berrange@redhat.com>
-  S: Odd Fixes
-  F: docs/devel/build-system.txt
+Is trawling the git history to guess at maintainers useful
+for regular usage, while undesirable for sending patches,
+or should we just pick a behaviour use it unconditionally?
 
-+Incompatible changes
-+R: libvir-list@redhat.com
-+F: qemu-deprecated.texi
+> 
+> Future improvements could include some more detailed analysis in
+> conjugation with the repo to analysis:
+> 
+>   - missing areas of coverage
+>   - maintainer stats
+> 
+> Who knows maybe the kernel guys will want to import our script one day
+> ;-)
+> 
+> Alex.
+> 
+> Alex Bennée (9):
+>   MAINTAINERS: fix missing names
+>   MAINTAINERS: fix libvirt entry
+>   MAINTAINERS: regularise the status fields
+>   scripts/get_maintainer.py: minimal argument parsing
+>   scripts/get_maintainer.py: resolve the source path
+>   scripts/get_maintainer.py: initial parsing of MAINTAINERS
+>   scripts/get_maintainer.py: add support for -f
+>   scripts/get_maintainer.py: add support reading patch files
+>   gitlab: add a check-maintainers task
+> 
+>  MAINTAINERS                    |  10 +-
+>  .gitlab-ci.d/static_checks.yml |   9 +
+>  scripts/get_maintainer.py      | 356 +++++++++++++++++++++++++++++++++
+>  3 files changed, 370 insertions(+), 5 deletions(-)
+>  create mode 100755 scripts/get_maintainer.py
+> 
+> -- 
+> 2.47.3
+> 
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
