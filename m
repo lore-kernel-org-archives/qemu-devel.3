@@ -4,99 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21CAED59D77
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 17:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72813D59D77
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 17:13:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU6bw-0005CM-2m; Fri, 12 Dec 2025 12:07:20 -0500
+	id 1vU6gi-0006lQ-St; Fri, 12 Dec 2025 12:12:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vU6bl-00059U-QT
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:07:11 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vU6be-0007O4-1k
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:07:04 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-29844c68068so17657505ad.2
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 09:07:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765559220; x=1766164020; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1NVVZdOVP6E8NLSkxgVuNngmwoczZxrxDt8x+mL5DA4=;
- b=hcU9pnj8zDJ8DVt8vHBrdqfSz0ATXKZ8UjrvDFOBMKH/dt5Htdhl24WYGYfKLsBqcH
- JGIGix1zG30BRr6pIYlI7Y6EzYcy361N3W/Ug81UWJwgRzpCJbUrX7eorO+HRTei9GyZ
- LFUUUck9ycEx9y7A3mfgGjjA9n9xC2C26+sZi+krizLd2D38o/gnWPKvYwcz9mRCYxGn
- FawO/cVQJ4f80I2TZ7O8PDGSh0kMOGx6Kf92KmP2MYyGYRo1iTVautplvs/OS56w4Q+Z
- VSolXwUkGPU5njA8QyXxLLvNOppR9/Uer9ZSoy86nJ7FFsGmIXjd/xHYgHz3LK1EmC7r
- KuDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765559220; x=1766164020;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1NVVZdOVP6E8NLSkxgVuNngmwoczZxrxDt8x+mL5DA4=;
- b=aCWyPleAURcqfNof5q7a89Zu43UtUPYdj932S+wEtWGIcejKFVdEZOsWk+aBaR4PDZ
- MwTIGsQws1N1Xn39lu+FYeH4LWUO/K5qp49mnZQjAlxEAO9iItOdP8hIWKm+jcdqtGRL
- odocJCGXpe0fncNRe8dDrlLeWRSfJpO0rDXGysTHl5gZWtDJG03iDrmkGSOKOnnATwG2
- EQJBs5pVBQRvOeN2nWV6OhiDf77tEFGRsUwyvDKyJQupzxHM3OWrGJF678NkkWtWoCTL
- LxtamXUKeIhKW9Oea0lAX1LK9D6M5TxW+WlpOF8F0DPV3aai+1KFOdwAJkjJLyf0/KDi
- rPiA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVSh94eOSQKJyN4LN9H8Z4EQ1AwegJNq8mw26PKUYYNXqKISGacD1mTc2IUbwTURPWk/5bx13DF//dd@nongnu.org
-X-Gm-Message-State: AOJu0Yx5qs5fQtP5uwmVMKjQOsIoe/2RiQvKKvXP1avtYGzIzg9RZwyP
- NxinLaWWqnrJQVW7Mfxl2Ei7q6p0VlDKlAU/ouSQhJT7cs69ikbU/YH3wTf8qpCdu64=
-X-Gm-Gg: AY/fxX5QboPM7rvz8QHHLC6RaF/fWLrxMKXY0zyG19B3tvvdRFzc65ycpwF4eDumREa
- zfAefJgpvdhcOOj5xAoR0vmX7d2sRMnWr1E18PJx4wUxScpAaOFSE3gIdV9Lb0lq7qP+bLhSJSO
- 8QUn+npVNmjvzLpoAp7ygTs+OR+OM5/cwGo02s6CkBEWb8RkL8ss6rusSzwXWxm1NOf9h4RvM4V
- pkmPJAgKGJcw0PNraMkm6betVYpYqSrXxVHAy50jKu8S4oy/734Jpe1rQBcGEw8mAmt0dQnzVt0
- aj6sINVbatBDOlxApZPGnacfqCVz3/wXzCnmVeIaIC6Kq6OTlfsSqsB0RxjJaHgcs9FNHpKIy6V
- kRKGKmHHwoNuP76iLYNiXIU2uw3qxMOggcIrl+JzxyxvdO7xzT2vI02/t9A7VrQc2ZTY2WZBsrC
- Nkrutu+XIoT8oSz4WO91x+CnANSacvgsnZ617gIue4xO26DQEh6GaiyeE=
-X-Google-Smtp-Source: AGHT+IEODwVNb1RY3NyLpxSOXnqK3e+KGY9JqV4JxrNBup3kpIZvyCdLPoO3GTsMBxhGNlQhgBkBOg==
-X-Received: by 2002:a17:902:ebd1:b0:298:3aa6:c03d with SMTP id
- d9443c01a7336-29f244cca9emr29682185ad.57.1765559220294; 
- Fri, 12 Dec 2025 09:07:00 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29f1eff8481sm27892715ad.80.2025.12.12.09.06.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Dec 2025 09:06:59 -0800 (PST)
-Message-ID: <ca2a2c61-6209-4736-b537-a9657f5e5dd2@linaro.org>
-Date: Fri, 12 Dec 2025 09:06:59 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm/smmu: add memory regions as property for an SMMU
- instance
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- tangtao1634@phytium.com.cn, qemu-arm@nongnu.org,
- Eric Auger <eric.auger@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Richard Henderson
- <richard.henderson@linaro.org>, Radoslaw Biernacki <rad@semihalf.com>
-References: <20251211221715.2206662-1-pierrick.bouvier@linaro.org>
- <87a479e9-21eb-4c4c-8e64-32744eea1f96@linaro.org>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87a479e9-21eb-4c4c-8e64-32744eea1f96@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vU6gh-0006l9-EK; Fri, 12 Dec 2025 12:12:15 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vU6gf-0000XC-Ri; Fri, 12 Dec 2025 12:12:15 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BCFJITK000613;
+ Fri, 12 Dec 2025 17:12:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=k1omdPacnWkmELZX8CxLa2AGC7IWRiEyhSq1QH/Vc9o=; b=IGlwDPOf0wkm
+ xL7qDopz2Qk1rZmy1qqcWP+fCVOBFNW1Qyb7Bl8ptIMov7Rg9JcpdgVfWN+0SiWl
+ Tock6vwSAq/E1o7zJZ6tWFVK9K2F/p405GL+YhI/acqFNlxDk1yJk5ppeKd/hzIT
+ 2ETJvI8kGk/fLkyS6qc+jjBVB7xfVZ/hV8MzJTVHLS+BQ3cPCJJ4nzY+B4uYtLs/
+ YHlFTi5OKU35Me/3HLElzAO2l4Bd7hyyCOUVhfWkOPuux7yhkjiMRtr5JW9Evy1n
+ O3CiqyY090zvBVSIJvBKN+2JhEX5/k36pUXvkAye3hmsD7kNAC9QOXS5K4jU5kzV
+ Bku7dqMxTw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4avc0kemgv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Dec 2025 17:12:09 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BCHC9bV003273;
+ Fri, 12 Dec 2025 17:12:09 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4avc0kemgq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Dec 2025 17:12:09 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BCH7NNu012432;
+ Fri, 12 Dec 2025 17:12:08 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4aw0akd1gb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 12 Dec 2025 17:12:08 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5BCHC6fL63242584
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 12 Dec 2025 17:12:06 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 82D0358064;
+ Fri, 12 Dec 2025 17:12:06 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1508758057;
+ Fri, 12 Dec 2025 17:12:06 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 12 Dec 2025 17:12:06 +0000 (GMT)
+Message-ID: <2d8f202116a38c2894b543cbb68867ae14ec7622.camel@linux.ibm.com>
+Subject: Re: [PATCH 1/6] hw/ppc: Add VMSTATE information for LPC model
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ alistair@alistair23.me, kowal@linux.ibm.com,
+ chalapathi.v@linux.ibm.com, angeloj@linux.ibm.com
+Date: Fri, 12 Dec 2025 11:12:05 -0600
+In-Reply-To: <20251211220926.2865972-2-calebs@linux.ibm.com>
+References: <20251211220926.2865972-1-calebs@linux.ibm.com>
+ <20251211220926.2865972-2-calebs@linux.ibm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Cf8FJbrl c=1 sm=1 tr=0 ts=693c4ce9 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=H4sycyl6Zx4OkLDMWMYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: ztgkZynSjEQ2voAVUbNh51qxHxYHcJlh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjA2MDAxNiBTYWx0ZWRfX2ePbo0tnnc2q
+ 2CnjA9GgWI2At4JxaA9fjtrwmkogd4LWlKAJiT+c8piyhbEykmbmUwEZraoqf1I1JWbXFuDKhDt
+ M/H6IfV4wOyiIVafq2WeZFzBdTGePKqJnkSAsoLpTVnUIidpSokdBwfLPEq6B4gq7c5QbmoqkaH
+ nOju5kHQTyb1H1xAB7sHDcniYhuAd8Jy8LXbIarlDNvY9ECdrz44aDPLs9y00w5DUMx5z6Pg08h
+ C9RarqBnqh++c8QmInm80IelT6FIFcRvbDL5T7f9JsKWedvW0EOQE6n20cDGq+qTvtOk2DXN9v0
+ 5No6Q4l9cMDvtPyxaRFITwZ7yePFAmRBylh0JoN+M0JEanETrWdI4y4A7FgLrHqotlahRE3sUtk
+ /EXyvfrvuTSRj95ZTwnC3xnpxWkw4A==
+X-Proofpoint-GUID: ntfWn0vv-MEn3phzEfSfz3Q56JPWIJn6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-12_04,2025-12-11_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 malwarescore=0 clxscore=1011 adultscore=0
+ lowpriorityscore=0 impostorscore=0 priorityscore=1501 spamscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
+ definitions=main-2512060016
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,227 +126,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/25 10:16 PM, Philippe Mathieu-Daudé wrote:
-> Hi Pierrick,
-> 
-> On 11/12/25 23:17, Pierrick Bouvier wrote:
->> This will be used to access non-secure and secure memory. Secure support
->> and Granule Protection Check (for RME) for SMMU need to access secure
->> memory.
-> 
-> Sorry yesterday it was late for me and I forgot to post the similar
-> patch :/
-> 
->>
->> As well, it allows to remove usage of global address_space_memory,
->> allowing different SMMU instances to have a specific view of memory.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    include/hw/arm/smmu-common.h |  4 ++++
->>    hw/arm/sbsa-ref.c            | 16 ++++++++++++----
->>    hw/arm/smmu-common.c         | 24 ++++++++++++++++++++++++
->>    hw/arm/virt.c                | 16 +++++++++++-----
->>    4 files changed, 51 insertions(+), 9 deletions(-)
->>
->> diff --git a/include/hw/arm/smmu-common.h b/include/hw/arm/smmu-common.h
->> index a6bdb67a983..0f08ae080c9 100644
->> --- a/include/hw/arm/smmu-common.h
->> +++ b/include/hw/arm/smmu-common.h
->> @@ -227,6 +227,10 @@ struct SMMUState {
->>        uint8_t bus_num;
->>        PCIBus *primary_bus;
->>        bool smmu_per_bus; /* SMMU is specific to the primary_bus */
->> +    MemoryRegion *memory;
->> +    AddressSpace as_memory;
->> +    MemoryRegion *secure_memory;
->> +    AddressSpace as_secure_memory;
-> 
-> Has SMMU concept of "secure memory"? My understanding is just a
-> different memory to access GPT, so I'd name it "gpt_memory".
->
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
-Yes, it has the concept of secure state, secure devices that can make 
-transactions that target secure memory. The fact GPT is kept there is a 
-detail of implementation, so secure_memory is the right term to use 
-here, and match how we call it for cpu implementation.
-
->>    };
->>    
->>    struct SMMUBaseClass {
->> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
->> index 45d2e3e946d..840b1a216f4 100644
->> --- a/hw/arm/sbsa-ref.c
->> +++ b/hw/arm/sbsa-ref.c
->> @@ -616,7 +616,9 @@ static void create_xhci(const SBSAMachineState *sms)
->>        sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(sms->gic, irq));
->>    }
->>    
->> -static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
->> +static void create_smmu(const SBSAMachineState *sms, PCIBus *bus,
->> +                        MemoryRegion *sysmem,
->> +                        MemoryRegion *secure_sysmem)
->>    {
->>        hwaddr base = sbsa_ref_memmap[SBSA_SMMU].base;
->>        int irq =  sbsa_ref_irqmap[SBSA_SMMU];
->> @@ -628,6 +630,10 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
->>        object_property_set_str(OBJECT(dev), "stage", "nested", &error_abort);
->>        object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
->>                                 &error_abort);
->> +    object_property_set_link(OBJECT(dev), "memory", OBJECT(sysmem),
->> +                             &error_abort);
->> +    object_property_set_link(OBJECT(dev), "secure-memory", OBJECT(secure_sysmem),
->> +                             &error_abort);
->>        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
->>        for (i = 0; i < NUM_SMMU_IRQS; i++) {
->> @@ -636,7 +642,9 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
->>        }
->>    }
->>    
->> -static void create_pcie(SBSAMachineState *sms)
->> +static void create_pcie(SBSAMachineState *sms,
->> +                        MemoryRegion *sysmem,
->> +                        MemoryRegion *secure_sysmem)
->>    {
->>        hwaddr base_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
->>        hwaddr size_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].size;
->> @@ -692,7 +700,7 @@ static void create_pcie(SBSAMachineState *sms)
->>    
->>        pci_create_simple(pci->bus, -1, "bochs-display");
->>    
->> -    create_smmu(sms, pci->bus);
->> +    create_smmu(sms, pci->bus, sysmem, secure_sysmem);
+On Thu, 2025-12-11 at 16:09 -0600, Caleb Schlossin wrote:
+> The PNV LPC model needs snapshot/migration support.  Added a VMSTATE
+> descriptor to save model data and an associated post_load() method.
 > 
-> As a preliminary cleanup create_pcie() returns the PCI bus, so the
-> machine_init() can call create_smmu() itself. I'll post later.
+> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+> ---
+>  hw/ppc/pnv_lpc.c | 39 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 39 insertions(+)
 > 
->>    }
->>    
->>    static void *sbsa_ref_dtb(const struct arm_boot_info *binfo, int *fdt_size)
->> @@ -831,7 +839,7 @@ static void sbsa_ref_init(MachineState *machine)
->>    
->>        create_xhci(sms);
->>    
->> -    create_pcie(sms);
->> +    create_pcie(sms, sysmem, secure_sysmem);
->>    
->>        create_secure_ec(secure_sysmem);
->>    
->> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
->> index 66367adc2a4..5fbfe825fd0 100644
->> --- a/hw/arm/smmu-common.c
->> +++ b/hw/arm/smmu-common.c
->> @@ -1171,6 +1171,12 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
->>            return;
->>        }
->>    
->> +    g_assert(s->memory);
->> +    address_space_init(&s->as_memory, s->memory, "memory");
->> +    if (s->secure_memory) {
->> +        address_space_init(&s->as_secure_memory, s->secure_memory, "secure-memory");
->> +    }
-> 
-> Allocating AddressSpaces on the heap:
-> 
->          else {
->              s->as_secure_memory = s->as_memory;
->          }
->
-
-What's the benefit?
-SMMUState is already heap allocated.
-
->>        /*
->>         * We only allow default PCIe Root Complex(pcie.0) or pxb-pcie based extra
->>         * root complexes to be associated with SMMU.
->> @@ -1235,10 +1241,28 @@ static void smmu_base_class_init(ObjectClass *klass, const void *data)
->>        rc->phases.exit = smmu_base_reset_exit;
->>    }
->>    
->> +static void smmu_base_instance_init(Object *obj)
->> +{
->> +    SMMUState *s = ARM_SMMU(obj);
->> +
->> +    object_property_add_link(obj, "memory",
->> +                             TYPE_MEMORY_REGION,
->> +                             (Object **)&s->memory,
->> +                             qdev_prop_allow_set_link_before_realize,
->> +                             OBJ_PROP_LINK_STRONG);
->> +
->> +    object_property_add_link(obj, "secure-memory",
->> +                             TYPE_MEMORY_REGION,
->> +                             (Object **)&s->secure_memory,
->> +                             qdev_prop_allow_set_link_before_realize,
->> +                             OBJ_PROP_LINK_STRONG);
->> +}
->> +
->>    static const TypeInfo smmu_base_info = {
->>        .name          = TYPE_ARM_SMMU,
->>        .parent        = TYPE_SYS_BUS_DEVICE,
->>        .instance_size = sizeof(SMMUState),
->> +    .instance_init = smmu_base_instance_init,
->>        .class_data    = NULL,
->>        .class_size    = sizeof(SMMUBaseClass),
->>        .class_init    = smmu_base_class_init,
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 5d205eff3a1..d446c3349e9 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -1514,8 +1514,9 @@ static void create_smmuv3_dev_dtb(VirtMachineState *vms,
->>                               0x0, vms->iommu_phandle, 0x0, 0x10000);
->>    }
->>    
->> -static void create_smmu(const VirtMachineState *vms,
->> -                        PCIBus *bus)
->> +static void create_smmu(const VirtMachineState *vms, PCIBus *bus,
->> +                        MemoryRegion *sysmem,
->> +                        MemoryRegion *secure_sysmem)
->>    {
->>        VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
->>        int irq =  vms->irqmap[VIRT_SMMU];
->> @@ -1549,6 +1550,10 @@ static void create_smmu(const VirtMachineState *vms,
->>        object_property_set_str(OBJECT(dev), "stage", stage, &error_fatal);
->>        object_property_set_link(OBJECT(dev), "primary-bus", OBJECT(bus),
->>                                 &error_abort);
->> +    object_property_set_link(OBJECT(dev), "memory", OBJECT(sysmem),
->> +                             &error_abort);
->> +    object_property_set_link(OBJECT(dev), "secure-memory", OBJECT(secure_sysmem),
->> +                             &error_abort);
->>        sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
->>        sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, base);
->>        for (i = 0; i < NUM_SMMU_IRQS; i++) {
->> @@ -1587,7 +1592,8 @@ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
->>        }
->>    }
->>    
->> -static void create_pcie(VirtMachineState *vms)
->> +static void create_pcie(VirtMachineState *vms,
->> +                        MemoryRegion *sysmem, MemoryRegion *secure_sysmem)
->>    {
->>        hwaddr base_mmio = vms->memmap[VIRT_PCIE_MMIO].base;
->>        hwaddr size_mmio = vms->memmap[VIRT_PCIE_MMIO].size;
->> @@ -1706,7 +1712,7 @@ static void create_pcie(VirtMachineState *vms)
->>    
->>            switch (vms->iommu) {
->>            case VIRT_IOMMU_SMMUV3:
->> -            create_smmu(vms, vms->bus);
->> +            create_smmu(vms, vms->bus, sysmem, secure_sysmem);
->>                if (!vms->default_bus_bypass_iommu) {
->>                    qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
->>                                           0x0, vms->iommu_phandle, 0x0, 0x10000);
->> @@ -2520,7 +2526,7 @@ static void machvirt_init(MachineState *machine)
->>    
->>        create_rtc(vms);
->>    
->> -    create_pcie(vms);
->> +    create_pcie(vms, sysmem, secure_sysmem);
->>        create_cxl_host_reg_region(vms);
->>    
->>        if (aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
-> 
+> diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
+> index f6beba0917..7f11fd312a 100644
+> --- a/hw/ppc/pnv_lpc.c
+> +++ b/hw/ppc/pnv_lpc.c
+> @@ -30,6 +30,7 @@
+>  #include "hw/ppc/pnv_lpc.h"
+>  #include "hw/ppc/pnv_xscom.h"
+>  #include "hw/ppc/fdt.h"
+> +#include "migration/vmstate.h"
+>  
+>  #include <libfdt.h>
+>  
+> @@ -777,11 +778,49 @@ static const TypeInfo pnv_lpc_power9_info = {
+>      .class_init    = pnv_lpc_power9_class_init,
+>  };
+>  
+> +static int vmstate_pnv_lpc_post_load(void *opaque, int version_id)
+> +{
+> +    PnvLpcController *lpc = PNV_LPC(opaque);
+> +
+> +    memory_region_set_alias_offset(&lpc->opb_isa_fw,
+> +                                   lpc->lpc_hc_fw_seg_idsel * LPC_FW_OPB_SIZE);
+> +    pnv_lpc_eval_serirq_routes(lpc);
+> +
+> +    pnv_lpc_eval_irqs(lpc);
+> +    return 0;
+> +}
+> +
+> +static const VMStateDescription vmstate_pnv_lpc = {
+> +    .name = TYPE_PNV_LPC,
+> +    .version_id = 1,
+> +    .minimum_version_id = 1,
+> +    .post_load = vmstate_pnv_lpc_post_load,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT64(eccb_stat_reg,       PnvLpcController),
+> +        VMSTATE_UINT32(eccb_data_reg,       PnvLpcController),
+> +        VMSTATE_UINT32(opb_irq_route0,      PnvLpcController),
+> +        VMSTATE_UINT32(opb_irq_route1,      PnvLpcController),
+> +        VMSTATE_UINT32(opb_irq_stat,        PnvLpcController),
+> +        VMSTATE_UINT32(opb_irq_mask,        PnvLpcController),
+> +        VMSTATE_UINT32(opb_irq_pol,         PnvLpcController),
+> +        VMSTATE_UINT32(opb_irq_input,       PnvLpcController),
+> +        VMSTATE_UINT32(lpc_hc_irq_inputs,   PnvLpcController),
+> +        VMSTATE_UINT32(lpc_hc_fw_seg_idsel, PnvLpcController),
+> +        VMSTATE_UINT32(lpc_hc_irqser_ctrl,  PnvLpcController),
+> +        VMSTATE_UINT32(lpc_hc_irqmask,      PnvLpcController),
+> +        VMSTATE_UINT32(lpc_hc_irqstat,      PnvLpcController),
+> +        VMSTATE_UINT32(lpc_hc_error_addr,   PnvLpcController),
+> +        VMSTATE_UINT32(lpc_hc_fw_rd_acc_size,     PnvLpcController),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+>  static void pnv_lpc_power10_class_init(ObjectClass *klass, const void *data)
+>  {
+>      DeviceClass *dc = DEVICE_CLASS(klass);
+>  
+>      dc->desc = "PowerNV LPC Controller POWER10";
+> +    dc->vmsd = &vmstate_pnv_lpc;
+>  }
+>  
+>  static const TypeInfo pnv_lpc_power10_info = {
 
 
