@@ -4,123 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 173D7D59D95
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 21:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16039D59F53
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 23:34:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vUAew-0006aP-QM; Fri, 12 Dec 2025 16:26:43 -0500
+	id 1vUCe4-0003ne-8q; Fri, 12 Dec 2025 18:33:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vUAeu-0006ZH-H5
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 16:26:40 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1vUCe2-0003nK-RB
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 18:33:54 -0500
+Received: from m228-31.mailgun.net ([159.135.228.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vUAes-0006a8-GB
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 16:26:40 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id B625E33696;
- Fri, 12 Dec 2025 21:26:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765574796; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+0A06cF7I5UP/VBr+lEisLZkWfnv9ku1yUfhdy4TGoI=;
- b=PWlsX/TZ4Xp3pXFdtfPBLY2R0QeNHVf6slcRce9S+4w/lzCRWiVotAToL3MjjOhIhfwxCC
- 2mKTRASSlx388m0CODGmt+Nxu6fmbKIBU525eXw0vijHn/nIIXRkOwiHS2LP8qFrr6L73v
- NA0esnTRzc9QjU0lSXc1vH/+uWgdq3Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765574796;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+0A06cF7I5UP/VBr+lEisLZkWfnv9ku1yUfhdy4TGoI=;
- b=rkKzTgGcDgNR0nikxtW+xSzNl3VaHimMdVrzboMHSWiix0k0MAzPck6p3H7klcymbWVmwG
- 5OnIfYe/8XcgmTDQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=JFba8xQf;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=FYFC9LsA
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765574795; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+0A06cF7I5UP/VBr+lEisLZkWfnv9ku1yUfhdy4TGoI=;
- b=JFba8xQfwRWQLgeTvPGGFfZH7GkZua+ck2+0kH4aSoLf4YhmdzNJxUVfOnMZjpA2hANiHX
- yZ+idBE2UoSaXQLgWsTvai5WyZcazFUdqjZ+oQ/+XbYU3SMmkJtyOTiegikiUPw1VSYZks
- p8hGp5rD6bqQIgyjt+GGeSQcMnhe18s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765574795;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+0A06cF7I5UP/VBr+lEisLZkWfnv9ku1yUfhdy4TGoI=;
- b=FYFC9LsAKq53PT3TmMfu7eh6tzrJyeBHMLGFRbxT/KM/A1arms5rkRwMnuQ/DPuhAMuoK6
- S9QASJYWCfU0rQBw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 253823EA63;
- Fri, 12 Dec 2025 21:26:34 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +XdCNYqIPGknOAAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 12 Dec 2025 21:26:34 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Thomas Huth <thuth@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, Kevin Wolf
- <kwolf@redhat.com>, qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Subject: Re: [PATCH] migration: Fix a possible crash when halting a guest
- during migration
-In-Reply-To: <5b510f3b-796a-45fb-a63f-e87b02dace61@redhat.com>
-References: <20251208135101.271417-1-thuth@redhat.com>
- <20251208144525.GA1341938@fedora> <87jyyxkna0.fsf@suse.de>
- <5b510f3b-796a-45fb-a63f-e87b02dace61@redhat.com>
-Date: Fri, 12 Dec 2025 18:26:32 -0300
-Message-ID: <87jyyrv1br.fsf@suse.de>
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1vUCe1-00089M-51
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 18:33:54 -0500
+X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
+Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
+ 27c2015fbf8d1903b07aee4363a9131f916608f32f4d32e868b3f954c8c702db with SMTP id
+ 693ca6577fb35aba9573efde; Fri, 12 Dec 2025 23:33:43 GMT
+X-Mailgun-Sending-Ip: 159.135.228.31
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
+ s=rsa2048; t=1765582422;
+ bh=cMQPg7v3DwE4MXXLruYCnKON1p6jkTly0q8R9f4/keI=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+ X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
+ Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
+ References;
+ b=mBoopMD0xr3RN5nlXNr2BZXcgv+9uRU+yy7sn+xWkSenU8db6YTqB5xen1+vPEUuj
+ tKv70DgU9N0xsJeUjT6NyNMnJJGc5c+nocTAUEAywCKXJGReRjq6Z9X4LE14gAztEG
+ ggyCqSmW/G36XzD2Wg7qZ0dMzHxgTTbf8v5hNNgXSGfY48d/7TJy8yGEyKvjQiU2uu
+ 56oyOZ03YP/ct0WY3BSOjG+a1JCiv0z1JF2a/R63RRVJ5KAhWUJMYprBZanhwXfOPN
+ rALWQl0AsBEeX0tx5twnGadMhTCcBqrdY2WEV7Hw0CnUWoathg1eff0Yt7vRAj9h1e
+ ytPz1eEqixsig==
+Message-ID: <bc52f621-493d-4df6-8403-1e4c7e2be424@yodel.dev>
+Date: Fri, 12 Dec 2025 17:33:40 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: B625E33696
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
- ARC_NA(0.00)[]; RCPT_COUNT_TWELVE(0.00)[12];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Subject: Re: [PATCH 2/2] tests/vhost-user-bridge.c: Fix const qualifier build
+ errors with recent glibc
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
+References: <20251210181306.926334-1-clg@redhat.com>
+ <20251210181306.926334-3-clg@redhat.com>
+Content-Language: en-US
+X-Mailgun-Dkim: no
+X-Mailgun-Dkim: no
+From: Yodel Eldar <yodel.eldar@yodel.dev>
+Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
+ xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
+ I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
+ CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
+ AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
+ Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
+ 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
+ imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
+ TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
+In-Reply-To: <20251210181306.926334-3-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=159.135.228.31;
+ envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
+ helo=m228-31.mailgun.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,93 +93,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Hi, Cédric!
 
-> On 08/12/2025 16.26, Fabiano Rosas wrote:
->> Stefan Hajnoczi <stefanha@redhat.com> writes:
->>=20
->>> On Mon, Dec 08, 2025 at 02:51:01PM +0100, Thomas Huth wrote:
->>>> From: Thomas Huth <thuth@redhat.com>
->>>>
->>>> When shutting down a guest that is currently in progress of being
->>>> migrated, there is a chance that QEMU might crash during bdrv_delete().
->>>> The backtrace looks like this:
->>>>
->>>>   Thread 74 "mig/src/main" received signal SIGSEGV, Segmentation fault.
->>>>
->>>>   [Switching to Thread 0x3f7de7fc8c0 (LWP 2161436)]
->>>>   0x000002aa00664012 in bdrv_delete (bs=3D0x2aa00f875c0) at ../../deve=
-l/qemu/block.c:5560
->>>>   5560	        QTAILQ_REMOVE(&graph_bdrv_states, bs, node_list);
->>>>   (gdb) bt
->>>>   #0  0x000002aa00664012 in bdrv_delete (bs=3D0x2aa00f875c0) at ../../=
-devel/qemu/block.c:5560
->>>>   #1  bdrv_unref (bs=3D0x2aa00f875c0) at ../../devel/qemu/block.c:7170
->>>>   Backtrace stopped: Cannot access memory at address 0x3f7de7f83e0
->>>>
->>=20
->> How does the migration thread reaches here? Is this from
->> migration_block_inactivate()?
->
-> Unfortunately, gdb was not very helpful here (claiming that it cannot acc=
-ess=20
-> the memory and stack anymore), so I had to do some printf debugging. This=
- is=20
-> what seems to happen:
->
-> Main thread:=C2=A0qemu_cleanup() calls =C2=A0migration_shutdown()=C2=A0--=
->=20
-> migration_cancel() which signals the migration thread to cancel the migra=
-tion.
->
-> Migration thread: migration_thread() got kicked out the loop and calls=20
-> migration_iteration_finish(), which tries to get the BQL via bql_lock() b=
-ut=20
-> that is currently held by another thread, so the migration thread is bloc=
-ked=20
-> here.
->
-> Main thread: qemu_cleanup() advances to bdrv_close_all() that uses=20
-> blockdev_close_all_bdrv_states() to unref all BDS. The BDS with the name=
-=20
-> 'libvirt-1-storage' gets deleted via bdrv_delete() that way.
->
+On 10/12/2025 12:13, Cédric Le Goater wrote:
+> A recent change in glibc 2.42.9000 [1] changes the return type of
+> strstr() and other string functions to be 'const char *' when the
+> input is a 'const char *'. This breaks the build in :
+> 
+> ../tests/vhost-user-bridge.c: In function ‘vubr_parse_host_port’:
+> ../tests/vhost-user-bridge.c:749:15: error: initialization discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+>    749 |     char *p = strchr(buf, ':');
+>        |               ^~~~~~
+> 
+> Fix this by using the glib g_strsplit() routine instead of strdup().
+> 
+> [1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+> 
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   tests/vhost-user-bridge.c | 10 ++++------
+>   1 file changed, 4 insertions(+), 6 deletions(-)
+> 
+> diff --git a/tests/vhost-user-bridge.c b/tests/vhost-user-bridge.c
+> index a5c711b1de8e9c164dd1614f4329b8e3c05d0402..ce4c3426d3938a0b54195f3e95bb1f1c3c4ae823 100644
+> --- a/tests/vhost-user-bridge.c
+> +++ b/tests/vhost-user-bridge.c
+> @@ -746,14 +746,12 @@ vubr_run(VubrDev *dev)
+>   static int
+>   vubr_parse_host_port(const char **host, const char **port, const char *buf)
+>   {
+> -    char *p = strchr(buf, ':');
+> -
+> -    if (!p) {
+> +    g_auto(GStrv) tokens = g_strsplit(buf, ":", 2);
+> +    if (!tokens[0] || !tokens[1]) {
+>           return -1;
+>       }
+> -    *p = '\0';
+> -    *host = strdup(buf);
+> -    *port = strdup(p + 1);
+> +    *host = g_steal_pointer(&tokens[0]);
+> +    *port = g_steal_pointer(&tokens[1]);
+>       return 0;
+>   }
+>   
 
-Has qmp_blockdev_del() ever been called to remove the BDS from the
-monitor_bdrv_states list? Otherwise your debugging seems to indicate
-blockdev_close_all_bdrv_states() is dropping the last reference to bs,
-but it's still accessible from bdrv_next() via
-bdrv_next_monitor_owned().
+Thanks for addressing this before the glibc change is widely propagated
+among distros.
 
-> Migration thread: Later, migration_iteration_finish() finally gets the BQ=
-L,=20
-> and calls the migration_block_activate() function in the=20
-> MIGRATION_STATUS_CANCELLING case statement. This calls bdrv_activate_all(=
-).
-> bdrv_activate_all() gets a pointer to that 'libvirt-1-storage' BDS again=
-=20
-> from bdrv_first(), and during the bdrv_next() that BDS gets unref'ed agai=
-n=20
-> which is causing the crash.
->
-> =3D=3D> Why is bdrv_first() still providing a BDS that have been deleted =
-by=20
-> other threads earlier?
->
+Acked-by: Yodel Eldar <yodel.eldar@yodel.dev>
+Tested-by: Yodel Eldar <yodel.eldar@yodel.dev>
 
->>> It sounds like the migration thread does not hold block graph refcounts
->>> and assumes the BlockDriverStates it uses have a long enough lifetime.
->>>
->>> I don't know the migration code well enough to say whether joining in
->>> migration_shutdown() is okay. Another option would be expicitly holding
->>> the necessary refcounts in the migration thread.
->>=20
->> I agree. In principle and also because shuffling the joining around
->> feels like something that's prone to introduce other bugs.
->
-> I'm a little bit lost here right now ... Can you suggest a place where we=
-=20
-> would need to increase the refcounts in the migration thread?
->
->   Thomas
+For testing, I built and installed glibc (76 commits ahead of cd748a63a)
+in an x86_64 Linux container and built vhost-user-bridge on top of that.
+Ran it with:
+
+./build/tests/vhost-user-bridge -H
+
+qemu-system-x86_64 \
+     -enable-kvm -m 4G \
+     -object memory-backend-ram,id=mem0,size=4G,share=on \
+     -numa node,memdev=mem0 -mem-prealloc \
+     -chardev socket,id=char0,path=/tmp/vubr.sock \
+     -netdev type=vhost-user,id=net0,chardev=char0,vhostforce=on \
+     -device virtio-net-pci,netdev=net0 \
+     -drive file=linux.qcow2
+
+and visually inspected the logged traffic.
+
+Thanks,
+Yodel
 
