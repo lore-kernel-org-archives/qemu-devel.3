@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1450DD59D6F
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 17:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 765B3D59D6F
+	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 17:36:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vU70W-0008G6-E1; Fri, 12 Dec 2025 12:32:44 -0500
+	id 1vU73s-0001kQ-0k; Fri, 12 Dec 2025 12:36:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vU70V-0008FZ-1Q
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:32:43 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1vU73p-0001jq-Sc
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:36:10 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vU70S-00052D-EF
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:32:42 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-7e2762ad850so1514796b3a.3
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 09:32:40 -0800 (PST)
+ id 1vU73o-0005sq-0h
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 12:36:09 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7b75e366866so701543b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 09:36:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765560759; x=1766165559; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765560966; x=1766165766; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gB5BecI3gnCVhlQyJ77/xZNlKac92qpuR5XsE0e1e/Y=;
- b=AKTzi79jBv9z32cC6nw6ryvcaKQ95m6qNC1D+QX2ZliIycbymLXNpKl1VUpHb+rrjY
- FJF/mJqwPDiWKM62v4nR6VDpDh8gSwHozH6G5hI+5k07FxcLSheQy3+P3unLZna64peb
- 34UKxfn/J0jPiV1SWzoiMP3o4pcKd7pqZJ3tlydG+2znYPcaKAK2kItRxN1N4Qf5I0p8
- O4xXe4Jr5pGsi/9KRRohpUKgNidUJDp4ANC4PObJgDDe14zn0OZ3UF0BednPwmptHTXh
- 3HyiPh0oxDPouhDRRur7spK40elTZLce8sOkqB/4L6K7SxK6XWa5TCTwDtWpe13LwiH+
- Tcag==
+ bh=FjJ8kmq+PNmH+QUBOdNLacaBstO6FE7Kc9eBq//2RGE=;
+ b=voN3XtwhOV4ZcCZ/ShrQgEiDoyXWGk44PW3juwnAkgXVB8uMUg+RoOxxfNiwWuf2Bb
+ GOFFF8hWr+sATm3d0V59osLdjuC7crD1+nRENgu7WTmp3Vj1d0tLybFst4Ddp79bOuM0
+ eIFy1/ipSfnZDXAHDSCy4oo/PSXILZVNCvOLEDstDz8a/6+vZqnE9GSCykhPgFbDeH8H
+ vSqF/GKDecRGtJhvs77pOa1keBCs0BxZxNlK+EHfNh2ZZHVKu5SOT59mLVfnbGMKGsmd
+ t1zhjjmapDnVOo2HeCtDvXO7R/na/CBNmcf74TyMgqwKXKguc45iyuajPV6E43LVQxm8
+ jKlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765560759; x=1766165559;
+ d=1e100.net; s=20230601; t=1765560966; x=1766165766;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gB5BecI3gnCVhlQyJ77/xZNlKac92qpuR5XsE0e1e/Y=;
- b=WVIMRX/MZvxQu3ES9jrXicTAlvWMqcJEUkTDDSEC4fYIJVmk3HbztaN7d/HmTNP/Ch
- RkFrLb4POZPnC8shVtlQx6ve1b4FypwgX47QnYalnut95cGQEIjTUlIQXaqdTUbUQheh
- BKCdayZ/XNaHcAthnNEgI1wD0EMosGuTip54T1xI4C8YmDOU9w3tZn6X9Sso+7RsIAyw
- PIVCgUn2dc+PnxYMeOiCOUPEx95DUmdRBxx6syjSlE7YOzGz/PdhwQBfYgbt0+Su+HIc
- +jXTctebny82CGHJD/fS9q4j5PXf80uV4vPichEVumsvVjCQQ9v4rFKaWw+v3vEa7Zzj
- 3vog==
-X-Gm-Message-State: AOJu0YzcHM5Po4gpFbWWBsGoqYlATogUrwZRPcava58FqysmHZfG1Xd2
- FagZMvEOeD2vfrJSj9D1EZzBLtfr6r0pRM9aqLZrNVdu2ZJGSh/Az7922HvmNtUjTnxaQ5D/zSv
- JFeEkaGRQfg==
-X-Gm-Gg: AY/fxX5OHGrmrHO/z2QfMZVTlG3YLF/bCXeGNgNCXn7FmJTr9spUVZFBDA9RFrGJqBF
- E7X6ak1tdKdajBW3Aoy3m6LxHixjzdxEWGfJjfMLGauSbagu3wKF1zW+aEm4Rjsx9lp1PeyjeuX
- j3cZyn0DtWg2lg6YTY/cTvyYjJB4tixnfcVJh2e5jX6FhUIZbHnRb485lgxtLG2SmBkQ+pE9plm
- 6hKMOk3GvXVOIJpGL3TYJf/qM4gBj/SuMLqSFktufQ2aD3+0Ap9kXFi5ctOAeUpE+BJCIHRFlYi
- FuQ5hXFqmvR+aeJHUzYlHi7w7y/XNPwlfNEbNcOkQY9db8Nk9sFlMIsda5wWiMlUZsCQgNRK67q
- 5HMWISk1uYrd4gQH3BzyO3VW1jT/7H1NelnSFLdTslytORi3GEKjym0i2GMOlHWjzhSIF6Nl5WM
- T0OaxzFJ7tKDikZPvbBu2mxJXBwBUP0zs20flqKEDdQaa+DK5aN7fW8HvLKcvJn70UGw==
-X-Google-Smtp-Source: AGHT+IEV2N31FySvnPWADkx14+kbMaK+vVKC88FuSyaAplT+MQS2I91+M0e7vFVNCkTv0jeIDYej1A==
-X-Received: by 2002:a05:6a00:94f4:b0:7e8:4433:8fb7 with SMTP id
- d2e1a72fcca58-7f66a07ce19mr2155508b3a.63.1765560758892; 
- Fri, 12 Dec 2025 09:32:38 -0800 (PST)
+ bh=FjJ8kmq+PNmH+QUBOdNLacaBstO6FE7Kc9eBq//2RGE=;
+ b=dDB9EqF4NiElQZxgphcPxx4qrm/Rri2ISf7Hj8EDETRT5K6ZPOw5UHVEToyx51Q1C0
+ c0tf8qHN69/khDRC3+0TXPB7oAVAWhzSlAgvp2HWtPPD4riCLXcP41K+wkQnodZ5TP77
+ 6c5GUvZRk4NnRL5eDxCnU6UBgYfLMWQYD8wtcXkel5rWqfiZO8VjUDUXeW7O+ItiaZue
+ NnGZxSqYNhL+ORhK6X3cupNV9KloVRON9ikYdvm0OHUaN5r6l91S6ZF+VIPwCaVxNqN/
+ WAFgrP9HbJEzrekQaQlnYQlVKMqkjTJoGWuoUq5u2Jrqs3imMj4FlG/EszeXBzlbHFTZ
+ WwcA==
+X-Gm-Message-State: AOJu0Yy1746uYHNGXImBg7lKKMrL8v6P3weSYGufUfLCeER75r0hjBw+
+ MO16z02wkRY9KznH0LXL4GHtXbfudJ8RST5LcWcvvJFL/aXnIeqN+eGjcAG3BLjdvVQ=
+X-Gm-Gg: AY/fxX49c6aed8gebxCb7o4yDgzlU0tqL///Xa2RfBq6nLse69ZUbqv0lZ8PGrm5nW0
+ HuzD9GvWErtYf4ngj4M3jmRv5r2z5Z3len33B7rDuYWoLdwY+uOYYK8ruFR8SPFClSMvh8R9bPK
+ MY4HUjNORSXulXFUmzrVIwoiv25+lc3PXBFFz3yzgituCR9FpqJ7y6QyJ80BL1cY9LvYdwmo8Ox
+ knnfN/Iw9/Akzj9Ex0mxZX1tm8kpWbqw1PhaQYRUHMue+5RvE1klJggFdkV/4UYzivHp+uRinDs
+ 0p2p8kprT33D+M1edzKPplh0JCsdPnNF6YUqw2UEdj52JNnmIkdwy2K4gDUO96wPHYFjhKpKyqd
+ dkdEMphE0Z1lhrLD8q51ldyfS+dbPyyLYMPHfewOc1FeRvuNRS3p8b0s1w6NOyqYbDVXdsU/Pyb
+ CaEeIx6gW11G1gIfTKCBG0aVtBz2LPmwNjFypzqmFz1Ui3dXDpq0p1vDg=
+X-Google-Smtp-Source: AGHT+IE9ucljhxu5JbbPnixp1thjht90uzItHZMjtfq0Zk2s/nDVJ5EIk44aaB3XnpfDv41OIJv5cg==
+X-Received: by 2002:a05:6a00:b486:b0:7e8:43f5:bd57 with SMTP id
+ d2e1a72fcca58-7f669c8d79bmr2620153b3a.67.1765560966240; 
+ Fri, 12 Dec 2025 09:36:06 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7f4c4ab52aasm5757420b3a.38.2025.12.12.09.32.38
+ d2e1a72fcca58-7f4c4aa6c49sm5716409b3a.34.2025.12.12.09.36.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Dec 2025 09:32:38 -0800 (PST)
-Message-ID: <43ebfbb8-479c-420a-904e-5aba9532d823@linaro.org>
-Date: Fri, 12 Dec 2025 09:32:38 -0800
+ Fri, 12 Dec 2025 09:36:05 -0800 (PST)
+Message-ID: <f9c8243e-1b34-464d-a6ed-d26e5b844fcc@linaro.org>
+Date: Fri, 12 Dec 2025 09:36:05 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] tcg tests: add a test to verify the syscall filter
- plugin API
+Subject: Re: [RFC PATCH v2 0/2] Enable PC diversion via the plugin API
 Content-Language: en-US
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ziyang Zhang <functioner@sjtu.edu.cn>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20251212141541.1792111-1-functioner@sjtu.edu.cn>
- <20251212141541.1792111-3-functioner@sjtu.edu.cn>
- <87ldj7sn9k.fsf@draig.linaro.org>
+ Florian Hofhammer <florian.hofhammer@epfl.ch>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, laurent@vivier.eu,
+ imp@bsdimp.com, berrange@redhat.com
+References: <e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b@epfl.ch>
+ <f06e2059-9d86-4a5c-acff-84cbeabcfb06@epfl.ch>
+ <87ikebucv4.fsf@draig.linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87ldj7sn9k.fsf@draig.linaro.org>
+In-Reply-To: <87ikebucv4.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,135 +107,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/25 8:00 AM, Alex Bennée wrote:
-> Ziyang Zhang <functioner@sjtu.edu.cn> writes:
+On 12/12/25 4:02 AM, Alex Bennée wrote:
+> Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
 > 
->> Register a syscall filter callback in tests/tcg/plugins/sycall.c,
->> returns a specific value for a magic system call number, and check
->> it in tests/tcg/multiarch/test-plugin-syscall-filter.c.
+>> Hi,
 >>
->> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
->> Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
->> ---
->>   tests/tcg/multiarch/Makefile.target           |  4 +++-
->>   .../multiarch/test-plugin-syscall-filter.c    | 20 +++++++++++++++++++
->>   tests/tcg/plugins/syscall.c                   | 15 ++++++++++++++
->>   3 files changed, 38 insertions(+), 1 deletion(-)
->>   create mode 100644 tests/tcg/multiarch/test-plugin-syscall-filter.c
+>> Sorry for necrobumping this thread. I just wanted to follow up on this
+>> and ask if there is still interest in this plugin API extension or if it
+>> is going to be dropped in favor of the Lorelei patches (which would also
+>> fulfill my original use case).
+> 
+> These are the system call filter patches?
+> 
+> I guess that depends on if being able to change PC is only for skipping
+> syscalls?
+>
+
+Both can probably coexist, as they serve different purposes.
+If only considering syscalls, the syscall filter (that you propose 
+first) is the best way to deal with it, as it's architecture agnostic.
+
+That said, it would be sad to drop the effort you made into this series, 
+and overriding pc can be convenient if anyone wants to filter anything 
+else than syscalls, or for fuzzing purpose.
+
 >>
->> diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
->> index f5b4d2b813..4005e3a8a9 100644
->> --- a/tests/tcg/multiarch/Makefile.target
->> +++ b/tests/tcg/multiarch/Makefile.target
->> @@ -202,8 +202,10 @@ run-plugin-test-plugin-mem-access-with-libmem.so: \
->>   	CHECK_PLUGIN_OUTPUT_COMMAND= \
->>   	$(SRC_PATH)/tests/tcg/multiarch/check-plugin-output.sh \
->>   	$(QEMU) $<
->> +run-plugin-test-plugin-syscall-filter-with-libsyscall.so:
->>   
->> -EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so
->> +EXTRA_RUNS_WITH_PLUGIN += run-plugin-test-plugin-mem-access-with-libmem.so \
->> +			   			  run-plugin-test-plugin-syscall-filter-with-libsyscall.so
->>   endif
->>   
->>   # Update TESTS
->> diff --git a/tests/tcg/multiarch/test-plugin-syscall-filter.c b/tests/tcg/multiarch/test-plugin-syscall-filter.c
->> new file mode 100644
->> index 0000000000..cc694e0a71
->> --- /dev/null
->> +++ b/tests/tcg/multiarch/test-plugin-syscall-filter.c
->> @@ -0,0 +1,20 @@
->> +/*
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + *
->> + * This test attempts to execute a magic syscall. The syscall test plugin
->> + * should intercept this and returns an expected value.
->> + */
->> +
->> +#include <stdint.h>
->> +#include <stdio.h>
->> +#include <stdlib.h>
->> +#include <unistd.h>
->> +
->> +int main(int argc, char *argv[]) {
->> +    long ret = syscall(0x66CCFF);
->> +    if (ret != 0xFFCC66) {
->> +        perror("ERROR: syscall returned unexpected value!!!");
->> +        return EXIT_FAILURE;
->> +    }
->> +    return EXIT_SUCCESS;
->> +}
-> 
->    This breaks some arches:
-> 
->    (gdb) r
->    Starting program: /home/alex/lsrc/qemu.git/builds/sanitisers/qemu-arm -plugin tests/tcg/plugins/libsyscall.so -d plugin ./tests/tcg/arm-linux-user/test-plugin-syscall-filter
->    [New Thread 0x7ffff37ff6c0 (LWP 63692)]
->    qemu: uncaught target signal 4 (Illegal instruction) - core dumped
->    syscall no.  calls  errors
->    45           5      0
->    338          1      1
->    256          1      0
->    191          1      0
->    398          1      1
->    125          1      0
->    384          1      0
->    332          1      0
-> 
->    Thread 1 "qemu-arm" received signal SIGILL, Illegal instruction.
->    Download failed: Invalid argument.  Continuing without source file ./nptl/../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S.
->    __syscall_cancel_arch () at ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56
->    warning: 56     ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S: No such file or directory
->    (gdb) bt
->    #0  __syscall_cancel_arch () at ../sysdeps/unix/sysv/linux/x86_64/syscall_cancel.S:56
->    #1  0x00007ffff6a51668 in __internal_syscall_cancel (a1=<optimized out>, a2=a2@entry=8, a3=a3@entry=0, a4=a4@entry=0, a5=a5@entry=0, a6=a6@entry=0, nr=130)
->        at ./nptl/cancellation.c:49
->    #2  0x00007ffff6a516ad in __syscall_cancel (a1=<optimized out>, a2=a2@entry=8, a3=a3@entry=0, a4=a4@entry=0, a5=a5@entry=0, a6=a6@entry=0, nr=130)
->        at ./nptl/cancellation.c:75
->    #3  0x00007ffff6a0207d in __GI___sigsuspend (set=<optimized out>) at ../sysdeps/unix/sysv/linux/sigsuspend.c:26
->    #4  0x0000555555a49b80 in die_with_signal (host_sig=4) at ../../linux-user/signal.c:807
->    #5  0x0000555555a49ed0 in dump_core_and_abort (env=0x532000004300, target_sig=4) at ../../linux-user/signal.c:847
->    #6  0x0000555555a4c969 in handle_pending_signal (cpu_env=0x532000004300, sig=4, k=0x5250000029d0) at ../../linux-user/signal.c:1306
->    #7  0x0000555555a4d0e5 in process_pending_signals (cpu_env=0x532000004300) at ../../linux-user/signal.c:1386
->    #8  0x0000555555873930 in cpu_loop (env=0x532000004300) at ../../linux-user/arm/cpu_loop.c:479
->    #9  0x0000555555a3eca7 in main (argc=6, argv=0x7fffffffe588, envp=0x7fffffffe5c0) at ../../linux-user/main.c:1035
->    (gdb)
-> 
->> \ No newline at end of file
->> diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
->> index 42801f5c86..1323e18bc0 100644
->> --- a/tests/tcg/plugins/syscall.c
->> +++ b/tests/tcg/plugins/syscall.c
->> @@ -170,6 +170,20 @@ static void vcpu_syscall_ret(qemu_plugin_id_t id, unsigned int vcpu_idx,
->>       }
->>   }
->>   
->> +static bool vcpu_syscall_filter(qemu_plugin_id_t id, unsigned int vcpu_index,
->> +                                int64_t num, uint64_t a1, uint64_t a2,
->> +                                uint64_t a3, uint64_t a4, uint64_t a5,
->> +                                uint64_t a6, uint64_t a7, uint64_t a8,
->> +                                uint64_t *ret)
->> +{
->> +    if (num == 0x66CCFF) {
->> +        *ret = 0xFFCC66;
->> +        qemu_plugin_outs("syscall 0x66CCFF filtered, ret=0xFFCC66\n");
->> +        return true;
->> +    }
->> +    return false;
->> +}
->> +
->>   static void print_entry(gpointer val, gpointer user_data)
->>   {
->>       SyscallStats *entry = (SyscallStats *) val;
->> @@ -255,6 +269,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->>   
->>       qemu_plugin_register_vcpu_syscall_cb(id, vcpu_syscall);
->>       qemu_plugin_register_vcpu_syscall_ret_cb(id, vcpu_syscall_ret);
->> +    qemu_plugin_register_vcpu_syscall_filter_cb(id, vcpu_syscall_filter);
->>       qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
->>       return 0;
->>   }
+>> Thanks for your time,
+>> Florian
+>>
+>> On 06/10/2025 15:21, Florian Hofhammer wrote:
+>>> Hi,
+>>>
+>>> As originally discussed in the thread at
+>>> https://lists.nongnu.org/archive/html/qemu-devel/2025-08/msg00656.html
+>>> and later proposed in a patch at
+>>> https://lists.nongnu.org/archive/html/qemu-devel/2025-09/msg02218.html,
+>>> I am sending an updated version of my patch based on the previous
+>>> feedback.
+>>>
+>>> Notable changes to v1:
+>>> - Added a setjmp() in the syscall handling path to allow redirecting
+>>>    the PC via cpu_loop_exit() also in syscall callbacks. The previous
+>>>    version would only work in instruction execution / memory access
+>>>    callback contexts, as the setjmp() corresponding to the longjmp() in
+>>>    cpu_loop_exit() was only live in those contexts.
+>>> - Added a flag to make sure the new API function is only called in
+>>>    contexts where it makes sense, i.e., during execution of guest code.
+>>> - Added a test that checks the new functionality by skipping a
+>>>    non-existent sentinel syscall.
+>>>
+>>> I made it an RFC patch this time as I am not entirely sure if my
+>>> setting/handling of the new flag makes sense the way it is. I briefly
+>>> looked into making the QEMU_PLUGIN_CB_* flags actual flags via a
+>>> bitfield instead of enum values, but that would have required touching
+>>> a lot of code all over the place, so I'm not sure this is the way to go.
+>>>
+>>> Happy to get feedback and your thoughts on the patches!
+>>>
+>>> Thanks,
+>>> Florian
+>>>
+>>>
+>>> Florian Hofhammer (2):
+>>>    plugins: Add PC diversion API function
+>>>    tests/tcg: add test for qemu_plugin_set_pc API
+>>>
+>>>   include/qemu/qemu-plugin.h                    | 15 +++++++
+>>>   linux-user/aarch64/cpu_loop.c                 |  2 +-
+>>>   linux-user/alpha/cpu_loop.c                   |  2 +-
+>>>   linux-user/arm/cpu_loop.c                     |  2 +-
+>>>   linux-user/hexagon/cpu_loop.c                 |  2 +-
+>>>   linux-user/hppa/cpu_loop.c                    |  4 ++
+>>>   linux-user/i386/cpu_loop.c                    |  8 ++--
+>>>   linux-user/include/special-errno.h            |  8 ++++
+>>>   linux-user/loongarch64/cpu_loop.c             |  5 ++-
+>>>   linux-user/m68k/cpu_loop.c                    |  2 +-
+>>>   linux-user/microblaze/cpu_loop.c              |  2 +-
+>>>   linux-user/mips/cpu_loop.c                    |  5 ++-
+>>>   linux-user/openrisc/cpu_loop.c                |  2 +-
+>>>   linux-user/ppc/cpu_loop.c                     |  6 ++-
+>>>   linux-user/riscv/cpu_loop.c                   |  2 +-
+>>>   linux-user/s390x/cpu_loop.c                   |  2 +-
+>>>   linux-user/sh4/cpu_loop.c                     |  2 +-
+>>>   linux-user/sparc/cpu_loop.c                   |  4 +-
+>>>   linux-user/syscall.c                          |  8 ++++
+>>>   linux-user/xtensa/cpu_loop.c                  |  3 ++
+>>>   plugins/api.c                                 | 17 +++++++-
+>>>   plugins/core.c                                | 25 ++++++-----
+>>>   tests/tcg/multiarch/Makefile.target           | 42 +++++++++++++++++++
+>>>   .../tcg/multiarch/test-plugin-skip-syscalls.c | 26 ++++++++++++
+>>>   tests/tcg/plugins/syscall.c                   |  6 +++
+>>>   25 files changed, 170 insertions(+), 32 deletions(-)
+>>>   create mode 100644 tests/tcg/multiarch/test-plugin-skip-syscalls.c
+>>>
 > 
 
-Looks like a simple issue with 32 bits target.
 
