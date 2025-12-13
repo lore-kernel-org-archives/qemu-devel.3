@@ -4,61 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34DE9D59F5C
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Dec 2025 02:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30F6D59F6D
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Dec 2025 05:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vUFFC-0006CM-0z; Fri, 12 Dec 2025 21:20:26 -0500
+	id 1vUIOD-00061S-Ck; Sat, 13 Dec 2025 00:41:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arbn@yandex-team.com>)
- id 1vUFF7-0006CA-Ks; Fri, 12 Dec 2025 21:20:21 -0500
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vUIO8-00060N-M9
+ for qemu-devel@nongnu.org; Sat, 13 Dec 2025 00:41:53 -0500
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arbn@yandex-team.com>)
- id 1vUFF4-0004HO-S7; Fri, 12 Dec 2025 21:20:21 -0500
-Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id B8481804AB;
- Sat, 13 Dec 2025 05:20:11 +0300 (MSK)
-Received: from [10.211.141.18] (10.211.141.18-vpn.dhcp.yndx.net
- [10.211.141.18])
- by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 6KGIuN1FqW20-qUEV00XX; Sat, 13 Dec 2025 05:20:10 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1765592411;
- bh=CvzHaP9W6lMABxx0nnrO8cueNmaPzF4mt+LCydWqi5c=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=k/RIYX6V54IlQ+SMFCmHqL22T7ltKzGBHzBvltUVGDN25aNfDxWXRr2N7BbQlYAO5
- 37o7QJCaJixl5Vc3KP1ev4tgFeNDj4cOfWCwy3jzZUeBGbVXpjmDvkx8xFG7eiUhSS
- ZP4mtdKrasy1n65B942JF/uN5c+9snAZRu8YEPDI=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.com
-Message-ID: <8582d6d5-507d-437d-be8c-c8e0b1225769@yandex-team.com>
-Date: Sat, 13 Dec 2025 11:19:56 +0900
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vUIO5-0002lq-IY
+ for qemu-devel@nongnu.org; Sat, 13 Dec 2025 00:41:52 -0500
+Received: from [10.200.7.128] (fs96f9c361.tkyc007.ap.nuro.jp [150.249.195.97])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BD5fMh4021206
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 13 Dec 2025 14:41:35 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=hhQtYxJkiZ1Udf1cmpL+dQs6MdP+kU8frJpKL7LDR4k=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Subject:Date:Message-Id:To;
+ s=rs20250326; t=1765604495; v=1;
+ b=g7ss70VSmdSIbnhyyj0HkUwrSDKIDGKSppxkrIB3C1MS/Pey2hS48VaT0wpNINMd
+ oaErVkiMyS78TQ5bCEwGfBWsD57QeO6ob203DATqgDBUZI2leUKffdhMiDaOtxMg
+ tzAd4Q4hWkLbP68hzuZlHoVLJRqCTJq4uBSEt6wLlaK7N0Kdzs+dJNuq0n3QtaLf
+ IgOSMLTzmZFFLRK0GxpEOmPa5artcRbOddpAEZPRD+v2FFiHaKKVURNPF1xirgV4
+ yxkKKA4WlOmxZUiVNrbI3oh2davUDewxAZa7CZ7EWu+IOkTlelg5BoyxHEzJsuzH
+ 61fg7OnkMEAgtcn+BTGnoQ==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PATCH v2 0/6] virtio-gpu: Force RCU when unmapping blob
+Date: Sat, 13 Dec 2025 14:41:19 +0900
+Message-Id: <20251213-force_rcu-v2-0-1de1ca84c6d6@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] q35: Fix migration of SMRAM state
-To: Igor Mammedov <imammedo@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, mst@redhat.com, michael.roth@amd.com
-References: <20251211165454.288476-1-imammedo@redhat.com>
-Content-Language: en-US
-From: Andrey Ryabinin <arbn@yandex-team.com>
-In-Reply-To: <20251211165454.288476-1-imammedo@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=arbn@yandex-team.com; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-B4-Tracking: v=1; b=H4sIAH/8PGkC/03MywrCMBCF4VcpszYhF03Ule8hRWJM2lFoyqQtl
+ tJ3NxYEl//h8C2QA2HIcK4WoDBhxtSVULsKfOu6JjB8lAYl1EEKZVlM5MON/MiMNN7utbY6Wij
+ /nkLE92Zd69It5iHRvNGT/K4/5fSnTJIJdo9HI5xR1jpzodxwjxz5yIb0mhN3nj97qNd1/QDg/
+ 0jLrwAAAA==
+X-Change-ID: 20251027-force_rcu-616c743373f7
+To: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.15-dev-179e8
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,53 +77,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Unmapping a blob changes the memory map, which is protected with RCU.
+RCU is designed to minimize the read-side overhead at the cost of
+reclamation delay. While this design usually makes sense, it is
+problematic when unmapping a blob because the operation blocks all
+virtio-gpu commands and causes perceivable disruption.
 
+Minimize such the disruption with force_rcu(), which minimizes the
+reclamation delay at the cost of a read-side overhead.
 
-On 12/12/25 1:54 AM, Igor Mammedov wrote:
-> When migrating, dst QEMU by default has SMRAM unlocked,
-> and since wmask is not migrated, the migrated value of
-> MCH_HOST_BRIDGE_F_SMBASE in config space fall to prey of
-> 
->   mch_update_smbase_smram()
->     ...
->     if (pd->wmask[MCH_HOST_BRIDGE_F_SMBASE] == 0xff) {
->         *reg = 0x00;
-> 
-> and is getting cleared and leads to unlocked smram
-> on dst even if on source it's been locked.
-> 
-> As Andrey has pointed out [1], we should derive wmask
-> from config and not other way around.
-> 
-> Drop offending chunk and resync wmask based on MCH_HOST_BRIDGE_F_SMBASE
-> register value. That would preserve the register during
-> migration and set smram regions into corresponding state.
-> 
-> What that changes is:
-> that it would let guest write junk values in register
-> (with no apparent effect) until it's stumbles upon
-> reserved 0x1 [|] 0x2 values, at which point it
-> would be only possible to lock register and trigger
-> switch to SMRAM blackhole in CPU AS.
-> 
-> While at it, fix up test by removing junk discard before negotiation hunk.
-> 
-> PS2:
-> Instead of adding a dedicated post_load handler for it,
-> reuse mch_update->mch_update_smbase_smram call chain
-> that is called on write/reset/post_load to be consistent
-> with how we handle mch registers.
-> 
-> PS3:
-> for prosterity here is erro message Andrey got due to this bug:
->     qemu: vfio_container_dma_map(0x..., 0x0, 0xa0000, 0x....) = -22 (Invalid argument)
->     qemu: hardware error: vfio: DMA mapping failed, unable to continue
-> 
-> 1) https://patchew.org/QEMU/20251203180851.6390-1-arbn@yandex-team.com/
-> Fixes: f404220e279c ("q35: implement 128K SMRAM at default SMBASE address")
-> Reported-by: Andrey Ryabinin <arbn@yandex-team.com>
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> ---
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Changes in v2:
+- Stopped overloading the call_rcu1() and force_rcu() notifications onto
+  one event. This fixes a deadlock after try_dequeue() caused by
+  incorrect masking of call_rcu1() notifications, and eliminates
+  spurious force quiescent states caused by being confused with a
+  call_rcu1() notification.
+  Tested-by: from the previous version was not collected because this
+  changes the logic significantly.
+- Merged the rcu_call_count and forced variables into one to avoid
+  the race between them that used to require a loop to resolve.
+- Aligned the type of the duration variable in qemu_futex_timedwait()
+  for Windows.
+- Fixed timespec of qemu_futex_timedwait() for 32-bit Linux.
+- Link to v1: https://lore.kernel.org/qemu-devel/20251029-force_rcu-v1-0-bf860a6277a6@rsg.ci.i.u-tokyo.ac.jp
 
-Reviewed-by: Andrey Ryabinin <arbn@yandex-team.com>
+---
+Akihiko Odaki (6):
+      timer: Rename init_clocks() to qemu_clock_init()
+      futex: Add qemu_futex_timedwait()
+      qemu-thread: Add qemu_event_timedwait()
+      rcu: Use call_rcu() in synchronize_rcu()
+      rcu: Wake the RCU thread when draining
+      virtio-gpu: Force RCU when unmapping blob
+
+ include/qemu/futex.h              | 34 ++++++++++++--
+ include/qemu/rcu.h                |  1 +
+ include/qemu/thread-posix.h       | 11 +++++
+ include/qemu/thread.h             |  8 +++-
+ include/qemu/timer.h              |  4 +-
+ hw/display/virtio-gpu-virgl.c     |  1 +
+ tests/unit/test-aio-multithread.c |  2 +-
+ util/event.c                      | 28 +++++++++--
+ util/main-loop.c                  |  2 +-
+ util/qemu-thread-posix.c          | 11 +----
+ util/qemu-timer.c                 |  7 +--
+ util/rcu.c                        | 98 ++++++++++++++++++++++-----------------
+ 12 files changed, 137 insertions(+), 70 deletions(-)
+---
+base-commit: 466e779e05b5087bffe39ecc51ec97fdf9121e8b
+change-id: 20251027-force_rcu-616c743373f7
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
 
