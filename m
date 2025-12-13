@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58C2FD59F6D
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Dec 2025 05:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DBE8D59F6C
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Dec 2025 05:43:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vUIOG-000626-1w; Sat, 13 Dec 2025 00:42:00 -0500
+	id 1vUIOD-00061R-Ds; Sat, 13 Dec 2025 00:41:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vUIO8-00060L-EH
+ id 1vUIO8-00060M-GE
  for qemu-devel@nongnu.org; Sat, 13 Dec 2025 00:41:53 -0500
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1vUIO5-0002ls-8c
+ id 1vUIO5-0002lv-8h
  for qemu-devel@nongnu.org; Sat, 13 Dec 2025 00:41:52 -0500
 Received: from [10.200.7.128] (fs96f9c361.tkyc007.ap.nuro.jp [150.249.195.97])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BD5fMh6021206
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5BD5fMh5021206
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Sat, 13 Dec 2025 14:41:36 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=L0B9jhJeb3zKvYSXK8vray0X2b7UJO76FxjV/uZ6Yhg=; 
+DKIM-Signature: a=rsa-sha256; bh=BGY2ydZ9DW/wM8vz+C2bRvZNL/uWtNVIK4HlTDmTvOw=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Date:Subject:Message-Id:To;
  s=rs20250326; t=1765604496; v=1;
- b=ogIPCXzmnzswqlljplj+XGP90M8yT1krbtjc+kJGbBvl50owpp0rfRXHLNSbosMS
- pJzePFS4zpnWi18PTyp2VYlHANBxqFvxvgoKLQ7+e/EWL/H/wSEaF6dfsauisfUJ
- S0U4mvhGMPR1aHlV6mkefvdi/u+lErDqAZgR/1WrKsB436bgQEAqhxXcV0SboYYY
- F9OwTn0nmWOHgb4tTmigd8MtF5HhcUQXNjf2mUWFvbGche1qBdFkrqbxI1aqcWqh
- dyr9bnN1OIRteSUlz4WGBFf/S9t2FKCPlcshoK6Fsiyg9JHKFvkMgqi7PRMk9YQj
- Y0Bq5deikVDMlB1E/gShkw==
+ b=NeqxvlgnGUdFoOdgurjfIDWexbhXikUvqNzpPt7IEK6aPPPdXDutziadl/WB8/br
+ i9rzOfYV29lreQCZCNOfRyXujko2MLgdw5ITdTIo+V4Lp/GCJkwg2IwrrvV7YaPa
+ sZ94ZCH7DvNnrrBkp1+QV4gj92q8dlxXI7+/dkXORyQ+kQ1Hv9s4ChhhqElLIm5z
+ Ng0HRl3BqL5ScWM898gjEfkIVMi6wAYs+dvODg54wE690i4S1BwMKE/j3zzwPAN0
+ FcZnz9bZP0pzJagmhp4O6vwzUzjh2m5857hhfQixcdlaDmvqVw0upKY+okn225bq
+ Njz9JU+05kcfBm9TPzsT0Q==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 13 Dec 2025 14:41:21 +0900
-Subject: [PATCH v2 2/6] futex: Add qemu_futex_timedwait()
+Date: Sat, 13 Dec 2025 14:41:20 +0900
+Subject: [PATCH v2 1/6] timer: Rename init_clocks() to qemu_clock_init()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251213-force_rcu-v2-2-1de1ca84c6d6@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20251213-force_rcu-v2-1-1de1ca84c6d6@rsg.ci.i.u-tokyo.ac.jp>
 References: <20251213-force_rcu-v2-0-1de1ca84c6d6@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20251213-force_rcu-v2-0-1de1ca84c6d6@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>
@@ -74,93 +74,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qemu_futex_timedwait() is equivalent to qemu_futex_wait(), except it has
-an absolute timeout.
+tests/qtest/stm32l4x5_usart-test.c will include qemu/timer.h in a
+suceeding change, but it causes a conflict of init_clocks() definitions.
+
+Since other functions that operate on clocks are prefixed with
+qemu_clock_, follow the convention by renaming init_clocks() to
+qemu_clock_init() and avoid the name conflict in the suceeding change.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- include/qemu/futex.h | 34 +++++++++++++++++++++++++++++-----
- 1 file changed, 29 insertions(+), 5 deletions(-)
+ include/qemu/timer.h              | 4 ++--
+ tests/unit/test-aio-multithread.c | 2 +-
+ util/main-loop.c                  | 2 +-
+ util/qemu-timer.c                 | 7 ++++---
+ 4 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/include/qemu/futex.h b/include/qemu/futex.h
-index 607613eec835..5b48f79bf329 100644
---- a/include/qemu/futex.h
-+++ b/include/qemu/futex.h
-@@ -24,13 +24,19 @@
- #ifndef QEMU_FUTEX_H
- #define QEMU_FUTEX_H
- 
-+#include "qemu/timer.h"
- #define HAVE_FUTEX
- 
- #ifdef CONFIG_LINUX
- #include <sys/syscall.h>
- #include <linux/futex.h>
-+#include <linux/time_types.h>
- 
-+#ifdef __NR_futex_time64
-+#define qemu_futex(...)              syscall(__NR_futex_time64, __VA_ARGS__)
-+#else
- #define qemu_futex(...)              syscall(__NR_futex, __VA_ARGS__)
-+#endif
- 
- static inline void qemu_futex_wake_all(void *f)
- {
-@@ -42,18 +48,28 @@ static inline void qemu_futex_wake_single(void *f)
-     qemu_futex(f, FUTEX_WAKE, 1, NULL, NULL, 0);
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index 406d74112030..9dfde0660d0e 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -786,11 +786,11 @@ static inline int64_t qemu_soonest_timeout(int64_t timeout1, int64_t timeout2)
  }
  
--static inline void qemu_futex_wait(void *f, unsigned val)
-+static inline bool qemu_futex_timedwait(void *f, unsigned val, int64_t ns)
+ /**
+- * initclocks:
++ * qemu_clock_init:
+  *
+  * Initialise the clock & timer infrastructure
+  */
+-void init_clocks(QEMUTimerListNotifyCB *notify_cb);
++void qemu_clock_init(QEMUTimerListNotifyCB *notify_cb);
+ 
+ static inline int64_t get_max_clock_jump(void)
  {
--    while (qemu_futex(f, FUTEX_WAIT, (int) val, NULL, NULL, 0)) {
-+    struct __kernel_timespec ts;
-+    uint32_t bitset = FUTEX_BITSET_MATCH_ANY;
-+
-+    ts.tv_sec = ns / NANOSECONDS_PER_SECOND;
-+    ts.tv_nsec = ns % NANOSECONDS_PER_SECOND;
-+
-+    while (qemu_futex(f, FUTEX_WAIT_BITSET, (int) val, &ts, NULL, bitset)) {
-         switch (errno) {
-         case EWOULDBLOCK:
--            return;
-+            return true;
-         case EINTR:
-             break; /* get out of switch and retry */
-+        case ETIMEDOUT:
-+            return false;
-         default:
-             abort();
-         }
+diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
+index 0ead6bf34ad1..33720b3ffff0 100644
+--- a/tests/unit/test-aio-multithread.c
++++ b/tests/unit/test-aio-multithread.c
+@@ -443,7 +443,7 @@ static void test_multi_mutex_10(void)
+ 
+ int main(int argc, char **argv)
+ {
+-    init_clocks(NULL);
++    qemu_clock_init(NULL);
+ 
+     g_test_init(&argc, &argv, NULL);
+     g_test_add_func("/aio/multi/lifecycle", test_lifecycle);
+diff --git a/util/main-loop.c b/util/main-loop.c
+index b8ddda8f5eec..718b87e05c74 100644
+--- a/util/main-loop.c
++++ b/util/main-loop.c
+@@ -162,7 +162,7 @@ int qemu_init_main_loop(Error **errp)
+     int ret;
+     GSource *src;
+ 
+-    init_clocks(qemu_timer_notify_cb);
++    qemu_clock_init(qemu_timer_notify_cb);
+ 
+     ret = qemu_signal_init(errp);
+     if (ret) {
+diff --git a/util/qemu-timer.c b/util/qemu-timer.c
+index 56f11b6a641f..c96856d70123 100644
+--- a/util/qemu-timer.c
++++ b/util/qemu-timer.c
+@@ -121,7 +121,8 @@ void timerlist_free(QEMUTimerList *timer_list)
+     g_free(timer_list);
+ }
+ 
+-static void qemu_clock_init(QEMUClockType type, QEMUTimerListNotifyCB *notify_cb)
++static void qemu_clock_init_one(QEMUClockType type,
++                                QEMUTimerListNotifyCB *notify_cb)
+ {
+     QEMUClock *clock = qemu_clock_ptr(type);
+ 
+@@ -637,11 +638,11 @@ static void qemu_virtual_clock_set_ns(int64_t time)
+     return cpus_set_virtual_clock(time);
+ }
+ 
+-void init_clocks(QEMUTimerListNotifyCB *notify_cb)
++void qemu_clock_init(QEMUTimerListNotifyCB *notify_cb)
+ {
+     QEMUClockType type;
+     for (type = 0; type < QEMU_CLOCK_MAX; type++) {
+-        qemu_clock_init(type, notify_cb);
++        qemu_clock_init_one(type, notify_cb);
      }
-+
-+    return true;
- }
- #elif defined(CONFIG_WIN32)
- #include <synchapi.h>
-@@ -68,12 +84,20 @@ static inline void qemu_futex_wake_single(void *f)
-     WakeByAddressSingle(f);
- }
  
--static inline void qemu_futex_wait(void *f, unsigned val)
-+static inline bool qemu_futex_timedwait(void *f, unsigned val, int64_t ns)
- {
--    WaitOnAddress(f, &val, sizeof(val), INFINITE);
-+    DWORD duration = MIN((ns - get_clock()) / SCALE_MS, INFINITE);
-+    return WaitOnAddress(f, &val, sizeof(val), duration);
- }
- #else
- #undef HAVE_FUTEX
- #endif
- 
-+#ifdef HAVE_FUTEX
-+static inline void qemu_futex_wait(void *f, unsigned val)
-+{
-+    qemu_futex_timedwait(f, val, INT64_MAX);
-+}
-+#endif
-+
- #endif /* QEMU_FUTEX_H */
+ #ifdef CONFIG_PRCTL_PR_SET_TIMERSLACK
 
 -- 
 2.52.0
