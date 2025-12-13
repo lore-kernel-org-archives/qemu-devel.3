@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B2DD59F53
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Dec 2025 00:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDEEED59F53
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Dec 2025 00:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vUDHo-0006gB-6X; Fri, 12 Dec 2025 19:15:00 -0500
+	id 1vUDHl-0006en-Ud; Fri, 12 Dec 2025 19:14:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3_688aQoKCqIOCTEOQTEQUIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--marcmorcos.bounces.google.com>)
- id 1vUDHm-0006fV-LH
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 19:14:58 -0500
-Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+ <3_K88aQoKCp8L9QBLNQBNRFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--marcmorcos.bounces.google.com>)
+ id 1vUDHk-0006bz-8A
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 19:14:56 -0500
+Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3_688aQoKCqIOCTEOQTEQUIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--marcmorcos.bounces.google.com>)
- id 1vUDHl-000797-56
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 19:14:58 -0500
-Received: by mail-pg1-x54a.google.com with SMTP id
- 41be03b00d2f7-b630b4d8d52so1714528a12.3
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 16:14:56 -0800 (PST)
+ <3_K88aQoKCp8L9QBLNQBNRFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--marcmorcos.bounces.google.com>)
+ id 1vUDHi-00078Y-Q8
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 19:14:55 -0500
+Received: by mail-pg1-x549.google.com with SMTP id
+ 41be03b00d2f7-bc0de474d4eso3042414a12.0
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 16:14:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1765584895; x=1766189695; darn=nongnu.org;
+ d=google.com; s=20230601; t=1765584892; x=1766189692; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=sl9CNn1EVZEpq7y7cqXda6K3glgb23SOapyyZsDMnjg=;
- b=HP0QXTSRWHK3x/2uHqxk3k1zqJ8DnpoIet2AUAJL+trOXKL0DYQPJ6ia19Fl3mSpNI
- d6tupxAZGfiLLJ+YBA+/5j18kWhWk2MyaRQNZE0bea/dsxztOhxhGQcTGf6MreF9HCyk
- kDP7wo/+349GqYOEJ6wobXmDU7oroAZ5ZbxmMrV47gFMMplNqlGPySVkZGg7iyUVqEYz
- 6k4pa0V3U169NX+vfOCyKN1r4S6OZK5q9R0SibDjQ4Ch5b357WC47kOtFeBEKIGCqmI6
- VPadAqGUwTnVy7ZXSAPNdHoxUnTceQWhnUMfKZf/3q2zLyU5hntHjr15X14jxPGTkY35
- lTAw==
+ bh=a9byHUhq171lB8iBLQB0kPeEXv2KRtdFiOEay6iUm0M=;
+ b=VUGXfSMSpigtY9Ezy0Ze5tK8mpeLn49RAuyWaha4hhqJ01nKS3wMIiWhDQ2fn9zQMi
+ UahaTIUAEsoy4oZlYviAYf9mpHP594an33wGt3LVbrMHyu/bcuYIcE05UAHmiENuxcD+
+ yCf2JXT9WFVPWjngiSEN1NqEKiAWXti97AIv3FdrlqV9ovG3hVKIy6ZdAmQfSCJuFpQb
+ 6e1XZQd2nPAGgPY383OOVu9rPb8EU2vlFkyrTALy0P8R6fvYEdKjsqWmBaonDfRDzXQA
+ bkoEBjuuZHGBO64/z7cq0b8TbECbHcSjE8VBjrYLnKw3TUXg7mG+I5YNZZ3a2XRC/EXm
+ BxFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765584895; x=1766189695;
+ d=1e100.net; s=20230601; t=1765584892; x=1766189692;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sl9CNn1EVZEpq7y7cqXda6K3glgb23SOapyyZsDMnjg=;
- b=Ytqb4dBtDBkIOzzaeu0uMz1+rgYG0ufn4YyNwirqQsMEZMB9bnRW8GWwU256gPkJLM
- ZLGtoA5usncU0/Lq2tgDTkLfLL67QzPp+Sa9xI6suD7QHaVS+W1epvSzXMbcjSSVw6JA
- lQayN2W3+oeQAMFCFBjdL1BkQz86K/mAn9V7NtDxkQhzZyXYd227y3IQ8PGmQwFNGN64
- AgCHezPO6HOx7ezRFgRsjRSpqjMQhLaekDHdig1GBPWcjWFhIAbir+DJjKc9MLGCpSEp
- upvdxRPhyBqj5HIqMcY8MobyirpdjRwIWreZydmEjvMdA8YWcUeiKKZx1Fut5Nbbedet
- ENBg==
+ bh=a9byHUhq171lB8iBLQB0kPeEXv2KRtdFiOEay6iUm0M=;
+ b=W1sllXKUGthDKuP7JWh8MVKawO/QPJeEwMvDV+/VThBXy1xdBhda9rYKv+aoLFZqkL
+ +2RMP2f7XlkQOd4Y3TBdgTSCjDlnL4eE7GY7T7jVL7CDB5bAEQtScnoYodRzw7bNDbLO
+ DgCdQzU9mPsHhfV0y7qUArZrvRv4u7hVuqwgs1DWfWOpU1QNvxtX8+wNmOMiJN+CVo1I
+ EIp30gyziMXFbJ43ofksnUQ4MtLuNS++JuSj4gOogROUu55R2RdPasczTxIyFr0v72/V
+ 4pp1+nj3dtO4WxJJGpm8tjr+hbEA34T/B+6Hv0gAv+2khv9ytAElYbOCmjGarKRjt3Vz
+ EOXQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUCKE6/O1JzzobaRSLgzVtL2bJn+ow7YCle1IVz/PRZI0BGO2DZyIDlZju/mtkIb6zrA4SqOiA6E7eF@nongnu.org
-X-Gm-Message-State: AOJu0YyLn9Tovg+kHRZpmiIacozW+TmonWdz7RFzksPPvuMfVQldhq/X
- rwdSRj8mT+f64DS9OSrhUt4eZYSoFUXJ6Vw5JzoBa51WaQNVqjeWGv12pBav9uog/0ANnwLo58h
- OBXkk47F6kYqoyFExlTn3ew==
-X-Google-Smtp-Source: AGHT+IE8+xrHCWoej8QIHCaGCUtpB6hyutXgRJeL9Co2narXZoICzwtqZy/98P5K8Cw5wHfygJT+Pm+hzJ2VPvoE
-X-Received: from dycmv3.prod.google.com ([2002:a05:693c:2803:b0:2ac:3a02:feae])
+ AJvYcCUQW++pV/Bl5eC1HKvYaGQvJmBvfnnoy5wzwkWAyd3xZwERC4ZYs1GGQKEE6K5JWPzU3+PxabOWy43Z@nongnu.org
+X-Gm-Message-State: AOJu0YxY7r4l9MN8HIGpwGLxuB5meq+yAmG1CmWLk1HQSqF6QmlZFnse
+ 8mrGEJhomgocRwxhA88J4vrDLkxBq+dwnVt+xvWJPMrkwvvr4ftV6XTnIzj+ohcTQepj5k16fot
+ 6LUhUXWMZnu+utdr95SLhgA==
+X-Google-Smtp-Source: AGHT+IGcin5hyq+n2qr2rmLGMVgo9UOC9nitcjENNrPSfYURQhY4WzARb8mesPEMZ3bMottnA8mjRAjvdj3DTytt
+X-Received: from dyx19.prod.google.com ([2002:a05:693c:8213:b0:2a4:6ffc:87c9])
  (user=marcmorcos job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:693c:6213:b0:2a4:3593:ddf3 with SMTP id
- 5a478bee46e88-2ac3012b8a3mr3278144eec.32.1765584895347; 
- Fri, 12 Dec 2025 16:14:55 -0800 (PST)
-Date: Sat, 13 Dec 2025 00:14:42 +0000
+ 2002:a05:7300:8283:b0:2a4:4bce:309c with SMTP id
+ 5a478bee46e88-2ac3025c82emr2257346eec.22.1765584892396; 
+ Fri, 12 Dec 2025 16:14:52 -0800 (PST)
+Date: Sat, 13 Dec 2025 00:14:40 +0000
 In-Reply-To: <20251213001443.2041258-1-marcmorcos@google.com>
 Mime-Version: 1.0
 References: <20251213001443.2041258-1-marcmorcos@google.com>
 X-Mailer: git-send-email 2.52.0.239.gd5f0c6e74e-goog
-Message-ID: <20251213001443.2041258-4-marcmorcos@google.com>
-Subject: [PATCH 3/4] qmp: Fix thread race
+Message-ID: <20251213001443.2041258-2-marcmorcos@google.com>
+Subject: [PATCH 1/4] apic: Resize APICBASE
 From: Marc Morcos <marcmorcos@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, 
@@ -76,9 +76,9 @@ Cc: "Michael S . Tsirkin" <mst@redhat.com>,
  qemu-devel@nongnu.org, 
  kvm@vger.kernel.org, Marc Morcos <marcmorcos@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
- envelope-from=3_688aQoKCqIOCTEOQTEQUIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--marcmorcos.bounces.google.com;
- helo=mail-pg1-x54a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
+ envelope-from=3_K88aQoKCp8L9QBLNQBNRFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--marcmorcos.bounces.google.com;
+ helo=mail-pg1-x549.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -101,60 +101,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This fixes a thread race involving the monitor in monitor_qmp_event and monitor_qapi_event_emit .
+ APICBASE is 36-bits wide, so this commit resizes it to hold the full data.
 
 Signed-off-by: Marc Morcos <marcmorcos@google.com>
 ---
- monitor/monitor.c | 11 ++++++++++-
- monitor/qmp.c     |  6 ++++--
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ hw/intc/apic_common.c           | 4 ++--
+ include/hw/i386/apic_internal.h | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index c5a5d30877..4bfd72939d 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -338,6 +338,7 @@ static void monitor_qapi_event_emit(QAPIEvent event, QDict *qdict)
+diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
+index ec9e978b0b..1e9aba2e48 100644
+--- a/hw/intc/apic_common.c
++++ b/hw/intc/apic_common.c
+@@ -233,7 +233,7 @@ static void apic_reset_common(DeviceState *dev)
  {
-     Monitor *mon;
-     MonitorQMP *qmp_mon;
-+    bool do_send = false;
+     APICCommonState *s = APIC_COMMON(dev);
+     APICCommonClass *info = APIC_COMMON_GET_CLASS(s);
+-    uint32_t bsp;
++    uint64_t bsp;
  
-     trace_monitor_protocol_event_emit(event, qdict);
-     QTAILQ_FOREACH(mon, &mon_list, entry) {
-@@ -346,7 +347,15 @@ static void monitor_qapi_event_emit(QAPIEvent event, QDict *qdict)
-         }
+     bsp = s->apicbase & MSR_IA32_APICBASE_BSP;
+     s->apicbase = APIC_DEFAULT_ADDRESS | bsp | MSR_IA32_APICBASE_ENABLE;
+@@ -363,7 +363,7 @@ static const VMStateDescription vmstate_apic_common = {
+     .post_load = apic_dispatch_post_load,
+     .priority = MIG_PRI_APIC,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(apicbase, APICCommonState),
++        VMSTATE_UINT64(apicbase, APICCommonState),
+         VMSTATE_UINT8(id, APICCommonState),
+         VMSTATE_UINT8(arb_id, APICCommonState),
+         VMSTATE_UINT8(tpr, APICCommonState),
+diff --git a/include/hw/i386/apic_internal.h b/include/hw/i386/apic_internal.h
+index 4a62fdceb4..c7ee65ce1d 100644
+--- a/include/hw/i386/apic_internal.h
++++ b/include/hw/i386/apic_internal.h
+@@ -158,7 +158,7 @@ struct APICCommonState {
  
-         qmp_mon = container_of(mon, MonitorQMP, common);
--        if (qmp_mon->commands != &qmp_cap_negotiation_commands) {
-+        do_send = false;
-+
-+        WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
-+            if (qmp_mon->commands != &qmp_cap_negotiation_commands) {
-+                do_send = true;
-+            }
-+        }
-+
-+        if (do_send) {
-             qmp_send_response(qmp_mon, qdict);
-         }
-     }
-diff --git a/monitor/qmp.c b/monitor/qmp.c
-index cb99a12d94..e1419a9efa 100644
---- a/monitor/qmp.c
-+++ b/monitor/qmp.c
-@@ -462,8 +462,10 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
- 
-     switch (event) {
-     case CHR_EVENT_OPENED:
--        mon->commands = &qmp_cap_negotiation_commands;
--        monitor_qmp_caps_reset(mon);
-+        WITH_QEMU_LOCK_GUARD(&mon->common.mon_lock) {
-+            mon->commands = &qmp_cap_negotiation_commands;
-+            monitor_qmp_caps_reset(mon);
-+        }
-         data = qmp_greeting(mon);
-         qmp_send_response(mon, data);
-         qobject_unref(data);
+     MemoryRegion io_memory;
+     X86CPU *cpu;
+-    uint32_t apicbase;
++    uint64_t apicbase;
+     uint8_t id; /* legacy APIC ID */
+     uint32_t initial_apic_id;
+     uint8_t version;
 -- 
 2.52.0.239.gd5f0c6e74e-goog
 
