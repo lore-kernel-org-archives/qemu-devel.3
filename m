@@ -4,65 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81D8BD59F52
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Dec 2025 00:15:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22B2DD59F53
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Dec 2025 00:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vUDHk-0006c4-C2; Fri, 12 Dec 2025 19:14:56 -0500
+	id 1vUDHo-0006gB-6X; Fri, 12 Dec 2025 19:15:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3-q88aQoKCp0J7O9JLO9LPDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--marcmorcos.bounces.google.com>)
- id 1vUDHi-0006an-L3
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 19:14:54 -0500
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
+ <3_688aQoKCqIOCTEOQTEQUIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--marcmorcos.bounces.google.com>)
+ id 1vUDHm-0006fV-LH
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 19:14:58 -0500
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3-q88aQoKCp0J7O9JLO9LPDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--marcmorcos.bounces.google.com>)
- id 1vUDHh-00078L-8V
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 19:14:54 -0500
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-29f29ae883bso12372565ad.3
- for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 16:14:52 -0800 (PST)
+ <3_688aQoKCqIOCTEOQTEQUIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--marcmorcos.bounces.google.com>)
+ id 1vUDHl-000797-56
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 19:14:58 -0500
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-b630b4d8d52so1714528a12.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 16:14:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1765584891; x=1766189691; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=8tL7/RGN/sKACTO1/U808dKR26ztwxbHlqQIK/m5vG0=;
- b=mPIZH28N+EuYnjV1gqdf4b3ctnYa2OAOdaUDuRtb9/cK+ZxQ3gdHRGLrdDW8Zrw/Pt
- qoJBEptckWIrdE7/qJCZeDSrQe/XEwfVf1NKqRPhyZ6LY1IhIez+KtwpgLsQwCyLcW1b
- cf53jFU8l0UZqI7zQQaBwlwuM4hHsvg2lD3vUg8dqPefZVPE4qC8CZDIlvuvOnogoXTK
- dByOQd76dWV74vbEEEP5tGCHAdSMUjtWdlMjKmrG9QOOxRVhe36wkwJhA13e82YscTeq
- Z3KAO0DO975te74t3D687svbEdeNq4HfiCZ87nZ0YryC0in/enRU6lzdja668ivEGl97
- XOZw==
+ d=google.com; s=20230601; t=1765584895; x=1766189695; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=sl9CNn1EVZEpq7y7cqXda6K3glgb23SOapyyZsDMnjg=;
+ b=HP0QXTSRWHK3x/2uHqxk3k1zqJ8DnpoIet2AUAJL+trOXKL0DYQPJ6ia19Fl3mSpNI
+ d6tupxAZGfiLLJ+YBA+/5j18kWhWk2MyaRQNZE0bea/dsxztOhxhGQcTGf6MreF9HCyk
+ kDP7wo/+349GqYOEJ6wobXmDU7oroAZ5ZbxmMrV47gFMMplNqlGPySVkZGg7iyUVqEYz
+ 6k4pa0V3U169NX+vfOCyKN1r4S6OZK5q9R0SibDjQ4Ch5b357WC47kOtFeBEKIGCqmI6
+ VPadAqGUwTnVy7ZXSAPNdHoxUnTceQWhnUMfKZf/3q2zLyU5hntHjr15X14jxPGTkY35
+ lTAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765584891; x=1766189691;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8tL7/RGN/sKACTO1/U808dKR26ztwxbHlqQIK/m5vG0=;
- b=Iyemzh1auA+IWGeC7hmALE5YmvKuoTvUrPDi3HiEX2bYupSYMyj4PySdnvVwN+MsQ3
- O/26ZFQNjKP3832zJ/OZrdV4nXoQLGFrmeebg1tSbiy3bx3arCN13kNxGHc+LfyUusRE
- 2UZEAv0uU7JlB7xvsVeNiY4iUAUdQ1lEjlrHuvMsWfFDIMS2QgJnjAwucVZz8ms0S9uz
- Olpr/ddNZAqsfcFgo0hVHZxfjevnrKehixgYnb8WWAFN2Eh8NVH0vFnsFcFGtV6jIK52
- r87XdITVdsTRyf8O5GQnF1XcJnnhfflQNOFTV5tiStcJd+Z+9MovhSDrQVFMERwEsCB+
- pH0A==
+ d=1e100.net; s=20230601; t=1765584895; x=1766189695;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sl9CNn1EVZEpq7y7cqXda6K3glgb23SOapyyZsDMnjg=;
+ b=Ytqb4dBtDBkIOzzaeu0uMz1+rgYG0ufn4YyNwirqQsMEZMB9bnRW8GWwU256gPkJLM
+ ZLGtoA5usncU0/Lq2tgDTkLfLL67QzPp+Sa9xI6suD7QHaVS+W1epvSzXMbcjSSVw6JA
+ lQayN2W3+oeQAMFCFBjdL1BkQz86K/mAn9V7NtDxkQhzZyXYd227y3IQ8PGmQwFNGN64
+ AgCHezPO6HOx7ezRFgRsjRSpqjMQhLaekDHdig1GBPWcjWFhIAbir+DJjKc9MLGCpSEp
+ upvdxRPhyBqj5HIqMcY8MobyirpdjRwIWreZydmEjvMdA8YWcUeiKKZx1Fut5Nbbedet
+ ENBg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJpSPl194jlw9rL4uOjfJlFM4AP0BcTHeubGsZznqgvjKFGD2Hx4ta05nVulieGmZnsE8qDFWxK2wr@nongnu.org
-X-Gm-Message-State: AOJu0YyAebcl4fOZeOapO04JjIY7Zj5bcSStMc1PR+iqH2SU5W8iG32k
- 5LYOvs7z5NB8YmYF1exL2Vkp2A8X0QQp0GD9K1J4+xBOz97oDkR9CnZ9zKV448v8Q0N2XDgHcDP
- 5f1IoU6QmE9MdsMIFT57iMg==
-X-Google-Smtp-Source: AGHT+IEk/EneiJL291SDXmhW6/pWcFWHFjoD4OjmgLdPzMcPD1d1qlCRdYtHtLu1AW5T+C/bWNgCkI8hcBP/vuAg
-X-Received: from dlkk18.prod.google.com ([2002:a05:7022:6092:b0:11e:60ad:95af])
+ AJvYcCUCKE6/O1JzzobaRSLgzVtL2bJn+ow7YCle1IVz/PRZI0BGO2DZyIDlZju/mtkIb6zrA4SqOiA6E7eF@nongnu.org
+X-Gm-Message-State: AOJu0YyLn9Tovg+kHRZpmiIacozW+TmonWdz7RFzksPPvuMfVQldhq/X
+ rwdSRj8mT+f64DS9OSrhUt4eZYSoFUXJ6Vw5JzoBa51WaQNVqjeWGv12pBav9uog/0ANnwLo58h
+ OBXkk47F6kYqoyFExlTn3ew==
+X-Google-Smtp-Source: AGHT+IE8+xrHCWoej8QIHCaGCUtpB6hyutXgRJeL9Co2narXZoICzwtqZy/98P5K8Cw5wHfygJT+Pm+hzJ2VPvoE
+X-Received: from dycmv3.prod.google.com ([2002:a05:693c:2803:b0:2ac:3a02:feae])
  (user=marcmorcos job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:7022:982:b0:11b:ade6:45bd with SMTP id
- a92af1059eb24-11f35475c65mr2888073c88.8.1765584890841; 
- Fri, 12 Dec 2025 16:14:50 -0800 (PST)
-Date: Sat, 13 Dec 2025 00:14:39 +0000
+ 2002:a05:693c:6213:b0:2a4:3593:ddf3 with SMTP id
+ 5a478bee46e88-2ac3012b8a3mr3278144eec.32.1765584895347; 
+ Fri, 12 Dec 2025 16:14:55 -0800 (PST)
+Date: Sat, 13 Dec 2025 00:14:42 +0000
+In-Reply-To: <20251213001443.2041258-1-marcmorcos@google.com>
 Mime-Version: 1.0
+References: <20251213001443.2041258-1-marcmorcos@google.com>
 X-Mailer: git-send-email 2.52.0.239.gd5f0c6e74e-goog
-Message-ID: <20251213001443.2041258-1-marcmorcos@google.com>
-Subject: [PATCH 0/4] Clean up TSAN warnings
+Message-ID: <20251213001443.2041258-4-marcmorcos@google.com>
+Subject: [PATCH 3/4] qmp: Fix thread race
 From: Marc Morcos <marcmorcos@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, 
@@ -74,9 +76,9 @@ Cc: "Michael S . Tsirkin" <mst@redhat.com>,
  qemu-devel@nongnu.org, 
  kvm@vger.kernel.org, Marc Morcos <marcmorcos@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3-q88aQoKCp0J7O9JLO9LPDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--marcmorcos.bounces.google.com;
- helo=mail-pl1-x64a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3_688aQoKCqIOCTEOQTEQUIQQING.EQOSGOW-FGXGNPQPIPW.QTI@flex--marcmorcos.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -99,23 +101,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When running several tests with tsan, thread races were detected when reading certain variables. This should allieviate the problem.
-Additionally, the apicbase member of APICCommonState has been updated to 64 bit to reflect its 36 bit contents.
+This fixes a thread race involving the monitor in monitor_qmp_event and monitor_qapi_event_emit .
 
-Marc Morcos (4):
-  apic: Resize APICBASE
-  thread-pool: Fix thread race
-  qmp: Fix thread race
-  apic: Make apicbase accesses atomic to fix data race
+Signed-off-by: Marc Morcos <marcmorcos@google.com>
+---
+ monitor/monitor.c | 11 ++++++++++-
+ monitor/qmp.c     |  6 ++++--
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
- hw/i386/kvm/apic.c              | 12 ++++++++----
- hw/intc/apic_common.c           | 24 ++++++++++++++----------
- include/hw/i386/apic_internal.h |  2 +-
- monitor/monitor.c               | 11 ++++++++++-
- monitor/qmp.c                   |  6 ++++--
- util/thread-pool.c              | 30 ++++++++++++++++--------------
- 6 files changed, 53 insertions(+), 32 deletions(-)
-
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index c5a5d30877..4bfd72939d 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -338,6 +338,7 @@ static void monitor_qapi_event_emit(QAPIEvent event, QDict *qdict)
+ {
+     Monitor *mon;
+     MonitorQMP *qmp_mon;
++    bool do_send = false;
+ 
+     trace_monitor_protocol_event_emit(event, qdict);
+     QTAILQ_FOREACH(mon, &mon_list, entry) {
+@@ -346,7 +347,15 @@ static void monitor_qapi_event_emit(QAPIEvent event, QDict *qdict)
+         }
+ 
+         qmp_mon = container_of(mon, MonitorQMP, common);
+-        if (qmp_mon->commands != &qmp_cap_negotiation_commands) {
++        do_send = false;
++
++        WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
++            if (qmp_mon->commands != &qmp_cap_negotiation_commands) {
++                do_send = true;
++            }
++        }
++
++        if (do_send) {
+             qmp_send_response(qmp_mon, qdict);
+         }
+     }
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index cb99a12d94..e1419a9efa 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -462,8 +462,10 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+ 
+     switch (event) {
+     case CHR_EVENT_OPENED:
+-        mon->commands = &qmp_cap_negotiation_commands;
+-        monitor_qmp_caps_reset(mon);
++        WITH_QEMU_LOCK_GUARD(&mon->common.mon_lock) {
++            mon->commands = &qmp_cap_negotiation_commands;
++            monitor_qmp_caps_reset(mon);
++        }
+         data = qmp_greeting(mon);
+         qmp_send_response(mon, data);
+         qobject_unref(data);
 -- 
 2.52.0.239.gd5f0c6e74e-goog
 
