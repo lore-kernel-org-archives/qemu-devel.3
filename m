@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16039D59F53
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Dec 2025 23:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FD74D59F52
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Dec 2025 00:13:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vUCe4-0003ne-8q; Fri, 12 Dec 2025 18:33:56 -0500
+	id 1vUDFl-00043T-BD; Fri, 12 Dec 2025 19:12:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vUCe2-0003nK-RB
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 18:33:54 -0500
-Received: from m228-31.mailgun.net ([159.135.228.31])
+ (Exim 4.90_1) (envelope-from
+ <3eq88aQoKCh0F3K5FHK5HL9HH9E7.5HFJ7FN-67O7EGHG9GN.HK9@flex--marcmorcos.bounces.google.com>)
+ id 1vUDFj-000431-I6
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 19:12:51 -0500
+Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vUCe1-00089M-51
- for qemu-devel@nongnu.org; Fri, 12 Dec 2025 18:33:54 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- 27c2015fbf8d1903b07aee4363a9131f916608f32f4d32e868b3f954c8c702db with SMTP id
- 693ca6577fb35aba9573efde; Fri, 12 Dec 2025 23:33:43 GMT
-X-Mailgun-Sending-Ip: 159.135.228.31
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1765582422;
- bh=cMQPg7v3DwE4MXXLruYCnKON1p6jkTly0q8R9f4/keI=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
- Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
- References;
- b=mBoopMD0xr3RN5nlXNr2BZXcgv+9uRU+yy7sn+xWkSenU8db6YTqB5xen1+vPEUuj
- tKv70DgU9N0xsJeUjT6NyNMnJJGc5c+nocTAUEAywCKXJGReRjq6Z9X4LE14gAztEG
- ggyCqSmW/G36XzD2Wg7qZ0dMzHxgTTbf8v5hNNgXSGfY48d/7TJy8yGEyKvjQiU2uu
- 56oyOZ03YP/ct0WY3BSOjG+a1JCiv0z1JF2a/R63RRVJ5KAhWUJMYprBZanhwXfOPN
- rALWQl0AsBEeX0tx5twnGadMhTCcBqrdY2WEV7Hw0CnUWoathg1eff0Yt7vRAj9h1e
- ytPz1eEqixsig==
-Message-ID: <bc52f621-493d-4df6-8403-1e4c7e2be424@yodel.dev>
-Date: Fri, 12 Dec 2025 17:33:40 -0600
-MIME-Version: 1.0
-Subject: Re: [PATCH 2/2] tests/vhost-user-bridge.c: Fix const qualifier build
- errors with recent glibc
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>
-References: <20251210181306.926334-1-clg@redhat.com>
- <20251210181306.926334-3-clg@redhat.com>
-Content-Language: en-US
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <20251210181306.926334-3-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=159.135.228.31;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=m228-31.mailgun.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3eq88aQoKCh0F3K5FHK5HL9HH9E7.5HFJ7FN-67O7EGHG9GN.HK9@flex--marcmorcos.bounces.google.com>)
+ id 1vUDFi-0006kH-05
+ for qemu-devel@nongnu.org; Fri, 12 Dec 2025 19:12:51 -0500
+Received: by mail-pj1-x104a.google.com with SMTP id
+ 98e67ed59e1d1-34566e62f16so2018401a91.1
+ for <qemu-devel@nongnu.org>; Fri, 12 Dec 2025 16:12:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1765584767; x=1766189567; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=a9byHUhq171lB8iBLQB0kPeEXv2KRtdFiOEay6iUm0M=;
+ b=D5M2IGTi3P0mpBW9iH/dfdgNkxHzlNf6jDqLkk4EZESUiWA/TO0+Djb8tFzbqpfG6R
+ FdfijBFG0u3kcMujC1ZyNCu4YLxq16EHhfdUvr8GiR285VqrCsey3vNO/283COGjDZ+E
+ U+3i4NCldPUKvE+QlPSGU+T/WjBMSF3hz3uGPEHdcwNA75fjtQ1HmmTn31+1Y9HKck1K
+ JWdV8TriuK6tXqgA1Ln7dxmBhroFSmaA9zuBCDuTvYZNU2u5ZRTO1Hr7zoefrjNrdgHH
+ hQdT2mumo4AoZLKyyvQzIArXXhhP87sLcoI+LdGPVBSGMqO3PT2shy7FG3IIR63PvDDt
+ C8pA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765584767; x=1766189567;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=a9byHUhq171lB8iBLQB0kPeEXv2KRtdFiOEay6iUm0M=;
+ b=b0l2iLk08NrQy3EtiPCyrsWhPJWFZszMyVLeKZTOvjfC691/EADnl8i/4PWSPUZg14
+ iTxl7ULrj0HmdBL4Hpq8j+aGWswvTR6E86PaI8qVgTJ3aCuQZG9J0tD7/IZy1r4wGOd3
+ OvsGfYVmwGx3FkPcMvdwfKsfUr3bcyHT4iMoL97W5XnZ3dHlGzlghaW1J22fnRgvxGQp
+ vc8hhRccDaUqN5X5+ru/BjflPVLUD5eXb1IxocKiiTAsSqDOZDpfLwzXOlPSEJ1VxTao
+ idUc+B/DIBsxbrDjNpvaB18J/AjqoMwHuIE8iXMBJ+PBSK+KQBnfGSrKQxV04iwdPOro
+ 4wOw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUniq4kJVrPOKOhKKqgeVJmQDJrNmAWHrqhiyIn2btwJ+KXjUVth1taihfX8jQlfr+J/KkETlV57Nol@nongnu.org
+X-Gm-Message-State: AOJu0YyMS9uFh+D0b2SesBn7le64j7vIOK8iGi19I6MaTvjAlh/V2t4h
+ LGkE1eD2bNX4inb3FPwXJDzaFxJYSrmKtuPRl0AaWaJKOIZkXynJCby3/FD2F6zOx378rO5XZro
+ Ts7/rmix/s5T6jkEV38A2KQ==
+X-Google-Smtp-Source: AGHT+IEjImOGnlHMiztl4z2ZlqTF3b9vjLnHL3vmRAV9t64A7B/mGpPOtYTnPz2l0lrHh3nOPkeYKOTQotEdpHPM
+X-Received: from dlbbk2.prod.google.com ([2002:a05:7022:4282:b0:11d:cfca:1df5])
+ (user=marcmorcos job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:7022:f509:b0:11b:9386:8257 with SMTP id
+ a92af1059eb24-11f34c2628bmr1661310c88.44.1765584762064; 
+ Fri, 12 Dec 2025 16:12:42 -0800 (PST)
+Date: Sat, 13 Dec 2025 00:12:31 +0000
+In-Reply-To: <20251213001234.2039232-1-marcmorcos@google.com>
+Mime-Version: 1.0
+References: <20251213001234.2039232-1-marcmorcos@google.com>
+X-Mailer: git-send-email 2.52.0.239.gd5f0c6e74e-goog
+Message-ID: <20251213001234.2039232-2-marcmorcos@google.com>
+Subject: [PATCH 1/4] apic: Resize APICBASE
+From: Marc Morcos <marcmorcos@google.com>
+To: maintainer_email_from_script@google.com
+Cc: cc_list_from_script@google.com, qemu-devel@nongnu.org, 
+ Marc Morcos <marcmorcos@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
+ envelope-from=3eq88aQoKCh0F3K5FHK5HL9HH9E7.5HFJ7FN-67O7EGHG9GN.HK9@flex--marcmorcos.bounces.google.com;
+ helo=mail-pj1-x104a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,75 +95,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Cédric!
+ APICBASE is 36-bits wide, so this commit resizes it to hold the full data.
 
-On 10/12/2025 12:13, Cédric Le Goater wrote:
-> A recent change in glibc 2.42.9000 [1] changes the return type of
-> strstr() and other string functions to be 'const char *' when the
-> input is a 'const char *'. This breaks the build in :
-> 
-> ../tests/vhost-user-bridge.c: In function ‘vubr_parse_host_port’:
-> ../tests/vhost-user-bridge.c:749:15: error: initialization discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
->    749 |     char *p = strchr(buf, ':');
->        |               ^~~~~~
-> 
-> Fix this by using the glib g_strsplit() routine instead of strdup().
-> 
-> [1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
-> 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   tests/vhost-user-bridge.c | 10 ++++------
->   1 file changed, 4 insertions(+), 6 deletions(-)
-> 
-> diff --git a/tests/vhost-user-bridge.c b/tests/vhost-user-bridge.c
-> index a5c711b1de8e9c164dd1614f4329b8e3c05d0402..ce4c3426d3938a0b54195f3e95bb1f1c3c4ae823 100644
-> --- a/tests/vhost-user-bridge.c
-> +++ b/tests/vhost-user-bridge.c
-> @@ -746,14 +746,12 @@ vubr_run(VubrDev *dev)
->   static int
->   vubr_parse_host_port(const char **host, const char **port, const char *buf)
->   {
-> -    char *p = strchr(buf, ':');
-> -
-> -    if (!p) {
-> +    g_auto(GStrv) tokens = g_strsplit(buf, ":", 2);
-> +    if (!tokens[0] || !tokens[1]) {
->           return -1;
->       }
-> -    *p = '\0';
-> -    *host = strdup(buf);
-> -    *port = strdup(p + 1);
-> +    *host = g_steal_pointer(&tokens[0]);
-> +    *port = g_steal_pointer(&tokens[1]);
->       return 0;
->   }
->   
+Signed-off-by: Marc Morcos <marcmorcos@google.com>
+---
+ hw/intc/apic_common.c           | 4 ++--
+ include/hw/i386/apic_internal.h | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Thanks for addressing this before the glibc change is widely propagated
-among distros.
+diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
+index ec9e978b0b..1e9aba2e48 100644
+--- a/hw/intc/apic_common.c
++++ b/hw/intc/apic_common.c
+@@ -233,7 +233,7 @@ static void apic_reset_common(DeviceState *dev)
+ {
+     APICCommonState *s = APIC_COMMON(dev);
+     APICCommonClass *info = APIC_COMMON_GET_CLASS(s);
+-    uint32_t bsp;
++    uint64_t bsp;
+ 
+     bsp = s->apicbase & MSR_IA32_APICBASE_BSP;
+     s->apicbase = APIC_DEFAULT_ADDRESS | bsp | MSR_IA32_APICBASE_ENABLE;
+@@ -363,7 +363,7 @@ static const VMStateDescription vmstate_apic_common = {
+     .post_load = apic_dispatch_post_load,
+     .priority = MIG_PRI_APIC,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT32(apicbase, APICCommonState),
++        VMSTATE_UINT64(apicbase, APICCommonState),
+         VMSTATE_UINT8(id, APICCommonState),
+         VMSTATE_UINT8(arb_id, APICCommonState),
+         VMSTATE_UINT8(tpr, APICCommonState),
+diff --git a/include/hw/i386/apic_internal.h b/include/hw/i386/apic_internal.h
+index 4a62fdceb4..c7ee65ce1d 100644
+--- a/include/hw/i386/apic_internal.h
++++ b/include/hw/i386/apic_internal.h
+@@ -158,7 +158,7 @@ struct APICCommonState {
+ 
+     MemoryRegion io_memory;
+     X86CPU *cpu;
+-    uint32_t apicbase;
++    uint64_t apicbase;
+     uint8_t id; /* legacy APIC ID */
+     uint32_t initial_apic_id;
+     uint8_t version;
+-- 
+2.52.0.239.gd5f0c6e74e-goog
 
-Acked-by: Yodel Eldar <yodel.eldar@yodel.dev>
-Tested-by: Yodel Eldar <yodel.eldar@yodel.dev>
-
-For testing, I built and installed glibc (76 commits ahead of cd748a63a)
-in an x86_64 Linux container and built vhost-user-bridge on top of that.
-Ran it with:
-
-./build/tests/vhost-user-bridge -H
-
-qemu-system-x86_64 \
-     -enable-kvm -m 4G \
-     -object memory-backend-ram,id=mem0,size=4G,share=on \
-     -numa node,memdev=mem0 -mem-prealloc \
-     -chardev socket,id=char0,path=/tmp/vubr.sock \
-     -netdev type=vhost-user,id=net0,chardev=char0,vhostforce=on \
-     -device virtio-net-pci,netdev=net0 \
-     -drive file=linux.qcow2
-
-and visually inspected the logged traffic.
-
-Thanks,
-Yodel
 
