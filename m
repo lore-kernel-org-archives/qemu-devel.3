@@ -4,60 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E15C3D5B16D
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Dec 2025 15:00:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB3AD59D99
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Dec 2025 16:19:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vUnZE-0003BP-Q3; Sun, 14 Dec 2025 09:59:24 -0500
+	id 1vUooH-00031K-SI; Sun, 14 Dec 2025 11:19:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenwei.pi@linux.dev>)
- id 1vUi7n-000201-Nd
- for qemu-devel@nongnu.org; Sun, 14 Dec 2025 04:10:43 -0500
-Received: from out-170.mta0.migadu.com ([91.218.175.170])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenwei.pi@linux.dev>)
- id 1vUi7k-00039E-NQ
- for qemu-devel@nongnu.org; Sun, 14 Dec 2025 04:10:43 -0500
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1765703438;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YjccH9cASOhv8Xqy6ggla8HIcFFiQvPnmz2kFeaGjjw=;
- b=GE/rM1eyP6iMkeIurBP06z4wXr4YKlSPOEicEC6ZRHNO5eEFG6K+R8+cgYlNEcJdyh9Z4m
- xru7Jt2798iZsef0DV5sVSmW7eCuM0UZQ3Gk9TJD9VmDka8l2JiMTiRgN1JHD7Xz3LwkXp
- UD/rczU4Z8XaZIpWs/rzCILIMYM++NE=
-From: zhenwei pi <zhenwei.pi@linux.dev>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, arei.gonglei@huawei.com, nakamurajames123@gmail.com,
- qemu-security@nongnu.org, mcascell@redhat.com,
- zhenwei pi <zhenwei.pi@linux.dev>
-Subject: [PATCH 2/2] cryptodev-builtin: Limit the maximum size
-Date: Sun, 14 Dec 2025 17:09:39 +0800
-Message-ID: <20251214090939.408436-3-zhenwei.pi@linux.dev>
-In-Reply-To: <20251214090939.408436-1-zhenwei.pi@linux.dev>
-References: <20251214090939.408436-1-zhenwei.pi@linux.dev>
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1vUooF-000313-Hh
+ for qemu-devel@nongnu.org; Sun, 14 Dec 2025 11:18:59 -0500
+Received: from m228-31.mailgun.net ([159.135.228.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1)
+ (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
+ id 1vUooD-0003Zq-Ij
+ for qemu-devel@nongnu.org; Sun, 14 Dec 2025 11:18:59 -0500
+X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
+Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
+ b77f18b6dc18f32f0915554837146b0265ef5e0b22b228ed4acdfda81311fc2b with SMTP id
+ 693ee369de3622e0f29e6c27; Sun, 14 Dec 2025 16:18:49 GMT
+X-Mailgun-Sending-Ip: 159.135.228.31
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
+ s=rsa2048; t=1765729128;
+ bh=mITUh0jzfRl8y/86BSI3DgVo6GlsUlWvtJToEVQ62uw=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+ X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
+ Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
+ References;
+ b=HSohKuVXG3FUj3yPRxF66G8IZd4CeXdmvCtV4uWhWI4bn5X3DXrh9K0LhtT/kMSaM
+ rQ6xJcexydk78romg1zfhrlYg9o5OBsQg9CrguIHYQt1h+ydIPP8tRlscmBwmrXPZc
+ EK8ZpTg9CQUfuqCK9ANro6S4jro6NVNtxEbAvEn7kMdbPPBluRn2z7wIfKSDYXlXTP
+ e+K7e8g8HVejCctimH8GWFJWOmf88TtmzHIILQkTBmN33jv8lwOdQSTztO8gkxLnNf
+ JopQDO6ed709A9FF5usa/zCYXVhvKUp/DoAeKPelzKFQeNRxyjQ34sIUnjlagp3AwY
+ 8zSG1ApyjJgvQ==
+Message-ID: <9247eb0c-1867-497d-97d0-ad1621d6c24d@yodel.dev>
+Date: Sun, 14 Dec 2025 10:18:47 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH 2/2] tests/vhost-user-bridge.c: Fix const qualifier build
+ errors with recent glibc
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+References: <20251210181306.926334-1-clg@redhat.com>
+ <20251210181306.926334-3-clg@redhat.com>
+ <bc52f621-493d-4df6-8403-1e4c7e2be424@yodel.dev>
+ <2a9859fa-1617-4d26-a618-acb63fbe0bb6@yodel.dev>
+ <b0a2d9da-1a8d-4352-b761-9b1f604c6894@redhat.com>
+ <82fbb148-153b-4d1c-bbe1-89f73318de5a@yodel.dev>
+ <11454796-30d2-4a57-85a5-d42ff0dce2e6@redhat.com>
+Content-Language: en-US
+X-Mailgun-Dkim: no
+X-Mailgun-Dkim: no
+From: Yodel Eldar <yodel.eldar@yodel.dev>
+Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
+ xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
+ I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
+ CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
+ AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
+ Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
+ 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
+ imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
+ TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
+In-Reply-To: <11454796-30d2-4a57-85a5-d42ff0dce2e6@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=91.218.175.170; envelope-from=zhenwei.pi@linux.dev;
- helo=out-170.mta0.migadu.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=159.135.228.31;
+ envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
+ helo=m228-31.mailgun.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 14 Dec 2025 09:59:22 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,44 +99,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This backend driver is used for demonstration purposes only, unlimited
-size leads QEMU OOM.
 
-Fixes: 1653a5f3fc7 ("cryptodev: introduce a new cryptodev backend")
-Reported-by: AM 이재영 <nakamurajames123@gmail.com>
-Signed-off-by: zhenwei pi <zhenwei.pi@linux.dev>
----
- backends/cryptodev-builtin.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
-index 0414c01e06..55a3fbd27b 100644
---- a/backends/cryptodev-builtin.c
-+++ b/backends/cryptodev-builtin.c
-@@ -53,6 +53,8 @@ typedef struct CryptoDevBackendBuiltinSession {
- 
- #define CRYPTODEV_BUITLIN_MAX_AUTH_KEY_LEN    512
- #define CRYPTODEV_BUITLIN_MAX_CIPHER_KEY_LEN  64
-+/* demonstration purposes only, use a limited size to avoid QEMU OOM */
-+#define CRYPTODEV_BUITLIN_MAX_REQUEST_SIZE  (1024 * 1024)
- 
- struct CryptoDevBackendBuiltin {
-     CryptoDevBackend parent_obj;
-@@ -98,12 +100,7 @@ static void cryptodev_builtin_init(
-                          1u << QCRYPTODEV_BACKEND_SERVICE_TYPE_MAC;
-     backend->conf.cipher_algo_l = 1u << VIRTIO_CRYPTO_CIPHER_AES_CBC;
-     backend->conf.hash_algo = 1u << VIRTIO_CRYPTO_HASH_SHA1;
--    /*
--     * Set the Maximum length of crypto request.
--     * Why this value? Just avoid to overflow when
--     * memory allocation for each crypto request.
--     */
--    backend->conf.max_size = LONG_MAX - sizeof(CryptoDevBackendOpInfo);
-+    backend->conf.max_size = CRYPTODEV_BUITLIN_MAX_REQUEST_SIZE;
-     backend->conf.max_cipher_key_len = CRYPTODEV_BUITLIN_MAX_CIPHER_KEY_LEN;
-     backend->conf.max_auth_key_len = CRYPTODEV_BUITLIN_MAX_AUTH_KEY_LEN;
-     cryptodev_builtin_init_akcipher(backend);
--- 
-2.43.0
+On 14/12/2025 02:56, Cédric Le Goater wrote:
+> Hello Yodel,
+> 
+> On 12/13/25 21:15, Yodel Eldar wrote:
+>>
+>> On 13/12/2025 00:59, Cédric Le Goater wrote:
+>>> On 12/13/25 01:17, Yodel Eldar wrote:
+>>>>
+>>>> On 12/12/2025 17:33, Yodel Eldar wrote:
+>>>>> Hi, Cédric!
+>>>>>
+>>>>> On 10/12/2025 12:13, Cédric Le Goater wrote:
+>>>>>> A recent change in glibc 2.42.9000 [1] changes the return type of
+>>>>>> strstr() and other string functions to be 'const char *' when the
+>>>>>> input is a 'const char *'. This breaks the build in :
+>>>>>>
+>>>>>> ../tests/vhost-user-bridge.c: In function ‘vubr_parse_host_port’:
+>>>>>> ../tests/vhost-user-bridge.c:749:15: error: initialization 
+>>>>>> discards ‘const’ qualifier from pointer target type [- 
+>>>>>> Werror=discarded- qualifiers]
+>>>>>>    749 |     char *p = strchr(buf, ':');
+>>>>>>        |               ^~~~~~
+>>>>>>
+>>>>>> Fix this by using the glib g_strsplit() routine instead of strdup().
+>>>>>>
+>>>>>> [1] https://sourceware.org/git/? 
+>>>>>> p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
+>>>>>>
+>>>>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>>>>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+>>>>>> ---
+>>>>>>   tests/vhost-user-bridge.c | 10 ++++------
+>>>>>>   1 file changed, 4 insertions(+), 6 deletions(-)
+>>>>>>
+>>>>>> diff --git a/tests/vhost-user-bridge.c b/tests/vhost-user-bridge.c
+>>>>>> index 
+>>>>>> a5c711b1de8e9c164dd1614f4329b8e3c05d0402..ce4c3426d3938a0b54195f3e95bb1f1c3c4ae823 100644
+>>>>>> --- a/tests/vhost-user-bridge.c
+>>>>>> +++ b/tests/vhost-user-bridge.c
+>>>>>> @@ -746,14 +746,12 @@ vubr_run(VubrDev *dev)
+>>>>>>   static int
+>>>>>>   vubr_parse_host_port(const char **host, const char **port, const 
+>>>>>> char *buf)
+>>>>>>   {
+>>>>>> -    char *p = strchr(buf, ':');
+>>>>>> -
+>>>>>> -    if (!p) {
+>>>>>> +    g_auto(GStrv) tokens = g_strsplit(buf, ":", 2);
+>>>>>> +    if (!tokens[0] || !tokens[1]) {
+>>>>>>           return -1;
+>>>>>>       }
+>>>>>> -    *p = '\0';
+>>>>>> -    *host = strdup(buf);
+>>>>>> -    *port = strdup(p + 1);
+>>>>>> +    *host = g_steal_pointer(&tokens[0]);
+>>>>>> +    *port = g_steal_pointer(&tokens[1]);
+>>>>>>       return 0;
+>>>>>>   }
+>>>>>
+>>>>> Thanks for addressing this before the glibc change is widely 
+>>>>> propagated
+>>>>> among distros.
+>>>>>
+>>>>> Acked-by: Yodel Eldar <yodel.eldar@yodel.dev>
+>>>>> Tested-by: Yodel Eldar <yodel.eldar@yodel.dev>
+>>>>>
+>>>>> For testing, I built and installed glibc (76 commits ahead of 
+>>>>> cd748a63a)
+>>>>> in an x86_64 Linux container and built vhost-user-bridge on top of 
+>>>>> that.
+>>>>> Ran it with:
+>>>>>
+>>>>> ./build/tests/vhost-user-bridge -H
+>>>>>
+>>>>> qemu-system-x86_64 \
+>>>>>      -enable-kvm -m 4G \
+>>>>>      -object memory-backend-ram,id=mem0,size=4G,share=on \
+>>>>>      -numa node,memdev=mem0 -mem-prealloc \
+>>>>>      -chardev socket,id=char0,path=/tmp/vubr.sock \
+>>>>>      -netdev type=vhost-user,id=net0,chardev=char0,vhostforce=on \
+>>>>>      -device virtio-net-pci,netdev=net0 \
+>>>>>      -drive file=linux.qcow2
+>>>>>
+>>>>> and visually inspected the logged traffic.
+>>>>>
+>>>>> Thanks,
+>>>>> Yodel
+>>>>>
+>>>>
+>>>> P.S. To build vhost-user-bridge, I had to modify util/log.c as in
+>>>> the PULL submission "<20251209200537.84097-9-philmd@linaro.org>".
+>>>>
+>>>> For completion, the commands used:
+>>>>
+>>>> ../configure --enable-tools --enable-vhost-user --disable-system \
+>>>>    --disable-user
+>>>>
+>>>> ninja tests/vhost-user-bridge
+>>>>
+>>>> Yodel
+>>>>
+>>>
+>>>
+>>> Thanks Yodel,
+>>>
+>>> My plan is to send a small PR as soon as QEMU 10.2 is out and ask
+>>> Michael T. to include the changes in the stable branches.
+>>>
+>>> C.
+>>>
+>>>
+>>
+>> Glad to hear it!
+>>
+>> Sorry for staggering my testing methodology over multiple emails, but I
+>> should add for clarification and completeness: to exercise your change
+>> to vubr_parse_host_port(), I passed various input into the -l and -r
+>> options of vhost-user-bridge; and, with:
+>>
+>>    tcpdump -i lo -n -X udp port 5678
+>>
+>> while running:
+>>
+>>    ./build/tests/vhost-user-bridge -H -l 127.0.0.1:4567 -r 127.0.0.1:5678
+>>
+>> for example,
+>>
+>> I was able to monitor the traffic (ARP requests) from port 4567 to 5678.
+>>
+> 
+> Would you mind providing a test case under tests/ or tests/functional ?
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+
+Certainly, that's a great idea! Although, I'll need to get better
+acquainted with QEMU's testing framework... Would you be willing to
+answer the occasional question regarding scope, approach, conventions,
+etc. over IRC? There's a Co-authored-by tag with your name on it if
+you so choose :-)
+
+Yodel
 
 
