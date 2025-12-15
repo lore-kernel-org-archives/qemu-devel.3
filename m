@@ -4,159 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F96D41D74
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 10:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B1BD41D74
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 10:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV6Eo-0006j5-Tw; Mon, 15 Dec 2025 05:55:34 -0500
+	id 1vV6H7-0007jE-1h; Mon, 15 Dec 2025 05:57:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vV6EG-0006VR-SG
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 05:55:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vV6H3-0007iX-P8
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 05:57:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vV6EE-0006XG-Af
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 05:55:00 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1vV6H1-0007JM-Vw
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 05:57:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765796097;
+ s=mimecast20190719; t=1765796269;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=q7u8DaxR2YqssGiivXfgVgdazrOIZEqrM3h/GzR666A=;
- b=MOIHqAOpfEDubBbPPLdu8ImwHhJKu+6dHg1sFs13fgF7ow9aHeJLZ7HzNExz3bM6Ysx7k+
- ioLUThiZZCmQa2/gusKZGi+rcT5mKngCaDR1QXteENojBiJchMWn97NoiIDOvR6LcB1TAs
- GNqVz8eNH221A38zogKS5dRpaQxyUMQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=ow/Q4ZR2DKljZANqWsJMAfUlQBtvd/Z9C3rCByzO63w=;
+ b=c0odHVdr56gy/zt0u+GQF9X8cqk4Xlh8Uf2LHzdpUSZzVwI47OQYsmkstpi4pxyniTx0MO
+ kxyUB4JjWUYBAPnlcQxTSM4uFamt6n0jUmsswlVIJtzBPThNmv0sTHMCvgAdTm2HJ0+rsC
+ bnlaZSKUwSHT3eqrAzeYViz5vTS7E2g=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-538-jQgfQOC1NTm08S2RStNa9A-1; Mon, 15 Dec 2025 05:54:55 -0500
-X-MC-Unique: jQgfQOC1NTm08S2RStNa9A-1
-X-Mimecast-MFC-AGG-ID: jQgfQOC1NTm08S2RStNa9A_1765796095
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-477563a0c75so21450985e9.1
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 02:54:55 -0800 (PST)
+ us-mta-365-M3DKAKD_NJefPdAoY2SyDA-1; Mon, 15 Dec 2025 05:57:47 -0500
+X-MC-Unique: M3DKAKD_NJefPdAoY2SyDA-1
+X-Mimecast-MFC-AGG-ID: M3DKAKD_NJefPdAoY2SyDA_1765796266
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2a0d058fc56so15917135ad.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 02:57:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765796092; x=1766400892; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=q7u8DaxR2YqssGiivXfgVgdazrOIZEqrM3h/GzR666A=;
- b=i+fmoMPwplh88GiSQK4E4QL0Qfci88vsCL/v14BPTOrhskxCKWZsiJXW3ndg7GyCQF
- e8g/pJunBJ9XHLfCXnCAidY0iSYs3N+Ei0brtP/Nglk9YQkZDsfLtPEK+la2mVzaImyd
- BBvvNGgNoGkvLBYPPYi9MerDHKEAyqeIDPMKFVzmvInLii8s3ULYgbu3Mhlk8rlQSliF
- zVjSzYL+Tq2QQFKEgJFKszbDSE1zXm8rFH3D1Zf6rerlXNInI1SFSKZqMUDQ9HbfnsrS
- kFlyHRHbm1OBeE1ctS7XYazAGi+xzf/gCJ9Dpk3Iq1nOnVj1jHCHMpIf0DSg4TiMpeay
- XYHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765796092; x=1766400892;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1765796266; x=1766401066; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q7u8DaxR2YqssGiivXfgVgdazrOIZEqrM3h/GzR666A=;
- b=H73EZnd34REprSnb4nPaW494hdWy5JM86libuFfMlPvT7A9ejPX4Cy/Ts9OlnPIwhc
- mumMkB2Omg3WArWTfHgayE8/HpZLcYjzH8fbM/mfYCyOyFVTzHU4SrhQa4r+144ICkzs
- av7gWZqlHdEktA2kQDtahrz5VRg5htZ25Jcajei4YxCjpbV3QZ12Pw+9p4sRMoEYNaxi
- cAh/ogiLvFYQGYEhiSVofKvV1hDkd5p8LCnazu31IoGW80cRhFJmIkvGtscJspNVwsfl
- UKJKaZzv0M0fRYTf9+lf4mF9+SqeKhCy3z5jz6QCvlwQVP+XP9yBZPuqs/YYXLxfGc5U
- NI9A==
+ bh=ow/Q4ZR2DKljZANqWsJMAfUlQBtvd/Z9C3rCByzO63w=;
+ b=iSt/Ohl1zYoXZj5mIQDFogYObBKF4nLHGoq8SdKf6Bc5j2+AIBTLLCyTyGoOsnzer4
+ 44renp4y344o+pgkeZs501R1Nkrgy5QHaUNrK3W4KV1AZmNSckd4VLrngZCraGQLomo/
+ GMfRXGl/I4qE+s62+TDjMeg3aWxczWhH/etpt4sTcFkapQv4+eRDnIwQmRTVRIHEierq
+ 6+O1nr/gSRlfKOWtF1IAV3nYC8swCdIORyAdUoCGH5fO9Hc98XFueARYSElHkuZlMGf8
+ 0LgFrw1s56VWHS5+IRkDZGG9dILakPkz4KdtZ+HZam7WpMoHf52/ct+EcYkQ2IuSS5Ge
+ 3SBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765796266; x=1766401066;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ow/Q4ZR2DKljZANqWsJMAfUlQBtvd/Z9C3rCByzO63w=;
+ b=id6wL3Tk0BiGSRAp/WhHO77MRQFZupgPOKkeXT/MZM4Uzq6vK29IZeaxJziB9Ua0nC
+ 49MaBgQ4AGdH9LJwi/2BBKHWeCIRk//py4XQ/8Tuf8TaMJsf5MYBf3xg1WtEuusQ2m7x
+ cvYd6pB7iaq9W6XkhOLDw91Y8EeaWHDApKTsgp55jQddPGJOPnM8c+XGYvzpmHcY7bU7
+ R3kZ+gVMaXZQ91xKIit+NCqs5xw3hO58lVFApRjzBVp/vb5eZvmF8/os27FIvpFeWQJg
+ 3n/i/Z/uwzccAR1XYOqpQb0WJMjPS+j/0/WvroRosWNGUNIg2+e+jbc5uO1k/gOkMA2R
+ DOJg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8IIruv6zOXycBrD5R636hmlz3WrboOl+exqwlm8DgTawxMjnzhfY5S814HuuWZcJjSMSeXYOa36UZ@nongnu.org
-X-Gm-Message-State: AOJu0Yx0GBNVBim0ZNQWGU4EgCGL55YwkfVrZbQrw11HBdBSfYltZmNd
- lThk5LmxD3EeJEjn2v3CQ/hVbtJg4e2WJpNrqYgJ87RBy/3/3jf178QCpQDbIjz9FKoTRPUFNXL
- GnE0v3m0S6XAVkxJdUDy4XQ1twYsyVqRzYd23G17NagV3DAoxrQJbo79g
-X-Gm-Gg: AY/fxX5BeD+8oCFHOEYcz8ZHRl8ZIcKGDZ6JwRVrfHNhv4KJsBIlzu7pPdYzyB3Pki6
- UkQj7eL86N0sYQzCBCFNRDCv+cemDXl/lPpQE00Q98nzC/GcyItDSXNON3tnNlSaHRO7un7Qzmv
- HmWHzAV9kCVXTQCPKss7YlzB4HfjeDed5cifKl8fRyF9xfUDQtVWzS2Hvsh56Go8Oxk/ePyDs/4
- fQdhfR6lZafzMgmbmtPMyTTaPQLHZNecx6DqTTk15cbMIto+zpGoY+MzjsC8AB9LD3NX0xPtGoe
- /e5aSHuznTNoBmjHzx2Tzp5WWntdTVyxCNOU5V7cpBvnFUYzfhQ/k/cViN79nM0xW2TQusqa1We
- hC6/KFBeh/eKBt3UcaUNU5u7b0dFT4K1qghE5sjAdWULHiSNm
-X-Received: by 2002:a05:600c:444b:b0:477:8ba7:fe17 with SMTP id
- 5b1f17b1804b1-47bd2b29f13mr6891535e9.7.1765796092110; 
- Mon, 15 Dec 2025 02:54:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEaMTEbKWmyKWL3CbEHPeCLuktnt3+L/kO5vC4I7VliiUYpgGUQPDWd2BQMw6y6nFrUpsOzlA==
-X-Received: by 2002:a05:600c:444b:b0:477:8ba7:fe17 with SMTP id
- 5b1f17b1804b1-47bd2b29f13mr6891145e9.7.1765796091612; 
- Mon, 15 Dec 2025 02:54:51 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCXAO5Ts5AHiO/SmJFnG2uSpvGboP7AgYo88olw9w2+7MKgrD8hC49Xoi3BMmMKG91JS9NFdwWo+xmIi@nongnu.org
+X-Gm-Message-State: AOJu0YxlWk/2hDdZ7dMfegZV9nH0dLZ7Of/muvSjVU7CGXJxHLxO1zbd
+ A4gW+d9WZG55cVl8Bd7mKAEkNdjHtTdyncLwLbqeS06oyfehrjaTLfQHhggbFX4vkCNcbZ4bz/l
+ wojlXyO02xgh+H1cjm+sLrE/+tKnBrenPWZw5q+M6WzzfGmn6GWWr5IRo
+X-Gm-Gg: AY/fxX7ZXvyBPUkI6DeSV+a5LjPiY3yoKUb0CeVN4ojuweh6uOSyTvNl+GvVZ6LXt5x
+ wBzfIQWBJNmbEantdPZsbXINT4M6CLgM33ejYngHL+qCkwsrku2KRB64z94A9zIjp40Xo2e1jtJ
+ uoQFDn7yO6mJ2JP7YrWjf0BUfQsSHI5Iv3FLQ+fx+nRf3VMGWQREkSXqzi8w4fD1RToVnlt9D5G
+ pfp1v+EGTF3Xoomd2ew3qD1tsb1APbEdlSYZkJtYZ9d/ZAPpRDs5wKh62QzfBoKmTCKM7Qw+rly
+ 64qfcjYCgEiLN+q8qvktDWfm2yKlXpc2aElXzFGiHI8apM+v4ziG4WExQsu8HXH4p2IwZhP+1FF
+ StdzonoJUsdBHxjS1kzsdAe+rDfBhCIMiDKOAXevQVUDtjV9f+qIj6NP5sg==
+X-Received: by 2002:a17:903:238b:b0:295:5b68:9967 with SMTP id
+ d9443c01a7336-29f24484ec0mr105220015ad.49.1765796266413; 
+ Mon, 15 Dec 2025 02:57:46 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IECz4ON7Bj7v/JllUIQe3rv8qfodGg3aun/6Su+UYI2GKHiHTxOoS/wFS6OyhQ+MNGyaqEPHw==
+X-Received: by 2002:a17:903:238b:b0:295:5b68:9967 with SMTP id
+ d9443c01a7336-29f24484ec0mr105219875ad.49.1765796265978; 
+ Mon, 15 Dec 2025 02:57:45 -0800 (PST)
+Received: from smtpclient.apple ([223.229.163.80])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a8f6f118esm69904835e9.3.2025.12.15.02.54.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Dec 2025 02:54:50 -0800 (PST)
-Message-ID: <fde9622a-a336-469e-982d-b82991243424@redhat.com>
-Date: Mon, 15 Dec 2025 11:54:50 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 32/33] vfio: Synthesize vPASID capability to VM
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, peter.maydell@linaro.org, jgg@nvidia.com,
- nicolinc@nvidia.com, ddutile@redhat.com, berrange@redhat.com,
- nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com,
- wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
- zhenzhong.duan@intel.com, yi.l.liu@intel.com, kjaju@nvidia.com
-References: <20251120132213.56581-1-skolothumtho@nvidia.com>
- <20251120132213.56581-33-skolothumtho@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20251120132213.56581-33-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ d9443c01a7336-2a0833e24fasm78615805ad.61.2025.12.15.02.57.44
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 15 Dec 2025 02:57:45 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.3\))
+Subject: Re: [PATCH v1 00/28] Introduce support for confidential guest reset
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <aT_lP8l7lS-QlMBd@redhat.com>
+Date: Mon, 15 Dec 2025 16:27:31 +0530
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <0E616C9E-3C41-487A-8683-1B83DF3508C3@redhat.com>
+References: <20251212150359.548787-1-anisinha@redhat.com>
+ <aT_lP8l7lS-QlMBd@redhat.com>
+To: Daniel Berrange <berrange@redhat.com>
+X-Mailer: Apple Mail (2.3826.700.81.1.3)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -174,130 +126,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/20/25 14:22, Shameer Kolothum wrote:
-> From: Yi Liu <yi.l.liu@intel.com>
-> 
-> If user wants to expose PASID capability in vIOMMU, then VFIO would also
-> need to report the PASID cap for this device if the underlying hardware
-> supports it as well.
-> 
-> As a start, this chooses to put the vPASID cap in the last 8 bytes of the
-> vconfig space. This is a choice in the good hope of no conflict with any
-> existing cap or hidden registers. For the devices that has hidden registers,
-> user should figure out a proper offset for the vPASID cap. This may require
-> an option for user to config it. Here we leave it as a future extension.
-> There are more discussions on the mechanism of finding the proper offset.
-> 
-> https://lore.kernel.org/kvm/BN9PR11MB5276318969A212AD0649C7BE8CBE2@BN9PR11MB5276.namprd11.prod.outlook.com/
-> 
-> Since we add a check to ensure the vIOMMU supports PASID, only devices
-> under those vIOMMUs can synthesize the vPASID capability. This gives
-> users control over which devices expose vPASID.
-> 
-> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-> Tested-by: Zhangfei Gao <zhangfei.gao@linaro.org>
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->   hw/vfio/pci.c      | 38 ++++++++++++++++++++++++++++++++++++++
->   include/hw/iommu.h |  1 +
->   2 files changed, 39 insertions(+)
 
 
-I just noticed another problem with this change. It relies on the
-availability of the HostIOMMUDevice which doesn't exist with VFIO
-mdev devices, such as vGPU. QEMU simply coredumps :/
+> On 15 Dec 2025, at 4:08=E2=80=AFPM, Daniel P. Berrang=C3=A9 =
+<berrange@redhat.com> wrote:
+>=20
+> On Fri, Dec 12, 2025 at 08:33:28PM +0530, Ani Sinha wrote:
+>> This change introduces support for confidential guests
+>> (SEV-ES, SEV-SNP and TDX) to reset/reboot just like other =
+non-confidential
+>> guests. Currently, a reboot intiated from the confidential guest =
+results
+>> in termination of the QEMU hypervisor as the CPUs are not resettable. =
+As the
+>> initial state of the guest including private memory is locked and =
+encrypted,
+>> the contents of that memory will not be accessible post reset. Hence =
+a new
+>> KVM file descriptor must be opened to create a new confidential VM =
+context
+>> closing the old one. All KVM VM specific ioctls must be called again. =
+New
+>> VCPU file descriptors must be created against the new KVM fd and most =
+VCPU
+>> ioctls must be called again as well.
+>>=20
+>> This change perfoms closing of the old KVM fd and creating a new one. =
+After
+>> the new KVM fd is opened, all generic and architecture specific ioctl =
+calls
+>> are issued again. Notifiers are added to notify subsystems that:
+>> - The KVM file fd is about to be changed to state sync-ing from KVM =
+to QEMU
+>>  should be done if required.
+>> - The KVM file fd has changed, so ioctl calls to the new KVM fd has =
+to be
+>>  performed again.
+>> - That new VCPU fds are created so that VCPU ioctl calls must be =
+called again
+>>  where required.
+>=20
+> Presumably this re-opening of VCPU FDs means that all  the KVM vCPU =
+PIDs
+> are going to change ?
 
-We will have to check/protect QEMU in some ways. I need to take
-a closer look because mdev handling seems to be spread across
-the code and may need to be improved first.
+Only vcpu file descriptor numbers are going to change, not the PID for =
+the corresponding threads. The same thread is going to be used.
 
-Thanks,
+>=20
+> If so, this is a significant semantic change that will break =
+management
+> applications. vCPU PIDs are exposed in QMP and applications like =
+libvirt
+> query them upon QEMU startup *BEFORE* vCPUs are started, and then do
+> things like setting CPU pinning or NUMA policies against them.
+>=20
+> They cannot re-query the vCPU PIDs at time of reset, as by that point =
+QEMU
+> has been running guest code, and so mgmt applications must assume that =
+the
+> QEMU process (and thus QMP replies) are hostile. They cannot trust the =
+vCPU
+> PIDs that would be reported as QEMU might have been compromised and =
+now be
+> reporting vCPU PIDs of a completely different process as a form of DoS
+> against the mgmt app.
+>=20
+> Can we get this reset functionality into KVM natively instead so QEMU
+> doesn't have todo this dance to re-create everything ?=20
+>=20
+> With regards,
+> Daniel
+> --=20
+> |: https://berrange.com      -o-    =
+https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            =
+https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    =
+https://www.instagram.com/dberrange :|
 
-C.
-
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 8b8bc5a421..e11e39d667 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -24,6 +24,7 @@
->   #include <sys/ioctl.h>
->   
->   #include "hw/hw.h"
-> +#include "hw/iommu.h"
->   #include "hw/pci/msi.h"
->   #include "hw/pci/msix.h"
->   #include "hw/pci/pci_bridge.h"
-> @@ -2500,7 +2501,12 @@ static int vfio_setup_rebar_ecap(VFIOPCIDevice *vdev, uint16_t pos)
->   
->   static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->   {
-> +    HostIOMMUDevice *hiod = vdev->vbasedev.hiod;
-> +    HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
->       PCIDevice *pdev = PCI_DEVICE(vdev);
-> +    uint64_t max_pasid_log2 = 0;
-> +    bool pasid_cap_added = false;
-> +    uint64_t hw_caps;
->       uint32_t header;
->       uint16_t cap_id, next, size;
->       uint8_t cap_ver;
-> @@ -2578,12 +2584,44 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->                   pcie_add_capability(pdev, cap_id, cap_ver, next, size);
->               }
->               break;
-> +        /*
-> +         * VFIO kernel does not expose the PASID CAP today. We may synthesize
-> +         * one later through IOMMUFD APIs. If VFIO ever starts exposing it,
-> +         * record its presence here so we do not create a duplicate CAP.
-> +         */
-> +        case PCI_EXT_CAP_ID_PASID:
-> +             pasid_cap_added = true;
-> +             /* fallthrough */
->           default:
->               pcie_add_capability(pdev, cap_id, cap_ver, next, size);
->           }
->   
->       }
->   
-> +#ifdef CONFIG_IOMMUFD
-> +    /* Try to retrieve PASID CAP through IOMMUFD APIs */
-> +    if (!pasid_cap_added && hiodc && hiodc->get_cap) {
-> +        hiodc->get_cap(hiod, HOST_IOMMU_DEVICE_CAP_GENERIC_HW, &hw_caps, NULL);
-> +        hiodc->get_cap(hiod, HOST_IOMMU_DEVICE_CAP_MAX_PASID_LOG2,
-> +                       &max_pasid_log2, NULL);
-> +    }
-> +
-> +    /*
-> +     * If supported, adds the PASID capability in the end of the PCIe config
-> +     * space. TODO: Add option for enabling pasid at a safe offset.
-> +     */
-> +    if (max_pasid_log2 && (pci_device_get_viommu_flags(pdev) &
-> +                           VIOMMU_FLAG_PASID_SUPPORTED)) {
-> +        bool exec_perm = (hw_caps & IOMMU_HW_CAP_PCI_PASID_EXEC);
-> +        bool priv_mod = (hw_caps & IOMMU_HW_CAP_PCI_PASID_PRIV);
-> +
-> +        pcie_pasid_init(pdev, PCIE_CONFIG_SPACE_SIZE - PCI_EXT_CAP_PASID_SIZEOF,
-> +                        max_pasid_log2, exec_perm, priv_mod);
-> +        /* PASID capability is fully emulated by QEMU */
-> +        memset(vdev->emulated_config_bits + pdev->exp.pasid_cap, 0xff, 8);
-> +    }
-> +#endif
-> +
->       /* Cleanup chain head ID if necessary */
->       if (pci_get_word(pdev->config + PCI_CONFIG_SPACE_SIZE) == 0xFFFF) {
->           pci_set_word(pdev->config + PCI_CONFIG_SPACE_SIZE, 0);
-> diff --git a/include/hw/iommu.h b/include/hw/iommu.h
-> index 9b8bb94fc2..9635770bee 100644
-> --- a/include/hw/iommu.h
-> +++ b/include/hw/iommu.h
-> @@ -20,6 +20,7 @@
->   enum viommu_flags {
->       /* vIOMMU needs nesting parent HWPT to create nested HWPT */
->       VIOMMU_FLAG_WANT_NESTING_PARENT = BIT_ULL(0),
-> +    VIOMMU_FLAG_PASID_SUPPORTED = BIT_ULL(1),
->   };
->   
->   #endif /* HW_IOMMU_H */
 
 
