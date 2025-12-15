@@ -4,86 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7A6CD5B16C
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Dec 2025 19:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 917A2D59D99
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 02:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vUrgN-00019n-Hp; Sun, 14 Dec 2025 14:23:03 -0500
+	id 1vUyND-0006Yd-Kd; Sun, 14 Dec 2025 21:31:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vUrgM-00019c-AK
- for qemu-devel@nongnu.org; Sun, 14 Dec 2025 14:23:02 -0500
-Received: from m228-31.mailgun.net ([159.135.228.31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1vUrgI-0007Iw-Ql
- for qemu-devel@nongnu.org; Sun, 14 Dec 2025 14:23:00 -0500
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- da8a8db7b5954afcd9c1e508bd3b001198cc248763ec78d2e6ee4baad63e3fda with SMTP id
- 693f0e8f6c5e919f061598c9; Sun, 14 Dec 2025 19:22:55 GMT
-X-Mailgun-Sending-Ip: 159.135.228.31
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1765740174;
- bh=Q3Msfk2OxNhcaYW46Wji0OsMnSf5y0Y5G7hgLP/X01c=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
- Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
- References;
- b=G92zX3LXZ98+A+oxT3w/+OxWYF/cJ6gKUow8Yj2Tt0K3RHbIWnRUgmzr7cG0FWZmP
- yGTmve2VLOOkcdgFff0F+dd4dtLYadpt7Q7dkkJb7FulQdMfee97mF3DlGCfwmIu8l
- SGG2/KhliSmMejfTreUScXsuL1VXA3laB6GecObO1ZxFUNoM8kmD6O8PXiRsZhU2fk
- qaj+LO2MeOUnbt0udlEfbeaxFky6ICEhthKzd4WKWGGYx2b8YeuSf2L1uVwfG0oImx
- w/3O+KspPOOnf2ZwpiVEr/Xa3Kss9IKJq+eXgt6Wt2nAZq46JOqRxNjV6Y5qcjGmjd
- /WXivL1aNdfhA==
-Message-ID: <37773ad3-7eee-4c55-91f3-4e92e098c29f@yodel.dev>
-Date: Sun, 14 Dec 2025 13:22:51 -0600
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vUyNC-0006YK-3Q
+ for qemu-devel@nongnu.org; Sun, 14 Dec 2025 21:31:42 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1vUyN8-0008Ty-R7
+ for qemu-devel@nongnu.org; Sun, 14 Dec 2025 21:31:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1765765899; x=1797301899;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=tiX7N2vhKUAvfBjlXET/egUebwdZROMwT7og7cm0Lsw=;
+ b=huEynkys1pkxUs7gq3OJiNEKJQXuJlJ6ImQw0yuKd4GOS4z3lqJLhgsp
+ 0lau/3EStI6nYfc3wGWwC++90b0UVEsNmAOwoUYHi3ERC+0OE9CX2RnSd
+ ZauXK+m4+/O4xpK7ooI7PnBgnls8whPD8DD2fWler2e3aIkObhvd5ou/D
+ j4gVLa/MmCQ/hfB5dSbowCCM7E35vGJIk5kNASXQtfkR1FjbTkDuJJka2
+ J3ddKU9m9wEyRzIHt31EGsPTQ/Z9/T0QYvJl8RsmMmdqm11TzidRDD5b1
+ TuFlLf/FJv7qIvyJy0AKHTJ5KuPhCDmMvlF4SeZKSSxM4UDlcahWt9cna w==;
+X-CSE-ConnectionGUID: zmxVQvO+T6St1jVCeFvXiA==
+X-CSE-MsgGUID: Vh4Uxy67TtGvi9G2t6tSvA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="71292782"
+X-IronPort-AV: E=Sophos;i="6.21,148,1763452800"; d="scan'208";a="71292782"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Dec 2025 18:31:35 -0800
+X-CSE-ConnectionGUID: Sm17ex42SJSTORw/p+uZag==
+X-CSE-MsgGUID: mlws72ftRHqL+lUooLyEIg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,148,1763452800"; d="scan'208";a="197888829"
+Received: from unknown (HELO [10.238.0.255]) ([10.238.0.255])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Dec 2025 18:31:33 -0800
+Message-ID: <d1d4b164-2f08-406a-b18a-83a82749943c@intel.com>
+Date: Mon, 15 Dec 2025 10:31:30 +0800
 MIME-Version: 1.0
-Subject: Re: [PATCH 2/2] tests/vhost-user-bridge.c: Fix const qualifier build
- errors with recent glibc
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, Thomas Huth <thuth@redhat.com>
-References: <20251210181306.926334-1-clg@redhat.com>
- <20251210181306.926334-3-clg@redhat.com>
- <bc52f621-493d-4df6-8403-1e4c7e2be424@yodel.dev>
- <2a9859fa-1617-4d26-a618-acb63fbe0bb6@yodel.dev>
- <b0a2d9da-1a8d-4352-b761-9b1f604c6894@redhat.com>
- <82fbb148-153b-4d1c-bbe1-89f73318de5a@yodel.dev>
- <11454796-30d2-4a57-85a5-d42ff0dce2e6@redhat.com>
- <9247eb0c-1867-497d-97d0-ad1621d6c24d@yodel.dev>
- <e08dcb25-a258-4e65-bd2c-360c8a08591c@redhat.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/9] kvm: Detect guest-memfd flags supported
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <20251119172913.577392-1-peterx@redhat.com>
+ <20251119172913.577392-3-peterx@redhat.com>
+ <a958f847-78fc-4743-80bb-49aae5f37bcf@intel.com> <aTxPhhvS2FiW3cgK@x1.local>
 Content-Language: en-US
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <e08dcb25-a258-4e65-bd2c-360c8a08591c@redhat.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <aTxPhhvS2FiW3cgK@x1.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=159.135.228.31;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=m228-31.mailgun.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,201 +89,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12/13/2025 1:23 AM, Peter Xu wrote:
+> On Fri, Dec 12, 2025 at 11:10:23AM +0800, Xiaoyao Li wrote:
+>> On 11/20/2025 1:29 AM, Peter Xu wrote:
+>>> Detect supported guest-memfd flags by the current kernel, and reject
+>>> creations of guest-memfd using invalid flags.  When the cap isn't
+>>> available, then no flag is supported.
+>>>
+>>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>>> ---
+>>>    accel/kvm/kvm-all.c | 11 +++++++++++
+>>>    1 file changed, 11 insertions(+)
+>>>
+>>> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+>>> index 96c194ce54..f477014126 100644
+>>> --- a/accel/kvm/kvm-all.c
+>>> +++ b/accel/kvm/kvm-all.c
+>>> @@ -108,6 +108,7 @@ static int kvm_sstep_flags;
+>>>    static bool kvm_immediate_exit;
+>>>    static uint64_t kvm_supported_memory_attributes;
+>>>    static bool kvm_guest_memfd_supported;
+>>> +static uint64_t kvm_guest_memfd_flags_supported;
+>>>    static hwaddr kvm_max_slot_size = ~0;
+>>>    static const KVMCapabilityInfo kvm_required_capabilites[] = {
+>>> @@ -2787,6 +2788,10 @@ static int kvm_init(AccelState *as, MachineState *ms)
+>>>        kvm_guest_memfd_supported =
+>>>            kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
+>>>            kvm_vm_check_extension(s, KVM_CAP_USER_MEMORY2);
+>>> +
+>>> +    ret = kvm_vm_check_extension(s, KVM_CAP_GUEST_MEMFD_FLAGS);
+>>> +    kvm_guest_memfd_flags_supported = ret > 0 ? ret : 0;
+>>> +
+>>>        kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
+>>>        if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
+>>> @@ -4492,6 +4497,12 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
+>>>            return -1;
+>>>        }
+>>> +    if (flags & ~kvm_guest_memfd_flags_supported) {
+>>> +        error_setg(errp, "KVM does not support guest-memfd flag: 0x%"PRIx64,
+>>
+>> I'm thinking if need to add "for current VM" like:
+>>
+>> 	KVM does not support guest-memfd flag: xxx for current VM
+>>
+>> because kvm_guest_memfd_flags_supported is got from VM-scope CAP and varies
+>> for different VM types.
+> 
+> Sure I can amend it.  Though I plan to change the sentence slightly:
+> 
+>       if (flags & ~kvm_guest_memfd_flags_supported) {
+> -        error_setg(errp, "KVM does not support guest-memfd flag: 0x%"PRIx64,
+> +        error_setg(errp, "Current KVM instance does not support "
+> +                   "guest-memfd flag: 0x%"PRIx64,
+>                      flags & ~kvm_guest_memfd_flags_supported);
+>           return -1;
+>       }
 
-On 14/12/2025 11:47, Cédric Le Goater wrote:
-> + Thomas,
-> 
-> On 12/14/25 17:18, Yodel Eldar wrote:
->>
->>
->> On 14/12/2025 02:56, Cédric Le Goater wrote:
->>> Hello Yodel,
->>>
->>> On 12/13/25 21:15, Yodel Eldar wrote:
->>>>
->>>> On 13/12/2025 00:59, Cédric Le Goater wrote:
->>>>> On 12/13/25 01:17, Yodel Eldar wrote:
->>>>>>
->>>>>> On 12/12/2025 17:33, Yodel Eldar wrote:
->>>>>>> Hi, Cédric!
->>>>>>>
->>>>>>> On 10/12/2025 12:13, Cédric Le Goater wrote:
->>>>>>>> A recent change in glibc 2.42.9000 [1] changes the return type of
->>>>>>>> strstr() and other string functions to be 'const char *' when the
->>>>>>>> input is a 'const char *'. This breaks the build in :
->>>>>>>>
->>>>>>>> ../tests/vhost-user-bridge.c: In function ‘vubr_parse_host_port’:
->>>>>>>> ../tests/vhost-user-bridge.c:749:15: error: initialization 
->>>>>>>> discards ‘const’ qualifier from pointer target type [- 
->>>>>>>> Werror=discarded- qualifiers]
->>>>>>>>    749 |     char *p = strchr(buf, ':');
->>>>>>>>        |               ^~~~~~
->>>>>>>>
->>>>>>>> Fix this by using the glib g_strsplit() routine instead of 
->>>>>>>> strdup().
->>>>>>>>
->>>>>>>> [1] https://sourceware.org/git/? 
->>>>>>>> p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
->>>>>>>>
->>>>>>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->>>>>>>> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->>>>>>>> ---
->>>>>>>>   tests/vhost-user-bridge.c | 10 ++++------
->>>>>>>>   1 file changed, 4 insertions(+), 6 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/tests/vhost-user-bridge.c b/tests/vhost-user-bridge.c
->>>>>>>> index 
->>>>>>>> a5c711b1de8e9c164dd1614f4329b8e3c05d0402..ce4c3426d3938a0b54195f3e95bb1f1c3c4ae823 100644
->>>>>>>> --- a/tests/vhost-user-bridge.c
->>>>>>>> +++ b/tests/vhost-user-bridge.c
->>>>>>>> @@ -746,14 +746,12 @@ vubr_run(VubrDev *dev)
->>>>>>>>   static int
->>>>>>>>   vubr_parse_host_port(const char **host, const char **port, 
->>>>>>>> const char *buf)
->>>>>>>>   {
->>>>>>>> -    char *p = strchr(buf, ':');
->>>>>>>> -
->>>>>>>> -    if (!p) {
->>>>>>>> +    g_auto(GStrv) tokens = g_strsplit(buf, ":", 2);
->>>>>>>> +    if (!tokens[0] || !tokens[1]) {
->>>>>>>>           return -1;
->>>>>>>>       }
->>>>>>>> -    *p = '\0';
->>>>>>>> -    *host = strdup(buf);
->>>>>>>> -    *port = strdup(p + 1);
->>>>>>>> +    *host = g_steal_pointer(&tokens[0]);
->>>>>>>> +    *port = g_steal_pointer(&tokens[1]);
->>>>>>>>       return 0;
->>>>>>>>   }
->>>>>>>
->>>>>>> Thanks for addressing this before the glibc change is widely 
->>>>>>> propagated
->>>>>>> among distros.
->>>>>>>
->>>>>>> Acked-by: Yodel Eldar <yodel.eldar@yodel.dev>
->>>>>>> Tested-by: Yodel Eldar <yodel.eldar@yodel.dev>
->>>>>>>
->>>>>>> For testing, I built and installed glibc (76 commits ahead of 
->>>>>>> cd748a63a)
->>>>>>> in an x86_64 Linux container and built vhost-user-bridge on top 
->>>>>>> of that.
->>>>>>> Ran it with:
->>>>>>>
->>>>>>> ./build/tests/vhost-user-bridge -H
->>>>>>>
->>>>>>> qemu-system-x86_64 \
->>>>>>>      -enable-kvm -m 4G \
->>>>>>>      -object memory-backend-ram,id=mem0,size=4G,share=on \
->>>>>>>      -numa node,memdev=mem0 -mem-prealloc \
->>>>>>>      -chardev socket,id=char0,path=/tmp/vubr.sock \
->>>>>>>      -netdev type=vhost-user,id=net0,chardev=char0,vhostforce=on \
->>>>>>>      -device virtio-net-pci,netdev=net0 \
->>>>>>>      -drive file=linux.qcow2
->>>>>>>
->>>>>>> and visually inspected the logged traffic.
->>>>>>>
->>>>>>> Thanks,
->>>>>>> Yodel
->>>>>>>
->>>>>>
->>>>>> P.S. To build vhost-user-bridge, I had to modify util/log.c as in
->>>>>> the PULL submission "<20251209200537.84097-9-philmd@linaro.org>".
->>>>>>
->>>>>> For completion, the commands used:
->>>>>>
->>>>>> ../configure --enable-tools --enable-vhost-user --disable-system \
->>>>>>    --disable-user
->>>>>>
->>>>>> ninja tests/vhost-user-bridge
->>>>>>
->>>>>> Yodel
->>>>>>
->>>>>
->>>>>
->>>>> Thanks Yodel,
->>>>>
->>>>> My plan is to send a small PR as soon as QEMU 10.2 is out and ask
->>>>> Michael T. to include the changes in the stable branches.
->>>>>
->>>>> C.
->>>>>
->>>>>
->>>>
->>>> Glad to hear it!
->>>>
->>>> Sorry for staggering my testing methodology over multiple emails, but I
->>>> should add for clarification and completeness: to exercise your change
->>>> to vubr_parse_host_port(), I passed various input into the -l and -r
->>>> options of vhost-user-bridge; and, with:
->>>>
->>>>    tcpdump -i lo -n -X udp port 5678
->>>>
->>>> while running:
->>>>
->>>>    ./build/tests/vhost-user-bridge -H -l 127.0.0.1:4567 -r 
->>>> 127.0.0.1:5678
->>>>
->>>> for example,
->>>>
->>>> I was able to monitor the traffic (ARP requests) from port 4567 to 
->>>> 5678.
->>>>
->>>
->>> Would you mind providing a test case under tests/ or tests/functional ?
->>>
->>> Thanks,
->>>
->>> C.
->>>
->>>
->>
->> Certainly, that's a great idea! Although, I'll need to get better
->> acquainted with QEMU's testing framework... Would you be willing to
->> answer the occasional question regarding scope, approach, conventions,
->> etc. over IRC? 
-> 
-> Sure. The #qemu channel is hosted on OFTC.
-> 
-> I think this test would qualify as a functional test. To run :
-> 
->    $ make check-functional
-> 
-> You could get some inspiration out of test_virtio_gpu.py I suppose.
-> Check source [2].
-> 
-> See [3] to send patches.
-> 
+Works for me.
+
 > Thanks,
 > 
-> C.
-> 
-> [1] https://www.qemu.org/docs/master/devel/testing/main.html#functional- 
-> tests-using-python
-> [2] https://gitlab.com/qemu-project/qemu/-/blob/master/tests/functional/ 
-> x86_64/test_virtio_gpu.py?ref_type=heads
-> [3] https://www.qemu.org/docs/master/devel/submitting-a-patch.html
-> 
-> 
-
-Thanks for the links!
-
-Currently, the plan's to replace tcpdump with the -object filter-dump
-feature and look for the user-supplied hosts and ports in the output,
-though I suspect there's a better way to do that. This would essentially
-only exercise vubr_parse_host_port() as in my manual testing of your
-patch. Please let me know if you had another direction in mind.
-
-My nick's "yodel" on OFTC, and I'll reach out if I hit a snag.
-
-Thanks,
-Yodel
-
->> There's a Co-authored-by tag with your name on it if
->> you so choose :-)
 >>
->> Yodel
+>>> +                   flags & ~kvm_guest_memfd_flags_supported);
+>>> +        return -1;
+>>> +    }
+>>> +
+>>>        fd = kvm_vm_ioctl(kvm_state, KVM_CREATE_GUEST_MEMFD, &guest_memfd);
+>>>        if (fd < 0) {
+>>>            error_setg_errno(errp, errno, "Error creating KVM guest_memfd");
 >>
-> 
 > 
 
 
