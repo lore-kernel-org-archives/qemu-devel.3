@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0237BD5B873
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 22:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09D75D5B86D
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 22:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVGe0-0004Gr-JO; Mon, 15 Dec 2025 17:02:16 -0500
+	id 1vVGec-0005en-D9; Mon, 15 Dec 2025 17:02:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGdw-0004Di-1F
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:02:12 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGeI-00050q-Qs
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:02:36 -0500
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGdt-0002pS-D7
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:02:11 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGeD-0002tF-BG
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:02:33 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 064305BE06;
- Mon, 15 Dec 2025 22:01:33 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id DC11B5BE04;
+ Mon, 15 Dec 2025 22:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765836093; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1765836106; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ANsQLnOi5r+0TJdIl2TP4Q9xn6fuGF1JvuOmuuwC1Yo=;
- b=M4TFS8IGnUP6slqi3RsD8IcVaffbpnjgMFWMVJLJdarHAYEeey/BbWYm19d6M0ncSoiyJ6
- bZiv1nBS+DfSEC3FbHqUgeDnn6ak7X6lirHGiMkLmyHJ7QDP8sWNkvYRa3LXiZ9Ov3gFYb
- NE0nPRYww1XW0PX4JBmMmz9cUBuWuYY=
+ bh=yETfNAilT25BcWaBM8mdKvqxVx/YTqV9EQ8Ncz8MsIA=;
+ b=gGnE6wQq7THSMnFCQLb5NncJsh76vczMTOqpNyj7bXjp2nSc6y1GRE5+q5QE0yi2Iu38fl
+ 2AX4nDK3XIT4UW1NqeShV0okc2iWnDSnwvyh0QWd3uR968sfpqxkn7hAMp6YtvytQZ7bM2
+ sQDWCUktey8p/A0UE8nLKfoyxgp41bc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765836093;
+ s=susede2_ed25519; t=1765836106;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ANsQLnOi5r+0TJdIl2TP4Q9xn6fuGF1JvuOmuuwC1Yo=;
- b=Xg8/UoQW5+IEfqDqcSUCJoI3OhAall68CWj1Hwnm28KJnNqQK+P/Wa/G3/DUmQPy7PO3Mg
- PFENt7mmziA4rzAA==
+ bh=yETfNAilT25BcWaBM8mdKvqxVx/YTqV9EQ8Ncz8MsIA=;
+ b=IZk2K6vMGl68Y4mjeT2T7Kj3wm67DUjDGZ+LSG2uEjxwewi8v9xBiZUH4IakTr3xa7wPnt
+ eV4cN1t/15X3WPDQ==
 Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765836093; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1765836106; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ANsQLnOi5r+0TJdIl2TP4Q9xn6fuGF1JvuOmuuwC1Yo=;
- b=M4TFS8IGnUP6slqi3RsD8IcVaffbpnjgMFWMVJLJdarHAYEeey/BbWYm19d6M0ncSoiyJ6
- bZiv1nBS+DfSEC3FbHqUgeDnn6ak7X6lirHGiMkLmyHJ7QDP8sWNkvYRa3LXiZ9Ov3gFYb
- NE0nPRYww1XW0PX4JBmMmz9cUBuWuYY=
+ bh=yETfNAilT25BcWaBM8mdKvqxVx/YTqV9EQ8Ncz8MsIA=;
+ b=gGnE6wQq7THSMnFCQLb5NncJsh76vczMTOqpNyj7bXjp2nSc6y1GRE5+q5QE0yi2Iu38fl
+ 2AX4nDK3XIT4UW1NqeShV0okc2iWnDSnwvyh0QWd3uR968sfpqxkn7hAMp6YtvytQZ7bM2
+ sQDWCUktey8p/A0UE8nLKfoyxgp41bc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765836093;
+ s=susede2_ed25519; t=1765836106;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ANsQLnOi5r+0TJdIl2TP4Q9xn6fuGF1JvuOmuuwC1Yo=;
- b=Xg8/UoQW5+IEfqDqcSUCJoI3OhAall68CWj1Hwnm28KJnNqQK+P/Wa/G3/DUmQPy7PO3Mg
- PFENt7mmziA4rzAA==
+ bh=yETfNAilT25BcWaBM8mdKvqxVx/YTqV9EQ8Ncz8MsIA=;
+ b=IZk2K6vMGl68Y4mjeT2T7Kj3wm67DUjDGZ+LSG2uEjxwewi8v9xBiZUH4IakTr3xa7wPnt
+ eV4cN1t/15X3WPDQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7CCE73EA63;
- Mon, 15 Dec 2025 22:01:31 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CD7C13EA63;
+ Mon, 15 Dec 2025 22:01:44 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id GDgZDzuFQGlrMQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 15 Dec 2025 22:01:31 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id eElXI0iFQGlrMQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 15 Dec 2025 22:01:44 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com,
-	armbru@redhat.com,
-	Peter Xu <peterx@redhat.com>
-Subject: [PATCH v3 17/51] migration: Use QAPI_MERGE in
- migrate_params_test_apply
-Date: Mon, 15 Dec 2025 19:00:03 -0300
-Message-ID: <20251215220041.12657-18-farosas@suse.de>
+Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v3 23/51] migration: Allow migrate commands to provide the
+ migration config
+Date: Mon, 15 Dec 2025 19:00:09 -0300
+Message-ID: <20251215220041.12657-24-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251215220041.12657-1-farosas@suse.de>
 References: <20251215220041.12657-1-farosas@suse.de>
@@ -87,16 +86,16 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.989];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.992];
  MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
  R_RATELIMIT(0.00)[to_ip_from(RLjrdmmf3juheryardexw6jb95)];
  TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
  RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
  RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
@@ -120,220 +119,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the code in migrate_params_test_apply() from an open-coded
-copy of every migration parameter to a copy using visitors. The
-current code has conditionals for each parameter's has_* field, which
-is exactly what the visitors do.
+Allow the migrate and migrate_incoming commands to pass the migration
+configuration options all at once, dispensing the use of
+migrate-set-parameters and migrate-set-capabilities.
 
-This hides the details of QAPI from the migration code and avoids the
-need to update migrate_params_test_apply() every time a new migration
-parameter is added. Both were very confusing and while the visitor
-code can become a bit involved, there is no need for new contributors
-to ever touch it.
+The motivation of this is to simplify the interface with the
+management layer and avoid the usage of several command invocations to
+configure a migration. It also avoids stale parameters from a previous
+migration to influence the current migration.
 
-Change the name of the function to a more direct reference of what it
-does: merging the user params with the temporary copy.
+The options that are changed during the migration can still be set
+with the existing commands.
 
-Move the QAPI_CLONE_MEMBERS into the caller, so QAPI_CLONE can be used
-and there's no need to allocate memory in the migration
-code. Similarly, turn 'tmp' into a pointer so the proper qapi_free_
-routine can be used.
+The order of precedence is:
 
-An extra call to migrate_mark_all_params_present() is now needed
-because the visitors update the has_ field for non-present fields, but
-we actually want them all set so migrate_params_apply() can copy all
-of them.
+'config' argument > migrate-set-parameters > -global migration cmdline
+> defaults (migration_properties)
 
+I.e. the config takes precedence over all, values not present in the
+config assume the default values. The -global migration command line
+option allows the defaults to be overridden for debug.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/options.c | 137 +++++++-------------------------------------
- 1 file changed, 22 insertions(+), 115 deletions(-)
+ migration/migration-hmp-cmds.c |  5 +++--
+ migration/migration.c          | 28 +++++++++++++++++++++++++---
+ migration/options.c            | 19 +++++++++++++++++++
+ migration/options.h            |  4 +++-
+ qapi/migration.json            | 10 ++++++++++
+ system/vl.c                    |  3 ++-
+ 6 files changed, 62 insertions(+), 7 deletions(-)
 
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 7e5ac57da5..e9c3541352 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -672,7 +672,7 @@ void hmp_migrate_incoming(Monitor *mon, const QDict *qdict)
+     }
+     QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
+ 
+-    qmp_migrate_incoming(NULL, true, caps, true, false, &err);
++    qmp_migrate_incoming(NULL, true, caps, NULL, true, false, &err);
+     qapi_free_MigrationChannelList(caps);
+ 
+ end:
+@@ -1070,7 +1070,8 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+     }
+     QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
+ 
+-    qmp_migrate(NULL, true, caps, false, false, true, resume, &err);
++    qmp_migrate(NULL, true, caps, NULL, false, false, true, resume,
++                &err);
+     if (hmp_handle_error(mon, err)) {
+         return;
+     }
+diff --git a/migration/migration.c b/migration/migration.c
+index 90b381b1fe..d23ab2905a 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1930,13 +1930,24 @@ void migrate_del_blocker(Error **reasonp)
+ 
+ void qmp_migrate_incoming(const char *uri, bool has_channels,
+                           MigrationChannelList *channels,
+-                          bool has_exit_on_error, bool exit_on_error,
+-                          Error **errp)
++                          MigrationParameters *config, bool has_exit_on_error,
++                          bool exit_on_error, Error **errp)
+ {
+     Error *local_err = NULL;
+     static bool once = true;
++    MigrationState *s = migrate_get_current();
+     MigrationIncomingState *mis = migration_incoming_get_current();
+ 
++    if (config) {
++        /*
++         * If a config was provided, all options set previously by
++         * migrate-set-parameters get ignored.
++         */
++        if (!migrate_params_override(s, config, errp)) {
++            return;
++        }
++    }
++
+     if (!once) {
+         error_setg(errp, "The incoming migration has already been started");
+         return;
+@@ -2208,7 +2219,8 @@ static gboolean qmp_migrate_finish_cb(QIOChannel *channel,
+ }
+ 
+ void qmp_migrate(const char *uri, bool has_channels,
+-                 MigrationChannelList *channels, bool has_detach, bool detach,
++                 MigrationChannelList *channels,
++                 bool has_detach, bool detach, MigrationParameters *config,
+                  bool has_resume, bool resume, Error **errp)
+ {
+     bool resume_requested;
+@@ -2219,6 +2231,16 @@ void qmp_migrate(const char *uri, bool has_channels,
+     MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
+     MigrationChannel *cpr_channel = NULL;
+ 
++    if (config) {
++        /*
++         * If a config was provided, all options set previously by
++         * migrate-set-parameters get ignored.
++         */
++        if (!migrate_params_override(s, config, errp)) {
++            return;
++        }
++    }
++
+     /*
+      * Having preliminary checks for uri and channel
+      */
 diff --git a/migration/options.c b/migration/options.c
-index 03e63c918c..36feaa5fe6 100644
+index d1d8e5c181..ccc25ad008 100644
 --- a/migration/options.c
 +++ b/migration/options.c
-@@ -20,6 +20,7 @@
- #include "qapi/qapi-commands-migration.h"
- #include "qapi/qapi-visit-migration.h"
- #include "qapi/qmp/qerror.h"
-+#include "qapi/type-helpers.h"
- #include "qobject/qnull.h"
- #include "system/runstate.h"
- #include "migration/colo.h"
-@@ -1260,124 +1261,28 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-     return true;
+@@ -1389,6 +1389,25 @@ void migrate_params_store_defaults(MigrationState *s)
+     s->initial_params = QAPI_CLONE(MigrationParameters, &s->parameters);
  }
  
--static void migrate_params_test_apply(MigrationParameters *params,
--                                      MigrationParameters *dest)
-+static void migrate_params_merge(MigrationParameters *dst,
-+                                 MigrationParameters *src)
- {
--    MigrationState *s = migrate_get_current();
--
--    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
--
--    if (params->has_throttle_trigger_threshold) {
--        dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
--    }
--
--    if (params->has_cpu_throttle_initial) {
--        dest->cpu_throttle_initial = params->cpu_throttle_initial;
--    }
--
--    if (params->has_cpu_throttle_increment) {
--        dest->cpu_throttle_increment = params->cpu_throttle_increment;
-+    /* free memory from pointers that are about to be assigned */
-+    if (src->has_block_bitmap_mapping) {
-+        g_clear_pointer(&dst->block_bitmap_mapping,
-+                        qapi_free_BitmapMigrationNodeAliasList);
-     }
- 
--    if (params->has_cpu_throttle_tailslow) {
--        dest->cpu_throttle_tailslow = params->cpu_throttle_tailslow;
-+    if (src->tls_creds) {
-+        g_clear_pointer(&dst->tls_creds, qapi_free_StrOrNull);
-     }
- 
--    if (params->tls_creds) {
--        qapi_free_StrOrNull(dest->tls_creds);
--        dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
-+    if (src->tls_hostname) {
-+        g_clear_pointer(&dst->tls_hostname, qapi_free_StrOrNull);
-     }
- 
--    if (params->tls_hostname) {
--        qapi_free_StrOrNull(dest->tls_hostname);
--        dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
-+    if (src->tls_authz) {
-+        g_clear_pointer(&dst->tls_authz, qapi_free_StrOrNull);
-     }
- 
--    if (params->tls_authz) {
--        qapi_free_StrOrNull(dest->tls_authz);
--        dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
--    }
--
--    if (params->has_max_bandwidth) {
--        dest->max_bandwidth = params->max_bandwidth;
--    }
--
--    if (params->has_avail_switchover_bandwidth) {
--        dest->avail_switchover_bandwidth = params->avail_switchover_bandwidth;
--    }
--
--    if (params->has_downtime_limit) {
--        dest->downtime_limit = params->downtime_limit;
--    }
--
--    if (params->has_x_checkpoint_delay) {
--        dest->x_checkpoint_delay = params->x_checkpoint_delay;
--    }
--
--    if (params->has_multifd_channels) {
--        dest->multifd_channels = params->multifd_channels;
--    }
--    if (params->has_multifd_compression) {
--        dest->multifd_compression = params->multifd_compression;
--    }
--    if (params->has_multifd_qatzip_level) {
--        dest->multifd_qatzip_level = params->multifd_qatzip_level;
--    }
--    if (params->has_multifd_zlib_level) {
--        dest->multifd_zlib_level = params->multifd_zlib_level;
--    }
--    if (params->has_multifd_zstd_level) {
--        dest->multifd_zstd_level = params->multifd_zstd_level;
--    }
--    if (params->has_xbzrle_cache_size) {
--        dest->xbzrle_cache_size = params->xbzrle_cache_size;
--    }
--    if (params->has_max_postcopy_bandwidth) {
--        dest->max_postcopy_bandwidth = params->max_postcopy_bandwidth;
--    }
--    if (params->has_max_cpu_throttle) {
--        dest->max_cpu_throttle = params->max_cpu_throttle;
--    }
--    if (params->has_announce_initial) {
--        dest->announce_initial = params->announce_initial;
--    }
--    if (params->has_announce_max) {
--        dest->announce_max = params->announce_max;
--    }
--    if (params->has_announce_rounds) {
--        dest->announce_rounds = params->announce_rounds;
--    }
--    if (params->has_announce_step) {
--        dest->announce_step = params->announce_step;
--    }
--
--    if (params->has_block_bitmap_mapping) {
--        dest->block_bitmap_mapping = params->block_bitmap_mapping;
--    }
--
--    if (params->has_x_vcpu_dirty_limit_period) {
--        dest->x_vcpu_dirty_limit_period =
--            params->x_vcpu_dirty_limit_period;
--    }
--    if (params->has_vcpu_dirty_limit) {
--        dest->vcpu_dirty_limit = params->vcpu_dirty_limit;
--    }
--
--    if (params->has_mode) {
--        dest->mode = params->mode;
--    }
--
--    if (params->has_zero_page_detection) {
--        dest->zero_page_detection = params->zero_page_detection;
--    }
--
--    if (params->has_direct_io) {
--        dest->direct_io = params->direct_io;
--    }
--
--    if (params->has_cpr_exec_command) {
--        dest->cpr_exec_command = params->cpr_exec_command;
--    }
-+    QAPI_MERGE(MigrationParameters, dst, src);
- }
- 
- /*
-@@ -1399,7 +1304,9 @@ static void migrate_params_apply(MigrationParameters *params)
- 
++bool migrate_params_override(MigrationState *s, MigrationParameters *new,
++                             Error **errp)
++{
++    ERRP_GUARD();
++
++    assert(bql_locked());
++
++    /* reset to initial parameters */
++    migrate_params_apply(s->initial_params);
++
++    /* apply the new ones on top */
++    qmp_migrate_set_parameters(new, errp);
++    if (*errp) {
++        return false;
++    }
++
++    return true;
++}
++
  void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
  {
--    MigrationParameters tmp;
-+    MigrationState *s = migrate_get_current();
-+    g_autoptr(MigrationParameters) tmp = QAPI_CLONE(MigrationParameters,
-+                                                    &s->parameters);
+     MigrationState *s = migrate_get_current();
+diff --git a/migration/options.h b/migration/options.h
+index 47f84bf180..29dee6f444 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -84,6 +84,8 @@ void migrate_capability_set_compat(MigrationParameters *params, int i,
+                                    bool val);
+ void migrate_capabilities_set_compat(MigrationParameters *params,
+                                      MigrationCapabilityStatusList *caps);
+-bool migrate_caps_check(const MigrationParameters *const new, Error **errp);
++bool migrate_caps_check(const MigrationParameters *new, Error **errp);
+ void migrate_params_store_defaults(MigrationState *s);
++bool migrate_params_override(MigrationState *s, MigrationParameters *new,
++                             Error **errp);
+ #endif
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 76a1e03f2f..bd799d67e4 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -1546,6 +1546,10 @@
+ #     will fail unless migration is in "postcopy-paused" state.
+ #     (default: false, since 3.0)
+ #
++# @config: migration configuration options.  When present, any
++#     migration configuration previously set with
++#     @migrate-set-parameters is ignored.  (since 11.0)
++#
+ # Features:
+ #
+ # @deprecated: Argument @detach is deprecated.
+@@ -1610,6 +1614,7 @@
+   'data': {'*uri': 'str',
+            '*channels': [ 'MigrationChannel' ],
+            '*detach': { 'type': 'bool', 'features': [ 'deprecated' ] },
++           '*config': 'MigrationParameters',
+            '*resume': 'bool' } }
  
-     /*
-      * Convert QTYPE_QNULL and NULL to the empty string (""). Even
-@@ -1413,7 +1320,7 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-     tls_opt_to_str(params->tls_hostname);
-     tls_opt_to_str(params->tls_authz);
+ ##
+@@ -1629,6 +1634,10 @@
+ #     :qapi:event:`MIGRATION` event, and error details could be
+ #     retrieved with `query-migrate`.  (since 9.1)
+ #
++# @config: migration configuration options.  When present, any
++#     migration configuration previously set with
++#     @migrate-set-parameters is ignored.  (since 11.0)
++#
+ # Since: 2.3
+ #
+ # .. admonition:: Notes
+@@ -1682,6 +1691,7 @@
+ { 'command': 'migrate-incoming',
+              'data': {'*uri': 'str',
+                       '*channels': [ 'MigrationChannel' ],
++                      '*config': 'MigrationParameters',
+                       '*exit-on-error': 'bool' } }
  
--    migrate_params_test_apply(params, &tmp);
-+    migrate_params_merge(tmp, params);
+ ##
+diff --git a/system/vl.c b/system/vl.c
+index 5091fe52d9..d09dc9a61c 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2829,7 +2829,8 @@ void qmp_x_exit_preconfig(Error **errp)
+                 g_new0(MigrationChannelList, 1);
  
-     /*
-      * Mark block_bitmap_mapping as present now while we have the
-@@ -1423,10 +1330,10 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-         migrate_get_current()->has_block_bitmap_mapping = true;
-     }
- 
--    if (migrate_params_check(&tmp, errp)) {
--        migrate_params_apply(&tmp);
-+    if (migrate_params_check(tmp, errp)) {
-+        /* mark all present, so they're all copied */
-+        migrate_mark_all_params_present(tmp);
-+        migrate_params_apply(tmp);
-         migrate_post_update_params(params, errp);
-     }
--
--    migrate_tls_opts_free(&tmp);
- }
+             channels->value = incoming_channels[MIGRATION_CHANNEL_TYPE_MAIN];
+-            qmp_migrate_incoming(NULL, true, channels, true, true, &local_err);
++            qmp_migrate_incoming(NULL, true, channels, NULL, true, true,
++                                 &local_err);
+             if (local_err) {
+                 error_reportf_err(local_err, "-incoming %s: ", incoming);
+                 exit(1);
 -- 
 2.51.0
 
