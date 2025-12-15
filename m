@@ -4,109 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37676D5B86D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0237BD5B873
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 22:03:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVGeE-0004rN-L7; Mon, 15 Dec 2025 17:02:30 -0500
+	id 1vVGe0-0004Gr-JO; Mon, 15 Dec 2025 17:02:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGe9-0004cH-KD
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:02:25 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGdw-0004Di-1F
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:02:12 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGe6-0002rO-69
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:02:25 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGdt-0002pS-D7
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:02:11 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id AEF9333703;
- Mon, 15 Dec 2025 22:01:59 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 064305BE06;
+ Mon, 15 Dec 2025 22:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765836119; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1765836093; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rdixMlj90AdyJ9tT9OWwan6oz2SIpuQi3hevm35iFow=;
- b=ukHPY+Au+Y/vYQv0QNkiaZpu9hXoRfTANMHfjo1m2sE0gJkia3EIUDEDMZlYU2zxTpb7zZ
- HPqDAaNpFsmmJHU5J7hICkQ4usQaw0zSuWZpONHCvamd+w38Ao8EQiwQkTlBSKL4inkB0Q
- QDiYSnSu6HiHM1FnOv2tMtlqNjZDipw=
+ bh=ANsQLnOi5r+0TJdIl2TP4Q9xn6fuGF1JvuOmuuwC1Yo=;
+ b=M4TFS8IGnUP6slqi3RsD8IcVaffbpnjgMFWMVJLJdarHAYEeey/BbWYm19d6M0ncSoiyJ6
+ bZiv1nBS+DfSEC3FbHqUgeDnn6ak7X6lirHGiMkLmyHJ7QDP8sWNkvYRa3LXiZ9Ov3gFYb
+ NE0nPRYww1XW0PX4JBmMmz9cUBuWuYY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765836119;
+ s=susede2_ed25519; t=1765836093;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rdixMlj90AdyJ9tT9OWwan6oz2SIpuQi3hevm35iFow=;
- b=wjnclOgU8ql9SWpmPWHcnkpM44OJw3wQxXyHqv2bHH4D3RQlUY3+b4CfOWtFaO44tpLKzs
- 9YTU421ZT/Hqo4BQ==
-Authentication-Results: smtp-out1.suse.de;
+ bh=ANsQLnOi5r+0TJdIl2TP4Q9xn6fuGF1JvuOmuuwC1Yo=;
+ b=Xg8/UoQW5+IEfqDqcSUCJoI3OhAall68CWj1Hwnm28KJnNqQK+P/Wa/G3/DUmQPy7PO3Mg
+ PFENt7mmziA4rzAA==
+Authentication-Results: smtp-out2.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765836119; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1765836093; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rdixMlj90AdyJ9tT9OWwan6oz2SIpuQi3hevm35iFow=;
- b=ukHPY+Au+Y/vYQv0QNkiaZpu9hXoRfTANMHfjo1m2sE0gJkia3EIUDEDMZlYU2zxTpb7zZ
- HPqDAaNpFsmmJHU5J7hICkQ4usQaw0zSuWZpONHCvamd+w38Ao8EQiwQkTlBSKL4inkB0Q
- QDiYSnSu6HiHM1FnOv2tMtlqNjZDipw=
+ bh=ANsQLnOi5r+0TJdIl2TP4Q9xn6fuGF1JvuOmuuwC1Yo=;
+ b=M4TFS8IGnUP6slqi3RsD8IcVaffbpnjgMFWMVJLJdarHAYEeey/BbWYm19d6M0ncSoiyJ6
+ bZiv1nBS+DfSEC3FbHqUgeDnn6ak7X6lirHGiMkLmyHJ7QDP8sWNkvYRa3LXiZ9Ov3gFYb
+ NE0nPRYww1XW0PX4JBmMmz9cUBuWuYY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765836119;
+ s=susede2_ed25519; t=1765836093;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=rdixMlj90AdyJ9tT9OWwan6oz2SIpuQi3hevm35iFow=;
- b=wjnclOgU8ql9SWpmPWHcnkpM44OJw3wQxXyHqv2bHH4D3RQlUY3+b4CfOWtFaO44tpLKzs
- 9YTU421ZT/Hqo4BQ==
+ bh=ANsQLnOi5r+0TJdIl2TP4Q9xn6fuGF1JvuOmuuwC1Yo=;
+ b=Xg8/UoQW5+IEfqDqcSUCJoI3OhAall68CWj1Hwnm28KJnNqQK+P/Wa/G3/DUmQPy7PO3Mg
+ PFENt7mmziA4rzAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A6CF13EA63;
- Mon, 15 Dec 2025 22:01:57 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7CCE73EA63;
+ Mon, 15 Dec 2025 22:01:31 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id qGD2GVWFQGlrMQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 15 Dec 2025 22:01:57 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id GDgZDzuFQGlrMQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 15 Dec 2025 22:01:31 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 28/51] tests/qtest/migration: Stop invoking
- migrate_incoming from hooks
-Date: Mon, 15 Dec 2025 19:00:14 -0300
-Message-ID: <20251215220041.12657-29-farosas@suse.de>
+Cc: berrange@redhat.com,
+	armbru@redhat.com,
+	Peter Xu <peterx@redhat.com>
+Subject: [PATCH v3 17/51] migration: Use QAPI_MERGE in
+ migrate_params_test_apply
+Date: Mon, 15 Dec 2025 19:00:03 -0300
+Message-ID: <20251215220041.12657-18-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251215220041.12657-1-farosas@suse.de>
 References: <20251215220041.12657-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
  R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.989];
- MIME_GOOD(-0.10)[text/plain];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
  R_RATELIMIT(0.00)[to_ip_from(RLjrdmmf3juheryardexw6jb95)];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,223 +120,220 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now that the listen_uri is being properly used, tests can stop calling
-migrate_incoming from their hooks. The _common functions and
-migrate_start should take care of that.
+Convert the code in migrate_params_test_apply() from an open-coded
+copy of every migration parameter to a copy using visitors. The
+current code has conditionals for each parameter's has_* field, which
+is exactly what the visitors do.
+
+This hides the details of QAPI from the migration code and avoids the
+need to update migrate_params_test_apply() every time a new migration
+parameter is added. Both were very confusing and while the visitor
+code can become a bit involved, there is no need for new contributors
+to ever touch it.
+
+Change the name of the function to a more direct reference of what it
+does: merging the user params with the temporary copy.
+
+Move the QAPI_CLONE_MEMBERS into the caller, so QAPI_CLONE can be used
+and there's no need to allocate memory in the migration
+code. Similarly, turn 'tmp' into a pointer so the proper qapi_free_
+routine can be used.
+
+An extra call to migrate_mark_all_params_present() is now needed
+because the visitors update the has_ field for non-present fields, but
+we actually want them all set so migrate_params_apply() can copy all
+of them.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration/compression-tests.c |  6 ++++++
- tests/qtest/migration/framework.c         | 14 +++++++++++---
- tests/qtest/migration/precopy-tests.c     |  7 ++++---
- tests/qtest/migration/tls-tests.c         |  8 ++++++++
- 4 files changed, 29 insertions(+), 6 deletions(-)
+ migration/options.c | 137 +++++++-------------------------------------
+ 1 file changed, 22 insertions(+), 115 deletions(-)
 
-diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
-index eb0b7d6b4b..bed39dece0 100644
---- a/tests/qtest/migration/compression-tests.c
-+++ b/tests/qtest/migration/compression-tests.c
-@@ -33,6 +33,7 @@ migrate_hook_start_precopy_tcp_multifd_zstd(QTestState *from,
- 
- static void test_multifd_tcp_zstd(char *name, MigrateCommon *args)
- {
-+    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_precopy_tcp_multifd_zstd;
- 
-     args->start.incoming_defer = true;
-@@ -43,6 +44,7 @@ static void test_multifd_tcp_zstd(char *name, MigrateCommon *args)
- 
- static void test_multifd_postcopy_tcp_zstd(char *name, MigrateCommon *args)
- {
-+    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_precopy_tcp_multifd_zstd,
- 
-     args->start.incoming_defer = true;
-@@ -66,6 +68,7 @@ migrate_hook_start_precopy_tcp_multifd_qatzip(QTestState *from,
- 
- static void test_multifd_tcp_qatzip(char *name, MigrateCommon *args)
- {
-+    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_precopy_tcp_multifd_qatzip;
- 
-     args->start.incoming_defer = true;
-@@ -85,6 +88,7 @@ migrate_hook_start_precopy_tcp_multifd_qpl(QTestState *from,
- 
- static void test_multifd_tcp_qpl(char *name, MigrateCommon *args)
- {
-+    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_precopy_tcp_multifd_qpl;
- 
-     args->start.incoming_defer = true;
-@@ -104,6 +108,7 @@ migrate_hook_start_precopy_tcp_multifd_uadk(QTestState *from,
- 
- static void test_multifd_tcp_uadk(char *name, MigrateCommon *args)
- {
-+    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_precopy_tcp_multifd_uadk;
- 
-     args->start.incoming_defer = true;
-@@ -156,6 +161,7 @@ migrate_hook_start_precopy_tcp_multifd_zlib(QTestState *from,
- 
- static void test_multifd_tcp_zlib(char *name, MigrateCommon *args)
- {
-+    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_precopy_tcp_multifd_zlib;
- 
-     args->start.incoming_defer = true;
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index e811945122..199e439263 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -820,6 +820,9 @@ int test_precopy_common(MigrateCommon *args)
-     QObject *out_channels = NULL;
- 
-     g_assert(!args->cpr_channel || args->connect_channels);
-+    if (args->start.incoming_defer) {
-+        g_assert(args->listen_uri || args->connect_channels);
-+    }
- 
-     if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-         return -1;
-@@ -829,6 +832,14 @@ int test_precopy_common(MigrateCommon *args)
-         data_hook = args->start_hook(from, to);
-     }
- 
-+    if (args->start.incoming_defer && !args->start.defer_target_connect) {
-+        if (args->connect_channels) {
-+            in_channels = qobject_from_json(args->connect_channels,
-+                                            &error_abort);
-+        }
-+        migrate_incoming_qmp(to, args->listen_uri, in_channels, "{}");
-+    }
-+
-     /* Wait for the first serial output from the source */
-     if (args->result == MIG_TEST_SUCCEED) {
-         wait_for_serial("src_serial");
-@@ -1060,9 +1071,6 @@ void *migrate_hook_start_precopy_tcp_multifd_common(QTestState *from,
-     migrate_set_parameter_str(from, "multifd-compression", method);
-     migrate_set_parameter_str(to, "multifd-compression", method);
- 
--    /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
--
-     return NULL;
+diff --git a/migration/options.c b/migration/options.c
+index 03e63c918c..36feaa5fe6 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -20,6 +20,7 @@
+ #include "qapi/qapi-commands-migration.h"
+ #include "qapi/qapi-visit-migration.h"
+ #include "qapi/qmp/qerror.h"
++#include "qapi/type-helpers.h"
+ #include "qobject/qnull.h"
+ #include "system/runstate.h"
+ #include "migration/colo.h"
+@@ -1260,124 +1261,28 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+     return true;
  }
  
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index d9c463dd0f..ab5789717f 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -239,9 +239,6 @@ static void *migrate_hook_start_fd(QTestState *from,
-                                  "  'arguments': { 'fdname': 'fd-mig' }}");
-     close(pair[0]);
- 
--    /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to, "fd:fd-mig", NULL, "{}");
+-static void migrate_params_test_apply(MigrationParameters *params,
+-                                      MigrationParameters *dest)
++static void migrate_params_merge(MigrationParameters *dst,
++                                 MigrationParameters *src)
+ {
+-    MigrationState *s = migrate_get_current();
 -
-     /* Send the 2nd socket to the target */
-     qtest_qmp_fds_assert_success(from, &pair[1], 1,
-                                  "{ 'execute': 'getfd',"
-@@ -283,6 +280,7 @@ static void migrate_hook_end_fd(QTestState *from,
- static void test_precopy_fd_socket(char *name, MigrateCommon *args)
+-    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
+-
+-    if (params->has_throttle_trigger_threshold) {
+-        dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
+-    }
+-
+-    if (params->has_cpu_throttle_initial) {
+-        dest->cpu_throttle_initial = params->cpu_throttle_initial;
+-    }
+-
+-    if (params->has_cpu_throttle_increment) {
+-        dest->cpu_throttle_increment = params->cpu_throttle_increment;
++    /* free memory from pointers that are about to be assigned */
++    if (src->has_block_bitmap_mapping) {
++        g_clear_pointer(&dst->block_bitmap_mapping,
++                        qapi_free_BitmapMigrationNodeAliasList);
+     }
+ 
+-    if (params->has_cpu_throttle_tailslow) {
+-        dest->cpu_throttle_tailslow = params->cpu_throttle_tailslow;
++    if (src->tls_creds) {
++        g_clear_pointer(&dst->tls_creds, qapi_free_StrOrNull);
+     }
+ 
+-    if (params->tls_creds) {
+-        qapi_free_StrOrNull(dest->tls_creds);
+-        dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
++    if (src->tls_hostname) {
++        g_clear_pointer(&dst->tls_hostname, qapi_free_StrOrNull);
+     }
+ 
+-    if (params->tls_hostname) {
+-        qapi_free_StrOrNull(dest->tls_hostname);
+-        dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
++    if (src->tls_authz) {
++        g_clear_pointer(&dst->tls_authz, qapi_free_StrOrNull);
+     }
+ 
+-    if (params->tls_authz) {
+-        qapi_free_StrOrNull(dest->tls_authz);
+-        dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
+-    }
+-
+-    if (params->has_max_bandwidth) {
+-        dest->max_bandwidth = params->max_bandwidth;
+-    }
+-
+-    if (params->has_avail_switchover_bandwidth) {
+-        dest->avail_switchover_bandwidth = params->avail_switchover_bandwidth;
+-    }
+-
+-    if (params->has_downtime_limit) {
+-        dest->downtime_limit = params->downtime_limit;
+-    }
+-
+-    if (params->has_x_checkpoint_delay) {
+-        dest->x_checkpoint_delay = params->x_checkpoint_delay;
+-    }
+-
+-    if (params->has_multifd_channels) {
+-        dest->multifd_channels = params->multifd_channels;
+-    }
+-    if (params->has_multifd_compression) {
+-        dest->multifd_compression = params->multifd_compression;
+-    }
+-    if (params->has_multifd_qatzip_level) {
+-        dest->multifd_qatzip_level = params->multifd_qatzip_level;
+-    }
+-    if (params->has_multifd_zlib_level) {
+-        dest->multifd_zlib_level = params->multifd_zlib_level;
+-    }
+-    if (params->has_multifd_zstd_level) {
+-        dest->multifd_zstd_level = params->multifd_zstd_level;
+-    }
+-    if (params->has_xbzrle_cache_size) {
+-        dest->xbzrle_cache_size = params->xbzrle_cache_size;
+-    }
+-    if (params->has_max_postcopy_bandwidth) {
+-        dest->max_postcopy_bandwidth = params->max_postcopy_bandwidth;
+-    }
+-    if (params->has_max_cpu_throttle) {
+-        dest->max_cpu_throttle = params->max_cpu_throttle;
+-    }
+-    if (params->has_announce_initial) {
+-        dest->announce_initial = params->announce_initial;
+-    }
+-    if (params->has_announce_max) {
+-        dest->announce_max = params->announce_max;
+-    }
+-    if (params->has_announce_rounds) {
+-        dest->announce_rounds = params->announce_rounds;
+-    }
+-    if (params->has_announce_step) {
+-        dest->announce_step = params->announce_step;
+-    }
+-
+-    if (params->has_block_bitmap_mapping) {
+-        dest->block_bitmap_mapping = params->block_bitmap_mapping;
+-    }
+-
+-    if (params->has_x_vcpu_dirty_limit_period) {
+-        dest->x_vcpu_dirty_limit_period =
+-            params->x_vcpu_dirty_limit_period;
+-    }
+-    if (params->has_vcpu_dirty_limit) {
+-        dest->vcpu_dirty_limit = params->vcpu_dirty_limit;
+-    }
+-
+-    if (params->has_mode) {
+-        dest->mode = params->mode;
+-    }
+-
+-    if (params->has_zero_page_detection) {
+-        dest->zero_page_detection = params->zero_page_detection;
+-    }
+-
+-    if (params->has_direct_io) {
+-        dest->direct_io = params->direct_io;
+-    }
+-
+-    if (params->has_cpr_exec_command) {
+-        dest->cpr_exec_command = params->cpr_exec_command;
+-    }
++    QAPI_MERGE(MigrationParameters, dst, src);
+ }
+ 
+ /*
+@@ -1399,7 +1304,9 @@ static void migrate_params_apply(MigrationParameters *params)
+ 
+ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
  {
-     args->connect_uri = "fd:fd-mig";
-+    args->listen_uri = "fd:fd-mig";
-     args->start_hook = migrate_hook_start_fd;
-     args->end_hook = migrate_hook_end_fd;
+-    MigrationParameters tmp;
++    MigrationState *s = migrate_get_current();
++    g_autoptr(MigrationParameters) tmp = QAPI_CLONE(MigrationParameters,
++                                                    &s->parameters);
  
-@@ -484,6 +482,7 @@ static void test_multifd_tcp_uri_none(char *name, MigrateCommon *args)
-      * everything will work alright even if guest page is changing.
-      */
-     args->live = true;
-+    args->listen_uri = "tcp:127.0.0.1:0";
+     /*
+      * Convert QTYPE_QNULL and NULL to the empty string (""). Even
+@@ -1413,7 +1320,7 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
+     tls_opt_to_str(params->tls_hostname);
+     tls_opt_to_str(params->tls_authz);
  
-     args->start.incoming_defer = true;
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -500,6 +499,7 @@ static void test_multifd_tcp_zero_page_legacy(char *name, MigrateCommon *args)
-      * everything will work alright even if guest page is changing.
-      */
-     args->live = true;
-+    args->listen_uri = "tcp:127.0.0.1:0";
+-    migrate_params_test_apply(params, &tmp);
++    migrate_params_merge(tmp, params);
  
-     args->start.incoming_defer = true;
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -516,6 +516,7 @@ static void test_multifd_tcp_no_zero_page(char *name, MigrateCommon *args)
-      * everything will work alright even if guest page is changing.
-      */
-     args->live = true;
-+    args->listen_uri = "tcp:127.0.0.1:0";
+     /*
+      * Mark block_bitmap_mapping as present now while we have the
+@@ -1423,10 +1330,10 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
+         migrate_get_current()->has_block_bitmap_mapping = true;
+     }
  
-     args->start.incoming_defer = true;
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-index 166f27f478..f63f37132a 100644
---- a/tests/qtest/migration/tls-tests.c
-+++ b/tests/qtest/migration/tls-tests.c
-@@ -677,6 +677,7 @@ static void test_multifd_tcp_tls_psk_match(char *name, MigrateCommon *args)
- {
-     args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_match;
-     args->end_hook = migrate_hook_end_tls_psk;
-+    args->listen_uri = "tcp:127.0.0.1:0";
- 
-     args->start.incoming_defer = true;
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -689,6 +690,7 @@ static void test_multifd_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
-     args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_mismatch;
-     args->end_hook = migrate_hook_end_tls_psk;
-     args->result = MIG_TEST_FAIL;
-+    args->listen_uri = "tcp:127.0.0.1:0";
- 
-     args->start.hide_stderr = true;
-     args->start.incoming_defer = true;
-@@ -702,6 +704,7 @@ static void test_multifd_postcopy_tcp_tls_psk_match(char *name,
- {
-     args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_match;
-     args->end_hook = migrate_hook_end_tls_psk;
-+    args->listen_uri = "tcp:127.0.0.1:0";
- 
-     args->start.incoming_defer = true;
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -716,6 +719,7 @@ static void test_multifd_tcp_tls_x509_default_host(char *name,
- {
-     args->start_hook = migrate_hook_start_multifd_tls_x509_default_host;
-     args->end_hook = migrate_hook_end_tls_x509;
-+    args->listen_uri = "tcp:127.0.0.1:0";
- 
-     args->start.incoming_defer = true;
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -728,6 +732,7 @@ static void test_multifd_tcp_tls_x509_override_host(char *name,
- {
-     args->start_hook = migrate_hook_start_multifd_tls_x509_override_host;
-     args->end_hook = migrate_hook_end_tls_x509;
-+    args->listen_uri = "tcp:127.0.0.1:0";
- 
-     args->start.incoming_defer = true;
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -754,6 +759,7 @@ static void test_multifd_tcp_tls_x509_mismatch_host(char *name,
-     args->start_hook = migrate_hook_start_multifd_tls_x509_mismatch_host;
-     args->end_hook = migrate_hook_end_tls_x509;
-     args->result = MIG_TEST_FAIL;
-+    args->listen_uri = "tcp:127.0.0.1:0";
- 
-     args->start.incoming_defer = true;
-     args->start.hide_stderr = true;
-@@ -767,6 +773,7 @@ static void test_multifd_tcp_tls_x509_allow_anon_client(char *name,
- {
-     args->start_hook = migrate_hook_start_multifd_tls_x509_allow_anon_client;
-     args->end_hook = migrate_hook_end_tls_x509;
-+    args->listen_uri = "tcp:127.0.0.1:0";
- 
-     args->start.incoming_defer = true;
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-@@ -780,6 +787,7 @@ static void test_multifd_tcp_tls_x509_reject_anon_client(char *name,
-     args->start_hook = migrate_hook_start_multifd_tls_x509_reject_anon_client;
-     args->end_hook = migrate_hook_end_tls_x509;
-     args->result = MIG_TEST_FAIL;
-+    args->listen_uri = "tcp:127.0.0.1:0";
- 
-     args->start.incoming_defer = true;
-     args->start.hide_stderr = true;
+-    if (migrate_params_check(&tmp, errp)) {
+-        migrate_params_apply(&tmp);
++    if (migrate_params_check(tmp, errp)) {
++        /* mark all present, so they're all copied */
++        migrate_mark_all_params_present(tmp);
++        migrate_params_apply(tmp);
+         migrate_post_update_params(params, errp);
+     }
+-
+-    migrate_tls_opts_free(&tmp);
+ }
 -- 
 2.51.0
 
