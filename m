@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F917D41D74
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 03:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03619D41D74
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 03:39:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vUz9n-00079J-0c; Sun, 14 Dec 2025 22:21:55 -0500
+	id 1vUzQI-0001vu-6x; Sun, 14 Dec 2025 22:38:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vUz9k-00078d-Sh; Sun, 14 Dec 2025 22:21:52 -0500
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
+ id 1vUzQF-0001vS-JR; Sun, 14 Dec 2025 22:38:55 -0500
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
  (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vUz9h-0003hr-Ks; Sun, 14 Dec 2025 22:21:52 -0500
+ id 1vUzQB-0008AZ-Na; Sun, 14 Dec 2025 22:38:55 -0500
 Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwCnrCS_fj9p+lR_AQ--.16447S2;
- Mon, 15 Dec 2025 11:21:35 +0800 (CST)
+ by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAH6CTHgj9pjXV_AQ--.44228S2;
+ Mon, 15 Dec 2025 11:38:47 +0800 (CST)
 Received: from [10.31.62.13] (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwD3T+22fj9pTwgMAA--.22979S2;
- Mon, 15 Dec 2025 11:21:27 +0800 (CST)
-Message-ID: <84882a17-0ba1-4503-9c92-d8fa4ab48caa@phytium.com.cn>
-Date: Mon, 15 Dec 2025 11:21:26 +0800
+ by mail (Coremail) with SMTP id AQAAfwC3DevCgj9pmAkMAA--.7881S2;
+ Mon, 15 Dec 2025 11:38:43 +0800 (CST)
+Message-ID: <97afc636-d7b3-4146-acb5-3f4c292f792d@phytium.com.cn>
+Date: Mon, 15 Dec 2025 11:38:42 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v6 2/4] hw/misc: Introduce iommu-testdev for bare-metal
- IOMMU testing
+Subject: Re: [RFC v6 4/4] tests/qtest: Add SMMUv3 bare-metal test using
+ iommu-testdev
 To: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
@@ -42,28 +42,29 @@ Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
  Mostafa Saleh <smostafa@google.com>,
  CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 References: <20251206155203.3015881-1-tangtao1634@phytium.com.cn>
- <20251206155203.3015881-3-tangtao1634@phytium.com.cn>
- <87y0n7ra1m.fsf@suse.de>
+ <20251206155203.3015881-5-tangtao1634@phytium.com.cn>
+ <87ms3nvae3.fsf@suse.de>
 From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <87y0n7ra1m.fsf@suse.de>
+In-Reply-To: <87ms3nvae3.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwD3T+22fj9pTwgMAA--.22979S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAFBWk-GiAB6wAAsH
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: AQAAfwC3DevCgj9pmAkMAA--.7881S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAFBWk-GiAB6wABsG
 Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
  4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxZFy5Xr4UZr43uF4rGr43GFg_yoW5WF15pa
- sxGa43tF18Ar47CF4Sqw1rJa4agF1ktF17Kr17tr1FqryjyFy8trWUK348K397JrZ5ZF17
- Zr4DKw15Gw4ayrDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
+X-Coremail-Antispam: 1Uk129KBjvJXoWxZFyrJr1UJryDKF45JFW3trb_yoWrGw4xpF
+ yUCFyYkF4xJr1xC3ZxXws7AF1Sgrs7Jr1UCr1fKF1akwn0yryxtryxKrW5KrZ7JaykXF1r
+ Z3Wvka4rWrn5XaDanT9S1TB71UUUUjUqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
  DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
  UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -83,78 +84,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Fabiano,
 
-On 2025/12/12 23:31, Fabiano Rosas wrote:
+On 2025/12/13 02:10, Fabiano Rosas wrote:
 > Tao Tang <tangtao1634@phytium.com.cn> writes:
 >
->> Add a minimal PCI test device designed to exercise IOMMU translation
->> (such as ARM SMMUv3) without requiring guest firmware or OS. The device
->> provides MMIO registers to configure and trigger DMA operations with
->> controllable attributes (security state, address space), enabling
->> deterministic IOMMU testing.
+>> Add a qtest suite that validates ARM SMMUv3 translation without guest
+>> firmware or OS. The tests leverage iommu-testdev to trigger DMA
+>> operations and the qos-smmuv3 library to configure IOMMU translation
+>> structures.
 >>
->> Key features:
->> - Bare-metal IOMMU testing via simple MMIO interface
->> - Configurable DMA attributes for security states and address spaces
->> - Write-then-read verification pattern with automatic result checking
+>> This test suite targets the virt machine and covers:
+>> - Stage 1 only translation (VA -> PA via CD page tables)
+>> - Stage 2 only translation (IPA -> PA via STE S2 tables)
+>> - Nested translation (VA -> IPA -> PA, Stage 1 + Stage 2)
+>> - Design to extended to support multiple security spaces
+>>      (Non-Secure, Secure, Root, Realm)
 >>
->> The device performs a deterministic DMA test pattern: write a known
->> value (0x88888888) to a configured IOVA, read it back, and verify data
->> integrity. Results are reported through a dedicated result register,
->> eliminating the need for complex interrupt handling or driver
->> infrastructure in tests.
+>> Each test case follows this sequence:
+>> 1. Initialize SMMUv3 with appropriate command/event queues
+>> 2. Build translation tables (STE/CD/PTE) for the target scenario
+>> 3. Configure iommu-testdev with IOVA and DMA attributes via MMIO
+>> 4. Trigger DMA and validate successful translation
+>> 5. Verify data integrity through a deterministic write-read pattern
 >>
->> This is purely a test device and not intended for production use or
->> machine realism. It complements existing test infrastructure like
->> pci-testdev but focuses specifically on IOMMU translation path
->> validation.
+>> This bare-metal approach provides deterministic IOMMU testing with
+>> minimal dependencies, making failures directly attributable to the SMMU
+>> translation path.
 >>
 >> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
+>> Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> ---
->>   docs/specs/index.rst            |   1 +
->>   docs/specs/iommu-testdev.rst    | 109 +++++++++++++
->>   hw/misc/Kconfig                 |   5 +
->>   hw/misc/iommu-testdev.c         | 278 ++++++++++++++++++++++++++++++++
->>   hw/misc/meson.build             |   1 +
->>   hw/misc/trace-events            |  10 ++
->>   include/hw/misc/iommu-testdev.h |  70 ++++++++
->>   7 files changed, 474 insertions(+)
->>   create mode 100644 docs/specs/iommu-testdev.rst
->>   create mode 100644 hw/misc/iommu-testdev.c
->>   create mode 100644 include/hw/misc/iommu-testdev.h
->> ------------------------------<snip>------------------------------
+>>   tests/qtest/iommu-smmuv3-test.c | 131 ++++++++++++++++++++++++++++++++
+>>   tests/qtest/meson.build         |   1 +
+>>   2 files changed, 132 insertions(+)
+>>   create mode 100644 tests/qtest/iommu-smmuv3-test.c
 >>
->>
->>
->> ------------------------------<snip>------------------------------
+>> diff --git a/tests/qtest/iommu-smmuv3-test.c b/tests/qtest/iommu-smmuv3-test.c
+>> new file mode 100644
+>> index 0000000000..96f66ee325
+>> --- /dev/null
+>> +++ b/tests/qtest/iommu-smmuv3-test.c
+>> @@ -0,0 +1,131 @@
+>> +/*
+>> + * QTest for SMMUv3 with iommu-testdev
+>> + *
+>> + * This QTest file is used to test the SMMUv3 with iommu-testdev so that we can
+>> + * test SMMUv3 without any guest kernel or firmware.
+>> + *
+>> + * Copyright (c) 2025 Phytium Technology
+>> + *
+>> + * Author:
+>> + *  Tao Tang <tangtao1634@phytium.com.cn>
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
 >> +
->> +/* DMA result/status values shared with tests */
->> +#define ITD_DMA_RESULT_IDLE   0xffffffffu
->> +#define ITD_DMA_RESULT_BUSY   0xfffffffeu
->> +#define ITD_DMA_ERR_BAD_LEN   0xdead0001u
->> +#define ITD_DMA_ERR_TX_FAIL   0xdead0002u
->> +#define ITD_DMA_ERR_RD_FAIL   0xdead0003u
->> +#define ITD_DMA_ERR_MISMATCH  0xdead0004u
->> +#define ITD_DMA_ERR_NOT_ARMED 0xdead0005u
+>> +#include "qemu/osdep.h"
+>> +#include "libqtest.h"
+>> +#include "libqos/pci.h"
+>> +#include "libqos/generic-pcihost.h"
+>> +#include "hw/pci/pci_regs.h"
+>> +#include "hw/misc/iommu-testdev.h"
+>> +#include "libqos/qos-smmuv3.h"
 >> +
->> +#define ITD_DMA_WRITE_VAL     0x88888888u
-> Is this intended to read the same regardless of endianness? It would
-> mask possible endianness bugs.
+>> +#define DMA_LEN           4
+>> +
+>> +static QPCIDevice *setup_qtest_pci_device(QTestState *qts, QGenericPCIBus *gbus,
+>> +                                          QPCIBar *bar)
+>> +{
+>> +    uint16_t vid, did;
+>> +    QPCIDevice *dev = NULL;
+>> +
+>> +    qpci_init_generic(gbus, qts, NULL, false);
+>> +
+>> +    /* Find device by vendor/device ID to avoid slot surprises. */
+>> +    for (int s = 0; s < 32 && !dev; s++) {
+>> +        for (int fn = 0; fn < 8 && !dev; fn++) {
+>> +            QPCIDevice *cand = qpci_device_find(&gbus->bus, QPCI_DEVFN(s, fn));
+>> +            if (!cand) {
+>> +                continue;
+>> +            }
+>> +            vid = qpci_config_readw(cand, PCI_VENDOR_ID);
+>> +            did = qpci_config_readw(cand, PCI_DEVICE_ID);
+>> +            if (vid == IOMMU_TESTDEV_VENDOR_ID &&
+>> +                did == IOMMU_TESTDEV_DEVICE_ID) {
+>> +                dev = cand;
+>> +                g_test_message("Found iommu-testdev! devfn: 0x%x", cand->devfn);
+>> +            } else {
+>> +                g_free(cand);
+>> +            }
+>> +        }
+>> +    }
+> This loop could be replaced with something simpler:
+>
+>    static void save_fn(QPCIDevice *dev, int devfn, void *data)
+>    {
+>        QPCIDevice **pdev = (QPCIDevice **) data;
+>        *pdev = dev;
+>    }
+>
+>    qpci_device_foreach(&gbus->bus, IOMMU_TESTDEV_VENDOR_ID,
+>                        IOMMU_TESTDEV_DEVICE_ID, save_fn, &dev);
 
-Thanks for catching this.
 
-It was something I typed quickly, and I did overlook endianness at the 
-time. I’ll change it to 0x12345678 in the next revision.
+Thanks for the suggestion.
+
+I looked into this pattern and it does seem to be the standard approach 
+in QEMU qtests (e.g. tests/qtest/ivshmem-test.c). I will update the code 
+accordingly in the next revision.
 
 
-Best regard,
+Regards,
 
 Tao
-
-
->
-> For the rest of the patch:
->
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
 
