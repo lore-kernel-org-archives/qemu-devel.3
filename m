@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA5B7D5B16C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B8CD41D74
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:13:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV2lh-00038R-UT; Mon, 15 Dec 2025 02:13:17 -0500
+	id 1vV2lb-00034M-VZ; Mon, 15 Dec 2025 02:13:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vV2le-00036r-9i
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:14 -0500
+ id 1vV2lY-00031W-V2
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:09 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vV2lc-0008DF-Fh
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:13 -0500
+ id 1vV2lW-0008DF-Dt
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765782793; x=1797318793;
+ t=1765782787; x=1797318787;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=VcO5I41SMkUWDYwzgsYbLxVHGQ75PO+VCvmvvKQrwrc=;
- b=H+SHpTs6bTkKZL1qbO1zfqSgmLg+acIa7BMkpR5OHaFuleoT8AsUIZFh
- VK/9wRSqu96LHXQU+S1kDaO1Y1b6ncsyvgaGs++nYoxe+WIBPm2Ibn9fF
- JKDFZNno8B1B707B8FY7rtuxJLj7IoR3W8tF6RRjzY7wl3kupHgXUTTBM
- hKs2Dqbl7FOEfwEljKTzr4G4Gvv6NmLF+5Qg3m95KbYHl9b7kGGsV6oj9
- GDhwtQ1LydiTTpskq0iB3qJP2NoYzbfRBhdJTgO6NWRm2+HVdizqAqzc3
- aDWd2stefPz8d/tQUfHGUeF54BpQN35H0ktYrnJIEb7jbzKBssaTiHzQr g==;
-X-CSE-ConnectionGUID: A1XBW9T1SoSqdIBYooKl3g==
-X-CSE-MsgGUID: NYT072BPTSaw3kSYdKwztg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="90332254"
-X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="90332254"
+ bh=B5KsWLdeYBGnKB0r8a9UJrHbD4BabWmPHKGbGEUZ0Go=;
+ b=KmSF4lpUGvBs+DV6iDQLcQaGp9hRV8TgGRvzbrghs+zPj4mdihZT3P6T
+ 8HB1NJs7YJszyktfUm5Sbz/0fp+8hIr/jsDdlJ4Rco8i2jiCGNDjPh74H
+ 4t0w7xj1pNHZkgMCDlyL8Ckmbzrf4dGxUnRIQJE4fxQpPVGWHYGutWenl
+ T2dP2wOFWi2qh/kzSfCv7BxeiZwdOoR58bmuUzQGHJU1Y1oRtk4Sgcuuv
+ CvMBVp5OQuEdE6U/L133NQL9yXEN3YpomGo/1bkK8oo45SWgQAG/V9Wyh
+ UiU3tDmbMU3MjFrKXIPNHSawvVCCkC28yYwuHb5RjzEFvc+lv6fYFfslu g==;
+X-CSE-ConnectionGUID: 9IOrUwxsQpq/51gzCOSHJw==
+X-CSE-MsgGUID: ac2YUdeBQ7evqiTGxcELDw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="90332235"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="90332235"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Dec 2025 23:13:12 -0800
-X-CSE-ConnectionGUID: WDYFwABUTvCTaKI9OHx0JQ==
-X-CSE-MsgGUID: aTRJDeuxTv6HTqAAfZQGpw==
+ 14 Dec 2025 23:13:04 -0800
+X-CSE-ConnectionGUID: SDz5MvHGTQyUzZBI1pDnFw==
+X-CSE-MsgGUID: tgJoFCkPTFSzBWpmIwqtfQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197265952"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197265927"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 14 Dec 2025 23:13:10 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 14 Dec 2025 23:13:02 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Xudong Hao <xudong.hao@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 06/11] i386/cpu: Allow unsupported avx10_version with
- x-force-features
-Date: Mon, 15 Dec 2025 15:37:38 +0800
-Message-Id: <20251215073743.4055227-7-zhao1.liu@intel.com>
+Subject: [PATCH v2 01/11] i386/cpu: Add support for MOVRS in CPUID enumeration
+Date: Mon, 15 Dec 2025 15:37:33 +0800
+Message-Id: <20251215073743.4055227-2-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251215073743.4055227-1-zhao1.liu@intel.com>
 References: <20251215073743.4055227-1-zhao1.liu@intel.com>
@@ -84,62 +83,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "force_features" ("x-force-features" property) forces setting
-feature even if host doesn't support, but also reports the warning.
+MOVRS is a new set of instructions introduced in the Intel platform
+Diamond Rapids, to load instructions that carry a read-shared hint.
 
-Given its function, it's useful for debug, so even if the AVX10
-version is unsupported by host, force to set this AVX10 version if
-x-force-features=on.
+Functionally, MOVRS family is equivalent to existing load instructions,
+but its read-shared hint indicates the source memory location is likely
+to become read-shared by multiple processors, i.e., read in the future
+by at least one other processor before it is written (assuming it is
+ever written in the future). It could optimize the behavior of the
+caches, especially shared caches, for this data for future reads by
+multiple processors. Additionally, MOVRS family also includes a software
+prefetch instruction, PREFETCHRST2, that carries the same read-shared
+hint. [*]
+
+MOVRS family is enumerated by CPUID single-bit (0x7.0x1.EAX[bit 31]).
+Add its enumeration support.
+
+[*]: Intel Architecture Instruction Set Extensions and Future Features
+     (rev.059).
 
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-Changes since v1:
- * New patch.
+Reference link: https://cdrdv2.intel.com/v1/dl/getContent/865891
 ---
- target/i386/cpu.c | 27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ target/i386/cpu.c | 2 +-
+ target/i386/cpu.h | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c47e06cb79e7..41ff4058871a 100644
+index 64dbef0ee154..7efb628e17a7 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -9500,16 +9500,27 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
-         uint8_t version = x86_cpu_get_host_avx10_version();
+@@ -1266,7 +1266,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             NULL, "fred", "lkgs", "wrmsrns",
+             NULL, "amx-fp16", NULL, "avx-ifma",
+             NULL, NULL, "lam", NULL,
+-            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, "movrs",
+         },
+         .cpuid = {
+             .eax = 7,
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index e405ec1dbc7e..0edba739c4e2 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1045,6 +1045,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_1_EAX_AVX_IFMA          (1U << 23)
+ /* Linear Address Masking */
+ #define CPUID_7_1_EAX_LAM               (1U << 26)
++/* MOVRS Instructions */
++#define CPUID_7_1_EAX_MOVRS             (1U << 31)
  
-         if (version < env->avx10_version) {
--            if (prefix) {
--                warn_report("%s: avx10.%d. Adjust to avx10.%d",
--                            prefix, env->avx10_version, version);
--            }
-             /*
--             * Discrete feature bits have been checked and filtered based on
--             * host support. So it's safe to change version without reverting
--             * other feature bits.
-+             * With x-force-features=on, CPUID_7_1_EDX_AVX10 will not be masked
-+             * off, so there's no need to zero avx10 version.
-              */
--            env->avx10_version = version;
-+            if (!cpu->force_features) {
-+                if (prefix) {
-+                    warn_report("%s: avx10.%d. Adjust to avx10.%d",
-+                                prefix, env->avx10_version, version);
-+                }
-+                /*
-+                 * Discrete feature bits have been checked and filtered based
-+                 * on host support. So it's safe to change version without
-+                 * reverting other feature bits.
-+                 */
-+                env->avx10_version = version;
-+            } else {
-+                if (prefix) {
-+                    warn_report("%s: avx10.%d.",
-+                                prefix, env->avx10_version);
-+                }
-+            }
-             have_filtered_features = true;
-         }
-     } else if (env->avx10_version) {
+ /* The immediate form of MSR access instructions */
+ #define CPUID_7_1_ECX_MSR_IMM           (1U << 5)
 -- 
 2.34.1
 
