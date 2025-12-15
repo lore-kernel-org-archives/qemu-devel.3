@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D0ED41D74
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 10:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 167AFD59D99
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 10:21:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV5gp-0002GU-K4; Mon, 15 Dec 2025 05:20:31 -0500
+	id 1vV5hA-0002PL-Rx; Mon, 15 Dec 2025 05:20:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vV5gI-0002FS-O1
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 05:19:54 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vV5gR-0002HK-D9
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 05:20:27 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vV5gH-00069G-0Y
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 05:19:54 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vV5gP-0006BF-Nv
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 05:20:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765793992;
+ s=mimecast20190719; t=1765794001;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=McJVbcIibUfbvwqtADPsXo/oSnNJARAFx9UrfUCuSvg=;
- b=eXNMQyQxBT40lzv3LsNwSAvOHmpqNDgWN8809gLztx1kdMl7O0OQr9W+h9MTPPbRP5AFhD
- YtV84WZ2hyF60AtYQ756YrjN9B+lxhQg4E5p3AnGulQ34sgRwUM9RwU0N+xmv9fRmqAQpb
- IavUkW3ruPFjcM33BT8wMKWxZswc4hU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=OcEAzUsRqwAcsvOrlw1Vzcf30xI8U7+FKwpRgtCmPgA=;
+ b=gwHV7BLzNy4+IEYERlPJwaiy5jRaO72OxRb+Z0PX7Vzz44x5R+6jc0up8qUHlMr7a50rpH
+ TKIEIV41+KZV/Dx/OSr0kSJpfptGgJ4XbaaMeGtZYHwv/xAysRCakUKF1G9M6ktczeUUez
+ dBlUWR1s7yI3iF+2W1Dm/dpZFI5yUL0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-548-wFSSUCMuOLWVtK32JOh6NQ-1; Mon,
- 15 Dec 2025 05:19:48 -0500
-X-MC-Unique: wFSSUCMuOLWVtK32JOh6NQ-1
-X-Mimecast-MFC-AGG-ID: wFSSUCMuOLWVtK32JOh6NQ_1765793986
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-bUs0c8MtMQqQSribOEecBA-1; Mon,
+ 15 Dec 2025 05:19:59 -0500
+X-MC-Unique: bUs0c8MtMQqQSribOEecBA-1
+X-Mimecast-MFC-AGG-ID: bUs0c8MtMQqQSribOEecBA_1765793998
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9086F195FCE5; Mon, 15 Dec 2025 10:19:46 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B6721800610; Mon, 15 Dec 2025 10:19:58 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.224.30])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BA0BE19560B4; Mon, 15 Dec 2025 10:19:43 +0000 (UTC)
+ id 154FF19560A7; Mon, 15 Dec 2025 10:19:54 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -53,10 +53,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v2 1/4] i386: Fix const qualifier build errors with recent
+Subject: [PATCH v2 4/4] gdbstub: Fix const qualifier build errors with recent
  glibc
-Date: Mon, 15 Dec 2025 11:19:34 +0100
-Message-ID: <20251215101937.281722-2-clg@redhat.com>
+Date: Mon, 15 Dec 2025 11:19:37 +0100
+Message-ID: <20251215101937.281722-5-clg@redhat.com>
 In-Reply-To: <20251215101937.281722-1-clg@redhat.com>
 References: <20251215101937.281722-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -92,36 +92,32 @@ A recent change in glibc 2.42.9000 [1] changes the return type of
 strstr() and other string functions to be 'const char *' when the
 input is a 'const char *'. This breaks the build in :
 
-  ../hw/i386/x86-common.c:827:11: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
-  827 |     vmode = strstr(kernel_cmdline, "vga=");
-      |           ^
-
+../gdbstub/user.c:322:21: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+  322 |     pid_placeholder = strstr(path, "%d");
+      |                     ^
 Fix this by changing the type of the variables that store the result
 of these functions to 'const char *'.
 
 [1] https://sourceware.org/git/?p=glibc.git;a=commit;h=cd748a63ab1a7ae846175c532a3daab341c62690
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20251210181306.926334-2-clg@redhat.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/i386/x86-common.c | 2 +-
+ gdbstub/user.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index c844749900a30c9c9c284c529e93c84c9457b128..f77e2e63046ff56d079363e411a9ee0eca365291 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -654,7 +654,7 @@ void x86_load_linux(X86MachineState *x86ms,
-     uint8_t header[8192], *setup, *kernel;
-     hwaddr real_addr, prot_addr, cmdline_addr, initrd_addr = 0;
-     FILE *f;
--    char *vmode;
-+    const char *vmode;
-     MachineState *machine = MACHINE(x86ms);
-     struct setup_data *setup_data;
-     const char *kernel_filename = machine->kernel_filename;
+diff --git a/gdbstub/user.c b/gdbstub/user.c
+index 2e14ded3f01053d4d4a36426c509ce7a6b81cb67..e233c598165ca1b10a5f2a89c87136df9af636ca 100644
+--- a/gdbstub/user.c
++++ b/gdbstub/user.c
+@@ -317,7 +317,7 @@ static bool gdb_accept_socket(int gdb_fd)
+ static int gdbserver_open_socket(const char *path, Error **errp)
+ {
+     g_autoptr(GString) buf = g_string_new("");
+-    char *pid_placeholder;
++    const char *pid_placeholder;
+ 
+     pid_placeholder = strstr(path, "%d");
+     if (pid_placeholder != NULL) {
 -- 
 2.52.0
 
