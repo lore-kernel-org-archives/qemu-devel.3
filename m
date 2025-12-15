@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA068D59D99
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A64FD41D74
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:14:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV2lk-0003BB-U8; Mon, 15 Dec 2025 02:13:20 -0500
+	id 1vV2le-00036z-Hq; Mon, 15 Dec 2025 02:13:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vV2li-00039p-IN
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:18 -0500
+ id 1vV2lc-00035h-OM
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:12 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vV2lh-0008DF-0o
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:18 -0500
+ id 1vV2la-0008DW-Vd
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765782797; x=1797318797;
+ t=1765782791; x=1797318791;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Od7MH3p6ChJmtLWUaAsLaiPAZLqzLKYPw3Ayr328ah8=;
- b=ZzBdHMDD3d0YARqfx22BJOMxLJKzCK+eZ3nRDqzrligcx8hp4I1wZhMA
- Dxz0z29uDUqisogo/+T9O4DhfFa9t0u0E2VmgORvOp1vnUrRKdqj6SdR5
- 25oRjqZcxrjfLRdhjDeGJIRItqEaP6xe4LniiXd2gZOXBsOamlPP2sWHE
- 8w+yldskP2U/W7kFxaMUcNrQGDqg2W5kNeK6qX49mtL33VPMUoFBZqaGb
- qBX0vWA+/uML+DwXML3L48lhm3/uslVNUyRYAFdE95s497IS4dHXHHOYF
- SIN9NM3LaZKAr2TZWpoypTPnBVFgYFPbTv4Mqel4dc50uCxXrRUQmatl9 w==;
-X-CSE-ConnectionGUID: JD+1utEdR5uU+Xvz4tQesg==
-X-CSE-MsgGUID: +TZO43qAS4WdwkE13HGk8g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="90332262"
-X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="90332262"
+ bh=x/GWY5xCsiPSP8QT5GyO13Q2zely1l5tmVx6MnF5Izk=;
+ b=FthllGDATsASj72DWCFNI2GLe1Mtjdh1/j8+0stpaZnPcdFhEC44cTrK
+ GYaGaize0l0QdX4eq543234Anc2a77dK90y2Q0fko+vJsSfBqK4vmOk2q
+ Ku13wPxQdvI4/ONseK7Ci/pqzf+GH1nqd9o05QWQhOcWFBEyCyWwaUmwD
+ RWbLoryDOj4TvGgGN097DWeh4erFEW8/2z93SZjqHd1leLI6oqOlPNC4Q
+ Wz1fRpH73BXNQXJPW1KcxPcCEd+SoM9xG1AsIwaI7rPNx9XE3oeBBJC5Q
+ 7wyEE0gR/DKvGEZ3QRSocUV1LkVilNiH1IbgcXRi+Q+KSCV9VSZxhTJ+7 Q==;
+X-CSE-ConnectionGUID: 9VPYhRFnTm2UCJ2Cj6hPMg==
+X-CSE-MsgGUID: Uwc8DQB2QpmNT+L5KvgZUw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="90332252"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="90332252"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Dec 2025 23:13:17 -0800
-X-CSE-ConnectionGUID: 2x8ehcjzTTeBTiiJTHLyeQ==
-X-CSE-MsgGUID: i42Pdx5xTwq/NAlLeqtxvQ==
+ 14 Dec 2025 23:13:11 -0800
+X-CSE-ConnectionGUID: 7ja6MCILQca1nDG1dsrUKg==
+X-CSE-MsgGUID: ehGfwQzyTG6ltpcnGInocw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197265970"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197265949"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 14 Dec 2025 23:13:15 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 14 Dec 2025 23:13:09 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Xudong Hao <xudong.hao@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 09/11] i386/cpu: Define dependency for
- VMX_VM_ENTRY_LOAD_IA32_FRED
-Date: Mon, 15 Dec 2025 15:37:41 +0800
-Message-Id: <20251215073743.4055227-10-zhao1.liu@intel.com>
+Subject: [PATCH v2 05/11] i386/cpu: Add a helper to get host avx10 version
+Date: Mon, 15 Dec 2025 15:37:37 +0800
+Message-Id: <20251215073743.4055227-6-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251215073743.4055227-1-zhao1.liu@intel.com>
 References: <20251215073743.4055227-1-zhao1.liu@intel.com>
@@ -84,43 +83,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VMX_VM_ENTRY_LOAD_IA32_FRED depends on FRED. Define this dependency
-relationship.
+Factor out a helper to get host avx10 version, to reduce duplicate
+codes.
 
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 4 ++++
- target/i386/cpu.h | 1 +
- 2 files changed, 5 insertions(+)
+ target/i386/cpu.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 6998c900b1dc..07ece8878542 100644
+index 05b001b80cfd..c47e06cb79e7 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -2036,6 +2036,10 @@ static FeatureDep feature_dependencies[] = {
-         .from = { FEAT_7_1_EDX,             CPUID_7_1_EDX_AVX10 },
-         .to = { FEAT_24_1_ECX,              ~0ull },
-     },
-+    {
-+        .from = { FEAT_7_1_EAX,             CPUID_7_1_EAX_FRED },
-+        .to = { FEAT_VMX_ENTRY_CTLS,        VMX_VM_ENTRY_LOAD_IA32_FRED },
-+    },
- };
+@@ -7757,6 +7757,13 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
  
- typedef struct X86RegisterInfo32 {
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 2546463fd6fe..d341e9835716 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1441,6 +1441,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define VMX_VM_ENTRY_LOAD_IA32_RTIT_CTL             0x00040000
- #define VMX_VM_ENTRY_LOAD_CET                       0x00100000
- #define VMX_VM_ENTRY_LOAD_IA32_PKRS                 0x00400000
-+#define VMX_VM_ENTRY_LOAD_IA32_FRED                 0x00800000
+ #endif /* !CONFIG_USER_ONLY */
  
- /* Supported Hyper-V Enlightenments */
- #define HYPERV_FEAT_RELAXED             0
++static uint8_t x86_cpu_get_host_avx10_version(void)
++{
++    uint32_t eax, ebx, ecx, edx;
++    x86_cpu_get_supported_cpuid(0x24, 0, &eax, &ebx, &ecx, &edx);
++    return ebx & 0xff;
++}
++
+ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+ {
+     FeatureWordInfo *wi = &feature_word_info[w];
+@@ -9265,11 +9272,10 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+         }
+ 
+         if ((env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) && !env->avx10_version) {
+-            uint32_t eax, ebx, ecx, edx;
+-            x86_cpu_get_supported_cpuid(0x24, 0, &eax, &ebx, &ecx, &edx);
++            uint8_t version = x86_cpu_get_host_avx10_version();
+ 
+             if (!object_property_set_uint(OBJECT(cpu), "avx10-version",
+-                                          ebx & 0xff, errp)) {
++                                          version, errp)) {
+                 return;
+             }
+         }
+@@ -9491,9 +9497,7 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
+     have_filtered_features = x86_cpu_have_filtered_features(cpu);
+ 
+     if (env->features[FEAT_7_1_EDX] & CPUID_7_1_EDX_AVX10) {
+-        x86_cpu_get_supported_cpuid(0x24, 0,
+-                                    &eax_0, &ebx_0, &ecx_0, &edx_0);
+-        uint8_t version = ebx_0 & 0xff;
++        uint8_t version = x86_cpu_get_host_avx10_version();
+ 
+         if (version < env->avx10_version) {
+             if (prefix) {
 -- 
 2.34.1
 
