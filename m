@@ -4,147 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46235D59D99
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D91D41D74
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:57:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV3Sb-0006zN-Ph; Mon, 15 Dec 2025 02:57:37 -0500
+	id 1vV3SZ-0006yx-R8; Mon, 15 Dec 2025 02:57:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1vV3Sa-0006zF-FJ
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:57:36 -0500
-Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
+ id 1vV3SX-0006yk-Gt
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:57:33 -0500
+Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
+ ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1vV3SX-0003jH-QT
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:57:36 -0500
+ id 1vV3SV-0003fY-CU
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:57:33 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LFi2jguYiQifX7xe3F1j1rgn+f5aW8yXwMAdpRLQnXfJ4y8ZFEqmv1aia82cG+ZGGp/8bZf8swYl7XSQrwEZkXd2gCEgAIjx66X24NYh1mi6q6B0Dk8BO8QEWmDx7IU3038pBS1gA9M2LUc9iDbi99BONKzvty/r5g9jJGbPGh96hQW32/F9VXUbHT/ncHN5tm2Y0ghGUyAXgYM3QsSm6WmCvZT00kHFD9qcRRp2wBK+9T1I+ywI5RIV5uf3DMkEsJfC1Iclzj9PPuXIrzpvwjwwvgkTY5jDwwapeJU15KnLCjoFRP06VS+EPM/4BLO/JgW+vpyf5Gs9zm5+WbVFMA==
+ b=JMmLO0wms889z8/dZ337oh04V6KOpvDKPN7CZv9GT6r+/w2wT23DrnfA6fO6+ZUA9L23goCE1rPWLTltAu+jpFx/6lSFRw44RswOIWVDn9VDIlracE2C9YLVU0/5fnWYSlG9xz8APvA8CuWl5cfOvh3NLjhJ5PNmFj0HBz9p5vtuoa7XxI5ReZ0NT+y/ia2ea5JUBS4nkZ1p2fv50LzLV59WO/rLUGiYLXuMFV12gd9eeFwADbCgOJf/V8FyttNbbyMqCV88mQeOW2/9tLh2VQtY/q+BB/dWGolonBLqyTl++uE38t+7LmiAN1n+c8BDCM4rrEPsbQX7u1bOkDnIyw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4TH9K4oMnrsU4tCvsW0w1nRq+IT1Z1oO4Ed7GZp5oYw=;
- b=sFqom5wsz97PEQXyA5ir6nzJTO3uYQ3W3cOWwfBWkxoY9GTjuUidVUD19p9siI3AJN8/ECIpxj3wrXqYl08XrZgIdRZ+a318CtyY5PE+AMtlzxvyS5Ym0yY9U1BCITgnRdm6gw1PR0Lue2sXTrIj6QFVQnC1d7bd17edZGZkkeBlVrwPYJbIVG3YggcTxEHGBmT1Nl6CpT2ZOC2LaxOddLm14um4/JFktuowC+u0uX9xdQqbR5lVFprsN53XWIUMPQ5zso0i3CnKFEDpea3Ls2eqicig5stzGVrweVlpVJ62L8oV5TtWeqlR5x30/rA1miIyl/M9reLIanWz5z/xEA==
+ bh=bDBhK0ltn8U8oW54Y4E27+KDFWOMPNTHaisoipiJqNI=;
+ b=bgjCy+UAPXPeZU5MHxbzhMYT/2uGm1OLgnuEaLkKEAtyFtjA5gG6rtdZJkjROz+fy75hIR18SuzsFfUZ0ZcSJeCgVc+dx/iV23emSQrINOgTeXjXabAxePU+89HBM9e5iOlkf5Djc09Lhprw7tHXd1nTS5SyR06EUJ2c2xetq3F6SZ/KYBeQn+qS7Q4lCt1Sslat3V9CjHy3ellsjqHeFRc516LKhQWQRAi4avdwxy3/G6aC57SYClgT4HPtf3bSwbOQjW6O8pHo6Dvs+6n22qGs3KVKVmAwP0+aI1KhLFhUstN1V4q4Jell9s1sigOjim2e0SCCRytCDJ5fgTYAsQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
  header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4TH9K4oMnrsU4tCvsW0w1nRq+IT1Z1oO4Ed7GZp5oYw=;
- b=hWUmX7KXWp4D3Dj1GUMZ6pnLL7OzP3U4q14vImZkKDZ9pWn6hJ4hzW2b0nCAl/n5/FMAVWzYazgJheaKf/cIwlRFx0BdlScsLY7DOZmEFLVex53099Vy3mzPCvIZ4ISN5vTcAK9RprPfqPEGSMOcuqZ+ZDrwo603cgN6jJeePdPNPT8xBM++JckOc7ipakviZ8GMwDGm8ChSirQKLmIus6Ai9ojeEs6A5RgNqlG1aME3gDGLt13nLLmSNEN/3VfUPKfz8nPPKWa3BlxMMhnwx51hOM8CBDUttsw1VB7UnUppYg71tGM46b/OygWiK24ASF9UqwMzdDg3tKXe6W9xxw==
+ bh=bDBhK0ltn8U8oW54Y4E27+KDFWOMPNTHaisoipiJqNI=;
+ b=T08w3hFkxDQntc7+9c9Q4s2uT4MWBFXD5p0ev2qsliRQjzvKsQBq2gic2ETyAzOIdutmP0alz57pGzgVsGUnl3tX7y8MQ+2BhwpU0wQbVrQl7qxk40kZbOUk6y1T+JtSk+s/giiasC/dOPZL2lCfdtRCBB+q2Szn8rWoi531MIMcq9ZicVdOygbXetjIBqBIqAwBOlZ8OV9SuzIgn7ohHySigRKwdeTQ23s4nXbqvcj2Jmv2AgQX1zDFqmjPKVkGKpCjyQMBI51FcvdcTMGgibSCiBaVRyu/Uj3MoYyJ/TLwz0V0U8gjcIUIph+zW4J1wYR7kf5FvdZpTg1ogtJMOw==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=jaguarmicro.com;
 Received: from PUZPR06MB4713.apcprd06.prod.outlook.com (2603:1096:301:b4::10)
- by SEYPR06MB6081.apcprd06.prod.outlook.com (2603:1096:101:d6::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.13; Mon, 15 Dec
- 2025 07:57:28 +0000
+ by SE1PPF215029121.apcprd06.prod.outlook.com (2603:1096:108:1::40e)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.7; Mon, 15 Dec
+ 2025 07:56:53 +0000
 Received: from PUZPR06MB4713.apcprd06.prod.outlook.com
  ([fe80::1b36:28b0:4e5:de66]) by PUZPR06MB4713.apcprd06.prod.outlook.com
  ([fe80::1b36:28b0:4e5:de66%6]) with mapi id 15.20.9412.011; Mon, 15 Dec 2025
- 07:57:27 +0000
+ 07:56:53 +0000
 From: Wafer Xie <wafer@jaguarmicro.com>
 To: mst@redhat.com, eperezma@redhat.com, jasowang@redhat.com,
  qemu-devel@nongnu.org
 Cc: leiyang@redhat.com, sgarzare@redhat.com, angus.chen@jaguarmicro.com,
  wafer@jaguarmicro.com
-Subject: [PATCH v2 2/4] vdpa: implement a statically allocated buffer for SVQ
-Date: Mon, 15 Dec 2025 15:57:13 +0800
-Message-Id: <20251215075713.2306-1-wafer@jaguarmicro.com>
+Subject: [PATCH v2 1/4] vhost: add data structure of virtio indirect
+ descriptors in SVQ
+Date: Mon, 15 Dec 2025 15:56:42 +0800
+Message-Id: <20251215075642.2245-1-wafer@jaguarmicro.com>
 X-Mailer: git-send-email 2.34.1
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: TP0P295CA0012.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:2::16) To PUZPR06MB4713.apcprd06.prod.outlook.com
+X-ClientProxiedBy: KUZPR02CA0021.apcprd02.prod.outlook.com
+ (2603:1096:d10:31::17) To PUZPR06MB4713.apcprd06.prod.outlook.com
  (2603:1096:301:b4::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PUZPR06MB4713:EE_|SEYPR06MB6081:EE_
-X-MS-Office365-Filtering-Correlation-Id: 301de4e0-d6a5-45be-b9e0-08de3baf9748
+X-MS-TrafficTypeDiagnostic: PUZPR06MB4713:EE_|SE1PPF215029121:EE_
+X-MS-Office365-Filtering-Correlation-Id: cd3781fb-4698-4a8e-19e9-08de3baf82c8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|52116014|376014|38350700014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?N+yJ8I6+KzbcXw6oO41gPSBk3ldxFtNYcqU/+JgLAmJLG2nZojU/RLTnK/u4?=
- =?us-ascii?Q?SUBKm1aFKUJLc3yJOsn4SDiSm3OEs/3gnud5DwfQ47klIWbr1JXYc9QCJDNw?=
- =?us-ascii?Q?zMkCHZfjp9SLPusMZTbeahm/tN6NZeM4jwIc45A1V9BqF1IjyhuZbPerBea/?=
- =?us-ascii?Q?iKJuBR8K3oLE0c09ZqPaYL+Zrz5MEQ6xpKsLCJvzkghlgBkPSLbPLFk7/bKR?=
- =?us-ascii?Q?QAf7g0QLbHJT4WT59zgImDIWKOxUoMcl40p6Ah0Vewp4xflKMYosFDyB5t5h?=
- =?us-ascii?Q?ZPopTuaK1EfNryxM3PBRY0rta5ncHB37AslEoZwbT42iOVo1dso3T24bPC0V?=
- =?us-ascii?Q?ZOHrMba78B1oNVG3ah0e1S9zGzeq33k0s8Nh5/Z90kYPVm7nXAPryIeKkzJ7?=
- =?us-ascii?Q?QVGzdZqHEfxr1qwCCYlxI5yURsd2dylEjiJ7hYB14JVaUoRGqc1Fdo/VPN4G?=
- =?us-ascii?Q?EFxFv0Jep3nxbQNLSFVnlc9cF09nass0ao8bSsOJsTlNIvBXUsuosmuZ/pTx?=
- =?us-ascii?Q?cDquFqb6mT1teUnHJUHPfbXAHEWSsKbNg7YwE9oRgG8QycmZ4/HJ9geExCKv?=
- =?us-ascii?Q?J4BPjIQxM5tbga/dFcQWZBhu77vpT0diwyLvHujVKn13mUoSBY0L+Cx76Hq8?=
- =?us-ascii?Q?099U+wepiaiMfFUttfXIIhxBDDF6VT8YLDpbFg7dTY2rIDdO4OO4Hixt9ZTe?=
- =?us-ascii?Q?rrTaF4KdgaEuqzw7wFfdLgY3Fk2jsg7MNGooud33gJGYcilawa9Qj2tQTHdC?=
- =?us-ascii?Q?8OPYMQ6xGUKkWnVpiixKZ+f7qG6SEOyzctdBkAWiw3uJ924iCpdG5R5QxhlY?=
- =?us-ascii?Q?07kPh2lQRbCox3Fo1zcqNf2Drqpcuo6PgQ46c7dxq+ffJrxM4omQN3zenunz?=
- =?us-ascii?Q?/x5hKaai5dtYr29rZmGUBLJqN0Enah2MNJHqP3oKEdaLIkVFxaGn0qQzDF51?=
- =?us-ascii?Q?jfU30FndRZEQq0z8Vl+OF5tC++xmeFYSgbi5VJCY9iCVqiWxw4KizlV7FjWw?=
- =?us-ascii?Q?CSNOycwTJkyuBE5OTKQ3XK0pyBibKFT8HfPnvMTAZvX3q9SUZa06IuMY6tWD?=
- =?us-ascii?Q?W+yzdreoQiK3smRThtx66NVwL+3X6cTQV6ZWl0NtDZLMMXx17R7BNLB6E6Uk?=
- =?us-ascii?Q?o0RBRZPRlWxKAXqdoiHPW/aFhLfiq7X43Q3pl79neykjDzGEGI6QsE7c47Xq?=
- =?us-ascii?Q?Q7Jh0IXSWpMyqKDC8UrpXAL+yRM9ttrYyYSZvM20s7lBCVISKbVpFMKj8tjQ?=
- =?us-ascii?Q?qYBRAIdEvBSZaggXbVPyOdnyaWJZltG2tB4nSqonYISxgjYposW/MfrajHYq?=
- =?us-ascii?Q?EHjiZkqN9cZfc7WS0oBkv3gx8rY3xneTSi/0Fr+tuKrPfFC+7BOLI2jONesB?=
- =?us-ascii?Q?5YOy0nTi7Wne1uI+AiqnsC8acORIOqnTQvReErQmyY/2viMfDO+xmvp+Wnz5?=
- =?us-ascii?Q?Ysp6uwLJhTOeO7sW5rggoll9KN5IwZEU+vutt4lH0GJ/3v/3sw/A36juF/q5?=
- =?us-ascii?Q?m2ukwfgK3WRqIpvvE4mwYgMOJk1xVEbUqVPn?=
+ ARA:13230040|366016|376014|52116014|1800799024|38350700014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?y4jpp0EpH5kFi0KKCc8q08SDidTu1S1B+I9tzMnT7z+0b0Mx9Q4YN5gXbRdF?=
+ =?us-ascii?Q?QwO03a2mGbKF4F3a1UKq+W9JaY6nX0+GfiRNvEEvJYDSmA7DeqysYVWqg7uH?=
+ =?us-ascii?Q?eIigUykEGhN+Xz3aOIiwfUU2gvnQZO8Q3+dLSVn7ISJ6bFCA0mPw89MUeXlj?=
+ =?us-ascii?Q?IE9+aRCBKwNfetqqlGxLOUi3FM5falyaWo+5zpTgQtcs+oX7l9rQubZ318zX?=
+ =?us-ascii?Q?bMEqK667gmPok5wI2D90dc1C2fUM4CeyoGfuOmmZj1Uj18XavlsIAMegWm2h?=
+ =?us-ascii?Q?hJ5hAnwT/wyJpQlxHE4Qi1etVtMbZQjVRpBl/EMXjDm1rmKiejcx4efpxoMC?=
+ =?us-ascii?Q?376GT9Ne9d5uAefK4u7rJg3kzJIU8n/fRbQy28IJzuMhen3wBiajU3am8mjL?=
+ =?us-ascii?Q?3HC8FSS7V0j208kMK7Yrgdpl/Gt+XZdrrxRnx8qrNXRR8kFQsRjqhGBxlpg9?=
+ =?us-ascii?Q?h9Xeh21y5kXLt/KqLvzhpq7+sjGw441SVCMRzFBmNoT/yRHAeiOIDolXbX41?=
+ =?us-ascii?Q?oZm/OoIjNgFMptk+vPIq3JFPIcNVAQtcIm2ErBvSmjwf3STypMwFDuHJgiwW?=
+ =?us-ascii?Q?UPFv6mkFH5KABvS5FSUjSRZAvitx3nJDHSyBAsm7P23+6QKxxBL9s5g7E/J8?=
+ =?us-ascii?Q?9y+3Eo5XWBvVUoJ/U5ELC392RZZkfWNnPGTEZGuYUZ+R7ZJtaDl4DgEk3F1L?=
+ =?us-ascii?Q?hSlnQffbAb46nfiNW0UnjJkgiiFVY02VtObHuy+G99fqrR/Q4c1VyvLqtRDC?=
+ =?us-ascii?Q?oCTy5Cihsvs8AYYD2SkDK7Yf+fmG8qJh59fVcgc0xbchX9We9T3+wrNLtuKx?=
+ =?us-ascii?Q?jlBGffdkNTzzGNaJ6F7qkL/De0DV608NV266vBnh8IOy6eHpj1SXYdrHN+px?=
+ =?us-ascii?Q?AVWeVH7bnKturZCL2l9BXZTs002cJNrmbuoxui4R5G2Hv2PS7fRoLNapZJOe?=
+ =?us-ascii?Q?3dLuohkmliw2ZVNZU2TYrPNXFUZjAl2CT2bHsx2F1OZa6niH/Yf7zVbJ1Mzn?=
+ =?us-ascii?Q?swxXMmK8L4FJsr0gvIwcstBtnZHx//YjGlN1xFZObnOaDApLwtgiXrOaNqyY?=
+ =?us-ascii?Q?UmGEAPb0hXm0G0/uo9HBufPPdRCIuMb1nxfh4JySQtr9Z6Yo/KAYQbDkUjuV?=
+ =?us-ascii?Q?qhvvJy15TGtyLC5nxG/FRnLRBtTfzDp9fQu59Kgq96sRaZWNI0+FNt/FhSPh?=
+ =?us-ascii?Q?iqi3sHRi5vqfcVn719AK8y2R6ijNQ7Ei7K4tBvF2VD+0KhXocwTW5SBXbSkl?=
+ =?us-ascii?Q?T+pqrmyXZWgXYB7h595MyScR3rwTfBnbGy51eW0Zjfpz2KzPTS07y8cnfOaG?=
+ =?us-ascii?Q?74hECWSRrrYH2pyUB0lxUPatZFoAv15Lw1UaV+ukJ3n7OEwTE+z/UgXghYTX?=
+ =?us-ascii?Q?kHAGqYg5qI7M13/pIa2c0B268IRzSDvPkl0E3agezT/tZI1/W/z6Twcl1zWq?=
+ =?us-ascii?Q?KodpDKyscQkOfFDSXoaOQk3LMdYjlWwOV+kHBm+8CyDUUqjXURkT7wbmLsLG?=
+ =?us-ascii?Q?z3ED7Sp5tTT7Dgj1S/qndeGnwJhlm20hMQG4?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:PUZPR06MB4713.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(52116014)(376014)(38350700014); DIR:OUT;
+ SFS:(13230040)(366016)(376014)(52116014)(1800799024)(38350700014); DIR:OUT;
  SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?8wwSfDBi4jleY0NTV1oAwbJhx0YtR+Bwg+kd9WtBaP46dWtz+MiUs5mc/sMY?=
- =?us-ascii?Q?Adfe4yVncqMGhR6gIfSvimhzrelhnbJU6h+6fOpamWGDSMf5x6+qnxlTMCCo?=
- =?us-ascii?Q?myyZmi3aFxNbEHobU7awixcBsKqTwftlsfbYblou2qBPY3GhREF/iQw/GscZ?=
- =?us-ascii?Q?B7iiw4wDoMhGhLwyZ4M7He81mMZZhL4AvJZA7IX+vYDRRDfH0XhMxwf9UWff?=
- =?us-ascii?Q?takCkqg6zqkNR4WfQWmrQyZMNBK1/8G1PQGgwcC7+GEsdk9cy2PRd+Pvd+Kl?=
- =?us-ascii?Q?E49fucSDxDxSWAFAd8aQtB8L5TjrC6Ar72xL/4IPS4ZTKt5ujeZnswA33YCZ?=
- =?us-ascii?Q?+M4w0Umy7/429xdqrf14OPsbcHbfOa15Y3TEgdrUVGvndpyotjoBUVdkWBAl?=
- =?us-ascii?Q?d9exUkXGjbhOhwPhd54bTCa/rYHLqMMLSwcPUXd67mJGt1GNJuI8yyQgzFdj?=
- =?us-ascii?Q?gxSTzRWrAHJBmCX4QT755/8c/GFOeyN/1BoGUfxM/MGFZ9tFUWNDko8O8eLN?=
- =?us-ascii?Q?3GGr97zU3IS8cjbepEhC92FtaCLIRbaya4EijnRmQy/xvyKB+6k9TgfgilDo?=
- =?us-ascii?Q?z3SCIqrzywPoAQ1pcz37zOkyNEZd5rpJ1SQpHdvWZSGUBXiEgxP3VY2Sq2CW?=
- =?us-ascii?Q?pIta8NhE9EtrDNf+vSI5/AyGl2Ot+X8PlFr8k7wyH65O3NlMyCxRz1DqGcgQ?=
- =?us-ascii?Q?VEGxZjHx74ULWF/gRt0cYw5kDEhsDl+bDAdJiDNwWAnsY3yk6LIpB9B2l8X3?=
- =?us-ascii?Q?7SzYU6jkxDg3Jt8+k6iuKqsleNCWcwggScGqhTUcOe78bsZBFvl6fwXeq0LB?=
- =?us-ascii?Q?2P/Ekn217wJD7mCeKRzGS4LyFHnyn8sNXeQcCS+JYpkhPhYLdECTX3Uhphm1?=
- =?us-ascii?Q?CWW31rusAX/8sH0Jv+ZTQgVJtOuaeIqitbbd7nKGqs2xTgUxt6k7HfVNYLK1?=
- =?us-ascii?Q?WDvxVMRkfcbwNnDLtvW9CnbYu2bdgoGLu9UOnbBFKJ3p1D8uqoT4rVGUH+YI?=
- =?us-ascii?Q?YJHKDw/uwfKc98RQqsKPJZVO/bD1GGfwz9nUZgj3nHTTnoEsPCAiJ+H07Cmm?=
- =?us-ascii?Q?Ax+lUsyYwXL6IpqP7IC+U8p+zz/AJi8lk4Weir/pCsIpNV1AqBRvHP5wvTD2?=
- =?us-ascii?Q?VSn4wlAGifrkVn3b24H+cvE4jnURCQjtr2pkgpkmixjEgZ5miwAzKKUWF0c+?=
- =?us-ascii?Q?/gDj8j0LXFxoVJfvsk/kfAfYVMmd3V/rti1aZ0cmMNLl9nXvbXQcqfxk5Ei3?=
- =?us-ascii?Q?TU9E38EuLAqx18O1X/aw9cctk0kir0D6sR9bKiG3jXU0NXgAbT4EhyJXMwFu?=
- =?us-ascii?Q?2zmx93DWla87R83cQuuLed1wmEv89qrgEANYB7lFdl/0PLDHe9txdCsWVncF?=
- =?us-ascii?Q?ut6ln6wQTw0fIp5Hc5DuhsP15+eHl8xW0PH2uzcHgI0LSwVcfz9TqHHZU32R?=
- =?us-ascii?Q?nhKa4+kmzoh5CabBdvZrMirT531RY95fL2ZNVG0faLc9KFEPF2fV6c7/xeMz?=
- =?us-ascii?Q?I3Xx9bjoBtI4V83gJ5X6WSLomb3cLoU7u+9jFIrElDvYqjpkLN8e6pe5ZRoK?=
- =?us-ascii?Q?y2G2IJF7EWChT3QDkeF9Aark7RJNBw17FiYv53UM?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?dMLTunfXo+Y5v1l6AiQ7PRggrPfdCS6zxTIZ1Opw8C0bDyNi0ZN9e8nSUdVh?=
+ =?us-ascii?Q?vq6mP8/HCy/ou4HN5jYYUjjXnApu8Sy48DciuFqDdVooRHib3LE7C0sUDKnK?=
+ =?us-ascii?Q?CjcRf3MFD3pLH4L8AP6XcBsYkrAcTb+r3OTqcEyCfo78o5ZJStDlitwWrXvD?=
+ =?us-ascii?Q?uO5yiVKqGZzfuCMnsbxGTUF/jnxpqwjBqg+JZJtyMw1KfWhi4UEh2Q0OiIn6?=
+ =?us-ascii?Q?RoI+6vxui0pLOmNQ4JjvS21xrp94Y7bNZrCzopqB5lOZooS2AEtwHaZYazoj?=
+ =?us-ascii?Q?lfJYM5T3Ct/7W88HSBcxDzA5OFEYNvUeih66sbLOvMMAshrPmEtq2O+0lZgM?=
+ =?us-ascii?Q?uwMus1R+dC0Ulhp/7/AdvNrINzXJhLhzXKhp2+VgT3y3xcw1jPDX+T13OHWV?=
+ =?us-ascii?Q?mGcG/XpzIkWs3+QlihIH1feDoy0oE19aVXLHzgYRYZcX9gJn4OdMmcW9kqff?=
+ =?us-ascii?Q?1h0u0SodU1ho3hj14uTTmeZPy8m8wv7f8m23sNti60UCb6XVZvwmRIwhZcpA?=
+ =?us-ascii?Q?528BL7LTjJIn2ZDoJcdaOqTfcuPXVr0LwlCDy9ys2ialZrHEzXsa2tvBoAum?=
+ =?us-ascii?Q?wBD3hLAK2li2NfBCKU1aTesbjlrE1Mmm6rb5vLXDBPHOpaXLTKvrZas93xBK?=
+ =?us-ascii?Q?8PfURBq42p9JC4YHnSslHLFM9bP5uVtPXvxv/mRWcyUyvuZFFdXc4OLlPXvv?=
+ =?us-ascii?Q?awehl8TrH1p+Ric7abA0J3p4v35FtZQTgn42tOHn7gnox8SEa02UPTvcbQor?=
+ =?us-ascii?Q?Yqn/ccaGRvYD4QYVnq1tpYHcazf3EARhMGU1SxsSRsIgwNFn2wi6SwdrQ6Co?=
+ =?us-ascii?Q?HSmHKzRRr3R7xVB73/TFhigfUtIVcKSWVWH+Ej6mBHRsM1mum4evUZvy73u5?=
+ =?us-ascii?Q?3VCquYN7WumMN2ulZrwzF/iCL+parDX1j3AJ0jwqV8PXoJFOQ7zoQxkjWaYN?=
+ =?us-ascii?Q?43sjdLbK8i2AY4xVKOOyq/hVhTGGu6UhxY4jts59TR4qCdbwbuVpMjIdR8Kh?=
+ =?us-ascii?Q?yxDETdhS6rKlnC1yjqmREp1SYxDZDrlxJQ/rclTOXbYaJs8SOd3OW1eelm2j?=
+ =?us-ascii?Q?1usgc9MklYwW2RDmSHQN4a1zQsVnZludGMReA6aE2gMOY8wII43lBbhsU9SM?=
+ =?us-ascii?Q?KlrzDoKJ79WfbfZR3ihRWWRTC+yUCfW+13hpunBpmWT9PDLhID4VIA3tyroZ?=
+ =?us-ascii?Q?5abB7Kk2DdLonoR8Aiune/M6D1Z5X08amGoZ2fCw2Sxm7NMuANfn70xl3U4p?=
+ =?us-ascii?Q?S8ksEgC3GqFCuhpbgEZAjVdshZUSNXKzKNJNGw+WdWgerTQIaEk9vRSHqvt4?=
+ =?us-ascii?Q?y7ZDG5vS38ujgeRjr9aVarUYes5aC4hKa/Crf17ahPkTRsOQkPHeIxS9axgr?=
+ =?us-ascii?Q?QdKovsSI+pn0kkfNtN79GchRzzZ51zMpRH++jMSjCze1DUzlW9uHPDEjT1/+?=
+ =?us-ascii?Q?M8W1mBSYsyKQ4aUHggbaAJXtyz7ZsYOxyOB6A8BotuMef+mOba9IqF1jSmE5?=
+ =?us-ascii?Q?hlRFjupit9REzwW9jIp7TEOAX3zrbxZjLW3rywNSNauUKC6RB0yr2HI3wSOh?=
+ =?us-ascii?Q?tgEc0CZ0YkgniGOnZ5pqMb/Ajdw8YA5WfeP96FE4?=
 X-OriginatorOrg: jaguarmicro.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 301de4e0-d6a5-45be-b9e0-08de3baf9748
+X-MS-Exchange-CrossTenant-Network-Message-Id: cd3781fb-4698-4a8e-19e9-08de3baf82c8
 X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4713.apcprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Dec 2025 07:57:27.9060 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Dec 2025 07:56:53.4742 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YM57bh5n4mJW+xRpSib7fNhClXIkFnwgPMAjpDI9UIZnF4hzPSTK0Opn2FrsbgiYftqoqGJflfhJjyOPXMnH8Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6081
-Received-SPF: pass client-ip=2a01:111:f403:c405::5;
+X-MS-Exchange-CrossTenant-UserPrincipalName: qx3S+2Mwxqkdi8cV3Oz14BovjKPDWbzy5dF6qk0PSvX9HoJhZepkoRHOdWjxglXsfj4G/9K/5sQb5TyODRhSwA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SE1PPF215029121
+Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=wafer@jaguarmicro.com;
- helo=TYPPR03CU001.outbound.protection.outlook.com
+ helo=OS8PR02CU002.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,267 +164,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: wafer Xie <wafer@jaguarmicro.com>
 
-allocated and initialized when creating the vhost-vdpa device,
-and release the indirect buffer when vhost-vdpa is stopped.
+Using multiple statically allocated buffers to store virtio indirect descriptors
 
 Signed-off-by: wafer Xie <wafer@jaguarmicro.com>
 ---
- hw/virtio/vhost-shadow-virtqueue.c |  25 +++++
- hw/virtio/vhost-vdpa.c             | 163 ++++++++++++++++++++++++++++-
- 2 files changed, 187 insertions(+), 1 deletion(-)
+ hw/virtio/vhost-shadow-virtqueue.h | 45 ++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index 2481d49345..85eff1d841 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -708,6 +708,25 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
-     for (unsigned i = 0; i < svq->vring.num - 1; i++) {
-         svq->desc_next[i] = i + 1;
-     }
+diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-virtqueue.h
+index 9c273739d6..ee8f0660b6 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.h
++++ b/hw/virtio/vhost-shadow-virtqueue.h
+@@ -23,6 +23,12 @@ typedef struct SVQDescState {
+      * guest's
+      */
+     unsigned int ndescs;
 +
-+    /* Initialize indirect descriptor state */
-+    svq->indirect_enabled = false;
-+    svq->current_indirect_buf = -1;
-+    for (int i = 0; i < SVQ_NUM_INDIRECT_BUFS; i++) {
-+        svq->indirect_bufs[i].desc = NULL;
-+        svq->indirect_bufs[i].iova = 0;
-+        svq->indirect_bufs[i].size = 0;
-+        svq->indirect_bufs[i].state = SVQ_INDIRECT_BUF_FREED;
-+        svq->indirect_bufs[i].num_descs = 0;
-+        svq->indirect_bufs[i].freed_descs = 0;
-+        svq->indirect_bufs[i].freeing_descs = 0;
-+        svq->indirect_bufs[i].freed_head = 0;
-+    }
-+
-+    /* Initialize desc_state indirect_buf_idx to -1 */
-+    for (unsigned i = 0; i < svq->vring.num; i++) {
-+        svq->desc_state[i].indirect_buf_idx = -1;
-+    }
- }
++    /*
++     * Index into the indirect descriptor buffer (0 or 1) if using indirect.
++     * -1 if not using indirect descriptors.
++     */
++    int indirect_buf_idx;
+ } SVQDescState;
  
- /**
-@@ -748,6 +767,10 @@ void vhost_svq_stop(VhostShadowVirtqueue *svq)
-     munmap(svq->vring.desc, vhost_svq_driver_area_size(svq));
-     munmap(svq->vring.used, vhost_svq_device_area_size(svq));
-     event_notifier_set_handler(&svq->hdev_call, NULL);
-+
-+    /* Reset indirect descriptor state (memory is freed by vhost-vdpa) */
-+    svq->indirect_enabled = false;
-+    svq->current_indirect_buf = -1;
- }
- 
- /**
-@@ -765,6 +788,8 @@ VhostShadowVirtqueue *vhost_svq_new(const VhostShadowVirtqueueOps *ops,
-     event_notifier_init_fd(&svq->svq_kick, VHOST_FILE_UNBIND);
-     svq->ops = ops;
-     svq->ops_opaque = ops_opaque;
-+    svq->indirect_enabled = false;
-+    svq->current_indirect_buf = -1;
-     return svq;
- }
- 
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 7061b6e1a3..816868d153 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -584,6 +584,155 @@ static int vhost_vdpa_get_dev_features(struct vhost_dev *dev,
-     return ret;
- }
+ typedef struct VhostShadowVirtqueue VhostShadowVirtqueue;
+@@ -46,6 +52,32 @@ typedef struct VhostShadowVirtqueueOps {
+     VirtQueueAvailCallback avail_handler;
+ } VhostShadowVirtqueueOps;
  
 +/**
-+ * Allocate a single indirect descriptor buffer for SVQ
-+ *
-+ * @v: vhost_vdpa instance
-+ * @num_descs: Number of descriptors (should be vring.num)
-+ * @buf: Output buffer structure to fill
-+ *
-+ * Returns true on success, false on failure.
++ * State of an indirect descriptor buffer
 + */
-+static bool vhost_vdpa_alloc_indirect_buf(struct vhost_vdpa *v,
-+                                           uint16_t num_descs,
-+                                           SVQIndirectDescBuf *buf)
-+{
-+    size_t desc_size = sizeof(vring_desc_t) * num_descs;
-+    size_t alloc_size = ROUND_UP(desc_size, qemu_real_host_page_size());
-+    DMAMap needle = {
-+        .size = alloc_size - 1,
-+        .perm = IOMMU_RO,
-+    };
-+    vring_desc_t *indirect_desc;
-+    int r;
-+
-+    /* Allocate memory for indirect descriptors */
-+    indirect_desc = mmap(NULL, alloc_size, PROT_READ | PROT_WRITE,
-+                         MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-+    if (indirect_desc == MAP_FAILED) {
-+        error_report("Cannot allocate indirect descriptor buffer");
-+        return false;
-+    }
-+
-+    /* Allocate IOVA for the indirect descriptor buffer */
-+    r = vhost_iova_tree_map_alloc(v->shared->iova_tree, &needle,
-+                                  (hwaddr)(uintptr_t)indirect_desc);
-+    if (unlikely(r != IOVA_OK)) {
-+        error_report("Cannot allocate iova for indirect descriptors (%d)", r);
-+        munmap(indirect_desc, alloc_size);
-+        return false;
-+    }
-+
-+    /* Map to device */
-+    r = vhost_vdpa_dma_map(v->shared, v->address_space_id, needle.iova,
-+                           alloc_size, indirect_desc, true);
-+    if (unlikely(r != 0)) {
-+        error_report("Cannot map indirect descriptors to device: %s (%d)",
-+                     g_strerror(-r), -r);
-+        vhost_iova_tree_remove(v->shared->iova_tree, needle);
-+        munmap(indirect_desc, alloc_size);
-+        return false;
-+    }
-+
-+    buf->desc = indirect_desc;
-+    buf->iova = needle.iova;
-+    buf->size = alloc_size;
-+    buf->state = SVQ_INDIRECT_BUF_FREED;
-+    buf->num_descs = num_descs;
-+    buf->freed_descs = num_descs;  /* All descriptors are free initially */
-+    buf->freeing_descs = 0;
-+    buf->freed_head = 0;
-+
-+    return true;
-+}
++typedef enum SVQIndirectBufState {
++    SVQ_INDIRECT_BUF_FREED,    /* Buffer is free and can be used */
++    SVQ_INDIRECT_BUF_FREEING,  /* Buffer is being freed (descriptors recycling) */
++} SVQIndirectBufState;
 +
 +/**
-+ * Free a single indirect descriptor buffer
-+ *
-+ * @v: vhost_vdpa instance
-+ * @buf: Buffer to free
++ * Pre-allocated indirect descriptor buffer
++ * Each SVQ has two of these buffers for double-buffering
 + */
-+static void vhost_vdpa_free_indirect_buf(struct vhost_vdpa *v,
-+                                          SVQIndirectDescBuf *buf)
-+{
-+    DMAMap needle;
-+    const DMAMap *result;
-+    int r;
++typedef struct SVQIndirectDescBuf {
++    vring_desc_t *desc;         /* Descriptor table size = num_descs) */
++    hwaddr iova;                /* IOVA of the descriptor table */
++    size_t size;                /* Size of the mmap'd region */
++    SVQIndirectBufState state;  /* Current state of this buffer */
++    uint16_t num_descs;         /* Total number of descriptors (N * vring.num) */
++    uint16_t freed_descs;       /* Number of descriptors available for use */
++    uint16_t freeing_descs;     /* Number of descriptors being freed from used ring */
++    uint16_t freed_head;        /* Next free descriptor index in this buffer */
++} SVQIndirectDescBuf;
 +
-+    if (!buf->desc) {
-+        return;
-+    }
++/* Number of indirect descriptor buffers per SVQ for double-buffering */
++#define SVQ_NUM_INDIRECT_BUFS 2
 +
-+    needle = (DMAMap) {
-+        .translated_addr = (uint64_t)(uintptr_t)buf->desc,
-+    };
-+    result = vhost_iova_tree_find_iova(v->shared->iova_tree, &needle);
-+
-+    if (result) {
-+        r = vhost_vdpa_dma_unmap(v->shared, v->address_space_id,
-+                                 result->iova, buf->size);
-+        if (unlikely(r != 0)) {
-+            error_report("Cannot unmap indirect descriptors: %s (%d)",
-+                         g_strerror(-r), -r);
-+        }
-+
-+        vhost_iova_tree_remove(v->shared->iova_tree, *result);
-+    }
-+
-+    munmap(buf->desc, buf->size);
-+    buf->desc = NULL;
-+    buf->iova = 0;
-+    buf->size = 0;
-+}
-+
-+/**
-+ * Initialize indirect descriptor buffers for a single SVQ
-+ *
-+ * @v: vhost_vdpa instance
-+ * @svq: Shadow virtqueue to initialize
-+ *
-+ * Returns true on success, false on failure.
-+ */
-+static bool vhost_vdpa_svq_init_indirect(struct vhost_vdpa *v,
-+                                          VhostShadowVirtqueue *svq)
-+{
-+    if (!svq->vring.num) {
-+        return true;
-+    }
-+
-+    /* Allocate indirect descriptor buffers for this SVQ */
-+    for (int j = 0; j < SVQ_NUM_INDIRECT_BUFS; j++) {
-+        if (!vhost_vdpa_alloc_indirect_buf(v, svq->vring.num * 4,
-+                                           &svq->indirect_bufs[j])) {
-+            /* Cleanup already allocated buffers */
-+            for (int k = 0; k < j; k++) {
-+                vhost_vdpa_free_indirect_buf(v, &svq->indirect_bufs[k]);
-+            }
-+            return false;
-+        }
-+    }
-+
-+    svq->indirect_enabled = true;
-+    svq->current_indirect_buf = 0;
-+    return true;
-+}
-+
-+/**
-+ * Cleanup indirect descriptor buffers for a single SVQ
-+ *
-+ * @v: vhost_vdpa instance
-+ * @svq: Shadow virtqueue to cleanup
-+ */
-+static void vhost_vdpa_svq_cleanup_indirect(struct vhost_vdpa *v,
-+                                             VhostShadowVirtqueue *svq)
-+{
-+    for (int j = 0; j < SVQ_NUM_INDIRECT_BUFS; j++) {
-+        vhost_vdpa_free_indirect_buf(v, &svq->indirect_bufs[j]);
-+    }
-+    svq->indirect_enabled = false;
-+    svq->current_indirect_buf = -1;
-+}
-+
- static void vhost_vdpa_init_svq(struct vhost_dev *hdev, struct vhost_vdpa *v)
- {
-     g_autoptr(GPtrArray) shadow_vqs = NULL;
-@@ -791,8 +940,11 @@ static void vhost_vdpa_svq_cleanup(struct vhost_dev *dev)
-     size_t idx;
+ /* Shadow virtqueue to relay notifications */
+ typedef struct VhostShadowVirtqueue {
+     /* Shadow vring */
+@@ -96,6 +128,19 @@ typedef struct VhostShadowVirtqueue {
+     /* Caller callbacks opaque */
+     void *ops_opaque;
  
-     for (idx = 0; idx < v->shadow_vqs->len; ++idx) {
--        vhost_svq_stop(g_ptr_array_index(v->shadow_vqs, idx));
-+        VhostShadowVirtqueue *svq = g_ptr_array_index(v->shadow_vqs, idx);
-+        vhost_vdpa_svq_cleanup_indirect(v, svq);
-+        vhost_svq_stop(svq);
-     }
++    /*
++     * Pre-allocated indirect descriptor buffers for double-buffering.
++     * These are allocated when SVQ starts if VIRTIO_RING_F_INDIRECT_DESC
++     * is negotiated.
++     */
++    SVQIndirectDescBuf indirect_bufs[SVQ_NUM_INDIRECT_BUFS];
 +
-     g_ptr_array_free(v->shadow_vqs, true);
- }
- 
-@@ -1299,6 +1451,13 @@ static bool vhost_vdpa_svqs_start(struct vhost_dev *dev)
-             error_setg_errno(&err, -r, "Cannot set device address");
-             goto err_set_addr;
-         }
++    /* Index of the current active indirect buffer, -1 if not using */
++    int current_indirect_buf;
 +
-+        /* Initialize indirect descriptor buffers for this SVQ */
-+        if (!vhost_vdpa_svq_init_indirect(v, svq)) {
-+            /* Non-fatal: will fallback to chain mode */
-+            warn_report("Cannot initialize indirect descriptor for SVQ %u",
-+                virtio_get_queue_index(vq));
-+        }
-     }
- 
-     return true;
-@@ -1313,6 +1472,7 @@ err:
-     error_reportf_err(err, "Cannot setup SVQ %u: ", i);
-     for (unsigned j = 0; j < i; ++j) {
-         VhostShadowVirtqueue *svq = g_ptr_array_index(v->shadow_vqs, j);
-+        vhost_vdpa_svq_cleanup_indirect(v, svq);
-         vhost_vdpa_svq_unmap_rings(dev, svq);
-         vhost_svq_stop(svq);
-     }
-@@ -1331,6 +1491,7 @@ static void vhost_vdpa_svqs_stop(struct vhost_dev *dev)
-     for (unsigned i = 0; i < v->shadow_vqs->len; ++i) {
-         VhostShadowVirtqueue *svq = g_ptr_array_index(v->shadow_vqs, i);
- 
-+        vhost_vdpa_svq_cleanup_indirect(v, svq);
-         vhost_svq_stop(svq);
-         vhost_vdpa_svq_unmap_rings(dev, svq);
++    /* Whether indirect descriptors are enabled */
++    bool indirect_enabled;
++
+     /* Next head to expose to the device */
+     uint16_t shadow_avail_idx;
  
 -- 
 2.48.1
