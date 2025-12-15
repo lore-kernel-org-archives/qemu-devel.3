@@ -4,151 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEE82D5B16C
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 16:10:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3D37D5B84C
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 16:12:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVB8c-0002qx-1V; Mon, 15 Dec 2025 11:09:30 -0500
+	id 1vVBBR-00042E-HT; Mon, 15 Dec 2025 11:12:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vVB80-0002lc-05
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:08:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVBBO-00041X-QB
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:12:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vVB7w-0003Rg-RM
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:08:51 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVBBN-0004SL-09
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:12:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765814927;
+ s=mimecast20190719; t=1765815139;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=e6HuzdNVYjPcIPQNH1UCNc2EOY1Lha0/ekqHgRNM0Bs=;
- b=BRWrRj05tht7ZOQHUI0FE4j5F9eTL9HEvDxZAiGC5XHrU6PZf1jI8hpVEZ4BCJYaw97ZEK
- y7J9eLcZaFZVOvy3mKkAhutVBqIRVtg42ZmGLBIiiEJdKb0XIq/B5ObFBlEPJ4nkFrcp/T
- 34NB4kjjNR5Ixa2d69+Y12xM8qlZuXI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=zuP2AlwgFLWSgCtjAnCdHCvFA8tVYqyy8jLOPwnaRSo=;
+ b=d4Xp4s5603Epxm6d8JqpBMYKESM5wqYD9tkC+QBFiZejQLwXfaVVWJgZaAXA/bVxMOMj2g
+ 0mXJSQI7+9afVhlL6T7YXlcr3c4JGVHKoZbymwq5G523SXLa1+ddT5tvQ25gH1T3MIV/nD
+ K/FfObNQ/Mairtmz7D33RqAxvHYv98s=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-343-4zJ_WqIiNFq1S4MQwHomOw-1; Mon, 15 Dec 2025 11:08:45 -0500
-X-MC-Unique: 4zJ_WqIiNFq1S4MQwHomOw-1
-X-Mimecast-MFC-AGG-ID: 4zJ_WqIiNFq1S4MQwHomOw_1765814924
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-430fcf10280so799034f8f.0
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 08:08:45 -0800 (PST)
+ us-mta-638-CXHV5qMkM9CSGW25hatosw-1; Mon, 15 Dec 2025 11:12:18 -0500
+X-MC-Unique: CXHV5qMkM9CSGW25hatosw-1
+X-Mimecast-MFC-AGG-ID: CXHV5qMkM9CSGW25hatosw_1765815138
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-88a2e9e09e6so53683636d6.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 08:12:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765814924; x=1766419724; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=e6HuzdNVYjPcIPQNH1UCNc2EOY1Lha0/ekqHgRNM0Bs=;
- b=XQVOTsmPTy7QwfgQoelinxEZPNLeUG+txgYDIVwECReS+RZtRkDJoxkYVU1fmYXynt
- pR+VJkqX1cAbcmIS0i79EQotvOrS1mct944MfF1Bc87h30z8IWtEUzw2AHolwCskoDhk
- ZKN6LcwhsxteQ+9l6KOjkAUzPBciYbICRw3iQb6vsRYFn5QvlBPVtVXqnSfaZ2tAnkwK
- FvaZllVadPAoBIWIFDvyQv4mJDKxzNhngY+gFh37062STentUIXiuQMkjW88dX6osXJ+
- uWFvvXCJaV4PwWanpqnZ+SLMTc1Z2PER0GADduModFG6ztMTtVsVaAuduvx8xIn6zDB9
- fV4w==
+ d=redhat.com; s=google; t=1765815138; x=1766419938; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=zuP2AlwgFLWSgCtjAnCdHCvFA8tVYqyy8jLOPwnaRSo=;
+ b=SS8QYBmbuiCgs2xOXQc9hDpZhIuiLnT/3Ag5IYk+yrsXhIenrkB0J/tHgHjQ3ZKk1R
+ h1dRITHhc3Vf6uMpzpUm5qeXlqwqNpzxIorjEgut5evJfwLcgu/YTws2rupEhe0e0Dga
+ SCpKFL3WDDI/oISvWUgyeVIcSBcptje5vX+tY+jbGzvmW5OYDcY8RbIK8hmk7bm1MZ/t
+ w2ouoXh1L2i2Uk394FcBtGTjP8pHNU0c7bxh1x5l3KD+p02u6L7K9U6WXUWyulHLBRje
+ 7VgOHWrUOkknuHTe0FRAkqzPuk7ZNwSWgZM/0EeMmJWanybLyRvZOz2ESaynTRUqzAC1
+ soAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765814924; x=1766419724;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=e6HuzdNVYjPcIPQNH1UCNc2EOY1Lha0/ekqHgRNM0Bs=;
- b=chuQZz+KCUuNSuebATSVWLJ98sxPYvL+3tp+izWYCBrl6ayQuh5bFY6ni9b2O/pR85
- VHAjLAYN1qCh/ox26k26Uud/AjIxY5z/7B6Z4g1eu4IwEak1UVhR4VCO3L2c77cHQ3Kb
- AFmGLeVCBsp+132il501OyQaJfsfTLLnG30dY77CR3YabH9z2k8cVakVbvFUGedyBmZ+
- U2ifUmfbJLRaysEUFOkSObfVnkFkjlI/vuXLSuGZKDpvJ8gxDlz8Z75n0lrMaWL8T/sS
- d9ohvTc4xbfACvbf9UzPGz2v/e1LJkGoeGosBh5XUZ+cEi/sXX86SdLdjgTabLnXHhuw
- Wi+Q==
+ d=1e100.net; s=20230601; t=1765815138; x=1766419938;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zuP2AlwgFLWSgCtjAnCdHCvFA8tVYqyy8jLOPwnaRSo=;
+ b=nhHl99PsF9iPdMLSBfugc4fSJnkSq70UHKQfK4wkZxmongfGwlTO+5t0PKENH90XJ+
+ WFJAadr27bLAEwc60GWO+EMHKav+c4glvde41LJagrM6ZYidrVOHYdyI6IwBJjpOuXFs
+ u1M+8qt/4Cm7J74ADioXU2yu7l2scNbaFg8ynCfhLRI29eocJovoV/ErT8fclE0L5IKo
+ YHjassWRwYDzOj9nIiDvO/hP8qbA9RHdTzhHoOu9+z23Fs8EmLr3i8e4avPmSusP/Ams
+ AHaZzAHtQL3hMaJ5VWZF1X8fPjoaUPpFMhWNNKTSF/LfshA/mOCE+fo2OwwxWaxnaj0M
+ YHIg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUEreSAmtAgjBZkrMXHhwKgE30GcVnz//G84rtBM0G/R7JmOWfYq0kKVu6p2VHBgmbrw7/zf7PxmEuY@nongnu.org
-X-Gm-Message-State: AOJu0YwfXfbDjim5E1uNqyp0l2pXABB7C/rWfPlPcbyRJ0soepT1QHo/
- 4mLWYN3YufwdciySCjMYt0qC9CLwg6jTckO+dO8YLxTLXjmmXjKVLUJ2O3OLCgdeg+oP+gQn5Yb
- 3VJg7mc4ZMD8Ra/eQGEJWhBLvc9uQ8OgmYS8bgqUkfGIlyaKp3xH9AyCU
-X-Gm-Gg: AY/fxX4IoN9NI+ORbnNz5NOW4CWN7PgXtmz8pgHgky7YKUkx3SubaLfdc3QKttmhKI9
- ANkMbPKF3l0U6keByCn+O3V4utTH/hPaCEp1r/0UYWM/gmSJehxhE63/OMtRGSgQmBeRxq84doO
- nnRfr5QmF3DL+qrQ6qFj5LdF/Av3Jqlq8L6UAAPuVLBwmjTEAsgWY1RueBdM/gHVY8IECOpTok5
- /eXgKPEUOLJGGhfYmhEdzuUxSzKZBtqvxndf0+yxnxGIZzdmomQTzs1QhkjyBRnFnuy+I7jFvSo
- IUIuGZLCO+0yoQdZ0Atb6ZczrZo0l+N4N1OdJ9OmJXVbgUJY3YX8DyUkRU/jsya/4Tlp30yea2j
- HvWbw+MynE9InvGM0cKUOsdO/ojSFS+n4hw1+P5TZwPjK
-X-Received: by 2002:a05:6000:18a4:b0:42b:4267:83e9 with SMTP id
- ffacd0b85a97d-42fb44a376dmr10770016f8f.2.1765814924120; 
- Mon, 15 Dec 2025 08:08:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFcF6wQd9CILn2U7zukmr4dJcu+T2aMkEEDErQ8REUSZGYnSegc6YhUS7X3aDmIy2nh21t4sA==
-X-Received: by 2002:a05:6000:18a4:b0:42b:4267:83e9 with SMTP id
- ffacd0b85a97d-42fb44a376dmr10769988f8f.2.1765814923685; 
- Mon, 15 Dec 2025 08:08:43 -0800 (PST)
-Received: from [192.168.0.5] (ip-109-41-115-194.web.vodafone.de.
- [109.41.115.194]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42fb0fc8d5fsm22371488f8f.2.2025.12.15.08.08.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Dec 2025 08:08:43 -0800 (PST)
-Message-ID: <e1517de6-dde9-4f2e-a44c-f89def6f766f@redhat.com>
-Date: Mon, 15 Dec 2025 17:08:41 +0100
+ AJvYcCW4Khhk6bojuVuz9fmzWP2eEKljPfuCT+GRqEnHjVxy+LlwCjiDhrZHQcdjQ7gEc6RYOPcC12LKi94n@nongnu.org
+X-Gm-Message-State: AOJu0YzSt4wcRUK+0DX8YFaC/EUvc9ElMvrYmGpQA1OzONOG4QUaAAOX
+ FfJwjdDFPzEYeEw6AeKd6M7exrwAKQDJhEqcU8ZhhyD1MyiUUqj6Sh0tD+onZubGd1ykDZZZmoI
+ IiTfgVC0eKsBhPpDUtxT5/TAYrUPWuq+jcpYRacde6Kl54xoF3MXA0OQ1
+X-Gm-Gg: AY/fxX6uKEB9//6CtWPjG9kejtFbX+RumRhU8gNiwks6drH1ghGEo6OllN8pV3mStcv
+ urfL81WBgAZIwOpnaCQLXMndx1JjSH4GQ1UBHE8Pgb2VkF6/Lzdx+0mXQAqosC1m+Pq6Dy+ALSm
+ t4TsbQDMwEXSXd8205sQVOnhaYwnXm8cJ5xaem6fV+C/a50MpjG+noAh+VqyAe2LRjwwyOYs3dE
+ GEIbx9AT37GA7Lp/myPS/bO2B5DvREvhtLdBkcO88NBKPwS2xQ7kzA+X80sjwFU3szoiP83qmoM
+ oo1Dw79tOW0T85LpcZVryy+Sjs6orlstkA6Ft8THvshRmsoPIGlSCL31kVw1l4PD39YWx+yeHoR
+ jMz4=
+X-Received: by 2002:a05:622a:59c4:b0:4ed:b82b:1984 with SMTP id
+ d75a77b69052e-4f1d04c53b2mr163308541cf.30.1765815137417; 
+ Mon, 15 Dec 2025 08:12:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG9yGKuC7enuQOdgMjU6i6wLGQHKEWIgZthCp1PeufGOD3HZGj1hAvg88/HqFjq2v0M1UG7TQ==
+X-Received: by 2002:a05:622a:59c4:b0:4ed:b82b:1984 with SMTP id
+ d75a77b69052e-4f1d04c53b2mr163307551cf.30.1765815136765; 
+ Mon, 15 Dec 2025 08:12:16 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4f1bd70a4adsm94336821cf.32.2025.12.15.08.12.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Dec 2025 08:12:16 -0800 (PST)
+Date: Mon, 15 Dec 2025 11:12:15 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH] migration: Fix a possible crash when halting a guest
+ during migration
+Message-ID: <aUAzXwM5iQnscHcc@x1.local>
+References: <20251208135101.271417-1-thuth@redhat.com>
+ <20251208144525.GA1341938@fedora> <87jyyxkna0.fsf@suse.de>
+ <5b510f3b-796a-45fb-a63f-e87b02dace61@redhat.com>
+ <87jyyrv1br.fsf@suse.de> <aUAQNaA_sW8hxW2Y@redhat.com>
+ <e62e8105-7add-45ed-afc2-9d6b1403b135@redhat.com>
+ <aUApJ23dL8JuAayW@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] block: Fix BDS use after free during shutdown
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: stefanha@redhat.com, peterx@redhat.com, farosas@suse.de,
- qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20251215150714.130214-1-kwolf@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20251215150714.130214-1-kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aUApJ23dL8JuAayW@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -166,52 +133,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/12/2025 16.07, Kevin Wolf wrote:
-> During shutdown, blockdev_close_all_bdrv_states() drops any block node
-> references that are still owned by the monitor (i.e. the user). However,
-> in doing so, it forgot to also remove the node from monitor_bdrv_states
-> (which qmp_blockdev_del() correctly does), which means that later calls
-> of bdrv_first()/bdrv_next() will still return the (now stale) pointer to
-> the node.
+On Mon, Dec 15, 2025 at 04:28:39PM +0100, Kevin Wolf wrote:
+> Am 15.12.2025 um 16:11 hat Thomas Huth geschrieben:
+> > On 15/12/2025 14.42, Kevin Wolf wrote:
+> > > Am 12.12.2025 um 22:26 hat Fabiano Rosas geschrieben:
+> > > > Thomas Huth <thuth@redhat.com> writes:
+> > > > 
+> > > > > On 08/12/2025 16.26, Fabiano Rosas wrote:
+> > > > > > Stefan Hajnoczi <stefanha@redhat.com> writes:
+> > > > > > 
+> > > > > > > On Mon, Dec 08, 2025 at 02:51:01PM +0100, Thomas Huth wrote:
+> > > > > > > > From: Thomas Huth <thuth@redhat.com>
+> > > > > > > > 
+> > > > > > > > When shutting down a guest that is currently in progress of being
+> > > > > > > > migrated, there is a chance that QEMU might crash during bdrv_delete().
+> > > > > > > > The backtrace looks like this:
+> > > > > > > > 
+> > > > > > > >    Thread 74 "mig/src/main" received signal SIGSEGV, Segmentation fault.
+> > > > > > > > 
+> > > > > > > >    [Switching to Thread 0x3f7de7fc8c0 (LWP 2161436)]
+> > > > > > > >    0x000002aa00664012 in bdrv_delete (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:5560
+> > > > > > > >    5560	        QTAILQ_REMOVE(&graph_bdrv_states, bs, node_list);
+> > > > > > > >    (gdb) bt
+> > > > > > > >    #0  0x000002aa00664012 in bdrv_delete (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:5560
+> > > > > > > >    #1  bdrv_unref (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:7170
+> > > > > > > >    Backtrace stopped: Cannot access memory at address 0x3f7de7f83e0
+> > > > > > > > 
+> > > > > > 
+> > > > > > How does the migration thread reaches here? Is this from
+> > > > > > migration_block_inactivate()?
+> > > > > 
+> > > > > Unfortunately, gdb was not very helpful here (claiming that it cannot access
+> > > > > the memory and stack anymore), so I had to do some printf debugging. This is
+> > > > > what seems to happen:
+> > > > > 
+> > > > > Main thread: qemu_cleanup() calls  migration_shutdown() -->
+> > > > > migration_cancel() which signals the migration thread to cancel the migration.
+> > > > > 
+> > > > > Migration thread: migration_thread() got kicked out the loop and calls
+> > > > > migration_iteration_finish(), which tries to get the BQL via bql_lock() but
+> > > > > that is currently held by another thread, so the migration thread is blocked
+> > > > > here.
+> > > > > 
+> > > > > Main thread: qemu_cleanup() advances to bdrv_close_all() that uses
+> > > > > blockdev_close_all_bdrv_states() to unref all BDS. The BDS with the name
+> > > > > 'libvirt-1-storage' gets deleted via bdrv_delete() that way.
+> > > > > 
+> > > > 
+> > > > Has qmp_blockdev_del() ever been called to remove the BDS from the
+> > > > monitor_bdrv_states list? Otherwise your debugging seems to indicate
+> > > > blockdev_close_all_bdrv_states() is dropping the last reference to bs,
+> > > > but it's still accessible from bdrv_next() via
+> > > > bdrv_next_monitor_owned().
+> > > 
+> > > The reference that blockdev_close_all_bdrv_states() drops is the monitor
+> > > reference. So is this the right fix (completely untested, but matches
+> > > what qmp_blockdev_del() does)?
+> > > 
+> > > Kevin
+> > > 
+> > > diff --git a/blockdev.c b/blockdev.c
+> > > index dbd1d4d3e80..6e86c6262f9 100644
+> > > --- a/blockdev.c
+> > > +++ b/blockdev.c
+> > > @@ -686,6 +686,7 @@ void blockdev_close_all_bdrv_states(void)
+> > > 
+> > >       GLOBAL_STATE_CODE();
+> > >       QTAILQ_FOREACH_SAFE(bs, &monitor_bdrv_states, monitor_list, next_bs) {
+> > > +        QTAILQ_REMOVE(&monitor_bdrv_states, bs, monitor_list);
+> > >           bdrv_unref(bs);
+> > >       }
+> > >   }
+> > 
+> > Thanks a lot, Kevin! This looks like the right fix for me - I gave it
+> > a try and it fixes the crash indeed!
 > 
-> Usually there is no such call after this point, but in some cases it can
-> happen. In the reported case, there was an ongoing migration, and the
-> migration thread wasn't shut down yet: migration_shutdown() called by
-> qemu_cleanup() doesn't actually wait for the migration to be shut down,
-> but may just move it to MIGRATION_STATUS_CANCELLING. The next time
-> migration_iteration_finish() runs, it sees the status and tries to
-> re-activate all block devices that migration may have previously
-> inactivated. This is where bdrv_first()/bdrv_next() get called and the
-> access to the already freed node happens.
+> Good. I think something like your patch would still be good for 11.0.
+> Having undefined order in shutdown is just asking for trouble. So it
+> would be good if we could be sure that migration is out of the way when
+> migration_shutdown() returns.
 > 
-> It is debatable if migration_shutdown() should really return before
-> migration has settled, but leaving a dangling pointer in the list of
-> monitor-owned block nodes is clearly a bug either way and fixing it
-> solves the immediate problem, so fix it.
-> 
-> Cc: qemu-stable@nongnu.org
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->   blockdev.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/blockdev.c b/blockdev.c
-> index dbd1d4d3e80..6e86c6262f9 100644
-> --- a/blockdev.c
-> +++ b/blockdev.c
-> @@ -686,6 +686,7 @@ void blockdev_close_all_bdrv_states(void)
->   
->       GLOBAL_STATE_CODE();
->       QTAILQ_FOREACH_SAFE(bs, &monitor_bdrv_states, monitor_list, next_bs) {
-> +        QTAILQ_REMOVE(&monitor_bdrv_states, bs, monitor_list);
->           bdrv_unref(bs);
->       }
->   }
+> I sent the above as a proper patch to fix the immediate problem for
+> 10.2.
 
-Thanks again!
+Thanks all!
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
+Does that completely fix the problem?  If so, IMHO we don't need the
+migration change anymore until later.  As replied in the other email, it
+was at least intentional a few years ago (when introducing
+migration_shutdown()) to not join() the migration thread here.
+
+If we need to persue that we need to justify it, and if the other fix can
+completely fix this problem, we'll need some other justification (meanwhile
+we'll need to re-evaluate the possible hang QEMU in other use cases).
+
+Thanks,
+
+-- 
+Peter Xu
 
 
