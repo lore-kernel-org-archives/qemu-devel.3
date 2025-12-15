@@ -4,155 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DB9D5B172
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 14:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFDCD5B17B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 14:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV9wC-000317-LN; Mon, 15 Dec 2025 09:52:36 -0500
+	id 1vVA1A-0005BU-Tj; Mon, 15 Dec 2025 09:57:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vV9wB-00030o-Ke
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 09:52:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vVA0j-00057F-QI
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 09:57:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vV9w9-0008Pu-MM
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 09:52:35 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1vVA0f-0001OU-SU
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 09:57:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765810352;
+ s=mimecast20190719; t=1765810631;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=zF8JgN4tWbVCAWjS2x+UG6gULrYPoT5c49LyU7Nv77s=;
- b=d9CUk2Jo/ok5gs0BTzfaUnfPfgdOJXoibSODuPe4eACCa0OjLkqSL4OI7H+i/VIxX77R6S
- IhVOGml3dnt3xT3egy42nIVPv81mESr7yEpfbiLutGHCk+hUONECi6W2wt2sm4bgysHUxw
- VgXTi2xR3ySg3Anj/sDc6bpXhF8uVjQ=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-enIjNg1FMz-AIBHnXJE8UA-1; Mon, 15 Dec 2025 09:52:31 -0500
-X-MC-Unique: enIjNg1FMz-AIBHnXJE8UA-1
-X-Mimecast-MFC-AGG-ID: enIjNg1FMz-AIBHnXJE8UA_1765810350
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-b7fe37056e1so50859466b.2
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 06:52:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765810350; x=1766415150; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=zF8JgN4tWbVCAWjS2x+UG6gULrYPoT5c49LyU7Nv77s=;
- b=YhdH5ukMTxQFhm5DL/dhb9PWQhMrLNyLUXQ0E4N8lgozmERPZO3uzxtx165cZfp1G4
- 87CBG+Mwh6+ftknfnygoGOyXFR4b35e+lZa+RnYykx1YHMyhwXGZSGctDszmdBEo9I/2
- tT5RlGb4QM7TGPnuNNySczstGRMMLK1dr/nHEuIjYq0CNakCq2AAEIURu9hk+xbZZELA
- 9Ngf+nIio+6eyq1+qofsfuwSyEtzYuDMI7qjNJAfvHh2Vq2eWF54hYuBBuvEW+wUoAFh
- dPOZSDjaYYTQ51b9rG+M//BMdmTLfz9IPASXJ75VfpuU31/p4ElBpglCXDbv8Bwa70dA
- fRbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765810350; x=1766415150;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zF8JgN4tWbVCAWjS2x+UG6gULrYPoT5c49LyU7Nv77s=;
- b=soO8BIwhFYESJAbqlIScfomUv7F6XDUrz8xXAdSdSSHVCmgqp0gerqbbpzD+plUHgg
- hO/39hFgH+iD0knsJ9+WOiKUQzHGweAWP2DCzMvc6d9dN6hmHi05GpQdDrxTcisMakK3
- qTRJmB/+FbKN1LKgnSPUam7xQHXTvc/xgMCBqV+zOsShbtLsP4MK5DXcVkJ7urnDg+zW
- zfnIpulgAaxhx74VbJDZxBbzsEGDuJctzX/bcKKn2OWhCSYbhiXwzKQnYtfllX29ESbB
- 7UtrDDuABlFNU/iRYxdXkEe24DanCXvRMds01G8Vb1/d4p+GdmizpBNZfX7fMoeCkhD6
- lzXg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsz0KOY3PUZI6iCP1gy9nSh48a2ButUIdxpTpCwM2v6ODMR4xCLXi5PDTLH08Z9YfngOuYVbN9QeyQ@nongnu.org
-X-Gm-Message-State: AOJu0YwkcKYvXnN4KUTWEaOJL7Emeq5SZ0PtnZyfS5tbHlhAYGTdNujF
- Yc22J3m9ng4RH2ZY2wFxb3aPu598jsIccbs7P6rJYH1JSezWv0lDK+SHwZQDyXldJ7pKAQESanJ
- wj4v8n1NOhvTitGuBhB1V8rpeLyahRpTb/p7vxgBGE9TQwj0+CZdqyI60
-X-Gm-Gg: AY/fxX5/2OPiN6SgUVjlWDKHxPmasezRK/I8G7s+wtZ7tpQ6xAvqiuiYNcVjAPWOLRO
- cgWeMfiBTt148KRGbC+Gc/Nq+jsaLsbx9etAzHlpmrwOZ5pgIL5cg3VKSykZRR545J+BHtuOfDb
- 2Qz4Y8tI0iRAJRO0UEU7NeuWRH148cmyE6V9Ay7foh7Mh9Fahvx71177B7BBjN5Kf7CLPCxbKX/
- uFoHZInZloqcBpdzlNloZp0KoEkAmPShSifu0t4wcDM+18FBcX5SShZW/TIgrQ+Dgbj9PJLrfRQ
- SvtmfHSM5XPWJd32MOob5vgXKTxMeJpGU8zujQ5iiv2c1UA1/S/28bskvS3EjbL3NMnE3yeNsfS
- sbdRUg2Q1lY57fMDDQaKZlDTGAR0WvWwxxpa4Y90idJZh2/FHePEAScf5QNi4f7QxHefg4voHXX
- oYygI4rNeL0aYQW2k=
-X-Received: by 2002:a17:907:2d29:b0:b70:c190:62e1 with SMTP id
- a640c23a62f3a-b7d23ad635bmr1137591266b.35.1765810349949; 
- Mon, 15 Dec 2025 06:52:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHn8J0an9IDgB1tsnPyFoLwVTjx3kNnmLGSz0vmlk7BO5WUjHzTh7WRzivAGmyoQORHhuQEcw==
-X-Received: by 2002:a17:907:2d29:b0:b70:c190:62e1 with SMTP id
- a640c23a62f3a-b7d23ad635bmr1137588366b.35.1765810349548; 
- Mon, 15 Dec 2025 06:52:29 -0800 (PST)
-Received: from [192.168.10.48] ([151.95.145.106])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-b7cfa2ed80dsm1416551566b.16.2025.12.15.06.52.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Dec 2025 06:52:29 -0800 (PST)
-Message-ID: <b6f193d4-b780-439a-80eb-bb8b43acac4e@redhat.com>
-Date: Mon, 15 Dec 2025 15:52:27 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] qmp: Fix thread race
-To: Marc Morcos <marcmorcos@google.com>,
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LqfzZJeYXVLzGtAlIixwEnTl6ybSp9Ely3jPjd1yfEA=;
+ b=V9Ok0YOGo0pOrdwvvYbrwEfjDSjjteNBhpIy/2DEUWG8NO+l0TuZhQeYWSUuqKGx/ID0bU
+ 8EFntr6ai1m13AfNWxMSgkA0rePubXaDNwtM5hxzTfJLFiTGaUFku3Q5z/CgLEucJENhWY
+ NWwPUWLUXL5rGuzb0ktOUhI92NrfhYk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-YaCpJOj5PYuuA1F3Y-kdcQ-1; Mon,
+ 15 Dec 2025 09:57:08 -0500
+X-MC-Unique: YaCpJOj5PYuuA1F3Y-kdcQ-1
+X-Mimecast-MFC-AGG-ID: YaCpJOj5PYuuA1F3Y-kdcQ_1765810627
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 766D31801212; Mon, 15 Dec 2025 14:57:06 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.117])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 398E21800576; Mon, 15 Dec 2025 14:57:04 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Dr . David Alan Gilbert" <dave@treblig.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Markus Armbruster <armbru@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org
-References: <20251213001443.2041258-1-marcmorcos@google.com>
- <20251213001443.2041258-4-marcmorcos@google.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20251213001443.2041258-4-marcmorcos@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fam Zheng <fam@euphon.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: [PULL for-10.2 0/1] Block patches
+Date: Mon, 15 Dec 2025 09:57:02 -0500
+Message-ID: <20251215145703.31841-1-stefanha@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,55 +86,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/13/25 01:14, Marc Morcos wrote:
-> @@ -346,7 +347,15 @@ static void monitor_qapi_event_emit(QAPIEvent event, QDict *qdict)
->           }
->   
->           qmp_mon = container_of(mon, MonitorQMP, common);
-> -        if (qmp_mon->commands != &qmp_cap_negotiation_commands) {
-> +        do_send = false;
-> +
-> +        WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
-> +            if (qmp_mon->commands != &qmp_cap_negotiation_commands) {
-> +                do_send = true;
-> +            }
-> +        }
-> +
-> +        if (do_send) {
->               qmp_send_response(qmp_mon, qdict);
->           }
->       }
+The following changes since commit 9c23f2a7b0b45277693a14074b1aaa827eecdb92:
 
-We cannot use WITH_QEMU_LOCK_GUARD with "continue" or "break" inside, 
-but we can use QEMU_LOCK_GUARD:
+  Update version for v10.2.0-rc3 release (2025-12-09 16:44:49 -0600)
 
-@@ -347,17 +346,13 @@ static void monitor_qapi_event_emit(QAPIEvent 
-event, QDict *qdict)
-          }
+are available in the Git repository at:
 
-          qmp_mon = container_of(mon, MonitorQMP, common);
--        do_send = false;
--
--        WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
--            if (qmp_mon->commands != &qmp_cap_negotiation_commands) {
--                do_send = true;
-+        {
-+            QEMU_LOCK_GUARD(&mon->mon_lock);
-+            if (qmp_mon->commands == &qmp_cap_negotiation_commands) {
-+                continue;
-              }
-          }
--
--        if (do_send) {
--            qmp_send_response(qmp_mon, qdict);
--        }
-+        qmp_send_response(qmp_mon, qdict);
-      }
-  }
+  https://gitlab.com/stefanha/qemu.git tags/block-pull-request
 
+for you to fetch changes up to b002acacc1d72521351501fa0af81d146106c9ed:
 
-Let me know if this is okay for you!
+  Revert "nvme: Fix coroutine waking" (2025-12-15 09:50:41 -0500)
 
-Paolo
+----------------------------------------------------------------
+Pull request
+
+- Hanna's fix a regression that hangs the userspace NVMe block driver.
+
+----------------------------------------------------------------
+
+Hanna Czenczek (1):
+  Revert "nvme: Fix coroutine waking"
+
+ block/nvme.c | 56 +++++++++++++++++++++++++---------------------------
+ 1 file changed, 27 insertions(+), 29 deletions(-)
+
+-- 
+2.52.0
 
 
