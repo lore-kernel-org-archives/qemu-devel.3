@@ -4,99 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E2D3D59D99
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58982D5B172
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV3M6-0000lF-KQ; Mon, 15 Dec 2025 02:50:54 -0500
+	id 1vV3LR-0000VB-BG; Mon, 15 Dec 2025 02:50:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vV3Lb-0000bt-Is
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:23 -0500
+ id 1vV3LP-0000Rs-IB
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vV3La-0000mU-3F
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:23 -0500
+ id 1vV3LN-0000iA-5d
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765785021;
+ s=mimecast20190719; t=1765785008;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DPzOYGOdSS2nqdUVmE3Appt8FioAsNxMPjypO5wkIkE=;
- b=FyrEag3K3VF4p1wAuyPulpAdgG8pa4nL68QeIJzPfyrXj9e+wuyetKY9dvEn3MPkeZ9nyp
- 4E4gHbgCt1pQrL4cvkVzfR7a4ZdGTmSnto5X473UM1D8Us48xioTSNS1e4A+Pqn2ki+rtV
- leXril7HOBKM4Lmy4tJt2u4Dz6ggu6U=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rhRgZBDZXKiwx46WkvcU17DF2Qqr8XZ4jHsnYPyyOuY=;
+ b=KDfGDX3w34ZW4Ako+PcrjoYHLHb+m7ORtcDhZ3PBO9mOHL5GtyAyY2lh9v/9Q7o63nL5jA
+ +yfluBW7qvD6nU3XNunHIFb/+nop5P3BHBiqY+HphW4p/IJ0N9toJ85I2KoZ2P/CX0AFh9
+ yn28M2Nu1dv6ASS4Vg9DfB4OArx2QC8=
 Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
  [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-140--hFRVLgJMPm3PP2Q3GUCdw-1; Mon, 15 Dec 2025 02:50:19 -0500
-X-MC-Unique: -hFRVLgJMPm3PP2Q3GUCdw-1
-X-Mimecast-MFC-AGG-ID: -hFRVLgJMPm3PP2Q3GUCdw_1765785018
+ us-mta-414-dzlsENvMMma6GIavcsQ4SQ-1; Mon, 15 Dec 2025 02:50:04 -0500
+X-MC-Unique: dzlsENvMMma6GIavcsQ4SQ-1
+X-Mimecast-MFC-AGG-ID: dzlsENvMMma6GIavcsQ4SQ_1765785004
 Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-430fcb6b2ebso414461f8f.2
- for <qemu-devel@nongnu.org>; Sun, 14 Dec 2025 23:50:19 -0800 (PST)
+ ffacd0b85a97d-430fcf10280so408712f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Dec 2025 23:50:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765785016; x=1766389816; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DPzOYGOdSS2nqdUVmE3Appt8FioAsNxMPjypO5wkIkE=;
- b=YMs/Fg4jUGRm87fgou4XR/Bhrrleyr1EP8Xv3B2BcnY4oXeLfgNSpFpk/OHr9wHz6q
- SQ4BHFNujcWzeyFquq+xc54K7IlN2qqwfDvucnm+Os7n+D+WKeQB8kw/wGd2qu/IGyDI
- /hEsPNTzUNCf75sLMCBH5xihMnHF1OXN+L+DB7DiqlQ2H+i+tHLdeOnuSslotreFjno2
- kLNHTP3LpVD5JF0VMljsDo2rHBH9NkL+W3Um2ZCE6ze5fPWftbLT8wEMWv2rayVIqRN3
- wsbOpDlxkTrFVSRC+x2w5rUZEGKvxv80WqQquADqMZKl+Nlh0rywPYb7fS4xMgm0CDX4
- HSBQ==
+ d=redhat.com; s=google; t=1765785003; x=1766389803; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rhRgZBDZXKiwx46WkvcU17DF2Qqr8XZ4jHsnYPyyOuY=;
+ b=cUDfn6CB92rlH6mWTiOPYEItAqP2SzVBDjy5Gw/YhIj+cEoZ0OAraF+iNbbW7RdrEW
+ Z25yFI6OnQgdBC/kWDp2c43As0jiVAqX8AL+32goMDQ/H7fvjrJFzstn5VTiBiIUUwKl
+ YanjBnQax1J5FjnZ9ugVuZupZblL5xPNwE3fXXKe5t2e0L1KR7kmohN2C9Jhjyv4/B2K
+ 6AJzpNpG7ougv+asCPGAB5lzvwS2T8f+xCj54ILzxM3G9/pGhlZvPaS14HEZg97u6AyM
+ F2MbksZTaM620Y1MK7qvEh2c0mKVv+JGJFZpwJqylxOOFJ3lhLb8OKO2k0YsSeafwJtn
+ oN1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765785016; x=1766389816;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DPzOYGOdSS2nqdUVmE3Appt8FioAsNxMPjypO5wkIkE=;
- b=h0g/gP05axahD3W825pT6fz5iVavfEoLtrZWkGSp1y2OsJHeEo9y/Qly50PZkAULDE
- WALsdT4gONdMAxRB1nUSzeu+qjCvuf7jmH61LYdQuBspjC/n3TcYiMKEGXA/0MBZVg47
- W8vd2o1J1crBhdRegxmWbguVEEmPuGnNVvunAPyowcbQrd5Jcljw0MLW5ZEp0zc/tp0K
- RUBzqbGrMfD+W1XtH3a+/5J/+d/WrIhhOW/MsuSkDCfEfx8PdkW5fGnnJfhjFAuSJNNx
- KER3DbDQw7Ov2c6iLr76FV+k+9L1WmouOFlv17WgGenj1KoipdeakRW2ZShn1ZgjGfv5
- ciiw==
-X-Gm-Message-State: AOJu0Ywl3F5Qq1AyQiNwBBpYbZKgFuQt0mpOBTuCqOCd2R7Q+s5Eqy3i
- s19h2wt7/gJXLDB/47AnSo0xmdEEk+pTpvat+jl/FlJY5LLetK/QsaGQ0VTr7LspyHZVlb1rqqV
- Iywk4KfdrU/+UbiO6F2g/b4OPPpvc06SBa0k+JY+KmdAXkBaUEc2ysd9CnFci/3gWx/fv6hUUz+
- 67AWx0r9QxW1NXgne0GfQtJRsCAqGqaNqXufDEARam
-X-Gm-Gg: AY/fxX6M5V/A2v7uomLEbfPv8A2Fs9jZiBot3VTdFiAENUfpMe66cdggEwURpi8qoA7
- lMKxPkIiYZ1bbaUAiG1zkbBL/ow2cxfYm4AsYtwt2QKKmvpVY9kZWfQYYvNi9ko8CIv1RjpA8OP
- y65G8bPw2ZKTc3GgiUasimgZlKHu9/0KGjBAtUdH+xeOE2cRq+o7HpP1DzPcwHrjhcPkQJbsvEu
- ZKyarFiDcidlRNRUQ1oijc4qDO/eMmfV1ZCZ5AgdKedyW06I1HKWpK0rBIh+iZQvIpABNMQc9M7
- ZV4Gch+dMeG93kdvYnDG4gwHyOzRqTpXBPPTe92WXGypH4PZ2NELlsDW6Y4l+VwOunwsLp/MKkE
- +YavDWw2uoHYZjWGM/8Q6kGj3e0NJGOXD9Sk/YfK7YgmIEd43k5v7w69IbY7i7qlz/YD8gJ3eK2
- JBTt6OnrynZ3WdVQA=
-X-Received: by 2002:a5d:5f91:0:b0:431:53:1f49 with SMTP id
- ffacd0b85a97d-431005325c2mr859102f8f.41.1765785016244; 
- Sun, 14 Dec 2025 23:50:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEVf+fWNJzbUzqsCwn5/tL5jAU1Nzlfoy2ugnNqNplrJxc7rJ26wxp+hA28DEWucIkVMS2sQQ==
-X-Received: by 2002:a5d:5f91:0:b0:431:53:1f49 with SMTP id
- ffacd0b85a97d-431005325c2mr859076f8f.41.1765785015766; 
- Sun, 14 Dec 2025 23:50:15 -0800 (PST)
+ d=1e100.net; s=20230601; t=1765785003; x=1766389803;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rhRgZBDZXKiwx46WkvcU17DF2Qqr8XZ4jHsnYPyyOuY=;
+ b=PDnrGiz9Tllr3FWEIQUhACRwyEhYLNEsrAFxchWUP9xtTF/ynwmuGrNpcZOJhjwdXz
+ 8/6lNBo/0DWT3tkL8QUoIFmOaCWIGqtJEqlRfoOvZ8az1hUFlyIH3yDS/9oSMyR0dTYS
+ LRMbA0g2Bnk9UxM4txvvUvUnKWU49EdMLIPAVdmeIxKM//xqPM8IZrFfcb/ybqQfC4Cr
+ 7GESfaTZEqBUNnvuHZXELYJIV953sE0vlJ2Rp/VgSny3e2JhBD/L6m17HH7qu176MPm2
+ UIlBgbk6CKHFHr+1DrRRbK+mGTIIUETE+MzMTzV3OfHuVFDhv4zzdRyDCHRai1QbQ6Xy
+ 87SQ==
+X-Gm-Message-State: AOJu0Yzm1MknHI+A1Te0V/z4/qmoc6sf8xr0g8u/h815xD7WfNnAS8Zg
+ CdlWVN/3utsLluZxcnQJuVSdPMB0xPkqjSs+YgJQHIQ30e98fKh98auGfFi/7012ilr4x2AVUV1
+ eWxN9maeWA8xyGbGO4EPQRWTHoPD+cTEe6mqFOxlRMzYCykwniBMgXGqBGXeXCg9mvg+S0q9DSq
+ SRGIoFjcPVT3tOpiPBb6C44NMkuzA/yAwv+vLvc2Tu
+X-Gm-Gg: AY/fxX49uEsd/jiyfrMw9nljGsqv7jnuQBOewBxbfi4+W8s15k47KM2ejphNyHXkZie
+ sp1teiCy6395DUBZZMN64uRvTygMvW2A2etLbJX+gf87ZjIZONyZraZteTqoNCGAya7i9wu83s0
+ 967LX37Bf17OUXDztZECum2kxCKyjUeiLbD1wdKn00mhvH82+DijFyCuVpLjoqCNHw00GWAxPRV
+ i9fiFhRC+44iFpIkCihtS4h146Ira00QRHF0glHmmmS71Ry/wxhtHZ4LeLgd0ah0+7uiieX9jBM
+ Ax1PcX3cbA9Tlf/hRPQxcg2rDBBUx/5dzP5LU9vL/KNdjS5vFH7BgEiWXKbwOO4vloqRrxZD58N
+ QixXCBDbrEdA7T+XwxuJZCzH436M1TXG8YTQ7rkJYO/5tzvbGvR+y6k+swTWalIX+/6l+zvgP32
+ +tcG+OxsmrZb8W7QQ=
+X-Received: by 2002:a05:6000:1848:b0:430:f97a:6f43 with SMTP id
+ ffacd0b85a97d-430f97a7049mr3814573f8f.53.1765785002653; 
+ Sun, 14 Dec 2025 23:50:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHqzWkYCtIQMI05pCrS1XC2FNK/o+lp8XHVZDoel7bKB7gBh1YsDB/HKtBXjnGc+4FKCfjVyg==
+X-Received: by 2002:a05:6000:1848:b0:430:f97a:6f43 with SMTP id
+ ffacd0b85a97d-430f97a7049mr3814541f8f.53.1765785002097; 
+ Sun, 14 Dec 2025 23:50:02 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-430f268d459sm12450206f8f.32.2025.12.14.23.50.14
+ ffacd0b85a97d-42fa8b9b26fsm29771952f8f.40.2025.12.14.23.50.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Dec 2025 23:50:14 -0800 (PST)
+ Sun, 14 Dec 2025 23:50:01 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	marcandre.lureau@redhat.com
-Subject: [PATCH 05/11] rust: only link the Rust part of the code into devices
-Date: Mon, 15 Dec 2025 08:49:54 +0100
-Message-ID: <20251215075000.335043-6-pbonzini@redhat.com>
+Subject: [PATCH for 11.0 00/11] First batch of Meson/Rust build system changes
+Date: Mon, 15 Dec 2025 08:49:49 +0100
+Message-ID: <20251215075000.335043-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251215075000.335043-1-pbonzini@redhat.com>
-References: <20251215075000.335043-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -123,86 +120,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not include libqemuutil in the device crates for the same
-reason as in the previous commit.  Static libraries like qemuutil
-are sensitive to their position on the command line and rustc does not
-always get it right.
+By bumping the minimum supported version of Meson to 1.10.0 (at least
+when --enable-rust is used), C objects can be passed to Rust targets.
+This allows to simplify the build process, and possibly also to link
+the executables dynamically linking to Rust's libstd which makes them
+smaller.
 
-If rustc places the library too early on the command line, the stubs
-are included in the final link product, which results in duplicate
-symbols.
+The major snag here is that QEMU wants to be very explicit about the order
+of libraries on the command line.  rustc has a normally useful feature
+where it records dependent static libraries and adds them to the linker
+automatically, but for us it messes up libqemuutil.a's stubs mechanism.
+This is fixed (or worked around depending on how you see it) by patches
+4 and 5.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/hw/char/pl011/meson.build | 18 ++++++++++--------
- rust/hw/timer/hpet/meson.build | 18 +++++++++---------
- 2 files changed, 19 insertions(+), 17 deletions(-)
+Meson 1.10.0 also contains some bugfixes such that Rust can now also be
+added to the Windows and macOS CI jobs.  This reveals a few more bugs,
+such as the ones fixed in patch 1 and 8.
 
-diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
-index 33b91f21911..9c0e8290e9a 100644
---- a/rust/hw/char/pl011/meson.build
-+++ b/rust/hw/char/pl011/meson.build
-@@ -28,20 +28,22 @@ _libpl011_rs = static_library(
-   ),
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-+  link_with: [
-+    _util_rs,
-+    _migration_rs,
-+    _bql_rs,
-+    _qom_rs,
-+    _chardev_rs,
-+    _system_rs,
-+    _hwcore_rs,
-+    _trace_rs
-+  ],
-   dependencies: [
-     bilge_rs,
-     bilge_impl_rs,
-     bits_rs,
-     common_rs,
-     glib_sys_rs,
--    util_rs,
--    migration_rs,
--    bql_rs,
--    qom_rs,
--    chardev_rs,
--    system_rs,
--    hwcore_rs,
--    trace_rs
-   ],
- )
- 
-diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
-index 9a3dd62caa3..3bb7ce2a6ca 100644
---- a/rust/hw/timer/hpet/meson.build
-+++ b/rust/hw/timer/hpet/meson.build
-@@ -3,16 +3,16 @@ _libhpet_rs = static_library(
-   files('src/lib.rs'),
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
--  dependencies: [
--    common_rs,
--    util_rs,
--    migration_rs,
--    bql_rs,
--    qom_rs,
--    system_rs,
--    hwcore_rs,
--    trace_rs,
-+  link_with: [
-+    _util_rs,
-+    _migration_rs,
-+    _bql_rs,
-+    _qom_rs,
-+    _system_rs,
-+    _hwcore_rs,
-+    _trace_rs,
-   ],
-+  dependencies: [common_rs],
- )
- 
- rust_devices_ss.add(when: 'CONFIG_X_HPET_RUST', if_true: [declare_dependency(
+Finally, Meson 1.10.0 improves Meson's embedded Cargo.toml/Cargo.lock
+interpreter, but those changes are still mostly internal and the
+interpreter cannot be used yet.  The required changes are planned for
+1.11.0; Marc-André already played with them for his GStreamer audio
+backend, and a couple more users are hanging out and helping on the
+#meson IRC channel, too.  Once this functionality is merged, it will
+replace a few hundreds lines of meson.build code and will make it simpler
+to add new devices.
+
+I still expect that the --enable-rust option will require bleeding
+edge Meson for a good part of next year.  However, as was the case for
+the original switch to Meson, this will smooth out and Meson will have
+improved much for the whole ecosystem.
+
+Paolo
+
+Marc-André Lureau (2):
+  cirrus/macos: enable Rust
+  gitlab-ci: enable rust for msys2-64bit
+
+Martin Kletzander (1):
+  rust: Do not link qemuutil into Rust rlibs
+
+Paolo Bonzini (8):
+  build: do not include @block.syms/@qemu.sys with modules disabled
+  tests/meson: do not reuse migration_files variable
+  bump meson wheel to 1.10.0
+  rust: only link the Rust part of the code into devices
+  rust: Meson now adds -Cdefault-linker-libraries
+  meson: let Meson handle mixed-language linking of Rust and C objects
+  rust: skip compilation if there are no system emulators
+  lcitool: enable Rust for Windows cross targets
+
+ configure                                     |   4 +-
+ meson.build                                   |  36 +++++++-----------
+ .gitlab-ci.d/cirrus.yml                       |   2 +-
+ .gitlab-ci.d/windows.yml                      |   7 +++-
+ python/scripts/vendor.py                      |   4 +-
+ python/wheels/meson-1.10.0-py3-none-any.whl   | Bin 0 -> 1057029 bytes
+ pythondeps.toml                               |   4 +-
+ rust/chardev/meson.build                      |   2 +-
+ rust/hw/char/pl011/meson.build                |  18 +++++----
+ rust/hw/timer/hpet/meson.build                |  18 ++++-----
+ rust/meson.build                              |   7 ++++
+ rust/qom/meson.build                          |   2 +-
+ rust/util/meson.build                         |   4 +-
+ scripts/rust/rust_root_crate.sh               |   1 +
+ .../dockerfiles/fedora-win64-cross.docker     |   2 +
+ tests/lcitool/refresh                         |   5 +--
+ tests/qtest/meson.build                       |   6 +--
+ 17 files changed, 64 insertions(+), 58 deletions(-)
+ create mode 100644 python/wheels/meson-1.10.0-py3-none-any.whl
+
 -- 
 2.52.0
 
