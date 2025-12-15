@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A84D9D5B868
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1378D5B86E
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 20:54:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVFYO-0006J9-KK; Mon, 15 Dec 2025 15:52:24 -0500
+	id 1vVFYr-0006h8-4F; Mon, 15 Dec 2025 15:52:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVFYN-0006GE-AM
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 15:52:23 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVFYQ-0006KQ-7s
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 15:52:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVFYL-0005nN-JO
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 15:52:23 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVFYO-0005pq-3i
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 15:52:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765831940;
+ s=mimecast20190719; t=1765831943;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pgZrEo4/DY4n0337ei0aQoLyE7/lInlTug5w3FqBW0I=;
- b=F2eXU03i59s9dBkfgRSb/DZKPlpd3SAzVJnOA6Rw575R4XNceRdPcSCw2JA6MymBgsLZXx
- KI31CjeE3AkQkoOCJq8+hQEXigwIxgUocjrrWVlNJ7HJGQ5QlJbjHH7+sNjlQ+7dq83bf2
- h9UKG1wMA2g5p7e259Lsw2KiuiJuRws=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JnMxtrXTusXMIXSRjsHu7VxCqHT0zBV4fsUGeGwSgkQ=;
+ b=eDEHr8UhMiOCGy9HVOtkLa568KU+aZDb2m06riB1gRFKr+QO3tcZ+e/qkuvKA7VC7MfGCA
+ OJgK8oADJ+9IhYPMAxD1nEZMQ77RzpKOsX8YojY9mwlisYrhx0ZUeOYay+HRW1ig18wZZe
+ AaJ69O+r/d3LtUwj+sS/b0+XTOnsKbE=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-139-Xa0uwzi3NL6kH-wCPpophQ-1; Mon, 15 Dec 2025 15:52:19 -0500
-X-MC-Unique: Xa0uwzi3NL6kH-wCPpophQ-1
-X-Mimecast-MFC-AGG-ID: Xa0uwzi3NL6kH-wCPpophQ_1765831939
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8804b991976so90829216d6.2
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 12:52:19 -0800 (PST)
+ us-mta-319-xOFcFoHeM06gmoiraHEPSQ-1; Mon, 15 Dec 2025 15:52:22 -0500
+X-MC-Unique: xOFcFoHeM06gmoiraHEPSQ-1
+X-Mimecast-MFC-AGG-ID: xOFcFoHeM06gmoiraHEPSQ_1765831942
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-88a3356a310so44021206d6.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 12:52:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765831939; x=1766436739; darn=nongnu.org;
+ d=redhat.com; s=google; t=1765831941; x=1766436741; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pgZrEo4/DY4n0337ei0aQoLyE7/lInlTug5w3FqBW0I=;
- b=lxpBAfOgWheQbfboNL2S5f127AkyggSiYDF/jbH/gPr5Go19ggjJsg7aSnK3K2UTMy
- N/7UOw9vxqEfSe1YtbCNNNJMN0yg43nq3jr6iYZuMmykGFOXn3Jz8+hk/3JgqXq5Jxds
- 2xkPXdyVTLf58VGcRPdCUl3Qwf4zvG15lFmEXJUWPg7HRFMOniANwok6nV5YQpMCtWge
- fqEx88afOoXVxnKKUCjfEoeU+OU/pQPJEK4eM3zoWJL1j3xkyJNklD/cnQ+QvWGbs3j6
- CzLb54YAbjTJ+4t5Hsri8mrMeWoI6J74NEpFewskVp6ef+iWL1q372qq4lqOasKhkPzg
- muUQ==
+ bh=JnMxtrXTusXMIXSRjsHu7VxCqHT0zBV4fsUGeGwSgkQ=;
+ b=N4rr5RQajsueO6oxhheyafh30BvZcaLsAAKAMzXnoS+HSHKuXoJgndFyRN+mcdGDMX
+ fu1KY2+lYFWIkzZPJ4eyNsYmIuNQ2aaApToJjvP5FcxxCRNUHGyU+vznLtdEHlRCb9nK
+ erF4ngPgiKt1KLMGY8/KZnFbCT4+obFSyZs0oF5izvOiMMftnUPwP2E39X3oJzOLJNO2
+ B3BOUoX3kz//yx3l/EvH7Oq64vP8EQLE7N3IMOn4jrVQN5BrpDHja/0YbZ0fbeHy8TKR
+ cw9ONBf46ZZCm6p5r0IZIpgYR5NKhIRtVxDncjLI1/eo393GSMD/UWI9XCeBSyFKtUZc
+ f9iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765831939; x=1766436739;
+ d=1e100.net; s=20230601; t=1765831941; x=1766436741;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=pgZrEo4/DY4n0337ei0aQoLyE7/lInlTug5w3FqBW0I=;
- b=NwBFOycNGdAbfSG4fzfuiQF9rLa6TmqAIwH1Klhy3cDEFX5Byjkav8vaTiWU2AvVlm
- Hhln9nRz9y8CIG0AR2tK7vTUNKmtkBqrWHxOT5Cwl0di4w0RDBCwYFc+JBzLLGk+xLJU
- un8l9Grz2vj31Ec1JWfkCbdqDQUZxL3K/0jDhRw1mCUvYlLa+teWJDxDdYJLbwb+PRZa
- x+TMDYQp8tR80fcA7OQvwAVdTo7ZRkRghHlc04b7WeqvHRx0F6lNez5aKg1PIZlxl6P3
- uE3IXzATQwqR2fDASm+EWbCtRD4nPkvuC36bPPKzMwYRTV/MT5tSU+2/ShlnhTGLVYat
- oUCg==
-X-Gm-Message-State: AOJu0YxYrPfLX0R+Jii+WEguc2n7MoTrvg0b4cxWBsNp4LWZbkKpj/Wi
- o2pySACrFEGGj9oRbFory0F2mzvPnK4hJ/jHmyKN23YaH2vLo+6pYwVvr4OX8GSfg3KeBWZkgFr
- CRsidFIfE+lcChvhYsFB2adWo84fspA5RhptmOsQSElrOvPumtnQceQwTq3Llgd2iZuiQ4Jze4e
- iFhY6TMSC8fptmKPxALATDgE2/ZU+UN4cZpyVzpg==
-X-Gm-Gg: AY/fxX70suwIOLC4lkEZ5/4pSkSFfYe/5MzZX9YM25gmGro5S2JVASvV3dYaMKn5aRO
- Gu77a+hSJCsdsQOMT8ETuwf8d/r0wiBAL5FkPiuWv6TfC4UcgPrZyQxnw/xhs8iZ+4PnTnqgtS1
- +Vf/WkUNqHMHWgHC0lmzbbKipg3QL2r1TSvAcIH7afTBvR7GlQ/bqu33tREXCetpHz0Uj7GoEkw
- UXZwFl3SA1SZ5psYx6gUQvUNTtizpJwUpg8MziUbCJDPzuVGoAQAbduppJVTufEm7FePbigRbUp
- xyMyVCcZHxRiaKbMKaCzbJpD7SIA2/B+MfNYjazyRsII/xIvv8xao8zcv/3OA9ep1E5IlnGEB03
- f
-X-Received: by 2002:a05:6214:3203:b0:880:1f14:e086 with SMTP id
- 6a1803df08f44-8887e191605mr184204176d6.64.1765831938615; 
- Mon, 15 Dec 2025 12:52:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHoWT7Liw+FSuMicaSV6vJRL/U+RxelNOAeH+dUvt0vjndwRP2wr7owEmhrCCI0JCtcigKmNg==
-X-Received: by 2002:a05:6214:3203:b0:880:1f14:e086 with SMTP id
- 6a1803df08f44-8887e191605mr184203726d6.64.1765831938119; 
- Mon, 15 Dec 2025 12:52:18 -0800 (PST)
+ bh=JnMxtrXTusXMIXSRjsHu7VxCqHT0zBV4fsUGeGwSgkQ=;
+ b=C1fUIU4SkptxTrbNyXGGf0dAyncT8/+8yUHkAqWxiPp1u5TUpLG2OSGJFoSiOeSGb6
+ Mpey97rPaOSpP8K1jyiJflMjU6Joxd5b2bIwffLMn8o3ybSnUBphFxC8aWoSau/PaYtL
+ IN7vb+G54ltHKjlgULU7YCEAlXIVhgN8hlJlUvGZFioeoSWSVWS2cr/9vLT/nvnVre2/
+ dEmm77LWd/SYxgjDIlpZ+tbJQ9dOTP6dEY2Is5uCA0+TdarVl/uF1pGKdA6NnceGxdhf
+ pPG9xWKES8ibpudjnjanoqbrAl6Au1CFiXuajkWmdXSUlHsa0zNguESFsKf/n8ezKQZU
+ FuRA==
+X-Gm-Message-State: AOJu0YwbkshF2Tv0l8H1wiYarVJAOoIBYm6bdi8ZMavUvGqF4DWtloNY
+ u+LEnwUq5ntDWgetNgPTS+GJkiXqzrjmU16hhwQBmHhOzvz+Ccqdk+ifBreZ+SNaci8/aXzTEEc
+ oqPpwbfY6lyW1nrLOsMB+VpWvtn1aTLi19ifxhKKNOdpF/YA4SRKAH1QDkGzCnhuhCVO6lX5i2J
+ XO9n+nLovF7Sbh8YU/R5gVqlDbg5poQvl2To1jyQ==
+X-Gm-Gg: AY/fxX6VoPLsSGuZmQRcPNs2Ogo/g95sKJeeQXs9E4iSR7kdNahLr8j3e4Hbi42pIKW
+ 3TAaDAeFB4NYdBC8j3YDr6zhNG5h4o5mgkt8hgFM+9kHGdSg27Sfh3H4o+9gc3Abgt/9R3WPLHW
+ vn/1d0k4uCALorCdgJHaG/W7PrqUmPxT3+GZJsIRNgPo0KW3pINexVqGGzn7VgtQd/Ly+rFx24S
+ NhH7Cp3TvyEhiC3XMFpZNCDwx9oj2plGTcvvgy7/ejW8p4tccSse8uVPEpnB2r0X/7quXkeGsx1
+ GzrMsnO0k2XBfzWAAZ5OzxTlh+mSjp82wClDEEcfR1Hg1NWANvjnhVMY8Ya1i3/+BvqJzQpGoYK
+ F
+X-Received: by 2002:a05:6214:5bc6:b0:882:3bc7:1909 with SMTP id
+ 6a1803df08f44-8887e0fd8dfmr173823336d6.37.1765831941429; 
+ Mon, 15 Dec 2025 12:52:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEtC2B1Bs+WJtJ64cYFnO/hAfp9LsJnsdyV8d0bJxMXIFybc8OnE4R7KhEcp1u29oA52MWTIg==
+X-Received: by 2002:a05:6214:5bc6:b0:882:3bc7:1909 with SMTP id
+ 6a1803df08f44-8887e0fd8dfmr173822966d6.37.1765831940959; 
+ Mon, 15 Dec 2025 12:52:20 -0800 (PST)
 Received: from x1.com ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8899ea3621bsm58726236d6.36.2025.12.15.12.52.16
+ 6a1803df08f44-8899ea3621bsm58726236d6.36.2025.12.15.12.52.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Dec 2025 12:52:17 -0800 (PST)
+ Mon, 15 Dec 2025 12:52:20 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, David Hildenbrand <david@kernel.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Chenyi Qiang <chenyi.qiang@intel.com>,
  peterx@redhat.com, Fabiano Rosas <farosas@suse.de>,
  Alexey Kardashevskiy <aik@amd.com>, Li Xiaoyao <xiaoyao.li@intel.com>
-Subject: [PATCH v3 08/12] hostmem: Support fully shared guest memfd to back a
- VM
-Date: Mon, 15 Dec 2025 15:51:59 -0500
-Message-ID: <20251215205203.1185099-9-peterx@redhat.com>
+Subject: [PATCH v3 10/12] memory: Rename memory_region_init_ram_guest_memfd()
+ to *_private()
+Date: Mon, 15 Dec 2025 15:52:01 -0500
+Message-ID: <20251215205203.1185099-11-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20251215205203.1185099-1-peterx@redhat.com>
 References: <20251215205203.1185099-1-peterx@redhat.com>
@@ -122,145 +122,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Host backends supports guest-memfd now by detecting whether it's a
-confidential VM.  There's no way to choose it yet from the memory level to
-use it fully shared.  If we use guest-memfd, it so far always implies we
-need two layers of memory backends, while the guest-memfd only provides the
-private set of pages.
+Differenciate it from fully shared guest-memfd use cases.
 
-This patch introduces a way so that QEMU can consume guest memfd as the
-only source of memory to back the object (aka, fully shared).
-
-To use the fully shared guest-memfd, one can add a memfd object with:
-
-  -object memory-backend-memfd,guest-memfd=on,share=on
-
-Note that share=on is required with fully shared guest_memfd.
-
-PS: there's a trivial touch-up on fd<0 check, because the stub to create
-guest-memfd may return negative but not -1.
-
+Suggested-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- qapi/qom.json            |  6 ++++-
- backends/hostmem-memfd.c | 53 ++++++++++++++++++++++++++++++++++++----
- 2 files changed, 53 insertions(+), 6 deletions(-)
+ include/system/memory.h | 10 +++++-----
+ backends/igvm.c         |  4 ++--
+ hw/i386/pc.c            |  4 ++--
+ hw/i386/pc_sysfw.c      |  4 ++--
+ hw/i386/x86-common.c    |  4 ++--
+ system/memory.c         | 10 +++++-----
+ 6 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index 6f5c9de0f0..9ebf17bfc7 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -763,13 +763,17 @@
- # @seal: if true, create a sealed-file, which will block further
- #     resizing of the memory (default: true)
- #
-+# @guest-memfd: if true, use guest-memfd to back the memory region.
-+#     (default: false, since: 11.0)
-+#
- # Since: 2.12
- ##
- { 'struct': 'MemoryBackendMemfdProperties',
-   'base': 'MemoryBackendProperties',
-   'data': { '*hugetlb': 'bool',
-             '*hugetlbsize': 'size',
--            '*seal': 'bool' },
-+            '*seal': 'bool',
-+            '*guest-memfd': 'bool' },
-   'if': 'CONFIG_LINUX' }
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 9b58303bb8..b3d000a563 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -1693,11 +1693,11 @@ bool memory_region_init_ram(MemoryRegion *mr,
+                             uint64_t size,
+                             Error **errp);
  
- ##
-diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
-index ea93f034e4..9299cd7675 100644
---- a/backends/hostmem-memfd.c
-+++ b/backends/hostmem-memfd.c
-@@ -18,6 +18,8 @@
- #include "qapi/error.h"
- #include "qom/object.h"
- #include "migration/cpr.h"
-+#include "system/kvm.h"
-+#include <linux/kvm.h>
+-bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
+-                                        Object *owner,
+-                                        const char *name,
+-                                        uint64_t size,
+-                                        Error **errp);
++bool memory_region_init_ram_guest_memfd_private(MemoryRegion *mr,
++                                                Object *owner,
++                                                const char *name,
++                                                uint64_t size,
++                                                Error **errp);
  
- OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
- 
-@@ -28,6 +30,13 @@ struct HostMemoryBackendMemfd {
-     bool hugetlb;
-     uint64_t hugetlbsize;
-     bool seal;
-+    /*
-+     * NOTE: this differs from HostMemoryBackend's guest_memfd_private,
-+     * which represents a internally private guest-memfd that only backs
-+     * private pages.  Instead, this flag marks the memory backend will
-+     * 100% use the guest-memfd pages in-place.
-+     */
-+    bool guest_memfd;
- };
- 
- static bool
-@@ -47,11 +56,26 @@ memfd_backend_memory_alloc(HostMemoryBackend *backend, Error **errp)
-         goto have_fd;
+ /**
+  * memory_region_init_rom: Initialize a ROM memory region.
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 905bd8d989..91631829e5 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -221,8 +221,8 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
+             g_strdup_printf("igvm.%X", region_identifier);
+         igvm_pages = g_new0(MemoryRegion, 1);
+         if (ctx->cgs && ctx->cgs->require_guest_memfd) {
+-            if (!memory_region_init_ram_guest_memfd(igvm_pages, NULL,
+-                                                    region_name, size, errp)) {
++            if (!memory_region_init_ram_guest_memfd_private(
++                    igvm_pages, NULL, region_name, size, errp)) {
+                 return NULL;
+             }
+         } else {
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index b2d55ceb5e..41dfbbdcf0 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -963,8 +963,8 @@ void pc_memory_init(PCMachineState *pcms,
+     if (!is_tdx_vm()) {
+         option_rom_mr = g_malloc(sizeof(*option_rom_mr));
+         if (machine_require_guest_memfd_private(machine)) {
+-            memory_region_init_ram_guest_memfd(option_rom_mr, NULL, "pc.rom",
+-                                            PC_ROM_SIZE, &error_fatal);
++            memory_region_init_ram_guest_memfd_private(
++                option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE, &error_fatal);
+         } else {
+             memory_region_init_ram(option_rom_mr, NULL, "pc.rom", PC_ROM_SIZE,
+                                 &error_fatal);
+diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
+index 1c37258654..ad55d4eba6 100644
+--- a/hw/i386/pc_sysfw.c
++++ b/hw/i386/pc_sysfw.c
+@@ -53,8 +53,8 @@ static void pc_isa_bios_init(PCMachineState *pcms, MemoryRegion *isa_bios,
+     /* map the last 128KB of the BIOS in ISA space */
+     isa_bios_size = MIN(flash_size, 128 * KiB);
+     if (machine_require_guest_memfd_private(MACHINE(pcms))) {
+-        memory_region_init_ram_guest_memfd(isa_bios, NULL, "isa-bios",
+-                                           isa_bios_size, &error_fatal);
++        memory_region_init_ram_guest_memfd_private(
++            isa_bios, NULL, "isa-bios", isa_bios_size, &error_fatal);
+     } else {
+         memory_region_init_ram(isa_bios, NULL, "isa-bios", isa_bios_size,
+                                &error_fatal);
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index 33ac7fb6e9..27854a9164 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -1045,8 +1045,8 @@ void x86_bios_rom_init(X86MachineState *x86ms, const char *default_firmware,
+         goto bios_error;
      }
- 
--    fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
--                           m->hugetlb, m->hugetlbsize, m->seal ?
--                           F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
--                           errp);
--    if (fd == -1) {
-+    if (m->guest_memfd) {
-+        /* User choose to use fully shared guest-memfd to back the VM.. */
-+        if (!backend->share) {
-+            error_setg(errp, "Guest-memfd=on must be used with share=on");
-+            return false;
-+        }
-+
-+        /* TODO: add huge page support */
-+        fd = kvm_create_guest_memfd(backend->size,
-+                                    GUEST_MEMFD_FLAG_MMAP |
-+                                    GUEST_MEMFD_FLAG_INIT_SHARED,
-+                                    errp);
-+    } else {
-+        fd = qemu_memfd_create(TYPE_MEMORY_BACKEND_MEMFD, backend->size,
-+                               m->hugetlb, m->hugetlbsize, m->seal ?
-+                               F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL : 0,
-+                               errp);
-+    }
-+
-+    if (fd < 0) {
-         return false;
-     }
-     cpr_save_fd(name, 0, fd);
-@@ -65,6 +89,18 @@ have_fd:
-                                           backend->size, ram_flags, fd, 0, errp);
+     if (machine_require_guest_memfd_private(MACHINE(x86ms))) {
+-        memory_region_init_ram_guest_memfd(&x86ms->bios, NULL, "pc.bios",
+-                                           bios_size, &error_fatal);
++        memory_region_init_ram_guest_memfd_private(
++            &x86ms->bios, NULL, "pc.bios", bios_size, &error_fatal);
+         if (is_tdx_vm()) {
+             tdx_set_tdvf_region(&x86ms->bios);
+         }
+diff --git a/system/memory.c b/system/memory.c
+index d70968c966..28810dcb29 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3746,11 +3746,11 @@ bool memory_region_init_ram(MemoryRegion *mr,
+     return true;
  }
  
-+static bool
-+memfd_backend_get_guest_memfd(Object *o, Error **errp)
-+{
-+    return MEMORY_BACKEND_MEMFD(o)->guest_memfd;
-+}
-+
-+static void
-+memfd_backend_set_guest_memfd(Object *o, bool value, Error **errp)
-+{
-+    MEMORY_BACKEND_MEMFD(o)->guest_memfd = value;
-+}
-+
- static bool
- memfd_backend_get_hugetlb(Object *o, Error **errp)
+-bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
+-                                        Object *owner,
+-                                        const char *name,
+-                                        uint64_t size,
+-                                        Error **errp)
++bool memory_region_init_ram_guest_memfd_private(MemoryRegion *mr,
++                                                Object *owner,
++                                                const char *name,
++                                                uint64_t size,
++                                                Error **errp)
  {
-@@ -152,6 +188,13 @@ memfd_backend_class_init(ObjectClass *oc, const void *data)
-         object_class_property_set_description(oc, "hugetlbsize",
-                                               "Huge pages size (ex: 2M, 1G)");
-     }
-+
-+    object_class_property_add_bool(oc, "guest-memfd",
-+                                   memfd_backend_get_guest_memfd,
-+                                   memfd_backend_set_guest_memfd);
-+    object_class_property_set_description(oc, "guest-memfd",
-+                                          "Use guest memfd");
-+
-     object_class_property_add_bool(oc, "seal",
-                                    memfd_backend_get_seal,
-                                    memfd_backend_set_seal);
+     DeviceState *owner_dev;
+ 
 -- 
 2.50.1
 
