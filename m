@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F7BD5B170
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA442D5B85E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:49:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVCSb-0004SJ-Lm; Mon, 15 Dec 2025 12:34:15 -0500
+	id 1vVCgu-0000Oy-N5; Mon, 15 Dec 2025 12:49:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vVCRe-0004D4-TB
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:33:22 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <marcmorcos@google.com>)
+ id 1vVCgs-0000Ob-W6
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:48:59 -0500
+Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vVCRc-0001XG-Rt
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:33:14 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-477ba2c1ca2so42546235e9.2
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 09:33:11 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcmorcos@google.com>)
+ id 1vVCgr-0005bJ-9B
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:48:58 -0500
+Received: by mail-vk1-xa34.google.com with SMTP id
+ 71dfb90a1353d-559748bcf99so2962697e0c.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 09:48:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765819990; x=1766424790; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hdkqHWSQoIB6A9wzwsDWUJvd0/FbziOQd0nBqRN7giU=;
- b=eQbU5IK8vwn2ssjbDPypzqN6pUp6dyhvxxK/wls4ebRqOLuEfsMypa35TBEHXUHOMC
- qHcG60QoRk2Km36uW5Q0ofHz4kv+3h0vPRZuseIMP08OD8eeeASPEXCzcPKX+yUsR0JT
- 8aou2Obi06+odJDD28kybQ2uiFwKMB0uAX7oAC7ckJFnQuVMSY9MB6Vs16yJxC4sWTOp
- hRqQr1vZQ+1TthduJjNYteEc1VhlO6ITxqgD01Ui9BVk0Srk45JHJhoXQoDcbAdkJfCQ
- 1arDF9Y4/2XqIzcM0cUgjCIOzoo3JNU9/6Hfmzfxm56pW67ZTjEfCm/+/qQx4No7aqIy
- 97uA==
+ d=google.com; s=20230601; t=1765820935; x=1766425735; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=FI7UcnmRmSjYBv7OLwGuk+M9ZTcTnewwPCw0e97p1Ek=;
+ b=E2F2Q1+RACB+9g0CqItAaOkrE0PSfKxfUJboNnDawI4qAhhDLVD2LzIntVA7LI8KGR
+ aUFv14qbXmV6P5wTdYuquWUhRyvpIY2CMMFdB5Xy6AdUYyKUdY6Rh4XWhW8W8eHvTJ2d
+ BHHpWamW5vh0Fw84cWa1Lj6Yg3R+TcTSWs4dGRqWpfTcPlkY3SB4REo5WpnXqdZ8LBPl
+ 01/47/ERp3n+T2UVAnyHOHBBxbIVxfKdZXV79c2Bf4poijE8dqbyxVox4Fd9SByP8Qjv
+ aN97Vif80jtRRHZ6EWdO+xlnBI3GQB+n5fGPz9OY8vGExF6IEvSy1GQxgUAv/zQ2131e
+ /F0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765819990; x=1766424790;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hdkqHWSQoIB6A9wzwsDWUJvd0/FbziOQd0nBqRN7giU=;
- b=pL1ZV46EHAnsK0XkothyVYgU+HKPzkj4tPbA03XaxErKEIS4pU01B87wdR4SMqvF+A
- n0VBtAoNxi9KYQj/hRXkbWezp604HilH03mCkHagmZ7mhcR1jqFac5hkyE/tx7ZUGlJQ
- 02EE4uN09vJe/+qJzxTTTLFkmGOi9bZg8SVOnCSIK7seL8R3U4rn1gN9BGbHF09FN4sg
- YU0gmrOrkc8vjM/Nx9ciLu3ZJg1JzoIsKoI77a0yzkRjirVoU+jJVEURScOCHwDZXI/6
- bnCm2Eb7Uo/g1TtOJBVXnPgrzp48oYHtBn7TMgPNvFpUx+SwPe5NkUxVfNjt4NK4fIZC
- XIIg==
+ d=1e100.net; s=20230601; t=1765820935; x=1766425735;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FI7UcnmRmSjYBv7OLwGuk+M9ZTcTnewwPCw0e97p1Ek=;
+ b=Z9JtHBw/t1msNiVoQU0c/HwOT3pu35mNSW3BmhZLVMazN5vvH+ltsamLj3ULUyLe/S
+ io4H6R33LCP9KY176JrfMwmbfIj9Y+CC3PdSEcfbtRWXFWxO6OpZtszDIpCCcCMu4tge
+ WNZWC81ACx6+a086lAMfKwHIspvYOABz379GNZ/0/1igXsO6A4+6tVqYZMbvvS0VwVSI
+ wULVAqIYUu1rMMinxRHlHhjEPJWJZASGHzeC6nmphmcbDpvuCWA5b/7z3fiHcpSY4YxS
+ n2VoBbtWBryUNzY19B9jOSbVuhv0SIm/FiYjqDXbAEA1RMx5fXyQdAxMWepHHT3AOfIn
+ OqWQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVgqQZJ+/DkFjAiiU+Ixu+IzNrBO6+h0WzzLgUCWPPjasnyct3U1rmtHisMijudzdk/3bKWuALecyIO@nongnu.org
-X-Gm-Message-State: AOJu0Ywlr8i7kasAnsJhC+qnV/uxVArASfC6Oph+HI3A9VyDUzyxo16W
- oBb2PlGPfA2acsYpEhMOHWBMQ7rd9vHIAIzMTRZkZRPcQ6xe9DrU8CafvUbihzJK23e1kkpspKC
- LhhM/9sE=
-X-Gm-Gg: AY/fxX7YFaHqBnh+FiFwH7+3JTUUUwk3QxoAsC78Sunlktk3vZnrc41sHzmHoYw396r
- v79T+poxn/VG4gO5pTYvb1+ftA0+fbjSYlCTKzIHWAKblO79Wi2MOreqhGbfPS+a9AaTBf7ZTEO
- dZLyiF7oL8R0qf2Ey+KfsIPAoqH8aamvevFlsllEHYuqS3HObIUaaE0gF33JfNWVOoQjk4aPGLL
- y+OSOaU7m9lk2bb2PdARI9D+gNX2WCCGOV3UrvbF1XSRNORhplzCq5c1B64BXOG+alSySKC98sS
- 7p7SR9kMjpw54+APUlpdODh/NF9qbMPRzhh8PSKGHCn8+MrRkei9TxjsNtmcLcwngrap+T86wWy
- sR81Sxrt+z2chxSuOG6G4NKTfg+VEkJcKxSdnxYyvHWBkxZgcpaJcs/W/jAHHm+yxXDBj41I65t
- j+bRJyLAplTR3a0ISmYLDHeflVeoH7MCVcpw79V6cF75+KYenRzu4XCu6DnyK2wZ7s
-X-Google-Smtp-Source: AGHT+IE8rc2Kgj3Xng/28vnTCzW+Pqz6y4F6UK2bFOhZES/v6OB0NcqMQEk0Y2ESPimB9FBQgwLrMg==
-X-Received: by 2002:a05:600c:6208:b0:477:aed0:f40a with SMTP id
- 5b1f17b1804b1-47a8f90392dmr107864265e9.19.1765819990266; 
- Mon, 15 Dec 2025 09:33:10 -0800 (PST)
-Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-430fc36c83fsm9218829f8f.19.2025.12.15.09.33.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Dec 2025 09:33:09 -0800 (PST)
-Message-ID: <334a8388-d275-4e08-a2a3-fcf0ead81674@linaro.org>
-Date: Mon, 15 Dec 2025 18:33:08 +0100
+ AJvYcCV1UFbgYhSmbFgyObRirhvCXdv0rE8Lc3Z1tKWQgCDPaa+9wQ1LY2vZ+X9haSnbx2rAS4sle4ylF0i4@nongnu.org
+X-Gm-Message-State: AOJu0YwnI/zbGioDnu7/CWjFIY2who3F/zZ5XJbXKIIQ1wg2EQ/9OT1Q
+ xJAS1WIegxVvlx6F8ynzyG8fU3S51xRB179uaAXDI4QuW12CD65P2VveHIAcXEkGcLiXYxGq7b2
+ dfO3PgmnkDnxqjCstmWLh6LJXXYeGBP8OAML8G8HW
+X-Gm-Gg: AY/fxX5ulUPiF85d/5a3w3BNZIDHTHHRql3Ert9q25cx/20BKshWXL7BJwMtg/m16T8
+ 3m/j9hJkspJiaeY/GMa/tPwi8Mrkh63vXDI/rO9rb0xrToN8LbEX7zbaLw27FU0tLhNV5BeNjpL
+ ezQxKC4hqL0GLG2s94iP74WgwMHBL+1XerqSd3YZa5kKm4uHRkWE6OhnMHVcWLmW/ZSfTQKJs0l
+ VDudMVjXcCJ+37wLSIibhxboHExbewQNVhGSHQRXn0Y8AFowssHeNpwk4VVvOpbEy7oHJpzuRbE
+ MIsl8m1TfBkjSJdr5oqnJlcv4J6kF8Byog==
+X-Google-Smtp-Source: AGHT+IHKEJlRG8kkwtcr6RV2KjC4mYeyWDGbR77XR3Y7OLZ5xj5OV7KZUS1WDfYBU2SjUy286UEmqrBJ4QHPv/nqY/M=
+X-Received: by 2002:a05:6122:2a10:b0:559:7077:9a8f with SMTP id
+ 71dfb90a1353d-55fed5887b3mr3595793e0c.5.1765820935061; Mon, 15 Dec 2025
+ 09:48:55 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] util: Move qemu_ftruncate64 from block/file-win32.c
- to oslib-win32.c
-Content-Language: en-US
-To: phind.uet@gmail.com, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Stefan Weil <sw@weilnetz.de>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
-References: <20251215164512.322786-1-phind.uet@gmail.com>
- <20251215164512.322786-3-phind.uet@gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251215164512.322786-3-phind.uet@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20251213001443.2041258-1-marcmorcos@google.com>
+ <20251213001443.2041258-4-marcmorcos@google.com>
+ <b6f193d4-b780-439a-80eb-bb8b43acac4e@redhat.com>
+In-Reply-To: <b6f193d4-b780-439a-80eb-bb8b43acac4e@redhat.com>
+From: Marc Morcos <marcmorcos@google.com>
+Date: Mon, 15 Dec 2025 09:48:46 -0800
+X-Gm-Features: AQt7F2q46qGvfJHP5RGbzhCj-urSqFZcDzlJTa7Pgdiy1-vh4lnoI_-5tazn-dI
+Message-ID: <CACKn2CzdT3SxgjgZJQcvuC4j3EVDcvkmFGm_qW18yU6gwRRJ7w@mail.gmail.com>
+Subject: Re: [PATCH 3/4] qmp: Fix thread race
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, 
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>, 
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Content-Type: multipart/alternative; boundary="000000000000930b2c06460139a3"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
+ envelope-from=marcmorcos@google.com; helo=mail-vk1-xa34.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,19 +105,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/12/25 17:45, phind.uet@gmail.com wrote:
-> From: Nguyen Dinh Phi <phind.uet@gmail.com>
-> 
-> qemu_ftruncate64() is utility function that may be used outside of the block
-> layer. Move it to util/oslib-win32.c where other Windows-specific utility
-> functions reside.
-> 
-> Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
-> ---
->   block/file-win32.c | 32 --------------------------------
->   util/oslib-win32.c | 34 ++++++++++++++++++++++++++++++++++
->   2 files changed, 34 insertions(+), 32 deletions(-)
+--000000000000930b2c06460139a3
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Yes, that looks correct. Thanks!
 
+- Marc
+
+On Mon, Dec 15, 2025, 6:52=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com> w=
+rote:
+
+> On 12/13/25 01:14, Marc Morcos wrote:
+> > @@ -346,7 +347,15 @@ static void monitor_qapi_event_emit(QAPIEvent
+> event, QDict *qdict)
+> >           }
+> >
+> >           qmp_mon =3D container_of(mon, MonitorQMP, common);
+> > -        if (qmp_mon->commands !=3D &qmp_cap_negotiation_commands) {
+> > +        do_send =3D false;
+> > +
+> > +        WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
+> > +            if (qmp_mon->commands !=3D &qmp_cap_negotiation_commands) =
+{
+> > +                do_send =3D true;
+> > +            }
+> > +        }
+> > +
+> > +        if (do_send) {
+> >               qmp_send_response(qmp_mon, qdict);
+> >           }
+> >       }
+>
+> We cannot use WITH_QEMU_LOCK_GUARD with "continue" or "break" inside,
+> but we can use QEMU_LOCK_GUARD:
+>
+> @@ -347,17 +346,13 @@ static void monitor_qapi_event_emit(QAPIEvent
+> event, QDict *qdict)
+>           }
+>
+>           qmp_mon =3D container_of(mon, MonitorQMP, common);
+> -        do_send =3D false;
+> -
+> -        WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
+> -            if (qmp_mon->commands !=3D &qmp_cap_negotiation_commands) {
+> -                do_send =3D true;
+> +        {
+> +            QEMU_LOCK_GUARD(&mon->mon_lock);
+> +            if (qmp_mon->commands =3D=3D &qmp_cap_negotiation_commands) =
+{
+> +                continue;
+>               }
+>           }
+> -
+> -        if (do_send) {
+> -            qmp_send_response(qmp_mon, qdict);
+> -        }
+> +        qmp_send_response(qmp_mon, qdict);
+>       }
+>   }
+>
+>
+> Let me know if this is okay for you!
+>
+> Paolo
+>
+>
+
+--000000000000930b2c06460139a3
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><span class=3D"smart_draft_text">Yes, that looks correct.=
+ Thanks!<br><br>- Marc</span></div><br><div class=3D"gmail_quote gmail_quot=
+e_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Dec 15, 2025, 6:=
+52=E2=80=AFAM Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com">pbon=
+zini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 1=
+2/13/25 01:14, Marc Morcos wrote:<br>
+&gt; @@ -346,7 +347,15 @@ static void monitor_qapi_event_emit(QAPIEvent eve=
+nt, QDict *qdict)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qmp_mon =3D container_of(mon, =
+MonitorQMP, common);<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qmp_mon-&gt;commands !=3D &amp;qmp_ca=
+p_negotiation_commands) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 do_send =3D false;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 WITH_QEMU_LOCK_GUARD(&amp;mon-&gt;mon_loc=
+k) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qmp_mon-&gt;commands !=
+=3D &amp;qmp_cap_negotiation_commands) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 do_send =3D t=
+rue;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (do_send) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qmp_send_respons=
+e(qmp_mon, qdict);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+We cannot use WITH_QEMU_LOCK_GUARD with &quot;continue&quot; or &quot;break=
+&quot; inside, <br>
+but we can use QEMU_LOCK_GUARD:<br>
+<br>
+@@ -347,17 +346,13 @@ static void monitor_qapi_event_emit(QAPIEvent <br>
+event, QDict *qdict)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qmp_mon =3D container_of(mon, MonitorQMP=
+, common);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 do_send =3D false;<br>
+-<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 WITH_QEMU_LOCK_GUARD(&amp;mon-&gt;mon_lock) {<=
+br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qmp_mon-&gt;commands !=3D &a=
+mp;qmp_cap_negotiation_commands) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 do_send =3D true;<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 QEMU_LOCK_GUARD(&amp;mon-&gt;mon=
+_lock);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qmp_mon-&gt;commands =3D=3D =
+&amp;qmp_cap_negotiation_commands) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+-<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (do_send) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qmp_send_response(qmp_mon, qdict=
+);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 qmp_send_response(qmp_mon, qdict);<br>
+=C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0 }<br>
+<br>
+<br>
+Let me know if this is okay for you!<br>
+<br>
+Paolo<br>
+<br>
+</blockquote></div>
+
+--000000000000930b2c06460139a3--
 
