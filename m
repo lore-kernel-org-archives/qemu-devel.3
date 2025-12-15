@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A521ED41D74
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A82AD59D99
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:15:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV2lj-0003AC-Rr; Mon, 15 Dec 2025 02:13:20 -0500
+	id 1vV2ld-000362-Fo; Mon, 15 Dec 2025 02:13:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vV2lh-00038n-Jh
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:17 -0500
+ id 1vV2lY-00031U-V3
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:09 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vV2lf-0008FQ-LM
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:17 -0500
+ id 1vV2lW-0008DC-Dz
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765782796; x=1797318796;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=DQKY+pMsXXbbU9Xz9iV7D6PsC8YZn6Qa+YVZAqB1vuU=;
- b=Q9By7wea7ArqLAlN+11WlDjVTzc6g2YwIO/zZFx4KqDrn7mQXqzCB2ux
- N0lRhbWB+kns6fPGViGPNu2ic5xXrQoxxiSJfDcrSUO/ko+gBTygbVkQm
- U5e9SsG1JSfzpBuxHGcfeHWErSA8MvLCTUa1370vv6D56Fn9/rtgCN5/2
- s38dtQGK4vQccBA+m53ZFm4Qt65fSTEc3htuu+1gM5ItWPv49rFX+gE5L
- T6dnry8GdBTRz88D7vw9569lzjYV3U4WvRMmfUJ9j+BROCE2g1L0Wnj4s
- 9zh0sADHdBApoEUlgPD/0Y7Uzzy58ONfjUPcHTc/IzcXg7/UGfZB027ZA A==;
-X-CSE-ConnectionGUID: gK2qEReaRPK09De4Wz67yA==
-X-CSE-MsgGUID: BCB3mejtS+aiWd+a+brb0w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="90332259"
-X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="90332259"
+ t=1765782787; x=1797318787;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=+F1W5flgSC29AhZEjyUZFJ8828PLL7V8CxC1bXmkOf8=;
+ b=iGUx2gZavG7uERD6OFgaBW3uPyFtkuQSBPwlLSRv2TUzlVmN0EyYOTi6
+ 8xb1cE/ZgK9sTuQvLHjdFmT00zCNCkbVQBLxrgQQl7pW7QrqAWWcNTRFC
+ DVU6G1/71JbEZ7Dxv+K2+LylwSuZ1vvrjr3Glotohxppi4FeZTjD3P1Bw
+ 8oZg9BLZxL29eChWVAVzXYyxoiDK0GmH6AJgDplhw8Lz1RwINncHqMmex
+ TX8ymjrReCxFuB7xw/VzoPFkvG6FEAJ+vpXpvWgX45yjVKXNKK5h5lQmS
+ i+0c51agF0yYby/5359fqY9O03fEARkoNVh4ACknqNp7hw9SmFwt+rssN g==;
+X-CSE-ConnectionGUID: mGxWk9T4RguJY5wU+bknXQ==
+X-CSE-MsgGUID: sU9ws9ycTvedNO1nMq9zZQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="90332233"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="90332233"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Dec 2025 23:13:15 -0800
-X-CSE-ConnectionGUID: 9bs0c17PTFqjuUWkkFEI9w==
-X-CSE-MsgGUID: v/Z/DRMxQjqrdzQ+K9ibpA==
+ 14 Dec 2025 23:13:03 -0800
+X-CSE-ConnectionGUID: wVo7qYCcQFuRnXXY7rqMiA==
+X-CSE-MsgGUID: 5s3UOpIeQb6UhKlgxTEQ2g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197265963"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197265921"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 14 Dec 2025 23:13:13 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 14 Dec 2025 23:13:01 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Xudong Hao <xudong.hao@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 08/11] i386/cpu: Add an option in X86CPUDefinition to
- control CPUID 0x1f
-Date: Mon, 15 Dec 2025 15:37:40 +0800
-Message-Id: <20251215073743.4055227-9-zhao1.liu@intel.com>
+Subject: [PATCH v2 00/11] i386/cpu: Add new instructions & CPU model for Intel
+ Diamond Rapids
+Date: Mon, 15 Dec 2025 15:37:32 +0800
+Message-Id: <20251215073743.4055227-1-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20251215073743.4055227-1-zhao1.liu@intel.com>
-References: <20251215073743.4055227-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
@@ -84,51 +82,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Many Intel CPUs enable CPUID 0x1f by default to encode CPU topology
-information.
+Hi,
 
-Add the "cpuid_0x1f" option to X86CPUDefinition to allow named CPU
-models to configure CPUID 0x1f from the start, thereby forcing 0x1f
-to be present for guest.
+This series addes new instrucions and CPU model support for Intel
+Diamond Rapids.
 
-With this option, there's no need to explicitly add v1 model to an
-unversioned CPU model for explicitly enabling the x-force-cpuid-0x1f
-property.
+This series mainly includes:
+ * MOVRS CPUID
+ * new AMX CPUIDs
+ * AVX10.2 & AVX10_VNNI_INT
+ * DMR CPU model & topology documentation
+   - The on-going cache-aware scheduling work could benefit such
+     topology:
+     https://lore.kernel.org/lkml/cover.1764801860.git.tim.c.chen@linux.intel.com/
 
-Tested-by: Xudong Hao <xudong.hao@intel.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+This series is based on https://gitlab.com/bonzini/qemu i386 branch at
+7c7e2f410b3d ("target/i386/tcg: mark APX as supported").
+
+Compared with v1, v2 mainly did:
+ * allow upsupported avx10 version when x-force-feature=on, for debug.
+ * rename CPUID_7_1_EDX_APX to CPUID_7_1_EDX_APXF in DMR CPU model.
+
+
+One More Thing
+==============
+
+About the AVX10 model (patch 4), in principle, AVX10.1 should be allowed
+to run on an AVX10.2 host. For similar version drived features,
+introducing a model might be a preferable way. However, PMU doesn't
+serve as a good example here.
+
+
+Thanks for your review!
+
+Best Regards,
+Zhao
 ---
- target/i386/cpu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Zhao Liu (11):
+  i386/cpu: Add support for MOVRS in CPUID enumeration
+  i386/cpu: Add CPUID.0x1E.0x1 subleaf for AMX instructions
+  i386/cpu: Add support for AVX10_VNNI_INT in CPUID enumeration
+  i386/cpu: Support AVX10.2 with AVX10 feature models
+  i386/cpu: Add a helper to get host avx10 version
+  i386/cpu: Allow unsupported avx10_version with x-force-features
+  i386/cpu: Allow cache to be shared at thread level
+  i386/cpu: Add an option in X86CPUDefinition to control CPUID 0x1f
+  i386/cpu: Define dependency for VMX_VM_ENTRY_LOAD_IA32_FRED
+  i386/cpu: Add CPU model for Diamond Rapids
+  dosc/cpu-models-x86: Add documentation for DiamondRapids
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 1deed542561c..6998c900b1dc 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -2313,6 +2313,12 @@ typedef struct X86CPUDefinition {
-     int model;
-     int stepping;
-     uint8_t avx10_version;
-+    /*
-+     * Whether to present CPUID 0x1f by default.
-+     * If true, encode CPU topology in 0x1f leaf even if there's no
-+     * extended topology levels.
-+     */
-+    bool cpuid_0x1f;
-     FeatureWordArray features;
-     const char *model_id;
-     const CPUCaches *const cache_info;
-@@ -8014,6 +8020,10 @@ static void x86_cpu_load_model(X86CPU *cpu, const X86CPUModel *model)
-                                  def->avx10_version, &error_abort);
-     }
- 
-+    if (def->cpuid_0x1f) {
-+        object_property_set_bool(OBJECT(cpu), "x-force-cpuid-0x1f",
-+                                 def->cpuid_0x1f, &error_abort);
-+    }
-     x86_cpu_apply_version_props(cpu, model);
- 
-     /*
+ docs/system/cpu-models-x86.rst.inc |  20 ++
+ target/i386/cpu.c                  | 462 +++++++++++++++++++++++++----
+ target/i386/cpu.h                  |  27 ++
+ 3 files changed, 456 insertions(+), 53 deletions(-)
+
 -- 
 2.34.1
 
