@@ -4,105 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DF26D5B84C
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 16:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5782CD5B854
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 16:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVBUg-0001ns-NQ; Mon, 15 Dec 2025 11:32:18 -0500
+	id 1vVBqf-0004yS-B1; Mon, 15 Dec 2025 11:55:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVBUc-0001lj-Mi
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:32:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <uwu@icenowy.me>) id 1vVBqM-0004xU-NU
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:54:42 -0500
+Received: from sender4-op-o15.zoho.com ([136.143.188.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVBUY-0001NI-VW
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:32:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765816329;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=KOX0iNXiRn43h3jDbpzxigHOVb/WjXy5CQm1DC9EXJc=;
- b=E6XhH2TK/Jr2VUUMo+4WMrP9O94m262U+b1gwz5CcofdR3wBb+Zks12+NYqlMQIgLk6DGm
- Rvs6BO9U9ymLYReri1Stm/u3mhvLWYMf6e1BW0B1Uuma8SDYF8n4KyBph4rWC8WICDt5Te
- igi4QboFoJcYQaI2wUV1y7+RzfTsiNY=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-583-xLjq9atCM0KpogAJWFCEQA-1; Mon, 15 Dec 2025 11:32:07 -0500
-X-MC-Unique: xLjq9atCM0KpogAJWFCEQA-1
-X-Mimecast-MFC-AGG-ID: xLjq9atCM0KpogAJWFCEQA_1765816327
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4ed74ab4172so81060801cf.1
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 08:32:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765816327; x=1766421127; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=KOX0iNXiRn43h3jDbpzxigHOVb/WjXy5CQm1DC9EXJc=;
- b=MaAVpby5k+cEBbboq3cKpp8wiZjiehnyvz40yvv3QK+iaOWHFRLLhYuH0bfZwJ7FIg
- B76Nd9yaql0VTJ+usd5cltTotZ+xcAS2Y3HFi7ycpocfsjJ8W06+yFkjdv+TYe0mZf26
- LqyzmNkVhSMfxn/Wkyw+msEqcS1B+PZQNKjoFCAAxRlU8xojASdmOSerUB7Im3R4uwg5
- eL+4wa7URQpKdO49SuKBM8IS6QR1DImNm7RQyVBtatxdEyr4xkOi4brG/kBk7REr32EJ
- 7or/u9bHQbgY3YUQ/zyQ1Y5SQZAXUG7LqWEqLkRWXUPrsFjuq3y2dcLQnYQ3llvxvMbB
- X+JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765816327; x=1766421127;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KOX0iNXiRn43h3jDbpzxigHOVb/WjXy5CQm1DC9EXJc=;
- b=w9nj1A5Z1cAqAedKH3RCmoQHB1+o1Mie95qGRpYBGWRwjvuXSgIq6Mn5K6E3gEkcpM
- QL+a5Gl3Is45JW5ukSglW2/sKvTZ4YokBYV5gjInr2ziVeiFRocL2QI+l53zw2NHkzEP
- 732dfHZ0SBRKkvPR0L0q+pia/N7/UE5jV2T+nK2JDDp3A/Zo1j2RQKnraViLowyFkljN
- u5MG2NnINJa7kxEM67QHq5OE75CbOoJoEcF8z691D6pdCcSm1f6kuyU1Zy86phOyjbSn
- y9EeHd6SSNjyrwMDao8KxRY+tqeORJQy1DiLQZBWBpeEGAGYxjFqPvwKMdHRAfF+fUKz
- RjIg==
-X-Gm-Message-State: AOJu0Yw1FkrIcvaWwFwYr1+Ts8ssO84oBpVpyeiFD6ne7IeyJ3SOx5gQ
- BHgIf0DYbziL0RfQB2Mogxif0E42mGck5H9OrtreX9s8RA9sVDKdDIybpact6tgEX2pHOytVKUU
- 6oIRhKC7ycbbI7YyYD0bcyoXZciSneKsfDDd55BaQvS204WCWA3AY+5Gmr/gwi1wm
-X-Gm-Gg: AY/fxX4/SeZ9HN6kEwvdZ9lSxYiwv70NKVCwgAnl/8F3ZaSu9xPRCyrjBcpEkUeMvot
- 3hmAi5LDzlFR/g76idaIEDtS5Vr0fYSdRRT1HvP2WpdkVlxRefUDNGXEJ4AAnsWA7vpHreT38ds
- 8394ShnnnP5xHt2/96E9XcuCUj4qd1UqfFhqxsYoSGAyWQYkIJ75o6LmprGuuxXSq6NX7XEgkr0
- F9dRJLwgb5wW7/YxEkQbYprm00LxB8dqIdtuc/RKcQq0m2VQ8V0ECYbK117WlhpXbe7Ceq7mlcq
- EIgwJmTxEwdgCbEhDqjqlc1XP6H/+Fg+udVPWHzJqnE996ftC4bbNSfOd9KRA0vBRVvy+PpWGf3
- SpCA=
-X-Received: by 2002:ac8:6f1a:0:b0:4ee:1a72:cf84 with SMTP id
- d75a77b69052e-4f1d04c058dmr157448831cf.27.1765816326940; 
- Mon, 15 Dec 2025 08:32:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEeClZZLC27MvVgIA0CjbdbzO4AbCimOILCiBLQ9ryElL08qKLztTAfSFPUdhGstYzaIUnByA==
-X-Received: by 2002:ac8:6f1a:0:b0:4ee:1a72:cf84 with SMTP id
- d75a77b69052e-4f1d04c058dmr157448231cf.27.1765816326390; 
- Mon, 15 Dec 2025 08:32:06 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4f1f38349casm25447531cf.17.2025.12.15.08.32.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Dec 2025 08:32:05 -0800 (PST)
-Date: Mon, 15 Dec 2025 11:32:04 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Chuang Xu <xuchuangxclwt@bytedance.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, sgarzare@redhat.com,
- richard.henderson@linaro.org, pbonzini@redhat.com, david@kernel.org,
- philmd@linaro.org, farosas@suse.de
-Subject: Re: [PATCH v2 1/1] migration: merge fragmented clear_dirty ioctls
-Message-ID: <aUA4BGW2Faw9CMgs@x1.local>
-References: <20251215140611.16180-1-xuchuangxclwt@bytedance.com>
- <20251215140611.16180-2-xuchuangxclwt@bytedance.com>
+ (Exim 4.90_1) (envelope-from <uwu@icenowy.me>) id 1vVBqJ-0001iV-IS
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:54:41 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1765817554; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=Tc53rykijguGng9yYKEEUVGC2Jb2qdgQtApnef1tbvc3RdpVvl/fXvEjzFrVMfkqajgnknvMz8FF7Tfh6BbpkpyfVFJ9j6UEJHuOqFCGoad2t7fOiIgvhfNci2WU6jJl5Nkj/OYmPnBrDpHo7xJ7tsJaZ38+rsa5Z42+op02MLE=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1765817554;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=fhf/i3W922cwjDZzN+Aa9fovELFDhLsvX8mkJjuCJJM=; 
+ b=NmVj8ODn3GiqOuBXgQEJpLltc0E7KhG+GmDTa7Sv/dx8iEkh3pC3VamjYvQysmPHNmCphchCvK0Ks58/Vk4EmJSasqajA5eUbTkeh5PA7qguq/jBCpF2FJ6poU6qwBEo7H2dbsIpP3PIdstFMMkjhjkzQ6L5ffyq718z67pFXY0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=icenowy.me;
+ spf=pass  smtp.mailfrom=uwu@icenowy.me;
+ dmarc=pass header.from=<uwu@icenowy.me>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765817554; 
+ s=zmail2; d=icenowy.me; i=uwu@icenowy.me;
+ h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
+ bh=fhf/i3W922cwjDZzN+Aa9fovELFDhLsvX8mkJjuCJJM=;
+ b=AWB58VYPxD1Fi2QiXwGt8AAAthX6GT+mpml9W+/NrYOeN6wwcfOauzcSNC3AcKcU
+ 5JF+PxNqP/boJXC0RtCLAIYoiR7IccqnJjMUtANfBGhgbJq9mhoS9zl6ZxlDctKm/h6
+ H/XIf0XeXBI4Hb+MLeHwmpqU3rBCTPZsA/6yYeXuubRLklTNJ3kXrXPhkhqYCHgkK/9
+ dAfTxwya1LUR+NyEzCIJzlmhfmqkWG9oRDXj9436pRx+tkAJfWsXJQeXmwLXuqPQHD6
+ ZnaddWHR25POBeooGp4EFQJv7/NraRuImzbqE9DtR58gm+9807SAv5w916k+yQwz7wJ
+ XXQy5lJtzw==
+Received: by mx.zohomail.com with SMTPS id 1765817552126861.6983322663837;
+ Mon, 15 Dec 2025 08:52:32 -0800 (PST)
+Message-ID: <70995759267010817b2005884979e57117006e7d.camel@icenowy.me>
+Subject: Re: [PATCH 5/7] Add termios2 support to ppc target
+From: Icenowy Zheng <uwu@icenowy.me>
+To: Luca Bonissi <qemu@bonslack.org>, Richard Henderson
+ <richard.henderson@linaro.org>, Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org
+Date: Tue, 16 Dec 2025 00:52:27 +0800
+In-Reply-To: <ab68ba71-acd1-4ef1-bdde-f72a9e8e3152@bonslack.org>
+References: <ab68ba71-acd1-4ef1-bdde-f72a9e8e3152@bonslack.org>
+Organization: Anthon Open-Source Community
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.44.4 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251215140611.16180-2-xuchuangxclwt@bytedance.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.15; envelope-from=uwu@icenowy.me;
+ helo=sender4-op-o15.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,222 +82,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 10:06:11PM +0800, Chuang Xu wrote:
-> From: xuchuangxclwt <xuchuangxclwt@bytedance.com>
-> 
-> When the addresses processed are not aligned, a large number of
-> clear_dirty ioctl occur (e.g. a 4MB misaligned memory can generate
-> 2048 clear_dirty ioctls from two different memory_listener),
-> which increases the time required for bitmap_sync and makes it
-> more difficult for dirty pages to converge.
-> 
-> Attempt to merge those fragmented clear_dirty ioctls.
-> 
-> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
-> ---
->  accel/tcg/cputlb.c       |  5 +++--
->  include/system/physmem.h |  7 ++++---
->  migration/ram.c          | 26 ++++++++++++------------
->  system/memory.c          |  2 +-
->  system/physmem.c         | 44 ++++++++++++++++++++++++----------------
->  5 files changed, 48 insertions(+), 36 deletions(-)
-> 
-> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> index fd1606c856..c8827c8b0d 100644
-> --- a/accel/tcg/cputlb.c
-> +++ b/accel/tcg/cputlb.c
-> @@ -857,8 +857,9 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
->  void tlb_protect_code(ram_addr_t ram_addr)
->  {
->      physical_memory_test_and_clear_dirty(ram_addr & TARGET_PAGE_MASK,
-> -                                             TARGET_PAGE_SIZE,
-> -                                             DIRTY_MEMORY_CODE);
-> +                                         TARGET_PAGE_SIZE,
-> +                                         DIRTY_MEMORY_CODE,
-> +                                         NULL);
->  }
->  
->  /* update the TLB so that writes in physical page 'phys_addr' are no longer
-> diff --git a/include/system/physmem.h b/include/system/physmem.h
-> index 879f6eae38..8eeace9d1f 100644
-> --- a/include/system/physmem.h
-> +++ b/include/system/physmem.h
-> @@ -39,9 +39,10 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
->  
->  void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
->  
-> -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
-> -                                          ram_addr_t length,
-> -                                          unsigned client);
-> +uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
-> +                                              ram_addr_t length,
-> +                                              unsigned client,
-> +                                              unsigned long *dest);
-
-Nitpick: please consider adding doc for this function now, both "dest" and
-retval may need some explanations.
-
->  
->  DirtyBitmapSnapshot *
->  physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr offset,
-> diff --git a/migration/ram.c b/migration/ram.c
-> index 29f016cb25..2d5e979211 100644
-> --- a/migration/ram.c
-> +++ b/migration/ram.c
-> @@ -942,7 +942,6 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
->                                                    ram_addr_t start,
->                                                    ram_addr_t length)
->  {
-> -    ram_addr_t addr;
->      unsigned long word = BIT_WORD((start + rb->offset) >> TARGET_PAGE_BITS);
->      uint64_t num_dirty = 0;
->      unsigned long *dest = rb->bmap;
-> @@ -995,18 +994,19 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
->          }
->      } else {
->          ram_addr_t offset = rb->offset;
-> -
-> -        for (addr = 0; addr < length; addr += TARGET_PAGE_SIZE) {
-> -            if (physical_memory_test_and_clear_dirty(
-> -                        start + addr + offset,
-> -                        TARGET_PAGE_SIZE,
-> -                        DIRTY_MEMORY_MIGRATION)) {
-> -                long k = (start + addr) >> TARGET_PAGE_BITS;
-> -                if (!test_and_set_bit(k, dest)) {
-> -                    num_dirty++;
-> -                }
-> -            }
-> -        }
-> +        unsigned long end, start_page;
-> +        uint64_t mr_offset, mr_size;
-> +
-> +        num_dirty = physical_memory_test_and_clear_dirty(
-> +                        start + offset,
-> +                        length,
-> +                        DIRTY_MEMORY_MIGRATION,
-> +                        dest);
-
-Thanks for doing this, I think this is better.  Though IIUC you missed a
-major benefit of the current API I'm suggesting here, which is to avoid
-explicit invokations of memory_region_clear_dirty_bitmap().
-
-IIUC you can remove the "if" check at [1] below, then you can drop the five
-lines here afterwards.
-
-So physical_memory_test_and_clear_dirty() should never worry about remote
-clears, and it should always be done properly.
-
-> +        end = TARGET_PAGE_ALIGN(start + offset + length) >> TARGET_PAGE_BITS;
-> +        start_page = (start + offset) >> TARGET_PAGE_BITS;
-> +        mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - offset;
-> +        mr_size = (end - start_page) << TARGET_PAGE_BITS;
-> +        memory_region_clear_dirty_bitmap(rb->mr, mr_offset, mr_size);
->      }
->  
->      return num_dirty;
-> diff --git a/system/memory.c b/system/memory.c
-> index 8b84661ae3..666364392d 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -2424,7 +2424,7 @@ void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
->  {
->      assert(mr->ram_block);
->      physical_memory_test_and_clear_dirty(
-> -        memory_region_get_ram_addr(mr) + addr, size, client);
-> +        memory_region_get_ram_addr(mr) + addr, size, client, NULL);
->  }
->  
->  int memory_region_get_fd(MemoryRegion *mr)
-> diff --git a/system/physmem.c b/system/physmem.c
-> index c9869e4049..d015eb2133 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -1090,18 +1090,19 @@ void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
->  }
->  
->  /* Note: start and end must be within the same ram block.  */
-> -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
-> +uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
->                                                ram_addr_t length,
-> -                                              unsigned client)
-> +                                              unsigned client,
-> +                                              unsigned long *dest)
->  {
->      DirtyMemoryBlocks *blocks;
->      unsigned long end, page, start_page;
-> -    bool dirty = false;
-> +    uint64_t num_dirty = 0;
->      RAMBlock *ramblock;
->      uint64_t mr_offset, mr_size;
->  
->      if (length == 0) {
-> -        return false;
-> +        return 0;
->      }
->  
->      end = TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
-> @@ -1118,31 +1119,40 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
->          while (page < end) {
->              unsigned long idx = page / DIRTY_MEMORY_BLOCK_SIZE;
->              unsigned long offset = page % DIRTY_MEMORY_BLOCK_SIZE;
-> -            unsigned long num = MIN(end - page,
-> -                                    DIRTY_MEMORY_BLOCK_SIZE - offset);
->  
-> -            dirty |= bitmap_test_and_clear_atomic(blocks->blocks[idx],
-> -                                                  offset, num);
-> -            page += num;
-> +            if (bitmap_test_and_clear_atomic(blocks->blocks[idx], offset, 1)) {
-> +                if (dest) {
-> +                    unsigned long k = page - (ramblock->offset >> TARGET_PAGE_BITS);
-> +                    if (!test_and_set_bit(k, dest)) {
-> +                        num_dirty++;
-> +                    }
-> +                } else {
-> +                    num_dirty++;
-> +                }
-> +            }
-> +
-> +            page++;
->          }
->  
-> -        mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - ramblock->offset;
-> -        mr_size = (end - start_page) << TARGET_PAGE_BITS;
-> -        memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, mr_size);
-> +        if (!dest && num_dirty) {
-
-[1]
-
-> +            mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - ramblock->offset;
-> +            mr_size = (end - start_page) << TARGET_PAGE_BITS;
-> +            memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, mr_size);
-> +        }
->      }
->  
-> -    if (dirty) {
-> +    if (num_dirty) {
->          physical_memory_dirty_bits_cleared(start, length);
->      }
->  
-> -    return dirty;
-> +    return num_dirty;
->  }
->  
->  static void physical_memory_clear_dirty_range(ram_addr_t addr, ram_addr_t length)
->  {
-> -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
-> -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
-> -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
-> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION, NULL);
-> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA, NULL);
-> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE, NULL);
->  }
->  
->  DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
-> -- 
-> 2.39.3 (Apple Git-146)
-> 
-
--- 
-Peter Xu
+5ZyoIDIwMjUtMTAtMzHmmJ/mnJ/kupTnmoQgMTQ6MjYgKzAxMDDvvIxMdWNhIEJvbmlzc2nlhpnp
+gZPvvJoKPiA+IEZyb20gMmFhMGExM2RhMGRhNmUzYTgwNDM1OWYyNGNjMTI5OGI5N2NkYTQ1YyBN
+b24gU2VwIDE3IDAwOjAwOjAwCj4gPiAyMDAxCj4gRnJvbTogTHVjYSBCb25pc3NpIDxxZW11QGJv
+bnNsYWNrLm9yZz4KPiBEYXRlOiBGcmksIDMxIE9jdCAyMDI1IDEzOjMxOjM2ICswMTAwCj4gU3Vi
+amVjdDogW1BBVENIIDUvN10gQWRkIHRlcm1pb3MyIHN1cHBvcnQgdG8gcHBjIHRhcmdldAo+IAo+
+IFNpZ25lZC1vZmYtYnk6IEx1Y2EgQm9uaXNzaSA8cWVtdUBib25zbGFjay5vcmc+Cj4gLS0tCj4g
+wqBsaW51eC11c2VyL3BwYy90ZXJtYml0cy5oIHwgMjQgKysrKysrKysrKysrKysrKysrKysrKysr
+Cj4gwqAxIGZpbGUgY2hhbmdlZCwgMjQgaW5zZXJ0aW9ucygrKQo+IAo+IGRpZmYgLS1naXQgYS9s
+aW51eC11c2VyL3BwYy90ZXJtYml0cy5oIGIvbGludXgtdXNlci9wcGMvdGVybWJpdHMuaAo+IGlu
+ZGV4IGViMjI2ZTA5OTkuLmFlNmVlODg5N2MgMTAwNjQ0Cj4gLS0tIGEvbGludXgtdXNlci9wcGMv
+dGVybWJpdHMuaAo+ICsrKyBiL2xpbnV4LXVzZXIvcHBjL3Rlcm1iaXRzLmgKPiBAQCAtMjAsNiAr
+MjAsMjggQEAgc3RydWN0IHRhcmdldF90ZXJtaW9zIHsKPiDCoMKgwqDCoCB0YXJnZXRfc3BlZWRf
+dCBjX29zcGVlZDvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIC8qIG91dHB1dCBzcGVlZCAq
+Lwo+IMKgfTsKPiDCoAo+ICtzdHJ1Y3QgdGFyZ2V0X3Rlcm1pb3MyIHsKPiArwqDCoMKgIHRhcmdl
+dF90Y2ZsYWdfdCBjX2lmbGFnO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogaW5wdXQg
+bW9kZSBmbGFncyAqLwo+ICvCoMKgwqAgdGFyZ2V0X3RjZmxhZ190IGNfb2ZsYWc7wqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBvdXRwdXQgbW9kZSBmbGFncyAqLwo+ICvCoMKgwqAgdGFy
+Z2V0X3RjZmxhZ190IGNfY2ZsYWc7wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBjb250
+cm9sIG1vZGUgZmxhZ3MgKi8KPiArwqDCoMKgIHRhcmdldF90Y2ZsYWdfdCBjX2xmbGFnO8KgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogbG9jYWwgbW9kZSBmbGFncyAqLwo+ICvCoMKgwqAg
+dGFyZ2V0X2NjX3QgY19jY1tUQVJHRVRfTkNDU107wqDCoMKgwqDCoMKgwqDCoCAvKiBjb250cm9s
+IGNoYXJhY3RlcnMgKi8KPiArwqDCoMKgIHRhcmdldF9jY190IGNfbGluZTvCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBsaW5lIGRpc2NpcGxpbmUgKi8KPiArwqDCoMKg
+IHRhcmdldF9zcGVlZF90IGNfaXNwZWVkO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyog
+aW5wdXQgc3BlZWQgKi8KPiArwqDCoMKgIHRhcmdldF9zcGVlZF90IGNfb3NwZWVkO8KgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogb3V0cHV0IHNwZWVkICovCj4gK307Cj4gKwo+ICtzdHJ1
+Y3QgdGFyZ2V0X2t0ZXJtaW9zIHsKPiArwqDCoMKgIHRhcmdldF90Y2ZsYWdfdCBjX2lmbGFnO8Kg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogaW5wdXQgbW9kZSBmbGFncyAqLwo+ICvCoMKg
+wqAgdGFyZ2V0X3RjZmxhZ190IGNfb2ZsYWc7wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAv
+KiBvdXRwdXQgbW9kZSBmbGFncyAqLwo+ICvCoMKgwqAgdGFyZ2V0X3RjZmxhZ190IGNfY2ZsYWc7
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBjb250cm9sIG1vZGUgZmxhZ3MgKi8KPiAr
+wqDCoMKgIHRhcmdldF90Y2ZsYWdfdCBjX2xmbGFnO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgLyogbG9jYWwgbW9kZSBmbGFncyAqLwo+ICvCoMKgwqAgdGFyZ2V0X2NjX3QgY19jY1tUQVJH
+RVRfTkNDU107wqDCoMKgwqDCoMKgwqDCoCAvKiBjb250cm9sIGNoYXJhY3RlcnMgKi8KPiArwqDC
+oMKgIHRhcmdldF9jY190IGNfbGluZTvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCAvKiBsaW5lIGRpc2NpcGxpbmUgKi8KPiArwqDCoMKgIHRhcmdldF9zcGVlZF90IGNfaXNw
+ZWVkO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogaW5wdXQgc3BlZWQgKi8KPiArwqDC
+oMKgIHRhcmdldF9zcGVlZF90IGNfb3NwZWVkO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+Lyogb3V0cHV0IHNwZWVkICovCj4gK307Cj4gKwoKV2VsbCB5b3VyIHRoaXMgcGF0Y2ggc2VlbXMg
+dG8gYmUgaW50cm9kdWNpbmcgbm9uLW5lZWRlZCB0aGluZ3MgZm9yClBvd2VyUEM/CgpBbGwgMyBz
+dHJ1Y3R1cmVzIGFyZSB0aGUgc2FtZSBoZXJlLCBhbmQgUFBDIG5ldmVyIGhhcyBhIHRlcm1pb3My
+CmludGVyZmFjZSAoZXhjZXB0IGluc2lkZSB0aGUgaW50ZXJuYWwgb2YgZ2xpYmMpLgoKPiDCoC8q
+IGNfY2MgY2hhcmFjdGVyIG9mZnNldHMgKi8KPiDCoCNkZWZpbmUgVEFSR0VUX1ZJTlRSwqDCoMKg
+MAo+IMKgI2RlZmluZSBUQVJHRVRfVlFVSVTCoMKgwqAxCj4gQEAgLTIyNSw2ICsyNDcsOCBAQCBz
+dHJ1Y3QgdGFyZ2V0X3Rlcm1pb3Mgewo+IMKgI2RlZmluZSBUQVJHRVRfVElPQ1NCUkvCoMKgwqDC
+oMKgwqDCoMKgMHg1NDI3wqAgLyogQlNEIGNvbXBhdGliaWxpdHkgKi8KPiDCoCNkZWZpbmUgVEFS
+R0VUX1RJT0NDQlJLwqDCoMKgwqDCoMKgwqDCoDB4NTQyOMKgIC8qIEJTRCBjb21wYXRpYmlsaXR5
+ICovCj4gwqAjZGVmaW5lIFRBUkdFVF9USU9DR1NJRMKgwqDCoMKgwqDCoMKgwqAweDU0MjnCoCAv
+KiBSZXR1cm4gdGhlIHNlc3Npb24gSUQgb2YKPiBGRCAqLwo+ICsjZGVmaW5lIFRBUkdFVF9USU9D
+R1JTNDg1wqDCoMKgwqDCoMKgMHg1NDJlCj4gKyNkZWZpbmUgVEFSR0VUX1RJT0NTUlM0ODXCoMKg
+wqDCoMKgwqAweDU0MmYKCkkgZG9uJ3QgdGhpbmsgdGhlc2UgdHdvIElPQ1RMJ3MgYXJlIHJlbGF0
+ZWQgaGVyZS4KCldlbGwgdGhleSdyZSBtaXNzaW5nLCBidXQgdGhleSdyZSBub3QgaW1wbGVtZW50
+ZWQgZWl0aGVyLgoKPiDCoCNkZWZpbmUgVEFSR0VUX1RJT0NHUFROwqDCoMKgwqDCoMKgwqDCoFRB
+UkdFVF9JT1IoJ1QnLDB4MzAsIHVuc2lnbmVkIGludCkgLyoKPiBHZXQgUHR5IE51bWJlciAob2Yg
+cHR5LW11eCBkZXZpY2UpICovCj4gwqAjZGVmaW5lIFRBUkdFVF9USU9DU1BUTENLwqDCoMKgwqDC
+oMKgVEFSR0VUX0lPVygnVCcsMHgzMSwgaW50KcKgIC8qCj4gTG9jay91bmxvY2sgUHR5ICovCj4g
+wqAjZGVmaW5lIFRBUkdFVF9USU9DR1BUUEVFUsKgwqDCoMKgwqAgVEFSR0VUX0lPKCdUJywgMHg0
+MSkgLyogU2FmZWx5IG9wZW4KPiB0aGUgc2xhdmUgKi8KCg==
 
 
