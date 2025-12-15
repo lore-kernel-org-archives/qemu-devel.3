@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA442D5B85E
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6066AD5B85E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVCgu-0000Oy-N5; Mon, 15 Dec 2025 12:49:00 -0500
+	id 1vVCjj-0001LW-Ra; Mon, 15 Dec 2025 12:51:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcmorcos@google.com>)
- id 1vVCgs-0000Ob-W6
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:48:59 -0500
+ id 1vVCjW-0001Je-9e
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:51:47 -0500
 Received: from mail-vk1-xa34.google.com ([2607:f8b0:4864:20::a34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcmorcos@google.com>)
- id 1vVCgr-0005bJ-9B
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:48:58 -0500
+ id 1vVCjU-0006Ok-KI
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:51:42 -0500
 Received: by mail-vk1-xa34.google.com with SMTP id
- 71dfb90a1353d-559748bcf99so2962697e0c.3
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 09:48:56 -0800 (PST)
+ 71dfb90a1353d-55b09f54e98so1138252e0c.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 09:51:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1765820935; x=1766425735; darn=nongnu.org;
+ d=google.com; s=20230601; t=1765821100; x=1766425900; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FI7UcnmRmSjYBv7OLwGuk+M9ZTcTnewwPCw0e97p1Ek=;
- b=E2F2Q1+RACB+9g0CqItAaOkrE0PSfKxfUJboNnDawI4qAhhDLVD2LzIntVA7LI8KGR
- aUFv14qbXmV6P5wTdYuquWUhRyvpIY2CMMFdB5Xy6AdUYyKUdY6Rh4XWhW8W8eHvTJ2d
- BHHpWamW5vh0Fw84cWa1Lj6Yg3R+TcTSWs4dGRqWpfTcPlkY3SB4REo5WpnXqdZ8LBPl
- 01/47/ERp3n+T2UVAnyHOHBBxbIVxfKdZXV79c2Bf4poijE8dqbyxVox4Fd9SByP8Qjv
- aN97Vif80jtRRHZ6EWdO+xlnBI3GQB+n5fGPz9OY8vGExF6IEvSy1GQxgUAv/zQ2131e
- /F0w==
+ bh=AEofe3U+vR5Wl6ecYWnKxvsGdbshodOGyoNvx5+ZkBE=;
+ b=F97SrIxfH7Gs74zl9ojJc/hbXh0C92ulP7Jls1yRteiKZflaCxdoD8jUdmP2AGTvkJ
+ Ck5TEL1f7GqCxHuT2PmR83rFRzzF7FxxwbnVTfUB631zJQKjH5bUqKVsqMtWIbAMzdFz
+ JsSqc/OrFgiHkI5zdCV/6ROAap5z0jNiWAkyfIN0HTMSfIhoWYvVxRqQsgPvlPXiS96T
+ mBzjxMvhks3/nKaEa73LcfrRxC6SDMbv3b6RVU/g/XZd1Ex9SnaTrMHzuD3d1trUlnxe
+ gBULHGd0US5CcUh3QtmlWuPBT71W1u6EhEyGw+0f8IX1F41yYCgsj1OKX+R/V0uFfnxp
+ ovQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765820935; x=1766425735;
+ d=1e100.net; s=20230601; t=1765821100; x=1766425900;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FI7UcnmRmSjYBv7OLwGuk+M9ZTcTnewwPCw0e97p1Ek=;
- b=Z9JtHBw/t1msNiVoQU0c/HwOT3pu35mNSW3BmhZLVMazN5vvH+ltsamLj3ULUyLe/S
- io4H6R33LCP9KY176JrfMwmbfIj9Y+CC3PdSEcfbtRWXFWxO6OpZtszDIpCCcCMu4tge
- WNZWC81ACx6+a086lAMfKwHIspvYOABz379GNZ/0/1igXsO6A4+6tVqYZMbvvS0VwVSI
- wULVAqIYUu1rMMinxRHlHhjEPJWJZASGHzeC6nmphmcbDpvuCWA5b/7z3fiHcpSY4YxS
- n2VoBbtWBryUNzY19B9jOSbVuhv0SIm/FiYjqDXbAEA1RMx5fXyQdAxMWepHHT3AOfIn
- OqWQ==
+ bh=AEofe3U+vR5Wl6ecYWnKxvsGdbshodOGyoNvx5+ZkBE=;
+ b=vQAsmF9v/E+GfHLJgxIj22zACIOYTR2UvHw8jYV9PhC/m/CQWVYnmHLoTTCzn6T24K
+ b4sRMjptU4R3PIXpMPU+L8y5MjhyGjJP6f6ZmcBkxWh46FBwkHDjng38PuhZhswTaJgC
+ pVkbNja33xjqH0mQpkYPdHFp9Il71Ysn2mEJ3B11CtoQXzEfIyLfYQrBctDGdO6RpD6G
+ H4kLTDkuiCCwFV2Up9B8L1tGlHdMhO8lxUPR4Y47Oke3PaSR6YgeVhJZnkTapjqzBv+n
+ zTEG2mKPIeprt0wlO+kkyrs8EUSiEiiJibsy0PT0ySeBkk6euapKkEKEORxk/7OrG3x5
+ uJHQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV1UFbgYhSmbFgyObRirhvCXdv0rE8Lc3Z1tKWQgCDPaa+9wQ1LY2vZ+X9haSnbx2rAS4sle4ylF0i4@nongnu.org
-X-Gm-Message-State: AOJu0YwnI/zbGioDnu7/CWjFIY2who3F/zZ5XJbXKIIQ1wg2EQ/9OT1Q
- xJAS1WIegxVvlx6F8ynzyG8fU3S51xRB179uaAXDI4QuW12CD65P2VveHIAcXEkGcLiXYxGq7b2
- dfO3PgmnkDnxqjCstmWLh6LJXXYeGBP8OAML8G8HW
-X-Gm-Gg: AY/fxX5ulUPiF85d/5a3w3BNZIDHTHHRql3Ert9q25cx/20BKshWXL7BJwMtg/m16T8
- 3m/j9hJkspJiaeY/GMa/tPwi8Mrkh63vXDI/rO9rb0xrToN8LbEX7zbaLw27FU0tLhNV5BeNjpL
- ezQxKC4hqL0GLG2s94iP74WgwMHBL+1XerqSd3YZa5kKm4uHRkWE6OhnMHVcWLmW/ZSfTQKJs0l
- VDudMVjXcCJ+37wLSIibhxboHExbewQNVhGSHQRXn0Y8AFowssHeNpwk4VVvOpbEy7oHJpzuRbE
- MIsl8m1TfBkjSJdr5oqnJlcv4J6kF8Byog==
-X-Google-Smtp-Source: AGHT+IHKEJlRG8kkwtcr6RV2KjC4mYeyWDGbR77XR3Y7OLZ5xj5OV7KZUS1WDfYBU2SjUy286UEmqrBJ4QHPv/nqY/M=
-X-Received: by 2002:a05:6122:2a10:b0:559:7077:9a8f with SMTP id
- 71dfb90a1353d-55fed5887b3mr3595793e0c.5.1765820935061; Mon, 15 Dec 2025
- 09:48:55 -0800 (PST)
+ AJvYcCWirk5exboEqWUv5eBVLyXSCmvwug27RWqf3KZ1+kGzzT8OO2bE0rq4cwKqpLk9THU9QrsFqdHlCO/C@nongnu.org
+X-Gm-Message-State: AOJu0YxI2DtE36WmseecMBR0MnDrlZyMBF/kNQ0zGfKxOA/iH+B6z+q2
+ LOibkh0bPQjvA9E+HR2Vz6PCsIgeOGwmAwmzSJaTmp8CHFNgmjdrhpHpas22e7L++8FhDtcOdld
+ CgoXw8WKIk0h7fsMu6m4kSP86yc6cfTT3MCJ/eBX6
+X-Gm-Gg: AY/fxX4rvYin2pnUV0InG2soZAEt7+dwf/B9YcNwVdUWCN4QS7SMtqiK2F9g0ozIowD
+ r2jzYapMva3oM9M8jJEnhvF5OtoharwYrIAIqZHBq30dkmMII//NBAgFcF9YmBlk8Ez73OfnwN+
+ USiEPfJ4TPVkSfoWcjuUg5p7+uIE/g0AMuu6HMYBp0ZOxXMEBnsHjP3pwv2xwQSnImgUzHY3CiC
+ MUjFLXksUQJP2TPnaIFTd5+YyceOT5FuHDQl6/60HmFR9ZfxGTo2/Mt+rt4ffWrznVcf1xVdATs
+ vjNm50/fIgUBPUC6NZztn5ZgczyDFA1pGA==
+X-Google-Smtp-Source: AGHT+IGhvvgJYBzbewqwYS0dt0pvl6YvEeEbI1fyi7wyfpcFFQVSUSf+FqGYpHFDOAWjTlZJnZR0xKUHdgMTNDhUW4g=
+X-Received: by 2002:a05:6122:310a:b0:559:ef6b:1efb with SMTP id
+ 71dfb90a1353d-55fed62bfabmr3984534e0c.11.1765821099379; Mon, 15 Dec 2025
+ 09:51:39 -0800 (PST)
 MIME-Version: 1.0
 References: <20251213001443.2041258-1-marcmorcos@google.com>
- <20251213001443.2041258-4-marcmorcos@google.com>
- <b6f193d4-b780-439a-80eb-bb8b43acac4e@redhat.com>
-In-Reply-To: <b6f193d4-b780-439a-80eb-bb8b43acac4e@redhat.com>
+ <20251213001443.2041258-3-marcmorcos@google.com>
+ <159ced33-46e4-4b86-85e7-eda01406f768@redhat.com>
+In-Reply-To: <159ced33-46e4-4b86-85e7-eda01406f768@redhat.com>
 From: Marc Morcos <marcmorcos@google.com>
-Date: Mon, 15 Dec 2025 09:48:46 -0800
-X-Gm-Features: AQt7F2q46qGvfJHP5RGbzhCj-urSqFZcDzlJTa7Pgdiy1-vh4lnoI_-5tazn-dI
-Message-ID: <CACKn2CzdT3SxgjgZJQcvuC4j3EVDcvkmFGm_qW18yU6gwRRJ7w@mail.gmail.com>
-Subject: Re: [PATCH 3/4] qmp: Fix thread race
+Date: Mon, 15 Dec 2025 09:51:30 -0800
+X-Gm-Features: AQt7F2qzOJJ91zfx4CTNMV6CXrlJTNseiRzfLuw9_1STeyubPu99KVrx2t2nszI
+Message-ID: <CACKn2CyOtxr_KiH8T+7D6CMtDqKcTqL2kBVMBbEQzdZJuQYvnw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] thread-pool: Fix thread race
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>, 
@@ -79,7 +79,7 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Markus Armbruster <armbru@redhat.com>, 
  Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
  kvm@vger.kernel.org
-Content-Type: multipart/alternative; boundary="000000000000930b2c06460139a3"
+Content-Type: multipart/alternative; boundary="0000000000005e59830646014370"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::a34;
  envelope-from=marcmorcos@google.com; helo=mail-vk1-xa34.google.com
 X-Spam_score_int: -175
@@ -105,150 +105,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000930b2c06460139a3
+--0000000000005e59830646014370
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Yes, that looks correct. Thanks!
+Sounds good, thanks!
 
-- Marc
-
-On Mon, Dec 15, 2025, 6:52=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com> w=
+On Mon, Dec 15, 2025, 6:43=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com> w=
 rote:
 
 > On 12/13/25 01:14, Marc Morcos wrote:
-> > @@ -346,7 +347,15 @@ static void monitor_qapi_event_emit(QAPIEvent
-> event, QDict *qdict)
-> >           }
 > >
-> >           qmp_mon =3D container_of(mon, MonitorQMP, common);
-> > -        if (qmp_mon->commands !=3D &qmp_cap_negotiation_commands) {
-> > +        do_send =3D false;
-> > +
-> > +        WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
-> > +            if (qmp_mon->commands !=3D &qmp_cap_negotiation_commands) =
-{
-> > +                do_send =3D true;
-> > +            }
-> > +        }
-> > +
-> > +        if (do_send) {
-> >               qmp_send_response(qmp_mon, qdict);
-> >           }
-> >       }
+> >           req->ret =3D ret;
 >
-> We cannot use WITH_QEMU_LOCK_GUARD with "continue" or "break" inside,
-> but we can use QEMU_LOCK_GUARD:
->
-> @@ -347,17 +346,13 @@ static void monitor_qapi_event_emit(QAPIEvent
-> event, QDict *qdict)
->           }
->
->           qmp_mon =3D container_of(mon, MonitorQMP, common);
-> -        do_send =3D false;
-> -
-> -        WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
-> -            if (qmp_mon->commands !=3D &qmp_cap_negotiation_commands) {
-> -                do_send =3D true;
-> +        {
-> +            QEMU_LOCK_GUARD(&mon->mon_lock);
-> +            if (qmp_mon->commands =3D=3D &qmp_cap_negotiation_commands) =
-{
-> +                continue;
->               }
->           }
-> -
-> -        if (do_send) {
-> -            qmp_send_response(qmp_mon, qdict);
-> -        }
-> +        qmp_send_response(qmp_mon, qdict);
->       }
->   }
->
->
-> Let me know if this is okay for you!
+> Better use qatomic_set here---will fix it myself, thanks!
 >
 > Paolo
 >
+> > -        /* Write ret before state.  */
+> > -        smp_wmb();
+> > -        req->state =3D THREAD_DONE;
+> > +        /* _release to write ret before state.  */
+> > +        qatomic_store_release(&req->state, THREAD_DONE);
+> >
+> >           qemu_bh_schedule(pool->completion_bh);
+> >           qemu_mutex_lock(&pool->lock);
+> > @@ -180,7 +184,8 @@ static void thread_pool_completion_bh(void *opaque)
+> >
+> >   restart:
+> >       QLIST_FOREACH_SAFE(elem, &pool->head, all, next) {
+> > -        if (elem->state !=3D THREAD_DONE) {
+> > +        /* _acquire to read state before ret.  */
+> > +        if (qatomic_load_acquire(&elem->state) !=3D THREAD_DONE) {
+> >               continue;
+> >           }
+> >
+> > @@ -189,9 +194,6 @@ restart:
+> >           QLIST_REMOVE(elem, all);
+> >
+> >           if (elem->common.cb) {
+> > -            /* Read state before ret.  */
+> > -            smp_rmb();
+> > -
+> >               /* Schedule ourselves in case elem->common.cb() calls
+> aio_poll() to
+> >                * wait for another request that completed at the same
+> time.
+> >                */
+> > @@ -223,12 +225,12 @@ static void thread_pool_cancel(BlockAIOCB *acb)
+> >       trace_thread_pool_cancel_aio(elem, elem->common.opaque);
+> >
+> >       QEMU_LOCK_GUARD(&pool->lock);
+> > -    if (elem->state =3D=3D THREAD_QUEUED) {
+> > +    if (qatomic_read(&elem->state) =3D=3D THREAD_QUEUED) {
+> >           QTAILQ_REMOVE(&pool->request_list, elem, reqs);
+> >           qemu_bh_schedule(pool->completion_bh);
+> >
+> > -        elem->state =3D THREAD_DONE;
+> > -        elem->ret =3D -ECANCELED;
+> > +        qatomic_set(&elem->ret, -ECANCELED);
+> > +        qatomic_store_release(&elem->state, THREAD_DONE);
+> >       }
+> >
+> >   }
+>
 >
 
---000000000000930b2c06460139a3
+--0000000000005e59830646014370
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto"><span class=3D"smart_draft_text">Yes, that looks correct.=
- Thanks!<br><br>- Marc</span></div><br><div class=3D"gmail_quote gmail_quot=
-e_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Dec 15, 2025, 6:=
-52=E2=80=AFAM Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com">pbon=
-zini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 1=
-2/13/25 01:14, Marc Morcos wrote:<br>
-&gt; @@ -346,7 +347,15 @@ static void monitor_qapi_event_emit(QAPIEvent eve=
-nt, QDict *qdict)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<div dir=3D"auto">Sounds good, thanks!</div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Dec 15,=
+ 2025, 6:43=E2=80=AFAM Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.=
+com">pbonzini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:=
+1ex">On 12/13/25 01:14, Marc Morcos wrote:<br>
 &gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qmp_mon =3D container_of(mon, =
-MonitorQMP, common);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qmp_mon-&gt;commands !=3D &amp;qmp_ca=
-p_negotiation_commands) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 do_send =3D false;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 WITH_QEMU_LOCK_GUARD(&amp;mon-&gt;mon_loc=
-k) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qmp_mon-&gt;commands !=
-=3D &amp;qmp_cap_negotiation_commands) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 do_send =3D t=
-rue;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (do_send) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qmp_send_respons=
-e(qmp_mon, qdict);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0req-&gt;ret =3D ret;<br>
 <br>
-We cannot use WITH_QEMU_LOCK_GUARD with &quot;continue&quot; or &quot;break=
-&quot; inside, <br>
-but we can use QEMU_LOCK_GUARD:<br>
-<br>
-@@ -347,17 +346,13 @@ static void monitor_qapi_event_emit(QAPIEvent <br>
-event, QDict *qdict)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qmp_mon =3D container_of(mon, MonitorQMP=
-, common);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 do_send =3D false;<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 WITH_QEMU_LOCK_GUARD(&amp;mon-&gt;mon_lock) {<=
-br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qmp_mon-&gt;commands !=3D &a=
-mp;qmp_cap_negotiation_commands) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 do_send =3D true;<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 QEMU_LOCK_GUARD(&amp;mon-&gt;mon=
-_lock);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qmp_mon-&gt;commands =3D=3D =
-&amp;qmp_cap_negotiation_commands) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
--<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (do_send) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qmp_send_response(qmp_mon, qdict=
-);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 qmp_send_response(qmp_mon, qdict);<br>
-=C2=A0 =C2=A0 =C2=A0 }<br>
-=C2=A0 }<br>
-<br>
-<br>
-Let me know if this is okay for you!<br>
+Better use qatomic_set here---will fix it myself, thanks!<br>
 <br>
 Paolo<br>
 <br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Write ret before state.=C2=A0 */<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 smp_wmb();<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 req-&gt;state =3D THREAD_DONE;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* _release to write ret before state.=C2=
+=A0 */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qatomic_store_release(&amp;req-&gt;state,=
+ THREAD_DONE);<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_bh_schedule(pool-&gt;comp=
+letion_bh);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_mutex_lock(&amp;pool-&gt;=
+lock);<br>
+&gt; @@ -180,7 +184,8 @@ static void thread_pool_completion_bh(void *opaque=
+)<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0restart:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0QLIST_FOREACH_SAFE(elem, &amp;pool-&gt;head,=
+ all, next) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (elem-&gt;state !=3D THREAD_DONE) {<br=
+>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* _acquire to read state before ret.=C2=
+=A0 */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qatomic_load_acquire(&amp;elem-&gt;st=
+ate) !=3D THREAD_DONE) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0continue;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; @@ -189,9 +194,6 @@ restart:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0QLIST_REMOVE(elem, all);<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (elem-&gt;common.cb) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Read state before ret.=
+=C2=A0 */<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 smp_rmb();<br>
+&gt; -<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* Schedule ours=
+elves in case elem-&gt;common.cb() calls aio_poll() to<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 * wait for anot=
+her request that completed at the same time.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 */<br>
+&gt; @@ -223,12 +225,12 @@ static void thread_pool_cancel(BlockAIOCB *acb)<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0trace_thread_pool_cancel_aio(elem, elem-&gt;=
+common.opaque);<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0QEMU_LOCK_GUARD(&amp;pool-&gt;lock);<br>
+&gt; -=C2=A0 =C2=A0 if (elem-&gt;state =3D=3D THREAD_QUEUED) {<br>
+&gt; +=C2=A0 =C2=A0 if (qatomic_read(&amp;elem-&gt;state) =3D=3D THREAD_QUE=
+UED) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0QTAILQ_REMOVE(&amp;pool-&gt;re=
+quest_list, elem, reqs);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0qemu_bh_schedule(pool-&gt;comp=
+letion_bh);<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 elem-&gt;state =3D THREAD_DONE;<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 elem-&gt;ret =3D -ECANCELED;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qatomic_set(&amp;elem-&gt;ret, -ECANCELED=
+);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qatomic_store_release(&amp;elem-&gt;state=
+, THREAD_DONE);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0}<br>
+<br>
 </blockquote></div>
 
---000000000000930b2c06460139a3--
+--0000000000005e59830646014370--
 
