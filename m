@@ -4,96 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC818D5B84D
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 16:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CA51D5B85A
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVBsn-0006Rc-8a; Mon, 15 Dec 2025 11:57:15 -0500
+	id 1vVBxU-0008N4-T8; Mon, 15 Dec 2025 12:02:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phind.uet@gmail.com>)
- id 1vVBsj-0006Qr-Qp
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:57:09 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phind.uet@gmail.com>)
- id 1vVBsh-0003J1-6L
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:57:09 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2a087b2a9c0so26972365ad.0
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 08:57:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1765817826; x=1766422626; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hlmep2q9td76PCYg8X7guf9whxirVcSaE6Y/wnkBSEQ=;
- b=kzf0/CoELV8BItlu1bz3rPoCtl0SeXlfpRUxRMeOmQPg+fURPMUBFXX9tLLNhv2PGC
- nuKIOWKVbg82rdLubrrcBhWU6dWfpR4zh00ePMDr/qyGSNthenEmDSMWPNVdnIKIiTOa
- ffTnu4ZYdvuCsJ3/rk/fNlKU6boVpLp233+W0mpXgffJLfS7R5IYsI2f0HwQVl5Rwa9K
- EexHDlxzx7gV4iOVrQvTofljEOROx2TdkwLqJrKyYYMgfIzWE5Cn/C7pzScUUeqt+gC7
- VvqFEJo3kQtsHjJxp5uf7YSHC4W81sJarFQFty9kT94EnuL4vGknBFS4eamJUZDzkqyO
- AGNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765817826; x=1766422626;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hlmep2q9td76PCYg8X7guf9whxirVcSaE6Y/wnkBSEQ=;
- b=HGZyq5fRKw8vSLQBo+9pYyi/loo/YGkwV1ws3LNx4pRL6RW6nWRlo1zGzG8PgGLBhh
- F8tGGFVUSDJNh0hBYV/xbwBChi9LbCFyhsfpeTPSxI1SpyWeIInImA+MlR/XPmWd1DPE
- Vn9+HVUwpstW4wBaJxeTGm70ZNrgTalUaEh/XmtOxrmCoa46D501mfUgeySwToHX3SWa
- L7FXKofUA2zMiXk6zf4MJ+U432LLzOzm8u73lsVW4R+1NgW/Yssqg5H5QnxscLAvHQu9
- J18L4D5zoSDBIzIAzbi/p02ZfzkDpQRXQya3WSr8du81XNb+L2fqUz/F5Cj6/+65NNiW
- 07NA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6aMaCOMi5RbbNZnkoFtbbCvLFymyjMUADojZZi7WUe0pDDApXOAhHbbZIulRtJqXuOKyE//bB039f@nongnu.org
-X-Gm-Message-State: AOJu0YzwqCq0bc3JfzbtwwR0uOXI7lR9hHBYTX5UasfRo8yJFZbBlRcE
- tvJKaVK9aDab7UOe+r+oYwFM2Rph6wqfssP9OJGNlRD5yEP/bFpwFdqW
-X-Gm-Gg: AY/fxX5GnhEQtx6kkxm2w2pQWYB+BCE9iQcVD32v8e7teDEAkqRulEhQL7XAU90JeCF
- F2SPSneBJ2bQVqQNwVTFXPhcCYGRImjvvbVnRecwCDZ+WmfMUUtPU82d70C8kWP3+EzrTlUbfxa
- xsq/5vT5W0IZ9lCzmCbPghqFF/+ItdcT+Wf6eNZ0NrBBbJslpyVyovPwxdIaWI+mt7T3R2wTK/W
- 4GO0uz6sY34V9nMlquLcj7pXxa9qIu5LExJOUUR6WMggDOok5+ug9VvVmLmPB4u8aA45Qjl678q
- SuXIoQZB0hig8i5n6DBd2Ar+wcnGjTUoQ05chaKXOcUFRtPeB5bEpjRfBD6zx/pY3yMvYgY4mT7
- hIqyDvtQ+gl+JYugc4F4CE5/L1oDletMXqPnd+vUNDxNMf4HdFTsh13p0oBud1eVDyWAqApehSJ
- 6/CQ9KI7PaG5sbTlSYHUfWgeI=
-X-Google-Smtp-Source: AGHT+IGdZGiLRz+7VL3S8w6zNgFO6AtSTUjnRhqiQnRGEMHXp12KZgBw+HxdZBPEvBUV1r9EAXjaFA==
-X-Received: by 2002:a17:902:dac8:b0:29f:301a:f6cf with SMTP id
- d9443c01a7336-29f301af865mr105164445ad.35.1765817825751; 
- Mon, 15 Dec 2025 08:57:05 -0800 (PST)
-Received: from localhost.localdomain ([116.86.160.247])
- by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-29ee9d38c74sm140084775ad.31.2025.12.15.08.57.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Dec 2025 08:57:05 -0800 (PST)
-From: phind.uet@gmail.com
-To: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>,
- Michael Roth <michael.roth@amd.com>
-Cc: Nguyen Dinh Phi <phind.uet@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH 1/2] qga/vss-win32: Fix ConvertStringToBSTR redefinition with
- newer MinGW
-Date: Tue, 16 Dec 2025 00:45:11 +0800
-Message-ID: <20251215164512.322786-2-phind.uet@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251215164512.322786-1-phind.uet@gmail.com>
-References: <20251215164512.322786-1-phind.uet@gmail.com>
+ (Exim 4.90_1) (envelope-from <uwu@icenowy.me>) id 1vVBvx-00087B-TW
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:00:37 -0500
+Received: from sender4-op-o15.zoho.com ([136.143.188.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <uwu@icenowy.me>) id 1vVBvs-0004Qu-OA
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:00:29 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1765816960; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=kJVBGptoFHwiRrOlB5kwtirryOq7AbI2LuPb1cOOOfDUEjjRhxIu+ra0m0Iif52apToUXsdlGc+ILcHAtw7tmhMbGnYl19POr6rP/RKnhCfcc9oeLZ3mDTfr6ecV/WtzPYxfnG0r4FGSjBd90Yh+1+ofw5/Pr0QUhYu0KSTmcbw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1765816960;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=VbCzz+t8YdxlgPqxrswGhEfoTdtdoqpWAzN1+mJBSz8=; 
+ b=bTVKY0Yq0crKXmOe/T36Tsprq05RXuBJGSxGpIgyp3LjT4H5KDgOcmfpKrHZV1JHLjNP0zvTv6/hSHUDfiFD9+xHu0ln8sEHZLE0JoBmDECxKIDf2GlmqTetxnav2/ZwZV7pT98PSszw1JY16u1LZABDkxgc1E6NOVJu1OGj5Do=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=icenowy.me;
+ spf=pass  smtp.mailfrom=uwu@icenowy.me;
+ dmarc=pass header.from=<uwu@icenowy.me>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765816960; 
+ s=zmail2; d=icenowy.me; i=uwu@icenowy.me;
+ h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
+ bh=VbCzz+t8YdxlgPqxrswGhEfoTdtdoqpWAzN1+mJBSz8=;
+ b=dQcEO1lPPlnalSDQTyH5YAtG2/3xFFtcosd0vEn3hc1NBppuYMBT72n2G2Ye/Da2
+ OtC+FLzHPnRrTnxTBu+qYNdUW4LQ7fOqbvhSkB4kc8cQH8sBgeT0YI9gCT537r6Rjcx
+ lTHAnRJfNW2/zmaMubJk0tAsJwM2XFnBKC3WjeaMC0/ouUE47RK0We2FvkqZJPFQul2
+ TvRunMJhp7NkhoxEC/CaS1Gmk2KGKSClpVfw/mnkW+t1g0aXRHAldcD7zGw/4oXYvnF
+ 1IT7Xm12CEefoJgH+2X8SrcHfzjiOzE/1Nmu5Bajlz+jKqr1shl52ZKAYB64cNdSGPq
+ I+EW1XzVTg==
+Received: by mx.zohomail.com with SMTPS id 1765816948356745.0852669235609;
+ Mon, 15 Dec 2025 08:42:28 -0800 (PST)
+Message-ID: <f970cb682c3dc0d66713037c7e27cabb69797b37.camel@icenowy.me>
+Subject: Re: [PATCH 1/7] Add termios2 support to linux-user
+From: Icenowy Zheng <uwu@icenowy.me>
+To: Luca Bonissi <qemu@bonslack.org>, Richard Henderson
+ <richard.henderson@linaro.org>, Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org
+Date: Tue, 16 Dec 2025 00:42:23 +0800
+In-Reply-To: <745f18b6-ee62-4903-9a56-dcb903b610cf@bonslack.org>
+References: <745f18b6-ee62-4903-9a56-dcb903b610cf@bonslack.org>
+Organization: Anthon Open-Source Community
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=phind.uet@gmail.com; helo=mail-pl1-x636.google.com
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.15; envelope-from=uwu@icenowy.me;
+ helo=sender4-op-o15.zoho.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,66 +82,590 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nguyen Dinh Phi <phind.uet@gmail.com>
+=E5=9C=A8 2025-10-31=E6=98=9F=E6=9C=9F=E4=BA=94=E7=9A=84 14:23 +0100=EF=BC=
+=8CLuca Bonissi=E5=86=99=E9=81=93=EF=BC=9A
+> > From 6ddab7d3ba1035b5e2a6016bde4776436267c18b Mon Sep 17 00:00:00
+> > 2001
+> From: Luca Bonissi <qemu@bonslack.org>
+> Date: Fri, 31 Oct 2025 13:29:19 +0100
+> Subject: [PATCH 1/7] Add termios2 support to linux-user
 
-Newer versions of MinGW-w64 provide ConvertStringToBSTR() in the
-_com_util namespace via <comutil.h>. This causes a redefinition
-error when building qemu-ga on Windows with these toolchains.
+Sorry but this patch does not build on PowerPC hosts:
 
-Add a meson check to detect whether ConvertStringToBSTR is already
-available, and conditionally compile our fallback implementation
-only when the system does not provide one.
+```
+../linux-user/ioctls.h:4:12: error: =E2=80=98TCGETS2=E2=80=99 undeclared he=
+re (not in a
+function); did you mean =E2=80=98TCGETS=E2=80=99?
+    4 |      IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+      |            ^~~~~~~
+../linux-user/syscall.c:5615:23: note: in definition of macro =E2=80=98IOCT=
+L=E2=80=99
+ 5615 |     { TARGET_ ## cmd, cmd, #cmd, access, 0, {  __VA_ARGS__ } },
+      |                       ^~~
+../linux-user/ioctls.h:5:12: error: =E2=80=98TCSETS2=E2=80=99 undeclared he=
+re (not in a
+function); did you mean =E2=80=98TCSETS=E2=80=99?
+    5 |      IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+      |            ^~~~~~~
+../linux-user/syscall.c:5615:23: note: in definition of macro =E2=80=98IOCT=
+L=E2=80=99
+ 5615 |     { TARGET_ ## cmd, cmd, #cmd, access, 0, {  __VA_ARGS__ } },
+      |                       ^~~
+../linux-user/ioctls.h:6:12: error: =E2=80=98TCSETSW2=E2=80=99 undeclared h=
+ere (not in
+a function); did you mean =E2=80=98TCSETSW=E2=80=99?
+    6 |      IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+      |            ^~~~~~~~
+../linux-user/syscall.c:5615:23: note: in definition of macro =E2=80=98IOCT=
+L=E2=80=99
+ 5615 |     { TARGET_ ## cmd, cmd, #cmd, access, 0, {  __VA_ARGS__ } },
+      |                       ^~~
+../linux-user/ioctls.h:7:12: error: =E2=80=98TCSETSF2=E2=80=99 undeclared h=
+ere (not in
+a function); did you mean =E2=80=98TCSETSF=E2=80=99?
+    7 |      IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+      |            ^~~~~~~~
+../linux-user/syscall.c:5615:23: note: in definition of macro =E2=80=98IOCT=
+L=E2=80=99
+ 5615 |     { TARGET_ ## cmd, cmd, #cmd, access, 0, {  __VA_ARGS__ } },
+      |                       ^~~
+../linux-user/syscall.c: In function =E2=80=98target_to_host_termios2=E2=80=
+=99:
+../linux-user/syscall.c:5940:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5940 |     host->c_iflag =3D
+      |         ^~
+../linux-user/syscall.c:5942:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5942 |     host->c_oflag =3D
+      |         ^~
+../linux-user/syscall.c:5944:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5944 |     host->c_cflag =3D
+      |         ^~
+../linux-user/syscall.c:5946:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5946 |     host->c_lflag =3D
+      |         ^~
+../linux-user/syscall.c:5948:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5948 |     host->c_line =3D target->c_line;
+      |         ^~
+../linux-user/syscall.c:5949:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5949 |     host->c_ispeed =3D tswap32(target->c_ispeed);
+      |         ^~
+../linux-user/syscall.c:5950:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5950 |     host->c_ospeed =3D tswap32(target->c_ospeed);
+      |         ^~
+../linux-user/syscall.c:5952:16: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5952 |     memset(host->c_cc, 0, sizeof(host->c_cc));
+      |                ^~
+../linux-user/syscall.c:5952:38: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5952 |     memset(host->c_cc, 0, sizeof(host->c_cc));
+      |                                      ^~
+../linux-user/syscall.c:5953:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5953 |     host->c_cc[VINTR] =3D target->c_cc[TARGET_VINTR];
+      |         ^~
+../linux-user/syscall.c:5954:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5954 |     host->c_cc[VQUIT] =3D target->c_cc[TARGET_VQUIT];
+      |         ^~
+../linux-user/syscall.c:5955:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5955 |     host->c_cc[VERASE] =3D target->c_cc[TARGET_VERASE];
+      |         ^~
+../linux-user/syscall.c:5956:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5956 |     host->c_cc[VKILL] =3D target->c_cc[TARGET_VKILL];
+      |         ^~
+../linux-user/syscall.c:5957:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5957 |     host->c_cc[VEOF] =3D target->c_cc[TARGET_VEOF];
+      |         ^~
+../linux-user/syscall.c:5958:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5958 |     host->c_cc[VTIME] =3D target->c_cc[TARGET_VTIME];
+      |         ^~
+../linux-user/syscall.c:5959:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5959 |     host->c_cc[VMIN] =3D target->c_cc[TARGET_VMIN];
+      |         ^~
+../linux-user/syscall.c:5960:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5960 |     host->c_cc[VSWTC] =3D target->c_cc[TARGET_VSWTC];
+      |         ^~
+../linux-user/syscall.c:5961:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5961 |     host->c_cc[VSTART] =3D target->c_cc[TARGET_VSTART];
+      |         ^~
+../linux-user/syscall.c:5962:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5962 |     host->c_cc[VSTOP] =3D target->c_cc[TARGET_VSTOP];
+      |         ^~
+../linux-user/syscall.c:5963:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5963 |     host->c_cc[VSUSP] =3D target->c_cc[TARGET_VSUSP];
+      |         ^~
+../linux-user/syscall.c:5964:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5964 |     host->c_cc[VEOL] =3D target->c_cc[TARGET_VEOL];
+      |         ^~
+../linux-user/syscall.c:5965:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5965 |     host->c_cc[VREPRINT] =3D target->c_cc[TARGET_VREPRINT];
+      |         ^~
+../linux-user/syscall.c:5966:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5966 |     host->c_cc[VDISCARD] =3D target->c_cc[TARGET_VDISCARD];
+      |         ^~
+../linux-user/syscall.c:5967:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5967 |     host->c_cc[VWERASE] =3D target->c_cc[TARGET_VWERASE];
+      |         ^~
+../linux-user/syscall.c:5968:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5968 |     host->c_cc[VLNEXT] =3D target->c_cc[TARGET_VLNEXT];
+      |         ^~
+../linux-user/syscall.c:5969:9: error: invalid use of undefined type
+=E2=80=98struct host_termios2=E2=80=99
+ 5969 |     host->c_cc[VEOL2] =3D target->c_cc[TARGET_VEOL2];
+      |         ^~
+In file included from ../linux-user/user-internals.h:21,
+                 from ../linux-user/syscall.c:137:
+../linux-user/syscall.c: In function =E2=80=98host_to_target_termios2=E2=80=
+=99:
+../linux-user/syscall.c:5978:44: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5978 |         tswap32(host_to_target_bitmask(host->c_iflag,
+iflag_tbl));
+      |                                            ^~
+/var/cache/acbs/build/acbs.62hveo8z/qemu-
+10.1.2/src.user/include/user/thunk.h:209:32: note: in definition of
+macro =E2=80=98host_to_target_bitmask=E2=80=99
+  209 |     host_to_target_bitmask_len(M, T, ARRAY_SIZE(T))
+      |                                ^
+../linux-user/syscall.c:5980:44: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5980 |         tswap32(host_to_target_bitmask(host->c_oflag,
+oflag_tbl));
+      |                                            ^~
+/var/cache/acbs/build/acbs.62hveo8z/qemu-
+10.1.2/src.user/include/user/thunk.h:209:32: note: in definition of
+macro =E2=80=98host_to_target_bitmask=E2=80=99
+  209 |     host_to_target_bitmask_len(M, T, ARRAY_SIZE(T))
+      |                                ^
+../linux-user/syscall.c:5982:44: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5982 |         tswap32(host_to_target_bitmask(host->c_cflag,
+cflag_tbl));
+      |                                            ^~
+/var/cache/acbs/build/acbs.62hveo8z/qemu-
+10.1.2/src.user/include/user/thunk.h:209:32: note: in definition of
+macro =E2=80=98host_to_target_bitmask=E2=80=99
+  209 |     host_to_target_bitmask_len(M, T, ARRAY_SIZE(T))
+      |                                ^
+../linux-user/syscall.c:5984:44: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5984 |         tswap32(host_to_target_bitmask(host->c_lflag,
+lflag_tbl));
+      |                                            ^~
+/var/cache/acbs/build/acbs.62hveo8z/qemu-
+10.1.2/src.user/include/user/thunk.h:209:32: note: in definition of
+macro =E2=80=98host_to_target_bitmask=E2=80=99
+  209 |     host_to_target_bitmask_len(M, T, ARRAY_SIZE(T))
+      |                                ^
+../linux-user/syscall.c:5985:26: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5985 |     target->c_line =3D host->c_line;
+      |                          ^~
+../linux-user/syscall.c:5986:36: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5986 |     target->c_ispeed =3D tswap32(host->c_ispeed);
+      |                                    ^~
+../linux-user/syscall.c:5987:36: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5987 |     target->c_ospeed =3D tswap32(host->c_ospeed);
+      |                                    ^~
+../linux-user/syscall.c:5990:38: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5990 |     target->c_cc[TARGET_VINTR] =3D host->c_cc[VINTR];
+      |                                      ^~
+../linux-user/syscall.c:5991:38: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5991 |     target->c_cc[TARGET_VQUIT] =3D host->c_cc[VQUIT];
+      |                                      ^~
+../linux-user/syscall.c:5992:39: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5992 |     target->c_cc[TARGET_VERASE] =3D host->c_cc[VERASE];
+      |                                       ^~
+../linux-user/syscall.c:5993:38: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5993 |     target->c_cc[TARGET_VKILL] =3D host->c_cc[VKILL];
+      |                                      ^~
+../linux-user/syscall.c:5994:37: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5994 |     target->c_cc[TARGET_VEOF] =3D host->c_cc[VEOF];
+      |                                     ^~
+../linux-user/syscall.c:5995:38: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5995 |     target->c_cc[TARGET_VTIME] =3D host->c_cc[VTIME];
+      |                                      ^~
+../linux-user/syscall.c:5996:37: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5996 |     target->c_cc[TARGET_VMIN] =3D host->c_cc[VMIN];
+      |                                     ^~
+../linux-user/syscall.c:5997:38: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5997 |     target->c_cc[TARGET_VSWTC] =3D host->c_cc[VSWTC];
+      |                                      ^~
+../linux-user/syscall.c:5998:39: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5998 |     target->c_cc[TARGET_VSTART] =3D host->c_cc[VSTART];
+      |                                       ^~
+../linux-user/syscall.c:5999:38: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 5999 |     target->c_cc[TARGET_VSTOP] =3D host->c_cc[VSTOP];
+      |                                      ^~
+../linux-user/syscall.c:6000:38: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 6000 |     target->c_cc[TARGET_VSUSP] =3D host->c_cc[VSUSP];
+      |                                      ^~
+../linux-user/syscall.c:6001:37: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 6001 |     target->c_cc[TARGET_VEOL] =3D host->c_cc[VEOL];
+      |                                     ^~
+../linux-user/syscall.c:6002:41: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 6002 |     target->c_cc[TARGET_VREPRINT] =3D host->c_cc[VREPRINT];
+      |                                         ^~
+../linux-user/syscall.c:6003:41: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 6003 |     target->c_cc[TARGET_VDISCARD] =3D host->c_cc[VDISCARD];
+      |                                         ^~
+../linux-user/syscall.c:6004:40: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 6004 |     target->c_cc[TARGET_VWERASE] =3D host->c_cc[VWERASE];
+      |                                        ^~
+../linux-user/syscall.c:6005:39: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 6005 |     target->c_cc[TARGET_VLNEXT] =3D host->c_cc[VLNEXT];
+      |                                       ^~
+../linux-user/syscall.c:6006:38: error: invalid use of undefined type
+=E2=80=98const struct host_termios2=E2=80=99
+ 6006 |     target->c_cc[TARGET_VEOL2] =3D host->c_cc[VEOL2];
+      |                                      ^~
+../linux-user/syscall.c: At top level:
+../linux-user/syscall.c:6011:54: error: invalid application of =E2=80=98siz=
+eof=E2=80=99
+to incomplete type =E2=80=98struct host_termios2=E2=80=99
+ 6011 |     .size =3D { sizeof(struct target_termios2), sizeof(struct
+host_termios2) },
+      |                                                      ^~~~~~
+../linux-user/syscall.c:6012:65: error: invalid application of
+=E2=80=98__alignof__=E2=80=99 to incomplete type =E2=80=98struct host_termi=
+os2=E2=80=99
+ 6012 |     .align =3D { __alignof__(struct target_termios2),
+__alignof__(struct host_termios2) },
+      |                                                              =20
+^~~~~~
+```
 
-Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
----
- meson.build               | 12 ++++++++++++
- qga/vss-win32/install.cpp |  2 ++
- 2 files changed, 14 insertions(+)
+(The whole patchset rebased onto v10.1.2)
 
-diff --git a/meson.build b/meson.build
-index c5710a6a47..60a980e610 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3299,6 +3299,18 @@ endif
- # Detect host pointer size for the target configuration loop.
- host_long_bits = cc.sizeof('void *') * 8
- 
-+# Detect if ConvertStringToBSTR has been defined in _com_util namespace
-+if host_os == 'windows'
-+  has_convert_string_to_bstr = cxx.compiles('''
-+    #include <comutil.h>
-+    int main() {
-+        BSTR b = _com_util::ConvertStringToBSTR("test");
-+        return b ? 0 : 1;
-+    }
-+  ''')
-+  config_host_data.set('CONFIG_CONVERT_STRING_TO_BSTR', has_convert_string_to_bstr)
-+endif
-+
- ########################
- # Target configuration #
- ########################
-diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-index 7b25d9098b..5b7a8e9bc5 100644
---- a/qga/vss-win32/install.cpp
-+++ b/qga/vss-win32/install.cpp
-@@ -549,6 +549,7 @@ STDAPI DllUnregisterServer(void)
- 
- 
- /* Support function to convert ASCII string into BSTR (used in _bstr_t) */
-+#ifndef CONFIG_CONVERT_STRING_TO_BSTR
- namespace _com_util
- {
-     BSTR WINAPI ConvertStringToBSTR(const char *ascii) {
-@@ -566,6 +567,7 @@ namespace _com_util
-         return bstr;
-     }
- }
-+#endif
- 
- /* Stop QGA VSS provider service using Winsvc API  */
- STDAPI StopService(void)
--- 
-2.43.0
+It seems that PowerPC do not have a `termios2` interface in kernel --
+the `termios` here is just `termios2` .
+
+>=20
+> Signed-off-by: Luca Bonissi <qemu@bonslack.org>
+> ---
+> =C2=A0linux-user/ioctls.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ |=C2=A0 6 +++
+> =C2=A0linux-user/strace.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ | 69 ++++++++++++++++++++++++++++++
+> =C2=A0linux-user/syscall.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 84
+> +++++++++++++++++++++++++++++++++++++
+> =C2=A0linux-user/syscall_types.h=C2=A0 |=C2=A0 3 ++
+> =C2=A0linux-user/user-internals.h |=C2=A0 3 ++
+> =C2=A05 files changed, 165 insertions(+)
+>=20
+> diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+> index 2f62fd2cb9..6ecfe6306e 100644
+> --- a/linux-user/ioctls.h
+> +++ b/linux-user/ioctls.h
+> @@ -1,5 +1,11 @@
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* emulated ioctl list */
+> =C2=A0
+> +#ifdef TARGET_TCGETS2
+> +=C2=A0=C2=A0=C2=A0=C2=A0 IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_t=
+ermios2)))
+> +=C2=A0=C2=A0=C2=A0=C2=A0 IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_t=
+ermios2)))
+> +=C2=A0=C2=A0=C2=A0=C2=A0 IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_=
+termios2)))
+> +=C2=A0=C2=A0=C2=A0=C2=A0 IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_=
+termios2)))
+> +#endif
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 IOCTL(TCGETS, IOC_R, MK_PTR(MK_STRUCT(STRU=
+CT_termios)))
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 IOCTL(TCSETS, IOC_W, MK_PTR(MK_STRUCT(STRU=
+CT_termios)))
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 IOCTL(TCSETSF, IOC_W, MK_PTR(MK_STRUCT(STR=
+UCT_termios)))
+> diff --git a/linux-user/strace.c b/linux-user/strace.c
+> index 758c5d32b6..7afb94544f 100644
+> --- a/linux-user/strace.c
+> +++ b/linux-user/strace.c
+> @@ -1935,6 +1935,75 @@ print_termios(void *arg)
+> =C2=A0=C2=A0=C2=A0=C2=A0 qemu_log("}");
+> =C2=A0}
+> =C2=A0
+> +#ifdef TARGET_TCGETS2
+> +void
+> +print_termios2(void *arg)
+> +{
+> +=C2=A0=C2=A0=C2=A0 const struct target_termios2 *target =3D arg;
+> +
+> +=C2=A0=C2=A0=C2=A0 target_tcflag_t iflags =3D tswap32(target->c_iflag);
+> +=C2=A0=C2=A0=C2=A0 target_tcflag_t oflags =3D tswap32(target->c_oflag);
+> +=C2=A0=C2=A0=C2=A0 target_tcflag_t cflags =3D tswap32(target->c_cflag);
+> +=C2=A0=C2=A0=C2=A0 target_tcflag_t lflags =3D tswap32(target->c_lflag);
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log("{");
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log("c_iflag =3D ");
+> +=C2=A0=C2=A0=C2=A0 print_flags(termios_iflags, iflags, 0);
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log("c_oflag =3D ");
+> +=C2=A0=C2=A0=C2=A0 target_tcflag_t oflags_clean =3D=C2=A0 oflags & ~(TAR=
+GET_NLDLY |
+> TARGET_CRDLY |
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 TARGET_TABDLY |
+> TARGET_BSDLY |
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 TARGET_VTDLY |
+> TARGET_FFDLY);
+> +=C2=A0=C2=A0=C2=A0 print_flags(termios_oflags, oflags_clean, 0);
+> +=C2=A0=C2=A0=C2=A0 if (oflags & TARGET_NLDLY) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print_enums(termios_oflags_NL=
+DLY, oflags & TARGET_NLDLY, 0);
+> +=C2=A0=C2=A0=C2=A0 }
+> +=C2=A0=C2=A0=C2=A0 if (oflags & TARGET_CRDLY) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print_enums(termios_oflags_CR=
+DLY, oflags & TARGET_CRDLY, 0);
+> +=C2=A0=C2=A0=C2=A0 }
+> +=C2=A0=C2=A0=C2=A0 if (oflags & TARGET_TABDLY) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print_enums(termios_oflags_TA=
+BDLY, oflags & TARGET_TABDLY,
+> 0);
+> +=C2=A0=C2=A0=C2=A0 }
+> +=C2=A0=C2=A0=C2=A0 if (oflags & TARGET_BSDLY) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print_enums(termios_oflags_BS=
+DLY, oflags & TARGET_BSDLY, 0);
+> +=C2=A0=C2=A0=C2=A0 }
+> +=C2=A0=C2=A0=C2=A0 if (oflags & TARGET_VTDLY) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print_enums(termios_oflags_VT=
+DLY, oflags & TARGET_VTDLY, 0);
+> +=C2=A0=C2=A0=C2=A0 }
+> +=C2=A0=C2=A0=C2=A0 if (oflags & TARGET_FFDLY) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print_enums(termios_oflags_FF=
+DLY, oflags & TARGET_FFDLY, 0);
+> +=C2=A0=C2=A0=C2=A0 }
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log("c_cflag =3D ");
+> +=C2=A0=C2=A0=C2=A0 if (cflags & TARGET_CBAUD) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print_enums(termios_cflags_CB=
+AUD, cflags & TARGET_CBAUD, 0);
+> +=C2=A0=C2=A0=C2=A0 }
+> +=C2=A0=C2=A0=C2=A0 if (cflags & TARGET_CSIZE) {
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 print_enums(termios_cflags_CS=
+IZE, cflags & TARGET_CSIZE, 0);
+> +=C2=A0=C2=A0=C2=A0 }
+> +=C2=A0=C2=A0=C2=A0 target_tcflag_t cflags_clean =3D cflags & ~(TARGET_CB=
+AUD |
+> TARGET_CSIZE);
+> +=C2=A0=C2=A0=C2=A0 print_flags(termios_cflags, cflags_clean, 0);
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log("c_lflag =3D ");
+> +=C2=A0=C2=A0=C2=A0 print_flags(termios_lflags, lflags, 0);
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log("c_ispeed =3D ");
+> +=C2=A0=C2=A0=C2=A0 print_raw_param("%u", tswap32(target->c_ispeed), 0);
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log("c_ospeed =3D ");
+> +=C2=A0=C2=A0=C2=A0 print_raw_param("%u", tswap32(target->c_ospeed), 0);
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log("c_cc =3D ");
+> +=C2=A0=C2=A0=C2=A0 qemu_log("\"%s\",", target->c_cc);
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log("c_line =3D ");
+> +=C2=A0=C2=A0=C2=A0 print_raw_param("\'%c\'", target->c_line, 1);
+> +
+> +=C2=A0=C2=A0=C2=A0 qemu_log("}");
+> +}
+> +#endif
+> +
+> =C2=A0#undef UNUSED
+> =C2=A0
+> =C2=A0#ifdef TARGET_NR_accept
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index 8546f48a05..920bf23406 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -86,6 +86,7 @@
+> =C2=A0#endif
+> =C2=A0
+> =C2=A0#define termios host_termios
+> +#define termios2 host_termios2
+> =C2=A0#define winsize host_winsize
+> =C2=A0#define termio host_termio
+> =C2=A0#define sgttyb host_sgttyb /* same as target */
+> @@ -5885,6 +5886,89 @@ static const StructEntry struct_termios_def =3D
+> {
+> =C2=A0=C2=A0=C2=A0=C2=A0 .print =3D print_termios,
+> =C2=A0};
+> =C2=A0
+> +#ifdef TARGET_TCGETS2
+> +static void target_to_host_termios2 (void *dst, const void *src)
+> +{
+> +=C2=A0=C2=A0=C2=A0 struct host_termios2 *host =3D dst;
+> +=C2=A0=C2=A0=C2=A0 const struct target_termios2 *target =3D src;
+> +
+> +=C2=A0=C2=A0=C2=A0 host->c_iflag =3D
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target_to_host_bitmask(tswap3=
+2(target->c_iflag), iflag_tbl);
+> +=C2=A0=C2=A0=C2=A0 host->c_oflag =3D
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target_to_host_bitmask(tswap3=
+2(target->c_oflag), oflag_tbl);
+> +=C2=A0=C2=A0=C2=A0 host->c_cflag =3D
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target_to_host_bitmask(tswap3=
+2(target->c_cflag), cflag_tbl);
+> +=C2=A0=C2=A0=C2=A0 host->c_lflag =3D
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target_to_host_bitmask(tswap3=
+2(target->c_lflag), lflag_tbl);
+> +=C2=A0=C2=A0=C2=A0 host->c_line =3D target->c_line;
+> +=C2=A0=C2=A0=C2=A0 host->c_ispeed =3D tswap32(target->c_ispeed);
+> +=C2=A0=C2=A0=C2=A0 host->c_ospeed =3D tswap32(target->c_ospeed);
+> +
+> +=C2=A0=C2=A0=C2=A0 memset(host->c_cc, 0, sizeof(host->c_cc));
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VINTR] =3D target->c_cc[TARGET_VINTR];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VQUIT] =3D target->c_cc[TARGET_VQUIT];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VERASE] =3D target->c_cc[TARGET_VERASE];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VKILL] =3D target->c_cc[TARGET_VKILL];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VEOF] =3D target->c_cc[TARGET_VEOF];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VTIME] =3D target->c_cc[TARGET_VTIME];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VMIN] =3D target->c_cc[TARGET_VMIN];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VSWTC] =3D target->c_cc[TARGET_VSWTC];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VSTART] =3D target->c_cc[TARGET_VSTART];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VSTOP] =3D target->c_cc[TARGET_VSTOP];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VSUSP] =3D target->c_cc[TARGET_VSUSP];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VEOL] =3D target->c_cc[TARGET_VEOL];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VREPRINT] =3D target->c_cc[TARGET_VREPRINT=
+];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VDISCARD] =3D target->c_cc[TARGET_VDISCARD=
+];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VWERASE] =3D target->c_cc[TARGET_VWERASE];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VLNEXT] =3D target->c_cc[TARGET_VLNEXT];
+> +=C2=A0=C2=A0=C2=A0 host->c_cc[VEOL2] =3D target->c_cc[TARGET_VEOL2];
+> +}
+> +
+> +static void host_to_target_termios2 (void *dst, const void *src)
+> +{
+> +=C2=A0=C2=A0=C2=A0 struct target_termios2 *target =3D dst;
+> +=C2=A0=C2=A0=C2=A0 const struct host_termios2 *host =3D src;
+> +
+> +=C2=A0=C2=A0=C2=A0 target->c_iflag =3D
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tswap32(host_to_target_bitmas=
+k(host->c_iflag, iflag_tbl));
+> +=C2=A0=C2=A0=C2=A0 target->c_oflag =3D
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tswap32(host_to_target_bitmas=
+k(host->c_oflag, oflag_tbl));
+> +=C2=A0=C2=A0=C2=A0 target->c_cflag =3D
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tswap32(host_to_target_bitmas=
+k(host->c_cflag, cflag_tbl));
+> +=C2=A0=C2=A0=C2=A0 target->c_lflag =3D
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 tswap32(host_to_target_bitmas=
+k(host->c_lflag, lflag_tbl));
+> +=C2=A0=C2=A0=C2=A0 target->c_line =3D host->c_line;
+> +=C2=A0=C2=A0=C2=A0 target->c_ispeed =3D tswap32(host->c_ispeed);
+> +=C2=A0=C2=A0=C2=A0 target->c_ospeed =3D tswap32(host->c_ospeed);
+> +
+> +=C2=A0=C2=A0=C2=A0 memset(target->c_cc, 0, sizeof(target->c_cc));
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VINTR] =3D host->c_cc[VINTR];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VQUIT] =3D host->c_cc[VQUIT];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VERASE] =3D host->c_cc[VERASE];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VKILL] =3D host->c_cc[VKILL];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VEOF] =3D host->c_cc[VEOF];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VTIME] =3D host->c_cc[VTIME];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VMIN] =3D host->c_cc[VMIN];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VSWTC] =3D host->c_cc[VSWTC];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VSTART] =3D host->c_cc[VSTART];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VSTOP] =3D host->c_cc[VSTOP];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VSUSP] =3D host->c_cc[VSUSP];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VEOL] =3D host->c_cc[VEOL];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VREPRINT] =3D host->c_cc[VREPRINT=
+];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VDISCARD] =3D host->c_cc[VDISCARD=
+];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VWERASE] =3D host->c_cc[VWERASE];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VLNEXT] =3D host->c_cc[VLNEXT];
+> +=C2=A0=C2=A0=C2=A0 target->c_cc[TARGET_VEOL2] =3D host->c_cc[VEOL2];
+> +}
+> +
+> +static const StructEntry struct_termios2_def =3D {
+> +=C2=A0=C2=A0=C2=A0 .convert =3D { host_to_target_termios2, target_to_hos=
+t_termios2 },
+> +=C2=A0=C2=A0=C2=A0 .size =3D { sizeof(struct target_termios2), sizeof(st=
+ruct
+> host_termios2) },
+> +=C2=A0=C2=A0=C2=A0 .align =3D { __alignof__(struct target_termios2),
+> __alignof__(struct host_termios2) },
+> +=C2=A0=C2=A0=C2=A0 .print =3D print_termios2,
+> +};
+> +#endif
+> +
+> =C2=A0/* If the host does not provide these bits, they may be safely
+> discarded. */
+> =C2=A0#ifndef MAP_SYNC
+> =C2=A0#define MAP_SYNC 0
+> diff --git a/linux-user/syscall_types.h b/linux-user/syscall_types.h
+> index 6dd7a80ce5..ac45705acf 100644
+> --- a/linux-user/syscall_types.h
+> +++ b/linux-user/syscall_types.h
+> @@ -1,4 +1,7 @@
+> =C2=A0STRUCT_SPECIAL(termios)
+> +#ifdef TARGET_TCGETS2
+> +STRUCT_SPECIAL(termios2)
+> +#endif
+> =C2=A0
+> =C2=A0STRUCT(winsize,
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 TYPE_SHORT, TYPE_SHORT, TYPE_S=
+HORT, TYPE_SHORT)
+> diff --git a/linux-user/user-internals.h b/linux-user/user-
+> internals.h
+> index 7099349ec8..067c02bb93 100644
+> --- a/linux-user/user-internals.h
+> +++ b/linux-user/user-internals.h
+> @@ -129,6 +129,9 @@ static inline uint64_t target_offset64(uint64_t
+> word0, uint64_t word1)
+> =C2=A0#endif /* TARGET_ABI_BITS !=3D 32 */
+> =C2=A0
+> =C2=A0void print_termios(void *arg);
+> +#ifdef TARGET_TCGETS2
+> +void print_termios2(void *arg);
+> +#endif
+> =C2=A0
+> =C2=A0/* ARM EABI and MIPS expect 64bit types aligned even on pairs or
+> registers */
+> =C2=A0#ifdef TARGET_ARM
 
 
