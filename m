@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 523EED59D99
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3416D5B16C
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:14:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV2lk-0003As-Hx; Mon, 15 Dec 2025 02:13:20 -0500
+	id 1vV2lc-00035W-Mt; Mon, 15 Dec 2025 02:13:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vV2lg-00038H-FH
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:17 -0500
+ id 1vV2la-00033w-Mp
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:10 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vV2le-0008DF-LR
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:16 -0500
+ id 1vV2lX-0008DW-0i
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765782795; x=1797318795;
+ t=1765782787; x=1797318787;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=EzPVzaUr3I3OOvLOdifr5YptjvugY0i5WiQfN8ijd28=;
- b=dbm2FPU64e1xUCpTZmnrX44RtEyBpvXidooxVNdfatPB7kTKJqKw2paN
- FQ20Z2e5RoxjQ1ZPXO1vlQ0pKhEKGQOQEFezGqz2nLz8FxLBN+36p/bCE
- RoQb2wEmYDur9eVojIk/Y6SBHCCY/QJaxFzTMVc2tFtRpbVi1IwchVYm3
- mpCQmdwV/Jj2oYX/oWkdH1s6DzL/AsDHho0ILSA26EmDgObk5OPq/UGJq
- XZSZXb7h596T+g1za/q1B4DIDJD5cBOPvciCidro0D/d6ZF4UHhkJYgTj
- av0WLm+akPPt14/UvE9dSPdZlwpK/cVa1B7ugcaCBpBMJ3J4LwjiuasB0 A==;
-X-CSE-ConnectionGUID: T0fyzjupT7yH8wzUwTG86g==
-X-CSE-MsgGUID: MpwIVsHHRLSNmMa7c1A/aQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="90332256"
-X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="90332256"
+ bh=vit3CDGKgADTcvTJz3NSHDWQVkt2LabKgxDAyaoeYJ4=;
+ b=cf3BD4VgghGlD9mmbotMApbm+jrojzDzNFFRqfQhwO5Sgm00j23FOHEq
+ 8DTC2W4C0WuzbjNymyH5jUQV0GxGKmxx5FnVrTfM3yqu06FD8jQ1hIAgz
+ Z+WJ8utA/sydehouvJX0abHFWdMJxtdvzKqZV0vjsJY5ZmS9lxpK3Ti+X
+ xxmKmjeYUm2mgboylb+/TdvS7K2qRXPevBlHg+HeE1S/2Fe4tjCzFMtTq
+ u5sr7EHvrDrfkRmNC+Gk7bbRHSy0qVCaCfDJpRat9nd2NrS0IUPIjgRmN
+ Sa09xJQV1w5/AXaurTVPrGErv3Isgz5DVF5vhjxvRCyFmVJakOjCoagOc A==;
+X-CSE-ConnectionGUID: G/qnI6sTTQC0ByfGlyk0gQ==
+X-CSE-MsgGUID: pStmCdhxRR68DvO/AJrgcw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="90332238"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="90332238"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Dec 2025 23:13:14 -0800
-X-CSE-ConnectionGUID: 7KQqUEnTSESt3Q9ULSvq/w==
-X-CSE-MsgGUID: rVdwKmeHSqqlz09nSNJcrA==
+ 14 Dec 2025 23:13:06 -0800
+X-CSE-ConnectionGUID: NRKxrr7JQhiU1UKzHzKXMQ==
+X-CSE-MsgGUID: e2bXRFQ/Tye/jVk0vwdDrQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197265959"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197265933"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 14 Dec 2025 23:13:12 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 14 Dec 2025 23:13:04 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Xudong Hao <xudong.hao@intel.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v2 07/11] i386/cpu: Allow cache to be shared at thread level
-Date: Mon, 15 Dec 2025 15:37:39 +0800
-Message-Id: <20251215073743.4055227-8-zhao1.liu@intel.com>
+Subject: [PATCH v2 02/11] i386/cpu: Add CPUID.0x1E.0x1 subleaf for AMX
+ instructions
+Date: Mon, 15 Dec 2025 15:37:34 +0800
+Message-Id: <20251215073743.4055227-3-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251215073743.4055227-1-zhao1.liu@intel.com>
 References: <20251215073743.4055227-1-zhao1.liu@intel.com>
@@ -83,108 +84,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In CPUID 0x4 leaf, it's possible to make the cache privated at thread
-level when there's no HT within the core. In this case, while cache per
-thread and cache per core are essentially identical, their topology
-information differs in CPUID 0x4.
+Intel Diamond Rapids adds new AMX instructions to support new formats
+and memory operations [*]. And it introduces the CPUID subleaf 0x1E.0x1
+to centralize the discrete AMX feature bits within EAX.
 
-Diamond Rapids assigns the L1 i/d cache at the thread level. To allow
-accurate emulation of DMR cache topology, remove the cache-per-thread
-restriction in max_thread_ids_for_cache(), which enables CPUID 0x4 to
-support cache per thread topology.
+For new feature bits (CPUID 0x1E.0x1.EAX[bits 4,6-8]), it's
+straightforward to add their enurmeration support.
 
-Given that after adding thread-level support, the topology offset
-information required by max_thread_ids_for_cache() can be sufficiently
-provided by apicid_offset_by_topo_level(), so it's straightforward to
-re-implement max_thread_ids_for_cache() based on
-apicid_offset_by_topo_level() to reduce redundant duplicate codes.
+In addition to the new features, CPUID 0x1E.0x1.EAX[bits 0-3] are
+mirrored positions of existing AMX feature bits distributing across
+the 0x7 leaves. It's not flexible to make these mirror bits have the
+same names as existing ones, because QEMU would try to set both original
+bit and mirror bit which would cause warning if host doesn't support
+0x1E.0x1 subleaf. Thus, name these mirror bits with "*-mirror" suffix.
+
+[*]: Intel Architecture Instruction Set Extensions and Future Features
+     (rev.059).
 
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 53 ++++++++++++++---------------------------------
- 1 file changed, 15 insertions(+), 38 deletions(-)
+Reference link: https://cdrdv2.intel.com/v1/dl/getContent/865891
+---
+ target/i386/cpu.c | 25 +++++++++++++++++++++++++
+ target/i386/cpu.h | 18 ++++++++++++++++++
+ 2 files changed, 43 insertions(+)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 41ff4058871a..1deed542561c 100644
+index 7efb628e17a7..7cff00a1b160 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -304,33 +304,30 @@ static void encode_cache_cpuid2(X86CPU *cpu,
-                        ((t) == UNIFIED_CACHE) ? CACHE_TYPE_UNIFIED : \
-                        0 /* Invalid value */)
+@@ -1037,6 +1037,7 @@ void x86_cpu_vendor_words2str(char *dst, uint32_t vendor1,
+ #define TCG_SGX_12_1_EAX_FEATURES 0
+ #define TCG_24_0_EBX_FEATURES 0
+ #define TCG_29_0_EBX_FEATURES 0
++#define TCG_1E_1_EAX_FEATURES 0
  
--static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
--                                         enum CpuTopologyLevel share_level)
-+static uint32_t apicid_offset_by_topo_level(X86CPUTopoInfo *topo_info,
-+                                            enum CpuTopologyLevel topo_level)
- {
--    uint32_t num_ids = 0;
--
--    switch (share_level) {
-+    switch (topo_level) {
-+    case CPU_TOPOLOGY_LEVEL_THREAD:
-+        return 0;
-     case CPU_TOPOLOGY_LEVEL_CORE:
--        num_ids = 1 << apicid_core_offset(topo_info);
--        break;
-+        return apicid_core_offset(topo_info);
-     case CPU_TOPOLOGY_LEVEL_MODULE:
--        num_ids = 1 << apicid_module_offset(topo_info);
--        break;
-+        return apicid_module_offset(topo_info);
-     case CPU_TOPOLOGY_LEVEL_DIE:
--        num_ids = 1 << apicid_die_offset(topo_info);
--        break;
-+        return apicid_die_offset(topo_info);
-     case CPU_TOPOLOGY_LEVEL_SOCKET:
--        num_ids = 1 << apicid_pkg_offset(topo_info);
--        break;
-+        return apicid_pkg_offset(topo_info);
-     default:
--        /*
--         * Currently there is no use case for THREAD, so use
--         * assert directly to facilitate debugging.
--         */
-         g_assert_not_reached();
+ #if defined CONFIG_USER_ONLY
+ #define CPUID_8000_0008_EBX_KERNEL_FEATURES (CPUID_8000_0008_EBX_IBPB | \
+@@ -1332,6 +1333,25 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+         },
+         .tcg_features = TCG_7_2_EDX_FEATURES,
+     },
++    [FEAT_1E_1_EAX] = {
++        .type = CPUID_FEATURE_WORD,
++        .feat_names = {
++            "amx-int8-mirror", "amx-bf16-mirror", "amx-complex-mirror", "amx-fp16-mirror",
++            "amx-fp8", NULL, "amx-tf32", "amx-avx512",
++            "amx-movrs", NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, NULL,
++        },
++        .cpuid = {
++            .eax = 0x1e,
++            .needs_ecx = true, .ecx = 1,
++            .reg = R_EAX,
++        },
++        .tcg_features = TCG_1E_1_EAX_FEATURES,
++    },
+     [FEAT_24_0_EBX] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+@@ -8412,8 +8432,13 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         }
+ 
+         if (count == 0) {
++            uint32_t unused;
++            x86_cpu_get_supported_cpuid(0x1E, 0, eax, &unused,
++                                        &unused, &unused);
+             /* Highest numbered palette subleaf */
+             *ebx = INTEL_AMX_TMUL_MAX_K | (INTEL_AMX_TMUL_MAX_N << 8);
++        } else if (count == 1) {
++            *eax = env->features[FEAT_1E_1_EAX];
+         }
+         break;
      }
-+    return 0;
-+}
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 0edba739c4e2..dd18a33c6275 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -713,6 +713,7 @@ typedef enum FeatureWord {
+     FEAT_7_2_EDX,       /* CPUID[EAX=7,ECX=2].EDX */
+     FEAT_24_0_EBX,      /* CPUID[EAX=0x24,ECX=0].EBX */
+     FEAT_29_0_EBX,      /* CPUID[EAX=0x29,ECX=0].EBX */
++    FEAT_1E_1_EAX,      /* CPUID[EAX=0x1E,ECX=1].EAX */
+     FEATURE_WORDS,
+ } FeatureWord;
  
--    return num_ids - 1;
-+static uint32_t max_thread_ids_for_cache(X86CPUTopoInfo *topo_info,
-+                                         enum CpuTopologyLevel share_level)
-+{
-+    return (1 << apicid_offset_by_topo_level(topo_info, share_level)) - 1;
- }
+@@ -1086,6 +1087,23 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ /* Packets which contain IP payload have LIP values */
+ #define CPUID_14_0_ECX_LIP              (1U << 31)
  
- static uint32_t max_core_ids_in_package(X86CPUTopoInfo *topo_info)
-@@ -398,26 +395,6 @@ static uint32_t num_threads_by_topo_level(X86CPUTopoInfo *topo_info,
-     return 0;
- }
- 
--static uint32_t apicid_offset_by_topo_level(X86CPUTopoInfo *topo_info,
--                                            enum CpuTopologyLevel topo_level)
--{
--    switch (topo_level) {
--    case CPU_TOPOLOGY_LEVEL_THREAD:
--        return 0;
--    case CPU_TOPOLOGY_LEVEL_CORE:
--        return apicid_core_offset(topo_info);
--    case CPU_TOPOLOGY_LEVEL_MODULE:
--        return apicid_module_offset(topo_info);
--    case CPU_TOPOLOGY_LEVEL_DIE:
--        return apicid_die_offset(topo_info);
--    case CPU_TOPOLOGY_LEVEL_SOCKET:
--        return apicid_pkg_offset(topo_info);
--    default:
--        g_assert_not_reached();
--    }
--    return 0;
--}
--
- static uint32_t cpuid1f_topo_type(enum CpuTopologyLevel topo_level)
- {
-     switch (topo_level) {
++/* AMX_INT8 instruction (mirror of CPUID_7_0_EDX_AMX_INT8) */
++#define CPUID_1E_1_EAX_AMX_INT8_MIRROR      (1U << 0)
++/* AMX_BF16 instruction (mirror of CPUID_7_0_EDX_AMX_BF16) */
++#define CPUID_1E_1_EAX_AMX_BF16_MIRROR      (1U << 1)
++/* AMX_COMPLEX instruction (mirror of CPUID_7_1_EDX_AMX_COMPLEX) */
++#define CPUID_1E_1_EAX_AMX_COMPLEX_MIRROR   (1U << 2)
++/* AMX_FP16 instruction (mirror of CPUID_7_1_EAX_AMX_FP16) */
++#define CPUID_1E_1_EAX_AMX_FP16_MIRROR      (1U << 3)
++/* AMX_FP8 instruction */
++#define CPUID_1E_1_EAX_AMX_FP8              (1U << 4)
++/* AMX_TF32 instruction */
++#define CPUID_1E_1_EAX_AMX_TF32             (1U << 6)
++/* AMX_AVX512 instruction */
++#define CPUID_1E_1_EAX_AMX_AVX512           (1U << 7)
++/* AMX_MOVRS instruction */
++#define CPUID_1E_1_EAX_AMX_MOVRS            (1U << 8)
++
+ /* AVX10 128-bit vector support is present */
+ #define CPUID_24_0_EBX_AVX10_128        (1U << 16)
+ /* AVX10 256-bit vector support is present */
 -- 
 2.34.1
 
