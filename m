@@ -4,42 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBD5FD5B868
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 19:40:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E157D5B868
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 19:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVEQJ-00012c-Ba; Mon, 15 Dec 2025 14:39:59 -0500
+	id 1vVEQL-00016L-F0; Mon, 15 Dec 2025 14:40:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQH-0000zh-N1
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 14:39:57 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQJ-00012g-4z
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 14:39:59 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQF-0006XK-NS
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 14:39:57 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQG-0006XC-02
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 14:39:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
- Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
- Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
- :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+ Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=AgxO69IEW2egiBpxY9kDuHoKebHzuCVnmKGUhChrOTc=; b=Z0D4E6ljWJFZaTV
- kTDLa/CHETFx74IsAwfMuLhfeZ0tfri9tWH1Bf6tJ8SzCtY6DlwxFFB/gAZpsCpdyRkOYYjCmPV1g
- lBAfTpiv/VDNklOVaE4kIl/WOZhYTDwgmEaf4VqP681koutbOfHyqEFzHQhpfduDKZ/erNtN76tQ1
- f4=;
-Date: Mon, 15 Dec 2025 20:42:51 +0100
-Subject: [PATCH v2 2/7] target/hppa: Define PA[20|1X] physical address
- space size
+ List-Help; bh=GLiSwyDMzvhykDe1MatEcJw/QAWYhhb6rQB38+9jfw8=; b=Cz225Nij3C2qFwv
+ 6cbKoZnYgA3O+N0rayjQSUeQNecOU3YYZkGAJAUM3yd1XoRDAlg6RED3h/f4um++hDljyvJw0zLFP
+ Xaglu14kJy6P4lkRUT4dnrop556e1YeZ3TRXcGdTdlWiht2HuqbjqylBl1WdIF7hHu5Ujl26QCCWU
+ F0=;
+Subject: [PATCH v2 0/7] single-binary: Drop TARGET_PHYS_ADDR_SPACE_BITS
+Date: Mon, 15 Dec 2025 20:42:49 +0100
+Message-Id: <20251215-phys_addr-v2-0-633aa1d922cd@rev.ng>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251215-phys_addr-v2-2-633aa1d922cd@rev.ng>
-References: <20251215-phys_addr-v2-0-633aa1d922cd@rev.ng>
-In-Reply-To: <20251215-phys_addr-v2-0-633aa1d922cd@rev.ng>
+X-B4-Tracking: v=1; b=H4sIALlkQGkC/03OTQrCMBCG4auUWRuZ/EjUlfeQIrGZNLNpSyLBU
+ nJ3Y924fD+Gh9kgU2LKcO02SFQ48zy1UIcOhuimkQT71qBQnaREI5a45ofzPoknBmPJaZTGQbt
+ fEgV+79a9bx05v+a07nSR3/WnKLz8KUUKFIM+26DJKm/trb1xnEboa60fthYSXJ8AAAA=
+X-Change-ID: 20251104-phys_addr-b0f47ea3014a
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -66,83 +68,69 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When converting virtual to physical addresses,
-TARGET_PHYS_ADDR_SPACE_BITS is used under PA-RISC 2.0, and an explicit
-cast to uint32_t is used under PA-RISC 1.X.  Replace the former with a
-more specific macro limited to mem_helper.c, and make the latter
-conversion explicit by defining the size of the physical address space
-for PA-RISC 1.X.
+The target macro TARGET_PHYS_ADDR_SPACE_BITS is unused since commit
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+  2e8fe327eb6 ("accel/tcg: Simplify L1_MAP_ADDR_SPACE_BITS"),
+
+replace the handful of remaining uses with runtime functions or
+constants.
+
+For discussion see:
+
+  https://lore.kernel.org/qemu-devel/8f0db5c1-f20b-4b7a-8d6c-76ce7ec7b4e0@linaro.org/
+
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/hppa/mem_helper.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+Changes in v2:
+- Move alpha_phys_addr_space_bits() to linux-user/alpha/target_proc.h
+  (Richard);
+- Link to v1: https://lore.kernel.org/qemu-devel/20251209-phys_addr-v1-0-c387f3e72d77@rev.ng
 
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index cce82e6599..8563bb0e2a 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -29,6 +29,19 @@
- #include "hw/core/cpu.h"
- #include "trace.h"
- 
-+/*
-+ * 64-bit (PA-RISC 2.0) machines are assumed to run PA-8700, and 32-bit
-+ * machines 7300LC.  This gives 44 and 32 bits of physical address space
-+ * respectively.
-+ *
-+ *   CPU model        Physical address space bits
-+ *   PA-7000--7300LC  32
-+ *   PA-8000--8600    40
-+ *   PA-8700--8900    44
-+ */
-+#define HPPA_PHYS_ADDR_SPACE_BITS_PA20 44
-+#define HPPA_PHYS_ADDR_SPACE_BITS_PA1X 32
-+
- hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
- {
-     /*
-@@ -42,8 +55,8 @@ hwaddr hppa_abs_to_phys_pa2_w1(vaddr addr)
-      * Since the supported physical address space is below 54 bits, the
-      * H-8 algorithm is moot and all that is left is to truncate.
-      */
--    QEMU_BUILD_BUG_ON(TARGET_PHYS_ADDR_SPACE_BITS > 54);
--    return sextract64(addr, 0, TARGET_PHYS_ADDR_SPACE_BITS);
-+    QEMU_BUILD_BUG_ON(HPPA_PHYS_ADDR_SPACE_BITS_PA20 > 54);
-+    return sextract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
- }
- 
- hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-@@ -67,7 +80,7 @@ hwaddr hppa_abs_to_phys_pa2_w0(vaddr addr)
-          * is what can be seen on physical machines too.
-          */
-         addr = (uint32_t)addr;
--        addr |= -1ull << (TARGET_PHYS_ADDR_SPACE_BITS - 4);
-+        addr |= -1ull << (HPPA_PHYS_ADDR_SPACE_BITS_PA20 - 4);
-     }
-     return addr;
- }
-@@ -217,7 +230,7 @@ int hppa_get_physical_address(CPUHPPAState *env, vaddr addr, int mmu_idx,
-             if (hppa_is_pa20(env)) {
-                 phys = hppa_abs_to_phys_pa2_w0(addr);
-             } else {
--                phys = (uint32_t)addr;
-+                phys = extract64(addr, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA1X);
-             }
-             break;
-         default:
-@@ -558,7 +571,7 @@ static void itlbt_pa20(CPUHPPAState *env, target_ulong r1,
-     /* Align per the page size. */
-     ent->pa &= TARGET_PAGE_MASK << mask_shift;
-     /* Ignore the bits beyond physical address space. */
--    ent->pa = sextract64(ent->pa, 0, TARGET_PHYS_ADDR_SPACE_BITS);
-+    ent->pa = sextract64(ent->pa, 0, HPPA_PHYS_ADDR_SPACE_BITS_PA20);
- 
-     ent->t = extract64(r2, 61, 1);
-     ent->d = extract64(r2, 60, 1);
+---
+Anton Johansson (7):
+      target/alpha: Introduce alpha_phys_addr_space_bits()
+      target/hppa: Define PA[20|1X] physical address space size
+      target/i386: Drop physical address range checks
+      target/loongarch: Introduce loongarch_palen_mask()
+      hw/loongarch: Use loongarch_palen_mask()
+      hw/riscv: Fix IOMMU PAS capability to 56 bits
+      Drop TARGET_PHYS_ADDR_SPACE_BITS
 
--- 
-2.51.0
+ include/exec/cpu-defs.h           |  3 ---
+ include/exec/poison.h             |  2 --
+ include/hw/loongarch/boot.h       |  3 ++-
+ linux-user/alpha/target_proc.h    | 23 ++++++++++++++++++++++-
+ target/alpha/cpu-param.h          |  3 ---
+ target/arm/cpu-param.h            |  2 --
+ target/avr/cpu-param.h            |  1 -
+ target/hexagon/cpu-param.h        |  1 -
+ target/hppa/cpu-param.h           |  2 --
+ target/i386/cpu-param.h           |  2 --
+ target/i386/tcg/helper-tcg.h      |  2 --
+ target/loongarch/cpu-mmu.h        |  1 +
+ target/loongarch/cpu-param.h      |  1 -
+ target/loongarch/internals.h      |  1 -
+ target/m68k/cpu-param.h           |  1 -
+ target/microblaze/cpu-param.h     |  2 --
+ target/mips/cpu-param.h           |  2 --
+ target/openrisc/cpu-param.h       |  1 -
+ target/ppc/cpu-param.h            |  7 -------
+ target/riscv/cpu-param.h          |  2 --
+ target/rx/cpu-param.h             |  1 -
+ target/s390x/cpu-param.h          |  1 -
+ target/sh4/cpu-param.h            |  1 -
+ target/sparc/cpu-param.h          |  2 --
+ target/tricore/cpu-param.h        |  1 -
+ target/xtensa/cpu-param.h         |  1 -
+ hw/loongarch/boot.c               | 28 ++++++++++++++++------------
+ hw/loongarch/virt.c               |  5 ++++-
+ hw/riscv/riscv-iommu.c            | 12 +++++++++---
+ target/hppa/mem_helper.c          | 23 ++++++++++++++++++-----
+ target/i386/cpu.c                 |  9 +++------
+ target/i386/kvm/kvm.c             |  3 +--
+ target/loongarch/cpu_helper.c     | 14 +++++++++++---
+ target/loongarch/tcg/tlb_helper.c | 12 ++++++++----
+ 34 files changed, 95 insertions(+), 80 deletions(-)
 
 
