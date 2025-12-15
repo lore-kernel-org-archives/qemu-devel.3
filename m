@@ -4,69 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC3FFD5B857
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:05:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CE10D5B85A
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVC05-00022Z-4o; Mon, 15 Dec 2025 12:04:47 -0500
+	id 1vVC0E-0002DP-5z; Mon, 15 Dec 2025 12:04:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uwu@icenowy.me>) id 1vVBys-0001Sa-Rx
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:03:38 -0500
-Received: from sender4-op-o15.zoho.com ([136.143.188.15])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vVBzq-00020u-AV
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:04:33 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uwu@icenowy.me>) id 1vVByd-00055I-H7
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:03:18 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1765817085; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=gqXxSN//NUeCyw2LJMc9OqOcrIIjDL1l6/YEYLTkxJHLPp1ry3qNYHikYYNp19uDJE8R82ArWr4PSe++tO0ECU/DimZzxuDNWnu+cltsHTgn+9JDhHZo/kehCMx3mHCrvFptBoi6/yAYE0dOgEyrAf4v/m+WERNgpLVMh1H3gV4=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1765817085;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=Okhcb+mHrLdZfC5AndPe1wxJVN/L8ZIWn1v3Pzb4PJA=; 
- b=Zg50GKEXJ6oUTgYvl5UKB1H9N/v0G4G6xbnrZikGG+KpxnJxfSsMHxyJiDB7qI6GKAr0K0p5dHh50SF8mGuW8GU00BFir9u1M9CBJh84a1N5tkoJq4HIG0FBGolzrce7Xi/uOCQHrMuKspqfxxUmWUrtdvhdDUDS4VKTL8h0gVI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=icenowy.me;
- spf=pass  smtp.mailfrom=uwu@icenowy.me;
- dmarc=pass header.from=<uwu@icenowy.me>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765817085; 
- s=zmail2; d=icenowy.me; i=uwu@icenowy.me;
- h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
- bh=Okhcb+mHrLdZfC5AndPe1wxJVN/L8ZIWn1v3Pzb4PJA=;
- b=E/2gzbB4lOP8Gt1p3lCTYBK6x5MQh3YKlhFuC/C799wCJRIVQwB9M3xqJ71c6M0B
- QfvqCjBiizsbkeD7y/Xb5LUpVWA15YXfgDGz9hR1u8YgbwIYRHPLgECgJ+UsXUmw3v5
- 9SNw42WPGGH3AM6l0Op7RTe6ESn0BMcdCx+iesc75as88OESppRHH4tQ7SvqjjY6zre
- eEOKroOO5RDXOQytaUjeUFSmS+qbdoO4718AGmNHRc0jD7NKSjKD3Ule54f0dwUHMzh
- dL9XsGGSNmTcfsxGo5KFydpHf+davs1+H65wWD8kY+POTZ+LdEmQLZrY1uMzynrWtEd
- XI2UdLg0ww==
-Received: by mx.zohomail.com with SMTPS id 1765817082294461.754019425539;
- Mon, 15 Dec 2025 08:44:42 -0800 (PST)
-Message-ID: <c496ed9e43adb46c59352baee4507357b6c1d97e.camel@icenowy.me>
-Subject: Re: [PATCH 1/7] Add termios2 support to linux-user
-From: Icenowy Zheng <uwu@icenowy.me>
-To: Luca Bonissi <qemu@bonslack.org>, Richard Henderson
- <richard.henderson@linaro.org>, Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
-Date: Tue, 16 Dec 2025 00:44:38 +0800
-In-Reply-To: <745f18b6-ee62-4903-9a56-dcb903b610cf@bonslack.org>
-References: <745f18b6-ee62-4903-9a56-dcb903b610cf@bonslack.org>
-Organization: Anthon Open-Source Community
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4 
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vVBzn-0005On-IC
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:04:29 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vVBzd-00000005f8U-2fek; Mon, 15 Dec 2025 18:04:17 +0100
+Message-ID: <a0cfba30-8571-4153-a5a3-572cb2fe514f@maciej.szmigiero.name>
+Date: Mon, 15 Dec 2025 18:04:12 +0100
 MIME-Version: 1.0
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.15; envelope-from=uwu@icenowy.me;
- helo=sender4-op-o15.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 21/28] hw/hyperv/vmbus: add support for confidential
+ guest reset
+To: Ani Sinha <anisinha@redhat.com>
+Cc: vkuznets@redhat.com, kraxel@redhat.com, pbonzini@redhat.com,
+ qemu-devel@nongnu.org
+References: <20251212150359.548787-1-anisinha@redhat.com>
+ <20251212150359.548787-22-anisinha@redhat.com>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <20251212150359.548787-22-anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,19 +105,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-=E5=9C=A8 2025-10-31=E6=98=9F=E6=9C=9F=E4=BA=94=E7=9A=84 14:23 +0100=EF=BC=
-=8CLuca Bonissi=E5=86=99=E9=81=93=EF=BC=9A
-> > From 6ddab7d3ba1035b5e2a6016bde4776436267c18b Mon Sep 17 00:00:00
-> > 2001
-> From: Luca Bonissi <qemu@bonslack.org>
-> Date: Fri, 31 Oct 2025 13:29:19 +0100
-> Subject: [PATCH 1/7] Add termios2 support to linux-user
+On 12.12.2025 16:03, Ani Sinha wrote:
+> On confidential guests when the KVM virtual machine file descriptor changes as
+> a part of the reset process, event file descriptors needs to be reassociated
+> with the new KVM VM file descriptor. This is achieved with the help of a
+> callback handler that gets called when KVM VM file descriptor changes during
+> the confidential guest reset process.
+> 
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> ---
 
-By the way, please add a v3 tag in your subject (like [PATCH v3 1/7])
-when resending this patchset again.
+Have you actually tested confidential guests with VMBus or is this a change
+"for completeness sake" that can't be exercised in the current state of things?
 
-I failed to differienate two revisions of your patchset.
+Thanks,
+Maciej
 
->=20
-> Signed-off-by: Luca Bonissi <qemu@bonslack.org>
 
