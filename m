@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B0F1D5B16E
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 14:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6565FD5B16E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 14:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV9Dt-00011Q-4s; Mon, 15 Dec 2025 09:06:51 -0500
+	id 1vV9Ea-0001KN-MQ; Mon, 15 Dec 2025 09:07:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
- id 1vV9Dn-0000yL-Gg
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 09:06:43 -0500
-Received: from sg-1-103.ptr.blmpb.com ([118.26.132.103])
+ id 1vV9E3-00016k-1e
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 09:06:59 -0500
+Received: from sg-1-100.ptr.blmpb.com ([118.26.132.100])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
- id 1vV9Di-0000WR-9V
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 09:06:43 -0500
+ id 1vV9Dt-0000aq-MO
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 09:06:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1765807581; h=from:subject:
+ s=2212171451; d=bytedance.com; t=1765807594; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=mdrZwmEps9khHPfnDavMxy8BuDg6qYxaetpSfRyhV/4=;
- b=IBXqNkm6Ur6s+00ul2+Wkvl2Nuq3eanP6yzgNprhPz2ZySNacIKXB8xkjJZM6vlxxmN+3Q
- vUxJyyz5D1eat0L+Soo3SUaQSd2Qm+2YeWuI+35C57HLdNDX1F3AMDJIpuqSOAnCBuBa5B
- RPCvUVm92HG5mMJziSmf/qVuedAoR6KCO/kJPnBfUq3YLmzKNhKSY0bQ8pDPAHidJDMw6L
- +U0biIMjf3pT9w7rPYR+t1dpumy6QqR5SDlwepoE76oPukuD/t0W7GXj7E+dnjua69gayr
- 9rsTx4fF7SqkJ/cqV4MxZDrA42HenZtqstaXppKFjTMXRY0MVuc0aZjLGV0GKg==
-X-Lms-Return-Path: <lba+2694015db+5e97ef+nongnu.org+xuchuangxclwt@bytedance.com>
-X-Original-From: Chuang Xu <xuchuangxclwt@bytedance.com>
-Subject: [PATCH v2 0/1] migration: reduce bitmap sync time and make dirty
- pages converge much more easily
-Date: Mon, 15 Dec 2025 22:06:10 +0800
+ bh=s0OFiVIW/yPXbHVyol+Lp25JjClNpszFFXFvE6ZWPt8=;
+ b=kp41W3aH0+pYg8t5vF+jO3lQ23b6vK/NCd+unJsgDT+XhDqIo1LBWpa2gE1OvoiMT/3jE3
+ SvrptCaDdcSqmchQojyXTAFCvyBMu6iqmUccQnlsaxK+OhgXqGtzWCKEnsua1GbUn3mbfr
+ e5TX9Okqo5vqsQ/1kvQ8tjlVZ4YaHKu56HqKEehJyzOwZUx72RcI5YUmBlJ+IbRa7rZoAR
+ 2eR1MrR+99/C1v8kTxSYxD3R+E81NBMk0VJpG3G0HmAZfomRRl8x3vaaC/hjQMCBng1UO3
+ r5fNe8C8n1Rk4MomogaMBUwja4RBd4LV1ZvhDojm02VLpaIsvBy2IR5qyggteg==
+Subject: [PATCH v2 1/1] migration: merge fragmented clear_dirty ioctls
+References: <20251215140611.16180-1-xuchuangxclwt@bytedance.com>
 Cc: <mst@redhat.com>, <sgarzare@redhat.com>, <richard.henderson@linaro.org>, 
  <pbonzini@redhat.com>, <peterx@redhat.com>, <david@kernel.org>, 
- <philmd@linaro.org>, <farosas@suse.de>
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
+ <philmd@linaro.org>, <farosas@suse.de>, 
+ "xuchuangxclwt" <xuchuangxclwt@bytedance.com>
 X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+X-Original-From: Chuang Xu <xuchuangxclwt@bytedance.com>
 From: "Chuang Xu" <xuchuangxclwt@bytedance.com>
-Message-Id: <20251215140611.16180-1-xuchuangxclwt@bytedance.com>
-To: <qemu-devel@nongnu.org>
+Message-Id: <20251215140611.16180-2-xuchuangxclwt@bytedance.com>
+X-Lms-Return-Path: <lba+2694015e9+d5bd72+nongnu.org+xuchuangxclwt@bytedance.com>
+In-Reply-To: <20251215140611.16180-1-xuchuangxclwt@bytedance.com>
+Content-Transfer-Encoding: 7bit
 Content-Type: text/plain; charset=UTF-8
-Received-SPF: pass client-ip=118.26.132.103;
- envelope-from=xuchuangxclwt@bytedance.com; helo=sg-1-103.ptr.blmpb.com
+To: <qemu-devel@nongnu.org>
+Mime-Version: 1.0
+Date: Mon, 15 Dec 2025 22:06:11 +0800
+Received-SPF: pass client-ip=118.26.132.100;
+ envelope-from=xuchuangxclwt@bytedance.com; helo=sg-1-100.ptr.blmpb.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -70,113 +72,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In this version:
+From: xuchuangxclwt <xuchuangxclwt@bytedance.com>
 
-- drop duplicate vhost_log_sync optimization
-- refactor physical_memory_test_and_clear_dirty
-- provide more detailed bitmap sync time for each part in this cover
+When the addresses processed are not aligned, a large number of
+clear_dirty ioctl occur (e.g. a 4MB misaligned memory can generate
+2048 clear_dirty ioctls from two different memory_listener),
+which increases the time required for bitmap_sync and makes it
+more difficult for dirty pages to converge.
 
+Attempt to merge those fragmented clear_dirty ioctls.
 
-In our long-term experience in Bytedance, we've found that under the same load,
-live migration of larger VMs with more devices is often more difficult to
-converge (requiring a larger downtime limit).
+Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+---
+ accel/tcg/cputlb.c       |  5 +++--
+ include/system/physmem.h |  7 ++++---
+ migration/ram.c          | 26 ++++++++++++------------
+ system/memory.c          |  2 +-
+ system/physmem.c         | 44 ++++++++++++++++++++++++----------------
+ 5 files changed, 48 insertions(+), 36 deletions(-)
 
-We've observed that the live migration bandwidth of large, multi-device VMs is
-severely distorted, a phenomenon likely similar to the problem described in this link
-(https://wiki.qemu.org/ToDo/LiveMigration#Optimize_migration_bandwidth_calculation).
-
-Through some testing and calculations, we conclude that bitmap sync time affects
-the calculation of live migration bandwidth.
-
-Now, let me use formulaic reasoning to illustrate the relationship between the downtime
-limit required to achieve the stop conditions and the bitmap sync time.
-
-Assume the actual live migration bandwidth is B, the dirty page rate is D,
-the bitmap sync time is x (ms), the transfer time per iteration is t (ms), and the
-downtime limit is y (ms).
-
-To simplify the calculation, we assume all of dirty pages are not zero page and only
-consider the case B > D.
-
-When x + t > 100ms, the bandwidth calculated by qemu is R = B * t / (x + t).
-When x + t < 100ms, the bandwidth calculated by qemu is R = B * (100 - x) / 100.
-
-If there is a critical convergence state, then we have:
-  (1) B * t = D * (x + t)
-  (2) t = D * x / (B - D)
-For the stop condition to be successfully determined, then we have two cases:
-  When:
-  (3) x + t > 100
-  (4) x + D * x / (B - D) > 100
-  (5) x > 100 - 100 * D / B
-  Then:
-  (6) R * y > D * (x + t)
-  (7) B * t * y / (x + t) > D * (x + t)
-  (8) (B * (D * x / (B - D)) * y) / (x + D * x / (B - D)) > D * (x + D * x / (B - D))
-  (9) D * y > D * (x + D * x / (B - D))
-  (10) y > x + D * x / (B - D)
-  (11) (B - D) * y > B * x
-  (12) y > B * x / (B - D)
-
-  When:
-  (13) x + t < 100
-  (14) x + D * x / (B - D) < 100
-  (15) x < 100 - 100 * D / B
-  Then:
-  (16) R * y > D * (x + t)
-  (17) B * (100 - x) * y / 100 > D * (x + t)
-  (18) B * (100 - x) * y / 100 > D * (x + D * x / (B - D))
-  (19) y > 100 * D * x / ((B - D) * (100 - x))
-
-After deriving the formula, we can use some data for comparison.
-
-For a 64C256G vm with 8 vhost-user-net(32 queue per nic) and 16 vhost-user-blk(4 queue per blk),
-the sync time is as high as *73ms* (tested with 10GBps dirty rate, the sync time increases as the dirty page rate increases),
-Here are each part of the sync time:
-
-- sync from kvm to ram_list: 2.5ms
-- vhost_log_sync:3ms
-- sync aligned memory from ram_list to RAMBlock: 5ms
-- sync misaligned memory from ram_list to RAMBlock: 61ms
-
-After applying this patch, syncing misaligned memory from ram_list to RAMBlock takes only about 1ms,
-and the total sync time is only *12ms*.
-
-*First case, assume our maximum bandwidth can reach 15GBps and the dirty page rate is 10GBps.
-
-If x = 73 ms, when there is a critical convergence state,
-we use formula(2) get t = D * x / (B - D) = 146 ms,
-because x + t = 219ms > 100ms,
-so we get y > B * x / (B - D) = 219ms.
-
-If x = 12 ms, when there is a critical convergence state,
-we use formula(2) get t = D * x / (B - D) = 24 ms,
-because x + t = 36ms < 100ms,
-so we get y > 100 * D * x / ((B - D) * (100 - x)) = 27.2ms.
-
-We can see that after optimization, under the same bandwidth and dirty rate scenario,
-the downtime limit required for dirty page convergence is significantly reduced.
-
-*Second case, assume our maximum bandwidth can reach 15GBps and the downtime limit is set to 150ms.
-If x = 73 ms,
-when x + t > 100ms,
-we use formula(12) get D < B * (y - x) / y = 15 * (150 - 73) / 150 = 7.7GBps,
-when x + t < 100ms,
-we use formula(19) get D < 5.35GBps
-
-If x = 12 ms,
-when x + t > 100ms,
-we use formula(12) get D < B * (y - x) / y = 15 * (150 - 12) / 150 = 13.8GBps,
-when x + t < 100ms,
-we use formula(19) get D < 13.75GBps
-
-We can see that after optimization, under the same bandwidth and downtime limit scenario,
-the convergent dirty page rate is significantly improved.
-
-Through the above formula derivation, we have proven that reducing bitmap sync time
-can significantly improve dirty page convergence capability. 
-
-This patch only optimizes bitmap sync time for part of scenarios.
-There may still be many scenarios where bitmap sync time negatively impacts dirty page
-convergence capability, and we can also try to optimize using this approach.
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index fd1606c856..c8827c8b0d 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -857,8 +857,9 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+ void tlb_protect_code(ram_addr_t ram_addr)
+ {
+     physical_memory_test_and_clear_dirty(ram_addr & TARGET_PAGE_MASK,
+-                                             TARGET_PAGE_SIZE,
+-                                             DIRTY_MEMORY_CODE);
++                                         TARGET_PAGE_SIZE,
++                                         DIRTY_MEMORY_CODE,
++                                         NULL);
+ }
+ 
+ /* update the TLB so that writes in physical page 'phys_addr' are no longer
+diff --git a/include/system/physmem.h b/include/system/physmem.h
+index 879f6eae38..8eeace9d1f 100644
+--- a/include/system/physmem.h
++++ b/include/system/physmem.h
+@@ -39,9 +39,10 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+ 
+ void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
+ 
+-bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+-                                          ram_addr_t length,
+-                                          unsigned client);
++uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
++                                              ram_addr_t length,
++                                              unsigned client,
++                                              unsigned long *dest);
+ 
+ DirtyBitmapSnapshot *
+ physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr offset,
+diff --git a/migration/ram.c b/migration/ram.c
+index 29f016cb25..2d5e979211 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -942,7 +942,6 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
+                                                   ram_addr_t start,
+                                                   ram_addr_t length)
+ {
+-    ram_addr_t addr;
+     unsigned long word = BIT_WORD((start + rb->offset) >> TARGET_PAGE_BITS);
+     uint64_t num_dirty = 0;
+     unsigned long *dest = rb->bmap;
+@@ -995,18 +994,19 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
+         }
+     } else {
+         ram_addr_t offset = rb->offset;
+-
+-        for (addr = 0; addr < length; addr += TARGET_PAGE_SIZE) {
+-            if (physical_memory_test_and_clear_dirty(
+-                        start + addr + offset,
+-                        TARGET_PAGE_SIZE,
+-                        DIRTY_MEMORY_MIGRATION)) {
+-                long k = (start + addr) >> TARGET_PAGE_BITS;
+-                if (!test_and_set_bit(k, dest)) {
+-                    num_dirty++;
+-                }
+-            }
+-        }
++        unsigned long end, start_page;
++        uint64_t mr_offset, mr_size;
++
++        num_dirty = physical_memory_test_and_clear_dirty(
++                        start + offset,
++                        length,
++                        DIRTY_MEMORY_MIGRATION,
++                        dest);
++        end = TARGET_PAGE_ALIGN(start + offset + length) >> TARGET_PAGE_BITS;
++        start_page = (start + offset) >> TARGET_PAGE_BITS;
++        mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - offset;
++        mr_size = (end - start_page) << TARGET_PAGE_BITS;
++        memory_region_clear_dirty_bitmap(rb->mr, mr_offset, mr_size);
+     }
+ 
+     return num_dirty;
+diff --git a/system/memory.c b/system/memory.c
+index 8b84661ae3..666364392d 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2424,7 +2424,7 @@ void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
+ {
+     assert(mr->ram_block);
+     physical_memory_test_and_clear_dirty(
+-        memory_region_get_ram_addr(mr) + addr, size, client);
++        memory_region_get_ram_addr(mr) + addr, size, client, NULL);
+ }
+ 
+ int memory_region_get_fd(MemoryRegion *mr)
+diff --git a/system/physmem.c b/system/physmem.c
+index c9869e4049..d015eb2133 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1090,18 +1090,19 @@ void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
+ }
+ 
+ /* Note: start and end must be within the same ram block.  */
+-bool physical_memory_test_and_clear_dirty(ram_addr_t start,
++uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
+                                               ram_addr_t length,
+-                                              unsigned client)
++                                              unsigned client,
++                                              unsigned long *dest)
+ {
+     DirtyMemoryBlocks *blocks;
+     unsigned long end, page, start_page;
+-    bool dirty = false;
++    uint64_t num_dirty = 0;
+     RAMBlock *ramblock;
+     uint64_t mr_offset, mr_size;
+ 
+     if (length == 0) {
+-        return false;
++        return 0;
+     }
+ 
+     end = TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
+@@ -1118,31 +1119,40 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+         while (page < end) {
+             unsigned long idx = page / DIRTY_MEMORY_BLOCK_SIZE;
+             unsigned long offset = page % DIRTY_MEMORY_BLOCK_SIZE;
+-            unsigned long num = MIN(end - page,
+-                                    DIRTY_MEMORY_BLOCK_SIZE - offset);
+ 
+-            dirty |= bitmap_test_and_clear_atomic(blocks->blocks[idx],
+-                                                  offset, num);
+-            page += num;
++            if (bitmap_test_and_clear_atomic(blocks->blocks[idx], offset, 1)) {
++                if (dest) {
++                    unsigned long k = page - (ramblock->offset >> TARGET_PAGE_BITS);
++                    if (!test_and_set_bit(k, dest)) {
++                        num_dirty++;
++                    }
++                } else {
++                    num_dirty++;
++                }
++            }
++
++            page++;
+         }
+ 
+-        mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - ramblock->offset;
+-        mr_size = (end - start_page) << TARGET_PAGE_BITS;
+-        memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, mr_size);
++        if (!dest && num_dirty) {
++            mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - ramblock->offset;
++            mr_size = (end - start_page) << TARGET_PAGE_BITS;
++            memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, mr_size);
++        }
+     }
+ 
+-    if (dirty) {
++    if (num_dirty) {
+         physical_memory_dirty_bits_cleared(start, length);
+     }
+ 
+-    return dirty;
++    return num_dirty;
+ }
+ 
+ static void physical_memory_clear_dirty_range(ram_addr_t addr, ram_addr_t length)
+ {
+-    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
+-    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
+-    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
++    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION, NULL);
++    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA, NULL);
++    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE, NULL);
+ }
+ 
+ DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
+-- 
+2.39.3 (Apple Git-146)
 
