@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0508D59D99
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:50:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E2D3D59D99
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV3LU-0000ZM-3T; Mon, 15 Dec 2025 02:50:16 -0500
+	id 1vV3M6-0000lF-KQ; Mon, 15 Dec 2025 02:50:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vV3LR-0000V0-7E
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:13 -0500
+ id 1vV3Lb-0000bt-Is
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vV3LP-0000ja-Mu
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:12 -0500
+ id 1vV3La-0000mU-3F
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765785011;
+ s=mimecast20190719; t=1765785021;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nDqBb+howVc6cd7uGoknJH0PjirYFJJey/1eAuvkVIA=;
- b=hsoGnuXgDR+52a4YYZIjYx67ffVY514RfWkTEjiJIuUzyQ68ec24u3kIuDlITjl3LcgPfI
- CoOv9GHUSw0n/76vZUZM0qYsc+hoBbh1QclgrIOKnHfEiXtXHu1gF/ppXxKOygq+C9dust
- j+Bam9B/wgKXFPci1aJTjLYutCmY4Ew=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DPzOYGOdSS2nqdUVmE3Appt8FioAsNxMPjypO5wkIkE=;
+ b=FyrEag3K3VF4p1wAuyPulpAdgG8pa4nL68QeIJzPfyrXj9e+wuyetKY9dvEn3MPkeZ9nyp
+ 4E4gHbgCt1pQrL4cvkVzfR7a4ZdGTmSnto5X473UM1D8Us48xioTSNS1e4A+Pqn2ki+rtV
+ leXril7HOBKM4Lmy4tJt2u4Dz6ggu6U=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-274-fA4p9q6ZNg-v7vhgScIbAA-1; Mon, 15 Dec 2025 02:50:08 -0500
-X-MC-Unique: fA4p9q6ZNg-v7vhgScIbAA-1
-X-Mimecast-MFC-AGG-ID: fA4p9q6ZNg-v7vhgScIbAA_1765785007
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-477964c22e0so21283025e9.0
- for <qemu-devel@nongnu.org>; Sun, 14 Dec 2025 23:50:08 -0800 (PST)
+ us-mta-140--hFRVLgJMPm3PP2Q3GUCdw-1; Mon, 15 Dec 2025 02:50:19 -0500
+X-MC-Unique: -hFRVLgJMPm3PP2Q3GUCdw-1
+X-Mimecast-MFC-AGG-ID: -hFRVLgJMPm3PP2Q3GUCdw_1765785018
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-430fcb6b2ebso414461f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Dec 2025 23:50:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765785006; x=1766389806; darn=nongnu.org;
+ d=redhat.com; s=google; t=1765785016; x=1766389816; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nDqBb+howVc6cd7uGoknJH0PjirYFJJey/1eAuvkVIA=;
- b=cX99Be70LGZqd7+hzAnRh42uhc9ZWkJYiR/Ea2KPbfmhYkrYdSuPWC3XpjxH2LvMql
- lhKimCuzMlI+FRM7Iec8CU76BtNZ2cy2HeGKP6QG1N+sW03WUtfyu8YpxAzWvRrZADIy
- LvHV8j32WHinN/EHp08HUUgsGwLY2KtoAMxvHgTeevJ2bWvYQWfY6RMwy+KEXFJJDoVs
- FnNmPuFCl6PIGnTXQjPj4nLA70r8AzOoyi+3WAzDZQAM98iwdx2ToEgM3gtd6Rs6Mth3
- II+D8Z2E4/Maz5Kedj8z+hk0fp7acWJQXdzlKLbeBuaDnsCQ6KKNTh7OA3mCcR1hbYxY
- 1XXA==
+ bh=DPzOYGOdSS2nqdUVmE3Appt8FioAsNxMPjypO5wkIkE=;
+ b=YMs/Fg4jUGRm87fgou4XR/Bhrrleyr1EP8Xv3B2BcnY4oXeLfgNSpFpk/OHr9wHz6q
+ SQ4BHFNujcWzeyFquq+xc54K7IlN2qqwfDvucnm+Os7n+D+WKeQB8kw/wGd2qu/IGyDI
+ /hEsPNTzUNCf75sLMCBH5xihMnHF1OXN+L+DB7DiqlQ2H+i+tHLdeOnuSslotreFjno2
+ kLNHTP3LpVD5JF0VMljsDo2rHBH9NkL+W3Um2ZCE6ze5fPWftbLT8wEMWv2rayVIqRN3
+ wsbOpDlxkTrFVSRC+x2w5rUZEGKvxv80WqQquADqMZKl+Nlh0rywPYb7fS4xMgm0CDX4
+ HSBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765785006; x=1766389806;
+ d=1e100.net; s=20230601; t=1765785016; x=1766389816;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nDqBb+howVc6cd7uGoknJH0PjirYFJJey/1eAuvkVIA=;
- b=Uu0JUtOvIUM7zkGuTx9i6gzimkrz3BSWVswr1+AJr0hAWUcdAgAQrOoiYvpg4KX3RL
- Ub8UrLz0307yPFBOLsRmzwF2sG0t5qAbsIkm30Vasz6neVJJn18G+MNcw9Gdw2XqZQ1T
- flH07TDLK+VpKzo7T7duP4Sj9tO9WQt6Tk5hbNurGm8+e0U6LyY6C3i105GimyexXFgt
- mRQuaruMt6CaDwHGgVYWUO6jYa22n+w7qnBu9jXYXalXZ39DDGHM80CiQg82U5XcOGrW
- enMWZjGNHguj2knmoQlv5ZGL47RdPxomYroRd9jbTAYGKjtlmEpo1v2PXfhQMWD3abRT
- 9KNQ==
-X-Gm-Message-State: AOJu0Yzn4mrYg+yRci647S4o9K9pwUlg6yiX4rNzkBSwuUk0N7UnPBso
- 3sgcGgC4JxFsagVoqAopIfUueDcKrGm5mUxetHTRKJLw2i47dHmoFkva9RguECQsf+umqdvtfoq
- rE/b13m3mATmHTm9thGMPvva38xVd0MRyF4KEL/E6M9EaV/2ii3pv4JOvG0XL0Mjjy2vpArdVJq
- DjygtYjqCtniRFCk1tijeaq/slIVdl9ZYbSmGbH+Qm
-X-Gm-Gg: AY/fxX7qZF5W3Gr/n4OR5NaSKc2460ImjqDEXkVJEFGZtvJwO0t1/ACCa5ES7hAFpNQ
- fP8SEKvAO1hdu0C/nFfd/TIXUM+L3d9rMkF8HM9TiLX2ZAsIcrjL6irL+IkCv/7skG2yN1RhE31
- zaVOTUxRofM9tK2XOWkVticel2OzHdAlR1kZTwPTnz2qeGO3xo3QLP2KHN+uTLP10xoI/XMcvIc
- vPvidOyNzRB/unzs9oAiTGiiMQ/gA3w31qgy+gt9jrRYY8MH7UJOKYeJnONn5yX8ipa1QDHekxn
- 5y3xiNB4we7ZVquVPlFPlbaVsgzlg6115oSjbij/hofETSJh/+0Zt4BHK8iLgoK9vBpHL0dcgfC
- oqdBypw85Nmq8kYfEkT1R+hManHAc8xR819rW1JuD/jHULwRX/H01rxKdnZTNq8TLQkR+AqOkEn
- XEW7RK9kPHcX7qvgM=
-X-Received: by 2002:a05:600c:64cf:b0:479:255f:8805 with SMTP id
- 5b1f17b1804b1-47a8f094212mr102922215e9.4.1765785006303; 
- Sun, 14 Dec 2025 23:50:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGK5Tx7FwVTie0aYHr7X4g2Hd6jxuowd5CtqTlTxD975RhZae7JhLVuvENqmdxDLBd482PFmw==
-X-Received: by 2002:a05:600c:64cf:b0:479:255f:8805 with SMTP id
- 5b1f17b1804b1-47a8f094212mr102921985e9.4.1765785005828; 
- Sun, 14 Dec 2025 23:50:05 -0800 (PST)
+ bh=DPzOYGOdSS2nqdUVmE3Appt8FioAsNxMPjypO5wkIkE=;
+ b=h0g/gP05axahD3W825pT6fz5iVavfEoLtrZWkGSp1y2OsJHeEo9y/Qly50PZkAULDE
+ WALsdT4gONdMAxRB1nUSzeu+qjCvuf7jmH61LYdQuBspjC/n3TcYiMKEGXA/0MBZVg47
+ W8vd2o1J1crBhdRegxmWbguVEEmPuGnNVvunAPyowcbQrd5Jcljw0MLW5ZEp0zc/tp0K
+ RUBzqbGrMfD+W1XtH3a+/5J/+d/WrIhhOW/MsuSkDCfEfx8PdkW5fGnnJfhjFAuSJNNx
+ KER3DbDQw7Ov2c6iLr76FV+k+9L1WmouOFlv17WgGenj1KoipdeakRW2ZShn1ZgjGfv5
+ ciiw==
+X-Gm-Message-State: AOJu0Ywl3F5Qq1AyQiNwBBpYbZKgFuQt0mpOBTuCqOCd2R7Q+s5Eqy3i
+ s19h2wt7/gJXLDB/47AnSo0xmdEEk+pTpvat+jl/FlJY5LLetK/QsaGQ0VTr7LspyHZVlb1rqqV
+ Iywk4KfdrU/+UbiO6F2g/b4OPPpvc06SBa0k+JY+KmdAXkBaUEc2ysd9CnFci/3gWx/fv6hUUz+
+ 67AWx0r9QxW1NXgne0GfQtJRsCAqGqaNqXufDEARam
+X-Gm-Gg: AY/fxX6M5V/A2v7uomLEbfPv8A2Fs9jZiBot3VTdFiAENUfpMe66cdggEwURpi8qoA7
+ lMKxPkIiYZ1bbaUAiG1zkbBL/ow2cxfYm4AsYtwt2QKKmvpVY9kZWfQYYvNi9ko8CIv1RjpA8OP
+ y65G8bPw2ZKTc3GgiUasimgZlKHu9/0KGjBAtUdH+xeOE2cRq+o7HpP1DzPcwHrjhcPkQJbsvEu
+ ZKyarFiDcidlRNRUQ1oijc4qDO/eMmfV1ZCZ5AgdKedyW06I1HKWpK0rBIh+iZQvIpABNMQc9M7
+ ZV4Gch+dMeG93kdvYnDG4gwHyOzRqTpXBPPTe92WXGypH4PZ2NELlsDW6Y4l+VwOunwsLp/MKkE
+ +YavDWw2uoHYZjWGM/8Q6kGj3e0NJGOXD9Sk/YfK7YgmIEd43k5v7w69IbY7i7qlz/YD8gJ3eK2
+ JBTt6OnrynZ3WdVQA=
+X-Received: by 2002:a5d:5f91:0:b0:431:53:1f49 with SMTP id
+ ffacd0b85a97d-431005325c2mr859102f8f.41.1765785016244; 
+ Sun, 14 Dec 2025 23:50:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEVf+fWNJzbUzqsCwn5/tL5jAU1Nzlfoy2ugnNqNplrJxc7rJ26wxp+hA28DEWucIkVMS2sQQ==
+X-Received: by 2002:a5d:5f91:0:b0:431:53:1f49 with SMTP id
+ ffacd0b85a97d-431005325c2mr859076f8f.41.1765785015766; 
+ Sun, 14 Dec 2025 23:50:15 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a8f6e58c1sm169877695e9.12.2025.12.14.23.50.05
+ ffacd0b85a97d-430f268d459sm12450206f8f.32.2025.12.14.23.50.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Dec 2025 23:50:05 -0800 (PST)
+ Sun, 14 Dec 2025 23:50:14 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	marcandre.lureau@redhat.com
-Subject: [PATCH 02/11] tests/meson: do not reuse migration_files variable
-Date: Mon, 15 Dec 2025 08:49:51 +0100
-Message-ID: <20251215075000.335043-3-pbonzini@redhat.com>
+Subject: [PATCH 05/11] rust: only link the Rust part of the code into devices
+Date: Mon, 15 Dec 2025 08:49:54 +0100
+Message-ID: <20251215075000.335043-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251215075000.335043-1-pbonzini@redhat.com>
 References: <20251215075000.335043-1-pbonzini@redhat.com>
@@ -123,44 +123,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The variable is defined in migration/meson.build, reusing it is confusing.
+Do not include libqemuutil in the device crates for the same
+reason as in the previous commit.  Static libraries like qemuutil
+are sensitive to their position on the command line and rustc does not
+always get it right.
+
+If rustc places the library too early on the command line, the stubs
+are included in the final link product, which results in duplicate
+symbols.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- tests/qtest/meson.build | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ rust/hw/char/pl011/meson.build | 18 ++++++++++--------
+ rust/hw/timer/hpet/meson.build | 18 +++++++++---------
+ 2 files changed, 19 insertions(+), 17 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 669d07c06bd..08fba9695b9 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -343,7 +343,7 @@ endif
+diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
+index 33b91f21911..9c0e8290e9a 100644
+--- a/rust/hw/char/pl011/meson.build
++++ b/rust/hw/char/pl011/meson.build
+@@ -28,20 +28,22 @@ _libpl011_rs = static_library(
+   ),
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
++  link_with: [
++    _util_rs,
++    _migration_rs,
++    _bql_rs,
++    _qom_rs,
++    _chardev_rs,
++    _system_rs,
++    _hwcore_rs,
++    _trace_rs
++  ],
+   dependencies: [
+     bilge_rs,
+     bilge_impl_rs,
+     bits_rs,
+     common_rs,
+     glib_sys_rs,
+-    util_rs,
+-    migration_rs,
+-    bql_rs,
+-    qom_rs,
+-    chardev_rs,
+-    system_rs,
+-    hwcore_rs,
+-    trace_rs
+   ],
+ )
  
- tpmemu_files = ['tpm-emu.c', 'tpm-util.c', 'tpm-tests.c']
+diff --git a/rust/hw/timer/hpet/meson.build b/rust/hw/timer/hpet/meson.build
+index 9a3dd62caa3..3bb7ce2a6ca 100644
+--- a/rust/hw/timer/hpet/meson.build
++++ b/rust/hw/timer/hpet/meson.build
+@@ -3,16 +3,16 @@ _libhpet_rs = static_library(
+   files('src/lib.rs'),
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+-  dependencies: [
+-    common_rs,
+-    util_rs,
+-    migration_rs,
+-    bql_rs,
+-    qom_rs,
+-    system_rs,
+-    hwcore_rs,
+-    trace_rs,
++  link_with: [
++    _util_rs,
++    _migration_rs,
++    _bql_rs,
++    _qom_rs,
++    _system_rs,
++    _hwcore_rs,
++    _trace_rs,
+   ],
++  dependencies: [common_rs],
+ )
  
--migration_files = [files(
-+test_migration_files = [files(
-   'migration/bootfile.c',
-   'migration/framework.c',
-   'migration/migration-qmp.c',
-@@ -377,7 +377,7 @@ qtests = {
-                              'migration/migration-util.c') + dbus_vmstate1,
-   'erst-test': files('erst-test.c'),
-   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
--  'migration-test': migration_files + migration_tls_files,
-+  'migration-test': test_migration_files + migration_tls_files,
-   'pxe-test': files('boot-sector.c'),
-   'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
-                           'pnv-xive2-nvpg_bar.c'),
-@@ -389,7 +389,7 @@ qtests = {
-   'tpm-tis-i2c-test': [io, tpmemu_files, 'qtest_aspeed.c'],
-   'tpm-tis-device-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
-   'tpm-tis-device-test': [io, tpmemu_files, 'tpm-tis-util.c'],
--  'virtio-net-failover': migration_files,
-+  'virtio-net-failover': test_migration_files,
-   'vmgenid-test': files('boot-sector.c', 'acpi-utils.c'),
-   'netdev-socket': files('netdev-socket.c', '../unit/socket-helpers.c'),
- }
+ rust_devices_ss.add(when: 'CONFIG_X_HPET_RUST', if_true: [declare_dependency(
 -- 
 2.52.0
 
