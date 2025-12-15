@@ -4,44 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E157D5B868
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 19:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 803D0D5B86B
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 19:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVEQL-00016L-F0; Mon, 15 Dec 2025 14:40:01 -0500
+	id 1vVEQM-00018y-M0; Mon, 15 Dec 2025 14:40:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQJ-00012g-4z
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQJ-00012u-As
  for qemu-devel@nongnu.org; Mon, 15 Dec 2025 14:39:59 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQG-0006XC-02
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 14:39:58 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQF-0006XV-VX
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 14:39:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
- s=dkim; h=Cc:To:Content-Transfer-Encoding:Content-Type:MIME-Version:
- Message-Id:Date:Subject:From:Sender:Reply-To:Content-ID:Content-Description:
- Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
- In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
+ Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=GLiSwyDMzvhykDe1MatEcJw/QAWYhhb6rQB38+9jfw8=; b=Cz225Nij3C2qFwv
- 6cbKoZnYgA3O+N0rayjQSUeQNecOU3YYZkGAJAUM3yd1XoRDAlg6RED3h/f4um++hDljyvJw0zLFP
- Xaglu14kJy6P4lkRUT4dnrop556e1YeZ3TRXcGdTdlWiht2HuqbjqylBl1WdIF7hHu5Ujl26QCCWU
- F0=;
-Subject: [PATCH v2 0/7] single-binary: Drop TARGET_PHYS_ADDR_SPACE_BITS
-Date: Mon, 15 Dec 2025 20:42:49 +0100
-Message-Id: <20251215-phys_addr-v2-0-633aa1d922cd@rev.ng>
+ List-Help; bh=YDrHHlS00KR9cgLAc08zrXeue6HMnDH9zKMdv1cxuvs=; b=TTJIF29EF+OVwOI
+ upkiGotiNrw9JjUl4wZqqkiZOoWiVO7MQvNvdH95vFrhlhiiN9cQ97xCwo7ztWEHB96dR8rbc6EPF
+ 7PWgYz2IajwZWs5HdN8jh9s5eFLNalLo96oKT2VEFltZTVHGtZr+D2xnSTxYSqpmEVj3Zb3xDasOc
+ Ho=;
+Date: Mon, 15 Dec 2025 20:42:53 +0100
+Subject: [PATCH v2 4/7] target/loongarch: Introduce loongarch_palen_mask()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALlkQGkC/03OTQrCMBCG4auUWRuZ/EjUlfeQIrGZNLNpSyLBU
- nJ3Y924fD+Gh9kgU2LKcO02SFQ48zy1UIcOhuimkQT71qBQnaREI5a45ofzPoknBmPJaZTGQbt
- fEgV+79a9bx05v+a07nSR3/WnKLz8KUUKFIM+26DJKm/trb1xnEboa60fthYSXJ8AAAA=
-X-Change-ID: 20251104-phys_addr-b0f47ea3014a
+Message-Id: <20251215-phys_addr-v2-4-633aa1d922cd@rev.ng>
+References: <20251215-phys_addr-v2-0-633aa1d922cd@rev.ng>
+In-Reply-To: <20251215-phys_addr-v2-0-633aa1d922cd@rev.ng>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Brian Cain <brian.cain@oss.qualcomm.com>
+ Richard Henderson <richard.henderson@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -20
@@ -50,7 +47,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,69 +66,159 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The target macro TARGET_PHYS_ADDR_SPACE_BITS is unused since commit
+In preparation for dropping TARGET_PHYS_ADDR_SPACE_BITS, define a
+runtime function to construct a mask from the PALEN cpucfg field.
+The mask is then used when converting from virtual to physical
+addresses.
 
-  2e8fe327eb6 ("accel/tcg: Simplify L1_MAP_ADDR_SPACE_BITS"),
-
-replace the handful of remaining uses with runtime functions or
-constants.
-
-For discussion see:
-
-  https://lore.kernel.org/qemu-devel/8f0db5c1-f20b-4b7a-8d6c-76ce7ec7b4e0@linaro.org/
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
-Changes in v2:
-- Move alpha_phys_addr_space_bits() to linux-user/alpha/target_proc.h
-  (Richard);
-- Link to v1: https://lore.kernel.org/qemu-devel/20251209-phys_addr-v1-0-c387f3e72d77@rev.ng
-
----
-Anton Johansson (7):
-      target/alpha: Introduce alpha_phys_addr_space_bits()
-      target/hppa: Define PA[20|1X] physical address space size
-      target/i386: Drop physical address range checks
-      target/loongarch: Introduce loongarch_palen_mask()
-      hw/loongarch: Use loongarch_palen_mask()
-      hw/riscv: Fix IOMMU PAS capability to 56 bits
-      Drop TARGET_PHYS_ADDR_SPACE_BITS
-
- include/exec/cpu-defs.h           |  3 ---
- include/exec/poison.h             |  2 --
- include/hw/loongarch/boot.h       |  3 ++-
- linux-user/alpha/target_proc.h    | 23 ++++++++++++++++++++++-
- target/alpha/cpu-param.h          |  3 ---
- target/arm/cpu-param.h            |  2 --
- target/avr/cpu-param.h            |  1 -
- target/hexagon/cpu-param.h        |  1 -
- target/hppa/cpu-param.h           |  2 --
- target/i386/cpu-param.h           |  2 --
- target/i386/tcg/helper-tcg.h      |  2 --
  target/loongarch/cpu-mmu.h        |  1 +
- target/loongarch/cpu-param.h      |  1 -
  target/loongarch/internals.h      |  1 -
- target/m68k/cpu-param.h           |  1 -
- target/microblaze/cpu-param.h     |  2 --
- target/mips/cpu-param.h           |  2 --
- target/openrisc/cpu-param.h       |  1 -
- target/ppc/cpu-param.h            |  7 -------
- target/riscv/cpu-param.h          |  2 --
- target/rx/cpu-param.h             |  1 -
- target/s390x/cpu-param.h          |  1 -
- target/sh4/cpu-param.h            |  1 -
- target/sparc/cpu-param.h          |  2 --
- target/tricore/cpu-param.h        |  1 -
- target/xtensa/cpu-param.h         |  1 -
- hw/loongarch/boot.c               | 28 ++++++++++++++++------------
- hw/loongarch/virt.c               |  5 ++++-
- hw/riscv/riscv-iommu.c            | 12 +++++++++---
- target/hppa/mem_helper.c          | 23 ++++++++++++++++++-----
- target/i386/cpu.c                 |  9 +++------
- target/i386/kvm/kvm.c             |  3 +--
  target/loongarch/cpu_helper.c     | 14 +++++++++++---
  target/loongarch/tcg/tlb_helper.c | 12 ++++++++----
- 34 files changed, 95 insertions(+), 80 deletions(-)
+ 4 files changed, 20 insertions(+), 8 deletions(-)
+
+diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
+index 2259de9d36..3286accc14 100644
+--- a/target/loongarch/cpu-mmu.h
++++ b/target/loongarch/cpu-mmu.h
+@@ -98,5 +98,6 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+ void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+                         uint64_t *dir_width, unsigned int level);
+ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
++uint64_t loongarch_palen_mask(CPULoongArchState *env);
+ 
+ #endif  /* LOONGARCH_CPU_MMU_H */
+diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+index 8793bd9df6..e01dbed40f 100644
+--- a/target/loongarch/internals.h
++++ b/target/loongarch/internals.h
+@@ -13,7 +13,6 @@
+ #define FCMP_UN   0b0100  /* unordered */
+ #define FCMP_GT   0b1000  /* fp0 > fp1 */
+ 
+-#define TARGET_PHYS_MASK MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS)
+ #define TARGET_VIRT_MASK MAKE_64BIT_MASK(0, TARGET_VIRT_ADDR_SPACE_BITS)
+ 
+ void loongarch_translate_init(void);
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index a6eba4f416..6497b454a6 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -147,6 +147,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+ {
+     CPUState *cs = env_cpu(env);
+     target_ulong index = 0, phys = 0;
++    uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+     uint64_t base, pte;
+     int level;
+@@ -154,13 +155,14 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+     TLBRet ret;
+     MemTxResult ret1;
+ 
++
+     address = context->addr;
+     if ((address >> 63) & 0x1) {
+         base = env->CSR_PGDH;
+     } else {
+         base = env->CSR_PGDL;
+     }
+-    base &= TARGET_PHYS_MASK;
++    base &= palen_mask;
+ 
+     for (level = 4; level >= 0; level--) {
+         get_dir_base_width(env, &dir_base, &dir_width, level);
+@@ -181,7 +183,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
+                 break;
+             } else {
+                 /* Discard high bits with page directory table */
+-                base &= TARGET_PHYS_MASK;
++                base &= palen_mask;
+             }
+         }
+     }
+@@ -315,7 +317,7 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
+     /* Check PG and DA */
+     address = context->addr;
+     if (da & !pg) {
+-        context->physical = address & TARGET_PHYS_MASK;
++        context->physical = address & loongarch_palen_mask(env);
+         context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+         context->mmu_index = MMU_DA_IDX;
+         return TLBRET_MATCH;
+@@ -364,3 +366,9 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+     }
+     return context.physical;
+ }
++
++uint64_t loongarch_palen_mask(CPULoongArchState *env)
++{
++    uint64_t phys_bits = FIELD_EX32(env->cpucfg[1], CPUCFG1, PALEN);
++    return MAKE_64BIT_MASK(0, phys_bits);
++}
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 01e0a27f0b..30107f3e3f 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -691,8 +691,10 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+ {
+     CPUState *cs = env_cpu(env);
+     target_ulong badvaddr, index, phys;
++    uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+ 
++
+     if (unlikely((level == 0) || (level > 4))) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "Attepted LDDIR with level %u\n", level);
+@@ -714,11 +716,11 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+     }
+ 
+     badvaddr = env->CSR_TLBRBADV;
+-    base = base & TARGET_PHYS_MASK;
++    base = base & palen_mask;
+     get_dir_base_width(env, &dir_base, &dir_width, level);
+     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
+     phys = base | index << 3;
+-    return ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
++    return ldq_phys(cs->as, phys) & palen_mask;
+ }
+ 
+ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+@@ -728,9 +730,11 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+     target_ulong phys, tmp0, ptindex, ptoffset0, ptoffset1, badv;
+     uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+     uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
++    uint64_t palen_mask = loongarch_palen_mask(env);
+     uint64_t dir_base, dir_width;
+     uint8_t  ps;
+ 
++
+     /*
+      * The parameter "base" has only two types,
+      * one is the page table base address,
+@@ -738,7 +742,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+      * and the other is the huge page entry,
+      * whose bit 6 should be 1.
+      */
+-    base = base & TARGET_PHYS_MASK;
++    base = base & palen_mask;
+     if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+         /*
+          * Gets the huge page level and Gets huge page size.
+@@ -779,7 +783,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+         ptoffset0 = ptindex << 3;
+         ptoffset1 = (ptindex + 1) << 3;
+         phys = base | (odd ? ptoffset1 : ptoffset0);
+-        tmp0 = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
++        tmp0 = ldq_phys(cs->as, phys) & palen_mask;
+         ps = ptbase;
+     }
+ 
+
+-- 
+2.51.0
 
 
