@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5799AD5B85B
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 18:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C62F4D5B866
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 18:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVD5h-0008TS-7c; Mon, 15 Dec 2025 13:14:37 -0500
+	id 1vVDlC-0002oB-CL; Mon, 15 Dec 2025 13:57:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vVD5U-0008JW-FY
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 13:14:27 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vVDlB-0002nk-DN
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 13:57:29 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1vVD5Q-00050P-Ai
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 13:14:22 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4779ce2a624so42078735e9.2
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 10:14:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vVDl7-0004Q6-OF
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 13:57:29 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-477a2ab455fso41809455e9.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 10:57:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1765822455; x=1766427255; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1765825043; x=1766429843; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K3dzsXqkHvwqoBXvxlu95nqIsRk0MCO35JmcU23X3QE=;
- b=SO2lVVt0KgOlqK6ymM3Y7zioqkrtDZrLXJEKeIaq5y0sQulfBAf2xJnWgSXNmGRvb0
- vUzylYnkDWBa2n8NVxjahCyNEByaMIsKKgZOz8ULOYYXnhrHGfaDPMgpLHPBLvSJ1LB7
- oxfX5JwB0NvhoI4gPnkL7eXkoC2zURS9VP7RVMqIPre2jMSuH8/LcvDjlmg8eIjXnNgj
- JB00qV1+HP8kgxJLxwnRv6RdeNeT7TnCn0lPc0suwiIOTy+GQlz1OgRMm8vdO9B/xZv/
- BZbji37tVjPkLaGqKSvjwcfO+rzsYRXuVPy3K+3DYTJn8qW7udKM0uGIbPWAsKdQD2gn
- qAAg==
+ bh=k6dsbfB55lL70cfof4yycVK0QIlwoXPPbjIaQMXm9Ow=;
+ b=wLEAiph4WmjYhMuNUp092zmXol7b+xmngMiPuJzQr9C/mz3IkixqAlXjZHtX3HSMmp
+ thE5TxMPg9crLpdpLImII17nS1RzSacNeRQAjLWj64yMzr8DJ3x3tnDMo+cTUASpmyN4
+ mbzq7Wx5UrJFp9XXBlibTBMYX03U8aaqGKOEH4bZJF4X1e6km0qVVyTg2lZWM7xiQCbI
+ FNq1POAHR/ybb4UC0WxR0rNX3YFrAvhsIJiGvnneqVdz4njm9XylzS+Jx2JuPZnNVCwb
+ 492hor6RSIsAdFT4HKnPecJm1YgkENWNb6Zk4QKcBCIkgBnJD/egxA+J6AQY/XYBOAlY
+ LdFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765822455; x=1766427255;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=K3dzsXqkHvwqoBXvxlu95nqIsRk0MCO35JmcU23X3QE=;
- b=PSFkrIqfLgP3BMTJaSwAQTbFLQzrYYcYDR8FQ33UeBpcv29L5ffBzW5aOnHHWW6N5g
- LYw+i+jOqytiUQGOQUcoz3BkiF03lnVdU5qj5Dreq2KADk/D0zFpT1Ev6FBPJf4/Yx4S
- 7SvZ/DnLenakeCuPcS1ZEMJa5aEPFdd1h9vCk0DAXk7vxtRx2xwfz6jkpC7V4N5GWMFB
- igGCEb02UeuN5rrkJfCiNxuRb+v9n4eMgxnWo9eWf5X7BfUFE+1vAK6/S8AqhcBAsO5H
- A8vd81rTsZnJM6kqt8elAtjtaXRUZe9YR2nwLk64uEYc1XVpXem9ql1IT5MNHmXnGU4q
- t1OA==
-X-Gm-Message-State: AOJu0YwCz2dUJs4MEdMQwE5GbHcXeCM9wbiZvXg+d5yEFk6iQFMRU1rb
- I4ZNp2bQLHzEsIRtIxtUchNlPu3SIzIuv7o4gYp9YuVcf62Wmz3ChAetpSSerg==
-X-Gm-Gg: AY/fxX7fbRp2N3WIiMJPWPJmSTvCTQnZVhneTF0UckkDZ9S2ObksIPbq8mbhOZLVmif
- GGHoQLinKeY79gQYKBGvktPT/SkH8IoSeEeLlIw40DWhNdRufEaWzXSZ7h75rBGoRrWSMXxAXVL
- REbv2ggq6mLFSTPhHGbm5+AX8z1OQqYytXXjkhtD06UtH59DN4DmEYtr5AveOq+UfiN55etzkIp
- EM9g5fnTNzTpI6Rbpkco0LeuNdY4N7vn4ybtZdMMcRZCQYOo4u/tN0NORLvTjlfD+Iy5Z7wfKI+
- FTUGZ7g+vE4BanZCEuiqVqgr3hOZA7n9tubTTXZv5cWsAFqjFIKSf9X/vLs0bfiP2lyGBz3P3ss
- djffnZdYrkgKMlkla8F/GFT9JkqaDquTFx2u3XyAsw1YkX6XB7N7U1W6qE3v/OG1M6PJcGulv3/
- ENOXByjbPxdPv7duw1t6Lq+0t10eGoNlOlMTXc+dxwknU525oKsn6V55R+x4SF/ZmRi+rD/fDt9
- awqvBFf
-X-Google-Smtp-Source: AGHT+IGYTTi/mdmsTZs5noFQjWVVIts/LpkOPrQYKtmoxitQKDC/vqt8DwTQLhEeY0q52gFGs3+cCw==
-X-Received: by 2002:a05:600c:19c6:b0:477:5c45:8100 with SMTP id
- 5b1f17b1804b1-47a8f906decmr118865955e9.24.1765822454752; 
- Mon, 15 Dec 2025 10:14:14 -0800 (PST)
-Received: from ehlo.thunderbird.net
- (p200300faaf27140000b3712bc8ea4066.dip0.t-ipconnect.de.
- [2003:fa:af27:1400:b3:712b:c8ea:4066])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a8f74b17bsm202810515e9.2.2025.12.15.10.14.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Dec 2025 10:14:14 -0800 (PST)
-Date: Mon, 15 Dec 2025 18:14:12 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
- Pavel Pisa <pisa@fel.cvut.cz>
-CC: Matyas Bobek <bobekmat@fel.cvut.cz>,
- Oliver Hartkopp <socketcan@hartkopp.net>, 
- Nikita Ostrenkov <n.ostrenkov@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: i.MX6 SabreLite FlexCAN emulation for QEMU progress/working
-In-Reply-To: <20250710-carrot-pillbug-of-election-eca4ab-mkl@pengutronix.de>
-References: <202507101258.05760.pisa@fel.cvut.cz>
- <20250710-carrot-pillbug-of-election-eca4ab-mkl@pengutronix.de>
-Message-ID: <1B709815-4D9A-4C4A-B5DA-C69B432F7B5E@gmail.com>
+ d=1e100.net; s=20230601; t=1765825043; x=1766429843;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=k6dsbfB55lL70cfof4yycVK0QIlwoXPPbjIaQMXm9Ow=;
+ b=pnmTqyaSBUJdR39oTBFJOqXHzWYCqtaGIQsvEFsS4cjyiMsOwlrkXxzd74/79UseKr
+ JZuevBjCtzzlRAyphnAPK/apz4WBPESLwaX2FBOykwad16WxYOjiGs44IMDLHsWTBvN2
+ aE0lyEmncsmWX0ky7Prbxi/NRcCU7inczKN35lJqYFUKg4zBREVuJJGdDX6SkBojjJhn
+ IC+7UnSIeopoj5Y2J+zGgtgNOwwVoxw4URk4OYnFYgZfK3nncRzP/quw9qnGpaQUcXE5
+ I2I4TXDyZsT1xE8nP48SmogW2tmM3jA8tcubzFeQBdjIm1DYuzmPteIG3VOkLTz6pX+0
+ slHQ==
+X-Gm-Message-State: AOJu0YwTy4jl7mZSE/RfrIa1Oaty8b/+Y1xt/XESHxjq2pak60W+RdKw
+ 6i2EC3fsJJbUny6DOojA10AK4gZdXIiwijrrTw4AUKB0fQcXcgAcmy/DZJW+eM/APejZ5EWqVj4
+ QqFXk
+X-Gm-Gg: AY/fxX4sUIt/tvQO0YfUW8bnliwMHxP/18VN7wadwwJ0cQ6Egv+/pMGA1CeSBnVf/8I
+ Fqw7rIU6bgvwZk55zJqtPSjBKAOUH+pUuSoO1H/kdB7fb9o8LrkOD92HBvE/MM7w03Bw8DNypzc
+ DKjhU74kJxhB/BHcy35b2PLeCXTVa6wby5HYSF61EdKjjOW+ADLuf88cCTclgjQ1jHkSjvtSE0x
+ r7ReeaH/8e3Q8UH8vh/R6jeX5GUEQReQNwFwV+rs3FigznfHXo6131e22YZPkBFrGXSLdU2cOU+
+ VhJA0dySgOjTRkewCjQdg8nYmL2blmoinYvVXXMmub21wMUCwdxOpKRnOFus/M3K0uV1CSGwhuY
+ S2d5AStH1KhgX4/CxvDR2jllrPBpY3xTCeitkBM/WK3WdlTemrtGWnfeuvSGeUmyONx9LO8K5Xf
+ Jm0HMNRYEGcPQ=
+X-Google-Smtp-Source: AGHT+IFgYgL7wyWiNZh5f7TBwzd2UtQRw1YL17FL/zCJqFlD1v28fhCSFvZi0LeZKko8kievtNHetg==
+X-Received: by 2002:a05:600c:821a:b0:477:fcb:2267 with SMTP id
+ 5b1f17b1804b1-47a8f89bc9amr132265025e9.8.1765825043346; 
+ Mon, 15 Dec 2025 10:57:23 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47bd5f896dcsm1020875e9.4.2025.12.15.10.57.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Dec 2025 10:57:22 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E3A335F856;
+ Mon, 15 Dec 2025 18:57:21 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [qemu-web PATCH] reorganize sponsorship page
+In-Reply-To: <20251215144027.567313-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Mon, 15 Dec 2025 15:40:27 +0100")
+References: <20251215144027.567313-1-pbonzini@redhat.com>
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Mon, 15 Dec 2025 18:57:21 +0000
+Message-ID: <87345bmv3i.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,89 +105,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Paolo Bonzini <pbonzini@redhat.com> writes:
 
-
-Am 10=2E Juli 2025 12:50:41 UTC schrieb Marc Kleine-Budde <mkl@pengutronix=
-=2Ede>:
->On 10=2E07=2E2025 12:58:05, Pavel Pisa wrote:
->> Hello Marc and others,
->>=20
->> Matyas Bobek has implemented FlexCAN emulation for i=2EMX6
->> targets in the frame of his bachelor thesis
->>=20
->>   https://dspace=2Ecvut=2Ecz/bitstream/handle/10467/122654/F3-BP-2025-B=
-obek-Matyas-BP_Bobek_FlexCAN_final_4=2Epdf
->>=20
->> with reviews there
->>=20
->>   https://dspace=2Ecvut=2Ecz/handle/10467/122779
->>=20
->> Please, if you have problems to access documents, try that later,
->> our large archive with theses and publications is under
->> "AI" scrape-bots attacks almost permanently=2E=2E=2E or send me note
->> and I send the document directly=2E
->>=20
->> The project continues and on base of Marc Kleine-Budde
->> review, Matyas Bobek has implemented timestamping
->> which should ensure correct messages ordering
->> even if FIFO mode is not used in the drivers,
->> Linux driver default case=2E There is even workaround
->> to advance timestamp if the the QEMU virtual time
->> is too coarse to provide unique values for for
->> too fast delivered messages through virtual bus
->> without real bits serialization=2E
+> Put all CI resources together. Azure was replaced by OSUOSL and AWS.
 >
->Nice! Good work!
-
-Indeed!
-
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  sponsors.md | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
 >
->> The actual code is available on the "flexcan"
->> branch of the repository
->>=20
->>   https://gitlab=2Efel=2Ecvut=2Ecz/bobekmat/qemu-flexcan
->>=20
->> The clean, minimal patches sequence will be prepared
->> for review for the proposal for inclusion into QEMU
->> mainline, hopefully soon=2E
->>=20
->> In longer term perspective, I have interrest in i=2EMX8
->> and other FlexCAN variants with FD support, etc=2E
->> I do not know if Mr=2E Bobek will have time and interest
->> to continue in this direction=2E I can offer that as the
->> another thesis or can offer that as summer job
->> etc=2E But latter would need some funding for students
->> motivation and their time compensation and I have had
->> never and do not have any QEMU related project for such
->> funding now and even minimal chance is even in future
->> for other than CTU CAN FD IP core where we support
->> silicon and FPGA products=2E So no timing, chances,
->> estimates for something beyond i=2EMX6 FlexCAN=2E=20
->
->ACK, I think getting things mainline is more important than CAN-FD
->support=2E
+> diff --git a/sponsors.md b/sponsors.md
+> index b68779f..8ac7d45 100644
+> --- a/sponsors.md
+> +++ b/sponsors.md
+> @@ -7,17 +7,17 @@ QEMU has ongoing sponsorship agreements with a number o=
+f companies and
+>  organizations, who provide resources (software, hardware, monetary) to
+>  assist in the project's operations.
+>=20=20
+> -[Azure](https://azure.microsoft.com/) and [DigitalOcean](https://www.dig=
+italocean.com/)
+> -provide QEMU and [Patchew](https://patchew.org) with virtual machines and
+> -other cloud resources through the [Azure credits for open source
+> -projects](https://opensource.microsoft.com/azure-credits/) and [DigitalO=
+cean
+> -Open Source Credits](https://www.digitalocean.com/open-source/credits-fo=
+r-projects)
+> -programs.
+> +QEMU's continuous integration is supported by:
+> +* [AWS](https://aws.amazon.com/) through the [AWS credits for open source
+> +  projects](https://aws.amazon.com/blogs/opensource/aws-promotional-cred=
+its-open-source-projects/) program
+> +* [Digital Ocean](https://digitalocean.com/) through the [DigitalOcean O=
+pen
+> +  Source Credits](https://www.digitalocean.com/open-source/credits-for-p=
+rojects)
+> +  program
+> +*
+> [Equinix](https://www.arm.com/markets/computing-infrastructure/works-on-a=
+rm?#Equinix),
 
-Any news?
+This is out of date now, Linaro are hosting the Arm hardware.
 
-I've been playing with Matyas' flexcan branch and integrated the FlexCAN d=
-evice model into the imx8mp-evk machine [1]=2E With some minor modification=
-s such as allowing for 64-bit access I am able to run cangen+candump on eit=
-her side and see the communication!
 
-I think Matyas' work should be upstreamed=2E How shall we proceed? If desi=
-red, I could do the upstreaming process, leaving all credits to Matyas of c=
-ourse=2E IIUC we'd need Matyas' Signed-off-by tags (of the *squashed* branc=
-h) in this case for legal reasons, correct?
+> +* [IBM LinuxONE Community Cloud](https://developer.ibm.com/articles/get-=
+started-with-ibm-linuxone/)
+>=20=20
+> -[Equinix](https://www.arm.com/markets/computing-infrastructure/works-on-=
+arm?#Equinix),
+> -[IBM LinuxONE Community Cloud](https://developer.ibm.com/articles/get-st=
+arted-with-ibm-linuxone/)
+> -and the [Oregon State University Open Source Labs](https://www.osuosl.or=
+g)
+> -also provide QEMU with access to compute hosts.
+> +The [Oregon State University Open Source Labs](https://www.osuosl.org)
+> +provides QEMU and [Patchew](https://patchew.org) with access to compute =
+hosts.
+>=20=20
+>  Downloads are hosted by [GNOME](https://gnome.org/).
 
-What do you think?
-
-Best regards,
-Bernhard
-
-[1] https://github=2Ecom/shentok/qemu/tree/imx8mp-flexcan
-
->
->regards,
->Marc
->
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
