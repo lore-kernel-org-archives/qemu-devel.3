@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A987D41D74
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 11:08:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC03BD59D99
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 11:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV6QZ-00024s-Bm; Mon, 15 Dec 2025 06:07:43 -0500
+	id 1vV6R1-00027M-HT; Mon, 15 Dec 2025 06:08:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vV6QY-00024k-KL
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 06:07:42 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vV6Qz-000271-Ny
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 06:08:09 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vV6QW-0002JM-Ot
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 06:07:42 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-42fbc305882so1128753f8f.0
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 03:07:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vV6Qy-0002PI-37
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 06:08:09 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-477632b0621so23842535e9.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 03:08:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765796859; x=1766401659; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1765796886; x=1766401686; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Qj3xtYNVbvliRPqpQD1lKyL0QG8KRTz9eKr79f1GPX0=;
- b=YNRaoTtAeq5GqCRWC7gfRyVtB7u1tOGN41QH8JocA/4MdkwNl9T4gz3ewnmyOD1/V5
- Dknuc2oeomNvpci6Fi3nR3Lmx6mijRU8f8ysdi9lThzgKcdk10AAk+XjVRD7UDTeN2bv
- RoKaiCNUeQ3cBeCT/mpw+fThefq5XPZYtSjOA2FSsI8UDdwtPr9rtZ/6DcGcaxMXMng7
- qrwUwIsx+fO004r52epY95ZcD4MrO0TZeJVOkWiwuy9KVfBsUySz9hklIaIwoBMUPrO/
- tt/7HWQshHh5oWmWy+8bnIe3bVL0tIjjScjW/dKvNthhE/4rtRRo7ChTW5q26pnbDRRy
- irIw==
+ bh=iJltbxOt/9TZ2eA4uwws1CJXvgUotzsegufjxsGu3Zs=;
+ b=Wd71w8MGel+asSmRv55a6BFFw+74w35ZFIGRs1OcMJwSFj1HcPtefdebBqXKeuUfzc
+ bvi+bL7rxhqq9+yrsjWZA3bvkIEGKeEV7P+EfriYqjuCLjl9XZlX1FnEwkwZfm4Ezncw
+ aWi3/5SBHmhDavUPAD/yzHkdGCGc8e0EbIHRbp1y9XgycbKlFmMfbK6nb020LQpY+XCq
+ WWQNwdEGZ8UkVZQ9o3RPtNqz4h3olyjNVLr4oi+gblUzK5VzFFGwU1i+8m4bvWjol9v4
+ 6vMtEf8UDO4IT/pIw+U1F6DPamHkWmbJZl4ZiY6GCCtvG+yZZUu1WL16ZpObI9kng7yS
+ 5cPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765796859; x=1766401659;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1765796886; x=1766401686;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Qj3xtYNVbvliRPqpQD1lKyL0QG8KRTz9eKr79f1GPX0=;
- b=QU2YzbWYD19NMgZnClOcQVwEOOBSDquHify3ukjQFgNOrjwOk6htOZLFZSQotzQE+8
- xXfGno2SayB8kX2bR6VO+qw8nmaXf+eDZWVPCEJ1H4LEsPQKP2HqCG/h/UeonmZc4tcz
- q3VB0K99zKwrEd8N07qWHRuYogNfWGeRMm4fONumAJf2KzDqk1XVfSpqdv+IS0CCnL8D
- z2iZLu+o5jh8xd5WIYx3cWDI5CPniEARS/zEujhfIW+7JLoW7ZsLQbpbNDoEcO1plQqr
- YeREydVn0VBf3tG7FNPPACxmcWomtj5RG6fKEesB8t52N5qgxeQSwg9XDdkQV83TkS9D
- rGAg==
+ bh=iJltbxOt/9TZ2eA4uwws1CJXvgUotzsegufjxsGu3Zs=;
+ b=ZBuYkymxXk098JkxnnJOMvOptl3n817QN+5IEBOQGj4RK+nRH0enov9gexNo7kHNtm
+ B+ArkZQOqi6V+1iG+L/mxQBiw+lqeyReb8Vo76QuuQZP2WZTfWDsu+IZ+/WfIRZ9U3W4
+ 26hXUzJLazrpg3Gw2YH1mNvX/LYnXbJ/SqpYiFlFSDw+oCCvrTMvREjsTC29XVtHVkLE
+ /ivUn7Zn5PL7IUf4GLsOmkfb85ob8c8iIHTNKk3Vn3laBx2tDzv2Y334ZZ2kggTgcWtn
+ QLUFN7oH2Q3+U4JUCkYbQ5fUx0tCHBDwm0ELf9ZYQU3MC+q/YV3YP2zGOvwyxAznPafn
+ OHpg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCxnIqlGar1tRP7T7/CmRuwZxWwi9c6EOEOgdoktBr9x3np5hkhs7unaw1swf3DFOL81LQipE7Evd4@nongnu.org
-X-Gm-Message-State: AOJu0YxQXmoM1WRmU/vCeRghL3tfdGn3QCob514YrQ6pJ4MxF8SMpEmI
- t9yS0rPahnWMsvHkH1FKv1uUyPpSwdDlnvWQBuNDi1lbFyi2O0Zc9PqDYDIyn1jKfOc=
-X-Gm-Gg: AY/fxX4+qxm8mA0tazYQeo/GVYaeyxTYcYWdU90+JwzMn+jJ0an4ZtplY+YjGcct07s
- nRGUMfgRwsxefEquLavCi497Ueg/jaRYOM0GW4iSOlZItN640vNy3kV4Sry3jsMFafr6yEGAXyA
- 0aZEnDL0nSPgrU/c4JduqCk2DEtkTTGh9qvmOkpHWMIhEUXNZX0ilTk0DwoCAgRfdSgczSIPEZB
- 0pqGsW1SVIMED2OYUR0v9nMltt+d8vI2f1Z88NrMYf0ZPwzT2t9GR74XqWd9UUXdXYVrIeXBJAY
- HDQ/TNyiYrXRTtIsy1yQoRwp9p6iFp6Ci9k96v+sP/878EoVgL8xRMrVO+rlhnMYGtERSkpHeAN
- vXMAuZQF87iiE4VYceafViPod0dgiUByaxpJTlwPSR1Xqr/0cEVQMH+X+usxhZ3MGwgGZ2z5Bl3
- FC4cG25K62dGf2ib6jV2ywjSf5HyWx+ZBcUGdlNDCDIqOAi8NTBzJKJw==
-X-Google-Smtp-Source: AGHT+IGLWHWlznlrUxcHketU3XmvYI24VoIelUTPM+z4A/O7CGC1fYsEpebGYtrkMYkoljF1mUn5uw==
-X-Received: by 2002:a5d:5847:0:b0:431:266:d142 with SMTP id
- ffacd0b85a97d-4310266d72amr822908f8f.26.1765796858602; 
- Mon, 15 Dec 2025 03:07:38 -0800 (PST)
+ AJvYcCXx3vhitSNvVazxA1VIHlXlWJMx6U8BBhnfkpSkDgXjJlUAacjhwuiRnXNeyY8Fm1QHEDEka1RaZTck@nongnu.org
+X-Gm-Message-State: AOJu0Yzu2m0JkolZKpWgth+wDYaItD7sadeK60k0fIY75Py0z6rh73Q1
+ 4KFN5AuRo7gJVDUyCnRiNrje8FvNlFmTBiQXpQmU5k3MBpjoZHLA3z2YMCrU/C73EWpnCBAw4rM
+ /zVLRvBc=
+X-Gm-Gg: AY/fxX5ZvjT2sRupfftujiSDOxMnRbnrgZ0HAev7glnyXctCKZ7L+pEd/Di9GUPF8j8
+ q810t7IjC0aMjFKsSzH+6rOjcj1QY7yR2K5rsfCQD7tBtflRKz1L4Azb8BvwBruURzkbeMm08A2
+ jK7D+wTUvLmZpdPUQ6OS8ZSxSMxdRNMS0FiwiC0gixLuMKKz4GxZh0uV4+pLC3uwwthF7Mid2hS
+ +S1rBMh7TCK538btMF03uOz0wHJ4uP4sTkUzMj+tsH9suKIDh84PEMYZKYcV/3QMhUqmZkQ/eXr
+ 9o07m/JTTpFKNblgA1rMh0zmqDrSPbndkAOCKZTsEuNQESQnO1W0VCdfZaI1uf1A/M+FY6Kn2wf
+ MskpufkB+YPuHPSwWbGdyW6Z/JkeKOnyC7iai+T8oFYeUCPNQ4kwhZO1a3qAI4tezxeZsicw92p
+ Io/RACZ70RfXS9xVnTRPfLThCC8mUYl2xkJoarkSOP3EGWH56VswqoWQ==
+X-Google-Smtp-Source: AGHT+IFXFVLIOPbULUIscGyydd3pNRcTh1hsVLe0ylh6hJbh2sVqnM/aqnd/OKsX6V9XTS1JZSWC2Q==
+X-Received: by 2002:a05:600c:529b:b0:477:ae31:1311 with SMTP id
+ 5b1f17b1804b1-47a8f8c0edfmr103759245e9.13.1765796885521; 
+ Mon, 15 Dec 2025 03:08:05 -0800 (PST)
 Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-430f38d01d6sm13857525f8f.8.2025.12.15.03.07.37
+ 5b1f17b1804b1-47a8f4b4d5fsm66043895e9.7.2025.12.15.03.08.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Dec 2025 03:07:37 -0800 (PST)
-Message-ID: <52d1084b-40c5-4641-aec3-bf2b888d183f@linaro.org>
-Date: Mon, 15 Dec 2025 12:07:37 +0100
+ Mon, 15 Dec 2025 03:08:04 -0800 (PST)
+Message-ID: <f88e6e39-1732-4635-bb92-16ac15ee98ac@linaro.org>
+Date: Mon, 15 Dec 2025 12:08:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] monitor: Fix const qualifier build errors with
+Subject: Re: [PATCH v2 4/4] gdbstub: Fix const qualifier build errors with
  recent glibc
+Content-Language: en-US
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20251215101937.281722-1-clg@redhat.com>
- <20251215101937.281722-4-clg@redhat.com>
-Content-Language: en-US
+ <20251215101937.281722-5-clg@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251215101937.281722-4-clg@redhat.com>
+In-Reply-To: <20251215101937.281722-5-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,13 +111,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/12/25 11:19, Cédric Le Goater wrote:
 > A recent change in glibc 2.42.9000 [1] changes the return type of
-> strchr() and other string functions to be 'const char *' when the
+> strstr() and other string functions to be 'const char *' when the
 > input is a 'const char *'. This breaks the build in :
 > 
-> ../monitor/hmp.c:589:7: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
->    589 |     p = strchr(type, ':');
->        |       ^
-> 
+> ../gdbstub/user.c:322:21: error: assignment discards ‘const’ qualifier from pointer target type [-Werror=discarded-qualifiers]
+>    322 |     pid_placeholder = strstr(path, "%d");
+>        |                     ^
 > Fix this by changing the type of the variables that store the result
 > of these functions to 'const char *'.
 > 
@@ -124,8 +124,8 @@ On 15/12/25 11:19, Cédric Le Goater wrote:
 > 
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   monitor/hmp.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+>   gdbstub/user.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
