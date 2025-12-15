@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 803D0D5B86B
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 19:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DFC1D5B86C
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 19:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVEQM-00018y-M0; Mon, 15 Dec 2025 14:40:02 -0500
+	id 1vVEQM-00017s-1F; Mon, 15 Dec 2025 14:40:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQJ-00012u-As
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQI-00012a-Vs
  for qemu-devel@nongnu.org; Mon, 15 Dec 2025 14:39:59 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQF-0006XV-VX
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 14:39:59 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVEQG-0006XD-2l
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 14:39:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=YDrHHlS00KR9cgLAc08zrXeue6HMnDH9zKMdv1cxuvs=; b=TTJIF29EF+OVwOI
- upkiGotiNrw9JjUl4wZqqkiZOoWiVO7MQvNvdH95vFrhlhiiN9cQ97xCwo7ztWEHB96dR8rbc6EPF
- 7PWgYz2IajwZWs5HdN8jh9s5eFLNalLo96oKT2VEFltZTVHGtZr+D2xnSTxYSqpmEVj3Zb3xDasOc
- Ho=;
-Date: Mon, 15 Dec 2025 20:42:53 +0100
-Subject: [PATCH v2 4/7] target/loongarch: Introduce loongarch_palen_mask()
+ List-Help; bh=Sl9uDZgG/YOVTATFnr0+sDvBRh8u9n6793uBQguCpQ4=; b=E3LoXV7lTePv57j
+ 2LFQ8eyH7kHm3poowHlyshVjqwvPcFfnYT01kR3oZc5Ab5H/hGiqulT74D57PFhBpBTe3go6UVGl3
+ 5aNwBj1V3473LbtJogjHai16UPI4g/iew7cDpR5zLrNy8TH0yxBqFIdYwzJWhQqx3l56Gr+SDbLq1
+ 1E=;
+Date: Mon, 15 Dec 2025 20:42:50 +0100
+Subject: [PATCH v2 1/7] target/alpha: Introduce
+ alpha_phys_addr_space_bits()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251215-phys_addr-v2-4-633aa1d922cd@rev.ng>
+Message-Id: <20251215-phys_addr-v2-1-633aa1d922cd@rev.ng>
 References: <20251215-phys_addr-v2-0-633aa1d922cd@rev.ng>
 In-Reply-To: <20251215-phys_addr-v2-0-633aa1d922cd@rev.ng>
 To: qemu-devel@nongnu.org
@@ -47,8 +48,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,157 +66,56 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation for dropping TARGET_PHYS_ADDR_SPACE_BITS, define a
-runtime function to construct a mask from the PALEN cpucfg field.
-The mask is then used when converting from virtual to physical
-addresses.
+In preparation for dropping TARGET_PHYS_ADDR_SPACE_BITS, add a
+a runtime function to correctly represent the size of the physical
+address space for EV4-6 based on the current CPU version.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/loongarch/cpu-mmu.h        |  1 +
- target/loongarch/internals.h      |  1 -
- target/loongarch/cpu_helper.c     | 14 +++++++++++---
- target/loongarch/tcg/tlb_helper.c | 12 ++++++++----
- 4 files changed, 20 insertions(+), 8 deletions(-)
+ linux-user/alpha/target_proc.h | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
-diff --git a/target/loongarch/cpu-mmu.h b/target/loongarch/cpu-mmu.h
-index 2259de9d36..3286accc14 100644
---- a/target/loongarch/cpu-mmu.h
-+++ b/target/loongarch/cpu-mmu.h
-@@ -98,5 +98,6 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
- void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
-                         uint64_t *dir_width, unsigned int level);
- hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
-+uint64_t loongarch_palen_mask(CPULoongArchState *env);
+diff --git a/linux-user/alpha/target_proc.h b/linux-user/alpha/target_proc.h
+index da437ee0e5..6b491ffa3a 100644
+--- a/linux-user/alpha/target_proc.h
++++ b/linux-user/alpha/target_proc.h
+@@ -6,6 +6,27 @@
+ #ifndef ALPHA_TARGET_PROC_H
+ #define ALPHA_TARGET_PROC_H
  
- #endif  /* LOONGARCH_CPU_MMU_H */
-diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
-index 8793bd9df6..e01dbed40f 100644
---- a/target/loongarch/internals.h
-+++ b/target/loongarch/internals.h
-@@ -13,7 +13,6 @@
- #define FCMP_UN   0b0100  /* unordered */
- #define FCMP_GT   0b1000  /* fp0 > fp1 */
- 
--#define TARGET_PHYS_MASK MAKE_64BIT_MASK(0, TARGET_PHYS_ADDR_SPACE_BITS)
- #define TARGET_VIRT_MASK MAKE_64BIT_MASK(0, TARGET_VIRT_ADDR_SPACE_BITS)
- 
- void loongarch_translate_init(void);
-diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
-index a6eba4f416..6497b454a6 100644
---- a/target/loongarch/cpu_helper.c
-+++ b/target/loongarch/cpu_helper.c
-@@ -147,6 +147,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
- {
-     CPUState *cs = env_cpu(env);
-     target_ulong index = 0, phys = 0;
-+    uint64_t palen_mask = loongarch_palen_mask(env);
-     uint64_t dir_base, dir_width;
-     uint64_t base, pte;
-     int level;
-@@ -154,13 +155,14 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-     TLBRet ret;
-     MemTxResult ret1;
- 
++#include "qemu/osdep.h"
++#include "target/alpha/cpu.h"
 +
-     address = context->addr;
-     if ((address >> 63) & 0x1) {
-         base = env->CSR_PGDH;
-     } else {
-         base = env->CSR_PGDL;
-     }
--    base &= TARGET_PHYS_MASK;
-+    base &= palen_mask;
- 
-     for (level = 4; level >= 0; level--) {
-         get_dir_base_width(env, &dir_base, &dir_width, level);
-@@ -181,7 +183,7 @@ TLBRet loongarch_ptw(CPULoongArchState *env, MMUContext *context,
-                 break;
-             } else {
-                 /* Discard high bits with page directory table */
--                base &= TARGET_PHYS_MASK;
-+                base &= palen_mask;
-             }
-         }
-     }
-@@ -315,7 +317,7 @@ TLBRet get_physical_address(CPULoongArchState *env, MMUContext *context,
-     /* Check PG and DA */
-     address = context->addr;
-     if (da & !pg) {
--        context->physical = address & TARGET_PHYS_MASK;
-+        context->physical = address & loongarch_palen_mask(env);
-         context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-         context->mmu_index = MMU_DA_IDX;
-         return TLBRET_MATCH;
-@@ -364,3 +366,9 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
-     }
-     return context.physical;
- }
-+
-+uint64_t loongarch_palen_mask(CPULoongArchState *env)
++static uint8_t alpha_phys_addr_space_bits(CPUAlphaState *env)
 +{
-+    uint64_t phys_bits = FIELD_EX32(env->cpucfg[1], CPUCFG1, PALEN);
-+    return MAKE_64BIT_MASK(0, phys_bits);
++    switch (env->implver) {
++    case IMPLVER_2106x:
++        /* EV4 */
++        return 34;
++    case IMPLVER_21164:
++        /* EV5 */
++        return 40;
++    case IMPLVER_21264:
++    case IMPLVER_21364:
++        /* EV6 and EV7*/
++        return 44;
++    default:
++        g_assert_not_reached();
++    }
 +}
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 01e0a27f0b..30107f3e3f 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -691,8 +691,10 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
++
+ static int open_cpuinfo(CPUArchState *cpu_env, int fd)
  {
-     CPUState *cs = env_cpu(env);
-     target_ulong badvaddr, index, phys;
-+    uint64_t palen_mask = loongarch_palen_mask(env);
-     uint64_t dir_base, dir_width;
+     int max_cpus = sysconf(_SC_NPROCESSORS_CONF);
+@@ -57,7 +78,7 @@ static int open_cpuinfo(CPUArchState *cpu_env, int fd)
+             "L1 Dcache\t\t: n/a\n"
+             "L2 cache\t\t: n/a\n"
+             "L3 cache\t\t: n/a\n",
+-            model, TARGET_PAGE_SIZE, TARGET_PHYS_ADDR_SPACE_BITS,
++            model, TARGET_PAGE_SIZE, alpha_phys_addr_space_bits(cpu_env),
+             max_cpus, num_cpus, cpu_mask);
  
-+
-     if (unlikely((level == 0) || (level > 4))) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "Attepted LDDIR with level %u\n", level);
-@@ -714,11 +716,11 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
-     }
- 
-     badvaddr = env->CSR_TLBRBADV;
--    base = base & TARGET_PHYS_MASK;
-+    base = base & palen_mask;
-     get_dir_base_width(env, &dir_base, &dir_width, level);
-     index = (badvaddr >> dir_base) & ((1 << dir_width) - 1);
-     phys = base | index << 3;
--    return ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
-+    return ldq_phys(cs->as, phys) & palen_mask;
- }
- 
- void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-@@ -728,9 +730,11 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-     target_ulong phys, tmp0, ptindex, ptoffset0, ptoffset1, badv;
-     uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
-     uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
-+    uint64_t palen_mask = loongarch_palen_mask(env);
-     uint64_t dir_base, dir_width;
-     uint8_t  ps;
- 
-+
-     /*
-      * The parameter "base" has only two types,
-      * one is the page table base address,
-@@ -738,7 +742,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-      * and the other is the huge page entry,
-      * whose bit 6 should be 1.
-      */
--    base = base & TARGET_PHYS_MASK;
-+    base = base & palen_mask;
-     if (FIELD_EX64(base, TLBENTRY, HUGE)) {
-         /*
-          * Gets the huge page level and Gets huge page size.
-@@ -779,7 +783,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
-         ptoffset0 = ptindex << 3;
-         ptoffset1 = (ptindex + 1) << 3;
-         phys = base | (odd ? ptoffset1 : ptoffset0);
--        tmp0 = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
-+        tmp0 = ldq_phys(cs->as, phys) & palen_mask;
-         ps = ptbase;
-     }
- 
+     return 0;
 
 -- 
 2.51.0
