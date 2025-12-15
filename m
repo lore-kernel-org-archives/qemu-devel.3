@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB506D5B85E
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:57:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44535D5B85E
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:57:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVCok-0003oF-AK; Mon, 15 Dec 2025 12:57:06 -0500
+	id 1vVCpK-0003yI-Ft; Mon, 15 Dec 2025 12:57:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVCoi-0003o3-Ta
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:57:04 -0500
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1vVCpD-0003wh-Mn
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:57:36 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVCoh-0007zH-ED
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:57:04 -0500
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2a0a33d0585so18126295ad.1
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 09:57:02 -0800 (PST)
+ id 1vVCpC-00085U-6z
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:57:35 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7f0db5700b2so3319132b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 09:57:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765821421; x=1766426221; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765821451; x=1766426251; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CdNgqbZgGC1qDRc3rbuIRyZmbhgMWQtVz5IQ5Opm5jg=;
- b=OEr4x7IvBkiV8F9KN5RNQ4AZtAyvzHrcRqugaQEpara4ewusH5lT9cpfBdAU1EvbiC
- NBmJa2/0iFm2QhgWHZTP7h2t3TNapfw8noeglFrrgWIB69bUe74vQKJJi8f6pSboPzRN
- jhZvrcZEjdtsnLuu/6Tyit0EjZwkXZytUV0tpL4pxYtURyO6uYu39p/u2hWcGDWER2kV
- xUGh9iPvDnmh9fp6hxBncOLRWzr3uDMXgKoUhvVttmJszVvsD2+S4aAw91+6D2Y4K7Mb
- nqFFJD/BZn4EjB8U5bvlnhRUMNy30GaG/htheqIGeuf8HUqPGn9wXgTD590qTPiwhtw1
- vDOg==
+ bh=qW4AF0ByCAqJuDeoFXWb4Pw8hfXOu8UQaZdMMLtYDVc=;
+ b=n/K4BisslSTbwNXwOBzLqe9+ENe8Jo4F6Smj7Cu6469mKLWhq/8iJXYlO7gPACnYd3
+ Q+uBTDQrFB00iKFnMczNiU/+OrgEnJyztxEpfdK8Cw+GqeZFTbZl4U4Fp9iJxjwCgfm1
+ C3oj9Op2pqV/irzhF7jr8f+329f8ZdAq/LryY/yZk/1LXWHjcDNI1VFz3p1mYnafyn0i
+ mfVs3tAITNQ6e85aGdITFCgP7Q1vcupn1jLZASsXKQ06EbajXdClSVy0RSpkeAAXSqbg
+ cxKCSctGcO4bwUDPNNQDzuLemNw6nSBk5R55wDM6yOCEezPDqahvsFKGRff8Hp+BU9GI
+ yX7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765821421; x=1766426221;
+ d=1e100.net; s=20230601; t=1765821451; x=1766426251;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CdNgqbZgGC1qDRc3rbuIRyZmbhgMWQtVz5IQ5Opm5jg=;
- b=bNN6W97P3BjLo+qNNoMTFoMtKnJlgtdEDfBdFkGw+7fI5PUFXujo+4cKYgg8FuAgeY
- mbbW43R3kTXLAG0OCBlT/3mEyx40RpnkFwv3KoduXeikDF11juuoz3GVQFzB3xP0sN4Z
- UVzWVgSxOgfJp198bmzXp3xiFKeX1++FHmvQhqJeitsmFU+w/XGIKMqlhzme+FDGR2Jm
- t7qdULfq3NBLkBexxBpW9jN4tQXmTPpRovnVpBjBp5pxtEcADpd2QDB31SMpwdc73uEc
- JKk/fiv2YaKlWf8roZpUUyzmGtzbiw67LBIgCcQehNRqw7Tet8TwbPRgYPAoH8bF/sAz
- aeDQ==
+ bh=qW4AF0ByCAqJuDeoFXWb4Pw8hfXOu8UQaZdMMLtYDVc=;
+ b=Y0HbHAjwvwe46w9kSBgf1ucKSC7w8LzhxypxNy7kLZ2czEp3DS6Ls1UZm/3S2wIqGL
+ ndKQKKkBWp1hF3z0tQ6QPtwi04MrjhwpnI1bdW2/EGVH8cXZYOPYNyQKb494kOWc0TKh
+ v2ClRo4E3ePFH1PJSoi1JTXB2srNxPI+LttjWugAgGraid2DIrTh/vJbFwCMIFK4D6TS
+ duRnQjt53ie2sHhJtXYZDob9qpg+GJP1u36PjAvxhvYKPBksyJSVtdG3YhcsmkV7d+jZ
+ wO41YbFVn7ktXqEly8CffyWJEFb37ay7BTzskW/Ivd4lwwfK7k4Q0AhO/8GfIzwNTk8p
+ ooRA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1d/AT0LoQVO+DNkTnRUFH5uCZzwsf9uAQ/FDJvQ3VFKYuNXduYphfFo3jCXYaic33r9fD9OV6O/a1@nongnu.org
-X-Gm-Message-State: AOJu0YwafSy7jm3tg+dDIxQiz+pbIUAZH8pvNx1MisnA2ng/ftoTpBaU
- nL9Q8GIxsllnvOvAcZZgn6a71EjkL586+9sN2kfN24GuMM8oxsWk9OF9MwHUNyP9X2s=
-X-Gm-Gg: AY/fxX7GNhPBP1Z39TGoDzMxVAcZV3A7yakXHz7VX/ZofWjD6/78xxLfuAFWORaqq41
- RWb9/vktSxRC5II6B2zW/lIh6Yodjnx7cRHvSDowMGi27jQKlrs36wruDVsGp+oIWNYjCMooDch
- eJS+qKOiFnaCCrz8/lNe+Z6J44wR/JE9RMFxsiln0GI1TcxXOzbN0+d9Ck1AjO78X2Ym3sjr+7U
- uX46Ffo0MMfiLhdW4wmGnam196t/1mld8P4OXXZ6eKv7RYN5NGqQpvfKV+3yevK6U4OPYHatx2q
- xP0/xYPnMPVF5NR9vIzTUU9BgAIZnedaNmt3EG//zyWEnv5E7XAO1nMmmhURRI8ys0TZuB4tLpN
- CzhqoD+MM0G4OUBr4K1Cgai5dw2lG9ATTwWVDsdJDHs7Ond5HoW3+TZdi8+VSKwexYnhxwBk6oQ
- +IasYBse/202V71fCRJKzPrJk1Dmmd+onGF2j9ko8eFIYXLPeQ1gr7dRg=
-X-Google-Smtp-Source: AGHT+IHh9hH9N+naDHoARjrcrV6VPq90HXfgUjy90HAZfqj/cZiXUF63jFHBGYA9sY0LKUM3sHtg+A==
-X-Received: by 2002:a17:902:d58a:b0:2a0:c1f5:c695 with SMTP id
- d9443c01a7336-2a0c1f5cf3amr60586055ad.16.1765821421411; 
- Mon, 15 Dec 2025 09:57:01 -0800 (PST)
+ AJvYcCWbAOBPExBaulCSuMhUOlosdtloRDWW9KV6cjmMnMvl24bsFU8QYJEW8BlJeNP8ALGgrmj6bIOkuCeS@nongnu.org
+X-Gm-Message-State: AOJu0YzSIwy9m+lfkx7Wkxos+i5f+3HCVj1Z12sWCUpqMyz4iXQZuDAI
+ 68M7c/f5SYZKMTBnUgj87LPVvi8DqXr5RRRCH5/u/2PUtWTIRzqDIo8KoxzFGsd13M8=
+X-Gm-Gg: AY/fxX4t8Tsis36cnciaA1f6KO1xQWzD3H0jl3pHu5QvQ1Hykr0qdKp0+wb4n8qg0VY
+ wYLxF+hPXUsAX0B1hfhtuhn8MOdnyAsa+jniU7hgfBgmZ+DWF42Tlxx7sr0iQzbWRiOB8rzfXbR
+ 2JbJnV5CMpyxnG2MB4SJ8mxi94gic25fXx7AdPHpoWGzoTpG4LOLqx4trLuxRQz9i56SppnDiqj
+ KHcKNMVeaELPEThuelgsdsEe21RMCCKijxSVkfmLEvHoz7PfaGhkCn8Sk4LlAU/fAueoV6qMqtq
+ CxOh38yjey0gqamThuSoc3kiQgxuLhL84JHMglWK/tAp2PPsJ7G5d9Elvivl32QBDJnPRADL3mO
+ I/UK53UNwxErs288sHay2CM4rMhlq02j4+whvfVp9CpXxApGR8n3HIi5LneTJOGYYMfd97WVh9n
+ cSzFmtQckTWmF5knvZ0YURSZxfYBWdE7l6hrloPTU1mlG64v/gR5x/U1E=
+X-Google-Smtp-Source: AGHT+IFyEfnz9BJDzk504HwrLYYA46MWnO7rYU8W2oq3qOSFGYF3VW3xEnEXxFZFdRNHQi1v9T/MuA==
+X-Received: by 2002:a05:6a00:4107:b0:7e8:4398:b370 with SMTP id
+ d2e1a72fcca58-7f669c8a7bbmr9280906b3a.67.1765821451407; 
+ Mon, 15 Dec 2025 09:57:31 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a0993ab61dsm73268325ad.46.2025.12.15.09.57.00
+ d2e1a72fcca58-7f4c2379e40sm13242607b3a.5.2025.12.15.09.57.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Dec 2025 09:57:00 -0800 (PST)
-Message-ID: <e7ffbbc3-b544-4882-861a-76bee28c50f9@linaro.org>
-Date: Mon, 15 Dec 2025 09:57:00 -0800
+ Mon, 15 Dec 2025 09:57:31 -0800 (PST)
+Message-ID: <7e11df05-4592-4fbb-920d-7fdc9db665d3@linaro.org>
+Date: Mon, 15 Dec 2025 09:57:30 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] linux-user: add plugin API to filter syscalls
+Subject: Re: [PATCH v4 2/2] tcg tests: add a test to verify the syscall filter
+ plugin API
 Content-Language: en-US
 To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
 Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
@@ -82,13 +83,13 @@ Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
  Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
  Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
 References: <20251214144620.179282-1-functioner@sjtu.edu.cn>
- <20251214144620.179282-2-functioner@sjtu.edu.cn>
+ <20251214144620.179282-3-functioner@sjtu.edu.cn>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251214144620.179282-2-functioner@sjtu.edu.cn>
+In-Reply-To: <20251214144620.179282-3-functioner@sjtu.edu.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,23 +113,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/14/25 6:46 AM, Ziyang Zhang wrote:
-> This commit adds a syscall filter API to the TCG plugin API set.
-> Plugins can register a filter callback to QEMU to decide whether
-> to intercept a syscall, process it and bypass the QEMU syscall
-> handler.
+> Register a syscall filter callback in tests/tcg/plugins/sycall.c,
+> returns a specific value for a magic system call number, and check
+> it in tests/tcg/multiarch/test-plugin-syscall-filter.c.
 > 
 > Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
 > Co-authored-by: Mingyuan Xia <xiamy@ultrarisc.com>
 > ---
->   include/qemu/plugin-event.h  |  1 +
->   include/qemu/plugin.h        | 33 +++++++++++++++++++++++---------
->   include/qemu/qemu-plugin.h   | 32 +++++++++++++++++++++++++++++++
->   include/user/syscall-trace.h | 17 +++++++++++++++++
->   linux-user/syscall.c         |  7 +++++--
->   plugins/api.c                |  7 +++++++
->   plugins/core.c               | 37 ++++++++++++++++++++++++++++++++++++
->   7 files changed, 123 insertions(+), 11 deletions(-)
-
+>   tests/tcg/multiarch/Makefile.target           |  4 ++-
+>   .../multiarch/test-plugin-syscall-filter.c    | 35 +++++++++++++++++++
+>   tests/tcg/plugins/syscall.c                   | 19 ++++++++++
+>   3 files changed, 57 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/tcg/multiarch/test-plugin-syscall-filter.c
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
