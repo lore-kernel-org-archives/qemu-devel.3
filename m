@@ -4,96 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531BFD5B84D
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1593DD5B85D
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:18:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVCBr-0008S8-Pc; Mon, 15 Dec 2025 12:16:56 -0500
+	id 1vVCDa-0002SZ-OD; Mon, 15 Dec 2025 12:18:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vVBx6-0008MA-QK
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:01:58 -0500
-Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1vVBx2-0004e7-3W
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:01:40 -0500
-Received: by mail-pf1-x443.google.com with SMTP id
- d2e1a72fcca58-7bb3092e4d7so3937346b3a.0
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 09:01:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1765818090; x=1766422890; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Kd4frPi8CM8WZOxQB80DiCTWX9nbYzH7xkDrG+aJGhI=;
- b=YvHddpkX2sXGmVa3p1wsEnKR/+kWcrpRNrMpi9cr926JPHsnMm9OJAvnj/CFX5uuBV
- IY7fHzCcf1bHxbLJnV4OTSkyX51B4ZI2ABucDkgLGnXF/u5+/6yF5qhfXzArS76pz+5J
- 8ulf4LDoMQIX8ltWNZxSuPsYLrfecWSvn3RsS1e/jaHeQVr10uOsVcbkpjMNap+ItwyN
- FK4cX2wZUoxa55HnGC/0KsgG3U5mN0bxKzHyIjD31xIWUp2navMLqKEloctuUlczNjR/
- 01gW0D1eZU9l6t3EEjeXd5S3uKRkLXj/cyDVfcYoelCdjl1x9wFGgVmkCTHAmVo9xq72
- oxgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765818090; x=1766422890;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Kd4frPi8CM8WZOxQB80DiCTWX9nbYzH7xkDrG+aJGhI=;
- b=Se91Vy/LQ61WCOOUTMQ2tAtzTkatpNp4OJ2e3XVHojupRydKMAp1tXOQnOEfKzUkDE
- ddENDE2TKGnhSEFUBVx5OGHJdh1D/DuWfqh6rWYbALyhodPoT6c7wBa0saM8MbE76LBq
- xzLrfSCUNj/88EiATxWU3fLSHCI7eCF60MrZgvOo209S52hMwCEp5K30jFOOtghXc9Kn
- hJt0HTN2eimrxBKr2lKf3ZVGESN0grP8+hiNpw148zV5FJNEJuxpvvyo++AkZZOVvNja
- 0E7+OyS3ehXfF4tt80v/KujPMUqzgylqrXlklpDDTKcUFz/5tEGpGqezjmELds5F/qEW
- +pJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUA5MxwD0Xke6+0iuPGfWXx+DnXfICBFwoXZx3w61amh3104MrGcq+8Tim1qLI7MaS3p9WMXXfXjRO8@nongnu.org
-X-Gm-Message-State: AOJu0YzIg3TFXeY5oKOVpjdkdJeXeapOD4VGCjYXHR19XpvnB83dOSyL
- yxoeGCA/VWeWwWBlwlAu7MuMKZXTw2uyMpL2UYfPXHI7Ys+bzrcZOvrKiJCaLXOiX/6Vx94P
-X-Gm-Gg: AY/fxX7KeT1pJmwCpCqpHPi4DoLTBxiuuHEcn1dudEWizhyhWD6FZ9zkuQdK9nHIl7s
- aYHzrjWaPOGezMGpOO+9AsEvNyMYCDJAgW/xgDEU2JmXBA2IJMwm/+/spqafUBDAAfNUG2Ad47V
- ZAIQwH5xXUy68jVeCtyziXK4fijuk5aYUy8e9pb39WlRRyscyXLaold3Yvplg9F/reqvCaaERHM
- u76zRtJiOkj2TXv8m8NizJS4aSInwVa7UMoX1LGWU0baW6vlVBTLpofmPWoQNliaWsY06XPP86w
- PuXORHlIek0hrgIKQ4eLUFYh6Tq1ORJZwGFp/Nh5yFtq0XIqCklHkxTOC/27ahylg8tcYUYIhiY
- cZolYaierFqQkL1mkigk/0c/OEmZZ8s1md9xN8s2sabi8bNp+Y6AHwzuizhwPFWUUnKsXLuIQPp
- GJxRLiGB3RZ+wqQd8TAjQuTKhqsrvVtQ==
-X-Google-Smtp-Source: AGHT+IHbEfOt80craAlj5VQZSK9xS1NvPz/DsIzrFzdlBMYZhnsgyiF2rwu2dEIE9MpTphKtnbtCtg==
-X-Received: by 2002:a05:6a21:339f:b0:33b:f418:c3e8 with SMTP id
- adf61e73a8af0-369b6f94d36mr10592103637.60.1765818090106; 
- Mon, 15 Dec 2025 09:01:30 -0800 (PST)
-Received: from ZEVORN-PC.localdomain ([114.88.97.170])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c0c2589d4f7sm13132788a12.3.2025.12.15.09.01.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Dec 2025 09:01:29 -0800 (PST)
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: pbonzini@redhat.com, dbarboza@ventanamicro.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- hust-os-kernel-patches@googlegroups.com, 1440332527@qq.com,
- 3160104094@zju.edu.cn, temashking@foxmail.com, me@ziyao.cc,
- Chao Liu <chao.liu@zevorn.cn>, Chao Liu <chao.liu.zevorn@gmail.com>,
- Conor Dooley <conor@kernel.org>
-Subject: [RESEND PATCH v3 1/5] target/riscv: add thead-c908 cpu support
-Date: Tue, 16 Dec 2025 01:01:14 +0800
-Message-ID: <ca8ed6ad2cb12f322f20f759c459d472cf5edda8.1765816341.git.chao.liu.zevorn@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1765816341.git.chao.liu.zevorn@gmail.com>
-References: <cover.1765816341.git.chao.liu.zevorn@gmail.com>
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1vVCDQ-0002D2-JG; Mon, 15 Dec 2025 12:18:39 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
+ id 1vVCDM-0002gp-K8; Mon, 15 Dec 2025 12:18:32 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BFCFEm5030921;
+ Mon, 15 Dec 2025 17:18:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=cva5ZBoYoUhj+fm1v
+ LQwcvS1IsAUupqHklY5+6VEThg=; b=Si2/H2rrWE1YLOadjq4X698a8hirSB6vF
+ PST+dLF1YEhEgowrHF0fieduChL1f0fhaD6MbmMY5SBtD0X491SLqegtLjWrlMWH
+ y/zoSrVRpmzmch6lLV5GNz9X3BVGuGazYjwK13hs/CZW/40J6DTIWfB+zMCBQjzl
+ rkk6hZfOrnVvxJNyBCfFoll1OAc41+IU6dyapqmgUNJjEdwWAAU6GjSyE4VtXQwx
+ IXO5knbg0hdC3EePTcBlyNEvMJFuBOa/KbpoOYKieP//X2Q23u7hGq56Uwzs8IiK
+ 73eQF/ZQOZeuSPrM1WHPcz6Fji7KOiApxRYdBeClNfBRL1mgnNtqw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjktn21-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Dec 2025 17:18:23 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BFHINnP006935;
+ Mon, 15 Dec 2025 17:18:23 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjktn1u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Dec 2025 17:18:23 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BFExYE2012800;
+ Mon, 15 Dec 2025 17:18:22 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4b1juxytvt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Dec 2025 17:18:22 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5BFHILd116908830
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 15 Dec 2025 17:18:21 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6C50D58060;
+ Mon, 15 Dec 2025 17:18:21 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E9C6A5803F;
+ Mon, 15 Dec 2025 17:18:20 +0000 (GMT)
+Received: from gfwr532.rchland.ibm.com (unknown [9.10.239.133])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 15 Dec 2025 17:18:20 +0000 (GMT)
+From: Caleb Schlossin <calebs@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ milesg@linux.ibm.com, alistair@alistair23.me, kowal@linux.ibm.com,
+ chalapathi.v@linux.ibm.com, calebs@linux.ibm.com, angeloj@linux.ibm.com
+Subject: [PATCH v2 1/7] hw/ppc: Add VMSTATE information for LPC model
+Date: Mon, 15 Dec 2025 11:18:07 -0600
+Message-ID: <20251215171813.1670241-2-calebs@linux.ibm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251215171813.1670241-1-calebs@linux.ibm.com>
+References: <20251215171813.1670241-1-calebs@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-pf1-x443.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: n46iAahUqLRPZ0wcFz8zZVciBDve5Lcy
+X-Authority-Analysis: v=2.4 cv=CLgnnBrD c=1 sm=1 tr=0 ts=694042df cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=VnNF1IyMAAAA:8
+ a=GMd5MdSob7TKo89JhDQA:9
+X-Proofpoint-GUID: ZiuSycC1SZUN6l27NagRsNSLx0SC5QdI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAwOSBTYWx0ZWRfX12St5Oo4k3N8
+ tmpLttKJRmwiqdHGywpYqQjDlfsK2R8h4gq2IgKD1Nsr+YIVnXE4dqtsJbFG53v/2SYkLAvJU7K
+ X5eNM+znsSCAkPPgE4AbyxjdNJeQVVgtvIFvJlvwmcyOAnu6689/Wyq7tJCSO3saUsJT40MChc6
+ hurRpuT4uh95YCdXvq93BcpB9PGdTGMV2IKOZZ1FjJcj7wtsnGAZ6ZpINEKPB8YvWEz7m4m8gxu
+ P9etIzsK4YvCQsb4D0+XAIrv4g6jOiwh6+2hu4/1Oa3T5FLb27n5ZpYMjhWSYyTtfiTB3+dv1JO
+ 4RI7P0ItfPgynd5uzphRGo2kgOW1i5bk8vWDxeULWuTE50Lg9uh7ultE5bEYaRIrXIoo84gsiCe
+ gF21bTBZdXQui223JOhi8JmKUnAmcw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-15_04,2025-12-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130009
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=calebs@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 15 Dec 2025 12:14:59 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,526 +124,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chao Liu <chao.liu@zevorn.cn>
+The PNV LPC model needs snapshot/migration support.  Added a VMSTATE
+descriptor to save model data and an associated post_load() method.
+Snapshot support added for Power8, Power9, and Power10.
 
-The C908 processor is based on the RV64GCB[V] instruction
-set, compatible to RVA22 Profile and implements the XIE
-(XuanTie Instruction Extension) technology.
-
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Suggested-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Conor Dooley <conor@kernel.org>
-Reported-by: Peng Jiang <3160104094@zju.edu.cn>
+Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
 ---
- target/riscv/cpu-qom.h |   2 +
- target/riscv/cpu.c     |  51 ++++++
- target/riscv/th_csr.c  | 380 ++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 432 insertions(+), 1 deletion(-)
+ hw/ppc/pnv_lpc.c | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 75f4e43408..1ddb5a6a6c 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -52,6 +52,8 @@
- #define TYPE_RISCV_CPU_SIFIVE_U34       RISCV_CPU_TYPE_NAME("sifive-u34")
- #define TYPE_RISCV_CPU_SIFIVE_U54       RISCV_CPU_TYPE_NAME("sifive-u54")
- #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906")
-+#define TYPE_RISCV_CPU_THEAD_C908       RISCV_CPU_TYPE_NAME("thead-c908")
-+#define TYPE_RISCV_CPU_THEAD_C908V      RISCV_CPU_TYPE_NAME("thead-c908v")
- #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
- #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
- #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 73d4280d7c..6c10e557da 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -3130,6 +3130,57 @@ static const TypeInfo riscv_cpu_type_infos[] = {
- #endif
-     ),
+diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
+index f6beba0917..e52a062181 100644
+--- a/hw/ppc/pnv_lpc.c
++++ b/hw/ppc/pnv_lpc.c
+@@ -30,6 +30,7 @@
+ #include "hw/ppc/pnv_lpc.h"
+ #include "hw/ppc/pnv_xscom.h"
+ #include "hw/ppc/fdt.h"
++#include "migration/vmstate.h"
  
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908, TYPE_RISCV_VENDOR_CPU,
-+        .misa_mxl_max = MXL_RV64,
-+        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
-+        .priv_spec = PRIV_VERSION_1_12_0,
-+
-+        /* ISA extensions */
-+        .cfg.ext_xtheadba = true,
-+        .cfg.ext_xtheadbb = true,
-+        .cfg.ext_xtheadbs = true,
-+        .cfg.ext_xtheadcmo = true,
-+        .cfg.ext_xtheadcondmov = true,
-+        .cfg.ext_xtheadfmv = true,
-+        .cfg.ext_xtheadfmemidx = true,
-+        .cfg.ext_xtheadmac = true,
-+        .cfg.ext_xtheadmemidx = true,
-+        .cfg.ext_xtheadmempair = true,
-+        .cfg.ext_xtheadsync = true,
-+        .cfg.ext_smepmp = true,
-+        .cfg.ext_sscofpmf = true,
-+        .cfg.ext_sstc = true,
-+        .cfg.ext_svpbmt = true,
-+        .cfg.ext_svinval = true,
-+        .cfg.ext_svnapot = true,
-+        .cfg.ext_zba = true,
-+        .cfg.ext_zbb = true,
-+        .cfg.ext_zbc = true,
-+        .cfg.ext_zbs = true,
-+        .cfg.ext_zkt = true,
-+        .cfg.ext_zbkc = true,
-+        .cfg.ext_zicsr = true,
-+        .cfg.ext_zifencei = true,
-+        .cfg.ext_zihintpause = true,
-+        .cfg.ext_zicbom = true,
-+        .cfg.ext_zicboz = true,
-+
-+        .cfg.pmp = true,
-+        .cfg.mmu = true,
-+        .cfg.max_satp_mode = VM_1_10_SV48,
-+
-+        .cfg.marchid = 0x8d143000,
-+        .cfg.mvendorid = THEAD_VENDOR_ID,
-+#ifndef CONFIG_USER_ONLY
-+        .custom_csrs = th_csr_list,
-+#endif
-+    ),
-+
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908V, TYPE_RISCV_CPU_THEAD_C908,
-+        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU | RVV,
-+        .vext_spec = VEXT_VERSION_1_00_0,
-+    ),
-+
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_TT_ASCALON, TYPE_RISCV_VENDOR_CPU,
-         .misa_mxl_max = MXL_RV64,
-         .misa_ext = RVG | RVC | RVS | RVU | RVH | RVV,
-diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
-index 49eb7bbab5..3b59939f05 100644
---- a/target/riscv/th_csr.c
-+++ b/target/riscv/th_csr.c
-@@ -2,6 +2,9 @@
-  * T-Head-specific CSRs.
-  *
-  * Copyright (c) 2024 VRULL GmbH
-+ * Copyright (c) 2025 Chao Liu <chao.liu@zevorn.cn>
-+ *
-+ * For more information, see XuanTie-C908-UserManual_xrvm_20240530.pdf
-  *
-  * This program is free software; you can redistribute it and/or modify it
-  * under the terms and conditions of the GNU General Public License,
-@@ -20,13 +23,88 @@
- #include "cpu.h"
- #include "cpu_vendorid.h"
+ #include <libfdt.h>
  
--#define CSR_TH_SXSTATUS 0x5c0
-+/* Extended M-mode control registers of T-Head */
-+#define CSR_TH_MXSTATUS        0x7c0
-+#define CSR_TH_MHCR            0x7c1
-+#define CSR_TH_MCOR            0x7c2
-+#define CSR_TH_MCCR2           0x7c3
-+#define CSR_TH_MHINT           0x7c5
-+#define CSR_TH_MRVBR           0x7c7
-+#define CSR_TH_MCOUNTERWEN     0x7c9
-+#define CSR_TH_MCOUNTERINTEN   0x7ca
-+#define CSR_TH_MCOUNTEROF      0x7cb
-+#define CSR_TH_MCINS           0x7d2
-+#define CSR_TH_MCINDEX         0x7d3
-+#define CSR_TH_MCDATA0         0x7d4
-+#define CSR_TH_MCDATA1         0x7d5
-+#define CSR_TH_MSMPR           0x7f3
-+#define CSR_TH_CPUID           0xfc0
-+#define CSR_TH_MAPBADDR        0xfc1
-+
-+/* TH_MXSTATUS bits */
-+#define TH_MXSTATUS_UCME        BIT(16)
-+#define TH_MXSTATUS_MAEE        BIT(21)
-+#define TH_MXSTATUS_THEADISAEE  BIT(22)
-+
-+/* Extended S-mode control registers of T-Head */
-+#define CSR_TH_SXSTATUS        0x5c0
-+#define CSR_TH_SHCR            0x5c1
-+#define CSR_TH_SCER2           0x5c2
-+#define CSR_TH_SCER            0x5c3
-+#define CSR_TH_SCOUNTERINTEN   0x5c4
-+#define CSR_TH_SCOUNTEROF      0x5c5
-+#define CSR_TH_SCYCLE          0x5e0
-+#define CSR_TH_SHPMCOUNTER3    0x5e3
-+#define CSR_TH_SHPMCOUNTER4    0x5e4
-+#define CSR_TH_SHPMCOUNTER5    0x5e5
-+#define CSR_TH_SHPMCOUNTER6    0x5e6
-+#define CSR_TH_SHPMCOUNTER7    0x5e7
-+#define CSR_TH_SHPMCOUNTER8    0x5e8
-+#define CSR_TH_SHPMCOUNTER9    0x5e9
-+#define CSR_TH_SHPMCOUNTER10   0x5ea
-+#define CSR_TH_SHPMCOUNTER11   0x5eb
-+#define CSR_TH_SHPMCOUNTER12   0x5ec
-+#define CSR_TH_SHPMCOUNTER13   0x5ed
-+#define CSR_TH_SHPMCOUNTER14   0x5ee
-+#define CSR_TH_SHPMCOUNTER15   0x5ef
-+#define CSR_TH_SHPMCOUNTER16   0x5f0
-+#define CSR_TH_SHPMCOUNTER17   0x5f1
-+#define CSR_TH_SHPMCOUNTER18   0x5f2
-+#define CSR_TH_SHPMCOUNTER19   0x5f3
-+#define CSR_TH_SHPMCOUNTER20   0x5f4
-+#define CSR_TH_SHPMCOUNTER21   0x5f5
-+#define CSR_TH_SHPMCOUNTER22   0x5f6
-+#define CSR_TH_SHPMCOUNTER23   0x5f7
-+#define CSR_TH_SHPMCOUNTER24   0x5f8
-+#define CSR_TH_SHPMCOUNTER25   0x5f9
-+#define CSR_TH_SHPMCOUNTER26   0x5fa
-+#define CSR_TH_SHPMCOUNTER27   0x5fb
-+#define CSR_TH_SHPMCOUNTER28   0x5fc
-+#define CSR_TH_SHPMCOUNTER29   0x5fd
-+#define CSR_TH_SHPMCOUNTER30   0x5fe
-+#define CSR_TH_SHPMCOUNTER31   0x5ff
-+#define CSR_TH_SMIR            0x9c0
-+#define CSR_TH_SMLO0           0x9c1
-+#define CSR_TH_SMEH            0x9c2
-+#define CSR_TH_SMCIR           0x9c3
-+
-+/* Extended U-mode control registers of T-Head */
-+#define CSR_TH_FXCR            0x800
- 
- /* TH_SXSTATUS bits */
- #define TH_SXSTATUS_UCME        BIT(16)
- #define TH_SXSTATUS_MAEE        BIT(21)
- #define TH_SXSTATUS_THEADISAEE  BIT(22)
- 
-+static RISCVException mmode(CPURISCVState *env, int csrno)
-+{
-+    if (riscv_has_ext(env, RVM)) {
-+        return RISCV_EXCP_NONE;
-+    }
-+
-+    return RISCV_EXCP_ILLEGAL_INST;
-+}
-+
- static RISCVException smode(CPURISCVState *env, int csrno)
- {
-     if (riscv_has_ext(env, RVS)) {
-@@ -36,11 +114,31 @@ static RISCVException smode(CPURISCVState *env, int csrno)
-     return RISCV_EXCP_ILLEGAL_INST;
- }
- 
-+static RISCVException any(CPURISCVState *env, int csrno)
-+{
-+    return RISCV_EXCP_NONE;
-+}
-+
- static bool test_thead_mvendorid(RISCVCPU *cpu)
- {
-     return cpu->cfg.mvendorid == THEAD_VENDOR_ID;
- }
- 
-+static RISCVException read_th_mxstatus(CPURISCVState *env, int csrno,
-+                                       target_ulong *val)
-+{
-+    /* We don't set MAEE here, because QEMU does not implement MAEE. */
-+    *val = TH_MXSTATUS_UCME | TH_MXSTATUS_THEADISAEE;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException read_unimp_th_csr(CPURISCVState *env, int csrno,
-+                                        target_ulong *val)
-+{
-+    *val = 0;
-+    return RISCV_EXCP_NONE;
-+}
-+
- static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
-                                        target_ulong *val)
- {
-@@ -50,10 +148,290 @@ static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
- }
- 
- const RISCVCSR th_csr_list[] = {
-+    {
-+        .csrno = CSR_TH_MXSTATUS,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mxstatus", mmode, read_th_mxstatus }
-+    },
-+    {
-+        .csrno = CSR_TH_MHCR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mhcr", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcor", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCCR2,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mccr2", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MHINT,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mhint", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MRVBR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mrvbr", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOUNTERWEN,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterwen", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOUNTERINTEN,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterinten", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOUNTEROF,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterof", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCINS,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcins", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCINDEX,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcindex", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCDATA0,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcdata0", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCDATA1,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcdata1", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MSMPR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.msmpr", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_CPUID,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.cpuid", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MAPBADDR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mapbaddr", mmode, read_unimp_th_csr }
-+    },
-     {
-         .csrno = CSR_TH_SXSTATUS,
-         .insertion_test = test_thead_mvendorid,
-         .csr_ops = { "th.sxstatus", smode, read_th_sxstatus }
+@@ -696,6 +697,43 @@ static const MemoryRegionOps opb_master_ops = {
      },
-+    {
-+        .csrno = CSR_TH_SHCR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shcr", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCER2,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scer2", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCER,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scer", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCOUNTERINTEN,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scounterinten", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCOUNTEROF,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scounterof", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCYCLE,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scycle", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER3,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter3", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER4,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter4", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER5,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter5", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER6,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter6", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER7,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter7", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER8,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter8", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER9,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter9", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER10,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter10", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER11,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter11", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER12,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter12", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER13,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter13", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER14,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter14", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER15,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter15", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER16,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter16", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER17,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter17", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER18,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter18", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER19,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter19", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER20,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter20", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER21,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter21", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER22,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter22", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER23,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter23", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER24,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter24", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER25,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter25", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER26,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter26", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER27,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter27", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER28,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter28", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER29,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter29", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER30,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter30", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER31,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter31", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMIR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smir", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMLO0,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smlo0", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMEH,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smeh", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMCIR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smcir", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_FXCR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.fxcr", any, read_unimp_th_csr }
-+    },
-     { }
  };
+ 
++static int vmstate_pnv_lpc_post_load(void *opaque, int version_id)
++{
++    PnvLpcController *lpc = PNV_LPC(opaque);
++
++    memory_region_set_alias_offset(&lpc->opb_isa_fw,
++                                   lpc->lpc_hc_fw_seg_idsel * LPC_FW_OPB_SIZE);
++    pnv_lpc_eval_serirq_routes(lpc);
++
++    pnv_lpc_eval_irqs(lpc);
++    return 0;
++}
++
++static const VMStateDescription vmstate_pnv_lpc = {
++    .name = TYPE_PNV_LPC,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load = vmstate_pnv_lpc_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(eccb_stat_reg,       PnvLpcController),
++        VMSTATE_UINT32(eccb_data_reg,       PnvLpcController),
++        VMSTATE_UINT32(opb_irq_route0,      PnvLpcController),
++        VMSTATE_UINT32(opb_irq_route1,      PnvLpcController),
++        VMSTATE_UINT32(opb_irq_stat,        PnvLpcController),
++        VMSTATE_UINT32(opb_irq_mask,        PnvLpcController),
++        VMSTATE_UINT32(opb_irq_pol,         PnvLpcController),
++        VMSTATE_UINT32(opb_irq_input,       PnvLpcController),
++        VMSTATE_UINT32(lpc_hc_irq_inputs,   PnvLpcController),
++        VMSTATE_UINT32(lpc_hc_fw_seg_idsel, PnvLpcController),
++        VMSTATE_UINT32(lpc_hc_irqser_ctrl,  PnvLpcController),
++        VMSTATE_UINT32(lpc_hc_irqmask,      PnvLpcController),
++        VMSTATE_UINT32(lpc_hc_irqstat,      PnvLpcController),
++        VMSTATE_UINT32(lpc_hc_error_addr,   PnvLpcController),
++        VMSTATE_UINT32(lpc_hc_fw_rd_acc_size,     PnvLpcController),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static void pnv_lpc_power8_realize(DeviceState *dev, Error **errp)
+ {
+     PnvLpcController *lpc = PNV_LPC(dev);
+@@ -721,6 +759,7 @@ static void pnv_lpc_power8_class_init(ObjectClass *klass, const void *data)
+     PnvLpcClass *plc = PNV_LPC_CLASS(klass);
+ 
+     dc->desc = "PowerNV LPC Controller POWER8";
++    dc->vmsd = &vmstate_pnv_lpc;
+ 
+     xdc->dt_xscom = pnv_lpc_dt_xscom;
+ 
+@@ -766,6 +805,7 @@ static void pnv_lpc_power9_class_init(ObjectClass *klass, const void *data)
+     PnvLpcClass *plc = PNV_LPC_CLASS(klass);
+ 
+     dc->desc = "PowerNV LPC Controller POWER9";
++    dc->vmsd = &vmstate_pnv_lpc;
+ 
+     device_class_set_parent_realize(dc, pnv_lpc_power9_realize,
+                                     &plc->parent_realize);
+@@ -782,6 +822,7 @@ static void pnv_lpc_power10_class_init(ObjectClass *klass, const void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     dc->desc = "PowerNV LPC Controller POWER10";
++    dc->vmsd = &vmstate_pnv_lpc;
+ }
+ 
+ static const TypeInfo pnv_lpc_power10_info = {
 -- 
-2.51.0
+2.47.3
 
 
