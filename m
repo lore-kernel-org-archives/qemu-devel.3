@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E01D41D74
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:14:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A521ED41D74
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:15:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV2ly-0003I5-Jj; Mon, 15 Dec 2025 02:13:34 -0500
+	id 1vV2lj-0003AC-Rr; Mon, 15 Dec 2025 02:13:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vV2lx-0003HY-EQ
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:33 -0500
+ id 1vV2lh-00038n-Jh
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:17 -0500
 Received: from mgamail.intel.com ([198.175.65.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vV2lv-0008Ga-Pv
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:33 -0500
+ id 1vV2lf-0008FQ-LM
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:13:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765782812; x=1797318812;
+ t=1765782796; x=1797318796;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=qb/vshutsSrj3fhretVqp/6vsgjWlWps3KLTT4WJKLk=;
- b=NGLF2SdukdL6q1CpG7xoG/eoKcc7UDEhgAqnioc4rp7SEqr8XAQqaJl3
- H+e3fBnrzGpBkSrQcikif5VG+E7csZwcnlH/Cb1gklJmYBLWp+VZA4lzz
- ZmHgR+HAb4biabMl0at9uqhIh8Fwx0LP1sE/QLx0aLATXb67drYkQ2qnp
- bmmD+HfFCrovSWM/2vJqQGOMzR2dIZzYt4hyNO+qgxcXPF+ykAnZDJ0TF
- VBIsSkE9K0zpnwTIklyNsBhpCNrb1XhMILjSf+BevuITvxypfMyfxl9nF
- OGTZJ72NkdjZL/qGpSjy/XjQQAN0LX8PxKjFRSN/vOTIUVfEiFYXwISdy A==;
-X-CSE-ConnectionGUID: lH1SqSGUTNGg5BjF/E8A+w==
-X-CSE-MsgGUID: l1vEyTl3TSqB8cVJlAVCNQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="90332267"
-X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="90332267"
+ bh=DQKY+pMsXXbbU9Xz9iV7D6PsC8YZn6Qa+YVZAqB1vuU=;
+ b=Q9By7wea7ArqLAlN+11WlDjVTzc6g2YwIO/zZFx4KqDrn7mQXqzCB2ux
+ N0lRhbWB+kns6fPGViGPNu2ic5xXrQoxxiSJfDcrSUO/ko+gBTygbVkQm
+ U5e9SsG1JSfzpBuxHGcfeHWErSA8MvLCTUa1370vv6D56Fn9/rtgCN5/2
+ s38dtQGK4vQccBA+m53ZFm4Qt65fSTEc3htuu+1gM5ItWPv49rFX+gE5L
+ T6dnry8GdBTRz88D7vw9569lzjYV3U4WvRMmfUJ9j+BROCE2g1L0Wnj4s
+ 9zh0sADHdBApoEUlgPD/0Y7Uzzy58ONfjUPcHTc/IzcXg7/UGfZB027ZA A==;
+X-CSE-ConnectionGUID: gK2qEReaRPK09De4Wz67yA==
+X-CSE-MsgGUID: BCB3mejtS+aiWd+a+brb0w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="90332259"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="90332259"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Dec 2025 23:13:20 -0800
-X-CSE-ConnectionGUID: yJ6xNHsJQbqOyvE6rnALXg==
-X-CSE-MsgGUID: 64KR+f/gQbCJ8sjR7kEaUA==
+ 14 Dec 2025 23:13:15 -0800
+X-CSE-ConnectionGUID: 9bs0c17PTFqjuUWkkFEI9w==
+X-CSE-MsgGUID: v/Z/DRMxQjqrdzQ+K9ibpA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197265982"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197265963"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 14 Dec 2025 23:13:18 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 14 Dec 2025 23:13:13 -0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-devel@nongnu.org, Xudong Hao <xudong.hao@intel.com>,
- Zhao Liu <zhao1.liu@intel.com>, Yu Chen <yu.c.chen@intel.com>
-Subject: [PATCH v2 11/11] dosc/cpu-models-x86: Add documentation for
- DiamondRapids
-Date: Mon, 15 Dec 2025 15:37:43 +0800
-Message-Id: <20251215073743.4055227-12-zhao1.liu@intel.com>
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v2 08/11] i386/cpu: Add an option in X86CPUDefinition to
+ control CPUID 0x1f
+Date: Mon, 15 Dec 2025 15:37:40 +0800
+Message-Id: <20251215073743.4055227-9-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251215073743.4055227-1-zhao1.liu@intel.com>
 References: <20251215073743.4055227-1-zhao1.liu@intel.com>
@@ -84,47 +84,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Current DiamondRapids hasn't supported cache model. Instead, document
-its special CPU & cache topology to allow user emulate with "-smp" &
-"-machine smp-cache".
+Many Intel CPUs enable CPUID 0x1f by default to encode CPU topology
+information.
 
-Reviewed-by: Yu Chen <yu.c.chen@intel.com>
+Add the "cpuid_0x1f" option to X86CPUDefinition to allow named CPU
+models to configure CPUID 0x1f from the start, thereby forcing 0x1f
+to be present for guest.
+
+With this option, there's no need to explicitly add v1 model to an
+unversioned CPU model for explicitly enabling the x-force-cpuid-0x1f
+property.
+
+Tested-by: Xudong Hao <xudong.hao@intel.com>
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- docs/system/cpu-models-x86.rst.inc | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ target/i386/cpu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/docs/system/cpu-models-x86.rst.inc b/docs/system/cpu-models-x86.rst.inc
-index 6a770ca8351c..c4c8fc67a562 100644
---- a/docs/system/cpu-models-x86.rst.inc
-+++ b/docs/system/cpu-models-x86.rst.inc
-@@ -71,6 +71,26 @@ mixture of host CPU models between machines, if live migration
- compatibility is required, use the newest CPU model that is compatible
- across all desired hosts.
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 1deed542561c..6998c900b1dc 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -2313,6 +2313,12 @@ typedef struct X86CPUDefinition {
+     int model;
+     int stepping;
+     uint8_t avx10_version;
++    /*
++     * Whether to present CPUID 0x1f by default.
++     * If true, encode CPU topology in 0x1f leaf even if there's no
++     * extended topology levels.
++     */
++    bool cpuid_0x1f;
+     FeatureWordArray features;
+     const char *model_id;
+     const CPUCaches *const cache_info;
+@@ -8014,6 +8020,10 @@ static void x86_cpu_load_model(X86CPU *cpu, const X86CPUModel *model)
+                                  def->avx10_version, &error_abort);
+     }
  
-+``DiamondRapids``
-+    Intel Xeon Processor.
-+
-+    Diamond Rapids product has a topology which differs from previous Xeon
-+    products. It does not support SMT, but instead features a dual core
-+    module (DCM) architecture. It also has core building blocks (CBB - die
-+    level in CPU topology). The cache hierarchy is organized as follows:
-+    L1 i/d cache is per thread, L2 cache is per DCM, and L3 cache is per
-+    CBB. This cache topology can be emulated for DiamondRapids CPU model
-+    using the smp-cache configuration as shown below:
-+
-+    Example:
-+
-+        ::
-+
-+            -machine smp-cache.0.cache=l1d,smp-cache.0.topology=thread,\
-+                     smp-cache.1.cache=l1i,smp-cache.1.topology=thread,\
-+                     smp-cache.2.cache=l2,smp-cache.2.topology=module,\
-+                     smp-cache.3.cache=l3,smp-cache.3.topology=die
-+
- ``ClearwaterForest``
-     Intel Xeon Processor (ClearwaterForest, 2025)
++    if (def->cpuid_0x1f) {
++        object_property_set_bool(OBJECT(cpu), "x-force-cpuid-0x1f",
++                                 def->cpuid_0x1f, &error_abort);
++    }
+     x86_cpu_apply_version_props(cpu, model);
  
+     /*
 -- 
 2.34.1
 
