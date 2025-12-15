@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC82AD5B872
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE84D5B86F
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 22:03:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVGes-0006th-7a; Mon, 15 Dec 2025 17:03:10 -0500
+	id 1vVGdX-0002qT-Rv; Mon, 15 Dec 2025 17:01:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGeb-0005lO-9e
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:02:59 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGdV-0002pm-Dx
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:01:45 -0500
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGeY-0002y0-Jj
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:02:52 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVGdS-0002hu-Fr
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 17:01:45 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7BAA133748;
- Mon, 15 Dec 2025 22:02:18 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 855FD3378B;
+ Mon, 15 Dec 2025 22:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765836138; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1765836099; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IqI0X7oXn5B9kGsqSF6ZqoV37V/bdDXnVUVjvBEXCqM=;
- b=dWmYDWrFfCcXvgef9DRDAd8MvZCRhC/21O2jUOK1hb9LfX/KObE6+jv+qK3uBkQwqUECHk
- cu/PrtUwE+gVtrpWNsOnbKBHCIZX+Qv936XM0FFc6EyZuaS1+YXQLUAp76VOZ4HZu37d6y
- iX8yIn1Oww++2UpdmGI5N1m+heafyOs=
+ bh=YKPKJBkTp51hj6cCjBkLRwP50jjlnOW8s+DEvZSGbho=;
+ b=bNsqIdWW8ysiAd3MJ4NHvo86l9rnc3Qm5mUMrbLYg57dChxYlzlPNSYqtbMj7BJu5vG8ul
+ gEwuQ6vabfSpE2PX8Q5R7dzpe5PURXKKuy5YHGAksDKyFICQWrQabwTAit0epIMGQM0nGg
+ COuccVU20OmcxIGIcL0idKeyCenVmWw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765836138;
+ s=susede2_ed25519; t=1765836099;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IqI0X7oXn5B9kGsqSF6ZqoV37V/bdDXnVUVjvBEXCqM=;
- b=cxeelZb+8lyb3qdFbj7s/PGloRcTLRG4j+Kuz7OLvgF8TCl+SttDPpQKiKM8NIWqa4yPQd
- tPPoCMIZanrUFZAw==
+ bh=YKPKJBkTp51hj6cCjBkLRwP50jjlnOW8s+DEvZSGbho=;
+ b=Y2fCjnD4udpO53L1eCJrakQLBJ6Qsx4Y6Uu9cmoZRPUFc1WxIbBdRHvxOShVgdjhtr8w7r
+ ebjkMFlsiMQIHQAw==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765836138; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1765836099; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IqI0X7oXn5B9kGsqSF6ZqoV37V/bdDXnVUVjvBEXCqM=;
- b=dWmYDWrFfCcXvgef9DRDAd8MvZCRhC/21O2jUOK1hb9LfX/KObE6+jv+qK3uBkQwqUECHk
- cu/PrtUwE+gVtrpWNsOnbKBHCIZX+Qv936XM0FFc6EyZuaS1+YXQLUAp76VOZ4HZu37d6y
- iX8yIn1Oww++2UpdmGI5N1m+heafyOs=
+ bh=YKPKJBkTp51hj6cCjBkLRwP50jjlnOW8s+DEvZSGbho=;
+ b=bNsqIdWW8ysiAd3MJ4NHvo86l9rnc3Qm5mUMrbLYg57dChxYlzlPNSYqtbMj7BJu5vG8ul
+ gEwuQ6vabfSpE2PX8Q5R7dzpe5PURXKKuy5YHGAksDKyFICQWrQabwTAit0epIMGQM0nGg
+ COuccVU20OmcxIGIcL0idKeyCenVmWw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765836138;
+ s=susede2_ed25519; t=1765836099;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IqI0X7oXn5B9kGsqSF6ZqoV37V/bdDXnVUVjvBEXCqM=;
- b=cxeelZb+8lyb3qdFbj7s/PGloRcTLRG4j+Kuz7OLvgF8TCl+SttDPpQKiKM8NIWqa4yPQd
- tPPoCMIZanrUFZAw==
+ bh=YKPKJBkTp51hj6cCjBkLRwP50jjlnOW8s+DEvZSGbho=;
+ b=Y2fCjnD4udpO53L1eCJrakQLBJ6Qsx4Y6Uu9cmoZRPUFc1WxIbBdRHvxOShVgdjhtr8w7r
+ ebjkMFlsiMQIHQAw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 772403EA63;
- Mon, 15 Dec 2025 22:02:16 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 0919E3EA63;
+ Mon, 15 Dec 2025 22:01:37 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id +KEqDmiFQGlrMQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 15 Dec 2025 22:02:16 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id KD8FL0GFQGlrMQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 15 Dec 2025 22:01:37 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, armbru@redhat.com, Peter Xu <peterx@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 35/51] tests/qtest/migration: Add a config parameter to
- migrate_qmp functions
-Date: Mon, 15 Dec 2025 19:00:21 -0300
-Message-ID: <20251215220041.12657-36-farosas@suse.de>
+Cc: berrange@redhat.com,
+	armbru@redhat.com,
+	Peter Xu <peterx@redhat.com>
+Subject: [PATCH v3 20/51] migration: Remove s->capabilities
+Date: Mon, 15 Dec 2025 19:00:06 -0300
+Message-ID: <20251215220041.12657-21-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251215220041.12657-1-farosas@suse.de>
 References: <20251215220041.12657-1-farosas@suse.de>
@@ -86,7 +86,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.991];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.990];
  MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
  R_RATELIMIT(0.00)[to_ip_from(RLjrdmmf3juheryardexw6jb95)];
@@ -95,7 +95,7 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
  RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_TLS_ALL(0.00)[]
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
@@ -119,542 +119,813 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a config parameter to all migrate_qmp functions. All tests will be
-converted in the next patches to use the config instead of calling
-migrate_set_*.
+Last patch added capabilities to s->parameters. Now we can replace all
+instances of s->capabilities with s->parameters:
 
+- The -global properties now get set directly in s->parameters.
+
+- Accessors from options.c now read from s->parameters.
+
+- migrate_caps_check() now takes a MigrationParameters object. The
+  function is still kept around because migrate-set-capabilities will
+  still use it.
+
+- The machinery for background-snapshot compatibility check goes
+  away. We can check each capability by name (if s->parameters.cap ...)
+
+- savevm uses the helper functions introduced in the last patch to do
+  validation of capabilities found on the migration stream.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration/cpr-tests.c     |  3 ++-
- tests/qtest/migration/framework.c     | 33 ++++++++++++++----------
- tests/qtest/migration/migration-qmp.c | 27 ++++++++++++++++---
- tests/qtest/migration/migration-qmp.h | 13 +++++-----
- tests/qtest/migration/misc-tests.c    | 11 ++++----
- tests/qtest/migration/precopy-tests.c | 37 +++++++++++++++------------
- tests/qtest/virtio-net-failover.c     | 24 +++++++++++------
- 7 files changed, 96 insertions(+), 52 deletions(-)
+ migration/migration.c |  22 +--
+ migration/migration.h |   1 -
+ migration/options.c   | 310 +++++++++++++++++-------------------------
+ migration/options.h   |  19 +--
+ migration/savevm.c    |   8 +-
+ 5 files changed, 140 insertions(+), 220 deletions(-)
 
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-index 280e671e4b..9883616cb5 100644
---- a/tests/qtest/migration/cpr-tests.c
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -201,7 +201,7 @@ static void test_cpr_exec(MigrateCommon *args)
-     wait_for_serial("src_serial");
-     set_cpr_exec_args(from, args);
-     migrate_set_capability(from, "events", true);
--    migrate_qmp(from, NULL, connect_uri, NULL, "{}");
-+    migrate_qmp(from, NULL, connect_uri, NULL, args->start.config, "{}");
-     wait_for_migration_event(from, "completed");
- 
-     to = qtest_init_after_exec(from);
-@@ -214,6 +214,7 @@ static void test_cpr_exec(MigrateCommon *args)
- 
-     migrate_incoming_qmp(to, NULL,
-                          qobject_from_json(channels, &error_abort),
-+                         args->start.config,
-                          "{}");
-     wait_for_migration_complete(to);
- 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 227bc39303..f740228cf2 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -602,13 +602,13 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
-                                  "              'host': '127.0.0.1',"
-                                  "              'port': '0' } } ]",
-                                  &error_abort);
--    migrate_incoming_qmp(to, NULL, channels, "{}");
-+    migrate_incoming_qmp(to, NULL, channels, args->start.config, "{}");
- 
-     /* Wait for the first serial output from the source */
-     wait_for_serial("src_serial");
-     wait_for_suspend(from, &src_state);
- 
--    migrate_qmp(from, to, NULL, NULL, "{}");
-+    migrate_qmp(from, to, NULL, NULL, args->start.config, "{}");
- 
-     migrate_wait_for_dirty_mem(from, to);
- 
-@@ -666,9 +666,10 @@ static void wait_for_postcopy_status(QTestState *one, const char *status)
- }
- 
- static void postcopy_recover_fail(QTestState *from, QTestState *to,
--                                  PostcopyRecoveryFailStage stage)
-+                                  MigrateCommon *args)
+diff --git a/migration/migration.c b/migration/migration.c
+index f0e74cbf4b..182dccd579 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -262,9 +262,10 @@ static bool
+ migration_capabilities_and_transport_compatible(MigrationAddress *addr,
+                                                 Error **errp)
  {
- #ifndef _WIN32
-+    PostcopyRecoveryFailStage stage = args->postcopy_recovery_fail_stage;
-     bool fail_early = (stage == POSTCOPY_FAIL_CHANNEL_ESTABLISH);
-     int ret, pair1[2], pair2[2];
-     char c;
-@@ -717,7 +718,8 @@ static void postcopy_recover_fail(QTestState *from, QTestState *to,
-     }
- 
-     migrate_recover(to, "fd:fd-mig");
--    migrate_qmp(from, to, "fd:fd-mig", NULL, "{'resume': true}");
-+    migrate_qmp(from, to, "fd:fd-mig", NULL, args->start.config,
-+                "{'resume': true}");
- 
-     /*
-      * Source QEMU has an extra RECOVER_SETUP phase, dest doesn't have it.
-@@ -824,7 +826,7 @@ void test_postcopy_recovery_common(MigrateCommon *args)
-          * Test when a wrong socket specified for recover, and then the
-          * ability to kick it out, and continue with a correct socket.
-          */
--        postcopy_recover_fail(from, to, args->postcopy_recovery_fail_stage);
-+        postcopy_recover_fail(from, to, args);
-         /* continue with a good recovery */
-     }
- 
-@@ -840,7 +842,7 @@ void test_postcopy_recovery_common(MigrateCommon *args)
-      * Try to rebuild the migration channel using the resume flag and
-      * the newly created channel
-      */
--    migrate_qmp(from, to, uri, NULL, "{'resume': true}");
-+    migrate_qmp(from, to, uri, NULL, args->start.config, "{'resume': true}");
- 
-     /* Restore the postcopy bandwidth to unlimited */
-     migrate_set_parameter_int(from, "max-postcopy-bandwidth", 0);
-@@ -873,7 +875,8 @@ int test_precopy_common(MigrateCommon *args)
-             in_channels = qobject_from_json(args->connect_channels,
-                                             &error_abort);
-         }
--        migrate_incoming_qmp(to, args->listen_uri, in_channels, "{}");
-+        migrate_incoming_qmp(to, args->listen_uri, in_channels,
-+                             args->start.config, "{}");
-     }
- 
-     /* Wait for the first serial output from the source */
-@@ -919,17 +922,20 @@ int test_precopy_common(MigrateCommon *args)
-     }
- 
-     if (args->result == MIG_TEST_QMP_ERROR) {
--        migrate_qmp_fail(from, args->connect_uri, out_channels, "{}");
-+        migrate_qmp_fail(from, args->connect_uri, out_channels,
-+                         args->start.config, "{}");
-         goto finish;
-     }
- 
--    migrate_qmp(from, to, args->connect_uri, out_channels, "{}");
-+    migrate_qmp(from, to, args->connect_uri, out_channels,
-+                args->start.config, "{}");
- 
-     if (args->start.defer_target_connect) {
-         qtest_connect(to);
-         qtest_qmp_handshake(to, NULL);
-         if (args->start.incoming_defer) {
--            migrate_incoming_qmp(to, NULL, in_channels, "{}");
-+            migrate_incoming_qmp(to, args->connect_uri, in_channels,
-+                                 args->start.config, "{}");
-         }
-     }
- 
-@@ -1067,18 +1073,19 @@ void test_file_common(MigrateCommon *args, bool stop_src)
-     }
- 
-     if (args->result == MIG_TEST_QMP_ERROR) {
--        migrate_qmp_fail(from, args->connect_uri, NULL, "{}");
-+        migrate_qmp_fail(from, args->connect_uri, NULL,
-+                         args->start.config, "{}");
-         goto finish;
-     }
- 
--    migrate_qmp(from, to, args->connect_uri, NULL, "{}");
-+    migrate_qmp(from, to, args->connect_uri, NULL, args->start.config, "{}");
-     wait_for_migration_complete(from);
- 
-     /*
-      * We need to wait for the source to finish before starting the
-      * destination.
-      */
--    migrate_incoming_qmp(to, args->listen_uri, NULL, "{}");
-+    migrate_incoming_qmp(to, args->listen_uri, NULL, args->start.config, "{}");
-     wait_for_migration_complete(to);
- 
-     if (stop_src) {
-diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-index 7fe47a5793..a4dde029ee 100644
---- a/tests/qtest/migration/migration-qmp.c
-+++ b/tests/qtest/migration/migration-qmp.c
-@@ -77,7 +77,7 @@ QObject *migrate_str_to_channel(const char *str)
- }
- 
- void migrate_qmp_fail(QTestState *who, const char *uri,
--                      QObject *channels, const char *fmt, ...)
-+                      QObject *channels, QDict *config, const char *fmt, ...)
- {
-     va_list ap;
-     QDict *args, *err;
-@@ -96,12 +96,19 @@ void migrate_qmp_fail(QTestState *who, const char *uri,
-         qdict_put_obj(args, "channels", channels);
-     }
- 
-+    config = config_load(config);
-+    if (config) {
-+        qdict_put_obj(args, "config", QOBJECT(config));
-+        qobject_ref(config);
-+    }
++    MigrationState *s = migrate_get_current();
 +
-     err = qtest_qmp_assert_failure_ref(
-         who, "{ 'execute': 'migrate', 'arguments': %p}", args);
+     if (addr->transport == MIGRATION_ADDRESS_TYPE_RDMA) {
+-        return migrate_rdma_caps_check(migrate_get_current()->capabilities,
+-                                       errp);
++        return migrate_rdma_caps_check(&s->parameters, errp);
+     }
  
-     g_assert(qdict_haskey(err, "desc"));
- 
-     qobject_unref(err);
-+    config_put(config);
- }
- 
- /*
-@@ -110,7 +117,7 @@ void migrate_qmp_fail(QTestState *who, const char *uri,
-  * qobject_from_jsonf_nofail()) with "uri": @uri spliced in.
+     return true;
+@@ -4189,22 +4190,7 @@ static void migration_instance_init(Object *obj)
   */
- void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
--                 QObject *channels, const char *fmt, ...)
-+                 QObject *channels, QDict *config, const char *fmt, ...)
+ static bool migration_object_check(MigrationState *ms, Error **errp)
  {
-     va_list ap;
-     QDict *args;
-@@ -135,8 +142,15 @@ void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
-         qdict_put_obj(args, "channels", channels);
+-    /* Assuming all off */
+-    bool old_caps[MIGRATION_CAPABILITY__MAX] = { 0 };
+-
+-    if (!migrate_params_check(&ms->parameters, errp)) {
+-        return false;
+-    }
+-
+-    /*
+-     * FIXME: Temporarily while -global capabilties are still using
+-     * s->capabilities. Will be gone by the end of the series.
+-     */
+-    for (int i = 0; i < MIGRATION_CAPABILITY__MAX; i++) {
+-        migrate_capability_set_compat(&ms->parameters, i, ms->capabilities[i]);
+-    }
+-
+-    return migrate_caps_check(old_caps, ms->capabilities, errp);
++    return migrate_params_check(&ms->parameters, errp);
+ }
+ 
+ static const TypeInfo migration_type = {
+diff --git a/migration/migration.h b/migration/migration.h
+index 20802596fb..5fe5f8a23e 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -359,7 +359,6 @@ struct MigrationState {
+     int64_t downtime_start;
+     int64_t downtime;
+     int64_t expected_downtime;
+-    bool capabilities[MIGRATION_CAPABILITY__MAX];
+     int64_t setup_time;
+ 
+     /*
+diff --git a/migration/options.c b/migration/options.c
+index b23dcc15f9..d3bb65513b 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -82,9 +82,6 @@
+ #define DEFAULT_MIGRATE_ANNOUNCE_ROUNDS    5
+ #define DEFAULT_MIGRATE_ANNOUNCE_STEP    100
+ 
+-#define DEFINE_PROP_MIG_CAP(name, x)             \
+-    DEFINE_PROP_BOOL(name, MigrationState, capabilities[x], false)
+-
+ const PropertyInfo qdev_prop_StrOrNull;
+ #define DEFINE_PROP_STR_OR_NULL(_name, _state, _field)                  \
+     DEFINE_PROP(_name, _state, _field, qdev_prop_StrOrNull, StrOrNull *, \
+@@ -185,32 +182,42 @@ const Property migration_properties[] = {
+     DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
+                        parameters.zero_page_detection,
+                        ZERO_PAGE_DETECTION_MULTIFD),
+-
+-    /* Migration capabilities */
+-    DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
+-    DEFINE_PROP_MIG_CAP("x-rdma-pin-all", MIGRATION_CAPABILITY_RDMA_PIN_ALL),
+-    DEFINE_PROP_MIG_CAP("x-auto-converge", MIGRATION_CAPABILITY_AUTO_CONVERGE),
+-    DEFINE_PROP_MIG_CAP("x-zero-blocks", MIGRATION_CAPABILITY_ZERO_BLOCKS),
+-    DEFINE_PROP_MIG_CAP("x-events", MIGRATION_CAPABILITY_EVENTS),
+-    DEFINE_PROP_MIG_CAP("x-postcopy-ram", MIGRATION_CAPABILITY_POSTCOPY_RAM),
+-    DEFINE_PROP_MIG_CAP("x-postcopy-preempt",
+-                        MIGRATION_CAPABILITY_POSTCOPY_PREEMPT),
+-    DEFINE_PROP_MIG_CAP("postcopy-blocktime",
+-                        MIGRATION_CAPABILITY_POSTCOPY_BLOCKTIME),
+-    DEFINE_PROP_MIG_CAP("x-colo", MIGRATION_CAPABILITY_X_COLO),
+-    DEFINE_PROP_MIG_CAP("x-release-ram", MIGRATION_CAPABILITY_RELEASE_RAM),
+-    DEFINE_PROP_MIG_CAP("x-return-path", MIGRATION_CAPABILITY_RETURN_PATH),
+-    DEFINE_PROP_MIG_CAP("x-multifd", MIGRATION_CAPABILITY_MULTIFD),
+-    DEFINE_PROP_MIG_CAP("x-background-snapshot",
+-            MIGRATION_CAPABILITY_BACKGROUND_SNAPSHOT),
++    DEFINE_PROP_BOOL("x-xbzrle",
++                     MigrationState, parameters.xbzrle, false),
++    DEFINE_PROP_BOOL("x-rdma-pin-all",
++                     MigrationState, parameters.rdma_pin_all, false),
++    DEFINE_PROP_BOOL("x-auto-converge",
++                     MigrationState, parameters.auto_converge, false),
++    DEFINE_PROP_BOOL("x-zero-blocks",
++                     MigrationState, parameters.zero_blocks, false),
++    DEFINE_PROP_BOOL("x-events",
++                     MigrationState, parameters.events, false),
++    DEFINE_PROP_BOOL("x-postcopy-ram",
++                     MigrationState, parameters.postcopy_ram, false),
++    DEFINE_PROP_BOOL("x-postcopy-preempt",
++                     MigrationState, parameters.postcopy_preempt, false),
++    DEFINE_PROP_BOOL("postcopy-blocktime",
++                     MigrationState, parameters.postcopy_blocktime, false),
++    DEFINE_PROP_BOOL("x-colo",
++                     MigrationState, parameters.x_colo, false),
++    DEFINE_PROP_BOOL("x-release-ram",
++                     MigrationState, parameters.release_ram, false),
++    DEFINE_PROP_BOOL("x-return-path",
++                     MigrationState, parameters.return_path, false),
++    DEFINE_PROP_BOOL("x-multifd",
++                     MigrationState, parameters.multifd, false),
++    DEFINE_PROP_BOOL("x-background-snapshot",
++                     MigrationState, parameters.background_snapshot, false),
+ #ifdef CONFIG_LINUX
+-    DEFINE_PROP_MIG_CAP("x-zero-copy-send",
+-            MIGRATION_CAPABILITY_ZERO_COPY_SEND),
++    DEFINE_PROP_BOOL("x-zero-copy-send",
++                     MigrationState, parameters.zero_copy_send, false),
+ #endif
+-    DEFINE_PROP_MIG_CAP("x-switchover-ack",
+-                        MIGRATION_CAPABILITY_SWITCHOVER_ACK),
+-    DEFINE_PROP_MIG_CAP("x-dirty-limit", MIGRATION_CAPABILITY_DIRTY_LIMIT),
+-    DEFINE_PROP_MIG_CAP("mapped-ram", MIGRATION_CAPABILITY_MAPPED_RAM),
++    DEFINE_PROP_BOOL("x-switchover-ack",
++                     MigrationState, parameters.switchover_ack, false),
++    DEFINE_PROP_BOOL("x-dirty-limit",
++                     MigrationState, parameters.dirty_limit, false),
++    DEFINE_PROP_BOOL("mapped-ram",
++                     MigrationState, parameters.mapped_ram, false),
+ };
+ const size_t migration_properties_count = ARRAY_SIZE(migration_properties);
+ 
+@@ -285,7 +292,7 @@ bool migrate_auto_converge(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_AUTO_CONVERGE];
++    return s->parameters.auto_converge;
+ }
+ 
+ bool migrate_send_switchover_start(void)
+@@ -299,144 +306,142 @@ bool migrate_background_snapshot(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_BACKGROUND_SNAPSHOT];
++    return s->parameters.background_snapshot;
+ }
+ 
+ bool migrate_colo(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_X_COLO];
++    return s->parameters.x_colo;
+ }
+ 
+ bool migrate_dirty_bitmaps(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_DIRTY_BITMAPS];
++    return s->parameters.dirty_bitmaps;
+ }
+ 
+ bool migrate_dirty_limit(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_DIRTY_LIMIT];
++    return s->parameters.dirty_limit;
+ }
+ 
+ bool migrate_events(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_EVENTS];
++    return s->parameters.events;
+ }
+ 
+ bool migrate_mapped_ram(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM];
++    return s->parameters.mapped_ram;
+ }
+ 
+ bool migrate_ignore_shared(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_X_IGNORE_SHARED];
++    return s->parameters.x_ignore_shared;
+ }
+ 
+ bool migrate_late_block_activate(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_LATE_BLOCK_ACTIVATE];
++    return s->parameters.late_block_activate;
+ }
+ 
+ bool migrate_multifd(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_MULTIFD];
++    return s->parameters.multifd;
+ }
+ 
+ bool migrate_pause_before_switchover(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_PAUSE_BEFORE_SWITCHOVER];
++    return s->parameters.pause_before_switchover;
+ }
+ 
+ bool migrate_postcopy_blocktime(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_POSTCOPY_BLOCKTIME];
++    return s->parameters.postcopy_blocktime;
+ }
+ 
+ bool migrate_postcopy_preempt(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT];
++    return s->parameters.postcopy_preempt;
+ }
+ 
+ bool migrate_postcopy_ram(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_POSTCOPY_RAM];
++    return s->parameters.postcopy_ram;
+ }
+ 
+ bool migrate_rdma_pin_all(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_RDMA_PIN_ALL];
++    return s->parameters.rdma_pin_all;
+ }
+ 
+ bool migrate_release_ram(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_RELEASE_RAM];
++    return s->parameters.release_ram;
+ }
+ 
+ bool migrate_return_path(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_RETURN_PATH];
++    return s->parameters.return_path;
+ }
+ 
+ bool migrate_switchover_ack(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_SWITCHOVER_ACK];
++    return s->parameters.switchover_ack;
+ }
+ 
+ bool migrate_validate_uuid(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_VALIDATE_UUID];
++    return s->parameters.validate_uuid;
+ }
+ 
+ bool migrate_xbzrle(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_XBZRLE];
++    return s->parameters.xbzrle;
+ }
+ 
+ bool migrate_zero_copy_send(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->capabilities[MIGRATION_CAPABILITY_ZERO_COPY_SEND];
++    return s->parameters.zero_copy_send;
+ }
+ 
+-/* pseudo capabilities */
+-
+ bool migrate_multifd_flush_after_each_section(void)
+ {
+     MigrationState *s = migrate_get_current();
+@@ -481,44 +486,6 @@ WriteTrackingSupport migrate_query_write_tracking(void)
+     return WT_SUPPORT_COMPATIBLE;
+ }
+ 
+-/* Migration capabilities set */
+-struct MigrateCapsSet {
+-    int size;                       /* Capability set size */
+-    MigrationCapability caps[];     /* Variadic array of capabilities */
+-};
+-typedef struct MigrateCapsSet MigrateCapsSet;
+-
+-/* Define and initialize MigrateCapsSet */
+-#define INITIALIZE_MIGRATE_CAPS_SET(_name, ...)   \
+-    MigrateCapsSet _name = {    \
+-        .size = sizeof((int []) { __VA_ARGS__ }) / sizeof(int), \
+-        .caps = { __VA_ARGS__ } \
+-    }
+-
+-/* Background-snapshot compatibility check list */
+-static const
+-INITIALIZE_MIGRATE_CAPS_SET(check_caps_background_snapshot,
+-    MIGRATION_CAPABILITY_POSTCOPY_RAM,
+-    MIGRATION_CAPABILITY_DIRTY_BITMAPS,
+-    MIGRATION_CAPABILITY_POSTCOPY_BLOCKTIME,
+-    MIGRATION_CAPABILITY_LATE_BLOCK_ACTIVATE,
+-    MIGRATION_CAPABILITY_RETURN_PATH,
+-    MIGRATION_CAPABILITY_MULTIFD,
+-    MIGRATION_CAPABILITY_PAUSE_BEFORE_SWITCHOVER,
+-    MIGRATION_CAPABILITY_AUTO_CONVERGE,
+-    MIGRATION_CAPABILITY_RELEASE_RAM,
+-    MIGRATION_CAPABILITY_RDMA_PIN_ALL,
+-    MIGRATION_CAPABILITY_XBZRLE,
+-    MIGRATION_CAPABILITY_X_COLO,
+-    MIGRATION_CAPABILITY_VALIDATE_UUID,
+-    MIGRATION_CAPABILITY_ZERO_COPY_SEND);
+-
+-/* Snapshot compatibility check list */
+-static const
+-INITIALIZE_MIGRATE_CAPS_SET(check_caps_savevm,
+-                            MIGRATION_CAPABILITY_MULTIFD,
+-);
+-
+ static bool migrate_incoming_started(void)
+ {
+     return !!migration_incoming_get_current()->transport_data;
+@@ -527,34 +494,28 @@ static bool migrate_incoming_started(void)
+ bool migrate_can_snapshot(Error **errp)
+ {
+     MigrationState *s = migrate_get_current();
+-    int i;
+ 
+-    for (i = 0; i < check_caps_savevm.size; i++) {
+-        int incomp_cap = check_caps_savevm.caps[i];
+-
+-        if (s->capabilities[incomp_cap]) {
+-            error_setg(errp,
+-                       "Snapshots are not compatible with %s",
+-                       MigrationCapability_str(incomp_cap));
+-            return false;
+-        }
++    if (migrate_capability_get_compat(
++            &s->parameters, MIGRATION_CAPABILITY_MULTIFD)) {
++        error_setg(errp,
++                   "Snapshots are not compatible with multifd");
++        return false;
      }
  
-+    config = config_load(config);
-+    if (config) {
-+        qdict_put_obj(args, "config", QOBJECT(config));
-+        qobject_ref(config);
-+    }
-+
-     qtest_qmp_assert_success(who,
-                              "{ 'execute': 'migrate', 'arguments': %p}", args);
-+    config_put(config);
+     return true;
  }
  
- void migrate_set_capability(QTestState *who, const char *capability,
-@@ -151,7 +165,7 @@ void migrate_set_capability(QTestState *who, const char *capability,
- }
- 
- void migrate_incoming_qmp(QTestState *to, const char *uri, QObject *channels,
--                          const char *fmt, ...)
-+                          QDict *config, const char *fmt, ...)
+-
+-bool migrate_rdma_caps_check(bool *caps, Error **errp)
++bool migrate_rdma_caps_check(MigrationParameters *params, Error **errp)
  {
-     va_list ap;
-     QDict *args, *rsp;
-@@ -173,6 +187,12 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, QObject *channels,
-     /* This function relies on the event to work, make sure it's enabled */
-     migrate_set_capability(to, "events", true);
- 
-+    config = config_load(config);
-+    if (config) {
-+        qdict_put_obj(args, "config", QOBJECT(config));
-+        qobject_ref(config);
-+    }
-+
-     rsp = qtest_qmp(to, "{ 'execute': 'migrate-incoming', 'arguments': %p}",
-                     args);
- 
-@@ -185,6 +205,7 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, QObject *channels,
-     qobject_unref(rsp);
- 
-     migration_event_wait(to, "setup");
-+    config_put(config);
+-    if (caps[MIGRATION_CAPABILITY_XBZRLE]) {
++    if (params->xbzrle) {
+         error_setg(errp, "RDMA and XBZRLE can't be used together");
+         return false;
+     }
+-    if (caps[MIGRATION_CAPABILITY_MULTIFD]) {
++    if (params->multifd) {
+         error_setg(errp, "RDMA and multifd can't be used together");
+         return false;
+     }
+-    if (caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
++    if (params->postcopy_ram) {
+         error_setg(errp, "RDMA and postcopy-ram can't be used together");
+         return false;
+     }
+@@ -562,26 +523,19 @@ bool migrate_rdma_caps_check(bool *caps, Error **errp)
+     return true;
  }
  
- static bool check_migration_status(QTestState *who, const char *goal,
-diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
-index e465c69094..7daeb913fa 100644
---- a/tests/qtest/migration/migration-qmp.h
-+++ b/tests/qtest/migration/migration-qmp.h
-@@ -6,17 +6,18 @@
+-/**
+- * @migration_caps_check - check capability compatibility
+- *
+- * @old_caps: old capability list
+- * @new_caps: new capability list
+- * @errp: set *errp if the check failed, with reason
+- *
+- * Returns true if check passed, otherwise false.
+- */
+-bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
++bool migrate_caps_check(MigrationParameters *new, Error **errp)
+ {
+-    ERRP_GUARD();
++    MigrationState *s = migrate_get_current();
+     MigrationIncomingState *mis = migration_incoming_get_current();
++    bool postcopy_already_on = s->parameters.postcopy_ram;
++    ERRP_GUARD();
  
- QObject *migrate_str_to_channel(const char *str);
+-    if (new_caps[MIGRATION_CAPABILITY_ZERO_BLOCKS]) {
++    if (new->zero_blocks) {
+         warn_report("zero-blocks capability is deprecated");
+     }
  
--G_GNUC_PRINTF(4, 5)
-+G_GNUC_PRINTF(5, 6)
- void migrate_qmp_fail(QTestState *who, const char *uri,
--                      QObject *channels, const char *fmt, ...);
-+                      QObject *channels, QDict *config, const char *fmt, ...);
+ #ifndef CONFIG_REPLICATION
+-    if (new_caps[MIGRATION_CAPABILITY_X_COLO]) {
++    if (new->x_colo) {
+         error_setg(errp, "QEMU compiled without replication module"
+                    " can't enable COLO");
+         error_append_hint(errp, "Please enable replication before COLO.\n");
+@@ -589,27 +543,27 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+     }
+ #endif
  
--G_GNUC_PRINTF(5, 6)
-+G_GNUC_PRINTF(6, 7)
- void migrate_qmp(QTestState *who, QTestState *to, const char *uri,
--                 QObject *channels, const char *fmt, ...);
-+                 QObject *channels, QDict *config, const char *fmt, ...);
+-    if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
++    if (new->postcopy_ram) {
+         /* This check is reasonably expensive, so only when it's being
+          * set the first time, also it's only the destination that needs
+          * special support.
+          */
+-        if (!old_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM] &&
++        if (!postcopy_already_on &&
+             runstate_check(RUN_STATE_INMIGRATE) &&
+             !postcopy_ram_supported_by_host(mis, errp)) {
+             error_prepend(errp, "Postcopy is not supported: ");
+             return false;
+         }
  
--G_GNUC_PRINTF(4, 5)
-+G_GNUC_PRINTF(5, 6)
- void migrate_incoming_qmp(QTestState *who, const char *uri,
--                          QObject *channels, const char *fmt, ...);
-+                          QObject *channels, QDict *config,
-+                          const char *fmt, ...);
+-        if (new_caps[MIGRATION_CAPABILITY_X_IGNORE_SHARED]) {
++        if (new->x_ignore_shared) {
+             error_setg(errp, "Postcopy is not compatible with ignore-shared");
+             return false;
+         }
+     }
  
- void migration_event_wait(QTestState *s, const char *target);
- void migrate_set_capability(QTestState *who, const char *capability,
-diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
-index 0a737cb54f..c62fd1e3f9 100644
---- a/tests/qtest/migration/misc-tests.c
-+++ b/tests/qtest/migration/misc-tests.c
-@@ -31,7 +31,7 @@ static void test_baddest(char *name, MigrateCommon *args)
-     if (migrate_start(&from, &to, "tcp:127.0.0.1:0", &args->start)) {
+-    if (new_caps[MIGRATION_CAPABILITY_BACKGROUND_SNAPSHOT]) {
++    if (new->background_snapshot) {
+         WriteTrackingSupport wt_support;
+-        int idx;
++
+         /*
+          * Check if 'background-snapshot' capability is supported by
+          * host kernel and compatible with guest memory configuration.
+@@ -625,41 +579,45 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+             return false;
+         }
+ 
+-        /*
+-         * Check if there are any migration capabilities
+-         * incompatible with 'background-snapshot'.
+-         */
+-        for (idx = 0; idx < check_caps_background_snapshot.size; idx++) {
+-            int incomp_cap = check_caps_background_snapshot.caps[idx];
+-            if (new_caps[incomp_cap]) {
+-                error_setg(errp,
+-                        "Background-snapshot is not compatible with %s",
+-                        MigrationCapability_str(incomp_cap));
+-                return false;
+-            }
++        if (new->postcopy_ram ||
++            new->dirty_bitmaps ||
++            new->postcopy_blocktime ||
++            new->late_block_activate ||
++            new->return_path ||
++            new->multifd ||
++            new->pause_before_switchover ||
++            new->auto_converge ||
++            new->release_ram ||
++            new->rdma_pin_all ||
++            new->xbzrle ||
++            new->x_colo ||
++            new->validate_uuid ||
++            new->zero_copy_send) {
++            error_setg(errp,
++                       "Background-snapshot is not compatible with "
++                       "currently set capabilities");
++            return false;
+         }
+     }
+ 
+ #ifdef CONFIG_LINUX
+-    if (new_caps[MIGRATION_CAPABILITY_ZERO_COPY_SEND] &&
+-        (!new_caps[MIGRATION_CAPABILITY_MULTIFD] ||
+-         new_caps[MIGRATION_CAPABILITY_XBZRLE] ||
+-         migrate_multifd_compression() ||
+-         migrate_tls())) {
++    if (new->zero_copy_send &&
++        (!new->multifd || new->xbzrle ||
++         migrate_multifd_compression() || migrate_tls())) {
+         error_setg(errp,
+                    "Zero copy only available for non-compressed non-TLS multifd migration");
+         return false;
+     }
+ #else
+-    if (new_caps[MIGRATION_CAPABILITY_ZERO_COPY_SEND]) {
++    if (new->zero_copy_send) {
+         error_setg(errp,
+                    "Zero copy currently only available on Linux");
+         return false;
+     }
+ #endif
+ 
+-    if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_PREEMPT]) {
+-        if (!new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
++    if (new->postcopy_preempt) {
++        if (!new->postcopy_ram) {
+             error_setg(errp, "Postcopy preempt requires postcopy-ram");
+             return false;
+         }
+@@ -671,22 +629,22 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+         }
+     }
+ 
+-    if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
++    if (new->multifd) {
+         if (!migrate_multifd() && migrate_incoming_started()) {
+             error_setg(errp, "Multifd must be set before incoming starts");
+             return false;
+         }
+     }
+ 
+-    if (new_caps[MIGRATION_CAPABILITY_SWITCHOVER_ACK]) {
+-        if (!new_caps[MIGRATION_CAPABILITY_RETURN_PATH]) {
++    if (new->switchover_ack) {
++        if (!new->return_path) {
+             error_setg(errp, "Capability 'switchover-ack' requires capability "
+                              "'return-path'");
+             return false;
+         }
+     }
+-    if (new_caps[MIGRATION_CAPABILITY_DIRTY_LIMIT]) {
+-        if (new_caps[MIGRATION_CAPABILITY_AUTO_CONVERGE]) {
++    if (new->dirty_limit) {
++        if (new->auto_converge) {
+             error_setg(errp, "dirty-limit conflicts with auto-converge"
+                        " either of then available currently");
+             return false;
+@@ -699,21 +657,21 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+         }
+     }
+ 
+-    if (new_caps[MIGRATION_CAPABILITY_MULTIFD]) {
+-        if (new_caps[MIGRATION_CAPABILITY_XBZRLE]) {
++    if (new->multifd) {
++        if (new->xbzrle) {
+             error_setg(errp, "Multifd is not compatible with xbzrle");
+             return false;
+         }
+     }
+ 
+-    if (new_caps[MIGRATION_CAPABILITY_MAPPED_RAM]) {
+-        if (new_caps[MIGRATION_CAPABILITY_XBZRLE]) {
++    if (new->mapped_ram) {
++        if (new->xbzrle) {
+             error_setg(errp,
+                        "Mapped-ram migration is incompatible with xbzrle");
+             return false;
+         }
+ 
+-        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
++        if (new->postcopy_ram) {
+             error_setg(errp,
+                        "Mapped-ram migration is incompatible with postcopy");
+             return false;
+@@ -724,7 +682,7 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+      * On destination side, check the cases that capability is being set
+      * after incoming thread has started.
+      */
+-    if (migrate_rdma() && !migrate_rdma_caps_check(new_caps, errp)) {
++    if (migrate_rdma() && !migrate_rdma_caps_check(new, errp)) {
+         return false;
+     }
+     return true;
+@@ -845,39 +803,37 @@ MigrationCapabilityStatusList *qmp_query_migrate_capabilities(Error **errp)
+     for (i = 0; i < MIGRATION_CAPABILITY__MAX; i++) {
+         caps = g_malloc0(sizeof(*caps));
+         caps->capability = i;
+-        caps->state = s->capabilities[i];
++        caps->state = migrate_capability_get_compat(&s->parameters, i);
+         QAPI_LIST_APPEND(tail, caps);
+     }
+ 
+     return head;
+ }
+ 
+-void qmp_migrate_set_capabilities(MigrationCapabilityStatusList *params,
++void qmp_migrate_set_capabilities(MigrationCapabilityStatusList *capabilities,
+                                   Error **errp)
+ {
+     MigrationState *s = migrate_get_current();
+-    MigrationCapabilityStatusList *cap;
+-    bool new_caps[MIGRATION_CAPABILITY__MAX];
++    g_autoptr(MigrationParameters) params = NULL;
+ 
+     if (migration_is_running() || migration_in_colo_state()) {
+         error_setg(errp, "There's a migration process in progress");
          return;
      }
--    migrate_qmp(from, to, "tcp:127.0.0.1:0", NULL, "{}");
-+    migrate_qmp(from, to, "tcp:127.0.0.1:0", NULL, args->start.config, "{}");
-     wait_for_migration_fail(from, false);
-     migrate_end(from, to, false);
- }
-@@ -69,7 +69,7 @@ static void test_analyze_script(char *name, MigrateCommon *args)
-     uri = g_strdup_printf("exec:cat > %s", file);
  
-     migrate_ensure_converge(from, args->start.config);
--    migrate_qmp(from, to, uri, NULL, "{}");
-+    migrate_qmp(from, to, uri, NULL, args->start.config, "{}");
-     wait_for_migration_complete(from);
+-    memcpy(new_caps, s->capabilities, sizeof(new_caps));
+-    for (cap = params; cap; cap = cap->next) {
+-        new_caps[cap->value->capability] = cap->value->state;
+-    }
++    /*
++     * Capabilities validation needs to first copy from s->parameters
++     * in case the incoming capabilities have a capability that
++     * conflicts with another that's already set.
++     */
++    params = QAPI_CLONE(MigrationParameters, &s->parameters);
++    migrate_capabilities_set_compat(params, capabilities);
  
-     pid = fork();
-@@ -108,7 +108,7 @@ static void test_ignore_shared(char *name, MigrateCommon *args)
-     /* Wait for the first serial output from the source */
-     wait_for_serial("src_serial");
- 
--    migrate_qmp(from, to, uri, NULL, "{}");
-+    migrate_qmp(from, to, uri, NULL, args->start.config, "{}");
- 
-     migrate_wait_for_dirty_mem(from, to);
- 
-@@ -146,7 +146,7 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
-     /* Wait for the first serial output from the source */
-     wait_for_serial("src_serial");
- 
--    migrate_qmp(from, to, uri, NULL, "{}");
-+    migrate_qmp(from, to, uri, NULL, args->config, "{}");
- 
-     if (should_fail) {
-         qtest_set_expected_status(to, EXIT_FAILURE);
-@@ -210,7 +210,8 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
-     channels = args->connect_channels ?
-                qobject_from_json(args->connect_channels, &error_abort) :
-                NULL;
--    migrate_qmp_fail(from, args->connect_uri, channels, "{}");
-+    migrate_qmp_fail(from, args->connect_uri, channels,
-+                     args->start.config, "{}");
- 
-     migrate_end(from, to, false);
- }
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index eabbbf39c3..0b0f04bf19 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -382,7 +382,7 @@ static void test_auto_converge(char *name, MigrateCommon *args)
-     /* Wait for the first serial output from the source */
-     wait_for_serial("src_serial");
- 
--    migrate_qmp(from, to, uri, NULL, "{}");
-+    migrate_qmp(from, to, uri, NULL, args->start.config, "{}");
- 
-     /* Wait for throttling begins */
-     percentage = 0;
-@@ -577,12 +577,12 @@ static void test_multifd_tcp_cancel(MigrateCommon *args, bool postcopy_ram)
-     migrate_set_capability(to, "multifd", true);
- 
-     /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, "{}");
-+    migrate_incoming_qmp(to, "tcp:127.0.0.1:0", NULL, args->start.config, "{}");
- 
-     /* Wait for the first serial output from the source */
-     wait_for_serial("src_serial");
- 
--    migrate_qmp(from, to, NULL, NULL, "{}");
-+    migrate_qmp(from, to, NULL, NULL, args->start.config, "{}");
- 
-     migrate_wait_for_dirty_mem(from, to);
- 
-@@ -621,11 +621,12 @@ static void test_multifd_tcp_cancel(MigrateCommon *args, bool postcopy_ram)
-     migrate_set_capability(to2, "multifd", true);
- 
-     /* Start incoming migration from the 1st socket */
--    migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", NULL, "{}");
-+    migrate_incoming_qmp(to2, "tcp:127.0.0.1:0", NULL, args->start.config,
-+                         "{}");
- 
-     migrate_ensure_non_converge(from, args->start.config);
- 
--    migrate_qmp(from, to2, NULL, NULL, "{}");
-+    migrate_qmp(from, to2, NULL, NULL, args->start.config, "{}");
- 
-     migrate_wait_for_dirty_mem(from, to2);
-     migrate_ongoing_ensure_converge(from);
-@@ -659,7 +660,7 @@ static void test_cancel_src_after_failed(QTestState *from, QTestState *to,
-     wait_for_serial("src_serial");
-     migrate_ensure_converge(from, args->config);
- 
--    migrate_qmp(from, to, uri, NULL, "{}");
-+    migrate_qmp(from, to, uri, NULL, args->config, "{}");
- 
-     migration_event_wait(from, phase);
-     migrate_cancel(from);
-@@ -679,12 +680,13 @@ static void test_cancel_src_after_cancelled(QTestState *from, QTestState *to,
-                                             const char *uri, const char *phase,
-                                             MigrateStart *args)
- {
--    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-+    migrate_incoming_qmp(to, uri, NULL, args->config,
-+                         "{ 'exit-on-error': false }");
- 
-     wait_for_serial("src_serial");
-     migrate_ensure_converge(from, args->config);
- 
--    migrate_qmp(from, to, uri, NULL, "{}");
-+    migrate_qmp(from, to, uri, NULL, args->config, "{}");
- 
-     /* To move to cancelled/cancelling */
-     migrate_cancel(from);
-@@ -704,12 +706,13 @@ static void test_cancel_src_after_complete(QTestState *from, QTestState *to,
-                                            const char *uri, const char *phase,
-                                            MigrateStart *args)
- {
--    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-+    migrate_incoming_qmp(to, uri, NULL, args->config,
-+                         "{ 'exit-on-error': false }");
- 
-     wait_for_serial("src_serial");
-     migrate_ensure_converge(from, args->config);
- 
--    migrate_qmp(from, to, uri, NULL, "{}");
-+    migrate_qmp(from, to, uri, NULL, args->config, "{}");
- 
-     migration_event_wait(from, phase);
-     migrate_cancel(from);
-@@ -735,10 +738,11 @@ static void test_cancel_src_after_none(QTestState *from, QTestState *to,
-     wait_for_serial("src_serial");
-     migrate_cancel(from);
- 
--    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-+    migrate_incoming_qmp(to, uri, NULL, args->config,
-+                         "{ 'exit-on-error': false }");
- 
-     migrate_ensure_converge(from, args->config);
--    migrate_qmp(from, to, uri, NULL, "{}");
-+    migrate_qmp(from, to, uri, NULL, args->config, "{}");
- 
-     wait_for_migration_complete(from);
-     wait_for_migration_complete(to);
-@@ -754,12 +758,13 @@ static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
-     migrate_set_capability(from, "multifd", true);
-     migrate_set_capability(to, "multifd", true);
- 
--    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-+    migrate_incoming_qmp(to, uri, NULL, args->config,
-+                         "{ 'exit-on-error': false }");
- 
-     wait_for_serial("src_serial");
-     migrate_ensure_converge(from, args->config);
- 
--    migrate_qmp(from, to, uri, NULL, "{}");
-+    migrate_qmp(from, to, uri, NULL, args->config, "{}");
- 
-     migration_event_wait(from, phase);
-     migrate_cancel(from);
-@@ -1127,7 +1132,7 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
-     migrate_dirty_limit_wait_showup(from, dirtylimit_period, dirtylimit_value);
- 
-     /* Start migrate */
--    migrate_qmp(from, to, args->connect_uri, NULL, "{}");
-+    migrate_qmp(from, to, args->connect_uri, NULL, args->start.config, "{}");
- 
-     /* Wait for dirty limit throttle begin */
-     throttle_us_per_full = 0;
-@@ -1172,7 +1177,7 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
+-    if (!migrate_caps_check(s->capabilities, new_caps, errp)) {
++    if (!migrate_caps_check(params, errp)) {
+         return;
      }
  
-     /* Start migrate */
--    migrate_qmp(from, to, args->connect_uri, NULL, "{}");
-+    migrate_qmp(from, to, args->connect_uri, NULL, args->start.config, "{}");
+-    for (cap = params; cap; cap = cap->next) {
+-        s->capabilities[cap->value->capability] = cap->value->state;
+-    }
+-
+-    migrate_capabilities_set_compat(&s->parameters, params);
++    migrate_capabilities_set_compat(&s->parameters, capabilities);
+ }
  
-     /* Wait for dirty limit throttle begin */
-     throttle_us_per_full = 0;
-diff --git a/tests/qtest/virtio-net-failover.c b/tests/qtest/virtio-net-failover.c
-index 5baf81c3e6..e3edcfc9b7 100644
---- a/tests/qtest/virtio-net-failover.c
-+++ b/tests/qtest/virtio-net-failover.c
-@@ -741,7 +741,7 @@ static void test_migrate_out(gconstpointer opaque)
- static void test_migrate_in(gconstpointer opaque)
- {
-     QTestState *qts;
--    QDict *resp, *ret;
-+    QDict *resp, *ret, *config;
-     g_autofree gchar *uri = g_strdup_printf("exec: cat %s", (gchar *)opaque);
+ /* parameters */
+@@ -938,9 +894,8 @@ bool migrate_direct_io(void)
+      * isolated to the main migration thread while multifd channels
+      * process the aligned data with O_DIRECT enabled.
+      */
+-    return s->parameters.direct_io &&
+-        s->capabilities[MIGRATION_CAPABILITY_MAPPED_RAM] &&
+-        s->capabilities[MIGRATION_CAPABILITY_MULTIFD];
++    return s->parameters.direct_io && s->parameters.mapped_ram &&
++        s->parameters.multifd;
+ }
  
-     qts = machine_start(BASE_MACHINE
-@@ -773,7 +773,9 @@ static void test_migrate_in(gconstpointer opaque)
-     check_one_card(qts, true, "standby0", MAC_STANDBY0);
-     check_one_card(qts, false, "primary0", MAC_PRIMARY0);
+ uint64_t migrate_downtime_limit(void)
+@@ -1373,6 +1328,10 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+         return false;
+     }
  
--    migrate_incoming_qmp(qts, uri, NULL, "{}");
-+    config = qdict_new();
-+    migrate_incoming_qmp(qts, uri, NULL, config, "{}");
-+    qdict_unref(config);
++    if (!migrate_caps_check(params, errp)) {
++        return false;
++    }
++
+     return true;
+ }
  
-     resp = get_failover_negociated_event(qts);
-     g_assert_cmpstr(qdict_get_str(resp, "device-id"), ==, "standby0");
-@@ -863,7 +865,7 @@ static void test_off_migrate_out(gconstpointer opaque)
- static void test_off_migrate_in(gconstpointer opaque)
- {
-     QTestState *qts;
--    QDict *ret;
-+    QDict *ret, *config;
-     g_autofree gchar *uri = g_strdup_printf("exec: cat %s", (gchar *)opaque);
+@@ -1435,19 +1394,6 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
+     tls_opt_to_str(params->tls_hostname);
+     tls_opt_to_str(params->tls_authz);
  
-     qts = machine_start(BASE_MACHINE
-@@ -895,7 +897,9 @@ static void test_off_migrate_in(gconstpointer opaque)
-     check_one_card(qts, true, "standby0", MAC_STANDBY0);
-     check_one_card(qts, true, "primary0", MAC_PRIMARY0);
+-    /*
+-     * FIXME: Temporarily while migrate_caps_check is not
+-     * converted to look at s->parameters. Will be gone the end of
+-     * the series.
+-     */
+-    bool new_caps[MIGRATION_CAPABILITY__MAX] = { 0 };
+-    for (int i = 0; i < MIGRATION_CAPABILITY__MAX; i++) {
+-        new_caps[i] = migrate_capability_get_compat(&s->parameters, i);
+-    }
+-    if (!migrate_caps_check(s->capabilities, new_caps, errp)) {
+-        return;
+-    }
+-
+     migrate_params_merge(tmp, params);
  
--    migrate_incoming_qmp(qts, uri, NULL, "{}");
-+    config = qdict_new();
-+    migrate_incoming_qmp(qts, uri, NULL, config, "{}");
-+    qdict_unref(config);
+     /*
+diff --git a/migration/options.h b/migration/options.h
+index 794cf23870..ceb12b0ff0 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -1,5 +1,5 @@
+ /*
+- * QEMU migration capabilities
++ * QEMU migration options
+  *
+  * Copyright (c) 2012-2023 Red Hat Inc
+  *
+@@ -23,8 +23,6 @@
+ extern const Property migration_properties[];
+ extern const size_t migration_properties_count;
  
-     check_one_card(qts, true, "standby0", MAC_STANDBY0);
-     check_one_card(qts, true, "primary0", MAC_PRIMARY0);
-@@ -990,7 +994,7 @@ static void test_guest_off_migrate_out(gconstpointer opaque)
- static void test_guest_off_migrate_in(gconstpointer opaque)
- {
-     QTestState *qts;
--    QDict *ret;
-+    QDict *ret, *config;
-     g_autofree gchar *uri = g_strdup_printf("exec: cat %s", (gchar *)opaque);
+-/* capabilities */
+-
+ bool migrate_auto_converge(void);
+ bool migrate_colo(void);
+ bool migrate_dirty_bitmaps(void);
+@@ -43,22 +41,12 @@ bool migrate_validate_uuid(void);
+ bool migrate_xbzrle(void);
+ bool migrate_zero_copy_send(void);
  
-     qts = machine_start(BASE_MACHINE
-@@ -1022,7 +1026,9 @@ static void test_guest_off_migrate_in(gconstpointer opaque)
-     check_one_card(qts, true, "standby0", MAC_STANDBY0);
-     check_one_card(qts, false, "primary0", MAC_PRIMARY0);
+-/*
+- * pseudo capabilities
+- *
+- * These are functions that are used in a similar way to capabilities
+- * check, but they are not a capability.
+- */
+-
+ bool migrate_multifd_flush_after_each_section(void);
+ bool migrate_postcopy(void);
+ bool migrate_rdma(void);
+ bool migrate_tls(void);
  
--    migrate_incoming_qmp(qts, uri, NULL, "{}");
-+    config = qdict_new();
-+    migrate_incoming_qmp(qts, uri, NULL, config, "{}");
-+    qdict_unref(config);
+-/* capabilities helpers */
+-
+-bool migrate_rdma_caps_check(bool *caps, Error **errp);
+-bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp);
++bool migrate_rdma_caps_check(MigrationParameters *config, Error **errp);
+ bool migrate_can_snapshot(Error **errp);
  
-     check_one_card(qts, true, "standby0", MAC_STANDBY0);
-     check_one_card(qts, false, "primary0", MAC_PRIMARY0);
-@@ -1681,7 +1687,7 @@ static void test_multi_out(gconstpointer opaque)
- static void test_multi_in(gconstpointer opaque)
- {
-     QTestState *qts;
--    QDict *resp, *ret;
-+    QDict *resp, *ret, *config;
-     g_autofree gchar *uri = g_strdup_printf("exec: cat %s", (gchar *)opaque);
+ /* parameters */
+@@ -88,8 +76,6 @@ const char *migrate_tls_hostname(void);
+ uint64_t migrate_xbzrle_cache_size(void);
+ ZeroPageDetection migrate_zero_page_detection(void);
  
-     qts = machine_start(BASE_MACHINE
-@@ -1747,7 +1753,9 @@ static void test_multi_in(gconstpointer opaque)
-     check_one_card(qts, true, "standby1", MAC_STANDBY1);
-     check_one_card(qts, false, "primary1", MAC_PRIMARY1);
- 
--    migrate_incoming_qmp(qts, uri, NULL, "{}");
-+    config = qdict_new();
-+    migrate_incoming_qmp(qts, uri, NULL, config, "{}");
-+    qdict_unref(config);
- 
-     resp = get_failover_negociated_event(qts);
-     g_assert_cmpstr(qdict_get_str(resp, "device-id"), ==, "standby0");
+-/* parameters helpers */
+-
+ bool migrate_params_check(MigrationParameters *params, Error **errp);
+ void migrate_params_init(MigrationParameters *params);
+ void migrate_tls_opts_free(MigrationParameters *params);
+@@ -98,4 +84,5 @@ void migrate_capability_set_compat(MigrationParameters *params, int i,
+                                    bool val);
+ void migrate_capabilities_set_compat(MigrationParameters *params,
+                                      MigrationCapabilityStatusList *caps);
++bool migrate_caps_check(MigrationParameters *new, Error **errp);
+ #endif
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 62cc2ce25c..d61d266902 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -291,7 +291,8 @@ static uint32_t get_validatable_capabilities_count(void)
+     uint32_t result = 0;
+     int i;
+     for (i = 0; i < MIGRATION_CAPABILITY__MAX; i++) {
+-        if (should_validate_capability(i) && s->capabilities[i]) {
++        if (should_validate_capability(i) &&
++            migrate_capability_get_compat(&s->parameters, i)) {
+             result++;
+         }
+     }
+@@ -313,7 +314,8 @@ static int configuration_pre_save(void *opaque)
+     state->capabilities = g_renew(MigrationCapability, state->capabilities,
+                                   state->caps_count);
+     for (i = j = 0; i < MIGRATION_CAPABILITY__MAX; i++) {
+-        if (should_validate_capability(i) && s->capabilities[i]) {
++        if (should_validate_capability(i) &&
++            migrate_capability_get_compat(&s->parameters, i)) {
+             state->capabilities[j++] = i;
+         }
+     }
+@@ -363,7 +365,7 @@ static bool configuration_validate_capabilities(SaveState *state)
+             continue;
+         }
+         source_state = test_bit(i, source_caps_bm);
+-        target_state = s->capabilities[i];
++        target_state = migrate_capability_get_compat(&s->parameters, i);
+         if (source_state != target_state) {
+             error_report("Capability %s is %s, but received capability is %s",
+                          MigrationCapability_str(i),
 -- 
 2.51.0
 
