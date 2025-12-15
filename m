@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B070ED5B84D
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:26:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB85D5B84D
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 17:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVCKn-0008RJ-JC; Mon, 15 Dec 2025 12:26:09 -0500
+	id 1vVCKy-00008C-77; Mon, 15 Dec 2025 12:26:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vVCKk-0008PK-TL
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:26:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vVCKo-0008TG-SZ
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:26:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vVCKi-0005oK-BZ
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:26:06 -0500
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vVCKn-0005vr-7T
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 12:26:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765819563;
+ s=mimecast20190719; t=1765819568;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=MEfkkWvHScdxmVIQebLYQHHY4iclWOyvZgpKkDQBFHs=;
- b=G46g8X2mjiFeZGmg2RYvgvrqdajUu5r4TBZIOY+txtVwhtKYzne1iovKtgSdDeErcuYvPa
- rnPIEyJFtsmjisxp0kL6y1PCMdVyYnAHmh+Ccgj6GiegrfZ762qPwOOGEHmapHxQ9odsny
- +kecZl33NDMZUiNmEwySe2fVnlKmMzU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3goVdkDsGTkKhMU3MU9FIj8mf5l+sLi4elvdbZrGq98=;
+ b=H1lVC80q6s9drvsR742RoQ/dCMtNkCH8qL32SBWfoty0k9d2h0V0KK0Bw7uSxiR8jfjNqA
+ xHqgqAzJts137gJWk9NQsBPHoAdzV1EtGwTyvhOGZRHXI1S+AQq2t3Lyf9bMwS83Wfg6I/
+ JCbAdUJertMN94qKAUYXTaYWqIDogiE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-354-mpGUqy1wP9WsEYxc5GsoKA-1; Mon,
- 15 Dec 2025 12:25:58 -0500
-X-MC-Unique: mpGUqy1wP9WsEYxc5GsoKA-1
-X-Mimecast-MFC-AGG-ID: mpGUqy1wP9WsEYxc5GsoKA_1765819558
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-Hn9ETNCPNgm-YwtFi5P8Zg-1; Mon,
+ 15 Dec 2025 12:26:03 -0500
+X-MC-Unique: Hn9ETNCPNgm-YwtFi5P8Zg-1
+X-Mimecast-MFC-AGG-ID: Hn9ETNCPNgm-YwtFi5P8Zg_1765819562
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B46011956058; Mon, 15 Dec 2025 17:25:57 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0590D19560B1; Mon, 15 Dec 2025 17:26:02 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.44.32.188])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1F55419560A7; Mon, 15 Dec 2025 17:25:55 +0000 (UTC)
+ id 5B4F619560A7; Mon, 15 Dec 2025 17:26:00 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	richard.henderson@linaro.org,
 	qemu-devel@nongnu.org
-Subject: [PULL 0/2] Block layer patches
-Date: Mon, 15 Dec 2025 18:25:51 +0100
-Message-ID: <20251215172553.467516-1-kwolf@redhat.com>
+Subject: [PULL 2/2] block: Fix BDS use after free during shutdown
+Date: Mon, 15 Dec 2025 18:25:53 +0100
+Message-ID: <20251215172553.467516-3-kwolf@redhat.com>
+In-Reply-To: <20251215172553.467516-1-kwolf@redhat.com>
+References: <20251215172553.467516-1-kwolf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -81,35 +83,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 9c23f2a7b0b45277693a14074b1aaa827eecdb92:
+During shutdown, blockdev_close_all_bdrv_states() drops any block node
+references that are still owned by the monitor (i.e. the user). However,
+in doing so, it forgot to also remove the node from monitor_bdrv_states
+(which qmp_blockdev_del() correctly does), which means that later calls
+of bdrv_first()/bdrv_next() will still return the (now stale) pointer to
+the node.
 
-  Update version for v10.2.0-rc3 release (2025-12-09 16:44:49 -0600)
+Usually there is no such call after this point, but in some cases it can
+happen. In the reported case, there was an ongoing migration, and the
+migration thread wasn't shut down yet: migration_shutdown() called by
+qemu_cleanup() doesn't actually wait for the migration to be shut down,
+but may just move it to MIGRATION_STATUS_CANCELLING. The next time
+migration_iteration_finish() runs, it sees the status and tries to
+re-activate all block devices that migration may have previously
+inactivated. This is where bdrv_first()/bdrv_next() get called and the
+access to the already freed node happens.
 
-are available in the Git repository at:
+It is debatable if migration_shutdown() should really return before
+migration has settled, but leaving a dangling pointer in the list of
+monitor-owned block nodes is clearly a bug either way and fixing it
+solves the immediate problem, so fix it.
 
-  https://repo.or.cz/qemu/kevin.git tags/for-upstream
+Cc: qemu-stable@nongnu.org
+Reported-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20251215150714.130214-1-kwolf@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ blockdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-for you to fetch changes up to 307bc43095b8ab1765fd66c26003d5da06681c05:
-
-  block: Fix BDS use after free during shutdown (2025-12-15 17:31:08 +0100)
-
-----------------------------------------------------------------
-Block layer patches
-
-- Fix crash due to BDS use after free during shutdown (in particular
-  while migration is running)
-- iotests: Fix a typo that made a check to prevent overwriting a file
-  ineffective
-
-----------------------------------------------------------------
-Kevin Wolf (1):
-      block: Fix BDS use after free during shutdown
-
-Thomas Huth (1):
-      tests/qemu-iotests: Fix check for existing file in _require_disk_usage()
-
- blockdev.c                   | 1 +
- tests/qemu-iotests/common.rc | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+diff --git a/blockdev.c b/blockdev.c
+index dbd1d4d3e80..6e86c6262f9 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -686,6 +686,7 @@ void blockdev_close_all_bdrv_states(void)
+ 
+     GLOBAL_STATE_CODE();
+     QTAILQ_FOREACH_SAFE(bs, &monitor_bdrv_states, monitor_list, next_bs) {
++        QTAILQ_REMOVE(&monitor_bdrv_states, bs, monitor_list);
+         bdrv_unref(bs);
+     }
+ }
+-- 
+2.52.0
 
 
