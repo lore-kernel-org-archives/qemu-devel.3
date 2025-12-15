@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C772D5B866
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8886D5B868
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 20:05:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVEnk-0000f2-Hf; Mon, 15 Dec 2025 15:04:12 -0500
+	id 1vVEoU-0000vk-Ni; Mon, 15 Dec 2025 15:04:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
- id 1vVEni-0000el-Pb
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 15:04:10 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1vVEoT-0000vW-Iu
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 15:04:57 -0500
+Received: from mail-wm1-x344.google.com ([2a00:1450:4864:20::344])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
- id 1vVEnh-0007t4-2I
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 15:04:10 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-47a95efd2ceso19471045e9.2
- for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 12:04:08 -0800 (PST)
+ id 1vVEoR-000811-P4
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 15:04:57 -0500
+Received: by mail-wm1-x344.google.com with SMTP id
+ 5b1f17b1804b1-47774d3536dso39349845e9.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Dec 2025 12:04:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1765829047; x=1766433847; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=J5syRGw+m96ON7wgJuHkIp0bOgB7gS8JVijH/4j4eIM=;
- b=B0vd8NMJj+j+s6t5BzODcJituMu/FAsb6dFm/sbc3tlP3Mk273IjNgSM6Lu5sGHViK
- fdlpGPTZngZ/kNcq6fHHMUvbESonus6eNn+BLDciMwkzTs4lRzGLsxHM3tfk7kHbO6Yq
- 7NkPlyYji3SYEt9Ui9EENwrTlfCCpDiwVzMqSS5u9JJY8H8d1BhXE2FpfjBjl0RIORDy
- ICLGWS4ZHVCHH2MGR8Y5YxrPtRO+GhJLgpU3h9Yy0/PLd3SAFFBQQcjevAbN4KOnVf/4
- UK+lKPmSz/YyhbnXLv/nhCNcZEuHtPyaDtesS8ENS1ayMNQQWyjS3PrtBUcv7cRUztyi
- Md6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765829047; x=1766433847;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1765829094; x=1766433894; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J5syRGw+m96ON7wgJuHkIp0bOgB7gS8JVijH/4j4eIM=;
- b=lnHKYNyLCUWirsdN2yb5C+CXnyXTArU0GseoHpEhYeIfCpkU0tnKM0azyzqzxgg7HA
- LLyr5TvwJnBgh2zoXlpku/S/o4yb7UWLcluoaqkjyGPtwNlis9wSMZa4HTlBpc5UoO6Z
- AgQD4rqYMW1yKJAdianOh9JDnEythhkTkMQqVhoZnx0GSz9GKybOUk1iPVTcWCmqDuYn
- LIrr0+t316p5hbf8Hrn8laMIFqqFrzRtFKgJqXj3pjKifBUaWGsIbiSwiXIA/bTj8wey
- +r9ScG7438UAIF25s9eBk1mYQqx5kazDtsPwJZUsvrwKj446KYLsAAAJOICNSDc2yD2r
- Iz6w==
-X-Gm-Message-State: AOJu0YwyzgdSqGU2ekIKqKBwFqgc8PtOxb1C5chPecjzxRcS2X9IAY1y
- XM8AnxwjMHirBzok7P54EWdNe/S3JZY0YUkqrTjgmRjgX2eH6DhYOXnpQnl5cw==
-X-Gm-Gg: AY/fxX5X47L48mNZ0+piDC8TPXf41Zyf0HHBfKvvMlFX0O7nke2aQ0NNnhYjK4nVmYL
- o4nQhIOrkHWVeykPJLGw3U50jgqyYRwbxfGkK31CPo7TcGLFFdhITYv7Cc6HrPosoQep7O5sZCy
- 2a05WPURuqCVrE9e2Liip0Pwj3+nhDdq09bbn5Hg9hjrW9jw5eS8pUBV271J825eWkCpldXnO3T
- SOFZCKlDvI9TI1A6qDZv5N/rYgR3GNEVKF7qIXjKmBoM9/0YBqhTobpaLt7E+F8FGiVKumB2nT6
- sNSJDZcOwizPN503YOyoxrk7toUoJ8io6nLalR/mjaRpP7PCg6FhXSdIEqahdhA949oyIBPTdta
- G1hgvZsrNHuQc4lJsoNuTA0ut0qO310syidCnKv4C9YByHe8oSvqdZlSw5pngxRAFbpVKLCPbNk
- +W3AOL329JOGi/zFNqkGIgJXqThu4mT93XykmEs4NgPg==
-X-Google-Smtp-Source: AGHT+IEpO3I8vWR+5QywvxORMyI5P6CDnRbdJrs8hHILLulutOZjYJmQO0wwC7l0cmeHEMNFhzaoZA==
-X-Received: by 2002:a05:600c:4e90:b0:477:557b:691d with SMTP id
- 5b1f17b1804b1-47a942cd40dmr99154595e9.25.1765829046615; 
- Mon, 15 Dec 2025 12:04:06 -0800 (PST)
+ bh=MizUUlNpjXIbwqKxnq224wGapMpxwlfA17G+ANK60nc=;
+ b=TXA5y8GIzLoYrBBg1mKG9lUlhjTc785XzDo8DRgcaagZsn0Dme1Q2sKquZ/Dq1+ZKQ
+ 2lRdIGxKTuwbT8y+/wwaxEi5AgG4J5eT5DNbiqPVFiGPBZXH4HHdwdI5Gh2NqlMKoZCO
+ mgcsAWmRyxkd/RwGLXl7qS1jVXN1r8Uh9gNNQceL/FlfQiV/Xhj4x7Yr2FizUQLyy0Xn
+ +kwRs4wKGgHAYhfH6/wfOGywwlsReiP23GgnBY0/CXA7eg0Dzgi9Vx962c45XkML0zy+
+ 7lOBNjNNXU+k0TDuNyxbjo4k34b4GYJC+AWUV/Vsiy0+wpji/0iqtNtiYxZKTF2fkDbK
+ ozgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765829094; x=1766433894;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=MizUUlNpjXIbwqKxnq224wGapMpxwlfA17G+ANK60nc=;
+ b=YQX7peD6UU7rOZL+J5594XaoMquMayA/Ae6Q6SeHp5TKA4jbr1VGhPQe6zJUo541K2
+ 73vE36xagczXkxm45VLSTpqOe248IzcQD+AZsoDYAdAmShtWWIRHGgW5GKhkmw0K5Bf0
+ EYY2MxyYg7Ft4N1d0WYQIuGZVE5/4Bngr4QaM4/ipVkb0SwSExLTAeS9e6fFiRU8mDhp
+ 4ceovGX1AkHwFcXqj5d3rfQoKsFVUTEAEDQNjUZU6oECJ8J5lv8CRmKmU+yzOM5tP1vN
+ 9MLO2RagVT07J2Rhalq8lvLLPIgMTi8h2AAIXwrM5PI1o3CsGOiFC70M+U9QWqUutW67
+ Pwsg==
+X-Gm-Message-State: AOJu0Yz8CN/lVbzR5lg6tklRiLFopNhkO2c36Q6nEmxtnyx9yEdkPLh+
+ vHGw+sb1QvHR7ICxKuTwdH+7CBYqN3ff69zHHmeb7p312VmTLvrX1Da7YtVNjO50
+X-Gm-Gg: AY/fxX5EXwBnzzvvpfR09/0ZUaFgiamsubPxjk7Ew4poslj/zz+ITXRFnKVHwPfMU/G
+ Rc9ryzg4Zqe24Wwqd+AeGYO1mX4EqJK0DJdIivpVuP4gbyKqPkTR7iLWEsBqhb8hd3Aa2doiWi5
+ Y9dRpnyU8Wubaqfk8YjdAelnmTgqAtAJKWJIibR1cI4eHXH859h1ZNR4MhNGA6oZHJzznsMVKkt
+ SXXLaBG2ddDHCPo3oBD3oCcehmBRpJwOBoZ4ue0fC0/Y+Mtxxzbw0f5odnHee1aUzDyjZslhRQd
+ Ds8N7MpH7NzFMruosjU/cjQlQjxiLIQnWRMy+exwlYCfGDUmVMM2n3X4dCV2pbWxQvo2j57IYVg
+ geLjHbhxPTY8aHtr+2fVmV0n4MS9NsJiW6ZpibsmepzO6qoqkEfKr0EUKe6RtjOC7JjZRO6UUOt
+ DieZtW70RGxODO0qePaPTFLaC5l0uzmYaIz1NVZAtBhw==
+X-Google-Smtp-Source: AGHT+IExba6SPXoagxav5/xRmbJklcXvqVmknCIdGWDZwJxrozrm/rBOTXhJNd/MfY9pQbg14GJWWA==
+X-Received: by 2002:a05:600d:486:20b0:477:991c:a17c with SMTP id
+ 5b1f17b1804b1-47a89da4685mr127957215e9.6.1765829094118; 
+ Mon, 15 Dec 2025 12:04:54 -0800 (PST)
 Received: from acidburn.pod.cvut.cz (acidburn.pod.cvut.cz. [147.32.90.2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47a8f703efesm72603235e9.16.2025.12.15.12.04.05
+ 5b1f17b1804b1-47a8f703efesm72603235e9.16.2025.12.15.12.04.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Dec 2025 12:04:06 -0800 (PST)
+ Mon, 15 Dec 2025 12:04:53 -0800 (PST)
 From: =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>
 To: qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
  Pavel Pisa <pisa@fel.cvut.cz>, Bernhard Beschow <shentey@gmail.com>
@@ -72,15 +73,17 @@ Cc: Marc Kleine-Budde <mkl@pengutronix.de>,
  Nikita Ostrenkov <n.ostrenkov@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>
-Subject: [PATCH v1 0/6] hw/arm/sabrelite: Add FlexCAN support
-Date: Mon, 15 Dec 2025 21:03:09 +0100
-Message-ID: <cover.1765826753.git.matyas.bobek@gmail.com>
+Subject: [PATCH v1 1/6] hw/arm/sabrelite: Convert machine to full class
+Date: Mon, 15 Dec 2025 21:03:10 +0100
+Message-ID: <4bece01078549fe0565af4cd28df46da97a372fb.1765826753.git.matyas.bobek@gmail.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <cover.1765826753.git.matyas.bobek@gmail.com>
+References: <cover.1765826753.git.matyas.bobek@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=matyas.bobek@gmail.com; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::344;
+ envelope-from=matyas.bobek@gmail.com; helo=mail-wm1-x344.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,55 +106,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds emulation of the FlexCAN CAN controller, version 2,
-found in NXP i.MX6 series SoCs. The controller is integrated into
-fsl-imx6 and the Sabrelite ARM board.
+Define SABRELITE_MACHINE manually instead of
+DEFINE_MACHINE_ARM to allow "canbus*" machine
+properties to be added later.
 
-The chip has two FlexCAN controllers, but the Linux Sabrelite
-device tree enables only one by default. Linux kernel with both
-controllers enabled has been tested to work properly (using a custom
-device tree).
-See docs/system/devices/can.rst for an example of QEMU command line
-invocation.
+Signed-off-by: Matyáš Bobek <matyas.bobek@gmail.com>
+---
+ hw/arm/sabrelite.c | 54 +++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 44 insertions(+), 10 deletions(-)
 
-More information about the implementation can be found in my bachelor
-thesis [1].
-
-[1] http://dspace.cvut.cz/bitstream/handle/10467/122654/F3-BP-2025-Bobek-Matyas-BP_Bobek_FlexCAN_final_4.pdf
-
-Matyáš Bobek (6):
-  hw/arm/sabrelite: Convert machine to full class
-  hw/misc/imx6_ccm: Add PLL3 and CAN clock
-  hw/net/can/flexcan: NXP FlexCAN core emulation
-  hw/arm: Plug FlexCAN into FSL_IMX6 and Sabrelite
-  tests: Add qtests for FlexCAN
-  docs/arm/sabrelite: Mention FlexCAN support
-
- MAINTAINERS                   |    2 +
- docs/system/arm/sabrelite.rst |    1 +
- docs/system/devices/can.rst   |   20 +
- hw/arm/Kconfig                |    1 +
- hw/arm/fsl-imx6.c             |   29 +
- hw/arm/sabrelite.c            |   70 +-
- hw/misc/imx6_ccm.c            |   24 +
- hw/misc/trace-events          |    2 +
- hw/net/Kconfig                |    5 +
- hw/net/can/flexcan.c          | 1469 +++++++++++++++++++++++++++++++++
- hw/net/can/flexcan_regs.h     |  188 +++++
- hw/net/can/meson.build        |    1 +
- hw/net/can/trace-events       |   18 +
- include/hw/arm/fsl-imx6.h     |    7 +
- include/hw/misc/imx6_ccm.h    |    4 +
- include/hw/misc/imx_ccm.h     |    1 +
- include/hw/net/flexcan.h      |  153 ++++
- tests/qtest/flexcan-test.c    |  411 +++++++++
- tests/qtest/meson.build       |    1 +
- 19 files changed, 2397 insertions(+), 10 deletions(-)
- create mode 100644 hw/net/can/flexcan.c
- create mode 100644 hw/net/can/flexcan_regs.h
- create mode 100644 include/hw/net/flexcan.h
- create mode 100644 tests/qtest/flexcan-test.c
-
+diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
+index 5b4ab7d77a..29418af190 100644
+--- a/hw/arm/sabrelite.c
++++ b/hw/arm/sabrelite.c
+@@ -20,6 +20,16 @@
+ #include "qemu/error-report.h"
+ #include "system/qtest.h"
+ 
++typedef struct SabreliteMachineState {
++    MachineState parent_obj;
++    FslIMX6State soc;
++
++    struct arm_boot_info binfo;
++} Sabrelite;
++
++#define TYPE_SABRELITE_MACHINE MACHINE_TYPE_NAME("sabrelite")
++OBJECT_DECLARE_SIMPLE_TYPE(SabreliteMachineState, SABRELITE_MACHINE)
++
+ static struct arm_boot_info sabrelite_binfo = {
+     /* DDR memory start */
+     .loader_start = FSL_IMX6_MMDC_ADDR,
+@@ -41,7 +51,7 @@ static void sabrelite_reset_secondary(ARMCPU *cpu,
+ 
+ static void sabrelite_init(MachineState *machine)
+ {
+-    FslIMX6State *s;
++    Sabrelite *s = SABRELITE_MACHINE(machine);
+ 
+     /* Check the amount of memory is compatible with the SOC */
+     if (machine->ram_size > FSL_IMX6_MMDC_SIZE) {
+@@ -50,13 +60,12 @@ static void sabrelite_init(MachineState *machine)
+         exit(1);
+     }
+ 
+-    s = FSL_IMX6(object_new(TYPE_FSL_IMX6));
+-    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
++    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IMX6);
+ 
+     /* Ethernet PHY address is 6 */
+-    object_property_set_int(OBJECT(s), "fec-phy-num", 6, &error_fatal);
++    object_property_set_int(OBJECT(&s->soc), "fec-phy-num", 6, &error_fatal);
+ 
+-    qdev_realize(DEVICE(s), NULL, &error_fatal);
++    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
+ 
+     memory_region_add_subregion(get_system_memory(), FSL_IMX6_MMDC_ADDR,
+                                 machine->ram);
+@@ -70,7 +79,7 @@ static void sabrelite_init(MachineState *machine)
+         /* Add the sst25vf016b NOR FLASH memory to first SPI */
+         Object *spi_dev;
+ 
+-        spi_dev = object_resolve_path_component(OBJECT(s), "spi1");
++        spi_dev = object_resolve_path_component(OBJECT(&s->soc), "spi1");
+         if (spi_dev) {
+             SSIBus *spi_bus;
+ 
+@@ -89,23 +98,33 @@ static void sabrelite_init(MachineState *machine)
+                 qdev_realize_and_unref(flash_dev, BUS(spi_bus), &error_fatal);
+ 
+                 cs_line = qdev_get_gpio_in_named(flash_dev, SSI_GPIO_CS, 0);
+-                qdev_connect_gpio_out(DEVICE(&s->gpio[2]), 19, cs_line);
++                qdev_connect_gpio_out(DEVICE(&s->soc.gpio[2]), 19, cs_line);
+             }
+         }
+     }
+ 
++
+     sabrelite_binfo.ram_size = machine->ram_size;
+     sabrelite_binfo.secure_boot = true;
+     sabrelite_binfo.write_secondary_boot = sabrelite_write_secondary;
+     sabrelite_binfo.secondary_cpu_reset_hook = sabrelite_reset_secondary;
+ 
+     if (!qtest_enabled()) {
+-        arm_load_kernel(&s->cpu[0], machine, &sabrelite_binfo);
++        arm_load_kernel(&s->soc.cpu[0], machine, &sabrelite_binfo);
+     }
+ }
+ 
+-static void sabrelite_machine_init(MachineClass *mc)
++static void sabrelite_machine_instance_init(Object *obj)
+ {
++    Sabrelite *s = SABRELITE_MACHINE(obj);
++
++    (void)s;
++}
++
++static void sabrelite_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
+     mc->desc = "Freescale i.MX6 Quad SABRE Lite Board (Cortex-A9)";
+     mc->init = sabrelite_init;
+     mc->max_cpus = FSL_IMX6_NUM_CPUS;
+@@ -114,4 +133,19 @@ static void sabrelite_machine_init(MachineClass *mc)
+     mc->auto_create_sdcard = true;
+ }
+ 
+-DEFINE_MACHINE_ARM("sabrelite", sabrelite_machine_init)
++static const TypeInfo sabrelite_machine_init_typeinfo = {
++    .name       = TYPE_SABRELITE_MACHINE,
++    .parent     = TYPE_MACHINE,
++    .class_init = sabrelite_machine_class_init,
++    .instance_init = sabrelite_machine_instance_init,
++    .instance_size = sizeof(Sabrelite),
++    .abstract   = false,
++    .interfaces = arm_machine_interfaces,
++};
++
++static void sabrelite_machine_init_register_types(void)
++{
++    type_register_static(&sabrelite_machine_init_typeinfo);
++}
++
++type_init(sabrelite_machine_init_register_types)
 -- 
 2.52.0
 
