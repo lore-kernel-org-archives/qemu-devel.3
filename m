@@ -4,69 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5782CD5B854
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 16:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BD8BD5B854
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 16:56:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVBqf-0004yS-B1; Mon, 15 Dec 2025 11:55:01 -0500
+	id 1vVBra-0005KH-93; Mon, 15 Dec 2025 11:55:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uwu@icenowy.me>) id 1vVBqM-0004xU-NU
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:54:42 -0500
-Received: from sender4-op-o15.zoho.com ([136.143.188.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <uwu@icenowy.me>) id 1vVBqJ-0001iV-IS
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:54:41 -0500
-ARC-Seal: i=1; a=rsa-sha256; t=1765817554; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=Tc53rykijguGng9yYKEEUVGC2Jb2qdgQtApnef1tbvc3RdpVvl/fXvEjzFrVMfkqajgnknvMz8FF7Tfh6BbpkpyfVFJ9j6UEJHuOqFCGoad2t7fOiIgvhfNci2WU6jJl5Nkj/OYmPnBrDpHo7xJ7tsJaZ38+rsa5Z42+op02MLE=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1765817554;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=fhf/i3W922cwjDZzN+Aa9fovELFDhLsvX8mkJjuCJJM=; 
- b=NmVj8ODn3GiqOuBXgQEJpLltc0E7KhG+GmDTa7Sv/dx8iEkh3pC3VamjYvQysmPHNmCphchCvK0Ks58/Vk4EmJSasqajA5eUbTkeh5PA7qguq/jBCpF2FJ6poU6qwBEo7H2dbsIpP3PIdstFMMkjhjkzQ6L5ffyq718z67pFXY0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=icenowy.me;
- spf=pass  smtp.mailfrom=uwu@icenowy.me;
- dmarc=pass header.from=<uwu@icenowy.me>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1765817554; 
- s=zmail2; d=icenowy.me; i=uwu@icenowy.me;
- h=Message-ID:Subject:Subject:From:From:To:To:Cc:Cc:Date:Date:In-Reply-To:References:Content-Type:Content-Transfer-Encoding:MIME-Version:Message-Id:Reply-To;
- bh=fhf/i3W922cwjDZzN+Aa9fovELFDhLsvX8mkJjuCJJM=;
- b=AWB58VYPxD1Fi2QiXwGt8AAAthX6GT+mpml9W+/NrYOeN6wwcfOauzcSNC3AcKcU
- 5JF+PxNqP/boJXC0RtCLAIYoiR7IccqnJjMUtANfBGhgbJq9mhoS9zl6ZxlDctKm/h6
- H/XIf0XeXBI4Hb+MLeHwmpqU3rBCTPZsA/6yYeXuubRLklTNJ3kXrXPhkhqYCHgkK/9
- dAfTxwya1LUR+NyEzCIJzlmhfmqkWG9oRDXj9436pRx+tkAJfWsXJQeXmwLXuqPQHD6
- ZnaddWHR25POBeooGp4EFQJv7/NraRuImzbqE9DtR58gm+9807SAv5w916k+yQwz7wJ
- XXQy5lJtzw==
-Received: by mx.zohomail.com with SMTPS id 1765817552126861.6983322663837;
- Mon, 15 Dec 2025 08:52:32 -0800 (PST)
-Message-ID: <70995759267010817b2005884979e57117006e7d.camel@icenowy.me>
-Subject: Re: [PATCH 5/7] Add termios2 support to ppc target
-From: Icenowy Zheng <uwu@icenowy.me>
-To: Luca Bonissi <qemu@bonslack.org>, Richard Henderson
- <richard.henderson@linaro.org>, Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org
-Date: Tue, 16 Dec 2025 00:52:27 +0800
-In-Reply-To: <ab68ba71-acd1-4ef1-bdde-f72a9e8e3152@bonslack.org>
-References: <ab68ba71-acd1-4ef1-bdde-f72a9e8e3152@bonslack.org>
-Organization: Anthon Open-Source Community
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.44.4 
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVBrY-0005J2-BP
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:55:56 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVBrV-0002tY-A8
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 11:55:56 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id CDA1133779;
+ Mon, 15 Dec 2025 16:55:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1765817749; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OFx5Yv18boTD5jupFtTGf5ZCHMwFSe+FiEPGzRmX7y0=;
+ b=tTXFHZkMKhakudj6I3kWgoVMh4r3lmxeKUqnm7dESr4Wl8uMZ/l41rDTGZX0ZJYBi6Pu+f
+ oJMAUe5svSmP3+yq9AlOMyt5Wyux564hO3WmE7MymsgypizOKpZwl7yJcnSiQW3GYUxNpo
+ Pto/8xciQ2IA/WuiNns4jxKBQZD5DOg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1765817749;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OFx5Yv18boTD5jupFtTGf5ZCHMwFSe+FiEPGzRmX7y0=;
+ b=I1kwHfEJ7ljaLer9qR1ht0PNNdqIBPhPWWzlSf3RfOcyc09FZ3CIHVKUMQMQMJbRZj0Mgl
+ zvWIX7Cr7XaBSwBg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="Z/1DHDGg";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=xv7uNCnP
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1765817747; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OFx5Yv18boTD5jupFtTGf5ZCHMwFSe+FiEPGzRmX7y0=;
+ b=Z/1DHDGgJA29T2CbhxvjCq7tcy0N4ks1d0qJln6cqaVTLf8xOMrD15EM+eXycKcaS3HZyi
+ XSQJc4Ky/+W9waXVRA5UzTKsWXtOpQhFDXnj/fvLc/hA0taUim3f4IV7o1pKPJj3GPLvsM
+ mchDmZht8yq4VHv9IFk2nMMPe+RYYTk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1765817747;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=OFx5Yv18boTD5jupFtTGf5ZCHMwFSe+FiEPGzRmX7y0=;
+ b=xv7uNCnP+Lf5otSGAk9hhS6NAQ8rwzJhLIrlPksenPs+Pfe6rDlU1stuQnSuokRWMj0xSY
+ f49q+fqFHh4Ot+Aw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 44B573EA63;
+ Mon, 15 Dec 2025 16:55:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id d0s0AZM9QGnoJgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 15 Dec 2025 16:55:47 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: kwolf@redhat.com, thuth@redhat.com, stefanha@redhat.com,
+ peterx@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: [PATCH] block: Fix BDS use after free during shutdown
+In-Reply-To: <20251215150714.130214-1-kwolf@redhat.com>
+References: <20251215150714.130214-1-kwolf@redhat.com>
+Date: Mon, 15 Dec 2025 13:55:44 -0300
+Message-ID: <87h5trvg4v.fsf@suse.de>
 MIME-Version: 1.0
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.15; envelope-from=uwu@icenowy.me;
- helo=sender4-op-o15.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Rspamd-Queue-Id: CDA1133779
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ RCPT_COUNT_SEVEN(0.00)[8]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, suse.de:email,
+ imap1.dmz-prg2.suse.org:rdns, imap1.dmz-prg2.suse.org:helo]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,63 +126,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-5ZyoIDIwMjUtMTAtMzHmmJ/mnJ/kupTnmoQgMTQ6MjYgKzAxMDDvvIxMdWNhIEJvbmlzc2nlhpnp
-gZPvvJoKPiA+IEZyb20gMmFhMGExM2RhMGRhNmUzYTgwNDM1OWYyNGNjMTI5OGI5N2NkYTQ1YyBN
-b24gU2VwIDE3IDAwOjAwOjAwCj4gPiAyMDAxCj4gRnJvbTogTHVjYSBCb25pc3NpIDxxZW11QGJv
-bnNsYWNrLm9yZz4KPiBEYXRlOiBGcmksIDMxIE9jdCAyMDI1IDEzOjMxOjM2ICswMTAwCj4gU3Vi
-amVjdDogW1BBVENIIDUvN10gQWRkIHRlcm1pb3MyIHN1cHBvcnQgdG8gcHBjIHRhcmdldAo+IAo+
-IFNpZ25lZC1vZmYtYnk6IEx1Y2EgQm9uaXNzaSA8cWVtdUBib25zbGFjay5vcmc+Cj4gLS0tCj4g
-wqBsaW51eC11c2VyL3BwYy90ZXJtYml0cy5oIHwgMjQgKysrKysrKysrKysrKysrKysrKysrKysr
-Cj4gwqAxIGZpbGUgY2hhbmdlZCwgMjQgaW5zZXJ0aW9ucygrKQo+IAo+IGRpZmYgLS1naXQgYS9s
-aW51eC11c2VyL3BwYy90ZXJtYml0cy5oIGIvbGludXgtdXNlci9wcGMvdGVybWJpdHMuaAo+IGlu
-ZGV4IGViMjI2ZTA5OTkuLmFlNmVlODg5N2MgMTAwNjQ0Cj4gLS0tIGEvbGludXgtdXNlci9wcGMv
-dGVybWJpdHMuaAo+ICsrKyBiL2xpbnV4LXVzZXIvcHBjL3Rlcm1iaXRzLmgKPiBAQCAtMjAsNiAr
-MjAsMjggQEAgc3RydWN0IHRhcmdldF90ZXJtaW9zIHsKPiDCoMKgwqDCoCB0YXJnZXRfc3BlZWRf
-dCBjX29zcGVlZDvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIC8qIG91dHB1dCBzcGVlZCAq
-Lwo+IMKgfTsKPiDCoAo+ICtzdHJ1Y3QgdGFyZ2V0X3Rlcm1pb3MyIHsKPiArwqDCoMKgIHRhcmdl
-dF90Y2ZsYWdfdCBjX2lmbGFnO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogaW5wdXQg
-bW9kZSBmbGFncyAqLwo+ICvCoMKgwqAgdGFyZ2V0X3RjZmxhZ190IGNfb2ZsYWc7wqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBvdXRwdXQgbW9kZSBmbGFncyAqLwo+ICvCoMKgwqAgdGFy
-Z2V0X3RjZmxhZ190IGNfY2ZsYWc7wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBjb250
-cm9sIG1vZGUgZmxhZ3MgKi8KPiArwqDCoMKgIHRhcmdldF90Y2ZsYWdfdCBjX2xmbGFnO8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogbG9jYWwgbW9kZSBmbGFncyAqLwo+ICvCoMKgwqAg
-dGFyZ2V0X2NjX3QgY19jY1tUQVJHRVRfTkNDU107wqDCoMKgwqDCoMKgwqDCoCAvKiBjb250cm9s
-IGNoYXJhY3RlcnMgKi8KPiArwqDCoMKgIHRhcmdldF9jY190IGNfbGluZTvCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBsaW5lIGRpc2NpcGxpbmUgKi8KPiArwqDCoMKg
-IHRhcmdldF9zcGVlZF90IGNfaXNwZWVkO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyog
-aW5wdXQgc3BlZWQgKi8KPiArwqDCoMKgIHRhcmdldF9zcGVlZF90IGNfb3NwZWVkO8KgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogb3V0cHV0IHNwZWVkICovCj4gK307Cj4gKwo+ICtzdHJ1
-Y3QgdGFyZ2V0X2t0ZXJtaW9zIHsKPiArwqDCoMKgIHRhcmdldF90Y2ZsYWdfdCBjX2lmbGFnO8Kg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogaW5wdXQgbW9kZSBmbGFncyAqLwo+ICvCoMKg
-wqAgdGFyZ2V0X3RjZmxhZ190IGNfb2ZsYWc7wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAv
-KiBvdXRwdXQgbW9kZSBmbGFncyAqLwo+ICvCoMKgwqAgdGFyZ2V0X3RjZmxhZ190IGNfY2ZsYWc7
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvKiBjb250cm9sIG1vZGUgZmxhZ3MgKi8KPiAr
-wqDCoMKgIHRhcmdldF90Y2ZsYWdfdCBjX2xmbGFnO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgLyogbG9jYWwgbW9kZSBmbGFncyAqLwo+ICvCoMKgwqAgdGFyZ2V0X2NjX3QgY19jY1tUQVJH
-RVRfTkNDU107wqDCoMKgwqDCoMKgwqDCoCAvKiBjb250cm9sIGNoYXJhY3RlcnMgKi8KPiArwqDC
-oMKgIHRhcmdldF9jY190IGNfbGluZTvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoCAvKiBsaW5lIGRpc2NpcGxpbmUgKi8KPiArwqDCoMKgIHRhcmdldF9zcGVlZF90IGNfaXNw
-ZWVkO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgLyogaW5wdXQgc3BlZWQgKi8KPiArwqDC
-oMKgIHRhcmdldF9zcGVlZF90IGNfb3NwZWVkO8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
-Lyogb3V0cHV0IHNwZWVkICovCj4gK307Cj4gKwoKV2VsbCB5b3VyIHRoaXMgcGF0Y2ggc2VlbXMg
-dG8gYmUgaW50cm9kdWNpbmcgbm9uLW5lZWRlZCB0aGluZ3MgZm9yClBvd2VyUEM/CgpBbGwgMyBz
-dHJ1Y3R1cmVzIGFyZSB0aGUgc2FtZSBoZXJlLCBhbmQgUFBDIG5ldmVyIGhhcyBhIHRlcm1pb3My
-CmludGVyZmFjZSAoZXhjZXB0IGluc2lkZSB0aGUgaW50ZXJuYWwgb2YgZ2xpYmMpLgoKPiDCoC8q
-IGNfY2MgY2hhcmFjdGVyIG9mZnNldHMgKi8KPiDCoCNkZWZpbmUgVEFSR0VUX1ZJTlRSwqDCoMKg
-MAo+IMKgI2RlZmluZSBUQVJHRVRfVlFVSVTCoMKgwqAxCj4gQEAgLTIyNSw2ICsyNDcsOCBAQCBz
-dHJ1Y3QgdGFyZ2V0X3Rlcm1pb3Mgewo+IMKgI2RlZmluZSBUQVJHRVRfVElPQ1NCUkvCoMKgwqDC
-oMKgwqDCoMKgMHg1NDI3wqAgLyogQlNEIGNvbXBhdGliaWxpdHkgKi8KPiDCoCNkZWZpbmUgVEFS
-R0VUX1RJT0NDQlJLwqDCoMKgwqDCoMKgwqDCoDB4NTQyOMKgIC8qIEJTRCBjb21wYXRpYmlsaXR5
-ICovCj4gwqAjZGVmaW5lIFRBUkdFVF9USU9DR1NJRMKgwqDCoMKgwqDCoMKgwqAweDU0MjnCoCAv
-KiBSZXR1cm4gdGhlIHNlc3Npb24gSUQgb2YKPiBGRCAqLwo+ICsjZGVmaW5lIFRBUkdFVF9USU9D
-R1JTNDg1wqDCoMKgwqDCoMKgMHg1NDJlCj4gKyNkZWZpbmUgVEFSR0VUX1RJT0NTUlM0ODXCoMKg
-wqDCoMKgwqAweDU0MmYKCkkgZG9uJ3QgdGhpbmsgdGhlc2UgdHdvIElPQ1RMJ3MgYXJlIHJlbGF0
-ZWQgaGVyZS4KCldlbGwgdGhleSdyZSBtaXNzaW5nLCBidXQgdGhleSdyZSBub3QgaW1wbGVtZW50
-ZWQgZWl0aGVyLgoKPiDCoCNkZWZpbmUgVEFSR0VUX1RJT0NHUFROwqDCoMKgwqDCoMKgwqDCoFRB
-UkdFVF9JT1IoJ1QnLDB4MzAsIHVuc2lnbmVkIGludCkgLyoKPiBHZXQgUHR5IE51bWJlciAob2Yg
-cHR5LW11eCBkZXZpY2UpICovCj4gwqAjZGVmaW5lIFRBUkdFVF9USU9DU1BUTENLwqDCoMKgwqDC
-oMKgVEFSR0VUX0lPVygnVCcsMHgzMSwgaW50KcKgIC8qCj4gTG9jay91bmxvY2sgUHR5ICovCj4g
-wqAjZGVmaW5lIFRBUkdFVF9USU9DR1BUUEVFUsKgwqDCoMKgwqAgVEFSR0VUX0lPKCdUJywgMHg0
-MSkgLyogU2FmZWx5IG9wZW4KPiB0aGUgc2xhdmUgKi8KCg==
+Kevin Wolf <kwolf@redhat.com> writes:
 
+> During shutdown, blockdev_close_all_bdrv_states() drops any block node
+> references that are still owned by the monitor (i.e. the user). However,
+> in doing so, it forgot to also remove the node from monitor_bdrv_states
+> (which qmp_blockdev_del() correctly does), which means that later calls
+> of bdrv_first()/bdrv_next() will still return the (now stale) pointer to
+> the node.
+>
+> Usually there is no such call after this point, but in some cases it can
+> happen. In the reported case, there was an ongoing migration, and the
+> migration thread wasn't shut down yet: migration_shutdown() called by
+> qemu_cleanup() doesn't actually wait for the migration to be shut down,
+> but may just move it to MIGRATION_STATUS_CANCELLING. The next time
+> migration_iteration_finish() runs, it sees the status and tries to
+> re-activate all block devices that migration may have previously
+> inactivated. This is where bdrv_first()/bdrv_next() get called and the
+> access to the already freed node happens.
+>
+> It is debatable if migration_shutdown() should really return before
+> migration has settled, but leaving a dangling pointer in the list of
+> monitor-owned block nodes is clearly a bug either way and fixing it
+> solves the immediate problem, so fix it.
+>
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
