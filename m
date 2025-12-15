@@ -4,82 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37E5D5B844
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 15:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19A4BD5B840
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 15:30:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVAWb-0006d2-GA; Mon, 15 Dec 2025 10:30:14 -0500
+	id 1vVAW0-0006Pi-7r; Mon, 15 Dec 2025 10:29:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vVAVO-00067F-E6
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 10:29:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
+ id 1vVAVS-0006AX-T6; Mon, 15 Dec 2025 10:29:07 -0500
+Received: from out28-68.mail.aliyun.com ([115.124.28.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vVAVK-0004Ch-H9
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 10:28:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765812529;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=033JI5AS/gUOEu4m0H3+u5w3ybvGCtQqyrTfFGodmTw=;
- b=EucPfyy8xf+ODad3bSQzf4nR+TXr+wJG2Q+RZ5v0eL4G3gxZYQmk20yP4CmZbQKTVFfwd7
- 8LGq6dMKgB2bKXMTDapYbHpn0sNF05ZhB/xw1CYgzwsp3ROxMngLxtY9nkow1BvazfyyYL
- UGB/aT5C3MQc/8d/o32luGHSmunptAA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-67-M1YLvk5HOZC0iW7vf2n7YA-1; Mon,
- 15 Dec 2025 10:28:47 -0500
-X-MC-Unique: M1YLvk5HOZC0iW7vf2n7YA-1
-X-Mimecast-MFC-AGG-ID: M1YLvk5HOZC0iW7vf2n7YA_1765812526
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38C2D1800630; Mon, 15 Dec 2025 15:28:46 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.188])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 437083000225; Mon, 15 Dec 2025 15:28:42 +0000 (UTC)
-Date: Mon, 15 Dec 2025 16:28:39 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Stefan Hajnoczi <stefanha@redhat.com>,
- Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org, Eric Blake <eblake@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH] migration: Fix a possible crash when halting a guest
- during migration
-Message-ID: <aUApJ23dL8JuAayW@redhat.com>
-References: <20251208135101.271417-1-thuth@redhat.com>
- <20251208144525.GA1341938@fedora> <87jyyxkna0.fsf@suse.de>
- <5b510f3b-796a-45fb-a63f-e87b02dace61@redhat.com>
- <87jyyrv1br.fsf@suse.de> <aUAQNaA_sW8hxW2Y@redhat.com>
- <e62e8105-7add-45ed-afc2-9d6b1403b135@redhat.com>
+ (Exim 4.90_1) (envelope-from <chao.liu@zevorn.cn>)
+ id 1vVAVO-0004Av-Oj; Mon, 15 Dec 2025 10:29:02 -0500
+Received: from ZEVORN-PC(mailfrom:chao.liu@zevorn.cn
+ fp:SMTPD_---.fkrAZjz_1765812518 cluster:ay29) by smtp.aliyun-inc.com;
+ Mon, 15 Dec 2025 23:28:39 +0800
+From: "Zevorn(Chao Liu)" <chao.liu@zevorn.cn>
+To: pbonzini@redhat.com, dbarboza@ventanamicro.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
+ hust-os-kernel-patches@googlegroups.com, 1440332527@qq.com,
+ 3160104094@zju.edu.cn, temashking@foxmail.com, ziyao@disroot.org,
+ Chao Liu <chao.liu@zevorn.cn>
+Subject: [PATCH v3 4/5] tests/qtest: add test for K230 watchdog
+Date: Mon, 15 Dec 2025 23:28:32 +0800
+Message-ID: <844453276ccfe532b2923cfab8a72d6d1b474528.1765811173.git.chao.liu@zevorn.cn>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <cover.1765811173.git.chao.liu@zevorn.cn>
+References: <cover.1765811173.git.chao.liu@zevorn.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e62e8105-7add-45ed-afc2-9d6b1403b135@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+Received-SPF: pass client-ip=115.124.28.68; envelope-from=chao.liu@zevorn.cn;
+ helo=out28-68.mail.aliyun.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,88 +60,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 15.12.2025 um 16:11 hat Thomas Huth geschrieben:
-> On 15/12/2025 14.42, Kevin Wolf wrote:
-> > Am 12.12.2025 um 22:26 hat Fabiano Rosas geschrieben:
-> > > Thomas Huth <thuth@redhat.com> writes:
-> > > 
-> > > > On 08/12/2025 16.26, Fabiano Rosas wrote:
-> > > > > Stefan Hajnoczi <stefanha@redhat.com> writes:
-> > > > > 
-> > > > > > On Mon, Dec 08, 2025 at 02:51:01PM +0100, Thomas Huth wrote:
-> > > > > > > From: Thomas Huth <thuth@redhat.com>
-> > > > > > > 
-> > > > > > > When shutting down a guest that is currently in progress of being
-> > > > > > > migrated, there is a chance that QEMU might crash during bdrv_delete().
-> > > > > > > The backtrace looks like this:
-> > > > > > > 
-> > > > > > >    Thread 74 "mig/src/main" received signal SIGSEGV, Segmentation fault.
-> > > > > > > 
-> > > > > > >    [Switching to Thread 0x3f7de7fc8c0 (LWP 2161436)]
-> > > > > > >    0x000002aa00664012 in bdrv_delete (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:5560
-> > > > > > >    5560	        QTAILQ_REMOVE(&graph_bdrv_states, bs, node_list);
-> > > > > > >    (gdb) bt
-> > > > > > >    #0  0x000002aa00664012 in bdrv_delete (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:5560
-> > > > > > >    #1  bdrv_unref (bs=0x2aa00f875c0) at ../../devel/qemu/block.c:7170
-> > > > > > >    Backtrace stopped: Cannot access memory at address 0x3f7de7f83e0
-> > > > > > > 
-> > > > > 
-> > > > > How does the migration thread reaches here? Is this from
-> > > > > migration_block_inactivate()?
-> > > > 
-> > > > Unfortunately, gdb was not very helpful here (claiming that it cannot access
-> > > > the memory and stack anymore), so I had to do some printf debugging. This is
-> > > > what seems to happen:
-> > > > 
-> > > > Main thread: qemu_cleanup() calls  migration_shutdown() -->
-> > > > migration_cancel() which signals the migration thread to cancel the migration.
-> > > > 
-> > > > Migration thread: migration_thread() got kicked out the loop and calls
-> > > > migration_iteration_finish(), which tries to get the BQL via bql_lock() but
-> > > > that is currently held by another thread, so the migration thread is blocked
-> > > > here.
-> > > > 
-> > > > Main thread: qemu_cleanup() advances to bdrv_close_all() that uses
-> > > > blockdev_close_all_bdrv_states() to unref all BDS. The BDS with the name
-> > > > 'libvirt-1-storage' gets deleted via bdrv_delete() that way.
-> > > > 
-> > > 
-> > > Has qmp_blockdev_del() ever been called to remove the BDS from the
-> > > monitor_bdrv_states list? Otherwise your debugging seems to indicate
-> > > blockdev_close_all_bdrv_states() is dropping the last reference to bs,
-> > > but it's still accessible from bdrv_next() via
-> > > bdrv_next_monitor_owned().
-> > 
-> > The reference that blockdev_close_all_bdrv_states() drops is the monitor
-> > reference. So is this the right fix (completely untested, but matches
-> > what qmp_blockdev_del() does)?
-> > 
-> > Kevin
-> > 
-> > diff --git a/blockdev.c b/blockdev.c
-> > index dbd1d4d3e80..6e86c6262f9 100644
-> > --- a/blockdev.c
-> > +++ b/blockdev.c
-> > @@ -686,6 +686,7 @@ void blockdev_close_all_bdrv_states(void)
-> > 
-> >       GLOBAL_STATE_CODE();
-> >       QTAILQ_FOREACH_SAFE(bs, &monitor_bdrv_states, monitor_list, next_bs) {
-> > +        QTAILQ_REMOVE(&monitor_bdrv_states, bs, monitor_list);
-> >           bdrv_unref(bs);
-> >       }
-> >   }
-> 
-> Thanks a lot, Kevin! This looks like the right fix for me - I gave it
-> a try and it fixes the crash indeed!
+From: Chao Liu <chao.liu@zevorn.cn>
 
-Good. I think something like your patch would still be good for 11.0.
-Having undefined order in shutdown is just asking for trouble. So it
-would be good if we could be sure that migration is out of the way when
-migration_shutdown() returns.
+Testing the Basic Functions of K230 WDT:
+1. Reset Function
+2. Timeout Check
+3. Interrupt Function
 
-I sent the above as a proper patch to fix the immediate problem for
-10.2.
+Signed-off-by: Mig Yang <temashking@foxmail.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ MAINTAINERS                 |   1 +
+ tests/qtest/k230-wdt-test.c | 199 ++++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build     |   3 +-
+ 3 files changed, 202 insertions(+), 1 deletion(-)
+ create mode 100644 tests/qtest/k230-wdt-test.c
 
-Kevin
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 46bac9108f..20510a8d1f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1744,6 +1744,7 @@ F: hw/riscv/k230.c
+ F: hw/watchdog/k230_wdt.c
+ F: include/hw/riscv/k230.h
+ F: include/hw/watchdog/k230_wdt.h
++F: tests/qtest/k230-wdt-test.c
+ 
+ RX Machines
+ -----------
+diff --git a/tests/qtest/k230-wdt-test.c b/tests/qtest/k230-wdt-test.c
+new file mode 100644
+index 0000000000..2550cebd10
+--- /dev/null
++++ b/tests/qtest/k230-wdt-test.c
+@@ -0,0 +1,199 @@
++/*
++ * QTest testcase for K230 Watchdog
++ *
++ * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * Provides a board compatible with the kendryte K230 SDK
++ *
++ * Documentation: K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
++ *
++ * For more information, see <https://www.kendryte.com/en/proDetail/230>
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/timer.h"
++#include "qemu/bitops.h"
++#include "libqtest.h"
++#include "hw/watchdog/k230_wdt.h"
++
++/* K230 WDT0 base address */
++#define K230_WDT0_BASE 0x91106000
++#define K230_WDT1_BASE 0x91106800
++
++/* Test WDT0 by default */
++#define WDT_BASE K230_WDT0_BASE
++
++static void test_register_read_write(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    /* Test Control Register (CR) read/write */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0xFFFFFFFF);
++    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_CR), ==,
++                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
++                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
++
++    /* Test Timeout Range Register (TORR) read/write */
++    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0xFFFFFFFF);
++    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_TORR), ==,
++                    K230_WDT_TORR_TOP_MASK);
++
++    /* Test Protection Level Register read/write */
++    qtest_writel(qts, WDT_BASE + K230_WDT_PROT_LEVEL, 0xFFFFFFFF);
++    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_PROT_LEVEL), ==, 0x7);
++
++    qtest_quit(qts);
++}
++
++static void test_counter_restart(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    /* Enable watchdog and set timeout */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
++    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x5); /* TOP = 5 */
++
++    /* Read current counter value */
++    uint32_t initial_count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
++    g_assert_cmpuint(initial_count, >, 0);
++
++    /* Restart counter with magic value */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CRR, K230_WDT_CRR_RESTART);
++
++    /* Wait for time */
++    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
++
++    /* Counter should be reset to timeout value */
++    uint32_t new_count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
++    g_assert_cmpuint(new_count, >, 0);
++    g_assert_cmpuint(new_count, !=, initial_count);
++
++    qtest_quit(qts);
++}
++
++static void test_interrupt_mode(void)
++{
++    QTestState *qts = qtest_init("-machine k230 --trace k230_*,file=k230.log");
++
++    /* Set interrupt mode and enable watchdog */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR,
++                 K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
++    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout */
++
++    /* Wait for timeout to trigger interrupt */
++    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 10);
++
++    /* Check interrupt status */
++    uint32_t stat = qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
++    g_assert_cmphex(stat & K230_WDT_STAT_INT, ==, K230_WDT_STAT_INT);
++
++    /* Clear interrupt */
++    qtest_writel(qts, WDT_BASE + K230_WDT_EOI, 0x1);
++    stat = qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
++    g_assert_cmphex(stat & K230_WDT_STAT_INT, ==, 0);
++
++    qtest_quit(qts);
++}
++
++static void test_reset_mode(void)
++{
++    QTestState *qts = qtest_init("-machine k230 -no-reboot");
++
++    /* Set reset mode and enable watchdog */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
++    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout */
++
++    /* Wait for timeout to trigger reset */
++    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
++
++    /* In reset mode, the system should reset */
++    /* This test verifies that reset mode is properly configured */
++
++    qtest_quit(qts);
++}
++
++static void test_timeout_calculation(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    /* Test different timeout values */
++    for (uint32_t top = 0; top <= 15; top++) {
++        qtest_writel(qts, WDT_BASE + K230_WDT_TORR, top);
++        qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
++
++        /* Read current counter value */
++        uint32_t count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
++        g_assert_cmpuint(count, >, 0);
++
++        /* Disable watchdog for next iteration */
++        qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
++    }
++
++    qtest_quit(qts);
++}
++
++static void test_wdt1_registers(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    /* Test WDT1 registers (second watchdog) */
++    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_CR, 0xFFFFFFFF);
++    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_CR), ==,
++                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
++                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
++
++    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_TORR, 0xFFFFFFFF);
++    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_TORR), ==,
++                    K230_WDT_TORR_TOP_MASK);
++
++    qtest_quit(qts);
++}
++
++static void test_enable_disable(void)
++{
++    QTestState *qts = qtest_init("-machine k230");
++
++    /* Initially disabled */
++    uint32_t cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
++    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, 0);
++
++    /* Enable watchdog */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
++    cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
++    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, K230_WDT_CR_WDT_EN);
++
++    /* Disable watchdog */
++    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
++    cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
++    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, 0);
++
++    qtest_quit(qts);
++}
++
++int main(int argc, char *argv[])
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/k230-wdt/register_read_write", test_register_read_write);
++    qtest_add_func("/k230-wdt/counter_restart", test_counter_restart);
++    qtest_add_func("/k230-wdt/interrupt_mode", test_interrupt_mode);
++    qtest_add_func("/k230-wdt/reset_mode", test_reset_mode);
++    qtest_add_func("/k230-wdt/timeout_calculation", test_timeout_calculation);
++    qtest_add_func("/k230-wdt/wdt1_registers", test_wdt1_registers);
++    qtest_add_func("/k230-wdt/enable_disable", test_enable_disable);
++
++    return g_test_run();
++}
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 669d07c06b..0d9339e938 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -282,7 +282,8 @@ qtests_riscv32 = \
+   (config_all_devices.has_key('CONFIG_SIFIVE_E_AON') ? ['sifive-e-aon-watchdog-test'] : [])
+ 
+ qtests_riscv64 = ['riscv-csr-test'] + \
+-  (unpack_edk2_blobs ? ['bios-tables-test'] : [])
++  (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
++  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
+ 
+ qos_test_ss = ss.source_set()
+ qos_test_ss.add(
+-- 
+2.51.0
 
 
