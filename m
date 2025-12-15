@@ -4,96 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58982D5B172
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:51:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E91D41D74
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 07:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV3LR-0000VB-BG; Mon, 15 Dec 2025 02:50:13 -0500
+	id 1vV3MF-0000rS-7X; Mon, 15 Dec 2025 02:51:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vV3LP-0000Rs-IB
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:11 -0500
+ id 1vV3Lg-0000cd-8o
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:31 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vV3LN-0000iA-5d
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:11 -0500
+ id 1vV3Ld-0000mw-97
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 02:50:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765785008;
+ s=mimecast20190719; t=1765785024;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=rhRgZBDZXKiwx46WkvcU17DF2Qqr8XZ4jHsnYPyyOuY=;
- b=KDfGDX3w34ZW4Ako+PcrjoYHLHb+m7ORtcDhZ3PBO9mOHL5GtyAyY2lh9v/9Q7o63nL5jA
- +yfluBW7qvD6nU3XNunHIFb/+nop5P3BHBiqY+HphW4p/IJ0N9toJ85I2KoZ2P/CX0AFh9
- yn28M2Nu1dv6ASS4Vg9DfB4OArx2QC8=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rh8EAU3Vu8iISu05eCtJPhE7/fLdZf4qcNAXE0aot+8=;
+ b=CsC6PtTkeNO28d344CEuULZ+ol2T3fmtTJMqB4kJF52+BOWcvOzq6n0/FHxJSNdowirvG/
+ 7PQWuNfCMRzLzt62S6Uuurbs7PLCaitWLKZaI6wfJILT+qNUezCWIKUiwvUvul0Jy2FutG
+ jvfcBWX/WIThL06mqjPzX9Lh0K4Kjpc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-dzlsENvMMma6GIavcsQ4SQ-1; Mon, 15 Dec 2025 02:50:04 -0500
-X-MC-Unique: dzlsENvMMma6GIavcsQ4SQ-1
-X-Mimecast-MFC-AGG-ID: dzlsENvMMma6GIavcsQ4SQ_1765785004
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-430fcf10280so408712f8f.0
- for <qemu-devel@nongnu.org>; Sun, 14 Dec 2025 23:50:04 -0800 (PST)
+ us-mta-310-wPIdLr_hN1CjjbcE9ooZSQ-1; Mon, 15 Dec 2025 02:50:23 -0500
+X-MC-Unique: wPIdLr_hN1CjjbcE9ooZSQ-1
+X-Mimecast-MFC-AGG-ID: wPIdLr_hN1CjjbcE9ooZSQ_1765785022
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-477cf2230c8so30660195e9.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Dec 2025 23:50:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765785003; x=1766389803; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=rhRgZBDZXKiwx46WkvcU17DF2Qqr8XZ4jHsnYPyyOuY=;
- b=cUDfn6CB92rlH6mWTiOPYEItAqP2SzVBDjy5Gw/YhIj+cEoZ0OAraF+iNbbW7RdrEW
- Z25yFI6OnQgdBC/kWDp2c43As0jiVAqX8AL+32goMDQ/H7fvjrJFzstn5VTiBiIUUwKl
- YanjBnQax1J5FjnZ9ugVuZupZblL5xPNwE3fXXKe5t2e0L1KR7kmohN2C9Jhjyv4/B2K
- 6AJzpNpG7ougv+asCPGAB5lzvwS2T8f+xCj54ILzxM3G9/pGhlZvPaS14HEZg97u6AyM
- F2MbksZTaM620Y1MK7qvEh2c0mKVv+JGJFZpwJqylxOOFJ3lhLb8OKO2k0YsSeafwJtn
- oN1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765785003; x=1766389803;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1765785021; x=1766389821; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rhRgZBDZXKiwx46WkvcU17DF2Qqr8XZ4jHsnYPyyOuY=;
- b=PDnrGiz9Tllr3FWEIQUhACRwyEhYLNEsrAFxchWUP9xtTF/ynwmuGrNpcZOJhjwdXz
- 8/6lNBo/0DWT3tkL8QUoIFmOaCWIGqtJEqlRfoOvZ8az1hUFlyIH3yDS/9oSMyR0dTYS
- LRMbA0g2Bnk9UxM4txvvUvUnKWU49EdMLIPAVdmeIxKM//xqPM8IZrFfcb/ybqQfC4Cr
- 7GESfaTZEqBUNnvuHZXELYJIV953sE0vlJ2Rp/VgSny3e2JhBD/L6m17HH7qu176MPm2
- UIlBgbk6CKHFHr+1DrRRbK+mGTIIUETE+MzMTzV3OfHuVFDhv4zzdRyDCHRai1QbQ6Xy
- 87SQ==
-X-Gm-Message-State: AOJu0Yzm1MknHI+A1Te0V/z4/qmoc6sf8xr0g8u/h815xD7WfNnAS8Zg
- CdlWVN/3utsLluZxcnQJuVSdPMB0xPkqjSs+YgJQHIQ30e98fKh98auGfFi/7012ilr4x2AVUV1
- eWxN9maeWA8xyGbGO4EPQRWTHoPD+cTEe6mqFOxlRMzYCykwniBMgXGqBGXeXCg9mvg+S0q9DSq
- SRGIoFjcPVT3tOpiPBb6C44NMkuzA/yAwv+vLvc2Tu
-X-Gm-Gg: AY/fxX49uEsd/jiyfrMw9nljGsqv7jnuQBOewBxbfi4+W8s15k47KM2ejphNyHXkZie
- sp1teiCy6395DUBZZMN64uRvTygMvW2A2etLbJX+gf87ZjIZONyZraZteTqoNCGAya7i9wu83s0
- 967LX37Bf17OUXDztZECum2kxCKyjUeiLbD1wdKn00mhvH82+DijFyCuVpLjoqCNHw00GWAxPRV
- i9fiFhRC+44iFpIkCihtS4h146Ira00QRHF0glHmmmS71Ry/wxhtHZ4LeLgd0ah0+7uiieX9jBM
- Ax1PcX3cbA9Tlf/hRPQxcg2rDBBUx/5dzP5LU9vL/KNdjS5vFH7BgEiWXKbwOO4vloqRrxZD58N
- QixXCBDbrEdA7T+XwxuJZCzH436M1TXG8YTQ7rkJYO/5tzvbGvR+y6k+swTWalIX+/6l+zvgP32
- +tcG+OxsmrZb8W7QQ=
-X-Received: by 2002:a05:6000:1848:b0:430:f97a:6f43 with SMTP id
- ffacd0b85a97d-430f97a7049mr3814573f8f.53.1765785002653; 
- Sun, 14 Dec 2025 23:50:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHqzWkYCtIQMI05pCrS1XC2FNK/o+lp8XHVZDoel7bKB7gBh1YsDB/HKtBXjnGc+4FKCfjVyg==
-X-Received: by 2002:a05:6000:1848:b0:430:f97a:6f43 with SMTP id
- ffacd0b85a97d-430f97a7049mr3814541f8f.53.1765785002097; 
- Sun, 14 Dec 2025 23:50:02 -0800 (PST)
+ bh=Rh8EAU3Vu8iISu05eCtJPhE7/fLdZf4qcNAXE0aot+8=;
+ b=VDlyZAvxxyCmkT2QtWf3twcM/W5i6L90lmEZ1ki8ijVpbG1mRzBqx0I/rjlUTbMn5L
+ DXyQJ4VdXu6GQlX1m3GUkPSzbuk5qeqZjeuyZ3TxO11aJiEh6X95fm57IRAWlTkAQhy8
+ 2xuC9lpXvZAAhWvlP59jXjLXqFS4HhUHWnzQBVGAdqsb7pZJr6Ca3z+4nDUv3ByhBp7r
+ IiP9oFv8vh9pNXOeSh0AyT23xqM/TBXvaD8jXpIqT1YcTstCec7AoFj9+wgF6NOf1/XQ
+ Kx9BBEH2PoS/qJXQXRIYPSJDWsn/FmWvcN0aKjomPgXhSyiQDMWB5yD/58U8hzah84OS
+ bkEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765785021; x=1766389821;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Rh8EAU3Vu8iISu05eCtJPhE7/fLdZf4qcNAXE0aot+8=;
+ b=KWEPGcqNfBjPsrLFqiq4DZwCowoWnnTrZGlQxrdyEO/lArqiyobLPGswGufgUl37h1
+ gXwhkZZeltkHx7V+f1syDJw1UuFVb5dAxnoHKl9yz9+a4eC8AXD4uoiLZuJK/8zM5ffC
+ 4ZyPglVP9GNSOHOen4MY7ndGhcafI3WI1JwD/8L0rd+dD4UmPQOisSqgR5pxdOAX2b5W
+ kKXpPrGy7Cymq69/gO6FXKAlW7sDQBMKOfxk6vdvPYbfdbRb0zddscMcduIDJTz1/RzQ
+ 73AXWp/5dL230Txsgn2aGIHkVBXwrg99TFlhRbvPQaXhlV8hZWIjLWUDokFFG9jDNUgE
+ Pb6w==
+X-Gm-Message-State: AOJu0Yy/xVYc8QauU8HmD5ZoI+G8eh0cnju9eBDzVXwJ6eiX2QsR7Gp6
+ eImPr/S3F/KlMw4nTEhVD4lZPNvhahEwkEwen2uO8kC6KCSlmRirIHYMuxB60N6Bqs58LX7kJFb
+ eWiYL4E3FjSVV+KA8VEW0f5OpkfVVuxfOLCPlXfSFSDgyJrb2TfLQbC7CcDFshDfeLe+1fi3ER0
+ Ryno2TxoNJtnwanKMUX6ESMdesDZN1L8/t9q/MSwqV
+X-Gm-Gg: AY/fxX5130xfmgFaiB3ZHi6i5xmKqVn+nHcAiM4oapQrq8aMnSgACrnn8y/hWOTyUxF
+ 1RgjL/4t4SKGOp9eKLjSol+KWjL2oE020oO8Qi9YLBLm+NK6qMbCvWoT5+AblBAjL3+nzv8TL+6
+ nTBatYxM62KwDhMdjoDf6XDNbPw1nKRUkXaanhIkykug4ixp0DVV/qiERadQPNPJZwFI19Uoijv
+ yQ2ruomPwI/5lsAZWEgjiAfdWApJ5l9dWjF2RBY0XmlJxitrqE1XCCVieKFTMopotxgNEOYjq2v
+ 59jbSP41dtOB4R2ku+U/AF1vmCWbQFwz4oJyKhF83BfjO/hE7iJzXqEFB5AsLUpZkybNIDYLA3J
+ /aaZ0eyJRxQpV0NEWFbucW1/4JtLS10MGnrU8FR7whtIv9YWJ5WNhw79asu55+WgB5nAdTrGxUo
+ 6R/Z6myPub2GS8vec=
+X-Received: by 2002:a05:600c:a46:b0:477:58:7cf4 with SMTP id
+ 5b1f17b1804b1-47a8f8a7d03mr100417185e9.4.1765785019587; 
+ Sun, 14 Dec 2025 23:50:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFtv9ezhZRY3pkF6AFLP3UrJmNyaVU51P3R20WD4pyhJfihgmNoXy61W823BKutfB1Wsn/5MQ==
+X-Received: by 2002:a05:600c:a46:b0:477:58:7cf4 with SMTP id
+ 5b1f17b1804b1-47a8f8a7d03mr100416895e9.4.1765785019123; 
+ Sun, 14 Dec 2025 23:50:19 -0800 (PST)
 Received: from [192.168.10.48] ([151.95.145.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-42fa8b9b26fsm29771952f8f.40.2025.12.14.23.50.01
+ 5b1f17b1804b1-47a8f33d082sm67841095e9.0.2025.12.14.23.50.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Dec 2025 23:50:01 -0800 (PST)
+ Sun, 14 Dec 2025 23:50:16 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	marcandre.lureau@redhat.com
-Subject: [PATCH for 11.0 00/11] First batch of Meson/Rust build system changes
-Date: Mon, 15 Dec 2025 08:49:49 +0100
-Message-ID: <20251215075000.335043-1-pbonzini@redhat.com>
+Subject: [PATCH 06/11] rust: Meson now adds -Cdefault-linker-libraries
+Date: Mon, 15 Dec 2025 08:49:55 +0100
+Message-ID: <20251215075000.335043-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251215075000.335043-1-pbonzini@redhat.com>
+References: <20251215075000.335043-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -120,76 +123,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-By bumping the minimum supported version of Meson to 1.10.0 (at least
-when --enable-rust is used), C objects can be passed to Rust targets.
-This allows to simplify the build process, and possibly also to link
-the executables dynamically linking to Rust's libstd which makes them
-smaller.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ meson.build | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-The major snag here is that QEMU wants to be very explicit about the order
-of libraries on the command line.  rustc has a normally useful feature
-where it records dependent static libraries and adds them to the linker
-automatically, but for us it messes up libqemuutil.a's stubs mechanism.
-This is fixed (or worked around depending on how you see it) by patches
-4 and 5.
-
-Meson 1.10.0 also contains some bugfixes such that Rust can now also be
-added to the Windows and macOS CI jobs.  This reveals a few more bugs,
-such as the ones fixed in patch 1 and 8.
-
-Finally, Meson 1.10.0 improves Meson's embedded Cargo.toml/Cargo.lock
-interpreter, but those changes are still mostly internal and the
-interpreter cannot be used yet.  The required changes are planned for
-1.11.0; Marc-André already played with them for his GStreamer audio
-backend, and a couple more users are hanging out and helping on the
-#meson IRC channel, too.  Once this functionality is merged, it will
-replace a few hundreds lines of meson.build code and will make it simpler
-to add new devices.
-
-I still expect that the --enable-rust option will require bleeding
-edge Meson for a good part of next year.  However, as was the case for
-the original switch to Meson, this will smooth out and Meson will have
-improved much for the whole ecosystem.
-
-Paolo
-
-Marc-André Lureau (2):
-  cirrus/macos: enable Rust
-  gitlab-ci: enable rust for msys2-64bit
-
-Martin Kletzander (1):
-  rust: Do not link qemuutil into Rust rlibs
-
-Paolo Bonzini (8):
-  build: do not include @block.syms/@qemu.sys with modules disabled
-  tests/meson: do not reuse migration_files variable
-  bump meson wheel to 1.10.0
-  rust: only link the Rust part of the code into devices
-  rust: Meson now adds -Cdefault-linker-libraries
-  meson: let Meson handle mixed-language linking of Rust and C objects
-  rust: skip compilation if there are no system emulators
-  lcitool: enable Rust for Windows cross targets
-
- configure                                     |   4 +-
- meson.build                                   |  36 +++++++-----------
- .gitlab-ci.d/cirrus.yml                       |   2 +-
- .gitlab-ci.d/windows.yml                      |   7 +++-
- python/scripts/vendor.py                      |   4 +-
- python/wheels/meson-1.10.0-py3-none-any.whl   | Bin 0 -> 1057029 bytes
- pythondeps.toml                               |   4 +-
- rust/chardev/meson.build                      |   2 +-
- rust/hw/char/pl011/meson.build                |  18 +++++----
- rust/hw/timer/hpet/meson.build                |  18 ++++-----
- rust/meson.build                              |   7 ++++
- rust/qom/meson.build                          |   2 +-
- rust/util/meson.build                         |   4 +-
- scripts/rust/rust_root_crate.sh               |   1 +
- .../dockerfiles/fedora-win64-cross.docker     |   2 +
- tests/lcitool/refresh                         |   5 +--
- tests/qtest/meson.build                       |   6 +--
- 17 files changed, 64 insertions(+), 58 deletions(-)
- create mode 100644 python/wheels/meson-1.10.0-py3-none-any.whl
-
+diff --git a/meson.build b/meson.build
+index 02738c9765f..e2de3832ac3 100644
+--- a/meson.build
++++ b/meson.build
+@@ -136,13 +136,7 @@ if have_rust
+     rustc_lint_args += ['-Dwarnings', '-Funknown_lints']
+   endif
+ 
+-  # Apart from procedural macros, our Rust executables will often link
+-  # with C code, so include all the libraries that C code needs.  This
+-  # is safe; https://github.com/rust-lang/rust/pull/54675 says that
+-  # passing -nodefaultlibs to the linker "was more ideological to
+-  # start with than anything".
+-  add_project_arguments(rustc_lint_args +
+-      ['--cfg', 'MESON', '-C', 'default-linker-libraries'],
++  add_project_arguments(rustc_lint_args + ['--cfg', 'MESON'],
+       native: false, language: 'rust')
+   add_project_arguments(rustc_lint_args + ['--cfg', 'MESON'],
+       native: true, language: 'rust')
 -- 
 2.52.0
 
