@@ -4,66 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03619D41D74
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 03:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00834D41D74
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 06:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vUzQI-0001vu-6x; Sun, 14 Dec 2025 22:38:58 -0500
+	id 1vV1la-0000jQ-29; Mon, 15 Dec 2025 01:09:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vUzQF-0001vS-JR; Sun, 14 Dec 2025 22:38:55 -0500
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1vUzQB-0008AZ-Na; Sun, 14 Dec 2025 22:38:55 -0500
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAH6CTHgj9pjXV_AQ--.44228S2;
- Mon, 15 Dec 2025 11:38:47 +0800 (CST)
-Received: from [10.31.62.13] (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwC3DevCgj9pmAkMAA--.7881S2;
- Mon, 15 Dec 2025 11:38:43 +0800 (CST)
-Message-ID: <97afc636-d7b3-4146-acb5-3f4c292f792d@phytium.com.cn>
-Date: Mon, 15 Dec 2025 11:38:42 +0800
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vV1lR-0000j5-FI; Mon, 15 Dec 2025 01:08:57 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vV1lQ-0007ic-06; Mon, 15 Dec 2025 01:08:57 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BEKF0ol022513;
+ Mon, 15 Dec 2025 06:08:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=G7XRPLbm5kBlyrnYdVzIe7xO79/6yg
+ qEVKPMm8m9RCw=; b=DcA+DUrrfjsqOW+KvuXUIHIMd6uio1LZXoHGfATKjfvBh/
+ GsDA2Ch2Ork78Fo/uyoFYIZOoLHBClUh4og+AYDqMAJfdsNHtsb3gE/+tvZ64qVr
+ 1HQLBn013A3ih10/+bvG/uCfpa022eNPe0NY3tQTIyRAyK6XarxGE37amxW2oBw5
+ 8YwtAHKc36iNiGbWxIHHvbWhep+7curzuYrGpepc+A3nEXyPkg7X1soJaasfXWGS
+ EjCk36gGg1dTSD1pYDj/tXdFfpFdJe8KGHmEwt/v27HSaWM5bdbljHSrOP1mlwXE
+ XUj8ozNeAgotie/AkiMWjw0sGOobkJ8W6ckII21Q==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjkqsuf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Dec 2025 06:08:50 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BF68KYK022295;
+ Mon, 15 Dec 2025 06:08:50 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjkqsud-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Dec 2025 06:08:49 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BF211hm005675;
+ Mon, 15 Dec 2025 06:08:49 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4b1tgnkea5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 15 Dec 2025 06:08:49 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5BF68jms28967250
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 15 Dec 2025 06:08:45 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 62B4E20040;
+ Mon, 15 Dec 2025 06:08:45 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C570320049;
+ Mon, 15 Dec 2025 06:08:41 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.19.2]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 15 Dec 2025 06:08:41 +0000 (GMT)
+Date: Mon, 15 Dec 2025 11:38:39 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Caleb Schlossin <calebs@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, alistair@alistair23.me, kowal@linux.ibm.com,
+ chalapathi.v@linux.ibm.com, angeloj@linux.ibm.com
+Subject: Re: [PATCH 0/6] hw/ppc: Snapshot support for several ppc devices
+Message-ID: <2vux3irnfwzssnleomcymy42vgd45bsqtjprhg6ro53koxannx@k3i2yh4dz647>
+References: <20251211220926.2865972-1-calebs@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v6 4/4] tests/qtest: Add SMMUv3 bare-metal test using
- iommu-testdev
-To: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mostafa Saleh <smostafa@google.com>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
-References: <20251206155203.3015881-1-tangtao1634@phytium.com.cn>
- <20251206155203.3015881-5-tangtao1634@phytium.com.cn>
- <87ms3nvae3.fsf@suse.de>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <87ms3nvae3.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAfwC3DevCgj9pmAkMAA--.7881S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAFBWk-GiAB6wABsG
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoWxZFyrJr1UJryDKF45JFW3trb_yoWrGw4xpF
- yUCFyYkF4xJr1xC3ZxXws7AF1Sgrs7Jr1UCr1fKF1akwn0yryxtryxKrW5KrZ7JaykXF1r
- Z3Wvka4rWrn5XaDanT9S1TB71UUUUjUqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251211220926.2865972-1-calebs@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: xr2fTW9iuWeo_b-1WN4E77lsrp1-cw-u
+X-Authority-Analysis: v=2.4 cv=CLgnnBrD c=1 sm=1 tr=0 ts=693fa5f2 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=zwWZ8z_C5TZ1uqLLtyIA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-GUID: QQS4PoX6-VEbsh4fwL1raNoRTA3Xv4BZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAwOSBTYWx0ZWRfX5DUCQ9aGXBl/
+ a5mteN4sB1z5OAQH9WI7zXvIH1cHXZons1MTYwo4B66kQvawkbFZcGyY9Vvv7r9p/SWWa68zqXR
+ t2O26EsdTAW2bP+MJwNCwRqfCcWOVd8FQqk9fnUblF0eh/3S2LU/QNZEhV7eUCBII6Qwv2SvvK0
+ IJMVVq97eRXUNBcf8mvMBRCdKVa2eNs3m+BcKwlhTwXckg49AsmPCON6JTucqdV6lF78sOeZ5Bu
+ TK4RzlDEk/KL2pIGSbEGyDTZ0Lh9kB6gs5X3l06jDcLhby7dYSB4+YE5+a5JFP629nG/wxPTR4G
+ Cy0mOl2uD1Kkp5GBCAZWB75KYeTPafDzo6QGFhSrDUCT0/lZ6d1k6US4K72240ocqKnjx7TSO2a
+ dyCcUbOpCj/O7us0OCBTo1ia/d0byw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-14_07,2025-12-15_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130009
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -82,120 +124,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Fabiano,
+Hello Caleb,
 
-On 2025/12/13 02:10, Fabiano Rosas wrote:
-> Tao Tang <tangtao1634@phytium.com.cn> writes:
->
->> Add a qtest suite that validates ARM SMMUv3 translation without guest
->> firmware or OS. The tests leverage iommu-testdev to trigger DMA
->> operations and the qos-smmuv3 library to configure IOMMU translation
->> structures.
->>
->> This test suite targets the virt machine and covers:
->> - Stage 1 only translation (VA -> PA via CD page tables)
->> - Stage 2 only translation (IPA -> PA via STE S2 tables)
->> - Nested translation (VA -> IPA -> PA, Stage 1 + Stage 2)
->> - Design to extended to support multiple security spaces
->>      (Non-Secure, Secure, Root, Realm)
->>
->> Each test case follows this sequence:
->> 1. Initialize SMMUv3 with appropriate command/event queues
->> 2. Build translation tables (STE/CD/PTE) for the target scenario
->> 3. Configure iommu-testdev with IOVA and DMA attributes via MMIO
->> 4. Trigger DMA and validate successful translation
->> 5. Verify data integrity through a deterministic write-read pattern
->>
->> This bare-metal approach provides deterministic IOMMU testing with
->> minimal dependencies, making failures directly attributable to the SMMU
->> translation path.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>   tests/qtest/iommu-smmuv3-test.c | 131 ++++++++++++++++++++++++++++++++
->>   tests/qtest/meson.build         |   1 +
->>   2 files changed, 132 insertions(+)
->>   create mode 100644 tests/qtest/iommu-smmuv3-test.c
->>
->> diff --git a/tests/qtest/iommu-smmuv3-test.c b/tests/qtest/iommu-smmuv3-test.c
->> new file mode 100644
->> index 0000000000..96f66ee325
->> --- /dev/null
->> +++ b/tests/qtest/iommu-smmuv3-test.c
->> @@ -0,0 +1,131 @@
->> +/*
->> + * QTest for SMMUv3 with iommu-testdev
->> + *
->> + * This QTest file is used to test the SMMUv3 with iommu-testdev so that we can
->> + * test SMMUv3 without any guest kernel or firmware.
->> + *
->> + * Copyright (c) 2025 Phytium Technology
->> + *
->> + * Author:
->> + *  Tao Tang <tangtao1634@phytium.com.cn>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "libqtest.h"
->> +#include "libqos/pci.h"
->> +#include "libqos/generic-pcihost.h"
->> +#include "hw/pci/pci_regs.h"
->> +#include "hw/misc/iommu-testdev.h"
->> +#include "libqos/qos-smmuv3.h"
->> +
->> +#define DMA_LEN           4
->> +
->> +static QPCIDevice *setup_qtest_pci_device(QTestState *qts, QGenericPCIBus *gbus,
->> +                                          QPCIBar *bar)
->> +{
->> +    uint16_t vid, did;
->> +    QPCIDevice *dev = NULL;
->> +
->> +    qpci_init_generic(gbus, qts, NULL, false);
->> +
->> +    /* Find device by vendor/device ID to avoid slot surprises. */
->> +    for (int s = 0; s < 32 && !dev; s++) {
->> +        for (int fn = 0; fn < 8 && !dev; fn++) {
->> +            QPCIDevice *cand = qpci_device_find(&gbus->bus, QPCI_DEVFN(s, fn));
->> +            if (!cand) {
->> +                continue;
->> +            }
->> +            vid = qpci_config_readw(cand, PCI_VENDOR_ID);
->> +            did = qpci_config_readw(cand, PCI_DEVICE_ID);
->> +            if (vid == IOMMU_TESTDEV_VENDOR_ID &&
->> +                did == IOMMU_TESTDEV_DEVICE_ID) {
->> +                dev = cand;
->> +                g_test_message("Found iommu-testdev! devfn: 0x%x", cand->devfn);
->> +            } else {
->> +                g_free(cand);
->> +            }
->> +        }
->> +    }
-> This loop could be replaced with something simpler:
->
->    static void save_fn(QPCIDevice *dev, int devfn, void *data)
->    {
->        QPCIDevice **pdev = (QPCIDevice **) data;
->        *pdev = dev;
->    }
->
->    qpci_device_foreach(&gbus->bus, IOMMU_TESTDEV_VENDOR_ID,
->                        IOMMU_TESTDEV_DEVICE_ID, save_fn, &dev);
+On 25/12/11 04:09PM, Caleb Schlossin wrote:
+> Add snapshot support for several ppc devices for the powernv machines.
+> 
+> * Adding LPC, ADU, SPI, I2C, core, and chipTOD
+> 
+> No specific ordering of the patches as this is ongoing development to
+> support the PowerVM team. Additional patches for other (non-ppc) devices
+> will be coming in separate patch submissions.
 
+Thanks for the patches, can you tell more background on this ? Because
+afaik PowerNV doesn't seem to have vmstate mostly, are these enough to
+store/restore full PowerNV context ?
 
-Thanks for the suggestion.
+The patches look good overall, though I am yet to review in detail.
+Some minor nits, LPC only sets vmstate for Power10's LPC, and many
+devices vmstate don't have pre/post load handlers, assuming just the
+vmstate info is enough in those cases ?
 
-I looked into this pattern and it does seem to be the standard approach 
-in QEMU qtests (e.g. tests/qtest/ivshmem-test.c). I will update the code 
-accordingly in the next revision.
+Thanks,
+- Aditya G
 
-
-Regards,
-
-Tao
-
+> 
+> Thanks,
+> Caleb
+> 
+> Michael Kowal (1):
+>   hw/ppc: Add VMSTATE information for LPC model
+> 
+> Caleb Schlossin (2):
+>   hw/ppc: Add pnv_spi vmstate support
+>   hw/ppc: Add pnv_i2c vmstate support
+> 
+> Angelo Jaramillo (3):
+>   hw/ppc: pnv_adu.c added vmstate support
+>   hw/ppc: pnv_core.c add vmstate support
+>   hw/ppc: pnv_chiptod.c add vmstate support
+>   
+> 
+>  hw/ppc/pnv_adu.c             | 12 +++++++++++
+>  hw/ppc/pnv_chiptod.c         | 38 +++++++++++++++++++++++++++++++++++
+>  hw/ppc/pnv_core.c            | 22 ++++++++++++++++++++
+>  hw/ppc/pnv_i2c.c             | 11 ++++++++++
+>  hw/ppc/pnv_lpc.c             | 39 ++++++++++++++++++++++++++++++++++++
+>  hw/ssi/pnv_spi.c             | 27 +++++++++++++++++++++++++
+>  include/hw/ppc/pnv_chiptod.h |  2 ++
+>  7 files changed, 151 insertions(+)
+> 
+> -- 
+> 2.47.3
+> 
 
