@@ -4,111 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00834D41D74
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 06:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCFCD5B16C
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Dec 2025 06:51:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vV1la-0000jQ-29; Mon, 15 Dec 2025 01:09:06 -0500
+	id 1vV2QY-0007z0-55; Mon, 15 Dec 2025 01:51:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vV1lR-0000j5-FI; Mon, 15 Dec 2025 01:08:57 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vV2QV-0007yZ-99
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 01:51:23 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vV1lQ-0007ic-06; Mon, 15 Dec 2025 01:08:57 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BEKF0ol022513;
- Mon, 15 Dec 2025 06:08:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=G7XRPLbm5kBlyrnYdVzIe7xO79/6yg
- qEVKPMm8m9RCw=; b=DcA+DUrrfjsqOW+KvuXUIHIMd6uio1LZXoHGfATKjfvBh/
- GsDA2Ch2Ork78Fo/uyoFYIZOoLHBClUh4og+AYDqMAJfdsNHtsb3gE/+tvZ64qVr
- 1HQLBn013A3ih10/+bvG/uCfpa022eNPe0NY3tQTIyRAyK6XarxGE37amxW2oBw5
- 8YwtAHKc36iNiGbWxIHHvbWhep+7curzuYrGpepc+A3nEXyPkg7X1soJaasfXWGS
- EjCk36gGg1dTSD1pYDj/tXdFfpFdJe8KGHmEwt/v27HSaWM5bdbljHSrOP1mlwXE
- XUj8ozNeAgotie/AkiMWjw0sGOobkJ8W6ckII21Q==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjkqsuf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 15 Dec 2025 06:08:50 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BF68KYK022295;
- Mon, 15 Dec 2025 06:08:50 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjkqsud-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 15 Dec 2025 06:08:49 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BF211hm005675;
- Mon, 15 Dec 2025 06:08:49 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4b1tgnkea5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 15 Dec 2025 06:08:49 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5BF68jms28967250
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 15 Dec 2025 06:08:45 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 62B4E20040;
- Mon, 15 Dec 2025 06:08:45 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C570320049;
- Mon, 15 Dec 2025 06:08:41 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.19.2]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 15 Dec 2025 06:08:41 +0000 (GMT)
-Date: Mon, 15 Dec 2025 11:38:39 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Caleb Schlossin <calebs@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- milesg@linux.ibm.com, alistair@alistair23.me, kowal@linux.ibm.com,
- chalapathi.v@linux.ibm.com, angeloj@linux.ibm.com
-Subject: Re: [PATCH 0/6] hw/ppc: Snapshot support for several ppc devices
-Message-ID: <2vux3irnfwzssnleomcymy42vgd45bsqtjprhg6ro53koxannx@k3i2yh4dz647>
-References: <20251211220926.2865972-1-calebs@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vV2QT-0000u9-23
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 01:51:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1765781482; x=1797317482;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=CrcbGDYu4t1KGlBoxXFtJlX6+xdx6r7Dm7GHUltTqt8=;
+ b=Gm0SXn2ZujoX7fGbs6fup/5ls0ayc3NasBA73jNXZi9pDdEZsRASAHdm
+ 9JqplJpp/CieLWtvhIO1NUg4XdNkDo+NggQZkloUxLhHqwi3QsDxM65C5
+ 6r489/a7wErY0hoJMgpzHCgSJsU/NoTjociE8JwvcUUB73HKlzDfYBd1u
+ 08ilEU06gScOlu/JUNp+gHedsDzbGODytr1q0hRxou4VjytlQ4jzrAMaD
+ 5gbITaMQEGxXiJhiypflw9Zpf9uapN2Mh1aMpHrPKcQCuDDzp408NJQBH
+ RwELpk890x64QOkgj2YF6klRy411RLWA2nZkWhfydPgC9AtWt/DeLs5ca w==;
+X-CSE-ConnectionGUID: xEJgr/CPQIqpmq688IM1nQ==
+X-CSE-MsgGUID: AshaaLj9Q1KoRpfwzO6vcA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11642"; a="71304930"
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="71304930"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Dec 2025 22:51:20 -0800
+X-CSE-ConnectionGUID: YmK5jMJHR0qNOxLbD/m5qg==
+X-CSE-MsgGUID: oim5s8/XRQGA/dMTuqAwDg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,150,1763452800"; d="scan'208";a="197408727"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Dec 2025 22:51:16 -0800
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v9 02/19] intel_iommu: Delete RPS capability related
+ supporting code
+Date: Mon, 15 Dec 2025 01:50:26 -0500
+Message-ID: <20251215065046.86991-3-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20251215065046.86991-1-zhenzhong.duan@intel.com>
+References: <20251215065046.86991-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251211220926.2865972-1-calebs@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: xr2fTW9iuWeo_b-1WN4E77lsrp1-cw-u
-X-Authority-Analysis: v=2.4 cv=CLgnnBrD c=1 sm=1 tr=0 ts=693fa5f2 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=zwWZ8z_C5TZ1uqLLtyIA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: QQS4PoX6-VEbsh4fwL1raNoRTA3Xv4BZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAwOSBTYWx0ZWRfX5DUCQ9aGXBl/
- a5mteN4sB1z5OAQH9WI7zXvIH1cHXZons1MTYwo4B66kQvawkbFZcGyY9Vvv7r9p/SWWa68zqXR
- t2O26EsdTAW2bP+MJwNCwRqfCcWOVd8FQqk9fnUblF0eh/3S2LU/QNZEhV7eUCBII6Qwv2SvvK0
- IJMVVq97eRXUNBcf8mvMBRCdKVa2eNs3m+BcKwlhTwXckg49AsmPCON6JTucqdV6lF78sOeZ5Bu
- TK4RzlDEk/KL2pIGSbEGyDTZ0Lh9kB6gs5X3l06jDcLhby7dYSB4+YE5+a5JFP629nG/wxPTR4G
- Cy0mOl2uD1Kkp5GBCAZWB75KYeTPafDzo6QGFhSrDUCT0/lZ6d1k6US4K72240ocqKnjx7TSO2a
- dyCcUbOpCj/O7us0OCBTo1ia/d0byw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-14_07,2025-12-15_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 suspectscore=0
- phishscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130009
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.15;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,56 +87,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Caleb,
+RID-PASID Support(RPS) is not set in vIOMMU ECAP register, the supporting
+code is there but never takes effect.
 
-On 25/12/11 04:09PM, Caleb Schlossin wrote:
-> Add snapshot support for several ppc devices for the powernv machines.
-> 
-> * Adding LPC, ADU, SPI, I2C, core, and chipTOD
-> 
-> No specific ordering of the patches as this is ongoing development to
-> support the PowerVM team. Additional patches for other (non-ppc) devices
-> will be coming in separate patch submissions.
+Meanwhile, according to VTD spec section 3.4.3:
+"Implementations not supporting RID_PASID capability (ECAP_REG.RPS is 0b),
+use a PASID value of 0 to perform address translation for requests without
+PASID."
 
-Thanks for the patches, can you tell more background on this ? Because
-afaik PowerNV doesn't seem to have vmstate mostly, are these enough to
-store/restore full PowerNV context ?
+We should delete the supporting code which fetches RID_PASID field from
+scalable context entry and use 0 as RID_PASID directly, because RID_PASID
+field is ignored if no RPS support according to spec.
 
-The patches look good overall, though I am yet to review in detail.
-Some minor nits, LPC only sets vmstate for Power10's LPC, and many
-devices vmstate don't have pre/post load handlers, assuming just the
-vmstate info is enough in those cases ?
+This simplifies the code and doesn't bring any penalty.
 
-Thanks,
-- Aditya G
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+---
+ hw/i386/intel_iommu_internal.h |  2 +-
+ hw/i386/intel_iommu.c          | 89 +++++++++++-----------------------
+ 2 files changed, 28 insertions(+), 63 deletions(-)
 
-> 
-> Thanks,
-> Caleb
-> 
-> Michael Kowal (1):
->   hw/ppc: Add VMSTATE information for LPC model
-> 
-> Caleb Schlossin (2):
->   hw/ppc: Add pnv_spi vmstate support
->   hw/ppc: Add pnv_i2c vmstate support
-> 
-> Angelo Jaramillo (3):
->   hw/ppc: pnv_adu.c added vmstate support
->   hw/ppc: pnv_core.c add vmstate support
->   hw/ppc: pnv_chiptod.c add vmstate support
->   
-> 
->  hw/ppc/pnv_adu.c             | 12 +++++++++++
->  hw/ppc/pnv_chiptod.c         | 38 +++++++++++++++++++++++++++++++++++
->  hw/ppc/pnv_core.c            | 22 ++++++++++++++++++++
->  hw/ppc/pnv_i2c.c             | 11 ++++++++++
->  hw/ppc/pnv_lpc.c             | 39 ++++++++++++++++++++++++++++++++++++
->  hw/ssi/pnv_spi.c             | 27 +++++++++++++++++++++++++
->  include/hw/ppc/pnv_chiptod.h |  2 ++
->  7 files changed, 151 insertions(+)
-> 
-> -- 
-> 2.47.3
-> 
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 75bafdf0cd..36d04427dd 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -609,7 +609,7 @@ typedef struct VTDRootEntry VTDRootEntry;
+ #define VTD_CTX_ENTRY_LEGACY_SIZE     16
+ #define VTD_CTX_ENTRY_SCALABLE_SIZE   32
+ 
+-#define VTD_SM_CONTEXT_ENTRY_RID2PASID_MASK 0xfffff
++#define PASID_0                             0
+ #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(aw)  (0x1e0ULL | ~VTD_HAW_MASK(aw))
+ #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
+ #define VTD_SM_CONTEXT_ENTRY_PRE            0x10ULL
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index ab7afdbf3d..cc55a68ae7 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -41,8 +41,6 @@
+ #include "trace.h"
+ 
+ /* context entry operations */
+-#define VTD_CE_GET_RID2PASID(ce) \
+-    ((ce)->val[1] & VTD_SM_CONTEXT_ENTRY_RID2PASID_MASK)
+ #define VTD_CE_GET_PASID_DIR_TABLE(ce) \
+     ((ce)->val[0] & VTD_PASID_DIR_BASE_ADDR_MASK)
+ #define VTD_CE_GET_PRE(ce) \
+@@ -958,15 +956,12 @@ static int vtd_ce_get_pasid_entry(IntelIOMMUState *s, VTDContextEntry *ce,
+                                   VTDPASIDEntry *pe, uint32_t pasid)
+ {
+     dma_addr_t pasid_dir_base;
+-    int ret = 0;
+ 
+     if (pasid == PCI_NO_PASID) {
+-        pasid = VTD_CE_GET_RID2PASID(ce);
++        pasid = PASID_0;
+     }
+     pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
+-    ret = vtd_get_pe_from_pasid_table(s, pasid_dir_base, pasid, pe);
+-
+-    return ret;
++    return vtd_get_pe_from_pasid_table(s, pasid_dir_base, pasid, pe);
+ }
+ 
+ static int vtd_ce_get_pasid_fpd(IntelIOMMUState *s,
+@@ -980,7 +975,7 @@ static int vtd_ce_get_pasid_fpd(IntelIOMMUState *s,
+     VTDPASIDEntry pe;
+ 
+     if (pasid == PCI_NO_PASID) {
+-        pasid = VTD_CE_GET_RID2PASID(ce);
++        pasid = PASID_0;
+     }
+     pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
+ 
+@@ -1520,17 +1515,15 @@ static inline int vtd_context_entry_rsvd_bits_check(IntelIOMMUState *s,
+     return 0;
+ }
+ 
+-static int vtd_ce_rid2pasid_check(IntelIOMMUState *s,
+-                                  VTDContextEntry *ce)
++static int vtd_ce_pasid_0_check(IntelIOMMUState *s, VTDContextEntry *ce)
+ {
+     VTDPASIDEntry pe;
+ 
+     /*
+      * Make sure in Scalable Mode, a present context entry
+-     * has valid rid2pasid setting, which includes valid
+-     * rid2pasid field and corresponding pasid entry setting
++     * has valid pasid entry setting at PASID_0.
+      */
+-    return vtd_ce_get_pasid_entry(s, ce, &pe, PCI_NO_PASID);
++    return vtd_ce_get_pasid_entry(s, ce, &pe, PASID_0);
+ }
+ 
+ /* Map a device to its corresponding domain (context-entry) */
+@@ -1591,15 +1584,11 @@ static int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
+         }
+     } else {
+         /*
+-         * Check if the programming of context-entry.rid2pasid
+-         * and corresponding pasid setting is valid, and thus
+-         * avoids to check pasid entry fetching result in future
+-         * helper function calling.
++         * Check if the programming of pasid setting of PASID_0
++         * is valid, and thus avoids to check pasid entry fetching
++         * result in future helper function calling.
+          */
+-        ret_fr = vtd_ce_rid2pasid_check(s, ce);
+-        if (ret_fr) {
+-            return ret_fr;
+-        }
++        return vtd_ce_pasid_0_check(s, ce);
+     }
+ 
+     return 0;
+@@ -2108,7 +2097,6 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+     bool reads = true;
+     bool writes = true;
+     uint8_t access_flags, pgtt;
+-    bool rid2pasid = (pasid == PCI_NO_PASID) && s->root_scalable;
+     VTDIOTLBEntry *iotlb_entry;
+     uint64_t xlat, size;
+ 
+@@ -2120,21 +2108,23 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+ 
+     vtd_iommu_lock(s);
+ 
+-    cc_entry = &vtd_as->context_cache_entry;
++    if (pasid == PCI_NO_PASID && s->root_scalable) {
++        pasid = PASID_0;
++    }
+ 
+-    /* Try to fetch pte from IOTLB, we don't need RID2PASID logic */
+-    if (!rid2pasid) {
+-        iotlb_entry = vtd_lookup_iotlb(s, source_id, pasid, addr);
+-        if (iotlb_entry) {
+-            trace_vtd_iotlb_page_hit(source_id, addr, iotlb_entry->pte,
+-                                     iotlb_entry->domain_id);
+-            pte = iotlb_entry->pte;
+-            access_flags = iotlb_entry->access_flags;
+-            page_mask = iotlb_entry->mask;
+-            goto out;
+-        }
++    /* Try to fetch pte from IOTLB */
++    iotlb_entry = vtd_lookup_iotlb(s, source_id, pasid, addr);
++    if (iotlb_entry) {
++        trace_vtd_iotlb_page_hit(source_id, addr, iotlb_entry->pte,
++                                 iotlb_entry->domain_id);
++        pte = iotlb_entry->pte;
++        access_flags = iotlb_entry->access_flags;
++        page_mask = iotlb_entry->mask;
++        goto out;
+     }
+ 
++    cc_entry = &vtd_as->context_cache_entry;
++
+     /* Try to fetch context-entry from cache first */
+     if (cc_entry->context_cache_gen == s->context_cache_gen) {
+         trace_vtd_iotlb_cc_hit(bus_num, devfn, cc_entry->context_entry.hi,
+@@ -2171,10 +2161,6 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+         cc_entry->context_cache_gen = s->context_cache_gen;
+     }
+ 
+-    if (rid2pasid) {
+-        pasid = VTD_CE_GET_RID2PASID(&ce);
+-    }
+-
+     /*
+      * We don't need to translate for pass-through context entries.
+      * Also, let's ignore IOTLB caching as well for PT devices.
+@@ -2200,19 +2186,6 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+         return true;
+     }
+ 
+-    /* Try to fetch pte from IOTLB for RID2PASID slow path */
+-    if (rid2pasid) {
+-        iotlb_entry = vtd_lookup_iotlb(s, source_id, pasid, addr);
+-        if (iotlb_entry) {
+-            trace_vtd_iotlb_page_hit(source_id, addr, iotlb_entry->pte,
+-                                     iotlb_entry->domain_id);
+-            pte = iotlb_entry->pte;
+-            access_flags = iotlb_entry->access_flags;
+-            page_mask = iotlb_entry->mask;
+-            goto out;
+-        }
+-    }
+-
+     if (s->flts && s->root_scalable) {
+         ret_fr = vtd_iova_to_flpte(s, &ce, addr, is_write, &pte, &level,
+                                    &reads, &writes, s->aw_bits, pasid);
+@@ -2475,20 +2448,14 @@ static void vtd_iotlb_page_invalidate_notify(IntelIOMMUState *s,
+         ret = vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
+                                        vtd_as->devfn, &ce);
+         if (!ret && domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
+-            uint32_t rid2pasid = PCI_NO_PASID;
+-
+-            if (s->root_scalable) {
+-                rid2pasid = VTD_CE_GET_RID2PASID(&ce);
+-            }
+-
+             /*
+              * In legacy mode, vtd_as->pasid == pasid is always true.
+              * In scalable mode, for vtd address space backing a PCI
+              * device without pasid, needs to compare pasid with
+-             * rid2pasid of this device.
++             * PASID_0 of this device.
+              */
+             if (!(vtd_as->pasid == pasid ||
+-                  (vtd_as->pasid == PCI_NO_PASID && pasid == rid2pasid))) {
++                  (vtd_as->pasid == PCI_NO_PASID && pasid == PASID_0))) {
+                 continue;
+             }
+ 
+@@ -2993,9 +2960,7 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
+         if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
+                                       vtd_as->devfn, &ce) &&
+             domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
+-            uint32_t rid2pasid = VTD_CE_GET_RID2PASID(&ce);
+-
+-            if ((vtd_as->pasid != PCI_NO_PASID || pasid != rid2pasid) &&
++            if ((vtd_as->pasid != PCI_NO_PASID || pasid != PASID_0) &&
+                 vtd_as->pasid != pasid) {
+                 continue;
+             }
+-- 
+2.47.1
+
 
