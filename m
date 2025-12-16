@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D4E2D637B3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDF4DD64060
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 23:53:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVenH-0001GY-5h; Tue, 16 Dec 2025 18:49:27 -0500
+	id 1vVenH-0001Gd-NF; Tue, 16 Dec 2025 18:49:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen0-0001BQ-Vi
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen0-0001BK-UK
  for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:13 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVemw-0006lF-Q6
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVemw-0006lM-Q9
  for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
@@ -24,16 +24,17 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=HVrHmCLtKG/li6bva9ES51CEQVlXbEoSxOKkY91hKRw=; b=jiXqVZeokxRuI4G
- KSk/+NWnTuJ4gEQt0LWCOz+WdPRCkCCI08AC0nuQxwiOsVMYLePg9EYUQdg2fnn27/f0/oWptOF8m
- 2Xb5yHGQdJdfCF65fT36EsxuP/pG+OBnRlENDc0c43nxEKhMJUJCa9oUfSkvKbXTWFlczQWDGfOim
- oM=;
-Date: Wed, 17 Dec 2025 00:51:06 +0100
-Subject: [PATCH 01/14] hw/riscv: Register generic riscv[32|64] QOM interfaces
+ List-Help; bh=Lh6q/PRs+COIODpbn3Lbfbr1eCux7qx9JaD+WFn/UEc=; b=pEIiO57eE1ywOIw
+ pFImcnDlO3pk9M6PDmUx8u1Fl8pb72WTSztTRMA8Q11FKOjDGz4xDrzjuShg7CP+cYxisOuvr3bD2
+ 1XnaKGX04s9X+doBqszDgPWh4O/CdxMuwUMmZ8rtkWGEx9kcglQnvcptIioq7wwd6/wpT4bF0ANwn
+ UQ=;
+Date: Wed, 17 Dec 2025 00:51:07 +0100
+Subject: [PATCH 02/14] hw/riscv: Add macros and globals for simplifying
+ machine definitions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251217-hw-riscv-cpu-int-v1-1-d24a4048d3aa@rev.ng>
+Message-Id: <20251217-hw-riscv-cpu-int-v1-2-d24a4048d3aa@rev.ng>
 References: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
 In-Reply-To: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
 To: qemu-devel@nongnu.org
@@ -65,68 +66,82 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Defines generic 32- and 64-bit riscv machine interfaces for machines to
-implement.
+Adds macros and global interfaces for defining machines available only
+in qemu-system-riscv32, qemu-system-riscv64, or both.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- include/hw/riscv/machines-qom.h | 20 ++++++++++++++++++++
- target-info-qom.c               |  9 +++++++++
- 2 files changed, 29 insertions(+)
+ include/hw/riscv/machines-qom.h | 26 ++++++++++++++++++++++++++
+ target/riscv/machine.c          | 17 +++++++++++++++++
+ 2 files changed, 43 insertions(+)
 
 diff --git a/include/hw/riscv/machines-qom.h b/include/hw/riscv/machines-qom.h
-new file mode 100644
-index 0000000000..6e2c542c87
---- /dev/null
+index 6e2c542c87..2254b2dbcc 100644
+--- a/include/hw/riscv/machines-qom.h
 +++ b/include/hw/riscv/machines-qom.h
-@@ -0,0 +1,20 @@
+@@ -17,4 +17,30 @@
+ #define TYPE_TARGET_RISCV64_MACHINE \
+         "target-info-riscv64-machine"
+ 
 +/*
-+ * QOM type definitions for riscv32 / riscv64 machines
-+ *
-+ *  Copyright (c) rev.ng Labs Srl.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Interfaces specifiying wether a given QOM object is available in
++ * qemu-system-riscv32, qemu-riscv-riscv64, or both.
 + */
 +
-+#ifndef HW_RISCV_MACHINES_QOM_H
-+#define HW_RISCV_MACHINES_QOM_H
++extern InterfaceInfo riscv32_machine_interfaces[];
++extern InterfaceInfo riscv64_machine_interfaces[];
++extern InterfaceInfo riscv32_64_machine_interfaces[];
 +
-+#include "hw/boards.h"
++/*
++ * Helper macros for defining machines available in qemu-system-riscv32,
++ * qemu-system-riscv64, or both.
++ */
 +
-+#define TYPE_TARGET_RISCV32_MACHINE \
-+        "target-info-riscv32-machine"
++#define DEFINE_MACHINE_RISCV32(namestr, machine_initfn) \
++        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
++                                            riscv32_machine_interfaces)
 +
-+#define TYPE_TARGET_RISCV64_MACHINE \
-+        "target-info-riscv64-machine"
++#define DEFINE_MACHINE_RISCV64(namestr, machine_initfn) \
++        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
++                                            riscv64_machine_interfaces)
 +
-+#endif
-diff --git a/target-info-qom.c b/target-info-qom.c
-index 7fd58d2481..aaaebd55c7 100644
---- a/target-info-qom.c
-+++ b/target-info-qom.c
-@@ -9,6 +9,7 @@
- #include "qemu/osdep.h"
- #include "qom/object.h"
- #include "hw/arm/machines-qom.h"
++#define DEFINE_MACHINE_RISCV32_64(namestr, machine_initfn) \
++        DEFINE_MACHINE_WITH_INTERFACE_ARRAY(namestr, machine_initfn, \
++                                            riscv32_64_machine_interfaces)
++
+ #endif
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 13eb292c4a..3d2e3968fd 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -23,6 +23,7 @@
+ #include "migration/cpu.h"
+ #include "exec/icount.h"
+ #include "target/riscv/debug.h"
 +#include "hw/riscv/machines-qom.h"
  
- static const TypeInfo target_info_types[] = {
-     {
-@@ -19,6 +20,14 @@ static const TypeInfo target_info_types[] = {
-         .name           = TYPE_TARGET_AARCH64_MACHINE,
-         .parent         = TYPE_INTERFACE,
-     },
-+    {
-+        .name           = TYPE_TARGET_RISCV32_MACHINE,
-+        .parent         = TYPE_INTERFACE,
-+    },
-+    {
-+        .name           = TYPE_TARGET_RISCV64_MACHINE,
-+        .parent         = TYPE_INTERFACE,
-+    },
+ static bool pmp_needed(void *opaque)
+ {
+@@ -503,3 +504,19 @@ const VMStateDescription vmstate_riscv_cpu = {
+         NULL
+     }
  };
- 
- DEFINE_TYPES(target_info_types)
++
++InterfaceInfo riscv32_machine_interfaces[] = {
++    { TYPE_TARGET_RISCV32_MACHINE },
++    { }
++};
++
++InterfaceInfo riscv64_machine_interfaces[] = {
++    { TYPE_TARGET_RISCV64_MACHINE },
++    { }
++};
++
++InterfaceInfo riscv32_64_machine_interfaces[] = {
++    { TYPE_TARGET_RISCV32_MACHINE },
++    { TYPE_TARGET_RISCV64_MACHINE },
++    { }
++};
 
 -- 
 2.51.0
