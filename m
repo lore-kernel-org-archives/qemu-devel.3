@@ -4,105 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 506C7D637A9
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 20:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36181D5E374
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 21:01:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVbxB-0007h4-Ky; Tue, 16 Dec 2025 15:47:29 -0500
+	id 1vVcA6-0001RV-L6; Tue, 16 Dec 2025 16:00:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVbxA-0007gh-88
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 15:47:28 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVbx8-0004W0-Rp
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 15:47:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765918045;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3n//CUYgcmIzmvtThC+mgA/3gCtIX8trouGE3a27CE0=;
- b=IACnsTepyKjXj881yzqHNQKA3YLBQGOldFXZaeFMo1HlHrZDPKVCcOpZssjsHy2OKVUKZk
- U1pwhRP0+uqumQ3TXuQ5xzA9XntWOonFhzeaJMm1hdZjxhLcQTVrf9UpD/xuyI0nT9H0gG
- WF/zMeEiomX603Z02NfQ3s+TYJXqYP0=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-Xn-0wgfCMDqds-1zW5hNcw-1; Tue, 16 Dec 2025 15:47:06 -0500
-X-MC-Unique: Xn-0wgfCMDqds-1zW5hNcw-1
-X-Mimecast-MFC-AGG-ID: Xn-0wgfCMDqds-1zW5hNcw_1765918026
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4f1dea13d34so84629481cf.1
- for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 12:47:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <cyril.leclerc@subnoto.com>)
+ id 1vVb3Y-0004Kr-Va
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 14:50:02 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cyril.leclerc@subnoto.com>)
+ id 1vVb3W-0007MV-29
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 14:50:00 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-b79e7112398so992452166b.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 11:49:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765918026; x=1766522826; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=3n//CUYgcmIzmvtThC+mgA/3gCtIX8trouGE3a27CE0=;
- b=bYElZqtCoaDtb22zQg6uvdUn5vYW2YlsjiGOPO93ImfoMPa/u0W+iMrOaEQW4adWKK
- VKTYlJKKWV/Z9a/EpQ4/ds3SCdnOGxrUdEg6ZTdALB8L8GvtVclHkn2ABk6r3/yVsEmH
- xAV4Zj52nuM9dqdpkeHZlQvW0IQ6ZpY+w1LmZHvegViwEZTOzXZyr2h9Q1kaLQERfKRR
- twgaRZhpMg2bHm5INsCLV54D5SwZYmJ3cOLqB8514KRq4ZPAISe9sfVtgTcfbsyoTsSP
- c124LfPetoicUi4gcjEif5czNureu3Bp0J2GwDwGcb/OjQ+pi/cHx9JxQHyHTUT7NU49
- h8qQ==
+ d=subnoto-com.20230601.gappssmtp.com; s=20230601; t=1765914594; x=1766519394;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YtFSQzS8+7Iy+4YrT1DbnI6bk/rrIAZ1H9KtkCUzPUM=;
+ b=WJZoQvN3DEADdnygLnjtOqLctfdVSjdTcgjT+l8mNtXYpi6ZdfWDC+btIxsuwhb2yg
+ GBppja8fTHhuM01fCy53ux49rwcnMje0V5V/ea/TEC6cAxDdKLyzBnxk0zvs7QttbeEq
+ Q1BS7egkjwFDxqulkeqYUVfD7t+kGNk61xzMk1peiofmep/EZLb/DFW5BiBQmmHRxdP7
+ eGWh85wHsHA3UpNd2CjlMWYyoBlT2eIm5YbCE0MGlWrcEng9XrWDTfNISch/1wjj8bQf
+ XPAOgCB7ZL55nqKcMVKv/w12mliQt0Or22oQBKihNtReJCo01A6ERPbsWRUsCOpxwOka
+ 2cqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765918026; x=1766522826;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3n//CUYgcmIzmvtThC+mgA/3gCtIX8trouGE3a27CE0=;
- b=TLx04zM2rhxhfIuUofZyYvetUjIom6FNNdyhStJsMz9Xliv/Gqy0Z53W9A2LhnaWpV
- m2JN0qIPFAlGr27ovnbxOvPS0Bjuc2BapLdKfNK3Uy132VCq7qIbpO5TPmRZ/KAUU4tH
- yZsbioERcw6TsmttqRyN7KJSV+GDD/Cb8GFvBPZPGgDB+AO+F2YiO74+K4Bzf+lNKt0v
- 2uhFGpjEX4JuXGGievvXw6qqGJfGhnbWFH+zQE5DK7QRfkxkdSKtaaSeU+0JjVfy2KtH
- CLOM3JJJxDE9R0ejboNmErjt0U8w1aTxp0jP1pcI1m+syF9C4iVt0IpcvbzYK4O/Lc5t
- p2Cg==
-X-Gm-Message-State: AOJu0Yz6bVqJZSZMsnnzPZXrTYLI3qt2VFQh1YukFHHTF7J1AkKPv/3k
- Ir19eFI4PFi6gAdYDQA6GdoYsK2HjtscosX5ROdAMR3tRnRudjR79baJb2QuqEFQy2nXPO8j3AB
- DFa3W+9Af0bIMnmjz192MfK2jaOwmh59y7Ren+gKhJZZO8k+VNfg3t/22
-X-Gm-Gg: AY/fxX5fAmp5vRIB+ODjVqsLQalhPEkfe6DExcMSYy0lC4Xi/M2kZ6M5UApBhWdWj7a
- meU4p+EjCfUGmpOPaekiokDsYotg1lM2deuT399sqgxj6AIq3F/47qST/+cFtBZvsmyY+EadNaz
- tCubL3acuYNrlQCT7uS26ZjR26KdUwd0KzxAvBi2TLMT9YLdVfXa8jbP6QeluQTskELdtQnpIUt
- BZSGmE/bUYylKPtRQwtwf16FjTyV/XbzN6PMaWRKxkwoClqnEHFTvFBg/w2ICLX24gcEquLL2fB
- rfOuZINFbP972+ADEyW0oI9wFQrpS5uHouY36Tbvy4nlgc4H1UC3MMxIRgQcJGD18sF9Xhb5N0q
- 79/E=
-X-Received: by 2002:ac8:5156:0:b0:4f1:e8f1:cbda with SMTP id
- d75a77b69052e-4f1e8f1d29fmr118131111cf.54.1765918026022; 
- Tue, 16 Dec 2025 12:47:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEvgH8Sc0aHpJq/WtMV0rWyope8hy55KOYWR4UuGDeAxC3VPL58aNdSy17drhKUn6uzHFCEsA==
-X-Received: by 2002:ac8:5156:0:b0:4f1:e8f1:cbda with SMTP id
- d75a77b69052e-4f1e8f1d29fmr118130781cf.54.1765918025433; 
- Tue, 16 Dec 2025 12:47:05 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4f345c31460sm22958061cf.17.2025.12.16.12.47.04
+ d=1e100.net; s=20230601; t=1765914594; x=1766519394;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YtFSQzS8+7Iy+4YrT1DbnI6bk/rrIAZ1H9KtkCUzPUM=;
+ b=I36AJxHkHnN2xQ2Dx0i4FRvOjO7VsMJjauOHKO1GAJL2Wamt5fOX7+wX3iepZe7T+N
+ 0mIqYizd62gMWig87VN+ZgIsR9fxppM0jaUrYbgOyVDl38+MpcvG5k64tKxu4iEInpvV
+ myVZ9VugJhAMzROewzY5Sw5QW9Jb8hmCSv9WwBSYmFvilDzpuWP66/GhBpEn0rPjZZ3a
+ w09kDzE7AmNjFMDwBEpmYT8m1vMJGftKuZqSNhEfDwaSm3q/AQ3j99qBZ3xojYs7grQN
+ RcKm1vK4wx6qCzEX3ci9Sb4bvmHbMknk345vHp3RNRs8iyWQD7bFBV7vmrrRJWMJuYI6
+ Ff6w==
+X-Gm-Message-State: AOJu0YyRaK2J9H8dMvcYO/G7uVKveiTnkkVCKqyr2EuBIM/f0faTvSx4
+ IgEboPKT0rVUtOh6CEKsMTJPR0hT0LiL8OFbKGs10W0eOu59YuklMcT9ZHpzna12drsJQnieNfH
+ RMEMf
+X-Gm-Gg: AY/fxX5nUbNWwf2CL51gzUROlXoQP9NZWys4tMyFY4cihm/ElACHItz7j+afm37RHms
+ M8ouJ/cOUB2vCgZ99Ab6jqwQed2Zm2jSSQ/MKFtrE6khRv1vS3bTN04M7RRFV+xuceNstAi13N4
+ E5qYqFsjlSCP+PgDkgi+VjWolhNopwM6sjtk4cvr1vtGsgPFeK0hSr/iROQAddj4niIFYc1dSa7
+ EZlpTl6lfw+U+2PRRrVy9UcxBuQUpOO3KpqF37SWAtWn10Fzcxofj6YKJ8T7Qx0Anp3weMcPYBo
+ NWosX1+1CgsS7ZvtN0OqEmp1gkSzHpelRzShNgLZ888vgKktSm6M8dnr4rjdgeaqbriTZDllBIR
+ xGadSXSWLOH6tnQZrRJrKSUg9OegcPvunil1OBiSXJNbg5WP/E0MofeHqVNUIagcdXwJK3ub8c7
+ 0zkH3lYTqoZxqehDVC4DnPGDwHrJ4whGl8TXmmj/X5EbU1urtCyIfQvUvvKbN4SqzIGbka0/dYE
+ 1e7IipY+XHibnMgumS88GUf4QVz+UF3NONEeTJLF27zq46NUdC5g32aiXC+RjFzmyOHALiunmBC
+ ugeLQw==
+X-Google-Smtp-Source: AGHT+IE6as294FLHdBuDb+RV+hYfSc+6vjSeLol4cTEkAMmtVNwCKfyKdZqUDVZ3mdaenuKTiVDUBw==
+X-Received: by 2002:a17:907:969e:b0:b71:cec2:d54 with SMTP id
+ a640c23a62f3a-b7d23a80cdcmr1448843866b.57.1765914594250; 
+ Tue, 16 Dec 2025 11:49:54 -0800 (PST)
+Received: from
+ coder-e3a4a9b1-8b67-433d-8bfa-83dcda1c6c7d-85f799c49c-trc2n.coder.svc.cluster.local
+ (195-154-137-126.rev.poneytelecom.eu. [195.154.137.126])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b7cfa5d1e89sm1748574266b.69.2025.12.16.11.49.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Dec 2025 12:47:04 -0800 (PST)
-Date: Tue, 16 Dec 2025 15:47:03 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com
-Subject: Re: [PATCH v3 17/51] migration: Use QAPI_MERGE in
- migrate_params_test_apply
-Message-ID: <aUHFR0bhNAVEIJG7@x1.local>
-References: <20251215220041.12657-1-farosas@suse.de>
- <20251215220041.12657-18-farosas@suse.de>
+ Tue, 16 Dec 2025 11:49:54 -0800 (PST)
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cyril Leclerc <cyril.leclerc@subnoto.com>
+Subject: [PATCH] hw/i386/microvm: account for SEV c-bit in 64 bit PCI MMIO hole
+Date: Tue, 16 Dec 2025 19:49:53 +0000
+Message-ID: <20251216194953.1183260-1-cyril.leclerc@subnoto.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251215220041.12657-18-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=cyril.leclerc@subnoto.com; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 16 Dec 2025 16:00:37 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -114,68 +103,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Cyril Leclerc <cyril.leclerc@subnoto.com>
+From:  Cyril Leclerc via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 07:00:03PM -0300, Fabiano Rosas wrote:
-> @@ -1260,124 +1261,28 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
->      return true;
->  }
->  
-> -static void migrate_params_test_apply(MigrationParameters *params,
-> -                                      MigrationParameters *dest)
-> +static void migrate_params_merge(MigrationParameters *dst,
-> +                                 MigrationParameters *src)
->  {
-> -    MigrationState *s = migrate_get_current();
-> -
-> -    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
-> -
-> -    if (params->has_throttle_trigger_threshold) {
-> -        dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
-> -    }
-> -
-> -    if (params->has_cpu_throttle_initial) {
-> -        dest->cpu_throttle_initial = params->cpu_throttle_initial;
-> -    }
-> -
-> -    if (params->has_cpu_throttle_increment) {
-> -        dest->cpu_throttle_increment = params->cpu_throttle_increment;
-> +    /* free memory from pointers that are about to be assigned */
-> +    if (src->has_block_bitmap_mapping) {
-> +        g_clear_pointer(&dst->block_bitmap_mapping,
-> +                        qapi_free_BitmapMigrationNodeAliasList);
->      }
->  
-> -    if (params->has_cpu_throttle_tailslow) {
-> -        dest->cpu_throttle_tailslow = params->cpu_throttle_tailslow;
-> +    if (src->tls_creds) {
-> +        g_clear_pointer(&dst->tls_creds, qapi_free_StrOrNull);
->      }
->  
-> -    if (params->tls_creds) {
-> -        qapi_free_StrOrNull(dest->tls_creds);
-> -        dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
-> +    if (src->tls_hostname) {
-> +        g_clear_pointer(&dst->tls_hostname, qapi_free_StrOrNull);
->      }
->  
-> -    if (params->tls_hostname) {
-> -        qapi_free_StrOrNull(dest->tls_hostname);
-> -        dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
-> +    if (src->tls_authz) {
-> +        g_clear_pointer(&dst->tls_authz, qapi_free_StrOrNull);
->      }
+microvm places the 64-bit PCI MMIO hole at the top of the physical
+address space. With SEV, the c-bit reduces the usable address space,
+so the MMIO hole ends up at addresses the guest cannot reach (the
+guest always strips the c-bit on MMIO accesses).
 
-These will still be error prone when introducing new parameters that needs
-explicit frees.  It'll be nice if QAPI_MERGE() can free the elements when
-present in dest and when to be replaced.
+Fix by placing the MMIO hole within the sev guest addressable range.
 
-But this is good enough, let's land this series first..
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3245
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Tested-by: Cyril Leclerc <cyril.leclerc@subnoto.com>
+Signed-off-by: Cyril Leclerc <cyril.leclerc@subnoto.com>
+---
+ hw/i386/microvm.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index 94d22a232a..cb43a399ff 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -36,6 +36,7 @@
+ #include "hw/i386/microvm.h"
+ #include "hw/i386/x86.h"
+ #include "target/i386/cpu.h"
++#include "target/i386/sev.h"
+ #include "hw/intc/i8259.h"
+ #include "hw/timer/i8254.h"
+ #include "hw/rtc/mc146818rtc.h"
+@@ -230,7 +231,11 @@ static void microvm_devices_init(MicrovmMachineState *mms)
+ 
+     if (x86_machine_is_acpi_enabled(x86ms) && mms->pcie == ON_OFF_AUTO_ON) {
+         /* use topmost 25% of the address space available */
+-        hwaddr phys_size = (hwaddr)1 << X86_CPU(first_cpu)->phys_bits;
++        int phys_bits = X86_CPU(first_cpu)->phys_bits;
++        if (sev_enabled()) {
++            phys_bits -= sev_get_reduced_phys_bits();
++        }
++        hwaddr phys_size = (hwaddr)1 << phys_bits;
+         if (phys_size > 0x1000000ll) {
+             mms->gpex.mmio64.size = phys_size / 4;
+             mms->gpex.mmio64.base = phys_size - mms->gpex.mmio64.size;
 -- 
-Peter Xu
+2.47.3
 
 
