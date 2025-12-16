@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C92D64061
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B09D64060
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 23:52:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVenH-0001Ge-OS; Tue, 16 Dec 2025 18:49:27 -0500
+	id 1vVenH-0001GX-6U; Tue, 16 Dec 2025 18:49:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen5-0001CU-DT
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:18 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen0-0001BM-W3
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:13 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen3-0006m4-J3
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:15 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVemy-0006le-KR
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=FzpOcrVYjNzEtYgsWqtDXWI5lGWknI6VeBb0xQgmtOw=; b=QnxwhycABv+XnoF
- 8pDtw0Ukid1fVaNi9wKNJ1CeGDuLXrRG1eyiijDiHejGl4cY4X7rrhi0h079q+9P5WD8mdRz+WX6c
- OJAKzWSEY79NgWBCwpiF0ezOuX9PUShivvIGmkQZdUx+D39Aq0UJ6j7w5sRCLAfVuJx4QENuVXYD8
- v8=;
-Date: Wed, 17 Dec 2025 00:51:15 +0100
-Subject: [PATCH 10/14] target/riscv: Move riscv_pmu_read_ctr() to internal
- csr.h header
+ List-Help; bh=54mt/PTzZGX+TPISgLkPIrlQtFwnzbtxDC8UvzVAWmo=; b=c7oml7BiAlLA5B8
+ oboswFuuxRzwMVmR2ymPl2sNd+QdxxwZKiBkQCOOo0K8RejXyg5/rHhdPSv8zs0V538K8eoN3Cx20
+ xChXOg0OvEsss1r3HEzmNqDCNtxMwvPJq86cTJqzs3oMFAULJI5NllEC0nx1ZH7Oi1+bKjIqs+PcY
+ n0=;
+Date: Wed, 17 Dec 2025 00:51:11 +0100
+Subject: [PATCH 06/14] target-info: Add target_riscv64()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251217-hw-riscv-cpu-int-v1-10-d24a4048d3aa@rev.ng>
+Message-Id: <20251217-hw-riscv-cpu-int-v1-6-d24a4048d3aa@rev.ng>
 References: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
 In-Reply-To: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
 To: qemu-devel@nongnu.org
@@ -66,53 +65,44 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function depends on target_ulong and is via the pmu.h header exposed
-to hw/riscv, this function is only used internally in pmu.c and csr.c,
-so move it to the internal csr.h header.
+Adds a helper function to tell if the binary is targeting riscv64 or
+not.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/csr.h | 3 +++
- target/riscv/pmu.h | 2 --
- target/riscv/pmu.c | 1 +
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ include/qemu/target-info.h | 7 +++++++
+ target-info.c              | 5 +++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/target/riscv/csr.h b/target/riscv/csr.h
-index 3752a0ef43..e6a6f2e85f 100644
---- a/target/riscv/csr.h
-+++ b/target/riscv/csr.h
-@@ -90,4 +90,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-                        target_ulong val);
- target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
+diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
+index 6235962223..a4853ad4bb 100644
+--- a/include/qemu/target-info.h
++++ b/include/qemu/target-info.h
+@@ -71,4 +71,11 @@ bool target_arm(void);
+  */
+ bool target_aarch64(void);
  
-+/* PMU CSRs */
-+RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
-+                                  bool upper_half, uint32_t ctr_idx);
- #endif /* RISCV_CSR_H */
-diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
-index 3853d0e262..ca40cfeed6 100644
---- a/target/riscv/pmu.h
-+++ b/target/riscv/pmu.h
-@@ -36,7 +36,5 @@ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
-                           uint32_t ctr_idx);
- void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
-                                  bool new_virt);
--RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
--                                  bool upper_half, uint32_t ctr_idx);
- 
- #endif /* RISCV_PMU_H */
-diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-index 708f2ec7aa..9701c8cba6 100644
---- a/target/riscv/pmu.c
-+++ b/target/riscv/pmu.c
-@@ -22,6 +22,7 @@
- #include "qemu/timer.h"
- #include "cpu.h"
- #include "pmu.h"
-+#include "target/riscv/csr.h"
- #include "exec/icount.h"
- #include "system/device_tree.h"
- 
++/**
++ * target_riscv64:
++ *
++ * Returns whether the target architecture is riscv64
++ */
++bool target_riscv64(void);
++
+ #endif
+diff --git a/target-info.c b/target-info.c
+index 24696ff411..6cc78e25c8 100644
+--- a/target-info.c
++++ b/target-info.c
+@@ -73,3 +73,8 @@ bool target_aarch64(void)
+ {
+     return target_arch() == SYS_EMU_TARGET_AARCH64;
+ }
++
++bool target_riscv64(void)
++{
++    return target_arch() == SYS_EMU_TARGET_RISCV64;
++}
 
 -- 
 2.51.0
