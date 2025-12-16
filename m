@@ -4,55 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4265D5B87C
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 08:01:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DCADD5B87C
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 08:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVPzJ-0005sw-GY; Tue, 16 Dec 2025 03:00:54 -0500
+	id 1vVPzo-00066X-K6; Tue, 16 Dec 2025 03:01:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
- id 1vVPzD-0005sG-LV
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 03:00:48 -0500
-Received: from sg-1-100.ptr.blmpb.com ([118.26.132.100])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
- id 1vVPz8-0007b9-Aw
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 03:00:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1765872024; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=neLrmK4qucvB0Dn3tkNPinE7y9JJvO1HRo0OTnv+7j4=;
- b=L12EovbdDqoj1OEpPm4fRcNTsonSiggj1FKldxHCfCMfy4VXxDKt7/WHzmYuKt8leuvB8s
- cBTyjf1k5scdfbq2BxqkBcxaEP+9C7f1n0ae3QebXelFo8Wh5ByEqATZEckihZmjoPVwIV
- NlKz+EBPXyoCF+nwIzZ0KCOjyv7mHsM0eKl/By+ZZ0ioalaVsNHt+mp7olJVP4ilRtnrJH
- e3HrtaxuMR0yJHNOQNY4ievzM3vm3aZnxJ/AR7tAsFG5DXKJV3zm7vZsSV7F7xJZPS7gYO
- KAbMIaJChD5WUDZYQamtwkN0p4gKe+hNROUF4f93eeQVYbCuXXlinDk1KcQD2w==
-Cc: <mst@redhat.com>, <sgarzare@redhat.com>, <richard.henderson@linaro.org>, 
- <pbonzini@redhat.com>, <peterx@redhat.com>, <david@kernel.org>, 
- <philmd@linaro.org>, <farosas@suse.de>, 
- "xuchuangxclwt" <xuchuangxclwt@bytedance.com>
-From: "Chuang Xu" <xuchuangxclwt@bytedance.com>
-Subject: [PATCH v3 1/1] migration: merge fragmented clear_dirty ioctls
-Message-Id: <20251216080001.64579-1-xuchuangxclwt@bytedance.com>
-X-Lms-Return-Path: <lba+269411193+70b64e+nongnu.org+xuchuangxclwt@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 16 Dec 2025 16:00:01 +0800
-Content-Transfer-Encoding: 7bit
-X-Original-From: Chuang Xu <xuchuangxclwt@bytedance.com>
-To: <qemu-devel@nongnu.org>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-Received-SPF: pass client-ip=118.26.132.100;
- envelope-from=xuchuangxclwt@bytedance.com; helo=sg-1-100.ptr.blmpb.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001,
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vVPzl-000660-7Q
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 03:01:21 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vVPze-0007ub-Ht
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 03:01:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1765872074; x=1797408074;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Ly+Ud2bhZKSB8OQ2caS0r8J18OBDXNWaCjHdBlKKK5g=;
+ b=QrNPyqT9ONw/YXDOX866DfLhyMb/pXXHncRvWcwK4slmzutFqwgH8+0D
+ 6dMvwXvn5eZKfcKUQwaiudytmdZq/oQ1Elo56bzxMQGx7MCUngHyVFCCD
+ 61s8EcVKwEJJWBcGSeN/w8A1npD50wkH9l7XH6Dk3i4tsiSwPqOZc/OFB
+ a/ym81mzscs7YK2Mlz3ALcvQwkVIZ8bkY9IVFo1Ol32gUaU4jpAg2iu08
+ QNa5vtIaEiZ57CChcd0EMknRRepSR/7X6tLV1EkyIc0qbEDZX1cahecpR
+ NVr4LdJZ/oSJjtVY99Xff+uKfc4UsM4aRaqNDM4XHnes2vnjHdNgp+NoA g==;
+X-CSE-ConnectionGUID: N1lUQYbDSwOq7uUy/5MyoA==
+X-CSE-MsgGUID: RaZkSwSoQXaNiaLx8aPyLg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11643"; a="71413798"
+X-IronPort-AV: E=Sophos;i="6.21,152,1763452800"; d="scan'208";a="71413798"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Dec 2025 00:01:08 -0800
+X-CSE-ConnectionGUID: hyFoc6uNT9qO7FWsvZGdyQ==
+X-CSE-MsgGUID: 6oF8idddSeyPf7qt61RKHQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,152,1763452800"; d="scan'208";a="197845265"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa006.fm.intel.com with ESMTP; 16 Dec 2025 00:01:04 -0800
+Date: Tue, 16 Dec 2025 16:25:52 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Dongli Zhang <dongli.zhang@oracle.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, pbonzini@redhat.com,
+ mtosatti@redhat.com, sandipan.das@amd.com, babu.moger@amd.com,
+ likexu@tencent.com, like.xu.linux@gmail.com, groug@kaod.org,
+ khorenko@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ den@virtuozzo.com, davydov-max@yandex-team.ru, xiaoyao.li@intel.com,
+ dapeng1.mi@linux.intel.com, joe.jin@oracle.com,
+ ewanhai-oc@zhaoxin.com, ewanhai@zhaoxin.com
+Subject: Re: [PATCH v7 0/9] target/i386/kvm/pmu: PMU Enhancement, Bugfix and
+ Cleanup
+Message-ID: <aUEXkDDOba+oZ4v+@intel.com>
+References: <20251111061532.36702-1-dongli.zhang@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251111061532.36702-1-dongli.zhang@oracle.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -70,216 +89,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: xuchuangxclwt <xuchuangxclwt@bytedance.com>
+On Mon, Nov 10, 2025 at 10:14:49PM -0800, Dongli Zhang wrote:
+> Date: Mon, 10 Nov 2025 22:14:49 -0800
+> From: Dongli Zhang <dongli.zhang@oracle.com>
+> Subject: [PATCH v7 0/9] target/i386/kvm/pmu: PMU Enhancement, Bugfix and
+>  Cleanup
+> X-Mailer: git-send-email 2.43.5
+> 
+> This patchset addresses four bugs related to AMD PMU virtualization.
+> 
+> 1. The PerfMonV2 is still available if PERCORE if disabled via
+> "-cpu host,-perfctr-core".
+> 
+> 2. The VM 'cpuid' command still returns PERFCORE although "-pmu" is
+> configured.
+> 
+> 3. The third issue is that using "-cpu host,-pmu" does not disable AMD PMU
+> virtualization. When using "-cpu EPYC" or "-cpu host,-pmu", AMD PMU
+> virtualization remains enabled. On the VM's Linux side, you might still
+> see:
+> 
+> [    0.510611] Performance Events: Fam17h+ core perfctr, AMD PMU driver.
+> 
+> instead of:
+> 
+> [    0.596381] Performance Events: PMU not available due to virtualization, using software events only.
+> [    0.600972] NMI watchdog: Perf NMI watchdog permanently disabled
+> 
+> To address this, KVM_CAP_PMU_CAPABILITY is used to set KVM_PMU_CAP_DISABLE
+> when "-pmu" is configured.
+> 
+> 4. The fourth issue is that unreclaimed performance events (after a QEMU
+> system_reset) in KVM may cause random, unwanted, or unknown NMIs to be
+> injected into the VM.
+> 
+> The AMD PMU registers are not reset during QEMU system_reset.
+> 
+> (1) If the VM is reset (e.g., via QEMU system_reset or VM kdump/kexec) while
+> running "perf top", the PMU registers are not disabled properly.
+> 
+> (2) Despite x86_cpu_reset() resetting many registers to zero, kvm_put_msrs()
+> does not handle AMD PMU registers, causing some PMU events to remain
+> enabled in KVM.
+> 
+> (3) The KVM kvm_pmc_speculative_in_use() function consistently returns true,
+> preventing the reclamation of these events. Consequently, the
+> kvm_pmc->perf_event remains active.
+> 
+> (4) After a reboot, the VM kernel may report the following error:
+> 
+> [    0.092011] Performance Events: Fam17h+ core perfctr, Broken BIOS detected, complain to your hardware vendor.
+> [    0.092023] [Firmware Bug]: the BIOS has corrupted hw-PMU resources (MSR c0010200 is 530076)
+> 
+> (5) In the worst case, the active kvm_pmc->perf_event may inject unknown
+> NMIs randomly into the VM kernel:
+> 
+> [...] Uhhuh. NMI received for unknown reason 30 on CPU 0.
+> 
+> To resolve these issues, we propose resetting AMD PMU registers during the
+> VM reset process
+ 
+Hi Dongli,
 
-In our long-term experience in Bytedance, we've found that under
-the same load, live migration of larger VMs with more devices is
-often more difficult to converge (requiring a larger downtime limit).
+Except for Patch 1 & 2 which need compatibility options (if you think
+it's okay, I could help take these 2 and fix them when v11.0's compat
+array is ready).
 
-Through some testing and calculations, we conclude that bitmap sync time
-affects the calculation of live migration bandwidth.
+The other patches still LGTM. Maybe it's better to have a v8 excluding
+patch 1 & 2?
 
-When the addresses processed are not aligned, a large number of
-clear_dirty ioctl occur (e.g. a 4MB misaligned memory can generate
-2048 clear_dirty ioctls from two different memory_listener),
-which increases the time required for bitmap_sync and makes it
-more difficult for dirty pages to converge.
+Regards,
+Zhao
 
-For a 64C256G vm with 8 vhost-user-net(32 queue per nic) and
-16 vhost-user-blk(4 queue per blk), the sync time is as high as *73ms*
-(tested with 10GBps dirty rate, the sync time increases as the dirty
-page rate increases), Here are each part of the sync time:
-
-- sync from kvm to ram_list: 2.5ms
-- vhost_log_sync:3ms
-- sync aligned memory from ram_list to RAMBlock: 5ms
-- sync misaligned memory from ram_list to RAMBlock: 61ms
-
-Attempt to merge those fragmented clear_dirty ioctls, then syncing
-misaligned memory from ram_list to RAMBlock takes only about 1ms,
-and the total sync time is only *12ms*.
-
-Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
----
- accel/tcg/cputlb.c       |  5 ++--
- include/system/physmem.h |  7 +++---
- migration/ram.c          | 17 ++++----------
- system/memory.c          |  2 +-
- system/physmem.c         | 49 ++++++++++++++++++++++++++++------------
- 5 files changed, 47 insertions(+), 33 deletions(-)
-
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index fd1606c856..c8827c8b0d 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -857,8 +857,9 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
- void tlb_protect_code(ram_addr_t ram_addr)
- {
-     physical_memory_test_and_clear_dirty(ram_addr & TARGET_PAGE_MASK,
--                                             TARGET_PAGE_SIZE,
--                                             DIRTY_MEMORY_CODE);
-+                                         TARGET_PAGE_SIZE,
-+                                         DIRTY_MEMORY_CODE,
-+                                         NULL);
- }
- 
- /* update the TLB so that writes in physical page 'phys_addr' are no longer
-diff --git a/include/system/physmem.h b/include/system/physmem.h
-index 879f6eae38..8eeace9d1f 100644
---- a/include/system/physmem.h
-+++ b/include/system/physmem.h
-@@ -39,9 +39,10 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
- 
- void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
- 
--bool physical_memory_test_and_clear_dirty(ram_addr_t start,
--                                          ram_addr_t length,
--                                          unsigned client);
-+uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
-+                                              ram_addr_t length,
-+                                              unsigned client,
-+                                              unsigned long *dest);
- 
- DirtyBitmapSnapshot *
- physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr offset,
-diff --git a/migration/ram.c b/migration/ram.c
-index 29f016cb25..a03c9874a2 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -942,7 +942,6 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
-                                                   ram_addr_t start,
-                                                   ram_addr_t length)
- {
--    ram_addr_t addr;
-     unsigned long word = BIT_WORD((start + rb->offset) >> TARGET_PAGE_BITS);
-     uint64_t num_dirty = 0;
-     unsigned long *dest = rb->bmap;
-@@ -996,17 +995,11 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
-     } else {
-         ram_addr_t offset = rb->offset;
- 
--        for (addr = 0; addr < length; addr += TARGET_PAGE_SIZE) {
--            if (physical_memory_test_and_clear_dirty(
--                        start + addr + offset,
--                        TARGET_PAGE_SIZE,
--                        DIRTY_MEMORY_MIGRATION)) {
--                long k = (start + addr) >> TARGET_PAGE_BITS;
--                if (!test_and_set_bit(k, dest)) {
--                    num_dirty++;
--                }
--            }
--        }
-+        num_dirty = physical_memory_test_and_clear_dirty(
-+                        start + offset,
-+                        length,
-+                        DIRTY_MEMORY_MIGRATION,
-+                        dest);
-     }
- 
-     return num_dirty;
-diff --git a/system/memory.c b/system/memory.c
-index 8b84661ae3..666364392d 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2424,7 +2424,7 @@ void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
- {
-     assert(mr->ram_block);
-     physical_memory_test_and_clear_dirty(
--        memory_region_get_ram_addr(mr) + addr, size, client);
-+        memory_region_get_ram_addr(mr) + addr, size, client, NULL);
- }
- 
- int memory_region_get_fd(MemoryRegion *mr)
-diff --git a/system/physmem.c b/system/physmem.c
-index c9869e4049..f8b660dafe 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1089,19 +1089,31 @@ void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
-     }
- }
- 
--/* Note: start and end must be within the same ram block.  */
--bool physical_memory_test_and_clear_dirty(ram_addr_t start,
-+/*
-+ * Note: start and end must be within the same ram block.
-+ *
-+ * @dest usage:
-+ * - When @dest is provided, set bits for newly discovered dirty pages
-+ *   only if the bit wasn't already set in dest, and count those pages
-+ *   in num_dirty.
-+ * - When @dest is NULL, count all dirty pages in the range
-+ *
-+ * @return:
-+ * - Number of dirty guest pages found within [start, start + length).
-+ */
-+uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
-                                               ram_addr_t length,
--                                              unsigned client)
-+                                              unsigned client,
-+                                              unsigned long *dest)
- {
-     DirtyMemoryBlocks *blocks;
-     unsigned long end, page, start_page;
--    bool dirty = false;
-+    uint64_t num_dirty = 0;
-     RAMBlock *ramblock;
-     uint64_t mr_offset, mr_size;
- 
-     if (length == 0) {
--        return false;
-+        return 0;
-     }
- 
-     end = TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
-@@ -1118,12 +1130,19 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
-         while (page < end) {
-             unsigned long idx = page / DIRTY_MEMORY_BLOCK_SIZE;
-             unsigned long offset = page % DIRTY_MEMORY_BLOCK_SIZE;
--            unsigned long num = MIN(end - page,
--                                    DIRTY_MEMORY_BLOCK_SIZE - offset);
- 
--            dirty |= bitmap_test_and_clear_atomic(blocks->blocks[idx],
--                                                  offset, num);
--            page += num;
-+            if (bitmap_test_and_clear_atomic(blocks->blocks[idx], offset, 1)) {
-+                if (dest) {
-+                    unsigned long k = page - (ramblock->offset >> TARGET_PAGE_BITS);
-+                    if (!test_and_set_bit(k, dest)) {
-+                        num_dirty++;
-+                    }
-+                } else {
-+                    num_dirty++;
-+                }
-+            }
-+
-+            page++;
-         }
- 
-         mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - ramblock->offset;
-@@ -1131,18 +1150,18 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
-         memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, mr_size);
-     }
- 
--    if (dirty) {
-+    if (num_dirty) {
-         physical_memory_dirty_bits_cleared(start, length);
-     }
- 
--    return dirty;
-+    return num_dirty;
- }
- 
- static void physical_memory_clear_dirty_range(ram_addr_t addr, ram_addr_t length)
- {
--    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
--    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
--    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
-+    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION, NULL);
-+    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA, NULL);
-+    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE, NULL);
- }
- 
- DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
--- 
-2.39.3 (Apple Git-146)
 
