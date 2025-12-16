@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B09D64060
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 23:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DBA5D637B3
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 23:52:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVenH-0001GX-6U; Tue, 16 Dec 2025 18:49:27 -0500
+	id 1vVenH-0001Gf-Oc; Tue, 16 Dec 2025 18:49:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen0-0001BM-W3
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen0-0001BP-VW
  for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:13 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVemy-0006le-KR
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:10 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVemy-0006lX-KO
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=54mt/PTzZGX+TPISgLkPIrlQtFwnzbtxDC8UvzVAWmo=; b=c7oml7BiAlLA5B8
- oboswFuuxRzwMVmR2ymPl2sNd+QdxxwZKiBkQCOOo0K8RejXyg5/rHhdPSv8zs0V538K8eoN3Cx20
- xChXOg0OvEsss1r3HEzmNqDCNtxMwvPJq86cTJqzs3oMFAULJI5NllEC0nx1ZH7Oi1+bKjIqs+PcY
- n0=;
-Date: Wed, 17 Dec 2025 00:51:11 +0100
-Subject: [PATCH 06/14] target-info: Add target_riscv64()
+ List-Help; bh=a3U+ZaBuXfpA0G4zxktPBWyoxo5yyQM9fwBSNf9EjgA=; b=dfifWosGclhWLdq
+ 96/iaOU8zt72AswHw0KWC8XbAc+oWnwSeDNImjvMpBsP86XjTAXYjV41n6emALjWSRDbOnMWPxrah
+ UEpLnOif+HuQ66Lrnfkl8IrdNRzX8oXWpjQWRZ9AGpe3NB0D6zJBvOpHKhH9xDltpONAFy3mVtbFU
+ Xs=;
+Date: Wed, 17 Dec 2025 00:51:10 +0100
+Subject: [PATCH 05/14] configs/target: Implement per-binary TargetInfo
+ structure for riscv
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251217-hw-riscv-cpu-int-v1-6-d24a4048d3aa@rev.ng>
+Message-Id: <20251217-hw-riscv-cpu-int-v1-5-d24a4048d3aa@rev.ng>
 References: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
 In-Reply-To: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
 To: qemu-devel@nongnu.org
@@ -65,44 +66,90 @@ From:  Anton Johansson via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a helper function to tell if the binary is targeting riscv64 or
-not.
+Defines TargetInfo for 32- and 64-bit riscv binaries.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- include/qemu/target-info.h | 7 +++++++
- target-info.c              | 5 +++++
- 2 files changed, 12 insertions(+)
+ configs/targets/riscv32-softmmu.c | 26 ++++++++++++++++++++++++++
+ configs/targets/riscv64-softmmu.c | 26 ++++++++++++++++++++++++++
+ configs/targets/meson.build       |  1 +
+ 3 files changed, 53 insertions(+)
 
-diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-index 6235962223..a4853ad4bb 100644
---- a/include/qemu/target-info.h
-+++ b/include/qemu/target-info.h
-@@ -71,4 +71,11 @@ bool target_arm(void);
-  */
- bool target_aarch64(void);
- 
-+/**
-+ * target_riscv64:
+diff --git a/configs/targets/riscv32-softmmu.c b/configs/targets/riscv32-softmmu.c
+new file mode 100644
+index 0000000000..897c93594b
+--- /dev/null
++++ b/configs/targets/riscv32-softmmu.c
+@@ -0,0 +1,26 @@
++/*
++ * QEMU binary/target API (qemu-system-riscv32)
 + *
-+ * Returns whether the target architecture is riscv64
++ *  Copyright (c) rev.ng Labs Srl.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+bool target_riscv64(void);
 +
- #endif
-diff --git a/target-info.c b/target-info.c
-index 24696ff411..6cc78e25c8 100644
---- a/target-info.c
-+++ b/target-info.c
-@@ -73,3 +73,8 @@ bool target_aarch64(void)
- {
-     return target_arch() == SYS_EMU_TARGET_AARCH64;
- }
++#include "qemu/osdep.h"
++#include "qemu/target-info-impl.h"
++#include "hw/riscv/machines-qom.h"
++#include "target/riscv/cpu-qom.h"
 +
-+bool target_riscv64(void)
++static const TargetInfo target_info_riscv32_system = {
++    .target_name = "riscv32",
++    .target_arch = SYS_EMU_TARGET_RISCV32,
++    .long_bits = 32,
++    .cpu_type = TYPE_RISCV_CPU,
++    .machine_typename = TYPE_TARGET_RISCV32_MACHINE,
++    .endianness = ENDIAN_MODE_LITTLE,
++};
++
++const TargetInfo *target_info(void)
 +{
-+    return target_arch() == SYS_EMU_TARGET_RISCV64;
++    return &target_info_riscv32_system;
 +}
+diff --git a/configs/targets/riscv64-softmmu.c b/configs/targets/riscv64-softmmu.c
+new file mode 100644
+index 0000000000..d2e4520d76
+--- /dev/null
++++ b/configs/targets/riscv64-softmmu.c
+@@ -0,0 +1,26 @@
++/*
++ * QEMU binary/target API (qemu-system-riscv64)
++ *
++ *  Copyright (c) rev.ng Labs Srl.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/target-info-impl.h"
++#include "hw/riscv/machines-qom.h"
++#include "target/riscv/cpu-qom.h"
++
++static const TargetInfo target_info_riscv64_system = {
++    .target_name = "riscv64",
++    .target_arch = SYS_EMU_TARGET_RISCV64,
++    .long_bits = 64,
++    .cpu_type = TYPE_RISCV_CPU,
++    .machine_typename = TYPE_TARGET_RISCV64_MACHINE,
++    .endianness = ENDIAN_MODE_LITTLE,
++};
++
++const TargetInfo *target_info(void)
++{
++    return &target_info_riscv64_system;
++}
+diff --git a/configs/targets/meson.build b/configs/targets/meson.build
+index cca2514eb5..2ab4d27eaf 100644
+--- a/configs/targets/meson.build
++++ b/configs/targets/meson.build
+@@ -1,5 +1,6 @@
+ foreach target : [
+       'arm-softmmu', 'aarch64-softmmu',
++      'riscv32-softmmu', 'riscv64-softmmu'
+   ]
+   config_target_info += {target : files(target + '.c')}
+ endforeach
 
 -- 
 2.51.0
