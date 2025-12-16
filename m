@@ -4,113 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81430D609C2
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 16:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE01D609CE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 16:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVXt8-0006Q9-LZ; Tue, 16 Dec 2025 11:27:02 -0500
+	id 1vVXt3-0006Oy-98; Tue, 16 Dec 2025 11:26:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1vVXt6-0006Po-VD; Tue, 16 Dec 2025 11:27:00 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVXt1-0006Ol-PN
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 11:26:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1vVXt5-0002MC-HL; Tue, 16 Dec 2025 11:27:00 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGA0YIC031125;
- Tue, 16 Dec 2025 16:26:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=irzhMXWYvjosKYccpK/cvSXWobH9DxTYWEFBzHFMbEA=; b=i7f/vzFgmmvA
- ufrQ92ETwM67W3IurS2h150Oqg7dhotNUtg6FHzbfI8zeNSBRsqfZ/uDi1q/vL0d
- 5iU2rEZ60pdNv5a0ODe/j/T9I34B8nl7BKC90HaaiQpqlziznMNNKdEX/rj0K/TN
- 9OZTQzgJ8nIcswbbCLcfgFnnz05lrtnE3nRoDTOBfc3JtWm3YTDD3v8J/pdzXc2V
- WmSvkwrZO2VZH0D97u+tULbgN7+QBQK73euZmtx6uSoBq0oOHVyx+31Mt9cbeGKb
- kryOc2m6HaPZUqX9o+nttmVrV7ou0iLj0bSseUd62k/4d+CivN9EwpKFjYJdWDr6
- lvwgcL4QlA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjkyj2g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 16:26:56 +0000 (GMT)
-Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BGGBniW006668;
- Tue, 16 Dec 2025 16:26:55 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjkyj2c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 16:26:55 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGFu1Fw026746;
- Tue, 16 Dec 2025 16:26:54 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4b1jfsdfgh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 16:26:54 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5BGGQsvj30933636
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Dec 2025 16:26:54 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EEFD358056;
- Tue, 16 Dec 2025 16:26:53 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 964475803F;
- Tue, 16 Dec 2025 16:26:53 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 16 Dec 2025 16:26:53 +0000 (GMT)
-Message-ID: <7edad6d6817f8fa6a92ee9920bdd99c0ff296d8c.camel@linux.ibm.com>
-Subject: Re: [PATCH] hw/ssi/pnv_spi: Fix fifo8 memory leak on unrealize
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
- alistair@alistair23.me, chalapathi.v@linux.ibm.com
-Date: Tue, 16 Dec 2025 10:26:53 -0600
-In-Reply-To: <20251216154503.2263755-1-calebs@linux.ibm.com>
-References: <20251216154503.2263755-1-calebs@linux.ibm.com>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: UZo9mUpuOu-eRgvb7J2mMwYJV7dQP-uG
-X-Authority-Analysis: v=2.4 cv=CLgnnBrD c=1 sm=1 tr=0 ts=69418850 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=CJKrucV5HHBk1qxaKX0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: h3o8UxtNjyCHt9MnqvJtEMsdqnBspx4M
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAwOSBTYWx0ZWRfX55mOZM8WZSie
- 5EprE9BmfytvUr27UFNThI3vqEDsJpbkV+NOhncL5hVCiyhwPeFmuk7/RDTblxCo+MHclwa9vas
- QzfCRRwmwV6LqLWfuAPqqALhmj1yKUsW7aw3dqEgf1P0nPIxRrTMg6x8q31oL+smK3y6xYd870+
- 11upiuxzQ1qYzfowg0mCkBVMc0W8bzZPuNOXkg5T81cEnI0pHwZKvRCjK7K1B6Wn1y5yB3Jnohw
- anBhl4jwMtb5suVrQz5E6Ei4rLl5AiJwaW8tyNLvxwHGMrZy4NuwwJ5n7yi8jeux1HNxLc/OSXI
- HhiOOsZ4LdTx5oif62+y8nWWbyl9FneRcN5pKk+JGT06NKMuSlOAbTqa8OwBtRo/e048n8fTQVM
- IgLgoczwYso/ywO78IKRiT7GgVGReg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-16_02,2025-12-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 suspectscore=0
- phishscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130009
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVXsz-0002LC-Po
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 11:26:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765902410;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5/w/b+koP+xIFiBwND2BYBwntrjPiqFe5tK/A0dBBBo=;
+ b=PRqa6tebBeuwXAuqfkZPi1r/9bAMPlUXIqsf+i0LrhtMNm6A4PceVdRZ8/kvszM2bzAVqj
+ q41Ct2aKJLd13D8QqBJQXP9XhVbOSyzZWp0lOFvlBUAEQyVgbGzSLlNK1leBAjz5Bw98Ou
+ 8czibceL2xKd68QJfboik7GvnG1Qh5s=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-157-wOZBPUkyO-a0S7mQxzu48Q-1; Tue, 16 Dec 2025 11:26:49 -0500
+X-MC-Unique: wOZBPUkyO-a0S7mQxzu48Q-1
+X-Mimecast-MFC-AGG-ID: wOZBPUkyO-a0S7mQxzu48Q_1765902408
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-29da1ea0b97so122275245ad.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 08:26:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1765902408; x=1766507208; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=5/w/b+koP+xIFiBwND2BYBwntrjPiqFe5tK/A0dBBBo=;
+ b=ssR0wgj8Wz8B2GLbQXq9XpQf/+3Sr7QEgmgT+v+zRre/br4kwfa1lRClLIhVrrxG6u
+ 4YTDmvhjL5MB3jAZvIx6mlIre7H7dxaHjq5M9pa+WEOBwNi2FPLiFVx0H0dZlw9UXCyO
+ 713eS88q8iPIxgjUWd7WXt83S0wFD6yYJ6WBRbpLsL+Ea+gSVVlJzbdj6U8PfYcrhA9p
+ gZl77wLaJXoFoEGd7rL25vwK/zozLFHJYajxbQmoAD/56nNNymmhb3rXYL9n+kV6ka76
+ meQm5C4x+/DwjJ+OZIlzy1vY4BgXeMFpC9vSMpWdZkfmz3zbMkFB2trsttZjXmhESrIj
+ /U/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765902408; x=1766507208;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5/w/b+koP+xIFiBwND2BYBwntrjPiqFe5tK/A0dBBBo=;
+ b=mR6mnVRZKmSBn+QSEU3bomSyPq/VgKathC/tnmo+B84tjgZPPKMfMfESRlYpe/DX7Q
+ Zhvt61XLE6mG/sjBywJDt16zn905Bsr5ZncpuSR7Af49yRcaKdKHvcNDbyR7BUC7lAQx
+ kl64txE3Fyr8HrLvB02l9SUfWeyVhNNj8Yy0TlmISkEO5oFDUp6rQCfEc+JJkOja/Rs0
+ B/yHp4VHDFOTvojSYbWxcCho3jOTMo1PYp4/9dyNFUM9toSmEL1U7ZU1r5XM+aW4f90U
+ GP4ojPD1S/aqTml3gJhcYenEXsSVom068u6cyjubhGIb9sxATzBiuEgNHtEEdnoXNdug
+ Xmuw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2CfzH+Gv+dy5h3+crmoHXDCw97+FVhv41wvW5c/MuYFpNdjK28nbQC25MKR4A/x47GaXfMEoFAStU@nongnu.org
+X-Gm-Message-State: AOJu0Yy2ZRGuphAxsSBBhvJ8u7MgOD2srczKqGPXILC2A9Jh7lFMMEbk
+ ah2tACyWanqPF1v7bZteWAZmegj4jpa4R7gC+59qDNB5H/QiDNl3IPvDVILxlD1j0WFzfQznIqf
+ xma5C2cM+ScYvCUB47kxOsvBOqKNB/THAFAZpLxrNVX7z9lebWzXtrGbh
+X-Gm-Gg: AY/fxX5Dux5qWDFi3MVHzqLh5csdX/LW/SBAZ+e/vaMpRYQyIIXC1k71yVsRVvIbOd/
+ rTsTUZuQeCnOwbvaaPXKSYSoM+SQi8ezcby/uWH4JEMv0cXQmiwZ7b1tcsynaK9D/PSqZ5N7OE1
+ kDFpZRmwko/4lXjpLexPHQWGgFIM4LBc5GCFVZzOEPb/XYiX4KgQ0v/VMBdKAvnXU+jSAR4M32O
+ KP/2V5gi4cLuDAw/Si1iSAx5x9DDx6WFzCajbRBHIIGAvTOpkEhdbL4r4LVxeDDklVF062u9Apf
+ IePzeznxNTvUned0QKY1OGxlxf8oyphZhqoX5Oazf3ZHySO5t601Ge3iM0ySbRHTyD8fza5YrWd
+ GhRI=
+X-Received: by 2002:a17:902:f605:b0:2a0:dd66:d813 with SMTP id
+ d9443c01a7336-2a0dd66d8e5mr105863555ad.55.1765902407747; 
+ Tue, 16 Dec 2025 08:26:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGJpdDfzQg46toth3bE70MGhWIPOFxRi1xW/0fNn+PvnMp5hl91KNikbKhdvryiBMIvSqPw4g==
+X-Received: by 2002:a17:902:f605:b0:2a0:dd66:d813 with SMTP id
+ d9443c01a7336-2a0dd66d8e5mr105863175ad.55.1765902407153; 
+ Tue, 16 Dec 2025 08:26:47 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2a0993ab61dsm102998805ad.46.2025.12.16.08.26.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Dec 2025 08:26:46 -0800 (PST)
+Date: Tue, 16 Dec 2025 11:26:38 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, qemu-devel@nongnu.org,
+ mst@redhat.com, sgarzare@redhat.com, richard.henderson@linaro.org,
+ pbonzini@redhat.com, david@kernel.org, philmd@linaro.org
+Subject: Re: [PATCH v3 1/1] migration: merge fragmented clear_dirty ioctls
+Message-ID: <aUGIPj1JNpd8HZ-V@x1.local>
+References: <20251216080001.64579-1-xuchuangxclwt@bytedance.com>
+ <877bum36ed.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <877bum36ed.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,51 +117,263 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+On Tue, Dec 16, 2025 at 10:25:46AM -0300, Fabiano Rosas wrote:
+> "Chuang Xu" <xuchuangxclwt@bytedance.com> writes:
+> 
+> > From: xuchuangxclwt <xuchuangxclwt@bytedance.com>
+> >
+> > In our long-term experience in Bytedance, we've found that under
+> > the same load, live migration of larger VMs with more devices is
+> > often more difficult to converge (requiring a larger downtime limit).
+> >
+> > Through some testing and calculations, we conclude that bitmap sync time
+> > affects the calculation of live migration bandwidth.
+
+Side note:
+
+I forgot to mention when replying to the old versions, but we introduced
+avail-switchover-bandwidth to partially remedy this problem when we hit it
+before - which may or may not be exactly the same reason here on unaligned
+syncs as we didn't further investigate (we have VFIO-PCI devices when
+testing), but the whole logic should be similar that bw was calculated too
+small.
+
+So even if with this patch optimizing sync, bw is always not as accurate.
+I wonder if we can still fix it somehow, e.g. I wonder if 100ms is too
+short a period to take samples, or at least we should be able to remember
+more samples so the reported bw (even if we keep sampling per 100ms) will
+cover longer period.
+
+Feel free to share your thoughts if you have any.
+
+> >
+> > When the addresses processed are not aligned, a large number of
+> > clear_dirty ioctl occur (e.g. a 4MB misaligned memory can generate
+> > 2048 clear_dirty ioctls from two different memory_listener),
+> > which increases the time required for bitmap_sync and makes it
+> > more difficult for dirty pages to converge.
+> >
+> > For a 64C256G vm with 8 vhost-user-net(32 queue per nic) and
+> > 16 vhost-user-blk(4 queue per blk), the sync time is as high as *73ms*
+> > (tested with 10GBps dirty rate, the sync time increases as the dirty
+> > page rate increases), Here are each part of the sync time:
+> >
+> > - sync from kvm to ram_list: 2.5ms
+> > - vhost_log_sync:3ms
+> > - sync aligned memory from ram_list to RAMBlock: 5ms
+> > - sync misaligned memory from ram_list to RAMBlock: 61ms
+> >
+> > Attempt to merge those fragmented clear_dirty ioctls, then syncing
+> > misaligned memory from ram_list to RAMBlock takes only about 1ms,
+> > and the total sync time is only *12ms*.
+> >
+> > Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+> > ---
+> >  accel/tcg/cputlb.c       |  5 ++--
+> >  include/system/physmem.h |  7 +++---
+> >  migration/ram.c          | 17 ++++----------
+> >  system/memory.c          |  2 +-
+> >  system/physmem.c         | 49 ++++++++++++++++++++++++++++------------
+> >  5 files changed, 47 insertions(+), 33 deletions(-)
+> >
+> > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> > index fd1606c856..c8827c8b0d 100644
+> > --- a/accel/tcg/cputlb.c
+> > +++ b/accel/tcg/cputlb.c
+> > @@ -857,8 +857,9 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
+> >  void tlb_protect_code(ram_addr_t ram_addr)
+> >  {
+> >      physical_memory_test_and_clear_dirty(ram_addr & TARGET_PAGE_MASK,
+> > -                                             TARGET_PAGE_SIZE,
+> > -                                             DIRTY_MEMORY_CODE);
+> > +                                         TARGET_PAGE_SIZE,
+> > +                                         DIRTY_MEMORY_CODE,
+> > +                                         NULL);
+> >  }
+> >  
+> >  /* update the TLB so that writes in physical page 'phys_addr' are no longer
+> > diff --git a/include/system/physmem.h b/include/system/physmem.h
+> > index 879f6eae38..8eeace9d1f 100644
+> > --- a/include/system/physmem.h
+> > +++ b/include/system/physmem.h
+> > @@ -39,9 +39,10 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
+> >  
+> >  void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
+> >  
+> > -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+> > -                                          ram_addr_t length,
+> > -                                          unsigned client);
+> > +uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
+> > +                                              ram_addr_t length,
+> > +                                              unsigned client,
+> > +                                              unsigned long *dest);
+> >  
+> >  DirtyBitmapSnapshot *
+> >  physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr offset,
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index 29f016cb25..a03c9874a2 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -942,7 +942,6 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
+> >                                                    ram_addr_t start,
+> >                                                    ram_addr_t length)
+> >  {
+> > -    ram_addr_t addr;
+> >      unsigned long word = BIT_WORD((start + rb->offset) >> TARGET_PAGE_BITS);
+> >      uint64_t num_dirty = 0;
+> >      unsigned long *dest = rb->bmap;
+> > @@ -996,17 +995,11 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
+> >      } else {
+> >          ram_addr_t offset = rb->offset;
+> >  
+> > -        for (addr = 0; addr < length; addr += TARGET_PAGE_SIZE) {
+> > -            if (physical_memory_test_and_clear_dirty(
+> > -                        start + addr + offset,
+> > -                        TARGET_PAGE_SIZE,
+> > -                        DIRTY_MEMORY_MIGRATION)) {
+> > -                long k = (start + addr) >> TARGET_PAGE_BITS;
+> > -                if (!test_and_set_bit(k, dest)) {
+> > -                    num_dirty++;
+> > -                }
+> > -            }
+> > -        }
+> > +        num_dirty = physical_memory_test_and_clear_dirty(
+> > +                        start + offset,
+> > +                        length,
+> > +                        DIRTY_MEMORY_MIGRATION,
+> > +                        dest);
+> >      }
+> >  
+> >      return num_dirty;
+> > diff --git a/system/memory.c b/system/memory.c
+> > index 8b84661ae3..666364392d 100644
+> > --- a/system/memory.c
+> > +++ b/system/memory.c
+> > @@ -2424,7 +2424,7 @@ void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
+> >  {
+> >      assert(mr->ram_block);
+> >      physical_memory_test_and_clear_dirty(
+> > -        memory_region_get_ram_addr(mr) + addr, size, client);
+> > +        memory_region_get_ram_addr(mr) + addr, size, client, NULL);
+> >  }
+> >  
+> >  int memory_region_get_fd(MemoryRegion *mr)
+> > diff --git a/system/physmem.c b/system/physmem.c
+> > index c9869e4049..f8b660dafe 100644
+> > --- a/system/physmem.c
+> > +++ b/system/physmem.c
+> > @@ -1089,19 +1089,31 @@ void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
+> >      }
+> >  }
+> >  
+> > -/* Note: start and end must be within the same ram block.  */
+> > -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+> > +/*
+> > + * Note: start and end must be within the same ram block.
+> > + *
+> > + * @dest usage:
+> 
+> I'm not sure if it's just me, but I find this "dest" term quite
+> confusing. "bmap" might be more straight-forward.
+> 
+> > + * - When @dest is provided, set bits for newly discovered dirty pages
+> > + *   only if the bit wasn't already set in dest, and count those pages
+> > + *   in num_dirty.
+> 
+> Am I misreading the code? I don't see this "set ... only if the bit
+> wasn't already set" part. What I see is: "set bits, but only count those
+> pages if the bit wasn't already set".
+
+Agrees on both points.. one more thing to mention below.
+
+> 
+> > + * - When @dest is NULL, count all dirty pages in the range
+> > + *
+> > + * @return:
+> > + * - Number of dirty guest pages found within [start, start + length).
+> > + */
+> > +uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
+> >                                                ram_addr_t length,
+> > -                                              unsigned client)
+> > +                                              unsigned client,
+> > +                                              unsigned long *dest)
+> >  {
+> >      DirtyMemoryBlocks *blocks;
+> >      unsigned long end, page, start_page;
+> > -    bool dirty = false;
+> > +    uint64_t num_dirty = 0;
+> >      RAMBlock *ramblock;
+> >      uint64_t mr_offset, mr_size;
+> >  
+> >      if (length == 0) {
+> > -        return false;
+> > +        return 0;
+> >      }
+> >  
+> >      end = TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
+> > @@ -1118,12 +1130,19 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+> >          while (page < end) {
+> >              unsigned long idx = page / DIRTY_MEMORY_BLOCK_SIZE;
+> >              unsigned long offset = page % DIRTY_MEMORY_BLOCK_SIZE;
+> > -            unsigned long num = MIN(end - page,
+> > -                                    DIRTY_MEMORY_BLOCK_SIZE - offset);
+> >  
+> > -            dirty |= bitmap_test_and_clear_atomic(blocks->blocks[idx],
+> > -                                                  offset, num);
+> > -            page += num;
+> > +            if (bitmap_test_and_clear_atomic(blocks->blocks[idx], offset, 1)) {
+> > +                if (dest) {
+> > +                    unsigned long k = page - (ramblock->offset >> TARGET_PAGE_BITS);
+> > +                    if (!test_and_set_bit(k, dest)) {
+> > +                        num_dirty++;
+> > +                    }
+> > +                } else {
+> > +                    num_dirty++;
+> > +                }
+> > +            }
+> > +
+> > +            page++;
+
+Sorry I could have mentioned this in the previous version: IMHO it'll still
+be nice to keep the one atomic operations for !dest/!bmap case over "num".
+There's no reason we need to introduce even any slightest regression in
+those paths.
 
 Thanks,
 
-Glenn
+> >          }
+> >  
+> >          mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - ramblock->offset;
+> > @@ -1131,18 +1150,18 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+> >          memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, mr_size);
+> >      }
+> >  
+> > -    if (dirty) {
+> > +    if (num_dirty) {
+> >          physical_memory_dirty_bits_cleared(start, length);
+> >      }
+> >  
+> > -    return dirty;
+> > +    return num_dirty;
+> >  }
+> >  
+> >  static void physical_memory_clear_dirty_range(ram_addr_t addr, ram_addr_t length)
+> >  {
+> > -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
+> > -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
+> > -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
+> > +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION, NULL);
+> > +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA, NULL);
+> > +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE, NULL);
+> >  }
+> >  
+> >  DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
+> 
 
-On Tue, 2025-12-16 at 09:45 -0600, Caleb Schlossin wrote:
-> unrealize should free the fifo8 memory that was allocated by realize.
-> 
-> Fixes: 17befecda85 ("hw/ssi/pnv_spi: Replace PnvXferBuffer with Fifo8 structure")
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
-> ---
->  hw/ssi/pnv_spi.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-> index f40e8836b9..5db440be9a 100644
-> --- a/hw/ssi/pnv_spi.c
-> +++ b/hw/ssi/pnv_spi.c
-> @@ -1176,6 +1176,13 @@ static void pnv_spi_realize(DeviceState *dev, Error **errp)
->                            s, "xscom-spi", PNV10_XSCOM_PIB_SPIC_SIZE);
->  }
->  
-> +static void pnv_spi_unrealize(DeviceState *dev)
-> +{
-> +    PnvSpi *s = PNV_SPI(dev);
-> +    fifo8_destroy(&s->tx_fifo);
-> +    fifo8_destroy(&s->rx_fifo);
-> +}
-> +
->  static int pnv_spi_dt_xscom(PnvXScomInterface *dev, void *fdt,
->                               int offset)
->  {
-> @@ -1208,6 +1215,7 @@ static void pnv_spi_class_init(ObjectClass *klass, const void *data)
->  
->      dc->desc = "PowerNV SPI";
->      dc->realize = pnv_spi_realize;
-> +    dc->unrealize = pnv_spi_unrealize;
->      device_class_set_legacy_reset(dc, do_reset);
->      device_class_set_props(dc, pnv_spi_properties);
->  }
+-- 
+Peter Xu
 
 
