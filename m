@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1E33D5C0C0
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 03:22:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DADFD5C0C5
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 03:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVLdM-000461-75; Mon, 15 Dec 2025 22:21:56 -0500
+	id 1vVLdI-00044j-80; Mon, 15 Dec 2025 22:21:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_haixcui@quicinc.com>)
- id 1vVLdK-00045T-Dk
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 22:21:54 -0500
+ id 1vVLdG-00044S-Re
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 22:21:50 -0500
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_haixcui@quicinc.com>)
- id 1vVLdI-0002Ry-8e
- for qemu-devel@nongnu.org; Mon, 15 Dec 2025 22:21:54 -0500
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1vVLdE-0002Mv-NO
+ for qemu-devel@nongnu.org; Mon, 15 Dec 2025 22:21:50 -0500
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 5BFJxehN1290627; Tue, 16 Dec 2025 03:21:50 GMT
+ 5BFLG8NG2278295; Tue, 16 Dec 2025 03:21:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- vGH4T7L8XEnEgK3icxBm8TFgLTzmV9FLSR3nKVfquv0=; b=H1Hq7KyBW/Y/VmZE
- 84oXnOVuo1cwJewPoXapNmuPuxd6y3Ayzm2wv2cHjMIjEqe8xcV0Bc6d3oZO0dzT
- J4BDRB/Z8rj8BldiJkRIRC483W+v8mw59zgXhT5HWTHom+OBYVN392bVHrZCwL5S
- OiP3+mYNSPPc3paxzEikcq2Pz6eiir3R6A1BUNPy2MvbAx5JNJ5F717qDC4AAoSx
- eUmwL8lYXDG6LXVhQjRXoirsFAJse7SP4f22U39vpK0OXBiw12tUSxRDXaSz8JGe
- B3R8+guDmoA2PI6Vuh7xosZAN3f4ue1VzGCDUirARFsxmyWj0PoGgZtOIowY3BVx
- GzQNeQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
+ z/1Fo2bHzFPB7FZ/afoe7y/RHqDF4ibFnHpIGV1W3RY=; b=cEBtvIjbYHATK5wk
+ B7XC61e0Lv+nSq+8baR02Uk2rqIsZYDjs6N/yY4CYaQK1uoK/QINPSPmxRMjqR2q
+ bLY9w7E73JqTWNsHz2HpKltVB+YewIx54escSjkTu9K/48NJRmfE/c4X/G/o3D6L
+ wtXGZYkjcbgvYQpbXKFiG5QYifgawL/bPTNhknb5JwTGve09Q9+q5WD9FFuvKmzv
+ 1FQYEY6IIotnOWAYMSD2zth8Ym/7l5aO0PKn5stKZeNv+e5oTVRJTECAWUoff++V
+ N+VEQJx+wQEsZ3OqN/R7rwAOmnn9TVN/6j+sKKMp67KbuRBgEIiVwspArsjVAV04
+ y08YpA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com
  [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b2hgatry3-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b2per9qtr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 03:21:50 +0000 (GMT)
+ Tue, 16 Dec 2025 03:21:46 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com
  [10.47.209.197])
- by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5BG3LnGK016520
+ by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5BG3LjAW024763
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 03:21:49 GMT
+ Tue, 16 Dec 2025 03:21:45 GMT
 Received: from haixcui1-gv.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Mon, 15 Dec 2025 19:21:46 -0800
+ 15.2.2562.17; Mon, 15 Dec 2025 19:21:42 -0800
 From: Haixu Cui <quic_haixcui@quicinc.com>
 To: <manos.pitsidianakis@linaro.org>, <alex.bennee@linaro.org>,
  <viresh.kumar@linaro.org>, <quic_tsoni@quicinc.com>,
  <qemu-devel@nongnu.org>, <mst@redhat.com>, <zhiqiang.tu@oss.qualcomm.com>
 CC: Haixu Cui <quic_haixcui@quicinc.com>
-Subject: [PATCH v3 2/2] virtio-spi: Add vhost-user-spi device support
-Date: Tue, 16 Dec 2025 11:21:22 +0800
-Message-ID: <20251216032122.1316684-3-quic_haixcui@quicinc.com>
+Subject: [PATCH v3 1/2] standard-headers: Update virtio_spi.h from Linux
+ v6.18-rc3
+Date: Tue, 16 Dec 2025 11:21:21 +0800
+Message-ID: <20251216032122.1316684-2-quic_haixcui@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251216032122.1316684-1-quic_haixcui@quicinc.com>
 References: <20251216032122.1316684-1-quic_haixcui@quicinc.com>
@@ -67,29 +68,29 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
  signatures=585085
-X-Proofpoint-GUID: lnHUr9JBR5a_IqHplgb6acUQvWqEtDWd
-X-Proofpoint-ORIG-GUID: lnHUr9JBR5a_IqHplgb6acUQvWqEtDWd
-X-Authority-Analysis: v=2.4 cv=GpxPO01C c=1 sm=1 tr=0 ts=6940d04e cx=c_pps
+X-Proofpoint-ORIG-GUID: ZrhmTNEuhZ_D0efsBLaINGjDVWUusKMW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE2MDAyNiBTYWx0ZWRfX0M/Ushp6SK6O
+ THTXCZlH3ilSrAiUlJZzTir/UlkDZ7qvlk0oUjTY5S5UGlpdEeKU6vPoWal96wZWhi/Lzh6f3FE
+ cevOlfN3sRM0xD8MfzW1JbcG1uqe3KpXn17PeBPhzDP30T+nmuOlPMzjYgbDIgKnxhdhFloLAdV
+ K59LE5uMpb4HhTiWvYCLcOb7atkod0fxq9I1UBWj8PR1zXV3M2ZxDgPxrQhAgupnLuuZ1q6ZeIF
+ OxPFyxSBfg6a4rr/3pJRGs5HGaH4p8n6a1mUzTqZYqtb7Cx5n9BMD+qwTjEDM1qDAoP7uE6h4oF
+ 2YwrUlRcDstdOLHH+d66wJTsBp5Rgu7cwCEQeDvN57Pvf2PZAM+whHB58SU7Ay2OVu97Sbj0C8o
+ Z9cgfWccFzjhrz5Yk8KWV708QlTqqw==
+X-Proofpoint-GUID: ZrhmTNEuhZ_D0efsBLaINGjDVWUusKMW
+X-Authority-Analysis: v=2.4 cv=PYHyRyhd c=1 sm=1 tr=0 ts=6940d04a cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=GEpy-HfZoHoA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
- a=i0EeH86SAAAA:8 a=8x0lwGbhQW9GwtfvS4EA:9 a=TjNXssC_j7lpFel5tvFf:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE2MDAyNiBTYWx0ZWRfX8fvPe5I2Sqnt
- a37Tlsc0LW1bA2UCi+qOMVMLnPTOMKmAE0ulMO1c8n15bQg3Ksiy18MfkAGSBsSvtm7zGvuM0R9
- IHdBh3ZxkrbeLdhNGRx3T8PuKQUmhYF5h+wN1Nk1b2ohG39S2yC9L1hRgFyUe5SaSYdRrIsVcun
- dzwN0oo2zh7zUeXXBfS1YOogqy9QxzsFboM3qHmk7uDdN2rBxbxAfpTKeI/OoN/wIzbG5jwOLCu
- DWJ1S2BwJPNSU52PnG2ANRJi0216CV98Lb498BrxkF/dNmAwID5j9OaJxv2rLGWRUDkwcftxtP6
- URievl60pKji5eo2A344sRpNbAVC6KgHkHoHMJ+TRChMtLs+vPJcVYDZB41p59O0nj8aMMKyQwV
- z8+MJb1GGIBu4+gW6Nyzp68noVP5Zw==
+ a=Z4Rwk6OoAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=rqJjEXyH_1KH1bkhQPcA:9
+ a=HkZW87K1Qel5hWWM3VKY:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-16_01,2025-12-15_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 impostorscore=0 spamscore=0 bulkscore=0
- lowpriorityscore=0 adultscore=0 suspectscore=0 clxscore=1015 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512160026
+ spamscore=0 adultscore=0 phishscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 priorityscore=1501
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2510240001
+ definitions=main-2512160026
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=quic_haixcui@quicinc.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -115,316 +116,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch introduces support for vhost-user-spi and vhost-user-spi-pci
-devices in QEMU, enabling virtio-based SPI communication via the vhost-user
-protocol.
+Synced virtio_spi.h from upstream Linux kernelusing
+scripts/update-linux-headers.sh.
 
-The implementation follows the virtio-spi specification and leverages
-the upstream virtio-spi driver in Linux. Relevant references:
+Source:
+- Linux commit dcb6fa37fd7bc9c3d2b066329b0d27dedf8becaa (v6.18-rc3)
+- Author: Linus Torvalds <torvalds@linux-foundation.org>
+- Date:   Sun Oct 26 15:59:49 2025 -0700
 
-- Virtio SPI specification:
-  https://github.com/oasis-tcs/virtio-spec/tree/master/device-types/spi
-- Linux virtio-spi driver:
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/spi/spi-virtio.c?h=v6.18-rc3
-- vhost-user-spi daemon:
-  https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-spi
-
-Example usage with rust-vmm vhost-user-spi daemon:
-
-Start the vhost-user-spi daemon:
-    vhost-device-spi --socket-path=vspi.sock --socket-count=1 \
-        --device "/dev/spidev0.0"
-
-Launch QEMU with:
-    qemu-system-aarch64 -m 1G \
-        -chardev socket,path=/home/root/vspi.sock0,id=vspi \
-        -device vhost-user-spi-device,chardev=vspi,id=spi \
-        -object memory-backend-file,id=mem,size=1G,mem-path=/dev/shm,share=on \
-        -numa node,memdev=mem
+This update ensures QEMU's standard headers are consistent with the latest
+virtio SPI definitions from Linux v6.18-rc3.
 
 Signed-off-by: Haixu Cui <quic_haixcui@quicinc.com>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- MAINTAINERS                               |  6 ++
- docs/system/devices/virtio/vhost-user.rst |  3 +
- hw/virtio/Kconfig                         |  5 ++
- hw/virtio/meson.build                     |  3 +
- hw/virtio/vhost-user-spi-pci.c            | 69 +++++++++++++++++++++++
- hw/virtio/vhost-user-spi.c                | 65 +++++++++++++++++++++
- hw/virtio/virtio.c                        |  4 +-
- include/hw/virtio/vhost-user-spi.h        | 25 ++++++++
- 8 files changed, 179 insertions(+), 1 deletion(-)
- create mode 100644 hw/virtio/vhost-user-spi-pci.c
- create mode 100644 hw/virtio/vhost-user-spi.c
- create mode 100644 include/hw/virtio/vhost-user-spi.h
+ include/standard-headers/linux/virtio_spi.h | 181 ++++++++++++++++++++
+ 1 file changed, 181 insertions(+)
+ create mode 100644 include/standard-headers/linux/virtio_spi.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 63e9ba521b..790607b557 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2525,6 +2525,12 @@ F: hw/virtio/vhost-user-scmi*
- F: include/hw/virtio/vhost-user-scmi.h
- F: tests/qtest/libqos/virtio-scmi.*
- 
-+vhost-user-spi
-+M: Haixu Cui <quic_haixcui@quicinc.com>
-+S: Maintained
-+F: include/hw/virtio/vhost-user-spi.h
-+F: hw/virtio/vhost-user-spi*
-+
- virtio-crypto
- M: Gonglei <arei.gonglei@huawei.com>
- S: Supported
-diff --git a/docs/system/devices/virtio/vhost-user.rst b/docs/system/devices/virtio/vhost-user.rst
-index f556a840e9..2806d81ca2 100644
---- a/docs/system/devices/virtio/vhost-user.rst
-+++ b/docs/system/devices/virtio/vhost-user.rst
-@@ -58,6 +58,9 @@ platform details for what sort of virtio bus to use.
-   * - vhost-user-vsock
-     - Socket based communication
-     - `vhost-device-vsock <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock>`_
-+  * - vhost-user-spi
-+    - Proxy spi devices to host
-+    - `vhost-device-spi <https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-spi>`_
- 
- The referenced *daemons* are not exhaustive, any conforming backend
- implementing the device and using the vhost-user protocol should work.
-diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
-index 10f5c53ac0..8895682c61 100644
---- a/hw/virtio/Kconfig
-+++ b/hw/virtio/Kconfig
-@@ -127,6 +127,11 @@ config VHOST_USER_SCMI
-     default y
-     depends on VIRTIO && VHOST_USER && ARM
- 
-+config VHOST_USER_SPI
-+    bool
-+    default y
-+    depends on VIRTIO && VHOST_USER
-+
- config VHOST_USER_TEST
-     bool
-     default y
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index affd66887d..6675b63ce6 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -28,6 +28,7 @@ if have_vhost
-     system_virtio_ss.add(when: 'CONFIG_VHOST_USER_RNG', if_true: files('vhost-user-rng.c'))
-     system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SND', if_true: files('vhost-user-snd.c'))
-     system_virtio_ss.add(when: 'CONFIG_VHOST_USER_INPUT', if_true: files('vhost-user-input.c'))
-+    system_virtio_ss.add(when: 'CONFIG_VHOST_USER_SPI', if_true: files('vhost-user-spi.c'))
- 
-     # PCI Stubs
-     system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_TEST'],
-@@ -42,6 +43,8 @@ if have_vhost
-                          if_true: files('vhost-user-snd-pci.c'))
-     system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_INPUT'],
-                          if_true: files('vhost-user-input-pci.c'))
-+    system_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SPI'],
-+                         if_true: files('vhost-user-spi-pci.c'))
-   endif
-   if have_vhost_vdpa
-     system_virtio_ss.add(files('vhost-vdpa.c'))
-diff --git a/hw/virtio/vhost-user-spi-pci.c b/hw/virtio/vhost-user-spi-pci.c
+diff --git a/include/standard-headers/linux/virtio_spi.h b/include/standard-headers/linux/virtio_spi.h
 new file mode 100644
-index 0000000000..095aba5760
+index 0000000000..54e570fb4a
 --- /dev/null
-+++ b/hw/virtio/vhost-user-spi-pci.c
-@@ -0,0 +1,69 @@
++++ b/include/standard-headers/linux/virtio_spi.h
+@@ -0,0 +1,181 @@
++/* SPDX-License-Identifier: BSD-3-Clause */
 +/*
-+ * Vhost-user spi virtio device PCI glue
-+ *
-+ * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Copyright (C) 2023 OpenSynergy GmbH
++ * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
 + */
++#ifndef _LINUX_VIRTIO_VIRTIO_SPI_H
++#define _LINUX_VIRTIO_VIRTIO_SPI_H
 +
-+#include "qemu/osdep.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/virtio/vhost-user-spi.h"
-+#include "hw/virtio/virtio-pci.h"
-+
-+struct VHostUserSPIPCI {
-+    VirtIOPCIProxy parent_obj;
-+    VHostUserSPI vdev;
-+};
-+
-+typedef struct VHostUserSPIPCI VHostUserSPIPCI;
-+
-+#define TYPE_VHOST_USER_SPI_PCI "vhost-user-spi-pci-base"
-+
-+DECLARE_INSTANCE_CHECKER(VHostUserSPIPCI, VHOST_USER_SPI_PCI,
-+                         TYPE_VHOST_USER_SPI_PCI)
-+
-+static void vhost_user_spi_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
-+{
-+    VHostUserSPIPCI *dev = VHOST_USER_SPI_PCI(vpci_dev);
-+    DeviceState *vdev = DEVICE(&dev->vdev);
-+
-+    vpci_dev->nvectors = 1;
-+    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
-+}
-+
-+static void vhost_user_spi_pci_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
-+    PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
-+    k->realize = vhost_user_spi_pci_realize;
-+    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-+    pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
-+    pcidev_k->device_id = 0; /* Set by virtio-pci based on virtio id */
-+    pcidev_k->revision = 0x00;
-+    pcidev_k->class_id = PCI_CLASS_COMMUNICATION_OTHER;
-+}
-+
-+static void vhost_user_spi_pci_instance_init(Object *obj)
-+{
-+    VHostUserSPIPCI *dev = VHOST_USER_SPI_PCI(obj);
-+
-+    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
-+                                TYPE_VHOST_USER_SPI);
-+}
-+
-+static const VirtioPCIDeviceTypeInfo vhost_user_spi_pci_info = {
-+    .base_name = TYPE_VHOST_USER_SPI_PCI,
-+    .non_transitional_name = "vhost-user-spi-pci",
-+    .instance_size = sizeof(VHostUserSPIPCI),
-+    .instance_init = vhost_user_spi_pci_instance_init,
-+    .class_init = vhost_user_spi_pci_class_init,
-+};
-+
-+static void vhost_user_spi_pci_register(void)
-+{
-+    virtio_pci_types_register(&vhost_user_spi_pci_info);
-+}
-+
-+type_init(vhost_user_spi_pci_register);
-diff --git a/hw/virtio/vhost-user-spi.c b/hw/virtio/vhost-user-spi.c
-new file mode 100644
-index 0000000000..0d44dec46a
---- /dev/null
-+++ b/hw/virtio/vhost-user-spi.c
-@@ -0,0 +1,65 @@
-+/*
-+ * Vhost-user spi virtio device
-+ *
-+ * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/virtio/virtio-bus.h"
-+#include "hw/virtio/vhost-user-spi.h"
-+#include "qemu/error-report.h"
++#include "standard-headers/linux/types.h"
++#include "standard-headers/linux/virtio_config.h"
 +#include "standard-headers/linux/virtio_ids.h"
-+#include "standard-headers/linux/virtio_spi.h"
++#include "standard-headers/linux/virtio_types.h"
 +
-+static const Property vspi_properties[] = {
-+    DEFINE_PROP_CHR("chardev", VHostUserBase, chardev),
-+};
++/* Sample data on trailing clock edge */
++#define VIRTIO_SPI_CPHA			_BITUL(0)
++/* Clock is high when IDLE */
++#define VIRTIO_SPI_CPOL			_BITUL(1)
++/* Chip Select is active high */
++#define VIRTIO_SPI_CS_HIGH			_BITUL(2)
++/* Transmit LSB first */
++#define VIRTIO_SPI_MODE_LSB_FIRST		_BITUL(3)
++/* Loopback mode */
++#define VIRTIO_SPI_MODE_LOOP			_BITUL(4)
 +
-+static void vspi_realize(DeviceState *dev, Error **errp)
-+{
-+    VHostUserBase *vub = VHOST_USER_BASE(dev);
-+    VHostUserBaseClass *vubc = VHOST_USER_BASE_GET_CLASS(dev);
-+
-+    /* Fixed for SPI */
-+    vub->virtio_id = VIRTIO_ID_SPI;
-+    vub->num_vqs = 1;
-+    vub->vq_size = 4;
-+    vub->config_size = sizeof(struct virtio_spi_config);
-+
-+    vubc->parent_realize(dev, errp);
-+}
-+
-+static const VMStateDescription vu_spi_vmstate = {
-+    .name = "vhost-user-spi",
-+    .unmigratable = 1,
-+};
-+
-+static void vu_spi_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    VHostUserBaseClass *vubc = VHOST_USER_BASE_CLASS(klass);
-+
-+    dc->vmsd = &vu_spi_vmstate;
-+    device_class_set_props(dc, vspi_properties);
-+    device_class_set_parent_realize(dc, vspi_realize,
-+                                    &vubc->parent_realize);
-+    set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
-+}
-+
-+static const TypeInfo vu_spi_info = {
-+    .name = TYPE_VHOST_USER_SPI,
-+    .parent = TYPE_VHOST_USER_BASE,
-+    .instance_size = sizeof(VHostUserSPI),
-+    .class_init = vu_spi_class_init,
-+};
-+
-+static void vu_spi_register_types(void)
-+{
-+    type_register_static(&vu_spi_info);
-+}
-+
-+type_init(vu_spi_register_types)
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 257cda506a..d2ff634b14 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -48,6 +48,7 @@
- #include "standard-headers/linux/virtio_iommu.h"
- #include "standard-headers/linux/virtio_mem.h"
- #include "standard-headers/linux/virtio_vsock.h"
-+#include "standard-headers/linux/virtio_spi.h"
- 
- /*
-  * Maximum size of virtio device config space
-@@ -196,7 +197,8 @@ const char *virtio_device_names[] = {
-     [VIRTIO_ID_PARAM_SERV] = "virtio-param-serv",
-     [VIRTIO_ID_AUDIO_POLICY] = "virtio-audio-pol",
-     [VIRTIO_ID_BT] = "virtio-bluetooth",
--    [VIRTIO_ID_GPIO] = "virtio-gpio"
-+    [VIRTIO_ID_GPIO] = "virtio-gpio",
-+    [VIRTIO_ID_SPI] = "virtio-spi"
- };
- 
- static const char *virtio_id_to_name(uint16_t device_id)
-diff --git a/include/hw/virtio/vhost-user-spi.h b/include/hw/virtio/vhost-user-spi.h
-new file mode 100644
-index 0000000000..a1a65820cd
---- /dev/null
-+++ b/include/hw/virtio/vhost-user-spi.h
-@@ -0,0 +1,25 @@
-+/*
-+ * Vhost-user spi virtio device
-+ *
-+ * Copyright (C) 2025 Qualcomm Innovation Center, Inc. All Rights Reserved.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++/**
++ * struct virtio_spi_config - All config fields are read-only for the
++ * Virtio SPI driver
++ * @cs_max_number: maximum number of chipselect the host SPI controller
++ *   supports.
++ * @cs_change_supported: indicates if the host SPI controller supports to toggle
++ *   chipselect after each transfer in one message:
++ *   0: unsupported, chipselect will be kept in active state throughout the
++ *      message transaction;
++ *   1: supported.
++ *   Note: Message here contains a sequence of SPI transfers.
++ * @tx_nbits_supported: indicates the supported number of bit for writing:
++ *   bit 0: DUAL (2-bit transfer), 1 for supported
++ *   bit 1: QUAD (4-bit transfer), 1 for supported
++ *   bit 2: OCTAL (8-bit transfer), 1 for supported
++ *   other bits are reserved as 0, 1-bit transfer is always supported.
++ * @rx_nbits_supported: indicates the supported number of bit for reading:
++ *   bit 0: DUAL (2-bit transfer), 1 for supported
++ *   bit 1: QUAD (4-bit transfer), 1 for supported
++ *   bit 2: OCTAL (8-bit transfer), 1 for supported
++ *   other bits are reserved as 0, 1-bit transfer is always supported.
++ * @bits_per_word_mask: mask indicating which values of bits_per_word are
++ *   supported. If not set, no limitation for bits_per_word.
++ * @mode_func_supported: indicates the following features are supported or not:
++ *   bit 0-1: CPHA feature
++ *     0b00: invalid, should support as least one CPHA setting
++ *     0b01: supports CPHA=0 only
++ *     0b10: supports CPHA=1 only
++ *     0b11: supports CPHA=0 and CPHA=1.
++ *   bit 2-3: CPOL feature
++ *     0b00: invalid, should support as least one CPOL setting
++ *     0b01: supports CPOL=0 only
++ *     0b10: supports CPOL=1 only
++ *     0b11: supports CPOL=0 and CPOL=1.
++ *   bit 4: chipselect active high feature, 0 for unsupported and 1 for
++ *     supported, chipselect active low is supported by default.
++ *   bit 5: LSB first feature, 0 for unsupported and 1 for supported,
++ *     MSB first is supported by default.
++ *   bit 6: loopback mode feature, 0 for unsupported and 1 for supported,
++ *     normal mode is supported by default.
++ * @max_freq_hz: the maximum clock rate supported in Hz unit, 0 means no
++ *   limitation for transfer speed.
++ * @max_word_delay_ns: the maximum word delay supported, in nanoseconds.
++ *   A value of 0 indicates that word delay is unsupported.
++ *   Each transfer may consist of a sequence of words.
++ * @max_cs_setup_ns: the maximum delay supported after chipselect is asserted,
++ *   in ns unit, 0 means delay is not supported to introduce after chipselect is
++ *   asserted.
++ * @max_cs_hold_ns: the maximum delay supported before chipselect is deasserted,
++ *   in ns unit, 0 means delay is not supported to introduce before chipselect
++ *   is deasserted.
++ * @max_cs_incative_ns: maximum delay supported after chipselect is deasserted,
++ *   in ns unit, 0 means delay is not supported to introduce after chipselect is
++ *   deasserted.
 + */
-+
-+#ifndef QEMU_VHOST_USER_SPI_H
-+#define QEMU_VHOST_USER_SPI_H
-+
-+#include "hw/virtio/virtio.h"
-+#include "hw/virtio/vhost.h"
-+#include "hw/virtio/vhost-user.h"
-+#include "hw/virtio/vhost-user-base.h"
-+
-+#define TYPE_VHOST_USER_SPI "vhost-user-spi-device"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(VHostUserSPI, VHOST_USER_SPI)
-+
-+struct VHostUserSPI {
-+    VHostUserBase parent_obj;
++struct virtio_spi_config {
++	uint8_t cs_max_number;
++	uint8_t cs_change_supported;
++#define VIRTIO_SPI_RX_TX_SUPPORT_DUAL		_BITUL(0)
++#define VIRTIO_SPI_RX_TX_SUPPORT_QUAD		_BITUL(1)
++#define VIRTIO_SPI_RX_TX_SUPPORT_OCTAL		_BITUL(2)
++	uint8_t tx_nbits_supported;
++	uint8_t rx_nbits_supported;
++	uint32_t bits_per_word_mask;
++#define VIRTIO_SPI_MF_SUPPORT_CPHA_0		_BITUL(0)
++#define VIRTIO_SPI_MF_SUPPORT_CPHA_1		_BITUL(1)
++#define VIRTIO_SPI_MF_SUPPORT_CPOL_0		_BITUL(2)
++#define VIRTIO_SPI_MF_SUPPORT_CPOL_1		_BITUL(3)
++#define VIRTIO_SPI_MF_SUPPORT_CS_HIGH		_BITUL(4)
++#define VIRTIO_SPI_MF_SUPPORT_LSB_FIRST		_BITUL(5)
++#define VIRTIO_SPI_MF_SUPPORT_LOOPBACK		_BITUL(6)
++	uint32_t mode_func_supported;
++	uint32_t max_freq_hz;
++	uint32_t max_word_delay_ns;
++	uint32_t max_cs_setup_ns;
++	uint32_t max_cs_hold_ns;
++	uint32_t max_cs_inactive_ns;
 +};
 +
-+#endif /* QEMU_VHOST_USER_SPI_H */
++/**
++ * struct spi_transfer_head - virtio SPI transfer descriptor
++ * @chip_select_id: chipselect index the SPI transfer used.
++ * @bits_per_word: the number of bits in each SPI transfer word.
++ * @cs_change: whether to deselect device after finishing this transfer
++ *     before starting the next transfer, 0 means cs keep asserted and
++ *     1 means cs deasserted then asserted again.
++ * @tx_nbits: bus width for write transfer.
++ *     0,1: bus width is 1, also known as SINGLE
++ *     2  : bus width is 2, also known as DUAL
++ *     4  : bus width is 4, also known as QUAD
++ *     8  : bus width is 8, also known as OCTAL
++ *     other values are invalid.
++ * @rx_nbits: bus width for read transfer.
++ *     0,1: bus width is 1, also known as SINGLE
++ *     2  : bus width is 2, also known as DUAL
++ *     4  : bus width is 4, also known as QUAD
++ *     8  : bus width is 8, also known as OCTAL
++ *     other values are invalid.
++ * @reserved: for future use.
++ * @mode: SPI transfer mode.
++ *     bit 0: CPHA, determines the timing (i.e. phase) of the data
++ *         bits relative to the clock pulses.For CPHA=0, the
++ *         "out" side changes the data on the trailing edge of the
++ *         preceding clock cycle, while the "in" side captures the data
++ *         on (or shortly after) the leading edge of the clock cycle.
++ *         For CPHA=1, the "out" side changes the data on the leading
++ *         edge of the current clock cycle, while the "in" side
++ *         captures the data on (or shortly after) the trailing edge of
++ *         the clock cycle.
++ *     bit 1: CPOL, determines the polarity of the clock. CPOL=0 is a
++ *         clock which idles at 0, and each cycle consists of a pulse
++ *         of 1. CPOL=1 is a clock which idles at 1, and each cycle
++ *         consists of a pulse of 0.
++ *     bit 2: CS_HIGH, if 1, chip select active high, else active low.
++ *     bit 3: LSB_FIRST, determines per-word bits-on-wire, if 0, MSB
++ *         first, else LSB first.
++ *     bit 4: LOOP, loopback mode.
++ * @freq: the transfer speed in Hz.
++ * @word_delay_ns: delay to be inserted between consecutive words of a
++ *     transfer, in ns unit.
++ * @cs_setup_ns: delay to be introduced after CS is asserted, in ns
++ *     unit.
++ * @cs_delay_hold_ns: delay to be introduced before CS is deasserted
++ *     for each transfer, in ns unit.
++ * @cs_change_delay_inactive_ns: delay to be introduced after CS is
++ *     deasserted and before next asserted, in ns unit.
++ */
++struct spi_transfer_head {
++	uint8_t chip_select_id;
++	uint8_t bits_per_word;
++	uint8_t cs_change;
++	uint8_t tx_nbits;
++	uint8_t rx_nbits;
++	uint8_t reserved[3];
++	uint32_t mode;
++	uint32_t freq;
++	uint32_t word_delay_ns;
++	uint32_t cs_setup_ns;
++	uint32_t cs_delay_hold_ns;
++	uint32_t cs_change_delay_inactive_ns;
++};
++
++/**
++ * struct spi_transfer_result - virtio SPI transfer result
++ * @result: Transfer result code.
++ *          VIRTIO_SPI_TRANS_OK: Transfer successful.
++ *          VIRTIO_SPI_PARAM_ERR: Parameter error.
++ *          VIRTIO_SPI_TRANS_ERR: Transfer error.
++ */
++struct spi_transfer_result {
++#define VIRTIO_SPI_TRANS_OK	0
++#define VIRTIO_SPI_PARAM_ERR	1
++#define VIRTIO_SPI_TRANS_ERR	2
++	uint8_t result;
++};
++
++#endif /* #ifndef _LINUX_VIRTIO_VIRTIO_SPI_H */
 -- 
 2.34.1
 
