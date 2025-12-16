@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F32D8D637DB
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 22:53:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54989D637DF
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 23:00:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVdut-0005W6-L9; Tue, 16 Dec 2025 17:53:15 -0500
+	id 1vVe1c-0007mI-Pl; Tue, 16 Dec 2025 18:00:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVdus-0005VJ-6G
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 17:53:14 -0500
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ id 1vVe1b-0007kx-4L
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:00:11 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVduq-0000fP-Id
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 17:53:13 -0500
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-bfb84c2fe5eso3952a12.1
- for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 14:53:12 -0800 (PST)
+ id 1vVe1Z-0002WA-EJ
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:00:10 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7f651586be1so6448b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 15:00:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765925591; x=1766530391; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1765926008; x=1766530808; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=97eb24TtJtzRV8hQQfX2roM76MdnXtCmhpyJRZkPRwg=;
- b=Mvr86p17am9WlJQ2ZmcaWLVAk2CUkZU4T8vGA/My3PHOmys5aqfGrYSLMIjTep0sw6
- xg0mEbXdy2faYATcnEaCFlbA3fgk+Gn6hdV453TjI7BnJFhtqLl/Il5DLjAL7XpdwsCA
- 62rReWLEvPzY7lRjIqDmLEatyXDFqqJsYLnir/U6nGTum9GRw7OyuIU9hFmtUklgCMWp
- uVYsdtclKeWKv/HR6E1wHhs/F5wCDyuwqxNX+ySP25YgZnbHjXZaLSmd/uZ8p7WjEXLq
- UpWQqShEE9J3xYQJ55LbChIlQnJ6yIHlPN8WpMig3tAqCurpcCEZV1IJ/QT1BP14gTD4
- 3Vow==
+ bh=ziPfD9NHMhYz3zapDtOKNcrP0FDQLQeZsiHf4ThB3ws=;
+ b=a2CTqqTU5V6Wtl5MWz71xVj7tATx+7oJayLgjOjzVTIyVVEAHwPdkYcUtUY3DecN8E
+ M5vCqWKQMlWpZFnoU/laZOcPKenNTYMUDSr5PZmB0w8viNySzL3AzDmXtwQCHk6QjB1Q
+ pTK45A3kWfLO5pnm1JRmMHiYWWg6YXDiNbNLITNX2aE1kabkVHVyK6aQEYFQFpOeueri
+ 2Sn3lPzRNM+8gW7Z1j8jA0eW+CHSEtfWz83awyFTTDOC/KmyvE4JozzS35FmnAWfoarm
+ HytGPjMpZc2bdB2YOypGvzr417U84B2vNShLFSsDUSRlLdxQlWGMTQGScP+rRbDweR+5
+ O7YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765925591; x=1766530391;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1765926008; x=1766530808;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=97eb24TtJtzRV8hQQfX2roM76MdnXtCmhpyJRZkPRwg=;
- b=wcQITFEb5QVJiwG3g6BQSroK6gczV+ruVInCqlcMhkXm9zt00Q5dj7ZPkWszm8cRya
- VvP0WxIPZ9TuuAMI8MWIuaR85+Gc1mey9v5b+cRMWRiz0dZfJhvAWACdtOOMDLZ2ONq1
- KPzG/audt0caTeN/GO1RC20lKAo2INQ2UmHDq8yuRv5voXpueamnSUEn36dPEIHOFiPR
- J9C69aXBbMi4A+RaUMttiNCD2amxKIj0ymxiRj5RFaZmlSdQFfGMm9SRp8J3HzGK1htu
- qrjq3xOa+DDmsGAaR0aTNOjpFCq+VuGQqCGnufAn8nZ8YSaNvlY8LtHMLw23twEPBT0o
- 0QCA==
-X-Gm-Message-State: AOJu0YzM3DBGDRHUu6NCRZETfiIxbdusaf28ahjIQ+PfQtbrjC2y6/tz
- Gfcfjg0C3Dy07gnJo+SRgeHCMTeg6t9FyFpVkH4FSRvhc5NtzhRIS3oveAJ3vyi5Y4fdv2T9BnP
- JXqzgCwYPIg==
-X-Gm-Gg: AY/fxX6+6j6TldMX5gFz7PK/f4lQoka6TyxDautyTatlvEieICntoNnWW3RyfhMdhsX
- e7dsfUyQdZHAH0S0WYucCO6Tr4wG8taN6Uz/esRlVLAC8Adp/hyDvzZSAghSrxlsR9c30kNsna3
- +tRPxOU1H4sH5R5R8P2/mjNsOTOUZfbjR8ufLPaSZL8t2w5tl84rhQ6S+5loFG8wJOsIE1rmdTL
- +arnv0gcVB6MVYC4/6JVwvtJhH8H0bMF6Xbuh9j3MDXQgoL4gqQnfZZN/4Bcaxz4pIZE4c+GfgW
- iWx6Wp/DPHZshPHegcbiLf9lrNmb7IvaSlGc9A4E4qKL4K7gQsUJHQv5rehsXqFWkWi/KOd4UHe
- GWcoss29x33nQEblN0FQAnBgcaaJtLaipXmXCgtqni4QrrTwrHUgi3kIuzZ2mEY2x90k752ejko
- 9C1bKnAS3QmLNPPRrMKKKAU0B2gu7HAOtKVSBuHI3wZrAEoiqgt6d5ZZA=
-X-Google-Smtp-Source: AGHT+IEfYMNZIgogrzbvjAAtbewpeuKdsv9i0n9MTGYfb0NHhiR9o4yNvtiMsDPpAUdWrdHTjcvAnA==
-X-Received: by 2002:a17:902:ef02:b0:2a0:835f:3d5b with SMTP id
- d9443c01a7336-2a0835f40dbmr148489965ad.6.1765925591099; 
- Tue, 16 Dec 2025 14:53:11 -0800 (PST)
+ bh=ziPfD9NHMhYz3zapDtOKNcrP0FDQLQeZsiHf4ThB3ws=;
+ b=Z5rFACVmhFgSBdkDWT4jdZH0rR7hHhPC5upzGVjCg7n7g0LYpmEIMzCXvfliusdn6m
+ bULkNJ8XuqyhSFNST9dNnYlLbPEnP+oK1UkWI2AEJaVxto+dQ2vd8bdnMeAfT6heyJTI
+ kO4u+SwEq9cKhGdtDbDxOC5Ftdj/s+9oajl7rLHeEK23q3f3XRdT8nMDy8wdkfj+ihK/
+ pyrpisIvZmOsln+24bbz0pKGUhGF+JKA+wUKImPEpbXcADRWUNC2KSBS2SukQo8VnJ+Z
+ ZFe+yvTx/9c6Xduh3c0vPj3Fu7yn7Heymic7VFisQHw39ygTtJbjjayBtqHwcmNXCtQD
+ 1LFw==
+X-Gm-Message-State: AOJu0Yz3qMgjjO3WGxOi438szT2wNx3dP2rB6x4vYh/6ZJcZtlGEoJpp
+ tuKYRHJK5AC+L69lkeJh5TTETpu+tnWqb4lFsKNftaE8JKYbpGYm8EOWptl0Fy3OptM=
+X-Gm-Gg: AY/fxX55rfo071UMydotrY9vY9HAFxeqNnoZmcTEFFLuFRv396QOdT1XvOHUP/lBkGN
+ T13br/3Yn5mYvHU9VptUVc5Q1AU5Ff0czYnYniIUfQbt5frIMHWzkgB8Q8+TR438apZ2GUWyEZq
+ qczCxFfVlIlYOrQ5y6GeAnjNIhSVtw8A068XqoS1GDEUPjDrXfokoNcrM5i44HOunOFeQaN9Myo
+ N981NmaU1G3fgFW2yPO34T/cVzqyGr4PaIJmAQ7fBsCbGJ3tsolmGFNIHJn3OPUDN6NaMMDmLqI
+ 2wJ1GthZGnIz57gr1giS9IF5Ev4o0fjaL2UNX99IjJNKX6mDED9rQIRYUz5xSY9xTS/tzE+Ft1u
+ ZuTOMWtwDiDJ1UBzoPH/qzc8JnWp7vETvg0PvU1ONvMiQXVeEtAH+yDJX7Hp5x5H4EuujiqGbES
+ lppONFPWLlVWgoXkSQyn6v05uIQSHnA8wkzZp4f8nHr85BJ0dwGo77ogo=
+X-Google-Smtp-Source: AGHT+IHk/AAE3nkpcF3tAGdN7DPkDfONt1nmeZxSfNZa+7sfPwMxKfXZXszal7Dfu6QfnkOPu/KUOg==
+X-Received: by 2002:a62:e515:0:b0:7ae:b13f:37c2 with SMTP id
+ d2e1a72fcca58-7f51c48ad86mr11768197b3a.10.1765926007544; 
+ Tue, 16 Dec 2025 15:00:07 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a099e77889sm108331505ad.22.2025.12.16.14.53.10
+ d2e1a72fcca58-7fcbb6fa57bsm592232b3a.46.2025.12.16.15.00.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Dec 2025 14:53:10 -0800 (PST)
-Message-ID: <a82b26be-9671-4a5e-80b3-81bc6cc40e15@linaro.org>
-Date: Tue, 16 Dec 2025 14:53:09 -0800
+ Tue, 16 Dec 2025 15:00:06 -0800 (PST)
+Message-ID: <c4c35b43-7868-45e6-9ea3-a0f859cb2bee@linaro.org>
+Date: Tue, 16 Dec 2025 15:00:05 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/arm/smmu: add memory regions as property for an
- SMMU instance
-Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: tangtao1634@phytium.com.cn, Peter Maydell <peter.maydell@linaro.org>,
- richard.henderson@linaro.org, Eric Auger <eric.auger@redhat.com>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org,
+Subject: Re: [PATCH 1/2] qga/vss-win32: Fix ConvertStringToBSTR redefinition
+ with newer MinGW
+To: phind.uet@gmail.com, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>
-References: <20251216224845.1673051-1-pierrick.bouvier@linaro.org>
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org
+References: <20251215164512.322786-1-phind.uet@gmail.com>
+ <20251215164512.322786-2-phind.uet@gmail.com>
+Content-Language: en-US
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251216224845.1673051-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20251215164512.322786-2-phind.uet@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,35 +109,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/16/25 2:48 PM, Pierrick Bouvier wrote:
-> This will be used to access non-secure and secure memory. Secure support
-> and Granule Protection Check (for RME) for SMMU need to access secure
-> memory.
+On 12/15/25 8:45 AM, phind.uet@gmail.com wrote:
+> From: Nguyen Dinh Phi <phind.uet@gmail.com>
 > 
-> As well, it allows to remove usage of global address_space_memory,
-> allowing different SMMU instances to have a specific view of memory.
+> Newer versions of MinGW-w64 provide ConvertStringToBSTR() in the
+> _com_util namespace via <comutil.h>. This causes a redefinition
+> error when building qemu-ga on Windows with these toolchains.
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Add a meson check to detect whether ConvertStringToBSTR is already
+> available, and conditionally compile our fallback implementation
+> only when the system does not provide one.
+> 
+> Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
 > ---
->   include/hw/arm/smmu-common.h |  4 ++++
->   hw/arm/sbsa-ref.c            | 16 ++++++++++++----
->   hw/arm/smmu-common.c         | 27 +++++++++++++++++++++++++++
->   hw/arm/virt.c                | 16 +++++++++++-----
->   4 files changed, 54 insertions(+), 9 deletions(-)
-v3
---
+>   meson.build               | 12 ++++++++++++
+>   qga/vss-win32/install.cpp |  2 ++
+>   2 files changed, 14 insertions(+)
 
-- solved issue with user creatable smmuv3 (found with 
-qtest/bios-tables-test, subtest smmuv3-dev), which is not created by 
-board file. In this case, smmu->memory is not set, so just use global 
-get_system_memory() instead.
-
-v2
---
-
-- Fix rebase on top of master
-- rename memory and secure-memory address space with
-    "smmu-memory-view" and "smmu-secure-memory-view".
-    If someone prefers any other name, I can change it.
+Thanks for the fix, I was looking at this error.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
