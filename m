@@ -4,117 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E9E1D5E156
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 13:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D22ED5E15A
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 13:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVVDX-0000md-0z; Tue, 16 Dec 2025 08:35:55 -0500
+	id 1vVVFw-0001YJ-Lf; Tue, 16 Dec 2025 08:38:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1vVVDQ-0000mI-IP; Tue, 16 Dec 2025 08:35:50 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vVVFu-0001Xx-G5
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 08:38:22 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <calebs@linux.ibm.com>)
- id 1vVVDO-0005f9-R0; Tue, 16 Dec 2025 08:35:48 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGDMZGj004481;
- Tue, 16 Dec 2025 13:35:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=hpUD8i
- kICxeEc0wtkGY2cM7WTBil+3ycH1ur7icRgeo=; b=IqPvD8vrbL7wbdQGKvIVQG
- Zt0lsi/bbnRJYYKpWOOoETzLqlO1LAPBLvNekUNgWxV3KC7v8UXAdgVrNunhY23c
- mENfHtSxq5IhcjN4HL/Agu6jJQ8bjvDuTNIllP5P4NoCnRvdCn3js7YCJrbPdq9f
- EPg8Ab8C5gy3v017NnblEsyHaZ3izPKdvFsi8JnQx6jd4b8CXske8lUc4RSnu58J
- /YwNWcBLRFWVtWeg+NogDyyxRAOl41l3hLOJ7Hnw3/Z84vHkd3v4cSeIpAqINv4I
- iLbR2bOBNiKIOvL7Sge+tJZBiCSUgN6hzW+1aUTk3L+BSTaDLzwcDWRyQ2Id686w
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0yn8fd5a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 13:35:40 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BGDM9Dw011249;
- Tue, 16 Dec 2025 13:35:40 GMT
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0yn8fd57-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 13:35:39 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGB5XRT014332;
- Tue, 16 Dec 2025 13:35:39 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4b1mpjv0wu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 13:35:39 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5BGDZcj25505658
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Dec 2025 13:35:38 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F0CB58062;
- Tue, 16 Dec 2025 13:35:38 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 73FB65805E;
- Tue, 16 Dec 2025 13:35:37 +0000 (GMT)
-Received: from [9.61.245.21] (unknown [9.61.245.21])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 16 Dec 2025 13:35:37 +0000 (GMT)
-Message-ID: <51ce8be6-a13b-4916-85ba-383187418601@linux.ibm.com>
-Date: Tue, 16 Dec 2025 07:35:37 -0600
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vVVFr-0005yV-Oa
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 08:38:22 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1vVVFn-00000005jXN-2xc1; Tue, 16 Dec 2025 14:38:15 +0100
+Message-ID: <9cb2723e-4132-44ac-be32-857c7933d27e@maciej.szmigiero.name>
+Date: Tue, 16 Dec 2025 14:38:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] hw/ppc: Add VMSTATE information to PnvPsi
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- milesg@linux.ibm.com, alistair@alistair23.me, kowal@linux.ibm.com,
- chalapathi.v@linux.ibm.com, angeloj@linux.ibm.com
-References: <20251215171813.1670241-1-calebs@linux.ibm.com>
- <20251215171813.1670241-8-calebs@linux.ibm.com>
- <ak2xwufxarhtcbaj6nj5mjaimlfhk5p2csty4uxljs4sjrkqol@axobvglzomg7>
-Content-Language: en-US
-From: Caleb Schlossin <calebs@linux.ibm.com>
-In-Reply-To: <ak2xwufxarhtcbaj6nj5mjaimlfhk5p2csty4uxljs4sjrkqol@axobvglzomg7>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAxOCBTYWx0ZWRfX0qAnNsj9MlwE
- Kn/qJwLExt74LWQcZ7tD3i2qIYKQROA8rMzYvtSHPrB3qyEbr5PUZgqaOuEsz3c193z1i3bVEju
- lYphnbibrtmjQ3cEJ1uVqbAWgV1czYxKwIq87Efrez+8vnfgsI2+SsKoKzyAJONFOm3FQ64LzO4
- SgGthjEtnmOjzq4ZIjeyEZjoU7NXeSdTFMcnK8TR3cpRQ1827JS/jCzmaMr3b75xAZXvTGfE5ZJ
- aTqiN6sQpzNnWCJhhO53OiL+sptZbjq9TVVnTb/y7gRYK/VffPfco8kcoRmSaOEpXTnHPbo+aEg
- HmejNWw1G+vChOdYYUxWsBYWJvSabFRGJw0uK8fiGSCj21nuLIs8Rvp4vKKezS5nP/t09Nnfz3p
- CTdsr89lbXazWhAq1TD1/OSpR18R1w==
-X-Proofpoint-GUID: RQhQJ7Kxq2JSnQiBKBaAq4wI9lKF1deU
-X-Proofpoint-ORIG-GUID: qO-X7Ew-b1_PT11hk6hNuaZzobcE7VwT
-X-Authority-Analysis: v=2.4 cv=LbYxKzfi c=1 sm=1 tr=0 ts=6941602c cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=eYMPxEQh5GRO0S22tSsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-16_02,2025-12-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0 phishscore=0 clxscore=1015 suspectscore=0
- adultscore=0 malwarescore=0 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2510240000
- definitions=main-2512130018
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=calebs@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Subject: Re: [PATCH v1 21/28] hw/hyperv/vmbus: add support for confidential
+ guest reset
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Vitaly Kuznetsov <vkuznets@redhat.com>, Gerd Hoffmann
+ <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-devel <qemu-devel@nongnu.org>
+References: <20251212150359.548787-1-anisinha@redhat.com>
+ <20251212150359.548787-22-anisinha@redhat.com>
+ <a0cfba30-8571-4153-a5a3-572cb2fe514f@maciej.szmigiero.name>
+ <FCE31E2E-19BA-43AF-9525-B99C45ADBBF6@redhat.com>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <FCE31E2E-19BA-43AF-9525-B99C45ADBBF6@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,76 +108,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 12/16/25 6:58 AM, Aditya Gupta wrote:
-> Hello Caleb,
+On 16.12.2025 05:41, Ani Sinha wrote:
 > 
-> On 25/12/15 11:18AM, Caleb Schlossin wrote:
->> <...snip...>
+> 
+>> On 15 Dec 2025, at 10:34 PM, Maciej S. Szmigiero <mail@maciej.szmigiero.name> wrote:
 >>
->> --- a/hw/ppc/pnv_psi.c
->> +++ b/hw/ppc/pnv_psi.c
->> @@ -25,6 +25,7 @@
->>  #include "qemu/module.h"
->>  #include "system/reset.h"
->>  #include "qapi/error.h"
->> +#include "migration/vmstate.h"
->>  
->>  
->>  #include "hw/ppc/fdt.h"
->> @@ -35,6 +36,8 @@
->>  
->>  #include <libfdt.h>
->>  
->> +#undef PSI_DEBUG
->> +
+>> On 12.12.2025 16:03, Ani Sinha wrote:
+>>> On confidential guests when the KVM virtual machine file descriptor changes as
+>>> a part of the reset process, event file descriptors needs to be reassociated
+>>> with the new KVM VM file descriptor. This is achieved with the help of a
+>>> callback handler that gets called when KVM VM file descriptor changes during
+>>> the confidential guest reset process.
+>>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+>>> ---
+>>
+>> Have you actually tested confidential guests with VMBus or is this a change
+>> "for completeness sake" that can't be exercised in the current state of things?
 > 
-> Is this intended or got left over from debugging ?
+> No I have not tested the changes with VMBus. It’s more for completeness sake as you have correctly put it. If you suggest, I can drop the change.
+> 
 
-This was indented to aid future debug, if needed.
+I have mixed feelings here: on the one hand this support could be useful in
+the future, on the other hand we probably don't want to add dead and
+untestable code to QEMU.
 
-> 
->>  #define PSIHB_XSCOM_FIR_RW      0x00
->>  #define PSIHB_XSCOM_FIR_AND     0x01
->>  #define PSIHB_XSCOM_FIR_OR      0x02
->> @@ -130,12 +133,11 @@ static void pnv_psi_set_bar(PnvPsi *psi, uint64_t bar)
->>  {
->>      PnvPsiClass *ppc = PNV_PSI_GET_CLASS(psi);
->>      MemoryRegion *sysmem = get_system_memory();
->> -    uint64_t old = psi->regs[PSIHB_XSCOM_BAR];
->>  
->>      psi->regs[PSIHB_XSCOM_BAR] = bar & (ppc->bar_mask | PSIHB_BAR_EN);
->>  
->>      /* Update MR, always remove it first */
->> -    if (old & PSIHB_BAR_EN) {
->> +    if (memory_region_is_mapped(&psi->regs_mr)) {
->>          memory_region_del_subregion(sysmem, &psi->regs_mr);
->>      }
->>  
->> @@ -975,6 +977,40 @@ static void pnv_psi_register_types(void)
->>  
->>  type_init(pnv_psi_register_types);
->>  
->> +#ifdef PSI_DEBUG
->> +static void psi_regs_pic_print_info(uint64_t *regs, uint32_t nr_regs,
->> +                                    GString *buf) {
->> +    uint i, prev_idx = -1;
->> +    uint64_t  reg1, prev_reg1 = -1;
->> +    uint64_t  reg2, prev_reg2 = -1;
->> +    uint64_t  reg3, prev_reg3 = -1;
->> +    uint64_t  reg4, prev_reg4 = -1;
-> 
-> Very minor nitpick, 2 spaces in the declaration between type and name.
-> checkpatch doesn't point it out, so it's okay with me.
-> 
-> Looks good to me overall. Please just see if the #undef was intentional,
-> if so:
-> 
-> Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-> 
-> Thanks,
-> - Aditya G
-> 
+Let's see what other maintainers think about adding such code in order to
+be consistent across different subsystems.
+
+Thanks,
+Maciej
 
 
