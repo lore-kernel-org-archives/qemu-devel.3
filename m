@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 378BAD609D3
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 17:25:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91642D5E13D
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 18:51:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVYmy-0000DI-FT; Tue, 16 Dec 2025 12:24:47 -0500
+	id 1vVa8Y-0001SS-O3; Tue, 16 Dec 2025 13:51:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVYmm-0000Bh-M8
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 12:24:35 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVa8N-0001RZ-9h
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 13:50:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVYmi-00012C-Jh
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 12:24:30 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVa8K-00011f-W6
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 13:50:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765905867;
+ s=mimecast20190719; t=1765911051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sBiKL7GSHQPGbTr30+w7UVfTrABt68MayFbd9YdhyVY=;
- b=dVUvyy+vpAoYhe/KOl4mOxkNhwbZZ3nJF6QMHMU94SvNTi3Z5eZ3h74nVw/h53HWyr/gxJ
- 1cYDGNS4oG0rj2YmxpecgPz08/h7u1l09mfkZqnCP2Ut3xhoduRnY9LNCL6fPy9NxFaz52
- jPFfs8oknmLOdQl+vH0oBiTooK0Wgrg=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=P/fOSDXWu+EjBQqql2JQ71490x0+G0k/2IfhkTPq4P0=;
+ b=WDdw3EpqyvADSeIJ5NSrejFeJMauwJYJ5uI5xI0OniwPuA7+GjeMQttkafdSktEGbOKpkT
+ eBnIsAfD6IzY6FFHNN3PdFDYYHDYk9A8meSNvRqW1RLCQBlLujsLFmnaqkgyOAUx4hg6iz
+ g22CzjRCnfU2/bGLxqTNKVyqFSP6sRo=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-479-Cb1-Hpd9NfS_g6J4mQeZWA-1; Tue, 16 Dec 2025 12:24:23 -0500
-X-MC-Unique: Cb1-Hpd9NfS_g6J4mQeZWA-1
-X-Mimecast-MFC-AGG-ID: Cb1-Hpd9NfS_g6J4mQeZWA_1765905863
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8804b991a54so181459146d6.2
- for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 09:24:23 -0800 (PST)
+ us-mta-55-o6DfCqmbOpex_cfgeGV-xQ-1; Tue, 16 Dec 2025 13:50:50 -0500
+X-MC-Unique: o6DfCqmbOpex_cfgeGV-xQ-1
+X-Mimecast-MFC-AGG-ID: o6DfCqmbOpex_cfgeGV-xQ_1765911049
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-88a3356a310so74096136d6.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 10:50:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765905863; x=1766510663; darn=nongnu.org;
+ d=redhat.com; s=google; t=1765911049; x=1766515849; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=sBiKL7GSHQPGbTr30+w7UVfTrABt68MayFbd9YdhyVY=;
- b=sKP3hDo9nOXVAHA7yAfr2GG5cRxUf6LoLnb/oX0xrZm0ljjjM+0xuccuiMGH+kPbmI
- lcnQKiZYRSFxhF6PW4fYE9wLAm801Kc9dPPCfwypRr8Ra2Tmb+2Jvrm2hTeK1DU19E60
- bFm7N5fWWPvbuGelk2UHyYKTdvKZTI6L1kyH+TxoNU/gsp+YdIB92mh4Pq9dJdFcs9Gu
- tuCk5mC7tUqKFPb2+CT/4gUNvuWH4nFAbROjlMjh0TUAZKsmOIA5ad6c7lDnGCV+vtub
- JeLq7zgt2d1NB7KFX6IP8VnA2B1Vh4EqFt/lglTjzMoBGh8PdHHXkLxDUooiP2b9LGYe
- yuGw==
+ bh=P/fOSDXWu+EjBQqql2JQ71490x0+G0k/2IfhkTPq4P0=;
+ b=VLKUofo9JL9SAj0zwlB3Jxo7H6ZIK9IBG+VCfsgWuOxep6u7KCKrhHovGprb/0c9MR
+ nF1OsCcO9r0ZPITtWIwtfsc16HGUSpr/l5bej8ZlcDNe1z46QJO3w9XlnhxNVyfhEFJ6
+ pbg20LV7pKuKUvgJwYK2gmi22zpC4o1JDGd8prkW1uOsxVZSolrceq49zVlVFQRpTvCR
+ mPLGU9fs7AFLGUWWVU7uCg1mIO96EXkylUXWuzrA5pCLMypnSA10jV211K/ET6VFEst9
+ 0gS2xkbczrB0ieY8Vpr/QF3NvraIohvvB7IHyBBFGZHggz9ZhgFVgovn9z91uesBLPeq
+ w1tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765905863; x=1766510663;
+ d=1e100.net; s=20230601; t=1765911049; x=1766515849;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sBiKL7GSHQPGbTr30+w7UVfTrABt68MayFbd9YdhyVY=;
- b=YK7lxTNs+s0Bu6tM/mAaIIjpyJgOCdHkRJuvsKYpt0Dv+kDGCS/EHtA9p4DAd28zga
- A71eb0baaGet5mnNIK3SUxgjn570z76QkrqMmblLHlmpUmwUmUAMyXRnXQpu3OfLYN36
- vNLN072ELP4BD6/RvhvMMKT8Pdy86QrjR4qbbFhcjaq/AUVLnSmIbjfXwUCGd61KZjdD
- 5O/Tv6Y7PddQv/AqGPxAH7zIYKtBBNCu8pUzVzAI0qdWEJ7DEbhfvdHAGtJX/1SzH2eY
- iuZBAWacrKcmY8H2ya56TgspQfyyoXgo1RrsYxl+F4ednQkre9JkJzYW1krjL/ipNSs8
- HAXQ==
-X-Gm-Message-State: AOJu0YzSYykXMLDFA8CkUv3h35SU2IqZExAwo18tEVgInitUcdRdZPVd
- ZCI/Pj2+TQaW33+yszQyd0nC6psJ3LreM67f35yttag7ZQ9Odks5lb5RGh2g74JMKwudP8toP7Y
- P6roZqa5GDo2GcTk329F7DsaNnBUYCRLogcPHK5Un+77jSqGsrIgRru71
-X-Gm-Gg: AY/fxX6BwcC/W+0L5inYwRJH3B4BQq3XL4RF/w7Y2DTKJyJmYspaoh1aTcqVDv+YaGN
- ZnRUdOPMgBMADUKx+LpHg2doc2ErQQUFM+5lti07ce0nxY0z0V8QswYZCXb8vIuHJCyXv4G0ieX
- o0MpNlvxIPP5x6237147Ld4sZ24Yj/k5OyfO5lwDP1I+FNyehB0z68PXAe+5hU3KV5sW2xQapFD
- 8K5s2jX3Whr2H2l7zX30/9I8EqsnYPXF9FqnghiRRvzaweE8Gr5Q27mmLFBC3tUqmNuXdbDyUG+
- OeusBcYnJlBFLu1/6XP/nr1Y3xM2qXkxv+lkcAuxE5OUQy/CUkJD3TVEeco1UqjffaclISJJmt1
- s75I=
-X-Received: by 2002:a05:6214:1309:b0:888:1f18:7a0a with SMTP id
- 6a1803df08f44-8887e01e6cfmr254718816d6.23.1765905862725; 
- Tue, 16 Dec 2025 09:24:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF8cmDG6RYWFwhRxjGvMTBZD+Q7iBQVDsQ2kedH7luWJyoon55cT2FFF/pOA8cz9LqBC3dwMQ==
-X-Received: by 2002:a05:6214:1309:b0:888:1f18:7a0a with SMTP id
- 6a1803df08f44-8887e01e6cfmr254718386d6.23.1765905862181; 
- Tue, 16 Dec 2025 09:24:22 -0800 (PST)
+ bh=P/fOSDXWu+EjBQqql2JQ71490x0+G0k/2IfhkTPq4P0=;
+ b=i8JA61S5F0axnA0u/0SUHBZ6bqy652Hu0Q8q498H5fuGdz7z7a/p0Nav37zxmBve+p
+ dGlZr5Av7hMgpvUYIYrddALKMeLFaaoAcaeIG08AKEfeoWLI7QFYItY3p3oo+XgdEKQL
+ GZj+aowpUVlH2aRt5VD4Q6PJCGFKygMcKSe0qzGqVwbOPwS4rIU7koVRo3iM95ieVgy1
+ GQLVqIg0Spm6yXxmup1l39T7NFGPOvpPzDdPJg6a6sFFb5ZndskMkoWcdFMnk9BhjuNE
+ UGz7obsGqv1dL9+oI8YVHKRcgz2BIZge5B4fyMymUCpE8yzhjGVKLtmQA/RDbexFHwxD
+ tBaw==
+X-Gm-Message-State: AOJu0Ywwb690aOGLi6abPZ+e7zxvK4nnvL84DBseOi2dix1B1uLkYSnd
+ jF84NW0/VH9s4OsjEAlqtX5nc9cqVfHfPGjPq804JjUevn9rkqkbUhvYmGlbz5oI83iQaPMa+BR
+ nn+1JQbwBfhFFY7rN2pQ5PhPuLk/N3OomgCJ/eyWz+lR3toC6mLZkzQhp
+X-Gm-Gg: AY/fxX4wqnM+XjV8s4IcJoheL4PwoaWu8iFSr+SqnrH15SFP+U6dOTIuy8pjF8PxuAg
+ 1w6n8vM2h/pcWKi1qI5PEpTulztgE2dK44ypT5QU3WlMty9/ZJRcKhGURnnm/H9tk8cGz2/WUKN
+ p0NBB4bPWZUmn0kTsR3oI/RytO51TaVU0VOvPjA69SbOjVhG4WWWDP8l/o+c2xnLfrUJFqiD215
+ DIyI4Yz+m6oeH/cDRxeuK9tH4Krxep1HmUrITJhEqmikVuj6Mm9mTQQzuVl9iKygQGONvp+jEh0
+ 6fFHK5N9TqiCKqXwxGVIVGDXt4kr9NpGP/0ZeL7zCehPKCli4Z9GAwwaWL53tVOeUfvSNx8rq1i
+ d9bM=
+X-Received: by 2002:a05:6214:509b:b0:793:dce5:4540 with SMTP id
+ 6a1803df08f44-8887dfec0a2mr275667696d6.2.1765911049525; 
+ Tue, 16 Dec 2025 10:50:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGdMgZQ59ts91VKyn+RIAMxvR7drvO3Hi2MjalVeArBVwGdCIxZcUs/AO/49TjtxBRnsJn1tw==
+X-Received: by 2002:a05:6214:509b:b0:793:dce5:4540 with SMTP id
+ 6a1803df08f44-8887dfec0a2mr275667416d6.2.1765911049108; 
+ Tue, 16 Dec 2025 10:50:49 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-889a85eaf02sm77451336d6.40.2025.12.16.09.24.21
+ 6a1803df08f44-8899f5bbba8sm79060876d6.34.2025.12.16.10.50.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Dec 2025 09:24:21 -0800 (PST)
-Date: Tue, 16 Dec 2025 12:24:20 -0500
+ Tue, 16 Dec 2025 10:50:48 -0800 (PST)
+Date: Tue, 16 Dec 2025 13:50:47 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v3 05/51] migration: Normalize tls arguments
-Message-ID: <aUGVxIHNbVDba2dc@x1.local>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com
+Subject: Re: [PATCH v3 10/51] migration: Remove checks for s->parameters
+ has_* fields
+Message-ID: <aUGqB1V_ulqZ03T3@x1.local>
 References: <20251215220041.12657-1-farosas@suse.de>
- <20251215220041.12657-6-farosas@suse.de>
+ <20251215220041.12657-11-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251215220041.12657-6-farosas@suse.de>
+In-Reply-To: <20251215220041.12657-11-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -117,75 +117,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 06:59:51PM -0300, Fabiano Rosas wrote:
-> The migration parameters tls_creds, tls_authz and tls_hostname
-> currently have a non-uniform handling. When used as arguments to
-> migrate-set-parameters, their type is StrOrNull and when used as
-> return value from query-migrate-parameters their type is a plain
-> string.
+On Mon, Dec 15, 2025 at 06:59:56PM -0300, Fabiano Rosas wrote:
+> The migration parameters validation produces a temporary structure
+> which is the merge of the current parameter values (s->parameters,
+> MigrationParameters) with the new parameters set by the user
+> (former MigrateSetParameters).
 > 
-> Not only having to convert between the types is cumbersome, but it
-> also creates the issue of requiring two different QAPI types to be
-> used, one for each command. MigrateSetParameters is used for
-> migrate-set-parameters with the TLS arguments as StrOrNull while
-> MigrationParameters is used for query-migrate-parameters with the TLS
-> arguments as str.
+> When copying the values from s->parameters into the temporary
+> structure, the has_* fields are copied along, but when merging the
+> user-input values they are not.
 > 
-> Since StrOrNull could be considered a superset of str, change the type
-> of the TLS arguments in MigrationParameters to StrOrNull. Also ensure
-> that QTYPE_QNULL is never used.
+> During migrate_params_check(), only the parameters that have the
+> corresponding has_* field will be checked, so only the parameters that
+> were initialized in migrate_params_init() will be validated.
 > 
-> 1) migrate-set-parameters will always write QTYPE_QSTRING to
->   s->parameters, either an empty or non-empty string.
+> This causes (almost) all of the migration parameters to be validated
+> every time a parameter is set, regardless of which fields the user
+> touched, but it also skips validation of any values that are not set
+> in migrate_params_init().
 > 
-> 2) query-migrate-parameters will always return a QTYPE_QSTRING, either
->   empty or non-empty.
+> It's not clear what was the intention of the original code, whether to
+> validate all fields always, or only validate what the user input
+> changed. Since the current situation is closer to the former option,
+> make the choice of validating all parameters by removing the checks
+> for the has_* fields when validating.
 > 
-> 3) the migrate_tls_* helpers will always return a non-empty string or
->   NULL, for the internal migration code's consumption.
+> Note that bringing the user input into the temporary structure for
+> validation still needs to look at the has_* fields, otherwise any
+> parameters not set by the user (i.e. 0) would override the
+> corresponding value in s->parameters.
 > 
-> Points (1) and (2) above help simplify the parameters validation and
-> the query command handling because s->parameters is already kept in
-> the format that query-migrate-parameters (and info migrate_paramters)
-> expect. Point (3) is so people don't need to care about StrOrNull in
-> migration code.
+> The empty migrate_params_init() will be kept because subsequent
+> patches will add code to it.
 > 
-> This will allow the type duplication to be removed in the next
-> patches.
-> 
-> Note that the type of @tls_creds, @tls-hostname, @tls-authz changes
-> from str to StrOrNull in introspection of the query-migrate-parameters
-> command. We accept this imprecision to enable de-duplication.
-> 
-> There's no need to free the TLS options in
-> migration_instance_finalize() because they're freed by the qdev
-> properties .release method.
-> 
-> Temporary in this patch:
-> migrate_params_test_apply() copies s->parameters into a temporary
-> structure, so it's necessary to drop the references to the TLS options
-> if they were not set by the user to avoid double-free. This is fixed
-> in the next patches.
-> 
-> Acked-by: Markus Armbruster <armbru@redhat.com>
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
-
-[...]
-
-> @@ -403,6 +403,9 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
->          monitor_printf(mon, "%s: %" PRIu64 " bytes\n",
->              MigrationParameter_str(MIGRATION_PARAMETER_XBZRLE_CACHE_SIZE),
->              params->xbzrle_cache_size);
-> +        monitor_printf(mon, "%s: %" PRIu64 "\n",
-> +            MigrationParameter_str(MIGRATION_PARAMETER_MAX_POSTCOPY_BANDWIDTH),
-> +            params->max_postcopy_bandwidth);
->  
->          if (params->has_block_bitmap_mapping) {
->              const BitmapMigrationNodeAliasList *bmnal;
-
-This chunk seems to be introduced by accident and removed in patch 18..
-
-After removal, feel free to take:
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 
