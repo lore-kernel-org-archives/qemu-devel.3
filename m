@@ -4,91 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15396D637A1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 20:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32722D637A1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 20:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVbLj-0007Qg-UL; Tue, 16 Dec 2025 15:08:47 -0500
+	id 1vVbdK-0003QY-6t; Tue, 16 Dec 2025 15:26:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vVbLg-0007QI-RZ
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 15:08:46 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vVbLb-0004im-4X
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 15:08:43 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2a0a33d0585so31564585ad.1
- for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 12:08:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVbdI-0003QM-Le
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 15:26:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVbdH-0007ol-8d
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 15:26:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765916814;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jZj1I8nOzjmoVDHZyvdDRdx1xL+2UHNsvnexGg34QqE=;
+ b=JsyQRtAge1XuLtbFpOoHbAFbOK/aWDIhaSD9V0x3dZ/AhFqviJUlOkQ+Ro034R51ZT3Eyn
+ QiVgqmpwucqHkg1Y0tMtc3A73umdeUyu0p98pws1oVcNmvTq+OpjN2Tq+r0mzT7tg3H+3V
+ v/Zp3uIcAHhjVQFDEpTutvxn9w6SFhs=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-338-CHXr9BD5OZaTcExu3YPHbA-1; Tue, 16 Dec 2025 15:26:52 -0500
+X-MC-Unique: CHXr9BD5OZaTcExu3YPHbA-1
+X-Mimecast-MFC-AGG-ID: CHXr9BD5OZaTcExu3YPHbA_1765916812
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-88a2e9e09e6so96318996d6.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 12:26:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765915717; x=1766520517; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=00NZgZanZk2i8XUGdnK+VCnE3XpUB6MIHPNxnOPtssA=;
- b=DE/8wcZaiPl1qbThots++GtzjRamRSfU0Qoyvx8THyWjTJtN3JVKgQlqC1n6KHJuUA
- SZaleSLq4iVsm3DlwlmrGkrA+KMI7ySH9JR8eDPokP72w8EhqAe+iei9KfzpCLORbrNs
- beuREo+kVMTXTHBn7RkNRU6KIw/pUyUf2vcgufGyKVX7zJ/pHONDMoZKujz2tAvbP/c0
- O85c1TjBKcXK76hR31GWskAIXz/Rwc1LZJDSQkw5SlLg5+WRiCDCfWxFd8q1RcZLELKF
- bIUvgaaHlcu2G0XjSeVi/D/w5Rq7dZ/0AcRA10z91PMFyqe7lzONdbZpDSST0L2XlprP
- Q4fw==
+ d=redhat.com; s=google; t=1765916812; x=1766521612; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=jZj1I8nOzjmoVDHZyvdDRdx1xL+2UHNsvnexGg34QqE=;
+ b=gHDMV2YusToS6CBii1hTjv5zsn+TJ4r5APS2eBv4ND8Weau23aFs+c+CLzQJ5Rszux
+ pPJ3d3iuWzzm4AGWTdo0hORxo0CGUfSpamuI7mcNoHhePwgLY3phEN24h/PxjqDt2Mes
+ O++85X4wz/v1RfqwwgREUtILWNz3WovJA4NK7RC+DbVSqff0mfQVqV5l/TrFY4bZxJWB
+ +u+toIQXCj0f4/+uf25uB0DJQ02dfVzzydy8PjMunAr0ajoqLH8HV/f83S5EbGoXw59e
+ yF9jZu8NVkvKTFen2C8bNl6nX6U3ebl62hRIWPWONzXY3leIPb5Niyo94gOotdh4XgOr
+ naqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765915717; x=1766520517;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=00NZgZanZk2i8XUGdnK+VCnE3XpUB6MIHPNxnOPtssA=;
- b=A3A6FfRezjI9Ie+i5GdRpeGH1J5yD9vxiBFRQlaJ/6vrZstkmkKErjgxjKc4Rk+Toj
- /7TWTx8iMAP4UZpx91aJhLdZiev4dGHhk8ep5KWhGCkzVV+vHtgqw4Mcne900Q1kx8+R
- 9NccKVRvMPtHOoi4A32unPudlsyvUbFxsL/ytGBQpNfeM8GDyYzhEtEpH6uG3ocNx2v6
- OTtclLCSxQ24/m3oJfR84MuGuly2w+WdRJcpiGvCGCF1RTCnbl4P95fjhwqFgV6phL6C
- kldJofxlWzvV8HN5L3y3lYXhPoNRYpMhjxtiMS1N1ZICBslGOsxwRpjovkdUlK5o+Vlz
- LZAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX8Uknvd03XJ5pgjthK+r4o33x+mDfVCnZCbAIAkTJAU/Hlkvz40sKSO/RfXbYAotBP2akCKSTPCi/j@nongnu.org
-X-Gm-Message-State: AOJu0Yy7Y6hwsm4Deh+FDTc3AH4zOCiTOpS33ipxewI0FpVzqtip7c6P
- vJuIxk+CpToD8o5vvyLtZLNuxs3bP5gupK6IYOwe5ec3Y5b929wb/4B/b1tPz9yyUwU=
-X-Gm-Gg: AY/fxX71MAXFpYBsJXgY891hPbwwr/aRFaM08+oKIOyrd3239XOvJnjWnDmv2ulWFfK
- 0MvoKYPp0ZKiwhKC5TV8mz/luH5UgoQJ0oxNangLTb9EO+cwyDzMER3ygKLZsDyDXOPYjj/RNJJ
- cCpv+5oiC64LLv3X3zb0nRuHuXQ8q9zC2olohsfqFKinBjoKgIgOWt0U9x8SOTRt2gKz0YOxAyT
- 4g/ajoSkWI5inm6cmoIhex8WwdeUyhGs0sHE6ARw1FkDXDjMdv6nH4GuiTkbQzZt33tdYxKirCn
- cox+46fNpQY7JFIhBZ7CAiXFjn674Wii28UjYsjWSHW4ryuSzcIo+LPSfMWHxGEv6q+6gpn89OH
- kDcStBaxwb77amw/WFZ1FOKnFLDDRycUsPPiq8a0C42IQjBv0WPDKk1Ld5YgxRPiumSFHVnMoJA
- 1OAqmknrOvg0XWfYIpzdUwPxqzTp1fuQ==
-X-Google-Smtp-Source: AGHT+IGkXYEErblLzy/CAmG8q7L4JxQColJWZ/qowusq8vbkl485CU9I/SuixqLz6r8jahO7qNT6xw==
-X-Received: by 2002:a17:902:fc4b:b0:2a0:9d16:5fb4 with SMTP id
- d9443c01a7336-2a09d166e1amr110932775ad.18.1765915717426; 
- Tue, 16 Dec 2025 12:08:37 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.245])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-29eea03fceasm173287265ad.79.2025.12.16.12.08.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Dec 2025 12:08:37 -0800 (PST)
-Message-ID: <32b8a371-b93d-4e40-8168-93bbf4aea243@linaro.org>
-Date: Wed, 17 Dec 2025 07:08:33 +1100
+ d=1e100.net; s=20230601; t=1765916812; x=1766521612;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jZj1I8nOzjmoVDHZyvdDRdx1xL+2UHNsvnexGg34QqE=;
+ b=eKLgdkK4Act93jgX4c21lfgQpDxv2yCoFt0tCsGp5J9oHJjmgPpLhXXLyUegyknO7g
+ SsrQwH8kPvoVS/OMKWIg2ZZJM4H6TmOkNIuVMmZt90J3PCjFlXz1pBpb0bHvLR3xQGwe
+ bAUy70L7vNIsIHL8lH2DmLWpdgicJgXEn26Yz22N34tcBggxzGvok/HJer1qZIAR8MAC
+ zyVhCDYGmvp7jW3sKT1+5OSWzBs/SzoMpVfH9uajpapEKX88XW6DWbEcha6pfIr294xV
+ N/p0+iNnh1JzBiXnnellB0f0nzQy/MiCsaqP+PNDcdabvXZ2iNonNO8qJ09grpGsS+d6
+ PBNw==
+X-Gm-Message-State: AOJu0YyxU6oyWhabpl+eymmnK9Oc0HaBk2kRcDby31e0meZtz2kIF2Iq
+ Thooht0y7WmgVGeUKptHBVYCa/fFliN9EdkSTgWSpIEy7UpGa6tp8DstTZOZeUeqLKzHChpVTnY
+ Rb4EDh/zulUYsEfVyeoC0+jEOrAwM+3mldoorBOfArR5dyHxCytZ71w72
+X-Gm-Gg: AY/fxX5ct2cEdN7rrG8Qo2EevIdJHATqsDXVZLLEradPPsT7y+RERIJS09Lfg685EnO
+ eGnEhtX6G0uum1s03qWFbkghqfu8aULaqL3lwkCetYa/f9o8nYYlAYMhhP1KgldSmM6liSHNS89
+ 88RuHKsUwR9mH5g6GAkbHTDu77JpTomp7hwDLg2kpmZg9euoDZMFlNU5B20xLS3rrCf4aop8seD
+ OPZ0HJfvttlm3gH8W01poedKjjm77e4p+GvwhqvPwaycbWje2CwVTdRPboh1iw/nTel9rAbNK8R
+ 6eyOeEMXQlyJ6NIDSDiGnXJIcF0WLyIHXnexNuFcYw1QjAOK7bLoWKgye/2Ec/8eue9quId37cl
+ ua00=
+X-Received: by 2002:a05:6214:3f8d:b0:88a:4ab2:5f52 with SMTP id
+ 6a1803df08f44-88a4ab26055mr41555326d6.51.1765916812126; 
+ Tue, 16 Dec 2025 12:26:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHkW+SfqW5P2ZGLuWYx14ReuCMe2e8SGG17EOVxrNM9pVu1kE1cvCvHByXuH24k/2GqQfD1Cw==
+X-Received: by 2002:a05:6214:3f8d:b0:88a:4ab2:5f52 with SMTP id
+ 6a1803df08f44-88a4ab26055mr41555056d6.51.1765916811671; 
+ Tue, 16 Dec 2025 12:26:51 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-88993b5c015sm81188856d6.15.2025.12.16.12.26.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Dec 2025 12:26:51 -0800 (PST)
+Date: Tue, 16 Dec 2025 15:26:50 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com
+Subject: Re: [PATCH v3 15/51] migration: Use QAPI_CLONE_MEMBERS in
+ migrate_params_apply
+Message-ID: <aUHAiqMr7k21qGFu@x1.local>
+References: <20251215220041.12657-1-farosas@suse.de>
+ <20251215220041.12657-16-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/4] glibc queue
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-References: <20251216142843.519084-1-clg@redhat.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20251216142843.519084-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251215220041.12657-16-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,34 +117,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/17/25 01:28, Cédric Le Goater wrote:
-> Richard,
+On Mon, Dec 15, 2025 at 07:00:01PM -0300, Fabiano Rosas wrote:
+> Instead of setting parameters one by one, use the temporary object,
+> which already contains the current migration parameters plus the new
+> ones and was just validated by migration_params_check(). Use cloning
+> to overwrite it.
 > 
-> In case there is still time,
+> This avoids the need to alter this function every time a new parameter
+> is added.
 > 
-> Thanks,
-> 
-> C.
-> 
-> 
-> 
-> The following changes since commit 9c23f2a7b0b45277693a14074b1aaa827eecdb92:
-> 
->    Update version for v10.2.0-rc3 release (2025-12-09 16:44:49 -0600)
-> 
-> are available in the Git repository at:
-> 
->    https://github.com/legoater/qemu/ tags/pull-glibc-20251216
-> 
-> for you to fetch changes up to d7e1df769910da9d832dda86b01fe1363e4f4a3c:
-> 
->    gdbstub: Fix const qualifier build errors with recent glibc (2025-12-16 14:28:30 +0100)
-> 
-> ----------------------------------------------------------------
-> Fix const qualifier build errors with recent glibc
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/10.2 as appropriate.
+-- 
+Peter Xu
 
-r~
 
