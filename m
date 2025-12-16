@@ -4,115 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37C98D5E378
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 14:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C238D5E391
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 14:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVWAS-00008f-1B; Tue, 16 Dec 2025 09:36:48 -0500
+	id 1vVWII-0001Xv-IM; Tue, 16 Dec 2025 09:44:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vVWAO-00007z-NR; Tue, 16 Dec 2025 09:36:45 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vVWAM-00059k-7t; Tue, 16 Dec 2025 09:36:44 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BG8esfO025635;
- Tue, 16 Dec 2025 14:36:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=3Oawvon6PszhHkCqo7+kJH6/MDdkQi
- HuHZKI/kj2kc8=; b=tsYtZfeeKmC/i46LfywuLAdQhBfkoJImsjf2pCfzihlcYF
- 2z8qMxIhGwMbBoSeaLZDr88UU9JwK8ZpeM0+c6QlX3VmWsX6/tbn224ZXqj9Ju2s
- uM/NWmC2rOQlj5iirlw2NH9hGDn3MNapNOSadL8OBTwwZQKsoZ4ujxaqkan/U27H
- CEFiXdlqChqUTKNIcAXE+iyBErrsSllvuLk15eD5+fMcNLj8bX8eWDKQKZ883rZR
- nFt64bahlG+WghWuTPPet1jOJ2JQo3A3UeazTXoVyh+r6nhyX+hCTqIQ576dySkR
- 1vcG4Nc/CjhqdsJ3lPfK3WTZBsPGUYJ488qitCRw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0ytv7j1y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 14:36:37 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BGETZ2B027439;
- Tue, 16 Dec 2025 14:36:36 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0ytv7j1v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 14:36:36 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGCZKi6026808;
- Tue, 16 Dec 2025 14:36:35 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4b1jfscu6p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 14:36:35 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5BGEaVJA46203262
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Dec 2025 14:36:32 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D91FC20043;
- Tue, 16 Dec 2025 14:36:30 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 566652004D;
- Tue, 16 Dec 2025 14:36:27 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.209.67])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 16 Dec 2025 14:36:27 +0000 (GMT)
-Date: Tue, 16 Dec 2025 20:06:25 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Caleb Schlossin <calebs@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, npiggin@gmail.com,
- milesg@linux.ibm.com, alistair@alistair23.me, kowal@linux.ibm.com,
- chalapathi.v@linux.ibm.com, angeloj@linux.ibm.com
-Subject: Re: [PATCH v2 7/7] hw/ppc: Add VMSTATE information to PnvPsi
-Message-ID: <vmvjec6njy2f5sfriqtcstg5ypzldibobs7vstyvpc36vmfkrm@rr3fgx3ezlif>
-References: <20251215171813.1670241-1-calebs@linux.ibm.com>
- <20251215171813.1670241-8-calebs@linux.ibm.com>
- <ak2xwufxarhtcbaj6nj5mjaimlfhk5p2csty4uxljs4sjrkqol@axobvglzomg7>
- <51ce8be6-a13b-4916-85ba-383187418601@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vVWIH-0001Xf-Dt
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 09:44:53 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vVWIF-0006Vn-Ne
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 09:44:53 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-42fbad1fa90so3354276f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 06:44:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1765896289; x=1766501089; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s9oT+wJPfisoFL1eZlH1HjHNoP+4MLQIy1YzGxkhvYo=;
+ b=f0qwdPaGGU7Nlf/Y2fjq8/DSzAFxZS3rLil2dK2G4Yu+50jTqUtAkGiecVgtGLtHbo
+ I0tQvy0bkuNRSO21DbyxXjZBTPSBz1+4rU2v4R5KmQvpysVblrw40Dj2lk+33s9lBhCq
+ smtP/TMEhD7W6+Eb6SSzK8NuYTRw7ewiI8jyeb6Gtg4HEnrK1Kx9IeY+UedDCYoV3vZp
+ 6mXQF6NvC6qIQqz8xrjPZLAVLT5AYM48wrDI/YHiugCnmzk4DuGwc0RwL//wxkG6x4j/
+ jslal9+6CEBnCNCUSvq5DvhaSol4caXwbfV97CuFFkvV1LOXzjZoZ0oNFMn2gSI+NTiy
+ /oJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765896289; x=1766501089;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=s9oT+wJPfisoFL1eZlH1HjHNoP+4MLQIy1YzGxkhvYo=;
+ b=aerA9KULJx7AtGNgGKM3wYfYIM5ofPTvs1TnHO1cOzJkj1+rGtauYoES8bN+3yiLMi
+ nrgSFNUoCrvlldDsaF66RzN8cttk3FG3LCuBa+YS4KkF1zJUHYKUu3cfb9HNyG4KMT7u
+ 2+J6EQnIDCWxuQ/50zqef4dbMm9keC5s8BEBGDTA9WbMUUTn+c0cBY5omw5unOqCGzvT
+ UiXCmF3VsaFURbRQBPJVhWARyyKH+4olisJJRtupxXIa6Id1COclxXgyYGvrEEK0FrPn
+ KobeZGrE0vrdGBvTPQdxmOAEtQUAo6GKzwbuagKhSoLIyxvzuAxRhfaQFPzRIBXNC3Ox
+ vbow==
+X-Gm-Message-State: AOJu0YxGiyt4bn8IIQatO79DWiyCRyHHAcmTggwzDc3/bnVuZAKMbKKo
+ WbbJj8vKspH3gjpQUZ6sHN8pfCAOEkP26CQcgmQdhPm6Vwl23+jCvRXogB8nWVcrNqAYwKOst5T
+ N2ie/
+X-Gm-Gg: AY/fxX4oi/7qoFOQhwLoU849aR5MZlY99c2ZJ4L9Orrm5VOICGUE0oO+LwpKeIr8pSZ
+ 1chWy9z7Bt8dosadcBTVWC8mFpKUBOd6U2K4/H1X86jXgmSrIzsUIlku0iIMH+XxEYqlmtnIu/H
+ /ENtHVLlShH/bWuN1F/gbz9Hf9ZM6OolFKlldFDROxzbxRfTkfg5waLv5lZZ52yWF74/yaWwjwN
+ Dc4zhxvtE5gNc3CLlj0z8t4LXE3qlIRhn1IeD4D7unVgtiEHfmLddLW6/Bt3wgWorxSN8ML8qqE
+ wnNl0px0VCJVYmKnwWELxFB+k9WetTZlZeTBpuP+hm+60BD6B5KrArgwvziaYByLJ6DjyAmT+I8
+ +3+IxPrAyHaBvQVp7Hps3VCLR1xl2snOq4AL+of7ovba3dOS/2Yd0Tegw19ySdRfX6kx2kYlT85
+ PeihSYtgrs+sk=
+X-Google-Smtp-Source: AGHT+IGEf5xmNxQLaPRj71+iOY3QCNgN7T/F4Iis4wsiQy4v8DpTgSd9xgSrkQ+yqzZKiwKvWNiDpA==
+X-Received: by 2002:a05:6000:4382:b0:431:1d4:3a6d with SMTP id
+ ffacd0b85a97d-43101d4429amr6031807f8f.48.1765896288555; 
+ Tue, 16 Dec 2025 06:44:48 -0800 (PST)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-430fa5f6ab7sm16801779f8f.25.2025.12.16.06.44.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Dec 2025 06:44:47 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 059005F861;
+ Tue, 16 Dec 2025 14:44:47 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>
+Cc: qemu-devel@nongnu.org,  pierrick.bouvier@linaro.org,
+ richard.henderson@linaro.org,  laurent@vivier.eu,  imp@bsdimp.com,
+ berrange@redhat.com
+Subject: Re: [RFC PATCH v2 1/2] plugins: Add PC diversion API function
+In-Reply-To: <01a56a53-ef95-4c63-8f4d-21458bbc3668@epfl.ch> (Florian
+ Hofhammer's message of "Tue, 16 Dec 2025 13:28:47 +0100")
+References: <e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b@epfl.ch>
+ <b461feb8-4ad5-481d-a497-dcb10b12ee79@epfl.ch>
+ <87cy4jubc9.fsf@draig.linaro.org>
+ <341e0334-7bc3-4186-94c7-fba1c92cfc9d@epfl.ch>
+ <01a56a53-ef95-4c63-8f4d-21458bbc3668@epfl.ch>
+User-Agent: mu4e 1.12.14-pre3; emacs 30.1
+Date: Tue, 16 Dec 2025 14:44:46 +0000
+Message-ID: <87tsxqlc4h.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <51ce8be6-a13b-4916-85ba-383187418601@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAyMyBTYWx0ZWRfX5z8usZu/LgZI
- 1TKIisZFg+jfDS8+7IPey0zsfLmg7zkyLsDoHtnwUKR1N5puW2gEpjUDmL/oErtXdLZGU6FFhfB
- j5uc8/wM8M37yCDzHjfjkGi1ex8Od4hJpYKkaqD9UK+k5+MALiFGwgzKKu9A6b1oRmNugoOGMr5
- EUNnXKJb4UYzc2ph0XnMBk8byMw0yWR68GuFdTg3QVuXcv9YolMOUqhcisCxNAar6fR2TN47/+D
- 2/yh0+kESw5wsNJMk/JnikhnHAgOaTh3qTI+4asdKKhvpfADsnzd86VYo7urTV1FeBSYGfCxHZ+
- hsO/SVQ6hxWf3ucdG4nwrSvxru8E5SKh+HsJLZhz1oHJwMVtvQffClbtgCLKwmYVgMD4FKQBkZ4
- F5g5yuVquKdpCcbgiMfcj/ziAg1Y7w==
-X-Proofpoint-ORIG-GUID: 2qux3USXvJuima0e4JkgujavOqjKOJ5S
-X-Authority-Analysis: v=2.4 cv=QtRTHFyd c=1 sm=1 tr=0 ts=69416e75 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=OXLunwfInWpPE1gpIFAA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: 3rVhxs0l1AtdhvuVZcNTHxR8ibVst0_2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-16_02,2025-12-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 impostorscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130023
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,87 +111,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/12/16 07:35AM, Caleb Schlossin wrote:
-> 
-> 
-> On 12/16/25 6:58 AM, Aditya Gupta wrote:
-> > Hello Caleb,
-> > 
-> > On 25/12/15 11:18AM, Caleb Schlossin wrote:
-> >> <...snip...>
-> >>
-> >> --- a/hw/ppc/pnv_psi.c
-> >> +++ b/hw/ppc/pnv_psi.c
-> >> @@ -25,6 +25,7 @@
-> >>  #include "qemu/module.h"
-> >>  #include "system/reset.h"
-> >>  #include "qapi/error.h"
-> >> +#include "migration/vmstate.h"
-> >>  
-> >>  
-> >>  #include "hw/ppc/fdt.h"
-> >> @@ -35,6 +36,8 @@
-> >>  
-> >>  #include <libfdt.h>
-> >>  
-> >> +#undef PSI_DEBUG
-> >> +
-> > 
-> > Is this intended or got left over from debugging ?
-> 
-> This was indented to aid future debug, if needed.
-> 
+Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
 
-If so, i believe this should be removed.
+> On 16/12/2025 10:27, Florian Hofhammer wrote:
+>>>> diff --git a/plugins/api.c b/plugins/api.c
+>>>> index eac04cc1f6..fc19bdb40b 100644
+>>>> --- a/plugins/api.c
+>>>> +++ b/plugins/api.c
+>>>> @@ -41,6 +41,7 @@
+>>>>  #include "qemu/log.h"
+>>>>  #include "system/memory.h"
+>>>>  #include "tcg/tcg.h"
+>>>> +#include "exec/cpu-common.h"
+>>>>  #include "exec/gdbstub.h"
+>>>>  #include "exec/target_page.h"
+>>>>  #include "exec/translation-block.h"
+>>>> @@ -450,13 +451,27 @@ int qemu_plugin_write_register(struct qemu_plugi=
+n_register *reg,
+>>>>  {
+>>>>      g_assert(current_cpu);
+>>>>=20=20
+>>>> -    if (buf->len =3D=3D 0 || qemu_plugin_get_cb_flags() !=3D QEMU_PLU=
+GIN_CB_RW_REGS) {
+>>>> +    if (buf->len =3D=3D 0 || (
+>>>> +                qemu_plugin_get_cb_flags() !=3D QEMU_PLUGIN_CB_RW_REGS
+>>>> +                && qemu_plugin_get_cb_flags() !=3D QEMU_PLUGIN_CB_RW_=
+REGS_PC)) {
+>>>>          return -1;
+>>>>      }
+>>>
+>>> If we are exposing a specific qemu_plugin_set_pc we should probably
+>>> forbid setting it via write_register. Can we filter out the PC from the
+>>> register list?
+>>=20
+>> The qemu_plugin_write_register API silently swallows writes to the PC
+>> even though such a write doesn't actually have an effect, so excluding
+>> the PC here might make sense and I'm happy to update the patch
+>> accordingly.
+>> Are there other registers that should be excluded as well?
+>> General-purpose register writes are visible to the guest immediately,
+>> but what about special registers? Do writes to those actually always
+>> have the intended effect or should they also be excluded here?
+>
+> Actually, after looking into this for a bit, I don't think it's easily
+> feasible without a big revamp (but please correct me if I'm wrong or
+> simply missing something).
+>
+> The problem is that the opaque handle passed to the plugin API only
+> encodes a register offset, not its name or type. So to exclude the PC,
+> we'd need to expose the register name to the API (which would
+> likely require either duplication of the name in both `struct
+> qemu_plugin_reg_descriptor` and `struct qemu_plugin_register` or
+> changing the API) and then filter in the API based on the register name
+> ("pc", "rip", "eip", ...). This seems rather hacky and fragile to me.
+>
+> Alternatively, we could encode whether a register is to be filtered out
+> or not in the opaque handle itself (e.g., by setting the topmost bit).
+> This still requires getting this information from somewhere, though.
+> Currently, registers are created by parsing the target XML in `gdb-xml/`
+> at compile time. The PC is generally marked as `type=3D"code_ptr"` in the
+> XML, so we could expose this type information to the code and adjust the
+> register handle if it's a code pointer. The problem here is that it's
+> not just the PC that is marked as `code_ptr` in the XML; there may be
+> other registers as well (e.g., `lr` or `ra` for Arm and RISC-V).
 
-With this we just unconditionally noped out the #ifdef PSI_DEBUG
-portions in this file, even if the user explicitly compiles with PSI_DEBUG
+Hmm thats interesting. I wonder what the semantics of that for gdb are?
 
-What do you say ?
+However I think thinks like the link registers are normally rectified.
+For example from the systrace plugin I'm toying with:
 
-- Aditya G
+But I'm not always able to catch it on being automatically set:
 
-> > 
-> >>  #define PSIHB_XSCOM_FIR_RW      0x00
-> >>  #define PSIHB_XSCOM_FIR_AND     0x01
-> >>  #define PSIHB_XSCOM_FIR_OR      0x02
-> >> @@ -130,12 +133,11 @@ static void pnv_psi_set_bar(PnvPsi *psi, uint64_t bar)
-> >>  {
-> >>      PnvPsiClass *ppc = PNV_PSI_GET_CLASS(psi);
-> >>      MemoryRegion *sysmem = get_system_memory();
-> >> -    uint64_t old = psi->regs[PSIHB_XSCOM_BAR];
-> >>  
-> >>      psi->regs[PSIHB_XSCOM_BAR] = bar & (ppc->bar_mask | PSIHB_BAR_EN);
-> >>  
-> >>      /* Update MR, always remove it first */
-> >> -    if (old & PSIHB_BAR_EN) {
-> >> +    if (memory_region_is_mapped(&psi->regs_mr)) {
-> >>          memory_region_del_subregion(sysmem, &psi->regs_mr);
-> >>      }
-> >>  
-> >> @@ -975,6 +977,40 @@ static void pnv_psi_register_types(void)
-> >>  
-> >>  type_init(pnv_psi_register_types);
-> >>  
-> >> +#ifdef PSI_DEBUG
-> >> +static void psi_regs_pic_print_info(uint64_t *regs, uint32_t nr_regs,
-> >> +                                    GString *buf) {
-> >> +    uint i, prev_idx = -1;
-> >> +    uint64_t  reg1, prev_reg1 = -1;
-> >> +    uint64_t  reg2, prev_reg2 = -1;
-> >> +    uint64_t  reg3, prev_reg3 = -1;
-> >> +    uint64_t  reg4, prev_reg4 = -1;
-> > 
-> > Very minor nitpick, 2 spaces in the declaration between type and name.
-> > checkpatch doesn't point it out, so it's okay with me.
-> > 
-> > Looks good to me overall. Please just see if the #undef was intentional,
-> > if so:
-> > 
-> > Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
-> > 
-> > Thanks,
-> > - Aditya G
-> > 
-> 
+  CPU: 0 taking host call from 0xffffffc08003a35c to 0xffffffc08003a35c
+    LAST SYSREG: 0xffffffc0809d3d38 msr daif, x23
+    REG: id_aa64pfr0_el1 is 1100000011110012 (previously 1100000010110012, =
+0 to 1 hits)
+    REG: sctlr_el1 is 0200000034f4d91d (previously 0000000000000000, 0 to 3=
+ hits)
+    REG: spsr_el1 is 00000000000003c5 (previously 0000000000000000, 0 to 1 =
+hits)
+    REG: elr_el1 is 0000000041406100 (previously 0000000000000000, 0 to 1 h=
+its)
+    REG: vbar_el1 is ffffffc080010800 (previously 0000000000000000, 0 to 1 =
+hits)
+    REG: mdscr_el1 is 0000000000001000 (previously 0000000000000000, 0 to 1=
+ hits)
+    REG: ttbr0_el1 is 0000000041408000 (previously 0000000000000000, 0 to 2=
+ hits)
+    REG: ttbr1_el1 is 0000000041409000 (previously 0000000000000000, 0 to 5=
+ hits)
+    REG: tcr_el1 is 001000f5b5593519 (previously 0000000000000000, 0 to 3 h=
+its)
+    REG: mair_el1 is 000000040044ffff (previously 0000000000000000, 0 to 1 =
+hits)
+    REG: midr_el1 is 00000000414fd0c1 (previously 0000000000000000, 0 to 2 =
+hits)
+  CPU: 0 taking host call from 0xffffffc08003a35c to 0xffffffc08003a35c
+    LAST SYSREG: 0xffffffc0800cd6dc msr daif, x21
+  CPU: 0 taking host call from 0xffffffc08003a35c to 0xffffffc08003a35c
+    LAST SYSREG: 0xffffffc08010fe9c msr daif, x27
+  CPU: 0 taking host call from 0xffffffc08003a35c to 0xffffffc08003a35c
+    LAST SYSREG: 0xffffffc08010fe9c msr daif, x27
+  CPU: 0 taking host call from 0xffffffc08003a35c to 0xffffffc08003a35c
+    LAST SYSREG: 0xffffffc08010fe9c msr daif, x27
+  CPU: 0 taking host call from 0xffffffc08003a35c to 0xffffffc08003a35c
+    LAST SYSREG: 0xffffffc08010fe9c msr daif, x27
+  CPU: 0 taking host call from 0xffffffc08003a35c to 0xffffffc08003a35c
+    LAST SYSREG: 0xffffffc08010fe9c msr daif, x27
+  CPU: 0 taking irq from 0xffffffc08121102c to 0xffffffc080010a80
+    LAST SYSREG: 0xffffffc081211028 msr daifclr, #3
+    REG: cntkctl_el1 is 0000000000000002 (previously 0000000000000000, 0 to=
+ 2 hits)
+    REG: tpidr_el1 is ffffffbfbe084000 (previously 0000000000000000, 513 to=
+ 4453 hits)
+  CPU: 0 taking irq from 0xffffffc08121102c to 0xffffffc080010a80
+    LAST SYSREG: 0xffffffc08001207c msr spsr_el1, x22
+    REG: spsr_el1 is 0000000000000005 (previously 00000000000003c5, 1 to 3 =
+hits)
+    REG: elr_el1 is ffffffc08121102c (previously 0000000041406100, 1 to 3 h=
+its)
+  CPU: 0 taking irq from 0xffffffc08065c988 to 0xffffffc080010a80
+    LAST SYSREG: 0xffffffc080657970 msr daif, x21
+    REG: spsr_el1 is 0000000020000005 (previously 0000000000000005, 3 to 5 =
+hits)
+    REG: elr_el1 is ffffffc08065c988 (previously ffffffc08121102c, 3 to 5 h=
+its)
+  CPU: 0 taking irq from 0xffffffc0806591c4 to 0xffffffc080010a80
+    LAST SYSREG: 0xffffffc080657ad8 msr daif, x22
+    REG: spsr_el1 is 0000000060000005 (previously 0000000020000005, 5 to 7 =
+hits)
+    REG: elr_el1 is ffffffc0806591c4 (previously ffffffc08065c988, 5 to 7 h=
+its)
+
+I think the elr_el1 changes I'm picking up are where its explicitly set
+by the code and not the implicit updates.
+
+
+>
+> I'm not sure whether the above explanation is clear enough, so please
+> let me know if you'd like me to clarify anything or point you to the
+> exact spots in the code.
+>
+> Thanks,
+> Florian
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
