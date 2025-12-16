@@ -4,104 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC9CCD609DB
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 19:32:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E16D637A1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 20:06:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vValp-0000xa-19; Tue, 16 Dec 2025 14:31:41 -0500
+	id 1vVbJA-0006gy-3q; Tue, 16 Dec 2025 15:06:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVall-0000xG-Ig
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 14:31:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vValj-0004A8-VO
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 14:31:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765913494;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cofkPrxdprT3guCmCwDMtm4wLqM859nOJoDdI7hjkq4=;
- b=KZfOfmjLrzNp2GI/baOzyF70SZ1wQ8MnnoUmLCrxkjJJdnDvWBo/+MEX2GrotjTjPBk+Ow
- EhqwKSFCHmGpmAIz/zWl86KpyKGisEk2oCNxZgpJjTzOE0JuYR5yLn6KcHKTf7qFNrNzJ2
- +jCaGz+ZnTSE+wcJm5e9oXSZlwKjSPo=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-MkZvBykJPJq_cCWdnsTiNQ-1; Tue, 16 Dec 2025 14:31:33 -0500
-X-MC-Unique: MkZvBykJPJq_cCWdnsTiNQ-1
-X-Mimecast-MFC-AGG-ID: MkZvBykJPJq_cCWdnsTiNQ_1765913492
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4f1d7ac8339so148289281cf.2
- for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 11:31:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765913492; x=1766518292; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=cofkPrxdprT3guCmCwDMtm4wLqM859nOJoDdI7hjkq4=;
- b=VNFtnFEi5SrL0yH69pUgQdhtxnmTKdgdaWnPtEQgGpc5dKKFGr3W+SqB1PzruN7v23
- h1klVOhVqqnQKIw6efICMi482XIL7XOlVpCseYGIUzdVrT/mXq9Qa0GO5OjbL3ukkw+G
- sAvSn6N1bV3JNc2p6uFtSMq/L9hGxVtpvSU1fTl3ge+xK4bvfHTw5F4zfqt8q/TH8322
- gTqWpQOGpKY2CrrSip5TGEVJfLcrG14FusFTLa/pTl7LU0VeyWwaqjCZMkC5EluAs2MP
- I8pPupc1uufQvvUp/n8kVi/yarUNla2ZbHRH4/yau+bZLWCSpe8i+U/vxGLmKxNg8Nzk
- kj+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765913492; x=1766518292;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cofkPrxdprT3guCmCwDMtm4wLqM859nOJoDdI7hjkq4=;
- b=M1wcIfHYqe8oL7IJMUkP7FV65gGiNWEG12soQ81oTWkirLQIE4nyLr04o8hqx+ODiZ
- PWZeKyydUFoEjqGmxpuYGj8ojovFZvg7LzposqIC9zoPft2EUHvwLSWCjPmW2CK5aDBk
- fnELMEkuxsEOmPQGLfJ6bP+bQGA8evQywLN7UK/523LKS/Kgedl2aUhTX9mYvM5sKqzg
- MuMYWCPRMFWumwhs5mp1qYHZ/IJdis/e6pN1VsPmwm9Ofg4FMwtcKshCTqahJWaI7LtS
- LmsGqqH40uofoPeC0hhNYAEF6QY0ChbXl8Z/FBf5WHNw1kejYyOsBeH0jDKqxu97v2lJ
- TN/g==
-X-Gm-Message-State: AOJu0YzI8/d/DRF5j96ZWwFYreIvceF9odqE+Zqzu2i6x14h4/SxvouL
- NUDibevXAM3i5E8O9F2rtpxzP7GsEwiig+lJSi/wVCH/uUQL7h7W/d+s21aD5lVxEgiyGOGnhgl
- EIs0ScZ7SAXaCgCKYz9ovwtmcYtEnGrT+Wc8V3yg6KFMMA1csgzbADPMZ
-X-Gm-Gg: AY/fxX7s6bXgc9hXUV36qt9iltt1ssZ01wcHkbveE6/jWNafk7ITNQNlZwv2QftSJ8H
- OiIqsnasabevKrP33mCmIFDi+vmr1qJFteZbLDm2IPlssBwI9blLzkiub27u+jLO6yOQGGFRpT8
- za2dCc0chaZuv1HiHBM5L/xfAIaOgHo2MyYltRMFAGBGkRS8d6lILeYONXcolj6eiu0cwahbMSH
- 0wwQ85FSawCH3qEZUOxQSWD+EKAjZA8XSK1Zr460PocCVBYHhYylgU3grNY8p4hWYju4Ugs8jDB
- wQGFawQra8CD1JgskOCwXsu9LuMFyISkUDJGNkszMjyFJrC6pEM0PDVew+2pnRUP7KOZO58NcrN
- bXIc=
-X-Received: by 2002:a05:622a:1455:b0:4f1:cbdc:28 with SMTP id
- d75a77b69052e-4f1d05aed11mr206500451cf.52.1765913492254; 
- Tue, 16 Dec 2025 11:31:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHBYnmuwupzXP0kFl/ASRThV60ieoRXgbZt0WBtEZ3widT/cY5gZJe6Rwb4xRXT7g1vHhP3OA==
-X-Received: by 2002:a05:622a:1455:b0:4f1:cbdc:28 with SMTP id
- d75a77b69052e-4f1d05aed11mr206500011cf.52.1765913491777; 
- Tue, 16 Dec 2025 11:31:31 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4f345c2e5f7sm19841981cf.20.2025.12.16.11.31.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Dec 2025 11:31:31 -0800 (PST)
-Date: Tue, 16 Dec 2025 14:31:30 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com
-Subject: Re: [PATCH v3 14/51] migration: Use QAPI_CLONE_MEMBERS in
- migrate_params_test_apply
-Message-ID: <aUGzkpyNcLE2bixw@x1.local>
-References: <20251215220041.12657-1-farosas@suse.de>
- <20251215220041.12657-15-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVbJ8-0006gj-4X
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 15:06:06 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVbJ5-0002ec-Ub
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 15:06:05 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 391125BCD3;
+ Tue, 16 Dec 2025 20:06:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1765915560; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=YyStftDYXwUDmLSQO+FtK7Qt7Q1mbbcghIZZJNGW1ws=;
+ b=CmnoTB9myPD9l+GzR4DyM6DtSCX3cjBzud3QeJDaA1Jr9ulhZj3TYs3SahMXX1uqEoH+gm
+ PJsBdDZDZN+DbzMWv7gmYEyhaUDxkPXXVPX18U/lGJAU/DjWPmbZvzlKKCZwcA9O0LldHL
+ wjz8t2IpLXvaFDhCFXeQJYVjV+saJt4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1765915560;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=YyStftDYXwUDmLSQO+FtK7Qt7Q1mbbcghIZZJNGW1ws=;
+ b=sKDRvMygqIgLBf12O59JM7qeHc/1XgfIKjvTqSprtJIy4qtKQIpK78A86noVVKA21k7EYk
+ kImBgs5uy/tUpqDA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1765915560; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=YyStftDYXwUDmLSQO+FtK7Qt7Q1mbbcghIZZJNGW1ws=;
+ b=CmnoTB9myPD9l+GzR4DyM6DtSCX3cjBzud3QeJDaA1Jr9ulhZj3TYs3SahMXX1uqEoH+gm
+ PJsBdDZDZN+DbzMWv7gmYEyhaUDxkPXXVPX18U/lGJAU/DjWPmbZvzlKKCZwcA9O0LldHL
+ wjz8t2IpLXvaFDhCFXeQJYVjV+saJt4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1765915560;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=YyStftDYXwUDmLSQO+FtK7Qt7Q1mbbcghIZZJNGW1ws=;
+ b=sKDRvMygqIgLBf12O59JM7qeHc/1XgfIKjvTqSprtJIy4qtKQIpK78A86noVVKA21k7EYk
+ kImBgs5uy/tUpqDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 558693EA63;
+ Tue, 16 Dec 2025 20:05:58 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id etYEBaa7QWmuewAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 16 Dec 2025 20:05:58 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH] tests/functional: Allow tests to be run individually
+Date: Tue, 16 Dec 2025 17:05:55 -0300
+Message-ID: <20251216200555.4374-1-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251215220041.12657-15-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.995];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[testcase.py:url,imap1.dmz-prg2.suse.org:helo,test_pseries.py:url,suse.de:email,suse.de:mid];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,99 +110,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 07:00:00PM -0300, Fabiano Rosas wrote:
-> Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
-> method makes the handling of the TLS strings more intuitive because it
-> clones them as well.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/options.c | 25 +++++++++++++------------
->  1 file changed, 13 insertions(+), 12 deletions(-)
-> 
-> diff --git a/migration/options.c b/migration/options.c
-> index 6b60003a32..2901b37228 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -1262,9 +1262,9 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
->  static void migrate_params_test_apply(MigrationParameters *params,
->                                        MigrationParameters *dest)
->  {
-> -    *dest = migrate_get_current()->parameters;
-> +    MigrationState *s = migrate_get_current();
->  
-> -    /* TODO use QAPI_CLONE() instead of duplicating it inline */
-> +    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
->  
->      if (params->has_throttle_trigger_threshold) {
->          dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
-> @@ -1283,24 +1283,18 @@ static void migrate_params_test_apply(MigrationParameters *params,
->      }
->  
->      if (params->tls_creds) {
-> +        qapi_free_StrOrNull(dest->tls_creds);
->          dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
-> -    } else {
-> -        /* clear the reference, it's owned by s->parameters */
-> -        dest->tls_creds = NULL;
->      }
->  
->      if (params->tls_hostname) {
-> +        qapi_free_StrOrNull(dest->tls_hostname);
->          dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
-> -    } else {
-> -        /* clear the reference, it's owned by s->parameters */
-> -        dest->tls_hostname = NULL;
->      }
->  
->      if (params->tls_authz) {
-> +        qapi_free_StrOrNull(dest->tls_authz);
->          dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
-> -    } else {
-> -        /* clear the reference, it's owned by s->parameters */
-> -        dest->tls_authz = NULL;
->      }
->  
->      if (params->has_max_bandwidth) {
-> @@ -1357,7 +1351,6 @@ static void migrate_params_test_apply(MigrationParameters *params,
->      }
->  
->      if (params->has_block_bitmap_mapping) {
-> -        dest->has_block_bitmap_mapping = true;
->          dest->block_bitmap_mapping = params->block_bitmap_mapping;
+The functional tests currently don't allow a single test to be
+selected for execution by dotted name, e.g:
 
-Now "dest" came from a QAPI_CLONE, does it also need explicit free and
-QAPI_CLONE() from params->block_bitmap_mapping?
+../tests/functional/ppc64/test_pseries.py PseriesMachine.test_ppc64_linux_boot
+                                          ^
+The issue is that the testcase.py main function passes the test
+module's name as the second argument to unittest.main(), which makes
+it ignore all other positional arguments (presumably because the
+module is already the superset of all tests).
 
-I think this part looks fine when the whole set is applied, so it's only a
-question of intermediate stage of this patch.
+After commit cac08383f0 ("tests/functional: expose sys.argv to
+unittest.main"), the situation improves by passing the rest of the
+argv from the command line invocation into unittest.main(), but it
+still doesn't fix the issue. The short form options are now accepted,
+so the -k option could be used to filter for a pattern, which is
+useful, but not the same as listing the test names.
 
->      }
->  
-> @@ -1532,6 +1525,14 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
->  
->      migrate_params_test_apply(params, &tmp);
->  
-> +    /*
-> +     * Mark block_bitmap_mapping as present now while we have the
-> +     * params structure with the user input around.
-> +     */
-> +    if (params->has_block_bitmap_mapping) {
-> +        migrate_get_current()->has_block_bitmap_mapping = true;
-> +    }
+Fix this by passing the test module name via the "module" argument to
+unittest.main() and stop touching argv. The ways of invoking tests are
+now as per unittests documentation (-k still works):
 
-Should this be put into the if block below?  Aka, when we decide to apply
-the parameters?
+  Examples:
+    test_pseries.py                           - run default set of tests
+    test_pseries.py MyTestSuite               - run suite 'MyTestSuite'
+    test_pseries.py MyTestCase.testSomething  - run MyTestCase.testSomething
+    test_pseries.py MyTestCase                - run all 'test*' test methods in MyTestCase
 
-> +
->      if (migrate_params_check(&tmp, errp)) {
->          migrate_params_apply(params);
->          migrate_post_update_params(params, errp);
-> -- 
-> 2.51.0
-> 
+Note that ever since we've been programatically passing the module
+name to unittest.main(), the usage 'test_pseries.py test_pseries' was
+never valid. It used to "work" just the same as 'test_pseries.py
+foobar' would. After this patch, that usage results in an error.
 
+Also note that testcase.py:main() pertains to running the test module
+that invoked it via QemuSystemTest.main(), i.e. module == __main__. So
+the 'discover' usage of unittest doesn't apply here, the module is
+already discovered because that's where this code was called from to
+begin with. This patch could just as well call unittest.main() instead
+of unittest.main(test_module), but the latter provides nicer error
+messages prefixed with the module name.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ tests/functional/qemu_test/testcase.py | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 58f2740100..fa100d9632 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -249,17 +249,16 @@ def main():
+         warnings.simplefilter("default")
+         os.environ["PYTHONWARNINGS"] = "default"
+ 
+-        path = os.path.basename(sys.argv[0])[:-3]
++        test_module = os.path.basename(sys.argv[0])[:-3]
+ 
+         cache = os.environ.get("QEMU_TEST_PRECACHE", None)
+         if cache is not None:
+-            Asset.precache_suites(path, cache)
++            Asset.precache_suites(test_module, cache)
+             return
+ 
+         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+                                    test_output_log = pycotap.LogMode.LogToError)
+-        res = unittest.main(module = None, testRunner = tr, exit = False,
+-                            argv=[sys.argv[0], path] + sys.argv[1:])
++        res = unittest.main(test_module, testRunner = tr, exit = False)
+         failed = {}
+         for (test, _message) in res.result.errors + res.result.failures:
+             if hasattr(test, "log_filename") and not test.id() in failed:
 -- 
-Peter Xu
+2.51.0
 
 
