@@ -1,40 +1,39 @@
 Return-Path: <qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
-Received: from lists.gnu.org (unknown [209.51.188.17])
+Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1BCD637B3
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 23:51:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB79D64060
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 23:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVenG-0001GF-Ot; Tue, 16 Dec 2025 18:49:26 -0500
+	id 1vVenK-0001JI-76; Tue, 16 Dec 2025 18:49:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen6-0001Ca-LP
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:18 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen1-0001BN-0i
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:14 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen4-0006mK-Tg
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:16 -0500
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVemy-0006lT-KP
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
  Content-Type:MIME-Version:Subject:Date:From:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=nNu+hhZPCxg3t1C9ePlO/uOhsAN+U4ctEJxn/FIV/o4=; b=qV+pUzzeZWA8/Cn
- mNhG50JGCbz7n9+mv1C975nB8UNcwnoH24FhhGOqYUMau5p0bsXjf58gjyWSAC3m3kFXRJkq3anl6
- d3p1mWLhYN6CPzf0qBRzTg/0lYdNcdpUXjuLEeNqBsPIAvTlaTrVST/4k1YP0Wi8NntOsjRLdRhR9
- nc=;
-Date: Wed, 17 Dec 2025 00:51:18 +0100
-Subject: [PATCH 13/14] hw/riscv: Define SiFive E/U CPUs using runtime
- conditions
+ List-Help; bh=SbulELr7fvQ/Mas+GWwU/UakpuILoL/WSUAL/5qfqFY=; b=Kn9nBieUSeZErcA
+ BqlXnj6h34Uz9WeOof2dTsLttUoEJRHEFGmMonzcs9uvLLcmVaNhJZNlLDH68Tiijdk68Msw8U2M2
+ C0hEt2lQiSJmCLw/gvrHwfI4uyJJUCnmB062Y9cuch9j2QYY/fIQ0XeSVHXzc6qDEeo7Hdv+bpao9
+ cY=;
+Date: Wed, 17 Dec 2025 00:51:09 +0100
+Subject: [PATCH 04/14] hw/core: Add riscv[32|64] to "none" machine
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251217-hw-riscv-cpu-int-v1-13-d24a4048d3aa@rev.ng>
+Message-Id: <20251217-hw-riscv-cpu-int-v1-4-d24a4048d3aa@rev.ng>
 References: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
 In-Reply-To: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
 To: qemu-devel@nongnu.org
@@ -68,82 +67,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- include/hw/riscv/sifive_cpu.h | 26 +++++++++++++++++++-------
- hw/riscv/sifive_e.c           |  2 +-
- hw/riscv/sifive_u.c           |  4 ++--
- 3 files changed, 22 insertions(+), 10 deletions(-)
+ hw/core/null-machine.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/hw/riscv/sifive_cpu.h b/include/hw/riscv/sifive_cpu.h
-index 136799633a..8391141d5e 100644
---- a/include/hw/riscv/sifive_cpu.h
-+++ b/include/hw/riscv/sifive_cpu.h
-@@ -20,12 +20,24 @@
- #ifndef HW_SIFIVE_CPU_H
- #define HW_SIFIVE_CPU_H
+diff --git a/hw/core/null-machine.c b/hw/core/null-machine.c
+index 67b769bd3e..77e4ed60e6 100644
+--- a/hw/core/null-machine.c
++++ b/hw/core/null-machine.c
+@@ -17,6 +17,7 @@
+ #include "system/address-spaces.h"
+ #include "hw/core/cpu.h"
+ #include "hw/arm/machines-qom.h"
++#include "hw/riscv/machines-qom.h"
  
--#if defined(TARGET_RISCV32)
--#define SIFIVE_E_CPU TYPE_RISCV_CPU_SIFIVE_E31
--#define SIFIVE_U_CPU TYPE_RISCV_CPU_SIFIVE_U34
--#elif defined(TARGET_RISCV64)
--#define SIFIVE_E_CPU TYPE_RISCV_CPU_SIFIVE_E51
--#define SIFIVE_U_CPU TYPE_RISCV_CPU_SIFIVE_U54
--#endif
-+#include "qemu/target-info.h"
-+
-+static inline const char *sifive_e_cpu(void)
-+{
-+    if (target_riscv64()) {
-+        return TYPE_RISCV_CPU_SIFIVE_E51;
-+    } else {
-+        return TYPE_RISCV_CPU_SIFIVE_E31;
-+    }
-+}
-+
-+static inline const char *sifive_u_cpu(void)
-+{
-+    if (target_riscv64()) {
-+        return TYPE_RISCV_CPU_SIFIVE_U54;
-+    } else {
-+        return TYPE_RISCV_CPU_SIFIVE_U34;
-+    }
-+}
- 
- #endif /* HW_SIFIVE_CPU_H */
-diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
-index 7ed419cf69..458b21b9e3 100644
---- a/hw/riscv/sifive_e.c
-+++ b/hw/riscv/sifive_e.c
-@@ -151,7 +151,7 @@ static void sifive_e_machine_class_init(ObjectClass *oc, const void *data)
-     mc->desc = "RISC-V Board compatible with SiFive E SDK";
-     mc->init = sifive_e_machine_init;
-     mc->max_cpus = 1;
--    mc->default_cpu_type = SIFIVE_E_CPU;
-+    mc->default_cpu_type = sifive_e_cpu();
-     mc->default_ram_id = "riscv.sifive.e.ram";
-     mc->default_ram_size = sifive_e_memmap[SIFIVE_E_DEV_DTIM].size;
- 
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index 2ff2059bb9..a04481806e 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -723,7 +723,7 @@ static void sifive_u_machine_class_init(ObjectClass *oc, const void *data)
-     mc->init = sifive_u_machine_init;
-     mc->max_cpus = SIFIVE_U_MANAGEMENT_CPU_COUNT + SIFIVE_U_COMPUTE_CPU_COUNT;
-     mc->min_cpus = SIFIVE_U_MANAGEMENT_CPU_COUNT + 1;
--    mc->default_cpu_type = SIFIVE_U_CPU;
-+    mc->default_cpu_type = sifive_u_cpu();
-     mc->default_cpus = mc->min_cpus;
-     mc->default_ram_id = "riscv.sifive.u.ram";
-     mc->auto_create_sdcard = true;
-@@ -764,7 +764,7 @@ static void sifive_u_soc_instance_init(Object *obj)
-                             TYPE_RISCV_HART_ARRAY);
-     qdev_prop_set_uint32(DEVICE(&s->e_cpus), "num-harts", 1);
-     qdev_prop_set_uint32(DEVICE(&s->e_cpus), "hartid-base", 0);
--    qdev_prop_set_string(DEVICE(&s->e_cpus), "cpu-type", SIFIVE_E_CPU);
-+    qdev_prop_set_string(DEVICE(&s->e_cpus), "cpu-type", sifive_e_cpu());
-     qdev_prop_set_uint64(DEVICE(&s->e_cpus), "resetvec", 0x1004);
- 
-     object_initialize_child(obj, "u-cluster", &s->u_cluster, TYPE_CPU_CLUSTER);
+ static void machine_none_init(MachineState *mch)
+ {
+@@ -59,4 +60,6 @@ static void machine_none_machine_init(MachineClass *mc)
+ DEFINE_MACHINE_WITH_INTERFACES("none", machine_none_machine_init,
+                                { TYPE_TARGET_AARCH64_MACHINE },
+                                { TYPE_TARGET_ARM_MACHINE },
++                               { TYPE_TARGET_RISCV32_MACHINE },
++                               { TYPE_TARGET_RISCV64_MACHINE },
+                                { })
 
 -- 
 2.51.0
