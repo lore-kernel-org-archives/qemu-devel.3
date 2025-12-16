@@ -4,107 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE01D609CE
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 16:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4AC7D609CE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 16:49:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVXt3-0006Oy-98; Tue, 16 Dec 2025 11:26:57 -0500
+	id 1vVYEl-000449-7h; Tue, 16 Dec 2025 11:49:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVXt1-0006Ol-PN
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 11:26:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1vVYEi-000433-Or; Tue, 16 Dec 2025 11:49:20 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVXsz-0002LC-Po
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 11:26:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765902410;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5/w/b+koP+xIFiBwND2BYBwntrjPiqFe5tK/A0dBBBo=;
- b=PRqa6tebBeuwXAuqfkZPi1r/9bAMPlUXIqsf+i0LrhtMNm6A4PceVdRZ8/kvszM2bzAVqj
- q41Ct2aKJLd13D8QqBJQXP9XhVbOSyzZWp0lOFvlBUAEQyVgbGzSLlNK1leBAjz5Bw98Ou
- 8czibceL2xKd68QJfboik7GvnG1Qh5s=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-157-wOZBPUkyO-a0S7mQxzu48Q-1; Tue, 16 Dec 2025 11:26:49 -0500
-X-MC-Unique: wOZBPUkyO-a0S7mQxzu48Q-1
-X-Mimecast-MFC-AGG-ID: wOZBPUkyO-a0S7mQxzu48Q_1765902408
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-29da1ea0b97so122275245ad.3
- for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 08:26:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765902408; x=1766507208; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=5/w/b+koP+xIFiBwND2BYBwntrjPiqFe5tK/A0dBBBo=;
- b=ssR0wgj8Wz8B2GLbQXq9XpQf/+3Sr7QEgmgT+v+zRre/br4kwfa1lRClLIhVrrxG6u
- 4YTDmvhjL5MB3jAZvIx6mlIre7H7dxaHjq5M9pa+WEOBwNi2FPLiFVx0H0dZlw9UXCyO
- 713eS88q8iPIxgjUWd7WXt83S0wFD6yYJ6WBRbpLsL+Ea+gSVVlJzbdj6U8PfYcrhA9p
- gZl77wLaJXoFoEGd7rL25vwK/zozLFHJYajxbQmoAD/56nNNymmhb3rXYL9n+kV6ka76
- meQm5C4x+/DwjJ+OZIlzy1vY4BgXeMFpC9vSMpWdZkfmz3zbMkFB2trsttZjXmhESrIj
- /U/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765902408; x=1766507208;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5/w/b+koP+xIFiBwND2BYBwntrjPiqFe5tK/A0dBBBo=;
- b=mR6mnVRZKmSBn+QSEU3bomSyPq/VgKathC/tnmo+B84tjgZPPKMfMfESRlYpe/DX7Q
- Zhvt61XLE6mG/sjBywJDt16zn905Bsr5ZncpuSR7Af49yRcaKdKHvcNDbyR7BUC7lAQx
- kl64txE3Fyr8HrLvB02l9SUfWeyVhNNj8Yy0TlmISkEO5oFDUp6rQCfEc+JJkOja/Rs0
- B/yHp4VHDFOTvojSYbWxcCho3jOTMo1PYp4/9dyNFUM9toSmEL1U7ZU1r5XM+aW4f90U
- GP4ojPD1S/aqTml3gJhcYenEXsSVom068u6cyjubhGIb9sxATzBiuEgNHtEEdnoXNdug
- Xmuw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU2CfzH+Gv+dy5h3+crmoHXDCw97+FVhv41wvW5c/MuYFpNdjK28nbQC25MKR4A/x47GaXfMEoFAStU@nongnu.org
-X-Gm-Message-State: AOJu0Yy2ZRGuphAxsSBBhvJ8u7MgOD2srczKqGPXILC2A9Jh7lFMMEbk
- ah2tACyWanqPF1v7bZteWAZmegj4jpa4R7gC+59qDNB5H/QiDNl3IPvDVILxlD1j0WFzfQznIqf
- xma5C2cM+ScYvCUB47kxOsvBOqKNB/THAFAZpLxrNVX7z9lebWzXtrGbh
-X-Gm-Gg: AY/fxX5Dux5qWDFi3MVHzqLh5csdX/LW/SBAZ+e/vaMpRYQyIIXC1k71yVsRVvIbOd/
- rTsTUZuQeCnOwbvaaPXKSYSoM+SQi8ezcby/uWH4JEMv0cXQmiwZ7b1tcsynaK9D/PSqZ5N7OE1
- kDFpZRmwko/4lXjpLexPHQWGgFIM4LBc5GCFVZzOEPb/XYiX4KgQ0v/VMBdKAvnXU+jSAR4M32O
- KP/2V5gi4cLuDAw/Si1iSAx5x9DDx6WFzCajbRBHIIGAvTOpkEhdbL4r4LVxeDDklVF062u9Apf
- IePzeznxNTvUned0QKY1OGxlxf8oyphZhqoX5Oazf3ZHySO5t601Ge3iM0ySbRHTyD8fza5YrWd
- GhRI=
-X-Received: by 2002:a17:902:f605:b0:2a0:dd66:d813 with SMTP id
- d9443c01a7336-2a0dd66d8e5mr105863555ad.55.1765902407747; 
- Tue, 16 Dec 2025 08:26:47 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGJpdDfzQg46toth3bE70MGhWIPOFxRi1xW/0fNn+PvnMp5hl91KNikbKhdvryiBMIvSqPw4g==
-X-Received: by 2002:a17:902:f605:b0:2a0:dd66:d813 with SMTP id
- d9443c01a7336-2a0dd66d8e5mr105863175ad.55.1765902407153; 
- Tue, 16 Dec 2025 08:26:47 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a0993ab61dsm102998805ad.46.2025.12.16.08.26.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Dec 2025 08:26:46 -0800 (PST)
-Date: Tue, 16 Dec 2025 11:26:38 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Chuang Xu <xuchuangxclwt@bytedance.com>, qemu-devel@nongnu.org,
- mst@redhat.com, sgarzare@redhat.com, richard.henderson@linaro.org,
- pbonzini@redhat.com, david@kernel.org, philmd@linaro.org
-Subject: Re: [PATCH v3 1/1] migration: merge fragmented clear_dirty ioctls
-Message-ID: <aUGIPj1JNpd8HZ-V@x1.local>
-References: <20251216080001.64579-1-xuchuangxclwt@bytedance.com>
- <877bum36ed.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1vVYEg-0000c1-Ra; Tue, 16 Dec 2025 11:49:20 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGC1mGv029165;
+ Tue, 16 Dec 2025 16:49:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=edItOK+T/9x4eBU9q775Qr+LTRr8sX
+ IqcslynM5hyJg=; b=ZOeTkK57rO5DSM0HpAvNARypeNiNuj6JHj6ncX3dWhBjNa
+ GOGeHrkPO4dyHsOmdCqED3CL5cIUeqZICiWRp93HgXLpcjkghacF6B5tX+hgoEVw
+ yv/8s1XvH6qEGT9ZCZVBy1ub8ESmuw+Jw3z/0WT7N89G7nYTQyptGNlA0+OV35lG
+ OnKXCGpecPq6Gdgzr12y+AYZW08GznSTFxy7otTAiF1dB7oaygUwL8mrliz6kT5P
+ 6213QMSzHgCca2zdONu/YjyCKoEh7VffWxOvWh+evWGJFg56tNFBztyeMmvVTtMX
+ 5PtWyxDFPiXdCBV/fMeiicHUOM8bFuo1936lMUwg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjkypsn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Dec 2025 16:49:14 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BGGnDFV025595;
+ Tue, 16 Dec 2025 16:49:13 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjkypsh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Dec 2025 16:49:13 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGFCsLk005690;
+ Tue, 16 Dec 2025 16:49:12 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4b1tgnv0he-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Dec 2025 16:49:12 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5BGGnBvB39190856
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 16 Dec 2025 16:49:11 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8253158052;
+ Tue, 16 Dec 2025 16:49:11 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B907A58056;
+ Tue, 16 Dec 2025 16:49:10 +0000 (GMT)
+Received: from [9.10.80.59] (unknown [9.10.80.59])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 16 Dec 2025 16:49:10 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------O30MsbR3Ay0Go9hneti6x2kv"
+Message-ID: <2bbffee3-6a1a-4bd9-9dde-91f57c58a411@linux.ibm.com>
+Date: Tue, 16 Dec 2025 10:49:10 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <877bum36ed.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 7/7] hw/ppc: Add VMSTATE information to PnvPsi
+To: milesg@linux.ibm.com, Caleb Schlossin <calebs@linux.ibm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ alistair@alistair23.me, chalapathi.v@linux.ibm.com, angeloj@linux.ibm.com
+References: <20251216151359.418708-1-calebs@linux.ibm.com>
+ <20251216151359.418708-8-calebs@linux.ibm.com>
+ <2570f988a46615022b9180b2aad228a733e3b7ff.camel@linux.ibm.com>
+Content-Language: en-US
+From: Mike Kowal <kowal@linux.ibm.com>
+In-Reply-To: <2570f988a46615022b9180b2aad228a733e3b7ff.camel@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: YXu02etxMjSP3yfHbt1TxcpDEeMoilPT
+X-Authority-Analysis: v=2.4 cv=CLgnnBrD c=1 sm=1 tr=0 ts=69418d8a cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22 a=r77TgQKjGQsHNAKrUKIA:9
+ a=VnNF1IyMAAAA:8 a=eDkLXcaQSEDiTH1ZAsEA:9 a=QEXdDO2ut3YA:10
+ a=OW9FX9VIyzILtHTHIfsA:9 a=YA9Eye4rJ7QrCEPl:21 a=_W_S_7VecoQA:10
+ a=lqcHg5cX4UMA:10
+X-Proofpoint-GUID: 7NXAEo80CxsEF0a-gYXZoKdWFlg6pmLf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAwOSBTYWx0ZWRfXxMWdnH99T9U/
+ yXYqwRLS7ORAuagozfaDqRNzpY/EsKI31fC+0fHvSiC9m/pvP8CpCAEs9i8+jlO8r+REVr8Wfca
+ szzebUI3bpODf80PNx2VjTLds9iwQYyEdbTmEmFUZLdDhInFkGp+v2HWaNrrQUFpVMI+rhzapLF
+ iIOGtpf6W1ZY7bQaqIPgBj0b484Xrm5lRbGiea+Df+zc1SrRUouRojld3i3PGzhW/kx0wxVHWKt
+ 2FnYiWf2RNJjRzfVeFmngcSjVlJVPVRpV5YbBJrvTzkLuOpS/6EqMV1JAoqrNeUOW1LWCWIDQ4y
+ otxuxXtup2KJfSb6Judncs5a2ULtDf47KEZd2fZYETHPRX+K5xIGUxV3R5FuV3C0xZn9ay85Vsc
+ Jlt5/OocUq/oWkQ86zBNUwuR7DxnPw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-16_02,2025-12-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1011 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130009
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,260 +130,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 16, 2025 at 10:25:46AM -0300, Fabiano Rosas wrote:
-> "Chuang Xu" <xuchuangxclwt@bytedance.com> writes:
-> 
-> > From: xuchuangxclwt <xuchuangxclwt@bytedance.com>
-> >
-> > In our long-term experience in Bytedance, we've found that under
-> > the same load, live migration of larger VMs with more devices is
-> > often more difficult to converge (requiring a larger downtime limit).
-> >
-> > Through some testing and calculations, we conclude that bitmap sync time
-> > affects the calculation of live migration bandwidth.
+This is a multi-part message in MIME format.
+--------------O30MsbR3Ay0Go9hneti6x2kv
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Side note:
+Reviewed-by: Michael Kowal<kowal@linux.ibm.com>
 
-I forgot to mention when replying to the old versions, but we introduced
-avail-switchover-bandwidth to partially remedy this problem when we hit it
-before - which may or may not be exactly the same reason here on unaligned
-syncs as we didn't further investigate (we have VFIO-PCI devices when
-testing), but the whole logic should be similar that bw was calculated too
-small.
+Thanks, MAK
 
-So even if with this patch optimizing sync, bw is always not as accurate.
-I wonder if we can still fix it somehow, e.g. I wonder if 100ms is too
-short a period to take samples, or at least we should be able to remember
-more samples so the reported bw (even if we keep sampling per 100ms) will
-cover longer period.
 
-Feel free to share your thoughts if you have any.
+On 12/16/2025 10:24 AM, Miles Glenn wrote:
+> Reviewed-by: Glenn Miles<milesg@linux.ibm.com>
+>
+> Thanks,
+>
+> Glenn
+>
+> On Tue, 2025-12-16 at 09:13 -0600, Caleb Schlossin wrote:
+>> PnvPsi needs to be able to save/load snapshots.  Add VMSTATE information
+>> to the device class and a post_load() method to restore dynamic data items and
+>> memory region mappings.
+>>
+>> Signed-off-by: Michael Kowal<kowal@linux.ibm.com>
+>> Signed-off-by: Caleb Schlossin<calebs@linux.ibm.com>
+>> ---
+>>   hw/ppc/pnv_psi.c | 36 ++++++++++++++++++++++++++++++++++--
+>>   1 file changed, 34 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
+>> index 5d947d8b52..67bc911e4b 100644
+>> --- a/hw/ppc/pnv_psi.c
+>> +++ b/hw/ppc/pnv_psi.c
+>> @@ -25,6 +25,7 @@
+>>   #include "qemu/module.h"
+>>   #include "system/reset.h"
+>>   #include "qapi/error.h"
+>> +#include "migration/vmstate.h"
+>>   
+>>   
+>>   #include "hw/ppc/fdt.h"
+>> @@ -130,12 +131,11 @@ static void pnv_psi_set_bar(PnvPsi *psi, uint64_t bar)
+>>   {
+>>       PnvPsiClass *ppc = PNV_PSI_GET_CLASS(psi);
+>>       MemoryRegion *sysmem = get_system_memory();
+>> -    uint64_t old = psi->regs[PSIHB_XSCOM_BAR];
+>>   
+>>       psi->regs[PSIHB_XSCOM_BAR] = bar & (ppc->bar_mask | PSIHB_BAR_EN);
+>>   
+>>       /* Update MR, always remove it first */
+>> -    if (old & PSIHB_BAR_EN) {
+>> +    if (memory_region_is_mapped(&psi->regs_mr)) {
+>>           memory_region_del_subregion(sysmem, &psi->regs_mr);
+>>       }
+>>   
+>> @@ -919,6 +919,37 @@ static const TypeInfo pnv_psi_power9_info = {
+>>       },
+>>   };
+>>   
+>> +static int vmstate_pnv_psi_post_load(void *opaque, int version_id)
+>> +{
+>> +    PnvPsi *psi = PNV_PSI(opaque);
+>> +    Pnv9Psi *psi9 = PNV9_PSI(psi);
+>> +    MemoryRegion   *sysmem = get_system_memory();
+>> +    uint64_t esb_bar;
+>> +    hwaddr esb_addr;
+>> +
+>> +    /* Set the ESB MMIO mapping */
+>> +    esb_bar = psi->regs[PSIHB_REG(PSIHB9_ESB_CI_BASE)];
+>> +
+>> +    if (esb_bar & PSIHB9_ESB_CI_VALID) {
+>> +        esb_addr = esb_bar & PSIHB9_ESB_CI_ADDR_MASK;
+>> +        memory_region_add_subregion(sysmem, esb_addr,
+>> +                                    &psi9->source.esb_mmio);
+>> +    }
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> +static const VMStateDescription vmstate_pnv_psi = {
+>> +    .name = TYPE_PNV_PSI,
+>> +    .version_id = 1,
+>> +    .minimum_version_id = 1,
+>> +    .post_load = vmstate_pnv_psi_post_load,
+>> +    .fields = (const VMStateField[]) {
+>> +        VMSTATE_UINT64_ARRAY(regs, PnvPsi, PSIHB_XSCOM_MAX),
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> +
+>>   static void pnv_psi_power10_class_init(ObjectClass *klass, const void *data)
+>>   {
+>>       DeviceClass *dc = DEVICE_CLASS(klass);
+>> @@ -926,6 +957,7 @@ static void pnv_psi_power10_class_init(ObjectClass *klass, const void *data)
+>>       static const char compat[] = "ibm,power10-psihb-x\0ibm,psihb-x";
+>>   
+>>       dc->desc    = "PowerNV PSI Controller POWER10";
+>> +    dc->vmsd = &vmstate_pnv_psi;
+>>   
+>>       ppc->xscom_pcba = PNV10_XSCOM_PSIHB_BASE;
+>>       ppc->xscom_size = PNV10_XSCOM_PSIHB_SIZE;
+--------------O30MsbR3Ay0Go9hneti6x2kv
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> >
-> > When the addresses processed are not aligned, a large number of
-> > clear_dirty ioctl occur (e.g. a 4MB misaligned memory can generate
-> > 2048 clear_dirty ioctls from two different memory_listener),
-> > which increases the time required for bitmap_sync and makes it
-> > more difficult for dirty pages to converge.
-> >
-> > For a 64C256G vm with 8 vhost-user-net(32 queue per nic) and
-> > 16 vhost-user-blk(4 queue per blk), the sync time is as high as *73ms*
-> > (tested with 10GBps dirty rate, the sync time increases as the dirty
-> > page rate increases), Here are each part of the sync time:
-> >
-> > - sync from kvm to ram_list: 2.5ms
-> > - vhost_log_sync:3ms
-> > - sync aligned memory from ram_list to RAMBlock: 5ms
-> > - sync misaligned memory from ram_list to RAMBlock: 61ms
-> >
-> > Attempt to merge those fragmented clear_dirty ioctls, then syncing
-> > misaligned memory from ram_list to RAMBlock takes only about 1ms,
-> > and the total sync time is only *12ms*.
-> >
-> > Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
-> > ---
-> >  accel/tcg/cputlb.c       |  5 ++--
-> >  include/system/physmem.h |  7 +++---
-> >  migration/ram.c          | 17 ++++----------
-> >  system/memory.c          |  2 +-
-> >  system/physmem.c         | 49 ++++++++++++++++++++++++++++------------
-> >  5 files changed, 47 insertions(+), 33 deletions(-)
-> >
-> > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-> > index fd1606c856..c8827c8b0d 100644
-> > --- a/accel/tcg/cputlb.c
-> > +++ b/accel/tcg/cputlb.c
-> > @@ -857,8 +857,9 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
-> >  void tlb_protect_code(ram_addr_t ram_addr)
-> >  {
-> >      physical_memory_test_and_clear_dirty(ram_addr & TARGET_PAGE_MASK,
-> > -                                             TARGET_PAGE_SIZE,
-> > -                                             DIRTY_MEMORY_CODE);
-> > +                                         TARGET_PAGE_SIZE,
-> > +                                         DIRTY_MEMORY_CODE,
-> > +                                         NULL);
-> >  }
-> >  
-> >  /* update the TLB so that writes in physical page 'phys_addr' are no longer
-> > diff --git a/include/system/physmem.h b/include/system/physmem.h
-> > index 879f6eae38..8eeace9d1f 100644
-> > --- a/include/system/physmem.h
-> > +++ b/include/system/physmem.h
-> > @@ -39,9 +39,10 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
-> >  
-> >  void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
-> >  
-> > -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
-> > -                                          ram_addr_t length,
-> > -                                          unsigned client);
-> > +uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
-> > +                                              ram_addr_t length,
-> > +                                              unsigned client,
-> > +                                              unsigned long *dest);
-> >  
-> >  DirtyBitmapSnapshot *
-> >  physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr offset,
-> > diff --git a/migration/ram.c b/migration/ram.c
-> > index 29f016cb25..a03c9874a2 100644
-> > --- a/migration/ram.c
-> > +++ b/migration/ram.c
-> > @@ -942,7 +942,6 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
-> >                                                    ram_addr_t start,
-> >                                                    ram_addr_t length)
-> >  {
-> > -    ram_addr_t addr;
-> >      unsigned long word = BIT_WORD((start + rb->offset) >> TARGET_PAGE_BITS);
-> >      uint64_t num_dirty = 0;
-> >      unsigned long *dest = rb->bmap;
-> > @@ -996,17 +995,11 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
-> >      } else {
-> >          ram_addr_t offset = rb->offset;
-> >  
-> > -        for (addr = 0; addr < length; addr += TARGET_PAGE_SIZE) {
-> > -            if (physical_memory_test_and_clear_dirty(
-> > -                        start + addr + offset,
-> > -                        TARGET_PAGE_SIZE,
-> > -                        DIRTY_MEMORY_MIGRATION)) {
-> > -                long k = (start + addr) >> TARGET_PAGE_BITS;
-> > -                if (!test_and_set_bit(k, dest)) {
-> > -                    num_dirty++;
-> > -                }
-> > -            }
-> > -        }
-> > +        num_dirty = physical_memory_test_and_clear_dirty(
-> > +                        start + offset,
-> > +                        length,
-> > +                        DIRTY_MEMORY_MIGRATION,
-> > +                        dest);
-> >      }
-> >  
-> >      return num_dirty;
-> > diff --git a/system/memory.c b/system/memory.c
-> > index 8b84661ae3..666364392d 100644
-> > --- a/system/memory.c
-> > +++ b/system/memory.c
-> > @@ -2424,7 +2424,7 @@ void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
-> >  {
-> >      assert(mr->ram_block);
-> >      physical_memory_test_and_clear_dirty(
-> > -        memory_region_get_ram_addr(mr) + addr, size, client);
-> > +        memory_region_get_ram_addr(mr) + addr, size, client, NULL);
-> >  }
-> >  
-> >  int memory_region_get_fd(MemoryRegion *mr)
-> > diff --git a/system/physmem.c b/system/physmem.c
-> > index c9869e4049..f8b660dafe 100644
-> > --- a/system/physmem.c
-> > +++ b/system/physmem.c
-> > @@ -1089,19 +1089,31 @@ void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
-> >      }
-> >  }
-> >  
-> > -/* Note: start and end must be within the same ram block.  */
-> > -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
-> > +/*
-> > + * Note: start and end must be within the same ram block.
-> > + *
-> > + * @dest usage:
-> 
-> I'm not sure if it's just me, but I find this "dest" term quite
-> confusing. "bmap" might be more straight-forward.
-> 
-> > + * - When @dest is provided, set bits for newly discovered dirty pages
-> > + *   only if the bit wasn't already set in dest, and count those pages
-> > + *   in num_dirty.
-> 
-> Am I misreading the code? I don't see this "set ... only if the bit
-> wasn't already set" part. What I see is: "set bits, but only count those
-> pages if the bit wasn't already set".
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>
+    </p>
+    <div
+style="font-family: &quot;Consolas&quot;; font-size: 11.0pt; color: #000000;background-color: #FFFFFF; font-style: normal; font-weight: normal; text-decoration: none;">
+      <pre>Reviewed-by: Michael Kowal <a class="moz-txt-link-rfc2396E" href="mailto:kowal@linux.ibm.com">&lt;kowal@linux.ibm.com&gt;</a>
 
-Agrees on both points.. one more thing to mention below.
-
-> 
-> > + * - When @dest is NULL, count all dirty pages in the range
-> > + *
-> > + * @return:
-> > + * - Number of dirty guest pages found within [start, start + length).
-> > + */
-> > +uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
-> >                                                ram_addr_t length,
-> > -                                              unsigned client)
-> > +                                              unsigned client,
-> > +                                              unsigned long *dest)
-> >  {
-> >      DirtyMemoryBlocks *blocks;
-> >      unsigned long end, page, start_page;
-> > -    bool dirty = false;
-> > +    uint64_t num_dirty = 0;
-> >      RAMBlock *ramblock;
-> >      uint64_t mr_offset, mr_size;
-> >  
-> >      if (length == 0) {
-> > -        return false;
-> > +        return 0;
-> >      }
-> >  
-> >      end = TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
-> > @@ -1118,12 +1130,19 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
-> >          while (page < end) {
-> >              unsigned long idx = page / DIRTY_MEMORY_BLOCK_SIZE;
-> >              unsigned long offset = page % DIRTY_MEMORY_BLOCK_SIZE;
-> > -            unsigned long num = MIN(end - page,
-> > -                                    DIRTY_MEMORY_BLOCK_SIZE - offset);
-> >  
-> > -            dirty |= bitmap_test_and_clear_atomic(blocks->blocks[idx],
-> > -                                                  offset, num);
-> > -            page += num;
-> > +            if (bitmap_test_and_clear_atomic(blocks->blocks[idx], offset, 1)) {
-> > +                if (dest) {
-> > +                    unsigned long k = page - (ramblock->offset >> TARGET_PAGE_BITS);
-> > +                    if (!test_and_set_bit(k, dest)) {
-> > +                        num_dirty++;
-> > +                    }
-> > +                } else {
-> > +                    num_dirty++;
-> > +                }
-> > +            }
-> > +
-> > +            page++;
-
-Sorry I could have mentioned this in the previous version: IMHO it'll still
-be nice to keep the one atomic operations for !dest/!bmap case over "num".
-There's no reason we need to introduce even any slightest regression in
-those paths.
+Thanks, MAK
+</pre>
+    </div>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 12/16/2025 10:24 AM, Miles Glenn
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+cite="mid:2570f988a46615022b9180b2aad228a733e3b7ff.camel@linux.ibm.com">
+      <pre wrap="" class="moz-quote-pre">Reviewed-by: Glenn Miles <a class="moz-txt-link-rfc2396E" href="mailto:milesg@linux.ibm.com">&lt;milesg@linux.ibm.com&gt;</a>
 
 Thanks,
 
-> >          }
-> >  
-> >          mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - ramblock->offset;
-> > @@ -1131,18 +1150,18 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
-> >          memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, mr_size);
-> >      }
-> >  
-> > -    if (dirty) {
-> > +    if (num_dirty) {
-> >          physical_memory_dirty_bits_cleared(start, length);
-> >      }
-> >  
-> > -    return dirty;
-> > +    return num_dirty;
-> >  }
-> >  
-> >  static void physical_memory_clear_dirty_range(ram_addr_t addr, ram_addr_t length)
-> >  {
-> > -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
-> > -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
-> > -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
-> > +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION, NULL);
-> > +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA, NULL);
-> > +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE, NULL);
-> >  }
-> >  
-> >  DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
-> 
+Glenn
 
--- 
-Peter Xu
+On Tue, 2025-12-16 at 09:13 -0600, Caleb Schlossin wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">PnvPsi needs to be able to save/load snapshots.  Add VMSTATE information
+to the device class and a post_load() method to restore dynamic data items and
+memory region mappings.
+
+Signed-off-by: Michael Kowal <a class="moz-txt-link-rfc2396E" href="mailto:kowal@linux.ibm.com">&lt;kowal@linux.ibm.com&gt;</a>
+Signed-off-by: Caleb Schlossin <a class="moz-txt-link-rfc2396E" href="mailto:calebs@linux.ibm.com">&lt;calebs@linux.ibm.com&gt;</a>
+---
+ hw/ppc/pnv_psi.c | 36 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 2 deletions(-)
+
+diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
+index 5d947d8b52..67bc911e4b 100644
+--- a/hw/ppc/pnv_psi.c
++++ b/hw/ppc/pnv_psi.c
+@@ -25,6 +25,7 @@
+ #include "qemu/module.h"
+ #include "system/reset.h"
+ #include "qapi/error.h"
++#include "migration/vmstate.h"
+ 
+ 
+ #include "hw/ppc/fdt.h"
+@@ -130,12 +131,11 @@ static void pnv_psi_set_bar(PnvPsi *psi, uint64_t bar)
+ {
+     PnvPsiClass *ppc = PNV_PSI_GET_CLASS(psi);
+     MemoryRegion *sysmem = get_system_memory();
+-    uint64_t old = psi-&gt;regs[PSIHB_XSCOM_BAR];
+ 
+     psi-&gt;regs[PSIHB_XSCOM_BAR] = bar &amp; (ppc-&gt;bar_mask | PSIHB_BAR_EN);
+ 
+     /* Update MR, always remove it first */
+-    if (old &amp; PSIHB_BAR_EN) {
++    if (memory_region_is_mapped(&amp;psi-&gt;regs_mr)) {
+         memory_region_del_subregion(sysmem, &amp;psi-&gt;regs_mr);
+     }
+ 
+@@ -919,6 +919,37 @@ static const TypeInfo pnv_psi_power9_info = {
+     },
+ };
+ 
++static int vmstate_pnv_psi_post_load(void *opaque, int version_id)
++{
++    PnvPsi *psi = PNV_PSI(opaque);
++    Pnv9Psi *psi9 = PNV9_PSI(psi);
++    MemoryRegion   *sysmem = get_system_memory();
++    uint64_t esb_bar;
++    hwaddr esb_addr;
++
++    /* Set the ESB MMIO mapping */
++    esb_bar = psi-&gt;regs[PSIHB_REG(PSIHB9_ESB_CI_BASE)];
++
++    if (esb_bar &amp; PSIHB9_ESB_CI_VALID) {
++        esb_addr = esb_bar &amp; PSIHB9_ESB_CI_ADDR_MASK;
++        memory_region_add_subregion(sysmem, esb_addr,
++                                    &amp;psi9-&gt;source.esb_mmio);
++    }
++
++    return 0;
++}
++
++static const VMStateDescription vmstate_pnv_psi = {
++    .name = TYPE_PNV_PSI,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .post_load = vmstate_pnv_psi_post_load,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64_ARRAY(regs, PnvPsi, PSIHB_XSCOM_MAX),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static void pnv_psi_power10_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -926,6 +957,7 @@ static void pnv_psi_power10_class_init(ObjectClass *klass, const void *data)
+     static const char compat[] = "ibm,power10-psihb-x\0ibm,psihb-x";
+ 
+     dc-&gt;desc    = "PowerNV PSI Controller POWER10";
++    dc-&gt;vmsd = &amp;vmstate_pnv_psi;
+ 
+     ppc-&gt;xscom_pcba = PNV10_XSCOM_PSIHB_BASE;
+     ppc-&gt;xscom_size = PNV10_XSCOM_PSIHB_SIZE;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------O30MsbR3Ay0Go9hneti6x2kv--
 
 
