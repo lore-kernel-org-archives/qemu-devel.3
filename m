@@ -4,98 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE6BD609BB
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 16:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 669EAD609C6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 16:22:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVXgJ-0003Ha-U7; Tue, 16 Dec 2025 11:13:47 -0500
+	id 1vVXnn-0004OM-DT; Tue, 16 Dec 2025 11:21:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVXgH-0003GX-P7
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 11:13:45 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVXgG-0004yH-83
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 11:13:45 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7b9c17dd591so4053884b3a.3
- for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 08:13:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765901623; x=1766506423; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=10oyi9nDKeNlIVFMrauOe0l7R48MzuLinYpojqAXQkQ=;
- b=VXmt1a8p4hnpo0GhFnbpjXMO1y/hw3j005UXTga9iieh+lmPnfxWnfFx9qjXtZG1F4
- vxyPEs9aM9Q8VLrDes1xJnPa+f8k0Z7wvFFPeVHzTF6LdOjCrlmIemScUH1lY5epMU0y
- hVlbts4Eukvsnf3ANpAmJQMjoUx58GJmnKSp0xPCIWwcItfHAQB+vw/9+lMU8Z5i9Qon
- VlybhKNpznqB3aNCouhM6x14FVZISgGHd5igIo2yb+KIgqUAyBO86oyT5x8jRrCLtYxI
- Qx3brcu4yQndt3bA+HDIBNWcN9JC9gZ1ZEMGpWGOfDRrB+Tg8WPDf21bmDwzWdmP96iz
- MwQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765901623; x=1766506423;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=10oyi9nDKeNlIVFMrauOe0l7R48MzuLinYpojqAXQkQ=;
- b=naexQAjbSVpXrUhYAmI5W9OwvhQrRJyqjAA+reKFWl/t0P54WEapxP/EhbEDvzD6BD
- En7oz64x4USClxj03jrhfcRNh+XSQPgpG0WWs2DFN0w2f0IhKHC0nJpveZFZkaZ2oZpg
- 9mF2isPJqqKLzHYiVt39bvtDFMR1fl/he8M1CGFIyutXrHOB6Yriq7FPT+8RShAentRK
- DRfrlHtcWfBqLg/UdUnTObDRiLcJUNZUWbDpJSF/Qf5QfWM9bEB1QayZnbNap8X17Yfs
- EeAh7WvgvV+yVxeIkd3cfKFrLSjX2XUnXS3VjfMsqE6vzOuM7Yi3byixctzp9zVQ+wef
- S7GA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUKMQ6RBtMsWLF/U0q8okoHgVMvTcS1ooH6dDJhYOfdc+0dFRRmueyU8JmtUh34s+KPUkJAwk/Ss8+W@nongnu.org
-X-Gm-Message-State: AOJu0YxE7sDmd+Jzhzgn964rK8YJRTADgCc8g4jBnXTtsEkKKTLprG9e
- f6tNjdtshdvR6FGuu9vh16Vy79VzvBcxY5YBFX8XbMPzfOS6iOEI/nLnuxBocpi0g7I=
-X-Gm-Gg: AY/fxX76ZFVr3RNwiT4ZCFtkg0lGY7oPPGaMEmnopKdAYgUwjoZ1UrmugwDQw0jWbXc
- SroKkDlf5vecc4hp0/j73REq71GWuVx1JwUBCBXGqwSusXxk93PsHY+VsoJDQcDOoFg634gYlDj
- OpDYq6c4d/h4ZeCow48Gd9fOlUXSr4G+f3Ej2ZYYtDugRmgHJO7knFDjOgYGKlxe+eU3LfTUYcE
- 3/11hVmyF7vkfh++xLmEdJXNxsaMK9M7muDnylopa+vrdYYFmUbXNzvNAxHQfEs4IMiNramwhZw
- OLH9FmYbu285Q2pKLTK8bGNHaqgw1SmS36IqA6frAtBXatySLeXncGdkmITkNdiT/XtCnfTypIc
- speZGwbqMSlQgB+d1UybtQLJXIwmiBOeP2pwD3upChFwTa37lQTc1qTM/mX7nG1qe/d4GDyhRsS
- T2tg21KVF32brDJfhxYr5bB1VVHIiBVPlW7CmMpNkKDfW8tEDcDCqLA1U=
-X-Google-Smtp-Source: AGHT+IGdhdUD1Gvz5OHJoWKZGVaPp+eEGeO/hBoftTPwXmyyLgkno5vg3k+FtLmOC3TB6jF26hIsHQ==
-X-Received: by 2002:a05:6a20:3d86:b0:366:815a:b3a5 with SMTP id
- adf61e73a8af0-369b04ca160mr14367502637.74.1765901622319; 
- Tue, 16 Dec 2025 08:13:42 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34abe3de37asm12286091a91.9.2025.12.16.08.13.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Dec 2025 08:13:41 -0800 (PST)
-Message-ID: <f214e8d4-8864-4806-a3ba-207aa3f67714@linaro.org>
-Date: Tue, 16 Dec 2025 08:13:41 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] target/arm/ptw: make granule_protection_check
- usable without a cpu
-To: Tao Tang <tangtao1634@phytium.com.cn>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Auger <eric.auger@redhat.com>
-References: <20251216000122.763264-1-pierrick.bouvier@linaro.org>
- <20251216000122.763264-3-pierrick.bouvier@linaro.org>
- <05c30ad2-2836-4f78-9c79-ad03eee2ce00@phytium.com.cn>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <05c30ad2-2836-4f78-9c79-ad03eee2ce00@phytium.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vVXnR-0004Ib-8x; Tue, 16 Dec 2025 11:21:11 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1vVXnL-0007lL-4a; Tue, 16 Dec 2025 11:21:07 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGEDV1i029950;
+ Tue, 16 Dec 2025 16:20:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=v13P5ngI131lIAmUoGgpseEA84J3HO0Sn7IimbhJmaI=; b=RL/KMKIiDjVO
+ LpkCV1wdwBDKqeo+8uRUr/5RmydhshWHulc3Z9nKJo60qEcCWimsmRD9/ue85IAi
+ YroVYfF/R5j73IajuorlFP0e9G7Jt2f1eq0mvz/1ZnomqyR++P319KlaPNf2Ii7X
+ jmuRlHvdrIycVvtJfFIibPKbUhYDWwcoXrUOBKAVuedyGtPSqz6+tx5cQVUj58e4
+ eeZRVG03ZKIB3K5VBQAhKTp0kOha0KOLuhtBJG/4yCv/otzo8fS8znKzM1RLSoC+
+ Xtn5TaSnNuvGe29zc/nM24lHcCGBW+PwZeJVybkLGQYsMLYBaOzXHiijlcKn6+wo
+ cMq5/7A88A==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0yvb83tm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Dec 2025 16:20:37 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BGGEAhV001951;
+ Tue, 16 Dec 2025 16:20:36 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0yvb83th-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Dec 2025 16:20:36 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGGBI4l012788;
+ Tue, 16 Dec 2025 16:20:35 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4b1juy59xp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 16 Dec 2025 16:20:35 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5BGGKYP130802548
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 16 Dec 2025 16:20:34 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 537A958052;
+ Tue, 16 Dec 2025 16:20:34 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DDFE358056;
+ Tue, 16 Dec 2025 16:20:33 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 16 Dec 2025 16:20:33 +0000 (GMT)
+Message-ID: <d2e0c2ec59d94ef7e37bf3da4aaf4948e8e0670c.camel@linux.ibm.com>
+Subject: Re: [PATCH v3 5/7] hw/ppc: pnv_core.c add vmstate support
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
+ alistair@alistair23.me, kowal@linux.ibm.com,
+ chalapathi.v@linux.ibm.com, angeloj@linux.ibm.com
+Date: Tue, 16 Dec 2025 10:20:33 -0600
+In-Reply-To: <20251216151359.418708-6-calebs@linux.ibm.com>
+References: <20251216151359.418708-1-calebs@linux.ibm.com>
+ <20251216151359.418708-6-calebs@linux.ibm.com>
+Organization: IBM
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=V/JwEOni c=1 sm=1 tr=0 ts=694186d5 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VnNF1IyMAAAA:8 a=qtmRp8ezACxhaHKQCycA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: WNy9Rv38ZEn3uKx-7DUjipmOqcBUkxLm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAyMyBTYWx0ZWRfX8U7Q4gAvGM/f
+ 1G9UUQh4PKmS5euNCKqsHFXKAXoVsCNW+bc22KgHcGONvw2fOxjBHEgi+3KpBX6KZZgEivLe4Cs
+ /xmUH4g5pA2rm+z/CQNwSbCngfqnuBgXTlyi11e2I4M66HbubJJ30XKp00StSz9xvtHX9bokoAC
+ 93dPZPYicOL4B89sOYtgsjQdkCqAXqnuU1Uyx1puc4t7fDxuvxZorP6MOaZJ5Xqv8DIY3pUmjiE
+ x4zMunnmjlt6K5CJdvhhYyizC0MleMAV07CC3C1Pq9ZG+VEFa3yiyv4nGqp1z6zg2CL5daETnMY
+ w3Z+2CZsrqdaKZVlODbaCtzJnYEw51T7NbIbO9MMXkOu/9mI2skUV5YazulHuz2bzCGDJvya56D
+ 5BvnKX6OyWX1XQhKirAWDCbsoApA0Q==
+X-Proofpoint-ORIG-GUID: XVbbXldkG2AggCMiSc8NBVpZSBW6H3zN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-16_02,2025-12-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 bulkscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130023
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,72 +125,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/16/25 5:39 AM, Tao Tang wrote:
-> Hi Pierrick,
-> 
-> On 2025/12/16 08:01, Pierrick Bouvier wrote:
->> By removing cpu details and use a config struct, we can use the
->> same granule_protection_check with other devices, like SMMU.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    target/arm/cpu.h | 34 ++++++++++++++++++++++++++++
->>    target/arm/ptw.c | 59 +++++++++++++++++++++++++++++++-----------------
->>    2 files changed, 72 insertions(+), 21 deletions(-)
->>
->> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
->> index efbef0341da..5752e1f58fb 100644
->> --- a/target/arm/cpu.h
->> +++ b/target/arm/cpu.h
->> @@ -1216,6 +1216,40 @@ void arm_v7m_cpu_do_interrupt(CPUState *cpu);
->>    
->>    hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
->>                                             MemTxAttrs *attrs);
->> +
->> +typedef struct ARMGranuleProtectionConfig {
->> +    /* GPCCR_EL3 */
->> +    uint64_t gpccr;
->> +    /* GPTBR_EL3 */
->> +    uint64_t gptbr;
->> +    /* ID_AA64MMFR0_EL1.PARange */
->> +    uint8_t parange;
->> +    /* FEAT_SEL2 */
->> +    bool support_sel2;
->> +    /* Address space to access Granule Protection Table */
->> +    AddressSpace *gpt_as;
->> +} ARMGranuleProtectionConfig;
-> 
-> Would it make sense to add brief comments explaining how the fields in
-> ARMGranuleProtectionConfig map to SMMU registers? This could help
-> clarify that arm_granule_protection_check() is intended as a shared
-> abstraction for both CPU MMU and SMMU.
-> 
-
-I'm not sure it's needed.
-If we search for GPCCR/GPTBR/FEAT_SEL2 in SMMU spec, it will 
-unambigously give the answer of which register holds it or what it is.
-I would consider the comment is here to map local name to spec name, but 
-not further than that.
-
-Concerning finding which are the callers of this function, code 
-completion tools or grep does a great job at it.
-
-That said, if we want to add details about SMMU using this, it's 
-definitely worth waiting for the patch using it on SMMU side.
-
-> 
-> That said, I’m also happy to defer this until we actually add the SMMU
-> RME support.
-> 
-> 
-> Regards,
-> 
-> Tao
-> 
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
 
 Thanks,
-Pierrick
+
+Glenn
+
+On Tue, 2025-12-16 at 09:13 -0600, Caleb Schlossin wrote:
+> - Add vmstate support PnvCore and PnvQuad capturing scratch
+> registers and special wakeup registers
+> 
+> Signed-off-by: Angelo Jaramillo <angelo.jaramillo@linux.ibm.com>
+> Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
+> ---
+>  hw/ppc/pnv_core.c | 22 ++++++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+> 
+> diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
+> index fb2dfc7ba2..03b64f0013 100644
+> --- a/hw/ppc/pnv_core.c
+> +++ b/hw/ppc/pnv_core.c
+> @@ -31,6 +31,7 @@
+>  #include "hw/ppc/xics.h"
+>  #include "hw/qdev-properties.h"
+>  #include "helper_regs.h"
+> +#include "migration/vmstate.h"
+>  
+>  static const char *pnv_core_cpu_typename(PnvCore *pc)
+>  {
+> @@ -478,6 +479,15 @@ static void pnv_core_power11_class_init(ObjectClass *oc, const void *data)
+>      pnv_core_power10_class_init(oc, data);
+>  }
+>  
+> +static const VMStateDescription pnv_core_vmstate = {
+> +    .name = TYPE_PNV_CORE,
+> +    .version_id = 1,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_UINT64_ARRAY(scratch, PnvCore, 8),
+> +        VMSTATE_END_OF_LIST(),
+> +    },
+> +};
+> +
+>  static void pnv_core_class_init(ObjectClass *oc, const void *data)
+>  {
+>      DeviceClass *dc = DEVICE_CLASS(oc);
+> @@ -486,6 +496,7 @@ static void pnv_core_class_init(ObjectClass *oc, const void *data)
+>      dc->unrealize = pnv_core_unrealize;
+>      device_class_set_props(dc, pnv_core_properties);
+>      dc->user_creatable = false;
+> +    dc->vmsd = &pnv_core_vmstate;
+>  }
+>  
+>  #define DEFINE_PNV_CORE_TYPE(family, cpu_model) \
+> @@ -737,12 +748,23 @@ static void pnv_quad_power11_class_init(ObjectClass *oc, const void *data)
+>      pnv_quad_power10_class_init(oc, data);
+>  }
+>  
+> +static const VMStateDescription pnv_quad_vmstate = {
+> +    .name = TYPE_PNV_QUAD,
+> +    .version_id = 1,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_BOOL(special_wakeup_done, PnvQuad),
+> +        VMSTATE_BOOL_ARRAY(special_wakeup, PnvQuad, 4),
+> +        VMSTATE_END_OF_LIST(),
+> +    },
+> +};
+> +
+>  static void pnv_quad_class_init(ObjectClass *oc, const void *data)
+>  {
+>      DeviceClass *dc = DEVICE_CLASS(oc);
+>  
+>      device_class_set_props(dc, pnv_quad_properties);
+>      dc->user_creatable = false;
+> +    dc->vmsd = &pnv_quad_vmstate;
+>  }
+>  
+>  static const TypeInfo pnv_quad_infos[] = {
+
 
