@@ -4,107 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF4BCD609CE
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 16:25:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81430D609C2
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 16:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVXrC-0005M3-IY; Tue, 16 Dec 2025 11:25:02 -0500
+	id 1vVXt8-0006Q9-LZ; Tue, 16 Dec 2025 11:27:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1vVXrA-0005Kr-Tr; Tue, 16 Dec 2025 11:25:00 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vVXt6-0006Po-VD; Tue, 16 Dec 2025 11:27:00 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1vVXr9-0001v1-5H; Tue, 16 Dec 2025 11:25:00 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BG8BeFm021029;
- Tue, 16 Dec 2025 16:24:55 GMT
+ id 1vVXt5-0002MC-HL; Tue, 16 Dec 2025 11:27:00 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGA0YIC031125;
+ Tue, 16 Dec 2025 16:26:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=t3/G9eMMLO69p+TQf7o2bhh2mqZyEL0lP+5AsqOR4T4=; b=OzoqeviWKSI2
- 3ZR1sJ7mmHG212Ysho1pwbNR3VxGciSpQ/7rxgGkZ86kZL0EPTPjpq9zl/1DjiV9
- Q/kdd6edYoDER2K/tkVJQo7v3mxLyDhUi2j9hokgHy3vofh91s+1IWsbtI9CUHEH
- o1m0D6wrVGuXB/NDf/A0DKvVdntjepmT5ZOteMX0SpUiiJVuR8uI0x6nQd5VXJxe
- 5AKyJCB2d7e6H+oAdYProEGaP2I2yG0f/n2paQPwgX17cA8NQ9/Nn6XZsHfwTOcn
- 3FKnAzucXssFbkAsA9hGjW9Rit4Q14ZQeUm1hGdvmrUCK4g93PIlBx226IY/ivhH
- UVa0lxU7sQ==
+ bh=irzhMXWYvjosKYccpK/cvSXWobH9DxTYWEFBzHFMbEA=; b=i7f/vzFgmmvA
+ ufrQ92ETwM67W3IurS2h150Oqg7dhotNUtg6FHzbfI8zeNSBRsqfZ/uDi1q/vL0d
+ 5iU2rEZ60pdNv5a0ODe/j/T9I34B8nl7BKC90HaaiQpqlziznMNNKdEX/rj0K/TN
+ 9OZTQzgJ8nIcswbbCLcfgFnnz05lrtnE3nRoDTOBfc3JtWm3YTDD3v8J/pdzXc2V
+ WmSvkwrZO2VZH0D97u+tULbgN7+QBQK73euZmtx6uSoBq0oOHVyx+31Mt9cbeGKb
+ kryOc2m6HaPZUqX9o+nttmVrV7ou0iLj0bSseUd62k/4d+CivN9EwpKFjYJdWDr6
+ lvwgcL4QlA==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0ytv83yp-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjkyj2g-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 16:24:55 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BGG946o014084;
- Tue, 16 Dec 2025 16:24:54 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0ytv83yh-1
+ Tue, 16 Dec 2025 16:26:56 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 5BGGBniW006668;
+ Tue, 16 Dec 2025 16:26:55 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0xjkyj2c-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 16:24:54 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGE93de002948;
- Tue, 16 Dec 2025 16:24:53 GMT
+ Tue, 16 Dec 2025 16:26:55 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BGFu1Fw026746;
+ Tue, 16 Dec 2025 16:26:54 GMT
 Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4b1kykn1sy-1
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4b1jfsdfgh-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 16 Dec 2025 16:24:53 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
+ Tue, 16 Dec 2025 16:26:54 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
  by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5BGGOqh124904370
+ 5BGGQsvj30933636
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Dec 2025 16:24:52 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4E1C258056;
- Tue, 16 Dec 2025 16:24:52 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D428758052;
- Tue, 16 Dec 2025 16:24:51 +0000 (GMT)
+ Tue, 16 Dec 2025 16:26:54 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EEFD358056;
+ Tue, 16 Dec 2025 16:26:53 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 964475803F;
+ Tue, 16 Dec 2025 16:26:53 +0000 (GMT)
 Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 16 Dec 2025 16:24:51 +0000 (GMT)
-Message-ID: <2570f988a46615022b9180b2aad228a733e3b7ff.camel@linux.ibm.com>
-Subject: Re: [PATCH v3 7/7] hw/ppc: Add VMSTATE information to PnvPsi
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 16 Dec 2025 16:26:53 +0000 (GMT)
+Message-ID: <7edad6d6817f8fa6a92ee9920bdd99c0ff296d8c.camel@linux.ibm.com>
+Subject: Re: [PATCH] hw/ssi/pnv_spi: Fix fifo8 memory leak on unrealize
 From: Miles Glenn <milesg@linux.ibm.com>
 To: Caleb Schlossin <calebs@linux.ibm.com>, qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, npiggin@gmail.com, adityag@linux.ibm.com,
- alistair@alistair23.me, kowal@linux.ibm.com,
- chalapathi.v@linux.ibm.com, angeloj@linux.ibm.com
-Date: Tue, 16 Dec 2025 10:24:51 -0600
-In-Reply-To: <20251216151359.418708-8-calebs@linux.ibm.com>
-References: <20251216151359.418708-1-calebs@linux.ibm.com>
- <20251216151359.418708-8-calebs@linux.ibm.com>
+ alistair@alistair23.me, chalapathi.v@linux.ibm.com
+Date: Tue, 16 Dec 2025 10:26:53 -0600
+In-Reply-To: <20251216154503.2263755-1-calebs@linux.ibm.com>
+References: <20251216154503.2263755-1-calebs@linux.ibm.com>
 Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
 X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAyMyBTYWx0ZWRfX9j+7Ob9boaI4
- VtOD3ECOlbeaJlmoQtyx1tnpF80rXEGJzMEYyjEUHAcvBMXSbBaXBceCSSFG4VgguoRUuicHCbw
- lZVjoBP1YV9+9cXD52HJXhGldipfjrCm+sl5KkGeBU8Rzx9Eo8k4z3GDIZJRIv59cBuXv6vtBVb
- Oyo+4bKhptQMwBDJR729bTbMjGn5ybyPreaBekD7ELMYIeKpiLiSHpEvms3RLb4jtqpCxY+4/r4
- peqj1c7MvOcWFuMLe97K9Kl4IhaL9oBtdZzC/QhHDOTgRA0E9deMrlSewJqSt5RJFLP8MZ711Xi
- QM8GiZagMgs+qhiwzhlVlfJuXtciJ4e54465uJAm4iRE3vyJIO3/tXVQyrD+P3BFaI4PFz2/LpR
- qMjff8tZ6gwAB+6MJCHHPHguovKDNA==
-X-Proofpoint-ORIG-GUID: N5WrE2fVbznFlSqpDmKBQnVf5_taLOVI
-X-Authority-Analysis: v=2.4 cv=QtRTHFyd c=1 sm=1 tr=0 ts=694187d7 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-ORIG-GUID: UZo9mUpuOu-eRgvb7J2mMwYJV7dQP-uG
+X-Authority-Analysis: v=2.4 cv=CLgnnBrD c=1 sm=1 tr=0 ts=69418850 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VnNF1IyMAAAA:8 a=i99o-4Xi_ac2l2A7azgA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: Rod0kepnA6RHrLjDmqBMd5dtxrA9cB9z
+ a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=CJKrucV5HHBk1qxaKX0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: h3o8UxtNjyCHt9MnqvJtEMsdqnBspx4M
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAwOSBTYWx0ZWRfX55mOZM8WZSie
+ 5EprE9BmfytvUr27UFNThI3vqEDsJpbkV+NOhncL5hVCiyhwPeFmuk7/RDTblxCo+MHclwa9vas
+ QzfCRRwmwV6LqLWfuAPqqALhmj1yKUsW7aw3dqEgf1P0nPIxRrTMg6x8q31oL+smK3y6xYd870+
+ 11upiuxzQ1qYzfowg0mCkBVMc0W8bzZPuNOXkg5T81cEnI0pHwZKvRCjK7K1B6Wn1y5yB3Jnohw
+ anBhl4jwMtb5suVrQz5E6Ei4rLl5AiJwaW8tyNLvxwHGMrZy4NuwwJ5n7yi8jeux1HNxLc/OSXI
+ HhiOOsZ4LdTx5oif62+y8nWWbyl9FneRcN5pKk+JGT06NKMuSlOAbTqa8OwBtRo/e048n8fTQVM
+ IgLgoczwYso/ywO78IKRiT7GgVGReg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-16_02,2025-12-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 impostorscore=0 clxscore=1015
+ spamscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 bulkscore=0 impostorscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130023
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130009
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -135,88 +133,41 @@ Thanks,
 
 Glenn
 
-On Tue, 2025-12-16 at 09:13 -0600, Caleb Schlossin wrote:
-> PnvPsi needs to be able to save/load snapshots.  Add VMSTATE information
-> to the device class and a post_load() method to restore dynamic data items and
-> memory region mappings.
+On Tue, 2025-12-16 at 09:45 -0600, Caleb Schlossin wrote:
+> unrealize should free the fifo8 memory that was allocated by realize.
 > 
-> Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
+> Fixes: 17befecda85 ("hw/ssi/pnv_spi: Replace PnvXferBuffer with Fifo8 structure")
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > Signed-off-by: Caleb Schlossin <calebs@linux.ibm.com>
 > ---
->  hw/ppc/pnv_psi.c | 36 ++++++++++++++++++++++++++++++++++--
->  1 file changed, 34 insertions(+), 2 deletions(-)
+>  hw/ssi/pnv_spi.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
-> index 5d947d8b52..67bc911e4b 100644
-> --- a/hw/ppc/pnv_psi.c
-> +++ b/hw/ppc/pnv_psi.c
-> @@ -25,6 +25,7 @@
->  #include "qemu/module.h"
->  #include "system/reset.h"
->  #include "qapi/error.h"
-> +#include "migration/vmstate.h"
+> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
+> index f40e8836b9..5db440be9a 100644
+> --- a/hw/ssi/pnv_spi.c
+> +++ b/hw/ssi/pnv_spi.c
+> @@ -1176,6 +1176,13 @@ static void pnv_spi_realize(DeviceState *dev, Error **errp)
+>                            s, "xscom-spi", PNV10_XSCOM_PIB_SPIC_SIZE);
+>  }
 >  
->  
->  #include "hw/ppc/fdt.h"
-> @@ -130,12 +131,11 @@ static void pnv_psi_set_bar(PnvPsi *psi, uint64_t bar)
->  {
->      PnvPsiClass *ppc = PNV_PSI_GET_CLASS(psi);
->      MemoryRegion *sysmem = get_system_memory();
-> -    uint64_t old = psi->regs[PSIHB_XSCOM_BAR];
->  
->      psi->regs[PSIHB_XSCOM_BAR] = bar & (ppc->bar_mask | PSIHB_BAR_EN);
->  
->      /* Update MR, always remove it first */
-> -    if (old & PSIHB_BAR_EN) {
-> +    if (memory_region_is_mapped(&psi->regs_mr)) {
->          memory_region_del_subregion(sysmem, &psi->regs_mr);
->      }
->  
-> @@ -919,6 +919,37 @@ static const TypeInfo pnv_psi_power9_info = {
->      },
->  };
->  
-> +static int vmstate_pnv_psi_post_load(void *opaque, int version_id)
+> +static void pnv_spi_unrealize(DeviceState *dev)
 > +{
-> +    PnvPsi *psi = PNV_PSI(opaque);
-> +    Pnv9Psi *psi9 = PNV9_PSI(psi);
-> +    MemoryRegion   *sysmem = get_system_memory();
-> +    uint64_t esb_bar;
-> +    hwaddr esb_addr;
-> +
-> +    /* Set the ESB MMIO mapping */
-> +    esb_bar = psi->regs[PSIHB_REG(PSIHB9_ESB_CI_BASE)];
-> +
-> +    if (esb_bar & PSIHB9_ESB_CI_VALID) {
-> +        esb_addr = esb_bar & PSIHB9_ESB_CI_ADDR_MASK;
-> +        memory_region_add_subregion(sysmem, esb_addr,
-> +                                    &psi9->source.esb_mmio);
-> +    }
-> +
-> +    return 0;
+> +    PnvSpi *s = PNV_SPI(dev);
+> +    fifo8_destroy(&s->tx_fifo);
+> +    fifo8_destroy(&s->rx_fifo);
 > +}
 > +
-> +static const VMStateDescription vmstate_pnv_psi = {
-> +    .name = TYPE_PNV_PSI,
-> +    .version_id = 1,
-> +    .minimum_version_id = 1,
-> +    .post_load = vmstate_pnv_psi_post_load,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_UINT64_ARRAY(regs, PnvPsi, PSIHB_XSCOM_MAX),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  static void pnv_psi_power10_class_init(ObjectClass *klass, const void *data)
+>  static int pnv_spi_dt_xscom(PnvXScomInterface *dev, void *fdt,
+>                               int offset)
 >  {
->      DeviceClass *dc = DEVICE_CLASS(klass);
-> @@ -926,6 +957,7 @@ static void pnv_psi_power10_class_init(ObjectClass *klass, const void *data)
->      static const char compat[] = "ibm,power10-psihb-x\0ibm,psihb-x";
+> @@ -1208,6 +1215,7 @@ static void pnv_spi_class_init(ObjectClass *klass, const void *data)
 >  
->      dc->desc    = "PowerNV PSI Controller POWER10";
-> +    dc->vmsd = &vmstate_pnv_psi;
->  
->      ppc->xscom_pcba = PNV10_XSCOM_PSIHB_BASE;
->      ppc->xscom_size = PNV10_XSCOM_PSIHB_SIZE;
+>      dc->desc = "PowerNV SPI";
+>      dc->realize = pnv_spi_realize;
+> +    dc->unrealize = pnv_spi_unrealize;
+>      device_class_set_legacy_reset(dc, do_reset);
+>      device_class_set_props(dc, pnv_spi_properties);
+>  }
 
 
