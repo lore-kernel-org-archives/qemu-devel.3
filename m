@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (unknown [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2255DD64060
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 23:50:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1BCD637B3
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 23:51:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVenC-0001E7-Jj; Tue, 16 Dec 2025 18:49:22 -0500
+	id 1vVenG-0001GF-Ot; Tue, 16 Dec 2025 18:49:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen6-0001CZ-I2
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen6-0001Ca-LP
  for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:18 -0500
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen4-0006mH-Fs
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1vVen4-0006mK-Tg
  for qemu-devel@nongnu.org; Tue, 16 Dec 2025 18:49:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=Cc:To:In-Reply-To:References:Message-Id:Content-Transfer-Encoding:
@@ -24,16 +24,17 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=vaTs1VnbsgKYFk8rZjeEaioTtQMT1eDTmwJ9+Jy4GbM=; b=xD8La5KHboaFf6w
- feyOhLUO5Ak7i2g4F+3wNeICCx7Beu+BWfDH5nI/iKoS9/j9fvIz3oS9WHumiC38WtpCfK6cAFMjh
- zzsEircaNsYkCyFt3aYK3k5CGTDxEUn5Fsbi0Qt2fuABXnu7VL8s7AedmuEL79SHPjRdnfCnqjdUg
- fo=;
-Date: Wed, 17 Dec 2025 00:51:16 +0100
-Subject: [PATCH 11/14] target/riscv: Make pmu.h target-agnostic
+ List-Help; bh=nNu+hhZPCxg3t1C9ePlO/uOhsAN+U4ctEJxn/FIV/o4=; b=qV+pUzzeZWA8/Cn
+ mNhG50JGCbz7n9+mv1C975nB8UNcwnoH24FhhGOqYUMau5p0bsXjf58gjyWSAC3m3kFXRJkq3anl6
+ d3p1mWLhYN6CPzf0qBRzTg/0lYdNcdpUXjuLEeNqBsPIAvTlaTrVST/4k1YP0Wi8NntOsjRLdRhR9
+ nc=;
+Date: Wed, 17 Dec 2025 00:51:18 +0100
+Subject: [PATCH 13/14] hw/riscv: Define SiFive E/U CPUs using runtime
+ conditions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251217-hw-riscv-cpu-int-v1-11-d24a4048d3aa@rev.ng>
+Message-Id: <20251217-hw-riscv-cpu-int-v1-13-d24a4048d3aa@rev.ng>
 References: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
 In-Reply-To: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
 To: qemu-devel@nongnu.org
@@ -67,56 +68,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 ---
- target/riscv/pmu.h | 2 +-
- target/riscv/pmu.c | 8 +++++---
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ include/hw/riscv/sifive_cpu.h | 26 +++++++++++++++++++-------
+ hw/riscv/sifive_e.c           |  2 +-
+ hw/riscv/sifive_u.c           |  4 ++--
+ 3 files changed, 22 insertions(+), 10 deletions(-)
 
-diff --git a/target/riscv/pmu.h b/target/riscv/pmu.h
-index ca40cfeed6..273d8f3f94 100644
---- a/target/riscv/pmu.h
-+++ b/target/riscv/pmu.h
-@@ -34,7 +34,7 @@ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
- void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
- int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
-                           uint32_t ctr_idx);
--void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
-+void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
-                                  bool new_virt);
+diff --git a/include/hw/riscv/sifive_cpu.h b/include/hw/riscv/sifive_cpu.h
+index 136799633a..8391141d5e 100644
+--- a/include/hw/riscv/sifive_cpu.h
++++ b/include/hw/riscv/sifive_cpu.h
+@@ -20,12 +20,24 @@
+ #ifndef HW_SIFIVE_CPU_H
+ #define HW_SIFIVE_CPU_H
  
- #endif /* RISCV_PMU_H */
-diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-index 9701c8cba6..d818c2f8f6 100644
---- a/target/riscv/pmu.c
-+++ b/target/riscv/pmu.c
-@@ -115,7 +115,8 @@ static bool riscv_pmu_counter_enabled(RISCVCPU *cpu, uint32_t ctr_idx)
-  *  new priv and new virt values are passed in as arguments.
-  */
- static void riscv_pmu_icount_update_priv(CPURISCVState *env,
--                                         target_ulong newpriv, bool new_virt)
-+                                         privilege_mode_t newpriv,
-+                                         bool new_virt)
- {
-     uint64_t *snapshot_prev, *snapshot_new;
-     uint64_t current_icount;
-@@ -155,7 +156,8 @@ static void riscv_pmu_icount_update_priv(CPURISCVState *env,
- }
+-#if defined(TARGET_RISCV32)
+-#define SIFIVE_E_CPU TYPE_RISCV_CPU_SIFIVE_E31
+-#define SIFIVE_U_CPU TYPE_RISCV_CPU_SIFIVE_U34
+-#elif defined(TARGET_RISCV64)
+-#define SIFIVE_E_CPU TYPE_RISCV_CPU_SIFIVE_E51
+-#define SIFIVE_U_CPU TYPE_RISCV_CPU_SIFIVE_U54
+-#endif
++#include "qemu/target-info.h"
++
++static inline const char *sifive_e_cpu(void)
++{
++    if (target_riscv64()) {
++        return TYPE_RISCV_CPU_SIFIVE_E51;
++    } else {
++        return TYPE_RISCV_CPU_SIFIVE_E31;
++    }
++}
++
++static inline const char *sifive_u_cpu(void)
++{
++    if (target_riscv64()) {
++        return TYPE_RISCV_CPU_SIFIVE_U54;
++    } else {
++        return TYPE_RISCV_CPU_SIFIVE_U34;
++    }
++}
  
- static void riscv_pmu_cycle_update_priv(CPURISCVState *env,
--                                        target_ulong newpriv, bool new_virt)
-+                                        privilege_mode_t newpriv,
-+                                        bool new_virt)
- {
-     uint64_t *snapshot_prev, *snapshot_new;
-     uint64_t current_ticks;
-@@ -190,7 +192,7 @@ static void riscv_pmu_cycle_update_priv(CPURISCVState *env,
-     counter_arr[env->priv] += delta;
- }
+ #endif /* HW_SIFIVE_CPU_H */
+diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
+index 7ed419cf69..458b21b9e3 100644
+--- a/hw/riscv/sifive_e.c
++++ b/hw/riscv/sifive_e.c
+@@ -151,7 +151,7 @@ static void sifive_e_machine_class_init(ObjectClass *oc, const void *data)
+     mc->desc = "RISC-V Board compatible with SiFive E SDK";
+     mc->init = sifive_e_machine_init;
+     mc->max_cpus = 1;
+-    mc->default_cpu_type = SIFIVE_E_CPU;
++    mc->default_cpu_type = sifive_e_cpu();
+     mc->default_ram_id = "riscv.sifive.e.ram";
+     mc->default_ram_size = sifive_e_memmap[SIFIVE_E_DEV_DTIM].size;
  
--void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, target_ulong newpriv,
-+void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
-                                  bool new_virt)
- {
-     riscv_pmu_cycle_update_priv(env, newpriv, new_virt);
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index 2ff2059bb9..a04481806e 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -723,7 +723,7 @@ static void sifive_u_machine_class_init(ObjectClass *oc, const void *data)
+     mc->init = sifive_u_machine_init;
+     mc->max_cpus = SIFIVE_U_MANAGEMENT_CPU_COUNT + SIFIVE_U_COMPUTE_CPU_COUNT;
+     mc->min_cpus = SIFIVE_U_MANAGEMENT_CPU_COUNT + 1;
+-    mc->default_cpu_type = SIFIVE_U_CPU;
++    mc->default_cpu_type = sifive_u_cpu();
+     mc->default_cpus = mc->min_cpus;
+     mc->default_ram_id = "riscv.sifive.u.ram";
+     mc->auto_create_sdcard = true;
+@@ -764,7 +764,7 @@ static void sifive_u_soc_instance_init(Object *obj)
+                             TYPE_RISCV_HART_ARRAY);
+     qdev_prop_set_uint32(DEVICE(&s->e_cpus), "num-harts", 1);
+     qdev_prop_set_uint32(DEVICE(&s->e_cpus), "hartid-base", 0);
+-    qdev_prop_set_string(DEVICE(&s->e_cpus), "cpu-type", SIFIVE_E_CPU);
++    qdev_prop_set_string(DEVICE(&s->e_cpus), "cpu-type", sifive_e_cpu());
+     qdev_prop_set_uint64(DEVICE(&s->e_cpus), "resetvec", 0x1004);
+ 
+     object_initialize_child(obj, "u-cluster", &s->u_cluster, TYPE_CPU_CLUSTER);
 
 -- 
 2.51.0
