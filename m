@@ -4,94 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36181D5E374
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 21:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C2CDD637AE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 21:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVcA6-0001RV-L6; Tue, 16 Dec 2025 16:00:51 -0500
+	id 1vVcX9-0005OS-VF; Tue, 16 Dec 2025 16:24:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cyril.leclerc@subnoto.com>)
- id 1vVb3Y-0004Kr-Va
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 14:50:02 -0500
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cyril.leclerc@subnoto.com>)
- id 1vVb3W-0007MV-29
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 14:50:00 -0500
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-b79e7112398so992452166b.3
- for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 11:49:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=subnoto-com.20230601.gappssmtp.com; s=20230601; t=1765914594; x=1766519394;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=YtFSQzS8+7Iy+4YrT1DbnI6bk/rrIAZ1H9KtkCUzPUM=;
- b=WJZoQvN3DEADdnygLnjtOqLctfdVSjdTcgjT+l8mNtXYpi6ZdfWDC+btIxsuwhb2yg
- GBppja8fTHhuM01fCy53ux49rwcnMje0V5V/ea/TEC6cAxDdKLyzBnxk0zvs7QttbeEq
- Q1BS7egkjwFDxqulkeqYUVfD7t+kGNk61xzMk1peiofmep/EZLb/DFW5BiBQmmHRxdP7
- eGWh85wHsHA3UpNd2CjlMWYyoBlT2eIm5YbCE0MGlWrcEng9XrWDTfNISch/1wjj8bQf
- XPAOgCB7ZL55nqKcMVKv/w12mliQt0Or22oQBKihNtReJCo01A6ERPbsWRUsCOpxwOka
- 2cqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765914594; x=1766519394;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YtFSQzS8+7Iy+4YrT1DbnI6bk/rrIAZ1H9KtkCUzPUM=;
- b=I36AJxHkHnN2xQ2Dx0i4FRvOjO7VsMJjauOHKO1GAJL2Wamt5fOX7+wX3iepZe7T+N
- 0mIqYizd62gMWig87VN+ZgIsR9fxppM0jaUrYbgOyVDl38+MpcvG5k64tKxu4iEInpvV
- myVZ9VugJhAMzROewzY5Sw5QW9Jb8hmCSv9WwBSYmFvilDzpuWP66/GhBpEn0rPjZZ3a
- w09kDzE7AmNjFMDwBEpmYT8m1vMJGftKuZqSNhEfDwaSm3q/AQ3j99qBZ3xojYs7grQN
- RcKm1vK4wx6qCzEX3ci9Sb4bvmHbMknk345vHp3RNRs8iyWQD7bFBV7vmrrRJWMJuYI6
- Ff6w==
-X-Gm-Message-State: AOJu0YyRaK2J9H8dMvcYO/G7uVKveiTnkkVCKqyr2EuBIM/f0faTvSx4
- IgEboPKT0rVUtOh6CEKsMTJPR0hT0LiL8OFbKGs10W0eOu59YuklMcT9ZHpzna12drsJQnieNfH
- RMEMf
-X-Gm-Gg: AY/fxX5nUbNWwf2CL51gzUROlXoQP9NZWys4tMyFY4cihm/ElACHItz7j+afm37RHms
- M8ouJ/cOUB2vCgZ99Ab6jqwQed2Zm2jSSQ/MKFtrE6khRv1vS3bTN04M7RRFV+xuceNstAi13N4
- E5qYqFsjlSCP+PgDkgi+VjWolhNopwM6sjtk4cvr1vtGsgPFeK0hSr/iROQAddj4niIFYc1dSa7
- EZlpTl6lfw+U+2PRRrVy9UcxBuQUpOO3KpqF37SWAtWn10Fzcxofj6YKJ8T7Qx0Anp3weMcPYBo
- NWosX1+1CgsS7ZvtN0OqEmp1gkSzHpelRzShNgLZ888vgKktSm6M8dnr4rjdgeaqbriTZDllBIR
- xGadSXSWLOH6tnQZrRJrKSUg9OegcPvunil1OBiSXJNbg5WP/E0MofeHqVNUIagcdXwJK3ub8c7
- 0zkH3lYTqoZxqehDVC4DnPGDwHrJ4whGl8TXmmj/X5EbU1urtCyIfQvUvvKbN4SqzIGbka0/dYE
- 1e7IipY+XHibnMgumS88GUf4QVz+UF3NONEeTJLF27zq46NUdC5g32aiXC+RjFzmyOHALiunmBC
- ugeLQw==
-X-Google-Smtp-Source: AGHT+IE6as294FLHdBuDb+RV+hYfSc+6vjSeLol4cTEkAMmtVNwCKfyKdZqUDVZ3mdaenuKTiVDUBw==
-X-Received: by 2002:a17:907:969e:b0:b71:cec2:d54 with SMTP id
- a640c23a62f3a-b7d23a80cdcmr1448843866b.57.1765914594250; 
- Tue, 16 Dec 2025 11:49:54 -0800 (PST)
-Received: from
- coder-e3a4a9b1-8b67-433d-8bfa-83dcda1c6c7d-85f799c49c-trc2n.coder.svc.cluster.local
- (195-154-137-126.rev.poneytelecom.eu. [195.154.137.126])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b7cfa5d1e89sm1748574266b.69.2025.12.16.11.49.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Dec 2025 11:49:54 -0800 (PST)
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cyril Leclerc <cyril.leclerc@subnoto.com>
-Subject: [PATCH] hw/i386/microvm: account for SEV c-bit in 64 bit PCI MMIO hole
-Date: Tue, 16 Dec 2025 19:49:53 +0000
-Message-ID: <20251216194953.1183260-1-cyril.leclerc@subnoto.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1vVcX7-0005Ma-Vg
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 16:24:38 -0500
+Received: from 11.mo550.mail-out.ovh.net ([188.165.48.29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1vVcX5-00057s-FU
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 16:24:37 -0500
+Received: from director4.ghost.mail-out.ovh.net (unknown [10.110.37.31])
+ by mo550.mail-out.ovh.net (Postfix) with ESMTP id 4dW91B3dxDz6S5h
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 21:24:30 +0000 (UTC)
+Received: from ghost-submission-7d8d68f679-rtqmk (unknown [10.110.113.129])
+ by director4.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 297E8C2986;
+ Tue, 16 Dec 2025 21:24:29 +0000 (UTC)
+Received: from petrot.fr ([37.59.142.110])
+ by ghost-submission-7d8d68f679-rtqmk with ESMTPSA
+ id TDJCAQ3OQWmCMBYAcfe/tA
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>);
+ Tue, 16 Dec 2025 21:24:29 +0000
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-110S00420054def-a0c6-4d02-bf6c-848c098131ab,
+ 447B3D2F0E3A97C97AEC376AC808067992D061BE) smtp.auth=frederic@petrot.fr
+X-OVh-ClientIp: 79.90.201.35
+To: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>, 
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH 1/1] trans_rvi.c.inc: Make lq and sq use 128-bit ld/st
+Date: Tue, 16 Dec 2025 22:24:23 +0100
+Message-ID: <20251216212423.2586121-1-frederic.petrot@univ-grenoble-alpes.fr>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=cyril.leclerc@subnoto.com; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-Ovh-Tracer-Id: 14847805024245847323
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTEypbdQktD1E5Xcj31kCaeJC/ygmACJeulf1Yvf6tO9tKZwbi+i1QzTctcv4tHNavoPSoUFjUphM5i4hGY7+6HAaUpDadiKDYF0CaSwQ7vza9j0KLwdfFWtcHSwRzLDxkp/L3yDI7ICZl8FPx8d0smnbBd1WwuuS3WTgphRFrXHNalDeKtInLcbulCdAByIVsM/cIuIH7LcKCgWh+89Fr1XoN7/cB1LVUZkollnSS+uDom6+2rrlGqtxsDShKkXRERCVnKI2ToG7pk+/XSItUMMkHJZhbSjberJVVZ+09McLPX33LE1FLtsv6YzUA5xp2/P7mfjKzSCTuhOoNpzZk33MG4ExPZTUChenZvXE4LAfrIbpNsYyBXJHv+QTp9g2giqYuGc1QAn/A+uL8sfqahLXX+HwyOV0U6olSZOYCvhg4DRZvj4IHPEt7tUGelVBiGKVQf5Ma28J0oD7GcIhMSudTOTtbzCHhtzCXzNcVnv49nn4WAZZ6TPymyIoioKIpnLQgDaDpLCJhCnSnNowk7dv6IIl2J7/NNFS1wjMNBRnYzljit1zghoLT+F8N90QqpbgpJ44PWYD2ucpePjWER1YP3PU7n/fTIQ28WgmQBJVH3hTUIEb+1BxWYCek4adVW4/CWk6CG7i3y7kU8XBVWEYM6FYrNpx7FufJ1S2JGkZA
+Received-SPF: softfail client-ip=188.165.48.29;
+ envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
+ helo=11.mo550.mail-out.ovh.net
+X-Spam_score_int: -11
+X-Spam_score: -1.2
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 16 Dec 2025 16:00:37 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,52 +77,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Cyril Leclerc <cyril.leclerc@subnoto.com>
-From:  Cyril Leclerc via <qemu-devel@nongnu.org>
+Reply-to:  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+From: frederic.petrot--- via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-microvm places the 64-bit PCI MMIO hole at the top of the physical
-address space. With SEV, the c-bit reduces the usable address space,
-so the MMIO hole ends up at addresses the guest cannot reach (the
-guest always strips the c-bit on MMIO accesses).
+The lq and sq helpers for the experimental rv128 architecture currently
+use direct (and erroneous) memory accesses.
+Replace these direct accesses with the standard tcg_gen_qemu_{ld,st}_i128
+TCG helpers that handle endianness issues.
 
-Fix by placing the MMIO hole within the sev guest addressable range.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3245
-
-Tested-by: Cyril Leclerc <cyril.leclerc@subnoto.com>
-Signed-off-by: Cyril Leclerc <cyril.leclerc@subnoto.com>
+Reported-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
 ---
- hw/i386/microvm.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ target/riscv/insn_trans/trans_rvi.c.inc | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
-index 94d22a232a..cb43a399ff 100644
---- a/hw/i386/microvm.c
-+++ b/hw/i386/microvm.c
-@@ -36,6 +36,7 @@
- #include "hw/i386/microvm.h"
- #include "hw/i386/x86.h"
- #include "target/i386/cpu.h"
-+#include "target/i386/sev.h"
- #include "hw/intc/i8259.h"
- #include "hw/timer/i8254.h"
- #include "hw/rtc/mc146818rtc.h"
-@@ -230,7 +231,11 @@ static void microvm_devices_init(MicrovmMachineState *mms)
- 
-     if (x86_machine_is_acpi_enabled(x86ms) && mms->pcie == ON_OFF_AUTO_ON) {
-         /* use topmost 25% of the address space available */
--        hwaddr phys_size = (hwaddr)1 << X86_CPU(first_cpu)->phys_bits;
-+        int phys_bits = X86_CPU(first_cpu)->phys_bits;
-+        if (sev_enabled()) {
-+            phys_bits -= sev_get_reduced_phys_bits();
+diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
+index 54b9b4f241..ea5a961464 100644
+--- a/target/riscv/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/insn_trans/trans_rvi.c.inc
+@@ -388,10 +388,14 @@ static bool gen_load_i128(DisasContext *ctx, arg_lb *a, MemOp memop)
+             tcg_gen_movi_tl(desth, 0);
+         }
+     } else {
+-        /* assume little-endian memory access for now */
+-        tcg_gen_qemu_ld_tl(destl, addrl, ctx->mem_idx, MO_TEUQ);
+-        tcg_gen_addi_tl(addrl, addrl, 8);
+-        tcg_gen_qemu_ld_tl(desth, addrl, ctx->mem_idx, MO_TEUQ);
++        TCGv_i128 t16 = tcg_temp_new_i128();
++
++        tcg_gen_qemu_ld_i128(t16, addrl, ctx->mem_idx, memop);
++        if (mo_endian(ctx) == MO_LE) {
++            tcg_gen_extr_i128_i64(destl, desth, t16);
++        } else {
++            tcg_gen_extr_i128_i64(desth, destl, t16);
 +        }
-+        hwaddr phys_size = (hwaddr)1 << phys_bits;
-         if (phys_size > 0x1000000ll) {
-             mms->gpex.mmio64.size = phys_size / 4;
-             mms->gpex.mmio64.base = phys_size - mms->gpex.mmio64.size;
+     }
+ 
+     gen_set_gpr128(ctx, a->rd, destl, desth);
+@@ -494,10 +498,14 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
+     if ((memop & MO_SIZE) <= MO_64) {
+         tcg_gen_qemu_st_tl(src2l, addrl, ctx->mem_idx, memop);
+     } else {
+-        /* little-endian memory access assumed for now */
+-        tcg_gen_qemu_st_tl(src2l, addrl, ctx->mem_idx, MO_TEUQ);
+-        tcg_gen_addi_tl(addrl, addrl, 8);
+-        tcg_gen_qemu_st_tl(src2h, addrl, ctx->mem_idx, MO_TEUQ);
++        TCGv_i128 t16 = tcg_temp_new_i128();
++
++        if (mo_endian(ctx) == MO_LE) {
++            tcg_gen_concat_i64_i128(t16, src2l, src2h);
++        } else {
++            tcg_gen_concat_i64_i128(t16, src2h, src2l);
++        }
++        tcg_gen_qemu_st_i128(t16, addrl, ctx->mem_idx, memop);
+     }
+     return true;
+ }
 -- 
-2.47.3
+2.43.0
 
 
