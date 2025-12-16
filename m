@@ -4,212 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6C27D5CC97
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 09:41:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2EDAD5CCA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Dec 2025 09:54:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVRYd-0000N1-BN; Tue, 16 Dec 2025 04:41:27 -0500
+	id 1vVRkQ-0002Gi-Hj; Tue, 16 Dec 2025 04:53:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vVRYb-0000M9-ME
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 04:41:25 -0500
-Received: from
- mail-switzerlandnorthazon11020118.outbound.protection.outlook.com
- ([52.101.186.118] helo=ZRAP278CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1vVRkN-0002GW-8r
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 04:53:35 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
- id 1vVRYa-0000uk-4D
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 04:41:25 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jnkdb6Sj2T0UFVIVGibD0NwMfFxRJ3FDpc8wXEKYfdlSFzIwZ9Mws2nEh2eyQ/TvFKyAENR3a5nlE7IxUUcdEmGgx2nVdlM+xPH0UycbmVV1Y2I0vU35meE1naRPkduWiSwhJdTsbt/szsAJZSNShukpAO5suYmFiOCspY15eLRGi5NVbDivQkyFrmMgUexMFIQL9ZhEEQc4LE4f9AFWVHr+TvVkXUKViDMIYGoarjgXfhylXwnyph0cHjkAfJJsWsOuBFZfMDCJsKlQip41f+UORzJ/oeOJsULmo+9Kk4ZldAn8yYSYdWOvFwKIsJlKJ1IHMSm2EFATyLnwhbaDQw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=N3lTlNJ1rvdVLwKD0Wj3ZqC9ZasgP/eF/zmM1KtKJZs=;
- b=sFhmRe/bihqcyMpI2YfWuOc5vsJEbEIgTLlfGkpESPA1GMyO2tkgEcRdftPhh5fcJvhGGPT+mZJNS8n4yUIcbkZ83wr8GEzjHIF7EW7mNGmbIkh+1rI7U1YqG3pQK+aGK/sg+BiypYdy2g6INHh4BfSmy8LfVMMAZ511ghqxZsta3GhAcc6r+rA7JSWFzpLHfLPGRx8P42yS8dxUaG8V/1zmm3oze9l051V7OeJj5hQ5YRpyB40Tj96YywCDHfDBo/zcIHhsy6C16breDvlqWyvDZvgZN68dg4sRGsYSaTrB/tHDkoRcqOi+N3W8KK/TF+/CVbQU+2K1gv6xkzujXg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
- header.d=epfl.ch; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=N3lTlNJ1rvdVLwKD0Wj3ZqC9ZasgP/eF/zmM1KtKJZs=;
- b=sETn6AfM/Aey0kBF45Fb+paJMnX6wsVLsELmwUsW7pBSQxh6v5hPzGvY1tq7glmcK+J4F7xbSOqVTW23aN4ljHAKXdaGWNR+p9iDHFBKWe0jTXucPh7BcdrXhs55G6UCI+2gDw7RO3d/mdi4+Ev0J4SGZTQcrCQ8cMDXo21czE4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=epfl.ch;
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
- by ZR3P278MB1440.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:a0::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.13; Tue, 16 Dec
- 2025 09:36:18 +0000
-Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::ccdc:4b69:a4c:e1c1]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- ([fe80::ccdc:4b69:a4c:e1c1%2]) with mapi id 15.20.9412.011; Tue, 16 Dec 2025
- 09:36:17 +0000
-Message-ID: <0586445b-31fc-4c18-9dea-b3cdc973516b@epfl.ch>
-Date: Tue, 16 Dec 2025 10:19:07 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 0/2] Enable PC diversion via the plugin API
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, pierrick.bouvier@linaro.org,
- richard.henderson@linaro.org, laurent@vivier.eu, imp@bsdimp.com,
- berrange@redhat.com
-References: <e9bcd7c7-2d67-469e-b2f3-d1a68e456b2b@epfl.ch>
- <f06e2059-9d86-4a5c-acff-84cbeabcfb06@epfl.ch>
- <87ikebucv4.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Florian Hofhammer <florian.hofhammer@epfl.ch>
-Autocrypt: addr=florian.hofhammer@epfl.ch; keydata=
- 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
- 5hMMZIzTI4AtIcgA3xe4Ew==
-In-Reply-To: <87ikebucv4.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: GV0P278CA0060.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:710:2a::11) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
- (2603:10a6:918::220)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1vVRkK-0004lR-7D
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 04:53:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1765878810;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=L1s0eqRGahHf7N8O4aYEfoltAWxkcolVTZ0Epkcl9Is=;
+ b=bsxRVCHgvikwtcissBBVls/DkPVbFKxskaXjvTLxbYEHETIHLUQ1T8bS3HW5IEZUHIZMlr
+ hacMZDP6YybJjdQGdR9/bRM0gL+7QWXWvobZ7X0nsso1mMdi076Y2hnsW9Flf7va2zcm+F
+ RxhpDdONBNTdqWo6umepO8KdiEoEB1s=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-661-hUvGbaXzMUWw6YqOM7Iwag-1; Tue, 16 Dec 2025 04:53:26 -0500
+X-MC-Unique: hUvGbaXzMUWw6YqOM7Iwag-1
+X-Mimecast-MFC-AGG-ID: hUvGbaXzMUWw6YqOM7Iwag_1765878806
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8823f4666abso100490096d6.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 01:53:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1765878806; x=1766483606; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=L1s0eqRGahHf7N8O4aYEfoltAWxkcolVTZ0Epkcl9Is=;
+ b=KgPdL2A59lb/yM/1/+CDjgNuYQ9DjBWRijcjZ1r7qWx3tEci70yAU+psn/rjw3nzgm
+ +oecCXo2uyy4wNiVxkEk3I9EScyHeRHWjDeN4KN+mKxVq10YWgKapHah1z2JfWUZf0LC
+ z3caBNj1UNDeEzLrD/2HnDYJSVltg+nYAYvG6NhEYVwg32sAVUx4gs+TcRBtlfwZvg58
+ HaylXyW097SPGPrWCZtIaGhlV+a5FjpO0nfHqcZrczwFAc4/xOqaWzFnXingF/AJUQwu
+ VD/EEwmMqUPnHDGah70WTAww2ofGvGP0eefPWRr23Y1wsia8B9Xg5nRVAzIBhdvYnfT0
+ 3Fnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765878806; x=1766483606;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L1s0eqRGahHf7N8O4aYEfoltAWxkcolVTZ0Epkcl9Is=;
+ b=xIkQ7J7762AhBL4vm2zDamIhVCZ57CcY5sz36ElpN09DK6G+Mwmgz3sXW/EWnHc6V6
+ sxmq0P24Ybzl4dt4kVvakjmrp+gQ6GcSIVXRvSZ1kESjqGvEpQuTC8CTMVAd94crm0Ws
+ KOYQpgHUKDSU95J1ZKwMzsZJj3iZzjRz4rrLtcSR1921iDp5sWHtMzIrP5etCf2eAnJE
+ zHnZZ1v7JblBRPlYwTKf53K+msJ+ZiVQDETy0bxnH+hY9jnVsZj7Dr3KD0glgiSLA+tS
+ X+FSaeIN9zFLPwJ5pACITyHalDVtBZr/5AcNZwuoqptg/bt75JQpPj/smMXJ3eD46kKa
+ 5sRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWDecqmWsURk8L/YeTIgE5ejx8HmMNoGV0tHRVqljjiDGMtyKbhO8tCLsyjU1MRmRGdBV8EuRR9q5Kt@nongnu.org
+X-Gm-Message-State: AOJu0Yx5+8sSzAgNbfsqYedeMuUou/rcG1IfoorwoA0RTgzsDyeUBaiC
+ 4GSMtjdRP4dsgxX3j4jp9Jnh4QJiXx0EmROLj4m+ToRC4FD5DAjulcmJlpHeij0ag5vFsO18tF4
+ 7lrWVilh3JYDJkDVtR4caOGliZmBd4V3Et8WbNIiHD3ogtZ64gV7n9At4vSCxPAwguOM9US7ChT
+ rvsaJZXpupKWTuzqBon/qlZZp+eWJAv/s=
+X-Gm-Gg: AY/fxX65e0V6hNrjA/wGfCNyHJdmAottOnzLqMv1DKAUtN3fs+5pN9h5tvt6LM9tU0F
+ wx5+nelI7x86fx8k7eml9fnH8GcWgjmv4CGMic5/ZcMFtjKTaLga771/6w+1v2hMUlBWDhZm1nW
+ FWiHvz5L5CfHCd/sSEXjy7onpeSFj4YP1aMC1j2Sp/U/wnvvzOx0cN6XCfiigBP41X3HKC
+X-Received: by 2002:a05:6214:2305:b0:87c:1889:6a7f with SMTP id
+ 6a1803df08f44-8887e16bd17mr225070166d6.5.1765878806319; 
+ Tue, 16 Dec 2025 01:53:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEBqBCTN4PynvolU7w8ZBf0KPSeYeBPIRXDaBdeIqZBeyEn9YrCPJVwbzhlxCEqbisbuYcDsm+heAj4rhxN2Yg=
+X-Received: by 2002:a05:6214:2305:b0:87c:1889:6a7f with SMTP id
+ 6a1803df08f44-8887e16bd17mr225069996d6.5.1765878805891; Tue, 16 Dec 2025
+ 01:53:25 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|ZR3P278MB1440:EE_
-X-MS-Office365-Filtering-Correlation-Id: 000df1bd-0d25-4caa-e727-08de3c86903c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0; ARA:13230040|1800799024|376014|366016|19092799006;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aEJucVlQRVk1RzgzVzZxMktnYTIwZkQrdEExdWdENGtOR2JNV1JIaDB2dDdw?=
- =?utf-8?B?RHZQN1VzQnlVYUZCc0VRWXBiZUErb0JvYVFUbWNrc25xdlVCNkZ1R3ZSNlpn?=
- =?utf-8?B?OVp3OWxPRXY3Tmh5SXBHbXJzRTFWQ2liWnI3Mlg1UjAzVFJUVTg1anFkaE9k?=
- =?utf-8?B?aUErS0hiNXNHT0VQLzRZKzcraHdmS3VrVytjTklxMmMrOUN2bVJoc2ozdHdi?=
- =?utf-8?B?Yk9UTTV0aStBaUc0VFZZVmcrT2JsRlpiSW5DZUdFT0lrdlNlUlo1NGk0V2ZG?=
- =?utf-8?B?bWxubkdWZHZvZzlFYUlDSDVIQWx6Q3RoLysxTFZVb3hhck9zTExXd3l0RVQr?=
- =?utf-8?B?SVZtN0phVzNiaDVpd2I1MHNoTU0xUkc5OExTVGJjQ21NUW83OUQ5eVduQXE1?=
- =?utf-8?B?QUo5b0E1WFNmbkpBYTJ4NkNlbmdMbmk1RjBsbnFzNlJNNGYybHJRd240VTVi?=
- =?utf-8?B?Mi9oOWdUb1FGMkNNQmdQZjkxV2d6MUxxOS9HR2FMalFBWS9xVFJnc3Z3MGds?=
- =?utf-8?B?eWdmTWF2aCtETnVQNThZZGlxdVc2eERyYnFINGo3OFFqYWU3NllZRG00dk5H?=
- =?utf-8?B?U3FmaEdaVzB3K1R4bmYvdlE2SENSOVdpOVkwdk1LOW5XQnM1bnFwOFBaeWlC?=
- =?utf-8?B?a054WEg2dWZlWVFhYUZuL25RdFlnWHdsTmZqcDJsNVNVTFlpS1JRMGs3Rjlu?=
- =?utf-8?B?QnFRTHBYZzkycndmQmEvNUE0Wmd0cG9qWUlEREpWbUc3UWZxR1JaelhwbUQw?=
- =?utf-8?B?SXM4RXZLT3ZwK3VJSkVteEVncG94Y1hMTE82aGJoUm82UWZCcUtxNHRXWm5C?=
- =?utf-8?B?Um5SenAza2NwT0E0U2V0Q21pa1BjMmM1MFVaOXFRcGs5aUZUczkxWitLSnV2?=
- =?utf-8?B?aUFMenphSFc5VFdVcUJUa0lmTXhTUm5mU3hzaWNxUVVlcWpSZzc4aERBN1kr?=
- =?utf-8?B?bkthU1VEQUVvY1dUNG5kSTNzcVVPK1NUYWtJaFh6U0pTcCtMZUNmYUFhRjFr?=
- =?utf-8?B?RXFEcTVZcTd3SEt6Y3JoVEVVSmRhYkpNRWJFN1N6TjJjTVE4SWdXYW52eTcy?=
- =?utf-8?B?N2dpWXcrMUNQcy9HdXd2Z1NJTkcxbkNyZ2pOUXluc3p1QkNKQ0JUZFVxeXFW?=
- =?utf-8?B?dzlOVVU0MWtlU2RXa2UyU2hkUjJHc0NyU2lXais0YUVnNUgwUHllL3NVMjdP?=
- =?utf-8?B?dFJCWXdSTmhKM2F4eGloeDhSalBvOG1EMkFHRjBGOWhFZE1yNWZEdnNEMFdS?=
- =?utf-8?B?MmFoL0laQTBtMmN4aTJKZlZ5UHNNazVrc05Ja1BmSVAzamNpMjI1d0RzeDUv?=
- =?utf-8?B?NTZGR2NvR044NEI1TGJ1dS93cXNGdFh4ek05M0xUS1lKUzJ2N2VZSGxzODAz?=
- =?utf-8?B?ODFIVzZiaEpOcGN5TVhUTjFSWTJoSzZFYlNrSHVyYmFYcy9ZMEgwcUVKcHR3?=
- =?utf-8?B?aWhaclNUVWdlWEg1ZGFpdFdnNE91R3JuSCt1d1NibGdRU0lacHJTc2IwMWVP?=
- =?utf-8?B?WTFYN1FUakZSNzdJZnJncGl3Y0Z3NytxOXB0TlNSc2FsTUtJUGwyTDd4Qjh3?=
- =?utf-8?B?dnhvZjNwS0o4aFpXcXFsOXEwb2xIMjVNaCswdS9OUFRwU3M2YWJJWVlEZFdU?=
- =?utf-8?B?YVM2STd6RkVqMVBkcllJeEN2VVI0RXpJK3V2L0ZyRzQrM1pFaXRDREZhK29z?=
- =?utf-8?B?Y0E0b3BaOWRZdGVYOUxVNjl6ZFVCR1lqTmJEVVd6NGRpVTl1K1F6bEN0SDFv?=
- =?utf-8?B?K21xaEdQRDhKNVo5bGw1M3JhUUlwbEpFR2lUY29KUUwyTzJuamZ0enFDdHVq?=
- =?utf-8?B?S0NVeVdteEVtVlBWbmFNTVVZZThFbGRnaTRYZUZGQkU2Qnk5UkpQWGtTZm5p?=
- =?utf-8?B?UkJ5dXZRQ1g5NzZ6MXdkeHNTbithRFVSYlpFdFo0ZjFPck1weVdxTmFFcjNH?=
- =?utf-8?Q?isGxjjeh0V6OVCJz8RXmJlxm99GntIgT?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(19092799006); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?d2Qyc1JicFlnMEloV2hkUTdhSXBOMU1rZzdTSlczNmhhOU9SMVlsQ29EZkdo?=
- =?utf-8?B?SFpWMjYveGFNYktnMHBkMkdnbkk3V0ZnamlvZ3FGb3R6bFRpQUxyZnZ5bExO?=
- =?utf-8?B?b2lxVmlNQU1uWUI2MmhRdkJ6Q0c3dTdDV1NCcUM1aWVoYWFRbnVIdGpnbnl1?=
- =?utf-8?B?TlgrUHk4cXpuZ1JFN01WZ0dIQngxUXZJVm1XQkVGL2pEaCs0SkJ4RlU0WXVz?=
- =?utf-8?B?WFNzRFBaNTlOYmZ1R1BwWjQxUGMzdmt6ZlF3NUJ6Mm04cUZvWmYxQjNaUVF6?=
- =?utf-8?B?OFVoTHRLVm5KQnYxb1owWXY1azNUUFdYUUwvdHZhcVhNbnpVSmJLQmtPSmxa?=
- =?utf-8?B?K2NWQlRJdmQ5RW9CNDRwRzF3RzJkT1pJZWtaMGViOFVYTnk2dUtFemU4OTlt?=
- =?utf-8?B?aWw3cm5NNHVlRkFmbkI4RFlzWkp1bXA4V1ArR2hRK0tpRXRQS2ZiMHA0OXpT?=
- =?utf-8?B?V2loK0RQZ3JIWGQrL1M1QnVPYjBOWG9iclpaem5DcklKbTFubUJaVXF2b3l5?=
- =?utf-8?B?ajlGQmtyeUpSK2Z5SHNCSjRqR1N5bG9PSVk0UnlGYVN3aXhvaVFEdUIwd2lz?=
- =?utf-8?B?clhpRHNaZWRBSVZ4WGFXMHJnSm1KaUhKcGxTVWU2YUwxTTVQZUtRRmhnd2Nh?=
- =?utf-8?B?RW4ycmV1bFVmWVVteUNuUXdnaklreWNTeG1MeXlObFdlREdueE9QWnVkMjZD?=
- =?utf-8?B?SVZrckxYV1VSbWQ0UXZMRGtaWXFuYWFqd1lJdnpVbDZ3WnlVQUo4d2JGZFlT?=
- =?utf-8?B?eUd6TlM5Z1R2aXY0SDRXYThqT0ZpTWkzc0NNVUh4dmlkelV0bDQrcXFGMFlB?=
- =?utf-8?B?TkMxeXhwSEdLNGZDZnFsRGdJbFlzbmpnMlZhN1kxbFZBME5lTGJWVWo5MGpv?=
- =?utf-8?B?VVVnUlVuWGpLVHRoYVovcnB3VXI2cENNdHlyZ0JyL3JZZ3htZ1BhT3BjVS9i?=
- =?utf-8?B?QjVjTnZIdlhJRWJDdEpCR2tBbnBDTS9hVWFncTZ3TEF6UGF4L3dTcW5GSkZG?=
- =?utf-8?B?dXhXR1ovb1pNTW5mUHNzR3pWMDVzS1dvVnNqeEl1ek5wZnBpSlJLWWVBKzB3?=
- =?utf-8?B?RWRaOXdhcWlsT211V2xXRi8rcEhCeUJ5R2FGOGE1K0w1R3dPN0ZzVEh6MUpM?=
- =?utf-8?B?N0dIWVFCYlkvcWxEMlNjNS9uNjgyVjV2emEwNW04Y09JbFhrNDN5L2czYWd6?=
- =?utf-8?B?cU1YVjRBbngvQ1dDbkVrVW9qOEpHamh2WGhkSkxQandmRktRaldxeGIxcms0?=
- =?utf-8?B?VVVQaDdPc0dOYm1HcjZTUWc4VUQvbUd4aS9yRURmN0ZYUGkzZkFJZWZsYXNX?=
- =?utf-8?B?VCsycTR5eDdSaHFsdTl1OHgyYUdzU1c2WnZhajUvRnVmbTFJS0FYVUQ0MFJK?=
- =?utf-8?B?Y3IwOXR0amo0YWtYTkNZM3drdlBVNzBFTWdxeDl3ODU4Ym9oaENJdWVXOXIv?=
- =?utf-8?B?REpCTTZsVlAyQSt2eVdkV0FiWEFYRzZvYzNWVnNMZTZRRnd6K3VGa2lzaTk0?=
- =?utf-8?B?UUdlc2dBSkhZanJYME5xSkREcGhWUFZLUWY1Ym5BeE5OT3pQTDdaNGxZVitY?=
- =?utf-8?B?ZDM3NDFtVlprb1czd1FZOStKendMQSt0SW1ULzhZQ3B2T3RXZlFGYWZwQUtI?=
- =?utf-8?B?SFJ6R05BVFpzanQyRTVJYXV0dmRkT1dycUJVd0FOb3BLTHJrMXp2VHBlMUJC?=
- =?utf-8?B?UW9mN1djRzgxQVQvWlI2TE8xUUdocUJyMk5jWXczN1lOVTV5dWJWZW1xUDRx?=
- =?utf-8?B?bTQxUlRNRWNXTDZ6c1lSMjhQL1NpVXpoaFNGcnBvT0NkUkh4M0hGL1VGeng5?=
- =?utf-8?B?bkQ0U2d1UjNPWlJIaUNLMHFJdStPbk5XTVZkNm95Nk9hZ3VXTzUwMVZJaTR3?=
- =?utf-8?B?QU9kQzljN1Q2ZFdObEwyRmFYZUh4MStLbzNNeGlXZmkzSWJ5MmRiWDZyRVNm?=
- =?utf-8?B?NEowalBzMUxUMzNNcmtzUTVCUkhabTVhZWljTUZETzJHWmo0RmR3R2Y4ZkVS?=
- =?utf-8?B?MHFPWVl3WnhpTnNSdUxBdlVPVW9IbHprSFpQVVlHZWZ6ajlCbkp0d0diQTFK?=
- =?utf-8?B?VXgrSDBEc1RQMDF4RUc3Y2lYbEVzcE94MkpRQ09yOUdTUWFXU2NIUytEdHpD?=
- =?utf-8?B?VXJvd3NhMlBEQThNYnVsNXFvSFZBNm41RkpCZ005TXRxajNWbWVzZjdzUk96?=
- =?utf-8?B?REE9PQ==?=
-X-OriginatorOrg: epfl.ch
-X-MS-Exchange-CrossTenant-Network-Message-Id: 000df1bd-0d25-4caa-e727-08de3c86903c
-X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Dec 2025 09:36:17.8511 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CsSUb00tlaaFrQFy0VrFoCQHNbHQjQ/+xUHWlvMfRWMeXeH+jZeMNItARhGCTTfniSPXtXjhDxpOLrrfecynOnfgWXhaaP2zcQavh/1xIVk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: ZR3P278MB1440
-Received-SPF: pass client-ip=52.101.186.118;
- envelope-from=florian.hofhammer@epfl.ch;
- helo=ZRAP278CU002.outbound.protection.outlook.com
+References: <20251215164512.322786-1-phind.uet@gmail.com>
+ <20251215164512.322786-2-phind.uet@gmail.com>
+ <CAMxuvaw=ZigHsgHf5matsmLrH57y-HE4gwgQy4Oyht4+u58N+g@mail.gmail.com>
+In-Reply-To: <CAMxuvaw=ZigHsgHf5matsmLrH57y-HE4gwgQy4Oyht4+u58N+g@mail.gmail.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Tue, 16 Dec 2025 11:53:14 +0200
+X-Gm-Features: AQt7F2pFKeaXf-s1mkeH2Q8kl3JJwNmpDg4wcv8FQEvd6Tx2CZncROtpm7NfnSE
+Message-ID: <CAPMcbCqSGCk0kmHF+uJjOjES+sKHQHQ-v59iU_q4QqY3TOTGVg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] qga/vss-win32: Fix ConvertStringToBSTR redefinition
+ with newer MinGW
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: phind.uet@gmail.com, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000f11f0e06460eb24e"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -227,28 +120,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/2025 13:02, Alex Bennée wrote:
-> Florian Hofhammer <florian.hofhammer@epfl.ch> writes:
-> 
->> Hi,
+--000000000000f11f0e06460eb24e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi
+
+On Tue, Dec 16, 2025 at 8:26=E2=80=AFAM Marc-Andr=C3=A9 Lureau <
+marcandre.lureau@redhat.com> wrote:
+
+> Hi
+>
+> On Mon, Dec 15, 2025 at 8:57=E2=80=AFPM <phind.uet@gmail.com> wrote:
+>
+>> From: Nguyen Dinh Phi <phind.uet@gmail.com>
 >>
->> Sorry for necrobumping this thread. I just wanted to follow up on this
->> and ask if there is still interest in this plugin API extension or if it
->> is going to be dropped in favor of the Lorelei patches (which would also
->> fulfill my original use case).
-> 
-> These are the system call filter patches?
-> 
-> I guess that depends on if being able to change PC is only for skipping
-> syscalls?
+>> Newer versions of MinGW-w64 provide ConvertStringToBSTR() in the
+>> _com_util namespace via <comutil.h>. This causes a redefinition
+>> error when building qemu-ga on Windows with these toolchains.
+>>
+>> Add a meson check to detect whether ConvertStringToBSTR is already
+>> available, and conditionally compile our fallback implementation
+>> only when the system does not provide one.
+>>
+>> Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+>> ---
+>>  meson.build               | 12 ++++++++++++
+>>  qga/vss-win32/install.cpp |  2 ++
+>>  2 files changed, 14 insertions(+)
+>>
+>> diff --git a/meson.build b/meson.build
+>> index c5710a6a47..60a980e610 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -3299,6 +3299,18 @@ endif
+>>  # Detect host pointer size for the target configuration loop.
+>>  host_long_bits =3D cc.sizeof('void *') * 8
+>>
+>> +# Detect if ConvertStringToBSTR has been defined in _com_util namespace
+>> +if host_os =3D=3D 'windows'
+>> +  has_convert_string_to_bstr =3D cxx.compiles('''
+>> +    #include <comutil.h>
+>> +    int main() {
+>> +        BSTR b =3D _com_util::ConvertStringToBSTR("test");
+>> +        return b ? 0 : 1;
+>> +    }
+>> +  ''')
+>> +  config_host_data.set('CONFIG_CONVERT_STRING_TO_BSTR',
+>> has_convert_string_to_bstr)
+>> +endif
+>> +
+>>  ########################
+>>  # Target configuration #
+>>  ########################
+>> diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
+>> index 7b25d9098b..5b7a8e9bc5 100644
+>> --- a/qga/vss-win32/install.cpp
+>> +++ b/qga/vss-win32/install.cpp
+>> @@ -549,6 +549,7 @@ STDAPI DllUnregisterServer(void)
+>>
+>>
+>>  /* Support function to convert ASCII string into BSTR (used in _bstr_t)
+>> */
+>> +#ifndef CONFIG_CONVERT_STRING_TO_BSTR
+>>
+>
+> I wonder if it could check __MINGW64_VERSION_MAJOR >=3D 14 instead of add=
+ing
+> a configure-time check.
+>
 
-Yes, the Lorelei patches are the syscall filter patches.
+@Peter Maydell <peter.maydell@linaro.org> preferred to avoid specific
+version-number checks.
+See: https://gitlab.com/qemu-project/qemu/-/issues/3217#note_2935451782
 
-This was my original use case as well, but I think diverting control
-flow outside of that use case can be useful as well (e.g., to divert
-control flow to a different library function implementation when things
-like LD_PRELOAD are not an option).
+I also preferred the idea of checking the real function present instead of
+the version of the component.
 
-Best,
-Florian
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+
+
+>
+> lgtm anyway
+> Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+>  namespace _com_util
+>>  {
+>>      BSTR WINAPI ConvertStringToBSTR(const char *ascii) {
+>> @@ -566,6 +567,7 @@ namespace _com_util
+>>          return bstr;
+>>      }
+>>  }
+>> +#endif
+>>
+>>  /* Stop QGA VSS provider service using Winsvc API  */
+>>  STDAPI StopService(void)
+>> --
+>> 2.43.0
+>>
+>>
+
+--000000000000f11f0e06460eb24e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi</div><br><div class=3D"gmail_quote gmail_quote_con=
+tainer"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Dec 16, 2025 at 8:26=
+=E2=80=AFAM Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lureau@r=
+edhat.com">marcandre.lureau@redhat.com</a>&gt; wrote:<br></div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr">Hi<=
+/div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">O=
+n Mon, Dec 15, 2025 at 8:57=E2=80=AFPM &lt;<a href=3D"mailto:phind.uet@gmai=
+l.com" target=3D"_blank">phind.uet@gmail.com</a>&gt; wrote:<br></div><block=
+quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
+px solid rgb(204,204,204);padding-left:1ex">From: Nguyen Dinh Phi &lt;<a hr=
+ef=3D"mailto:phind.uet@gmail.com" target=3D"_blank">phind.uet@gmail.com</a>=
+&gt;<br>
+<br>
+Newer versions of MinGW-w64 provide ConvertStringToBSTR() in the<br>
+_com_util namespace via &lt;comutil.h&gt;. This causes a redefinition<br>
+error when building qemu-ga on Windows with these toolchains.<br>
+<br>
+Add a meson check to detect whether ConvertStringToBSTR is already<br>
+available, and conditionally compile our fallback implementation<br>
+only when the system does not provide one.<br>
+<br>
+Signed-off-by: Nguyen Dinh Phi &lt;<a href=3D"mailto:phind.uet@gmail.com" t=
+arget=3D"_blank">phind.uet@gmail.com</a>&gt;<br>
+---<br>
+=C2=A0meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 1=
+2 ++++++++++++<br>
+=C2=A0qga/vss-win32/install.cpp |=C2=A0 2 ++<br>
+=C2=A02 files changed, 14 insertions(+)<br>
+<br>
+diff --git a/meson.build b/meson.build<br>
+index c5710a6a47..60a980e610 100644<br>
+--- a/meson.build<br>
++++ b/meson.build<br>
+@@ -3299,6 +3299,18 @@ endif<br>
+=C2=A0# Detect host pointer size for the target configuration loop.<br>
+=C2=A0host_long_bits =3D cc.sizeof(&#39;void *&#39;) * 8<br>
+<br>
++# Detect if ConvertStringToBSTR has been defined in _com_util namespace<br=
+>
++if host_os =3D=3D &#39;windows&#39;<br>
++=C2=A0 has_convert_string_to_bstr =3D cxx.compiles(&#39;&#39;&#39;<br>
++=C2=A0 =C2=A0 #include &lt;comutil.h&gt;<br>
++=C2=A0 =C2=A0 int main() {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 BSTR b =3D _com_util::ConvertStringToBSTR(&quo=
+t;test&quot;);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return b ? 0 : 1;<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 &#39;&#39;&#39;)<br>
++=C2=A0 config_host_data.set(&#39;CONFIG_CONVERT_STRING_TO_BSTR&#39;, has_c=
+onvert_string_to_bstr)<br>
++endif<br>
++<br>
+=C2=A0########################<br>
+=C2=A0# Target configuration #<br>
+=C2=A0########################<br>
+diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp<br>
+index 7b25d9098b..5b7a8e9bc5 100644<br>
+--- a/qga/vss-win32/install.cpp<br>
++++ b/qga/vss-win32/install.cpp<br>
+@@ -549,6 +549,7 @@ STDAPI DllUnregisterServer(void)<br>
+<br>
+<br>
+=C2=A0/* Support function to convert ASCII string into BSTR (used in _bstr_=
+t) */<br>
++#ifndef CONFIG_CONVERT_STRING_TO_BSTR<br></blockquote><div><br></div><div>=
+I wonder if it could check __MINGW64_VERSION_MAJOR &gt;=3D 14 instead of ad=
+ding a configure-time check.</div></div></div></blockquote><div><br></div><=
+div><a class=3D"gmail_plusreply" id=3D"plusReplyChip-1" href=3D"mailto:pete=
+r.maydell@linaro.org" tabindex=3D"-1">@Peter Maydell</a>=C2=A0preferred to=
+=C2=A0avoid specific version-number checks.=C2=A0</div><div>See: <a href=3D=
+"https://gitlab.com/qemu-project/qemu/-/issues/3217#note_2935451782">https:=
+//gitlab.com/qemu-project/qemu/-/issues/3217#note_2935451782</a></div><div>=
+<br></div><div>I also preferred the idea of checking the real function pres=
+ent instead of the version of the component.</div><div><br></div><div>Revie=
+wed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com">kkost=
+iuk@redhat.com</a>&gt;</div><div>=C2=A0</div><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex"><div dir=3D"ltr"><div class=3D"gmail_quote"><div><br></=
+div><div>lgtm anyway</div><div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a h=
+ref=3D"mailto:marcandre.lureau@redhat.com" target=3D"_blank">marcandre.lure=
+au@redhat.com</a>&gt;</div><div><br></div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex">
+=C2=A0namespace _com_util<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0BSTR WINAPI ConvertStringToBSTR(const char *ascii) {<br=
+>
+@@ -566,6 +567,7 @@ namespace _com_util<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return bstr;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0}<br>
++#endif<br>
+<br>
+=C2=A0/* Stop QGA VSS provider service using Winsvc API=C2=A0 */<br>
+=C2=A0STDAPI StopService(void)<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div></div>
+</blockquote></div></div>
+
+--000000000000f11f0e06460eb24e--
+
 
