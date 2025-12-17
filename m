@@ -4,111 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A38B4D65C7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 16:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0A17D65C7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 16:47:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVufp-0004RI-2L; Wed, 17 Dec 2025 11:46:49 -0500
+	id 1vVufl-0004Q3-0R; Wed, 17 Dec 2025 11:46:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVufG-0004GT-Qx
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 11:46:17 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVuf8-0004GC-HM
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 11:46:13 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVufE-0007Ao-Qj
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 11:46:14 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vVuf0-00078c-T1
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 11:46:01 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 97BEE33694;
- Wed, 17 Dec 2025 16:45:58 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 594325BCD3;
+ Wed, 17 Dec 2025 16:45:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765989958; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BOdX227QL3oWFhXpMwmHJU3UZWXXFN5ORNQ7qNLZu5c=;
- b=iKZdoyM+yLZAEGz/y+SpK74B7C9EJe1uupxk5j6+zkgIE9FFr+KGYxGMUdpsxskgm6kYYP
- fmZw2e3gxO0P3ZJWWOq06pp+BYMUc3LTs96BTlOqUIt4SRdzV1f0w5LQb9Xm7UCzU1OLfx
- x/YfgiF18/TUYPzMiSCRi2dtOgoBB6M=
+ t=1765989954; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=GflHCo7RBYrYhtZvzABS0DCrAarF1iGNGJd1Mhf/Vpw=;
+ b=r8WD+01BtYLz8r9MXeQOJVRZS30R73WjbXy1yP5zZS0jFIXke9vYLURJAP376os3S1WAWc
+ KZBKIwI7reeiIhWYysj+YZwZujrfB+jnCnn5mHipBlsEo39/++whrq1g1j6Ka9y4zppk19
+ kgSKJXu2vbJ1J4ch3nJ7SSEhTTGTCIw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765989958;
+ s=susede2_ed25519; t=1765989954;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BOdX227QL3oWFhXpMwmHJU3UZWXXFN5ORNQ7qNLZu5c=;
- b=LPjVNoGLn+0qSvgdgtMGOy5XKa0z+v1IwJGiItg9IEUOj6wWjGhx67E4I1h2FpRyiv9oIw
- W33g0KBjL8tQxhDQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=iKZdoyM+;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=LPjVNoGL
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=GflHCo7RBYrYhtZvzABS0DCrAarF1iGNGJd1Mhf/Vpw=;
+ b=us8GxZPjN5hBGltUg8gDJecuHmGapmMscdEmZQ5ERU1xotsjKSIk4gUIj9P2cJ2DwbvBag
+ hISxlvux8JJ9HNCg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=rIdvvbSl;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=cdUTv5bC
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1765989958; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BOdX227QL3oWFhXpMwmHJU3UZWXXFN5ORNQ7qNLZu5c=;
- b=iKZdoyM+yLZAEGz/y+SpK74B7C9EJe1uupxk5j6+zkgIE9FFr+KGYxGMUdpsxskgm6kYYP
- fmZw2e3gxO0P3ZJWWOq06pp+BYMUc3LTs96BTlOqUIt4SRdzV1f0w5LQb9Xm7UCzU1OLfx
- x/YfgiF18/TUYPzMiSCRi2dtOgoBB6M=
+ t=1765989953; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=GflHCo7RBYrYhtZvzABS0DCrAarF1iGNGJd1Mhf/Vpw=;
+ b=rIdvvbSlozVIYZyRyoCPtZGYKpp1X4ZqztuAgf/sp/gtaQlOz33P99R1J8XAj3MjiVfdlm
+ b0q/c7GkHc5VFmAeIlbGZummGwXwti5IAx3zIG7fMaJVIpHkhqx2Gp8fxq/73qFrW+PLlv
+ it8NmoMIULuUwYfPjqeqIiCaXL60fFw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1765989958;
+ s=susede2_ed25519; t=1765989953;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BOdX227QL3oWFhXpMwmHJU3UZWXXFN5ORNQ7qNLZu5c=;
- b=LPjVNoGLn+0qSvgdgtMGOy5XKa0z+v1IwJGiItg9IEUOj6wWjGhx67E4I1h2FpRyiv9oIw
- W33g0KBjL8tQxhDQ==
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=GflHCo7RBYrYhtZvzABS0DCrAarF1iGNGJd1Mhf/Vpw=;
+ b=cdUTv5bCu800mgLKKOQdcYf6yRCgdqTHZgKFLIaVafRpzhwTI095VGq+P4/2gSjQ6EwzWm
+ lAji2I0yb/qfLXDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CB60A3EA63;
- Wed, 17 Dec 2025 16:45:56 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 143C83EA63;
+ Wed, 17 Dec 2025 16:45:51 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mNPQIkTeQmlyDQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 17 Dec 2025 16:45:56 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 9xGIMT/eQmlyDQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 17 Dec 2025 16:45:51 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com, peterx@redhat.com, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v2 2/2] tests/functional: Add a OS level migration test for
- pseries
-Date: Wed, 17 Dec 2025 13:45:48 -0300
-Message-ID: <20251217164549.4311-3-farosas@suse.de>
+Cc: thuth@redhat.com,
+	peterx@redhat.com
+Subject: [PATCH v2 0/2] ppc: Fix migration issue with quiesced state
+Date: Wed, 17 Dec 2025 13:45:46 -0300
+Message-ID: <20251217164549.4311-1-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251217164549.4311-1-farosas@suse.de>
-References: <20251217164549.4311-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 97BEE33694
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ MX_GOOD(-0.01)[]; TO_DN_NONE(0.00)[]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_HAS_DN(0.00)[];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim,suse.de:email];
- FROM_EQ_ENVFROM(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- FREEMAIL_CC(0.00)[redhat.com,gmail.com,linux.ibm.com];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- FREEMAIL_ENVRCPT(0.00)[gmail.com]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 594325BCD3
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -132,101 +118,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There's currently no OS level test for ppc64le. Add one such test by
-reusing the boot level tests that are already present.
+A while back, Fabian reported two issues with migration on ppc64le,
+one of which was already fixed. There remains this one from the
+previous series:
 
-The test boots the source machine, waits for it to reach a mid-boot
-message, migrates and checks that the destination has reached the
-final boot message (VFS error due to no disk).
+pseries migration causes a guest hang after migration due to a new
+variable used to track the stopped state of vcpus, which is not
+migrated. Fix is to migrate the new variable. To avoid breaking
+backward migration, a compat property is added. For forward migration,
+a heuritics based on the known QEMU code is used.
 
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/functional/ppc64/test_migration.py | 12 ++++++++
- tests/functional/ppc64/test_pseries.py   | 35 ++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
+Thanks
 
-diff --git a/tests/functional/ppc64/test_migration.py b/tests/functional/ppc64/test_migration.py
-index 5dfdaaf709..a3b819680b 100755
---- a/tests/functional/ppc64/test_migration.py
-+++ b/tests/functional/ppc64/test_migration.py
-@@ -4,6 +4,7 @@
- #
- # ppc migration test
- 
-+from qemu_test.ports import Ports
- from migration import MigrationTest
- 
- 
-@@ -21,6 +22,17 @@ def test_migration_with_exec(self):
-         self.set_machine('mac99')
-         self.migration_with_exec()
- 
-+    def do_migrate_ppc64_linux(self, source_vm, dest_vm):
-+        with Ports() as ports:
-+            port = ports.find_free_port()
-+            if port is None:
-+                self.skipTest('Failed to find a free port')
-+            uri = 'tcp:localhost:%u' % port
-+
-+            dest_vm.qmp('migrate-incoming', uri=uri)
-+            source_vm.qmp('migrate', uri=uri)
-+            self.assert_migration(source_vm, dest_vm)
-+
- 
- if __name__ == '__main__':
-     MigrationTest.main()
-diff --git a/tests/functional/ppc64/test_pseries.py b/tests/functional/ppc64/test_pseries.py
-index 7840c4e3ff..e15a8956a5 100755
---- a/tests/functional/ppc64/test_pseries.py
-+++ b/tests/functional/ppc64/test_pseries.py
-@@ -9,6 +9,7 @@
- 
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
-+from test_migration import PpcMigrationTest
- 
- class PseriesMachine(QemuSystemTest):
- 
-@@ -87,5 +88,39 @@ def test_ppc64_linux_big_boot(self):
-         wait_for_console_pattern(self, console_pattern, self.panic_message)
-         wait_for_console_pattern(self, self.good_message, self.panic_message)
- 
-+    def test_ppc64_linux_migration(self):
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
-+
-+        self.set_machine('pseries')
-+
-+        dest_vm = self.get_vm(name="dest-qemu")
-+        dest_vm.add_args('-incoming', 'defer')
-+        dest_vm.add_args('-smp', '4')
-+        dest_vm.add_args('-nodefaults')
-+        dest_vm.add_args('-kernel', kernel_path,
-+                         '-append', kernel_command_line)
-+        dest_vm.set_console()
-+        dest_vm.launch()
-+
-+        source_vm = self.get_vm(name="source-qemu")
-+        source_vm.add_args('-smp', '4')
-+        source_vm.add_args('-nodefaults')
-+        source_vm.add_args('-kernel', kernel_path,
-+                           '-append', kernel_command_line)
-+        source_vm.set_console()
-+        source_vm.launch()
-+
-+        # ensure the boot has reached Linux
-+        console_pattern = 'smp: Brought up 1 node, 4 CPUs'
-+        wait_for_console_pattern(self, console_pattern, self.panic_message,
-+                                 vm=source_vm)
-+
-+        PpcMigrationTest().do_migrate_ppc64_linux(source_vm, dest_vm);
-+
-+        # ensure the boot proceeds after migration
-+        wait_for_console_pattern(self, self.good_message, self.panic_message,
-+                                 vm=dest_vm)
-+
- if __name__ == '__main__':
-     QemuSystemTest.main()
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/2220496446
+
+v1:
+https://lore.kernel.org/r/20250819223905.2247-1-farosas@suse.de
+
+Fabiano Rosas (2):
+  target/ppc: Fix env->quiesced migration
+  tests/functional: Add a OS level migration test for pseries
+
+ hw/ppc/spapr.c                           |  6 +++
+ target/ppc/cpu.h                         |  1 +
+ target/ppc/cpu_init.c                    |  7 +++
+ target/ppc/machine.c                     | 63 ++++++++++++++++++++++++
+ tests/functional/ppc64/test_migration.py | 12 +++++
+ tests/functional/ppc64/test_pseries.py   | 35 +++++++++++++
+ 6 files changed, 124 insertions(+)
+
 -- 
 2.51.0
 
