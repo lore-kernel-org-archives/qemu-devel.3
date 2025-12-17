@@ -4,66 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D918CD64076
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 06:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786BAD64062
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 06:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVl2K-0004h2-VV; Wed, 17 Dec 2025 01:29:24 -0500
+	id 1vVlCk-00078K-7K; Wed, 17 Dec 2025 01:40:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangruikang@iscas.ac.cn>)
- id 1vVl2I-0004gX-6t
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 01:29:22 -0500
-Received: from smtp84.cstnet.cn ([159.226.251.84] helo=cstnet.cn)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
- (Exim 4.90_1) (envelope-from <wangruikang@iscas.ac.cn>)
- id 1vVl2E-0004Sz-Oz
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 01:29:21 -0500
-Received: from [192.168.0.103] (unknown [114.241.82.59])
- by APP-05 (Coremail) with SMTP id zQCowABX7A+tTUJphwTyAA--.61294S2;
- Wed, 17 Dec 2025 14:29:02 +0800 (CST)
-Message-ID: <5cb9dfb6-7ab9-4c3d-9574-3a1f3e5432e3@iscas.ac.cn>
-Date: Wed, 17 Dec 2025 14:29:01 +0800
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1vVlCh-00077H-5U
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 01:40:07 -0500
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1vVlCe-0006uA-8s
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 01:40:06 -0500
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-34cf1e31f85so807138a91.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 22:40:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1765953601; x=1766558401; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=t3iwmbOYCjXdXUNhd7VjiSslObz2RgyQrl9ndYDPsIA=;
+ b=I5y8GSlf/hKFrNwa5VZ5/1gtdSVa85lqY6x9ARytyV5q5Rz9vLa/OswAtIDhg2T/P3
+ YYLUBwJ/ubz8WS0VyzXp1DFIB2WR9fqNBejWZ5uHfoyKHbwOWDi5hfJEm9xzi6OduA3P
+ /BCLsq5QAtrNxGKTrF3P6PzvPKYubMhj0Q3mux1srhuMBTto3eyqdDWgn+FAOk1BS4vN
+ myL1uS5fUdIXdWLh5qBA6X5uBzZmZeZUl7ZwZVzX6+DTqlj0mh53xIMPmoJRsiq580cy
+ 18b+NLPI8ooBII46vNdPIIL76mGGzor+nlZiTAahPHpVz3z5MWHnYZPIaHPJSKDnng4s
+ S6/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765953602; x=1766558402;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t3iwmbOYCjXdXUNhd7VjiSslObz2RgyQrl9ndYDPsIA=;
+ b=MEoShCBxhhHyQPGTveLuj4E/4Y2XJ/xsqSliLE5OLdd/goNsCEaA7yh6cWGeQGvNu+
+ 0c9DwfD4oPK5dwcgHOocz9gTLb67R28rjs4ICr2MJUZiwFZBBstNDPF+Lr2SqCQLU2i5
+ ryEiIqod1FtLVWOo+5lbyjgjhvWpVguqzEN7oA+Uf5ZwIbDv7X1+KvAEBd87XiNzh9gL
+ BTxPhZ+f0tq1jDxvMdoU4NHQ29glQB3KZ9AXTvmbYwo/fayvgfM0Lm92340QtP+b54L7
+ p4jP8z2pqN0uN3+CqUt3czlADzAUsFYi4VYbYHBIc+RbZ5+4HC+jjv27v+N5VMNeIMZK
+ DxwQ==
+X-Gm-Message-State: AOJu0YwOPOK24riIvtKR0NXH9KSXiN+IsexcrHDok3IvTgE1bh8/1pY5
+ dLLpWKdFTMgtKBaLHXvqPjBnfpXavcYWpc/0Ay+ltvpSKpqOB60j9R/qAec64S1QO10nCYHmIHC
+ /U/yZhOq9DoAOCwS2gAnOEGu2U9pAMlVqJyJqX/KAbQPpSjP0UBrEZBtlj9mKeqtYcHmXDxT8UE
+ 3WqBtEDIkjWgtxsB+CJl0C/+YNVt7li5RuPSVV528yph8=
+X-Gm-Gg: AY/fxX6xxIobF016RQAtC7jH0MC2VHOW0LaUHmuou8h1MbqJZyCc6fjFfubxt12x2bm
+ DWcX2QZ6hKanMqQ7pjNGUZpDFgiE4Nl7WrEHWY3yNDSbQ0Og7Mk90DeVMq7xq69wYjtRYdOs8j1
+ SYk1CwXvxP+LhLlUeuVPQvTvdvTbKDJyH5Wh0rFOleLFgRJj8wfc3Y5px0HfbBB4P0A1Yif9Szg
+ TLgZib0oYqn18ySHWjKp2nBpML/E5ftZ0opUXcsM5JYE6zufRF0Ck+L0bjNWKgHzOhJQoeWKXmm
+ 33pYfNqARt8W4W1FzP6962JhjpBU+rFv4KawrlOAEoIiceBrM9bHnfpaYE66fMbN4QX1JRXOwFa
+ YtofBp+OsLIqAoMcqqiL62aa7DjdhuHyPaPlGmU+Jo17Wj4vzsZEt3FDK0DtsWuVPheQPcHCIea
+ b7r/TaZs5jphXdnTTBBvOR/F+gUccY2oinr+/7EQ==
+X-Google-Smtp-Source: AGHT+IH4htit06dL6FFJWyBBYjSQpV0OVEA8xN2Mv28ZkCAe5tYXlS/nT9PhB2w40shlrQU28aQMUw==
+X-Received: by 2002:a17:90b:1806:b0:343:7714:4ca6 with SMTP id
+ 98e67ed59e1d1-34abd7617b6mr14428803a91.22.1765953601330; 
+ Tue, 16 Dec 2025 22:40:01 -0800 (PST)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-34cd40eb2b9sm1488879a91.2.2025.12.16.22.39.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Dec 2025 22:40:00 -0800 (PST)
+From: frank.chang@sifive.com
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
+ Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>
+Subject: [PATCH] target/riscv: Initialize riscv_excp_names[] and
+ riscv_intr_names[] using designated initializer
+Date: Wed, 17 Dec 2025 14:39:55 +0800
+Message-ID: <20251217063955.1037737-1-frank.chang@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/7] Add termios2 support to ppc target
-To: Luca Bonissi <qemu@bonslack.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>
-Cc: qemu-devel@nongnu.org, Icenowy Zheng <uwu@icenowy.me>
-References: <ab68ba71-acd1-4ef1-bdde-f72a9e8e3152@bonslack.org>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <ab68ba71-acd1-4ef1-bdde-f72a9e8e3152@bonslack.org>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: zQCowABX7A+tTUJphwTyAA--.61294S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxuryrur1xXr4rXr1ktFy3XFb_yoW5Wr1Dpa
- 4kGw15GF4DtrW3CFs3KF4YvF4Ygr1fJr4DCr1fGrW0y3WSqFyUWFn2kr4YvF1jqF1ru34a
- qFZxuw12kw4UA3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUkYb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I2
- 0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
- A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
- jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
- A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
- w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
- vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCY1x0262kKe7AKxVWUAVWUtwCF04k2
- 0xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI
- 8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41l
- IxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIx
- AIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2
- jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU5L18JUUUUU==
-X-Originating-IP: [114.241.82.59]
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
-Received-SPF: pass client-ip=159.226.251.84;
- envelope-from=wangruikang@iscas.ac.cn; helo=cstnet.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=frank.chang@sifive.com; helo=mail-pj1-x102a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,72 +106,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+From: Frank Chang <frank.chang@sifive.com>
 
-As Icenowy has pointed out, there is no termios2 for ppc. The TCGETS2
-constant for ppc in glibc is not actually usable in user code. However,
-this gave me an idea...
+Use designated initializers to initialize riscv_excp_names[] and
+riscv_intr_names[] so that we don't have to explicitly add "reserved"
+items.
 
-On 10/31/25 21:26, Luca Bonissi wrote:
-> >From 2aa0a13da0da6e3a804359f24cc1298b97cda45c Mon Sep 17 00:00:00 2001
-> From: Luca Bonissi <qemu@bonslack.org>
-> Date: Fri, 31 Oct 2025 13:31:36 +0100
-> Subject: [PATCH 5/7] Add termios2 support to ppc target
->
-> Signed-off-by: Luca Bonissi <qemu@bonslack.org>
-> ---
->  linux-user/ppc/termbits.h | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
->
-> diff --git a/linux-user/ppc/termbits.h b/linux-user/ppc/termbits.h
-> index eb226e0999..ae6ee8897c 100644
-> --- a/linux-user/ppc/termbits.h
-> +++ b/linux-user/ppc/termbits.h
-> @@ -20,6 +20,28 @@ struct target_termios {
->      target_speed_t c_ospeed;               /* output speed */
->  };
->  
-> +struct target_termios2 {
-> +    target_tcflag_t c_iflag;               /* input mode flags */
-> +    target_tcflag_t c_oflag;               /* output mode flags */
-> +    target_tcflag_t c_cflag;               /* control mode flags */
-> +    target_tcflag_t c_lflag;               /* local mode flags */
-> +    target_cc_t c_cc[TARGET_NCCS];         /* control characters */
-> +    target_cc_t c_line;                    /* line discipline */
-> +    target_speed_t c_ispeed;               /* input speed */
-> +    target_speed_t c_ospeed;               /* output speed */
-> +};
-> +
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+---
+ target/riscv/cpu.c | 89 +++++++++++++++++++++++-----------------------
+ 1 file changed, 45 insertions(+), 44 deletions(-)
 
-The "nonsensical" target_termios2 here is identical to target_termios.
-So, can we simply *rename* target_termios into target_termios2, and also
-rename the constants like these to add a "2":
-
-#define TARGET_TCGETS		TARGET_IOR('t', 19, struct target_termios)
-#define TARGET_TCSETS		TARGET_IOW('t', 20, struct target_termios)
-#define TARGET_TCSETSW		TARGET_IOW('t', 21, struct target_termios)
-#define TARGET_TCSETSF		TARGET_IOW('t', 22, struct target_termios)
-
-So that we repurpose the generic termios2 code to handle termios for
-ppc? This would look like we're translating ppc guest TCGETS into host
-TCGETS2, but the code would be written like it's doing a straight ppc
-guest fake-TCGETS2 to host TCGETS2 translation.
-
-Essentially, instead of thinking of ppc as "termios is different, and
-there's no termios2", we can think of it as "termios2 only, no termios".
-This would be ABI compatible with user programs and support the
-non-standard baud rates use case that are checked in the glibc test
-suite on ppc guest. 
-
-Icenowy's suggestion [1] to fix ppc host support basically does the
-corresponding thing on the ppc host side. This looks slightly less
-cursed than my idea but is basically the same deal.
-
-Some extra handling may be needed to print the correct words in syscall
-trace output.
-
-Vivian "dramforever" Wang
-
-[1]: https://lore.kernel.org/qemu-devel/4403eb94ddbb2934f1f75d94ce921f0f1078ad9f.camel@icenowy.me/
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index aa58ba8b99a..ee859093f78 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -305,60 +305,61 @@ const char * const riscv_rvv_regnames[] = {
+ };
+ 
+ static const char * const riscv_excp_names[] = {
+-    "misaligned_fetch",
+-    "fault_fetch",
+-    "illegal_instruction",
+-    "breakpoint",
+-    "misaligned_load",
+-    "fault_load",
+-    "misaligned_store",
+-    "fault_store",
+-    "user_ecall",
+-    "supervisor_ecall",
+-    "hypervisor_ecall",
+-    "machine_ecall",
+-    "exec_page_fault",
+-    "load_page_fault",
+-    "reserved",
+-    "store_page_fault",
+-    "double_trap",
+-    "reserved",
+-    "reserved",
+-    "reserved",
+-    "guest_exec_page_fault",
+-    "guest_load_page_fault",
+-    "reserved",
+-    "guest_store_page_fault",
++    [RISCV_EXCP_INST_ADDR_MIS] = "misaligned_fetch",
++    [RISCV_EXCP_INST_ACCESS_FAULT] = "fault_fetch",
++    [RISCV_EXCP_ILLEGAL_INST] = "illegal_instruction",
++    [RISCV_EXCP_BREAKPOINT] = "breakpoint",
++    [RISCV_EXCP_LOAD_ADDR_MIS] = "misaligned_load",
++    [RISCV_EXCP_LOAD_ACCESS_FAULT] = "fault_load",
++    [RISCV_EXCP_STORE_AMO_ADDR_MIS] = "misaligned_store",
++    [RISCV_EXCP_STORE_AMO_ACCESS_FAULT] = "fault_store",
++    [RISCV_EXCP_U_ECALL] = "user_ecall",
++    [RISCV_EXCP_S_ECALL] = "supervisor_ecall",
++    [RISCV_EXCP_VS_ECALL] = "hypervisor_ecall",
++    [RISCV_EXCP_M_ECALL] = "machine_ecall",
++    [RISCV_EXCP_INST_PAGE_FAULT] = "exec_page_fault",
++    [RISCV_EXCP_LOAD_PAGE_FAULT] = "load_page_fault",
++    [RISCV_EXCP_STORE_PAGE_FAULT] = "store_page_fault",
++    [RISCV_EXCP_DOUBLE_TRAP] = "double_trap",
++    [RISCV_EXCP_SW_CHECK] = "sw_check",
++    [RISCV_EXCP_HW_ERR] = "hw_error",
++    [RISCV_EXCP_INST_GUEST_PAGE_FAULT] = "guest_exec_page_fault",
++    [RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT] = "guest_load_page_fault",
++    [RISCV_EXCP_VIRT_INSTRUCTION_FAULT] = "virt_illegal_instruction",
++    [RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT] = "guest_store_page_fault",
++    [RISCV_EXCP_SEMIHOST] = "semihost",
+ };
+ 
+ static const char * const riscv_intr_names[] = {
+-    "u_software",
+-    "s_software",
+-    "vs_software",
+-    "m_software",
+-    "u_timer",
+-    "s_timer",
+-    "vs_timer",
+-    "m_timer",
+-    "u_external",
+-    "s_external",
+-    "vs_external",
+-    "m_external",
+-    "reserved",
+-    "reserved",
+-    "reserved",
+-    "reserved"
++    [IRQ_U_SOFT] = "u_software",
++    [IRQ_S_SOFT] = "s_software",
++    [IRQ_VS_SOFT] = "vs_software",
++    [IRQ_M_SOFT] = "m_software",
++    [IRQ_U_TIMER] = "u_timer",
++    [IRQ_S_TIMER] = "s_timer",
++    [IRQ_VS_TIMER] = "vs_timer",
++    [IRQ_M_TIMER] = "m_timer",
++    [IRQ_U_EXT] = "u_external",
++    [IRQ_S_EXT] = "s_external",
++    [IRQ_VS_EXT] = "vs_external",
++    [IRQ_M_EXT] = "m_external",
++    [IRQ_S_GEXT] = "s_guest_external",
++    [IRQ_PMU_OVF] = "counter_overflow",
+ };
+ 
+ const char *riscv_cpu_get_trap_name(target_ulong cause, bool async)
+ {
+     if (async) {
+-        return (cause < ARRAY_SIZE(riscv_intr_names)) ?
+-               riscv_intr_names[cause] : "(unknown)";
++        if ((cause < ARRAY_SIZE(riscv_intr_names)) && riscv_intr_names[cause]) {
++            return riscv_intr_names[cause];
++        }
+     } else {
+-        return (cause < ARRAY_SIZE(riscv_excp_names)) ?
+-               riscv_excp_names[cause] : "(unknown)";
++        if ((cause < ARRAY_SIZE(riscv_excp_names)) && riscv_excp_names[cause]) {
++            return riscv_excp_names[cause];
++        }
+     }
++
++    return "(unknown)";
+ }
+ 
+ void riscv_cpu_set_misa_ext(CPURISCVState *env, uint32_t ext)
+-- 
+2.43.0
 
 
