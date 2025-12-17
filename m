@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F0B2D609D5
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 00:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 611C6D637DF
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 00:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVfPn-0002Jh-I1; Tue, 16 Dec 2025 19:29:15 -0500
+	id 1vVfQF-0002gn-SX; Tue, 16 Dec 2025 19:29:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVfPj-0002JJ-KA
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 19:29:11 -0500
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1vVfQD-0002d2-UB
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 19:29:42 -0500
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVfPi-0006Q7-4A
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 19:29:11 -0500
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-2a07fac8aa1so39898915ad.1
- for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 16:29:09 -0800 (PST)
+ id 1vVfQC-0006We-Ch
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 19:29:41 -0500
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-349ff18445aso4312630a91.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 16:29:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765931348; x=1766536148; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765931379; x=1766536179; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4GPTrweyyeK+8037DCuuyHtXWg8qaThAkj48F0vT19U=;
- b=IRQ4dTFJo6vc33riGhT2J8tE13/mqXnCvE2srcoUlf7TiqaDYAWewhu29250tke1vp
- 134hf2WdUnDCFa/rDlX/76Bb/ijI9p5Te1s5EYS++pCKIZB10HpDJLyA67pTJlp094zX
- iXib7PA+7RTS+FzG8v85rgmwsep8dpqmZ36ZrsOtGRuxW5YfgkFYqkKIdM8BB2UyBWqX
- btZGWN+9LOksYCalKdTW/DOyOowHmJ5Ip8GgEtAWj+Sn65SRG57NE+cES6z9Fo9FypjC
- 6USZLBr1015wJ2Ek66vwof02VJ6KnTLvL89jxe51czphT1YmG4rAXSKhNjpQ7f21ifUE
- TRxw==
+ bh=ih6ys6XHM7O9Qa024dWKHwivlgwlJayUzYMfjepNtGU=;
+ b=RXY2uB37jzXTGSPHaONnROEraPVqRZLd3p5xMLlDhUnKRvcEiPv4eDMA+WNAees4oq
+ byrzIqG8ipiyZYZTc/dsva0+rRqMmppeWMKvXLkBksRrdb5d9CUu4od1wKcQP+LN9g58
+ opthJ6kKK3oJfwM8B/i1uiFKjlla94tWKopb8lB3ypg4v7/qRPnKv/+XYrM4pfR5q1Ec
+ Hh6umo3dNcB7V26XkbEujQyY21WIxgASAuljgZkS+otRNh1+AZkfz4rkZaxZY01LFLrl
+ Lf5qnU3jrMB9q38F6C4e59L0r8DPt/XL6fnncPiYb8h+aQ5MOYAZZSr91aPT5xCoOMzU
+ Jh/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765931348; x=1766536148;
+ d=1e100.net; s=20230601; t=1765931379; x=1766536179;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=4GPTrweyyeK+8037DCuuyHtXWg8qaThAkj48F0vT19U=;
- b=g/jvGJpZgSv/W3zI+EuuZPzYVxjMrTgHIoTOVjaXUVsj79MHgDQ1ycFuXxhvLKPAm2
- c0crUiYHGj5o+/j/G4+skh8LVKBUbvaa/b6sPaCOXRP1HbhE+Bhw67fiJmMYGhXmrS/a
- 0ztd02uQ/oSk++2ZcevbGl/UDQNe1lqVhq5Gj0MEXXO2AoAlLyqLpard8NMjxjdm+Erx
- K6yzyowQXWiZEmaS2zOssQF7x3dPwnby/rxBSBO1fLhx+R7KXGxNz9Ij7jCRBX8M935l
- vkN3IVkvN32BY2JmWCE5M+YYqAmKLHGxxKI0i0ncd65pKWPyxC/+6exE8VEZB7sEFWyj
- p7Sg==
+ bh=ih6ys6XHM7O9Qa024dWKHwivlgwlJayUzYMfjepNtGU=;
+ b=Htj/Y5pDIDwTivLhfSa7vcrFCI5xpJ4jYocOc/ANQgFNtn/BkxZZSzuxh5HYoNkSEq
+ 2KWJeuqGXlg2wxes104ykyDg2wDiBnvD6bAIjk1howLacmDxEYfzGh3v6S6CSY7A0WLj
+ HDq82Hk2JtA8x4LJJZWW+wQmRW6trxGVEjUQu0KKjlAr0SHVl1dZnko4FhKAcUzXjKUy
+ IUYq1r5cipxuY4eDx6Dtgbs5M+HjIT2tbNLt4BMiFDsY/b3a3Dc61TuSkmiPu0Drw1J/
+ AztngvLOBLqqdeQQ6/8ernPImq4EpZpxraFN51wkvfSCZERkZRL3yd7g8R7EAgjOmgTP
+ 2ARA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWraifiHVfZQI2DD30QuYyq5LjLf3SEfIDCBntEhoNXxavVOgnuKQR64av1I8S4e7Yel++qU7js7Ho0@nongnu.org
-X-Gm-Message-State: AOJu0YyHaYND9isQl2UTHKUwdQIkFz0WHrvdhdo6pt7N2YOH+CZHRT/U
- LQEf4yxTqxe9clvdicSAmrWYPxj9RsPNHedhLYNQlTiTWm3qyvpYMmt8QaS45uCgdpM=
-X-Gm-Gg: AY/fxX43eIO6J5C1mBb8oKqZUqA0/bJXWW4rZYHzW0/BXky69wsXmfLetmugcBU4gqW
- 3E6Q0XEqmarBno/n/reoOaUHQheTP75YlL8V54LXvM0oqAMF/EBXjcmfLcDx6HA+YzWsHq/LK8X
- QjGodkBttpKfpWQm8i7CPnFwo/N6HJg/QyPT/Kf2Iy0VM4Hps82sIm2JCWM4Ok/TkKygYHcQQu8
- yeC4XKQDvvtOp/gk8Aiu3LmLYpIFkvXji6t4MNo/PQxx5tQiyH9m0D/+CHz0zq8NYWdbAvfhnk7
- FWxzDDqw+PHqtFIXpHO0Sc1Jtlo5Hb817DokLYfvsBwed6ecwpolofE08NYVU1JWCYgW+hU5vFs
- 6JV3TicL+Pjj9oWKFiE1fyuCdteLu9haNnARdUaaIYF4C8/RIubJtZJZCk9UW6Vq8VCo4O6tHLv
- g81d5BHxQpg0PDYegSFHwTU1OJuLMfttlP/EAdao/EFW/EfUX4FhAUEt9S52NXc7qqjg==
-X-Google-Smtp-Source: AGHT+IHjNVTshteqwEDQzmUnxpXjrD7YI+4+V9yvrc1wytnYFqQcT/+jNzWuy4xpju7tQ09+f7cACg==
-X-Received: by 2002:a17:903:32c4:b0:2a0:945d:a195 with SMTP id
- d9443c01a7336-2a0945da490mr140741435ad.45.1765931348308; 
- Tue, 16 Dec 2025 16:29:08 -0800 (PST)
+ AJvYcCVcsAcRHu6KqhkpyLu1gc9g7C8G0yMt7ZLYRmnEbEL3WqWGU6x5JKcHXqVjO7K0s8Ql9RrTm/c2a5hY@nongnu.org
+X-Gm-Message-State: AOJu0Yxk4ZlyyawQJPwj29QW+i0ZCPkW6Hv8Y199c26X77sjMOHAu94f
+ +HQsmFQqIIvD3sczb9upg0bPwEfZW1hoF64HgdSJxEv/a0qLkoqopevb0h+oQ8VUvZg=
+X-Gm-Gg: AY/fxX7fnsF3FcEiImMMZRN5mjvkzgmZncqSPMf6lhT0v5KhN/3kNlZx5Xh7jS+nRLV
+ LqCzx+ICZ6YgF9uJ5SYuBF6BUshwNSGhl58d18h4k6xroLzDkWiOtTktZA/x4UPUfl3RIGWSG/u
+ nnqQwcS+FBOlOb7Rht1P+50Q5chS1G8a5j1M5bLf7G837dUgT8lCDtpIbeTRPpfVHMGg/HlJVF8
+ yDmznL713MM2FykNWVyTf0+TUR49To0IYCH9dhWOiFi7qvEA0PX7EqC8NptZTxZx4IQKo1FIibg
+ qOGi/RdXSMAttPfEk4P7IDrd0foF5M4pKKGYug7ZuCvKgVRj/bmP2S227IYf7R/lhFy2C4YMhXI
+ nmPJRW3kd+uoq042BpR7aWiizHQusKWst96pzzwj7cN7evp45tO7g3+GuLItRCO/JEs8NKWgFtQ
+ /Hs5TA6i5HS+HuWHXBhPJDGsjEOvM2whaYhi2oQt+yUe6HbO1VeUEl3TM=
+X-Google-Smtp-Source: AGHT+IEGlMj/BPyJPYEZEFUzuYUzQNkRu/85NhgWAPIehVjhkAwOExg0ptlQxUT3lxfobKcXDqjAww==
+X-Received: by 2002:a17:90b:3e4e:b0:340:d578:f2a2 with SMTP id
+ 98e67ed59e1d1-34abd7a9571mr14784525a91.6.1765931379001; 
+ Tue, 16 Dec 2025 16:29:39 -0800 (PST)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34cfd90bc9asm591859a91.7.2025.12.16.16.29.07
+ 98e67ed59e1d1-34cd9a40c83sm1071816a91.3.2025.12.16.16.29.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Dec 2025 16:29:07 -0800 (PST)
-Message-ID: <7ba085b6-8461-4538-bde2-e291fe18bcab@linaro.org>
-Date: Tue, 16 Dec 2025 16:29:07 -0800
+ Tue, 16 Dec 2025 16:29:38 -0800 (PST)
+Message-ID: <b5ae3fd1-62cb-49b9-a85b-13b42dbd3146@linaro.org>
+Date: Tue, 16 Dec 2025 16:29:38 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/14] hw/core: Add riscv[32|64] to "none" machine
+Subject: Re: [PATCH 05/14] configs/target: Implement per-binary TargetInfo
+ structure for riscv
 Content-Language: en-US
 To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org, palmer@dabbelt.com, alistair.francis@wdc.com
 References: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
- <20251217-hw-riscv-cpu-int-v1-4-d24a4048d3aa@rev.ng>
+ <20251217-hw-riscv-cpu-int-v1-5-d24a4048d3aa@rev.ng>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251217-hw-riscv-cpu-int-v1-4-d24a4048d3aa@rev.ng>
+In-Reply-To: <20251217-hw-riscv-cpu-int-v1-5-d24a4048d3aa@rev.ng>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,10 +108,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/16/25 3:51 PM, Anton Johansson wrote:
+> Defines TargetInfo for 32- and 64-bit riscv binaries.
+> 
 > Signed-off-by: Anton Johansson <anjo@rev.ng>
 > ---
->   hw/core/null-machine.c | 3 +++
->   1 file changed, 3 insertions(+)
+>   configs/targets/riscv32-softmmu.c | 26 ++++++++++++++++++++++++++
+>   configs/targets/riscv64-softmmu.c | 26 ++++++++++++++++++++++++++
+>   configs/targets/meson.build       |  1 +
+>   3 files changed, 53 insertions(+)
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
