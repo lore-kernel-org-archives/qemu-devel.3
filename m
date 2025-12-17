@@ -4,104 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2391D66BA2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 20:27:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCC8BD66BA2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 20:29:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVy7B-00056r-AO; Wed, 17 Dec 2025 15:27:17 -0500
+	id 1vVy98-0005wK-Qe; Wed, 17 Dec 2025 15:29:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVy7A-00056F-5W
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 15:27:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vVy78-0005nV-LZ
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 15:27:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766003234;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TebtAd+gSaWqNVJFJPHtCbG9b9Zh6VR7vcxAdvehGcE=;
- b=WOPNNGnhnJvRSgqtpi5LwNtikskE+9wjReAYxqesyYhoUPEJm8zhIQ/ZMvIUv50Di8HED4
- fe+GQ2s8lxO/Jv3pXhb5EN6X4d5gkHTX2PGqExHW5P/D6bifJgACwKwy6ImbbuWRphkmTM
- ItHAf8jIkdpqN0vA5Gzq90aB5/IebaU=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-532-psb6Y7wxP0KyW3Wz9pZa6A-1; Wed, 17 Dec 2025 15:27:12 -0500
-X-MC-Unique: psb6Y7wxP0KyW3Wz9pZa6A-1
-X-Mimecast-MFC-AGG-ID: psb6Y7wxP0KyW3Wz9pZa6A_1766003232
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-88a344b86f7so126342956d6.0
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 12:27:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vVy95-0005vr-Hq
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 15:29:15 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vVy93-0006Hp-UC
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 15:29:15 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7b7828bf7bcso6729272b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 12:29:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766003232; x=1766608032; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=TebtAd+gSaWqNVJFJPHtCbG9b9Zh6VR7vcxAdvehGcE=;
- b=T/4Epz830m+hkhmmHKnYjfKAydAhEhMaZt8vvebVNGkdrECqQ6akajIGstL9Nwy5Ru
- KAV8amjQ8kC16hw2Zl4tiu5SmDdmNYF7YHYbHuU9z7UWL5BS3QsHoDufekS4ngfuaTAz
- 9UScvTh28z8cZXkU7yRiM3FT69yGNcfveO/qm3GqjAmiIiiFpUPlCXC3zcSURtmyfZrP
- Gap8MFdXq7wEOuY6ScRLTClWw98hcto3sqFsPxqMPZmXMc6PwHoJeGt6hgZ7djzn2xZU
- mqGkyI1Gj1DIQxdTjIF3LuoB+PzU7VGLhi2hf49Hs6oqBjPKB5FjXKylG0EKCXuerVVe
- bzLw==
+ d=linaro.org; s=google; t=1766003352; x=1766608152; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PeuSfPSNWLtwpJyqq29Ik6xFhfYqiWSj7JRj6ySmND4=;
+ b=WSXmXjw8oqnV7BAI8BX6SGZwDfXLuKDRP7XeYop6H/F6S11go/0JXta4KccM+WrCAh
+ CclH6k67+PqT8OiLNXdGdHIBvY5CKdqb8Eo6PKvfpmSgfs9Ld9VG4n/NOh3NGzMH0LXq
+ kkZQR3iDw4oasAl2AlB6q+cHgCCXVJ7pTqihWBy7hOrCMwRwFTTPn4gM1rbdRa/a/cQU
+ r96yY/6S6J5eQnk57sL8z2q4uYUyLiWmZMGaZHxTQ2nF9rNTh9Qzp+vTzfWV6+eoEyJs
+ yZUJ9Bs8F+B2y2WP+x9w2QLfKEjx9BJA5G8Txv0kxRy/gpNVJwxQ7iDUpY8F3koqLam3
+ MGaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766003232; x=1766608032;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TebtAd+gSaWqNVJFJPHtCbG9b9Zh6VR7vcxAdvehGcE=;
- b=pNqpWynWbqbAbebL6aWcSkTn1BtoI6w/pOWbUUUWP2721rl8JcGJDmKKY9wUL7YKkC
- AYxCvAeo2axrFUwlvQtIKrlVdL2APrsJyYzoAUiCAuMPGuTkDOSohrOgPK3lSb90JR2I
- b4aMYvLGJT2/vBkJHcNiIcmhmwJaXL7fKxgzk2EmA5MgFa7/MolfMnqpKHy7rgMcMgpV
- /1JH8W+9AGXpQPaWbjzFs+qv0YZPCR9dLFh0iqDJ3QwIeNd253r0QAEB91ds5o17qxfU
- 2iWm4ID0m3OXmhMogURnmwR5XOm528pDG3exq7V0ksFqdiOHUrVXLf3b1hFNBHTIkC/n
- ZZ2A==
-X-Gm-Message-State: AOJu0YzDmBRp9aNf4O2B9IIPmdlhof4nIUrnFsetVxd01I7pEJP78Kq2
- ctrbGQsOrK7IExt89VOXV7LYFYCe8y6+GpKvvl3F+vaCSMVkhs6e/t5Mq1DR4NzDBSM0U3c1CIT
- qnB4hGdCCd6MwFFVlcgPb13hnLZNrexIoGv4EBg17Ei4D6dg9yh0VtZ7C
-X-Gm-Gg: AY/fxX6J9ufL7J0um0CAb6V8+BEvGbSE7HtKQAJTii+/1nTyor7hLGViSiJMTGHXEU4
- mc6+rIskXWwTmmeh+UFfM5O0RDphSvEuq+TXnGLftf6pUA6GekD5ozDD7zLdb1Wq8qA57qR9ANI
- i80mQrtOzftY7wtHXU16mPSmkW8YB1wnl4R9nEzuAt6Dxud8+lkqjwl4ZyXiKxqLz9ZTz5itxJs
- aHr2W3Mcb8GTsPenI2fV+YxER+tDWm8MQxiobjDRr/xCtxw1mhL0oHI+JIjaO563Xxke0M/WDOy
- pF41AXmnqh+vWfqS2hnpqU/Gh3jnBMjgp/IBVXuBqKANNYRgcF8zvAtaXzDn3Jpr/UZD9v4Kvdi
- cPI8=
-X-Received: by 2002:a05:6214:3bc8:b0:88a:529a:a531 with SMTP id
- 6a1803df08f44-88a529aae76mr65584656d6.48.1766003231944; 
- Wed, 17 Dec 2025 12:27:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHPcDPhjRoq1rYfhZPEDo+FwMs51zyMfL2vwPFNFdYron07B3QP8XII9l8XT6sOrHMjTyDrOg==
-X-Received: by 2002:a05:6214:3bc8:b0:88a:529a:a531 with SMTP id
- 6a1803df08f44-88a529aae76mr65584346d6.48.1766003231546; 
- Wed, 17 Dec 2025 12:27:11 -0800 (PST)
-Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-88c5db7a7ffsm2968206d6.11.2025.12.17.12.27.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Dec 2025 12:27:11 -0800 (PST)
-Date: Wed, 17 Dec 2025 15:27:10 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 29/51] tests/qtest/migration: Add config QDict
-Message-ID: <aUMSHnmPCIXa0a3t@x1.local>
-References: <20251215220041.12657-1-farosas@suse.de>
- <20251215220041.12657-30-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1766003352; x=1766608152;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PeuSfPSNWLtwpJyqq29Ik6xFhfYqiWSj7JRj6ySmND4=;
+ b=XtVLGw614H7nvDvsPY3UDxCVxbadq+rBEHDXzAMYjYKOwBCINeIQDwpTM8HFKcCbvv
+ q188MUxn+Fmpsrg3E2yvCjCG3QjxXKu9s4SThfo8WWBmA0gSCkcztw4ZagVhZ1hUu5wl
+ crMPmjqGZUQLW5mcptvOTBNdiMj/H1+LL6CUaJGIp77G9YlGOQJvu3oHp0596FEroBY2
+ WCI14MDdIRaxqe/iUV47RkdU1+CyjaHaa/u+DaLrjOnNFwcQy1vhegJzIuV1zabFKysI
+ myjOO4OfCb97bo/83kiG3NEXI2bGrvLm53MZZPqPwNF1riCOVPblAbIPyP0TDIUXvkeo
+ zmVQ==
+X-Gm-Message-State: AOJu0YxTHShKWn2Ec/DxXsQjv7H/gGiiUrWuxGvUJTDbv1A7PSk94gHy
+ mJb+Cw83NPUxmtJ/tiaeMWN20f4nkVmD4MxKIVCkBqYifMGnnQPn3Hgsge1WP2hRYcTtFi6aF+Z
+ 2bQnEJcg=
+X-Gm-Gg: AY/fxX6cOOJYhGL6N8+PHzqj60U6vmE6tOsfCHarxtgTNEk2tPsOSDN+V627vXnhSUX
+ Ugs4HWz88ZJiJqMajjtIMjXyX1qGOn7I9Rj/qBpmIa4L0HCq7JnvHMq9zZwCAsfpHfSbsGGWDXj
+ OL4sLDVv/i5Cxq8rHrh5jBGOxtTR3FOv9ZZgznzc9rkIC6z1MPXW3W9zN6bQY2kJjqhwDqWM20y
+ 5eEmxxJ5QewgKZXjhMnWyj9i+exCubgHItjX8xTyMzNPyOL6VzIwsQqKhX+8IPkxPW3oSPUYt2a
+ XBfsmQTGCs3upwWILEFp+82lVVSevQBpmRFZy0irBfibyHGCiDQoIhm2sdljEYuPiw+5Uf2y+xl
+ cKUDN26RikZkKBINTJdfrrDdLdvfc4mD9oceet2rtjRsaUdBfXSqg0i8R4V4hp3g2UT4S/7Aqwe
+ fIWOE6WpHXincgro/YcZPh0lKU821I0g==
+X-Google-Smtp-Source: AGHT+IGI1rMhZ35ybc7yPZYHx6rzQvuZWSNXrMBNhPZ7lfrJzR/4aR6s4R9MIZUIAK9uj9atKNAjGA==
+X-Received: by 2002:a05:6a00:3403:b0:7e8:4398:b35a with SMTP id
+ d2e1a72fcca58-7f6691b1669mr17589867b3a.45.1766003352184; 
+ Wed, 17 Dec 2025 12:29:12 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.245])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7fe14179645sm307835b3a.47.2025.12.17.12.29.10
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Dec 2025 12:29:11 -0800 (PST)
+Message-ID: <90a7de63-c7cb-4378-9afd-fd6740ed27fe@linaro.org>
+Date: Thu, 18 Dec 2025 07:29:08 +1100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251215220041.12657-30-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/14] system/memory: Factor
+ address_space_ldst[M]_internal() helper out
+To: qemu-devel@nongnu.org
+References: <20251217143150.94463-1-philmd@linaro.org>
+ <20251217143150.94463-13-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20251217143150.94463-13-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,15 +106,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 07:00:15PM -0300, Fabiano Rosas wrote:
-> Add the config object to the MigrateCommon structure and allocate/free
-> it in the wrappers that are used when dispatched every migration test.
+On 12/18/25 01:31, Philippe Mathieu-Daudé wrote:
+> All the LD/ST[W,L,Q] variants use the same template, only
+> modifying the access size used. Unify as a single pair of
+> LD/ST methods taking a MemOp argument. Thus use the 'm'
+> suffix for MemOp.
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   system/memory_ldst.c.inc | 289 ++++++++-------------------------------
+>   1 file changed, 58 insertions(+), 231 deletions(-)
+> 
+> diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
+> index 823fc3a7561..e0c0c3f5dca 100644
+> --- a/system/memory_ldst.c.inc
+> +++ b/system/memory_ldst.c.inc
+> @@ -20,39 +20,43 @@
+>    */
+>   
+>   /* warning: addr must be aligned */
+> -static inline uint32_t glue(address_space_ldl_internal, SUFFIX)(ARG1_DECL,
+> -    hwaddr addr, MemTxAttrs attrs, MemTxResult *result,
+> -    enum device_endian endian)
+> +static inline
+> +uint64_t glue(address_space_ldm_internal, SUFFIX)(ARG1_DECL, MemOp mop,
+> +                                                  hwaddr addr,
+> +                                                  MemTxAttrs attrs,
+> +                                                  MemTxResult *result,
+> +                                                  enum device_endian endian)
+>   {
+> +    const unsigned size = memop_size(mop);
+>       uint8_t *ptr;
+>       uint64_t val;
+>       MemoryRegion *mr;
+> -    hwaddr l = 4;
+> +    hwaddr l = size;
+>       hwaddr addr1;
+>       MemTxResult r;
+>       bool release_lock = false;
+>   
+>       RCU_READ_LOCK();
+>       mr = TRANSLATE(addr, &addr1, &l, false, attrs);
+> -    if (l < 4 || !memory_access_is_direct(mr, false, attrs)) {
+> +    if (l < size || !memory_access_is_direct(mr, false, attrs)) {
+>           release_lock |= prepare_mmio_access(mr);
+>   
+>           /* I/O case */
+>           r = memory_region_dispatch_read(mr, addr1, &val,
+> -                                        MO_32 | devend_memop(endian), attrs);
+> +                                        mop | devend_memop(endian), attrs);
+>       } else {
+>           /* RAM case */
+> -        fuzz_dma_read_cb(addr, 4, mr);
+> +        fuzz_dma_read_cb(addr, size, mr);
+>           ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
+>           switch (endian) {
+>           case DEVICE_LITTLE_ENDIAN:
+> -            val = ldl_le_p(ptr);
+> +            val = ldn_le_p(ptr, size);
+>               break;
+>           case DEVICE_BIG_ENDIAN:
+> -            val = ldl_be_p(ptr);
+> +            val = ldn_be_p(ptr, size);
+>               break;
+>           default:
+> -            val = ldl_p(ptr);
+> +            val = ldn_p(ptr, size);
+>               break;
+>           }
+>           r = MEMTX_OK;
+> @@ -67,87 +71,30 @@ static inline uint32_t glue(address_space_ldl_internal, SUFFIX)(ARG1_DECL,
+>       return val;
+>   }
+>   
+> +/* warning: addr must be aligned */
+> +static inline uint32_t glue(address_space_ldl_internal, SUFFIX)(ARG1_DECL,
+> +    hwaddr addr, MemTxAttrs attrs, MemTxResult *result,
+> +    enum device_endian endian)
+> +{
+> +    return glue(address_space_ldm_internal, SUFFIX)(ARG1, MO_32, addr,
+> +                                                    attrs, result, endian);
+> +}
+> +
+>   /* warning: addr must be aligned */
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Do we know why this warning is here?
+Do we know why we aren't asserting alignment?
 
--- 
-Peter Xu
+It makes me wonder if the ldn_*_p above shouldn't be qatomic_ld.
+And more so for the stores.
 
+But that's an existing problem, not new with the refactor, so
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
