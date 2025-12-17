@@ -4,102 +4,199 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5171D64083
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 07:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E9FCD64083
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 07:21:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVlga-0003mF-3O; Wed, 17 Dec 2025 02:11:00 -0500
+	id 1vVlqV-00084s-6v; Wed, 17 Dec 2025 02:21:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <midnight@trainwit.ch>)
- id 1vVlgX-0003ls-Pm; Wed, 17 Dec 2025 02:10:57 -0500
-Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vVlqS-00081v-8l
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 02:21:13 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <midnight@trainwit.ch>)
- id 1vVlgV-0000J6-Of; Wed, 17 Dec 2025 02:10:57 -0500
-Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 64E9E7A01C5;
- Wed, 17 Dec 2025 02:10:51 -0500 (EST)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-01.internal (MEProxy); Wed, 17 Dec 2025 02:10:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trainwit.ch; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:message-id:mime-version:reply-to
- :subject:subject:to:to; s=fm1; t=1765955451; x=1766041851; bh=X+
- 71vWb1XfXWzj4F2b7sjtBRXUgUZs3OF3KMjNiwC8w=; b=3RxtWFyqvdyk63+MvO
- +i+kVaf2QfKIpIwUqH+cX4Qlo6kBQxnSlnb+YVwNcSXBdjDpZcBVSBIo8sTii2Ob
- WHXB6UVU860jFvBo1huDzvAEf289zVu4loVwloZXPEduqoYH1ulKutebvqr10IdT
- +YmpbSz1Sjds6mtzkZ2mEY2XBajJWO8vfhBVQRR/keDhJ2rSmtFZMg+edSSrvTFt
- FtH6WhAyiSoWzb0S4VV10YpeNqgjJbUpIqvZn4USaf7oPVpc5QuPhXLyEEqmucK4
- PGuuAM+jboZ+ZCU/JrpRu6Q1tRNSqe6lEJ7qNV7pblTqMHTkqtQWUBTqIigZWvMG
- N59A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1765955451; x=1766041851; bh=X+71vWb1XfXWzj4F2b7sjtBRXUgU
- Zs3OF3KMjNiwC8w=; b=jjxwU+cpeV7JYBwhvJcshqv6gDvm+gN0aHogf7VnW6n8
- gDySVTJDSB4tvRhsNY6OvMYBrQeTk1+3UUP3fmcd7ntG85za1WuquAYnVJJhSNG9
- 7eXxsSuh2/b26llCrJs4lEIm94orbWX7c8FpSYpsKJo1EE25YMqKfQXUy6D4O6GG
- POE/Mz5HzA626Q3NhEACCbsi+GVYotNiPjcGnNQwslxRxQ/CVq/2KqHy2YDejFOc
- xFP+B9Xo2MQpxLP4D/KtU5DQhln2zheqfNCDAuJtmfkOLsKin+M3X9UiIR1RAlIQ
- +jXK0L1VSuc0S91dbPK4QSaLXLDZdzn0CnP44o1HiQ==
-X-ME-Sender: <xms:eldCaWPt-8KdWfuXd-55hjAowI0-noOuxu80IyPHNHOPb1Fby0sIhg>
- <xme:eldCaS5NCGSm6bXQLWgX-uJ9owQUaZ3G5x6hGmA8vw_LMMvPr5cxlSQZqnP4ENYvH
- oHjtWS3vRzear7y-45vMCxAVMzqqQRpzD_oV04snYHHuLQhmSEM0tU>
-X-ME-Received: <xmr:eldCaflxuQ4PdJbDurQzZRDN52DW919IYeZgXnhph1fZGXhg8ooaDrVEqxm9EkuRcWSquO0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegudelfecutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
- hrpefhfffugggtgffkvfevofesthejredtredtjeenucfhrhhomhepjhhulhhirgcuoehm
- ihgunhhighhhthesthhrrghinhifihhtrdgthheqnecuggftrfgrthhtvghrnhepfffghe
- eujedvlefhffejgeegledtgefhteejtddtvdfhveelteeuhedvvedvhfehnecuvehluhhs
- thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmhhiughnihhghhhtse
- htrhgrihhnfihithdrtghhpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhu
- thdprhgtphhtthhopehpsghonhiiihhnihesrhgvughhrghtrdgtohhmpdhrtghpthhtoh
- epqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehmihgunhhi
- ghhhthesthhrrghinhifihhtrdgthhdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlh
- hlsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdqrghrmhesnhhonhhgnhhu
- rdhorhhgpdhrtghpthhtohepmhgrrhgtrghnughrvgdrlhhurhgvrghusehrvgguhhgrth
- drtghomh
-X-ME-Proxy: <xmx:eldCabSXqimAVx3vLmu_eW6sWF6hrbyYPmH_53yREzVSAC5mOUTdcg>
- <xmx:eldCaWG_y9e81qUvmm3XrJWFvx3JdjFMXuFHtl5mi8GTDf3L2RErAw>
- <xmx:eldCaYFxk-EZZrEEiYgItuF0GiVDk1KmH3AvobOFeY6N60gOPya8zA>
- <xmx:eldCacRY3ZO4N3roA5_lu9vNY6r_VRyuo40AQF-zLEqvZkX53PSiAw>
- <xmx:e1dCaYEIPz3lq50SBGkhlZn4q375QANJvRhBketxgEO9c8w0QLVCf0K3>
-Feedback-ID: ib36e48e7:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Dec 2025 02:10:48 -0500 (EST)
-From: julia <midnight@trainwit.ch>
-Date: Wed, 17 Dec 2025 18:10:41 +1100
-Subject: [PATCH] hw/char/cmsdk-apb-uart.c: log guest_errors for r/w to
- disabled uart
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1vVlqF-00029n-VV
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 02:21:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1765956060; x=1797492060;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=6onQnSYaSjzy6bu9j2cwG6QJ20eqWIqlkXqRLiN4YYY=;
+ b=WLeftoaI6hRSPBEqHvSij1sMI7KsOEFcABWxQ8jYipvwhIXMvbvJ9Cm4
+ XEUAIl6psj+qcEIHwL2yp4oJkFxfv+pXH/MqjY6D82wdvQpL28qC4s7/v
+ BkjZOUpwBxeo3ZYogrx+qpToAwuv0/GbspjLL9n/9bZcaniDE0IJdNITw
+ PX/7vc9Ld48pcMFtiR6CLXkl8QvHbFj+7XkhQLoprf3AUUBHrY2hbSCr2
+ eYGXoS2UqJEBzVI07LFRkk2ZydI4BVPmHw2yvyZL1iQVMn1hdbbcoJpW0
+ 7vQxKxe0s8IL9FhFLVjtePAzUpn9/YusHG9qPie2H0CjIEMNUbkeC3Kqu w==;
+X-CSE-ConnectionGUID: HDzWcLAJSpicXXnCKB5uuw==
+X-CSE-MsgGUID: mVIZx/10RTSnp3bC4Pd//A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11644"; a="71518171"
+X-IronPort-AV: E=Sophos;i="6.21,155,1763452800"; d="scan'208";a="71518171"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Dec 2025 23:20:56 -0800
+X-CSE-ConnectionGUID: 4j+gIKrKRta6tJGVJ5DU+Q==
+X-CSE-MsgGUID: 6YKCTa80T/eGI01yDkZUxw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,155,1763452800"; d="scan'208";a="229302693"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Dec 2025 23:20:55 -0800
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Tue, 16 Dec 2025 23:20:54 -0800
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29 via Frontend Transport; Tue, 16 Dec 2025 23:20:54 -0800
+Received: from DM1PR04CU001.outbound.protection.outlook.com (52.101.61.6) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Tue, 16 Dec 2025 23:20:53 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VgNhxqpgzlRAdK3QSHy9DC8Fgj1X9FnSBXHhW7dKHD1Wfs4um6aTjLem1KJ7w+LxXLuXncFFq9bYubb6HSdMgKLQpebxRShrgvbQB8SiCyc/BEi/iyN4gmopVl54k0iSxLJhEtlAf+OQEZywcAAK0XkL8LNKmDwncalv2G1EKzNl4ulXtOnfVISewdAI8uGcUUPJwhn/IIpnevlhBSGSMul3eQOJ0FZFdvJb+/pXwTm5L2F7I1g5Z5JrHy+V7/qL4XAEXBv6tM8CJghMZCh5nzMZpc7UDJ5ma4D56dWFDoxjgF5W8EP4k44jlMZfpHadO90V9URdGRYqzvIeRVZbQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7KZShzrFv6w+qt2xfysOhneac0zLmADbt/DcA3Y22q4=;
+ b=F4VRnMgPZLcQB4FUwD+W0mVA3RXyDVaxCiw4A4U0AYJsrYguH+/yFbhyhKc01m/COCpHO1nMSI8IOprZSEhLLvWuLBIfKc2qtpRE2bPjVkZ8touN0j0UhZzi3FyZ0D8cV+TTZBUS2ZlT8bOL8jWfAO9XqZqxe+/HT9tpJUSQg9CZd1mxwKrAnRdCoVDwLNH00CKG21h41JBMPeuHgbOS3wddXKDS0AAGxB5Uy646DXyxq3lSYLYFtyx24ocYPDKzLr53bjnfJAAvrLkEPggZem7VUAnbNxPMXjRJ0bGFT0YqhCWy+A3Vli1TepQZNRz+5GO8NlrW7k9NQHRiVslKTw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by SJ5PPF162366726.namprd11.prod.outlook.com
+ (2603:10b6:a0f:fc02::813) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.6; Wed, 17 Dec
+ 2025 07:20:50 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%7]) with mapi id 15.20.9434.001; Wed, 17 Dec 2025
+ 07:20:50 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "alex@shazbot.org" <alex@shazbot.org>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>, "Tian, 
+ Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao
+ P" <chao.p.peng@intel.com>
+Subject: RE: [PATCH v9 00/19] intel_iommu: Enable first stage translation for
+ passthrough device
+Thread-Topic: [PATCH v9 00/19] intel_iommu: Enable first stage translation for
+ passthrough device
+Thread-Index: AQHcbY9AReLaq+3KWEek0HB2hE9cArUivIcAgADTNdCAAGVSgIAAHtKw
+Date: Wed, 17 Dec 2025 07:20:50 +0000
+Message-ID: <IA3PR11MB91361CD5DE6DA4898C361DC092ABA@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20251215065046.86991-1-zhenzhong.duan@intel.com>
+ <56e582e7-d14c-46f6-b2cb-4a328315d505@redhat.com>
+ <IA3PR11MB913661A98BDF8BE7019277D192AAA@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <0b2f87ff-2c5f-4a1a-b4a6-db640f0bafb0@redhat.com>
+In-Reply-To: <0b2f87ff-2c5f-4a1a-b4a6-db640f0bafb0@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|SJ5PPF162366726:EE_
+x-ms-office365-filtering-correlation-id: e5b29223-daed-488e-47f4-08de3d3cce50
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|7416014|1800799024|366016|38070700021; 
+x-microsoft-antispam-message-info: =?iso-8859-1?Q?kQJtTofR3QfheRo8pxWpc3JO3xuErHFyq+0oSHFAVIL/339Jyb1ux0PawJ?=
+ =?iso-8859-1?Q?hPs81h1gQBgoAjkp3yhuO8eCybl+470ewArbKh+mkLRQfWZvcS6VkHxNAu?=
+ =?iso-8859-1?Q?1tkPvHH852+2YpZRzOWtL1XlhaUsWVVao/b33x40uNxZ+uLomRYScnBbAh?=
+ =?iso-8859-1?Q?fJbN0Vu/o2nqoLpjzeXV43aXgxk+JUYeignxySM3XUFkMHPP6OEjK3VhgP?=
+ =?iso-8859-1?Q?q8EsUhC5g953JOJbKiWz6gXQrbm8cMjOJqTNSy0/3CAjxR9f1zaTQ5Pw2P?=
+ =?iso-8859-1?Q?vnxtWBwCeyWzfxT8DdUTT/eCZaoqGXDteGBfpp+FH2imwNUOo6icjt/GCh?=
+ =?iso-8859-1?Q?mzxj7Qc+E0+rjYdqWw+KKJkhH/YOvw+LyvpeznnL5HwtGks3KTTIU1qrI/?=
+ =?iso-8859-1?Q?VcYBHOZge5fU3AfA7hGKdmXLMZ7u6h+93q7j/5DR7vNC5LEW/2q7kpxRK7?=
+ =?iso-8859-1?Q?cP6gKwDhKUrmrjBCsgMYaPVtlfbhg8+8Z3Y905izLXQFLJMnVQ5jHHhjkr?=
+ =?iso-8859-1?Q?DvpY18EnUIJgtiu1DpIkWDLNiiTLsDro0AdW6c/8FIdsGX8eLWCMhFgM/J?=
+ =?iso-8859-1?Q?MsDnHX8RW6I0gOUWv+KDnyGo4iBm0Mg3xWIH/dl8AMXnOWLk9O1TXgmit9?=
+ =?iso-8859-1?Q?aR+84FL6LlbaKciXyLYdfHZhmqSRBcischBXJw6ZKbw92xRySrz8fxRZvb?=
+ =?iso-8859-1?Q?ZOOWcX068OS37S7mF5UduCo/mUoRvSekuc3OM8MU6hPLPFrey3GClEfqqQ?=
+ =?iso-8859-1?Q?QIcsEjGAbNfLrbt1+yOqDLiGl07auYmNfDG+/++d2qshsSNh/pS3K46NCW?=
+ =?iso-8859-1?Q?UHF8bViamgu0RBmDIgRzQ2JTZdlmc8NyrOotjP0jhiL26VKVmHWkokbNJg?=
+ =?iso-8859-1?Q?6hnzmIRXlDbMRNzm/X/mQSn4EYaRtAP+UV+BqCOePqGneW9Qei/WMdOdvE?=
+ =?iso-8859-1?Q?F6GoMqfnvSJuWztLJe79ad8tFz4SwDOvtnLUVRH10Q0qVYXBYUTlm4O3lq?=
+ =?iso-8859-1?Q?vYdH3gHuEDywBoFEJUS7Rq6XZOuEjoC78zXUmSRAbRYZeNoYFREUgZhh76?=
+ =?iso-8859-1?Q?yRbUIf6zeyV0kWn7nABPEqAlqeziz8xMADrS+ihxWhCLkH4m8XhUMf3/d7?=
+ =?iso-8859-1?Q?QTxJsqfwJ4jmDYDjHu5qEPQSgDZECajIyM2bce9w2+UMuXs50NKB5eVZWN?=
+ =?iso-8859-1?Q?0TolS9l0wP65tyHYhjBrjB79vQ/aePi1t5DONfaJWypry0zScKEUDlMbSs?=
+ =?iso-8859-1?Q?ueL1ji/oFGHK/d5aORQb92HkrMy5yR1jXT3hj6a7WHzDygkZACtOpNkhPa?=
+ =?iso-8859-1?Q?DNMLa0AznHgtna95aCgqOS24lzIde+fUwnuO2bEUz18lxWuF3EyyjZyxo4?=
+ =?iso-8859-1?Q?fPWa7VJuJ4F0g5ZjLlK+vckM7Aovz7hZeTQe88zEoNV8nV2gA36o15QiZD?=
+ =?iso-8859-1?Q?WYz5oX4iwJ0IPdCF8MX3VRyefDyX4+VVw9w+81Nvh/FncgcQrUD8aXLoMz?=
+ =?iso-8859-1?Q?sQh7KtD9kIayHkdqd4svC7+yoF5GKI39huHT+rtuYcjw=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?9du0YbqnD4l9sgJvYN5VxhMpBd11uih6ZF25PXRfo6/BUZ9tnaPnbimhqS?=
+ =?iso-8859-1?Q?oaAPzFRrke9ox3djSFjzs2d1zs/6zXmL57NuSx+XwRfA82tXqgVcFhbxYr?=
+ =?iso-8859-1?Q?boEwSP4i+4MWtAkrh40O+yKuKQsR/oNK4gpthR0jPllfykbyXrvQxDZqNp?=
+ =?iso-8859-1?Q?eH2BQNqAn5yXjw7ilkc7atbrZVs8Cbz3AmR7MZkCb9bHEsOrGeBKwm8G53?=
+ =?iso-8859-1?Q?C1lKPgQ28EEd0avFcN0AAmWpmdrZjPLfnGR8OhiuqgN50aiMO3MiNlJMuK?=
+ =?iso-8859-1?Q?gpwv5GFgN7SKBzCjrrhRPQ/uzZJFV3VrD9w3bZvlTOtwKUXhlaEcOZKxtA?=
+ =?iso-8859-1?Q?W+FVL0nIOdh170Gpr0ZKoB2vuS7qM09MRsSQ2TENFSlPrk5KwyEzVQa3jF?=
+ =?iso-8859-1?Q?TBtri5f23cnPvgP7niQnKrQo17vjlmEVLEFGQ+YewOsxvbxcfPAn6rokG0?=
+ =?iso-8859-1?Q?ZWYEgztVmOVy0Pia9I/EmXQ+7qtjuJ4EfD+3FSneWp04tGQ4LnXfYdkW8y?=
+ =?iso-8859-1?Q?TuQr5O0S+M80DlCWuIgSxWEKNuqtC/Y3wzmLwahn/JQuTYY/Yrhl/wVZpJ?=
+ =?iso-8859-1?Q?CRUQorsd9fS8BMTS7KmYIsumR6Jsk0/0IhJqp8NN3uKF7JA8JYSfxH4GiN?=
+ =?iso-8859-1?Q?XLN0I8oo39LSwoHkY1qr9sguUwWitVJgLKrjrsvbBf++6nBmbDO6ngM09Q?=
+ =?iso-8859-1?Q?FO2J60/MQiyl8FLnpN0rzeStQ2hAtA2aLc318rrp0gcLN5QX9lX0vLIqSV?=
+ =?iso-8859-1?Q?MCk9vajW829e2lFC9k3DGnSRLZkT4oPAliLFrCPFDOVHNMmQ6VLqen7Hyd?=
+ =?iso-8859-1?Q?KpUHwVbgYFMjlOk0HGQSbjkspmV2KZOSOFz5QCjOA7Kfz2Fno0J0pSLDmF?=
+ =?iso-8859-1?Q?nGpymOss7FHTOeAt0MG7XAqwtWjdi9QgtHpzfr+Fh9NafY1qlm099z2owp?=
+ =?iso-8859-1?Q?Sc27boPECn8jNudtQJJuDogeT253qVyrwI+8GfBbHbcvVgNELkQdjQm5nQ?=
+ =?iso-8859-1?Q?V8GeJFnUeK9TMw+MrKyGxQ5DEUoPKxCooGCSZDPZqM4tKfK9UCnaJURsoJ?=
+ =?iso-8859-1?Q?Ab4YlVYk24M/EOwmOaVxAasWSdXbkmRzQ515NXUaj0XAqRKgMKYECmyz7E?=
+ =?iso-8859-1?Q?BIW57FyMyzZok1X2Z/KUfPB4MTxWxkoA1yPo6m65jAeLte1aYCeJBY5Ubl?=
+ =?iso-8859-1?Q?DWV7L6d9VglEY9LyMGI9zSVWzAs0UPlqyj55cyKWH0n9TetsruGuk9XiRM?=
+ =?iso-8859-1?Q?exKhqxP4/8ljNYVYZJzOPH1R88ZeO3b4MMNShntsubVFZiRTr4lfTCC8za?=
+ =?iso-8859-1?Q?WgYAcXMm6fBz592BzuUYpEOEYNDCkVBWNOWrfdf1bAhziJ9dWAq29X3g7H?=
+ =?iso-8859-1?Q?D0/LbbppLWhvI71664e1UtuPL1JKJ3gFRn7Kx+8Jdy47eMg9NVxNcU/+Vi?=
+ =?iso-8859-1?Q?n4tPnIdF7SVTL0Z8u5v4ec7+xngPJdlO+WAeNrzjFlYWucWCghtd6yVgY3?=
+ =?iso-8859-1?Q?IDoCHxRdUtS91LS09C15O4lIWYTvKDETIRGIOXzWI2ID8aSEq6TZm5MbDR?=
+ =?iso-8859-1?Q?zsffK4Ne/auoujuxtW8bTGfQUjBg8AWXSv11M677Bi4K/sjmEcD2zMPFvi?=
+ =?iso-8859-1?Q?O+x4nZAY3E8iRrMaX022GrYm/sNhxSNg+n?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251217-cmsdk-uart-disabled-warning2-v1-1-847de48840bc@trainwit.ch>
-X-B4-Tracking: v=1; b=H4sIAHBXQmkC/x3MwQqDMAwA0F+RnA20wSHsV8RDbDMXNutIphuI/
- 76y47u8A1xMxeHaHGCyq+taKmLbQLpzmQU1VwMFukSKPabF8wM3tjdmdZ6ekvHDVrTMhCH0xF2
- XSDhCLV4mN/3++2E8zx/SUJK8bgAAAA==
-X-Change-ID: 20251217-cmsdk-uart-disabled-warning2-0072a44c2ea1
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, 
- julia <midnight@trainwit.ch>
-X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=202.12.124.159; envelope-from=midnight@trainwit.ch;
- helo=fhigh-b8-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5b29223-daed-488e-47f4-08de3d3cce50
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Dec 2025 07:20:50.1851 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Kf8V+dgnwW7FdfYb1wL5k1qdr0oSEJxA5c9jv6GwVv4yci1ZMDd0imIRXE3fMlfv1Jd1+XviyAalHuAiQBTAKIwZDG6BXIlMnHRiFRBGn+I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF162366726
+X-OriginatorOrg: intel.com
+Received-SPF: permerror client-ip=198.175.65.15;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_PERMERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,48 +212,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I don't want to admit how many hours I spent trying to figure out why
-nothing was being printed (as the enable-ing code hadn't yet run,
-even thought it existed).
 
-Signed-off-by: julia <midnight@trainwit.ch>
----
- hw/char/cmsdk-apb-uart.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
 
-diff --git a/hw/char/cmsdk-apb-uart.c b/hw/char/cmsdk-apb-uart.c
-index 32090f3516f6accad32bcd9fe9b10d572f17ed12..26931ab6c5d36f0ec5aac7acf3677855a6dd5f22 100644
---- a/hw/char/cmsdk-apb-uart.c
-+++ b/hw/char/cmsdk-apb-uart.c
-@@ -159,6 +159,10 @@ static uint64_t uart_read(void *opaque, hwaddr offset, unsigned size)
-     switch (offset) {
-     case A_DATA:
-         r = s->rxbuf;
-+        if (!(s->ctrl & R_CTRL_RX_EN_MASK)) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "CMSDK APB UART: receive data read with Rx disabled\n");
-+        }
-         s->state &= ~R_STATE_RXFULL_MASK;
-         cmsdk_apb_uart_update(s);
-         qemu_chr_fe_accept_input(&s->chr);
-@@ -248,6 +252,10 @@ static void uart_write(void *opaque, hwaddr offset, uint64_t value,
-     switch (offset) {
-     case A_DATA:
-         s->txbuf = value;
-+        if (!(s->ctrl & R_CTRL_TX_EN_MASK)) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "CMSDK APB UART: transmit data write with Tx disabled\n");
-+        }
-         if (s->state & R_STATE_TXFULL_MASK) {
-             /* Buffer already full -- note the overrun and let the
-              * existing pending transmit callback handle the new char.
+>-----Original Message-----
+>From: C=E9dric Le Goater <clg@redhat.com>
+>Subject: Re: [PATCH v9 00/19] intel_iommu: Enable first stage translation =
+for
+>passthrough device
 
----
-base-commit: 7154e4df40468012fccb6687ecd2b288c56a4a2d
-change-id: 20251217-cmsdk-uart-disabled-warning2-0072a44c2ea1
+...
 
-Best regards,
--- 
-julia <midnight@trainwit.ch>
+>>>> Below is an example to enable first stage translation for passthrough
+>>> device:
+>>>>
+>>>>       -M q35,...
+>>>>       -device intel-iommu,x-scalable-mode=3Don,x-flts=3Don...
+>>>>       -object iommufd,id=3Diommufd0 -device
+>>> vfio-pci,iommufd=3Diommufd0,...
+>>>
+>>> What about libvirt support ? There are patches to enable IOMMUFD
+>>> support with device assignment but I don't see anything related
+>>> to first stage translation. Is there a plan ?
+>>
+>> I think IOMMUFD support in libvirt is non-trivial, good to know there is
+>progress.
+>> But I didn't find a match in libvirt mailing list,
+>https://lists.libvirt.org/archives/search?q=3Diommufd
+>> Do you have a link?
+>
+>Here  :
+>
+>
+>https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/KFY=
+UQGMX
+>WV64QPI245H66GKRNAYL7LGB/
 
+Thanks
+
+>
+>There might be an update. We should ask Nathan.
+>
+>> I think first stage support is trivial, only to support a new property
+><...x-flts=3Don/off>.
+>> I can apply a few time resource from my manager to work on it after this
+>series is merged.
+>> It's also welcome if anyone is interested to take it.
+>
+>ok. So, currently, we have no way to benefit from translation
+>acceleration on the host unless we directly set the 'x-flts'
+>property on the QEMU command line.
+
+Yes, thanks for reminding.
+I'll try add 'x-flts' support to libvirt to fill the gap recently,
+I will take one week vacation starting this Friday, may try it after vacati=
+on.
+
+>
+>>> This raises a question. Should ftls support be automatically enabled
+>>> based on the availability of an IOMMUFD backend ?
+>>
+>> Yes, if user doesn't force it off, like <...iommufd=3D'off'> and IOMMUFD
+>backend available, we can enable it automatically.
+>
+>The plan is to keep VFIO IOMMU Type1 as the default host IOMMU
+>backend to maintain a consistent behavior. If an IOMMUFD backend
+>is required, it should be set explicitly. One day we might revisit
+>this choice and change the default. Not yet.
+
+OK, maybe we need to maintain consistent behavior for intel_iommu too,
+if first-stage is required, it should be set explicitly, if not set, defaul=
+t to second stage(shadow page).
+
+>
+>
+>>>> Test done:
+>>>> - VFIO devices hotplug/unplug
+>>>> - different VFIO devices linked to different iommufds
+>>>> - vhost net device ping test
+>>>> - migration with QAT passthrough
+>>>
+>>> Did you do any experiments with active mlx5 VFs ?
+>>
+>> No, there are only a few device drivers supporting VFIO migration and we
+>only have QAT.
+>> Let me know if you see issue on other devices.
+>Since we lack libvirt integration (of flts), the tests need
+>to be run manually which is more complex for QE. IOW, it will
+>take more time but we should definitely evaluate other devices.
+
+Oh, if you mean nesting feature test, we did play with different devices we=
+ had,
+ixgbevf, ICE vf, DSA and QAT. For VFIO migration with nesting, we only test=
+ed QAT.
+
+Thanks
+Zhenzhong
 
