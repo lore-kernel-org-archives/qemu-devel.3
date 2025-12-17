@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7135AD65C40
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 19:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A2F9D65C40
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 19:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVwoF-0001UQ-5n; Wed, 17 Dec 2025 14:03:39 -0500
+	id 1vVwq9-0002yk-6w; Wed, 17 Dec 2025 14:05:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vVwo3-0001Qb-Fa
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 14:03:30 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vVwq7-0002y8-6Q
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 14:05:35 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vVwnw-0007Wc-VT
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 14:03:25 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-7e2762ad850so6467715b3a.3
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 11:03:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vVwq4-00088j-Vd
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 14:05:34 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4779a4fc95aso5493135e9.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 11:05:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765998198; x=1766602998; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=UWzPKBCSNbPIqw5vrlcj/BwPaO/htNHgS+VUq1+3R5s=;
- b=BEZIGHp7XqhLUtDN923PSJ8cNCG+8z0gZGcUnQ2IV/JvOLCR68HkbcfXkvYyPLdejN
- 0wqyomvNFzjLVkEKODIxkvee4LjargadMqoMYQGHxriw/MIH8rhFIree4ui2IcALUgP4
- zOgUUB9lLHu5mCAoF2eW/rIkKUcghh+REPNiX5Y8MJzN1bISdbaHQcXlWhkv0ElfLB/F
- 8PX41dn9/kwpq/zZnDDSAYs2xPDIeM4hhzpP/OW9LJ1EAbFsdH5JG0k2mIBM47Kgqqwo
- iR3VJdmBqa2Y2RsN+bfvckxw/hsef+y/mFpRftQ+XP+pT4XiosioJxJJulwZV3FV7C0D
- Rgpw==
+ d=linaro.org; s=google; t=1765998331; x=1766603131; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Pt92HLCtvDc3E9mopn34lz2s5csYP3EHsCvLiAlUXFg=;
+ b=Q9zrRrPzl6bHLbi6RYeqWvozucemJ6oRGoM2X7WhINbbBLhWfdkwPakWB1BIIXG3sF
+ XY/O6hEO366hUt4e6NXvozDk1c8PpQglwpGYdpodocf2AjPci8HBEiyjC+ErhVqKw6cN
+ LA5wfSoeaDZFeB33fgF/e1jXjC/tQI2Ul1dnC80GcYszgjhu3Qh5RRQwfrR4fCLewSHV
+ vGQSR1578s8I7jccehUsvyPgIhIPqhkV7grErsbvxaD+haEALlAgWKccjyMpEVkrTbl2
+ fuiC9EmlH5n67CBgkRHrY+FHtJ6DOr/0JjDDkI/DGuVNZAFoY79P5vIcy6Pf3y4hVX+P
+ VN3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765998198; x=1766602998;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UWzPKBCSNbPIqw5vrlcj/BwPaO/htNHgS+VUq1+3R5s=;
- b=XRq6f2gncGSxIv33AzAWaARBNHGH7b3OasQ+5baYW6cvX7dCpXgNskBghREgUsasj6
- +5TCxXW4GGKI9qsCn0LUJXB9cfjzGaNlEY+sbTHzS/ZxzTheHhTM1j5+9PSm7wZANIT0
- ZI7fJmYmVat0uJQkjOKgDttO8sZrjv7dog603XXCgz0xPkA01YiF7trrM/LUC3D0Vslx
- CJS7EQNiPXdPv37bifzqAMZ4ltCMZYDlw8RFhsncPJ7NHRihLYEw+sIDWqjK39U/M/s8
- 0noX3Ltq/Oi8/CJ5bz5pfqyqrS3Q0JDcf4LgzX5zvcC/XoPDQM2q6YrWyNsncicM/ymE
- 3rGA==
-X-Gm-Message-State: AOJu0YyZreVQy4v9eNigPtRv6aZUPNPbSPxD8ADb51xRtGlfAkntO/5J
- B3V1gcS/hpXPt56RkopgBBa0GECdunMkn7eUfoGNmyIgTOm+iJT5ig75mKhMtyibLeM0x0f5KfG
- 6RM61T10=
-X-Gm-Gg: AY/fxX5anojHrPyqhgXyiBneeIEz/i2I6gYRRZbF6YvPQBJEGy5uDjdjDXcTG9z4J2c
- Y+2h+UDw6TcCO299Fg8cPCR/lJ69HjQzRDNrmQ3aXe6BEyMUOrlp81VgdyTBJWCNsdcJ1Xaz0lV
- 72CB7/AGEm1iM+3dqoA5QFt6jDLskDRp7gB0vOXYWzgG72CtiO0RBbscCz8DpiBnfDj81LmwbMf
- gzlvyep/tkT1+DBTBUnZk4VcMORd8yFvyyQ4RkcUubdHA1QouWB+GxI7P3hAtALBmuAHrDpt/yZ
- lVS0eBQxKn+C9llvsqZv+7GEZL0GCeSPSXC7kFfJR0luPsfkxxs8b2g8vIDP3zecxdZy+G6brVz
- gg0oEcK4xLLk1fWgxOlWHWibBGtP4oyr+1lyF6/fugz7trevugt68GWUNK95qFbP7NswgqR8cgF
- TUdbXuItwvL0g3XSaxuQMGsOC3jxSEpg==
-X-Google-Smtp-Source: AGHT+IEyBW4CNOXau5FknMqFr7R+mQ36g4bUuLE5Gq8xsfxpyI2hDwmozu4oEUB2ve7uMK3qjs4bcw==
-X-Received: by 2002:a05:6a00:f89:b0:7e8:4433:8fbd with SMTP id
- d2e1a72fcca58-7f66a46cb37mr16734761b3a.69.1765998198261; 
- Wed, 17 Dec 2025 11:03:18 -0800 (PST)
-Received: from [192.168.10.140] ([180.233.125.245])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7fe14270cc1sm188920b3a.48.2025.12.17.11.03.16
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1765998331; x=1766603131;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Pt92HLCtvDc3E9mopn34lz2s5csYP3EHsCvLiAlUXFg=;
+ b=crONckbfWpydfuCGq4+/qxNr0T4P5gdNrXIrzAnlieRMCaK4+nLoYwwQmAbHKitRhC
+ JsdJrpNYnzVFnnoGKUsYPOijLw3juEr5g4BTOBov6qrCe1ch1FrrD/UK6QURCI/iPcpB
+ EZn5XkitOPmMdjHA0vCBfpMois/3XphbL4Uh7jlAgJVRY10R8hE0ft/mMVlys8hhZNMO
+ u1/lTAIMvu9rA/NkYNQsRY4z+t5MgSc8aeuQOKQWoGrHBW6OlmO845I5Gvt10kuKPYPg
+ LjXpUwCqQzRXeWYMLP61x0ydXK5nPTi15MMw1NmY9t0i8q3zUU1xFdhKM1R2BI6W/pDi
+ UIqw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXJXQAnEqjig9MdPYoXj+Y3b+sO0VWCv7UhpJEdQgRQbntxtvB+6Z0cUElqV0YxURFWfzRhlXozpqH@nongnu.org
+X-Gm-Message-State: AOJu0YwTDg7GT5gKg0xe7FQFym3WWqarmKcr9Cy2hTgIUGJsD8i6o2WZ
+ mPGXtZ1shjqp5xkHJdAknqZH8Zw6E/lJ4RgNUjF8PYqdT6/AkFC4CRRtr9PcrOGOq58=
+X-Gm-Gg: AY/fxX6LqC/ytY33yzbYAk50g0O0amWLMH0fUJBCS0IFyg9WuFKJ3h6HI0ESqfZjze1
+ bQA2vdZCdfp8l14IxG9xcFGvEcrwMf+u8i7AWqvr6O9R/5f+TQDIVwyY7kvXblvyIuebNpOwd8F
+ gsUTFDxUMsk20Y3et5isFMxORMAHktHjheBqmfZ3BuGjzRKiGeoeouOKG6ahWetej7EYwgKSg/+
+ Pn9/Gce0vVvoxoDFgRd7WV2JKK3adwCcDUF+tT/uQPNhurjOLtUCV27CON8asgDOkSj2c3UjKXi
+ No+BDsrRLUODmx15Z5oVQm6i3WH+GBUvI1rkD5swzuqad1q1Dm8nOvLJ/aTdg5NfTMo9nN7Dxii
+ TVpYuH5ZF9N8R1Godsb6pHFeBcVLjoyGBH25UpGPBMmlIyd8FuOGDk2Mc4/xq2hAAuxdqDUpH61
+ LxMeeMfveG5e7lxNtxUSRmxeElxmZwAT605ZKFLC7Q2tmDjwTn0Ii38Q==
+X-Google-Smtp-Source: AGHT+IFnm7vnu4vjuCO7J4O7017IEg2ib1L5bgWFptXgCKaNNApuxg50VCieZGXhO7uDZlqxmB/KZg==
+X-Received: by 2002:a05:600c:4ed4:b0:479:13e9:3d64 with SMTP id
+ 5b1f17b1804b1-47be29de6bamr4838925e9.15.1765998331111; 
+ Wed, 17 Dec 2025 11:05:31 -0800 (PST)
+Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47be3277a61sm1276125e9.12.2025.12.17.11.05.29
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Dec 2025 11:03:17 -0800 (PST)
-Message-ID: <292a56f8-5078-4d39-bb5c-33e48c8dd05c@linaro.org>
-Date: Thu, 18 Dec 2025 06:03:13 +1100
+ Wed, 17 Dec 2025 11:05:30 -0800 (PST)
+Message-ID: <68c147b6-eecf-48ce-9da9-369885d6df9b@linaro.org>
+Date: Wed, 17 Dec 2025 20:05:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/14] target/sparc: Update MMU page table using stl_phys()
-To: qemu-devel@nongnu.org
-References: <20251217143150.94463-1-philmd@linaro.org>
- <20251217143150.94463-3-philmd@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 13/14] hw/riscv: Define SiFive E/U CPUs using runtime
+ conditions
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
+Cc: pierrick.bouvier@linaro.org, palmer@dabbelt.com, alistair.francis@wdc.com
+References: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
+ <20251217-hw-riscv-cpu-int-v1-13-d24a4048d3aa@rev.ng>
+ <b1c5fa3e-f716-46f0-9ce1-1bdb8af18076@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251217143150.94463-3-philmd@linaro.org>
+In-Reply-To: <b1c5fa3e-f716-46f0-9ce1-1bdb8af18076@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,36 +105,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/18/25 01:31, Philippe Mathieu-Daudé wrote:
-> stl_phys_notdirty() is supposed to do an optimized CODE
-> path store. Here we update the page table via the DATA
-> path, so can use the normal stl_phys() helper.
+On 17/12/25 16:13, Philippe Mathieu-Daudé wrote:
+> On 17/12/25 00:51, Anton Johansson wrote:
+>> Signed-off-by: Anton Johansson <anjo@rev.ng>
+>> ---
+>>   include/hw/riscv/sifive_cpu.h | 26 +++++++++++++++++++-------
+>>   hw/riscv/sifive_e.c           |  2 +-
+>>   hw/riscv/sifive_u.c           |  4 ++--
+>>   3 files changed, 22 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/include/hw/riscv/sifive_cpu.h b/include/hw/riscv/ 
+>> sifive_cpu.h
+>> index 136799633a..8391141d5e 100644
+>> --- a/include/hw/riscv/sifive_cpu.h
+>> +++ b/include/hw/riscv/sifive_cpu.h
+>> @@ -20,12 +20,24 @@
+>>   #ifndef HW_SIFIVE_CPU_H
+>>   #define HW_SIFIVE_CPU_H
+>> -#if defined(TARGET_RISCV32)
+>> -#define SIFIVE_E_CPU TYPE_RISCV_CPU_SIFIVE_E31
+>> -#define SIFIVE_U_CPU TYPE_RISCV_CPU_SIFIVE_U34
+>> -#elif defined(TARGET_RISCV64)
+>> -#define SIFIVE_E_CPU TYPE_RISCV_CPU_SIFIVE_E51
+>> -#define SIFIVE_U_CPU TYPE_RISCV_CPU_SIFIVE_U54
+>> -#endif
+>> +#include "qemu/target-info.h"
+>> +
+>> +static inline const char *sifive_e_cpu(void)
+>> +{
+>> +    if (target_riscv64()) {
+>> +        return TYPE_RISCV_CPU_SIFIVE_E51;
+>> +    } else {
+>> +        return TYPE_RISCV_CPU_SIFIVE_E31;
+>> +    }
+>> +}
+>> +
+>> +static inline const char *sifive_u_cpu(void)
+>> +{
+>> +    if (target_riscv64()) {
+>> +        return TYPE_RISCV_CPU_SIFIVE_U54;
+>> +    } else {
+>> +        return TYPE_RISCV_CPU_SIFIVE_U34;
+>> +    }
+>> +}
+>>   #endif /* HW_SIFIVE_CPU_H */
+>> diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
+>> index 7ed419cf69..458b21b9e3 100644
+>> --- a/hw/riscv/sifive_e.c
+>> +++ b/hw/riscv/sifive_e.c
+>> @@ -151,7 +151,7 @@ static void 
+>> sifive_e_machine_class_init(ObjectClass *oc, const void *data)
+>>       mc->desc = "RISC-V Board compatible with SiFive E SDK";
+>>       mc->init = sifive_e_machine_init;
+>>       mc->max_cpus = 1;
+>> -    mc->default_cpu_type = SIFIVE_E_CPU;
+>> +    mc->default_cpu_type = sifive_e_cpu();
+>>       mc->default_ram_id = "riscv.sifive.e.ram";
+>>       mc->default_ram_size = sifive_e_memmap[SIFIVE_E_DEV_DTIM].size;
+>> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+>> index 2ff2059bb9..a04481806e 100644
+>> --- a/hw/riscv/sifive_u.c
+>> +++ b/hw/riscv/sifive_u.c
+>> @@ -723,7 +723,7 @@ static void 
+>> sifive_u_machine_class_init(ObjectClass *oc, const void *data)
+>>       mc->init = sifive_u_machine_init;
+>>       mc->max_cpus = SIFIVE_U_MANAGEMENT_CPU_COUNT + 
+>> SIFIVE_U_COMPUTE_CPU_COUNT;
+>>       mc->min_cpus = SIFIVE_U_MANAGEMENT_CPU_COUNT + 1;
+>> -    mc->default_cpu_type = SIFIVE_U_CPU;
+>> +    mc->default_cpu_type = sifive_u_cpu();
+>>       mc->default_cpus = mc->min_cpus;
+>>       mc->default_ram_id = "riscv.sifive.u.ram";
+>>       mc->auto_create_sdcard = true;
+>> @@ -764,7 +764,7 @@ static void sifive_u_soc_instance_init(Object *obj)
+>>                               TYPE_RISCV_HART_ARRAY);
+>>       qdev_prop_set_uint32(DEVICE(&s->e_cpus), "num-harts", 1);
+>>       qdev_prop_set_uint32(DEVICE(&s->e_cpus), "hartid-base", 0);
+>> -    qdev_prop_set_string(DEVICE(&s->e_cpus), "cpu-type", SIFIVE_E_CPU);
+>> +    qdev_prop_set_string(DEVICE(&s->e_cpus), "cpu-type", 
+>> sifive_e_cpu());
+>>       qdev_prop_set_uint64(DEVICE(&s->e_cpus), "resetvec", 0x1004);
+>>       object_initialize_child(obj, "u-cluster", &s->u_cluster, 
+>> TYPE_CPU_CLUSTER);
+>>
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/sparc/mmu_helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> Just inline and remove the header. With that:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+If Alistair Acks the series and there is no other change requested,
+I can address that cosmetic change myself, then no need to respin.
 > 
-> diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-> index 217580a4d8c..46bf500ea83 100644
-> --- a/target/sparc/mmu_helper.c
-> +++ b/target/sparc/mmu_helper.c
-> @@ -189,7 +189,7 @@ static int get_physical_address(CPUSPARCState *env, CPUTLBEntryFull *full,
->           if (is_dirty) {
->               pde |= PG_MODIFIED_MASK;
->           }
-> -        stl_phys_notdirty(cs->as, pde_ptr, pde);
-> +        stl_phys(cs->as, pde_ptr, pde);
->       }
->   
->       /* the page can be put in the TLB */
 
-I didn't recall that we had this in Sparc.
-I suspect that this needs to be reorganized to use atomic operations, like arm.
-
-That said, there's nothing we need from notdirty.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
 
