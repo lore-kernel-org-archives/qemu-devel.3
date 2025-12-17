@@ -4,132 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E28D65C46
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 13:34:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE6ECD65C47
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 13:44:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVreQ-0006gh-Hf; Wed, 17 Dec 2025 08:33:10 -0500
+	id 1vVroh-0000dE-85; Wed, 17 Dec 2025 08:43:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vVre5-0006a6-Qx
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 08:32:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vVre1-00078a-Ig
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 08:32:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765978363;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=y88grvNyA6vLs9Q+keb1EkjPRPpjjnzTbnJK7zRddLU=;
- b=czd1ZjIvozLa31vvMaJKyMrXYDqSAS4HT2ZyIg8iz6qyQZjsU3mgNC9nBgWp8timCyL+4m
- /Z2R2F7UVsVS4scVYWmP87FmuS3YPAVQIGZyDxdKeat8xNSMkJMyzYzuo0hm889MLe3Ohm
- Exy9aEZmbOmp+eAlJsee748pdb3HFto=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-73-SZpkWHKFN6SQ7rdLYXdtuA-1; Wed, 17 Dec 2025 08:32:42 -0500
-X-MC-Unique: SZpkWHKFN6SQ7rdLYXdtuA-1
-X-Mimecast-MFC-AGG-ID: SZpkWHKFN6SQ7rdLYXdtuA_1765978361
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-477771366cbso40354065e9.0
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 05:32:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765978361; x=1766583161; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=y88grvNyA6vLs9Q+keb1EkjPRPpjjnzTbnJK7zRddLU=;
- b=gSkABq3j2qLKSST8FdvZjrVgYzFUasxwKfupaNIk7eOr2BlJuCktdNHrr5tF3Xdvs0
- 0veTcfErVGIiki+Kx0wZuHHVtCShNe0p/PHPbdSkIONJJZ1G10Fj6sfOPOW0Y/by4hw2
- PQ8sYt0DcKc94wPVt3vRYS0u0RJCxTdKKQneWzHWsxgHwJa3/uyQw7/Old4IO2qkVueJ
- ukJA9B0Mv/NHXH1lnirxJcc2xHpOC+fsmHYL9A1OWTCvSXkMG1Q2tsvtiKUygV7WxkvP
- 6VSYrYEjoIaa0H1xpbxm94p1+TQ+KzD8euGD+gAtcPlmq4lSeSAJeIA4ctwlAgNyd7jH
- lU9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765978361; x=1766583161;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=y88grvNyA6vLs9Q+keb1EkjPRPpjjnzTbnJK7zRddLU=;
- b=Vai6funtIQuJmfOORV3ctqD5oMrohZ68/BgZ7xaUayLeJr6PnP8u3D9ppS/ZOKp7t5
- lTbS2P7vtBfzTVSRCaykm/KX185BeVaSO+rdaBR6D7ILaSP89Qaf/9NsexHDlyrcVbNS
- EQb/EKZ7pp8DwOX5F/jqBMLZhX0PDoMKFz1RwTcK8p/+SbWrpDMdZRG+Oi5RTuipJ0n3
- gdLj3BH1pBZEGZfV++0A1sSzM2MqtIAqGm/jHeJpbSedESP9pr1uRjYOLq4ARcWfUqE6
- ertIfr6QyR+CgF5EhMAu7YGx2UfLlUhzTnwqfI7Sfu6HoPmuHIfT9OLtwkEKqDIQ5ZXw
- giJQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXfZNyn7kNkUa83FkPrS7RtaM49ptYxdL+9O4+sqfN+umaWxLs1v0x58SA2bOwFv+TRzq8XWYNppbre@nongnu.org
-X-Gm-Message-State: AOJu0YzxH+xk04ckWQunPaz/puHKZojF4CcKGot/eAOOptHPu4dNmCum
- yld/tgmfjhtA4rUKDYju+BPleRYQzAXThy9VQwV0e8xkZfYPPc8KCg7T5HbIS+oKgHDhsvmobzQ
- cHtH75C1kN94v2hAsi+IFI/euvQ63rF5f9TyTVsOclu+j5pTm+x8ZqpA4
-X-Gm-Gg: AY/fxX65YCiZ+S3mW/elhedFVA2iuhXBHwXIx+iXl/5Oaer0XeqU6E9GQDFRNZl7xFI
- oD4TsUhl0A/QH90G4LVjxmozSlLVjiW5BIqrOjWIyMYd9X3+/s0BtrqugNlsWbgSxP+0s/fTZul
- Eaqf51KCIH3RiuKFidPBDoqbJe4/1pKhzwDbEDMAI8cVMy2Lv6DotwcPon0H2rKHBB0fWST0xq6
- TkWXXFc914EqZjjGrbc8c3B8nPWbL/IEqJjp220mwJ9eByB7AyqUN7uOyEeZCRCKddzp6rOtplS
- Cy+o1G3mo2KbSPm2TFcKCZ6yTAXOjUfn4IR/7LeUUJl2/DQxe6bV0VcGLm3a3ZFPDCNu6w==
-X-Received: by 2002:a05:600c:4f90:b0:477:9dc1:b706 with SMTP id
- 5b1f17b1804b1-47a8f9055bfmr166586475e9.19.1765978361087; 
- Wed, 17 Dec 2025 05:32:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH1DBxXjUwAXD60W++JB0qTpdlbwvJgM0HJ5acxEXUSUAiFGW/S+fxK32pWtLvkiy3PWkiKnQ==
-X-Received: by 2002:a05:600c:4f90:b0:477:9dc1:b706 with SMTP id
- 5b1f17b1804b1-47a8f9055bfmr166585685e9.19.1765978360422; 
- Wed, 17 Dec 2025 05:32:40 -0800 (PST)
-Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47bdc1de9cesm39837815e9.8.2025.12.17.05.32.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Dec 2025 05:32:39 -0800 (PST)
-Date: Wed, 17 Dec 2025 14:32:37 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas
- Huth <thuth@redhat.com>, qemu-devel@nongnu.org, devel@lists.libvirt.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org, Richard
- Henderson <richard.henderson@linaro.org>, Sergio Lopez <slp@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Laurent Vivier <lvivier@redhat.com>, Jiaxun
- Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>, Eduardo
- Habkost <eduardo@habkost.net>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, Weiwei Li <liwei1518@gmail.com>, Amit Shah
- <amit@kernel.org>, Xiaoyao Li <xiaoyao.li@intel.com>, Yanan Wang
- <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>, Palmer Dabbelt
- <palmer@dabbelt.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>, Ani Sinha <anisinha@redhat.com>, Fabiano Rosas
- <farosas@suse.de>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>, Huacai
- Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>, Mark
- Cave-Ayland <mark.caveayland@nutanix.com>, BALATON Zoltan
- <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>, Jiri Denemark
- <jdenemar@redhat.com>
-Subject: Re: [PATCH v5 03/28] pc: Start with modern CPU hotplug interface by
- default
-Message-ID: <20251217143237.7829af2e@imammedo>
-In-Reply-To: <20251202162835.3227894-4-zhao1.liu@intel.com>
-References: <20251202162835.3227894-1-zhao1.liu@intel.com>
- <20251202162835.3227894-4-zhao1.liu@intel.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1vVrof-0000d6-7q
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 08:43:45 -0500
+Received: from sg-1-100.ptr.blmpb.com ([118.26.132.100])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
+ id 1vVroc-0001JZ-0n
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 08:43:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1765979008; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=C07fVhQktzGEj7tha75spBmFj4X5cGLclHbJxIszH6g=;
+ b=GUpTyPMuUc//L/5pw464EdQYJaO7xXYsSjg8wSVdCFsfkxrKrSP76riDz628HPgtfcikl0
+ lbV0vlAYwjsooOFAbkCJT0Gs49yy56TupSGHId7MlCIdOa78NgOOhJ2T3yNmBtt9UV9AAb
+ f/gnQt7OGyZW/xgeV1ivhsWXWAuGvgRDIqZF+SN5kNvaQFa+kPqms5pj071z2bmDBbBWDf
+ p+a35IVT6PCd6Joif9ERfR3qlaLvjaYT2zPwF5b6ykoNSJfRJufNWCIdK1m6Pm5KKVNC/2
+ b68aX+/4vCsIe/AGA9XHkkDiVZiJidzY4/cWozxIpSbGjmuojdV82zm1r+zduA==
+X-Original-From: Chuang Xu <xuchuangxclwt@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] migration: merge fragmented clear_dirty ioctls
+In-Reply-To: <aUKuWISfpQeld_AF@x1.local>
+To: "Peter Xu" <peterx@redhat.com>
+From: "Chuang Xu" <xuchuangxclwt@bytedance.com>
+Date: Wed, 17 Dec 2025 21:43:24 +0800
+Content-Transfer-Encoding: quoted-printable
+References: <20251216080001.64579-1-xuchuangxclwt@bytedance.com>
+ <877bum36ed.fsf@suse.de> <aUGIPj1JNpd8HZ-V@x1.local>
+ <29bc82b4-99c3-4275-b4a8-cfc400f0e44d@bytedance.com>
+ <aUKuWISfpQeld_AF@x1.local>
+X-Lms-Return-Path: <lba+26942b37f+1830c9+nongnu.org+xuchuangxclwt@bytedance.com>
+Cc: <qemu-devel@nongnu.org>, "Fabiano Rosas" <farosas@suse.de>, 
+ <mst@redhat.com>, <sgarzare@redhat.com>, <richard.henderson@linaro.org>, 
+ <pbonzini@redhat.com>, <david@kernel.org>, <philmd@linaro.org>
+Message-Id: <65dc5a3d-fe3f-48d9-b7e8-c04346308fa8@bytedance.com>
+Mime-Version: 1.0
+Received-SPF: pass client-ip=118.26.132.100;
+ envelope-from=xuchuangxclwt@bytedance.com; helo=sg-1-100.ptr.blmpb.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,216 +74,344 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  3 Dec 2025 00:28:10 +0800
-Zhao Liu <zhao1.liu@intel.com> wrote:
+On 17/12/2025 21:21, Peter Xu wrote:
+> On Wed, Dec 17, 2025 at 02:46:58PM +0800, Chuang Xu wrote:
+>> On 17/12/2025 00:26, Peter Xu wrote:
+>>> On Tue, Dec 16, 2025 at 10:25:46AM -0300, Fabiano Rosas wrote:
+>>>> "Chuang Xu" <xuchuangxclwt@bytedance.com> writes:
+>>>>
+>>>>> From: xuchuangxclwt <xuchuangxclwt@bytedance.com>
+>>>>>
+>>>>> In our long-term experience in Bytedance, we've found that under
+>>>>> the same load, live migration of larger VMs with more devices is
+>>>>> often more difficult to converge (requiring a larger downtime limit).
+>>>>>
+>>>>> Through some testing and calculations, we conclude that bitmap sync t=
+ime
+>>>>> affects the calculation of live migration bandwidth.
+>>> Side note:
+>>>
+>>> I forgot to mention when replying to the old versions, but we introduce=
+d
+>>> avail-switchover-bandwidth to partially remedy this problem when we hit=
+ it
+>>> before - which may or may not be exactly the same reason here on unalig=
+ned
+>>> syncs as we didn't further investigate (we have VFIO-PCI devices when
+>>> testing), but the whole logic should be similar that bw was calculated =
+too
+>>> small.
+>> In bytedance, we also migrate vms with vfio devices, which also suffer f=
+rom
+>> the issue of long vfio bitmap sync time for large vm.
+>>> So even if with this patch optimizing sync, bw is always not as accurat=
+e.
+>>> I wonder if we can still fix it somehow, e.g. I wonder if 100ms is too
+>>> short a period to take samples, or at least we should be able to rememb=
+er
+>>> more samples so the reported bw (even if we keep sampling per 100ms) wi=
+ll
+>>> cover longer period.
+>>>
+>>> Feel free to share your thoughts if you have any.
+>>>
+>> FYI:
+>> Initially, when I encountered the problem of large vm migration hard to
+>> converge,
+>> I tried subtracting the bitmap sync time from the bandwidth calculation,
+>> which alleviated the problem somewhat. However, through formula calculat=
+ion,
+>> I found that this did not completely solve the problem. Therefore, I
+> If you ruled out sync time, why the bw is still not accurate?  Have you
+> investigated that?
+>
+> Maybe there's something else happening besides the sync period you
+> excluded.
 
-> From: Igor Mammedov <imammedo@redhat.com>
-^^^
-given you resplit original patch, it's better to replace this with you,
-keeping my SoB is sufficient
+Referring to the formula I wrote in the cover, after subtracting sync time,
 
-> 
-> For compatibility reasons PC/Q35 will start with legacy CPU hotplug
-> interface by default but with new CPU hotplug AML code since 2.7
-> machine type (in commit 679dd1a957df ("pc: use new CPU hotplug interface
-> since 2.7 machine type")). In that way, legacy firmware that doesn't use
-> QEMU generated ACPI tables was able to continue using legacy CPU hotplug
-> interface.
-> 
-> While later machine types, with firmware supporting QEMU provided ACPI
-> tables, generate new CPU hotplug AML, which will switch to new CPU
-> hotplug interface when guest OS executes its _INI method on ACPI tables
-> loading.
-> 
-> Since 2.6 machine type is now gone, and consider that the legacy BIOS
-> (based on QEMU ACPI prior to v2.7) should be no longer in use, previous
-> compatibility requirements are no longer necessary. So initialize
-> 'modern' hotplug directly from the very beginning for PC/Q35 machines
-> with cpu_hotplug_hw_init(), and drop _INIT method.
-> 
-> Additionally, remove the checks and settings around cpu_hotplug_legacy
-> in cpuhp VMState (for piix4 & ich9), to eliminate the risk of
-> segmentation faults, as gpe_cpu no longer has the opportunity to be
-> initialized. This is safe because all hotplug now start with the modern
-> way, and it's impossible to switch to legacy way at runtime (even the
-> "cpu-hotplug-legacy" properties does not allow it either).
-> 
-> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+we get the prerequisite that R=3DB. Substituting this condition into the
 
-tested ping pong cross version (master vs master+this patch) migration
-with 10.1 machine type, nothing is broken, hence
+subsequent formula derivation(B * t =3D D * (x + t) and=C2=A0R * y > D * (x=
+ + t)),
 
-Acked-by: Igor Mammedov <imammedo@redhat.com>
+we will eventually get y > D * x / (B - D).
 
-> ---
-> Changes since v4:
->  * New patch split off from Igor's v5 [*].
-> 
-> [*]: https://lore.kernel.org/qemu-devel/20251031142825.179239-1-imammedo@redhat.com/
-> ---
->  hw/acpi/cpu.c                  | 10 ----------
->  hw/acpi/ich9.c                 | 22 +++-------------------
->  hw/acpi/piix4.c                | 21 +++------------------
->  hw/i386/acpi-build.c           |  2 +-
->  hw/loongarch/virt-acpi-build.c |  1 -
->  include/hw/acpi/cpu.h          |  1 -
->  6 files changed, 7 insertions(+), 50 deletions(-)
-> 
-> diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
-> index 6f1ae79edbf3..d63ca83c1bcd 100644
-> --- a/hw/acpi/cpu.c
-> +++ b/hw/acpi/cpu.c
-> @@ -408,16 +408,6 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
->          aml_append(field, aml_reserved_field(4 * 8));
->          aml_append(field, aml_named_field(CPU_DATA, 32));
->          aml_append(cpu_ctrl_dev, field);
-> -
-> -        if (opts.has_legacy_cphp) {
-> -            method = aml_method("_INI", 0, AML_SERIALIZED);
-> -            /* switch off legacy CPU hotplug HW and use new one,
-> -             * on reboot system is in new mode and writing 0
-> -             * in CPU_SELECTOR selects BSP, which is NOP at
-> -             * the time _INI is called */
-> -            aml_append(method, aml_store(zero, aml_name(CPU_SELECTOR)));
-> -            aml_append(cpu_ctrl_dev, method);
-> -        }
->      }
->      aml_append(sb_scope, cpu_ctrl_dev);
->  
-> diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
-> index 2b3b493c014b..54590129c695 100644
-> --- a/hw/acpi/ich9.c
-> +++ b/hw/acpi/ich9.c
-> @@ -183,26 +183,10 @@ static const VMStateDescription vmstate_tco_io_state = {
->      }
->  };
->  
-> -static bool vmstate_test_use_cpuhp(void *opaque)
-> -{
-> -    ICH9LPCPMRegs *s = opaque;
-> -    return !s->cpu_hotplug_legacy;
-> -}
-> -
-> -static int vmstate_cpuhp_pre_load(void *opaque)
-> -{
-> -    ICH9LPCPMRegs *s = opaque;
-> -    Object *obj = OBJECT(s->gpe_cpu.device);
-> -    object_property_set_bool(obj, "cpu-hotplug-legacy", false, &error_abort);
-> -    return 0;
-> -}
-> -
->  static const VMStateDescription vmstate_cpuhp_state = {
->      .name = "ich9_pm/cpuhp",
->      .version_id = 1,
->      .minimum_version_id = 1,
-> -    .needed = vmstate_test_use_cpuhp,
-> -    .pre_load = vmstate_cpuhp_pre_load,
->      .fields = (const VMStateField[]) {
->          VMSTATE_CPU_HOTPLUG(cpuhp_state, ICH9LPCPMRegs),
->          VMSTATE_END_OF_LIST()
-> @@ -338,8 +322,8 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
->      pm->powerdown_notifier.notify = pm_powerdown_req;
->      qemu_register_powerdown_notifier(&pm->powerdown_notifier);
->  
-> -    legacy_acpi_cpu_hotplug_init(pci_address_space_io(lpc_pci),
-> -        OBJECT(lpc_pci), &pm->gpe_cpu, ICH9_CPU_HOTPLUG_IO_BASE);
-> +    cpu_hotplug_hw_init(pci_address_space_io(lpc_pci),
-> +        OBJECT(lpc_pci), &pm->cpuhp_state, ICH9_CPU_HOTPLUG_IO_BASE);
->  
->      acpi_memory_hotplug_init(pci_address_space_io(lpc_pci), OBJECT(lpc_pci),
->                               &pm->acpi_memory_hotplug,
-> @@ -419,7 +403,7 @@ void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm)
->  {
->      static const uint32_t gpe0_len = ICH9_PMIO_GPE0_LEN;
->      pm->acpi_memory_hotplug.is_enabled = true;
-> -    pm->cpu_hotplug_legacy = true;
-> +    pm->cpu_hotplug_legacy = false;
->      pm->disable_s3 = 0;
->      pm->disable_s4 = 0;
->      pm->s4_val = 2;
-> diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
-> index 7a18f18dda21..a7a29b0d09a9 100644
-> --- a/hw/acpi/piix4.c
-> +++ b/hw/acpi/piix4.c
-> @@ -195,25 +195,10 @@ static const VMStateDescription vmstate_memhp_state = {
->      }
->  };
->  
-> -static bool vmstate_test_use_cpuhp(void *opaque)
-> -{
-> -    PIIX4PMState *s = opaque;
-> -    return !s->cpu_hotplug_legacy;
-> -}
-> -
-> -static int vmstate_cpuhp_pre_load(void *opaque)
-> -{
-> -    Object *obj = OBJECT(opaque);
-> -    object_property_set_bool(obj, "cpu-hotplug-legacy", false, &error_abort);
-> -    return 0;
-> -}
-> -
->  static const VMStateDescription vmstate_cpuhp_state = {
->      .name = "piix4_pm/cpuhp",
->      .version_id = 1,
->      .minimum_version_id = 1,
-> -    .needed = vmstate_test_use_cpuhp,
-> -    .pre_load = vmstate_cpuhp_pre_load,
->      .fields = (const VMStateField[]) {
->          VMSTATE_CPU_HOTPLUG(cpuhp_state, PIIX4PMState),
->          VMSTATE_END_OF_LIST()
-> @@ -573,12 +558,12 @@ static void piix4_acpi_system_hot_add_init(MemoryRegion *parent,
->          qbus_set_hotplug_handler(BUS(pci_get_bus(PCI_DEVICE(s))), OBJECT(s));
->      }
->  
-> -    s->cpu_hotplug_legacy = true;
-> +    s->cpu_hotplug_legacy = false;
->      object_property_add_bool(OBJECT(s), "cpu-hotplug-legacy",
->                               piix4_get_cpu_hotplug_legacy,
->                               piix4_set_cpu_hotplug_legacy);
-> -    legacy_acpi_cpu_hotplug_init(parent, OBJECT(s), &s->gpe_cpu,
-> -                                 PIIX4_CPU_HOTPLUG_IO_BASE);
-> +    cpu_hotplug_hw_init(parent, OBJECT(s), &s->cpuhp_state,
-> +                        PIIX4_CPU_HOTPLUG_IO_BASE);
->  
->      if (s->acpi_memory_hotplug.is_enabled) {
->          acpi_memory_hotplug_init(parent, OBJECT(s), &s->acpi_memory_hotplug,
-> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> index 9446a9f862ca..23147ddc25e7 100644
-> --- a/hw/i386/acpi-build.c
-> +++ b/hw/i386/acpi-build.c
-> @@ -964,7 +964,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
->          build_legacy_cpu_hotplug_aml(dsdt, machine, pm->cpu_hp_io_base);
->      } else {
->          CPUHotplugFeatures opts = {
-> -            .acpi_1_compatible = true, .has_legacy_cphp = true,
-> +            .acpi_1_compatible = true,
->              .smi_path = pm->smi_on_cpuhp ? "\\_SB.PCI0.SMI0.SMIC" : NULL,
->              .fw_unplugs_cpu = pm->smi_on_cpu_unplug,
->          };
-> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
-> index 3694c9827f04..8d01c8e3de87 100644
-> --- a/hw/loongarch/virt-acpi-build.c
-> +++ b/hw/loongarch/virt-acpi-build.c
-> @@ -369,7 +369,6 @@ build_la_ged_aml(Aml *dsdt, MachineState *machine)
->  
->      if (event & ACPI_GED_CPU_HOTPLUG_EVT) {
->          opts.acpi_1_compatible = false;
-> -        opts.has_legacy_cphp = false;
->          opts.fw_unplugs_cpu = false;
->          opts.smi_path = NULL;
->  
-> diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
-> index 32654dc274fd..2cb0ca4f3dce 100644
-> --- a/include/hw/acpi/cpu.h
-> +++ b/include/hw/acpi/cpu.h
-> @@ -54,7 +54,6 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
->  
->  typedef struct CPUHotplugFeatures {
->      bool acpi_1_compatible;
-> -    bool has_legacy_cphp;
->      bool fw_unplugs_cpu;
->      const char *smi_path;
->  } CPUHotplugFeatures;
+This means that even if our bandwidth calculations are correct,
 
+the sync time can still affect our judgment of downtime conditions.
+
+>> decided to
+>> conduct specific analysis for specific scenario to minimize the bitmap
+>> sync time
+>> as much as possible.
+>>>>> When the addresses processed are not aligned, a large number of
+>>>>> clear_dirty ioctl occur (e.g. a 4MB misaligned memory can generate
+>>>>> 2048 clear_dirty ioctls from two different memory_listener),
+>>>>> which increases the time required for bitmap_sync and makes it
+>>>>> more difficult for dirty pages to converge.
+>>>>>
+>>>>> For a 64C256G vm with 8 vhost-user-net(32 queue per nic) and
+>>>>> 16 vhost-user-blk(4 queue per blk), the sync time is as high as *73ms=
+*
+>>>>> (tested with 10GBps dirty rate, the sync time increases as the dirty
+>>>>> page rate increases), Here are each part of the sync time:
+>>>>>
+>>>>> - sync from kvm to ram_list: 2.5ms
+>>>>> - vhost_log_sync:3ms
+>>>>> - sync aligned memory from ram_list to RAMBlock: 5ms
+>>>>> - sync misaligned memory from ram_list to RAMBlock: 61ms
+>>>>>
+>>>>> Attempt to merge those fragmented clear_dirty ioctls, then syncing
+>>>>> misaligned memory from ram_list to RAMBlock takes only about 1ms,
+>>>>> and the total sync time is only *12ms*.
+>>>>>
+>>>>> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
+>>>>> ---
+>>>>>    accel/tcg/cputlb.c       |  5 ++--
+>>>>>    include/system/physmem.h |  7 +++---
+>>>>>    migration/ram.c          | 17 ++++----------
+>>>>>    system/memory.c          |  2 +-
+>>>>>    system/physmem.c         | 49 ++++++++++++++++++++++++++++--------=
+----
+>>>>>    5 files changed, 47 insertions(+), 33 deletions(-)
+>>>>>
+>>>>> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+>>>>> index fd1606c856..c8827c8b0d 100644
+>>>>> --- a/accel/tcg/cputlb.c
+>>>>> +++ b/accel/tcg/cputlb.c
+>>>>> @@ -857,8 +857,9 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synce=
+d(CPUState *src_cpu,
+>>>>>    void tlb_protect_code(ram_addr_t ram_addr)
+>>>>>    {
+>>>>>        physical_memory_test_and_clear_dirty(ram_addr & TARGET_PAGE_MA=
+SK,
+>>>>> -                                             TARGET_PAGE_SIZE,
+>>>>> -                                             DIRTY_MEMORY_CODE);
+>>>>> +                                         TARGET_PAGE_SIZE,
+>>>>> +                                         DIRTY_MEMORY_CODE,
+>>>>> +                                         NULL);
+>>>>>    }
+>>>>>   =20
+>>>>>    /* update the TLB so that writes in physical page 'phys_addr' are =
+no longer
+>>>>> diff --git a/include/system/physmem.h b/include/system/physmem.h
+>>>>> index 879f6eae38..8eeace9d1f 100644
+>>>>> --- a/include/system/physmem.h
+>>>>> +++ b/include/system/physmem.h
+>>>>> @@ -39,9 +39,10 @@ uint64_t physical_memory_set_dirty_lebitmap(unsign=
+ed long *bitmap,
+>>>>>   =20
+>>>>>    void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr=
+_t length);
+>>>>>   =20
+>>>>> -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+>>>>> -                                          ram_addr_t length,
+>>>>> -                                          unsigned client);
+>>>>> +uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
+>>>>> +                                              ram_addr_t length,
+>>>>> +                                              unsigned client,
+>>>>> +                                              unsigned long *dest);
+>>>>>   =20
+>>>>>    DirtyBitmapSnapshot *
+>>>>>    physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr =
+offset,
+>>>>> diff --git a/migration/ram.c b/migration/ram.c
+>>>>> index 29f016cb25..a03c9874a2 100644
+>>>>> --- a/migration/ram.c
+>>>>> +++ b/migration/ram.c
+>>>>> @@ -942,7 +942,6 @@ static uint64_t physical_memory_sync_dirty_bitmap=
+(RAMBlock *rb,
+>>>>>                                                      ram_addr_t start=
+,
+>>>>>                                                      ram_addr_t lengt=
+h)
+>>>>>    {
+>>>>> -    ram_addr_t addr;
+>>>>>        unsigned long word =3D BIT_WORD((start + rb->offset) >> TARGET=
+_PAGE_BITS);
+>>>>>        uint64_t num_dirty =3D 0;
+>>>>>        unsigned long *dest =3D rb->bmap;
+>>>>> @@ -996,17 +995,11 @@ static uint64_t physical_memory_sync_dirty_bitm=
+ap(RAMBlock *rb,
+>>>>>        } else {
+>>>>>            ram_addr_t offset =3D rb->offset;
+>>>>>   =20
+>>>>> -        for (addr =3D 0; addr < length; addr +=3D TARGET_PAGE_SIZE) =
+{
+>>>>> -            if (physical_memory_test_and_clear_dirty(
+>>>>> -                        start + addr + offset,
+>>>>> -                        TARGET_PAGE_SIZE,
+>>>>> -                        DIRTY_MEMORY_MIGRATION)) {
+>>>>> -                long k =3D (start + addr) >> TARGET_PAGE_BITS;
+>>>>> -                if (!test_and_set_bit(k, dest)) {
+>>>>> -                    num_dirty++;
+>>>>> -                }
+>>>>> -            }
+>>>>> -        }
+>>>>> +        num_dirty =3D physical_memory_test_and_clear_dirty(
+>>>>> +                        start + offset,
+>>>>> +                        length,
+>>>>> +                        DIRTY_MEMORY_MIGRATION,
+>>>>> +                        dest);
+>>>>>        }
+>>>>>   =20
+>>>>>        return num_dirty;
+>>>>> diff --git a/system/memory.c b/system/memory.c
+>>>>> index 8b84661ae3..666364392d 100644
+>>>>> --- a/system/memory.c
+>>>>> +++ b/system/memory.c
+>>>>> @@ -2424,7 +2424,7 @@ void memory_region_reset_dirty(MemoryRegion *mr=
+, hwaddr addr,
+>>>>>    {
+>>>>>        assert(mr->ram_block);
+>>>>>        physical_memory_test_and_clear_dirty(
+>>>>> -        memory_region_get_ram_addr(mr) + addr, size, client);
+>>>>> +        memory_region_get_ram_addr(mr) + addr, size, client, NULL);
+>>>>>    }
+>>>>>   =20
+>>>>>    int memory_region_get_fd(MemoryRegion *mr)
+>>>>> diff --git a/system/physmem.c b/system/physmem.c
+>>>>> index c9869e4049..f8b660dafe 100644
+>>>>> --- a/system/physmem.c
+>>>>> +++ b/system/physmem.c
+>>>>> @@ -1089,19 +1089,31 @@ void physical_memory_set_dirty_range(ram_addr=
+_t start, ram_addr_t length,
+>>>>>        }
+>>>>>    }
+>>>>>   =20
+>>>>> -/* Note: start and end must be within the same ram block.  */
+>>>>> -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
+>>>>> +/*
+>>>>> + * Note: start and end must be within the same ram block.
+>>>>> + *
+>>>>> + * @dest usage:
+>>>> I'm not sure if it's just me, but I find this "dest" term quite
+>>>> confusing. "bmap" might be more straight-forward.
+>>>>
+>>>>> + * - When @dest is provided, set bits for newly discovered dirty pag=
+es
+>>>>> + *   only if the bit wasn't already set in dest, and count those pag=
+es
+>>>>> + *   in num_dirty.
+>>>> Am I misreading the code? I don't see this "set ... only if the bit
+>>>> wasn't already set" part. What I see is: "set bits, but only count tho=
+se
+>>>> pages if the bit wasn't already set".
+>>> Agrees on both points.. one more thing to mention below.
+>> This will be fixed in next version.
+>>>>> + * - When @dest is NULL, count all dirty pages in the range
+>>>>> + *
+>>>>> + * @return:
+>>>>> + * - Number of dirty guest pages found within [start, start + length=
+).
+>>>>> + */
+>>>>> +uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
+>>>>>                                                  ram_addr_t length,
+>>>>> -                                              unsigned client)
+>>>>> +                                              unsigned client,
+>>>>> +                                              unsigned long *dest)
+>>>>>    {
+>>>>>        DirtyMemoryBlocks *blocks;
+>>>>>        unsigned long end, page, start_page;
+>>>>> -    bool dirty =3D false;
+>>>>> +    uint64_t num_dirty =3D 0;
+>>>>>        RAMBlock *ramblock;
+>>>>>        uint64_t mr_offset, mr_size;
+>>>>>   =20
+>>>>>        if (length =3D=3D 0) {
+>>>>> -        return false;
+>>>>> +        return 0;
+>>>>>        }
+>>>>>   =20
+>>>>>        end =3D TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
+>>>>> @@ -1118,12 +1130,19 @@ bool physical_memory_test_and_clear_dirty(ram=
+_addr_t start,
+>>>>>            while (page < end) {
+>>>>>                unsigned long idx =3D page / DIRTY_MEMORY_BLOCK_SIZE;
+>>>>>                unsigned long offset =3D page % DIRTY_MEMORY_BLOCK_SIZ=
+E;
+>>>>> -            unsigned long num =3D MIN(end - page,
+>>>>> -                                    DIRTY_MEMORY_BLOCK_SIZE - offset=
+);
+>>>>>   =20
+>>>>> -            dirty |=3D bitmap_test_and_clear_atomic(blocks->blocks[i=
+dx],
+>>>>> -                                                  offset, num);
+>>>>> -            page +=3D num;
+>>>>> +            if (bitmap_test_and_clear_atomic(blocks->blocks[idx], of=
+fset, 1)) {
+>>>>> +                if (dest) {
+>>>>> +                    unsigned long k =3D page - (ramblock->offset >> =
+TARGET_PAGE_BITS);
+>>>>> +                    if (!test_and_set_bit(k, dest)) {
+>>>>> +                        num_dirty++;
+>>>>> +                    }
+>>>>> +                } else {
+>>>>> +                    num_dirty++;
+>>>>> +                }
+>>>>> +            }
+>>>>> +
+>>>>> +            page++;
+>>> Sorry I could have mentioned this in the previous version: IMHO it'll s=
+till
+>>> be nice to keep the one atomic operations for !dest/!bmap case over "nu=
+m".
+>>> There's no reason we need to introduce even any slightest regression in
+>>> those paths.
+>>>
+>>> Thanks,
+>> bitmap_test_and_clear_atomic returns bool, not the number of bits cleare=
+d.
+>> So for !bmap case we can only return whether there is dirty, not the num=
+ber
+>> of dirty, and this might be a bit confusing.
+> Ah, right..
+>
+> Looks like we only have two real users of this API that clears more than
+> one target page (tcx_reset, qemu_ram_resize), I assume they're not perf
+> critical as of now.  When it comes, it should be easy to optimize.
+>
+> Unless others have concerns, IMHO we can go with the current one until
+> later.  Feel free to ignore this comment.
+>
+> Thanks,
+>
+>>>>>            }
+>>>>>   =20
+>>>>>            mr_offset =3D (ram_addr_t)(start_page << TARGET_PAGE_BITS)=
+ - ramblock->offset;
+>>>>> @@ -1131,18 +1150,18 @@ bool physical_memory_test_and_clear_dirty(ram=
+_addr_t start,
+>>>>>            memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, =
+mr_size);
+>>>>>        }
+>>>>>   =20
+>>>>> -    if (dirty) {
+>>>>> +    if (num_dirty) {
+>>>>>            physical_memory_dirty_bits_cleared(start, length);
+>>>>>        }
+>>>>>   =20
+>>>>> -    return dirty;
+>>>>> +    return num_dirty;
+>>>>>    }
+>>>>>   =20
+>>>>>    static void physical_memory_clear_dirty_range(ram_addr_t addr, ram=
+_addr_t length)
+>>>>>    {
+>>>>> -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_=
+MIGRATION);
+>>>>> -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_=
+VGA);
+>>>>> -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_=
+CODE);
+>>>>> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_=
+MIGRATION, NULL);
+>>>>> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_=
+VGA, NULL);
+>>>>> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_=
+CODE, NULL);
+>>>>>    }
+>>>>>   =20
+>>>>>    DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
 
