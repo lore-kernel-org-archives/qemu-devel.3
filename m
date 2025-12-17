@@ -4,122 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71473D65C49
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 14:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A539DD6554E
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 14:08:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVsC7-00022Q-3b; Wed, 17 Dec 2025 09:07:59 -0500
+	id 1vVsCu-0002Ln-AK; Wed, 17 Dec 2025 09:08:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vVsC5-00021o-7I
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 09:07:57 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vVsCo-0002GQ-Ty
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 09:08:43 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1vVsC2-0007dw-9g
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 09:07:56 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vVsCh-0007jY-VO
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 09:08:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765980472;
+ s=mimecast20190719; t=1765980514;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aljhJcWsDJ3PFFfYqiQ4P5tji0PBbRIzCHEZWg9XRYg=;
- b=cw08ZGozAlaLp/sfhKWUmBCoLtGObJQsw8M8QUB1WA9ogLUZaGLBJUubkN+CylfqIRi1EJ
- dCsxceq8/GCBloIg6tyqaGeoHDto7a8BjyUUQjhRrhVJ6yQ9K9QktHaueFakRhKrlzbNHr
- u2OaE67Bt7E+peq9oFdEwkXLDpDv0sc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-E30PHjiFMu-fpyhsrb0uWA-1; Wed, 17 Dec 2025 09:07:51 -0500
-X-MC-Unique: E30PHjiFMu-fpyhsrb0uWA-1
-X-Mimecast-MFC-AGG-ID: E30PHjiFMu-fpyhsrb0uWA_1765980470
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43100a07eb1so1732757f8f.3
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 06:07:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1765980470; x=1766585270; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aljhJcWsDJ3PFFfYqiQ4P5tji0PBbRIzCHEZWg9XRYg=;
- b=cEiCXFrP/d/HyT4hlDGkMTTK1LI+e5JePwXA1+6kh2+P/81nZqBETD2xzX/fWO/oXT
- MwUeHoPbvpKJJj7aBNa1up029NXG/cRtun+INyDwCRE2FmBbx7O3UUmw9Z16hRE4YD7L
- l/SrKrqxAwaIJvupS2Mt+NaZIanCylebPx7RRAlQSpfXKNMCa+gJd/vAXNXXk0w8ZPK/
- CLlL45UVfhNYCJW1FKK3aue6xaGZuOPoRpsqAKEw7Oo0hCfblnWx4DBBlP/BVuhW9hmX
- y310VXoEc6zF7HivwiZ9exVUqVdde1cTjyu2uEFj7sAoC0xRRFnRsxgHUMlKSWby4yWP
- tjnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765980470; x=1766585270;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aljhJcWsDJ3PFFfYqiQ4P5tji0PBbRIzCHEZWg9XRYg=;
- b=BzSeyi3x3KB8HaKlBxcjk9bFyavicdtKy3C/4HKbIVHxDB2YKcg23eXkDOlbhuLY9f
- Wjdfd9MN2Ma2o6Tz2SZJyqYj2Qnmg0w6Q5TolsyaVexBjuNAjwN1uhSgiXXj+bD/ubFi
- OfMPYGpNzYchwkhhfGoZzXrIXELYy3Gv888JgnkhY6vx6330fJ6I2uL/QelrGhhg0or0
- zxcNol/D7jKIusbgGBMCQ/lto6nQbCELZ4ECNzp6LPHjQQM9G9ncrvn4dx383PBEZMuO
- 50bz6PRv1ogpsigthjyBko3VtjCrw+dr1W8GvxAGrG791wb9t2n/UE8IIhBEwHccuOMm
- RZxg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWZiuRWCuRFsQmu5IhVv08u3DYOUdL6m3morfUjCn28iY8+scZRwSgSSjURaSUDEBwwBYc+ZnmW+tk4@nongnu.org
-X-Gm-Message-State: AOJu0Yzra8ncVYpI47zMt4MnP+tz/UplzUksufhSoBcEevM3ty3SnveU
- RdTfkpDuxAFv7uVT13kneXdQbFXVuom8TsDSlvchdUXWlvRVhHLLtwqpGYGOsgUHUG1V+xQ8aW0
- OWPwAupnVWFGYPblfysNsfRCPOhPGMzJw82FcTU8BMa1itYlJXoZgnrr1
-X-Gm-Gg: AY/fxX4Ze3y8ggDf1A3pLy7EnPlkYgniEcsgKO5c9f6FwoGjDum9HGtsB3mR1lU2KME
- aqCq/jaarGsrys7XTBjsJMQhXhsx5t4RlBhp/dzYIb972OMbjujD9NVnYfUjeHicaFCzdMDeGAD
- ym+spDhNC4tC8ACljZGBJrUHYKAgI769k6EKKOwSAW5sso0z6qP7xDBkIfipDxk0MRmVuJD3jqg
- ROYouog5Y2keikrNHNWMenknm10yTZuFKt2Qi1BOJEkH2dFxBKT5fbDStMSdPuFBnW2yQJH8pwT
- AyTiEJ2B/bog0II6RFJYspWznVHPAvdFgWp6afeAYmUaa579Yyb0yEB/00aCo1Gi1AwH5g==
-X-Received: by 2002:a05:6000:230f:b0:430:fa9a:75a with SMTP id
- ffacd0b85a97d-430fa9a0d44mr13417670f8f.62.1765980470125; 
- Wed, 17 Dec 2025 06:07:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHpXoLJz1298FbluPk6Xn1ITwdOxZzapjcXfhQvPzVc4SMQoEloQ6OJ4+yK0Lg6SKLVv9uCjQ==
-X-Received: by 2002:a05:6000:230f:b0:430:fa9a:75a with SMTP id
- ffacd0b85a97d-430fa9a0d44mr13417644f8f.62.1765980469532; 
- Wed, 17 Dec 2025 06:07:49 -0800 (PST)
-Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4310adad192sm5220905f8f.14.2025.12.17.06.07.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Dec 2025 06:07:49 -0800 (PST)
-Date: Wed, 17 Dec 2025 15:07:47 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
- <philmd@linaro.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas
- Huth <thuth@redhat.com>, qemu-devel@nongnu.org, devel@lists.libvirt.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org, Richard
- Henderson <richard.henderson@linaro.org>, Sergio Lopez <slp@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Laurent Vivier <lvivier@redhat.com>, Jiaxun
- Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>, Eduardo
- Habkost <eduardo@habkost.net>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, Weiwei Li <liwei1518@gmail.com>, Amit Shah
- <amit@kernel.org>, Xiaoyao Li <xiaoyao.li@intel.com>, Yanan Wang
- <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>, Palmer Dabbelt
- <palmer@dabbelt.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>, Ani Sinha <anisinha@redhat.com>, Fabiano Rosas
- <farosas@suse.de>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>, Huacai
- Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>, Mark
- Cave-Ayland <mark.caveayland@nutanix.com>, BALATON Zoltan
- <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>, Jiri Denemark
- <jdenemar@redhat.com>
-Subject: Re: [PATCH v5 14/28] hw/i386/pc: Remove multiboot.bin
-Message-ID: <20251217150747.13d77fab@imammedo>
-In-Reply-To: <20251202162835.3227894-15-zhao1.liu@intel.com>
-References: <20251202162835.3227894-1-zhao1.liu@intel.com>
- <20251202162835.3227894-15-zhao1.liu@intel.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
+ bh=/Vr9xukdWOnd+aakAcHJmI8rOgQJ1eSfxjHiLZshjq4=;
+ b=G6+8TNPHwCFIZ7vt2zDaSeiKNuWxJcecgxL+/4htlZ28T2MrBkzict4L0IZky8Mncc8AA1
+ X7Kq2rdCk6jAYwq8pN8m2TjAQstZuW4D09SinWOgB3XZ2khlax8CguYsNL4lhbJ+ZHm8pt
+ G0Z9V4YyWhECFT/C9wFDQFGgrF9hrYI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-l-tnkY1MOKqTEV04q0osVw-1; Wed,
+ 17 Dec 2025 09:08:31 -0500
+X-MC-Unique: l-tnkY1MOKqTEV04q0osVw-1
+X-Mimecast-MFC-AGG-ID: l-tnkY1MOKqTEV04q0osVw_1765980510
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D9FB11801207; Wed, 17 Dec 2025 14:08:29 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.156])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7995130001A2; Wed, 17 Dec 2025 14:08:29 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id E67851800080; Wed, 17 Dec 2025 15:08:26 +0100 (CET)
+Date: Wed, 17 Dec 2025 15:08:26 +0100
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Ani Sinha <anisinha@redhat.com>, 
+ Vitaly Kuznetsov <vkuznets@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v1 21/28] hw/hyperv/vmbus: add support for confidential
+ guest reset
+Message-ID: <6z23v5oawxmjzby5yv7mpbnupnv3dgayjg424hxseiqcrihv6z@yx5dfg7c62wu>
+References: <20251212150359.548787-1-anisinha@redhat.com>
+ <20251212150359.548787-22-anisinha@redhat.com>
+ <a0cfba30-8571-4153-a5a3-572cb2fe514f@maciej.szmigiero.name>
+ <FCE31E2E-19BA-43AF-9525-B99C45ADBBF6@redhat.com>
+ <9cb2723e-4132-44ac-be32-857c7933d27e@maciej.szmigiero.name>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9cb2723e-4132-44ac-be32-857c7933d27e@maciej.szmigiero.name>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -144,603 +92,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed,  3 Dec 2025 00:28:21 +0800
-Zhao Liu <zhao1.liu@intel.com> wrote:
+On Tue, Dec 16, 2025 at 02:38:10PM +0100, Maciej S. Szmigiero wrote:
+> On 16.12.2025 05:41, Ani Sinha wrote:
+> > 
+> > 
+> > > On 15 Dec 2025, at 10:34 PM, Maciej S. Szmigiero <mail@maciej.szmigiero.name> wrote:
+> > > 
+> > > On 12.12.2025 16:03, Ani Sinha wrote:
+> > > > On confidential guests when the KVM virtual machine file descriptor changes as
+> > > > a part of the reset process, event file descriptors needs to be reassociated
+> > > > with the new KVM VM file descriptor. This is achieved with the help of a
+> > > > callback handler that gets called when KVM VM file descriptor changes during
+> > > > the confidential guest reset process.
+> > > > Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> > > > ---
+> > > 
+> > > Have you actually tested confidential guests with VMBus or is this a change
+> > > "for completeness sake" that can't be exercised in the current state of things?
+> > 
+> > No I have not tested the changes with VMBus. It’s more for completeness sake as you have correctly put it. If you suggest, I can drop the change.
+> > 
+> 
+> I have mixed feelings here: on the one hand this support could be useful in
+> the future, on the other hand we probably don't want to add dead and
+> untestable code to QEMU.
+> 
+> Let's see what other maintainers think about adding such code in order to
+> be consistent across different subsystems.
 
-> From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->=20
-> All PC machines now use the multiboot_dma.bin binary,
-> we can remove the non-DMA version (multiboot.bin).
->=20
-> This doesn't change multiboot_dma binary file.
->=20
-> Suggested-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+In any case the testing status of these changes should be noted in the
+commit messages.  There are some xen changes in the series where I
+suspect they are untested too ...
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> ---
-> Changes since v4:
->  * There's a recent change for multiboot.S: commit 4c8f69b94839.
->    Rebase this patch on that.
-> ---
->  hw/i386/pc.c                      |   1 -
->  pc-bios/meson.build               |   1 -
->  pc-bios/multiboot.bin             | Bin 1024 -> 0 bytes
->  pc-bios/optionrom/Makefile        |   2 +-
->  pc-bios/optionrom/multiboot.S     | 232 -----------------------------
->  pc-bios/optionrom/multiboot_dma.S | 234 +++++++++++++++++++++++++++++-
->  pc-bios/optionrom/optionrom.h     |   4 -
->  7 files changed, 233 insertions(+), 241 deletions(-)
->  delete mode 100644 pc-bios/multiboot.bin
->  delete mode 100644 pc-bios/optionrom/multiboot.S
->=20
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index 2b8d3982c4a0..9d88d4a5207a 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -669,7 +669,6 @@ void xen_load_linux(PCMachineState *pcms)
->          assert(!strcmp(option_rom[i].name, "linuxboot.bin") ||
->                 !strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
->                 !strcmp(option_rom[i].name, "pvh.bin") ||
-> -               !strcmp(option_rom[i].name, "multiboot.bin") ||
->                 !strcmp(option_rom[i].name, "multiboot_dma.bin"));
->          rom_add_option(option_rom[i].name, option_rom[i].bootindex);
->      }
-> diff --git a/pc-bios/meson.build b/pc-bios/meson.build
-> index 9260aaad78e8..efe45c16705d 100644
-> --- a/pc-bios/meson.build
-> +++ b/pc-bios/meson.build
-> @@ -62,7 +62,6 @@ blobs =3D [
->    'efi-e1000e.rom',
->    'efi-vmxnet3.rom',
->    'qemu-nsis.bmp',
-> -  'multiboot.bin',
->    'multiboot_dma.bin',
->    'linuxboot.bin',
->    'linuxboot_dma.bin',
-> diff --git a/pc-bios/multiboot.bin b/pc-bios/multiboot.bin
-> deleted file mode 100644
-> index e772713c95749bee82c20002b50ec6d05b2d4987..0000000000000000000000000=
-000000000000000
-> GIT binary patch
-> literal 0
-> HcmV?d00001
->=20
-> literal 1024
-> zcmeHFF-Tic6utlZQ$OjD#Hxcx2u0GNQv6GySOkZR(ulaX<>%N!Y#>cWhY}nf36J7X
-> zN(%*X6NHY>xcqO11dG^02a8L@B~ihln|%1*|7(haWa`)l@80w7;U4Ziyv0rZ8{K-w =20
-> zX(Ib3tLZ)RgZ}w1ei{~QEqQq9q1J-iHc<Nk_t=3D0qf%XfPZVHw2DY#ujc2P|}*P%6X
-> z5J{pPlX4<yP&N5pXK;s@UhB~&!E&UdqEwGZF6xQMIcu9YL#zeSRCoLGt{Nh+08t>}
-> z{m%E-b32A??+@XljSYirtWObwngi<ymS1Ta*dFGMp;8@=3D_3Z52!v09{UU~`QnFsB_
-> z7BiEC)uZxH%SW9kPWCicN{_iUjmk<~D^H|R%@|m9%43Woc(Pkeq%n{&8ND5Z*tPt#
-> zJua+xXAQhN4K(1MMs0{u_6sp>l#NmvPZ7KC<lsLdQgMFC@A6POvMoDMgW=3DM+K;T<o
-> zTkpnNq6x*`vM0CGE>t40l-CQ}*)y<y--c)(x}o&1TMzwX+ToGS@VER4zR&s70fl+( =20
-> qI)9<-H_-!n#lLJmGq*^~<$US&%R-@)$`@YPx#A6#|L`9<;9UXPG71m?
->=20
-> diff --git a/pc-bios/optionrom/Makefile b/pc-bios/optionrom/Makefile
-> index 30d07026c790..1183ef889228 100644
-> --- a/pc-bios/optionrom/Makefile
-> +++ b/pc-bios/optionrom/Makefile
-> @@ -2,7 +2,7 @@ include config.mak
->  SRC_DIR :=3D $(TOPSRC_DIR)/pc-bios/optionrom
->  VPATH =3D $(SRC_DIR)
-> =20
-> -all: multiboot.bin multiboot_dma.bin linuxboot.bin linuxboot_dma.bin kvm=
-vapic.bin pvh.bin
-> +all: multiboot_dma.bin linuxboot.bin linuxboot_dma.bin kvmvapic.bin pvh.=
-bin
->  # Dummy command so that make thinks it has done something
->  	@true
-> =20
-> diff --git a/pc-bios/optionrom/multiboot.S b/pc-bios/optionrom/multiboot.S
-> deleted file mode 100644
-> index c95e35c9cb62..000000000000
-> --- a/pc-bios/optionrom/multiboot.S
-> +++ /dev/null
-> @@ -1,232 +0,0 @@
-> -/*
-> - * Multiboot Option ROM
-> - *
-> - * This program is free software; you can redistribute it and/or modify
-> - * it under the terms of the GNU General Public License as published by
-> - * the Free Software Foundation; either version 2 of the License, or
-> - * (at your option) any later version.
-> - *
-> - * This program is distributed in the hope that it will be useful,
-> - * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> - * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-> - * GNU General Public License for more details.
-> - *
-> - * You should have received a copy of the GNU General Public License
-> - * along with this program; if not, see <http://www.gnu.org/licenses/>.
-> - *
-> - * Copyright Novell Inc, 2009
-> - *   Authors: Alexander Graf <agraf@suse.de>
-> - */
-> -
-> -#include "optionrom.h"
-> -
-> -#define BOOT_ROM_PRODUCT "multiboot loader"
-> -
-> -#define MULTIBOOT_MAGIC		0x2badb002
-> -
-> -#define GS_PROT_JUMP		0
-> -#define GS_GDT_DESC		6
-> -
-> -
-> -BOOT_ROM_START
-> -
-> -run_multiboot:
-> -
-> -	cli
-> -	cld
-> -
-> -	mov		%cs, %eax
-> -	shl		$0x4, %eax
-> -
-> -	/* set up a long jump descriptor that is PC relative */
-> -
-> -	/* move stack memory to %gs */
-> -	mov		%ss, %ecx
-> -	shl		$0x4, %ecx
-> -	mov		%esp, %ebx
-> -	add		%ebx, %ecx
-> -	sub		$0x20, %ecx
-> -	sub		$0x30, %esp
-> -	shr		$0x4, %ecx
-> -	mov		%cx, %gs
-> -
-> -	/* now push the indirect jump descriptor there */
-> -	mov		(prot_jump), %ebx
-> -	add		%eax, %ebx
-> -	movl		%ebx, %gs:GS_PROT_JUMP
-> -	mov		$8, %bx
-> -	movw		%bx, %gs:GS_PROT_JUMP + 4
-> -
-> -	/* fix the gdt descriptor to be PC relative */
-> -	movw		(gdt_desc), %bx
-> -	movw		%bx, %gs:GS_GDT_DESC
-> -	movl		(gdt_desc+2), %ebx
-> -	add		%eax, %ebx
-> -	movl		%ebx, %gs:GS_GDT_DESC + 2
-> -
-> -	xor		%eax, %eax
-> -	mov		%eax, %es
-> -
-> -	/* Read the bootinfo struct into RAM */
-> -	read_fw_blob_dma(FW_CFG_INITRD)
-> -
-> -	/* FS =3D bootinfo_struct */
-> -	read_fw		FW_CFG_INITRD_ADDR
-> -	shr		$4, %eax
-> -	mov		%ax, %fs
-> -
-> -	/* Account for the EBDA in the multiboot structure's e801
-> -	 * map.
-> -	 */
-> -	int		$0x12
-> -	cwtl
-> -	movl		%eax, %fs:4
-> -
-> -	/* ES =3D mmap_addr */
-> -	mov 		%fs:48, %eax
-> -	shr		$4, %eax
-> -	mov		%ax, %es
-> -
-> -	/* Initialize multiboot mmap structs using int 0x15(e820) */
-> -	xor		%ebx, %ebx
-> -	/* Start storing mmap data at %es:0 */
-> -	xor		%edi, %edi
-> -
-> -mmap_loop:
-> -	/* The multiboot entry size has offset -4, so leave some space */
-> -	add		$4, %di
-> -	/* entry size (mmap struct) & max buffer size (int15) */
-> -	movl		$20, %ecx
-> -	/* e820 */
-> -	movl		$0x0000e820, %eax
-> -	/* 'SMAP' magic */
-> -	movl		$0x534d4150, %edx
-> -	int		$0x15
-> -
-> -mmap_check_entry:
-> -	/* Error or last entry already done? */
-> -	jb		mmap_done
-> -
-> -mmap_store_entry:
-> -	/* store entry size */
-> -	/* old as(1) doesn't like this insn so emit the bytes instead:
-> -	movl		%ecx, %es:-4(%edi)
-> -	*/
-> -	.dc.b		0x26,0x67,0x66,0x89,0x4f,0xfc
-> -
-> -	/* %edi +=3D entry_size, store as mbs_mmap_length */
-> -	add		%ecx, %edi
-> -	movw		%di, %fs:0x2c
-> -
-> -	/* Continuation value 0 means last entry */
-> -	test		%ebx, %ebx
-> -	jnz		mmap_loop
-> -
-> -mmap_done:
-> -	/* Calculate upper_mem field: The amount of memory between 1 MB and
-> -	   the first upper memory hole. Get it from the mmap. */
-> -	xor		%di, %di
-> -	mov		$0x100000, %edx
-> -upper_mem_entry:
-> -	cmp		%fs:0x2c, %di
-> -	je		upper_mem_done
-> -	add		$4, %di
-> -
-> -	/* Skip if type !=3D 1 */
-> -	cmpl		$1, %es:16(%di)
-> -	jne		upper_mem_next
-> -
-> -	/* Skip if > 4 GB */
-> -	movl		%es:4(%di), %eax
-> -	test		%eax, %eax
-> -	jnz		upper_mem_next
-> -
-> -	/* Check for contiguous extension (base <=3D %edx < base + length) */
-> -	movl		%es:(%di), %eax
-> -	cmp		%eax, %edx
-> -	jb		upper_mem_next
-> -	addl		%es:8(%di), %eax
-> -	cmp		%eax, %edx
-> -	jae		upper_mem_next
-> -
-> -	/* If so, update %edx, and restart the search (mmap isn't ordered) */
-> -	mov		%eax, %edx
-> -	xor		%di, %di
-> -	jmp		upper_mem_entry
-> -
-> -upper_mem_next:
-> -	addl		%es:-4(%di), %edi
-> -	jmp		upper_mem_entry
-> -
-> -upper_mem_done:
-> -	sub		$0x100000, %edx
-> -	shr		$10, %edx
-> -	mov		%edx, %fs:0x8
-> -
-> -real_to_prot:
-> -	/* Load the GDT before going into protected mode */
-> -lgdt:
-> -	data32 lgdt	%gs:GS_GDT_DESC
-> -
-> -	/* get us to protected mode now */
-> -	movl		$1, %eax
-> -	movl		%eax, %cr0
-> -
-> -	/* the LJMP sets CS for us and gets us to 32-bit */
-> -ljmp:
-> -	data32 ljmp	*%gs:GS_PROT_JUMP
-> -
-> -prot_mode:
-> -.code32
-> -
-> -	/* initialize all other segments */
-> -	movl		$0x10, %eax
-> -	movl		%eax, %ss
-> -	movl		%eax, %ds
-> -	movl		%eax, %es
-> -	movl		%eax, %fs
-> -	movl		%eax, %gs
-> -
-> -	/* Read the kernel and modules into RAM */
-> -	read_fw_blob_dma(FW_CFG_KERNEL)
-> -
-> -	/* Jump off to the kernel */
-> -	read_fw		FW_CFG_KERNEL_ENTRY
-> -	mov		%eax, %ecx
-> -
-> -	/* EBX contains a pointer to the bootinfo struct */
-> -	read_fw		FW_CFG_INITRD_ADDR
-> -	movl		%eax, %ebx
-> -
-> -	/* EAX has to contain the magic */
-> -	movl		$MULTIBOOT_MAGIC, %eax
-> -ljmp2:
-> -	jmp		*%ecx
-> -
-> -/* Variables */
-> -.align 4, 0
-> -prot_jump:	.long prot_mode
-> -		.short 8
-> -
-> -.align 8, 0
-> -gdt:
-> -	/* 0x00 */
-> -.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-> -
-> -	/* 0x08: code segment (base=3D0, limit=3D0xfffff, type=3D32bit code exe=
-c/read, DPL=3D0, 4k) */
-> -.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9a, 0xcf, 0x00
-> -
-> -	/* 0x10: data segment (base=3D0, limit=3D0xfffff, type=3D32bit data rea=
-d/write, DPL=3D0, 4k) */
-> -.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0xcf, 0x00
-> -
-> -	/* 0x18: code segment (base=3D0, limit=3D0x0ffff, type=3D16bit code exe=
-c/read/conf, DPL=3D0, 1b) */
-> -.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9e, 0x00, 0x00
-> -
-> -	/* 0x20: data segment (base=3D0, limit=3D0x0ffff, type=3D16bit data rea=
-d/write, DPL=3D0, 1b) */
-> -.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0x00, 0x00
-> -
-> -gdt_desc:
-> -.short	(5 * 8) - 1
-> -.long	gdt
-> -
-> -BOOT_ROM_END
-> diff --git a/pc-bios/optionrom/multiboot_dma.S b/pc-bios/optionrom/multib=
-oot_dma.S
-> index d809af3e23fc..c95e35c9cb62 100644
-> --- a/pc-bios/optionrom/multiboot_dma.S
-> +++ b/pc-bios/optionrom/multiboot_dma.S
-> @@ -1,2 +1,232 @@
-> -#define USE_FW_CFG_DMA 1
-> -#include "multiboot.S"
-> +/*
-> + * Multiboot Option ROM
-> + *
-> + * This program is free software; you can redistribute it and/or modify
-> + * it under the terms of the GNU General Public License as published by
-> + * the Free Software Foundation; either version 2 of the License, or
-> + * (at your option) any later version.
-> + *
-> + * This program is distributed in the hope that it will be useful,
-> + * but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-> + * GNU General Public License for more details.
-> + *
-> + * You should have received a copy of the GNU General Public License
-> + * along with this program; if not, see <http://www.gnu.org/licenses/>.
-> + *
-> + * Copyright Novell Inc, 2009
-> + *   Authors: Alexander Graf <agraf@suse.de>
-> + */
-> +
-> +#include "optionrom.h"
-> +
-> +#define BOOT_ROM_PRODUCT "multiboot loader"
-> +
-> +#define MULTIBOOT_MAGIC		0x2badb002
-> +
-> +#define GS_PROT_JUMP		0
-> +#define GS_GDT_DESC		6
-> +
-> +
-> +BOOT_ROM_START
-> +
-> +run_multiboot:
-> +
-> +	cli
-> +	cld
-> +
-> +	mov		%cs, %eax
-> +	shl		$0x4, %eax
-> +
-> +	/* set up a long jump descriptor that is PC relative */
-> +
-> +	/* move stack memory to %gs */
-> +	mov		%ss, %ecx
-> +	shl		$0x4, %ecx
-> +	mov		%esp, %ebx
-> +	add		%ebx, %ecx
-> +	sub		$0x20, %ecx
-> +	sub		$0x30, %esp
-> +	shr		$0x4, %ecx
-> +	mov		%cx, %gs
-> +
-> +	/* now push the indirect jump descriptor there */
-> +	mov		(prot_jump), %ebx
-> +	add		%eax, %ebx
-> +	movl		%ebx, %gs:GS_PROT_JUMP
-> +	mov		$8, %bx
-> +	movw		%bx, %gs:GS_PROT_JUMP + 4
-> +
-> +	/* fix the gdt descriptor to be PC relative */
-> +	movw		(gdt_desc), %bx
-> +	movw		%bx, %gs:GS_GDT_DESC
-> +	movl		(gdt_desc+2), %ebx
-> +	add		%eax, %ebx
-> +	movl		%ebx, %gs:GS_GDT_DESC + 2
-> +
-> +	xor		%eax, %eax
-> +	mov		%eax, %es
-> +
-> +	/* Read the bootinfo struct into RAM */
-> +	read_fw_blob_dma(FW_CFG_INITRD)
-> +
-> +	/* FS =3D bootinfo_struct */
-> +	read_fw		FW_CFG_INITRD_ADDR
-> +	shr		$4, %eax
-> +	mov		%ax, %fs
-> +
-> +	/* Account for the EBDA in the multiboot structure's e801
-> +	 * map.
-> +	 */
-> +	int		$0x12
-> +	cwtl
-> +	movl		%eax, %fs:4
-> +
-> +	/* ES =3D mmap_addr */
-> +	mov 		%fs:48, %eax
-> +	shr		$4, %eax
-> +	mov		%ax, %es
-> +
-> +	/* Initialize multiboot mmap structs using int 0x15(e820) */
-> +	xor		%ebx, %ebx
-> +	/* Start storing mmap data at %es:0 */
-> +	xor		%edi, %edi
-> +
-> +mmap_loop:
-> +	/* The multiboot entry size has offset -4, so leave some space */
-> +	add		$4, %di
-> +	/* entry size (mmap struct) & max buffer size (int15) */
-> +	movl		$20, %ecx
-> +	/* e820 */
-> +	movl		$0x0000e820, %eax
-> +	/* 'SMAP' magic */
-> +	movl		$0x534d4150, %edx
-> +	int		$0x15
-> +
-> +mmap_check_entry:
-> +	/* Error or last entry already done? */
-> +	jb		mmap_done
-> +
-> +mmap_store_entry:
-> +	/* store entry size */
-> +	/* old as(1) doesn't like this insn so emit the bytes instead:
-> +	movl		%ecx, %es:-4(%edi)
-> +	*/
-> +	.dc.b		0x26,0x67,0x66,0x89,0x4f,0xfc
-> +
-> +	/* %edi +=3D entry_size, store as mbs_mmap_length */
-> +	add		%ecx, %edi
-> +	movw		%di, %fs:0x2c
-> +
-> +	/* Continuation value 0 means last entry */
-> +	test		%ebx, %ebx
-> +	jnz		mmap_loop
-> +
-> +mmap_done:
-> +	/* Calculate upper_mem field: The amount of memory between 1 MB and
-> +	   the first upper memory hole. Get it from the mmap. */
-> +	xor		%di, %di
-> +	mov		$0x100000, %edx
-> +upper_mem_entry:
-> +	cmp		%fs:0x2c, %di
-> +	je		upper_mem_done
-> +	add		$4, %di
-> +
-> +	/* Skip if type !=3D 1 */
-> +	cmpl		$1, %es:16(%di)
-> +	jne		upper_mem_next
-> +
-> +	/* Skip if > 4 GB */
-> +	movl		%es:4(%di), %eax
-> +	test		%eax, %eax
-> +	jnz		upper_mem_next
-> +
-> +	/* Check for contiguous extension (base <=3D %edx < base + length) */
-> +	movl		%es:(%di), %eax
-> +	cmp		%eax, %edx
-> +	jb		upper_mem_next
-> +	addl		%es:8(%di), %eax
-> +	cmp		%eax, %edx
-> +	jae		upper_mem_next
-> +
-> +	/* If so, update %edx, and restart the search (mmap isn't ordered) */
-> +	mov		%eax, %edx
-> +	xor		%di, %di
-> +	jmp		upper_mem_entry
-> +
-> +upper_mem_next:
-> +	addl		%es:-4(%di), %edi
-> +	jmp		upper_mem_entry
-> +
-> +upper_mem_done:
-> +	sub		$0x100000, %edx
-> +	shr		$10, %edx
-> +	mov		%edx, %fs:0x8
-> +
-> +real_to_prot:
-> +	/* Load the GDT before going into protected mode */
-> +lgdt:
-> +	data32 lgdt	%gs:GS_GDT_DESC
-> +
-> +	/* get us to protected mode now */
-> +	movl		$1, %eax
-> +	movl		%eax, %cr0
-> +
-> +	/* the LJMP sets CS for us and gets us to 32-bit */
-> +ljmp:
-> +	data32 ljmp	*%gs:GS_PROT_JUMP
-> +
-> +prot_mode:
-> +.code32
-> +
-> +	/* initialize all other segments */
-> +	movl		$0x10, %eax
-> +	movl		%eax, %ss
-> +	movl		%eax, %ds
-> +	movl		%eax, %es
-> +	movl		%eax, %fs
-> +	movl		%eax, %gs
-> +
-> +	/* Read the kernel and modules into RAM */
-> +	read_fw_blob_dma(FW_CFG_KERNEL)
-> +
-> +	/* Jump off to the kernel */
-> +	read_fw		FW_CFG_KERNEL_ENTRY
-> +	mov		%eax, %ecx
-> +
-> +	/* EBX contains a pointer to the bootinfo struct */
-> +	read_fw		FW_CFG_INITRD_ADDR
-> +	movl		%eax, %ebx
-> +
-> +	/* EAX has to contain the magic */
-> +	movl		$MULTIBOOT_MAGIC, %eax
-> +ljmp2:
-> +	jmp		*%ecx
-> +
-> +/* Variables */
-> +.align 4, 0
-> +prot_jump:	.long prot_mode
-> +		.short 8
-> +
-> +.align 8, 0
-> +gdt:
-> +	/* 0x00 */
-> +.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-> +
-> +	/* 0x08: code segment (base=3D0, limit=3D0xfffff, type=3D32bit code exe=
-c/read, DPL=3D0, 4k) */
-> +.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9a, 0xcf, 0x00
-> +
-> +	/* 0x10: data segment (base=3D0, limit=3D0xfffff, type=3D32bit data rea=
-d/write, DPL=3D0, 4k) */
-> +.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0xcf, 0x00
-> +
-> +	/* 0x18: code segment (base=3D0, limit=3D0x0ffff, type=3D16bit code exe=
-c/read/conf, DPL=3D0, 1b) */
-> +.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x9e, 0x00, 0x00
-> +
-> +	/* 0x20: data segment (base=3D0, limit=3D0x0ffff, type=3D16bit data rea=
-d/write, DPL=3D0, 1b) */
-> +.byte	0xff, 0xff, 0x00, 0x00, 0x00, 0x92, 0x00, 0x00
-> +
-> +gdt_desc:
-> +.short	(5 * 8) - 1
-> +.long	gdt
-> +
-> +BOOT_ROM_END
-> diff --git a/pc-bios/optionrom/optionrom.h b/pc-bios/optionrom/optionrom.h
-> index 7bcdf0eeb240..2e6e2493f83f 100644
-> --- a/pc-bios/optionrom/optionrom.h
-> +++ b/pc-bios/optionrom/optionrom.h
-> @@ -117,16 +117,12 @@
->   *
->   * Clobbers: %eax, %edx, %es, %ecx, %edi and adresses %esp-20 to %esp
->   */
-> -#ifdef USE_FW_CFG_DMA
->  #define read_fw_blob_dma(var)                           \
->          read_fw         var ## _SIZE;                   \
->          mov             %eax, %ecx;                     \
->          read_fw         var ## _ADDR;                   \
->          mov             %eax, %edi ;                    \
->          read_fw_dma     var ## _DATA, %ecx, %edi
-> -#else
-> -#define read_fw_blob_dma(var) read_fw_blob(var)
-> -#endif
-> =20
->  #define read_fw_blob_pre(var)                           \
->          read_fw         var ## _SIZE;                   \
+take care,
+  Gerd
 
 
