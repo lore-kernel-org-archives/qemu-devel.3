@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49371D6552C
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 11:37:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64760D6552C
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 11:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVppi-0008Uh-G2; Wed, 17 Dec 2025 06:36:43 -0500
+	id 1vVpwy-0001CX-RF; Wed, 17 Dec 2025 06:44:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vVppW-0008UK-Qn
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 06:36:31 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vVpwx-0001CM-Ai
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 06:44:11 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vVppU-000526-43
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 06:36:29 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1vVpwv-0007b3-JD
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 06:44:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765971387;
+ s=mimecast20190719; t=1765971848;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6qIZ34esG1c6ZVBCQVE14sm24RyVINchDFCkdTTRXKY=;
- b=V1zxJh6+XtEwRucRb1R3iNmeQ1B3xYHQMBzLUtnNSjULMIujpoUQGPV4PkdJCioCPcHPLQ
- FEk/N1JxWzcPDoQrSFCnH6vFztP3sALQzuXYTzyeNGQUDI42yaB2k3C+cRsXoGNKzo32R2
- Q+AlKrF524QjSw/rfF78GoP5uwQb1Hw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=byYbQW2aOTVienLeGnmuCCWlLXqBV6cfpvW/+Acp7fA=;
+ b=dxC04+Or2hpl2uBVlsGBmsxco3N6hGVSDML8Fe4o1beg9/hQjZb+fH8YOEnOEfT+3I0ki2
+ lxgSQDm+Yvtw3+LARTxM/Lqq34hPozjQ26G43OsG1Tj/hbEJoE1N09rMw/wgi674dP0jF7
+ nQ2kjvEaKZmL6kaZTep6TzU4Uas65n4=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-Mfhed5YQNtSX-Yw_i8PhqQ-1; Wed,
- 17 Dec 2025 06:36:25 -0500
-X-MC-Unique: Mfhed5YQNtSX-Yw_i8PhqQ-1
-X-Mimecast-MFC-AGG-ID: Mfhed5YQNtSX-Yw_i8PhqQ_1765971384
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-362-fGt1zVYEOneFoK8CoOhToQ-1; Wed,
+ 17 Dec 2025 06:44:07 -0500
+X-MC-Unique: fGt1zVYEOneFoK8CoOhToQ-1
+X-Mimecast-MFC-AGG-ID: fGt1zVYEOneFoK8CoOhToQ_1765971846
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 93D2918005B0; Wed, 17 Dec 2025 11:36:24 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1157C19560A5; Wed, 17 Dec 2025 11:44:06 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.156])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32D0B1800576; Wed, 17 Dec 2025 11:36:24 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 951AA19560A7; Wed, 17 Dec 2025 11:44:05 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id BD75A1800869; Wed, 17 Dec 2025 12:36:21 +0100 (CET)
-Date: Wed, 17 Dec 2025 12:36:21 +0100
+ id 48F861800869; Wed, 17 Dec 2025 12:44:03 +0100 (CET)
+Date: Wed, 17 Dec 2025 12:44:03 +0100
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: Ani Sinha <anisinha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
  Marcelo Tosatti <mtosatti@redhat.com>, vkuznets@redhat.com,
  qemu-devel@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH v1 13/28] i386/tdx: finalize TDX guest state upon reset
-Message-ID: <ubmc2igckwxxpgw3zq7lmrhztygazibobjq3ruuhr3kbuzhfpr@odnoz7izs4hn>
+Subject: Re: [PATCH v1 15/28] i386/sev: add migration blockers only once
+Message-ID: <aas37tpm2yrqueip7mhgqd7lzy5f3ckk6zrt73bzq6dawpjoox@47o27xg5acqt>
 References: <20251212150359.548787-1-anisinha@redhat.com>
- <20251212150359.548787-14-anisinha@redhat.com>
+ <20251212150359.548787-16-anisinha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251212150359.548787-14-anisinha@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+In-Reply-To: <20251212150359.548787-16-anisinha@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,21 +87,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 12, 2025 at 08:33:41PM +0530, Ani Sinha wrote:
-> When the confidential virtual machine KVM file descriptor changes due to the
-> guest reset, some TDX specific setup steps needs to be done again. This
-> includes finalizing the inital guest launch state again. This change
-> re-executes some parts of the TDX setup during the device reset phaze using a
-> resettable interface. This finalizes the guest launch state again and locks
-> it in. Also care has been taken so that notifiers are installed only once.
+On Fri, Dec 12, 2025 at 08:33:43PM +0530, Ani Sinha wrote:
+> sev_launch_finish() and sev_snp_launch_finish() could be called multiple times
+> if the confidential guest is capable of being reset/rebooted. The migration
+> blockers should not be added multiple times, once per invocation. This change
+> makes sure that the migration blockers are added only one time and not every
+> time upon invocvation of launch_finish() calls.
 
-> +    if (!notifier_added) {
-> +        qemu_add_machine_init_done_notifier(&tdx_machine_done_notify);
-> +        notifier_added = true;
+> +    static bool added_migration_blocker;
+
+> -    error_setg(&sev_mig_blocker,
+> -               "SEV: Migration is not implemented");
+> -    migrate_add_blocker(&sev_mig_blocker, &error_fatal);
+> +    if (!added_migration_blocker) {
+> +        /* add migration blocker */
+> +        error_setg(&sev_mig_blocker,
+> +                   "SEV: Migration is not implemented");
+> +        migrate_add_blocker(&sev_mig_blocker, &error_fatal);
+> +        added_migration_blocker = true;
 > +    }
 
-Is this notifier needed still if you finalize the initial guest state in
-the reset handler?
+Maybe move this to another place which is called only once?  The
+migration blocker should not be very sensitive to initialization
+ordering, so I'd expect finding another place where you don't need
+the added_migration_blocker tracker variable isn't too much of a
+problem.
 
 take care,
   Gerd
