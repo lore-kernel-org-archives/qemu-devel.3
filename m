@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB07D66B85
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 18:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5F9CD66B86
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 18:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVwYF-0004A4-V0; Wed, 17 Dec 2025 13:47:08 -0500
+	id 1vVwdg-0005pa-6l; Wed, 17 Dec 2025 13:52:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVwXl-000402-Kq
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 13:46:38 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vVwdL-0005nR-Ei
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 13:52:23 -0500
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVwXh-0002tJ-Dx
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 13:46:37 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-34aa62f9e74so7675183a91.1
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 10:46:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1vVwdJ-0005FA-AO
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 13:52:23 -0500
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2a07f8dd9cdso47060505ad.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 10:52:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765997191; x=1766601991; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1765997534; x=1766602334; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=pI42kNWgZIf8o9hHQclQE0NOKqpoW5cIj2mxpLTq0Fg=;
- b=x2RXzT5AQav11r1D0AsBq58CVSsFq+8hyo515Uda6ySR2qyrWOj4xL+d2S8Q0MsW5z
- AzlwV7cY/soISXlVOjFji6jfDVTcmztqos6Z9KhdMwT3E5/U7bR35yj/J3F4jvXiGnMN
- sZpBUo8u7i3QhAIuxs/5ljfA2ZB6XtOsU4O47zBcpWCl/6/h5zpDeZIJuicfKANJXiwz
- l+bR0LLaZbq4MQ2w2pMV/fJHTmm+ukWSPLV+B5k7IQvOQBIcTFh8ax1Sq/T9tEM56NPu
- iRHKqaGy2n5FvqhaSwNSDfHT8P9MS8g/IJTvTAfcmhDagYrE15PNztFhZhiMy1wOqQTv
- Weww==
+ bh=AVdEp4mpT1E59xpkC2vm4GpVRC7IE4+bfaZnrGctLBc=;
+ b=skLqYR+2v7GB+HwCReFJkGjtbChrSs6Ph4pBj4jx5GRU29bazQCn14RyZhkmMG1E85
+ Ck3FvnrfhjgoAoi7BSrxDUApj6cTTi2ufxH+6gI8M3mxHOmFOMPpJLeJDtUJcHqEPZZK
+ nEVFS+o9YyJmDevhVUSCYNN8XEK6oTFIMp4ZDK6/J2Qm3SnOYpXkXBBfg0qWZ9/QTcRH
+ FPA4fk8dgRvcsnO4o0yvfkoxjLJZSHu17Z4oTdqIua0eZj3dbscr74ZLuo2CKYh6SvSo
+ b+NKe+hr3WPAYV/e7IObxL8y2ls6l0BjQ46wfkmLcNBEggE/mPeNGpU3/GJqMKXKA7PH
+ ZRZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765997191; x=1766601991;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1765997534; x=1766602334;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pI42kNWgZIf8o9hHQclQE0NOKqpoW5cIj2mxpLTq0Fg=;
- b=vkvWCOlcB1/XI3W4O/L4d2hhFu5P9Hihce9mfUguy9u9XBCzB5hE4BKeqOsUnzzT88
- 8dBjNDQfuw7ikjvMhLrwnV2yR9AsvzLBITjTfT5vbhv29nGSCMDswF0RIQfg/M774HZ4
- zNeKJ4PFom4r0/MhECLblFiIEAL+flqK2MpxF+Og1WYbyITzRo3qs8bQPnbZXa7BGJwT
- 6/yv37gh6+sC/9s3r9cxoS0zet7PKFI2QYeiptpmqka1hKCbjgvqPaE+suuUgjHvPkHE
- H/A3tNE0N/x8W4DJiapWnRxvO72X061lN+LHTLVkYMWBYtfH82cNXIFP4lQ4DnIfwX/d
- rIbg==
+ bh=AVdEp4mpT1E59xpkC2vm4GpVRC7IE4+bfaZnrGctLBc=;
+ b=dVQMO+RGrhe8/UTOFA/rqIrKdeA8Iafu7kTR5lhovJ2T0ANaH8+KUZhCpfIkdqfoKy
+ c1G7fSb3m/Isvh8tWH1Y5fQqDymAKFY+wucjywYimY5eyuC5vkmf2/W08IKSh5ULW1lv
+ 6KTCjSoc1uygkPymXEEWtVpHFwnI8dvzwx9YqDcvosRKgLlcgdgRm8L9ob4iwloli2zU
+ b93ZxdgumFx3PCBzFwJgjLzSIr+lIyPxl9d1Y9GrSGhkaDGc8syRTyky1rywA7gfZI+9
+ 8O/UU07alChj+/hAvbO2cZzYGc2hV/r21HNTi0N28B6PYmL/HwC83QQ+xP69nXhcOy5K
+ mDZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX50a+BXgGGR9cjeTeN60jXj1CLrzWH1+dEmA2LT6bFUkMbQiNg0/zeE7aEFCQ56UrfcBBQEjr1V8ND@nongnu.org
-X-Gm-Message-State: AOJu0YzZ24nAVq1Y4DOLjXnq+z+/2F16sDcuOAuZF5YRILfaDjoG7LUA
- +dI3MiYVbhGbONkDoBrScOwTS2fBcAKu0+MP60mGEaSKd6nyWpKz+IY9FeNhWI1BuMk=
-X-Gm-Gg: AY/fxX68+PoNySNjhDXMA0JUSjRfYbmzl8PQ0Vu30r6DkMHUdvlvR2s73kHbB/bqSct
- QggnULpizilKjhN3eI6wL6uH6loFAABhPKaJf1II0KmNBXXafWBwtU+qESYQKZBURAbRx6Nmlqr
- q7SrrrxX3jYp8RxbjbXhif7SEo1GNRvcFocH131ctJQMRqTxTME9mCU2h0i8nAqdHkbfWM4GuFP
- xtqGN7e5vCRZ4E1QdZwmNKNB/gw/5uUroLpTtktUP54P5itoi2h73+UVCfIo0DB+auHgQr5+4nI
- 7qsDc3SSROUTxPS5rXcR99q5LghdoBvX2GEZ4OHYUhI4Lj33EDGV71gIJ1Pod80XsCMVE1+Zu6J
- TjDQz4I2gNZH0MyFWKX2pabfMAG0PTGcM/rNbimsHh8cvhTaKev1V0zLqb5FG6YE3CoK1XLkLUV
- mIFQVZMVH2MPdBeo7tRIcWUkDuTfW+fHjik1pgdTXT9fhtTac7OSUIx7s=
-X-Google-Smtp-Source: AGHT+IGuDLF9hCkCQ32FxmsehbFeIBUpAG5nJUjAyHNNul4pwRz228BbMvUsiU0p7xtSmpAR597cjg==
-X-Received: by 2002:a17:90b:3912:b0:33b:be31:8194 with SMTP id
- 98e67ed59e1d1-34abd7bae4bmr15971409a91.34.1765997190784; 
- Wed, 17 Dec 2025 10:46:30 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ AJvYcCVUai8/E00iOMBVbFMVH5iAAwDUpuJWP0m8ZNxLoxKHCBFYtqy4YcKX1BFJB8Y38MBGsJwEwNo0ZfG+@nongnu.org
+X-Gm-Message-State: AOJu0YyjCqSP5Iu13HmGSw7BKKwVWbNzmgHoPkY4tMKLyt5QSAqjDiRf
+ f4xcQm+OhGL566swqVZ2YpDRwLbFaCw6ms953psmloxTNdDk2FX4opMbk3+OtFrudpZsAxa6x4W
+ CJJ+9/mw=
+X-Gm-Gg: AY/fxX4C+Fh/ucmn9j5dc99kIL0e9lZUcsmXCy3Jg0x28e5QdrRftYA/yxxIzZ1t3Pr
+ WC4YeduK4arFJzWQRzWayezuNI7Qx5wO32FzMFst9HpTKddD085OW3c861ZLSjJQgsKKD79Aq6N
+ pqo4aWhYXT+AdyyWvB24Pr8FuOqSYDIwoJY+XbqJnXFJmdz7ZxTllg4FIGUvAMUnMypdppnKUbG
+ rGBtwgeWoQNnzZZEJXnXdIVpDvStmBvufqQLDk7Ii578IxGkkFcR+gH4FGkcwZADHpdRkuhL4xs
+ eYCLsiWrusBQS5EhPZaKt7BT/iN/j3ZmuQpbLEXt7JatC35MfBZtCjAwmvDhfu5G2hSXZMyyGBz
+ dVyfwFTQYw0ampDtv1XoMhfCxz7CLhenvIKM27pIoKHwmtrj/FL88rzeMusrXwdpVjV7Snl/pjM
+ PMfcD0JEJC/w7pdOaFKXzawxpAhoHZAA==
+X-Google-Smtp-Source: AGHT+IH7fiESJQ4m2cvicQ1gZw+RrnvQqyFhYO0OWK8RBUhHZUBMEVpOVVLTd97TxNxr7u+uVyzowg==
+X-Received: by 2002:a17:903:1aa5:b0:297:c048:fb60 with SMTP id
+ d9443c01a7336-29f23e54506mr198482645ad.25.1765997534231; 
+ Wed, 17 Dec 2025 10:52:14 -0800 (PST)
+Received: from [192.168.10.140] ([180.233.125.245])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-34e7452f1f2sm117983a91.3.2025.12.17.10.46.29
+ d9443c01a7336-2a2d16127b8sm421535ad.52.2025.12.17.10.52.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Dec 2025 10:46:30 -0800 (PST)
-Message-ID: <46a75a2f-18d3-459b-b9f3-ddd09e5dc89f@linaro.org>
-Date: Wed, 17 Dec 2025 10:46:29 -0800
+ Wed, 17 Dec 2025 10:52:13 -0800 (PST)
+Message-ID: <f2c0144b-62fa-4ffe-be2c-82b0aff7a72f@linaro.org>
+Date: Thu, 18 Dec 2025 05:52:07 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/14] system/memory: Inline address_space_stq_internal()
+Subject: Re: [PATCH v2 2/2] target/arm/ptw: make granule_protection_check
+ usable without a cpu
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Tao Tang <tangtao1634@phytium.com.cn>, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Eric Auger <eric.auger@redhat.com>
+References: <20251216000122.763264-1-pierrick.bouvier@linaro.org>
+ <20251216000122.763264-3-pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>, qemu-arm@nongnu.org,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@kernel.org>, Peter Xu <peterx@redhat.com>
-References: <20251217143150.94463-1-philmd@linaro.org>
- <20251217143150.94463-9-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251217143150.94463-9-philmd@linaro.org>
+In-Reply-To: <20251216000122.763264-3-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,16 +110,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/17/25 6:31 AM, Philippe Mathieu-Daudé wrote:
-> As its name suggests, address_space_stq_internal() is an
-> internal method which can be inlined like all the other
-> ones in this file.
+On 12/16/25 11:01, Pierrick Bouvier wrote:
+> By removing cpu details and use a config struct, we can use the
+> same granule_protection_check with other devices, like SMMU.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   system/memory_ldst.c.inc | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/arm/cpu.h | 34 ++++++++++++++++++++++++++++
+>   target/arm/ptw.c | 59 +++++++++++++++++++++++++++++++-----------------
+>   2 files changed, 72 insertions(+), 21 deletions(-)
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
+
+> 
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index efbef0341da..5752e1f58fb 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -1216,6 +1216,40 @@ void arm_v7m_cpu_do_interrupt(CPUState *cpu);
+>   
+>   hwaddr arm_cpu_get_phys_page_attrs_debug(CPUState *cpu, vaddr addr,
+>                                            MemTxAttrs *attrs);
+> +
+> +typedef struct ARMGranuleProtectionConfig {
+> +    /* GPCCR_EL3 */
+> +    uint64_t gpccr;
+> +    /* GPTBR_EL3 */
+> +    uint64_t gptbr;
+> +    /* ID_AA64MMFR0_EL1.PARange */
+> +    uint8_t parange;
+> +    /* FEAT_SEL2 */
+> +    bool support_sel2;
+> +    /* Address space to access Granule Protection Table */
+> +    AddressSpace *gpt_as;
+> +} ARMGranuleProtectionConfig;
+> +
+> +/**
+> + * arm_granule_protection_check
+> + * @config: granule protection configuration
+> + * @paddress: address accessed
+> + * @pspace: physical address space accessed
+> + * @ss: security state for access
+> + * @fi: fault information in case a fault is detected
+> + *
+> + * Checks if @paddress can be accessed in physical adress space @pspace
+> + * for @ss secure state, following granule protection setup with @config.
+> + * If a fault is detected, @fi is set accordingly.
+> + * See GranuleProtectionCheck() in A-profile manual.
+> + *
+> + * Returns: true if access is authorized, else false.
+> + */
+> +bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
+> +                                  uint64_t paddress,
+> +                                  ARMSecuritySpace pspace,
+> +                                  ARMSecuritySpace ss,
+> +                                  ARMMMUFaultInfo *fi);
+>   #endif /* !CONFIG_USER_ONLY */
+>   
+>   int arm_cpu_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
+> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+> index 2e6b149b2d1..cdc14b1735b 100644
+> --- a/target/arm/ptw.c
+> +++ b/target/arm/ptw.c
+> @@ -330,26 +330,26 @@ static bool regime_translation_disabled(CPUARMState *env, ARMMMUIdx mmu_idx,
+>       return (regime_sctlr(env, mmu_idx) & SCTLR_M) == 0;
+>   }
+>   
+> -static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+> -                                     ARMSecuritySpace pspace,
+> -                                     ARMSecuritySpace ss,
+> -                                     ARMMMUFaultInfo *fi)
+> +bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
+> +                                  uint64_t paddress,
+> +                                  ARMSecuritySpace pspace,
+> +                                  ARMSecuritySpace ss,
+> +                                  ARMMMUFaultInfo *fi)
+>   {
+>       MemTxAttrs attrs = {
+>           .secure = true,
+>           .space = ARMSS_Root,
+>       };
+> -    ARMCPU *cpu = env_archcpu(env);
+> -    uint64_t gpccr = env->cp15.gpccr_el3;
+> +    const uint64_t gpccr = config.gpccr;
+>       unsigned pps, pgs, l0gptsz, level = 0;
+>       uint64_t tableaddr, pps_mask, align, entry, index;
+> -    AddressSpace *as;
+>       MemTxResult result;
+>       int gpi;
+>   
+> -    if (!FIELD_EX64(gpccr, GPCCR, GPC)) {
+> -        return true;
+> -    }
+> +    /*
+> +     * We assume Granule Protection Check is enabled when
+> +     * calling this function (GPCCR.GPC == 1).
+> +     */
+>   
+>       /*
+>        * GPC Priority 1 (R_GMGRR):
+> @@ -362,7 +362,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+>        * physical address size is invalid.
+>        */
+>       pps = FIELD_EX64(gpccr, GPCCR, PPS);
+> -    if (pps > FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE)) {
+> +    if (pps > config.parange) {
+>           goto fault_walk;
+>       }
+>       pps = pamax_map[pps];
+> @@ -432,7 +432,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+>       }
+>   
+>       /* GPC Priority 4: the base address of GPTBR_EL3 exceeds PPS. */
+> -    tableaddr = env->cp15.gptbr_el3 << 12;
+> +    tableaddr = config.gptbr << 12;
+>       if (tableaddr & ~pps_mask) {
+>           goto fault_size;
+>       }
+> @@ -446,12 +446,10 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+>       align = MAKE_64BIT_MASK(0, align);
+>       tableaddr &= ~align;
+>   
+> -    as = arm_addressspace(env_cpu(env), attrs);
+> -
+>       /* Level 0 lookup. */
+>       index = extract64(paddress, l0gptsz, pps - l0gptsz);
+>       tableaddr += index * 8;
+> -    entry = address_space_ldq_le(as, tableaddr, attrs, &result);
+> +    entry = address_space_ldq_le(config.gpt_as, tableaddr, attrs, &result);
+>       if (result != MEMTX_OK) {
+>           goto fault_eabt;
+>       }
+> @@ -479,7 +477,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+>       level = 1;
+>       index = extract64(paddress, pgs + 4, l0gptsz - pgs - 4);
+>       tableaddr += index * 8;
+> -    entry = address_space_ldq_le(as, tableaddr, attrs, &result);
+> +    entry = address_space_ldq_le(config.gpt_as, tableaddr, attrs, &result);
+>       if (result != MEMTX_OK) {
+>           goto fault_eabt;
+>       }
+> @@ -513,7 +511,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
+>       case 0b1111: /* all access */
+>           return true;
+>       case 0b1000: /* secure */
+> -        if (!cpu_isar_feature(aa64_sel2, cpu)) {
+> +        if (!config.support_sel2) {
+>               goto fault_walk;
+>           }
+>           /* fall through */
+> @@ -3786,11 +3784,30 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
+>                               memop, result, fi)) {
+>           return true;
+>       }
+> -    if (!granule_protection_check(env, result->f.phys_addr,
+> -                                  result->f.attrs.space, ptw->in_space, fi)) {
+> -        fi->type = ARMFault_GPCFOnOutput;
+> -        return true;
+> +
+> +    const uint64_t gpccr = env->cp15.gpccr_el3;
+> +    const bool gpc_enabled = FIELD_EX64(gpccr, GPCCR, GPC);
+> +    if (gpc_enabled) {
+> +        ARMCPU *cpu = env_archcpu(env);
+> +        MemTxAttrs attrs = {
+> +            .secure = true,
+> +            .space = ARMSS_Root,
+> +        };
+> +        struct ARMGranuleProtectionConfig config = {
+> +            .gpccr = env->cp15.gpccr_el3,
+> +            .gptbr = env->cp15.gptbr_el3,
+> +            .parange = FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE),
+> +            .support_sel2 = cpu_isar_feature(aa64_sel2, cpu),
+> +            .gpt_as = arm_addressspace(env_cpu(env), attrs)
+> +        };
+> +        if (!arm_granule_protection_check(config, result->f.phys_addr,
+> +                                          result->f.attrs.space, ptw->in_space,
+> +                                          fi)) {
+> +            fi->type = ARMFault_GPCFOnOutput;
+> +            return true;
+> +        }
+>       }
+> +
+>       return false;
+>   }
+>   
 
 
