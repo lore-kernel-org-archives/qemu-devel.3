@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90941D6406D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 03:19:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6658D6406D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 03:31:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVi4C-0007J8-G5; Tue, 16 Dec 2025 22:19:08 -0500
+	id 1vViF4-0002TT-2X; Tue, 16 Dec 2025 22:30:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vVi4A-0007IW-TH; Tue, 16 Dec 2025 22:19:06 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
+ id 1vViF1-0002TF-17; Tue, 16 Dec 2025 22:30:19 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vVi49-0006bY-EZ; Tue, 16 Dec 2025 22:19:06 -0500
+ id 1vViEy-0005HZ-P1; Tue, 16 Dec 2025 22:30:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765941546; x=1797477546;
+ t=1765942217; x=1797478217;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=RZtDMBQe8Jfogu798vLQrAfpdA9Qwot6bk8LrubbchQ=;
- b=Y/bxjWZGykm8sJ1k7eu9vXKVrRwZqPSiR6yTxHTCaDNKvp1K48OYM3O2
- RcO1VPaddptVDKy2PxJibZQ1zs47LRCwdXGS1x1t6yKkfIJhkBHI7kiiC
- bdrvujBtgeJW//q2pJtuP/hY9LwNdVJ1HAZh67beJ+R90ib16W/ATwMOa
- Ugk6gABXqvwEtXAd55KiHVdpflLnRhtrjwdY5NVBhYEadax3YhYrQ7oVx
- BpAupDC7O6FuyLmW6aZna8yXF36xsg41p1GXs6NIKEyahNCkh+0p3bHjt
- ruZFiw2odv/WiSkfjZX2xNtllyJtrNvLGrcyxQUogVpnjkwXww2x+6wgL g==;
-X-CSE-ConnectionGUID: 3pbno/XiQcy4FZJNI3UezA==
-X-CSE-MsgGUID: tsEmA8AYTDu53xrDrQXneQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11644"; a="70447994"
-X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="70447994"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Dec 2025 19:19:03 -0800
-X-CSE-ConnectionGUID: t8GH8KgYRj+1vj92Dtmh/A==
-X-CSE-MsgGUID: voZsRUbdQ6WttwSPepxA7w==
+ bh=fZfcEjPUKBFnIVchpem3UoWR6ijquN/H5TV75jV+iJM=;
+ b=bd6zjo39GT+wg5nDYAVLHq71LrKrRK/0WPa/tObYeHPcKBes7YGqG6m0
+ yIvc5uzEB7l655ju7/KmIGJBje5/4cJP21W0uLPnUvo56MNao85E5o4bf
+ ihMxZuRC2HQzxehj1gXNE6BUG8EtNAnd3U27Uwt/Ei/MOwT3WWI5ZTHDU
+ t+S1beYax9bKP9k64sKgaiDRqKESC6hsiYF53LTe5761JpgIbB7ngf/A3
+ nDO9O3MKPsSIzVxVOL+p3/0Xuq89sm9qyo66V26aLrnPub8juahimFzpH
+ Ki7XZ3gPcGvS0QhzyLnjYQSBx+XNnEGFcif6xEYCcHWLaLPQt0s648c8t Q==;
+X-CSE-ConnectionGUID: wYH1Rph2TRiDt7iaLsVR1A==
+X-CSE-MsgGUID: RCkC/gVoSuK3gOjd2ozGnA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11635"; a="67810540"
+X-IronPort-AV: E=Sophos;i="6.20,256,1758610800"; d="scan'208";a="67810540"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Dec 2025 19:30:13 -0800
+X-CSE-ConnectionGUID: 2LNb3YkDRQO0jH2fc+hysQ==
+X-CSE-MsgGUID: wFWJxZyuTdOAsrMOXMoD6Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="198439337"
+X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="202382794"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 16 Dec 2025 19:19:02 -0800
-Date: Wed, 17 Dec 2025 11:43:51 +0800
+ by orviesa003.jf.intel.com with ESMTP; 16 Dec 2025 19:30:11 -0800
+Date: Wed, 17 Dec 2025 11:55:00 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
 	marcandre.lureau@redhat.com
-Subject: Re: [PATCH 06/11] rust: Meson now adds -Cdefault-linker-libraries
-Message-ID: <aUIm9/nfCV6Qf5DE@intel.com>
+Subject: Re: [PATCH 08/11] rust: skip compilation if there are no system
+ emulators
+Message-ID: <aUIplPBhj/rhakbf@intel.com>
 References: <20251215075000.335043-1-pbonzini@redhat.com>
- <20251215075000.335043-7-pbonzini@redhat.com>
+ <20251215075000.335043-9-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251215075000.335043-7-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20251215075000.335043-9-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -82,17 +83,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 08:49:55AM +0100, Paolo Bonzini wrote:
-> Date: Mon, 15 Dec 2025 08:49:55 +0100
+On Mon, Dec 15, 2025 at 08:49:57AM +0100, Paolo Bonzini wrote:
+> Date: Mon, 15 Dec 2025 08:49:57 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 06/11] rust: Meson now adds -Cdefault-linker-libraries
+> Subject: [PATCH 08/11] rust: skip compilation if there are no system
+>  emulators
 > X-Mailer: git-send-email 2.52.0
+> 
+> Otherwise, the Rust crates require the corresponding C code
+> (e.g. migration/ for rust/migration/) but the dependencies of
+> that C code, for example the trace files, have not been built.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  meson.build | 8 +-------
->  1 file changed, 1 insertion(+), 7 deletions(-)
+>  rust/meson.build | 7 +++++++
+>  1 file changed, 7 insertions(+)
 
-Reviwed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
