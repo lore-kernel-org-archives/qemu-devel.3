@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCF37D609D5
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 00:23:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 304A6D609D5
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 00:23:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVfJh-0006uG-Mc; Tue, 16 Dec 2025 19:22:57 -0500
+	id 1vVfJF-00064K-Ms; Tue, 16 Dec 2025 19:22:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVfJg-0006tD-2l
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 19:22:56 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from
+ <3vvdBaQYKCgc51ipu6nvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--yubinz.bounces.google.com>)
+ id 1vVfJE-0005zs-K9
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 19:22:28 -0500
+Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vVfJe-0005BT-Dl
- for qemu-devel@nongnu.org; Tue, 16 Dec 2025 19:22:55 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2a0c20ee83dso37059945ad.2
- for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 16:22:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from
+ <3vvdBaQYKCgc51ipu6nvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--yubinz.bounces.google.com>)
+ id 1vVfJC-000556-L0
+ for qemu-devel@nongnu.org; Tue, 16 Dec 2025 19:22:28 -0500
+Received: by mail-pg1-x549.google.com with SMTP id
+ 41be03b00d2f7-be8c77ecc63so7900013a12.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Dec 2025 16:22:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765930973; x=1766535773; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0GeIN8L3ngtfeuK2pGocAHhhSy46naAJYZnNGFVsLP4=;
- b=L1470/px1XPaqxNXsc6ukAjXmRwFkHJovnXWOKhxipUmGv0ddfm96FCmFalDky/iqd
- /FCog7z9B/eDfbKjGCC9wpteeaNmJ3MJS9djYAli3Y6++K8htYqkm7V86Kjy0dRV53qm
- mOgfm1TBy4syT59YtjstCOqPsKWWQU/0hy2Z5b+Die89ynovU06vto0fHkSN7k012bVB
- 7sHFfQLi5ZmTj0zwmEqJeaG0h632ZbLhTpcGOitIIl9DzBlF8KmWO686EH4+LxgzLTuj
- jiWiugXB6AdUNaCIm1UiTBgn89KbD3+FVSDuxk7kybgsfRqqGjAIPvEAMenBeqmM4mKe
- 5sKg==
+ d=google.com; s=20230601; t=1765930943; x=1766535743; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=yl+gcw2nJqkBZU0PVg1fG9b10LfH4tcGif07p7f9C9I=;
+ b=p5u2S3bH7JkClDPE5mec9saXEpCW8m0yLuLB5ItByhEQRAWB3yluHYyurlpIRbzlUa
+ N0LzAGC3H+yeSePSzdzeRFbxjzkR+LxfGvp4QYkF/3I9cS9uJRx3IRDK0A3jISyxL704
+ rAZuI3hl7kA6nfwNhJXixY7UyA/nFLMM26Zd6ZyxXCChqzmg202ScBW0hDI1udZii+/U
+ ywQMdXfdfY7CnEmMaI9ENBnUpZHT15BRwnX+Kfit9HUxCf78TNy/rMCl7QZ1D9l1r1Mm
+ XBWMQIYdg+Vn5aLLhVhDCBg1p38ieC4JHsKxR86pS4pHKa8EXfq4iZ+rNiAysYtoVzuQ
+ ayOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765930973; x=1766535773;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0GeIN8L3ngtfeuK2pGocAHhhSy46naAJYZnNGFVsLP4=;
- b=GNCtynnz6I+lT92tgQ5Kr76wHq7ry6HsaH9nQhBlh25Nh13iQ+nR8Tv2j3LHLHBO3e
- Fm4SL2m0oYOHw5xETFvxhcJTR/pW5pDTjGKA/DRgS/0IcoT1TDuLjtNG7ATaeFVmD96f
- fa7u7jarynLlWGgFJUeGsD3YcjTfPd06tlSpzSHZ0trM1SX98dGlsiqv+tvmB4Rwjr7E
- M8oeHt+8VlMXpvP8xjDuBvJFpIwYPr8rT2snZefFc3LDKMPM2JZs20wfUOTg7acgBDS3
- d1YuUvNdO3j9qn2VCbwnOXWQTlUWymrMa7ffPP1f5gL8NlUiSfd5q0/Kj7fbZtgHV1Hj
- UN4Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWhn/SVp0iKqV82A0Agq0dgOqO/3jaCrTTp3boBQ2qLgTJuhdU4CTpkoJjwDzYvujqzt1KBfyIXknUo@nongnu.org
-X-Gm-Message-State: AOJu0YyCEbXh8Hf2nPyNyzkCb811qbRRSnI64Mz251t9O16llT1NfztS
- oUt1ub9/k5a6af37XqyxKbaHarv7fE3uKtuCk2RL3uXqtatW7PBSV9aBYe0LiwEzFG3KF/DBOSY
- O91xZkpg0/A==
-X-Gm-Gg: AY/fxX4m7N6XkCfioZEQUB0tGpGg4XyhFImEULwH2k6xmZ8vUX3fEkcrhB3D446b1jO
- YZz3eops+CxaK9jZa8LjVfCTGRn5K3sfl2tN0gXmwDSGVvcRy8nx8pSDASuaf/j1dUgY6aKM3qT
- 9EtsDLw+vDhm0tDOfhL5/ALvySROqj3Kl4keibrPZnpAhcPrJvH6CuOsmlBolYt001S88QtuwXD
- 5urJkXGGRUAOcJSLFQeEuBbcDBNuEf5kBtHD8I67arQ05AYsraIZVQrSaBAus4BYJAN5ZS0r5FS
- y+HgSNL6NIqoFs+T9s/85+5Wq479ntgAx32scAM8mFhK42oiehDBRBVyre1wg4KQ+C8rwifVFH8
- p5I920AnqkvB/Cdx6K+9AvMRThp/8dG/CrSGkDGPWCAYoRGWYSbC4+M/8aDwvtvfu0dTkXIzfQj
- u8IeXl4KjYKwYi/YBfiNCbOxkJlOd4zjKQtFD3ORTd6BDK8fyM5dE3AhJ+OuvzdR4LHw==
-X-Google-Smtp-Source: AGHT+IFeYx8KV/NeyzszG8QlXrBR3HxrvPGyC9CACbeQlbEbiUB/daiUGXjTkqW3giq7SH2DWsKxIQ==
-X-Received: by 2002:a17:903:1aac:b0:298:5fde:5a93 with SMTP id
- d9443c01a7336-29f23c677edmr155134555ad.32.1765930972691; 
- Tue, 16 Dec 2025 16:22:52 -0800 (PST)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a0ad49454csm101629295ad.10.2025.12.16.16.22.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Dec 2025 16:22:52 -0800 (PST)
-Message-ID: <a05894f4-4998-4b5d-bcc6-6ee4d2bae5d0@linaro.org>
-Date: Tue, 16 Dec 2025 16:22:51 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/14] hw/riscv: Filter machine types for
- qemu-system-riscv32/64 binaries
-Content-Language: en-US
-To: Anton Johansson <anjo@rev.ng>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, palmer@dabbelt.com, alistair.francis@wdc.com
-References: <20251217-hw-riscv-cpu-int-v1-0-d24a4048d3aa@rev.ng>
- <20251217-hw-riscv-cpu-int-v1-3-d24a4048d3aa@rev.ng>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20251217-hw-riscv-cpu-int-v1-3-d24a4048d3aa@rev.ng>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20230601; t=1765930943; x=1766535743;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yl+gcw2nJqkBZU0PVg1fG9b10LfH4tcGif07p7f9C9I=;
+ b=YNAPVBos8l90mDdsWOz+qbelhbKRFgp4SR7mSeC4aJJ6JqepdI4IXew7x7hwB/NAQ5
+ ZPGLRTXQ3P7ZnzU1HSuNGuvLISHYbOnYaexuzA/waDCcEPUKz27BV9nm26EBCVnLcydn
+ XeRwBGsiN9jo6RjEPcSeIoPvF5vQyVsVIQqU0n9djTO1+NiXWOU1ZoNFxCFMuJRDY3tW
+ 3XKbwl7KrFSUYdvKoYXoPmRixY2XO/shG/aaWSaKVHDgyFbiv0ZDlwZC5QKSgJ0K8PkO
+ Js2p8QuMLQ7XtO7tk+BTLTHSBpzki+Cf4sInRM/mtmBxWsl2h+7/GlJtTWHQs6Hfbg93
+ s2PQ==
+X-Gm-Message-State: AOJu0Yxd0CmXCO3X+zeHU19koM2F0WjGAQa4+z50W40Wb0Xy2QhUnwEV
+ FbmbU2Z5UxqZu0MO/kZtKLsI9tEMJ9d9YuR11GaeMeQVh0fm1CAtKwf/fJbZwHIjDJ6bXaY7tAm
+ SlFSlmkG4wj/TTPU1veFVkdZQMDiaEHUKVJuNQOuQMAHw90ELRZ52LVs53k0wKNCbOccTXaLNoU
+ XoGhaaBYnzBMNS3QLgqmugrDKzz/WwqxqOe8g=
+X-Google-Smtp-Source: AGHT+IH1aRO6kMHKBN69E6XF7l4zDVP9+dsXNNWzAPyuUWrJ1cmiScuVnpoakP9MZugiYtTy99itgHq5g9Y=
+X-Received: from dlbtz16.prod.google.com
+ ([2002:a05:7022:ead0:b0:11d:f5c6:adcf])
+ (user=yubinz job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:7023:906:b0:11a:c387:1357
+ with SMTP id a92af1059eb24-11f349c5823mr10148418c88.16.1765930942578; Tue, 16
+ Dec 2025 16:22:22 -0800 (PST)
+Date: Wed, 17 Dec 2025 00:22:10 +0000
+Mime-Version: 1.0
+X-B4-Tracking: v=1; b=H4sIALP3QWkC/2XM0Q6CIBiG4VtxHEf7QcHoqPtoHSD8IluFg+Zqz
+ nsP3Vpph9+3Pe9IEkaPiRyLkUQcfPLhnke1K4jp9N0h9TZvwoELxkBQnXpES5PrfaDMVsqiNKi
+ lJJn0EVv/XHLnS96dT48QX0t9YPP7Ccl1aGAUaANcgiprJlt9ciG4K+5NuJG5NPCv5qA2mmeta
+ omiFbUCw/90+aMZbHSZNTaHBkxbWivYSk/T9AaozgTJJQEAAA==
+X-Change-Id: 20251105-aspeed-sgpio-1d49de6cea66
+X-Mailer: b4 0.14.2
+Message-ID: <20251217-aspeed-sgpio-v4-0-28bbb8dcab30@google.com>
+Subject: [PATCH v4 0/6] hw/gpio/aspeed_sgpio: Add Aspeed Serial GPIO (SGPIO)
+ controller model
+From: Yubin Zou <yubinz@google.com>
+To: qemu-devel@nongnu.org
+Cc: "=?utf-8?q?C=C3=A9dric_Le_Goater?=" <clg@kaod.org>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Kane-Chen-AS <kane_chen@aspeedtech.com>, 
+ Nabih Estefan <nabihestefan@google.com>, qemu-arm@nongnu.org, 
+ Yubin Zou <yubinz@google.com>
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
+ envelope-from=3vvdBaQYKCgc51ipu6nvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--yubinz.bounces.google.com;
+ helo=mail-pg1-x549.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,22 +107,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/16/25 3:51 PM, Anton Johansson wrote:
-> Register machines able to run in qemu-system-riscv32,
-> qemu-system-riscv64, or both.
-> 
-> Signed-off-by: Anton Johansson <anjo@rev.ng>
-> ---
->   hw/riscv/microblaze-v-generic.c | 3 ++-
->   hw/riscv/microchip_pfsoc.c      | 2 ++
->   hw/riscv/opentitan.c            | 2 ++
->   hw/riscv/shakti_c.c             | 2 ++
->   hw/riscv/sifive_e.c             | 2 ++
->   hw/riscv/sifive_u.c             | 2 ++
->   hw/riscv/spike.c                | 2 ++
->   hw/riscv/virt.c                 | 3 +++
->   hw/riscv/xiangshan_kmh.c        | 2 ++
->   9 files changed, 19 insertions(+), 1 deletion(-)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This series introduces a model for the Aspeed Serial GPIO (SGPIO) controller,
+commonly found on Aspeed SoCs such as the AST2700. The SGPIO peripheral
+provides a large number of GPIO pins that can be controlled and monitored
+serially.
+
+Improvement to QEMU:
+These patches enhance QEMU's hardware emulation capabilities for platforms
+using Aspeed SoCs, particularly for BMC simulations. By modeling the SGPIO
+controller, QEMU can more accurately represent the hardware, allowing for
+better development and testing of firmware and software that relies on these
+GPIOs for various functions like sensor monitoring, presence detect, and
+system control signals.
+
+Impact (Before/After):
+
+Before:
+QEMU lacked a model for the Aspeed SGPIO controller. Any guest software
+attempting to interact with the SGPIO register space would find no device.
+Firmware features depending on SGPIO pin states or interrupts could not be
+tested in QEMU.
+
+After:
+QEMU emulates the Aspeed SGPIO controller on supported machines (e.g.,
+ast2700-evb).
+- Guest firmware can configure SGPIO pins, set output values, and read input
+  values through the memory-mapped registers.
+- External entities (like test scripts or other QEMU components) can interact
+  with the pins via QOM properties (e.g., to simulate external signal changes).
+  Path example: /machine/soc/sgpio[0]/sgpio0
+- The model generates interrupts based on input pin transitions, according to
+  the configured mode (level/edge), enabling testing of interrupt handlers.
+
+Signed-off-by: Yubin Zou <yubinz@google.com>
+---
+Changes in v4:
+- Fix indentation issue, replace SysBusDevice by SysBusDeviceClass,
+  remove unused function in 1/6.
+- Fix g_autofree usage in 2/6.
+- Switch to use  %03d in unit test, remove unused headers in 6/6. 
+- Link to v3: https://lore.kernel.org/qemu-devel/20251210-aspeed-sgpio-v3-0-eb8b0cf3dd51@google.com
+
+Changes in v3:
+- Fix commit message typo and address several review feedback in
+  commit 2/6.
+- Switch to use g_autofree and drop g_free.
+- Use "%03d" instead of "%d".
+- Link to v2: https://lore.kernel.org/qemu-devel/20251209-aspeed-sgpio-v2-0-976e5f5790c2@google.com
+
+Changes in v2:
+Split the v1 into smaller commits and reorder it for better review:
+- Link to v1: https://lore.kernel.org/qemu-devel/20251106-aspeed-sgpio-v1-0-b026093716fa@google.com
+
+---
+Yubin Zou (6):
+      hw/gpio/aspeed_sgpio: Add basic device model for Aspeed SGPIO
+      hw/gpio/aspeed_sgpio: Add QOM property accessors for SGPIO pins
+      hw/gpio/aspeed_sgpio: Implement SGPIO interrupt handling
+      hw/arm/aspeed_soc: Update Aspeed SoC to support two SGPIO controllers
+      hw/arm/aspeed_ast27x0: Wire SGPIO controller to AST2700 SoC
+      test/qtest: Add Unit test for Aspeed SGPIO
+
+ include/hw/arm/aspeed_soc.h      |   8 +-
+ include/hw/gpio/aspeed_sgpio.h   |  68 ++++++++
+ hw/arm/aspeed_ast10x0.c          |   6 +-
+ hw/arm/aspeed_ast27x0.c          |  26 +++
+ hw/gpio/aspeed_sgpio.c           | 347 +++++++++++++++++++++++++++++++++++++++
+ tests/qtest/ast2700-sgpio-test.c | 166 +++++++++++++++++++
+ hw/gpio/meson.build              |   1 +
+ tests/qtest/meson.build          |   1 +
+ 8 files changed, 618 insertions(+), 5 deletions(-)
+---
+base-commit: 917ac07f9aef579b9538a81d45f45850aba42906
+change-id: 20251105-aspeed-sgpio-1d49de6cea66
+
+Best regards,
+-- 
+Yubin Zou <yubinz@google.com>
 
 
