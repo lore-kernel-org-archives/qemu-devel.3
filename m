@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF779D6406D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 03:18:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90941D6406D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 03:19:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVi2w-0006fs-VC; Tue, 16 Dec 2025 22:17:50 -0500
+	id 1vVi4C-0007J8-G5; Tue, 16 Dec 2025 22:19:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vVi2o-0006bR-GO; Tue, 16 Dec 2025 22:17:42 -0500
-Received: from mgamail.intel.com ([192.198.163.17])
+ id 1vVi4A-0007IW-TH; Tue, 16 Dec 2025 22:19:06 -0500
+Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vVi2m-0006Eo-5D; Tue, 16 Dec 2025 22:17:42 -0500
+ id 1vVi49-0006bY-EZ; Tue, 16 Dec 2025 22:19:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765941460; x=1797477460;
+ t=1765941546; x=1797477546;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=zBJgc/hbE6t3nLugzcJb+1vjT990b/mKDeAY5TEz314=;
- b=NUD3vkb5vriCLc0PfCiGTd5oRpJtBTs62Vbi5jmHFw9tSctdtlcNE/gE
- bEP4S4IT+cB4KwGu7NHCBGcafzpCSNs9XOtVWHYJmmyVtYM3rOhY+vwFt
- ncB3tn2HHYXYrP/ruMs9Zrp5KsNV3WkAlcvO37u+JKMGUhvKZ6fLT2S4X
- mcuDbUgHF6C7w9kkv/doc2boOwHzhRxPzWZUlSGyc+zAKFiNrC0STpN9A
- plzx+iQWQlcpOdbsVw0Ne4t2zjKxneyBpxgU/pyVn5KkQ7vN8e6j6dDm4
- 38EwIbqoQRvg9IO9JVSk0xgpRShh2OamDU0WTxjPTd2JIm7WzS0cpFf8M A==;
-X-CSE-ConnectionGUID: oHd8HqKiSWeMTdCCxyiMIg==
-X-CSE-MsgGUID: 2kllHh2tS9+QHXZG6w/RoA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11644"; a="67757184"
-X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="67757184"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Dec 2025 19:17:38 -0800
-X-CSE-ConnectionGUID: GWbUW4UpRmajI6fMMM86RQ==
-X-CSE-MsgGUID: szWdfd8WTM2h9FH9P17U/w==
+ bh=RZtDMBQe8Jfogu798vLQrAfpdA9Qwot6bk8LrubbchQ=;
+ b=Y/bxjWZGykm8sJ1k7eu9vXKVrRwZqPSiR6yTxHTCaDNKvp1K48OYM3O2
+ RcO1VPaddptVDKy2PxJibZQ1zs47LRCwdXGS1x1t6yKkfIJhkBHI7kiiC
+ bdrvujBtgeJW//q2pJtuP/hY9LwNdVJ1HAZh67beJ+R90ib16W/ATwMOa
+ Ugk6gABXqvwEtXAd55KiHVdpflLnRhtrjwdY5NVBhYEadax3YhYrQ7oVx
+ BpAupDC7O6FuyLmW6aZna8yXF36xsg41p1GXs6NIKEyahNCkh+0p3bHjt
+ ruZFiw2odv/WiSkfjZX2xNtllyJtrNvLGrcyxQUogVpnjkwXww2x+6wgL g==;
+X-CSE-ConnectionGUID: 3pbno/XiQcy4FZJNI3UezA==
+X-CSE-MsgGUID: tsEmA8AYTDu53xrDrQXneQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11644"; a="70447994"
+X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="70447994"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Dec 2025 19:19:03 -0800
+X-CSE-ConnectionGUID: t8GH8KgYRj+1vj92Dtmh/A==
+X-CSE-MsgGUID: voZsRUbdQ6WttwSPepxA7w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="228882837"
+X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="198439337"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 16 Dec 2025 19:17:37 -0800
-Date: Wed, 17 Dec 2025 11:42:25 +0800
+ by fmviesa008.fm.intel.com with ESMTP; 16 Dec 2025 19:19:02 -0800
+Date: Wed, 17 Dec 2025 11:43:51 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
 	marcandre.lureau@redhat.com
-Subject: Re: [PATCH 05/11] rust: only link the Rust part of the code into
- devices
-Message-ID: <aUImoemVOzoYUc1i@intel.com>
+Subject: Re: [PATCH 06/11] rust: Meson now adds -Cdefault-linker-libraries
+Message-ID: <aUIm9/nfCV6Qf5DE@intel.com>
 References: <20251215075000.335043-1-pbonzini@redhat.com>
- <20251215075000.335043-6-pbonzini@redhat.com>
+ <20251215075000.335043-7-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251215075000.335043-6-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20251215075000.335043-7-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -83,28 +82,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 08:49:54AM +0100, Paolo Bonzini wrote:
-> Date: Mon, 15 Dec 2025 08:49:54 +0100
+On Mon, Dec 15, 2025 at 08:49:55AM +0100, Paolo Bonzini wrote:
+> Date: Mon, 15 Dec 2025 08:49:55 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 05/11] rust: only link the Rust part of the code into
->  devices
+> Subject: [PATCH 06/11] rust: Meson now adds -Cdefault-linker-libraries
 > X-Mailer: git-send-email 2.52.0
-> 
-> Do not include libqemuutil in the device crates for the same
-> reason as in the previous commit.  Static libraries like qemuutil
-> are sensitive to their position on the command line and rustc does not
-> always get it right.
-> 
-> If rustc places the library too early on the command line, the stubs
-> are included in the final link product, which results in duplicate
-> symbols.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  rust/hw/char/pl011/meson.build | 18 ++++++++++--------
->  rust/hw/timer/hpet/meson.build | 18 +++++++++---------
->  2 files changed, 19 insertions(+), 17 deletions(-)
+>  meson.build | 8 +-------
+>  1 file changed, 1 insertion(+), 7 deletions(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviwed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
