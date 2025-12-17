@@ -4,174 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF32FD65528
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 10:01:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C7CED6552F
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 10:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVoJZ-0002m7-4s; Wed, 17 Dec 2025 04:59:25 -0500
+	id 1vVoc5-0001IG-Qn; Wed, 17 Dec 2025 05:18:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vVoJX-0002jk-5T; Wed, 17 Dec 2025 04:59:23 -0500
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <15927021679@163.com>)
+ id 1vVobz-0001GG-8i
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 05:18:28 -0500
+Received: from m16.mail.163.com ([220.197.31.3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1vVoJT-0000n6-EQ; Wed, 17 Dec 2025 04:59:21 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gi6xUSLLnTRA38RE5HZFZsWrxCmCJiacguC6V3awK450e/SMY94ytnk+ZFxVNMFW35xbryrJsz30DpWfncT5qEiz3R1JOC3AzmQ7Ajrzqv3tuEyiDqWAowC6RYyVS2zKkBH8tAyEpA0GNMvcCwbe7wIHCSXDQ6Rk5nSrYH8y2k1QcUVaaPOtFUyXFtu4oyzMVslnwxMdtEP8DkdzwCUCqqjiZy47DUZ5fXuoi3Utqz24UH5tKqA1IXqMpmwI+fxhdMbxLIne8/bd/hcaLyy5opDXQwu4kjbKmGDEDL1CA+mtVU09DXDBHS5JvoF9fKtcBr+WqUtQ7Ed+SftkrVFpwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pa6pRJPT7/ofM6FSDM/VrgVlvRRumdctRbdWKgu+gIA=;
- b=NUkIC+rjUrSgYU/3WxcI8JL8+h7gZa+BjPCb6f4StB9JzvuT5yiMiWbRbvRm21zM8FAQiTY+PSY3Xi+l9z47kcnsPVzesslhZS+UfMGLEnCL9b8hY7a3kncHwfsmiVFFhiW0GHEelrjfioADZb8y12DvOCT8fys1ZcEUYbYhiqLoDtuDoXhGnEHlfIU/XnYjyUz0PFi+ou0Q/hx6X/lxIV755PwJJUzVpkgcQL9RUMSFJYRyRLWbCf4DhWmI2bW8hzTLtnAG2kkLAqaPboAMnMyOirlkyPKBji26oiBEkCR00RLDPd5eUMA+NRxjr9rb+SlcSla+k1sB6QvRV0UEVw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pa6pRJPT7/ofM6FSDM/VrgVlvRRumdctRbdWKgu+gIA=;
- b=VkSsVUMZSa8d9dPr/WGcShY/s+HH4CkdRvq2p19rLLc/wZp+/kvgG96D8xBd3x3kHxdOO6VXVjhHtHdVN7x1inDJ1lFKj4Hdx0k1jJNiBsfhoVJheJ5kVCzyZcI0CgQwxJJYzlxBjBlBXzcevWZJ3KdiXQcfWES7UdJFVDcrHamFx0gUIz4d5LK84ePBHLbus9MCZbgn7TWo9vzu0Ll9W85POC8qLdvPycHP/QNieqmbhlAWa5Ze9woHXNp73Umcmc+eqKJuDTOCxm9na39rWJbctHKhmjJpmFXqtDbnSKNYFOcyk90eAZQXlouslJRsgSq2Yes4v2ISOo7gOyLMOQ==
-Received: from SI6PR06MB7631.apcprd06.prod.outlook.com (2603:1096:4:239::11)
- by TYSPR06MB6390.apcprd06.prod.outlook.com (2603:1096:400:433::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.6; Wed, 17 Dec
- 2025 09:59:12 +0000
-Received: from SI6PR06MB7631.apcprd06.prod.outlook.com
- ([fe80::602a:6372:fff6:feca]) by SI6PR06MB7631.apcprd06.prod.outlook.com
- ([fe80::602a:6372:fff6:feca%6]) with mapi id 15.20.9434.001; Wed, 17 Dec 2025
- 09:59:12 +0000
-From: Kane Chen <kane_chen@aspeedtech.com>
-To: Yubin Zou <yubinz@google.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, Andrew Jeffery
- <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, Fabiano Rosas
- <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Nabih Estefan <nabihestefan@google.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-Subject: RE: [PATCH v4 6/6] test/qtest: Add Unit test for Aspeed SGPIO
-Thread-Topic: [PATCH v4 6/6] test/qtest: Add Unit test for Aspeed SGPIO
-Thread-Index: AQHcbus+2E+FkBdes0Kva0XmwqZoorUlk+tw
-Date: Wed, 17 Dec 2025 09:59:12 +0000
-Message-ID: <SI6PR06MB7631A8F4D4A4EC6045103968F7ABA@SI6PR06MB7631.apcprd06.prod.outlook.com>
-References: <20251217-aspeed-sgpio-v4-0-28bbb8dcab30@google.com>
- <20251217-aspeed-sgpio-v4-6-28bbb8dcab30@google.com>
-In-Reply-To: <20251217-aspeed-sgpio-v4-6-28bbb8dcab30@google.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI6PR06MB7631:EE_|TYSPR06MB6390:EE_
-x-ms-office365-filtering-correlation-id: 6ed58e9a-a084-4c64-0f6c-08de3d52ee1c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|38070700021; 
-x-microsoft-antispam-message-info: =?utf-8?B?dWxSSjlibkY3dVI0WHV2WEhQb3lVcUowZERuK1dLcmRuZTE3WWQ4MjllN0Zq?=
- =?utf-8?B?Y2dNOXU3dzFuVnl6ZUdVRlFjOHRMUld3SytUMFV6ZWVjWXdERDVzT1NiUWlM?=
- =?utf-8?B?aHpmS05md08zaEh2VjdhSEVQRW1ka1Yzbkk3LzB2VmJrMmxqcnJ6Tng3MkRM?=
- =?utf-8?B?TVFsNjdCSTFSanVEVW9UbWFKczBiNFpMdnpGTmlqMVhOalpld2F3cVU3STlr?=
- =?utf-8?B?YUhTcERjOWV5N3plWW0xQjliL3ovSUQ2OVNOYVlTSzhPejF6bG13QVp6Zi9n?=
- =?utf-8?B?YlIzdlRrbjZ4NmxJclZteTlqeWhIRmhheHZPMy84S0xHTXBWZzdFZENwN0sx?=
- =?utf-8?B?NW9hR0xlSFIvbHVzcTBsZWxlWmYzbTBRMUlMdUpnRHUvMXY2akFUTlBVbUNm?=
- =?utf-8?B?dXdZOElSWEhZVTZTWDlVejVlWnVFTldWOUJhNmsvVWJqMkowY1MyTzV3bHRU?=
- =?utf-8?B?L3IzZ3QvMW82MVMya2hFQkk4V1Y2L3Brekg2L0RWS1UreDBKWC93M3l3MWEw?=
- =?utf-8?B?Y2ozMEQ2R0d1UVNsNCtWMkpwRlJ3SG92eHgzNHRRRDRDQk9WNFc5eVdTc2lI?=
- =?utf-8?B?d2Q0M1Yyd2xYSythL1MrWGpnR2tkU0lraTJMdFhqODl2SWljeExWRTlLek5j?=
- =?utf-8?B?QmE0S2Z5SVJXREZoaSs1VkhBTkVMNlVSUU1KNUJJNzM1RDF5eW5vRFlFNUlE?=
- =?utf-8?B?eXhpYU9EZ2c3b1QzUHVhVmtGaHA5R2o5ZGw2TEtFUU51U2NXUlpYdFd5S3Jn?=
- =?utf-8?B?akFNWnVaejJ3ejNoQXZROFBHZGo0ai96eTFEK1ljdnR3VjdsczNlOTlaM3ZD?=
- =?utf-8?B?U0MvN3JncjhkOFVmZXoxczBFY2xsZ3BNalJ2MWFEdFZtQ1lKK2h1NzRmR0pp?=
- =?utf-8?B?QVhhQVdKbUNBM3VmSnBEcXErRHpZY3A3dU4yM284VjBsbU1aaHcvY1luTDhz?=
- =?utf-8?B?Uk9ubGVXMFVyRlNiSWQ3V2VtdUQ0RWZieDVkdXZTbUxFekMyYVF5L25rTHNS?=
- =?utf-8?B?N05WWVJRdm1XTDd5ZEVSdERKR2lvUXNPckFwbFprTStwQ3VwT0pxaVNtdUFD?=
- =?utf-8?B?NnQ3NWRaMEtUUnBLS0tCN1FFWmZnamxJS1U3UFd5c1BENVhFamdMUkY0Y2Iz?=
- =?utf-8?B?Rjl3QTYwUndtOUY2OHpzWjBucGhqNUo4L21ETDQ4QlhBN2laWEFNMzV6RlR5?=
- =?utf-8?B?OVZySGZueWFSbEtmVmJmRHdEb2NIQXB1Y01JMEZsbEMzbXNpL1FwdUllbUF4?=
- =?utf-8?B?K0ZFSHRIZXU1T2ljVk5mSnpZZmQrZmdjYzNQdDJQV0ZmcEljaVo3aWo4ZHcr?=
- =?utf-8?B?WkxDSjFSZmp2dHlOcWNzR1ROQ3J3N1g1TVVhOHNRMjI2bm5KK3BDVndNQ0NV?=
- =?utf-8?B?SCtOWjBONGNzQ3NGajE0NnF6dEQrY2l3aE5YZ3hEN3dJaU1TNld4Rm5SL0ZY?=
- =?utf-8?B?S1BIb2s1T01mTWRpd3NnbVd2QUtKMnhzWlB5cnIrRzNRSmIvbWFvcmxTUmZP?=
- =?utf-8?B?ZEdRRHRvWml1QSs4VzF3ZjdPcUdJamx3bUNkOXUvRldBaldxWWx3WmpsaXZS?=
- =?utf-8?B?VGExbklzMHdvUmp2N1MvQ3R3SFAwWEliVFp1WFpuWW5rSExkeFZ4OEFmRGtE?=
- =?utf-8?B?bExBbWxUdjJwOFo0R0dxMTdjYS81S1pyMjliZG5IaXk4NDhWWDh5VHZDN1I3?=
- =?utf-8?B?YytKWlBheFkxVG9jKzJoV0hzUWNwN2p0YTZQL3VMZDFVZDNteFhpNXJNcDA2?=
- =?utf-8?B?UGNxM2d6NUt2L2RMcXRoWXZEeU1UWVZoV1ZIeFN3VFNObDZZU2pKL0RFTnNB?=
- =?utf-8?B?dm9MakJFU3c0bW40M2xwTjlONCtRUC83OWJHMjhwNlNyL3c4UlNpQ2dvdVRq?=
- =?utf-8?B?U0JlZHhKdGlkY1BGVG1rV09oUXFWVFBkRDMvL2dtb0FiWVYyNDhQQVFhZTdC?=
- =?utf-8?B?ZE9DbEM1b1pxaXV3bTFHVDBlRjZRZU4xZ1FQdFhGWEpuR2ZWNGZpOUc4Q3pU?=
- =?utf-8?B?b0FlM1BqSUE3eEhTNXFzalVpc0hWMjdWczVSRTdITy8yc3EwNjkrNk1rR1pQ?=
- =?utf-8?Q?2Fo3xi?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI6PR06MB7631.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RmErSkgrK3JSV3dmdVF0ZEZNdmFPd3dwNFVBNUZndHJNVnJiY0VicGZ6cHdI?=
- =?utf-8?B?ZkFPQlVYQ1crcC8xcUZtZkRGQnNmUGROR0doejJPQVVFcy9MdTRCTE5GOFdI?=
- =?utf-8?B?QVB5MHJzZDFJZ0Y4L0FkRTdnNTdKYUlLMTFvZS9mUFZLbnVaNGVlN3ZFdTJK?=
- =?utf-8?B?a01FTVZtK0ZML2RTa3NJZEZnZ2VYbndBcy9sLzlqS1UrZEVRTGo0am5WYkhU?=
- =?utf-8?B?WEVaZHdvTUdNblp5bUxvY1JPRmltWHMwU3Rzb0ZyYkU2U1pzWFp4elRSODc4?=
- =?utf-8?B?NmxGVDZCVUdvekhFdWx5MXY5bWlKVWthbndLSEJpWFZHWDNRTGpyQXhsT2JW?=
- =?utf-8?B?dlF1aGc4cklmQzJnNmdwQ3gzNmZ6VkJtOXdhWUNob3d4ODd5NWlFRTF4QjRK?=
- =?utf-8?B?VWl0eThNT3lFSURiTkhiVS93UE5SREhVaTNzYy9kNFZOcmlSZzRqU3BKb3pY?=
- =?utf-8?B?S3VhVnYzaE41bUdnei9RdGxVYmRLL1hFajBpNjRRMDg4L25pSTlsQzJaQkZU?=
- =?utf-8?B?eGZ2M09ob1duSFRlZHBMRWt1RVl0SVNQSkNFZW1jVVBudzRMV3QxaWkrdXZM?=
- =?utf-8?B?bk40YVpRWWliRFRLUkVkWGZ1bXljRWRFQmt4TUVMK3M1R1MvR0lXSm9iOWtE?=
- =?utf-8?B?bEFSYnd3RjA2NW1wdkpXWTJBRlN1eGxqRUltRDhsTk5IV2EwTVZFMzE5aHBm?=
- =?utf-8?B?dUp3b0VSRStyRWdlS2VZZWNNNVl2d3dmQjM3bTFXTDZWZldCMC9JVDNQM21y?=
- =?utf-8?B?eXQ3K1NkK0swem1vbnUzTVgrU2xmbzFoUXN0QWtuM3pmdzZQL0VlZmlQT1JN?=
- =?utf-8?B?SVZLQzFnbEMzdTQ0dERDMWhzTnF3c1NUOThjbTk3MW1LVGJWUm8zbDlHbHJL?=
- =?utf-8?B?SnZFSytSV3FHcy9OV0JIWlVHU05OSVFQZmw1a1RwQUVZVkZvQklQRUFJWTcy?=
- =?utf-8?B?RTMwMklHREh0dHI5dC9iZXpQc3lieTZSUmlWSnV3cDBIc3hJcnlWQ2xiV1Zv?=
- =?utf-8?B?RnJ3Z1RCSUd5aTRpTmlzdnpCa3czVTBhT0h3czEzSjIva0tqRXdwQzlKOUdM?=
- =?utf-8?B?MVpXMm1ZU3dzQzdiZHZkU1JIUWplc1pUMXhETU5SZmJSMDI0dmNnOGswdW5j?=
- =?utf-8?B?dnJJem9OR1dqSDVlUVNocStPU1RQSDNiV05DNDZscWhSRzg5RHVRbFk5cEc4?=
- =?utf-8?B?UDl2SDlmWUNwMVhjWDdJa2xWdzc2a2UyQ012bmplVDcwTTFoTHg0K2RvSGNE?=
- =?utf-8?B?aWVzV3pES2lsbjZhSzQ2K3VDRTFzMitzTzd6Z1krS0M1Uklod2RRK2ZkTTB6?=
- =?utf-8?B?bmVBSFdpT2ZPUktMU2wzdEtCTE52Z05sUjdHYUd6MW1hZ1B6eGhhRkxVRG1n?=
- =?utf-8?B?dmEyTUFuUGEvVjdmYkJqV3V3MnJwUGpTVXlCS0ZscU4vS3FOVTZmYzJHVkMx?=
- =?utf-8?B?OUVDamdPY0pZZEhSeGtpQ2xtN0R4WThqMVBXOUVlWGhVcFI4MjUyVHBRbm0x?=
- =?utf-8?B?cXNuQmdWVHkvWmV6M0tNb2EwWjIxOGtQWVNRejdSVUpTckY2NUJsVmZmcWlV?=
- =?utf-8?B?ZDJKRkxZa0svUDJBUTh5Q2syeFFVbFdYeXRCNm1keTZoNUxjbFkzQVdtS0c0?=
- =?utf-8?B?TForeEdDOXNaNFBGTTdxYWpSUElXd1VJOE81bUtCbGh3TTU4OW1wajRBeEtW?=
- =?utf-8?B?YjJRU1pJT01uMFUzVkpaRzhJRVpMelJNazJJR003ZEIxUlZHemdHclk3Snpa?=
- =?utf-8?B?T2pkT2pLL1dmandQZllGcFlvL1pLUFk5OGNnSk9vRHhtOTdWMDRtajVidDBZ?=
- =?utf-8?B?WUhJTUphQVFnOU5CZXpiNnViMzRCdTlWSWNCTkl4ZElJZUl4ZzhXRXJXUlJ0?=
- =?utf-8?B?MjVIdlRjNFR0UkFlTkViaTIveng5SmdMcFo4R20wZGRzNlp3eTBhTHRYWHo3?=
- =?utf-8?B?SzVCSGk1bTJlRVFrMXRaakFRQmE2VHBaSUJYeFloaENFc1pTUnlaUFVZRGxO?=
- =?utf-8?B?R0toekVkdCtERkU4Wng5Sm11UDljS0JlbC9rVUlHZzM0OFIyYmN1TUVBMlEy?=
- =?utf-8?B?eUVVUVdDbEsxWUhSTy81TW9CbGZOUlhtSlFIMTZjZVgzTElLNFpTMFVnaVY3?=
- =?utf-8?Q?tTJ18nhOQNUHa0Cv3nkCMYMnd?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <15927021679@163.com>)
+ id 1vVobt-0007xl-MW
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 05:18:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=gT
+ r9cXlUolcdcafwK8bWD4/QDXm/K6s1AH54NIQvIJI=; b=DWa/ahyjox1lJLgGyi
+ +dJ+mhtrMmGUKiye5Qh9W/57NtLr8pg9aLafIJWet+q3lEDvljDOdTLsAmGV9zGc
+ XQ69SCgcQKiazUT1/kgUdFEzvfpHbsHsWy8yR9XacjyYvY26Z5rawrvM/2fJFt7Q
+ W3ROynVyo2b9gtUSxHotX7BYk=
+Received: from xwm-TianYi510Pro-14IMB.. (unknown [])
+ by gzsmtp5 (Coremail) with SMTP id QCgvCgCnD19Sg0Jp8+rdHw--.201S3;
+ Wed, 17 Dec 2025 18:18:06 +0800 (CST)
+From: Xiong Weimin <15927021679@163.com>
+To: xiongweimin@kylinos.cn
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] hw/rdma: Implement vhost-user RDMA device with PCI support
+Date: Wed, 17 Dec 2025 18:17:18 +0800
+Message-ID: <20251217101753.16343-2-15927021679@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20251217101753.16343-1-15927021679@163.com>
+References: <20251217101753.16343-1-15927021679@163.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7631.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6ed58e9a-a084-4c64-0f6c-08de3d52ee1c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Dec 2025 09:59:12.4471 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 2plQFxhdHMFNVt9kwasdy/myfNdTEq3ug493DGOlmIaWuUUpapAlZxlWzcqLcTTm+m4m196MWd++hbuq6Sex3aY6d5xOlLn9ozJs+Y5Z/zg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB6390
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=kane_chen@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: QCgvCgCnD19Sg0Jp8+rdHw--.201S3
+X-Coremail-Antispam: 1Uf129KBjvAXoWftr48Cw1DXFyrJry7Aw4kXrb_yoW5WF13to
+ W7Jrya9F4rtw1UCFsY9r17ArW2gFyj9F17Cr4S9rZFqayxJw1DtF97Ka9rJ3yrCr4fK34x
+ CryfG3yxGa15AFZ3n29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
+ AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvj4RNyCXUUUUU
+X-Originating-IP: [116.128.244.169]
+X-CM-SenderInfo: jprvmjixqsilmxzbiqqrwthudrp/xtbC0h-ia2lCg1-3PQAA35
+Received-SPF: pass client-ip=220.197.31.3; envelope-from=15927021679@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
+ FROM_LOCAL_HEX=0.006, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -187,158 +74,946 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBZdWJpbiBab3UgPHl1YmluekBn
-b29nbGUuY29tPg0KPiBTZW50OiBXZWRuZXNkYXksIERlY2VtYmVyIDE3LCAyMDI1IDg6MjIgQU0N
-Cj4gVG86IHFlbXUtZGV2ZWxAbm9uZ251Lm9yZw0KPiBDYzogQ8OpZHJpYyBMZSBHb2F0ZXIgPGNs
-Z0BrYW9kLm9yZz47IFBldGVyIE1heWRlbGwNCj4gPHBldGVyLm1heWRlbGxAbGluYXJvLm9yZz47
-IFN0ZXZlbiBMZWUgPHN0ZXZlbl9sZWVAYXNwZWVkdGVjaC5jb20+OyBUcm95DQo+IExlZSA8bGVl
-dHJveUBnbWFpbC5jb20+OyBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNoLmNvbT47IEFu
-ZHJldw0KPiBKZWZmZXJ5IDxhbmRyZXdAY29kZWNvbnN0cnVjdC5jb20uYXU+OyBKb2VsIFN0YW5s
-ZXkgPGpvZWxAam1zLmlkLmF1PjsNCj4gRmFiaWFubyBSb3NhcyA8ZmFyb3Nhc0BzdXNlLmRlPjsg
-TGF1cmVudCBWaXZpZXIgPGx2aXZpZXJAcmVkaGF0LmNvbT47DQo+IFBhb2xvIEJvbnppbmkgPHBi
-b256aW5pQHJlZGhhdC5jb20+OyBLYW5lIENoZW4NCj4gPGthbmVfY2hlbkBhc3BlZWR0ZWNoLmNv
-bT47IE5hYmloIEVzdGVmYW4gPG5hYmloZXN0ZWZhbkBnb29nbGUuY29tPjsNCj4gcWVtdS1hcm1A
-bm9uZ251Lm9yZzsgWXViaW4gWm91IDx5dWJpbnpAZ29vZ2xlLmNvbT4NCj4gU3ViamVjdDogW1BB
-VENIIHY0IDYvNl0gdGVzdC9xdGVzdDogQWRkIFVuaXQgdGVzdCBmb3IgQXNwZWVkIFNHUElPDQo+
-IA0KPiBUaGlzIGNvbW1pdCBpbnRyb2R1Y2VzIGEgbmV3IHF0ZXN0IGZvciB0aGUgQXNwZWVkIFNH
-UElPIGNvbnRyb2xsZXIgVGhlIHRlc3QNCj4gY292ZXJzIHRoZSBmb2xsb3dpbmc6DQo+ICAgLSBT
-ZXR0aW5nIGFuZCBjbGVhcmluZyBTR1BJTyBvdXRwdXQgcGlucyBhbmQgdmVyaWZ5aW5nIHRoZSBw
-aW4gc3RhdGUuDQo+ICAgLSBTZXR0aW5nIGFuZCBjbGVhcmluZyBTR1BJTyBpbnB1dCBwaW5zIGFu
-ZCB2ZXJpZnlpbmcgdGhlIHBpbiBzdGF0ZS4NCj4gICAtIFZlcmlmeWluZyB0aGF0IGxldmVsLWhp
-Z2ggaW50ZXJydXB0cyBhcmUgY29ycmVjdGx5IHRyaWdnZXJlZCBhbmQgY2xlYXJlZC4NCj4gDQo+
-IFNpZ25lZC1vZmYtYnk6IFl1YmluIFpvdSA8eXViaW56QGdvb2dsZS5jb20+DQo+IC0tLQ0KPiAg
-dGVzdHMvcXRlc3QvYXN0MjcwMC1zZ3Bpby10ZXN0LmMgfCAxNjYNCj4gKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKysrKysrDQo+ICB0ZXN0cy9xdGVzdC9tZXNvbi5idWlsZCAgICAg
-ICAgICB8ICAgMSArDQo+ICAyIGZpbGVzIGNoYW5nZWQsIDE2NyBpbnNlcnRpb25zKCspDQo+IA0K
-PiBkaWZmIC0tZ2l0IGEvdGVzdHMvcXRlc3QvYXN0MjcwMC1zZ3Bpby10ZXN0LmMgYi90ZXN0cy9x
-dGVzdC9hc3QyNzAwLXNncGlvLXRlc3QuYw0KPiBuZXcgZmlsZSBtb2RlIDEwMDY0NA0KPiBpbmRl
-eA0KPiAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwLi42ZDAyNDUyNGEz
-MjcxNzU2MDMwMWY3DQo+IDNlZTFjNzEzMmY0MTgxZTcxMQ0KPiAtLS0gL2Rldi9udWxsDQo+ICsr
-KyBiL3Rlc3RzL3F0ZXN0L2FzdDI3MDAtc2dwaW8tdGVzdC5jDQo+IEBAIC0wLDAgKzEsMTY2IEBA
-DQo+ICsvKg0KPiArICogUVRlc3QgdGVzdGNhc2UgZm9yIHRoZSBBU1BFRUQgQVNUMjcwMCBTR1BJ
-TyBDb250cm9sbGVyLg0KPiArICoNCj4gKyAqIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwt
-Mi4wLW9yLWxhdGVyDQo+ICsgKiBDb3B5cmlnaHQgKEMpIDIwMjUgR29vZ2xlIExMQy4NCj4gKyAq
-Lw0KPiArDQo+ICsjaW5jbHVkZSAicWVtdS9vc2RlcC5oIg0KPiArI2luY2x1ZGUgInFlbXUvYml0
-b3BzLmgiDQo+ICsjaW5jbHVkZSAicW9iamVjdC9xZGljdC5oIg0KPiArI2luY2x1ZGUgImxpYnF0
-ZXN0LXNpbmdsZS5oIg0KPiArI2luY2x1ZGUgImh3L3JlZ2lzdGVyZmllbGRzLmgiDQo+ICsjaW5j
-bHVkZSAiaHcvZ3Bpby9hc3BlZWRfc2dwaW8uaCINCj4gKw0KPiArI2RlZmluZSBBU1BFRURfU0dQ
-SU9fTUFYX1BJTl9QQUlSIDI1Ng0KDQpBU1BFRURfU0dQSU9fTUFYX1BJTl9QQUlSIGlzIGFscmVh
-ZHkgZGVmaW5lZCBpbiBhc3BlZWRfc2dwaW8uaCwgc28gdGhlDQpkdXBsaWNhdGUgZGVmaW5pdGlv
-biBoZXJlIGNhbiBiZSByZW1vdmVkLg0KDQo+ICsjZGVmaW5lIEFTVDI3MDBfU0dQSU8wX0JBU0Ug
-MHgxNEMwQzAwMA0KPiArI2RlZmluZSBBU1QyNzAwX1NHUElPMV9CQVNFIDB4MTRDMEQwMDANCj4g
-Kw0KPiArc3RhdGljIHZvaWQgdGVzdF9vdXRwdXRfcGlucyhjb25zdCBjaGFyICptYWNoaW5lLCBj
-b25zdCB1aW50MzJfdCBiYXNlLA0KPiAraW50IGlkeCkgew0KPiArICAgIFFUZXN0U3RhdGUgKnMg
-PSBxdGVzdF9pbml0KG1hY2hpbmUpOw0KPiArICAgIGNoYXIgbmFtZVsxNl07DQo+ICsgICAgY2hh
-ciBxb21fcGF0aFs2NF07DQo+ICsgICAgdWludDMyX3Qgb2Zmc2V0ID0gMDsNCj4gKyAgICB1aW50
-MzJfdCB2YWx1ZSA9IDA7DQo+ICsgICAgZm9yIChpbnQgaSA9IDA7IGkgPCBBU1BFRURfU0dQSU9f
-TUFYX1BJTl9QQUlSOyBpKyspIHsNCj4gKyAgICAgICAgLyogT2RkIGluZGV4IGlzIG91dHB1dCBw
-b3J0ICovDQo+ICsgICAgICAgIHNwcmludGYobmFtZSwgInNncGlvJTAzZCIsIGkgKiAyICsgMSk7
-DQo+ICsgICAgICAgIHNwcmludGYocW9tX3BhdGgsICIvbWFjaGluZS9zb2Mvc2dwaW9bJWRdIiwg
-aWR4KTsNCj4gKyAgICAgICAgb2Zmc2V0ID0gYmFzZSArIChSX1NHUElPXzBfQ09OVFJPTCArIGkp
-ICogNDsNCj4gKyAgICAgICAgLyogc2V0IHNlcmlhbCBvdXRwdXQgKi8NCj4gKyAgICAgICAgcXRl
-c3Rfd3JpdGVsKHMsIG9mZnNldCwgMHgwMDAwMDAwMSk7DQo+ICsgICAgICAgIHZhbHVlID0gcXRl
-c3RfcmVhZGwocywgb2Zmc2V0KTsNCj4gKyAgICAgICAgZ19hc3NlcnRfY21waGV4KFNIQVJFRF9G
-SUVMRF9FWDMyKHZhbHVlLA0KPiBTR1BJT19TRVJJQUxfT1VUX1ZBTCksID09LCAxKTsNCj4gKyAg
-ICAgICAgZ19hc3NlcnRfY21waGV4KHF0ZXN0X3FvbV9nZXRfYm9vbChzLCBxb21fcGF0aCwgbmFt
-ZSksID09LA0KPiArdHJ1ZSk7DQo+ICsNCj4gKyAgICAgICAgLyogY2xlYXIgc2VyaWFsIG91dHB1
-dCAqLw0KPiArICAgICAgICBxdGVzdF93cml0ZWwocywgb2Zmc2V0LCAweDAwMDAwMDAwKTsNCj4g
-KyAgICAgICAgdmFsdWUgPSBxdGVzdF9yZWFkbChzLCBvZmZzZXQpOw0KPiArICAgICAgICBnX2Fz
-c2VydF9jbXBoZXgoU0hBUkVEX0ZJRUxEX0VYMzIodmFsdWUsDQo+IFNHUElPX1NFUklBTF9PVVRf
-VkFMKSwgPT0sIDApOw0KPiArICAgICAgICBnX2Fzc2VydF9jbXBoZXgocXRlc3RfcW9tX2dldF9i
-b29sKHMsIHFvbV9wYXRoLCBuYW1lKSwgPT0sDQo+IGZhbHNlKTsNCj4gKyAgICB9DQo+ICsgICAg
-cXRlc3RfcXVpdChzKTsNCj4gK30NCj4gKw0KPiArc3RhdGljIHZvaWQgdGVzdF9pbnB1dF9waW5z
-KGNvbnN0IGNoYXIgKm1hY2hpbmUsIGNvbnN0IHVpbnQzMl90IGJhc2UsDQo+ICtpbnQgaWR4KSB7
-DQo+ICsgICAgUVRlc3RTdGF0ZSAqcyA9IHF0ZXN0X2luaXQobWFjaGluZSk7DQo+ICsgICAgY2hh
-ciBuYW1lWzE2XTsNCj4gKyAgICBjaGFyIHFvbV9wYXRoWzY0XTsNCj4gKyAgICB1aW50MzJfdCBv
-ZmZzZXQgPSAwOw0KPiArICAgIHVpbnQzMl90IHZhbHVlID0gMDsNCj4gKyAgICBmb3IgKGludCBp
-ID0gMDsgaSA8IEFTUEVFRF9TR1BJT19NQVhfUElOX1BBSVI7IGkrKykgew0KPiArICAgICAgICAv
-KiBFdmVuIGluZGV4IGlzIGlucHV0IHBvcnQgKi8NCj4gKyAgICAgICAgc3ByaW50ZihuYW1lLCAi
-c2dwaW8lMDNkIiwgaSAqIDIpOw0KPiArICAgICAgICBzcHJpbnRmKHFvbV9wYXRoLCAiL21hY2hp
-bmUvc29jL3NncGlvWyVkXSIsIGlkeCk7DQo+ICsgICAgICAgIG9mZnNldCA9IGJhc2UgKyAoUl9T
-R1BJT18wX0NPTlRST0wgKyBpKSAqIDQ7DQo+ICsgICAgICAgIC8qIHNldCBzZXJpYWwgaW5wdXQg
-Ki8NCj4gKyAgICAgICAgcXRlc3RfcW9tX3NldF9ib29sKHMsIHFvbV9wYXRoLCBuYW1lLCB0cnVl
-KTsNCj4gKyAgICAgICAgdmFsdWUgPSBxdGVzdF9yZWFkbChzLCBvZmZzZXQpOw0KPiArICAgICAg
-ICBnX2Fzc2VydF9jbXBoZXgoU0hBUkVEX0ZJRUxEX0VYMzIodmFsdWUsDQo+IFNHUElPX1NFUklB
-TF9JTl9WQUwpLCA9PSwgMSk7DQo+ICsgICAgICAgIGdfYXNzZXJ0X2NtcGhleChxdGVzdF9xb21f
-Z2V0X2Jvb2wocywgcW9tX3BhdGgsIG5hbWUpLCA9PSwNCj4gK3RydWUpOw0KPiArDQo+ICsgICAg
-ICAgIC8qIGNsZWFyIHNlcmlhbCBpbnB1dCAqLw0KPiArICAgICAgICBxdGVzdF9xb21fc2V0X2Jv
-b2wocywgcW9tX3BhdGgsIG5hbWUsIGZhbHNlKTsNCj4gKyAgICAgICAgdmFsdWUgPSBxdGVzdF9y
-ZWFkbChzLCBvZmZzZXQpOw0KPiArICAgICAgICBnX2Fzc2VydF9jbXBoZXgoU0hBUkVEX0ZJRUxE
-X0VYMzIodmFsdWUsDQo+IFNHUElPX1NFUklBTF9JTl9WQUwpLCA9PSwgMCk7DQo+ICsgICAgICAg
-IGdfYXNzZXJ0X2NtcGhleChxdGVzdF9xb21fZ2V0X2Jvb2wocywgcW9tX3BhdGgsIG5hbWUpLCA9
-PSwNCj4gZmFsc2UpOw0KPiArICAgIH0NCj4gKyAgICBxdGVzdF9xdWl0KHMpOw0KPiArfQ0KPiAr
-DQo+ICtzdGF0aWMgdm9pZCB0ZXN0X2lycV9sZXZlbF9oaWdoKGNvbnN0IGNoYXIgKm1hY2hpbmUs
-DQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNvbnN0IHVpbnQzMl90IGJhc2Us
-IGludCBpZHgpIHsNCj4gKyAgICBRVGVzdFN0YXRlICpzID0gcXRlc3RfaW5pdChtYWNoaW5lKTsN
-Cj4gKyAgICBjaGFyIG5hbWVbMTZdOw0KPiArICAgIGNoYXIgcW9tX3BhdGhbNjRdOw0KPiArICAg
-IHVpbnQzMl90IGN0cmxfb2Zmc2V0ID0gMDsNCj4gKyAgICB1aW50MzJfdCBpbnRfb2Zmc2V0ID0g
-MDsNCj4gKyAgICB1aW50MzJfdCBpbnRfcmVnX2lkeCA9IDA7DQo+ICsgICAgdWludDMyX3QgaW50
-X2JpdF9pZHggPSAwOw0KPiArICAgIHVpbnQzMl90IHZhbHVlID0gMDsNCj4gKyAgICBmb3IgKGlu
-dCBpID0gMDsgaSA8IEFTUEVFRF9TR1BJT19NQVhfUElOX1BBSVI7IGkrKykgew0KPiArICAgICAg
-ICAvKiBFdmVuIGluZGV4IGlzIGlucHV0IHBvcnQgKi8NCj4gKyAgICAgICAgc3ByaW50ZihuYW1l
-LCAic2dwaW8lMDNkIiwgaSAqIDIpOw0KPiArICAgICAgICBzcHJpbnRmKHFvbV9wYXRoLCAiL21h
-Y2hpbmUvc29jL3NncGlvWyVkXSIsIGlkeCk7DQo+ICsgICAgICAgIGludF9yZWdfaWR4ID0gaSAv
-IDMyOw0KPiArICAgICAgICBpbnRfYml0X2lkeCA9IGkgJSAzMjsNCj4gKyAgICAgICAgaW50X29m
-ZnNldCA9IGJhc2UgKyAoUl9TR1BJT19JTlRfU1RBVFVTXzAgKyBpbnRfcmVnX2lkeCkgKiA0Ow0K
-PiArICAgICAgICBjdHJsX29mZnNldCA9IGJhc2UgKyAoUl9TR1BJT18wX0NPTlRST0wgKyBpKSAq
-IDQ7DQo+ICsNCj4gKyAgICAgICAgLyogRW5hYmxlIHRoZSBpbnRlcnJ1cHQgKi8NCj4gKyAgICAg
-ICAgdmFsdWUgPSBTSEFSRURfRklFTERfRFAzMih2YWx1ZSwgU0dQSU9fSU5UX0VOLCAxKTsNCj4g
-KyAgICAgICAgcXRlc3Rfd3JpdGVsKHMsIGN0cmxfb2Zmc2V0LCB2YWx1ZSk7DQo+ICsNCj4gKyAg
-ICAgICAgLyogU2V0IHRoZSBpbnRlcnJ1cHQgdHlwZSB0byBsZXZlbC1oaWdoIHRyaWdnZXIgKi8N
-Cj4gKyAgICAgICAgdmFsdWUgPSBTSEFSRURfRklFTERfRFAzMihxdGVzdF9yZWFkbChzLCBjdHJs
-X29mZnNldCksDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgU0dQSU9fSU5UX1RZUEUsDQo+IDMpOw0KPiArICAgICAgICBxdGVzdF93cml0ZWwocywgY3Ry
-bF9vZmZzZXQsIHZhbHVlKTsNCj4gKw0KPiArICAgICAgICAvKiBTZXQgc2VyaWFsIGlucHV0IGhp
-Z2ggKi8NCj4gKyAgICAgICAgcXRlc3RfcW9tX3NldF9ib29sKHMsIHFvbV9wYXRoLCBuYW1lLCB0
-cnVlKTsNCj4gKyAgICAgICAgdmFsdWUgPSBxdGVzdF9yZWFkbChzLCBjdHJsX29mZnNldCk7DQo+
-ICsgICAgICAgIGdfYXNzZXJ0X2NtcGhleChTSEFSRURfRklFTERfRVgzMih2YWx1ZSwNCj4gU0dQ
-SU9fU0VSSUFMX0lOX1ZBTCksDQo+ICsgPT0sIDEpOw0KPiArDQo+ICsgICAgICAgIC8qIEludGVy
-cnVwdCBzdGF0dXMgaXMgc2V0ICovDQo+ICsgICAgICAgIHZhbHVlID0gcXRlc3RfcmVhZGwocywg
-aW50X29mZnNldCk7DQo+ICsgICAgICAgIGdfYXNzZXJ0X2NtcGhleChleHRyYWN0MzIodmFsdWUs
-IGludF9iaXRfaWR4LCAxKSwgPT0sIDEpOw0KPiArDQo+ICsgICAgICAgIC8qIENsZWFyIEludGVy
-cnVwdCAqLw0KPiArICAgICAgICB2YWx1ZSA9IFNIQVJFRF9GSUVMRF9EUDMyKHF0ZXN0X3JlYWRs
-KHMsIGN0cmxfb2Zmc2V0KSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICBTR1BJT19JTlRfU1RBVFVTLA0KPiAxKTsNCj4gKyAgICAgICAgcXRlc3Rfd3Jp
-dGVsKHMsIGN0cmxfb2Zmc2V0LCB2YWx1ZSk7DQo+ICsgICAgICAgIHZhbHVlID0gcXRlc3RfcmVh
-ZGwocywgaW50X29mZnNldCk7DQo+ICsgICAgICAgIGdfYXNzZXJ0X2NtcGhleChleHRyYWN0MzIo
-dmFsdWUsIGludF9iaXRfaWR4LCAxKSwgPT0sIDApOw0KPiArDQo+ICsgICAgICAgIC8qIENsZWFy
-IHNlcmlhbCBpbnB1dCAqLw0KPiArICAgICAgICBxdGVzdF9xb21fc2V0X2Jvb2wocywgcW9tX3Bh
-dGgsIG5hbWUsIGZhbHNlKTsNCj4gKyAgICAgICAgdmFsdWUgPSBxdGVzdF9yZWFkbChzLCBjdHJs
-X29mZnNldCk7DQo+ICsgICAgICAgIGdfYXNzZXJ0X2NtcGhleChTSEFSRURfRklFTERfRVgzMih2
-YWx1ZSwNCj4gU0dQSU9fU0VSSUFMX0lOX1ZBTCksID09LCAwKTsNCj4gKyAgICB9DQo+ICsgICAg
-cXRlc3RfcXVpdChzKTsNCj4gK30NCj4gKw0KPiArc3RhdGljIHZvaWQgdGVzdF9hc3RfMjcwMF9z
-Z3Bpb19pbnB1dCh2b2lkKSB7DQo+ICsgICAgdGVzdF9pbnB1dF9waW5zKCItbWFjaGluZSBhc3Qy
-NzAwLWV2YiIsDQo+ICsgICAgICAgICAgICAgICAgICAgIEFTVDI3MDBfU0dQSU8wX0JBU0UsIDAp
-Ow0KPiArICAgIHRlc3RfaW5wdXRfcGlucygiLW1hY2hpbmUgYXN0MjcwMC1ldmIiLA0KPiArICAg
-ICAgICAgICAgICAgICAgICBBU1QyNzAwX1NHUElPMV9CQVNFLCAxKTsgfQ0KPiArDQo+ICtzdGF0
-aWMgdm9pZCB0ZXN0X2FzdF8yNzAwX3NncGlvX291dHB1dCh2b2lkKSB7DQo+ICsgICAgdGVzdF9v
-dXRwdXRfcGlucygiLW1hY2hpbmUgYXN0MjcwMC1ldmIiLA0KPiArICAgICAgICAgICAgICAgICAg
-ICBBU1QyNzAwX1NHUElPMF9CQVNFLCAwKTsNCj4gKyAgICB0ZXN0X291dHB1dF9waW5zKCItbWFj
-aGluZSBhc3QyNzAwLWV2YiIsDQo+ICsgICAgICAgICAgICAgICAgICAgIEFTVDI3MDBfU0dQSU8x
-X0JBU0UsIDEpOw0KPiArICAgIHRlc3RfaXJxX2xldmVsX2hpZ2goIi1tYWNoaW5lIGFzdDI3MDAt
-ZXZiIiwNCj4gKyAgICAgICAgICAgICAgICAgICAgQVNUMjcwMF9TR1BJTzBfQkFTRSwgMCk7DQo+
-ICsgICAgdGVzdF9pcnFfbGV2ZWxfaGlnaCgiLW1hY2hpbmUgYXN0MjcwMC1ldmIiLA0KPiArICAg
-ICAgICAgICAgICAgICAgICBBU1QyNzAwX1NHUElPMV9CQVNFLCAxKTsgfQ0KPiArDQo+ICtzdGF0
-aWMgdm9pZCB0ZXN0X2FzdF8yNzAwX3NncGlvX2lycSh2b2lkKSB7DQo+ICsgICAgdGVzdF9pcnFf
-bGV2ZWxfaGlnaCgiLW1hY2hpbmUgYXN0MjcwMC1ldmIiLA0KPiArICAgICAgICAgICAgICAgICAg
-ICBBU1QyNzAwX1NHUElPMF9CQVNFLCAwKTsNCj4gKyAgICB0ZXN0X2lycV9sZXZlbF9oaWdoKCIt
-bWFjaGluZSBhc3QyNzAwLWV2YiIsDQo+ICsgICAgICAgICAgICAgICAgICAgIEFTVDI3MDBfU0dQ
-SU8xX0JBU0UsIDEpOyB9DQo+ICsNCj4gK2ludCBtYWluKGludCBhcmdjLCBjaGFyICoqYXJndikN
-Cj4gK3sNCj4gKyAgICBnX3Rlc3RfaW5pdCgmYXJnYywgJmFyZ3YsIE5VTEwpOw0KPiArDQo+ICsg
-ICAgcXRlc3RfYWRkX2Z1bmMoIi9hc3QyNzAwL3NncGlvL2FzdF8yNzAwX3NncGlvX2lucHV0IiwN
-Cj4gKyAgICAgICAgICAgICAgICAgICB0ZXN0X2FzdF8yNzAwX3NncGlvX2lucHV0KTsNCj4gKyAg
-ICBxdGVzdF9hZGRfZnVuYygiL2FzdDI3MDAvc2dwaW8vYXN0XzI3MDBfc2dwaW9fb3V0cHV0IiwN
-Cj4gKyAgICAgICAgICAgICAgICAgICB0ZXN0X2FzdF8yNzAwX3NncGlvX291dHB1dCk7DQo+ICsg
-ICAgcXRlc3RfYWRkX2Z1bmMoIi9hc3QyNzAwL3NncGlvL2FzdF8yNzAwX3NncGlvX2lycSIsDQo+
-ICsgICAgICAgICAgICAgICAgICAgdGVzdF9hc3RfMjcwMF9zZ3Bpb19pcnEpOw0KPiArDQo+ICsg
-ICAgcmV0dXJuIGdfdGVzdF9ydW4oKTsNCj4gK30NCj4gZGlmZiAtLWdpdCBhL3Rlc3RzL3F0ZXN0
-L21lc29uLmJ1aWxkIGIvdGVzdHMvcXRlc3QvbWVzb24uYnVpbGQgaW5kZXgNCj4gNjY5ZDA3YzA2
-YmRlZGM2YmUwYzY5YWNhZGViYTk4OWRjMTVkZGYzZi4uNWM4MGIyZWQ2ZGUxZjQ1M2QyNDgzZGI0
-DQo+IDgyYzFiMGU3ODAxYmE5ODAgMTAwNjQ0DQo+IC0tLSBhL3Rlc3RzL3F0ZXN0L21lc29uLmJ1
-aWxkDQo+ICsrKyBiL3Rlc3RzL3F0ZXN0L21lc29uLmJ1aWxkDQo+IEBAIC0yMjEsNiArMjIxLDcg
-QEAgcXRlc3RzX2FzcGVlZCA9IFwNCj4gIHF0ZXN0c19hc3BlZWQ2NCA9IFwNCj4gICAgWydhc3Qy
-NzAwLWdwaW8tdGVzdCcsDQo+ICAgICAnYXN0MjcwMC1oYWNlLXRlc3QnLA0KPiArICAgJ2FzdDI3
-MDAtc2dwaW8tdGVzdCcsDQo+ICAgICAnYXN0MjcwMC1zbWMtdGVzdCddDQo+IA0KPiAgcXRlc3Rz
-X3N0bTMybDR4NSA9IFwNCj4gDQo+IC0tDQo+IDIuNTIuMC4zMDUuZzNmYzc2Nzc2NGEtZ29vZw0K
-DQpCZXN0IFJlZ2FyZHMsDQpLYW5lDQo=
+From: xiongweimin <xiongweimin@kylinos.cn>
+
+This commit introduces a complete vhost-user RDMA device implementation
+including PCI interface bindings. The implementation enables RDMA operations
+through a vhost-user backend and provides a PCI device interface for guests.
+
+Key components included:
+1. PCI device binding layer:
+   - Automatic MSI-X vector allocation (queues + 1)
+   - Virtio 1.0 compliance (no legacy support)
+   - Standard Red Hat vendor/device IDs
+   - Bootindex property passthrough
+   - Transitional/non-transitional device variants
+
+2. Core vhost-user RDMA device:
+   - Chardev-based backend communication
+   - Dynamic connection management with reconnect
+   - 256 virtqueues (512 entries each)
+   - Feature negotiation (VIRTIO_F_VERSION_1, INDIRECT_DESC, etc.)
+   - Config space handling with live updates
+   - VM state preservation for migration
+   - Graceful start/stop sequences
+   - Host notifier management
+
+3. Key functionalities:
+   - Automatic backend connection management
+   - Config change notification handling
+   - Queue enablement on guest activity
+   - Error handling for backend disconnections
+   - Resource cleanup on device unrealize
+
+The implementation follows virtio and vhost-user standards, providing
+a foundation for RDMA virtualization using user-space backends.
+
+CC: qemu-devel@nongnu.org
+Signed-off-by: Xiong Weimin <xiongweimin@kylinos.cn>
+Change-Id: I3299219282bc98800422e132298006ed1b3637da
+---
+ hw/rdma/Kconfig                             |   5 +
+ hw/rdma/meson.build                         |   5 +
+ hw/rdma/vhost-user-rdma.c                   | 463 ++++++++++++++++++++
+ hw/virtio/meson.build                       |   1 +
+ hw/virtio/vhost-user-rdma-pci.c             |  93 ++++
+ hw/virtio/vhost-user.c                      |  11 +
+ hw/virtio/vhost.c                           |   2 +
+ hw/virtio/virtio.c                          |   1 +
+ include/hw/pci/pci.h                        |   1 +
+ include/hw/virtio/vhost-user-rdma.h         |  43 ++
+ include/hw/virtio/virtio.h                  |   2 +-
+ include/standard-headers/linux/virtio_ids.h |   1 +
+ include/standard-headers/rdma/virtio_rdma.h |  60 +++
+ 13 files changed, 687 insertions(+), 1 deletion(-)
+ create mode 100644 hw/rdma/vhost-user-rdma.c
+ create mode 100644 hw/virtio/vhost-user-rdma-pci.c
+ create mode 100644 include/hw/virtio/vhost-user-rdma.h
+ create mode 100644 include/standard-headers/rdma/virtio_rdma.h
+
+diff --git a/hw/rdma/Kconfig b/hw/rdma/Kconfig
+index 840320bdc0..1cb7ee72ab 100644
+--- a/hw/rdma/Kconfig
++++ b/hw/rdma/Kconfig
+@@ -1,3 +1,8 @@
+ config VMW_PVRDMA
+     default y if PCI_DEVICES
+     depends on PVRDMA && MSI_NONBROKEN && VMXNET3_PCI
++
++config VHOST_USER_RDMA
++    bool
++    default y if VIRTIO_PCI
++    depends on VIRTIO && VHOST_USER && LINUX
+diff --git a/hw/rdma/meson.build b/hw/rdma/meson.build
+index 363c9b8c83..51c47b2d44 100644
+--- a/hw/rdma/meson.build
++++ b/hw/rdma/meson.build
+@@ -10,3 +10,8 @@ specific_ss.add(when: 'CONFIG_VMW_PVRDMA', if_true: files(
+   'vmw/pvrdma_dev_ring.c',
+   'vmw/pvrdma_main.c',
+ ))
++
++
++specific_ss.add(when: 'CONFIG_VHOST_USER_RDMA', if_true: files(
++  'vhost-user-rdma.c',
++))
+diff --git a/hw/rdma/vhost-user-rdma.c b/hw/rdma/vhost-user-rdma.c
+new file mode 100644
+index 0000000000..e54b349ec4
+--- /dev/null
++++ b/hw/rdma/vhost-user-rdma.c
+@@ -0,0 +1,463 @@
++/*
++ * RDMA device interface
++ *
++ * Copyright (C) 2025 Kylinsoft
++ *
++ * Authors:
++ *		Xiong Weimin <xiongweimin@kylinos.cn>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qemu/cutils.h"
++#include "hw/qdev-core.h"
++#include "hw/qdev-properties.h"
++#include "hw/virtio/vhost.h"
++#include "hw/virtio/vhost-user-rdma.h"
++#include "hw/virtio/virtio.h"
++#include "hw/virtio/virtio-bus.h"
++#include "hw/virtio/virtio-access.h"
++#include "sysemu/sysemu.h"
++#include "sysemu/runstate.h"
++
++#define VHOST_USER_RDMA_NUM_QUEUES 256
++#define VHOST_USER_RDMA_QUEUE_SIZE 512
++
++static const int user_feature_bits[] = {
++	VIRTIO_F_VERSION_1,
++	VIRTIO_RING_F_INDIRECT_DESC,
++	VIRTIO_RING_F_EVENT_IDX,
++	VIRTIO_F_NOTIFY_ON_EMPTY,
++	VHOST_INVALID_FEATURE_BIT
++};
++
++static void vhost_user_rdma_event(void *opaque, QEMUChrEvent event);
++
++static int vhost_user_rdma_start(VirtIODevice *vdev)
++{
++	VHostUserRdma *r = VHOST_USER_RDMA(vdev);
++	BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
++	VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
++	int i, ret;
++
++	if (!k->set_guest_notifiers) {
++		error_report("binding does not support guest notifiers");
++		return -ENOSYS;
++	}
++
++	ret = vhost_dev_enable_notifiers(&r->dev, vdev);
++	if (ret < 0) {
++		error_report("Error enabling host notifiers: %d", -ret);
++		return ret;
++	}
++
++	ret = k->set_guest_notifiers(qbus->parent, r->dev.nvqs, true);
++	if (ret < 0) {
++		error_report("Error binding guest notifier: %d", -ret);
++		goto err_host_notifiers;
++	}
++
++	r->dev.acked_features = vdev->guest_features;
++
++	ret = vhost_dev_start(&r->dev, vdev, true);
++	if (ret < 0) {
++		error_report("Error starting vhost: %d", -ret);
++		goto err_guest_notifiers;
++	}
++	r->started_vu = true;
++
++	for (i = 0; i < r->dev.nvqs; i++) {
++		vhost_virtqueue_mask(&r->dev, vdev, i, false);
++	}
++
++	return ret;
++
++err_guest_notifiers:
++	k->set_guest_notifiers(qbus->parent, r->dev.nvqs, false);
++err_host_notifiers:
++	vhost_dev_disable_notifiers(&r->dev, vdev);
++	return ret;
++}
++
++static void vhost_user_rdma_stop(VirtIODevice *vdev)
++{
++	VHostUserRdma *r = VHOST_USER_RDMA(vdev);
++	BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
++	VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
++	int ret;
++
++	if (!r->started_vu) {
++		return;
++	}
++	r->started_vu = false;
++
++	if (!k->set_guest_notifiers) {
++		return;
++	}
++
++	vhost_dev_stop(&r->dev, vdev, true);
++
++	ret = k->set_guest_notifiers(qbus->parent, r->dev.nvqs, false);
++	if (ret < 0) {
++		error_report("vhost guest notifier cleanup failed: %d", ret);
++		return;
++	}
++
++	vhost_dev_disable_notifiers(&r->dev, vdev);
++}
++
++static int vhost_user_rdma_handle_config_change(struct vhost_dev *dev)
++{
++	int ret;
++	VHostUserRdma *r = VHOST_USER_RDMA(dev->vdev);
++	Error *local_err = NULL;
++
++	ret = vhost_dev_get_config(dev, (uint8_t *)&r->rdmacfg,
++							sizeof(struct virtio_rdma_config), &local_err);
++	if (ret < 0) {
++		error_report("get config space failed");
++		return -1;
++	}
++
++	virtio_notify_config(dev->vdev);
++	return 0;
++}
++
++const VhostDevConfigOps rdma_ops = {
++	.vhost_dev_config_notifier = vhost_user_rdma_handle_config_change,
++};
++
++static int vhost_user_rdma_connect(DeviceState *dev)
++{
++	VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++	VHostUserRdma *r = VHOST_USER_RDMA(vdev);
++	int ret = 0;
++	Error *local_err = NULL;
++
++	info_report("vhost_user_rdma: vhost connect");
++
++	if (r->connected) {
++		return 0;
++	}
++	r->connected = true;
++
++	r->dev.nvqs = r->num_queues;
++	r->dev.vqs = r->vhost_vqs;
++	r->dev.vq_index = 0;
++	r->dev.backend_features = 0;
++
++	vhost_dev_set_config_notifier(&r->dev, &rdma_ops);
++
++	ret = vhost_dev_init(&r->dev, &r->vhost_user,
++						VHOST_BACKEND_TYPE_USER, 0, &local_err);
++	if (ret < 0) {
++		error_report("vhost-user-rdma: vhost initialization failed: %s",
++					strerror(-ret));
++		return ret;
++	}
++
++	/* restore vhost state */
++	if (virtio_device_started(vdev, vdev->status)) {
++		info_report("vhost_user_rdma: vhost ss?");
++		ret = vhost_user_rdma_start(vdev);
++		if (ret < 0) {
++			error_report("vhost-user-rdma: vhost start failed: %s",
++						strerror(-ret));
++			return ret;
++		}
++	}
++	info_report("vhost_user_rdma: vhost connect success");
++	return 0;
++}
++
++static void vhost_user_rdma_disconnect(DeviceState *dev)
++{
++	VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++	VHostUserRdma *s = VHOST_USER_RDMA(vdev);
++
++	if (!s->connected) {
++		return;
++	}
++	s->connected = false;
++
++	vhost_user_rdma_stop(vdev);
++
++	vhost_dev_cleanup(&s->dev);
++}
++
++static void vhost_user_rdma_chr_closed_bh(void *opaque)
++{
++	DeviceState *dev = opaque;
++	VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++	VHostUserRdma *r = VHOST_USER_RDMA(vdev);
++
++	vhost_user_rdma_disconnect(dev);
++	qemu_chr_fe_set_handlers(&r->chardev, NULL, NULL, vhost_user_rdma_event,
++			NULL, opaque, NULL, true);
++}
++
++static void vhost_user_rdma_event(void *opaque, QEMUChrEvent event)
++{
++	DeviceState *dev = opaque;
++	VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++	VHostUserRdma *r = VHOST_USER_RDMA(vdev);
++
++	switch (event) {
++	case CHR_EVENT_OPENED:
++		if (vhost_user_rdma_connect(dev) < 0) {
++			qemu_chr_fe_disconnect(&r->chardev);
++			return;
++		}
++		break;
++	case CHR_EVENT_CLOSED:
++		if (runstate_is_running()) {
++			AioContext *ctx = qemu_get_current_aio_context();
++
++			qemu_chr_fe_set_handlers(&r->chardev, NULL, NULL, NULL, NULL,
++					NULL, NULL, false);
++			aio_bh_schedule_oneshot(ctx, vhost_user_rdma_chr_closed_bh, opaque);
++		}
++
++		r->dev.started = false;
++		break;
++	case CHR_EVENT_BREAK:
++	case CHR_EVENT_MUX_IN:
++	case CHR_EVENT_MUX_OUT:
++		/* Ignore */
++		break;
++	}
++}
++
++static void vhost_user_rdma_handle_output(VirtIODevice *vdev, VirtQueue *vq)
++{
++	VHostUserRdma *r = VHOST_USER_RDMA(vdev);
++	int i, ret;
++
++	if (!vdev->start_on_kick) {
++		return;
++	}
++
++	if (!r->connected) {
++		return;
++	}
++
++	if (r->dev.started) {
++		return;
++	}
++
++	ret = vhost_user_rdma_start(vdev);
++	if (ret < 0) {
++		qemu_chr_fe_disconnect(&r->chardev);
++		return;
++	}
++
++	for (i = 0; i < r->dev.nvqs; i++) {
++		VirtQueue *kick_vq = virtio_get_queue(vdev, i);
++
++		if (!virtio_queue_get_desc_addr(vdev, i)) {
++			continue;
++		}
++		event_notifier_set(virtio_queue_get_host_notifier(kick_vq));
++	}
++}
++
++static void vhost_user_rdma_update_config(VirtIODevice *vdev, uint8_t *config)
++{
++	VHostUserRdma *r = VHOST_USER_RDMA(vdev);
++
++	memcpy(config, &r->rdmacfg, sizeof(struct virtio_rdma_config));
++}
++
++static void vhost_user_rdma_set_config(VirtIODevice *vdev,
++									const uint8_t *config)
++{
++	/* nothing to do */
++}
++
++static uint64_t vhost_user_rdma_get_features(VirtIODevice *vdev,
++											uint64_t features,
++											Error **errp)
++{
++	VHostUserRdma *s = VHOST_USER_RDMA(vdev);
++
++	return vhost_get_features(&s->dev, user_feature_bits, features);
++}
++
++static void vhost_user_rdma_set_status(VirtIODevice *vdev, uint8_t status)
++{
++	VHostUserRdma *r = VHOST_USER_RDMA(vdev);
++	bool should_start = virtio_device_started(vdev, status);
++	int ret;
++
++	if (!vdev->vm_running) {
++		should_start = false;
++	}
++
++	if (!r->connected) {
++		return;
++	}
++
++	if (r->dev.started == should_start) {
++		return;
++	}
++
++	if (should_start) {
++		ret = vhost_user_rdma_start(vdev);
++		if (ret < 0) {
++			error_report("vhost-user-rdma: vhost start failed: %s",
++						strerror(-ret));
++			qemu_chr_fe_disconnect(&r->chardev);
++		}
++	} else {
++		vhost_user_rdma_stop(vdev);
++	}
++}
++
++static void vhost_user_rdma_device_realize(DeviceState *dev, Error **errp)
++{
++	VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++	VHostUserRdma *r = VHOST_USER_RDMA(vdev);
++	Error *err = NULL;
++	int i, ret;
++
++	if (!r->chardev.chr) {
++		error_setg(errp, "vhost-user-rdma: chardev is mandatory");
++		return;
++	}
++
++	r->num_queues = VHOST_USER_RDMA_NUM_QUEUES;
++
++	if (r->num_queues > VIRTIO_QUEUE_MAX) {
++		error_setg(errp, "vhost-user-rdma: invalid number of IO queues");
++		return;
++	}
++
++	if (!vhost_user_init(&r->vhost_user, &r->chardev, errp)) {
++		return;
++	}
++
++	virtio_init(vdev, VIRTIO_ID_RDMA, sizeof(struct virtio_rdma_config));
++
++	r->virtqs = g_new(VirtQueue *, r->num_queues);
++
++	for (i = 0; i < r->num_queues; i++) {
++		r->virtqs[i] = virtio_add_queue(vdev, VHOST_USER_RDMA_QUEUE_SIZE,
++										vhost_user_rdma_handle_output);
++	}
++
++	r->vhost_vqs = g_new0(struct vhost_virtqueue, r->num_queues);
++	r->connected = false;
++
++	qemu_chr_fe_set_handlers(&r->chardev,  NULL, NULL, vhost_user_rdma_event,
++							NULL, (void *)dev, NULL, true);
++
++reconnect:
++	if (qemu_chr_fe_wait_connected(&r->chardev, &err) < 0) {
++		error_report_err(err);
++		goto virtio_err;
++	}
++
++	/* check whether vhost_user_rdma_connect() failed or not */
++	if (!r->connected) {
++		goto reconnect;
++	}
++
++	ret = vhost_dev_get_config(&r->dev, (uint8_t *)&r->rdmacfg,
++							sizeof(struct virtio_rdma_config), &err);
++	if (ret < 0) {
++		error_report("vhost-user-rdma: get rdma config failed");
++		goto reconnect;
++	}
++
++	return;
++
++virtio_err:
++	g_free(r->vhost_vqs);
++	r->vhost_vqs = NULL;
++	for (i = 0; i < r->num_queues; i++) {
++		virtio_delete_queue(r->virtqs[i]);
++	}
++	g_free(r->virtqs);
++	virtio_cleanup(vdev);
++	vhost_user_cleanup(&r->vhost_user);
++}
++
++static void vhost_user_rdma_device_unrealize(DeviceState *dev)
++{
++	VirtIODevice *vdev = VIRTIO_DEVICE(dev);
++	VHostUserRdma *r = VHOST_USER_RDMA(dev);
++	int i;
++
++	virtio_set_status(vdev, 0);
++	qemu_chr_fe_set_handlers(&r->chardev,  NULL, NULL, NULL,
++							NULL, NULL, NULL, false);
++	vhost_dev_cleanup(&r->dev);
++	g_free(r->vhost_vqs);
++	r->vhost_vqs = NULL;
++	for (i = 0; i < r->num_queues; i++) {
++		virtio_delete_queue(r->virtqs[i]);
++	}
++	g_free(r->virtqs);
++	virtio_cleanup(vdev);
++	vhost_user_cleanup(&r->vhost_user);
++}
++
++static void vhost_user_rdma_instance_init(Object *obj)
++{
++	VHostUserRdma *r = VHOST_USER_RDMA(obj);
++
++	device_add_bootindex_property(obj, &r->bootindex, "bootindex",
++								"bootindex", DEVICE(obj));
++}
++
++static const VMStateDescription vmstate_vhost_user_rdma = {
++	.name = "vhost-user-rdma",
++	.minimum_version_id = 1,
++	.version_id = 1,
++	.fields = (VMStateField[]) {
++		VMSTATE_VIRTIO_DEVICE,
++		VMSTATE_END_OF_LIST()
++	},
++};
++
++static Property vhost_user_rdma_properties[] = {
++	DEFINE_PROP_CHR("chardev", VHostUserRdma, chardev),
++	DEFINE_PROP_END_OF_LIST(),
++};
++
++static void vhost_user_rdma_class_init(ObjectClass *klass, void *data)
++{
++	DeviceClass *dc = DEVICE_CLASS(klass);
++	VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
++
++	device_class_set_props(dc, vhost_user_rdma_properties);
++	dc->vmsd = &vmstate_vhost_user_rdma;
++	set_bit(DEVICE_CATEGORY_NETWORK, dc->categories);
++
++	vdc->realize = vhost_user_rdma_device_realize;
++	vdc->unrealize = vhost_user_rdma_device_unrealize;
++	vdc->get_config = vhost_user_rdma_update_config;
++	vdc->set_config = vhost_user_rdma_set_config;
++	vdc->get_features = vhost_user_rdma_get_features;
++	vdc->set_status = vhost_user_rdma_set_status;
++}
++
++static const TypeInfo vhost_user_rdma_info = {
++	.name = TYPE_VHOST_USER_RDMA,
++	.parent = TYPE_VIRTIO_DEVICE,
++	.instance_size = sizeof(VHostUserRdma),
++	.instance_init = vhost_user_rdma_instance_init,
++	.class_init = vhost_user_rdma_class_init,
++};
++
++static void virtio_register_types(void)
++{
++	type_register_static(&vhost_user_rdma_info);
++}
++
++type_init(virtio_register_types)
+diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+index d7f18c96e6..3f0a7da910 100644
+--- a/hw/virtio/meson.build
++++ b/hw/virtio/meson.build
+@@ -63,6 +63,7 @@ virtio_pci_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock-pci.c'
+ virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vsock-pci.c'))
+ virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_BLK', if_true: files('vhost-user-blk-pci.c'))
+ virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_SCSI', if_true: files('vhost-user-scsi-pci.c'))
++virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_RDMA', if_true: files('vhost-user-rdma-pci.c'))
+ virtio_pci_ss.add(when: 'CONFIG_VHOST_SCSI', if_true: files('vhost-scsi-pci.c'))
+ virtio_pci_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs-pci.c'))
+ 
+diff --git a/hw/virtio/vhost-user-rdma-pci.c b/hw/virtio/vhost-user-rdma-pci.c
+new file mode 100644
+index 0000000000..6b95949c07
+--- /dev/null
++++ b/hw/virtio/vhost-user-rdma-pci.c
+@@ -0,0 +1,93 @@
++/*
++ * This work is licensed under the terms of the GNU GPL, version 2 or
++ * (at your option) any later version.  See the COPYING file in the
++ * top-level directory.
++ */
++
++#include "qemu/osdep.h"
++
++#include "standard-headers/rdma/virtio_rdma.h"
++#include "hw/virtio/virtio.h"
++#include "hw/virtio/vhost-user-rdma.h"
++#include "hw/pci/pci.h"
++#include "hw/qdev-properties.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qemu/module.h"
++#include "hw/virtio/virtio-pci.h"
++#include "qom/object.h"
++
++typedef struct VHostUserRdmaPCI VHostUserRdmaPCI;
++
++#define TYPE_VHOST_USER_RDMA_PCI "vhost-user-rdma-pci-base"
++DECLARE_INSTANCE_CHECKER(VHostUserRdmaPCI, VHOST_USER_RDMA_PCI,
++						TYPE_VHOST_USER_RDMA_PCI)
++
++struct VHostUserRdmaPCI {
++	VirtIOPCIProxy parent_obj;
++	VHostUserRdma vdev;
++};
++
++static Property vhost_user_rdma_pci_properties[] = {
++	DEFINE_PROP_UINT32("class", VirtIOPCIProxy, class_code, 0),
++	DEFINE_PROP_UINT32("vectors", VirtIOPCIProxy, nvectors,
++						DEV_NVECTORS_UNSPECIFIED),
++	DEFINE_PROP_END_OF_LIST(),
++};
++
++static void vhost_user_rdma_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
++{
++	VHostUserRdmaPCI *dev = VHOST_USER_RDMA_PCI(vpci_dev);
++	DeviceState *vdev = DEVICE(&dev->vdev);
++
++	if (vpci_dev->nvectors == DEV_NVECTORS_UNSPECIFIED) {
++		vpci_dev->nvectors = dev->vdev.num_queues + 1;
++	}
++
++	virtio_pci_force_virtio_1(vpci_dev);
++
++	qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
++}
++
++static void vhost_user_rdma_pci_class_init(ObjectClass *klass, void *data)
++{
++	DeviceClass *dc = DEVICE_CLASS(klass);
++	VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
++	PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
++
++	set_bit(DEVICE_CATEGORY_NETWORK, dc->categories);
++	device_class_set_props(dc, vhost_user_rdma_pci_properties);
++	k->realize = vhost_user_rdma_pci_realize;
++	pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
++	pcidev_k->device_id = PCI_DEVICE_ID_VIRTIO_RDMA;
++	pcidev_k->revision = VIRTIO_PCI_ABI_VERSION;
++	pcidev_k->class_id = PCI_CLASS_NETWORK_OTHER;
++}
++
++static void vhost_user_rdma_pci_instance_init(Object *obj)
++{
++	VHostUserRdmaPCI *dev = VHOST_USER_RDMA_PCI(obj);
++
++	virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
++							TYPE_VHOST_USER_RDMA);
++
++	object_property_add_alias(obj, "bootindex", OBJECT(&dev->vdev),
++							"bootindex");
++}
++
++static const VirtioPCIDeviceTypeInfo vhost_user_rdma_pci_info = {
++	.base_name				= TYPE_VHOST_USER_RDMA_PCI,
++	.generic_name			= "vhost-user-rdma-pci",
++	.transitional_name		= "vhost-user-rdma-pci-transitional",
++	.non_transitional_name	= "vhost-user-rdma-pci-non-transitional",
++	.instance_size			= sizeof(VHostUserRdmaPCI),
++	.instance_init			= vhost_user_rdma_pci_instance_init,
++	.class_init				= vhost_user_rdma_pci_class_init,
++};
++
++static void vhost_user_rdma_pci_register(void)
++{
++	virtio_pci_types_register(&vhost_user_rdma_pci_info);
++}
++
++type_init(vhost_user_rdma_pci_register)
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index cdf9af4a4b..eb0813bddd 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -460,6 +460,7 @@ static int vhost_user_set_log_base(struct vhost_dev *dev, uint64_t base,
+     }
+ 
+     if (shmfd) {
++        error_report("vhost_user_read: vhost_user_set_log_base");
+         msg.hdr.size = 0;
+         ret = vhost_user_read(dev, &msg);
+         if (ret < 0) {
+@@ -753,6 +754,7 @@ static int send_add_regions(struct vhost_dev *dev,
+             if (track_ramblocks) {
+                 uint64_t reply_gpa;
+ 
++                error_report("vhost_user_read: send_add_regions");
+                 ret = vhost_user_read(dev, &msg_reply);
+                 if (ret < 0) {
+                     return ret;
+@@ -930,6 +932,7 @@ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
+             return ret;
+         }
+ 
++        error_report("vhost_user_read: vhost_user_set_mem_table_postcopy");
+         ret = vhost_user_read(dev, &msg_reply);
+         if (ret < 0) {
+             return ret;
+@@ -1287,6 +1290,7 @@ static int vhost_user_get_vring_base(struct vhost_dev *dev,
+         return ret;
+     }
+ 
++    error_report("vhost_user_read: vhost_user_get_vring_base");
+     ret = vhost_user_read(dev, &msg);
+     if (ret < 0) {
+         return ret;
+@@ -1433,6 +1437,7 @@ static int vhost_user_set_features(struct vhost_dev *dev,
+      * VHOST_USER_F_PROTOCOL_FEATURES bit for enabling protocol
+      * features.
+      */
++
+     ret = vhost_user_set_u64(dev, VHOST_USER_SET_FEATURES,
+                               features | dev->backend_features,
+                               log_enabled);
+@@ -1673,6 +1678,7 @@ int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned char *uuid,
+         return ret;
+     }
+ 
++    error_report("vhost_user_read: vhost_user_get_shared_object");
+     ret = vhost_user_read(dev, &msg);
+     if (ret < 0) {
+         return ret;
+@@ -1998,6 +2004,7 @@ static int vhost_user_postcopy_advise(struct vhost_dev *dev, Error **errp)
+         return ret;
+     }
+ 
++    error_report("vhost_user_read: vhost_user_postcopy_advise");
+     ret = vhost_user_read(dev, &msg);
+     if (ret < 0) {
+         error_setg(errp, "Failed to get postcopy_advise reply from vhost");
+@@ -2435,6 +2442,7 @@ static int vhost_user_get_config(struct vhost_dev *dev, uint8_t *config,
+         return ret;
+     }
+ 
++    error_report("vhost_user_read: vhost_user_get_config");
+     ret = vhost_user_read(dev, &msg);
+     if (ret < 0) {
+         error_setg_errno(errp, -ret, "vhost_get_config failed");
+@@ -2578,6 +2586,7 @@ static int vhost_user_crypto_create_session(struct vhost_dev *dev,
+         return ret;
+     }
+ 
++    error_report("vhost_user_read: vhost_user_crypto_create_session");
+     ret = vhost_user_read(dev, &msg);
+     if (ret < 0) {
+         error_report("vhost_user_read() return %d, create session failed",
+@@ -2923,6 +2932,7 @@ static int vhost_user_set_device_state_fd(struct vhost_dev *dev,
+         return ret;
+     }
+ 
++    error_report("vhost_user_read: vhost_user_set_device_state_fd");
+     ret = vhost_user_read(dev, &msg);
+     if (ret < 0) {
+         error_setg_errno(errp, -ret,
+@@ -2985,6 +2995,7 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
+         return ret;
+     }
+ 
++    error_report("vhost_user_read: vhost_user_check_device_state");
+     ret = vhost_user_read(dev, &msg);
+     if (ret < 0) {
+         error_setg_errno(errp, -ret,
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index f50180e60e..87cec36828 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -934,6 +934,7 @@ static int vhost_dev_set_features(struct vhost_dev *dev,
+             features |= 0x1ULL << VIRTIO_F_IOMMU_PLATFORM;
+        }
+     }
++
+     r = dev->vhost_ops->vhost_set_features(dev, features);
+     if (r < 0) {
+         VHOST_OPS_DEBUG(r, "vhost_set_features failed");
+@@ -1804,6 +1805,7 @@ void vhost_ack_features(struct vhost_dev *hdev, const int *feature_bits,
+                         uint64_t features)
+ {
+     const int *bit = feature_bits;
++    info_report("vhost_ack_features");
+     while (*bit != VHOST_INVALID_FEATURE_BIT) {
+         uint64_t bit_mask = (1ULL << *bit);
+         if (features & bit_mask) {
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index fd2dfe3a6b..bee7156e6d 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -181,6 +181,7 @@ const char *virtio_device_names[] = {
+     [VIRTIO_ID_FS] = "virtio-user-fs",
+     [VIRTIO_ID_PMEM] = "virtio-pmem",
+     [VIRTIO_ID_RPMB] = "virtio-rpmb",
++    [VIRTIO_ID_RDMA] = "virtio-rdma",
+     [VIRTIO_ID_MAC80211_HWSIM] = "virtio-mac-hwsim",
+     [VIRTIO_ID_VIDEO_ENCODER] = "virtio-vid-encoder",
+     [VIRTIO_ID_VIDEO_DECODER] = "virtio-vid-decoder",
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index eaa3fc99d8..a1eccfb78b 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -85,6 +85,7 @@ extern bool pci_available;
+ #define PCI_DEVICE_ID_VIRTIO_RNG         0x1005
+ #define PCI_DEVICE_ID_VIRTIO_9P          0x1009
+ #define PCI_DEVICE_ID_VIRTIO_VSOCK       0x1012
++#define PCI_DEVICE_ID_VIRTIO_RDMA        0x1016
+ 
+ /*
+  * modern virtio-pci devices get their id assigned automatically,
+diff --git a/include/hw/virtio/vhost-user-rdma.h b/include/hw/virtio/vhost-user-rdma.h
+new file mode 100644
+index 0000000000..2d522cd676
+--- /dev/null
++++ b/include/hw/virtio/vhost-user-rdma.h
+@@ -0,0 +1,43 @@
++/*
++ * vhost-user-rdma host device
++ * Copyright(C) 2021 Bytedance Inc. All rights reserved.
++ *
++ * Authors:
++ *  Junji Wei <weijunji@bytedance.com>
++ *
++ * This work is licensed under the terms of the GNU LGPL, version 2 or later.
++ * See the COPYING.LIB file in the top-level directory.
++ *
++ */
++
++#ifndef VHOST_USER_RDMA_H
++#define VHOST_USER_RDMA_H
++
++#include "standard-headers/rdma/virtio_rdma.h"
++#include "chardev/char-fe.h"
++#include "hw/virtio/vhost.h"
++#include "hw/virtio/vhost-user.h"
++#include "qom/object.h"
++
++#define TYPE_VHOST_USER_RDMA "vhost-user-rdma"
++OBJECT_DECLARE_SIMPLE_TYPE(VHostUserRdma, VHOST_USER_RDMA)
++
++struct VHostUserRdma {
++    VirtIODevice parent_obj;
++    CharBackend chardev;
++    int32_t bootindex;
++    struct virtio_rdma_config rdmacfg;
++    struct vhost_dev dev;
++    VhostUserState vhost_user;
++    struct vhost_virtqueue *vhost_vqs;
++    VirtQueue **virtqs;
++
++    int num_queues;
++
++    /* vhost_user_rdma_connect/vhost_user_rdma_disconnect */
++    bool connected;
++    /* vhost_user_rdma_start/vhost_user_rdma_stop */
++    bool started_vu;
++};
++
++#endif
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 7d5ffdc145..f74da61477 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -369,7 +369,7 @@ typedef struct VirtIORNGConf VirtIORNGConf;
+     DEFINE_PROP_BIT64("packed", _state, _field, \
+                       VIRTIO_F_RING_PACKED, false), \
+     DEFINE_PROP_BIT64("queue_reset", _state, _field, \
+-                      VIRTIO_F_RING_RESET, true)
++                      VIRTIO_F_RING_RESET, false)
+ 
+ hwaddr virtio_queue_get_desc_addr(VirtIODevice *vdev, int n);
+ bool virtio_queue_enabled_legacy(VirtIODevice *vdev, int n);
+diff --git a/include/standard-headers/linux/virtio_ids.h b/include/standard-headers/linux/virtio_ids.h
+index 7aa2eb7662..ff2d0b01b4 100644
+--- a/include/standard-headers/linux/virtio_ids.h
++++ b/include/standard-headers/linux/virtio_ids.h
+@@ -68,6 +68,7 @@
+ #define VIRTIO_ID_AUDIO_POLICY		39 /* virtio audio policy */
+ #define VIRTIO_ID_BT			40 /* virtio bluetooth */
+ #define VIRTIO_ID_GPIO			41 /* virtio gpio */
++#define VIRTIO_ID_RDMA          42 /* virtio rdma */
+ 
+ /*
+  * Virtio Transitional IDs
+diff --git a/include/standard-headers/rdma/virtio_rdma.h b/include/standard-headers/rdma/virtio_rdma.h
+new file mode 100644
+index 0000000000..b493f973d8
+--- /dev/null
++++ b/include/standard-headers/rdma/virtio_rdma.h
+@@ -0,0 +1,60 @@
++/*
++ * Virtio RDMA Device
++ *
++ * Copyright (C) 2021 Bytedance Inc.
++ *
++ * Authors:
++ *  Junji Wei <weijunji@bytedance.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2.  See
++ * the COPYING file in the top-level directory.
++ *
++ */
++
++#ifndef _LINUX_VIRTIO_RDMA_H
++#define _LINUX_VIRTIO_RDMA_H
++
++#include <linux/types.h>
++#include <infiniband/verbs.h>
++
++#include "standard-headers/linux/virtio_ids.h"
++#include "standard-headers/linux/virtio_config.h"
++#include "standard-headers/linux/virtio_types.h"
++
++struct virtio_rdma_config {
++    __le32         phys_port_cnt;
++
++    __le64         sys_image_guid;
++    __le32         vendor_id;
++    __le32         vendor_part_id;
++    __le32         hw_ver;
++    __le64         max_mr_size;
++    __le64         page_size_cap;
++    __le32         max_qp;
++    __le32         max_qp_wr;
++    __le64         device_cap_flags;
++    __le32         max_send_sge;
++    __le32         max_recv_sge;
++    __le32         max_sge_rd;
++    __le32         max_cq;
++    __le32         max_cqe;
++    __le32         max_mr;
++    __le32         max_pd;
++    __le32         max_qp_rd_atom;
++    __le32         max_res_rd_atom;
++    __le32         max_qp_init_rd_atom;
++    __le32         atomic_cap;
++    __le32         max_mw;
++    __le32         max_mcast_grp;
++    __le32         max_mcast_qp_attach;
++    __le32         max_total_mcast_qp_attach;
++    __le32         max_ah;
++    __le32         max_fast_reg_page_list_len;
++    __le32         max_pi_fast_reg_page_list_len;
++    __le16         max_pkeys;
++    uint8_t        local_ca_ack_delay;
++
++    uint8_t           reserved[64];
++} QEMU_PACKED;
++
++#endif
+-- 
+2.43.0
+
 
