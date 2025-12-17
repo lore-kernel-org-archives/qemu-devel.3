@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C18D66BB3
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 21:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82EAAD66BB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 21:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVyxN-00009F-E0; Wed, 17 Dec 2025 16:21:13 -0500
+	id 1vVyxO-0000Af-QO; Wed, 17 Dec 2025 16:21:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1vVyxF-0008Si-MK
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 16:21:05 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1vVyxH-0008St-1w
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 16:21:07 -0500
+Received: from mail-dy1-x132d.google.com ([2607:f8b0:4864:20::132d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1vVyxC-0004YZ-2Z
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 16:21:04 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-7acd9a03ba9so7097425b3a.1
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 13:21:01 -0800 (PST)
+ id 1vVyxF-0004ZB-EL
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 16:21:06 -0500
+Received: by mail-dy1-x132d.google.com with SMTP id
+ 5a478bee46e88-2ae24015dc0so1081337eec.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 13:21:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766006460; x=1766611260; darn=nongnu.org;
+ d=linaro.org; s=google; t=1766006463; x=1766611263; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=u2+w7aKeM4mn6IUIq7PiZicrN3KwLnQcc+QlfR75hvY=;
- b=VB9dcjcwiOWVSdQ37lIEzrg4x/3Mm52GgbuaqYC55WSx7EO1cJaF4x937gjKcR1hbw
- 6Dz6Phg+6Ji0Al7JlwpRIoVBdCQlKWVqu5evjWNJ8aagTTJLslNtAKrbQ/4csnuPbvxG
- MXBO4OsyACiTQT23+SbFA13FGMp3UMtujKble4XlBZbWQZbqq3di0XyoGLS8qKfZEBIn
- /k2T2NvVUU7lmCwjMIrPFqXOxfYK7Q/+Grnb2Z+ZFKvV8u/sMi/0PXgNRTc4p79pEKIq
- B5kiZAj3oWOmlUZ6DpSXQ+JI0TnToThscAVL/0JIhb+2LOfafadqD4673uaUU+JVr6db
- 66Bg==
+ bh=P6rMJ3udbgIpgAiy6d31R0Vx2kkWCqkcA13MTheL8sQ=;
+ b=lnrjSTETKHTBsLS0MyHE5yt+7v0flwHb8IGz+AnCfNU6B+6QsTROZNyWjzxKErAQYF
+ Zq/ZaKxyDGfxXfEGYIUWCoqfnhqt6rNFvF5cXChb4sfBUG+pfo5XvAll80xfXlLePBxs
+ IaKuQdnpmQP6s+vn4k2QytsmQUsthDmJk8HcASVw2WmOheh+B+n1lqlyLopu1GOs9CYC
+ FSVwZYBhEnpCP22mtHUNQybY9CB/5KGPS6vJGC37qfSibPV2u/8x+0dn5KRcnmvJGQx7
+ s92xjRVEO1DtI7lGEAig+7bheqdXuSqs877tZDdETvWlpXaHHZHzARjFHcmDuUA8/qLJ
+ fvHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766006460; x=1766611260;
+ d=1e100.net; s=20230601; t=1766006463; x=1766611263;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=u2+w7aKeM4mn6IUIq7PiZicrN3KwLnQcc+QlfR75hvY=;
- b=lZ1ypHAOwrtscGaCBaOs/2xyp4fomlDui3hFY3loB1rL84yumwBMVZRzZH+yNa/gRc
- nQdOfCEsZTk8d4qK8oE7rBDpgeo9qIVepcxfFbwm5uJmBz6ioSabiqf4HlniV9K7Om4I
- 4iDIQPIsDWlCNcZh9F0NTQUC/O496pUzf0LJK664S5dxBx5tuYTt5gyF9cQB5uSRFwCr
- LEoWbt/UotIwCbN8ZIAIX7miKYvfH/YnZGc9yJZcyffKOXtTotruQGkaVQ43V1Ag80Xl
- kFaIH4CvSDBuTBGSeVgYrGFL9g3Nv50TnscIcpzilHRIgKBuCWYKz+AxxbFNmAqrnfUu
- zoyw==
-X-Gm-Message-State: AOJu0YwZQYxQUi/aAfc1RKZAw/rJRnmYF9SNS7FEcQi8r833c1VcYeAE
- 5Cay8Qv4oaZh3f/pjLXkPzgZ5cp57+sqlM1hThp1qg8dXesI6omnrXKia6VcYO5O/5SKW4vTzAp
- CPlDV
-X-Gm-Gg: AY/fxX7iLrDG4zKsxZpUucEj7bfVvEBBFIDKm0eG9UyrRikptYV+sT414NWlo1BHR56
- neuLhAX+azVH2Dn3eLb3yaKBxUQJnaHud0g6HnuIp9PzJwVtDMiEVSqLQ2j7Yw2iAJh1zcm+ZIB
- n76ODT8s7j+CkI1UL9kQBZ219oByRzKS+HICFbLr07m2ejE+FPcQGXyIkJyssKdtg/0dfImrQw9
- qh/96CeJ5aHu+NLPK9DpG/RMZI8gcN43IRVjMX9BjRPJqdTl2XybQR2fC+pdNeQnuRty87YNkZz
- A0LKwGn8NdsFqUTyS/qZIS5b/nEBEhNIlc3EJulxRPsSrFZsLL1bkNZr8AV+D3itAtJsvxpIlim
- rZ0O3UQSt4D11WGlIWnIJWS27uNCa5eu5kE94+VZVuRYp1E1tqYpT4SFjO01vhCciEM4fz+2m7Q
- DwRKiN+Dq5K/5Gwn8=
-X-Google-Smtp-Source: AGHT+IFg3xV2gW/RwJSjplPlVf9W1qWvTBF6RzlOUdR5mVzRDt6DQLTiIxH6E4GP+uNSJPDW7HEBsQ==
-X-Received: by 2002:a05:7022:e20:b0:119:e56b:9590 with SMTP id
- a92af1059eb24-11f34bf9f44mr20860406c88.21.1766006460351; 
- Wed, 17 Dec 2025 13:21:00 -0800 (PST)
+ bh=P6rMJ3udbgIpgAiy6d31R0Vx2kkWCqkcA13MTheL8sQ=;
+ b=dDt3/juqM5gZQ6huenF4k3vMTEPjRQY1YmM0bhqAkS2Eb4Hg9X08i5adEoVSw4rycN
+ ZyjYfYQYrEhi5aCSXAkPgQf6RVoddy/n4bc5HoTPNvwrmx4A9reZIAXLqd0EuXUrwdCX
+ bQnNf/NpavRhE5aUd4kS6TCrGByRicbdXqOoXMlXr8SwuvqpLEcpYbX2fy21Cyh31Li/
+ /NtHd+X7yg+2mhOigs+U06xYRtD3SLDHe0lugQ6nPDYLmvzLSZ/V05iIE7rqb5Geflap
+ EqsZcJDV/NojZYT8rdhDGPQwrDcx8Q1XUC4ZSx4G1ucZknARqz4rtC2RaMQ0qrBrdAff
+ h8ow==
+X-Gm-Message-State: AOJu0YxwUu+abK2wgQVKviWgI9qOh4JkfDXpKlJuKMrnJRxdpagamfhT
+ dO9c7XN6mCP/Yqr2+8TFq295sX7hkZSKRnwfFUCGV1cWCAjgsbb/rMUCnQQED2dGqW+c6Vw9A3v
+ hWYkN
+X-Gm-Gg: AY/fxX7MdyaIfLMjiRe6dUXCssd1sgl7X46olpwwU4YPMNMreK//QapSdSTv+AUFeEr
+ e4ndbXT4ReicX/tpd3XFUIL8aqaaRQ6xViQRzZ8gBvBB4M56mvN4/H7bOZignL13AFwzBR1SpLl
+ YXT6j9gnaxyLO99JIAd5kTiGKNHaHrobQkVvocZZ4Phm0Kj8whXUPP6WiKm49y2o0tCbGlrmgz7
+ iVoitCPph9P8yFwVnbNzZ9WWda/62r8yVdctuKoXWUk4vQ79O8Z2ablpTeB8SoexsQqmyav0YTZ
+ slnMzxTcKMHhFmQJPhwkt4WQkduF7dDzIsOEqfPNUXp6I51rmhe/gfvxtYLxK44/Toz6yY42/K0
+ zvm+ubmVKfql7Nzkyv5ZCZOfL1Uri8V4+yFc5nbPRZ9lwOUoE0jG0u+ZTTlbat5PpWoM2LhEDPc
+ 46m1Qz07MBaHhJSoE=
+X-Google-Smtp-Source: AGHT+IFrBbbLfgFSt3ipKNQ1FyQche183dMsWRyOxuuFRtR7CcPIeqi++oKWDmhkqCsx96QI4AKtcQ==
+X-Received: by 2002:a05:7022:ef13:b0:11f:3479:fb72 with SMTP id
+ a92af1059eb24-12061938261mr763402c88.6.1766006462582; 
+ Wed, 17 Dec 2025 13:21:02 -0800 (PST)
 Received: from gromero0.. ([191.8.216.160]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12061ef3383sm1852476c88.0.2025.12.17.13.20.58
+ a92af1059eb24-12061ef3383sm1852476c88.0.2025.12.17.13.21.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Dec 2025 13:21:00 -0800 (PST)
+ Wed, 17 Dec 2025 13:21:02 -0800 (PST)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org,
  alex.bennee@linaro.org, philmd@linaro.org, peter.maydell@linaro.org
 Cc: gustavo.romero@linaro.org
-Subject: [PATCH v2 2/6] target/arm: Add a _MAX sentinel to ARMASIdx enum
-Date: Wed, 17 Dec 2025 18:20:14 -0300
-Message-Id: <20251217212018.93320-3-gustavo.romero@linaro.org>
+Subject: [PATCH v2 3/6] target/i386: Add a _MAX sentinel to X86ASIdx enum
+Date: Wed, 17 Dec 2025 18:20:15 -0300
+Message-Id: <20251217212018.93320-4-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20251217212018.93320-1-gustavo.romero@linaro.org>
 References: <20251217212018.93320-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132d;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-dy1-x132d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,26 +101,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a sentinel to the ARMASIdx enum so it can be used when the total
+Add a sentinel to the X86ASIdx enum so it can be used when the total
 number of address spaces is required.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- target/arm/cpu.h | 1 +
+ target/i386/cpu.h | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 39f2b2e54d..00f5af0fcd 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -2336,6 +2336,7 @@ typedef enum ARMASIdx {
-     ARMASIdx_S = 1,
-     ARMASIdx_TagNS = 2,
-     ARMASIdx_TagS = 3,
-+    ARMASIdx_MAX
- } ARMASIdx;
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index cee1f692a1..783ad66d74 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2600,6 +2600,7 @@ void cpu_sync_avx_hflag(CPUX86State *env);
+ typedef enum X86ASIdx {
+     X86ASIdx_MEM = 0,
+     X86ASIdx_SMM = 1,
++    X86ASIdx_MAX
+ } X86ASIdx;
  
- static inline ARMMMUIdx arm_space_to_phys(ARMSecuritySpace space)
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.34.1
 
