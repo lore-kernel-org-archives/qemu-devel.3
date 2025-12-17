@@ -4,75 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A562DD65C46
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 13:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E28D65C46
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 13:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVrdb-0006Ti-15; Wed, 17 Dec 2025 08:32:19 -0500
+	id 1vVreQ-0006gh-Hf; Wed, 17 Dec 2025 08:33:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vVrdV-0006St-Mn
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 08:32:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vVre5-0006a6-Qx
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 08:32:55 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vVrdT-0006ZP-C5
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 08:32:13 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1vVre1-00078a-Ig
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 08:32:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1765978330;
+ s=mimecast20190719; t=1765978363;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QlClCP04KEhWjdsKQcmn/ZHOyIpyi7Wz4RUkFJVZwbo=;
- b=Ykusd8/tpdPpcMQwIx6NNFZwJt3/UzrrB4KZ5jDmIzIaTghAQjP1KNuww8S7UASGpoDgGp
- 3isxYktSGynWwH1y2Z+p3WewhMwJLsRJd4fcr+Z3904Qkr5nE9OcX4ExND2f35qSELAgHR
- JOhI/f4xbkp6U3f5+Tm479Eq6DNovbs=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-CBYg6NUfNkKT8bHJ27nVvA-1; Wed,
- 17 Dec 2025 08:32:07 -0500
-X-MC-Unique: CBYg6NUfNkKT8bHJ27nVvA-1
-X-Mimecast-MFC-AGG-ID: CBYg6NUfNkKT8bHJ27nVvA_1765978326
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 77EC2195608F; Wed, 17 Dec 2025 13:32:06 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.7])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D0186180035A; Wed, 17 Dec 2025 13:32:05 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 70BDB21E6A27; Wed, 17 Dec 2025 14:32:03 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, qemu-rust@nongnu.org
-Subject: Re: [PATCH 14/19] scripts/qapi: generate high-level Rust bindings
-In-Reply-To: <20251010151006.791038-15-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Fri, 10 Oct 2025 17:09:59 +0200")
-References: <20251010151006.791038-1-pbonzini@redhat.com>
- <20251010151006.791038-15-pbonzini@redhat.com>
-Date: Wed, 17 Dec 2025 14:32:03 +0100
-Message-ID: <87wm2lkze4.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=y88grvNyA6vLs9Q+keb1EkjPRPpjjnzTbnJK7zRddLU=;
+ b=czd1ZjIvozLa31vvMaJKyMrXYDqSAS4HT2ZyIg8iz6qyQZjsU3mgNC9nBgWp8timCyL+4m
+ /Z2R2F7UVsVS4scVYWmP87FmuS3YPAVQIGZyDxdKeat8xNSMkJMyzYzuo0hm889MLe3Ohm
+ Exy9aEZmbOmp+eAlJsee748pdb3HFto=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-73-SZpkWHKFN6SQ7rdLYXdtuA-1; Wed, 17 Dec 2025 08:32:42 -0500
+X-MC-Unique: SZpkWHKFN6SQ7rdLYXdtuA-1
+X-Mimecast-MFC-AGG-ID: SZpkWHKFN6SQ7rdLYXdtuA_1765978361
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-477771366cbso40354065e9.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 05:32:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1765978361; x=1766583161; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=y88grvNyA6vLs9Q+keb1EkjPRPpjjnzTbnJK7zRddLU=;
+ b=gSkABq3j2qLKSST8FdvZjrVgYzFUasxwKfupaNIk7eOr2BlJuCktdNHrr5tF3Xdvs0
+ 0veTcfErVGIiki+Kx0wZuHHVtCShNe0p/PHPbdSkIONJJZ1G10Fj6sfOPOW0Y/by4hw2
+ PQ8sYt0DcKc94wPVt3vRYS0u0RJCxTdKKQneWzHWsxgHwJa3/uyQw7/Old4IO2qkVueJ
+ ukJA9B0Mv/NHXH1lnirxJcc2xHpOC+fsmHYL9A1OWTCvSXkMG1Q2tsvtiKUygV7WxkvP
+ 6VSYrYEjoIaa0H1xpbxm94p1+TQ+KzD8euGD+gAtcPlmq4lSeSAJeIA4ctwlAgNyd7jH
+ lU9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1765978361; x=1766583161;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=y88grvNyA6vLs9Q+keb1EkjPRPpjjnzTbnJK7zRddLU=;
+ b=Vai6funtIQuJmfOORV3ctqD5oMrohZ68/BgZ7xaUayLeJr6PnP8u3D9ppS/ZOKp7t5
+ lTbS2P7vtBfzTVSRCaykm/KX185BeVaSO+rdaBR6D7ILaSP89Qaf/9NsexHDlyrcVbNS
+ EQb/EKZ7pp8DwOX5F/jqBMLZhX0PDoMKFz1RwTcK8p/+SbWrpDMdZRG+Oi5RTuipJ0n3
+ gdLj3BH1pBZEGZfV++0A1sSzM2MqtIAqGm/jHeJpbSedESP9pr1uRjYOLq4ARcWfUqE6
+ ertIfr6QyR+CgF5EhMAu7YGx2UfLlUhzTnwqfI7Sfu6HoPmuHIfT9OLtwkEKqDIQ5ZXw
+ giJQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXfZNyn7kNkUa83FkPrS7RtaM49ptYxdL+9O4+sqfN+umaWxLs1v0x58SA2bOwFv+TRzq8XWYNppbre@nongnu.org
+X-Gm-Message-State: AOJu0YzxH+xk04ckWQunPaz/puHKZojF4CcKGot/eAOOptHPu4dNmCum
+ yld/tgmfjhtA4rUKDYju+BPleRYQzAXThy9VQwV0e8xkZfYPPc8KCg7T5HbIS+oKgHDhsvmobzQ
+ cHtH75C1kN94v2hAsi+IFI/euvQ63rF5f9TyTVsOclu+j5pTm+x8ZqpA4
+X-Gm-Gg: AY/fxX65YCiZ+S3mW/elhedFVA2iuhXBHwXIx+iXl/5Oaer0XeqU6E9GQDFRNZl7xFI
+ oD4TsUhl0A/QH90G4LVjxmozSlLVjiW5BIqrOjWIyMYd9X3+/s0BtrqugNlsWbgSxP+0s/fTZul
+ Eaqf51KCIH3RiuKFidPBDoqbJe4/1pKhzwDbEDMAI8cVMy2Lv6DotwcPon0H2rKHBB0fWST0xq6
+ TkWXXFc914EqZjjGrbc8c3B8nPWbL/IEqJjp220mwJ9eByB7AyqUN7uOyEeZCRCKddzp6rOtplS
+ Cy+o1G3mo2KbSPm2TFcKCZ6yTAXOjUfn4IR/7LeUUJl2/DQxe6bV0VcGLm3a3ZFPDCNu6w==
+X-Received: by 2002:a05:600c:4f90:b0:477:9dc1:b706 with SMTP id
+ 5b1f17b1804b1-47a8f9055bfmr166586475e9.19.1765978361087; 
+ Wed, 17 Dec 2025 05:32:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH1DBxXjUwAXD60W++JB0qTpdlbwvJgM0HJ5acxEXUSUAiFGW/S+fxK32pWtLvkiy3PWkiKnQ==
+X-Received: by 2002:a05:600c:4f90:b0:477:9dc1:b706 with SMTP id
+ 5b1f17b1804b1-47a8f9055bfmr166585685e9.19.1765978360422; 
+ Wed, 17 Dec 2025 05:32:40 -0800 (PST)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-47bdc1de9cesm39837815e9.8.2025.12.17.05.32.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Dec 2025 05:32:39 -0800 (PST)
+Date: Wed, 17 Dec 2025 14:32:37 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Thomas
+ Huth <thuth@redhat.com>, qemu-devel@nongnu.org, devel@lists.libvirt.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org, Richard
+ Henderson <richard.henderson@linaro.org>, Sergio Lopez <slp@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Laurent Vivier <lvivier@redhat.com>, Jiaxun
+ Yang <jiaxun.yang@flygoat.com>, Yi Liu <yi.l.liu@intel.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, Weiwei Li <liwei1518@gmail.com>, Amit Shah
+ <amit@kernel.org>, Xiaoyao Li <xiaoyao.li@intel.com>, Yanan Wang
+ <wangyanan55@huawei.com>, Helge Deller <deller@gmx.de>, Palmer Dabbelt
+ <palmer@dabbelt.com>, "Daniel P . =?UTF-8?B?QmVycmFuZ8Op?="
+ <berrange@redhat.com>, Ani Sinha <anisinha@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6k=?= Lureau <marcandre.lureau@redhat.com>, Huacai
+ Chen <chenhuacai@kernel.org>, Jason Wang <jasowang@redhat.com>, Mark
+ Cave-Ayland <mark.caveayland@nutanix.com>, BALATON Zoltan
+ <balaton@eik.bme.hu>, Peter Krempa <pkrempa@redhat.com>, Jiri Denemark
+ <jdenemar@redhat.com>
+Subject: Re: [PATCH v5 03/28] pc: Start with modern CPU hotplug interface by
+ default
+Message-ID: <20251217143237.7829af2e@imammedo>
+In-Reply-To: <20251202162835.3227894-4-zhao1.liu@intel.com>
+References: <20251202162835.3227894-1-zhao1.liu@intel.com>
+ <20251202162835.3227894-4-zhao1.liu@intel.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,438 +145,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Wed,  3 Dec 2025 00:28:10 +0800
+Zhao Liu <zhao1.liu@intel.com> wrote:
 
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> Generate high-level native Rust declarations for the QAPI types.
->
-> - char* is mapped to String, scalars to there corresponding Rust types
->
-> - enums are simply aliased from FFI
->
-> - has_foo/foo members are mapped to Option<T>
->
-> - lists are represented as Vec<T>
->
-> - structures have Rust versions, with To/From FFI conversions
->
-> - alternate are represented as Rust enum
->
-> - unions are represented in a similar way as in C: a struct S with a "u"
->   member (since S may have extra 'base' fields). However, the discriminant
->   isn't a member of S, since Rust enum already include it.
->
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Link: https://lore.kernel.org/r/20210907121943.3498701-21-marcandre.lurea=
-u@redhat.com
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> From: Igor Mammedov <imammedo@redhat.com>
+^^^
+given you resplit original patch, it's better to replace this with you,
+keeping my SoB is sufficient
+
+> 
+> For compatibility reasons PC/Q35 will start with legacy CPU hotplug
+> interface by default but with new CPU hotplug AML code since 2.7
+> machine type (in commit 679dd1a957df ("pc: use new CPU hotplug interface
+> since 2.7 machine type")). In that way, legacy firmware that doesn't use
+> QEMU generated ACPI tables was able to continue using legacy CPU hotplug
+> interface.
+> 
+> While later machine types, with firmware supporting QEMU provided ACPI
+> tables, generate new CPU hotplug AML, which will switch to new CPU
+> hotplug interface when guest OS executes its _INI method on ACPI tables
+> loading.
+> 
+> Since 2.6 machine type is now gone, and consider that the legacy BIOS
+> (based on QEMU ACPI prior to v2.7) should be no longer in use, previous
+> compatibility requirements are no longer necessary. So initialize
+> 'modern' hotplug directly from the very beginning for PC/Q35 machines
+> with cpu_hotplug_hw_init(), and drop _INIT method.
+> 
+> Additionally, remove the checks and settings around cpu_hotplug_legacy
+> in cpuhp VMState (for piix4 & ich9), to eliminate the risk of
+> segmentation faults, as gpe_cpu no longer has the opportunity to be
+> initialized. This is safe because all hotplug now start with the modern
+> way, and it's impossible to switch to legacy way at runtime (even the
+> "cpu-hotplug-legacy" properties does not allow it either).
+> 
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+
+tested ping pong cross version (master vs master+this patch) migration
+with 10.1 machine type, nothing is broken, hence
+
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+
 > ---
->  meson.build              |   4 +-
->  scripts/qapi/backend.py  |  27 ++-
->  scripts/qapi/main.py     |   4 +-
->  scripts/qapi/rs.py       | 181 +++++++++++++++++++
->  scripts/qapi/rs_types.py | 365 +++++++++++++++++++++++++++++++++++++++
->  5 files changed, 577 insertions(+), 4 deletions(-)
->  create mode 100644 scripts/qapi/rs.py
->  create mode 100644 scripts/qapi/rs_types.py
->
-> diff --git a/meson.build b/meson.build
-> index afaefa01722..ce914217c52 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3571,12 +3571,14 @@ qapi_gen_depends =3D [ meson.current_source_dir()=
- / 'scripts/qapi/__init__.py',
->                       meson.current_source_dir() / 'scripts/qapi/introspe=
-ct.py',
->                       meson.current_source_dir() / 'scripts/qapi/main.py',
->                       meson.current_source_dir() / 'scripts/qapi/parser.p=
-y',
-> +                     meson.current_source_dir() / 'scripts/qapi/rs_types=
-.py',
->                       meson.current_source_dir() / 'scripts/qapi/schema.p=
-y',
->                       meson.current_source_dir() / 'scripts/qapi/source.p=
-y',
->                       meson.current_source_dir() / 'scripts/qapi/types.py=
-',
->                       meson.current_source_dir() / 'scripts/qapi/features=
-.py',
->                       meson.current_source_dir() / 'scripts/qapi/visit.py=
-',
-> -                     meson.current_source_dir() / 'scripts/qapi-gen.py'
-> +                     meson.current_source_dir() / 'scripts/qapi-gen.py',
-> +                     meson.current_source_dir() / 'scripts/qapi/rs.py',
->  ]
->=20=20
->  tracetool =3D [
-> diff --git a/scripts/qapi/backend.py b/scripts/qapi/backend.py
-> index 49ae6ecdd33..305b62b514c 100644
-> --- a/scripts/qapi/backend.py
-> +++ b/scripts/qapi/backend.py
-> @@ -7,6 +7,7 @@
->  from .events import gen_events
->  from .features import gen_features
->  from .introspect import gen_introspect
-> +from .rs_types import gen_rs_types
->  from .schema import QAPISchema
->  from .types import gen_types
->  from .visit import gen_visit
-> @@ -36,7 +37,7 @@ def generate(self,
->          """
->=20=20
->=20=20
-> -class QAPICBackend(QAPIBackend):
-> +class QAPICodeBackend(QAPIBackend):
-
-Why this rename?
-
-If we want it, separate commit, please.
-
->      # pylint: disable=3Dtoo-few-public-methods
->=20=20
->      def generate(self,
-> @@ -63,3 +64,27 @@ def generate(self,
->          gen_commands(schema, output_dir, prefix, gen_tracing)
->          gen_events(schema, output_dir, prefix)
->          gen_introspect(schema, output_dir, prefix, unmask)
-> +
-> +
-> +class QAPIRsBackend(QAPIBackend):
-> +    # pylint: disable=3Dtoo-few-public-methods
-> +
-> +    def generate(self,
-> +                 schema: QAPISchema,
-> +                 output_dir: str,
-> +                 prefix: str,
-> +                 unmask: bool,
-> +                 builtins: bool,
-> +                 gen_tracing: bool) -> None:
-> +        """
-> +        Generate Rust code for the given schema into the target director=
-y.
-> +
-> +        :param schema_file: The primary QAPI schema file.
-> +        :param output_dir: The output directory to store generated code.
-> +        :param prefix: Optional C-code prefix for symbol names.
-> +        :param unmask: Expose non-ABI names through introspection?
-> +        :param builtins: Generate code for built-in types?
-> +
-> +        :raise QAPIError: On failures.
-> +        """
-> +        gen_rs_types(schema, output_dir, prefix, builtins)
-
-As discussed in reply to the cover letter, this series uses the -B
-plumbing for out-of-tree backends for generating Rust.  Fine for a
-prototype.  This class is the glue between -B and Rust generation.
-
-> diff --git a/scripts/qapi/main.py b/scripts/qapi/main.py
-> index 0e2a6ae3f07..4ad75e213f5 100644
-> --- a/scripts/qapi/main.py
-> +++ b/scripts/qapi/main.py
-> @@ -12,7 +12,7 @@
->  import sys
->  from typing import Optional
->=20=20
-> -from .backend import QAPIBackend, QAPICBackend
-> +from .backend import QAPIBackend, QAPICodeBackend
->  from .common import must_match
->  from .error import QAPIError
->  from .schema import QAPISchema
-> @@ -27,7 +27,7 @@ def invalid_prefix_char(prefix: str) -> Optional[str]:
->=20=20
->  def create_backend(path: str) -> QAPIBackend:
->      if path is None:
-> -        return QAPICBackend()
-> +        return QAPICodeBackend()
->=20=20
->      module_path, dot, class_name =3D path.rpartition('.')
->      if not dot:
-> diff --git a/scripts/qapi/rs.py b/scripts/qapi/rs.py
-> new file mode 100644
-> index 00000000000..2a9bbcb9f54
-> --- /dev/null
-> +++ b/scripts/qapi/rs.py
-> @@ -0,0 +1,181 @@
-> +# This work is licensed under the terms of the GNU GPL, version 2.
-> +# See the COPYING file in the top-level directory.
-> +"""
-> +QAPI Rust generator
-> +"""
-> +
-> +import os
-> +import re
-> +import subprocess
-> +from typing import NamedTuple, Optional
-> +
-> +from .common import POINTER_SUFFIX
-> +from .gen import QAPIGen
-> +from .schema import QAPISchemaModule, QAPISchemaVisitor
-> +
-> +
-> +# see to_upper_case()/to_lower_case() below
-> +snake_case =3D re.compile(r'((?<=3D[a-z0-9])[A-Z]|(?!^)[A-Z](?=3D[a-z]))=
-')
-> +
-> +
-> +rs_name_trans =3D str.maketrans('.-', '__')
-> +
-> +
-> +# Map @name to a valid Rust identifier.
-> +# If @protect, avoid returning certain ticklish identifiers (like
-> +# keywords) by prepending raw identifier prefix 'r#'.
-> +def rs_name(name: str, protect: bool =3D True) -> str:
-> +    name =3D name.translate(rs_name_trans)
-> +    if name[0].isnumeric():
-> +        name =3D '_' + name
-> +    if not protect:
-> +        return name
-> +    # based from the list:
-> +    # https://doc.rust-lang.org/reference/keywords.html
-> +    if name in ('Self', 'abstract', 'as', 'async',
-> +                'await', 'become', 'box', 'break',
-> +                'const', 'continue', 'crate', 'do',
-> +                'dyn', 'else', 'enum', 'extern',
-> +                'false', 'final', 'fn', 'for',
-> +                'if', 'impl', 'in', 'let',
-> +                'loop', 'macro', 'match', 'mod',
-> +                'move', 'mut', 'override', 'priv',
-> +                'pub', 'ref', 'return', 'self',
-> +                'static', 'struct', 'super', 'trait',
-> +                'true', 'try', 'type', 'typeof',
-> +                'union', 'unsafe', 'unsized', 'use',
-> +                'virtual', 'where', 'while', 'yield'):
-> +        name =3D 'r#' + name
-> +    # avoid some clashes with the standard library
-> +    if name in ('String',):
-> +        name =3D 'Qapi' + name
-> +
-> +    return name
-
-This is like common.c_name().  Differences:
-
-1. Funny input characters
-
-   c_name() returns a valid C identifier for any non-empty input.
-
-   rs_name() requires its argument to contain only characters valid in
-   Rust identifiers plus '.' and '-'.
-
-   I think we better avoid this difference.
-
-2. "Protected" identifiers
-
-   When @protect, then certain "protected" identifiers are prefixed with
-   'q_'.  We typically pass False to @protect when the output is used as
-   part of an identifier.
-
-   c_name() and rs_name() protect different identifiers.  Makes sense.
-
-3. Input starting with a digit
-
-   c_name() treats them just like protected identifiers, i.e. prefix
-   with 'q_' when @protect.
-
-   rs_name() prefixes with '_'.  Is this a good idea?  Hmm...  "The Rust
-   Reference:
-
-       Note
-
-       Identifiers starting with an underscore are typically used to
-       indicate an identifier that is intentionally unused, and will
-       silence the unused warning in rustc.
-
-       https://doc.rust-lang.org/reference/identifiers.html
-
-   rs_name() prefixes always, not just when @protect.  Is this a good
-   idea?  Remember, @protect is typically false when the output is used
-   as part of an identifier.  Or do we use it differently for Rust?
-
-4. Name clash avoidance
-
-   c_name() treats names that are prone to clash as protected,
-   i.e. prefix 'q_' unless @protect.
-
-   rs_name() prefixes 'Qapi' instead.  Why?
-
-> +
-> +
-> +def rs_type(c_type: str,
-> +            qapi_ns: str =3D 'qapi::',
-> +            optional: bool =3D False,
-> +            box: bool =3D False) -> str:
-> +    (is_pointer, _, is_list, c_type) =3D rs_ctype_parse(c_type)
-> +    to_rs =3D {
-> +        'QNull': '()',
-> +        'QObject': 'QObject',
-> +        'any': 'QObject',
-> +        'bool': 'bool',
-> +        'char': 'i8',
-> +        'double': 'f64',
-> +        'int': 'i64',
-> +        'int16': 'i16',
-> +        'int16_t': 'i16',
-> +        'int32': 'i32',
-> +        'int32_t': 'i32',
-> +        'int64': 'i64',
-> +        'int64_t': 'i64',
-> +        'int8': 'i8',
-> +        'int8_t': 'i8',
-> +        'number': 'f64',
-> +        'size': 'u64',
-> +        'str': 'String',
-> +        'uint16': 'u16',
-> +        'uint16_t': 'u16',
-> +        'uint32': 'u32',
-> +        'uint32_t': 'u32',
-> +        'uint64': 'u64',
-> +        'uint64_t': 'u64',
-> +        'uint8': 'u8',
-> +        'uint8_t': 'u8',
-> +        'String': 'QapiString',
-> +    }
-
-The argument name @c_type suggests it is a C type, but this map contains
-a mix of C types, QAPI built-in types, and even a user-defined QAPI type
-(String).  How come?
-
-Why do we even have to map from C type to Rust type?  Why can't we map
-from QAPI type to Rust type, like we map from QAPI type to C type?
-
-> +    if is_pointer:
-> +        to_rs.update({
-> +            'char': 'String',
-> +        })
-> +
-> +    if is_list:
-> +        c_type =3D c_type[:-4]
-> +
-> +    ret =3D to_rs.get(c_type, qapi_ns + c_type)
-> +    if is_list:
-> +        ret =3D 'Vec<%s>' % ret
-> +    elif is_pointer and c_type not in to_rs and box:
-> +        ret =3D 'Box<%s>' % ret
-> +    if optional:
-> +        ret =3D 'Option<%s>' % ret
-> +    return ret
-> +
-> +
-> +class CType(NamedTuple):
-> +    is_pointer: bool
-> +    is_const: bool
-> +    is_list: bool
-> +    c_type: str
-> +
-> +
-> +def rs_ctype_parse(c_type: str) -> CType:
-> +    is_pointer =3D False
-> +    if c_type.endswith(POINTER_SUFFIX):
-> +        is_pointer =3D True
-> +        c_type =3D c_type[:-len(POINTER_SUFFIX)]
-> +    is_list =3D c_type.endswith('List')
-> +    is_const =3D False
-> +    if c_type.startswith('const '):
-> +        is_const =3D True
-> +        c_type =3D c_type[6:]
-> +
-> +    c_type =3D rs_name(c_type)
-> +    return CType(is_pointer, is_const, is_list, c_type)
-
-This feels a bit brittle.
-
-> +
-> +
-> +def to_camel_case(value: str) -> str:
-> +    # special case for last enum value
-> +    if value =3D=3D '_MAX':
-> +        return value
-> +    raw_id =3D False
-> +    if value.startswith('r#'):
-> +        raw_id =3D True
-> +        value =3D value[2:]
-> +    value =3D ''.join('_' + word if word[0].isdigit()
-> +                    else word[:1].upper() + word[1:]
-> +                    for word in filter(None, re.split("[-_]+", value)))
-> +    if raw_id:
-> +        return 'r#' + value
-> +    return value
-> +
-> +
-> +def to_upper_case(value: str) -> str:
-> +    return snake_case.sub(r'_\1', value).upper()
-
-This tackles the same problem as common.camel_to_upper().  Your code is
-much simpler.  However, the two produce different output, e.g.
-
-    input                       output
-    QType                       QTYPE
-                                Q_TYPE
-    XDbgBlockGraphNodeType      XDBG_BLOCK_GRAPH_NODE_TYPE
-                                X_DBG_BLOCK_GRAPH_NODE_TYPE
-    QCryptoTLSCredsEndpoint     QCRYPTO_TLS_CREDS_ENDPOINT
-                                Q_CRYPTO_TLS_CREDS_ENDPOINT
-
-I doubt having two different mappings from CamelCase make sense.
-
-See also commit 7b29353fdd9 (qapi: Smarter camel_to_upper() to reduce
-need for 'prefix').
-
-Aside: the examples in camel_to_upper()'s function comment are out of
-date.  I'll take care of that.
-
-> +
-> +
-> +def to_lower_case(value: str) -> str:
-> +    return snake_case.sub(r'_\1', value).lower()
-> +
-> +
-> +class QAPIGenRs(QAPIGen):
-> +    pass
-
-In my initial review of the generated code, I suggested a file comment.
-Code for that would go here.  See QAPIGenC for an example.
-
-> +
-> +
-> +class QAPISchemaRsVisitor(QAPISchemaVisitor):
-> +
-> +    def __init__(self, prefix: str, what: str):
-> +        super().__init__()
-> +        self._prefix =3D prefix
-> +        self._what =3D what
-> +        self._gen =3D QAPIGenRs(self._prefix + self._what + '.rs')
-> +        self._main_module: Optional[str] =3D None
-> +
-> +    def visit_module(self, name: Optional[str]) -> None:
-> +        if name is None:
-> +            return
-> +        if QAPISchemaModule.is_user_module(name):
-> +            if self._main_module is None:
-> +                self._main_module =3D name
-
-._main_module appears to be unused.
-
-> +
-> +    def write(self, output_dir: str) -> None:
-> +        self._gen.write(output_dir)
-> +
-> +        pathname =3D os.path.join(output_dir, self._gen.fname)
-
-This duplicates ._gen.write()'s file name construction.  I think we
-better make it a available from ._gen.
-
-> +        try:
-> +            subprocess.check_call(['rustfmt', pathname])
-
-Interesting.  Worth mentioning in the commit message.
-
-> +        except FileNotFoundError:
-> +            pass
-
-Huh?
-
-Gotta run, rest left for later.
-
-[...]
+> Changes since v4:
+>  * New patch split off from Igor's v5 [*].
+> 
+> [*]: https://lore.kernel.org/qemu-devel/20251031142825.179239-1-imammedo@redhat.com/
+> ---
+>  hw/acpi/cpu.c                  | 10 ----------
+>  hw/acpi/ich9.c                 | 22 +++-------------------
+>  hw/acpi/piix4.c                | 21 +++------------------
+>  hw/i386/acpi-build.c           |  2 +-
+>  hw/loongarch/virt-acpi-build.c |  1 -
+>  include/hw/acpi/cpu.h          |  1 -
+>  6 files changed, 7 insertions(+), 50 deletions(-)
+> 
+> diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+> index 6f1ae79edbf3..d63ca83c1bcd 100644
+> --- a/hw/acpi/cpu.c
+> +++ b/hw/acpi/cpu.c
+> @@ -408,16 +408,6 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
+>          aml_append(field, aml_reserved_field(4 * 8));
+>          aml_append(field, aml_named_field(CPU_DATA, 32));
+>          aml_append(cpu_ctrl_dev, field);
+> -
+> -        if (opts.has_legacy_cphp) {
+> -            method = aml_method("_INI", 0, AML_SERIALIZED);
+> -            /* switch off legacy CPU hotplug HW and use new one,
+> -             * on reboot system is in new mode and writing 0
+> -             * in CPU_SELECTOR selects BSP, which is NOP at
+> -             * the time _INI is called */
+> -            aml_append(method, aml_store(zero, aml_name(CPU_SELECTOR)));
+> -            aml_append(cpu_ctrl_dev, method);
+> -        }
+>      }
+>      aml_append(sb_scope, cpu_ctrl_dev);
+>  
+> diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+> index 2b3b493c014b..54590129c695 100644
+> --- a/hw/acpi/ich9.c
+> +++ b/hw/acpi/ich9.c
+> @@ -183,26 +183,10 @@ static const VMStateDescription vmstate_tco_io_state = {
+>      }
+>  };
+>  
+> -static bool vmstate_test_use_cpuhp(void *opaque)
+> -{
+> -    ICH9LPCPMRegs *s = opaque;
+> -    return !s->cpu_hotplug_legacy;
+> -}
+> -
+> -static int vmstate_cpuhp_pre_load(void *opaque)
+> -{
+> -    ICH9LPCPMRegs *s = opaque;
+> -    Object *obj = OBJECT(s->gpe_cpu.device);
+> -    object_property_set_bool(obj, "cpu-hotplug-legacy", false, &error_abort);
+> -    return 0;
+> -}
+> -
+>  static const VMStateDescription vmstate_cpuhp_state = {
+>      .name = "ich9_pm/cpuhp",
+>      .version_id = 1,
+>      .minimum_version_id = 1,
+> -    .needed = vmstate_test_use_cpuhp,
+> -    .pre_load = vmstate_cpuhp_pre_load,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_CPU_HOTPLUG(cpuhp_state, ICH9LPCPMRegs),
+>          VMSTATE_END_OF_LIST()
+> @@ -338,8 +322,8 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
+>      pm->powerdown_notifier.notify = pm_powerdown_req;
+>      qemu_register_powerdown_notifier(&pm->powerdown_notifier);
+>  
+> -    legacy_acpi_cpu_hotplug_init(pci_address_space_io(lpc_pci),
+> -        OBJECT(lpc_pci), &pm->gpe_cpu, ICH9_CPU_HOTPLUG_IO_BASE);
+> +    cpu_hotplug_hw_init(pci_address_space_io(lpc_pci),
+> +        OBJECT(lpc_pci), &pm->cpuhp_state, ICH9_CPU_HOTPLUG_IO_BASE);
+>  
+>      acpi_memory_hotplug_init(pci_address_space_io(lpc_pci), OBJECT(lpc_pci),
+>                               &pm->acpi_memory_hotplug,
+> @@ -419,7 +403,7 @@ void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm)
+>  {
+>      static const uint32_t gpe0_len = ICH9_PMIO_GPE0_LEN;
+>      pm->acpi_memory_hotplug.is_enabled = true;
+> -    pm->cpu_hotplug_legacy = true;
+> +    pm->cpu_hotplug_legacy = false;
+>      pm->disable_s3 = 0;
+>      pm->disable_s4 = 0;
+>      pm->s4_val = 2;
+> diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
+> index 7a18f18dda21..a7a29b0d09a9 100644
+> --- a/hw/acpi/piix4.c
+> +++ b/hw/acpi/piix4.c
+> @@ -195,25 +195,10 @@ static const VMStateDescription vmstate_memhp_state = {
+>      }
+>  };
+>  
+> -static bool vmstate_test_use_cpuhp(void *opaque)
+> -{
+> -    PIIX4PMState *s = opaque;
+> -    return !s->cpu_hotplug_legacy;
+> -}
+> -
+> -static int vmstate_cpuhp_pre_load(void *opaque)
+> -{
+> -    Object *obj = OBJECT(opaque);
+> -    object_property_set_bool(obj, "cpu-hotplug-legacy", false, &error_abort);
+> -    return 0;
+> -}
+> -
+>  static const VMStateDescription vmstate_cpuhp_state = {
+>      .name = "piix4_pm/cpuhp",
+>      .version_id = 1,
+>      .minimum_version_id = 1,
+> -    .needed = vmstate_test_use_cpuhp,
+> -    .pre_load = vmstate_cpuhp_pre_load,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_CPU_HOTPLUG(cpuhp_state, PIIX4PMState),
+>          VMSTATE_END_OF_LIST()
+> @@ -573,12 +558,12 @@ static void piix4_acpi_system_hot_add_init(MemoryRegion *parent,
+>          qbus_set_hotplug_handler(BUS(pci_get_bus(PCI_DEVICE(s))), OBJECT(s));
+>      }
+>  
+> -    s->cpu_hotplug_legacy = true;
+> +    s->cpu_hotplug_legacy = false;
+>      object_property_add_bool(OBJECT(s), "cpu-hotplug-legacy",
+>                               piix4_get_cpu_hotplug_legacy,
+>                               piix4_set_cpu_hotplug_legacy);
+> -    legacy_acpi_cpu_hotplug_init(parent, OBJECT(s), &s->gpe_cpu,
+> -                                 PIIX4_CPU_HOTPLUG_IO_BASE);
+> +    cpu_hotplug_hw_init(parent, OBJECT(s), &s->cpuhp_state,
+> +                        PIIX4_CPU_HOTPLUG_IO_BASE);
+>  
+>      if (s->acpi_memory_hotplug.is_enabled) {
+>          acpi_memory_hotplug_init(parent, OBJECT(s), &s->acpi_memory_hotplug,
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index 9446a9f862ca..23147ddc25e7 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -964,7 +964,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+>          build_legacy_cpu_hotplug_aml(dsdt, machine, pm->cpu_hp_io_base);
+>      } else {
+>          CPUHotplugFeatures opts = {
+> -            .acpi_1_compatible = true, .has_legacy_cphp = true,
+> +            .acpi_1_compatible = true,
+>              .smi_path = pm->smi_on_cpuhp ? "\\_SB.PCI0.SMI0.SMIC" : NULL,
+>              .fw_unplugs_cpu = pm->smi_on_cpu_unplug,
+>          };
+> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+> index 3694c9827f04..8d01c8e3de87 100644
+> --- a/hw/loongarch/virt-acpi-build.c
+> +++ b/hw/loongarch/virt-acpi-build.c
+> @@ -369,7 +369,6 @@ build_la_ged_aml(Aml *dsdt, MachineState *machine)
+>  
+>      if (event & ACPI_GED_CPU_HOTPLUG_EVT) {
+>          opts.acpi_1_compatible = false;
+> -        opts.has_legacy_cphp = false;
+>          opts.fw_unplugs_cpu = false;
+>          opts.smi_path = NULL;
+>  
+> diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
+> index 32654dc274fd..2cb0ca4f3dce 100644
+> --- a/include/hw/acpi/cpu.h
+> +++ b/include/hw/acpi/cpu.h
+> @@ -54,7 +54,6 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
+>  
+>  typedef struct CPUHotplugFeatures {
+>      bool acpi_1_compatible;
+> -    bool has_legacy_cphp;
+>      bool fw_unplugs_cpu;
+>      const char *smi_path;
+>  } CPUHotplugFeatures;
 
 
