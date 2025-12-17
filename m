@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C7CED6552F
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 10:19:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A7C3D6552C
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 10:29:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVoc5-0001IG-Qn; Wed, 17 Dec 2025 05:18:33 -0500
+	id 1vVomH-0004Id-GO; Wed, 17 Dec 2025 05:29:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <15927021679@163.com>)
- id 1vVobz-0001GG-8i
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 05:18:28 -0500
-Received: from m16.mail.163.com ([220.197.31.3])
+ id 1vVom9-0004HV-S6
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 05:28:58 -0500
+Received: from m16.mail.163.com ([117.135.210.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <15927021679@163.com>)
- id 1vVobt-0007xl-MW
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 05:18:26 -0500
+ id 1vVom2-0003Hq-MY
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 05:28:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
  s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=gT
- r9cXlUolcdcafwK8bWD4/QDXm/K6s1AH54NIQvIJI=; b=DWa/ahyjox1lJLgGyi
- +dJ+mhtrMmGUKiye5Qh9W/57NtLr8pg9aLafIJWet+q3lEDvljDOdTLsAmGV9zGc
- XQ69SCgcQKiazUT1/kgUdFEzvfpHbsHsWy8yR9XacjyYvY26Z5rawrvM/2fJFt7Q
- W3ROynVyo2b9gtUSxHotX7BYk=
+ r9cXlUolcdcafwK8bWD4/QDXm/K6s1AH54NIQvIJI=; b=RHk4NRy6bFjksEiUme
+ LVbBmj8x2TqNnR/LH3k7lObYTImAgIzI2A1CaItjPv9QHznfXQ7mDY3PX755KO38
+ +P8IvdzAN942ohoXyVqaju1tFwlkXy7USe/M62EJlDpqzn6y/cXsG59WAiPCETV5
+ n2zZ8ObcaLRlg/mQ+G8URuII4=
 Received: from xwm-TianYi510Pro-14IMB.. (unknown [])
- by gzsmtp5 (Coremail) with SMTP id QCgvCgCnD19Sg0Jp8+rdHw--.201S3;
- Wed, 17 Dec 2025 18:18:06 +0800 (CST)
+ by gzsmtp4 (Coremail) with SMTP id PygvCgBHdJbThUJp3UMTHw--.46S2;
+ Wed, 17 Dec 2025 18:28:38 +0800 (CST)
 From: Xiong Weimin <15927021679@163.com>
 To: xiongweimin@kylinos.cn
 Cc: qemu-devel@nongnu.org
 Subject: [PATCH] hw/rdma: Implement vhost-user RDMA device with PCI support
-Date: Wed, 17 Dec 2025 18:17:18 +0800
-Message-ID: <20251217101753.16343-2-15927021679@163.com>
+Date: Wed, 17 Dec 2025 18:28:31 +0800
+Message-ID: <20251217102833.17165-1-15927021679@163.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251217101753.16343-1-15927021679@163.com>
-References: <20251217101753.16343-1-15927021679@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: QCgvCgCnD19Sg0Jp8+rdHw--.201S3
+X-CM-TRANSID: PygvCgBHdJbThUJp3UMTHw--.46S2
 X-Coremail-Antispam: 1Uf129KBjvAXoWftr48Cw1DXFyrJry7Aw4kXrb_yoW5WF13to
  W7Jrya9F4rtw1UCFsY9r17ArW2gFyj9F17Cr4S9rZFqayxJw1DtF97Ka9rJ3yrCr4fK34x
  CryfG3yxGa15AFZ3n29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
- AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvj4RNyCXUUUUU
+ AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvj4RK-erUUUUU
 X-Originating-IP: [116.128.244.169]
-X-CM-SenderInfo: jprvmjixqsilmxzbiqqrwthudrp/xtbC0h-ia2lCg1-3PQAA35
-Received-SPF: pass client-ip=220.197.31.3; envelope-from=15927021679@163.com;
+X-CM-SenderInfo: jprvmjixqsilmxzbiqqrwthudrp/xtbC8xaBCmlChdbDIwAA32
+Received-SPF: pass client-ip=117.135.210.2; envelope-from=15927021679@163.com;
  helo=m16.mail.163.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
@@ -55,8 +53,7 @@ X-Spam_bar: -
 X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, FROM_LOCAL_DIGITS=0.001,
- FROM_LOCAL_HEX=0.006, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ FROM_LOCAL_HEX=0.006, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
