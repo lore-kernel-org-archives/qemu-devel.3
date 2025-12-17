@@ -4,59 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2703D64062
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 06:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5171D64083
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 07:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVlJy-0008Sp-06; Wed, 17 Dec 2025 01:47:38 -0500
+	id 1vVlga-0003mF-3O; Wed, 17 Dec 2025 02:11:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
- id 1vVlJw-0008SY-KR
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 01:47:36 -0500
-Received: from sg-1-100.ptr.blmpb.com ([118.26.132.100])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
- id 1vVlJe-00006i-Lx
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 01:47:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1765954023; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=qFnIj5kqyyonbQEMANvUGU7U4GDQh8qV/4lH5F61gyM=;
- b=CwO5FV7U7Bnz2WJbYyQtcHjrWjOHBRIGRlL0CJvRhGaQ0URQQiw5oQ7f6aTqPxy1tKAU9C
- 3DcrCBRawUousaD0ggRUJMS4qt7Z8S+S39nzYDzAvy2Vt+QvCfwLlIc68NBSVOtd/MDK/f
- 9nUhh3Y7mayx5DORhL61ICzMR4qSm60slw7J3WB/V9V9DP8iWduRLrcA2FBGqkbejvh6UP
- E6o2Lkrd0CbYmtQmzq8C+A93wThXW57lZ353kU5xI9VsswqFwzAqOfuPGFv1TeXq7x7pEd
- WRGtRkt+B2Wb7T+JRVIViGizyKyj3T7uC0YnRPfaT3nb67btWSThbdOhRsTSKg==
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <midnight@trainwit.ch>)
+ id 1vVlgX-0003ls-Pm; Wed, 17 Dec 2025 02:10:57 -0500
+Received: from fhigh-b8-smtp.messagingengine.com ([202.12.124.159])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <midnight@trainwit.ch>)
+ id 1vVlgV-0000J6-Of; Wed, 17 Dec 2025 02:10:57 -0500
+Received: from phl-compute-01.internal (phl-compute-01.internal [10.202.2.41])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 64E9E7A01C5;
+ Wed, 17 Dec 2025 02:10:51 -0500 (EST)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-01.internal (MEProxy); Wed, 17 Dec 2025 02:10:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=trainwit.ch; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:message-id:mime-version:reply-to
+ :subject:subject:to:to; s=fm1; t=1765955451; x=1766041851; bh=X+
+ 71vWb1XfXWzj4F2b7sjtBRXUgUZs3OF3KMjNiwC8w=; b=3RxtWFyqvdyk63+MvO
+ +i+kVaf2QfKIpIwUqH+cX4Qlo6kBQxnSlnb+YVwNcSXBdjDpZcBVSBIo8sTii2Ob
+ WHXB6UVU860jFvBo1huDzvAEf289zVu4loVwloZXPEduqoYH1ulKutebvqr10IdT
+ +YmpbSz1Sjds6mtzkZ2mEY2XBajJWO8vfhBVQRR/keDhJ2rSmtFZMg+edSSrvTFt
+ FtH6WhAyiSoWzb0S4VV10YpeNqgjJbUpIqvZn4USaf7oPVpc5QuPhXLyEEqmucK4
+ PGuuAM+jboZ+ZCU/JrpRu6Q1tRNSqe6lEJ7qNV7pblTqMHTkqtQWUBTqIigZWvMG
+ N59A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:message-id:mime-version:reply-to:subject
+ :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm1; t=1765955451; x=1766041851; bh=X+71vWb1XfXWzj4F2b7sjtBRXUgU
+ Zs3OF3KMjNiwC8w=; b=jjxwU+cpeV7JYBwhvJcshqv6gDvm+gN0aHogf7VnW6n8
+ gDySVTJDSB4tvRhsNY6OvMYBrQeTk1+3UUP3fmcd7ntG85za1WuquAYnVJJhSNG9
+ 7eXxsSuh2/b26llCrJs4lEIm94orbWX7c8FpSYpsKJo1EE25YMqKfQXUy6D4O6GG
+ POE/Mz5HzA626Q3NhEACCbsi+GVYotNiPjcGnNQwslxRxQ/CVq/2KqHy2YDejFOc
+ xFP+B9Xo2MQpxLP4D/KtU5DQhln2zheqfNCDAuJtmfkOLsKin+M3X9UiIR1RAlIQ
+ +jXK0L1VSuc0S91dbPK4QSaLXLDZdzn0CnP44o1HiQ==
+X-ME-Sender: <xms:eldCaWPt-8KdWfuXd-55hjAowI0-noOuxu80IyPHNHOPb1Fby0sIhg>
+ <xme:eldCaS5NCGSm6bXQLWgX-uJ9owQUaZ3G5x6hGmA8vw_LMMvPr5cxlSQZqnP4ENYvH
+ oHjtWS3vRzear7y-45vMCxAVMzqqQRpzD_oV04snYHHuLQhmSEM0tU>
+X-ME-Received: <xmr:eldCaflxuQ4PdJbDurQzZRDN52DW919IYeZgXnhph1fZGXhg8ooaDrVEqxm9EkuRcWSquO0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdegudelfecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+ hrpefhfffugggtgffkvfevofesthejredtredtjeenucfhrhhomhepjhhulhhirgcuoehm
+ ihgunhhighhhthesthhrrghinhifihhtrdgthheqnecuggftrfgrthhtvghrnhepfffghe
+ eujedvlefhffejgeegledtgefhteejtddtvdfhveelteeuhedvvedvhfehnecuvehluhhs
+ thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmhhiughnihhghhhtse
+ htrhgrihhnfihithdrtghhpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhu
+ thdprhgtphhtthhopehpsghonhiiihhnihesrhgvughhrghtrdgtohhmpdhrtghpthhtoh
+ epqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehmihgunhhi
+ ghhhthesthhrrghinhifihhtrdgthhdprhgtphhtthhopehpvghtvghrrdhmrgihuggvlh
+ hlsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdqrghrmhesnhhonhhgnhhu
+ rdhorhhgpdhrtghpthhtohepmhgrrhgtrghnughrvgdrlhhurhgvrghusehrvgguhhgrth
+ drtghomh
+X-ME-Proxy: <xmx:eldCabSXqimAVx3vLmu_eW6sWF6hrbyYPmH_53yREzVSAC5mOUTdcg>
+ <xmx:eldCaWG_y9e81qUvmm3XrJWFvx3JdjFMXuFHtl5mi8GTDf3L2RErAw>
+ <xmx:eldCaYFxk-EZZrEEiYgItuF0GiVDk1KmH3AvobOFeY6N60gOPya8zA>
+ <xmx:eldCacRY3ZO4N3roA5_lu9vNY6r_VRyuo40AQF-zLEqvZkX53PSiAw>
+ <xmx:e1dCaYEIPz3lq50SBGkhlZn4q375QANJvRhBketxgEO9c8w0QLVCf0K3>
+Feedback-ID: ib36e48e7:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 Dec 2025 02:10:48 -0500 (EST)
+From: julia <midnight@trainwit.ch>
+Date: Wed, 17 Dec 2025 18:10:41 +1100
+Subject: [PATCH] hw/char/cmsdk-apb-uart.c: log guest_errors for r/w to
+ disabled uart
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <29bc82b4-99c3-4275-b4a8-cfc400f0e44d@bytedance.com>
-References: <20251216080001.64579-1-xuchuangxclwt@bytedance.com>
- <877bum36ed.fsf@suse.de> <aUGIPj1JNpd8HZ-V@x1.local>
-Cc: <qemu-devel@nongnu.org>, "Fabiano Rosas" <farosas@suse.de>, 
- <mst@redhat.com>, <sgarzare@redhat.com>, <richard.henderson@linaro.org>, 
- <pbonzini@redhat.com>, <david@kernel.org>, <philmd@linaro.org>
-Date: Wed, 17 Dec 2025 14:46:58 +0800
-X-Original-From: Chuang Xu <xuchuangxclwt@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-To: "Peter Xu" <peterx@redhat.com>
-From: "Chuang Xu" <xuchuangxclwt@bytedance.com>
-Subject: Re: [PATCH v3 1/1] migration: merge fragmented clear_dirty ioctls
-User-Agent: Mozilla Thunderbird
-X-Lms-Return-Path: <lba+2694251e5+627d78+nongnu.org+xuchuangxclwt@bytedance.com>
-In-Reply-To: <aUGIPj1JNpd8HZ-V@x1.local>
-Received-SPF: pass client-ip=118.26.132.100;
- envelope-from=xuchuangxclwt@bytedance.com; helo=sg-1-100.ptr.blmpb.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Message-Id: <20251217-cmsdk-uart-disabled-warning2-v1-1-847de48840bc@trainwit.ch>
+X-B4-Tracking: v=1; b=H4sIAHBXQmkC/x3MwQqDMAwA0F+RnA20wSHsV8RDbDMXNutIphuI/
+ 76y47u8A1xMxeHaHGCyq+taKmLbQLpzmQU1VwMFukSKPabF8wM3tjdmdZ6ekvHDVrTMhCH0xF2
+ XSDhCLV4mN/3++2E8zx/SUJK8bgAAAA==
+X-Change-ID: 20251217-cmsdk-uart-disabled-warning2-0072a44c2ea1
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org, 
+ julia <midnight@trainwit.ch>
+X-Mailer: b4 0.14.2
+Received-SPF: pass client-ip=202.12.124.159; envelope-from=midnight@trainwit.ch;
+ helo=fhigh-b8-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,265 +115,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/12/2025 00:26, Peter Xu wrote:
-> On Tue, Dec 16, 2025 at 10:25:46AM -0300, Fabiano Rosas wrote:
->> "Chuang Xu" <xuchuangxclwt@bytedance.com> writes:
->>
->>> From: xuchuangxclwt <xuchuangxclwt@bytedance.com>
->>>
->>> In our long-term experience in Bytedance, we've found that under
->>> the same load, live migration of larger VMs with more devices is
->>> often more difficult to converge (requiring a larger downtime limit).
->>>
->>> Through some testing and calculations, we conclude that bitmap sync time
->>> affects the calculation of live migration bandwidth.
-> Side note:
->
-> I forgot to mention when replying to the old versions, but we introduced
-> avail-switchover-bandwidth to partially remedy this problem when we hit it
-> before - which may or may not be exactly the same reason here on unaligned
-> syncs as we didn't further investigate (we have VFIO-PCI devices when
-> testing), but the whole logic should be similar that bw was calculated too
-> small.
-In bytedance, we also migrate vms with vfio devices, which also suffer from
-the issue of long vfio bitmap sync time for large vm.
->
-> So even if with this patch optimizing sync, bw is always not as accurate.
-> I wonder if we can still fix it somehow, e.g. I wonder if 100ms is too
-> short a period to take samples, or at least we should be able to remember
-> more samples so the reported bw (even if we keep sampling per 100ms) will
-> cover longer period.
->
-> Feel free to share your thoughts if you have any.
->
-FYI:
-Initially, when I encountered the problem of large vm migration hard to 
-converge,
-I tried subtracting the bitmap sync time from the bandwidth calculation,
-which alleviated the problem somewhat. However, through formula calculation,
-I found that this did not completely solve the problem. Therefore, I 
-decided to
-conduct specific analysis for specific scenario to minimize the bitmap 
-sync time
-as much as possible.
->>> When the addresses processed are not aligned, a large number of
->>> clear_dirty ioctl occur (e.g. a 4MB misaligned memory can generate
->>> 2048 clear_dirty ioctls from two different memory_listener),
->>> which increases the time required for bitmap_sync and makes it
->>> more difficult for dirty pages to converge.
->>>
->>> For a 64C256G vm with 8 vhost-user-net(32 queue per nic) and
->>> 16 vhost-user-blk(4 queue per blk), the sync time is as high as *73ms*
->>> (tested with 10GBps dirty rate, the sync time increases as the dirty
->>> page rate increases), Here are each part of the sync time:
->>>
->>> - sync from kvm to ram_list: 2.5ms
->>> - vhost_log_sync:3ms
->>> - sync aligned memory from ram_list to RAMBlock: 5ms
->>> - sync misaligned memory from ram_list to RAMBlock: 61ms
->>>
->>> Attempt to merge those fragmented clear_dirty ioctls, then syncing
->>> misaligned memory from ram_list to RAMBlock takes only about 1ms,
->>> and the total sync time is only *12ms*.
->>>
->>> Signed-off-by: Chuang Xu <xuchuangxclwt@bytedance.com>
->>> ---
->>>   accel/tcg/cputlb.c       |  5 ++--
->>>   include/system/physmem.h |  7 +++---
->>>   migration/ram.c          | 17 ++++----------
->>>   system/memory.c          |  2 +-
->>>   system/physmem.c         | 49 ++++++++++++++++++++++++++++------------
->>>   5 files changed, 47 insertions(+), 33 deletions(-)
->>>
->>> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
->>> index fd1606c856..c8827c8b0d 100644
->>> --- a/accel/tcg/cputlb.c
->>> +++ b/accel/tcg/cputlb.c
->>> @@ -857,8 +857,9 @@ void tlb_flush_page_bits_by_mmuidx_all_cpus_synced(CPUState *src_cpu,
->>>   void tlb_protect_code(ram_addr_t ram_addr)
->>>   {
->>>       physical_memory_test_and_clear_dirty(ram_addr & TARGET_PAGE_MASK,
->>> -                                             TARGET_PAGE_SIZE,
->>> -                                             DIRTY_MEMORY_CODE);
->>> +                                         TARGET_PAGE_SIZE,
->>> +                                         DIRTY_MEMORY_CODE,
->>> +                                         NULL);
->>>   }
->>>   
->>>   /* update the TLB so that writes in physical page 'phys_addr' are no longer
->>> diff --git a/include/system/physmem.h b/include/system/physmem.h
->>> index 879f6eae38..8eeace9d1f 100644
->>> --- a/include/system/physmem.h
->>> +++ b/include/system/physmem.h
->>> @@ -39,9 +39,10 @@ uint64_t physical_memory_set_dirty_lebitmap(unsigned long *bitmap,
->>>   
->>>   void physical_memory_dirty_bits_cleared(ram_addr_t start, ram_addr_t length);
->>>   
->>> -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
->>> -                                          ram_addr_t length,
->>> -                                          unsigned client);
->>> +uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
->>> +                                              ram_addr_t length,
->>> +                                              unsigned client,
->>> +                                              unsigned long *dest);
->>>   
->>>   DirtyBitmapSnapshot *
->>>   physical_memory_snapshot_and_clear_dirty(MemoryRegion *mr, hwaddr offset,
->>> diff --git a/migration/ram.c b/migration/ram.c
->>> index 29f016cb25..a03c9874a2 100644
->>> --- a/migration/ram.c
->>> +++ b/migration/ram.c
->>> @@ -942,7 +942,6 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
->>>                                                     ram_addr_t start,
->>>                                                     ram_addr_t length)
->>>   {
->>> -    ram_addr_t addr;
->>>       unsigned long word = BIT_WORD((start + rb->offset) >> TARGET_PAGE_BITS);
->>>       uint64_t num_dirty = 0;
->>>       unsigned long *dest = rb->bmap;
->>> @@ -996,17 +995,11 @@ static uint64_t physical_memory_sync_dirty_bitmap(RAMBlock *rb,
->>>       } else {
->>>           ram_addr_t offset = rb->offset;
->>>   
->>> -        for (addr = 0; addr < length; addr += TARGET_PAGE_SIZE) {
->>> -            if (physical_memory_test_and_clear_dirty(
->>> -                        start + addr + offset,
->>> -                        TARGET_PAGE_SIZE,
->>> -                        DIRTY_MEMORY_MIGRATION)) {
->>> -                long k = (start + addr) >> TARGET_PAGE_BITS;
->>> -                if (!test_and_set_bit(k, dest)) {
->>> -                    num_dirty++;
->>> -                }
->>> -            }
->>> -        }
->>> +        num_dirty = physical_memory_test_and_clear_dirty(
->>> +                        start + offset,
->>> +                        length,
->>> +                        DIRTY_MEMORY_MIGRATION,
->>> +                        dest);
->>>       }
->>>   
->>>       return num_dirty;
->>> diff --git a/system/memory.c b/system/memory.c
->>> index 8b84661ae3..666364392d 100644
->>> --- a/system/memory.c
->>> +++ b/system/memory.c
->>> @@ -2424,7 +2424,7 @@ void memory_region_reset_dirty(MemoryRegion *mr, hwaddr addr,
->>>   {
->>>       assert(mr->ram_block);
->>>       physical_memory_test_and_clear_dirty(
->>> -        memory_region_get_ram_addr(mr) + addr, size, client);
->>> +        memory_region_get_ram_addr(mr) + addr, size, client, NULL);
->>>   }
->>>   
->>>   int memory_region_get_fd(MemoryRegion *mr)
->>> diff --git a/system/physmem.c b/system/physmem.c
->>> index c9869e4049..f8b660dafe 100644
->>> --- a/system/physmem.c
->>> +++ b/system/physmem.c
->>> @@ -1089,19 +1089,31 @@ void physical_memory_set_dirty_range(ram_addr_t start, ram_addr_t length,
->>>       }
->>>   }
->>>   
->>> -/* Note: start and end must be within the same ram block.  */
->>> -bool physical_memory_test_and_clear_dirty(ram_addr_t start,
->>> +/*
->>> + * Note: start and end must be within the same ram block.
->>> + *
->>> + * @dest usage:
->> I'm not sure if it's just me, but I find this "dest" term quite
->> confusing. "bmap" might be more straight-forward.
->>
->>> + * - When @dest is provided, set bits for newly discovered dirty pages
->>> + *   only if the bit wasn't already set in dest, and count those pages
->>> + *   in num_dirty.
->> Am I misreading the code? I don't see this "set ... only if the bit
->> wasn't already set" part. What I see is: "set bits, but only count those
->> pages if the bit wasn't already set".
-> Agrees on both points.. one more thing to mention below.
-This will be fixed in next version.
->>> + * - When @dest is NULL, count all dirty pages in the range
->>> + *
->>> + * @return:
->>> + * - Number of dirty guest pages found within [start, start + length).
->>> + */
->>> +uint64_t physical_memory_test_and_clear_dirty(ram_addr_t start,
->>>                                                 ram_addr_t length,
->>> -                                              unsigned client)
->>> +                                              unsigned client,
->>> +                                              unsigned long *dest)
->>>   {
->>>       DirtyMemoryBlocks *blocks;
->>>       unsigned long end, page, start_page;
->>> -    bool dirty = false;
->>> +    uint64_t num_dirty = 0;
->>>       RAMBlock *ramblock;
->>>       uint64_t mr_offset, mr_size;
->>>   
->>>       if (length == 0) {
->>> -        return false;
->>> +        return 0;
->>>       }
->>>   
->>>       end = TARGET_PAGE_ALIGN(start + length) >> TARGET_PAGE_BITS;
->>> @@ -1118,12 +1130,19 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
->>>           while (page < end) {
->>>               unsigned long idx = page / DIRTY_MEMORY_BLOCK_SIZE;
->>>               unsigned long offset = page % DIRTY_MEMORY_BLOCK_SIZE;
->>> -            unsigned long num = MIN(end - page,
->>> -                                    DIRTY_MEMORY_BLOCK_SIZE - offset);
->>>   
->>> -            dirty |= bitmap_test_and_clear_atomic(blocks->blocks[idx],
->>> -                                                  offset, num);
->>> -            page += num;
->>> +            if (bitmap_test_and_clear_atomic(blocks->blocks[idx], offset, 1)) {
->>> +                if (dest) {
->>> +                    unsigned long k = page - (ramblock->offset >> TARGET_PAGE_BITS);
->>> +                    if (!test_and_set_bit(k, dest)) {
->>> +                        num_dirty++;
->>> +                    }
->>> +                } else {
->>> +                    num_dirty++;
->>> +                }
->>> +            }
->>> +
->>> +            page++;
-> Sorry I could have mentioned this in the previous version: IMHO it'll still
-> be nice to keep the one atomic operations for !dest/!bmap case over "num".
-> There's no reason we need to introduce even any slightest regression in
-> those paths.
->
-> Thanks,
+I don't want to admit how many hours I spent trying to figure out why
+nothing was being printed (as the enable-ing code hadn't yet run,
+even thought it existed).
 
-bitmap_test_and_clear_atomic returns bool, not the number of bits cleared.
-So for !bmap case we can only return whether there is dirty, not the number
-of dirty, and this might be a bit confusing.
+Signed-off-by: julia <midnight@trainwit.ch>
+---
+ hw/char/cmsdk-apb-uart.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
->>>           }
->>>   
->>>           mr_offset = (ram_addr_t)(start_page << TARGET_PAGE_BITS) - ramblock->offset;
->>> @@ -1131,18 +1150,18 @@ bool physical_memory_test_and_clear_dirty(ram_addr_t start,
->>>           memory_region_clear_dirty_bitmap(ramblock->mr, mr_offset, mr_size);
->>>       }
->>>   
->>> -    if (dirty) {
->>> +    if (num_dirty) {
->>>           physical_memory_dirty_bits_cleared(start, length);
->>>       }
->>>   
->>> -    return dirty;
->>> +    return num_dirty;
->>>   }
->>>   
->>>   static void physical_memory_clear_dirty_range(ram_addr_t addr, ram_addr_t length)
->>>   {
->>> -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION);
->>> -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA);
->>> -    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE);
->>> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_MIGRATION, NULL);
->>> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_VGA, NULL);
->>> +    physical_memory_test_and_clear_dirty(addr, length, DIRTY_MEMORY_CODE, NULL);
->>>   }
->>>   
->>>   DirtyBitmapSnapshot *physical_memory_snapshot_and_clear_dirty
+diff --git a/hw/char/cmsdk-apb-uart.c b/hw/char/cmsdk-apb-uart.c
+index 32090f3516f6accad32bcd9fe9b10d572f17ed12..26931ab6c5d36f0ec5aac7acf3677855a6dd5f22 100644
+--- a/hw/char/cmsdk-apb-uart.c
++++ b/hw/char/cmsdk-apb-uart.c
+@@ -159,6 +159,10 @@ static uint64_t uart_read(void *opaque, hwaddr offset, unsigned size)
+     switch (offset) {
+     case A_DATA:
+         r = s->rxbuf;
++        if (!(s->ctrl & R_CTRL_RX_EN_MASK)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "CMSDK APB UART: receive data read with Rx disabled\n");
++        }
+         s->state &= ~R_STATE_RXFULL_MASK;
+         cmsdk_apb_uart_update(s);
+         qemu_chr_fe_accept_input(&s->chr);
+@@ -248,6 +252,10 @@ static void uart_write(void *opaque, hwaddr offset, uint64_t value,
+     switch (offset) {
+     case A_DATA:
+         s->txbuf = value;
++        if (!(s->ctrl & R_CTRL_TX_EN_MASK)) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "CMSDK APB UART: transmit data write with Tx disabled\n");
++        }
+         if (s->state & R_STATE_TXFULL_MASK) {
+             /* Buffer already full -- note the overrun and let the
+              * existing pending transmit callback handle the new char.
+
+---
+base-commit: 7154e4df40468012fccb6687ecd2b288c56a4a2d
+change-id: 20251217-cmsdk-uart-disabled-warning2-0072a44c2ea1
+
+Best regards,
+-- 
+julia <midnight@trainwit.ch>
+
 
