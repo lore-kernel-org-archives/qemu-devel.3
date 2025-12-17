@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50E7BD6406D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 03:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF779D6406D
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 03:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVhyP-0005GV-KV; Tue, 16 Dec 2025 22:13:09 -0500
+	id 1vVi2w-0006fs-VC; Tue, 16 Dec 2025 22:17:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vVhyN-0005Fb-6F; Tue, 16 Dec 2025 22:13:07 -0500
-Received: from mgamail.intel.com ([198.175.65.12])
+ id 1vVi2o-0006bR-GO; Tue, 16 Dec 2025 22:17:42 -0500
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vVhyL-0004Eg-0p; Tue, 16 Dec 2025 22:13:06 -0500
+ id 1vVi2m-0006Eo-5D; Tue, 16 Dec 2025 22:17:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1765941185; x=1797477185;
+ t=1765941460; x=1797477460;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=f615fpmWqCZllLrZqNripFqTae3cYSQKTpNqudKOSiI=;
- b=igqoTQlbqcgPvNcGhzD7PbUMTwNeyE44iQLs7Rxd4Q8tmh6qCCyPgWdA
- ZS8Rx46JsccVk4Gs2n7uMkwTLAj+YYt+8znjeAFhegxZeBvEXYjaw3KYZ
- cMlruzH/3X0GqirC1JtgIUPHpMUAaonGv5FNCIvY+alapyRcfNM+U7+bD
- Ki62t47/8k4bVs0Hw/825xI8gQkdyOqarfJft1lIqCxwS8ahZxiGxt/pR
- 4ai0T3c+AUVodEIp0fx2d72Ip9hiFaV+GdXnZUh7r5Ikdm7yIGKUKxmZa
- 6xxEZS0MevKFdYNeNGiSSmglGQzO5UxZLVwosNvyUdCSp0ZRNc214RiP9 A==;
-X-CSE-ConnectionGUID: fPcGjYlvQu6wRr8Tuq51Tg==
-X-CSE-MsgGUID: NCKaTLfjQDWet0qP+1qyyg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11644"; a="79325418"
-X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="79325418"
+ bh=zBJgc/hbE6t3nLugzcJb+1vjT990b/mKDeAY5TEz314=;
+ b=NUD3vkb5vriCLc0PfCiGTd5oRpJtBTs62Vbi5jmHFw9tSctdtlcNE/gE
+ bEP4S4IT+cB4KwGu7NHCBGcafzpCSNs9XOtVWHYJmmyVtYM3rOhY+vwFt
+ ncB3tn2HHYXYrP/ruMs9Zrp5KsNV3WkAlcvO37u+JKMGUhvKZ6fLT2S4X
+ mcuDbUgHF6C7w9kkv/doc2boOwHzhRxPzWZUlSGyc+zAKFiNrC0STpN9A
+ plzx+iQWQlcpOdbsVw0Ne4t2zjKxneyBpxgU/pyVn5KkQ7vN8e6j6dDm4
+ 38EwIbqoQRvg9IO9JVSk0xgpRShh2OamDU0WTxjPTd2JIm7WzS0cpFf8M A==;
+X-CSE-ConnectionGUID: oHd8HqKiSWeMTdCCxyiMIg==
+X-CSE-MsgGUID: 2kllHh2tS9+QHXZG6w/RoA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11644"; a="67757184"
+X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="67757184"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Dec 2025 19:13:00 -0800
-X-CSE-ConnectionGUID: k3TZuxVuT9GB5pUisJ4AKA==
-X-CSE-MsgGUID: fdqkS7W0TLeZaW3bi4k28w==
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Dec 2025 19:17:38 -0800
+X-CSE-ConnectionGUID: GWbUW4UpRmajI6fMMM86RQ==
+X-CSE-MsgGUID: szWdfd8WTM2h9FH9P17U/w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="228881916"
+X-IronPort-AV: E=Sophos;i="6.21,154,1763452800"; d="scan'208";a="228882837"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa002.jf.intel.com with ESMTP; 16 Dec 2025 19:12:59 -0800
-Date: Wed, 17 Dec 2025 11:37:47 +0800
+ by orviesa002.jf.intel.com with ESMTP; 16 Dec 2025 19:17:37 -0800
+Date: Wed, 17 Dec 2025 11:42:25 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, marcandre.lureau@redhat.com,
- Martin Kletzander <mkletzan@redhat.com>
-Subject: Re: [PATCH 04/11] rust: Do not link qemuutil into Rust rlibs
-Message-ID: <aUIli8Do+HM89mu8@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+	marcandre.lureau@redhat.com
+Subject: Re: [PATCH 05/11] rust: only link the Rust part of the code into
+ devices
+Message-ID: <aUImoemVOzoYUc1i@intel.com>
 References: <20251215075000.335043-1-pbonzini@redhat.com>
- <20251215075000.335043-5-pbonzini@redhat.com>
+ <20251215075000.335043-6-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251215075000.335043-5-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20251215075000.335043-6-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -82,67 +83,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 08:49:53AM +0100, Paolo Bonzini wrote:
-> Date: Mon, 15 Dec 2025 08:49:53 +0100
+On Mon, Dec 15, 2025 at 08:49:54AM +0100, Paolo Bonzini wrote:
+> Date: Mon, 15 Dec 2025 08:49:54 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 04/11] rust: Do not link qemuutil into Rust rlibs
+> Subject: [PATCH 05/11] rust: only link the Rust part of the code into
+>  devices
 > X-Mailer: git-send-email 2.52.0
 > 
-> From: Martin Kletzander <mkletzan@redhat.com>
+> Do not include libqemuutil in the device crates for the same
+> reason as in the previous commit.  Static libraries like qemuutil
+> are sensitive to their position on the command line and rustc does not
+> always get it right.
 > 
-> Commit de037ab8d83d removed qemuutil dependency from chardev and util
-> rust crates.  However it stayed in the _util_rs static library.  The
-> dependency is also defined as `link_with`, which is fine for C targets,
-> where the resulting archive gets linked as another parameter on the
-> command line when it is a static library.
+> If rustc places the library too early on the command line, the stubs
+> are included in the final link product, which results in duplicate
+> symbols.
 > 
-> However, when a C library is linked into a Rust rlib, rustc remembers
-> the dependency into the metadata and adds the library to the linker
-> command line.
-> 
-> Unfortunately, static libraries are sensitive to their
-> position on the command line and rustc does not always get it right.
-> Fortunately, simply removing it from dependencies of any rust libraries
-> and instead adding them into the dependencies of executables and
-> doctests fixes the behaviour.
-> 
-> Without this patch the error I get is:
-> 
->   FAILED: [code=1] rust/tests/rust-integration
->   ...
->   = note: rust-lld: error: unable to find library -l:libqemuutil.a
->           rust-lld: error: unable to find library -l:libvhost-user-glib.a
->           rust-lld: error: unable to find library -l:libvhost-user.a
->           rust-lld: error: unable to find library -l:libqemuutil.a
->           rust-lld: error: unable to find library -l:libvhost-user-glib.a
->           rust-lld: error: unable to find library -l:libvhost-user.a
->           rust-lld: error: unable to find library -l:libqemuutil.a
->           rust-lld: error: unable to find library -l:libvhost-user-glib.a
->           rust-lld: error: unable to find library -l:libvhost-user.a
->           rust-lld: error: unable to find library -l:libqemuutil.a
->           rust-lld: error: unable to find library -l:libvhost-user-glib.a
->           rust-lld: error: unable to find library -l:libvhost-user.a
->           rust-lld: error: unable to find library -l:libqemuutil.a
->           rust-lld: error: unable to find library -l:libvhost-user-glib.a
->           rust-lld: error: unable to find library -l:libvhost-user.a
->           rust-lld: error: unable to find library -l:libqemuutil.a
->           rust-lld: error: unable to find library -l:libvhost-user-glib.a
->           rust-lld: error: unable to find library -l:libvhost-user.a
->           collect2: error: ld returned 1 exit status
-> 
-> Meson could work around it itself by never adding these static libraries
-> to the rlibs (after all, Meson tracks the transitive dependencies already
-> and knows how to add them to dependents of those rlibs); at least for now,
-> do it in QEMU: never link C libraries into Rust rlibs, and add them to the
-> final build products only.
-> 
-> Signed-off-by: Martin Kletzander <mkletzan@redhat.com>
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  rust/chardev/meson.build | 2 +-
->  rust/qom/meson.build     | 2 +-
->  rust/util/meson.build    | 4 ++--
->  3 files changed, 4 insertions(+), 4 deletions(-)
+>  rust/hw/char/pl011/meson.build | 18 ++++++++++--------
+>  rust/hw/timer/hpet/meson.build | 18 +++++++++---------
+>  2 files changed, 19 insertions(+), 17 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
