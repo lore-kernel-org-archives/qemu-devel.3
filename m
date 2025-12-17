@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A598D66B9D
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 19:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17E7ED66B9A
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 19:09:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVwt4-00046h-Ef; Wed, 17 Dec 2025 14:08:38 -0500
+	id 1vVwtz-0004kh-Us; Wed, 17 Dec 2025 14:09:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vVwsz-00045R-BR
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 14:08:34 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1vVwtz-0004kV-Aw
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 14:09:35 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1vVwsx-0000LS-Nv
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 14:08:33 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2a0d0788adaso37798925ad.3
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 11:08:31 -0800 (PST)
+ id 1vVwtx-0000Yx-Mk
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 14:09:34 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-7f651586be1so482239b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 11:09:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1765998510; x=1766603310; darn=nongnu.org;
+ d=linaro.org; s=google; t=1765998572; x=1766603372; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MGsgEJD2SyR+AWVolmZTycppNh/PCxe2EmoUR9JEWAg=;
- b=cPXk/yQisy25KRU3TKhim8UcTSAgsiT7h5mSqgheimPwLXuFjhI2JreVcfm58I6O5w
- d3KTjG8pBoNoQIdTgwqEJwyig5tA2LDhL1cs6WO8RbZlfVqKlz6v0FBO7ueQkMkAOuac
- ARfhP7fnHK7v7dUQ9NR2kPw/kY58Qj8J4ckrxNKoXxPQXhHRgAbbrEsJEjU9ghZ2M3ne
- h+Yp+ZfmXFXjIGGiFE7SmF+EYP18ds4Ty+0f1yiB2/ZJ15ii4J1umj5zf6F7GkoDsOay
- cbGNGT/W+oGZtrl4D33HmJK/WN66jIcaGzo94C/O7oAKcPELjzMaIFyKpPxz5QGY4DSX
- 3D5w==
+ bh=0gcgUFcIy0Rl998fbvewGR5lW7JgEQupnjBQ1p4RVng=;
+ b=iJvexFMdMGNIJTwidlT8CfEbASM3+0EfLhT/mf2JEZTFlfPtcPHqcaC4EB3RfqiQxP
+ 4l9OaP7/5zWGYunizGrlbcO7pp47GNyDe7c8XyKnng+FjNl++SfFkcL/lWUq4SAbShdY
+ gGNKElWApFiw4nROlcGX1yt1TZyV417K3lcjfgNWH+ST63rUJNlNVXxUCCq4uwUWe0Bp
+ FkJ3XNjj7nQT0xdx/0pObbJulnF51Y5Hl1gek5oIL20TaYgyo4uxF4om6b5/s3uWEeyf
+ cJacWbhZTCjp4PgxxYqF08gjTGutGuBY62K07MJbE8wF/GgtKVc2hQLubMBRxMAbrAwb
+ Lwhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765998510; x=1766603310;
+ d=1e100.net; s=20230601; t=1765998572; x=1766603372;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=MGsgEJD2SyR+AWVolmZTycppNh/PCxe2EmoUR9JEWAg=;
- b=FkIHys2bd4tO/WWs1aH+L2YtKdxwhcHTDjQE9mc0hMjs6krBGf7TP1BnBzH+Pt2D1l
- oEeIyjVENzJSqWQznkbXXF2mXathNd3gltXlneEy3P4bmInE7RttEkNLIDE5aRL14XY6
- KgLtRmXkFmCEcy/etdUHk/U/4J6UHWifRsZgo6Xl/hq0ZXC8X8qWeVR0cCk+iDsj52hq
- xVoFzPrmwRJl2whm5ZS6fruBFPvyE7otKC+r+sj+JmXCzbJo6HSJmscrR+D49UsFRj5L
- mqHHcXAwwN0zBZG8gQiNM8cchaiplM+X0DN60+WTM69S1x86cQ1EiPh0lTPVqj6xr6fY
- TEaw==
-X-Gm-Message-State: AOJu0Yz369fndURpT0CBoDRzGKlsus/Rn5J/hAJslnhcKwwqnmyryLF6
- /NF20QzrtzvcGaFTb2zyH+oQ6L+TVqpEJengOsMOuN3UR7Q0JfYo1rE6WB46yFodAZfNOWJ3UnF
- YVKy34hk=
-X-Gm-Gg: AY/fxX6aZu4R0YyN5V+DzBQpIET/V4QoiOqM8TgJcu8DWM/dDFgy+aQSNx2Rac/uY6c
- pa7iP9OSIbhqQNyKrTIiI7dj633LP5oPofUI5s5SbKKp1is97N0WDYl66vHxoDf1FGD45LbTvds
- ETbJME1nuTZE2h/WebvNKLBnzalfu3omRB//nASvx1m6A11LY4BnZ0qHKzML/xsl1MS0EgfOYmC
- /oSdiniFXi+32SsiRDHuMhBnA7nvUpwSzgSGrC/AZOhWaz8fx1FhuL6sDgERmsJVOyIGqEsxnn9
- Gfii7PYJML3MVJGDk0pyzPTOUNgDGFN2sGaDhp5K8YAh1TiOpnwn5Xpm66AsusUn4eoa9hKCnZY
- NfOmuRbRwLALW8NC5xtNFwfZVRIsAkImwzzDTbFI3bOPeHjoQzCSXrEZ/KP7NHnDuEpxgiGC9ry
- WBNyF53lvSJReRnmnX38FYPZOsoszV8A==
-X-Google-Smtp-Source: AGHT+IHvRfe6JNYP3+5MkK/e+/i8d05tKCzmk01z+XBokyb3hsJI+m6d2a05tUUL+aYJp4g/tpRg4g==
-X-Received: by 2002:a17:902:f789:b0:29f:2734:6ffb with SMTP id
- d9443c01a7336-29f27347628mr184370565ad.22.1765998509916; 
- Wed, 17 Dec 2025 11:08:29 -0800 (PST)
+ bh=0gcgUFcIy0Rl998fbvewGR5lW7JgEQupnjBQ1p4RVng=;
+ b=G2OaTVbjjuIc6iwVkdQ/k2ePzAx3viqAfPvzKMlsW631OEKte99rsW8mwsJ+qyN1la
+ ki89/xlv9puhcAgF7qAuyD5LFgALkh9bD+luHtQbpthXA/ha0xKmPwvWtysVtf/gACAQ
+ l/eL390MiFbuQ9XNYE0SEJILdBxAyIF9rrYtK5lj+65YdP/dAgs5WV/+d7N7THeL4F+E
+ 83MXxpCKF5odaaCSQyONuPmvL58EVCZuI+i5fMryRYavAES81L9EK217Ufr4oIhXbOjX
+ pMySzViGvXQ3rAZ18ZizfmLcS+xUaBLY9+BnXWVnoS4NebTsFlEN0SlqGLl6gAWAQwqo
+ j0RA==
+X-Gm-Message-State: AOJu0Yw7WnIWhYDX95TXVeWymTVsn9llUROWXgK7ty8cJ26AveTeS5Bs
+ FeEGKCfX2hwasH8mtf63YBxpnmrvkJ2tocs7mhW1ApHjAXDuymmF+JngSfhIMNrog9CL/PyH+L+
+ utXRADJI=
+X-Gm-Gg: AY/fxX4Y9+n5zmJtVNaqvmRJfdYQZNB4iozumITPFp4L0fdU+KnNOzBQhn4hF1gRU11
+ mWjBZ5N/aYQQSXZGKYB/eUs/mAS0ey0Y1jk6onUZSAMfimjr7N9n496CdvFtcX/zA9HzJ1vanzh
+ 7n3GPTsWByBDBMj3RoVWo8DDDoqhlAU4vUSsskJriBO+T+jkAqyndm3t00/AUBCx/XN/ioMzXZT
+ N6LAzCF7PmG0CKU666vwdA2ekLWx9jbB96ZcmbXojbXHqbbQHIfWcEG21oANPCEVP4n+/sQZWHG
+ n9KCz0s3bmmN1VVvOyBHDrP6gpZliKZOqftd+y4giuD7GzgzKfgGZYsy9ODnqun5zzIpviutiEP
+ mpp15omneOgO6+AWYba41+c2EOLgU4ZOST7ZjzypvKOhmbel3Q07YiIw7W8Mx+7PY8eDxiq7S3V
+ dQhqF7ntttrCrGu6oQrmh2lAITlj2myA==
+X-Google-Smtp-Source: AGHT+IGw9upkc8rGJFXChsj/SHkJJwIpWWumE3Wx12jx0p8M1YG+6UzpO3a8bzF/I038tmdwu5xJig==
+X-Received: by 2002:a05:6a00:2295:b0:7ab:242b:95c6 with SMTP id
+ d2e1a72fcca58-7fe0b73a291mr425067b3a.6.1765998572060; 
+ Wed, 17 Dec 2025 11:09:32 -0800 (PST)
 Received: from [192.168.10.140] ([180.233.125.245])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2a2d193cf46sm620885ad.100.2025.12.17.11.08.28
+ d2e1a72fcca58-7fe1456d417sm196556b3a.58.2025.12.17.11.09.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Dec 2025 11:08:29 -0800 (PST)
-Message-ID: <d59cb4eb-e69e-4f41-aa52-48c7a65b21cc@linaro.org>
-Date: Thu, 18 Dec 2025 06:08:25 +1100
+ Wed, 17 Dec 2025 11:09:31 -0800 (PST)
+Message-ID: <50046687-efa9-4dee-814f-31234bee9cb5@linaro.org>
+Date: Thu, 18 Dec 2025 06:09:27 +1100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/14] system/memory: Remove address_space_stl_notdirty
- and stl_phys_notdirty
+Subject: Re: [PATCH 05/14] system/physmem: Inline and remove leul_to_cpu()
 To: qemu-devel@nongnu.org
 References: <20251217143150.94463-1-philmd@linaro.org>
- <20251217143150.94463-5-philmd@linaro.org>
+ <20251217143150.94463-6-philmd@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20251217143150.94463-5-philmd@linaro.org>
+In-Reply-To: <20251217143150.94463-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,22 +106,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/18/25 01:31, Philippe Mathieu-Daudé wrote:
-> stl_phys_notdirty() was added in commit 8df1cd076cc ("physical memory
-> access functions") as a (premature?) optimisation for the CODE path.
-> Meanwhile 20 years passed, we might never have understood / used it
-> properly; the code evolved and now the recommended way to access the
-> CODE path is via the cpu_ld/st_mmu*() API.
+> leul_to_cpu() is only used within physmem.c: inline it
+> and remove.
+> Since @bitmap is of 'unsigned long' type, use its size
+> with ldn_le_p() instead of using HOST_LONG_BITS.
 > 
-> Remove both address_space_stl_notdirty() and stl_phys_notdirty()
-> leftovers.
-> 
-> Suggested-by: Pierrick Bouvier<pierrick.bouvier@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   include/system/memory.h        |  6 ------
->   include/exec/memory_ldst.h.inc |  2 --
->   system/memory_ldst.c.inc       | 39 ----------------------------------
->   3 files changed, 47 deletions(-)
+>   include/qemu/bswap.h | 11 -----------
+>   system/physmem.c     |  5 +++--
+>   2 files changed, 3 insertions(+), 13 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
