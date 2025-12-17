@@ -4,127 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E45ED66B81
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 18:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77BABD66B81
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Dec 2025 18:13:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vVvzO-0008Mi-Fm; Wed, 17 Dec 2025 13:11:06 -0500
+	id 1vVw1v-0000fE-AZ; Wed, 17 Dec 2025 13:13:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vVvzK-0008ML-0o
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 13:11:02 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vVvzG-0001yE-Sl
- for qemu-devel@nongnu.org; Wed, 17 Dec 2025 13:11:01 -0500
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 5BHHMtgq3981266
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 18:10:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=JAYI8S4sYwYl7EChrMVCoF7S
- wN4z6RZN4gUx1n+zxo4=; b=amHLmRMo4cadqKaQ/g7sOoNscZRcfSAnilFKTaSu
- z/PmxYDgZ0gnQqAGHtrll2n2XwTRTDve6rHealIbLb6NYULP0IxVjjVbVmWC8wTq
- IjT6YsYo4kqRa+JYlu35C5Zkg1yeThjwkfo3rqjd9jNSbbQdEpJJ6I1eE6q9k/Qx
- pab57w/P/BvbLl4l+H5/lM670e3oqBG33SOAKgvnu+S1LKjpbLXt03KRqg73R8TS
- HQkbqHUfP+9ru5loZ1au018nZq+DU2GMm8PPBqmmgBOMLvfKmW/FvH3WxnWzvZrK
- 1lIVpLS8lrsMlcSitDWIEittF093YZGGyLOLs+Bm3OcNZw==
-Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
- [74.125.224.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b40v784qy-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 18:10:56 +0000 (GMT)
-Received: by mail-yx1-f69.google.com with SMTP id
- 956f58d0204a3-645599517c5so5245910d50.3
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 10:10:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vVw1t-0000f2-GQ
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 13:13:41 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vVw1r-0002LU-Ir
+ for qemu-devel@nongnu.org; Wed, 17 Dec 2025 13:13:41 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2a0eaf55d58so5782455ad.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 10:13:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1765995055; x=1766599855; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JAYI8S4sYwYl7EChrMVCoF7SwN4z6RZN4gUx1n+zxo4=;
- b=GFqYrUeySDGhB0D1cvODwPNMqwx61trGPyjPCiILYhDFLxUwqRUfKdKEiE/0LCsurJ
- 9NjQ239P9dX/fXmv8IjZNn1R2K25O+spZ9py24TAr8mlRLDFjXAxUY7etwnI1BAT6CrL
- Cg69v1X2gU8Jo8IFSpZW0hk+x9hJm/H4LgJaKUG30frnN8Iz0Obyl284JG8MZzdj6p5P
- 6u93vUuX3BW5xWNqmGdYIpemQ/jDAFipT37V1exoiRT7YejtCzJzeBLseT+JVzs5XwrH
- clqssETwC12AnwOJq2/7fjdO0pOsheRE8IbGzLIkXW/cEd5aHseQTZ3dgXrqTsnrughX
- Ei4A==
+ d=linaro.org; s=google; t=1765995218; x=1766600018; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=L8DgTyvbqMUayO2l1xNnvYO2P3fS9oDX8SyjcTFpp0o=;
+ b=jZrKSc7WyI20s8tGzGkCbc1LhfmSASWoWb4S/KRt5bn5FBz0RA5H8Pa7u4Z+qIEp25
+ xCJgVnm15X8z+5Cr/gXlKI66MP1m0GRL2twn8Ls9PtWvQ8LQ1MESYpIgyYzX24dTSb/b
+ pW4A0j0UM0n+ljyP2iwVBsNPcYUTDlvgLg/VOUdthsXW5tkXCgFsvBP+q7P2r+b2YZld
+ f5UBdFsuTRi1SZq/OZyU2gcWvWsqsTfnSLn8Pg2pKeAj0oFddfjAusC4tlpQDV8riP97
+ 2gv+MEMbx/yCMkvsuerCTe9Zs68dSfFm835pC7BIGVCqJgjQbnglI7i3S7kORZOvxNxS
+ XDNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1765995055; x=1766599855;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JAYI8S4sYwYl7EChrMVCoF7SwN4z6RZN4gUx1n+zxo4=;
- b=o8AZBPS6AH25BFfWzWaG729L5LLyE9suMl1fEoA5kln0TlJ6b0BO19Vk9kqUb7Vgbz
- FZgY3t07tVysfT6JTN3zEopfz1BiHVmuY1HHlnH6Bo4w0vR6hG9XWdwFZY5m4j9HmPSf
- cnH7h1Jsrg86KycubjpqLX42f70Eb8QWQQmmeytfRBqns8KsUllNBmugV6lLpwfsGwNr
- JzDR81q83br3bU2YLKwgxG4YeRBfA7b89ounkbqLKxQqWpU/CS+KObmtmPFCIzq13BOV
- +1Yj6Yk+grFQLQtidV8/VEXcR/NewYw1pM60u/BCSdGYWlIstmdSaxAI3BrwRaznrIE1
- rfSQ==
-X-Gm-Message-State: AOJu0YwuTiw3YgQsPJRtSaIGm0OGyTD9SM6gN4mIaD+1WD4n2chaIjMU
- UrkngnPmGTbZWLc9NGpfxxAIbohzRQG5ZoZvf78ZEry9lCnDwCkb8tQkRbSk/COR9DJ+uIGbQjM
- gCw5fk6UmyHYtJJFQ0sPEoiWAC9KSCRGTIT0AD4s9Dvk6Qnb62jmg8IC5kn82WclhIBG4rcMDak
- 5UwacSNtb53W+0pMW2LpcLoJuXQmo6a68d
-X-Gm-Gg: AY/fxX7Aqwx4AX+g8UgdSCWBp8YyY911XpT6J1yHOzy3Ng0SH/1P3mBrk4u0Ffro9ev
- UeSOS9DT57oJhN4op6AgQgDkTzEPhgMYKmSdZsvYcUQZdSnyhKztcB4Zp8uAUwTh26DN2aLeYkI
- 6zjdoHm5auDwbtrpltLlts66jUIPsm6wnMcAaylqe+NNoO2rc9CGJRQdD4//6pCQgSpi0=
-X-Received: by 2002:a05:690e:1187:b0:644:60d9:8651 with SMTP id
- 956f58d0204a3-6455567e274mr14172069d50.96.1765995055480; 
- Wed, 17 Dec 2025 10:10:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG22oiL1vrX2+oEv9GBqouWO2GOiNkbW7g9kMN0v9O2xYKdYOEdlxy3FFuq/vWtJ4JrSwAdzWpVGX7DQa/YQWU=
-X-Received: by 2002:a05:690e:1187:b0:644:60d9:8651 with SMTP id
- 956f58d0204a3-6455567e274mr14172054d50.96.1765995054878; Wed, 17 Dec 2025
- 10:10:54 -0800 (PST)
+ d=1e100.net; s=20230601; t=1765995218; x=1766600018;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=L8DgTyvbqMUayO2l1xNnvYO2P3fS9oDX8SyjcTFpp0o=;
+ b=c3i3M92xj7vY5DOyoHm+RH+V50hiV8VbT/9uSDzsVrIPRYYEeJ42e26BD+IX4nTwmF
+ NhJoYMHjNqAW362yuxq8jYM8zHiTUNr2iaPspBMVrpaJIGWL70T12LOaaIc5xvy7XqBh
+ NM0+EPsDngWL0Twf0vS6OuOhsMNvMVxEid245xpC/rStalYc0Fe5+8BlerbWEd3oX1I+
+ +B3kR2KTVe+ILS85rAI+t23riienCk2KDulbnUQJBvznEZDy+/L+70NPByHXMI9Lofoa
+ a15CyQ8lNRDMnTUmdCBplmrMJxTSf1A29qnQhWSdhFDt2tgan/fkIiUuftHvyvgrIdk0
+ H6tQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUg1eZWONp/IgDApSNqRm5+GlkTelZwPYvXIWjbrL4+l9ITYe5uPlM61AJAKO1vRl6P/H1pZcv1aDrf@nongnu.org
+X-Gm-Message-State: AOJu0YxAW2tnre52rVG34+YbusylTNWfHadi9M0adW4V2jBbsZ5i3Fig
+ RiiZMzaoU/JR0sRFXFyzDhSlxoeZEHZwph+GZj5bpfUZkjh+oUnZJ66Op6c//4ZBBw9SaC9jq9F
+ lhu/jA1c=
+X-Gm-Gg: AY/fxX5xmJ2GiQJG4VY29nt2yswGExzOApvytW7QR0+Un25TTD6KRv7S5sTYudblJxd
+ zMwcu2SB47+A/QWeFvxbG2/KmwMGulZjC3DgQUUVHxLtqchDeCT6jDFLqoMIUl1mbA2x7q2IlRI
+ mFsOLYWFo5ieVHllLkWwShgkZpw7rhtVhm0py4ks26atUQZk0XBjvRhkZbiPk5ao6SiaxmYVbKA
+ wTaZPEwzIQXoTkBQEzZ7vWTK2MsYFmsqxQg4U8ZU57A9b2zNU1UuPTCvGdRAuLeFTxFh0jeJzCz
+ E38YOu64t9Lr7Xrk1IPcLjqUABMqu306rx8RHxZ3nvUgaKYp/dJv1WEjtUF6VWxQTOjVeftAdWD
+ cLGLaf38eVhZxlzxgPXcU9VL0LLtkxOVsod7ToQIlUjkiAuHH75l07wcXzIN0Bd/rsseI33qygP
+ 5F1EyAbAvvcaD9+qQpAKqIWPNCl7lElWyE9rSxq12lZoZSiXshbmbjNwk=
+X-Google-Smtp-Source: AGHT+IGdYBTs24ilP1LkU/GKDanxnvfYJaLPrfYjzeMmgGpBWyxEFFmm22Th+UzjJ0xS946gB2KVOA==
+X-Received: by 2002:a17:90b:3c4d:b0:340:6b6f:4bbf with SMTP id
+ 98e67ed59e1d1-34e71e6a525mr252649a91.18.1765995217301; 
+ Wed, 17 Dec 2025 10:13:37 -0800 (PST)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-34e70dcc7bcsm225830a91.13.2025.12.17.10.13.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Dec 2025 10:13:36 -0800 (PST)
+Message-ID: <09738981-6ee4-47f9-b868-37f3259c06ed@linaro.org>
+Date: Wed, 17 Dec 2025 10:13:36 -0800
 MIME-Version: 1.0
-References: <20251217144211.95032-1-philmd@linaro.org>
-In-Reply-To: <20251217144211.95032-1-philmd@linaro.org>
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-Date: Wed, 17 Dec 2025 12:10:39 -0600
-X-Gm-Features: AQt7F2pFxKiksABlZtcpCAk8_olFrbSEgEteEqlMUaNv-R_JuOHIbPx_HF9baCo
-Message-ID: <CAEqNhNZKhNWbMsGfT2_BdzDRKLZ03KjEaUtaim04upoQJ+quAQ@mail.gmail.com>
-Subject: Re: [PATCH] target/hexagon: Include missing 'cpu.h' header in
- 'internal.h'
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- Matheus Tavares Bernardino <quic_mathbern@quicinc.com>,
- Taylor Simpson <ltaylorsimpson@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000ebfa09064629c3a0"
-X-Proofpoint-ORIG-GUID: bGxjXOWHa5KlWTIiv409WlqKbuJSetb7
-X-Proofpoint-GUID: bGxjXOWHa5KlWTIiv409WlqKbuJSetb7
-X-Authority-Analysis: v=2.4 cv=f8JFxeyM c=1 sm=1 tr=0 ts=6942f230 cx=c_pps
- a=J+5FMm3BkXb42VdG8aMU9w==:117 a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=jes78ldr6eyxAPFlORkA:9 a=QEXdDO2ut3YA:10 a=s0m16PFOyf00l4jPi5oA:9
- a=o8ZsNmgYwwGp3ILO:21 a=lqcHg5cX4UMA:10 a=Epx66wHExT0cjJnnR-oj:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE3MDE0NSBTYWx0ZWRfX/A+aZi7x5rsD
- DeoQiKnoDfw3gjRpEw5QvXWNtd49KXQt2UTkvYNw4strw5S4ja4ZyJmSPNyYnIYNaLzqLQQDcoj
- sGS3Baao8wUDy+wtfZQAvADdV2ju5vg00/xLGUlHn7vpnIqW6mqBJywJJmPB8ZFqi2pXS63NMUi
- 1mZxTyp8kKg9rRMZGFFtU1ktOkHzBLwueKefe+AAJDdB/Py72OAi33AygoPjlm9tvKvUyC1K8DV
- dO/kf4f7NxQogpvIoVdJ3J/WrOnEM3Ik3fj2neTjZ65Kw5yhNdIzDAB5Xh9S4EkPoOSvyG4r+Dt
- nEr+ZMVDapdcMw1zW4BtdGU8OyAmiGqiDG6yrIRA+QSXDX1gsAilE0NpqYA8fCUEu99jx02d9I9
- nFVYysEUPeVViiiHs6eaGJ2fKog+lg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
- definitions=2025-12-17_03,2025-12-16_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 suspectscore=0 phishscore=0
- impostorscore=0 bulkscore=0 malwarescore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2510240001 definitions=main-2512170145
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] qga/vss-win32: Fix ConvertStringToBSTR redefinition
+ with newer MinGW
+Content-Language: en-US
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: phind.uet@gmail.com, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org
+References: <20251215164512.322786-1-phind.uet@gmail.com>
+ <20251215164512.322786-2-phind.uet@gmail.com>
+ <CAMxuvaw=ZigHsgHf5matsmLrH57y-HE4gwgQy4Oyht4+u58N+g@mail.gmail.com>
+ <CAPMcbCqSGCk0kmHF+uJjOjES+sKHQHQ-v59iU_q4QqY3TOTGVg@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAPMcbCqSGCk0kmHF+uJjOjES+sKHQHQ-v59iU_q4QqY3TOTGVg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,171 +115,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ebfa09064629c3a0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 12/16/25 1:53 AM, Kostiantyn Kostiuk wrote:
+> Hi
+> 
+> On Tue, Dec 16, 2025 at 8:26 AM Marc-André Lureau 
+> <marcandre.lureau@redhat.com <mailto:marcandre.lureau@redhat.com>> wrote:
+> 
+>     Hi
+> 
+>     On Mon, Dec 15, 2025 at 8:57 PM <phind.uet@gmail.com
+>     <mailto:phind.uet@gmail.com>> wrote:
+> 
+>         From: Nguyen Dinh Phi <phind.uet@gmail.com
+>         <mailto:phind.uet@gmail.com>>
+> 
+>         Newer versions of MinGW-w64 provide ConvertStringToBSTR() in the
+>         _com_util namespace via <comutil.h>. This causes a redefinition
+>         error when building qemu-ga on Windows with these toolchains.
+> 
+>         Add a meson check to detect whether ConvertStringToBSTR is already
+>         available, and conditionally compile our fallback implementation
+>         only when the system does not provide one.
+> 
+>         Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com
+>         <mailto:phind.uet@gmail.com>>
+>         ---
+>           meson.build               | 12 ++++++++++++
+>           qga/vss-win32/install.cpp |  2 ++
+>           2 files changed, 14 insertions(+)
+> 
+>         diff --git a/meson.build b/meson.build
+>         index c5710a6a47..60a980e610 100644
+>         --- a/meson.build
+>         +++ b/meson.build
+>         @@ -3299,6 +3299,18 @@ endif
+>           # Detect host pointer size for the target configuration loop.
+>           host_long_bits = cc.sizeof('void *') * 8
+> 
+>         +# Detect if ConvertStringToBSTR has been defined in _com_util
+>         namespace
+>         +if host_os == 'windows'
+>         +  has_convert_string_to_bstr = cxx.compiles('''
+>         +    #include <comutil.h>
+>         +    int main() {
+>         +        BSTR b = _com_util::ConvertStringToBSTR("test");
+>         +        return b ? 0 : 1;
+>         +    }
+>         +  ''')
+>         +  config_host_data.set('CONFIG_CONVERT_STRING_TO_BSTR',
+>         has_convert_string_to_bstr)
+>         +endif
+>         +
+>           ########################
+>           # Target configuration #
+>           ########################
+>         diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
+>         index 7b25d9098b..5b7a8e9bc5 100644
+>         --- a/qga/vss-win32/install.cpp
+>         +++ b/qga/vss-win32/install.cpp
+>         @@ -549,6 +549,7 @@ STDAPI DllUnregisterServer(void)
+> 
+> 
+>           /* Support function to convert ASCII string into BSTR (used in
+>         _bstr_t) */
+>         +#ifndef CONFIG_CONVERT_STRING_TO_BSTR
+> 
+> 
+>     I wonder if it could check __MINGW64_VERSION_MAJOR >= 14 instead of
+>     adding a configure-time check.
+> 
+> 
+> @Peter Maydell <mailto:peter.maydell@linaro.org> preferred to avoid 
+> specific version-number checks.
+> See: https://gitlab.com/qemu-project/qemu/-/issues/3217#note_2935451782 
+> <https://gitlab.com/qemu-project/qemu/-/issues/3217#note_2935451782>
+> 
+> I also preferred the idea of checking the real function present instead 
+> of the version of the component.
+> 
+> Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com 
+> <mailto:kkostiuk@redhat.com>>
+> 
+> 
+>     lgtm anyway
+>     Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com
+>     <mailto:marcandre.lureau@redhat.com>>
+> 
+>           namespace _com_util
+>           {
+>               BSTR WINAPI ConvertStringToBSTR(const char *ascii) {
+>         @@ -566,6 +567,7 @@ namespace _com_util
+>                   return bstr;
+>               }
+>           }
+>         +#endif
+> 
+>           /* Stop QGA VSS provider service using Winsvc API  */
+>           STDAPI StopService(void)
+>         -- 
+>         2.43.0
+> 
 
-On Wed, Dec 17, 2025 at 8:42=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
+When cross-compiling using fedora-win64-cross, it can find the function 
+in header but does not link it.
 
-> Both CPUHexagonState and TOTAL_PER_THREAD_REGS are defined
-> in "cpu.h" which is luckily indirectly included. However when
-> refactoring unrelated files we get:
->
->   In file included from target/hexagon/helper.h:18,
->                    from include/exec/helper-proto.h.inc:56,
->                    from include/exec/helper-proto.h:13,
->                    from target/hexagon/op_helper.c:22:
->   target/hexagon/internal.h: At top level:
->   target/hexagon/internal.h:29:25: error: unknown type name
-> =E2=80=98CPUHexagonState=E2=80=99; did you mean =E2=80=98CPUPluginState=
-=E2=80=99?
->      29 | void hexagon_debug_vreg(CPUHexagonState *env, int regnum);
->         |                         ^~~~~~~~~~~~~~~
->         |                         CPUPluginState
->   target/hexagon/internal.h:30:25: error: unknown type name
-> =E2=80=98CPUHexagonState=E2=80=99; did you mean =E2=80=98CPUPluginState=
-=E2=80=99?
->      30 | void hexagon_debug_qreg(CPUHexagonState *env, int regnum);
->         |                         ^~~~~~~~~~~~~~~
->         |                         CPUPluginState
->   target/hexagon/internal.h:31:20: error: unknown type name
-> =E2=80=98CPUHexagonState=E2=80=99; did you mean =E2=80=98CPUPluginState=
-=E2=80=99?
->      31 | void hexagon_debug(CPUHexagonState *env);
->         |                    ^~~~~~~~~~~~~~~
->         |                    CPUPluginState
->   target/hexagon/internal.h:33:44: error: =E2=80=98TOTAL_PER_THREAD_REGS=
-=E2=80=99
-> undeclared here (not in a function)
->      33 | extern const char * const
-> hexagon_regnames[TOTAL_PER_THREAD_REGS];
->         |                                            ^~~~~~~~~~~~~~~~~~~~=
-~
->
-> Fix that by including the missing header.
->
-> We don't need the "qemu/log.h" since commit 0cb73cb5a02 ("target/hexagon:
-> Remove HEX_DEBUG/HEX_DEBUG_LOG"): remove it.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  target/hexagon/internal.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
->
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+$ podman run --pull newer --init --rm -it -v $(pwd):$(pwd) -w $(pwd) \
+docker.io/pbolinaro/qemu-ci:fedora-win64-cross \
+bash -cx './configure $QEMU_CONFIGURE_OPTS && ninja -C build install'
+...
+[4434/4696] Linking target qga/vss-win32/qga-vss.dll
+FAILED: qga/vss-win32/qga-vss.dll
+x86_64-w64-mingw32-g++ -m64  -o qga/vss-win32/qga-vss.dll 
+qga/vss-win32/qga-vss.dll.p/requester.cpp.obj 
+qga/vss-win32/qga-vss.dll.p/provider.cpp.obj 
+qga/vss-win32/qga-vss.dll.p/install.cpp.obj 
+qga/vss-win32/qga-vss.dll.p/vss-debug.cpp.obj 
+-Wl,--allow-shlib-undefined -shared ../qga/vss-win32/qga-vss.def 
+-Wl,--start-group -Wl,--out-implib=qga/vss-win32/qga-vss.dll.a 
+-fstack-protector-strong -Wl,--no-seh -Wl,--nxcompat -Wl,--dynamicbase 
+-Wl,--high-entropy-va -fstack-protector-all -fstack-protector-strong 
+-Wl,--add-stdcall-alias -Wl,--enable-stdcall-fixup -lws2_32 -lole32 
+-loleaut32 -lshlwapi -luuid -lkernel32 -luser32 -lgdi32 -lwinspool 
+-lshell32 -lcomdlg32 -ladvapi32 -Wl,--end-group
+/usr/lib/gcc/x86_64-w64-mingw32/14.2.1/../../../../x86_64-w64-mingw32/bin/ld: 
+qga/vss-win32/qga-vss.dll.p/install.cpp.obj: in function 
+`_bstr_t::Data_t::Data_t(char const*)':
+/usr/x86_64-w64-mingw32/sys-root/mingw/include/comutil.h:279:(.text+0x1dc8): 
+undefined reference to `_com_util::ConvertStringToBSTR(char const*)'
+...
 
+Looking into mingw files, the symbol is not there.
+$ nm /usr/x86_64-w64-mingw32/sys-root/mingw/lib/lib*.a |
+grep -i ConvertStringToBSTR
 
+It's present in header file though:
+/usr/x86_64-w64-mingw32/sys-root/mingw/include/comutil.h
 
-> diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
-> index 32e96f00d97..5fc837ae229 100644
-> --- a/target/hexagon/internal.h
-> +++ b/target/hexagon/internal.h
-> @@ -18,7 +18,7 @@
->  #ifndef HEXAGON_INTERNAL_H
->  #define HEXAGON_INTERNAL_H
->
-> -#include "qemu/log.h"
-> +#include "target/hexagon/cpu.h"
->
->  int hexagon_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
->  int hexagon_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);
-> --
-> 2.52.0
->
->
+Not sure if something is missing in mingw, or if it's missing an 
+attribute to say it should be available at runtime only, but in all 
+cases, a simple fix to the patch is:
 
---000000000000ebfa09064629c3a0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+diff --git a/meson.build b/meson.build
+index ab19317f5af..113296544c4 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3261,7 +3261,7 @@ host_long_bits = cc.sizeof('void *') * 8
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:monospace"><br></div></div><br><div class=3D"gmail_quote gmail_quo=
-te_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Dec 17, 2025 at=
- 8:42=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@l=
-inaro.org">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"g=
-mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
-,204,204);padding-left:1ex">Both CPUHexagonState and TOTAL_PER_THREAD_REGS =
-are defined<br>
-in &quot;cpu.h&quot; which is luckily indirectly included. However when<br>
-refactoring unrelated files we get:<br>
-<br>
-=C2=A0 In file included from target/hexagon/helper.h:18,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0from i=
-nclude/exec/helper-proto.h.inc:56,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0from i=
-nclude/exec/helper-proto.h:13,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0from t=
-arget/hexagon/op_helper.c:22:<br>
-=C2=A0 target/hexagon/internal.h: At top level:<br>
-=C2=A0 target/hexagon/internal.h:29:25: error: unknown type name =E2=80=98C=
-PUHexagonState=E2=80=99; did you mean =E2=80=98CPUPluginState=E2=80=99?<br>
-=C2=A0 =C2=A0 =C2=A029 | void hexagon_debug_vreg(CPUHexagonState *env, int =
-regnum);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^~~~~~~~~~~~~~~<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CPUPluginState<br>
-=C2=A0 target/hexagon/internal.h:30:25: error: unknown type name =E2=80=98C=
-PUHexagonState=E2=80=99; did you mean =E2=80=98CPUPluginState=E2=80=99?<br>
-=C2=A0 =C2=A0 =C2=A030 | void hexagon_debug_qreg(CPUHexagonState *env, int =
-regnum);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^~~~~~~~~~~~~~~<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CPUPluginState<br>
-=C2=A0 target/hexagon/internal.h:31:20: error: unknown type name =E2=80=98C=
-PUHexagonState=E2=80=99; did you mean =E2=80=98CPUPluginState=E2=80=99?<br>
-=C2=A0 =C2=A0 =C2=A031 | void hexagon_debug(CPUHexagonState *env);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~~~~~~~~~~~~<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 CPUPluginState<br>
-=C2=A0 target/hexagon/internal.h:33:44: error: =E2=80=98TOTAL_PER_THREAD_RE=
-GS=E2=80=99 undeclared here (not in a function)<br>
-=C2=A0 =C2=A0 =C2=A033 | extern const char * const hexagon_regnames[TOTAL_P=
-ER_THREAD_REGS];<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ^~~~~~~~~~~~~~~~~~~~~<br>
-<br>
-Fix that by including the missing header.<br>
-<br>
-We don&#39;t need the &quot;qemu/log.h&quot; since commit 0cb73cb5a02 (&quo=
-t;target/hexagon:<br>
-Remove HEX_DEBUG/HEX_DEBUG_LOG&quot;): remove it.<br>
-<br>
-Signed-off-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lin=
-aro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
----<br>
-=C2=A0target/hexagon/internal.h | 2 +-<br>
-=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
-<br></blockquote><div><br></div><div><div class=3D"gmail_default" style=3D"=
-font-family:monospace">Reviewed-by: Brian Cain &lt;<a href=3D"mailto:brian.=
-cain@oss.qualcomm.com">brian.cain@oss.qualcomm.com</a>&gt;</div><br></div><=
-div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h<br>
-index 32e96f00d97..5fc837ae229 100644<br>
---- a/target/hexagon/internal.h<br>
-+++ b/target/hexagon/internal.h<br>
-@@ -18,7 +18,7 @@<br>
-=C2=A0#ifndef HEXAGON_INTERNAL_H<br>
-=C2=A0#define HEXAGON_INTERNAL_H<br>
-<br>
--#include &quot;qemu/log.h&quot;<br>
-+#include &quot;target/hexagon/cpu.h&quot;<br>
-<br>
-=C2=A0int hexagon_gdb_read_register(CPUState *cpu, GByteArray *buf, int reg=
-);<br>
-=C2=A0int hexagon_gdb_write_register(CPUState *cpu, uint8_t *buf, int reg);=
-<br>
--- <br>
-2.52.0<br>
-<br>
-</blockquote></div></div>
+  # Detect if ConvertStringToBSTR has been defined in _com_util namespace
+  if host_os == 'windows'
+-  has_convert_string_to_bstr = cxx.compiles('''
++  has_convert_string_to_bstr = cxx.links('''
+      #include <comutil.h>
+      int main() {
+          BSTR b = _com_util::ConvertStringToBSTR("test");
 
---000000000000ebfa09064629c3a0--
+I would recommend to use cxx.links instead of cxx.compiles for now.
+
+Regards,
+Pierrick
 
