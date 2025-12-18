@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1060CD6E2DC
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 19:39:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92ED2D70DF2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 19:41:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWJpy-0007uU-DD; Thu, 18 Dec 2025 14:38:58 -0500
+	id 1vWJs0-0008VP-8U; Thu, 18 Dec 2025 14:41:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1vWJpw-0007u9-As; Thu, 18 Dec 2025 14:38:56 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vWJrx-0008Ug-2X; Thu, 18 Dec 2025 14:41:01 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1vWJpu-00080Q-Ne; Thu, 18 Dec 2025 14:38:56 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BIG4tSx025635;
- Thu, 18 Dec 2025 19:38:51 GMT
+ (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
+ id 1vWJru-0008Pg-Os; Thu, 18 Dec 2025 14:41:00 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5BIG1B6u011837;
+ Thu, 18 Dec 2025 19:40:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=n9akDz
- TW2L3fc8uGLX4AiZ/WkzibskqN0ofa9L+/wjQ=; b=l3UMKo9t2vBIQORPbSloIn
- h1E1v6u/ScsiVQITJ/91/a5uLPNaKR8jw8kmtOS77/vufx9/v1FM7lv28vn8oK9x
- HlArulDVy4PDve3MdW8r3jghKIL4Tw5rQxmAmGEub4PZP1yTepKOkwPJI8Kt7yRH
- +0AV+2JdBAMwrnGbJIxnp6RrDT9t16Qh9EL5hkfA+nKnJzfEvf2ep6BX5Dt/hT3R
- IFrIOIBTUu6jRO+osXkHhmNPGycGiRgtbYaxK2FeaS27ONAnpvMc3mjaRVUGX6DF
- rF6lWR5+K7bUBv2p1tMxB3QmfmrY1+o0opJgzM0h1DdwCo5EpZ1ARZEHD7thB5zg
+ :message-id:mime-version:references:subject:to; s=pp1; bh=lWHtek
+ a3NzhUeMZKwBEHPT0rbPqo81msew1EANH/1K0=; b=RK7xVMSWnu3OMAoti3DlJT
+ WkWVqihTVeUoIsfrBWktDGGRvbaMREnux2RxjuFk1EgeS+SzVo1OdGQnmU4HsoLG
+ hbdKOq0twJTjzg7bO40yTtyDogwQOzSLR175UptQC2ck/zsGVTs21LzpADqXgcAb
+ SdvZ2song4TzqJlyKRxBEs/qHcAkRmxpJbp4tSCQmFyk7kFZckh5sFnc685dK2ul
+ Oc5002qxkEbWYeNC2NclDiyaOBBRJor69WvbbPXanwY15nQyf5j6UyG7dbav3AL6
+ g4pSbnYAT918pqondnRq7unRnSRBfdpcpdvDOV7yf+mi0YO7wM91HOjzd0AyTZaQ
  ==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0ytvmh5r-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4b0yt1ufvd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Dec 2025 19:38:51 +0000 (GMT)
+ Thu, 18 Dec 2025 19:40:57 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BIJY8AE031521;
- Thu, 18 Dec 2025 19:38:50 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4b4qvu80kh-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5BIJY5eU031459;
+ Thu, 18 Dec 2025 19:40:56 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4b4qvu80u7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 18 Dec 2025 19:38:50 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5BIJcmHW13566500
+ Thu, 18 Dec 2025 19:40:56 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5BIJetCh29033114
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 18 Dec 2025 19:38:48 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7CD945805D;
- Thu, 18 Dec 2025 19:38:48 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2497A58052;
- Thu, 18 Dec 2025 19:38:48 +0000 (GMT)
-Received: from [9.61.64.106] (unknown [9.61.64.106])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 18 Dec 2025 19:38:48 +0000 (GMT)
-Message-ID: <198747e2-ffb1-4d0d-b886-4da71346f511@linux.ibm.com>
-Date: Thu, 18 Dec 2025 14:38:47 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ Thu, 18 Dec 2025 19:40:56 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id ADC8958059;
+ Thu, 18 Dec 2025 19:40:55 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DFEDD58061;
+ Thu, 18 Dec 2025 19:40:54 +0000 (GMT)
+Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
+ [9.61.79.187]) by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 18 Dec 2025 19:40:54 +0000 (GMT)
+Message-ID: <a14c3180990bcaf3aefb59f6f68e877fb0918693.camel@linux.ibm.com>
 Subject: Re: [PATCH] MAINTAINERS: Add util/s390x_pci_mmio.c to the S390 PCI
  section
+From: Eric Farman <farman@linux.ibm.com>
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>
-References: <20251218193642.170968-1-thuth@redhat.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org, Matthew Rosato <mjrosato@linux.ibm.com>
+Date: Thu, 18 Dec 2025 14:40:54 -0500
 In-Reply-To: <20251218193642.170968-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20251218193642.170968-1-thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+MIME-Version: 1.0
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAyMyBTYWx0ZWRfX16sExPKwQ8kz
- d7XOiaPO4hnxsGXrqCeMABPnMntOMQDPWFYPM1Ockd5EelihUaZeQcsGxKeE03aJCNg1CobMGIY
- GX2zwvCXrsgrppoc7MvEs4KnzutfqILdHAds0k3CxmRDyYBqzRfM/Q8YqDqUatDrr41kr8xJgm4
- bCOX1dj/hE/Pd1a0ZSd6sXVaQ1L2CtcWS4YkSn/nekpFUV0Tofg0uEt+w/L1ahWyImJ2ZnpPEOu
- mm2t9t2xVtz3s28oS4M2IaQrEOD4Xcf3vpsYo9ZLaYBg8cXHlMBeIJu6f2JxzynKiwOy4YiZoSi
- MxVWXMCssJoOBmeMNS+gT1Mioq7g604vYfF67K/3gA1mR5ycOxCTYeDo6wLiMOw5eeu2nf5ITCv
- FITh8nQ+NseayFwWb4qmgd8M9FzQsg==
-X-Proofpoint-ORIG-GUID: YCLqlfznOgWjf0fSDsi73z1UpalAp7jF
-X-Authority-Analysis: v=2.4 cv=QtRTHFyd c=1 sm=1 tr=0 ts=6944584b cx=c_pps
+X-Proofpoint-GUID: IRFeX8ObjTLa9qx_mooBEgFOq32q9y29
+X-Proofpoint-ORIG-GUID: IRFeX8ObjTLa9qx_mooBEgFOq32q9y29
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjEzMDAyMyBTYWx0ZWRfXzraC9JFx7BZQ
+ kn9RzaaR0db4x3eG/EXVoKefpyLLlWdh08lfTvKtwiCozpnsCjHRRbKuf3mrq7HnrQtBX1cjBMh
+ HMuhWiGeuPrTkt7AgxodcWwyAQGuL4fNykKei1e0T38+X1oA1iKn89bNDZq1hr+YIpPEjt2Q18/
+ CfY3IkB/IBg9kpSCk7hi1NBc/UJpwRCVfStxDnJnIB8aC/BtIsfIqS62ot1RLMWN8Rdn1hr7+aC
+ /d8iVNppUqC/IjaOJ47O6ftENQ0TRtPb9xY58PqP0ZW3vpJ6EpQjTARKaTQb7Euew5MUM7fVckK
+ hxEP2LT0byg1OLpoWvCHXu1LYAXcyNUKS1N4KOkRuzcPWmNSqd1YAHEztQXB0ZZBeB5ehkseRl3
+ +eWQI6CHX2ViPAH6tJtxMu1yZikrrA==
+X-Authority-Analysis: v=2.4 cv=L/MQguT8 c=1 sm=1 tr=0 ts=694458c9 cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=VkNPw1HP01LnGYTKEx00:22
  a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=y1HG68m94I6UZcum19sA:9
  a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: YCLqlfznOgWjf0fSDsi73z1UpalAp7jF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2025-12-18_02,2025-12-17_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 impostorscore=0 clxscore=1011
+ impostorscore=0 phishscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ clxscore=1015 lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510240000 definitions=main-2512130023
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -120,21 +119,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/18/25 2:36 PM, Thomas Huth wrote:
+On Thu, 2025-12-18 at 20:36 +0100, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
-> 
+>=20
 > s390x_pci_mmio.c currently shows up as unmaintained. Add it to
 > the S390 PCI section to make the right people aware of changes
 > to this file.
-> 
+>=20
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
-
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-
 > ---
 >  MAINTAINERS | 1 +
 >  1 file changed, 1 insertion(+)
-> 
+
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
+
+>=20
 > diff --git a/MAINTAINERS b/MAINTAINERS
 > index c7faa5672a4..226bf64f68e 100644
 > --- a/MAINTAINERS
@@ -145,7 +144,6 @@ Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 >  F: include/hw/s390x/s390-pci*
 > +F: util/s390x_pci_mmio.c
 >  L: qemu-s390x@nongnu.org
->  
+> =20
 >  S390 channel subsystem
-
 
