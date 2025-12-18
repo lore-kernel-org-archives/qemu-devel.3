@@ -4,105 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39AF0D6ACF5
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 12:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 601CBD6ACF5
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 12:36:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWDCG-00044U-Sv; Thu, 18 Dec 2025 07:33:32 -0500
+	id 1vWDEu-0004nJ-PO; Thu, 18 Dec 2025 07:36:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWDCF-00043u-13
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:33:31 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vWDCD-0001vu-58
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:33:30 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id C68E35BD18;
- Thu, 18 Dec 2025 12:33:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1766061206; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ZFrW/nMhlpNMuSoDmosJkjYMLHFTy66ZMnjAxpF7bfQ=;
- b=MHyjzylQuVsM0Q6v/42Y5uv2SOj9GKOtRIyS0lmbK5njXOdgk4nACNuYocSBGOMWi+W1YW
- BI5h1ptXPpcfmcPQa/RfzU7UZo4ZXU/JfQXRpABa2jbHujDslKnxq4IPlbfCKhe3xWUg01
- XT9FZTi2HN9TeRQni7PLHe+lNBXedxY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1766061206;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ZFrW/nMhlpNMuSoDmosJkjYMLHFTy66ZMnjAxpF7bfQ=;
- b=Y0tDtvBCKWOigV70bL1WcKJ3ywOOgZJKAM8O4GUAV6nsAI9I5ie6/SigrFCEWF0zKPrYMz
- SiPg8elN06jp9zAQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=jl5lgzBG;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=5nW01hLa
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1766061204; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ZFrW/nMhlpNMuSoDmosJkjYMLHFTy66ZMnjAxpF7bfQ=;
- b=jl5lgzBG4xSZ+wAtPgyPl164XdANi+UIUcne3LReyOxhoxmaOCC/5Y90CYClL37lr8pI1G
- caw5uwQ3Cf7Qn8OZM5zY09Ex5yKUc8pfYDdFJsPKoZwfyiziC+5JuEoWjZJNd8LXCoYMX5
- R4uLgeBTvnpf+Ggzy8dou5A9euYfisE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1766061204;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ZFrW/nMhlpNMuSoDmosJkjYMLHFTy66ZMnjAxpF7bfQ=;
- b=5nW01hLaTNKCj50OrXdSrnEPpgFwvHwb3dwPQOeL6XCubWoTi15EEIZC8b6REqAF/Ts39J
- UMdrIg42KdkTLGBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1F1053EA63;
- Thu, 18 Dec 2025 12:33:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id h54LNZL0Q2kWdAAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 18 Dec 2025 12:33:22 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2] tests/functional: Allow tests to be run individually
-Date: Thu, 18 Dec 2025 09:33:20 -0300
-Message-ID: <20251218123320.31347-1-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1vWDEp-0004n1-8I
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:36:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1vWDEf-0002RE-Np
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 07:36:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1766061358;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8LJEI7hBcJPsKIGs0FW8nMdtFnVkJuNdMnip0SyuyT8=;
+ b=Ewuq6hXPGFTMwGbwUhg+c4S80L007BJ4YIRHIhcy9Dp3BjVRxZ6KfzxevEUyGNXVdzyMeJ
+ Q0UsCxxZYgohYLADGJSlxpGpCI8TiwXCdoXnfuwdpBZXJU0z9sF9f8QL+uT084R+XNycfq
+ PhqxkCacE57FPuoPeTvBw+4JGGod2QM=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-553-CDuVA9xANRK5nUBjoKX4NA-1; Thu, 18 Dec 2025 07:35:56 -0500
+X-MC-Unique: CDuVA9xANRK5nUBjoKX4NA-1
+X-Mimecast-MFC-AGG-ID: CDuVA9xANRK5nUBjoKX4NA_1766061356
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8b259f0da04so131717385a.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 04:35:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1766061356; x=1766666156; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8LJEI7hBcJPsKIGs0FW8nMdtFnVkJuNdMnip0SyuyT8=;
+ b=jhaUdWh88pRRObguP3kA2dv31r5Q2GWvii1ejTQgelZbvAR3CVMS/CQBgT+3lmcz4E
+ OR1QTVXF3KWOn+dLGCodpKXHeGPS6bSp1PXXWT9gZAjB/j5ZfJUIDSpKEg4jdho7dUzS
+ FtaIbMgtEQ930TGve+Q/pgYSLhlN9VUjFjgs0M0E+vvia5v27TI1M/R1EDLi1M4/A5Mp
+ xVbxxpeDw/8aIq0/XuUBXSwW9XYJtAtAGrgyLzhFjMfXd1LTphuewfozKVaFAlpSvvsG
+ w3MXPtFHaR/rCQn37aUP0zPCXDcddNIafIDH/lPeXP3Cf409VzjlIxedC0ncyetmiKuX
+ woMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1766061356; x=1766666156;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8LJEI7hBcJPsKIGs0FW8nMdtFnVkJuNdMnip0SyuyT8=;
+ b=NvfRiFfv4yXdPozCGPQ7jpDtzi0JdZjWITS/7KAdAmQTNs53voSjxUUsO8qJOR6C/N
+ tvVcIGmwhOqZCog1x/eoDVq1fWq897qmibvvR+KEVQvtmZIYOWRegeThnt+u+ExJ8e+x
+ FsLZqVsKy1Qxemrg9Ns/S6D2X5mcrSISP3Q5gHYbR040Pw4baElcvzwjSFx1k2aTBMYk
+ feaTq4oNSALG9qZy3WqTg0C9PNMebbA4xvGVTBlf2APpUatC/MrKiUbVN3qEZdzVmdSL
+ Rnswa0omiiIqqHjjfbk99qErlRDveRA2czPet5og+BrHvoAWecPBMWqE0RKdbxrxFrsG
+ cBdQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZ0OHEADpZlLbueCQf76k1YtfFe1GqbCLnSdmRz8qAecmLIS+Yxt0NKVUKn8UNK2GfKL6FZI4EU9Jk@nongnu.org
+X-Gm-Message-State: AOJu0Yz0rehsSYpg6EfbcuZ/G6yhHMeZXvAErZyykJzUjdiPJEbkG9XF
+ PTaXTnfidfL1FDCzxj1CNEDfs2lgntKIzRAA0xhf/GJ/dt+MxiktA4MEoC9C4gBCZot8pw/VILy
+ E+vgJCbckoYdy6vKYrFdR1+5TXX9iny02FQl0RumU7HYRE6g6v90MOi8XORdU6P/e1IxjN4QrnU
+ 9LfaQx4sK7Xp91M7toDzaqJxpUxddu0HM=
+X-Gm-Gg: AY/fxX7TtmqAZamZtG9l+0mEElQh2fX6JTRWQSh8vJwD1a0dhzIOZKXjv5e8J6y8rfm
+ hA0DQ3/L3etyC+KJS1ozauOfGImXl8BcDsHJKK0RpAvSYz0BGbJVr7YhLvTSVYkND8nCd3JRMFC
+ wqlv1Yiijxv6JNPenwVJJbOVR1sYpR8+vrUAhmQSBlW3jR5IZkXnmi0pQOAfC1Rt+atOE=
+X-Received: by 2002:a05:620a:6919:b0:8b2:5cdd:6a16 with SMTP id
+ af79cd13be357-8bb3b3708d5mr2929783085a.82.1766061355895; 
+ Thu, 18 Dec 2025 04:35:55 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHpxFhGoLTghMC+VClOhPC8jMRIpVdUHIyRBMkyOji8G/nfSeqCFXAa/rBK/Oq82OvKZ0wz0sCNUfcmYNstw2Y=
+X-Received: by 2002:a05:620a:6919:b0:8b2:5cdd:6a16 with SMTP id
+ af79cd13be357-8bb3b3708d5mr2929779985a.82.1766061355467; Thu, 18 Dec 2025
+ 04:35:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: C68E35BD18
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[test_pseries.py:url,suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+References: <20251218085446.462827-1-phind.uet@gmail.com>
+ <20251218085446.462827-2-phind.uet@gmail.com>
+In-Reply-To: <20251218085446.462827-2-phind.uet@gmail.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Thu, 18 Dec 2025 14:35:44 +0200
+X-Gm-Features: AQt7F2q4o5B25uhX_oWQBW9fat5qEtkM0Nr8aYVEcXQ9mIhtZ6QKAhGqX5MMIc4
+Message-ID: <CAPMcbCqCkqSyhpGvSYAQLR-cT0+_imh=3o5mXfCiR1j+74264A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] qga/vss-win32: Fix ConvertStringToBSTR
+ redefinition with newer MinGW
+To: phind.uet@gmail.com
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Michael Roth <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000be9b8206463933da"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,120 +120,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The functional tests currently don't allow a single test to be
-selected for execution by dotted name, e.g:
+--000000000000be9b8206463933da
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-../tests/functional/ppc64/test_pseries.py PseriesMachine.test_ppc64_linux_boot
-                                          ^
-The issue is that the testcase.py main function passes the test
-module's name as the second argument to unittest.main(), which makes
-it ignore all other positional arguments (presumably because the
-module is already the superset of all tests).
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
-After commit cac08383f0 ("tests/functional: expose sys.argv to
-unittest.main"), the situation improves by passing the rest of the
-argv from the command line invocation into unittest.main(), but it
-still doesn't fix the issue. The short form options are now accepted,
-so the -k option could be used to filter for a pattern, which is
-useful, but not the same as listing the test names.
+On Thu, Dec 18, 2025 at 10:55=E2=80=AFAM <phind.uet@gmail.com> wrote:
 
-Fix this by passing the test module name via the "module" argument to
-unittest.main() and stop touching argv. The ways of invoking tests are
-now as per unittests documentation (-k still works):
+> From: Nguyen Dinh Phi <phind.uet@gmail.com>
+>
+> Newer versions of MinGW-w64 provide ConvertStringToBSTR() in the
+> _com_util namespace via <comutil.h>. This causes a redefinition
+> error when building qemu-ga on Windows with these toolchains.
+>
+> Add a meson check to detect whether ConvertStringToBSTR is already
+> available, and conditionally compile our fallback implementation
+> only when the system does not provide one.
+>
+> Signed-off-by: Nguyen Dinh Phi <phind.uet@gmail.com>
+> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>  meson.build               | 12 ++++++++++++
+>  qga/vss-win32/install.cpp |  2 ++
+>  2 files changed, 14 insertions(+)
+>
+> diff --git a/meson.build b/meson.build
+> index c5710a6a47..5a0f407d6f 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -3299,6 +3299,18 @@ endif
+>  # Detect host pointer size for the target configuration loop.
+>  host_long_bits =3D cc.sizeof('void *') * 8
+>
+> +# Detect if ConvertStringToBSTR has been defined in _com_util namespace
+> +if host_os =3D=3D 'windows'
+> +  has_convert_string_to_bstr =3D cxx.links('''
+> +    #include <comutil.h>
+> +    int main() {
+> +        BSTR b =3D _com_util::ConvertStringToBSTR("test");
+> +        return b ? 0 : 1;
+> +    }
+> +  ''')
+> +  config_host_data.set('CONFIG_CONVERT_STRING_TO_BSTR',
+> has_convert_string_to_bstr)
+> +endif
+> +
+>  ########################
+>  # Target configuration #
+>  ########################
+> diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
+> index 7b25d9098b..5b7a8e9bc5 100644
+> --- a/qga/vss-win32/install.cpp
+> +++ b/qga/vss-win32/install.cpp
+> @@ -549,6 +549,7 @@ STDAPI DllUnregisterServer(void)
+>
+>
+>  /* Support function to convert ASCII string into BSTR (used in _bstr_t) =
+*/
+> +#ifndef CONFIG_CONVERT_STRING_TO_BSTR
+>  namespace _com_util
+>  {
+>      BSTR WINAPI ConvertStringToBSTR(const char *ascii) {
+> @@ -566,6 +567,7 @@ namespace _com_util
+>          return bstr;
+>      }
+>  }
+> +#endif
+>
+>  /* Stop QGA VSS provider service using Winsvc API  */
+>  STDAPI StopService(void)
+> --
+> 2.43.0
+>
+>
 
-  Examples:
-    test_pseries.py                           - run default set of tests
-    test_pseries.py MyTestSuite               - run suite 'MyTestSuite'
-    test_pseries.py MyTestCase.testSomething  - run MyTestCase.testSomething
-    test_pseries.py MyTestCase                - run all 'test*' test methods in MyTestCase
+--000000000000be9b8206463933da
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Note that ever since we've been programatically passing the module
-name to unittest.main(), the usage 'test_pseries.py test_pseries' was
-never valid. It used to "work" just the same as 'test_pseries.py
-foobar' would. After this patch, that usage results in an error.
+<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
+tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
+v class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gma=
+il_attr">On Thu, Dec 18, 2025 at 10:55=E2=80=AFAM &lt;<a href=3D"mailto:phi=
+nd.uet@gmail.com">phind.uet@gmail.com</a>&gt; wrote:<br></div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">From: Nguyen Dinh Phi &lt;<a href=3D"m=
+ailto:phind.uet@gmail.com" target=3D"_blank">phind.uet@gmail.com</a>&gt;<br=
+>
+<br>
+Newer versions of MinGW-w64 provide ConvertStringToBSTR() in the<br>
+_com_util namespace via &lt;comutil.h&gt;. This causes a redefinition<br>
+error when building qemu-ga on Windows with these toolchains.<br>
+<br>
+Add a meson check to detect whether ConvertStringToBSTR is already<br>
+available, and conditionally compile our fallback implementation<br>
+only when the system does not provide one.<br>
+<br>
+Signed-off-by: Nguyen Dinh Phi &lt;<a href=3D"mailto:phind.uet@gmail.com" t=
+arget=3D"_blank">phind.uet@gmail.com</a>&gt;<br>
+Suggested-by: Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linar=
+o.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;<br>
+---<br>
+=C2=A0meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 1=
+2 ++++++++++++<br>
+=C2=A0qga/vss-win32/install.cpp |=C2=A0 2 ++<br>
+=C2=A02 files changed, 14 insertions(+)<br>
+<br>
+diff --git a/meson.build b/meson.build<br>
+index c5710a6a47..5a0f407d6f 100644<br>
+--- a/meson.build<br>
++++ b/meson.build<br>
+@@ -3299,6 +3299,18 @@ endif<br>
+=C2=A0# Detect host pointer size for the target configuration loop.<br>
+=C2=A0host_long_bits =3D cc.sizeof(&#39;void *&#39;) * 8<br>
+<br>
++# Detect if ConvertStringToBSTR has been defined in _com_util namespace<br=
+>
++if host_os =3D=3D &#39;windows&#39;<br>
++=C2=A0 has_convert_string_to_bstr =3D cxx.links(&#39;&#39;&#39;<br>
++=C2=A0 =C2=A0 #include &lt;comutil.h&gt;<br>
++=C2=A0 =C2=A0 int main() {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 BSTR b =3D _com_util::ConvertStringToBSTR(&quo=
+t;test&quot;);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return b ? 0 : 1;<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 &#39;&#39;&#39;)<br>
++=C2=A0 config_host_data.set(&#39;CONFIG_CONVERT_STRING_TO_BSTR&#39;, has_c=
+onvert_string_to_bstr)<br>
++endif<br>
++<br>
+=C2=A0########################<br>
+=C2=A0# Target configuration #<br>
+=C2=A0########################<br>
+diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp<br>
+index 7b25d9098b..5b7a8e9bc5 100644<br>
+--- a/qga/vss-win32/install.cpp<br>
++++ b/qga/vss-win32/install.cpp<br>
+@@ -549,6 +549,7 @@ STDAPI DllUnregisterServer(void)<br>
+<br>
+<br>
+=C2=A0/* Support function to convert ASCII string into BSTR (used in _bstr_=
+t) */<br>
++#ifndef CONFIG_CONVERT_STRING_TO_BSTR<br>
+=C2=A0namespace _com_util<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0BSTR WINAPI ConvertStringToBSTR(const char *ascii) {<br=
+>
+@@ -566,6 +567,7 @@ namespace _com_util<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return bstr;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0}<br>
++#endif<br>
+<br>
+=C2=A0/* Stop QGA VSS provider service using Winsvc API=C2=A0 */<br>
+=C2=A0STDAPI StopService(void)<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div>
 
-Also note that testcase.py:main() pertains to running the test module
-that invoked it via QemuSystemTest.main(), i.e. module == __main__. So
-the 'discover' usage of unittest doesn't apply here, the module is
-already discovered because that's where this code was called from to
-begin with. This patch could just as well call unittest.main() instead
-of unittest.main(test_module), but the latter provides nicer error
-messages prefixed with the module name.
-
-Tested-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
-v2: added docs
----
- docs/devel/testing/functional.rst      | 19 +++++++++++++++++--
- tests/functional/qemu_test/testcase.py |  7 +++----
- 2 files changed, 20 insertions(+), 6 deletions(-)
-
-diff --git a/docs/devel/testing/functional.rst b/docs/devel/testing/functional.rst
-index fdeaebaadc..4ccc7c3940 100644
---- a/docs/devel/testing/functional.rst
-+++ b/docs/devel/testing/functional.rst
-@@ -52,17 +52,32 @@ the following line will only run the tests for the x86_64 target:
- 
-   make check-functional-x86_64
- 
--To run a single test file without the meson test runner, you can also
-+To run the tests from a test file without the meson test runner, you can also
- execute the file directly by specifying two environment variables first,
- the PYTHONPATH that has to include the python folder and the tests/functional
- folder of the source tree, and QEMU_TEST_QEMU_BINARY that has to point
- to the QEMU binary that should be used for the test. The current working
--directory should be your build folder. For example::
-+directory should be your build folder. Like so::
- 
-   $ export PYTHONPATH=../python:../tests/functional
-   $ export QEMU_TEST_QEMU_BINARY=$PWD/qemu-system-x86_64
-+
-+With the above set, run all tests from a test file::
-+
-   $ pyvenv/bin/python3 ../tests/functional/test_file.py
- 
-+Run all tests from a test class::
-+
-+  $ pyvenv/bin/python3 ../tests/functional/test_file.py TestClass
-+
-+Or a single test::
-+
-+  $ pyvenv/bin/python3 ../tests/functional/test_file.py TestClass.test_name
-+
-+Filtering test names also works::
-+
-+  $ pyvenv/bin/python3 ../tests/functional/test_file.py -k pattern
-+
- The test framework will automatically purge any scratch files created during
- the tests. If needing to debug a failed test, it is possible to keep these
- files around on disk by setting ``QEMU_TEST_KEEP_SCRATCH=1`` as an env
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 58f2740100..fa100d9632 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -249,17 +249,16 @@ def main():
-         warnings.simplefilter("default")
-         os.environ["PYTHONWARNINGS"] = "default"
- 
--        path = os.path.basename(sys.argv[0])[:-3]
-+        test_module = os.path.basename(sys.argv[0])[:-3]
- 
-         cache = os.environ.get("QEMU_TEST_PRECACHE", None)
-         if cache is not None:
--            Asset.precache_suites(path, cache)
-+            Asset.precache_suites(test_module, cache)
-             return
- 
-         tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
-                                    test_output_log = pycotap.LogMode.LogToError)
--        res = unittest.main(module = None, testRunner = tr, exit = False,
--                            argv=[sys.argv[0], path] + sys.argv[1:])
-+        res = unittest.main(test_module, testRunner = tr, exit = False)
-         failed = {}
-         for (test, _message) in res.result.errors + res.result.failures:
-             if hasattr(test, "log_filename") and not test.id() in failed:
--- 
-2.51.0
+--000000000000be9b8206463933da--
 
 
