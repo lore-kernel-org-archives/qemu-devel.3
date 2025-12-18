@@ -4,90 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED36D68BE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 07:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B587BD68BE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 07:57:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vW8mh-0005Ya-4M; Thu, 18 Dec 2025 02:50:51 -0500
+	id 1vW8sZ-0007xo-Nw; Thu, 18 Dec 2025 02:56:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vW8md-0005Y7-Q3
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 02:50:48 -0500
-Received: from mail-wr1-x443.google.com ([2a00:1450:4864:20::443])
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>)
+ id 1vW8sX-0007wQ-EL; Thu, 18 Dec 2025 02:56:53 -0500
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vW8ma-00044f-I8
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 02:50:46 -0500
-Received: by mail-wr1-x443.google.com with SMTP id
- ffacd0b85a97d-431048c4068so154549f8f.1
- for <qemu-devel@nongnu.org>; Wed, 17 Dec 2025 23:50:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766044243; x=1766649043; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=BNuBMvcfRMJftO6hvS2QM/ySAK+YceG+Do76sWoYe0o=;
- b=BtIQ0N2s6GmdMwlx4WHBvMbrEbJnSRhjjilIUn3GAWZ8lq9Ok2bn0qaTJQaRVIaXIQ
- 8LPtp1vF5P0rfMlgWV/F4vA8Mcuc7ATg98M4I5qxSP3zEBw0vRZS38noY7HMruaFxB0k
- kSE4FxO8BQvGfK8tQ2wSbgBk7IrKNnDmgEz2sWgwLqyhuWuL4+i9X3kHp8RhT4FJXBJz
- QqiY0tjk3LFzs4Xw7JTp493H+0W+blmVl0x15MSqXNVo+PRJuYgjFF506khICm17kTHj
- WTIWnvy4THp/0QweH1YP+t/cRYeIvzModeJjSICwt1zpSakhtHrEWCGGaMv5/X/qrHoS
- 1aLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766044243; x=1766649043;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=BNuBMvcfRMJftO6hvS2QM/ySAK+YceG+Do76sWoYe0o=;
- b=FfZuTtj0JU7ZsCTG9bHL+2ouMyH3xWyq/ka5Udt3+lLtpWTOZKBtQndNqrEIP+pUj2
- kRmbqg4RzPItAL7oEEOZQh71KZ2/C0ymv1cDDkNwLAfRdzcLZKBFUDUVn43cxuYvaf3I
- 9bNVqBCFK1aAx4CWYE+SkQpFAwmMOk//x8r4DIcOCy6/nzXqTL8YOFqpMd0IIjYugrnI
- XzcCSTuqBetafQ7RnsGTDfsm3N5LTgBqCwG++A7qQ30ih7QExtgVmcMBq3bfUai+khBO
- 0JSz9BO7bvqujvooLNuAR4tUKO1Frh/hTNK/AYmGbzhPSQ2fv3BW0I37fyaKH04iyHu6
- JPaQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWjyyIvJvYfXpbEm69HpHyPjo1Ih+aJq2HMOz7Ri8oLAryZVecTBaNrLzjxSiilXsQQH5HLsp5bRGLa@nongnu.org
-X-Gm-Message-State: AOJu0YwdZX5gnTRibJMe0pR8cPKcO16cZUQEawqzf+xOV8CWyrdIzhM1
- d5sZ9mVZphPuwwdFUasEq4y/YvkEkUdytcVr8jzrtb45aFbMoQ2mrAK/LJsQ1jD3wmM=
-X-Gm-Gg: AY/fxX51rNmZzdaqfU7G6svjPLFpwCvHH6OY5O3r2PLPhYg5Ekh55PUqJh0yz7JWO+x
- 6xiHiWf+ViarBCppGoQD33sMAzIq11rmIrmIniWEWIyTcBpDcSUZAaty3xmTx8DbUhbA2C2K+Ye
- AZdYAzgcieHRMH+YrnQOqzVvl/mqoyHsWGoStP1eR/Q9P9SPGweIqfHpw3V/QRidjoIKFyhf33d
- KL64us4nK7I/Zf9oGi0NbuOPSdYIYBRnAxqzmUJGr5jnfnnopc+L+vKSIXzsKtw0IjjXKeC4+YV
- x+B8HiYu4WiDUnK8NF7F137bn/tCVpyCMOU2nCJ6t2yZChxaCCyk8P4AtmFyLLVsbHX02hPcYz0
- FscGaDAvqQvNGW5ZAwhZ4Y0FhJRDTeeHFnyxHQYDD38eMgvBD3drBOSx5fUvoqCiZZr1wb39Eqc
- SUJ/oJYFeEulIAAEGHih248h1JELeHBsr9jvgtGvgmSK+yoq8PKcdmEQ==
-X-Google-Smtp-Source: AGHT+IE/sk/Zaxi6Kn05S/nIUD/VoHHTMkLi7wP2/3qnhVmfuSDi3wxqB+seCrnUYZruKllxei1iRQ==
-X-Received: by 2002:adf:e588:0:b0:431:1c7:f967 with SMTP id
- ffacd0b85a97d-432447ac138mr2019724f8f.17.1766044242575; 
- Wed, 17 Dec 2025 23:50:42 -0800 (PST)
-Received: from [192.168.69.202] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4324493fd7esm3574073f8f.10.2025.12.17.23.50.40
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Dec 2025 23:50:40 -0800 (PST)
-Message-ID: <ae1c0c21-a464-4893-ac11-c0e831056df9@linaro.org>
-Date: Thu, 18 Dec 2025 08:50:39 +0100
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>)
+ id 1vW8sV-000724-GW; Thu, 18 Dec 2025 02:56:53 -0500
+Received: from [192.168.178.140] (p5b151e44.dip0.t-ipconnect.de [91.21.30.68])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id A6A81DA045A;
+ Thu, 18 Dec 2025 08:56:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
+ t=1766044602;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=WLVjI7qNBJqOzX4ulp3bRld7vOrqA5CUnNqo3FO1yIQ=;
+ b=LaQhU/4G179ZMeLkX5PItHCzuP92WG2S1AWCWq5rLiFXm97hebclt9/KrJyuMB5/378Jb/
+ dmP72erHVGQSbtP0P9arsczWRszEGSlXChvHKGJJ+94sg0ATvYG205+bI2KWJgp3VAKmtW
+ XEfzfzTaEwxAGBEiwKUMmTiYVQtynys=
+Authentication-Results: ORIGINATING;
+ auth=pass smtp.auth=stefan.weil@weilnetz.de smtp.mailfrom=sw@weilnetz.de
+Message-ID: <21c88d7a-10ca-472f-bea0-a6c9ab74f459@weilnetz.de>
+Date: Thu, 18 Dec 2025 08:56:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] qemu-options.hx: use KiB, MiB, GiB for power-of-2 units
-Content-Language: en-US
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org
-References: <20251218073208.160482-1-mjt@tls.msk.ru>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251218073208.160482-1-mjt@tls.msk.ru>
+Subject: Re: [PATCH v4 1/2] target/arm/kvm: add constants for new PSCI versions
+To: Sebastian Ott <sebott@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Eric Auger <eric.auger@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ kvmarm@lists.linux.dev
+References: <20251202160853.22560-1-sebott@redhat.com>
+ <20251202160853.22560-2-sebott@redhat.com>
+Autocrypt: addr=sw@weilnetz.de; keydata=
+ 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
+In-Reply-To: <20251202160853.22560-2-sebott@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::443;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x443.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Server: v2201612906741603
+X-Rspamd-Queue-Id: A6A81DA045A
+X-Spamd-Bar: ---
+X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[100.00%];
+ MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_ZERO(0.00)[0];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[p5b151e44.dip0.t-ipconnect.de:rdns]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,19 +126,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/25 08:32, Michael Tokarev wrote:
-> Use MiB &Co instead of MB &Co when the talk is about
-> power-of-two-based sizes, in qemu-options.hx.
+Am 02.12.25 um 17:08 schrieb Sebastian Ott:
+> Add constants for PSCI version 1_2 and 1_3.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3222
-> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Sebastian Ott <sebott@redhat.com>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
 > ---
->   qemu-options.hx | 20 ++++++++++----------
->   1 file changed, 10 insertions(+), 10 deletions(-)
+>   target/arm/kvm-consts.h | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/target/arm/kvm-consts.h b/target/arm/kvm-consts.h
+> index 54ae5da7ce..9fba3e886d 100644
+> --- a/target/arm/kvm-consts.h
+> +++ b/target/arm/kvm-consts.h
+> @@ -97,6 +97,8 @@ MISMATCH_CHECK(QEMU_PSCI_1_0_FN_PSCI_FEATURES, PSCI_1_0_FN_PSCI_FEATURES);
+>   #define QEMU_PSCI_VERSION_0_2                     0x00002
+>   #define QEMU_PSCI_VERSION_1_0                     0x10000
+>   #define QEMU_PSCI_VERSION_1_1                     0x10001
+> +#define QEMU_PSCI_VERSION_1_2                     0x10002
+> +#define QEMU_PSCI_VERSION_1_3                     0x10003
+>   
+>   MISMATCH_CHECK(QEMU_PSCI_0_2_RET_TOS_MIGRATION_NOT_REQUIRED, PSCI_0_2_TOS_MP);
+>   /* We don't bother to check every possible version value */
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+Reviewed-by: Stefan Weil <sw@weilnetz.de>
 
