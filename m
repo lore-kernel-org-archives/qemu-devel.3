@@ -4,96 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0C54D6E2AE
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 22:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30ED6D711C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 22:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWMHC-0001Q9-Ve; Thu, 18 Dec 2025 17:15:14 -0500
+	id 1vWMGd-0001H8-HV; Thu, 18 Dec 2025 17:14:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWMHB-0001Pk-BQ
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 17:15:13 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWMH9-0006q4-3h
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 17:15:13 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4775ae5684fso4650875e9.1
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 14:15:10 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWMGW-0001Gp-IG
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 17:14:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWMGR-0006QG-IV
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 17:14:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1766096064;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bwDdH66VM5JfgZgulo57HsWJKPt71NnK+/2ffC8Jha4=;
+ b=Z6jPVFylxEtkrdkMwnsdSDjIHzOeRo932MTnN6OQXCyhqji51aaCD7qStiYr0hlW0qJM6d
+ y2Yws3NuV/+xnNlcIYSjwrhJO1pmitnAM2/1v0fwYFCiRePu0fWqHjV+fAy1vyHlbKFhUN
+ smX2n4cP1TPE9iHUAPtirrZ9ctZd1mw=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-633-PaQbW5ltN9iMZ0_bWQCB9Q-1; Thu, 18 Dec 2025 17:14:22 -0500
+X-MC-Unique: PaQbW5ltN9iMZ0_bWQCB9Q-1
+X-Mimecast-MFC-AGG-ID: PaQbW5ltN9iMZ0_bWQCB9Q_1766096062
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4ee16731ceaso21136191cf.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 14:14:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766096109; x=1766700909; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9A1gr5CJUaSQgBXQcHovtENYxaFT/E0t2tXqegO2h5o=;
- b=sWATqa3uHy59IEyAQfwz7C+o684LG0qIFpI8bCtHxcPBiDg6qSluOW+M4oB7coNWS0
- 43ckuYQS7rLtxh/61qaYd5g87Dw3oOkY4+Uex9xeFIlk0kMuQky+iQTx/e+z6ue5iQcF
- RnNyD7zWd0aH9lOaf7fsHHy+NaRf9yV8NT5WPJqK56afieTGWG6VY50Coo787X11rnH3
- tcnJ63VoVf4MGxw9yrglg4eE5ypOlJYoX3v2B+WGtpumQXv2p6aKRWE1YtmgnFWK/Y46
- kXEXxJ02pb2nAQaWKW+wdPzKUvEK7Q9270Ug1ZfyEGtob7YOkKJmt7Z0t+eRpSenK7zr
- chmw==
+ d=redhat.com; s=google; t=1766096062; x=1766700862; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=bwDdH66VM5JfgZgulo57HsWJKPt71NnK+/2ffC8Jha4=;
+ b=fb4GwqA3XO7/N8D4H9Aw6Sf0duKZa12fuVBEx13GDL2IhLShjjc4vi1t96PVyk4Ixv
+ LIzPpr37EqUXtkjVpvZWp4I/DNFP/ZtpyVHa5OSAHPRuxharOOdOqf16nP0yWMvNTxBi
+ 4yaBuu19UDD6RhssSv1DS7PSdUyUz76OdrxbVJ9D9EqT/UpZS6gtog6UGPBVkN5JzAA5
+ Fl42qiSYKcV8gDQ7IQJdo0HOpmFeLD4S1K87Ovu09V7hYIQflcmpekA7738miVUSvAyU
+ mfQ9oUlSgZxwovkOmT1cHhHanVrxBuaOOVJZOf2UX5yKlD3PlIAPYGj4THJ3xrqfBARO
+ KAeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766096109; x=1766700909;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9A1gr5CJUaSQgBXQcHovtENYxaFT/E0t2tXqegO2h5o=;
- b=rFG3q1tOuASCCJMGfI8XBjDP1P1Uxpfh5K2zEIKkXZBWWELZLtxwKm1Ld0ALfcCBa4
- L0kucxxAfqpWXYp6iyRFrILCotmDGP+d9dUGqmB3/HWx0NMX3f1WdFnZFpp2JpuzkeT/
- kUR4qBAze+qukwRyORMa4I1sQuyBaaTMZyCBVQFvfLCaRcgIc4UC2KwKUg0T3C/LtKHH
- MQ6+lRyCtRnLc3uP3E7HGVm+wkfBJCfjnJGIc4C6C1DBOqcH6gASBWPPbAHYXxsVta0F
- FDc0AVMVa43Mz6gkNrD2+48TJ24BXcLsrGw45dPeJedPcn6u7P9E38G4fWrX2n+4d1q5
- mJaQ==
-X-Gm-Message-State: AOJu0Ywg/UJCLG/y8Pv4BNHVfc+M8/HHsp2J8yIm7Luu2KSFOgfUoLee
- tqYikL3Ca7eIdCmdpwrJT8WeaHhD3hHHzgUNEVyxnGmEbs7IKEBOKqTXXG9iPjvbRIUcoElrLqD
- Zy9jaJr0=
-X-Gm-Gg: AY/fxX6qnWgPlXjSiRBRf3zMlaVpCjjb0YF7jFmZwpyeIaGlx6JYh/uUSfRxkWDhQnr
- ChgGLLYTtuIPOucm0XodkbqDF1XGaNd08mNKKqeogE2ZL9OUQEqau29PlXE4KjxEbNPPPm829cz
- mcQT7VH8Q8Fd12sJXqSqseE+K6QU941ul26IyQjm8MYCUdPj4lnwmP8qcc1TSICmpCK64VxsFfc
- 1MVKh5KD2IcQxFIWoVQ1fHS052MkK9FECKnmq2HStr3MLPhIZPOhvQrd4cgC8WoTzxPsXEO8H4n
- u99TvqX/PoPSsRNsl+irve0BKRlgmF1MwJNumCJLxYGFzvqUPae05nz1oqI1S00S4JvfM19ciHh
- xZBnkXrhV3wRY7L5uazk7N+rsNGhtsUl6BVDG304FudaL/ht19HFj0jbSPilf/5Rk5wHt4xOhyf
- BgCqEc0Upk+QCbTUGMoMdcvSbO1RRbkaXyqTmzU229eWenVTTwGJFdj7zvFO/HaD/JKKNtrFadL
- KQYvlUIBg==
-X-Google-Smtp-Source: AGHT+IEWA0AqhiqGd6C3tlcRx7U7sx7I9Zn+5xAeQJTS3aSRMVHJ1129lbAkrTpzL0xmXuMcoFWi4Q==
-X-Received: by 2002:a05:600c:8216:b0:477:97c7:9be7 with SMTP id
- 5b1f17b1804b1-47d19549a07mr6458775e9.1.1766096109032; 
- Thu, 18 Dec 2025 14:15:09 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3a40c5dsm22108935e9.6.2025.12.18.14.15.07
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Dec 2025 14:15:07 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Frederic Konrad <konrad.frederic@yahoo.fr>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/6] hw/sparc: Use explicit big-endian LD/ST API
-Date: Thu, 18 Dec 2025 23:14:52 +0100
-Message-ID: <20251218221457.73341-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251218221457.73341-1-philmd@linaro.org>
-References: <20251218221457.73341-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1766096062; x=1766700862;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bwDdH66VM5JfgZgulo57HsWJKPt71NnK+/2ffC8Jha4=;
+ b=JZBfvF5KyCmgMsGr1PSOQlnHlTE4t6IdJky+u9Htlm4KpRPaxN/szo0UkPTYXaTlaV
+ pyXAlpBcwiZA5tVAdkemEx4Fli5rAwO39YYxjbejPJB0iSSnY/ha2JeYmNsTzerTZND7
+ W4iveaxoyJ2zNTnxAOxj4CNm1ungT6+gj460LlynxfqkM7TioRSiXrXgNQZtXMLj+B3w
+ AOSRInrALY29xF2CIkp2Fp3FWORVD2psC9O32OtviQcILf6bSY8aWq7Eie9FV6VoK1zI
+ EQK9CrArqUZlHyDGZVG5b0rP/dUwJG8crJYvXVyLT5T+BVL809IxjVtRCoU9zXRV3yHK
+ VrYQ==
+X-Gm-Message-State: AOJu0Yyiw20hnwBAcGstbXevpPLtnwwVZwH4IDyt2kuKuxiLMLB4SgKs
+ vCpDnMSu3nnF/oybWnkPN7hqdZBYB4Ptu74uJdvCfrOKSkLW3CqioAHc6AVwwzPiiMnGl52y0P6
+ /Ygr42smD6Tl8zm0bHpPNInm1NAv0194yl1p+1WCR3w6WTGEKnLjkF6O0
+X-Gm-Gg: AY/fxX7cUISAf/XHsTYdcGNFPde84kzz34SrI8p/I2moflqlk/tW2fQ0NVFaM9n/UTb
+ RtyP6bVbsGmC+Uz48pbIORdlAZOy0HBvP9gYGzajOalXn5ITWYVHwbK0qduW17QE/XbqqV3Y6c1
+ CIpnuZ8xKuk2fv8adIdO/HhmFTSrtzwHSF66/wD0YXKNLO8MkkfhEwfaKSAlb2lXfMmn2wj/Yps
+ eRWbJHiHKP1HgtvFrIOwxCJwuaWf/dujI/ywBzGbTvHkrHy0kWYPyv1WUfhgIjesDfxcoeK62Jg
+ D6fsLGR8KVqwduVujEc1gv4/RcPBHTlt+iWB/S9/dnTypc1gJreNY0x245PZ+S9Mwb0kHhj1ixu
+ on+Q=
+X-Received: by 2002:a05:622a:24f:b0:4f1:ddda:9a26 with SMTP id
+ d75a77b69052e-4f4abd122a3mr12901211cf.35.1766096061903; 
+ Thu, 18 Dec 2025 14:14:21 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGVq3SvTVAAiSaf2QCb1Gy1diAxvb8RrlP8A31mm9X567yblJIfqG1CCwCLV/XTFXXAukGw0A==
+X-Received: by 2002:a05:622a:24f:b0:4f1:ddda:9a26 with SMTP id
+ d75a77b69052e-4f4abd122a3mr12900851cf.35.1766096061375; 
+ Thu, 18 Dec 2025 14:14:21 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4f4ac62fa56sm3364421cf.17.2025.12.18.14.14.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Dec 2025 14:14:20 -0800 (PST)
+Date: Thu, 18 Dec 2025 17:14:19 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 44/51] tests/qtest/migration: Convert TLS PSK tests to
+ use config
+Message-ID: <aUR8u53VV3ezfFE0@x1.local>
+References: <20251215220041.12657-1-farosas@suse.de>
+ <20251215220041.12657-45-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251215220041.12657-45-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,139 +118,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SPARC architecture uses big endianness. Directly use
-the big-endian LD/ST API.
+On Mon, Dec 15, 2025 at 07:00:30PM -0300, Fabiano Rosas wrote:
+> Replace calls to migrate_set_parameters and the usage of args.caps
+> with the new config object API.
+> 
+> The multifd tests are now the same as the "precopy" tests, only
+> setting some multifd options, so reuse the precopy code.
+> 
+> Temporarily, set the use-config key to enable the new method.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  tests/qtest/migration/tls-tests.c | 72 +++++++++----------------------
+>  1 file changed, 20 insertions(+), 52 deletions(-)
+> 
+> diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+> index abd6bf9281..68304a7af3 100644
+> --- a/tests/qtest/migration/tls-tests.c
+> +++ b/tests/qtest/migration/tls-tests.c
+> @@ -73,9 +73,6 @@ static void *migrate_hook_start_tls_psk_common(QTestState *from,
+>                               "                 'dir': %s } }",
+>                               args->mismatch ? workdiralt : workdir);
+>  
+> -    migrate_set_parameter_str(from, "tls-creds", "tlscredspsk0");
+> -    migrate_set_parameter_str(to, "tls-creds", "tlscredspsk0");
+> -
+>      return NULL;
+>  }
+>  
+> @@ -121,6 +118,11 @@ static void test_precopy_tls_psk_common(MigrateCommon *args,
+>  {
+>      TestMigrateTLSPSKData *data = g_new0(TestMigrateTLSPSKData, 1);
+>  
+> +    /* temporary */
+> +    qdict_put_bool(args->start.config, "use-config", true);
+> +
+> +    qdict_put_str(args->start.config, "tls-creds", "tlscredspsk0");
+> +
+>      migrate_tls_psk_init(args, test_args, data);
+>      test_precopy_common(args);
+>      migrate_tls_psk_cleanup(data);
+> @@ -497,18 +499,11 @@ static void test_precopy_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
+>      test_precopy_tls_psk_common(args, &tls_psk_mismatch);
+>  }
+>  
+> -static void *migrate_hook_start_no_tls(QTestState *from, QTestState *to)
+> -{
+> -    migrate_set_parameter_null(from, "tls-creds");
+> -    migrate_set_parameter_null(to, "tls-creds");
+> -
+> -    return NULL;
+> -}
+> -
+>  static void test_precopy_tcp_no_tls(char *name, MigrateCommon *args)
+>  {
+>      args->listen_uri = "tcp:127.0.0.1:0";
+> -    args->start_hook = migrate_hook_start_no_tls;
+> +
+> +    qdict_put_null(args->start.config, "tls-creds");
+>  
+>      test_precopy_common(args);
+>  }
+> @@ -614,29 +609,7 @@ static void test_precopy_tcp_tls_x509_reject_anon_client(char *name,
+>  
+>      test_precopy_tls_x509_common(args, &tls_x509_reject_anon_client);
+>  }
+> -#endif /* CONFIG_TASN1 */
+>  
+> -static void *
+> -migrate_hook_start_multifd_tcp_tls_psk_match(QTestState *from,
+> -                                             QTestState *to)
+> -{
+> -    migrate_set_parameter_str(from, "multifd-compression", "none");
+> -    migrate_set_parameter_str(to, "multifd-compression", "none");
+> -
+> -    return migrate_hook_start_tls_psk_common(from, to, &tls_psk_match);
+> -}
+> -
+> -static void *
+> -migrate_hook_start_multifd_tcp_tls_psk_mismatch(QTestState *from,
+> -                                                QTestState *to)
+> -{
+> -    migrate_set_parameter_str(from, "multifd-compression", "none");
+> -    migrate_set_parameter_str(to, "multifd-compression", "none");
+> -
+> -    return migrate_hook_start_tls_psk_common(from, to, &tls_psk_mismatch);
+> -}
+> -
+> -#ifdef CONFIG_TASN1
+>  static void *
+>  migrate_hook_start_multifd_tls_x509_default_host(QTestState *from,
+>                                                   QTestState *to)
+> @@ -694,39 +667,34 @@ migrate_hook_start_multifd_tls_x509_reject_anon_client(QTestState *from,
+>  
+>  static void test_multifd_tcp_tls_psk_match(char *name, MigrateCommon *args)
+>  {
+> -    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_match;
+> -    args->listen_uri = "tcp:127.0.0.1:0";
+> -
+>      args->start.incoming_defer = true;
+> -    args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+>  
+> -    test_precopy_tls_psk_common(args, &tls_psk_match);
+> +    qdict_put_str(args->start.config, "multifd-compression", "none");
+> +    qdict_put_bool(args->start.config, "multifd", true);
+> +
+> +    test_precopy_tcp_tls_psk_match(name, args);
+>  }
+>  
+>  static void test_multifd_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
+>  {
+> -    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_mismatch;
+> -    args->result = MIG_TEST_FAIL;
+> -    args->listen_uri = "tcp:127.0.0.1:0";
+> -
+> -    args->start.hide_stderr = true;
+>      args->start.incoming_defer = true;
+> -    args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+>  
+> -    test_precopy_tls_psk_common(args, &tls_psk_mismatch);
+> +    qdict_put_str(args->start.config, "multifd-compression", "none");
 
-Mechanical change running:
+Why do we need to start set multifd-compression=none all the time
+(including all below tests)?  Isn't that the default anyway?
 
-  $ for a in uw w l q; do \
-      sed -i -e "s/ld${a}_p(/ld${a}_be_p(/" \
-        $(git grep -wlE '(ld|st)u?[wlq]_p' hw/sparc*/);
-    done
+> +    qdict_put_bool(args->start.config, "multifd", true);
+> +
+> +    test_precopy_tcp_tls_psk_mismatch(name, args);
+>  }
+>  
+>  static void test_multifd_postcopy_tcp_tls_psk_match(char *name,
+>                                                      MigrateCommon *args)
+>  {
+> -    args->start_hook = migrate_hook_start_multifd_tcp_tls_psk_match;
+> -    args->listen_uri = "tcp:127.0.0.1:0";
+> -
+>      args->start.incoming_defer = true;
+> -    args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
+> -    args->start.caps[MIGRATION_CAPABILITY_POSTCOPY_RAM] = true;
+>  
+> -    test_precopy_tls_psk_common(args, &tls_psk_match);
+> +    qdict_put_str(args->start.config, "multifd-compression", "none");
+> +    qdict_put_bool(args->start.config, "multifd", true);
+> +    qdict_put_bool(args->start.config, "postcopy-ram", true);
+> +
+> +    test_precopy_tcp_tls_psk_match(name, args);
+>  }
+>  
+>  #ifdef CONFIG_TASN1
+> -- 
+> 2.51.0
+> 
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Chigot Clément <chigot@adacore.com>
----
- hw/sparc/leon3.c   | 42 +++++++++++++++++++++---------------------
- hw/sparc/sun4m.c   |  6 +++---
- hw/sparc64/sun4u.c |  6 +++---
- 3 files changed, 27 insertions(+), 27 deletions(-)
-
-diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
-index 631c6113b5c..0414e9df573 100644
---- a/hw/sparc/leon3.c
-+++ b/hw/sparc/leon3.c
-@@ -78,21 +78,21 @@ typedef struct ResetData {
- 
- static uint32_t *gen_store_u32(uint32_t *code, hwaddr addr, uint32_t val)
- {
--    stl_p(code++, 0x82100000); /* mov %g0, %g1                */
--    stl_p(code++, 0x84100000); /* mov %g0, %g2                */
--    stl_p(code++, 0x03000000 +
-+    stl_be_p(code++, 0x82100000); /* mov %g0, %g1             */
-+    stl_be_p(code++, 0x84100000); /* mov %g0, %g2             */
-+    stl_be_p(code++, 0x03000000 +
-       extract32(addr, 10, 22));
-                                /* sethi %hi(addr), %g1        */
--    stl_p(code++, 0x82106000 +
-+    stl_be_p(code++, 0x82106000 +
-       extract32(addr, 0, 10));
-                                /* or %g1, addr, %g1           */
--    stl_p(code++, 0x05000000 +
-+    stl_be_p(code++, 0x05000000 +
-       extract32(val, 10, 22));
-                                /* sethi %hi(val), %g2         */
--    stl_p(code++, 0x8410a000 +
-+    stl_be_p(code++, 0x8410a000 +
-       extract32(val, 0, 10));
-                                /* or %g2, val, %g2            */
--    stl_p(code++, 0xc4204000); /* st %g2, [ %g1 ]             */
-+    stl_be_p(code++, 0xc4204000); /* st %g2, [ %g1 ]          */
- 
-     return code;
- }
-@@ -112,13 +112,13 @@ static void write_bootloader(void *ptr, hwaddr kernel_addr)
- 
-     /* If we are running on a secondary CPU, jump directly to the kernel.  */
- 
--    stl_p(p++, 0x85444000); /* rd %asr17, %g2      */
--    stl_p(p++, 0x8530a01c); /* srl  %g2, 0x1c, %g2 */
--    stl_p(p++, 0x80908000); /* tst  %g2            */
-+    stl_be_p(p++, 0x85444000); /* rd %asr17, %g2      */
-+    stl_be_p(p++, 0x8530a01c); /* srl  %g2, 0x1c, %g2 */
-+    stl_be_p(p++, 0x80908000); /* tst  %g2            */
-     /* Filled below.  */
-     sec_cpu_branch_p = p;
--    stl_p(p++, 0x0BADC0DE); /* bne xxx             */
--    stl_p(p++, 0x01000000); /* nop */
-+    stl_be_p(p++, 0x0BADC0DE); /* bne xxx             */
-+    stl_be_p(p++, 0x01000000); /* nop */
- 
-     /* Initialize the UARTs                                        */
-     /* *UART_CONTROL = UART_RECEIVE_ENABLE | UART_TRANSMIT_ENABLE; */
-@@ -133,17 +133,17 @@ static void write_bootloader(void *ptr, hwaddr kernel_addr)
-     p = gen_store_u32(p, 0x80000318, 3);
- 
-     /* Now, the relative branch above can be computed.  */
--    stl_p(sec_cpu_branch_p, 0x12800000
--          + (p - sec_cpu_branch_p));
-+    stl_be_p(sec_cpu_branch_p, 0x12800000
-+             + (p - sec_cpu_branch_p));
- 
-     /* JUMP to the entry point                                     */
--    stl_p(p++, 0x82100000); /* mov %g0, %g1 */
--    stl_p(p++, 0x03000000 + extract32(kernel_addr, 10, 22));
--                            /* sethi %hi(kernel_addr), %g1 */
--    stl_p(p++, 0x82106000 + extract32(kernel_addr, 0, 10));
--                            /* or kernel_addr, %g1 */
--    stl_p(p++, 0x81c04000); /* jmp  %g1 */
--    stl_p(p++, 0x01000000); /* nop */
-+    stl_be_p(p++, 0x82100000); /* mov %g0, %g1 */
-+    stl_be_p(p++, 0x03000000 + extract32(kernel_addr, 10, 22));
-+                               /* sethi %hi(kernel_addr), %g1 */
-+    stl_be_p(p++, 0x82106000 + extract32(kernel_addr, 0, 10));
-+                               /* or kernel_addr, %g1 */
-+    stl_be_p(p++, 0x81c04000); /* jmp  %g1 */
-+    stl_be_p(p++, 0x01000000); /* nop */
- }
- 
- static void leon3_cpu_reset(void *opaque)
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index 53d7ae08ae9..52ca9586001 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -268,9 +268,9 @@ static unsigned long sun4m_load_kernel(const char *kernel_filename,
-         if (*initrd_size > 0) {
-             for (i = 0; i < 64 * TARGET_PAGE_SIZE; i += TARGET_PAGE_SIZE) {
-                 ptr = rom_ptr(KERNEL_LOAD_ADDR + i, 24);
--                if (ptr && ldl_p(ptr) == 0x48647253) { /* HdrS */
--                    stl_p(ptr + 16, INITRD_LOAD_ADDR);
--                    stl_p(ptr + 20, *initrd_size);
-+                if (ptr && ldl_be_p(ptr) == 0x48647253) { /* HdrS */
-+                    stl_be_p(ptr + 16, INITRD_LOAD_ADDR);
-+                    stl_be_p(ptr + 20, *initrd_size);
-                     break;
-                 }
-             }
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index 82c3e7c855b..e83c82fc9ae 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -206,9 +206,9 @@ static uint64_t sun4u_load_kernel(const char *kernel_filename,
-         if (*initrd_size > 0) {
-             for (i = 0; i < 64 * TARGET_PAGE_SIZE; i += TARGET_PAGE_SIZE) {
-                 ptr = rom_ptr(*kernel_addr + i, 32);
--                if (ptr && ldl_p(ptr + 8) == 0x48647253) { /* HdrS */
--                    stl_p(ptr + 24, *initrd_addr + *kernel_addr);
--                    stl_p(ptr + 28, *initrd_size);
-+                if (ptr && ldl_be_p(ptr + 8) == 0x48647253) { /* HdrS */
-+                    stl_be_p(ptr + 24, *initrd_addr + *kernel_addr);
-+                    stl_be_p(ptr + 28, *initrd_size);
-                     break;
-                 }
-             }
 -- 
-2.52.0
+Peter Xu
 
 
