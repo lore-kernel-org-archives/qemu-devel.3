@@ -4,63 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 505B0D68BF6
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 09:21:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40F36D6ACD8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 09:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWAC0-00032w-Bf; Thu, 18 Dec 2025 04:21:04 -0500
+	id 1vWAST-0006Bg-QG; Thu, 18 Dec 2025 04:38:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
- id 1vWABl-00032S-Tk
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 04:20:50 -0500
-Received: from sg-1-103.ptr.blmpb.com ([118.26.132.103])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xuchuangxclwt@bytedance.com>)
- id 1vWABg-0005n3-2k
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 04:20:47 -0500
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vWASS-0006AZ-P6; Thu, 18 Dec 2025 04:38:04 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vWASR-0004fo-Bz; Thu, 18 Dec 2025 04:38:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1766049623; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=Yx4BIP5+6EKVCoEm0zoPq0/I9xrQPQjktACnV7eqgVg=;
- b=eBYBbZOQKsKKBjG9x77FlI00kwejs3ZHQBEOn0dP3tS09nltQpLehEpL/bc7jdDRVhlNzM
- ovZ+9nILTI50zEPnB2b1PbwS9pI+K6rvC7k3J/kNFwHa8gPyyy0yJUq4m8XHk98i6wtiCd
- wXoJtYByNqB5Om0yBD2lLOAWIA+pXXFvnk6AGFsR1McBV84nfYlmjhBbwN8ehi6zs2hrYH
- OO1llsBQ/YN5UzckrJPuu/vqdvxqXurw+5JxRt9T1B5KTEMSEAyeF9YNJDDVt9RcpbEFyT
- NLyQlzIeRlwEqm2T7EeyY8XAaxO6zjxyHSOkcZflGWd2K0OJfTyeTvXe4XUKww==
-From: "Chuang Xu" <xuchuangxclwt@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=CdVZZXvtAsDsBfcicgORr5XoLaVyZ6Nhg+w7tV7S0m4=; b=HjoLPPS6HxXtyqH5/pR+CWD914
+ ULSgsizBdtO+TcycVLZx65JzQ47PEZmlPkp+LUtZYdT6Xq7jQE0UKZMlzy8evbiCdoqXv7sA+vSiz
+ belTUD0V6bexUNNb2o/zye3HRhuuqLjylDPFyyZnE6LJJlOZdTQ3KwZY6jr5lMxYfx9rVIF3rhycs
+ AimRa7NeKw7gFCjPHU9OVm4EXHGbgff5RIiHDUA1Zp53SiaIVmncQGDIVWincS6DOz4E6E25sbQB/
+ ecba7VKx4dTDcyTNjI3us5pZ2vDs9szZbLnitB+5CcvUxazhvjrMk+5zrueO4R3h6ckmH14pCyyrT
+ mwV1n/etlcixKjgpt2qEmePYVlfE9LgmxY6CiVXKgG60A+569A1Q3og3xfZQ9oYpvMS7zs7MbIwst
+ 7x0Q3t6876P2iioT4qUDlILU5GwM7qS1ewZ3TJJ7eC8irq7da3L1Rll7OPuv/NTIt47+EX/jyprD7
+ xhGTR+ce/vQ7ON2vZrmbI/9CV6IN8XB8NObbwtH8HTBzR+yTyWTVLSCcyS7uUP3nEL1FhqstoTJZ8
+ QMH7BxvptwVQH7sw2dUVbtWBQoM1kYkaAO/1PyYyjaxt2IY1CnBU9XFbE1F0tXZmUpGaJyc5eUna4
+ ZU5h62HPZgFwWf7BluYg/9DfLrlmHC+eN/Gm2o3uc=;
+Received: from [2a02:8012:2f01:0:8ae1:185a:3ee6:bcd5]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1vWAPq-0005h6-DH; Thu, 18 Dec 2025 09:35:22 +0000
+Message-ID: <83c9ed5a-8b1b-4b80-91f3-8690b2c64019@ilande.co.uk>
+Date: Thu, 18 Dec 2025 09:37:51 +0000
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: "Peter Xu" <peterx@redhat.com>
-Date: Thu, 18 Dec 2025 17:20:19 +0800
-Message-Id: <82ca276d-831d-4e19-96e2-d88a7f94a430@bytedance.com>
-X-Lms-Return-Path: <lba+26943c755+8042fb+nongnu.org+xuchuangxclwt@bytedance.com>
-Subject: Re: [PATCH v3 1/1] migration: merge fragmented clear_dirty ioctls
-X-Original-From: Chuang Xu <xuchuangxclwt@bytedance.com>
-References: <20251216080001.64579-1-xuchuangxclwt@bytedance.com>
- <877bum36ed.fsf@suse.de> <aUGIPj1JNpd8HZ-V@x1.local>
- <29bc82b4-99c3-4275-b4a8-cfc400f0e44d@bytedance.com>
- <aUKuWISfpQeld_AF@x1.local>
- <65dc5a3d-fe3f-48d9-b7e8-c04346308fa8@bytedance.com>
- <aULFP1kbeT2yceiV@x1.local>
-Cc: <qemu-devel@nongnu.org>, "Fabiano Rosas" <farosas@suse.de>, 
- <mst@redhat.com>, <sgarzare@redhat.com>, <richard.henderson@linaro.org>, 
- <pbonzini@redhat.com>, <david@kernel.org>, <philmd@linaro.org>
-In-Reply-To: <aULFP1kbeT2yceiV@x1.local>
-Content-Transfer-Encoding: 7bit
-Mime-Version: 1.0
-Received-SPF: pass client-ip=118.26.132.103;
- envelope-from=xuchuangxclwt@bytedance.com; helo=sg-1-103.ptr.blmpb.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+To: Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Igor Mammedov <imammedo@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+References: <20251203060942.57851-1-philmd@linaro.org>
+ <20251203060942.57851-9-philmd@linaro.org> <aTBccn2LIv7puGzR@intel.com>
+ <05f92a77-7587-4441-a252-01e4705a6892@linaro.org>
+ <c03820b8-7745-4b8e-8e69-a37c872257f8@ilande.co.uk>
+ <aUPAysAYqTPAfgzD@intel.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <aUPAysAYqTPAfgzD@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:8ae1:185a:3ee6:bcd5
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH-for-11.0 v6 08/13] hw/sparc64/sun4u: Use
+ fw_cfg_init_io_nodma()
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,55 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/12/2025 22:59, Peter Xu wrote:
-> Right, it will, because any time used for sync has the vCPUs running, so
-> that will contributes to the total dirtied pages, hence partly increase D,
-> as you pointed out.
->
-> But my point is, if you _really_ have R=B all right, you should e.g. on a
-> 10Gbps NIC seeing R~=10Gbps.  If R is not wire speed, it means the R is not
-> really correctly measured..
+On 18/12/2025 08:52, Zhao Liu wrote:
 
-In my experience, the bandwidth of live migration usually doesn't reach
-the nic's bandwidth limit (my test environment's nic bandwidth limit is 200Gbps).
-This could be due to various reasons: for example, the live migration main thread's
-ability to search for dirty pages may have reached a bottleneck;
-the nic's interrupt binding range might limit the softirq's processing capacity;
-there might be too few multifd threads; or there might be overhead in synchronizing
-between the live migration main thread and the multifd thread.
+>>>> I think maybe one reason to use `ebus` is because...
+>>>>
+>>>>> -    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+>>>>> -    memory_region_add_subregion(pci_address_space_io(ebus), BIOS_CFG_IOPORT,
+>>>>                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+>>>> ... because the parent region is managed by ebus.
+>>>>
+>>>> Perhaps we should add another argument: Object *parent?
+>>>
+>>> I thought about it but don't think so, all instances but this one use
+>>> the machine container.
+>>>
+>>> I'll improve the description.
+>>
+>> The reason that the fw_cfg device lives under ebus on sun4u is because the
+>> ebus device is effectively a PCI-ISA bridge, and the fw_cfg port is mapped
+>> into I/O address space along with other ISA devices. I'm not sure that
+>> setting the parent to the machine is the right thing to do here.
+> 
+> Thanks Philippe and Mark, IIUC, ebus doesn't have the hotplug use case,
+> so it lives long enough like the sun4u/v machine, therefore replacing
+> the parent object "ebus" with machine is safe.
 
->
-> I think it's likely impossible to measure the correct R so that it'll equal
-> to B, however IMHO we can still think about something that makes the R
-> getting much closer to B, then when normally y is a constant (default
-> 300ms, for example) it'll start to converge where it used to not be able to.
+It's safe, but it still doesn't make sense for sun4u/v because there is no 
+machine-level I/O address space as per x86. It really does exist as a separate legacy 
+bus under a PCI bridge.
 
-Yes, there are always various factors that can cause measurement errors.
-We can only try to make the calculated value as close as possible to the actual value.
+> And it might be better to explicitly set ebus as not supporting hotplug
+> (via dc->hotpluggable = false).
 
-> E.g. QEMU can currently report R as low as 10Mbps even if on 10Gbps, IMHO
-> it'll be much better and start solving a lot of such problems if it can
-> start to report at least a few Gbps based on all kinds of methods
-> (e.g. excluding sync, as you experimented), then even if it's not reporting
-> 10Gbps it'll help.
->
-After I applied these optimizations, typically the bandwidth statistics
-from QEMU and the real-time nic bandwidth monitored by atop are close.
+That's correct, ebus does not support hotplug.
 
-Those extremely low bandwidth(but consistent with atop monitoring) is usually
-caused by zero pages or dirty pages with extremely high compression rates.
-In these cases, QEMU uses very little nic bandwidth to transmit a large number
-of dirty pages, but the bandwidth is only calculated based on the actual
-amount of data transmitted.
+> Adding a "parent" argument to the generic interface fw_cfg_init_io_nodma()
+> doesn't seem necessary at the moment, since using the default machine as
+> parent seems enough to meet all current needs in QEMU.
+> 
+> What do you think?
 
-If we want to use the actual number of dirty pages transmitted to calculate
-bandwidth, we face another risk: if the dirty pages transmitted before the
-downtime have a high compression ratio, and the dirty pages to be transmitted
-after the downtime have a low compression ratio, then the downtime will far
-exceed expectations.
+My preference would be add to add the parent argument as it's easy to do, and doesn't 
+attempt to enforce x86-type constraints on other architectures.
 
-This may have strayed a bit, but just providing some potentially useful information
-from my perspective.
 
-Thanks!
+ATB,
+
+Mark.
+
 
