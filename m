@@ -4,102 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A423D6E2DD
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 19:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AAC9D6E2CA
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 19:16:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWJJz-0001FZ-8P; Thu, 18 Dec 2025 14:05:55 -0500
+	id 1vWJTQ-0003mq-2f; Thu, 18 Dec 2025 14:15:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWJJq-0001Di-2e
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 14:05:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWJT8-0003l1-CM
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 14:15:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWJJo-0003Fy-CN
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 14:05:45 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWJT4-0000bH-Gf
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 14:15:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1766084742;
+ s=mimecast20190719; t=1766085316;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=vcUrmDDl+qtL0kR0Yte+8l25DTAryA7/gu21iKp2lVc=;
- b=b738I/bEh/bv3t1JAJBR71cj6dFGRHgw9suv0VYh6unADryknxoK8dBrMpNjr3wZbH5BTs
- JJoSZJN3RWhm2oUu29/WMUtAiL0ntan0B9c/V7uj3mLIp5mF8O3+7EwOUrnzXmSDI9FhCF
- 75+oyEqdJHNzCh+zWXgRsBkCdWTGvLU=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lxmjktm0qvaPoNZeGs02Wyv/y65xpVuTVaCbM9lE3E4=;
+ b=gcwvE+dr+eiQmgO4Z3ey0KA0pEECJvLsjLk6RsxqNk3ogue3z1LIWP3z+3Ou9kSA7kVlC5
+ pN4Y4WCRoLG4RWTxvJCMhnnDePZYKgAjWQ2XRWmmI+/ygCmhCifz6elnSyPOjc5uDKp0jv
+ sgLtWf0AbPT7Yxt2jaCZ8JaPlsGzdiQ=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-398-L-9ox3iiMfKUfGNKqFnLEQ-1; Thu, 18 Dec 2025 14:05:41 -0500
-X-MC-Unique: L-9ox3iiMfKUfGNKqFnLEQ-1
-X-Mimecast-MFC-AGG-ID: L-9ox3iiMfKUfGNKqFnLEQ_1766084740
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4ed7591799eso20389021cf.0
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 11:05:41 -0800 (PST)
+ us-mta-317-ekEIFyFQPF-SIU6BPPo3Og-1; Thu, 18 Dec 2025 14:15:12 -0500
+X-MC-Unique: ekEIFyFQPF-SIU6BPPo3Og-1
+X-Mimecast-MFC-AGG-ID: ekEIFyFQPF-SIU6BPPo3Og_1766085312
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8b245c49d0cso217424185a.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 11:15:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1766084740; x=1766689540; darn=nongnu.org;
+ d=redhat.com; s=google; t=1766085312; x=1766690112; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=vcUrmDDl+qtL0kR0Yte+8l25DTAryA7/gu21iKp2lVc=;
- b=Elvu3j0d75eyxbuQzi2uvU5Y16cihEvLedxZ6OxayUQhK3rl1SIe8ZDknCtHHuuQ5b
- H0GrMgv1cT4GMZiQfe0f1yHOjA8/v32dmJ7ksNgbfytGxhTWqyWEMkf2uuqxs30MKsxW
- 3vsXxt8RP0W64i3XSpEulYpykaf5/0fIw35XvLmqOs6ivyY55p+X06igdXly3kwgHTtK
- dOrtCDDsm9K3Kg1litwjumDOErUGXO38dQamx8JdICV3DXpDFFPm3Zhj/b9kgD8cVg0a
- RpjQZdP2DK8rgbYvHojS4spDx923a7BjU4vS9AeKVDWIn4lVxyPJR3TSazKtAWfLn38Z
- tQgQ==
+ bh=lxmjktm0qvaPoNZeGs02Wyv/y65xpVuTVaCbM9lE3E4=;
+ b=RgakhAOAFwVSXKefwCNIyZgd6b4OHYjMExGEKIoWXUfzeUJfgIDeRCBFsuHYIlnjYZ
+ 4sAkzgmDIMFQn6oRaq7iOXMeBxsdDhoF5MK4deRpHLgbJxS+LczWjE08ZJaqv5oi8ubr
+ dvQN02WMlPg6Y5ya92QdBo9s5i2d25Kpq1G9jo+bpebfHw8FmWq2MbEUzEJtoXHK3stV
+ e+zO5+QfUk7nmvyhq2BlO0Z1vPNznfSpi/VDJ1FibNUwa3hD/nU7lD8B8Rj4ycbESYu0
+ Cxk80KXGB87EDE8e8H32t/ddfu13tGB6+WS0owDy3amUbZq7NBsBRnogO6KD26uKIeUF
+ Traw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766084740; x=1766689540;
+ d=1e100.net; s=20230601; t=1766085312; x=1766690112;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vcUrmDDl+qtL0kR0Yte+8l25DTAryA7/gu21iKp2lVc=;
- b=QZfQlVAWoUCMc9a37UtHY6ipcYmFzNQDSPa1MGvwvCxCSBobCdTja3EJ9+h96HOoK/
- m9vsQn+S0hq1aHnMQO59jQwfEIndtCA6L1vadwomxucCW9Gz8782/XqQlJetJaNd46Io
- AIVV6pQ8Wu7ZQ6N7y7+WAT8GkwKUfxp04fPjJhSih/iot74uBUKPF98X+bTssxWD3vyc
- fwJp5ah1ljx9CG6C6XZIsnT2Wj92bHd+ByZbVt3o8hS1ttnNJkJGtnoodG87hshqq2Vw
- cFUja9lKkNEz9rIjvISnVy5thnSvaDtr2IfgHflWmvBqW3olvPRh5UqvRLgyW1gBsAWr
- 7twQ==
-X-Gm-Message-State: AOJu0Yxnz81i1Si+WofYeylrXTy/CXgdx5hPLdNpNEtm6156hUiPvM9P
- a+w6LhbSpa1BnD6IBqITx3Y2GNJEebEe8Sf8qxgYrJei06pisWY8p1b3lX7YsjeJ/l7ziwm+j18
- eI43XE5b59xOr7q9DT06jrAHMAH0SpR+7EuAox/ZFzTIgvvKImYr5xHwn
-X-Gm-Gg: AY/fxX6WpEfFxOaTWJeetLMcmWuCYpdFvKiscsAsE96Anj8TvYA2H5nFMMHIZNENf2q
- KNhVyvcpP2FjgzwKxmNR4W0+2Y7is4j+Uf6yDYuXKRGiPgoaqy5pchzGMYkWWDzyRJQPPvLW2WU
- gJSnVyaAERmUQGC3fwpkedkMu+2XjfGqgVm/SKWb0g1v9v2cPDHd62QgHPRY6b9ey4AmBb0TsZ7
- Nq7PKFgVVNykQhyulZCXmhbC3T8XXtGNmf3rG4na01xRYjgurtKXSUJYBMeUGpPGrxqxaqnu3Kk
- 8UdJhNXY/W5XJDZnHH0Z/GMKJFTezXHR2NHsz4mqgmaSjTRn69UEAgZ+0V8VSc8lZNZwUwT1ltG
- ETGs=
-X-Received: by 2002:ac8:7d85:0:b0:4ee:5aa:9c2c with SMTP id
- d75a77b69052e-4f4abcf6cb6mr3737431cf.8.1766084740436; 
- Thu, 18 Dec 2025 11:05:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEwqktfdHYbWQ0S4+dHD/ctVJwoVaFepxR6pI+aFixUHhmGOH43qEgylfwhdREeIl7ndade4Q==
-X-Received: by 2002:ac8:7d85:0:b0:4ee:5aa:9c2c with SMTP id
- d75a77b69052e-4f4abcf6cb6mr3736871cf.8.1766084739854; 
- Thu, 18 Dec 2025 11:05:39 -0800 (PST)
+ bh=lxmjktm0qvaPoNZeGs02Wyv/y65xpVuTVaCbM9lE3E4=;
+ b=TQ+NDgEch413VkAajTOjAHj1oOizediY3zO78XfPoFWmxI/2Yij9zMHtQWyO5LoPj+
+ WhplilF4dDy5L7C6sobBPbiVzZAyM/pGUo1z1HHZixRNJNh9eAyxkim/suAFggZzoYkg
+ O+L9vbwBoIIAdssHookG1mVzsZv/1BhLue7MfcBJ7Enh+4E66GHfeTNxjdHPZDzzO/iY
+ ny7ZcUl9+Q7wO7VKZguRAdiBnmjFSVlpPfhgA3ye8XQvWoMOvFzMIYtr1MxOd7K7Gn7H
+ frc+O/HS17WKi7ZNQlGAFJTnkBja1y3pPa8V5bcAqaELCTv0ZeuEVT9xv1y3spRwvP4y
+ hhbg==
+X-Gm-Message-State: AOJu0YzEk9ALc6mpG5hmtXQHiezR1xgLn10DWSS34VCwcSbNcRgGMawP
+ dZ+N2dZZOctM2LGcC0qrh/UzvH6zSE6/Bua9z6vq9Td7GFJ4SlXzikBZq5F8aqfaNBbpqU+nnb9
+ UYlsrsUwTnUKkbJkUjj2AkUczkX3cmLCdkOdfjJC28DbrnJLxHz/MUCFR
+X-Gm-Gg: AY/fxX4AH7uPkFSTJvZViz/ChTDmNlaWbdfYfo/EFGvs8rp+nXEAuPk4wd9+2Ny/HnG
+ bYIoyOHborhkc25KvZvZF22mYsbcsdKB/DIUXwtHDMIifenl4Q1mhIxfeLNMrz3sXPVloJw3L0R
+ PXdy3StDepn1IWrilLG93pvl0+DPEsEtcXY95es2TCzg9Pl/cJdAuyyv9DaTCVGuE9F3GCdkUV6
+ 56Pso+L6STvqrCcanBufvUy8kxiuW+tBtIFc1J+iz8/vjOGkyTHAdAArNe9vvioJ9qyuR+sB7Lv
+ SWT1Qd3bRjC/n2fX44wnlktpXRVA7QZZ9ze4+GZUx15Io05GrSXocrV7Fv0d0m0xVicmwbBstbv
+ WLLg=
+X-Received: by 2002:a05:620a:4690:b0:8be:738b:ecd1 with SMTP id
+ af79cd13be357-8c08fbdc02amr113446085a.89.1766085311723; 
+ Thu, 18 Dec 2025 11:15:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEwfKRhR4j/cM/QlNbZ38qSJk0LZYALN/NZ7xV3p1ra57FSxQCe4WAgaPG1pfNWhVltk1h4Ew==
+X-Received: by 2002:a05:620a:4690:b0:8be:738b:ecd1 with SMTP id
+ af79cd13be357-8c08fbdc02amr113439985a.89.1766085311226; 
+ Thu, 18 Dec 2025 11:15:11 -0800 (PST)
 Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4f4ac66a1aasm74841cf.33.2025.12.18.11.05.39
+ af79cd13be357-8c0975eec8fsm7744585a.54.2025.12.18.11.15.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Dec 2025 11:05:39 -0800 (PST)
-Date: Thu, 18 Dec 2025 14:05:38 -0500
+ Thu, 18 Dec 2025 11:15:10 -0800 (PST)
+Date: Thu, 18 Dec 2025 14:15:09 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v3 37/51] tests/qtest/migration: Add new hook with data
-Message-ID: <aURQgjrsVhlfu8kr@x1.local>
+Subject: Re: [PATCH v3 38/51] tests/qtest/migration: TLS x509: Refactor to
+ use full hook
+Message-ID: <aURSvVtgSj0rQYCd@x1.local>
 References: <20251215220041.12657-1-farosas@suse.de>
- <20251215220041.12657-38-farosas@suse.de>
+ <20251215220041.12657-39-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20251215220041.12657-38-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20251215220041.12657-39-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,93 +118,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 15, 2025 at 07:00:23PM -0300, Fabiano Rosas wrote:
-> Add a new start hook that takes an opaque pointer so the tests can
-> stop having to nest hook calls.
-
-I saw that this hook is also removed after the whole series applied.. maybe
-it should be mentioned here.
-
+On Mon, Dec 15, 2025 at 07:00:24PM -0300, Fabiano Rosas wrote:
+> Refactor the TLS x509 hooks to use the _full variant which passes the
+> hook data into the _common functions via MigrateCommon *args.
+> 
+> This reduces the number of hooks and will allow further simplification
+> of the TLS tests by setting a common hook at a centralized place in
+> the next patches.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
-
-> ---
->  tests/qtest/migration/framework.c |  8 ++++++++
->  tests/qtest/migration/framework.h | 16 ++++++++++++++++
->  2 files changed, 24 insertions(+)
-> 
-> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-> index f740228cf2..b9bbdca6a9 100644
-> --- a/tests/qtest/migration/framework.c
-> +++ b/tests/qtest/migration/framework.c
-> @@ -591,6 +591,9 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
->  
->      if (args->start_hook) {
->          args->postcopy_data = args->start_hook(from, to);
-> +    } else if (args->start_hook_full) {
-> +        args->postcopy_data = args->start_hook_full(from, to,
-> +                                                    args->start_hook_data);
->      }
->  
->      migrate_ensure_non_converge(from, args->start.config);
-> @@ -868,6 +871,9 @@ int test_precopy_common(MigrateCommon *args)
->  
->      if (args->start_hook) {
->          data_hook = args->start_hook(from, to);
-> +    } else if (args->start_hook_full) {
-> +        data_hook = args->start_hook_full(from, to,
-> +                                          args->start_hook_data);
->      }
->  
->      if (args->start.incoming_defer && !args->start.defer_target_connect) {
-> @@ -1062,6 +1068,8 @@ void test_file_common(MigrateCommon *args, bool stop_src)
->  
->      if (args->start_hook) {
->          data_hook = args->start_hook(from, to);
-> +    } else if (args->start_hook_full) {
-> +        data_hook = args->start_hook_full(from, to, args->start_hook_data);
->      }
->  
->      migrate_ensure_converge(from, args->start.config);
-> diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-> index 65c656e0d3..2584599f14 100644
-> --- a/tests/qtest/migration/framework.h
-> +++ b/tests/qtest/migration/framework.h
-> @@ -65,6 +65,19 @@ int migration_env_clean(MigrationTestEnv *env);
->  typedef void * (*TestMigrateStartHook)(QTestState *from,
->                                         QTestState *to);
->  
-> +
-> +/*
-> + * A hook that runs after the src and dst QEMUs have been created, but
-> + * before the migration is started. This can be used to run routines
-> + * that require the QTestState object.
-> + *
-> + * Returns: NULL, or a pointer to opaque state to be
-> + *          later passed to the TestMigrateEndHook
-> + */
-> +typedef void * (*TestMigrateStartHookFull)(QTestState *from,
-> +                                           QTestState *to,
-> +                                           void *opaque);
-> +
->  /*
->   * A hook that runs after the migration has finished,
->   * regardless of whether it succeeded or failed, but
-> @@ -196,6 +209,9 @@ typedef struct {
->      /* Optional: callback to run at finish to cleanup */
->      TestMigrateEndHook end_hook;
->  
-> +    TestMigrateStartHookFull start_hook_full;
-> +    void *start_hook_data;
-> +
->      /*
->       * Optional: normally we expect the migration process to complete.
->       *
-> -- 
-> 2.51.0
-> 
 
 -- 
 Peter Xu
