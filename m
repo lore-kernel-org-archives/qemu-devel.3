@@ -4,94 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04CD1D711C6
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 21:31:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13975D711C6
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Dec 2025 21:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vWLat-000421-CT; Thu, 18 Dec 2025 16:31:31 -0500
+	id 1vWLbx-0004pc-B5; Thu, 18 Dec 2025 16:32:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWLam-0003pC-4x
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 16:31:25 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vWLak-0000Cm-PD
- for qemu-devel@nongnu.org; Thu, 18 Dec 2025 16:31:23 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4775ae5684fso4552245e9.1
- for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 13:31:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWLbB-0004j8-Om
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 16:31:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vWLbA-0000VW-3s
+ for qemu-devel@nongnu.org; Thu, 18 Dec 2025 16:31:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1766093506;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fVSAPn4EfWqfBr22z9YSMw1q2F1WSwVXyG71Y88IAyc=;
+ b=eGcoDqesIvIuoDS4bm+4yMDow1SFtKL5lgbELKKcLikK8cbPVYnj7Fpabzih4LN62nxFbL
+ KqIb4eVimwUndMN3nTQ+IgHTWKVbAGDH2yTNFfd8HXUNgdu4BuOINULSDCfLfhkVqExrJs
+ 8Ij+Mpl688Nz8dVkxkbHFbC6YR4lZO0=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-202-m-Fsw7voOFWkluuuvfjFTg-1; Thu, 18 Dec 2025 16:31:44 -0500
+X-MC-Unique: m-Fsw7voOFWkluuuvfjFTg-1
+X-Mimecast-MFC-AGG-ID: m-Fsw7voOFWkluuuvfjFTg_1766093504
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8824292911cso42905676d6.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Dec 2025 13:31:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1766093481; x=1766698281; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rm4QE5DZffmJMRXvEQpcNSWzIzngXUmmcZvTA3tgWo0=;
- b=KlNyaclm/naO5l58Y3OKtdHu97M+Z2inTgcTA6BiBvwLIYTe7aXtB+KJgRfA0GGUcg
- CEFYXcQ4Dqa6583YDwZZUEPt69Byh7XkYU9XPIS/50mOdU6g4LHjj9pY3qMO4/Jssz5H
- vReQBp4L7++ckGv4JgzAC/BDCdchDecMduYiBHULL0YgRgnVmoQcaByXYrZt5rW1703t
- 4sAk3jlDgJRnker970iGnGj5Sk08ZfiIEYd9BUWCxk5/Zd/a1yV7v7qkrmqrmSA/a1kz
- F+87WOyzmGqqGfrBeLz/8a42z2T1EuqN7VllmNrWwlBRw2gesi0WapKhT+cmeGHqdtqe
- Euqg==
+ d=redhat.com; s=google; t=1766093504; x=1766698304; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=fVSAPn4EfWqfBr22z9YSMw1q2F1WSwVXyG71Y88IAyc=;
+ b=oUXvJXBZoBtiuHfGe3/tiGzMp5WOUcmj+x5xJfyVe8I81C2eTJl6ErPhvoIRGOk2Uf
+ et+pYViU5CG+fo94JNHeO6UdfyUTGyhKOdgd6qQLGLYFIqEShV2jhAcVYDcNgrjYNSLW
+ 6HeYhEyq7xp7/8sfitD1Z5TfHH6yLx4QJeI6DnDERj78IPmxIMuiVtsc2l2CMeIi/rAn
+ vlT7IA6ByglNU0b+r3TLSxgAE9uOH0YvL7S3CnX8IaIArzuvp5/4g+eujvNoGb+uzJRm
+ UvjVX8hf84li8mBHYPOruYCXtUEKvCHU9CDCBtzWBD6R9bgV1zhpcehKxJw9HFKwnb+s
+ sp9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1766093481; x=1766698281;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rm4QE5DZffmJMRXvEQpcNSWzIzngXUmmcZvTA3tgWo0=;
- b=e+6AdrCiHrmK9fUUMbyttLAlgXOgeTjXrrIPPDNPnBh1fpUSLEjD1vVUOgar4275Y6
- M1EQ3PLklg8UrZu758umP7XUoOsU+eC42Q+iqaakAVBuEaODopIq2gFpx+qivZ/btCDw
- cr0DeSCDjUp+JPm2TxulGj5ZaAmRWj265/F0fAkccb/xIxaf9WYg8aSB05eQY8wBdjhV
- capux9Jg82S7578NvNqcYGV6pFuaqZvIJOUzAJWmU9YBZMjft8fyTrdOLf3pnjQedxUX
- FaTg1I++hnyeKcOMITct2hsLnZNEhj6In8iBPvZljrCBGOmn0Lsx6HkoaHHnXw/U8ayT
- twTw==
-X-Gm-Message-State: AOJu0Yx2vHzQdsNYeqx686EruLvECt4okeMjN5MyPTTuMYbBNXmvVNHG
- 0OpRkj9xqAvzYgy6UE7s3TG8t3H+N0hvY5bFODXJJkzZqU9RS0fdQyXhVhfgbr7YigcGtcld7w9
- uFxjrliA=
-X-Gm-Gg: AY/fxX4hSKlqRyaUtOetQyME4DBZH3Kj25wsu7n3BtN5eTyoxD824ZP4/e3i5ZCLBUg
- 51BkD0wSGDNOQsq5F4Ie9WuziuAMAEuxhdQxgN6ZZFbpIf1RtpS7wNIE4UFX7Dmei1R4JNMjuRe
- UYF0dSIpWNkesBALVgcL7YlG/h2KVfh1n0N8ZJ4gv1Vv1Y4L8z3aDHQmxMsTus89KW7Ud1EnlSP
- gwrsGhQF49rfdbSR99IJElyz4NJ9tJ0GymB7RJpwCxWDte21Gu9vWyKORBRcHAbbqBwY+TtK2BE
- 1ixA8oz9fQ/s+jABZWukYGtxkzs05YzvWnLTAhQt+rCfWFAzCvXotVIAl+RgaqoccszRJls81Mg
- 0lLoG/zT9HnWSpcechywFWubunAYTEJulMnyL5Oz9K8wAd+/PLFWuswuIbTAFHyJjVft8I/3J2d
- vckPWsTmmXrhnwwVVsYoEWACMb5/mdBXt1PMDCqZwswMXggxRNc1mGYLFfTwuntQIcR//4sfM=
-X-Google-Smtp-Source: AGHT+IGtEfNvrJkAnMlrx/rHc9NUSbky0mhysBuAmKhRwIDfIqlVSnd7ElPYchOPKs3qOAzkLZo2hg==
-X-Received: by 2002:a05:600c:3e0b:b0:477:2f7c:314f with SMTP id
- 5b1f17b1804b1-47d19555af8mr5777855e9.10.1766093480893; 
- Thu, 18 Dec 2025 13:31:20 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-47be3ac5409sm20158105e9.15.2025.12.18.13.31.18
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Dec 2025 13:31:19 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Michael Rolnik <mrolnik@gmail.com>, Anton Johansson <anjo@rev.ng>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/3] configs/targets: Forbid AVR to use legacy native
- endianness API
-Date: Thu, 18 Dec 2025 22:30:53 +0100
-Message-ID: <20251218213053.61665-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251218213053.61665-1-philmd@linaro.org>
-References: <20251218213053.61665-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1766093504; x=1766698304;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fVSAPn4EfWqfBr22z9YSMw1q2F1WSwVXyG71Y88IAyc=;
+ b=H/07hN1XipNBc9c8y/OSThrDUx/k+qgNXJvjBLAHbnjmlq4gOXbrmHnu4sfpVmmwcJ
+ HRiXKkAc3G8A/+yCr5LP4y2qFHRJ3xvaaqSGbuq1zfq5RwTlRYSpFFONIilGnNkPIODb
+ f0/FFo6pdpQ/uCt+hpMQgxlKDXtshAOgFaNXof4bmUA/9Ps0fdSyyWPmy4JvqQyutpSQ
+ ed48holFv89c2dMHTId4eLOBwAvKjPZurN0vqAsFR6GEQ1Fgv1Y1RY0LEUZwxyLRAFAA
+ SdVx/vuwOTOjEQEhG+BX8c4pURgsupnNgSpEhxFYA5hH8pfleMF7Ad8+o7Tjmb0ea2U3
+ +k1Q==
+X-Gm-Message-State: AOJu0YyNHtWtNhbLp26gHHwCxrWb3p2UXb3RNfIHKEo1LU6zoTqVjgoO
+ X1iYVRCVqDHAkwKmVzpyrFZ0vz7erIXaloHRTKU1FrHiUUGGvV6klN57JzaDDEfgJ4SmA0vJRsq
+ 2FXJcfpvzNRs0jv1YMCR/8Jjrp3n0fRbaOUVHlD56SJSKDLOb5U66BsMb
+X-Gm-Gg: AY/fxX6OxI4eVzh5ruMV6gPWY9vmv0htgUeWzGGmwuJNuoBt4Im90Q1TbFkBx1d7cXc
+ w+Z7K0O0XuKOBFTV9Qh8men5fhK0BSXkJA80HaXFTYAgqgUlO2XQui+oCRyxHiVPgWNir7iMbHk
+ sxHHHaVy4HoSPTK+eaK08uu31b4vZQERMwFvUar3BJhB3pqP7khOlXRbzaHQZJBshAgkFoHr6HF
+ VfbSL5D+aRnVPazfyEmmwiaTHgUUbFPtWR1MeEmfzHuAxvvyKLJzoldJr0+MJSMlalV4NX5eaQj
+ wP6nUrTORWVJ0xn31QWNbjcO+FOjskGUEJrN8gA/76/3Dh4xUXLxVxgGfqW6naQK/+mq9IDoHDf
+ /558=
+X-Received: by 2002:a05:6214:4686:b0:880:4cfb:ab57 with SMTP id
+ 6a1803df08f44-88d83c64e72mr15308326d6.25.1766093504237; 
+ Thu, 18 Dec 2025 13:31:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IETvacSvZ/O26d5ZSg8RI/ssJtH7cJGxQAKOQH4VF61tHbb/qCbv2/iuh22PggqJj3dvsk/3w==
+X-Received: by 2002:a05:6214:4686:b0:880:4cfb:ab57 with SMTP id
+ 6a1803df08f44-88d83c64e72mr15307956d6.25.1766093503758; 
+ Thu, 18 Dec 2025 13:31:43 -0800 (PST)
+Received: from x1.local ([142.188.210.156]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-88d997ada77sm4474106d6.37.2025.12.18.13.31.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Dec 2025 13:31:42 -0800 (PST)
+Date: Thu, 18 Dec 2025 16:31:41 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, armbru@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 39/51] tests/qtest/migration: TLS x509: Add
+ init/cleanup routines
+Message-ID: <aURyvVMQuoXBrUbg@x1.local>
+References: <20251215220041.12657-1-farosas@suse.de>
+ <20251215220041.12657-40-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20251215220041.12657-40-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,26 +118,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The qemu-system-avr binary is buildable without a single use
-of the legacy "native endian" API. Unset the transitional
-TARGET_USE_LEGACY_NATIVE_ENDIAN_API definition to forbid
-further uses of the legacy API.
+On Mon, Dec 15, 2025 at 07:00:25PM -0300, Fabiano Rosas wrote:
+> Split the TLS x509 hooks by moving out of them any code that doesn't
+> need to access the QTestState.
+> 
+> Aside from making the code harder to follow for no practical reason,
+> having extra code in the hooks will soon get in the way of converting
+> the tests to use a new API that, unlike
+> migrate_set_parameters|capabilities, doesn't require the QEMU instance
+> to be already live.
+> 
+> Move the QTestState-independent code into a normal function and leave
+> the hooks only for operations that need the guest machine.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- configs/targets/avr-softmmu.mak | 1 -
- 1 file changed, 1 deletion(-)
+I think I see what you want to do, this looks ok,
 
-diff --git a/configs/targets/avr-softmmu.mak b/configs/targets/avr-softmmu.mak
-index 1aba1ccf13b..b6157fc465d 100644
---- a/configs/targets/avr-softmmu.mak
-+++ b/configs/targets/avr-softmmu.mak
-@@ -1,4 +1,3 @@
- TARGET_ARCH=avr
- TARGET_XML_FILES= gdb-xml/avr-cpu.xml
--TARGET_USE_LEGACY_NATIVE_ENDIAN_API=y
- TARGET_LONG_BITS=32
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+One trivial thing to mention below,
+
+> ---
+>  tests/qtest/migration/tls-tests.c | 155 +++++++++++++++---------------
+>  1 file changed, 75 insertions(+), 80 deletions(-)
+> 
+> diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+> index 8da95dc92a..6a858b766f 100644
+> --- a/tests/qtest/migration/tls-tests.c
+> +++ b/tests/qtest/migration/tls-tests.c
+> @@ -210,15 +210,57 @@ migrate_hook_start_tls_x509_common(QTestState *from,
+>                                     void *opaque)
+>  {
+>      TestMigrateTLSX509 *args = opaque;
+> -    TestMigrateTLSX509Data *data = g_new0(TestMigrateTLSX509Data, 1);
+> +    const char *workdir = g_strdup_printf("%s/tlscredsx5090", tmpfs);
+
+This introduces a string duplicate with the init() function.
+
+Quick change is we can at least make it a macro so use it in both places
+just to be clear that they must match.
+
+Logically we can also make the opaque to be TestMigrateTLSX509Data*
+instead, which can add a pointer pointing to TestMigrateTLSX509 (the "Data"
+struct is per-test, "non-Data" is a setup, which can be shared).
+
+Either way (the latter will need separate patch), or keep it as-is, you can
+keep my R-b.
+
 -- 
-2.52.0
+Peter Xu
 
 
